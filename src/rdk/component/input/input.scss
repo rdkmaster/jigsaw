@@ -1,0 +1,58 @@
+@import "../../assets/scss/core/_basc";
+
+:host{
+  @include inline-block();
+}
+
+:host-context(.theme-blue) .input-box input{
+  &:hover {
+    border: 1px solid $blue;
+  }
+  &:focus {
+    border: 1px solid $blue;
+    box-shadow: 0 0 0 2px $blue-shadow;
+  }
+}
+
+:host-context(.theme-orange) .input-box input{
+  &:hover {
+    border: 1px solid $orange;
+  }
+  &:focus {
+    border: 1px solid $orange;
+    box-shadow: 0 0 0 2px $orange-shadow;
+  }
+}
+
+.input-box {
+  position: relative;
+  margin-right: 10px;
+  input {
+    width: 300px;
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid $gray;
+    border-radius: 3px;
+    text-indent: 4px;
+    outline: none;
+    @include prefixer(transition, all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1));
+    &:hover {
+      border: 1px solid $blue;
+    }
+    &:focus {
+      border: 1px solid $blue;
+      box-shadow: 0 0 0 2px $blue-shadow;
+    }
+  }
+  span{
+    position: absolute;
+    right: 6px;
+    top: 8px;
+    color: $gray-dark-20;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+  }
+}
+

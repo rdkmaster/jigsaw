@@ -1,0 +1,24 @@
+@import "../../assets/scss/core/_basc";
+
+:host{
+  @include inline-block();
+  .search-box {
+    margin-bottom: 8px;
+    rdk-input /deep/{
+      img{
+        height: 16px;
+        position: absolute;
+        left: 8px;
+        top: 8px;
+      }
+      input{
+        text-indent: 28px;
+      }
+    }
+  }
+}
+
+.selected-option {
+  margin-right: 5px;
+}
+

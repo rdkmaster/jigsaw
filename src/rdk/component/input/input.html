@@ -1,0 +1,4 @@
+<div class="input-box">
+    <ng-content></ng-content>
+    <input [(ngModel)]="value"><span (click)="clearValue()" [hidden]="!value">X</span>
+</div>

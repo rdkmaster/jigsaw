@@ -1,0 +1,10 @@
+@import "../../assets/scss/core/_basc";
+
+:host{
+  @include inline-block();
+}
+
+.hidden{
+  display: none !important;
+}
+

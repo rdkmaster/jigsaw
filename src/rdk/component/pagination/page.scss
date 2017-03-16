@@ -1,0 +1,70 @@
+@import "../../assets/scss/core/_basc";
+
+:host{
+    @include inline-block();
+    margin-right: 8px;
+    vertical-align: top;
+    span {
+        @include inline-block();
+        width: 28px;
+        height: 28px;
+        line-height: 28px;
+        text-align: center;
+        border: 1px solid $gray;
+        border-radius: 4px;
+        cursor: pointer;
+        vertical-align: top;
+        @include prefixer(transition, all .3s ease);
+        &:hover{
+            border: 1px solid $blue;
+            color: $blue;
+            &.prev:after, &.next:after{
+                border-color: $blue;
+            }
+        }
+    }
+    &.page-current span{
+        background: $blue;
+        border: 1px solid $blue;
+        color: $white;
+    }
+    &.page-hidden{
+        display: none;
+    }
+    i{
+        @include inline-block();
+        width: 28px;
+        height: 28px;
+        cursor: pointer;
+        &:after{
+            display: block;
+            content: '. . .';
+            font-weight: 700;
+            font-size: 14px;
+            color: #bbbbbb;
+            line-height: 21px;
+            text-align: center;
+        }
+        &.prev-btn{
+            margin-left: 8px;
+        }
+        &.next-btn{
+            margin-right: 8px;
+        }
+        &:hover{
+            &.prev-btn:after{
+                content: '<<';
+                line-height: 28px;
+            }
+            &.next-btn:after{
+                content: '>>';
+                line-height: 28px;
+            }
+        }
+    }
+    //&.show-prev i.prev-btn, &.show-next i.next-btn{@include inline-block();}
+
+}
+
+
+

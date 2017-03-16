@@ -1,0 +1,13 @@
+<div class="prev page" [class.disabled]="prevDisabled" (click)="pagePrev()"></div>
+<rdk-paging-item *ngFor="let page of pageArr" [page]="page"></rdk-paging-item>
+<div class="next page" [class.disabled]="nextDisabled" (click)="pageNext()"></div>
+
+<rdk-select *ngIf="pageSizeOptions" [(ngModel)]="pageSize">
+    <rdk-option *ngFor="let pageSizeOption of pageSizeOptions" [optionValue]="pageSizeOption"></rdk-option>
+</rdk-select>
+
+<div class="goto-box">
+    <span>Goto</span>
+    <rdk-input #input (keyup.enter)="goto(input.value)" [width]="80"></rdk-input>
+</div>
+

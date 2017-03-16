@@ -1,0 +1,90 @@
+@import "../../assets/scss/core/_basc";
+
+:host{
+  @include inline-block();
+  background: none;
+  padding: 0;
+  border: none;
+  outline: none;
+  font: inherit;
+  text-decoration: none !important;
+  user-select: none;
+}
+:host(.disabled){
+  pointer-events: none;
+  .btn-box{
+    background: $gray-dark !important;
+  }
+}
+
+:host-context(.theme-blue) .btn-box{
+  background: $blue;
+  &:hover{
+    background: $blue-light;
+  }
+  &.btn-clicked:after {
+    border: 0 solid $blue-light;
+  }
+}
+
+:host-context(.theme-orange) .btn-box{
+  background: $orange;
+  &:hover{
+    background: $orange-light;
+  }
+  &.btn-clicked:after {
+    border: 0 solid $orange-light;
+  }
+}
+
+.btn-box{
+  position: relative;
+  width: 80px;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  background: $blue;
+  border-radius: 3px;
+  color: $white;
+  cursor: pointer;
+  box-shadow: 4px 4px 6px $gray;
+  @include prefixer(transition, all .3s cubic-bezier(0.645, 0.045, 0.355, 1));
+  &:hover{
+    background: $blue-light;
+  }
+  &.btn-clicked:after {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    bottom: -1px;
+    right: -1px;
+    border-radius: inherit;
+    border: 0 solid $blue-light;
+    opacity: 0.4;
+    @include prefixer(animation, buttonEffect 0.36s ease-out forwards);
+    display: block;
+  }
+  .icon-box{
+    @include inline-block();
+    vertical-align: -5px;
+    /deep/ img{
+      vertical-align: top;
+      height: 20px;
+    }
+  }
+  span.label-txt {
+
+  }
+}
+
+@include keyframes(buttonEffect){
+  to {
+    opacity: 0;
+    top: -6px;
+    left: -6px;
+    bottom: -6px;
+    right: -6px;
+    border-width: 6px;
+  }
+}

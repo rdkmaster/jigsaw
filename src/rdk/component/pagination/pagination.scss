@@ -1,0 +1,76 @@
+@import "../../assets/scss/core/_basc";
+
+:host {
+    @include inline-block();
+    font-size: 12px;
+    user-select: none;
+    .page{
+        position: relative;
+        @include inline-block;
+        width: 28px;
+        height: 28px;
+        line-height: 28px;
+        text-align: center;
+        border: 1px solid $gray;
+        border-radius: 4px;
+        margin-right: 8px;
+        cursor: pointer;
+        vertical-align: top;
+        @include prefixer(transition, all .3s ease);
+        &.prev:after, &.next:after{
+            position: absolute;
+            left: 11px;
+            top: 10px;
+            content: '';
+            display: block;
+            width: 4px;
+            height: 6px;
+            border-color: #666666;
+        }
+        &.prev:after{
+            border: {
+                left: 1px solid;
+                top: 1px solid;
+            };
+            @include prefixer(transform, rotate(-45deg))
+        }
+        &.next:after{
+            border: {
+                right: 1px solid;
+                top: 1px solid;
+            };
+            @include prefixer(transform, rotate(45deg))
+        }
+        &.disabled{
+            cursor: not-allowed;
+            &.prev:after, &.next:after{
+                border-color: #dddddd;
+            }
+            &:hover{
+                border: 1px solid $gray;
+                &.prev:after, &.next:after{
+                    border-color: #dddddd;
+                }
+            }
+        }
+        &:hover{
+            border: 1px solid $blue;
+            color: $blue;
+            &.prev:after, &.next:after{
+                border-color: $blue;
+            }
+        }
+
+    }
+    rdk-select{
+        margin-right: 8px;
+    }
+    .goto-box{
+        @include inline-block;
+        height: 28px;
+        line-height: 28px;
+        span{
+            margin-right: 8px;
+        }
+    }
+}

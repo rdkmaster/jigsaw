@@ -1,0 +1,38 @@
+@import "../../assets/scss/core/_basc";
+
+:host{
+  display: block;
+}
+
+:host-context(.theme-blue) .option-box {
+  &:hover {
+    background-color: $blue-hover;
+  }
+  &.on, &.on:hover{
+    background-color: $gray-light;
+  }
+}
+
+:host-context(.theme-orange) .option-box {
+  &:hover {
+    background-color: $orange-hover;
+  }
+  &.on, &.on:hover{
+    background-color: $gray-light;
+  }
+}
+
+.option-box {
+  width: 118px;
+  height: 28px;
+  line-height: 28px;
+  cursor: pointer;
+  padding: 0 6px;
+  box-sizing: border-box;
+  &:hover {
+    background-color: $blue-hover;
+  }
+  &.on, &.on:hover{
+    background-color: $gray-light;
+  }
+}

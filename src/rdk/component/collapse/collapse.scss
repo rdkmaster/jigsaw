@@ -1,0 +1,8 @@
+@import "../../assets/scss/core/_basc";
+
+:host{
+  display: block;
+  border: 1px solid $gray;
+  border-bottom: none;
+  border-radius: 4px;
+}

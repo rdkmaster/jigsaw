@@ -1,0 +1,82 @@
+@import "../../assets/scss/core/_basc";
+
+:host{
+  @include inline-block();
+}
+
+:host-context(.theme-blue) .select-box .selected-box {
+  &:hover {
+    border-color: $blue;
+  }
+  &.opened {
+    border-color: $blue;
+    box-shadow: 0 0 0 2px $blue-shadow;
+  }
+}
+
+:host-context(.theme-orange) .select-box .selected-box {
+  &:hover {
+    border-color: $orange;
+  }
+  &.opened {
+    border-color: $orange;
+    box-shadow: 0 0 0 2px $orange-shadow;
+  }
+}
+
+.select-box{
+  position: relative;
+  width: 120px;
+  .selected-box{
+    border: 1px solid $gray;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 6px;
+    box-sizing: border-box;
+    @include prefixer(transition, all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1));
+    &:hover{
+      border-color: $blue;
+    }
+    &.opened{
+      border-color: $blue;
+      box-shadow: 0 0 0 2px $blue-shadow;
+      &:after{
+        @include prefixer(transform, rotate(225deg));
+      }
+    }
+    &:after{
+      position: absolute;
+      content: " ";
+      width: 5px;
+      height: 5px;
+      border: {
+        bottom: 1px solid $gray-dark;
+        right: 1px solid $gray-dark;
+      };
+      right: 8px;
+      top: 12px;
+      @include prefixer(transition, transform 0.2s ease);
+      @include prefixer(transform, rotate(45deg));
+      @include prefixer(transform-origin, 60% 60%);
+    }
+
+  }
+  .option-list{
+    position: absolute;
+    z-index: 1;
+    border: 1px solid $gray;
+    background: $white;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    @include prefixer(transition, all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1));
+    @include prefixer(transform-origin, 0 0);
+    &.hidden-option{
+      display: none\9;
+      opacity: 0;
+      @include prefixer(transform, scale(1,0));
+    }
+  }
+}

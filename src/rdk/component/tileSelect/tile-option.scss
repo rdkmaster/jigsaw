@@ -1,0 +1,42 @@
+@import "../../assets/scss/core/_basc";
+
+:host{
+  @include inline-block();
+}
+
+:host-context(.theme-blue) .option-box{
+  &:hover, &.on{
+    color: $blue;
+  }
+  &.on{
+    border: 1px solid $blue;
+  }
+}
+
+:host-context(.theme-orange) .option-box{
+  &:hover, &.on{
+    color: $orange;
+  }
+  &.on{
+    border: 1px solid $orange;
+  }
+}
+
+.option-box {
+  vertical-align: top;
+  margin-right: 8px;
+  cursor: pointer;
+  width: 50px;
+  height: 30px;
+  border: 1px solid $gray;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 4px;
+  @include prefixer(transition, all .3s cubic-bezier(0.645, 0.045, 0.355, 1));
+  &:hover, &.on{
+    color: $blue;
+  }
+  &.on{
+    border: 1px solid $blue;
+  }
+}
