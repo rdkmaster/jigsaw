@@ -1,21 +1,26 @@
 import {
-  IComponentData, ComponentDataHelper, DataRefreshCallback, DataReviser, OnRefreshToken,
-  IPagableData, PagingBasicInfo, PagingFilterInfo, PagingSortInfo, SortAs, SortOrder, TableData
+  IAjaxComponentData, ComponentDataHelper, DataRefreshCallback, DataReviser, CallbackRemoval,
+  IPagableData, PagingBasicInfo, PagingFilterInfo, PagingSortInfo, SortAs, SortOrder, AjaxSuccessCallback,
+  AjaxErrorCallback, AjaxCompleteCallback
 } from "./component-data";
-import {Http, RequestOptionsArgs, Response, URLSearchParams} from "@angular/http";
-import {Observable, Subject} from "rxjs";
+import {TableData} from "./table-data";
+
+import {Http, RequestOptionsArgs, URLSearchParams, Response} from "@angular/http";
+import {Subject} from "rxjs";
 import 'rxjs/add/operator/map';
 
 
-export class ArrayCollection<T> extends Array<T> implements IComponentData {
+export class ArrayCollection<T> extends Array<T> implements IAjaxComponentData {
+  public busy: boolean;
   public http: Http;
-  protected _dataReviser: DataReviser;
-  private _originDataReviser: DataReviser;
 
   constructor(source?: Array<T>) {
     super();
     this._fromArray(source);
   }
+
+  protected wrappedDataReviser: DataReviser;
+  private _originDataReviser: DataReviser;
 
   public get dataReviser(): DataReviser {
     return this._originDataReviser;
@@ -23,7 +28,7 @@ export class ArrayCollection<T> extends Array<T> implements IComponentData {
 
   public set dataReviser(value: DataReviser) {
     this._originDataReviser = value;
-    this._dataReviser = (data) => {
+    this.wrappedDataReviser = (data) => {
       try {
         return this._originDataReviser(data);
       } catch (e) {
@@ -34,25 +39,49 @@ export class ArrayCollection<T> extends Array<T> implements IComponentData {
     }
   }
 
+  protected ajaxSuccessHandler(data: Array<T>): void {
+    if (data instanceof Array) {
+      this.fromArray(data);
+    } else {
+      console.error('invalid data type: ' + typeof(data) + ', need Array.');
+      this.fromArray([]);
+    }
+    this.componentDataHelper.invokeAjaxSuccessCallback(data);
+  }
+
+  protected ajaxErrorHandler(error:Response): void {
+    console.error('get data from paging server error!! detail: ' + error);
+
+    this.busy = false;
+    this.fromArray([]);
+    this.componentDataHelper.invokeAjaxErrorCallback(error);
+  }
+
+  protected ajaxCompleteHandler(): void {
+    console.log('get data from paging server complete!!');
+
+    this.busy = false;
+    this.componentDataHelper.invokeAjaxCompleteCallback();
+  }
+
+  protected reviseData(response:Response):any {
+    return this.wrappedDataReviser ? this.wrappedDataReviser(response.json()) : response.json();
+  }
+
   public fromAjax(url: string, options?: RequestOptionsArgs): void {
     if (!this.http) {
       console.error('set a valid Http instance to ArrayCollection.http before invoking ArrayCollection.fromAjax()!');
       return;
     }
 
-    const method: string = options && options.method ? options.method.toString() : 'get';
-    const observable: Observable<Response> = this.http[method](url, options);
-
-    observable
-      .map(res => (this._dataReviser ? this._dataReviser(res.json()) : res.json())  as Array<T>)
-      .subscribe((list: Array<T>) => {
-        if (list instanceof Array) {
-          this.fromArray(list);
-        } else {
-          console.error('invalid data type: ' + typeof(list) + ', need Array.');
-          this.fromArray([]);
-        }
-      });
+    this.busy = true;
+    this.http.request(url, options)
+      .map(res => this.reviseData(res) as Array<T>)
+      .subscribe(
+        data => this.ajaxSuccessHandler(data),
+        error => this.ajaxErrorHandler(error),
+        () => this.ajaxCompleteHandler()
+      );
   }
 
   public fromArray(source: Array<T>): ArrayCollection<T> {
@@ -74,26 +103,38 @@ export class ArrayCollection<T> extends Array<T> implements IComponentData {
     return needRefresh;
   }
 
-  private _componentDataHelper: ComponentDataHelper = new ComponentDataHelper(this);
+  protected componentDataHelper: ComponentDataHelper = new ComponentDataHelper(this);
 
   public refresh(): void {
-    this._componentDataHelper.invokeCallback();
+    this.componentDataHelper.invokeRefreshCallback();
   }
 
-  public onRefresh(callback: DataRefreshCallback): OnRefreshToken {
-    return this._componentDataHelper.getRemoval(callback);
+  public onRefresh(callback: DataRefreshCallback): CallbackRemoval {
+    return this.componentDataHelper.getRefreshRemoval(callback);
+  }
+
+  public onAjaxSuccess(callback: AjaxSuccessCallback): CallbackRemoval {
+    return this.componentDataHelper.getAjaxSuccessRemoval(callback);
+  }
+
+  public onAjaxError(callback: AjaxErrorCallback): CallbackRemoval {
+    return this.componentDataHelper.getAjaxErrorRemoval(callback);
+  }
+
+  public onAjaxComplete(callback: AjaxCompleteCallback): CallbackRemoval {
+    return this.componentDataHelper.getAjaxCompleteRemoval(callback);
   }
 
   public destroy(): void {
     console.log('destroying ArrayCollection....');
     this.splice(0, this.length);
 
-    this._componentDataHelper.clearCallbacks();
-    this._componentDataHelper = null;
+    this.componentDataHelper.clearCallbacks();
+    this.componentDataHelper = null;
 
-    this.dataReviser = null;
+    this.wrappedDataReviser = null;
+    this._originDataReviser = null;
   }
-
 }
 
 export class ServerSidePagingArray extends ArrayCollection<any> implements IPagableData {
@@ -140,7 +181,12 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPaga
       while (true) {
         const next = keys.next();
         if (next.done) break;
-        pp[next.value] = originSearch.get(next.value);
+        const val = originSearch.get(next.value);
+        try {
+          pp[next.value] = JSON.parse(val);
+        } catch(e) {
+          pp[next.value] = val;
+        }
       }
 
       this._sourceRequestOptions.search.set('peerParam', JSON.stringify(pp));
@@ -161,8 +207,7 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPaga
 
   public updateDataSource(url: string, options?: RequestOptionsArgs): void {
     this._sourceUrl = url;
-    this._sourceRequestOptions = options;
-    this._initRequestOptions();
+    this.updateRequestOptions(options);
   }
 
   public updateRequestOptions(options: RequestOptionsArgs): void {
@@ -189,7 +234,7 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPaga
     }
 
     this._http.request(this.pagingServerUrl, this._sourceRequestOptions)
-      .map(res => this._dataReviser ? this._dataReviser(res.json()) : res.json())
+      .map(res => this.reviseData(res))
       .map(data => {
         const tableData: TableData = new TableData();
         if (TableData.isTableData(data)) {
@@ -199,16 +244,16 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPaga
         }
         return tableData;
       })
-      .subscribe(tableData => {
-        this.fromArray(tableData.toArray());
-      }, (error) => {
-        console.error('get data from paging server error!! detail: ' + error);
-        this.busy = false;
-        this.fromArray([]);
-      }, () => {
-        console.log('get data from paging server complete!!');
-        this.busy = false;
-      });
+      .subscribe(
+        tableData => this.ajaxSuccessHandler(tableData),
+        error => this.ajaxErrorHandler(error),
+        () => this.ajaxCompleteHandler()
+      );
+  }
+
+  protected ajaxSuccessHandler(tableData: any): void {
+    this.fromArray(tableData.toArray());
+    this.componentDataHelper.invokeAjaxSuccessCallback(tableData);
   }
 
   public pagingFilter(term: string, fields?: Array<string|number>): void;
@@ -240,9 +285,31 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPaga
   }
 }
 
-// export class DirectServerSidePagingArray<T> extends ServerSidePagingArray<T> {
-//   constructor(private _http:Http, private _sourceUrl:string, private _sourceRequestOptions:RequestOptionsArgs) {
-//     super(_http, _sourceUrl, _sourceRequestOptions);
-//     console.error("unsupported yet!");
-//   }
-// }
+export class DirectServerSidePagingArray extends ServerSidePagingArray {
+  constructor(private _http$: Http, private _sourceUrl$: string, private _sourceRequestOptions$: RequestOptionsArgs) {
+    super(_http$, _sourceUrl$, _sourceRequestOptions$);
+    console.error("unsupported yet!");
+  }
+}
+
+export class LocalPagingArray extends ArrayCollection<any> implements IPagableData {
+  public pagingInfo: PagingBasicInfo;
+  public filterInfo: PagingFilterInfo;
+  public sortInfo: PagingSortInfo;
+  public busy: boolean = false;
+
+  constructor() {
+    super();
+    console.error("unsupported yet!");
+  }
+
+  public pagingFilter(term: string, fields?: Array<string|number>): void;
+  public pagingFilter(term: PagingFilterInfo): void;
+  public pagingFilter(term, fields?: Array<string|number>): void {
+  }
+
+  public pagingSort(as: SortAs, order: SortOrder, field: string|number): void;
+  public pagingSort(sort: PagingSortInfo): void;
+  public pagingSort(as, order?: SortOrder, field?: string|number): void {
+  }
+}
