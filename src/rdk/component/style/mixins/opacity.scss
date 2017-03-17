@@ -1,0 +1,8 @@
+
+@mixin opacity($opacity) {
+    // IE8 filter
+    $opacity-ie: ($opacity * 100);
+
+    opacity: $opacity;
+    filter: alpha(opacity=$opacity-ie);
+}
