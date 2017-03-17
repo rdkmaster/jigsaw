@@ -69,8 +69,39 @@
         @include inline-block;
         height: 28px;
         line-height: 28px;
+        vertical-align: top;
         span{
             margin-right: 8px;
+        }
+    }
+    rdk-input{
+        vertical-align: top;
+        /deep/{
+            input{
+                height: 28px !important;
+            }
+            span{
+                top: 6px !important;
+            }
+        }
+        &.search-box /deep/{
+            img{
+                height: 16px;
+                position: absolute;
+                left: 8px;
+                top: 6px;
+            }
+            input{
+                text-indent: 28px !important;
+            }
+        }
+    }
+    rdk-select{
+        /deep/ {
+            .select-box .selected-box{
+                height: 28px;
+                line-height: 28px;
+            }
         }
     }
 }

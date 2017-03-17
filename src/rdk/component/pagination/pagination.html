@@ -1,13 +1,17 @@
+<rdk-input class="search-box" *ngIf="searchable" width="80">
+    <img src="rdk/assets/images/search.png">
+</rdk-input>
+
 <div class="prev page" [class.disabled]="prevDisabled" (click)="pagePrev()"></div>
 <rdk-paging-item *ngFor="let page of pageArr" [page]="page"></rdk-paging-item>
 <div class="next page" [class.disabled]="nextDisabled" (click)="pageNext()"></div>
 
-<rdk-select *ngIf="pageSizeOptions" [(ngModel)]="pageSize">
+<rdk-select *ngIf="pageSizeOptions" [(ngModel)]="pageSize" [width]="80">
     <rdk-option *ngFor="let pageSizeOption of pageSizeOptions" [optionValue]="pageSizeOption"></rdk-option>
 </rdk-select>
 
-<div class="goto-box">
+<div class="goto-box" *ngIf="showQuickJumper">
     <span>Goto</span>
-    <rdk-input #input (keyup.enter)="goto(input.value)" [width]="80"></rdk-input>
+    <rdk-input #input (keyup.enter)="goto(input.value)" [width]="50"></rdk-input>
 </div>
 

@@ -1,0 +1,40 @@
+@mixin clearfix(){
+  *zoom: 1;
+  &:after {
+    clear: both;
+    content: "";
+    display: block;
+  }
+}
+
+@mixin inline-block(){
+  display: inline-block;
+  *zoom: 1;
+  *display: inline;
+}
+
+@mixin prefixer($property, $value) {
+  -webkit-#{$property}: $value;
+  -moz-#{$property}: $value;
+  -ms-#{$property}: $value;
+  -o-#{$property}: $value;
+  #{$property}: $value;
+}
+
+@mixin keyframes($name){
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @-o-keyframes #{$name} {
+    @content;
+  }
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  }
+}
