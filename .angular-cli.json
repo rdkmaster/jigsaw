@@ -9,6 +9,7 @@
       "outDir": "dist",
       "assets": [
         "assets",
+        "rdk/assets",
         "favicon.ico"
       ],
       "index": "index.html",

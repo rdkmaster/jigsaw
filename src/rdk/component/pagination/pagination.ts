@@ -43,6 +43,8 @@ export class PaginationComponent implements OnInit, AfterViewInit {
             this.canablePrevAndNext();
 
             this.initing ? this.initing = false : null;
+
+            this.change.emit(newValue);
         }
     }
 
@@ -251,6 +253,7 @@ export class PaginationComponent implements OnInit, AfterViewInit {
     }
 
     goto(pageNum) {
+        pageNum = parseInt(pageNum);
         if(pageNum <= this.totalPage && pageNum >= 1){
             this.pages.find(page => page.current == true).cancleCurrent();
             this.pages.find(page => page.page == pageNum).setCurrent();

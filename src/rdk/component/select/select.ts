@@ -6,7 +6,7 @@ import {NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 
-import {DataSourceService} from '../../../app/data-source.service';
+//import {DataSourceService} from '../../../app/data-source.service';
 
 type OptionValue = {
     value: any,
@@ -18,7 +18,8 @@ type OptionValue = {
     templateUrl: 'select.html',
     styleUrls: ['select.scss'],
     host: {
-      "(click)": "_toggleClick($event)",
+        "(click)": "_toggleClick($event)",
+        '[style.width.px]': 'width'
     },
     providers: [{
         provide: NG_VALUE_ACCESSOR,
@@ -31,6 +32,8 @@ export class SelectComponent implements AfterContentInit, ControlValueAccessor, 
     viewValue: any; //select显示值
     _value: any; //select表单值
     _options: any; //select的option属性
+
+    @Input() width: number;
 
     //用于数据源获取option数据，加载option
     @Input() url: string;
@@ -53,7 +56,7 @@ export class SelectComponent implements AfterContentInit, ControlValueAccessor, 
         }
     }
 
-    constructor(renderer: Renderer, private dsService: DataSourceService, private compiler: Compiler){
+    constructor(renderer: Renderer, /*private dsService: DataSourceService,*/ private compiler: Compiler){
         this.documentListen = renderer.listenGlobal('document', 'click', () => this.optionListHidden = true);
     }
 
@@ -62,7 +65,7 @@ export class SelectComponent implements AfterContentInit, ControlValueAccessor, 
     }
 
     ngOnInit(){
-        if(this.url){
+        /*if(this.url){
             this.dsService.getData(this.url).then(optionValues => {
                 optionValues.forEach(optionValue => {
                     let factory: ComponentFactory<any> = this._compileToComponent(optionValue);
@@ -72,7 +75,7 @@ export class SelectComponent implements AfterContentInit, ControlValueAccessor, 
                 this._getOptions();
                 this._updateSelectedOption();
             });
-        }
+        }*/
     }
 
     //子组件初始化钩子

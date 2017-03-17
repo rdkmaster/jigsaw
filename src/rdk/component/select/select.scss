@@ -2,6 +2,7 @@
 
 :host{
   @include inline-block();
+  width: 120px;
 }
 
 :host-context(.theme-blue) .select-box .selected-box {
@@ -26,7 +27,7 @@
 
 .select-box{
   position: relative;
-  width: 120px;
+  width: 100%;
   .selected-box{
     border: 1px solid $gray;
     border-radius: 4px;
@@ -65,6 +66,7 @@
 
   }
   .option-list{
+    width: 100%;
     position: absolute;
     z-index: 1;
     border: 1px solid $gray;
