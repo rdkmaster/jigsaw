@@ -21,8 +21,6 @@
       "prefix": "app",
       "styles": [
         "styles.css",
-        "assets/scss/index.scss",
-        "assets/scss/reset.scss",
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
         "../node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"
       ],
