@@ -6,18 +6,17 @@ import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
 @Component({
     selector: 'rdk-switch',
     templateUrl: './switch.html',
-    styleUrls: ['./style/switch.scss']
+    styleUrls: ['./switch.scss']
 })
 
 export class RdkSwitch implements OnInit{
-    prefixCls: string = 'rdk-switch';
-    _checked: boolean = false;
-    _disabled: boolean = false;
-    _content: any;
-    _switchClass: {};
+    private _checked: boolean = false;
+    private _disabled: boolean = false;
+    private _content: any;
+    private _switchClass: {};
 
-    @Input() checkedChildren: any;
-    @Input() unCheckedChildren: any;
+    @Input() onLabel: any;
+    @Input() offLabel: any;
     @Input() size: string = 'default';
 
     @Input()
@@ -35,15 +34,20 @@ export class RdkSwitch implements OnInit{
         this.setSwitchClass();
         this.setInnerValue();
     }
+    @Output() checkedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    @Output() change: EventEmitter<boolean> = new EventEmitter<boolean>();
+    /**
+     * 对外暴露事件,
+     * @type {EventEmitter<boolean>}
+     */
+    @Output() change = this.checkedChange;
 
     _switchClick() {
         if(!this.disabled) {
             this.checked = !this.checked;
 
             // 发出事件
-            this.change.emit(this.checked);
+            this.checkedChange.emit(this.checked);
         }
     }
 
@@ -63,7 +67,7 @@ export class RdkSwitch implements OnInit{
      * 设置选中和费选中的值.
      */
     setInnerValue() {
-        this._content = this.checked ? this.checkedChildren : this.unCheckedChildren;
+        this._content = this.checked ? this.onLabel : this.offLabel;
     }
 
     ngOnInit() {
