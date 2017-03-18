@@ -1,45 +1,84 @@
-import {RequestOptionsArgs, Http, Response} from "@angular/http";
+import {RequestOptionsArgs, Response} from "@angular/http";
 
-export type DataReviser = (data: any) => any;
-export type DataRefreshCallback = (thisData: IComponentData) => void;
-export type OnRefreshToken = () => void;
+export type DataReviser          = (data: any)                => any;
+export type CallbackRemoval      = ()                         => void;
+export type DataRefreshCallback  = (thisData: IComponentData) => void;
+export type AjaxSuccessCallback  = (data: any)                => void;
+export type AjaxErrorCallback    = (error: Response)          => void;
+export type AjaxCompleteCallback = ()                         => void;
 
 export class ComponentDataHelper {
   constructor(public ownerData: IComponentData) {
   }
 
-  private timeout: any = null;
-  private callbacks: Array<DataRefreshCallback> = [];
-
-  public getRemoval(callback: DataRefreshCallback): OnRefreshToken {
-    this.callbacks.push(callback);
+  private _getRemoval<T>(callbacks:Array<T>, callback:T):CallbackRemoval {
+    callbacks.push(callback);
     return () => {
-      let idx = this.callbacks.indexOf(callback);
+      const idx = callbacks.indexOf(callback);
       if (idx != -1) {
-        this.callbacks.splice(idx, 1);
+        callbacks.splice(idx, 1);
       }
     }
   }
 
-  public invokeCallback(): void {
-    if (this.timeout !== null) {
+  private _timeout: any = null;
+  private _refreshCallbacks: Array<DataRefreshCallback> = [];
+  private _ajaxSuccessCallbacks: Array<AjaxSuccessCallback> = [];
+  private _ajaxErrorCallbacks: Array<AjaxSuccessCallback> = [];
+  private _ajaxCompleteCallbacks: Array<AjaxSuccessCallback> = [];
+
+  public getAjaxSuccessRemoval(callback:AjaxSuccessCallback):CallbackRemoval {
+    return this._getRemoval(this._ajaxSuccessCallbacks, callback);
+  }
+
+  public getAjaxErrorRemoval(callback:AjaxSuccessCallback):CallbackRemoval {
+    return this._getRemoval(this._ajaxErrorCallbacks, callback);
+  }
+
+  public getAjaxCompleteRemoval(callback:AjaxSuccessCallback):CallbackRemoval {
+    return this._getRemoval(this._ajaxCompleteCallbacks, callback);
+  }
+
+  public getRefreshRemoval(callback: DataRefreshCallback): CallbackRemoval {
+    return this._getRemoval(this._refreshCallbacks, callback);
+  }
+
+  public invokeRefreshCallback(): void {
+    if (this._timeout !== null) {
       return;
     }
-    this.timeout = setTimeout(() => {
-      this.callbacks.forEach((callback: DataRefreshCallback) => {
-        try {
-          callback(this.ownerData);
-        } catch (e) {
-          console.error('call data refresh callback error:');
-          console.error(e.stack);
-        }
-      });
-      this.timeout = null;
+    this._timeout = setTimeout(() => {
+      this._refreshCallbacks.forEach(callback => this._safeInvokeCallback(callback, this.ownerData));
+      this._timeout = null;
     }, 0);
   }
 
+  public invokeAjaxSuccessCallback(data:any):void {
+    this._ajaxSuccessCallbacks.forEach(callback => this._safeInvokeCallback(callback, data));
+  }
+
+  public invokeAjaxErrorCallback(error:Response):void {
+    this._ajaxErrorCallbacks.forEach(callback => this._safeInvokeCallback(callback, error));
+  }
+
+  public invokeAjaxCompleteCallback():void {
+    this._ajaxCompleteCallbacks.forEach(callback => this._safeInvokeCallback(callback));
+  }
+
+  private _safeInvokeCallback(callback:Function, ...args):any {
+    try {
+      return callback.apply(callback, args);
+    } catch (e) {
+      console.error('invoke callback error: ' + e);
+      console.error(e.stack);
+    }
+  }
+
   public clearCallbacks(): void {
-    this.callbacks.splice(0, this.callbacks.length);
+    this._refreshCallbacks.splice(0, this._refreshCallbacks.length);
+    this._ajaxSuccessCallbacks.splice(0, this._ajaxSuccessCallbacks.length);
+    this._ajaxErrorCallbacks.splice(0, this._ajaxErrorCallbacks.length);
+    this._ajaxCompleteCallbacks.splice(0, this._ajaxCompleteCallbacks.length);
   }
 }
 
@@ -47,9 +86,17 @@ export interface IComponentData {
   dataReviser: DataReviser;
 
   refresh(): void;
-  onRefresh(callback: DataRefreshCallback): OnRefreshToken;
-  fromAjax(url: string, options?: RequestOptionsArgs): void;
   destroy(): void;
+  onRefresh(callback: DataRefreshCallback): CallbackRemoval;
+}
+
+export interface IAjaxComponentData extends IComponentData {
+  busy: boolean;
+
+  fromAjax(url: string, options?: RequestOptionsArgs): void;
+  onAjaxSuccess (callback: AjaxSuccessCallback): CallbackRemoval;
+  onAjaxError   (callback: AjaxErrorCallback): CallbackRemoval;
+  onAjaxComplete(callback: AjaxCompleteCallback): CallbackRemoval;
 }
 
 export class PagingBasicInfo {
@@ -74,54 +121,14 @@ export class PagingSortInfo {
   }
 }
 
-export interface IPagableData extends IComponentData {
+export interface IPagableData extends IAjaxComponentData {
   pagingInfo: PagingBasicInfo;
   filterInfo: PagingFilterInfo;
   sortInfo: PagingSortInfo;
-
-  busy: boolean;
 
   pagingFilter(term: string, fields?: Array<string|number>): void;
   pagingFilter(term: PagingFilterInfo): void;
 
   pagingSort(as: SortAs, order: SortOrder, field: string|number): void;
   pagingSort(sort: PagingSortInfo): void;
-}
-
-export class TableData {
-  constructor(public header: Array<string> = [],
-              public field: Array<string> = [],
-              public data: Array< Array<string|number> > = []) {
-  }
-
-  public fromObject(data:any):void {
-    if (!TableData.isTableData(data)) {
-      throw new Error('the input data is NOT a TableData type!');
-    }
-    this.data = data.data;
-    this.field = data.field;
-    this.header = data.header;
-  }
-
-  public toArray(): Array<any> {
-    const result: Array<any> = [];
-    if (!this.data || !this.field) {
-      return result;
-    }
-
-    this.data.forEach(row => {
-      let item = {};
-      this.field.forEach((field, index) => {
-        item[field] = row[index];
-      });
-      result.push(item);
-    });
-    return result;
-  }
-
-  public static isTableData(data:any):boolean {
-    return data && data.hasOwnProperty('data') && data.data instanceof Array &&
-        data.hasOwnProperty('header') && data.header instanceof Array &&
-        data.hasOwnProperty('field') && data.field instanceof Array;
-  }
 }
