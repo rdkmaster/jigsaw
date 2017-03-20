@@ -15,6 +15,7 @@ body {
     font-size: $font-size-base;
     line-height: $line-height-base;
     color: $text-color;
+
     background-color: $body-background;
 }
 
@@ -25,11 +26,11 @@ body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fiel
 }
 
 // Reset fonts for relevant elements
-button, input, select, textarea {
+button, input, select, textarea, span {
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
-    color: inherit;
+    color: $text-color;
 }
 
 ul,
