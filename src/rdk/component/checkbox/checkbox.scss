@@ -1,0 +1,111 @@
+@import "../style/themes/default";
+@import "../style/mixins/index";
+@import "../style/core/base";
+
+$checkbox-prefix-cls: #{$rdk-prefix}-checkbox;
+
+.#{$checkbox-prefix-cls}-wrapper {
+  position: relative;
+  cursor: pointer;
+  font-size: $font-size-base;
+  display: inline-block;
+  outline: none;
+  line-height: 18px;
+  vertical-align: text-bottom;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  left: 0px;
+  &:not(:last-child) {
+    margin-right: 8px;
+  }
+
+  &:hover {
+    > .#{$checkbox-prefix-cls} {
+      border-color: $primary-color;
+    }
+  }
+
+  .#{$checkbox-prefix-cls} {
+    position: relative;
+    top: 2px;
+    left: 3px;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    overflow: hidden;
+    border: $border-width-base $border-style-base $border-color-base;
+    border-radius: $border-radius-sm;
+    background-color: #fff;
+    transition: all .3s;
+
+    &:after {
+      transform: rotate(45deg) scale(0);
+      position: absolute;
+      left: 4px;
+      top: 1px;
+      display: table;
+      width: 5px;
+      height: 8px;
+      border: 2px solid #fff;
+      border-top: 0;
+      border-left: 0;
+      content: ' ';
+      transition: all .1s $ease-in-back;
+    }
+
+    &-checked, &-indeterminate {
+      background-color: $primary-color;
+      border-color: $primary-color;
+    }
+
+    // 选中状态
+    &-checked:after {
+      transform: rotate(45deg) scale(1);
+      position: absolute;
+      left: 4px;
+      top: 1px;
+      display: table;
+      width: 5px;
+      height: 8px;
+      border: 2px solid #fff;
+      border-top: 0;
+      border-left: 0;
+      content: ' ';
+      transition: all .2s $ease-out-back .1s;
+    }
+
+    &-indeterminate:after {
+      transform: scale(1);
+      position: absolute;
+      left: 2px;
+      top: 5px;
+      width: 8px;
+      height: 1px;
+      content: ' ';
+    }
+
+    &-disabled {
+      cursor: not-allowed;
+
+      border-color: $border-color-base !important;
+      background-color: #f3f3f3;
+
+      & + span {
+        color: #ccc;
+        cursor: not-allowed;
+      }
+    }
+
+    &-disabled:after {
+      animation-name: none;
+      border-color: #ccc;
+    }
+  }
+
+  .#{$checkbox-prefix-cls}-label {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}

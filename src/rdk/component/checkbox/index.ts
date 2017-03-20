@@ -4,7 +4,7 @@
 import { NgModule } from '@angular/core';
 
 import { RdkCheckBox } from './checkbox';
-import {CommonModule} from "@angular/common";
+import { CommonModule } from "@angular/common";
 
 @NgModule({
     imports: [CommonModule],

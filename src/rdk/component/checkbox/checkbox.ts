@@ -10,31 +10,43 @@ export class RdkCheckboxChange {
     /** The source RdkCheckBox of the event. */
     source: RdkCheckBox;
     /** The new `checked` value of the checkbox. */
-    checked: boolean;
+    checked: boolean | CheckBoxStatus;
+}
+
+export enum CheckBoxStatus {
+    unchecked, checked, indeterminate
 }
 
 @Component({
     selector: 'rdk-checkbox',
     templateUrl: './checkbox.html',
-    styleUrls: ['./style/checkbox.scss']
+    styleUrls: ['./checkbox.scss']
 })
 
 /**
  * checkbox 组件
  */
 export class RdkCheckBox implements OnInit{
-    prefixCls: string = 'rdk-checkbox';
-    _checked: boolean = false;
-    _disabled: boolean = false;
-    _indeterminate: boolean = false;
-    checkboxClass: { };
+    private _checked: CheckBoxStatus | boolean = CheckBoxStatus.unchecked;
+    private _disabled: boolean = false;
+    private checkboxClass: { };
 
     @Input()
-    get checked(): boolean { return this._checked };
-    set checked(value: boolean) {
+    get checked(): boolean | CheckBoxStatus { return this._checked };
+    set checked(value: boolean | CheckBoxStatus) {
         this._checked = value;
         this.setCheckBoxClass();
     };
+    @Output() checkedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+    /**
+     * 设置checkbox 状态
+     * @param value boolean 或者 CheckBoxStatus
+     */
+    setCheckboxStatus(value: boolean| CheckBoxStatus) {
+        this._checked = value;
+        this.setCheckBoxClass();
+    }
 
     @Input()
     get disabled(): boolean { return this._disabled; };
@@ -43,20 +55,6 @@ export class RdkCheckBox implements OnInit{
         this.setCheckBoxClass();
     };
 
-    @Input()
-    get indeterminate() {return this._indeterminate;}
-    set indeterminate(value: boolean) {
-        this.setIndeterminate(value);
-    }
-
-    /**
-     * 设置中间状态
-     * @param isIndeterminate  是否为中间状态
-     */
-    setIndeterminate(isIndeterminate: boolean) {
-        this._indeterminate = isIndeterminate;
-        this.setCheckBoxClass();
-    }
     /** Event emitted when the checkbox's `checked` value changes. */
     @Output() change: EventEmitter<RdkCheckboxChange> = new EventEmitter<RdkCheckboxChange>();
 
@@ -95,7 +93,7 @@ export class RdkCheckBox implements OnInit{
         this.checkboxClass = {
             'rdk-checkbox': 'true',
             'rdk-checkbox-checked': this.checked,
-            'rdk-checkbox-indeterminate': this.indeterminate,
+            'rdk-checkbox-indeterminate': this.checked === CheckBoxStatus.indeterminate,
             'rdk-checkbox-disabled': this.disabled
         }
     }
