@@ -1,188 +1,148 @@
 import {
     NgModule, Component, ContentChildren, QueryList, AfterContentInit, Input, forwardRef, Optional, Renderer, OnDestroy,
-    OnInit, Compiler, ComponentFactory, ViewChild, ViewContainerRef
+    OnInit, Output, EventEmitter, ChangeDetectorRef
 } from '@angular/core';
-import {NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 
-//import {DataSourceService} from '../../../app/data-source.service';
-
-type OptionValue = {
-    value: any,
-    viewValue: any
-};
-
 @Component({
-    selector: 'rdk-select',
+    selector: 'rdk-list-select',
     templateUrl: 'select.html',
     styleUrls: ['select.scss'],
     host: {
         "(click)": "_toggleClick($event)",
         '[style.width.px]': 'width'
-    },
-    providers: [{
-        provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => SelectComponent),
-        multi: true
-    }]
+    }
 })
-export class SelectComponent implements AfterContentInit, ControlValueAccessor, OnDestroy, OnInit{
-    optionListHidden: boolean = true; //设置option列表是否显示
-    viewValue: any; //select显示值
-    _value: any; //select表单值
-    _options: any; //select的option属性
+export class SelectComponent implements AfterContentInit, OnDestroy, OnInit{
+    private _optionListHidden: boolean = true; // 设置option列表是否显示
+    private _value: any; // select表单值
+    private _contentInit: boolean = false; //子组件加载标记
+    private _documentListen: Function; // document事件解绑函数
+    private _selectedView: string;
 
-    @Input() width: number;
+    //设置对象的标识
+    @Input() trackItemBy: any;
 
-    //用于数据源获取option数据，加载option
-    @Input() url: string;
-    @ViewChild('insert', {read: ViewContainerRef}) insert;
-    dynamicOptionCmptArr = [];
-
-    //获取映射的子组件option
-    @ContentChildren(forwardRef(() => OptionComponent))
-    contentOptions: QueryList<OptionComponent> = null;
-
-    //document事件解绑函数
-    documentListen: Function;
+    //显示在界面上的属性名
+    @Input() labelField: string = 'label';
 
     //select form表单值
+    @Input()
     get value(): any { return this._value; }
     set value(newValue: any) {
         if (this._value != newValue) {
             this._value = newValue;
-            this._updateSelectedOption();
+            this._selectedView = newValue[this.labelField];
+            this._contentInit && this._updateSelectedOption();
         }
     }
 
-    constructor(renderer: Renderer, /*private dsService: DataSourceService,*/ private compiler: Compiler){
-        this.documentListen = renderer.listenGlobal('document', 'click', () => this.optionListHidden = true);
-    }
+    @Output() valueChange: EventEmitter<any> = new EventEmitter<any>();
 
-    ngOnDestroy(){
-        this.documentListen();//解绑document上的点击事件
-    }
+    @Input() width: number;
 
-    ngOnInit(){
-        /*if(this.url){
-            this.dsService.getData(this.url).then(optionValues => {
-                optionValues.forEach(optionValue => {
-                    let factory: ComponentFactory<any> = this._compileToComponent(optionValue);
-                    let optionCmpt = this.insert.createComponent(factory)._component;
-                    this.dynamicOptionCmptArr.push(optionCmpt);
-                });
-                this._getOptions();
-                this._updateSelectedOption();
-            });
-        }*/
-    }
+    //获取映射的子组件option
+    @ContentChildren(forwardRef(() => OptionComponent))
+    private _options: QueryList<OptionComponent> = null;
 
-    //子组件初始化钩子
-    ngAfterContentInit() {
-        this._getOptions();
-    }
-
-    //动态编译option
-    private _compileToComponent(optionValue): ComponentFactory<any> {
-        @Component({
-            selector: 'rdk-option',
-            templateUrl: 'option.html',
-            styleUrls: ['option.scss'],
-            host: {
-                "(click)": "onClick()"
-            }
-        })
-        class DynamicComponent extends OptionComponent{
-            optionValue = optionValue;
-            constructor(@Optional() selectCmp: SelectComponent){
-                super(selectCmp);
-            }
-
-        }
-        @NgModule({
-            declarations: [DynamicComponent]
-        })
-        class DynamicModule {
-        }
-        return this.compiler.compileModuleAndAllComponentsSync(DynamicModule).componentFactories.find(x => x.componentType === DynamicComponent);
+    constructor(renderer: Renderer){
+        //绑定全局事件
+        this._documentListen = renderer.listenGlobal('document', 'click', () => this._optionListHidden = true);
     }
 
     //点击组件，显示\隐藏option列表
-    _toggleClick(event: Event){
+    private _toggleClick(event: Event): void{
         event.stopPropagation();
-        this.optionListHidden = !this.optionListHidden;
-    }
-    //获取select的options
-    private _getOptions(){
-        if (this.contentOptions && this.contentOptions.length) { //content加载的子组件
-            this._options = this.contentOptions;
-        }else if(this.dynamicOptionCmptArr.length){ //数据源加载的子组件
-            this._options = this.dynamicOptionCmptArr;
-        }
+        this._optionListHidden = !this._optionListHidden;
     }
 
     //更改option选中状态
-    private _updateSelectedOption(): void {
+    private _updateSelectedOption(): void{
         this._options && this._options.forEach((option) => {
-            option.selected = this.value == option.optionValue.value;//设置option选中状态
-            if(this.value == option.optionValue.value){
-                this.viewValue = option.optionValue.viewValue;//设置select显示值
-            }
+            option.selected = this._compareJsonObj(this.value, option.optionItem);
+            option.cdRef.detectChanges();
         });
+        this.valueChange.emit(this.value);
     };
 
-    //outside to inside
-    writeValue(outsideValue: any): void {
-        this.value = outsideValue;
-    };
+    //比较两个radio是否相等
+    private _compareJsonObj(item1, item2): boolean{
+        for(let i = 0; i < this.trackItemBy.length; i++){
+            if (item1[this.trackItemBy[i]] == item2[this.trackItemBy[i]]) {
+                continue;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
 
-    _onChange = (value: any) => {};
-    _onTouched = () => {};
+    /*
+     * 初始化对象标识，转化为数组
+     * */
+    private _initTrackItemBy(): void{
+        if(!this.trackItemBy){ //标识没有输入值，采用显示属性名
+            this.trackItemBy = this.labelField;
+        }
+        if(this.trackItemBy.indexOf(",") != -1){ //标识是多个
+            this.trackItemBy = this.trackItemBy.replace(" ","").split(",");
+        }else { //标识是单个
+            let arr = [];
+            arr.push(this.trackItemBy);
+            this.trackItemBy = arr;
+        }
+    }
 
-    //inside to outside
-    //注册一个方法, 当 inside value updated then need call it : fn(newValue)
-    registerOnChange(fn: (newValue : any) => void): void {
-        this._onChange = fn;
-    };
+    ngOnInit(){
+        this._initTrackItemBy();
+    }
 
-    //inside to outside
-    registerOnTouched(fn: any): void {
-        this._onTouched = fn;
+    ngAfterContentInit() {
+        this._contentInit = true;
+        this._updateSelectedOption();
+    }
+
+    ngOnDestroy(){
+        this._documentListen();//解绑document上的点击事件
     }
 
 }
 
-
 @Component({
-    selector: 'rdk-option',
+    selector: 'rdk-list-option',
     templateUrl: 'option.html',
     styleUrls: ['option.scss'],
     host: {
-        "(click)": "onClick()"
+        "(click)": "_onClick()"
     }
 })
-export class OptionComponent{
+export class OptionComponent implements OnInit{
     @Input()
-    optionValue: OptionValue;
+    optionItem: any;
 
-    selected:boolean = false;//选中状态
+    private _optionView: string;
 
-    selectCpt: SelectComponent;
+    private _selectCmp: SelectComponent;
 
-    constructor(@Optional() selectCpt: SelectComponent){
-        this.selectCpt = selectCpt;
+    public selected:boolean = false;//选中状态
+
+    constructor(@Optional() selectCmp: SelectComponent, public cdRef: ChangeDetectorRef){
+        this._selectCmp = selectCmp;
     }
 
-    onClick(){
+    private _onClick(): void{
         if(!this.selected){
             this.selected = true;
-            if (this.selectCpt) {
-                this.selectCpt.value = this.optionValue.value;//更新内部value
-                this.selectCpt._onChange(this.optionValue.value);//更新外部(双向绑定)
-                this.selectCpt._onTouched();
+            if (this._selectCmp) {
+                this._selectCmp.value = this.optionItem;//更新内部value
             }
         }
+    }
+
+    ngOnInit(){
+        //初始化option显示值
+        this._optionView = this.optionItem[this._selectCmp.labelField];
     }
 
 }

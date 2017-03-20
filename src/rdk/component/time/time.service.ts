@@ -15,7 +15,7 @@ export class TimeService{
     * @param 时间（时间宏，时间字符串，Date对象） 粒度
     *
     * */
-    getDate(timeMacro, gr) {
+    public getDate(timeMacro, gr): string {
         if (typeof timeMacro === 'string') {
             var isLetter = /^[a-z]/i;
             if (isLetter.test(timeMacro)) {
@@ -42,27 +42,13 @@ export class TimeService{
         }
     }
 
-    _timeMacroConvert(timeMacro) {
-        var date;
-        switch (timeMacro) {
-            case 'now':
-                date = new Date();
-                break;
-            default:
-                date = timeMacro;
-                break;
-        }
-        return date;
-    }
-
-
     /*
     *
     * 格式化时间
     * @param 时间 时间格式
     *
     * */
-    format(date, formator){
+    public format(date, formator): string{
         return moment(date).format(formator);
     }
 
@@ -72,8 +58,8 @@ export class TimeService{
      * @param 时间 粒度
      *
      * */
-    formatWithGr(date, gr): string {
-        return moment(date).format(this.getFormator(gr));
+    public formatWithGr(date, gr): string {
+        return moment(date).format(this._getFormator(gr));
     }
 
     /*
@@ -82,7 +68,7 @@ export class TimeService{
      * @param 时间 数值 单位
      *
      * */
-    addDate(date, num, unit){
+    public addDate(date, num, unit): string{
         return moment(date).add(num, unit);
     }
 
@@ -92,7 +78,7 @@ export class TimeService{
      * @param 时间 数值 单位
      *
      * */
-    subtractDate(date, num, unit){
+    public subtractDate(date, num, unit): string{
         return moment(date).subtract(num, unit);
     }
 
@@ -102,7 +88,7 @@ export class TimeService{
      * @param 粒度
      *
      * */
-    getFormator(gr){
+    private _getFormator(gr): string{
         let format: string;
         switch(gr){
             case 'quarter':
@@ -130,6 +116,19 @@ export class TimeService{
                 format = 'YYYY-MM-DD, HH:mm:ss';
         }
         return format;
+    }
+
+    private _timeMacroConvert(timeMacro): Date {
+        var date;
+        switch (timeMacro) {
+            case 'now':
+                date = new Date();
+                break;
+            default:
+                date = timeMacro;
+                break;
+        }
+        return date;
     }
 
 }

@@ -4,8 +4,8 @@ import {FormsModule} from '@angular/forms';
 
 import {TimeService} from './time.service';
 
-declare var $: any;
-declare var require: any;
+declare let $: any;
+declare let require: any;
 
 @Component({
     selector: 'rdk-time',
@@ -15,9 +15,9 @@ declare var require: any;
 })
 export class TimeComponent implements OnInit {
     //组件是否初始化
-    _initFlag: boolean;
+    private _initFlag: boolean;
 
-    _value: string;
+    private _value: string;
 
     @Input() inline: boolean = true;
 
@@ -25,10 +25,9 @@ export class TimeComponent implements OnInit {
     @Input() get date() {
         return this._value;
     }
-
     set date(newValue) {
         if (this._value != newValue) {
-            this._value = this.timeService.format(newValue, this.format);
+            this._value = this.timeService.format(newValue, this._format);
             this._initFlag && this._setDate(this._value);
         }
     }
@@ -42,42 +41,47 @@ export class TimeComponent implements OnInit {
     @Input() dateLimitEnd: any;
 
     //时间格式
-    format: string = 'YYYY-MM-DD, HH:mm:ss';
+    private _format: string = 'YYYY-MM-DD, HH:mm:ss';
 
     //粒度
     @Input() set gr(value){
         switch(value){
             case 'quarter':
-                this.format = 'YYYY-Q';
+                this._format = 'YYYY-Q';
                 break;
             case 'month':
-                this.format = 'YYYY-MM';
+                this._format = 'YYYY-MM';
                 break;
             case 'week':
-                this.format = 'YYYY-W';
+                this._format = 'YYYY-W';
                 break;
             case 'day':
-                this.format =  'YYYY-MM-DD';
+                this._format =  'YYYY-MM-DD';
                 break;
             case 'hour':
-                this.format = 'YYYY-MM-DD, HH';
+                this._format = 'YYYY-MM-DD, HH';
                 break;
             case 'minute':
-                this.format = 'YYYY-MM-DD, HH:mm';
+                this._format = 'YYYY-MM-DD, HH:mm';
                 break;
             case 'second':
-                this.format = 'YYYY-MM-DD, HH:mm:ss';
+                this._format = 'YYYY-MM-DD, HH:mm:ss';
                 break;
             default:
-                this.format = 'YYYY-MM-DD, HH:mm:ss';
+                this._format = 'YYYY-MM-DD, HH:mm:ss';
         }
     }
 
     //time插件容器（jq对象）
-    timepicker: any;
+    private _timepicker: any;
 
     constructor(private el: ElementRef, private timeService:TimeService) {
 
+    }
+
+    //设置插件选中时间值
+    private _setDate(date) {
+        this._timepicker && this._timepicker.data("DateTimePicker").date(date);
     }
 
     ngOnInit() {
@@ -88,13 +92,13 @@ export class TimeComponent implements OnInit {
 
             $(() => {
                 console.log(this._value);
-                console.log(this.format);
+                console.log(this._format);
                 let insert = this.el.nativeElement.querySelector(".time-box");
                 $(insert).datetimepicker({
                     //locale: 'zh-cn',
                     inline: this.inline,
                     defaultDate: this._value,
-                    format: this.format, // format: 'LT', //时刻
+                    format: this._format, // format: 'LT', //时刻
                     minDate: this.dateLimitStart,
                     maxDate: this.dateLimitEnd,
                     //viewMode: 'days', // 'decades','years','months','days', default: 'days'
@@ -102,22 +106,17 @@ export class TimeComponent implements OnInit {
                     //showTodayButton: true,
                     //useCurrent: false
                 }).on("dp.change", (e) => {
-                    let changeValue = this.timeService.format(e.date, this.format);
+                    let changeValue = this.timeService.format(e.date, this._format);
                     if(this._value != changeValue){
                         this._value = changeValue;
                         this.dateChange.emit(this._value);
                     }
                 });
 
-                this.timepicker = $(insert);
+                this._timepicker = $(insert);
                 this._initFlag = true;
             });
         }, 'datepicker');
-    }
-
-    //设置插件选中时间值
-    _setDate(date) {
-        this.timepicker && this.timepicker.data("DateTimePicker").date(date);
     }
 
 }

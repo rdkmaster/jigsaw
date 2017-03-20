@@ -13,9 +13,7 @@ import {InputModule} from '../input/input';
     styleUrls: ['tile-select.scss']
 })
 export class TileSelectComponent implements OnInit, AfterContentInit{
-
-    _contentInit: boolean = false;
-
+    private _contentInit: boolean = false;
     private _selectedItems: any[] = [];
 
     @Input()
@@ -32,41 +30,42 @@ export class TileSelectComponent implements OnInit, AfterContentInit{
         }
     }
 
-    @Output('selected') selectedItemsChange = new EventEmitter<any[]>();
+    @Output() selectedItemsChange = new EventEmitter<any[]>();
 
     //设置对象的标识
-    @Input() track_item_by: any;
+    @Input() trackItemBy: any;
 
     //显示在界面上的属性名
-    @Input() label_field: string = 'label';
+    @Input() labelField: string = 'label';
 
     //判断是否支持多选
-    @Input() multiple_select: boolean = true;
+    @Input() multipleSelect: boolean = true;
 
     @Input() searchable: boolean = false;
 
     //获取映射的子组件
-    @ContentChildren(forwardRef(() => TileOptionComponent)) options: QueryList<TileOptionComponent>;
+    @ContentChildren(forwardRef(() => TileOptionComponent))
+    private _options: QueryList<TileOptionComponent>;
 
     constructor(){
     }
 
     //根据选中的option更新selectedItems
-    _updateSelectItems(optionItem, selected){
-        if(this.multiple_select){ //多选
+    public updateSelectItems(optionItem, selected): void{
+        if(this.multipleSelect){ //多选
             if(selected){
                 this.selectedItems.push(optionItem);
             }else{
                 this._selectedItems.forEach(selectedItem => {
-                   if(this._compareOption(selectedItem, optionItem)){
+                   if(this._compareJsonObj(selectedItem, optionItem)){
                        this.selectedItems.splice(this.selectedItems.indexOf(selectedItem), 1);
                    }
                 });
             }
         }else{ //单选选中
-            this.options.length && this.options.forEach((option: TileOptionComponent) => {
+            this._options.length && this._options.forEach((option: TileOptionComponent) => {
                 //去除其他option选中
-                if(!this._compareOption(option.optionItem, optionItem) && option.selected){
+                if(!this._compareJsonObj(option.optionItem, optionItem) && option.selected){
                     option.selected = false;
                     this.selectedItems.splice(this.selectedItems.indexOf(option.optionItem), 1);
                 }
@@ -75,13 +74,12 @@ export class TileSelectComponent implements OnInit, AfterContentInit{
             this.selectedItems.push(optionItem);
         }
         this.selectedItemsChange.emit(this.selectedItems);
-
     }
 
     //比较两个option是否相等
-    _compareOption(item1, item2): boolean{
-        for(let i=0; i<this.track_item_by.length; i++){
-            if (item1[this.track_item_by[i]] == item2[this.track_item_by[i]]) {
+    private _compareJsonObj(item1, item2): boolean{
+        for(let i=0; i<this.trackItemBy.length; i++){
+            if (item1[this.trackItemBy[i]] == item2[this.trackItemBy[i]]) {
                 continue;
             } else {
                 return false;
@@ -91,10 +89,10 @@ export class TileSelectComponent implements OnInit, AfterContentInit{
     }
 
     //根据selectedItems设置选中的option
-    _setOptionState(){
-        this._selectedItems.length && this.options.length && this.options.forEach((option) => {
+    private _setOptionState(): void{
+        this._selectedItems.length && this._options.length && this._options.forEach((option) => {
             this._selectedItems.forEach((optionItem) => {
-                if(this._compareOption(option.optionItem, optionItem) && !option.selected){
+                if(this._compareJsonObj(option.optionItem, optionItem) && !option.selected){
                     option.selected = true;
                     option._cdref.detectChanges();
                 }
@@ -102,18 +100,24 @@ export class TileSelectComponent implements OnInit, AfterContentInit{
         });
     }
 
-    ngOnInit(){
-        //初始化对象标识，转化为数组
-        if(!this.track_item_by){ //标识没有输入值，采用显示属性名
-            this.track_item_by = this.label_field;
+    /*
+     * 初始化对象标识，转化为数组
+     * */
+    private _initTrackItemBy(): void{
+        if(!this.trackItemBy){ //标识没有输入值，采用显示属性名
+            this.trackItemBy = this.labelField;
         }
-        if(this.track_item_by.indexOf(",") != -1){ //标识是多个
-            this.track_item_by = this.track_item_by.replace(" ","").split(",");
+        if(this.trackItemBy.indexOf(",") != -1){ //标识是多个
+            this.trackItemBy = this.trackItemBy.replace(" ","").split(",");
         }else { //标识是单个
             let arr = [];
-            arr.push(this.track_item_by);
-            this.track_item_by = arr;
+            arr.push(this.trackItemBy);
+            this.trackItemBy = arr;
         }
+    }
+
+    ngOnInit(){
+        this._initTrackItemBy();
     }
 
     ngAfterContentInit(){
@@ -130,27 +134,26 @@ export class TileSelectComponent implements OnInit, AfterContentInit{
 export class TileOptionComponent implements OnInit{
     @Input() optionItem: any; //option对象
 
-    optionView: string; //显示在页面上的值
+    private _optionView: string; //显示在页面上的值
+    private _tileSelect: TileSelectComponent; //父组件
 
-    selected:boolean = false;//选中状态
-
-    tileSelect: TileSelectComponent; //父组件
+    public selected:boolean = false;//选中状态
 
     constructor(@Optional() tileSelect: TileSelectComponent, public _cdref: ChangeDetectorRef){
-        this.tileSelect = tileSelect;
+        this._tileSelect = tileSelect;
     }
 
     //点击组件触发
-    onClick(){
-        if(this.tileSelect.multiple_select){ //多选
+    private _onClick(): void{
+        if(this._tileSelect.multipleSelect){ //多选
             this.selected = !this.selected;//切换组件选中状态
-            this.tileSelect._updateSelectItems(this.optionItem, this.selected);
+            this._tileSelect.updateSelectItems(this.optionItem, this.selected);
         }else{ //单选
             if(this.selected){
                 return;
             }else{
                 this.selected = true;
-                this.tileSelect._updateSelectItems(this.optionItem, this.selected);
+                this._tileSelect.updateSelectItems(this.optionItem, this.selected);
             }
         }
 
@@ -158,7 +161,7 @@ export class TileOptionComponent implements OnInit{
 
     ngOnInit(){
         //初始化option显示值
-        this.optionView = this.optionItem[this.tileSelect.label_field];
+        this._optionView = this.optionItem[this._tileSelect.labelField];
     }
 
 }

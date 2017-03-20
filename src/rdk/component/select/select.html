@@ -1,8 +1,8 @@
 <div class="select-box">
-    <div class="selected-box" [class.opened]="!optionListHidden">
-        <span [hidden]="viewValue">请选择</span>{{viewValue}}
+    <div class="selected-box" [class.opened]="!_optionListHidden">
+        <span [hidden]="_selectedView">请选择</span>{{_selectedView}}
     </div>
-    <div class="option-list" [class.hidden-option]="optionListHidden">
+    <div class="option-list" [class.hidden-option]="_optionListHidden">
         <div #insert></div>
         <ng-content></ng-content>
     </div>

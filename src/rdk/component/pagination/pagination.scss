@@ -62,7 +62,7 @@
         }
 
     }
-    rdk-select{
+    rdk-list-select{
         margin-right: 8px;
     }
     .goto-box{
@@ -96,7 +96,7 @@
             }
         }
     }
-    rdk-select{
+    rdk-list-select{
         /deep/ {
             .select-box .selected-box{
                 height: 28px;

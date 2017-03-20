@@ -14,93 +14,104 @@ import {InputModule} from '../input/input';
     styleUrls: ['pagination.scss']
 })
 export class PaginationComponent implements OnInit, AfterViewInit {
-    totalPage: number; // 总页数
-    pageArr: number[] = [];
-    prevDisabled: boolean = false;
-    nextDisabled: boolean = false;
-    _current: number;
-    _defaultCurrent: number;
-    showPages: number[] = [];
-    firstPage: PageComponent;
-    lastPage: PageComponent;
-    _pageSizeOptions: any[];
-    _pageSize: number;
-    initing: boolean = false;
+    private _totalPage: number; // 总页数
+    private _pageArr: number[] = [];
+    private _prevDisabled: boolean = false;
+    private _nextDisabled: boolean = false;
+    private _current: number;
+    private _defaultCurrent: number;
+    private _showPages: number[] = [];
+    private _firstPage: PageComponent;
+    private _lastPage: PageComponent;
+    private _pageSizeOptions: any[];
+    private _pageSize: any;
+    private _hostInit: boolean = false;
 
+    // 当前页
     @Input() get current() {
         return this._current
-    }; // 当前页
+    };
     set current(newValue) {
-        if (this._current != newValue || this.initing) {
+        if (this._current != newValue || this._hostInit) {
             this._current = newValue;
             //page显示形式
-            this.pageShow(newValue);
+            this._pageShow(newValue);
 
             //prevPages nextPages 显示
-            this.showPrevAndNextBtn();
+            this._showPrevAndNextBtn();
 
             //prevPage nextPage 不可点
-            this.canablePrevAndNext();
+            this._canablePrevAndNext();
 
-            this.initing ? this.initing = false : null;
+            this._hostInit ? this._hostInit = false : null;
 
             this.change.emit(newValue);
         }
     }
 
+    // 默认当前页
     @Input() get defaultCurrent() {
         return this._defaultCurrent;
     }
-
     set defaultCurrent(newValue) {
         if (this._defaultCurrent != newValue) {
             this._defaultCurrent = newValue;
         }
-    }; // 默认当前页
-    @Input() total: number; // 数据总数
-    @Input() get pageSize() {
-        return this._pageSize
-    }
-
-    set pageSize(newValue) {
-        if (this._pageSize != newValue) {
-            this._pageSize = newValue;
-            this.init();
-        }
-    }; // 每页条数
-    @Input() showSizeChanger: boolean; // 是否可以改变pageSize
-    @Input() get pageSizeOptions() {
-        return this._pageSizeOptions
     };
 
+    @Input() total: number; // 数据总数
+
+    // 每页条数
+    @Input() get pageSize() {
+        return this._pageSize;
+    }
+    set pageSize(newValue) {
+        if (this._pageSize != newValue) {
+            if(newValue.hasOwnProperty('id')){
+                this._pageSize = newValue;
+            }else if(!isNaN(newValue)){
+                this._pageSize = {id: newValue, label: newValue + '/Page'};
+            }
+            this._init();
+        }
+    };
+
+    @Input() showSizeChanger: boolean; // 是否可以改变pageSize
+
+    // 指定每页可以显示多少条
+    @Input() get pageSizeOptions() {return this._pageSizeOptions}
     set pageSizeOptions(newValue: number[]) {
         this._pageSizeOptions = [];
         newValue.forEach(num => {
-            let option = {value: num, viewValue: num + '/Page'};
+            let option = {id: num, label: num + '/Page'};
             this._pageSizeOptions.push(option);
         });
-    }; // 指定每页可以显示多少条
+    };
 
     @Input() searchable: boolean; // 搜索功能开关
+
     @Input() showQuickJumper: boolean; // 是否可以快速跳转至某页
 
     @Input() size: string; // 当为「small」时，是小尺寸分页
+
     @Input() simple: boolean; // 当添加该属性时，显示为简单分页
 
     @Output() change: EventEmitter<any> = new EventEmitter<any>(); //页码改变的事件
+
     @Output() onShowSizeChange: EventEmitter<any> = new EventEmitter<any>(); // pageSize 变化的事件
 
-    @ViewChildren(forwardRef(() => PageComponent)) pages: QueryList<PageComponent>;
+    @ViewChildren(forwardRef(() => PageComponent))
+    private _pages: QueryList<PageComponent> = null;
 
-    constructor(private _cdRef: ChangeDetectorRef) {
+    constructor() {
 
     }
 
     /*
      * 根据page组件的当前选择改变current值
      * */
-    changeCurrent(pageTrigger) {
-        this.pages.forEach((page) => {
+    public changeCurrent(pageTrigger): void {
+        this._pages.forEach((page) => {
             if (page !== pageTrigger) {
                 page.current = false;
             }
@@ -111,26 +122,26 @@ export class PaginationComponent implements OnInit, AfterViewInit {
     /*
      * 根据defaultCurrent改变current和page组件的当前选择
      * */
-    changePage() {
-        this.pages.find(page => page.page == this.defaultCurrent).setCurrent();
-        this.initing = true;
+    private _changePage(): void {
+        this._pages.find(page => page.page == this.defaultCurrent).setCurrent();
+        this._hostInit = true;
         this.current = this.defaultCurrent;
     }
 
     /*
      * 根据current控制page显示
      * */
-    pageShow(pageNum) {
-        if (this.totalPage > 10) {
+    private _pageShow(pageNum): void {
+        if (this._totalPage > 10) {
             if (pageNum <= 3) {
-                this.showPages = [1, 2, 3, 4, 5, this.totalPage];
-            } else if (pageNum >= this.totalPage - 2) {
-                this.showPages = [1, this.totalPage - 4, this.totalPage - 3, this.totalPage - 2, this.totalPage - 1, this.totalPage];
+                this._showPages = [1, 2, 3, 4, 5, this._totalPage];
+            } else if (pageNum >= this._totalPage - 2) {
+                this._showPages = [1, this._totalPage - 4, this._totalPage - 3, this._totalPage - 2, this._totalPage - 1, this._totalPage];
             } else {
-                this.showPages = [1, pageNum - 2, pageNum - 1, pageNum, pageNum + 1, pageNum + 2, this.totalPage];
+                this._showPages = [1, pageNum - 2, pageNum - 1, pageNum, pageNum + 1, pageNum + 2, this._totalPage];
             }
-            this.pages.forEach(page => {
-                this.showPages.indexOf(page.page) != -1 ? page.show() : page.hide();
+            this._pages.forEach(page => {
+                this._showPages.indexOf(page.page) != -1 ? page.show() : page.hide();
             });
         }
     }
@@ -138,78 +149,78 @@ export class PaginationComponent implements OnInit, AfterViewInit {
     /*
      * 上一页
      * */
-    pagePrev() {
-        let pageCur = this.pages.find(page => page.current == true);
+    private _pagePrev(): void {
+        let pageCur = this._pages.find(page => page.current == true);
         if (!pageCur) return;
         let pageNum = pageCur.page;
         if (pageNum == 1) return;
         pageCur.cancleCurrent();
         pageNum -= 1;
-        this.pages.find(page => page.page == pageNum).setCurrent();
+        this._pages.find(page => page.page == pageNum).setCurrent();
         this.current = pageNum;
     }
 
     /*
      * 下一页
      * */
-    pageNext() {
-        let pageCur = this.pages.find(page => page.current == true);
+    private _pageNext(): void {
+        let pageCur = this._pages.find(page => page.current == true);
         if (!pageCur) return;
         let pageNum = pageCur.page;
-        if (pageNum == this.totalPage) return;
+        if (pageNum == this._totalPage) return;
         pageCur.cancleCurrent();
         pageNum += 1;
-        this.pages.find(page => page.page == pageNum).setCurrent();
+        this._pages.find(page => page.page == pageNum).setCurrent();
         this.current = pageNum;
     }
 
     /*
      * 下五页
      * */
-    pagesNext() {
-        let pageCur = this.pages.find(page => page.current == true);
+    public pagesNext(): void {
+        let pageCur = this._pages.find(page => page.current == true);
         if (!pageCur) return;
         pageCur.cancleCurrent();
         let pageNum = pageCur.page;
         pageNum = pageNum + 5;
-        if (pageNum > this.totalPage) pageNum = this.totalPage;
-        this.pages.find(page => page.page == pageNum).setCurrent();
+        if (pageNum > this._totalPage) pageNum = this._totalPage;
+        this._pages.find(page => page.page == pageNum).setCurrent();
         this.current = pageNum;
     }
 
     /*
      * 上五页
      * */
-    pagesPrev() {
-        let pageCur = this.pages.find(page => page.current == true);
+    public pagesPrev(): void {
+        let pageCur = this._pages.find(page => page.current == true);
         if (!pageCur) return;
         pageCur.cancleCurrent();
         let pageNum = pageCur.page;
         pageNum = pageNum - 5;
         if (pageNum < 1) pageNum = 1;
-        this.pages.find(page => page.page == pageNum).setCurrent();
+        this._pages.find(page => page.page == pageNum).setCurrent();
         this.current = pageNum;
     }
 
     /*
      * 显示上五页、下五页按钮
      * */
-    showPrevAndNextBtn() {
-        if (this.totalPage <= 10) {
-            this.firstPage.showPrev = false;
-            this.lastPage.showNext = false;
+    private _showPrevAndNextBtn(): void {
+        if (this._totalPage <= 10) {
+            this._firstPage.showPrev = false;
+            this._lastPage.showNext = false;
         }
         else if (this.current <= 4) {
-            this.firstPage.showPrev = false;
-            this.lastPage.showNext = true;
+            this._firstPage.showPrev = false;
+            this._lastPage.showNext = true;
         }
-        else if (this.current >= this.totalPage - 3) {
-            this.firstPage.showPrev = true;
-            this.lastPage.showNext = false;
+        else if (this.current >= this._totalPage - 3) {
+            this._firstPage.showPrev = true;
+            this._lastPage.showNext = false;
         }
         else {
-            this.firstPage.showPrev = true;
-            this.lastPage.showNext = true;
+            this._firstPage.showPrev = true;
+            this._lastPage.showNext = true;
         }
 
     }
@@ -217,46 +228,46 @@ export class PaginationComponent implements OnInit, AfterViewInit {
     /*
      * 获取第一个和最后一个page组件实例
      * */
-    getFirstAndLastPage() {
-        this.firstPage = this.pages.find(page => page.page == 1);
-        this.lastPage = this.pages.find(page => page.page == this.totalPage);
+    private _getFirstAndLastPage(): void {
+        this._firstPage = this._pages.find(page => page.page == 1);
+        this._lastPage = this._pages.find(page => page.page == this._totalPage);
     }
 
-    canablePrevAndNext() {
+    private _canablePrevAndNext(): void {
         if (this._current == 1) {
-            this.prevDisabled = true;
-            this.nextDisabled = false;
-        } else if (this._current == this.totalPage) {
-            this.nextDisabled = true;
-            this.prevDisabled = false;
+            this._prevDisabled = true;
+            this._nextDisabled = false;
+        } else if (this._current == this._totalPage) {
+            this._nextDisabled = true;
+            this._prevDisabled = false;
         } else {
-            this.prevDisabled = false;
-            this.nextDisabled = false;
+            this._prevDisabled = false;
+            this._nextDisabled = false;
         }
     }
 
-    init() {
+    private _init(): void {
         //计算总页数
-        let pageArr = [];
-        this.totalPage = Math.ceil(this.total / this.pageSize);
-        for (let i = 0; i < this.totalPage; i++) {
-            pageArr.push(i + 1);
+        let _pageArr = [];
+        this._totalPage = Math.ceil(this.total / this.pageSize.id);
+        for (let i = 0; i < this._totalPage; i++) {
+            _pageArr.push(i + 1);
         }
-        this.pageArr = pageArr;
+        this._pageArr = _pageArr;
         //判断上一页、下一页按钮可用性
-        if (this.totalPage == 1) {
-            this.prevDisabled = true;
-            this.nextDisabled = true;
+        if (this._totalPage == 1) {
+            this._prevDisabled = true;
+            this._nextDisabled = true;
         }
         //没有输入defaultCurrent时，设置defaultCurrent默认值
         !this.defaultCurrent ? this.defaultCurrent = 1 : null;
     }
 
-    goto(pageNum) {
+    private _goto(pageNum): void {
         pageNum = parseInt(pageNum);
-        if(pageNum <= this.totalPage && pageNum >= 1){
-            this.pages.find(page => page.current == true).cancleCurrent();
-            this.pages.find(page => page.page == pageNum).setCurrent();
+        if(pageNum <= this._totalPage && pageNum >= 1){
+            this._pages.find(page => page.current == true).cancleCurrent();
+            this._pages.find(page => page.page == pageNum).setCurrent();
             this.current = pageNum;
         }
     }
@@ -264,29 +275,28 @@ export class PaginationComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         if (!this.pageSize) {
             this.pageSize = 10;
-            this.init();
         }
     }
 
     ngAfterViewInit() {
         setTimeout(() => {
             //获取第一个和最后一个page组件实例
-            this.getFirstAndLastPage();
+            this._getFirstAndLastPage();
             //根据defaultCurrent设置page组件的选中状态
-            this.changePage();
+            this._changePage();
         }, 1);
-        this.pages.changes.subscribe(() => {
+        this._pages.changes.subscribe(() => {
             setTimeout(() => {
                 //之前的上五页和下五页按钮居然有残留
-                this.pages.forEach(page => {
+                this._pages.forEach(page => {
                     page.showPrev = false;
                     page.showNext = false;
                 });
 
                 //获取第一个和最后一个page组件实例
-                this.getFirstAndLastPage();
+                this._getFirstAndLastPage();
                 //根据defaultCurrent设置page组件的选中状态
-                this.changePage();
+                this._changePage();
             }, 1);
         });
     }
@@ -298,56 +308,56 @@ export class PaginationComponent implements OnInit, AfterViewInit {
     templateUrl: 'page.html',
     styleUrls: ['page.scss'],
     host: {
-        '(click)': 'onClick()',
+        '(click)': '_onClick()',
         '[class.page-current]': 'current',
-        '[class.page-hidden]': '!isShow',
+        '[class.page-hidden]': '!_isShow',
     }
 })
 export class PageComponent {
-    current: boolean = false;
-    isShow: boolean = false;
-    showPrev: boolean = false;
-    showNext: boolean = false;
+    public current: boolean = false;
+    public showPrev: boolean = false;
+    public showNext: boolean = false;
+
+    private _isShow: boolean = false;
+    private _pagination: PaginationComponent;
 
     @Input() page: number;
 
-    pagination: PaginationComponent;
-
     constructor(@Optional() pagination: PaginationComponent, public cdRef: ChangeDetectorRef) {
-        this.pagination = pagination;
+        this._pagination = pagination;
     }
 
-    onClick() {
+    private _onClick(): void {
         if (!this.current) {
             this.setCurrent();
-            this.pagination.changeCurrent(this);
+            this._pagination.changeCurrent(this);
         }
     }
 
-    setCurrent() {
+    public setCurrent(): void {
         this.current = true;
     }
 
-    cancleCurrent() {
+    public cancleCurrent(): void {
         this.current = false;
     }
 
-    show() {
-        this.isShow = true;
+    public show(): void {
+        this._isShow = true;
     }
 
-    hide() {
-        this.isShow = false;
+    public hide(): void {
+        this._isShow = false;
     }
 
-    prevPages() {
+    private _prevPages(): void {
         event.stopPropagation();
-        this.pagination.pagesPrev();
+        this._pagination.pagesPrev();
     }
 
-    nextPages() {
+    private _nextPages(): void {
         event.stopPropagation();
-        this.pagination.pagesNext();
+        this._pagination.pagesNext();
     }
 }
 

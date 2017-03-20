@@ -1,72 +1,86 @@
 import {
-    Component, Directive, NgModule, forwardRef, Input, HostListener, ContentChildren, QueryList,
-    AfterContentInit, Optional
+    Component, Directive, NgModule, forwardRef, Input, ContentChildren, QueryList,
+    Optional, EventEmitter, Output, AfterContentInit, OnInit, ChangeDetectorRef
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormsModule, NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
-
-type RadioValue = {
-    value: any,
-    viewValue: any
-};
+import {FormsModule} from '@angular/forms';
 
 @Directive({
-    selector: 'radio-group',
-    providers: [{
-        provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => RadioGroup),
-        multi: true
-    }]
+    selector: 'radio-group'
 })
-export class RadioGroup implements ControlValueAccessor, AfterContentInit{
-    _value: any = null;
+export class RadioGroup implements OnInit, AfterContentInit{
+    private _value: any = null;
+    private _contentInit: boolean = false;
+
+    //设置对象的标识
+    @Input() trackItemBy: any;
+
+    //显示在界面上的属性名
+    @Input() labelField: string = 'label';
 
     @Input()
-    get value(): any { return this._value; }
+    get value() { return this._value; }
     set value(newValue: any) {
         if (this._value != newValue) {
             this._value = newValue;
-            this._updateSelectedRadioFromValue();
+            this._contentInit && this._updateSelectedRadio();
         }
     }
 
+    @Output() valueChange: EventEmitter<any> = new EventEmitter<any>();
+
     @ContentChildren(forwardRef(() => RadioButton))
-    _radios: QueryList<RadioButton> = null;
+    private _radios: QueryList<RadioButton> = null;
 
     constructor(){
 
     }
 
-    ngAfterContentInit(){
-
+    private _updateSelectedRadio(): void {
+        this._radios && this._radios.forEach(radio => {
+            radio.checked = this._compareJsonObj(this.value, radio.radioItem);
+            radio.cdRef.detectChanges();
+        });
+        this.valueChange.emit(this.value);
     }
 
-    private _updateSelectedRadioFromValue(): void {
-        if (this._radios != null) {
-            this._radios.forEach(radio => {
-                radio.checked = this.value == radio.radioValue.value;
-            });
+    //比较两个radio是否相等
+    private _compareJsonObj(item1, item2): boolean{
+        for(let i = 0; i < this.trackItemBy.length; i++){
+            if (item1[this.trackItemBy[i]] == item2[this.trackItemBy[i]]) {
+                continue;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /*
+    * 初始化对象标识，转化为数组
+    * */
+    private _initTrackItemBy(): void{
+        if(!this.trackItemBy){ //标识没有输入值，采用显示属性名
+            this.trackItemBy = this.labelField;
+        }
+        if(this.trackItemBy.indexOf(",") != -1){ //标识是多个
+            this.trackItemBy = this.trackItemBy.replace(" ","").split(",");
+        }else { //标识是单个
+            let arr = [];
+            arr.push(this.trackItemBy);
+            this.trackItemBy = arr;
         }
     }
 
-    //outside to inside
-    writeValue(outsideValue: any): void {
-        this.value = outsideValue;
-    };
-
-    _controlValueAccessorChangeFn: (value: any) => void = (value) => {};
-    onTouched: () => any = () => {};
-
-    //inside to outside
-    //注册一个方法, 当 inside value updated then need call it : fn(newValue)
-    registerOnChange(fn: (newValue : any) => void): void {
-        this._controlValueAccessorChangeFn = fn;
+    ngOnInit(){
+        this._initTrackItemBy();
     }
 
-    //inside to outside
-    registerOnTouched(fn: any): void {
-        this.onTouched = fn;
+    ngAfterContentInit(){
+        this._contentInit = true;
+        this._updateSelectedRadio();
     }
+
 }
 
 @Component({
@@ -74,30 +88,34 @@ export class RadioGroup implements ControlValueAccessor, AfterContentInit{
     templateUrl: 'radio.html',
     styleUrls: ['radio.scss'],
     host: {
-        "(click)": "onClick()"
+        "(click)": "_onClick()"
     }
 })
-export class RadioButton{
-    @Input() radioValue: RadioValue;
+export class RadioButton implements OnInit{
+    @Input() radioItem: any;
 
-    checked: boolean = false;
+    private _radioView: string;
 
-    radioGroup: RadioGroup;
+    public checked: boolean = false;
 
-    constructor(@Optional() radioGroup: RadioGroup){
-        this.radioGroup = radioGroup;
+    private _radioGroup: RadioGroup;
+
+    constructor(@Optional() radioGroup: RadioGroup, public cdRef: ChangeDetectorRef){
+        this._radioGroup = radioGroup;
     }
 
-    onClick(){
+    private _onClick(): void{
         if(!this.checked){
             this.checked = true;
         }
-        if (this.radioGroup) {
-            this.radioGroup.value = this.radioValue.value;//更新内部value
-            this.radioGroup._controlValueAccessorChangeFn(this.radioValue.value);//更新外部(双向绑定)
-            this.radioGroup.onTouched();
+        if (this._radioGroup) {
+            this._radioGroup.value = this.radioItem;//更新内部value
         }
+    }
 
+    ngOnInit(){
+        //初始化radio显示值
+        this._radioView = this.radioItem[this._radioGroup.labelField];
     }
 
 }
