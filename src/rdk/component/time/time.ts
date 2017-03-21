@@ -85,7 +85,7 @@ export class TimeComponent implements OnInit {
     }
 
     ngOnInit() {
-        require.ensure([], (require) => {//这里是异步的（webpack）
+        //require.ensure([], (require) => {//这里是异步的（webpack）
             //require("bootstrap/dist/css/bootstrap.min.css");
             //require("eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css");
             //require("eonasdan-bootstrap-datetimepicker");
@@ -116,7 +116,7 @@ export class TimeComponent implements OnInit {
                 this._timepicker = $(insert);
                 this._initFlag = true;
             });
-        }, 'datepicker');
+        //}, 'datepicker');
     }
 
 }
