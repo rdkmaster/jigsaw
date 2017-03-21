@@ -23,6 +23,7 @@
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
         "../node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css",
         "styles.css",
+        "../node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css",
         "rdk/assets/font-awesome/css/font-awesome.min.css",
         "rdk/assets/scss/common.scss"
       ],
