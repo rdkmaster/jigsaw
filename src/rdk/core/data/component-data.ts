@@ -48,24 +48,24 @@ export class ComponentDataHelper {
       return;
     }
     this._timeout = setTimeout(() => {
-      this._refreshCallbacks.forEach(callback => this._safeInvokeCallback(callback, this.ownerData));
+      this._refreshCallbacks.forEach(callback => ComponentDataHelper._safeInvokeCallback(callback, this.ownerData));
       this._timeout = null;
     }, 0);
   }
 
   public invokeAjaxSuccessCallback(data:any):void {
-    this._ajaxSuccessCallbacks.forEach(callback => this._safeInvokeCallback(callback, data));
+    this._ajaxSuccessCallbacks.forEach(callback => ComponentDataHelper._safeInvokeCallback(callback, data));
   }
 
   public invokeAjaxErrorCallback(error:Response):void {
-    this._ajaxErrorCallbacks.forEach(callback => this._safeInvokeCallback(callback, error));
+    this._ajaxErrorCallbacks.forEach(callback => ComponentDataHelper._safeInvokeCallback(callback, error));
   }
 
   public invokeAjaxCompleteCallback():void {
-    this._ajaxCompleteCallbacks.forEach(callback => this._safeInvokeCallback(callback));
+    this._ajaxCompleteCallbacks.forEach(callback => ComponentDataHelper._safeInvokeCallback(callback));
   }
 
-  private _safeInvokeCallback(callback:Function, ...args):any {
+  private static _safeInvokeCallback(callback:Function, ...args):any {
     try {
       return callback.apply(callback, args);
     } catch (e) {
