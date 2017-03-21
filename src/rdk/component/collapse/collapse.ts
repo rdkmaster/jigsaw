@@ -26,14 +26,15 @@ export class CollapseComponent implements AfterContentInit{
     @Input()
     panelModel: boolean = true;
 
-    openedPanelKeys: number[] = [];
+    public openedPanelKeys: number[] = [];
 
-    @ContentChildren(forwardRef(() => PanelComponent)) panelList: QueryList<PanelComponent>;
+    @ContentChildren(forwardRef(() => PanelComponent))
+    private _panelList: QueryList<PanelComponent>;
 
     constructor(){}
 
-    _undatePanelOpen(key){
-        this.panelList.forEach(panel => {
+    public undatePanelOpen(key){
+        this._panelList.forEach(panel => {
             if(panel.panelValue.key != key){
                 panel.close();
             }
@@ -41,7 +42,7 @@ export class CollapseComponent implements AfterContentInit{
     }
 
     ngAfterContentInit(){
-        this.panelList.changes.subscribe(() => {
+        this._panelList.changes.subscribe(() => {
             console.log(1111);
         });
     }
@@ -53,40 +54,41 @@ export class CollapseComponent implements AfterContentInit{
     templateUrl: 'panel.html',
     styleUrls: ['panel.scss'],
     host: {
-        '[class.opened]': 'opened'
+        '[class.rdk-panel-opened]': '_opened'
     }
 })
 export class PanelComponent{
     @Input()
     panelValue: PanelValue;
-    opened: boolean;
 
-    collapse: CollapseComponent;
+    private _opened: boolean;
+
+    private _collapse: CollapseComponent;
 
     constructor(private _renderer: Renderer, private _el: ElementRef, @Optional() collapse: CollapseComponent){
-        this.collapse = collapse;
+        this._collapse = collapse;
     }
 
-    onClick(){
-        !this.opened ? this.open() : this.close();
+    private _onClick(){
+        !this._opened ? this.open() : this.close();
     }
 
-    open(){
-        if(!this.opened){
-            this.opened = true;
-            let contentWidth = this._el.nativeElement.querySelector(".content p").offsetHeight;
-            this._renderer.setElementStyle(this._el.nativeElement.querySelector(".content"), "height", contentWidth + "px");
-            this.collapse.openedPanelKeys.push(this.panelValue.key);
-            this.collapse.panelModel && this.collapse._undatePanelOpen(this.panelValue.key);
+    public open(){
+        if(!this._opened){
+            this._opened = true;
+            let contentWidth = this._el.nativeElement.querySelector(".rdk-panel-content p").offsetHeight;
+            this._renderer.setElementStyle(this._el.nativeElement.querySelector(".rdk-panel-content"), "height", contentWidth + "px");
+            this._collapse.openedPanelKeys.push(this.panelValue.key);
+            this._collapse.panelModel && this._collapse.undatePanelOpen(this.panelValue.key);
         }
     }
 
-    close(){
-        if(this.opened){
-            this.opened = false;
-            this._renderer.setElementStyle(this._el.nativeElement.querySelector(".content"), "height", "0");
-            this.collapse.openedPanelKeys.indexOf(this.panelValue.key) != -1 ?
-                this.collapse.openedPanelKeys.splice(this.collapse.openedPanelKeys.indexOf(this.panelValue.key), 1) : null;
+    public close(){
+        if(this._opened){
+            this._opened = false;
+            this._renderer.setElementStyle(this._el.nativeElement.querySelector(".rdk-panel-content"), "height", "0");
+            this._collapse.openedPanelKeys.indexOf(this.panelValue.key) != -1 ?
+                this._collapse.openedPanelKeys.splice(this._collapse.openedPanelKeys.indexOf(this.panelValue.key), 1) : null;
         }
     }
 }

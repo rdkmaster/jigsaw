@@ -1,34 +1,36 @@
 @import "../../assets/scss/core/_basc";
 
+$radio-prefix-cls: #{$rdk-prefix}-radio;
+
 :host{
   @include inline-block();
 }
 
-:host-context(.theme-blue) .radio-button .radio-inner{
+:host-context(.theme-blue) .#{$radio-prefix-cls}-button .#{$radio-prefix-cls}-inner{
   &:after{
-    background-color: $blue;
+    background-color: $primary-color;
   }
 }
 
-:host-context(.theme-orange) .radio-button .radio-inner{
+:host-context(.theme-orange) .#{$radio-prefix-cls}-button .#{$radio-prefix-cls}-inner{
   &:after{
     background-color: $orange;
   }
 }
 
-.radio-button{
+.#{$radio-prefix-cls}-button{
   margin-right: 10px;
   cursor: pointer;
-  .radio-inner{
+  .#{$radio-prefix-cls}-inner{
     @include inline-block();
     position: relative;
     top: 0;
     left: 0;
     width: 14px;
     height: 14px;
-    border: 1px solid $gray;
+    border: 1px solid $border-color-base;
     border-radius: 14px;
-    background-color: $white;
+    background-color: $component-background;
     vertical-align: -3px;
     margin-right: 5px;
     @include prefixer(transition, all 0.3s);
@@ -43,14 +45,14 @@
       border-top: 0;
       border-left: 0;
       content: ' ';
-      background-color: $blue;
+      background-color: $primary-color;
       opacity: 0;
       @include prefixer(transfrom, scale(0));
-      @include prefixer(transition, all 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86));
+      @include prefixer(transition, all 0.3s $ease-in-out-circ);
     }
-    &.radio-checked:after{
+    &.#{$radio-prefix-cls}-checked:after{
       @include prefixer(transform, scale(1));
-      @include prefixer(transition, all 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86));
+      @include prefixer(transition, all 0.3s $ease-in-out-circ);
       opacity: 1;
     }
   }

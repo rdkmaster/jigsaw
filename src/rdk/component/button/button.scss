@@ -1,5 +1,7 @@
 @import "../../assets/scss/core/_basc";
 
+$btn-prefix-cls: #{$rdk-prefix}-button;
+
 :host {
     @include inline-block();
     width: 80px;
@@ -7,18 +9,18 @@
     line-height: 32px;
     text-align: center;
     position: relative;
-    background: $blue;
+    background: $primary-color;
     border-radius: 3px;
-    color: $white;
+    color: $text-color-white;
     cursor: pointer;
-    box-shadow: 4px 4px 6px $gray;
+    box-shadow: 4px 4px 6px $border-color-base;
     user-select: none;
-    @include prefixer(transition, all .3s cubic-bezier(0.645, 0.045, 0.355, 1));
+    @include prefixer(transition, all .3s $ease-in-out);
     &:hover {
-        background: $blue-light;
-        color: $white;
+        background: $primary-color-light;
+        color: $text-color-white;
     }
-    &.am-running:after {
+    &.#{$btn-prefix-cls}-clicked:after {
         content: '';
         position: absolute;
         top: -1px;
@@ -26,14 +28,14 @@
         bottom: -1px;
         right: -1px;
         border-radius: inherit;
-        border: 0 solid $blue-light;
+        border: 0 solid $primary-color-light;
         opacity: 0.4;
-        @include prefixer(animation, buttonEffect 0.36s ease-out forwards);
+        @include prefixer(animation, buttonEffect 0.36s $ease-out forwards);
         display: block;
     }
-    .icon-box {
+    .#{$btn-prefix-cls}-icon {
         @include inline-block();
-        vertical-align: -5px;
+        /*vertical-align: -5px;*/
         /deep/ img {
             vertical-align: top;
             height: 20px;
@@ -47,38 +49,38 @@
     outline: none;
     text-decoration: none !important;
     &:active, &:visited, &:link, &:focus{
-        color: $white;
+        color: $text-color-white;
     }
 }
 
-:host(.disabled) {
+:host(.#{$btn-prefix-cls}-disabled) {
     pointer-events: none;
-    background: $gray-dark !important;
+    background: $disabled-color !important;
 }
 
-:host-context(.theme-blue) :host {
-    background: $blue;
+:host-context(.theme-blue) {
+    background: $primary-color;
     &:hover {
-        background: $blue-light;
+        background: $primary-color-light;
     }
-    &.btn-clicked:after {
-        border: 0 solid $blue-light;
+    &.#{$btn-prefix-cls}-clicked:after {
+        border: 0 solid $primary-color-light;
     }
 }
 
-:host-context(.theme-orange) :host {
+:host-context(.theme-orange){
     background: $orange;
     &:hover {
         background: $orange-light;
     }
-    &.btn-clicked:after {
+    &.#{$btn-prefix-cls}-clicked:after {
         border: 0 solid $orange-light;
     }
 }
 
 @include keyframes(buttonEffect) {
     to {
-        opacity: 0;
+        @include opacity(0);
         top: -6px;
         left: -6px;
         bottom: -6px;

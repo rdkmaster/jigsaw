@@ -1,27 +1,29 @@
 @import "../../assets/scss/core/_basc";
 
+$panel-prefix-cls: #{$rdk-prefix}-panel;
+
 :host{
   display: block;
-  border-bottom: 1px solid $gray;
+  border-bottom: 1px solid $border-color-base;
 }
 
-:host(.opened) .head .arrow{
+:host(.#{$panel-prefix-cls}-opened) .#{$panel-prefix-cls}-head .#{$panel-prefix-cls}-arrow{
   @include prefixer(transform, rotate(270deg));
 }
 
-:host(.opened) .content{
+:host(.#{$panel-prefix-cls}-opened) .#{$panel-prefix-cls}-content{
   display: block;
-  opacity: 1;
+  @include opacity(1);
 }
 
-.head{
+.#{$panel-prefix-cls}-head{
   height: 38px;
   line-height: 38px;
   padding-left: 32px;
   background: $gray-light;
   cursor: pointer;
   position: relative;
-  .arrow{
+  .#{$panel-prefix-cls}-arrow{
     position: absolute;
     right: 8px;
     font-size: 20px;
@@ -32,11 +34,11 @@
   }
 }
 
-.content{
-  @include prefixer(transition, all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1));
+.#{$panel-prefix-cls}-content{
+  @include prefixer(transition, all 0.3s $ease-in-out);
   @include prefixer(transform-origin, 0 0);
   display: none\9;
-  opacity: 0;
+  @include opacity(0);
   height: 0;
   overflow: hidden;
   p{

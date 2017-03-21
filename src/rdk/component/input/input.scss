@@ -1,58 +1,87 @@
 @import "../../assets/scss/core/_basc";
 
-:host{
-  @include inline-block();
-}
+$input-prefix-cls: #{$rdk-prefix}-input;
 
-:host-context(.theme-blue) .input-box input{
-  &:hover {
-    border: 1px solid $blue;
-  }
-  &:focus {
-    border: 1px solid $blue;
-    box-shadow: 0 0 0 2px $blue-shadow;
-  }
-}
-
-:host-context(.theme-orange) .input-box input{
-  &:hover {
-    border: 1px solid $orange;
-  }
-  &:focus {
-    border: 1px solid $orange;
-    box-shadow: 0 0 0 2px $orange-shadow;
-  }
-}
-
-.input-box {
-  position: relative;
-  margin-right: 10px;
-  input {
+:host {
+    @include inline-block();
+    position: relative;
     width: 300px;
     height: 30px;
     line-height: 30px;
-    border: 1px solid $gray;
-    border-radius: 3px;
-    text-indent: 4px;
-    outline: none;
-    @include prefixer(transition, all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1));
+    input {
+        width: 100%;
+        height: 100%;
+        border: 1px solid $border-color-base;
+        border-radius: 3px;
+        text-indent: 4px;
+        outline: none;
+        @include prefixer(transition, all 0.3s $ease-in-out);
+        &:hover {
+            border: 1px solid $primary-color;
+        }
+        &:focus {
+            border: 1px solid $primary-color;
+            box-shadow: 0 0 0 2px $primary-color-shadow;
+        }
+    }
+    span {
+        position: absolute;
+        right: 6px;
+        top: 9px;
+        color: $gray-dark-second;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1;
+        cursor: pointer;
+        width: 12px;
+        height: 12px;
+        &:before, &:after{
+            display: block;
+            width: 8px;
+            height: 8px;
+            content: ' ';
+        }
+        &:before{
+            position: absolute;
+            right: 6px;
+            top: 3px;
+            border: {
+                right: 2px solid $text-color-secondary;
+                top: 2px solid $text-color-secondary;
+            };
+            @include prefixer(transform, rotate(45deg));
+        }
+        &:after{
+            position: absolute;
+            right: -2px;
+            top: 3px;
+            border: {
+                left: 2px solid $text-color-secondary;
+                top: 2px solid $text-color-secondary;
+            };
+            @include prefixer(transform, rotate(-45deg));
+        }
+    }
+}
+
+:host-context(.theme-blue) input {
     &:hover {
-      border: 1px solid $blue;
+        border: 1px solid $primary-color;
     }
     &:focus {
-      border: 1px solid $blue;
-      box-shadow: 0 0 0 2px $blue-shadow;
+        border: 1px solid $primary-color;
+        box-shadow: 0 0 0 2px $primary-color-shadow;
     }
-  }
-  span{
-    position: absolute;
-    right: 6px;
-    top: 8px;
-    color: $gray-dark-20;
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 1;
-    cursor: pointer;
-  }
 }
+
+:host-context(.theme-orange) input {
+    &:hover {
+        border: 1px solid $orange;
+    }
+    &:focus {
+        border: 1px solid $orange;
+        box-shadow: 0 0 0 2px $orange-shadow;
+    }
+}
+
 

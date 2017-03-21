@@ -1,9 +1,8 @@
-<div class="select-box">
-    <div class="selected-box" [class.opened]="!_optionListHidden">
+<div class="rdk-select-box">
+    <div class="rdk-select" [class.rdk-select-opened]="!_optionListHidden">
         <span [hidden]="_selectedView">请选择</span>{{_selectedView}}
     </div>
-    <div class="option-list" [class.hidden-option]="_optionListHidden">
-        <div #insert></div>
+    <div class="rdk-option-list" [class.rdk-option-hidden]="_optionListHidden">
         <ng-content></ng-content>
     </div>
 </div>

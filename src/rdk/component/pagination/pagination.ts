@@ -309,8 +309,8 @@ export class PaginationComponent implements OnInit, AfterViewInit {
     styleUrls: ['page.scss'],
     host: {
         '(click)': '_onClick()',
-        '[class.page-current]': 'current',
-        '[class.page-hidden]': '!_isShow',
+        '[class.rdk-page-current]': 'current',
+        '[class.rdk-page-hidden]': '!_isShow',
     }
 })
 export class PageComponent {

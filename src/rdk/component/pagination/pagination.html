@@ -1,17 +1,17 @@
-<rdk-input class="search-box" *ngIf="searchable" width="80">
+<rdk-input class="rdk-paging-search" *ngIf="searchable" width="80" height="28">
     <img src="rdk/assets/images/search.png">
 </rdk-input>
 
-<div class="prev page" [class.disabled]="_prevDisabled" (click)="_pagePrev()"></div>
+<div class="rdk-paging-prev rdk-paging-page" [class.rdk-paging-disabled]="_prevDisabled" (click)="_pagePrev()"></div>
 <rdk-paging-item *ngFor="let page of _pageArr" [page]="page"></rdk-paging-item>
-<div class="next page" [class.disabled]="_nextDisabled" (click)="_pageNext()"></div>
+<div class="rdk-paging-next rdk-paging-page" [class.rdk-paging-disabled]="_nextDisabled" (click)="_pageNext()"></div>
 
-<rdk-list-select *ngIf="pageSizeOptions" [(value)]="pageSize" trackItemBy="id" labelField="label"  [width]="80">
+<rdk-list-select *ngIf="pageSizeOptions" [(value)]="pageSize" trackItemBy="id" labelField="label"  width="80" height="28">
     <rdk-list-option *ngFor="let pageSizeOption of pageSizeOptions" [optionItem]="pageSizeOption"></rdk-list-option>
 </rdk-list-select>
 
-<div class="goto-box" *ngIf="showQuickJumper">
+<div class="rdk-paging-goto" *ngIf="showQuickJumper">
     <span>Goto</span>
-    <rdk-input #input (keyup.enter)="_goto(input.value)" [width]="50"></rdk-input>
+    <rdk-input #input (keyup.enter)="_goto(input.value)" width="50" height="28"></rdk-input>
 </div>
 

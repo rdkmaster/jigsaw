@@ -1,8 +1,10 @@
 @import "../../assets/scss/core/_basc";
 
+$select-prefix-cls: #{$rdk-prefix}-tile-select;
+
 :host{
   @include inline-block();
-  .search-box {
+  .#{$select-prefix-cls}-search {
     margin-bottom: 8px;
     rdk-input /deep/{
       img{
@@ -18,7 +20,4 @@
   }
 }
 
-.selected-option {
-  margin-right: 5px;
-}
 

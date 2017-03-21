@@ -20,9 +20,11 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css",
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
-        "../node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"
+        "../node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css",
+        "styles.css",
+        "rdk/assets/font-awesome/css/font-awesome.min.css",
+        "rdk/assets/scss/common.scss"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",

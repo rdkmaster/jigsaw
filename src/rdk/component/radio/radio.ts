@@ -6,7 +6,7 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 
 @Directive({
-    selector: 'radio-group'
+    selector: 'rdk-radio-group'
 })
 export class RadioGroup implements OnInit, AfterContentInit{
     private _value: any = null;
@@ -84,7 +84,7 @@ export class RadioGroup implements OnInit, AfterContentInit{
 }
 
 @Component({
-    selector: 'radio-button',
+    selector: 'rdk-radio-button',
     templateUrl: 'radio.html',
     styleUrls: ['radio.scss'],
     host: {

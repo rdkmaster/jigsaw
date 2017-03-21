@@ -1,5 +1,7 @@
 @import "../../assets/scss/core/_basc";
 
+$page-prefix-cls: #{$rdk-prefix}-page;
+
 :host{
     @include inline-block();
     margin-right: 8px;
@@ -10,25 +12,22 @@
         height: 28px;
         line-height: 28px;
         text-align: center;
-        border: 1px solid $gray;
+        border: 1px solid $border-color-base;
         border-radius: 4px;
         cursor: pointer;
         vertical-align: top;
         @include prefixer(transition, all .3s ease);
         &:hover{
-            border: 1px solid $blue;
-            color: $blue;
-            &.prev:after, &.next:after{
-                border-color: $blue;
-            }
+            border: 1px solid $primary-color;
+            color: $primary-color;
         }
     }
-    &.page-current span{
-        background: $blue;
-        border: 1px solid $blue;
-        color: $white;
+    &.#{$page-prefix-cls}-current span{
+        background: $primary-color;
+        border: 1px solid $primary-color;
+        color: $text-color-white;
     }
-    &.page-hidden{
+    &.#{$page-prefix-cls}-hidden{
         display: none;
     }
     i{
@@ -45,24 +44,23 @@
             line-height: 21px;
             text-align: center;
         }
-        &.prev-btn{
+        &.#{$page-prefix-cls}-prevs{
             margin-left: 8px;
         }
-        &.next-btn{
+        &.#{$page-prefix-cls}-nexts{
             margin-right: 8px;
         }
         &:hover{
-            &.prev-btn:after{
+            &.#{$page-prefix-cls}-prevs:after{
                 content: '<<';
                 line-height: 28px;
             }
-            &.next-btn:after{
+            &.#{$page-prefix-cls}-nexts:after{
                 content: '>>';
                 line-height: 28px;
             }
         }
     }
-    //&.show-prev i.prev-btn, &.show-next i.next-btn{@include inline-block();}
 
 }
 

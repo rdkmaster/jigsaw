@@ -1,5 +1,5 @@
 import {
-    NgModule, Component, EventEmitter, Input, Renderer, ElementRef, Output
+    NgModule, Component, EventEmitter, Input, Output
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
@@ -7,10 +7,15 @@ import {FormsModule} from '@angular/forms';
 @Component({
     selector: 'rdk-input',
     templateUrl: 'input.html',
-    styleUrls: ['input.scss']
+    styleUrls: ['input.scss'],
+    host: {
+        '[style.width.px]': 'width',
+        '[style.height.px]': 'height',
+        '[style.line-height.px]': 'height'
+    }
 })
 export class InputComponent{
-    _value: any; //input表单值
+    private _value: any; //input表单值
 
     //input form表单值
     @Input()
@@ -26,15 +31,15 @@ export class InputComponent{
 
     @Input() width: number;
 
-    constructor(private renderer: Renderer, private el: ElementRef){
-    }
+    @Input() height: number;
 
-    ngOnInit(){
-        this.width && this.renderer.setElementStyle(this.el.nativeElement.querySelector('input'), 'width', this.width + 'px');
+    @Input() clearable: boolean = true;
+
+    constructor(){
     }
 
     private _clearValue(): void{
-        this.value = '';
+        this.value = null;
     }
 
 }

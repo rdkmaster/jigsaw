@@ -1,23 +1,25 @@
 @import "../../assets/scss/core/_basc";
 
+$paging-prefix-cls: #{$rdk-prefix}-paging;
+
 :host {
     @include inline-block();
     font-size: 12px;
     user-select: none;
-    .page{
+    .#{$paging-prefix-cls}-page{
         position: relative;
         @include inline-block;
         width: 28px;
         height: 28px;
         line-height: 28px;
         text-align: center;
-        border: 1px solid $gray;
+        border: 1px solid $border-color-base;
         border-radius: 4px;
         margin-right: 8px;
         cursor: pointer;
         vertical-align: top;
         @include prefixer(transition, all .3s ease);
-        &.prev:after, &.next:after{
+        &.#{$paging-prefix-cls}-prev:after, &.#{$paging-prefix-cls}-next:after{
             position: absolute;
             left: 11px;
             top: 10px;
@@ -27,37 +29,37 @@
             height: 6px;
             border-color: #666666;
         }
-        &.prev:after{
+        &.#{$paging-prefix-cls}-prev:after{
             border: {
                 left: 1px solid;
                 top: 1px solid;
             };
             @include prefixer(transform, rotate(-45deg))
         }
-        &.next:after{
+        &.#{$paging-prefix-cls}-next:after{
             border: {
                 right: 1px solid;
                 top: 1px solid;
             };
             @include prefixer(transform, rotate(45deg))
         }
-        &.disabled{
+        &.#{$paging-prefix-cls}-disabled{
             cursor: not-allowed;
-            &.prev:after, &.next:after{
-                border-color: #dddddd;
+            &.#{$paging-prefix-cls}-prev:after, &.#{$paging-prefix-cls}-next:after{
+                border-color: $disabled-color;
             }
             &:hover{
-                border: 1px solid $gray;
-                &.prev:after, &.next:after{
-                    border-color: #dddddd;
+                border: 1px solid $border-color-base;
+                &.#{$paging-prefix-cls}-prev:after, &.#{$paging-prefix-cls}-next:after{
+                    border-color: $disabled-color;
                 }
             }
         }
         &:hover{
-            border: 1px solid $blue;
-            color: $blue;
-            &.prev:after, &.next:after{
-                border-color: $blue;
+            border: 1px solid $primary-color;
+            color: $primary-color;
+            &.#{$paging-prefix-cls}-prev:after, &.#{$paging-prefix-cls}-next:after{
+                border-color: $primary-color;
             }
         }
 
@@ -65,7 +67,7 @@
     rdk-list-select{
         margin-right: 8px;
     }
-    .goto-box{
+    .#{$paging-prefix-cls}-goto{
         @include inline-block;
         height: 28px;
         line-height: 28px;
@@ -76,15 +78,13 @@
     }
     rdk-input{
         vertical-align: top;
+        margin-right: 8px;
         /deep/{
-            input{
-                height: 28px !important;
-            }
             span{
                 top: 6px !important;
             }
         }
-        &.search-box /deep/{
+        &.#{$paging-prefix-cls}-search /deep/{
             img{
                 height: 16px;
                 position: absolute;
@@ -96,12 +96,5 @@
             }
         }
     }
-    rdk-list-select{
-        /deep/ {
-            .select-box .selected-box{
-                height: 28px;
-                line-height: 28px;
-            }
-        }
-    }
+
 }

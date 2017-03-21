@@ -1,42 +1,44 @@
 @import "../../assets/scss/core/_basc";
 
+$option-prefix-cls: #{$rdk-prefix}-tile-option;
+
 :host{
   @include inline-block();
 }
 
-:host-context(.theme-blue) .option-box{
-  &:hover, &.on{
-    color: $blue;
+:host-context(.theme-blue) .#{$option-prefix-cls}{
+  &:hover, &.#{$option-prefix-cls}-on{
+    color: $primary-color;
   }
-  &.on{
-    border: 1px solid $blue;
+  &.#{$option-prefix-cls}-on{
+    border: 1px solid $primary-color;
   }
 }
 
-:host-context(.theme-orange) .option-box{
-  &:hover, &.on{
+:host-context(.theme-orange) .#{$option-prefix-cls}{
+  &:hover, &.#{$option-prefix-cls}-on{
     color: $orange;
   }
-  &.on{
+  &.#{$option-prefix-cls}-on{
     border: 1px solid $orange;
   }
 }
 
-.option-box {
+.#{$option-prefix-cls} {
   vertical-align: top;
   margin-right: 8px;
   cursor: pointer;
   width: 50px;
   height: 30px;
-  border: 1px solid $gray;
+  border: 1px solid $border-color-base;
   line-height: 30px;
   text-align: center;
   border-radius: 4px;
-  @include prefixer(transition, all .3s cubic-bezier(0.645, 0.045, 0.355, 1));
-  &:hover, &.on{
-    color: $blue;
+  @include prefixer(transition, all .3s $ease-in-out);
+  &:hover, &.#{$option-prefix-cls}-on{
+    color: $primary-color;
   }
-  &.on{
-    border: 1px solid $blue;
+  &.#{$option-prefix-cls}-on{
+    border: 1px solid $primary-color;
   }
 }

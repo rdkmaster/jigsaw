@@ -11,7 +11,9 @@ import {FormsModule} from '@angular/forms';
     styleUrls: ['select.scss'],
     host: {
         "(click)": "_toggleClick($event)",
-        '[style.width.px]': 'width'
+        '[style.width.px]': 'width',
+        '[style.height.px]': 'height',
+        '[style.line-height.px]': 'height'
     }
 })
 export class SelectComponent implements AfterContentInit, OnDestroy, OnInit{
@@ -41,6 +43,8 @@ export class SelectComponent implements AfterContentInit, OnDestroy, OnInit{
     @Output() valueChange: EventEmitter<any> = new EventEmitter<any>();
 
     @Input() width: number;
+
+    @Input() height: number;
 
     //获取映射的子组件option
     @ContentChildren(forwardRef(() => OptionComponent))
@@ -114,7 +118,9 @@ export class SelectComponent implements AfterContentInit, OnDestroy, OnInit{
     templateUrl: 'option.html',
     styleUrls: ['option.scss'],
     host: {
-        "(click)": "_onClick()"
+        "(click)": "_onClick()",
+        '[style.height.px]': '_height',
+        '[style.line-height.px]': '_height'
     }
 })
 export class OptionComponent implements OnInit{
@@ -124,6 +130,8 @@ export class OptionComponent implements OnInit{
     private _optionView: string;
 
     private _selectCmp: SelectComponent;
+
+    private _height: number;
 
     public selected:boolean = false;//选中状态
 
@@ -143,6 +151,7 @@ export class OptionComponent implements OnInit{
     ngOnInit(){
         //初始化option显示值
         this._optionView = this.optionItem[this._selectCmp.labelField];
+        this._selectCmp.height ? this._height = this._selectCmp.height -2 : null;
     }
 
 }

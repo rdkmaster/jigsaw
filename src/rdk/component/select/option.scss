@@ -1,37 +1,40 @@
 @import "../../assets/scss/core/_basc";
 
+$option-prefix-cls: #{$rdk-prefix}-option;
+
 :host{
   display: block;
+  height: 28px;
+  line-height: 28px;
 }
 
-:host-context(.theme-blue) .option-box {
+:host-context(.theme-blue) .#{$option-prefix-cls} {
   &:hover {
-    background-color: $blue-hover;
+    background-color: $primary-color-hover;
   }
-  &.on, &.on:hover{
+  &.#{$option-prefix-cls}-on, &.#{$option-prefix-cls}-on:hover{
     background-color: $gray-light;
   }
 }
 
-:host-context(.theme-orange) .option-box {
+:host-context(.theme-orange) .#{$option-prefix-cls} {
   &:hover {
     background-color: $orange-hover;
   }
-  &.on, &.on:hover{
+  &.#{$option-prefix-cls}-on, &.#{$option-prefix-cls}-on:hover{
     background-color: $gray-light;
   }
 }
 
-.option-box {
-  height: 28px;
-  line-height: 28px;
+.#{$option-prefix-cls} {
+  height: 100%;
   cursor: pointer;
   padding: 0 6px;
   box-sizing: border-box;
   &:hover {
-    background-color: $blue-hover;
+    background-color: $primary-color-hover;
   }
-  &.on, &.on:hover{
+  &.#{$option-prefix-cls}-on, &.#{$option-prefix-cls}-on:hover{
     background-color: $gray-light;
   }
 }

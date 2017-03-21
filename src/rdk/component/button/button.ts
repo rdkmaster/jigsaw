@@ -1,16 +1,16 @@
-import {NgModule, Component, Input, OnChanges, SimpleChanges, Renderer, ElementRef, OnInit} from '@angular/core';
+import {NgModule, Component, Input} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 @Component({
-    selector: 'rdk-btn, a[rdk-btn]',
+    selector: 'rdk-button, a[rdk-button]',
     templateUrl: 'button.html',
     styleUrls: ['button.scss'],
     host: {
-        '[class.disabled]': 'disabled',
+        '[class.rdk-button-disabled]': 'disabled',
         '(click)': '_onClick()',
         '[style.width.px]': 'width',
         '[style.height.px]': 'height',
-        '[class.am-running]': "_amRunning"
+        '[class.rdk-button-clicked]': "_clicked"
     }
 })
 export class ButtonComponent{
@@ -27,12 +27,12 @@ export class ButtonComponent{
     @Input() disabled: boolean = false;
 
     //按钮动画执行状态
-    private _amRunning: boolean = false;
+    private _clicked: boolean = false;
 
     private _onClick(): void {
         if (!this.disabled) {
-            this._amRunning = true;
-            setTimeout(() => this._amRunning = false, 360);
+            this._clicked = true;
+            setTimeout(() => this._clicked = false, 360);
         }
     }
 
