@@ -17,7 +17,7 @@ $switch-duration: .3s;
     transition: all $switch-duration;
     user-select: none;
 
-    &-inner {
+    .#{$switch-prefix}-inner {
         color: #fff;
         font-size: $font-size-base;
         margin-left: 24px;
@@ -80,7 +80,7 @@ $switch-duration: .3s;
             cursor: not-allowed;
         }
 
-        &-inner {
+        .#{$switch-prefix}-inner {
             color: $disabled-color;
         }
     }
