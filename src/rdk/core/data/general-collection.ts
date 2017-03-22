@@ -1,146 +1,147 @@
 import {
-  IAjaxComponentData, DataReviser, DataRefreshCallback, ComponentDataHelper, CallbackRemoval, AjaxSuccessCallback,
-  AjaxErrorCallback, AjaxCompleteCallback
+    IAjaxComponentData, DataReviser, DataRefreshCallback, ComponentDataHelper, CallbackRemoval, AjaxSuccessCallback,
+    AjaxErrorCallback, AjaxCompleteCallback
 } from "./component-data";
 import {Http, RequestOptionsArgs, Response} from "@angular/http";
 
 export abstract class AbstractGeneralCollection extends Object implements IAjaxComponentData {
-  public http: Http;
-  public busy: boolean;
+    public http: Http;
+    public busy: boolean;
 
-  public abstract fromObject(data: any): AbstractGeneralCollection;
-  protected abstract ajaxSuccessHandler(data): void;
+    public abstract fromObject(data: any): AbstractGeneralCollection;
 
-  protected reviseData(response:Response):any {
-    return this.wrappedDataReviser ? this.wrappedDataReviser(response.json()) : response.json();
-  }
+    protected abstract ajaxSuccessHandler(data): void;
 
-  public fromAjax(url: string, options?: RequestOptionsArgs): void {
-    if (!this.http) {
-      console.error('set a valid Http instance to the http attribute before invoking fromAjax()!');
-      return;
+    protected reviseData(response: Response): any {
+        return this.wrappedDataReviser ? this.wrappedDataReviser(response.json()) : response.json();
     }
 
-    this.http.request(url, options)
-      .map(res => this.reviseData(res))
-      .subscribe(
-        data => this.ajaxSuccessHandler(data),
-        error => this.ajaxErrorHandler(error),
-        () => this.ajaxCompleteHandler()
-      );
-  }
+    public fromAjax(url: string, options?: RequestOptionsArgs): void {
+        if (!this.http) {
+            console.error('set a valid Http instance to the http attribute before invoking fromAjax()!');
+            return;
+        }
 
-  protected wrappedDataReviser: DataReviser;
-  private _originDataReviser: DataReviser;
-
-  public get dataReviser(): DataReviser {
-    return this._originDataReviser;
-  }
-
-  public set dataReviser(value: DataReviser) {
-    this._originDataReviser = value;
-    this.wrappedDataReviser = (data) => {
-      try {
-        return this._originDataReviser(data);
-      } catch (e) {
-        console.error('revise data error: ' + e);
-        console.error(e.stack);
-        return data;
-      }
+        this.http.request(url, options)
+            .map(res => this.reviseData(res))
+            .subscribe(
+                data => this.ajaxSuccessHandler(data),
+                error => this.ajaxErrorHandler(error),
+                () => this.ajaxCompleteHandler()
+            );
     }
-  }
 
-  protected componentDataHelper: ComponentDataHelper = new ComponentDataHelper(this);
+    protected wrappedDataReviser: DataReviser;
+    private _originDataReviser: DataReviser;
 
-  public refresh(): void {
-    this.componentDataHelper.invokeRefreshCallback();
-  }
+    public get dataReviser(): DataReviser {
+        return this._originDataReviser;
+    }
 
-  public onRefresh(callback: DataRefreshCallback): CallbackRemoval {
-    return this.componentDataHelper.getRefreshRemoval(callback);
-  }
+    public set dataReviser(value: DataReviser) {
+        this._originDataReviser = value;
+        this.wrappedDataReviser = (data) => {
+            try {
+                return this._originDataReviser(data);
+            } catch (e) {
+                console.error('revise data error: ' + e);
+                console.error(e.stack);
+                return data;
+            }
+        }
+    }
 
-  public onAjaxSuccess(callback: AjaxSuccessCallback): CallbackRemoval {
-    return this.componentDataHelper.getAjaxSuccessRemoval(callback);
-  }
+    protected componentDataHelper: ComponentDataHelper = new ComponentDataHelper(this);
 
-  public onAjaxError(callback: AjaxErrorCallback): CallbackRemoval {
-    return this.componentDataHelper.getAjaxErrorRemoval(callback);
-  }
+    public refresh(): void {
+        this.componentDataHelper.invokeRefreshCallback();
+    }
 
-  public onAjaxComplete(callback: AjaxCompleteCallback): CallbackRemoval {
-    return this.componentDataHelper.getAjaxCompleteRemoval(callback);
-  }
+    public onRefresh(callback: DataRefreshCallback): CallbackRemoval {
+        return this.componentDataHelper.getRefreshRemoval(callback);
+    }
 
-  protected ajaxErrorHandler(error): void {
-    console.error('get data from paging server error!! detail: ' + error);
-    this.componentDataHelper.invokeAjaxErrorCallback(error);
-    this.busy = false;
-  }
+    public onAjaxSuccess(callback: AjaxSuccessCallback): CallbackRemoval {
+        return this.componentDataHelper.getAjaxSuccessRemoval(callback);
+    }
 
-  protected ajaxCompleteHandler(): void {
-    console.log('get data from paging server complete!!');
-    this.componentDataHelper.invokeAjaxCompleteCallback();
-    this.busy = false;
-  }
+    public onAjaxError(callback: AjaxErrorCallback): CallbackRemoval {
+        return this.componentDataHelper.getAjaxErrorRemoval(callback);
+    }
 
-  public destroy(): void {
-    this.componentDataHelper.clearCallbacks();
-    this.componentDataHelper = null;
+    public onAjaxComplete(callback: AjaxCompleteCallback): CallbackRemoval {
+        return this.componentDataHelper.getAjaxCompleteRemoval(callback);
+    }
 
-    this.wrappedDataReviser = null;
-    this._originDataReviser = null;
-  }
+    protected ajaxErrorHandler(error): void {
+        console.error('get data from paging server error!! detail: ' + error);
+        this.componentDataHelper.invokeAjaxErrorCallback(error);
+        this.busy = false;
+    }
+
+    protected ajaxCompleteHandler(): void {
+        console.log('get data from paging server complete!!');
+        this.componentDataHelper.invokeAjaxCompleteCallback();
+        this.busy = false;
+    }
+
+    public destroy(): void {
+        this.componentDataHelper.clearCallbacks();
+        this.componentDataHelper = null;
+
+        this.wrappedDataReviser = null;
+        this._originDataReviser = null;
+    }
 }
 
 export class GeneralCollection extends AbstractGeneralCollection {
 
-  protected ajaxSuccessHandler(data): void {
-    this.fromObject(data);
-    this.componentDataHelper.invokeAjaxSuccessCallback(data);
-  }
-
-  private _propList: Array<string> = [];
-
-  public fromObject(data: any): GeneralCollection {
-    if (data instanceof GeneralCollection) {
-      console.error("unable to make data from another GeneralCollection instance!");
-      return;
+    protected ajaxSuccessHandler(data): void {
+        this.fromObject(data);
+        this.componentDataHelper.invokeAjaxSuccessCallback(data);
     }
 
-    let needRefresh = false;
+    protected propList: string[] = [];
 
-    this._propList.forEach(prop => {
-      needRefresh = true;
-      delete this[prop];
-    });
-    this._propList.splice(0, this._propList.length);
-
-    if (data) {
-      for (let key in data) {
-        if (!data.hasOwnProperty(key) || data[key] instanceof Function) {
-          continue;
+    public fromObject(data: any): GeneralCollection {
+        if (data instanceof GeneralCollection) {
+            console.error("unable to make data from another GeneralCollection instance!");
+            return;
         }
-        needRefresh = true;
-        this[key] = data[key];
-        this._propList.push(key);
-      }
+
+        let needRefresh = false;
+
+        this.propList.forEach(prop => {
+            needRefresh = true;
+            delete this[prop];
+        });
+        this.propList.splice(0, this.propList.length);
+
+        if (data) {
+            for (let key in data) {
+                if (!data.hasOwnProperty(key) || data[key] instanceof Function) {
+                    continue;
+                }
+                needRefresh = true;
+                this[key] = data[key];
+                this.propList.push(key);
+            }
+        }
+
+        if (needRefresh) {
+            this.refresh();
+        }
+
+        return this;
     }
 
-    if (needRefresh) {
-      this.refresh();
+    public destroy(): void {
+        super.destroy();
+        console.log('destroying GeneralCollection....');
+
+        this.propList.forEach((prop: string) => {
+            delete this[prop];
+        });
+        this.propList.splice(0, this.propList.length);
     }
-
-    return this;
-  }
-
-  public destroy(): void {
-    super.destroy();
-    console.log('destroying GeneralCollection....');
-
-    this._propList.forEach((prop: string) => {
-      delete this[prop];
-    });
-    this._propList.splice(0, this._propList.length);
-  }
 }
