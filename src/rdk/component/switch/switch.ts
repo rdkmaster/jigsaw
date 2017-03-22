@@ -15,34 +15,37 @@ export class RdkSwitch implements OnInit{
     private _content: any;
     private _switchClass: {};
 
-    @Input() onLabel: any;
-    @Input() offLabel: any;
-    @Input() size: string = 'default';
+    @Input()
+    public onLabel: any;
+    @Input()
+    public offLabel: any;
+    @Input()
+    public size: string = 'default';
 
     @Input()
-    get disabled(): boolean { return this._disabled; };
-    set disabled(value: boolean) {
+    public get disabled(): boolean { return this._disabled; };
+    public set disabled(value: boolean) {
         this._disabled = value;
-        this.setSwitchClass();
+        this._setSwitchClass();
     }
 
     @Input()
-    get checked(): boolean  { return this._checked};
-    set checked(value: boolean) {
+    public get checked(): boolean  { return this._checked};
+    public set checked(value: boolean) {
         this._checked = value;
 
-        this.setSwitchClass();
-        this.setInnerValue();
+        this._setSwitchClass();
+        this._setInnerValue();
     }
-    @Output() checkedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() public checkedChange = new EventEmitter<boolean>();
 
     /**
      * 对外暴露事件,
      * @type {EventEmitter<boolean>}
      */
-    @Output() change = this.checkedChange;
+    @Output() public change = this.checkedChange;
 
-    _switchClick() {
+    private _switchClick() {
         if(!this.disabled) {
             this.checked = !this.checked;
 
@@ -54,7 +57,7 @@ export class RdkSwitch implements OnInit{
     /**
      * 更新控件样式的方法
      */
-    setSwitchClass() {
+    private _setSwitchClass() {
         this._switchClass = {
             'rdk-switch': 'true',
             'rdk-switch-small': this.size === 'small'? true : false,
@@ -66,12 +69,12 @@ export class RdkSwitch implements OnInit{
     /**
      * 设置选中和费选中的值.
      */
-    setInnerValue() {
+    private _setInnerValue() {
         this._content = this.checked ? this.onLabel : this.offLabel;
     }
 
-    ngOnInit() {
-        this.setSwitchClass();
-        this.setInnerValue();
+    public ngOnInit() {
+        this._setSwitchClass();
+        this._setInnerValue();
     }
 }
