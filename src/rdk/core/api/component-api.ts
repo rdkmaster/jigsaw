@@ -19,11 +19,8 @@ export abstract class AbstractRDKComponent implements IRDKComponent {
     }
 
     public set width(newValue: string) {
-        if (newValue.indexOf('%') == -1 && newValue.indexOf('px') == -1) {
-            this._width = newValue + 'px';
-        } else {
-            this._width = newValue;
-        }
+        const match = newValue ? newValue.match(/^\s*\d+%|px\s*$/) : null;
+        this._width =  match ? newValue : newValue + 'px';
     }
 
     @Input() public height: number;
