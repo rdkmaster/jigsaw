@@ -4,10 +4,10 @@
 
 import {Directive, Input, ElementRef, OnInit, Output, EventEmitter} from '@angular/core';
 
-// todo 修改成import 形式.
-let $ = require('jquery');
-require("jquery-mousewheel");
-require('malihu-custom-scrollbar-plugin');
+// todo 1 这种写法的原理
+let $ = require("jquery");
+import "jquery-mousewheel";
+import 'malihu-custom-scrollbar-plugin';
 
 export class ScrollEvent {
     // 滚动发生的方向, y 或者x
@@ -16,20 +16,23 @@ export class ScrollEvent {
     // 距左部的距离
     draggerLeft: number;
 
-    // 距顶部的距离
-    draggerTop: number;
-
-    // 内容距离
-    left: number;
-
     // 距左侧的百分比
     leftPct: number;
 
     // 内容距离
-    top: number;
+    left: number;
+
+    // 距顶部的距离
+    draggerTop: number;
 
     // 距顶部的百分比
-    topPct: number
+    topPct: number;
+
+    // 内容距离
+    top: number;
+
+    // 原本的jquery对象
+    content: Object
 }
 
 
@@ -41,31 +44,31 @@ export class RdkScrollBar implements OnInit{
     constructor(private _elf: ElementRef) {}
 
     @Input()
-    axis: string = "yx";   //  horizontal scrollbar or "y" or "x"
+    public axis: string = "yx";   //  horizontal scrollbar or "y" or "x"
 
     @Input()
-    theme: string  = "dark";  // 很多很多主题...
+    public theme: string  = "dark";  // 很多很多主题...
 
     @Input()
-    autoHideScrollbar: boolean = false;
+    public autoHideScrollbar: boolean = false;
 
     @Output()
-    scrollInit: EventEmitter<any> = new EventEmitter<any>();
+    public scrollInit: EventEmitter<any> = new EventEmitter<any>();
 
     @Output()
-    scrollStart: EventEmitter<any> = new EventEmitter<any>();
+    public scrollStart = new EventEmitter<ScrollEvent>();
 
     @Output()
-    whileScrolling: EventEmitter<any> = new EventEmitter<any>();
+    public whileScrolling = new EventEmitter<ScrollEvent>();
 
 
     /**
-     *根据复杂的参数这是滚动条.
+     * 根据复杂的参数设置滚动条.
      * 暂不对外提供
      * option {} object 类型
      */
     private _setScrollBar(option) {
-        // 下回当前滚动条
+        // 销毁当前滚动条
         this._scrollBarJq.mCustomScrollbar("destroy");
 
         // 简单的合并参数
@@ -79,7 +82,7 @@ export class RdkScrollBar implements OnInit{
         this._scrollBarJq.mCustomScrollbar(option);
     }
 
-    ngOnInit() {
+    public ngOnInit() {
         this._scrollBarJq = $(this._elf.nativeElement).mCustomScrollbar({
             axis: this.axis,
             theme: this.theme,
@@ -103,11 +106,13 @@ export class RdkScrollBar implements OnInit{
 
         scrollEvent.direction = event.direction;
         scrollEvent.draggerLeft = event.draggerLeft;
-        scrollEvent.draggerTop = event.draggerTop;
-        scrollEvent.left = event.left;
         scrollEvent.leftPct = event.leftPct;
-        scrollEvent.top = event.top;
+        scrollEvent.left = event.left;
+        scrollEvent.draggerTop = event.draggerTop;
         scrollEvent.topPct = event.topPct;
+        scrollEvent.top = event.top;
+
+        scrollEvent.content = event.content;
 
         return scrollEvent;
     }
