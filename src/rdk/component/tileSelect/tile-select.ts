@@ -4,15 +4,17 @@ import {
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms'
-import {CompareJsonObjComponent} from '../../core/api/compareJsonObjComponent';
 import {InputModule} from '../input/input';
+import {AbstractRDKComponent} from '../../core/api/component-api';
+import {CommonUtils} from '../../core/utils/common-utils';
+import {InternalUtils} from '../../core/utils/internal-utils';
 
 @Component({
     selector: 'rdk-tile-select',
     templateUrl: 'tile-select.html',
     styleUrls: ['tile-select.scss']
 })
-export class TileSelectComponent extends CompareJsonObjComponent implements OnInit, AfterContentInit {
+export class TileSelectComponent extends AbstractRDKComponent implements OnInit, AfterContentInit {
     private _contentInit: boolean = false;
     private _selectedItems: any[] = [];
 
@@ -33,6 +35,12 @@ export class TileSelectComponent extends CompareJsonObjComponent implements OnIn
 
     @Output() public selectedItemsChange = new EventEmitter<any[]>();
 
+    //设置对象的标识
+    @Input() public trackItemBy: any;
+
+    //显示在界面上的属性名
+    @Input() public labelField: string = 'label';
+
     //判断是否支持多选
     @Input() public multipleSelect: boolean = true;
 
@@ -50,7 +58,7 @@ export class TileSelectComponent extends CompareJsonObjComponent implements OnIn
                 this.selectedItems.push(optionItem);
             } else {
                 this._selectedItems.forEach(selectedItem => {
-                    if (this._compareJsonObj(selectedItem, optionItem)) {
+                    if (CommonUtils.compareWithKeyProperty(selectedItem, optionItem, this.trackItemBy)) {
                         this.selectedItems.splice(this.selectedItems.indexOf(selectedItem), 1);
                     }
                 });
@@ -58,7 +66,7 @@ export class TileSelectComponent extends CompareJsonObjComponent implements OnIn
         } else { //单选选中
             this._options.length && this._options.forEach((option: TileOptionComponent) => {
                 //去除其他option选中
-                if (!this._compareJsonObj(option.optionItem, optionItem) && option.selected) {
+                if (!CommonUtils.compareWithKeyProperty(option.optionItem, optionItem, this.trackItemBy) && option.selected) {
                     option.selected = false;
                     this.selectedItems.splice(this.selectedItems.indexOf(option.optionItem), 1);
                 }
@@ -73,7 +81,7 @@ export class TileSelectComponent extends CompareJsonObjComponent implements OnIn
     private _setOptionState(): void {
         this._selectedItems.length && this._options.length && this._options.forEach((option) => {
             this._selectedItems.forEach((optionItem) => {
-                if (this._compareJsonObj(option.optionItem, optionItem) && !option.selected) {
+                if (CommonUtils.compareWithKeyProperty(option.optionItem, optionItem, this.trackItemBy) && !option.selected) {
                     option.selected = true;
                     option._cdref.detectChanges();
                 }
@@ -82,7 +90,7 @@ export class TileSelectComponent extends CompareJsonObjComponent implements OnIn
     }
 
     ngOnInit() {
-        this._initTrackItemBy();
+        this.trackItemBy = InternalUtils.initTrackItemBy(this.trackItemBy, this.labelField);
     }
 
     ngAfterContentInit() {

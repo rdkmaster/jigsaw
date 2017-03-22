@@ -1,5 +1,5 @@
-<rdk-input class="rdk-paging-search" *ngIf="searchable" width="80" height="28">
-    <img src="rdk/assets/images/search.png">
+<rdk-input class="rdk-paging-search" *ngIf="searchable" width="80" height="28" [bigIndent]="true">
+    <span rdk-icon-front class="fa fa-search"></span>
 </rdk-input>
 
 <div class="rdk-paging-prev rdk-paging-page" [class.rdk-paging-disabled]="_prevDisabled" (click)="_pagePrev()"></div>

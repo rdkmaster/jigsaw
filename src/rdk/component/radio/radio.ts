@@ -4,12 +4,14 @@ import {
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {CompareJsonObjComponent} from '../../core/api/compareJsonObjComponent';
+import {AbstractRDKComponent} from '../../core/api/component-api';
+import {CommonUtils} from '../../core/utils/common-utils';
+import {InternalUtils} from '../../core/utils/internal-utils';
 
 @Directive({
     selector: 'rdk-radio-group'
 })
-export class RadioGroup extends CompareJsonObjComponent implements OnInit, AfterContentInit {
+export class RadioGroup extends AbstractRDKComponent implements OnInit, AfterContentInit {
     private _value: any = null;
     private _contentInit: boolean = false;
 
@@ -27,19 +29,25 @@ export class RadioGroup extends CompareJsonObjComponent implements OnInit, After
 
     @Output() public valueChange: EventEmitter<any> = new EventEmitter<any>();
 
+    //设置对象的标识
+    @Input() public trackItemBy: any;
+
+    //显示在界面上的属性名
+    @Input() public labelField: string = 'label';
+
     @ContentChildren(forwardRef(() => RadioButton))
     private _radios: QueryList<RadioButton> = null;
 
     private _updateSelectedRadio(): void {
         this._radios && this._radios.forEach(radio => {
-            radio.checked = this._compareJsonObj(this.value, radio.radioItem);
+            radio.checked = CommonUtils.compareWithKeyProperty(this.value, radio.radioItem, this.trackItemBy);
             radio.cdRef.detectChanges();
         });
         this.valueChange.emit(this.value);
     }
 
     ngOnInit() {
-        this._initTrackItemBy();
+        this.trackItemBy = InternalUtils.initTrackItemBy(this.trackItemBy, this.labelField);
     }
 
     ngAfterContentInit() {

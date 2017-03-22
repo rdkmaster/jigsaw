@@ -4,7 +4,7 @@ export interface IRDKComponent {
     //组件基础样式
     basicClass: string;
     width: string;
-    height: number;
+    height: string;
 }
 
 export abstract class AbstractRDKComponent implements IRDKComponent {
@@ -13,6 +13,7 @@ export abstract class AbstractRDKComponent implements IRDKComponent {
     public basicClass: string;
 
     protected _width: string;
+    protected _height: string;
     @Input()
     public get width(): string {
         return this._width
@@ -23,7 +24,15 @@ export abstract class AbstractRDKComponent implements IRDKComponent {
         this._width =  match ? newValue : newValue + 'px';
     }
 
-    @Input() public height: number;
+    @Input()
+    public get height(): string {
+        return this._height;
+    }
+
+    public set height(newValue: string) {
+        const match = newValue ? newValue.match(/^\s*\d+%|px\s*$/) : null;
+        this._height =  match ? newValue : newValue + 'px';
+    }
 
 }
 

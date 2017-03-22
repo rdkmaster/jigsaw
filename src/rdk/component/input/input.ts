@@ -1,5 +1,6 @@
 import {
-    NgModule, Component, EventEmitter, Input, Output
+    NgModule, Component, EventEmitter, Input, Output, ContentChildren, AfterContentInit, Directive, QueryList,
+    ElementRef, OnInit
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
@@ -17,6 +18,9 @@ import {AbstractRDKComponent} from '../../core/api/component-api';
 })
 export class InputComponent extends AbstractRDKComponent {
     private _value: string | number; //input表单值
+
+    @Input()
+    public bigIndent: boolean = false;
 
     //input form表单值
     @Input()

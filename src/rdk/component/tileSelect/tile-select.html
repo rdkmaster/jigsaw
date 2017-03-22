@@ -1,6 +1,6 @@
 <div class="rdk-tile-select-search">
-    <rdk-input *ngIf="searchable" width="500">
-        <img src="rdk/assets/images/search.png">
+    <rdk-input *ngIf="searchable" width="500" [bigIndent]="true">
+        <span rdk-icon-front class="fa fa-search"></span>
     </rdk-input>
 </div>
 <ng-content></ng-content>
