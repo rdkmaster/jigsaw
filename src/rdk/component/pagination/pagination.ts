@@ -1,6 +1,6 @@
 import {
-    NgModule, Component, Input, Output, EventEmitter, OnInit, ElementRef, Renderer,
-    QueryList, ViewChildren, Optional, forwardRef, AfterViewInit, ChangeDetectorRef
+    NgModule, Component, Input, Output, EventEmitter, OnInit,
+    QueryList, ViewChildren, Optional, forwardRef, AfterViewInit
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
@@ -14,7 +14,7 @@ import {InputModule} from '../input/input';
     styleUrls: ['pagination.scss']
 })
 export class PaginationComponent implements OnInit, AfterViewInit {
-    private _totalPage: number; // 总页数
+    private _totalPage: number;
     private _pageArr: number[] = [];
     private _prevDisabled: boolean = false;
     private _nextDisabled: boolean = false;
@@ -28,10 +28,12 @@ export class PaginationComponent implements OnInit, AfterViewInit {
     private _hostInit: boolean = false;
 
     // 当前页
-    @Input() get current() {
+    @Input()
+    public get current(): number {
         return this._current
     };
-    set current(newValue) {
+
+    public set current(newValue: number) {
         if (this._current != newValue || this._hostInit) {
             this._current = newValue;
             //page显示形式
@@ -50,37 +52,45 @@ export class PaginationComponent implements OnInit, AfterViewInit {
     }
 
     // 默认当前页
-    @Input() get defaultCurrent() {
+    @Input()
+    public get defaultCurrent(): number {
         return this._defaultCurrent;
     }
-    set defaultCurrent(newValue) {
+
+    public set defaultCurrent(newValue: number) {
         if (this._defaultCurrent != newValue) {
             this._defaultCurrent = newValue;
         }
     };
 
-    @Input() total: number; // 数据总数
+    @Input() public total: number; // 数据总数
 
     // 每页条数
-    @Input() get pageSize() {
+    @Input()
+    public get pageSize() {
         return this._pageSize;
     }
-    set pageSize(newValue) {
+
+    public set pageSize(newValue) {
         if (this._pageSize != newValue) {
-            if(newValue.hasOwnProperty('id')){
+            if (newValue.hasOwnProperty('id')) {
                 this._pageSize = newValue;
-            }else if(!isNaN(newValue)){
+            } else if (!isNaN(newValue)) {
                 this._pageSize = {id: newValue, label: newValue + '/Page'};
             }
             this._init();
         }
     };
 
-    @Input() showSizeChanger: boolean; // 是否可以改变pageSize
+    @Input() public showSizeBox: boolean; // 是否可以改变pageSize
 
     // 指定每页可以显示多少条
-    @Input() get pageSizeOptions() {return this._pageSizeOptions}
-    set pageSizeOptions(newValue: number[]) {
+    @Input()
+    public get pageSizeOptions() {
+        return this._pageSizeOptions
+    }
+
+    public set pageSizeOptions(newValue: number[]) {
         this._pageSizeOptions = [];
         newValue.forEach(num => {
             let option = {id: num, label: num + '/Page'};
@@ -88,24 +98,18 @@ export class PaginationComponent implements OnInit, AfterViewInit {
         });
     };
 
-    @Input() searchable: boolean; // 搜索功能开关
+    @Input() public searchable: boolean; // 搜索功能开关
 
-    @Input() showQuickJumper: boolean; // 是否可以快速跳转至某页
+    @Input() public showQuickJumper: boolean; // 是否可以快速跳转至某页
 
-    @Input() size: string; // 当为「small」时，是小尺寸分页
+    @Input() public size: string; // 当为「small」时，是小尺寸分页
 
-    @Input() simple: boolean; // 当添加该属性时，显示为简单分页
-
-    @Output() change: EventEmitter<any> = new EventEmitter<any>(); //页码改变的事件
+    @Output() public change: EventEmitter<any> = new EventEmitter<any>(); //页码改变的事件
 
     @Output() onShowSizeChange: EventEmitter<any> = new EventEmitter<any>(); // pageSize 变化的事件
 
     @ViewChildren(forwardRef(() => PageComponent))
     private _pages: QueryList<PageComponent> = null;
-
-    constructor() {
-
-    }
 
     /*
      * 根据page组件的当前选择改变current值
@@ -222,7 +226,6 @@ export class PaginationComponent implements OnInit, AfterViewInit {
             this._firstPage.showPrev = true;
             this._lastPage.showNext = true;
         }
-
     }
 
     /*
@@ -265,7 +268,7 @@ export class PaginationComponent implements OnInit, AfterViewInit {
 
     private _goto(pageNum): void {
         pageNum = parseInt(pageNum);
-        if(pageNum <= this._totalPage && pageNum >= 1){
+        if (pageNum <= this._totalPage && pageNum >= 1) {
             this._pages.find(page => page.current == true).cancleCurrent();
             this._pages.find(page => page.page == pageNum).setCurrent();
             this.current = pageNum;
@@ -291,6 +294,7 @@ export class PaginationComponent implements OnInit, AfterViewInit {
                 this._pages.forEach(page => {
                     page.showPrev = false;
                     page.showNext = false;
+                    page.current = false;
                 });
 
                 //获取第一个和最后一个page组件实例
@@ -321,9 +325,9 @@ export class PageComponent {
     private _isShow: boolean = false;
     private _pagination: PaginationComponent;
 
-    @Input() page: number;
+    @Input() public page: number;
 
-    constructor(@Optional() pagination: PaginationComponent, public cdRef: ChangeDetectorRef) {
+    constructor(@Optional() pagination: PaginationComponent) {
         this._pagination = pagination;
     }
 

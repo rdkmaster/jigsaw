@@ -3,42 +3,39 @@ import {
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {AbstractRDKComponent} from '../../core/api/component-api';
 
 @Component({
     selector: 'rdk-input',
     templateUrl: 'input.html',
     styleUrls: ['input.scss'],
     host: {
-        '[style.width.px]': 'width',
+        '[style.width]': 'width',
         '[style.height.px]': 'height',
         '[style.line-height.px]': 'height'
     }
 })
-export class InputComponent{
-    private _value: any; //input表单值
+export class InputComponent extends AbstractRDKComponent {
+    private _value: string | number; //input表单值
 
     //input form表单值
     @Input()
-    get value() { return this._value; }
-    set value(newValue: any) {
+    public get value(): string | number {
+        return this._value;
+    }
+
+    public set value(newValue: string | number) {
         if (this._value != newValue) {
             this._value = newValue;
             this.valueChange.emit(newValue);
         }
     }
 
-    @Output() valueChange: EventEmitter<any> = new EventEmitter<any>();
+    @Output() public valueChange: EventEmitter<string | number> = new EventEmitter<string | number>();
 
-    @Input() width: number;
+    @Input() public clearable: boolean = true;
 
-    @Input() height: number;
-
-    @Input() clearable: boolean = true;
-
-    constructor(){
-    }
-
-    private _clearValue(): void{
+    private _clearValue(): void {
         this.value = null;
     }
 
@@ -49,7 +46,7 @@ export class InputComponent{
     declarations: [InputComponent],
     exports: [InputComponent],
 })
-export class InputModule{
+export class InputModule {
 
 }
 

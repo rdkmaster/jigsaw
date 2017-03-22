@@ -28,10 +28,7 @@
         "rdk/assets/scss/common.scss"
       ],
       "scripts": [
-        "../node_modules/jquery/dist/jquery.min.js",
-        "../node_modules/moment/min/moment.min.js",
-        "../node_modules/bootstrap/dist/js/bootstrap.min.js",
-        "../node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"
+
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

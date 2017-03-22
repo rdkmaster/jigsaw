@@ -4,35 +4,33 @@ import {
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {CompareJsonObjComponent} from '../../core/api/compareJsonObjComponent';
 
 @Component({
-    selector: 'rdk-list-select',
+    selector: 'rdk-select',
     templateUrl: 'select.html',
     styleUrls: ['select.scss'],
     host: {
         "(click)": "_toggleClick($event)",
-        '[style.width.px]': 'width',
+        '[style.width]': 'width',
         '[style.height.px]': 'height',
         '[style.line-height.px]': 'height'
     }
 })
-export class SelectComponent implements AfterContentInit, OnDestroy, OnInit{
+export class SelectComponent extends CompareJsonObjComponent implements AfterContentInit, OnDestroy, OnInit {
     private _optionListHidden: boolean = true; // 设置option列表是否显示
     private _value: any; // select表单值
     private _contentInit: boolean = false; //子组件加载标记
     private _documentListen: Function; // document事件解绑函数
     private _selectedView: string;
 
-    //设置对象的标识
-    @Input() trackItemBy: any;
-
-    //显示在界面上的属性名
-    @Input() labelField: string = 'label';
-
     //select form表单值
     @Input()
-    get value(): any { return this._value; }
-    set value(newValue: any) {
+    public get value(): any {
+        return this._value;
+    }
+
+    public set value(newValue: any) {
         if (this._value != newValue) {
             this._value = newValue;
             this._selectedView = newValue[this.labelField];
@@ -40,29 +38,28 @@ export class SelectComponent implements AfterContentInit, OnDestroy, OnInit{
         }
     }
 
-    @Output() valueChange: EventEmitter<any> = new EventEmitter<any>();
+    @Output() public valueChange: EventEmitter<any> = new EventEmitter<any>();
 
-    @Input() width: number;
-
-    @Input() height: number;
+    @Input() public placeholder: string;
 
     //获取映射的子组件option
     @ContentChildren(forwardRef(() => OptionComponent))
     private _options: QueryList<OptionComponent> = null;
 
-    constructor(renderer: Renderer){
+    constructor(private _renderer: Renderer) {
+        super();
         //绑定全局事件
-        this._documentListen = renderer.listenGlobal('document', 'click', () => this._optionListHidden = true);
+        this._documentListen = _renderer.listenGlobal('document', 'click', () => this._optionListHidden = true);
     }
 
     //点击组件，显示\隐藏option列表
-    private _toggleClick(event: Event): void{
+    private _toggleClick(event: Event): void {
         event.stopPropagation();
         this._optionListHidden = !this._optionListHidden;
     }
 
     //更改option选中状态
-    private _updateSelectedOption(): void{
+    private _updateSelectedOption(): void {
         this._options && this._options.forEach((option) => {
             option.selected = this._compareJsonObj(this.value, option.optionItem);
             option.cdRef.detectChanges();
@@ -70,35 +67,7 @@ export class SelectComponent implements AfterContentInit, OnDestroy, OnInit{
         this.valueChange.emit(this.value);
     };
 
-    //比较两个radio是否相等
-    private _compareJsonObj(item1, item2): boolean{
-        for(let i = 0; i < this.trackItemBy.length; i++){
-            if (item1[this.trackItemBy[i]] == item2[this.trackItemBy[i]]) {
-                continue;
-            } else {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /*
-     * 初始化对象标识，转化为数组
-     * */
-    private _initTrackItemBy(): void{
-        if(!this.trackItemBy){ //标识没有输入值，采用显示属性名
-            this.trackItemBy = this.labelField;
-        }
-        if(this.trackItemBy.indexOf(",") != -1){ //标识是多个
-            this.trackItemBy = this.trackItemBy.replace(" ","").split(",");
-        }else { //标识是单个
-            let arr = [];
-            arr.push(this.trackItemBy);
-            this.trackItemBy = arr;
-        }
-    }
-
-    ngOnInit(){
+    ngOnInit() {
         this._initTrackItemBy();
     }
 
@@ -107,14 +76,14 @@ export class SelectComponent implements AfterContentInit, OnDestroy, OnInit{
         this._updateSelectedOption();
     }
 
-    ngOnDestroy(){
+    ngOnDestroy() {
         this._documentListen();//解绑document上的点击事件
     }
 
 }
 
 @Component({
-    selector: 'rdk-list-option',
+    selector: 'rdk-select-option',
     templateUrl: 'option.html',
     styleUrls: ['option.scss'],
     host: {
@@ -123,24 +92,23 @@ export class SelectComponent implements AfterContentInit, OnDestroy, OnInit{
         '[style.line-height.px]': '_height'
     }
 })
-export class OptionComponent implements OnInit{
-    @Input()
-    optionItem: any;
+export class OptionComponent implements OnInit {
+    @Input() public optionItem: any;
 
-    private _optionView: string;
+    private _optionLabel: string;
 
     private _selectCmp: SelectComponent;
 
     private _height: number;
 
-    public selected:boolean = false;//选中状态
+    public selected: boolean = false;//选中状态
 
-    constructor(@Optional() selectCmp: SelectComponent, public cdRef: ChangeDetectorRef){
+    constructor(@Optional() selectCmp: SelectComponent, public cdRef: ChangeDetectorRef) {
         this._selectCmp = selectCmp;
     }
 
-    private _onClick(): void{
-        if(!this.selected){
+    private _onClick(): void {
+        if (!this.selected) {
             this.selected = true;
             if (this._selectCmp) {
                 this._selectCmp.value = this.optionItem;//更新内部value
@@ -148,10 +116,10 @@ export class OptionComponent implements OnInit{
         }
     }
 
-    ngOnInit(){
+    ngOnInit() {
         //初始化option显示值
-        this._optionView = this.optionItem[this._selectCmp.labelField];
-        this._selectCmp.height ? this._height = this._selectCmp.height -2 : null;
+        this._optionLabel = this.optionItem[this._selectCmp.labelField];
+        this._selectCmp.height ? this._height = this._selectCmp.height - 2 : null;
     }
 
 }
@@ -161,6 +129,6 @@ export class OptionComponent implements OnInit{
     declarations: [SelectComponent, OptionComponent],
     exports: [SelectComponent, OptionComponent]
 })
-export class SelectModule{
+export class SelectModule {
 
 }
