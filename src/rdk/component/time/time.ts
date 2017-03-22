@@ -4,8 +4,11 @@ import {FormsModule} from '@angular/forms';
 
 import {TimeService} from './time.service';
 
-declare let $: any;
-declare let require: any;
+//declare let $: any;
+//declare let require: any;
+
+let $ = require('jquery');
+import "eonasdan-bootstrap-datetimepicker";
 
 @Component({
     selector: 'rdk-time',
@@ -19,33 +22,36 @@ export class TimeComponent implements OnInit {
 
     private _value: string;
 
-    @Input() inline: boolean = true;
+    @Input() public inline: boolean = true;
 
     //组件暴露出去的时间数值，支持双向绑定
-    @Input() get date() {
+    @Input()
+    public get date(): string {
         return this._value;
     }
-    set date(newValue) {
+
+    public set date(newValue: string) {
         if (this._value != newValue) {
             this._value = this.timeService.format(newValue, this._format);
             this._initFlag && this._setDate(this._value);
         }
     }
 
-    @Output() dateChange = new EventEmitter<string>();
+    @Output() public dateChange = new EventEmitter<string>();
 
     //限制开始时间
-    @Input() dateLimitStart: any;
+    @Input() public dateLimitStart: any;
 
     //限制结束时间
-    @Input() dateLimitEnd: any;
+    @Input() public dateLimitEnd: any;
 
     //时间格式
     private _format: string = 'YYYY-MM-DD, HH:mm:ss';
 
     //粒度
-    @Input() set gr(value){
-        switch(value){
+    @Input()
+    public set gr(value) {
+        switch (value) {
             case 'quarter':
                 this._format = 'YYYY-Q';
                 break;
@@ -56,7 +62,7 @@ export class TimeComponent implements OnInit {
                 this._format = 'YYYY-W';
                 break;
             case 'day':
-                this._format =  'YYYY-MM-DD';
+                this._format = 'YYYY-MM-DD';
                 break;
             case 'hour':
                 this._format = 'YYYY-MM-DD, HH';
@@ -75,7 +81,7 @@ export class TimeComponent implements OnInit {
     //time插件容器（jq对象）
     private _timepicker: any;
 
-    constructor(private el: ElementRef, private timeService:TimeService) {
+    constructor(private el: ElementRef, private timeService: TimeService) {
 
     }
 
@@ -86,36 +92,36 @@ export class TimeComponent implements OnInit {
 
     ngOnInit() {
         //require.ensure([], (require) => {//这里是异步的（webpack）
-            //require("bootstrap/dist/css/bootstrap.min.css");
-            //require("eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css");
-            //require("eonasdan-bootstrap-datetimepicker");
+        //require("bootstrap/dist/css/bootstrap.min.css");
+        //require("eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css");
+        //require("eonasdan-bootstrap-datetimepicker");
 
-            $(() => {
-                console.log(this._value);
-                console.log(this._format);
-                let insert = this.el.nativeElement.querySelector(".time-box");
-                $(insert).datetimepicker({
-                    //locale: 'zh-cn',
-                    inline: this.inline,
-                    defaultDate: this._value,
-                    format: this._format, // format: 'LT', //时刻
-                    minDate: this.dateLimitStart,
-                    maxDate: this.dateLimitEnd,
-                    //viewMode: 'days', // 'decades','years','months','days', default: 'days'
-                    //extraFormats: ['MM/dd/YYYY', 'MM/dd/YY'],
-                    //showTodayButton: true,
-                    //useCurrent: false
-                }).on("dp.change", (e) => {
-                    let changeValue = this.timeService.format(e.date, this._format);
-                    if(this._value != changeValue){
-                        this._value = changeValue;
-                        this.dateChange.emit(this._value);
-                    }
-                });
-
-                this._timepicker = $(insert);
-                this._initFlag = true;
+        $(() => {
+            console.log(this._value);
+            console.log(this._format);
+            let insert = this.el.nativeElement.querySelector(".time-box");
+            $(insert).datetimepicker({
+                //locale: 'zh-cn',
+                inline: this.inline,
+                defaultDate: this._value,
+                format: this._format, // format: 'LT', //时刻
+                minDate: this.dateLimitStart,
+                maxDate: this.dateLimitEnd,
+                //viewMode: 'days', // 'decades','years','months','days', default: 'days'
+                //extraFormats: ['MM/dd/YYYY', 'MM/dd/YY'],
+                //showTodayButton: true,
+                //useCurrent: false
+            }).on("dp.change", (e) => {
+                let changeValue = this.timeService.format(e.date, this._format);
+                if (this._value != changeValue) {
+                    this._value = changeValue;
+                    this.dateChange.emit(this._value);
+                }
             });
+
+            this._timepicker = $(insert);
+            this._initFlag = true;
+        });
         //}, 'datepicker');
     }
 

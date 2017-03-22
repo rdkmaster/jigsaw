@@ -1,7 +1,7 @@
 import {
-  IAjaxComponentData, ComponentDataHelper, DataRefreshCallback, DataReviser, CallbackRemoval,
-  IPagableData, PagingBasicInfo, PagingFilterInfo, PagingSortInfo, SortAs, SortOrder, AjaxSuccessCallback,
-  AjaxErrorCallback, AjaxCompleteCallback
+    IAjaxComponentData, ComponentDataHelper, DataRefreshCallback, DataReviser, CallbackRemoval,
+    IPagableData, PagingBasicInfo, PagingFilterInfo, PagingSortInfo, SortAs, SortOrder, AjaxSuccessCallback,
+    AjaxErrorCallback, AjaxCompleteCallback
 } from "./component-data";
 import {TableData} from "./table-data";
 
@@ -11,305 +11,305 @@ import 'rxjs/add/operator/map';
 
 
 export class ArrayCollection<T> extends Array<T> implements IAjaxComponentData {
-  public busy: boolean;
-  public http: Http;
+    public busy: boolean;
+    public http: Http;
 
-  constructor(source?: Array<T>) {
-    super();
-    this._fromArray(source);
-  }
-
-  protected wrappedDataReviser: DataReviser;
-  private _originDataReviser: DataReviser;
-
-  public get dataReviser(): DataReviser {
-    return this._originDataReviser;
-  }
-
-  public set dataReviser(value: DataReviser) {
-    this._originDataReviser = value;
-    this.wrappedDataReviser = (data) => {
-      try {
-        return this._originDataReviser(data);
-      } catch (e) {
-        console.error('revise data error: ' + e);
-        console.error(e.stack);
-        return data;
-      }
-    }
-  }
-
-  protected ajaxSuccessHandler(data: Array<T>): void {
-    if (data instanceof Array) {
-      this.fromArray(data);
-    } else {
-      console.error('invalid data type: ' + typeof(data) + ', need Array.');
-      this.fromArray([]);
-    }
-    this.componentDataHelper.invokeAjaxSuccessCallback(data);
-  }
-
-  protected ajaxErrorHandler(error:Response): void {
-    console.error('get data from paging server error!! detail: ' + error);
-
-    this.busy = false;
-    this.fromArray([]);
-    this.componentDataHelper.invokeAjaxErrorCallback(error);
-  }
-
-  protected ajaxCompleteHandler(): void {
-    console.log('get data from paging server complete!!');
-
-    this.busy = false;
-    this.componentDataHelper.invokeAjaxCompleteCallback();
-  }
-
-  protected reviseData(response:Response):any {
-    return this.wrappedDataReviser ? this.wrappedDataReviser(response.json()) : response.json();
-  }
-
-  public fromAjax(url: string, options?: RequestOptionsArgs): void {
-    if (!this.http) {
-      console.error('set a valid Http instance to ArrayCollection.http before invoking ArrayCollection.fromAjax()!');
-      return;
+    constructor(source?: Array<T>) {
+        super();
+        this._fromArray(source);
     }
 
-    this.busy = true;
-    this.http.request(url, options)
-      .map(res => this.reviseData(res) as Array<T>)
-      .subscribe(
-        data => this.ajaxSuccessHandler(data),
-        error => this.ajaxErrorHandler(error),
-        () => this.ajaxCompleteHandler()
-      );
-  }
+    protected wrappedDataReviser: DataReviser;
+    private _originDataReviser: DataReviser;
 
-  public fromArray(source: Array<T>): ArrayCollection<T> {
-    if (this._fromArray(source)) {
-      this.refresh();
-    }
-    return this;
-  }
-
-  private _fromArray(source: Array<T>): boolean {
-    let needRefresh = this.length > 0;
-
-    this.splice(0, this.length);
-    if (source) {
-      needRefresh = needRefresh || source.length > 0;
-      source.forEach(item => this.push(item));
+    public get dataReviser(): DataReviser {
+        return this._originDataReviser;
     }
 
-    return needRefresh;
-  }
+    public set dataReviser(value: DataReviser) {
+        this._originDataReviser = value;
+        this.wrappedDataReviser = (data) => {
+            try {
+                return this._originDataReviser(data);
+            } catch (e) {
+                console.error('revise data error: ' + e);
+                console.error(e.stack);
+                return data;
+            }
+        }
+    }
 
-  protected componentDataHelper: ComponentDataHelper = new ComponentDataHelper(this);
+    protected ajaxSuccessHandler(data: T[]): void {
+        if (data instanceof Array) {
+            this.fromArray(data);
+        } else {
+            console.error('invalid data type: ' + typeof(data) + ', need Array.');
+            this.fromArray([]);
+        }
+        this.componentDataHelper.invokeAjaxSuccessCallback(data);
+    }
 
-  public refresh(): void {
-    this.componentDataHelper.invokeRefreshCallback();
-  }
+    protected ajaxErrorHandler(error: Response): void {
+        console.error('get data from paging server error!! detail: ' + error);
 
-  public onRefresh(callback: DataRefreshCallback): CallbackRemoval {
-    return this.componentDataHelper.getRefreshRemoval(callback);
-  }
+        this.busy = false;
+        this.fromArray([]);
+        this.componentDataHelper.invokeAjaxErrorCallback(error);
+    }
 
-  public onAjaxSuccess(callback: AjaxSuccessCallback): CallbackRemoval {
-    return this.componentDataHelper.getAjaxSuccessRemoval(callback);
-  }
+    protected ajaxCompleteHandler(): void {
+        console.log('get data from paging server complete!!');
 
-  public onAjaxError(callback: AjaxErrorCallback): CallbackRemoval {
-    return this.componentDataHelper.getAjaxErrorRemoval(callback);
-  }
+        this.busy = false;
+        this.componentDataHelper.invokeAjaxCompleteCallback();
+    }
 
-  public onAjaxComplete(callback: AjaxCompleteCallback): CallbackRemoval {
-    return this.componentDataHelper.getAjaxCompleteRemoval(callback);
-  }
+    protected reviseData(response: Response): any {
+        return this.wrappedDataReviser ? this.wrappedDataReviser(response.json()) : response.json();
+    }
 
-  public destroy(): void {
-    console.log('destroying ArrayCollection....');
-    this.splice(0, this.length);
+    public fromAjax(url: string, options?: RequestOptionsArgs): void {
+        if (!this.http) {
+            console.error('set a valid Http instance to ArrayCollection.http before invoking ArrayCollection.fromAjax()!');
+            return;
+        }
 
-    this.componentDataHelper.clearCallbacks();
-    this.componentDataHelper = null;
+        this.busy = true;
+        this.http.request(url, options)
+            .map(res => this.reviseData(res) as T[])
+            .subscribe(
+                data => this.ajaxSuccessHandler(data),
+                error => this.ajaxErrorHandler(error),
+                () => this.ajaxCompleteHandler()
+            );
+    }
 
-    this.wrappedDataReviser = null;
-    this._originDataReviser = null;
-  }
+    public fromArray(source: T[]): ArrayCollection<T> {
+        if (this._fromArray(source)) {
+            this.refresh();
+        }
+        return this;
+    }
+
+    private _fromArray(source: T[]): boolean {
+        let needRefresh = this.length > 0;
+
+        this.splice(0, this.length);
+        if (source) {
+            needRefresh = needRefresh || source.length > 0;
+            source.forEach(item => this.push(item));
+        }
+
+        return needRefresh;
+    }
+
+    protected componentDataHelper: ComponentDataHelper = new ComponentDataHelper(this);
+
+    public refresh(): void {
+        this.componentDataHelper.invokeRefreshCallback();
+    }
+
+    public onRefresh(callback: DataRefreshCallback): CallbackRemoval {
+        return this.componentDataHelper.getRefreshRemoval(callback);
+    }
+
+    public onAjaxSuccess(callback: AjaxSuccessCallback): CallbackRemoval {
+        return this.componentDataHelper.getAjaxSuccessRemoval(callback);
+    }
+
+    public onAjaxError(callback: AjaxErrorCallback): CallbackRemoval {
+        return this.componentDataHelper.getAjaxErrorRemoval(callback);
+    }
+
+    public onAjaxComplete(callback: AjaxCompleteCallback): CallbackRemoval {
+        return this.componentDataHelper.getAjaxCompleteRemoval(callback);
+    }
+
+    public destroy(): void {
+        console.log('destroying ArrayCollection....');
+        this.splice(0, this.length);
+
+        this.componentDataHelper.clearCallbacks();
+        this.componentDataHelper = null;
+
+        this.wrappedDataReviser = null;
+        this._originDataReviser = null;
+    }
 }
 
 export class ServerSidePagingArray extends ArrayCollection<any> implements IPagableData {
-  public pagingServerUrl: string = '/rdk/service/app/common/paging';
+    public pagingServerUrl: string = '/rdk/service/app/common/paging';
 
-  public pagingInfo: PagingBasicInfo;
-  public filterInfo: PagingFilterInfo;
-  public sortInfo: PagingSortInfo;
-  public busy: boolean = false;
+    public pagingInfo: PagingBasicInfo;
+    public filterInfo: PagingFilterInfo;
+    public sortInfo: PagingSortInfo;
+    public busy: boolean = false;
 
-  private _filterSubject = new Subject<PagingFilterInfo>();
-  private _sortSubject = new Subject<PagingSortInfo>();
+    private _filterSubject = new Subject<PagingFilterInfo>();
+    private _sortSubject = new Subject<PagingSortInfo>();
 
-  constructor(private _http: Http, private _sourceUrl: string, private _sourceRequestOptions?: RequestOptionsArgs) {
-    super();
+    constructor(private _http: Http, private _sourceUrl: string, private _sourceRequestOptions?: RequestOptionsArgs) {
+        super();
 
-    if (!_http) {
-      throw new Error('invalid _http!');
-    }
-    this.pagingInfo = new PagingBasicInfo();
-
-    this._initRequestOptions();
-    this._initSubjects();
-  }
-
-  private _initRequestOptions(): void {
-    if (!this._sourceUrl) {
-      throw new Error('invalid source url!');
-    }
-    if (!this._sourceRequestOptions) {
-      this._sourceRequestOptions = {method: 'get'};
-    }
-
-    let originSearch = this._sourceRequestOptions.search;
-    this._sourceRequestOptions.search = new URLSearchParams();
-    if (originSearch) {
-      if (typeof originSearch === 'string') {
-        originSearch = new URLSearchParams(originSearch);
-      }
-
-      //将坑爹的 a=1&b=2&... 转为json对象
-      const keys = originSearch.paramsMap.keys();
-      const pp: any = {};
-      while (true) {
-        const next = keys.next();
-        if (next.done) break;
-        const val = originSearch.get(next.value);
-        try {
-          pp[next.value] = JSON.parse(val);
-        } catch(e) {
-          pp[next.value] = val;
+        if (!_http) {
+            throw new Error('invalid _http!');
         }
-      }
+        this.pagingInfo = new PagingBasicInfo();
 
-      this._sourceRequestOptions.search.set('peerParam', JSON.stringify(pp));
-    }
-    this._sourceRequestOptions.search.set('service', this._sourceUrl);
-  }
-
-  private _initSubjects(): void {
-    this._filterSubject.debounceTime(300).subscribe(filter => {
-      this.filterInfo = filter;
-      this._ajax();
-    });
-    this._sortSubject.debounceTime(300).subscribe(sort => {
-      this.sortInfo = sort;
-      this._ajax();
-    });
-  }
-
-  public updateDataSource(url: string, options?: RequestOptionsArgs): void {
-    this._sourceUrl = url;
-    this.updateRequestOptions(options);
-  }
-
-  public updateRequestOptions(options: RequestOptionsArgs): void {
-    this._sourceRequestOptions = options;
-    this._initRequestOptions();
-  }
-
-  public fromAjax(url: string, options?: RequestOptionsArgs): void {
-    this.updateDataSource(url, options);
-    this._ajax();
-  }
-
-  private _ajax(): void {
-    this.busy = true;
-
-    if (this._sourceRequestOptions.search instanceof URLSearchParams) {
-      this._sourceRequestOptions.search.set('paging', JSON.stringify(this.pagingInfo));
-      if (this.filterInfo) {
-        this._sourceRequestOptions.search.set('filter', JSON.stringify(this.filterInfo));
-      }
-      if (this.sortInfo) {
-        this._sourceRequestOptions.search.set('sort', JSON.stringify(this.sortInfo));
-      }
+        this._initRequestOptions();
+        this._initSubjects();
     }
 
-    this._http.request(this.pagingServerUrl, this._sourceRequestOptions)
-      .map(res => this.reviseData(res))
-      .map(data => {
-        const tableData: TableData = new TableData();
-        if (TableData.isTableData(data)) {
-          tableData.fromObject(data);
-        } else {
-          console.error('invalid data format, need a TableData object.');
+    private _initRequestOptions(): void {
+        if (!this._sourceUrl) {
+            throw new Error('invalid source url!');
         }
-        return tableData;
-      })
-      .subscribe(
-        tableData => this.ajaxSuccessHandler(tableData),
-        error => this.ajaxErrorHandler(error),
-        () => this.ajaxCompleteHandler()
-      );
-  }
+        if (!this._sourceRequestOptions) {
+            this._sourceRequestOptions = {method: 'get'};
+        }
 
-  protected ajaxSuccessHandler(tableData: any): void {
-    this.fromArray(tableData.toArray());
-    this.componentDataHelper.invokeAjaxSuccessCallback(tableData);
-  }
+        let originSearch = this._sourceRequestOptions.search;
+        this._sourceRequestOptions.search = new URLSearchParams();
+        if (originSearch) {
+            if (typeof originSearch === 'string') {
+                originSearch = new URLSearchParams(originSearch);
+            }
 
-  public pagingFilter(term: string, fields?: Array<string|number>): void;
-  public pagingFilter(term: PagingFilterInfo): void;
-  public pagingFilter(term: string|PagingFilterInfo, fields?: Array<string|number>): void {
-    const pfi = term instanceof PagingFilterInfo ? term : new PagingFilterInfo(term, fields);
-    this._filterSubject.next(pfi);
-  }
+            //将坑爹的 a=1&b=2&... 转为json对象
+            const keys = originSearch.paramsMap.keys();
+            const pp: any = {};
+            while (true) {
+                const next = keys.next();
+                if (next.done) break;
+                const val = originSearch.get(next.value);
+                try {
+                    pp[next.value] = JSON.parse(val);
+                } catch (e) {
+                    pp[next.value] = val;
+                }
+            }
 
-  public pagingSort(as: SortAs, order: SortOrder, field: string|number): void;
-  public pagingSort(sort: PagingSortInfo): void;
-  public pagingSort(as, order?: SortOrder, field?: string|number): void {
-    const psi = as instanceof PagingSortInfo ? as : new PagingSortInfo(as, order, field);
-    this._sortSubject.next(psi);
-  }
+            this._sourceRequestOptions.search.set('peerParam', JSON.stringify(pp));
+        }
+        this._sourceRequestOptions.search.set('service', this._sourceUrl);
+    }
 
-  public destroy(): void {
-    super.destroy();
+    private _initSubjects(): void {
+        this._filterSubject.debounceTime(300).subscribe(filter => {
+            this.filterInfo = filter;
+            this._ajax();
+        });
+        this._sortSubject.debounceTime(300).subscribe(sort => {
+            this.sortInfo = sort;
+            this._ajax();
+        });
+    }
 
-    this._http = null;
-    this._sourceRequestOptions = null;
-    this.pagingInfo = null;
-    this.filterInfo = null;
-    this.sortInfo = null;
-    this._filterSubject.unsubscribe();
-    this._filterSubject = null;
-    this._sortSubject.unsubscribe();
-    this._sortSubject = null;
-  }
+    public updateDataSource(url: string, options?: RequestOptionsArgs): void {
+        this._sourceUrl = url;
+        this.updateRequestOptions(options);
+    }
+
+    public updateRequestOptions(options: RequestOptionsArgs): void {
+        this._sourceRequestOptions = options;
+        this._initRequestOptions();
+    }
+
+    public fromAjax(url: string, options?: RequestOptionsArgs): void {
+        this.updateDataSource(url, options);
+        this._ajax();
+    }
+
+    private _ajax(): void {
+        this.busy = true;
+
+        if (this._sourceRequestOptions.search instanceof URLSearchParams) {
+            this._sourceRequestOptions.search.set('paging', JSON.stringify(this.pagingInfo));
+            if (this.filterInfo) {
+                this._sourceRequestOptions.search.set('filter', JSON.stringify(this.filterInfo));
+            }
+            if (this.sortInfo) {
+                this._sourceRequestOptions.search.set('sort', JSON.stringify(this.sortInfo));
+            }
+        }
+
+        this._http.request(this.pagingServerUrl, this._sourceRequestOptions)
+            .map(res => this.reviseData(res))
+            .map(data => {
+                const tableData: TableData = new TableData();
+                if (TableData.isTableData(data)) {
+                    tableData.fromObject(data);
+                } else {
+                    console.error('invalid data format, need a TableData object.');
+                }
+                return tableData;
+            })
+            .subscribe(
+                tableData => this.ajaxSuccessHandler(tableData),
+                error => this.ajaxErrorHandler(error),
+                () => this.ajaxCompleteHandler()
+            );
+    }
+
+    protected ajaxSuccessHandler(tableData: any): void {
+        this.fromArray(tableData.toArray());
+        this.componentDataHelper.invokeAjaxSuccessCallback(tableData);
+    }
+
+    public pagingFilter(term: string, fields?: string[] | number[]): void;
+    public pagingFilter(term: PagingFilterInfo): void;
+    public pagingFilter(term: string|PagingFilterInfo, fields?: string[] | number[]): void {
+        const pfi = term instanceof PagingFilterInfo ? term : new PagingFilterInfo(term, fields);
+        this._filterSubject.next(pfi);
+    }
+
+    public pagingSort(as: SortAs, order: SortOrder, field: string|number): void;
+    public pagingSort(sort: PagingSortInfo): void;
+    public pagingSort(as, order?: SortOrder, field?: string|number): void {
+        const psi = as instanceof PagingSortInfo ? as : new PagingSortInfo(as, order, field);
+        this._sortSubject.next(psi);
+    }
+
+    public destroy(): void {
+        super.destroy();
+
+        this._http = null;
+        this._sourceRequestOptions = null;
+        this.pagingInfo = null;
+        this.filterInfo = null;
+        this.sortInfo = null;
+        this._filterSubject.unsubscribe();
+        this._filterSubject = null;
+        this._sortSubject.unsubscribe();
+        this._sortSubject = null;
+    }
 }
 
 export class DirectServerSidePagingArray extends ServerSidePagingArray {
-  constructor(private _http$: Http, private _sourceUrl$: string, private _sourceRequestOptions$: RequestOptionsArgs) {
-    super(_http$, _sourceUrl$, _sourceRequestOptions$);
-    console.error("unsupported yet!");
-  }
+    constructor(private _http$: Http, private _sourceUrl$: string, private _sourceRequestOptions$: RequestOptionsArgs) {
+        super(_http$, _sourceUrl$, _sourceRequestOptions$);
+        console.error("unsupported yet!");
+    }
 }
 
 export class LocalPagingArray extends ArrayCollection<any> implements IPagableData {
-  public pagingInfo: PagingBasicInfo;
-  public filterInfo: PagingFilterInfo;
-  public sortInfo: PagingSortInfo;
-  public busy: boolean = false;
+    public pagingInfo: PagingBasicInfo;
+    public filterInfo: PagingFilterInfo;
+    public sortInfo: PagingSortInfo;
+    public busy: boolean = false;
 
-  constructor() {
-    super();
-    console.error("unsupported yet!");
-  }
+    constructor() {
+        super();
+        console.error("unsupported yet!");
+    }
 
-  public pagingFilter(term: string, fields?: Array<string|number>): void;
-  public pagingFilter(term: PagingFilterInfo): void;
-  public pagingFilter(term, fields?: Array<string|number>): void {
-  }
+    public pagingFilter(term: string, fields?: string[] | number[]): void;
+    public pagingFilter(term: PagingFilterInfo): void;
+    public pagingFilter(term, fields?: string[] | number[]): void {
+    }
 
-  public pagingSort(as: SortAs, order: SortOrder, field: string|number): void;
-  public pagingSort(sort: PagingSortInfo): void;
-  public pagingSort(as, order?: SortOrder, field?: string|number): void {
-  }
+    public pagingSort(as: SortAs, order: SortOrder, field: string|number): void;
+    public pagingSort(sort: PagingSortInfo): void;
+    public pagingSort(as, order?: SortOrder, field?: string|number): void {
+    }
 }
