@@ -30,7 +30,7 @@ export class RadioGroup extends AbstractRDKComponent implements OnInit, AfterCon
     @Output() public valueChange: EventEmitter<any> = new EventEmitter<any>();
 
     //设置对象的标识
-    @Input() public trackItemBy: any;
+    @Input() public trackItemBy: string|string[];
 
     //显示在界面上的属性名
     @Input() public labelField: string = 'label';
@@ -40,7 +40,7 @@ export class RadioGroup extends AbstractRDKComponent implements OnInit, AfterCon
 
     private _updateSelectedRadio(): void {
         this._radios && this._radios.forEach(radio => {
-            radio.checked = CommonUtils.compareWithKeyProperty(this.value, radio.radioItem, this.trackItemBy);
+            radio.checked = CommonUtils.compareWithKeyProperty(this.value, radio.radioItem, <string[]>this.trackItemBy);
             radio.cdRef.detectChanges();
         });
         this.valueChange.emit(this.value);
