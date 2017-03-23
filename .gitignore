@@ -31,7 +31,6 @@
 npm-debug.log
 testem.log
 /typings
-/src/app/**
 
 # e2e
 /e2e/*.js
