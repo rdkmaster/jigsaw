@@ -15,8 +15,8 @@ import {InternalUtils} from '../../core/utils/internal-utils';
     host: {
         "(click)": "_toggleClick($event)",
         '[style.width]': 'width',
-        '[style.height.px]': 'height',
-        '[style.line-height.px]': 'height'
+        '[style.height]': 'height',
+        '[style.line-height]': 'height'
     }
 })
 export class SelectComponent extends AbstractRDKComponent implements AfterContentInit, OnDestroy, OnInit {
@@ -43,7 +43,7 @@ export class SelectComponent extends AbstractRDKComponent implements AfterConten
     @Output() public valueChange: EventEmitter<any> = new EventEmitter<any>();
 
     //设置对象的标识
-    @Input() public trackItemBy: any;
+    @Input() public trackItemBy: string|string[];
 
     //显示在界面上的属性名
     @Input() public labelField: string = 'label';
@@ -72,14 +72,14 @@ export class SelectComponent extends AbstractRDKComponent implements AfterConten
     //更改option选中状态
     private _updateSelectedOption(): void {
         this._options && this._options.forEach((option) => {
-            option.selected = CommonUtils.compareWithKeyProperty(this.value, option.optionItem, this.trackItemBy);
+            option.selected = CommonUtils.compareWithKeyProperty(this.value, option.optionItem, <string[]>this.trackItemBy);
             option.cdRef.detectChanges();
         });
         this.valueChange.emit(this.value);
     };
 
     ngOnInit() {
-        this.trackItemBy = InternalUtils.initTrackItemBy(this.trackItemBy, this.labelField);
+        this.trackItemBy = InternalUtils.initTrackItemBy(<string>this.trackItemBy, this.labelField);
     }
 
     ngAfterContentInit() {

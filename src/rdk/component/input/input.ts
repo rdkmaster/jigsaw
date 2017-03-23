@@ -12,8 +12,8 @@ import {AbstractRDKComponent} from '../../core/api/component-api';
     styleUrls: ['input.scss'],
     host: {
         '[style.width]': 'width',
-        '[style.height.px]': 'height',
-        '[style.line-height.px]': 'height'
+        '[style.height]': 'height',
+        '[style.line-height]': 'height'
     }
 })
 export class InputComponent extends AbstractRDKComponent {

@@ -1,10 +1,10 @@
 <div class="rdk-input-icon-front">
-    <ng-content select="[rdk-icon-front]"></ng-content>
+    <ng-content select="[rdk-prefix-icon]"></ng-content>
 </div>
 <ng-content></ng-content>
 <input [class.rdk-input-big-indent]="bigIndent" [(ngModel)]="value">
 <div class="rdk-input-icon-end">
     <span *ngIf="clearable" (click)="_clearValue()" [hidden]="!value && value != 0" class="fa fa-times"></span>
-    <ng-content select="[rdk-icon-end]"></ng-content>
+    <ng-content select="[rdk-icon]"></ng-content>
 </div>
 

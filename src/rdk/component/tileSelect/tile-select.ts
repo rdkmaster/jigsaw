@@ -36,7 +36,7 @@ export class TileSelectComponent extends AbstractRDKComponent implements OnInit,
     @Output() public selectedItemsChange = new EventEmitter<any[]>();
 
     //设置对象的标识
-    @Input() public trackItemBy: any;
+    @Input() public trackItemBy: string|string[];
 
     //显示在界面上的属性名
     @Input() public labelField: string = 'label';
@@ -58,7 +58,7 @@ export class TileSelectComponent extends AbstractRDKComponent implements OnInit,
                 this.selectedItems.push(optionItem);
             } else {
                 this._selectedItems.forEach(selectedItem => {
-                    if (CommonUtils.compareWithKeyProperty(selectedItem, optionItem, this.trackItemBy)) {
+                    if (CommonUtils.compareWithKeyProperty(selectedItem, optionItem, <string[]>this.trackItemBy)) {
                         this.selectedItems.splice(this.selectedItems.indexOf(selectedItem), 1);
                     }
                 });
@@ -66,7 +66,7 @@ export class TileSelectComponent extends AbstractRDKComponent implements OnInit,
         } else { //单选选中
             this._options.length && this._options.forEach((option: TileOptionComponent) => {
                 //去除其他option选中
-                if (!CommonUtils.compareWithKeyProperty(option.optionItem, optionItem, this.trackItemBy) && option.selected) {
+                if (!CommonUtils.compareWithKeyProperty(option.optionItem, optionItem, <string[]>this.trackItemBy) && option.selected) {
                     option.selected = false;
                     this.selectedItems.splice(this.selectedItems.indexOf(option.optionItem), 1);
                 }
@@ -81,7 +81,7 @@ export class TileSelectComponent extends AbstractRDKComponent implements OnInit,
     private _setOptionState(): void {
         this._selectedItems.length && this._options.length && this._options.forEach((option) => {
             this._selectedItems.forEach((optionItem) => {
-                if (CommonUtils.compareWithKeyProperty(option.optionItem, optionItem, this.trackItemBy) && !option.selected) {
+                if (CommonUtils.compareWithKeyProperty(option.optionItem, optionItem, <string[]>this.trackItemBy) && !option.selected) {
                     option.selected = true;
                     option._cdref.detectChanges();
                 }
@@ -90,7 +90,7 @@ export class TileSelectComponent extends AbstractRDKComponent implements OnInit,
     }
 
     ngOnInit() {
-        this.trackItemBy = InternalUtils.initTrackItemBy(this.trackItemBy, this.labelField);
+        this.trackItemBy = InternalUtils.initTrackItemBy(<string>this.trackItemBy, this.labelField);
     }
 
     ngAfterContentInit() {

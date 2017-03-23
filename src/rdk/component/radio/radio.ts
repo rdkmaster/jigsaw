@@ -47,7 +47,7 @@ export class RadioGroup extends AbstractRDKComponent implements OnInit, AfterCon
     }
 
     ngOnInit() {
-        this.trackItemBy = InternalUtils.initTrackItemBy(this.trackItemBy, this.labelField);
+        this.trackItemBy = InternalUtils.initTrackItemBy(<string>this.trackItemBy, this.labelField);
     }
 
     ngAfterContentInit() {

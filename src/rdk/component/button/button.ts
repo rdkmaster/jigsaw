@@ -10,7 +10,7 @@ import {AbstractRDKComponent} from '../../core/api/component-api';
         '[class.rdk-button-disabled]': 'disabled',
         '(click)': '_onClick()',
         '[style.width]': 'width',
-        '[style.height.px]': 'height',
+        '[style.height]': 'height',
         '[class.rdk-button-clicked]': "_clicked"
     }
 })
