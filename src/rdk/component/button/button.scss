@@ -5,8 +5,9 @@ $btn-prefix-cls: #{$rdk-prefix}-button;
 :host {
     @include inline-block();
     width: 80px;
-    height: 32px;
-    line-height: 32px;
+    height: $height-base;
+    line-height: $height-base;
+    font-size: $font-size-base;
     text-align: center;
     position: relative;
     background: $primary-color;

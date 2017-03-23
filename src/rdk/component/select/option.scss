@@ -2,39 +2,40 @@
 
 $option-prefix-cls: #{$rdk-prefix}-option;
 
-:host{
-  display: block;
-  height: 28px;
-  line-height: 28px;
+:host {
+    display: block;
+    height: $height-base;
+    line-height: $height-base;
+    font-size: $font-size-base;
 }
 
 :host-context(.theme-blue) .#{$option-prefix-cls} {
-  &:hover {
-    background-color: $primary-color-hover;
-  }
-  &.#{$option-prefix-cls}-on, &.#{$option-prefix-cls}-on:hover{
-    background-color: $gray-light;
-  }
+    &:hover {
+        background-color: $primary-color-hover;
+    }
+    &.#{$option-prefix-cls}-on, &.#{$option-prefix-cls}-on:hover {
+        background-color: $gray-light;
+    }
 }
 
 :host-context(.theme-orange) .#{$option-prefix-cls} {
-  &:hover {
-    background-color: $orange-hover;
-  }
-  &.#{$option-prefix-cls}-on, &.#{$option-prefix-cls}-on:hover{
-    background-color: $gray-light;
-  }
+    &:hover {
+        background-color: $orange-hover;
+    }
+    &.#{$option-prefix-cls}-on, &.#{$option-prefix-cls}-on:hover {
+        background-color: $gray-light;
+    }
 }
 
 .#{$option-prefix-cls} {
-  height: 100%;
-  cursor: pointer;
-  padding: 0 6px;
-  box-sizing: border-box;
-  &:hover {
-    background-color: $primary-color-hover;
-  }
-  &.#{$option-prefix-cls}-on, &.#{$option-prefix-cls}-on:hover{
-    background-color: $gray-light;
-  }
+    height: 100%;
+    cursor: pointer;
+    padding: 0 6px;
+    box-sizing: border-box;
+    &:hover {
+        background-color: $primary-color-hover;
+    }
+    &.#{$option-prefix-cls}-on, &.#{$option-prefix-cls}-on:hover {
+        background-color: $gray-light;
+    }
 }

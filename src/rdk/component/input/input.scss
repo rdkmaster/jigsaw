@@ -6,8 +6,9 @@ $input-prefix-cls: #{$rdk-prefix}-input;
     @include inline-block();
     position: relative;
     width: 300px;
-    height: 30px;
-    line-height: 30px;
+    height: $height-base;
+    line-height: $height-base;
+    font-size: $font-size-base;
     .#{$input-prefix-cls}-icon-front{
         position: absolute;
         left: 8px;
@@ -35,8 +36,8 @@ $input-prefix-cls: #{$rdk-prefix}-input;
             border: 1px solid $primary-color;
             box-shadow: 0 0 0 2px $primary-color-shadow;
         }
-        &.#{$input-prefix-cls}-big-indent{
-            text-indent: 22px;
+        &.#{$input-prefix-cls}-long-indent{
+            text-indent: 24px;
         }
     }
     span.fa{

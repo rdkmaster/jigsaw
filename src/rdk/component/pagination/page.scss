@@ -9,8 +9,9 @@ $page-prefix-cls: #{$rdk-prefix}-page;
     span {
         @include inline-block();
         width: 28px;
-        height: 28px;
-        line-height: 28px;
+        height: $height-base;
+        line-height: $height-base;
+        font-size: $font-size-base;
         text-align: center;
         border: 1px solid $border-color-base;
         border-radius: 4px;

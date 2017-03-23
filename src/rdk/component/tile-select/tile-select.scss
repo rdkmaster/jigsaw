@@ -6,17 +6,6 @@ $select-prefix-cls: #{$rdk-prefix}-tile-select;
   @include inline-block();
   .#{$select-prefix-cls}-search {
     margin-bottom: 8px;
-    rdk-input /deep/{
-      img{
-        height: 16px;
-        position: absolute;
-        left: 8px;
-        top: 8px;
-      }
-      input{
-        text-indent: 28px;
-      }
-    }
   }
 }
 
