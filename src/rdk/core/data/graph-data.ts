@@ -67,31 +67,36 @@ export abstract class AbstractGraphData extends TableData {
 
 export class GraphTitle {
     //TODO: 补充完整
-    constructor(public text: string = '',
-                public subtext: string = '',
-                public left: string = 'auto',
-                public right: string = 'auto',
-                public top: string = 'auto',
-                public bottom: string = 'auto',
-                public show: boolean = true) {
+    constructor(public text: string,
+                public subtext?: string,
+                public left?: string,
+                public right?: string,
+                public top?: string,
+                public bottom?: string,
+                public show?: boolean) {
+    }
+}
+
+export class GraphLegendItem {
+    constructor(public name: string, icon?: string) {
     }
 }
 
 export class GraphLegend {
     //TODO: 补充完整
-    constructor(public data: Array<{name: string, icon?: any}>,
-                public left: string = 'auto',
-                public right: string = 'auto',
-                public top: string = 'auto',
-                public bottom: string = 'auto',
-                public show: boolean = true) {
-
+    constructor(public data: GraphLegendItem[],
+                public left?: string,
+                public right?: string,
+                public top?: string,
+                public bottom?: string,
+                public show?: boolean) {
     }
 }
 
 export class GraphTooltip {
     //TODO: 补充完整
-    constructor(public show: boolean = true) {
+    constructor(public formatter?: string|Function,
+                public show?: boolean) {
     }
 }
 

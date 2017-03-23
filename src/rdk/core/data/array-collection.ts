@@ -14,7 +14,7 @@ export class ArrayCollection<T> extends Array<T> implements IAjaxComponentData {
     public busy: boolean;
     public http: Http;
 
-    constructor(source?: Array<T>) {
+    constructor(source?: T[]) {
         super();
         this._fromArray(source);
     }
