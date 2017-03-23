@@ -33,6 +33,7 @@ $option-prefix-cls: #{$rdk-prefix}-option;
     cursor: pointer;
     padding: 0 6px;
     box-sizing: border-box;
+    @include line-ellipsis(100%);
     &:hover {
         background-color: $primary-color-hover;
     }

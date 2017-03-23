@@ -1,16 +1,16 @@
-@mixin clearfix(){
-  *zoom: 1;
-  &:after {
-    clear: both;
-    content: "";
-    display: block;
-  }
+@mixin clearfix() {
+    *zoom: 1;
+    &:after {
+        clear: both;
+        content: "";
+        display: block;
+    }
 }
 
-@mixin inline-block(){
-  display: inline-block;
-  *zoom: 1;
-  *display: inline;
+@mixin inline-block() {
+    display: inline-block;
+    *zoom: 1;
+    *display: inline;
 }
 
 @mixin opacity($opacity) {
@@ -21,28 +21,35 @@
     filter: alpha(opacity=$opacity-ie);
 }
 
-@mixin prefixer($property, $value) {
-  -webkit-#{$property}: $value;
-  -moz-#{$property}: $value;
-  -ms-#{$property}: $value;
-  -o-#{$property}: $value;
-  #{$property}: $value;
+@mixin line-ellipsis($width) {
+    width: $width;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-@mixin keyframes($name){
-  @-webkit-keyframes #{$name} {
-    @content;
-  }
-  @-moz-keyframes #{$name} {
-    @content;
-  }
-  @-o-keyframes #{$name} {
-    @content;
-  }
-  @-ms-keyframes #{$name} {
-    @content;
-  }
-  @keyframes #{$name} {
-    @content;
-  }
+@mixin prefixer($property, $value) {
+    -webkit-#{$property}: $value;
+    -moz-#{$property}: $value;
+    -ms-#{$property}: $value;
+    -o-#{$property}: $value;
+    #{$property}: $value;
+}
+
+@mixin keyframes($name) {
+    @-webkit-keyframes #{$name} {
+        @content;
+    }
+    @-moz-keyframes #{$name} {
+        @content;
+    }
+    @-o-keyframes #{$name} {
+        @content;
+    }
+    @-ms-keyframes #{$name} {
+        @content;
+    }
+    @keyframes #{$name} {
+        @content;
+    }
 }

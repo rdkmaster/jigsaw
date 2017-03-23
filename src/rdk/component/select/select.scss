@@ -39,7 +39,7 @@ $option-prefix-cls: #{$rdk-prefix}-option;
         border: 1px solid $border-color-base;
         border-radius: 4px;
         cursor: pointer;
-        width: 100%;
+        @include line-ellipsis(100%);
         height: 100%;
         padding: 0 6px;
         box-sizing: border-box;
@@ -50,24 +50,15 @@ $option-prefix-cls: #{$rdk-prefix}-option;
         &.#{$select-prefix-cls}-opened {
             border-color: $primary-color;
             box-shadow: 0 0 0 2px $primary-color-shadow;
-            &:after {
-                @include prefixer(transform, rotate(225deg));
+            .#{$select-prefix-cls}-icon-down {
+                @include prefixer(transform, rotate(180deg));
             }
         }
-        &:after {
+        .#{$select-prefix-cls}-icon-down{
             position: absolute;
-            content: " ";
-            width: 5px;
-            height: 5px;
-            border: {
-                bottom: 1px solid $gray-dark;
-                right: 1px solid $gray-dark;
-            };
             right: 8px;
-            top: 12px;
+            line-height: inherit;
             @include prefixer(transition, transform 0.2s ease);
-            @include prefixer(transform, rotate(45deg));
-            @include prefixer(transform-origin, 60% 60%);
         }
 
     }
