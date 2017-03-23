@@ -2,10 +2,10 @@ import {Component, OnInit, NgModule} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
 import {FormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
-import {ButtonComponent} from "../../../component/button/button";
+import {ButtonComponent} from "../../../../component/button/button";
 
 @Component({
-  selector: 'test-button',
+  selector: 'button-demo',
   templateUrl: 'button.demo.html',
   styleUrls: []
 })
