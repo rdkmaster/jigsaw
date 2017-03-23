@@ -12,18 +12,18 @@ export class TableData extends AbstractGeneralCollection {
             data.hasOwnProperty('field') && data.field instanceof Array;
     }
 
-    constructor(public data: TableDataMatrix = [],
-                public field: TableDataField = [],
-                public header: TableDataHeader = []) {
+    constructor(public data?: TableDataMatrix,
+                public field?: TableDataField,
+                public header?: TableDataHeader) {
         super();
-        if (!header) {
-            throw new Error('invalid header data!');
+        if (!data) {
+            this.data = [];
         }
         if (!field) {
-            throw new Error('invalid field data!');
+            this.field = [];
         }
-        if (!data) {
-            throw new Error('invalid matrix data!');
+        if (!header) {
+            this.header = [];
         }
     }
 

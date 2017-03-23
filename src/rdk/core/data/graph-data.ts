@@ -1,4 +1,5 @@
 import {TableData} from "./table-data";
+import {EchartTitle, EchartLegend, EchartTooltip, EchartOptions} from "./echart-types";
 
 type GraphMatrixRow = Array<string|number>;
 export type GraphDataHeader = string[];
@@ -9,25 +10,27 @@ export type GraphDataMatrix = GraphMatrixRow[];
 export abstract class AbstractGraphData extends TableData {
     protected abstract createChartOptions(): any;
 
-    constructor(public data: GraphDataMatrix = [],
-                public header: GraphDataHeader = [],
-                public rowDescriptor: GraphDataRowDescriptor = [],
-                public field: GraphDataField) {
+    public optionsPatch:EchartOptions;
+
+    constructor(public data?: GraphDataMatrix,
+                public header?: GraphDataHeader,
+                public rowDescriptor?: GraphDataRowDescriptor,
+                public field?: GraphDataField) {
         super(data, field, header);
         this._makeFields();
-
         if (!rowDescriptor) {
-            throw new Error('invalid rowDescriptor data!');
+            this.rowDescriptor = [];
         }
     }
 
-    protected chartOptions: any;
+    protected echartOptions: EchartOptions;
 
-    public get options(): any {
-        if (!this.chartOptions) {
-            this.chartOptions = this.createChartOptions();
+    public get options(): EchartOptions {
+        if (!this.echartOptions) {
+            this.echartOptions = this.createChartOptions();
+            this.patchOptions();
         }
-        return this.chartOptions;
+        return this.echartOptions;
     }
 
     public fromObject(data: any): AbstractGraphData {
@@ -63,47 +66,19 @@ export abstract class AbstractGraphData extends TableData {
         this.rowDescriptor.splice(0, this.rowDescriptor.length);
     }
 
-}
-
-export class GraphTitle {
-    //TODO: 补充完整
-    constructor(public text: string,
-                public subtext?: string,
-                public left?: string,
-                public right?: string,
-                public top?: string,
-                public bottom?: string,
-                public show?: boolean) {
+    protected patchOptions():void {
+        if (!this.optionsPatch) {
+            return;
+        }
+        //TODO 实现打补丁功能
     }
-}
 
-export class GraphLegendItem {
-    constructor(public name: string, icon?: string) {
-    }
-}
-
-export class GraphLegend {
-    //TODO: 补充完整
-    constructor(public data: GraphLegendItem[],
-                public left?: string,
-                public right?: string,
-                public top?: string,
-                public bottom?: string,
-                public show?: boolean) {
-    }
-}
-
-export class GraphTooltip {
-    //TODO: 补充完整
-    constructor(public formatter?: string|Function,
-                public show?: boolean) {
-    }
 }
 
 export abstract class AbstractNormalGraphData extends AbstractGraphData {
-    public title: GraphTitle;
-    public legend: GraphLegend;
-    public tooltip: GraphTooltip;
+    public title: EchartTitle;
+    public legend: EchartLegend;
+    public tooltip: EchartTooltip;
 }
 
 export class OutlineMapData extends AbstractNormalGraphData {

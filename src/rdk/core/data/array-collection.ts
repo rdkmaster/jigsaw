@@ -148,11 +148,11 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPaga
     private _filterSubject = new Subject<PagingFilterInfo>();
     private _sortSubject = new Subject<PagingSortInfo>();
 
-    constructor(private _http: Http, private _sourceUrl: string, private _sourceRequestOptions?: RequestOptionsArgs) {
+    constructor(public http: Http, public sourceUrl: string, public sourceRequestOptions?: RequestOptionsArgs) {
         super();
 
-        if (!_http) {
-            throw new Error('invalid _http!');
+        if (!http) {
+            throw new Error('invalid http!');
         }
         this.pagingInfo = new PagingBasicInfo();
 
@@ -161,15 +161,15 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPaga
     }
 
     private _initRequestOptions(): void {
-        if (!this._sourceUrl) {
+        if (!this.sourceUrl) {
             throw new Error('invalid source url!');
         }
-        if (!this._sourceRequestOptions) {
-            this._sourceRequestOptions = {method: 'get'};
+        if (!this.sourceRequestOptions) {
+            this.sourceRequestOptions = {method: 'get'};
         }
 
-        let originSearch = this._sourceRequestOptions.search;
-        this._sourceRequestOptions.search = new URLSearchParams();
+        let originSearch = this.sourceRequestOptions.search;
+        this.sourceRequestOptions.search = new URLSearchParams();
         if (originSearch) {
             if (typeof originSearch === 'string') {
                 originSearch = new URLSearchParams(originSearch);
@@ -189,9 +189,9 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPaga
                 }
             }
 
-            this._sourceRequestOptions.search.set('peerParam', JSON.stringify(pp));
+            this.sourceRequestOptions.search.set('peerParam', JSON.stringify(pp));
         }
-        this._sourceRequestOptions.search.set('service', this._sourceUrl);
+        this.sourceRequestOptions.search.set('service', this.sourceUrl);
     }
 
     private _initSubjects(): void {
@@ -206,12 +206,12 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPaga
     }
 
     public updateDataSource(url: string, options?: RequestOptionsArgs): void {
-        this._sourceUrl = url;
+        this.sourceUrl = url;
         this.updateRequestOptions(options);
     }
 
     public updateRequestOptions(options: RequestOptionsArgs): void {
-        this._sourceRequestOptions = options;
+        this.sourceRequestOptions = options;
         this._initRequestOptions();
     }
 
@@ -223,17 +223,17 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPaga
     private _ajax(): void {
         this.busy = true;
 
-        if (this._sourceRequestOptions.search instanceof URLSearchParams) {
-            this._sourceRequestOptions.search.set('paging', JSON.stringify(this.pagingInfo));
+        if (this.sourceRequestOptions.search instanceof URLSearchParams) {
+            this.sourceRequestOptions.search.set('paging', JSON.stringify(this.pagingInfo));
             if (this.filterInfo) {
-                this._sourceRequestOptions.search.set('filter', JSON.stringify(this.filterInfo));
+                this.sourceRequestOptions.search.set('filter', JSON.stringify(this.filterInfo));
             }
             if (this.sortInfo) {
-                this._sourceRequestOptions.search.set('sort', JSON.stringify(this.sortInfo));
+                this.sourceRequestOptions.search.set('sort', JSON.stringify(this.sortInfo));
             }
         }
 
-        this._http.request(this.pagingServerUrl, this._sourceRequestOptions)
+        this.http.request(this.pagingServerUrl, this.sourceRequestOptions)
             .map(res => this.reviseData(res))
             .map(data => {
                 const tableData: TableData = new TableData();
@@ -273,8 +273,8 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPaga
     public destroy(): void {
         super.destroy();
 
-        this._http = null;
-        this._sourceRequestOptions = null;
+        this.http = null;
+        this.sourceRequestOptions = null;
         this.pagingInfo = null;
         this.filterInfo = null;
         this.sortInfo = null;
