@@ -6,6 +6,9 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {AbstractRDKComponent} from '../../core/api/component-api';
 
+@Directive({ selector: 'span' })
+export class IconFront {}
+
 @Component({
     selector: 'rdk-input',
     templateUrl: 'input.html',
@@ -18,9 +21,7 @@ import {AbstractRDKComponent} from '../../core/api/component-api';
 })
 export class InputComponent extends AbstractRDKComponent {
     private _value: string | number; //input表单值
-
-    @Input()
-    public bigIndent: boolean = false;
+    private _longIndent: boolean = false;
 
     //input form表单值
     @Input()
@@ -39,16 +40,22 @@ export class InputComponent extends AbstractRDKComponent {
 
     @Input() public clearable: boolean = true;
 
+    @ContentChildren(IconFront) _iconFront: QueryList<IconFront> = null;
+
     private _clearValue(): void {
         this.value = null;
+    }
+
+    ngAfterContentInit(){
+        this._iconFront && this._iconFront.length ? this._longIndent = true : null;
     }
 
 }
 
 @NgModule({
     imports: [CommonModule, FormsModule],
-    declarations: [InputComponent],
-    exports: [InputComponent],
+    declarations: [InputComponent, IconFront],
+    exports: [InputComponent,IconFront],
 })
 export class InputModule {
 

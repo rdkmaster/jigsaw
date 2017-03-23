@@ -79,22 +79,6 @@ $paging-prefix-cls: #{$rdk-prefix}-paging;
     rdk-input{
         vertical-align: top;
         margin-right: 8px;
-        /deep/{
-            span{
-                top: 6px !important;
-            }
-        }
-        &.#{$paging-prefix-cls}-search /deep/{
-            img{
-                height: 16px;
-                position: absolute;
-                left: 8px;
-                top: 6px;
-            }
-            input{
-                text-indent: 28px !important;
-            }
-        }
     }
 
 }
