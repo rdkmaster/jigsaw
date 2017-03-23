@@ -6,7 +6,7 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {AbstractRDKComponent} from '../../core/api/component-api';
 
-@Directive({ selector: 'span' })
+@Directive({ selector: '[rdk-prefix-icon]' })
 export class IconFront {}
 
 @Component({

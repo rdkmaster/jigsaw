@@ -6,8 +6,9 @@ $input-prefix-cls: #{$rdk-prefix}-input;
     @include inline-block();
     position: relative;
     width: 300px;
-    height: 30px;
-    line-height: 30px;
+    height: $height-base;
+    line-height: $height-base;
+    font-size: $font-size-base;
     .#{$input-prefix-cls}-icon-front{
         position: absolute;
         left: 8px;

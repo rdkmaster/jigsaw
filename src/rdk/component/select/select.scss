@@ -6,8 +6,9 @@ $option-prefix-cls: #{$rdk-prefix}-option;
 :host {
     @include inline-block();
     width: 120px;
-    height: 30px;
-    line-height: 30px;
+    height: $height-base;
+    line-height: $height-base;
+    font-size: $font-size-base;
 }
 
 :host-context(.theme-blue) .#{$select-prefix-cls}-box .#{$select-prefix-cls} {

@@ -12,7 +12,10 @@ import {InternalUtils} from '../../core/utils/internal-utils';
 @Component({
     selector: 'rdk-tile-select',
     templateUrl: 'tile-select.html',
-    styleUrls: ['tile-select.scss']
+    styleUrls: ['tile-select.scss'],
+    host: {
+        '[style.width]': 'width'
+    }
 })
 export class TileSelectComponent extends AbstractRDKComponent implements OnInit, AfterContentInit {
     private _contentInit: boolean = false;
@@ -102,17 +105,23 @@ export class TileSelectComponent extends AbstractRDKComponent implements OnInit,
 @Component({
     selector: 'rdk-tile-option',
     templateUrl: 'tile-option.html',
-    styleUrls: ['tile-option.scss']
+    styleUrls: ['tile-option.scss'],
+    host: {
+        '[style.width]': 'width',
+        '[style.height]': 'height',
+        '[style.line-height]': 'height'
+    }
 })
-export class TileOptionComponent implements OnInit {
+export class TileOptionComponent extends AbstractRDKComponent implements OnInit {
     @Input() public optionItem: any; //option对象
 
-    private _optionView: string; //显示在页面上的值
+    private _optionLabel: string; //显示在页面上的值
     private _tileSelect: TileSelectComponent; //父组件
 
     public selected: boolean = false;//选中状态
 
     constructor(@Optional() tileSelect: TileSelectComponent, public _cdref: ChangeDetectorRef) {
+        super();
         this._tileSelect = tileSelect;
     }
 
@@ -134,7 +143,7 @@ export class TileOptionComponent implements OnInit {
 
     ngOnInit() {
         //初始化option显示值
-        this._optionView = this.optionItem[this._tileSelect.labelField];
+        this._optionLabel = this.optionItem[this._tileSelect.labelField];
     }
 
 }
