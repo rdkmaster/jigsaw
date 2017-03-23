@@ -1,7 +1,7 @@
 import {NgModule, Component, Input, Output, ElementRef, OnInit, EventEmitter} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-
+import {AbstractRDKComponent} from '../../core/api/component-api';
 import {TimeService} from './time.service';
 
 //declare let $: any;
@@ -14,9 +14,12 @@ import "eonasdan-bootstrap-datetimepicker";
     selector: 'rdk-time',
     templateUrl: 'time.html',
     styleUrls: ['time.scss'],
-    providers: [TimeService]
+    providers: [TimeService],
+    host: {
+        '[style.width]': 'width'
+    }
 })
-export class TimeComponent implements OnInit {
+export class TimeComponent extends AbstractRDKComponent implements OnInit {
     //组件是否初始化
     private _initFlag: boolean;
 
@@ -82,7 +85,7 @@ export class TimeComponent implements OnInit {
     private _timepicker: any;
 
     constructor(private el: ElementRef, private timeService: TimeService) {
-
+        super();
     }
 
     //设置插件选中时间值

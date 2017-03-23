@@ -1,10 +1,16 @@
 @import "../../assets/scss/core/basc";
 
-:host{
-  @include inline-block();
+$time-prefix-cls: #{$rdk-prefix}-time;
+
+:host {
+    @include inline-block();
+    width: 300px;
+    .time-box {
+        width: 100%;
+    }
 }
 
-.hidden{
-  display: none !important;
+.#{$time-prefix-cls}-hidden {
+    display: none !important;
 }
 
