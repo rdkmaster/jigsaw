@@ -1,0 +1,13 @@
+@import "./core/basc";
+
+rdk-select{
+    .mCSB_scrollTools{
+        width: 5px;
+    }
+    .mCSB_container_wrapper{
+        margin-right: 0;
+        & > .mCSB_container {
+            padding-right: 0;
+        }
+    }
+}

@@ -27,7 +27,7 @@ export class TileSelectComponent extends AbstractRDKComponent implements OnInit,
     }
 
     public set selectedItems(newValue: any[]) {
-        if (newValue && !newValue.length) {
+        if (!newValue || !newValue.length) {
             return;
         }
         if (this._selectedItems != newValue) {

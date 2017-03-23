@@ -1,12 +1,24 @@
 import {
     NgModule, Component, ContentChildren, QueryList, AfterContentInit, Input, forwardRef, Optional, Renderer, OnDestroy,
-    OnInit, Output, EventEmitter, ChangeDetectorRef
+    OnInit, Output, EventEmitter, ChangeDetectorRef, Directive
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {AbstractRDKComponent} from '../../core/api/component-api';
 import {CommonUtils} from '../../core/utils/common-utils';
 import {InternalUtils} from '../../core/utils/internal-utils';
+import {RdkScrollBar} from '../scrollbar/scrollbar';
+
+@Directive({
+    selector: '.rdk-option-list',
+    host: {
+        '[style.width]': 'width',
+        '[style.height]': 'height'
+    }
+})
+export class OptionList extends AbstractRDKComponent{
+
+}
 
 @Component({
     selector: 'rdk-select',
@@ -33,7 +45,7 @@ export class SelectComponent extends AbstractRDKComponent implements AfterConten
     }
 
     public set value(newValue: any) {
-        if (this._value != newValue) {
+        if (newValue && this._value != newValue) {
             this._value = newValue;
             this._selectedLabel = newValue[this.labelField];
             this._contentInit && this._updateSelectedOption();
@@ -49,6 +61,12 @@ export class SelectComponent extends AbstractRDKComponent implements AfterConten
     @Input() public labelField: string = 'label';
 
     @Input() public placeholder: string;
+
+    @Input() public scrollable: boolean = false;
+
+    @Input() public optionWidth: string;
+
+    @Input() public optionHeight: string;
 
     //获取映射的子组件option
     @ContentChildren(forwardRef(() => OptionComponent))
@@ -71,7 +89,7 @@ export class SelectComponent extends AbstractRDKComponent implements AfterConten
 
     //更改option选中状态
     private _updateSelectedOption(): void {
-        this._options && this._options.forEach((option) => {
+        this._options.length && this._options.forEach((option) => {
             option.selected = CommonUtils.compareWithKeyProperty(this.value, option.optionItem, <string[]>this.trackItemBy);
             option.cdRef.detectChanges();
         });
@@ -84,7 +102,7 @@ export class SelectComponent extends AbstractRDKComponent implements AfterConten
 
     ngAfterContentInit() {
         this._contentInit = true;
-        this._updateSelectedOption();
+        this.value && this._updateSelectedOption();
     }
 
     ngOnDestroy() {
@@ -137,7 +155,7 @@ export class OptionComponent implements OnInit {
 
 @NgModule({
     imports: [CommonModule, FormsModule],
-    declarations: [SelectComponent, OptionComponent],
+    declarations: [SelectComponent, OptionComponent, OptionList, RdkScrollBar],
     exports: [SelectComponent, OptionComponent]
 })
 export class SelectModule {

@@ -61,6 +61,9 @@ export class RdkScrollBar implements OnInit{
     @Output()
     public whileScrolling = new EventEmitter<ScrollEvent>();
 
+    @Input()
+    public rdkScrollBar: boolean = true;
+
 
     /**
      * 根据复杂的参数设置滚动条.
@@ -83,7 +86,7 @@ export class RdkScrollBar implements OnInit{
     }
 
     public ngOnInit() {
-        this._scrollBarJq = $(this._elf.nativeElement).mCustomScrollbar({
+        this.rdkScrollBar ? this._scrollBarJq = $(this._elf.nativeElement).mCustomScrollbar({
             axis: this.axis,
             theme: this.theme,
             autoHideScrollbar: this.autoHideScrollbar,
@@ -98,7 +101,7 @@ export class RdkScrollBar implements OnInit{
                     this.whileScrolling.emit(this._generateEventObject(this._scrollBarJq.get(0).mcs));
                 }
             }
-        });
+        }) : null;
     }
 
     private _generateEventObject(event): ScrollEvent {

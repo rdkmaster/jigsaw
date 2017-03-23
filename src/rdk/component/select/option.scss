@@ -4,6 +4,7 @@ $option-prefix-cls: #{$rdk-prefix}-option;
 
 :host {
     display: block;
+    width: 100%;
     height: $height-base;
     line-height: $height-base;
     font-size: $font-size-base;

@@ -21,7 +21,7 @@ export class RadioGroup extends AbstractRDKComponent implements OnInit, AfterCon
     }
 
     public set value(newValue: any) {
-        if (this._value != newValue) {
+        if (newValue && this._value != newValue) {
             this._value = newValue;
             this._contentInit && this._updateSelectedRadio();
         }
@@ -39,7 +39,7 @@ export class RadioGroup extends AbstractRDKComponent implements OnInit, AfterCon
     private _radios: QueryList<RadioButton> = null;
 
     private _updateSelectedRadio(): void {
-        this._radios && this._radios.forEach(radio => {
+        this._radios.length && this._radios.forEach(radio => {
             radio.checked = CommonUtils.compareWithKeyProperty(this.value, radio.radioItem, <string[]>this.trackItemBy);
             radio.cdRef.detectChanges();
         });
@@ -52,7 +52,7 @@ export class RadioGroup extends AbstractRDKComponent implements OnInit, AfterCon
 
     ngAfterContentInit() {
         this._contentInit = true;
-        this._updateSelectedRadio();
+        this.value && this._updateSelectedRadio();
     }
 
 }
