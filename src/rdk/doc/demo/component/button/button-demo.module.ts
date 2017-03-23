@@ -1,12 +1,29 @@
 
 
 import {NgModule} from "@angular/core";
-import {ButtonComponent} from "../../../../component/button/button";
 import {RouterModule} from "@angular/router";
-import {buttonDemoRoutes} from "./button-demo.routes";
-import {ButtonBasicDemoComponent} from "./basic/basic";
+import {ButtonComponent} from "../../../../component/button/button";
 import {RdkCheckBoxModule} from "../../../../component/checkbox/index";
+import {ButtonBasicDemoComponent} from "./basic/basic";
 import {ButtonDisableDemoComponent} from "./disabled/disabled";
+
+const buttonDemoRoutes=[
+    {
+        path:'',
+        redirectTo:'basic',
+        pathMatch:'full'
+    },
+    {
+        path:'basic', component: ButtonBasicDemoComponent
+    },
+    {
+        path:'disable', component: ButtonDisableDemoComponent
+    },
+    {
+        path:'**', //fallback router must in the last
+        component: ButtonBasicDemoComponent
+    }
+];
 
 @NgModule({
     declarations: [

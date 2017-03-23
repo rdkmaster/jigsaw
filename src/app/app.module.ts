@@ -5,7 +5,22 @@ import { HttpModule } from '@angular/http';
 
 import {AppComponent} from './app.component';
 import {RouterModule} from "@angular/router";
-import {appRoutes} from "./app.routes";
+
+const appRoutes=[
+    {
+        path:'',
+        redirectTo:'demo',
+        pathMatch:'full'
+    },
+    {
+        path:'demo',
+        loadChildren:'../rdk/doc/demo/demo-list#DemoListModule'
+    },
+    {
+        path:'**',//fallback router must in the last
+        loadChildren:'../rdk/doc/demo/demo-list#DemoListModule'
+    }
+];
 
 @NgModule({
   declarations: [
