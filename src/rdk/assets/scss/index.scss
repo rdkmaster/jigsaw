@@ -1,5 +1,6 @@
 @import "./core/basc";
 
+/*单选滚动条样式start*/
 rdk-select{
     .mCSB_scrollTools{
         width: 5px;
@@ -14,3 +15,17 @@ rdk-select{
         margin-right: 0;
     }
 }
+/*单选滚动条样式end*/
+
+/*时间组件样式start*/
+rdk-time{
+    color: $text-color;
+    .bootstrap-datetimepicker-widget table td.old, .bootstrap-datetimepicker-widget table td.new {
+        color: $text-color-secondary;
+    }
+
+    .glyphicon-chevron-left:before, .glyphicon-chevron-right:before {
+        color: $text-color-secondary;
+    }
+}
+/*时间组件样式end*/

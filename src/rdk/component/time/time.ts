@@ -97,11 +97,9 @@ export class TimeComponent implements OnInit {
         //require("eonasdan-bootstrap-datetimepicker");
 
         $(() => {
-            console.log(this._value);
-            console.log(this._format);
             let insert = this.el.nativeElement.querySelector(".time-box");
             $(insert).datetimepicker({
-                //locale: 'zh-cn',
+                locale: 'zh-cn',
                 inline: this.inline,
                 defaultDate: this._value,
                 format: this._format, // format: 'LT', //时刻

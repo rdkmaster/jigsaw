@@ -32,7 +32,7 @@ $radio-prefix-cls: #{$rdk-prefix}-radio;
         border: 1px solid $border-color-base;
         border-radius: 14px;
         background-color: $component-background;
-        vertical-align: -3px;
+        vertical-align: -2px;
         margin-right: 5px;
         @include prefixer(transition, all 0.3s);
         &:after {

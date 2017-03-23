@@ -47,7 +47,7 @@ export class PaginationComponent implements OnInit, AfterViewInit {
 
             this._hostInit ? this._hostInit = false : null;
 
-            this.change.emit(newValue);
+            this.currentPageChange.emit(newValue);
         }
     }
 
@@ -75,8 +75,10 @@ export class PaginationComponent implements OnInit, AfterViewInit {
         if (this._pageSize != newValue) {
             if (newValue.hasOwnProperty('id')) {
                 this._pageSize = newValue;
+                this.onShowSizeChange.emit(newValue.id);
             } else if (!isNaN(newValue)) {
                 this._pageSize = {id: newValue, label: newValue + '/Page'};
+                this.onShowSizeChange.emit(newValue);
             }
             this._init();
         }
@@ -104,9 +106,9 @@ export class PaginationComponent implements OnInit, AfterViewInit {
 
     @Input() public size: string; // 当为「small」时，是小尺寸分页
 
-    @Output() public change: EventEmitter<any> = new EventEmitter<any>(); //页码改变的事件
+    @Output() public currentPageChange: EventEmitter<any> = new EventEmitter<any>(); //页码改变的事件
 
-    @Output() onShowSizeChange: EventEmitter<any> = new EventEmitter<any>(); // pageSize 变化的事件
+    @Output() public onShowSizeChange: EventEmitter<any> = new EventEmitter<any>(); // pageSize 变化的事件
 
     @ViewChildren(forwardRef(() => PageComponent))
     private _pages: QueryList<PageComponent> = null;
