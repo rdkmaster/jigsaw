@@ -2,16 +2,11 @@ import {
     Component, Input, NgModule, ComponentFactoryResolver, AfterViewInit, ViewChild, Type, ChangeDetectorRef
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {RdkRendererHost} from "../core";
 
-@Component({
-    selector: 'rdk-table',
-    templateUrl: 'table.html'
-})
-export class RdkTable {
-    @Input()
-    public data: {data: string[][], header: string[]};
-}
+import {RdkRendererHost} from "../core";
+import {TableData} from "../../core/data/table-data";
+import {TableCellRenderer} from "./table-api";
+
 
 class TableCellBasic implements AfterViewInit {
     constructor(private _componentFactoryResolver: ComponentFactoryResolver,
@@ -19,7 +14,7 @@ class TableCellBasic implements AfterViewInit {
     }
 
     @Input()
-    public tableData: any;
+    public tableData: TableData;
     @Input()
     public cellData: any;
     @Input()
@@ -41,9 +36,16 @@ class TableCellBasic implements AfterViewInit {
         componentRef.instance.row = this.row;
         componentRef.instance.column = this.column;
         this._changeDetector.detectChanges();
-
-        console.log("%s, %s", this.row, this.column);
     }
+}
+
+@Component({
+    selector: 'rdk-table',
+    templateUrl: 'table.html'
+})
+export class RdkTable {
+    @Input()
+    public data: TableData;
 }
 
 @Component({
@@ -66,13 +68,6 @@ export class RdkTableHeader extends TableCellBasic {
         super(cfr, cd);
         this.renderer = DefaultCellRenderer;
     }
-}
-
-export class TableCellRenderer {
-    @Input() tableData: any;
-    @Input() cellData: any;
-    @Input() row: number;
-    @Input() column: number;
 }
 
 @Component({
