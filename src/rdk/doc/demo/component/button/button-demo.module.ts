@@ -2,10 +2,10 @@
 
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {ButtonComponent} from "../../../../component/button/button";
-import {RdkCheckBoxModule} from "../../../../component/checkbox/index";
 import {ButtonBasicDemoComponent} from "./basic/basic";
 import {ButtonDisableDemoComponent} from "./disabled/disabled";
+import {RdkCheckBoxModule} from "../../../../component/checkbox/index";
+import {RdkButton} from "../../../../component/button/button";
 
 const buttonDemoRoutes=[
     {
@@ -27,7 +27,7 @@ const buttonDemoRoutes=[
 
 @NgModule({
     declarations: [
-        ButtonComponent, ButtonBasicDemoComponent, ButtonDisableDemoComponent
+        RdkButton, ButtonBasicDemoComponent, ButtonDisableDemoComponent
     ],
     imports: [
         RouterModule.forChild(buttonDemoRoutes), RdkCheckBoxModule
