@@ -21,3 +21,6 @@ ng serve -pc proxy-config.json
 
 # 组件开发云图
 ![](comp-map.png)
+
+# 参与贡献
+项目处于初始阶段，没有issue，可以搜索源码中的TODO列表，帮忙改正。
