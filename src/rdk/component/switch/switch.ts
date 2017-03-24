@@ -10,10 +10,7 @@ import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
 })
 
 export class RdkSwitch implements OnInit{
-    private _checked: boolean = false;
-    private _disabled: boolean = false;
-    private _content: any;
-    private _switchClass: {};
+    private _content: any; // 当前显示的内容.
 
     @Input()
     public onLabel: any;
@@ -22,12 +19,7 @@ export class RdkSwitch implements OnInit{
     @Input()
     public size: string = 'default';
 
-    @Input()
-    public get disabled(): boolean { return this._disabled; };
-    public set disabled(value: boolean) {
-        this._disabled = value;
-        this._setSwitchClass();
-    }
+    private _checked: boolean = false;
 
     @Input()
     public get checked(): boolean  { return this._checked};
@@ -45,6 +37,14 @@ export class RdkSwitch implements OnInit{
      */
     @Output() public change = this.checkedChange;
 
+    private _disabled: boolean = false;
+    @Input()
+    public get disabled(): boolean { return this._disabled; };
+    public set disabled(value: boolean) {
+        this._disabled = value;
+        this._setSwitchClass();
+    }
+
     private _switchClick() {
         if(!this.disabled) {
             this.checked = !this.checked;
@@ -53,6 +53,8 @@ export class RdkSwitch implements OnInit{
             this.checkedChange.emit(this.checked);
         }
     }
+
+    private _switchClass: {};
 
     /**
      * 更新控件样式的方法
