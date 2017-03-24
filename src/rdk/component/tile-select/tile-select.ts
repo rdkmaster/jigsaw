@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms'
-import {InputModule} from '../input/input';
+import {RdkInputModule} from '../input/input';
 import {AbstractRDKComponent} from '../../core/api/component-api';
 import {CommonUtils} from '../../core/utils/common-utils';
 import {InternalUtils} from '../../core/utils/internal-utils';
@@ -17,7 +17,7 @@ import {InternalUtils} from '../../core/utils/internal-utils';
         '[style.width]': 'width'
     }
 })
-export class TileSelectComponent extends AbstractRDKComponent implements OnInit, AfterContentInit {
+export class RdkTileSelect extends AbstractRDKComponent implements OnInit, AfterContentInit {
     private _contentInit: boolean = false;
     private _selectedItems: any[] = [];
 
@@ -50,8 +50,8 @@ export class TileSelectComponent extends AbstractRDKComponent implements OnInit,
     @Input() public searchable: boolean = false;
 
     //获取映射的子组件
-    @ContentChildren(forwardRef(() => TileOptionComponent))
-    private _options: QueryList<TileOptionComponent>;
+    @ContentChildren(forwardRef(() => RdkTileOption))
+    private _options: QueryList<RdkTileOption>;
 
 
     //根据选中的option更新selectedItems
@@ -67,7 +67,7 @@ export class TileSelectComponent extends AbstractRDKComponent implements OnInit,
                 });
             }
         } else { //单选选中
-            this._options.length && this._options.forEach((option: TileOptionComponent) => {
+            this._options.length && this._options.forEach((option: RdkTileOption) => {
                 //去除其他option选中
                 if (!CommonUtils.compareWithKeyProperty(option.optionItem, optionItem, <string[]>this.trackItemBy) && option.selected) {
                     option.selected = false;
@@ -112,15 +112,15 @@ export class TileSelectComponent extends AbstractRDKComponent implements OnInit,
         '[style.line-height]': 'height'
     }
 })
-export class TileOptionComponent extends AbstractRDKComponent implements OnInit {
+export class RdkTileOption extends AbstractRDKComponent implements OnInit {
     @Input() public optionItem: any; //option对象
 
     private _optionLabel: string; //显示在页面上的值
-    private _tileSelect: TileSelectComponent; //父组件
+    private _tileSelect: RdkTileSelect; //父组件
 
     public selected: boolean = false;//选中状态
 
-    constructor(@Optional() tileSelect: TileSelectComponent, public _cdref: ChangeDetectorRef) {
+    constructor(@Optional() tileSelect: RdkTileSelect, public _cdref: ChangeDetectorRef) {
         super();
         this._tileSelect = tileSelect;
     }
@@ -149,11 +149,11 @@ export class TileOptionComponent extends AbstractRDKComponent implements OnInit 
 }
 
 @NgModule({
-    imports: [CommonModule, FormsModule, InputModule],
-    declarations: [TileSelectComponent, TileOptionComponent],
-    exports: [TileSelectComponent, TileOptionComponent]
+    imports: [CommonModule, FormsModule, RdkInputModule],
+    declarations: [RdkTileSelect, RdkTileOption],
+    exports: [RdkTileSelect, RdkTileOption]
 })
-export class TileSelectorModule {
+export class RdkTileSelectModule {
 
 }
 

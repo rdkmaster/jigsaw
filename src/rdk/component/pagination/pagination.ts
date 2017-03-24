@@ -5,15 +5,15 @@ import {
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 
-import {SelectModule} from '../select/select';
-import {InputModule} from '../input/input';
+import {RdkSelectModule} from '../select/select';
+import {RdkInputModule} from '../input/input';
 
 @Component({
     selector: 'rdk-paging',
     templateUrl: 'pagination.html',
     styleUrls: ['pagination.scss']
 })
-export class PaginationComponent implements OnInit, AfterViewInit {
+export class RdkPagination implements OnInit, AfterViewInit {
     private _totalPage: number;
     private _pageArr: number[] = [];
     private _prevDisabled: boolean = false;
@@ -21,8 +21,8 @@ export class PaginationComponent implements OnInit, AfterViewInit {
     private _current: number;
     private _defaultCurrent: number;
     private _showPages: number[] = [];
-    private _firstPage: PageComponent;
-    private _lastPage: PageComponent;
+    private _firstPage: RdkPage;
+    private _lastPage: RdkPage;
     private _pageSizeOptions: any[];
     private _pageSize: any;
     private _hostInit: boolean = false;
@@ -100,9 +100,9 @@ export class PaginationComponent implements OnInit, AfterViewInit {
         });
     };
 
-    @Input() public searchable: boolean; // 搜索功能开关
+    @Input() public searchable: boolean = false; // 搜索功能开关
 
-    @Input() public showQuickJumper: boolean; // 是否可以快速跳转至某页
+    @Input() public showQuickJumper: boolean = false; // 是否可以快速跳转至某页
 
     @Input() public size: string; // 当为「small」时，是小尺寸分页
 
@@ -110,8 +110,8 @@ export class PaginationComponent implements OnInit, AfterViewInit {
 
     @Output() public onShowSizeChange: EventEmitter<any> = new EventEmitter<any>(); // pageSize 变化的事件
 
-    @ViewChildren(forwardRef(() => PageComponent))
-    private _pages: QueryList<PageComponent> = null;
+    @ViewChildren(forwardRef(() => RdkPage))
+    private _pages: QueryList<RdkPage> = null;
 
     /*
      * 根据page组件的当前选择改变current值
@@ -319,17 +319,17 @@ export class PaginationComponent implements OnInit, AfterViewInit {
         '[class.rdk-page-hidden]': '!_isShow',
     }
 })
-export class PageComponent {
+export class RdkPage {
     public current: boolean = false;
     public showPrev: boolean = false;
     public showNext: boolean = false;
 
     private _isShow: boolean = false;
-    private _pagination: PaginationComponent;
+    private _pagination: RdkPagination;
 
     @Input() public page: number;
 
-    constructor(@Optional() pagination: PaginationComponent) {
+    constructor(@Optional() pagination: RdkPagination) {
         this._pagination = pagination;
     }
 
@@ -368,11 +368,11 @@ export class PageComponent {
 }
 
 @NgModule({
-    imports: [CommonModule, FormsModule, SelectModule, InputModule],
-    declarations: [PaginationComponent, PageComponent],
-    exports: [PaginationComponent]
+    imports: [CommonModule, FormsModule, RdkSelectModule, RdkInputModule],
+    declarations: [RdkPagination, RdkPage],
+    exports: [RdkPagination]
 })
-export class PaginationModule {
+export class RdkPaginationModule {
 
 }
 

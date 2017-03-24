@@ -11,7 +11,7 @@ import {InternalUtils} from '../../core/utils/internal-utils';
 @Directive({
     selector: 'rdk-radio-group'
 })
-export class RadioGroup extends AbstractRDKComponent implements OnInit, AfterContentInit {
+export class RdkRadioGroup extends AbstractRDKComponent implements OnInit, AfterContentInit {
     private _value: any = null;
     private _contentInit: boolean = false;
 
@@ -35,8 +35,8 @@ export class RadioGroup extends AbstractRDKComponent implements OnInit, AfterCon
     //显示在界面上的属性名
     @Input() public labelField: string = 'label';
 
-    @ContentChildren(forwardRef(() => RadioButton))
-    private _radios: QueryList<RadioButton> = null;
+    @ContentChildren(forwardRef(() => RdkRadioButton))
+    private _radios: QueryList<RdkRadioButton> = null;
 
     private _updateSelectedRadio(): void {
         this._radios.length && this._radios.forEach(radio => {
@@ -65,16 +65,16 @@ export class RadioGroup extends AbstractRDKComponent implements OnInit, AfterCon
         "(click)": "_onClick()"
     }
 })
-export class RadioButton implements OnInit {
+export class RdkRadioButton implements OnInit {
     @Input() public radioItem: any;
 
     private _radioLabel: string;
 
-    private _radioGroup: RadioGroup;
+    private _radioGroup: RdkRadioGroup;
 
     public checked: boolean = false;
 
-    constructor(@Optional() radioGroup: RadioGroup, public cdRef: ChangeDetectorRef) {
+    constructor(@Optional() radioGroup: RdkRadioGroup, public cdRef: ChangeDetectorRef) {
         this._radioGroup = radioGroup;
     }
 
@@ -96,9 +96,9 @@ export class RadioButton implements OnInit {
 
 @NgModule({
     imports: [CommonModule, FormsModule],
-    declarations: [RadioGroup, RadioButton],
-    exports: [RadioGroup, RadioButton]
+    declarations: [RdkRadioGroup, RdkRadioButton],
+    exports: [RdkRadioGroup, RdkRadioButton]
 })
-export class RadioModule {
+export class RdkRadioModule {
 
 }

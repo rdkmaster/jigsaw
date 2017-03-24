@@ -14,7 +14,7 @@ import {AbstractRDKComponent} from '../../core/api/component-api';
         '[class.rdk-button-clicked]': "_clicked"
     }
 })
-export class ButtonComponent extends AbstractRDKComponent {
+export class RdkButton extends AbstractRDKComponent {
 
     //按钮不可点击状态
     @Input() public disabled: boolean = false;
@@ -33,9 +33,9 @@ export class ButtonComponent extends AbstractRDKComponent {
 
 @NgModule({
     imports: [CommonModule],
-    declarations: [ButtonComponent],
-    exports: [ButtonComponent]
+    declarations: [RdkButton],
+    exports: [RdkButton]
 })
-export class ButtonModule {
+export class RdkButtonModule {
 
 }

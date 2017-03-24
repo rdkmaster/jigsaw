@@ -19,7 +19,7 @@ export class IconFront {}
         '[style.line-height]': 'height'
     }
 })
-export class InputComponent extends AbstractRDKComponent {
+export class RdkInput extends AbstractRDKComponent {
     private _value: string | number; //input表单值
     private _longIndent: boolean = false;
 
@@ -54,10 +54,10 @@ export class InputComponent extends AbstractRDKComponent {
 
 @NgModule({
     imports: [CommonModule, FormsModule],
-    declarations: [InputComponent, IconFront],
-    exports: [InputComponent,IconFront],
+    declarations: [RdkInput, IconFront],
+    exports: [RdkInput,IconFront],
 })
-export class InputModule {
+export class RdkInputModule {
 
 }
 

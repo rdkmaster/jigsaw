@@ -19,7 +19,7 @@ import "eonasdan-bootstrap-datetimepicker";
         '[style.width]': 'width'
     }
 })
-export class TimeComponent extends AbstractRDKComponent implements OnInit {
+export class RdkTime extends AbstractRDKComponent implements OnInit {
     //组件是否初始化
     private _initFlag: boolean;
 
@@ -43,10 +43,10 @@ export class TimeComponent extends AbstractRDKComponent implements OnInit {
     @Output() public dateChange = new EventEmitter<string>();
 
     //限制开始时间
-    @Input() public dateLimitStart: any;
+    @Input() public dateLimitStart: string;
 
     //限制结束时间
-    @Input() public dateLimitEnd: any;
+    @Input() public dateLimitEnd: string;
 
     //时间格式
     private _format: string = 'YYYY-MM-DD, HH:mm:ss';
@@ -130,9 +130,9 @@ export class TimeComponent extends AbstractRDKComponent implements OnInit {
 
 @NgModule({
     imports: [CommonModule, FormsModule],
-    declarations: [TimeComponent],
-    exports: [TimeComponent]
+    declarations: [RdkTime],
+    exports: [RdkTime]
 })
-export class TimeModule {
+export class RdkTimeModule {
 
 }

@@ -19,7 +19,7 @@ export class PanelValue{
         '[style.width.px]': 'width',
     }
 })
-export class CollapseComponent implements AfterContentInit{
+export class RdkCollapse implements AfterContentInit{
     @Input()
     width: number = 400;
 
@@ -28,8 +28,8 @@ export class CollapseComponent implements AfterContentInit{
 
     public openedPanelKeys: number[] = [];
 
-    @ContentChildren(forwardRef(() => PanelComponent))
-    private _panelList: QueryList<PanelComponent>;
+    @ContentChildren(forwardRef(() => RdkPanel))
+    private _panelList: QueryList<RdkPanel>;
 
     constructor(){}
 
@@ -57,15 +57,15 @@ export class CollapseComponent implements AfterContentInit{
         '[class.rdk-panel-opened]': '_opened'
     }
 })
-export class PanelComponent{
+export class RdkPanel{
     @Input()
     panelValue: PanelValue;
 
     private _opened: boolean;
 
-    private _collapse: CollapseComponent;
+    private _collapse: RdkCollapse;
 
-    constructor(private _renderer: Renderer, private _el: ElementRef, @Optional() collapse: CollapseComponent){
+    constructor(private _renderer: Renderer, private _el: ElementRef, @Optional() collapse: RdkCollapse){
         this._collapse = collapse;
     }
 
@@ -95,10 +95,10 @@ export class PanelComponent{
 
 @NgModule({
     imports: [CommonModule, FormsModule],
-    declarations: [CollapseComponent, PanelComponent],
-    exports: [CollapseComponent, PanelComponent]
+    declarations: [RdkCollapse, RdkPanel],
+    exports: [RdkCollapse, RdkPanel]
 })
-export class CollapseModule{
+export class RdkCollapseModule{
 
 }
 

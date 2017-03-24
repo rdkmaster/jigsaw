@@ -31,7 +31,7 @@ export class OptionList extends AbstractRDKComponent{
         '[style.line-height]': 'height'
     }
 })
-export class SelectComponent extends AbstractRDKComponent implements AfterContentInit, OnDestroy, OnInit {
+export class RdkSelect extends AbstractRDKComponent implements AfterContentInit, OnDestroy, OnInit {
     private _optionListHidden: boolean = true; // 设置option列表是否显示
     private _value: any; // select表单值
     private _contentInit: boolean = false; //子组件加载标记
@@ -69,8 +69,8 @@ export class SelectComponent extends AbstractRDKComponent implements AfterConten
     @Input() public optionHeight: string;
 
     //获取映射的子组件option
-    @ContentChildren(forwardRef(() => OptionComponent))
-    private _options: QueryList<OptionComponent> = null;
+    @ContentChildren(forwardRef(() => RdkOption))
+    private _options: QueryList<RdkOption> = null;
 
     constructor(private _renderer: Renderer) {
         super()
@@ -121,18 +121,18 @@ export class SelectComponent extends AbstractRDKComponent implements AfterConten
         '[style.line-height]': '_height'
     }
 })
-export class OptionComponent implements OnInit {
+export class RdkOption implements OnInit {
     @Input() public optionItem: any;
 
     private _optionLabel: string;
 
-    private _selectCmp: SelectComponent;
+    private _selectCmp: RdkSelect;
 
     private _height: string;
 
     public selected: boolean = false;//选中状态
 
-    constructor(@Optional() selectCmp: SelectComponent, public cdRef: ChangeDetectorRef) {
+    constructor(@Optional() selectCmp: RdkSelect, public cdRef: ChangeDetectorRef) {
         this._selectCmp = selectCmp;
     }
 
@@ -155,9 +155,9 @@ export class OptionComponent implements OnInit {
 
 @NgModule({
     imports: [CommonModule, FormsModule],
-    declarations: [SelectComponent, OptionComponent, OptionList, RdkScrollBar],
-    exports: [SelectComponent, OptionComponent]
+    declarations: [RdkSelect, RdkOption, OptionList, RdkScrollBar],
+    exports: [RdkSelect, RdkOption]
 })
-export class SelectModule {
+export class RdkSelectModule {
 
 }
