@@ -8,7 +8,6 @@ import {
 import {AbstractRDKComponent} from "../../core/api/component-api";
 
 
-
 export enum CheckBoxStatus {
     unchecked, checked, indeterminate
 }
@@ -27,16 +26,15 @@ export type CheckBoxValue = boolean | CheckBoxStatus;
  * checkbox 组件
  */
 export class RdkCheckBox extends AbstractRDKComponent implements OnInit {
-    private _checked: CheckBoxStatus | boolean = CheckBoxStatus.unchecked;
-    private _disabled: boolean = false;
-    private _checkboxClass: { };
 
+    private _checked: CheckBoxStatus = CheckBoxStatus.unchecked;
     @Input()
     public get checked(): CheckBoxValue {
         return this._checked
     }
+
     public set checked(value: CheckBoxValue) {
-        this._checked = value;
+        this._checked = this._fixCheckValue(value);
         this._setCheckBoxClass();
     }
 
@@ -46,6 +44,7 @@ export class RdkCheckBox extends AbstractRDKComponent implements OnInit {
     @Output()
     public change = this.checkedChange;
 
+    private _disabled: boolean = false;
     @Input()
     public get disabled(): boolean {
         return this._disabled;
@@ -56,13 +55,50 @@ export class RdkCheckBox extends AbstractRDKComponent implements OnInit {
         this._setCheckBoxClass();
     }
 
+    private _enableIndeterminate: boolean = false;
+    @Input()
+    public get enableIndeterminate(): boolean {
+        return this._enableIndeterminate;
+    }
+
+    public set enableIndeterminate(value: boolean) {
+        this._enableIndeterminate = value;
+        this._valueCandidates = [CheckBoxStatus.unchecked, CheckBoxStatus.checked];
+        if (value) {
+            this._valueCandidates.push(CheckBoxStatus.indeterminate);
+        }
+        if (!this._enableIndeterminate && this._checked === CheckBoxStatus.indeterminate) {
+            this._checked = this._fixCheckValue(this._checked);
+            this._setCheckBoxClass();
+            setTimeout(() => this.checkedChange.emit(this._checked));
+        }
+    }
+
     public ngOnInit() {
         this._setCheckBoxClass();
     }
 
+    private _valueCandidates: CheckBoxStatus[] = [CheckBoxStatus.unchecked, CheckBoxStatus.checked];
+
     private _toggle(): void {
-        this.checked = !this.checked;
-        this.checkedChange.emit(this.checked);
+        const index = this._valueCandidates.indexOf(this._checked);
+        this._checked = this._valueCandidates[(index + 1) % this._valueCandidates.length];
+        this.checkedChange.emit(this._checked);
+    }
+
+    private _fixCheckValue(value:CheckBoxValue):CheckBoxStatus {
+        let v:CheckBoxStatus;
+        if (value === undefined || value == null) {
+            v = CheckBoxStatus.unchecked;
+        } else if (typeof value === 'number') {
+            v = value > CheckBoxStatus.indeterminate ? CheckBoxStatus.checked : value;
+        } else {
+            v = value ? CheckBoxStatus.checked : CheckBoxStatus.unchecked;
+        }
+        if (!this.enableIndeterminate && v == CheckBoxStatus.indeterminate) {
+            v = CheckBoxStatus.checked;
+        }
+        return v;
     }
 
     /**
@@ -83,11 +119,13 @@ export class RdkCheckBox extends AbstractRDKComponent implements OnInit {
     /**
      * 更新checkbox的样式信息
      */
+    private _checkboxClass: { };
+
     private _setCheckBoxClass() {
         this._checkboxClass = {
             'rdk-checkbox': 'true',
-            'rdk-checkbox-checked': this.checked,
-            'rdk-checkbox-indeterminate': this.checked === CheckBoxStatus.indeterminate,
+            'rdk-checkbox-checked': this._checked,
+            'rdk-checkbox-indeterminate': this._checked === CheckBoxStatus.indeterminate,
             'rdk-checkbox-disabled': this.disabled
         }
     }

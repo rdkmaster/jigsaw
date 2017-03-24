@@ -2,6 +2,8 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {CheckBoxBasicDemoComponent} from "./basic/basic";
 import {RdkCheckBoxModule} from "../../../../component/checkbox/index";
+import {RdkSwitchModule} from "../../../../component/switch/index";
+import {CheckBoxDisableDemoComponent} from "./disabled/disabled";
 
 const buttonDemoRoutes=[
     {
@@ -13,6 +15,9 @@ const buttonDemoRoutes=[
         path:'basic', component: CheckBoxBasicDemoComponent
     },
     {
+        path:'disable', component: CheckBoxDisableDemoComponent
+    },
+    {
         path:'**', //fallback router must in the last
         component: CheckBoxBasicDemoComponent
     }
@@ -20,13 +25,13 @@ const buttonDemoRoutes=[
 
 @NgModule({
     declarations: [
-        CheckBoxBasicDemoComponent
+        CheckBoxBasicDemoComponent, CheckBoxDisableDemoComponent
     ],
     imports: [
-        RouterModule.forChild(buttonDemoRoutes), RdkCheckBoxModule
+        RouterModule.forChild(buttonDemoRoutes), RdkCheckBoxModule, RdkSwitchModule
     ],
     exports: [
-        CheckBoxBasicDemoComponent
+        CheckBoxBasicDemoComponent, CheckBoxDisableDemoComponent
     ],
     providers: []
 })

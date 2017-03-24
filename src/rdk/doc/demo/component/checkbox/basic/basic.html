@@ -1,2 +1,7 @@
 
-<rdk-checkbox>click me</rdk-checkbox>
+<rdk-checkbox [(checked)]="checked" [(enableIndeterminate)]="enableIndeterminate">click me</rdk-checkbox>
+<span>The checkbox value is {{checked}}!</span>
+
+<br>
+<span>启用中间状态</span>
+<rdk-switch [(checked)]="enableIndeterminate"></rdk-switch>
