@@ -8,7 +8,7 @@ import { CommonModule } from "@angular/common";
 
 @NgModule({
     imports: [CommonModule],
-    exports: [RdkCheckBox],
+    exports: [RdkCheckBox, CommonModule],
     declarations: [RdkCheckBox],
     providers: [],
 })

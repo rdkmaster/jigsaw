@@ -7,16 +7,12 @@ import {
 } from '@angular/core';
 import {AbstractRDKComponent} from "../../core/api/component-api";
 
-export class RdkCheckboxChange {
-    /** The source RdkCheckBox of the event. */
-    source: RdkCheckBox;
-    /** The new `checked` value of the checkbox. */
-    checked: boolean | CheckBoxStatus;
-}
+
 
 export enum CheckBoxStatus {
     unchecked, checked, indeterminate
 }
+export type CheckBoxValue = boolean | CheckBoxStatus;
 
 @Component({
     selector: 'rdk-checkbox',
@@ -30,37 +26,35 @@ export enum CheckBoxStatus {
 /**
  * checkbox 组件
  */
-export class RdkCheckBox extends AbstractRDKComponent implements OnInit{
+export class RdkCheckBox extends AbstractRDKComponent implements OnInit {
     private _checked: CheckBoxStatus | boolean = CheckBoxStatus.unchecked;
     private _disabled: boolean = false;
     private _checkboxClass: { };
 
     @Input()
-    public get checked(): boolean | CheckBoxStatus { return this._checked };
-    public set checked(value: boolean | CheckBoxStatus) {
-        this._checked = value;
-        this._setCheckBoxClass();
-    };
-    @Output() public checkedChange: EventEmitter<boolean| CheckBoxStatus> = new EventEmitter<boolean>();
-
-    /**
-     * 设置checkbox 状态
-     * @param value boolean 或者 CheckBoxStatus
-     */
-    public setCheckboxStatus(value: boolean| CheckBoxStatus) {
+    public get checked(): CheckBoxValue {
+        return this._checked
+    }
+    public set checked(value: CheckBoxValue) {
         this._checked = value;
         this._setCheckBoxClass();
     }
 
+    @Output()
+    public checkedChange: EventEmitter<CheckBoxValue> = new EventEmitter();
+
+    @Output()
+    public change = this.checkedChange;
+
     @Input()
-    public get disabled(): boolean { return this._disabled; };
+    public get disabled(): boolean {
+        return this._disabled;
+    }
+
     public set disabled(value: boolean) {
         this._disabled = value;
         this._setCheckBoxClass();
-    };
-
-    /** Event emitted when the checkbox's `checked` value changes. */
-    @Output() public change = new EventEmitter<RdkCheckboxChange>();
+    }
 
     public ngOnInit() {
         this._setCheckBoxClass();
@@ -68,15 +62,6 @@ export class RdkCheckBox extends AbstractRDKComponent implements OnInit{
 
     private _toggle(): void {
         this.checked = !this.checked;
-        this._emitChangeEvent();
-    }
-
-    // change事件.
-    private _emitChangeEvent() {
-        let event = new RdkCheckboxChange();
-        event.source = this;
-        event.checked = this.checked;
-        this.change.emit(event);
         this.checkedChange.emit(this.checked);
     }
 
@@ -89,7 +74,7 @@ export class RdkCheckBox extends AbstractRDKComponent implements OnInit{
         event.stopPropagation();
         event.preventDefault();
 
-        if(!this.disabled) {
+        if (!this.disabled) {
             this._toggle();
             this._setCheckBoxClass();
         }

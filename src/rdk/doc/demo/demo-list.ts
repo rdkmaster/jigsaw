@@ -2,7 +2,8 @@ import {NgModule, Component} from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
-    selector: 'rdk-demo-list', templateUrl: 'demo-list.html'
+    selector: 'rdk-demo-list', templateUrl: 'demo-list.html',
+    styles: ['li {display: inline-block; margin-right: 12px;}']
 })
 export class DemoListComponent {
 
@@ -20,6 +21,10 @@ const demoListRoutes=[
     {
         path:'button',
         loadChildren:'./component/button/button-demo.module#ButtonDemoModule'
+    },
+    {
+        path:'checkbox',
+        loadChildren:'./component/checkbox/checkbox-demo.module#CheckBoxDemoModule'
     },
     {
         path:'table',

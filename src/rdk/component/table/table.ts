@@ -83,7 +83,7 @@ export class DefaultCellRenderer extends TableCellRenderer {
     imports: [
         CommonModule
     ],
-    exports: [CommonModule, RdkTable, RdkTable, RdkTableCell, RdkRendererHost, RdkTableHeader, DefaultCellRenderer],
+    exports: [CommonModule, RdkTable, RdkTableCell, RdkRendererHost, RdkTableHeader, DefaultCellRenderer],
     entryComponents: [DefaultCellRenderer]
 })
 export class RdkTableModule {
