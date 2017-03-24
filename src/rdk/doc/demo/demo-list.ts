@@ -22,6 +22,10 @@ const demoListRoutes=[
         loadChildren:'./component/button/button-demo.module#ButtonDemoModule'
     },
     {
+        path:'table',
+        loadChildren:'./component/table/table-demo.module#TableDemoModule'
+    },
+    {
         path:'**', //fallback router must in the last
         component: DemoListComponent
     }

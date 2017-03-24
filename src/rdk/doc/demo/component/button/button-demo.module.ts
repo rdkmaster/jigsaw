@@ -27,8 +27,7 @@ const buttonDemoRoutes=[
 
 @NgModule({
     declarations: [
-        ButtonComponent,
-        ButtonBasicDemoComponent, ButtonDisableDemoComponent
+        ButtonComponent, ButtonBasicDemoComponent, ButtonDisableDemoComponent
     ],
     imports: [
         RouterModule.forChild(buttonDemoRoutes), RdkCheckBoxModule

@@ -1,0 +1,17 @@
+
+<table>
+    <thead>
+    <tr>
+        <td rdk-table-header *ngFor="let head of data.header; let colIndex = index"
+            [tableData]="data" [cellData]="head" [column]="colIndex" [row]="0">
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let row of data.data; let rowIndex = index;">
+        <td rdk-table-cell *ngFor="let cell of row; let colIndex = index"
+            [tableData]="data" [cellData]="cell" [row]="rowIndex" [column]="colIndex">
+        </td>
+    </tr>
+    </tbody>
+</table>

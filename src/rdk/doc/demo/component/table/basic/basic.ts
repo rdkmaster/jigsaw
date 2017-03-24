@@ -4,9 +4,6 @@ import {Component} from "@angular/core";
   templateUrl: 'basic.html',
   styleUrls: []
 })
-export class ButtonBasicDemoComponent {
-    onClick() {
-        alert('hello rdk button');
-    }
+export class TableBasicDemoComponent {
 }
 
