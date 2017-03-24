@@ -19,8 +19,8 @@ export class RdkGraph implements OnInit, OnDestroy {
     // 通过 echarts.init 创建的实例
     public graph: any;
 
+    // 由数据服务提供的数据.
     private _data: AbstractGraphData;
-
 
     @Input()
     public get data(): AbstractGraphData {
@@ -32,12 +32,12 @@ export class RdkGraph implements OnInit, OnDestroy {
         this._setOption(value.options)
     }
 
-    private _setOption(option) {
+    private _setOption(option: Object, notMerge?: boolean, lazyUpdate?: boolean) {
         if (!this.graph) return;
 
         if (!this._isOptionsValid(option)) return;
 
-        this.graph.setOption(option);
+        this.graph.setOption(option, notMerge, lazyUpdate);
         this._registerEvent();
     }
 
@@ -95,6 +95,10 @@ export class RdkGraph implements OnInit, OnDestroy {
 
     public registerTheme(themeName: string, theme: Object): void {
         this.echart.registerMap(themeName, theme);
+    }
+
+    public setOption(option: Object, notMerge?: boolean, lazyUpdate?: boolean) {
+        this._setOption(option, notMerge, lazyUpdate)
     }
 
     public getWidth(): number {
