@@ -6,3 +6,4 @@
 ### graph
 
 // Todo
+参照echarts 的说明文档使用
