@@ -11,6 +11,7 @@ import {InternalUtils} from '../../core/utils/internal-utils';
 @Directive({
     selector: 'rdk-radio-group'
 })
+//TODO by chenxu: radio内部自动完成ngFor，不用应用自己写，但是依然在模板里保留 <ng-content></ng-content>
 export class RdkRadioGroup extends AbstractRDKComponent implements OnInit, AfterContentInit {
     private _value: any = null;
     private _contentInit: boolean = false;

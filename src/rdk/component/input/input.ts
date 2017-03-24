@@ -1,13 +1,10 @@
-import {
-    NgModule, Component, EventEmitter, Input, Output, ContentChildren, AfterContentInit, Directive, QueryList,
-    ElementRef, OnInit
-} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {AbstractRDKComponent} from '../../core/api/component-api';
+import {NgModule, Component, EventEmitter, Input, Output, ContentChildren, Directive, QueryList} from "@angular/core";
+import {CommonModule} from "@angular/common";
+import {FormsModule} from "@angular/forms";
+import {AbstractRDKComponent} from "../../core/api/component-api";
 
 @Directive({ selector: '[rdk-prefix-icon]' })
-export class IconFront {}
+export class RdkPrefixIcon {}
 
 @Component({
     selector: 'rdk-input',
@@ -19,6 +16,7 @@ export class IconFront {}
         '[style.line-height]': 'height'
     }
 })
+//TODO（by陈旭） 缺少keyup、blur等事件
 export class RdkInput extends AbstractRDKComponent {
     private _value: string | number; //input表单值
     private _longIndent: boolean = false;
@@ -40,7 +38,7 @@ export class RdkInput extends AbstractRDKComponent {
 
     @Input() public clearable: boolean = true;
 
-    @ContentChildren(IconFront) _iconFront: QueryList<IconFront> = null;
+    @ContentChildren(RdkPrefixIcon) _iconFront: QueryList<RdkPrefixIcon> = null;
 
     private _clearValue(): void {
         this.value = null;
@@ -54,8 +52,8 @@ export class RdkInput extends AbstractRDKComponent {
 
 @NgModule({
     imports: [CommonModule, FormsModule],
-    declarations: [RdkInput, IconFront],
-    exports: [RdkInput,IconFront],
+    declarations: [RdkInput, RdkPrefixIcon],
+    exports: [RdkInput,RdkPrefixIcon],
 })
 export class RdkInputModule {
 
