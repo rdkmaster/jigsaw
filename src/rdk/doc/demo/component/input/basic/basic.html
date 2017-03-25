@@ -7,8 +7,8 @@
 </rdk-input>
 <p class="notes">输入值是：{{inputValue}}</p>
 
-<h6>图标放在左侧</h6>
-<rdk-input  width="30%">
-    <span rdk-prefix-icon class="fa fa-search"></span>
+<h6>图标放在左侧，并有交互</h6>
+<rdk-input #myInput width="30%">
+    <a (click)="click()"><span rdk-prefix-icon class="fa fa-search"></span></a>
 </rdk-input>
 
