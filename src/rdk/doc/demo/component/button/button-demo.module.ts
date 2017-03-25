@@ -1,26 +1,22 @@
-
-
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {ButtonBasicDemoComponent} from "./basic/basic";
 import {ButtonDisableDemoComponent} from "./disabled/disabled";
 import {RdkCheckBoxModule} from "../../../../component/checkbox/index";
-import {RdkButton, RdkButtonModule} from "../../../../component/button/button";
+import {RdkButtonModule} from "../../../../component/button/button";
 
-const buttonDemoRoutes=[
+const buttonDemoRoutes = [
     {
-        path:'',
-        redirectTo:'basic',
-        pathMatch:'full'
+        path: '', redirectTo: 'basic', pathMatch: 'full'
     },
     {
-        path:'basic', component: ButtonBasicDemoComponent
+        path: 'basic', component: ButtonBasicDemoComponent
     },
     {
-        path:'disable', component: ButtonDisableDemoComponent
+        path: 'disable', component: ButtonDisableDemoComponent
     },
     {
-        path:'**', //fallback router must in the last
+        path: '**', //fallback router must in the last
         component: ButtonBasicDemoComponent
     }
 ];
@@ -37,4 +33,5 @@ const buttonDemoRoutes=[
     ],
     providers: []
 })
-export class ButtonDemoModule { }
+export class ButtonDemoModule {
+}

@@ -2,8 +2,7 @@ import {Component} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
 
 @Component({
-  templateUrl: 'renderer.html',
-  styleUrls: []
+  templateUrl: 'renderer.html'
 })
 export class TableRendererDemoComponent {
     tableData:TableData;

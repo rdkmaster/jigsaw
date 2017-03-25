@@ -8,9 +8,7 @@ import {RouterModule} from "@angular/router";
 
 const appRoutes=[
     {
-        path:'',
-        redirectTo:'demo',
-        pathMatch:'full'
+        path:'', redirectTo:'demo', pathMatch:'full'
     },
     {
         path:'demo',

@@ -1,8 +1,7 @@
 import {Component} from "@angular/core";
 
 @Component({
-  templateUrl: 'basic.html',
-  styleUrls: []
+  templateUrl: 'basic.html'
 })
 export class TableBasicDemoComponent {
 }

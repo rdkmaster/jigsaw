@@ -11,12 +11,7 @@ export class DemoListComponent {
 
 const demoListRoutes=[
     {
-        path:'',
-        redirectTo:'home',
-        pathMatch:'full'
-    },
-    {
-        path:'home', component: DemoListComponent
+        path:'', component: DemoListComponent
     },
     {
         path:'button',

@@ -1,8 +1,7 @@
 import {Component} from "@angular/core";
 
 @Component({
-  templateUrl: 'disabled.html',
-  styleUrls: []
+    templateUrl: 'disabled.html'
 })
 export class ButtonDisableDemoComponent {
     click() {
