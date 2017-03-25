@@ -1,0 +1,34 @@
+@import "../../../../../assets/scss/core/_basc";
+
+$tooltip-prefix-cls: #{$rdk-prefix}-tooltip;
+
+.#{$tooltip-prefix-cls}{
+    position: absolute;
+    max-width: 250px;
+    padding: 8px 10px;
+    color: #fff;
+    text-align: left;
+    text-decoration: none;
+    background-color: rgba(64,64,64,.85);
+    border-radius: 4px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.2);
+    min-height: 34px;
+    line-height: 1.5;
+    .#{$tooltip-prefix-cls}-arrow {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border: {
+            color: transparent;
+            style: solid;
+            width: 5px 5px 0;
+        };
+        border-top-color: rgba(64,64,64,.85);
+        left: 10px;
+        bottom: -5px;
+    }
+}
+
+
+
+

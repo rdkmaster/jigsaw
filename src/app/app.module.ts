@@ -7,7 +7,7 @@ import {AppComponent} from './app.component';
 import {RouterModule} from "@angular/router";
 
 const appRoutes=[
-    {
+    /*{
         path:'',
         redirectTo:'demo',
         pathMatch:'full'
@@ -19,7 +19,7 @@ const appRoutes=[
     {
         path:'**',//fallback router must in the last
         loadChildren:'../rdk/doc/demo/demo-list#DemoListModule'
-    }
+    }*/
 ];
 
 @NgModule({
