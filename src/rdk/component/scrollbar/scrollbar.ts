@@ -9,33 +9,6 @@ let $ = require("jquery");
 import "jquery-mousewheel";
 import 'malihu-custom-scrollbar-plugin';
 
-export class ScrollEvent {
-    // 滚动发生的方向, y 或者x
-    direction: string;
-
-    // 距左部的距离
-    draggerLeft: number;
-
-    // 距左侧的百分比
-    leftPct: number;
-
-    // 内容距离
-    left: number;
-
-    // 距顶部的距离
-    draggerTop: number;
-
-    // 距顶部的百分比
-    topPct: number;
-
-    // 内容距离
-    top: number;
-
-    // 原本的jquery对象
-    content: Object
-}
-
-
 @Directive({
     selector: '[rdk-scroll-bar], [rdkScrollBar], [rdk-scrollBar]'
 })
@@ -109,14 +82,40 @@ export class RdkScrollBar implements OnInit{
 
         scrollEvent.direction = event.direction;
         scrollEvent.draggerLeft = event.draggerLeft;
-        scrollEvent.leftPct = event.leftPct;
+        scrollEvent.leftPercentage = event.leftPercentage;
         scrollEvent.left = event.left;
         scrollEvent.draggerTop = event.draggerTop;
-        scrollEvent.topPct = event.topPct;
+        scrollEvent.topPercentage = event.topPercentage;
         scrollEvent.top = event.top;
 
         scrollEvent.content = event.content;
 
         return scrollEvent;
     }
+}
+
+export class ScrollEvent {
+    // 滚动发生的方向, y 或者x
+    direction: string;
+
+    // 距左部的距离
+    draggerLeft: number;
+
+    // 距顶部的距离
+    draggerTop: number;
+
+    // 距左侧的百分比
+    leftPercentage: number;
+
+    // 内容距离
+    left: number;
+
+    // 距顶部的百分比
+    topPercentage: number;
+
+    // 内容距离
+    top: number;
+
+    // 原本的jquery对象
+    content: Object
 }

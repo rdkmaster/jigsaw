@@ -8,7 +8,7 @@ import {TableData} from "../../core/data/table-data";
 import {TableCellRenderer} from "./table-api";
 
 
-class TableCellBasic implements AfterViewInit {
+export class TableCellBasic implements AfterViewInit {
     constructor(private _componentFactoryResolver: ComponentFactoryResolver,
                 private _changeDetector: ChangeDetectorRef) {
     }
