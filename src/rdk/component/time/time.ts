@@ -7,8 +7,8 @@ import {TimeService} from './time.service';
 //declare let $: any;
 //declare let require: any;
 
-let $ = require('jquery');
-import "eonasdan-bootstrap-datetimepicker";
+//let $ = require('jquery');
+//import "eonasdan-bootstrap-datetimepicker";
 
 @Component({
     selector: 'rdk-time',
