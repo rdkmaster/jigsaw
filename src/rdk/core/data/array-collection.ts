@@ -168,12 +168,10 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPaga
             this.sourceRequestOptions = {method: 'get'};
         }
 
-        let originSearch = this.sourceRequestOptions.search;
+        let rawSearch = this.sourceRequestOptions.search;
         this.sourceRequestOptions.search = new URLSearchParams();
-        if (originSearch) {
-            if (typeof originSearch === 'string') {
-                originSearch = new URLSearchParams(originSearch);
-            }
+        if (rawSearch) {
+            let originSearch:URLSearchParams = typeof rawSearch === 'string' ? new URLSearchParams(rawSearch) : rawSearch as URLSearchParams;
 
             //将坑爹的 a=1&b=2&... 转为json对象
             const keys = originSearch.paramsMap.keys();
@@ -189,9 +187,9 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPaga
                 }
             }
 
-            this.sourceRequestOptions.search.set('peerParam', JSON.stringify(pp));
+            (<URLSearchParams>this.sourceRequestOptions.search).set('peerParam', JSON.stringify(pp));
         }
-        this.sourceRequestOptions.search.set('service', this.sourceUrl);
+        (<URLSearchParams>this.sourceRequestOptions.search).set('service', this.sourceUrl);
     }
 
     private _initSubjects(): void {
