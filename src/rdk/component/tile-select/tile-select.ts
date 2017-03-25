@@ -17,6 +17,7 @@ import {InternalUtils} from '../../core/utils/internal-utils';
         '[style.width]': 'width'
     }
 })
+//TODO by chenxu: TileSelect内部自动完成ngFor，不用应用自己写，但是依然在模板里保留 <ng-content></ng-content>
 export class RdkTileSelect extends AbstractRDKComponent implements OnInit, AfterContentInit {
     private _contentInit: boolean = false;
     private _selectedItems: any[] = [];

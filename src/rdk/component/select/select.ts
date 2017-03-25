@@ -31,6 +31,7 @@ export class OptionList extends AbstractRDKComponent{
         '[style.line-height]': 'height'
     }
 })
+//TODO by chenxu: select内部自动完成ngFor，不用应用自己写，但是依然在模板里保留 <ng-content></ng-content>
 export class RdkSelect extends AbstractRDKComponent implements AfterContentInit, OnDestroy, OnInit {
     private _optionListHidden: boolean = true; // 设置option列表是否显示
     private _value: any; // select表单值

@@ -9,7 +9,7 @@ import {RdkSelectModule} from '../select/select';
 import {RdkInputModule} from '../input/input';
 
 @Component({
-    selector: 'rdk-paging',
+    selector: 'rdk-pagination',
     templateUrl: 'pagination.html',
     styleUrls: ['pagination.scss']
 })
@@ -21,8 +21,8 @@ export class RdkPagination implements OnInit, AfterViewInit {
     private _current: number;
     private _defaultCurrent: number;
     private _showPages: number[] = [];
-    private _firstPage: RdkPage;
-    private _lastPage: RdkPage;
+    private _firstPage: RdkPagingItem;
+    private _lastPage: RdkPagingItem;
     private _pageSizeOptions: any[];
     private _pageSize: any;
     private _hostInit: boolean = false;
@@ -63,7 +63,8 @@ export class RdkPagination implements OnInit, AfterViewInit {
         }
     };
 
-    @Input() public total: number; // 数据总数
+    @Input()
+    public total: number; // 数据总数
 
     // 每页条数
     @Input()
@@ -84,7 +85,8 @@ export class RdkPagination implements OnInit, AfterViewInit {
         }
     };
 
-    @Input() public showSizeBox: boolean; // 是否可以改变pageSize
+    @Input()
+    public showSizeBox: boolean; // 是否可以改变pageSize
 
     // 指定每页可以显示多少条
     @Input()
@@ -110,8 +112,8 @@ export class RdkPagination implements OnInit, AfterViewInit {
 
     @Output() public onShowSizeChange: EventEmitter<any> = new EventEmitter<any>(); // pageSize 变化的事件
 
-    @ViewChildren(forwardRef(() => RdkPage))
-    private _pages: QueryList<RdkPage> = null;
+    @ViewChildren(forwardRef(() => RdkPagingItem))
+    private _pages: QueryList<RdkPagingItem> = null;
 
     /*
      * 根据page组件的当前选择改变current值
@@ -319,7 +321,7 @@ export class RdkPagination implements OnInit, AfterViewInit {
         '[class.rdk-page-hidden]': '!_isShow',
     }
 })
-export class RdkPage {
+export class RdkPagingItem {
     public current: boolean = false;
     public showPrev: boolean = false;
     public showNext: boolean = false;
@@ -369,7 +371,7 @@ export class RdkPage {
 
 @NgModule({
     imports: [CommonModule, FormsModule, RdkSelectModule, RdkInputModule],
-    declarations: [RdkPagination, RdkPage],
+    declarations: [RdkPagination, RdkPagingItem],
     exports: [RdkPagination]
 })
 export class RdkPaginationModule {
