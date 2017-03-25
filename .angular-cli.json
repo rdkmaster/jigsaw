@@ -28,8 +28,7 @@
                 "rdk/assets/scss/index.scss",
                 "rdk/assets/scss/reset.scss"
             ],
-            "scripts": [
-            ],
+            "scripts": [],
             "environmentSource": "environments/environment.ts",
             "environments": {
                 "dev": "environments/environment.ts",
