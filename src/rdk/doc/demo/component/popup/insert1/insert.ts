@@ -1,7 +1,5 @@
 import {Component, ElementRef, Renderer} from '@angular/core';
 
-import {PopupComponent} from '../../../../../core/api/component-popup';
-
 import {PopupService, IPopupable} from '../../../../../core/service/popup.service';
 import {fadeIn} from '../../../../../component/animations/fadeIn';
 

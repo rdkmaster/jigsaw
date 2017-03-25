@@ -11,12 +11,7 @@ export class DemoListComponent {
 
 const demoListRoutes=[
     {
-        path:'',
-        redirectTo:'home',
-        pathMatch:'full'
-    },
-    {
-        path:'home', component: DemoListComponent
+        path:'', component: DemoListComponent
     },
     {
         path:'button',
@@ -33,6 +28,18 @@ const demoListRoutes=[
     {
         path:'popup',
         loadChildren:'./component/popup/popup-demo.module#PopupDemoModule'
+    },
+    {
+        path:'input',
+        loadChildren:'./component/input/input-demo.module#InputDemoModule'
+    },
+    {
+        path:'scrollbar',
+        loadChildren:'./component/scrollbar/scrollbar-demo.module#ScrollbarDemoModule'
+    },
+    {
+        path:'select',
+        loadChildren:'./component/select/select-demo.module#SelectDemoModule'
     },
     {
         path:'**', //fallback router must in the last

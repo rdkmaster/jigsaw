@@ -1,20 +1,21 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
-let moment = require('moment');
+//let moment = require('moment');
+//import * as moment from 'moment';
 
 @Injectable()
-export class TimeService{
+export class TimeService {
 
     constructor() {
         moment.locale('zh-cn');
     }
 
     /*
-    *
-    * 获取时间，支持时间宏，格式化
-    * @param 时间（时间宏，时间字符串，Date对象） 粒度
-    *
-    * */
+     *
+     * 获取时间，支持时间宏，格式化
+     * @param 时间（时间宏，时间字符串，Date对象） 粒度
+     *
+     * */
     public getDate(timeMacro, gr): string {
         if (typeof timeMacro === 'string') {
             var isLetter = /^[a-z]/i;
@@ -24,11 +25,11 @@ export class TimeService{
                 var timeMacroArr = fullPara.exec(timeMacro);
                 if (timeMacroArr && timeMacroArr[2] != undefined) { //有加减 now-2d
                     var result = null;
-                    if(timeMacroArr[2] == "+"){
-                        result = this.formatWithGr(this.addDate(this._timeMacroConvert(timeMacroArr[1]), timeMacroArr[3],  timeMacroArr[4]), gr);
+                    if (timeMacroArr[2] == "+") {
+                        result = this.formatWithGr(this.addDate(this._timeMacroConvert(timeMacroArr[1]), timeMacroArr[3], timeMacroArr[4]), gr);
                     }
-                    else if(timeMacroArr[2] == "-"){
-                        result = this.formatWithGr(this.subtractDate(this._timeMacroConvert(timeMacroArr[1]), timeMacroArr[3],  timeMacroArr[4]), gr);
+                    else if (timeMacroArr[2] == "-") {
+                        result = this.formatWithGr(this.subtractDate(this._timeMacroConvert(timeMacroArr[1]), timeMacroArr[3], timeMacroArr[4]), gr);
                     }
                     return result;
                 } else { //无加减 now
@@ -43,12 +44,12 @@ export class TimeService{
     }
 
     /*
-    *
-    * 格式化时间
-    * @param 时间 时间格式
-    *
-    * */
-    public format(date, formator): string{
+     *
+     * 格式化时间
+     * @param 时间 时间格式
+     *
+     * */
+    public format(date, formator): string {
         return moment(date).format(formator);
     }
 
@@ -68,8 +69,9 @@ export class TimeService{
      * @param 时间 数值 单位
      *
      * */
-    public addDate(date, num, unit): string{
-        return moment(date).add(num, unit);
+    public addDate(date, num, unit): string {
+        //return moment(date).add(num, unit);
+        return ""
     }
 
     /*
@@ -78,8 +80,9 @@ export class TimeService{
      * @param 时间 数值 单位
      *
      * */
-    public subtractDate(date, num, unit): string{
-        return moment(date).subtract(num, unit);
+    public subtractDate(date, num, unit): string {
+        //return moment(date).subtract(num, unit);
+        return ""
     }
 
     /*
@@ -88,9 +91,9 @@ export class TimeService{
      * @param 粒度
      *
      * */
-    private _getFormator(gr): string{
+    private _getFormator(gr): string {
         let format: string;
-        switch(gr){
+        switch (gr) {
             case 'quarter':
                 format = 'YYYY-Q';
                 break;
@@ -101,7 +104,7 @@ export class TimeService{
                 format = 'YYYY-W';
                 break;
             case 'day':
-                format =  'YYYY-MM-DD';
+                format = 'YYYY-MM-DD';
                 break;
             case 'hour':
                 format = 'YYYY-MM-DD, HH';

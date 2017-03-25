@@ -1,4 +1,4 @@
-import { trigger, state, style, transition, animate,keyframes } from '@angular/core';
+import { trigger, state, style, transition, animate,keyframes } from '@angular/animations';
 
 export const fadeIn = trigger('fadeIn', [
   state('in', style({opacity: 1})),
