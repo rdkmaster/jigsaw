@@ -4,7 +4,7 @@
 import {Component, OnInit, ElementRef, Input, Output, EventEmitter, OnDestroy} from '@angular/core';
 import {AbstractGraphData} from "../../core/data/graph-data";
 
-let echarts = require('echarts');
+import * as echarts from 'echarts';
 
 @Component({
     selector: 'rdk-graph',
