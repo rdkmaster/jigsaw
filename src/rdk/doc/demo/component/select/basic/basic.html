@@ -1,0 +1,8 @@
+<h2> select </h2>
+<rdk-select [(value)]="selectedCityForSelect"
+            (valueChange)="selectChange($event)"
+            placeholder="请选择城市">
+            <rdk-select-option *ngFor="let city of cityListForSelect"
+                       [optionItem]="city">
+            </rdk-select-option>
+</rdk-select>

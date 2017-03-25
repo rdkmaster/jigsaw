@@ -31,6 +31,18 @@ const demoListRoutes=[
         loadChildren:'./component/table/table-demo.module#TableDemoModule'
     },
     {
+        path:'input',
+        loadChildren:'./component/input/input-demo.module#InputDemoModule'
+    },
+    {
+        path:'scrollbar',
+        loadChildren:'./component/scrollbar/scrollbar-demo.module#ScrollbarDemoModule'
+    },
+    {
+        path:'select',
+        loadChildren:'./component/select/select-demo.module#SelectDemoModule'
+    },
+    {
         path:'**', //fallback router must in the last
         component: DemoListComponent
     }
