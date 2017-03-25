@@ -1,0 +1,14 @@
+<h4>输入框</h4>
+
+<h6>图标放在右侧</h6>
+<rdk-input [(value)]="inputValue" (valueChange)="valueChanged($event)"
+            width="50%" [clearable]="false">
+    <span rdk-icon class="fa fa-thumbs-up"></span>
+</rdk-input>
+<p class="notes">输入值是：{{inputValue}}</p>
+
+<h6>图标放在左侧</h6>
+<rdk-input  width="30%">
+    <span rdk-prefix-icon class="fa fa-search"></span>
+</rdk-input>
+
