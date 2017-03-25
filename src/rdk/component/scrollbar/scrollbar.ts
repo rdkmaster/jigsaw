@@ -5,7 +5,7 @@
 import {Directive, Input, ElementRef, OnInit, Output, EventEmitter} from '@angular/core';
 
 // todo 1 这种写法的原理
-let $ = require("jquery");
+declare var $: any;
 import "jquery-mousewheel";
 import 'malihu-custom-scrollbar-plugin';
 
