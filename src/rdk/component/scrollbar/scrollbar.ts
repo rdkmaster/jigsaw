@@ -4,13 +4,10 @@
 
 import {Directive, Input, ElementRef, OnInit, Output, EventEmitter} from '@angular/core';
 
-// todo 1 这种写法的原理
 declare var $: any;
-import "jquery-mousewheel";
-import 'malihu-custom-scrollbar-plugin';
 
 @Directive({
-    selector: '[rdk-scroll-bar], [rdkScrollBar], [rdk-scrollBar]'
+    selector: '[rdk-scroll-bar], [rdk-scrollBar]'
 })
 export class RdkScrollBar implements OnInit{
     private _scrollBarJq: any;
