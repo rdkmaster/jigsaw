@@ -1,7 +1,7 @@
 import {Component, ViewChild, ElementRef} from "@angular/core";
 
 import {InsertComponent} from './modal/modal';
-import {RdkToolTip} from './tooltip/tooltip';
+import {RdkTooltip} from './tooltip/tooltip';
 
 import {
     PopupService, PopupEffect, PopupOptions, PopupPositionType
@@ -17,11 +17,12 @@ export class PopupDemoComponent {
     }
 
     popupModal() {
-        this._popupService.popup(InsertComponent, this._getModalOptions());
+        this._popupService.popup(InsertComponent, null, this._getModalOptions());
     }
 
     popupToolTip() {
-        this._popupService.popup(RdkToolTip, this._getToolTipOptions(this.insertPlaceEl));
+        this._popupService.popup(RdkTooltip, {message: 'This is a message!'},
+            this._getToolTipOptions(this.insertPlaceEl));
     }
 
     closeToolTip() {

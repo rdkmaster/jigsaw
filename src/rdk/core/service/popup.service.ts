@@ -35,6 +35,7 @@ export enum PopupPositionType {
 export interface IPopupable {
     renderer: Renderer2;
     el: ElementRef;
+    initData: any;
 }
 
 @Injectable()
@@ -52,10 +53,11 @@ export class PopupService {
         this._vcr = (_appRef.components[0].instance as AppComponent).vcr;
     }
 
-    popup(what: Type<IPopupable>, options: PopupOptions) {
+    popup(what: Type<IPopupable>, initData: any, options: PopupOptions) {
         this.close();
         let factory = this._cfr.resolveComponentFactory(what);
         this._componentRef = this._vcr.createComponent(factory);
+        this._componentRef.instance.initData = initData;
         this._renderer = this._componentRef.instance.renderer;
         this._el = this._componentRef.instance.el;
         if (options && !options.modal) {

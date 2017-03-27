@@ -5,7 +5,7 @@ import {RdkButtonModule} from "../../../../component/button/button";
 
 import {PopupDemoComponent} from "./popup";
 import {InsertComponent} from './modal/modal';
-import {RdkToolTip} from './tooltip/tooltip';
+import {RdkTooltip} from './tooltip/tooltip';
 
 import {PopupService} from '../../../../core/service/popup.service';
 
@@ -26,7 +26,7 @@ const buttonDemoRoutes=[
 
 @NgModule({
     declarations: [
-        PopupDemoComponent, InsertComponent, RdkToolTip
+        PopupDemoComponent, InsertComponent, RdkTooltip
     ],
     imports: [
         RouterModule.forChild(buttonDemoRoutes),
@@ -36,6 +36,6 @@ const buttonDemoRoutes=[
         PopupDemoComponent
     ],
     providers: [PopupService],
-    entryComponents: [InsertComponent, RdkToolTip]
+    entryComponents: [InsertComponent, RdkTooltip]
 })
 export class PopupDemoModule { }
