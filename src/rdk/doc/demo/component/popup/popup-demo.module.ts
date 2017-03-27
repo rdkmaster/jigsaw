@@ -3,39 +3,44 @@ import {RouterModule} from "@angular/router";
 
 import {RdkButtonModule} from "../../../../component/button/button";
 
-import {PopupDemoComponent} from "./popup";
-import {InsertComponent} from './modal/modal';
-import {RdkTooltip} from './tooltip/tooltip';
+import {DialogDemoComponent} from "./dialog/dialog";
+import {TooltipDemoComponent} from "./tooltip/tooltip";
+import {RdkDialog} from '../../../../component/dialog/dialog';
+import {RdkTooltip} from '../../../../component/tooltip/tooltip';
+import {Dialog1Component} from './dialog/use-dialog/use-dialog';
 
 import {PopupService} from '../../../../core/service/popup.service';
 
 const buttonDemoRoutes=[
     {
         path:'',
-        redirectTo:'modal',
+        redirectTo:'dialog',
         pathMatch:'full'
     },
     {
-        path:'modal', component: PopupDemoComponent
+        path:'dialog', component: DialogDemoComponent
+    },
+    {
+        path:'tooltip', component: TooltipDemoComponent
     },
     {
         path:'**', //fallback router must in the last
-        component: PopupDemoComponent
+        component: DialogDemoComponent
     }
 ];
 
 @NgModule({
     declarations: [
-        PopupDemoComponent, InsertComponent, RdkTooltip
+        DialogDemoComponent, RdkDialog, RdkTooltip, TooltipDemoComponent, Dialog1Component
     ],
     imports: [
         RouterModule.forChild(buttonDemoRoutes),
-        RdkButtonModule
+        RdkButtonModule,
     ],
     exports: [
-        PopupDemoComponent
+        DialogDemoComponent, TooltipDemoComponent
     ],
     providers: [PopupService],
-    entryComponents: [InsertComponent, RdkTooltip]
+    entryComponents: [RdkDialog, RdkTooltip, Dialog1Component]
 })
 export class PopupDemoModule { }

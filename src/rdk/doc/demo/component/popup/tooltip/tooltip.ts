@@ -1,28 +1,43 @@
-import {Component, Renderer2, ElementRef} from '@angular/core';
+import {Component, ViewChild, ElementRef} from "@angular/core";
 
-import {PopupService, IPopupable} from '../../../../../core/service/popup.service';
-import {fadeIn} from '../../../../../component/animations/fadeIn';
-import {flyIn} from '../../../../../component/animations/fly-in';
+import {RdkDialog} from '../../../../../component/dialog/dialog';
+import {RdkTooltip} from '../../../../../component/tooltip/tooltip';
+
+import {
+    PopupService, PopupEffect, PopupOptions, PopupPositionType
+} from '../../../../../core/service/popup.service';
 
 @Component({
-    templateUrl: 'tooltip.html',
-    styleUrls: ['tooltip.scss'],
-    animations: [
-        flyIn
-    ]
+    templateUrl: 'tooltip.html'
 })
-export class RdkTooltip implements IPopupable {
-    set initData(newValue: any){
-        this._message = newValue.message;
-    }
-    public renderer: Renderer2;
-    public el: ElementRef;
+export class TooltipDemoComponent {
+    @ViewChild("insertPlace", {read: ElementRef}) insertPlaceEl: ElementRef;
 
-    private _message: string;
-
-    constructor(private _renderer: Renderer2, private _el: ElementRef) {
-        this.renderer = _renderer;
-        this.el = _el;
+    constructor(private _popupService: PopupService) {
     }
+
+    popupToolTip() {
+        this._popupService.popup(RdkTooltip, {message: 'This is a message!'},
+            this._getTooltipOptions(this.insertPlaceEl));
+    }
+
+    closeToolTip() {
+        this._popupService.close();
+    }
+
+    private _getTooltipOptions(insertPlaceEl: ElementRef): PopupOptions {
+        return {
+            modal: false, //是否模态
+            showEffect: PopupEffect.fadeIn,//弹出的动效，fadeIn/fadeOut，wipeIn/wipeOut
+            hideEffect: PopupEffect.fadeOut, //隐藏的动效，fadeIn/fadeOut，wipeIn/wipeOut
+            pos: insertPlaceEl,
+            posOffset: {
+                top: -14,
+                left: 0
+            },
+            posType: PopupPositionType.absolute,
+        };
+    }
+
 }
 

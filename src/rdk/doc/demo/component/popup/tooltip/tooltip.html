@@ -1,4 +1,3 @@
-<div class="rdk-tooltip" [@flyIn]="active">
-    <div class="rdk-tooltip-arrow"></div>
-    {{_message}}
-</div>
+<rdk-button #insertPlace width="100" (mouseenter)="popupToolTip()" (mouseleave)="closeToolTip()">
+    <span class="fa fa-thumbs-up"></span>点赞
+</rdk-button>

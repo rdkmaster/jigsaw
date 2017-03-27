@@ -1,0 +1,15 @@
+<div class="rdk-dialog-box">
+    <div class="rdk-dialog-bg"></div>
+    <div class="rdk-dialog">
+        <div class="rdk-dialog-head">
+            <span class="rdk-dialog-close" (click)='close()'>X</span>
+        </div>
+        <div class="rdk-dialog-content">
+            <ng-content></ng-content>
+        </div>
+        <div class="rdk-dialog-button-group">
+            <rdk-button (click)='test()'>确定</rdk-button>
+            <rdk-button (click)='close()'>取消</rdk-button>
+        </div>
+    </div>
+</div>
