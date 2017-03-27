@@ -42,13 +42,6 @@ $dialog-prefix-cls: #{$rdk-prefix}-dialog;
             line-height: 1;
         }
     }
-    /deep/ h3 {
-        height: 100px;
-        text-align: center;
-        margin-top: 56px;
-        line-height: 100px;
-        font-size: 16px;
-    }
     .#{$dialog-prefix-cls}-button-group {
         text-align: center;
     }

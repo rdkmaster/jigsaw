@@ -1,4 +1,4 @@
-import {Component, Renderer2, ElementRef} from '@angular/core';
+import {Component, Renderer2, ElementRef, Input} from '@angular/core';
 
 import {PopupService, IPopupable} from '../../core/service/popup.service';
 
@@ -8,6 +8,7 @@ import {PopupService, IPopupable} from '../../core/service/popup.service';
     styleUrls: ['dialog.scss']
 })
 export class RdkDialog implements IPopupable{
+    @Input()
     set initData(newValue: any){
         this.test = newValue.test;
     }

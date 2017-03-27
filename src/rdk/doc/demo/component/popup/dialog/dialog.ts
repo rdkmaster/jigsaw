@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 
-import {Dialog1Component} from './use-dialog/use-dialog';
+import {UseDialogComponent} from './use-dialog/use-dialog';
 
 import {
     PopupService, PopupEffect, PopupOptions
@@ -15,7 +15,7 @@ export class DialogDemoComponent {
     }
 
     popupModal() {
-        this._popupService.popup(Dialog1Component, {test: () => {console.log('modal test function called!')}}, this._getModalOptions());
+        this._popupService.popup(UseDialogComponent, {test: () => {console.log('modal test function called!')}}, this._getModalOptions());
     }
 
     private _getModalOptions(): PopupOptions {

@@ -5,12 +5,16 @@ import {fadeIn} from '../../../../../../component/animations/fadeIn';
 
 @Component({
     templateUrl: 'use-dialog.html',
+    styleUrls: ['use-dialog.scss'],
     animations: [
         fadeIn
     ]
 })
-export class Dialog1Component implements IPopupable{
+export class UseDialogComponent implements IPopupable{
+    private _initDate: any;
+    get initDate(){return this._initDate}
     set initData(newValue: any){
+        this._initDate = newValue;
         this.test = newValue.test;
     }
     renderer: Renderer2;
