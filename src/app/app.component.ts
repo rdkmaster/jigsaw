@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, ViewContainerRef} from "@angular/core";
 
 @Component({
     selector: 'app-root',
@@ -7,7 +7,7 @@ import {Component, OnInit} from "@angular/core";
 })
 export class AppComponent implements OnInit {
 
-    constructor() {
+    constructor(public vcr: ViewContainerRef) {
     }
 
     ngOnInit(): void {

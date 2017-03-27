@@ -1,4 +1,4 @@
-import {Component, ViewChild, ViewContainerRef, ElementRef} from "@angular/core";
+import {Component, ViewChild, ViewContainerRef, ElementRef, ApplicationRef} from "@angular/core";
 
 import {InsertComponent} from './insert1/insert';
 import {RdkToolTip} from './tooltip/tooltip';
@@ -11,13 +11,12 @@ import {PositionOption} from '../../../../core/service/popup.service';
     templateUrl: 'popup.html'
 })
 export class PopupDemoComponent {
-    @ViewChild("insertPlace1", {read: ViewContainerRef}) insertPlace1: ViewContainerRef;
-    @ViewChild("insertPlace2", {read: ViewContainerRef}) insertPlace2: ViewContainerRef;
     @ViewChild("insertPlace1", {read: ElementRef}) insertPlaceEl1: ElementRef;
     @ViewChild("insertPlace2", {read: ElementRef}) insertPlaceEl2: ElementRef;
 
-    constructor(private _popupService: PopupService) {
+    viewRef: ViewContainerRef;
 
+    constructor(private _popupService: PopupService) {
     }
 
     option1: PositionOption = {
@@ -29,11 +28,12 @@ export class PopupDemoComponent {
     };
 
     popup1() {
-        this._popupService.popup(this.insertPlace1, InsertComponent, this.option1);
+        console.log(this.viewRef);
+        this._popupService.popup(InsertComponent, null);
     }
 
     popup2() {
-        this._popupService.popup(this.insertPlace2, RdkToolTip, this._getOption(this.insertPlaceEl2));
+        this._popupService.popup(RdkToolTip, this._getOption(this.insertPlaceEl2));
     }
 
     popup3() {
@@ -41,7 +41,6 @@ export class PopupDemoComponent {
     }
 
     private _getOption(insertPlaceEl: ElementRef): PositionOption {
-        console.log(insertPlaceEl.nativeElement);
         return {
             position: 'absolute',
             top: (insertPlaceEl.nativeElement.offsetTop - insertPlaceEl.nativeElement.offsetHeight - 14) + 'px',

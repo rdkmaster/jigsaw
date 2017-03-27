@@ -1,6 +1,8 @@
 import {
-    Injectable, ComponentFactoryResolver, ComponentRef, Renderer, ElementRef, Type
+    Injectable, ComponentFactoryResolver, ComponentRef, Renderer, ElementRef, Type, ViewContainerRef, ApplicationRef
 } from '@angular/core';
+
+import {AppComponent} from '../../../app/app.component';
 
 export type PositionOption = {
     position: string;
@@ -18,33 +20,35 @@ export interface IPopupable {
 @Injectable()
 export class PopupService {
 
-    componentRef: ComponentRef<any>;
+    private _componentRef: ComponentRef<any>;
 
-    renderer: Renderer;
+    private _renderer: Renderer;
 
-    el: ElementRef;
+    private _el: ElementRef;
 
-    constructor(private _cfr: ComponentFactoryResolver) {
+    private _vcr: ViewContainerRef;
 
+    constructor(private _cfr: ComponentFactoryResolver, private _appRef: ApplicationRef) {
+        this._vcr = (_appRef.components[0].instance as AppComponent).vcr;
     }
 
-    popup(insertPlace, what: Type<IPopupable>, option: PositionOption) {
+    popup(what: Type<IPopupable>, option: PositionOption) {
         let factory = this._cfr.resolveComponentFactory(what);
-        this.componentRef = insertPlace.createComponent(factory);
-        this.renderer = this.componentRef.instance.renderer;
-        this.el = this.componentRef.instance.el;
+        this._componentRef = this._vcr.createComponent(factory);
+        this._renderer = this._componentRef.instance.renderer;
+        this._el = this._componentRef.instance.el;
         if (option) {
-            this.renderer.setElementStyle(this.el.nativeElement, 'position', option.position);
-            this.renderer.setElementStyle(this.el.nativeElement, 'top', option.top);
-            this.renderer.setElementStyle(this.el.nativeElement, 'left', option.left);
-            this.renderer.setElementStyle(this.el.nativeElement, 'right', option.right);
-            this.renderer.setElementStyle(this.el.nativeElement, 'bottom', option.bottom);
+            this._renderer.setElementStyle(this._el.nativeElement, 'position', option.position);
+            this._renderer.setElementStyle(this._el.nativeElement, 'top', option.top);
+            this._renderer.setElementStyle(this._el.nativeElement, 'left', option.left);
+            this._renderer.setElementStyle(this._el.nativeElement, 'right', option.right);
+            this._renderer.setElementStyle(this._el.nativeElement, 'bottom', option.bottom);
         }
 
     }
 
     close() {
-        this.componentRef.destroy();
+        this._componentRef.destroy();
     }
 
 }
