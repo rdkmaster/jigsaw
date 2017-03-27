@@ -1,52 +1,52 @@
-import {Component, ViewChild, ViewContainerRef, ElementRef, ApplicationRef} from "@angular/core";
+import {Component, ViewChild, ElementRef} from "@angular/core";
 
-import {InsertComponent} from './insert1/insert';
+import {InsertComponent} from './modal/modal';
 import {RdkToolTip} from './tooltip/tooltip';
 
-import {PopupService} from '../../../../core/service/popup.service';
-
-import {PositionOption} from '../../../../core/service/popup.service';
+import {
+    PopupService, PopupEffect, PopupOptions, PopupPositionType
+} from '../../../../core/service/popup.service';
 
 @Component({
     templateUrl: 'popup.html'
 })
 export class PopupDemoComponent {
-    @ViewChild("insertPlace1", {read: ElementRef}) insertPlaceEl1: ElementRef;
-    @ViewChild("insertPlace2", {read: ElementRef}) insertPlaceEl2: ElementRef;
-
-    viewRef: ViewContainerRef;
+    @ViewChild("insertPlace", {read: ElementRef}) insertPlaceEl: ElementRef;
 
     constructor(private _popupService: PopupService) {
     }
 
-    option1: PositionOption = {
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        right: "",
-        bottom: ""
-    };
-
-    popup1() {
-        console.log(this.viewRef);
-        this._popupService.popup(InsertComponent, null);
+    popupModal() {
+        this._popupService.popup(InsertComponent, this._getModalOptions());
     }
 
-    popup2() {
-        this._popupService.popup(RdkToolTip, this._getOption(this.insertPlaceEl2));
+    popupToolTip() {
+        this._popupService.popup(RdkToolTip, this._getToolTipOptions(this.insertPlaceEl));
     }
 
-    popup3() {
+    closeToolTip() {
         this._popupService.close();
     }
 
-    private _getOption(insertPlaceEl: ElementRef): PositionOption {
+    private _getToolTipOptions(insertPlaceEl: ElementRef): PopupOptions {
         return {
-            position: 'absolute',
-            top: (insertPlaceEl.nativeElement.offsetTop - insertPlaceEl.nativeElement.offsetHeight - 14) + 'px',
-            left: insertPlaceEl.nativeElement.offsetLeft + 'px',
-            right: '0px',
-            bottom: '0px',
+            modal: false, //是否模态
+            showEffect: PopupEffect.fadeIn,//弹出的动效，fadeIn/fadeOut，wipeIn/wipeOut
+            hideEffect: PopupEffect.fadeOut, //隐藏的动效，fadeIn/fadeOut，wipeIn/wipeOut
+            pos: insertPlaceEl,
+            posOffset: {
+                top: -14,
+                left: 0
+            },
+            posType: PopupPositionType.absolute,
+        };
+    }
+
+    private _getModalOptions(): PopupOptions {
+        return {
+            modal: true, //是否模态
+            showEffect: PopupEffect.fadeIn,//弹出的动效，fadeIn/fadeOut，wipeIn/wipeOut
+            hideEffect: PopupEffect.fadeOut //隐藏的动效，fadeIn/fadeOut，wipeIn/wipeOut
         };
     }
 }

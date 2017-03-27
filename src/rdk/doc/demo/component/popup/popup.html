@@ -1,7 +1,7 @@
-<rdk-button #insertPlace1 width="100" (click)="popup1()">
+<rdk-button width="100" (click)="popupModal()">
     <span class="fa fa-thumbs-up"></span>点赞
 </rdk-button>
 
-<rdk-button #insertPlace2 width="100" (mouseover)="popup2()" (mouseout)="popup3()">
+<rdk-button #insertPlace width="100" (mouseenter)="popupToolTip()" (mouseleave)="closeToolTip()">
     <span class="fa fa-thumbs-up"></span>点赞
 </rdk-button>

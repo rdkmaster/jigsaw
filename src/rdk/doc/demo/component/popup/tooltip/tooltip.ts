@@ -1,4 +1,4 @@
-import {Component, Renderer, ElementRef} from '@angular/core';
+import {Component, Renderer2, ElementRef} from '@angular/core';
 
 import {PopupService, IPopupable} from '../../../../../core/service/popup.service';
 import {fadeIn} from '../../../../../component/animations/fadeIn';
@@ -11,18 +11,14 @@ import {fadeIn} from '../../../../../component/animations/fadeIn';
     ]
 })
 export class RdkToolTip implements IPopupable {
-    public renderer: Renderer;
+    public renderer: Renderer2;
     public el: ElementRef;
 
     message: string = 'This is message!';
 
-    constructor(private _popupService: PopupService, private _renderer: Renderer, private _el: ElementRef) {
+    constructor(private _renderer: Renderer2, private _el: ElementRef) {
         this.renderer = _renderer;
         this.el = _el;
-    }
-
-    close() {
-        this._popupService.close();
     }
 }
 

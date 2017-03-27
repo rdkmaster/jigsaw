@@ -4,7 +4,7 @@ import {RouterModule} from "@angular/router";
 import {RdkButtonModule} from "../../../../component/button/button";
 
 import {PopupDemoComponent} from "./popup";
-import {InsertComponent} from './insert1/insert';
+import {InsertComponent} from './modal/modal';
 import {RdkToolTip} from './tooltip/tooltip';
 
 import {PopupService} from '../../../../core/service/popup.service';

@@ -14,6 +14,7 @@ $tooltip-prefix-cls: #{$rdk-prefix}-tooltip;
     box-shadow: 0 1px 6px rgba(0,0,0,.2);
     min-height: 34px;
     line-height: 1.5;
+    white-space: nowrap;
     .#{$tooltip-prefix-cls}-arrow {
         position: absolute;
         width: 0;
