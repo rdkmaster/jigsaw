@@ -1,14 +1,17 @@
 import {Component, Renderer2, ElementRef} from '@angular/core';
 
 import {IPopupable} from '../../core/service/popup.service';
-import {fadeIn} from '../animations/fadeIn';
+import {fadeIn} from '../animations/fade-in';
 import {flyIn} from '../animations/fly-in';
+import {bubbleIn} from '../animations/bubble-in';
 
 @Component({
     templateUrl: 'tooltip.html',
     styleUrls: ['tooltip.scss'],
     animations: [
-        fadeIn
+        fadeIn,
+        flyIn,
+        bubbleIn
     ]
 })
 export class RdkTooltip implements IPopupable {

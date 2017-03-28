@@ -1,20 +1,25 @@
-import {Component, Renderer2, ElementRef, Input, OnInit} from '@angular/core';
+import {Component, Renderer2, ElementRef, Input, OnInit, OnDestroy} from '@angular/core';
 
 import {PopupService, IPopupable} from '../../core/service/popup.service';
 
-import {fadeIn} from '../animations/fadeIn';
+import {fadeIn} from '../animations/fade-in';
+import {bubbleIn} from '../animations/bubble-in';
+import {AbstractRDKComponent} from "../../core/api/component-api";
 
 @Component({
     selector: 'rdk-dialog',
     templateUrl: 'dialog.html',
     styleUrls: ['dialog.scss'],
     animations: [
-        fadeIn
+        fadeIn,
+        bubbleIn
     ]
 })
-export class RdkDialog implements IPopupable, OnInit{
+export class RdkDialog extends AbstractRDKComponent implements IPopupable, OnInit, OnDestroy{
 
     private _topPlace: string;
+    private _popupEl: HTMLElement;
+    private _windowResize: any;
 
     @Input()
     public set initData(newValue: any){
@@ -38,6 +43,7 @@ export class RdkDialog implements IPopupable, OnInit{
     }
 
     constructor(private _popupService: PopupService, private _renderer: Renderer2, private _el: ElementRef){
+        super()
     }
 
     close(){
@@ -47,16 +53,25 @@ export class RdkDialog implements IPopupable, OnInit{
     test: () => void;
 
     ngOnInit(){
-        let popupEl = this._el.nativeElement.querySelector('.rdk-dialog');
-        this._renderer.setStyle(popupEl, 'left', (window.innerWidth/2 - popupEl.offsetWidth/2) + 'px');
+        this._popupEl = this._el.nativeElement.querySelector('.rdk-dialog');
+
+        this._renderer.setStyle(this._popupEl, 'width', this.width);
+        this._renderer.setStyle(this._popupEl, 'left', (window.innerWidth/2 - this._popupEl.offsetWidth/2) + 'px');
         if(this.topPlace){
             //居上显示
-            this._renderer.setStyle(popupEl, 'top', this.topPlace);
+            this._renderer.setStyle(this._popupEl, 'top', this.topPlace);
         }else{
             //居中显示
-            this._renderer.setStyle(popupEl, 'top', (window.innerHeight/2 - popupEl.offsetHeight/2) + 'px');
+            this._renderer.setStyle(this._popupEl, 'top', (window.innerHeight/2 - this._popupEl.offsetHeight/2) + 'px');
         }
 
+        this._windowResize = this._renderer.listen('window', 'resize', ()=>{
+            this._renderer.setStyle(this._popupEl, 'left', (window.innerWidth/2 - this._popupEl.offsetWidth/2) + 'px');
+        })
+    }
+
+    ngOnDestroy(){
+        this._windowResize();
     }
 }
 
