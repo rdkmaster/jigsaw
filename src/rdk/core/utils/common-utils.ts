@@ -10,4 +10,11 @@ export class CommonUtils {
         }
         return true;
     }
+
+    // 判断是否是空对象.
+    public static isEmptyObject(obj): boolean {
+        for(let i in obj)
+            return false;
+        return true;
+    }
 }
