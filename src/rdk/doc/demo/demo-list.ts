@@ -55,6 +55,10 @@ const demoListRoutes=[
         loadChildren:'./component/time/time-demo.module#TimeDemoModule'
     },
     {
+        path:'radio',
+        loadChildren:'./component/radio/radio-demo.module#RadioDemoModule'
+    },
+    {
         path:'**', //fallback router must in the last
         component: DemoListComponent
     }
