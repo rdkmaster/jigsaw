@@ -5,6 +5,7 @@ import {Component, OnInit, ElementRef, Input, Output, EventEmitter, OnDestroy} f
 import {AbstractGraphData} from "../../core/data/graph-data";
 
 import * as echarts from 'echarts';
+import {CommonUtils} from "../../core/utils/common-utils";
 
 @Component({
     selector: 'rdk-graph',
@@ -36,8 +37,8 @@ export class RdkGraph implements OnInit, OnDestroy {
         if (!this.graph) return;
 
         if (!this._isOptionsValid(option)) return;
-
-        this.graph.setOption(option, notMerge, lazyUpdate);
+        console.info(option);
+        this.graph.setOption(option, true, lazyUpdate);
         this._registerEvent();
     }
 
@@ -46,14 +47,7 @@ export class RdkGraph implements OnInit, OnDestroy {
      * @param obj
      */
     private _isOptionsValid(obj): boolean {
-        return !this._isEmptyObject(obj);
-    }
-
-    // 判断是否是空对象.
-    private _isEmptyObject(obj): boolean {
-        for(let i in obj)
-            return false;
-        return true;
+        return !CommonUtils.isEmptyObject(obj);
     }
 
     constructor(private _elf: ElementRef) {  }
@@ -234,7 +228,7 @@ export class RdkGraph implements OnInit, OnDestroy {
     // 平行坐标轴
     @Output()
     public axisareaselected = new EventEmitter<any>();
-    // graph
+    // basic
     @Output()
     public focusNodeAdjacency = new EventEmitter<any>();
     @Output()
