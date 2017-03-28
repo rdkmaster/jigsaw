@@ -47,6 +47,14 @@ const demoListRoutes=[
         loadChildren:'./component/table/demo.module#TableDemoModule'
     },
     {
+        path:'switch',
+        loadChildren:'./component/switch/switch-demo.module#SwitchDemoModule'
+    },
+    {
+        path:'time',
+        loadChildren:'./component/time/time-demo.module#TimeDemoModule'
+    },
+    {
         path:'**', //fallback router must in the last
         component: DemoListComponent
     }

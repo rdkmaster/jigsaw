@@ -1,12 +1,13 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {SelectBasicDemoComponent} from "./basic/basic";
-import {SelectScrollDemoComponent} from "./scroll/scroll";
-import {SelectCheckboxDemoComponent} from "./checkbox/checkbox";
 import {CommonModule} from '@angular/common';//todo 使用ng-for时需要引用
 
 import { RdkSelectModule } from "../../../../component/select/select";
 import { RdkCheckBoxModule } from "../../../../component/checkbox/index";
+
+import {SelectBasicDemoComponent} from "./basic/basic";
+import {SelectScrollDemoComponent} from "./scroll/scroll";
+import {SelectCheckboxDemoComponent} from "./checkbox/checkbox";
 
 
 const selectDemoRoutes=[
@@ -35,7 +36,7 @@ const selectDemoRoutes=[
         SelectBasicDemoComponent,SelectScrollDemoComponent,SelectCheckboxDemoComponent
     ],
     imports: [
-        RouterModule.forChild(selectDemoRoutes),RdkSelectModule,CommonModule, RdkCheckBoxModule
+        RouterModule.forChild(selectDemoRoutes),RdkSelectModule, RdkCheckBoxModule,CommonModule
     ],
     exports: [
         SelectBasicDemoComponent,SelectScrollDemoComponent,SelectCheckboxDemoComponent
