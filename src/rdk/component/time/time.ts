@@ -102,7 +102,7 @@ export class RdkTime extends AbstractRDKComponent implements OnInit {
         $(() => {
             let insert = this.el.nativeElement.querySelector(".time-box");
             $(insert).datetimepicker({
-                locale: 'zh-cn',
+                //locale: 'zh-cn',
                 inline: this.inline,
                 defaultDate: this._value,
                 format: this._format, // format: 'LT', //时刻

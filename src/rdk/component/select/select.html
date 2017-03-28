@@ -3,7 +3,7 @@
         <span [hidden]="_selectedLabel">{{placeholder}}</span>{{_selectedLabel}}
         <span class="rdk-select-icon-down fa fa-angle-down"></span>
     </div>
-    <div class="rdk-option-list" [rdkScrollBar]="scrollable" axis="y" [width]="optionWidth"
+    <div class="rdk-option-list" rdk-scroll-bar [rdkScrollBar]="scrollable" axis="y" [width]="optionWidth"
          [height]="optionHeight" [class.rdk-option-hidden]="_optionListHidden">
         <ng-content></ng-content>
     </div>

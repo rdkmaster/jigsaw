@@ -18,7 +18,7 @@ const scrollbarDemoRoutes=[
         path:'basic', component: ScrollbarBasicDemoComponent
     },
     {
-        path:'checkbox', component: ScrollbarUserdefineDemoComponent
+        path:'user-define', component: ScrollbarUserdefineDemoComponent
     },
     {
         path:'**', //fallback router must in the last
