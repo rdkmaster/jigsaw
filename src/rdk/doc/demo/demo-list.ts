@@ -59,6 +59,10 @@ const demoListRoutes=[
         loadChildren:'./component/radio/radio-demo.module#RadioDemoModule'
     },
     {
+        path:'tileselect',
+        loadChildren:'./component/tileselect/tileselect-demo.module#TileSelectDemoModule'
+    },
+    {
         path:'**', //fallback router must in the last
         component: DemoListComponent
     }
