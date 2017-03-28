@@ -4,8 +4,6 @@
 
 import {Directive, Input, ElementRef, OnInit, Output, EventEmitter} from '@angular/core';
 
-declare var $: any;
-
 @Directive({
     selector: '[rdk-scroll-bar], [rdk-scrollBar]'
 })
