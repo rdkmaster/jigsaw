@@ -4,7 +4,7 @@ import {
 } from "./component-data";
 import {Http, RequestOptionsArgs, Response} from "@angular/http";
 
-export abstract class AbstractGeneralCollection extends Object implements IAjaxComponentData {
+export abstract class AbstractGeneralCollection implements IAjaxComponentData {
     public http: Http;
     public busy: boolean;
 

@@ -9,37 +9,42 @@ export class DemoListComponent {
 
 }
 
+// 请按照组件的字符序排列
 const demoListRoutes=[
     {
         path:'', component: DemoListComponent
     },
     {
+        path:'array-collection',
+        loadChildren:'./component/array-collection/demo.module#ArrayCollectionDemoModule'
+    },
+    {
         path:'button',
-        loadChildren:'./component/button/button-demo.module#ButtonDemoModule'
+        loadChildren:'./component/button/demo.module#ButtonDemoModule'
     },
     {
         path:'checkbox',
-        loadChildren:'./component/checkbox/checkbox-demo.module#CheckBoxDemoModule'
-    },
-    {
-        path:'table',
-        loadChildren:'./component/table/table-demo.module#TableDemoModule'
-    },
-    {
-        path:'popup',
-        loadChildren:'./component/popup/popup-demo.module#PopupDemoModule'
+        loadChildren:'./component/checkbox/demo.module#CheckBoxDemoModule'
     },
     {
         path:'input',
-        loadChildren:'./component/input/input-demo.module#InputDemoModule'
+        loadChildren:'./component/input/demo.module#InputDemoModule'
+    },
+    {
+        path:'popup',
+        loadChildren:'./component/popup/demo.module#PopupDemoModule'
     },
     {
         path:'scrollbar',
-        loadChildren:'./component/scrollbar/scrollbar-demo.module#ScrollbarDemoModule'
+        loadChildren:'./component/scrollbar/demo.module#ScrollbarDemoModule'
     },
     {
         path:'select',
-        loadChildren:'./component/select/select-demo.module#SelectDemoModule'
+        loadChildren:'./component/select/demo.module#SelectDemoModule'
+    },
+    {
+        path:'table',
+        loadChildren:'./component/table/demo.module#TableDemoModule'
     },
     {
         path:'**', //fallback router must in the last
