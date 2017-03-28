@@ -8,10 +8,11 @@ import {TooltipDemoComponent} from "./tooltip/tooltip";
 import {RdkDialog} from '../../../../component/dialog/dialog';
 import {RdkTooltip} from '../../../../component/tooltip/tooltip';
 import {UseDialogComponent} from './dialog/use-dialog/use-dialog';
+import {RdkDrag} from '../../../../component/drag/drag';
 
 import {PopupService} from '../../../../core/service/popup.service';
 
-const buttonDemoRoutes=[
+const popupDemoRoutes=[
     {
         path:'',
         redirectTo:'dialog',
@@ -31,10 +32,10 @@ const buttonDemoRoutes=[
 
 @NgModule({
     declarations: [
-        DialogDemoComponent, RdkDialog, RdkTooltip, TooltipDemoComponent, UseDialogComponent
+        DialogDemoComponent, RdkDialog, RdkTooltip, TooltipDemoComponent, UseDialogComponent, RdkDrag
     ],
     imports: [
-        RouterModule.forChild(buttonDemoRoutes),
+        RouterModule.forChild(popupDemoRoutes),
         RdkButtonModule,
     ],
     exports: [

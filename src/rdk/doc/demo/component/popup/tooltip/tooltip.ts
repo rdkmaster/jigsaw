@@ -1,6 +1,5 @@
 import {Component, ViewChild, ElementRef} from "@angular/core";
 
-import {RdkDialog} from '../../../../../component/dialog/dialog';
 import {RdkTooltip} from '../../../../../component/tooltip/tooltip';
 
 import {

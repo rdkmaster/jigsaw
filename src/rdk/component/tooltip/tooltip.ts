@@ -8,7 +8,7 @@ import {flyIn} from '../animations/fly-in';
     templateUrl: 'tooltip.html',
     styleUrls: ['tooltip.scss'],
     animations: [
-        flyIn
+        fadeIn
     ]
 })
 export class RdkTooltip implements IPopupable {
