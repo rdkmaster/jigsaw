@@ -32,6 +32,7 @@ export class OptionList extends AbstractRDKComponent{
     }
 })
 //TODO by chenxu: select内部自动完成ngFor，不用应用自己写，但是依然在模板里保留 <ng-content></ng-content>
+//TODO by chenxu: 去掉scrollable/optionHeight属性，增加optionCount属性用于指明下拉最大显示多少个选项，如果备选项数量大于这个值，则自动出现滚动条
 export class RdkSelect extends AbstractRDKComponent implements AfterContentInit, OnDestroy, OnInit {
     private _optionListHidden: boolean = true; // 设置option列表是否显示
     private _value: any; // select表单值
