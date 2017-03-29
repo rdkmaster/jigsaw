@@ -6,6 +6,7 @@ import {flyIn} from '../animations/fly-in';
 import {bubbleIn} from '../animations/bubble-in';
 
 @Component({
+    selector: 'rdk-tooltip',
     templateUrl: 'tooltip.html',
     styleUrls: ['tooltip.scss'],
     animations: [
@@ -15,16 +16,16 @@ import {bubbleIn} from '../animations/bubble-in';
     ]
 })
 export class RdkTooltip implements IPopupable, OnInit {
-    id: number;
+    @Input()
+    public id: number;
 
-    private _message: string;
 
     @Input()
     public options: PopupOptions;
 
     @Input()
     set initData(newValue: any){
-        this._message = newValue.message;
+
     }
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef, private _popupservice: PopupService) {

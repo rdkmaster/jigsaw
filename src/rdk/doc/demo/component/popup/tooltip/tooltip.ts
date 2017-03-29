@@ -1,6 +1,6 @@
 import {Component, ViewChild, ElementRef} from "@angular/core";
 
-import {RdkTooltip} from '../../../../../component/tooltip/tooltip';
+import {UseTooltipComponent} from './use-tooltip/use-tooltip';
 
 import {
     PopupService, PopupEffect, PopupOptions, PopupPositionType
@@ -10,18 +10,19 @@ import {
     templateUrl: 'tooltip.html'
 })
 export class TooltipDemoComponent {
+    private _componentId: number;
+
     @ViewChild("insertPlace", {read: ElementRef}) insertPlaceEl: ElementRef;
 
     constructor(private _popupService: PopupService) {
     }
 
-    popupToolTip() {
-        this._popupService.popup(RdkTooltip, {message: 'This is a message!'},
-            this._getTooltipOptions(this.insertPlaceEl));
+    popup() {
+        this._componentId = this._popupService.popup(UseTooltipComponent, this._getTooltipOptions(this.insertPlaceEl));
     }
 
-    closeToolTip() {
-        this._popupService.close(null);
+    close() {
+        this._popupService.close(this._componentId);
     }
 
     private _getTooltipOptions(insertPlaceEl: ElementRef): PopupOptions {

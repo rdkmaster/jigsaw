@@ -32,9 +32,14 @@ export enum PopupPositionType {
     absolute, fixed
 }
 
-export type popupComponent ={
+export type PopupComponent = {
     id: number;
     componentRef: ComponentRef<IPopupable>;
+}
+
+export type ButtonOptions = {
+    label: string;
+    callback: () => void;
 }
 
 export interface IPopupable {
@@ -44,7 +49,7 @@ export interface IPopupable {
 }
 
 export interface IDialog extends IPopupable {
-    buttons: any[];
+    buttons: Array<ButtonOptions>;
     title: string;
 }
 
@@ -53,7 +58,7 @@ export class PopupService {
 
     private _componentId: number;
 
-    private _components: Array<popupComponent> = [];
+    private _components: Array<PopupComponent> = [];
 
     private _vcr: ViewContainerRef;
 
@@ -62,7 +67,7 @@ export class PopupService {
         this._componentId = new Date().getTime();
     }
 
-    popup(what: Type<IPopupable>, initData: any, options: PopupOptions) {
+    popup(what: Type<IPopupable>, options: PopupOptions, initData?: any) {
         let factory = this._cfr.resolveComponentFactory(what);
         let componentRef = this._vcr.createComponent(factory);
         componentRef.instance.id = this._componentId;
@@ -70,6 +75,7 @@ export class PopupService {
         componentRef.instance.options = options;
         this._components.push({id: this._componentId, componentRef: componentRef});
         this._componentId++;
+        return componentRef.instance.id;
     }
 
     close(componentId) {

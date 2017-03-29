@@ -2,26 +2,26 @@ import {Directive, Renderer2, ElementRef} from "@angular/core";
 
 
 @Directive({
-    selector: '[rdk-drag]',
+    selector: '[rdk-draggable]',
     host:{
         '[attr.draggable]': 'true',
         '(dragstart)': '_onDragstart($event)',
-        //'(drag)': '_onDrag($event)',
+        //'(draggable)': '_onDrag($event)',
         '(dragend)': '_onDragend($event)'
     }
 })
-export class RdkDrag{
+export class RdkDraggable{
     private _ox: number;
     private _oy: number;
     private _cx: number;
     private _cy: number;
 
-    constructor(private _renderer: Renderer2, private _el: ElementRef){
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef){
     }
 
     _onDragstart(event){
         event.dataTransfer.effectAllowed = 'move';
-        event.dataTransfer.setData('text', 'rdk dialog');
+        event.dataTransfer.setData('text', 'rdk draggable');
         this._cx = event.clientX;
         this._cy = event.clientY;
 
@@ -33,10 +33,10 @@ export class RdkDrag{
 
     _onDragend(event){
 
-        this._ox = event.clientX - this._cx + this._el.nativeElement.offsetLeft;
-        this._oy = event.clientY - this._cy + this._el.nativeElement.offsetTop;
-        this._renderer.setStyle(this._el.nativeElement, 'left', this._ox + 'px');
-        this._renderer.setStyle(this._el.nativeElement, 'top', this._oy + 'px');
+        this._ox = event.clientX - this._cx + this._elementRef.nativeElement.offsetLeft;
+        this._oy = event.clientY - this._cy + this._elementRef.nativeElement.offsetTop;
+        this._renderer.setStyle(this._elementRef.nativeElement, 'left', this._ox + 'px');
+        this._renderer.setStyle(this._elementRef.nativeElement, 'top', this._oy + 'px');
     }
 
 }
