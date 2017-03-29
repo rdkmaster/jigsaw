@@ -10,7 +10,8 @@
             "assets": [
                 "assets",
                 "rdk/assets",
-                "favicon.ico"
+                "favicon.ico",
+                "mock-data"
             ],
             "index": "index.html",
             "main": "main.ts",
