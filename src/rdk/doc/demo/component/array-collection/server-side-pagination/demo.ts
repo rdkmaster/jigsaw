@@ -18,17 +18,18 @@ export class ServerSidePaginationDemoComponent {
         this.sspa.onAjaxError(this.onAjaxError, this);
     }
 
-    private onAjaxSuccess(data) {
+    private onAjaxSuccess(data): void {
         this.ready = true;
     }
 
-    private onAjaxError(err) {
+    private onAjaxError(err): void {
+        this.ready = false;
         this.errorInfo = err;
     }
 
     start() {
+        this.errorInfo = '';
         this.sspa.fromAjax();
-
     }
 
     lastPage() {

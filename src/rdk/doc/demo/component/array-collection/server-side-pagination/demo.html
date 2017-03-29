@@ -1,4 +1,5 @@
-<p [ngClass]="tipClass"  *ngIf="!ready">Run a rdk server before you <a (click)="start()">continue</a>.</p>
+<p><strong>Tip:</strong> use &lt;rdk-pagination&gt;&lt;/rdk-pagination&gt; in your product development is strongly recommended!</p>
+<p [ngClass]="tipClass" *ngIf="!ready"><strong>Tip:</strong> run a rdk server before you <a (click)="start()">continue</a>.</p>
 <div *ngIf="ready">
     <p>
         <span>current page {{sspa.pagingInfo.currentPage}} / {{sspa.pagingInfo.totalPage}} total page,
