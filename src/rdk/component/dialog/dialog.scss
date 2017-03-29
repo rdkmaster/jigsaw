@@ -38,6 +38,7 @@ $dialog-prefix-cls: #{$rdk-prefix}-dialog;
         background: #FFF;
         border: 1px solid #ddd;
         border-radius: 4px;
+        cursor: move;
         .#{$dialog-prefix-cls}-head{
             @include clearfix;
             position: relative;
