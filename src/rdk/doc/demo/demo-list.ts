@@ -24,7 +24,7 @@ const demoListRoutes=[
     },
     {
         path:'checkbox',
-        loadChildren:'./component/checkbox/checkbox-demo.module#CheckBoxDemoModule'
+        loadChildren:'./component/checkbox/demo.module#CheckBoxDemoModule'
     },
     {
         path:'input',

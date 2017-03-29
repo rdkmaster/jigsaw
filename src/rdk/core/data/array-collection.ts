@@ -9,8 +9,158 @@ import {Http, RequestOptionsArgs, URLSearchParams, Response} from "@angular/http
 import {Subject} from "rxjs";
 import 'rxjs/add/operator/map';
 
+// we have to implement the Array<T> interface due to this breaking change:
+// https://github.com/Microsoft/TypeScript/wiki/FAQ#why-doesnt-extending-built-ins-like-error-array-and-map-work
+// https://github.com/Microsoft/TypeScript/issues/14869
+export class RDKArray<T> implements Array<T> {
+    private _agent:T[] = [];
 
-export class ArrayCollection<T> extends Array<T> implements IAjaxComponentData {
+    public set(index:number, value:T):void {
+        this._agent[index] = value;
+    }
+
+    public get(index:number):T {
+        return this._agent[index];
+    }
+
+    public get length():number {
+        return this._agent.length;
+    }
+
+    public set length(value:number) {
+        this._agent.length = value;
+    }
+
+    readonly [n: number]: T;
+
+    public includes(searchElement: T, fromIndex?: number): boolean {
+        return this._agent.includes.apply(this, arguments);
+    }
+
+    public toString(): string {
+        return this._agent.toString.apply(this, arguments);
+    }
+
+    public toLocaleString(): string {
+        return this._agent.toLocaleString.apply(this, arguments);
+    }
+
+    public push(...items: T[]): number {
+        return this._agent.push.apply(this, arguments);
+    }
+
+    public pop(): T {
+        return this._agent.pop.apply(this, arguments);
+    }
+
+    public concat(...items: any[]):any {
+        return this._agent.concat.apply(this, arguments);
+    }
+
+    public join(separator?: string): string {
+        return this._agent.join.apply(this, arguments);
+    }
+
+    public reverse(): T[] {
+        return this._agent.reverse.apply(this, arguments);
+    }
+
+    public shift(): T {
+        return this._agent.shift.apply(this, arguments);
+    }
+
+    public slice(start?: number, end?: number): T[] {
+        return this._agent.slice.apply(this, arguments);
+    }
+
+    public sort(compareFn?: (a: T, b: T) => number): any {
+        return this._agent.sort.apply(this, arguments);
+    }
+
+    public splice(start: any, deleteCount?: any, ...rest: any[]):T[] {
+        return this._agent.splice.apply(this, arguments);
+    }
+
+    public unshift(...items: T[]): number {
+        return this._agent.unshift.apply(this, arguments);
+    }
+
+    public indexOf(searchElement: T, fromIndex?: number): number {
+        return this._agent.indexOf.apply(this, arguments);
+    }
+
+    public lastIndexOf(searchElement: T, fromIndex?: number): number {
+        return this._agent.lastIndexOf.apply(this, arguments);
+    }
+
+    public every(callbackfn: (value: T, index: number, array: T[]) => boolean, thisArg?: any): boolean {
+        return this._agent.every.apply(this, arguments);
+    }
+
+    public some(callbackfn: (value: T, index: number, array: T[]) => boolean, thisArg?: any): boolean {
+        return this._agent.some.apply(this, arguments);
+    }
+
+    public forEach(callbackfn: (value: T, index: number, array: T[]) => void, thisArg?: any): void {
+        return this._agent.forEach.apply(this, arguments);
+    }
+
+    public map(callbackfn: any, thisArg?: any):[any, any, any, any, any] {
+        return this._agent.map.apply(this, arguments);
+    }
+
+    public filter(callbackfn: (value: T, index: number, array: T[]) => any, thisArg?: any): T[] {
+        return this._agent.filter.apply(this, arguments);
+    }
+
+    public reduce(callbackfn: any, initialValue?: any):T {
+        return this._agent.reduce.apply(this, arguments);
+    }
+
+    public reduceRight(callbackfn: any, initialValue?: any):T {
+        return this._agent.reduceRight.apply(this, arguments);
+    }
+
+    [Symbol.unscopables](): { copyWithin: boolean; entries: boolean; fill: boolean; find: boolean; findIndex: boolean; keys: boolean; values: boolean; } {
+        const iterator = this._agent[Symbol.unscopables];
+        return iterator.apply(this);
+    }
+
+    [Symbol.iterator](): IterableIterator<T> {
+        const iterator = this._agent[Symbol.iterator];
+        return iterator.apply(this);
+    }
+
+    public entries(): IterableIterator<[number, T]> {
+        return this._agent.entries.apply(this, arguments);
+    }
+
+    public keys(): IterableIterator<number> {
+        return this._agent.keys.apply(this, arguments);
+    }
+
+    public values(): IterableIterator<T> {
+        return this._agent.values.apply(this, arguments);
+    }
+
+    public find(predicate: (value: T, index: number, obj: T[]) => boolean, thisArg?: any): T {
+        return this._agent.find.apply(this, arguments);
+    }
+
+    public findIndex(predicate: (value: T, index: number, obj: T[]) => boolean, thisArg?: any): number {
+        return this._agent.findIndex.apply(this, arguments);
+    }
+
+    public fill(value: T, start?: number, end?: number): any {
+        return this._agent.fill.apply(this, arguments);
+    }
+
+    public copyWithin(target: number, start: number, end?: number): any {
+        return this._agent.copyWithin.apply(this, arguments);
+    }
+}
+
+export class ArrayCollection<T> extends RDKArray<T> implements IAjaxComponentData {
     public busy: boolean;
     public http: Http;
 
