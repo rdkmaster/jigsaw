@@ -1,0 +1,17 @@
+<p [ngClass]="tipClass"  *ngIf="!ready">Run a rdk server before you <a (click)="start()">continue</a>.</p>
+<div *ngIf="ready">
+    <p>
+        <span>current page {{sspa.pagingInfo.currentPage}} / {{sspa.pagingInfo.totalPage}} total page,
+            showing {{sspa.pagingInfo.pageSize}} items / page, {{sspa.pagingInfo.totalRecord}} records totally.</span>
+    </p>
+    <p>
+        <button [disabled]="sspa.busy || sspa.pagingInfo.currentPage == 1" (click)="lastPage()">last page</button>
+        <button [disabled]="sspa.busy || sspa.pagingInfo.currentPage == sspa.pagingInfo.totalPage" (click)="nextPage()">next page</button>
+    </p>
+</div>
+<p *ngIf="!!errorInfo" style="color: red">Error: {{errorInfo}}</p>
+
+<hr style="margin-top: 20px">
+<div *ngIf="ready">
+    <p *ngFor="let item of sspa">{{item | json}}</p>
+</div>

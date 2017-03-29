@@ -4,7 +4,7 @@ import {
 } from "./component-data";
 import {Http, RequestOptionsArgs, Response} from "@angular/http";
 
-export abstract class AbstractGeneralCollection extends Object implements IAjaxComponentData {
+export abstract class AbstractGeneralCollection implements IAjaxComponentData {
     public http: Http;
     public busy: boolean;
 
@@ -51,26 +51,26 @@ export abstract class AbstractGeneralCollection extends Object implements IAjaxC
         }
     }
 
-    protected componentDataHelper: ComponentDataHelper = new ComponentDataHelper(this);
+    protected componentDataHelper: ComponentDataHelper = new ComponentDataHelper();
 
     public refresh(): void {
         this.componentDataHelper.invokeRefreshCallback();
     }
 
-    public onRefresh(callback: DataRefreshCallback): CallbackRemoval {
-        return this.componentDataHelper.getRefreshRemoval(callback);
+    public onRefresh(callback: (thisData: GeneralCollection) => void, context?: any): CallbackRemoval {
+        return this.componentDataHelper.getRefreshRemoval({fn: callback, context: context});
     }
 
-    public onAjaxSuccess(callback: AjaxSuccessCallback): CallbackRemoval {
-        return this.componentDataHelper.getAjaxSuccessRemoval(callback);
+    public onAjaxSuccess(callback: (data: any) => void, context?: any): CallbackRemoval {
+        return this.componentDataHelper.getAjaxSuccessRemoval({fn: callback, context: context});
     }
 
-    public onAjaxError(callback: AjaxErrorCallback): CallbackRemoval {
-        return this.componentDataHelper.getAjaxErrorRemoval(callback);
+    public onAjaxError(callback: (error: Response) => void, context?: any): CallbackRemoval {
+        return this.componentDataHelper.getAjaxErrorRemoval({fn: callback, context: context});
     }
 
-    public onAjaxComplete(callback: AjaxCompleteCallback): CallbackRemoval {
-        return this.componentDataHelper.getAjaxCompleteRemoval(callback);
+    public onAjaxComplete(callback: () => void, context?: any): CallbackRemoval {
+        return this.componentDataHelper.getAjaxCompleteRemoval({fn: callback, context: context});
     }
 
     protected ajaxErrorHandler(error): void {

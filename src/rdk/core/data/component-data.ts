@@ -1,14 +1,38 @@
 import {RequestOptionsArgs, Response} from "@angular/http";
 
-export type DataReviser          = (data: any)                => any;
-export type CallbackRemoval      = ()                         => void;
-export type DataRefreshCallback  = (thisData: IComponentData) => void;
-export type AjaxSuccessCallback  = (data: any)                => void;
-export type AjaxErrorCallback    = (error: Response)          => void;
-export type AjaxCompleteCallback = ()                         => void;
+export type DataReviser = (data: any) => any;
+export type CallbackRemoval = () => void;
+
+export class DataRefreshCallback {
+    constructor(public fn: (thisData: IComponentData) => void,
+                public context?: any) {
+        this.context = !!context ? context : fn;
+    }
+}
+
+export class AjaxSuccessCallback {
+    constructor(public fn: (data: any) => void,
+                public context?: any) {
+        this.context = !!context ? context : fn;
+    }
+}
+
+export class AjaxErrorCallback {
+    constructor(public fn: (error: Response) => void,
+                public context?: any) {
+        this.context = !!context ? context : fn;
+    }
+}
+
+export class AjaxCompleteCallback {
+    constructor(public fn: () => void,
+                public context?: any) {
+        this.context = !!context ? context : fn;
+    }
+}
 
 export class ComponentDataHelper {
-    constructor(public ownerData: IComponentData) {
+    constructor() {
     }
 
     private _getRemoval<T>(callbacks: T[], callback: T): CallbackRemoval {
@@ -48,26 +72,26 @@ export class ComponentDataHelper {
             return;
         }
         this._timeout = setTimeout(() => {
-            this._refreshCallbacks.forEach(callback => ComponentDataHelper._safeInvokeCallback(callback, this.ownerData));
+            this._refreshCallbacks.forEach(callback => ComponentDataHelper._safeInvokeCallback(callback.context, callback.fn));
             this._timeout = null;
         }, 0);
     }
 
     public invokeAjaxSuccessCallback(data: any): void {
-        this._ajaxSuccessCallbacks.forEach(callback => ComponentDataHelper._safeInvokeCallback(callback, data));
+        this._ajaxSuccessCallbacks.forEach(callback => ComponentDataHelper._safeInvokeCallback(callback.context, callback.fn, data));
     }
 
     public invokeAjaxErrorCallback(error: Response): void {
-        this._ajaxErrorCallbacks.forEach(callback => ComponentDataHelper._safeInvokeCallback(callback, error));
+        this._ajaxErrorCallbacks.forEach(callback => ComponentDataHelper._safeInvokeCallback(callback.context, callback.fn, error));
     }
 
     public invokeAjaxCompleteCallback(): void {
-        this._ajaxCompleteCallbacks.forEach(callback => ComponentDataHelper._safeInvokeCallback(callback));
+        this._ajaxCompleteCallbacks.forEach(callback => ComponentDataHelper._safeInvokeCallback(callback.context, callback.fn));
     }
 
-    private static _safeInvokeCallback(callback: Function, ...args): any {
+    private static _safeInvokeCallback(context: any, callback: Function, ...args): any {
         try {
-            return callback.apply(callback, args);
+            return callback.apply(context, args);
         } catch (e) {
             console.error('invoke callback error: ' + e);
             console.error(e.stack);
@@ -87,20 +111,23 @@ export interface IComponentData {
 
     refresh(): void;
     destroy(): void;
-    onRefresh(callback: DataRefreshCallback): CallbackRemoval;
+    onRefresh(callback: (thisData: IComponentData) => void, context?: any): CallbackRemoval;
 }
 
 export interface IAjaxComponentData extends IComponentData {
     busy: boolean;
 
     fromAjax(url: string, options?: RequestOptionsArgs): void;
-    onAjaxSuccess (callback: AjaxSuccessCallback): CallbackRemoval;
-    onAjaxError   (callback: AjaxErrorCallback): CallbackRemoval;
-    onAjaxComplete(callback: AjaxCompleteCallback): CallbackRemoval;
+    onAjaxSuccess (callback: (data: any) => void, context?: any): CallbackRemoval;
+    onAjaxError   (callback: (error: Response) => void, context?: any): CallbackRemoval;
+    onAjaxComplete(callback: () => void, context?: any): CallbackRemoval;
 }
 
 export class PagingBasicInfo {
-    constructor(public currentPage: number = 1, public pageSize: number = 20, public totalPage: number = 1) {
+    constructor(public currentPage: number = 1,
+                public pageSize: number = 20,
+                public totalPage: number = 1,
+                public totalRecord: number = 0) {
     }
 }
 
@@ -117,7 +144,9 @@ export enum SortOrder {
     asc, desc
 }
 export class PagingSortInfo {
-    constructor(public as: SortAs = SortAs.string, public order: SortOrder = SortOrder.asc, public field: string|number) {
+    constructor(public as: SortAs = SortAs.string,
+                public order: SortOrder = SortOrder.asc,
+                public field: string | number) {
     }
 }
 
@@ -129,6 +158,6 @@ export interface IPagableData extends IAjaxComponentData {
     pagingFilter(term: string, fields?: string[] | number[]): void;
     pagingFilter(term: PagingFilterInfo): void;
 
-    pagingSort(as: SortAs, order: SortOrder, field: string|number): void;
+    pagingSort(as: SortAs, order: SortOrder, field: string | number): void;
     pagingSort(sort: PagingSortInfo): void;
 }

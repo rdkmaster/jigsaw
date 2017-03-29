@@ -190,6 +190,8 @@ export class ArrayCollection<T> extends RDKArray<T> implements IAjaxComponentDat
     }
 
     protected ajaxSuccessHandler(data: T[]): void {
+        console.log('get data from paging server success!!');
+
         if (data instanceof Array) {
             this.fromArray(data);
         } else {
@@ -253,26 +255,26 @@ export class ArrayCollection<T> extends RDKArray<T> implements IAjaxComponentDat
         return needRefresh;
     }
 
-    protected componentDataHelper: ComponentDataHelper = new ComponentDataHelper(this);
+    protected componentDataHelper: ComponentDataHelper = new ComponentDataHelper();
 
     public refresh(): void {
         this.componentDataHelper.invokeRefreshCallback();
     }
 
-    public onRefresh(callback: DataRefreshCallback): CallbackRemoval {
-        return this.componentDataHelper.getRefreshRemoval(callback);
+    public onRefresh(callback: (thisData: ArrayCollection<T>) => void, context?: any): CallbackRemoval {
+        return this.componentDataHelper.getRefreshRemoval({fn: callback, context: context});
     }
 
-    public onAjaxSuccess(callback: AjaxSuccessCallback): CallbackRemoval {
-        return this.componentDataHelper.getAjaxSuccessRemoval(callback);
+    public onAjaxSuccess(callback: (data: any) => void, context?: any): CallbackRemoval {
+        return this.componentDataHelper.getAjaxSuccessRemoval({fn: callback, context: context});
     }
 
-    public onAjaxError(callback: AjaxErrorCallback): CallbackRemoval {
-        return this.componentDataHelper.getAjaxErrorRemoval(callback);
+    public onAjaxError(callback: (error: Response) => void, context?: any): CallbackRemoval {
+        return this.componentDataHelper.getAjaxErrorRemoval({fn: callback, context: context});
     }
 
-    public onAjaxComplete(callback: AjaxCompleteCallback): CallbackRemoval {
-        return this.componentDataHelper.getAjaxCompleteRemoval(callback);
+    public onAjaxComplete(callback: () => void, context?: any): CallbackRemoval {
+        return this.componentDataHelper.getAjaxCompleteRemoval({fn: callback, context: context});
     }
 
     public destroy(): void {
@@ -354,8 +356,11 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPaga
     }
 
     public updateDataSource(url: string, options?: RequestOptionsArgs): void {
-        this.sourceUrl = url;
-        this.updateRequestOptions(options);
+        this.sourceUrl = !!url ? url : this.sourceUrl;
+        this.sourceRequestOptions = !!options ? options : this.sourceRequestOptions;
+        if (!!url || !!options) {
+            this._initRequestOptions();
+        }
     }
 
     public updateRequestOptions(options: RequestOptionsArgs): void {
@@ -363,7 +368,7 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPaga
         this._initRequestOptions();
     }
 
-    public fromAjax(url: string, options?: RequestOptionsArgs): void {
+    public fromAjax(url?: string, options?: RequestOptionsArgs): void {
         this.updateDataSource(url, options);
         this._ajax();
     }
@@ -384,6 +389,8 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPaga
         this.http.request(this.pagingServerUrl, this.sourceRequestOptions)
             .map(res => this.reviseData(res))
             .map(data => {
+                this._updatePagingInfo(data);
+
                 const tableData: TableData = new TableData();
                 if (TableData.isTableData(data)) {
                     tableData.fromObject(data);
@@ -399,7 +406,18 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPaga
             );
     }
 
+    private _updatePagingInfo(data: any) :void {
+        if (!data.hasOwnProperty('paging')) {
+            return;
+        }
+        const paging = data.paging;
+        this.pagingInfo.currentPage = paging.hasOwnProperty('currentPage') ? paging.currentPage : this.pagingInfo.currentPage;
+        this.pagingInfo.totalPage = paging.hasOwnProperty('totalPage') ? paging.totalPage : this.pagingInfo.totalPage;
+        this.pagingInfo.totalRecord = paging.hasOwnProperty('totalRecord') ? paging.totalRecord : this.pagingInfo.totalRecord;
+    }
+
     protected ajaxSuccessHandler(tableData: any): void {
+        console.log('get data from paging server success!!');
         this.fromArray(tableData.toArray());
         this.componentDataHelper.invokeAjaxSuccessCallback(tableData);
     }
