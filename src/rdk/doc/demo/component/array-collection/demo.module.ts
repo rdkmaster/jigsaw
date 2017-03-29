@@ -1,6 +1,8 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {ArrayCollectionBasicDemoComponent} from "./basic/basic";
+import {CommonModule} from "@angular/common";
+import {ArrayCollectionAjaxDemoComponent} from "./ajax/demo";
+import {ArrayCollectionBasicDemoComponent} from "./basic/demo";
 
 const buttonDemoRoutes = [
     {
@@ -10,6 +12,9 @@ const buttonDemoRoutes = [
         path: 'basic', component: ArrayCollectionBasicDemoComponent
     },
     {
+        path: 'ajax', component: ArrayCollectionAjaxDemoComponent
+    },
+    {
         path: '**', //fallback router must in the last
         component: ArrayCollectionBasicDemoComponent
     }
@@ -17,13 +22,13 @@ const buttonDemoRoutes = [
 
 @NgModule({
     declarations: [
-        ArrayCollectionBasicDemoComponent
+        ArrayCollectionBasicDemoComponent, ArrayCollectionAjaxDemoComponent
     ],
     imports: [
-        RouterModule.forChild(buttonDemoRoutes),
+        RouterModule.forChild(buttonDemoRoutes), CommonModule
     ],
     exports: [
-        ArrayCollectionBasicDemoComponent
+        ArrayCollectionBasicDemoComponent, ArrayCollectionAjaxDemoComponent
     ],
     providers: []
 })

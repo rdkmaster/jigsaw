@@ -1,17 +1,16 @@
 <div class="rdk-dialog-box" [@fadeIn]="active">
     <div class="rdk-dialog-bg"></div>
     <div class="rdk-dialog-win">
-        <div class="rdk-dialog" rdk-drag [@bubbleIn]="active">
-            <div class="rdk-dialog-head">
-                <span>{{title}}</span>
+        <div class="rdk-dialog" rdk-draggable [@bubbleIn]="active">
+            <div class="rdk-dialog-head" >
+                <ng-content select="[title]"></ng-content><span>{{title}}</span>
                 <span class="fa fa-times rdk-dialog-close" (click)='close()'></span>
             </div>
             <div class="rdk-dialog-content">
                 <ng-content></ng-content>
             </div>
             <div class="rdk-dialog-button-group">
-                <rdk-button (click)='test()'>确定</rdk-button>
-                <rdk-button (click)='close()'>取消</rdk-button>
+                <rdk-button *ngFor="let button of buttons" (click)="button.callback()">{{button.label}}</rdk-button>
             </div>
         </div>
     </div>
