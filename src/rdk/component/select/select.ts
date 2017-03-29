@@ -7,7 +7,7 @@ import {FormsModule} from '@angular/forms';
 import {AbstractRDKComponent} from '../../core/api/component-api';
 import {CommonUtils} from '../../core/utils/common-utils';
 import {InternalUtils} from '../../core/utils/internal-utils';
-import {RdkScrollBar} from '../scrollbar/scrollbar';
+import {RdkScrollBar, RdkScrollBarModule} from '../scrollbar/scrollbar';
 
 @Directive({
     selector: '.rdk-option-list',
@@ -156,8 +156,8 @@ export class RdkOption implements OnInit {
 }
 
 @NgModule({
-    imports: [CommonModule, FormsModule],
-    declarations: [RdkSelect, RdkOption, OptionList, RdkScrollBar],
+    imports: [CommonModule, FormsModule, RdkScrollBarModule],
+    declarations: [RdkSelect, RdkOption, OptionList],
     exports: [RdkSelect, RdkOption]
 })
 export class RdkSelectModule {

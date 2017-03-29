@@ -1,12 +1,8 @@
-
-
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {ScrollbarBasicDemoComponent} from "./basic/basic";
 import {ScrollbarUserdefineDemoComponent} from "./user-define/user-define";
-
-import { RdkScrollBar } from "../../../../component/scrollbar/scrollbar";
-
+import {RdkScrollBarModule} from "../../../../component/scrollbar/scrollbar";
 
 const scrollbarDemoRoutes=[
     {
@@ -28,10 +24,10 @@ const scrollbarDemoRoutes=[
 
 @NgModule({
     declarations: [
-        ScrollbarBasicDemoComponent,ScrollbarUserdefineDemoComponent,RdkScrollBar
+        ScrollbarBasicDemoComponent,ScrollbarUserdefineDemoComponent
     ],
     imports: [
-        RouterModule.forChild(scrollbarDemoRoutes)
+        RouterModule.forChild(scrollbarDemoRoutes), RdkScrollBarModule
     ],
     exports: [
         ScrollbarBasicDemoComponent,ScrollbarUserdefineDemoComponent

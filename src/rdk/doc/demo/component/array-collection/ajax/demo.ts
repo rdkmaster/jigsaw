@@ -11,7 +11,7 @@ export class ArrayCollectionAjaxDemoComponent {
     constructor(http: Http) {
         const ac = new ArrayCollection();
         ac.http = http;
-        ac.fromAjax('src/rdk/doc/demo/component/array-collection/ajax/data.json');
+        ac.fromAjax('mock-data/array-collection/core-members.json');
 
         this.consoleAppend("list of our first core members:");
         ac.onAjaxComplete(() => {
