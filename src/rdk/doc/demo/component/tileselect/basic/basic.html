@@ -1,6 +1,6 @@
 <h4>tileselect</h4>
 <rdk-tile-select [(selectedItems)]="selectedCity" labelField="label"
-                 trackItemBy="id" [multipleSelect]="true" [searchable]="true"
+                 [multipleSelect]="true" [searchable]="true"
                  (selectedItemsChange)="basicSelectChange($event)">
 
     <rdk-tile-option width="100px" *ngFor="let optionItem of citys" [optionItem]="optionItem">
