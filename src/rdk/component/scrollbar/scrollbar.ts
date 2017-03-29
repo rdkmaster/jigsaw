@@ -2,7 +2,7 @@
  * Created by 10177553 on 2017/3/20.
  */
 
-import {Directive, Input, ElementRef, OnInit, Output, EventEmitter} from '@angular/core';
+import {Directive, Input, ElementRef, OnInit, Output, EventEmitter, NgModule} from '@angular/core';
 
 @Directive({
     selector: '[rdk-scroll-bar], [rdk-scrollBar]'
@@ -113,4 +113,12 @@ export class ScrollEvent {
 
     // 原本的jquery对象
     content: Object
+}
+
+@NgModule({
+    imports: [],
+    declarations: [RdkScrollBar],
+    exports: [RdkScrollBar]
+})
+export class RdkScrollBarModule {
 }
