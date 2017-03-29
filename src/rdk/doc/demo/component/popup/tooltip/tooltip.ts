@@ -32,7 +32,7 @@ export class TooltipDemoComponent {
             hideEffect: PopupEffect.fadeOut, //隐藏的动效，fadeIn/fadeOut，wipeIn/wipeOut
             pos: insertPlaceEl,
             posOffset: {
-                top: -14,
+                top: -8,
                 left: 0
             },
             posType: PopupPositionType.absolute,

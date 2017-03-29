@@ -1,4 +1,4 @@
-import {Component, Renderer2, ElementRef, Input, OnInit, OnDestroy} from '@angular/core';
+import {Component, Renderer2, ElementRef, Input, OnInit, OnDestroy, AfterContentInit} from '@angular/core';
 
 import {PopupService, PopupOptions, IDialog, ButtonOptions} from '../../core/service/popup.service';
 
@@ -15,7 +15,7 @@ import {AbstractRDKComponent} from "../../core/api/component-api";
         bubbleIn
     ]
 })
-export class RdkDialog extends AbstractRDKComponent implements IDialog, OnInit, OnDestroy{
+export class RdkDialog extends AbstractRDKComponent implements IDialog, AfterContentInit, OnDestroy {
     @Input()
     public id: number;
 
@@ -39,49 +39,62 @@ export class RdkDialog extends AbstractRDKComponent implements IDialog, OnInit, 
 
     public set topPlace(newValue: string) {
         const match = newValue ? newValue.match(/^\s*\d+%|px\s*$/) : null;
-        this._topPlace =  match ? newValue : newValue + 'px';
+        this._topPlace = match ? newValue : newValue + 'px';
     }
 
     @Input() buttons: Array<ButtonOptions>;
 
     constructor(private _popupService: PopupService,
                 private _renderer: Renderer2,
-                private _elementRef: ElementRef){
+                private _elementRef: ElementRef) {
         super();
     }
 
-    close(){
+    close() {
         this._popupService.close(this.id);
     }
 
-    private _setPosition(){
+    private _init() {
         this._popupEl = this._elementRef.nativeElement.querySelector('.rdk-dialog');
 
         //设置弹框宽度
         this.width && this._renderer.setStyle(this._popupEl, 'width', this.width);
+    }
 
+    private _setDefaultPosition(): void {
         //弹框居中
-        this._renderer.setStyle(this._popupEl, 'left', (window.innerWidth/2 - this._popupEl.offsetWidth/2) + 'px');
-        if(this.topPlace){
+        this._renderer.setStyle(this._popupEl, 'left', (window.innerWidth / 2 - this._popupEl.offsetWidth / 2) + 'px');
+        if (this.topPlace) {
             //居上显示
             this._renderer.setStyle(this._popupEl, 'top', this.topPlace);
-        }else{
+        } else {
             //居中显示
-            this._renderer.setStyle(this._popupEl, 'top', (window.innerHeight/2 - this._popupEl.offsetHeight/2) + 'px');
+            this._renderer.setStyle(this._popupEl, 'top', (window.innerHeight / 2 - this._popupEl.offsetHeight / 2) + 'px');
         }
+    }
 
+    private _resetPosition() {
         //resize居中
-        this._windowResize = this._renderer.listen('window', 'resize', ()=>{
-            this._renderer.setStyle(this._popupEl, 'left', (window.innerWidth/2 - this._popupEl.offsetWidth/2) + 'px');
-            !this.topPlace && this._renderer.setStyle(this._popupEl, 'top', (window.innerHeight/2 - this._popupEl.offsetHeight/2) + 'px');
+        this._windowResize = this._renderer.listen('window', 'resize', () => {
+            this._renderer.setStyle(this._popupEl, 'left', (window.innerWidth / 2 - this._popupEl.offsetWidth / 2) + 'px');
+            !this.topPlace && this._renderer.setStyle(this._popupEl, 'top', (window.innerHeight / 2 - this._popupEl.offsetHeight / 2) + 'px');
         })
     }
 
-    ngOnInit(){
-        this._setPosition();
+    ngAfterContentInit() {
+        this._init();
+
+        if (this.options && this.options.pos) {
+            this._popupService.setPopupPos(this.options, this._renderer, this._popupEl);
+        } else {
+            //设置默认位置
+            this._setDefaultPosition();
+        }
+
+        this._resetPosition();
     }
 
-    ngOnDestroy(){
+    ngOnDestroy() {
         //销毁resize事件
         this._windowResize();
     }

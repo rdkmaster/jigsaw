@@ -20,7 +20,6 @@ export class UseTooltipComponent implements IPopupable {
         this._initDate = newValue;
     }
 
-    public _message: string = 'This is a message!';
     public options: PopupOptions;
 
     constructor(private _popupService: PopupService) {

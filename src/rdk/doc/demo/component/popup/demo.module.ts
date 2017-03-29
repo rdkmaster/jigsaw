@@ -9,6 +9,7 @@ import {TooltipDemoComponent} from "./tooltip/tooltip";
 import {RdkDialog} from '../../../../component/dialog/dialog';
 import {RdkTooltip} from '../../../../component/tooltip/tooltip';
 import {UseDialogComponent} from './dialog/use-dialog/use-dialog';
+import {UseDialog2Component} from './dialog/use-dialog2/use-dialog';
 import {RdkDraggable} from '../../../../component/draggable/draggable';
 import {UseTooltipComponent} from './tooltip/use-tooltip/use-tooltip';
 
@@ -36,6 +37,7 @@ const popupDemoRoutes=[
     declarations: [
         RdkDialog,
         UseDialogComponent,
+        UseDialog2Component,
         DialogDemoComponent,
         RdkDraggable,
         RdkTooltip,
@@ -51,6 +53,6 @@ const popupDemoRoutes=[
         DialogDemoComponent, TooltipDemoComponent
     ],
     providers: [PopupService],
-    entryComponents: [RdkDialog, UseDialogComponent, RdkTooltip, UseTooltipComponent]
+    entryComponents: [RdkDialog, UseDialogComponent, UseDialog2Component,RdkTooltip, UseTooltipComponent]
 })
 export class PopupDemoModule { }

@@ -2,8 +2,11 @@
 
 $tooltip-prefix-cls: #{$rdk-prefix}-tooltip;
 
+:host{
+    @include inline-block;
+}
+
 .#{$tooltip-prefix-cls}{
-    position: absolute;
     max-width: 250px;
     padding: 8px 10px;
     color: #fff;
