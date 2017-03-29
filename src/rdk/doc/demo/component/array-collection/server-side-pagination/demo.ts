@@ -23,12 +23,13 @@ export class ServerSidePaginationDemoComponent {
     }
 
     private onAjaxError(err) {
+        this.ready = false;
         this.errorInfo = err;
     }
 
     start() {
+        this.errorInfo = '';
         this.sspa.fromAjax();
-
     }
 
     lastPage() {
