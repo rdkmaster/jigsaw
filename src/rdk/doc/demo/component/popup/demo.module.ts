@@ -1,4 +1,5 @@
 import {NgModule} from "@angular/core";
+import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
 
 import {RdkButtonModule} from "../../../../component/button/button";
@@ -37,6 +38,7 @@ const popupDemoRoutes=[
     imports: [
         RouterModule.forChild(popupDemoRoutes),
         RdkButtonModule,
+        CommonModule
     ],
     exports: [
         DialogDemoComponent, TooltipDemoComponent

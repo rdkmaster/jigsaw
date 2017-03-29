@@ -20,17 +20,19 @@ export class RdkDrag{
     }
 
     _onDragstart(event){
-        event.dataTransfer.effectAllowed = "move";
+        event.dataTransfer.effectAllowed = 'move';
+        event.dataTransfer.setData('text', 'rdk dialog');
         this._cx = event.clientX;
         this._cy = event.clientY;
 
     }
 
-    /*_onDrag(event){
-        event.dataTransfer.effectAllowed = "move";
-    }*/
+    // _onDrag(event){
+    //     event.dataTransfer.effectAllowed = "move";
+    // }
 
     _onDragend(event){
+
         this._ox = event.clientX - this._cx + this._el.nativeElement.offsetLeft;
         this._oy = event.clientY - this._cy + this._el.nativeElement.offsetTop;
         this._renderer.setStyle(this._el.nativeElement, 'left', this._ox + 'px');

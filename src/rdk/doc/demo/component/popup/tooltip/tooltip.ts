@@ -21,7 +21,7 @@ export class TooltipDemoComponent {
     }
 
     closeToolTip() {
-        this._popupService.close();
+        this._popupService.close(null);
     }
 
     private _getTooltipOptions(insertPlaceEl: ElementRef): PopupOptions {
