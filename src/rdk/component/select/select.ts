@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {AbstractRDKComponent} from '../../core/api/component-api';
+import {AbstractRDKComponent} from "../core";
 import {CommonUtils} from '../../core/utils/common-utils';
 import {InternalUtils} from '../../core/utils/internal-utils';
 import {RdkScrollBarModule} from '../scrollbar/scrollbar';
