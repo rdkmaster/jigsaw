@@ -3,7 +3,7 @@
  */
 import {
     Component, OnInit, ContentChildren, QueryList, Directive, Input, ElementRef, ViewChildren,
-    AfterViewInit, Output, EventEmitter
+    AfterViewInit, Output, EventEmitter, Type, TemplateRef
 } from '@angular/core';
 import {TabPane} from "./tab-pane";
 import {RdkLabel} from "./tab-label";
@@ -55,13 +55,9 @@ export class RdkTabs implements AfterViewInit {
     // 将有纵向切换的封装.
     private _getLabelOffsetByKey(key: number): any {
         // todo 非法key的校验
-        let currentLabel = this._tabLabel.find(item => {
-            if (item.key == key) return true
-            else
-                return false;
-        });
+        let currentLabel = this._tabLabel.find(item => item.key === key);
 
-        // 非法的 key// 有可能getTop 等扩展Tab页时再重构.
+        // 非法的 key // 有可能getTop 等扩展Tab页时再重构.
         return {
             offSet: currentLabel.getOffsetLeft(),
             width: currentLabel.getOffsetWidth()
@@ -70,11 +66,7 @@ export class RdkTabs implements AfterViewInit {
 
     private _getTabPaneByIndex(key):TabPane {
 
-        let tabPane = this._tabPanes.find((item,index) => {
-            if(index === key) return true;
-            else
-                return false;
-        })
+        let tabPane = this._tabPanes.find((item,index) => index === key)
 
         return tabPane;
     }
@@ -86,6 +78,27 @@ export class RdkTabs implements AfterViewInit {
         this._tabPanes.forEach(item => {
             console.info(item.icon);
         })
+    }
+
+    // Todo 调用接口创建tabPane 1. templateRef 哪里来? 2. 是否默认显示创建的tabPane.
+    addTabPane(title:string, content:TemplateRef<any>|Type<any>, icon?: string, index?: number) {
+
+    }
+
+    /**
+     * 异常对应的Tab页.
+     * @param key (tab pane 的顺序.)
+     */
+    hideTab(index) {
+
+    }
+
+    /**
+     * 显示对应的Tab页, 如果已经是显示的没有变化, 隐藏的显示, 没有打印出警告.
+     * @param index
+     */
+    showTab(index) {
+
     }
 
 }

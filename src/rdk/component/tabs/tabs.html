@@ -13,7 +13,7 @@
                     <!-- 负责实现动画效果 -->
                     <div class="rdk-tabs-ink-bar" [ngStyle]="_inkBarStyle"></div>
                     <div tab-label class="rdk-tabs-tab"
-                         *ngFor="let tab of _tabPanes; let i = index" key="{{i}}"
+                         *ngFor="let tab of _tabPanes; let i = index" [key]="i"
                          [class.rdk-tabs-tab-active]="selectedIndex === i"
                          [class.rdk-tabs-tab-disabled]="tab.disabled"
                          (click)="_tabClick(i)">
