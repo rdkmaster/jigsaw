@@ -1,6 +1,6 @@
 import {NgModule, Component, Input} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {AbstractRDKComponent} from '../../core/api/component-api';
+import {AbstractRDKComponent} from "../core";
 
 @Component({
     selector: 'rdk-button, a[rdk-button]',

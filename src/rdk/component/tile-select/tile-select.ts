@@ -5,7 +5,7 @@ import {
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms'
 import {RdkInputModule} from '../input/input';
-import {AbstractRDKComponent} from '../../core/api/component-api';
+import {AbstractRDKComponent} from '../core';
 import {CommonUtils} from '../../core/utils/common-utils';
 import {InternalUtils} from '../../core/utils/internal-utils';
 

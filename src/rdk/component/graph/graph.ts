@@ -6,6 +6,7 @@ import {AbstractGraphData} from "../../core/data/graph-data";
 
 import * as echarts from 'echarts';
 import {CommonUtils} from "../../core/utils/common-utils";
+import {AbstractRDKComponent} from "../core";
 
 @Component({
     selector: 'rdk-graph',
@@ -13,7 +14,7 @@ import {CommonUtils} from "../../core/utils/common-utils";
     styleUrls: ['./graph.scss']
 })
 
-export class RdkGraph implements OnInit, OnDestroy {
+export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy {
     // 全局 echarts 对象
     public echart: any = echarts;
 
@@ -50,7 +51,9 @@ export class RdkGraph implements OnInit, OnDestroy {
         return !CommonUtils.isEmptyObject(obj);
     }
 
-    constructor(private _elf: ElementRef) {  }
+    constructor(private _elf: ElementRef) {
+        super();
+    }
 
     ngOnInit() {
         this.graph = echarts.init(this._elf.nativeElement);
@@ -95,12 +98,21 @@ export class RdkGraph implements OnInit, OnDestroy {
         this._setOption(option, notMerge, lazyUpdate)
     }
 
-    public getWidth(): number {
+    @Input()
+    public get width():string {
         return this.graph.getWidth();
     }
 
-    public getHeight(): number {
+    public set width(value: string) {
+        this.graph.resize({width: value, silent: true});
+    }
+
+    public get height():string {
         return this.graph.getHeight();
+    }
+
+    public set height(value: string) {
+        this.graph.resize({height: value, silent: true});
     }
 
     public resize(opts?: {
