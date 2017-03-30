@@ -11,6 +11,7 @@ import {AbstractRDKComponent} from '../../core/api/component-api';
         '(click)': '_onClick()',
         '[style.width]': 'width',
         '[style.height]': 'height',
+        '[style.line-height]': 'height',
         '[class.rdk-button-clicked]': "_clicked"
     }
 })
