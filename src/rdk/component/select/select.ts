@@ -63,8 +63,6 @@ export class RdkSelect extends AbstractRDKComponent implements AfterContentInit,
 
     @Input() public placeholder: string;
 
-    @Input() public scrollable: boolean = false;
-
     @Input() public optionWidth: string;
 
     @Input() public optionHeight: string;
