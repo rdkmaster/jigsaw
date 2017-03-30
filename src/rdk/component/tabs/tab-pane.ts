@@ -11,17 +11,16 @@ import {Component, OnInit, Input, TemplateRef, ViewChild} from '@angular/core';
         </ng-template>
     `
 })
-export class TabPane implements OnInit {
+export class TabPane {
     @Input()
     public label: string;
 
     @Input()
     public disabled: boolean = false;
 
+    @Input()
+    public icon: string;
+
+
     @ViewChild(TemplateRef) content: TemplateRef<any>;
-
-    constructor() { }
-
-    ngOnInit() { }
-
 }

@@ -4,11 +4,10 @@
 
 import {Directive, Input, ElementRef} from "@angular/core";
 
-
 @Directive({
     selector: '[tab-label]'
 })
-// todo label 渲染器,以备将来支持html的渲染;
+// Todo label 渲染器,以备将来支持html的渲染;
 export class RdkLabel {
     @Input()
     public key: number;

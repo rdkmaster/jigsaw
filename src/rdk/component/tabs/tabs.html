@@ -15,8 +15,12 @@
                     <div tab-label class="rdk-tabs-tab"
                          *ngFor="let tab of _tabPanes; let i = index" key="{{i}}"
                          [class.rdk-tabs-tab-active]="selectedIndex === i"
-                         (click)="_setSelectIndex(i)">
-                        {{tab.label}}</div>
+                         [class.rdk-tabs-tab-disabled]="tab.disabled"
+                         (click)="_tabClick(i)">
+                         <i *ngIf="tab.icon" class="{{tab.icon}}"></i>
+                         {{tab.label}}
+
+                    </div>
                 </div>
             </div>
         </div>

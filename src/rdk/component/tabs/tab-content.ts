@@ -27,7 +27,6 @@ export class RdkTabContent implements AfterViewChecked {
     @Input()
     contentKey: number;
 
-
     private _isActive: boolean;
 
     @Input()
