@@ -1,13 +1,13 @@
 import {
-    NgModule, Component, ContentChildren, QueryList, AfterContentInit, Input, forwardRef, Optional, Renderer, OnDestroy,
-    OnInit, Output, EventEmitter, ChangeDetectorRef, Directive, Renderer2, ElementRef
+    NgModule, Component, ContentChildren, QueryList, AfterContentInit, Input, forwardRef, Optional, OnDestroy,
+    OnInit, Output, EventEmitter, ChangeDetectorRef, Directive, Renderer2, ElementRef, ViewChildren
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {AbstractRDKComponent} from '../../core/api/component-api';
 import {CommonUtils} from '../../core/utils/common-utils';
 import {InternalUtils} from '../../core/utils/internal-utils';
-import {RdkScrollBar, RdkScrollBarModule} from '../scrollbar/scrollbar';
+import {RdkScrollBarModule} from '../scrollbar/scrollbar';
 
 @Directive({
     selector: '.rdk-option-list',
@@ -31,7 +31,6 @@ export class OptionList extends AbstractRDKComponent{
         '[style.line-height]': 'height'
     }
 })
-//TODO by chenxu: select内部自动完成ngFor，不用应用自己写，但是依然在模板里保留 <ng-content></ng-content>
 export class RdkSelect extends AbstractRDKComponent implements AfterContentInit, OnDestroy, OnInit {
     private _optionListHidden: boolean = true; // 设置option列表是否显示
     private _value: any; // select表单值
@@ -69,8 +68,10 @@ export class RdkSelect extends AbstractRDKComponent implements AfterContentInit,
 
     @Input() public optionCount: number;
 
+    @Input() data: Array<object>;
+
     //获取映射的子组件option
-    @ContentChildren(forwardRef(() => RdkOption))
+    @ViewChildren(forwardRef(() => RdkOption))
     private _options: QueryList<RdkOption> = null;
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
