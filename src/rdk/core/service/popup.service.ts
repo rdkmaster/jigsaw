@@ -1,5 +1,6 @@
 import {
-    Injectable, ComponentFactoryResolver, ComponentRef, Renderer2, ElementRef, Type, ViewContainerRef, ApplicationRef
+    Injectable, ComponentFactoryResolver, ComponentRef, Renderer2, ElementRef, Type, ViewContainerRef, ApplicationRef,
+    TemplateRef, EmbeddedViewRef
 } from '@angular/core';
 
 import {AppComponent} from '../../../app/app.component';
@@ -39,9 +40,9 @@ export enum PopupPositionType {
     absolute, fixed
 }
 
-export type PopupComponent = {
+export type Popup = {
     id: number;
-    componentRef: ComponentRef<IPopupable>;
+    popupRef: ComponentRef<IPopupable> | EmbeddedViewRef<any>;
 }
 
 export type ButtonOptions = {
@@ -68,41 +69,53 @@ export interface IDialog extends IPopupable {
 @Injectable()
 export class PopupService {
 
-    private _componentId: number;
+    private _popupId: number;
 
-    private _components: Array<PopupComponent> = [];
+    private _popups: Array<Popup> = [];
 
     //全局插入点
     private _vcr: ViewContainerRef;
 
     constructor(private _cfr: ComponentFactoryResolver, private _appRef: ApplicationRef) {
         this._vcr = (_appRef.components[0].instance as AppComponent).vcr;
-        this._componentId = new Date().getTime();
+        this._popupId = new Date().getTime();
     }
 
     /*
-    * 打开弹框
-    * return 弹框组件的id
+    * 打开组件弹框
+    * return 弹框的id
     * */
     public popup(what: Type<IPopupable>, options: PopupOptions, initData?: any): number {
         let factory = this._cfr.resolveComponentFactory(what);
         let componentRef = this._vcr.createComponent(factory);
-        componentRef.instance.id = this._componentId;
+        componentRef.instance.id = this._popupId;
         componentRef.instance.initData = initData;
         componentRef.instance.options = options;
-        this._components.push({id: this._componentId, componentRef: componentRef});
-        this._componentId++;
+        this._popups.push({id: this._popupId, popupRef: componentRef});
+        this._popupId++;
         return componentRef.instance.id;
+    }
+
+    /*
+    * 打开模板弹框
+    * return 弹框的id
+    * */
+    public popupTemplate(what: TemplateRef<any>): number{
+        let viewRef = this._vcr.createEmbeddedView(what);
+        let popupId: number = this._popupId;
+        this._popups.push({id: this._popupId, popupRef: viewRef});
+        this._popupId++;
+        return popupId;
     }
 
     /*
     * 关闭弹框
     * param 弹框组件的id
     * */
-    public close(componentId: number): void {
-        let component = this._components.find(component => componentId === component.id);
-        component.componentRef.destroy();
-        this._components.splice(this._components.indexOf(component), 1);
+    public close(popupId: number): void {
+        let popup = this._popups.find(popup => popupId === popup.id);
+        popup.popupRef.destroy();
+        this._popups.splice(this._popups.indexOf(popup), 1);
     }
 
     /*

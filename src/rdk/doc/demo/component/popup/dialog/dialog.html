@@ -6,3 +6,19 @@
     <span class="fa fa-thumbs-up"></span>点赞
 </rdk-button>
 
+<rdk-button width="100" (click)="popupTemplate(tp)">
+    <span class="fa fa-thumbs-up"></span>点赞
+</rdk-button>
+
+<ng-template #tp>
+    <div class="pop-bg"></div>
+    <div class="pop-win">
+        <span class="close-btn" (click)="closeTemplate()">X</span>
+        <h3>这是模板弹框</h3>
+        <div class="btn-group-box">
+            <rdk-button>确定</rdk-button>
+            <rdk-button (click)="closeTemplate()">取消</rdk-button>
+        </div>
+    </div>
+</ng-template>
+

@@ -8,9 +8,12 @@ import {
 } from '../../../../../core/service/popup.service';
 
 @Component({
-    templateUrl: 'dialog.html'
+    templateUrl: 'dialog.html',
+    styleUrls: ['dialog.scss']
 })
 export class DialogDemoComponent {
+
+    private _templateId: number;
 
     constructor(private _popupService: PopupService) {
     }
@@ -21,6 +24,14 @@ export class DialogDemoComponent {
 
     popupAtPoint(event) {
         this._popupService.popup(UseDialog2Component, this._getDialogOptionsTwo(event));
+    }
+
+    popupTemplate(tp){
+        this._templateId = this._popupService.popupTemplate(tp);
+    }
+
+    closeTemplate(){
+        this._popupService.close(this._templateId);
     }
 
     private _getDialogOptions(): PopupOptions {
