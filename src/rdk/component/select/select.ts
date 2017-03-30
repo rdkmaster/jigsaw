@@ -1,6 +1,6 @@
 import {
     NgModule, Component, ContentChildren, QueryList, AfterContentInit, Input, forwardRef, Optional, Renderer, OnDestroy,
-    OnInit, Output, EventEmitter, ChangeDetectorRef, Directive
+    OnInit, Output, EventEmitter, ChangeDetectorRef, Directive, Renderer2, ElementRef
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
@@ -32,7 +32,6 @@ export class OptionList extends AbstractRDKComponent{
     }
 })
 //TODO by chenxu: select内部自动完成ngFor，不用应用自己写，但是依然在模板里保留 <ng-content></ng-content>
-//TODO by chenxu: 去掉scrollable/optionHeight属性，增加optionCount属性用于指明下拉最大显示多少个选项，如果备选项数量大于这个值，则自动出现滚动条
 export class RdkSelect extends AbstractRDKComponent implements AfterContentInit, OnDestroy, OnInit {
     private _optionListHidden: boolean = true; // 设置option列表是否显示
     private _value: any; // select表单值
@@ -70,11 +69,13 @@ export class RdkSelect extends AbstractRDKComponent implements AfterContentInit,
 
     @Input() public optionHeight: string;
 
+    @Input() public optionCount: number;
+
     //获取映射的子组件option
     @ContentChildren(forwardRef(() => RdkOption))
     private _options: QueryList<RdkOption> = null;
 
-    constructor(private _renderer: Renderer) {
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
         super()
     }
 
@@ -85,7 +86,7 @@ export class RdkSelect extends AbstractRDKComponent implements AfterContentInit,
         if (this._optionListHidden) {
             this._documentListen();
         } else {
-            this._documentListen = this._renderer.listenGlobal('document', 'click', () => this._optionListHidden = true);
+            this._documentListen = this._renderer.listen('document', 'click', () => this._optionListHidden = true);
         }
     }
 
@@ -98,8 +99,15 @@ export class RdkSelect extends AbstractRDKComponent implements AfterContentInit,
         this.valueChange.emit(this.value);
     };
 
+    private _setOptionListHeight(){
+        if(this.optionCount){
+            this.optionHeight = this._elementRef.nativeElement.offsetHeight * this.optionCount + 'px';
+        }
+    }
+
     ngOnInit() {
         this.trackItemBy = InternalUtils.initTrackItemBy(<string>this.trackItemBy, this.labelField);
+        this._setOptionListHeight();
     }
 
     ngAfterContentInit() {
@@ -108,7 +116,7 @@ export class RdkSelect extends AbstractRDKComponent implements AfterContentInit,
     }
 
     ngOnDestroy() {
-        this._documentListen();//解绑document上的点击事件
+        this._documentListen && this._documentListen();//解绑document上的点击事件
     }
 
 }

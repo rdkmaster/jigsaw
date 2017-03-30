@@ -4,8 +4,7 @@
             placeholder="请选择城市"
             width="50%"
             optionWidth="150%"
-            optionHeight="100px"
-            scrollable="true">
+            [optionCount]="3">
             <rdk-select-option *ngFor="let city of cityListForSelect"
                        [optionItem]="city">
             </rdk-select-option>
