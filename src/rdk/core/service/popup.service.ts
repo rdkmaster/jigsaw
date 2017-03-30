@@ -6,8 +6,8 @@ import {AppComponent} from '../../../app/app.component';
 
 export class PopupOptions {
     modal: boolean; //是否模态
-    showEffect: PopupEffect;//弹出的动效，fadeIn/fadeOut，wipeIn/wipeOut
-    hideEffect: PopupEffect; //隐藏的动效，fadeIn/fadeOut，wipeIn/wipeOut
+    showEffect?: PopupEffect;//弹出的动效，fadeIn/fadeOut，wipeIn/wipeOut
+    hideEffect?: PopupEffect; //隐藏的动效，fadeIn/fadeOut，wipeIn/wipeOut
     pos?: PopupPosition; //控制弹出对象的左上角位置，下面2者选其一。
     posOffset?: PopupPositionOffset;
     posType?: PopupPositionType

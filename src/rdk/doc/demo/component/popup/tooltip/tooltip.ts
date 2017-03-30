@@ -3,7 +3,7 @@ import {Component, ViewChild, ElementRef} from "@angular/core";
 import {UseTooltipComponent} from './use-tooltip/use-tooltip';
 
 import {
-    PopupService, PopupEffect, PopupOptions, PopupPositionType
+    PopupService, PopupOptions, PopupPositionType
 } from '../../../../../core/service/popup.service';
 
 @Component({
@@ -28,14 +28,12 @@ export class TooltipDemoComponent {
     private _getTooltipOptions(insertPlaceEl: ElementRef): PopupOptions {
         return {
             modal: false, //是否模态
-            showEffect: PopupEffect.fadeIn,//弹出的动效，fadeIn/fadeOut，wipeIn/wipeOut
-            hideEffect: PopupEffect.fadeOut, //隐藏的动效，fadeIn/fadeOut，wipeIn/wipeOut
-            pos: insertPlaceEl,
-            posOffset: {
+            pos: insertPlaceEl, //插入点
+            posOffset: { //偏移位置
                 top: -8,
                 left: 0
             },
-            posType: PopupPositionType.absolute,
+            posType: PopupPositionType.absolute, //定位类型
         };
     }
 

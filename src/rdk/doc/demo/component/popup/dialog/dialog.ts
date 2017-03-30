@@ -4,7 +4,7 @@ import {UseDialogComponent} from './use-dialog/use-dialog';
 import {UseDialog2Component} from './use-dialog2/use-dialog';
 
 import {
-    PopupService, PopupEffect, PopupOptions, PopupPositionType, PopupPositionXy
+    PopupService, PopupOptions, PopupPositionType, PopupPositionXy
 } from '../../../../../core/service/popup.service';
 
 @Component({
@@ -25,23 +25,19 @@ export class DialogDemoComponent {
 
     private _getDialogOptions(): PopupOptions {
         return {
-            modal: true, //是否模态
-            showEffect: PopupEffect.fadeIn,//弹出的动效，fadeIn/fadeOut，wipeIn/wipeOut
-            hideEffect: PopupEffect.fadeOut //隐藏的动效，fadeIn/fadeOut，wipeIn/wipeOut
+            modal: true //是否模态
         };
     }
 
     private _getDialogOptionsTwo(event): PopupOptions {
         return {
             modal: false, //是否模态
-            showEffect: PopupEffect.fadeIn,//弹出的动效，fadeIn/fadeOut，wipeIn/wipeOut
-            hideEffect: PopupEffect.fadeOut, //隐藏的动效，fadeIn/fadeOut，wipeIn/wipeOut
-            pos: new PopupPositionXy(event.clientX, event.clientY),
-            posOffset: {
+            pos: new PopupPositionXy(event.clientX, event.clientY), //插入点
+            posOffset: { //偏移位置
                 top: 0,
                 left: 0
             },
-            posType: PopupPositionType.absolute,
+            posType: PopupPositionType.absolute, //定位类型
         };
     }
 }
