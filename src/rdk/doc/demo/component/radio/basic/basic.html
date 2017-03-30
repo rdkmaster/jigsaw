@@ -1,7 +1,6 @@
 <h4>单选按钮</h4>
 <rdk-radio-group [(value)]="selectedCity"
-                 (valueChange)="radioChange($event)" >
-    <rdk-radio-button *ngFor="let city of citys" [radioItem]="city">
-    </rdk-radio-button>
+                 (valueChange)="radioChange($event)"
+                 [data]="citys">
 </rdk-radio-group>
 

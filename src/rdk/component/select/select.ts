@@ -1,6 +1,6 @@
 import {
     NgModule, Component, ContentChildren, QueryList, AfterContentInit, Input, forwardRef, Optional, OnDestroy,
-    OnInit, Output, EventEmitter, ChangeDetectorRef, Directive, Renderer2, ElementRef, ViewChildren
+    OnInit, Output, EventEmitter, ChangeDetectorRef, Directive, Renderer2, ElementRef, ViewChildren, AfterViewInit
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
@@ -31,7 +31,7 @@ export class OptionList extends AbstractRDKComponent{
         '[style.line-height]': 'height'
     }
 })
-export class RdkSelect extends AbstractRDKComponent implements AfterContentInit, OnDestroy, OnInit {
+export class RdkSelect extends AbstractRDKComponent implements AfterViewInit, OnDestroy, OnInit {
     private _optionListHidden: boolean = true; // 设置option列表是否显示
     private _value: any; // select表单值
     private _contentInit: boolean = false; //子组件加载标记
@@ -109,7 +109,7 @@ export class RdkSelect extends AbstractRDKComponent implements AfterContentInit,
         this._setOptionListHeight();
     }
 
-    ngAfterContentInit() {
+    ngAfterViewInit() {
         this._contentInit = true;
         this.value && this._updateSelectedOption();
     }

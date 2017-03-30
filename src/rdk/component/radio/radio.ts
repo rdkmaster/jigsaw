@@ -1,6 +1,6 @@
 import {
     Component, Directive, NgModule, forwardRef, Input, ContentChildren, QueryList,
-    Optional, EventEmitter, Output, AfterContentInit, OnInit, ChangeDetectorRef
+    Optional, EventEmitter, Output, AfterContentInit, OnInit, ChangeDetectorRef, ViewChildren, AfterViewInit
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
@@ -8,11 +8,11 @@ import {AbstractRDKComponent} from '../../core/api/component-api';
 import {CommonUtils} from '../../core/utils/common-utils';
 import {InternalUtils} from '../../core/utils/internal-utils';
 
-@Directive({
-    selector: 'rdk-radio-group'
+@Component({
+    selector: 'rdk-radio-group',
+    templateUrl: 'radio-group.html'
 })
-//TODO by chenxu: radio内部自动完成ngFor，不用应用自己写，但是依然在模板里保留 <ng-content></ng-content>
-export class RdkRadioGroup extends AbstractRDKComponent implements OnInit, AfterContentInit {
+export class RdkRadioGroup extends AbstractRDKComponent implements OnInit, AfterViewInit {
     private _value: any = null;
     private _contentInit: boolean = false;
 
@@ -36,7 +36,9 @@ export class RdkRadioGroup extends AbstractRDKComponent implements OnInit, After
     //显示在界面上的属性名
     @Input() public labelField: string = 'label';
 
-    @ContentChildren(forwardRef(() => RdkRadioButton))
+    @Input() public data: Array<object>;
+
+    @ViewChildren(forwardRef(() => RdkRadioButton))
     private _radios: QueryList<RdkRadioButton> = null;
 
     private _updateSelectedRadio(): void {
@@ -51,7 +53,7 @@ export class RdkRadioGroup extends AbstractRDKComponent implements OnInit, After
         this.trackItemBy = InternalUtils.initTrackItemBy(<string>this.trackItemBy, this.labelField);
     }
 
-    ngAfterContentInit() {
+    ngAfterViewInit() {
         this._contentInit = true;
         this.value && this._updateSelectedRadio();
     }
