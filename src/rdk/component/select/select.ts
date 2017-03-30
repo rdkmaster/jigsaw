@@ -100,7 +100,11 @@ export class RdkSelect extends AbstractRDKComponent implements AfterViewInit, On
 
     private _setOptionListHeight(){
         if(this.optionCount){
-            this.optionHeight = this._elementRef.nativeElement.offsetHeight * this.optionCount + 'px';
+            if (this.optionCount > this.data.length){
+                this.optionCount=this.data.length;
+            }
+            this.optionHeight = this._elementRef.nativeElement.Height * this.optionCount + 'px';
+
         }
     }
 
