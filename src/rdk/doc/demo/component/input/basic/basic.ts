@@ -13,7 +13,7 @@ export class InputBasicDemoComponent {
 
     @ViewChild('myInput') myInput:RdkInput;
     click() {
-        alert('你输入的值是 ' + this.myInput.value)
+        console.log('你输入的值是 ' + this.myInput.value)
     }
 }
 
