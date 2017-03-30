@@ -17,7 +17,6 @@ export class RdkPrefixIcon {}
     }
 })
 //TODO（by陈旭） 缺少keyup、blur等事件
-//TODO http://localhost:4200/demo/input/basic 出错，图标跑上面去了
 export class RdkInput extends AbstractRDKComponent {
     private _value: string | number; //input表单值
     private _longIndent: boolean = false;
