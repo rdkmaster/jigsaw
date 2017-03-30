@@ -1,6 +1,6 @@
 import {
     NgModule, Component, ContentChildren, QueryList, Input, Output, EventEmitter,
-    Optional, OnInit, forwardRef, AfterContentInit, ChangeDetectorRef
+    Optional, OnInit, forwardRef, AfterContentInit, ChangeDetectorRef, AfterViewInit, ViewChildren
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms'
@@ -17,8 +17,7 @@ import {InternalUtils} from '../../core/utils/internal-utils';
         '[style.width]': 'width'
     }
 })
-//TODO by chenxu: TileSelect内部自动完成ngFor，不用应用自己写，但是依然在模板里保留 <ng-content></ng-content>
-export class RdkTileSelect extends AbstractRDKComponent implements OnInit, AfterContentInit {
+export class RdkTileSelect extends AbstractRDKComponent implements OnInit, AfterViewInit {
     private _contentInit: boolean = false;
     private _selectedItems: any[] = [];
 
@@ -50,8 +49,14 @@ export class RdkTileSelect extends AbstractRDKComponent implements OnInit, After
 
     @Input() public searchable: boolean = false;
 
+    @Input() public data: Array<object>;
+
+    @Input() public tileOptionWidth: string;
+
+    @Input() public tileOptionHeight: string;
+
     //获取映射的子组件
-    @ContentChildren(forwardRef(() => RdkTileOption))
+    @ViewChildren(forwardRef(() => RdkTileOption))
     private _options: QueryList<RdkTileOption>;
 
 
@@ -97,7 +102,7 @@ export class RdkTileSelect extends AbstractRDKComponent implements OnInit, After
         this.trackItemBy = InternalUtils.initTrackItemBy(<string>this.trackItemBy, this.labelField);
     }
 
-    ngAfterContentInit() {
+    ngAfterViewInit() {
         this._contentInit = true;
         this._setOptionState();
     }

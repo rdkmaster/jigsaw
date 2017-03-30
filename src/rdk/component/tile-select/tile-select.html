@@ -4,4 +4,6 @@
     </rdk-input>
 </div>
 <ng-content></ng-content>
+<rdk-tile-option [width]="tileOptionWidth" [height]="tileOptionHeight" *ngFor="let optionItem of data" [optionItem]="optionItem">
+</rdk-tile-option>
 
