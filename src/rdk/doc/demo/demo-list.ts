@@ -71,6 +71,10 @@ const demoListRoutes=[
         loadChildren:'./component/pagination/pagination-demo.module#PaginationDemoModule'
     },
     {
+        path:'tag',
+        loadChildren:'./component/tag/tag-demo.module#TagDemoModule'
+    },
+    {
         path:'**', //fallback router must in the last
         component: DemoListComponent
     }
