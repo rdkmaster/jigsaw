@@ -5,7 +5,7 @@ import {UseDialog2Component} from './use-dialog2/use-dialog';
 
 import {
     PopupService, PopupOptions, PopupPositionType, PopupPoint
-} from '../../../../../core/service/popup.service';
+} from '../../../../../service/popup.service';
 
 @Component({
     templateUrl: 'dialog.html',

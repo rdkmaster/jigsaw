@@ -3,7 +3,7 @@ import {
     TemplateRef, EmbeddedViewRef
 } from '@angular/core';
 
-import {AppComponent} from '../../../app/app.component';
+import {AppComponent} from '../../app/app.component';
 
 export class PopupOptions {
     modal: boolean; //是否模态

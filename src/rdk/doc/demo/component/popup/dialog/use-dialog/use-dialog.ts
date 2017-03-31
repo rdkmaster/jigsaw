@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 
-import {PopupService, IDialog, ButtonOptions} from '../../../../../../core/service/popup.service';
+import {PopupService, IDialog, ButtonOptions} from '../../../../../../service/popup.service';
 
 @Component({
     templateUrl: 'use-dialog.html',
