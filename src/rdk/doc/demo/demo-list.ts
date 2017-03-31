@@ -75,10 +75,6 @@ const demoListRoutes=[
         loadChildren:'./component/tag/tag-demo.module#TagDemoModule'
     },
     {
-        path:'tabs',
-        loadChildren:'./component/tabs/tabs-demo.module#TabsDemoModule'
-    },
-    {
         path:'**', //fallback router must in the last
         component: DemoListComponent
     }
