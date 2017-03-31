@@ -6,14 +6,11 @@ import { Component, OnInit } from '@angular/core';
 import {AbstractGraphData} from "../../../../../core/data/graph-data";
 
 @Component({
-    template: `
-        <rdk-graph #graph1 class="graph-content" [data]="data"></rdk-graph>
-    `
+    templateUrl:"basicGraph.html"
 })
 
 export class BasicGraphComponent  implements OnInit {
     data: AbstractGraphData;
-
     ngOnInit() {
         this.data = new GraphData();
     }
