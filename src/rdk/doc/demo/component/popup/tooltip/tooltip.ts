@@ -10,7 +10,7 @@ import {
     templateUrl: 'tooltip.html'
 })
 export class TooltipDemoComponent {
-    private _componentId: number;
+    private _popupId: number;
 
     @ViewChild("insertPlace", {read: ElementRef}) insertPlaceEl: ElementRef;
 
@@ -18,11 +18,11 @@ export class TooltipDemoComponent {
     }
 
     popup() {
-        this._componentId = this._popupService.popup(UseTooltipComponent, this._getTooltipOptions(this.insertPlaceEl));
+        this._popupId = this._popupService.popup(UseTooltipComponent, this._getTooltipOptions(this.insertPlaceEl));
     }
 
     close() {
-        this._popupService.close(this._componentId);
+        this._popupService.removePopup(this._popupId);
     }
 
     private _getTooltipOptions(insertPlaceEl: ElementRef): PopupOptions {
@@ -30,7 +30,7 @@ export class TooltipDemoComponent {
             modal: false, //是否模态
             pos: insertPlaceEl, //插入点
             posOffset: { //偏移位置
-                top: -8,
+                bottom: -8,
                 left: 0
             },
             posType: PopupPositionType.absolute, //定位类型

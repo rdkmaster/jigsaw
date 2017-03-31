@@ -1,6 +1,6 @@
-import {Component, Renderer2, ElementRef, OnInit, Input, AfterContentInit} from '@angular/core';
+import {Component, Renderer2, ElementRef, Input, AfterContentInit} from '@angular/core';
 
-import {IPopupable, PopupOptions, PopupService} from '../../core/service/popup.service';
+import {IPopupable, PopupService} from '../../core/service/popup.service';
 import {fadeIn} from '../animations/fade-in';
 import {flyIn} from '../animations/fly-in';
 import {bubbleIn} from '../animations/bubble-in';
@@ -17,11 +17,7 @@ import {bubbleIn} from '../animations/bubble-in';
 })
 export class RdkTooltip implements IPopupable, AfterContentInit {
     @Input()
-    public id: number;
-
-
-    @Input()
-    public options: PopupOptions;
+    public popupId: number;
 
     @Input()
     set initData(newValue: any){
@@ -33,7 +29,7 @@ export class RdkTooltip implements IPopupable, AfterContentInit {
     }
 
     ngAfterContentInit(){
-        this._popupService.setPopupPos(this.options, this._renderer, this._elementRef.nativeElement);
+        this._popupService.setPopupPos(this.popupId, this._renderer, this._elementRef.nativeElement);
     }
 }
 

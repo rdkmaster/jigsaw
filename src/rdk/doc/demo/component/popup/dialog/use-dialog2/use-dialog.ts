@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 
-import {PopupService, IDialog, PopupOptions, ButtonOptions} from '../../../../../../core/service/popup.service';
+import {PopupService, IDialog, ButtonOptions} from '../../../../../../core/service/popup.service';
 
 @Component({
     templateUrl: 'use-dialog.html',
@@ -10,7 +10,7 @@ export class UseDialog2Component implements IDialog {
 
     private _initDate: any;
 
-    public id: number;
+    public popupId: number;
 
     public get initDate() {
         return this._initDate
@@ -21,7 +21,6 @@ export class UseDialog2Component implements IDialog {
     }
 
     public title: string = `Title of the dialog`;
-    public options: PopupOptions;
     public buttons: Array<ButtonOptions> = [
         {
             label: 'confirm', callback: () => {
@@ -29,7 +28,7 @@ export class UseDialog2Component implements IDialog {
             }
         },
         {
-            label: 'cancle', callback: () => {
+            label: 'cancel', callback: () => {
                 this.close();
             }
         }
@@ -39,7 +38,7 @@ export class UseDialog2Component implements IDialog {
     }
 
     close() {
-        this._popupService.close(this.id);
+        this._popupService.removePopup(this.popupId);
     }
 
 }

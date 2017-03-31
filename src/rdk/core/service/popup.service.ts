@@ -18,14 +18,10 @@ export enum PopupEffect {
     fadeIn, fadeOut
 }
 
-export type PopupPosition = PopupPositionXy | ElementRef;
+export type PopupPosition = PopupPoint | ElementRef;
 
-export class PopupPositionXy {
-    x: number;
-    y: number;
-    constructor(x: number, y: number){
-        this.x = x;
-        this.y = y;
+export class PopupPoint {
+    constructor(public x: number, public y: number){
     }
 }
 
@@ -41,8 +37,9 @@ export enum PopupPositionType {
 }
 
 export type Popup = {
-    id: number;
+    popupId: number;
     popupRef: ComponentRef<IPopupable> | EmbeddedViewRef<any>;
+    options: PopupOptions
 }
 
 export type ButtonOptions = {
@@ -56,9 +53,8 @@ export type Position = {
 }
 
 export interface IPopupable {
-    id: number;
+    popupId: number;
     initData: any;
-    options: PopupOptions;
 }
 
 export interface IDialog extends IPopupable {
@@ -82,47 +78,51 @@ export class PopupService {
     }
 
     /*
-    * 打开组件弹框
+    * 打开弹框
     * return 弹框的id
     * */
-    public popup(what: Type<IPopupable>, options: PopupOptions, initData?: any): number {
-        let factory = this._cfr.resolveComponentFactory(what);
-        let componentRef = this._vcr.createComponent(factory);
-        componentRef.instance.id = this._popupId;
-        componentRef.instance.initData = initData;
-        componentRef.instance.options = options;
-        this._popups.push({id: this._popupId, popupRef: componentRef});
-        this._popupId++;
-        return componentRef.instance.id;
-    }
-
-    /*
-    * 打开模板弹框
-    * return 弹框的id
-    * */
-    public popupTemplate(what: TemplateRef<any>): number{
-        let viewRef = this._vcr.createEmbeddedView(what);
-        let popupId: number = this._popupId;
-        this._popups.push({id: this._popupId, popupRef: viewRef});
-        this._popupId++;
-        return popupId;
+    public popup(what: Type<IPopupable>, options: PopupOptions, initData?: any): number;
+    public popup(what: TemplateRef<any>): number;
+    public popup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any): number {
+        if(what instanceof TemplateRef){
+            let viewRef = this._vcr.createEmbeddedView(what);
+            let popupId: number = this._popupId;
+            this._popups.push({popupId: this._popupId, popupRef: viewRef, options: null});
+            this._popupId++;
+            return popupId;
+        }else{
+            let factory = this._cfr.resolveComponentFactory(what);
+            let componentRef = this._vcr.createComponent(factory);
+            componentRef.instance.popupId = this._popupId;
+            componentRef.instance.initData = initData;
+            this._popups.push({popupId: this._popupId, popupRef: componentRef, options: options});
+            this._popupId++;
+            return componentRef.instance.popupId;
+        }
     }
 
     /*
     * 关闭弹框
     * param 弹框组件的id
     * */
-    public close(popupId: number): void {
-        let popup = this._popups.find(popup => popupId === popup.id);
+    public removePopup(popupId: number): void {
+        let popup = this._popups.find(popup => popupId === popup.popupId);
         popup.popupRef.destroy();
         this._popups.splice(this._popups.indexOf(popup), 1);
     }
 
     /*
-    * 设置弹框的位置
-    *
+    * 获取popup的options
     * */
-    public setPopupPos(options: PopupOptions, renderer: Renderer2, element: HTMLElement): void{
+    public getOptions(popupId: number): PopupOptions{
+        return this._popups.find(popup => popupId === popup.popupId).options;
+    }
+
+    /*
+    * 设置弹框的位置
+    * */
+    public setPopupPos(popupId: number, renderer: Renderer2, element: HTMLElement): void{
+        let options = this._popups.find(popup => popupId === popup.popupId).options;
         if (options && !options.modal) {
             let posType: string = this._getPosType(options.posType);
             let position: Position = this._getPosition(options, element);
@@ -154,11 +154,36 @@ export class PopupService {
         let left: string;
         if (options && !options.modal) {
             if(options.pos instanceof ElementRef){
-                top = (options.pos.nativeElement.offsetTop - element.offsetHeight + options.posOffset.top) + 'px';
-                left = (options.pos.nativeElement.offsetLeft + options.posOffset.left) + 'px';
-            }else if(options.pos instanceof PopupPositionXy) {
-                top = options.pos.y + 'px';
-                left = options.pos.x + 'px';
+                if(options.posOffset.top || options.posOffset.top == 0){
+                    top = (options.pos.nativeElement.offsetTop + options.posOffset.top) + 'px';
+                }
+                else if(options.posOffset.bottom || options.posOffset.bottom == 0){
+                    top = (options.pos.nativeElement.offsetTop - element.offsetHeight + options.posOffset.bottom) + 'px';
+                }
+                else{
+                    top = options.pos.nativeElement.offsetTop + 'px';
+                }
+
+                if(options.posOffset.left || options.posOffset.left == 0){
+                    left = (options.pos.nativeElement.offsetLeft + options.posOffset.left) + 'px';
+                }
+                else if(options.posOffset.right || options.posOffset.right == 0){
+                    left = (options.pos.nativeElement.offsetLeft - element.offsetWidth + options.posOffset.right) + 'px';
+                }
+                else{
+                    left = options.pos.nativeElement.offsetLeft + 'px';
+                }
+            }else if(options.pos instanceof PopupPoint) {
+                if(options.posOffset.top){
+                    top = (options.pos.y + options.posOffset.top) + 'px';
+                }else {
+                    top = options.pos.y + 'px';
+                }
+                if(options.posOffset.left){
+                    left = (options.pos.x + options.posOffset.left) + 'px';
+                }else {
+                    left = options.pos.x + 'px';
+                }
             }
         }
         return {
