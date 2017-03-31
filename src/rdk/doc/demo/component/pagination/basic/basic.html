@@ -1,5 +1,11 @@
 <h4>pagenation</h4>
 <rdk-pagination [total]="550" [pageSize]="10"
-            [pageSizeOptions]="[5, 10, 20]" [searchable]="true"
-            [showQuickJumper]="true" (currentPageChange)="getCurrentPage($event)" (onShowSizeChange)="getPageSize($event)"></rdk-pagination>
+                [pageSizeOptions]="[5, 10, 20]"
+                [searchable]="true"
+                [showQuickJumper]="true"
+                (currentPageChange)="getCurrentPage($event)"
+                (onShowSizeChange)="getPageSize($event)"
+                width="700px"
+                >
+</rdk-pagination>
 

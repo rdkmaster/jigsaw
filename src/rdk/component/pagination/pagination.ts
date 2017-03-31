@@ -7,13 +7,18 @@ import {FormsModule} from '@angular/forms';
 
 import {RdkSelectModule} from '../select/select';
 import {RdkInputModule} from '../input/input';
+import {AbstractRDKComponent} from "../../core/api/component-api";
 
 @Component({
     selector: 'rdk-pagination',
     templateUrl: 'pagination.html',
-    styleUrls: ['pagination.scss']
+    styleUrls: ['pagination.scss'],
+    host: {
+        '[style.width]': 'width',
+        '[style.height]': 'height'
+    }
 })
-export class RdkPagination implements OnInit, AfterViewInit {
+export class RdkPagination extends AbstractRDKComponent implements OnInit, AfterViewInit {
     private _totalPage: number;
     private _pageArr: number[] = [];
     private _prevDisabled: boolean = false;
