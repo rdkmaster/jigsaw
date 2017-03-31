@@ -1,4 +1,4 @@
-import {Component, Renderer2, ElementRef, Input, OnInit, OnDestroy, AfterContentInit} from '@angular/core';
+import {Component, Renderer2, ElementRef, Input, OnDestroy, AfterContentInit} from '@angular/core';
 
 import {PopupService, PopupOptions, IDialog, ButtonOptions} from '../../core/service/popup.service';
 
@@ -17,19 +17,17 @@ import {AbstractRDKComponent} from "../../core/api/component-api";
 })
 export class RdkDialog extends AbstractRDKComponent implements IDialog, AfterContentInit, OnDestroy {
     @Input()
-    public id: number;
+    public popupId: number;
 
     private _topPlace: string;
     private _popupEl: HTMLElement;
     private _windowResize: Function;
+    private _options: PopupOptions;
 
     public initData: any;
 
     @Input()
     public title: string;
-
-    @Input()
-    options: PopupOptions;
 
     //设置距离顶部高度
     @Input()
@@ -51,7 +49,7 @@ export class RdkDialog extends AbstractRDKComponent implements IDialog, AfterCon
     }
 
     close() {
-        this._popupService.close(this.id);
+        this._popupService.removePopup(this.popupId);
     }
 
     private _init() {
@@ -59,6 +57,17 @@ export class RdkDialog extends AbstractRDKComponent implements IDialog, AfterCon
 
         //设置弹框宽度
         this.width && this._renderer.setStyle(this._popupEl, 'width', this.width);
+
+        this._options = this._popupService.getOptions(this.popupId);
+
+        if (this._options && !this._options.modal) {
+            this._popupService.setPopupPos(this.popupId, this._renderer, this._popupEl);
+        } else {
+            //设置默认位置
+            this._setDefaultPosition();
+        }
+
+        this._resetPosition();
     }
 
     private _setDefaultPosition(): void {
@@ -83,15 +92,6 @@ export class RdkDialog extends AbstractRDKComponent implements IDialog, AfterCon
 
     ngAfterContentInit() {
         this._init();
-
-        if (this.options && this.options.pos) {
-            this._popupService.setPopupPos(this.options, this._renderer, this._popupEl);
-        } else {
-            //设置默认位置
-            this._setDefaultPosition();
-        }
-
-        this._resetPosition();
     }
 
     ngOnDestroy() {

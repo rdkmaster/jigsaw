@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 
-import {PopupService, PopupOptions, IPopupable} from '../../../../../../core/service/popup.service';
+import {PopupService, IPopupable} from '../../../../../../core/service/popup.service';
 
 @Component({
     templateUrl: 'use-tooltip.html',
@@ -10,7 +10,7 @@ export class UseTooltipComponent implements IPopupable {
 
     private _initDate: any;
 
-    public id: number;
+    public popupId: number;
 
     public get initDate() {
         return this._initDate
@@ -20,13 +20,11 @@ export class UseTooltipComponent implements IPopupable {
         this._initDate = newValue;
     }
 
-    public options: PopupOptions;
-
     constructor(private _popupService: PopupService) {
     }
 
     close() {
-        this._popupService.close(this.id);
+        this._popupService.removePopup(this.popupId);
     }
 
 }

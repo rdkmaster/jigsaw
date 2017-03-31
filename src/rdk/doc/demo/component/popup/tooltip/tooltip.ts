@@ -22,7 +22,7 @@ export class TooltipDemoComponent {
     }
 
     close() {
-        this._popupService.close(this._componentId);
+        this._popupService.removePopup(this._componentId);
     }
 
     private _getTooltipOptions(insertPlaceEl: ElementRef): PopupOptions {

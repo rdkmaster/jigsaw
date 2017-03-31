@@ -1,5 +1,5 @@
 <div class="rdk-dialog-box" [@fadeIn]="active">
-    <div class="rdk-dialog-bg" *ngIf="options.modal"></div>
+    <div class="rdk-dialog-bg" *ngIf="_options.modal"></div>
     <div class="rdk-dialog" rdk-draggable [@bubbleIn]="active">
         <div class="rdk-dialog-head">
             <ng-content select="[title]"></ng-content><span>{{title}}</span>
