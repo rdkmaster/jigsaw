@@ -1,0 +1,8 @@
+<h4>单选按钮</h4>
+<rdk-radio-group [(value)]="selectedCity"  labelField="name"
+                 (valueChange)="radioChange($event)"
+                 [data]="citys">
+</rdk-radio-group>
+
+选择的城市的ID号是 : {{selectedCity.id}}
+
