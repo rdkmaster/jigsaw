@@ -1,8 +1,8 @@
 import {NgModule, Component, Input, Renderer2, ElementRef} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {AbstractRDKComponent} from '../../core/api/component-api';
 
 import {tagDestroy} from '../animations/tag-destroy';
+import {AbstractRDKComponent} from "../core";
 
 @Component({
     selector: 'rdk-tag',

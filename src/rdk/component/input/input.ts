@@ -1,7 +1,7 @@
 import {NgModule, Component, EventEmitter, Input, Output, ContentChildren, Directive, QueryList} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
-import {AbstractRDKComponent} from "../../core/api/component-api";
+import {AbstractRDKComponent} from "../core";
 
 @Directive({ selector: '[rdk-prefix-icon]' })
 export class RdkPrefixIcon {}

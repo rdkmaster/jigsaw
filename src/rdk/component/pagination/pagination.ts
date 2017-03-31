@@ -7,7 +7,7 @@ import {FormsModule} from '@angular/forms';
 
 import {RdkSelectModule} from '../select/select';
 import {RdkInputModule} from '../input/input';
-import {AbstractRDKComponent} from "../../core/api/component-api";
+import {AbstractRDKComponent} from "../core";
 
 @Component({
     selector: 'rdk-pagination',

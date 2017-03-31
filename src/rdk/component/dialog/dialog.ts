@@ -4,7 +4,7 @@ import {PopupService, PopupOptions, IDialog, ButtonOptions} from '../../core/ser
 
 import {fadeIn} from '../animations/fade-in';
 import {bubbleIn} from '../animations/bubble-in';
-import {AbstractRDKComponent} from "../../core/api/component-api";
+import {AbstractRDKComponent} from '../core';
 
 @Component({
     selector: 'rdk-dialog',

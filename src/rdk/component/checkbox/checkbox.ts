@@ -5,7 +5,7 @@
 import {
     Component, Input, EventEmitter, Output, OnInit
 } from '@angular/core';
-import {AbstractRDKComponent} from "../../core/api/component-api";
+import {AbstractRDKComponent} from '../core';
 
 
 export enum CheckBoxStatus {
