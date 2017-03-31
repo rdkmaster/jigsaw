@@ -60,7 +60,7 @@ export class RdkGraph implements OnInit, OnDestroy {
 
     // 组件销毁, 注销实例
     ngOnDestroy() {
-        this.echart.destroy();
+        this.echart.dispose();
     }
 
     // 注册封装的echarts事件.
