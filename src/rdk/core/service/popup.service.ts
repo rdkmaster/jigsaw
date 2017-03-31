@@ -154,11 +154,36 @@ export class PopupService {
         let left: string;
         if (options && !options.modal) {
             if(options.pos instanceof ElementRef){
-                top = (options.pos.nativeElement.offsetTop - element.offsetHeight + options.posOffset.top) + 'px';
-                left = (options.pos.nativeElement.offsetLeft + options.posOffset.left) + 'px';
+                if(options.posOffset.top || options.posOffset.top == 0){
+                    top = (options.pos.nativeElement.offsetTop + options.posOffset.top) + 'px';
+                }
+                else if(options.posOffset.bottom || options.posOffset.bottom == 0){
+                    top = (options.pos.nativeElement.offsetTop - element.offsetHeight + options.posOffset.bottom) + 'px';
+                }
+                else{
+                    top = options.pos.nativeElement.offsetTop + 'px';
+                }
+
+                if(options.posOffset.left || options.posOffset.left == 0){
+                    left = (options.pos.nativeElement.offsetLeft + options.posOffset.left) + 'px';
+                }
+                else if(options.posOffset.right || options.posOffset.right == 0){
+                    left = (options.pos.nativeElement.offsetLeft - element.offsetWidth + options.posOffset.right) + 'px';
+                }
+                else{
+                    left = options.pos.nativeElement.offsetLeft + 'px';
+                }
             }else if(options.pos instanceof PopupPoint) {
-                top = options.pos.y + 'px';
-                left = options.pos.x + 'px';
+                if(options.posOffset.top){
+                    top = (options.pos.y + options.posOffset.top) + 'px';
+                }else {
+                    top = options.pos.y + 'px';
+                }
+                if(options.posOffset.left){
+                    left = (options.pos.x + options.posOffset.left) + 'px';
+                }else {
+                    left = options.pos.x + 'px';
+                }
             }
         }
         return {
@@ -166,7 +191,5 @@ export class PopupService {
             left: left
         }
     }
-
-
 
 }

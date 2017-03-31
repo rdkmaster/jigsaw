@@ -45,8 +45,8 @@ export class DialogDemoComponent {
             modal: false, //是否模态
             pos: new PopupPoint(event.clientX, event.clientY), //插入点
             posOffset: { //偏移位置
-                top: 0,
-                left: 0
+                top: -10,
+                left: 10,
             },
             posType: PopupPositionType.absolute, //定位类型
         };
