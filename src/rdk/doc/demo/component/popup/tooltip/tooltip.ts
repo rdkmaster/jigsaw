@@ -4,7 +4,7 @@ import {UseTooltipComponent} from './use-tooltip/use-tooltip';
 
 import {
     PopupService, PopupOptions, PopupPositionType
-} from '../../../../../core/service/popup.service';
+} from '../../../../../service/popup.service';
 
 @Component({
     templateUrl: 'tooltip.html'

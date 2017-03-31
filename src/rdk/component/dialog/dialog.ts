@@ -1,6 +1,6 @@
 import {Component, Renderer2, ElementRef, Input, OnDestroy, AfterContentInit} from '@angular/core';
 
-import {PopupService, PopupOptions, IDialog, ButtonOptions} from '../../core/service/popup.service';
+import {PopupService, PopupOptions, IDialog, ButtonOptions} from '../../service/popup.service';
 
 import {fadeIn} from '../animations/fade-in';
 import {bubbleIn} from '../animations/bubble-in';

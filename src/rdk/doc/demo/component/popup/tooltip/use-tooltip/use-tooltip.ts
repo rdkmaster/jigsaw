@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 
-import {PopupService, IPopupable} from '../../../../../../core/service/popup.service';
+import {PopupService, IPopupable} from '../../../../../../service/popup.service';
 
 @Component({
     templateUrl: 'use-tooltip.html',

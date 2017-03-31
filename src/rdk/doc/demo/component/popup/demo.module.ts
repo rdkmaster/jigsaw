@@ -13,7 +13,7 @@ import {UseDialog2Component} from './dialog/use-dialog2/use-dialog';
 import {RdkDraggable} from '../../../../component/draggable/draggable';
 import {UseTooltipComponent} from './tooltip/use-tooltip/use-tooltip';
 
-import {PopupService} from '../../../../core/service/popup.service';
+import {PopupService} from '../../../../service/popup.service';
 
 const popupDemoRoutes=[
     {

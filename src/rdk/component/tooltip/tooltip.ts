@@ -1,6 +1,6 @@
 import {Component, Renderer2, ElementRef, Input, AfterContentInit} from '@angular/core';
 
-import {IPopupable, PopupService} from '../../core/service/popup.service';
+import {IPopupable, PopupService} from '../../service/popup.service';
 import {fadeIn} from '../animations/fade-in';
 import {flyIn} from '../animations/fly-in';
 import {bubbleIn} from '../animations/bubble-in';
