@@ -71,8 +71,13 @@ const demoListRoutes=[
         loadChildren:'./component/pagination/pagination-demo.module#PaginationDemoModule'
     },
     {
+<<<<<<< HEAD
         path:'tag',
         loadChildren:'./component/tag/tag-demo.module#TagDemoModule'
+=======
+        path:'tabs',
+        loadChildren:'./component/tabs/tabs-demo.module#TabsDemoModule'
+>>>>>>> 113abe0c45fe1e416784b111828f2ed19898ba12
     },
     {
         path:'**', //fallback router must in the last
