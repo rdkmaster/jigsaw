@@ -43,7 +43,7 @@ export class RdkGraph implements OnInit, OnDestroy {
     }
 
     /**
-     * 判断对象是否为空
+     * 判断对象是否为空 {}
      * @param obj
      */
     private _isOptionsValid(obj): boolean {
