@@ -13,6 +13,7 @@ import {AbstractRDKComponent} from "../core";
         '[style.height]': 'height',
         '[style.line-height]': 'height',
         '[@tagDestroy]': '_state',
+        '(@tagDestroy.done)': '_animationDone($event)'
     },
     animations:[
         tagDestroy
@@ -24,17 +25,20 @@ export class RdkTag extends AbstractRDKComponent {
 
     @Input() public closable: boolean;
 
-    private _state: string = 'active';
+    private _state: string;
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef){
         super()
     }
 
     private _close(){
-        this._state = 'inactive';
-        setTimeout(() => {
+        this._state = 'void';
+    }
+
+    private _animationDone($event){
+        if($event.toState == 'void'){
             this._renderer.parentNode(this._elementRef.nativeElement).removeChild(this._elementRef.nativeElement);
-        }, 300);
+        }
     }
 
 }

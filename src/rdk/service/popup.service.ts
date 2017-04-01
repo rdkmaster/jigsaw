@@ -38,9 +38,11 @@ export enum PopupPositionType {
 
 export type Popup = {
     popupId: number;
-    popupRef: ComponentRef<IPopupable> | EmbeddedViewRef<any>;
+    popupRef: PopupRef;
     options: PopupOptions
 }
+
+export type PopupRef = ComponentRef<IPopupable> | EmbeddedViewRef<any>;
 
 export type ButtonOptions = {
     label: string;
@@ -115,7 +117,16 @@ export class PopupService {
     * 获取popup的options
     * */
     public getOptions(popupId: number): PopupOptions{
-        return this._popups.find(popup => popupId === popup.popupId).options;
+        let popup = this._popups.find(popup => popupId === popup.popupId);
+        return popup ? popup.options : null;
+    }
+
+    /*
+     * 获取popup的popupRef
+     * */
+    public getPopupRef(popupId: number): PopupRef{
+        let popup = this._popups.find(popup => popupId === popup.popupId);
+        return popup ? popup.popupRef : null;
     }
 
     /*
