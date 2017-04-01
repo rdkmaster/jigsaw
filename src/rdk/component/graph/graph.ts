@@ -1,7 +1,9 @@
 /**
  * Created by 10177553 on 2017/3/23.
  */
-import {Component, OnInit, ElementRef, Input, Output, EventEmitter, OnDestroy} from '@angular/core';
+import {Component, OnInit, ElementRef,
+        Input, Output, EventEmitter,
+        OnDestroy, Renderer2} from '@angular/core';
 import {AbstractGraphData} from "../../core/data/graph-data";
 
 import * as echarts from 'echarts';
@@ -11,7 +13,11 @@ import {AbstractRDKComponent} from "../core";
 @Component({
     selector: 'rdk-graph',
     templateUrl: 'graph.html',
-    styleUrls: ['./graph.scss']
+    styleUrls: ['./graph.scss'],
+    host: {
+        '[style.width]': 'width',
+        '[style.height]': 'height'
+    }
 })
 
 export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy {
@@ -51,13 +57,14 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
         return !CommonUtils.isEmptyObject(obj);
     }
 
-    constructor(private _elf: ElementRef) {
+    constructor(private _elf: ElementRef, private _renderer: Renderer2) {
         super();
     }
 
     ngOnInit() {
+        this._renderer.setStyle(this._elf.nativeElement, 'width', this.width);
+        this._renderer.setStyle(this._elf.nativeElement, 'height', this.height);
         this.graph = echarts.init(this._elf.nativeElement);
-
         this._setOption(this.data.options)
     }
 
@@ -98,29 +105,12 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
         this._setOption(option, notMerge, lazyUpdate)
     }
 
-    @Input()
-    public get width():string {
-        return this.graph.getWidth();
-    }
-
-    public set width(value: string) {
-        this.graph.resize({width: value, silent: true});
-    }
-
-    public get height():string {
-        return this.graph.getHeight();
-    }
-
-    public set height(value: string) {
-        this.graph.resize({height: value, silent: true});
-    }
-
     public resize(opts?: {
         width?: number|string,
         height?: number|string,
         silent?: boolean
     }): void {
-        this.graph.resize(opts);
+        this._setOption(opts);
     }
 
     public dispatchAction(payload: Object): void {
