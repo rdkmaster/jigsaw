@@ -88,11 +88,6 @@ export class RdkSelect extends AbstractRDKComponent implements AfterViewInit, On
             this._documentListen = this._renderer.listen('document', 'click', () => this._optionListHidden = true);
         }
     }
-    private testScrollEvent(message:any){
-        console.log(message);
-       // message.stopPropagation();
-
-    }
     //更改option选中状态
     private _updateSelectedOption(): void {
         this._options.length && this._options.forEach((option) => {
