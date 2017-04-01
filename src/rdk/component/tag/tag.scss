@@ -1,5 +1,7 @@
 @import "../../assets/scss/core/basc";
 
+$tag-prefix-cls: #{$rdk-prefix}-tag;
+
 :host{
     @include inline-block;
     position: relative;
@@ -7,7 +9,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    padding: 0 20px 0 8px;
+    padding: 0 8px;
     height: 22px;
     line-height: 22px;
     border: 1px solid $border-color-base;
@@ -15,6 +17,12 @@
     background: $gray-light;
     cursor: pointer;
     //transform-origin: 0 0;
+    &.#{$tag-prefix-cls}-close{
+        padding-right: 20px;
+    }
+    &.#{$tag-prefix-cls}-color{
+        color: $text-color-white;
+    }
     .fa{
         vertical-align: 1px;
         position: absolute;

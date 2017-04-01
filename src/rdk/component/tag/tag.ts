@@ -1,4 +1,4 @@
-import {NgModule, Component, Input, Renderer2, ElementRef} from '@angular/core';
+import {NgModule, Component, Input, Renderer2, ElementRef, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 import {tagDestroy} from '../animations/tag-destroy';
@@ -12,23 +12,28 @@ import {AbstractRDKComponent} from "../core";
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[style.line-height]': 'height',
+        '[style.background]': 'color',
+        '[style.border-color]': 'color',
+        '[class.rdk-tag-close]': 'closable',
+        '[class.rdk-tag-color]': '!!color',
         '[@tagDestroy]': '_state',
-        '(@tagDestroy.done)': '_animationDone($event)'
+        '(@tagDestroy.done)': '_animationDone($event)',
     },
     animations:[
         tagDestroy
     ]
 })
-export class RdkTag extends AbstractRDKComponent {
+export class RdkTag extends AbstractRDKComponent implements OnInit{
 
     @Input() public color: string;
 
-    @Input() public closable: boolean;
+    @Input() public closable: boolean = false;
 
     private _state: string;
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef){
-        super()
+        super();
+
     }
 
     private _close(){
@@ -39,6 +44,10 @@ export class RdkTag extends AbstractRDKComponent {
         if($event.toState == 'void'){
             this._renderer.parentNode(this._elementRef.nativeElement).removeChild(this._elementRef.nativeElement);
         }
+    }
+
+    ngOnInit(){
+        this._renderer.addClass(this._elementRef.nativeElement, this.basicClass);
     }
 
 }
