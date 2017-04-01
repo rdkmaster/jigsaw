@@ -13,21 +13,21 @@ import 'rxjs/add/operator/map';
 // https://github.com/Microsoft/TypeScript/wiki/FAQ#why-doesnt-extending-built-ins-like-error-array-and-map-work
 // https://github.com/Microsoft/TypeScript/issues/14869
 export class RDKArray<T> implements Array<T> {
-    private _agent:T[] = [];
+    private _agent: T[] = [];
 
-    public set(index:number, value:T):void {
+    public set(index: number, value: T): void {
         this._agent[index] = value;
     }
 
-    public get(index:number):T {
+    public get(index: number): T {
         return this._agent[index];
     }
 
-    public get length():number {
+    public get length(): number {
         return this._agent.length;
     }
 
-    public set length(value:number) {
+    public set length(value: number) {
         this._agent.length = value;
     }
 
@@ -53,7 +53,7 @@ export class RDKArray<T> implements Array<T> {
         return this._agent.pop.apply(this, arguments);
     }
 
-    public concat(...items: any[]):any {
+    public concat(...items: any[]): any {
         return this._agent.concat.apply(this, arguments);
     }
 
@@ -77,7 +77,7 @@ export class RDKArray<T> implements Array<T> {
         return this._agent.sort.apply(this, arguments);
     }
 
-    public splice(start: any, deleteCount?: any, ...rest: any[]):T[] {
+    public splice(start: any, deleteCount?: any, ...rest: any[]): T[] {
         return this._agent.splice.apply(this, arguments);
     }
 
@@ -105,7 +105,7 @@ export class RDKArray<T> implements Array<T> {
         return this._agent.forEach.apply(this, arguments);
     }
 
-    public map(callbackfn: any, thisArg?: any):[any, any, any, any, any] {
+    public map(callbackfn: any, thisArg?: any): [any, any, any, any, any] {
         return this._agent.map.apply(this, arguments);
     }
 
@@ -113,11 +113,11 @@ export class RDKArray<T> implements Array<T> {
         return this._agent.filter.apply(this, arguments);
     }
 
-    public reduce(callbackfn: any, initialValue?: any):T {
+    public reduce(callbackfn: any, initialValue?: any): T {
         return this._agent.reduce.apply(this, arguments);
     }
 
-    public reduceRight(callbackfn: any, initialValue?: any):T {
+    public reduceRight(callbackfn: any, initialValue?: any): T {
         return this._agent.reduceRight.apply(this, arguments);
     }
 
@@ -220,14 +220,15 @@ export class ArrayCollection<T> extends RDKArray<T> implements IAjaxComponentDat
         return this.wrappedDataReviser ? this.wrappedDataReviser(response.json()) : response.json();
     }
 
-    public fromAjax(url: string, options?: RequestOptionsArgs): void {
+    public fromAjax(options: RequestOptionsArgs | string): void {
         if (!this.http) {
             console.error('set a valid Http instance to ArrayCollection.http before invoking ArrayCollection.fromAjax()!');
             return;
         }
 
+        const op = ComponentDataHelper.castToRequestOptionsArgs(options);
         this.busy = true;
-        this.http.request(url, options)
+        this.http.request(op.url, op)
             .map(res => this.reviseData(res) as T[])
             .subscribe(
                 data => this.ajaxSuccessHandler(data),
@@ -300,7 +301,7 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPaga
     private _filterSubject = new Subject<PagingFilterInfo>();
     private _sortSubject = new Subject<PagingSortInfo>();
 
-    constructor(public http: Http, public sourceUrl: string, public sourceRequestOptions?: RequestOptionsArgs) {
+    constructor(public http: Http, public sourceRequestOptions: RequestOptionsArgs) {
         super();
 
         if (!http) {
@@ -312,36 +313,36 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPaga
         this._initSubjects();
     }
 
+    private _requestOptions: RequestOptionsArgs;
+
     private _initRequestOptions(): void {
-        if (!this.sourceUrl) {
-            throw new Error('invalid source url!');
+        if (!this.sourceRequestOptions || !this.sourceRequestOptions.url) {
+            throw new Error('invalid data source request options or invalid url!');
         }
-        if (!this.sourceRequestOptions) {
-            this.sourceRequestOptions = {method: 'get'};
-        }
+        this._requestOptions = {
+            method: this.sourceRequestOptions.method,
+            params: new URLSearchParams(),
+            headers: this.sourceRequestOptions.headers,
+            body: this.sourceRequestOptions.body,
+            withCredentials: this.sourceRequestOptions.withCredentials,
+            responseType: this.sourceRequestOptions.responseType
+        };
 
-        let rawSearch = this.sourceRequestOptions.search;
-        this.sourceRequestOptions.search = new URLSearchParams();
-        if (rawSearch) {
-            let originSearch:URLSearchParams = typeof rawSearch === 'string' ? new URLSearchParams(rawSearch) : rawSearch as URLSearchParams;
-
-            //将坑爹的 a=1&b=2&... 转为json对象
-            const keys = originSearch.paramsMap.keys();
-            const pp: any = {};
-            while (true) {
-                const next = keys.next();
-                if (next.done) break;
-                const val = originSearch.get(next.value);
-                try {
-                    pp[next.value] = JSON.parse(val);
-                } catch (e) {
-                    pp[next.value] = val;
+        let params = {};
+        const rawParams = this.sourceRequestOptions.params;
+        if (rawParams) {
+            if (rawParams instanceof URLSearchParams || typeof rawParams === 'string') {
+                const p = rawParams instanceof URLSearchParams ? rawParams : new URLSearchParams(rawParams);
+                for (let key in p) {
+                    params[key] = p.get(key);
                 }
+            } else {
+                params = rawParams;
             }
 
-            (<URLSearchParams>this.sourceRequestOptions.search).set('peerParam', JSON.stringify(pp));
+            (<URLSearchParams>this._requestOptions.params).set('peerParam', JSON.stringify(params));
         }
-        (<URLSearchParams>this.sourceRequestOptions.search).set('service', this.sourceUrl);
+        (<URLSearchParams>this._requestOptions.params).set('service', this.sourceRequestOptions.url);
     }
 
     private _initSubjects(): void {
@@ -355,38 +356,37 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPaga
         });
     }
 
-    public updateDataSource(url: string, options?: RequestOptionsArgs): void {
-        this.sourceUrl = !!url ? url : this.sourceUrl;
-        this.sourceRequestOptions = !!options ? options : this.sourceRequestOptions;
-        if (!!url || !!options) {
-            this._initRequestOptions();
-        }
-    }
-
-    public updateRequestOptions(options: RequestOptionsArgs): void {
+    public updateDataSource(options: RequestOptionsArgs): void {
         this.sourceRequestOptions = options;
+        this.pagingInfo.currentPage = 1;
+        this.pagingInfo.totalPage = 1;
+        this.pagingInfo.totalRecord = 0;
+        this.filterInfo = null;
+        this.sortInfo = null;
         this._initRequestOptions();
     }
 
-    public fromAjax(url?: string, options?: RequestOptionsArgs): void {
-        this.updateDataSource(url, options);
+    public fromAjax(options?: RequestOptionsArgs | string): void {
+        const op = ComponentDataHelper.castToRequestOptionsArgs(options);
+        if (!!op) {
+            this.updateDataSource(op);
+        }
         this._ajax();
     }
 
     private _ajax(): void {
         this.busy = true;
 
-        if (this.sourceRequestOptions.search instanceof URLSearchParams) {
-            this.sourceRequestOptions.search.set('paging', JSON.stringify(this.pagingInfo));
-            if (this.filterInfo) {
-                this.sourceRequestOptions.search.set('filter', JSON.stringify(this.filterInfo));
-            }
-            if (this.sortInfo) {
-                this.sourceRequestOptions.search.set('sort', JSON.stringify(this.sortInfo));
-            }
+        const params: URLSearchParams = this._requestOptions.params as URLSearchParams;
+        params.set('paging', JSON.stringify(this.pagingInfo));
+        if (this.filterInfo) {
+            params.set('filter', JSON.stringify(this.filterInfo));
+        }
+        if (this.sortInfo) {
+            params.set('sort', JSON.stringify(this.sortInfo));
         }
 
-        this.http.request(this.pagingServerUrl, this.sourceRequestOptions)
+        this.http.request(this.pagingServerUrl, this._requestOptions)
             .map(res => this.reviseData(res))
             .map(data => {
                 this._updatePagingInfo(data);
@@ -406,7 +406,7 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPaga
             );
     }
 
-    private _updatePagingInfo(data: any) :void {
+    private _updatePagingInfo(data: any): void {
         if (!data.hasOwnProperty('paging')) {
             return;
         }
@@ -424,14 +424,14 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPaga
 
     public pagingFilter(term: string, fields?: string[] | number[]): void;
     public pagingFilter(term: PagingFilterInfo): void;
-    public pagingFilter(term: string|PagingFilterInfo, fields?: string[] | number[]): void {
+    public pagingFilter(term: string | PagingFilterInfo, fields?: string[] | number[]): void {
         const pfi = term instanceof PagingFilterInfo ? term : new PagingFilterInfo(term, fields);
         this._filterSubject.next(pfi);
     }
 
-    public pagingSort(as: SortAs, order: SortOrder, field: string|number): void;
+    public pagingSort(as: SortAs, order: SortOrder, field: string | number): void;
     public pagingSort(sort: PagingSortInfo): void;
-    public pagingSort(as, order?: SortOrder, field?: string|number): void {
+    public pagingSort(as, order?: SortOrder, field?: string | number): void {
         const psi = as instanceof PagingSortInfo ? as : new PagingSortInfo(as, order, field);
         this._sortSubject.next(psi);
     }
@@ -444,6 +444,7 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPaga
         this.pagingInfo = null;
         this.filterInfo = null;
         this.sortInfo = null;
+        this._requestOptions = null;
         this._filterSubject.unsubscribe();
         this._filterSubject = null;
         this._sortSubject.unsubscribe();
@@ -452,8 +453,8 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPaga
 }
 
 export class DirectServerSidePagingArray extends ServerSidePagingArray {
-    constructor(private _http$: Http, private _sourceUrl$: string, private _sourceRequestOptions$: RequestOptionsArgs) {
-        super(_http$, _sourceUrl$, _sourceRequestOptions$);
+    constructor(private _http$: Http, private _sourceRequestOptions$: RequestOptionsArgs) {
+        super(_http$, _sourceRequestOptions$);
         console.error("unsupported yet!");
     }
 }
@@ -474,8 +475,8 @@ export class LocalPagingArray extends ArrayCollection<any> implements IPagableDa
     public pagingFilter(term, fields?: string[] | number[]): void {
     }
 
-    public pagingSort(as: SortAs, order: SortOrder, field: string|number): void;
+    public pagingSort(as: SortAs, order: SortOrder, field: string | number): void;
     public pagingSort(sort: PagingSortInfo): void;
-    public pagingSort(as, order?: SortOrder, field?: string|number): void {
+    public pagingSort(as, order?: SortOrder, field?: string | number): void {
     }
 }

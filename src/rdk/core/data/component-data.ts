@@ -32,6 +32,10 @@ export class AjaxCompleteCallback {
 }
 
 export class ComponentDataHelper {
+    public static castToRequestOptionsArgs(args:RequestOptionsArgs|string):RequestOptionsArgs {
+        return typeof args === 'string' ? {url: args, method: 'get'} : args;
+    }
+
     constructor() {
     }
 
@@ -117,7 +121,7 @@ export interface IComponentData {
 export interface IAjaxComponentData extends IComponentData {
     busy: boolean;
 
-    fromAjax(url: string, options?: RequestOptionsArgs): void;
+    fromAjax(options: RequestOptionsArgs|string): void;
     onAjaxSuccess (callback: (data: any) => void, context?: any): CallbackRemoval;
     onAjaxError   (callback: (error: Response) => void, context?: any): CallbackRemoval;
     onAjaxComplete(callback: () => void, context?: any): CallbackRemoval;

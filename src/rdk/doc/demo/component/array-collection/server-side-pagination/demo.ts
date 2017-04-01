@@ -13,7 +13,7 @@ export class ServerSidePaginationDemoComponent {
 
     constructor(http: Http) {
         this.sspa = new ServerSidePagingArray(http,
-            'http://localhost:4200/mock-data/array-collection/paging-data.json');
+            {url: 'http://localhost:4200/mock-data/array-collection/paging-data.json', params: {aa: 11, bb: 22}});
         this.sspa.onAjaxSuccess(this.onAjaxSuccess, this);
         this.sspa.onAjaxError(this.onAjaxError, this);
     }

@@ -16,13 +16,14 @@ export abstract class AbstractGeneralCollection implements IAjaxComponentData {
         return this.wrappedDataReviser ? this.wrappedDataReviser(response.json()) : response.json();
     }
 
-    public fromAjax(url: string, options?: RequestOptionsArgs): void {
+    public fromAjax(options: RequestOptionsArgs|string): void {
         if (!this.http) {
             console.error('set a valid Http instance to the http attribute before invoking fromAjax()!');
             return;
         }
 
-        this.http.request(url, options)
+        const op = ComponentDataHelper.castToRequestOptionsArgs(options);
+        this.http.request(op.url, op)
             .map(res => this.reviseData(res))
             .subscribe(
                 data => this.ajaxSuccessHandler(data),
