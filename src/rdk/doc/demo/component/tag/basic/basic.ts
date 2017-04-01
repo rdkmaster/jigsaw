@@ -1,7 +1,8 @@
-import {Component, ViewChild} from "@angular/core";
+import {Component} from "@angular/core";
 
 @Component({
-  templateUrl: 'basic.html'
+    templateUrl: 'basic.html',
+    styleUrls: ['basic.scss']
 })
 export class TagBasicDemoComponent {
 

@@ -1,6 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 
 import {PopupService, IPopupable} from '../../../../../../service/popup.service';
+import {RdkTooltip} from "../../../../../../component/tooltip/tooltip";
 
 @Component({
     templateUrl: 'use-tooltip.html',
@@ -20,11 +21,13 @@ export class UseTooltipComponent implements IPopupable {
         this._initDate = newValue;
     }
 
+    @ViewChild(RdkTooltip) public tooltip: RdkTooltip;
+
     constructor(private _popupService: PopupService) {
     }
 
     close() {
-        this._popupService.removePopup(this.popupId);
+        this.tooltip.close();
     }
 
 }

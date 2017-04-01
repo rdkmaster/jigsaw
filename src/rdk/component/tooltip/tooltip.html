@@ -1,4 +1,4 @@
-<div class="rdk-tooltip" [@bubbleIn]="active">
+<div class="rdk-tooltip" [@bubbleIn]="_state" (@bubbleIn.done)="_animationDone($event)">
     <div class="rdk-tooltip-arrow"></div>
     <ng-content></ng-content>
 </div>

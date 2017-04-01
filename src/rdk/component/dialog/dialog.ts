@@ -23,6 +23,7 @@ export class RdkDialog extends AbstractRDKComponent implements IDialog, AfterCon
     private _popupEl: HTMLElement;
     private _windowResize: Function;
     private _options: PopupOptions;
+    private _state: String = 'active';
 
     public initData: any;
 
@@ -49,7 +50,7 @@ export class RdkDialog extends AbstractRDKComponent implements IDialog, AfterCon
     }
 
     close() {
-        this._popupService.removePopup(this.popupId);
+        this._state = 'void';
     }
 
     private _init() {
@@ -88,6 +89,12 @@ export class RdkDialog extends AbstractRDKComponent implements IDialog, AfterCon
             this._renderer.setStyle(this._popupEl, 'left', (window.innerWidth / 2 - this._popupEl.offsetWidth / 2) + 'px');
             !this.topPlace && this._renderer.setStyle(this._popupEl, 'top', (window.innerHeight / 2 - this._popupEl.offsetHeight / 2) + 'px');
         })
+    }
+
+    private _animationDone($event){
+        if($event.toState == 'void'){
+            this._popupService.removePopup(this.popupId);
+        }
     }
 
     ngAfterContentInit() {

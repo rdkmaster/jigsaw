@@ -1,4 +1,4 @@
-import {Component, ViewChild, ElementRef} from "@angular/core";
+import {Component, ViewChild, ElementRef, ComponentRef} from "@angular/core";
 
 import {UseTooltipComponent} from './use-tooltip/use-tooltip';
 
@@ -22,7 +22,9 @@ export class TooltipDemoComponent {
     }
 
     close() {
-        this._popupService.removePopup(this._popupId);
+        let popupRef = this._popupService.getPopupRef(this._popupId);
+        popupRef && (popupRef as ComponentRef<any>).instance.close();
+        //this._popupService.removePopup(this._popupId); //无关闭动画
     }
 
     private _getTooltipOptions(insertPlaceEl: ElementRef): PopupOptions {
