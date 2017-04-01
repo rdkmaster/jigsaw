@@ -11,8 +11,6 @@ import {AbstractGraphData} from "../../../../../core/data/graph-data";
 
 export class GraphSetSizeComponent  implements OnInit {
     data: AbstractGraphData;
-    graphWidth ;
-    graphHeight;
     ngOnInit() {
         this.data = new GraphData();
     }
