@@ -70,8 +70,7 @@ export class TimeService {
      *
      * */
     public addDate(date, num, unit): string {
-        //return moment(date).add(num, unit);
-        return ""
+        return moment(date).add(num, unit);
     }
 
     /*
@@ -81,8 +80,7 @@ export class TimeService {
      *
      * */
     public subtractDate(date, num, unit): string {
-        //return moment(date).subtract(num, unit);
-        return ""
+        return moment(date).subtract(num, unit);
     }
 
     /*
