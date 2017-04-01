@@ -1,6 +1,6 @@
 import {Component, Renderer2, ElementRef, Input, OnDestroy, AfterContentInit} from '@angular/core';
 
-import {PopupService, PopupOptions, IDialog, ButtonOptions} from '../../service/popup.service';
+import {PopupService, PopupOptions, IDialog, ButtonInfo} from '../../service/popup.service';
 
 import {fadeIn} from '../animations/fade-in';
 import {bubbleIn} from '../animations/bubble-in';
@@ -40,7 +40,7 @@ export class RdkDialog extends AbstractRDKComponent implements IDialog, AfterCon
         this._topPlace = match ? newValue : newValue + 'px';
     }
 
-    @Input() buttons: Array<ButtonOptions>;
+    @Input() buttons: Array<ButtonInfo>;
 
     constructor(private _popupService: PopupService,
                 private _renderer: Renderer2,

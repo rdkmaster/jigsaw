@@ -42,7 +42,7 @@ export type Popup = {
     options: PopupOptions
 }
 
-export type ButtonOptions = {
+export type ButtonInfo = {
     label: string;
     callback: () => void;
 }
@@ -58,7 +58,7 @@ export interface IPopupable {
 }
 
 export interface IDialog extends IPopupable {
-    buttons: Array<ButtonOptions>;
+    buttons: ButtonInfo[];
     title: string;
 }
 

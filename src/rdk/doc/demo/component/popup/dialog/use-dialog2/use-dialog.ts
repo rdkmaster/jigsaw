@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 
-import {PopupService, IDialog, ButtonOptions} from '../../../../../../service/popup.service';
+import {PopupService, IDialog, ButtonInfo} from '../../../../../../service/popup.service';
 
 @Component({
     templateUrl: 'use-dialog.html',
@@ -21,7 +21,7 @@ export class UseDialog2Component implements IDialog {
     }
 
     public title: string = `Title of the dialog`;
-    public buttons: Array<ButtonOptions> = [
+    public buttons: Array<ButtonInfo> = [
         {
             label: 'confirm', callback: () => {
                 console.log('confirm callback success!')
