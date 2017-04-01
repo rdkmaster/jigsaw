@@ -13,11 +13,7 @@ import {AbstractRDKComponent} from "../core";
 @Component({
     selector: 'rdk-graph',
     templateUrl: 'graph.html',
-    styleUrls: ['./graph.scss'],
-    host: {
-        '[style.width]': 'width',
-        '[style.height]': 'height'
-    }
+    styleUrls: ['./graph.scss']
 })
 
 export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy {
