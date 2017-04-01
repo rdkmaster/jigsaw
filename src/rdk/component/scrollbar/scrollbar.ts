@@ -60,13 +60,20 @@ export class RdkScrollBar implements OnInit{
             autoHideScrollbar: this.autoHideScrollbar,
             callbacks: {
                 onInit: () => {
+
                     this.scrollInit.emit();
+
                 },
                 onScrollStart: (value) => {
                     this.scrollStart.emit(this._generateEventObject(this._scrollBarJq.get(0).mcs));
                 },
                 whileScrolling: () => {
                     this.whileScrolling.emit(this._generateEventObject(this._scrollBarJq.get(0).mcs));
+                },
+                onScroll : () => {
+                    this._scrollBarJq.find('.mCSB_1_scrollbar').on('click', function () {
+                        event.stopPropagation();
+                    })
                 }
             }
         }) : null;
