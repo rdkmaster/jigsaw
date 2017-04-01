@@ -2,7 +2,7 @@ import {NgModule, Component, Input, Output, ElementRef, OnInit, EventEmitter} fr
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {AbstractRDKComponent} from '../core';
-import {TimeService} from './time.service';
+import {TimeService} from '../../service/time.service';
 
 //declare let $: any;
 //declare let require: any;
