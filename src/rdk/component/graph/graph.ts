@@ -109,13 +109,10 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
 
     public set width(value: string) {
         const match = value ? value.match(/^\s*\d+%|px\s*$/) : null;
-        let tempWidth =  match ? value : value + 'px';
-        if (isUndefined(this.graph)){
-            this._width =  tempWidth;
-        }else {
-            this.graph.resize({width: tempWidth, silent: true});
+        this._width =  match ? value : value + 'px';
+        if (!isUndefined(this.graph)){
+            this.graph.resize({width: this._width, silent: true});
         }
-
     }
 
     public get height():string {
@@ -124,11 +121,9 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
 
     public set height(value: string) {
         const match = value ? value.match(/^\s*\d+%|px\s*$/) : null;
-        let tempHeight =  match ? value : value + 'px';
-        if (isUndefined(this.graph)) {
-            this._height =  tempHeight;
-        }else {
-            this.graph.resize({height: tempHeight, silent: true});
+        this._height =  match ? value : value + 'px';
+        if (!isUndefined(this.graph)) {
+            this.graph.resize({height: this._height, silent: true});
         }
     }
 
