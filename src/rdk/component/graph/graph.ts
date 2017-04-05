@@ -1,12 +1,15 @@
 /**
  * Created by 10177553 on 2017/3/23.
  */
-import {Component, OnInit, ElementRef, Input, Output, EventEmitter, OnDestroy} from '@angular/core';
+import {Component, OnInit, ElementRef,
+        Input, Output, EventEmitter,
+        OnDestroy, Renderer2} from '@angular/core';
 import {AbstractGraphData} from "../../core/data/graph-data";
 
 import * as echarts from 'echarts';
 import {CommonUtils} from "../../core/utils/common-utils";
 import {AbstractRDKComponent} from "../core";
+import {isUndefined} from "util";
 
 @Component({
     selector: 'rdk-graph',
@@ -51,14 +54,15 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
         return !CommonUtils.isEmptyObject(obj);
     }
 
-    constructor(private _elf: ElementRef) {
+    constructor(private _elf: ElementRef, private _renderer: Renderer2) {
         super();
     }
 
     ngOnInit() {
+        this._renderer.setStyle(this._elf.nativeElement, 'width', this._width);
+        this._renderer.setStyle(this._elf.nativeElement, 'height', this._height);
         this.graph = echarts.init(this._elf.nativeElement);
-
-        this._setOption(this.data.options)
+        this._setOption(this.data.options);
     }
 
     // 组件销毁, 注销实例
@@ -100,26 +104,34 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
 
     @Input()
     public get width():string {
-        return this.graph.getWidth();
+        return this._width;
     }
 
     public set width(value: string) {
-        this.graph.resize({width: value, silent: true});
+        const match = value ? value.match(/^\s*\d+%|px\s*$/) : null;
+        this._width =  match ? value : value + 'px';
+        if (!isUndefined(this.graph)){
+            this.graph.resize({width: this._width, silent: true});
+        }
     }
 
     public get height():string {
-        return this.graph.getHeight();
+        return this._height;
     }
 
     public set height(value: string) {
-        this.graph.resize({height: value, silent: true});
+        const match = value ? value.match(/^\s*\d+%|px\s*$/) : null;
+        this._height =  match ? value : value + 'px';
+        if (!isUndefined(this.graph)) {
+            this.graph.resize({height: this._height, silent: true});
+        }
     }
 
     public resize(opts?: {
-        width?: number|string,
-        height?: number|string,
-        silent?: boolean
-    }): void {
+                      width?: number|string,
+                      height?: number|string,
+                      silent?: boolean
+                  }): void {
         this.graph.resize(opts);
     }
 
