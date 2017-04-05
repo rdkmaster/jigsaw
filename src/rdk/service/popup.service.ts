@@ -72,16 +72,16 @@ export class PopupService {
     private _popups: Array<Popup> = [];
 
     //全局插入点
-    private _vcr: ViewContainerRef;
+    private _viewContainerRef: ViewContainerRef;
 
     constructor(private _cfr: ComponentFactoryResolver, private _appRef: ApplicationRef) {
         _appRef.components.length && _appRef.components.forEach(component => {
-            if(component.instance.hasOwnProperty('vcr')){
-                this._vcr = component.instance.vcr;
+            if(component.instance.hasOwnProperty('viewContainerRef')){
+                this._viewContainerRef = component.instance.viewContainerRef;
             }
         });
-        if(!this._vcr){
-            console.error("please add 'constructor(public vcr: ViewContainerRef){}' into AppComponent");
+        if(!this._viewContainerRef){
+            console.error("please add 'constructor(public viewContainerRef: ViewContainerRef){}' into AppComponent");
         }
 
         this._popupId = new Date().getTime();
@@ -95,14 +95,14 @@ export class PopupService {
     public popup(what: TemplateRef<any>): number;
     public popup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any): number {
         if(what instanceof TemplateRef){
-            let viewRef = this._vcr.createEmbeddedView(what);
+            let viewRef = this._viewContainerRef.createEmbeddedView(what);
             let popupId: number = this._popupId;
             this._popups.push({popupId: this._popupId, popupRef: viewRef, options: null});
             this._popupId++;
             return popupId;
         }else{
             let factory = this._cfr.resolveComponentFactory(what);
-            let componentRef = this._vcr.createComponent(factory);
+            let componentRef = this._viewContainerRef.createComponent(factory);
             componentRef.instance.popupId = this._popupId;
             componentRef.instance.initData = initData;
             this._popups.push({popupId: this._popupId, popupRef: componentRef, options: options});
