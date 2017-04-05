@@ -75,7 +75,15 @@ export class PopupService {
     private _vcr: ViewContainerRef;
 
     constructor(private _cfr: ComponentFactoryResolver, private _appRef: ApplicationRef) {
-        this._vcr = (_appRef.components[0].instance as AppComponent).vcr;
+        _appRef.components.length && _appRef.components.forEach(component => {
+            if(component.instance.hasOwnProperty('vcr')){
+                this._vcr = component.instance.vcr;
+            }
+        });
+        if(!this._vcr){
+            console.error("please add 'constructor(public vcr: ViewContainerRef){}' into AppComponent");
+        }
+
         this._popupId = new Date().getTime();
     }
 
