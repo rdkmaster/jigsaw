@@ -8,9 +8,14 @@ import { RdkTabsDemoComponent } from './basic/basic';
 import {RdkTabsModule} from "../../../../component/tabs/index";
 import {RouterModule} from "@angular/router";
 import {RdkInputModule} from "../../../../component/input/input";
+import {RdkButtonModule} from "../../../../component/button/button";
 import {RdkTabsWithInputComponent} from "./withInput/withInput";
 import {RdkTabsWithNgForComponent} from "./ngFor/ngFor";
 import {CommonModule} from "@angular/common";
+import {RdkHideTabComponent} from "./hideTab/hideTab";
+import {RdkShowTabComponent} from "./showTab/showTab";
+import {RdkDestoryTabComponent} from "./destoryTab/destoryTab";
+import {RdkTabsComponent} from "./tabs/Tabs";
 
 const routes=[
     {
@@ -21,17 +26,29 @@ const routes=[
     },
     {
         path:'withNgFor', component: RdkTabsWithNgForComponent
+    },
+    {
+        path:'hideTab', component: RdkHideTabComponent
+    },
+    {
+        path:'showTab', component: RdkShowTabComponent
+    },
+    {
+        path:'destoryTab', component: RdkDestoryTabComponent
+    }, {
+        path:'Tabs', component: RdkTabsComponent
     }
 ];
 
 @NgModule({
     imports: [
         RouterModule.forChild(routes),
-        RdkTabsModule,RdkInputModule,
+        RdkTabsModule,RdkInputModule,RdkButtonModule,
         CommonModule
     ],
     exports: [RdkTabsDemoComponent],
-    declarations: [RdkTabsDemoComponent,RdkTabsWithInputComponent,RdkTabsWithNgForComponent],
+    declarations: [RdkTabsDemoComponent,RdkTabsWithInputComponent,RdkTabsWithNgForComponent,
+        RdkHideTabComponent,RdkShowTabComponent,RdkDestoryTabComponent,RdkTabsComponent],
     providers: [],
     schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

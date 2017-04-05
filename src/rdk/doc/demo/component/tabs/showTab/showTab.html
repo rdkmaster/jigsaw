@@ -1,0 +1,10 @@
+<div class="container">
+    <rdk-tabs #myTab>
+        <tab-pane label="tab 1" icon="fa fa-gift" > tab content 1</tab-pane>
+        <tab-pane label="tab 2" icon="fa fa-gift" [hidden]="true"> tab content 2</tab-pane>
+    </rdk-tabs>
+</div>
+
+<rdk-button (click)="showTab()" width="150">显示第二个Tab</rdk-button>
+
+
