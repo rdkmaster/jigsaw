@@ -1,7 +1,7 @@
 @import "./core/basc";
 
-/*单选滚动条样式start*/
-rdk-select{
+/*滚动条样式start*/
+rdk-select, rdk-table{
     .mCSB_scrollTools{
         width: 10px;
     }
@@ -15,7 +15,7 @@ rdk-select{
         margin-right: 0;
     }
 }
-/*单选滚动条样式end*/
+/*滚动条样式end*/
 
 /*时间组件样式start*/
 rdk-time{

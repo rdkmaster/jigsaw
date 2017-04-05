@@ -1,0 +1,39 @@
+@import "../../assets/scss/core/basc";
+
+$table-prefix-cls: #{$rdk-prefix}-table;
+
+:host{
+    @include inline-block;
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.#{$table-prefix-cls}-box{
+    width: 100%;
+    height: 100%;
+}
+
+table{
+    width: 1000px;
+    text-align: center;
+    thead{
+        background: $gray-dark;
+    }
+    td{
+        border: 1px solid $border-color-base;
+    }
+    tr{
+        height: 28px;
+    }
+    &.#{$table-prefix-cls}-fixed-head{
+        position: absolute;
+        z-index: 10;
+    }
+}
+
+
+
+
+

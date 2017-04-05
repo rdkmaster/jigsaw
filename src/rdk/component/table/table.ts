@@ -1,11 +1,15 @@
 import {
-    Component, Input, NgModule, ComponentFactoryResolver, AfterViewInit, ViewChild, Type, ChangeDetectorRef
+    Component, Input, NgModule, ComponentFactoryResolver, AfterViewInit, ViewChild, Type, ChangeDetectorRef, ElementRef,
+    Renderer2
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 
 import {RdkRendererHost} from "../core";
 import {TableData} from "../../core/data/table-data";
 import {TableCellRenderer} from "./table-api";
+
+import {RdkScrollBarModule} from "../scrollbar/scrollbar";
+import {RdkScrollBar} from "../scrollbar/scrollbar";
 
 
 export class TableCellBasic implements AfterViewInit {
@@ -41,11 +45,32 @@ export class TableCellBasic implements AfterViewInit {
 
 @Component({
     selector: 'rdk-table',
-    templateUrl: 'table.html'
+    templateUrl: 'table.html',
+    styleUrls: ['table.scss']
 })
-export class RdkTable {
+export class RdkTable implements AfterViewInit{
     @Input()
     public data: TableData;
+
+    private _fixedHead: HTMLElement;
+
+    @ViewChild(RdkScrollBar) private _scrollBar: RdkScrollBar;
+
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef){
+
+    }
+
+    ngAfterViewInit(){
+        this._fixedHead = this._elementRef.nativeElement.querySelector(".rdk-table-fixed-head");
+        $(() => {
+            this._scrollBar.whileScrolling.subscribe(scrollEvent => {
+                if(scrollEvent.direction == 'x'){
+                    this._renderer.setStyle(this._fixedHead, 'left', scrollEvent.left+'px');
+                }
+            })
+        })
+    }
+
 }
 
 @Component({
@@ -81,7 +106,7 @@ export class DefaultCellRenderer extends TableCellRenderer {
         RdkTable, RdkTableCell, RdkRendererHost, RdkTableHeader, DefaultCellRenderer
     ],
     imports: [
-        CommonModule
+        CommonModule, RdkScrollBarModule
     ],
     exports: [CommonModule, RdkTable, RdkTableCell, RdkRendererHost, RdkTableHeader, DefaultCellRenderer],
     entryComponents: [DefaultCellRenderer]
