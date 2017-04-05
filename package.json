@@ -22,7 +22,7 @@
         "@angular/platform-browser-dynamic": "^4.0.0",
         "@angular/router": "^4.0.0",
         "core-js": "^2.4.1",
-        "echarts": "^3.4.0",
+        "echarts": "3.5.2",
         "eonasdan-bootstrap-datetimepicker": "^4.17.47",
         "font-awesome": "^4.7.0",
         "jquery": "^3.1.1",
