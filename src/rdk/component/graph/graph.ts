@@ -9,6 +9,7 @@ import {AbstractGraphData} from "../../core/data/graph-data";
 import * as echarts from 'echarts';
 import {CommonUtils} from "../../core/utils/common-utils";
 import {AbstractRDKComponent} from "../core";
+import {isUndefined} from "util";
 
 @Component({
     selector: 'rdk-graph',
@@ -58,10 +59,10 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
     }
 
     ngOnInit() {
-        this._renderer.setStyle(this._elf.nativeElement, 'width', this.width);
-        this._renderer.setStyle(this._elf.nativeElement, 'height', this.height);
+        this._renderer.setStyle(this._elf.nativeElement, 'width', this._width);
+        this._renderer.setStyle(this._elf.nativeElement, 'height', this._height);
         this.graph = echarts.init(this._elf.nativeElement);
-        this._setOption(this.data.options)
+        this._setOption(this.data.options);
     }
 
     // 组件销毁, 注销实例
@@ -101,12 +102,40 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
         this._setOption(option, notMerge, lazyUpdate)
     }
 
+    @Input()
+    public get width():string {
+        return this._width;
+    }
+
+    public set width(value: string) {
+        if (isUndefined(this.graph)){
+            const match = value ? value.match(/^\s*\d+%|px\s*$/) : null;
+            this._width =  match ? value : value + 'px';
+        }else {
+            this.graph.resize({width: value, silent: true});
+        }
+
+    }
+
+    public get height():string {
+        return this._height;
+    }
+
+    public set height(value: string) {
+        if (isUndefined(this.graph)) {
+            const match = value ? value.match(/^\s*\d+%|px\s*$/) : null;
+            this._height =  match ? value : value + 'px';
+        }else {
+            this.graph.resize({height: value, silent: true});
+        }
+    }
+
     public resize(opts?: {
-        width?: number|string,
-        height?: number|string,
-        silent?: boolean
-    }): void {
-        this._setOption(opts);
+                      width?: number|string,
+                      height?: number|string,
+                      silent?: boolean
+                  }): void {
+        this.graph.resize(opts);
     }
 
     public dispatchAction(payload: Object): void {
