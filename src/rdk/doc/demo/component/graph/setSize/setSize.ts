@@ -20,7 +20,7 @@ export class GraphSetSizeComponent  implements OnInit {
     }
 
     public changeSize(){
-        this.graphWidth = "1000";
+        this.graphWidth = "600";
         this.graphHeight = "200";
     }
 }

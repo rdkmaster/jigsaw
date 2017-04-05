@@ -108,11 +108,12 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
     }
 
     public set width(value: string) {
+        const match = value ? value.match(/^\s*\d+%|px\s*$/) : null;
+        let tempWidth =  match ? value : value + 'px';
         if (isUndefined(this.graph)){
-            const match = value ? value.match(/^\s*\d+%|px\s*$/) : null;
-            this._width =  match ? value : value + 'px';
+            this._width =  tempWidth;
         }else {
-            this.graph.resize({width: value, silent: true});
+            this.graph.resize({width: tempWidth, silent: true});
         }
 
     }
@@ -122,11 +123,12 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
     }
 
     public set height(value: string) {
+        const match = value ? value.match(/^\s*\d+%|px\s*$/) : null;
+        let tempHeight =  match ? value : value + 'px';
         if (isUndefined(this.graph)) {
-            const match = value ? value.match(/^\s*\d+%|px\s*$/) : null;
-            this._height =  match ? value : value + 'px';
+            this._height =  tempHeight;
         }else {
-            this.graph.resize({height: value, silent: true});
+            this.graph.resize({height: tempHeight, silent: true});
         }
     }
 
