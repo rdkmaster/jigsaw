@@ -7,7 +7,7 @@ import {Component, OnInit, ViewContainerRef} from "@angular/core";
 })
 export class AppComponent implements OnInit {
 
-    constructor(public vcr: ViewContainerRef) {
+    constructor(public viewContainerRef: ViewContainerRef) {
     }
 
     ngOnInit(): void {
