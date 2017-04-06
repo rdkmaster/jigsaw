@@ -47,6 +47,7 @@ export type PopupRef = ComponentRef<IPopupable> | EmbeddedViewRef<any>;
 export type ButtonInfo = {
     label: string;
     callback: () => void;
+    class: string;
 }
 
 export type Position = {

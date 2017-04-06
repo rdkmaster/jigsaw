@@ -14,7 +14,13 @@ import {RdkDraggable} from '../../../../component/draggable/draggable';
 import {UseTooltipComponent} from './tooltip/use-tooltip/use-tooltip';
 
 import {PopupService} from '../../../../service/popup.service';
+import {RdkAlert} from "../../../../component/alert/alert";
+import {AlertDemoComponent} from "./alert/alert";
 
+import {InfoAlert} from "./alert/use-alert-default/info-alert";
+import {WarningAlert} from './alert/use-alert-default/warning-alert';
+import {ErrorAlert} from './alert/use-alert-default/error-alert';
+import {UserAlertComponentConfig} from './alert/use-alert-config/alert-config';
 const popupDemoRoutes=[
     {
         path:'',
@@ -26,6 +32,9 @@ const popupDemoRoutes=[
     },
     {
         path:'tooltip', component: TooltipDemoComponent
+    },
+    {
+        path:'alert', component: AlertDemoComponent
     },
     {
         path:'**', //fallback router must in the last
@@ -42,7 +51,13 @@ const popupDemoRoutes=[
         RdkDraggable,
         RdkTooltip,
         UseTooltipComponent,
-        TooltipDemoComponent
+        TooltipDemoComponent,
+        RdkAlert,
+        InfoAlert,
+        WarningAlert,
+        ErrorAlert,
+        UserAlertComponentConfig,
+        AlertDemoComponent
     ],
     imports: [
         RouterModule.forChild(popupDemoRoutes),
@@ -50,9 +65,10 @@ const popupDemoRoutes=[
         CommonModule
     ],
     exports: [
-        DialogDemoComponent, TooltipDemoComponent
+        DialogDemoComponent, TooltipDemoComponent,AlertDemoComponent
     ],
     providers: [PopupService],
-    entryComponents: [RdkDialog, UseDialogComponent, UseDialog2Component,RdkTooltip, UseTooltipComponent]
+    entryComponents: [RdkDialog, UseDialogComponent, UseDialog2Component,RdkTooltip, UseTooltipComponent,RdkAlert,InfoAlert,WarningAlert,
+        ErrorAlert,UserAlertComponentConfig]
 })
 export class PopupDemoModule { }

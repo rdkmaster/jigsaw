@@ -1,0 +1,18 @@
+<div class="rdk-alert-box" [@fadeIn]="_state" (@fadeIn.done)="_animationDone($event)">
+    <div class="rdk-alert-bg" *ngIf="_options.modal"></div>
+    <div class="rdk-alert"  [ngClass]="_alertClass" rdk-draggable [@bubbleIn]="_state">
+        <i class="rdk-alert-icon fa "></i>
+        <span class="rdk-alert-title">{{title}}</span>
+        <span class="rdk-alert-close fa fa-times" (click)='close()'></span>
+        <div class="rdk-alert-content" >
+            <ng-content></ng-content>
+        </div>
+        <div class="rdk-alert-button-group" *ngIf="buttons.length>0">
+            <rdk-button class="{{button.class}}"
+                        *ngFor="let button of buttons"
+                        (click)="button.callback()">
+                        {{button.label}}
+            </rdk-button>
+        </div>
+    </div>
+</div>
