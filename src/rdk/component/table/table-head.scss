@@ -1,0 +1,33 @@
+@import "../../assets/scss/core/basc";
+
+$table-prefix-cls: #{$rdk-prefix}-table;
+
+
+.#{$table-prefix-cls}-sort{
+    cursor: pointer;
+    &:hover{
+        color: $primary-color;
+    }
+}
+.#{$table-prefix-cls}-sort-up{
+    position: absolute;
+    right: 6px;
+    top: 8px;
+}
+.#{$table-prefix-cls}-sort-down{
+    position: absolute;
+    right: 6px;
+    top: 10px;
+}
+
+.#{$table-prefix-cls}-asc{
+    .#{$table-prefix-cls}-sort-up{
+        color: $primary-color;
+    }
+}
+
+.#{$table-prefix-cls}-des{
+    .#{$table-prefix-cls}-sort-down{
+        color: $primary-color;
+    }
+}
