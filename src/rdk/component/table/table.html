@@ -1,8 +1,17 @@
 <table class="rdk-table-fixed-head">
     <thead>
     <tr>
-        <td rdk-table-header *ngFor="let head of data.header; let colIndex = index"
-            [tableData]="data" [cellData]="head" [column]="colIndex" [row]="0">
+        <td rdk-table-header *ngFor="let head of _headDatas; let colIndex = index"
+            [tableData]="data"
+            [cellData]="head.cellData"
+            [column]="colIndex"
+            [row]="0"
+            [renderer]="head.renderer"
+            [sortable]="head.sortable"
+            [sortAs]="head.sortAs"
+            [defaultSortOrder]="head.defaultSortOrder"
+            width="{{head.width}}"
+            class="{{head.class}}">
         </td>
     </tr>
     </thead>
@@ -12,8 +21,17 @@
     <table class="rdk-table">
         <thead>
         <tr>
-            <td rdk-table-header *ngFor="let head of data.header; let colIndex = index"
-                [tableData]="data" [cellData]="head" [column]="colIndex" [row]="0">
+            <td rdk-table-header *ngFor="let head of _headDatas; let colIndex = index"
+                [tableData]="data"
+                [cellData]="head.cellData"
+                [column]="colIndex"
+                [row]="0"
+                [renderer]="head.renderer"
+                [sortable]="head.sortable"
+                [sortAs]="head.sortAs"
+                [defaultSortOrder]="head.defaultSortOrder"
+                width="{{head.width}}"
+                class="{{head.class}}">
             </td>
         </tr>
         </thead>

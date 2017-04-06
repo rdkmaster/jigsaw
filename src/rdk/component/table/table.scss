@@ -16,13 +16,54 @@ $table-prefix-cls: #{$rdk-prefix}-table;
 }
 
 table{
-    width: 1000px;
+    width: 100%;
     text-align: center;
     thead{
         background: $gray-dark;
+        color: $text-color-white;
     }
     td{
+        position: relative;
         border: 1px solid $border-color-base;
+        .#{$table-prefix-cls}-sort:before, .#{$table-prefix-cls}-sort:after{
+            content: '';
+            display: block;
+            width: 6px;
+            height: 6px;
+            cursor: pointer;
+            &:hover, &.on{
+                color: $primary-color;
+            }
+        }
+        .#{$table-prefix-cls}-sort:before{
+            cursor: pointer;
+            &:hover, &.on{
+                color: $primary-color;
+            }
+        }
+        .#{$table-prefix-cls}-sort:after{
+            cursor: pointer;
+            &:hover, &.on{
+                color: $primary-color;
+            }
+        }
+        /*
+        .#{$table-prefix-cls}-sort{
+            cursor: pointer;
+            &:hover, &.on{
+                color: $primary-color;
+            }
+        }
+        .#{$table-prefix-cls}-sort-up{
+            position: absolute;
+            right: 6px;
+            top: 8px;
+        }
+        .#{$table-prefix-cls}-sort-down{
+            position: absolute;
+            right: 6px;
+            top: 10px;
+        }*/
     }
     tr{
         height: 28px;

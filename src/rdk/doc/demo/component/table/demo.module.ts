@@ -2,7 +2,8 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {TableBasicDemoComponent} from "./basic/basic";
 import {TableRendererDemoComponent} from "./renderer/renderer";
-import {RdkTableModule} from "../../../../component/table/table";
+import {RdkTableModule, DefaultCellRenderer} from "../../../../component/table/table";
+import {TableHead, TableCell} from "./renderer/table-renderer";
 
 const tableDemoRoutes=[
     {
@@ -22,7 +23,7 @@ const tableDemoRoutes=[
 
 @NgModule({
     declarations: [
-        TableBasicDemoComponent, TableRendererDemoComponent
+        TableBasicDemoComponent, TableRendererDemoComponent, DefaultCellRenderer, TableHead, TableCell
     ],
     imports: [
         RouterModule.forChild(tableDemoRoutes), RdkTableModule
@@ -30,6 +31,7 @@ const tableDemoRoutes=[
     exports: [
         TableBasicDemoComponent, TableRendererDemoComponent
     ],
-    providers: []
+    providers: [],
+    entryComponents: [DefaultCellRenderer, TableHead, TableCell]
 })
 export class TableDemoModule { }
