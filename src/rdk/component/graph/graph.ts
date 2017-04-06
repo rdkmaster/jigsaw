@@ -108,8 +108,17 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
     }
 
     public set width(value: string) {
-        const match = value ? value.match(/^\s*\d+%|px\s*$/) : null;
-        this._width =  match ? value : value + 'px';
+        const match = value ? value.match(/^\s*(\d+)(%|px)\s*$/) : null;
+        if (match==null){
+            this._width = value + 'px';
+        }else{
+            if(match[2]=='%'){
+                this._width = parseInt(match[1])/100 * this._elf.nativeElement.offsetWidth + 'px';
+            }else {
+                this._width = match[1]  + 'px';
+            }
+        }
+
         if (!isUndefined(this.graph)){
             this.graph.resize({width: this._width, silent: true});
         }
@@ -120,8 +129,16 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
     }
 
     public set height(value: string) {
-        const match = value ? value.match(/^\s*\d+%|px\s*$/) : null;
-        this._height =  match ? value : value + 'px';
+        const match = value ? value.match(/^\s*(\d+)(%|px)\s*$/) : null;
+        if (match==null){
+            this._height = value + 'px';
+        }else{
+            if(match[2]=='%'){
+                this._height = parseInt(match[1])/100 * this._elf.nativeElement.offsetHeight + 'px';
+            }else {
+                this._height = match[1]  + 'px';
+            }
+        }
         if (!isUndefined(this.graph)) {
             this.graph.resize({height: this._height, silent: true});
         }
