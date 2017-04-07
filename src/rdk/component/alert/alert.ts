@@ -51,15 +51,19 @@ export class RdkAlert extends AbstractRDKComponent implements IDialog, AfterCont
         if (this._title === undefined || this._title == null) {
             switch (this._level) {
                 case AlertLevel.info:
+                    //TODO 需要考虑国际化
                     this._title = "Information";
                     break;
                 case AlertLevel.warning:
+                    //TODO 需要考虑国际化
                     this._title = "Warning";
                     break;
                 case AlertLevel.error:
+                    //TODO 需要考虑国际化
                     this._title = "Error";
                     break;
                 default:
+                    //TODO 需要考虑国际化
                     this._title = "Information";
                     break;
             }
