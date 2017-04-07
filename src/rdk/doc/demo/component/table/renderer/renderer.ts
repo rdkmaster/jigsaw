@@ -1,6 +1,6 @@
 import {Component, ViewEncapsulation} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
-import {TableHead, TableCell, TableHeadSelect} from "./table-renderer";
+import {TableHead, TableCell, TableHeadSelect, TableCellCheckbox, TableCellOption} from "./table-renderer";
 import {SortAs, SortOrder} from "../../../../../core/data/component-data";
 
 @Component({
@@ -13,24 +13,24 @@ export class TableRendererDemoComponent {
 
     constructor() {
         this.tableData = new TableData([
-                [12, 12, 12, 12, 12],
-                [23, 23, 23, 23, 23],
-                [43, 43, 43, 43, 43],
-                [12, 12, 12, 12, 12],
-                [23, 23, 23, 23, 23],
-                [43, 43, 43, 43, 43],
-                [12, 12, 12, 12, 12],
-                [23, 23, 23, 23, 23],
-                [43, 43, 43, 43, 43],
-                [12, 12, 12, 12, 12],
-                [23, 23, 23, 23, 23],
-                [43, 43, 43, 43, 43],
-                [12, 12, 12, 12, 12],
-                [23, 23, 23, 23, 23],
-                [43, 43, 43, 43, 43],
-                [12, 12, 12, 12, 12],
-                [23, 23, 23, 23, 23],
-                [43, 43, 43, 43, 43]],
+                [12, 12, 12, 12, 12, 111],
+                [23, 23, 23, 23, 23, 111],
+                [43, 43, 43, 43, 43, 111],
+                [12, 12, 12, 12, 12, 111],
+                [23, 23, 23, 23, 23, 111],
+                [43, 43, 43, 43, 43, 111],
+                [12, 12, 12, 12, 12, 111],
+                [23, 23, 23, 23, 23, 111],
+                [43, 43, 43, 43, 43, 111],
+                [12, 12, 12, 12, 12, 111],
+                [23, 23, 23, 23, 23, 111],
+                [43, 43, 43, 43, 43, 111],
+                [12, 12, 12, 12, 12, 111],
+                [23, 23, 23, 23, 23, 111],
+                [43, 43, 43, 43, 43, 111],
+                [12, 12, 12, 12, 12, 111],
+                [23, 23, 23, 23, 23, 111],
+                [43, 43, 43, 43, 43, 111]],
             ['f1', 'f2', 'f3', 'f4', 'f5', 'f6'], ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
     }
 
@@ -45,7 +45,7 @@ export class TableRendererDemoComponent {
             },
             cell: {
                 renderer: TableCell,
-                class: null,
+                class: 'green-text',
                 editable: false,
                 editorRenderer: null,
             },
@@ -142,17 +142,15 @@ export class TableRendererDemoComponent {
 
     private _additionalColumns = [
         {
-            pos: 2,
-            width: '10%',
+            pos: 0,
+            width: '60px',
             header: {
                 renderer: TableHead,
                 class: 'red-text',
-                sortable: true,
-                sortAs: SortAs.string,
-                defaultSortOrder: SortOrder.des
+                sortable: false
             },
             cell: {
-                renderer: TableCell,
+                renderer: TableCellCheckbox,
                 class: null,
                 editable: false,
                 editorRenderer: null,
@@ -170,7 +168,7 @@ export class TableRendererDemoComponent {
                 defaultSortOrder: SortOrder.des
             },
             cell: {
-                renderer: TableCell,
+                renderer: TableCellOption,
                 class: null,
                 editable: false,
                 editorRenderer: null,

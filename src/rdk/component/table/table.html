@@ -36,9 +36,18 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let row of data.data; let rowIndex = index;">
-            <td rdk-table-cell *ngFor="let cell of row; let colIndex = index"
-                [tableData]="data" [cellData]="cell" [row]="rowIndex" [column]="colIndex">
+        <tr *ngFor="let row of _cellSettings; let rowIndex = index;">
+            <td *ngFor="let cell of row; let colIndex = index" class="{{cell.class}}">
+                <div *ngIf="cell.renderer" rdk-table-cell
+                     [tableData]="data"
+                     [cellData]="cell.cellData"
+                     [row]="rowIndex"
+                     [column]="colIndex"
+                     [renderer]="cell.renderer"
+                     [editable]="cell.editable"
+                     [editorRenderer]="cell.editorRenderer"
+                     [group]="cell.group"></div>
+                <span *ngIf="!cell.renderer">{{cell.cellData}}</span>
             </td>
         </tr>
         </tbody>

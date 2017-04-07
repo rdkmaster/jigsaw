@@ -11,6 +11,24 @@ export class TableCell extends TableCellRenderer {
 }
 
 /*
+ * 自定义单元格渲染组件
+ * */
+@Component({
+    template: '<rdk-checkbox></rdk-checkbox>'
+})
+export class TableCellCheckbox extends TableCellRenderer {
+}
+
+/*
+ * 自定义单元格渲染组件
+ * */
+@Component({
+    template: '<a href="javascript:;">修改</a> <a href="javascript:;">删除</a>'
+})
+export class TableCellOption extends TableCellRenderer {
+}
+
+/*
  * 自定义表头渲染组件
  * */
 @Component({

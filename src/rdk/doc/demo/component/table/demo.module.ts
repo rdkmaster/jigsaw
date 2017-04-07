@@ -3,8 +3,9 @@ import {RouterModule} from "@angular/router";
 import {TableBasicDemoComponent} from "./basic/basic";
 import {TableRendererDemoComponent} from "./renderer/renderer";
 import {RdkTableModule, DefaultCellRenderer} from "../../../../component/table/table";
-import {TableHead, TableCell, TableHeadSelect} from "./renderer/table-renderer";
-import {RdkSelectModule} from "../../../../component/select/select"
+import {TableHead, TableCell, TableHeadSelect, TableCellCheckbox, TableCellOption} from "./renderer/table-renderer";
+import {RdkSelectModule} from "../../../../component/select/select";
+import {RdkCheckBoxModule} from "../../../../component/checkbox/index";
 
 const tableDemoRoutes=[
     {
@@ -24,15 +25,22 @@ const tableDemoRoutes=[
 
 @NgModule({
     declarations: [
-        TableBasicDemoComponent, TableRendererDemoComponent, DefaultCellRenderer, TableHead, TableCell, TableHeadSelect
+        TableBasicDemoComponent,
+        TableRendererDemoComponent,
+        DefaultCellRenderer,
+        TableHead,
+        TableCell,
+        TableHeadSelect,
+        TableCellCheckbox,
+        TableCellOption
     ],
     imports: [
-        RouterModule.forChild(tableDemoRoutes), RdkTableModule, RdkSelectModule
+        RouterModule.forChild(tableDemoRoutes), RdkTableModule, RdkSelectModule, RdkCheckBoxModule
     ],
     exports: [
         TableBasicDemoComponent, TableRendererDemoComponent
     ],
     providers: [],
-    entryComponents: [DefaultCellRenderer, TableHead, TableCell, TableHeadSelect]
+    entryComponents: [DefaultCellRenderer, TableHead, TableCell, TableHeadSelect, TableCellCheckbox, TableCellOption]
 })
 export class TableDemoModule { }
