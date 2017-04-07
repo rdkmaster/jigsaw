@@ -1,4 +1,5 @@
 import {EchartTitle, EchartLegend, EchartTooltip, EchartOptions} from "./echart-types";
+import {TableData} from "./table-data";
 
 type GraphMatrixRow = Array<string|number>;
 export type GraphDataHeader = string[];
@@ -6,8 +7,7 @@ export type GraphDataField = string[];
 export type GraphDataRowDescriptor = string[];
 export type GraphDataMatrix = GraphMatrixRow[];
 
-// TODO 1. 临时调试去掉了继承
-export abstract class AbstractGraphData {
+export abstract class AbstractGraphData extends TableData {
     protected abstract createChartOptions(): any;
 
     public optionsPatch: EchartOptions;
@@ -16,8 +16,8 @@ export abstract class AbstractGraphData {
                 public header?: GraphDataHeader,
                 public rowDescriptor?: GraphDataRowDescriptor,
                 public field?: GraphDataField) {
-        // super(data, field, header);
-        // this._makeFields();
+        super(data, field, header);
+        this._makeFields();
         if (!rowDescriptor) {
             this.rowDescriptor = [];
         }
@@ -36,36 +36,36 @@ export abstract class AbstractGraphData {
         return this.echartOptions;
     }
 
-    // public fromObject(data: any): AbstractGraphData {
-    //     if (!data.hasOwnProperty('data') || !(data.data instanceof Array)) {
-    //         throw new Error('need a "data" property which type is Array!');
-    //     }
-    //     this.clearData();
-    //
-    //     TableData.arrayAppend(this.data, data.data);
-    //     if (data.hasOwnProperty('header')) {
-    //         TableData.arrayAppend(this.header, data.header);
-    //     }
-    //     if (data.hasOwnProperty('field')) {
-    //         TableData.arrayAppend(this.field, data.field);
-    //     }
-    //     if (data.hasOwnProperty('rowDescriptor')) {
-    //         TableData.arrayAppend(this.rowDescriptor, data.rowDescriptor);
-    //     }
-    //     this._makeFields();
-    //     this.refresh();
-    //
-    //     return this;
-    // }
-    //
-    // private _makeFields(): void {
-    //     if (this.field.length == 0) {
-    //         this.header.forEach(item => this.field.push(item));
-    //     }
-    // }
+    public fromObject(data: any): AbstractGraphData {
+        if (!data.hasOwnProperty('data') || !(data.data instanceof Array)) {
+            throw new Error('need a "data" property which type is Array!');
+        }
+        this.clearData();
+
+        TableData.arrayAppend(this.data, data.data);
+        if (data.hasOwnProperty('header')) {
+            TableData.arrayAppend(this.header, data.header);
+        }
+        if (data.hasOwnProperty('field')) {
+            TableData.arrayAppend(this.field, data.field);
+        }
+        if (data.hasOwnProperty('rowDescriptor')) {
+            TableData.arrayAppend(this.rowDescriptor, data.rowDescriptor);
+        }
+        this._makeFields();
+        this.refresh();
+
+        return this;
+    }
+
+    private _makeFields(): void {
+        if ((!this.field|| this.field.length == 0) && this.header) {
+            this.header.forEach(item => this.field.push(item));
+        }
+    }
 
     protected clearData(): void {
-        // super.clearData();
+        super.clearData();
         this.rowDescriptor.splice(0, this.rowDescriptor.length);
     }
 
