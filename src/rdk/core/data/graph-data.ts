@@ -114,6 +114,15 @@ export abstract class AbstractNormalGraphData extends AbstractGraphData {
     public title: EchartTitle;
     public legend: EchartLegend;
     public tooltip: EchartTooltip;
+    protected _title: string;
+    protected _legendData: string[] = [];
+    protected _seriesData: Object[];
+
+    protected getLegendData(){
+        this._seriesData && this._seriesData.forEach(item => {
+            item.hasOwnProperty("name") && this._legendData.push(item["name"]);
+        });
+    }
 }
 
 export class OutlineMapData extends AbstractNormalGraphData {
@@ -125,21 +134,17 @@ export class OutlineMapData extends AbstractNormalGraphData {
 
 export class PieGraphData extends AbstractNormalGraphData {
     // todo 2 以后抽取到公共的echarts文件中.
-    private _title: string;
-    private _legendData: Array<string>;
     private _seriesName: string;
-    private _seriesData: Array<Object>;
-
     // 数据结构:
     constructor(seriesData: Array<Object>, title?: string, legendData?: Array<string>, seriesName?: string) {
         super();
         this._title = title;
-        this._legendData = legendData;
         this._seriesName = seriesName;
         this._seriesData = seriesData;
     }
 
     protected createChartOptions(): any {
+        this.getLegendData();
         return {
             title: {
                 text: this._title,
@@ -181,8 +186,48 @@ export class DonutGraphData extends PieGraphData {
 }
 
 export class LineBarGraphData extends AbstractNormalGraphData {
+    private _xAxisData: Object[];
+    private _yAxisData: Object[];
+
+    // 数据结构:
+    constructor(seriesData: Object[], title?: string,  xAxisData?:Object[], yAxisData?:Object[]) {
+        super();
+        this._title = title;
+        this._seriesData = seriesData;
+        this._xAxisData = xAxisData;
+        this._yAxisData = yAxisData;
+    }
+
     protected createChartOptions(): any {
-        return undefined;
+        this.getLegendData();
+        return {
+            title: {
+                text: this._title
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    crossStyle: {
+                        color: '#999'
+                    }
+                }
+            },
+            toolbox: {
+                feature: {
+                    dataView: {show: true, readOnly: false},
+                    magicType: {show: true, type: ['line', 'bar']},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
+            },
+            legend: {
+                data: this._legendData
+            },
+            xAxis: this._xAxisData,
+            yAxis: this._yAxisData,
+            series: this._seriesData
+        };
     }
 }
 

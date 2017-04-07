@@ -7,6 +7,7 @@ import {RdkGraphModule} from "../../../../component/graph/index";
 import {BasicGraphComponent} from "./basic/basicGraph";
 import {RouterModule} from "@angular/router";
 import {PieDemoComponent} from "./pie/pieGraph";
+import {LineBarGraphDemoComponent} from "./linebargraph/linebargraph";
 import {GraphSetSizeComponent} from "./setSize/setSize";
 
 const graphRoutes = [
@@ -15,6 +16,9 @@ const graphRoutes = [
     },
     {
         path: 'pie', component: PieDemoComponent
+    },
+    {
+        path: 'linebargraph', component: LineBarGraphDemoComponent
     },
     {
         path: 'setSize', component: GraphSetSizeComponent
@@ -29,9 +33,10 @@ const graphRoutes = [
         RdkGraphModule
     ],
     exports: [
-        BasicGraphComponent, PieDemoComponent
+        BasicGraphComponent, PieDemoComponent,LineBarGraphDemoComponent
     ],
-    declarations: [BasicGraphComponent,PieDemoComponent,GraphSetSizeComponent],
+    declarations: [BasicGraphComponent,PieDemoComponent,
+        GraphSetSizeComponent,LineBarGraphDemoComponent],
     providers: [],
 })
 export class GraphDemoModule { }
