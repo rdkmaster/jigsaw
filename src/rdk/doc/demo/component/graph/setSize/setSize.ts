@@ -15,13 +15,13 @@ export class GraphSetSizeComponent  implements OnInit {
      graphHeight;
     ngOnInit() {
         this.data = new GraphData();
-         this.graphWidth = "100";
-         this.graphHeight = "100";
+         this.graphWidth = "100%";
+         this.graphHeight = "250";
     }
 
     public changeSize(){
-        this.graphWidth = "600";
-        this.graphHeight = "200";
+        this.graphWidth = "50%";
+        this.graphHeight = "80%";
     }
 }
 

@@ -1,9 +1,11 @@
 /**
  * Created by 10177553 on 2017/3/23.
  */
-import {Component, OnInit, ElementRef,
-        Input, Output, EventEmitter,
-        OnDestroy, Renderer2} from '@angular/core';
+import {
+    Component, OnInit, ElementRef,
+    Input, Output, EventEmitter,
+    OnDestroy, Renderer2
+} from '@angular/core';
 import {AbstractGraphData} from "../../core/data/graph-data";
 
 import * as echarts from 'echarts';
@@ -103,33 +105,45 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
     }
 
     @Input()
-    public get width():string {
+    public get width(): string {
         return this._width;
     }
 
     public set width(value: string) {
-        const match = value ? value.match(/^\s*\d+%|px\s*$/) : null;
-        this._width =  match ? value : value + 'px';
-        if (!isUndefined(this.graph)){
+        const match = value ? value.match(/^\s*(\d+)(%|px)\s*$/) : null;
+
+        if (match && match[2] == '%') {
+            this._width = parseInt(match[1]) / 100 * this._elf.nativeElement.offsetWidth + 'px';
+        } else {
+            this._width = value + 'px';
+        }
+
+        if (!isUndefined(this.graph)) {
             this.graph.resize({width: this._width, silent: true});
         }
     }
 
-    public get height():string {
+    public get height(): string {
         return this._height;
     }
 
     public set height(value: string) {
-        const match = value ? value.match(/^\s*\d+%|px\s*$/) : null;
-        this._height =  match ? value : value + 'px';
+        const match = value ? value.match(/^\s*(\d+)(%|px)\s*$/) : null;
+
+        if (match && match[2] == '%') {
+            this._height = parseInt(match[1]) / 100 * this._elf.nativeElement.offsetHeight + 'px';
+        } else  {
+            this._height = value + 'px';
+        }
+
         if (!isUndefined(this.graph)) {
             this.graph.resize({height: this._height, silent: true});
         }
     }
 
     public resize(opts?: {
-                      width?: number|string,
-                      height?: number|string,
+                      width?: number | string,
+                      height?: number | string,
                       silent?: boolean
                   }): void {
         this.graph.resize(opts);
