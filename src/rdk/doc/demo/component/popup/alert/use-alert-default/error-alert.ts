@@ -1,17 +1,21 @@
 import {Component} from '@angular/core';
 
 import {PopupService, IDialog, ButtonInfo} from '../../../../../../service/popup.service';
+import { AlertLevel } from '../../../../../../component/alert/alert';
 
 @Component({
-    templateUrl: 'use-dialog.html',
-    styleUrls: ['use-dialog.scss']
+    templateUrl: 'error-alert.html',
+    styles: [`
+        label{
+            padding:16px 0px 0px 0px!important;
+        }
+    `]
 })
-export class UseDialog2Component implements IDialog {
+export class ErrorAlert implements IDialog {
 
     private _initDate: any;
-
+    public level: AlertLevel = AlertLevel.error;
     public popupId: number;
-
     public get initDate() {
         return this._initDate
     }
@@ -20,22 +24,9 @@ export class UseDialog2Component implements IDialog {
         this._initDate = newValue;
     }
 
-    public title: string = `Title of the dialog`;
+    public title: string;
     public buttons: Array<ButtonInfo> = [
-        {
-            label: 'confirm',
-            callback: () => {
-                console.log('confirm callback success!')
-            },
-            class: ""
-        },
-        {
-            label: 'cancel',
-            callback: () => {
-                this.close();
-            },
-            class: ""
-        }
+
     ];
 
     constructor(private _popupService: PopupService) {

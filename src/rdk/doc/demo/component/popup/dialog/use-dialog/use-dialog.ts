@@ -23,14 +23,18 @@ export class UseDialogComponent implements IDialog {
     public title: string = `Title of the dialog`;
     public buttons: Array<ButtonInfo> = [
         {
-            label: 'confirm', callback: () => {
+            label: 'confirm',
+            callback: () => {
                 console.log('confirm callback success!')
-            }
+            },
+            class: ""
         },
         {
-            label: 'cancel', callback: () => {
+            label: 'cancel',
+            callback: () => {
                 this.close();
-            }
+            },
+            class: ""
         }
     ];
 
