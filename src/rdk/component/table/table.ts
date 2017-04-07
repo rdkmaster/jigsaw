@@ -117,7 +117,6 @@ export class RdkTable implements AfterViewInit{
 
         //过滤掉不显示的表头
         this._headSettings = this._headSettings.filter(headData => headData.visible);
-        console.log(this._headSettings);
     }
 
     /*
@@ -181,8 +180,8 @@ export class RdkTableCell extends TableCellBasic implements OnInit{
     selector: '[rdk-table-header]',
     template: `<template rdk-renderer-host></template>
                <div *ngIf="sortable" [ngClass]="_sortOrderClass">
-                    <span (click)="sortUp()" class="fa fa-sort-up rdk-table-sort rdk-table-sort-up"></span>
-                    <span (click)="sortDown()" class="fa fa-sort-down rdk-table-sort rdk-table-sort-down"></span>
+                    <span (click)="sortUp()" class="rdk-table-sort-btn rdk-table-sort-up"></span>
+                    <span (click)="sortDown()" class="rdk-table-sort-btn rdk-table-sort-down"></span>
                </div>`,
     styleUrls: ['table-head.scss']
 })
@@ -193,6 +192,7 @@ export class RdkTableHeader extends TableCellBasic implements OnInit{
 
     private _setSortOrderClass(){
         this._sortOrderClass = {
+            'rdk-table-sort-box': true,
             'rdk-table-asc': this._sortOrder == SortOrder.asc,
             'rdk-table-des': this._sortOrder == SortOrder.des
         }
