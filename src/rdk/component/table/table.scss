@@ -21,6 +21,9 @@ table{
     thead{
         background: $gray-dark;
         color: $text-color-white;
+        tr{
+            height: 40px;
+        }
     }
     td{
         position: relative;
@@ -47,23 +50,6 @@ table{
                 color: $primary-color;
             }
         }
-        /*
-        .#{$table-prefix-cls}-sort{
-            cursor: pointer;
-            &:hover, &.on{
-                color: $primary-color;
-            }
-        }
-        .#{$table-prefix-cls}-sort-up{
-            position: absolute;
-            right: 6px;
-            top: 8px;
-        }
-        .#{$table-prefix-cls}-sort-down{
-            position: absolute;
-            right: 6px;
-            top: 10px;
-        }*/
     }
     tr{
         height: 28px;

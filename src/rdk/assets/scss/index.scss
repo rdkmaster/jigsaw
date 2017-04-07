@@ -1,19 +1,17 @@
 @import "./core/basc";
 
 /*滚动条样式start*/
-rdk-select, rdk-table{
-    .mCSB_scrollTools{
-        width: 10px;
+.mCSB_scrollTools{
+    width: 10px;
+}
+.mCSB_container_wrapper{
+    margin-right: 0;
+    & > .mCSB_container {
+        padding-right: 0;
     }
-    .mCSB_container_wrapper{
-        margin-right: 0;
-        & > .mCSB_container {
-            padding-right: 0;
-        }
-    }
-    .mCSB_inside > .mCSB_container {
-        margin-right: 0;
-    }
+}
+.mCSB_inside > .mCSB_container {
+    margin-right: 0;
 }
 /*滚动条样式end*/
 

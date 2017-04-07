@@ -10,24 +10,17 @@ import {TableCellRenderer} from "./table-api";
 
 import {RdkScrollBarModule} from "../scrollbar/scrollbar";
 import {RdkScrollBar} from "../scrollbar/scrollbar";
+import {SortAs, SortOrder} from "../../core/data/component-data";
 
-export class HeadData {
+class HeadSetting {
     cellData: string;
     width: string|number;
     visible: boolean;
     renderer: Type<TableCellBasic>;
     class: string;
     sortable: boolean;
-    sortAs: string|number;
+    sortAs: SortAs;
     defaultSortOrder: SortOrder;
-}
-
-export enum SortAs{
-    string, number
-}
-
-export enum SortOrder{
-    des, asc, default
 }
 
 export class TableCellBasic implements AfterViewInit {
@@ -75,7 +68,7 @@ export class RdkTable implements AfterViewInit{
 
     private _fixedHead: HTMLElement;
 
-    private _headDatas: Array<HeadData> = [];
+    private _headSettings: Array<HeadSetting> = [];
 
     @ViewChild(RdkScrollBar) private _scrollBar: RdkScrollBar;
 
@@ -88,46 +81,62 @@ export class RdkTable implements AfterViewInit{
     * */
     private _transformData(){
         this.data.header.forEach(cellData => {
-            this._headDatas.push({
+            this._headSettings.push({
                 cellData: cellData,
                 width: null,
-                visible: null,
+                visible: true,
                 renderer: null,
-                class: null,
-                sortable: null,
-                sortAs: null,
-                defaultSortOrder: null
+                class: '',
+                sortable: false,
+                sortAs: SortAs.string,
+                defaultSortOrder: SortOrder.default
             })
         });
         this.columns.forEach(column => {
-            if(!isNaN(column.target)){
-                let index = column.target;
-                this._mergeHeaderData(index, column);
+            if (column.target instanceof Function) {
+                let fields = this.data.field.filter(column.target);
+                fields.forEach(field => {
+                    this._mergeHeaderSetting(this.data.field.indexOf(field), column);
+                })
+            }
+            else if(column.target instanceof Array){
+                column.target.forEach(targetItem => {
+                    if(!isNaN(targetItem)){
+                        this._mergeHeaderSetting(targetItem, column);
+                    }else{
+                        this._mergeHeaderSetting(this.data.field.indexOf(targetItem), column);
+                    }
+                })
+            }
+            else if(!isNaN(column.target)){
+                this._mergeHeaderSetting(column.target, column);
             }else{
-                let index = this.data.field.indexOf(column.target);
-                this._mergeHeaderData(index, column);
+                this._mergeHeaderSetting(this.data.field.indexOf(column.target), column);
             }
         });
 
         //过滤掉不显示的表头
-        this._headDatas = this._headDatas.filter(headData => headData.visible);
+        this._headSettings = this._headSettings.filter(headData => headData.visible);
+        console.log(this._headSettings);
     }
 
     /*
     * 合并data和columns里的header数据
     * */
-    private _mergeHeaderData(index, column){
-        let header = column.header;
+    private _mergeHeaderSetting(index, column){
         if(index >= 0 && index < this.data.header.length){
-            let headDate: HeadData = this._headDatas[index];
-            headDate.width = column.width;
-            headDate.visible = column.visible;
+            const headSetting: HeadSetting = this._headSettings[index];
+            headSetting.width = column.width ? column.width : headSetting.width;
+            headSetting.visible = column.visible === true || column.visible === false ? column.visible : headSetting.visible;
+
+            const header = column.header;
             if(header){
-                headDate.renderer = header.renderer;
-                headDate.class = header.class;
-                headDate.sortable = header.sortable;
-                headDate.sortAs = header.sortAs;
-                headDate.defaultSortOrder = header.defaultSortOrder;
+                headSetting.renderer = header.renderer ? header.renderer : headSetting.renderer;
+                headSetting.class = typeof header.class == 'string' && header.class !== '' ? headSetting.class + " " + header.class : headSetting.class;
+                headSetting.sortable = header.sortable === true || header.sortable === false ? header.sortable : headSetting.sortable;
+                headSetting.sortAs = header.sortAs !== null && header.sortAs !== undefined ? header.sortAs : headSetting.sortAs;
+                headSetting.defaultSortOrder = header.defaultSortOrder !== null && header.defaultSortOrder !== undefined ?
+                    header.defaultSortOrder : headSetting.defaultSortOrder;
             }
         }
     }

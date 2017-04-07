@@ -1,11 +1,12 @@
-import {Component} from "@angular/core";
+import {Component, ViewEncapsulation} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
-import {TableHead, TableCell} from "./table-renderer";
-import {SortAs, SortOrder} from "../../../../../component/table/table";
+import {TableHead, TableCell, TableHeadSelect} from "./table-renderer";
+import {SortAs, SortOrder} from "../../../../../core/data/component-data";
 
 @Component({
     templateUrl: 'renderer.html',
-    styleUrls: ['renderer.scss']
+    styleUrls: ['renderer.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class TableRendererDemoComponent {
     tableData: TableData;
@@ -37,9 +38,9 @@ export class TableRendererDemoComponent {
         {
             target: 'f1',
             visible: true,
-            width: '50px',
+            width: '20%',
             header: {
-                renderer: TableHead,
+                renderer: TableHeadSelect,
                 sortable: false
             },
             cell: {
@@ -108,7 +109,6 @@ export class TableRendererDemoComponent {
             visible: true,
             width: 'auto',
             header: {
-                renderer: TableHead,
                 sortable: true,
                 sortAs: SortAs.string,
                 defaultSortOrder: SortOrder.default
@@ -124,6 +124,18 @@ export class TableRendererDemoComponent {
         {
             target: 'f6',
             visible: false
+        },
+        {
+            target: (field, index) => { return index > 2 },
+            header:{
+                class: 'big-text'
+            }
+        },
+        {
+            target: ['f1', 'f4'],
+            header:{
+                class: 'green-text'
+            }
         }
 
     ]
