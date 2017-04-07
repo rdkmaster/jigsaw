@@ -138,6 +138,45 @@ export class TableRendererDemoComponent {
             }
         }
 
+    ];
+
+    private _additionalColumns = [
+        {
+            pos: 2,
+            width: '10%',
+            header: {
+                renderer: TableHead,
+                class: 'red-text',
+                sortable: true,
+                sortAs: SortAs.string,
+                defaultSortOrder: SortOrder.des
+            },
+            cell: {
+                renderer: TableCell,
+                class: null,
+                editable: false,
+                editorRenderer: null,
+            },
+            group: true
+        },
+        {
+            pos: -1,
+            width: '10%',
+            header: {
+                renderer: TableHead,
+                class: 'red-text',
+                sortable: true,
+                sortAs: SortAs.string,
+                defaultSortOrder: SortOrder.des
+            },
+            cell: {
+                renderer: TableCell,
+                class: null,
+                editable: false,
+                editorRenderer: null,
+            },
+            group: true
+        }
     ]
 }
 
