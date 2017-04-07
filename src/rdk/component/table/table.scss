@@ -18,41 +18,28 @@ $table-prefix-cls: #{$rdk-prefix}-table;
 table{
     width: 100%;
     text-align: center;
+    td{
+        position: relative;
+        border: 1px solid $border-color-base;
+    }
     thead{
-        background: $gray-dark;
-        color: $text-color-white;
+        background: $gray-light;
+        color: #333;
         tr{
             height: 40px;
         }
     }
-    td{
-        position: relative;
-        border: 1px solid $border-color-base;
-        .#{$table-prefix-cls}-sort:before, .#{$table-prefix-cls}-sort:after{
-            content: '';
-            display: block;
-            width: 6px;
-            height: 6px;
-            cursor: pointer;
-            &:hover, &.on{
-                color: $primary-color;
-            }
+    tbody tr{
+        height: 30px;
+        &:nth-child(2n){
+            background: $component-background;
         }
-        .#{$table-prefix-cls}-sort:before{
-            cursor: pointer;
-            &:hover, &.on{
-                color: $primary-color;
-            }
+        &:nth-child(2n-1){
+            background: lighten($primary-color, 50%);
         }
-        .#{$table-prefix-cls}-sort:after{
-            cursor: pointer;
-            &:hover, &.on{
-                color: $primary-color;
-            }
+        &:hover{
+            background: $primary-color-hover;
         }
-    }
-    tr{
-        height: 28px;
     }
     &.#{$table-prefix-cls}-fixed-head{
         position: absolute;

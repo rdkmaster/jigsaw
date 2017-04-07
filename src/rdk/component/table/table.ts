@@ -189,7 +189,7 @@ export class RdkTable implements AfterViewInit {
         }
     }
 
-    private _insertSettings(index, additionalColumn){
+    private _insertSettings(index, additionalColumn) {
         this._insertHeaderSetting(index, additionalColumn);
         this._insertCellSetting(index, additionalColumn);
     }
@@ -271,12 +271,14 @@ export class RdkTable implements AfterViewInit {
 
     ngAfterViewInit() {
         this._fixedHead = this._elementRef.nativeElement.querySelector(".rdk-table-fixed-head");
-        $(() => {
-            this._scrollBar.whileScrolling.subscribe(scrollEvent => {
-                if (scrollEvent.direction == 'x') {
-                    this._renderer.setStyle(this._fixedHead, 'left', scrollEvent.left + 'px');
-                }
-            })
+
+        //调整滚动条位置
+        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.mCSB_scrollTools_vertical'), 'margin', this._fixedHead.offsetHeight + 'px 0 0');
+
+        this._scrollBar.whileScrolling.subscribe(scrollEvent => {
+            if (scrollEvent.direction == 'x') {
+                this._renderer.setStyle(this._fixedHead, 'left', scrollEvent.left + 'px');
+            }
         });
 
         this._transformData();

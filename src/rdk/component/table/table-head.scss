@@ -18,7 +18,7 @@ $table-prefix-cls: #{$rdk-prefix}-table;
     width: 0;
     height: 0;
     border: 6px solid;
-    border-color: transparent transparent $gray transparent;
+    border-color: transparent transparent $gray-dark transparent;
     margin-bottom: 2px;
     &:hover{
         border-bottom-color: $primary-color;
@@ -29,7 +29,7 @@ $table-prefix-cls: #{$rdk-prefix}-table;
     width: 0;
     height: 0;
     border: 6px solid;
-    border-color: $gray transparent transparent transparent;
+    border-color: $gray-dark transparent transparent transparent;
     &:hover{
         border-top-color: $primary-color;
     }

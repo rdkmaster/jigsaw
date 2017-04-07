@@ -1,6 +1,9 @@
 import {Component, ViewEncapsulation} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
-import {TableHead, TableCell, TableHeadSelect, TableCellCheckbox, TableCellOption} from "./table-renderer";
+import {
+    TableHead, TableCell, TableHeadSelect, TableCellCheckbox, TableCellOption,
+    TableHeadOption
+} from "./table-renderer";
 import {SortAs, SortOrder} from "../../../../../core/data/component-data";
 
 @Component({
@@ -122,7 +125,7 @@ export class TableRendererDemoComponent {
             group: true
         },
         {
-            target: 'f6',
+            target: 5,
             visible: false
         },
         {
@@ -145,15 +148,10 @@ export class TableRendererDemoComponent {
             pos: 0,
             width: '60px',
             header: {
-                renderer: TableHead,
-                class: 'red-text',
-                sortable: false
+                renderer: TableCellCheckbox,
             },
             cell: {
-                renderer: TableCellCheckbox,
-                class: null,
-                editable: false,
-                editorRenderer: null,
+                renderer: TableCellCheckbox
             },
             group: true
         },
@@ -161,17 +159,11 @@ export class TableRendererDemoComponent {
             pos: -1,
             width: '10%',
             header: {
-                renderer: TableHead,
-                class: 'red-text',
-                sortable: true,
-                sortAs: SortAs.string,
-                defaultSortOrder: SortOrder.des
+                renderer: TableHeadOption,
+                class: 'red-text'
             },
             cell: {
-                renderer: TableCellOption,
-                class: null,
-                editable: false,
-                editorRenderer: null,
+                renderer: TableCellOption
             },
             group: true
         }
