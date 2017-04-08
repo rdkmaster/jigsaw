@@ -1,10 +1,11 @@
-import {Component, ViewEncapsulation} from "@angular/core";
+import {Component, ViewEncapsulation, Type} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
 import {
     TableHead, TableCell, TableHeadSelect, TableCellCheckbox, TableCellOption,
     TableHeadOption
 } from "./table-renderer";
 import {SortAs, SortOrder} from "../../../../../core/data/component-data";
+import {ColumnSetting, AdditionalColumnSetting} from "../../../../../component/table/table-api";
 
 @Component({
     templateUrl: 'renderer.html',
@@ -37,7 +38,7 @@ export class TableRendererDemoComponent {
             ['f1', 'f2', 'f3', 'f4', 'f5', 'f6'], ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
     }
 
-    private _columns = [
+    private _columns: ColumnSetting[] = [
         {
             target: 'f1',
             visible: true,
@@ -76,7 +77,6 @@ export class TableRendererDemoComponent {
         {
             target: 'f3',
             visible: true,
-            width: 'auto',
             header: {
                 renderer: TableHead,
                 sortable: true,
@@ -94,7 +94,6 @@ export class TableRendererDemoComponent {
         {
             target: 'f4',
             visible: true,
-            width: 'auto',
             header: {
                 renderer: TableHead,
                 sortable: false
@@ -110,7 +109,6 @@ export class TableRendererDemoComponent {
         {
             target: 'f5',
             visible: true,
-            width: 'auto',
             header: {
                 sortable: true,
                 sortAs: SortAs.string,
@@ -126,7 +124,7 @@ export class TableRendererDemoComponent {
         },
         {
             target: 5,
-            visible: false
+            visible: false,
         },
         {
             target: (field, index) => { return index > 2 },
@@ -140,10 +138,9 @@ export class TableRendererDemoComponent {
                 class: 'green-text'
             }
         }
-
     ];
 
-    private _additionalColumns = [
+    private _additionalColumns: AdditionalColumnSetting[] = [
         {
             pos: 0,
             width: '60px',
@@ -157,6 +154,18 @@ export class TableRendererDemoComponent {
         },
         {
             pos: -1,
+            width: '10%',
+            header: {
+                renderer: TableHeadOption,
+                class: 'red-text'
+            },
+            cell: {
+                renderer: TableCellOption
+            },
+            group: true
+        },
+        {
+            pos: 2,
             width: '10%',
             header: {
                 renderer: TableHeadOption,
