@@ -1,10 +1,124 @@
-import {Component, Renderer2, ElementRef, Input, OnDestroy, AfterContentInit} from '@angular/core';
+import {
+    AfterContentInit,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    Output,
+    Renderer2
+} from "@angular/core";
 
-import {PopupService, PopupOptions, IDialog, ButtonInfo} from '../../service/popup.service';
+import {ButtonInfo, IPopupable, PopupService} from "../../service/popup.service";
 
-import {fadeIn} from '../animations/fade-in';
-import {bubbleIn} from '../animations/bubble-in';
-import {AbstractRDKComponent} from '../core';
+import {fadeIn} from "../animations/fade-in";
+import {bubbleIn} from "../animations/bubble-in";
+import {AbstractRDKComponent} from "../core";
+
+
+export interface IDialog extends IPopupable {
+    buttons: ButtonInfo[];
+    title: string;
+}
+
+export abstract class DialogBase extends AbstractRDKComponent implements IDialog, AfterContentInit, OnDestroy {
+    @Input()
+    public buttons: ButtonInfo[];
+    @Input()
+    public title: string;
+    @Input()
+    public popupId: number;
+    public initData: any;
+
+    protected state: String = 'active';
+    protected removeResizeEvent: Function;
+    protected popupElement: HTMLElement;
+    protected modal: boolean;
+
+    protected popupService: PopupService;
+    protected renderer: Renderer2;
+    protected elementRef: ElementRef;
+
+    private _top: string;
+    //设置距离顶部高度
+    @Input()
+    public get top(): string {
+        return this._top
+    }
+
+    public set top(newValue: string) {
+        const match = newValue ? newValue.match(/^\s*\d+%|px\s*$/) : null;
+        this._top = match ? newValue : newValue + 'px';
+    }
+
+
+    @Output()
+    public close: EventEmitter<void> = new EventEmitter<void>();
+
+    public dispose() {
+        this.state = 'void';
+        this.close.emit();
+    }
+
+    public ngAfterContentInit() {
+        this.init();
+    }
+
+    public ngOnDestroy() {
+        //销毁resize事件
+        this.removeResizeEvent();
+    }
+
+    protected abstract getPopupElement():HTMLElement;
+
+    protected init() {
+        this.popupElement = this.getPopupElement();
+
+        //设置弹框宽度
+        if (this.width) {
+            this.renderer.setStyle(this.popupElement, 'width', this.width);
+        }
+
+        const options = this.popupService.getOptions(this.popupId);
+        this.modal = options && options.modal;
+
+        if (this.modal) {
+            //设置默认位置
+            this.setDefaultPosition();
+        } else {
+            this.popupService.setPopupPos(this.popupId, this.renderer, this.popupElement);
+        }
+
+        this.resetPosition();
+    }
+
+    protected setDefaultPosition(): void {
+        //弹框居中
+        this.renderer.setStyle(this.popupElement, 'left', (window.innerWidth / 2 - this.popupElement.offsetWidth / 2) + 'px');
+        if (this.top) {
+            //居上显示
+            this.renderer.setStyle(this.popupElement, 'top', this.top);
+        } else {
+            //居中显示
+            this.renderer.setStyle(this.popupElement, 'top', (window.innerHeight / 2 - this.popupElement.offsetHeight / 2) + 'px');
+        }
+    }
+
+    protected resetPosition() {
+        //resize居中
+        this.removeResizeEvent = this.renderer.listen('window', 'resize', () => {
+            this.renderer.setStyle(this.popupElement, 'left', (window.innerWidth / 2 - this.popupElement.offsetWidth / 2) + 'px');
+            !this.top && this.renderer.setStyle(this.popupElement, 'top', (window.innerHeight / 2 - this.popupElement.offsetHeight / 2) + 'px');
+        })
+    }
+
+    protected animationDone($event){
+        if($event.toState == 'void'){
+            this.popupService.removePopup(this.popupId);
+        }
+    }
+
+}
 
 @Component({
     selector: 'rdk-dialog',
@@ -15,95 +129,19 @@ import {AbstractRDKComponent} from '../core';
         bubbleIn
     ]
 })
-export class RdkDialog extends AbstractRDKComponent implements IDialog, AfterContentInit, OnDestroy {
-    @Input()
-    public popupId: number;
+export class RdkDialog extends DialogBase {
 
-    private _topPlace: string;
-    private _popupEl: HTMLElement;
-    private _windowResize: Function;
-    private _options: PopupOptions;
-    private _state: String = 'active';
-
-    public initData: any;
-
-    @Input()
-    public title: string;
-
-    //设置距离顶部高度
-    @Input()
-    public get topPlace(): string {
-        return this._topPlace
-    }
-
-    public set topPlace(newValue: string) {
-        const match = newValue ? newValue.match(/^\s*\d+%|px\s*$/) : null;
-        this._topPlace = match ? newValue : newValue + 'px';
-    }
-
-    @Input() buttons: Array<ButtonInfo>;
-
-    constructor(private _popupService: PopupService,
-                private _renderer: Renderer2,
-                private _elementRef: ElementRef) {
+    constructor(popupService: PopupService,
+                renderer: Renderer2,
+                elementRef: ElementRef) {
         super();
+        this.popupService = popupService;
+        this.renderer = renderer;
+        this.elementRef = elementRef;
     }
 
-    close() {
-        this._state = 'void';
-    }
-
-    private _init() {
-        this._popupEl = this._elementRef.nativeElement.querySelector('.rdk-dialog');
-
-        //设置弹框宽度
-        this.width && this._renderer.setStyle(this._popupEl, 'width', this.width);
-
-        this._options = this._popupService.getOptions(this.popupId);
-
-        if (this._options && !this._options.modal) {
-            this._popupService.setPopupPos(this.popupId, this._renderer, this._popupEl);
-        } else {
-            //设置默认位置
-            this._setDefaultPosition();
-        }
-
-        this._resetPosition();
-    }
-
-    private _setDefaultPosition(): void {
-        //弹框居中
-        this._renderer.setStyle(this._popupEl, 'left', (window.innerWidth / 2 - this._popupEl.offsetWidth / 2) + 'px');
-        if (this.topPlace) {
-            //居上显示
-            this._renderer.setStyle(this._popupEl, 'top', this.topPlace);
-        } else {
-            //居中显示
-            this._renderer.setStyle(this._popupEl, 'top', (window.innerHeight / 2 - this._popupEl.offsetHeight / 2) + 'px');
-        }
-    }
-
-    private _resetPosition() {
-        //resize居中
-        this._windowResize = this._renderer.listen('window', 'resize', () => {
-            this._renderer.setStyle(this._popupEl, 'left', (window.innerWidth / 2 - this._popupEl.offsetWidth / 2) + 'px');
-            !this.topPlace && this._renderer.setStyle(this._popupEl, 'top', (window.innerHeight / 2 - this._popupEl.offsetHeight / 2) + 'px');
-        })
-    }
-
-    private _animationDone($event){
-        if($event.toState == 'void'){
-            this._popupService.removePopup(this.popupId);
-        }
-    }
-
-    ngAfterContentInit() {
-        this._init();
-    }
-
-    ngOnDestroy() {
-        //销毁resize事件
-        this._windowResize();
+    protected getPopupElement(): HTMLElement {
+        return this.elementRef.nativeElement.querySelector('.rdk-dialog');
     }
 }
 

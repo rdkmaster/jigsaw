@@ -1,7 +1,8 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 
-import {PopupService, IDialog, ButtonInfo} from '../../../../../../service/popup.service';
+import {PopupService, ButtonInfo} from '../../../../../../service/popup.service';
 import {AlertLevel} from '../../../../../../component/alert/alert';
+import {IDialog} from "../../../../../../component/dialog/dialog";
 
 @Component({
     templateUrl: 'alert-config.html',
@@ -24,23 +25,23 @@ export class UserAlertComponentConfig implements IDialog {
     }
 
     public title: string;
-    public buttons: Array<ButtonInfo> = [
+    public buttons: ButtonInfo[] = [
 
         {
             label: 'ok',
             callback: () => {
-                console.log('ok callback success!')
+                console.log('ok callback success!');
                 this.close();
             },
-            class: 'button-ok'
+            clazz: 'button-ok'
         },
         {
             label: 'cancel',
             callback: () => {
-                console.log('cancel callback success!')
+                console.log('cancel callback success!');
                 this.close();
             },
-            class: 'button-cancel'
+            clazz: 'button-cancel'
 
         }
     ];

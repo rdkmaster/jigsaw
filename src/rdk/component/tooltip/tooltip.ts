@@ -23,7 +23,6 @@ export class RdkTooltip implements IPopupable, AfterContentInit {
     }
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef, private _popupService: PopupService) {
-
     }
 
     ngAfterContentInit(){

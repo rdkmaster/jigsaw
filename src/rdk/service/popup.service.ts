@@ -21,7 +21,7 @@ export enum PopupEffect {
 export type PopupPosition = PopupPoint | ElementRef;
 
 export class PopupPoint {
-    constructor(public x: number, public y: number){
+    constructor(public x: number, public y: number) {
     }
 }
 
@@ -36,7 +36,7 @@ export enum PopupPositionType {
     absolute, fixed
 }
 
-export type Popup = {
+type PopupInfo = {
     popupId: number;
     popupRef: PopupRef;
     options: PopupOptions
@@ -44,10 +44,13 @@ export type Popup = {
 
 export type PopupRef = ComponentRef<IPopupable> | EmbeddedViewRef<any>;
 
-export type ButtonInfo = {
-    label: string;
-    callback: () => void;
-    class: string;
+export class ButtonInfo {
+    constructor(public label: string,
+                public callback: () => void,
+                public callbackContext?: any,
+                public clazz?: string) {
+        this.clazz = clazz ? clazz : '';
+    }
 }
 
 export type Position = {
@@ -60,28 +63,24 @@ export interface IPopupable {
     initData: any;
 }
 
-export interface IDialog extends IPopupable {
-    buttons: ButtonInfo[];
-    title: string;
-}
-
 @Injectable()
 export class PopupService {
 
     private _popupId: number;
 
-    private _popups: Array<Popup> = [];
+    private _popups: PopupInfo[] = [];
 
     //全局插入点
     private _viewContainerRef: ViewContainerRef;
 
     constructor(private _cfr: ComponentFactoryResolver, private _appRef: ApplicationRef) {
         _appRef.components.length && _appRef.components.forEach(component => {
-            if(component.instance.hasOwnProperty('viewContainerRef')){
+            //TODO by chenxu 自动获取viewContainerRef，而不要应用提供
+            if (component.instance.hasOwnProperty('viewContainerRef')) {
                 this._viewContainerRef = component.instance.viewContainerRef;
             }
         });
-        if(!this._viewContainerRef){
+        if (!this._viewContainerRef) {
             console.error("please add 'constructor(public viewContainerRef: ViewContainerRef){}' into AppComponent");
         }
 
@@ -89,33 +88,31 @@ export class PopupService {
     }
 
     /*
-    * 打开弹框
-    * return 弹框的id
-    * */
+     * 打开弹框
+     * return 弹框的id
+     * */
     public popup(what: Type<IPopupable>, options: PopupOptions, initData?: any): number;
     public popup(what: TemplateRef<any>): number;
     public popup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any): number {
-        if(what instanceof TemplateRef){
+        this._popupId++;
+        if (what instanceof TemplateRef) {
             let viewRef = this._viewContainerRef.createEmbeddedView(what);
-            let popupId: number = this._popupId;
             this._popups.push({popupId: this._popupId, popupRef: viewRef, options: null});
-            this._popupId++;
-            return popupId;
-        }else{
+            return this._popupId;
+        } else {
             let factory = this._cfr.resolveComponentFactory(what);
             let componentRef = this._viewContainerRef.createComponent(factory);
             componentRef.instance.popupId = this._popupId;
             componentRef.instance.initData = initData;
             this._popups.push({popupId: this._popupId, popupRef: componentRef, options: options});
-            this._popupId++;
-            return componentRef.instance.popupId;
+            return this._popupId;
         }
     }
 
     /*
-    * 关闭弹框
-    * param 弹框组件的id
-    * */
+     * 关闭弹框
+     * param 弹框组件的id
+     * */
     public removePopup(popupId: number): void {
         let popup = this._popups.find(popup => popupId === popup.popupId);
         popup.popupRef.destroy();
@@ -123,9 +120,9 @@ export class PopupService {
     }
 
     /*
-    * 获取popup的options
-    * */
-    public getOptions(popupId: number): PopupOptions{
+     * 获取popup的options
+     * */
+    public getOptions(popupId: number): PopupOptions {
         let popup = this._popups.find(popup => popupId === popup.popupId);
         return popup ? popup.options : null;
     }
@@ -133,15 +130,15 @@ export class PopupService {
     /*
      * 获取popup的popupRef
      * */
-    public getPopupRef(popupId: number): PopupRef{
+    public getPopupRef(popupId: number): PopupRef {
         let popup = this._popups.find(popup => popupId === popup.popupId);
         return popup ? popup.popupRef : null;
     }
 
     /*
-    * 设置弹框的位置
-    * */
-    public setPopupPos(popupId: number, renderer: Renderer2, element: HTMLElement): void{
+     * 设置弹框的位置
+     * */
+    public setPopupPos(popupId: number, renderer: Renderer2, element: HTMLElement): void {
         let options = this._popups.find(popup => popupId === popup.popupId).options;
         if (options && !options.modal) {
             let posType: string = this._getPosType(options.posType);
@@ -153,10 +150,10 @@ export class PopupService {
     }
 
     /*
-    * 获取posType字符串类型
-    * */
-    private _getPosType(posType: number): string{
-        switch (posType){
+     * 获取posType字符串类型
+     * */
+    private _getPosType(posType: number): string {
+        switch (posType) {
             case 0:
                 return 'absolute';
             case 1:
@@ -167,41 +164,41 @@ export class PopupService {
     }
 
     /*
-    * 获取位置具体的top和left
-    * */
-    private _getPosition(options: PopupOptions, element: HTMLElement): Position{
+     * 获取位置具体的top和left
+     * */
+    private _getPosition(options: PopupOptions, element: HTMLElement): Position {
         let top: string;
         let left: string;
         if (options && !options.modal) {
-            if(options.pos instanceof ElementRef){
-                if(options.posOffset.top || options.posOffset.top == 0){
+            if (options.pos instanceof ElementRef) {
+                if (options.posOffset.top || options.posOffset.top == 0) {
                     top = (options.pos.nativeElement.offsetTop + options.posOffset.top) + 'px';
                 }
-                else if(options.posOffset.bottom || options.posOffset.bottom == 0){
+                else if (options.posOffset.bottom || options.posOffset.bottom == 0) {
                     top = (options.pos.nativeElement.offsetTop - element.offsetHeight + options.posOffset.bottom) + 'px';
                 }
-                else{
+                else {
                     top = options.pos.nativeElement.offsetTop + 'px';
                 }
 
-                if(options.posOffset.left || options.posOffset.left == 0){
+                if (options.posOffset.left || options.posOffset.left == 0) {
                     left = (options.pos.nativeElement.offsetLeft + options.posOffset.left) + 'px';
                 }
-                else if(options.posOffset.right || options.posOffset.right == 0){
+                else if (options.posOffset.right || options.posOffset.right == 0) {
                     left = (options.pos.nativeElement.offsetLeft - element.offsetWidth + options.posOffset.right) + 'px';
                 }
-                else{
+                else {
                     left = options.pos.nativeElement.offsetLeft + 'px';
                 }
-            }else if(options.pos instanceof PopupPoint) {
-                if(options.posOffset.top){
+            } else if (options.pos instanceof PopupPoint) {
+                if (options.posOffset.top) {
                     top = (options.pos.y + options.posOffset.top) + 'px';
-                }else {
+                } else {
                     top = options.pos.y + 'px';
                 }
-                if(options.posOffset.left){
+                if (options.posOffset.left) {
                     left = (options.pos.x + options.posOffset.left) + 'px';
-                }else {
+                } else {
                     left = options.pos.x + 'px';
                 }
             }

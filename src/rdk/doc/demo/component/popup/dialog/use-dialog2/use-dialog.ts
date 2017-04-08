@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 
-import {PopupService, IDialog, ButtonInfo} from '../../../../../../service/popup.service';
+import {PopupService, ButtonInfo} from '../../../../../../service/popup.service';
+import {IDialog} from "../../../../../../component/dialog/dialog";
 
 @Component({
     templateUrl: 'use-dialog.html',
@@ -27,14 +28,14 @@ export class UseDialog2Component implements IDialog {
             callback: () => {
                 console.log('confirm callback success!')
             },
-            class: ""
+            clazz: ""
         },
         {
             label: 'cancel',
             callback: () => {
                 this.close();
             },
-            class: ""
+            clazz: ""
         }
     ];
 

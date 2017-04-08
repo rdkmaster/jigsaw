@@ -1,12 +1,12 @@
 <rdk-alert [popupId]="popupId"
-           [level]="level"
+           level="info"
            title="use-alert-config-title"
            icon="fa-check-circle"
            [buttons]="buttons"
-           topPlace="100px"
+           top="100px"
            width="400px"
            buttonClass="button-class"
-           (closeCallFunc)="afterClose($event)">
+           (close)="afterClose($event)">
     <label >
         Detailed description and advices about successful copywriting
     </label>

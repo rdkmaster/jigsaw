@@ -1,13 +1,14 @@
 import {Component} from '@angular/core';
 
-import {PopupService, IDialog, ButtonInfo} from '../../../../../../service/popup.service';
+import {PopupService, ButtonInfo} from '../../../../../../service/popup.service';
 import { AlertLevel } from '../../../../../../component/alert/alert';
+import {IDialog} from "../../../../../../component/dialog/dialog";
 
 @Component({
     templateUrl: 'info-alert.html',
     styles: [`
         label{
-            padding:16px 0px 0px 0px!important;
+            padding:16px 0 0 0 !important;
         }
     `]
 })
