@@ -4,7 +4,7 @@
 $tab-prefix: #{$rdk-prefix}-tabs;
 
 .#{$tab-prefix} {
-    display: inline-block;
+    display: block;
     position: relative;
     overflow: hidden;
     @include clearfix;
@@ -24,12 +24,6 @@ $tab-prefix: #{$rdk-prefix}-tabs;
         position: relative;
         white-space: nowrap;
         @include clearfix;
-
-        &-scrolling {
-            padding: 0 32px;
-        }
-
-        //    todo 多余当前的宽度切换的按钮
 
         .#{$tab-prefix}-nav-wrap {
             overflow: hidden;
@@ -66,9 +60,6 @@ $tab-prefix: #{$rdk-prefix}-tabs;
                     cursor: default;
                     color: $disabled-color;
                 }
-                .#{$tab-prefix}-tab-hidden {
-                    display: none;
-                }
 
                 .#{$tab-prefix}-tab {
                     display: inline-block;
@@ -87,6 +78,10 @@ $tab-prefix: #{$rdk-prefix}-tabs;
 
                     &:active {
                         color: $primary-7;
+                    }
+
+                    &-hidden {
+                        display: none;
                     }
                 }
 
@@ -110,6 +105,10 @@ $tab-prefix: #{$rdk-prefix}-tabs;
             &-inactive {
                 opacity: 0;
                 height: 0;
+            }
+
+            &-hidden {
+                display: none;
             }
         }
     }
