@@ -1,7 +1,7 @@
-import {Component, ViewEncapsulation, Type} from "@angular/core";
+import {Component, ViewEncapsulation, Type, ViewChildren, QueryList, AfterViewInit} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
 import {
-    TableHead, TableCell, TableHeadSelect, TableCellCheckbox, TableCellOption,
+    TableHead, TableCell, TableHeadSelect, TableHeadCheckbox,TableCellCheckbox, TableCellOption,
     TableHeadOption
 } from "./table-renderer";
 import {SortAs, SortOrder} from "../../../../../core/data/component-data";
@@ -12,7 +12,7 @@ import {ColumnSetting, AdditionalColumnSetting} from "../../../../../component/t
     styleUrls: ['renderer.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TableRendererDemoComponent {
+export class TableRendererDemoComponent implements AfterViewInit{
     tableData: TableData;
 
     constructor() {
@@ -145,7 +145,7 @@ export class TableRendererDemoComponent {
             pos: 0,
             width: '60px',
             header: {
-                renderer: TableCellCheckbox,
+                renderer: TableHeadCheckbox,
             },
             cell: {
                 renderer: TableCellCheckbox
@@ -176,6 +176,23 @@ export class TableRendererDemoComponent {
             },
             group: true
         }
-    ]
+    ];
+
+    /*total = 200;
+
+    public getCurrentPage(message:any){
+        console.log("current page message is: "+message);
+    }
+    public getPageSize(message:any){
+        console.log("page size is: "+message);
+    }*/
+
+    @ViewChildren(TableCellCheckbox) checkboxs: QueryList<TableCellCheckbox>;
+
+    ngAfterViewInit(){
+        this.checkboxs.forEach(checkbox => {
+            checkbox.cellData = 1;
+        })
+    }
 }
 

@@ -221,7 +221,6 @@ export class RdkTable implements AfterViewInit {
         }else{
             this._headSettings.push(headSetting)
         }
-        //index != -1 ? this._headSettings.splice(index, 0, headSetting) : this._headSettings.push(headSetting);
     }
 
     /*
@@ -241,24 +240,32 @@ export class RdkTable implements AfterViewInit {
         cellSetting = this._generateCellSetting(cellSetting, additionalColumn);
 
         if(pos != -1){
-            this._cellSettings.forEach(cellSettings => {
+            this._cellSettings.forEach((cellSettings) => {
+                /*let cellSettingClone: CellSetting = <CellSetting>this._clone(cellSetting);
+                const index = cellSettings.indexOf(cellSettings.find(cellSetting => cellSetting.pos == pos));
+                cellSettings.splice(index, 0, cellSettingClone);*/
                 const index = cellSettings.indexOf(cellSettings.find(cellSetting => cellSetting.pos == pos));
                 cellSettings.splice(index, 0, cellSetting);
-
-                //cellSettings.splice(pos, 0, cellSetting);
             })
         }else{
-            this._cellSettings.forEach(cellSettings => {
+            this._cellSettings.forEach((cellSettings) => {
+                /*let cellSettingClone: CellSetting = <CellSetting>this._clone(cellSetting);
+                cellSettings.push(cellSettingClone);*/
                 cellSettings.push(cellSetting);
             })
         }
+    }
 
-
-        /*pos != -1 ? this._cellSettings.forEach(cellSettings => {
-                cellSettings.splice(pos, 0, cellSetting);
-            }) : this._cellSettings.forEach(cellSettings => {
-                cellSettings.push(cellSetting);
-            })*/
+    /*
+    * 简单对象的拷贝
+    * */
+    private _clone(obj: Object): Object{
+        let copy = (obj instanceof Array) ? [] : {};
+        for (let attr in obj) {
+            if (!obj.hasOwnProperty(attr)) continue;
+            copy[attr] = (typeof obj[attr] == "object") ? this._clone(obj[attr]) : obj[attr];
+        }
+        return copy;
     }
 
     /*

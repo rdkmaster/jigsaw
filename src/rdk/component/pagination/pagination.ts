@@ -156,6 +156,10 @@ export class RdkPagination extends AbstractRDKComponent implements OnInit, After
             this._pages.forEach(page => {
                 this._showPages.indexOf(page.page) != -1 ? page.show() : page.hide();
             });
+        }else{
+            this._pages.forEach(page => {
+                page.show();
+            });
         }
     }
 
