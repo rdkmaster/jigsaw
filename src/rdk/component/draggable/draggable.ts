@@ -1,4 +1,4 @@
-import {Directive, Renderer2, ElementRef} from "@angular/core";
+import {Directive, Renderer2, ElementRef, NgModule} from "@angular/core";
 
 
 @Directive({
@@ -38,5 +38,14 @@ export class RdkDraggable{
         this._renderer.setStyle(this._elementRef.nativeElement, 'left', this._ox + 'px');
         this._renderer.setStyle(this._elementRef.nativeElement, 'top', this._oy + 'px');
     }
-
 }
+
+
+@NgModule({
+    imports: [],
+    declarations: [RdkDraggable],
+    exports: [RdkDraggable]
+})
+export class RdkDraggableModule {
+}
+

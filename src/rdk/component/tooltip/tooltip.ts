@@ -1,6 +1,6 @@
 import {Component, Renderer2, ElementRef, Input, AfterContentInit, OnDestroy} from '@angular/core';
 
-import {IPopupable, PopupService} from '../../service/popup.service';
+import {IPopupable, PopupOptions, PopupService} from '../../service/popup.service';
 import {bubbleIn} from '../animations/bubble-in';
 
 @Component({
@@ -12,6 +12,9 @@ import {bubbleIn} from '../animations/bubble-in';
     ]
 })
 export class RdkTooltip implements IPopupable, AfterContentInit {
+    disposer: () => void;
+    options: PopupOptions;
+
     private _state: string = 'active';
 
     @Input()
@@ -26,7 +29,7 @@ export class RdkTooltip implements IPopupable, AfterContentInit {
     }
 
     ngAfterContentInit(){
-        this._popupService.setPopupPos(this.popupId, this._renderer, this._elementRef.nativeElement);
+        // this._popupService.setPopupPos(this.popupId, this._renderer, this._elementRef.nativeElement);
     }
 
     public close(){
@@ -35,7 +38,7 @@ export class RdkTooltip implements IPopupable, AfterContentInit {
 
     private _animationDone($event){
         if($event.toState == 'void'){
-            this._popupService.removePopup(this.popupId);
+            // this._popupService.removePopup(this.popupId);
         }
     }
 }

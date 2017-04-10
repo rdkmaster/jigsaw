@@ -18,12 +18,12 @@ export class TooltipDemoComponent {
     }
 
     popup() {
-        this._popupId = this._popupService.popup(UseTooltipComponent, this._getTooltipOptions(this.insertPlaceEl));
+        // this._popupId = this._popupService.popup(UseTooltipComponent, this._getTooltipOptions(this.insertPlaceEl));
     }
 
     close() {
-        let popupRef = this._popupService.getPopupRef(this._popupId);
-        popupRef && (popupRef as ComponentRef<any>).instance.close();
+        // let popupRef = this._popupService.getPopupRef(this._popupId);
+        // popupRef && (popupRef as ComponentRef<any>).instance.close();
         //this._popupService.removePopup(this._popupId); //无关闭动画
     }
 

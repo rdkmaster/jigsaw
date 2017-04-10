@@ -1,13 +1,11 @@
 import {Component} from "@angular/core";
 
-import {InfoAlert} from './use-alert-default/info-alert';
-import {WarningAlert} from './use-alert-default/warning-alert';
-import {ErrorAlert} from './use-alert-default/error-alert';
-import {UserAlertComponentConfig} from './use-alert-config/alert-config';
+import {CustomizedAlert} from './customized-alert/customized-alert';
 
 import {
-    PopupService, PopupOptions, PopupPositionType, PopupPoint
+    PopupService, PopupOptions, PopupPositionType, PopupPoint, ButtonInfo, PopupDisposer
 } from '../../../../../service/popup.service';
+import {RdkErrorAlert, RdkInfoAlert, RdkWarningAlert} from "../../../../../component/alert/alert";
 
 @Component({
     templateUrl: 'alert.html',
@@ -15,42 +13,50 @@ import {
 })
 export class AlertDemoComponent {
 
-    private _templateId: number;
+    private _disposer: PopupDisposer;
+
+    answer = '';
 
     constructor(private _popupService: PopupService) {
     }
 
-    alertDefaultInfo(event) {
-        this._popupService.popup(InfoAlert, this._getDialogOptionsTwo(event));
+    private alertCallback(answer:ButtonInfo) {
+        this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
     }
 
-    alertDefaultWarning(event) {
-        this._popupService.popup(WarningAlert, this._getDialogOptionsTwo(event));
+    commonInfoAlert(event) {
+        this.answer = 'waiting for an answer';
+        this._popupService.popup(RdkInfoAlert, this._getDialogOptions(event), {
+            message: 'this is a great info alert!', title: 'the title is optional',
+            callback: this.alertCallback, callbackContext: this
+        });
     }
 
-    alertDefaultError(event) {
-        this._popupService.popup(ErrorAlert, this._getDialogOptionsTwo(event));
+    commonWarningAlert(event) {
+        this.answer = 'waiting for an answer';
+        this._popupService.popup(RdkWarningAlert, this._getDialogOptions(event), {
+            message: 'this is a great warning alert!',
+            callback: this.alertCallback, callbackContext: this
+        });
     }
 
-    alertConfig(event) {
-        this._popupService.popup(UserAlertComponentConfig, this._getDialogOptionsTwo(event));
+    commonErrorAlert(event) {
+        this.answer = 'waiting for an answer';
+        this._popupService.popup(RdkErrorAlert, this._getDialogOptions(event), {
+            message: 'this is a great error alert!',
+            callback: this.alertCallback, callbackContext: this
+        });
     }
 
-
-    closeTemplate(){
-        this._popupService.removePopup(this._templateId);
+    customizedAlert(event) {
+        this.answer = 'waiting for an answer';
+        this._popupService.popup(CustomizedAlert, this._getDialogOptions(event));
     }
 
-    private _getDialogOptions(): PopupOptions {
-        return {
-            modal: true //是否模态
-        };
-    }
-
-    private _getDialogOptionsTwo(event): PopupOptions {
+    private _getDialogOptions(event): PopupOptions {
         return {
             modal: false, //是否模态
-            pos: new PopupPoint(event.clientX, event.clientY), //插入点
+            pos: {x: event.clientX, y: event.clientY}, //插入点
             posOffset: { //偏移位置
                 top: -10,
                 left: 10,

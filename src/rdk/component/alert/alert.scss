@@ -43,6 +43,9 @@ $alert-prefix-cls: #{$rdk-prefix}-alert;
             display: inline-block;
             vertical-align: middle;
         }
+        .#{$alert-prefix-cls}-content {
+            padding-top: 16px;
+        }
         .#{$alert-prefix-cls}-close {
             float: right;
             font-size: 20px;
