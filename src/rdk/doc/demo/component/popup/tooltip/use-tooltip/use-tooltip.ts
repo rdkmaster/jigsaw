@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 
-import {PopupService, IPopupable} from '../../../../../../service/popup.service';
+import {PopupService, IPopupable, PopupOptions} from '../../../../../../service/popup.service';
 import {RdkTooltip} from "../../../../../../component/tooltip/tooltip";
 
 @Component({
@@ -8,6 +8,8 @@ import {RdkTooltip} from "../../../../../../component/tooltip/tooltip";
     styleUrls: ['use-tooltip.scss']
 })
 export class UseTooltipComponent implements IPopupable {
+    disposer: () => void;
+    options: PopupOptions;
 
     private _initDate: any;
 

@@ -4,7 +4,7 @@ import {UseDialogComponent} from './use-dialog/use-dialog';
 import {UseDialog2Component} from './use-dialog2/use-dialog';
 
 import {
-    PopupService, PopupOptions, PopupPositionType, PopupPoint
+    PopupService, PopupOptions, PopupPositionType, PopupPoint, PopupDisposer
 } from '../../../../../service/popup.service';
 
 @Component({
@@ -13,7 +13,7 @@ import {
 })
 export class DialogDemoComponent {
 
-    private _templateId: number;
+    private _disposer: PopupDisposer;
 
     constructor(private _popupService: PopupService) {
     }
@@ -27,11 +27,11 @@ export class DialogDemoComponent {
     }
 
     popupTemplate(tp){
-        this._templateId = this._popupService.popup(tp);
+        this._disposer = this._popupService.popup(tp);
     }
 
     closeTemplate(){
-        this._popupService.removePopup(this._templateId);
+        this._disposer();
     }
 
     private _getDialogOptions(): PopupOptions {
@@ -43,7 +43,7 @@ export class DialogDemoComponent {
     private _getDialogOptionsTwo(event): PopupOptions {
         return {
             modal: false, //是否模态
-            pos: new PopupPoint(event.clientX, event.clientY), //插入点
+            pos: {x: event.clientX, y: event.clientY}, //插入点
             posOffset: { //偏移位置
                 top: -10,
                 left: 10,

@@ -1,20 +1,20 @@
 import {
-    Component, Renderer2, ElementRef,
-    Input, OnDestroy, AfterContentInit,
-    EventEmitter, Output
-} from '@angular/core';
+    AfterContentInit, Component, ElementRef, Input, NgModule, OnDestroy, Renderer2, ViewChild,
+    ViewEncapsulation
+} from "@angular/core";
 
-import {
-    PopupService, PopupOptions,
-    IDialog, ButtonInfo
-} from '../../service/popup.service';
+import {ButtonInfo, PopupService} from "../../service/popup.service";
 
-import {fadeIn} from '../animations/fade-in';
-import {bubbleIn} from '../animations/bubble-in';
-import {AbstractRDKComponent} from '../core';
+import {fadeIn} from "../animations/fade-in";
+import {bubbleIn} from "../animations/bubble-in";
+import {AbstractDialogComponentBase, DialogBase, RdkDialog, RdkDialogModule} from "../dialog/dialog";
+import {CommonModule} from "@angular/common";
+import {RdkButtonModule} from "../button/button";
+import {RdkDraggableModule} from "../draggable/draggable";
+
 
 export enum AlertLevel {
-    info, warning, error
+    info, warning, error, confirm
 }
 
 @Component({
@@ -26,102 +26,71 @@ export enum AlertLevel {
         bubbleIn
     ]
 })
-export class RdkAlert extends AbstractRDKComponent implements IDialog, AfterContentInit, OnDestroy {
+export class RdkAlert extends AbstractDialogComponentBase {
+    //TODO label需要国际化
+    public static OK_LABEL: string = 'OK';
+    public static CANCEL_LABEL: string = 'Cancel';
+    public static YES_LABEL: string = 'Yes';
+    public static NO_LABEL: string = 'No';
+    public static ABORT_LABEL: string = 'Abort';
+    public static IGNORE_LABEL: string = 'Ignore';
+    public static RETRY_LABEL: string = 'Retry';
 
-    constructor(private _popupService: PopupService,
-                private _renderer: Renderer2,
-                private _elementRef: ElementRef) {
+    public static INFO_TITLE: string = 'Information';
+    public static WARNING_TITLE: string = 'Warning';
+    public static ERROR_TITLE: string = 'Error';
+    public static CONFIRM_TITLE: string = 'Confirm';
+
+    constructor(popupService: PopupService,
+                renderer: Renderer2,
+                elementRef: ElementRef) {
         super();
+        this.popupService = popupService;
+        this.renderer = renderer;
+        this.elementRef = elementRef;
     }
 
-    private _level: AlertLevel;
+    private _alertClass = {
+        'rdk-alert-info': true,
+        'rdk-alert-warning': false,
+        'rdk-alert-error': false
+    };
+
+    private _level: AlertLevel = AlertLevel.info;
     @Input()
-    public get level(): AlertLevel {
+    public get level(): AlertLevel | string {
         return this._level;
     }
 
-    public set level(value: AlertLevel) {
-        this._level = value;
-        this._setAlertClass(this._level);
-    }
+    public set level(value: AlertLevel | string) {
+        switch (value) {
+            case AlertLevel.warning:
+            case "warning":
+                this._level = AlertLevel.warning;
+                break;
 
-    private _title: string;
-    @Input()
-    public get title(): string {
-        if (this._title === undefined || this._title == null) {
-            switch (this._level) {
-                case AlertLevel.info:
-                    //TODO 需要考虑国际化
-                    this._title = "Information";
-                    break;
-                case AlertLevel.warning:
-                    //TODO 需要考虑国际化
-                    this._title = "Warning";
-                    break;
-                case AlertLevel.error:
-                    //TODO 需要考虑国际化
-                    this._title = "Error";
-                    break;
-                default:
-                    //TODO 需要考虑国际化
-                    this._title = "Information";
-                    break;
-            }
+            case AlertLevel.error:
+            case "error":
+                this._level = AlertLevel.error;
+                break;
+
+            case AlertLevel.info:
+            case "info":
+            default:
+                this._level = AlertLevel.info;
         }
-        return this._title;
-    }
 
-    public set title(value: string) {
-        this._title = value;
+        this._alertClass = {
+            'rdk-alert-info': this._level == AlertLevel.info,
+            'rdk-alert-warning': this._level == AlertLevel.warning,
+            'rdk-alert-error': this._level == AlertLevel.error
+        }
     }
 
     private _icon: string;
     @Input()
     public get icon(): string {
-        return this._icon;
-    }
-
-    public set icon(value: string) {
-        this._icon = value;
-    }
-
-    private _topPlace: string;
-    @Input()
-    public get topPlace(): string {
-        return this._topPlace
-    }
-
-    public set topPlace(newValue: string) {
-        const match = newValue ? newValue.match(/^\s*\d+%|px\s*$/) : null;
-        this._topPlace = match ? newValue : newValue + 'px';
-    }
-
-    @Input()
-    public popupId: number;
-
-    @Input()
-    public buttonClass:string;
-
-    @Input() buttons: Array<ButtonInfo>=[];
-    @Output()
-    public closeCallFunc: EventEmitter<any> = new EventEmitter<any>();
-
-    private _popupEl: HTMLElement;
-    private _iconEl: HTMLElement;
-    private _iconButton: HTMLElement;
-    private _windowResize: Function;
-    private _options: PopupOptions;
-    private _state: string = 'active';
-
-    public initData: any;
-
-    public close() {
-        this._state = 'void';
-        this.closeCallFunc.emit();
-    }
-
-    private getDefaultIcon() {
-        if (this._icon === undefined || this._icon == null) {
+        if (!this._icon) {
             switch (this._level) {
                 case AlertLevel.info:
                     this._icon = "fa-info-circle";
@@ -137,73 +106,101 @@ export class RdkAlert extends AbstractRDKComponent implements IDialog, AfterCont
                     break;
             }
         }
+        return this._icon;
     }
 
-    private _init() {
-        this._iconEl = this._elementRef.nativeElement.querySelector('.rdk-alert-icon');
-        this.getDefaultIcon();
-        this._icon && this._renderer.addClass(this._iconEl, this._icon);
-
-        this._popupEl = this._elementRef.nativeElement.querySelector('.rdk-alert');
-        //设置弹框宽度
-        this.width && this._renderer.setStyle(this._popupEl, 'width', this.width);
-
-        this._options = this._popupService.getOptions(this.popupId);
-
-        if (this._options && !this._options.modal) {
-            this._popupService.setPopupPos(this.popupId, this._renderer, this._popupEl);
-        } else {
-            //设置默认位置
-            this._setDefaultPosition();
-        }
-
-        this._resetPosition();
+    public set icon(value: string) {
+        this._icon = value;
     }
 
-    private _setDefaultPosition(): void {
-        //弹框居中
-        this._renderer.setStyle(this._popupEl, 'left', (window.innerWidth / 2 - this._popupEl.offsetWidth / 2) + 'px');
-        if (this.topPlace) {
-            //居上显示
-            this._renderer.setStyle(this._popupEl, 'top', this.topPlace);
-        } else {
-            //居中显示
-            this._renderer.setStyle(this._popupEl, 'top', (window.innerHeight / 2 - this._popupEl.offsetHeight / 2) + 'px');
-        }
+    protected getPopupElement(): HTMLElement {
+        return this.elementRef.nativeElement.querySelector('.rdk-alert');
     }
 
-    private _resetPosition() {
-        //resize居中
-        this._windowResize = this._renderer.listen('window', 'resize', () => {
-            this._renderer.setStyle(this._popupEl, 'left', (window.innerWidth / 2 - this._popupEl.offsetWidth / 2) + 'px');
-            !this.topPlace && this._renderer.setStyle(this._popupEl, 'top', (window.innerHeight / 2 - this._popupEl.offsetHeight / 2) + 'px');
-        })
-    }
-
-    private _animationDone($event) {
-        if ($event.toState == 'void') {
-            this._popupService.removePopup(this.popupId);
-        }
-    }
-
-    private _alertClass: {};
-
-    private _setAlertClass(value: AlertLevel) {
-
-        this._alertClass = {
-            'rdk-alert-info': value == AlertLevel.info ? true : false,
-            'rdk-alert-warning': value == AlertLevel.warning ? true : false,
-            'rdk-alert-error': value == AlertLevel.error ? true : false
-        }
-    }
-
-    ngAfterContentInit() {
-        this._init();
-    }
-
-    ngOnDestroy() {
-        //销毁resize事件
-        this._windowResize();
+    protected init() {
+        const iconEl = this.elementRef.nativeElement.querySelector('.rdk-alert-icon');
+        this.renderer.addClass(iconEl, this.icon);
+        super.init();
     }
 }
 
+abstract class RdkCommonAlert extends DialogBase {
+    public set initData(value: any) {
+        if (!value) {
+            return;
+        }
+        this.message = value.message ? value.message : 'the "message" property in the initData goes here.';
+        this.title = value.title ? value.title : this._getDefaultTitle();
+        this.callback = value.callback;
+        this.callbackContext = value.callbackContext;
+    }
+
+    public abstract get dialog(): RdkDialog;
+    public abstract set dialog(value: RdkDialog);
+
+    public message: string;
+    public callback: Function;
+    public callbackContext: any;
+    public buttons = [{label: RdkAlert.OK_LABEL, callback: this.dispose, callbackContext: this}];
+    public level: AlertLevel = AlertLevel.info;
+
+    private _getDefaultTitle():string {
+        switch (this.level) {
+            case AlertLevel.warning:
+                return RdkAlert.WARNING_TITLE;
+
+            case AlertLevel.error:
+                return RdkAlert.ERROR_TITLE;
+
+            case AlertLevel.info:
+            default:
+                return RdkAlert.INFO_TITLE;
+        }
+    }
+
+    public onClose(answer: ButtonInfo): void {
+        if (!this.callback) {
+            return;
+        }
+        this.callback.call(this.callbackContext, answer);
+    }
+}
+
+@Component({
+    templateUrl: 'common-alert.html',
+    selector: 'rdk-info-alert',
+    encapsulation: ViewEncapsulation.None
+})
+export class RdkInfoAlert extends RdkCommonAlert {
+    @ViewChild(RdkAlert) dialog: RdkDialog;
+    public level: AlertLevel = AlertLevel.info;
+}
+
+@Component({
+    templateUrl: 'common-alert.html',
+    selector: 'rdk-warning-alert',
+    encapsulation: ViewEncapsulation.None
+})
+export class RdkWarningAlert extends RdkCommonAlert {
+    @ViewChild(RdkAlert) dialog: RdkDialog;
+    public level: AlertLevel = AlertLevel.warning;
+}
+
+@Component({
+    templateUrl: 'common-alert.html',
+    selector: 'rdk-error-alert',
+    encapsulation: ViewEncapsulation.None
+})
+export class RdkErrorAlert extends RdkCommonAlert {
+    @ViewChild(RdkAlert) dialog: RdkDialog;
+    public level: AlertLevel = AlertLevel.error;
+}
+
+
+@NgModule({
+    imports: [RdkDialogModule, RdkDraggableModule, RdkButtonModule, CommonModule],
+    declarations: [RdkAlert, RdkInfoAlert, RdkWarningAlert, RdkErrorAlert],
+    exports: [RdkDialogModule, RdkDraggableModule, RdkAlert, RdkInfoAlert, RdkWarningAlert, RdkErrorAlert]
+})
+export class RdkAlertModule {
+}
