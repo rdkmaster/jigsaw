@@ -1,7 +1,6 @@
-import {Component, ViewChild, OnInit, ChangeDetectorRef} from "@angular/core";
+import {Component} from "@angular/core";
 import {TableCellRenderer} from "../../../../../component/table/table-api";
-import {RdkCheckBox} from "../../../../../component/checkbox/checkbox";
-import {TableRendererService, checkboxState} from "./tableRendererService";
+import {TableRendererService, CheckboxState} from "./tableRendererService";
 
 /*
  * 自定义单元格渲染组件
@@ -22,15 +21,15 @@ export class TableHeadCheckbox extends TableCellRenderer {
     constructor(private tableRendererService: TableRendererService){
         super();
         this.tableRendererService.headListen(() => {
-            this.tableRendererService.headCheckboxState = this.cellData = 1;
+            this.tableRendererService.headState = this.cellData = 1;
         }, () => {
-            this.tableRendererService.headCheckboxState = this.cellData = 0;
+            this.tableRendererService.headState = this.cellData = 0;
         });
-        this.tableRendererService.headCheckboxState = this.cellData;
+        this.tableRendererService.headState = this.cellData;
     }
 
     toggleSelectAll(checked){
-        this.tableRendererService.headCheckboxState = checked;
+        this.tableRendererService.headState = checked;
         if(checked){
             this.tableRendererService.selectAll();
         }else{
@@ -51,7 +50,7 @@ export class TableCellCheckbox extends TableCellRenderer{
         this.tableRendererService.listen(() => {this.cellData = 1}, () => {this.cellData = 0});
     }
 
-    private checkboxState: checkboxState;
+    private checkboxState: CheckboxState;
 
     setCheckboxState(checked){
         if(this.checkboxState){
@@ -62,9 +61,9 @@ export class TableCellCheckbox extends TableCellRenderer{
         }
 
         if(!this.tableRendererService.checkboxStates.find(checkboxState => checkboxState.checked == false)){
-            !this.tableRendererService.headCheckboxState && this.tableRendererService.headCheckboxSelect();
+            !this.tableRendererService.headState && this.tableRendererService.headSelect();
         }else{
-            this.tableRendererService.headCheckboxState && this.tableRendererService.headCheckboxUnSelect();
+            this.tableRendererService.headState && this.tableRendererService.headUnSelect();
         }
     }
 

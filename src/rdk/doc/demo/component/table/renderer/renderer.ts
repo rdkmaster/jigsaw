@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation, Type, ViewChildren, QueryList, AfterViewInit} from "@angular/core";
+import {Component, ViewEncapsulation} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
 import {
     TableHead, TableCell, TableHeadSelect, TableHeadCheckbox,TableCellCheckbox, TableCellOption,
@@ -12,7 +12,7 @@ import {ColumnSetting, AdditionalColumnSetting} from "../../../../../component/t
     styleUrls: ['renderer.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TableRendererDemoComponent implements AfterViewInit{
+export class TableRendererDemoComponent{
     tableData: TableData;
 
     constructor() {
@@ -187,12 +187,5 @@ export class TableRendererDemoComponent implements AfterViewInit{
         console.log("page size is: "+message);
     }*/
 
-    @ViewChildren(TableCellCheckbox) checkboxs: QueryList<TableCellCheckbox>;
-
-    ngAfterViewInit(){
-        this.checkboxs.forEach(checkbox => {
-            checkbox.cellData = 1;
-        })
-    }
 }
 
