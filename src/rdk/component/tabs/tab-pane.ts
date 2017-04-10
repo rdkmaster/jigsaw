@@ -12,6 +12,7 @@ import {Component, OnInit, Input, TemplateRef, ViewChild} from '@angular/core';
     `
 })
 export class TabPane {
+
     @Input()
     public label: string;
 
@@ -24,5 +25,5 @@ export class TabPane {
     @Input()
     public hidden: boolean = false;
 
-    @ViewChild(TemplateRef) content: TemplateRef<any>;
+    @ViewChild(TemplateRef) content: TemplateRef<any>| any;
 }

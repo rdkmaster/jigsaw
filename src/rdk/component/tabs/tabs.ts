@@ -1,13 +1,9 @@
-/**
- * Created by 10177553 on 2017/3/29.
- */
 import {
-    Component, OnInit, ContentChildren, QueryList, Directive, Input, ElementRef, ViewChildren,
-    AfterViewInit, Output, EventEmitter, Type, TemplateRef
+    Component, ContentChildren, QueryList, Input, ViewChildren,
+    AfterViewInit, Output, EventEmitter, AfterViewChecked, ChangeDetectorRef
 } from '@angular/core';
 import {TabPane} from "./tab-pane";
 import {TabLabel} from "./tab-label";
-import {addExportToModule} from "@angular/cli/lib/ast-tools";
 import {TabContent} from "./tab-content";
 
 @Component({
@@ -15,7 +11,7 @@ import {TabContent} from "./tab-content";
     templateUrl: 'tabs.html',
     styleUrls: ['./tabs.scss']
 })
-export class RdkTabs implements AfterViewInit {
+export class RdkTabs implements AfterViewInit, AfterViewChecked {
 
     @ContentChildren(TabPane) _tabPanes: QueryList<TabPane>;
 
@@ -29,6 +25,8 @@ export class RdkTabs implements AfterViewInit {
     @Output()
     public selectChange = new EventEmitter<TabPane>();
 
+    constructor(private _changeDetector: ChangeDetectorRef) {};
+
     // tab页点击
     private _tabClick(index) {
         if(this.selectedIndex === index) return;
@@ -38,9 +36,23 @@ export class RdkTabs implements AfterViewInit {
 
         // 发出事件, 返回相应
         this.selectChange.emit(this._getTabPaneByIndex(index));
+        this.selectedIndexChanged.emit(index);
     }
 
-    public selectedIndex: number = 0;
+    private _selectedIndex: number = 0;
+
+    @Input()
+    public get selectedIndex():number {
+        return this._selectedIndex;
+    }
+    public set selectedIndex(value: number) {
+        if(this._selectedIndex === value) return;
+
+        this._selectedIndex = value;
+    }
+
+    @Output()
+    public selectedIndexChanged = new EventEmitter<number>();
 
     private _setSelectIndex(index):void {
         this.selectedIndex = index;
@@ -52,6 +64,7 @@ export class RdkTabs implements AfterViewInit {
 
     private _setInkBarStyle(index: number) {
         let labelPos = this._getLabelOffsetByKey(index);
+
         this._inkBarStyle = {
             'display': 'block',
             'transform': 'translate3d('+ labelPos.offSet +'px, 0px, 0px)',
@@ -61,13 +74,17 @@ export class RdkTabs implements AfterViewInit {
 
     // 将有纵向切换的封装.
     private _getLabelOffsetByKey(key: number): any {
-        // todo 非法key的校验
         let currentLabel = this._tabLabel.find(item => item.key === key);
 
         // 非法的 key // 有可能getTop 等扩展Tab页时再重构.
-        return {
-            offSet: currentLabel.getOffsetLeft(),
-            width: currentLabel.getOffsetWidth()
+        if(currentLabel) { // 找到对应的Label
+            return {
+                offSet: currentLabel.getOffsetLeft(),
+                width: currentLabel.getOffsetWidth()
+            }
+        } else {
+            console.warn("没有对应key的tab-Label");
+            return {}
         }
     }
 
@@ -84,39 +101,99 @@ export class RdkTabs implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        // 默认选中的值.
-        this._setSelectIndex(0);
+        this._setSelectIndex(this.selectedIndex);
     }
 
-    // Todo 调用接口创建tabPane 1. templateRef 哪里来? 2. 是否默认显示创建的tabPane.
-    addTabPane(title:string, content:TemplateRef<any>|Type<any>, icon?: string, index?: number) {
-
+    ngAfterViewChecked() {
+        this._setSelectIndex(this.selectedIndex);
+        // 因为已经做过"脏检查", 需要手动再触发检查
+        this._changeDetector.detectChanges();
     }
 
     /**
-     * 异常对应的Tab页.
+     * 隐藏对应的Tab页.
      * @param key (tab pane 的顺序.)
      */
-    hideTab(index):void {
+    public hideTab(index):void {
         let tabPane = this._getTabPaneByIndex(index);
-        tabPane.hidden = true;
-    }
 
+        if(!this._isTabPane(tabPane)) return;
+
+        tabPane.hidden = true;
+
+        this._handleSelect();
+    }
     /**
      * 显示对应的Tab页, 如果已经是显示的没有变化, 隐藏的显示, 没有打印出警告.
      * @param index
      */
-    showTab(index) {
+    public showTab(index) {
         let tabPane = this._getTabPaneByIndex(index);
+
+        if(!this._isTabPane(tabPane)) return;
+
         tabPane.hidden = false;
+        this.selectedIndex = index;
+    }
+
+    private _isTabPane(tabPane: any):boolean {
+        if(!tabPane) {
+            console.info("没有找到对应的索引的tab-pane");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
+    /**
+     * 销毁指定的Tab页. 从0开始计数.
+     * @param index
+     */
+    destroyTabPane(index) {
+        if(this._tabPanes.length - index < 1) {
+            console.info("没有对应tab-pane 供删除");
+            return;
+        }
+
+        let tabTemp = this._tabPanes.toArray();
+        tabTemp.splice(index, 1); // 去掉要删除的元素;
+
+        // 重新修改queryList. 不确定这么做有没有什么隐患.
+        this._tabPanes.reset(tabTemp);
+
+        this._getTabLabelByIndex(index).destroy();
+        this._getTabContentByIndex(index).destroy();
+
+        this._handleSelect();
     }
 
     /**
-     * 销毁指定的Tab页.
-     * @param index
+     * 当 没有指定选择哪个tab时自动处理选中的函数:
+     * 使用场景:
+     *  1. 隐藏了当前选中的tab-pane
+     *  2. 删除了当前的tab-pane
+     *  规则: 1. 最后一个非disabled的tabPane
+     *        2. 否则隐藏tab 条.
+     * @private
      */
-    destroyTab(index) {
+    private _handleSelect() {
 
+        let tabPane = this._getTabPaneByIndex(this.selectedIndex);
+
+        if(!tabPane|| tabPane.hidden|| tabPane.disabled) {
+            let canSelect = -1;
+
+            this._tabPanes.forEach((item, index) => {
+                if(!item.disabled&& !item.hidden) canSelect = index;
+            })
+
+            if(canSelect === -1) {
+                // 1. Todo 没有非disable和hidden的tab页时，怎么显示tab页.
+                console.info("取消显示");
+            } else {
+                this.selectedIndex = canSelect;
+            }
+        }
     }
-
 }

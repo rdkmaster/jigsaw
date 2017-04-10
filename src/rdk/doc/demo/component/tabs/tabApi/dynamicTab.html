@@ -1,0 +1,13 @@
+<div class="container">
+    <div class="tabBar">
+        <input type="button" value="增加" (click)="addTabPane()">
+        <input type="button" value="隐藏第一个Tab页" (click)="hideTab($event)">
+        <input type="button" value="显示第一个Tab页" (click)="showTab($event)">
+        <input type="button" value="删除第一个Tab页" (click)="deleteTab($event)">
+        <input type="button" value="删除第一个推荐实现" (click)="deleteTabSec($event)">
+    </div>
+
+    <rdk-tabs [selectedIndex]="activeIndex">
+        <tab-pane *ngFor="let tab of dynamicTabs" [disabled]="tab.disabled" label="{{tab.label}}"> {{tab.content}}</tab-pane>
+    </rdk-tabs>
+</div>

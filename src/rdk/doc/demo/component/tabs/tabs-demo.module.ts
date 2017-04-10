@@ -16,6 +16,7 @@ import {RdkHideTabComponent} from "./hideTab/hideTab";
 import {RdkShowTabComponent} from "./showTab/showTab";
 import {RdkDestoryTabComponent} from "./destoryTab/destoryTab";
 import {RdkTabsComponent} from "./tabs/Tabs";
+import {dynamicTabDemoComponent} from "./tabApi/dynamicTab";
 
 const routes=[
     {
@@ -35,7 +36,11 @@ const routes=[
     },
     {
         path:'destoryTab', component: RdkDestoryTabComponent
-    }, {
+    },
+    {
+        path:'dynamicTab', component: dynamicTabDemoComponent
+    },
+    {
         path:'Tabs', component: RdkTabsComponent
     }
 ];
@@ -48,7 +53,7 @@ const routes=[
     ],
     exports: [RdkTabsDemoComponent],
     declarations: [RdkTabsDemoComponent,RdkTabsWithInputComponent,RdkTabsWithNgForComponent,
-        RdkHideTabComponent,RdkShowTabComponent,RdkDestoryTabComponent,RdkTabsComponent],
+        RdkHideTabComponent,RdkShowTabComponent,RdkDestoryTabComponent,RdkTabsComponent, dynamicTabDemoComponent],
     providers: [],
     schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

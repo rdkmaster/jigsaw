@@ -4,7 +4,7 @@
 
 import {
     Component, Input, ViewContainerRef,
-    TemplateRef, AfterViewChecked, ViewChild
+    TemplateRef, AfterViewChecked, ViewChild, Renderer2, ElementRef
 } from '@angular/core';
 
 @Component({
@@ -19,13 +19,15 @@ import {
     `
 })
 export class TabContent implements AfterViewChecked {
-    @ViewChild('body', {read: ViewContainerRef}) body: ViewContainerRef;
+    @ViewChild('body', {read: ViewContainerRef}) _body: ViewContainerRef;
 
     @Input('content')
     private _content: TemplateRef<Object>;
 
     @Input()
-    contentKey: number;
+    public contentKey: number;
+
+    constructor(private _render: Renderer2, private _element: ElementRef) {};
 
     private _isActive: boolean;
 
@@ -39,6 +41,10 @@ export class TabContent implements AfterViewChecked {
     }
 
     ngAfterViewChecked() {
-        this.body.createEmbeddedView(this._content);
+        this._body.createEmbeddedView(this._content);
+    }
+
+    public destroy(): void {
+        this._render.parentNode(this._element.nativeElement).removeChild(this._element.nativeElement);
     }
 }
