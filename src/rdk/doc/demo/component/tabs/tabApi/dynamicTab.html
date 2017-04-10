@@ -7,7 +7,7 @@
         <input type="button" value="删除第一个推荐实现" (click)="deleteTabSec($event)">
     </div>
 
-    <rdk-tabs [selectedIndex]="activeIndex">
+    <rdk-tab [selectedIndex]="activeIndex">
         <tab-pane *ngFor="let tab of dynamicTabs" [disabled]="tab.disabled" label="{{tab.label}}"> {{tab.content}}</tab-pane>
-    </rdk-tabs>
+    </rdk-tab>
 </div>

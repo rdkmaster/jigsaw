@@ -2,7 +2,7 @@
  * Created by 10177553 on 2017/4/5.
  */
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {RdkTabs} from "../../../../../component/tabs/tabs";
+import {RdkTab} from "../../../../../component/tabs/tab";
 
 @Component({
     templateUrl: './dynamicTab.html',
@@ -24,7 +24,7 @@ import {RdkTabs} from "../../../../../component/tabs/tabs";
     `]
 })
 export class dynamicTabDemoComponent implements OnInit {
-    @ViewChild(RdkTabs) tabs: RdkTabs;
+    @ViewChild(RdkTab) tabs: RdkTab;
 
     activeIndex: number = 0;
 

@@ -2,14 +2,14 @@
  * Created by 10177553 on 2017/3/29.
  */
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {RdkTabs} from "../../../../../component/tabs/tabs";
+import {RdkTab} from "../../../../../component/tabs/tab";
 
 @Component({
     templateUrl:"destoryTab.html"
 })
 export class RdkDestoryTabComponent {
 
-    @ViewChild('myTab') myTab: RdkTabs;
+    @ViewChild('myTab') myTab: RdkTab;
 
     destroyTab() {
         this.myTab.destroyTabPane(0);

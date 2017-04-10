@@ -7,11 +7,11 @@ import {TabLabel} from "./tab-label";
 import {TabContent} from "./tab-content";
 
 @Component({
-    selector: 'rdk-tabs',
-    templateUrl: 'tabs.html',
-    styleUrls: ['./tabs.scss']
+    selector: 'rdk-tab',
+    templateUrl: 'tab.html',
+    styleUrls: ['./tab.scss']
 })
-export class RdkTabs implements AfterViewInit, AfterViewChecked {
+export class RdkTab implements AfterViewInit, AfterViewChecked {
 
     @ContentChildren(TabPane) _tabPanes: QueryList<TabPane>;
 
@@ -60,7 +60,7 @@ export class RdkTabs implements AfterViewInit, AfterViewChecked {
         this._setInkBarStyle(index);
     }
 
-    _inkBarStyle: {}
+    _inkBarStyle: {};
 
     private _setInkBarStyle(index: number) {
         let labelPos = this._getLabelOffsetByKey(index);
@@ -186,7 +186,7 @@ export class RdkTabs implements AfterViewInit, AfterViewChecked {
 
             this._tabPanes.forEach((item, index) => {
                 if(!item.disabled&& !item.hidden) canSelect = index;
-            })
+            });
 
             if(canSelect === -1) {
                 // 1. Todo 没有非disable和hidden的tab页时，怎么显示tab页.

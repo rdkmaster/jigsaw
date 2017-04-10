@@ -5,15 +5,15 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
     template: `
-    <div class="container">
-        <rdk-tabs (selectChange)="testEvent($event)">
-            <tab-pane label="tab 1" icon="fa fa-gift"> tab content 1</tab-pane>
-            <tab-pane label="tab 2123123123123123123"> <input type="text" placeholder="请输入姓名~"></tab-pane>
-            <tab-pane label="tab 3"> tab content 3</tab-pane>
-            <tab-pane label="tab 4" [disabled]="true"> tab content 4</tab-pane>
-            <tab-pane label="tab 5" icon="fa fa-bicycle"> tab content 5</tab-pane>
-        </rdk-tabs>
-    </div>
+        <div class="container">
+            <rdk-tab (selectChange)="testEvent($event)">
+                <tab-pane label="tab 1" icon="fa fa-gift"> tab content 1</tab-pane>
+                <tab-pane label="tab 2123123123123123123"><input type="text" placeholder="请输入姓名~"></tab-pane>
+                <tab-pane label="tab 3"> tab content 3</tab-pane>
+                <tab-pane label="tab 4" [disabled]="true"> tab content 4</tab-pane>
+                <tab-pane label="tab 5" icon="fa fa-bicycle"> tab content 5</tab-pane>
+            </rdk-tab>
+        </div>
     `,
     styles:[ `
         .container {
