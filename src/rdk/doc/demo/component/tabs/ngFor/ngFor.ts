@@ -16,4 +16,7 @@ export class RdkTabsWithNgForComponent implements OnInit {
         this.tabDatas = new Array("Tab1","Tab2")
     }
 
+    testEvent() {
+        console.info("tab页点击");
+    }
 }
