@@ -12,7 +12,7 @@ export class RdkDestoryTabComponent {
     @ViewChild('myTab') myTab: RdkTabs;
 
     destroyTab() {
-        this.myTab.destroyTab(0);
+        this.myTab.destroyTabPane(0);
     }
 
 }
