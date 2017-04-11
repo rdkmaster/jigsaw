@@ -135,7 +135,6 @@ export class GraphData extends TableData {
     }
 
     protected extendEchartsOption(targetObject, sourceObj) {
-        debugger
         if (!sourceObj) return targetObject;
         if (!targetObject) return sourceObj;
         for (var param in sourceObj) {
