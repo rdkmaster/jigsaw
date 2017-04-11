@@ -23,6 +23,7 @@ export abstract class AbstractGeneralCollection implements IAjaxComponentData {
         }
 
         const op = ComponentDataHelper.castToRequestOptionsArgs(options);
+        debugger
         this.http.request(op.url, op)
             .map(res => this.reviseData(res))
             .subscribe(

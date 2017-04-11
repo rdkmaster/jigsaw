@@ -1,26 +1,52 @@
+import {Http, RequestOptionsArgs} from "@angular/http";
 import {EchartTitle, EchartLegend, EchartTooltip, EchartOptions} from "./echart-types";
 import {TableData} from "./table-data";
+import {ComponentDataHelper} from "./component-data";
+import {Subject} from "rxjs";
+import 'rxjs/add/operator/map';
 
-type GraphMatrixRow = Array<string|number>;
+type GraphMatrixRow = Array<string | number>;
 export type GraphDataHeader = string[];
 export type GraphDataField = string[];
 export type GraphDataRowDescriptor = string[];
 export type GraphDataMatrix = GraphMatrixRow[];
 
-export abstract class AbstractGraphData extends TableData {
-    protected abstract createChartOptions(): any;
-
-    public optionsPatch: EchartOptions;
-
+export class GraphData extends TableData {
     constructor(public data?: GraphDataMatrix,
                 public header?: GraphDataHeader,
                 public rowDescriptor?: GraphDataRowDescriptor,
                 public field?: GraphDataField) {
         super(data, field, header);
-        this._makeFields();
+        if (!data) {
+            this.data = [];
+        }
+        if (!field) {
+            this.field = [];
+        }
+        if (!header) {
+            this.header = [];
+        }
         if (!rowDescriptor) {
             this.rowDescriptor = [];
         }
+        this._makeFields();
+        this.refresh();
+    }
+
+    //图共有属性
+    public _seriesData: object[] = [];
+    public _hasRightData: boolean = true;
+
+    public static isGraphData(data: any): boolean {
+        return data && data.hasOwnProperty('data') && data.data instanceof Array &&
+            data.hasOwnProperty('header') && data.header instanceof Array &&
+            data.hasOwnProperty('rowDescriptor') && data.rowDescriptor instanceof Array;
+    }
+
+    public optionsPatch: EchartOptions;
+
+    protected createChartOptions(): any {
+        return undefined;
     }
 
     protected echartOptions: EchartOptions;
@@ -28,16 +54,13 @@ export abstract class AbstractGraphData extends TableData {
     public get options(): EchartOptions {
         if (!this.echartOptions) {
             this.echartOptions = this.createChartOptions();
-            if (this.optionsPatch) {
-                this.extendOption();
-            }
         }
-
-        return this.echartOptions;
+        return this.extendEchartsOption(this.echartOptions, this.optionsPatch);
     }
 
-    public fromObject(data: any): AbstractGraphData {
+    public fromObject(data: any): GraphData {
         if (!data.hasOwnProperty('data') || !(data.data instanceof Array)) {
+            this._hasRightData = false;
             throw new Error('need a "data" property which type is Array!');
         }
         this.clearData();
@@ -54,12 +77,45 @@ export abstract class AbstractGraphData extends TableData {
         }
         this._makeFields();
         this.refresh();
-
         return this;
     }
 
+    public fromAjax(options?: RequestOptionsArgs | string): void {
+        const op = ComponentDataHelper.castToRequestOptionsArgs(options);
+        this.busy = true;
+
+        this.http.request(op.url, op)
+            .map(res => this.reviseData(res))
+            .map(data => {
+                const graphData: GraphData = new GraphData();
+
+                if (GraphData.isGraphData(data)) {
+                    graphData.fromObject(data);
+                } else {
+                    console.error('invalid data format, need a TableData object.');
+                    this._hasRightData = false;
+                }
+                return graphData;
+            })
+            .subscribe(
+                graphData => this.ajaxSuccessHandler(graphData),
+                error => this.ajaxErrorHandler(error),
+                () => this.ajaxCompleteHandler()
+            );
+    }
+
+    protected ajaxSuccessHandler(graphData: any): void {
+        graphData.rowDescriptor.forEach(data => {
+            data && this.rowDescriptor.push(data);
+        });
+        this.header = graphData.header;
+        this.data = graphData.data;
+        this.refresh();
+        console.log('get data from  server success!!');
+    }
+
     private _makeFields(): void {
-        if ((!this.field|| this.field.length == 0) && this.header) {
+        if ((!this.field || this.field.length == 0) && this.header) {
             this.header.forEach(item => this.field.push(item));
         }
     }
@@ -70,113 +126,67 @@ export abstract class AbstractGraphData extends TableData {
     }
 
     public patchOptions(patchOpt: Object): void {
-        if(!patchOpt) return;
-
+        if (!patchOpt) return;
         this.optionsPatch = patchOpt;
     }
 
-    /**
-     * 扩展 echarts 默认的option的配置.
-     * @param sourceOption 传递进来新的option选项
-     */
-    public extendOption() {
-        this.extendObject(this.echartOptions, this.optionsPatch);
+    public isObject(obj) {
+        return obj !== null && typeof obj === 'object' && Object.getPrototypeOf(obj) === Object.prototype;
     }
 
-    /**
-     * 主要负责两个对象的合并
-     * 将sourceObject 中的属性添加到targetObject 中.
-     * @param targetObject 要合并的源对象
-     * @param sourceObject 合并的对象信息
-     */
-    protected extendObject(targetObject, sourceObject) {
-        // 目标对象为空，则直接将对象复制给obj
-        if (!targetObject) {
-            targetObject = sourceObject;
-        }
-
-        for (let i in sourceObject) {
-            if (typeof sourceObject[i] !== "object") {
-                targetObject[i] = sourceObject[i];
+    protected extendEchartsOption(targetObject, sourceObj) {
+        debugger
+        if (!sourceObj) return targetObject;
+        if (!targetObject) return sourceObj;
+        for (var param in sourceObj) {
+            var dst = targetObject[param];
+            var src = sourceObj[param];
+            if (dst === src) {
+                continue;
+            }
+            if (this.isObject(src)) {
+                dst = dst || {};
+                targetObject[param] = this.extendEchartsOption(dst, src);
+            } else if (dst != null && src instanceof Array) {
+                targetObject[param] = this.extendEchartsOption(dst, src);
             } else {
-                // 如果原数据为数组, 已经是属性的值，直接覆盖;
-                if (sourceObject[i] instanceof Array) {
-                    targetObject[i] = sourceObject[i];
-                } else {
-                    this.extendObject(targetObject[i], sourceObject[i]);
-                }
+                targetObject[param] = src;
             }
         }
+        return targetObject;
     }
 }
 
-export abstract class AbstractNormalGraphData extends AbstractGraphData {
-    public title: EchartTitle;
-    public legend: EchartLegend;
-    public tooltip: EchartTooltip;
-    protected _title: string;
-    protected _legendData: string[] = [];
-    protected _seriesData: Object[];
-
-    protected getLegendData(){
-        this._seriesData && this._seriesData.forEach(item => {
-            item.hasOwnProperty("name") && this._legendData.push(item["name"]);
-        });
-    }
-}
-
-export class OutlineMapData extends AbstractNormalGraphData {
+export class OutlineMapData extends GraphData {
     protected createChartOptions(): any {
         return undefined;
     }
 }
 
 
-export class PieGraphData extends AbstractNormalGraphData {
-    // todo 2 以后抽取到公共的echarts文件中.
-    private _seriesName: string;
-    // 数据结构:
-    constructor(seriesData: Array<Object>, title?: string, legendData?: Array<string>, seriesName?: string) {
+export class PieGraphData extends GraphData {
+
+    constructor() {
         super();
-        this._title = title;
-        this._seriesName = seriesName;
-        this._seriesData = seriesData;
     }
 
     protected createChartOptions(): any {
-        this.getLegendData();
+        if (this.busy)  return;
+        let series = [];
+        for (let i = 0; i < this.data.length; i++) {
+            series.push(this.data[i]);
+        }
+
         return {
-            title: {
-                text: this._title,
-                x: 'center'
+            "legend": {
+                data: this.rowDescriptor
             },
-            tooltip: {
-                trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
-            },
-            legend: {
-                orient: 'vertical',
-                left: 'left',
-                data: this._legendData
-            },
-            series: [
-                {
-                    name: this._seriesName,
-                    type: 'pie',
-                    radius: '55%',
-                    center: ['50%', '60%'],
-                    data: this._seriesData,
-                    itemStyle: {
-                        emphasis: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        }
-                    }
-                }
-            ]
+            "series": [{
+                data: series
+            }]
         };
     }
+
 }
 
 export class DonutGraphData extends PieGraphData {
@@ -185,71 +195,54 @@ export class DonutGraphData extends PieGraphData {
     }
 }
 
-export class LineBarGraphData extends AbstractNormalGraphData {
-    private _xAxisData: Object[];
-    private _yAxisData: Object[];
+export class LineBarGraphData extends GraphData {
 
-    // 数据结构:
-    constructor(seriesData: Object[], title?: string,  xAxisData?:Object[], yAxisData?:Object[]) {
+    constructor(http: Http) {
         super();
-        this._title = title;
-        this._seriesData = seriesData;
-        this._xAxisData = xAxisData;
-        this._yAxisData = yAxisData;
+        this.http = http;
     }
 
     protected createChartOptions(): any {
-        this.getLegendData();
+        if (this.busy)  return;
+        let series = [];
+        for (let i = 0; i < this.data.length; i++) {
+            series.push({"data": this.data[i], "name": (this.rowDescriptor[i] || "")});
+        }
+
+        let xAxisData = [];
+        this.header.forEach(data => {
+            xAxisData.push({"data": data});
+        });
+
         return {
-            title: {
-                text: this._title
+            "xAxis": xAxisData,
+            "legend": {
+                data: this.rowDescriptor
             },
-            tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                    type: 'cross',
-                    crossStyle: {
-                        color: '#999'
-                    }
-                }
-            },
-            toolbox: {
-                feature: {
-                    dataView: {show: true, readOnly: false},
-                    magicType: {show: true, type: ['line', 'bar']},
-                    restore: {show: true},
-                    saveAsImage: {show: true}
-                }
-            },
-            legend: {
-                data: this._legendData
-            },
-            xAxis: this._xAxisData,
-            yAxis: this._yAxisData,
-            series: this._seriesData
+            "series": series
         };
     }
 }
 
-export class GaugeGraphData extends AbstractNormalGraphData {
+export class GaugeGraphData extends GraphData {
     protected createChartOptions(): any {
         return undefined;
     }
 }
 
-export class ScatterGraphData extends AbstractNormalGraphData {
+export class ScatterGraphData extends GraphData {
     protected createChartOptions(): any {
         return undefined;
     }
 }
 
-export class RadarGraphData extends AbstractNormalGraphData {
+export class RadarGraphData extends GraphData {
     protected createChartOptions(): any {
         return undefined;
     }
 }
 
-export class HeatGraphData extends AbstractNormalGraphData {
+export class HeatGraphData extends GraphData {
     protected createChartOptions(): any {
         return undefined;
     }

@@ -6,7 +6,7 @@ import {
     Input, Output, EventEmitter,
     OnDestroy, Renderer2
 } from '@angular/core';
-import {AbstractGraphData} from "../../core/data/graph-data";
+import {GraphData} from "../../core/data/graph-data";
 
 import * as echarts from 'echarts';
 import {CommonUtils} from "../../core/utils/common-utils";
@@ -27,16 +27,29 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
     public graph: any;
 
     // 由数据服务提供的数据.
-    private _data: AbstractGraphData;
+    private _data: GraphData;
+
+    public _hasdata:boolean = true;
 
     @Input()
-    public get data(): AbstractGraphData {
+    public get data(): GraphData {
         return this._data;
     }
 
-    public set data(value: AbstractGraphData) {
+    public set data(value: GraphData) {
+        if (!value) return;
         this._data = value;
-        this._setOption(value.options)
+
+        value.onRefresh(()=>{
+            this._hasdata=value._hasRightData;
+            if (this._hasdata){
+                this._renderer.setStyle(this._elf.nativeElement.querySelector(".rdk-graph"), 'width', this._width);
+                this._renderer.setStyle(this._elf.nativeElement.querySelector(".rdk-graph"), 'height', this._height);
+                this.graph = echarts.init(this._elf.nativeElement.querySelector(".rdk-graph"));
+            }
+            this._setOption(value.options)
+        })
+
     }
 
     private _setOption(option: Object, notMerge?: boolean, lazyUpdate?: boolean) {
@@ -61,10 +74,7 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
     }
 
     ngOnInit() {
-        this._renderer.setStyle(this._elf.nativeElement, 'width', this._width);
-        this._renderer.setStyle(this._elf.nativeElement, 'height', this._height);
-        this.graph = echarts.init(this._elf.nativeElement);
-        this._setOption(this.data.options);
+
     }
 
     // 组件销毁, 注销实例

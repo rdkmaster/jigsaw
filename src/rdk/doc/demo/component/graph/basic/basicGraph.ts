@@ -3,20 +3,20 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import {AbstractGraphData} from "../../../../../core/data/graph-data";
+import {GraphData} from "../../../../../core/data/graph-data";
 
 @Component({
     templateUrl:"basicGraph.html"
 })
 
 export class BasicGraphComponent  implements OnInit {
-    data: AbstractGraphData;
+    data: GraphData;
     ngOnInit() {
-        this.data = new GraphData();
+        this.data = new GraphDataDemo();
     }
 }
 
-export class GraphData extends AbstractGraphData {
+export class GraphDataDemo extends GraphData {
     protected createChartOptions(): any {
         return {
             title: {

@@ -3,19 +3,19 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import {AbstractGraphData} from "../../../../../core/data/graph-data";
+import {GraphData} from "../../../../../core/data/graph-data";
 
 @Component({
     templateUrl:"setSize.html"
 })
 
 export class GraphSetSizeComponent  implements OnInit {
-    data: AbstractGraphData;
+    data: GraphData;
      graphWidth ;
      graphHeight;
     ngOnInit() {
-        this.data = new GraphData();
-         this.graphWidth = "100%";
+        this.data = new GraphDataSetSize();
+         this.graphWidth = "80%";
          this.graphHeight = "250";
     }
 
@@ -25,7 +25,7 @@ export class GraphSetSizeComponent  implements OnInit {
     }
 }
 
-export class GraphData extends AbstractGraphData {
+export class GraphDataSetSize extends GraphData {
     protected createChartOptions(): any {
         return {
             title: {

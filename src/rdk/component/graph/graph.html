@@ -1,1 +1,8 @@
-<div class="rdk-graph"></div>
+<div *ngIf="_hasdata; else loading">
+    <div class="rdk-graph"></div>
+</div>
+<ng-template #loading><img src="/comp-map.png" alt=""></ng-template>
+
+<!-->todo 待添加no-data图<-->
+
+
