@@ -34,7 +34,6 @@ class CellSetting {
     group: boolean;
     pos: number;
     rowSpan: number;
-    merged: boolean;
 }
 
 export class TableCellBasic implements AfterViewInit {
@@ -171,6 +170,7 @@ export class RdkTable implements AfterViewInit {
             this._cellSettings[index] = cellSettings.filter(cellSetting => cellSetting.visible);
         });
 
+        //合并单元格
         let rowSpans: number[] = [];
         this._cellSettings.forEach((cellSettings, rowIndex) => {
             cellSettings.forEach((cellSetting, colIndex) => {
@@ -217,11 +217,8 @@ export class RdkTable implements AfterViewInit {
                     }
                 }
 
-
             })
         })
-        console.log(this._cellSettings);
-
     }
 
     private _mergeSettings(index, column: ColumnSetting): void {
@@ -291,24 +288,23 @@ export class RdkTable implements AfterViewInit {
             editorRenderer: null,
             group: false,
             pos: -1, //-1代表插入列
-            rowSpan: 1,
-            merged: false
+            rowSpan: 1
         };
         cellSetting = this._generateCellSetting(cellSetting, additionalColumn);
 
         if (pos != -1) {
             this._cellSettings.forEach((cellSettings) => {
-                let cellSettingClone: CellSetting = <CellSetting>this._clone(cellSetting);
+                /*let cellSettingClone: CellSetting = <CellSetting>this._clone(cellSetting);
+                 const index = cellSettings.indexOf(cellSettings.find(cellSetting => cellSetting.pos == pos));
+                 cellSettings.splice(index, 0, cellSettingClone);*/
                 const index = cellSettings.indexOf(cellSettings.find(cellSetting => cellSetting.pos == pos));
-                cellSettings.splice(index, 0, cellSettingClone);
-                /*const index = cellSettings.indexOf(cellSettings.find(cellSetting => cellSetting.pos == pos));
-                 cellSettings.splice(index, 0, cellSetting);*/
+                cellSettings.splice(index, 0, cellSetting);
             })
         } else {
             this._cellSettings.forEach((cellSettings) => {
-                let cellSettingClone: CellSetting = <CellSetting>this._clone(cellSetting);
-                cellSettings.push(cellSettingClone);
-                // cellSettings.push(cellSetting);
+                /*let cellSettingClone: CellSetting = <CellSetting>this._clone(cellSetting);
+                 cellSettings.push(cellSettingClone);*/
+                cellSettings.push(cellSetting);
             })
         }
     }

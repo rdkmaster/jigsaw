@@ -38,7 +38,9 @@ table{
             background: lighten($primary-color, 50%);
         }
         &:hover{
-            background: $primary-color-hover;
+            td:not([rowspan]){
+                background: $primary-color-hover;
+            }
         }
     }
     &.#{$table-prefix-cls}-fixed-head{
