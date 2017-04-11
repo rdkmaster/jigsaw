@@ -6,28 +6,33 @@ import {CommonModule} from "@angular/common";
 
 import {RdkRendererHost} from "../core";
 import {TableData} from "../../core/data/table-data";
-import {TableCellRenderer} from "./table-api";
+import {TableCellRenderer, ColumnSetting, AdditionalColumnSetting} from "./table-api";
 
 import {RdkScrollBarModule} from "../scrollbar/scrollbar";
 import {RdkScrollBar} from "../scrollbar/scrollbar";
+import {SortAs, SortOrder} from "../../core/data/component-data";
 
-export class HeadData {
+class HeadSetting {
     cellData: string;
     width: string|number;
     visible: boolean;
-    renderer: Type<TableCellBasic>;
+    renderer: Type<TableCellRenderer>;
     class: string;
     sortable: boolean;
-    sortAs: string|number;
+    sortAs: SortAs;
     defaultSortOrder: SortOrder;
+    pos: number;
 }
 
-export enum SortAs{
-    string, number
-}
-
-export enum SortOrder{
-    des, asc, default
+class CellSetting {
+    cellData: string|number;
+    visible: boolean;
+    renderer: Type<TableCellRenderer>;
+    class: string;
+    editable: boolean;
+    editorRenderer: Type<TableCellRenderer>;
+    group: boolean;
+    pos: number;
 }
 
 export class TableCellBasic implements AfterViewInit {
@@ -66,80 +71,249 @@ export class TableCellBasic implements AfterViewInit {
     templateUrl: 'table.html',
     styleUrls: ['table.scss']
 })
-export class RdkTable implements AfterViewInit{
+export class RdkTable implements AfterViewInit {
     @Input()
     public data: TableData;
 
     @Input()
-    public columns: any[];
+    public columns: ColumnSetting[];
+
+    @Input()
+    public additionalColumns: AdditionalColumnSetting[];
 
     private _fixedHead: HTMLElement;
 
-    private _headDatas: Array<HeadData> = [];
+    private _headSettings: Array<HeadSetting> = [];
+
+    private _cellSettings: Array<CellSetting>[] = [];
 
     @ViewChild(RdkScrollBar) private _scrollBar: RdkScrollBar;
 
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef){
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
 
     }
 
     /*
-    * data和columns数据合并转换
-    * */
-    private _transformData(){
-        this.data.header.forEach(cellData => {
-            this._headDatas.push({
+     * data和columns数据合并转换
+     * */
+    private _transformData() {
+        //初始化_headSettings
+        this.data.header.forEach((cellData, index) => {
+            this._headSettings.push({
                 cellData: cellData,
                 width: null,
-                visible: null,
+                visible: true,
                 renderer: null,
-                class: null,
-                sortable: null,
-                sortAs: null,
-                defaultSortOrder: null
+                class: '',
+                sortable: false,
+                sortAs: SortAs.string,
+                defaultSortOrder: SortOrder.default,
+                pos: index
             })
         });
-        this.columns.forEach(column => {
-            if(!isNaN(column.target)){
-                let index = column.target;
-                this._mergeHeaderData(index, column);
-            }else{
-                let index = this.data.field.indexOf(column.target);
-                this._mergeHeaderData(index, column);
+
+        //初始化_cellSettings
+        this.data.data.forEach(row => {
+            let cellSettings = [];
+            row.forEach((cellData, index) => {
+                cellSettings.push({
+                    cellData: cellData,
+                    visible: true,
+                    renderer: null,
+                    class: '',
+                    editable: false,
+                    editorRenderer: null,
+                    group: false,
+                    pos: index
+                })
+            });
+            this._cellSettings.push(cellSettings);
+        });
+
+        //列定义数据转换
+        this.columns && this.columns.forEach(column => {
+            if (column.target instanceof Function) {
+                let fields = this.data.field.filter(column.target);
+                fields.forEach(field => {
+                    this._mergeSettings(this.data.field.indexOf(field), column);
+                })
             }
+            else if (column.target instanceof Array) {
+                const a:(string|number)[] = column.target;
+                a.forEach(targetItem => {
+                    if (typeof targetItem === 'number') {
+                        this._mergeSettings(targetItem, column);
+                    } else if(typeof targetItem === 'string') {
+                        this._mergeSettings(this.data.field.indexOf(targetItem), column);
+                    }
+                })
+            }
+            else if (typeof column.target === 'number') {
+                this._mergeSettings(column.target, column);
+            } else if(typeof column.target === 'string') {
+                this._mergeSettings(this.data.field.indexOf(column.target), column);
+            }
+        });
+
+        //其他列定义数据转换
+        this.additionalColumns && this.additionalColumns.forEach(additionalColumn => {
+            let pos = additionalColumn.pos;
+            pos = pos >= 0 && pos < this.data.header.length ? pos : -1;
+            this._insertSettings(pos, additionalColumn);
         });
 
         //过滤掉不显示的表头
-        this._headDatas = this._headDatas.filter(headData => headData.visible);
+        this._headSettings = this._headSettings ? this._headSettings.filter(headSetting => headSetting.visible) : null;
+        this._cellSettings && this._cellSettings.forEach((cellSettings, index) => {
+            this._cellSettings[index] = cellSettings.filter(cellSetting => cellSetting.visible);
+        })
+    }
+
+    private _mergeSettings(index, column: ColumnSetting) {
+        this._mergeHeaderSetting(index, column);
+        this._mergeCellSetting(index, column);
     }
 
     /*
-    * 合并data和columns里的header数据
-    * */
-    private _mergeHeaderData(index, column){
-        let header = column.header;
-        if(index >= 0 && index < this.data.header.length){
-            let headDate: HeadData = this._headDatas[index];
-            headDate.width = column.width;
-            headDate.visible = column.visible;
-            if(header){
-                headDate.renderer = header.renderer;
-                headDate.class = header.class;
-                headDate.sortable = header.sortable;
-                headDate.sortAs = header.sortAs;
-                headDate.defaultSortOrder = header.defaultSortOrder;
-            }
+     * 根据column修改表头列数据
+     * */
+    private _mergeHeaderSetting(index, column: ColumnSetting) {
+        if (index >= 0 && index < this.data.header.length) {
+            this._generateHeaderSetting(this._headSettings[index], column);
         }
     }
 
-    ngAfterViewInit(){
-        this._fixedHead = this._elementRef.nativeElement.querySelector(".rdk-table-fixed-head");
-        $(() => {
-            this._scrollBar.whileScrolling.subscribe(scrollEvent => {
-                if(scrollEvent.direction == 'x'){
-                    this._renderer.setStyle(this._fixedHead, 'left', scrollEvent.left+'px');
-                }
+    /*
+     * 根据column修改单元格列数据
+     * */
+    private _mergeCellSetting(index, column: ColumnSetting) {
+        if (index >= 0 && index < this.data.header.length) {
+            this._cellSettings.forEach(cellSettings => {
+                this._generateCellSetting(cellSettings[index], column);
+            });
+        }
+    }
+
+    private _insertSettings(pos, additionalColumn: AdditionalColumnSetting) {
+        this._insertHeaderSetting(pos, additionalColumn);
+        this._insertCellSetting(pos, additionalColumn);
+    }
+
+    /*
+     * 插入表头列
+     * */
+    private _insertHeaderSetting(pos, additionalColumn: AdditionalColumnSetting) {
+        let headSetting: HeadSetting = {
+            cellData: '',
+            width: null,
+            visible: true,
+            renderer: null,
+            class: '',
+            sortable: false,
+            sortAs: SortAs.string,
+            defaultSortOrder: SortOrder.default,
+            pos: -1 //-1代表插入列
+        };
+        headSetting = this._generateHeaderSetting(headSetting, additionalColumn);
+        if(pos != -1){
+            const index = this._headSettings.indexOf(this._headSettings.find(headSetting => headSetting.pos == pos));
+            this._headSettings.splice(index, 0, headSetting);
+        }else{
+            this._headSettings.push(headSetting)
+        }
+    }
+
+    /*
+     * 插入单元格列
+     * */
+    private _insertCellSetting(pos, additionalColumn: AdditionalColumnSetting) {
+        let cellSetting: CellSetting = {
+            cellData: '',
+            visible: true,
+            renderer: null,
+            class: '',
+            editable: false,
+            editorRenderer: null,
+            group: true,
+            pos: -1 //-1代表插入列
+        };
+        cellSetting = this._generateCellSetting(cellSetting, additionalColumn);
+
+        if(pos != -1){
+            this._cellSettings.forEach((cellSettings) => {
+                /*let cellSettingClone: CellSetting = <CellSetting>this._clone(cellSetting);
+                const index = cellSettings.indexOf(cellSettings.find(cellSetting => cellSetting.pos == pos));
+                cellSettings.splice(index, 0, cellSettingClone);*/
+                const index = cellSettings.indexOf(cellSettings.find(cellSetting => cellSetting.pos == pos));
+                cellSettings.splice(index, 0, cellSetting);
             })
+        }else{
+            this._cellSettings.forEach((cellSettings) => {
+                /*let cellSettingClone: CellSetting = <CellSetting>this._clone(cellSetting);
+                cellSettings.push(cellSettingClone);*/
+                cellSettings.push(cellSetting);
+            })
+        }
+    }
+
+    /*
+    * 简单对象的拷贝
+    * */
+    private _clone(obj: Object): Object{
+        let copy = (obj instanceof Array) ? [] : {};
+        for (let attr in obj) {
+            if (!obj.hasOwnProperty(attr)) continue;
+            copy[attr] = (typeof obj[attr] == "object") ? this._clone(obj[attr]) : obj[attr];
+        }
+        return copy;
+    }
+
+    /*
+     * 根据column的数据生成headSetting，支持多个column数据的合并
+     * */
+    private _generateHeaderSetting(headSetting: HeadSetting, column: ColumnSetting | AdditionalColumnSetting): HeadSetting {
+        headSetting.width = column.width ? column.width : headSetting.width;
+        headSetting.visible = column.visible === true || column.visible === false ? column.visible : headSetting.visible;
+
+        const header = column.header;
+        if (header) {
+            headSetting.renderer = header.renderer ? header.renderer : headSetting.renderer;
+            headSetting.class = typeof header.class == 'string' && header.class !== '' ? headSetting.class + " " + header.class : headSetting.class;
+            headSetting.sortable = header.sortable === true || header.sortable === false ? header.sortable : headSetting.sortable;
+            headSetting.sortAs = header.sortAs !== null && header.sortAs !== undefined ? header.sortAs : headSetting.sortAs;
+            headSetting.defaultSortOrder = header.defaultSortOrder !== null && header.defaultSortOrder !== undefined ?
+                header.defaultSortOrder : headSetting.defaultSortOrder;
+        }
+        return headSetting;
+    }
+
+    /*
+     * 根据column的数据生成cellSetting，支持多个column数据的合并
+     * */
+    private _generateCellSetting(cellSetting: CellSetting, column: ColumnSetting | AdditionalColumnSetting): CellSetting {
+        cellSetting.visible = column.visible === true || column.visible === false ? column.visible : cellSetting.visible;
+
+        const cell = column.cell;
+        if (cell) {
+            cellSetting.renderer = cell.renderer ? cell.renderer : cellSetting.renderer;
+            cellSetting.class = typeof cell.class == 'string' && cell.class !== '' ? cellSetting.class + " " + cell.class : cellSetting.class;
+            cellSetting.editable = cell.editable === true || cell.editable === false ? cell.editable : cellSetting.editable;
+            cellSetting.editorRenderer = cell.editorRenderer ? cell.editorRenderer : cellSetting.editorRenderer;
+            cellSetting.group = column.group === true || column.group === false ? column.group : cellSetting.group;
+        }
+        return cellSetting;
+    }
+
+    ngAfterViewInit() {
+        this._fixedHead = this._elementRef.nativeElement.querySelector(".rdk-table-fixed-head");
+
+        //调整滚动条位置
+        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.mCSB_scrollTools_vertical'), 'margin', this._fixedHead.offsetHeight + 'px 0 0');
+
+        this._scrollBar.whileScrolling.subscribe(scrollEvent => {
+            if (scrollEvent.direction == 'x') {
+                this._renderer.setStyle(this._fixedHead, 'left', scrollEvent.left + 'px');
+            }
         });
 
         this._transformData();
@@ -148,42 +322,53 @@ export class RdkTable implements AfterViewInit{
 }
 
 /*
-* 单元格插入点
-* */
+ * 单元格插入点
+ * */
 @Component({
     selector: '[rdk-table-cell]',
     template: '<template rdk-renderer-host></template>'
 })
-export class RdkTableCell extends TableCellBasic implements OnInit{
+export class RdkTableCell extends TableCellBasic implements OnInit {
+
+    @Input()
+    public editable: boolean = false;
+
+    @Input()
+    public editorRenderer: Type<TableCellBasic>;
+
+    @Input()
+    public group: boolean;
+
     constructor(cfr: ComponentFactoryResolver, cd: ChangeDetectorRef) {
         super(cfr, cd);
     }
 
-    ngOnInit(){
+    ngOnInit() {
         //设置默认渲染器
         this.renderer = this.renderer ? this.renderer : DefaultCellRenderer;
     }
 }
 
 /*
-* 表头插入点
-* */
+ * 表头插入点
+ * */
 @Component({
     selector: '[rdk-table-header]',
     template: `<template rdk-renderer-host></template>
                <div *ngIf="sortable" [ngClass]="_sortOrderClass">
-                    <span (click)="sortUp()" class="fa fa-sort-up rdk-table-sort rdk-table-sort-up"></span>
-                    <span (click)="sortDown()" class="fa fa-sort-down rdk-table-sort rdk-table-sort-down"></span>
+                    <span (click)="sortUp()" class="rdk-table-sort-btn rdk-table-sort-up"></span>
+                    <span (click)="sortDown()" class="rdk-table-sort-btn rdk-table-sort-down"></span>
                </div>`,
     styleUrls: ['table-head.scss']
 })
-export class RdkTableHeader extends TableCellBasic implements OnInit{
+export class RdkTableHeader extends TableCellBasic implements OnInit {
     private _sortOrder: SortOrder = SortOrder.default;
 
     private _sortOrderClass: object = {};
 
-    private _setSortOrderClass(){
+    private _setSortOrderClass() {
         this._sortOrderClass = {
+            'rdk-table-sort-box': true,
             'rdk-table-asc': this._sortOrder == SortOrder.asc,
             'rdk-table-des': this._sortOrder == SortOrder.des
         }
@@ -191,11 +376,11 @@ export class RdkTableHeader extends TableCellBasic implements OnInit{
 
     @Input() public sortable: boolean;
 
-    @Input() public sortAs: string|number;
+    @Input() public sortAs: SortAs;
 
     @Input()
-    public set defaultSortOrder(newValue){
-        if(newValue != null){
+    public set defaultSortOrder(newValue) {
+        if (newValue != null) {
             this._sortOrder = newValue
         }
     };
@@ -204,17 +389,17 @@ export class RdkTableHeader extends TableCellBasic implements OnInit{
         super(cfr, cd);
     }
 
-    sortUp(){
+    sortUp() {
         this._sortOrder = SortOrder.asc;
         this._setSortOrderClass();
     }
 
-    sortDown(){
+    sortDown() {
         this._sortOrder = SortOrder.des;
         this._setSortOrderClass();
     }
 
-    ngOnInit(){
+    ngOnInit() {
         //设置默认渲染器
         this.renderer = this.renderer ? this.renderer : DefaultCellRenderer;
 
@@ -223,8 +408,8 @@ export class RdkTableHeader extends TableCellBasic implements OnInit{
 }
 
 /*
-* 默认表格渲染组件
-* */
+ * 默认表格渲染组件
+ * */
 @Component({
     template: '<span>{{cellData}}</span>'
 })

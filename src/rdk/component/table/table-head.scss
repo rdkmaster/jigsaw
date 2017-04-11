@@ -2,32 +2,47 @@
 
 $table-prefix-cls: #{$rdk-prefix}-table;
 
-
-.#{$table-prefix-cls}-sort{
-    cursor: pointer;
-    &:hover{
-        color: $primary-color;
-    }
-}
-.#{$table-prefix-cls}-sort-up{
+.#{$table-prefix-cls}-sort-box{
+    @include inline-block;
     position: absolute;
     right: 6px;
     top: 8px;
+    width: 12px;
+}
+
+.#{$table-prefix-cls}-sort-btn{
+    cursor: pointer;
+}
+.#{$table-prefix-cls}-sort-up{
+    display: block;
+    width: 0;
+    height: 0;
+    border: 6px solid;
+    border-color: transparent transparent $gray-dark transparent;
+    margin-bottom: 2px;
+    &:hover{
+        border-bottom-color: $primary-color;
+    }
 }
 .#{$table-prefix-cls}-sort-down{
-    position: absolute;
-    right: 6px;
-    top: 10px;
+    display: block;
+    width: 0;
+    height: 0;
+    border: 6px solid;
+    border-color: $gray-dark transparent transparent transparent;
+    &:hover{
+        border-top-color: $primary-color;
+    }
 }
 
 .#{$table-prefix-cls}-asc{
     .#{$table-prefix-cls}-sort-up{
-        color: $primary-color;
+        border-bottom-color: $primary-color;
     }
 }
 
 .#{$table-prefix-cls}-des{
     .#{$table-prefix-cls}-sort-down{
-        color: $primary-color;
+        border-top-color: $primary-color;
     }
 }

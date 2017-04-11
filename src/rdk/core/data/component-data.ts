@@ -145,8 +145,9 @@ export enum SortAs {
 }
 
 export enum SortOrder {
-    asc, desc
+    asc, des, default
 }
+
 export class PagingSortInfo {
     constructor(public as: SortAs = SortAs.string,
                 public order: SortOrder = SortOrder.asc,

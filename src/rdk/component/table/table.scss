@@ -18,55 +18,28 @@ $table-prefix-cls: #{$rdk-prefix}-table;
 table{
     width: 100%;
     text-align: center;
-    thead{
-        background: $gray-dark;
-        color: $text-color-white;
-    }
     td{
         position: relative;
         border: 1px solid $border-color-base;
-        .#{$table-prefix-cls}-sort:before, .#{$table-prefix-cls}-sort:after{
-            content: '';
-            display: block;
-            width: 6px;
-            height: 6px;
-            cursor: pointer;
-            &:hover, &.on{
-                color: $primary-color;
-            }
-        }
-        .#{$table-prefix-cls}-sort:before{
-            cursor: pointer;
-            &:hover, &.on{
-                color: $primary-color;
-            }
-        }
-        .#{$table-prefix-cls}-sort:after{
-            cursor: pointer;
-            &:hover, &.on{
-                color: $primary-color;
-            }
-        }
-        /*
-        .#{$table-prefix-cls}-sort{
-            cursor: pointer;
-            &:hover, &.on{
-                color: $primary-color;
-            }
-        }
-        .#{$table-prefix-cls}-sort-up{
-            position: absolute;
-            right: 6px;
-            top: 8px;
-        }
-        .#{$table-prefix-cls}-sort-down{
-            position: absolute;
-            right: 6px;
-            top: 10px;
-        }*/
     }
-    tr{
-        height: 28px;
+    thead{
+        background: $gray-light;
+        color: #333;
+        tr{
+            height: 40px;
+        }
+    }
+    tbody tr{
+        height: 30px;
+        &:nth-child(2n){
+            background: $component-background;
+        }
+        &:nth-child(2n-1){
+            background: lighten($primary-color, 50%);
+        }
+        &:hover{
+            background: $primary-color-hover;
+        }
     }
     &.#{$table-prefix-cls}-fixed-head{
         position: absolute;

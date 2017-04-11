@@ -1,50 +1,55 @@
-import {Component} from "@angular/core";
+import {Component, ViewEncapsulation} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
-import {TableHead, TableCell} from "./table-renderer";
-import {SortAs, SortOrder} from "../../../../../component/table/table";
+import {
+    TableHead, TableCell, TableHeadSelect, TableHeadCheckbox,TableCellCheckbox, TableCellOption,
+    TableHeadOption
+} from "./table-renderer";
+import {SortAs, SortOrder} from "../../../../../core/data/component-data";
+import {ColumnSetting, AdditionalColumnSetting} from "../../../../../component/table/table-api";
 
 @Component({
     templateUrl: 'renderer.html',
-    styleUrls: ['renderer.scss']
+    styleUrls: ['renderer.scss'],
+    encapsulation: ViewEncapsulation.None
 })
-export class TableRendererDemoComponent {
+export class TableRendererDemoComponent{
     tableData: TableData;
 
     constructor() {
         this.tableData = new TableData([
-                [12, 12, 12, 12, 12],
-                [23, 23, 23, 23, 23],
-                [43, 43, 43, 43, 43],
-                [12, 12, 12, 12, 12],
-                [23, 23, 23, 23, 23],
-                [43, 43, 43, 43, 43],
-                [12, 12, 12, 12, 12],
-                [23, 23, 23, 23, 23],
-                [43, 43, 43, 43, 43],
-                [12, 12, 12, 12, 12],
-                [23, 23, 23, 23, 23],
-                [43, 43, 43, 43, 43],
-                [12, 12, 12, 12, 12],
-                [23, 23, 23, 23, 23],
-                [43, 43, 43, 43, 43],
-                [12, 12, 12, 12, 12],
-                [23, 23, 23, 23, 23],
-                [43, 43, 43, 43, 43]],
+                [12, 12, 12, 12, 12, 111],
+                [23, 23, 23, 23, 23, 111],
+                [43, 43, 43, 43, 43, 111],
+                [12, 12, 12, 12, 12, 111],
+                [23, 23, 23, 23, 23, 111],
+                [43, 43, 43, 43, 43, 111],
+                [12, 12, 12, 12, 12, 111],
+                [23, 23, 23, 23, 23, 111],
+                [43, 43, 43, 43, 43, 111],
+                [12, 12, 12, 12, 12, 111],
+                [23, 23, 23, 23, 23, 111],
+                [43, 43, 43, 43, 43, 111],
+                [12, 12, 12, 12, 12, 111],
+                [23, 23, 23, 23, 23, 111],
+                [43, 43, 43, 43, 43, 111],
+                [12, 12, 12, 12, 12, 111],
+                [23, 23, 23, 23, 23, 111],
+                [43, 43, 43, 43, 43, 111]],
             ['f1', 'f2', 'f3', 'f4', 'f5', 'f6'], ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
     }
 
-    private _columns = [
+    private _columns: ColumnSetting[] = [
         {
             target: 'f1',
             visible: true,
-            width: '50px',
+            width: '20%',
             header: {
-                renderer: TableHead,
+                renderer: TableHeadSelect,
                 sortable: false
             },
             cell: {
                 renderer: TableCell,
-                class: null,
+                class: 'green-text',
                 editable: false,
                 editorRenderer: null,
             },
@@ -72,7 +77,6 @@ export class TableRendererDemoComponent {
         {
             target: 'f3',
             visible: true,
-            width: 'auto',
             header: {
                 renderer: TableHead,
                 sortable: true,
@@ -90,7 +94,6 @@ export class TableRendererDemoComponent {
         {
             target: 'f4',
             visible: true,
-            width: 'auto',
             header: {
                 renderer: TableHead,
                 sortable: false
@@ -106,9 +109,7 @@ export class TableRendererDemoComponent {
         {
             target: 'f5',
             visible: true,
-            width: 'auto',
             header: {
-                renderer: TableHead,
                 sortable: true,
                 sortAs: SortAs.string,
                 defaultSortOrder: SortOrder.default
@@ -122,10 +123,69 @@ export class TableRendererDemoComponent {
             group: true
         },
         {
-            target: 'f6',
-            visible: false
+            target: 5,
+            visible: false,
+        },
+        {
+            target: (field, index) => { return index > 2 },
+            header:{
+                class: 'big-text'
+            }
+        },
+        {
+            target: ['f1', 'f4'],
+            header:{
+                class: 'green-text'
+            }
         }
+    ];
 
-    ]
+    private _additionalColumns: AdditionalColumnSetting[] = [
+        {
+            pos: 0,
+            width: '60px',
+            header: {
+                renderer: TableHeadCheckbox,
+            },
+            cell: {
+                renderer: TableCellCheckbox
+            },
+            group: true
+        },
+        {
+            pos: -1,
+            width: '10%',
+            header: {
+                renderer: TableHeadOption,
+                class: 'red-text'
+            },
+            cell: {
+                renderer: TableCellOption
+            },
+            group: true
+        },
+        {
+            pos: 2,
+            width: '10%',
+            header: {
+                renderer: TableHeadOption,
+                class: 'red-text'
+            },
+            cell: {
+                renderer: TableCellOption
+            },
+            group: true
+        }
+    ];
+
+    /*total = 200;
+
+    public getCurrentPage(message:any){
+        console.log("current page message is: "+message);
+    }
+    public getPageSize(message:any){
+        console.log("page size is: "+message);
+    }*/
+
 }
 
