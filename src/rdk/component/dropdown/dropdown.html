@@ -1,1 +1,19 @@
-div
+<div class="rdk-drop-down"
+     [class.rdk-drop-down-opened]="_isOpened"
+     (click)="_toggleClick()">
+
+    <div class="rdk-drop-down-selection">
+        <div class="rdk-drop-down-selection-rendered">
+            <div *ngIf="placeholder&& !value" class="rdk-drop-down-selection_placeholder">{{placeholder}}</div>
+            <!-- 多个值的展示. -->
+            <div *ngIf="value" class="rdk-drop-down-selection-selected-value">{{value}}</div>
+        </div>
+    </div>
+
+    <div class="rdk-drop-down-content">
+        <ng-content></ng-content>
+    </div>
+
+    <!-- ?? 可能是个问题. 依赖了fontAwesome -->
+    <i class="fa fa-angle-down rdk-drop-down-arrow"></i>
+</div>
