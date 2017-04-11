@@ -31,7 +31,7 @@ export class GraphData extends TableData {
         this._makeFields();
         this.refresh();
     }
-    
+
     public _hasRightData: boolean = true;
 
     public static isGraphData(data: any): boolean {
