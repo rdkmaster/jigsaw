@@ -2,7 +2,6 @@ import {Http, RequestOptionsArgs} from "@angular/http";
 import {EchartTitle, EchartLegend, EchartTooltip, EchartOptions} from "./echart-types";
 import {TableData} from "./table-data";
 import {ComponentDataHelper} from "./component-data";
-import {Subject} from "rxjs";
 import 'rxjs/add/operator/map';
 
 type GraphMatrixRow = Array<string | number>;
@@ -32,9 +31,7 @@ export class GraphData extends TableData {
         this._makeFields();
         this.refresh();
     }
-
-    //图共有属性
-    public _seriesData: object[] = [];
+    
     public _hasRightData: boolean = true;
 
     public static isGraphData(data: any): boolean {
