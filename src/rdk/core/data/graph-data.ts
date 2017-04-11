@@ -165,8 +165,9 @@ export class OutlineMapData extends GraphData {
 
 export class PieGraphData extends GraphData {
 
-    constructor() {
+    constructor(http?: Http) {
         super();
+        this.http = http;
     }
 
     protected createChartOptions(): any {
@@ -196,7 +197,7 @@ export class DonutGraphData extends PieGraphData {
 
 export class LineBarGraphData extends GraphData {
 
-    constructor(http: Http) {
+    constructor(http?: Http) {
         super();
         this.http = http;
     }
