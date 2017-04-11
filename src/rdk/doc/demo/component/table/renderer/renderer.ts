@@ -1,8 +1,8 @@
 import {Component, ViewEncapsulation} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
 import {
-    TableHead, TableCell, TableHeadSelect, TableHeadCheckbox,TableCellCheckbox, TableCellOption,
-    TableHeadOption
+    TableHead, TableCell, TableHeadSelect, TableHeadCheckbox, TableCellCheckbox, TableCellOption,
+    TableHeadOption, TableCellNum, TableHeadNum
 } from "./table-renderer";
 import {SortAs, SortOrder} from "../../../../../core/data/component-data";
 import {ColumnSetting, AdditionalColumnSetting} from "../../../../../component/table/table-api";
@@ -71,8 +71,7 @@ export class TableRendererDemoComponent{
                 class: null,
                 editable: false,
                 editorRenderer: null,
-            },
-            group: true
+            }
         },
         {
             target: 'f3',
@@ -145,6 +144,16 @@ export class TableRendererDemoComponent{
             pos: 0,
             width: '60px',
             header: {
+                renderer: TableHeadNum,
+            },
+            cell: {
+                renderer: TableCellNum
+            }
+        },
+        {
+            pos: 0,
+            width: '60px',
+            header: {
                 renderer: TableHeadCheckbox,
             },
             cell: {
@@ -162,7 +171,7 @@ export class TableRendererDemoComponent{
                 renderer: TableCellOption
             }
         },
-        {
+        /*{
             pos: 2,
             width: '10%',
             header: {
@@ -172,7 +181,7 @@ export class TableRendererDemoComponent{
             cell: {
                 renderer: TableCellOption
             }
-        }
+        }*/
     ];
 
     /*total = 200;

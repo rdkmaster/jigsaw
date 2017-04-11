@@ -3,7 +3,7 @@ import {RouterModule} from "@angular/router";
 import {TableBasicDemoComponent} from "./basic/basic";
 import {TableRendererDemoComponent} from "./renderer/renderer";
 import {RdkTableModule, DefaultCellRenderer} from "../../../../component/table/table";
-import {TableHead, TableCell, TableHeadSelect, TableHeadCheckbox,TableCellCheckbox, TableCellOption, TableHeadOption} from "./renderer/table-renderer";
+import {TableHead, TableCell, TableHeadSelect, TableHeadCheckbox,TableCellCheckbox, TableCellOption, TableHeadOption, TableCellNum, TableHeadNum} from "./renderer/table-renderer";
 import {RdkSelectModule} from "../../../../component/select/select";
 import {RdkCheckBoxModule} from "../../../../component/checkbox/index";
 import {RdkPaginationModule} from "../../../../component/pagination/pagination";
@@ -36,7 +36,9 @@ const tableDemoRoutes=[
         TableHeadCheckbox,
         TableCellCheckbox,
         TableCellOption,
-        TableHeadOption
+        TableHeadOption,
+        TableCellNum,
+        TableHeadNum
     ],
     imports: [
         RouterModule.forChild(tableDemoRoutes), RdkTableModule, RdkSelectModule, RdkCheckBoxModule, RdkPaginationModule
@@ -53,7 +55,9 @@ const tableDemoRoutes=[
         TableHeadCheckbox,
         TableCellCheckbox,
         TableCellOption,
-        TableHeadOption
+        TableHeadOption,
+        TableCellNum,
+        TableHeadNum
     ]
 })
 export class TableDemoModule { }
