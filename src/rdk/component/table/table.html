@@ -37,7 +37,7 @@
         </thead>
         <tbody>
         <tr *ngFor="let row of _cellSettings; index as rowIndex;">
-            <td *ngFor="let cell of row; index as colIndex" class="{{cell.class}}">
+            <td *ngFor="let cell of row; index as colIndex" [attr.rowspan]="cell.rowSpan > 1 ? cell.rowSpan : null" [style.display]="cell.rowSpan ? 'table-cell' : 'none'" class="{{cell.class}}">
                 <div *ngIf="cell.renderer" rdk-table-cell
                      [tableData]="data"
                      [cellData]="cell.cellData"

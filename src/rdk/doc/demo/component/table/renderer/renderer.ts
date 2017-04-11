@@ -1,8 +1,8 @@
 import {Component, ViewEncapsulation} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
 import {
-    TableHead, TableCell, TableHeadSelect, TableHeadCheckbox,TableCellCheckbox, TableCellOption,
-    TableHeadOption
+    TableHead, TableCell, TableHeadSelect, TableHeadCheckbox, TableCellCheckbox, TableCellOption,
+    TableHeadOption, TableCellNum, TableHeadNum
 } from "./table-renderer";
 import {SortAs, SortOrder} from "../../../../../core/data/component-data";
 import {ColumnSetting, AdditionalColumnSetting} from "../../../../../component/table/table-api";
@@ -17,24 +17,24 @@ export class TableRendererDemoComponent{
 
     constructor() {
         this.tableData = new TableData([
-                [12, 12, 12, 12, 12, 111],
-                [23, 23, 23, 23, 23, 111],
+                [22, 12, 11, 12, 12, 111],
+                [22, 23, 11, 23, 23, 111],
+                [22, 43, 11, 43, 77, 111],
+                [22, 12, 12, 12, 77, 111],
+                [23, 55, 23, 23, 23, 111],
+                [43, 55, 43, 44, 43, 111],
+                [12, 55, 12, 44, 12, 111],
+                [23, 55, 23, 44, 23, 111],
+                [43, 43, 43, 44, 43, 111],
+                [12, 12, 33, 12, 66, 111],
+                [23, 23, 33, 88, 66, 111],
+                [43, 43, 33, 88, 66, 111],
+                [12, 11, 12, 88, 66, 111],
+                [23, 11, 23, 23, 23, 111],
                 [43, 43, 43, 43, 43, 111],
-                [12, 12, 12, 12, 12, 111],
-                [23, 23, 23, 23, 23, 111],
-                [43, 43, 43, 43, 43, 111],
-                [12, 12, 12, 12, 12, 111],
-                [23, 23, 23, 23, 23, 111],
-                [43, 43, 43, 43, 43, 111],
-                [12, 12, 12, 12, 12, 111],
-                [23, 23, 23, 23, 23, 111],
-                [43, 43, 43, 43, 43, 111],
-                [12, 12, 12, 12, 12, 111],
-                [23, 23, 23, 23, 23, 111],
-                [43, 43, 43, 43, 43, 111],
-                [12, 12, 12, 12, 12, 111],
-                [23, 23, 23, 23, 23, 111],
-                [43, 43, 43, 43, 43, 111]],
+                [12, 12, 12, 99, 12, 111],
+                [23, 23, 23, 99, 23, 111],
+                [43, 43, 43, 99, 43, 111]],
             ['f1', 'f2', 'f3', 'f4', 'f5', 'f6'], ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
     }
 
@@ -71,8 +71,7 @@ export class TableRendererDemoComponent{
                 class: null,
                 editable: false,
                 editorRenderer: null,
-            },
-            group: true
+            }
         },
         {
             target: 'f3',
@@ -145,12 +144,21 @@ export class TableRendererDemoComponent{
             pos: 0,
             width: '60px',
             header: {
+                renderer: TableHeadNum,
+            },
+            cell: {
+                renderer: TableCellNum
+            }
+        },
+        {
+            pos: 0,
+            width: '60px',
+            header: {
                 renderer: TableHeadCheckbox,
             },
             cell: {
                 renderer: TableCellCheckbox
-            },
-            group: true
+            }
         },
         {
             pos: -1,
@@ -161,10 +169,9 @@ export class TableRendererDemoComponent{
             },
             cell: {
                 renderer: TableCellOption
-            },
-            group: true
+            }
         },
-        {
+        /*{
             pos: 2,
             width: '10%',
             header: {
@@ -173,9 +180,8 @@ export class TableRendererDemoComponent{
             },
             cell: {
                 renderer: TableCellOption
-            },
-            group: true
-        }
+            }
+        }*/
     ];
 
     /*total = 200;

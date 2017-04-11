@@ -70,6 +70,25 @@ export class TableCellCheckbox extends TableCellRenderer{
 }
 
 /*
+ * 编号列头
+ * */
+@Component({
+    template: '<span>编号</span>'
+})
+export class TableHeadNum extends TableCellRenderer {
+}
+
+/*
+ * 编号列
+ * */
+@Component({
+    template: '<span>{{row + 1}}</span>'
+})
+export class TableCellNum extends TableCellRenderer {
+}
+
+
+/*
  * 自定义单元格渲染组件
  * */
 @Component({
