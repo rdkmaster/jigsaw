@@ -91,7 +91,6 @@ export class RdkTable implements AfterViewInit {
     @ViewChild(RdkScrollBar) private _scrollBar: RdkScrollBar;
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
-
     }
 
     /*
