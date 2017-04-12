@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {TableCellRenderer} from "./table-api";
 import {TableCheckboxService, CheckboxState} from "./table-service";
 
@@ -6,17 +6,13 @@ import {TableCheckboxService, CheckboxState} from "./table-service";
  * head checkbox renderer
  * */
 @Component({
-    template: '<rdk-checkbox [(checked)]="cellData" (checkedChange)="toggleSelectAll($event)"></rdk-checkbox>'
+    template: `<rdk-checkbox  [(checked)]="cellData"
+                (checkedChange)="toggleSelectAll($event)"
+                [enableIndeterminate]="true"></rdk-checkbox>`
 })
-export class TableHeadCheckbox extends TableCellRenderer {
+export class TableHeadCheckbox extends TableCellRenderer implements OnInit{
     constructor(private tableRendererService: TableCheckboxService){
         super();
-        this.tableRendererService.headListen(() => {
-            this.tableRendererService.headState = this.cellData = 1;
-        }, () => {
-            this.tableRendererService.headState = this.cellData = 0;
-        });
-        this.tableRendererService.headState = this.cellData;
     }
 
     toggleSelectAll(checked){
@@ -26,6 +22,18 @@ export class TableHeadCheckbox extends TableCellRenderer {
         }else{
             this.tableRendererService.unSelectAll();
         }
+        console.log(this.tableRendererService.checkboxStates);
+    }
+
+    ngOnInit(){
+        this.tableRendererService.headListen(() => {
+            this.tableRendererService.headState = this.cellData = 1;
+        }, () => {
+            this.tableRendererService.headState = this.cellData = 0;
+        }, () => {
+            this.tableRendererService.headState = this.cellData = 2;
+        });
+        this.tableRendererService.headState = this.cellData = 0;
     }
 }
 
@@ -35,29 +43,32 @@ export class TableHeadCheckbox extends TableCellRenderer {
 @Component({
     template: '<rdk-checkbox [(checked)]="cellData" (checkedChange)="setCheckboxState($event)"></rdk-checkbox>'
 })
-export class TableCellCheckbox extends TableCellRenderer{
+export class TableCellCheckbox extends TableCellRenderer implements OnInit{
     constructor(private tableRendererService: TableCheckboxService){
         super();
-        this.tableRendererService.listen(() => {this.cellData = 1}, () => {this.cellData = 0});
     }
 
-    private checkboxState: CheckboxState;
+    private _checkboxState: CheckboxState;
 
     setCheckboxState(checked){
-        if(this.checkboxState){
-            this.checkboxState.checked = checked;
-        }else{
-            this.tableRendererService.checkboxStates.push({row: this.row, checked: checked});
-            this.checkboxState = this.tableRendererService.checkboxStates.find(checkboxState => checkboxState.row == this.row);
-        }
+        this._checkboxState.checked = checked;
 
         if(!this.tableRendererService.checkboxStates.find(checkboxState => checkboxState.checked == false)){
-            !this.tableRendererService.headState && this.tableRendererService.headSelect();
+            this.tableRendererService.headState != 1 && this.tableRendererService.headSelect();
+        }else if(!this.tableRendererService.checkboxStates.find(checkboxState => checkboxState.checked == true)){
+            this.tableRendererService.headState != 0 && this.tableRendererService.headUnSelect();
         }else{
-            this.tableRendererService.headState && this.tableRendererService.headUnSelect();
+            this.tableRendererService.headState != 2 && this.tableRendererService.headIndeterminate();
         }
     }
 
+    ngOnInit(){
+        this.cellData = this.cellData ? 1 : 0;
+        this.tableRendererService.listen(() => {this._checkboxState.checked = this.cellData = 1},
+            () => {this._checkboxState.checked = this.cellData = 0});
+        this._checkboxState = {row: this.row, checked: this.cellData};
+        this.tableRendererService.checkboxStates.push(this._checkboxState);
+    }
 }
 
 /*
