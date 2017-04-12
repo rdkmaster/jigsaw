@@ -3,24 +3,32 @@ import {RouterModule} from "@angular/router";
 import {TableBasicDemoComponent} from "./basic/basic";
 import {TableRendererDemoComponent} from "./renderer/renderer";
 import {RdkTableModule, DefaultCellRenderer} from "../../../../component/table/table";
-import {TableHead, TableCell, TableHeadSelect, TableHeadCheckbox,TableCellCheckbox, TableCellOption, TableHeadOption, TableCellNum, TableHeadNum} from "./renderer/table-renderer";
+import {
+    TableHeadCheckbox,
+    TableCellCheckbox,
+    TableCellOption,
+    TableHeadOption,
+    TableCellNum,
+    TableHeadNum
+} from "../../../../component/table/table-renderer";
+import {TableCheckboxService} from "../../../../component/table/table-service";
+import {TableHead, TableCell, TableHeadSelect} from "./renderer/table-renderer";
 import {RdkSelectModule} from "../../../../component/select/select";
 import {RdkCheckBoxModule} from "../../../../component/checkbox/index";
 import {RdkPaginationModule} from "../../../../component/pagination/pagination";
-import {TableRendererService} from "./renderer/tableRendererService";
 
-const tableDemoRoutes=[
+const tableDemoRoutes = [
     {
-        path:'', redirectTo:'basic', pathMatch:'full'
+        path: '', redirectTo: 'basic', pathMatch: 'full'
     },
     {
-        path:'basic', component: TableBasicDemoComponent
+        path: 'basic', component: TableBasicDemoComponent
     },
     {
-        path:'renderer', component: TableRendererDemoComponent
+        path: 'renderer', component: TableRendererDemoComponent
     },
     {
-        path:'**', //fallback router must in the last
+        path: '**', //fallback router must in the last
         component: TableBasicDemoComponent
     }
 ];
@@ -46,7 +54,7 @@ const tableDemoRoutes=[
     exports: [
         TableBasicDemoComponent, TableRendererDemoComponent
     ],
-    providers: [TableRendererService],
+    providers: [TableCheckboxService],
     entryComponents: [
         DefaultCellRenderer,
         TableHead,
@@ -60,4 +68,5 @@ const tableDemoRoutes=[
         TableHeadNum
     ]
 })
-export class TableDemoModule { }
+export class TableDemoModule {
+}

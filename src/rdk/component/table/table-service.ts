@@ -1,3 +1,4 @@
+
 import {Injectable} from "@angular/core";
 
 export type CheckboxState = {
@@ -5,9 +6,11 @@ export type CheckboxState = {
     checked: boolean
 }
 
+/*
+ * checkbox renderer service
+ * */
 @Injectable()
-export class TableRendererService{
-
+export class TableCheckboxService{
     public checkboxStates: CheckboxState[] = [];
     public checkboxSelectAll: (() => void)[] = [];
     public checkboxUnSelectAll: (() => void)[] = [];
