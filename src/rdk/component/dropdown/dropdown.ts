@@ -2,7 +2,7 @@
  * Created by 10177553 on 2017/4/10.
  */
 
-import {Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter, Renderer2} from '@angular/core';
 
 export enum DropDownMode {
     single,
@@ -21,7 +21,7 @@ export enum DropDownTrigger {
     // encapsulation: ViewEncapsulation.None
 })
 export class RdkDropDown implements OnInit {
-    constructor() { }
+    constructor(private _render: Renderer2) { }
 
     private _value: string| Array<any>;
 
@@ -49,20 +49,61 @@ export class RdkDropDown implements OnInit {
     public disabled: boolean;
 
     @Input()
-    public required: boolean = false;
-
-    @Input()
     public mode: DropDownMode = DropDownMode.single;
 
     @Input()
     public trigger: DropDownTrigger = DropDownTrigger.click;
 
+    private _dropDownWidth: string;
+
+    @Input()
+    public get dropDownWidth():string {
+        return this._dropDownWidth;
+    };
+    public set dropDownWidth(width) {
+        this._dropDownWidth = width;
+    }
+
     private _isOpened: boolean = false;
 
     private _toggleClick() {
+        event.preventDefault();
+        event.stopPropagation();
+
         this._isOpened = !this._isOpened;
     }
 
-    ngOnInit() { }
+    private _contentClick() {
+        event.preventDefault();
+        event.stopPropagation();
+
+        if(this.mode === DropDownMode.multiple) return;
+
+        this.close();
+    }
+
+    private _hoverHandle(isHover): void {
+        if(this.trigger === DropDownTrigger.click) return;
+
+        if(isHover == 1) {
+            this._isOpened = true;
+        } else {
+            this._isOpened = false;
+        }
+    }
+
+    public open() {
+        this._isOpened = true;
+    }
+
+    public close() {
+        this._isOpened = false;
+    }
+
+    ngOnInit() {
+        this._render.listen('window', 'click',() => {
+            this.close();
+        })
+    }
 
 }

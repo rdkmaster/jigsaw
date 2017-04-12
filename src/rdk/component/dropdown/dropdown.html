@@ -1,16 +1,18 @@
 <div class="rdk-drop-down"
      [class.rdk-drop-down-opened]="_isOpened"
-     (click)="_toggleClick()">
+     [class.rdk-drop-down-disabled]="disabled"
+     (mouseover)="_hoverHandle(1)"
+     (mouseout)="_hoverHandle(0)">
 
-    <div class="rdk-drop-down-selection">
+    <div class="rdk-drop-down-selection" (click)="_toggleClick()">
         <div class="rdk-drop-down-selection-rendered">
             <div *ngIf="placeholder&& !value" class="rdk-drop-down-selection_placeholder">{{placeholder}}</div>
-            <!-- 多个值的展示. -->
+            <!-- todo 多个值的展示. -->
             <div *ngIf="value" class="rdk-drop-down-selection-selected-value">{{value}}</div>
         </div>
     </div>
 
-    <div class="rdk-drop-down-content">
+    <div class="rdk-drop-down-content" (click)="_contentClick()" [style.width]="dropDownWidth">
         <ng-content></ng-content>
     </div>
 

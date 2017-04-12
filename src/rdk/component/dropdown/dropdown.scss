@@ -34,50 +34,57 @@ $rdk-dropDown: #{$rdk-prefix}-drop-down;
             }
         }
 
-        &-content {
-            background-color: $component-background;
+        &-disabled {
+            color: $disabled-color;
+            pointer-events: none;
+
+            .#{$rdk-dropDown}-selection {
+                background-color: $background-color-base;
+                cursor: not-allowed;
+
+                &:hover, &:active, &:focus {
+                    border-color: $background-color-base;
+                    box-shadow: none;
+                }
+            }
+        }
+
+        .#{$rdk-dropDown}-content {
+            position: absolute;
+            width: 100%;
+            z-index: $zindex-dropdown;
+            overflow: hidden;
+
+            margin-top: 3px;
+            padding: 5px;
+
+            border: $border-width-base $border-style-base $border-color-base;
+            background: $component-background;
             box-shadow: $box-shadow-base;
             border-radius: $border-radius-base;
-            z-index: $zindex-dropdown;
-            left: -9999px;
-            top: -9999px;
-            position: absolute;
-            outline: none;
-            overflow: hidden;
-            font-size: $font-size-base;
 
+            @include opacity(0);
+            @include prefixer(transition, all 0.3s $ease-in-out);
         }
 
         &-opened {
             .#{$rdk-dropDown}-arrow {
                 @include prefixer(transform, rotate(180deg));
             }
+
+            .#{$rdk-dropDown}-content {
+                @include opacity(1);
+                @include prefixer(transform, scale(1, 1));
+            }
         }
 
-        &-arrow {
+        .#{$rdk-dropDown}-arrow {
             position: absolute;
             top: 50%;
             right: 8px;
             line-height: 1px;
 
             @include prefixer(transition, transform 0.3s ease);
-        }
-
-        &-content {
-            position: absolute;
-            width: 100%;
-            z-index: 1;
-            border: $border-width-base $border-style-base $border-color-base;
-            background: $component-background;
-            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
-            border-radius: 4px;
-            @include prefixer(transition, all 0.3s $ease-in-out);
-            @include prefixer(transform-origin, 0 0);
-            &.#{$rdk-dropDown}-hidden {
-                display: none;
-                @include opacity(0);
-                @include prefixer(transform, scale(1, 0));
-            }
         }
     }
 }
