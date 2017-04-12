@@ -1,19 +1,19 @@
 /**
  * Created by 10177553 on 2017/3/29.
  */
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
 import {RdkTab} from "../../../../../component/tabs/tab";
 
 @Component({
     templateUrl:"Tabs.html"
 })
-export class RdkTabsComponent implements OnInit{
+export class RdkTabsComponent implements AfterViewInit{
 
     @ViewChild('myTab') myTab : RdkTab
 
-    ngOnInit(){
+    ngAfterViewInit(){
         console.log(this.myTab);
-        this.myTab.tabs.forEach(
+        this.myTab.tabPanes.forEach(
             (tabPane)=>{console.log(tabPane.label)}
         );
     }

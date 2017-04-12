@@ -12,7 +12,7 @@ export class RdkShowTabComponent {
     @ViewChild('myTab') myTab: RdkTab;
 
     showTab() {
-        this.myTab.showTab(1);
+        this.myTab.showTabPane(1);
     }
 
 }

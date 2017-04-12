@@ -12,7 +12,7 @@ export class RdkHideTabComponent implements OnInit {
     @ViewChild('myTab') myTab: RdkTab;
 
     hideTab() {
-        this.myTab.hideTab(0);
+        this.myTab.hideTabPane(0);
     }
 
     constructor() { }

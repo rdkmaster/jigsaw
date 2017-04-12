@@ -53,10 +53,10 @@ export class dynamicTabDemoComponent implements OnInit {
         this.activeIndex = this.dynamicTabs.length-1;
     }
     public hideTab():void {
-        this.tabs.hideTab(0);
+        this.tabs.hideTabPane(0);
     }
     public showTab():void {
-        this.tabs.showTab(0);
+        this.tabs.showTabPane(0);
     }
 
     public addTabPane() {
