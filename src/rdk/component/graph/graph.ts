@@ -2,63 +2,66 @@
  * Created by 10177553 on 2017/3/23.
  */
 import {
-    Component, OnInit, ElementRef,
-    Input, Output, EventEmitter,
-    OnDestroy, Renderer2
-} from '@angular/core';
-import {GraphData} from "../../core/data/graph-data";
+    Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output,
+    Renderer2, SimpleChanges
+} from "@angular/core";
+import {AbstractGraphData} from "../../core/data/graph-data";
 
-import * as echarts from 'echarts';
+import * as echarts from "echarts";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {AbstractRDKComponent} from "../core";
-import {isUndefined} from "util";
+import {EchartOptions} from "../../core/data/echart-types";
+import {CallbackRemoval} from "../../core/data/component-data";
 
 @Component({
     selector: 'rdk-graph',
     templateUrl: 'graph.html',
-    styleUrls: ['./graph.scss']
+    styleUrls: ['./graph.scss'],
+    host: {
+        "[style.width]": "width",
+        "[style.height]": "height"
+    }
 })
-
 export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy {
     // 全局 echarts 对象
-    public echart: any = echarts;
+    public static echarts: any = echarts;
 
-    // 通过 echarts.init 创建的实例
-    public graph: any;
+    public dataValid: boolean = false;
 
     // 由数据服务提供的数据.
-    private _data: GraphData;
+    private _data: AbstractGraphData;
 
-    public _hasdata:boolean = true;
+    // 通过 echarts.init 创建的实例
+    private _graph: any;
 
     @Input()
-    public get data(): GraphData {
+    public get data(): AbstractGraphData {
         return this._data;
     }
 
-    public set data(value: GraphData) {
+    private _removeRefreshCallback: CallbackRemoval;
+
+    public set data(value: AbstractGraphData) {
         if (!value) return;
         this._data = value;
 
-        value.onRefresh(()=>{
-            this._hasdata=value._hasRightData;
-            if (this._hasdata){
-                this._renderer.setStyle(this._elf.nativeElement.querySelector(".rdk-graph"), 'width', this._width);
-                this._renderer.setStyle(this._elf.nativeElement.querySelector(".rdk-graph"), 'height', this._height);
-                this.graph = echarts.init(this._elf.nativeElement.querySelector(".rdk-graph"));
-            }
-            this._setOption(value.options)
-        })
+        const opt = value.options;
+        if (opt instanceof Promise) {
+            this.setPromiseOption(opt);
+        } else {
+            this.setOption(opt);
+        }
 
+        if (this._removeRefreshCallback) {
+            this._removeRefreshCallback();
+        }
+        this._removeRefreshCallback = value.onRefresh(() => {
+            this.setOption(value.options);
+        });
     }
 
-    private _setOption(option: Object, notMerge?: boolean, lazyUpdate?: boolean) {
-        if (!this.graph) return;
-
-        if (!this._isOptionsValid(option)) return;
-        console.info(option);
-        this.graph.setOption(option, true, lazyUpdate);
-        this._registerEvent();
+    constructor(private _elf: ElementRef, private _renderer: Renderer2) {
+        super();
     }
 
     /**
@@ -69,23 +72,24 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
         return !CommonUtils.isEmptyObject(obj);
     }
 
-    constructor(private _elf: ElementRef, private _renderer: Renderer2) {
-        super();
-    }
-
     ngOnInit() {
+        const container = this._elf.nativeElement.querySelector(".rdk-graph");
+        this._renderer.setStyle(container, 'width', this._width);
+        this._renderer.setStyle(container, 'height', this._height);
+        this._graph = echarts.init(container);
 
+        if (this.data) this.setOption(this.data.options);
     }
 
     // 组件销毁, 注销实例
     ngOnDestroy() {
-        this.echart.dispose();
+        RdkGraph.echarts.dispose();
     }
 
     // 注册封装的echarts事件.
     private _registerEvent() {
         for (let index in this._eventArr) {
-            this.graph.on(this._eventArr[index], params => this._handleEvent(params, this._eventArr[index]));
+            this._graph.on(this._eventArr[index], params => this._handleEvent(params, this._eventArr[index]));
         }
     }
 
@@ -99,19 +103,38 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
 
     /* ********************** echarts api 封装区 start  ******************************** */
     public registerMap(mapName: string, geoJson: Object, specialAreas?: Object): void {
-        this.echart.registerMap(mapName, geoJson, specialAreas);
+        RdkGraph.echarts.registerMap(mapName, geoJson, specialAreas);
     }
 
     public getMapMap(mapName: string): Object {
-        return this.echart.getMap(mapName);
+        return RdkGraph.echarts.getMap(mapName);
     }
 
     public registerTheme(themeName: string, theme: Object): void {
-        this.echart.registerMap(themeName, theme);
+        RdkGraph.echarts.registerMap(themeName, theme);
     }
 
-    public setOption(option: Object, notMerge?: boolean, lazyUpdate?: boolean) {
-        this._setOption(option, notMerge, lazyUpdate)
+    public setOption(option: EchartOptions, lazyUpdate?: boolean) {
+        if (!this._graph) {
+            return;
+        }
+        if (!this._isOptionsValid(option)) {
+            this.dataValid = false;
+            return;
+        }
+        this.dataValid = true;
+
+        console.info(option);
+        this._graph.setOption(option, true, lazyUpdate);
+        this._registerEvent();
+    }
+
+    protected setPromiseOption(optionPromise: Promise<EchartOptions>, lazyUpdate?: boolean):void {
+        optionPromise.then(options => {
+            this.setOption(options, lazyUpdate);
+        }, rejectReason => {
+            this.dataValid = false;
+        });
     }
 
     @Input()
@@ -120,6 +143,7 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
     }
 
     public set width(value: string) {
+        console.log(value);
         const match = value ? value.match(/^\s*(\d+)(%|px)\s*$/) : null;
 
         if (match && match[2] == '%') {
@@ -128,11 +152,12 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
             this._width = value + 'px';
         }
 
-        if (!isUndefined(this.graph)) {
-            this.graph.resize({width: this._width, silent: true});
+        if (this._graph) {
+            this._graph.resize({width: this._width, silent: true});
         }
     }
 
+    @Input()
     public get height(): string {
         return this._height;
     }
@@ -142,12 +167,12 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
 
         if (match && match[2] == '%') {
             this._height = parseInt(match[1]) / 100 * this._elf.nativeElement.offsetHeight + 'px';
-        } else  {
+        } else {
             this._height = value + 'px';
         }
 
-        if (!isUndefined(this.graph)) {
-            this.graph.resize({height: this._height, silent: true});
+        if (this._graph) {
+            this._graph.resize({height: this._height, silent: true});
         }
     }
 
@@ -156,39 +181,39 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
                       height?: number | string,
                       silent?: boolean
                   }): void {
-        this.graph.resize(opts);
+        this._graph.resize(opts);
     }
 
     public dispatchAction(payload: Object): void {
-        this.graph.dispatchAction(payload);
+        this._graph.dispatchAction(payload);
     }
 
     public on(eventName: string, handler: Function, context?: Object): void {
-        this.graph.on(eventName, handler, context);
+        this._graph.on(eventName, handler, context);
     }
 
     public off(eventName: string, handler?: Function): void {
-        this.graph.off(eventName, handler);
+        this._graph.off(eventName, handler);
     }
 
     public showLoading(type?: string, opts?: Object): void {
-        this.graph.showLoading(type, opts);
+        this._graph.showLoading(type, opts);
     }
 
     public hideLoading(): void {
-        this.graph.hideLoading();
+        this._graph.hideLoading();
     }
 
     public clear(): void {
-        this.graph.clear();
+        this._graph.clear();
     }
 
     public isDisposed(): boolean {
-        return this.graph.isDisposed();
+        return this._graph.isDisposed();
     }
 
     public dispose(): void {
-        this.graph.dispose();
+        this._graph.dispose();
     }
 
     /* ********************** echarts api 封装区 end  ******************************** */

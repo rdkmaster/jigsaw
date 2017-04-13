@@ -31,7 +31,7 @@ export class PieDemoComponent implements OnInit {
         ]};
         let legendData = ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎'];
         // 直接创建图表
-        this.data = new PieGraphData();
+        // this.data = new PieGraphData();
 
         let extendOption = {
             title : {
@@ -65,7 +65,7 @@ export class PieDemoComponent implements OnInit {
             ]
         };
         // 打补丁分方式修改
-        this.data.patchOptions(extendOption);
+        // this.data.patchOptions(extendOption);
         this.data.fromObject(seriesData);
     }
 }

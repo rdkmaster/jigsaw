@@ -3,21 +3,22 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import {GraphData} from "../../../../../core/data/graph-data";
+import {AbstractGraphData} from "../../../../../core/data/graph-data";
+import {EchartOptions} from "rdk/core/data/echart-types";
 
 @Component({
-    templateUrl:"basicGraph.html"
+    templateUrl:"basic-graph.html"
 })
 
 export class BasicGraphComponent  implements OnInit {
-    data: GraphData;
+    data: AbstractGraphData;
     ngOnInit() {
         this.data = new GraphDataDemo();
     }
 }
 
-export class GraphDataDemo extends GraphData {
-    protected createChartOptions(): any {
+export class GraphDataDemo extends AbstractGraphData {
+    protected createChartOptions(): EchartOptions {
         return {
             title: {
                 text: '堆叠区域图'

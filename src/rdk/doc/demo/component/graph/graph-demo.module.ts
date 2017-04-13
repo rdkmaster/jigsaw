@@ -4,11 +4,11 @@
 
 import { NgModule } from '@angular/core';
 import {RdkGraphModule} from "../../../../component/graph/index";
-import {BasicGraphComponent} from "./basic/basicGraph";
+import {BasicGraphComponent} from "./basic/basic-graph";
 import {RouterModule} from "@angular/router";
 import {PieDemoComponent} from "./pie/pieGraph";
-import { LineBarGraphArrayDemoComponent } from "./linebargraph/fromArray/linebargraphArray";
-import { LineBarGraphAxjxDemoComponent } from "./linebargraph/fromAxjx/linebargraphAxjx";
+import { LineBarGraphArrayDemoComponent } from "./line-bar-graph/fromArray/linebargraphArray";
+import { LineBarGraphAxjxDemoComponent } from "./line-bar-graph/fromAxjx/linebargraphAxjx";
 import {GraphSetSizeComponent} from "./setSize/setSize";
 
 const graphRoutes = [
@@ -19,10 +19,10 @@ const graphRoutes = [
         path: 'pie', component: PieDemoComponent
     },
     {
-        path: 'linebargraph-array', component: LineBarGraphArrayDemoComponent
+        path: 'line-bar-graph-array', component: LineBarGraphArrayDemoComponent
     },
     {
-        path: 'linebargraph-axjx', component: LineBarGraphAxjxDemoComponent
+        path: 'line-bar-graph-axjx', component: LineBarGraphAxjxDemoComponent
     },
     {
         path: 'setSize', component: GraphSetSizeComponent

@@ -1,7 +1,7 @@
 /**
  * Created by 10177553 on 2017/3/28.
  */
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {LineBarGraphData} from "../../../../../../core/data/graph-data";
 import {Http} from "@angular/http";
 
@@ -19,7 +19,7 @@ import {Http} from "@angular/http";
         margin: 20px 300px;
     }`]
 })
-export class LineBarGraphArrayDemoComponent implements OnInit {
+export class LineBarGraphAxjxDemoComponent {
     data: LineBarGraphData;
 
     graphWidth;
@@ -28,7 +28,7 @@ export class LineBarGraphArrayDemoComponent implements OnInit {
 
     constructor(http: Http) {
         this._http = http;
-        this.data = new LineBarGraphData(this._http);
+        // this.data = new LineBarGraphData(this._http);
 
         this.graphWidth = "600";
         this.graphHeight = "250";
@@ -194,21 +194,7 @@ export class LineBarGraphArrayDemoComponent implements OnInit {
             ]
         };
 
-        let objectData = {
-            "rowDescriptor": ["掉话次数"],
-            "header": [["2016.04.24", "2016.04.25", "2016.04.26", "2016.05.27", "2016.04.28", "2016.04.29", "2016.04.30", "2016.05.01", "2016.05.02", "2016.05.03", "2016.05.04", "2016.05.05", "2016.05.06", "2016.05.07"
-                , "2016.05.08", "2016.05.09", "2016.05.10", "2016.05.11", "2016.05.12", "2016.05.13", "2016.05.14", "2016.05.15", "2016.05.16", "2016.05.17", "2016.05.18", "2016.05.19",
-                "2016.05.20", "2016.05.21", "2016.05.22", "2016.05.23", "2016.05.24"]],
-            "data": [
-                [2, 2, 1, 3, 2, 3, 1, 2, 3, 1, 3, 3, 3, 1, 2, 1, 3, 2, 3, 1, 3, 2, 3, 1, 2, 1, 3, 3, 3, 1, 2],
-                [0.6, 0.5, 0.8, 0.6, 0.5, 0.8, 0.8, 0.7, 0.6, 0.3, 0.8, 0.9, 0.3, 0.7, 0.6, 0.5, 0.3, 0.9, 0.7, 0.6, 0.5, 0.8, 0.5, 0.6, 0.5, 0.6, 0.8, 0.9, 0.6, 0.8, 0.6]
-            ]
-        };
-        // // 打补丁分方式修改
-        this.data.patchOptions(extendOption);
-        this.data.fromObject(objectData);
-    }
-
-    ngOnInit() {
+        // this.data.patchOptions(extendOption);
+        this.data.fromAjax('mock-data/graph/line-bar-graph-data.json');
     }
 }
