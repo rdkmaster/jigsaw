@@ -8,6 +8,7 @@
 |----------|------------------|----------|--------|
 | value  | dropDown组件的值.   | string或者array| - |
 | placeholder | 没有value时的提示 | string | - |
+| labelField | 显示的值的属性 | string | 'label' |
 | disabled | 是否可编辑 | boolean | - |
 | mode | 单值或者多值 | DropDownMode | DropDownMode.single|
 | trigger | 触发下拉的事件 | DropDownTrigger | DropDownTrigger.click |

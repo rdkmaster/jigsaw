@@ -6,7 +6,8 @@ $rdk-dropDown: #{$rdk-prefix}-drop-down;
 :host {
 
     .#{$rdk-dropDown} {
-        width: 200px;
+        min-width: 120px;
+        width: 240px;
         display: inline-block;
         outline: none;
         position: relative;
@@ -21,6 +22,7 @@ $rdk-dropDown: #{$rdk-prefix}-drop-down;
             border-radius: $border-radius-base;
             border: $border-width-base $border-style-base $border-color-base;
             transition: all .3s $ease-in-out;
+            white-space:nowrap;
 
             &:hover {
                 border-color: $primary-color;
@@ -30,7 +32,8 @@ $rdk-dropDown: #{$rdk-prefix}-drop-down;
                 display: block;
                 margin: 0 7px;
                 position: relative;
-                line-height: 26px;
+                line-height: 30px;
+                height: 30px;
             }
         }
 

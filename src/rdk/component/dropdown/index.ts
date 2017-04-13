@@ -4,14 +4,16 @@
 import { NgModule } from '@angular/core';
 import {RdkDropDown} from "./dropdown";
 import {CommonModule} from "@angular/common";
+import {RdkTagModule} from "../tag/tag";
 
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        RdkTagModule
     ],
     exports: [RdkDropDown],
     declarations: [RdkDropDown],
     providers: [],
 })
-export class RdkDropDownModuleModule { }
+export class RdkDropDownModule { }

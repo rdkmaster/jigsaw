@@ -2,7 +2,10 @@
  * Created by 10177553 on 2017/4/10.
  */
 
-import {Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter, Renderer2} from '@angular/core';
+import {
+    Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter, Renderer2,
+    ChangeDetectorRef
+} from '@angular/core';
 
 export enum DropDownMode {
     single,
@@ -21,7 +24,7 @@ export enum DropDownTrigger {
     // encapsulation: ViewEncapsulation.None
 })
 export class RdkDropDown implements OnInit {
-    constructor(private _render: Renderer2) { }
+    constructor(private _render: Renderer2, private _changeDetector: ChangeDetectorRef) { }
 
     private _value: string| Array<any>;
 
@@ -29,11 +32,45 @@ export class RdkDropDown implements OnInit {
     public get value() { return this._value; }
 
     public set value(value) {
+        this._handleShowValue(value);
+
         this._value = value;
     }
 
+    @Input()
+    public labelField: string = 'label';
+
+    private _showValue: string| Array<any>[] = '';
+
+    private _isArray:boolean = false;
+
+    _handleShowValue(value) {
+        if(!value) return; // 控制直接返回;
+        console.info(value);
+        // 优化: 转换成字符串, 然后统一处理.
+        if(typeof value === 'string') {
+            this._showValue = value;
+        } else if(value instanceof Array) { // 数组或者对象.
+            this._showValue = '';
+            this._isArray = true;
+
+            value.forEach(item => {
+                if(typeof value === 'string') {
+                    this._showValue += item+',';
+                } else {
+                    this._showValue += item[this.labelField]+','
+                }
+            });
+        } else { // 对象
+            this._showValue = value[this.labelField];
+        }
+    }
+
+    // TODO 自定义展示的样式.
+
     @Output()
     public changeValue = new EventEmitter<string| Array<any>>(); // 双向绑定
+
 
     /**
      * 对外值变化事件.
@@ -105,5 +142,4 @@ export class RdkDropDown implements OnInit {
             this.close();
         })
     }
-
 }

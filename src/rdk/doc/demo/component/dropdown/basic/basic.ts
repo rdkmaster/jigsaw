@@ -5,25 +5,12 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {DropDownMode, RdkDropDown, DropDownTrigger} from "../../../../../component/dropdown/dropdown";
 
 @Component({
-    template: `
-        <div class="contaner">
-            <input type="button" (click)="changeTriger()" value="hover触发">
-            <input type="button" (click)="changeDisabled()" value="变为不可编辑">
-            <input type="button" (click)="changeWidth()" value="改变dropdown的宽度">
-        </div>
-        
-        <rdk-drop-down placeholder="请输入姓名~" [value]=name.value  [mode]=mode #dropDown [trigger]="trigger" [disabled]="disabled"
-        [dropDownWidth]="width">
-            <label for="">姓名: </label>
-            <input type="text" placeholder="请输入姓名~" #name value="Lily"/>
-            <br />
-            <input type="button" value="提交" (click)="formSubmit($event)">
-        </rdk-drop-down>
-    `,
+    templateUrl: './basic.html',
     styles: [`
         .contaner {
             padding: 5px;
         }
+        
     `]
 })
 export class RdkDropDownInput implements OnInit {
