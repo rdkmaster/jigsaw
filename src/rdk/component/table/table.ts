@@ -1,12 +1,12 @@
 import {
     Component, Input, NgModule, ComponentFactoryResolver, AfterViewInit, ViewChild, Type, ChangeDetectorRef, ElementRef,
-    Renderer2, OnInit
+    Renderer2, OnInit, ComponentRef, Output, EventEmitter, ViewChildren, QueryList, forwardRef
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 
 import {RdkRendererHost} from "../core";
 import {TableData} from "../../core/data/table-data";
-import {TableCellRenderer, ColumnSetting, AdditionalColumnSetting} from "./table-api";
+import {TableCellRenderer, ColumnSetting, AdditionalColumnSetting, TableMsg} from "./table-api";
 
 import {RdkScrollBarModule} from "../scrollbar/scrollbar";
 import {RdkScrollBar} from "../scrollbar/scrollbar";
@@ -37,8 +37,8 @@ class CellSetting {
 }
 
 export class TableCellBasic implements AfterViewInit {
-    constructor(private _componentFactoryResolver: ComponentFactoryResolver,
-                private _changeDetector: ChangeDetectorRef) {
+    constructor(public componentFactoryResolver: ComponentFactoryResolver,
+                public changeDetector: ChangeDetectorRef) {
     }
 
     @Input()
@@ -52,18 +52,34 @@ export class TableCellBasic implements AfterViewInit {
     @Input()
     protected renderer: Type<TableCellRenderer>;
 
+    public rendererRef: ComponentRef<TableCellRenderer>;
+
     @ViewChild(RdkRendererHost) rendererHost: RdkRendererHost;
 
-    ngAfterViewInit(): void {
-        let componentFactory = this._componentFactoryResolver.resolveComponentFactory(this.renderer);
+    /*
+    * 渲染器制造工厂
+    * */
+    protected rendererFactory(renderer: Type<TableCellRenderer>): ComponentRef<TableCellRenderer> {
+        let componentFactory = this.componentFactoryResolver.resolveComponentFactory(renderer);
         let viewContainerRef = this.rendererHost.viewContainerRef;
-        viewContainerRef.clear();
         let componentRef = viewContainerRef.createComponent(componentFactory);
         componentRef.instance.tableData = this.tableData;
         componentRef.instance.cellData = this.cellData;
         componentRef.instance.row = this.row;
         componentRef.instance.column = this.column;
-        this._changeDetector.detectChanges();
+        return componentRef;
+    }
+
+    /*
+    * 插入渲染器
+    * */
+    protected insertRenderer(){
+        this.rendererRef = this.rendererFactory(this.renderer);
+        this.changeDetector.detectChanges();
+    }
+
+    ngAfterViewInit(): void {
+        this.insertRenderer();
     }
 }
 
@@ -89,6 +105,10 @@ export class RdkTable implements AfterViewInit {
     private _cellSettings: Array<CellSetting>[] = [];
 
     @ViewChild(RdkScrollBar) private _scrollBar: RdkScrollBar;
+
+    @ViewChildren(forwardRef(() => RdkTableCell)) tabelCells: QueryList<RdkTableCell>;
+
+    @Output() cellChange: EventEmitter<TableMsg> = new EventEmitter<TableMsg>();
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
     }
@@ -472,6 +492,14 @@ export class RdkTable implements AfterViewInit {
         });
 
         this._transformData();
+
+        setTimeout(()=>{
+            this.tabelCells.length && this.tabelCells.forEach(tableCell => {
+                tableCell.cellChange.subscribe(value => {
+                    this.cellChange.emit(value);
+                })
+            })
+        }, 0);
     }
 
 }
@@ -481,7 +509,7 @@ export class RdkTable implements AfterViewInit {
  * */
 @Component({
     selector: '[rdk-table-cell]',
-    template: '<template rdk-renderer-host></template>'
+    template: '<ng-template rdk-renderer-host></ng-template>'
 })
 export class RdkTableCell extends TableCellBasic implements OnInit {
 
@@ -489,19 +517,64 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
     public editable: boolean = false;
 
     @Input()
-    public editorRenderer: Type<TableCellBasic>;
+    public editorRenderer: Type<TableCellRenderer>;
 
     @Input()
     public group: boolean;
 
-    constructor(cfr: ComponentFactoryResolver, cd: ChangeDetectorRef) {
+    @Output() cellChange: EventEmitter<TableMsg> = new EventEmitter<TableMsg>();
+
+    public editorRendererRef: ComponentRef<TableCellRenderer>;
+
+    private goEditCallback: () => void;
+
+    constructor(cfr: ComponentFactoryResolver, cd: ChangeDetectorRef, private _rdr: Renderer2, private _el: ElementRef) {
         super(cfr, cd);
+    }
+
+    /*
+    * 插入编辑渲染器
+    * */
+    protected insertEditorRenderer(){
+        this.editorRendererRef = this.rendererFactory(this.editorRenderer);
+
+        this.editorRendererRef.instance.changeToText.subscribe(cellData => {
+            if(cellData){
+                if(this.cellData != cellData){
+                    this.cellData = cellData;
+                    this.cellChange.emit({row: this.row, cellData: this.cellData});
+                }
+                this.rendererHost.viewContainerRef.clear();
+                this.insertRenderer();
+                this._onClick();
+            }
+        });
+
+        this.goEditCallback && this.goEditCallback();
+
+        this.changeDetector.detectChanges();
+    }
+
+    /*
+    * 如果可编辑，单元格绑定点击事件
+    * */
+    private _onClick(){
+        this.goEditCallback = this.editable ? this._rdr.listen(this._el.nativeElement, 'click', () => {
+                this.rendererHost.viewContainerRef.clear();
+                this.insertEditorRenderer();
+            }) : null;
     }
 
     ngOnInit() {
         //设置默认渲染器
         this.renderer = this.renderer ? this.renderer : DefaultCellRenderer;
+
+        //绑定点击事件
+        this._onClick();
+
+        this.editable && this._rdr.setStyle(this._el.nativeElement, 'cursor', 'pointer');
     }
+
 }
 
 /*
@@ -509,7 +582,7 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
  * */
 @Component({
     selector: '[rdk-table-header]',
-    template: `<template rdk-renderer-host></template>
+    template: `<ng-template rdk-renderer-host></ng-template>
                <div *ngIf="sortable" [ngClass]="_sortOrderClass">
                     <span (click)="_sortUp()" class="rdk-table-sort-btn rdk-table-sort-up"></span>
                     <span (click)="_sortDown()" class="rdk-table-sort-btn rdk-table-sort-down"></span>

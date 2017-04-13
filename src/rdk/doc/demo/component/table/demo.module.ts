@@ -12,10 +12,11 @@ import {
     TableHeadNum
 } from "../../../../component/table/table-renderer";
 import {TableCheckboxService} from "../../../../component/table/table-service";
-import {TableHead, TableCell, TableHeadSelect} from "./renderer/table-renderer";
+import {TableHead, TableCell, TableHeadSelect, TableCellEditor} from "./renderer/table-renderer";
 import {RdkSelectModule} from "../../../../component/select/select";
 import {RdkCheckBoxModule} from "../../../../component/checkbox/index";
 import {RdkPaginationModule} from "../../../../component/pagination/pagination";
+import {RdkInputModule} from "../../../../component/input/input";
 
 const tableDemoRoutes = [
     {
@@ -46,10 +47,16 @@ const tableDemoRoutes = [
         TableCellOption,
         TableHeadOption,
         TableCellNum,
-        TableHeadNum
+        TableHeadNum,
+        TableCellEditor
     ],
     imports: [
-        RouterModule.forChild(tableDemoRoutes), RdkTableModule, RdkSelectModule, RdkCheckBoxModule, RdkPaginationModule
+        RouterModule.forChild(tableDemoRoutes),
+        RdkTableModule,
+        RdkSelectModule,
+        RdkCheckBoxModule,
+        RdkPaginationModule,
+        RdkInputModule
     ],
     exports: [
         TableBasicDemoComponent, TableRendererDemoComponent
@@ -65,7 +72,8 @@ const tableDemoRoutes = [
         TableCellOption,
         TableHeadOption,
         TableCellNum,
-        TableHeadNum
+        TableHeadNum,
+        TableCellEditor
     ]
 })
 export class TableDemoModule {

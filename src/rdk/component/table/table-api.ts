@@ -1,4 +1,4 @@
-import {Input, Type} from "@angular/core";
+import {Input, Type, Output, EventEmitter} from "@angular/core";
 import {TableData} from "../../core/data/table-data";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 
@@ -7,6 +7,8 @@ export class TableCellRenderer {
     @Input() cellData: any;
     @Input() row: number;
     @Input() column: number;
+
+    @Output() changeToText: EventEmitter<string|number> = new EventEmitter<string|number>();
 }
 
 export type ColumnSetting = {
@@ -26,6 +28,11 @@ export type AdditionalColumnSetting = {
     header?: Header,
     cell?: Cell,
     group?: boolean
+}
+
+export type TableMsg = {
+    row: number,
+    cellData: string|number
 }
 
 type targetType = number|string|number[]|string[]|targetFun;

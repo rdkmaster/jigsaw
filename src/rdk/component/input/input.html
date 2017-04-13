@@ -2,9 +2,12 @@
     <ng-content select="[rdk-prefix-icon]"></ng-content>
 </div>
 <ng-content></ng-content>
-<input [class.rdk-input-long-indent]="_longIndent" [(ngModel)]="value">
+<input #input [class.rdk-input-long-indent]="_longIndent"
+       [(ngModel)]="value"
+       (blur)="_handleBlur($event)"
+       (focus)="_handleFocus($event)">
 <div class="rdk-input-icon-end">
-    <span *ngIf="clearable" (click)="_clearValue()" [hidden]="!value && value != 0" class="fa fa-times"></span>
+    <span *ngIf="clearable" (click)="_clearValue($event)" [hidden]="!value && value != 0" class="fa fa-times"></span>
     <ng-content select="[rdk-icon]"></ng-content>
 </div>
 

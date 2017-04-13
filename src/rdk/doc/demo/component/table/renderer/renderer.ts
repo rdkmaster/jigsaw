@@ -1,4 +1,7 @@
-import {Component, ViewEncapsulation} from "@angular/core";
+import {
+    Component, ViewEncapsulation, AfterViewInit, forwardRef,
+    ViewChild
+} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
 import {
     TableHeadCheckbox,
@@ -10,14 +13,15 @@ import {
 } from "../../../../../component/table/table-renderer";
 import {SortAs, SortOrder} from "../../../../../core/data/component-data";
 import {ColumnSetting, AdditionalColumnSetting} from "../../../../../component/table/table-api";
-import {TableHeadSelect, TableCell, TableHead} from "./table-renderer";
+import {TableHeadSelect, TableCell, TableHead, TableCellEditor} from "./table-renderer";
+import {RdkTable} from "../../../../../component/table/table";
 
 @Component({
     templateUrl: 'renderer.html',
     styleUrls: ['renderer.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TableRendererDemoComponent {
+export class TableRendererDemoComponent implements AfterViewInit{
     tableData: TableData;
 
     constructor() {
@@ -71,9 +75,8 @@ export class TableRendererDemoComponent {
             },
             cell: {
                 renderer: TableCell,
-                class: null,
-                editable: false,
-                editorRenderer: null,
+                editable: true,
+                editorRenderer: TableCellEditor,
             }
         },
         {
@@ -206,6 +209,14 @@ export class TableRendererDemoComponent {
          }
          }*/
     ];
+
+    @ViewChild(forwardRef(() => RdkTable)) table: RdkTable;
+
+    private _changeMsg: string;
+
+    ngAfterViewInit(){
+        this.table.cellChange.subscribe(value => this._changeMsg = `row: ${value.row}, cellData: ${value.cellData}`);
+    }
 
     /*total = 200;
 
