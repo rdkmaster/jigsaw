@@ -29,10 +29,10 @@ const routes=[
         path:'withNgFor', component: RdkTabsWithNgForComponent
     },
     {
-        path:'hideTab', component: RdkHideTabComponent
+        path:'hideTabPane', component: RdkHideTabComponent
     },
     {
-        path:'showTab', component: RdkShowTabComponent
+        path:'showTabPane', component: RdkShowTabComponent
     },
     {
         path:'destoryTab', component: RdkDestoryTabComponent

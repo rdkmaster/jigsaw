@@ -16,7 +16,7 @@ export class RdkTab implements AfterViewInit, AfterViewChecked {
     @ContentChildren(TabPane) _tabPanes: QueryList<TabPane>;
 
     // 声明不可修改的暴露属性.所有包含 TabPane
-    public readonly tabs:QueryList<TabPane> = this._tabPanes;
+    public tabPanes = this._tabPanes;
 
     @ViewChildren(TabLabel) _tabLabel: QueryList<TabLabel>;
 
@@ -108,13 +108,15 @@ export class RdkTab implements AfterViewInit, AfterViewChecked {
         this._setSelectIndex(this.selectedIndex);
         // 因为已经做过"脏检查", 需要手动再触发检查
         this._changeDetector.detectChanges();
+
+        this.tabPanes = this._tabPanes;
     }
 
     /**
      * 隐藏对应的Tab页.
      * @param key (tab pane 的顺序.)
      */
-    public hideTab(index):void {
+    public hideTabPane(index):void {
         let tabPane = this._getTabPaneByIndex(index);
 
         if(!this._isTabPane(tabPane)) return;
@@ -127,7 +129,7 @@ export class RdkTab implements AfterViewInit, AfterViewChecked {
      * 显示对应的Tab页, 如果已经是显示的没有变化, 隐藏的显示, 没有打印出警告.
      * @param index
      */
-    public showTab(index) {
+    public showTabPane(index) {
         let tabPane = this._getTabPaneByIndex(index);
 
         if(!this._isTabPane(tabPane)) return;
