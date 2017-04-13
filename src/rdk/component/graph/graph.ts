@@ -46,11 +46,7 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
         this._data = value;
 
         const opt = value.options;
-        if (opt instanceof Promise) {
-            this.setPromiseOption(opt);
-        } else {
-            this.setOption(opt);
-        }
+        this.setOption(opt);
 
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback();
@@ -129,21 +125,12 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
         this._registerEvent();
     }
 
-    protected setPromiseOption(optionPromise: Promise<EchartOptions>, lazyUpdate?: boolean):void {
-        optionPromise.then(options => {
-            this.setOption(options, lazyUpdate);
-        }, rejectReason => {
-            this.dataValid = false;
-        });
-    }
-
     @Input()
     public get width(): string {
         return this._width;
     }
 
     public set width(value: string) {
-        console.log(value);
         const match = value ? value.match(/^\s*(\d+)(%|px)\s*$/) : null;
 
         if (match && match[2] == '%') {

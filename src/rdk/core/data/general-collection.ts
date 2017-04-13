@@ -3,17 +3,29 @@ import {
     AjaxErrorCallback, AjaxCompleteCallback
 } from "./component-data";
 import {Http, RequestOptionsArgs, Response} from "@angular/http";
+import "rxjs/add/operator/map";
 
 export abstract class AbstractGeneralCollection implements IAjaxComponentData {
     public http: Http;
     public busy: boolean;
+    public dataReviser: DataReviser;
 
     public abstract fromObject(data: any): AbstractGeneralCollection;
 
     protected abstract ajaxSuccessHandler(data): void;
 
     protected reviseData(response: Response): any {
-        return this.wrappedDataReviser ? this.wrappedDataReviser(response.json()) : response.json();
+        const json = response.json();
+        if (!this.dataReviser) {
+            return json;
+        }
+        try {
+            return this.dataReviser(json);
+        } catch (e) {
+            console.error('revise data error: ' + e);
+            console.error(e.stack);
+            return json;
+        }
     }
 
     public fromAjax(options: RequestOptionsArgs|string): void {
@@ -23,7 +35,7 @@ export abstract class AbstractGeneralCollection implements IAjaxComponentData {
         }
 
         const op = ComponentDataHelper.castToRequestOptionsArgs(options);
-        debugger
+        this.busy = true;
         this.http.request(op.url, op)
             .map(res => this.reviseData(res))
             .subscribe(
@@ -31,26 +43,6 @@ export abstract class AbstractGeneralCollection implements IAjaxComponentData {
                 error => this.ajaxErrorHandler(error),
                 () => this.ajaxCompleteHandler()
             );
-    }
-
-    protected wrappedDataReviser: DataReviser;
-    private _originDataReviser: DataReviser;
-
-    public get dataReviser(): DataReviser {
-        return this._originDataReviser;
-    }
-
-    public set dataReviser(value: DataReviser) {
-        this._originDataReviser = value;
-        this.wrappedDataReviser = (data) => {
-            try {
-                return this._originDataReviser(data);
-            } catch (e) {
-                console.error('revise data error: ' + e);
-                console.error(e.stack);
-                return data;
-            }
-        }
     }
 
     protected componentDataHelper: ComponentDataHelper = new ComponentDataHelper();
@@ -90,9 +82,7 @@ export abstract class AbstractGeneralCollection implements IAjaxComponentData {
     public destroy(): void {
         this.componentDataHelper.clearCallbacks();
         this.componentDataHelper = null;
-
-        this.wrappedDataReviser = null;
-        this._originDataReviser = null;
+        this.dataReviser = null;
     }
 }
 

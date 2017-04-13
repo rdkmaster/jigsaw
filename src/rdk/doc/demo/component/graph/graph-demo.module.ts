@@ -2,34 +2,24 @@
  * Created by 10177553 on 2017/3/28.
  */
 
-import { NgModule } from '@angular/core';
+import {NgModule} from "@angular/core";
 import {RdkGraphModule} from "../../../../component/graph/index";
-import {BasicGraphComponent} from "./basic/basic-graph";
+import {BasicGraphComponent} from "./basic/demo";
 import {RouterModule} from "@angular/router";
-import {PieDemoComponent} from "./pie/pieGraph";
-import { LineBarGraphArrayDemoComponent } from "./line-bar-graph/fromArray/linebargraphArray";
-import { LineBarGraphAxjxDemoComponent } from "./line-bar-graph/fromAxjx/linebargraphAxjx";
-import {GraphSetSizeComponent} from "./setSize/setSize";
+import {BasicLineGraphComponent} from "./line-bar-graph/basic/demo";
+import {AjaxLineGraphComponent} from "./line-bar-graph/from-axjx/demo";
 
 const graphRoutes = [
     {
-        path: 'basic', component:BasicGraphComponent
+        path: 'basic', component: BasicGraphComponent
     },
     {
-        path: 'pie', component: PieDemoComponent
+        path: 'line-bar-graph-basic', component: BasicLineGraphComponent
     },
     {
-        path: 'line-bar-graph-array', component: LineBarGraphArrayDemoComponent
+        path: 'line-bar-graph-ajax', component: AjaxLineGraphComponent
     },
-    {
-        path: 'line-bar-graph-axjx', component: LineBarGraphAxjxDemoComponent
-    },
-    {
-        path: 'setSize', component: GraphSetSizeComponent
-    }
-
-
-]
+];
 
 @NgModule({
     imports: [
@@ -37,10 +27,12 @@ const graphRoutes = [
         RdkGraphModule
     ],
     exports: [
-        BasicGraphComponent, PieDemoComponent,LineBarGraphAxjxDemoComponent,LineBarGraphArrayDemoComponent
+        BasicGraphComponent, BasicLineGraphComponent, AjaxLineGraphComponent
     ],
-    declarations: [BasicGraphComponent,PieDemoComponent,
-        GraphSetSizeComponent,LineBarGraphAxjxDemoComponent,LineBarGraphArrayDemoComponent],
+    declarations: [
+        BasicGraphComponent, BasicLineGraphComponent, AjaxLineGraphComponent
+    ],
     providers: [],
 })
-export class GraphDemoModule { }
+export class GraphDemoModule {
+}

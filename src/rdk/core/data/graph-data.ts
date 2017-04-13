@@ -3,14 +3,14 @@ import {TableData} from "./table-data";
 import {CommonUtils} from "../utils/common-utils";
 import {reject} from "q";
 
-type GraphMatrixRow = Array<string|number>;
+type GraphMatrixRow = Array<string | number>;
 export type GraphDataHeader = string[];
 export type GraphDataField = string[];
 export type GraphDataRowDescriptor = string[];
 export type GraphDataMatrix = GraphMatrixRow[];
 
 export abstract class AbstractGraphData extends TableData {
-    protected abstract createChartOptions(): EchartOptions | Promise<EchartOptions>;
+    protected abstract createChartOptions(): EchartOptions;
 
     public static isGraphData(data: any): boolean {
         if (!data) {
@@ -35,13 +35,22 @@ export abstract class AbstractGraphData extends TableData {
                 public rowDescriptor?: GraphDataRowDescriptor,
                 public field?: GraphDataField) {
         super(data, field, header);
-        this._makeFields();
+        if (!data) {
+            this.data = [];
+        }
+        if (!field) {
+            this.field = [];
+        }
+        if (!header) {
+            this.header = [];
+        }
         if (!rowDescriptor) {
             this.rowDescriptor = [];
         }
+        this._makeFields();
     }
 
-    private _optionsPatch:EchartOptions;
+    private _optionsPatch: EchartOptions;
 
     public get optionsPatch(): EchartOptions {
         return this._optionsPatch;
@@ -52,7 +61,7 @@ export abstract class AbstractGraphData extends TableData {
         this.patchOptions(value);
     }
 
-    public patchOptions(patchOpt: EchartOptions, suppressWarning:boolean = false): void {
+    public patchOptions(patchOpt: EchartOptions, suppressWarning: boolean = false): void {
         if (!this.echartOptions) {
             if (!suppressWarning) console.warn('the options is not ready!');
             return;
@@ -62,28 +71,32 @@ export abstract class AbstractGraphData extends TableData {
 
     protected echartOptions: EchartOptions;
 
-    public get options(): EchartOptions | Promise<EchartOptions> {
+    public get options(): EchartOptions {
         if (this.echartOptions) {
             return this.echartOptions;
         }
 
         const opt = this.createChartOptions();
-        if (opt instanceof Promise) {
-            opt.then(rawOptions => {
-                this._setupOptions(rawOptions);
-                return this.echartOptions;
-            });
-        } else {
-            this._setupOptions(opt);
-        }
+        this._setupOptions(opt);
         return opt;
     }
 
-    private _setupOptions(opt:EchartOptions):void {
+    private _setupOptions(opt: EchartOptions): void {
         this.echartOptions = opt;
         if (this._optionsPatch) {
             this.patchOptions(this._optionsPatch);
         }
+    }
+
+    public ajaxSuccessHandler(data):void {
+        super.ajaxSuccessHandler(data);
+        this.fromObject(data);
+    }
+
+    public ajaxErrorHandler(error):void {
+        super.ajaxErrorHandler(error);
+        this.clearData();
+        this.refresh();
     }
 
     public fromObject(data: any): AbstractGraphData {
@@ -109,7 +122,7 @@ export abstract class AbstractGraphData extends TableData {
     }
 
     private _makeFields(): void {
-        if ((!this.field|| this.field.length == 0) && this.header) {
+        if ((!this.field || this.field.length == 0) && this.header) {
             this.header.forEach(item => this.field.push(item));
         }
     }
@@ -192,12 +205,25 @@ export class DonutGraphData extends PieGraphData {
 }
 
 export class LineBarGraphData extends AbstractNormalGraphData {
-    protected createChartOptions(): any {
-        return {
-            title: {
-                text: '堆叠区域图'
-            },
-            tooltip : {
+    protected getDataByColumn(index: number): any[] {
+        const result: any[] = [];
+        this.data.forEach(row => result.push(row[index]));
+        return result;
+    }
+
+    protected isDataValid(): boolean {
+        return this.header && this.header.length > 0 &&
+            this.rowDescriptor && this.rowDescriptor.length > 0 &&
+            this.data && this.data.length > 0;
+    }
+
+    protected createChartOptions(): EchartOptions {
+        if (!this.isDataValid()) {
+            return null;
+        }
+
+        const options: EchartOptions = {
+            tooltip: {
                 trigger: 'axis',
                 axisPointer: {
                     type: 'cross',
@@ -207,7 +233,7 @@ export class LineBarGraphData extends AbstractNormalGraphData {
                 }
             },
             legend: {
-                data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
+                data: this.header
             },
             toolbox: {
                 feature: {
@@ -220,62 +246,83 @@ export class LineBarGraphData extends AbstractNormalGraphData {
                 bottom: '3%',
                 containLabel: true
             },
-            xAxis : [
+            xAxis: [
                 {
-                    type : 'category',
-                    boundaryGap : false,
-                    data : ['周一','周二','周三','周四','周五','周六','周日']
+                    type: 'category',
+                    boundaryGap: false,
+                    data: this.rowDescriptor
                 }
             ],
-            yAxis : [
+            yAxis: [
                 {
-                    type : 'value'
+                    type: 'value'
                 }
             ],
-            series : [
-                {
-                    name:'邮件营销',
-                    type:'line',
-                    stack: '总量',
-                    areaStyle: {normal: {}},
-                    data:[120, 132, 101, 134, 90, 230, 210]
-                },
-                {
-                    name:'联盟广告',
-                    type:'line',
-                    stack: '总量',
-                    areaStyle: {normal: {}},
-                    data:[220, 182, 191, 234, 290, 330, 310]
-                },
-                {
-                    name:'视频广告',
-                    type:'line',
-                    stack: '总量',
-                    areaStyle: {normal: {}},
-                    data:[150, 232, 201, 154, 190, 330, 410]
-                },
-                {
-                    name:'直接访问',
-                    type:'line',
-                    stack: '总量',
-                    areaStyle: {normal: {}},
-                    data:[320, 332, 301, 334, 390, 330, 320]
-                },
-                {
-                    name:'搜索引擎',
-                    type:'line',
-                    stack: '总量',
-                    label: {
-                        normal: {
-                            show: true,
-                            position: 'top'
-                        }
-                    },
-                    areaStyle: {normal: {}},
-                    data:[820, 932, 901, 934, 1290, 1330, 1320]
-                }
-            ]
+            series: []
         };
+        this.data.forEach((row, index) => {
+            options.series.push({name: this.header[index], type: 'line', data: this.getDataByColumn(index)});
+        });
+        options.title = this.title;
+        return options;
+    }
+}
+
+export class LineBarGraphDataByRow extends AbstractNormalGraphData {
+
+    protected isDataValid(): boolean {
+        return this.header && this.header.length > 0 &&
+            this.rowDescriptor && this.rowDescriptor.length > 0 &&
+            this.data && this.data.length > 0;
+    }
+
+    protected createChartOptions(): EchartOptions {
+        if (!this.isDataValid()) {
+            return null;
+        }
+        const options: EchartOptions = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    label: {
+                        backgroundColor: '#6a7985'
+                    }
+                }
+            },
+            legend: {
+                data: this.rowDescriptor
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: this.header
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: []
+        };
+        this.data.forEach((row, index) => {
+            options.series.push({name: this.rowDescriptor[index], type: 'line', data: row});
+        });
+        options.title = this.title;
+        return options;
     }
 }
 
