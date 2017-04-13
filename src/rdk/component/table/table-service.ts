@@ -1,23 +1,43 @@
+
 import {Injectable} from "@angular/core";
 
 export type CheckboxState = {
     row: number,
-    checked: boolean
+    checked: boolean|number
 }
 
+/*
+ * checkbox renderer service
+ * */
 @Injectable()
-export class TableRendererService{
-
+export class TableCheckboxService{
     public checkboxStates: CheckboxState[] = [];
     public checkboxSelectAll: (() => void)[] = [];
     public checkboxUnSelectAll: (() => void)[] = [];
-    public headState: string|number;
+    public headState: boolean|number;
+
+    /*public headCheckboxSelect: () => void;
+    public headCheckboxUnSelect: () => void;
+    headListen(selectListener, unSelectListener){
+        this.headCheckboxSelect = selectListener;
+        this.headCheckboxUnSelect = unSelectListener;
+    }
+    headSelect(){
+        this.headCheckboxSelect();
+    }
+
+    headUnSelect(){
+        this.headCheckboxUnSelect();
+    }*/
+
     public headCheckboxSelect: (() => void)[] = [];
     public headCheckboxUnSelect: (() => void)[] = [];
+    public headCheckboxIndeterminate: (() => void)[] = [];
 
-    headListen(selectListener, unSelectListener){
+    headListen(selectListener, unSelectListener, IndeterminateListener){
         this.headCheckboxSelect.push(selectListener);
         this.headCheckboxUnSelect.push(unSelectListener);
+        this.headCheckboxIndeterminate.push(IndeterminateListener);
     }
 
     headSelect(){
@@ -26,6 +46,10 @@ export class TableRendererService{
 
     headUnSelect(){
         this.headCheckboxUnSelect.forEach(checkboxUnSelect => checkboxUnSelect());
+    }
+
+    headIndeterminate(){
+        this.headCheckboxIndeterminate.forEach(checkboxIndeterminate => checkboxIndeterminate());
     }
 
     listen(selectListener, unSelectListener){

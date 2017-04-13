@@ -13,7 +13,7 @@ import {RdkScrollBar} from "../scrollbar/scrollbar";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 
 class HeadSetting {
-    cellData: string;
+    cellData: string|number;
     width: string|number;
     visible: boolean;
     renderer: Type<TableCellRenderer>;
@@ -94,10 +94,9 @@ export class RdkTable implements AfterViewInit {
     }
 
     /*
-     * data和columns数据合并转换
+     * 初始化_headSettings
      * */
-    private _transformData(): void {
-        //初始化_headSettings
+    private _initHeadSettings(): void {
         this.data.header.forEach((cellData, index) => {
             this._headSettings.push({
                 cellData: cellData,
@@ -111,8 +110,12 @@ export class RdkTable implements AfterViewInit {
                 pos: index
             })
         });
+    }
 
-        //初始化_cellSettings
+    /*
+     * 初始化_cellSettings
+     * */
+    private _initCellSettings(): void {
         this.data.data.forEach(row => {
             let cellSettings = [];
             row.forEach((cellData, index) => {
@@ -130,8 +133,12 @@ export class RdkTable implements AfterViewInit {
             });
             this._cellSettings.push(cellSettings);
         });
+    }
 
-        //列定义数据转换
+    /*
+     * 列定义数据转换
+     * */
+    private _transformColumns(): void {
         this.columns && this.columns.forEach(column => {
             if (column.target instanceof Function) {
                 let fields = this.data.field.filter(column.target);
@@ -155,21 +162,34 @@ export class RdkTable implements AfterViewInit {
                 this._mergeSettings(this.data.field.indexOf(column.target), column);
             }
         });
+    }
 
-        //其他列定义数据转换
+    /*
+     * 其他列定义数据转换
+     * */
+    private _transformAdditionalColumns(): void {
         this.additionalColumns && this.additionalColumns.forEach(additionalColumn => {
             let pos = additionalColumn.pos;
+            const target = additionalColumn.target;
             pos = pos >= 0 && pos < this.data.header.length ? pos : -1;
-            this._insertSettings(pos, additionalColumn);
+            target ? this._insertCloneSettings(pos, target, additionalColumn) : this._insertSettings(pos, additionalColumn);
         });
+    }
 
-        //过滤掉不显示的表头
+    /*
+     * 过滤掉不显示的列
+     * */
+    private _filterSetttings(): void {
         this._headSettings = this._headSettings ? this._headSettings.filter(headSetting => headSetting.visible) : null;
         this._cellSettings && this._cellSettings.forEach((cellSettings, index) => {
             this._cellSettings[index] = cellSettings.filter(cellSetting => cellSetting.visible);
         });
+    }
 
-        //合并单元格
+    /*
+     * 合并单元格
+     * */
+    private _mergeCellWithGroup(): void {
         let rowSpans: number[] = [];
         this._cellSettings.forEach((cellSettings, rowIndex) => {
             cellSettings.forEach((cellSetting, colIndex) => {
@@ -182,7 +202,7 @@ export class RdkTable implements AfterViewInit {
                         for (let i = 0; i < this._cellSettings.length - rowIndex - 1; i++) {
                             if (this._cellSettings[rowIndex + i + 1][colIndex].cellData == cellSetting.cellData) {
                                 rowSpan += 1;
-                                if(i == this._cellSettings.length - rowIndex - 2){
+                                if (i == this._cellSettings.length - rowIndex - 2) {
                                     rowSpans.push(rowSpan);
                                     cellSetting.rowSpan = rowSpan;
                                 }
@@ -203,7 +223,7 @@ export class RdkTable implements AfterViewInit {
                         for (let i = 0; i < this._cellSettings.length - rowIndex - 1; i++) {
                             if (this._cellSettings[rowIndex + i + 1][colIndex].cellData == cellSetting.cellData) {
                                 rowSpan += 1;
-                                if(i == this._cellSettings.length - rowIndex - 2){
+                                if (i == this._cellSettings.length - rowIndex - 2) {
                                     rowSpans[colIndex] = rowSpan;
                                     cellSetting.rowSpan = rowSpans[colIndex];
                                 }
@@ -218,6 +238,33 @@ export class RdkTable implements AfterViewInit {
 
             })
         })
+    }
+
+    /*
+     * data和columns数据合并转换
+     * */
+    private _transformData(): void {
+        //初始化Settings
+        this._initSettings();
+
+        //列定义数据转换
+        this._transforms();
+
+        //过滤掉不显示的列
+        this._filterSetttings();
+
+        //合并单元格
+        this._mergeCellWithGroup();
+    }
+
+    private _initSettings(): void {
+        this._initHeadSettings();
+        this._initCellSettings();
+    }
+
+    private _transforms(): void {
+        this._transformColumns();
+        this._transformAdditionalColumns();
     }
 
     private _mergeSettings(index, column: ColumnSetting): void {
@@ -245,6 +292,49 @@ export class RdkTable implements AfterViewInit {
         }
     }
 
+    /*
+     * 根据元素在field的index找到在settings中的index
+     * */
+    private _getSettingIndex(pos) {
+        let settingIndex = null;
+        for (let i = 0; i < this._headSettings.length; i++) {
+            if (this._headSettings[i].pos == pos) {
+                settingIndex = i;
+                break;
+            }
+        }
+        return settingIndex;
+    }
+
+    /*
+     * 移动列位置
+     * */
+    private _insertCloneSettings(pos: number, target: string|number, additionalColumn: AdditionalColumnSetting) {
+        let curPos: number = null;
+        let settingIndex: number = null;
+        //合并列数据
+        if (typeof target === 'number') {
+            curPos = target;
+        } else if (typeof target === 'string') {
+            curPos = this.data.field.indexOf(target);
+        }
+        settingIndex = this._getSettingIndex(curPos);
+
+        //插入列头
+        let headSetting = <HeadSetting>this._clone(this._headSettings[settingIndex]);
+        headSetting.visible = true;
+        headSetting.pos = -1;
+        this._insertHeaderSetting(pos, additionalColumn, headSetting);
+
+        //插入列
+        this._cellSettings.forEach(cellSettings => {
+            let cellSetting = <CellSetting>this._clone(cellSettings[settingIndex]);
+            cellSetting.visible = true;
+            cellSetting.pos = -1;
+            this._insertCellSetting(pos, additionalColumn, cellSetting, cellSettings);
+        })
+    }
+
     private _insertSettings(pos, additionalColumn: AdditionalColumnSetting): void {
         this._insertHeaderSetting(pos, additionalColumn);
         this._insertCellSetting(pos, additionalColumn);
@@ -253,18 +343,20 @@ export class RdkTable implements AfterViewInit {
     /*
      * 插入表头列
      * */
-    private _insertHeaderSetting(pos, additionalColumn: AdditionalColumnSetting): void {
-        let headSetting: HeadSetting = {
-            cellData: '',
-            width: null,
-            visible: true,
-            renderer: null,
-            class: '',
-            sortable: false,
-            sortAs: SortAs.string,
-            defaultSortOrder: SortOrder.default,
-            pos: -1 //-1代表插入列
-        };
+    private _insertHeaderSetting(pos, additionalColumn: AdditionalColumnSetting): void
+    private _insertHeaderSetting(pos, additionalColumn: AdditionalColumnSetting, headSetting?: HeadSetting): void
+    private _insertHeaderSetting(pos, additionalColumn: AdditionalColumnSetting, headSetting?: HeadSetting): void {
+        headSetting = headSetting ? headSetting : {
+                cellData: '',
+                width: null,
+                visible: true,
+                renderer: null,
+                class: '',
+                sortable: false,
+                sortAs: SortAs.string,
+                defaultSortOrder: SortOrder.default,
+                pos: -1 //-1代表插入列
+            };
         headSetting = this._generateHeaderSetting(headSetting, additionalColumn);
         if (pos != -1) {
             const index = this._headSettings.indexOf(this._headSettings.find(headSetting => headSetting.pos == pos));
@@ -277,34 +369,45 @@ export class RdkTable implements AfterViewInit {
     /*
      * 插入单元格列
      * */
-    private _insertCellSetting(pos, additionalColumn: AdditionalColumnSetting): void {
-        let cellSetting: CellSetting = {
-            cellData: '',
-            visible: true,
-            renderer: null,
-            class: '',
-            editable: false,
-            editorRenderer: null,
-            group: false,
-            pos: -1, //-1代表插入列
-            rowSpan: 1
-        };
+    private _insertCellSetting(pos, additionalColumn: AdditionalColumnSetting): void
+    private _insertCellSetting(pos, additionalColumn: AdditionalColumnSetting, cellSetting?: CellSetting, cellSettings?: CellSetting[]): void
+    private _insertCellSetting(pos, additionalColumn: AdditionalColumnSetting, cellSetting?: CellSetting, cellSettings?: CellSetting[]): void {
+        cellSetting = cellSetting ? cellSetting : {
+                cellData: '',
+                visible: true,
+                renderer: null,
+                class: '',
+                editable: false,
+                editorRenderer: null,
+                group: false,
+                pos: -1, //-1代表插入列
+                rowSpan: 1
+            };
         cellSetting = this._generateCellSetting(cellSetting, additionalColumn);
 
-        if (pos != -1) {
-            this._cellSettings.forEach((cellSettings) => {
-                /*let cellSettingClone: CellSetting = <CellSetting>this._clone(cellSetting);
-                 const index = cellSettings.indexOf(cellSettings.find(cellSetting => cellSetting.pos == pos));
-                 cellSettings.splice(index, 0, cellSettingClone);*/
+        if (!cellSettings) {
+            if (pos != -1) {
+                this._cellSettings.forEach((cellSettings) => {
+                    /*let cellSettingClone: CellSetting = <CellSetting>this._clone(cellSetting);
+                     const index = cellSettings.indexOf(cellSettings.find(cellSetting => cellSetting.pos == pos));
+                     cellSettings.splice(index, 0, cellSettingClone);*/
+                    const index = cellSettings.indexOf(cellSettings.find(cellSetting => cellSetting.pos == pos));
+                    cellSettings.splice(index, 0, cellSetting);
+                })
+            } else {
+                this._cellSettings.forEach((cellSettings) => {
+                    /*let cellSettingClone: CellSetting = <CellSetting>this._clone(cellSetting);
+                     cellSettings.push(cellSettingClone);*/
+                    cellSettings.push(cellSetting);
+                })
+            }
+        } else {
+            if (pos != -1) {
                 const index = cellSettings.indexOf(cellSettings.find(cellSetting => cellSetting.pos == pos));
                 cellSettings.splice(index, 0, cellSetting);
-            })
-        } else {
-            this._cellSettings.forEach((cellSettings) => {
-                /*let cellSettingClone: CellSetting = <CellSetting>this._clone(cellSetting);
-                 cellSettings.push(cellSettingClone);*/
+            } else {
                 cellSettings.push(cellSetting);
-            })
+            }
         }
     }
 
