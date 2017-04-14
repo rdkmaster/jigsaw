@@ -5,7 +5,7 @@ export type TableDataHeader = string[];
 export type TableDataField = string[];
 export type TableDataMatrix = TableMatrixRow[];
 
-export class TableData extends AbstractGeneralCollection {
+export class TableDataBase extends AbstractGeneralCollection {
     public static isTableData(data: any): boolean {
         return data && data.hasOwnProperty('data') && data.data instanceof Array &&
             data.hasOwnProperty('header') && data.header instanceof Array &&
@@ -28,7 +28,7 @@ export class TableData extends AbstractGeneralCollection {
     }
 
     protected isDataValid(data): boolean {
-        return TableData.isTableData(data);
+        return TableDataBase.isTableData(data);
     }
 
     protected ajaxSuccessHandler(data): void {
@@ -42,16 +42,16 @@ export class TableData extends AbstractGeneralCollection {
         this.componentDataHelper.invokeAjaxSuccessCallback(data);
     }
 
-    public fromObject(data: any): TableData {
+    public fromObject(data: any): TableDataBase {
         if (!this.isDataValid(data)) {
             throw new Error('invalid raw TableData object!');
         }
 
         this.clearData();
 
-        TableData.arrayAppend(this.data, data.data);
-        TableData.arrayAppend(this.field, data.field);
-        TableData.arrayAppend(this.header, data.header);
+        TableDataBase.arrayAppend(this.data, data.data);
+        TableDataBase.arrayAppend(this.field, data.field);
+        TableDataBase.arrayAppend(this.header, data.header);
         this.refresh();
 
         return this;
@@ -96,6 +96,10 @@ export class TableData extends AbstractGeneralCollection {
     public destroy(): void {
         super.destroy();
         this.clearData();
-        console.log('destroying TableData....');
+        console.log('destroying TableDataBase....');
     }
+}
+
+export class TableData extends TableDataBase {
+
 }

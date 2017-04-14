@@ -32,7 +32,7 @@ export class AjaxCompleteCallback {
 }
 
 export class ComponentDataHelper {
-    public static castToRequestOptionsArgs(args:RequestOptionsArgs|string):RequestOptionsArgs {
+    public static castToRequestOptionsArgs(args: RequestOptionsArgs | string): RequestOptionsArgs {
         return typeof args === 'string' ? {url: args, method: 'get'} : args;
     }
 
@@ -121,7 +121,7 @@ export interface IComponentData {
 export interface IAjaxComponentData extends IComponentData {
     busy: boolean;
 
-    fromAjax(options: RequestOptionsArgs|string): void;
+    fromAjax(options: RequestOptionsArgs | string): void;
     onAjaxSuccess (callback: (data: any) => void, context?: any): CallbackRemoval;
     onAjaxError   (callback: (error: Response) => void, context?: any): CallbackRemoval;
     onAjaxComplete(callback: () => void, context?: any): CallbackRemoval;
@@ -155,14 +155,19 @@ export class PagingSortInfo {
     }
 }
 
-export interface IPagableData extends IAjaxComponentData {
+export interface IPageable extends IAjaxComponentData {
     pagingInfo: PagingBasicInfo;
-    filterInfo: PagingFilterInfo;
+    changePage(currentPage: number, pageSize?:number): void;
+}
+
+export interface ISortable extends IAjaxComponentData {
     sortInfo: PagingSortInfo;
+    sort(as: SortAs, order: SortOrder, field: string | number): void;
+    sort(sort: PagingSortInfo): void;
+}
 
-    pagingFilter(term: string, fields?: string[] | number[]): void;
-    pagingFilter(term: PagingFilterInfo): void;
-
-    pagingSort(as: SortAs, order: SortOrder, field: string | number): void;
-    pagingSort(sort: PagingSortInfo): void;
+export interface IFilterable extends IAjaxComponentData {
+    filterInfo: PagingFilterInfo;
+    filter(term: string, fields?: string[] | number[]): void;
+    filter(term: PagingFilterInfo): void;
 }

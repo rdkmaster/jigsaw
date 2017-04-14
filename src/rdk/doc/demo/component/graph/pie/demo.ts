@@ -7,7 +7,7 @@ import {Http} from "@angular/http";
 
 @Component({
     template: `
-        <h3>使用PieGraphData作为输入数据</h3>
+        <h3>使用 PieGraphData 作为输入数据</h3>
         <p>对于数据不是直接来自于数据库的时候，推荐使用这个数据类型构建饼图，简单又直接。</p>
         <rdk-graph [data]="pieGraphData" [width]="400" [height]="300"></rdk-graph>
 
