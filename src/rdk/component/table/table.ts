@@ -302,7 +302,6 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit {
         this._mergeCellWithGroup();
 
         this._inited = true;
-        console.log(this._cellSettings);
     }
 
     private _initSettings(): void {
@@ -513,6 +512,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit {
 
         //调整滚动条位置
         this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.mCSB_scrollTools_vertical'), 'margin', this._fixedHead.offsetHeight + 'px 0 0');
+        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.mCSB_scrollTools_horizontal'), 'margin', '0 0');
 
         this._scrollBar.whileScrolling.subscribe(scrollEvent => {
             if (scrollEvent.direction == 'x') {

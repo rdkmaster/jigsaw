@@ -92,13 +92,7 @@ export class TableRendererDemoComponent implements AfterViewInit{
         },
         {
             target: 'f4',
-            //visible: false,
-            /*header: {
-             renderer: TableHeadCheckbox
-             },
-             cell: {
-             renderer: TableCellCheckbox
-             }*/
+            //visible: false
         },
         {
             target: 'f5',
