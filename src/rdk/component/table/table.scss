@@ -26,6 +26,9 @@ table{
         color: #333;
         tr{
             height: 40px;
+            td{
+                white-space: nowrap;
+            }
         }
     }
     tbody tr{
