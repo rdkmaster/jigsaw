@@ -302,6 +302,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit {
         this._mergeCellWithGroup();
 
         this._inited = true;
+        console.log(this._cellSettings);
     }
 
     private _initSettings(): void {
@@ -496,14 +497,13 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit {
      * */
     private _generateCellSetting(cellSetting: CellSetting, column: ColumnSetting | AdditionalColumnSetting): CellSetting {
         cellSetting.visible = column.visible === true || column.visible === false ? column.visible : cellSetting.visible;
-
+        cellSetting.group = column.group === true || column.group === false ? column.group : cellSetting.group;
         const cell = column.cell;
         if (cell) {
             cellSetting.renderer = cell.renderer ? cell.renderer : cellSetting.renderer;
             cellSetting.class = typeof cell.class == 'string' && cell.class !== '' ? cellSetting.class + " " + cell.class : cellSetting.class;
             cellSetting.editable = cell.editable === true || cell.editable === false ? cell.editable : cellSetting.editable;
             cellSetting.editorRenderer = cell.editorRenderer ? cell.editorRenderer : cellSetting.editorRenderer;
-            cellSetting.group = column.group === true || column.group === false ? column.group : cellSetting.group;
         }
         return cellSetting;
     }

@@ -118,9 +118,6 @@ export class TableRendererDemoComponent implements AfterViewInit{
                 sortAs: SortAs.string,
                 defaultSortOrder: SortOrder.default
             },
-            cell: {
-                renderer: TableCell
-            },
             group: true
         },
         {
