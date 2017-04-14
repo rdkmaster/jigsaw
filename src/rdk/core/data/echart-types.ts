@@ -41,3 +41,8 @@ export class EchartTooltip {
     public show?: boolean;
     [prop:string]: any;
 }
+
+export class EchartSeriesItem {
+    data: any[];
+    [prop:string]: any;
+}

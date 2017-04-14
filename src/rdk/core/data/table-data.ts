@@ -27,8 +27,12 @@ export class TableData extends AbstractGeneralCollection {
         }
     }
 
+    protected isDataValid(data): boolean {
+        return TableData.isTableData(data);
+    }
+
     protected ajaxSuccessHandler(data): void {
-        if (TableData.isTableData(data)) {
+        if (this.isDataValid(data)) {
             this.fromObject(data);
         } else {
             console.log('invalid raw TableData received from server...');
@@ -39,7 +43,7 @@ export class TableData extends AbstractGeneralCollection {
     }
 
     public fromObject(data: any): TableData {
-        if (!TableData.isTableData(data)) {
+        if (!this.isDataValid(data)) {
             throw new Error('invalid raw TableData object!');
         }
 

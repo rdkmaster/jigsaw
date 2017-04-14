@@ -8,6 +8,7 @@ import {BasicGraphComponent} from "./basic/demo";
 import {RouterModule} from "@angular/router";
 import {BasicLineGraphComponent} from "./line-bar-graph/basic/demo";
 import {AjaxLineGraphComponent} from "./line-bar-graph/from-axjx/demo";
+import {PieGraphDemoComponent} from "./pie/demo";
 
 const graphRoutes = [
     {
@@ -19,6 +20,9 @@ const graphRoutes = [
     {
         path: 'line-bar-graph-ajax', component: AjaxLineGraphComponent
     },
+    {
+        path: 'pie-graph-basic', component: PieGraphDemoComponent
+    },
 ];
 
 @NgModule({
@@ -27,10 +31,10 @@ const graphRoutes = [
         RdkGraphModule
     ],
     exports: [
-        BasicGraphComponent, BasicLineGraphComponent, AjaxLineGraphComponent
+        BasicGraphComponent, BasicLineGraphComponent, AjaxLineGraphComponent, PieGraphDemoComponent
     ],
     declarations: [
-        BasicGraphComponent, BasicLineGraphComponent, AjaxLineGraphComponent
+        BasicGraphComponent, BasicLineGraphComponent, AjaxLineGraphComponent, PieGraphDemoComponent
     ],
     providers: [],
 })

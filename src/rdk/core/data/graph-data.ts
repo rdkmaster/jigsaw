@@ -1,7 +1,6 @@
 import {EchartTitle, EchartLegend, EchartTooltip, EchartOptions} from "./echart-types";
 import {TableData} from "./table-data";
 import {CommonUtils} from "../utils/common-utils";
-import {reject} from "q";
 
 type GraphMatrixRow = Array<string | number>;
 export type GraphDataHeader = string[];
@@ -88,12 +87,12 @@ export abstract class AbstractGraphData extends TableData {
         }
     }
 
-    public ajaxSuccessHandler(data):void {
+    public ajaxSuccessHandler(data): void {
         super.ajaxSuccessHandler(data);
         this.fromObject(data);
     }
 
-    public ajaxErrorHandler(error):void {
+    public ajaxErrorHandler(error): void {
         super.ajaxErrorHandler(error);
         this.clearData();
         this.refresh();
@@ -132,6 +131,21 @@ export abstract class AbstractGraphData extends TableData {
         this.rowDescriptor.splice(0, this.rowDescriptor.length);
         this.echartOptions = null;
     }
+
+    protected isDataValid(data, ...checkProperty): boolean {
+        if (!checkProperty) {
+            checkProperty = [];
+        }
+        checkProperty.push("data");
+
+        for (let i = 0; i < checkProperty.length; i++) {
+            let prop = data[checkProperty[i]];
+            if (!prop || !(prop instanceof Array) || prop.length == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
 
 export abstract class AbstractNormalGraphData extends AbstractGraphData {
@@ -147,44 +161,63 @@ export class OutlineMapData extends AbstractNormalGraphData {
 }
 
 
-export class PieGraphData extends AbstractNormalGraphData {
-    // todo 2 以后抽取到公共的echarts文件中.
-    private _title: string;
-    private _legendData: Array<string>;
-    private _seriesName: string;
-    private _seriesData: Array<Object>;
-
-    // 数据结构:
-    constructor(seriesData: Array<Object>, title?: string, legendData?: Array<string>, seriesName?: string) {
+export class PieGraphData extends AbstractGraphData {
+    constructor(title: string | EchartTitle, series: any[], tooltip?: EchartTooltip) {
         super();
-        this._title = title;
-        this._legendData = legendData;
-        this._seriesName = seriesName;
-        this._seriesData = seriesData;
+        this._title = <EchartTitle>(typeof title === 'string' ? {title: title} : title);
+        this._series = series;
+        this._tooltip = tooltip;
     }
 
-    protected createChartOptions(): any {
-        return {
-            title: {
-                text: this._title,
-                x: 'center'
-            },
+    private _series: any[];
+
+    public get series(): any[] {
+        return this._series;
+    }
+
+    public set series(value: any[]) {
+        this._series = value;
+        this.refresh();
+    }
+
+    private _title: EchartTitle;
+
+    public get title(): string | EchartTitle {
+        return this._title;
+    }
+
+    public set title(value: string | EchartTitle) {
+        this._title = <EchartTitle>(typeof value === 'string' ? {title: value} : value);
+        this.refresh();
+    }
+
+    private _tooltip: EchartTooltip;
+
+    public get tooltip(): EchartTooltip {
+        return this._tooltip;
+    }
+
+    public set tooltip(value: EchartTooltip) {
+        this._tooltip = value;
+        this.refresh();
+    }
+
+    protected createChartOptions(): EchartOptions {
+        const opt: EchartOptions = {
             tooltip: {
                 trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
+                formatter: "{b} : {c} ({d}%)"
             },
             legend: {
                 orient: 'vertical',
                 left: 'left',
-                data: this._legendData
+                data: []
             },
             series: [
                 {
-                    name: this._seriesName,
                     type: 'pie',
                     radius: '55%',
                     center: ['50%', '60%'],
-                    data: this._seriesData,
                     itemStyle: {
                         emphasis: {
                             shadowBlur: 10,
@@ -195,6 +228,113 @@ export class PieGraphData extends AbstractNormalGraphData {
                 }
             ]
         };
+        opt.title = this._title;
+        if (this._tooltip) {
+            opt.tooltip = this._tooltip;
+        }
+        opt.series[0].data = this._series;
+        this._series.forEach(item => {
+            if (!item.hasOwnProperty('name')) {
+                item.name = 'no-name-series';
+            }
+            opt.legend.data.push(item.name);
+        });
+        return opt;
+    }
+}
+
+export class PieGraphDataByColumn extends AbstractNormalGraphData {
+    private _column: number = 0;
+
+    public get column(): number {
+        return this._column;
+    }
+
+    public set column(value: number) {
+        this._column = value;
+        this.refresh();
+    }
+
+    protected optionsTemplate:EchartOptions = {
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a}<br>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: []
+        },
+        series: [
+            {
+                data: [],
+                type: 'pie',
+                radius: '55%',
+                center: ['50%', '60%'],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+
+    protected createChartOptions(): EchartOptions {
+        if (!this.isDataValid(this, 'rowDescriptor', 'header')) {
+            return undefined;
+        }
+        const opt: EchartOptions = this.optionsTemplate;
+        opt.legend.data = this.rowDescriptor;
+        opt.title = this.title;
+        if (this.tooltip) {
+            opt.tooltip = this.tooltip;
+        }
+        opt.series[0].name = this.header[this.column];
+        this.data.forEach((row, index) => {
+            const val = row[this.column];
+            opt.series[0].data.push({value: val, name: this.rowDescriptor[index]});
+        });
+        return opt;
+    }
+}
+
+export class PieGraphDataByRow extends PieGraphDataByColumn {
+    private _row: number = 0;
+
+    public get row(): number {
+        return this._row;
+    }
+
+    public set row(value: number) {
+        this._row = value;
+        this.refresh();
+    }
+
+    protected createChartOptions(): EchartOptions {
+        if (!this.isDataValid(this, 'rowDescriptor', 'header')) {
+            return undefined;
+        }
+        const rowData = this.data[this.row];
+        if (!rowData) {
+            console.error('invalid data, row[%s] not found!', this.row);
+            return undefined;
+        }
+
+        const opt: EchartOptions = this.optionsTemplate;
+        opt.title = this.title;
+        opt.legend.data = this.header;
+        if (this.tooltip) {
+            opt.tooltip = this.tooltip;
+        }
+        opt.series[0].name = this.rowDescriptor[this.row];
+
+        rowData.forEach((val, index) => {
+            opt.series[0].data.push({value: val, name: this.header[index]});
+        });
+        return opt;
     }
 }
 
@@ -211,14 +351,8 @@ export class LineBarGraphData extends AbstractNormalGraphData {
         return result;
     }
 
-    protected isDataValid(): boolean {
-        return this.header && this.header.length > 0 &&
-            this.rowDescriptor && this.rowDescriptor.length > 0 &&
-            this.data && this.data.length > 0;
-    }
-
     protected createChartOptions(): EchartOptions {
-        if (!this.isDataValid()) {
+        if (!this.isDataValid(this, 'header', 'rowDescriptor')) {
             return null;
         }
 
@@ -269,15 +403,9 @@ export class LineBarGraphData extends AbstractNormalGraphData {
 }
 
 export class LineBarGraphDataByRow extends AbstractNormalGraphData {
-
-    protected isDataValid(): boolean {
-        return this.header && this.header.length > 0 &&
-            this.rowDescriptor && this.rowDescriptor.length > 0 &&
-            this.data && this.data.length > 0;
-    }
-
     protected createChartOptions(): EchartOptions {
-        if (!this.isDataValid()) {
+        if (!this.isDataValid(this, 'header', 'rowDescriptor')) {
+            console.error('invalid data, "need these properties: "data"/"rowDescriptor"/"header"');
             return null;
         }
         const options: EchartOptions = {

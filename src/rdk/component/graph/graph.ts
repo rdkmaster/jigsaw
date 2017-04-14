@@ -28,11 +28,11 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
 
     public dataValid: boolean = false;
 
-    // 由数据服务提供的数据.
-    private _data: AbstractGraphData;
-
     // 通过 echarts.init 创建的实例
     private _graph: any;
+
+    // 由数据服务提供的数据.
+    private _data: AbstractGraphData;
 
     @Input()
     public get data(): AbstractGraphData {
@@ -120,7 +120,6 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
         }
         this.dataValid = true;
 
-        console.info(option);
         this._graph.setOption(option, true, lazyUpdate);
         this._registerEvent();
     }
@@ -131,6 +130,7 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
     }
 
     public set width(value: string) {
+        value = typeof value === 'string' ? value : value + '';
         const match = value ? value.match(/^\s*(\d+)(%|px)\s*$/) : null;
 
         if (match && match[2] == '%') {
@@ -150,6 +150,7 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
     }
 
     public set height(value: string) {
+        value = typeof value === 'string' ? value : value + '';
         const match = value ? value.match(/^\s*(\d+)(%|px)\s*$/) : null;
 
         if (match && match[2] == '%') {

@@ -29,9 +29,10 @@ export abstract class AbstractRDKComponent implements IRDKComponent {
         return this._width
     }
 
-    public set width(newValue: string) {
-        const match = newValue ? newValue.match(/^\s*\d+%|px\s*$/) : null;
-        this._width =  match ? newValue : newValue + 'px';
+    public set width(value: string) {
+        value = typeof value === 'string' ? value : value + '';
+        const match = value ? value.match(/^\s*\d+%|px\s*$/) : null;
+        this._width =  match ? value : value + 'px';
     }
 
     @Input()
@@ -39,9 +40,10 @@ export abstract class AbstractRDKComponent implements IRDKComponent {
         return this._height;
     }
 
-    public set height(newValue: string) {
-        const match = newValue ? newValue.match(/^\s*\d+%|px\s*$/) : null;
-        this._height =  match ? newValue : newValue + 'px';
+    public set height(value: string) {
+        value = typeof value === 'string' ? value : value + '';
+        const match = value ? value.match(/^\s*\d+%|px\s*$/) : null;
+        this._height =  match ? value : value + 'px';
     }
 }
 
