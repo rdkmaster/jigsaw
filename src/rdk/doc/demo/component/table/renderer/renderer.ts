@@ -9,11 +9,12 @@ import {
     TableCellOption,
     TableHeadOption,
     TableCellNum,
-    TableHeadNum
+    TableHeadNum,
+    TableCellEditor
 } from "../../../../../component/table/table-renderer";
 import {SortAs, SortOrder} from "../../../../../core/data/component-data";
 import {ColumnSetting, AdditionalColumnSetting} from "../../../../../component/table/table-api";
-import {TableHeadSelect, TableCell, TableHead, TableCellEditor} from "./table-renderer";
+import {TableHeadSelect, TableCell, TableHead} from "./table-renderer";
 import {RdkTable} from "../../../../../component/table/table";
 
 @Component({
@@ -215,7 +216,7 @@ export class TableRendererDemoComponent implements AfterViewInit{
     private _changeMsg: string;
 
     ngAfterViewInit(){
-        this.table.cellChange.subscribe(value => this._changeMsg = `row: ${value.row}, cellData: ${value.cellData}`);
+        this.table.cellChange.subscribe(value => this._changeMsg = `row: ${value.row}, column: ${value.column}, cellData: ${value.cellData}`);
     }
 
     /*total = 200;

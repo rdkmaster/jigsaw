@@ -32,6 +32,7 @@ export type AdditionalColumnSetting = {
 
 export type TableMsg = {
     row: number,
+    column: number,
     cellData: string|number
 }
 

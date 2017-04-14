@@ -41,27 +41,7 @@ export class TableHeadSelect extends TableCellRenderer {
 }
 
 /*
- * 编辑单元格渲染器
- * */
-@Component({
-    template: `<rdk-input #input [(value)]="cellData" width="100%" [clearable]="false" (blur)="_goText()"></rdk-input>`
-})
-export class TableCellEditor extends TableCellRenderer implements AfterViewInit{
-
-    @ViewChild(RdkInput) input: RdkInput;
-
-    _goText(): void {
-        this.changeToText.emit(this.cellData);
-    }
-
-    ngAfterViewInit(){
-        this.input.focus();
-    }
-
-}
-
-/*
- * 编辑单元格渲染器
+ * 编辑单元格渲染器(废弃)
  * */
 @Component({
     template: `<div [ngClass]="_cellClass"><span (click)="_goEdit()">{{cellData}}</span>

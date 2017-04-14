@@ -542,7 +542,7 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
             if(cellData){
                 if(this.cellData != cellData){
                     this.cellData = cellData;
-                    this.cellChange.emit({row: this.row, cellData: this.cellData});
+                    this.cellChange.emit({row: this.row, column: this.column, cellData: this.cellData});
                 }
                 this.rendererHost.viewContainerRef.clear();
                 this.insertRenderer();

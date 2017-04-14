@@ -9,10 +9,11 @@ import {
     TableCellOption,
     TableHeadOption,
     TableCellNum,
-    TableHeadNum
+    TableHeadNum,
+    TableCellEditor
 } from "../../../../component/table/table-renderer";
 import {TableCheckboxService} from "../../../../component/table/table-service";
-import {TableHead, TableCell, TableHeadSelect, TableCellEditor} from "./renderer/table-renderer";
+import {TableHead, TableCell, TableHeadSelect} from "./renderer/table-renderer";
 import {RdkSelectModule} from "../../../../component/select/select";
 import {RdkCheckBoxModule} from "../../../../component/checkbox/index";
 import {RdkPaginationModule} from "../../../../component/pagination/pagination";

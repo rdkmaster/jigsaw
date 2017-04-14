@@ -1,6 +1,7 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, ViewChild, AfterViewInit} from "@angular/core";
 import {TableCellRenderer} from "./table-api";
 import {TableCheckboxService, CheckboxState} from "./table-service";
+import {RdkInput} from "../input/input";
 
 /*
  * head checkbox renderer
@@ -90,7 +91,7 @@ export class TableCellNum extends TableCellRenderer {
 }
 
 /*
- * 自定义表头渲染组件
+ * 操作列头
  * */
 @Component({
     template: '<span>操作</span>'
@@ -99,13 +100,33 @@ export class TableHeadOption extends TableCellRenderer {
 }
 
 /*
- * 自定义单元格渲染组件
+ * 操作列
  * */
 @Component({
     template: '<a href="javascript:;">修改</a> <a href="javascript:;">删除</a>',
     styles: [`a{color: #ffaa00} a:hover{text-decoration: underline}`]
 })
 export class TableCellOption extends TableCellRenderer {
+}
+
+/*
+ * 编辑单元格渲染器
+ * */
+@Component({
+    template: `<rdk-input #input [(value)]="cellData" width="100%" [clearable]="false" (blur)="_goText()"></rdk-input>`
+})
+export class TableCellEditor extends TableCellRenderer implements AfterViewInit{
+
+    @ViewChild(RdkInput) input: RdkInput;
+
+    _goText(): void {
+        this.changeToText.emit(this.cellData);
+    }
+
+    ngAfterViewInit(){
+        this.input.focus();
+    }
+
 }
 
 
