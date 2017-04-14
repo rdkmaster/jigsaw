@@ -1,4 +1,8 @@
 import {AbstractGeneralCollection} from "./general-collection";
+import {
+    IFilterable, IPageable, ISortable, PagingBasicInfo, PagingFilterInfo, PagingSortInfo, SortAs,
+    SortOrder
+} from "./component-data";
 
 type TableMatrixRow = Array<string|number>;
 export type TableDataHeader = string[];
@@ -100,6 +104,25 @@ export class TableDataBase extends AbstractGeneralCollection {
     }
 }
 
-export class TableData extends TableDataBase {
+export class TableData extends TableDataBase implements ISortable, IFilterable {
+    public sortInfo: PagingSortInfo;
+    public filterInfo: PagingFilterInfo;
 
+    public sort(as: SortAs, order: SortOrder, field: string | number): void;
+    public sort(sort: PagingSortInfo): void;
+    public sort(as, order?: SortOrder, field?: string | number): void {
+    }
+
+    public filter(term: string, fields?: string[] | number[]): void;
+    public filter(term: PagingFilterInfo): void;
+    public filter(term, fields?: string[] | number[]): void {
+    }
+
+}
+
+export class ServerSidePagingTableData extends TableData implements IPageable {
+    public pagingInfo: PagingBasicInfo;
+
+    public changePage(currentPage: number, pageSize?: number): void {
+    }
 }
