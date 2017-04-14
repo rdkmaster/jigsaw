@@ -1,5 +1,5 @@
 import {EchartTitle, EchartLegend, EchartTooltip, EchartOptions} from "./echart-types";
-import {TableData} from "./table-data";
+import {TableDataBase} from "./table-data";
 import {CommonUtils} from "../utils/common-utils";
 
 type GraphMatrixRow = Array<string | number>;
@@ -8,7 +8,7 @@ export type GraphDataField = string[];
 export type GraphDataRowDescriptor = string[];
 export type GraphDataMatrix = GraphMatrixRow[];
 
-export abstract class AbstractGraphData extends TableData {
+export abstract class AbstractGraphData extends TableDataBase {
     protected abstract createChartOptions(): EchartOptions;
 
     public static isGraphData(data: any): boolean {
@@ -104,15 +104,15 @@ export abstract class AbstractGraphData extends TableData {
         }
         this.clearData();
 
-        TableData.arrayAppend(this.data, data.data);
+        TableDataBase.arrayAppend(this.data, data.data);
         if (data.hasOwnProperty('header')) {
-            TableData.arrayAppend(this.header, data.header);
+            TableDataBase.arrayAppend(this.header, data.header);
         }
         if (data.hasOwnProperty('field')) {
-            TableData.arrayAppend(this.field, data.field);
+            TableDataBase.arrayAppend(this.field, data.field);
         }
         if (data.hasOwnProperty('rowDescriptor')) {
-            TableData.arrayAppend(this.rowDescriptor, data.rowDescriptor);
+            TableDataBase.arrayAppend(this.rowDescriptor, data.rowDescriptor);
         }
         this._makeFields();
         this.refresh();

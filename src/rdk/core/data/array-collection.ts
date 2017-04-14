@@ -2,8 +2,8 @@ import {
     CallbackRemoval,
     ComponentDataHelper,
     DataReviser,
-    IAjaxComponentData,
-    IPagableData,
+    IAjaxComponentData, IFilterable,
+    IPageable, ISortable,
     PagingBasicInfo,
     PagingFilterInfo,
     PagingSortInfo,
@@ -286,7 +286,7 @@ export class ArrayCollection<T> extends RDKArray<T> implements IAjaxComponentDat
     }
 }
 
-export class ServerSidePagingArray extends ArrayCollection<any> implements IPagableData {
+export class ServerSidePagingArray extends ArrayCollection<any> implements IPageable, ISortable, IFilterable {
     public pagingServerUrl: string = '/rdk/service/app/common/paging';
 
     public pagingInfo: PagingBasicInfo;
@@ -418,18 +418,34 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPaga
         this.componentDataHelper.invokeAjaxSuccessCallback(tableData);
     }
 
-    public pagingFilter(term: string, fields?: string[] | number[]): void;
-    public pagingFilter(term: PagingFilterInfo): void;
-    public pagingFilter(term: string | PagingFilterInfo, fields?: string[] | number[]): void {
+    public filter(callbackfn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
+    public filter(term: string, fields?: string[] | number[]): void;
+    public filter(term: PagingFilterInfo): void;
+    public filter(term: string | PagingFilterInfo | Function, fields?: string[] | number[]): void {
+        if (term instanceof Function) {
+            throw 'filter function is NOT accepted by this class!';
+        }
         const pfi = term instanceof PagingFilterInfo ? term : new PagingFilterInfo(term, fields);
         this._filterSubject.next(pfi);
     }
 
-    public pagingSort(as: SortAs, order: SortOrder, field: string | number): void;
-    public pagingSort(sort: PagingSortInfo): void;
-    public pagingSort(as, order?: SortOrder, field?: string | number): void {
+    public sort(compareFn?: (a: any, b: any) => number): any;
+    public sort(as: SortAs, order: SortOrder, field: string | number): void;
+    public sort(sort: PagingSortInfo): void;
+    public sort(as, order?: SortOrder, field?: string | number): void {
+        if (as instanceof Function) {
+            throw 'compare function is NOT accepted by this class!';
+        }
         const psi = as instanceof PagingSortInfo ? as : new PagingSortInfo(as, order, field);
         this._sortSubject.next(psi);
+    }
+
+    public changePage(currentPage: number, pageSize?:number): void {
+        this.pagingInfo.currentPage = currentPage;
+        if (+pageSize > 0) {
+            this.pagingInfo.pageSize = pageSize;
+        }
+        this.fromAjax();
     }
 
     public destroy(): void {
@@ -455,7 +471,7 @@ export class DirectServerSidePagingArray extends ServerSidePagingArray {
     }
 }
 
-export class LocalPagingArray extends ArrayCollection<any> implements IPagableData {
+export class LocalPagingArray extends ArrayCollection<any> implements IPageable {
     public pagingInfo: PagingBasicInfo;
     public filterInfo: PagingFilterInfo;
     public sortInfo: PagingSortInfo;
@@ -466,13 +482,18 @@ export class LocalPagingArray extends ArrayCollection<any> implements IPagableDa
         console.error("unsupported yet!");
     }
 
-    public pagingFilter(term: string, fields?: string[] | number[]): void;
-    public pagingFilter(term: PagingFilterInfo): void;
-    public pagingFilter(term, fields?: string[] | number[]): void {
+    public filter(callbackfn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
+    public filter(term: string, fields?: string[] | number[]): void;
+    public filter(term: PagingFilterInfo): void;
+    public filter(term, fields?: string[] | number[]): void {
     }
 
-    public pagingSort(as: SortAs, order: SortOrder, field: string | number): void;
-    public pagingSort(sort: PagingSortInfo): void;
-    public pagingSort(as, order?: SortOrder, field?: string | number): void {
+    public sort(compareFn?: (a: any, b: any) => number): any;
+    public sort(as: SortAs, order: SortOrder, field: string | number): void;
+    public sort(sort: PagingSortInfo): void;
+    public sort(as, order?: SortOrder, field?: string | number): void {
+    }
+
+    public changePage(currentPage: number, pageSize?:number): void {
     }
 }
