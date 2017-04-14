@@ -1,13 +1,20 @@
 import {
-    IAjaxComponentData, ComponentDataHelper, DataRefreshCallback, DataReviser, CallbackRemoval,
-    IPagableData, PagingBasicInfo, PagingFilterInfo, PagingSortInfo, SortAs, SortOrder, AjaxSuccessCallback,
-    AjaxErrorCallback, AjaxCompleteCallback
+    CallbackRemoval,
+    ComponentDataHelper,
+    DataReviser,
+    IAjaxComponentData,
+    IPagableData,
+    PagingBasicInfo,
+    PagingFilterInfo,
+    PagingSortInfo,
+    SortAs,
+    SortOrder
 } from "./component-data";
 import {TableData} from "./table-data";
 
-import {Http, RequestOptionsArgs, URLSearchParams, Response} from "@angular/http";
+import {Http, RequestOptionsArgs, Response, URLSearchParams} from "@angular/http";
 import {Subject} from "rxjs";
-import 'rxjs/add/operator/map';
+import "rxjs/add/operator/map";
 
 // we have to implement the Array<T> interface due to this breaking change:
 // https://github.com/Microsoft/TypeScript/wiki/FAQ#why-doesnt-extending-built-ins-like-error-array-and-map-work
@@ -163,30 +170,11 @@ export class RDKArray<T> implements Array<T> {
 export class ArrayCollection<T> extends RDKArray<T> implements IAjaxComponentData {
     public busy: boolean;
     public http: Http;
+    public dataReviser: DataReviser;
 
     constructor(source?: T[]) {
         super();
         this._fromArray(source);
-    }
-
-    protected wrappedDataReviser: DataReviser;
-    private _originDataReviser: DataReviser;
-
-    public get dataReviser(): DataReviser {
-        return this._originDataReviser;
-    }
-
-    public set dataReviser(value: DataReviser) {
-        this._originDataReviser = value;
-        this.wrappedDataReviser = (data) => {
-            try {
-                return this._originDataReviser(data);
-            } catch (e) {
-                console.error('revise data error: ' + e);
-                console.error(e.stack);
-                return data;
-            }
-        }
     }
 
     protected ajaxSuccessHandler(data: T[]): void {
@@ -217,7 +205,17 @@ export class ArrayCollection<T> extends RDKArray<T> implements IAjaxComponentDat
     }
 
     protected reviseData(response: Response): any {
-        return this.wrappedDataReviser ? this.wrappedDataReviser(response.json()) : response.json();
+        const json = response.json();
+        if (!this.dataReviser) {
+            return json;
+        }
+        try {
+            return this.dataReviser(json);
+        } catch (e) {
+            console.error('revise data error: ' + e);
+            console.error(e.stack);
+            return json;
+        }
     }
 
     public fromAjax(options: RequestOptionsArgs | string): void {
@@ -284,9 +282,7 @@ export class ArrayCollection<T> extends RDKArray<T> implements IAjaxComponentDat
 
         this.componentDataHelper.clearCallbacks();
         this.componentDataHelper = null;
-
-        this.wrappedDataReviser = null;
-        this._originDataReviser = null;
+        this.dataReviser = null;
     }
 }
 
