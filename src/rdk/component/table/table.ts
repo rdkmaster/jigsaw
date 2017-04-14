@@ -4,7 +4,7 @@ import {
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 
-import {RdkRendererHost} from "../core";
+import {RdkRendererHost, AbstractRDKComponent} from "../core";
 import {TableData} from "../../core/data/table-data";
 import {TableCellRenderer, ColumnSetting, AdditionalColumnSetting, TableMsg} from "./table-api";
 
@@ -37,8 +37,8 @@ class CellSetting {
 }
 
 export class TableCellBasic implements AfterViewInit {
-    constructor(public componentFactoryResolver: ComponentFactoryResolver,
-                public changeDetector: ChangeDetectorRef) {
+    constructor(protected componentFactoryResolver: ComponentFactoryResolver,
+                protected changeDetector: ChangeDetectorRef) {
     }
 
     @Input()
@@ -86,9 +86,13 @@ export class TableCellBasic implements AfterViewInit {
 @Component({
     selector: 'rdk-table',
     templateUrl: 'table.html',
-    styleUrls: ['table.scss']
+    styleUrls: ['table.scss'],
+    host: {
+        '[style.width]': 'width',
+        '[style.height]': 'height'
+    }
 })
-export class RdkTable implements AfterViewInit {
+export class RdkTable extends AbstractRDKComponent implements AfterViewInit {
     @Input()
     public data: TableData;
 
@@ -111,6 +115,7 @@ export class RdkTable implements AfterViewInit {
     @Output() cellChange: EventEmitter<TableMsg> = new EventEmitter<TableMsg>();
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
+        super()
     }
 
     /*
@@ -505,7 +510,7 @@ export class RdkTable implements AfterViewInit {
 }
 
 /*
- * 单元格插入点
+ * 单元格
  * */
 @Component({
     selector: '[rdk-table-cell]',
@@ -578,7 +583,7 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
 }
 
 /*
- * 表头插入点
+ * 表头单元格
  * */
 @Component({
     selector: '[rdk-table-header]',
