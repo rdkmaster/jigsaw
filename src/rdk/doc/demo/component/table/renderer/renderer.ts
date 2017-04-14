@@ -53,14 +53,11 @@ export class TableRendererDemoComponent implements AfterViewInit{
             target: 'f1',
             width: '15%',
             header: {
-                renderer: TableHeadSelect,
-                sortable: false
+                renderer: TableHeadSelect
             },
             cell: {
                 renderer: TableCell,
-                class: 'green-text',
-                editable: false,
-                editorRenderer: null,
+                class: 'green-text'
             },
             group: true
         },
@@ -71,7 +68,7 @@ export class TableRendererDemoComponent implements AfterViewInit{
                 renderer: TableHead,
                 class: 'red-text',
                 sortable: true,
-                sortAs: SortAs.string,
+                sortAs: SortAs.number,
                 defaultSortOrder: SortOrder.des
             },
             cell: {
@@ -89,10 +86,7 @@ export class TableRendererDemoComponent implements AfterViewInit{
                 defaultSortOrder: SortOrder.asc
             },
             cell: {
-                renderer: TableCell,
-                class: null,
-                editable: false,
-                editorRenderer: null,
+                renderer: TableCell
             },
             group: true
         },
@@ -113,10 +107,7 @@ export class TableRendererDemoComponent implements AfterViewInit{
                 sortable: false
             },
             cell: {
-                renderer: TableCell,
-                class: null,
-                editable: false,
-                editorRenderer: null,
+                renderer: TableCell
             },
             group: true
         },
@@ -128,10 +119,7 @@ export class TableRendererDemoComponent implements AfterViewInit{
                 defaultSortOrder: SortOrder.default
             },
             cell: {
-                renderer: TableCell,
-                class: null,
-                editable: false,
-                editorRenderer: null,
+                renderer: TableCell
             },
             group: true
         },
@@ -216,7 +204,7 @@ export class TableRendererDemoComponent implements AfterViewInit{
     private _changeMsg: string;
 
     ngAfterViewInit(){
-        this.table.cellChange.subscribe(value => this._changeMsg = `row: ${value.row}, column: ${value.column}, cellData: ${value.cellData}`);
+        this.table.cellChange.subscribe(value => this._changeMsg = `row: ${value.row}, column: ${value.column}, pos: ${value.pos},cellData: ${value.cellData}`);
     }
 
     /*total = 200;
