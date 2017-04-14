@@ -35,7 +35,7 @@ export class TableDataBase extends AbstractGeneralCollection {
         if (this.isDataValid(data)) {
             this.fromObject(data);
         } else {
-            console.log('invalid raw TableDataBase received from server...');
+            console.log('invalid raw TableData received from server...');
             this.clearData();
             this.refresh();
         }
@@ -44,7 +44,7 @@ export class TableDataBase extends AbstractGeneralCollection {
 
     public fromObject(data: any): TableDataBase {
         if (!this.isDataValid(data)) {
-            throw new Error('invalid raw TableDataBase object!');
+            throw new Error('invalid raw TableData object!');
         }
 
         this.clearData();
