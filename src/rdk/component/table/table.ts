@@ -98,6 +98,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit {
     private _data: TableData;
     private _removeRefreshCallback: CallbackRemoval;
     private _inited: boolean;
+    private _timer: any;
 
     @Input()
     public get data(): TableData{return this._data}
@@ -507,6 +508,8 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit {
         return cellSetting;
     }
 
+
+
     ngAfterViewInit() {
         this._fixedHead = this._elementRef.nativeElement.querySelector(".rdk-table-fixed-head");
 
@@ -515,9 +518,12 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit {
         this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.mCSB_scrollTools_horizontal'), 'margin', '0 0');
 
         this._scrollBar.whileScrolling.subscribe(scrollEvent => {
-            if (scrollEvent.direction == 'x') {
-                this._renderer.setStyle(this._fixedHead, 'left', scrollEvent.left + 'px');
-            }
+            clearTimeout(this._timer);
+            this._timer =  setTimeout(() => {
+                if (scrollEvent.direction == 'x') {
+                    this._renderer.setStyle(this._fixedHead, 'left', scrollEvent.left + 'px');
+                }
+            }, 500);
         });
 
         this._transformData();
