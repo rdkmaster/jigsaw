@@ -615,8 +615,8 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
     template: `
         <ng-template rdk-renderer-host></ng-template>
         <div *ngIf="sortable" [ngClass]="_sortOrderClass">
-            <span (click)="_sort(SortOrder.asc)" class="rdk-table-sort-btn rdk-table-sort-up"></span>
-            <span (click)="_sort(SortOrder.des)" class="rdk-table-sort-btn rdk-table-sort-down"></span>
+            <span (click)="_sortAsc()" class="rdk-table-sort-btn rdk-table-sort-up"></span>
+            <span (click)="_sortDes()" class="rdk-table-sort-btn rdk-table-sort-down"></span>
         </div>`,
     styleUrls: ['table-head.scss']
 })
@@ -643,6 +643,14 @@ export class RdkTableHeader extends TableCellBasic implements OnInit {
 
     constructor(cfr: ComponentFactoryResolver, cd: ChangeDetectorRef) {
         super(cfr, cd);
+    }
+
+    private _sortAsc():void {
+        this._sort(SortOrder.asc);
+    }
+
+    private _sortDes():void {
+        this._sort(SortOrder.des);
     }
 
     private _sort(order:SortOrder): void {
