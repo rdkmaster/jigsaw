@@ -14,8 +14,8 @@ export class GraphSetSizeComponent  implements OnInit {
      graphWidth ;
      graphHeight;
     ngOnInit() {
-        this.data = new GraphData();
-         this.graphWidth = "100%";
+        this.data = new GraphDataSetSize();
+         this.graphWidth = "80%";
          this.graphHeight = "250";
     }
 
@@ -25,7 +25,7 @@ export class GraphSetSizeComponent  implements OnInit {
     }
 }
 
-export class GraphData extends AbstractGraphData {
+export class GraphDataSetSize extends AbstractGraphData {
     protected createChartOptions(): any {
         return {
             title: {

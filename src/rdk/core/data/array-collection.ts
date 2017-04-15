@@ -1,13 +1,20 @@
 import {
-    IAjaxComponentData, ComponentDataHelper, DataRefreshCallback, DataReviser, CallbackRemoval,
-    IPagableData, PagingBasicInfo, PagingFilterInfo, PagingSortInfo, SortAs, SortOrder, AjaxSuccessCallback,
-    AjaxErrorCallback, AjaxCompleteCallback
+    CallbackRemoval,
+    ComponentDataHelper,
+    DataReviser,
+    IAjaxComponentData, IFilterable,
+    IPageable, ISortable,
+    PagingInfo,
+    DataFilterInfo,
+    DataSortInfo,
+    SortAs,
+    SortOrder
 } from "./component-data";
 import {TableData} from "./table-data";
 
-import {Http, RequestOptionsArgs, URLSearchParams, Response} from "@angular/http";
+import {Http, RequestOptionsArgs, Response, URLSearchParams} from "@angular/http";
 import {Subject} from "rxjs";
-import 'rxjs/add/operator/map';
+import "rxjs/add/operator/map";
 
 // we have to implement the Array<T> interface due to this breaking change:
 // https://github.com/Microsoft/TypeScript/wiki/FAQ#why-doesnt-extending-built-ins-like-error-array-and-map-work
@@ -163,30 +170,11 @@ export class RDKArray<T> implements Array<T> {
 export class ArrayCollection<T> extends RDKArray<T> implements IAjaxComponentData {
     public busy: boolean;
     public http: Http;
+    public dataReviser: DataReviser;
 
     constructor(source?: T[]) {
         super();
         this._fromArray(source);
-    }
-
-    protected wrappedDataReviser: DataReviser;
-    private _originDataReviser: DataReviser;
-
-    public get dataReviser(): DataReviser {
-        return this._originDataReviser;
-    }
-
-    public set dataReviser(value: DataReviser) {
-        this._originDataReviser = value;
-        this.wrappedDataReviser = (data) => {
-            try {
-                return this._originDataReviser(data);
-            } catch (e) {
-                console.error('revise data error: ' + e);
-                console.error(e.stack);
-                return data;
-            }
-        }
     }
 
     protected ajaxSuccessHandler(data: T[]): void {
@@ -217,7 +205,17 @@ export class ArrayCollection<T> extends RDKArray<T> implements IAjaxComponentDat
     }
 
     protected reviseData(response: Response): any {
-        return this.wrappedDataReviser ? this.wrappedDataReviser(response.json()) : response.json();
+        const json = response.json();
+        if (!this.dataReviser) {
+            return json;
+        }
+        try {
+            return this.dataReviser(json);
+        } catch (e) {
+            console.error('revise data error: ' + e);
+            console.error(e.stack);
+            return json;
+        }
     }
 
     public fromAjax(options: RequestOptionsArgs | string): void {
@@ -284,22 +282,20 @@ export class ArrayCollection<T> extends RDKArray<T> implements IAjaxComponentDat
 
         this.componentDataHelper.clearCallbacks();
         this.componentDataHelper = null;
-
-        this.wrappedDataReviser = null;
-        this._originDataReviser = null;
+        this.dataReviser = null;
     }
 }
 
-export class ServerSidePagingArray extends ArrayCollection<any> implements IPagableData {
+export class ServerSidePagingArray extends ArrayCollection<any> implements IPageable, ISortable, IFilterable {
     public pagingServerUrl: string = '/rdk/service/app/common/paging';
 
-    public pagingInfo: PagingBasicInfo;
-    public filterInfo: PagingFilterInfo;
-    public sortInfo: PagingSortInfo;
+    public pagingInfo: PagingInfo;
+    public filterInfo: DataFilterInfo;
+    public sortInfo: DataSortInfo;
     public busy: boolean = false;
 
-    private _filterSubject = new Subject<PagingFilterInfo>();
-    private _sortSubject = new Subject<PagingSortInfo>();
+    private _filterSubject = new Subject<DataFilterInfo>();
+    private _sortSubject = new Subject<DataSortInfo>();
 
     constructor(public http: Http, public sourceRequestOptions: RequestOptionsArgs) {
         super();
@@ -307,7 +303,7 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPaga
         if (!http) {
             throw new Error('invalid http!');
         }
-        this.pagingInfo = new PagingBasicInfo();
+        this.pagingInfo = new PagingInfo();
 
         this._initRequestOptions();
         this._initSubjects();
@@ -422,18 +418,34 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPaga
         this.componentDataHelper.invokeAjaxSuccessCallback(tableData);
     }
 
-    public pagingFilter(term: string, fields?: string[] | number[]): void;
-    public pagingFilter(term: PagingFilterInfo): void;
-    public pagingFilter(term: string | PagingFilterInfo, fields?: string[] | number[]): void {
-        const pfi = term instanceof PagingFilterInfo ? term : new PagingFilterInfo(term, fields);
+    public filter(callbackfn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
+    public filter(term: string, fields?: string[] | number[]): void;
+    public filter(term: DataFilterInfo): void;
+    public filter(term: string | DataFilterInfo | Function, fields?: string[] | number[]): void {
+        if (term instanceof Function) {
+            throw 'filter function is NOT accepted by this class!';
+        }
+        const pfi = term instanceof DataFilterInfo ? term : new DataFilterInfo(term, fields);
         this._filterSubject.next(pfi);
     }
 
-    public pagingSort(as: SortAs, order: SortOrder, field: string | number): void;
-    public pagingSort(sort: PagingSortInfo): void;
-    public pagingSort(as, order?: SortOrder, field?: string | number): void {
-        const psi = as instanceof PagingSortInfo ? as : new PagingSortInfo(as, order, field);
+    public sort(compareFn?: (a: any, b: any) => number): any;
+    public sort(as: SortAs, order: SortOrder, field: string | number): void;
+    public sort(sort: DataSortInfo): void;
+    public sort(as, order?: SortOrder, field?: string | number): void {
+        if (as instanceof Function) {
+            throw 'compare function is NOT accepted by this class!';
+        }
+        const psi = as instanceof DataSortInfo ? as : new DataSortInfo(as, order, field);
         this._sortSubject.next(psi);
+    }
+
+    public changePage(currentPage: number, pageSize?:number): void {
+        this.pagingInfo.currentPage = currentPage;
+        if (+pageSize > 0) {
+            this.pagingInfo.pageSize = pageSize;
+        }
+        this.fromAjax();
     }
 
     public destroy(): void {
@@ -459,10 +471,10 @@ export class DirectServerSidePagingArray extends ServerSidePagingArray {
     }
 }
 
-export class LocalPagingArray extends ArrayCollection<any> implements IPagableData {
-    public pagingInfo: PagingBasicInfo;
-    public filterInfo: PagingFilterInfo;
-    public sortInfo: PagingSortInfo;
+export class LocalPagingArray extends ArrayCollection<any> implements IPageable {
+    public pagingInfo: PagingInfo;
+    public filterInfo: DataFilterInfo;
+    public sortInfo: DataSortInfo;
     public busy: boolean = false;
 
     constructor() {
@@ -470,13 +482,18 @@ export class LocalPagingArray extends ArrayCollection<any> implements IPagableDa
         console.error("unsupported yet!");
     }
 
-    public pagingFilter(term: string, fields?: string[] | number[]): void;
-    public pagingFilter(term: PagingFilterInfo): void;
-    public pagingFilter(term, fields?: string[] | number[]): void {
+    public filter(callbackfn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
+    public filter(term: string, fields?: string[] | number[]): void;
+    public filter(term: DataFilterInfo): void;
+    public filter(term, fields?: string[] | number[]): void {
     }
 
-    public pagingSort(as: SortAs, order: SortOrder, field: string | number): void;
-    public pagingSort(sort: PagingSortInfo): void;
-    public pagingSort(as, order?: SortOrder, field?: string | number): void {
+    public sort(compareFn?: (a: any, b: any) => number): any;
+    public sort(as: SortAs, order: SortOrder, field: string | number): void;
+    public sort(sort: DataSortInfo): void;
+    public sort(as, order?: SortOrder, field?: string | number): void {
+    }
+
+    public changePage(currentPage: number, pageSize?:number): void {
     }
 }

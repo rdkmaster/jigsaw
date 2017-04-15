@@ -32,7 +32,7 @@ export class AjaxCompleteCallback {
 }
 
 export class ComponentDataHelper {
-    public static castToRequestOptionsArgs(args:RequestOptionsArgs|string):RequestOptionsArgs {
+    public static castToRequestOptionsArgs(args: RequestOptionsArgs | string): RequestOptionsArgs {
         return typeof args === 'string' ? {url: args, method: 'get'} : args;
     }
 
@@ -121,13 +121,13 @@ export interface IComponentData {
 export interface IAjaxComponentData extends IComponentData {
     busy: boolean;
 
-    fromAjax(options: RequestOptionsArgs|string): void;
+    fromAjax(options: RequestOptionsArgs | string): void;
     onAjaxSuccess (callback: (data: any) => void, context?: any): CallbackRemoval;
     onAjaxError   (callback: (error: Response) => void, context?: any): CallbackRemoval;
     onAjaxComplete(callback: () => void, context?: any): CallbackRemoval;
 }
 
-export class PagingBasicInfo {
+export class PagingInfo {
     constructor(public currentPage: number = 1,
                 public pageSize: number = 20,
                 public totalPage: number = 1,
@@ -135,7 +135,7 @@ export class PagingBasicInfo {
     }
 }
 
-export class PagingFilterInfo {
+export class DataFilterInfo {
     constructor(public key: string = '', public field?: string[] | number[]) {
     }
 }
@@ -148,21 +148,26 @@ export enum SortOrder {
     asc, des, default
 }
 
-export class PagingSortInfo {
+export class DataSortInfo {
     constructor(public as: SortAs = SortAs.string,
                 public order: SortOrder = SortOrder.asc,
                 public field: string | number) {
     }
 }
 
-export interface IPagableData extends IAjaxComponentData {
-    pagingInfo: PagingBasicInfo;
-    filterInfo: PagingFilterInfo;
-    sortInfo: PagingSortInfo;
+export interface IPageable extends IAjaxComponentData {
+    pagingInfo: PagingInfo;
+    changePage(currentPage: number, pageSize?:number): void;
+}
 
-    pagingFilter(term: string, fields?: string[] | number[]): void;
-    pagingFilter(term: PagingFilterInfo): void;
+export interface ISortable extends IAjaxComponentData {
+    sortInfo: DataSortInfo;
+    sort(as: SortAs, order: SortOrder, field: string | number): void;
+    sort(sort: DataSortInfo): void;
+}
 
-    pagingSort(as: SortAs, order: SortOrder, field: string | number): void;
-    pagingSort(sort: PagingSortInfo): void;
+export interface IFilterable extends IAjaxComponentData {
+    filterInfo: DataFilterInfo;
+    filter(term: string, fields?: string[] | number[]): void;
+    filter(term: DataFilterInfo): void;
 }

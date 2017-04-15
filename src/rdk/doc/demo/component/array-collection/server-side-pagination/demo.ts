@@ -36,15 +36,13 @@ export class ServerSidePaginationDemoComponent {
         if (this.sspa.pagingInfo.currentPage == 1) {
             return;
         }
-        this.sspa.pagingInfo.currentPage--;
-        this.sspa.fromAjax();
+        this.sspa.changePage(this.sspa.pagingInfo.currentPage - 1);
     }
 
     nextPage() {
         if (this.sspa.pagingInfo.currentPage == this.sspa.pagingInfo.totalPage) {
             return;
         }
-        this.sspa.pagingInfo.currentPage++;
-        this.sspa.fromAjax();
+        this.sspa.changePage(this.sspa.pagingInfo.currentPage + 1);
     }
 }
