@@ -157,7 +157,7 @@ export class TableRendererDemoComponent implements AfterViewInit{
             }
         },
         /*{
-         pos: 0,
+         field: 0,
          width: '60px',
          header: {
          renderer: TableHeadCheckbox,
@@ -178,7 +178,7 @@ export class TableRendererDemoComponent implements AfterViewInit{
             }
         },
         /*{
-         pos: 2,
+         field: 2,
          width: '10%',
          header: {
          renderer: TableHeadOption,

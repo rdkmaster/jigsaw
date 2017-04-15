@@ -1,5 +1,4 @@
 import {AbstractGeneralCollection} from "./general-collection";
-import {SortAs, SortOrder} from "./component-data";
 
 type TableMatrixRow = Array<string|number>;
 export type TableDataHeader = string[];
@@ -52,34 +51,6 @@ export class TableData extends AbstractGeneralCollection {
         this.refresh();
 
         return this;
-    }
-
-    /*
-    * 暂时用于测试table排序功能
-    * */
-    public sort(pos: number, sortAs: SortAs, sortOrder: SortOrder){
-        if(sortAs == SortAs.number){
-            if(sortOrder == SortOrder.asc){
-                this.data.sort((a: any[], b: any[]) => {
-                    return a[pos] - b[pos];
-                });
-            }else if(sortOrder == SortOrder.des){
-                this.data.sort((a: any[], b: any[]) => {
-                    return b[pos] - a[pos];
-                });
-            }
-        } else if(sortAs == SortAs.string){
-            if(sortOrder == SortOrder.asc){
-                this.data.sort((a: any[], b: any[]) => {
-                    return a[pos] > b[pos] ? 1 : -1;
-                });
-            }else if(sortOrder == SortOrder.des){
-                this.data.sort((a: any[], b: any[]) => {
-                    return b[pos] < a[pos] ? 1: -1;
-                });
-            }
-        }
-        this.refresh();
     }
 
     protected static arrayAppend(dest: any[], source: any): void {
