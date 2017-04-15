@@ -111,9 +111,9 @@ export class TableData extends TableDataBase implements ISortable {
     public sort(sort: DataSortInfo): void;
     public sort(as, order?: SortOrder, field?: string | number): void {
         field = typeof field === 'string' ? this.field.indexOf(field) : field;
-        const psi = as instanceof DataSortInfo ? as : new DataSortInfo(as, order, field);
-        const orderFlag = psi.order == SortOrder.asc ? 1 : -1;
-        if (psi.as == SortAs.number) {
+        this.sortInfo = as instanceof DataSortInfo ? as : new DataSortInfo(as, order, field);
+        const orderFlag = this.sortInfo.order == SortOrder.asc ? 1 : -1;
+        if (this.sortInfo.as == SortAs.number) {
             this.data.sort((a, b) => orderFlag * (Number(a[field]) - Number(b[field])));
         } else {
             this.data.sort((a, b) => orderFlag * String(a[field]).localeCompare(String(b[field])));
