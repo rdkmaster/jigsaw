@@ -11,6 +11,7 @@ import {TableCellRenderer, ColumnSetting, AdditionalColumnSetting, TableMsg} fro
 import {RdkScrollBarModule} from "../scrollbar/scrollbar";
 import {RdkScrollBar} from "../scrollbar/scrollbar";
 import {SortAs, SortOrder, CallbackRemoval} from "../../core/data/component-data";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 class HeadSetting {
     cellData: string | number;
@@ -371,7 +372,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
 
         //插入列头
         if (!this._inited) {
-            let headSetting = <HeadSetting>this._clone(this._headSettings[settingIndex]);
+            let headSetting = <HeadSetting>CommonUtils.shallowCopy(this._headSettings[settingIndex]);
             headSetting.visible = true;
             headSetting.field = -1;
             this._insertHeaderSetting(pos, additionalColumn, headSetting);
@@ -379,7 +380,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
 
         //插入列
         this._cellSettings.forEach(cellSettings => {
-            let cellSetting = <CellSetting>this._clone(cellSettings[settingIndex]);
+            let cellSetting = <CellSetting>CommonUtils.shallowCopy(cellSettings[settingIndex]);
             cellSetting.visible = true;
             cellSetting.field = -1;
             this._insertCellSetting(pos, additionalColumn, cellSetting, cellSettings);
@@ -460,18 +461,6 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
                 cellSettings.push(cellSetting);
             }
         }
-    }
-
-    /*
-     * 简单对象的拷贝
-     * */
-    private _clone(obj: Object): Object {
-        let copy = (obj instanceof Array) ? [] : {};
-        for (let attr in obj) {
-            if (!obj.hasOwnProperty(attr)) continue;
-            copy[attr] = (typeof obj[attr] == "object") ? this._clone(obj[attr]) : obj[attr];
-        }
-        return copy;
     }
 
     /*

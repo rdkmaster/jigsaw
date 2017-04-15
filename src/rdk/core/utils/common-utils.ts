@@ -1,5 +1,21 @@
 export class CommonUtils {
     /**
+     * 浅拷贝一个对象
+     * @param source
+     */
+    public static shallowCopy(source:Object):Object {
+        if (source === null || source === undefined || typeof source !== 'object') {
+            return source;
+        }
+
+        let copy = (source instanceof Array) ? [] : {};
+        for (let attr in source) {
+            if (!source.hasOwnProperty(attr)) continue;
+            copy[attr] = CommonUtils.shallowCopy(source[attr]);
+        }
+        return copy;
+    }
+    /**
      * 比较两个对象是否相等
      * */
     public static compareWithKeyProperty(item1: any, item2: any, trackItemBy: string[]): boolean{
