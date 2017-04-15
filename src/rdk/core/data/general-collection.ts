@@ -5,12 +5,12 @@ import {
 import {Http, RequestOptionsArgs, Response} from "@angular/http";
 import "rxjs/add/operator/map";
 
-export abstract class AbstractGeneralCollection implements IAjaxComponentData {
+export abstract class AbstractGeneralCollection<T> implements IAjaxComponentData {
     public http: Http;
     public busy: boolean;
     public dataReviser: DataReviser;
 
-    public abstract fromObject(data: any): AbstractGeneralCollection;
+    public abstract fromObject(data: T): AbstractGeneralCollection<T>;
 
     protected abstract ajaxSuccessHandler(data): void;
 
@@ -28,7 +28,7 @@ export abstract class AbstractGeneralCollection implements IAjaxComponentData {
         }
     }
 
-    public fromAjax(options: RequestOptionsArgs|string): void {
+    public fromAjax(options: RequestOptionsArgs | string): void {
         if (!this.http) {
             console.error('set a valid Http instance to the http attribute before invoking fromAjax()!');
             return;
@@ -51,11 +51,11 @@ export abstract class AbstractGeneralCollection implements IAjaxComponentData {
         this.componentDataHelper.invokeRefreshCallback();
     }
 
-    public onRefresh(callback: (thisData: GeneralCollection) => void, context?: any): CallbackRemoval {
+    public onRefresh(callback: (thisData: AbstractGeneralCollection<T>) => void, context?: any): CallbackRemoval {
         return this.componentDataHelper.getRefreshRemoval({fn: callback, context: context});
     }
 
-    public onAjaxSuccess(callback: (data: any) => void, context?: any): CallbackRemoval {
+    public onAjaxSuccess(callback: (data: T) => void, context?: any): CallbackRemoval {
         return this.componentDataHelper.getAjaxSuccessRemoval({fn: callback, context: context});
     }
 
@@ -86,16 +86,17 @@ export abstract class AbstractGeneralCollection implements IAjaxComponentData {
     }
 }
 
-export class GeneralCollection extends AbstractGeneralCollection {
+export class GeneralCollection<T> extends AbstractGeneralCollection<T> {
+    [index: string]: any;
 
-    protected ajaxSuccessHandler(data): void {
+    protected ajaxSuccessHandler(data: T): void {
         this.fromObject(data);
         this.componentDataHelper.invokeAjaxSuccessCallback(data);
     }
 
     protected propList: string[] = [];
 
-    public fromObject(data: any): GeneralCollection {
+    public fromObject(data: T): GeneralCollection<T> {
         if (data instanceof GeneralCollection) {
             console.error("unable to make data from another GeneralCollection instance!");
             return;

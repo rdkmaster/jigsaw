@@ -286,7 +286,7 @@ export class ArrayCollection<T> extends RDKArray<T> implements IAjaxComponentDat
     }
 }
 
-export class ServerSidePagingArray extends ArrayCollection<any> implements IPageable, ISortable, IFilterable {
+export class PageableArray extends ArrayCollection<any> implements IPageable, ISortable, IFilterable {
     public pagingServerUrl: string = '/rdk/service/app/common/paging';
 
     public pagingInfo: PagingInfo;
@@ -464,14 +464,14 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPage
     }
 }
 
-export class DirectServerSidePagingArray extends ServerSidePagingArray {
+export class DirectPageableArray extends PageableArray {
     constructor(private _http$: Http, private _sourceRequestOptions$: RequestOptionsArgs) {
         super(_http$, _sourceRequestOptions$);
         console.error("unsupported yet!");
     }
 }
 
-export class LocalPagingArray extends ArrayCollection<any> implements IPageable {
+export class LocalPageableArray extends ArrayCollection<any> implements IPageable {
     public pagingInfo: PagingInfo;
     public filterInfo: DataFilterInfo;
     public sortInfo: DataSortInfo;

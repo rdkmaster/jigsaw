@@ -9,7 +9,7 @@ export type TableDataHeader = string[];
 export type TableDataField = string[];
 export type TableDataMatrix = TableMatrixRow[];
 
-export class TableDataBase extends AbstractGeneralCollection {
+export class TableDataBase extends AbstractGeneralCollection<any> {
     public static isTableData(data: any): boolean {
         return data && data.hasOwnProperty('data') && data.data instanceof Array &&
             data.hasOwnProperty('header') && data.header instanceof Array &&
@@ -121,7 +121,7 @@ export class TableData extends TableDataBase implements ISortable {
     }
 }
 
-export class ServerSidePagingTableData extends TableData implements IPageable, IFilterable {
+export class PageableTableData extends TableData implements IPageable, IFilterable {
     public filterInfo: DataFilterInfo;
     public pagingInfo: PagingInfo;
 
