@@ -22,7 +22,7 @@ import {RdkTable} from "../../../../../component/table/table";
     styleUrls: ['renderer.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TableRendererDemoComponent implements AfterViewInit{
+export class TableRendererDemoComponent {
     tableData: TableData;
 
     constructor() {
@@ -190,13 +190,11 @@ export class TableRendererDemoComponent implements AfterViewInit{
          }*/
     ];
 
-    @ViewChild(forwardRef(() => RdkTable)) table: RdkTable;
+    public onCellChange(value) {
+        this._changeMsg = `row: ${value.row}, column: ${value.column}, field: ${value.field},cellData: ${value.cellData}`
+    }
 
     private _changeMsg: string;
-
-    ngAfterViewInit(){
-        this.table.cellChange.subscribe(value => this._changeMsg = `row: ${value.row}, column: ${value.column}, field: ${value.field},cellData: ${value.cellData}`);
-    }
 
     /*total = 200;
 

@@ -75,7 +75,7 @@ export class TableCellCheckbox extends TableCellRenderer implements OnInit{
  * 编号列头
  * */
 @Component({
-    template: '<span>编号</span>'
+    template: '<span>#</span>'
 })
 export class TableHeadNum extends TableCellRenderer {
 }
