@@ -1,6 +1,6 @@
 import {AbstractGeneralCollection} from "./general-collection";
 import {
-    IFilterable, IPageable, ISortable, PagingBasicInfo, PagingFilterInfo, PagingSortInfo, SortAs,
+    IFilterable, IPageable, ISortable, PagingInfo, DataFilterInfo, DataSortInfo, SortAs,
     SortOrder
 } from "./component-data";
 
@@ -104,24 +104,31 @@ export class TableDataBase extends AbstractGeneralCollection {
     }
 }
 
-export class TableData extends TableDataBase implements ISortable, IFilterable {
-    public sortInfo: PagingSortInfo;
-    public filterInfo: PagingFilterInfo;
+export class TableData extends TableDataBase implements ISortable {
+    public sortInfo: DataSortInfo;
 
     public sort(as: SortAs, order: SortOrder, field: string | number): void;
-    public sort(sort: PagingSortInfo): void;
+    public sort(sort: DataSortInfo): void;
     public sort(as, order?: SortOrder, field?: string | number): void {
+        field = typeof field === 'string' ? this.field.indexOf(field) : field;
+        const psi = as instanceof DataSortInfo ? as : new DataSortInfo(as, order, field);
+        const orderFlag = psi.order == SortOrder.asc ? 1 : -1;
+        if (psi.as == SortAs.number) {
+            this.data.sort((a, b) => orderFlag * (Number(a[field]) - Number(b[field])));
+        } else {
+            this.data.sort((a, b) => orderFlag * String(a[field]).localeCompare(String(b[field])));
+        }
     }
-
-    public filter(term: string, fields?: string[] | number[]): void;
-    public filter(term: PagingFilterInfo): void;
-    public filter(term, fields?: string[] | number[]): void {
-    }
-
 }
 
-export class ServerSidePagingTableData extends TableData implements IPageable {
-    public pagingInfo: PagingBasicInfo;
+export class ServerSidePagingTableData extends TableData implements IPageable, IFilterable {
+    public filterInfo: DataFilterInfo;
+    public pagingInfo: PagingInfo;
+
+    public filter(term: string, fields?: string[] | number[]): void;
+    public filter(term: DataFilterInfo): void;
+    public filter(term, fields?: string[] | number[]): void {
+    }
 
     public changePage(currentPage: number, pageSize?: number): void {
     }

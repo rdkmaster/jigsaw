@@ -127,7 +127,7 @@ export interface IAjaxComponentData extends IComponentData {
     onAjaxComplete(callback: () => void, context?: any): CallbackRemoval;
 }
 
-export class PagingBasicInfo {
+export class PagingInfo {
     constructor(public currentPage: number = 1,
                 public pageSize: number = 20,
                 public totalPage: number = 1,
@@ -135,7 +135,7 @@ export class PagingBasicInfo {
     }
 }
 
-export class PagingFilterInfo {
+export class DataFilterInfo {
     constructor(public key: string = '', public field?: string[] | number[]) {
     }
 }
@@ -148,7 +148,7 @@ export enum SortOrder {
     asc, des, default
 }
 
-export class PagingSortInfo {
+export class DataSortInfo {
     constructor(public as: SortAs = SortAs.string,
                 public order: SortOrder = SortOrder.asc,
                 public field: string | number) {
@@ -156,18 +156,18 @@ export class PagingSortInfo {
 }
 
 export interface IPageable extends IAjaxComponentData {
-    pagingInfo: PagingBasicInfo;
+    pagingInfo: PagingInfo;
     changePage(currentPage: number, pageSize?:number): void;
 }
 
 export interface ISortable extends IAjaxComponentData {
-    sortInfo: PagingSortInfo;
+    sortInfo: DataSortInfo;
     sort(as: SortAs, order: SortOrder, field: string | number): void;
-    sort(sort: PagingSortInfo): void;
+    sort(sort: DataSortInfo): void;
 }
 
 export interface IFilterable extends IAjaxComponentData {
-    filterInfo: PagingFilterInfo;
+    filterInfo: DataFilterInfo;
     filter(term: string, fields?: string[] | number[]): void;
-    filter(term: PagingFilterInfo): void;
+    filter(term: DataFilterInfo): void;
 }

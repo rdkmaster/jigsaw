@@ -4,9 +4,9 @@ import {
     DataReviser,
     IAjaxComponentData, IFilterable,
     IPageable, ISortable,
-    PagingBasicInfo,
-    PagingFilterInfo,
-    PagingSortInfo,
+    PagingInfo,
+    DataFilterInfo,
+    DataSortInfo,
     SortAs,
     SortOrder
 } from "./component-data";
@@ -289,13 +289,13 @@ export class ArrayCollection<T> extends RDKArray<T> implements IAjaxComponentDat
 export class ServerSidePagingArray extends ArrayCollection<any> implements IPageable, ISortable, IFilterable {
     public pagingServerUrl: string = '/rdk/service/app/common/paging';
 
-    public pagingInfo: PagingBasicInfo;
-    public filterInfo: PagingFilterInfo;
-    public sortInfo: PagingSortInfo;
+    public pagingInfo: PagingInfo;
+    public filterInfo: DataFilterInfo;
+    public sortInfo: DataSortInfo;
     public busy: boolean = false;
 
-    private _filterSubject = new Subject<PagingFilterInfo>();
-    private _sortSubject = new Subject<PagingSortInfo>();
+    private _filterSubject = new Subject<DataFilterInfo>();
+    private _sortSubject = new Subject<DataSortInfo>();
 
     constructor(public http: Http, public sourceRequestOptions: RequestOptionsArgs) {
         super();
@@ -303,7 +303,7 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPage
         if (!http) {
             throw new Error('invalid http!');
         }
-        this.pagingInfo = new PagingBasicInfo();
+        this.pagingInfo = new PagingInfo();
 
         this._initRequestOptions();
         this._initSubjects();
@@ -420,23 +420,23 @@ export class ServerSidePagingArray extends ArrayCollection<any> implements IPage
 
     public filter(callbackfn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
     public filter(term: string, fields?: string[] | number[]): void;
-    public filter(term: PagingFilterInfo): void;
-    public filter(term: string | PagingFilterInfo | Function, fields?: string[] | number[]): void {
+    public filter(term: DataFilterInfo): void;
+    public filter(term: string | DataFilterInfo | Function, fields?: string[] | number[]): void {
         if (term instanceof Function) {
             throw 'filter function is NOT accepted by this class!';
         }
-        const pfi = term instanceof PagingFilterInfo ? term : new PagingFilterInfo(term, fields);
+        const pfi = term instanceof DataFilterInfo ? term : new DataFilterInfo(term, fields);
         this._filterSubject.next(pfi);
     }
 
     public sort(compareFn?: (a: any, b: any) => number): any;
     public sort(as: SortAs, order: SortOrder, field: string | number): void;
-    public sort(sort: PagingSortInfo): void;
+    public sort(sort: DataSortInfo): void;
     public sort(as, order?: SortOrder, field?: string | number): void {
         if (as instanceof Function) {
             throw 'compare function is NOT accepted by this class!';
         }
-        const psi = as instanceof PagingSortInfo ? as : new PagingSortInfo(as, order, field);
+        const psi = as instanceof DataSortInfo ? as : new DataSortInfo(as, order, field);
         this._sortSubject.next(psi);
     }
 
@@ -472,9 +472,9 @@ export class DirectServerSidePagingArray extends ServerSidePagingArray {
 }
 
 export class LocalPagingArray extends ArrayCollection<any> implements IPageable {
-    public pagingInfo: PagingBasicInfo;
-    public filterInfo: PagingFilterInfo;
-    public sortInfo: PagingSortInfo;
+    public pagingInfo: PagingInfo;
+    public filterInfo: DataFilterInfo;
+    public sortInfo: DataSortInfo;
     public busy: boolean = false;
 
     constructor() {
@@ -484,13 +484,13 @@ export class LocalPagingArray extends ArrayCollection<any> implements IPageable 
 
     public filter(callbackfn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
     public filter(term: string, fields?: string[] | number[]): void;
-    public filter(term: PagingFilterInfo): void;
+    public filter(term: DataFilterInfo): void;
     public filter(term, fields?: string[] | number[]): void {
     }
 
     public sort(compareFn?: (a: any, b: any) => number): any;
     public sort(as: SortAs, order: SortOrder, field: string | number): void;
-    public sort(sort: PagingSortInfo): void;
+    public sort(sort: DataSortInfo): void;
     public sort(as, order?: SortOrder, field?: string | number): void {
     }
 
