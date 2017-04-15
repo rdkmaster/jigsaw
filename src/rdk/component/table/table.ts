@@ -169,7 +169,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit {
                     editable: false,
                     editorRenderer: null,
                     group: false,
-                    pos: index,
+                    field: index,
                     rowSpan: 1
                 })
             });

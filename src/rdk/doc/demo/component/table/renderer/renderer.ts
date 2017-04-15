@@ -195,7 +195,7 @@ export class TableRendererDemoComponent implements AfterViewInit{
     private _changeMsg: string;
 
     ngAfterViewInit(){
-        this.table.cellChange.subscribe(value => this._changeMsg = `row: ${value.row}, column: ${value.column}, pos: ${value.pos},cellData: ${value.cellData}`);
+        this.table.cellChange.subscribe(value => this._changeMsg = `row: ${value.row}, column: ${value.column}, field: ${value.field},cellData: ${value.cellData}`);
     }
 
     /*total = 200;
