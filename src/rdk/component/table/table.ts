@@ -612,11 +612,12 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
  * */
 @Component({
     selector: '[rdk-table-header]',
-    template: `<ng-template rdk-renderer-host></ng-template>
-               <div *ngIf="sortable" [ngClass]="_sortOrderClass">
-                    <span (click)="_sortUp()" class="rdk-table-sort-btn rdk-table-sort-up"></span>
-                    <span (click)="_sortDown()" class="rdk-table-sort-btn rdk-table-sort-down"></span>
-               </div>`,
+    template: `
+        <ng-template rdk-renderer-host></ng-template>
+        <div *ngIf="sortable" [ngClass]="_sortOrderClass">
+            <span (click)="_sort(SortOrder.asc)" class="rdk-table-sort-btn rdk-table-sort-up"></span>
+            <span (click)="_sort(SortOrder.des)" class="rdk-table-sort-btn rdk-table-sort-down"></span>
+        </div>`,
     styleUrls: ['table-head.scss']
 })
 export class RdkTableHeader extends TableCellBasic implements OnInit {
@@ -644,22 +645,14 @@ export class RdkTableHeader extends TableCellBasic implements OnInit {
         super(cfr, cd);
     }
 
-    private _sortUp(): void {
-        this._setSortOrderClass(SortOrder.asc);
-
-        this.tableData.sort(this.sortAs, SortOrder.asc, this.field);
-    }
-
-    private _sortDown(): void {
-        this._setSortOrderClass(SortOrder.des);
-
-        this.tableData.sort(this.sortAs, SortOrder.asc, this.field);
+    private _sort(order:SortOrder): void {
+        this._setSortOrderClass(order);
+        this.tableData.sort(this.sortAs, order, this.field);
     }
 
     ngOnInit() {
         //设置默认渲染器
         this.renderer = this.renderer ? this.renderer : DefaultCellRenderer;
-
         this._setSortOrderClass(SortOrder.default);
     }
 }
