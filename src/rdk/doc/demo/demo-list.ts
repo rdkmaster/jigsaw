@@ -83,6 +83,10 @@ const demoListRoutes=[
         loadChildren:'./component/dropdown/dropdown-demo.module#DropDownDemoModule'
     },
     {
+        path:'slider',
+        loadChildren:'./component/slider/slider-demo.module#SliderDemoModule'
+    },
+    {
         path:'**', //fallback router must in the last
         component: DemoListComponent
     }

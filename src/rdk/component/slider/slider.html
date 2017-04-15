@@ -1,0 +1,11 @@
+<div class="rdk-slider">
+    <div class="rdk-slider-rail"></div>
+    <div class="rdk-slider-track" [ngStyle]="_trackStyle"></div>
+    <div class="rdk-slider-step"></div>
+    <div class="rdk-slider-handle" [ngStyle]="_handleStyle"
+         (mousedown)="_updateCanDragged(true)"
+        (mousemove)="_updateValuePosition($event)"
+        (mouseup)="_updateCanDragged(false)"
+        (mouseout)="_updateCanDragged(false)"></div>
+    <div class="rdk-slider-mark"></div>
+</div>
