@@ -6,7 +6,6 @@ $table-prefix-cls: #{$rdk-prefix}-table;
     @include inline-block;
     position: relative;
     width: 100%;
-    height: 200px;
     overflow: hidden;
 }
 
@@ -27,6 +26,9 @@ table{
         color: #333;
         tr{
             height: 40px;
+            td{
+                white-space: nowrap;
+            }
         }
     }
     tbody tr{

@@ -1,6 +1,6 @@
 
 <p>带渲染器的表格单元格</p>
-<rdk-table [data]="tableData" [columns]="_columns" [additionalColumns]="_additionalColumns"></rdk-table>
+<rdk-table height="400px" [data]="tableData" [columns]="_columns" [additionalColumns]="_additionalColumns" (cellChange)="onCellChange($event)"></rdk-table>
 <!--<rdk-pagination [total]="total" [pageSize]="10"
                 [pageSizeOptions]="[5, 10, 20]"
                 [searchable]="true"
@@ -9,3 +9,4 @@
                 (onShowSizeChange)="getPageSize($event)"
                 width="700px">
 </rdk-pagination>-->
+<p class="message">table change answer is: <span>{{_changeMsg}}</span></p>
