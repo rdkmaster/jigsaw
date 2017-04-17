@@ -32,6 +32,11 @@ import {
 } from "./setCellRender/setCellRender";
 import {TableSetCellClassDemoComponent} from "./setCellClass/setCellClass";
 import {TableColumnGroupDemoComponent} from "./setColumnGroup/setColumnGroup";
+import {TableSetCellEditableDemoComponent, MyTableCellEditor, MyTableCell} from "./setCellEditable/setCellEditable";
+import {
+    TableAddColumnDemoComponent, MyTableHeadOption, MyTableCellOption,
+    MyTableCellOption2
+} from "./addColumn/addColumn";
 
 const tableDemoRoutes = [
     {
@@ -66,6 +71,10 @@ const tableDemoRoutes = [
     },{
         path: 'setColumnGroup', component: TableColumnGroupDemoComponent
     },{
+        path: 'setCellEditable', component: TableSetCellEditableDemoComponent
+    },{
+        path: 'addColumn', component: TableAddColumnDemoComponent
+    },{
         path: '**', //fallback router must in the last
         component: TableBasicDemoComponent
     }
@@ -96,7 +105,14 @@ const tableDemoRoutes = [
         MyTableCellRender,
         TableSetCellRenderDemoComponent,
         TableSetCellClassDemoComponent,
-        TableColumnGroupDemoComponent
+        TableColumnGroupDemoComponent,
+        MyTableCellEditor,
+        MyTableCell,
+        TableSetCellEditableDemoComponent,
+        MyTableHeadOption,
+        MyTableCellOption,
+        MyTableCellOption2,
+        TableAddColumnDemoComponent
     ],
     imports: [
         RouterModule.forChild(tableDemoRoutes),
@@ -123,7 +139,12 @@ const tableDemoRoutes = [
         TableHeadNum,
         TableCellEditor,
         TableHeadRender,
-        MyTableCellRender
+        MyTableCellRender,
+        MyTableCell,
+        MyTableHeadOption,
+        MyTableCellOption,
+        MyTableCellOption2,
+        MyTableCellEditor
     ]
 })
 export class TableDemoModule {
