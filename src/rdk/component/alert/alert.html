@@ -8,7 +8,7 @@
             <ng-content></ng-content>
         </div>
         <div class="rdk-alert-button-group" *ngIf="buttons && buttons.length > 0">
-            <rdk-button translate *ngFor="let bi of buttons"
+            <rdk-button *ngFor="let bi of buttons"
                         (click)="bi.callback && bi.callback.call(bi.callbackContext, bi)"
                         class="{{bi.clazz}}">{{bi.label | translate }}
             </rdk-button>
