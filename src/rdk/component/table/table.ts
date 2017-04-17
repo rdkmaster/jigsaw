@@ -132,7 +132,13 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
 
     private _cellSettings: Array<CellSetting>[] = [];
 
+    private _windowListen: Function;
+
     @ViewChild(RdkScrollBar) private _scrollBar: RdkScrollBar;
+
+    @ViewChildren('header', {read: ElementRef}) headers: QueryList<ElementRef>;
+
+    @ViewChildren('fixedHeader', {read: ElementRef}) fixedHeaders: QueryList<ElementRef>;
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
         super()
@@ -289,11 +295,11 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     /*
-    * 原始数据排序
-    * */
-    private _dataDefaultSort(){
-        if(!this._defaultSorted){
-            this.columns.forEach(column => {
+     * 原始数据排序
+     * */
+    private _dataDefaultSort() {
+        if (!this._defaultSorted) {
+            this.columns && this.columns.forEach(column => {
                 const header = column.header;
                 const target = column.target;
                 if (header
@@ -521,13 +527,19 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
             cellSetting.editorRenderer = cell.editorRenderer ? cell.editorRenderer : cellSetting.editorRenderer;
 
             //单元格有editorRenderer,没有renderer时，指定默认renderer
-            if(cellSetting.editorRenderer && !cellSetting.renderer){
+            if (cellSetting.editorRenderer && !cellSetting.renderer) {
                 cellSetting.renderer = TableCellDefault;
             }
         }
         return cellSetting;
     }
 
+    private _setFixedHeadWidth(): void {
+        this.fixedHeaders.forEach((fixedHeader, index) => {
+            this._renderer.setStyle(fixedHeader.nativeElement, 'width',
+                this.headers.toArray()[index].nativeElement.offsetWidth + 'px');
+        })
+    }
 
     ngAfterViewInit() {
         this._fixedHead = this._elementRef.nativeElement.querySelector(".rdk-table-fixed-head");
@@ -543,11 +555,21 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         });
 
         this._transformData();
+
+        setTimeout(() => {
+            this._setFixedHeadWidth();
+            this._windowListen = this._renderer.listen('window', 'resize', () => {
+                this._setFixedHeadWidth();
+            })
+        })
     }
 
     ngOnDestroy() {
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback();
+        }
+        if (this._windowListen) {
+            this._windowListen();
         }
     }
 
@@ -605,7 +627,7 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
                         column: this.column,
                         field: this.field,
                         cellData: this.cellData,
-                        cellDataOld:  cellDataOld
+                        cellDataOld: cellDataOld
                     });
                 }
                 this.rendererHost.viewContainerRef.clear();

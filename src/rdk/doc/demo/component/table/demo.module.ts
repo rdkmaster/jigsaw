@@ -21,6 +21,7 @@ import {RdkCheckBoxModule} from "../../../../component/checkbox/index";
 import {RdkPaginationModule} from "../../../../component/pagination/pagination";
 import {RdkInputModule} from "../../../../component/input/input";
 import {TablePerformsDemoComponent} from "./performs/performs";
+import {TableFixedHeadDemoComponent} from "./fixedHead/fixedHead";
 
 const tableDemoRoutes = [
     {
@@ -36,6 +37,9 @@ const tableDemoRoutes = [
         path: 'performs', component: TablePerformsDemoComponent
     },
     {
+        path: 'fixedHead', component: TableFixedHeadDemoComponent
+    },
+    {
         path: '**', //fallback router must in the last
         component: TableBasicDemoComponent
     }
@@ -46,6 +50,7 @@ const tableDemoRoutes = [
         TableBasicDemoComponent,
         TableRendererDemoComponent,
         TablePerformsDemoComponent,
+        TableFixedHeadDemoComponent,
         DefaultCellRenderer,
         TableHeadDefault,
         TableCellDefault,
@@ -68,7 +73,7 @@ const tableDemoRoutes = [
         RdkInputModule
     ],
     exports: [
-        TableBasicDemoComponent, TableRendererDemoComponent, TablePerformsDemoComponent
+        TableBasicDemoComponent, TableRendererDemoComponent, TablePerformsDemoComponent, TableFixedHeadDemoComponent
     ],
     providers: [TableCheckboxService],
     entryComponents: [
