@@ -1,4 +1,7 @@
-import {Component, ViewEncapsulation} from "@angular/core";
+import {
+    Component, ViewEncapsulation, AfterViewInit, forwardRef,
+    ViewChild
+} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
 import {
     TableHeadCheckbox,
@@ -6,11 +9,13 @@ import {
     TableCellOption,
     TableHeadOption,
     TableCellNum,
-    TableHeadNum
+    TableHeadNum,
+    TableCellEditor
 } from "../../../../../component/table/table-renderer";
 import {SortAs, SortOrder} from "../../../../../core/data/component-data";
 import {ColumnSetting, AdditionalColumnSetting} from "../../../../../component/table/table-api";
 import {TableHeadSelect, TableCell, TableHead} from "./table-renderer";
+import {RdkTable} from "../../../../../component/table/table";
 
 @Component({
     templateUrl: 'renderer.html',
@@ -48,14 +53,11 @@ export class TableRendererDemoComponent {
             target: 'f1',
             width: '15%',
             header: {
-                renderer: TableHeadSelect,
-                sortable: false
+                renderer: TableHeadSelect
             },
             cell: {
                 renderer: TableCell,
-                class: 'green-text',
-                editable: false,
-                editorRenderer: null,
+                class: 'green-text'
             },
             group: true
         },
@@ -66,14 +68,13 @@ export class TableRendererDemoComponent {
                 renderer: TableHead,
                 class: 'red-text',
                 sortable: true,
-                sortAs: SortAs.string,
+                sortAs: SortAs.number,
                 defaultSortOrder: SortOrder.des
             },
             cell: {
                 renderer: TableCell,
-                class: null,
-                editable: false,
-                editorRenderer: null,
+                editable: true,
+                editorRenderer: TableCellEditor,
             }
         },
         {
@@ -85,22 +86,13 @@ export class TableRendererDemoComponent {
                 defaultSortOrder: SortOrder.asc
             },
             cell: {
-                renderer: TableCell,
-                class: null,
-                editable: false,
-                editorRenderer: null,
+                renderer: TableCell
             },
             group: true
         },
         {
             target: 'f4',
-            //visible: false,
-            /*header: {
-             renderer: TableHeadCheckbox
-             },
-             cell: {
-             renderer: TableCellCheckbox
-             }*/
+            //visible: false
         },
         {
             target: 'f5',
@@ -109,10 +101,7 @@ export class TableRendererDemoComponent {
                 sortable: false
             },
             cell: {
-                renderer: TableCell,
-                class: null,
-                editable: false,
-                editorRenderer: null,
+                renderer: TableCell
             },
             group: true
         },
@@ -122,12 +111,6 @@ export class TableRendererDemoComponent {
                 sortable: true,
                 sortAs: SortAs.string,
                 defaultSortOrder: SortOrder.default
-            },
-            cell: {
-                renderer: TableCell,
-                class: null,
-                editable: false,
-                editorRenderer: null,
             },
             group: true
         },
@@ -174,7 +157,7 @@ export class TableRendererDemoComponent {
             }
         },
         /*{
-         pos: 0,
+         field: 0,
          width: '60px',
          header: {
          renderer: TableHeadCheckbox,
@@ -195,7 +178,7 @@ export class TableRendererDemoComponent {
             }
         },
         /*{
-         pos: 2,
+         field: 2,
          width: '10%',
          header: {
          renderer: TableHeadOption,
@@ -206,6 +189,12 @@ export class TableRendererDemoComponent {
          }
          }*/
     ];
+
+    public onCellChange(value) {
+        this._changeMsg = `row: ${value.row}, column: ${value.column}, field: ${value.field},cellData: ${value.cellData}`
+    }
+
+    private _changeMsg: string;
 
     /*total = 200;
 

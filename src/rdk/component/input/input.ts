@@ -1,7 +1,11 @@
-import {NgModule, Component, EventEmitter, Input, Output, ContentChildren, Directive, QueryList} from "@angular/core";
+import {
+    NgModule, Component, EventEmitter, Input, Output, ContentChildren, Directive, QueryList,
+    ElementRef, ViewChild
+} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {AbstractRDKComponent} from "../core";
+import {Observable} from "rxjs";
 
 @Directive({ selector: '[rdk-prefix-icon]' })
 export class RdkPrefixIcon {}
@@ -16,10 +20,12 @@ export class RdkPrefixIcon {}
         '[style.line-height]': 'height'
     }
 })
-//TODO（by陈旭） 缺少keyup、blur等事件
 export class RdkInput extends AbstractRDKComponent {
     private _value: string | number; //input表单值
     private _longIndent: boolean = false;
+    private _focused: boolean;
+    private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
+    private _blurEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 
     //input form表单值
     @Input()
@@ -38,10 +44,36 @@ export class RdkInput extends AbstractRDKComponent {
 
     @Input() public clearable: boolean = true;
 
+    @Output('blur')
+    get onBlur(): Observable<FocusEvent> {
+        return this._blurEmitter.asObservable();
+    }
+
+    @Output('focus')
+    get onFocus(): Observable<FocusEvent> {
+        return this._focusEmitter.asObservable();
+    }
+
     @ContentChildren(RdkPrefixIcon) _iconFront: QueryList<RdkPrefixIcon> = null;
 
-    private _clearValue(): void {
+    @ViewChild('input') _inputElement: ElementRef;
+
+    public focus(){
+        this._inputElement.nativeElement.focus();
+    }
+
+    private _clearValue(event): void {
         this.value = null;
+    }
+
+    private _handleFocus(event: FocusEvent) {
+        this._focused = true;
+        this._focusEmitter.emit(event);
+    }
+
+    private _handleBlur(event: FocusEvent) {
+        this._focused = false;
+        this._blurEmitter.emit(event);
     }
 
     ngAfterContentInit(){

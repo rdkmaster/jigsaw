@@ -4,6 +4,7 @@ import {CommonModule} from "@angular/common";
 import {ArrayCollectionAjaxDemoComponent} from "./ajax/demo";
 import {ArrayCollectionBasicDemoComponent} from "./basic/demo";
 import {ServerSidePaginationDemoComponent} from "./server-side-pagination/demo";
+import {RdkButtonModule} from "../../../../component/button/button";
 
 const buttonDemoRoutes = [
     {
@@ -29,7 +30,7 @@ const buttonDemoRoutes = [
         ArrayCollectionBasicDemoComponent, ArrayCollectionAjaxDemoComponent, ServerSidePaginationDemoComponent
     ],
     imports: [
-        RouterModule.forChild(buttonDemoRoutes), CommonModule
+        RouterModule.forChild(buttonDemoRoutes), CommonModule, RdkButtonModule
     ],
     exports: [
         ArrayCollectionBasicDemoComponent, ArrayCollectionAjaxDemoComponent, ServerSidePaginationDemoComponent

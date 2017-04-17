@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {ArrayCollection, ServerSidePagingArray} from "../../../../../core/data/array-collection";
+import {ArrayCollection, PageableArray} from "../../../../../core/data/array-collection";
 import {Http} from "@angular/http";
 
 @Component({

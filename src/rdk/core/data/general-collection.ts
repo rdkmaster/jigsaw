@@ -3,26 +3,39 @@ import {
     AjaxErrorCallback, AjaxCompleteCallback
 } from "./component-data";
 import {Http, RequestOptionsArgs, Response} from "@angular/http";
+import "rxjs/add/operator/map";
 
-export abstract class AbstractGeneralCollection implements IAjaxComponentData {
+export abstract class AbstractGeneralCollection<T> implements IAjaxComponentData {
     public http: Http;
     public busy: boolean;
+    public dataReviser: DataReviser;
 
-    public abstract fromObject(data: any): AbstractGeneralCollection;
+    public abstract fromObject(data: T): AbstractGeneralCollection<T>;
 
     protected abstract ajaxSuccessHandler(data): void;
 
     protected reviseData(response: Response): any {
-        return this.wrappedDataReviser ? this.wrappedDataReviser(response.json()) : response.json();
+        const json = response.json();
+        if (!this.dataReviser) {
+            return json;
+        }
+        try {
+            return this.dataReviser(json);
+        } catch (e) {
+            console.error('revise data error: ' + e);
+            console.error(e.stack);
+            return json;
+        }
     }
 
-    public fromAjax(options: RequestOptionsArgs|string): void {
+    public fromAjax(options: RequestOptionsArgs | string): void {
         if (!this.http) {
             console.error('set a valid Http instance to the http attribute before invoking fromAjax()!');
             return;
         }
 
         const op = ComponentDataHelper.castToRequestOptionsArgs(options);
+        this.busy = true;
         this.http.request(op.url, op)
             .map(res => this.reviseData(res))
             .subscribe(
@@ -32,37 +45,17 @@ export abstract class AbstractGeneralCollection implements IAjaxComponentData {
             );
     }
 
-    protected wrappedDataReviser: DataReviser;
-    private _originDataReviser: DataReviser;
-
-    public get dataReviser(): DataReviser {
-        return this._originDataReviser;
-    }
-
-    public set dataReviser(value: DataReviser) {
-        this._originDataReviser = value;
-        this.wrappedDataReviser = (data) => {
-            try {
-                return this._originDataReviser(data);
-            } catch (e) {
-                console.error('revise data error: ' + e);
-                console.error(e.stack);
-                return data;
-            }
-        }
-    }
-
     protected componentDataHelper: ComponentDataHelper = new ComponentDataHelper();
 
     public refresh(): void {
         this.componentDataHelper.invokeRefreshCallback();
     }
 
-    public onRefresh(callback: (thisData: GeneralCollection) => void, context?: any): CallbackRemoval {
+    public onRefresh(callback: (thisData: AbstractGeneralCollection<T>) => void, context?: any): CallbackRemoval {
         return this.componentDataHelper.getRefreshRemoval({fn: callback, context: context});
     }
 
-    public onAjaxSuccess(callback: (data: any) => void, context?: any): CallbackRemoval {
+    public onAjaxSuccess(callback: (data: T) => void, context?: any): CallbackRemoval {
         return this.componentDataHelper.getAjaxSuccessRemoval({fn: callback, context: context});
     }
 
@@ -89,22 +82,21 @@ export abstract class AbstractGeneralCollection implements IAjaxComponentData {
     public destroy(): void {
         this.componentDataHelper.clearCallbacks();
         this.componentDataHelper = null;
-
-        this.wrappedDataReviser = null;
-        this._originDataReviser = null;
+        this.dataReviser = null;
     }
 }
 
-export class GeneralCollection extends AbstractGeneralCollection {
+export class GeneralCollection<T> extends AbstractGeneralCollection<T> {
+    [index: string]: any;
 
-    protected ajaxSuccessHandler(data): void {
+    protected ajaxSuccessHandler(data: T): void {
         this.fromObject(data);
         this.componentDataHelper.invokeAjaxSuccessCallback(data);
     }
 
     protected propList: string[] = [];
 
-    public fromObject(data: any): GeneralCollection {
+    public fromObject(data: T): GeneralCollection<T> {
         if (data instanceof GeneralCollection) {
             console.error("unable to make data from another GeneralCollection instance!");
             return;
