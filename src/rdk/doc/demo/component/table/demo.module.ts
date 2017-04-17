@@ -16,6 +16,19 @@ import {TableHead, TableCell, TableHeadSelect} from "./renderer/table-renderer";
 import {RdkSelectModule} from "../../../../component/select/select";
 import {RdkCheckBoxModule} from "../../../../component/checkbox/index";
 import {RdkPaginationModule} from "../../../../component/pagination/pagination";
+import {TableHeadRender,
+    TableSetHeaderRenderDemoComponent
+} from "./setHeaderRender/setHeaderRender";
+import {TableSetHeaderClassDemoComponent} from "./setHeaderClass/setHeaderClass";
+import {TableColumnSetWidthDemoComponent} from "./setColumnWidth/setColumnWidth";
+import {TableColumnSetVisibleDemoComponent} from "./setColumnVisible/setColumnVisible";
+import {TableSetHeaderSortDemoComponent} from "./setHeaderSort/setHeaderSort";
+import {
+    MyTableCellRender,
+    TableSetCellRenderDemoComponent
+} from "./setCellRender/setCellRender";
+import {TableSetCellClassDemoComponent} from "./setCellClass/setCellClass";
+import {TableColumnGroupDemoComponent} from "./setColumnGroup/setColumnGroup";
 
 const tableDemoRoutes = [
     {
@@ -28,6 +41,25 @@ const tableDemoRoutes = [
         path: 'renderer', component: TableRendererDemoComponent
     },
     {
+        path: 'setColumnWidth', component: TableColumnSetWidthDemoComponent
+    },
+    {
+        path: 'setColumnVisible', component: TableColumnSetVisibleDemoComponent
+    },
+    {
+        path: 'setHeaderRender', component: TableSetHeaderRenderDemoComponent
+    },
+    {
+        path: 'setHeaderClass', component: TableSetHeaderClassDemoComponent
+    },{
+        path: 'setHeaderSort', component: TableSetHeaderSortDemoComponent
+    },{
+        path: 'setCellRender', component: TableSetCellRenderDemoComponent
+    },{
+        path: 'setCellClass', component: TableSetCellClassDemoComponent
+    },{
+        path: 'setColumnGroup', component: TableColumnGroupDemoComponent
+    },{
         path: '**', //fallback router must in the last
         component: TableBasicDemoComponent
     }
@@ -46,7 +78,17 @@ const tableDemoRoutes = [
         TableCellOption,
         TableHeadOption,
         TableCellNum,
-        TableHeadNum
+        TableHeadNum,
+        TableHeadRender,
+        TableColumnSetWidthDemoComponent,
+        TableColumnSetVisibleDemoComponent,
+        TableSetHeaderRenderDemoComponent,
+        TableSetHeaderClassDemoComponent,
+        TableSetHeaderSortDemoComponent,
+        MyTableCellRender,
+        TableSetCellRenderDemoComponent,
+        TableSetCellClassDemoComponent,
+        TableColumnGroupDemoComponent
     ],
     imports: [
         RouterModule.forChild(tableDemoRoutes), RdkTableModule, RdkSelectModule, RdkCheckBoxModule, RdkPaginationModule
@@ -65,7 +107,9 @@ const tableDemoRoutes = [
         TableCellOption,
         TableHeadOption,
         TableCellNum,
-        TableHeadNum
+        TableHeadNum,
+        TableHeadRender,
+        MyTableCellRender
     ]
 })
 export class TableDemoModule {

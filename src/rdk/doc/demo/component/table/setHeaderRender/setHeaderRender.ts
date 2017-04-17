@@ -1,10 +1,20 @@
 import {Component} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
+import {ColumnSetting, TableCellRenderer} from "../../../../../component/table/table-api";
+/*
+ * 自定义表头渲染组件
+ * */
+@Component({
+    template: '<span class="fa fa-map-signs"></span>{{cellData}}'
+})
+export class TableHeadRender extends TableCellRenderer {
+}
+
 
 @Component({
-  templateUrl: 'basic.html'
+  templateUrl: 'setHeaderRender.html'
 })
-export class TableBasicDemoComponent {
+export class TableSetHeaderRenderDemoComponent {
     tableData: TableData;
     constructor() {
         this.tableData = new TableData(
@@ -164,6 +174,19 @@ export class TableBasicDemoComponent {
             ],
             ["name", "position", "salary", "start_date", "office", "extn"],
             ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
+
     }
+
+
+
+    private _columns: ColumnSetting[] = [
+        {
+            target: 'name',
+            header: {
+                renderer:TableHeadRender
+            }
+        }];
 }
+
+
 
