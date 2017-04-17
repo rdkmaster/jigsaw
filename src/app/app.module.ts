@@ -31,7 +31,13 @@ const appRoutes=[
   ],
   imports: [
     BrowserModule, FormsModule, HttpModule, RouterModule.forRoot(appRoutes), BrowserAnimationsModule
-      ,TranslateModule.forRoot(
+      ,TranslateModule.forRoot({
+              loader: {
+                  provide: TranslateLoader,
+                  useFactory: HttpLoaderFactory,
+                  deps: [Http]
+              },isolate:true
+          }
       )
   ],
   providers: [],
