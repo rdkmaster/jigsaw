@@ -53,7 +53,7 @@ export class TableSetCellEditableDemoComponent {
                     "542"
                 ],[
                 "Tiger Nixon2",
-                "System Arcfhitect",
+                "System Architect",
                 "$320,8000",
                 "2011/04/25",
                 "Edinburgh",
