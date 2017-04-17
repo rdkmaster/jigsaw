@@ -3,20 +3,24 @@ import { HttpModule , Http } from '@angular/http';
 import {TranslateModule, TranslateLoader, TranslateService} from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
+export function HttpLoaderFactory(http: Http) {
+    return new TranslateHttpLoader(http, '/src/rdk/i18n/', '.json');
+}
+
 @NgModule({
-  imports:[TranslateModule.forChild({
-      loader: {
-          provide: TranslateLoader,
-          useFactory: (http: Http) => new TranslateHttpLoader(http, '/src/rdk/i18n/', '.json'),
-          deps: [Http]
-      },isolate:true
-  }
-  )],
-  declarations:[
-  ],
-  exports:[
-    TranslateModule
-  ],
+    imports:[TranslateModule.forChild({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [Http]
+            },isolate:true
+        }
+    )],
+    declarations:[
+    ],
+    exports:[
+        TranslateModule
+    ],
     providers:[]
 })
 
