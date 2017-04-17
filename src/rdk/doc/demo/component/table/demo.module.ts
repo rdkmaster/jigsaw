@@ -4,6 +4,8 @@ import {TableBasicDemoComponent} from "./basic/basic";
 import {TableRendererDemoComponent} from "./renderer/renderer";
 import {RdkTableModule, DefaultCellRenderer} from "../../../../component/table/table";
 import {
+    TableHeadDefault,
+    TableCellDefault,
     TableHeadCheckbox,
     TableCellCheckbox,
     TableCellOption,
@@ -13,7 +15,7 @@ import {
     TableCellEditor
 } from "../../../../component/table/table-renderer";
 import {TableCheckboxService} from "../../../../component/table/table-service";
-import {TableHead, TableCell, TableHeadSelect} from "./renderer/table-renderer";
+import {TableHeadSelect, TableHeadIcon} from "./renderer/table-renderer";
 import {RdkSelectModule} from "../../../../component/select/select";
 import {RdkCheckBoxModule} from "../../../../component/checkbox/index";
 import {RdkPaginationModule} from "../../../../component/pagination/pagination";
@@ -45,9 +47,10 @@ const tableDemoRoutes = [
         TableRendererDemoComponent,
         TablePerformsDemoComponent,
         DefaultCellRenderer,
-        TableHead,
-        TableCell,
+        TableHeadDefault,
+        TableCellDefault,
         TableHeadSelect,
+        TableHeadIcon,
         TableHeadCheckbox,
         TableCellCheckbox,
         TableCellOption,
@@ -70,9 +73,10 @@ const tableDemoRoutes = [
     providers: [TableCheckboxService],
     entryComponents: [
         DefaultCellRenderer,
-        TableHead,
-        TableCell,
+        TableHeadDefault,
+        TableCellDefault,
         TableHeadSelect,
+        TableHeadIcon,
         TableHeadCheckbox,
         TableCellCheckbox,
         TableCellOption,

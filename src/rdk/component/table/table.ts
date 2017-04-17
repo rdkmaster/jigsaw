@@ -12,7 +12,7 @@ import {RdkScrollBarModule} from "../scrollbar/scrollbar";
 import {RdkScrollBar} from "../scrollbar/scrollbar";
 import {SortAs, SortOrder, CallbackRemoval} from "../../core/data/component-data";
 import {CommonUtils} from "../../core/utils/common-utils";
-import {isUndefined} from "util";
+import {TableCellDefault} from "./table-renderer";
 
 class HeadSetting {
     cellData: string | number;
@@ -519,6 +519,11 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
             cellSetting.class = typeof cell.class == 'string' && cell.class !== '' ? cellSetting.class + " " + cell.class : cellSetting.class;
             cellSetting.editable = cell.editable === true || cell.editable === false ? cell.editable : cellSetting.editable;
             cellSetting.editorRenderer = cell.editorRenderer ? cell.editorRenderer : cellSetting.editorRenderer;
+
+            //单元格有editorRenderer,没有renderer时，指定默认renderer
+            if(cellSetting.editorRenderer && !cellSetting.renderer){
+                cellSetting.renderer = TableCellDefault;
+            }
         }
         return cellSetting;
     }

@@ -4,6 +4,25 @@ import {TableCheckboxService, CheckboxState} from "./table-service";
 import {RdkInput} from "../input/input";
 
 /*
+ * 默认表头渲染组件
+ * */
+@Component({
+    template: '<span>{{cellData}}</span>'
+})
+export class TableHeadDefault extends TableCellRenderer {
+}
+
+/*
+ * 默认单元格渲染组件
+ * */
+@Component({
+    template: '<span>{{cellData}}</span>'
+})
+export class TableCellDefault extends TableCellRenderer {
+}
+
+
+/*
  * head checkbox renderer
  * */
 @Component({
