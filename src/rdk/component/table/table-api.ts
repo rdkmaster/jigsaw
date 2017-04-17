@@ -33,8 +33,9 @@ export type AdditionalColumnSetting = {
 export type TableMsg = {
     row: number,
     column: number,
-    pos: number,
-    cellData: string|number
+    field: number,
+    cellData: string|number,
+    cellDataOld: string|number
 }
 
 type targetType = number|string|number[]|string[]|targetFun;

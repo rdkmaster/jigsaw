@@ -1,6 +1,6 @@
 import {
     Component, Input, NgModule, ComponentFactoryResolver, AfterViewInit, ViewChild, Type, ChangeDetectorRef, ElementRef,
-    Renderer2, OnInit, ComponentRef, Output, EventEmitter, ViewChildren, QueryList, forwardRef, OnDestroy
+    Renderer2, OnInit, ComponentRef, Output, EventEmitter, ViewChildren, QueryList, forwardRef, OnDestroy, Optional
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 
@@ -118,6 +118,8 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         });
     };
 
+    @Output() public dataChange: EventEmitter<TableMsg> = new EventEmitter<TableMsg>();
+
     @Input()
     public columns: ColumnSetting[];
 
@@ -131,10 +133,6 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     private _cellSettings: Array<CellSetting>[] = [];
 
     @ViewChild(RdkScrollBar) private _scrollBar: RdkScrollBar;
-
-    @ViewChildren(forwardRef(() => RdkTableCell)) tabelCells: QueryList<RdkTableCell>;
-
-    @Output() cellChange: EventEmitter<TableMsg> = new EventEmitter<TableMsg>();
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
         super()
@@ -540,14 +538,6 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         });
 
         this._transformData();
-
-        setTimeout(() => {
-            this.tabelCells.length && this.tabelCells.forEach(tableCell => {
-                tableCell.cellChange.subscribe(value => {
-                    this.cellChange.emit(value);
-                })
-            })
-        }, 0);
     }
 
     ngOnDestroy() {
@@ -576,14 +566,19 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
     @Input()
     public group: boolean;
 
-    @Output() cellChange: EventEmitter<TableMsg> = new EventEmitter<TableMsg>();
-
     public editorRendererRef: ComponentRef<TableCellRenderer>;
 
     private goEditCallback: () => void;
 
-    constructor(cfr: ComponentFactoryResolver, cd: ChangeDetectorRef, private _rdr: Renderer2, private _el: ElementRef) {
+    private _rdkTable: RdkTable;
+
+    constructor(cfr: ComponentFactoryResolver,
+                cd: ChangeDetectorRef,
+                private _rdr: Renderer2,
+                private _el: ElementRef,
+                @Optional() rdkTable: RdkTable) {
         super(cfr, cd);
+        this._rdkTable = rdkTable;
     }
 
     /*
@@ -595,12 +590,17 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
         this.editorRendererRef.instance.changeToText.subscribe(cellData => {
             if (cellData) {
                 if (this.cellData != cellData) {
+                    let cellDataOld = this.cellData;
                     this.cellData = cellData;
-                    this.cellChange.emit({
+
+                    //更新tableData
+                    this.tableData.data[this.row][this.field] = cellData;
+                    this._rdkTable.dataChange.emit({
                         row: this.row,
                         column: this.column,
-                        pos: this.field,
-                        cellData: this.cellData
+                        field: this.field,
+                        cellData: this.cellData,
+                        cellDataOld:  cellDataOld
                     });
                 }
                 this.rendererHost.viewContainerRef.clear();

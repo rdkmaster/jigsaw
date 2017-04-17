@@ -190,7 +190,8 @@ export class TableRendererDemoComponent {
     ];
 
     public onCellChange(value) {
-        this._changeMsg = `row: ${value.row}, column: ${value.column}, field: ${value.field},cellData: ${value.cellData}`
+        this._changeMsg = `row: ${value.row}, column: ${value.column}, field: ${value.field},cellData: ${value.cellData},cellDataOld: ${value.cellDataOld}`;
+        console.log(this.tableData.data[value.row][value.field]);
     }
 
     private _changeMsg: string;
