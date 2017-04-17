@@ -2,15 +2,15 @@
     <div class="rdk-alert-bg" *ngIf="modal"></div>
     <div class="rdk-alert" [ngClass]="_alertClass" rdk-draggable [@bubbleIn]="state">
         <i class="rdk-alert-icon fa "></i>
-        <span class="rdk-alert-title">{{title}}</span>
+        <span class="rdk-alert-title">{{title | translate }}</span>
         <span class="rdk-alert-close fa fa-times" (click)='dispose()'></span>
         <div class="rdk-alert-content">
             <ng-content></ng-content>
         </div>
         <div class="rdk-alert-button-group" *ngIf="buttons && buttons.length > 0">
-            <rdk-button *ngFor="let bi of buttons"
+            <rdk-button translate *ngFor="let bi of buttons"
                         (click)="bi.callback && bi.callback.call(bi.callbackContext, bi)"
-                        class="{{bi.clazz}}">{{bi.label}}
+                        class="{{bi.clazz}}">{{bi.label | translate }}
             </rdk-button>
         </div>
     </div>
