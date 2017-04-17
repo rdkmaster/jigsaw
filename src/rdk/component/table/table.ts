@@ -312,7 +312,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * data和columns数据合并转换
      * */
     private _transformData(): void {
-        //
+        //原始数据排序
         this._dataDefaultSort();
 
         //初始化Settings

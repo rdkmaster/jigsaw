@@ -21,7 +21,7 @@ export type ColumnSetting = {
 }
 
 export type AdditionalColumnSetting = {
-    pos: number,
+    pos?: number,
     target?: string|number,
     visible?: boolean,
     width?: string,

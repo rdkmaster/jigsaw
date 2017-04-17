@@ -166,7 +166,7 @@ export class TableRendererDemoComponent {
          }
          },*/
         {
-            pos: -1,
+            //pos: -1, //不写pos也表示插入到最后
             width: '10%',
             header: {
                 renderer: TableHeadOption,
