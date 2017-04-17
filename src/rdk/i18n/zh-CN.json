@@ -1,13 +1,13 @@
 {
     "OK": "确定",
     "Cancel": "取消",
-    "Yes": "正确",
-    "No": "错误",
-    "Abort": "关于",
+    "Yes": "是",
+    "No": "否",
+    "Abort": "终止",
     "Ignore": "忽略",
     "Retry": "重试",
-    "Information": "信息",
+    "Information": "提示",
     "Warning": "告警",
     "Error": "错误",
-    "Confirm": "配置"
+    "Confirm": "确认"
 }
