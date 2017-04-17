@@ -1,10 +1,11 @@
 import {Component} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
+import {ColumnSetting} from "../../../../../component/table/table-api";
 
 @Component({
-  templateUrl: 'basic.html'
+  templateUrl: 'setColumnVisible.html'
 })
-export class TableBasicDemoComponent {
+export class TableColumnSetVisibleDemoComponent {
     tableData: TableData;
     constructor() {
         this.tableData = new TableData(
@@ -164,6 +165,13 @@ export class TableBasicDemoComponent {
             ],
             ["name", "position", "salary", "start_date", "office", "extn"],
             ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
+
     }
+    private _columns: ColumnSetting[] = [
+        {
+            target: 'name',
+            visible: false
+        }];
+
 }
 

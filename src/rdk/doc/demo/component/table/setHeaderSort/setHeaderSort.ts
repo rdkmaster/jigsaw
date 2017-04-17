@@ -1,10 +1,14 @@
 import {Component} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
+import {ColumnSetting} from "../../../../../component/table/table-api";
+import {SortAs, SortOrder} from "../../../../../core/data/component-data";
+
+
 
 @Component({
-  templateUrl: 'basic.html'
+  templateUrl: 'setHeaderSort.html'
 })
-export class TableBasicDemoComponent {
+export class TableSetHeaderSortDemoComponent {
     tableData: TableData;
     constructor() {
         this.tableData = new TableData(
@@ -164,6 +168,28 @@ export class TableBasicDemoComponent {
             ],
             ["name", "position", "salary", "start_date", "office", "extn"],
             ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
+
     }
+
+
+
+    private _columns: ColumnSetting[] = [
+        {
+            target: 'name',
+            header: {
+                sortable:true,
+                sortAs: SortAs.string,
+                defaultSortOrder: SortOrder.des,
+            }
+        },{
+            target: 'salary',
+            header: {
+                sortable:true,
+                sortAs: SortAs.number,
+                defaultSortOrder: SortOrder.asc,
+            }
+        }];
 }
+
+
 
