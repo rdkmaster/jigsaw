@@ -12,6 +12,7 @@ import {RdkScrollBarModule} from "../scrollbar/scrollbar";
 import {RdkScrollBar} from "../scrollbar/scrollbar";
 import {SortAs, SortOrder, CallbackRemoval} from "../../core/data/component-data";
 import {CommonUtils} from "../../core/utils/common-utils";
+import {isUndefined} from "util";
 
 class HeadSetting {
     cellData: string | number;
@@ -98,6 +99,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     private _data: TableData;
     private _removeRefreshCallback: CallbackRemoval;
     private _inited: boolean;
+    private _defaultSorted: boolean;
 
     @Input()
     public get data(): TableData {
@@ -112,7 +114,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
             this._removeRefreshCallback();
         }
         this._removeRefreshCallback = value.onRefresh(() => {
-            this._transformData();
+            this._inited && this._transformData();
         });
     };
 
@@ -289,9 +291,32 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     /*
+    * 原始数据排序
+    * */
+    private _dataDefaultSort(){
+        if(!this._defaultSorted){
+            this.columns.forEach(column => {
+                const header = column.header;
+                const target = column.target;
+                if (header
+                    && (typeof target === 'string' || typeof target === 'number')
+                    && header.sortable
+                    && (header.defaultSortOrder == SortOrder.asc || header.defaultSortOrder == SortOrder.des)) {
+                    this.data.sort(header.sortAs, header.defaultSortOrder, target)
+                }
+            });
+
+            this._defaultSorted = true;
+        }
+    }
+
+    /*
      * data和columns数据合并转换
      * */
     private _transformData(): void {
+        //
+        this._dataDefaultSort();
+
         //初始化Settings
         this._initSettings();
 
@@ -399,16 +424,16 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     private _insertHeaderSetting(pos, additionalColumn: AdditionalColumnSetting, headSetting?: HeadSetting): void
     private _insertHeaderSetting(pos, additionalColumn: AdditionalColumnSetting, headSetting?: HeadSetting): void {
         headSetting = headSetting ? headSetting : {
-            cellData: '',
-            width: null,
-            visible: true,
-            renderer: null,
-            class: '',
-            sortable: false,
-            sortAs: SortAs.string,
-            defaultSortOrder: SortOrder.default,
-            field: -1 //-1代表插入列
-        };
+                cellData: '',
+                width: null,
+                visible: true,
+                renderer: null,
+                class: '',
+                sortable: false,
+                sortAs: SortAs.string,
+                defaultSortOrder: SortOrder.default,
+                field: -1 //-1代表插入列
+            };
         headSetting = this._generateHeaderSetting(headSetting, additionalColumn);
         if (pos != -1) {
             const index = this._headSettings.indexOf(this._headSettings.find(headSetting => headSetting.field == pos));
@@ -425,16 +450,16 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     private _insertCellSetting(pos, additionalColumn: AdditionalColumnSetting, cellSetting?: CellSetting, cellSettings?: CellSetting[]): void
     private _insertCellSetting(pos, additionalColumn: AdditionalColumnSetting, cellSetting?: CellSetting, cellSettings?: CellSetting[]): void {
         cellSetting = cellSetting ? cellSetting : {
-            cellData: '',
-            visible: true,
-            renderer: null,
-            class: '',
-            editable: false,
-            editorRenderer: null,
-            group: false,
-            field: -1, //-1代表插入列
-            rowSpan: 1
-        };
+                cellData: '',
+                visible: true,
+                renderer: null,
+                class: '',
+                editable: false,
+                editorRenderer: null,
+                group: false,
+                field: -1, //-1代表插入列
+                rowSpan: 1
+            };
         cellSetting = this._generateCellSetting(cellSetting, additionalColumn);
 
         if (!cellSettings) {
@@ -594,9 +619,9 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
      * */
     private _onClick() {
         this.goEditCallback = this.editable ? this._rdr.listen(this._el.nativeElement, 'click', () => {
-            this.rendererHost.viewContainerRef.clear();
-            this.insertEditorRenderer();
-        }) : null;
+                this.rendererHost.viewContainerRef.clear();
+                this.insertEditorRenderer();
+            }) : null;
     }
 
     ngOnInit() {
@@ -666,7 +691,7 @@ export class RdkTableHeader extends TableCellBasic implements OnInit {
     ngOnInit() {
         //设置默认渲染器
         this.renderer = this.renderer ? this.renderer : DefaultCellRenderer;
-        this._setSortOrderClass(SortOrder.default);
+        //this._setSortOrderClass(SortOrder.default);
     }
 }
 

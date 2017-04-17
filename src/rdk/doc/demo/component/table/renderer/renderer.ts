@@ -82,8 +82,7 @@ export class TableRendererDemoComponent {
             header: {
                 renderer: TableHead,
                 sortable: true,
-                sortAs: SortAs.number,
-                defaultSortOrder: SortOrder.asc
+                sortAs: SortAs.number
             },
             cell: {
                 renderer: TableCell
