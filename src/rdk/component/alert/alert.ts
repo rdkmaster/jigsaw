@@ -11,8 +11,10 @@ import {AbstractDialogComponentBase, DialogBase, RdkDialog, RdkDialogModule} fro
 import {CommonModule} from "@angular/common";
 import {RdkButtonModule} from "../button/button";
 import {RdkDraggableModule} from "../draggable/draggable";
-
-
+import { SharedModule } from "../../core/shared/shared.module"
+import { HttpModule , Http } from '@angular/http';
+import {TranslateModule, TranslateLoader, TranslateService} from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 export enum AlertLevel {
     info, warning, error, confirm
 }
@@ -198,9 +200,10 @@ export class RdkErrorAlert extends RdkCommonAlert {
 
 
 @NgModule({
-    imports: [RdkDialogModule, RdkDraggableModule, RdkButtonModule, CommonModule],
+    imports: [RdkDialogModule, RdkDraggableModule, RdkButtonModule, CommonModule,SharedModule],
     declarations: [RdkAlert, RdkInfoAlert, RdkWarningAlert, RdkErrorAlert],
-    exports: [RdkDialogModule, RdkDraggableModule, RdkAlert, RdkInfoAlert, RdkWarningAlert, RdkErrorAlert]
+    exports: [RdkDialogModule, RdkDraggableModule, RdkAlert, RdkInfoAlert, RdkWarningAlert, RdkErrorAlert],
+    providers:[TranslateService]
 })
 export class RdkAlertModule {
 }
