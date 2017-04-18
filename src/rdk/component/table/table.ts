@@ -535,8 +535,9 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     private _setFixedHeadWidth(): void {
-        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.rdk-table-fixed-head'), 'width',
-            this._elementRef.nativeElement.querySelector('.rdk-table').offsetWidth + 'px');
+        const tableWidth = this._elementRef.nativeElement.querySelector('.rdk-table').offsetWidth + 'px';
+        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.rdk-table-fixed-head'), 'width', tableWidth);
+        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.mCSB_container'), 'width', tableWidth);
         this.fixedHeaders.forEach((fixedHeader, index) => {
             this._renderer.setStyle(fixedHeader.nativeElement, 'width',
                 this.headers.toArray()[index].nativeElement.offsetWidth + 'px');
@@ -558,6 +559,14 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
 
     ngAfterViewInit() {
         this._setScrollBar();
+
+        setTimeout(() => {
+            this._setFixedHeadWidth();
+        }, 0);
+
+        setTimeout(() => {
+            this._setFixedHeadWidth();
+        }, 1000);
 
         this._windowLoadListen = this._renderer.listen('window', 'load', () => {
             this._setFixedHeadWidth();
@@ -726,7 +735,6 @@ export class RdkTableHeader extends TableCellBasic implements OnInit {
     ngOnInit() {
         //设置默认渲染器
         this.renderer = this.renderer ? this.renderer : DefaultCellRenderer;
-        //this._setSortOrderClass(SortOrder.default);
     }
 }
 
