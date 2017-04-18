@@ -132,7 +132,9 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
 
     private _cellSettings: Array<CellSetting>[] = [];
 
-    private _windowListen: Function;
+    private _windowResizeListen: Function;
+
+    private _windowLoadListen: Function;
 
     @ViewChild(RdkScrollBar) private _scrollBar: RdkScrollBar;
 
@@ -543,11 +545,6 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
 
     private _setScrollBar(): void {
         this._fixedHead = this._elementRef.nativeElement.querySelector(".rdk-table-fixed-head");
-
-        //调整滚动条位置
-        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.mCSB_scrollTools_vertical'), 'margin', this._fixedHead.offsetHeight + 'px 0 0');
-        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.mCSB_scrollTools_horizontal'), 'margin', '0 0');
-
         this._scrollBar.whileScrolling.subscribe(scrollEvent => {
             if (scrollEvent.direction == 'x') {
                 this._renderer.setStyle(this._fixedHead, 'left', scrollEvent.left + 'px');
@@ -562,20 +559,24 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     ngAfterViewInit() {
         this._setScrollBar();
 
-        setTimeout(() => {
+        this._windowLoadListen = this._renderer.listen('window', 'load', () => {
             this._setFixedHeadWidth();
-            this._windowListen = this._renderer.listen('window', 'resize', () => {
-                this._setFixedHeadWidth();
-            })
-        }, 0)
+        });
+        this._windowResizeListen = this._renderer.listen('window', 'resize', () => {
+            this._setFixedHeadWidth();
+        });
+
     }
 
     ngOnDestroy() {
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback();
         }
-        if (this._windowListen) {
-            this._windowListen();
+        if (this._windowLoadListen) {
+            this._windowLoadListen();
+        }
+        if (this._windowResizeListen) {
+            this._windowResizeListen();
         }
     }
 

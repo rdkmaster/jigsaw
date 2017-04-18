@@ -8,6 +8,14 @@ $table-prefix-cls: #{$rdk-prefix}-table;
     width: 100%;
     overflow: hidden;
     vertical-align: top;
+    /deep/ {
+        .mCSB_scrollTools_vertical{
+            margin: 41px 0 0 !important;
+        }
+        .mCSB_scrollTools_horizontal{
+            margin: 0 0 !important;
+        }
+    }
 }
 
 .#{$table-prefix-cls}-box{
