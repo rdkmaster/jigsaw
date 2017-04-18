@@ -298,17 +298,15 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * 原始数据排序
      * */
     private _dataDefaultSort() {
-        if (!this._defaultSorted) {
-            this.columns && this.columns.forEach(column => {
-                const header = column.header;
-                const target = column.target;
-                if (header
-                    && (typeof target === 'string' || typeof target === 'number')
-                    && header.sortable
-                    && (header.defaultSortOrder == SortOrder.asc || header.defaultSortOrder == SortOrder.des)) {
-                    this.data.sort(header.sortAs, header.defaultSortOrder, target)
-                }
-            });
+        if (!this._defaultSorted && this.columns) {
+            //默认按第一个排序
+            let column = this.columns.find(column =>
+                column.header
+                && (typeof column.target === 'string' || typeof column.target === 'number')
+                && column.header.sortable
+                && (column.header.defaultSortOrder == SortOrder.asc || column.header.defaultSortOrder == SortOrder.des)
+            );
+            column && this.data.sort(column.header.sortAs, column.header.defaultSortOrder, <string|number>column.target);
 
             this._defaultSorted = true;
         }
