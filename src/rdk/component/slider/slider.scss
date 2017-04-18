@@ -133,6 +133,11 @@ $rdk-slider: #{$rdk-prefix}-slider;
             cursor: not-allowed;
             box-shadow: none;
         }
+
+        .#{$rdk-slider}-handle:active {
+            box-shadow: none;
+        }
+
         .#{$rdk-slider}-masr-text,
         .#{$rdk-slider}-dot {
             cursor: not-allowed!important;

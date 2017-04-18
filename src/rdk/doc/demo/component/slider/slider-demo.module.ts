@@ -6,6 +6,7 @@ import { NgModule } from '@angular/core';
 import {RdkSliderDemoBasic} from "./basic/basic";
 import {RouterModule} from "@angular/router";
 import {RdkSliderModule} from "../../../../component/slider/index";
+import {RdkSwitchModule} from "../../../../component/switch/index";
 
 const routes = [
     {
@@ -16,7 +17,8 @@ const routes = [
 @NgModule({
     imports: [
         RouterModule.forChild(routes),
-        RdkSliderModule
+        RdkSliderModule,
+        RdkSwitchModule
     ],
     exports: [RdkSliderDemoBasic],
     declarations: [RdkSliderDemoBasic],
