@@ -623,17 +623,18 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
         this.editorRendererRef.instance.changeToText.subscribe(cellData => {
             if (cellData) {
                 if (this.cellData != cellData) {
-                    let cellDataOld = this.cellData;
+                    let oldCellData = this.cellData;
                     this.cellData = cellData;
 
                     //更新tableData
                     this.tableData.data[this.row][this.field] = cellData;
                     this._rdkTable.dataChange.emit({
+                        field: this.tableData.field[this.field],
                         row: this.row,
                         column: this.column,
-                        field: this.field,
+                        rawColumn: this.field,
                         cellData: this.cellData,
-                        cellDataOld: cellDataOld
+                        oldCellData: oldCellData
                     });
                 }
                 this.rendererHost.viewContainerRef.clear();

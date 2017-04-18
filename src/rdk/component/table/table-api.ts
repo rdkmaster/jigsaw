@@ -31,11 +31,12 @@ export type AdditionalColumnSetting = {
 }
 
 export type TableMsg = {
+    field: string|number,
     row: number,
     column: number,
-    field: number,
+    rawColumn: number,
     cellData: string|number,
-    cellDataOld: string|number
+    oldCellData: string|number
 }
 
 type targetType = number|string|number[]|string[]|targetFun;
