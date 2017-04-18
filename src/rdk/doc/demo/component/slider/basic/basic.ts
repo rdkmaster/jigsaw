@@ -19,8 +19,13 @@ import { Component, OnInit } from '@angular/core';
         
         <hr>
         <br>
-        <h4>4. 双触点滑动条</h4>
-        <rdk-slider [(value)]="valueStep" min="0" max="2" step="0.01"></rdk-slider> <span>取值: {{valueStep}}</span>
+        <h4>4. 双触点滑动条(TODO)</h4>
+        <rdk-slider [(value)]="rangeValue" range="true"></rdk-slider>
+        
+        <hr>
+        <br>
+        <h4>5. mark 节点.</h4>
+        <rdk-slider [marks]="marks" value="50"></rdk-slider>
     `
 })
 export class RdkSliderDemoBasic implements OnInit {
@@ -35,6 +40,13 @@ export class RdkSliderDemoBasic implements OnInit {
     max = 20;
 
     valueStep = 1;
+
+    rangeValue = [30, 60]
+
+    marks = [{value: 20, label: '20oC'},
+    {value: 40, label: '40oC'},
+    {value: 60, label: '60oC'}]
+
 
     slderChange(value) {
         console.info("当前值: " + value);

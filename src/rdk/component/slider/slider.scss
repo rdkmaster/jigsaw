@@ -75,7 +75,7 @@ $rdk-slider: #{$rdk-prefix}-slider;
         font-size: $font-size-base;
         z-index: 3;
 
-        > &-text {
+        .#{$rdk-slider}-mark-text {
             position: absolute;
             display: inline-block;
             vertical-align: middle;

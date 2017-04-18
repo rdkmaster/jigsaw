@@ -8,17 +8,25 @@ import {Component, OnInit, Input, Output, EventEmitter, ElementRef, Renderer2} f
     templateUrl: './slider.html',
     styleUrls:['./slider.scss']
 })
+/**
+ * TODO 1. 双触点实现.(这个实现有点难度.. 修改的有点多)
+ *       2. 点击事件支持
+ *       3. 竖向滚动条支持.
+ *       4. tooltips 支持.
+ *       5. class 设置的API
+ *       6. mark的class
+ *       7. api 说明文档, 要不然里面的属性有点多
+ */
 export class RdkSlider implements OnInit {
 
     constructor(private _element: ElementRef, private _render: Renderer2) { }
 
-    private _value: number = 0;
+    private _value = 0;
 
     @Input()
     public get value() { return this._value; };
     public set value(value) {
         this._value = value;
-
         this._valueToPos();
     }
 
@@ -58,10 +66,14 @@ export class RdkSlider implements OnInit {
         this._step = value;
     }
 
-    private _width: number = 0;
+    private _width: number;
 
-    private _transformValueToPos() {
-        this._width = (this.value - this.min)/(this.max - this.min) * 100;
+    private _transformValueToPos(value?) {
+        if(!value) {
+            this._width = (this.value - this.min)/(this.max - this.min) * 100;
+        } else {
+            return (value - this.min)/(this.max - this.min) * 100;
+        }
     }
 
     private _transformPosToValue(pos) {
@@ -145,8 +157,8 @@ export class RdkSlider implements OnInit {
 
         // 兼容双触点.
         if(this.range) {
-            // startPos = Math.min(this.value[0], this.value[1]);
-            // trackWidth = Math.abs(this.value[0] - this.value[1]);
+            startPos = Math.min(this.value[0], this.value[1]);
+            trackWidth = Math.abs(this.value[0] - this.value[1]);
         }
 
         this._trackStyle = {
@@ -163,11 +175,30 @@ export class RdkSlider implements OnInit {
         }
     }
 
+    @Input()
+    marks: [Object];
+
+    _calMarks() {
+        if(!this.marks) return;
+
+        let width = Math.round(100/this.marks.length);
+        let marginLeft = -Math.floor(width/2);
+        let style = {
+            "width": width,
+            "margin-left": marginLeft
+        }
+        this.marks.forEach(mark => {
+            mark["left"] = this._transformValueToPos(mark["value"]);
+            mark["width"] = width;
+            mark["marginLeft"] = marginLeft;
+        });
+    }
+
     _registerGlobalEvent() {
-        this._render.listen("window", "mousemove", () => {
+        this._render.listen("document", "mousemove", () => {
             this._updateValuePosition();
         });
-        this._render.listen("window", "mouseup", () => {
+        this._render.listen("document", "mouseup", () => {
             this._dragged = false;
         });
     }
@@ -175,7 +206,10 @@ export class RdkSlider implements OnInit {
     ngOnInit() {
         // 计算slider 的尺寸.
         this._dimensions = this._element.nativeElement.getBoundingClientRect();
+
         this._valueToPos();
+
+        this._calMarks();
     }
 
 }
