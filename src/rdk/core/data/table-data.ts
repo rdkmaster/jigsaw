@@ -118,6 +118,8 @@ export class TableData extends TableDataBase implements ISortable {
         } else {
             this.data.sort((a, b) => orderFlag * String(a[field]).localeCompare(String(b[field])));
         }
+
+        this.refresh();
     }
 }
 

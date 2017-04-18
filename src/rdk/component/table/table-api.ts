@@ -21,7 +21,7 @@ export type ColumnSetting = {
 }
 
 export type AdditionalColumnSetting = {
-    pos: number,
+    pos?: number,
     target?: string|number,
     visible?: boolean,
     width?: string,
@@ -31,10 +31,12 @@ export type AdditionalColumnSetting = {
 }
 
 export type TableMsg = {
+    field: string|number,
     row: number,
     column: number,
-    pos: number,
-    cellData: string|number
+    rawColumn: number,
+    cellData: string|number,
+    oldCellData: string|number
 }
 
 type targetType = number|string|number[]|string[]|targetFun;
