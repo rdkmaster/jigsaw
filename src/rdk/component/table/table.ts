@@ -95,7 +95,7 @@ export class TableCellBasic implements AfterViewInit {
         '[style.height]': 'height'
     }
 })
-export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnDestroy {
+export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnDestroy, OnInit {
     private _data: TableData;
     private _removeRefreshCallback: CallbackRemoval;
     private _inited: boolean;
@@ -541,7 +541,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         })
     }
 
-    ngAfterViewInit() {
+    private _setScrollBar(): void {
         this._fixedHead = this._elementRef.nativeElement.querySelector(".rdk-table-fixed-head");
 
         //调整滚动条位置
@@ -553,15 +553,21 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
                 this._renderer.setStyle(this._fixedHead, 'left', scrollEvent.left + 'px');
             }
         });
+    }
 
+    ngOnInit() {
         this._transformData();
+    }
+
+    ngAfterViewInit() {
+        this._setScrollBar();
 
         setTimeout(() => {
             this._setFixedHeadWidth();
             this._windowListen = this._renderer.listen('window', 'resize', () => {
                 this._setFixedHeadWidth();
             })
-        })
+        }, 0)
     }
 
     ngOnDestroy() {

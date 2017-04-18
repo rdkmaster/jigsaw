@@ -6,7 +6,7 @@ import {RdkInput} from "../../../../../component/input/input";
  * 自定义表头渲染组件
  * */
 @Component({
-    template: '<span class="fa fa-map-signs"></span>{{cellData}}'
+    template: '<span class="fa fa-bus"></span>{{cellData}}'
 })
 export class TableHeadIcon extends TableCellRenderer {
 }
