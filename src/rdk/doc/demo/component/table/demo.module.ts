@@ -41,6 +41,7 @@ import {
 } from "./addColumn/addColumn";
 import {TableFixedHeadDemoComponent} from "./fixedHead/fixedHead";
 import {TablePageableDemoComponent} from "./pageable/demo";
+import {TableDataFromAjaxDemoComponent} from "./dataFromAjax/dataFromAjax";
 
 const tableDemoRoutes = [
     {
@@ -48,6 +49,9 @@ const tableDemoRoutes = [
     },
     {
         path: 'basic', component: TableBasicDemoComponent
+    },
+    {
+        path: 'dataFromAjax', component: TableDataFromAjaxDemoComponent
     },
     {
         path: 'renderer', component: TableRendererDemoComponent
@@ -132,7 +136,8 @@ const tableDemoRoutes = [
         MyTableCellOption,
         MyTableCellOption2,
         TableAddColumnDemoComponent,
-        TablePageableDemoComponent
+        TablePageableDemoComponent,
+        TableDataFromAjaxDemoComponent
     ],
     imports: [
         RouterModule.forChild(tableDemoRoutes),
@@ -142,9 +147,7 @@ const tableDemoRoutes = [
         RdkPaginationModule,
         RdkInputModule
     ],
-    exports: [
-        TableBasicDemoComponent, TableRendererDemoComponent, TablePerformsDemoComponent, TableFixedHeadDemoComponent
-    ],
+    exports: [ ],
     providers: [TableCheckboxService],
     entryComponents: [
         DefaultCellRenderer,
