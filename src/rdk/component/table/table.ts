@@ -553,6 +553,30 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         });
     }
 
+    private _getScrollTop(): number{
+        let scrollTop: number;
+        if(document.body.scrollTop){
+            scrollTop = document.body.scrollTop
+        }else if(document.documentElement.scrollTop){
+            scrollTop = document.documentElement.scrollTop
+        }
+        return scrollTop ? scrollTop : 0;
+    }
+
+    private _floatHead(maxTop){
+        let tableDocumentTop = this._offsetApi.offset(this._elementRef.nativeElement).top;
+        let scrollTop = this._getScrollTop();
+        console.log(scrollTop);
+        let top = scrollTop - tableDocumentTop;
+        if(top > 0 && top < maxTop){
+            this._renderer.setStyle(this._fixedHead, 'top', top + 'px');
+        }else if(top <= 0){
+            this._renderer.setStyle(this._fixedHead, 'top', '0px');
+        }else if(top >= maxTop){
+            this._renderer.setStyle(this._fixedHead, 'top', maxTop);
+        }
+    }
+
     ngOnInit() {
         this._transformData();
     }
@@ -573,20 +597,59 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         });
         this._windowResizeListen = this._renderer.listen('window', 'resize', () => {
             this._setFixedHeadWidth();
+            this._floatHead(maxTop);
         });
 
+        const maxTop = this._elementRef.nativeElement.offsetHeight - this._fixedHead.offsetHeight;
+        this._windowResizeListen = this._renderer.listen('window', 'scroll', () => {
+            this._floatHead(maxTop);
+        });
     }
 
+    private _offsetApi = {
+        offset: function(elem) {
+            var docElem, win, rect, doc;
+
+            if (!elem) {
+                return;
+            }
+
+            // Support: IE <=11 only
+            // Running getBoundingClientRect on a
+            // disconnected node in IE throws an error
+            if (!elem.getClientRects().length) {
+                return {top: 0, left: 0};
+            }
+
+            rect = elem.getBoundingClientRect();
+
+            // Make sure element is not hidden (display: none)
+            if (rect.width || rect.height) {
+                doc = elem.ownerDocument;
+                win = this.getWindow(doc);
+                docElem = doc.documentElement;
+
+                return {
+                    top: rect.top + win.pageYOffset - docElem.clientTop,
+                    left: rect.left + win.pageXOffset - docElem.clientLeft
+                };
+            }
+
+            // Return zeros for disconnected and hidden elements (gh-2310)
+            return rect;
+        },
+        getWindow: function(elem) {
+            return this.isWindow(elem) ? elem : elem.nodeType === 9 && elem.defaultView;
+        },
+        isWindow: function(obj) {
+            return obj != null && obj === obj.window;
+        }
+    };
+
     ngOnDestroy() {
-        if (this._removeRefreshCallback) {
-            this._removeRefreshCallback();
-        }
-        if (this._windowLoadListen) {
-            this._windowLoadListen();
-        }
-        if (this._windowResizeListen) {
-            this._windowResizeListen();
-        }
+        this._removeRefreshCallback && this._removeRefreshCallback();
+        this._windowLoadListen && this._windowLoadListen();
+        this._windowResizeListen && this._windowResizeListen();
     }
 
 }
