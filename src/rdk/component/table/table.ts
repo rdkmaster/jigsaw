@@ -13,7 +13,7 @@ import {RdkScrollBar} from "../scrollbar/scrollbar";
 import {SortAs, SortOrder, CallbackRemoval} from "../../core/data/component-data";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {TableCellDefault} from "./table-renderer";
-import {PositionUtils} from "../../core/utils/internal-utils";
+import {AffixUtils} from "../../core/utils/internal-utils";
 
 class HeadSetting {
     cellData: string | number;
@@ -555,8 +555,8 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     private _floatHead(maxTop) {
-        let tableDocumentTop = PositionUtils.offset(this._elementRef.nativeElement).top;
-        let scrollTop = PositionUtils.getScrollTop();
+        let tableDocumentTop = AffixUtils.offset(this._elementRef.nativeElement).top;
+        let scrollTop = AffixUtils.getScrollTop();
         let top = scrollTop - tableDocumentTop;
         if (top > 0 && top < maxTop) {
             this._renderer.setStyle(this._fixedHead, 'top', top + 'px');

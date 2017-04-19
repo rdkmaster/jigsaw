@@ -15,7 +15,7 @@ export class InternalUtils {
 /*
  * 用于获取dom元素的位置信息
  * */
-export class PositionUtils {
+export class AffixUtils {
     /*
      * 获取元素距离文档的top和left
      * */
