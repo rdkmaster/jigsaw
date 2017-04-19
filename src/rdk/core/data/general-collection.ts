@@ -5,14 +5,17 @@ import {
 import {Http, RequestOptionsArgs, Response} from "@angular/http";
 import "rxjs/add/operator/map";
 
-export abstract class AbstractGeneralCollection<T> implements IAjaxComponentData {
-    public http: Http;
-    public busy: boolean;
-    public dataReviser: DataReviser;
-
+export abstract class AbstractGeneralCollection<T = any> implements IAjaxComponentData {
     public abstract fromObject(data: T): AbstractGeneralCollection<T>;
-
     protected abstract ajaxSuccessHandler(data): void;
+
+    public http: Http;
+    public dataReviser: DataReviser;
+    protected _busy: boolean;
+
+    get busy(): boolean {
+        return this._busy;
+    }
 
     protected reviseData(response: Response): any {
         const json = response.json();
@@ -35,7 +38,7 @@ export abstract class AbstractGeneralCollection<T> implements IAjaxComponentData
         }
 
         const op = ComponentDataHelper.castToRequestOptionsArgs(options);
-        this.busy = true;
+        this._busy = true;
         this.http.request(op.url, op)
             .map(res => this.reviseData(res))
             .subscribe(
@@ -70,13 +73,13 @@ export abstract class AbstractGeneralCollection<T> implements IAjaxComponentData
     protected ajaxErrorHandler(error): void {
         console.error('get data from paging server error!! detail: ' + error);
         this.componentDataHelper.invokeAjaxErrorCallback(error);
-        this.busy = false;
+        this._busy = false;
     }
 
     protected ajaxCompleteHandler(): void {
         console.log('get data from paging server complete!!');
         this.componentDataHelper.invokeAjaxCompleteCallback();
-        this.busy = false;
+        this._busy = false;
     }
 
     public destroy(): void {

@@ -6,7 +6,7 @@
             showing {{pageable.pagingInfo.pageSize}} items / page, {{pageable.pagingInfo.totalRecord}} records totally.</span>
     </p>
     <p>
-        <rdk-button [disabled]="pageable.busy || pageable.pagingInfo.currentPage == 1" (click)="lastPage()">last page</rdk-button>
+        <rdk-button [disabled]="pageable.busy || pageable.pagingInfo.currentPage == 1" (click)="previousPage()">last page</rdk-button>
         <rdk-button [disabled]="pageable.busy || pageable.pagingInfo.currentPage == pageable.pagingInfo.totalPage" (click)="nextPage()">next page</rdk-button>
     </p>
 </div>

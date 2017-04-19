@@ -40,6 +40,7 @@ import {
     MyTableCellOption2
 } from "./addColumn/addColumn";
 import {TableFixedHeadDemoComponent} from "./fixedHead/fixedHead";
+import {TablePageableDemoComponent} from "./pageable/demo";
 
 const tableDemoRoutes = [
     {
@@ -65,20 +66,30 @@ const tableDemoRoutes = [
     },
     {
         path: 'setHeaderClass', component: TableSetHeaderClassDemoComponent
-    },{
+    },
+    {
         path: 'setHeaderSort', component: TableSetHeaderSortDemoComponent
-    },{
+    },
+    {
         path: 'setCellRender', component: TableSetCellRenderDemoComponent
-    },{
+    },
+    {
         path: 'setCellClass', component: TableSetCellClassDemoComponent
-    },{
+    },
+    {
         path: 'setColumnGroup', component: TableColumnGroupDemoComponent
-    },{
+    },
+    {
         path: 'setCellEditable', component: TableSetCellEditableDemoComponent
-    },{
+    },
+    {
         path: 'addColumn', component: TableAddColumnDemoComponent
-    },{
+    },
+    {
         path: 'fixedHead', component: TableFixedHeadDemoComponent
+    },
+    {
+        path: 'pageable', component: TablePageableDemoComponent
     },
     {
         path: '**', //fallback router must in the last
@@ -120,7 +131,8 @@ const tableDemoRoutes = [
         MyTableHeadOption,
         MyTableCellOption,
         MyTableCellOption2,
-        TableAddColumnDemoComponent
+        TableAddColumnDemoComponent,
+        TablePageableDemoComponent
     ],
     imports: [
         RouterModule.forChild(tableDemoRoutes),

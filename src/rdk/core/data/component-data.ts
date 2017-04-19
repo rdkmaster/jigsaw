@@ -3,6 +3,50 @@ import {RequestOptionsArgs, Response} from "@angular/http";
 export type DataReviser = (data: any) => any;
 export type CallbackRemoval = () => void;
 
+export interface IComponentData {
+    dataReviser: DataReviser;
+
+    refresh(): void;
+    destroy(): void;
+    onRefresh(callback: (thisData: IComponentData) => void, context?: any): CallbackRemoval;
+}
+
+export interface IAjaxComponentData extends IComponentData {
+    busy: boolean;
+
+    fromAjax(options: RequestOptionsArgs | string): void;
+    onAjaxSuccess (callback: (data: any) => void, context?: any): CallbackRemoval;
+    onAjaxError   (callback: (error: Response) => void, context?: any): CallbackRemoval;
+    onAjaxComplete(callback: () => void, context?: any): CallbackRemoval;
+}
+
+export interface IPageable extends IAjaxComponentData {
+    pagingInfo: PagingInfo;
+
+    changePage(currentPage: number, pageSize?:number): void;
+    changePage(info:PagingInfo):void;
+    firstPage():void;
+    previousPage():void;
+    nextPage():void;
+    lastPage():void;
+}
+
+export interface IServerSidePageable extends IPageable {
+    updateDataSource(options: RequestOptionsArgs): void;
+}
+
+export interface ISortable extends IAjaxComponentData {
+    sortInfo: DataSortInfo;
+    sort(as: SortAs, order: SortOrder, field: string | number): void;
+    sort(sort: DataSortInfo): void;
+}
+
+export interface IFilterable extends IAjaxComponentData {
+    filterInfo: DataFilterInfo;
+    filter(term: string, fields?: string[] | number[]): void;
+    filter(term: DataFilterInfo): void;
+}
+
 export class DataRefreshCallback {
     constructor(public fn: (thisData: IComponentData) => void,
                 public context?: any) {
@@ -110,24 +154,9 @@ export class ComponentDataHelper {
     }
 }
 
-export interface IComponentData {
-    dataReviser: DataReviser;
-
-    refresh(): void;
-    destroy(): void;
-    onRefresh(callback: (thisData: IComponentData) => void, context?: any): CallbackRemoval;
-}
-
-export interface IAjaxComponentData extends IComponentData {
-    busy: boolean;
-
-    fromAjax(options: RequestOptionsArgs | string): void;
-    onAjaxSuccess (callback: (data: any) => void, context?: any): CallbackRemoval;
-    onAjaxError   (callback: (error: Response) => void, context?: any): CallbackRemoval;
-    onAjaxComplete(callback: () => void, context?: any): CallbackRemoval;
-}
-
 export class PagingInfo {
+    public static pagingServerUrl: string = '/rdk/service/app/common/paging';
+
     constructor(public currentPage: number = 1,
                 public pageSize: number = 20,
                 public totalPage: number = 1,
@@ -153,21 +182,4 @@ export class DataSortInfo {
                 public order: SortOrder = SortOrder.asc,
                 public field: string | number) {
     }
-}
-
-export interface IPageable extends IAjaxComponentData {
-    pagingInfo: PagingInfo;
-    changePage(currentPage: number, pageSize?:number): void;
-}
-
-export interface ISortable extends IAjaxComponentData {
-    sortInfo: DataSortInfo;
-    sort(as: SortAs, order: SortOrder, field: string | number): void;
-    sort(sort: DataSortInfo): void;
-}
-
-export interface IFilterable extends IAjaxComponentData {
-    filterInfo: DataFilterInfo;
-    filter(term: string, fields?: string[] | number[]): void;
-    filter(term: DataFilterInfo): void;
 }
