@@ -553,60 +553,22 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         });
     }
 
-    private _getScrollTop(): number{
-        let scrollTop: number;
-        if(document.body.scrollTop){
-            scrollTop = document.body.scrollTop
-        }else if(document.documentElement.scrollTop){
-            scrollTop = document.documentElement.scrollTop
-        }
-        return scrollTop ? scrollTop : 0;
-    }
-
-    private _floatHead(maxTop){
+    private _floatHead(maxTop) {
         let tableDocumentTop = this._offsetApi.offset(this._elementRef.nativeElement).top;
-        let scrollTop = this._getScrollTop();
+        let scrollTop = this._offsetApi.getScrollTop();
+        console.log(scrollTop);
         let top = scrollTop - tableDocumentTop;
-        if(top > 0 && top < maxTop){
+        if (top > 0 && top < maxTop) {
             this._renderer.setStyle(this._fixedHead, 'top', top + 'px');
-        }else if(top <= 0){
+        } else if (top <= 0) {
             this._renderer.setStyle(this._fixedHead, 'top', '0px');
-        }else if(top >= maxTop){
+        } else if (top >= maxTop) {
             this._renderer.setStyle(this._fixedHead, 'top', maxTop);
         }
     }
 
-    ngOnInit() {
-        this._transformData();
-    }
-
-    ngAfterViewInit() {
-        this._setScrollBar();
-
-        setTimeout(() => {
-            this._setFixedHeadWidth();
-        }, 0);
-
-        setTimeout(() => {
-            this._setFixedHeadWidth();
-        }, 1000);
-
-        this._windowLoadListen = this._renderer.listen('window', 'load', () => {
-            this._setFixedHeadWidth();
-        });
-        this._windowResizeListen = this._renderer.listen('window', 'resize', () => {
-            this._setFixedHeadWidth();
-            this._floatHead(maxTop);
-        });
-
-        const maxTop = this._elementRef.nativeElement.offsetHeight - this._fixedHead.offsetHeight;
-        this._windowResizeListen = this._renderer.listen('window', 'scroll', () => {
-            this._floatHead(maxTop);
-        });
-    }
-
     private _offsetApi = {
-        offset: function(elem) {
+        offset: function (elem) {
             var docElem, win, rect, doc;
 
             if (!elem) {
@@ -637,13 +599,51 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
             // Return zeros for disconnected and hidden elements (gh-2310)
             return rect;
         },
-        getWindow: function(elem) {
+        getScrollTop: function () {
+            let scrollTop: number;
+            if (document.body.scrollTop) {
+                scrollTop = document.body.scrollTop
+            } else if (document.documentElement.scrollTop) {
+                scrollTop = document.documentElement.scrollTop
+            }
+            return scrollTop ? scrollTop : 0;
+        },
+        getWindow: function (elem) {
             return this.isWindow(elem) ? elem : elem.nodeType === 9 && elem.defaultView;
         },
-        isWindow: function(obj) {
+        isWindow: function (obj) {
             return obj != null && obj === obj.window;
         }
     };
+
+    ngOnInit() {
+        this._transformData();
+    }
+
+    ngAfterViewInit() {
+        this._setScrollBar();
+
+        setTimeout(() => {
+            this._setFixedHeadWidth();
+        }, 0);
+
+        setTimeout(() => {
+            this._setFixedHeadWidth();
+        }, 1000);
+
+        this._windowLoadListen = this._renderer.listen('window', 'load', () => {
+            this._setFixedHeadWidth();
+        });
+        this._windowResizeListen = this._renderer.listen('window', 'resize', () => {
+            this._setFixedHeadWidth();
+            this._floatHead(maxTop);
+        });
+
+        const maxTop = this._elementRef.nativeElement.offsetHeight - this._fixedHead.offsetHeight;
+        this._windowResizeListen = this._renderer.listen('window', 'scroll', () => {
+            this._floatHead(maxTop);
+        });
+    }
 
     ngOnDestroy() {
         this._removeRefreshCallback && this._removeRefreshCallback();
