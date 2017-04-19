@@ -13,6 +13,7 @@ import {RdkScrollBar} from "../scrollbar/scrollbar";
 import {SortAs, SortOrder, CallbackRemoval} from "../../core/data/component-data";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {TableCellDefault} from "./table-renderer";
+import {AffixUtils} from "../../core/utils/internal-utils";
 
 class HeadSetting {
     cellData: string | number;
@@ -535,8 +536,9 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     private _setFixedHeadWidth(): void {
-        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.rdk-table-fixed-head'), 'width',
-            this._elementRef.nativeElement.querySelector('.rdk-table').offsetWidth + 'px');
+        const tableWidth = this._elementRef.nativeElement.querySelector('.rdk-table').offsetWidth + 'px';
+        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.rdk-table-fixed-head'), 'width', tableWidth);
+        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.mCSB_container'), 'width', tableWidth);
         this.fixedHeaders.forEach((fixedHeader, index) => {
             this._renderer.setStyle(fixedHeader.nativeElement, 'width',
                 this.headers.toArray()[index].nativeElement.offsetWidth + 'px');
@@ -552,6 +554,19 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         });
     }
 
+    private _floatHead(maxTop) {
+        let tableDocumentTop = AffixUtils.offset(this._elementRef.nativeElement).top;
+        let scrollTop = AffixUtils.getScrollTop();
+        let top = scrollTop - tableDocumentTop;
+        if (top > 0 && top < maxTop) {
+            this._renderer.setStyle(this._fixedHead, 'top', top + 'px');
+        } else if (top <= 0) {
+            this._renderer.setStyle(this._fixedHead, 'top', '0px');
+        } else if (top >= maxTop) {
+            this._renderer.setStyle(this._fixedHead, 'top', maxTop);
+        }
+    }
+
     ngOnInit() {
         this._transformData();
     }
@@ -559,13 +574,26 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     ngAfterViewInit() {
         this._setScrollBar();
 
+        setTimeout(() => {
+            this._setFixedHeadWidth();
+        }, 0);
+
+        setTimeout(() => {
+            this._setFixedHeadWidth();
+        }, 1000);
+
         this._windowLoadListen = this._renderer.listen('window', 'load', () => {
             this._setFixedHeadWidth();
         });
         this._windowResizeListen = this._renderer.listen('window', 'resize', () => {
             this._setFixedHeadWidth();
+            this._floatHead(maxTop);
         });
 
+        const maxTop = this._elementRef.nativeElement.offsetHeight - this._fixedHead.offsetHeight;
+        this._windowResizeListen = this._renderer.listen('window', 'scroll', () => {
+            this._floatHead(maxTop);
+        });
     }
 
     ngOnDestroy() {
@@ -726,7 +754,6 @@ export class RdkTableHeader extends TableCellBasic implements OnInit {
     ngOnInit() {
         //设置默认渲染器
         this.renderer = this.renderer ? this.renderer : DefaultCellRenderer;
-        //this._setSortOrderClass(SortOrder.default);
     }
 }
 
