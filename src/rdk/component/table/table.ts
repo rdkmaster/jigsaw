@@ -566,7 +566,6 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     private _floatHead(maxTop){
         let tableDocumentTop = this._offsetApi.offset(this._elementRef.nativeElement).top;
         let scrollTop = this._getScrollTop();
-        console.log(scrollTop);
         let top = scrollTop - tableDocumentTop;
         if(top > 0 && top < maxTop){
             this._renderer.setStyle(this._fixedHead, 'top', top + 'px');
