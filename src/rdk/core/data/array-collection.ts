@@ -8,7 +8,7 @@ import {
     DataFilterInfo,
     DataSortInfo,
     SortAs,
-    SortOrder
+    SortOrder, IServerSidePageable
 } from "./component-data";
 import {TableData} from "./table-data";
 
@@ -168,13 +168,18 @@ export class RDKArray<T> implements Array<T> {
 }
 
 export class ArrayCollection<T> extends RDKArray<T> implements IAjaxComponentData {
-    public busy: boolean;
     public http: Http;
     public dataReviser: DataReviser;
 
     constructor(source?: T[]) {
         super();
         this._fromArray(source);
+    }
+
+    protected _busy: boolean;
+
+    get busy(): boolean {
+        return this._busy;
     }
 
     protected ajaxSuccessHandler(data: T[]): void {
@@ -192,7 +197,7 @@ export class ArrayCollection<T> extends RDKArray<T> implements IAjaxComponentDat
     protected ajaxErrorHandler(error: Response): void {
         console.error('get data from paging server error!! detail: ' + error);
 
-        this.busy = false;
+        this._busy = false;
         this.fromArray([]);
         this.componentDataHelper.invokeAjaxErrorCallback(error);
     }
@@ -200,7 +205,7 @@ export class ArrayCollection<T> extends RDKArray<T> implements IAjaxComponentDat
     protected ajaxCompleteHandler(): void {
         console.log('get data from paging server complete!!');
 
-        this.busy = false;
+        this._busy = false;
         this.componentDataHelper.invokeAjaxCompleteCallback();
     }
 
@@ -225,7 +230,7 @@ export class ArrayCollection<T> extends RDKArray<T> implements IAjaxComponentDat
         }
 
         const op = ComponentDataHelper.castToRequestOptionsArgs(options);
-        this.busy = true;
+        this._busy = true;
         this.http.request(op.url, op)
             .map(res => this.reviseData(res) as T[])
             .subscribe(
@@ -286,16 +291,14 @@ export class ArrayCollection<T> extends RDKArray<T> implements IAjaxComponentDat
     }
 }
 
-export class PageableArray extends ArrayCollection<any> implements IPageable, ISortable, IFilterable {
-    public pagingServerUrl: string = '/rdk/service/app/common/paging';
-
+export class PageableArray extends ArrayCollection<any> implements IServerSidePageable, ISortable, IFilterable {
     public pagingInfo: PagingInfo;
     public filterInfo: DataFilterInfo;
     public sortInfo: DataSortInfo;
-    public busy: boolean = false;
 
     private _filterSubject = new Subject<DataFilterInfo>();
     private _sortSubject = new Subject<DataSortInfo>();
+    private _requestOptions: RequestOptionsArgs;
 
     constructor(public http: Http, public sourceRequestOptions: RequestOptionsArgs) {
         super();
@@ -308,8 +311,6 @@ export class PageableArray extends ArrayCollection<any> implements IPageable, IS
         this._initRequestOptions();
         this._initSubjects();
     }
-
-    private _requestOptions: RequestOptionsArgs;
 
     private _initRequestOptions(): void {
         if (!this.sourceRequestOptions || !this.sourceRequestOptions.url) {
@@ -371,7 +372,7 @@ export class PageableArray extends ArrayCollection<any> implements IPageable, IS
     }
 
     private _ajax(): void {
-        this.busy = true;
+        this._busy = true;
 
         const params: URLSearchParams = this._requestOptions.params as URLSearchParams;
         params.set('paging', JSON.stringify(this.pagingInfo));
@@ -382,7 +383,7 @@ export class PageableArray extends ArrayCollection<any> implements IPageable, IS
             params.set('sort', JSON.stringify(this.sortInfo));
         }
 
-        this.http.request(this.pagingServerUrl, this._requestOptions)
+        this.http.request(PagingInfo.pagingServerUrl, this._requestOptions)
             .map(res => this.reviseData(res))
             .map(data => {
                 this._updatePagingInfo(data);
@@ -440,12 +441,43 @@ export class PageableArray extends ArrayCollection<any> implements IPageable, IS
         this._sortSubject.next(psi);
     }
 
-    public changePage(currentPage: number, pageSize?:number): void {
-        this.pagingInfo.currentPage = currentPage;
-        if (+pageSize > 0) {
-            this.pagingInfo.pageSize = pageSize;
+    public changePage(currentPage: number, pageSize?: number): void;
+    public changePage(info: PagingInfo): void;
+    public changePage(currentPage, pageSize?: number): void {
+        const pi:PagingInfo = currentPage instanceof PagingInfo ? currentPage : new PagingInfo(currentPage, +pageSize);
+        let needRefresh:boolean = false;
+
+        if (pi.currentPage >= 1 && pi.currentPage <= this.pagingInfo.totalPage) {
+            this.pagingInfo.currentPage = pi.currentPage;
+            needRefresh = true;
+        } else {
+            console.error(`invalid currentPage[${pi.currentPage}], it should be between in [1, ${this.pagingInfo.totalPage}]`);
         }
-        this.fromAjax();
+        if (pi.pageSize > 0) {
+            this.pagingInfo.pageSize = pi.pageSize;
+            needRefresh = true;
+        } else {
+            console.error(`invalid pageSize[${pi.pageSize}], it should be greater than 0`);
+        }
+        if (needRefresh) {
+            this.fromAjax();
+        }
+    }
+
+    public firstPage(): void {
+        this.changePage(1);
+    }
+
+    public previousPage(): void {
+        this.changePage(this.pagingInfo.currentPage - 1);
+    }
+
+    public nextPage(): void {
+        this.changePage(this.pagingInfo.currentPage + 1);
+    }
+
+    public lastPage(): void {
+        this.changePage(this.pagingInfo.pageSize);
     }
 
     public destroy(): void {
@@ -494,6 +526,20 @@ export class LocalPageableArray extends ArrayCollection<any> implements IPageabl
     public sort(as, order?: SortOrder, field?: string | number): void {
     }
 
-    public changePage(currentPage: number, pageSize?:number): void {
+    public changePage(currentPage: number, pageSize?: number): void;
+    public changePage(info: PagingInfo): void;
+    public changePage(currentPage, pageSize?: number): void {
+    }
+
+    public firstPage(): void {
+    }
+
+    public previousPage(): void {
+    }
+
+    public nextPage(): void {
+    }
+
+    public lastPage(): void {
     }
 }

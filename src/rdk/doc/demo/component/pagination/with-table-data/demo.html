@@ -1,0 +1,13 @@
+<rdk-pagination [total]="pageable.pagingInfo.totalRecord"
+                [pageSize]="pageable.pagingInfo.pageSize"
+                [current]="pageable.pagingInfo.currentPage"
+                [pageSizeOptions]="[5, 10, 20]"
+                [searchable]="true"
+                [showQuickJumper]="true"
+                (currentPageChange)="getCurrentPage($event)"
+                (pageSizeChange)="getPageSize($event)"
+                width="700px"
+                >
+</rdk-pagination>
+
+<!--<p>{{pageable.data | json}}</p>-->

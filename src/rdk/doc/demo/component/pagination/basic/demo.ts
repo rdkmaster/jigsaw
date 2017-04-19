@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 
 @Component({
-  templateUrl: 'basic.html'
+  templateUrl: 'demo.html'
 })
 export class PaginationBasicDemoComponent {
     public getCurrentPage(message:any){
