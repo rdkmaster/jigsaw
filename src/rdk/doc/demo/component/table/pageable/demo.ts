@@ -1,21 +1,22 @@
 import {Component} from "@angular/core";
-import {TableData} from "../../../../../core/data/table-data";
+import {PageableTableData, TableData} from "../../../../../core/data/table-data";
+import {Http} from "@angular/http";
+import {PageableArray} from "../../../../../core/data/array-collection";
 
 @Component({
   templateUrl: 'demo.html'
 })
 export class TablePageableDemoComponent {
-    constructor() {
-        const tg:TestGeneric<string> = new TestGeneric('123');
-        console.log(typeof tg.getData());
+    tableData:PageableTableData;
+    constructor(http:Http) {
+        this.tableData = new PageableTableData(http, {
+            url: 'http://localhost:4200/mock-data/array-collection/paging-data.json',
+            params: {aa: 11, bb: 22}, method:'get'
+        });
+        this.tableData.onAjaxComplete(() => {
+            console.log(this.tableData.data);
+        });
+        this.tableData.fromAjax();
     }
 }
 
-class TestGeneric<T = number> {
-    constructor(private data:T) {
-
-    }
-    getData():T {
-        return this.data;
-    }
-}

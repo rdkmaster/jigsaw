@@ -32,17 +32,11 @@ export class ServerSidePaginationDemoComponent {
         this.pageable.fromAjax();
     }
 
-    lastPage() {
-        if (this.pageable.pagingInfo.currentPage == 1) {
-            return;
-        }
-        this.pageable.changePage(this.pageable.pagingInfo.currentPage - 1);
+    previousPage() {
+        this.pageable.previousPage();
     }
 
     nextPage() {
-        if (this.pageable.pagingInfo.currentPage == this.pageable.pagingInfo.totalPage) {
-            return;
-        }
-        this.pageable.changePage(this.pageable.pagingInfo.currentPage + 1);
+        this.pageable.nextPage();
     }
 }

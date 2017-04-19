@@ -1,10 +1,17 @@
 import {AbstractGeneralCollection} from "./general-collection";
 import {
-    IFilterable, IPageable, ISortable, PagingInfo, DataFilterInfo, DataSortInfo, SortAs,
-    SortOrder, IServerSidePageable, ComponentDataHelper
+    DataFilterInfo,
+    DataSortInfo,
+    IFilterable,
+    IServerSidePageable,
+    ISortable,
+    PagingInfo,
+    SortAs,
+    SortOrder
 } from "./component-data";
-import {Http, RequestOptionsArgs} from "@angular/http";
+import {Http, RequestOptionsArgs, Response, URLSearchParams} from "@angular/http";
 import {Subject} from "rxjs";
+import "rxjs/add/operator/map";
 
 type TableMatrixRow = Array<string|number>;
 export type TableDataHeader = string[];
@@ -196,10 +203,9 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this._initRequestOptions();
     }
 
-    public fromAjax(options?: RequestOptionsArgs | string): void {
-        const op = ComponentDataHelper.castToRequestOptionsArgs(options);
-        if (!!op) {
-            this.updateDataSource(op);
+    public fromAjax(options?: RequestOptionsArgs): void {
+        if (!!options) {
+            this.updateDataSource(options);
         }
         this._ajax();
     }

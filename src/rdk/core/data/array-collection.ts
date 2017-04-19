@@ -363,10 +363,9 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this._initRequestOptions();
     }
 
-    public fromAjax(options?: RequestOptionsArgs | string): void {
-        const op = ComponentDataHelper.castToRequestOptionsArgs(options);
-        if (!!op) {
-            this.updateDataSource(op);
+    public fromAjax(options?: RequestOptionsArgs): void {
+        if (!!options) {
+            this.updateDataSource(options);
         }
         this._ajax();
     }
