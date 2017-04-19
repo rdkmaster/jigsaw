@@ -40,6 +40,7 @@ import {
     MyTableCellOption2
 } from "./addColumn/addColumn";
 import {TableFixedHeadDemoComponent} from "./fixedHead/fixedHead";
+import {TableDataFromAjaxDemoComponent} from "./dataFromAjax/dataFromAjax";
 
 const tableDemoRoutes = [
     {
@@ -47,6 +48,8 @@ const tableDemoRoutes = [
     },
     {
         path: 'basic', component: TableBasicDemoComponent
+    },{
+        path: 'dataFromAjax', component: TableDataFromAjaxDemoComponent
     },
     {
         path: 'renderer', component: TableRendererDemoComponent
@@ -120,7 +123,8 @@ const tableDemoRoutes = [
         MyTableHeadOption,
         MyTableCellOption,
         MyTableCellOption2,
-        TableAddColumnDemoComponent
+        TableAddColumnDemoComponent,
+        TableDataFromAjaxDemoComponent
     ],
     imports: [
         RouterModule.forChild(tableDemoRoutes),
