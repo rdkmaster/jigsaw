@@ -9,7 +9,7 @@ import {Directive, Input, ElementRef, OnInit, Output, EventEmitter, NgModule} fr
 })
 export class RdkScrollBar implements OnInit {
     private _scrollBarJq: any;
-    private _options: Object;
+    private _scrollBarOptions: Object;
     private _inited: boolean;
 
     constructor(private _elf: ElementRef) {
@@ -34,14 +34,16 @@ export class RdkScrollBar implements OnInit {
     public whileScrolling = new EventEmitter<ScrollEvent>();
 
     @Input()
-    public get options() {
-        return this._options
+    public get scrollBarOptions() {
+        return this._scrollBarOptions
     }
 
-    public set options(value) {
-        if (value && this.options != value) {
-            this._options = value;
-            this._inited && this._initScrollBar(this._generateOptions());
+    public set scrollBarOptions(value) {
+        if (value && this.scrollBarOptions != value) {
+            this._scrollBarOptions = value;
+            if(this._inited){
+                this._initScrollBar(this._generateOptions());
+            }
         }
     }
 
@@ -87,9 +89,9 @@ export class RdkScrollBar implements OnInit {
             }
         };
 
-        if (typeof this.options == 'object') {
-            for (let prop in this.options) {
-                options[prop] = this.options[prop]
+        if (typeof this.scrollBarOptions == 'object') {
+            for (let prop in this.scrollBarOptions) {
+                options[prop] = this.scrollBarOptions[prop]
             }
         }
 
