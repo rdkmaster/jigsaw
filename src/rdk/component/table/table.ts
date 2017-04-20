@@ -550,7 +550,8 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     private _setFixedHeadWidth(): void {
         const tableWidth = this._elementRef.nativeElement.querySelector('.rdk-table').offsetWidth + 'px';
         this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.rdk-table-fixed-head'), 'width', tableWidth);
-        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.mCSB_container'), 'width', tableWidth);
+        this._renderer.setStyle(
+            this._elementRef.nativeElement.querySelector('.rdk-table-box .mCSB_container:first-child'), 'width', tableWidth);
         this.fixedHeaders.forEach((fixedHeader, index) => {
             this._renderer.setStyle(fixedHeader.nativeElement, 'width',
                 this.headers.toArray()[index].nativeElement.offsetWidth + 'px');
