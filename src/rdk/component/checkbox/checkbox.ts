@@ -3,7 +3,7 @@
  */
 
 import {
-    Component, Input, EventEmitter, Output, OnInit
+    Component, Input, EventEmitter, Output, OnInit, AfterContentInit, Renderer2, ElementRef
 } from '@angular/core';
 import {AbstractRDKComponent} from '../core';
 
@@ -25,7 +25,7 @@ export type CheckBoxValue = boolean | CheckBoxStatus;
 /**
  * checkbox 组件
  */
-export class RdkCheckBox extends AbstractRDKComponent implements OnInit {
+export class RdkCheckBox extends AbstractRDKComponent implements OnInit, AfterContentInit {
 
     private _checked: CheckBoxStatus = CheckBoxStatus.unchecked;
     @Input()
@@ -74,8 +74,19 @@ export class RdkCheckBox extends AbstractRDKComponent implements OnInit {
         }
     }
 
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef){
+        super()
+    }
+
     public ngOnInit() {
         this._setCheckBoxClass();
+    }
+
+    public ngAfterContentInit(){
+        const labelEl = this._elementRef.nativeElement.querySelector('.rdk-checkbox-label');
+        if(labelEl.innerText === ''){
+            this._renderer.setStyle(labelEl, 'padding', '0');
+        }
     }
 
     private _valueCandidates: CheckBoxStatus[] = [CheckBoxStatus.unchecked, CheckBoxStatus.checked];
