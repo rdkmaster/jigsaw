@@ -5,8 +5,9 @@ $margin: 2px !default;
 $line-height: 35px !default;
 $line-width: 4px !default;
 @function delay($interval, $count, $index) {
-@return ($index * $interval) - ($interval * $count);
+    @return ($index * $interval) - ($interval * $count);
 }
+
 @mixin global-bg() {
     background-color: $primary-color;
 }
@@ -26,11 +27,10 @@ $line-width: 4px !default;
 @mixin line-scale($n:5) {
     @for $i from 1 through $n {
         > div:nth-child(#{$i}) {
-            animation: line-scale 1s delay(0.1s, $n, $i) infinite cubic-bezier(.2,.68,.18,1.08);
+            animation: line-scale 1s delay(0.1s, $n, $i) infinite cubic-bezier(.2, .68, .18, 1.08);
         }
     }
 }
-
 
 @mixin lines() {
     @include global-bg();
@@ -40,6 +40,7 @@ $line-width: 4px !default;
     border-radius: 2px;
     margin: $margin;
 }
+
 @mixin global-animation() {
     animation-fill-mode: both;
 }
@@ -58,7 +59,7 @@ $line-width: 4px !default;
     position: absolute;
 }
 
-.rdk-loading-content-test{
+.rdk-loading-content-test {
     position: absolute;
     left: 50%;
     top: 50%;

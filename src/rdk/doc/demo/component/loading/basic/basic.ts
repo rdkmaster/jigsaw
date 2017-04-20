@@ -29,6 +29,6 @@ export class LoadingDemoComponent implements  AfterViewInit {
 
     ngAfterViewInit() {
         $('#blockButton').click(() => {this._loadingservice.showLoading(this.insert);});
-        $('#unblockButton').click(() => {this._loadingservice.hideLoading();});
+        $('#unblockButton').click(() => {this._loadingservice.hideLoading(this.insert);});
     }
 }
