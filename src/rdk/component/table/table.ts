@@ -108,7 +108,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     public set data(value: TableData) {
-        if (!value) return;
+        if (!(value instanceof TableData)) return;
         this._data = value;
 
         if (this._removeRefreshCallback) {
@@ -568,7 +568,9 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     ngOnInit() {
-        this._transformData();
+        if(this.data instanceof TableData){
+            this._transformData();
+        }
     }
 
     ngAfterViewInit() {

@@ -8,10 +8,11 @@ import {Http} from "@angular/http";
 })
 
 export class TableDataFromAjaxDemoComponent {
+    tableData: TableData;
     constructor(http: Http) {
-        const tableData = new TableData();
-        tableData.http = http;
-        tableData.fromAjax('mock-data/table/data.json');
+        this.tableData = new TableData();
+        this.tableData.http = http;
+        this.tableData.fromAjax('mock-data/table/data.json');
     }
 }
 
