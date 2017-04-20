@@ -9,7 +9,7 @@ If Not FileExists(@ScriptDir & '\node_modules_tmp.zip') Then _error('无法下�
 
 If FileExists(@ScriptDir & '\node_modules') Then
 	_hideMessage()
-	If MsgBox(292,"Installer", "node_modules目录已经存在，是否将其删除？") == 7 Then Exit
+	If MsgBox(292,"Jigsaw Installer", "node_modules目录已经存在，是否将其删除？") == 7 Then Exit
 
 	_showMessage('正在删除 node_modules 目录。。。')
 	If Not DirRemove(@ScriptDir & '\node_modules', True) Then
@@ -19,7 +19,11 @@ EndIf
 
 _unzipPackage(@ScriptDir & '\node_modules_tmp.zip')
 FileDelete(@ScriptDir & '\node_modules_tmp.zip')
-MsgBox(64, "Installer", "安装开发环境结束，请运行 npm start 命令检查部署是否成功。")
+
+If MsgBox(36, "Jigsaw Installer", "安装开发环境结束!" & @CRLF & '是否立即运行 npm start 命令检查部署是否成功？') == 6 Then
+	Run(@ComSpec & " /c npm start", @ScriptDir)
+EndIf
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -41,14 +45,14 @@ EndFunc
 
 Func _isX64()
 	If FileExists('tmp__.txt') Then FileDelete('tmp__.txt')
-	RunWait(@ComSpec & ' /C systeminfo > tmp__.txt', '', @SW_HIDE)
+	RunWait(@ComSpec & ' /C systeminfo > tmp__.txt', @ScriptDir, @SW_HIDE)
 	Local $output = FileRead('tmp__.txt')
 	FileDelete('tmp__.txt')
 	Return StringInStr($output, 'x64-based PC')
 EndFunc
 
 Func _showMessage($msg)
-	ToolTip($msg, @DesktopWidth/2, @DesktopHeight/2-50, '', 0, 2)
+	ToolTip('Jigsaw Installer' & @CRLF & $msg, @DesktopWidth/2, @DesktopHeight/2-50, '', 0, 2)
 EndFunc
 
 Func _hideMessage()
@@ -57,7 +61,7 @@ EndFunc
 
 Func _error($msg)
 	ToolTip('')
-	MsgBox(16, 'Installer', $msg)
+	MsgBox(16, 'Jigsaw Installer', $msg)
 	Exit
 EndFunc
 
