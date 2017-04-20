@@ -13,6 +13,7 @@ export class TablePageableDemoComponent {
             url: 'http://localhost:4200/mock-data/array-collection/paging-data.json',
             params: {aa: 11, bb: 22}, method:'get'
         });
+        console.log(this.tableData.header);
         this.tableData.onAjaxComplete(() => {
             console.log(this.tableData.data);
         });
