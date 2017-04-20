@@ -1,7 +1,7 @@
 <table class="rdk-table-fixed-head">
     <thead>
     <tr>
-        <td rdk-table-header *ngFor="let head of _headSettings; index as colIndex"
+        <td #fixedHeader rdk-table-header *ngFor="let head of _headSettings; index as colIndex"
             [tableData]="data"
             [cellData]="head.cellData"
             [column]="colIndex"
@@ -22,7 +22,7 @@
     <table class="rdk-table">
         <thead>
         <tr>
-            <td rdk-table-header *ngFor="let head of _headSettings; index as colIndex"
+            <td #header rdk-table-header *ngFor="let head of _headSettings; index as colIndex"
                 [tableData]="data"
                 [cellData]="head.cellData"
                 [column]="colIndex"

@@ -1,7 +1,8 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import { RdkPaginationModule } from "../../../../component/pagination/pagination";
-import { PaginationBasicDemoComponent } from "./basic/basic";
+import { PaginationBasicDemoComponent } from "./basic/demo";
+import {ServerSidePagingDemoComponent} from "./with-table-data/demo";
 
 
 const inputDemoRoutes=[
@@ -14,6 +15,9 @@ const inputDemoRoutes=[
         path:'basic', component: PaginationBasicDemoComponent
     },
     {
+        path:'with-table-data', component: ServerSidePagingDemoComponent
+    },
+    {
         path:'**', //fallback router must in the last
         component: PaginationBasicDemoComponent
     }
@@ -21,13 +25,13 @@ const inputDemoRoutes=[
 
 @NgModule({
     declarations: [
-        PaginationBasicDemoComponent
+        PaginationBasicDemoComponent, ServerSidePagingDemoComponent
     ],
     imports: [
         RouterModule.forChild(inputDemoRoutes), RdkPaginationModule
     ],
     exports: [
-        PaginationBasicDemoComponent
+        PaginationBasicDemoComponent, ServerSidePagingDemoComponent
     ],
     providers: []
 })

@@ -1,0 +1,8 @@
+<rdk-table [data]="tableData" [columns]="_columns" (cellChange)="onCellChange($event)"></rdk-table>
+
+第三行数据：{{tableData.data[2]}}
+<br>
+第四行数据：{{tableData.data[3]}}
+
+<br>
+更改数据的信息： {{_changeMsg}}

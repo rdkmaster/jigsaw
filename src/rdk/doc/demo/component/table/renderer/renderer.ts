@@ -1,9 +1,8 @@
-import {
-    Component, ViewEncapsulation, AfterViewInit, forwardRef,
-    ViewChild
-} from "@angular/core";
+import {Component, ViewEncapsulation} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
 import {
+    TableHeadDefault,
+    TableCellDefault,
     TableHeadCheckbox,
     TableCellCheckbox,
     TableCellOption,
@@ -14,8 +13,7 @@ import {
 } from "../../../../../component/table/table-renderer";
 import {SortAs, SortOrder} from "../../../../../core/data/component-data";
 import {ColumnSetting, AdditionalColumnSetting} from "../../../../../component/table/table-api";
-import {TableHeadSelect, TableCell, TableHead} from "./table-renderer";
-import {RdkTable} from "../../../../../component/table/table";
+import {TableHeadSelect, TableHeadIcon} from "./table-renderer";
 
 @Component({
     templateUrl: 'renderer.html',
@@ -56,7 +54,7 @@ export class TableRendererDemoComponent {
                 renderer: TableHeadSelect
             },
             cell: {
-                renderer: TableCell,
+                renderer: TableCellDefault,
                 class: 'green-text'
             },
             group: true
@@ -65,14 +63,14 @@ export class TableRendererDemoComponent {
             target: 'f2',
             width: '10%',
             header: {
-                renderer: TableHead,
+                renderer: TableHeadDefault,
                 class: 'red-text',
                 sortable: true,
                 sortAs: SortAs.number,
                 defaultSortOrder: SortOrder.des
             },
             cell: {
-                renderer: TableCell,
+                //renderer: TableCellDefault, //支持不写renderer
                 editable: true,
                 editorRenderer: TableCellEditor,
             }
@@ -80,13 +78,12 @@ export class TableRendererDemoComponent {
         {
             target: 'f3',
             header: {
-                renderer: TableHead,
+                renderer: TableHeadIcon,
                 sortable: true,
-                sortAs: SortAs.number,
-                defaultSortOrder: SortOrder.asc
+                sortAs: SortAs.number
             },
             cell: {
-                renderer: TableCell
+                renderer: TableCellDefault
             },
             group: true
         },
@@ -97,11 +94,11 @@ export class TableRendererDemoComponent {
         {
             target: 'f5',
             header: {
-                renderer: TableHead,
+                renderer: TableHeadIcon,
                 sortable: false
             },
             cell: {
-                renderer: TableCell
+                renderer: TableCellDefault
             },
             group: true
         },
@@ -167,7 +164,7 @@ export class TableRendererDemoComponent {
          }
          },*/
         {
-            pos: -1,
+            //pos: -1, //不写pos也表示插入到最后
             width: '10%',
             header: {
                 renderer: TableHeadOption,
@@ -191,7 +188,8 @@ export class TableRendererDemoComponent {
     ];
 
     public onCellChange(value) {
-        this._changeMsg = `row: ${value.row}, column: ${value.column}, field: ${value.field},cellData: ${value.cellData}`
+        this._changeMsg = `field: '${value.field}', row: ${value.row}, column: ${value.column}, rawColumn: ${value.rawColumn}, cellData: ${value.cellData}, oldCellData: ${value.oldCellData}`;
+        console.log(this.tableData.data[value.row][value.rawColumn]);
     }
 
     private _changeMsg: string;
