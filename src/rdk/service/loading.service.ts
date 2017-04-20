@@ -1,5 +1,5 @@
 import {
-    Injectable, Component, ElementRef, Renderer2, AfterContentInit,
+    Injectable, Component, ElementRef, Renderer2, AfterContentInit,OnDestroy,
     ViewEncapsulation, ViewContainerRef, ComponentFactoryResolver, ApplicationRef
 } from '@angular/core';
 import {PopupOptions, PopupDisposer, IPopupable, PopupRef} from "./popup.service"
@@ -12,9 +12,10 @@ export class LoadingData {
 }
 
 @Injectable()
-export class LoadingService {
+export class LoadingService implements OnDestroy{
     private _viewContainerRef: ViewContainerRef;
-    private _disposer: PopupDisposer;
+    private viewContainerRefArray = [];
+
     constructor(private _cfr: ComponentFactoryResolver, private _appRef: ApplicationRef) {
         _appRef.components.length && _appRef.components.forEach(component => {
             if (component.instance.hasOwnProperty('viewContainerRef')) {
@@ -27,16 +28,23 @@ export class LoadingService {
     }
 
     public showLoading(viewContainerRef?: ViewContainerRef, loadingData?: LoadingData) {
-        if(this._disposer){
-            this.hideLoading();
-        }
+
+        this.viewContainerRefArray.forEach((item,index) => {
+            if (item["view"] == viewContainerRef) {
+                item["dispose"]();
+                this.viewContainerRefArray.slice(index,1);
+            }
+        })
+
         const factory = this._cfr.resolveComponentFactory(LoadingServiceComponent);
         let viewRef = viewContainerRef ? viewContainerRef : this._viewContainerRef;
         let ref = viewRef.createComponent(factory);
-        this._disposer = this._getDisposer(ref);
-        ref.instance.disposer = this._disposer;
+        let disposer = this._getDisposer(ref);
+        ref.instance.disposer = disposer;
         ref.instance.initData = loadingData;
         ref.instance.options = this._getDialogOptions() ? this._getDialogOptions() : {};
+        this.viewContainerRefArray.push({"view": viewContainerRef, "dispose": disposer});
+
     }
 
     private _getDisposer(popupRef: PopupRef): PopupDisposer {
@@ -45,14 +53,28 @@ export class LoadingService {
         }
     }
 
-    public hideLoading() {
-        this._disposer();
+    public hideLoading(viewContainerRef?: ViewContainerRef) {
+        this.viewContainerRefArray.forEach((item, index) => {
+            if (item["view"] == viewContainerRef) {
+                item["dispose"]();
+                this.viewContainerRefArray.slice(index,1);
+            }
+        })
     }
 
     private _getDialogOptions(): PopupOptions {
         return {
             modal: true
         };
+    }
+
+    ngOnDestroy(){
+        if(this.viewContainerRefArray.length>0){
+            this.viewContainerRefArray.forEach((item) => {
+                    item["dispose"]();
+            })
+            this.viewContainerRefArray.length=0;
+        }
     }
 }
 
