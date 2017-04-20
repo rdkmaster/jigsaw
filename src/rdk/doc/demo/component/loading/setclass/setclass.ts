@@ -1,4 +1,4 @@
-import {Component, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef, ViewEncapsulation} from '@angular/core';
 import {LoadingService} from "../../../../../service/loading.service"
 
 @Component({
@@ -33,7 +33,11 @@ import {LoadingService} from "../../../../../service/loading.service"
         </div>
 
         <button (click)="globalBlock()">global block</button>
-    `
+    `,
+    //给rdk的组件设置样式的时候，最好设置encapsulation为None
+    //当然添加在根目录下的styles.scss中也可以，当然不推荐
+    encapsulation: ViewEncapsulation.None,
+    styleUrls: ['style.scss']
 })
 export class LoadingSetclassDemoComponent {
     @ViewChild('insert', {read: ViewContainerRef}) insert: ViewContainerRef;

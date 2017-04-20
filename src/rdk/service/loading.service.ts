@@ -32,18 +32,16 @@ export class LoadingService implements OnDestroy {
     public show(viewContainerRef?: ViewContainerRef,
                 contentCss: string = "rdk-loading-content",
                 backgroundCss: string = "rdk-loading-background"): PopupDisposer {
+
         let viewRef = viewContainerRef ? viewContainerRef : this._viewContainerRef;
-        this._viewContainerRefArray.forEach((item, index) => {
-            if (item.view == viewRef) {
-                item.dispose();
-                this._viewContainerRefArray.slice(index, 1);
-            }
-        });
+        for (let item of this._viewContainerRefArray) {
+            if (item.view === viewRef) return item.dispose;
+        }
 
         const factory = this._cfr.resolveComponentFactory(LoadingServiceComponent);
 
         let ref = viewRef.createComponent(factory);
-        let disposer = this._getDisposer(ref);
+        let disposer = this._getDisposer(ref, viewRef);
         ref.instance.disposer = disposer;
         ref.instance.initData = {contentCss: contentCss, backgroundCss: backgroundCss};
         ref.instance.options = {modal: true};
@@ -51,9 +49,10 @@ export class LoadingService implements OnDestroy {
         return disposer;
     }
 
-    private _getDisposer(popupRef: PopupRef): PopupDisposer {
+    private _getDisposer(popupRef: PopupRef, viewRef: ViewContainerRef): PopupDisposer {
         return () => {
             popupRef.destroy();
+            this._viewContainerRefArray.splice(this._viewContainerRefArray.indexOf(viewRef), 1);
         }
     }
 
