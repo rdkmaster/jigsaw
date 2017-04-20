@@ -27,6 +27,9 @@ export class LoadingService {
     }
 
     public showLoading(viewContainerRef?: ViewContainerRef, loadingData?: LoadingData) {
+        if(this._disposer){
+            this.hideLoading();
+        }
         const factory = this._cfr.resolveComponentFactory(LoadingServiceComponent);
         this._viewContainerRef = viewContainerRef ? viewContainerRef : this._viewContainerRef;
         let ref = this._viewContainerRef.createComponent(factory);
@@ -82,7 +85,7 @@ export class LoadingServiceComponent implements IPopupable, AfterContentInit {
     };
 
     public init() {
-        this._renderer2.addClass(this.getPopupElement('.rdk-loading-head'), this.initData ? (<LoadingData> this.initData).contentCss : LoadingData.DEFAULT_BACKGROUND_CSS);
+        this._renderer2.addClass(this.getPopupElement('.rdk-loading-head'), this.initData ? (<LoadingData> this.initData).backgroundCss : LoadingData.DEFAULT_BACKGROUND_CSS);
         this._renderer2.addClass(this.getPopupElement('.rdk-loading-body'), this.initData ? (<LoadingData> this.initData).contentCss : LoadingData.DEFAULT_CONTENT_CSS);
     }
 
