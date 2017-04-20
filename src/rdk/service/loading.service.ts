@@ -31,8 +31,8 @@ export class LoadingService {
             this.hideLoading();
         }
         const factory = this._cfr.resolveComponentFactory(LoadingServiceComponent);
-        this._viewContainerRef = viewContainerRef ? viewContainerRef : this._viewContainerRef;
-        let ref = this._viewContainerRef.createComponent(factory);
+        let viewRef = viewContainerRef ? viewContainerRef : this._viewContainerRef;
+        let ref = viewRef.createComponent(factory);
         this._disposer = this._getDisposer(ref);
         ref.instance.disposer = this._disposer;
         ref.instance.initData = loadingData;
