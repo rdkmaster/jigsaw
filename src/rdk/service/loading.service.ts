@@ -28,22 +28,22 @@ export class LoadingService implements OnDestroy{
     }
 
     public showLoading(viewContainerRef?: ViewContainerRef, loadingData?: LoadingData) {
-
+        let viewRef = viewContainerRef ? viewContainerRef : this._viewContainerRef;
         this.viewContainerRefArray.forEach((item,index) => {
-            if (item["view"] == viewContainerRef) {
+            if (item["view"] == viewRef) {
                 item["dispose"]();
                 this.viewContainerRefArray.slice(index,1);
             }
         })
 
         const factory = this._cfr.resolveComponentFactory(LoadingServiceComponent);
-        let viewRef = viewContainerRef ? viewContainerRef : this._viewContainerRef;
+
         let ref = viewRef.createComponent(factory);
         let disposer = this._getDisposer(ref);
         ref.instance.disposer = disposer;
         ref.instance.initData = loadingData;
         ref.instance.options = this._getDialogOptions() ? this._getDialogOptions() : {};
-        this.viewContainerRefArray.push({"view": viewContainerRef, "dispose": disposer});
+        this.viewContainerRefArray.push({"view": viewRef, "dispose": disposer});
 
     }
 
@@ -54,8 +54,9 @@ export class LoadingService implements OnDestroy{
     }
 
     public hideLoading(viewContainerRef?: ViewContainerRef) {
+        let viewRef = viewContainerRef ? viewContainerRef : this._viewContainerRef;
         this.viewContainerRefArray.forEach((item, index) => {
-            if (item["view"] == viewContainerRef) {
+            if (item["view"] == viewRef) {
                 item["dispose"]();
                 this.viewContainerRefArray.slice(index,1);
             }

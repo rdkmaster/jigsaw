@@ -30,6 +30,8 @@ import {LoadingData, LoadingService} from "../../../../../service/loading.servic
                 可以在根目录src/style.scss样式里定义。
             </p>
         </div>
+
+        <input id="blockButton3" type="button" value="全局loading"/>
     `
 })
 export class LoadingSetclassDemoComponent implements  AfterViewInit {
@@ -54,6 +56,8 @@ export class LoadingSetclassDemoComponent implements  AfterViewInit {
         $('#blockButton2').click(() => {
             this._loadingservice.showLoading(this.insert2);});
         $('#unblockButton2').click(() => {this._loadingservice.hideLoading(this.insert2);});
-
+        $('#blockButton3').click(() => {
+            this._loadingservice.showLoading();
+        setTimeout(()=>{ this._loadingservice.hideLoading();},2000)});
     }
 }
