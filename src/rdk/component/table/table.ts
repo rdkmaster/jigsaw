@@ -102,6 +102,8 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     private _inited: boolean;
     private _defaultSorted: boolean;
 
+    private _scrollBarOptions: Object;
+
     @Input()
     public get data(): TableData {
         return this._data
@@ -126,6 +128,16 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
 
     @Input()
     public additionalColumns: AdditionalColumnSetting[];
+
+    @Input()
+    public set scrollAmount(value){
+        if(typeof value == 'number' && value > 0){
+            this._scrollBarOptions = {
+                snapAmount: 30,
+                mouseWheel:{ enable: true, scrollAmount: 30 * value }
+            };
+        }
+    }
 
     private _fixedHead: HTMLElement;
 

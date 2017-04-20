@@ -7,15 +7,19 @@ import {Directive, Input, ElementRef, OnInit, Output, EventEmitter, NgModule} fr
 @Directive({
     selector: '[rdk-scroll-bar], [rdk-scrollBar]'
 })
-export class RdkScrollBar implements OnInit{
+export class RdkScrollBar implements OnInit {
     private _scrollBarJq: any;
-    constructor(private _elf: ElementRef) {}
+    private _options: Object;
+    private _inited: boolean;
+
+    constructor(private _elf: ElementRef) {
+    }
 
     @Input()
     public axis: string = "yx";   //  horizontal scrollbar or "y" or "x"
 
     @Input()
-    public theme: string  = "dark";  // 很多很多主题...
+    public theme: string = "dark";  // 很多很多主题...
 
     @Input()
     public autoHideScrollbar: boolean = false;
@@ -30,39 +34,46 @@ export class RdkScrollBar implements OnInit{
     public whileScrolling = new EventEmitter<ScrollEvent>();
 
     @Input()
-    public rdkScrollBar: boolean = true;
+    public get options() {
+        return this._options
+    }
 
+    public set options(value) {
+        if (value && this.options != value) {
+            this._options = value;
+            this._inited && this._initScrollBar(this._generateOptions());
+        }
+    }
 
     /**
-     * 根据复杂的参数设置滚动条.
-     * 暂不对外提供
+     * 根据参数设置滚动条
      * option {} object 类型
      */
-    private _setScrollBar(option) {
-        // 销毁当前滚动条
-        this._scrollBarJq.mCustomScrollbar("destroy");
-
-        // 简单的合并参数
-        if(!option.axis) {
-            option.axis = this.axis;
-        } else if(!option.theme) {
-            option.theme = this.theme;
+    private _initScrollBar(option): void {
+        if (!this._scrollBarJq) {
+            this._scrollBarJq = $(this._elf.nativeElement);
+        } else {
+            // 销毁当前滚动条
+            this._scrollBarJq.mCustomScrollbar("destroy");
         }
-
         // 创建滚动条
         this._scrollBarJq.mCustomScrollbar(option);
     }
 
-    public ngOnInit() {
-        this.rdkScrollBar ? this._scrollBarJq = $(this._elf.nativeElement).mCustomScrollbar({
+    /*
+     * 生成最终的options
+     * */
+    private _generateOptions(): Object {
+        let options = {
             axis: this.axis,
             theme: this.theme,
             autoHideScrollbar: this.autoHideScrollbar,
             callbacks: {
                 onInit: () => {
-
                     this.scrollInit.emit();
-
+                    this._scrollBarJq.find('.mCSB_1_scrollbar').on('click', function () {
+                        event.stopPropagation();
+                    })
                 },
                 onScrollStart: (value) => {
                     this.scrollStart.emit(this._generateEventObject(this._scrollBarJq.get(0).mcs));
@@ -70,13 +81,24 @@ export class RdkScrollBar implements OnInit{
                 whileScrolling: () => {
                     this.whileScrolling.emit(this._generateEventObject(this._scrollBarJq.get(0).mcs));
                 },
-                onScroll : () => {
-                    this._scrollBarJq.find('.mCSB_1_scrollbar').on('click', function () {
-                        event.stopPropagation();
-                    })
+                onScroll: () => {
+
                 }
             }
-        }) : null;
+        };
+
+        if (typeof this.options == 'object') {
+            for (let prop in this.options) {
+                options[prop] = this.options[prop]
+            }
+        }
+
+        return options;
+    }
+
+    public ngOnInit() {
+        this._initScrollBar(this._generateOptions());
+        this._inited = true;
     }
 
     private _generateEventObject(event): ScrollEvent {

@@ -42,6 +42,7 @@ import {
 import {TableFixedHeadDemoComponent} from "./fixedHead/fixedHead";
 import {TablePageableDemoComponent} from "./pageable/demo";
 import {TableDataFromAjaxDemoComponent} from "./dataFromAjax/dataFromAjax";
+import {TableScrollAmountDemoComponent} from "./scrollAmount/scrollAmount";
 
 const tableDemoRoutes = [
     {
@@ -96,6 +97,9 @@ const tableDemoRoutes = [
         path: 'pageable', component: TablePageableDemoComponent
     },
     {
+        path: 'scrollAmount', component: TableScrollAmountDemoComponent
+    },
+    {
         path: '**', //fallback router must in the last
         component: TableBasicDemoComponent
     }
@@ -137,7 +141,8 @@ const tableDemoRoutes = [
         MyTableCellOption2,
         TableAddColumnDemoComponent,
         TablePageableDemoComponent,
-        TableDataFromAjaxDemoComponent
+        TableDataFromAjaxDemoComponent,
+        TableScrollAmountDemoComponent
     ],
     imports: [
         RouterModule.forChild(tableDemoRoutes),
