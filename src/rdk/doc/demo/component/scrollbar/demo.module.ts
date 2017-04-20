@@ -3,6 +3,7 @@ import {RouterModule} from "@angular/router";
 import {ScrollbarBasicDemoComponent} from "./basic/basic";
 import {ScrollbarUserdefineDemoComponent} from "./user-define/user-define";
 import {RdkScrollBarModule} from "../../../../component/scrollbar/scrollbar";
+import {ScrollbarSetOptionsDemoComponent} from "./setOptions/setOptions";
 
 const scrollbarDemoRoutes=[
     {
@@ -17,6 +18,9 @@ const scrollbarDemoRoutes=[
         path:'user-define', component: ScrollbarUserdefineDemoComponent
     },
     {
+        path:'setOptions', component: ScrollbarSetOptionsDemoComponent
+    },
+    {
         path:'**', //fallback router must in the last
         component: ScrollbarBasicDemoComponent
     }
@@ -24,13 +28,13 @@ const scrollbarDemoRoutes=[
 
 @NgModule({
     declarations: [
-        ScrollbarBasicDemoComponent,ScrollbarUserdefineDemoComponent
+        ScrollbarBasicDemoComponent,ScrollbarUserdefineDemoComponent,ScrollbarSetOptionsDemoComponent
     ],
     imports: [
         RouterModule.forChild(scrollbarDemoRoutes), RdkScrollBarModule
     ],
     exports: [
-        ScrollbarBasicDemoComponent,ScrollbarUserdefineDemoComponent
+        ScrollbarBasicDemoComponent,ScrollbarUserdefineDemoComponent,ScrollbarSetOptionsDemoComponent
     ],
     providers: []
 })
