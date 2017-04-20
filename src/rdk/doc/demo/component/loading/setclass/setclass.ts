@@ -1,10 +1,10 @@
-import {AfterViewInit, Component, ViewChild, ViewContainerRef} from '@angular/core';
-import {LoadingData, LoadingService} from "../../../../../service/loading.service"
+import {Component, ViewChild, ViewContainerRef} from '@angular/core';
+import {LoadingService} from "../../../../../service/loading.service"
 
 @Component({
     template: `
-        <input id="blockButton" type="button" value="blockButton"/>
-        <input id="unblockButton" type="button" value="unblockButton"/>
+        <button (click)="block1()">block</button>
+        <button (click)="unblock1()">unblock</button>
         <div id="blockedID" class="blockMe" style="width: 50%;height: auto;
              line-height:20px;font-weight:bold;position: relative; zoom: 1;">
             <ng-template #insert></ng-template>
@@ -17,8 +17,9 @@ import {LoadingData, LoadingService} from "../../../../../service/loading.servic
             </p>
         </div>
         <br/>
-        <input id="blockButton2" type="button" value="blockButton2"/>
-        <input id="unblockButton2" type="button" value="unblockButton2"/>
+
+        <button (click)="block2()">block</button>
+        <button (click)="unblock2()">unblock</button>
         <div id="blockedID2" class="blockMe" style="width: 50%;height: auto;
              line-height:20px;font-weight:bold;position: relative; zoom: 1;">
             <ng-template #insert2></ng-template>
@@ -31,33 +32,38 @@ import {LoadingData, LoadingService} from "../../../../../service/loading.servic
             </p>
         </div>
 
-        <input id="blockButton3" type="button" value="全局loading"/>
+        <button (click)="globalBlock()">global block</button>
     `
 })
-export class LoadingSetclassDemoComponent implements  AfterViewInit {
+export class LoadingSetclassDemoComponent {
     @ViewChild('insert', {read: ViewContainerRef}) insert: ViewContainerRef;
     @ViewChild('insert2', {read: ViewContainerRef}) insert2: ViewContainerRef;
 
-    public _loadingservice: LoadingService;
-
-    constructor(loadingservice: LoadingService) {
-        this._loadingservice = loadingservice;
+    constructor(public loadingService: LoadingService) {
     }
 
-    ngAfterViewInit() {
+    disposeBlock1: Function;
 
-        $('#blockButton').click(() => {
-            let loadingdata=new LoadingData();
-            loadingdata.backgroundCss="rdk-loading-background-test";
-            loadingdata.contentCss="rdk-loading-content-test";
-            this._loadingservice.showLoading(this.insert,loadingdata);});
-        $('#unblockButton').click(() => {this._loadingservice.hideLoading(this.insert);});
+    block1() {
+        this.disposeBlock1 = this.loadingService.show(this.insert, "rdk-loading-content-test", "rdk-loading-background-test");
+    }
 
-        $('#blockButton2').click(() => {
-            this._loadingservice.showLoading(this.insert2);});
-        $('#unblockButton2').click(() => {this._loadingservice.hideLoading(this.insert2);});
-        $('#blockButton3').click(() => {
-            this._loadingservice.showLoading();
-        setTimeout(()=>{ this._loadingservice.hideLoading();},2000)});
+    unblock1() {
+        if (this.disposeBlock1) this.disposeBlock1();
+    }
+
+    disposeBlock2: Function;
+
+    block2() {
+        this.disposeBlock2 = this.loadingService.show(this.insert2);
+    }
+
+    unblock2() {
+        if (this.disposeBlock2) this.disposeBlock2();
+    }
+
+    globalBlock() {
+        const dispose = this.loadingService.show();
+        setTimeout(() => dispose(), 2000);
     }
 }

@@ -1,20 +1,22 @@
 import {
-    Injectable, Component, ElementRef, Renderer2, AfterContentInit,OnDestroy,
-    ViewEncapsulation, ViewContainerRef, ComponentFactoryResolver, ApplicationRef
-} from '@angular/core';
-import {PopupOptions, PopupDisposer, IPopupable, PopupRef} from "./popup.service"
+    AfterContentInit,
+    ApplicationRef,
+    Component,
+    ComponentFactoryResolver,
+    ElementRef,
+    Injectable,
+    OnDestroy,
+    Renderer2,
+    ViewContainerRef,
+    ViewEncapsulation
+} from "@angular/core";
+import {IPopupable, PopupDisposer, PopupOptions, PopupRef} from "./popup.service";
 
-export class LoadingData {
-    public static DEFAULT_BACKGROUND_CSS = "rdk-loading-background";
-    public static DEFAULT_CONTENT_CSS = "rdk-loading-content";
-    public backgroundCss: string;
-    public contentCss: string;
-}
 
 @Injectable()
-export class LoadingService implements OnDestroy{
+export class LoadingService implements OnDestroy {
     private _viewContainerRef: ViewContainerRef;
-    private viewContainerRefArray = [];
+    private _viewContainerRefArray = [];
 
     constructor(private _cfr: ComponentFactoryResolver, private _appRef: ApplicationRef) {
         _appRef.components.length && _appRef.components.forEach(component => {
@@ -27,24 +29,26 @@ export class LoadingService implements OnDestroy{
         }
     }
 
-    public showLoading(viewContainerRef?: ViewContainerRef, loadingData?: LoadingData) {
+    public show(viewContainerRef?: ViewContainerRef,
+                contentCss: string = "rdk-loading-content",
+                backgroundCss: string = "rdk-loading-background"): PopupDisposer {
         let viewRef = viewContainerRef ? viewContainerRef : this._viewContainerRef;
-        this.viewContainerRefArray.forEach((item,index) => {
-            if (item["view"] == viewRef) {
-                item["dispose"]();
-                this.viewContainerRefArray.slice(index,1);
+        this._viewContainerRefArray.forEach((item, index) => {
+            if (item.view == viewRef) {
+                item.dispose();
+                this._viewContainerRefArray.slice(index, 1);
             }
-        })
+        });
 
         const factory = this._cfr.resolveComponentFactory(LoadingServiceComponent);
 
         let ref = viewRef.createComponent(factory);
         let disposer = this._getDisposer(ref);
         ref.instance.disposer = disposer;
-        ref.instance.initData = loadingData;
-        ref.instance.options = this._getDialogOptions() ? this._getDialogOptions() : {};
-        this.viewContainerRefArray.push({"view": viewRef, "dispose": disposer});
-
+        ref.instance.initData = {contentCss: contentCss, backgroundCss: backgroundCss};
+        ref.instance.options = {modal: true};
+        this._viewContainerRefArray.push({ "view": viewRef, "dispose": disposer });
+        return disposer;
     }
 
     private _getDisposer(popupRef: PopupRef): PopupDisposer {
@@ -53,28 +57,12 @@ export class LoadingService implements OnDestroy{
         }
     }
 
-    public hideLoading(viewContainerRef?: ViewContainerRef) {
-        let viewRef = viewContainerRef ? viewContainerRef : this._viewContainerRef;
-        this.viewContainerRefArray.forEach((item, index) => {
-            if (item["view"] == viewRef) {
-                item["dispose"]();
-                this.viewContainerRefArray.slice(index,1);
-            }
-        })
-    }
-
-    private _getDialogOptions(): PopupOptions {
-        return {
-            modal: true
-        };
-    }
-
-    ngOnDestroy(){
-        if(this.viewContainerRefArray.length>0){
-            this.viewContainerRefArray.forEach((item) => {
-                    item["dispose"]();
-            })
-            this.viewContainerRefArray.length=0;
+    ngOnDestroy() {
+        if (this._viewContainerRefArray.length > 0) {
+            this._viewContainerRefArray.forEach((item) => {
+                item.dispose();
+            });
+            this._viewContainerRefArray.splice(0, this._viewContainerRefArray.length);
         }
     }
 }
@@ -105,15 +93,11 @@ export class LoadingServiceComponent implements IPopupable, AfterContentInit {
 
     public getPopupElement(name: String): HTMLElement {
         return this._elementRef.nativeElement.querySelector(name);
-    };
-
-    public init() {
-        this._renderer2.addClass(this.getPopupElement('.rdk-loading-head'), this.initData ? (<LoadingData> this.initData).backgroundCss : LoadingData.DEFAULT_BACKGROUND_CSS);
-        this._renderer2.addClass(this.getPopupElement('.rdk-loading-body'), this.initData ? (<LoadingData> this.initData).contentCss : LoadingData.DEFAULT_CONTENT_CSS);
     }
 
     ngAfterContentInit() {
-        this.init();
+        this._renderer2.addClass(this.getPopupElement('.rdk-loading-head'), this.initData.backgroundCss ? this.initData.backgroundCss : "rdk-loading-background");
+        this._renderer2.addClass(this.getPopupElement('.rdk-loading-body'), this.initData.contentCss ? this.initData.contentCss : "rdk-loading-content");
     }
 
 }

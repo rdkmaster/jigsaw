@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef} from '@angular/core';
 import {LoadingService} from "../../../../../service/loading.service"
 
 @Component({
@@ -18,17 +18,19 @@ import {LoadingService} from "../../../../../service/loading.service"
         </div>
     `
 })
-export class LoadingDemoComponent implements  AfterViewInit {
+export class LoadingDemoComponent {
     @ViewChild('insert', {read: ViewContainerRef}) insert: ViewContainerRef;
 
-    public _loadingservice: LoadingService;
-
-    constructor(loadingservice: LoadingService) {
-        this._loadingservice = loadingservice;
+    constructor(public loadingService: LoadingService) {
     }
 
-    ngAfterViewInit() {
-        $('#blockButton').click(() => {this._loadingservice.showLoading(this.insert);});
-        $('#unblockButton').click(() => {this._loadingservice.hideLoading(this.insert);});
+    disposeBlock: Function;
+
+    block() {
+        this.disposeBlock = this.loadingService.show(this.insert);
+    }
+
+    unblock() {
+        if (this.disposeBlock) this.disposeBlock();
     }
 }
