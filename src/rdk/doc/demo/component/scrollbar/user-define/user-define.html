@@ -1,9 +1,10 @@
 <h2>scroll bar </h2>
-<div rdk-scrollBar class="bar" axis="yx" theme="dark"
+<div rdk-scrollBar class="bar"
+     scrollBarAxis="yx"
+     scrollBarTheme="dark"
      (whileScrolling)="testScrollEvent($event)"
      (scrollStart)="testScrollStart($event)"
-     (scrollInit)="testScrollInit($event)"
->
+     (scrollInit)="testScrollInit($event)">
     <ul >
         <li class="i1">1</li>
         <li class="i2">2</li>

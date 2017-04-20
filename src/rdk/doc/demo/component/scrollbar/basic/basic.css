@@ -3,3 +3,6 @@
     height: 100px;
     overflow: hidden;
 }
+.bar li{
+    height: 30px;
+}

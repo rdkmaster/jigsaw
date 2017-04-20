@@ -16,13 +16,22 @@ export class RdkScrollBar implements OnInit {
     }
 
     @Input()
-    public axis: string = "yx";   //  horizontal scrollbar or "y" or "x"
+    public scrollBarAxis: string = "yx";   //  horizontal scrollbar or "y" or "x"
 
     @Input()
-    public theme: string = "dark";  // 很多很多主题...
+    public scrollBarTheme: string = "dark";  // 很多很多主题...
 
     @Input()
     public autoHideScrollbar: boolean = false;
+
+    @Input()
+    public scrollBarSnapAmount: number;
+
+    @Input()
+    public scrollBarMouseWheelable: boolean;
+
+    @Input()
+    public scrollBarScrollAmount: number;
 
     @Output()
     public scrollInit: EventEmitter<any> = new EventEmitter<any>();
@@ -67,9 +76,11 @@ export class RdkScrollBar implements OnInit {
      * */
     private _generateOptions(): Object {
         let options = {
-            axis: this.axis,
-            theme: this.theme,
+            axis: this.scrollBarAxis,
+            theme: this.scrollBarTheme,
             autoHideScrollbar: this.autoHideScrollbar,
+            snapAmount: this.scrollBarSnapAmount,
+            mouseWheel:{ enable: this.scrollBarMouseWheelable, scrollAmount: this.scrollBarScrollAmount },
             callbacks: {
                 onInit: () => {
                     this.scrollInit.emit();
