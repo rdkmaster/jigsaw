@@ -16,5 +16,12 @@ export class ServerSidePagingDemoComponent {
         this.pageable = new PageableTableData(http, arg);
         this.pageable.fromAjax();
     }
+
+    getCurrentPage(message:any){
+        console.log("current page is: "+message);
+    }
+    getPageSize(message:any){
+        console.log("page size is: "+message);
+    }
 }
 

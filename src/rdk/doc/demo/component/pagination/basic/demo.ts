@@ -4,11 +4,16 @@ import { Component } from "@angular/core";
   templateUrl: 'demo.html'
 })
 export class PaginationBasicDemoComponent {
-    public getCurrentPage(message:any){
-        console.log("switch message is: "+message);
+    currentPage: number;
+
+    getCurrentPage(message:any){
+        console.log("current page is: "+message);
     }
-    public getPageSize(message:any){
-        console.log("switch message is: "+message);
+    getPageSize(message:any){
+        console.log("page size is: "+message);
+    }
+    changeCurrentPage(number){
+        this.currentPage = number;
     }
 }
 
