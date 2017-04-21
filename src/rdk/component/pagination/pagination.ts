@@ -290,7 +290,7 @@ export class RdkPagination extends AbstractRDKComponent implements OnInit, After
         this._totalPage = Math.ceil(this.total / this.pageSize);
 
         //验证总页数合法性
-        if (this._totalPage <= 0) return;
+        if (isNaN(this._totalPage) || this._totalPage <= 0) return;
 
         for (let i = 0; i < this._totalPage; i++) {
             pageNumbers.push(i + 1);
