@@ -43,6 +43,8 @@ import {TableFixedHeadDemoComponent} from "./fixedHead/fixedHead";
 import {TablePageableDemoComponent} from "./pageable/demo";
 import {TableDataFromAjaxDemoComponent} from "./dataFromAjax/dataFromAjax";
 import {TableScrollAmountDemoComponent} from "./scrollAmount/scrollAmount";
+import {TableAddIDColumnDemoComponent} from "./addIDColumn/addIDColumn";
+import {TableAddCheckboxColumnDemoComponent} from "./addCheckboxColumn/addCheckboxColumn";
 
 const tableDemoRoutes = [
     {
@@ -89,6 +91,10 @@ const tableDemoRoutes = [
     },
     {
         path: 'addColumn', component: TableAddColumnDemoComponent
+    },{
+        path: 'addIDColumn', component: TableAddIDColumnDemoComponent
+    },{
+        path: 'addCheckboxColumn', component: TableAddCheckboxColumnDemoComponent
     },
     {
         path: 'fixedHead', component: TableFixedHeadDemoComponent
@@ -142,7 +148,9 @@ const tableDemoRoutes = [
         TableAddColumnDemoComponent,
         TablePageableDemoComponent,
         TableDataFromAjaxDemoComponent,
-        TableScrollAmountDemoComponent
+        TableScrollAmountDemoComponent,
+        TableAddIDColumnDemoComponent,
+        TableAddCheckboxColumnDemoComponent
     ],
     imports: [
         RouterModule.forChild(tableDemoRoutes),
