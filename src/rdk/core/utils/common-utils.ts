@@ -1,9 +1,12 @@
 export class CommonUtils {
+    public static _uniqueIdIndex = 0;
+    public static _defaultPrefix = '__unique_id__';
+
     /**
      * 浅拷贝一个对象
      * @param source
      */
-    public static shallowCopy(source:Object):Object {
+    public static shallowCopy(source: Object): Object {
         if (source === null || source === undefined || typeof source !== 'object') {
             return source;
         }
@@ -15,11 +18,12 @@ export class CommonUtils {
         }
         return copy;
     }
+
     /**
      * 比较两个对象是否相等
      * */
-    public static compareWithKeyProperty(item1: any, item2: any, trackItemBy: string[]): boolean{
-        for(let i = 0; i < trackItemBy.length; i++){
+    public static compareWithKeyProperty(item1: any, item2: any, trackItemBy: string[]): boolean {
+        for (let i = 0; i < trackItemBy.length; i++) {
             if (item1[trackItemBy[i]] != item2[trackItemBy[i]]) {
                 return false;
             }
@@ -39,7 +43,7 @@ export class CommonUtils {
      * @param targetObject 要合并的源对象
      * @param sourceObject 合并的对象信息
      */
-    public static extendObject(targetObject:Object, sourceObject:Object):Object {
+    public static extendObject(targetObject: Object, sourceObject: Object): Object {
         if (!sourceObject) {
             return targetObject;
         }
@@ -70,4 +74,16 @@ export class CommonUtils {
         }
         return targetObject;
     }
+
+    /*
+     * 创建元素唯一ID
+     *
+     * */
+    public static createUniqueId(prefix?: string) {
+        this._uniqueIdIndex++;
+        if (prefix == null || prefix == undefined) {
+            prefix = this._defaultPrefix;
+        }
+        return prefix + this._uniqueIdIndex;
+    };
 }

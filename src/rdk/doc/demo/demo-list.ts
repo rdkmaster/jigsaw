@@ -87,6 +87,10 @@ const demoListRoutes=[
         loadChildren:'./component/dropdown/dropdown-demo.module#DropDownDemoModule'
     },
     {
+        path:'ztree',
+        loadChildren:'./component/ztree/demo.module#ZtreeDemoModule'
+    },
+    {
         path:'**', //fallback router must in the last
         component: DemoListComponent
     }

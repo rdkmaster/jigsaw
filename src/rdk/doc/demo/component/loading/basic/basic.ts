@@ -3,8 +3,8 @@ import {LoadingService} from "../../../../../service/loading.service"
 
 @Component({
     template: `
-        <input id="blockButton" type="button" value="blockButton"/>
-        <input id="unblockButton" type="button" value="unblockButton"/>
+        <button (click)="block()">block</button>
+        <button (click)="unblock()">unblock</button>
         <div id="blockedID" class="blockMe" style="width: 50%;height: auto;
              line-height:20px;font-weight:bold;position: relative; zoom: 1;">
             <ng-template #insert></ng-template>
