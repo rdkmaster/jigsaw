@@ -243,10 +243,13 @@ export class RdkPagination extends AbstractRDKComponent implements OnInit, After
      * 上一页、下一页按钮设置
      * */
     private _canablePrevAndNext(): void {
-        if (this._current == 1) {
+        if (this._totalPage == 1) {
+            this._prevDisabled = true;
+            this._nextDisabled = true;
+        } else if (this.current == 1) {
             this._prevDisabled = true;
             this._nextDisabled = false;
-        } else if (this._current == this._totalPage) {
+        } else if (this.current == this._totalPage) {
             this._nextDisabled = true;
             this._prevDisabled = false;
         } else {
@@ -285,17 +288,17 @@ export class RdkPagination extends AbstractRDKComponent implements OnInit, After
         //计算总页数
         let pageNumbers = [];
         this._totalPage = Math.ceil(this.total / this.pageSize);
-        if(this._totalPage <= 0) return;
+
+        //验证总页数合法性
+        if (this._totalPage <= 0) return;
+
         for (let i = 0; i < this._totalPage; i++) {
             pageNumbers.push(i + 1);
         }
         this._pageNumbers = pageNumbers;
 
-        //判断上一页、下一页按钮可用性
-        if (this._totalPage == 1) {
-            this._prevDisabled = true;
-            this._nextDisabled = true;
-        }
+        //验证current合法性
+        if (this.current <= 0 || this.current > this._totalPage) this.current = 1;
 
         setTimeout(() => {
             this._getFirstAndLastPage();
