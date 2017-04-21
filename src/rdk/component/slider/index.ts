@@ -5,13 +5,14 @@ import { NgModule } from '@angular/core';
 
 import { RdkSlider } from './slider';
 import {CommonModule} from "@angular/common";
+import {SliderHandle} from "./handle";
 
 @NgModule({
     imports: [
         CommonModule
     ],
     exports: [RdkSlider],
-    declarations: [RdkSlider],
+    declarations: [RdkSlider,SliderHandle],
     providers: [],
 })
 export class RdkSliderModule { }

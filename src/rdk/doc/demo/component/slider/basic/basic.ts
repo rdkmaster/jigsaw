@@ -7,15 +7,15 @@ import { Component, OnInit } from '@angular/core';
     template: `
         <h4>1. 基本滑动条,滑动事件变化. </h4>
         <rdk-switch [(checked)]="disabled" size="small"></rdk-switch>
-        <rdk-slider [value]="value1" [disabled]="disabled" (change)="slderChange($event)"></rdk-slider>
+        <rdk-slider [value]="value1" [disabled]="disabled" (change)="sliderChange($event)"></rdk-slider>
         <hr>
         <br>
         <h4>2. 设置了min和max的滑动条</h4>
-        <rdk-slider [(value)]="value" [min]="min" [max]="max"></rdk-slider> <span>取值: {{value}}</span>
+        <rdk-slider [value]="value" [min]="min" [max]="max" (change)="sliderChange2($event)"></rdk-slider> <span>取值: {{value2}}</span>
         <hr>
         <br>
         <h4>3. 改变step</h4>
-        <rdk-slider [(value)]="valueStep" min="0" max="2" step="0.01"></rdk-slider> <span>取值: {{valueStep}}</span>
+        <rdk-slider [value]="valueStep" min="0" max="2" step="0.01" (change)="sliderChange3($event)"></rdk-slider> <span>取值: {{value3}}</span>
         
         <hr>
         <br>
@@ -26,7 +26,8 @@ import { Component, OnInit } from '@angular/core';
         <br>
         <h4>5. mark 节点.</h4>
         <rdk-slider [marks]="marks" value="50"></rdk-slider>
-    `
+    `,
+    styleUrls:['./basic.scss']
 })
 export class RdkSliderDemoBasic implements OnInit {
     constructor() { }
@@ -45,11 +46,21 @@ export class RdkSliderDemoBasic implements OnInit {
 
     marks = [{value: 20, label: '20oC'},
     {value: 40, label: '40oC'},
-    {value: 60, label: '60oC'}]
+    {value: 60, label: '60oC', class: "markStyle-3"}]
 
 
-    slderChange(value) {
+    sliderChange(value) {
         console.info("当前值: " + value);
+    }
+
+    value2
+    private sliderChange2(value) {
+        this.value2 = value;
+    }
+
+    value3
+    public sliderChange3(value) {
+        this.value3 = value;
     }
     ngOnInit() { }
 

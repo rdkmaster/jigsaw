@@ -1,43 +1,57 @@
 /**
  * Created by 10177553 on 2017/4/13.
  */
-import {Component, OnInit, Input, Output, EventEmitter, ElementRef, Renderer2} from '@angular/core';
+import {
+    Component, OnInit, Input, Output, EventEmitter, ElementRef, Renderer2, ViewEncapsulation,
+    ViewChildren, QueryList
+} from '@angular/core';
+import {SliderHandle} from "./handle";
 
 @Component({
     selector: 'rdk-slider',
     templateUrl: './slider.html',
-    styleUrls:['./slider.scss']
+    styleUrls:['./slider.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 /**
- * TODO 1. 双触点实现.(这个实现有点难度.. 修改的有点多)
- *       2. 点击事件支持
+ * TODO 1. 双触点实现.(待完善, 修改的有点多. 修改的有点挂了了. 有个问题不知道为什么, 提交一个半成品. 准备重新整理一下心情, 再把剩下的补全)
  *       3. 竖向滚动条支持.
- *       4. tooltips 支持.
- *       5. class 设置的API
- *       6. mark的class
- *       7. api 说明文档, 要不然里面的属性有点多
+ *       4. tooltips 支持. 暂不支持
+ *       5. class 设置的API. 暂不支持.
+ *       6. mark的class . 没有支持成功. 没发现哪里写的有问题.
+ *       7. api 说明文档, 要不然里面的属性有点多, 有点难找.
  */
 export class RdkSlider implements OnInit {
 
     constructor(private _element: ElementRef, private _render: Renderer2) { }
 
-    private _value = 0;
+    private _value:Array<number> = [];
+
+    @ViewChildren(SliderHandle) _handles: QueryList<SliderHandle>;
 
     @Input()
-    public get value() { return this._value; };
-    public set value(value) {
-        this._value = value;
-        this._valueToPos();
-    }
+    public get value() {
+        if(this._value.length === 1) {
+            return this._value[0]
+        } else {
+            return this._value;
+        }
 
-    private _valueToPos() {
-        this._transformValueToPos();
-        this.setTrackStyle();
-        this.setHandleStyle();
+    };
+    public set value(value) {
+        if(typeof value  === 'object') {
+            this._value = value;
+        } else if(this._value.length === 0) {
+            this._value.push(value);
+        } else if(this._value.length === 1) {
+            this._value[0] = value;
+        }
+
+        this._setTrackStyle();
     }
 
     @Output()
-    public valueChange = new  EventEmitter<number>();
+    public valueChange = new  EventEmitter<number| Array<number>>();
 
     @Output()
     public change = this.valueChange;
@@ -66,51 +80,15 @@ export class RdkSlider implements OnInit {
         this._step = value;
     }
 
-    private _width: number;
+    private _offset: number;
 
     private _transformValueToPos(value?) {
         if(!value) {
-            this._width = (this.value - this.min)/(this.max - this.min) * 100;
+            let temp = Number(this.value);
+            this._offset = (temp - this.min)/(this.max - this.min) * 100;
         } else {
             return (value - this.min)/(this.max - this.min) * 100;
         }
-    }
-
-    private _transformPosToValue(pos) {
-        // 取得尺寸
-        let offset = this._dimensions.left;
-        let size = this._dimensions.width;
-
-        let newValue = ((pos.x - offset) / size * (this.max - this.min) + this.min); // 保留两位小数
-
-        let m = this._calFloat(this.step);
-
-        // 解决出现的有时小数点多了N多位.
-        newValue = Math.round(Math.round(newValue / this.step) * this.step * Math.pow(10, m)) / Math.pow(10, m);
-
-        if (newValue < this.min) {
-            return this.min;
-        } else if (newValue > this.max) {
-            return this.max;
-        } else {
-            return newValue;
-        }
-    }
-
-    /**
-     * 计算需要保留小数的位数.
-     * @param value
-     * @private
-     */
-    _calFloat(value: number): number {
-        // 增加步长的计算;
-        let m = 0;
-        try {
-            m = this.step.toString().split(".")[1].length;
-        } catch(e) {
-
-        }
-        return m;
     }
 
     private _dimensions;
@@ -128,32 +106,30 @@ export class RdkSlider implements OnInit {
             y: event["clientY"]
         }
 
-        let newValue = this._transformPosToValue(pos);
-
-        if(this.value === newValue) return ;
-
-        this.value = newValue;
+        let newValue = this._handles.first.transformPosToValue(pos);
 
         this.valueChange.emit(newValue);
     }
 
-    private _dragged = false;
-
-    _updateCanDragged(flag) {
-        this._registerGlobalEvent();
-        this._dragged = flag;
-        // Todo 增加取消事件注册的方法调用
+    // 改变value的值;
+    private _clickPosition() {
+        let pos = {
+            x: event["clientX"],
+            y: event["clientY"]
+        }
     }
+
+    private _dragged = false;
 
     @Input()
     public disabled: boolean = false;
 
     private _trackStyle = {}
 
-    private setTrackStyle() {
+    private _setTrackStyle(value?) {
         // 兼容双触点.
         let startPos: number = 0;
-        let trackWidth: number = this._width;
+        let trackWidth: number = typeof value !== 'undefined'?this._transformValueToPos(value):this._transformValueToPos(this.value); // 默认单触点位置
 
         // 兼容双触点.
         if(this.range) {
@@ -167,26 +143,50 @@ export class RdkSlider implements OnInit {
         }
     }
 
-    private _handleStyle = {}
-
-    private setHandleStyle() {
-        this._handleStyle = {
-            left: this._width + "%"
-        }
+    _updateCanDragged(flag) {
+        this._dragged = flag;
     }
 
     @Input()
-    marks: [Object];
+    public marks: [Object];
+
+    _newValue: Array<number> = [];
+
+    _handleValueChange(key, value) {
+
+        if(value !== this.value) {
+
+            // this._setNewValue(value, key);
+
+            if(this.range) {
+                this.valueChange.emit(this._newValue);
+            } else {
+                this.valueChange.emit(value);
+            }
+
+            // 设置值域的变化.
+            this._setTrackStyle(value);
+        }
+    }
+
+    private _setNewValue(value, key?) {
+        if(typeof value  === 'object') {
+            this._newValue = value;
+        } else if(this._newValue.length === 0) {
+            this._newValue.push(value);
+        } else if(this._newValue.length === 1) {
+            this._newValue[0] = value;
+        } else {
+            this._newValue[key] = value;
+        }
+    }
 
     _calMarks() {
         if(!this.marks) return;
 
         let width = Math.round(100/this.marks.length);
         let marginLeft = -Math.floor(width/2);
-        let style = {
-            "width": width,
-            "margin-left": marginLeft
-        }
+
         this.marks.forEach(mark => {
             mark["left"] = this._transformValueToPos(mark["value"]);
             mark["width"] = width;
@@ -194,21 +194,17 @@ export class RdkSlider implements OnInit {
         });
     }
 
-    _registerGlobalEvent() {
-        this._render.listen("document", "mousemove", () => {
-            this._updateValuePosition();
-        });
-        this._render.listen("document", "mouseup", () => {
-            this._dragged = false;
-        });
-    }
-
     ngOnInit() {
         // 计算slider 的尺寸.
         this._dimensions = this._element.nativeElement.getBoundingClientRect();
 
-        this._valueToPos();
+        // 设置新值;
+        this._setNewValue(this.value);
 
+        // 设置选中的轨道.
+        this._setTrackStyle();
+
+        // 设置标记.
         this._calMarks();
     }
 
