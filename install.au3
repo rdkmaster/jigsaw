@@ -2,7 +2,7 @@
 
 #NoTrayIcon
 
-_showMessage('正在从下载依赖包。。。')
+_showMessage('正在从服务器下载依赖包。。。')
 If FileExists(@ScriptDir & '\node_modules.zip') Then FileDelete(@ScriptDir & '\node_modules_tmp.zip')
 InetGet('http://rdk.zte.com.cn:4200/tools/node_modules.zip', @ScriptDir & '\node_modules_tmp.zip')
 If Not FileExists(@ScriptDir & '\node_modules_tmp.zip') Then _error('无法下载 node_modules.zip，请确认网络已经正常连接。如果你当前非处于zte内部网络，则需要使用npm安装。')
