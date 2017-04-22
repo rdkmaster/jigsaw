@@ -1,4 +1,4 @@
-import {Input, OnDestroy, OnInit, AfterViewInit, Output, EventEmitter, NgModule, Component} from '@angular/core';
+import {Input, OnDestroy, AfterViewInit, Output, EventEmitter, NgModule, Component} from '@angular/core';
 import {AbstractRDKComponent} from "rdk/component/core";
 import {CommonUtils} from "rdk/core/utils/common-utils";
 
@@ -8,17 +8,17 @@ export class TreeData {
     nodes?: TreeData[];
 }
 export class TreeEventData {
-    event?: Event;
     treeId: string;
     treeNode: object;
-    extraInfo: object;
+    event?: Event;
+    extraInfo?: object;
 }
 @Component({
     selector: 'rdk-tree-ext',
     template: `
         <div [id]="uniqueId" class="ztree"></div>`
 })
-export class RdkTreeExt extends AbstractRDKComponent implements OnInit, OnDestroy, AfterViewInit {
+export class RdkTreeExt extends AbstractRDKComponent implements AfterViewInit, OnDestroy {
     constructor() {
         super();
         this.uniqueId = CommonUtils.createUniqueId();
@@ -33,17 +33,17 @@ export class RdkTreeExt extends AbstractRDKComponent implements OnInit, OnDestro
     }
 
     public set setting(setting: object) {
-        this._setting = setting==null || CommonUtils.isEmptyObject(setting) ? this._defaultSetting() : setting;
+        this._setting = setting == null || CommonUtils.isEmptyObject(setting) ? this._defaultSetting() : setting;
         this._updateTree();
     }
 
-    public _data: object[] = [];
+    public _data: TreeData[] = [];
     @Input()
-    public get data(): object[] {
+    public get data(): TreeData[] {
         return this._data;
     }
 
-    public set data(data: object[]) {
+    public set data(data: TreeData[]) {
         this._data = data;
         this._updateTree();
     }
@@ -74,8 +74,6 @@ export class RdkTreeExt extends AbstractRDKComponent implements OnInit, OnDestro
     @Output()
     public beforeEditName = new EventEmitter<TreeEventData>();
 
-    ngOnInit() {
-    }
 
     ngAfterViewInit() {
         this._updateTree();
