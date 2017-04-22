@@ -27,6 +27,25 @@ export type CheckBoxValue = boolean | CheckBoxStatus;
  */
 export class RdkCheckBox extends AbstractRDKComponent implements OnInit, AfterContentInit {
 
+    private _enableIndeterminate: boolean = false;
+    @Input()
+    public get enableIndeterminate(): boolean {
+        return this._enableIndeterminate;
+    }
+
+    public set enableIndeterminate(value: boolean) {
+        this._enableIndeterminate = value;
+        this._valueCandidates = [CheckBoxStatus.unchecked, CheckBoxStatus.checked];
+        if (value) {
+            this._valueCandidates.push(CheckBoxStatus.indeterminate);
+        }
+        if (!this._enableIndeterminate && this._checked === CheckBoxStatus.indeterminate) {
+            this._checked = this._fixCheckValue(this._checked);
+            this._setCheckBoxClass();
+            setTimeout(() => this.checkedChange.emit(this._checked));
+        }
+    }
+
     private _checked: CheckBoxStatus = CheckBoxStatus.unchecked;
     @Input()
     public get checked(): CheckBoxValue {
@@ -55,27 +74,8 @@ export class RdkCheckBox extends AbstractRDKComponent implements OnInit, AfterCo
         this._setCheckBoxClass();
     }
 
-    private _enableIndeterminate: boolean = false;
-    @Input()
-    public get enableIndeterminate(): boolean {
-        return this._enableIndeterminate;
-    }
-
-    public set enableIndeterminate(value: boolean) {
-        this._enableIndeterminate = value;
-        this._valueCandidates = [CheckBoxStatus.unchecked, CheckBoxStatus.checked];
-        if (value) {
-            this._valueCandidates.push(CheckBoxStatus.indeterminate);
-        }
-        if (!this._enableIndeterminate && this._checked === CheckBoxStatus.indeterminate) {
-            this._checked = this._fixCheckValue(this._checked);
-            this._setCheckBoxClass();
-            setTimeout(() => this.checkedChange.emit(this._checked));
-        }
-    }
-
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef){
-        super()
+        super();
     }
 
     public ngOnInit() {
@@ -99,6 +99,7 @@ export class RdkCheckBox extends AbstractRDKComponent implements OnInit, AfterCo
 
     private _fixCheckValue(value:CheckBoxValue):CheckBoxStatus {
         let v:CheckBoxStatus;
+        debugger;
         if (value === undefined || value == null) {
             v = CheckBoxStatus.unchecked;
         } else if (typeof value === 'number') {
