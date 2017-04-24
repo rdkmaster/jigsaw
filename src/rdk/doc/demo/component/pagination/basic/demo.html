@@ -1,11 +1,14 @@
 <h4>pagenation</h4>
-<rdk-pagination [total]="550" [pageSize]="10"
+<button style="margin: 10px 0" (click)="changeCurrentPage(6)">第6页</button><br>
+<rdk-pagination [total]="550"
+                [pageSize]="10"
+                [(current)]="currentPage"
                 [pageSizeOptions]="[5, 10, 20]"
                 [searchable]="true"
                 [showQuickJumper]="true"
-                (currentPageChange)="getCurrentPage($event)"
+                (currentChange)="getCurrentPage($event)"
                 (pageSizeChange)="getPageSize($event)"
-                width="700px"
-                >
+                width="700px">
 </rdk-pagination>
+<p>当前第{{currentPage}}页</p>
 

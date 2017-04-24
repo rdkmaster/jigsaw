@@ -9,6 +9,11 @@ import {RdkSelectModule} from '../select/select';
 import {RdkInputModule} from '../input/input';
 import {AbstractRDKComponent} from "../core";
 
+type PageSizeData = {
+    value: number,
+    label: string
+}
+
 @Component({
     selector: 'rdk-pagination',
     templateUrl: 'pagination.html',
@@ -29,89 +34,65 @@ export class RdkPagination extends AbstractRDKComponent implements OnInit, After
     private _lastPage: RdkPagingItem;
     private _pageSizeOptions: any[];
     private _hostInit: boolean = false;
+    private _pageNumberInit: boolean = false;
+    // TODO 国际化
+    private _pageSize: PageSizeData = {value: null, label: 'null/Page'};
 
-    // 当前页
+    // 当前页(双绑)
     @Input()
     public get current(): number {
         return this._current
     };
 
     public set current(newValue: number) {
-        if (this._current != newValue || this._hostInit) {
+        newValue = newValue ? newValue : 1; //双绑初始值为undefined或null时，设默认值为1
+        if (this.current != newValue) {
             this._current = newValue;
-            //page显示形式
-            this._pageShow(newValue);
-
-            //prevPages nextPages 显示
-            this._showPrevAndNextBtn();
-
-            //prevPage nextPage 不可点
-            this._canablePrevAndNext();
-
-            this._hostInit ? this._hostInit = false : null;
-
-            this.currentPageChange.emit(newValue);
+            this.currentChange.emit(newValue);
+            if (this._hostInit && this._pageNumberInit) {
+                this._setCurrentShow();
+            }
         }
     }
 
-    // private _defaultCurrent: number = 1;
-    // // 默认当前页
-    // @Input()
-    // public get defaultCurrent(): number {
-    //     return this._defaultCurrent;
-    // }
-    //
-    // public set defaultCurrent(newValue: number) {
-    //     if (this._defaultCurrent != newValue) {
-    //         this._defaultCurrent = newValue;
-    //     }
-    // };
+    @Output() public currentChange: EventEmitter<any> = new EventEmitter<any>(); //页码改变的事件
+
+    private _total: number; // 数据总数
 
     @Input()
-    public total: number; // 数据总数
+    get total(): number {
+        return this._total;
+    }
+
+    set total(value: number) {
+        if(this._total != value){
+            this._total = value;
+            if(this._hostInit){
+                this._renderPages();
+            }
+        }
+    }
 
     @Output()
     public pageSizeChange: EventEmitter<number> = new EventEmitter<number>(); // pageSize 变化的事件
 
-    // TODO 国际化
-    private _pageSize = {value: 10, label: '10/Page'};
     // 每页条数
     @Input()
-    public get pageSize():number {
-        return this._pageSize.value;
+    public get pageSize(): number {
+        return this._pageSize ? this._pageSize.value : null;
     }
 
-    public set pageSize(newValue:number) {
-        if (this._pageSize.value == newValue) {
-            return;
-        }
-        this._pageSize.value = newValue;
-        this._pageSize.label = newValue + '10/Page';
-        this.pageSizeChange.emit(newValue);
-
-        this._init();
-    }
-
-    private _init(): void {
-        //计算总页数
-        let _pageArr = [];
-        this._totalPage = Math.ceil(this.total / this.pageSize);
-        for (let i = 0; i < this._totalPage; i++) {
-            _pageArr.push(i + 1);
-        }
-        console.log(this._pageNumbers);
-        this._pageNumbers = _pageArr;
-        console.log(this._pageNumbers);
-
-        //判断上一页、下一页按钮可用性
-        if (this._totalPage == 1) {
-            this._prevDisabled = true;
-            this._nextDisabled = true;
+    public set pageSize(newValue: number) {
+        newValue = newValue ? newValue : 10;
+        if (this.pageSize != newValue) {
+            this._pageSize.value = newValue;
+            this._pageSize.label = newValue + '/Page';
+            this.pageSizeChange.emit(newValue);
+            if(this._hostInit){
+                this._renderPages();
+            }
         }
     }
-
-    @Input()
-    public showPageSizeBox: boolean; // 是否可以改变pageSize
 
     // 指定每页可以显示多少条
     @Input()
@@ -133,50 +114,55 @@ export class RdkPagination extends AbstractRDKComponent implements OnInit, After
 
     @Input() public size: string; // 当为「small」时，是小尺寸分页
 
-    @Output() public currentPageChange: EventEmitter<any> = new EventEmitter<any>(); //页码改变的事件
-
     @ViewChildren(forwardRef(() => RdkPagingItem))
     private _pages: QueryList<RdkPagingItem> = null;
 
     /*
-     * 根据page组件的当前选择改变current值
+     * 根据current设置page按钮的显示，上一页，下一页，上五页，下五页的显示
      * */
-    public changeCurrent(pageTrigger): void {
-        this._pages.forEach((page) => {
-            if (page !== pageTrigger) {
-                page.current = false;
-            }
-        });
-        this.current = pageTrigger.page;
+    private _setCurrentShow() {
+        //page显示形式
+        this._pageShow();
+
+        //prevPages nextPages 显示
+        this._showPrevAndNextBtn();
+
+        //prevPage nextPage 不可点
+        this._canablePrevAndNext();
+
+        //设置当前页
+        this._setCurrentPage();
     }
 
     /*
-     * 根据defaultCurrent改变current和page组件的当前选择
+     * 根据current设置当前页
      * */
-    private _changePage(): void {
-        const page = this._pages.find(page => page.page == this.current);
-        if (page) {
-            page.setCurrent();
-        }
-        this._hostInit = true;
+    private _setCurrentPage(): void {
+        this._pages.forEach(page => {
+            if (page.pageNumber != this.current) {
+                page.current = false;
+            } else {
+                page.current = true;
+            }
+        });
     }
 
     /*
      * 根据current控制page显示
      * */
-    private _pageShow(pageNum): void {
+    private _pageShow(): void {
         if (this._totalPage > 10) {
-            if (pageNum <= 3) {
+            if (this.current <= 3) {
                 this._showPages = [1, 2, 3, 4, 5, this._totalPage];
-            } else if (pageNum >= this._totalPage - 2) {
+            } else if (this.current >= this._totalPage - 2) {
                 this._showPages = [1, this._totalPage - 4, this._totalPage - 3, this._totalPage - 2, this._totalPage - 1, this._totalPage];
             } else {
-                this._showPages = [1, pageNum - 2, pageNum - 1, pageNum, pageNum + 1, pageNum + 2, this._totalPage];
+                this._showPages = [1, this.current - 2, this.current - 1, this.current, this.current + 1, this.current + 2, this._totalPage];
             }
             this._pages.forEach(page => {
-                this._showPages.indexOf(page.page) != -1 ? page.show() : page.hide();
+                this._showPages.indexOf(page.pageNumber) != -1 ? page.show() : page.hide();
             });
-        }else{
+        } else {
             this._pages.forEach(page => {
                 page.show();
             });
@@ -189,11 +175,11 @@ export class RdkPagination extends AbstractRDKComponent implements OnInit, After
     private _pagePrev(): void {
         let pageCur = this._pages.find(page => page.current == true);
         if (!pageCur) return;
-        let pageNum = pageCur.page;
+        let pageNum = pageCur.pageNumber;
         if (pageNum == 1) return;
-        pageCur.cancleCurrent();
+        pageCur.cancelCurrent();
         pageNum -= 1;
-        this._pages.find(page => page.page == pageNum).setCurrent();
+        this._pages.find(page => page.pageNumber == pageNum).setCurrent();
         this.current = pageNum;
     }
 
@@ -203,11 +189,11 @@ export class RdkPagination extends AbstractRDKComponent implements OnInit, After
     private _pageNext(): void {
         let pageCur = this._pages.find(page => page.current == true);
         if (!pageCur) return;
-        let pageNum = pageCur.page;
+        let pageNum = pageCur.pageNumber;
         if (pageNum == this._totalPage) return;
-        pageCur.cancleCurrent();
+        pageCur.cancelCurrent();
         pageNum += 1;
-        this._pages.find(page => page.page == pageNum).setCurrent();
+        this._pages.find(page => page.pageNumber == pageNum).setCurrent();
         this.current = pageNum;
     }
 
@@ -217,11 +203,11 @@ export class RdkPagination extends AbstractRDKComponent implements OnInit, After
     public pagesNext(): void {
         let pageCur = this._pages.find(page => page.current == true);
         if (!pageCur) return;
-        pageCur.cancleCurrent();
-        let pageNum = pageCur.page;
+        pageCur.cancelCurrent();
+        let pageNum = pageCur.pageNumber;
         pageNum = pageNum + 5;
         if (pageNum > this._totalPage) pageNum = this._totalPage;
-        this._pages.find(page => page.page == pageNum).setCurrent();
+        this._pages.find(page => page.pageNumber == pageNum).setCurrent();
         this.current = pageNum;
     }
 
@@ -231,11 +217,11 @@ export class RdkPagination extends AbstractRDKComponent implements OnInit, After
     public pagesPrev(): void {
         let pageCur = this._pages.find(page => page.current == true);
         if (!pageCur) return;
-        pageCur.cancleCurrent();
-        let pageNum = pageCur.page;
+        pageCur.cancelCurrent();
+        let pageNum = pageCur.pageNumber;
         pageNum = pageNum - 5;
         if (pageNum < 1) pageNum = 1;
-        this._pages.find(page => page.page == pageNum).setCurrent();
+        this._pages.find(page => page.pageNumber == pageNum).setCurrent();
         this.current = pageNum;
     }
 
@@ -265,15 +251,21 @@ export class RdkPagination extends AbstractRDKComponent implements OnInit, After
      * 获取第一个和最后一个page组件实例
      * */
     private _getFirstAndLastPage(): void {
-        this._firstPage = this._pages.find(page => page.page == 1);
-        this._lastPage = this._pages.find(page => page.page == this._totalPage);
+        this._firstPage = this._pages.find(page => page.pageNumber == 1);
+        this._lastPage = this._pages.find(page => page.pageNumber == this._totalPage);
     }
 
+    /*
+     * 上一页、下一页按钮设置
+     * */
     private _canablePrevAndNext(): void {
-        if (this._current == 1) {
+        if (this._totalPage == 1) {
+            this._prevDisabled = true;
+            this._nextDisabled = true;
+        } else if (this.current == 1) {
             this._prevDisabled = true;
             this._nextDisabled = false;
-        } else if (this._current == this._totalPage) {
+        } else if (this.current == this._totalPage) {
             this._nextDisabled = true;
             this._prevDisabled = false;
         } else {
@@ -282,26 +274,62 @@ export class RdkPagination extends AbstractRDKComponent implements OnInit, After
         }
     }
 
+    /*
+     * goto功能
+     * */
     private _goto(pageNum): void {
         pageNum = parseInt(pageNum);
         if (pageNum <= this._totalPage && pageNum >= 1) {
-            this._pages.find(page => page.current == true).cancleCurrent();
-            this._pages.find(page => page.page == pageNum).setCurrent();
+            this._pages.find(page => page.current == true).cancelCurrent();
+            this._pages.find(page => page.pageNumber == pageNum).setCurrent();
             this.current = pageNum;
         }
     }
 
+    /*
+     * select组件改变pageSize
+     * */
+    private _changePageSize(pageSize) {
+        if (this.pageSize != pageSize.value) {
+            this._pageNumberInit = false;
+            this.current = 1;
+            this.pageSize = pageSize.value;
+        }
+    }
+
+    /*
+     * 渲染page按钮
+     * */
+    private _renderPages(): void {
+        //计算总页数
+        let pageNumbers = [];
+        this._totalPage = Math.ceil(this.total / this.pageSize);
+
+        //验证总页数合法性
+        if (isNaN(this._totalPage) || this._totalPage <= 0) return;
+
+        for (let i = 0; i < this._totalPage; i++) {
+            pageNumbers.push(i + 1);
+        }
+        this._pageNumbers = pageNumbers;
+
+        //验证current合法性
+        if (this.current <= 0 || this.current > this._totalPage) this.current = 1;
+
+        setTimeout(() => {
+            this._getFirstAndLastPage();
+            this._setCurrentShow();
+        }, 0);
+
+        this._pageNumberInit = true;
+    }
+
     ngOnInit() {
-        this._init();
+        this._renderPages();
+        this._hostInit = true;
     }
 
     ngAfterViewInit() {
-        setTimeout(() => {
-            //获取第一个和最后一个page组件实例
-            this._getFirstAndLastPage();
-            //根据defaultCurrent设置page组件的选中状态
-            this._changePage();
-        }, 1);
         this._pages.changes.subscribe(() => {
             setTimeout(() => {
                 //之前的上五页和下五页按钮居然有残留
@@ -311,11 +339,9 @@ export class RdkPagination extends AbstractRDKComponent implements OnInit, After
                     page.current = false;
                 });
 
-                //获取第一个和最后一个page组件实例
                 this._getFirstAndLastPage();
-                //根据defaultCurrent设置page组件的选中状态
-                this._changePage();
-            }, 1);
+                this._setCurrentShow();
+            }, 0);
         });
     }
 
@@ -339,7 +365,7 @@ export class RdkPagingItem {
     private _isShow: boolean = false;
     private _pagination: RdkPagination;
 
-    @Input() public page: number;
+    @Input() public pageNumber: number;
 
     constructor(@Optional() pagination: RdkPagination) {
         this._pagination = pagination;
@@ -347,8 +373,7 @@ export class RdkPagingItem {
 
     private _onClick(): void {
         if (!this.current) {
-            this.setCurrent();
-            this._pagination.changeCurrent(this);
+            this._pagination.current = this.pageNumber;
         }
     }
 
@@ -356,7 +381,7 @@ export class RdkPagingItem {
         this.current = true;
     }
 
-    public cancleCurrent(): void {
+    public cancelCurrent(): void {
         this.current = false;
     }
 
