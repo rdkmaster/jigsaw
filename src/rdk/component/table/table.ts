@@ -101,10 +101,12 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     private _columns: ColumnSetting[];
     private _additionalColumns: AdditionalColumnSetting[];
     private _removeRefreshCallback: CallbackRemoval;
-    private _inited: boolean;
-    private _defaultSorted: boolean;
+    private _hasInit: boolean; //组件是否已初始化
+    private _canSortDefault: boolean = true; //默认排序开关
+    private _canRenderHead: boolean = true; //渲染表头开关
     private _scrollBarOptions: Object;
-    private _isRenderHead: boolean = true;
+
+    public isSortRefresh : boolean; //data的排序onRefresh()
 
     @Input()
     public get data(): TableData {
@@ -119,15 +121,26 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
             this._removeRefreshCallback();
         }
         this._removeRefreshCallback = value.onRefresh(() => {
-            if (this._inited) {
-                this._isRenderHead = false; //关闭渲染表头开关
-                this._transformData();
-                this._isRenderHead = true; //排序完成，打开渲染表头开关
+            if (this._hasInit) {
+                if(this.isSortRefresh){
+                    this._canRenderHead = false; //关闭表头渲染
+                    this._canSortDefault = false; //关闭默认排序
+                }else{
+                    this._canRenderHead = true; //其他渲染打开表头渲染
+                    this._canSortDefault = true; //其他渲染打开默认排序
+                }
+
+                this._refresh();
+
+                //还原初始状态
+                this.isSortRefresh = false;
+                this._canRenderHead = true;
+                this._canSortDefault = true;
             }
         });
 
-        if (this._inited) {
-            this._reRender();
+        if (this._hasInit) {
+            this._refresh();
         }
     };
 
@@ -141,8 +154,8 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     set columns(value: ColumnSetting[]) {
         if (this.columns != value) {
             this._columns = value;
-            if (this._inited) {
-                this._reRender();
+            if (this._hasInit) {
+                this._refresh();
             }
         }
     }
@@ -155,8 +168,8 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     set additionalColumns(value: AdditionalColumnSetting[]) {
         if (this.additionalColumns != value) {
             this._additionalColumns = value;
-            if (this._inited) {
-                this._reRender();
+            if (this._hasInit) {
+                this._refresh();
             }
         }
     }
@@ -194,8 +207,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     /*
      * 重新渲染
      * */
-    private _reRender() {
-        this._defaultSorted = false; //打开默认排序开关
+    private _refresh() {
         this._transformData();
         this._asynAlignHead();//表头对齐
     }
@@ -289,7 +301,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * 过滤掉不显示的列
      * */
     private _filterSetttings(): void {
-        if (this._isRenderHead) {
+        if (this._canRenderHead) {
             this._headSettings = this._headSettings ? this._headSettings.filter(headSetting => headSetting.visible) : null;
         }
         this._cellSettings && this._cellSettings.forEach((cellSettings, index) => {
@@ -355,7 +367,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * 原始数据排序
      * */
     private _dataDefaultSort() {
-        if (!this._defaultSorted && this._columns) {
+        if (this._canSortDefault && this._columns) {
             //默认按第一个排序
             let column = this._columns.find(column =>
                 column.header
@@ -364,8 +376,6 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
                 && (column.header.defaultSortOrder == SortOrder.asc || column.header.defaultSortOrder == SortOrder.des)
             );
             column && this.data.sort(column.header.sortAs, column.header.defaultSortOrder, <string|number>column.target);
-
-            this._defaultSorted = true;
         }
     }
 
@@ -388,11 +398,11 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         //合并单元格
         this._mergeCellWithGroup();
 
-        this._inited = true;
+        this._hasInit = true;
     }
 
     private _initSettings(): void {
-        this._isRenderHead && this._initHeadSettings();
+        this._canRenderHead && this._initHeadSettings();
         this._initCellSettings();
     }
 
@@ -402,7 +412,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     private _mergeSettings(index, column: ColumnSetting): void {
-        this._isRenderHead && this._mergeHeaderSetting(index, column);
+        this._canRenderHead && this._mergeHeaderSetting(index, column);
         this._mergeCellSetting(index, column);
     }
 
@@ -455,7 +465,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         settingIndex = this._getSettingIndex(curPos);
 
         //插入列头
-        if (this._isRenderHead) {
+        if (this._canRenderHead) {
             let headSetting = <HeadSetting>CommonUtils.shallowCopy(this._headSettings[settingIndex]);
             headSetting.visible = true;
             headSetting.field = -1;
@@ -472,7 +482,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     private _insertSettings(pos, additionalColumn: AdditionalColumnSetting): void {
-        this._isRenderHead && this._insertHeaderSetting(pos, additionalColumn);
+        this._canRenderHead && this._insertHeaderSetting(pos, additionalColumn);
         this._insertCellSetting(pos, additionalColumn);
     }
 
@@ -777,6 +787,7 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
     styleUrls: ['table-head.scss']
 })
 export class RdkTableHeader extends TableCellBasic implements OnInit {
+    private _rdkTable: RdkTable;
     private _sortOrderClass: Object;
 
     private _setSortOrderClass(sortOrder: SortOrder): void {
@@ -798,8 +809,9 @@ export class RdkTableHeader extends TableCellBasic implements OnInit {
         }
     };
 
-    constructor(cfr: ComponentFactoryResolver, cd: ChangeDetectorRef) {
+    constructor(cfr: ComponentFactoryResolver, cd: ChangeDetectorRef, @Optional() rdkTable: RdkTable) {
         super(cfr, cd);
+        this._rdkTable = rdkTable;
     }
 
     private _sortAsc(): void {
@@ -812,6 +824,7 @@ export class RdkTableHeader extends TableCellBasic implements OnInit {
 
     private _sort(order: SortOrder): void {
         this._setSortOrderClass(order);
+        this._rdkTable.isSortRefresh = true; //tableData的refresh标记成排序的
         this.tableData.sort(this.sortAs, order, this.field);
     }
 
