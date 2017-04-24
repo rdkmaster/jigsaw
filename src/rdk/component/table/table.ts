@@ -98,11 +98,13 @@ export class TableCellBasic implements AfterViewInit {
 })
 export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnDestroy, OnInit {
     private _data: TableData;
+    private _columns: ColumnSetting[];
+    private _additionalColumns: AdditionalColumnSetting[];
     private _removeRefreshCallback: CallbackRemoval;
     private _inited: boolean;
     private _defaultSorted: boolean;
-
     private _scrollBarOptions: Object;
+    private _isRenderHead: boolean = true;
 
     @Input()
     public get data(): TableData {
@@ -117,22 +119,47 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
             this._removeRefreshCallback();
         }
         this._removeRefreshCallback = value.onRefresh(() => {
-            this._inited && this._transformData();
+            if (this._inited) {
+                this._isRenderHead = false; //关闭渲染表头开关
+                this._transformData();
+                this._isRenderHead = true; //排序完成，打开渲染表头开关
+            }
         });
 
         if (this._inited) {
-            this._transformData();
-            this._asynAlignHead();//表头对齐
+            this._reRender();
         }
     };
 
     @Output() public dataChange: EventEmitter<TableMsg> = new EventEmitter<TableMsg>();
 
     @Input()
-    public columns: ColumnSetting[];
+    get columns(): ColumnSetting[] {
+        return this._columns;
+    }
+
+    set columns(value: ColumnSetting[]) {
+        if (this.columns != value) {
+            this._columns = value;
+            if (this._inited) {
+                this._reRender();
+            }
+        }
+    }
 
     @Input()
-    public additionalColumns: AdditionalColumnSetting[];
+    get additionalColumns(): AdditionalColumnSetting[] {
+        return this._additionalColumns;
+    }
+
+    set additionalColumns(value: AdditionalColumnSetting[]) {
+        if (this.additionalColumns != value) {
+            this._additionalColumns = value;
+            if (this._inited) {
+                this._reRender();
+            }
+        }
+    }
 
     @Input()
     public set scrollAmount(value) {
@@ -165,9 +192,19 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     /*
+     * 重新渲染
+     * */
+    private _reRender() {
+        this._defaultSorted = false; //打开默认排序开关
+        this._transformData();
+        this._asynAlignHead();//表头对齐
+    }
+
+    /*
      * 初始化_headSettings
      * */
     private _initHeadSettings(): void {
+        this._headSettings = [];
         this.data.header.forEach((cellData, index) => {
             this._headSettings.push({
                 cellData: cellData,
@@ -211,7 +248,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * 列定义数据转换
      * */
     private _transformColumns(): void {
-        this.columns && this.columns.forEach(column => {
+        this._columns && this._columns.forEach(column => {
             if (column.target instanceof Function) {
                 let fields = this.data.field.filter(column.target);
                 fields.forEach(field => {
@@ -240,7 +277,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * 其他列定义数据转换
      * */
     private _transformAdditionalColumns(): void {
-        this.additionalColumns && this.additionalColumns.forEach(additionalColumn => {
+        this._additionalColumns && this._additionalColumns.forEach(additionalColumn => {
             let pos = additionalColumn.pos;
             const target = additionalColumn.target;
             pos = pos >= 0 && pos < this.data.header.length ? pos : -1;
@@ -252,7 +289,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * 过滤掉不显示的列
      * */
     private _filterSetttings(): void {
-        if (!this._inited) {
+        if (this._isRenderHead) {
             this._headSettings = this._headSettings ? this._headSettings.filter(headSetting => headSetting.visible) : null;
         }
         this._cellSettings && this._cellSettings.forEach((cellSettings, index) => {
@@ -318,9 +355,9 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * 原始数据排序
      * */
     private _dataDefaultSort() {
-        if (!this._defaultSorted && this.columns) {
+        if (!this._defaultSorted && this._columns) {
             //默认按第一个排序
-            let column = this.columns.find(column =>
+            let column = this._columns.find(column =>
                 column.header
                 && (typeof column.target === 'string' || typeof column.target === 'number')
                 && column.header.sortable
@@ -355,7 +392,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     private _initSettings(): void {
-        !this._inited && this._initHeadSettings();
+        this._isRenderHead && this._initHeadSettings();
         this._initCellSettings();
     }
 
@@ -365,7 +402,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     private _mergeSettings(index, column: ColumnSetting): void {
-        !this._inited && this._mergeHeaderSetting(index, column);
+        this._isRenderHead && this._mergeHeaderSetting(index, column);
         this._mergeCellSetting(index, column);
     }
 
@@ -418,7 +455,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         settingIndex = this._getSettingIndex(curPos);
 
         //插入列头
-        if (!this._inited) {
+        if (this._isRenderHead) {
             let headSetting = <HeadSetting>CommonUtils.shallowCopy(this._headSettings[settingIndex]);
             headSetting.visible = true;
             headSetting.field = -1;
@@ -435,7 +472,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     private _insertSettings(pos, additionalColumn: AdditionalColumnSetting): void {
-        !this._inited && this._insertHeaderSetting(pos, additionalColumn);
+        this._isRenderHead && this._insertHeaderSetting(pos, additionalColumn);
         this._insertCellSetting(pos, additionalColumn);
     }
 

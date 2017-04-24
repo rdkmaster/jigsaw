@@ -2,4 +2,8 @@
     change tableData
 </rdk-button>
 
-<rdk-table [data]="tableData" ></rdk-table>
+<rdk-button width="150" (click)="columnsChange()">
+    change columns
+</rdk-button>
+
+<rdk-table [data]="tableData" [columns]="columns"></rdk-table>

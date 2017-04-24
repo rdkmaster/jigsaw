@@ -1,5 +1,7 @@
 import {Component} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
+import {ColumnSetting} from "../../../../../component/table/table-api";
+import {TableCellDefault} from "../../../../../component/table/table-renderer";
 
 @Component({
   templateUrl: 'dataChange.html'
@@ -166,9 +168,40 @@ export class TableDataChangeDemoComponent {
             ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
     }
 
+    columns: ColumnSetting[] = [
+        {
+            target: 'name',
+            width: '15%',
+            cell: {
+                renderer: TableCellDefault,
+            }
+        },
+    ];
+
     dataChange(){
         this.tableData = new TableData(this.tableData.data.slice(0,3),this.tableData.field,this.tableData.header);
         console.log(this.tableData.data)
+    }
+
+    columnsChange(){
+        this.columns = [
+            {
+                target: 'position',
+                width: '20%',
+                cell: {
+                    renderer: TableCellDefault,
+                }
+            },
+        ];
+
+        //暂不支持修改数组
+        /*this.columns.push({
+            target: 'position',
+            width: '20%',
+            cell: {
+                renderer: TableCellDefault,
+            }
+        },)*/
     }
 }
 
