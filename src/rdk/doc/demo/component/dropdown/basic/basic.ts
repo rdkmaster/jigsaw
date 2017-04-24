@@ -14,30 +14,7 @@ import {DropDownMode, RdkDropDown, DropDownTrigger} from "../../../../../compone
     `]
 })
 export class RdkDropDownInput implements OnInit {
-    name: string = "Lily";
 
-    @ViewChild('dropDown') dropDown:RdkDropDown;
-
-    mode = DropDownMode.multiple;
-
-    formSubmit() {
-        this.dropDown.close();
-    }
-
-    private trigger = DropDownTrigger.click;
-    changeTriger() {
-        this.trigger = DropDownTrigger.hover;
-    }
-
-    disabled = false;
-    changeDisabled() {
-        this.disabled = true;
-    }
-
-    width
-    changeWidth() {
-        this.width = "120%";
-    }
 
     constructor() { }
 

@@ -9,13 +9,34 @@ import {RouterModule} from "@angular/router";
 import {RdkDropDownModule} from "../../../../component/dropdown/index";
 import {DropDownMultipleDemo} from "./multiple/multiple";
 import {RdkTileSelectModule} from "../../../../component/tile-select/tile-select";
+import {RdkDropDownTrigger} from "./trigger/trigger";
+import {RdkButtonModule} from "../../../../component/button/button";
+import {RdkDropDownDisable} from "./disable/disable";
+import {DropDownAutoWidthDemo} from "./autoWidth/autoWidth";
+import {DropDownLabelFieldDemo} from "./labelField/labelField";
+import {DropDownWidthDemo} from "./dropdownWidth/dropDownWidth";
+import {DropDownChangeDemo} from "./change/change";
 
 const routes = [
     {
         path: 'basic', component:RdkDropDownInput
     },
     {
+        path: 'trigger', component:RdkDropDownTrigger
+    },{
+        path: 'disable', component:RdkDropDownDisable
+    },
+    {
         path: 'multiple', component:DropDownMultipleDemo
+    },
+    {
+        path: 'autoWidth', component:DropDownAutoWidthDemo
+    },{
+        path: 'labelField', component:DropDownLabelFieldDemo
+    },{
+        path: 'dropDownWidth', component:DropDownWidthDemo
+    },{
+        path: 'change', component:DropDownChangeDemo
     }
 ]
 
@@ -23,9 +44,12 @@ const routes = [
     imports: [
         RouterModule.forChild(routes),
         RdkDropDownModule,
-        RdkTileSelectModule],
+        RdkTileSelectModule,
+        RdkButtonModule],
     exports: [RdkDropDownInput, DropDownMultipleDemo],
-    declarations: [RdkDropDownInput,DropDownMultipleDemo],
+    declarations: [RdkDropDownInput,DropDownMultipleDemo,RdkDropDownTrigger,
+                   RdkDropDownDisable,DropDownAutoWidthDemo,DropDownLabelFieldDemo,
+        DropDownWidthDemo,DropDownChangeDemo],
     providers: [],
 })
 export class DropDownDemoModule { }

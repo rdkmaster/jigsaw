@@ -1,0 +1,8 @@
+<rdk-drop-down placeholder="请输入姓名~" [value]="selectedCity" [mode]="mode"
+               (change)="change($event)" >
+    <rdk-tile-select [(selectedItems)]="selectedCity" labelField="label"
+                     [multipleSelect]="true" [searchable]="true"
+                     [data]="citys"
+                     tileOptionWidth="100px">
+    </rdk-tile-select>
+</rdk-drop-down>
