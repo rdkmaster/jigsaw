@@ -260,7 +260,8 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * 列定义数据转换
      * */
     private _transformColumns(): void {
-        this._columns && this._columns.forEach(column => {
+        if(!this._columns) return;
+        this._columns.forEach(column => {
             if (column.target instanceof Function) {
                 let fields = this.data.field.filter(column.target);
                 fields.forEach(field => {
@@ -289,7 +290,8 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * 其他列定义数据转换
      * */
     private _transformAdditionalColumns(): void {
-        this._additionalColumns && this._additionalColumns.forEach(additionalColumn => {
+        if(!this._additionalColumns) return;
+        this._additionalColumns.forEach(additionalColumn => {
             let pos = additionalColumn.pos;
             const target = additionalColumn.target;
             pos = pos >= 0 && pos < this.data.header.length ? pos : -1;
@@ -300,13 +302,15 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     /*
      * 过滤掉不显示的列
      * */
-    private _filterSetttings(): void {
+    private _filterSettings(): void {
         if (this._canRenderHead) {
             this._headSettings = this._headSettings ? this._headSettings.filter(headSetting => headSetting.visible) : null;
         }
-        this._cellSettings && this._cellSettings.forEach((cellSettings, index) => {
-            this._cellSettings[index] = cellSettings.filter(cellSetting => cellSetting.visible);
-        });
+        if(this._cellSettings){
+            this._cellSettings.forEach((cellSettings, index) => {
+                this._cellSettings[index] = cellSettings.filter(cellSetting => cellSetting.visible);
+            });
+        }
     }
 
     /*
@@ -375,7 +379,9 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
                 && column.header.sortable
                 && (column.header.defaultSortOrder == SortOrder.asc || column.header.defaultSortOrder == SortOrder.des)
             );
-            column && this.data.sort(column.header.sortAs, column.header.defaultSortOrder, <string|number>column.target);
+            if(column){
+                this.data.sort(column.header.sortAs, column.header.defaultSortOrder, <string|number>column.target);
+            }
         }
     }
 
@@ -393,7 +399,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         this._transforms();
 
         //过滤掉不显示的列
-        this._filterSetttings();
+        this._filterSettings();
 
         //合并单元格
         this._mergeCellWithGroup();
@@ -402,7 +408,9 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     private _initSettings(): void {
-        this._canRenderHead && this._initHeadSettings();
+        if(this._canRenderHead){
+            this._initHeadSettings();
+        }
         this._initCellSettings();
     }
 
@@ -412,7 +420,9 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     private _mergeSettings(index, column: ColumnSetting): void {
-        this._canRenderHead && this._mergeHeaderSetting(index, column);
+        if(this._canRenderHead){
+            this._mergeHeaderSetting(index, column);
+        }
         this._mergeCellSetting(index, column);
     }
 
@@ -439,7 +449,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     /*
      * 根据元素在field的index找到在settings中的index
      * */
-    private _getSettingIndex(pos) {
+    private _getSettingIndex(pos): number {
         let settingIndex = null;
         for (let i = 0; i < this._headSettings.length; i++) {
             if (this._headSettings[i].field == pos) {
@@ -482,7 +492,9 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     private _insertSettings(pos, additionalColumn: AdditionalColumnSetting): void {
-        this._canRenderHead && this._insertHeaderSetting(pos, additionalColumn);
+        if(this._canRenderHead){
+            this._insertHeaderSetting(pos, additionalColumn);
+        }
         this._insertCellSetting(pos, additionalColumn);
     }
 
@@ -746,7 +758,9 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
             }
         });
 
-        this.goEditCallback && this.goEditCallback();
+        if(this.goEditCallback){
+            this.goEditCallback();
+        }
 
         this.changeDetector.detectChanges();
     }
@@ -768,7 +782,9 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
         //绑定点击事件
         this._onClick();
 
-        this.editable && this._rdr.setStyle(this._el.nativeElement, 'cursor', 'pointer');
+        if(this.editable){
+            this._rdr.setStyle(this._el.nativeElement, 'cursor', 'pointer');
+        }
     }
 
 }
