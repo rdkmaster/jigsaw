@@ -34,8 +34,9 @@ export class RdkPagination extends AbstractRDKComponent implements OnInit, After
     private _lastPage: RdkPagingItem;
     private _pageSizeOptions: any[];
     private _hostInit: boolean = false;
+    private _pageNumberInit: boolean = false;
     // TODO 国际化
-    private _pageSize: PageSizeData = {value: 10, label: '10/Page'};
+    private _pageSize: PageSizeData = {value: null, label: 'null/Page'};
 
     // 当前页(双绑)
     @Input()
@@ -48,7 +49,7 @@ export class RdkPagination extends AbstractRDKComponent implements OnInit, After
         if (this.current != newValue) {
             this._current = newValue;
             this.currentChange.emit(newValue);
-            if (this._hostInit) {
+            if (this._hostInit && this._pageNumberInit) {
                 this._setCurrentShow();
             }
         }
@@ -56,8 +57,21 @@ export class RdkPagination extends AbstractRDKComponent implements OnInit, After
 
     @Output() public currentChange: EventEmitter<any> = new EventEmitter<any>(); //页码改变的事件
 
+    private _total: number; // 数据总数
+
     @Input()
-    public total: number; // 数据总数
+    get total(): number {
+        return this._total;
+    }
+
+    set total(value: number) {
+        if(this._total != value){
+            this._total = value;
+            if(this._hostInit){
+                this._renderPages();
+            }
+        }
+    }
 
     @Output()
     public pageSizeChange: EventEmitter<number> = new EventEmitter<number>(); // pageSize 变化的事件
@@ -70,11 +84,13 @@ export class RdkPagination extends AbstractRDKComponent implements OnInit, After
 
     public set pageSize(newValue: number) {
         newValue = newValue ? newValue : 10;
-        if (this.pageSize != newValue || !this._hostInit) { //未初始化 或者 值不等于当前值
+        if (this.pageSize != newValue) {
             this._pageSize.value = newValue;
             this._pageSize.label = newValue + '/Page';
             this.pageSizeChange.emit(newValue);
-            this._renderPages();
+            if(this._hostInit){
+                this._renderPages();
+            }
         }
     }
 
@@ -275,9 +291,9 @@ export class RdkPagination extends AbstractRDKComponent implements OnInit, After
      * */
     private _changePageSize(pageSize) {
         if (this.pageSize != pageSize.value) {
-            this._hostInit = false; //重新初始化
-            this.pageSize = pageSize.value;
+            this._pageNumberInit = false;
             this.current = 1;
+            this.pageSize = pageSize.value;
         }
     }
 
@@ -303,12 +319,14 @@ export class RdkPagination extends AbstractRDKComponent implements OnInit, After
         setTimeout(() => {
             this._getFirstAndLastPage();
             this._setCurrentShow();
-            this._hostInit = true;
         }, 0);
+
+        this._pageNumberInit = true;
     }
 
     ngOnInit() {
         this._renderPages();
+        this._hostInit = true;
     }
 
     ngAfterViewInit() {
@@ -323,7 +341,6 @@ export class RdkPagination extends AbstractRDKComponent implements OnInit, After
 
                 this._getFirstAndLastPage();
                 this._setCurrentShow();
-                this._hostInit = true;
             }, 0);
         });
     }
