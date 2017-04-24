@@ -194,14 +194,5 @@ export class TableRendererDemoComponent {
 
     private _changeMsg: string;
 
-    /*total = 200;
-
-     public getCurrentPage(message:any){
-     console.log("current page message is: "+message);
-     }
-     public getPageSize(message:any){
-     console.log("page size is: "+message);
-     }*/
-
 }
 

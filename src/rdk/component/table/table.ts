@@ -119,6 +119,11 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         this._removeRefreshCallback = value.onRefresh(() => {
             this._inited && this._transformData();
         });
+
+        if (this._inited) {
+            this._transformData();
+            this._asynAlignHead();//表头对齐
+        }
     };
 
     @Output() public dataChange: EventEmitter<TableMsg> = new EventEmitter<TableMsg>();
@@ -130,11 +135,11 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     public additionalColumns: AdditionalColumnSetting[];
 
     @Input()
-    public set scrollAmount(value){
-        if(typeof value == 'number' && value > 0){
+    public set scrollAmount(value) {
+        if (typeof value == 'number' && value > 0) {
             this._scrollBarOptions = {
                 snapAmount: 30,
-                mouseWheel:{ enable: true, scrollAmount: 30 * value }
+                mouseWheel: {enable: true, scrollAmount: 30 * value}
             };
         }
     }
@@ -580,15 +585,10 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         }
     }
 
-    ngOnInit() {
-        if(this.data instanceof TableData){
-            this._transformData();
-        }
-    }
-
-    ngAfterViewInit() {
-        this._setScrollBar();
-
+    /*
+     * 表头对齐
+     * */
+    private _asynAlignHead() {
         setTimeout(() => {
             this._setFixedHeadWidth();
         }, 0);
@@ -596,6 +596,18 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         setTimeout(() => {
             this._setFixedHeadWidth();
         }, 1000);
+    }
+
+    ngOnInit() {
+        if (this.data instanceof TableData) {
+            this._transformData();
+        }
+    }
+
+    ngAfterViewInit() {
+        this._setScrollBar();
+
+        this._asynAlignHead();
 
         this._windowLoadListen = this._renderer.listen('window', 'load', () => {
             this._setFixedHeadWidth();
