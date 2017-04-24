@@ -1,0 +1,28 @@
+<div class="rdk-slider"
+    [class.rdk-slider-disabled]="disabled"
+    [class.rdk-slider-with-marks]="marks&& marks.length > 0"
+>
+    <!--(mousedown)="_updateCanDragged(true)"-->
+    <!--(mouseup)="_updateValuePosition($event)"-->
+    <!--(click)="_updateCanDragged(false)"-->
+
+    <div class="rdk-slider-rail"></div>
+    <div class="rdk-slider-track" [ngStyle]="_trackStyle"></div>
+
+    <div class="rdk-slider-step">
+        <span *ngFor="let mark of marks" class="rdk-slider-dot rdk-slider-dot-active"
+              [style.left.%]="mark.left"></span>
+    </div>
+
+    <slider-handle *ngFor="let item of _value;let i = index" [max]="max" [min]="min" [value]="item"
+                   [step]="step" [dimensions]="_dimensions" [key]="i" (change)="_handleValueChange(i, $event)">
+    </slider-handle>
+
+    <div class="rdk-slider-mark">
+        <span *ngFor="let mark of marks" class="rdk-slider-mark-text"
+              ngClass="{{mark.class}}"
+              [style.left.%]="mark.left"
+              [style.width.%]="mark.width"
+              [style.margin-left.%]="mark.marginLeft"> {{mark.style}}-{{mark.label}}</span>
+    </div>
+</div>
