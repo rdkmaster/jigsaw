@@ -1,0 +1,10 @@
+
+<rdk-button (click)="changeDisabled()">变为不可编辑</rdk-button>
+
+
+<rdk-drop-down [disabled]="disabled" [value]=name.value>
+    <label for="">姓名: </label>
+    <input type="text" placeholder="请输入姓名~" #name/>
+</rdk-drop-down>
+<br>
+<br>

@@ -1,4 +1,7 @@
-<rdk-drop-down placeholder="请输入姓名~" [value]=name.value>
+<rdk-button (click)="changeTriger()">hover触发</rdk-button>
+
+
+<rdk-drop-down [trigger]="trigger" [value]=name.value>
     <label for="">姓名: </label>
     <input type="text" placeholder="请输入姓名~" #name/>
 </rdk-drop-down>
