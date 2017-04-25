@@ -52,7 +52,6 @@ export class TableHeadCheckbox extends TableCellRenderer implements OnInit{
         }, () => {
             this.tableRendererService.headState = this.cellData = 2;
         });
-        this.tableRendererService.headState = this.cellData = 0;
     }
 }
 
@@ -69,9 +68,7 @@ export class TableCellCheckbox extends TableCellRenderer implements OnInit{
 
     private _checkboxState: CheckboxState;
 
-    private _setCheckboxState(checked){
-        this._checkboxState.checked = checked;
-
+    private _setHeadCheckboxState(){
         if(!this.tableRendererService.checkboxStates.find(checkboxState => checkboxState.checked == false)){
             this.tableRendererService.headState != 1 && this.tableRendererService.headSelect();
         }else if(!this.tableRendererService.checkboxStates.find(checkboxState => checkboxState.checked == true)){
@@ -81,12 +78,20 @@ export class TableCellCheckbox extends TableCellRenderer implements OnInit{
         }
     }
 
+    private _setCheckboxState(checked){
+        this._checkboxState.checked = checked;
+        this._setHeadCheckboxState();
+    }
+
     ngOnInit(){
         this.cellData = this.cellData ? 1 : 0;
         this.tableRendererService.listen(() => {this._checkboxState.checked = this.cellData = 1},
             () => {this._checkboxState.checked = this.cellData = 0});
         this._checkboxState = {row: this.row, checked: this.cellData};
         this.tableRendererService.checkboxStates.push(this._checkboxState);
+        if(this.tableRendererService.headState != 2){
+            this._setHeadCheckboxState();
+        }
     }
 }
 
