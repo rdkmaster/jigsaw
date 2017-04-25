@@ -1,9 +1,9 @@
 import {Component, OnInit} from "@angular/core";
-import {TreeData} from "../../../../../component/ztree/ztree-ext"
-import {ZTreeSettingSetting} from "../../../../../component/ztree/ztree-types"
-import {Headers, Http, RequestOptions} from "@angular/http";
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/map';
+import {ZTreeSettingSetting} from "../../../../../component/ztree/ztree-types";
+import {Http} from "@angular/http";
+import "rxjs/add/operator/toPromise";
+import "rxjs/add/operator/map";
+import {TreeData} from "../../../../../core/data/tree-data";
 
 @Component({
     template: `
@@ -27,67 +27,7 @@ import 'rxjs/add/operator/map';
 })
 export class ZtreeDemoComponent implements OnInit {
     public setting1: ZTreeSettingSetting = {};
-    public data1: TreeData[] = [
-        {
-            label: "父节点1 - 展开",
-            open: true,
-            nodes: [
-                {
-                    label: "父节点11 - 折叠",
-                    nodes: [
-                        {label: "叶子节点111"},
-                        {label: "叶子节点112"},
-                        {label: "叶子节点113"},
-                        {label: "叶子节点114"}
-                    ]
-                },
-                {
-                    label: "父节点12 - 折叠",
-                    nodes: [
-                        {label: "叶子节点121"},
-                        {label: "叶子节点122"},
-                        {label: "叶子节点123"},
-                        {label: "叶子节点124"}
-                    ]
-                },
-                {label: "父节点13 - 没有子节点", isParent: true}
-            ]
-        },
-        {
-            label: "父节点2 - 折叠",
-            nodes: [
-                {
-                    label: "父节点21 - 展开", open: true,
-                    nodes: [
-                        {label: "叶子节点211"},
-                        {label: "叶子节点212"},
-                        {label: "叶子节点213"},
-                        {label: "叶子节点214"}
-                    ]
-                },
-                {
-                    label: "父节点22 - 折叠",
-                    nodes: [
-                        {label: "叶子节点221"},
-                        {label: "叶子节点222"},
-                        {label: "叶子节点223"},
-                        {label: "叶子节点224"}
-                    ]
-                },
-                {
-                    label: "父节点23 - 折叠",
-                    nodes: [
-                        {label: "叶子节点231"},
-                        {label: "叶子节点232"},
-                        {label: "叶子节点233"},
-                        {label: "叶子节点234"}
-                    ]
-                }
-            ]
-        },
-        {label: "父节点3 - 没有子节点", isParent: true}
-
-    ];
+    public data1 = new TreeData();
     public currentRenameLabel: string;
     public afterRenameLabel: string;
 
@@ -140,7 +80,7 @@ export class ZtreeDemoComponent implements OnInit {
     public onRename(msg: any) {
         console.log("onRename");
         this.afterRenameLabel = msg.treeNode.label;
-        this.findLabel(this.data1,this.currentRenameLabel,this.afterRenameLabel);
+        this.findLabel(this.data1.nodes,this.currentRenameLabel,this.afterRenameLabel);
         this.setTreeData();
     }
 
@@ -160,7 +100,68 @@ export class ZtreeDemoComponent implements OnInit {
 
     }
 
-    constructor(public http: Http) {}
+    constructor(public http: Http) {
+        this.data1.fromObject([
+            {
+                label: "父节点1 - 展开",
+                open: true,
+                nodes: [
+                    {
+                        label: "父节点11 - 折叠",
+                        nodes: [
+                            {label: "叶子节点111"},
+                            {label: "叶子节点112"},
+                            {label: "叶子节点113"},
+                            {label: "叶子节点114"}
+                        ]
+                    },
+                    {
+                        label: "父节点12 - 折叠",
+                        nodes: [
+                            {label: "叶子节点121"},
+                            {label: "叶子节点122"},
+                            {label: "叶子节点123"},
+                            {label: "叶子节点124"}
+                        ]
+                    },
+                    {label: "父节点13 - 没有子节点", isParent: true}
+                ]
+            },
+            {
+                label: "父节点2 - 折叠",
+                nodes: [
+                    {
+                        label: "父节点21 - 展开", open: true,
+                        nodes: [
+                            {label: "叶子节点211"},
+                            {label: "叶子节点212"},
+                            {label: "叶子节点213"},
+                            {label: "叶子节点214"}
+                        ]
+                    },
+                    {
+                        label: "父节点22 - 折叠",
+                        nodes: [
+                            {label: "叶子节点221"},
+                            {label: "叶子节点222"},
+                            {label: "叶子节点223"},
+                            {label: "叶子节点224"}
+                        ]
+                    },
+                    {
+                        label: "父节点23 - 折叠",
+                        nodes: [
+                            {label: "叶子节点231"},
+                            {label: "叶子节点232"},
+                            {label: "叶子节点233"},
+                            {label: "叶子节点234"}
+                        ]
+                    }
+                ]
+            },
+            {label: "父节点3 - 没有子节点", isParent: true}
+        ]);
+    }
 
     public setTreeData() {
         //todo post修改这个地方

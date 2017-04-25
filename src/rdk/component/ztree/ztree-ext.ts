@@ -3,12 +3,8 @@ import {AbstractRDKComponent} from "rdk/component/core";
 import {InternalUtils} from "../../core/utils/internal-utils";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {ZTreeSettingSetting} from "./ztree-types";
+import {TreeData} from "../../core/data/tree-data";
 
-export class TreeData {
-    [index: string]: any;
-    label: string;
-    nodes?: TreeData[];
-}
 export class TreeEventData {
     treeId: string;
     treeNode: object;
@@ -41,13 +37,13 @@ export class RdkTreeExt extends AbstractRDKComponent implements AfterViewInit, O
         this._updateTree();
     }
 
-    public _data: TreeData[] = [];
+    public _data: TreeData;
     @Input()
-    public get data(): TreeData[] {
+    public get data(): TreeData {
         return this._data;
     }
 
-    public set data(data: TreeData[]) {
+    public set data(data: TreeData) {
         this._data = data;
         this._updateTree();
     }
@@ -84,7 +80,7 @@ export class RdkTreeExt extends AbstractRDKComponent implements AfterViewInit, O
 
     private _updateTree() {
         if (!this._setting || !this._data) return;
-        $.fn.zTree.init($('#' + this.uniqueId), this._setting, this._data);
+        $.fn.zTree.init($('#' + this.uniqueId), this._setting, this._data.nodes);
     }
 
     private _defaultSetting() {
