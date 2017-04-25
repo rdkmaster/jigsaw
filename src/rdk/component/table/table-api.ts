@@ -32,7 +32,7 @@ export type AdditionalColumnSetting = {
 
 export type TableMsg = {
     field: string|number,
-    row: number,
+    row: number|number[],
     column: number,
     rawColumn: number,
     cellData: string|number,
