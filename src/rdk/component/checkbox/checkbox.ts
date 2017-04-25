@@ -99,7 +99,6 @@ export class RdkCheckBox extends AbstractRDKComponent implements OnInit, AfterCo
 
     private _fixCheckValue(value:CheckBoxValue):CheckBoxStatus {
         let v:CheckBoxStatus;
-        debugger;
         if (value === undefined || value == null) {
             v = CheckBoxStatus.unchecked;
         } else if (typeof value === 'number') {

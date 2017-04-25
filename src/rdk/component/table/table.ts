@@ -860,8 +860,9 @@ export class RdkTableHeader extends TableCellBasic implements OnInit {
 
     private _sort(order: SortOrder): void {
         this._setSortOrderClass(order);
-        this.sortChange.emit();
         this.tableData.sort(this.sortAs, order, this.field);
+        this.sortChange.emit();
+        this.tableData.refresh();
     }
 
     ngOnInit() {
