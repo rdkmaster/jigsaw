@@ -1,9 +1,9 @@
-import { Component} from "@angular/core";
+import { Component,AfterContentInit} from "@angular/core";
 
 @Component({
-  templateUrl: 'basic.html'
+  templateUrl: 'tileOptionWidth.html'
 })
-export class TileselectBasicDemoComponent{
+export class TileselectOptionWidthComponent {
 
     citys = [
         {label: "北京"},
@@ -16,6 +16,5 @@ export class TileselectBasicDemoComponent{
     constructor(){
 
     }
-
 }
 

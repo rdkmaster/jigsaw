@@ -1,9 +1,9 @@
 import { Component} from "@angular/core";
 
 @Component({
-  templateUrl: 'basic.html'
+  templateUrl: 'searchable.html'
 })
-export class TileselectBasicDemoComponent{
+export class TileselectSearchableComponent {
 
     citys = [
         {label: "北京"},
