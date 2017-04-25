@@ -1,20 +1,32 @@
-import {Component} from "@angular/core";
-import {TreeData} from "../../../../../component/ztree/ztreeExt"
+import {Component, OnInit} from "@angular/core";
+import {TreeData} from "../../../../../component/ztree/ztree-ext"
+import {ZTreeSettingSetting} from "../../../../../component/ztree/ztree-types"
+import {Headers, Http, RequestOptions} from "@angular/http";
+import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/map';
+
 @Component({
     template: `
-        <rdk-tree-ext [(setting)]="setting1" [(data)]="data1"
+        <rdk-tree-ext [(setting)]="setting1"
+                      [(data)]="data1"
                       (onClick)="onClick($event)"
                       (beforeExpand)="beforeExpand($event)"
                       (onDblClick)="onDblClick($event)"
                       (beforeCollapse)="beforeCollapse($event)"
                       (beforeRename)="beforeRename($event)"
-        ></rdk-tree-ext>
-        <rdk-tree-ext [(setting)]="setting2" [(data)]="data2"></rdk-tree-ext>
+                      (onRename)="onRename($event)">
+        </rdk-tree-ext>
+        <br/>
+        <label>从后端取数据</label>
+        <!--rdk-tree-ext [(setting)]="setting2"
+                      [(data)]="data2"
+                      (onRename)="onRename($event)">
+        </rdk-tree-ext-->
         <br/>
     `
 })
-export class ZtreeDemoComponent {
-    public setting1 = {};
+export class ZtreeDemoComponent implements OnInit {
+    public setting1: ZTreeSettingSetting = {};
     public data1: TreeData[] = [
         {
             label: "父节点1 - 展开",
@@ -76,8 +88,10 @@ export class ZtreeDemoComponent {
         {label: "父节点3 - 没有子节点", isParent: true}
 
     ];
+    public currentRenameLabel: string;
+    public afterRenameLabel: string;
 
-    public setting2 = {
+    public setting2: ZTreeSettingSetting = {
         data: {
             key: {
                 children: 'nodes',
@@ -95,32 +109,7 @@ export class ZtreeDemoComponent {
         return node.font ? node.font : {};
     }
 
-    public data2: TreeData[] = [{
-        label: "父节点1 - 展开",
-        open: true,
-        font: {'font-weight': 'bold', 'color': 'red'},
-        nodes: [
-            {
-                label: "父节点11 - 折叠", font: {'font-weight': 'bold'},
-                nodes: [
-                    {label: "叶子节点111", font: {'font-weight': 'bold'}},
-                    {label: "叶子节点112", font: {'font-weight': 'bold'}},
-                    {label: "叶子节点113", font: {'font-weight': 'bold'}},
-                    {label: "叶子节点114", font: {'font-weight': 'bold'}}
-                ]
-            },
-            {
-                label: "父节点12 - 折叠", font: {'font-weight': 'bold'},
-                nodes: [
-                    {label: "叶子节点121", font: {'font-weight': 'bold'}},
-                    {label: "叶子节点122", font: {'font-weight': 'bold'}},
-                    {label: "叶子节点123", font: {'font-weight': 'bold'}},
-                    {label: "叶子节点124", font: {'font-weight': 'bold'}}
-                ]
-            },
-            {label: "父节点13 - 没有子节点", isParent: true, font: {'font-weight': 'bold'}}
-        ]
-    }];
+    public data2: TreeData[] = [];
 
     public beforeExpand(msg: any) {
         console.log("beforeExpand");
@@ -143,42 +132,66 @@ export class ZtreeDemoComponent {
     }
 
     public beforeRename(msg: any) {
-        console.log("onDblClick");
+        console.log("beforeRename");
         console.log(msg);
+        this.currentRenameLabel = msg.treeNode.label;
     }
 
+    public onRename(msg: any) {
+        console.log("onRename");
+        this.afterRenameLabel = msg.treeNode.label;
+        this.findLabel(this.data1,this.currentRenameLabel,this.afterRenameLabel);
+        this.setTreeData();
+    }
 
-    constructor() {
-
-        setTimeout(() => {
-            this.data1 = [
-                {
-                    label: "父节点1 - 展开",
-                    open: true,
-                    nodes: [
-                        {
-                            label: "父节点11 - 折叠",
-                            nodes: [
-                                {label: "叶子节点111"},
-                                {label: "叶子节点112"},
-                                {label: "叶子节点113"},
-                                {label: "叶子节点114"}
-                            ]
-                        },
-                        {
-                            label: "父节点12 - 折叠",
-                            nodes: [
-                                {label: "叶子节点121"},
-                                {label: "叶子节点122"},
-                                {label: "叶子节点123"},
-                                {label: "叶子节点124"}
-                            ]
-                        },
-                        {label: "父节点13 - 没有子节点", isParent: true}
-                    ]
+    public findLabel(data:TreeData[],oldLabel: string,newLabel: string) {
+        loop(data);
+        function loop(arr){
+            for(let i=0;i<arr.length;i++){
+                let current=arr[i];
+                if(current.hasOwnProperty("label") && current.label==oldLabel){
+                    current.label=newLabel;
                 }
+                if(current.hasOwnProperty("nodes")){
+                    loop(current.nodes);
+                }
+            }
+        }
 
-            ];
-        }, 5000);
+    }
+
+    constructor(public http: Http) {}
+
+    public setTreeData() {
+        //todo post修改这个地方
+        // let headers = new Headers({'Content-Type': 'application/json'});
+        // let options = new RequestOptions({headers: headers});
+        // this.http.post("src/rdk/doc/demo/component/ztree/basic/data.json", JSON.stringify(this.data1),options)
+        //     .toPromise()
+        //     .then(response => {
+        //         this.data1 = response.json() as TreeData[];
+        //         console.log(JSON.stringify(this.data1));
+        //     })
+        //     .catch((error) => {
+        //         console.error(error);
+        //         return Promise.reject(error);
+        //     });
+
+    }
+
+    public getTreeData() {
+        this.http.get("mock-data/tree/data.json")
+            .toPromise()
+            .then(response => {
+                this.data2 = response.json() as TreeData[];
+            })
+            .catch((error) => {
+                console.error(error);
+                return Promise.reject(error);
+            });
+    }
+
+    ngOnInit() {
+        this.getTreeData();
     }
 }

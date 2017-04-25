@@ -1,7 +1,8 @@
 import {NgModule} from "@angular/core";
+import { HttpModule } from '@angular/http';
 import {RouterModule} from "@angular/router";
 import {ZtreeDemoComponent} from "./basic/basic";
-import { RdkTreeExtModule } from "../../../../component/ztree/ztreeExt"
+import { RdkTreeExtModule } from "../../../../component/ztree/ztree-ext"
 
 const ztreeDemoRoutes=[
     {
@@ -23,7 +24,7 @@ const ztreeDemoRoutes=[
         ZtreeDemoComponent
     ],
     imports: [
-        RouterModule.forChild(ztreeDemoRoutes),RdkTreeExtModule
+        RouterModule.forChild(ztreeDemoRoutes),RdkTreeExtModule,HttpModule
     ],
     exports: [
         ZtreeDemoComponent

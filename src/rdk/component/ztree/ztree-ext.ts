@@ -1,6 +1,8 @@
 import {Input, OnDestroy, AfterViewInit, Output, EventEmitter, NgModule, Component} from '@angular/core';
 import {AbstractRDKComponent} from "rdk/component/core";
-import {CommonUtils} from "rdk/core/utils/common-utils";
+import {InternalUtils} from "../../core/utils/internal-utils";
+import {CommonUtils} from "../../core/utils/common-utils";
+import {ZTreeSettingSetting} from "./ztree-types";
 
 export class TreeData {
     [index: string]: any;
@@ -13,6 +15,8 @@ export class TreeEventData {
     event?: Event;
     extraInfo?: object;
 }
+
+
 @Component({
     selector: 'rdk-tree-ext',
     template: `
@@ -21,18 +25,18 @@ export class TreeEventData {
 export class RdkTreeExt extends AbstractRDKComponent implements AfterViewInit, OnDestroy {
     constructor() {
         super();
-        this.uniqueId = CommonUtils.createUniqueId();
+        this.uniqueId = InternalUtils.createUniqueId();
     }
 
     public uniqueId: string = '__unique_id__';
 
-    public _setting: object;
+    public _setting: ZTreeSettingSetting;
     @Input()
-    public get setting(): object {
+    public get setting(): ZTreeSettingSetting {
         return this._setting;
     }
 
-    public set setting(setting: object) {
+    public set setting(setting: ZTreeSettingSetting) {
         this._setting = setting == null || CommonUtils.isEmptyObject(setting) ? this._defaultSetting() : setting;
         this._updateTree();
     }
@@ -47,11 +51,6 @@ export class RdkTreeExt extends AbstractRDKComponent implements AfterViewInit, O
         this._data = data;
         this._updateTree();
     }
-
-    public nodeField: string = 'nodes';
-    public labelField: string = 'label';
-    public checkable: boolean = false;
-    public editable: boolean = false;
 
     @Output()
     public onClick = new EventEmitter<TreeEventData>();
@@ -90,15 +89,15 @@ export class RdkTreeExt extends AbstractRDKComponent implements AfterViewInit, O
 
     private _defaultSetting() {
         let that = this;
-        var setObj = {
+        let setObj:ZTreeSettingSetting = {
             data: {
                 key: {
-                    children: that.nodeField || 'nodes',
-                    name: that.labelField || 'label'
+                    children:  'nodes',
+                    name: 'label'
                 }
             },
             check: {
-                enable: that.checkable || true
+                enable:  true
             },
             callback: {
                 onClick: on_click,
@@ -113,7 +112,7 @@ export class RdkTreeExt extends AbstractRDKComponent implements AfterViewInit, O
                 beforeEditName: before_editName
             },
             edit: {
-                enable: that.editable || true,
+                enable:  true,
                 removeTitle: '',
                 renameTitle: ''
             },
@@ -150,8 +149,15 @@ export class RdkTreeExt extends AbstractRDKComponent implements AfterViewInit, O
 
         //todo ztree before_rename事件的isCancel属性传不出来
         function before_rename(treeId, treeNode, newName, isCancel) {
-            let extraInfo = {"newName": newName, "isCancel": isCancel};
-            that.setTreeEvent.call(that, "beforeRename", treeId, treeNode, undefined, extraInfo);
+            if (newName.length == 0) {
+                alert("Node name can not be empty.");
+                return false;
+            }else{
+                let extraInfo = {"newName": newName, "isCancel": isCancel};
+                that.setTreeEvent.call(that, "beforeRename", treeId, treeNode, undefined, extraInfo);
+                return true;
+            }
+
         }
 
         function before_remove(treeId, treeNode) {

@@ -1,6 +1,4 @@
 export class CommonUtils {
-    public static _uniqueIdIndex = 0;
-    public static _defaultPrefix = '__unique_id__';
 
     /**
      * 浅拷贝一个对象
@@ -75,15 +73,4 @@ export class CommonUtils {
         return targetObject;
     }
 
-    /*
-     * 创建元素唯一ID
-     *
-     * */
-    public static createUniqueId(prefix?: string) {
-        this._uniqueIdIndex++;
-        if (prefix == null || prefix == undefined) {
-            prefix = this._defaultPrefix;
-        }
-        return prefix + this._uniqueIdIndex;
-    };
 }
