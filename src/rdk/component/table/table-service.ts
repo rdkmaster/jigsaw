@@ -18,18 +18,25 @@ export class TableCheckboxService{
 
     /*public headCheckboxSelect: () => void;
     public headCheckboxUnSelect: () => void;
-    headListen(selectListener, unSelectListener){
+    public headCheckboxIndeterminate: () => void;
+    headListen(selectListener: () => void, unSelectListener: () => void, IndeterminateListener: () => void){
         this.headCheckboxSelect = selectListener;
         this.headCheckboxUnSelect = unSelectListener;
+        this.headCheckboxIndeterminate = IndeterminateListener;
     }
+
     headSelect(){
         this.headCheckboxSelect();
     }
 
     headUnSelect(){
         this.headCheckboxUnSelect();
-    }*/
+    }
 
+    headIndeterminate(){
+        this.headCheckboxIndeterminate();
+    }
+*/
     public headCheckboxSelect: (() => void)[] = [];
     public headCheckboxUnSelect: (() => void)[] = [];
     public headCheckboxIndeterminate: (() => void)[] = [];

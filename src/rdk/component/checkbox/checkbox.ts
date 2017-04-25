@@ -74,6 +74,9 @@ export class RdkCheckBox extends AbstractRDKComponent implements OnInit, AfterCo
         this._setCheckBoxClass();
     }
 
+    @Input()
+    public canClickIndeterminate: boolean = true;
+
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef){
         super();
     }
@@ -93,7 +96,13 @@ export class RdkCheckBox extends AbstractRDKComponent implements OnInit, AfterCo
 
     private _toggle(): void {
         const index = this._valueCandidates.indexOf(this._checked);
-        this._checked = this._valueCandidates[(index + 1) % this._valueCandidates.length];
+        if((this._enableIndeterminate && this.canClickIndeterminate) || !this._enableIndeterminate){
+            this._checked = this._valueCandidates[(index + 1) % this._valueCandidates.length];
+        }else{
+            const valueCandidates: CheckBoxStatus[] = [CheckBoxStatus.unchecked, CheckBoxStatus.checked];
+            this._checked = valueCandidates[(index + 1) % valueCandidates.length];
+        }
+
         this.checkedChange.emit(this._checked);
     }
 

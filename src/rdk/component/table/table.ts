@@ -501,7 +501,6 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * */
     private _insertCloneCellSettings(pos: number, target: string | number, additionalColumn: AdditionalColumnSetting) {
         let index = this._getIndexInCellSettings(this._getPosInField(target));
-        console.log(index);
 
         //插入列
         this._cellSettings.forEach(cellSettings => {
