@@ -3,9 +3,10 @@
 #NoTrayIcon
 
 _showMessage('正在从服务器下载依赖包。。。')
-If FileExists(@ScriptDir & '\node_modules.zip') Then FileDelete(@ScriptDir & '\node_modules_tmp.zip')
-InetGet('http://rdk.zte.com.cn:4200/tools/node_modules.zip', @ScriptDir & '\node_modules_tmp.zip')
-If Not FileExists(@ScriptDir & '\node_modules_tmp.zip') Then _error('无法下载 node_modules.zip，请确认网络已经正常连接。如果你当前非处于zte内部网络，则需要使用npm安装。')
+If FileExists(@ScriptDir & '\install_tmp') Then DirRemove(@ScriptDir & '\install_tmp', True)
+
+InetGet('http://rdk.zte.com.cn:4200/tools/node_modules.zip', @ScriptDir & '\install_tmp\node_modules.zip')
+If Not FileExists(@ScriptDir & '\install_tmp\node_modules.zip') Then _error('无法下载 node_modules.zip，请确认网络已经正常连接。如果你当前非处于zte内部网络，则需要使用npm安装。')
 
 If FileExists(@ScriptDir & '\node_modules') Then
 	_hideMessage()
@@ -17,8 +18,8 @@ If FileExists(@ScriptDir & '\node_modules') Then
 	EndIf
 EndIf
 
-_unzipPackage(@ScriptDir & '\node_modules_tmp.zip')
-FileDelete(@ScriptDir & '\node_modules_tmp.zip')
+_unzipPackage(@ScriptDir & '\install_tmp\node_modules.zip')
+DirRemove(@ScriptDir & '\install_tmp', True)
 
 If MsgBox(36, "Jigsaw Installer", "安装开发环境结束!" & @CRLF & '是否立即运行 npm start 命令检查部署是否成功？') == 6 Then
 	Run(@ComSpec & " /c npm start", @ScriptDir)
@@ -31,16 +32,16 @@ EndIf
 Func _unzipPackage($packagePath)
 	_showMessage('正在准备解压依赖包。。。')
 	If _isX64() Then
-		InetGet('http://rdk.zte.com.cn:4200/tools/7z-64.dll', @ScriptDir & '\7z.dll')
-		InetGet('http://rdk.zte.com.cn:4200/tools/7z-64.exe', @ScriptDir & '\7z.exe')
+		InetGet('http://rdk.zte.com.cn:4200/tools/7z-64.dll', @ScriptDir & '\install_tmp\7z.dll')
+		InetGet('http://rdk.zte.com.cn:4200/tools/7z-64.exe', @ScriptDir & '\install_tmp\7z.exe')
 	Else
-		InetGet('http://rdk.zte.com.cn:4200/tools/7z-32.dll', @ScriptDir & '\7z.dll')
-		InetGet('http://rdk.zte.com.cn:4200/tools/7z-32.exe', @ScriptDir & '\7z.exe')
+		InetGet('http://rdk.zte.com.cn:4200/tools/7z-32.dll', @ScriptDir & '\install_tmp\7z.dll')
+		InetGet('http://rdk.zte.com.cn:4200/tools/7z-32.exe', @ScriptDir & '\install_tmp\7z.exe')
 	EndIf
 	_hideMessage()
-	RunWait('"' & @ScriptDir & '\7z.exe" x "' & $packagePath & '"')
-	FileDelete(@ScriptDir & '\7z.dll')
-	FileDelete(@ScriptDir & '\7z.exe')
+	RunWait('"' & @ScriptDir & '\install_tmp\7z.exe" x "' & $packagePath & '"')
+	FileDelete(@ScriptDir & '\install_tmp\7z.dll')
+	FileDelete(@ScriptDir & '\install_tmp\7z.exe')
 EndFunc
 
 Func _isX64()
