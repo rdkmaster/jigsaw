@@ -123,7 +123,7 @@ export class TableSetCellEditableDemoComponent {
     private _changeMsg : string;
 
     public onCellChange(value) {
-        this._changeMsg = `row: ${value.row}, column: ${value.column}, field: ${value.field},cellData: ${value.cellData}`
+        this._changeMsg = `field: '${value.field}', row: ${value.row}, column: ${value.column}, rawColumn: ${value.rawColumn}, cellData: ${value.cellData}, oldCellData: ${value.oldCellData}`;
     }
 }
 

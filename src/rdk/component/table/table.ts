@@ -722,6 +722,9 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
     @Input()
     public group: boolean;
 
+    @Input()
+    public rowSpan: number;
+
     public editorRendererRef: ComponentRef<TableCellRenderer>;
 
     private goEditCallback: () => void;
@@ -750,10 +753,14 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
                     this.cellData = cellData;
 
                     //更新tableData
-                    this.tableData.data[this.row][this.field] = cellData;
+                    let rows = [];
+                    for(let i = 0; i < this.rowSpan; i++){
+                        this.tableData.data[this.row + i][this.field] = cellData;
+                        rows.push(this.row + i);
+                    }
                     this._rdkTable.dataChange.emit({
                         field: this.tableData.field[this.field],
-                        row: this.row,
+                        row: rows,
                         column: this.column,
                         rawColumn: this.field,
                         cellData: this.cellData,
