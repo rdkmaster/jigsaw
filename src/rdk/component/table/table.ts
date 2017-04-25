@@ -198,7 +198,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * */
     private _refresh() {
         this._transformData();
-        this._asynAlignHead();//表头对齐
+        this.asynAlignHead();//表头对齐
     }
 
     /*
@@ -646,7 +646,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     /*
      * 表头对齐
      * */
-    private _asynAlignHead() {
+    public asynAlignHead() {
         setTimeout(() => {
             this._setFixedHeadWidth();
         }, 0);
@@ -666,7 +666,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     ngAfterViewInit() {
         this._setScrollBar();
 
-        this._asynAlignHead();
+        this.asynAlignHead();
 
         this._windowLoadListen = this._renderer.listen('window', 'load', () => {
             this._setFixedHeadWidth();
@@ -722,6 +722,9 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
     @Input()
     public group: boolean;
 
+    @Input()
+    public rowSpan: number;
+
     public editorRendererRef: ComponentRef<TableCellRenderer>;
 
     private goEditCallback: () => void;
@@ -750,10 +753,14 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
                     this.cellData = cellData;
 
                     //更新tableData
-                    this.tableData.data[this.row][this.field] = cellData;
+                    let rows = [];
+                    for(let i = 0; i < this.rowSpan; i++){
+                        this.tableData.data[this.row + i][this.field] = cellData;
+                        rows.push(this.row + i);
+                    }
                     this._rdkTable.dataChange.emit({
                         field: this.tableData.field[this.field],
-                        row: this.row,
+                        row: rows,
                         column: this.column,
                         rawColumn: this.field,
                         cellData: this.cellData,
@@ -763,6 +770,7 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
                 this.rendererHost.viewContainerRef.clear();
                 this.insertRenderer();
                 this._onClick();
+                this._rdkTable.asynAlignHead();
             }
         });
 
@@ -780,6 +788,7 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
         this.goEditCallback = this.editable ? this._rdr.listen(this._el.nativeElement, 'click', () => {
                 this.rendererHost.viewContainerRef.clear();
                 this.insertEditorRenderer();
+                this._rdkTable.asynAlignHead();
             }) : null;
     }
 
