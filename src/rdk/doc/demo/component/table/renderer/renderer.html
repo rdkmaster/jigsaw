@@ -5,13 +5,5 @@
                [columns]="_columns"
                [additionalColumns]="_additionalColumns"
                (dataChange)="onCellChange($event)"></rdk-table>
-    <!--<rdk-pagination [total]="total" [pageSize]="10"
-                    [pageSizeOptions]="[5, 10, 20]"
-                    [searchable]="true"
-                    [showQuickJumper]="true"
-                    (currentPageChange)="getCurrentPage($event)"
-                    (onShowSizeChange)="getPageSize($event)"
-                    width="700px">
-    </rdk-pagination>-->
     <p class="message">table change answer is: <span>{{_changeMsg}}</span></p>
 </div>

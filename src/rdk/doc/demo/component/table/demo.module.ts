@@ -45,6 +45,8 @@ import {TableDataFromAjaxDemoComponent} from "./dataFromAjax/dataFromAjax";
 import {TableScrollAmountDemoComponent} from "./scrollAmount/scrollAmount";
 import {TableAddIDColumnDemoComponent} from "./addIDColumn/addIDColumn";
 import {TableAddCheckboxColumnDemoComponent} from "./addCheckboxColumn/addCheckboxColumn";
+import {TableDataChangeDemoComponent} from "./dataChange/dataChange";
+import {RdkButtonModule} from "../../../../component/button/button";
 
 const tableDemoRoutes = [
     {
@@ -106,6 +108,9 @@ const tableDemoRoutes = [
         path: 'scrollAmount', component: TableScrollAmountDemoComponent
     },
     {
+        path: 'dataChange', component: TableDataChangeDemoComponent
+    },
+    {
         path: '**', //fallback router must in the last
         component: TableBasicDemoComponent
     }
@@ -150,7 +155,8 @@ const tableDemoRoutes = [
         TableDataFromAjaxDemoComponent,
         TableScrollAmountDemoComponent,
         TableAddIDColumnDemoComponent,
-        TableAddCheckboxColumnDemoComponent
+        TableAddCheckboxColumnDemoComponent,
+        TableDataChangeDemoComponent
     ],
     imports: [
         RouterModule.forChild(tableDemoRoutes),
@@ -158,7 +164,8 @@ const tableDemoRoutes = [
         RdkSelectModule,
         RdkCheckBoxModule,
         RdkPaginationModule,
-        RdkInputModule
+        RdkInputModule,
+        RdkButtonModule
     ],
     exports: [ ],
     providers: [TableCheckboxService],
