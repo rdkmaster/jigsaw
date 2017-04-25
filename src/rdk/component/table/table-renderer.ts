@@ -27,8 +27,7 @@ export class TableCellDefault extends TableCellRenderer {
  * */
 @Component({
     template: `<rdk-checkbox  [(checked)]="cellData"
-                (checkedChange)="_toggleSelectAll($event)"
-                [enableIndeterminate]="true" [canClickIndeterminate]="false"></rdk-checkbox>`
+                (checkedChange)="_toggleSelectAll($event)"></rdk-checkbox>`
 })
 export class TableHeadCheckbox extends TableCellRenderer implements OnInit{
     constructor(private tableRendererService: TableCheckboxService){

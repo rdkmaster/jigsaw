@@ -27,6 +27,10 @@ export type CheckBoxValue = boolean | CheckBoxStatus;
  */
 export class RdkCheckBox extends AbstractRDKComponent implements OnInit, AfterContentInit {
 
+    /*
+    * enableIndeterminate为true时，用户可以点出中间状态；
+    * 为false时，用户不可点出中间状态，但可赋予组件中间状态
+    * */
     private _enableIndeterminate: boolean = false;
     @Input()
     public get enableIndeterminate(): boolean {
@@ -38,11 +42,6 @@ export class RdkCheckBox extends AbstractRDKComponent implements OnInit, AfterCo
         this._valueCandidates = [CheckBoxStatus.unchecked, CheckBoxStatus.checked];
         if (value) {
             this._valueCandidates.push(CheckBoxStatus.indeterminate);
-        }
-        if (!this._enableIndeterminate && this._checked === CheckBoxStatus.indeterminate) {
-            this._checked = this._fixCheckValue(this._checked);
-            this._setCheckBoxClass();
-            setTimeout(() => this.checkedChange.emit(this._checked));
         }
     }
 
@@ -74,9 +73,6 @@ export class RdkCheckBox extends AbstractRDKComponent implements OnInit, AfterCo
         this._setCheckBoxClass();
     }
 
-    @Input()
-    public canClickIndeterminate: boolean = true;
-
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef){
         super();
     }
@@ -96,11 +92,10 @@ export class RdkCheckBox extends AbstractRDKComponent implements OnInit, AfterCo
 
     private _toggle(): void {
         const index = this._valueCandidates.indexOf(this._checked);
-        if((this._enableIndeterminate && this.canClickIndeterminate) || !this._enableIndeterminate){
-            this._checked = this._valueCandidates[(index + 1) % this._valueCandidates.length];
+        if(index == -1){
+            this._checked = this._valueCandidates[1];
         }else{
-            const valueCandidates: CheckBoxStatus[] = [CheckBoxStatus.unchecked, CheckBoxStatus.checked];
-            this._checked = valueCandidates[(index + 1) % valueCandidates.length];
+            this._checked = this._valueCandidates[(index + 1) % this._valueCandidates.length];
         }
 
         this.checkedChange.emit(this._checked);
@@ -114,9 +109,6 @@ export class RdkCheckBox extends AbstractRDKComponent implements OnInit, AfterCo
             v = value > CheckBoxStatus.indeterminate ? CheckBoxStatus.checked : value;
         } else {
             v = value ? CheckBoxStatus.checked : CheckBoxStatus.unchecked;
-        }
-        if (!this.enableIndeterminate && v == CheckBoxStatus.indeterminate) {
-            v = CheckBoxStatus.checked;
         }
         return v;
     }
