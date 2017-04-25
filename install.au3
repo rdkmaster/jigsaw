@@ -6,7 +6,7 @@ _showMessage('正在从服务器下载依赖包。。。')
 If FileExists(@ScriptDir & '\install_tmp') Then DirRemove(@ScriptDir & '\install_tmp', True)
 
 DirCreate(@ScriptDir & '\install_tmp')
-InetGet('http://rdk.zte.com.cn:4200/tools/node_modules.zip', @ScriptDir & '\install_tmp\node_modules.zip')
+InetGet('http://rdk.zte.com.cn:4200/tools/node_modules.zip', @ScriptDir & '\install_tmp\node_modules.zip', 1)
 If Not FileExists(@ScriptDir & '\install_tmp\node_modules.zip') Then _error('无法下载 node_modules.zip，请确认网络已经正常连接。如果你当前非处于zte内部网络，则需要使用npm安装。')
 
 If FileExists(@ScriptDir & '\node_modules') Then
