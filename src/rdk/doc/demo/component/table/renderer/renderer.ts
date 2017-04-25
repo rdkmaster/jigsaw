@@ -154,15 +154,15 @@ export class TableRendererDemoComponent {
             }
         },
         /*{
-         field: 0,
-         width: '60px',
-         header: {
-         renderer: TableHeadCheckbox,
-         },
-         cell: {
-         renderer: TableCellCheckbox
-         }
-         },*/
+            pos: 0,
+            width: '60px',
+            header: {
+                renderer: TableHeadCheckbox,
+            },
+            cell: {
+                renderer: TableCellCheckbox
+            }
+        },*/
         {
             //pos: -1, //不写pos也表示插入到最后
             width: '10%',
@@ -175,16 +175,16 @@ export class TableRendererDemoComponent {
             }
         },
         /*{
-         field: 2,
-         width: '10%',
-         header: {
-         renderer: TableHeadOption,
-         class: 'red-text'
-         },
-         cell: {
-         renderer: TableCellOption
-         }
-         }*/
+            pos: 2,
+            width: '10%',
+            header: {
+                renderer: TableHeadOption,
+                class: 'red-text'
+            },
+            cell: {
+                renderer: TableCellOption
+            }
+        }*/
     ];
 
     public onCellChange(value) {
