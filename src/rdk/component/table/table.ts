@@ -198,7 +198,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * */
     private _refresh() {
         this._transformData();
-        this._asynAlignHead();//表头对齐
+        this.asynAlignHead();//表头对齐
     }
 
     /*
@@ -646,7 +646,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     /*
      * 表头对齐
      * */
-    private _asynAlignHead() {
+    public asynAlignHead() {
         setTimeout(() => {
             this._setFixedHeadWidth();
         }, 0);
@@ -666,7 +666,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     ngAfterViewInit() {
         this._setScrollBar();
 
-        this._asynAlignHead();
+        this.asynAlignHead();
 
         this._windowLoadListen = this._renderer.listen('window', 'load', () => {
             this._setFixedHeadWidth();
@@ -763,6 +763,7 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
                 this.rendererHost.viewContainerRef.clear();
                 this.insertRenderer();
                 this._onClick();
+                this._rdkTable.asynAlignHead();
             }
         });
 
@@ -780,6 +781,7 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
         this.goEditCallback = this.editable ? this._rdr.listen(this._el.nativeElement, 'click', () => {
                 this.rendererHost.viewContainerRef.clear();
                 this.insertEditorRenderer();
+                this._rdkTable.asynAlignHead();
             }) : null;
     }
 
