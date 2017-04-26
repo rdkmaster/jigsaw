@@ -115,6 +115,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         value = typeof value === 'string' ? value : value + '';
         const match = value ? value.match(/^\s*\d+%|px\s*$/) : null;
         this._maxHeight =  match ? value : value + 'px';
+        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.rdk-table-box'), 'max-height', this._maxHeight);
     }
 
     @Input()
@@ -690,8 +691,6 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     ngAfterViewInit() {
-        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.rdk-table-box'), 'max-height', this._maxHeight);
-
         this._setScrollBar();
 
         this.asynAlignHead();
