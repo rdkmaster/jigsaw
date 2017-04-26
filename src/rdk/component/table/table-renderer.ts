@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild, AfterViewInit} from "@angular/core";
 import {TableCellRenderer} from "./table-api";
 import {TableCheckboxService, CheckboxState} from "./table-service";
 import {RdkInput} from "../input/input";
+import {PageableTableData} from "../../core/data/table-data";
 
 /*
  * 默认表头渲染组件
@@ -107,9 +108,17 @@ export class TableHeadNum extends TableCellRenderer {
  * 编号列
  * */
 @Component({
-    template: '<span>{{row + 1}}</span>'
+    template: '<span>{{number}}</span>'
 })
-export class TableCellNum extends TableCellRenderer {
+export class TableCellNum extends TableCellRenderer implements OnInit{
+    number: number;
+    ngOnInit(){
+        if(this.tableData instanceof PageableTableData){
+            this.number = (this.tableData.pagingInfo.currentPage - 1) * this.tableData.pagingInfo.pageSize + this.row + 1
+        }else{
+            this.number = this.row + 1;
+        }
+    }
 }
 
 /*

@@ -47,6 +47,7 @@ import {TableAddIDColumnDemoComponent} from "./addIDColumn/addIDColumn";
 import {TableAddCheckboxColumnDemoComponent} from "./addCheckboxColumn/addCheckboxColumn";
 import {TableDataChangeDemoComponent} from "./dataChange/dataChange";
 import {RdkButtonModule} from "../../../../component/button/button";
+import {TableAddIDWithPagingComponent} from "./addIDWithPaging/addIDWithPaging";
 
 const tableDemoRoutes = [
     {
@@ -111,6 +112,9 @@ const tableDemoRoutes = [
         path: 'dataChange', component: TableDataChangeDemoComponent
     },
     {
+        path: 'addIDWithPaging', component: TableAddIDWithPagingComponent
+    },
+    {
         path: '**', //fallback router must in the last
         component: TableBasicDemoComponent
     }
@@ -156,7 +160,8 @@ const tableDemoRoutes = [
         TableScrollAmountDemoComponent,
         TableAddIDColumnDemoComponent,
         TableAddCheckboxColumnDemoComponent,
-        TableDataChangeDemoComponent
+        TableDataChangeDemoComponent,
+        TableAddIDWithPagingComponent
     ],
     imports: [
         RouterModule.forChild(tableDemoRoutes),
