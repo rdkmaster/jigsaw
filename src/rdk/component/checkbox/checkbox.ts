@@ -27,6 +27,10 @@ export type CheckBoxValue = boolean | CheckBoxStatus;
  */
 export class RdkCheckBox extends AbstractRDKComponent implements OnInit, AfterContentInit {
 
+    /*
+    * enableIndeterminate为true时，用户可以点出中间状态；
+    * 为false时，用户不可点出中间状态，但可赋予组件中间状态
+    * */
     private _enableIndeterminate: boolean = false;
     @Input()
     public get enableIndeterminate(): boolean {
@@ -38,11 +42,6 @@ export class RdkCheckBox extends AbstractRDKComponent implements OnInit, AfterCo
         this._valueCandidates = [CheckBoxStatus.unchecked, CheckBoxStatus.checked];
         if (value) {
             this._valueCandidates.push(CheckBoxStatus.indeterminate);
-        }
-        if (!this._enableIndeterminate && this._checked === CheckBoxStatus.indeterminate) {
-            this._checked = this._fixCheckValue(this._checked);
-            this._setCheckBoxClass();
-            setTimeout(() => this.checkedChange.emit(this._checked));
         }
     }
 
@@ -93,22 +92,23 @@ export class RdkCheckBox extends AbstractRDKComponent implements OnInit, AfterCo
 
     private _toggle(): void {
         const index = this._valueCandidates.indexOf(this._checked);
-        this._checked = this._valueCandidates[(index + 1) % this._valueCandidates.length];
+        if(index == -1){
+            this._checked = this._valueCandidates[1];
+        }else{
+            this._checked = this._valueCandidates[(index + 1) % this._valueCandidates.length];
+        }
+
         this.checkedChange.emit(this._checked);
     }
 
     private _fixCheckValue(value:CheckBoxValue):CheckBoxStatus {
         let v:CheckBoxStatus;
-        debugger;
         if (value === undefined || value == null) {
             v = CheckBoxStatus.unchecked;
         } else if (typeof value === 'number') {
             v = value > CheckBoxStatus.indeterminate ? CheckBoxStatus.checked : value;
         } else {
             v = value ? CheckBoxStatus.checked : CheckBoxStatus.unchecked;
-        }
-        if (!this.enableIndeterminate && v == CheckBoxStatus.indeterminate) {
-            v = CheckBoxStatus.checked;
         }
         return v;
     }
