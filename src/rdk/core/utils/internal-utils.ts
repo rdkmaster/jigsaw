@@ -1,4 +1,6 @@
 export class InternalUtils {
+    public static _uniqueIdIndex = 0;
+    public static _defaultPrefix = '__unique_id__';
 
     /*
      * 初始化对象标识，转化为数组
@@ -10,6 +12,20 @@ export class InternalUtils {
         }
         return trackItemBy.split(/\s*,\s*/g);
     }
+
+
+    /*
+     * 创建元素唯一ID
+     *
+     * */
+    public static createUniqueId(prefix?: string) {
+        this._uniqueIdIndex++;
+        if (prefix == null || prefix == undefined) {
+            prefix = this._defaultPrefix;
+        }
+        return prefix + this._uniqueIdIndex;
+    };
+
 }
 
 /*

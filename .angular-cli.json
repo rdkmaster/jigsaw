@@ -26,6 +26,7 @@
                 "styles.scss",
                 "../node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css",
                 "../node_modules/font-awesome/css/font-awesome.min.css",
+                "../node_modules/ztree/css/zTreeStyle/zTreeStyle.css",
                 "rdk/assets/scss/index.scss",
                 "rdk/assets/scss/reset.scss"
             ],
@@ -35,6 +36,7 @@
                 "../node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js",
                 "../node_modules/moment/min/moment.min.js",
                 "../node_modules/bootstrap/dist/js/bootstrap.min.js",
+                "../node_modules/ztree/js/jquery.ztree.all.js",
                 "../node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"
             ],
             "environmentSource": "environments/environment.ts",

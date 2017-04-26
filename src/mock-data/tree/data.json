@@ -1,0 +1,164 @@
+[
+    {
+        "label": "父节点1 - 展开",
+        "open": true,
+        "font": {
+            "font-weight": "bold",
+            "color": "red"
+        },
+        "nodes": [
+            {
+                "label": "父节点11 - 折叠",
+                "font": {
+                    "font-weight": "bold"
+                },
+                "nodes": [
+                    {
+                        "label": "叶子节点111",
+                        "font": {
+                            "font-weight": "bold"
+                        }
+                    },
+                    {
+                        "label": "叶子节点112",
+                        "font": {
+                            "font-weight": "bold"
+                        }
+                    },
+                    {
+                        "label": "叶子节点113",
+                        "font": {
+                            "font-weight": "bold"
+                        }
+                    },
+                    {
+                        "label": "叶子节点114",
+                        "font": {
+                            "font-weight": "bold"
+                        }
+                    }
+                ]
+            },
+            {
+                "label": "父节点12 - 折叠",
+                "font": {
+                    "font-weight": "bold"
+                },
+                "nodes": [
+                    {
+                        "label": "叶子节点121",
+                        "font": {
+                            "font-weight": "bold"
+                        }
+                    },
+                    {
+                        "label": "叶子节点122",
+                        "font": {
+                            "font-weight": "bold"
+                        }
+                    },
+                    {
+                        "label": "叶子节点123",
+                        "font": {
+                            "font-weight": "bold"
+                        }
+                    },
+                    {
+                        "label": "叶子节点124",
+                        "font": {
+                            "font-weight": "bold"
+                        }
+                    }
+                ]
+            },
+            {
+                "label": "父节点13 - 没有子节点",
+                "isParent": true,
+                "font": {
+                    "font-weight": "bold"
+                }
+            }
+        ]
+    },
+    {
+        "label": "父节点2 - 展开",
+        "open": true,
+        "font": {
+            "font-weight": "bold",
+            "color": "red"
+        },
+        "nodes": [
+            {
+                "label": "父节点21 - 折叠",
+                "font": {
+                    "font-weight": "bold"
+                },
+                "nodes": [
+                    {
+                        "label": "叶子节点111",
+                        "font": {
+                            "font-weight": "bold"
+                        }
+                    },
+                    {
+                        "label": "叶子节点112",
+                        "font": {
+                            "font-weight": "bold"
+                        }
+                    },
+                    {
+                        "label": "叶子节点113",
+                        "font": {
+                            "font-weight": "bold"
+                        }
+                    },
+                    {
+                        "label": "叶子节点114",
+                        "font": {
+                            "font-weight": "bold"
+                        }
+                    }
+                ]
+            },
+            {
+                "label": "父节点12 - 折叠",
+                "font": {
+                    "font-weight": "bold"
+                },
+                "nodes": [
+                    {
+                        "label": "叶子节点121",
+                        "font": {
+                            "font-weight": "bold"
+                        }
+                    },
+                    {
+                        "label": "叶子节点122",
+                        "font": {
+                            "font-weight": "bold"
+                        }
+                    },
+                    {
+                        "label": "叶子节点123",
+                        "font": {
+                            "font-weight": "bold"
+                        }
+                    },
+                    {
+                        "label": "叶子节点124",
+                        "font": {
+                            "font-weight": "bold"
+                        }
+                    }
+                ]
+            },
+            {
+                "label": "父节点13 - 没有子节点",
+                "isParent": true,
+                "font": {
+                    "font-weight": "bold"
+                }
+            }
+        ]
+    }
+]
