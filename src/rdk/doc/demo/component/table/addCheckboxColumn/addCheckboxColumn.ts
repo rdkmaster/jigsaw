@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
-import {AdditionalColumnSetting} from "../../../../../component/table/table-api";
+import {AdditionalColumnDefine} from "../../../../../component/table/table-api";
 import {TableHeadCheckbox, TableCellCheckbox} from "../../../../../component/table/table-renderer";
 
 
@@ -76,7 +76,7 @@ export class TableAddCheckboxColumnDemoComponent {
 
 
 
-    private _additionalColumns: AdditionalColumnSetting[] = [{
+    private _additionalColumns: AdditionalColumnDefine[] = [{
             pos : 0,
             header: {
                 renderer: TableHeadCheckbox,

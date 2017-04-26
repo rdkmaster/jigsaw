@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
-import {ColumnSetting, TableCellRenderer} from "../../../../../component/table/table-api";
+import {ColumnDefine, TableCellRenderer} from "../../../../../component/table/table-api";
 /*
  * 自定义表头渲染组件
  * */
@@ -179,7 +179,7 @@ export class TableSetCellRenderDemoComponent {
 
 
 
-    private _columns: ColumnSetting[] = [
+    private _columns: ColumnDefine[] = [
         {
             target: 'name',
             cell: {

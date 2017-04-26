@@ -12,7 +12,7 @@ import {
     TableCellEditor
 } from "../../../../../component/table/table-renderer";
 import {SortAs, SortOrder} from "../../../../../core/data/component-data";
-import {ColumnSetting, AdditionalColumnSetting} from "../../../../../component/table/table-api";
+import {ColumnDefine, AdditionalColumnDefine} from "../../../../../component/table/table-api";
 import {TableHeadSelect, TableHeadIcon} from "./table-renderer";
 
 @Component({
@@ -46,7 +46,7 @@ export class TableRendererDemoComponent {
         ], ['f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7'], ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7']);
     }
 
-    private _columns: ColumnSetting[] = [
+    private _columns: ColumnDefine[] = [
         {
             target: 'f1',
             width: '15%',
@@ -131,7 +131,7 @@ export class TableRendererDemoComponent {
         }
     ];
 
-    private _additionalColumns: AdditionalColumnSetting[] = [
+    private _additionalColumns: AdditionalColumnDefine[] = [
         {
             pos: 0,
             width: '60px',

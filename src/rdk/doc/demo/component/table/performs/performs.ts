@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
-import {ColumnSetting} from "../../../../../component/table/table-api";
+import {ColumnDefine} from "../../../../../component/table/table-api";
 import {TableHeadIcon} from "../renderer/table-renderer";
 import {TableCellDefault} from "../../../../../component/table/table-renderer";
 
@@ -51,7 +51,7 @@ export class TablePerformsDemoComponent{
         this.tableData = new TableData(data, field, header);
     }
 
-    private _columns: ColumnSetting[] = [
+    private _columns: ColumnDefine[] = [
         {
             target: (field, index) => {
                 return index >= 0

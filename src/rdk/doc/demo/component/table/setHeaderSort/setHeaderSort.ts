@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
-import {ColumnSetting} from "../../../../../component/table/table-api";
+import {ColumnDefine} from "../../../../../component/table/table-api";
 import {SortAs, SortOrder} from "../../../../../core/data/component-data";
 
 
@@ -173,7 +173,7 @@ export class TableSetHeaderSortDemoComponent {
 
 
 
-    private _columns: ColumnSetting[] = [
+    private _columns: ColumnDefine[] = [
         {
             target: 'name',
             header: {

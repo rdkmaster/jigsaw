@@ -1,6 +1,6 @@
 import {Component, AfterViewInit, ViewChild, ViewEncapsulation} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
-import {ColumnSetting, TableCellRenderer} from "../../../../../component/table/table-api";
+import {ColumnDefine, TableCellRenderer} from "../../../../../component/table/table-api";
 import {RdkInput} from "../../../../../component/input/input";
 
 
@@ -108,7 +108,7 @@ export class TableSetCellEditableDemoComponent {
 
 
 
-    private _columns: ColumnSetting[] = [
+    private _columns: ColumnDefine[] = [
         {
             target: 'position',
             group : true,

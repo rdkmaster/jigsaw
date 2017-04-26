@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
-import {ColumnSetting} from "../../../../../component/table/table-api";
+import {ColumnDefine} from "../../../../../component/table/table-api";
 
 @Component({
   templateUrl: 'setColumnWidth.html'
@@ -168,7 +168,7 @@ export class TableColumnSetWidthDemoComponent {
 
     }
 
-    private _columns: ColumnSetting[] = [
+    private _columns: ColumnDefine[] = [
         {
             target: 'name',
             width: '15%',

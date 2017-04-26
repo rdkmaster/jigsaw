@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
-import {ColumnSetting} from "../../../../../component/table/table-api";
+import {ColumnDefine} from "../../../../../component/table/table-api";
 import {TableCellDefault} from "../../../../../component/table/table-renderer";
 
 @Component({
@@ -168,7 +168,7 @@ export class TableDataChangeDemoComponent {
             ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
     }
 
-    columns: ColumnSetting[] = [
+    columns: ColumnDefine[] = [
         {
             target: 'name',
             width: '15%',
@@ -195,7 +195,7 @@ export class TableDataChangeDemoComponent {
         ];
 
         //暂不支持修改数组
-        /*this.columns.push({
+        /*this.columnDefines.push({
             target: 'position',
             width: '20%',
             cell: {

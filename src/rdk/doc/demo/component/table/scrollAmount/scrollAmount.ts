@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
-import {AdditionalColumnSetting} from "../../../../../component/table/table-api";
+import {AdditionalColumnDefine} from "../../../../../component/table/table-api";
 import {TableHeadNum, TableCellNum} from "../../../../../component/table/table-renderer";
 
 @Component({
@@ -170,7 +170,7 @@ export class TableScrollAmountDemoComponent {
             ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
     }
 
-    additionalColumns: AdditionalColumnSetting[] = [
+    additionalColumns: AdditionalColumnDefine[] = [
         {
             pos: 0,
             width: '60px',

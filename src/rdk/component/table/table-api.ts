@@ -11,7 +11,7 @@ export class TableCellRenderer {
     @Output() changeToText: EventEmitter<string|number> = new EventEmitter<string|number>();
 }
 
-export type ColumnSetting = {
+export type ColumnDefine = {
     target: targetType,
     visible?: boolean,
     width?: string,
@@ -20,7 +20,7 @@ export type ColumnSetting = {
     group?: boolean
 }
 
-export type AdditionalColumnSetting = {
+export type AdditionalColumnDefine = {
     pos?: number,
     target?: string|number,
     visible?: boolean,
@@ -30,7 +30,7 @@ export type AdditionalColumnSetting = {
     group?: boolean
 }
 
-export type TableMsg = {
+export type TableDataChangeEvent = {
     field: string|number,
     row: number|number[],
     column: number,

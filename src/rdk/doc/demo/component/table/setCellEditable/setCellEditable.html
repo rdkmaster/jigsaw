@@ -1,4 +1,4 @@
-<rdk-table [data]="tableData" [columns]="_columns" (dataChange)="onCellChange($event)"></rdk-table>
+<rdk-table [data]="tableData" [columnDefines]="_columns" (dataChange)="onCellChange($event)"></rdk-table>
 
 第一行第二列数据：{{tableData.data[0][1]}}<br>
 第二行第二列数据：{{tableData.data[1][1]}}<br>

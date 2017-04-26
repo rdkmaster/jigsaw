@@ -2,8 +2,8 @@
 <div style="height: 2000px">
     <rdk-table height="400px"
                [data]="tableData"
-               [columns]="_columns"
-               [additionalColumns]="_additionalColumns"
+               [columnDefines]="_columns"
+               [additionalColumnDefines]="_additionalColumns"
                (dataChange)="onCellChange($event)"></rdk-table>
     <p class="message">table change answer is: <span>{{_changeMsg}}</span></p>
 </div>

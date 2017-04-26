@@ -1,6 +1,6 @@
 import {Component, ViewEncapsulation} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
-import {ColumnSetting} from "../../../../../component/table/table-api";
+import {ColumnDefine} from "../../../../../component/table/table-api";
 
 
 
@@ -175,7 +175,7 @@ export class TableSetCellClassDemoComponent {
 
 
 
-    private _columns: ColumnSetting[] = [
+    private _columns: ColumnDefine[] = [
         {
             target: 'name',
             cell: {

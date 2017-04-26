@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
-import {AdditionalColumnSetting, TableCellRenderer} from "../../../../../component/table/table-api";
+import {AdditionalColumnDefine, TableCellRenderer} from "../../../../../component/table/table-api";
 
 /*
  * 操作列头
@@ -104,7 +104,7 @@ export class TableAddColumnDemoComponent {
 
 
 
-    private _additionalColumns: AdditionalColumnSetting[] = [{
+    private _additionalColumns: AdditionalColumnDefine[] = [{
             pos : -1,
             header: {
                 renderer: MyTableHeadOption,
