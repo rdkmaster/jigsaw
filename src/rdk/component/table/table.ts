@@ -104,6 +104,18 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     private _hasInit: boolean; //组件是否已初始化
     private _scrollBarOptions: Object;
     private _isNormalRefresh : boolean = true; //data的排序onRefresh()
+    private _maxHeight: string;
+
+    @Input()
+    public get maxHeight(): string {
+        return this._maxHeight;
+    }
+
+    public set maxHeight(value: string) {
+        value = typeof value === 'string' ? value : value + '';
+        const match = value ? value.match(/^\s*\d+%|px\s*$/) : null;
+        this._maxHeight =  match ? value : value + 'px';
+    }
 
     @Input()
     public get data(): TableData {
@@ -678,6 +690,8 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     ngAfterViewInit() {
+        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.rdk-table-box'), 'max-height', this._maxHeight);
+
         this._setScrollBar();
 
         this.asynAlignHead();
