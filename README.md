@@ -15,7 +15,7 @@ cd d:\rdk-ng2
 # 如果无代理，则请跳过这一步。
 npm config set proxy=http://proxy.zte.com.cn:80
 npm config set registry=https://registry.npm.taobao.org/
-npm install -g node-sass --sass_binary_site=https://npm.taobao.org/mirrors/node-sass/
+npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass/
 npm install -g @angular/cli
 npm install
 npm start
