@@ -7,17 +7,23 @@ import {PageableArray} from "../../../../../core/data/array-collection";
   templateUrl: 'demo.html'
 })
 export class TablePageableDemoComponent {
-    tableData:PageableTableData;
+    pageable:PageableTableData;
     constructor(http:Http) {
-        this.tableData = new PageableTableData(http, {
+        this.pageable = new PageableTableData(http, {
             url: 'http://localhost:4200/mock-data/array-collection/paging-data.json',
             params: {aa: 11, bb: 22}, method:'get'
         });
-        console.log(this.tableData.header);
-        this.tableData.onAjaxComplete(() => {
-            console.log(this.tableData.data);
+        this.pageable.onAjaxComplete(() => {
+            console.log(this.pageable);
         });
-        this.tableData.fromAjax();
+        this.pageable.fromAjax();
+    }
+
+    getCurrentPage(){
+        this.pageable.changePage(this.pageable.pagingInfo);
+    }
+    getPageSize(){
+        this.pageable.changePage(this.pageable.pagingInfo);
     }
 }
 
