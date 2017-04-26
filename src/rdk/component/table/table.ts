@@ -443,12 +443,26 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     /*
-     * 根据元素在field的index找到在settings中的index
+     * 根据元素在field的index找到在headSettings中的index
      * */
-    private _getIndexInSettings(pos): number {
+    private _getIndexInHeadSettings(pos): number {
         let index = null;
         for (let i = 0; i < this._headSettings.length; i++) {
             if (this._headSettings[i].field == pos) {
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
+
+    /*
+     * 根据元素在field的index找到在cellSettings中的index
+     * */
+    private _getIndexInCellSettings(pos): number {
+        let index = null;
+        for (let i = 0; i < this._cellSettings[0].length; i++) {
+            if (this._cellSettings[0][i].field == pos) {
                 index = i;
                 break;
             }
@@ -473,10 +487,10 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * 移动列头位置
      * */
     private _insertCloneHeadSettings(pos: number, target: string | number, additionalColumn: AdditionalColumnSetting) {
-        let settingIndex = this._getIndexInSettings(this._getPosInField(target));
+        let index = this._getIndexInHeadSettings(this._getPosInField(target));
 
         //插入列头
-        let headSetting = <HeadSetting>CommonUtils.shallowCopy(this._headSettings[settingIndex]);
+        let headSetting = <HeadSetting>CommonUtils.shallowCopy(this._headSettings[index]);
         headSetting.visible = true;
         headSetting.field = -1;
         this._insertHeadSetting(pos, additionalColumn, headSetting);
@@ -486,11 +500,11 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * 移动列位置
      * */
     private _insertCloneCellSettings(pos: number, target: string | number, additionalColumn: AdditionalColumnSetting) {
-        let settingIndex = this._getIndexInSettings(this._getPosInField(target));
+        let index = this._getIndexInCellSettings(this._getPosInField(target));
 
         //插入列
         this._cellSettings.forEach(cellSettings => {
-            let cellSetting = <CellSetting>CommonUtils.shallowCopy(cellSettings[settingIndex]);
+            let cellSetting = <CellSetting>CommonUtils.shallowCopy(cellSettings[index]);
             cellSetting.visible = true;
             cellSetting.field = -1;
             this._insertCellSetting(pos, additionalColumn, cellSetting, cellSettings);
@@ -860,8 +874,9 @@ export class RdkTableHeader extends TableCellBasic implements OnInit {
 
     private _sort(order: SortOrder): void {
         this._setSortOrderClass(order);
-        this.sortChange.emit();
         this.tableData.sort(this.sortAs, order, this.field);
+        this.sortChange.emit();
+        this.tableData.refresh();
     }
 
     ngOnInit() {
