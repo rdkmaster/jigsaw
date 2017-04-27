@@ -1,4 +1,6 @@
-import {NgModule, Component, ViewEncapsulation, QueryList, Input, ContentChildren} from '@angular/core';
+import {
+    NgModule, Component, ViewEncapsulation, QueryList, Input, ContentChildren
+} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RdkPanel} from "./collapse-panel";
 import {AbstractRDKComponent} from "../core";
@@ -17,16 +19,6 @@ export class RdkCollapse extends AbstractRDKComponent{
     display = "block";
 
     @ContentChildren(RdkPanel) _rdkPanel: QueryList<RdkPanel>;
-
-    public closeAllPanel() {
-        if(!this._rdkPanel|| this._rdkPanel.length === 0) return;
-
-        this._rdkPanel.forEach(item => {
-            if(item["isActive"]) {
-                item["isActive"] = false;
-            }
-        });
-    }
 
     @Input()
     public mode: string| CollapseModule = 'default';  // accordion

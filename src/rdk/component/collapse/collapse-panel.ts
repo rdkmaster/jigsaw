@@ -19,8 +19,8 @@ export class RdkPanel implements OnInit{
     @Input()
     public isActive: boolean = false;
 
-    // 默认生成key.
-    key: string = "p-" + Math.round(Math.random() * 100).toString();
+    // 默认生成key. 临时方法可能存在重复.
+    key: string = "p-" + Math.round(Math.random() * 1000000).toString();
 
     private _onClick() {
         // 手风琴, 自动关闭其他的pane;
@@ -29,10 +29,9 @@ export class RdkPanel implements OnInit{
                 if(item.key === this.key) {
                     item.isActive = !item.isActive;
                 } else {
-                    item["isActive"] = false;
+                    item["isActive"] = true;
                 }
             })
-            console.info(this._collapse._rdkPanel);
         } else {
             this.isActive = !this.isActive;
         }
