@@ -36,8 +36,7 @@ import {TableSetCellClassDemoComponent} from "./setCellClass/setCellClass";
 import {TableColumnGroupDemoComponent} from "./setColumnGroup/setColumnGroup";
 import {TableSetCellEditableDemoComponent, MyTableCellEditor, MyTableCell} from "./setCellEditable/setCellEditable";
 import {
-    TableAddColumnDemoComponent, MyTableHeadOption, MyTableCellOption,
-    MyTableCellOption2
+    TableAddColumnDemoComponent, MyTableHeadOption, MyTableCellOption
 } from "./addColumn/addColumn";
 import {TableFixedHeadDemoComponent} from "./fixedHead/fixedHead";
 import {TablePageableDemoComponent} from "./pageable/demo";
@@ -153,7 +152,6 @@ const tableDemoRoutes = [
         TableSetCellEditableDemoComponent,
         MyTableHeadOption,
         MyTableCellOption,
-        MyTableCellOption2,
         TableAddColumnDemoComponent,
         TablePageableDemoComponent,
         TableDataFromAjaxDemoComponent,
@@ -192,7 +190,6 @@ const tableDemoRoutes = [
         MyTableCell,
         MyTableHeadOption,
         MyTableCellOption,
-        MyTableCellOption2,
         MyTableCellEditor
     ]
 })

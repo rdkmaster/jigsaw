@@ -15,28 +15,29 @@ export class MyTableHeadOption extends TableCellRenderer {
  * 操作列
  * */
 @Component({
-    template: '<a href="javascript:;">修改</a><a href="javascript:;">删除</a>{{tableData.data[row][0]}} ',
-    styles: [`a{color: #ffaa00} a:hover{text-decoration: underline}`]
+    template: `
+        <a href="javascript:;" (click)="clickHandler('修改')">修改</a>
+        <a href="javascript:;" (click)="clickHandler('删除')">删除</a>`,
+    styles: [`a {
+        color: #ffaa00
+    }
+
+    a:hover {
+        text-decoration: underline
+    }`]
 })
 export class MyTableCellOption extends TableCellRenderer {
+    clickHandler(actioin) {
+        alert(`正在${actioin}第 ${this.row + 1} 行的数据！`)
+    }
 }
 
-
 @Component({
-    template: '<a href="javascript:;">修改</a><a href="javascript:;">删除</a>{{cellData}} ',
-    styles: [`a{color: #ffaa00} a:hover{text-decoration: underline}`]
-})
-export class MyTableCellOption2 extends TableCellRenderer {
-}
-
-
-
-
-@Component({
-  templateUrl: 'addColumn.html'
+    templateUrl: 'addColumn.html'
 })
 export class TableAddColumnDemoComponent {
     tableData: TableData;
+
     constructor() {
         this.tableData = new TableData(
             [
@@ -47,7 +48,7 @@ export class TableAddColumnDemoComponent {
                     "2011/04/25",
                     "Edinburgh",
                     "542"
-                ],[
+                ], [
                 "Tiger Nixon2",
                 "System Arcfhitect",
                 "$320,8000",
@@ -103,24 +104,13 @@ export class TableAddColumnDemoComponent {
     }
 
 
-
     private _additionalColumns: AdditionalColumnDefine[] = [{
-            pos : -1,
-            header: {
-                renderer: MyTableHeadOption,
-            },
-            cell: {
-                renderer: MyTableCellOption
-            }
-        },{
-            pos : -1,
-            target : "salary",
-            header: {
-                renderer: MyTableHeadOption,
-            },
-            cell: {
-                renderer: MyTableCellOption2
-            }
+        header: {
+            renderer: MyTableHeadOption,
+        },
+        cell: {
+            renderer: MyTableCellOption
+        }
     }]
 }
 
