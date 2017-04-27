@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {PageableTableData} from "../../../../../core/data/table-data";
 import {Http} from "@angular/http";
 import {TableHeadNum, TableCellNum} from "../../../../../component/table/table-renderer";
-import {AdditionalColumnSetting, ColumnSetting} from "../../../../../component/table/table-api";
+import {AdditionalColumnDefine, ColumnDefine} from "../../../../../component/table/table-api";
 
 @Component({
     templateUrl: 'addIDWithPaging.html'
@@ -29,12 +29,12 @@ export class TableAddIDWithPagingComponent {
         this.pageable.changePage(this.pageable.pagingInfo);
     }
 
-    private _columns: ColumnSetting[] = [{
+    private _columns: ColumnDefine[] = [{
         target: 'id',
         visible: false
     }];
 
-    private _additionalColumns: AdditionalColumnSetting[] = [{
+    private _additionalColumns: AdditionalColumnDefine[] = [{
         pos: 0,
         header: {
             renderer: TableHeadNum,
