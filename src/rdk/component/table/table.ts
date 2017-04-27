@@ -185,7 +185,10 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     @Input()
     public set scrollAmount(value:number) {
         if (typeof value == 'number' && value > 0) {
-            this._scrollBarOptions.mouseWheel.scrollAmount = RdkTable.ROW_HEIGHT * value;
+            this._scrollBarOptions = {
+                snapAmount: RdkTable.ROW_HEIGHT,
+                mouseWheel: {enable: true, scrollAmount: RdkTable.ROW_HEIGHT * value}
+            };
         }
     }
 
