@@ -39,6 +39,12 @@ class CellSetting {
     rowSpan: number;
 }
 
+type sortChangeEvent = {
+    sortAs: SortAs,
+    order: SortOrder,
+    field: number
+}
+
 export class TableCellBasic implements AfterViewInit {
     constructor(protected componentFactoryResolver: ComponentFactoryResolver,
                 protected changeDetector: ChangeDetectorRef) {
@@ -100,7 +106,6 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     private _data: TableData;
     private _removeRefreshCallback: CallbackRemoval;
     private _hasInit: boolean; //组件是否已初始化
-    private _isNormalRefresh : boolean = true; //data的排序onRefresh()
     private _maxHeight: string;
 
     @Input()
@@ -128,12 +133,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
             this._removeRefreshCallback();
         }
         this._removeRefreshCallback = value.onRefresh(() => {
-            if(this._isNormalRefresh){
-                this._refresh();
-            }else{
-                this._transformCellSettings();
-                this._isNormalRefresh = true;
-            }
+            this._refresh();
         });
 
         if (this._hasInit) {
@@ -727,8 +727,9 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
 
         setTimeout(()=>{
             this._rdkTableHeaders.length && this._rdkTableHeaders.forEach(rdkTableHeaders => {
-                rdkTableHeaders.sortChange.subscribe(() => {
-                    this._isNormalRefresh = false;
+                rdkTableHeaders.sortChange.subscribe(value => {
+                    this.data.sort(value.sortAs, value.order, value.field);
+                    this._transformCellSettings();
                 })
             })
         }, 0);
@@ -890,7 +891,7 @@ export class RdkTableHeader extends TableCellBasic implements OnInit {
     };
 
     @Output()
-    public sortChange: EventEmitter<any> = new EventEmitter<any>();
+    public sortChange: EventEmitter<sortChangeEvent> = new EventEmitter<sortChangeEvent>();
 
     constructor(cfr: ComponentFactoryResolver, cd: ChangeDetectorRef, @Optional() rdkTable: RdkTable) {
         super(cfr, cd);
@@ -907,9 +908,7 @@ export class RdkTableHeader extends TableCellBasic implements OnInit {
 
     private _sort(order: SortOrder): void {
         this._setSortOrderClass(order);
-        this.tableData.sort(this.sortAs, order, this.field);
-        this.tableData.refresh();
-        this.sortChange.emit();
+        this.sortChange.emit({sortAs: this.sortAs, order: order, field: this.field});
     }
 
     ngOnInit() {
