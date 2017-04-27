@@ -14,6 +14,7 @@ import {SortAs, SortOrder, CallbackRemoval} from "../../core/data/component-data
 import {CommonUtils} from "../../core/utils/common-utils";
 import {TableCellDefault} from "./table-renderer";
 import {AffixUtils} from "../../core/utils/internal-utils";
+import {TableCheckboxService} from "./table-service";
 
 class HeadSetting {
     cellData: string | number;
@@ -100,7 +101,8 @@ export class TableCellBasic implements AfterViewInit {
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height'
-    }
+    },
+    providers: [TableCheckboxService]
 })
 export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnDestroy, OnInit {
     private _data: TableData;
