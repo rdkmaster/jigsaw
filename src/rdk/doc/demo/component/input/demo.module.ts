@@ -5,6 +5,11 @@ import {RouterModule} from "@angular/router";
 import {InputBasicDemoComponent} from "./basic/basic";
 
 import {RdkInputModule} from "../../../../component/input/input";
+import {InputValueChangeDemoComponent} from "./valueChange/valueChange";
+import {InputClearableDemoComponent} from "./clearable/clearable";
+import {InputFocusDemoComponent} from "./focus/focus";
+import {RdkButtonModule} from "../../../../component/button/button";
+import {InputPrefixIconDemoComponent} from "./prefixIcon/prefixIcon";
 
 
 const inputDemoRoutes=[
@@ -15,6 +20,14 @@ const inputDemoRoutes=[
     },
     {
         path:'basic', component: InputBasicDemoComponent
+    },{
+        path:'valueChange', component: InputValueChangeDemoComponent
+    },{
+        path:'clearable', component: InputClearableDemoComponent
+    },{
+        path:'focus', component: InputFocusDemoComponent
+    },{
+        path:'prefixIcon', component: InputPrefixIconDemoComponent
     },
     {
         path:'**', //fallback router must in the last
@@ -24,10 +37,11 @@ const inputDemoRoutes=[
 
 @NgModule({
     declarations: [
-        InputBasicDemoComponent
+        InputBasicDemoComponent,InputValueChangeDemoComponent,InputClearableDemoComponent
+        ,InputFocusDemoComponent,InputPrefixIconDemoComponent
     ],
     imports: [
-        RouterModule.forChild(inputDemoRoutes), RdkInputModule
+        RouterModule.forChild(inputDemoRoutes), RdkInputModule,RdkButtonModule
     ],
     exports: [
         InputBasicDemoComponent
