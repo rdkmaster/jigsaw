@@ -106,19 +106,6 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     private _data: TableData;
     private _removeRefreshCallback: CallbackRemoval;
     private _hasInit: boolean; //组件是否已初始化
-    private _maxHeight: string;
-
-    @Input()
-    public get maxHeight(): string {
-        return this._maxHeight;
-    }
-
-    public set maxHeight(value: string) {
-        value = typeof value === 'string' ? value : value + '';
-        const match = value ? value.match(/^\s*\d+%|px\s*$/) : null;
-        this._maxHeight =  match ? value : value + 'px';
-        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.rdk-table-box'), 'max-height', this._maxHeight);
-    }
 
     @Input()
     public get data(): TableData {
@@ -700,6 +687,11 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         }, 1000);
     }
 
+    private _setMaxHeight(){
+        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.rdk-table-box'),
+            'max-height', this._maxHeight);
+    }
+
     ngOnInit() {
         if (this.data instanceof TableData && this.data.header.length) {
             this._transformData();
@@ -708,6 +700,8 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     ngAfterViewInit() {
+        this._setMaxHeight();
+
         this._whileScrolling();
 
         this._asyncAlignHead();
