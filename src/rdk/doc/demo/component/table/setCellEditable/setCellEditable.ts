@@ -17,7 +17,7 @@ export class MyTableCell extends TableCellRenderer {
  * 编辑单元格渲染器
  * */
 @Component({
-    template: `<rdk-input #input [(value)]="cellData" width="100%" [clearable]="false" (blur)="dispatchRenderChange(cellData)"></rdk-input>`
+    template: `<rdk-input #input [(value)]="cellData" width="100%" [clearable]="false" (blur)="dispatchChangeEvent(cellData)"></rdk-input>`
 })
 export class MyTableCellEditor extends TableCellRenderer implements AfterViewInit{
 

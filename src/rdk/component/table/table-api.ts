@@ -3,7 +3,7 @@ import {TableData} from "../../core/data/table-data";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 
 export class TableCellRenderer {
-    protected dispatchRenderChange(value: string|number|TableHeadChangeEvent): void{
+    protected dispatchChangeEvent(value: string|number|TableHeadChangeEvent): void{
         this.cellDataChange.emit(value)
     }
 
@@ -16,7 +16,7 @@ export class TableCellRenderer {
 }
 
 export type ColumnDefine = {
-    target: targetType,
+    target: TargetType,
     visible?: boolean,
     width?: string,
     header?: Header,
@@ -49,9 +49,9 @@ export type TableHeadChangeEvent = {
     oldCellData: string|number
 }
 
-type targetType = number|string|number[]|string[]|targetFun;
+type TargetType = number|string|number[]|string[]|TargetFun;
 
-type targetFun = (field: string, index: number) => boolean;
+type TargetFun = (field: string, index: number) => boolean;
 
 type Header = {
     renderer?: Type<TableCellRenderer>,
