@@ -3,12 +3,16 @@ import {TableData} from "../../core/data/table-data";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 
 export class TableCellRenderer {
+    protected dispatchRenderChange(value: string|number|TableHeadChangeEvent): void{
+        this.cellDataChange.emit(value)
+    }
+
     @Input() tableData: TableData;
     @Input() cellData: any;
     @Input() row: number;
     @Input() column: number;
 
-    @Output() changeToText: EventEmitter<string|number> = new EventEmitter<string|number>();
+    @Output() cellDataChange: EventEmitter<string|number|TableHeadChangeEvent> = new EventEmitter<string|number|TableHeadChangeEvent>();
 }
 
 export type ColumnDefine = {
@@ -35,6 +39,12 @@ export type TableDataChangeEvent = {
     row: number|number[],
     column: number,
     rawColumn: number,
+    cellData: string|number,
+    oldCellData: string|number
+}
+
+export type TableHeadChangeEvent = {
+    rows: number[],
     cellData: string|number,
     oldCellData: string|number
 }

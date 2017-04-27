@@ -17,15 +17,11 @@ export class MyTableCell extends TableCellRenderer {
  * 编辑单元格渲染器
  * */
 @Component({
-    template: `<rdk-input #input [(value)]="cellData" width="100%" [clearable]="false" (blur)="_goText()"></rdk-input>`
+    template: `<rdk-input #input [(value)]="cellData" width="100%" [clearable]="false" (blur)="dispatchRenderChange(cellData)"></rdk-input>`
 })
 export class MyTableCellEditor extends TableCellRenderer implements AfterViewInit{
 
     @ViewChild(RdkInput) input: RdkInput;
-
-    _goText(): void {
-        this.changeToText.emit(this.cellData);
-    }
 
     ngAfterViewInit(){
         this.input.focus();

@@ -1,2 +1,2 @@
-<rdk-table [data]="tableData" [additionalColumnDefines]="_additionalColumns" ></rdk-table>
-
+<rdk-table [data]="tableData" [additionalColumnDefines]="_additionalColumns" (dataChange)="onCellChange($event)"></rdk-table>
+<p class="message">table change answer is: <span>{{_changeMsg}}</span></p>

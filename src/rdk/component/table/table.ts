@@ -6,7 +6,10 @@ import {CommonModule} from "@angular/common";
 
 import {RdkRendererHost, AbstractRDKComponent} from "../core";
 import {TableData} from "../../core/data/table-data";
-import {TableCellRenderer, ColumnDefine, AdditionalColumnDefine, TableDataChangeEvent} from "./table-api";
+import {
+    TableCellRenderer, ColumnDefine, AdditionalColumnDefine, TableDataChangeEvent,
+    TableHeadChangeEvent
+} from "./table-api";
 
 import {RdkScrollBarModule} from "../scrollbar/scrollbar";
 import {RdkScrollBar} from "../scrollbar/scrollbar";
@@ -44,54 +47,6 @@ type SortChangeEvent = {
     sortAs: SortAs,
     order: SortOrder,
     field: number
-}
-
-export class TableCellBasic implements AfterViewInit {
-    constructor(protected componentFactoryResolver: ComponentFactoryResolver,
-                protected changeDetector: ChangeDetectorRef) {
-    }
-
-    @Input()
-    public tableData: TableData;
-    @Input()
-    public cellData: any;
-    @Input()
-    public row: number;
-    @Input()
-    public column: number;
-    @Input()
-    public field: number;
-    @Input()
-    protected renderer: Type<TableCellRenderer>;
-
-    public rendererRef: ComponentRef<TableCellRenderer>;
-
-    @ViewChild(RdkRendererHost) rendererHost: RdkRendererHost;
-
-    /*
-     * 渲染器制造工厂
-     * */
-    protected rendererFactory(renderer: Type<TableCellRenderer>): ComponentRef<TableCellRenderer> {
-        let componentFactory = this.componentFactoryResolver.resolveComponentFactory(renderer);
-        let componentRef = this.rendererHost.viewContainerRef.createComponent(componentFactory);
-        componentRef.instance.tableData = this.tableData;
-        componentRef.instance.cellData = this.cellData;
-        componentRef.instance.row = this.row;
-        componentRef.instance.column = this.column;
-        return componentRef;
-    }
-
-    /*
-     * 插入渲染器
-     * */
-    protected insertRenderer() {
-        this.rendererRef = this.rendererFactory(this.renderer);
-        this.changeDetector.detectChanges();
-    }
-
-    ngAfterViewInit(): void {
-        this.insertRenderer();
-    }
 }
 
 @Component({
@@ -510,7 +465,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         //插入列头
         let headSetting = <HeadSetting>CommonUtils.shallowCopy(this._headSettings[index]);
         headSetting.visible = true;
-        headSetting.field = -1;
+        //headSetting.field = -1;
         this._insertHeadSetting(pos, additionalColumn, headSetting);
     }
 
@@ -524,7 +479,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         this._cellSettings.forEach(cellSettings => {
             let cellSetting = <CellSetting>CommonUtils.shallowCopy(cellSettings[index]);
             cellSetting.visible = true;
-            cellSetting.field = -1;
+            //cellSetting.field = -1;
             this._insertCellSetting(pos, additionalColumn, cellSetting, cellSettings);
         })
     }
@@ -748,6 +703,58 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
 
 }
 
+export class TableCellBasic implements AfterViewInit {
+    protected _rdkTable: RdkTable;
+
+    constructor(protected componentFactoryResolver: ComponentFactoryResolver,
+                protected changeDetector: ChangeDetectorRef,
+                @Optional() rdkTable: RdkTable) {
+        this._rdkTable = rdkTable;
+    }
+
+    @Input()
+    public tableData: TableData;
+    @Input()
+    public cellData: any;
+    @Input()
+    public row: number;
+    @Input()
+    public column: number;
+    @Input()
+    public field: number;
+    @Input()
+    public renderer: Type<TableCellRenderer>;
+
+    public rendererRef: ComponentRef<TableCellRenderer>;
+
+    @ViewChild(RdkRendererHost) rendererHost: RdkRendererHost;
+
+    /*
+     * 渲染器制造工厂
+     * */
+    protected rendererFactory(renderer: Type<TableCellRenderer>): ComponentRef<TableCellRenderer> {
+        let componentFactory = this.componentFactoryResolver.resolveComponentFactory(renderer);
+        let componentRef = this.rendererHost.viewContainerRef.createComponent(componentFactory);
+        componentRef.instance.tableData = this.tableData;
+        componentRef.instance.cellData = this.cellData;
+        componentRef.instance.row = this.row;
+        componentRef.instance.column = this.column;
+        return componentRef;
+    }
+
+    /*
+     * 插入渲染器
+     * */
+    protected insertRenderer() {
+        this.rendererRef = this.rendererFactory(this.renderer);
+        this.changeDetector.detectChanges();
+    }
+
+    ngAfterViewInit(): void {
+        this.insertRenderer();
+    }
+}
+
 /*
  * 单元格
  * */
@@ -771,17 +778,50 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
 
     public editorRendererRef: ComponentRef<TableCellRenderer>;
 
-    private goEditCallback: () => void;
-
-    private _rdkTable: RdkTable;
+    private _goEditCallback: () => void;
 
     constructor(cfr: ComponentFactoryResolver,
                 cd: ChangeDetectorRef,
+                @Optional() rdkTable: RdkTable,
                 private _rdr: Renderer2,
-                private _el: ElementRef,
-                @Optional() rdkTable: RdkTable) {
-        super(cfr, cd);
-        this._rdkTable = rdkTable;
+                private _el: ElementRef) {
+        super(cfr, cd, rdkTable);
+    }
+
+    private _emitDataChange(cellData: string|number): void{
+        let oldCellData = this.cellData;
+        this.cellData = cellData;
+
+        //更新tableData
+        let rows = [];
+        for(let i = 0; i < this.rowSpan; i++){
+            this.tableData.data[this.row + i][this.field] = cellData;
+            rows.push(this.row + i);
+        }
+        this._rdkTable.dataChange.emit({
+            field: this.tableData.field[this.field],
+            row: rows,
+            column: this.column,
+            rawColumn: this.field,
+            cellData: this.cellData,
+            oldCellData: oldCellData
+        });
+    }
+
+    /*
+     * 插入渲染器
+     * */
+    protected insertRenderer() {
+        super.insertRenderer();
+        this.rendererRef.instance.cellDataChange.subscribe(cellData => {
+            if (cellData === undefined || cellData ===  null) {
+                //cellData === '' 认为是合法值
+                return;
+            }
+            if (this.cellData != cellData) {
+                this._emitDataChange(cellData);
+            }
+        });
     }
 
     /*
@@ -790,36 +830,22 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
     protected insertEditorRenderer() {
         this.editorRendererRef = this.rendererFactory(this.editorRenderer);
 
-        this.editorRendererRef.instance.changeToText.subscribe(cellData => {
-            if (cellData) {
-                if (this.cellData != cellData) {
-                    let oldCellData = this.cellData;
-                    this.cellData = cellData;
-
-                    //更新tableData
-                    let rows = [];
-                    for(let i = 0; i < this.rowSpan; i++){
-                        this.tableData.data[this.row + i][this.field] = cellData;
-                        rows.push(this.row + i);
-                    }
-                    this._rdkTable.dataChange.emit({
-                        field: this.tableData.field[this.field],
-                        row: rows,
-                        column: this.column,
-                        rawColumn: this.field,
-                        cellData: this.cellData,
-                        oldCellData: oldCellData
-                    });
-                }
-                this.rendererHost.viewContainerRef.clear();
-                this.insertRenderer();
-                this._onClick();
-                this._rdkTable._asyncAlignHead();
+        this.editorRendererRef.instance.cellDataChange.subscribe(cellData => {
+            if (cellData === undefined || cellData ===  null) {
+                //cellData === '' 认为是合法值
+                return;
             }
+            if (this.cellData != cellData) {
+                this._emitDataChange(cellData);
+            }
+            this.rendererHost.viewContainerRef.clear();
+            this.insertRenderer();
+            this._onClick();
+            this._rdkTable._asyncAlignHead();
         });
 
-        if(this.goEditCallback){
-            this.goEditCallback();
+        if(this._goEditCallback){
+            this._goEditCallback();
         }
 
         this.changeDetector.detectChanges();
@@ -829,7 +855,7 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
      * 如果可编辑，单元格绑定点击事件
      * */
     private _onClick() {
-        this.goEditCallback = this.editable ? this._rdr.listen(this._el.nativeElement, 'click', () => {
+        this._goEditCallback = this.editable ? this._rdr.listen(this._el.nativeElement, 'click', () => {
                 this.rendererHost.viewContainerRef.clear();
                 this.insertEditorRenderer();
                 this._rdkTable._asyncAlignHead();
@@ -864,7 +890,6 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
     styleUrls: ['table-head.scss']
 })
 export class RdkTableHeader extends TableCellBasic implements OnInit {
-    private _rdkTable: RdkTable;
     private _sortOrderClass: Object;
 
     private _setSortOrderClass(sortOrder: SortOrder): void {
@@ -889,11 +914,6 @@ export class RdkTableHeader extends TableCellBasic implements OnInit {
     @Output()
     public sortChange: EventEmitter<SortChangeEvent> = new EventEmitter<SortChangeEvent>();
 
-    constructor(cfr: ComponentFactoryResolver, cd: ChangeDetectorRef, @Optional() rdkTable: RdkTable) {
-        super(cfr, cd);
-        this._rdkTable = rdkTable;
-    }
-
     private _sortAsc(): void {
         this._sort(SortOrder.asc);
     }
@@ -905,6 +925,32 @@ export class RdkTableHeader extends TableCellBasic implements OnInit {
     private _sort(order: SortOrder): void {
         this._setSortOrderClass(order);
         this.sortChange.emit({sortAs: this.sortAs, order: order, field: this.field});
+    }
+
+    private _emitDataChange(tableHeadChangeEvent: TableHeadChangeEvent): void{
+        //更新tableData
+        for(let row of tableHeadChangeEvent.rows){
+            this.tableData.data[row][this.field] = tableHeadChangeEvent.cellData;
+        }
+
+        this._rdkTable.dataChange.emit({
+            field: this.tableData.field[this.field],
+            row: tableHeadChangeEvent.rows,
+            column: this.column,
+            rawColumn: this.field,
+            cellData: tableHeadChangeEvent.cellData,
+            oldCellData: tableHeadChangeEvent.oldCellData
+        });
+    }
+
+    /*
+     * 插入渲染器
+     * */
+    protected insertRenderer() {
+        super.insertRenderer();
+        this.rendererRef.instance.cellDataChange.subscribe(tableHeadChangeEvent => {
+            this._emitDataChange(tableHeadChangeEvent);
+        });
     }
 
     ngOnInit() {
