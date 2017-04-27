@@ -39,6 +39,12 @@ class CellSetting {
     rowSpan: number;
 }
 
+type SortChangeEvent = {
+    sortAs: SortAs,
+    order: SortOrder,
+    field: number
+}
+
 export class TableCellBasic implements AfterViewInit {
     constructor(protected componentFactoryResolver: ComponentFactoryResolver,
                 protected changeDetector: ChangeDetectorRef) {
@@ -100,20 +106,6 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     private _data: TableData;
     private _removeRefreshCallback: CallbackRemoval;
     private _hasInit: boolean; //组件是否已初始化
-    private _isNormalRefresh : boolean = true; //data的排序onRefresh()
-    private _maxHeight: string;
-
-    @Input()
-    public get maxHeight(): string {
-        return this._maxHeight;
-    }
-
-    public set maxHeight(value: string) {
-        value = typeof value === 'string' ? value : value + '';
-        const match = value ? value.match(/^\s*\d+%|px\s*$/) : null;
-        this._maxHeight =  match ? value : value + 'px';
-        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.rdk-table-box'), 'max-height', this._maxHeight);
-    }
 
     @Input()
     public get data(): TableData {
@@ -128,12 +120,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
             this._removeRefreshCallback();
         }
         this._removeRefreshCallback = value.onRefresh(() => {
-            if(this._isNormalRefresh){
-                this._refresh();
-            }else{
-                this._transformCellSettings();
-                this._isNormalRefresh = true;
-            }
+            this._refresh();
         });
 
         if (this._hasInit) {
@@ -185,7 +172,10 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     @Input()
     public set scrollAmount(value:number) {
         if (typeof value == 'number' && value > 0) {
-            this._scrollBarOptions.mouseWheel.scrollAmount = RdkTable.ROW_HEIGHT * value;
+            this._scrollBarOptions = {
+                snapAmount: RdkTable.ROW_HEIGHT,
+                mouseWheel: {enable: true, scrollAmount: RdkTable.ROW_HEIGHT * value}
+            };
         }
     }
 
@@ -697,6 +687,11 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         }, 1000);
     }
 
+    private _setMaxHeight(){
+        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.rdk-table-box'),
+            'max-height', this._maxHeight);
+    }
+
     ngOnInit() {
         if (this.data instanceof TableData && this.data.header.length) {
             this._transformData();
@@ -705,6 +700,8 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     ngAfterViewInit() {
+        this._setMaxHeight();
+
         this._whileScrolling();
 
         this._asyncAlignHead();
@@ -724,8 +721,9 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
 
         setTimeout(()=>{
             this._rdkTableHeaders.length && this._rdkTableHeaders.forEach(rdkTableHeaders => {
-                rdkTableHeaders.sortChange.subscribe(() => {
-                    this._isNormalRefresh = false;
+                rdkTableHeaders.sortChange.subscribe(value => {
+                    this.data.sort(value.sortAs, value.order, value.field);
+                    this._transformCellSettings();
                 })
             })
         }, 0);
@@ -887,7 +885,7 @@ export class RdkTableHeader extends TableCellBasic implements OnInit {
     };
 
     @Output()
-    public sortChange: EventEmitter<any> = new EventEmitter<any>();
+    public sortChange: EventEmitter<SortChangeEvent> = new EventEmitter<SortChangeEvent>();
 
     constructor(cfr: ComponentFactoryResolver, cd: ChangeDetectorRef, @Optional() rdkTable: RdkTable) {
         super(cfr, cd);
@@ -904,9 +902,7 @@ export class RdkTableHeader extends TableCellBasic implements OnInit {
 
     private _sort(order: SortOrder): void {
         this._setSortOrderClass(order);
-        this.tableData.sort(this.sortAs, order, this.field);
-        this.tableData.refresh();
-        this.sortChange.emit();
+        this.sortChange.emit({sortAs: this.sortAs, order: order, field: this.field});
     }
 
     ngOnInit() {

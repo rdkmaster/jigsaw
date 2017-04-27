@@ -9,12 +9,14 @@ export class RdkRendererHost {
 }
 
 import {Input} from "@angular/core";
+import {CommonUtils} from "../core/utils/common-utils";
 
 export interface IRDKComponent {
     //组件基础样式
     basicClass: string;
     width: string;
     height: string;
+    maxHeight: string;
 }
 
 export abstract class AbstractRDKComponent implements IRDKComponent {
@@ -24,15 +26,14 @@ export abstract class AbstractRDKComponent implements IRDKComponent {
 
     protected _width: string;
     protected _height: string;
+    protected _maxHeight: string;
     @Input()
     public get width(): string {
         return this._width
     }
 
     public set width(value: string) {
-        value = typeof value === 'string' ? value : value + '';
-        const match = value ? value.match(/^\s*\d+%|px\s*$/) : null;
-        this._width =  match ? value : value + 'px';
+        this._width =  CommonUtils.getCssValue(value);
     }
 
     @Input()
@@ -41,9 +42,16 @@ export abstract class AbstractRDKComponent implements IRDKComponent {
     }
 
     public set height(value: string) {
-        value = typeof value === 'string' ? value : value + '';
-        const match = value ? value.match(/^\s*\d+%|px\s*$/) : null;
-        this._height =  match ? value : value + 'px';
+        this._height =  CommonUtils.getCssValue(value);
+    }
+
+    @Input()
+    public get maxHeight(): string {
+        return this._maxHeight;
+    }
+
+    public set maxHeight(value: string) {
+        this._maxHeight =  CommonUtils.getCssValue(value);
     }
 }
 
