@@ -39,7 +39,7 @@ class CellSetting {
     rowSpan: number;
 }
 
-type sortChangeEvent = {
+type SortChangeEvent = {
     sortAs: SortAs,
     order: SortOrder,
     field: number
@@ -885,7 +885,7 @@ export class RdkTableHeader extends TableCellBasic implements OnInit {
     };
 
     @Output()
-    public sortChange: EventEmitter<sortChangeEvent> = new EventEmitter<sortChangeEvent>();
+    public sortChange: EventEmitter<SortChangeEvent> = new EventEmitter<SortChangeEvent>();
 
     constructor(cfr: ComponentFactoryResolver, cd: ChangeDetectorRef, @Optional() rdkTable: RdkTable) {
         super(cfr, cd);
