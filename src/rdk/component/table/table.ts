@@ -170,7 +170,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * */
     private _refresh() {
         this._transformData();
-        this._asyncAlignHead();//表头对齐
+        this._refreshStyle();
     }
 
     /*
@@ -608,8 +608,11 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         })
     }
 
-    private _whileScrolling(): void {
+    private _defineFixedHead(){
         this._fixedHead = this._elementRef.nativeElement.querySelector(".rdk-table-fixed-head");
+    }
+
+    private _whileScrolling(): void {
         this._scrollBar.whileScrolling.subscribe(scrollEvent => {
             if (scrollEvent.direction == 'x') {
                 this._renderer.setStyle(this._fixedHead, 'left', scrollEvent.left + 'px');
@@ -617,7 +620,8 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         });
     }
 
-    private _floatHead(maxTop) {
+    private _floatHead() {
+        const maxTop = this._elementRef.nativeElement.offsetHeight - this._fixedHead.offsetHeight;
         let tableDocumentTop = AffixUtils.offset(this._elementRef.nativeElement).top;
         let scrollTop = AffixUtils.getScrollTop();
         let top = scrollTop - tableDocumentTop;
@@ -631,7 +635,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     /**
-     *
+     * 表头对齐
      * @private
      */
     public _asyncAlignHead() {
@@ -649,33 +653,34 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
             'max-height', this._maxHeight);
     }
 
-    ngOnInit() {
-        if (this.data instanceof TableData && this.data.header.length) {
-            this._transformData();
-            this._hasInit = true;
-        }
-    }
-
-    ngAfterViewInit() {
-        this._setMaxHeight();
-
-        this._whileScrolling();
-
-        this._asyncAlignHead();
+    private _addWindowListener(){
+        this._removeWindowListener();
 
         this._removeWindowLoadListener = this._renderer.listen('window', 'load', () => {
             this._setFixedHeadWidth();
         });
         this._removeWindowResizeListener = this._renderer.listen('window', 'resize', () => {
             this._setFixedHeadWidth();
-            this._floatHead(maxTop);
+            this._floatHead();
         });
-
-        const maxTop = this._elementRef.nativeElement.offsetHeight - this._fixedHead.offsetHeight;
         this._removeWindowScrollListener = this._renderer.listen('window', 'scroll', () => {
-            this._floatHead(maxTop);
+            this._floatHead();
         });
+    }
 
+    private _removeWindowListener(){
+        if (this._removeWindowLoadListener) {
+            this._removeWindowLoadListener();
+        }
+        if (this._removeWindowScrollListener) {
+            this._removeWindowScrollListener();
+        }
+        if (this._removeWindowResizeListener) {
+            this._removeWindowResizeListener();
+        }
+    }
+
+    private _subscribeSortChange(){
         setTimeout(()=>{
             this._rdkTableHeaders.length && this._rdkTableHeaders.forEach(rdkTableHeaders => {
                 rdkTableHeaders.sortChange.subscribe(value => {
@@ -686,19 +691,34 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         }, 0);
     }
 
+    private _refreshStyle(){
+        this._asyncAlignHead();
+        this._addWindowListener();
+        this._subscribeSortChange();
+    }
+
+    ngOnInit() {
+        if (this.data instanceof TableData && this.data.header.length) {
+            this._transformData();
+        }
+        this._hasInit = true;
+    }
+
+    ngAfterViewInit() {
+        this._setMaxHeight();
+        //定义浮动表头
+        this._defineFixedHead();
+        //横向滚动监听
+        this._whileScrolling();
+
+        this._refreshStyle();
+    }
+
     ngOnDestroy() {
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback();
         }
-        if (this._removeWindowLoadListener) {
-            this._removeWindowLoadListener();
-        }
-        if (this._removeWindowScrollListener) {
-            this._removeWindowScrollListener();
-        }
-        if (this._removeWindowResizeListener) {
-            this._removeWindowResizeListener();
-        }
+        this._removeWindowListener();
     }
 
 }
