@@ -608,10 +608,6 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         })
     }
 
-    private _defineFixedHead(){
-        this._fixedHead = this._elementRef.nativeElement.querySelector(".rdk-table-fixed-head");
-    }
-
     private _whileScrolling(): void {
         this._scrollBar.whileScrolling.subscribe(scrollEvent => {
             if (scrollEvent.direction == 'x') {
@@ -646,11 +642,6 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         setTimeout(() => {
             this._setFixedHeadWidth();
         }, 1000);
-    }
-
-    private _setMaxHeight(){
-        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.rdk-table-box'),
-            'max-height', this._maxHeight);
     }
 
     private _addWindowListener(){
@@ -697,9 +688,14 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         this._subscribeSortChange();
     }
 
+    private _init(){
+        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.rdk-table-box'),
+            'max-height', this._maxHeight);
+        this._fixedHead = this._elementRef.nativeElement.querySelector(".rdk-table-fixed-head");
+    }
+
     ngOnInit() {
-        this._setMaxHeight();
-        this._defineFixedHead();
+        this._init();
         if (this.data instanceof TableData && this.data.header.length) {
             this._refresh();
         }
