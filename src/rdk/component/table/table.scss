@@ -31,12 +31,12 @@ table{
         border: 1px solid $border-color-base;
     }
     thead{
-        background: $gray-light;
         color: #333;
         tr{
             height: 40px;
             td{
                 white-space: nowrap;
+                background: $gray-light;
             }
         }
     }
