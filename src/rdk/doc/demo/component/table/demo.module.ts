@@ -46,6 +46,9 @@ import {TableAddCheckboxColumnDemoComponent} from "./addCheckboxColumn/addCheckb
 import {TableDataChangeDemoComponent} from "./dataChange/dataChange";
 import {RdkButtonModule} from "../../../../component/button/button";
 import {TableAddIDWithPagingComponent} from "./addIDWithPaging/addIDWithPaging";
+import {TableDataWithPopupDemoComponent} from "./withPopup/withPopup";
+import {RdkDialogModule} from "../../../../component/dialog/dialog";
+import {PopupService} from "../../../../service/popup.service";
 
 const tableDemoRoutes = [
     {
@@ -113,6 +116,9 @@ const tableDemoRoutes = [
         path: 'addIDWithPaging', component: TableAddIDWithPagingComponent
     },
     {
+        path: 'withPopup', component: TableDataWithPopupDemoComponent
+    },
+    {
         path: '**', //fallback router must in the last
         component: TableBasicDemoComponent
     }
@@ -158,7 +164,8 @@ const tableDemoRoutes = [
         TableAddIDColumnDemoComponent,
         TableAddCheckboxColumnDemoComponent,
         TableDataChangeDemoComponent,
-        TableAddIDWithPagingComponent
+        TableAddIDWithPagingComponent,
+        TableDataWithPopupDemoComponent
     ],
     imports: [
         RouterModule.forChild(tableDemoRoutes),
@@ -167,7 +174,8 @@ const tableDemoRoutes = [
         RdkCheckBoxModule,
         RdkPaginationModule,
         RdkInputModule,
-        RdkButtonModule
+        RdkButtonModule,
+        RdkDialogModule
     ],
     exports: [ ],
     entryComponents: [
@@ -189,7 +197,8 @@ const tableDemoRoutes = [
         MyTableHeadOption,
         MyTableCellOption,
         MyTableCellEditor
-    ]
+    ],
+    providers: [PopupService],
 })
 export class TableDemoModule {
 }
