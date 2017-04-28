@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, AfterViewInit} from "@angular/core";
+import {Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef} from "@angular/core";
 import {TableCellRenderer} from "./table-api";
 import {TableCheckboxService, CheckboxState} from "./table-service";
 import {RdkInput} from "../input/input";
@@ -31,7 +31,7 @@ export class TableCellDefault extends TableCellRenderer {
                 (checkedChange)="_toggleSelectAll($event)"></rdk-checkbox>`
 })
 export class TableHeadCheckbox extends TableCellRenderer implements OnInit {
-    constructor(private tableRendererService: TableCheckboxService) {
+    constructor(private tableRendererService: TableCheckboxService, private _changeDetector: ChangeDetectorRef) {
         super();
     }
 
@@ -53,10 +53,13 @@ export class TableHeadCheckbox extends TableCellRenderer implements OnInit {
     ngOnInit() {
         this.tableRendererService.headListen(() => {
             this.tableRendererService.headState = this.cellData = 1;
+            this._changeDetector.detectChanges();
         }, () => {
             this.tableRendererService.headState = this.cellData = 0;
+            this._changeDetector.detectChanges();
         }, () => {
             this.tableRendererService.headState = this.cellData = 2;
+            this._changeDetector.detectChanges();
         });
     }
 }
@@ -68,7 +71,7 @@ export class TableHeadCheckbox extends TableCellRenderer implements OnInit {
     template: '<rdk-checkbox [(checked)]="cellData" (checkedChange)="_setCheckboxState($event)"></rdk-checkbox>'
 })
 export class TableCellCheckbox extends TableCellRenderer implements OnInit {
-    constructor(private tableRendererService: TableCheckboxService) {
+    constructor(private tableRendererService: TableCheckboxService, private _changeDetector: ChangeDetectorRef) {
         super();
     }
 
@@ -93,16 +96,19 @@ export class TableCellCheckbox extends TableCellRenderer implements OnInit {
     ngOnInit() {
         this.cellData = this.cellData ? 1 : 0;
         this.tableRendererService.listen(() => {
-                this._checkboxState.checked = this.cellData = 1
+                this._checkboxState.checked = this.cellData = 1;
+                this._changeDetector.detectChanges();
             },
             () => {
-                this._checkboxState.checked = this.cellData = 0
+                this._checkboxState.checked = this.cellData = 0;
+                this._changeDetector.detectChanges();
             });
         this._checkboxState = {row: this.row, checked: this.cellData};
         this.tableRendererService.checkboxStates.push(this._checkboxState);
         if (this.tableRendererService.headState != 2) {
             this._setHeadCheckboxState();
         }
+        this._changeDetector.detectChanges();
     }
 }
 
