@@ -8,7 +8,6 @@ import {TableHeadNum, TableCellNum} from "../../../../../component/table/table-r
 })
 export class TableScrollAmountDemoComponent {
     tableData: TableData;
-    scrollAmount: number;
 
     constructor() {
         this.tableData = new TableData(
@@ -182,9 +181,5 @@ export class TableScrollAmountDemoComponent {
             }
         }
     ];
-
-    setScrollAmount(num){
-        this.scrollAmount = num;
-    }
 
 }
