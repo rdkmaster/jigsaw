@@ -701,16 +701,13 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         this._setMaxHeight();
         this._defineFixedHead();
         if (this.data instanceof TableData && this.data.header.length) {
-            this._transformData();
+            this._refresh();
         }
         this._hasInit = true;
     }
 
     ngAfterViewInit() {
         this._whileScrolling();
-        if (this.data instanceof TableData && this.data.header.length) {
-            this._refreshStyle();
-        }
     }
 
     ngOnDestroy() {
