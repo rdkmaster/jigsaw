@@ -5,9 +5,15 @@ import {ColumnDefine, TableCellRenderer} from "../../../../../component/table/ta
  * 自定义表头渲染组件
  * */
 @Component({
-    template: '<span class="fa fa-map-signs"></span>{{cellData}}'
+    template: `
+        <div [ngSwitch]="cellData" style="font-size: 16px;">
+            <span *ngSwitchCase="'Accountant'" class="fa fa-money"></span>
+            <span *ngSwitchCase="'System Architect'" class="fa fa-universal-access"></span>
+            <span *ngSwitchCase="'Coder'" class="fa fa-file-code-o"></span>
+        </div>
+    `
 })
-export class MyTableCellRender extends TableCellRenderer {
+export class JobRenderer extends TableCellRenderer {
 }
 
 
@@ -37,7 +43,7 @@ export class TableSetCellRenderDemoComponent {
                 ],
                 [
                     "Tiger Nixon2",
-                    "System Arcfhitect",
+                    "System Architect",
                     "$320,8000",
                     "2011/04/25",
                     "Edinburgh",
@@ -53,7 +59,7 @@ export class TableSetCellRenderDemoComponent {
                 ],
                 [
                     "Tiger Nixon2",
-                    "System Arcfhitect",
+                    "System Architect",
                     "$320,8000",
                     "2011/04/25",
                     "Edinburgh",
@@ -69,7 +75,7 @@ export class TableSetCellRenderDemoComponent {
                 ],
                 [
                     "Tiger Nixon2",
-                    "System Arcfhitect",
+                    "Coder",
                     "$320,8000",
                     "2011/04/25",
                     "Edinburgh",
@@ -85,7 +91,7 @@ export class TableSetCellRenderDemoComponent {
                 ],
                 [
                     "Tiger Nixon2",
-                    "System Arcfhitect",
+                    "System Architect",
                     "$320,8000",
                     "2011/04/25",
                     "Edinburgh",
@@ -125,7 +131,7 @@ export class TableSetCellRenderDemoComponent {
                 ],
                 [
                     "Tiger Nixon1",
-                    "System Architect",
+                    "Coder",
                     "$320,80",
                     "2011/04/25",
                     "Edinburgh",
@@ -149,7 +155,7 @@ export class TableSetCellRenderDemoComponent {
                 ],
                 [
                     "Tigesr Nixon1",
-                    "System Architect",
+                    "Coder",
                     "$320,800",
                     "2011/04/25",
                     "Edinburgh",
@@ -181,9 +187,9 @@ export class TableSetCellRenderDemoComponent {
 
     private _columns: ColumnDefine[] = [
         {
-            target: 'name',
+            target: 'position',
             cell: {
-                renderer:MyTableCellRender
+                renderer:JobRenderer
             }
         }];
 }

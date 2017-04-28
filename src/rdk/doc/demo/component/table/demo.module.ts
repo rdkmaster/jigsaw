@@ -29,8 +29,7 @@ import {TableColumnSetWidthDemoComponent} from "./setColumnWidth/setColumnWidth"
 import {TableColumnSetVisibleDemoComponent} from "./setColumnVisible/setColumnVisible";
 import {TableSetHeaderSortDemoComponent} from "./setHeaderSort/setHeaderSort";
 import {
-    MyTableCellRender,
-    TableSetCellRenderDemoComponent
+    JobRenderer, TableSetCellRenderDemoComponent
 } from "./setCellRender/setCellRender";
 import {TableSetCellClassDemoComponent} from "./setCellClass/setCellClass";
 import {TableColumnGroupDemoComponent} from "./setColumnGroup/setColumnGroup";
@@ -143,7 +142,7 @@ const tableDemoRoutes = [
         TableSetHeaderRenderDemoComponent,
         TableSetHeaderClassDemoComponent,
         TableSetHeaderSortDemoComponent,
-        MyTableCellRender,
+        JobRenderer,
         TableSetCellRenderDemoComponent,
         TableSetCellClassDemoComponent,
         TableColumnGroupDemoComponent,
@@ -185,7 +184,7 @@ const tableDemoRoutes = [
         TableHeadNum,
         TableCellEditor,
         TableHeadRender,
-        MyTableCellRender,
+        JobRenderer,
         MyTableCell,
         MyTableHeadOption,
         MyTableCellOption,
