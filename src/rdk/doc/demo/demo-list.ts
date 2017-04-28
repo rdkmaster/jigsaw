@@ -1,5 +1,5 @@
 import {NgModule, Component} from '@angular/core';
-import { RouterModule } from '@angular/router';
+import {RouterModule} from '@angular/router';
 
 @Component({
     selector: 'rdk-demo-list', templateUrl: 'demo-list.html',
@@ -10,92 +10,96 @@ export class DemoListComponent {
 }
 
 // 请按照组件的字符序排列
-const demoListRoutes=[
+const demoListRoutes = [
     {
-        path:'', component: DemoListComponent
+        path: '', component: DemoListComponent
     },
     {
-        path:'array-collection',
-        loadChildren:'./component/array-collection/demo.module#ArrayCollectionDemoModule'
+        path: 'array-collection',
+        loadChildren: './component/array-collection/demo.module#ArrayCollectionDemoModule'
     },
     {
-        path:'button',
-        loadChildren:'./component/button/demo.module#ButtonDemoModule'
+        path: 'button',
+        loadChildren: './component/button/demo.module#ButtonDemoModule'
     },
     {
-        path:'checkbox',
-        loadChildren:'./component/checkbox/demo.module#CheckBoxDemoModule'
+        path: 'checkbox',
+        loadChildren: './component/checkbox/demo.module#CheckBoxDemoModule'
     },
     {
-        path:'loading',
-        loadChildren:'./component/loading/demo.module#LoadingDemoModule'
+        path: 'loading',
+        loadChildren: './component/loading/demo.module#LoadingDemoModule'
     },
     {
-        path:'input',
-        loadChildren:'./component/input/demo.module#InputDemoModule'
+        path: 'input',
+        loadChildren: './component/input/demo.module#InputDemoModule'
     },
     {
-        path:'popup',
-        loadChildren:'./component/popup/demo.module#PopupDemoModule'
+        path: 'popup',
+        loadChildren: './component/popup/demo.module#PopupDemoModule'
     },
     {
-        path:'scrollbar',
-        loadChildren:'./component/scrollbar/demo.module#ScrollbarDemoModule'
+        path: 'scrollbar',
+        loadChildren: './component/scrollbar/demo.module#ScrollbarDemoModule'
     },
     {
-        path:'select',
-        loadChildren:'./component/select/demo.module#SelectDemoModule'
+        path: 'select',
+        loadChildren: './component/select/demo.module#SelectDemoModule'
     },
     {
-        path:'table',
-        loadChildren:'./component/table/demo.module#TableDemoModule'
+        path: 'table',
+        loadChildren: './component/table/demo.module#TableDemoModule'
     },
     {
-        path:'switch',
-        loadChildren:'./component/switch/switch-demo.module#SwitchDemoModule'
+        path: 'switch',
+        loadChildren: './component/switch/switch-demo.module#SwitchDemoModule'
     },
     {
-        path:'time',
-        loadChildren:'./component/time/time-demo.module#TimeDemoModule'
+        path: 'time',
+        loadChildren: './component/time/time-demo.module#TimeDemoModule'
     },
     {
-        path:'radio',
-        loadChildren:'./component/radio/radio-demo.module#RadioDemoModule'
+        path: 'radio',
+        loadChildren: './component/radio/radio-demo.module#RadioDemoModule'
     },
     {
-        path:'tileselect',
-        loadChildren:'./component/tileselect/tileselect-demo.module#TileSelectDemoModule'
+        path: 'tileselect',
+        loadChildren: './component/tileselect/tileselect-demo.module#TileSelectDemoModule'
     },
     {
-        path:'graph',
-        loadChildren:'./component/graph/graph-demo.module#GraphDemoModule'
+        path: 'graph',
+        loadChildren: './component/graph/graph-demo.module#GraphDemoModule'
     },
     {
-        path:'pagination',
-        loadChildren:'./component/pagination/pagination-demo.module#PaginationDemoModule'
+        path: 'pagination',
+        loadChildren: './component/pagination/pagination-demo.module#PaginationDemoModule'
     },
     {
-        path:'tag',
-        loadChildren:'./component/tag/tag-demo.module#TagDemoModule'
+        path: 'tag',
+        loadChildren: './component/tag/tag-demo.module#TagDemoModule'
     },
     {
-        path:'tabs',
-        loadChildren:'./component/tabs/tabs-demo.module#TabsDemoModule'
+        path: 'tabs',
+        loadChildren: './component/tabs/tabs-demo.module#TabsDemoModule'
     },
     {
-        path:'dropdown',
-        loadChildren:'./component/dropdown/dropdown-demo.module#DropDownDemoModule'
+        path: 'dropdown',
+        loadChildren: './component/dropdown/dropdown-demo.module#DropDownDemoModule'
     },
     {
-        path:'slider',
-        loadChildren:'./component/slider/slider-demo.module#SliderDemoModule'
+        path: 'slider',
+        loadChildren: './component/slider/slider-demo.module#SliderDemoModule'
     },
     {
-        path:'ztree',
-        loadChildren:'./component/ztree/demo.module#ZtreeDemoModule'
+        path: 'ztree',
+        loadChildren: './component/ztree/demo.module#ZtreeDemoModule'
     },
     {
-        path:'**', //fallback router must in the last
+        path: 'collapse',
+        loadChildren: './component/collapse/collapse-module#CollapseDemoModule'
+    },
+    {
+        path: '**', //fallback router must in the last
         component: DemoListComponent
     }
 ];
@@ -110,4 +114,5 @@ const demoListRoutes=[
     ],
     providers: [],
 })
-export class DemoListModule { }
+export class DemoListModule {
+}
