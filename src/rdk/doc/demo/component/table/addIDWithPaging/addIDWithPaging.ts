@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, ViewEncapsulation} from "@angular/core";
 import {PageableTableData} from "../../../../../core/data/table-data";
 import {Http} from "@angular/http";
 import {TableHeadNum, TableCellNum} from "../../../../../component/table/table-renderer";

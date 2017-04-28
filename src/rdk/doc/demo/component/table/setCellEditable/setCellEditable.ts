@@ -2,6 +2,7 @@ import {Component, AfterViewInit, ViewChild, ViewEncapsulation} from "@angular/c
 import {TableData} from "../../../../../core/data/table-data";
 import {ColumnDefine, TableCellRenderer} from "../../../../../component/table/table-api";
 import {RdkInput} from "../../../../../component/input/input";
+import {Http} from "@angular/http";
 
 
 /*
@@ -37,69 +38,11 @@ export class MyTableCellEditor extends TableCellRenderer implements AfterViewIni
 })
 export class TableSetCellEditableDemoComponent {
     tableData: TableData;
-    constructor() {
-        this.tableData = new TableData(
-            [
-                [
-                    "Tiger Nixon1",
-                    "System Architect",
-                    "$320,00",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "542"
-                ],[
-                "Tiger Nixon2",
-                "System Architect",
-                "$320,8000",
-                "2011/04/25",
-                "Edinburgh",
-                "5421"
-            ],
-                [
-                    "Garrett Winflters1",
-                    "Accountant",
-                    "$170,7",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
-                ],
 
-                [
-                    "Garrett Winslters1",
-                    "Accountant",
-                    "$170,7",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
-                ],
-                [
-                    "Tiger Nixon2",
-                    "System Arcfhitect",
-                    "$320,8000",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ],
-                [
-                    "Garrett Winflters1",
-                    "Accountant",
-                    "$170,7",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
-                ],
-                [
-                    "Tiger Nixon2",
-                    "System Arcfhitect",
-                    "$320,8000",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ]
-            ],
-            ["name", "position", "salary", "start_date", "office", "extn"],
-            ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
-
+    constructor(http: Http) {
+        this.tableData = new TableData();
+        this.tableData.http = http;
+        this.tableData.fromAjax('mock-data/table/data.json');
     }
 
 
