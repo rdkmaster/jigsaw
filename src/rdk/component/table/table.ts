@@ -698,6 +698,8 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     ngOnInit() {
+        this._setMaxHeight();
+        this._defineFixedHead();
         if (this.data instanceof TableData && this.data.header.length) {
             this._transformData();
         }
@@ -705,13 +707,10 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     ngAfterViewInit() {
-        this._setMaxHeight();
-        //定义浮动表头
-        this._defineFixedHead();
-        //横向滚动监听
         this._whileScrolling();
-
-        this._refreshStyle();
+        if (this.data instanceof TableData && this.data.header.length) {
+            this._refreshStyle();
+        }
     }
 
     ngOnDestroy() {
