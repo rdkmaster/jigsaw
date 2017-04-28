@@ -29,13 +29,13 @@ table{
     td{
         position: relative;
         border: 1px solid $border-color-base;
+        @include word-break();
     }
     thead{
         color: #333;
         tr{
             height: 40px;
             td{
-                white-space: nowrap;
                 background: $gray-light;
             }
         }
