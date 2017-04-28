@@ -26,7 +26,7 @@ export type ColumnDefine = {
 
 export type AdditionalColumnDefine = {
     pos?: number,
-    target?: string|number,
+    field?: string|number,
     visible?: boolean,
     width?: string,
     header?: Header,
