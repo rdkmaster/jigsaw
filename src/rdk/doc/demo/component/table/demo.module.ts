@@ -171,7 +171,6 @@ const tableDemoRoutes = [
         RdkButtonModule
     ],
     exports: [ ],
-    providers: [TableCheckboxService],
     entryComponents: [
         DefaultCellRenderer,
         TableHeadDefault,

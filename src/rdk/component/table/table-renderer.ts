@@ -37,11 +37,17 @@ export class TableHeadCheckbox extends TableCellRenderer implements OnInit {
 
     private _toggleSelectAll(checked) {
         this.tableRendererService.headState = checked;
-        if (checked) {
-            this.tableRendererService.selectAll();
-        } else {
-            this.tableRendererService.unSelectAll();
-        }
+
+        let rows = [];
+        this.tableRendererService.checkboxStates.forEach(checkboxState => {
+            if(checkboxState.checked != checked){
+                rows.push(checkboxState.row);
+            }
+        });
+
+        checked ? this.tableRendererService.selectAll() : this.tableRendererService.unSelectAll();
+
+        this.dispatchChangeEvent({rows: rows, cellData: checked, oldCellData: checked ? 0 : 1});
     }
 
     ngOnInit() {
@@ -81,6 +87,7 @@ export class TableCellCheckbox extends TableCellRenderer implements OnInit {
     private _setCheckboxState(checked) {
         this._checkboxState.checked = checked;
         this._setHeadCheckboxState();
+        this.dispatchChangeEvent(checked);
     }
 
     ngOnInit() {
@@ -147,17 +154,13 @@ export class TableCellOption extends TableCellRenderer {
  * 编辑单元格渲染器
  * */
 @Component({
-    template: `<rdk-input #input [(value)]="cellData" width="100%" [clearable]="false" (blur)="_goText()"></rdk-input>`
+    template: `<rdk-input #input [(value)]="cellData" width="100%" [clearable]="false" (blur)="dispatchChangeEvent(cellData)"></rdk-input>`
 })
 export class TableCellEditor extends TableCellRenderer implements AfterViewInit {
 
     @ViewChild(RdkInput) input: RdkInput;
 
-    _goText(): void {
-        this.changeToText.emit(this.cellData);
-    }
-
-    ngAfterViewInit() {
+    ngAfterViewInit(){
         this.input.focus();
     }
 
