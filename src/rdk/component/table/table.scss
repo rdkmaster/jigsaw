@@ -29,7 +29,7 @@ table{
     td{
         position: relative;
         border: 1px solid $border-color-base;
-        @include word-break();
+        //@include word-break();
     }
     thead{
         color: #333;
