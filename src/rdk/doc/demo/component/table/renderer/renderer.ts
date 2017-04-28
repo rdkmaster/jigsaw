@@ -144,7 +144,7 @@ export class TableRendererDemoComponent {
         },
         {
             pos: 0,
-            target: 'f4',
+            field: 'f4',
             width: '60px',
             header: {
                 renderer: TableHeadCheckbox

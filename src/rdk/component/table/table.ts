@@ -255,7 +255,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         if(!this._additionalColumnDefines) return;
         this._additionalColumnDefines.forEach(additionalColumn => {
             let pos = additionalColumn.pos;
-            const target = additionalColumn.target;
+            const target = additionalColumn.field;
             pos = pos >= 0 && pos < this.data.header.length ? pos : -1;
             target ? insertClone.call(this, pos, target, additionalColumn) : insert.call(this, pos, additionalColumn);
         });
