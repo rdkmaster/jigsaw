@@ -18,7 +18,7 @@ export class MyTableCell extends TableCellRenderer {
  * 编辑单元格渲染器
  * */
 @Component({
-    template: `<rdk-input #input [(value)]="cellData" width="100%" [clearable]="false" (blur)="dispatchChangeEvent(cellData)"></rdk-input>`
+    template: `<rdk-input #input [(value)]="cellData" [clearable]="false" (blur)="dispatchChangeEvent(cellData)"></rdk-input>`
 })
 export class MyTableCellEditor extends TableCellRenderer implements AfterViewInit{
 
@@ -29,8 +29,6 @@ export class MyTableCellEditor extends TableCellRenderer implements AfterViewIni
     }
 
 }
-
-
 
 @Component({
   templateUrl: 'setCellEditable.html',
@@ -45,11 +43,10 @@ export class TableSetCellEditableDemoComponent {
         this.tableData.fromAjax('mock-data/table/data.json');
     }
 
-
-
     private _columns: ColumnDefine[] = [
         {
             target: 'position',
+            width: '20%',
             group : true,
             cell :{
                 renderer: MyTableCell,
