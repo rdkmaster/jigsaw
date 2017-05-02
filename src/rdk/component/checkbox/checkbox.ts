@@ -83,7 +83,7 @@ export class RdkCheckBox extends AbstractRDKComponent implements OnInit, AfterCo
 
     public ngAfterContentInit(){
         const labelEl = this._elementRef.nativeElement.querySelector('.rdk-checkbox-label');
-        if(labelEl.innerText === ''){
+        if(labelEl.innerText.trim() === ''){
             this._renderer.setStyle(labelEl, 'padding', '0');
         }
     }
