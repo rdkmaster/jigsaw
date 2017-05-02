@@ -664,6 +664,8 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         this._removeWindowResizeListener = this._renderer.listen('window', 'resize', () => {
             this._setFixedHeadWidth();
             this._floatHead();
+            this._scrollBar.scrollTo('left');
+            this._renderer.setStyle(this._fixedHead, 'left', 0);
         });
         this._removeWindowScrollListener = this._renderer.listen('window', 'scroll', () => {
             this._floatHead();

@@ -56,6 +56,10 @@ export class RdkScrollBar implements OnInit {
         }
     }
 
+    public scrollTo(position?: any, options?: any){
+        this._scrollBarJq.mCustomScrollbar("scrollTo", position, options);
+    }
+
     /**
      * 根据参数设置滚动条
      * option {} object 类型
