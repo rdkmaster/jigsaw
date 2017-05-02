@@ -1,6 +1,7 @@
 <div class="rdk-slider"
-    [class.rdk-slider-disabled]="disabled"
-    [class.rdk-slider-with-marks]="marks&& marks.length > 0"
+     [class.rdk-slider-disabled]="disabled"
+     [class.rdk-slider-with-marks]="marks&& marks.length > 0"
+     [class.rdk-slider-vertical]="vertical"
 >
     <!--(mousedown)="_updateCanDragged(true)"-->
     <!--(mouseup)="_updateValuePosition($event)"-->
@@ -14,7 +15,7 @@
               [style.left.%]="mark.left"></span>
     </div>
 
-    <slider-handle *ngFor="let item of _value;let i = index" [max]="max" [min]="min" [value]="item"
+    <slider-handle *ngFor="let item of _value;let i = index" [max]="max" [min]="min" value="{{item}}" [vertical]="vertical"
                    [step]="step" [dimensions]="_dimensions" [key]="i" (change)="_handleValueChange(i, $event)">
     </slider-handle>
 

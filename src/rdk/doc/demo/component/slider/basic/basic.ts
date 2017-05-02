@@ -26,6 +26,11 @@ import { Component, OnInit } from '@angular/core';
         <br>
         <h4>5. mark 节点.</h4>
         <rdk-slider [marks]="marks" value="50"></rdk-slider>
+        
+        <hr>
+        <br>
+        <h4>6. 垂直滑动条.</h4>
+        <rdk-slider value="50" [vertical]="vertical" class="vertical" style="height: 240px;"></rdk-slider>
     `,
     styleUrls:['./basic.scss']
 })
@@ -63,5 +68,7 @@ export class RdkSliderDemoBasic implements OnInit {
         this.value3 = value;
     }
     ngOnInit() { }
+
+    vertical = true;
 
 }
