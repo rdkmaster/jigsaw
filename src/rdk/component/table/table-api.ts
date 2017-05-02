@@ -54,6 +54,7 @@ type TargetType = number|string|number[]|string[]|TargetFun;
 type TargetFun = (field: string, index: number) => boolean;
 
 type Header = {
+    text?: string,
     renderer?: Type<TableCellRenderer>,
     class?: string,
     sortable?: boolean,

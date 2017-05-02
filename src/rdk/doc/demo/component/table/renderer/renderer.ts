@@ -1,15 +1,12 @@
 import {Component, ViewEncapsulation} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
 import {
-    TableHeadDefault,
-    TableCellDefault,
     TableHeadCheckbox,
     TableCellCheckbox,
     TableCellOption,
-    TableHeadOption,
     TableCellNum,
-    TableHeadNum,
-    TableCellEditor
+    TableCellEditor,
+    DefaultCellRenderer
 } from "../../../../../component/table/table-renderer";
 import {SortAs, SortOrder} from "../../../../../core/data/component-data";
 import {ColumnDefine, AdditionalColumnDefine} from "../../../../../component/table/table-api";
@@ -54,7 +51,7 @@ export class TableRendererDemoComponent {
                 renderer: TableHeadSelect
             },
             cell: {
-                renderer: TableCellDefault,
+                renderer: DefaultCellRenderer,
                 class: 'green-text'
             },
             group: true
@@ -63,7 +60,6 @@ export class TableRendererDemoComponent {
             target: 'f2',
             width: '10%',
             header: {
-                renderer: TableHeadDefault,
                 class: 'red-text',
                 sortable: true,
                 sortAs: SortAs.number,
@@ -83,7 +79,7 @@ export class TableRendererDemoComponent {
                 sortAs: SortAs.number
             },
             cell: {
-                renderer: TableCellDefault
+                renderer: DefaultCellRenderer
             },
             group: true
         },
@@ -98,7 +94,7 @@ export class TableRendererDemoComponent {
                 sortable: false
             },
             cell: {
-                renderer: TableCellDefault
+                renderer: DefaultCellRenderer
             },
             group: true
         },
@@ -136,7 +132,7 @@ export class TableRendererDemoComponent {
             pos: 0,
             width: '60px',
             header: {
-                renderer: TableHeadNum,
+                text: '#',
             },
             cell: {
                 renderer: TableCellNum
@@ -167,7 +163,7 @@ export class TableRendererDemoComponent {
             //pos: -1, //不写pos也表示插入到最后
             width: '10%',
             header: {
-                renderer: TableHeadOption,
+                text: '操作',
                 class: 'red-text'
             },
             cell: {

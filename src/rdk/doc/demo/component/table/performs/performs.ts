@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
 import {ColumnDefine} from "../../../../../component/table/table-api";
 import {TableHeadIcon} from "../renderer/table-renderer";
-import {TableCellDefault} from "../../../../../component/table/table-renderer";
+import {DefaultCellRenderer} from "../../../../../component/table/table-renderer";
 
 @Component({
     templateUrl: 'performs.html',
@@ -65,7 +65,7 @@ export class TablePerformsDemoComponent{
                 return index < 10
             },
             cell: {
-                renderer: TableCellDefault
+                renderer: DefaultCellRenderer
             }
         }
     ];

@@ -5,23 +5,13 @@ import {RdkInput} from "../input/input";
 import {PageableTableData} from "../../core/data/table-data";
 
 /*
- * 默认表头渲染组件
+ * 默认表格渲染组件
  * */
 @Component({
     template: '<span>{{cellData}}</span>'
 })
-export class TableHeadDefault extends TableCellRenderer {
+export class DefaultCellRenderer extends TableCellRenderer {
 }
-
-/*
- * 默认单元格渲染组件
- * */
-@Component({
-    template: '<span>{{cellData}}</span>'
-})
-export class TableCellDefault extends TableCellRenderer {
-}
-
 
 /*
  * head checkbox renderer
@@ -113,15 +103,6 @@ export class TableCellCheckbox extends TableCellRenderer implements OnInit {
 }
 
 /*
- * 编号列头
- * */
-@Component({
-    template: '<span>#</span>'
-})
-export class TableHeadNum extends TableCellRenderer {
-}
-
-/*
  * 编号列
  * */
 @Component({
@@ -135,15 +116,6 @@ export class TableCellNum extends TableCellRenderer implements OnInit {
             (this.tableData.pagingInfo.currentPage - 1) * this.tableData.pagingInfo.pageSize + this.row + 1 :
             this.row + 1;
     }
-}
-
-/*
- * 操作列头
- * */
-@Component({
-    template: '<span>操作</span>'
-})
-export class TableHeadOption extends TableCellRenderer {
 }
 
 /*

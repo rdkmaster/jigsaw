@@ -15,9 +15,9 @@ import {RdkScrollBarModule} from "../scrollbar/scrollbar";
 import {RdkScrollBar} from "../scrollbar/scrollbar";
 import {SortAs, SortOrder, CallbackRemoval} from "../../core/data/component-data";
 import {CommonUtils} from "../../core/utils/common-utils";
-import {TableCellDefault} from "./table-renderer";
 import {AffixUtils} from "../../core/utils/internal-utils";
 import {TableCheckboxService} from "./table-service";
+import {DefaultCellRenderer} from "./table-renderer";
 
 class HeadSetting {
     cellData: string | number;
@@ -570,6 +570,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
 
         const header = column.header;
         if (header) {
+            headSetting.cellData = header.text ? header.text : headSetting.cellData;
             headSetting.renderer = header.renderer ? header.renderer : headSetting.renderer;
             headSetting.class = typeof header.class == 'string' && header.class !== '' ? headSetting.class + " " + header.class : headSetting.class;
             headSetting.sortable = header.sortable === true || header.sortable === false ? header.sortable : headSetting.sortable;
@@ -596,7 +597,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
 
             //单元格有editorRenderer,没有renderer时，指定默认renderer
             if (cellSetting.editorRenderer && !cellSetting.renderer) {
-                cellSetting.renderer = TableCellDefault;
+                cellSetting.renderer = DefaultCellRenderer;
             }
         }
         return cellSetting;
@@ -979,15 +980,6 @@ export class RdkTableHeader extends TableCellBasic implements OnInit {
         //设置默认渲染器
         this.renderer = this.renderer ? this.renderer : DefaultCellRenderer;
     }
-}
-
-/*
- * 默认表格渲染组件
- * */
-@Component({
-    template: '<span>{{cellData}}</span>'
-})
-export class DefaultCellRenderer extends TableCellRenderer {
 }
 
 @NgModule({
