@@ -62,7 +62,9 @@ table{
     }
 }
 
-
+.#{$table-prefix-cls}-hide{
+    display: none;
+}
 
 
 

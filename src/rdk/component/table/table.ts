@@ -165,10 +165,15 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         super()
     }
 
+    private _beforeRefresh(){
+        this._renderer.addClass(this._fixedHead, 'rdk-table-hide');
+    }
+
     /*
      * 重新渲染
      * */
     private _refresh() {
+        this._beforeRefresh();
         this._transformData();
         this._refreshStyle();
     }
@@ -640,10 +645,12 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     public _asyncAlignHead() {
         setTimeout(() => {
             this._setFixedHeadWidth();
+            this._renderer.removeClass(this._fixedHead, 'rdk-table-hide');
         }, 0);
 
         setTimeout(() => {
             this._setFixedHeadWidth();
+            this._renderer.removeClass(this._fixedHead, 'rdk-table-hide');
         }, 1000);
     }
 
