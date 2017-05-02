@@ -614,7 +614,9 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         this._fixedHeaders.forEach((fixedHeader, index) => {
             this._renderer.setStyle(fixedHeader.nativeElement, 'width',
                 this._headers.toArray()[index].nativeElement.offsetWidth + 'px');
-        })
+        });
+
+        this._renderer.removeClass(this._fixedHead, 'rdk-table-hide');
     }
 
     private _whileScrolling(): void {
@@ -646,12 +648,10 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     public _asyncAlignHead() {
         setTimeout(() => {
             this._setFixedHeadWidth();
-            this._renderer.removeClass(this._fixedHead, 'rdk-table-hide');
         }, 0);
 
         setTimeout(() => {
             this._setFixedHeadWidth();
-            this._renderer.removeClass(this._fixedHead, 'rdk-table-hide');
         }, 1000);
     }
 
@@ -664,7 +664,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         this._removeWindowResizeListener = this._renderer.listen('window', 'resize', () => {
             this._setFixedHeadWidth();
             this._floatHead();
-            this._scrollBar.scrollTo('left');
+            this._scrollBar.scrollTo([null, 'left']);
             this._renderer.setStyle(this._fixedHead, 'left', 0);
         });
         this._removeWindowScrollListener = this._renderer.listen('window', 'scroll', () => {
