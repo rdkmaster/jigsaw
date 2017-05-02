@@ -3,14 +3,12 @@
  */
 
 import {
-    Input, Output, EventEmitter, Renderer2, Component, ViewEncapsulation, OnInit, Optional
+    Input, Output, EventEmitter, Renderer2, Component, OnInit
 } from "@angular/core";
-import {RdkSlider} from "./slider";
 
 @Component({
     selector: 'slider-handle',
-    templateUrl: './handle.html',
-    encapsulation: ViewEncapsulation.None
+    templateUrl: './handle.html'
 })
 export class SliderHandle implements OnInit{
 
@@ -42,10 +40,15 @@ export class SliderHandle implements OnInit{
 
         if(isNaN(this._offset)) return;
 
-        this._handleStyle = {
-            left: this._offset + "%"
+        if(this.vertical) { // 兼容垂直滑动条;
+            this._handleStyle = {
+                bottom: this._offset + "%"
+            }
+        } else {
+            this._handleStyle = {
+                left: this._offset + "%"
+            }
         }
-        console.info(this._handleStyle);
     }
 
     private _transformValueToPos() {
@@ -57,18 +60,24 @@ export class SliderHandle implements OnInit{
     disabled: boolean = false;
 
     @Input()
-    dimensions;
+    public dimensions;
 
-    @Input() max: number;
+    @Input()
+    public max: number;
 
-    @Input() min: number;
+    @Input()
+    public min: number;
 
-    @Input() step: number;
+    @Input()
+    public step: number;
+
+    @Input()
+    public vertical: boolean = false;
 
     public transformPosToValue(pos) {
         // 取得尺寸
-        let offset = this.dimensions.left;
-        let size = this.dimensions.width;
+        let offset = this.vertical?this.dimensions.bottom:this.dimensions.left;
+        let size = this.vertical?this.dimensions.height:this.dimensions.width;
 
         let newValue = ((pos.x - offset) / size * (this.max - this.min) + this.min); // 保留两位小数
 
@@ -102,8 +111,6 @@ export class SliderHandle implements OnInit{
 
     _updateCanDragged(flag) {
         this._dragged = flag;
-        console.info(flag);
-        console.info("this._dragged:" + this._dragged);
 
         if(flag) {
             this._registerGlobalEvent();
