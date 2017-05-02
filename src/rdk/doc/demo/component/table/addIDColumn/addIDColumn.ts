@@ -1,10 +1,8 @@
 import {Component} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
 import {AdditionalColumnDefine} from "../../../../../component/table/table-api";
-import {TableHeadNum, TableCellNum} from "../../../../../component/table/table-renderer";
+import {TableCellNum} from "../../../../../component/table/table-renderer";
 import {Http} from "@angular/http";
-
-
 
 @Component({
   templateUrl: 'addIDColumn.html'
@@ -23,7 +21,7 @@ export class TableAddIDColumnDemoComponent {
     private _additionalColumns: AdditionalColumnDefine[] = [{
             pos : 0,
             header: {
-                renderer: TableHeadNum,
+                text: '#'
             },
             cell: {
                 renderer: TableCellNum

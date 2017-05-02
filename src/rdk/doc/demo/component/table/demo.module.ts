@@ -2,19 +2,15 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {TableBasicDemoComponent} from "./basic/basic";
 import {TableRendererDemoComponent} from "./renderer/renderer";
-import {RdkTableModule, DefaultCellRenderer} from "../../../../component/table/table";
+import {RdkTableModule} from "../../../../component/table/table";
 import {
-    TableHeadDefault,
-    TableCellDefault,
     TableHeadCheckbox,
     TableCellCheckbox,
     TableCellOption,
-    TableHeadOption,
     TableCellNum,
-    TableHeadNum,
-    TableCellEditor
+    TableCellEditor,
+    DefaultCellRenderer
 } from "../../../../component/table/table-renderer";
-import {TableCheckboxService} from "../../../../component/table/table-service";
 import {TableHeadSelect, TableHeadIcon} from "./renderer/table-renderer";
 import {RdkSelectModule} from "../../../../component/select/select";
 import {RdkCheckBoxModule} from "../../../../component/checkbox/index";
@@ -131,16 +127,12 @@ const tableDemoRoutes = [
         TablePerformsDemoComponent,
         TableFixedHeadDemoComponent,
         DefaultCellRenderer,
-        TableHeadDefault,
-        TableCellDefault,
         TableHeadSelect,
         TableHeadIcon,
         TableHeadCheckbox,
         TableCellCheckbox,
         TableCellOption,
-        TableHeadOption,
         TableCellNum,
-        TableHeadNum,
         TableCellEditor,
         TableHeadRender,
         TableColumnSetWidthDemoComponent,
@@ -180,16 +172,12 @@ const tableDemoRoutes = [
     exports: [ ],
     entryComponents: [
         DefaultCellRenderer,
-        TableHeadDefault,
-        TableCellDefault,
         TableHeadSelect,
         TableHeadIcon,
         TableHeadCheckbox,
         TableCellCheckbox,
         TableCellOption,
-        TableHeadOption,
         TableCellNum,
-        TableHeadNum,
         TableCellEditor,
         TableHeadRender,
         JobRenderer,

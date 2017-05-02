@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
 import {ColumnDefine} from "../../../../../component/table/table-api";
-import {TableCellDefault} from "../../../../../component/table/table-renderer";
+import {DefaultCellRenderer} from "../../../../../component/table/table-renderer";
 import {Http} from "@angular/http";
 
 @Component({
@@ -21,7 +21,7 @@ export class TableDataChangeDemoComponent {
             target: 'name',
             width: '15%',
             cell: {
-                renderer: TableCellDefault,
+                renderer: DefaultCellRenderer,
             }
         },
     ];
@@ -37,7 +37,7 @@ export class TableDataChangeDemoComponent {
                 target: 'position',
                 width: '50%',
                 cell: {
-                    renderer: TableCellDefault,
+                    renderer: DefaultCellRenderer,
                 }
             },
         ];
