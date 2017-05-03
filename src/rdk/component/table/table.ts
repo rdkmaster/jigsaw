@@ -119,7 +119,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         }
     }
 
-    private static ROW_HEIGHT:number = 30;
+    public static ROW_HEIGHT:number = 30;
 
     private _scrollBarOptions: any = {
         snapAmount: RdkTable.ROW_HEIGHT,
@@ -785,9 +785,14 @@ export class TableCellBasic implements AfterViewInit {
  * */
 @Component({
     selector: '[rdk-table-cell]',
-    template: '<ng-template rdk-renderer-host></ng-template>'
+    template: '<ng-template rdk-renderer-host></ng-template>',
+    host: {
+        '[style.height]': '_rowHeight',
+        '[style.line-height]': '_rowHeight'
+    }
 })
 export class RdkTableCell extends TableCellBasic implements OnInit {
+    private _rowHeight: string = RdkTable.ROW_HEIGHT + 'px';
 
     @Input()
     public editable: boolean = false;
