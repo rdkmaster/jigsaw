@@ -1,6 +1,6 @@
 import {AfterContentInit, Component, TemplateRef, ViewChild, ViewEncapsulation} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
-import {ColumnDefine, TableCellRenderer} from "../../../../../component/table/table-api";
+import {ColumnDefine} from "../../../../../component/table/table-api";
 
 @Component({
     templateUrl: 'rendererOfTemplateRef.html',
@@ -9,7 +9,7 @@ import {ColumnDefine, TableCellRenderer} from "../../../../../component/table/ta
 })
 export class TableRendererOfTemplateRefDemoComponent implements AfterContentInit{
     outerValue: string = '&outer';
-    @ViewChild('headIcon') headIcon: TemplateRef<TableCellRenderer>;
+    @ViewChild('headIcon') headIcon: TemplateRef<any>;
 
     tableData: TableData;
 
