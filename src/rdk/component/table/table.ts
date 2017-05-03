@@ -471,7 +471,6 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         //插入列头
         let headSetting = <HeadSetting>CommonUtils.shallowCopy(this._headSettings[index]);
         headSetting.visible = true;
-        //headSetting.field = -1;
         this._insertHeadSetting(pos, additionalColumn, headSetting);
     }
 
@@ -485,7 +484,6 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         this._cellSettings.forEach(cellSettings => {
             let cellSetting = <CellSetting>CommonUtils.shallowCopy(cellSettings[index]);
             cellSetting.visible = true;
-            //cellSetting.field = -1;
             this._insertCellSetting(pos, additionalColumn, cellSetting, cellSettings);
         })
     }
@@ -538,16 +536,11 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         if (!cellSettings) {
             if (pos != -1) {
                 this._cellSettings.forEach((cellSettings) => {
-                    /*let cellSettingClone: CellSetting = <CellSetting>this._clone(cellSetting);
-                     const index = cellSettings.indexOf(cellSettings.find(cellSetting => cellSetting.pos == pos));
-                     cellSettings.splice(index, 0, cellSettingClone);*/
                     const index = cellSettings.indexOf(cellSettings.find(cellSetting => cellSetting.field == pos));
                     cellSettings.splice(index, 0, cellSetting);
                 })
             } else {
                 this._cellSettings.forEach((cellSettings) => {
-                    /*let cellSettingClone: CellSetting = <CellSetting>this._clone(cellSetting);
-                     cellSettings.push(cellSettingClone);*/
                     cellSettings.push(cellSetting);
                 })
             }
