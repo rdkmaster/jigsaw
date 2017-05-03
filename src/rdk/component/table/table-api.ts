@@ -63,7 +63,7 @@ type Header = {
 }
 
 type Cell = {
-    renderer?: Type<TableCellRenderer>,
+    renderer?: Type<TableCellRenderer>|TemplateRef<any>,
     class?: string,
     editable?: boolean,
     editorRenderer?: Type<TableCellRenderer>

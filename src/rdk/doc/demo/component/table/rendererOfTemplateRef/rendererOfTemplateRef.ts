@@ -10,6 +10,7 @@ import {ColumnDefine} from "../../../../../component/table/table-api";
 export class TableRendererOfTemplateRefDemoComponent implements AfterContentInit{
     outerValue: string = '&outer';
     @ViewChild('headIcon') headIcon: TemplateRef<any>;
+    @ViewChild('checkboxRenderer') checkboxRenderer: TemplateRef<any>;
 
     tableData: TableData;
 
@@ -45,6 +46,12 @@ export class TableRendererOfTemplateRefDemoComponent implements AfterContentInit
                 width: '15%',
                 header: {
                     renderer: this.headIcon
+                }
+            },
+            {
+                target: 'f4',
+                cell: {
+                    renderer: this.checkboxRenderer
                 }
             }
         ];

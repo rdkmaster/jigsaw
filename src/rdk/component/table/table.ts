@@ -35,10 +35,10 @@ class HeadSetting {
 class CellSetting {
     cellData: string | number;
     visible: boolean;
-    renderer: Type<TableCellRenderer>;
+    renderer: Type<TableCellRenderer>|TemplateRef<any>;
     class: string;
     editable: boolean;
-    editorRenderer: Type<TableCellRenderer>;
+    editorRenderer: Type<TableCellRenderer>|TemplateRef<any>;
     group: boolean;
     field: number;
     rowSpan: number;
