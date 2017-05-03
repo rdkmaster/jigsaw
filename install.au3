@@ -6,8 +6,13 @@
 
 OnAutoItExitRegister('_onExit')
 
+Local $isSilence = False
+If $cmdLine[0] >= 1 Then $isSilence = $cmdLine[1] == '-silence' Or $cmdLine[1] == '-s'
+If StringInStr($isSilence, '?') Then Exit MsgBox(64, "Jigsaw Installer", "用法：install [-silence / -s]")
+
+
 If FileExists(@ScriptDir & '\node_modules') Then
-	If MsgBox(292,"Jigsaw Installer", "node_modules目录已经存在，是否将其删除？") == 7 Then Exit
+	If Not $isSilence And MsgBox(292,"Jigsaw Installer", "node_modules目录已经存在，是否将其删除？") == 7 Then Exit
 	_showMessage('正在删除 node_modules 目录。。。')
 	If Not DirRemove(@ScriptDir & '\node_modules', True) Then
 		_error('无法删除文件夹 ' & @ScriptDir & '\node_modules' & @CRLF & '请退出IDE和npm程序后再试一次。')
@@ -22,7 +27,7 @@ If Not FileExists(@ScriptDir & '\install_tmp\node_modules.zip') Then _error('无
 
 _unzipPackage(@ScriptDir & '\install_tmp\node_modules.zip')
 
-If MsgBox(36, "Jigsaw Installer", "安装开发环境结束!" & @CRLF & '是否立即运行 npm start 命令检查部署是否成功？') == 6 Then
+If Not $isSilence And MsgBox(36, "Jigsaw Installer", "安装开发环境结束!" & @CRLF & '是否立即运行 npm start 命令检查部署是否成功？') == 6 Then
 	Run(@ComSpec & " /c npm start", @ScriptDir)
 EndIf
 
@@ -32,20 +37,35 @@ EndIf
 
 Func _unzipPackage($packagePath)
 	_hideMessage()
-	_Zip_UnzipAll(@ScriptDir & '\install_tmp\node_modules.zip', @ScriptDir)
+	Local $zip = RegRead('HKEY_CURRENT_USER\Software\7-Zip\', 'Path') & '\7z.exe'
+	If FileExists($zip) Then
+		; 7zip 解压速度更快
+		Local $cmd = '"' & $zip & '" x "' & @ScriptDir & '\install_tmp\node_modules.zip" -o"' & @ScriptDir & '"'
+		If $isSilence Then
+			RunWait($cmd, @ScriptDir, @SW_HIDE)
+		Else
+			RunWait($cmd, @ScriptDir)
+		EndIf
+	Else
+		_Zip_UnzipAll(@ScriptDir & '\install_tmp\node_modules.zip', @ScriptDir, $isSilence)
+	EndIf
 EndFunc
 
 Func _showMessage($msg)
+	If $isSilence Then Return
 	ToolTip('Jigsaw Installer' & @CRLF & $msg, @DesktopWidth/2, @DesktopHeight/2-50, '', 0, 2)
 EndFunc
 
 Func _hideMessage()
+	If $isSilence Then Return
 	ToolTip('')
 EndFunc
 
 Func _error($msg)
-	ToolTip('')
-	MsgBox(16, 'Jigsaw Installer', $msg)
+	If Not $isSilence Then
+		ToolTip('')
+		MsgBox(16, 'Jigsaw Installer', $msg)
+	EndIf
 	Exit
 EndFunc
 
