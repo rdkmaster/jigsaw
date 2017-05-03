@@ -1,0 +1,10 @@
+<p>带渲染器的表格单元格</p>
+<rdk-table height="400px"
+           [data]="tableData"
+           [columnDefines]="_columns"
+           [additionalColumnDefines]="_additionalColumns"
+           (dataChange)="onCellChange($event)"></rdk-table>
+
+<ng-template #headIcon let-cellData="cellData">
+    <span class="fa fa-bicycle"></span><span>{{cellData}}</span><span>{{outerValue}}</span>
+</ng-template>

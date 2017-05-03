@@ -1,6 +1,7 @@
 import {
     Component, Input, NgModule, ComponentFactoryResolver, AfterViewInit, ViewChild, Type, ChangeDetectorRef, ElementRef,
-    Renderer2, OnInit, ComponentRef, Output, EventEmitter, ViewChildren, QueryList, forwardRef, OnDestroy, Optional
+    Renderer2, OnInit, ComponentRef, Output, EventEmitter, ViewChildren, QueryList, forwardRef, OnDestroy, Optional,
+    TemplateRef, EmbeddedViewRef
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 
@@ -23,7 +24,7 @@ class HeadSetting {
     cellData: string | number;
     width: string | number;
     visible: boolean;
-    renderer: Type<TableCellRenderer>;
+    renderer: Type<TableCellRenderer>|TemplateRef<any>;
     class: string;
     sortable: boolean;
     sortAs: SortAs;
@@ -748,23 +749,28 @@ export class TableCellBasic implements AfterViewInit {
     @Input()
     public field: number;
     @Input()
-    public renderer: Type<TableCellRenderer>;
+    public renderer: Type<TableCellRenderer>|TemplateRef<any>;
 
-    public rendererRef: ComponentRef<TableCellRenderer>;
+    public rendererRef: ComponentRef<TableCellRenderer>|EmbeddedViewRef<any>;
 
     @ViewChild(RdkRendererHost) rendererHost: RdkRendererHost;
 
     /*
      * 渲染器制造工厂
      * */
-    protected rendererFactory(renderer: Type<TableCellRenderer>): ComponentRef<TableCellRenderer> {
-        let componentFactory = this.componentFactoryResolver.resolveComponentFactory(renderer);
-        let componentRef = this.rendererHost.viewContainerRef.createComponent(componentFactory);
-        componentRef.instance.tableData = this.tableData;
-        componentRef.instance.cellData = this.cellData;
-        componentRef.instance.row = this.row;
-        componentRef.instance.column = this.column;
-        return componentRef;
+    protected rendererFactory(renderer: Type<TableCellRenderer>|TemplateRef<any>): ComponentRef<TableCellRenderer>|EmbeddedViewRef<any> {
+        if(renderer instanceof TemplateRef){
+            let context = {cellData: this.cellData};
+            return this.rendererHost.viewContainerRef.createEmbeddedView(renderer, context);
+        }else{
+            let componentFactory = this.componentFactoryResolver.resolveComponentFactory(renderer);
+            let componentRef = this.rendererHost.viewContainerRef.createComponent(componentFactory);
+            componentRef.instance.tableData = this.tableData;
+            componentRef.instance.cellData = this.cellData;
+            componentRef.instance.row = this.row;
+            componentRef.instance.column = this.column;
+            return componentRef;
+        }
     }
 
     /*
@@ -806,7 +812,7 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
     @Input()
     public rowSpan: number;
 
-    public editorRendererRef: ComponentRef<TableCellRenderer>;
+    public editorRendererRef: ComponentRef<TableCellRenderer>|EmbeddedViewRef<any>;
 
     private _goEditCallback: () => void;
 
@@ -843,15 +849,17 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
      * */
     protected insertRenderer() {
         super.insertRenderer();
-        this.rendererRef.instance.cellDataChange.subscribe(cellData => {
-            if (cellData === undefined || cellData ===  null) {
-                //cellData === '' 认为是合法值
-                return;
-            }
-            if (this.cellData != cellData) {
-                this._emitDataChange(cellData);
-            }
-        });
+        if(this.rendererRef instanceof ComponentRef){
+            this.rendererRef.instance.cellDataChange.subscribe(cellData => {
+                if (cellData === undefined || cellData ===  null) {
+                    //cellData === '' 认为是合法值
+                    return;
+                }
+                if (this.cellData != cellData) {
+                    this._emitDataChange(cellData);
+                }
+            });
+        }
     }
 
     /*
@@ -859,20 +867,21 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
      * */
     protected insertEditorRenderer() {
         this.editorRendererRef = this.rendererFactory(this.editorRenderer);
-
-        this.editorRendererRef.instance.cellDataChange.subscribe(cellData => {
-            if (cellData === undefined || cellData ===  null) {
-                //cellData === '' 认为是合法值
-                return;
-            }
-            if (this.cellData != cellData) {
-                this._emitDataChange(cellData);
-            }
-            this.rendererHost.viewContainerRef.clear();
-            this.insertRenderer();
-            this._onClick();
-            this._rdkTable._asyncAlignHead();
-        });
+        if(this.editorRendererRef instanceof ComponentRef){
+            this.editorRendererRef.instance.cellDataChange.subscribe(cellData => {
+                if (cellData === undefined || cellData ===  null) {
+                    //cellData === '' 认为是合法值
+                    return;
+                }
+                if (this.cellData != cellData) {
+                    this._emitDataChange(cellData);
+                }
+                this.rendererHost.viewContainerRef.clear();
+                this.insertRenderer();
+                this._onClick();
+                this._rdkTable._asyncAlignHead();
+            });
+        }
 
         if(this._goEditCallback){
             this._goEditCallback();
@@ -978,9 +987,11 @@ export class RdkTableHeader extends TableCellBasic implements OnInit {
      * */
     protected insertRenderer() {
         super.insertRenderer();
-        this.rendererRef.instance.cellDataChange.subscribe(tableHeadChangeEvent => {
-            this._emitDataChange(tableHeadChangeEvent);
-        });
+        if(this.rendererRef instanceof ComponentRef){
+            this.rendererRef.instance.cellDataChange.subscribe(tableHeadChangeEvent => {
+                this._emitDataChange(tableHeadChangeEvent);
+            });
+        }
     }
 
     ngOnInit() {
