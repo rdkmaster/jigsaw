@@ -3,7 +3,7 @@ export class ZTreeSettingAsync {
     contentType?: string;
     type?: string;
     dataType?: string;
-    url?: string;
+    url?: string | Function;
     autoParam?: string[] | object;
     otherParam?: string[] | object;
     dataFilter?: Function;
