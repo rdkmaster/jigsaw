@@ -1,6 +1,6 @@
 import {AfterContentInit, Component, TemplateRef, ViewChild, ViewEncapsulation} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
-import {ColumnDefine} from "../../../../../component/table/table-api";
+import {AdditionalColumnDefine, ColumnDefine} from "../../../../../component/table/table-api";
 
 @Component({
     templateUrl: 'rendererOfTemplateRef.html',
@@ -11,10 +11,12 @@ export class TableRendererOfTemplateRefDemoComponent implements AfterContentInit
     outerValue: string = '&outer';
     @ViewChild('headIcon') headIcon: TemplateRef<any>;
     @ViewChild('checkboxRenderer') checkboxRenderer: TemplateRef<any>;
+    @ViewChild('cellOption') cellOption: TemplateRef<any>;
 
     tableData: TableData;
 
     private _columns: ColumnDefine[];
+    private _additionalColumns: AdditionalColumnDefine[];
 
     constructor() {
         this.tableData = new TableData([
@@ -39,6 +41,10 @@ export class TableRendererOfTemplateRefDemoComponent implements AfterContentInit
         ], ['f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7'], ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7']);
     }
 
+    handleClick(cellInfo){
+        alert(`row: ${cellInfo.row}, column: ${cellInfo.column}, rawColumn: ${cellInfo.field}, cellData: ${cellInfo.cellData}`)
+    }
+
     ngAfterContentInit(){
         this._columns = [
             {
@@ -48,13 +54,24 @@ export class TableRendererOfTemplateRefDemoComponent implements AfterContentInit
                     renderer: this.headIcon
                 }
             },
-            {
+            /*{
                 target: 'f4',
                 cell: {
                     renderer: this.checkboxRenderer
                 }
-            }
+            }*/
         ];
+        this._additionalColumns = [
+            {
+                width: '15%',
+                header: {
+                    text: '操作'
+                },
+                cell: {
+                    renderer: this.cellOption
+                }
+            }
+        ]
     }
 
 }
