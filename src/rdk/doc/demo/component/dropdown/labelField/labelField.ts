@@ -16,7 +16,7 @@ export class DropDownLabelFieldDemo implements OnInit {
 
 
     public selectedCity = [{name: "北京"}];
-
+    public labelField="name";
     private citys = [
         {name: "北京"},
         {name: "上海"},
@@ -24,7 +24,10 @@ export class DropDownLabelFieldDemo implements OnInit {
         {name: "深圳"},
         {name: "长沙"}
     ];
-
+    public clickProcess(event:Event){
+        event.stopPropagation();
+        event.preventDefault();
+    }
     ngOnInit() { }
 
 }

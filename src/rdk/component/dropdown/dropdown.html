@@ -1,9 +1,8 @@
-<div class="rdk-drop-down"
-     [class.rdk-drop-down-opened]="_isOpened"
-     [class.rdk-drop-down-disabled]="disabled"
-     (mouseover)="_hoverHandle(1)"
-     (mouseout)="_hoverHandle(0)">
-
+<div #dropdowntcontent class="rdk-drop-down"
+                       [class.rdk-drop-down-opened]="_hasContent"
+                       [class.rdk-drop-down-disabled]="disabled"
+                       (mouseover)="_hoverHandle()"
+                       >
     <div class="rdk-drop-down-selection" (click)="_toggleClick()">
         <div class="rdk-drop-down-selection-rendered">
             <div *ngIf="placeholder&& !value" class="rdk-drop-down-selection_placeholder">{{placeholder}}</div>
@@ -12,19 +11,13 @@
             <div *ngIf="mode === 0&& _showValue" class="rdk-drop-down-selection-selected-value">{{_showValue}}</div>
             <!-- 多选-非数组值域 -->
             <div *ngIf="mode === 1&& !_isArray">
-                {{_showValue}}
             </div>
             <!-- 多选- 数组;-->
             <div *ngIf="mode === 1&& _isArray">
-                <span *ngFor="let item of value">{{item[labelField]}},</span>
+                <span *ngFor="let item of value;let i = index">{{item[labelField]}}{{i==value.length-1?"":","}}</span>
             </div>
         </div>
     </div>
-
-    <div class="rdk-drop-down-content" (click)="_contentClick()" [style.width]="dropDownWidth">
-        <ng-content></ng-content>
-    </div>
-
     <!-- ?? 可能是个问题. 依赖了fontAwesome -->
     <i class="fa fa-angle-down rdk-drop-down-arrow"></i>
 </div>

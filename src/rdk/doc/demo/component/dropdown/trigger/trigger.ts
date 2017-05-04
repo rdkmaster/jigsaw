@@ -12,7 +12,16 @@ export class RdkDropDownTrigger implements OnInit {
     private trigger = DropDownTrigger.click;
 
     changeTriger() {
-        this.trigger = DropDownTrigger.hover;
+        if(this.trigger == DropDownTrigger.hover){
+            this.trigger = DropDownTrigger.click
+        }else{
+            this.trigger=DropDownTrigger.hover
+        }
+    }
+
+    public clickProcess(event:Event){
+        event.stopPropagation();
+        event.preventDefault();
     }
 
     constructor() { }

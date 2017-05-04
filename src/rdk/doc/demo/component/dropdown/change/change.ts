@@ -31,9 +31,14 @@ export class DropDownChangeDemo implements OnInit {
     ];
 
     change(evt){
+        console.log("--------------")
         console.log(evt)
     }
 
+    public clickProcess(event:Event){
+        event.stopPropagation();
+        event.preventDefault();
+    }
 
     ngOnInit() { }
 

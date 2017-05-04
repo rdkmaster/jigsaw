@@ -1,8 +1,19 @@
-<rdk-drop-down placeholder="请输入姓名~" #drop  dropDownWidth="120%" autoWidth="true" [mode]="mode" [value]="selectedCity"
-                >
-    <rdk-tile-select [(selectedItems)]="selectedCity" labelField="label"
+<rdk-drop-down
+    class="drop-down-father" [pane]="dropcontent"
+    placeholder="请输入姓名~"
+    [dropDownWidth]="dropDownWidth"
+    autoWidth="true"
+    [mode]="mode"
+    [value]="selectedCity">
+
+</rdk-drop-down>
+<ng-template #dropcontent>
+    <rdk-tile-select class="drop-down-child"
+                     [(selectedItems)]="selectedCity" labelField="label"
                      [multipleSelect]="true" [searchable]="true"
                      [data]="citys"
-                     tileOptionWidth="100px">
+                     tileOptionWidth="100px"
+                     (click)="clickProcess($event)"
+                     (selectedItemsChange)="basicSelectChange()">
     </rdk-tile-select>
-</rdk-drop-down>
+</ng-template>

@@ -6,18 +6,19 @@ import {DropDownMode, RdkDropDown, DropDownTrigger} from "../../../../../compone
 
 @Component({
     templateUrl: './basic.html',
-    styles: [`
-        .contaner {
-            padding: 5px;
-        }
-        
-    `]
+    styles: []
 })
 export class RdkDropDownInput implements OnInit {
+    //todo    阻止click冒泡事件可以实现autoCloseDropDown 这一属性
+    public clickProcess(event: Event) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
 
+    constructor() {
+    }
 
-    constructor() { }
-
-    ngOnInit() { }
+    ngOnInit() {
+    }
 
 }
