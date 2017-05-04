@@ -4,4 +4,19 @@
 
 .vertical {
     height: 240px;
+    width: 120px;
+}
+
+.vertical3 {
+    height: 360px;
+    width: 120px;
+    display: inline-block!important;
+}
+
+rdk-slider:focus, rdk-slider:hover {
+    outline: none;
+}
+
+rdk-slider::selection {
+    background-color: transparent;
 }

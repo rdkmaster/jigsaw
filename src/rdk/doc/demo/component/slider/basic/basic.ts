@@ -31,6 +31,8 @@ import { Component, OnInit } from '@angular/core';
         <br>
         <h4>6. 垂直滑动条.</h4>
         <rdk-slider value="50" [vertical]="vertical" class="vertical" style="height: 240px;"></rdk-slider>
+        
+        <rdk-slider value="50" [marks]="marks2" [vertical]="vertical" class="vertical3"></rdk-slider>
     `,
     styleUrls:['./basic.scss']
 })
@@ -53,6 +55,9 @@ export class RdkSliderDemoBasic implements OnInit {
     {value: 40, label: '40oC'},
     {value: 60, label: '60oC', class: "markStyle-3"}]
 
+    marks2 = [{value: 20, label: '20oC'},
+        {value: 40, label: '40oC'},
+        {value: 60, label: '60oC', class: "markStyle-3"}]
 
     sliderChange(value) {
         console.info("当前值: " + value);
