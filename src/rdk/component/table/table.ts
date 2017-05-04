@@ -790,7 +790,7 @@ export class TableCellBasic implements AfterViewInit {
     }
 })
 export class RdkTableCell extends TableCellBasic implements OnInit {
-    private _rowHeight: string = RdkTable.ROW_HEIGHT + 'px';
+    private _rowHeight: string = RdkTable.ROW_HEIGHT -2 + 'px';
 
     @Input()
     public editable: boolean = false;
