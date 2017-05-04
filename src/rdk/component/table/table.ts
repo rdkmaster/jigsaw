@@ -348,16 +348,14 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * 原始数据排序
      * */
     private _dataDefaultSort() {
-        if (this._columnDefines) {
+        if (this._headSettings) {
             //默认按第一个排序
-            let column = this._columnDefines.find(column =>
-                column.header
-                && (typeof column.target === 'string' || typeof column.target === 'number')
-                && column.header.sortable
-                && (column.header.defaultSortOrder == SortOrder.asc || column.header.defaultSortOrder == SortOrder.des)
+            let headSetting = this._headSettings.find(headSetting =>
+                headSetting.sortable
+                && (headSetting.defaultSortOrder == SortOrder.asc || headSetting.defaultSortOrder == SortOrder.des)
             );
-            if(column){
-                this.data.sort(column.header.sortAs, column.header.defaultSortOrder, <string|number>column.target);
+            if(headSetting){
+                this.data.sort(headSetting.sortAs, headSetting.defaultSortOrder, headSetting.field);
             }
         }
     }
@@ -396,8 +394,8 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * 执行默认排序，data和columns数据合并转换，生成headSettings和cellSettings，渲染head和cell
      * */
     private _transformData(): void {
-        this._dataDefaultSort();
         this._transformHeadSettings();
+        this._dataDefaultSort();
         this._transformCellSettings();
     }
 
