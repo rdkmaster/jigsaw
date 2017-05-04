@@ -1,15 +1,20 @@
-import {Component} from "@angular/core";
+import {AfterContentInit, Component, ViewChild} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
 import {AdditionalColumnDefine} from "../../../../../component/table/table-api";
 import {TableHeadCheckbox, TableCellCheckbox} from "../../../../../component/table/table-renderer";
 import {Http} from "@angular/http";
+import {RdkTable} from "../../../../../component/table/table";
 
 
 @Component({
   templateUrl: 'addCheckboxColumn.html'
 })
-export class TableAddCheckboxColumnDemoComponent {
+export class TableAddCheckboxColumnDemoComponent implements AfterContentInit{
     tableData: TableData;
+
+    private _changeMsg: string;
+
+    @ViewChild('myTable') myTable: RdkTable;
 
     constructor(http: Http) {
         this.tableData = new TableData();
@@ -18,14 +23,14 @@ export class TableAddCheckboxColumnDemoComponent {
     }
 
     private _additionalColumns: AdditionalColumnDefine[] = [{
-            pos : 0,
-            header: {
-                renderer: TableHeadCheckbox,
-            },
-            cell: {
-                renderer: TableCellCheckbox
-            }
-        }]
+        pos: 0,
+        header: {
+            renderer: TableHeadCheckbox,
+        },
+        cell: {
+            renderer: TableCellCheckbox
+        }
+    }];
 
     public onCellChange(value) {
         this._changeMsg = `field: '${value.field}', row: ${value.row}, column: ${value.column}, rawColumn: ${value.rawColumn}, cellData: ${value.cellData}, oldCellData: ${value.oldCellData}`;
@@ -35,7 +40,17 @@ export class TableAddCheckboxColumnDemoComponent {
         }
     }
 
-    private _changeMsg: string;
+    ngAfterContentInit(){
+        let checkedRow = [0, 1, 3, 6, 8];
+        setTimeout(() => {
+            console.log(this.myTable.getRenderers(0));
+            this.myTable.getRenderers(0).forEach(renderer => {
+                if(checkedRow.indexOf(renderer.row) != -1){
+                    renderer.renderer.setCheckboxState(true);
+                }
+            })
+        }, 1000)
+    }
 }
 
 

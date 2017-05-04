@@ -15,7 +15,6 @@ import {
 import {RdkScrollBarModule} from "../scrollbar/scrollbar";
 import {RdkScrollBar} from "../scrollbar/scrollbar";
 import {SortAs, SortOrder, CallbackRemoval} from "../../core/data/component-data";
-import {CommonUtils} from "../../core/utils/common-utils";
 import {AffixUtils} from "../../core/utils/internal-utils";
 import {TableCheckboxService} from "./table-service";
 import {DefaultCellRenderer} from "./table-renderer";
@@ -24,7 +23,7 @@ class HeadSetting {
     cellData: string | number;
     width: string | number;
     visible: boolean;
-    renderer: Type<TableCellRenderer>|TemplateRef<any>;
+    renderer: Type<TableCellRenderer> | TemplateRef<any>;
     class: string;
     sortable: boolean;
     sortAs: SortAs;
@@ -35,10 +34,10 @@ class HeadSetting {
 class CellSetting {
     cellData: string | number;
     visible: boolean;
-    renderer: Type<TableCellRenderer>|TemplateRef<any>;
+    renderer: Type<TableCellRenderer> | TemplateRef<any>;
     class: string;
     editable: boolean;
-    editorRenderer: Type<TableCellRenderer>|TemplateRef<any>;
+    editorRenderer: Type<TableCellRenderer> | TemplateRef<any>;
     group: boolean;
     field: number;
     rowSpan: number;
@@ -120,15 +119,15 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         }
     }
 
-    public static ROW_HEIGHT:number = 30;
+    public static ROW_HEIGHT: number = 30;
 
     private _scrollBarOptions: any = {
         snapAmount: RdkTable.ROW_HEIGHT,
-        mouseWheel: { enable: true, scrollAmount: RdkTable.ROW_HEIGHT * 3 }
+        mouseWheel: {enable: true, scrollAmount: RdkTable.ROW_HEIGHT * 3}
     };
 
     @Input()
-    public set scrollAmount(value:number) {
+    public set scrollAmount(value: number) {
         if (typeof value == 'number' && value > 0) {
             this._scrollBarOptions = {
                 snapAmount: RdkTable.ROW_HEIGHT,
@@ -137,7 +136,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         }
     }
 
-    public get scrollAmount():number {
+    public get scrollAmount(): number {
         return this._scrollBarOptions.mouseWheel.scrollAmount;
     }
 
@@ -166,7 +165,12 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         super()
     }
 
-    private _beforeRefresh(){
+    public rendererList: any[] = [];
+    public getRenderers(column){
+        return this.rendererList.filter(renderer => renderer.column == column);
+    }
+
+    private _beforeRefresh() {
         this._renderer.addClass(this._fixedHead, 'rdk-table-hide');
     }
 
@@ -228,7 +232,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * 列定义数据转换
      * */
     private _transformColumns(cb: Function): void {
-        if(!this._columnDefines) return;
+        if (!this._columnDefines) return;
         this._columnDefines.forEach(column => {
             if (column.target instanceof Function) {
                 let fields = this.data.field.filter(column.target);
@@ -258,7 +262,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * 其他列定义数据转换
      * */
     private _transformAdditionalColumns(insertClone: Function, insert: Function): void {
-        if(!this._additionalColumnDefines) return;
+        if (!this._additionalColumnDefines) return;
         this._additionalColumnDefines.forEach(additionalColumn => {
             let pos = additionalColumn.pos;
             const target = additionalColumn.field;
@@ -278,7 +282,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * 过滤掉不显示的列
      * */
     private _filterCellSettings(): void {
-        if(this._cellSettings){
+        if (this._cellSettings) {
             this._cellSettings.forEach((cellSettings, index) => {
                 this._cellSettings[index] = cellSettings.filter(cellSetting => cellSetting.visible);
             });
@@ -286,21 +290,21 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     /*
-    * cellSetting设置rowSpan
-    * */
-    private _setRowSpan(rowSpans, rowSpan, colIndex, cellSetting){
-        if(rowSpans[colIndex] === undefined){
+     * cellSetting设置rowSpan
+     * */
+    private _setRowSpan(rowSpans, rowSpan, colIndex, cellSetting) {
+        if (rowSpans[colIndex] === undefined) {
             rowSpans.push(rowSpan);
-        }else{
+        } else {
             rowSpans[colIndex] = rowSpan;
         }
         cellSetting.rowSpan = rowSpan;
     }
 
     /*
-    * 列检查合并单元格
-    * */
-    private _checkRowSpan(rowSpans, rowSpan, rowIndex, colIndex, cellSetting){
+     * 列检查合并单元格
+     * */
+    private _checkRowSpan(rowSpans, rowSpan, rowIndex, colIndex, cellSetting) {
         for (let i = 0; i < this._cellSettings.length - rowIndex - 1; i++) {
             if (this._cellSettings[rowIndex + i + 1][colIndex].cellData == cellSetting.cellData) {
                 rowSpan += 1;
@@ -354,16 +358,16 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
                 headSetting.sortable
                 && (headSetting.defaultSortOrder == SortOrder.asc || headSetting.defaultSortOrder == SortOrder.des)
             );
-            if(headSetting){
+            if (headSetting) {
                 this.data.sort(headSetting.sortAs, headSetting.defaultSortOrder, headSetting.field);
             }
         }
     }
 
     /*
-    * 转换headSettings,渲染head
-    * */
-    private _transformHeadSettings(){
+     * 转换headSettings,渲染head
+     * */
+    private _transformHeadSettings() {
         //初始化Settings
         this._initHeadSettings();
         //列定义数据转换
@@ -375,9 +379,9 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     /*
-    * 转换cellSettings,渲染cell
-    * */
-    private _transformCellSettings(){
+     * 转换cellSettings,渲染cell
+     * */
+    private _transformCellSettings() {
         //初始化Settings
         this._initCellSettings();
         //列定义数据转换
@@ -448,9 +452,9 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     /*
-    * 根据target找到在field中的位置
-    * */
-    private _getPosInField(target: string|number): number{
+     * 根据target找到在field中的位置
+     * */
+    private _getPosInField(target: string | number): number {
         let pos: number;
         if (typeof target === 'number') {
             pos = target;
@@ -511,16 +515,16 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     private _insertHeadSetting(pos, additionalColumn: AdditionalColumnDefine, headSetting?: HeadSetting): void
     private _insertHeadSetting(pos, additionalColumn: AdditionalColumnDefine, headSetting?: HeadSetting): void {
         headSetting = headSetting ? headSetting : {
-                cellData: '',
-                width: null,
-                visible: true,
-                renderer: null,
-                class: '',
-                sortable: false,
-                sortAs: SortAs.string,
-                defaultSortOrder: SortOrder.default,
-                field: -1 //-1代表插入列
-            };
+            cellData: '',
+            width: null,
+            visible: true,
+            renderer: null,
+            class: '',
+            sortable: false,
+            sortAs: SortAs.string,
+            defaultSortOrder: SortOrder.default,
+            field: -1 //-1代表插入列
+        };
         headSetting = this._generateHeadSetting(headSetting, additionalColumn);
         if (pos != -1) {
             const index = this._headSettings.indexOf(this._headSettings.find(headSetting => headSetting.field == pos));
@@ -537,16 +541,16 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     private _insertCellSetting(pos, additionalColumn: AdditionalColumnDefine, cellSetting?: CellSetting, cellSettings?: CellSetting[]): void
     private _insertCellSetting(pos, additionalColumn: AdditionalColumnDefine, cellSetting?: CellSetting, cellSettings?: CellSetting[]): void {
         cellSetting = cellSetting ? cellSetting : {
-                cellData: '',
-                visible: true,
-                renderer: null,
-                class: '',
-                editable: false,
-                editorRenderer: null,
-                group: false,
-                field: -1, //-1代表插入列
-                rowSpan: 1
-            };
+            cellData: '',
+            visible: true,
+            renderer: null,
+            class: '',
+            editable: false,
+            editorRenderer: null,
+            group: false,
+            field: -1, //-1代表插入列
+            rowSpan: 1
+        };
         cellSetting = this._generateCellSetting(cellSetting, additionalColumn);
 
         if (!cellSettings) {
@@ -665,7 +669,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         }, 1000);
     }
 
-    private _addWindowListener(){
+    private _addWindowListener() {
         this._removeWindowListener();
 
         this._removeWindowLoadListener = this._renderer.listen('window', 'load', () => {
@@ -682,7 +686,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         });
     }
 
-    private _removeWindowListener(){
+    private _removeWindowListener() {
         if (this._removeWindowLoadListener) {
             this._removeWindowLoadListener();
         }
@@ -694,8 +698,8 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         }
     }
 
-    private _subscribeSortChange(){
-        setTimeout(()=>{
+    private _subscribeSortChange() {
+        setTimeout(() => {
             this._rdkTableHeaders.length && this._rdkTableHeaders.forEach(rdkTableHeaders => {
                 rdkTableHeaders.sortChange.subscribe(value => {
                     this.data.sort(value.sortAs, value.order, value.field);
@@ -705,13 +709,13 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         }, 0);
     }
 
-    private _refreshStyle(){
+    private _refreshStyle() {
         this._asyncAlignHead();
         this._addWindowListener();
         this._subscribeSortChange();
     }
 
-    private _init(){
+    private _init() {
         this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.rdk-table-box'),
             'max-height', this._maxHeight);
         this._fixedHead = this._elementRef.nativeElement.querySelector(".rdk-table-fixed-head");
@@ -758,19 +762,19 @@ export class TableCellBasic implements AfterViewInit {
     @Input()
     public field: number;
     @Input()
-    public renderer: Type<TableCellRenderer>|TemplateRef<any>;
+    public renderer: Type<TableCellRenderer> | TemplateRef<any>;
 
-    public rendererRef: ComponentRef<TableCellRenderer>|EmbeddedViewRef<any>;
+    public rendererRef: ComponentRef<TableCellRenderer> | EmbeddedViewRef<any>;
 
     @ViewChild(RdkRendererHost) rendererHost: RdkRendererHost;
 
     /*
      * 渲染器制造工厂
      * */
-    protected rendererFactory(renderer: Type<TableCellRenderer>|TemplateRef<any>): ComponentRef<TableCellRenderer>|EmbeddedViewRef<any> {
-        if(renderer instanceof TemplateRef){
+    protected rendererFactory(renderer: Type<TableCellRenderer> | TemplateRef<any>): ComponentRef<TableCellRenderer> | EmbeddedViewRef<any> {
+        if (renderer instanceof TemplateRef) {
             return this.rendererHost.viewContainerRef.createEmbeddedView(renderer, {cellInfo: this});
-        }else{
+        } else {
             let componentFactory = this.componentFactoryResolver.resolveComponentFactory(renderer);
             let componentRef = this.rendererHost.viewContainerRef.createComponent(componentFactory);
             componentRef.instance.tableData = this.tableData;
@@ -806,7 +810,7 @@ export class TableCellBasic implements AfterViewInit {
     }
 })
 export class RdkTableCell extends TableCellBasic implements OnInit {
-    private _rowHeight: string = RdkTable.ROW_HEIGHT -2 + 'px';
+    private _rowHeight: string = RdkTable.ROW_HEIGHT - 2 + 'px';
 
     @Input()
     public editable: boolean = false;
@@ -820,7 +824,7 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
     @Input()
     public rowSpan: number;
 
-    public editorRendererRef: ComponentRef<TableCellRenderer>|EmbeddedViewRef<any>;
+    public editorRendererRef: ComponentRef<TableCellRenderer> | EmbeddedViewRef<any>;
 
     private _goEditCallback: () => void;
 
@@ -832,13 +836,13 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
         super(cfr, cd, rdkTable);
     }
 
-    private _emitDataChange(cellData: string|number): void{
+    private _emitDataChange(cellData: string | number): void {
         let oldCellData = this.cellData;
         this.cellData = cellData;
 
         //更新tableData
         let rows = [];
-        for(let i = 0; i < this.rowSpan; i++){
+        for (let i = 0; i < this.rowSpan; i++) {
             this.tableData.data[this.row + i][this.field] = cellData;
             rows.push(this.row + i);
         }
@@ -852,21 +856,59 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
         });
     }
 
+    private _cacheRenderer(renderer: TableCellRenderer, editorRenderer: TableCellRenderer){
+        let rendererInfo = this._rdkTable.rendererList.find(renderer => renderer.row == this.row
+                            && renderer.column == this.column);
+        if (rendererInfo) {
+            rendererInfo.renderer = renderer;
+            rendererInfo.editorRenderer = editorRenderer;
+        } else {
+            this._rdkTable.rendererList.push({
+                row: this.row,
+                column: this.column,
+                rawColumn: this.field,
+                renderer: renderer,
+                editorRenderer: editorRenderer
+            })
+        }
+    }
+
+    private _rendererSubscribe(renderer: TableCellRenderer): void{
+        renderer.cellDataChange.subscribe(cellData => {
+            if (cellData === undefined || cellData === null) {
+                //cellData === '' 认为是合法值
+                return;
+            }
+            if (this.cellData != cellData) {
+                this._emitDataChange(cellData);
+            }
+        });
+    }
+
+    private _editorRendererSubscribe(renderer: TableCellRenderer){
+        renderer.cellDataChange.subscribe(cellData => {
+            if (cellData === undefined || cellData === null) {
+                //cellData === '' 认为是合法值
+                return;
+            }
+            if (this.cellData != cellData) {
+                this._emitDataChange(cellData);
+            }
+            this.rendererHost.viewContainerRef.clear();
+            this.insertRenderer();
+            this._onClick();
+            this._rdkTable._asyncAlignHead();
+        });
+    }
+
     /*
      * 插入渲染器
      * */
     protected insertRenderer() {
         super.insertRenderer();
-        if(this.rendererRef instanceof ComponentRef){
-            this.rendererRef.instance.cellDataChange.subscribe(cellData => {
-                if (cellData === undefined || cellData ===  null) {
-                    //cellData === '' 认为是合法值
-                    return;
-                }
-                if (this.cellData != cellData) {
-                    this._emitDataChange(cellData);
-                }
-            });
+        if (this.rendererRef instanceof ComponentRef) {
+            this._rendererSubscribe(this.rendererRef.instance);
+            this._cacheRenderer(this.rendererRef.instance, null);
         }
     }
 
@@ -875,23 +917,13 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
      * */
     protected insertEditorRenderer() {
         this.editorRendererRef = this.rendererFactory(this.editorRenderer);
-        if(this.editorRendererRef instanceof ComponentRef){
-            this.editorRendererRef.instance.cellDataChange.subscribe(cellData => {
-                if (cellData === undefined || cellData ===  null) {
-                    //cellData === '' 认为是合法值
-                    return;
-                }
-                if (this.cellData != cellData) {
-                    this._emitDataChange(cellData);
-                }
-                this.rendererHost.viewContainerRef.clear();
-                this.insertRenderer();
-                this._onClick();
-                this._rdkTable._asyncAlignHead();
-            });
+
+        if (this.editorRendererRef instanceof ComponentRef) {
+            this._editorRendererSubscribe(this.editorRendererRef.instance);
+            this._cacheRenderer(null, this.editorRendererRef.instance);
         }
 
-        if(this._goEditCallback){
+        if (this._goEditCallback) {
             this._goEditCallback();
         }
 
@@ -903,10 +935,10 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
      * */
     private _onClick() {
         this._goEditCallback = this.editable ? this._rdr.listen(this._el.nativeElement, 'click', () => {
-                this.rendererHost.viewContainerRef.clear();
-                this.insertEditorRenderer();
-                this._rdkTable._asyncAlignHead();
-            }) : null;
+            this.rendererHost.viewContainerRef.clear();
+            this.insertEditorRenderer();
+            this._rdkTable._asyncAlignHead();
+        }) : null;
     }
 
     ngOnInit() {
@@ -916,7 +948,7 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
         //绑定点击事件
         this._onClick();
 
-        if(this.editable){
+        if (this.editable) {
             this._rdr.setStyle(this._el.nativeElement, 'cursor', 'pointer');
         }
     }
@@ -974,9 +1006,9 @@ export class RdkTableHeader extends TableCellBasic implements OnInit {
         this.sortChange.emit({sortAs: this.sortAs, order: order, field: this.field});
     }
 
-    private _emitDataChange(tableHeadChangeEvent: TableHeadChangeEvent): void{
+    private _emitDataChange(tableHeadChangeEvent: TableHeadChangeEvent): void {
         //更新tableData
-        for(let row of tableHeadChangeEvent.rows){
+        for (let row of tableHeadChangeEvent.rows) {
             this.tableData.data[row][this.field] = tableHeadChangeEvent.cellData;
         }
 
@@ -995,7 +1027,7 @@ export class RdkTableHeader extends TableCellBasic implements OnInit {
      * */
     protected insertRenderer() {
         super.insertRenderer();
-        if(this.rendererRef instanceof ComponentRef){
+        if (this.rendererRef instanceof ComponentRef) {
             this.rendererRef.instance.cellDataChange.subscribe(tableHeadChangeEvent => {
                 this._emitDataChange(tableHeadChangeEvent);
             });

@@ -58,7 +58,7 @@ export class TableHeadCheckbox extends TableCellRenderer implements OnInit {
  * cell checkbox renderer
  * */
 @Component({
-    template: '<rdk-checkbox [(checked)]="cellData" (checkedChange)="_setCheckboxState($event)"></rdk-checkbox>'
+    template: '<rdk-checkbox [(checked)]="cellData" (checkedChange)="_checkedChangeHandle($event)"></rdk-checkbox>'
 })
 export class TableCellCheckbox extends TableCellRenderer implements OnInit {
     constructor(private tableRendererService: TableCheckboxService, private _changeDetector: ChangeDetectorRef) {
@@ -77,8 +77,15 @@ export class TableCellCheckbox extends TableCellRenderer implements OnInit {
         }
     }
 
-    private _setCheckboxState(checked) {
+    private _checkedChangeHandle(checked) {
         this._checkboxState.checked = checked;
+        this._setHeadCheckboxState();
+        this.dispatchChangeEvent(checked);
+    }
+
+    public setCheckboxState(checked){
+        checked = checked ? 1 : 0;
+        this._checkboxState.checked = this.cellData = checked;
         this._setHeadCheckboxState();
         this.dispatchChangeEvent(checked);
     }
