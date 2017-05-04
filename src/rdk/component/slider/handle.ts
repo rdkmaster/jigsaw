@@ -3,12 +3,13 @@
  */
 
 import {
-    Input, Output, EventEmitter, Renderer2, Component, OnInit
+    Input, Output, EventEmitter, Renderer2, Component, OnInit, ViewEncapsulation
 } from "@angular/core";
 
 @Component({
     selector: 'slider-handle',
-    templateUrl: './handle.html'
+    templateUrl: './handle.html',
+    encapsulation: ViewEncapsulation.None
 })
 export class SliderHandle implements OnInit{
 
@@ -76,10 +77,21 @@ export class SliderHandle implements OnInit{
 
     public transformPosToValue(pos) {
         // 取得尺寸
-        let offset = this.vertical?this.dimensions.bottom:this.dimensions.left;
-        let size = this.vertical?this.dimensions.height:this.dimensions.width;
+        // 滚动条,减去全局滚动条的位置.
+        let top = document.body.scrollTop;
+        let left = document.body.scrollLeft;
 
-        let newValue = ((pos.x - offset) / size * (this.max - this.min) + this.min); // 保留两位小数
+        let offset = this.vertical?this.dimensions.bottom - top:this.dimensions.left - left;
+        let size = this.vertical?this.dimensions.height:this.dimensions.width;
+        let posValue = this.vertical? pos.y-38: pos.x;
+
+        if(this.vertical) {
+            posValue = posValue > offset? offset:posValue;
+        } else {
+            posValue = posValue < offset? offset:posValue;
+        }
+
+        let newValue = ((Math.abs(posValue - offset)) / size * (this.max - this.min) + this.min); // 保留两位小数
 
         let m = this._calFloat(this.step);
 

@@ -2,16 +2,19 @@
  * Created by 10177553 on 2017/4/13.
  */
 import {
-    Component, OnInit, Input, Output, EventEmitter, ElementRef
+    Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewEncapsulation
 } from '@angular/core';
 
 @Component({
     selector: 'rdk-slider',
     templateUrl: './slider.html',
-    styleUrls:['./slider.scss']
+    styleUrls:['./slider.scss'],
+    host: {
+        'class': 'sliderHost'
+    },
+    encapsulation: ViewEncapsulation.None
 })
 /**
- *       3. 竖向滑动条支持.
  *       4. tooltips 支持. 暂不支持
  *       5. class 设置的API. 暂不支持.
  *       6. mark的class . 没有支持成功. 没发现哪里写的有问题.
@@ -164,21 +167,38 @@ export class RdkSlider implements OnInit {
     _calMarks() {
         if(!this.marks) return;
 
-        let width = Math.round(100/this.marks.length);
-        let marginLeft = -Math.floor(width/2);
+        let size = Math.round(100/this.marks.length);
+        let margin = -Math.floor(size/2);
+        let vertical = this.vertical;
 
         this.marks.forEach(mark => {
-            mark["left"] = this._transformValueToPos(mark["value"]);
-            mark["width"] = width;
-            mark["marginLeft"] = marginLeft;
+            // 添加垂直滚动条的支持;
+            if(vertical) {
+                mark["dot"] = {
+                    bottom: this._transformValueToPos(mark["value"]) + "%",
+                }
+                mark["style"] = {
+                    bottom: this._transformValueToPos(mark["value"]) + "%",
+                    "margin-bottom": margin + "%"
+                }
+            } else {
+                mark["dot"] = {
+                    top: "-2px",
+                    left: this._transformValueToPos(mark["value"]) + "%",
+                }
+
+                mark["style"] = {
+                    left: this._transformValueToPos(mark["value"]) + "%",
+                    width: size + "%",
+                    "margin-left": margin + "%"
+                }
+            }
         });
     }
 
     ngOnInit() {
         // 计算slider 的尺寸.
         this._dimensions = this._element.nativeElement.getBoundingClientRect();
-        console.info("尺寸: ");
-        console.info(this._dimensions);
         // 设置选中的轨道.
         this._setTrackStyle(this.value);
 
