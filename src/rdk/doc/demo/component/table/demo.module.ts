@@ -2,19 +2,15 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {TableBasicDemoComponent} from "./basic/basic";
 import {TableRendererDemoComponent} from "./renderer/renderer";
-import {RdkTableModule, DefaultCellRenderer} from "../../../../component/table/table";
+import {RdkTableModule} from "../../../../component/table/table";
 import {
-    TableHeadDefault,
-    TableCellDefault,
     TableHeadCheckbox,
     TableCellCheckbox,
     TableCellOption,
-    TableHeadOption,
     TableCellNum,
-    TableHeadNum,
-    TableCellEditor
+    TableCellEditor,
+    DefaultCellRenderer
 } from "../../../../component/table/table-renderer";
-import {TableCheckboxService} from "../../../../component/table/table-service";
 import {TableHeadSelect, TableHeadIcon} from "./renderer/table-renderer";
 import {RdkSelectModule} from "../../../../component/select/select";
 import {RdkCheckBoxModule} from "../../../../component/checkbox/index";
@@ -29,15 +25,13 @@ import {TableColumnSetWidthDemoComponent} from "./setColumnWidth/setColumnWidth"
 import {TableColumnSetVisibleDemoComponent} from "./setColumnVisible/setColumnVisible";
 import {TableSetHeaderSortDemoComponent} from "./setHeaderSort/setHeaderSort";
 import {
-    MyTableCellRender,
-    TableSetCellRenderDemoComponent
+    JobRenderer, TableSetCellRenderDemoComponent
 } from "./setCellRender/setCellRender";
 import {TableSetCellClassDemoComponent} from "./setCellClass/setCellClass";
 import {TableColumnGroupDemoComponent} from "./setColumnGroup/setColumnGroup";
 import {TableSetCellEditableDemoComponent, MyTableCellEditor, MyTableCell} from "./setCellEditable/setCellEditable";
 import {
-    TableAddColumnDemoComponent, MyTableHeadOption, MyTableCellOption,
-    MyTableCellOption2
+    TableAddColumnDemoComponent, MyTableHeadOption, MyTableCellOption
 } from "./addColumn/addColumn";
 import {TableFixedHeadDemoComponent} from "./fixedHead/fixedHead";
 import {TablePageableDemoComponent} from "./pageable/demo";
@@ -48,6 +42,9 @@ import {TableAddCheckboxColumnDemoComponent} from "./addCheckboxColumn/addCheckb
 import {TableDataChangeDemoComponent} from "./dataChange/dataChange";
 import {RdkButtonModule} from "../../../../component/button/button";
 import {TableAddIDWithPagingComponent} from "./addIDWithPaging/addIDWithPaging";
+import {TableDataWithPopupDemoComponent} from "./withPopup/withPopup";
+import {RdkDialogModule} from "../../../../component/dialog/dialog";
+import {PopupService} from "../../../../service/popup.service";
 
 const tableDemoRoutes = [
     {
@@ -115,6 +112,9 @@ const tableDemoRoutes = [
         path: 'addIDWithPaging', component: TableAddIDWithPagingComponent
     },
     {
+        path: 'withPopup', component: TableDataWithPopupDemoComponent
+    },
+    {
         path: '**', //fallback router must in the last
         component: TableBasicDemoComponent
     }
@@ -127,16 +127,12 @@ const tableDemoRoutes = [
         TablePerformsDemoComponent,
         TableFixedHeadDemoComponent,
         DefaultCellRenderer,
-        TableHeadDefault,
-        TableCellDefault,
         TableHeadSelect,
         TableHeadIcon,
         TableHeadCheckbox,
         TableCellCheckbox,
         TableCellOption,
-        TableHeadOption,
         TableCellNum,
-        TableHeadNum,
         TableCellEditor,
         TableHeadRender,
         TableColumnSetWidthDemoComponent,
@@ -144,7 +140,7 @@ const tableDemoRoutes = [
         TableSetHeaderRenderDemoComponent,
         TableSetHeaderClassDemoComponent,
         TableSetHeaderSortDemoComponent,
-        MyTableCellRender,
+        JobRenderer,
         TableSetCellRenderDemoComponent,
         TableSetCellClassDemoComponent,
         TableColumnGroupDemoComponent,
@@ -153,7 +149,6 @@ const tableDemoRoutes = [
         TableSetCellEditableDemoComponent,
         MyTableHeadOption,
         MyTableCellOption,
-        MyTableCellOption2,
         TableAddColumnDemoComponent,
         TablePageableDemoComponent,
         TableDataFromAjaxDemoComponent,
@@ -161,7 +156,8 @@ const tableDemoRoutes = [
         TableAddIDColumnDemoComponent,
         TableAddCheckboxColumnDemoComponent,
         TableDataChangeDemoComponent,
-        TableAddIDWithPagingComponent
+        TableAddIDWithPagingComponent,
+        TableDataWithPopupDemoComponent
     ],
     imports: [
         RouterModule.forChild(tableDemoRoutes),
@@ -170,31 +166,27 @@ const tableDemoRoutes = [
         RdkCheckBoxModule,
         RdkPaginationModule,
         RdkInputModule,
-        RdkButtonModule
+        RdkButtonModule,
+        RdkDialogModule
     ],
     exports: [ ],
-    providers: [TableCheckboxService],
     entryComponents: [
         DefaultCellRenderer,
-        TableHeadDefault,
-        TableCellDefault,
         TableHeadSelect,
         TableHeadIcon,
         TableHeadCheckbox,
         TableCellCheckbox,
         TableCellOption,
-        TableHeadOption,
         TableCellNum,
-        TableHeadNum,
         TableCellEditor,
         TableHeadRender,
-        MyTableCellRender,
+        JobRenderer,
         MyTableCell,
         MyTableHeadOption,
         MyTableCellOption,
-        MyTableCellOption2,
         MyTableCellEditor
-    ]
+    ],
+    providers: [PopupService],
 })
 export class TableDemoModule {
 }

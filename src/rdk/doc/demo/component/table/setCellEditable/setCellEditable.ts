@@ -2,6 +2,7 @@ import {Component, AfterViewInit, ViewChild, ViewEncapsulation} from "@angular/c
 import {TableData} from "../../../../../core/data/table-data";
 import {ColumnDefine, TableCellRenderer} from "../../../../../component/table/table-api";
 import {RdkInput} from "../../../../../component/input/input";
+import {Http} from "@angular/http";
 
 
 /*
@@ -17,15 +18,11 @@ export class MyTableCell extends TableCellRenderer {
  * 编辑单元格渲染器
  * */
 @Component({
-    template: `<rdk-input #input [(value)]="cellData" width="100%" [clearable]="false" (blur)="_goText()"></rdk-input>`
+    template: `<rdk-input #input [(value)]="cellData" [clearable]="false" (blur)="dispatchChangeEvent(cellData)"></rdk-input>`
 })
 export class MyTableCellEditor extends TableCellRenderer implements AfterViewInit{
 
     @ViewChild(RdkInput) input: RdkInput;
-
-    _goText(): void {
-        this.changeToText.emit(this.cellData);
-    }
 
     ngAfterViewInit(){
         this.input.focus();
@@ -33,84 +30,23 @@ export class MyTableCellEditor extends TableCellRenderer implements AfterViewIni
 
 }
 
-
-
 @Component({
   templateUrl: 'setCellEditable.html',
     encapsulation: ViewEncapsulation.None
 })
 export class TableSetCellEditableDemoComponent {
     tableData: TableData;
-    constructor() {
-        this.tableData = new TableData(
-            [
-                [
-                    "Tiger Nixon1",
-                    "System Architect",
-                    "$320,00",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "542"
-                ],[
-                "Tiger Nixon2",
-                "System Architect",
-                "$320,8000",
-                "2011/04/25",
-                "Edinburgh",
-                "5421"
-            ],
-                [
-                    "Garrett Winflters1",
-                    "Accountant",
-                    "$170,7",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
-                ],
 
-                [
-                    "Garrett Winslters1",
-                    "Accountant",
-                    "$170,7",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
-                ],
-                [
-                    "Tiger Nixon2",
-                    "System Arcfhitect",
-                    "$320,8000",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ],
-                [
-                    "Garrett Winflters1",
-                    "Accountant",
-                    "$170,7",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
-                ],
-                [
-                    "Tiger Nixon2",
-                    "System Arcfhitect",
-                    "$320,8000",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ]
-            ],
-            ["name", "position", "salary", "start_date", "office", "extn"],
-            ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
-
+    constructor(http: Http) {
+        this.tableData = new TableData();
+        this.tableData.http = http;
+        this.tableData.fromAjax('mock-data/table/data.json');
     }
-
-
 
     private _columns: ColumnDefine[] = [
         {
             target: 'position',
+            width: '20%',
             group : true,
             cell :{
                 renderer: MyTableCell,
@@ -124,6 +60,10 @@ export class TableSetCellEditableDemoComponent {
 
     public onCellChange(value) {
         this._changeMsg = `field: '${value.field}', row: ${value.row}, column: ${value.column}, rawColumn: ${value.rawColumn}, cellData: ${value.cellData}, oldCellData: ${value.oldCellData}`;
+        let rows = value.row instanceof Array ? value.row : [value.row];
+        for(let row of rows){
+            console.log(this.tableData.data[row][value.rawColumn]);
+        }
     }
 }
 

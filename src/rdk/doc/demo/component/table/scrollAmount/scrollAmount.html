@@ -1,4 +1,4 @@
 <p>测试滚动条一次滚动行数</p>
-<button (click)="setScrollAmount(1)">滚动1行</button>
-<button (click)="setScrollAmount(2)">滚动2行</button>
-<rdk-table height="400px" [data]="tableData" [additionalColumnDefines]="additionalColumns" [scrollAmount]="scrollAmount"></rdk-table>
+<button (click)="table.scrollAmount = 1">一次滚动1行</button>
+<button (click)="table.scrollAmount = 5">一次滚动5行</button>
+<rdk-table #table height="400px" [data]="tableData" [additionalColumnDefines]="additionalColumns"></rdk-table>

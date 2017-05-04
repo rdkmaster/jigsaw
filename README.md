@@ -1,5 +1,3 @@
-
-
 # 这个组件集正在征名中。。。
 欢迎来给这套组件起名。。。
 
@@ -8,7 +6,7 @@
 1. 如果未安装nodejs，或者nodejs低于6.x.x，npm版本低于3.x.x，请先安装[nodejs](nodejs.cn)。
 2. 下载或者clone本工程代码，假设保存到了 d:\rdk-ng2
 3. 有两个可选方式
-    1. 如果你处于zte内部网络，推荐使用install.exe来部署环境。直接运行install.exe即可。
+    1. 如果你处于zte内部网络，推荐使用install.exe来部署环境。直接运行 `d:\rdk-ng2\install.exe` 即可。
     2. 使用下面脚本直接npm安装，由于国内奇葩的网络环境，可能会出现各种问题，请自行搜索解决吧。
 ```
 cd d:\rdk-ng2

@@ -73,4 +73,14 @@ export class CommonUtils {
         return targetObject;
     }
 
+    /**
+     * 把一个值转为px或%
+     * @param value
+     * @returns string
+     */
+    public static getCssValue(value: string|number): string{
+        value = typeof value === 'string' ? value : value + '';
+        const match = value ? value.match(/^\s*\d+%|px\s*$/) : null;
+        return match ? value : value + 'px';
+    }
 }

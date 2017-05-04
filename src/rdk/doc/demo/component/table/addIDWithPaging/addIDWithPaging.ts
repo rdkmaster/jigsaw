@@ -1,7 +1,7 @@
-import {Component} from "@angular/core";
+import {Component, ViewEncapsulation} from "@angular/core";
 import {PageableTableData} from "../../../../../core/data/table-data";
 import {Http} from "@angular/http";
-import {TableHeadNum, TableCellNum} from "../../../../../component/table/table-renderer";
+import {TableCellNum} from "../../../../../component/table/table-renderer";
 import {AdditionalColumnDefine, ColumnDefine} from "../../../../../component/table/table-api";
 
 @Component({
@@ -37,7 +37,7 @@ export class TableAddIDWithPagingComponent {
     private _additionalColumns: AdditionalColumnDefine[] = [{
         pos: 0,
         header: {
-            renderer: TableHeadNum,
+            text: '#'
         },
         cell: {
             renderer: TableCellNum

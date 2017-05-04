@@ -3,16 +3,20 @@ import {TableData} from "../../core/data/table-data";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 
 export class TableCellRenderer {
+    protected dispatchChangeEvent(value: string|number|TableHeadChangeEvent): void{
+        this.cellDataChange.emit(value)
+    }
+
     @Input() tableData: TableData;
     @Input() cellData: any;
     @Input() row: number;
     @Input() column: number;
 
-    @Output() changeToText: EventEmitter<string|number> = new EventEmitter<string|number>();
+    @Output() cellDataChange: EventEmitter<string|number|TableHeadChangeEvent> = new EventEmitter<string|number|TableHeadChangeEvent>();
 }
 
 export type ColumnDefine = {
-    target: targetType,
+    target: TargetType,
     visible?: boolean,
     width?: string,
     header?: Header,
@@ -22,7 +26,7 @@ export type ColumnDefine = {
 
 export type AdditionalColumnDefine = {
     pos?: number,
-    target?: string|number,
+    field?: string|number,
     visible?: boolean,
     width?: string,
     header?: Header,
@@ -39,11 +43,18 @@ export type TableDataChangeEvent = {
     oldCellData: string|number
 }
 
-type targetType = number|string|number[]|string[]|targetFun;
+export type TableHeadChangeEvent = {
+    rows: number[],
+    cellData: string|number,
+    oldCellData: string|number
+}
 
-type targetFun = (field: string, index: number) => boolean;
+type TargetType = number|string|number[]|string[]|TargetFun;
+
+type TargetFun = (field: string, index: number) => boolean;
 
 type Header = {
+    text?: string,
     renderer?: Type<TableCellRenderer>,
     class?: string,
     sortable?: boolean,

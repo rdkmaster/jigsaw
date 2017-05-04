@@ -1,0 +1,12 @@
+<rdk-button width="150" (click)="popupTemplate(tp)">
+popup
+</rdk-button>
+
+<ng-template #tp>
+<rdk-dialog top="20%" width="80%">
+    <rdk-table [data]="tableData" height="100%"></rdk-table>
+</rdk-dialog>
+</ng-template>
+
+
+

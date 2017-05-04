@@ -28,6 +28,11 @@
     text-overflow: ellipsis;
 }
 
+@mixin word-break(){
+    word-wrap:break-word;
+    word-break:break-all;
+}
+
 @mixin prefixer($property, $value) {
     -webkit-#{$property}: $value;
     -moz-#{$property}: $value;
