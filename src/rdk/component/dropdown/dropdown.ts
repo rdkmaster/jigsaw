@@ -155,7 +155,7 @@ export class RdkDropDown implements OnInit, OnDestroy {
         }
     }
 
-    private _hoverHandle(isHover): void {
+    private _hoverHandle(): void {
         if (this._trigger === DropDownTrigger.click) return;
         this._checkContent();
         this._hasContent = !this._hasContent;
