@@ -9,7 +9,7 @@ import {RdkTable} from "../../../../../component/table/table";
 @Component({
   templateUrl: 'addCheckboxColumn.html'
 })
-export class TableAddCheckboxColumnDemoComponent implements AfterContentInit{
+export class TableAddCheckboxColumnDemoComponent{
     tableData: TableData;
 
     private _changeMsg: string;
@@ -19,6 +19,17 @@ export class TableAddCheckboxColumnDemoComponent implements AfterContentInit{
     constructor(http: Http) {
         this.tableData = new TableData();
         this.tableData.http = http;
+        this.tableData.onAjaxComplete(() => {
+            console.log(this.tableData);
+            let checkedRow = [0, 1, 3, 6, 8];
+            setTimeout(() => {
+                this.myTable.getRenderers(0).forEach(renderer => {
+                    if(checkedRow.indexOf(renderer.row) != -1){
+                        renderer.renderer.setCheckboxState(true);
+                    }
+                })
+            }, 0)
+        });
         this.tableData.fromAjax('mock-data/table/data.json');
     }
 
@@ -40,17 +51,6 @@ export class TableAddCheckboxColumnDemoComponent implements AfterContentInit{
         }
     }
 
-    ngAfterContentInit(){
-        let checkedRow = [0, 1, 3, 6, 8];
-        setTimeout(() => {
-            console.log(this.myTable.getRenderers(0));
-            this.myTable.getRenderers(0).forEach(renderer => {
-                if(checkedRow.indexOf(renderer.row) != -1){
-                    renderer.renderer.setCheckboxState(true);
-                }
-            })
-        }, 1000)
-    }
 }
 
 
