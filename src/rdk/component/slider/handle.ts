@@ -136,7 +136,7 @@ export class SliderHandle implements OnInit{
 
     _registerGlobalEvent() {
         this.globalEventMouseMove = this._render.listen("document", "mousemove", () => {
-            this._updateValuePosition();
+            this.updateValuePosition();
         });
         this.globalEventMouseUp = this._render.listen("document", "mouseup", () => {
             this._dragged = false;
@@ -152,7 +152,7 @@ export class SliderHandle implements OnInit{
     }
 
     // 改变value的值;
-    private _updateValuePosition() {
+    private updateValuePosition() {
         if(!this._dragged|| this.disabled) return;
 
         let pos = {

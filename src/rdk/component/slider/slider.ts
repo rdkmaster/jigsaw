@@ -2,8 +2,9 @@
  * Created by 10177553 on 2017/4/13.
  */
 import {
-    Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewEncapsulation
+    Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewEncapsulation, ViewChildren, QueryList
 } from '@angular/core';
+import {SliderHandle} from "./handle";
 
 @Component({
     selector: 'rdk-slider',
@@ -16,14 +17,14 @@ import {
 })
 /**
  *       4. tooltips 支持. 暂不支持
- *       5. class 设置的API. 暂不支持.
  *       6. mark的class . 没有支持成功. 没发现哪里写的有问题.
- *       7. api 说明文档, 要不然里面的属性有点多, 有点难找.
- *       8. 双触点再向外传值支持;
+ *       8. 双触点再向外传值支持, 向外传递对象, 弄了快一天, 没有解决.
  */
 export class RdkSlider implements OnInit {
 
     constructor(private _element: ElementRef) { }
+
+    @ViewChildren(SliderHandle) _sliderHandle: QueryList<SliderHandle>;
 
     private _handleValue1: number;
 
@@ -96,14 +97,6 @@ export class RdkSlider implements OnInit {
         // Todo 格式化, 弹出信息.
     }
 
-    // 改变value的值;
-    private _clickPosition() {
-        let pos = {
-            x: event["clientX"],
-            y: event["clientY"]
-        }
-    }
-
     private _dragged = false;
 
     @Input()
@@ -139,6 +132,12 @@ export class RdkSlider implements OnInit {
         this._dragged = flag;
     }
 
+    // 多值时选择一个合适的触点. Todo 支持点击
+    _updateValuePosition() {
+        // let handle = this._sliderHandle.first;
+        // Todo
+    }
+
     @Input()
     public marks: [Object];
 
@@ -153,7 +152,7 @@ export class RdkSlider implements OnInit {
             }
 
             if(this.range) {
-                // [this._handleValue1, this._handleValue2]
+                //this._handleValue1 + "," + this._handleValue2
                 this.valueChange.emit();
             } else {
                 this.valueChange.emit(value);
