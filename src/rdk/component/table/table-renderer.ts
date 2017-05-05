@@ -65,7 +65,7 @@ export class TableCellCheckbox extends TableCellRenderer implements OnInit {
         super();
     }
 
-    private _checkboxState: CheckboxState;
+    public _checkboxState: CheckboxState;
 
     private _setHeadCheckboxState() {
         if (!this.tableRendererService.checkboxStates.find(checkboxState => checkboxState.checked == false)) {

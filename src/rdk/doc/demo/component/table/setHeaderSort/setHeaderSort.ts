@@ -22,18 +22,18 @@ export class TableSetHeaderSortDemoComponent {
 
     private _columns: ColumnDefine[] = [
         {
-            target: 'name',
-            header: {
-                sortable:true,
-                sortAs: SortAs.string,
-                defaultSortOrder: SortOrder.des,
-            }
-        },{
             target: 'salary',
             header: {
                 sortable:true,
                 sortAs: SortAs.number,
                 defaultSortOrder: SortOrder.asc,
+            }
+        },{
+            target: 'name',
+            header: {
+                sortable:true,
+                sortAs: SortAs.string,
+                defaultSortOrder: SortOrder.des,
             }
         }];
 }
