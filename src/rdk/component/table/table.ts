@@ -753,7 +753,7 @@ export class TableCellBasic implements AfterViewInit {
      * */
     protected rendererFactory(renderer: Type<TableCellRenderer>|TemplateRef<any>): ComponentRef<TableCellRenderer>|EmbeddedViewRef<any> {
         if(renderer instanceof TemplateRef){
-            return this.rendererHost.viewContainerRef.createEmbeddedView(renderer, {cellInfo: this});
+            return this.rendererHost.viewContainerRef.createEmbeddedView(renderer, {context: this});
         }else{
             let componentFactory = this.componentFactoryResolver.resolveComponentFactory(renderer);
             let componentRef = this.rendererHost.viewContainerRef.createComponent(componentFactory);
