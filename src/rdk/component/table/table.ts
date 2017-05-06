@@ -354,9 +354,8 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     private _dataDefaultSort() {
         if (this._headSettings) {
             //默认按第一个排序
-            let headSetting = this._headSettings.find(headSetting =>
-                headSetting.sortable
-                && (headSetting.defaultSortOrder == SortOrder.asc || headSetting.defaultSortOrder == SortOrder.des)
+            let headSetting = this._headSettings.find(headSetting => headSetting.sortable &&
+                (headSetting.defaultSortOrder == SortOrder.asc || headSetting.defaultSortOrder == SortOrder.des)
             );
             if (headSetting) {
                 this.data.sort(headSetting.sortAs, headSetting.defaultSortOrder, headSetting.field);
@@ -773,7 +772,9 @@ export class TableCellBasic implements AfterViewInit {
      * */
     protected rendererFactory(renderer: Type<TableCellRenderer> | TemplateRef<any>): ComponentRef<TableCellRenderer> | EmbeddedViewRef<any> {
         if (renderer instanceof TemplateRef) {
-            return this.rendererHost.viewContainerRef.createEmbeddedView(renderer, {cellInfo: this});
+            return this.rendererHost.viewContainerRef.createEmbeddedView(renderer, {
+                context: {cellData: this.cellData, row: this.row, column: this.column}
+            });
         } else {
             let componentFactory = this.componentFactoryResolver.resolveComponentFactory(renderer);
             let componentRef = this.rendererHost.viewContainerRef.createComponent(componentFactory);
@@ -917,7 +918,6 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
      * */
     protected insertEditorRenderer() {
         this.editorRendererRef = this.rendererFactory(this.editorRenderer);
-
         if (this.editorRendererRef instanceof ComponentRef) {
             this._editorRendererSubscribe(this.editorRendererRef.instance);
             this._cacheRenderer(null, this.editorRendererRef.instance);

@@ -9,12 +9,12 @@ import {Http} from "@angular/http";
     encapsulation: ViewEncapsulation.None
 })
 export class TableRendererOfTemplateRefDemoComponent implements AfterContentInit{
-    outerValue: string = '&outer';
     @ViewChild('headIcon') headIcon: TemplateRef<any>;
     @ViewChild('checkboxRenderer') checkboxRenderer: TemplateRef<any>;
     @ViewChild('cellOption') cellOption: TemplateRef<any>;
 
     tableData: TableData;
+    nativeValue: string = ' - native';
 
     private _columns: ColumnDefine[];
     private _additionalColumns: AdditionalColumnDefine[];
@@ -47,8 +47,8 @@ export class TableRendererOfTemplateRefDemoComponent implements AfterContentInit
         // ], ['f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7'], ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7']);
     }
 
-    handleClick(cellInfo){
-        alert(`row: ${cellInfo.row}, column: ${cellInfo.column}, rawColumn: ${cellInfo.field}, cellData: ${cellInfo.cellData}`)
+    handleClick(context){
+        alert(`row: ${context.row}, column: ${context.column}, cellData: ${context.cellData}`)
     }
 
     ngAfterContentInit(){
