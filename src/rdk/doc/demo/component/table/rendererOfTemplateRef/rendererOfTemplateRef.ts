@@ -8,12 +8,12 @@ import {AdditionalColumnDefine, ColumnDefine} from "../../../../../component/tab
     encapsulation: ViewEncapsulation.None
 })
 export class TableRendererOfTemplateRefDemoComponent implements AfterContentInit{
-    outerValue: string = '&outer';
     @ViewChild('headIcon') headIcon: TemplateRef<any>;
     @ViewChild('checkboxRenderer') checkboxRenderer: TemplateRef<any>;
     @ViewChild('cellOption') cellOption: TemplateRef<any>;
 
     tableData: TableData;
+    nativeValue: string = ' - native';
 
     private _columns: ColumnDefine[];
     private _additionalColumns: AdditionalColumnDefine[];
@@ -42,7 +42,7 @@ export class TableRendererOfTemplateRefDemoComponent implements AfterContentInit
     }
 
     handleClick(context){
-        alert(`row: ${context.row}, column: ${context.column}, rawColumn: ${context.field}, cellData: ${context.cellData}`)
+        alert(`row: ${context.row}, column: ${context.column}, cellData: ${context.cellData}`)
     }
 
     ngAfterContentInit(){
