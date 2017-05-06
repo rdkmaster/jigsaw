@@ -45,6 +45,7 @@ import {TableAddIDWithPagingComponent} from "./addIDWithPaging/addIDWithPaging";
 import {TableDataWithPopupDemoComponent} from "./withPopup/withPopup";
 import {RdkDialogModule} from "../../../../component/dialog/dialog";
 import {PopupService} from "../../../../service/popup.service";
+import {TableRendererOfTemplateRefDemoComponent} from "./rendererOfTemplateRef/rendererOfTemplateRef";
 
 const tableDemoRoutes = [
     {
@@ -115,6 +116,9 @@ const tableDemoRoutes = [
         path: 'withPopup', component: TableDataWithPopupDemoComponent
     },
     {
+        path: 'rendererOfTemplateRef', component: TableRendererOfTemplateRefDemoComponent
+    },
+    {
         path: '**', //fallback router must in the last
         component: TableBasicDemoComponent
     }
@@ -157,7 +161,8 @@ const tableDemoRoutes = [
         TableAddCheckboxColumnDemoComponent,
         TableDataChangeDemoComponent,
         TableAddIDWithPagingComponent,
-        TableDataWithPopupDemoComponent
+        TableDataWithPopupDemoComponent,
+        TableRendererOfTemplateRefDemoComponent
     ],
     imports: [
         RouterModule.forChild(tableDemoRoutes),

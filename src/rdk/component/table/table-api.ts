@@ -1,4 +1,4 @@
-import {Input, Type, Output, EventEmitter} from "@angular/core";
+import {Input, Type, Output, EventEmitter, TemplateRef} from "@angular/core";
 import {TableData} from "../../core/data/table-data";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 
@@ -55,7 +55,7 @@ type TargetFun = (field: string, index: number) => boolean;
 
 type Header = {
     text?: string,
-    renderer?: Type<TableCellRenderer>,
+    renderer?: Type<TableCellRenderer>|TemplateRef<any>,
     class?: string,
     sortable?: boolean,
     sortAs?: SortAs,
@@ -63,7 +63,7 @@ type Header = {
 }
 
 type Cell = {
-    renderer?: Type<TableCellRenderer>,
+    renderer?: Type<TableCellRenderer>|TemplateRef<any>,
     class?: string,
     editable?: boolean,
     editorRenderer?: Type<TableCellRenderer>
