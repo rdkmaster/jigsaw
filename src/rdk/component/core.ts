@@ -1,5 +1,5 @@
 
-import {Directive, ViewContainerRef} from "@angular/core";
+import {Directive, OnInit, ViewContainerRef} from "@angular/core";
 
 @Directive({
     selector: '[rdk-renderer-host]',
@@ -19,7 +19,7 @@ export interface IRDKComponent {
     maxHeight: string;
 }
 
-export abstract class AbstractRDKComponent implements IRDKComponent {
+export abstract class AbstractRDKComponent implements IRDKComponent, OnInit {
 
     @Input()
     public basicClass: string;
@@ -52,6 +52,12 @@ export abstract class AbstractRDKComponent implements IRDKComponent {
 
     public set maxHeight(value: string) {
         this._maxHeight =  CommonUtils.getCssValue(value);
+    }
+
+    //TODO 所有组件都使用这个属性判断是否初始化好
+    protected initialized:boolean = false;
+    ngOnInit() {
+        this.initialized = true;
     }
 }
 

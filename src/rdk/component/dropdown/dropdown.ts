@@ -16,11 +16,8 @@ import {
     ElementRef
 } from '@angular/core';
 import {PopupService, PopupDisposer} from "rdk/service/popup.service";
+import {AbstractRDKComponent} from "../core";
 
-export enum DropDownMode {
-    single,
-    multiple
-}
 
 export enum DropDownTrigger {
     click,
@@ -33,43 +30,30 @@ export enum DropDownTrigger {
     styleUrls: ['dropdown.scss'],
     // encapsulation: ViewEncapsulation.None
 })
-export class RdkDropDown implements OnInit, OnDestroy {
+export class RdkDropDown extends AbstractRDKComponent implements OnDestroy {
+    @ViewChild("dropDownContainer", {read: ElementRef})
+    private _dropDownContainer: ElementRef;
+    private _disposePopup: PopupDisposer;
+    private _removeClickHandler:Function;
+
     constructor(private _render: Renderer2,
-                private _popupService: PopupService,
-                private _elementRef: ElementRef) {
+                private _popupService: PopupService) {
+        super();
     }
 
-    private _value: string | Array<any>;
+    private _value: Array<{[index:string]:any}>;
 
     @Input()
-    public get value() {
+    public get value():Array<{[index:string]:any}> {
         return this._value;
     }
 
-    public set value(value) {
-        this._handleShowValue(value);
+    public set value(value:Array<{[index:string]:any}>) {
         this._value = value;
     }
 
     @Input()
     public labelField: string = 'label';
-
-    private _showValue: string | Array<any>[] = '';
-
-    private _isArray: boolean = false;
-
-    private _handleShowValue(value) {
-        if (typeof value === 'string') {
-            this._showValue = value;
-        } else if (value instanceof Array) { // 数组或者对象.
-            this._showValue = '';
-            this._isArray = true;
-        } else  if (value instanceof Object){ // 对象
-            this._showValue = value[this.labelField];
-        }else{
-            return;
-        }
-    }
 
     // TODO 对外事件，通过popup暴露不了
     /**
@@ -85,9 +69,6 @@ export class RdkDropDown implements OnInit, OnDestroy {
     @Input()
     public disabled: boolean;
 
-    @Input()
-    public mode: DropDownMode = DropDownMode.single;
-
     public _trigger: DropDownTrigger = DropDownTrigger.click;
     @Input()
     public get trigger() {
@@ -95,7 +76,6 @@ export class RdkDropDown implements OnInit, OnDestroy {
     }
 
     public set trigger(value: DropDownTrigger) {
-
         this._trigger = value;
     }
 
@@ -110,10 +90,7 @@ export class RdkDropDown implements OnInit, OnDestroy {
         this._dropDownWidth = width;
     }
 
-    private _PopupDisposer: PopupDisposer;
-    @ViewChild("dropdowntcontent", {read: ElementRef}) dropdowntcontent: ElementRef;
     private _contentTemplateRef: TemplateRef<any>;
-
     @Input()
     public get pane(): TemplateRef<any> {
         return this._contentTemplateRef;
@@ -124,67 +101,65 @@ export class RdkDropDown implements OnInit, OnDestroy {
 
     }
 
-    private _hasContent: boolean = false;
     @Input()
-    public get hasContent() {
-        return this._hasContent;
+    public get open():boolean {
+        return !!this._removeClickHandler && !!this._disposePopup;
     }
 
-    public set hasContent(value: boolean) {
-        this._hasContent = value;
+    public set open(value: boolean) {
+        if (value == this.open) {
+            return;
+        }
+        if (!this.initialized) {
+            console.warn('not initialized yet, call this later!');
+            return;
+        }
+        if (value) {
+            this._openDropDown();
+        } else {
+            this._closeDropDown();
+        }
     }
 
-    private _toggleClick() {
+    private _openDropDown():void {
+        if (this.open) {
+            return;
+        }
+
+        //TODO 阻止click冒泡事件可以实现autoCloseDropDown这一属性
+        this._removeClickHandler = this._render.listen('window', 'click', () => this._closeDropDown());
+
+        //TODO 把对弹出内容尺寸的计算前置到这里
+        this._disposePopup = this._popupService.popup(this._contentTemplateRef, null, this._dropDownWidth, this._dropDownContainer, this._render);
+    }
+
+    private _closeDropDown():void {
+        if (this._removeClickHandler) {
+            this._removeClickHandler();
+            this._removeClickHandler = null;
+        }
+        if (this._disposePopup) {
+            this._disposePopup();
+            this._disposePopup = null;
+        }
+    }
+
+    //TODO 后续再优化：所有组件，凡是html模板中用到的变量&方法，都以 _$ 开头。
+    //TODO 因为上次用--prod编译的时候，好像报在html模板中不能用private变量，因此用下划线开头。
+    //TODO 对于那些变量&方法，即在html模板中用到，又需要暴露给应用的，则额外再定义一个非 _$ 开头的变量or方法暴露出去。
+    private _$openDropDownByClick() {
         event.preventDefault();
         event.stopPropagation();
-        this._checkContent();
-        this._hasContent = !this._hasContent;
-        console.log(this._hasContent)
+        this._openDropDown();
     }
 
-    public _checkContent() {
-        if (this._hasContent == true && typeof this._PopupDisposer === "function") {
-            this._PopupDisposer();
-        } else if (this._hasContent == true && typeof this._PopupDisposer !== "function") {
-            this._PopupDisposer = this._popupService.popup(this._contentTemplateRef, null, this._dropDownWidth, this.dropdowntcontent, this._render);
-        } else if (this._hasContent == false && typeof this._PopupDisposer === "function") {
-            this._PopupDisposer();
-            this._PopupDisposer = this._popupService.popup(this._contentTemplateRef, null, this._dropDownWidth, this.dropdowntcontent, this._render);
-        } else if (this._hasContent == false && typeof this._PopupDisposer !== "function") {
-            this._PopupDisposer = this._popupService.popup(this._contentTemplateRef, null, this._dropDownWidth, this.dropdowntcontent, this._render);
-        }
-    }
-
-    private _hoverHandle(): void {
+    private _$openDropDownByHover(): void {
         if (this._trigger === DropDownTrigger.click) return;
-        this._checkContent();
-        this._hasContent = !this._hasContent;
-    }
-
-    public open() {
-        this._hasContent = true;
-    }
-
-    public close() {
-        this._hasContent = false;
-    }
-
-    ngOnInit() {
-        //TODO 阻止click冒泡事件可以实现autoCloseDropDown这一属性
-        this._render.listen('window', 'click', () => {
-            if (this._hasContent == true) {
-                this._checkContent();
-                this._hasContent = !this._hasContent;
-            }
-        })
-
-        if (this._hasContent) {
-            this._PopupDisposer = this._popupService.popup(this._contentTemplateRef, null, this._dropDownWidth, this.dropdowntcontent, this._render);
-            this._hasContent = !this._hasContent;
-        }
+        // this._checkContent();
+        // this._isOpen = !this._isOpen;
     }
 
     ngOnDestroy() {
-        if (this._PopupDisposer) this._PopupDisposer();
+        if (this._disposePopup) this._disposePopup();
     }
 }

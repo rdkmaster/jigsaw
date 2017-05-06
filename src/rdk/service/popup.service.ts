@@ -86,16 +86,16 @@ export class PopupService {
      * return 弹框的id
      * */
     public popup(what: Type<IPopupable>, options?: PopupOptions, initData?: any): PopupDisposer;
-    public popup(what: TemplateRef<any>, options?: PopupOptions, initData?: any, context?: any, _render?: Renderer2): PopupDisposer;
-    public popup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any, context?: any, _render?: Renderer2): PopupDisposer {
+    public popup(what: TemplateRef<any>, options?: PopupOptions, initData?: any, context?: any, render?: Renderer2): PopupDisposer;
+    public popup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any, context?: any, render?: Renderer2): PopupDisposer {
         let disposer: PopupDisposer;
         let ref: PopupRef;
         if (what instanceof TemplateRef) {
             ref = this._viewContainerRef.createEmbeddedView(what, context);
-            if(context && _render){
+            if(context && render){
                 let left = (context.nativeElement.offsetLeft) + 'px';
                 let top = (context.nativeElement.offsetTop + context.nativeElement.offsetHeight ) + 'px';
-                let value= typeof initData === 'string' ? initData : initData + '';
+                let value = typeof initData === 'string' ? initData : initData + '';
                 const match = value ? value.match(/^\s*(\d+)(%|px)\s*$/) : null;
                 let width;
                 if (match && match[2] == '%') {
@@ -104,10 +104,10 @@ export class PopupService {
                     width = context.nativeElement.offsetWidth + 'px';
                 }
 
-                _render.setStyle(ref.rootNodes[1], 'position', 'absolute');
-                _render.setStyle(ref.rootNodes[1], 'top', top);
-                _render.setStyle(ref.rootNodes[1], 'left', left);
-                _render.setStyle(ref.rootNodes[1], 'width', width);
+                render.setStyle(ref.rootNodes[1], 'position', 'absolute');
+                render.setStyle(ref.rootNodes[1], 'top', top);
+                render.setStyle(ref.rootNodes[1], 'left', left);
+                render.setStyle(ref.rootNodes[1], 'width', width);
             }
 
 

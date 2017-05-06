@@ -2,21 +2,12 @@
  * Created by 10177553 on 2017/4/13.
  */
 
-import {Component, OnInit, ChangeDetectorRef, ViewChild, Renderer2, ElementRef} from '@angular/core';
-import {DropDownMode, RdkDropDown} from "../../../../../component/dropdown/dropdown";
+import {Component, OnInit, Renderer2, ElementRef} from '@angular/core';
 
 @Component({
     templateUrl: 'dropDownWidth.html',
 })
 export class DropDownWidthDemo implements OnInit {
-
-    constructor(private _render: Renderer2,
-                private _elementRef: ElementRef) {
-    }
-
-
-    mode = DropDownMode.multiple;
-
     public dropDownWidth="120%";
     public selectedCity = [{label: "北京"}];
 
@@ -34,25 +25,8 @@ export class DropDownWidthDemo implements OnInit {
     ];
 
     ngOnInit() { }
-    public clickProcess(event:Event){
+    public preventAutoHide(event:Event){
         event.stopPropagation();
         event.preventDefault();
-    }
-    public basicSelectChange() {
-         setTimeout(() => {
-             console.log(parseFloat(this.dropDownWidth));
-             let value= typeof this.dropDownWidth === 'string' ? this.dropDownWidth : this.dropDownWidth + '';
-             const match = value ? value.match(/^\s*(\d+)(%|px)\s*$/) : null;
-             let width;
-             if (match && match[2] == '%') {
-                 width = parseInt(match[1]) / 100 * this._elementRef.nativeElement.querySelector('.drop-down-father').offsetWidth  + 'px';
-             } else {
-                 width = this._elementRef.nativeElement.querySelector('.drop-down-father').offsetWidth + 'px';
-             }
-
-             if(document.querySelector('rdk-tile-select')){
-                 this._render.setStyle(document.querySelector('.drop-down-child'),'width',width)
-             };
-         }, 0)
     }
 }

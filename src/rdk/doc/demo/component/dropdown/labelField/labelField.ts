@@ -3,7 +3,7 @@
  */
 
 import {Component, OnInit, ChangeDetectorRef, ViewChild} from '@angular/core';
-import {DropDownMode, RdkDropDown} from "../../../../../component/dropdown/dropdown";
+import {RdkDropDown} from "../../../../../component/dropdown/dropdown";
 
 @Component({
     templateUrl: 'labelField.html',
@@ -11,9 +11,6 @@ import {DropDownMode, RdkDropDown} from "../../../../../component/dropdown/dropd
 export class DropDownLabelFieldDemo implements OnInit {
 
     constructor() { }
-
-    mode = DropDownMode.multiple;
-
 
     public selectedCity = [{name: "北京"}];
     public labelField="name";

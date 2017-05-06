@@ -2,8 +2,7 @@
  * Created by 10177553 on 2017/4/13.
  */
 
-import {Component, OnInit, ChangeDetectorRef, ViewChild, ViewContainerRef, ElementRef, Renderer2} from '@angular/core';
-import {DropDownMode, RdkDropDown} from "../../../../../component/dropdown/dropdown";
+import {Component, OnInit, ViewChild, ElementRef, Renderer2} from '@angular/core';
 
 @Component({
     templateUrl: 'autoWidth.html',
@@ -15,8 +14,6 @@ export class DropDownAutoWidthDemo implements OnInit {
 
     @ViewChild("dropcontent", {read: ElementRef}) dropcontent: ElementRef;
 
-
-    public mode = DropDownMode.multiple;
     public selectedCity = [{label: "北京"}];
 
     private citys = [
