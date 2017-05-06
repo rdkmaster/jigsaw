@@ -466,8 +466,17 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         let index = this._getIndexInHeadSettings(this._getPosInField(target));
 
         //插入列头
-        let headSetting = <HeadSetting>CommonUtils.shallowCopy(this._headSettings[index]);
-        headSetting.visible = true;
+        let headSetting: HeadSetting = {
+            cellData: this._headSettings[index].cellData,
+            width: null,
+            visible: true,
+            renderer: null,
+            class: '',
+            sortable: false,
+            sortAs: SortAs.string,
+            defaultSortOrder: SortOrder.default,
+            field: this._headSettings[index].field
+        };
         this._insertHeadSetting(pos, additionalColumn, headSetting);
     }
 
@@ -479,8 +488,17 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
 
         //插入列
         this._cellSettings.forEach(cellSettings => {
-            let cellSetting = <CellSetting>CommonUtils.shallowCopy(cellSettings[index]);
-            cellSetting.visible = true;
+            let cellSetting: CellSetting = {
+                cellData: cellSettings[index].cellData,
+                visible: true,
+                renderer: null,
+                class: '',
+                editable: false,
+                editorRenderer: null,
+                group: false,
+                field: cellSettings[index].field,
+                rowSpan: 1
+            };
             this._insertCellSetting(pos, additionalColumn, cellSetting, cellSettings);
         })
     }
