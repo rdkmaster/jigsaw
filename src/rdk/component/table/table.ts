@@ -15,7 +15,6 @@ import {
 import {RdkScrollBarModule} from "../scrollbar/scrollbar";
 import {RdkScrollBar} from "../scrollbar/scrollbar";
 import {SortAs, SortOrder, CallbackRemoval} from "../../core/data/component-data";
-import {CommonUtils} from "../../core/utils/common-utils";
 import {AffixUtils} from "../../core/utils/internal-utils";
 import {TableCheckboxService} from "./table-service";
 import {DefaultCellRenderer} from "./table-renderer";
@@ -164,6 +163,11 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
         super()
+    }
+
+    public rendererList: any[] = [];
+    public getRenderers(column){
+        return this.rendererList.filter(renderer => renderer.column == column);
     }
 
     private _beforeRefresh() {
@@ -853,21 +857,59 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
         });
     }
 
+    private _cacheRenderer(renderer: TableCellRenderer, editorRenderer: TableCellRenderer){
+        let rendererInfo = this._rdkTable.rendererList.find(renderer => renderer.row == this.row
+                            && renderer.column == this.column);
+        if (rendererInfo) {
+            rendererInfo.renderer = renderer;
+            rendererInfo.editorRenderer = editorRenderer;
+        } else {
+            this._rdkTable.rendererList.push({
+                row: this.row,
+                column: this.column,
+                rawColumn: this.field,
+                renderer: renderer,
+                editorRenderer: editorRenderer
+            })
+        }
+    }
+
+    private _rendererSubscribe(renderer: TableCellRenderer): void{
+        renderer.cellDataChange.subscribe(cellData => {
+            if (cellData === undefined || cellData === null) {
+                //cellData === '' 认为是合法值
+                return;
+            }
+            if (this.cellData != cellData) {
+                this._emitDataChange(cellData);
+            }
+        });
+    }
+
+    private _editorRendererSubscribe(renderer: TableCellRenderer){
+        renderer.cellDataChange.subscribe(cellData => {
+            if (cellData === undefined || cellData === null) {
+                //cellData === '' 认为是合法值
+                return;
+            }
+            if (this.cellData != cellData) {
+                this._emitDataChange(cellData);
+            }
+            this.rendererHost.viewContainerRef.clear();
+            this.insertRenderer();
+            this._onClick();
+            this._rdkTable._asyncAlignHead();
+        });
+    }
+
     /*
      * 插入渲染器
      * */
     protected insertRenderer() {
         super.insertRenderer();
         if (this.rendererRef instanceof ComponentRef) {
-            this.rendererRef.instance.cellDataChange.subscribe(cellData => {
-                if (cellData === undefined || cellData === null) {
-                    //cellData === '' 认为是合法值
-                    return;
-                }
-                if (this.cellData != cellData) {
-                    this._emitDataChange(cellData);
-                }
-            });
+            this._rendererSubscribe(this.rendererRef.instance);
+            this._cacheRenderer(this.rendererRef.instance, null);
         }
     }
 
@@ -877,19 +919,8 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
     protected insertEditorRenderer() {
         this.editorRendererRef = this.rendererFactory(this.editorRenderer);
         if (this.editorRendererRef instanceof ComponentRef) {
-            this.editorRendererRef.instance.cellDataChange.subscribe(cellData => {
-                if (cellData === undefined || cellData === null) {
-                    //cellData === '' 认为是合法值
-                    return;
-                }
-                if (this.cellData != cellData) {
-                    this._emitDataChange(cellData);
-                }
-                this.rendererHost.viewContainerRef.clear();
-                this.insertRenderer();
-                this._onClick();
-                this._rdkTable._asyncAlignHead();
-            });
+            this._editorRendererSubscribe(this.editorRendererRef.instance);
+            this._cacheRenderer(null, this.editorRendererRef.instance);
         }
 
         if (this._goEditCallback) {

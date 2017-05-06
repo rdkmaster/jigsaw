@@ -1,1 +1,9 @@
 <rdk-table [data]="tableData" [columnDefines]="_columns" ></rdk-table>
+
+<ng-template #jobCellRender>
+    <div [ngSwitch]="cellData" style="font-size: 16px;">
+        <span *ngSwitchCase="'Accountant'" class="fa fa-money"></span>
+        <span *ngSwitchCase="'System Architect'" class="fa fa-universal-access"></span>
+        <span *ngSwitchCase="'Coder'" class="fa fa-file-code-o"></span>
+    </div>
+</ng-template>

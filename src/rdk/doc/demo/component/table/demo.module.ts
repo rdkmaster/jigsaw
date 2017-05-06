@@ -17,15 +17,14 @@ import {RdkCheckBoxModule} from "../../../../component/checkbox/index";
 import {RdkPaginationModule} from "../../../../component/pagination/pagination";
 import {RdkInputModule} from "../../../../component/input/input";
 import {TablePerformsDemoComponent} from "./performs/performs";
-import {TableHeadRender,
+import {
     TableSetHeaderRenderDemoComponent
 } from "./setHeaderRender/setHeaderRender";
 import {TableSetHeaderClassDemoComponent} from "./setHeaderClass/setHeaderClass";
 import {TableColumnSetWidthDemoComponent} from "./setColumnWidth/setColumnWidth";
 import {TableColumnSetVisibleDemoComponent} from "./setColumnVisible/setColumnVisible";
 import {TableSetHeaderSortDemoComponent} from "./setHeaderSort/setHeaderSort";
-import {
-    JobRenderer, TableSetCellRenderDemoComponent
+import {TableSetCellRenderDemoComponent
 } from "./setCellRender/setCellRender";
 import {TableSetCellClassDemoComponent} from "./setCellClass/setCellClass";
 import {TableColumnGroupDemoComponent} from "./setColumnGroup/setColumnGroup";
@@ -138,13 +137,11 @@ const tableDemoRoutes = [
         TableCellOption,
         TableCellNum,
         TableCellEditor,
-        TableHeadRender,
         TableColumnSetWidthDemoComponent,
         TableColumnSetVisibleDemoComponent,
         TableSetHeaderRenderDemoComponent,
         TableSetHeaderClassDemoComponent,
         TableSetHeaderSortDemoComponent,
-        JobRenderer,
         TableSetCellRenderDemoComponent,
         TableSetCellClassDemoComponent,
         TableColumnGroupDemoComponent,
@@ -184,8 +181,6 @@ const tableDemoRoutes = [
         TableCellOption,
         TableCellNum,
         TableCellEditor,
-        TableHeadRender,
-        JobRenderer,
         MyTableCell,
         MyTableHeadOption,
         MyTableCellOption,
