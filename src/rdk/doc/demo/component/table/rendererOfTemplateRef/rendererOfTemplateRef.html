@@ -5,8 +5,11 @@
            [additionalColumnDefines]="_additionalColumns"
            (dataChange)="onCellChange($event)"></rdk-table>
 
+<!--
+    let-context="context" 声明了context，context的结构是 {cellData: string|number, row:number, column:number}
+-->
 <ng-template #headIcon let-context="context">
-    <span class="fa fa-bicycle"></span><span>{{context.cellData}}</span><span>{{outerValue}}</span>
+    <span class="fa fa-bicycle"></span><span>{{context.cellData}}</span><span>{{this.outerValue}}</span>
 </ng-template>
 
 <ng-template #checkboxRenderer let-context="context">
@@ -14,5 +17,5 @@
 </ng-template>
 
 <ng-template #cellOption let-context="context">
-    <a (click)="handleClick(context)" href="javascript:;">修改</a> <a (click)="handleClick(context)" href="javascript:;">删除</a>
+    <a (click)="this.handleClick(context)" href="javascript:;">修改</a> <a (click)="this.handleClick(context)" href="javascript:;">删除</a>
 </ng-template>
