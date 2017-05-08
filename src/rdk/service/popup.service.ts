@@ -21,6 +21,7 @@ export class PopupOptions {
     pos?: PopupPosition; //控制弹出对象的左上角位置，下面2者选其一。
     posOffset?: PopupPositionOffset;
     posType?: PopupPositionType;
+    size?: { width: number, height: number }
 }
 
 export type PopupPosition = PopupPoint | ElementRef;
@@ -92,14 +93,16 @@ export class PopupService {
         let ref: PopupRef;
         if (what instanceof TemplateRef) {
             ref = this._viewContainerRef.createEmbeddedView(what, context);
-            if(context && render){
+            disposer = this._getDisposer(ref);
+
+            if (context && render) {
                 let left = (context.nativeElement.offsetLeft) + 'px';
                 let top = (context.nativeElement.offsetTop + context.nativeElement.offsetHeight ) + 'px';
                 let value = typeof initData === 'string' ? initData : initData + '';
                 const match = value ? value.match(/^\s*(\d+)(%|px)\s*$/) : null;
                 let width;
                 if (match && match[2] == '%') {
-                    width = parseInt(match[1]) / 100 * context.nativeElement.offsetWidth  + 'px';
+                    width = parseInt(match[1]) / 100 * context.nativeElement.offsetWidth + 'px';
                 } else {
                     width = context.nativeElement.offsetWidth + 'px';
                 }
@@ -109,10 +112,6 @@ export class PopupService {
                 render.setStyle(ref.rootNodes[1], 'left', left);
                 render.setStyle(ref.rootNodes[1], 'width', width);
             }
-
-
-            disposer = this._getDisposer(ref);
-
         } else {
             const factory = this._cfr.resolveComponentFactory(what);
             ref = this._viewContainerRef.createComponent(factory);

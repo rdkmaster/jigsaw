@@ -15,7 +15,7 @@ import {
     TemplateRef,
     ElementRef
 } from '@angular/core';
-import {PopupService, PopupDisposer} from "rdk/service/popup.service";
+import {PopupService, PopupDisposer, PopupOptions, PopupPositionType} from "rdk/service/popup.service";
 import {AbstractRDKComponent} from "../core";
 
 
@@ -61,7 +61,11 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy {
      * @type {EventEmitter<string|Array<any>>}
      */
     @Output()
-    public change = new EventEmitter<string | Array<any>>(); // 双向绑定
+    public change = new EventEmitter<any>(); // 双向绑定
+
+    private _$tagClickHandler(item):void {
+        this.change.emit(item);
+    }
 
     @Input()
     public placeholder: string;
@@ -130,7 +134,13 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy {
         this._removeClickHandler = this._render.listen('window', 'click', () => this._closeDropDown());
 
         //TODO 把对弹出内容尺寸的计算前置到这里
-        this._disposePopup = this._popupService.popup(this._contentTemplateRef, null, this._dropDownWidth, this._dropDownContainer, this._render);
+        const option:PopupOptions = {
+            pos: this._dropDownContainer, posType: PopupPositionType.absolute,
+            posOffset: {
+                top: this._dropDownContainer.nativeElement.offsetHeight
+            }
+        };
+        this._disposePopup = this._popupService.popup(this._contentTemplateRef, option, this._dropDownWidth, this._dropDownContainer, this._render);
     }
 
     private _closeDropDown():void {
@@ -160,6 +170,9 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy {
     }
 
     ngOnDestroy() {
-        if (this._disposePopup) this._disposePopup();
+        if (this._disposePopup) {
+            this._disposePopup();
+            this._disposePopup = null;
+        }
     }
 }

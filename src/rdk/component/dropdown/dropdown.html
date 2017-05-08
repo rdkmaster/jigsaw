@@ -6,7 +6,7 @@
     <div class="rdk-drop-down-selection" (click)="_$openDropDownByClick()">
         <div class="rdk-drop-down-selection-rendered">
             <div *ngIf="placeholder && (!value || value.length == 0)" class="rdk-drop-down-selection_placeholder">{{placeholder}}</div>
-            <rdk-tag [closable]="true" *ngFor="let item of value;">{{item[labelField]}}</rdk-tag>
+            <rdk-tag [closable]="true" (click)="_$tagClickHandler(item)" *ngFor="let item of value;">{{item[labelField]}}</rdk-tag>
         </div>
     </div>
     <!-- ?? 可能是个问题. 依赖了fontAwesome -->

@@ -2,14 +2,26 @@
  * Created by 10177553 on 2017/4/13.
  */
 
-import {Component, OnInit, Renderer2, ElementRef} from '@angular/core';
+import {Component, OnInit, Renderer2, ElementRef, ViewChild, AfterViewInit} from '@angular/core';
+import {RdkDropDown} from "../../../../../component/dropdown/dropdown";
 
 @Component({
     templateUrl: 'dropDownWidth.html',
 })
-export class DropDownWidthDemo implements OnInit {
+export class DropDownWidthDemo implements AfterViewInit {
     public dropDownWidth="120%";
     public selectedCity = [{label: "北京"}];
+
+    @ViewChild(RdkDropDown) dropDown:RdkDropDown;
+
+    constructor() {
+    }
+
+    ngAfterViewInit() {
+        this.dropDown.change.subscribe(data => {
+            console.log(data);
+        })
+    }
 
     private citys = [
         {label: "北京"},
@@ -24,7 +36,6 @@ export class DropDownWidthDemo implements OnInit {
         {label: "哈尔滨"}
     ];
 
-    ngOnInit() { }
     public preventAutoHide(event:Event){
         event.stopPropagation();
         event.preventDefault();
