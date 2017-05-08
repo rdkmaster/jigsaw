@@ -134,7 +134,6 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy {
         //TODO 阻止click冒泡事件可以实现autoCloseDropDown这一属性
         this._removeClickHandler = this._render.listen('window', 'click', () => this._closeDropDown());
 
-        //TODO 把对弹出内容尺寸的计算前置到这里
         const option:PopupOptions = {
             pos: this._dropDownContainer, posType: PopupPositionType.absolute,
             posOffset: {

@@ -98,14 +98,13 @@ export class PopupService {
         if (what instanceof TemplateRef) {
             ref = this._viewContainerRef.createEmbeddedView(what);
             disposer = this._getDisposer(ref);
-            let popupEl = ref.rootNodes.find(rootNode => rootNode instanceof HTMLElement);
+            let popupElement = ref.rootNodes.find(rootNode => rootNode instanceof HTMLElement);
             if (options) {
-                console.log(ref.rootNodes);
                 let posType: string = options.modal ? 'fixed' : PopupService.getPositionType(options.posType);
-                let position = PopupService.getPositionValue(options, popupEl);
-                this._renderer.setStyle(popupEl, 'position', posType);
-                this._renderer.setStyle(popupEl, 'top', position.top);
-                this._renderer.setStyle(popupEl, 'left', position.left);
+                let position = PopupService.getPositionValue(options, popupElement);
+                this._renderer.setStyle(popupElement, 'position', posType);
+                this._renderer.setStyle(popupElement, 'top', position.top);
+                this._renderer.setStyle(popupElement, 'left', position.left);
                 //this._renderer.setStyle(popupEl, 'width', options.size.width);
             }
         } else {

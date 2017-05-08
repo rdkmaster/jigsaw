@@ -12,6 +12,7 @@ import {
 } from "@angular/core";
 
 import {ButtonInfo, IPopupable, PopupDisposer, PopupOptions, PopupService} from "../../service/popup.service";
+import {RdkDraggableModule} from "../draggable/draggable";
 
 import {fadeIn} from "../animations/fade-in";
 import {bubbleIn} from "../animations/bubble-in";
@@ -108,8 +109,9 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
     public buttons: ButtonInfo[];
     @Input()
     public title: string;
+    @Input()
+    public disposer: () => void;
 
-    public disposer: PopupDisposer;
     public initData: any;
     public options: PopupOptions;
 
@@ -163,24 +165,19 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
             this.renderer.setStyle(this.popupElement, 'width', this.width);
         }
 
-        this.setPosition();
-        this.onResize();
+        if(this.options){
+            this.setPosition();
+            this.onResize();
+        }
+
     }
 
     protected setPosition():void {
-        if (this.options.modal) {
-            //设置默认位置
-            const top = this.top ? this.top: (window.innerHeight / 2 - this.popupElement.offsetHeight / 2) + 'px';
-            this.renderer.setStyle(this.popupElement, 'top', top);
-            //弹框居中
-            this.renderer.setStyle(this.popupElement, 'left', (window.innerWidth / 2 - this.popupElement.offsetWidth / 2) + 'px');
-        } else {
-            let posType: string = PopupService.getPositionType(this.options.posType);
-            let position = PopupService.getPositionValue(this.options, this.popupElement);
-            this.renderer.setStyle(this.popupElement, 'position', posType);
-            this.renderer.setStyle(this.popupElement, 'top', position.top);
-            this.renderer.setStyle(this.popupElement, 'left', position.left);
-        }
+        let posType: string = this.options.modal ? 'fixed' : PopupService.getPositionType(this.options.posType);
+        let position = PopupService.getPositionValue(this.options, this.popupElement);
+        this.renderer.setStyle(this.popupElement, 'position', posType);
+        this.renderer.setStyle(this.popupElement, 'top', this.top ? this.top : position.top);
+        this.renderer.setStyle(this.popupElement, 'left', position.left);
     }
 
     protected onResize() {
@@ -189,8 +186,9 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
         }
         //resize居中
         this.removeResizeEvent = this.renderer.listen('window', 'resize', () => {
-            this.renderer.setStyle(this.popupElement, 'left', (window.innerWidth / 2 - this.popupElement.offsetWidth / 2) + 'px');
-            !this.top && this.renderer.setStyle(this.popupElement, 'top', (window.innerHeight / 2 - this.popupElement.offsetHeight / 2) + 'px');
+            let position = PopupService.getPositionValue(this.options, this.popupElement);
+            this.renderer.setStyle(this.popupElement, 'top', this.top ? this.top : position.top);
+            this.renderer.setStyle(this.popupElement, 'left', position.left);
         })
     }
 
@@ -222,12 +220,12 @@ export class RdkDialog extends AbstractDialogComponentBase {
     }
 
     protected getPopupElement(): HTMLElement {
-        return this.elementRef.nativeElement.querySelector('.rdk-dialog');
+        return this.elementRef.nativeElement;
     }
 }
 
 @NgModule({
-    imports: [CommonModule, RdkButtonModule],
+    imports: [CommonModule, RdkButtonModule, RdkDraggableModule],
     declarations: [RdkDialog],
     exports: [RdkDialog]
 })
