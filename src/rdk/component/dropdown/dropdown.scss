@@ -6,8 +6,8 @@ $rdk-dropDown: #{$rdk-prefix}-drop-down;
 :host {
 
     .#{$rdk-dropDown} {
-        min-width: 120px;
-        width: 240px;
+        min-width: 240px;
+        width: auto;
         display: inline-block;
         outline: none;
         position: relative;
@@ -30,7 +30,7 @@ $rdk-dropDown: #{$rdk-prefix}-drop-down;
 
             .#{$rdk-dropDown}-selection-rendered {
                 display: block;
-                margin: 0 7px;
+                margin: 0 20px 0 7px;
                 position: relative;
                 line-height: 30px;
                 height: 30px;
@@ -75,10 +75,6 @@ $rdk-dropDown: #{$rdk-prefix}-drop-down;
                 @include prefixer(transform, rotate(180deg));
             }
 
-            .#{$rdk-dropDown}-content {
-                @include opacity(1);
-                @include prefixer(transform, scale(1, 1));
-            }
         }
 
         .#{$rdk-dropDown}-arrow {

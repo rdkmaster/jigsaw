@@ -13,7 +13,10 @@ export class RdkDropDownDisable implements OnInit {
     changeDisabled() {
         this.disabled = true;
     }
-
+    public clickProcess(event:Event){
+        event.stopPropagation();
+        event.preventDefault();
+    }
     constructor() { }
 
     ngOnInit() { }

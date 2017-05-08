@@ -3,14 +3,21 @@
  */
 
 import {
-    Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter, Renderer2,
-    ChangeDetectorRef
+    Component,
+    OnInit,
+    OnDestroy,
+    ViewEncapsulation,
+    Input,
+    Output,
+    EventEmitter,
+    Renderer2,
+    ViewChild,
+    TemplateRef,
+    ElementRef
 } from '@angular/core';
+import {PopupService, PopupDisposer, PopupOptions, PopupPositionType} from "rdk/service/popup.service";
+import {AbstractRDKComponent} from "../core";
 
-export enum DropDownMode {
-    single,
-    multiple
-}
 
 export enum DropDownTrigger {
     click,
@@ -23,61 +30,42 @@ export enum DropDownTrigger {
     styleUrls: ['dropdown.scss'],
     // encapsulation: ViewEncapsulation.None
 })
-export class RdkDropDown implements OnInit {
-    constructor(private _render: Renderer2, private _changeDetector: ChangeDetectorRef) { }
+export class RdkDropDown extends AbstractRDKComponent implements OnDestroy {
+    @ViewChild("dropDownContainer", {read: ElementRef})
+    private _dropDownContainer: ElementRef;
+    private _disposePopup: PopupDisposer;
+    private _removeClickHandler:Function;
 
-    private _value: string| Array<any>;
+    constructor(private _render: Renderer2,
+                private _popupService: PopupService) {
+        super();
+    }
+
+    private _value: Array<{[index:string]:any}>;
 
     @Input()
-    public get value() { return this._value; }
+    public get value():Array<{[index:string]:any}> {
+        return this._value;
+    }
 
-    public set value(value) {
-        this._handleShowValue(value);
-
+    public set value(value:Array<{[index:string]:any}>) {
         this._value = value;
     }
 
     @Input()
     public labelField: string = 'label';
 
-    private _showValue: string| Array<any>[] = '';
-
-    private _isArray:boolean = false;
-
-    _handleShowValue(value) {
-        if(!value) return; // 控制直接返回;
-        console.info(value);
-        // 优化: 转换成字符串, 然后统一处理.
-        if(typeof value === 'string') {
-            this._showValue = value;
-        } else if(value instanceof Array) { // 数组或者对象.
-            this._showValue = '';
-            this._isArray = true;
-
-            value.forEach(item => {
-                if(typeof value === 'string') {
-                    this._showValue += item+',';
-                } else {
-                    this._showValue += item[this.labelField]+','
-                }
-            });
-        } else { // 对象
-            this._showValue = value[this.labelField];
-        }
-    }
-
-    // TODO 自定义展示的样式.
-
-    @Output()
-    public changeValue = new EventEmitter<string| Array<any>>(); // 双向绑定
-
-
+    // TODO 对外事件，通过popup暴露不了
     /**
      * 对外值变化事件.
      * @type {EventEmitter<string|Array<any>>}
      */
     @Output()
-    public change = this.changeValue;
+    public change = new EventEmitter<any>(); // 双向绑定
+
+    private _$tagClickHandler(item):void {
+        this.change.emit(item);
+    }
 
     @Input()
     public placeholder: string;
@@ -85,61 +73,106 @@ export class RdkDropDown implements OnInit {
     @Input()
     public disabled: boolean;
 
+    public _trigger: DropDownTrigger = DropDownTrigger.click;
     @Input()
-    public mode: DropDownMode = DropDownMode.single;
+    public get trigger() {
+        return this._trigger;
+    }
 
-    @Input()
-    public trigger: DropDownTrigger = DropDownTrigger.click;
+    public set trigger(value: DropDownTrigger) {
+        this._trigger = value;
+    }
 
     private _dropDownWidth: string;
 
     @Input()
-    public get dropDownWidth():string {
+    public get dropDownWidth(): string {
         return this._dropDownWidth;
     };
+
     public set dropDownWidth(width) {
         this._dropDownWidth = width;
     }
 
-    private _isOpened: boolean = false;
+    private _contentTemplateRef: TemplateRef<any>;
+    @Input()
+    public get pane(): TemplateRef<any> {
+        return this._contentTemplateRef;
+    };
 
-    private _toggleClick() {
-        event.preventDefault();
-        event.stopPropagation();
+    public set pane(ref: TemplateRef<any>) {
+        this._contentTemplateRef = ref;
 
-        this._isOpened = !this._isOpened;
     }
 
-    private _contentClick() {
-        event.preventDefault();
-        event.stopPropagation();
-
-        if(this.mode === DropDownMode.multiple) return;
-
-        this.close();
+    @Input()
+    public get open():boolean {
+        return !!this._removeClickHandler && !!this._disposePopup;
     }
 
-    private _hoverHandle(isHover): void {
-        if(this.trigger === DropDownTrigger.click) return;
-
-        if(isHover == 1) {
-            this._isOpened = true;
+    public set open(value: boolean) {
+        if (value == this.open) {
+            return;
+        }
+        if (!this.initialized) {
+            console.warn('not initialized yet, call this later!');
+            return;
+        }
+        if (value) {
+            this._openDropDown();
         } else {
-            this._isOpened = false;
+            this._closeDropDown();
         }
     }
 
-    public open() {
-        this._isOpened = true;
+    private _openDropDown():void {
+        if (this.open) {
+            return;
+        }
+
+        //TODO 阻止click冒泡事件可以实现autoCloseDropDown这一属性
+        this._removeClickHandler = this._render.listen('window', 'click', () => this._closeDropDown());
+
+        //TODO 把对弹出内容尺寸的计算前置到这里
+        const option:PopupOptions = {
+            pos: this._dropDownContainer, posType: PopupPositionType.absolute,
+            posOffset: {
+                top: this._dropDownContainer.nativeElement.offsetHeight
+            }
+        };
+        this._disposePopup = this._popupService.popup(this._contentTemplateRef, option, this._dropDownWidth, this._dropDownContainer, this._render);
     }
 
-    public close() {
-        this._isOpened = false;
+    private _closeDropDown():void {
+        if (this._removeClickHandler) {
+            this._removeClickHandler();
+            this._removeClickHandler = null;
+        }
+        if (this._disposePopup) {
+            this._disposePopup();
+            this._disposePopup = null;
+        }
     }
 
-    ngOnInit() {
-        this._render.listen('window', 'click',() => {
-            this.close();
-        })
+    //TODO 后续再优化：所有组件，凡是html模板中用到的变量&方法，都以 _$ 开头。
+    //TODO 因为上次用--prod编译的时候，好像报在html模板中不能用private变量，因此用下划线开头。
+    //TODO 对于那些变量&方法，即在html模板中用到，又需要暴露给应用的，则额外再定义一个非 _$ 开头的变量or方法暴露出去。
+    private _$openDropDownByClick() {
+        event.preventDefault();
+        event.stopPropagation();
+        this._openDropDown();
+    }
+
+    private _$openDropDownByHover(): void {
+        if (this._trigger === DropDownTrigger.click) return;
+        // this._checkContent();
+        // this._isOpen = !this._isOpen;
+    }
+
+    ngOnDestroy() {
+        if (this._disposePopup) {
+            this._disposePopup();
+            this._disposePopup = null;
+        }
     }
 }

@@ -1,6 +1,7 @@
 import {
     NgModule, Component, ContentChildren, QueryList, Input, Output, EventEmitter,
-    Optional, OnInit, forwardRef, AfterContentInit, ChangeDetectorRef, AfterViewInit, ViewChildren
+    Optional, OnInit, forwardRef, AfterContentInit, ChangeDetectorRef, AfterViewInit, ViewChildren, Renderer2,
+    ElementRef
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms'
@@ -14,12 +15,28 @@ import {InternalUtils} from '../../core/utils/internal-utils';
     templateUrl: 'tile-select.html',
     styleUrls: ['tile-select.scss'],
     host: {
-        '[style.width]': 'width'
+        // '[style.width]': 'width'
     }
 })
 export class RdkTileSelect extends AbstractRDKComponent implements OnInit, AfterViewInit {
     private _contentInit: boolean = false;
     private _selectedItems: any[] = [];
+
+    constructor(private _render: Renderer2,
+                private _elementRef: ElementRef) {
+        super();
+
+    }
+
+    public set width(value: string) {
+        this._width =  CommonUtils.getCssValue(value);
+        this._render.setStyle(this._elementRef.nativeElement,'width',this._width);
+    }
+
+    public set height(value: string) {
+        this._height =  CommonUtils.getCssValue(value);
+        this._render.setStyle(this._elementRef.nativeElement,'height',this._height);
+    }
 
     @Input()
     public get selectedItems(): any[] {
@@ -39,7 +56,7 @@ export class RdkTileSelect extends AbstractRDKComponent implements OnInit, After
     @Output() public selectedItemsChange = new EventEmitter<any[]>();
 
     //设置对象的标识
-    @Input() public trackItemBy: string|string[];
+    @Input() public trackItemBy: string | string[];
 
     //显示在界面上的属性名
     @Input() public labelField: string = 'label';
@@ -100,6 +117,8 @@ export class RdkTileSelect extends AbstractRDKComponent implements OnInit, After
 
     ngOnInit() {
         this.trackItemBy = InternalUtils.initTrackItemBy(<string>this.trackItemBy, this.labelField);
+        this._render.setStyle(this._elementRef.nativeElement,'width',this._width);
+        this._render.setStyle(this._elementRef.nativeElement,'height',this._height);
     }
 
     ngAfterViewInit() {

@@ -1,8 +1,12 @@
-<rdk-drop-down placeholder="请输入姓名~" [value]="selectedCity" [mode]="mode"
+<rdk-drop-down [pane]="dropcontent"
+               placeholder="请输入姓名~" [value]="selectedCity"
                (change)="change($event)" >
+</rdk-drop-down>
+<ng-template #dropcontent>
     <rdk-tile-select [(selectedItems)]="selectedCity" labelField="label"
                      [multipleSelect]="true" [searchable]="true"
                      [data]="citys"
-                     tileOptionWidth="100px">
+                     tileOptionWidth="100px"
+                     (click)="clickProcess($event)">
     </rdk-tile-select>
-</rdk-drop-down>
+</ng-template>

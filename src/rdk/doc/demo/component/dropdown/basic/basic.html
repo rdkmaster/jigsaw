@@ -1,6 +1,15 @@
-<rdk-drop-down placeholder="请输入姓名~" [value]=name.value>
-    <label for="">姓名: </label>
-    <input type="text" placeholder="请输入姓名~" #name/>
+<rdk-drop-down
+    [pane]="dropcontent"
+    [value]="inputValue">
 </rdk-drop-down>
-<br>
-<br>
+<ng-template #dropcontent>
+    <p class="notes">输入值是：{{inputValue}}</p>
+    <br/>
+    <br/>
+    <rdk-input
+        [(value)]="inputValue"
+        (click)="clickProcess($event)">
+    </rdk-input>
+
+</ng-template>
+

@@ -2,36 +2,33 @@
  * Created by 10177553 on 2017/4/13.
  */
 
-import {Component, OnInit, ChangeDetectorRef, ViewChild} from '@angular/core';
-import {DropDownMode, RdkDropDown} from "../../../../../component/dropdown/dropdown";
+import {Component, OnInit} from '@angular/core';
 
 @Component({
     template: `
-        <rdk-drop-down placeholder="请输入姓名~" #drop  class="drop" [mode]="mode" [value]="selectedCity">
-            <rdk-tile-select [(selectedItems)]="selectedCity" labelField="label"
-                 [multipleSelect]="true" [searchable]="true"
-                 [data]="citys" 
-                 tileOptionWidth="100px">
-            </rdk-tile-select>
+        <rdk-drop-down [pane]="dropcontent"
+                       placeholder="请输入姓名~"
+                       class="drop"
+                       [value]="selectedCity">
         </rdk-drop-down>
+        <ng-template #dropcontent>
+            <rdk-tile-select [(selectedItems)]="selectedCity"
+                             labelField="label"
+                             [multipleSelect]="true"
+                             [searchable]="true"
+                             [data]="citys"
+                             tileOptionWidth="100px">
+            </rdk-tile-select>
+        </ng-template>
     `,
-    styles: [`
-        .drop {
-            position: relative;
-            width: 240px;
-        }
-    `]
+    styles: []
 })
 export class DropDownMultipleDemo implements OnInit {
-    @ViewChild("drop") drop: RdkDropDown;
 
-    constructor(private _changeDetector: ChangeDetectorRef) { }
-
-    mode = DropDownMode.multiple;
-
+    constructor() {
+    }
 
     public selectedCity = [{label: "北京"}];
-
     citys = [
         {label: "北京"},
         {label: "上海"},
@@ -40,8 +37,8 @@ export class DropDownMultipleDemo implements OnInit {
         {label: "长沙"},
         {label: "西安"}
     ];
-    // public selectedCity = this.citys;
 
-    ngOnInit() { }
+    ngOnInit() {
+    }
 
 }

@@ -2,8 +2,7 @@
  * Created by 10177553 on 2017/4/13.
  */
 
-import {Component, OnInit, ChangeDetectorRef, ViewChild} from '@angular/core';
-import {DropDownMode, RdkDropDown} from "../../../../../component/dropdown/dropdown";
+import {Component, OnInit} from '@angular/core';
 
 @Component({
     templateUrl: 'change.html',
@@ -11,9 +10,6 @@ import {DropDownMode, RdkDropDown} from "../../../../../component/dropdown/dropd
 export class DropDownChangeDemo implements OnInit {
 
     constructor() { }
-
-    mode = DropDownMode.multiple;
-
 
     public selectedCity = [{label: "北京"}];
 
@@ -31,9 +27,14 @@ export class DropDownChangeDemo implements OnInit {
     ];
 
     change(evt){
+        console.log("--------------")
         console.log(evt)
     }
 
+    public clickProcess(event:Event){
+        event.stopPropagation();
+        event.preventDefault();
+    }
 
     ngOnInit() { }
 

@@ -4,7 +4,7 @@ import {
     ComponentRef,
     ElementRef,
     EmbeddedViewRef,
-    Injectable,
+    Injectable, Renderer2,
     TemplateRef,
     Type,
     ViewContainerRef
@@ -21,6 +21,7 @@ export class PopupOptions {
     pos?: PopupPosition; //控制弹出对象的左上角位置，下面2者选其一。
     posOffset?: PopupPositionOffset;
     posType?: PopupPositionType;
+    size?: { width: number, height: number }
 }
 
 export type PopupPosition = PopupPoint | ElementRef;
@@ -68,7 +69,8 @@ export class PopupService {
     //全局插入点
     private _viewContainerRef: ViewContainerRef;
 
-    constructor(private _cfr: ComponentFactoryResolver, private _appRef: ApplicationRef) {
+    constructor(private _cfr: ComponentFactoryResolver,
+                private _appRef: ApplicationRef) {
         _appRef.components.length && _appRef.components.forEach(component => {
             //TODO by chenxu 自动获取viewContainerRef，而不要应用提供
             if (component.instance.hasOwnProperty('viewContainerRef')) {
@@ -85,13 +87,31 @@ export class PopupService {
      * return 弹框的id
      * */
     public popup(what: Type<IPopupable>, options?: PopupOptions, initData?: any): PopupDisposer;
-    public popup(what: TemplateRef<any>): PopupDisposer;
-    public popup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupDisposer {
+    public popup(what: TemplateRef<any>, options?: PopupOptions, initData?: any, context?: any, render?: Renderer2): PopupDisposer;
+    public popup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any, context?: any, render?: Renderer2): PopupDisposer {
         let disposer: PopupDisposer;
         let ref: PopupRef;
         if (what instanceof TemplateRef) {
-            ref = this._viewContainerRef.createEmbeddedView(what);
+            ref = this._viewContainerRef.createEmbeddedView(what, context);
             disposer = this._getDisposer(ref);
+
+            if (context && render) {
+                let left = (context.nativeElement.offsetLeft) + 'px';
+                let top = (context.nativeElement.offsetTop + context.nativeElement.offsetHeight ) + 'px';
+                let value = typeof initData === 'string' ? initData : initData + '';
+                const match = value ? value.match(/^\s*(\d+)(%|px)\s*$/) : null;
+                let width;
+                if (match && match[2] == '%') {
+                    width = parseInt(match[1]) / 100 * context.nativeElement.offsetWidth + 'px';
+                } else {
+                    width = context.nativeElement.offsetWidth + 'px';
+                }
+
+                render.setStyle(ref.rootNodes[1], 'position', 'absolute');
+                render.setStyle(ref.rootNodes[1], 'top', top);
+                render.setStyle(ref.rootNodes[1], 'left', left);
+                render.setStyle(ref.rootNodes[1], 'width', width);
+            }
         } else {
             const factory = this._cfr.resolveComponentFactory(what);
             ref = this._viewContainerRef.createComponent(factory);

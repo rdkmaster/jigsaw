@@ -1,9 +1,16 @@
 <rdk-button (click)="changeTriger()">hover触发</rdk-button>
 
 
-<rdk-drop-down [trigger]="trigger" [value]=name.value>
-    <label for="">姓名: </label>
-    <input type="text" placeholder="请输入姓名~" #name/>
+<rdk-drop-down [pane]="dropcontent"
+               [trigger]="trigger"
+               [value]="inputValue">
+    <ng-template #dropcontent>
+        <rdk-input
+            [(value)]="inputValue"
+            (click)="clickProcess($event)">
+        </rdk-input>
+        <p class="notes">输入值是：{{inputValue}}</p>
+    </ng-template>
 </rdk-drop-down>
 <br>
 <br>

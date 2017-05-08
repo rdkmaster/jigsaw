@@ -1,30 +1,14 @@
-<div class="rdk-drop-down"
-     [class.rdk-drop-down-opened]="_isOpened"
-     [class.rdk-drop-down-disabled]="disabled"
-     (mouseover)="_hoverHandle(1)"
-     (mouseout)="_hoverHandle(0)">
-
-    <div class="rdk-drop-down-selection" (click)="_toggleClick()">
+<div #dropDownContainer class="rdk-drop-down"
+                       [class.rdk-drop-down-opened]="_hasContent"
+                       [class.rdk-drop-down-disabled]="disabled"
+                       (mouseover)="_$openDropDownByHover()"
+                       >
+    <div class="rdk-drop-down-selection" (click)="_$openDropDownByClick()">
         <div class="rdk-drop-down-selection-rendered">
-            <div *ngIf="placeholder&& !value" class="rdk-drop-down-selection_placeholder">{{placeholder}}</div>
-            <!-- todo 有时间看看更加好的显示方式.-->
-            <!-- 单选-值域类型字符串 -->
-            <div *ngIf="mode === 0&& _showValue" class="rdk-drop-down-selection-selected-value">{{_showValue}}</div>
-            <!-- 多选-非数组值域 -->
-            <div *ngIf="mode === 1&& !_isArray">
-                {{_showValue}}
-            </div>
-            <!-- 多选- 数组;-->
-            <div *ngIf="mode === 1&& _isArray">
-                <span *ngFor="let item of value">{{item[labelField]}},</span>
-            </div>
+            <div *ngIf="placeholder && (!value || value.length == 0)" class="rdk-drop-down-selection_placeholder">{{placeholder}}</div>
+            <rdk-tag [closable]="true" (click)="_$tagClickHandler(item)" *ngFor="let item of value;">{{item[labelField]}}</rdk-tag>
         </div>
     </div>
-
-    <div class="rdk-drop-down-content" (click)="_contentClick()" [style.width]="dropDownWidth">
-        <ng-content></ng-content>
-    </div>
-
     <!-- ?? 可能是个问题. 依赖了fontAwesome -->
     <i class="fa fa-angle-down rdk-drop-down-arrow"></i>
 </div>
