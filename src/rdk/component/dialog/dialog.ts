@@ -165,30 +165,30 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
             this.renderer.setStyle(this.popupElement, 'width', this.width);
         }
 
+        //设置弹出位置
         if(this.options){
-            this.setPosition();
-            this.onResize();
+            PopupService.setPosition(this.options, this.popupElement, this.renderer);
+        }else{
+            this.renderer.setStyle(this.popupElement, 'left',
+                (window.innerWidth / 2 - this.popupElement.offsetWidth / 2) + 'px');
         }
 
-    }
+        if(this.top){
+            this.renderer.setStyle(this.popupElement, 'top', this.top);
+        }
 
-    protected setPosition():void {
-        let posType: string = this.options.modal ? 'fixed' : PopupService.getPositionType(this.options.posType);
-        let position = PopupService.getPositionValue(this.options, this.popupElement);
-        this.renderer.setStyle(this.popupElement, 'position', posType);
-        this.renderer.setStyle(this.popupElement, 'top', this.top ? this.top : position.top);
-        this.renderer.setStyle(this.popupElement, 'left', position.left);
+        if(!this.options || this.options.modal){
+            this.onResize();
+        }
     }
 
     protected onResize() {
-        if (!this.options.modal) {
-            return;
-        }
         //resize居中
         this.removeResizeEvent = this.renderer.listen('window', 'resize', () => {
-            let position = PopupService.getPositionValue(this.options, this.popupElement);
-            this.renderer.setStyle(this.popupElement, 'top', this.top ? this.top : position.top);
-            this.renderer.setStyle(this.popupElement, 'left', position.left);
+            this.renderer.setStyle(this.popupElement, 'top',
+                this.top ? this.top : (window.innerHeight / 2 - this.popupElement.offsetHeight / 2) + 'px');
+            this.renderer.setStyle(this.popupElement, 'left',
+                (window.innerWidth / 2 - this.popupElement.offsetWidth / 2) + 'px');
         })
     }
 

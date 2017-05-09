@@ -9,6 +9,7 @@ import {
     Type,
     ViewContainerRef
 } from "@angular/core";
+import {CommonUtils} from "../core/utils/common-utils";
 
 export enum PopupEffect {
     fadeIn, fadeOut
@@ -21,7 +22,7 @@ export class PopupOptions {
     pos?: PopupPosition; //控制弹出对象的左上角位置，下面2者选其一。
     posOffset?: PopupPositionOffset;
     posType?: PopupPositionType;
-    size?: { width: number, height: number }
+    size?: { width: string, height: string }
 }
 
 export type PopupPosition = PopupPoint | ElementRef;
@@ -88,7 +89,7 @@ export class PopupService {
 
     /*
      * 打开弹框
-     * return 弹框的id
+     * return 弹框的销毁回调
      * */
     public popup(what: Type<IPopupable>, options?: PopupOptions, initData?: any): PopupDisposer;
     public popup(what: TemplateRef<any>, options?: PopupOptions): PopupDisposer;
@@ -100,12 +101,8 @@ export class PopupService {
             disposer = this._getDisposer(ref);
             let popupElement = ref.rootNodes.find(rootNode => rootNode instanceof HTMLElement);
             if (options) {
-                let posType: string = options.modal ? 'fixed' : PopupService.getPositionType(options.posType);
-                let position = PopupService.getPositionValue(options, popupElement);
-                this._renderer.setStyle(popupElement, 'position', posType);
-                this._renderer.setStyle(popupElement, 'top', position.top);
-                this._renderer.setStyle(popupElement, 'left', position.left);
-                //this._renderer.setStyle(popupEl, 'width', options.size.width);
+                PopupService.setSize(options, popupElement, this._renderer);
+                PopupService.setPosition(options, popupElement, this._renderer);
             }
         } else {
             const factory = this._cfr.resolveComponentFactory(what);
@@ -122,6 +119,31 @@ export class PopupService {
         return () => {
             popupRef.destroy();
         }
+    }
+
+    /*
+    * 设置弹框尺寸
+    * */
+    public static setSize(options: PopupOptions, element: HTMLElement, renderer: Renderer2){
+        if(!options.size) return;
+        let size = options.size;
+        if(size.width){
+            renderer.setStyle(element, 'width', CommonUtils.getCssValue(size.width));
+        }
+        if(size.height){
+            renderer.setStyle(element, 'height', CommonUtils.getCssValue(size.height));
+        }
+    }
+
+    /*
+    * 设置弹出的位置
+    * */
+    public static setPosition(options: PopupOptions, element: HTMLElement, renderer: Renderer2):void {
+        let posType: string = options.modal ? 'fixed' : PopupService.getPositionType(options.posType);
+        let position = PopupService.getPositionValue(options, element);
+        renderer.setStyle(element, 'position', posType);
+        renderer.setStyle(element, 'top', position.top);
+        renderer.setStyle(element, 'left', position.left);
     }
 
     /*
