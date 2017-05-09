@@ -1,0 +1,53 @@
+{
+  "name": "angular.io",
+  "version": "0.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:angular/angular.git",
+  "author": "Angular",
+  "license": "MIT",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "predocs": "rimraf src/content",
+    "docs": "dgeni ./transforms/angular.io-package"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "4.0.1",
+    "@angular/common": "4.0.1",
+    "@angular/compiler": "4.0.1",
+    "@angular/core": "4.0.1",
+    "@angular/forms": "4.0.1",
+    "@angular/http": "4.0.1",
+    "@angular/material": "2.0.0-beta.2",
+    "@angular/platform-browser": "4.0.1",
+    "@angular/platform-browser-dynamic": "4.0.1",
+    "@angular/platform-server": "4.0.1",
+    "@angular/router": "4.0.1",
+    "@angular/service-worker": "^1.0.0-beta.8",
+    "core-js": "^2.4.1",
+    "rxjs": "^5.2.0",
+    "zone.js": "^0.8.4"
+  },
+  "devDependencies": {
+    "@angular/cli": "^1.0.0",
+    "@angular/compiler-cli": "4.0.1",
+    "@types/jasmine": "2.5.38",
+    "@types/node": "~6.0.60",
+    "canonical-path": "^0.0.2",
+    "codelyzer": "~2.0.0",
+    "dgeni": "^0.4.7",
+    "dgeni-packages": "0.17.0",
+    "entities": "^1.1.1",
+    "globby": "^6.1.0",
+    "html": "^1.0.0",
+    "lodash": "^4.17.4",
+    "protractor": "~5.1.0",
+    "rho": "https://github.com/petebacondarwin/rho#master",
+    "rimraf": "^2.6.1",
+    "shelljs": "^0.7.7",
+    "ts-node": "~2.0.0",
+    "tslint": "~4.5.0",
+    "typescript": "2.2.0"
+  }
+}

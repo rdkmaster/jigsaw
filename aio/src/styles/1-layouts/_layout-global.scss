@@ -1,0 +1,19 @@
+.clearfix {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+l-relative {
+    position: relative;
+}
+
+.l-clearfix:after, .clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.is-visible {
+    display: block!important;
+}
