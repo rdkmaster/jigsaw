@@ -125,7 +125,7 @@ export class PopupService {
      * 设置弹框尺寸
      * */
     public static setSize(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
-        if (!options.size) return;
+        if (!options || !options.size) return;
         let size = options.size;
         if (size.width) {
             renderer.setStyle(element, 'width', CommonUtils.getCssValue(size.width));
@@ -139,6 +139,7 @@ export class PopupService {
      * 设置弹出的位置
      * */
     public static setPosition(options: PopupOptions, element: HTMLElement, renderer: Renderer2): void {
+        if (!options) return;
         let posType: string = options.modal ? 'fixed' : PopupService.getPositionType(options.posType);
         let position = PopupService.getPositionValue(options, element);
         renderer.setStyle(element, 'position', posType);
