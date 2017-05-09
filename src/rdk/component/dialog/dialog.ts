@@ -172,6 +172,9 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
             if (this.options) {
                 PopupService.setPosition(this.options, this.popupElement, this.renderer);
             } else {
+                //没有配options，默认使用模态
+                this.renderer.setStyle(this.popupElement, 'top',
+                    (window.innerHeight / 2 - this.popupElement.offsetHeight / 2) + 'px');
                 this.renderer.setStyle(this.popupElement, 'left',
                     (window.innerWidth / 2 - this.popupElement.offsetWidth / 2) + 'px');
             }

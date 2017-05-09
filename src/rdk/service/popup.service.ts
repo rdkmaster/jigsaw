@@ -110,7 +110,7 @@ export class PopupService {
             disposer = this._getDisposer(ref);
             ref.instance.disposer = disposer;
             ref.instance.initData = initData;
-            ref.instance.options = options ? options : {};
+            ref.instance.options = options ? options : null;
         }
         return disposer;
     }

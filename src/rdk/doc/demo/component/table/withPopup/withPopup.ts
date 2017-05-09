@@ -20,7 +20,7 @@ export class TableDataWithPopupDemoComponent {
         this.tableData.fromAjax('mock-data/table/data.json');
     }
     popupTemplate(tp){
-        this._disposer = this._popupService.popup(tp, {modal: true});
+        this._disposer = this._popupService.popup(tp);
     }
 
     closeTemplate(){

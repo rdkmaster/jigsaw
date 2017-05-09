@@ -37,7 +37,7 @@ export class DialogDemoComponent {
     }
 
     popup() {
-        this._popupService.popup(UseDialogComponent, this._getModalOptions());
+        this._popupService.popup(UseDialogComponent); //没有配options，默认使用模态
     }
 
     popupAtPoint(event) {
@@ -45,7 +45,7 @@ export class DialogDemoComponent {
     }
 
     popupDialogTemplate(tp){
-        this._DialogDisposer = this._popupService.popup(tp, this._getModalOptions());
+        this._DialogDisposer = this._popupService.popup(tp);
     }
 
     popupTemplate(tp){
