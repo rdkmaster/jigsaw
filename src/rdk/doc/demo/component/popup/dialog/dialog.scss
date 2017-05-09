@@ -1,5 +1,13 @@
 @import "../../../../../assets/scss/core/basc";
 
+ul.dialog-content{
+    padding: 20px;
+    li{
+        font-size: 12px;
+        color: #999;
+    }
+}
+
 /*弹框template样式*/
 .pop-bg{
     background: #000;

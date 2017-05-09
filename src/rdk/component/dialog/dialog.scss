@@ -2,6 +2,16 @@
 
 $dialog-prefix-cls: #{$rdk-prefix}-dialog;
 
+:host{
+    position: fixed;
+    width: 400px;
+    z-index: 9999;
+}
+
+.#{$dialog-prefix-cls}-box{
+    @include opacity(0);
+}
+
 .#{$dialog-prefix-cls}-bg {
     background: #000;
     opacity: 0.4;
@@ -16,8 +26,7 @@ $dialog-prefix-cls: #{$rdk-prefix}-dialog;
 }
 
 .#{$dialog-prefix-cls} {
-    position: fixed;
-    width: 400px;
+    position: relative;
     background: #FFF;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -49,7 +58,6 @@ $dialog-prefix-cls: #{$rdk-prefix}-dialog;
             margin-right: 8px;
         }
     }
-
 }
 
 

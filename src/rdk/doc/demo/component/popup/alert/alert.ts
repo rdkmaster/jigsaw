@@ -26,7 +26,7 @@ export class AlertDemoComponent {
 
     commonInfoAlert(event) {
         this.answer = 'waiting for an answer';
-        this._popupService.popup(RdkInfoAlert, this._getDialogOptions(event), {
+        this._popupService.popup(RdkInfoAlert, {modal: true}, {
             message: 'this is a great info alert!', title: 'the title is optional',
             callback: this.alertCallback, callbackContext: this
         });
@@ -34,7 +34,7 @@ export class AlertDemoComponent {
 
     commonWarningAlert(event) {
         this.answer = 'waiting for an answer';
-        this._popupService.popup(RdkWarningAlert, this._getDialogOptions(event), {
+        this._popupService.popup(RdkWarningAlert, {modal: true}, {
             message: 'this is a great warning alert!',
             callback: this.alertCallback, callbackContext: this
         });

@@ -37,6 +37,7 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy {
     private _removeClickHandler:Function;
 
     constructor(private _render: Renderer2,
+                private _elementRef: ElementRef,
                 private _popupService: PopupService) {
         super();
     }
@@ -133,14 +134,14 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy {
         //TODO 阻止click冒泡事件可以实现autoCloseDropDown这一属性
         this._removeClickHandler = this._render.listen('window', 'click', () => this._closeDropDown());
 
-        //TODO 把对弹出内容尺寸的计算前置到这里
         const option:PopupOptions = {
             pos: this._dropDownContainer, posType: PopupPositionType.absolute,
             posOffset: {
                 top: this._dropDownContainer.nativeElement.offsetHeight
-            }
+            },
+            size: {width: this._elementRef.nativeElement.offsetWidth}
         };
-        this._disposePopup = this._popupService.popup(this._contentTemplateRef, option, this._dropDownWidth, this._dropDownContainer, this._render);
+        this._disposePopup = this._popupService.popup(this._contentTemplateRef, option);
     }
 
     private _closeDropDown():void {
