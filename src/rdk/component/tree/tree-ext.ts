@@ -4,6 +4,7 @@ import {InternalUtils} from "../../core/utils/internal-utils";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {ZTreeSettingSetting} from "./ztree-types";
 import {TreeData} from "../../core/data/tree-data";
+import {CallbackRemoval} from "../../core/data/component-data";
 
 export class TreeEventData {
     treeId: string;
@@ -37,6 +38,7 @@ export class RdkTreeExt extends AbstractRDKComponent implements AfterViewInit, O
         this._updateTree();
     }
 
+    private _removeRefreshCallback: CallbackRemoval;
     public _data: TreeData;
     @Input()
     public get data(): TreeData {
@@ -45,7 +47,12 @@ export class RdkTreeExt extends AbstractRDKComponent implements AfterViewInit, O
 
     public set data(data: TreeData) {
         this._data = data;
-        this._updateTree();
+        if (this._removeRefreshCallback) {
+            this._removeRefreshCallback();
+        }
+        this._removeRefreshCallback = data.onRefresh(() => {
+            this._updateTree();
+        });
     }
 
     @Output()
@@ -143,7 +150,7 @@ export class RdkTreeExt extends AbstractRDKComponent implements AfterViewInit, O
             that.setTreeEvent.call(that, "beforeCollapse", treeId, treeNode);
         }
 
-        //todo ztree before_rename事件的isCancel属性传不出来
+        //todo tree before_rename事件的isCancel属性传不出来
         function before_rename(treeId, treeNode, newName, isCancel) {
             if (newName.length == 0) {
                 alert("Node name can not be empty.");
