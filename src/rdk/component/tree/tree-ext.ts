@@ -150,7 +150,7 @@ export class RdkTreeExt extends AbstractRDKComponent implements AfterViewInit, O
             that.setTreeEvent.call(that, "beforeCollapse", treeId, treeNode);
         }
 
-        //todo ztree before_rename事件的isCancel属性传不出来
+        //todo tree before_rename事件的isCancel属性传不出来
         function before_rename(treeId, treeNode, newName, isCancel) {
             if (newName.length == 0) {
                 alert("Node name can not be empty.");

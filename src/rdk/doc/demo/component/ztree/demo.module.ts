@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 import { HttpModule } from '@angular/http';
 import {RouterModule} from "@angular/router";
 import {ZtreeDemoComponent} from "./basic/basic";
-import { RdkTreeExtModule } from "../../../../component/ztree/ztree-ext"
+import { RdkTreeExtModule } from "../../../../component/tree/tree-ext"
 import {ZtreeDemoDataFromAjaxComponent} from "./dataFromAjax/dataFromAjax";
 import {ZtreeDemoEditableComponent} from "./editable/editable";
 import {ZtreeAsynDemoComponent} from "./asyn/asyn";

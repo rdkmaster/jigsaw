@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {ZTreeSettingSetting} from "../../../../../component/ztree/ztree-types"
+import {ZTreeSettingSetting} from "../../../../../component/tree/ztree-types"
 import {Http} from "@angular/http";
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';

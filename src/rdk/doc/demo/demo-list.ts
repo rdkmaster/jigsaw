@@ -91,7 +91,7 @@ const demoListRoutes=[
         loadChildren:'./component/slider/slider-demo.module#SliderDemoModule'
     },
     {
-        path:'ztree',
+        path:'tree',
         loadChildren:'./component/ztree/demo.module#ZtreeDemoModule'
     },
     {
