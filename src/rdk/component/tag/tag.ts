@@ -1,8 +1,85 @@
-import {NgModule, Component, Input, Renderer2, ElementRef, OnInit} from '@angular/core';
-import {CommonModule} from '@angular/common';
-
-import {tagDestroy} from '../animations/tag-destroy';
+import {Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Optional, Output, Renderer2} from "@angular/core";
+import {CommonModule} from "@angular/common";
+import {tagDestroy} from "../animations/tag-destroy";
 import {AbstractRDKComponent} from "../core";
+
+export type tagGroupValue = Array<{ [index: string]: any }>;
+
+@Component({
+    selector: 'rdk-tag-group',
+    template: `
+        <div class="rdk-tag-group">
+            <rdk-tag *ngFor="let tagItem of data" [tagItem]="tagItem"
+                     [closable]='tagItem["closable"]'>
+                {{tagItem[labelField]}}
+            </rdk-tag>
+        </div>
+
+    `,
+    host: {
+        '[style.width]': 'width',
+        '[style.height]': 'height',
+        '[style.line-height]': 'height',
+        '[style.background]': 'color',
+        '[style.border-color]': 'color'
+    },
+    styleUrls: ['tag-group.scss']
+})
+
+export class RdkTagGroup extends AbstractRDKComponent implements OnInit {
+
+    private _data: tagGroupValue = null;
+    @Input()
+    public get data(): tagGroupValue {
+        return this._data;
+    }
+
+    public set data(value: tagGroupValue) {
+        this._data = value;
+
+    }
+
+    @Output()
+    public dataChange = new EventEmitter<tagGroupValue>();
+
+    @Input() public labelField: string = 'label';
+
+
+    private _value: any = null;
+    @Input()
+    public get value(): any {
+        return this._value;
+    }
+
+    public set value(newValue: any) {
+        if (newValue && this._value != newValue) {
+            this._value = newValue;
+            this._updateTags();
+        }
+    }
+
+    @Input() public color: string;
+
+    private _updateTags(): void {
+        this._value && this.data.length && this.data.forEach((tag, index) => {
+            if (tag[this.labelField] === this._value[this.labelField]) {
+                this.data.splice(index, 1);
+                let arr = [];
+                this.data.forEach((item) => {
+                    arr.push(item);
+                });
+                this.data = arr;
+                this.dataChange.emit(this._data);
+            }
+        });
+
+
+    }
+
+    ngOnInit() {
+
+    }
+}
 
 @Component({
     selector: 'rdk-tag',
@@ -14,48 +91,66 @@ import {AbstractRDKComponent} from "../core";
         '[style.line-height]': 'height',
         '[style.background]': 'color',
         '[style.border-color]': 'color',
-        '[class.rdk-tag-close]': 'closable',
+        '[class.rdk-tag-close]': '_closable',
         '[class.rdk-tag-color]': '!!color',
         '[@tagDestroy]': '_state',
         '(@tagDestroy.done)': '_animationDone($event)',
     },
-    animations:[
+    animations: [
         tagDestroy
     ]
 })
-export class RdkTag extends AbstractRDKComponent implements OnInit{
+export class RdkTag extends AbstractRDKComponent implements OnInit {
+    @Input() public tagItem: any;
 
     @Input() public color: string;
 
-    @Input() public closable: boolean = false;
+    private _closable: boolean;
+    @Input()
+    public get closable(): boolean {
+        return this._closable;
+    };
+
+    public set closable(value: boolean) {
+        this._closable = value === undefined ? true : value;
+    }
 
     private _state: string;
+    private _tagGroup: RdkTagGroup;
 
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef){
+    constructor(@Optional() tagGroup: RdkTagGroup,
+                private _renderer: Renderer2,
+                private _elementRef: ElementRef) {
         super();
+        this._tagGroup = tagGroup;
 
     }
 
-    private _close(){
-        this._state = 'void';
+    private _close() {
+        this._state = 'inactive';
     }
 
-    private _animationDone($event){
-        if($event.toState == 'void'){
-            this._renderer.parentNode(this._elementRef.nativeElement).removeChild(this._elementRef.nativeElement);
+    private _animationDone($event) {
+        if ($event.toState === 'inactive') {
+            if (this._tagGroup) {
+                this._tagGroup.value = this.tagItem;
+            } else {
+                this._renderer.parentNode(this._elementRef.nativeElement).removeChild(this._elementRef.nativeElement);
+            }
         }
     }
 
-    ngOnInit(){
-        this._renderer.addClass(this._elementRef.nativeElement, this.basicClass);
+    ngOnInit() {
+        this.basicClass && this._renderer.addClass(this._elementRef.nativeElement, this.basicClass);
     }
 
 }
 
+
 @NgModule({
     imports: [CommonModule],
-    declarations: [RdkTag],
-    exports: [RdkTag]
+    declarations: [RdkTag, RdkTagGroup],
+    exports: [RdkTag, RdkTagGroup]
 })
 export class RdkTagModule {
 

@@ -4,27 +4,40 @@
 
 import {Component, OnInit, ChangeDetectorRef, ViewChild} from '@angular/core';
 import {RdkDropDown} from "../../../../../component/dropdown/dropdown";
+import {tagGroupValue} from "../../../../../component/tag/tag";
 
 @Component({
     templateUrl: 'labelField.html',
 })
 export class DropDownLabelFieldDemo implements OnInit {
 
-    constructor() { }
+    constructor() {
+    }
 
-    public selectedCity = [{name: "北京"}];
-    public labelField="name";
+    public labelField = "name";
+    public selectedCity: tagGroupValue = [{name: "北京", closable: false}];
     private citys = [
-        {name: "北京"},
-        {name: "上海"},
+        {name: "北京", closable: false},
+        {name: "上海", closable: false},
         {name: "南京"},
         {name: "深圳"},
-        {name: "长沙"}
+        {name: "长沙"},
+        {name: "西安"},
+        {name: "盐城"},
+        {name: "徐州"},
+        {name: "连云港"},
+        {name: "连云港1"},
+        {name: "连云港2"},
+        {name: "连云港3"},
+        {name: "哈尔滨"}
     ];
-    public clickProcess(event:Event){
+
+    public clickProcess(event: Event) {
         event.stopPropagation();
         event.preventDefault();
     }
-    ngOnInit() { }
+
+    ngOnInit() {
+    }
 
 }

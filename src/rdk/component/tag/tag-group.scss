@@ -1,0 +1,15 @@
+@import "../../assets/scss/core/basc";
+
+$tag-group-prefix-cls: #{$rdk-prefix}-tag-group;
+
+:host{
+    @include inline-block;
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0px 8px;
+    height: 22px;
+    line-height: 22px;
+    cursor: pointer;
+}

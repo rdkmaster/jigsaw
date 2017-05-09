@@ -14,6 +14,8 @@ export class RdkDropDownInput implements OnInit {
         event.preventDefault();
     }
 
+    public inputValue: string = "hello angular";
+
     constructor() {
     }
 

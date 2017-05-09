@@ -4,20 +4,20 @@
 
 import {
     Component,
-    OnInit,
-    OnDestroy,
-    ViewEncapsulation,
-    Input,
-    Output,
+    ElementRef,
     EventEmitter,
+    Input,
+    OnDestroy,
+    Output,
     Renderer2,
-    ViewChild,
     TemplateRef,
-    ElementRef
-} from '@angular/core';
-import {PopupService, PopupDisposer, PopupOptions, PopupPositionType} from "rdk/service/popup.service";
+    ViewChild
+} from "@angular/core";
+import {PopupDisposer, PopupOptions, PopupPositionType, PopupService} from "rdk/service/popup.service";
 import {AbstractRDKComponent} from "../core";
+import {tagGroupValue} from "../tag/tag";
 
+export type inputValue = tagGroupValue | string;
 
 export enum DropDownTrigger {
     click,
@@ -27,43 +27,47 @@ export enum DropDownTrigger {
 @Component({
     selector: 'rdk-drop-down',
     templateUrl: 'dropdown.html',
-    styleUrls: ['dropdown.scss'],
-    // encapsulation: ViewEncapsulation.None
+    styleUrls: ['dropdown.scss']
 })
 export class RdkDropDown extends AbstractRDKComponent implements OnDestroy {
     @ViewChild("dropDownContainer", {read: ElementRef})
     private _dropDownContainer: ElementRef;
     private _disposePopup: PopupDisposer;
-    private _removeClickHandler:Function;
+    private _removeClickHandler: Function;
 
     constructor(private _render: Renderer2,
+                private _elementRef: ElementRef,
                 private _popupService: PopupService) {
         super();
     }
 
-    private _value: Array<{[index:string]:any}>;
+    private _value: inputValue = null;
+    private _stringValue: string = null;
 
     @Input()
-    public get value():Array<{[index:string]:any}> {
+    public get value(): inputValue {
         return this._value;
     }
 
-    public set value(value:Array<{[index:string]:any}>) {
-        this._value = value;
+    public set value(value: inputValue) {
+        if (typeof value === 'string') {
+            this._stringValue = value;
+            this._value = null;
+        } else {
+            this._value = value;
+            this.valueChange.emit(this._value);
+        }
     }
 
-    @Input()
-    public labelField: string = 'label';
+    @Output() public valueChange = new EventEmitter<inputValue>();
+
+    @Input() public labelField: string = 'label';
 
     // TODO 对外事件，通过popup暴露不了
-    /**
-     * 对外值变化事件.
-     * @type {EventEmitter<string|Array<any>>}
-     */
     @Output()
     public change = new EventEmitter<any>(); // 双向绑定
 
-    private _$tagClickHandler(item):void {
+    private _$tagClickHandler(item): void {
         this.change.emit(item);
     }
 
@@ -95,6 +99,7 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy {
     }
 
     private _contentTemplateRef: TemplateRef<any>;
+
     @Input()
     public get pane(): TemplateRef<any> {
         return this._contentTemplateRef;
@@ -105,8 +110,10 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy {
 
     }
 
+    private _$opened: boolean = false;
+
     @Input()
-    public get open():boolean {
+    public get open(): boolean {
         return !!this._removeClickHandler && !!this._disposePopup;
     }
 
@@ -125,7 +132,7 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy {
         }
     }
 
-    private _openDropDown():void {
+    private _openDropDown(): void {
         if (this.open) {
             return;
         }
@@ -133,17 +140,18 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy {
         //TODO 阻止click冒泡事件可以实现autoCloseDropDown这一属性
         this._removeClickHandler = this._render.listen('window', 'click', () => this._closeDropDown());
 
-        //TODO 把对弹出内容尺寸的计算前置到这里
-        const option:PopupOptions = {
+        const option: PopupOptions = {
             pos: this._dropDownContainer, posType: PopupPositionType.absolute,
             posOffset: {
                 top: this._dropDownContainer.nativeElement.offsetHeight
-            }
+            },
+            size: {width: this._elementRef.nativeElement.offsetWidth}
         };
-        this._disposePopup = this._popupService.popup(this._contentTemplateRef, option, this._dropDownWidth, this._dropDownContainer, this._render);
+        this._disposePopup = this._popupService.popup(this._contentTemplateRef, option);
+        this._$opened = true;
     }
 
-    private _closeDropDown():void {
+    private _closeDropDown(): void {
         if (this._removeClickHandler) {
             this._removeClickHandler();
             this._removeClickHandler = null;
@@ -152,6 +160,7 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy {
             this._disposePopup();
             this._disposePopup = null;
         }
+        this._$opened = false;
     }
 
     //TODO 后续再优化：所有组件，凡是html模板中用到的变量&方法，都以 _$ 开头。
@@ -165,8 +174,9 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy {
 
     private _$openDropDownByHover(): void {
         if (this._trigger === DropDownTrigger.click) return;
-        // this._checkContent();
-        // this._isOpen = !this._isOpen;
+        event.preventDefault();
+        event.stopPropagation();
+        this._openDropDown();
     }
 
     ngOnDestroy() {
