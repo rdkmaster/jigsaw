@@ -1,5 +1,5 @@
 <div class="rdk-alert-box" [@fadeIn]="state" (@fadeIn.done)="animationDone($event)">
-    <div class="rdk-alert-bg" *ngIf="modal"></div>
+    <div class="rdk-alert-bg" *ngIf="options.modal"></div>
     <div class="rdk-alert" [ngClass]="_alertClass" rdk-draggable [@bubbleIn]="state">
         <i class="rdk-alert-icon fa "></i>
         <span class="rdk-alert-title">{{title | translate }}</span>

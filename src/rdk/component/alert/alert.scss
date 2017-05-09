@@ -4,7 +4,7 @@ $alert-prefix-cls: #{$rdk-prefix}-alert;
 
 .#{$alert-prefix-cls}-box {
     display: inline-block;
-
+    @include opacity(0);
     .#{$alert-prefix-cls}-bg {
         background: #000;
         opacity: 0.4;

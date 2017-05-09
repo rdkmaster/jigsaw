@@ -7,6 +7,7 @@ import {
     Input,
     NgModule,
     OnDestroy,
+    OnInit,
     Output,
     Renderer2
 } from "@angular/core";
@@ -24,15 +25,15 @@ import {RdkButtonModule} from "../button/button";
 export interface IDialog extends IPopupable {
     buttons: ButtonInfo[];
     title: string;
-    dialog:RdkDialog;
+    dialog: RdkDialog;
 }
 
-export abstract class DialogBase implements IDialog, AfterViewInit {
+export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
 
     public initData: any;
 
-    abstract get dialog():RdkDialog;
-    abstract set dialog(value:RdkDialog);
+    abstract get dialog(): RdkDialog;
+    abstract set dialog(value: RdkDialog);
 
     private _title: string = 'Untitled Dialog';
 
@@ -47,13 +48,13 @@ export abstract class DialogBase implements IDialog, AfterViewInit {
         }
     }
 
-    private _disposer:PopupDisposer;
+    private _disposer: PopupDisposer;
 
-    public get disposer():PopupDisposer {
+    public get disposer(): PopupDisposer {
         return this._disposer;
     }
 
-    public set disposer(value:PopupDisposer) {
+    public set disposer(value: PopupDisposer) {
         this._disposer = value;
         if (this.dialog) {
             this.dialog.disposer = value;
@@ -86,21 +87,22 @@ export abstract class DialogBase implements IDialog, AfterViewInit {
         }
     }
 
-    public dispose(answer?:ButtonInfo):void {
+    public dispose(answer?: ButtonInfo): void {
         if (this.dialog) {
             this.dialog.dispose(answer);
         }
     }
 
-    public ngAfterViewInit() {
+    public ngOnInit() {
         if (this.dialog) {
             this.dialog.disposer = this.disposer;
             this.dialog.options = this.options;
-            setTimeout(() => {
-                this.dialog.buttons = this.buttons;
-                this.dialog.title = this.title;
-            }, 0);
+            this.dialog.buttons = this.buttons;
+            this.dialog.title = this.title;
         }
+    }
+
+    public ngAfterViewInit() {
     }
 }
 
@@ -115,7 +117,7 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
     public initData: any;
     public options: PopupOptions;
 
-    protected state: String = 'active';
+    protected state: String = 'void';
     protected removeResizeEvent: Function;
     protected popupElement: HTMLElement;
 
@@ -143,7 +145,7 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
         this.init();
     }
 
-    public dispose(answer?:ButtonInfo) {
+    public dispose(answer?: ButtonInfo) {
         this.state = 'void';
         this.close.emit(answer);
     }
@@ -155,7 +157,7 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
         }
     }
 
-    protected abstract getPopupElement():HTMLElement;
+    protected abstract getPopupElement(): HTMLElement;
 
     protected init() {
         this.popupElement = this.getPopupElement();
@@ -166,18 +168,22 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
         }
 
         //设置弹出位置
-        if(this.options){
-            PopupService.setPosition(this.options, this.popupElement, this.renderer);
-        }else{
-            this.renderer.setStyle(this.popupElement, 'left',
-                (window.innerWidth / 2 - this.popupElement.offsetWidth / 2) + 'px');
-        }
+        setTimeout(() => {
+            if (this.options) {
+                PopupService.setPosition(this.options, this.popupElement, this.renderer);
+            } else {
+                this.renderer.setStyle(this.popupElement, 'left',
+                    (window.innerWidth / 2 - this.popupElement.offsetWidth / 2) + 'px');
+            }
 
-        if(this.top){
-            this.renderer.setStyle(this.popupElement, 'top', this.top);
-        }
+            if (this.top) {
+                this.renderer.setStyle(this.popupElement, 'top', this.top);
+            }
 
-        if(!this.options || this.options.modal){
+            this.state = 'in';
+        }, 0);
+
+        if (!this.options || this.options.modal) {
             this.onResize();
         }
     }
@@ -192,8 +198,8 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
         })
     }
 
-    protected animationDone($event){
-        if($event.toState == 'void') {
+    protected animationDone($event) {
+        if ($event.toState == 'void') {
             this.disposer();
         }
     }

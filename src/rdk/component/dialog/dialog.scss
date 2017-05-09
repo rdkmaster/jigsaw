@@ -8,6 +8,10 @@ $dialog-prefix-cls: #{$rdk-prefix}-dialog;
     z-index: 9999;
 }
 
+.#{$dialog-prefix-cls}-box{
+    @include opacity(0);
+}
+
 .#{$dialog-prefix-cls}-bg {
     background: #000;
     opacity: 0.4;
