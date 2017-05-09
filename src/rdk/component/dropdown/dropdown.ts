@@ -139,7 +139,7 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy {
             posOffset: {
                 top: this._dropDownContainer.nativeElement.offsetHeight
             },
-            size: {width: this._elementRef.nativeElement.offSetWidth, height: this._elementRef.nativeElement.offSetHeight}
+            size: {width: this._elementRef.nativeElement.offsetWidth}
         };
         this._disposePopup = this._popupService.popup(this._contentTemplateRef, option);
     }

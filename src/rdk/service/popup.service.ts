@@ -22,7 +22,7 @@ export class PopupOptions {
     pos?: PopupPosition; //控制弹出对象的左上角位置，下面2者选其一。
     posOffset?: PopupPositionOffset;
     posType?: PopupPositionType;
-    size?: { width: string, height: string }
+    size?: { width?: string | number, height?: string | number }
 }
 
 export type PopupPosition = PopupPoint | ElementRef;
@@ -122,23 +122,23 @@ export class PopupService {
     }
 
     /*
-    * 设置弹框尺寸
-    * */
-    public static setSize(options: PopupOptions, element: HTMLElement, renderer: Renderer2){
-        if(!options.size) return;
+     * 设置弹框尺寸
+     * */
+    public static setSize(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
+        if (!options.size) return;
         let size = options.size;
-        if(size.width){
+        if (size.width) {
             renderer.setStyle(element, 'width', CommonUtils.getCssValue(size.width));
         }
-        if(size.height){
+        if (size.height) {
             renderer.setStyle(element, 'height', CommonUtils.getCssValue(size.height));
         }
     }
 
     /*
-    * 设置弹出的位置
-    * */
-    public static setPosition(options: PopupOptions, element: HTMLElement, renderer: Renderer2):void {
+     * 设置弹出的位置
+     * */
+    public static setPosition(options: PopupOptions, element: HTMLElement, renderer: Renderer2): void {
         let posType: string = options.modal ? 'fixed' : PopupService.getPositionType(options.posType);
         let position = PopupService.getPositionValue(options, element);
         renderer.setStyle(element, 'position', posType);
@@ -170,10 +170,10 @@ export class PopupService {
 
         let top: string = '';
         let left: string = '';
-        if(options.modal){
+        if (options.modal) {
             top = (window.innerHeight / 2 - element.offsetHeight / 2) + 'px';
             left = (window.innerWidth / 2 - element.offsetWidth / 2) + 'px';
-        }else if (options.pos instanceof ElementRef) {
+        } else if (options.pos instanceof ElementRef) {
             if (options.posOffset.top || options.posOffset.top == 0) {
                 top = (options.pos.nativeElement.offsetTop + options.posOffset.top) + 'px';
             }
