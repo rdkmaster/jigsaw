@@ -21,7 +21,7 @@ export class PopupOptions {
     pos?: PopupPosition; //控制弹出对象的左上角位置，下面2者选其一。
     posOffset?: PopupPositionOffset;
     posType?: PopupPositionType;
-    size?: { width: number, height: number }
+    size?: { width?: number, height?: number }
 }
 
 export type PopupPosition = PopupPoint | ElementRef;
