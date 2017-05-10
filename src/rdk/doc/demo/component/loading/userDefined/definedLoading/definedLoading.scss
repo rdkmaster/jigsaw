@@ -3,6 +3,7 @@ $ball-size: 15px !default;
 $margin: 2px !default;
 $line-height: 35px !default;
 $line-width: 4px !default;
+
 @function delay($interval, $count, $index) {
     @return ($index * $interval) - ($interval * $count);
 }
@@ -67,9 +68,9 @@ $line-width: 4px !default;
     background-color: #ed5565;
     cursor: wait;
     position: absolute;
-    opacity: 0;
+    opacity: 1;
     &.in {
-        opacity: 1;
+        opacity: 0.7;
     }
 }
 
