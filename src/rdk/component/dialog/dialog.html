@@ -1,5 +1,5 @@
 <div class="rdk-dialog-box" [@fadeIn]="state" (@fadeIn.done)="animationDone($event)">
-    <div class="rdk-dialog-bg" *ngIf="!options || options.modal"></div>
+    <div class="rdk-dialog-bg" *ngIf="isModal"></div>
     <div class="rdk-dialog" rdk-draggable [@bubbleIn]="state">
         <div class="rdk-dialog-head">
             <ng-content select="[title]"></ng-content>

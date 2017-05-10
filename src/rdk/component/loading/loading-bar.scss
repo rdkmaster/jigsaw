@@ -3,6 +3,7 @@ $ball-size: 15px !default;
 $margin: 2px !default;
 $line-height: 35px !default;
 $line-width: 4px !default;
+
 @function delay($interval, $count, $index) {
     @return ($index * $interval) - ($interval * $count);
 }
@@ -44,7 +45,18 @@ $line-width: 4px !default;
     animation-fill-mode: both;
 }
 
-.rdk-loading-background-test {
+:host {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+}
+
+.rdk-loading-background {
     z-index: 999;
     border: none;
     margin: 0px;
@@ -56,9 +68,13 @@ $line-width: 4px !default;
     background-color: #ed5565;
     cursor: wait;
     position: absolute;
+    opacity: 1;
+    &.in {
+        opacity: 0.7;
+    }
 }
 
-.rdk-loading-content-test {
+.rdk-loading-content {
     position: absolute;
     left: 50%;
     top: 50%;
