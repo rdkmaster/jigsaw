@@ -18,26 +18,39 @@ export class Loading2DemoComponent {
     disposeGlobalLoading: PopupDisposer;
 
     popupTmpLoading(tp) {
-        this.disposeTmpLoading = this.popupService.popup(tp, this.getOptions(this.blockOne));
+        if (!this.disposeTmpLoading) {
+            this.disposeTmpLoading = this.popupService.popup(tp, this.getOptions(this.blockOne));
+        }
     }
 
     closeTmpLoading() {
-        if (this.disposeTmpLoading) this.disposeTmpLoading();
+        if (this.disposeTmpLoading) {
+            this.disposeTmpLoading();
+            this.disposeTmpLoading = null;
+        }
     }
 
-    popupCmpLoading(){
-        this.disposeCmpLoading = this.popupService.popup(RdkLoading, this.getOptions(this.blockTwo));
+    popupCmpLoading() {
+        if (!this.disposeCmpLoading) {
+            this.disposeCmpLoading = this.popupService.popup(RdkLoading, this.getOptions(this.blockTwo));
+        }
     }
 
-    closeCmpLoading(){
-        if (this.disposeCmpLoading) this.disposeCmpLoading();
+    closeCmpLoading() {
+        if (this.disposeCmpLoading) {
+            this.disposeCmpLoading();
+            this.disposeCmpLoading = null;
+        }
     }
 
-    popupGlobalLoading(){
-        this.disposeGlobalLoading = this.popupService.popup(RdkLoading);
-        setTimeout(() => {
-            this.disposeGlobalLoading();
-        }, 3000)
+    popupGlobalLoading() {
+        if (!this.disposeGlobalLoading) {
+            this.disposeGlobalLoading = this.popupService.popup(RdkLoading);
+            setTimeout(() => {
+                this.disposeGlobalLoading();
+                this.disposeGlobalLoading = null;
+            }, 3000)
+        }
     }
 
     getOptions(elementRef: ElementRef): PopupOptions {
