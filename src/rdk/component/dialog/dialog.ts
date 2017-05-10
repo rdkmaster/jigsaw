@@ -163,9 +163,7 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
         this.popupElement = this.getPopupElement();
 
         //判断是否需要背景
-        if(!this.options || CommonUtils.isEmptyObject(this.options) || this.options.modal){
-            this.isModal = true;
-        }
+        this.isModal = !this.options || CommonUtils.isEmptyObject(this.options) || this.options.modal;
 
         //设置弹框宽度
         if (this.width) {
