@@ -121,7 +121,7 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
     protected state: String = 'void';
     protected removeResizeEvent: Function;
     protected popupElement: HTMLElement;
-    protected addBackground: boolean;
+    protected isModal: boolean;
 
     protected popupService: PopupService;
     protected renderer: Renderer2;
@@ -164,7 +164,7 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
 
         //判断是否需要背景
         if(!this.options || CommonUtils.isEmptyObject(this.options) || this.options.modal){
-            this.addBackground = true;
+            this.isModal = true;
         }
 
         //设置弹框宽度
