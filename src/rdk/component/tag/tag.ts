@@ -1,6 +1,6 @@
 import {Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Optional, Output, Renderer2} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {TagDestroy} from "../animations/destroy";
+import {AnimationDestroy} from "../animations/destroy";
 import {AbstractRDKComponent} from "../core";
 
 export type TagGroupValue = Array<{ [index: string]: any }>;
@@ -94,11 +94,11 @@ export class RdkTagGroup extends AbstractRDKComponent implements OnInit {
         '[style.border-color]': 'color',
         '[class.rdk-tag-close]': '_closable',
         '[class.rdk-tag-color]': '!!color',
-        '[@TagDestroy]': '_state',
-        '(@TagDestroy.done)': '_animationDone($event)',
+        '[@AnimationDestroy]': '_state',
+        '(@AnimationDestroy.done)': '_animationDone($event)',
     },
     animations: [
-        TagDestroy
+        AnimationDestroy
     ]
 })
 export class RdkTag extends AbstractRDKComponent implements OnInit {
