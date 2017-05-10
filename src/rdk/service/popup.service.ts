@@ -100,17 +100,17 @@ export class PopupService {
             ref = this._viewContainerRef.createEmbeddedView(what);
             disposer = this._getDisposer(ref);
             let popupElement = ref.rootNodes.find(rootNode => rootNode instanceof HTMLElement);
-            if (options) {
+            setTimeout(() => {
                 PopupService.setSize(options, popupElement, this._renderer);
                 PopupService.setPosition(options, popupElement, this._renderer);
-            }
+            }, 0)
         } else {
             const factory = this._cfr.resolveComponentFactory(what);
             ref = this._viewContainerRef.createComponent(factory);
             disposer = this._getDisposer(ref);
             ref.instance.disposer = disposer;
             ref.instance.initData = initData;
-            ref.instance.options = options;
+            ref.instance.options = options ? options : {};
         }
         return disposer;
     }
@@ -119,6 +119,11 @@ export class PopupService {
         return () => {
             popupRef.destroy();
         }
+    }
+
+    public static setPopup(options: PopupOptions, element: HTMLElement, renderer: Renderer2){
+        PopupService.setSize(options, element, renderer);
+        PopupService.setPosition(options, element, renderer);
     }
 
     /*
@@ -139,8 +144,8 @@ export class PopupService {
      * 设置弹出的位置
      * */
     public static setPosition(options: PopupOptions, element: HTMLElement, renderer: Renderer2): void {
-        if (!options) return;
-        let posType: string = options.modal ? 'fixed' : PopupService.getPositionType(options.posType);
+        //没配options或options为空对象时，默认模态
+        let posType: string = !options || CommonUtils.isEmptyObject(options) || options.modal ? 'fixed' : PopupService.getPositionType(options.posType);
         let position = PopupService.getPositionValue(options, element);
         renderer.setStyle(element, 'position', posType);
         renderer.setStyle(element, 'top', position.top);
@@ -165,15 +170,12 @@ export class PopupService {
      * 获取位置具体的top和left
      * */
     public static getPositionValue(options: PopupOptions, element: HTMLElement): PopupPositionValue {
-        if (!options) {
-            return {top: '', left: ''};
-        }
-
         let top: string = '';
         let left: string = '';
-        if (options.modal) {
-            top = (window.innerHeight / 2 - element.offsetHeight / 2) + 'px';
-            left = (window.innerWidth / 2 - element.offsetWidth / 2) + 'px';
+        if (!options || CommonUtils.isEmptyObject(options) || options.modal) {
+            //没配options或options为空对象时，默认模态
+            top = (document.body.clientHeight / 2 - element.offsetHeight / 2) + 'px';
+            left = (document.body.clientWidth / 2 - element.offsetWidth / 2) + 'px';
         } else if (options.pos instanceof ElementRef) {
             if (options.posOffset.top || options.posOffset.top == 0) {
                 top = (options.pos.nativeElement.offsetTop + options.posOffset.top) + 'px';
