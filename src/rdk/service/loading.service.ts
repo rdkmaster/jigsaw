@@ -1,27 +1,35 @@
-import {ElementRef, Injectable, OnDestroy} from "@angular/core";
+import {ElementRef, Injectable, TemplateRef, Type} from "@angular/core";
 import {PopupOptions, PopupPositionType, PopupService, PopupDisposer} from "./popup.service";
 import {RdkLoading} from "../component/loading/loading";
 
 @Injectable()
-export class LoadingService implements OnDestroy {
+export class LoadingService {
 
     constructor(private _popupService: PopupService) {
     }
 
     public show(blockTo?: ElementRef): PopupDisposer
-    public show(blockBy?: any): PopupDisposer
-    public show(blockTo?: ElementRef, blockBy?: any): PopupDisposer
-    public show(blockTo?: ElementRef, blockBy?: any): PopupDisposer {
+    public show(blockBy?: Type<any>): PopupDisposer
+    public show(blockBy?: TemplateRef<any>): PopupDisposer
+    public show(blockTo?: ElementRef, blockBy?: Type<any>): PopupDisposer
+    public show(blockTo?: ElementRef, blockBy?: TemplateRef<any>): PopupDisposer
+    public show(blockTo?: ElementRef|Type<any>|TemplateRef<any>, blockBy?: Type<any>|TemplateRef<any>): PopupDisposer {
         let disposer: PopupDisposer;
         if (blockTo instanceof ElementRef) {
-            if (blockBy) {
+            if (blockBy instanceof Type) {
+                disposer = this._popupService.popup(blockBy, this._getOptions(blockTo));
+            } else if (blockBy instanceof TemplateRef) {
                 disposer = this._popupService.popup(blockBy, this._getOptions(blockTo));
             } else {
                 disposer = this._popupService.popup(RdkLoading, this._getOptions(blockTo));
             }
         } else if (blockTo) {
             blockBy = blockTo;
-            disposer = this._popupService.popup(blockBy);
+            if (blockBy instanceof Type) {
+                disposer = this._popupService.popup(blockBy);
+            } else if (blockBy instanceof TemplateRef) {
+                disposer = this._popupService.popup(blockBy);
+            }
         } else {
             disposer = this._popupService.popup(RdkLoading);
         }
@@ -40,10 +48,6 @@ export class LoadingService implements OnDestroy {
             posType: PopupPositionType.absolute, //定位类型
             size: {width: element.offsetWidth, height: element.offsetHeight}
         };
-    }
-
-    ngOnDestroy() {
-
     }
 }
 

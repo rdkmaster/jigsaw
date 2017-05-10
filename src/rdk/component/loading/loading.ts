@@ -1,11 +1,7 @@
 import {Component, ElementRef, OnInit, Renderer2} from "@angular/core";
 import {IPopupable, PopupDisposer, PopupOptions, PopupService} from "rdk/service/popup.service";
 
-@Component({
-    templateUrl: 'loading.html',
-    styleUrls: ['loading.scss']
-})
-export class RdkLoading implements IPopupable, OnInit {
+export class RdkLoadingBase implements IPopupable, OnInit {
     public disposer: PopupDisposer;
     public initData: any;
     public options: PopupOptions;
@@ -24,4 +20,23 @@ export class RdkLoading implements IPopupable, OnInit {
     }
 }
 
+@Component({
+    templateUrl: 'loading.html',
+    styleUrls: ['loading-ball.scss']
+})
+export class RdkLoading extends RdkLoadingBase {
+    constructor(renderer: Renderer2, elementRef: ElementRef) {
+        super(renderer, elementRef);
+    }
+}
 
+
+@Component({
+    templateUrl: 'loading.html',
+    styleUrls: ['loading-bar.scss']
+})
+export class RdkBarLoading extends RdkLoadingBase {
+    constructor(renderer: Renderer2, elementRef: ElementRef) {
+        super(renderer, elementRef);
+    }
+}
