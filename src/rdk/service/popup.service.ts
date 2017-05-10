@@ -143,6 +143,11 @@ export class PopupService {
         }
     }
 
+    public static setPopup(options: PopupOptions, element: HTMLElement, renderer: Renderer2){
+        PopupService.setSize(options, element, renderer);
+        PopupService.setPosition(options, element, renderer);
+    }
+
     /*
      * 设置弹框尺寸
      * */
@@ -172,6 +177,7 @@ export class PopupService {
      * 设置弹出的位置
      * */
     public static setPosition(options: PopupOptions, element: HTMLElement, renderer: Renderer2): void {
+        //没配options或options为空对象时，默认模态
         let posType: string = !options || CommonUtils.isEmptyObject(options) || options.modal ? 'fixed' : PopupService.getPositionType(options.posType);
         let position = PopupService.getPositionValue(options, element);
         renderer.setStyle(element, 'position', posType);

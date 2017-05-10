@@ -20,6 +20,7 @@ import {bubbleIn} from "../animations/bubble-in";
 import {AbstractRDKComponent} from "../core";
 import {CommonModule} from "@angular/common";
 import {RdkButtonModule} from "../button/button";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 
 export interface IDialog extends IPopupable {
@@ -133,10 +134,8 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
     }
 
     public set top(newValue: string) {
-        const match = newValue ? newValue.match(/^\s*\d+%|px\s*$/) : null;
-        this._top = match ? newValue : newValue + 'px';
+        this._top = CommonUtils.getCssValue(newValue);
     }
-
 
     @Output()
     public close: EventEmitter<ButtonInfo> = new EventEmitter<ButtonInfo>();
@@ -167,16 +166,12 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
             this.renderer.setStyle(this.popupElement, 'width', this.width);
         }
 
-        //设置弹出位置
+        //设置弹出位置和尺寸
         setTimeout(() => {
-            if (this.options) {
-                PopupService.setPosition(this.options, this.popupElement, this.renderer);
-            } else {
-                //没有配options，默认使用模态
-                this.renderer.setStyle(this.popupElement, 'top',
-                    (window.innerHeight / 2 - this.popupElement.offsetHeight / 2) + 'px');
-                this.renderer.setStyle(this.popupElement, 'left',
-                    (window.innerWidth / 2 - this.popupElement.offsetWidth / 2) + 'px');
+            if(this.options){
+                //通过createEmbeddedView初始化时，options为undefined，计算位置和尺寸是在popupService里面，组件内部不计算
+                //通过createComponent初始化时，options至少是个{}，在组件内部计算位置和尺寸，options为{}时，默认模态
+                PopupService.setPopup(this.options, this.popupElement, this.renderer);
             }
 
             if (this.top) {
@@ -195,9 +190,9 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
         //resize居中
         this.removeResizeEvent = this.renderer.listen('window', 'resize', () => {
             this.renderer.setStyle(this.popupElement, 'top',
-                this.top ? this.top : (window.innerHeight / 2 - this.popupElement.offsetHeight / 2) + 'px');
+                this.top ? this.top : (document.body.clientHeight / 2 - this.popupElement.offsetHeight / 2) + 'px');
             this.renderer.setStyle(this.popupElement, 'left',
-                (window.innerWidth / 2 - this.popupElement.offsetWidth / 2) + 'px');
+                (document.body.clientWidth / 2 - this.popupElement.offsetWidth / 2) + 'px');
         })
     }
 
