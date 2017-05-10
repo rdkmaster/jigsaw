@@ -5,6 +5,7 @@ import {
     Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewEncapsulation, ViewChildren, QueryList
 } from '@angular/core';
 import {SliderHandle} from "./handle";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 @Component({
     selector: 'rdk-slider',
@@ -17,8 +18,7 @@ import {SliderHandle} from "./handle";
 })
 /**
  *       4. tooltips 支持. 暂不支持
- *       6. mark的class . 没有支持成功. 没发现哪里写的有问题.
- *       8. 双触点再向外传值支持, 向外传递对象, 弄了快一天, 没有解决.
+ *       5. 点击的支持。
  */
 export class RdkSlider implements OnInit {
 
@@ -26,22 +26,18 @@ export class RdkSlider implements OnInit {
 
     @ViewChildren(SliderHandle) _sliderHandle: QueryList<SliderHandle>;
 
-    private _handleValue1: number;
-
-    private _handleValue2: number;
-
     private _value:Array<number> = [];
 
     @Input()
-    public get value() {
+    public get value():number|number[] {
         // 兼容返回单个值， 和多触点的数组;
         if(!this.range) {
             return this._value[0];
         } else {
-            return [this._handleValue1, this._handleValue2];
+            return this._value;
         }
     };
-    public set value(value) {
+    public set value(value:number|number[]) {
         if(typeof value  === 'object') {
             this._value = value;
         } else if(this._value.length === 0) {
@@ -50,8 +46,16 @@ export class RdkSlider implements OnInit {
             this._value[0] = value;
         }
 
-        this._generateHandleValues();
         this._setTrackStyle();
+    }
+
+    // 设置单个的值
+    public setValue(key, value) {
+        this._value[key] = value;
+
+        this._setTrackStyle();
+
+        this.valueChange.emit(this.value);
     }
 
     @Output()
@@ -64,6 +68,7 @@ export class RdkSlider implements OnInit {
     public range: boolean = false;
 
     private _min: number = 0;
+
     @Input()
     public get min() { return this._min; }
     public set min(min) {
@@ -111,8 +116,8 @@ export class RdkSlider implements OnInit {
 
         // 兼容双触点.
         if(this.range) {
-            startPos = Math.min(this._handleValue1, this._handleValue2);
-            trackSize = Math.abs(this._handleValue1 - this._handleValue2);
+            startPos = Math.min(this.value[0], this.value[1]);
+            trackSize = Math.abs(this.value[0] - this.value[1]);
         }
 
         if(this.vertical) { // 垂直和水平两种
@@ -141,28 +146,6 @@ export class RdkSlider implements OnInit {
     @Input()
     public marks: [Object];
 
-    _handleValueChange(key, value) {
-
-        if(value !== this.value) {
-
-            if(key === 0) {
-                this._handleValue1 = value;
-            } else {
-                this._handleValue2 = value;
-            }
-
-            if(this.range) {
-                //this._handleValue1 + "," + this._handleValue2
-                this.valueChange.emit();
-            } else {
-                this.valueChange.emit(value);
-            }
-
-            // 设置值域的变化.
-            this._setTrackStyle(value);
-        }
-    }
-
     _calMarks() {
         if(!this.marks) return;
 
@@ -176,7 +159,7 @@ export class RdkSlider implements OnInit {
                 mark["dot"] = {
                     bottom: this._transformValueToPos(mark["value"]) + "%",
                 }
-                mark["style"] = {
+                mark["componentStyle"] = {
                     bottom: this._transformValueToPos(mark["value"]) + "%",
                     "margin-bottom": margin + "%"
                 }
@@ -186,12 +169,14 @@ export class RdkSlider implements OnInit {
                     left: this._transformValueToPos(mark["value"]) + "%",
                 }
 
-                mark["style"] = {
+                mark["componentStyle"] = {
                     left: this._transformValueToPos(mark["value"]) + "%",
                     width: size + "%",
                     "margin-left": margin + "%"
                 }
             }
+            // 如果用户自定义了样式, 要进行样式的合并;
+            CommonUtils.extendObject(mark["componentStyle"], mark["style"]);
         });
     }
 
@@ -203,14 +188,5 @@ export class RdkSlider implements OnInit {
 
         // 设置标记.
         this._calMarks();
-    }
-
-    private _generateHandleValues() {
-        if(this._value.length === 1 ) {
-            this._handleValue1 = this._value[0];
-        } else {
-            this._handleValue1 = this._value[0];
-            this._handleValue2 = this._value[1];
-        }
     }
 }

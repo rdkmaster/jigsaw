@@ -10,7 +10,7 @@ $rdk-slider: #{$rdk-prefix}-slider;
 }
 
 ::selection {
-    background-color: transparent;
+    background-color: #fff;
 }
 
 .#{$rdk-slider} {
@@ -110,7 +110,6 @@ $rdk-slider: #{$rdk-prefix}-slider;
 
         > .#{$rdk-slider}-dot {
             position: absolute;
-            //top: -2px;
             margin-left: -4px;
             width: 8px;
             height: 8px;
@@ -178,7 +177,6 @@ $rdk-slider: #{$rdk-prefix}-slider;
             left: 10px;
         }
         .#{$rdk-slider}-mark-text {
-            //left: 10px;
             white-space: nowrap;
         }
 

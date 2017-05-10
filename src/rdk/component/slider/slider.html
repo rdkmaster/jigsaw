@@ -15,13 +15,12 @@
               [ngStyle]="mark.dot"></span>
     </div>
 
-    <slider-handle *ngFor="let item of _value;let i = index" [max]="max" [min]="min" value="{{item}}" [vertical]="vertical"
-                   [step]="step" [dimensions]="_dimensions" [key]="i" (change)="_handleValueChange(i, $event)">
+    <slider-handle *ngFor="let item of _value;let i = index" value="{{item}}" [dimensions]="_dimensions" [key]="i" >
     </slider-handle>
 
     <div class="rdk-slider-mark">
         <span *ngFor="let mark of marks" class="rdk-slider-mark-text"
-              [ngStyle]="mark.style"
+              [ngStyle]="mark.componentStyle"
              > {{mark.label}}</span>
     </div>
 </div>
