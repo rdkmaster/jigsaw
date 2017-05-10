@@ -1,12 +1,11 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {LoadingDemoComponent } from "./basic/basic";
-import {LoadingSetclassDemoComponent } from "./setclass/setclass";
+import {DefinedLoadingDemoComponent } from "./userDefined/userDefined";
 import {LoadingService } from "../../../../service/loading.service"
-import { LoadingServiceComponent } from "../../../../service/loading.service"
+import {RdkLoading} from "../../../../component/loading/loading";
+import {LoadingDemoComponent} from "./basic/loading";
 import {PopupService} from "../../../../service/popup.service";
-import {RdkLoading, RdkLoadingModule} from "../../../../component/loading/loading";
-import {Loading2DemoComponent} from "./loading2/loading";
+import {DefinedLoading} from "./userDefined/definedLoading/definedLoading";
 const loadingDemoRoutes = [
     {
         path: '', redirectTo: 'basic', pathMatch: 'full'
@@ -15,10 +14,7 @@ const loadingDemoRoutes = [
         path: 'basic', component: LoadingDemoComponent
     },
     {
-        path: 'setclass', component: LoadingSetclassDemoComponent
-    },
-    {
-        path: 'loading2', component: Loading2DemoComponent
+        path: 'userDefined', component: DefinedLoadingDemoComponent
     },
     {
         path: '**', //fallback router must in the last
@@ -28,13 +24,13 @@ const loadingDemoRoutes = [
 
 @NgModule({
     declarations: [
-        LoadingDemoComponent,LoadingServiceComponent,LoadingSetclassDemoComponent, Loading2DemoComponent
+        LoadingDemoComponent,DefinedLoadingDemoComponent, RdkLoading, DefinedLoading
     ],
     imports: [
-        RouterModule.forChild(loadingDemoRoutes), RdkLoadingModule
+        RouterModule.forChild(loadingDemoRoutes)
     ],
     providers: [LoadingService, PopupService],
-    entryComponents:[LoadingServiceComponent, RdkLoading]
+    entryComponents:[RdkLoading, DefinedLoading]
 })
 export class LoadingDemoModule {
 }
