@@ -9,6 +9,7 @@ import {
     Type,
     ViewContainerRef
 } from "@angular/core";
+import {CommonUtils} from "../core/utils/common-utils";
 
 export enum PopupEffect {
     fadeIn, fadeOut
@@ -21,7 +22,7 @@ export class PopupOptions {
     pos?: PopupPosition; //控制弹出对象的左上角位置，下面2者选其一。
     posOffset?: PopupPositionOffset;
     posType?: PopupPositionType;
-    size?: { width?: number, height?: number }
+    size?: { width?: number, height?: number };
 }
 
 export type PopupPosition = PopupPoint | ElementRef;
@@ -68,6 +69,7 @@ export interface IPopupable {
 export class PopupService {
     //全局插入点
     private _viewContainerRef: ViewContainerRef;
+    private _renderer: Renderer2;
 
     constructor(private _cfr: ComponentFactoryResolver,
                 private _appRef: ApplicationRef) {
@@ -76,41 +78,31 @@ export class PopupService {
             if (component.instance.hasOwnProperty('viewContainerRef')) {
                 this._viewContainerRef = component.instance.viewContainerRef;
             }
+            if (component.instance.hasOwnProperty('renderer')) {
+                this._renderer = component.instance.renderer;
+            }
         });
-        if (!this._viewContainerRef) {
-            console.error("please add 'constructor(public viewContainerRef: ViewContainerRef){}' into AppComponent");
+        if (!this._viewContainerRef || !this._renderer) {
+            console.error("please add 'constructor(public viewContainerRef: ViewContainerRef, public renderer: Renderer2){}' into AppComponent");
         }
     }
 
     /*
      * 打开弹框
-     * return 弹框的id
+     * return 弹框的销毁回调
      * */
     public popup(what: Type<IPopupable>, options?: PopupOptions, initData?: any): PopupDisposer;
-    public popup(what: TemplateRef<any>, options?: PopupOptions, initData?: any, context?: any, render?: Renderer2): PopupDisposer;
-    public popup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any, context?: any, render?: Renderer2): PopupDisposer {
+    public popup(what: TemplateRef<any>, options?: PopupOptions): PopupDisposer;
+    public popup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupDisposer {
         let disposer: PopupDisposer;
         let ref: PopupRef;
         if (what instanceof TemplateRef) {
-            ref = this._viewContainerRef.createEmbeddedView(what, context);
+            ref = this._viewContainerRef.createEmbeddedView(what);
             disposer = this._getDisposer(ref);
-
-            if (context && render) {
-                let left = (context.nativeElement.offsetLeft) + 'px';
-                let top = (context.nativeElement.offsetTop + context.nativeElement.offsetHeight ) + 'px';
-                let value = typeof initData === 'string' ? initData : initData + '';
-                const match = value ? value.match(/^\s*(\d+)(%|px)\s*$/) : null;
-                let width;
-                if (match && match[2] == '%') {
-                    width = parseInt(match[1]) / 100 * context.nativeElement.offsetWidth + 'px';
-                } else {
-                    width = context.nativeElement.offsetWidth + 'px';
-                }
-
-                render.setStyle(ref.rootNodes[1], 'position', 'absolute');
-                render.setStyle(ref.rootNodes[1], 'top', top);
-                render.setStyle(ref.rootNodes[1], 'left', left);
-                render.setStyle(ref.rootNodes[1], 'width', width);
+            let popupElement = ref.rootNodes.find(rootNode => rootNode instanceof HTMLElement);
+            if (options) {
+                PopupService.setSize(options, popupElement, this._renderer);
+                PopupService.setPosition(options, popupElement, this._renderer);
             }
         } else {
             const factory = this._cfr.resolveComponentFactory(what);
@@ -118,7 +110,7 @@ export class PopupService {
             disposer = this._getDisposer(ref);
             ref.instance.disposer = disposer;
             ref.instance.initData = initData;
-            ref.instance.options = options ? options : {};
+            ref.instance.options = options;
         }
         return disposer;
     }
@@ -127,6 +119,31 @@ export class PopupService {
         return () => {
             popupRef.destroy();
         }
+    }
+
+    /*
+     * 设置弹框尺寸
+     * */
+    public static setSize(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
+        if (!options.size) return;
+        let size = options.size;
+        if (size.width) {
+            renderer.setStyle(element, 'width', CommonUtils.getCssValue(size.width));
+        }
+        if (size.height) {
+            renderer.setStyle(element, 'height', CommonUtils.getCssValue(size.height));
+        }
+    }
+
+    /*
+     * 设置弹出的位置
+     * */
+    public static setPosition(options: PopupOptions, element: HTMLElement, renderer: Renderer2): void {
+        let posType: string = options.modal ? 'fixed' : PopupService.getPositionType(options.posType);
+        let position = PopupService.getPositionValue(options, element);
+        renderer.setStyle(element, 'position', posType);
+        renderer.setStyle(element, 'top', position.top);
+        renderer.setStyle(element, 'left', position.left);
     }
 
     /*
@@ -153,7 +170,10 @@ export class PopupService {
 
         let top: string = '';
         let left: string = '';
-        if (options.pos instanceof ElementRef) {
+        if (options.modal) {
+            top = (window.innerHeight / 2 - element.offsetHeight / 2) + 'px';
+            left = (window.innerWidth / 2 - element.offsetWidth / 2) + 'px';
+        } else if (options.pos instanceof ElementRef) {
             if (options.posOffset.top || options.posOffset.top == 0) {
                 top = (options.pos.nativeElement.offsetTop + options.posOffset.top) + 'px';
             }

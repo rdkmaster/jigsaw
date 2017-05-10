@@ -2,7 +2,10 @@ import {NgModule} from "@angular/core";
 import { HttpModule } from '@angular/http';
 import {RouterModule} from "@angular/router";
 import {ZtreeDemoComponent} from "./basic/basic";
-import { RdkTreeExtModule } from "../../../../component/ztree/ztree-ext"
+import { RdkTreeExtModule } from "../../../../component/tree/tree-ext"
+import {ZtreeDemoDataFromAjaxComponent} from "./dataFromAjax/dataFromAjax";
+import {ZtreeDemoEditableComponent} from "./editable/editable";
+import {ZtreeAsynDemoComponent} from "./asyn/asyn";
 
 const ztreeDemoRoutes=[
     {
@@ -12,6 +15,12 @@ const ztreeDemoRoutes=[
     },
     {
         path:'basic', component: ZtreeDemoComponent
+    }, {
+        path:'dataFromAjax', component: ZtreeDemoDataFromAjaxComponent
+    },{
+        path:'editable', component: ZtreeDemoEditableComponent
+    },{
+        path:'asyn', component: ZtreeAsynDemoComponent
     },
     {
         path:'**', //fallback router must in the last
@@ -21,7 +30,7 @@ const ztreeDemoRoutes=[
 
 @NgModule({
     declarations: [
-        ZtreeDemoComponent
+        ZtreeDemoComponent,ZtreeDemoDataFromAjaxComponent,ZtreeDemoEditableComponent,ZtreeAsynDemoComponent
     ],
     imports: [
         RouterModule.forChild(ztreeDemoRoutes),RdkTreeExtModule,HttpModule

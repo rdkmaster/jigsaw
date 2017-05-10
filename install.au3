@@ -1,25 +1,44 @@
 ﻿#AutoIt3Wrapper_Icon=favicon.ico
 
-#include <array.au3>
+#include <Array.au3>
+#include <GuiEdit.au3>
+#include <GUIConstantsEx.au3>
+
 
 #NoTrayIcon
 
 OnAutoItExitRegister('_onExit')
 
+
+Global $idConsole = 0
+
+
 Local $isSilence = False
 If $cmdLine[0] >= 1 Then $isSilence = $cmdLine[1] == '-silence' Or $cmdLine[1] == '-s'
 If StringInStr($isSilence, '?') Then Exit MsgBox(64, "Jigsaw Installer", "用法：install [-silence / -s]")
 
+If Not $isSilence Then
+	; Create Console
+	Run('c:\windows\notepad.exe', '', @SW_HIDE)
+	$idConsole = WinWait("[CLASS:Notepad]")
+	WinSetTitle($idConsole, '', 'Jigsaw Installer Console')
+	ControlDisable($idConsole, '', "Edit1")
+	ControlSetText($idConsole, '', 'Edit1', 'Jigsaw is been installing...' & @CRLF)
+	WinSetOnTop($idConsole, '', True)
+	WinMove($idConsole, '', 0, 0, 450, 320)
+	WinSetState($idConsole, '', @SW_SHOW)
+EndIf
+
 
 If FileExists(@ScriptDir & '\node_modules') Then
 	If Not $isSilence And MsgBox(292,"Jigsaw Installer", "node_modules目录已经存在，是否将其删除？") == 7 Then Exit
-	_showMessage('正在删除 node_modules 目录。。。')
+	_appendConsole('正在删除 node_modules 目录...')
 	If Not DirRemove(@ScriptDir & '\node_modules', True) Then
 		_error('无法删除文件夹 ' & @ScriptDir & '\node_modules' & @CRLF & '请退出IDE和npm程序后再试一次。')
 	EndIf
 EndIf
 
-_showMessage('正在从服务器下载依赖包。。。')
+_appendConsole('正在从服务器下载依赖包...')
 If FileExists(@ScriptDir & '\install_tmp') Then DirRemove(@ScriptDir & '\install_tmp', True)
 DirCreate(@ScriptDir & '\install_tmp')
 InetGet('http://rdk.zte.com.cn:4200/tools/node_modules.zip', @ScriptDir & '\install_tmp\node_modules.zip', 1)
@@ -36,7 +55,8 @@ EndIf
 
 
 Func _unzipPackage($packagePath)
-	_hideMessage()
+	_appendConsole('正在解压依赖包...')
+	_appendConsole('这需要大约3到10分钟不等的时间，请耐心等候')
 	Local $zip = RegRead('HKEY_CURRENT_USER\Software\7-Zip\', 'Path') & '\7z.exe'
 	If FileExists($zip) Then
 		; 7zip 解压速度更快
@@ -51,14 +71,10 @@ Func _unzipPackage($packagePath)
 	EndIf
 EndFunc
 
-Func _showMessage($msg)
+Func _appendConsole($msg)
 	If $isSilence Then Return
-	ToolTip('Jigsaw Installer' & @CRLF & $msg, @DesktopWidth/2, @DesktopHeight/2-50, '', 0, 2)
-EndFunc
-
-Func _hideMessage()
-	If $isSilence Then Return
-	ToolTip('')
+	Local $text = ControlGetText($idConsole, '', 'Edit1')
+	ControlSetText($idConsole, '', 'Edit1', $text & @CRLF & $msg)
 EndFunc
 
 Func _error($msg)
@@ -71,6 +87,7 @@ EndFunc
 
 Func _onExit()
 	If FileExists(@ScriptDir & '\install_tmp') Then DirRemove(@ScriptDir & '\install_tmp', True)
+	If $idConsole <> 0 Then WinClose($idConsole)
 EndFunc
 
 
