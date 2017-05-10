@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
     template: `
         <h4>1. 基本滑动条,滑动事件变化. </h4>
         <rdk-switch [(checked)]="disabled" size="small"></rdk-switch>
-        <rdk-slider [value]="value1" [disabled]="disabled" (change)="sliderChange($event)"></rdk-slider>
+        <rdk-slider [(value)]="value1" [disabled]="disabled" (change)="sliderChange($event)"></rdk-slider>{{value1}}
         <hr>
         <br>
         <h4>2. 设置了min和max的滑动条</h4>
@@ -19,8 +19,8 @@ import { Component, OnInit } from '@angular/core';
         
         <hr>
         <br>
-        <h4>4. 双触点滑动条(TODO)</h4>
-        <rdk-slider [(value)]="rangeValue" range="true"></rdk-slider>
+        <h4>4. 双触点滑动条</h4>
+        <rdk-slider [(value)]="rangeValue" range="true" (change)="handleValueChange($event)"></rdk-slider>
         
         <hr>
         <br>
@@ -50,14 +50,20 @@ export class RdkSliderDemoBasic implements OnInit {
     valueStep = 1;
 
     rangeValue = [30, 60]
+    handleValueChange(value) {
+        console.log("传递出来的对象:");
+        console.log(value);
+    }
 
     marks = [{value: 20, label: '20oC'},
     {value: 40, label: '40oC'},
-    {value: 60, label: '60oC', class: "markStyle-3"}]
+    {value: 60, label: '60oC', style: {
+        color: "red"
+    }}]
 
     marks2 = [{value: 20, label: '20oC'},
         {value: 40, label: '40oC'},
-        {value: 60, label: '60oC', class: "markStyle-3"}]
+        {value: 80, label: '80oC', class: "markStyle-3"}]
 
     sliderChange(value) {
         console.info("当前值: " + value);
