@@ -6,7 +6,7 @@ import {
     Component, OnInit, ViewChild, ElementRef, Renderer2, Input, Output, EventEmitter,
     ViewEncapsulation
 } from '@angular/core';
-import {tagGroupValue} from '../../../../../component/tag/tag'
+import {TagGroupValue} from '../../../../../component/tag/tag'
 @Component({
     templateUrl: 'autoWidth.html',
     styles: [`.rdk-drop-down .rdk-drop-down-tag-group {
@@ -20,7 +20,7 @@ export class DropDownAutoWidthDemo implements OnInit {
                 private _elementRef: ElementRef) {
     }
 
-    public selectedCity: tagGroupValue = [{label: "北京", closable: false}];
+    public selectedCity: TagGroupValue = [{label: "北京", closable: false}];
     private citys = [
         {label: "北京", closable: false},
         {label: "上海", closable: false},

@@ -4,7 +4,7 @@
 
 import {Component, OnInit, ChangeDetectorRef, ViewChild} from '@angular/core';
 import {RdkDropDown} from "../../../../../component/dropdown/dropdown";
-import {tagGroupValue} from "../../../../../component/tag/tag";
+import {TagGroupValue} from "../../../../../component/tag/tag";
 
 @Component({
     templateUrl: 'labelField.html',
@@ -15,7 +15,7 @@ export class DropDownLabelFieldDemo implements OnInit {
     }
 
     public labelField = "name";
-    public selectedCity: tagGroupValue = [{name: "北京", closable: false}];
+    public selectedCity: TagGroupValue = [{name: "北京", closable: false}];
     private citys = [
         {name: "北京", closable: false},
         {name: "上海", closable: false},

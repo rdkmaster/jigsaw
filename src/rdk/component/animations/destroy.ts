@@ -1,6 +1,6 @@
 import {trigger, style, transition, animate} from '@angular/animations';
 
-export const tagDestroy = trigger('tagDestroy', [
+export const TagDestroy = trigger('TagDestroy', [
     transition('* => inactive', [
         animate('.3s cubic-bezier(.78,.14,.15,.86)', style({
             transform: 'scale(0, 0)',

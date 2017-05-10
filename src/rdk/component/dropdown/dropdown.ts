@@ -15,9 +15,9 @@ import {
 } from "@angular/core";
 import {PopupDisposer, PopupOptions, PopupPositionType, PopupService} from "rdk/service/popup.service";
 import {AbstractRDKComponent} from "../core";
-import {tagGroupValue} from "../tag/tag";
+import {TagGroupValue} from "../tag/tag";
 
-export type inputValue = tagGroupValue | string;
+export type DropdownInputValue = TagGroupValue | string;
 
 export enum DropDownTrigger {
     click,
@@ -41,15 +41,15 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy {
         super();
     }
 
-    private _value: inputValue = null;
+    private _value: DropdownInputValue = null;
     private _stringValue: string = null;
 
     @Input()
-    public get value(): inputValue {
+    public get value(): DropdownInputValue {
         return this._value;
     }
 
-    public set value(value: inputValue) {
+    public set value(value: DropdownInputValue) {
         if (typeof value === 'string') {
             this._stringValue = value;
             this._value = null;
@@ -59,7 +59,7 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy {
         }
     }
 
-    @Output() public valueChange = new EventEmitter<inputValue>();
+    @Output() public valueChange = new EventEmitter<DropdownInputValue>();
 
     @Input() public labelField: string = 'label';
 

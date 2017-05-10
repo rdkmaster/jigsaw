@@ -1,9 +1,9 @@
 import {Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Optional, Output, Renderer2} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {tagDestroy} from "../animations/tag-destroy";
+import {TagDestroy} from "../animations/destroy";
 import {AbstractRDKComponent} from "../core";
 
-export type tagGroupValue = Array<{ [index: string]: any }>;
+export type TagGroupValue = Array<{ [index: string]: any }>;
 
 @Component({
     selector: 'rdk-tag-group',
@@ -28,19 +28,19 @@ export type tagGroupValue = Array<{ [index: string]: any }>;
 
 export class RdkTagGroup extends AbstractRDKComponent implements OnInit {
 
-    private _data: tagGroupValue = null;
+    private _data: TagGroupValue = null;
     @Input()
-    public get data(): tagGroupValue {
+    public get data(): TagGroupValue {
         return this._data;
     }
 
-    public set data(value: tagGroupValue) {
+    public set data(value: TagGroupValue) {
         this._data = value;
 
     }
 
     @Output()
-    public dataChange = new EventEmitter<tagGroupValue>();
+    public dataChange = new EventEmitter<TagGroupValue>();
 
     @Input() public labelField: string = 'label';
 
@@ -61,19 +61,20 @@ export class RdkTagGroup extends AbstractRDKComponent implements OnInit {
     @Input() public color: string;
 
     private _updateTags(): void {
-        this._value && this.data.length && this.data.forEach((tag, index) => {
-            if (tag[this.labelField] === this._value[this.labelField]) {
-                this.data.splice(index, 1);
-                let arr = [];
-                this.data.forEach((item) => {
-                    arr.push(item);
-                });
-                this.data = arr;
-                this.dataChange.emit(this._data);
-            }
-        });
-
-
+        if (this.data.length === 0) return;
+        if (this._value) {
+            this.data.forEach((tag, index) => {
+                if (tag[this.labelField] === this._value[this.labelField]) {
+                    this.data.splice(index, 1);
+                    let arr = [];
+                    this.data.forEach((item) => {
+                        arr.push(item);
+                    });
+                    this.data = arr;
+                    this.dataChange.emit(this._data);
+                }
+            });
+        }
     }
 
     ngOnInit() {
@@ -93,11 +94,11 @@ export class RdkTagGroup extends AbstractRDKComponent implements OnInit {
         '[style.border-color]': 'color',
         '[class.rdk-tag-close]': '_closable',
         '[class.rdk-tag-color]': '!!color',
-        '[@tagDestroy]': '_state',
-        '(@tagDestroy.done)': '_animationDone($event)',
+        '[@TagDestroy]': '_state',
+        '(@TagDestroy.done)': '_animationDone($event)',
     },
     animations: [
-        tagDestroy
+        TagDestroy
     ]
 })
 export class RdkTag extends AbstractRDKComponent implements OnInit {
