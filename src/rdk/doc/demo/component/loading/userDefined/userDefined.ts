@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {LoadingService} from "../../../../../service/loading.service"
 import {PopupDisposer} from "../../../../../service/popup.service";
 import {DefinedLoading} from "./definedLoading/definedLoading";
@@ -33,9 +33,15 @@ export class DefinedLoadingDemoComponent {
         if (!this.disposeGlobalLoading) {
             this.disposeGlobalLoading = this.loadingService.show(DefinedLoading);
             setTimeout(() => {
-                this.disposeGlobalLoading();
-                this.disposeGlobalLoading = null;
+                this.closeGlobalLoading();
             }, 3000)
+        }
+    }
+
+    closeGlobalLoading() {
+        if (this.disposeGlobalLoading) {
+            this.disposeGlobalLoading();
+            this.disposeGlobalLoading = null;
         }
     }
 }

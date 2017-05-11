@@ -32,10 +32,15 @@ export class LoadingDemoComponent {
         if (!this.disposeGlobalLoading) {
             this.disposeGlobalLoading = this.loadingService.show();
             setTimeout(() => {
-                this.disposeGlobalLoading();
-                this.disposeGlobalLoading = null;
+                this.closeGlobalLoading();
             }, 3000)
         }
     }
 
+    closeGlobalLoading() {
+        if (this.disposeGlobalLoading) {
+            this.disposeGlobalLoading();
+            this.disposeGlobalLoading = null;
+        }
+    }
 }
