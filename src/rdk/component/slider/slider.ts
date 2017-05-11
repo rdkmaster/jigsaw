@@ -2,7 +2,8 @@
  * Created by 10177553 on 2017/4/13.
  */
 import {
-    Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewEncapsulation, ViewChildren, QueryList
+    Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewEncapsulation, ViewChildren, QueryList, Renderer2,
+    OnDestroy
 } from '@angular/core';
 import {SliderHandle} from "./handle";
 import {CommonUtils} from "../../core/utils/common-utils";
@@ -20,9 +21,9 @@ import {CommonUtils} from "../../core/utils/common-utils";
  *       4. tooltips 支持. 暂不支持
  *       5. 点击的支持。
  */
-export class RdkSlider implements OnInit {
+export class RdkSlider implements OnInit, OnDestroy {
 
-    constructor(private _element: ElementRef) { }
+    constructor(private _element: ElementRef, private _render: Renderer2) { }
 
     @ViewChildren(SliderHandle) _sliderHandle: QueryList<SliderHandle>;
 
@@ -188,5 +189,24 @@ export class RdkSlider implements OnInit {
 
         // 设置标记.
         this._calMarks();
+        // 注册resize事件;
+        this.resize();
+    }
+    private _removeResizeEvent:Function;
+
+    private resize() {
+        this._removeResizeEvent = this._render.listen("window", "resize", () => {
+            // 计算slider 的尺寸.
+            this._dimensions = this._element.nativeElement.getBoundingClientRect();
+        })
+    }
+
+    /**
+     * 暂没有使用场景.
+     */
+    public ngOnDestroy() {
+        if(this._removeResizeEvent) {
+            this._removeResizeEvent();
+        }
     }
 }
