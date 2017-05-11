@@ -69,9 +69,10 @@ export class SliderHandle implements OnInit{
         let top = document.body.scrollTop;
         let left = document.body.scrollLeft;
 
+        // bottom 在dom中的位置.
         let offset = this._slider.vertical?this.dimensions.bottom - top:this.dimensions.left - left;
         let size = this._slider.vertical?this.dimensions.height:this.dimensions.width;
-        let posValue = this._slider.vertical? pos.y-56: pos.x; // Todo 这个76 到底多少, 怎么来的.
+        let posValue = this._slider.vertical? pos.y-56: pos.x;
 
         if(this._slider.vertical) {
             posValue = posValue > offset? offset:posValue;
@@ -123,8 +124,8 @@ export class SliderHandle implements OnInit{
     globalEventMouseUp: Function;
 
     _registerGlobalEvent() {
-        this.globalEventMouseMove = this._render.listen("document", "mousemove", () => {
-            this.updateValuePosition();
+        this.globalEventMouseMove = this._render.listen("document", "mousemove", (e) => {
+            this.updateValuePosition(e);
         });
         this.globalEventMouseUp = this._render.listen("document", "mouseup", () => {
             this._dragged = false;
@@ -146,9 +147,7 @@ export class SliderHandle implements OnInit{
     }
 
     // 改变value的值;
-    private updateValuePosition() {
-        console.info("updateValuePosition")
-
+    private updateValuePosition(event?) {
         if(!this._dragged|| this._slider.disabled) return;
 
         let pos = {
