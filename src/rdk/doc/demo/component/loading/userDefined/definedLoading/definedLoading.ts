@@ -1,5 +1,5 @@
 import {Component, ElementRef, Renderer2} from "@angular/core";
-import {RdkLoading, RdkLoadingBase} from "../../../../../../component/loading/loading";
+import {RdkLoadingBase} from "../../../../../../component/loading/loading";
 
 @Component({
     templateUrl: 'definedLoading.html',
