@@ -147,9 +147,7 @@ export class SliderHandle implements OnInit{
 
     // 改变value的值;
     private updateValuePosition() {
-        console.log('******');
-        console.log(this._dragged);
-        console.log(this._slider.disabled);
+        console.info("updateValuePosition")
 
         if(!this._dragged|| this._slider.disabled) return;
 
