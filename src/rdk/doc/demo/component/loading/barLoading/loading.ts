@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {PopupDisposer} from "../../../../../service/popup.service";
 import {LoadingService} from "rdk/service/loading.service";
 import {RdkBarLoading} from "../../../../../component/loading/loading";
@@ -7,22 +7,16 @@ import {RdkBarLoading} from "../../../../../component/loading/loading";
     templateUrl: 'loading.html',
     styleUrls: ['loading.scss']
 })
-export class LoadingDemoComponent implements OnInit{
+export class BarLoadingDemoComponent{
     @ViewChild('block') block: ElementRef;
 
-    constructor(public loadingService: LoadingService, public renderer: Renderer2) {
+    constructor(public loadingService: LoadingService) {
     }
 
     disposeBlockLoading: PopupDisposer;
     disposeGlobalLoading: PopupDisposer;
 
     popupBlockLoading() {
-        if (!this.disposeBlockLoading) {
-            this.disposeBlockLoading = this.loadingService.show(this.block);
-        }
-    }
-
-    popupBlockBarLoading() {
         if (!this.disposeBlockLoading) {
             this.disposeBlockLoading = this.loadingService.show(this.block, RdkBarLoading);
         }
@@ -37,15 +31,6 @@ export class LoadingDemoComponent implements OnInit{
 
     popupGlobalLoading() {
         if (!this.disposeGlobalLoading) {
-            this.disposeGlobalLoading = this.loadingService.show();
-            setTimeout(() => {
-                this.closeGlobalLoading();
-            }, 3000)
-        }
-    }
-
-    popupGlobalBarLoading() {
-        if (!this.disposeGlobalLoading) {
             this.disposeGlobalLoading = this.loadingService.show(RdkBarLoading);
             setTimeout(() => {
                 this.closeGlobalLoading();
@@ -59,13 +44,4 @@ export class LoadingDemoComponent implements OnInit{
             this.disposeGlobalLoading = null;
         }
     }
-
-    ngOnInit(){
-        //window.history.back的监听
-        this.renderer.listen('window', 'popstate', () => {
-            this.closeBlockLoading();
-            this.closeGlobalLoading();
-        })
-    }
-
 }
