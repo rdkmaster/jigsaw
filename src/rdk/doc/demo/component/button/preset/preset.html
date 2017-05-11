@@ -1,0 +1,43 @@
+
+<p>预设颜色</p>
+<rdk-button  colortype="danger">Danger</rdk-button>
+
+<rdk-button>Default</rdk-button>
+
+<rdk-button  colortype="primary">Primary</rdk-button>
+
+<br>
+<br>
+<br>
+<p>另一种写法</p>
+
+<a rdk-button  colortype="danger">Danger</a>
+
+<a rdk-button >Default</a>
+
+<a rdk-button  colortype="primary">Primary</a>
+
+<br>
+<br>
+<br>
+<p>预设尺寸</p>
+<br>
+<p>当前尺寸: {{size || "default"}}</p>
+<br>
+<rdk-button  [presize]="size" colortype="primary" (click)="changeSize('small')">Small</rdk-button>
+
+<rdk-button  [presize]="size" colortype="primary" (click)="changeSize()">Default</rdk-button>
+
+<rdk-button  [presize]="size" colortype="primary" (click)="changeSize('large')">Large</rdk-button>
+
+<br>
+<br>
+<p>另一种写法</p>
+<br>
+<p>当前尺寸: {{aSize || "default"}}</p>
+<br>
+<a rdk-button  [presize]="aSize" colortype="primary" (click)="changeASize('small')">Small</a>
+
+<a rdk-button  [presize]="aSize" colortype="primary" (click)="changeASize()">Default</a>
+
+<a rdk-button  [presize]="aSize" colortype="primary" (click)="changeASize('large')">Large</a>
