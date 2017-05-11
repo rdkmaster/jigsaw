@@ -61,6 +61,7 @@ $amount: 10px;
     right: 0;
     bottom: 0;
     z-index: 9999;
+    @include prefixer(transition, opacity 0.3s $ease-in-out);
     @include opacity(0);
     &.in {
         @include opacity(0.6);
