@@ -30,7 +30,7 @@ import { Component, OnInit } from '@angular/core';
         <hr>
         <br>
         <h4>6. 垂直滑动条.</h4>
-        <rdk-slider value="50" [vertical]="vertical" class="vertical" style="height: 240px;"></rdk-slider>
+        <rdk-slider value="50" [vertical]="vertical" class="vertical" style="height: 240px; width: 60px;"></rdk-slider>
         
         <rdk-slider value="50" [marks]="marks2" [vertical]="vertical" class="vertical3"></rdk-slider>
     `,
