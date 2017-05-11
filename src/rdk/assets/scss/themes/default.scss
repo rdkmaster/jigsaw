@@ -8,6 +8,7 @@ $error-color            : #f50;
 $highlight-color        : #f50;
 $warning-color          : #fa0;
 $normal-color           : #d9d9d9;
+$default-color          : #fff;
 $disabled-color         : rgba(0,0,0,.25);
 
 $primary-1: saturate($primary-color, 80%);  // replace tint($primary-color, 90%)
@@ -110,7 +111,7 @@ $btn-ghost-color        : $text-color;
 $btn-ghost-bg           : transparent;
 $btn-ghost-border       : $border-color-base;
 
-$btn-disable-color      : #ccc;
+$btn-disable-color      : rgba(0, 0, 0, 0.247059);
 $btn-disable-bg         : $background-color-base;
 $btn-disable-border     : $border-color-base;
 
@@ -122,6 +123,10 @@ $btn-padding-sm         : 1px 7px;
 $btn-circle-size        : 28px;
 $btn-circle-size-lg     : 32px;
 $btn-circle-size-sm     : 22px;
+
+$btn-size-height-base   : $height-base;
+$btn-size-height-sm     : 20px;
+$btn-size-height-lg     : 36px;
 
 // Media queries breakpoints
 // Extra small screen / phone
