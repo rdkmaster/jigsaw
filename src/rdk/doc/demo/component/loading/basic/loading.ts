@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {PopupDisposer} from "../../../../../service/popup.service";
 import {LoadingService} from "rdk/service/loading.service";
 
@@ -6,10 +6,10 @@ import {LoadingService} from "rdk/service/loading.service";
     templateUrl: 'loading.html',
     styleUrls: ['loading.scss']
 })
-export class LoadingDemoComponent {
+export class LoadingDemoComponent implements OnInit{
     @ViewChild('block') block: ElementRef;
 
-    constructor(public loadingService: LoadingService) {
+    constructor(public loadingService: LoadingService, public renderer: Renderer2) {
     }
 
     disposeBlockLoading: PopupDisposer;
@@ -32,10 +32,23 @@ export class LoadingDemoComponent {
         if (!this.disposeGlobalLoading) {
             this.disposeGlobalLoading = this.loadingService.show();
             setTimeout(() => {
-                this.disposeGlobalLoading();
-                this.disposeGlobalLoading = null;
+                this.closeGlobalLoading();
             }, 3000)
         }
+    }
+
+    closeGlobalLoading(){
+        if(this.disposeGlobalLoading){
+            this.disposeGlobalLoading();
+            this.disposeGlobalLoading = null;
+        }
+    }
+
+    ngOnInit(){
+        this.renderer.listen('window', 'popstate', () => {
+            this.closeBlockLoading();
+            this.closeGlobalLoading();
+        })
     }
 
 }
