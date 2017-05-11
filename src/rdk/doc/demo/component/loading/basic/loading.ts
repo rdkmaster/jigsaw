@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {PopupDisposer} from "../../../../../service/popup.service";
 import {LoadingService} from "rdk/service/loading.service";
 
@@ -9,7 +9,7 @@ import {LoadingService} from "rdk/service/loading.service";
 export class LoadingDemoComponent {
     @ViewChild('block') block: ElementRef;
 
-    constructor(public loadingService: LoadingService, public renderer: Renderer2) {
+    constructor(public loadingService: LoadingService) {
     }
 
     disposeBlockLoading: PopupDisposer;
