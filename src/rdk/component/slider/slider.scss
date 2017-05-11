@@ -7,10 +7,11 @@ $rdk-slider: #{$rdk-prefix}-slider;
     height: 100%;
     width: 100%;
     display: inline-block;
+    user-select: none;
 }
-
 ::selection {
     background-color: #fff;
+    color: #666;
 }
 
 .#{$rdk-slider} {
