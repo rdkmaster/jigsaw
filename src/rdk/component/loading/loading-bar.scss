@@ -1,4 +1,6 @@
-$primary-color: #fff !default;
+@import "../../assets/scss/core/basc";
+
+$primary-color: #fff;
 $ball-size: 15px !default;
 $margin: 2px !default;
 $line-height: 35px !default;
@@ -68,9 +70,9 @@ $line-width: 4px !default;
     background-color: #ed5565;
     cursor: wait;
     position: absolute;
-    opacity: 1;
+    @include opacity(0);
     &.in {
-        opacity: 0.7;
+        @include opacity(0.6);
     }
 }
 
