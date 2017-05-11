@@ -56,6 +56,10 @@ $line-width: 4px !default;
     right: 0;
     bottom: 0;
     z-index: 9999;
+    @include opacity(0);
+    &.in {
+        @include opacity(0.6);
+    }
 }
 
 .rdk-loading-background {
@@ -70,10 +74,6 @@ $line-width: 4px !default;
     background-color: #ed5565;
     cursor: wait;
     position: absolute;
-    @include opacity(0);
-    &.in {
-        @include opacity(0.6);
-    }
 }
 
 .rdk-loading-content {

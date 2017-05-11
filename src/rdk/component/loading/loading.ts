@@ -5,7 +5,6 @@ export class RdkLoadingBase implements IPopupable, OnInit, OnDestroy {
     public disposer: PopupDisposer;
     public initData: any;
     public options: PopupOptions;
-    protected state: string = 'void';
     protected removeWindowListener: () => void;
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
@@ -16,7 +15,8 @@ export class RdkLoadingBase implements IPopupable, OnInit, OnDestroy {
             if (this.options) {
                 PopupService.setPopup(this.options, this._elementRef.nativeElement, this._renderer);
             }
-            this.state = 'in';
+            //手动显示loading
+            this._renderer.addClass(this._elementRef.nativeElement, 'in');
         }, 0);
 
         //window.history.back的监听
