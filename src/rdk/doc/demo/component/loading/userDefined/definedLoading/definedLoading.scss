@@ -8,6 +8,7 @@
     bottom: 0;
     z-index: 9999;
     background: #184154;
+    transition: opacity 0.3s ease-in-out;
     opacity: 0;
     &.in {
         opacity: 0.8;
