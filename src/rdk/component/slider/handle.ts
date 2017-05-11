@@ -61,7 +61,7 @@ export class SliderHandle implements OnInit{
         this._offset = (this.value - this._slider.min)/(this._slider.max - this._slider.min) * 100;
     }
 
-    _dragged: boolean = false;
+    private _dragged: boolean = false;
 
     public transformPosToValue(pos) {
         // 取得尺寸
