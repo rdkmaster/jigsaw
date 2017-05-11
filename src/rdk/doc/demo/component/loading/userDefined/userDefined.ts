@@ -7,7 +7,7 @@ import {DefinedLoading} from "./definedLoading/definedLoading";
     templateUrl: 'userDefined.html',
     styleUrls: ['userDefined.scss']
 })
-export class DefinedLoadingDemoComponent implements OnInit {
+export class DefinedLoadingDemoComponent {
     @ViewChild('block') block: ElementRef;
 
     constructor(public loadingService: LoadingService, public renderer: Renderer2) {
@@ -38,18 +38,10 @@ export class DefinedLoadingDemoComponent implements OnInit {
         }
     }
 
-    closeGlobalLoading(){
-        if(this.disposeGlobalLoading){
+    closeGlobalLoading() {
+        if (this.disposeGlobalLoading) {
             this.disposeGlobalLoading();
             this.disposeGlobalLoading = null;
         }
-    }
-
-    ngOnInit(){
-        //window.history.back的监听
-        this.renderer.listen('window', 'popstate', () => {
-            this.closeBlockLoading();
-            this.closeGlobalLoading();
-        })
     }
 }
