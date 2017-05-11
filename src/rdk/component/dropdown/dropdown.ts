@@ -8,19 +8,16 @@ import {
     EventEmitter,
     Input,
     OnDestroy,
-    DoCheck,
-    Output,
     OnInit,
+    Output,
     Renderer2,
     TemplateRef,
     ViewChild
-} from "@angular/core";
-import {PopupDisposer, PopupOptions, PopupPositionType, PopupService, PopupRef} from "rdk/service/popup.service";
-import {AbstractRDKComponent} from "../core";
-import {TagGroupValue} from "../tag/tag";
-
-export type DropdownInputValue = TagGroupValue | string;
-
+} from '@angular/core';
+import {PopupDisposer, PopupOptions, PopupPositionType, PopupRef, PopupService} from 'rdk/service/popup.service';
+import {AbstractRDKComponent} from '../core';
+import {TagGroupValue} from '../tag/tag';
+export type DropdownInputValue = TagGroupValue;
 export enum DropDownTrigger {
     click,
     mouseover,
@@ -47,7 +44,6 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
     }
 
     private _value: DropdownInputValue = null;
-    private _stringValue: string = null;
 
     @Input()
     public get value(): DropdownInputValue {
@@ -55,13 +51,8 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
     }
 
     public set value(value: DropdownInputValue) {
-        if (typeof value === 'string') {
-            this._stringValue = value;
-            this._value = null;
-        } else {
-            this._value = value;
-            this.valueChange.emit(this._value);
-        }
+        this._value = value;
+        this.valueChange.emit(this._value);
     }
 
     @Output() public valueChange = new EventEmitter<DropdownInputValue>();
@@ -156,7 +147,6 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
         }
     }
 
-    private _hasPopup: boolean = false;
     private _timeout: any = null;
 
     private _openDropDown(): void {
@@ -181,7 +171,7 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
         const ref: PopupRef = result['popupRef'];
         this._popupElement = ref['rootNodes'].find(rootNode => rootNode instanceof HTMLElement);
         this._disposePopup = result['disposer'];
-        PopupService.setBackground( this._popupElement, this._render);
+        PopupService.setBackground(this._popupElement, this._render);
 
         if (this._openTrigger === DropDownTrigger.mouseover && this._popupElement) {
             this._removeMouseoverHandler = this._render.listen(this._popupElement, 'mouseover', () => {
@@ -244,7 +234,7 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
             clearTimeout(this._timeout);
             this._openDropDown();
             this._timeout = null;
-        }else{
+        } else {
             this._openDropDown();
         }
     }
