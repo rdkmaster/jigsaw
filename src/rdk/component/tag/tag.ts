@@ -10,7 +10,7 @@ export type TagGroupValue = Array<{ [index: string]: any }>;
     template: `
         <div class="rdk-tag-group">
             <rdk-tag *ngFor="let tagItem of data" [tagItem]="tagItem"
-                     [closable]='tagItem["closable"]'>
+                     closable='false'>
                 {{tagItem[labelField]}}
             </rdk-tag>
         </div>

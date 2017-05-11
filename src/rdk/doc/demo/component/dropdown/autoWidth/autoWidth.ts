@@ -49,7 +49,7 @@ export class DropDownAutoWidthDemo implements OnInit {
                 this._render.setStyle(document.querySelector('.drop-down-child'), 'width', width)
             }
             ;
-        }, 0)
+        }, 0);
     }
 
     ngOnInit() {

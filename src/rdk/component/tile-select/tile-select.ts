@@ -29,13 +29,13 @@ export class RdkTileSelect extends AbstractRDKComponent implements OnInit, After
     }
 
     public set width(value: string) {
-        this._width =  CommonUtils.getCssValue(value);
-        this._render.setStyle(this._elementRef.nativeElement,'width',this._width);
+        this._width = CommonUtils.getCssValue(value);
+        this._render.setStyle(this._elementRef.nativeElement, 'width', this._width);
     }
 
     public set height(value: string) {
-        this._height =  CommonUtils.getCssValue(value);
-        this._render.setStyle(this._elementRef.nativeElement,'height',this._height);
+        this._height = CommonUtils.getCssValue(value);
+        this._render.setStyle(this._elementRef.nativeElement, 'height', this._height);
     }
 
     @Input()
@@ -106,19 +106,25 @@ export class RdkTileSelect extends AbstractRDKComponent implements OnInit, After
     //根据selectedItems设置选中的option
     private _setOptionState(): void {
         this._selectedItems.length && this._options.length && this._options.forEach((option) => {
+            let _hasSelected = false;
             this._selectedItems.forEach((optionItem) => {
-                if (CommonUtils.compareWithKeyProperty(option.optionItem, optionItem, <string[]>this.trackItemBy) && !option.selected) {
-                    option.selected = true;
-                    option._cdref.detectChanges();
+                if (CommonUtils.compareWithKeyProperty(option.optionItem, optionItem, <string[]>this.trackItemBy)) {
+                    _hasSelected = true;
                 }
-            })
+            });
+            option.selected = _hasSelected;
+            option._cdref.detectChanges();
         });
     }
 
     ngOnInit() {
         this.trackItemBy = InternalUtils.initTrackItemBy(<string>this.trackItemBy, this.labelField);
-        this._render.setStyle(this._elementRef.nativeElement,'width',this._width);
-        this._render.setStyle(this._elementRef.nativeElement,'height',this._height);
+        setTimeout(() => {
+            this._render.setStyle(this._elementRef.nativeElement, 'width', this._width);
+            this._render.setStyle(this._elementRef.nativeElement, 'height', this._height);
+            this._render.setStyle(this._elementRef.nativeElement, 'opacity', 1);
+        }, 0);
+
     }
 
     ngAfterViewInit() {

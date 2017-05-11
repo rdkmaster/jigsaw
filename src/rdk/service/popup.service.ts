@@ -22,7 +22,7 @@ export class PopupOptions {
     pos?: PopupPosition; //控制弹出对象的左上角位置，下面2者选其一。
     posOffset?: PopupPositionOffset;
     posType?: PopupPositionType;
-    size?: { width?: number, height?: number };
+    size?: { width?: string | number, height?: string | number };
 }
 
 export type PopupPosition = PopupPoint | ElementRef;
@@ -65,6 +65,11 @@ export interface IPopupable {
     options: PopupOptions;
 }
 
+export type PopupInfo = {
+    disposer: PopupDisposer,
+    popupRef: PopupRef
+}
+
 @Injectable()
 export class PopupService {
     //全局插入点
@@ -91,28 +96,45 @@ export class PopupService {
      * 打开弹框
      * return 弹框的销毁回调
      * */
+    /*
+     * 打开弹框
+     * return 弹框的销毁回调
+     * */
     public popup(what: Type<IPopupable>, options?: PopupOptions, initData?: any): PopupDisposer;
     public popup(what: TemplateRef<any>, options?: PopupOptions): PopupDisposer;
     public popup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupDisposer {
+        return this._popupFactory(what, options, initData).disposer;
+    }
+    /*
+     * 打开弹框(内部使用)
+     * return 弹框的销毁回调 & PopupRef
+     * */
+    public fullPopup(what: Type<IPopupable>, options?: PopupOptions, initData?: any): PopupInfo;
+    public fullPopup(what: TemplateRef<any>, options?: PopupOptions): PopupInfo;
+    public fullPopup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupInfo {
+        return this._popupFactory(what, options, initData);
+    }
+
+    private _popupFactory(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupInfo {
         let disposer: PopupDisposer;
         let ref: PopupRef;
         if (what instanceof TemplateRef) {
             ref = this._viewContainerRef.createEmbeddedView(what);
             disposer = this._getDisposer(ref);
-            let popupElement = ref.rootNodes.find(rootNode => rootNode instanceof HTMLElement);
-            if (options) {
+            const popupElement = ref.rootNodes.find(rootNode => rootNode instanceof HTMLElement);
+            setTimeout(() => {
                 PopupService.setSize(options, popupElement, this._renderer);
                 PopupService.setPosition(options, popupElement, this._renderer);
-            }
+            }, 0);
         } else {
             const factory = this._cfr.resolveComponentFactory(what);
             ref = this._viewContainerRef.createComponent(factory);
             disposer = this._getDisposer(ref);
             ref.instance.disposer = disposer;
             ref.instance.initData = initData;
-            ref.instance.options = options;
+            ref.instance.options = options ? options : {};
         }
-        return disposer;
+        return {disposer: disposer, popupRef: ref};
     }
 
     private _getDisposer(popupRef: PopupRef): PopupDisposer {
@@ -125,7 +147,7 @@ export class PopupService {
      * 设置弹框尺寸
      * */
     public static setSize(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
-        if (!options.size) return;
+        if (!options || !options.size) return;
         let size = options.size;
         if (size.width) {
             renderer.setStyle(element, 'width', CommonUtils.getCssValue(size.width));
@@ -136,10 +158,21 @@ export class PopupService {
     }
 
     /*
+     * 设置边框、阴影、动画
+     * */
+    public static setBackground(element: HTMLElement, renderer: Renderer2) {
+        renderer.setStyle(element, 'border', '1px solid #d9d9d9');
+        renderer.setStyle(element, 'border-radius', '2px');
+        renderer.setStyle(element, 'box-shadow', '1px 1px 1px #d9d9d9');
+        renderer.addClass(element, 'rdk-drop-down-animations');
+    }
+
+
+    /*
      * 设置弹出的位置
      * */
     public static setPosition(options: PopupOptions, element: HTMLElement, renderer: Renderer2): void {
-        let posType: string = options.modal ? 'fixed' : PopupService.getPositionType(options.posType);
+        let posType: string = !options || CommonUtils.isEmptyObject(options) || options.modal ? 'fixed' : PopupService.getPositionType(options.posType);
         let position = PopupService.getPositionValue(options, element);
         renderer.setStyle(element, 'position', posType);
         renderer.setStyle(element, 'top', position.top);
@@ -164,15 +197,12 @@ export class PopupService {
      * 获取位置具体的top和left
      * */
     public static getPositionValue(options: PopupOptions, element: HTMLElement): PopupPositionValue {
-        if (!options) {
-            return {top: '', left: ''};
-        }
-
         let top: string = '';
         let left: string = '';
-        if (options.modal) {
-            top = (window.innerHeight / 2 - element.offsetHeight / 2) + 'px';
-            left = (window.innerWidth / 2 - element.offsetWidth / 2) + 'px';
+        if (!options || CommonUtils.isEmptyObject(options) || options.modal) {
+            //没配options或options为空对象时，默认模态
+            top = (document.body.clientHeight / 2 - element.offsetHeight / 2) + 'px';
+            left = (document.body.clientWidth / 2 - element.offsetWidth / 2) + 'px';
         } else if (options.pos instanceof ElementRef) {
             if (options.posOffset.top || options.posOffset.top == 0) {
                 top = (options.pos.nativeElement.offsetTop + options.posOffset.top) + 'px';

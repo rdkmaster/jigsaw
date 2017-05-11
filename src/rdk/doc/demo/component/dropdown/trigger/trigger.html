@@ -2,13 +2,15 @@
 
 
 <rdk-drop-down [pane]="dropcontent"
-               [trigger]="trigger"
+               [openTrigger]="openTrigger"
+               [stopTrigger]="stopTrigger"
                [value]="inputValue">
     <ng-template #dropcontent>
         <rdk-input
             [(value)]="inputValue"
             (click)="clickProcess($event)"
-            width="240px"><b>输入值是：</b>{{inputValue}}
+            width="240px"
+            height="240px">
         </rdk-input>
     </ng-template>
 </rdk-drop-down>

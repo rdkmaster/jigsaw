@@ -9,23 +9,26 @@ import {DropDownTrigger} from "../../../../../component/dropdown/dropdown";
 })
 export class RdkDropDownTrigger implements OnInit {
 
-    private trigger = DropDownTrigger.click;
+    private openTrigger = DropDownTrigger.click;
+    private stopTrigger = DropDownTrigger.click;
 
     changeTriger() {
-        if(this.trigger == DropDownTrigger.hover){
-            this.trigger = DropDownTrigger.click
-        }else{
-            this.trigger=DropDownTrigger.hover
+        if (this.openTrigger === DropDownTrigger.click) {
+            this.openTrigger = DropDownTrigger.mouseover;
+        } else {
+            this.openTrigger = DropDownTrigger.click;
         }
     }
 
-    public clickProcess(event:Event){
+    public clickProcess(event: Event) {
         event.stopPropagation();
         event.preventDefault();
     }
 
-    constructor() { }
+    constructor() {
+    }
 
-    ngOnInit() { }
+    ngOnInit() {
+    }
 
 }

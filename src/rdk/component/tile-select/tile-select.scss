@@ -5,6 +5,7 @@ $select-prefix-cls: #{$rdk-prefix}-tile-select;
 :host {
     @include inline-block();
     width: 100%;
+    opacity: 0;
     .#{$select-prefix-cls}-search {
         margin-bottom: 8px;
     }

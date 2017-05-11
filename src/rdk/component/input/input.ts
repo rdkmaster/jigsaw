@@ -1,14 +1,15 @@
 import {
     NgModule, Component, EventEmitter, Input, Output, ContentChildren, Directive, QueryList,
-    ElementRef, ViewChild
+    ElementRef, ViewChild, AfterContentInit, Renderer2
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {AbstractRDKComponent} from "../core";
 import {Observable} from "rxjs";
 
-@Directive({ selector: '[rdk-prefix-icon]' })
-export class RdkPrefixIcon {}
+@Directive({selector: '[rdk-prefix-icon]'})
+export class RdkPrefixIcon {
+}
 
 @Component({
     selector: 'rdk-input',
@@ -20,12 +21,17 @@ export class RdkPrefixIcon {}
         '[style.line-height]': 'height'
     }
 })
-export class RdkInput extends AbstractRDKComponent {
+export class RdkInput extends AbstractRDKComponent implements AfterContentInit {
     private _value: string | number; //input表单值
     private _longIndent: boolean = false;
     private _focused: boolean;
     private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
     private _blurEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
+
+    constructor(private _render2: Renderer2,
+                private _elementRef: ElementRef) {
+        super();
+    }
 
     //input form表单值
     @Input()
@@ -58,7 +64,7 @@ export class RdkInput extends AbstractRDKComponent {
 
     @ViewChild('input') _inputElement: ElementRef;
 
-    public focus(){
+    public focus() {
         this._inputElement.nativeElement.focus();
     }
 
@@ -76,8 +82,12 @@ export class RdkInput extends AbstractRDKComponent {
         this._blurEmitter.emit(event);
     }
 
-    ngAfterContentInit(){
+    ngAfterContentInit() {
         this._iconFront && this._iconFront.length ? this._longIndent = true : null;
+        setTimeout(() => {
+            this._render2.setStyle(this._elementRef.nativeElement, 'opacity', 1);
+        }, 0);
+
     }
 
 }
@@ -85,7 +95,7 @@ export class RdkInput extends AbstractRDKComponent {
 @NgModule({
     imports: [CommonModule, FormsModule],
     declarations: [RdkInput, RdkPrefixIcon],
-    exports: [RdkInput,RdkPrefixIcon],
+    exports: [RdkInput, RdkPrefixIcon],
 })
 export class RdkInputModule {
 

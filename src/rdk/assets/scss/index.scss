@@ -107,3 +107,40 @@ $amount: 10px;
     @include ball();
 }
 /*laoding样式end*/
+
+/*rdk-dropdown弹出动画start*/
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    45% {
+        opacity: 0.4;
+    }
+    80% {
+        opacity: 0.8;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    45% {
+        opacity: 0.4;
+    }
+    80% {
+        opacity: 0.8;
+    }
+    100% {
+        opacity: 1;
+    }
+ }
+.rdk-drop-down-animations{
+    animation: fadeIn;
+    animation-duration: 0.25s;
+    -webkit-animation:fadeIn 0.25s;
+}
+
+/*rdk-dropdown弹出动画end*/
