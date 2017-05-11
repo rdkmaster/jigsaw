@@ -46,6 +46,7 @@ export class DefinedLoadingDemoComponent implements OnInit {
     }
 
     ngOnInit(){
+        //window.history.back的监听
         this.renderer.listen('window', 'popstate', () => {
             this.closeBlockLoading();
             this.closeGlobalLoading();
