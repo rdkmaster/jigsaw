@@ -2,11 +2,11 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {DefinedLoadingDemoComponent } from "./userDefined/userDefined";
 import {LoadingService } from "../../../../service/loading.service"
-import {RdkBarLoading, RdkLoading} from "../../../../component/loading/loading";
+import {RdkBallLoading, RdkLoading} from "../../../../component/loading/loading";
 import {LoadingDemoComponent} from "./basic/loading";
 import {PopupService} from "../../../../service/popup.service";
 import {DefinedLoading} from "./userDefined/definedLoading/definedLoading";
-import {BarLoadingDemoComponent} from "./barLoading/loading";
+import {BallLoadingDemoComponent} from "./ballLoading/loading";
 const loadingDemoRoutes = [
     {
         path: '', redirectTo: 'basic', pathMatch: 'full'
@@ -15,7 +15,7 @@ const loadingDemoRoutes = [
         path: 'basic', component: LoadingDemoComponent
     },
     {
-        path: 'barLoading', component: BarLoadingDemoComponent
+        path: 'ballLoading', component: BallLoadingDemoComponent
     },
     {
         path: 'userDefined', component: DefinedLoadingDemoComponent
@@ -28,13 +28,13 @@ const loadingDemoRoutes = [
 
 @NgModule({
     declarations: [
-        LoadingDemoComponent, BarLoadingDemoComponent,DefinedLoadingDemoComponent, RdkLoading, RdkBarLoading, DefinedLoading
+        LoadingDemoComponent, BallLoadingDemoComponent,DefinedLoadingDemoComponent, RdkLoading, RdkBallLoading, DefinedLoading
     ],
     imports: [
         RouterModule.forChild(loadingDemoRoutes)
     ],
     providers: [LoadingService, PopupService],
-    entryComponents:[RdkLoading, RdkBarLoading, DefinedLoading]
+    entryComponents:[RdkLoading, RdkBallLoading, DefinedLoading]
 })
 export class LoadingDemoModule {
 }

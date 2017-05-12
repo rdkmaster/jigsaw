@@ -1,13 +1,13 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {PopupDisposer} from "../../../../../service/popup.service";
 import {LoadingService} from "rdk/service/loading.service";
-import {RdkBarLoading} from "../../../../../component/loading/loading";
+import {RdkBallLoading} from "../../../../../component/loading/loading";
 
 @Component({
     templateUrl: 'loading.html',
     styleUrls: ['loading.scss']
 })
-export class BarLoadingDemoComponent{
+export class BallLoadingDemoComponent{
     @ViewChild('block') block: ElementRef;
 
     constructor(public loadingService: LoadingService) {
@@ -18,7 +18,7 @@ export class BarLoadingDemoComponent{
 
     popupBlockLoading() {
         if (!this.disposeBlockLoading) {
-            this.disposeBlockLoading = this.loadingService.show(this.block, RdkBarLoading);
+            this.disposeBlockLoading = this.loadingService.show(this.block, RdkBallLoading);
         }
     }
 
@@ -31,7 +31,7 @@ export class BarLoadingDemoComponent{
 
     popupGlobalLoading() {
         if (!this.disposeGlobalLoading) {
-            this.disposeGlobalLoading = this.loadingService.show(RdkBarLoading);
+            this.disposeGlobalLoading = this.loadingService.show(RdkBallLoading);
             setTimeout(() => {
                 this.closeGlobalLoading();
             }, 3000)
