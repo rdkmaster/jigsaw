@@ -1,5 +1,5 @@
 import {ElementRef, Injectable, TemplateRef, Type} from "@angular/core";
-import {PopupOptions, PopupPositionType, PopupService, PopupDisposer} from "./popup.service";
+import {PopupOptions, PopupPositionType, PopupService, PopupDisposer, IPopupable} from "./popup.service";
 import {RdkLoading} from "../component/loading/loading";
 
 @Injectable()
@@ -9,11 +9,11 @@ export class LoadingService {
     }
 
     public show(blockTo?: ElementRef): PopupDisposer
-    public show(blockBy?: Type<any>): PopupDisposer
+    public show(blockBy?: Type<IPopupable>): PopupDisposer
     public show(blockBy?: TemplateRef<any>): PopupDisposer
-    public show(blockTo?: ElementRef, blockBy?: Type<any>): PopupDisposer
+    public show(blockTo?: ElementRef, blockBy?: Type<IPopupable>): PopupDisposer
     public show(blockTo?: ElementRef, blockBy?: TemplateRef<any>): PopupDisposer
-    public show(blockTo?: ElementRef|Type<any>|TemplateRef<any>, blockBy?: Type<any>|TemplateRef<any>): PopupDisposer {
+    public show(blockTo?: ElementRef|Type<IPopupable>|TemplateRef<any>, blockBy?: Type<IPopupable>|TemplateRef<any>): PopupDisposer {
         let disposer: PopupDisposer;
         if (blockTo instanceof ElementRef) {
             if (blockBy instanceof Type) {
