@@ -31,6 +31,7 @@ export class RdkLoadingBase implements IPopupable, OnInit, OnDestroy {
 }
 
 @Component({
+    selector: 'rdk-loading',
     templateUrl: 'loading.html',
     styleUrls: ['loading.scss']
 })
@@ -41,6 +42,7 @@ export class RdkLoading extends RdkLoadingBase {
 }
 
 @Component({
+    selector: 'rdk-ball-loading',
     templateUrl: 'loading-ball.html',
     styleUrls: ['loading-ball.scss']
 })
