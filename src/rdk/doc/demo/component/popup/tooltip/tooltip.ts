@@ -3,14 +3,14 @@ import {Component, ViewChild, ElementRef, ComponentRef} from "@angular/core";
 import {UseTooltipComponent} from './use-tooltip/use-tooltip';
 
 import {
-    PopupService, PopupOptions, PopupPositionType
+    PopupService, PopupOptions, PopupPositionType, PopupRef, IPopupable
 } from '../../../../../service/popup.service';
 
 @Component({
     templateUrl: 'tooltip.html'
 })
 export class TooltipDemoComponent {
-    private _popupId: number;
+    private _tooltipRef: PopupRef;
 
     @ViewChild("insertPlace", {read: ElementRef}) insertPlaceEl: ElementRef;
 
@@ -18,13 +18,11 @@ export class TooltipDemoComponent {
     }
 
     popup() {
-        // this._popupId = this._popupService.popup(UseTooltipComponent, this._getTooltipOptions(this.insertPlaceEl));
+        this._tooltipRef = this._popupService.popup(UseTooltipComponent, this._getTooltipOptions(this.insertPlaceEl));
     }
 
     close() {
-        // let popupRef = this._popupService.getPopupRef(this._popupId);
-        // popupRef && (popupRef as ComponentRef<any>).instance.close();
-        //this._popupService.removePopup(this._popupId); //无关闭动画
+        this._tooltipRef.destroy();
     }
 
     private _getTooltipOptions(insertPlaceEl: ElementRef): PopupOptions {
