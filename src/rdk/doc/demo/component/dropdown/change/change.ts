@@ -26,9 +26,14 @@ export class DropDownChangeDemo implements OnInit {
         {label: "哈尔滨"}
     ];
 
-    change(evt){
-        console.log("--------------")
-        console.log(evt)
+    public selected:string = '';
+    select(data){
+        this.selected = data.label;
+    }
+
+    public removed:string = '';
+    remove(data){
+        this.removed = data.label;
     }
 
     public clickProcess(event:Event){

@@ -59,13 +59,11 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
 
     @Input() public labelField: string = 'label';
 
-    // TODO 对外事件，通过popup暴露不了
     @Output()
-    public change = new EventEmitter<any>(); // 双向绑定
+    public select = new EventEmitter<any>();
 
-    private _$tagClickHandler(item): void {
-        this.change.emit(item);
-    }
+    @Output()
+    public remove = new EventEmitter<any>();
 
     @Input()
     public placeholder: string;
@@ -122,7 +120,6 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
 
     public set pane(ref: TemplateRef<any>) {
         this._contentTemplateRef = ref;
-
     }
 
     private _$opened: boolean = false;
@@ -185,9 +182,8 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
                 if (!this._timeout) {
                     this._timeout = setTimeout(() => {
                         this._closeDropDown();
-                    }, 200);
+                    }, 400);
                 }
-
             });
 
         }
@@ -222,7 +218,6 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
         event.preventDefault();
         event.stopPropagation();
         this._openDropDown();
-
     }
 
     private _$openDropDownByHover(): void {

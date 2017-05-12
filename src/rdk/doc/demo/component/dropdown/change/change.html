@@ -1,6 +1,11 @@
+
+<p>selected: {{selected}}</p>
+<p>removed: {{removed}}</p>
+<hr>
+
 <rdk-drop-down [pane]="dropcontent"
                placeholder="请输入姓名~" [value]="selectedCity"
-               (change)="change($event)" >
+               (select)="select($event)" (remove)="remove($event)">
 </rdk-drop-down>
 <ng-template #dropcontent>
     <rdk-tile-select [(selectedItems)]="selectedCity" labelField="label"
@@ -10,3 +15,5 @@
                      (click)="clickProcess($event)">
     </rdk-tile-select>
 </ng-template>
+
+
