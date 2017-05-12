@@ -22,7 +22,7 @@ export class PopupOptions {
     pos?: PopupPosition; //控制弹出对象的左上角位置，下面2者选其一。
     posOffset?: PopupPositionOffset;
     posType?: PopupPositionType;
-    size?: { width?: string | number, height?: string | number };
+    size?: { width?: string | number, height?: string | number }
 }
 
 export type PopupPosition = PopupPoint | ElementRef;
@@ -65,11 +65,6 @@ export interface IPopupable {
     options: PopupOptions;
 }
 
-export type PopupInfo = {
-    disposer: PopupDisposer,
-    popupRef: PopupRef
-}
-
 @Injectable()
 export class PopupService {
     //全局插入点
@@ -96,19 +91,18 @@ export class PopupService {
      * 打开弹框
      * return 弹框的销毁回调
      * */
-    public popup(what: Type<IPopupable>, options?: PopupOptions, initData?: any): PopupDisposer;
-    public popup(what: TemplateRef<any>, options?: PopupOptions): PopupDisposer;
-    public popup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupDisposer {
+    public popup(what: Type<IPopupable>, options?: PopupOptions, initData?: any): PopupRef;
+    public popup(what: TemplateRef<any>, options?: PopupOptions): PopupRef;
+    public popup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupRef {
         let disposer: PopupDisposer;
         let ref: PopupRef;
         if (what instanceof TemplateRef) {
             ref = this._viewContainerRef.createEmbeddedView(what);
-            disposer = this._getDisposer(ref);
-            const popupElement = ref.rootNodes.find(rootNode => rootNode instanceof HTMLElement);
+            let popupElement = ref.rootNodes.find(rootNode => rootNode instanceof HTMLElement);
             setTimeout(() => {
                 PopupService.setSize(options, popupElement, this._renderer);
                 PopupService.setPosition(options, popupElement, this._renderer);
-            }, 0);
+            }, 0)
         } else {
             const factory = this._cfr.resolveComponentFactory(what);
             ref = this._viewContainerRef.createComponent(factory);
@@ -117,7 +111,7 @@ export class PopupService {
             ref.instance.initData = initData;
             ref.instance.options = options ? options : {};
         }
-        return disposer;
+        return ref;
     }
 
     private _getDisposer(popupRef: PopupRef): PopupDisposer {
