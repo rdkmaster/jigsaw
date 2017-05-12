@@ -13,8 +13,6 @@ import {RdkErrorAlert, RdkInfoAlert, RdkWarningAlert} from "../../../../../compo
 })
 export class AlertDemoComponent {
 
-    private _disposer: PopupDisposer;
-
     answer = '';
 
     constructor(private _popupService: PopupService) {

@@ -4,7 +4,7 @@ import {UseDialogComponent} from './use-dialog/use-dialog';
 import {UseDialog2Component} from './use-dialog2/use-dialog';
 
 import {
-    PopupService, PopupOptions, PopupPositionType, PopupPoint, PopupDisposer, ButtonInfo
+    PopupService, PopupOptions, PopupPositionType, PopupPoint, PopupDisposer, ButtonInfo, PopupRef
 } from '../../../../../service/popup.service';
 
 @Component({
@@ -13,8 +13,9 @@ import {
 })
 export class DialogDemoComponent {
 
-    private _disposer: PopupDisposer;
-    private _DialogDisposer: PopupDisposer;
+    private _templateRef: PopupRef;
+    private _dialogRef: PopupRef;
+    private _dialogDisposer: PopupDisposer;
 
     public title: string = 'Title of the dialog';
     public buttons: Array<ButtonInfo> = [
@@ -28,7 +29,7 @@ export class DialogDemoComponent {
         {
             label: 'cancel',
             callback: () => {
-                this._DialogDisposer()
+                this._dialogRef.destroy()
             },
             clazz: ""
         }
@@ -46,15 +47,16 @@ export class DialogDemoComponent {
     }
 
     popupDialogTemplate(tp){
-        this._DialogDisposer = this._popupService.popup(tp);
+        this._dialogRef = this._popupService.popup(tp);
+        this._dialogDisposer = () => {this._dialogRef.destroy()};
     }
 
     popupTemplate(tp){
-        this._disposer = this._popupService.popup(tp);
+        this._templateRef = this._popupService.popup(tp);
     }
 
     closeTemplate(){
-        this._disposer();
+        this._templateRef.destroy();
     }
 
     private _getModalOptions(): PopupOptions {

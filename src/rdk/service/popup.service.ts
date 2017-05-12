@@ -96,26 +96,9 @@ export class PopupService {
      * 打开弹框
      * return 弹框的销毁回调
      * */
-    /*
-     * 打开弹框
-     * return 弹框的销毁回调
-     * */
     public popup(what: Type<IPopupable>, options?: PopupOptions, initData?: any): PopupDisposer;
     public popup(what: TemplateRef<any>, options?: PopupOptions): PopupDisposer;
     public popup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupDisposer {
-        return this._popupFactory(what, options, initData).disposer;
-    }
-    /*
-     * 打开弹框(内部使用)
-     * return 弹框的销毁回调 & PopupRef
-     * */
-    public fullPopup(what: Type<IPopupable>, options?: PopupOptions, initData?: any): PopupInfo;
-    public fullPopup(what: TemplateRef<any>, options?: PopupOptions): PopupInfo;
-    public fullPopup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupInfo {
-        return this._popupFactory(what, options, initData);
-    }
-
-    private _popupFactory(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupInfo {
         let disposer: PopupDisposer;
         let ref: PopupRef;
         if (what instanceof TemplateRef) {
@@ -134,7 +117,7 @@ export class PopupService {
             ref.instance.initData = initData;
             ref.instance.options = options ? options : {};
         }
-        return {disposer: disposer, popupRef: ref};
+        return disposer;
     }
 
     private _getDisposer(popupRef: PopupRef): PopupDisposer {
