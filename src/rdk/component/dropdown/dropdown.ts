@@ -15,7 +15,7 @@ import {
     TemplateRef,
     ElementRef
 } from '@angular/core';
-import {PopupService, PopupDisposer, PopupOptions, PopupPositionType} from "rdk/service/popup.service";
+import {PopupService, PopupDisposer, PopupOptions, PopupPositionType, PopupRef} from "rdk/service/popup.service";
 import {AbstractRDKComponent} from "../core";
 
 
@@ -33,7 +33,7 @@ export enum DropDownTrigger {
 export class RdkDropDown extends AbstractRDKComponent implements OnDestroy {
     @ViewChild("dropDownContainer", {read: ElementRef})
     private _dropDownContainer: ElementRef;
-    private _disposePopup: PopupDisposer;
+    private _popupRef: PopupRef;
     private _removeClickHandler:Function;
 
     constructor(private _render: Renderer2,
@@ -108,7 +108,7 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy {
 
     @Input()
     public get open():boolean {
-        return !!this._removeClickHandler && !!this._disposePopup;
+        return !!this._removeClickHandler && !!this._popupRef;
     }
 
     public set open(value: boolean) {
@@ -141,7 +141,7 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy {
             },
             size: {width: this._elementRef.nativeElement.offsetWidth}
         };
-        this._disposePopup = this._popupService.popup(this._contentTemplateRef, option);
+        this._popupRef = this._popupService.popup(this._contentTemplateRef, option);
     }
 
     private _closeDropDown():void {
@@ -149,9 +149,9 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy {
             this._removeClickHandler();
             this._removeClickHandler = null;
         }
-        if (this._disposePopup) {
-            this._disposePopup();
-            this._disposePopup = null;
+        if (this._popupRef) {
+            this._popupRef.destroy();
+            this._popupRef = null;
         }
     }
 
@@ -171,9 +171,9 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy {
     }
 
     ngOnDestroy() {
-        if (this._disposePopup) {
-            this._disposePopup();
-            this._disposePopup = null;
+        if (this._popupRef) {
+            this._popupRef.destroy();
+            this._popupRef = null;
         }
     }
 }

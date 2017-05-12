@@ -1,6 +1,6 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {LoadingService} from "../../../../../service/loading.service"
-import {PopupDisposer} from "../../../../../service/popup.service";
+import {PopupRef} from "../../../../../service/popup.service";
 import {DefinedLoading} from "./definedLoading/definedLoading";
 
 @Component({
@@ -13,25 +13,25 @@ export class DefinedLoadingDemoComponent {
     constructor(public loadingService: LoadingService) {
     }
 
-    disposeBlockLoading: PopupDisposer;
-    disposeGlobalLoading: PopupDisposer;
+    blockLoading: PopupRef;
+    globalLoading: PopupRef;
 
     popupBlockLoading() {
-        if (!this.disposeBlockLoading) {
-            this.disposeBlockLoading = this.loadingService.show(this.block, DefinedLoading);
+        if (!this.blockLoading) {
+            this.blockLoading = this.loadingService.show(this.block, DefinedLoading);
         }
     }
 
     closeBlockLoading() {
-        if (this.disposeBlockLoading) {
-            this.disposeBlockLoading();
-            this.disposeBlockLoading = null;
+        if (this.blockLoading) {
+            this.blockLoading.destroy();
+            this.blockLoading = null;
         }
     }
 
     popupGlobalLoading() {
-        if (!this.disposeGlobalLoading) {
-            this.disposeGlobalLoading = this.loadingService.show(DefinedLoading);
+        if (!this.globalLoading) {
+            this.globalLoading = this.loadingService.show(DefinedLoading);
             setTimeout(() => {
                 this.closeGlobalLoading();
             }, 3000)
@@ -39,9 +39,9 @@ export class DefinedLoadingDemoComponent {
     }
 
     closeGlobalLoading() {
-        if (this.disposeGlobalLoading) {
-            this.disposeGlobalLoading();
-            this.disposeGlobalLoading = null;
+        if (this.globalLoading) {
+            this.globalLoading.destroy();
+            this.globalLoading = null;
         }
     }
 }

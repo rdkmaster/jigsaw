@@ -1,5 +1,5 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {PopupDisposer} from "../../../../../service/popup.service";
+import {PopupRef} from "../../../../../service/popup.service";
 import {LoadingService} from "rdk/service/loading.service";
 import {RdkBallLoading} from "../../../../../component/loading/loading";
 
@@ -13,25 +13,25 @@ export class BallLoadingDemoComponent{
     constructor(public loadingService: LoadingService) {
     }
 
-    disposeBlockLoading: PopupDisposer;
-    disposeGlobalLoading: PopupDisposer;
+    blockLoading: PopupRef;
+    globalLoading: PopupRef;
 
     popupBlockLoading() {
-        if (!this.disposeBlockLoading) {
-            this.disposeBlockLoading = this.loadingService.show(this.block, RdkBallLoading);
+        if (!this.blockLoading) {
+            this.blockLoading = this.loadingService.show(this.block, RdkBallLoading);
         }
     }
 
     closeBlockLoading() {
-        if (this.disposeBlockLoading) {
-            this.disposeBlockLoading();
-            this.disposeBlockLoading = null;
+        if (this.blockLoading) {
+            this.blockLoading.destroy();
+            this.blockLoading = null;
         }
     }
 
     popupGlobalLoading() {
-        if (!this.disposeGlobalLoading) {
-            this.disposeGlobalLoading = this.loadingService.show(RdkBallLoading);
+        if (!this.globalLoading) {
+            this.globalLoading = this.loadingService.show(RdkBallLoading);
             setTimeout(() => {
                 this.closeGlobalLoading();
             }, 3000)
@@ -39,9 +39,9 @@ export class BallLoadingDemoComponent{
     }
 
     closeGlobalLoading(){
-        if(this.disposeGlobalLoading){
-            this.disposeGlobalLoading();
-            this.disposeGlobalLoading = null;
+        if(this.globalLoading){
+            this.globalLoading.destroy();
+            this.globalLoading = null;
         }
     }
 }
