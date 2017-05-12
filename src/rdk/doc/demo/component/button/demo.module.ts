@@ -5,6 +5,7 @@ import {ButtonDisableDemoComponent} from "./disabled/disabled";
 import {RdkCheckBoxModule} from "../../../../component/checkbox/index";
 import {RdkButtonModule} from "../../../../component/button/button";
 import {ButtonWidthHeightDemoComponent} from "./width_height/width_height";
+import {ButtonPresetDemoComponent} from "./preset/preset";
 
 const buttonDemoRoutes = [
     {
@@ -20,6 +21,9 @@ const buttonDemoRoutes = [
         path: 'width_height', component: ButtonWidthHeightDemoComponent
     },
     {
+        path: 'preset', component: ButtonPresetDemoComponent
+    },
+    {
         path: '**', //fallback router must in the last
         component: ButtonBasicDemoComponent
     }
@@ -27,7 +31,7 @@ const buttonDemoRoutes = [
 
 @NgModule({
     declarations: [
-        ButtonBasicDemoComponent, ButtonDisableDemoComponent,ButtonWidthHeightDemoComponent
+        ButtonBasicDemoComponent, ButtonDisableDemoComponent,ButtonWidthHeightDemoComponent,ButtonPresetDemoComponent
     ],
     imports: [
         RouterModule.forChild(buttonDemoRoutes), RdkCheckBoxModule, RdkButtonModule

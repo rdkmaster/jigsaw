@@ -5,21 +5,24 @@ $btn-prefix-cls: #{$rdk-prefix}-button;
 :host {
     @include inline-block();
     width: 80px;
-    height: $height-base;
-    line-height: $height-base;
+    height: $btn-size-height-base;
+    line-height: $btn-size-height-base - 2;
     font-size: $font-size-base;
     text-align: center;
     position: relative;
-    background: $primary-color;
     border-radius: 3px;
-    color: $text-color-white;
     cursor: pointer;
     box-shadow: 4px 4px 6px $border-color-base;
     user-select: none;
     @include prefixer(transition, all .3s $ease-in-out);
+    background-color: $default-color;
+    border:1px solid $border-color-base;
+    color: $text-color ;
+
     &:hover {
-        background: $primary-color-light;
-        color: $text-color-white;
+        background: lighten($default-color,10%);
+        border: 1px solid $primary-color;
+        color: $primary-color;
     }
     &.#{$btn-prefix-cls}-clicked:after {
         content: '';
@@ -29,7 +32,8 @@ $btn-prefix-cls: #{$rdk-prefix}-button;
         bottom: -1px;
         right: -1px;
         border-radius: inherit;
-        border: 0 solid $primary-color-light;
+        border: 1px solid darken($primary-color,10%);
+        color: $primary-color;
         opacity: 0.4;
         @include prefixer(animation, buttonEffect 0.36s $ease-out forwards);
         display: block;
@@ -42,21 +46,51 @@ $btn-prefix-cls: #{$rdk-prefix}-button;
             height: 20px;
         }
     }
+
+    &.#{$btn-prefix-cls}-color-danger {
+        background-color: $error-color;
+        color: $text-color-white;
+        border:1px solid $error-color;
+        &.#{$btn-prefix-cls}-clicked:after {
+            border: 0 solid lighten($error-color, 10%);
+        }
+        &:hover {
+            background: lighten($error-color, 10%);
+        }
+    }
+
+    &.#{$btn-prefix-cls}-color-primary {
+        background-color: $btn-primary-bg;
+        color: $btn-primary-color;
+        border:1px solid $btn-group-border;
+        &:hover {
+            background: $primary-color-light;
+        }
+    }
+
+    &.#{$btn-prefix-cls}-size-large {
+        height:$btn-size-height-lg;
+        line-height: $btn-size-height-lg - 2;
+    }
+
+    &.#{$btn-prefix-cls}-size-small {
+        height:$btn-size-height-sm;
+        line-height: $btn-size-height-sm - 2;
+    }
 }
 
 :host(a){
     padding: 0;
-    border: none;
     outline: none;
     text-decoration: none !important;
-    &:active, &:visited, &:link, &:focus{
-        color: $text-color-white;
-    }
 }
 
 :host(.#{$btn-prefix-cls}-disabled) {
     pointer-events: none;
-    background: $gray-dark !important;
+    cursor: default;
+    color: $btn-disable-color;
+    background-color: $btn-disable-bg;
+    border-color: $btn-disable-border;
 }
 
 :host-context(.theme-blue) {
