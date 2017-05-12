@@ -5,9 +5,6 @@
     autoWidth="true"
     [(value)]="selectedCity"
     isOpened="true" >
-
-
-
 </rdk-drop-down>
 
 <ng-template #dropcontent>
@@ -17,8 +14,7 @@
                      [multipleSelect]="true" [searchable]="true"
                      [data]="citys"
                      tileOptionWidth="100px"
-
-                     (selectedItemsChange)="basicSelectChange()"
-                     (click)="clickProcess($event)">
+                     (selectedItemsChange)="adjustWidth()"
+                     (click)="preventAutoHide($event)">
     </rdk-tile-select>
 </ng-template>

@@ -9,7 +9,7 @@
                 {{placeholder}}
             </div>
             <rdk-tag *ngFor="let tagItem of value"
-                     closable='false'
+                     [closable]='tagItem.closable'
                      (select)="select.emit(tagItem)"
                      (close)="remove.emit(tagItem)">
                 {{tagItem[labelField]}}

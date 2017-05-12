@@ -18,7 +18,7 @@ export class DropDownWidthDemo implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this.dropDown.change.subscribe(data => {
+        this.dropDown.select.subscribe(data => {
             console.log(data);
         })
     }

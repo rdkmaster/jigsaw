@@ -1,5 +1,5 @@
 <div style="display: flex;height: 50px">
-    <rdk-button (click)="changeTriger()">触发方式</rdk-button>
+    <rdk-button (click)="changeTrigger()">触发方式</rdk-button>
     <hr style="width: 3px">
     <rdk-button (click)="changeDisabled()">不可编辑toggle</rdk-button>
 </div>
@@ -10,7 +10,7 @@
     [pane]="dropcontent"
     [disabled]="disabled"
     [openTrigger]="openTrigger"
-    [stopTrigger]="stopTrigger"
+    [closeTrigger]="closeTrigger"
     [(value)]="selectedCity">
 
 </rdk-drop-down>
@@ -20,8 +20,6 @@
                      [multipleSelect]="true" [searchable]="true"
                      [data]="citys"
                      tileOptionWidth="100px"
-
-                     (selectedItemsChange)="basicSelectChange()"
-                     (click)="clickProcess($event)">
+                     (click)="preventAutoHide($event)">
     </rdk-tile-select>
 </ng-template>

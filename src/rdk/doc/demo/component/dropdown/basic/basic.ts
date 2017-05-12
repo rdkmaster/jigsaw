@@ -8,18 +8,20 @@ import {DropDownTrigger, DropdownInputValue} from "../../../../../component/drop
 })
 export class RdkDropDownInput implements OnInit {
 
-    private openTrigger = DropDownTrigger.click;
-    private stopTrigger = DropDownTrigger.click;
+    private openTrigger = DropDownTrigger.mouseover;
+    private closeTrigger = DropDownTrigger.mouseout;
 
     constructor(private _render: Renderer2,
                 private _elementRef: ElementRef) {
     }
 
-    changeTriger() {
+    changeTrigger() {
         if (this.openTrigger === DropDownTrigger.click) {
             this.openTrigger = DropDownTrigger.mouseover;
+            this.closeTrigger = DropDownTrigger.mouseout;
         } else {
             this.openTrigger = DropDownTrigger.click;
+            this.closeTrigger = DropDownTrigger.click;
         }
     }
 
@@ -46,19 +48,9 @@ export class RdkDropDownInput implements OnInit {
         {label: "哈尔滨"}
     ];
 
-    public clickProcess(event: Event) {
+    public preventAutoHide(event: Event) {
         event.stopPropagation();
         event.preventDefault();
-    }
-
-    public basicSelectChange() {
-        setTimeout(() => {
-            let width = this._elementRef.nativeElement.querySelector('.drop-down-father').offsetWidth + 'px';
-            if (document.querySelector('rdk-tile-select')) {
-                this._render.setStyle(document.querySelector('.drop-down-child'), 'width', width)
-            }
-            ;
-        }, 0);
     }
 
     ngOnInit() {

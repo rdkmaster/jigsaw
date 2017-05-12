@@ -37,18 +37,17 @@ export class DropDownAutoWidthDemo implements OnInit {
         {label: "哈尔滨"}
     ];
 
-    public clickProcess(event: Event) {
+    public preventAutoHide(event: Event) {
         event.stopPropagation();
         event.preventDefault();
     }
 
-    public basicSelectChange() {
+    public adjustWidth() {
         setTimeout(() => {
             let width = this._elementRef.nativeElement.querySelector('.drop-down-father').offsetWidth + 'px';
             if (document.querySelector('rdk-tile-select')) {
                 this._render.setStyle(document.querySelector('.drop-down-child'), 'width', width)
             }
-            ;
         }, 0);
     }
 
