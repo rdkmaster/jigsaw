@@ -83,7 +83,7 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
         this._trigger = value;
     }
 
-    private _openTrigger: DropDownTrigger = DropDownTrigger.click;
+    private _openTrigger: DropDownTrigger = DropDownTrigger.mouseover;
     @Input()
     public get openTrigger(): DropDownTrigger {
         return this._openTrigger;
@@ -93,14 +93,14 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
         this._openTrigger = value;
     }
 
-    private _stopTrigger: DropDownTrigger = DropDownTrigger.click;
+    private _closeTrigger: DropDownTrigger = DropDownTrigger.mouseout;
     @Input()
-    public get stopTrigger(): DropDownTrigger {
-        return this._stopTrigger;
+    public get closeTrigger(): DropDownTrigger {
+        return this._closeTrigger;
     }
 
-    public set stopTrigger(value: DropDownTrigger) {
-        this._stopTrigger = value;
+    public set closeTrigger(value: DropDownTrigger) {
+        this._closeTrigger = value;
     }
 
     private _dropDownWidth: string;
@@ -156,7 +156,7 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
         }
 
         //TODO 阻止click冒泡事件可以实现autoCloseDropDown这一属性
-        if (this._stopTrigger === DropDownTrigger.click) {
+        if (this._closeTrigger === DropDownTrigger.click) {
             this._removeClickHandler = this._render.listen('window', 'click', () => this._closeDropDown());
         }
 
@@ -180,7 +180,7 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
                 }
             });
         }
-        if (this._stopTrigger === DropDownTrigger.mouseout && this._popupElement) {
+        if (this._closeTrigger === DropDownTrigger.mouseout && this._popupElement) {
             this._removeMouseoutHandler = this._render.listen(this._popupElement, 'mouseout', () => {
                 if (!this._timeout) {
                     this._timeout = setTimeout(() => {
@@ -239,7 +239,7 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
     }
 
     private _$closeDropDownByHover() {
-        if (this.stopTrigger !== DropDownTrigger.mouseout) return;
+        if (this.closeTrigger !== DropDownTrigger.mouseout) return;
         event.preventDefault();
         event.stopPropagation();
         if (!this._timeout) {
