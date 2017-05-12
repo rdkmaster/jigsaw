@@ -167,7 +167,7 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
             },
             size: {width: Number(this._elementRef.nativeElement.offsetWidth)}
         };
-        const ref: PopupRef = this._popupService.popup(this._contentTemplateRef, option);
+        const ref = this._popupService.popup(this._contentTemplateRef, option);
         this._popupElement = ref['rootNodes'].find(rootNode => rootNode instanceof HTMLElement);
         this._disposePopup = () => {ref.destroy()};
         PopupService.setBackground(this._popupElement, this._render);
