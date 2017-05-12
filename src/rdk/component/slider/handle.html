@@ -1,7 +1,5 @@
 <div class="rdk-slider-handle"
      [ngStyle]="_handleStyle"
      (mousedown)="_updateCanDragged(true)"
-     (mousemove)="_updateValuePosition($event)"
+     (mousemove)="updateValuePosition($event)"
      (mouseup)="_updateCanDragged(false)"></div>
-
-<!--[style.left.%]="_offset"-->
