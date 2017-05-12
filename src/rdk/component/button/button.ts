@@ -12,13 +12,23 @@ import {AbstractRDKComponent} from '../core';
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[style.line-height]': 'height',
-        '[class.rdk-button-clicked]': "_clicked"
+        '[class.rdk-button-clicked]': "_clicked",
+        '[class.rdk-button-size-small]': "presize === 'small'",
+        '[class.rdk-button-size-large]': "presize === 'large'",
+        '[class.rdk-button-color-primary]': "type === 'primary'",
+        '[class.rdk-button-color-danger]': "type === 'danger'"
     }
 })
 export class RdkButton extends AbstractRDKComponent {
 
     //按钮不可点击状态
     @Input() public disabled: boolean = false;
+
+    //按钮颜色类型, '', primary, danger
+    @Input() public type: string = '';
+
+    //按钮预设尺寸， small, '', large
+    @Input() public presize = '';
 
     //按钮动画执行状态
     private _clicked: boolean = false;

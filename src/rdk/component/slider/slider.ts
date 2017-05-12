@@ -2,43 +2,44 @@
  * Created by 10177553 on 2017/4/13.
  */
 import {
-    Component, OnInit, Input, Output, EventEmitter, ElementRef, Renderer2, ViewEncapsulation,
-    ViewChildren, QueryList
+    Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewEncapsulation, ViewChildren, QueryList, Renderer2,
+    OnDestroy
 } from '@angular/core';
 import {SliderHandle} from "./handle";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 @Component({
     selector: 'rdk-slider',
     templateUrl: './slider.html',
     styleUrls:['./slider.scss'],
+    host: {
+        'class': 'sliderHost'
+    },
     encapsulation: ViewEncapsulation.None
 })
 /**
- * TODO 1. 双触点实现.(待完善, 修改的有点多. 修改的有点挂了了. 有个问题不知道为什么, 提交一个半成品. 准备重新整理一下心情, 再把剩下的补全)
- *       3. 竖向滚动条支持.
  *       4. tooltips 支持. 暂不支持
- *       5. class 设置的API. 暂不支持.
- *       6. mark的class . 没有支持成功. 没发现哪里写的有问题.
- *       7. api 说明文档, 要不然里面的属性有点多, 有点难找.
+ *       5. 点击的支持。
+ *       6. 垂直滚动条有时候计算的高度不准确, 由于取的dom的bottom值不准确. 暂没有好的解决办法;
  */
-export class RdkSlider implements OnInit {
+export class RdkSlider implements OnInit, OnDestroy {
 
     constructor(private _element: ElementRef, private _render: Renderer2) { }
 
+    @ViewChildren(SliderHandle) _sliderHandle: QueryList<SliderHandle>;
+
     private _value:Array<number> = [];
 
-    @ViewChildren(SliderHandle) _handles: QueryList<SliderHandle>;
-
     @Input()
-    public get value() {
-        if(this._value.length === 1) {
-            return this._value[0]
+    public get value():number|number[] {
+        // 兼容返回单个值， 和多触点的数组;
+        if(!this.range) {
+            return this._value[0];
         } else {
             return this._value;
         }
-
     };
-    public set value(value) {
+    public set value(value:number|number[]) {
         if(typeof value  === 'object') {
             this._value = value;
         } else if(this._value.length === 0) {
@@ -48,6 +49,15 @@ export class RdkSlider implements OnInit {
         }
 
         this._setTrackStyle();
+    }
+
+    // 设置单个的值
+    public setValue(key, value) {
+        this._value[key] = value;
+
+        this._setTrackStyle();
+
+        this.valueChange.emit(this.value);
     }
 
     @Output()
@@ -60,6 +70,7 @@ export class RdkSlider implements OnInit {
     public range: boolean = false;
 
     private _min: number = 0;
+
     @Input()
     public get min() { return this._min; }
     public set min(min) {
@@ -80,43 +91,17 @@ export class RdkSlider implements OnInit {
         this._step = value;
     }
 
-    private _offset: number;
-
     private _transformValueToPos(value?) {
-        if(!value) {
-            let temp = Number(this.value);
-            this._offset = (temp - this.min)/(this.max - this.min) * 100;
-        } else {
-            return (value - this.min)/(this.max - this.min) * 100;
-        }
+        return (value - this.min)/(this.max - this.min) * 100;
     }
 
     private _dimensions;
 
+    @Input()
+    public vertical: boolean = false;
+
     tipFormatter() {
         // Todo 格式化, 弹出信息.
-    }
-
-    // 改变value的值;
-    private _updateValuePosition() {
-        if(!this._dragged|| this.disabled) return;
-
-        let pos = {
-            x: event["clientX"],
-            y: event["clientY"]
-        }
-
-        let newValue = this._handles.first.transformPosToValue(pos);
-
-        this.valueChange.emit(newValue);
-    }
-
-    // 改变value的值;
-    private _clickPosition() {
-        let pos = {
-            x: event["clientX"],
-            y: event["clientY"]
-        }
     }
 
     private _dragged = false;
@@ -129,17 +114,24 @@ export class RdkSlider implements OnInit {
     private _setTrackStyle(value?) {
         // 兼容双触点.
         let startPos: number = 0;
-        let trackWidth: number = typeof value !== 'undefined'?this._transformValueToPos(value):this._transformValueToPos(this.value); // 默认单触点位置
+        let trackSize: number = typeof value !== 'undefined'?this._transformValueToPos(value):this._transformValueToPos(this.value); // 默认单触点位置
 
         // 兼容双触点.
         if(this.range) {
             startPos = Math.min(this.value[0], this.value[1]);
-            trackWidth = Math.abs(this.value[0] - this.value[1]);
+            trackSize = Math.abs(this.value[0] - this.value[1]);
         }
 
-        this._trackStyle = {
-            left: startPos + "%",
-            width: trackWidth + "%"
+        if(this.vertical) { // 垂直和水平两种
+          this._trackStyle = {
+              bottom: startPos + "%",
+              height: trackSize + "%"
+          }
+        } else {
+            this._trackStyle = {
+                left: startPos + "%",
+                width: trackSize + "%"
+            }
         }
     }
 
@@ -147,65 +139,75 @@ export class RdkSlider implements OnInit {
         this._dragged = flag;
     }
 
+    // 多值时选择一个合适的触点. Todo 支持点击
+    _updateValuePosition() {
+        // let handle = this._sliderHandle.first;
+        // Todo
+    }
+
     @Input()
     public marks: [Object];
-
-    _newValue: Array<number> = [];
-
-    _handleValueChange(key, value) {
-
-        if(value !== this.value) {
-
-            // this._setNewValue(value, key);
-
-            if(this.range) {
-                this.valueChange.emit(this._newValue);
-            } else {
-                this.valueChange.emit(value);
-            }
-
-            // 设置值域的变化.
-            this._setTrackStyle(value);
-        }
-    }
-
-    private _setNewValue(value, key?) {
-        if(typeof value  === 'object') {
-            this._newValue = value;
-        } else if(this._newValue.length === 0) {
-            this._newValue.push(value);
-        } else if(this._newValue.length === 1) {
-            this._newValue[0] = value;
-        } else {
-            this._newValue[key] = value;
-        }
-    }
 
     _calMarks() {
         if(!this.marks) return;
 
-        let width = Math.round(100/this.marks.length);
-        let marginLeft = -Math.floor(width/2);
+        let size = Math.round(100/this.marks.length);
+        let margin = -Math.floor(size/2);
+        let vertical = this.vertical;
 
         this.marks.forEach(mark => {
-            mark["left"] = this._transformValueToPos(mark["value"]);
-            mark["width"] = width;
-            mark["marginLeft"] = marginLeft;
+            // 添加垂直滚动条的支持;
+            if(vertical) {
+                mark["dot"] = {
+                    bottom: this._transformValueToPos(mark["value"]) + "%",
+                }
+                mark["componentStyle"] = {
+                    bottom: this._transformValueToPos(mark["value"]) + "%",
+                    "margin-bottom": margin + "%"
+                }
+            } else {
+                mark["dot"] = {
+                    top: "-2px",
+                    left: this._transformValueToPos(mark["value"]) + "%",
+                }
+
+                mark["componentStyle"] = {
+                    left: this._transformValueToPos(mark["value"]) + "%",
+                    width: size + "%",
+                    "margin-left": margin + "%"
+                }
+            }
+            // 如果用户自定义了样式, 要进行样式的合并;
+            CommonUtils.extendObject(mark["componentStyle"], mark["style"]);
         });
     }
 
     ngOnInit() {
         // 计算slider 的尺寸.
-        this._dimensions = this._element.nativeElement.getBoundingClientRect();
-
-        // 设置新值;
-        this._setNewValue(this.value);
-
+        this._dimensions = this._element.nativeElement.getBoundingClientRect()
         // 设置选中的轨道.
-        this._setTrackStyle();
+        this._setTrackStyle(this.value);
 
         // 设置标记.
         this._calMarks();
+        // 注册resize事件;
+        this.resize();
+    }
+    private _removeResizeEvent:Function;
+
+    private resize() {
+        this._removeResizeEvent = this._render.listen("window", "resize", () => {
+            // 计算slider 的尺寸.
+            this._dimensions = this._element.nativeElement.getBoundingClientRect();
+        })
     }
 
+    /**
+     * 暂没有使用场景.
+     */
+    public ngOnDestroy() {
+        if(this._removeResizeEvent) {
+            this._removeResizeEvent();
+        }
+    }
 }

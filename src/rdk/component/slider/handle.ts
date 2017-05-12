@@ -3,7 +3,7 @@
  */
 
 import {
-    Input, Output, EventEmitter, Renderer2, Component, ViewEncapsulation, OnInit, Optional
+    Input, Output, EventEmitter, Renderer2, Component, OnInit, ViewEncapsulation, forwardRef, Inject, Host
 } from "@angular/core";
 import {RdkSlider} from "./slider";
 
@@ -20,8 +20,13 @@ export class SliderHandle implements OnInit{
     public key: number;
 
     @Input()
+    public dimensions;
+
+    @Input()
     public get value() { return this._value; }
     public set value(value) {
+        if(this._value === value) return;
+
         this._value = value;
         this._valueToPos();
     }
@@ -36,51 +41,56 @@ export class SliderHandle implements OnInit{
 
     private _offset: number = 0;
 
-    private _handleStyle = {}
+    private _handleStyle = {};
 
     private setHandleStyle() {
-
         if(isNaN(this._offset)) return;
 
-        this._handleStyle = {
-            left: this._offset + "%"
+        if(this._slider.vertical) { // 兼容垂直滑动条;
+            this._handleStyle = {
+                bottom: this._offset + "%"
+            }
+        } else {
+            this._handleStyle = {
+                left: this._offset + "%"
+            }
         }
-        console.info(this._handleStyle);
     }
 
     private _transformValueToPos() {
-        this._offset = (this.value - this.min)/(this.max - this.min) * 100;
+        this._offset = (this.value - this._slider.min)/(this._slider.max - this._slider.min) * 100;
     }
 
-    _dragged: boolean = false;
-
-    disabled: boolean = false;
-
-    @Input()
-    dimensions;
-
-    @Input() max: number;
-
-    @Input() min: number;
-
-    @Input() step: number;
+    private _dragged: boolean = false;
 
     public transformPosToValue(pos) {
         // 取得尺寸
-        let offset = this.dimensions.left;
-        let size = this.dimensions.width;
+        // 滚动条,减去全局滚动条的位置.
+        let top = document.body.scrollTop;
+        let left = document.body.scrollLeft;
 
-        let newValue = ((pos.x - offset) / size * (this.max - this.min) + this.min); // 保留两位小数
+        // bottom 在dom中的位置.
+        let offset = this._slider.vertical?this.dimensions.bottom - top:this.dimensions.left - left;
+        let size = this._slider.vertical?this.dimensions.height:this.dimensions.width;
+        let posValue = this._slider.vertical? pos.y-56: pos.x;
 
-        let m = this._calFloat(this.step);
+        if(this._slider.vertical) {
+            posValue = posValue > offset? offset:posValue;
+        } else {
+            posValue = posValue < offset? offset:posValue;
+        }
+
+        let newValue = ((Math.abs(posValue - offset)) / size * (this._slider.max - this._slider.min) + this._slider.min); // 保留两位小数
+
+        let m = this._calFloat(this._slider.step);
 
         // 解决出现的有时小数点多了N多位.
-        newValue = Math.round(Math.round(newValue / this.step) * this.step * Math.pow(10, m)) / Math.pow(10, m);
+        newValue = Math.round(Math.round(newValue / this._slider.step) * this._slider.step * Math.pow(10, m)) / Math.pow(10, m);
 
-        if (newValue < this.min) {
-            return this.min;
-        } else if (newValue > this.max) {
-            return this.max;
+        if (newValue < this._slider.min) {
+            return this._slider.min;
+        } else if (newValue > this._slider.max) {
+            return this._slider.max;
         } else {
             return newValue;
         }
@@ -95,15 +105,13 @@ export class SliderHandle implements OnInit{
         // 增加步长的计算;
         let m = 0;
         try {
-            m = this.step.toString().split(".")[1].length;
+            m = this._slider.step.toString().split(".")[1].length;
         } catch(e) { }
         return m;
     }
 
     _updateCanDragged(flag) {
         this._dragged = flag;
-        console.info(flag);
-        console.info("this._dragged:" + this._dragged);
 
         if(flag) {
             this._registerGlobalEvent();
@@ -116,8 +124,8 @@ export class SliderHandle implements OnInit{
     globalEventMouseUp: Function;
 
     _registerGlobalEvent() {
-        this.globalEventMouseMove = this._render.listen("document", "mousemove", () => {
-            this._updateValuePosition();
+        this.globalEventMouseMove = this._render.listen("document", "mousemove", (e) => {
+            this.updateValuePosition(e);
         });
         this.globalEventMouseUp = this._render.listen("document", "mouseup", () => {
             this._dragged = false;
@@ -132,9 +140,15 @@ export class SliderHandle implements OnInit{
         if(this.globalEventMouseUp)  { this.globalEventMouseUp(); }
     }
 
+    private _slider:RdkSlider; // 父组件;
+
+    constructor(private _render: Renderer2,@Host() @Inject(forwardRef(() => RdkSlider)) slider: RdkSlider) {
+        this._slider = slider;
+    }
+
     // 改变value的值;
-    private _updateValuePosition() {
-        if(!this._dragged|| this.disabled) return;
+    private updateValuePosition(event?) {
+        if(!this._dragged|| this._slider.disabled) return;
 
         let pos = {
             x: event["clientX"],
@@ -143,14 +157,12 @@ export class SliderHandle implements OnInit{
 
         let newValue = this.transformPosToValue(pos);
 
-        if(this.value === newValue) return ;
+        if(this.value === newValue) return;
 
         this.value = newValue;
 
-        this.change.emit(newValue);
+        this._slider.setValue(this.key, newValue);
     }
-
-    constructor(private _render: Renderer2) { }
 
     ngOnInit() {
         this._valueToPos();
