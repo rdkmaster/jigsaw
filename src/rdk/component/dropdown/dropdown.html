@@ -1,14 +1,13 @@
 <div #dropDownContainer class="rdk-drop-down"
-                       [class.rdk-drop-down-opened]="_hasContent"
+                       [class.rdk-drop-down-opened]="_$opened"
                        [class.rdk-drop-down-disabled]="disabled"
                        (mouseover)="_$openDropDownByHover()"
-                       >
+                       (mouseout)="_$closeDropDownByHover()">
     <div class="rdk-drop-down-selection" (click)="_$openDropDownByClick()">
         <div class="rdk-drop-down-selection-rendered">
             <div *ngIf="placeholder && (!value || value.length == 0)" class="rdk-drop-down-selection_placeholder">{{placeholder}}</div>
-            <rdk-tag [closable]="true" (click)="_$tagClickHandler(item)" *ngFor="let item of value;">{{item[labelField]}}</rdk-tag>
+            <rdk-tag-group class="rdk-drop-down-tag-group" *ngIf="!!value" [(data)]="value" [labelField]="labelField"></rdk-tag-group>
         </div>
     </div>
-    <!-- ?? 可能是个问题. 依赖了fontAwesome -->
     <i class="fa fa-angle-down rdk-drop-down-arrow"></i>
 </div>

@@ -61,6 +61,11 @@ $amount: 10px;
     right: 0;
     bottom: 0;
     z-index: 9999;
+    @include prefixer(transition, opacity 0.3s $ease-in-out);
+    @include opacity(0);
+    &.in {
+        @include opacity(0.6);
+    }
 }
 
 .#{$loading-prefix-cls}-background {
@@ -71,10 +76,6 @@ $amount: 10px;
     background-color: rgb(0, 0, 0);
     cursor: wait;
     position: absolute;
-    @include opacity(0);
-    &.in {
-        @include opacity(0.6);
-    }
 }
 
 .#{$loading-prefix-cls}-content {

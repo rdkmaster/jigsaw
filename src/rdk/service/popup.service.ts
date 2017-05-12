@@ -91,14 +91,13 @@ export class PopupService {
      * 打开弹框
      * return 弹框的销毁回调
      * */
-    public popup(what: Type<IPopupable>, options?: PopupOptions, initData?: any): PopupDisposer;
-    public popup(what: TemplateRef<any>, options?: PopupOptions): PopupDisposer;
-    public popup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupDisposer {
+    public popup(what: Type<IPopupable>, options?: PopupOptions, initData?: any): PopupRef;
+    public popup(what: TemplateRef<any>, options?: PopupOptions): PopupRef;
+    public popup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupRef {
         let disposer: PopupDisposer;
         let ref: PopupRef;
         if (what instanceof TemplateRef) {
             ref = this._viewContainerRef.createEmbeddedView(what);
-            disposer = this._getDisposer(ref);
             let popupElement = ref.rootNodes.find(rootNode => rootNode instanceof HTMLElement);
             setTimeout(() => {
                 PopupService.setSize(options, popupElement, this._renderer);
@@ -112,7 +111,7 @@ export class PopupService {
             ref.instance.initData = initData;
             ref.instance.options = options ? options : {};
         }
-        return disposer;
+        return ref;
     }
 
     private _getDisposer(popupRef: PopupRef): PopupDisposer {
@@ -139,6 +138,17 @@ export class PopupService {
             renderer.setStyle(element, 'height', CommonUtils.getCssValue(size.height));
         }
     }
+
+    /*
+     * 设置边框、阴影、动画
+     * */
+    public static setBackground(element: HTMLElement, renderer: Renderer2) {
+        renderer.setStyle(element, 'border', '1px solid #d9d9d9');
+        renderer.setStyle(element, 'border-radius', '2px');
+        renderer.setStyle(element, 'box-shadow', '1px 1px 1px #d9d9d9');
+        renderer.addClass(element, 'rdk-drop-down-animations');
+    }
+
 
     /*
      * 设置弹出的位置

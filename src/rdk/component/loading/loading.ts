@@ -5,7 +5,6 @@ export class RdkLoadingBase implements IPopupable, OnInit, OnDestroy {
     public disposer: PopupDisposer;
     public initData: any;
     public options: PopupOptions;
-    protected state: string = 'void';
     protected removeWindowListener: () => void;
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
@@ -16,7 +15,8 @@ export class RdkLoadingBase implements IPopupable, OnInit, OnDestroy {
             if (this.options) {
                 PopupService.setPopup(this.options, this._elementRef.nativeElement, this._renderer);
             }
-            this.state = 'in';
+            //手动显示loading
+            this._renderer.addClass(this._elementRef.nativeElement, 'in');
         }, 0);
 
         //window.history.back的监听
@@ -31,8 +31,9 @@ export class RdkLoadingBase implements IPopupable, OnInit, OnDestroy {
 }
 
 @Component({
+    selector: 'rdk-loading',
     templateUrl: 'loading.html',
-    styleUrls: ['loading-ball.scss']
+    styleUrls: ['loading.scss']
 })
 export class RdkLoading extends RdkLoadingBase {
     constructor(renderer: Renderer2, elementRef: ElementRef) {
@@ -40,13 +41,14 @@ export class RdkLoading extends RdkLoadingBase {
     }
 }
 
-
 @Component({
-    templateUrl: 'loading.html',
-    styleUrls: ['loading-bar.scss']
+    selector: 'rdk-ball-loading',
+    templateUrl: 'loading-ball.html',
+    styleUrls: ['loading-ball.scss']
 })
-export class RdkBarLoading extends RdkLoadingBase {
+export class RdkBallLoading extends RdkLoadingBase {
     constructor(renderer: Renderer2, elementRef: ElementRef) {
         super(renderer, elementRef);
     }
 }
+

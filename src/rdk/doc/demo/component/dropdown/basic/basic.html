@@ -1,15 +1,27 @@
+<div style="display: flex;height: 50px">
+    <rdk-button (click)="changeTriger()">触发方式</rdk-button>
+    <hr style="width: 3px">
+    <rdk-button (click)="changeDisabled()">不可编辑toggle</rdk-button>
+</div>
+
+<br>
 <rdk-drop-down
+    class="drop-down-father"
     [pane]="dropcontent"
-    [value]="inputValue">
+    [disabled]="disabled"
+    [openTrigger]="openTrigger"
+    [stopTrigger]="stopTrigger"
+    [(value)]="selectedCity">
+
 </rdk-drop-down>
 <ng-template #dropcontent>
-    <p class="notes">输入值是：{{inputValue}}</p>
-    <br/>
-    <br/>
-    <rdk-input
-        [(value)]="inputValue"
-        (click)="clickProcess($event)">
-    </rdk-input>
+    <rdk-tile-select class="drop-down-child"
+                     [(selectedItems)]="selectedCity" labelField="label"
+                     [multipleSelect]="true" [searchable]="true"
+                     [data]="citys"
+                     tileOptionWidth="100px"
 
+                     (selectedItemsChange)="basicSelectChange()"
+                     (click)="clickProcess($event)">
+    </rdk-tile-select>
 </ng-template>
-

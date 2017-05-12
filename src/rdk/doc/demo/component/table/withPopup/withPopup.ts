@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
 import {Http} from "@angular/http";
-import {PopupService, PopupDisposer} from "../../../../../service/popup.service";
+import {PopupService, PopupRef, PopupDisposer} from "../../../../../service/popup.service";
 
 
 @Component({
@@ -11,6 +11,7 @@ import {PopupService, PopupDisposer} from "../../../../../service/popup.service"
 
 export class TableDataWithPopupDemoComponent {
 
+    private _popupRef: PopupRef;
     private _disposer: PopupDisposer;
 
     tableData: TableData;
@@ -20,11 +21,9 @@ export class TableDataWithPopupDemoComponent {
         this.tableData.fromAjax('mock-data/table/data.json');
     }
     popupTemplate(tp){
-        this._disposer = this._popupService.popup(tp);
+        this._popupRef = this._popupService.popup(tp);
+        this._disposer = () => {this._popupRef.destroy()}
     }
 
-    closeTemplate(){
-        this._disposer();
-    }
 }
 

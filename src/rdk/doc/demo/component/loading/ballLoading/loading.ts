@@ -1,13 +1,13 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {LoadingService} from "../../../../../service/loading.service"
 import {PopupRef} from "../../../../../service/popup.service";
-import {DefinedLoading} from "./definedLoading/definedLoading";
+import {LoadingService} from "rdk/service/loading.service";
+import {RdkBallLoading} from "../../../../../component/loading/loading";
 
 @Component({
-    templateUrl: 'userDefined.html',
-    styleUrls: ['userDefined.scss']
+    templateUrl: 'loading.html',
+    styleUrls: ['loading.scss']
 })
-export class DefinedLoadingDemoComponent {
+export class BallLoadingDemoComponent{
     @ViewChild('block') block: ElementRef;
 
     constructor(public loadingService: LoadingService) {
@@ -18,7 +18,7 @@ export class DefinedLoadingDemoComponent {
 
     popupBlockLoading() {
         if (!this.blockLoading) {
-            this.blockLoading = this.loadingService.show(this.block, DefinedLoading);
+            this.blockLoading = this.loadingService.show(this.block, RdkBallLoading);
         }
     }
 
@@ -31,15 +31,15 @@ export class DefinedLoadingDemoComponent {
 
     popupGlobalLoading() {
         if (!this.globalLoading) {
-            this.globalLoading = this.loadingService.show(DefinedLoading);
+            this.globalLoading = this.loadingService.show(RdkBallLoading);
             setTimeout(() => {
                 this.closeGlobalLoading();
             }, 3000)
         }
     }
 
-    closeGlobalLoading() {
-        if (this.globalLoading) {
+    closeGlobalLoading(){
+        if(this.globalLoading){
             this.globalLoading.destroy();
             this.globalLoading = null;
         }

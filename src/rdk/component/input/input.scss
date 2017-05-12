@@ -9,6 +9,7 @@ $input-prefix-cls: #{$rdk-prefix}-input;
     height: $height-base;
     line-height: $height-base;
     font-size: $font-size-base;
+    opacity: 0;
     .#{$input-prefix-cls}-icon-front{
         position: absolute;
         left: 8px;

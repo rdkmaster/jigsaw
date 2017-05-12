@@ -4,7 +4,7 @@
 $rdk-dropDown: #{$rdk-prefix}-drop-down;
 
 :host {
-
+    @include inline-block;
     .#{$rdk-dropDown} {
         min-width: 240px;
         width: auto;
