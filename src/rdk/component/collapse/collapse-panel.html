@@ -1,0 +1,10 @@
+<div class="rdk-collapse-item"
+     [class.rdk-collapse-item-inactive]="isActive">
+    <div class="rdk-collapse-header" (click)="_onClick()">
+        <i class="fa fa-angle-down arrow"></i>
+        {{header}}
+    </div>
+    <div class="rdk-collapse-content">
+        <ng-content></ng-content>
+    </div>
+</div>
