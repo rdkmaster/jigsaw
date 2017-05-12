@@ -32,7 +32,7 @@ export class RdkLoadingBase implements IPopupable, OnInit, OnDestroy {
 
 @Component({
     templateUrl: 'loading.html',
-    styleUrls: ['loading-ball.scss']
+    styleUrls: ['loading.scss']
 })
 export class RdkLoading extends RdkLoadingBase {
     constructor(renderer: Renderer2, elementRef: ElementRef) {
@@ -40,13 +40,13 @@ export class RdkLoading extends RdkLoadingBase {
     }
 }
 
-
 @Component({
-    templateUrl: 'loading.html',
-    styleUrls: ['loading-bar.scss']
+    templateUrl: 'loading-ball.html',
+    styleUrls: ['loading-ball.scss']
 })
-export class RdkBarLoading extends RdkLoadingBase {
+export class RdkBallLoading extends RdkLoadingBase {
     constructor(renderer: Renderer2, elementRef: ElementRef) {
         super(renderer, elementRef);
     }
 }
+
