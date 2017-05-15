@@ -99,6 +99,10 @@ const demoListRoutes = [
         loadChildren: './component/collapse/collapse-module#CollapseDemoModule'
     },
     {
+        path: 'dialog',
+        loadChildren: './component/dialog/demo.module#DialogDemoModule'
+    },
+    {
         path: '**', //fallback router must in the last
         component: DemoListComponent
     }

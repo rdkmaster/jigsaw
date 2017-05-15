@@ -1,8 +1,9 @@
+<span>Top:</span><rdk-input [(value)]="top" width="200px"></rdk-input>
 <rdk-button width="300px" (click)="popupDialog1(dialog1)">Top</rdk-button>
 
 {{message}}
 <ng-template #dialog1>
-    <rdk-dialog title="dialog title" [disposer]="_disposer" top="20%" (close)="closeTemplate($event)">
+    <rdk-dialog title="dialog title"  [top]="top" [disposer]="_dialogDisposer">
         <ul class="dialog-content">
             <li>Dialog content...</li>
             <li>Dialog content...</li>
