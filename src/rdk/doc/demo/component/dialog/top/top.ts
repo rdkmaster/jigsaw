@@ -3,21 +3,25 @@
  */
 
 import {Component, TemplateRef, ViewEncapsulation} from '@angular/core';
-import {ButtonInfo, PopupDisposer, PopupService} from "../../../../../service/popup.service";
+import {ButtonInfo, PopupDisposer, PopupRef, PopupService} from "../../../../../service/popup.service";
 
 @Component({
     templateUrl: 'top.html'
 })
 export class DialogTopDemo  {
 
-    public _disposer : PopupDisposer;
+    private _dialogRef: PopupRef;
+    private _dialogDisposer: PopupDisposer;
+
+    private top = "20%";
 
     constructor(private popupService : PopupService){
 
     }
 
     popupDialog1(ele:TemplateRef<any>){
-        this._disposer = this.popupService.popup(ele);
+        this._dialogRef = this.popupService.popup(ele);
+        this._dialogDisposer = ()=> this._dialogRef.destroy();
     }
 
     closeTemplate(event){

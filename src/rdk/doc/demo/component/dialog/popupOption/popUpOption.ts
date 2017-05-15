@@ -4,7 +4,7 @@
 
 import {Component, ElementRef, OnInit, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
 import {
-    ButtonInfo, PopupDisposer, PopupOptions, PopupPoint, PopupPositionOffset, PopupPositionType,
+    ButtonInfo, PopupDisposer, PopupOptions, PopupPoint, PopupPositionOffset, PopupPositionType, PopupRef,
     PopupService
 } from "../../../../../service/popup.service";
 
@@ -14,7 +14,8 @@ import {
 })
 export class DialogPopOptionDemo implements OnInit{
 
-    public _disposer : PopupDisposer;
+    private _dialogRef: PopupRef;
+    private _dialogDisposer: PopupDisposer;
 
     private option : PopupOptions;
 
@@ -80,7 +81,9 @@ export class DialogPopOptionDemo implements OnInit{
         }else{
             this.option.pos = this.detailPos;
         }
-        this._disposer = this.popupService.popup(ele,this.option);
+
+        this._dialogRef = this.popupService.popup(ele,this.option);
+        this._dialogDisposer = () => this._dialogRef.destroy();
     }
 
 
