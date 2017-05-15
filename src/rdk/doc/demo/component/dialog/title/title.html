@@ -1,0 +1,24 @@
+<rdk-button width="300px" (click)="popupDialog1(dialog1)">通过属性配置</rdk-button>
+
+<rdk-button width="300px" (click)="popupDialog2(dialog2)">自定义ElementTitle</rdk-button>
+
+<ng-template #dialog1>
+    <rdk-dialog title="dialog title" [disposer]="_disposer">
+        <ul class="dialog-content">
+            <li>Dialog content...</li>
+            <li>Dialog content...</li>
+            <li>Dialog content...</li>
+        </ul>
+    </rdk-dialog>
+</ng-template>
+
+<ng-template #dialog2>
+    <rdk-dialog [disposer]="_disposer2">
+        <span title>Title of the dialog</span>
+        <ul class="dialog-content">
+            <li>Dialog content...</li>
+            <li>Dialog content...</li>
+            <li>Dialog content...</li>
+        </ul>
+    </rdk-dialog>
+</ng-template>
