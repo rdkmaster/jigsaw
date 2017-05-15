@@ -1,5 +1,5 @@
 
-import {Directive, OnInit, ViewContainerRef} from "@angular/core";
+import {Directive, ElementRef, OnInit, ViewContainerRef} from "@angular/core";
 
 @Directive({
     selector: '[rdk-renderer-host]',
