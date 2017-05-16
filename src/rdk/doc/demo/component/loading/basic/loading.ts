@@ -31,9 +31,9 @@ export class LoadingDemoComponent {
     popupGlobalLoading() {
         if (!this.globalLoading) {
             this.globalLoading = this.loadingService.show();
-            /*setTimeout(() => {
+            setTimeout(() => {
                 this.closeGlobalLoading();
-            }, 3000)*/
+            }, 3000)
         }
     }
 

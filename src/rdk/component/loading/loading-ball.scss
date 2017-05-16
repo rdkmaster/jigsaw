@@ -54,12 +54,9 @@ $amount: 10px;
 
 :host {
     @include inline-block;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    position: relative;
+    height: 15px;
+    width: 70px;
 }
 
 .#{$loading-prefix-cls}-content {

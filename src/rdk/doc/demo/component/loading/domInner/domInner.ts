@@ -7,8 +7,8 @@ export class DomInnerDemoComponent {
     isLoading: boolean;
     load(){
         this.isLoading = true;
-        setTimeout(() => {
+        /*setTimeout(() => {
             this.isLoading = false;
-        }, 3000)
+        }, 3000)*/
     }
 }
