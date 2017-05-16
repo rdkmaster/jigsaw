@@ -2,8 +2,15 @@
 
 $block-prefix-cls: #{$rdk-prefix}-block;
 
+:host{
+    @include inline-block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
 .#{$block-prefix-cls}{
-    position: fixed;
+    position: absolute;
     left: 0;
     right: 0;
     top: 0;

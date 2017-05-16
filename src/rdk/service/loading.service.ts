@@ -39,7 +39,7 @@ export class LoadingService {
     private _getOptions(elementRef: ElementRef): PopupOptions {
         let element = elementRef.nativeElement;
         return {
-            modal: false, //是否模态
+            modal: true, //是否模态
             pos: elementRef, //插入点
             posOffset: { //偏移位置
                 top: 0,

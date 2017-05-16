@@ -161,7 +161,6 @@ const tableDemoRoutes = [
         TableAddIDWithPagingComponent,
         TableDataWithPopupDemoComponent,
         TableRendererOfTemplateRefDemoComponent,
-        RdkBlock
     ],
     imports: [
         RouterModule.forChild(tableDemoRoutes),

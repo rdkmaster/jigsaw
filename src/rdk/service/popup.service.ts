@@ -105,28 +105,7 @@ export class PopupService {
         const ref: PopupRef = popupInfo.popupRef;
         const popupElement: HTMLElement = popupInfo.element;
         const disposer: PopupDisposer = popupInfo.disposer;
-
-        //modal block
-        let blockDisposer: PopupDisposer;
-        if (PopupService.isModal(options)) {
-            const blockOptions = {showEffect: PopupEffect.fadeIn, hideEffect: PopupEffect.fadeOut};
-            const blockInfo: PopupInfo = this._popupFactory(RdkBlock, blockOptions);
-            blockDisposer = blockInfo.disposer;
-            PopupService.setShowAminimate(blockOptions, blockInfo.element, this._renderer);
-        }
-
-        const popupDisposer: PopupDisposer = () => {
-            if (disposer) {
-                disposer();
-            }
-            if (blockDisposer) {
-                blockDisposer();
-            }
-        };
-
         if (ref instanceof ComponentRef) {
-            //ref.instance.disposer = disposer;
-            //ref.instance.options = options ? options : {modal: true};
             ref.instance.initData = initData;
             ref.instance.close.subscribe(() => {
                 popupDisposer();
@@ -136,6 +115,36 @@ export class PopupService {
         setTimeout(() => {
             PopupService.setPopup(options, popupElement, this._renderer);
         }, 0);
+
+        //modal block
+        let blockDisposer: PopupDisposer;
+        if (PopupService.isModal(options)) {
+            const blockOptions: PopupOptions = {
+                modal: true,
+                showEffect: PopupEffect.fadeIn,
+                hideEffect: PopupEffect.fadeOut
+            };
+            if(!CommonUtils.isEmptyObject(options)){
+                blockOptions.pos = options.pos;
+                blockOptions.posOffset = options.posOffset;
+                blockOptions.posType = options.posType;
+                blockOptions.size = options.size;
+            }
+
+            const blockInfo: PopupInfo = this._popupFactory(RdkBlock, blockOptions);
+            blockDisposer = blockInfo.disposer;
+            PopupService.setPopup(blockOptions, blockInfo.element, this._renderer);
+        }
+
+        //set disposer
+        const popupDisposer: PopupDisposer = () => {
+            if (disposer) {
+                disposer();
+            }
+            if (blockDisposer) {
+                blockDisposer();
+            }
+        };
 
         return {
             popupRef: ref,
@@ -182,21 +191,21 @@ export class PopupService {
 
     public static getDisposer(options: PopupOptions, popupRef: PopupRef, element: HTMLElement, renderer: Renderer2): PopupDisposer {
         return () => {
-            PopupService.setHideAminimate(options, element, renderer, () => {
+            PopupService.setHideAnimate(options, element, renderer, () => {
                 popupRef.destroy()
             });
         }
     }
 
     public static isModal(options: PopupOptions): boolean {
-        return !options || CommonUtils.isEmptyObject(options) || options.modal;
+        return CommonUtils.isEmptyObject(options) || options.modal;
     }
 
     public static setPopup(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
         if (element && renderer) {
             PopupService.setSize(options, element, renderer);
             PopupService.setPosition(options, element, renderer);
-            PopupService.setShowAminimate(options, element, renderer);
+            PopupService.setShowAnimate(options, element, renderer);
         }
     }
 
@@ -224,13 +233,13 @@ export class PopupService {
         renderer.addClass(element, 'rdk-drop-down-animations');
     }
 
-    public static setShowAminimate(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
+    public static setShowAnimate(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
         options = options && options.showEffect ? options : {showEffect: PopupEffect.fadeIn};
         renderer.setStyle(element, 'visibility', 'visible');
         renderer.addClass(element, 'rdk-am-' + PopupService.getAnimateName(options.showEffect));
     }
 
-    public static setHideAminimate(options: PopupOptions, element: HTMLElement, renderer: Renderer2, cb: () => void) {
+    public static setHideAnimate(options: PopupOptions, element: HTMLElement, renderer: Renderer2, cb: () => void) {
         options = options && options.hideEffect ? options : {hideEffect: PopupEffect.fadeOut};
         renderer.addClass(element, 'rdk-am-' + PopupService.getAnimateName(options.hideEffect));
         renderer.listen(element, 'animationend', () => {
@@ -291,8 +300,11 @@ export class PopupService {
     public static getPositionValue(options: PopupOptions, element: HTMLElement): PopupPositionValue {
         let top: string = '';
         let left: string = '';
-        if (PopupService.isModal(options)) {
-            //没配options或options为空对象时，默认模态
+        if (CommonUtils.isEmptyObject(options) || (options.modal && !options.pos)) {
+            // 全局模态:
+            // 没配options
+            // 或options为空对象
+            // 或者modal为true，并且没有配options.pos
             top = (document.body.clientHeight / 2 - element.offsetHeight / 2) + 'px';
             left = (document.body.clientWidth / 2 - element.offsetWidth / 2) + 'px';
         } else if (options.pos instanceof ElementRef) {
