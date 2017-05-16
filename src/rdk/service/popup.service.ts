@@ -108,6 +108,7 @@ export class PopupService {
         let popupElement: HTMLElement;
         let disposer: PopupDisposer;
         let blockDisposer: PopupDisposer;
+        let popupDisposer: PopupDisposer;
         let removeWindowListens: PopupDisposer[] = [];
 
         const popupInfo: PopupInfo = this._popupFactory(what, options);
@@ -119,7 +120,7 @@ export class PopupService {
         blockDisposer = this._popupBlock(options);
 
         //set disposer
-        const popupDisposer: PopupDisposer = () => {
+        popupDisposer = () => {
             if (disposer) {
                 disposer();
             }
