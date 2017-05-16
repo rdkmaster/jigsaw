@@ -150,6 +150,10 @@ export class SliderHandle implements OnInit{
     private updateValuePosition(event?) {
         if(!this._dragged|| this._slider.disabled) return;
 
+        // 防止产生选中其他文本，造成鼠标放开后还可以拖拽的奇怪现象;
+        event.stopPropagation();
+        event.preventDefault();
+
         let pos = {
             x: event["clientX"],
             y: event["clientY"]

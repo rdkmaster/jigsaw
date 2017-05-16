@@ -11,7 +11,7 @@ import { Component, OnInit } from '@angular/core';
         <hr>
         <br>
         <h4>2. 设置了min和max的滑动条</h4>
-        <rdk-slider [value]="value" [min]="min" [max]="max" (change)="sliderChange2($event)"></rdk-slider> <span>取值: {{value2}}</span>
+        <rdk-slider style="margin: 20px 0; " [value]="value" [min]="min" [max]="max" (change)="sliderChange2($event)"></rdk-slider> <span>取值: {{value2}}</span>
         <hr>
         <br>
         <h4>3. 改变step</h4>
