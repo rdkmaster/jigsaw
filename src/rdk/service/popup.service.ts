@@ -197,8 +197,28 @@ export class PopupService {
         }
     }
 
+    /**
+     * 是否模态，包括全局和局部的：
+     * 没配options
+     * 或options为空对象
+     * 或者modal为true
+     * @param options
+     * @returns {boolean}
+     */
     public static isModal(options: PopupOptions): boolean {
         return CommonUtils.isEmptyObject(options) || options.modal;
+    }
+
+    /**
+     * 是否全局模态:
+     * 没配options
+     * 或options为空对象
+     * 或者modal为true，并且没有配options.pos
+     * @param options
+     * @returns {boolean}
+     */
+    public static isGlobalModal(options: PopupOptions): boolean {
+        return CommonUtils.isEmptyObject(options) || (options.modal && !options.pos);
     }
 
     public static setPopup(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
@@ -272,8 +292,7 @@ export class PopupService {
      * 设置弹出的位置
      * */
     public static setPosition(options: PopupOptions, element: HTMLElement, renderer: Renderer2): void {
-        //没配options或options为空对象时，默认模态
-        let posType: string = !options || CommonUtils.isEmptyObject(options) || options.modal ? 'fixed' : PopupService.getPositionType(options.posType);
+        let posType: string = PopupService.isGlobalModal(options) ? 'fixed' : PopupService.getPositionType(options.posType);
         let position = PopupService.getPositionValue(options, element);
         renderer.setStyle(element, 'position', posType);
         renderer.setStyle(element, 'top', position.top);
@@ -300,11 +319,7 @@ export class PopupService {
     public static getPositionValue(options: PopupOptions, element: HTMLElement): PopupPositionValue {
         let top: string = '';
         let left: string = '';
-        if (CommonUtils.isEmptyObject(options) || (options.modal && !options.pos)) {
-            // 全局模态:
-            // 没配options
-            // 或options为空对象
-            // 或者modal为true，并且没有配options.pos
+        if (PopupService.isGlobalModal(options)) {
             top = (document.body.clientHeight / 2 - element.offsetHeight / 2) + 'px';
             left = (document.body.clientWidth / 2 - element.offsetWidth / 2) + 'px';
         } else if (options.pos instanceof ElementRef) {
