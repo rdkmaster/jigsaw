@@ -94,10 +94,13 @@ export class PopupService {
         }
     }
 
-    /*
+    /**
      * 打开弹框
-     * return 弹框的销毁回调
-     * */
+     * @param what
+     * @param options
+     * @param initData
+     * @return PopupInfo
+     */
     public popup(what: Type<IPopupable>, options?: PopupOptions, initData?: any): PopupInfo;
     public popup(what: TemplateRef<any>, options?: PopupOptions): PopupInfo;
     public popup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupInfo {
@@ -111,7 +114,7 @@ export class PopupService {
                 popupDisposer();
             })
         }
-        this._beforePopup(popupElement);
+        const removeWindowListens: PopupDisposer[] = this._beforePopup(options, popupElement, this._renderer);
         setTimeout(() => {
             PopupService.setPopup(options, popupElement, this._renderer);
         }, 0);
@@ -144,6 +147,7 @@ export class PopupService {
             if (blockDisposer) {
                 blockDisposer();
             }
+            removeWindowListens.forEach(removeWindowListen => removeWindowListen())
         };
 
         return {
@@ -153,9 +157,10 @@ export class PopupService {
         }
     }
 
-    private _beforePopup(popupElement) {
+    private _beforePopup(options:PopupOptions, popupElement, renderer: Renderer2): PopupDisposer[] {
         this._renderer.setStyle(popupElement, 'z-index', '10000');
         this._renderer.setStyle(popupElement, 'visibility', 'hidden');
+        return this._setWindowListener(options, popupElement, renderer);
     }
 
     private _popupFactory(what: Type<IPopupable> | TemplateRef<any>, options: PopupOptions): PopupInfo {
@@ -227,6 +232,19 @@ export class PopupService {
             PopupService.setPosition(options, element, renderer);
             PopupService.setShowAnimate(options, element, renderer);
         }
+    }
+
+    private _setWindowListener(options: PopupOptions, element: HTMLElement, renderer: Renderer2): PopupDisposer[] {
+        let removeWindowListens: PopupDisposer[] = [];
+        if(PopupService.isGlobalModal(options)){
+            removeWindowListens.push(renderer.listen('window', 'resize', () => {
+                renderer.setStyle(element, 'top',
+                    (document.body.clientHeight / 2 - element.offsetHeight / 2) + 'px');
+                renderer.setStyle(element, 'left',
+                    (document.body.clientWidth / 2 - element.offsetWidth / 2) + 'px');
+            }));
+        }
+        return removeWindowListens;
     }
 
     /*

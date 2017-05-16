@@ -93,12 +93,9 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
     public title: string;
 
     public initData: any;
-    public options: PopupOptions;
 
-    protected removeResizeEvent: Function;
     protected removePopstateEvent: Function;
     protected popupElement: HTMLElement;
-    protected isModal: boolean;
 
     protected renderer: Renderer2;
     protected elementRef: ElementRef;
@@ -126,10 +123,6 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
     }
 
     public ngOnDestroy() {
-        //销毁resize事件
-        if (this.removeResizeEvent) {
-            this.removeResizeEvent();
-        }
         //销毁浏览器回退事件
         if (this.removePopstateEvent) {
             this.removePopstateEvent();
@@ -140,9 +133,6 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
 
     protected init() {
         this.popupElement = this.getPopupElement();
-
-        //判断是否需要背景
-        this.isModal = !this.options || CommonUtils.isEmptyObject(this.options) || this.options.modal;
 
         //设置弹框宽度
         if (this.width) {
@@ -155,26 +145,12 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
                 this.renderer.setStyle(this.popupElement, 'top', this.top);
             }
 
-            if (this.isModal) {
-                this.onResize();
-            }
-
             //window.history.back的监听
             this.removePopstateEvent = this.renderer.listen('window', 'popstate', () => {
                 this.dispose();
             });
 
         }, 0);
-    }
-
-    protected onResize() {
-        //resize居中
-        this.removeResizeEvent = this.renderer.listen('window', 'resize', () => {
-            this.renderer.setStyle(this.popupElement, 'top',
-                this.top ? this.top : (document.body.clientHeight / 2 - this.popupElement.offsetHeight / 2) + 'px');
-            this.renderer.setStyle(this.popupElement, 'left',
-                (document.body.clientWidth / 2 - this.popupElement.offsetWidth / 2) + 'px');
-        })
     }
 }
 
