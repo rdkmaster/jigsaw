@@ -1,5 +1,14 @@
 @import "../../../../../assets/scss/core/basc";
 
+h3.title{
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.dom-dialog{
+    margin-bottom: 30px;
+}
+
 ul.dialog-content{
     padding: 20px;
     li{

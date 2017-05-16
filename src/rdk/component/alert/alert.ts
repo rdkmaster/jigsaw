@@ -125,6 +125,7 @@ export class RdkAlert extends AbstractDialogComponentBase {
 }
 
 abstract class RdkCommonAlert extends DialogBase {
+    @Input()
     public set initData(value: any) {
         if (!value) {
             return;
@@ -168,7 +169,8 @@ abstract class RdkCommonAlert extends DialogBase {
 
 @Component({
     templateUrl: 'common-alert.html',
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['common-alert.scss'],
+    selector: 'rdk-info-alert',
 })
 export class RdkInfoAlert extends RdkCommonAlert {
     @ViewChild(RdkAlert) dialog: RdkDialog;
@@ -177,7 +179,8 @@ export class RdkInfoAlert extends RdkCommonAlert {
 
 @Component({
     templateUrl: 'common-alert.html',
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['common-alert.scss'],
+    selector: 'rdk-warning-alert',
 })
 export class RdkWarningAlert extends RdkCommonAlert {
     @ViewChild(RdkAlert) dialog: RdkDialog;
@@ -186,13 +189,13 @@ export class RdkWarningAlert extends RdkCommonAlert {
 
 @Component({
     templateUrl: 'common-alert.html',
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['common-alert.scss'],
+    selector: 'rdk-error-alert',
 })
 export class RdkErrorAlert extends RdkCommonAlert {
     @ViewChild(RdkAlert) dialog: RdkDialog;
     public level: AlertLevel = AlertLevel.error;
 }
-
 
 @NgModule({
     imports: [RdkDialogModule, RdkDraggableModule, RdkButtonModule, CommonModule,SharedModule],

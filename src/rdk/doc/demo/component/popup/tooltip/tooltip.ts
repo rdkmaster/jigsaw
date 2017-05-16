@@ -7,7 +7,8 @@ import {
 } from '../../../../../service/popup.service';
 
 @Component({
-    templateUrl: 'tooltip.html'
+    templateUrl: 'tooltip.html',
+    styleUrls: ['tooltip.scss']
 })
 export class TooltipDemoComponent {
     private _tooltipInfo: PopupInfo;

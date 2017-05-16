@@ -11,11 +11,9 @@ $alert-prefix-cls: #{$rdk-prefix}-alert;
         border: 1px solid #ddd;
         border-radius: 4px;
         cursor: move;
-        z-index: 10000;
         position: relative;
         padding: 16px 16px 16px 70px;
         line-height: 18px;
-
         .#{$alert-prefix-cls}-icon {
 
             display: inline-block;

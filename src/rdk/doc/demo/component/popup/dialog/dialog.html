@@ -1,4 +1,5 @@
-<rdk-dialog style="margin-bottom: 10px" [buttons]="buttons">
+<h3 class="title">在文档流中：</h3>
+<rdk-dialog class="dom-dialog" width="300px" [buttons]="buttons">
     <span title><span class="fa fa-thumbs-up"></span>Title of the dialog</span>
     <ul class="dialog-content">
         <li>Dialog content...</li>
@@ -7,6 +8,7 @@
     </ul>
 </rdk-dialog>
 
+<h3 class="title">弹出：</h3>
 <rdk-button width="150" (click)="popup()">
     modal dialog
 </rdk-button>
@@ -28,7 +30,7 @@
 </rdk-button>
 
 <ng-template #tpDialog>
-    <rdk-dialog width="60%" [buttons]="buttons" (close)="closeDialogTemplate()">
+    <rdk-dialog width="40%" [buttons]="buttons" (close)="closeDialogTemplate()">
         <span title><span class="fa fa-thumbs-up"></span>Title of the dialog</span>
         <ul class="dialog-content">
             <li>Dialog content...</li>

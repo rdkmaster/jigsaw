@@ -29,7 +29,9 @@ export class DialogDemoComponent {
         {
             label: 'cancel',
             callback: () => {
-                this._dialogInfo.disposer()
+                if(this._dialogInfo){
+                    this._dialogInfo.disposer()
+                }
             },
             clazz: ""
         }

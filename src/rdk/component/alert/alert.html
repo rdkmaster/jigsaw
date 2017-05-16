@@ -1,6 +1,6 @@
 <div class="rdk-alert" [ngClass]="_alertClass" rdk-draggable>
     <i class="rdk-alert-icon fa "></i>
-    <span class="rdk-alert-title">{{title | translate }}</span>
+    <span class="rdk-alert-title">{{title}}</span>
     <span class="rdk-alert-close fa fa-times" (click)='dispose()'></span>
     <div class="rdk-alert-content">
         <ng-content></ng-content>
@@ -8,7 +8,7 @@
     <div class="rdk-alert-button-group" *ngIf="buttons && buttons.length > 0">
         <rdk-button *ngFor="let bi of buttons"
                     (click)="bi.callback && bi.callback.call(bi.callbackContext, bi)"
-                    class="{{bi.clazz}}">{{bi.label | translate }}
+                    class="{{bi.clazz}}">{{bi.label}}
         </rdk-button>
     </div>
 </div>

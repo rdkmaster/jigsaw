@@ -22,6 +22,11 @@ export class AlertDemoComponent {
         this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
     }
 
+    infoInitData = {
+        message: 'this is a great info alert!', title: 'the title is optional',
+        callback: this.alertCallback, callbackContext: this
+    };
+
     commonInfoAlert(event) {
         this.answer = 'waiting for an answer';
         this._popupService.popup(RdkInfoAlert, this._getModalOptions(), {
