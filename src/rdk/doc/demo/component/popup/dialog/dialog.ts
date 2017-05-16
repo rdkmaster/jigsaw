@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, ComponentRef} from "@angular/core";
 
 import {UseDialogComponent} from './use-dialog/use-dialog';
 import {UseDialog2Component} from './use-dialog2/use-dialog';
@@ -41,11 +41,21 @@ export class DialogDemoComponent {
     }
 
     popup() {
-        this._popupService.popup(UseDialogComponent, this._getModalOptions()); //没有配options，默认使用模态
+        const popupInfo = this._popupService.popup(UseDialogComponent, this._getModalOptions());
+        if(popupInfo.popupRef instanceof ComponentRef){
+            popupInfo.popupRef.instance.close.subscribe(() => {
+                popupInfo.disposer()
+            })
+        }
     }
 
     popupAtPoint(event) {
-        this._popupService.popup(UseDialog2Component, this._getUnModalOptions(event));
+        const popupInfo = this._popupService.popup(UseDialog2Component, this._getUnModalOptions(event));
+        if(popupInfo.popupRef instanceof ComponentRef){
+            popupInfo.popupRef.instance.close.subscribe(() => {
+                popupInfo.disposer()
+            })
+        }
     }
 
     popupModalDialogTemplate(tp){

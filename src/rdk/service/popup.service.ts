@@ -104,24 +104,50 @@ export class PopupService {
     public popup(what: Type<IPopupable>, options?: PopupOptions, initData?: any): PopupInfo;
     public popup(what: TemplateRef<any>, options?: PopupOptions): PopupInfo;
     public popup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupInfo {
+        let ref: PopupRef;
+        let popupElement: HTMLElement;
+        let disposer: PopupDisposer;
+        let blockDisposer: PopupDisposer;
+        let removeWindowListens: PopupDisposer[] = [];
+
         const popupInfo: PopupInfo = this._popupFactory(what, options);
-        const ref: PopupRef = popupInfo.popupRef;
-        const popupElement: HTMLElement = popupInfo.element;
-        const disposer: PopupDisposer = popupInfo.disposer;
+        ref = popupInfo.popupRef;
+        popupElement = popupInfo.element;
+        disposer = popupInfo.disposer;
+
+        //popup block
+        blockDisposer = this._popupBlock(options);
+
+        //set disposer
+        const popupDisposer: PopupDisposer = () => {
+            if (disposer) {
+                disposer();
+            }
+            if (blockDisposer) {
+                blockDisposer();
+            }
+            removeWindowListens.forEach(removeWindowListen => removeWindowListen());
+        };
+
+        //set popup
         if (ref instanceof ComponentRef) {
             ref.instance.initData = initData;
-            ref.instance.close.subscribe(() => {
-                popupDisposer();
-            })
         }
-        const removeWindowListens: PopupDisposer[] = this._beforePopup(options, popupElement, this._renderer);
+        removeWindowListens = this._beforePopup(options, popupElement, this._renderer, popupDisposer);
         setTimeout(() => {
-            PopupService.setPopup(options, popupElement, this._renderer);
+            this._setPopup(options, popupElement, this._renderer);
         }, 0);
 
-        //modal block
-        let blockDisposer: PopupDisposer;
-        if (PopupService.isModal(options)) {
+        return {
+            popupRef: ref,
+            element: popupElement,
+            disposer: popupDisposer
+        }
+    }
+
+    private _popupBlock(options: PopupOptions): PopupDisposer{
+        let disposer: PopupDisposer;
+        if (this._isModal(options)) {
             const blockOptions: PopupOptions = {
                 modal: true,
                 showEffect: PopupEffect.fadeIn,
@@ -135,38 +161,22 @@ export class PopupService {
             }
 
             const blockInfo: PopupInfo = this._popupFactory(RdkBlock, blockOptions);
-            blockDisposer = blockInfo.disposer;
-            PopupService.setPopup(blockOptions, blockInfo.element, this._renderer);
+            disposer = blockInfo.disposer;
+            this._setPopup(blockOptions, blockInfo.element, this._renderer);
         }
-
-        //set disposer
-        const popupDisposer: PopupDisposer = () => {
-            if (disposer) {
-                disposer();
-            }
-            if (blockDisposer) {
-                blockDisposer();
-            }
-            removeWindowListens.forEach(removeWindowListen => removeWindowListen())
-        };
-
-        return {
-            popupRef: ref,
-            element: popupElement,
-            disposer: popupDisposer
-        }
+        return disposer
     }
 
-    private _beforePopup(options:PopupOptions, popupElement, renderer: Renderer2): PopupDisposer[] {
+    private _beforePopup(options:PopupOptions, popupElement, renderer: Renderer2, disposer: PopupDisposer): PopupDisposer[] {
         this._renderer.setStyle(popupElement, 'z-index', '10000');
         this._renderer.setStyle(popupElement, 'visibility', 'hidden');
-        return this._setWindowListener(options, popupElement, renderer);
+        return this._setWindowListener(options, popupElement, renderer, disposer);
     }
 
     private _popupFactory(what: Type<IPopupable> | TemplateRef<any>, options: PopupOptions): PopupInfo {
         const ref: PopupRef = this._createPopup(what);
-        const element: HTMLElement = PopupService.getPopupElement(ref);
-        const disposer: PopupDisposer = PopupService.getDisposer(options, ref, element, this._renderer);
+        const element: HTMLElement = this._getPopupElement(ref);
+        const disposer: PopupDisposer = this._getDisposer(options, ref, element, this._renderer);
         return {
             popupRef: ref,
             element: element,
@@ -183,7 +193,7 @@ export class PopupService {
         }
     }
 
-    public static getPopupElement(ref: PopupRef): HTMLElement {
+    private _getPopupElement(ref: PopupRef): HTMLElement {
         let popupElement: HTMLElement;
         if (ref instanceof ComponentRef) {
             popupElement = ref.location.nativeElement.localName == 'ng-component' ?
@@ -194,9 +204,9 @@ export class PopupService {
         return popupElement
     }
 
-    public static getDisposer(options: PopupOptions, popupRef: PopupRef, element: HTMLElement, renderer: Renderer2): PopupDisposer {
+    private _getDisposer(options: PopupOptions, popupRef: PopupRef, element: HTMLElement, renderer: Renderer2): PopupDisposer {
         return () => {
-            PopupService.setHideAnimate(options, element, renderer, () => {
+            this._setHideAnimate(options, element, renderer, () => {
                 popupRef.destroy()
             });
         }
@@ -210,7 +220,7 @@ export class PopupService {
      * @param options
      * @returns {boolean}
      */
-    public static isModal(options: PopupOptions): boolean {
+    private _isModal(options: PopupOptions): boolean {
         return CommonUtils.isEmptyObject(options) || options.modal;
     }
 
@@ -222,21 +232,21 @@ export class PopupService {
      * @param options
      * @returns {boolean}
      */
-    public static isGlobalModal(options: PopupOptions): boolean {
+    private _isGlobalModal(options: PopupOptions): boolean {
         return CommonUtils.isEmptyObject(options) || (options.modal && !options.pos);
     }
 
-    public static setPopup(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
+    private _setPopup(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
         if (element && renderer) {
-            PopupService.setSize(options, element, renderer);
-            PopupService.setPosition(options, element, renderer);
-            PopupService.setShowAnimate(options, element, renderer);
+            this._setSize(options, element, renderer);
+            this._setPosition(options, element, renderer);
+            this._setShowAnimate(options, element, renderer);
         }
     }
 
-    private _setWindowListener(options: PopupOptions, element: HTMLElement, renderer: Renderer2): PopupDisposer[] {
+    private _setWindowListener(options: PopupOptions, element: HTMLElement, renderer: Renderer2, disposer: PopupDisposer): PopupDisposer[] {
         let removeWindowListens: PopupDisposer[] = [];
-        if(PopupService.isGlobalModal(options)){
+        if(this._isGlobalModal(options)){
             removeWindowListens.push(renderer.listen('window', 'resize', () => {
                 renderer.setStyle(element, 'top',
                     (document.body.clientHeight / 2 - element.offsetHeight / 2) + 'px');
@@ -244,13 +254,16 @@ export class PopupService {
                     (document.body.clientWidth / 2 - element.offsetWidth / 2) + 'px');
             }));
         }
+        removeWindowListens.push(renderer.listen('window', 'popstate', () => {
+            disposer()
+        }));
         return removeWindowListens;
     }
 
     /*
      * 设置弹框尺寸
      * */
-    public static setSize(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
+    private _setSize(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
         if (!options || !options.size) return;
         let size = options.size;
         if (size.width) {
@@ -271,21 +284,22 @@ export class PopupService {
         renderer.addClass(element, 'rdk-drop-down-animations');
     }
 
-    public static setShowAnimate(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
+    private _setShowAnimate(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
         options = options && options.showEffect ? options : {showEffect: PopupEffect.fadeIn};
         renderer.setStyle(element, 'visibility', 'visible');
-        renderer.addClass(element, 'rdk-am-' + PopupService.getAnimateName(options.showEffect));
+        renderer.addClass(element, 'rdk-am-' + this._getAnimateName(options.showEffect));
     }
 
-    public static setHideAnimate(options: PopupOptions, element: HTMLElement, renderer: Renderer2, cb: () => void) {
+    private _setHideAnimate(options: PopupOptions, element: HTMLElement, renderer: Renderer2, cb: () => void) {
         options = options && options.hideEffect ? options : {hideEffect: PopupEffect.fadeOut};
-        renderer.addClass(element, 'rdk-am-' + PopupService.getAnimateName(options.hideEffect));
-        renderer.listen(element, 'animationend', () => {
+        renderer.addClass(element, 'rdk-am-' + this._getAnimateName(options.hideEffect));
+        const removeElementListen = renderer.listen(element, 'animationend', () => {
+            removeElementListen();
             cb()
         })
     }
 
-    public static getAnimateName(popupEffect: PopupEffect): string {
+    private _getAnimateName(popupEffect: PopupEffect): string {
         let animateName: string;
         switch (popupEffect) {
             case 0:
@@ -309,9 +323,9 @@ export class PopupService {
     /*
      * 设置弹出的位置
      * */
-    public static setPosition(options: PopupOptions, element: HTMLElement, renderer: Renderer2): void {
-        let posType: string = PopupService.isGlobalModal(options) ? 'fixed' : PopupService.getPositionType(options.posType);
-        let position = PopupService.getPositionValue(options, element);
+    private _setPosition(options: PopupOptions, element: HTMLElement, renderer: Renderer2): void {
+        let posType: string = this._isGlobalModal(options) ? 'fixed' : this._getPositionType(options.posType);
+        let position = this._getPositionValue(options, element);
         renderer.setStyle(element, 'position', posType);
         renderer.setStyle(element, 'top', position.top);
         renderer.setStyle(element, 'left', position.left);
@@ -320,7 +334,7 @@ export class PopupService {
     /*
      * 获取posType字符串类型
      * */
-    public static getPositionType(posType: number): string {
+    private _getPositionType(posType: number): string {
         switch (posType) {
             case 0:
                 return 'absolute';
@@ -334,10 +348,10 @@ export class PopupService {
     /*
      * 获取位置具体的top和left
      * */
-    public static getPositionValue(options: PopupOptions, element: HTMLElement): PopupPositionValue {
+    private _getPositionValue(options: PopupOptions, element: HTMLElement): PopupPositionValue {
         let top: string = '';
         let left: string = '';
-        if (PopupService.isGlobalModal(options)) {
+        if (this._isGlobalModal(options)) {
             top = (document.body.clientHeight / 2 - element.offsetHeight / 2) + 'px';
             left = (document.body.clientWidth / 2 - element.offsetWidth / 2) + 'px';
         } else if (options.pos instanceof ElementRef) {

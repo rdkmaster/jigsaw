@@ -2,26 +2,9 @@ import {Component, ElementRef, EventEmitter, NgModule, OnDestroy, OnInit, Output
 import {IPopupable, PopupDisposer, PopupOptions, PopupService} from "rdk/service/popup.service";
 import {CommonModule} from "@angular/common";
 
-export class RdkLoadingBase implements IPopupable, OnInit, OnDestroy {
+export class RdkLoadingBase implements IPopupable {
     public initData: any;
-    @Output()
-    public close: EventEmitter<any> = new EventEmitter<any>();
-
-    protected removeWindowListener: () => void;
-
-    constructor(private _renderer: Renderer2) {
-    }
-
-    ngOnInit() {
-        //window.history.back的监听
-        this.removeWindowListener = this._renderer.listen('window', 'popstate', () => {
-            this.close.emit();
-        })
-    }
-
-    ngOnDestroy() {
-        this.removeWindowListener();
-    }
+    public close: EventEmitter<any>;
 }
 
 @Component({
@@ -30,9 +13,7 @@ export class RdkLoadingBase implements IPopupable, OnInit, OnDestroy {
     styleUrls: ['loading.scss']
 })
 export class RdkLoading extends RdkLoadingBase {
-    constructor(renderer: Renderer2) {
-        super(renderer);
-    }
+
 }
 
 @Component({
@@ -41,9 +22,7 @@ export class RdkLoading extends RdkLoadingBase {
     styleUrls: ['loading-ball.scss']
 })
 export class RdkBallLoading extends RdkLoadingBase {
-    constructor(renderer: Renderer2) {
-        super(renderer);
-    }
+
 }
 
 @NgModule({

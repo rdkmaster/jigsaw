@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, ComponentRef} from "@angular/core";
 
 import {CustomizedAlert} from './customized-alert/customized-alert';
 
@@ -29,31 +29,51 @@ export class AlertDemoComponent {
 
     commonInfoAlert(event) {
         this.answer = 'waiting for an answer';
-        this._popupService.popup(RdkInfoAlert, this._getModalOptions(), {
+        const popupInfo = this._popupService.popup(RdkInfoAlert, this._getModalOptions(), {
             message: 'this is a great info alert!', title: 'the title is optional',
             callback: this.alertCallback, callbackContext: this
         });
+        if(popupInfo.popupRef instanceof ComponentRef){
+            popupInfo.popupRef.instance.close.subscribe(() => {
+                popupInfo.disposer()
+            })
+        }
     }
 
     commonWarningAlert(event) {
         this.answer = 'waiting for an answer';
-        this._popupService.popup(RdkWarningAlert, this._getModalOptions(), {
+        const popupInfo = this._popupService.popup(RdkWarningAlert, this._getModalOptions(), {
             message: 'this is a great warning alert!',
             callback: this.alertCallback, callbackContext: this
         });
+        if(popupInfo.popupRef instanceof ComponentRef){
+            popupInfo.popupRef.instance.close.subscribe(() => {
+                popupInfo.disposer()
+            })
+        }
     }
 
     commonErrorAlert(event) {
         this.answer = 'waiting for an answer';
-        this._popupService.popup(RdkErrorAlert, this._getUnModalOptions(event), {
+        const popupInfo = this._popupService.popup(RdkErrorAlert, this._getUnModalOptions(event), {
             message: 'this is a great error alert!',
             callback: this.alertCallback, callbackContext: this
         });
+        if(popupInfo.popupRef instanceof ComponentRef){
+            popupInfo.popupRef.instance.close.subscribe(() => {
+                popupInfo.disposer()
+            })
+        }
     }
 
     customizedAlert(event) {
         this.answer = 'waiting for an answer';
-        this._popupService.popup(CustomizedAlert, this._getUnModalOptions(event));
+        const popupInfo = this._popupService.popup(CustomizedAlert, this._getUnModalOptions(event));
+        if(popupInfo.popupRef instanceof ComponentRef){
+            popupInfo.popupRef.instance.close.subscribe(() => {
+                popupInfo.disposer()
+            })
+        }
     }
 
     private _getModalOptions(): PopupOptions {

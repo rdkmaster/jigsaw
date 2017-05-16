@@ -86,7 +86,7 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
     }
 }
 
-export abstract class AbstractDialogComponentBase extends AbstractRDKComponent implements IPopupable, AfterContentInit, OnDestroy {
+export abstract class AbstractDialogComponentBase extends AbstractRDKComponent implements IPopupable, AfterContentInit {
     @Input()
     public buttons: ButtonInfo[];
     @Input()
@@ -94,7 +94,6 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
 
     public initData: any;
 
-    protected removePopstateEvent: Function;
     protected popupElement: HTMLElement;
 
     protected renderer: Renderer2;
@@ -122,13 +121,6 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
         this.close.emit(answer);
     }
 
-    public ngOnDestroy() {
-        //销毁浏览器回退事件
-        if (this.removePopstateEvent) {
-            this.removePopstateEvent();
-        }
-    }
-
     protected abstract getPopupElement(): HTMLElement;
 
     protected init() {
@@ -144,12 +136,6 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
             if (this.top) {
                 this.renderer.setStyle(this.popupElement, 'top', this.top);
             }
-
-            //window.history.back的监听
-            this.removePopstateEvent = this.renderer.listen('window', 'popstate', () => {
-                this.dispose();
-            });
-
         }, 0);
     }
 }
