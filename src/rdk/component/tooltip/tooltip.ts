@@ -1,10 +1,11 @@
 import {
     Component, Renderer2, ElementRef, Input, AfterContentInit, OnDestroy, AfterViewInit,
-    OnInit, EventEmitter, Output
+    OnInit, EventEmitter, Output, NgModule
 } from '@angular/core';
 
 import {IPopupable, PopupDisposer, PopupOptions, PopupService} from '../../service/popup.service';
 import {bubbleIn} from '../animations/bubble-in';
+import {CommonModule} from "@angular/common";
 
 export interface ITooltip extends IPopupable {
     tooltip: RdkTooltip;
@@ -60,3 +61,11 @@ export class RdkTooltip implements IPopupable, AfterContentInit {
 
 }
 
+@NgModule({
+    imports: [CommonModule],
+    declarations: [RdkTooltip],
+    exports: [RdkTooltip]
+})
+export class RdkTooltipModule {
+
+}

@@ -1,5 +1,5 @@
 import {ElementRef, Injectable, TemplateRef, Type} from "@angular/core";
-import {PopupOptions, PopupPositionType, PopupService, IPopupable, PopupRef} from "./popup.service";
+import {PopupOptions, PopupPositionType, PopupService, IPopupable, PopupRef, PopupInfo} from "./popup.service";
 import {RdkLoading} from "../component/loading/loading";
 
 @Injectable()
@@ -8,32 +8,32 @@ export class LoadingService {
     constructor(private _popupService: PopupService) {
     }
 
-    public show(blockTo?: ElementRef): PopupRef
-    public show(blockBy?: Type<IPopupable>): PopupRef
-    public show(blockBy?: TemplateRef<any>): PopupRef
-    public show(blockTo?: ElementRef, blockBy?: Type<IPopupable>): PopupRef
-    public show(blockTo?: ElementRef, blockBy?: TemplateRef<any>): PopupRef
-    public show(blockTo?: ElementRef|Type<IPopupable>|TemplateRef<any>, blockBy?: Type<IPopupable>|TemplateRef<any>): PopupRef {
-        let ref: PopupRef;
+    public show(blockTo?: ElementRef): PopupInfo
+    public show(blockBy?: Type<IPopupable>): PopupInfo
+    public show(blockBy?: TemplateRef<any>): PopupInfo
+    public show(blockTo?: ElementRef, blockBy?: Type<IPopupable>): PopupInfo
+    public show(blockTo?: ElementRef, blockBy?: TemplateRef<any>): PopupInfo
+    public show(blockTo?: ElementRef|Type<IPopupable>|TemplateRef<any>, blockBy?: Type<IPopupable>|TemplateRef<any>): PopupInfo {
+        let popupInfo: PopupInfo;
         if (blockTo instanceof ElementRef) {
             if (blockBy instanceof Type) {
-                ref = this._popupService.popup(blockBy, this._getOptions(blockTo)).popupRef;
+                popupInfo = this._popupService.popup(blockBy, this._getOptions(blockTo));
             } else if (blockBy instanceof TemplateRef) {
-                ref = this._popupService.popup(blockBy, this._getOptions(blockTo)).popupRef;
+                popupInfo = this._popupService.popup(blockBy, this._getOptions(blockTo));
             } else {
-                ref = this._popupService.popup(RdkLoading, this._getOptions(blockTo)).popupRef;
+                popupInfo = this._popupService.popup(RdkLoading, this._getOptions(blockTo));
             }
         } else if (blockTo) {
             blockBy = blockTo;
             if (blockBy instanceof Type) {
-                ref = this._popupService.popup(blockBy).popupRef;
+                popupInfo = this._popupService.popup(blockBy);
             } else if (blockBy instanceof TemplateRef) {
-                ref = this._popupService.popup(blockBy).popupRef;
+                popupInfo = this._popupService.popup(blockBy);
             }
         } else {
-            ref = this._popupService.popup(RdkLoading).popupRef;
+            popupInfo = this._popupService.popup(RdkLoading);
         }
-        return ref;
+        return popupInfo;
     }
 
     private _getOptions(elementRef: ElementRef): PopupOptions {

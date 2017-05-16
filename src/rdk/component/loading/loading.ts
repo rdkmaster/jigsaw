@@ -1,5 +1,6 @@
-import {Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, Renderer2} from "@angular/core";
+import {Component, ElementRef, EventEmitter, NgModule, OnDestroy, OnInit, Output, Renderer2} from "@angular/core";
 import {IPopupable, PopupDisposer, PopupOptions, PopupService} from "rdk/service/popup.service";
+import {CommonModule} from "@angular/common";
 
 export class RdkLoadingBase implements IPopupable, OnInit, OnDestroy {
     public initData: any;
@@ -43,5 +44,14 @@ export class RdkBallLoading extends RdkLoadingBase {
     constructor(renderer: Renderer2) {
         super(renderer);
     }
+}
+
+@NgModule({
+    imports: [CommonModule],
+    declarations: [RdkLoading, RdkBallLoading],
+    exports: [RdkLoading, RdkBallLoading]
+})
+export class RdkLoadingModule {
+
 }
 

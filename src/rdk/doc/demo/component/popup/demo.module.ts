@@ -6,8 +6,8 @@ import {RdkButtonModule} from "../../../../component/button/button";
 
 import {DialogDemoComponent} from "./dialog/dialog";
 import {TooltipDemoComponent} from "./tooltip/tooltip";
-import {RdkDialog} from "../../../../component/dialog/dialog";
-import {RdkTooltip} from "../../../../component/tooltip/tooltip";
+import {RdkDialog, RdkDialogModule} from "../../../../component/dialog/dialog";
+import {RdkTooltip, RdkTooltipModule} from "../../../../component/tooltip/tooltip";
 import {UseDialogComponent} from "./dialog/use-dialog/use-dialog";
 import {UseDialog2Component} from "./dialog/use-dialog2/use-dialog";
 import {UseTooltipComponent} from "./tooltip/use-tooltip/use-tooltip";
@@ -17,7 +17,7 @@ import {RdkAlertModule, RdkErrorAlert, RdkInfoAlert, RdkWarningAlert} from "../.
 import {AlertDemoComponent} from "./alert/alert";
 
 import {CustomizedAlert} from "./alert/customized-alert/customized-alert";
-import {RdkBlock} from "../../../../component/block/block";
+import {RdkBlock, RdkBlockModule} from "../../../../component/block/block";
 const popupDemoRoutes = [
     {
         path: '',
@@ -41,8 +41,6 @@ const popupDemoRoutes = [
 
 @NgModule({
     declarations: [
-        RdkBlock,
-        RdkTooltip,
         DialogDemoComponent,
         UseDialogComponent,
         UseDialog2Component,
@@ -54,6 +52,9 @@ const popupDemoRoutes = [
     imports: [
         RouterModule.forChild(popupDemoRoutes),
         CommonModule,
+        RdkBlockModule,
+        RdkDialogModule,
+        RdkTooltipModule,
         RdkAlertModule,
         RdkButtonModule
     ],

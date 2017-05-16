@@ -46,19 +46,13 @@ $line-width: 4px !default;
 }
 
 :host {
-    position: fixed;
+    display: inline-block;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 9999;
-    transition: opacity 0.3s ease-in-out;
-    opacity: 0;
-    &.in {
-        opacity: 0.6;
-    }
 }
 
 .rdk-loading-background {

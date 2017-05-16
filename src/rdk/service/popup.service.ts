@@ -66,9 +66,9 @@ export interface IPopupable {
     close: EventEmitter<any>;
 }
 
-export type PopupInfo = {
-    popupRef: PopupRef,
-    element: HTMLElement,
+export class PopupInfo {
+    popupRef: PopupRef;
+    element: HTMLElement;
     disposer: PopupDisposer
 }
 

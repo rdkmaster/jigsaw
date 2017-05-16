@@ -1,5 +1,6 @@
-import {Component, EventEmitter} from "@angular/core";
+import {Component, EventEmitter, NgModule} from "@angular/core";
 import {IPopupable} from "../../service/popup.service";
+import {CommonModule} from "@angular/common";
 
 @Component({
     selector: 'rdk-block',
@@ -9,4 +10,13 @@ import {IPopupable} from "../../service/popup.service";
 export class RdkBlock implements IPopupable{
     initData: any;
     close: EventEmitter<any>;
+}
+
+@NgModule({
+    imports: [CommonModule],
+    declarations: [RdkBlock],
+    exports: [RdkBlock]
+})
+export class RdkBlockModule {
+
 }
