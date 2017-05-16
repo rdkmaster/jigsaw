@@ -55,15 +55,15 @@ export class RdkSliderDemoBasic implements OnInit {
         console.log(value);
     }
 
-    marks = [{value: 20, label: '20oC'},
-    {value: 40, label: '40oC'},
-    {value: 60, label: '60oC', style: {
+    marks = [{value: 20, label: '20 ℃'},
+    {value: 40, label: '40 ℃'},
+    {value: 60, label: '60 ℃', style: {
         color: "red"
     }}]
 
-    marks2 = [{value: 20, label: '20oC'},
-        {value: 40, label: '40oC'},
-        {value: 80, label: '80oC', class: "markStyle-3"}]
+    marks2 = [{value: 20, label: '20 ℃'},
+        {value: 40, label: '40 ℃'},
+        {value: 80, label: '80 ℃', class: "markStyle-3"}]
 
     sliderChange(value) {
         console.info("当前值: " + value);
