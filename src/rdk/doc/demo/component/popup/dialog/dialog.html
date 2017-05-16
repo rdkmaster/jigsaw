@@ -6,6 +6,10 @@
     point dialog
 </rdk-button>
 
+<rdk-button width="150" (click)="popupModalDialogTemplate(tpDialog)">
+    template modal dialog
+</rdk-button>
+
 <rdk-button width="150" (click)="popupDialogTemplate(tpDialog)">
     template dialog
 </rdk-button>
@@ -14,8 +18,17 @@
     template
 </rdk-button>
 
+<rdk-dialog [buttons]="buttons">
+    <span title><span class="fa fa-thumbs-up"></span>Title of the dialog</span>
+    <ul class="dialog-content">
+        <li>Dialog content...</li>
+        <li>Dialog content...</li>
+        <li>Dialog content...</li>
+    </ul>
+</rdk-dialog>
+
 <ng-template #tpDialog>
-    <rdk-dialog [buttons]="buttons" [disposer]="_dialogDisposer">
+    <rdk-dialog [buttons]="buttons" (close)="closeDialogTemplate()">
         <span title><span class="fa fa-thumbs-up"></span>Title of the dialog</span>
         <ul class="dialog-content">
             <li>Dialog content...</li>

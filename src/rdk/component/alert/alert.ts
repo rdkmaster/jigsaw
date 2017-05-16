@@ -43,11 +43,9 @@ export class RdkAlert extends AbstractDialogComponentBase {
     public static ERROR_TITLE: string = 'Error';
     public static CONFIRM_TITLE: string = 'Confirm';
 
-    constructor(popupService: PopupService,
-                renderer: Renderer2,
+    constructor(renderer: Renderer2,
                 elementRef: ElementRef) {
         super();
-        this.popupService = popupService;
         this.renderer = renderer;
         this.elementRef = elementRef;
     }
@@ -116,7 +114,7 @@ export class RdkAlert extends AbstractDialogComponentBase {
     }
 
     protected getPopupElement(): HTMLElement {
-        return this.elementRef.nativeElement.querySelector('.rdk-alert');
+        return this.elementRef.nativeElement;
     }
 
     protected init() {
@@ -170,7 +168,6 @@ abstract class RdkCommonAlert extends DialogBase {
 
 @Component({
     templateUrl: 'common-alert.html',
-    selector: 'rdk-info-alert',
     encapsulation: ViewEncapsulation.None
 })
 export class RdkInfoAlert extends RdkCommonAlert {
@@ -180,7 +177,6 @@ export class RdkInfoAlert extends RdkCommonAlert {
 
 @Component({
     templateUrl: 'common-alert.html',
-    selector: 'rdk-warning-alert',
     encapsulation: ViewEncapsulation.None
 })
 export class RdkWarningAlert extends RdkCommonAlert {
@@ -190,7 +186,6 @@ export class RdkWarningAlert extends RdkCommonAlert {
 
 @Component({
     templateUrl: 'common-alert.html',
-    selector: 'rdk-error-alert',
     encapsulation: ViewEncapsulation.None
 })
 export class RdkErrorAlert extends RdkCommonAlert {

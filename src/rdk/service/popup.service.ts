@@ -7,12 +7,14 @@ import {
     Injectable, Renderer2,
     TemplateRef,
     Type,
-    ViewContainerRef
+    ViewContainerRef,
+    ViewRef,
 } from "@angular/core";
 import {CommonUtils} from "../core/utils/common-utils";
+import {RdkBlock} from "../component/block/block";
 
 export enum PopupEffect {
-    fadeIn, fadeOut
+    fadeIn, fadeOut, bubbleIn, bubbleOut
 }
 
 export class PopupOptions {
@@ -65,6 +67,12 @@ export interface IPopupable {
     options: PopupOptions;
 }
 
+export type PopupInfo = {
+    popupRef: PopupRef,
+    element: HTMLElement,
+    disposer: PopupDisposer
+}
+
 @Injectable()
 export class PopupService {
     //全局插入点
@@ -91,38 +99,99 @@ export class PopupService {
      * 打开弹框
      * return 弹框的销毁回调
      * */
-    public popup(what: Type<IPopupable>, options?: PopupOptions, initData?: any): PopupRef;
-    public popup(what: TemplateRef<any>, options?: PopupOptions): PopupRef;
-    public popup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupRef {
-        let disposer: PopupDisposer;
-        let ref: PopupRef;
-        if (what instanceof TemplateRef) {
-            ref = this._viewContainerRef.createEmbeddedView(what);
-            let popupElement = ref.rootNodes.find(rootNode => rootNode instanceof HTMLElement);
-            setTimeout(() => {
-                PopupService.setSize(options, popupElement, this._renderer);
-                PopupService.setPosition(options, popupElement, this._renderer);
-            }, 0)
-        } else {
-            const factory = this._cfr.resolveComponentFactory(what);
-            ref = this._viewContainerRef.createComponent(factory);
-            disposer = this._getDisposer(ref);
+    public popup(what: Type<IPopupable>, options?: PopupOptions, initData?: any): PopupInfo;
+    public popup(what: TemplateRef<any>, options?: PopupOptions): PopupInfo;
+    public popup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupInfo {
+        const popupInfo: PopupInfo = this._popupFactory(what, options);
+        const ref: PopupRef = popupInfo.popupRef;
+        const popupElement: HTMLElement = popupInfo.element;
+        const disposer: PopupDisposer =  popupInfo.disposer;
+        if(ref instanceof ComponentRef){
             ref.instance.disposer = disposer;
             ref.instance.initData = initData;
-            ref.instance.options = options ? options : {};
+            ref.instance.options = options ? options : {modal: true};
         }
-        return ref;
+
+        let blockDisposer: PopupDisposer;
+        if (PopupService.isModal(options)) {
+            const blockInfo: PopupInfo = this._popupFactory(RdkBlock, Object.create(null));
+            blockDisposer = blockInfo.disposer;
+            PopupService.setShowAminimate(options, blockInfo.element, this._renderer);
+        }
+
+        this._beforePopup(popupElement);
+        setTimeout(() => {
+            PopupService.setPopup(options, popupElement, this._renderer);
+        }, 0);
+
+        return {
+            popupRef: ref,
+            element: popupElement,
+            disposer: () => {
+                if(disposer){
+                    disposer();
+                }
+                if(blockDisposer){
+                    blockDisposer();
+                }
+            }
+        };
     }
 
-    private _getDisposer(popupRef: PopupRef): PopupDisposer {
+    private _beforePopup(popupElement) {
+        this._renderer.setStyle(popupElement, 'visibility', 'hidden');
+    }
+
+    private _popupFactory(what: Type<IPopupable> | TemplateRef<any>, options: PopupOptions): PopupInfo {
+        const ref: PopupRef = this._createPopup(what);
+        const element: HTMLElement = PopupService.getPopupElement(ref);
+        const disposer: PopupDisposer = PopupService.getDisposer(options, ref, element, this._renderer);
+        return {
+            popupRef: ref,
+            element: element,
+            disposer: disposer
+        }
+    }
+
+    private _createPopup(what: Type<IPopupable> | TemplateRef<any>){
+        if (what instanceof TemplateRef) {
+            return this._viewContainerRef.createEmbeddedView(what);
+        } else {
+            const factory = this._cfr.resolveComponentFactory(what);
+            return this._viewContainerRef.createComponent(factory);
+        }
+    }
+
+    public static getPopupElement(ref: PopupRef): HTMLElement {
+        let popupElement: HTMLElement;
+        if (ref instanceof ComponentRef) {
+            popupElement = ref.location.nativeElement.localName == 'ng-component' ?
+                ref.location.nativeElement.children[0] : ref.location.nativeElement;
+        } else {
+            popupElement = ref.rootNodes.find(rootNode => rootNode instanceof HTMLElement);
+        }
+        return popupElement
+    }
+
+    public static getDisposer(options: PopupOptions, popupRef: PopupRef, element: HTMLElement, renderer: Renderer2): PopupDisposer {
         return () => {
-            popupRef.destroy();
+            PopupService.setHideAminimate(options, element, renderer, () => {
+                debugger
+                popupRef.destroy()
+            });
         }
     }
 
-    public static setPopup(options: PopupOptions, element: HTMLElement, renderer: Renderer2){
-        PopupService.setSize(options, element, renderer);
-        PopupService.setPosition(options, element, renderer);
+    public static isModal(options: PopupOptions): boolean {
+        return !options || CommonUtils.isEmptyObject(options) || options.modal;
+    }
+
+    public static setPopup(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
+        if (element && renderer) {
+            PopupService.setSize(options, element, renderer);
+            PopupService.setPosition(options, element, renderer);
+            PopupService.setShowAminimate(options, element, renderer);
+        }
     }
 
     /*
@@ -149,6 +218,40 @@ export class PopupService {
         renderer.addClass(element, 'rdk-drop-down-animations');
     }
 
+    public static setShowAminimate(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
+        options = options && options.showEffect ? options : {showEffect: PopupEffect.fadeIn};
+        renderer.setStyle(element, 'visibility', 'visible');
+        renderer.addClass(element, 'rdk-am-' + PopupService.getAnimateName(options.showEffect));
+    }
+
+    public static setHideAminimate(options: PopupOptions, element: HTMLElement, renderer: Renderer2, cb: () => void) {
+        options = options && options.hideEffect ? options : {hideEffect: PopupEffect.fadeOut};
+        renderer.addClass(element, 'rdk-am-' + PopupService.getAnimateName(options.hideEffect));
+        renderer.listen(element, 'animationend', () => {
+            cb()
+        })
+    }
+
+    public static getAnimateName(popupEffect: PopupEffect): string {
+        let animateName: string;
+        switch (popupEffect) {
+            case 0:
+                animateName = 'fade-in';
+                break;
+            case 1:
+                animateName = 'fade-out';
+                break;
+            case 2:
+                animateName = 'bubble-in';
+                break;
+            case 3:
+                animateName = 'bubble-out';
+                break;
+            default:
+                animateName = 'fade-in';
+        }
+        return animateName;
+    }
 
     /*
      * 设置弹出的位置
@@ -182,7 +285,7 @@ export class PopupService {
     public static getPositionValue(options: PopupOptions, element: HTMLElement): PopupPositionValue {
         let top: string = '';
         let left: string = '';
-        if (!options || CommonUtils.isEmptyObject(options) || options.modal) {
+        if (PopupService.isModal(options)) {
             //没配options或options为空对象时，默认模态
             top = (document.body.clientHeight / 2 - element.offsetHeight / 2) + 'px';
             left = (document.body.clientWidth / 2 - element.offsetWidth / 2) + 'px';

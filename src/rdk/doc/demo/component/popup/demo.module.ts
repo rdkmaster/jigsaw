@@ -17,6 +17,7 @@ import {RdkAlertModule, RdkErrorAlert, RdkInfoAlert, RdkWarningAlert} from "../.
 import {AlertDemoComponent} from "./alert/alert";
 
 import {CustomizedAlert} from "./alert/customized-alert/customized-alert";
+import {RdkBlock} from "../../../../component/block/block";
 const popupDemoRoutes = [
     {
         path: '',
@@ -40,7 +41,15 @@ const popupDemoRoutes = [
 
 @NgModule({
     declarations: [
-        DialogDemoComponent, TooltipDemoComponent, AlertDemoComponent, CustomizedAlert, UseDialogComponent, UseDialog2Component, RdkTooltip, UseTooltipComponent
+        RdkBlock,
+        RdkTooltip,
+        DialogDemoComponent,
+        UseDialogComponent,
+        UseDialog2Component,
+        TooltipDemoComponent,
+        UseTooltipComponent,
+        AlertDemoComponent,
+        CustomizedAlert,
     ],
     imports: [
         RouterModule.forChild(popupDemoRoutes),
@@ -48,13 +57,18 @@ const popupDemoRoutes = [
         RdkAlertModule,
         RdkButtonModule
     ],
-    exports: [
-        DialogDemoComponent, TooltipDemoComponent, AlertDemoComponent
-    ],
     providers: [PopupService],
     entryComponents: [
-        RdkDialog, UseDialogComponent, UseDialog2Component, RdkTooltip, UseTooltipComponent,
-        CustomizedAlert, RdkInfoAlert, RdkWarningAlert, RdkErrorAlert
+        RdkBlock,
+        RdkDialog,
+        RdkTooltip,
+        UseDialogComponent,
+        UseDialog2Component,
+        UseTooltipComponent,
+        RdkInfoAlert,
+        RdkWarningAlert,
+        RdkErrorAlert,
+        CustomizedAlert,
     ]
 })
 export class PopupDemoModule {

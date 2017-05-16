@@ -4,7 +4,8 @@ import {UseDialogComponent} from './use-dialog/use-dialog';
 import {UseDialog2Component} from './use-dialog2/use-dialog';
 
 import {
-    PopupService, PopupOptions, PopupPositionType, PopupPoint, PopupDisposer, ButtonInfo, PopupRef
+    PopupService, PopupOptions, PopupPositionType, PopupPoint, PopupDisposer, ButtonInfo, PopupRef, PopupEffect,
+    PopupInfo
 } from '../../../../../service/popup.service';
 
 @Component({
@@ -13,9 +14,8 @@ import {
 })
 export class DialogDemoComponent {
 
-    private _templateRef: PopupRef;
-    private _dialogRef: PopupRef;
-    private _dialogDisposer: PopupDisposer;
+    private _templateRef: PopupInfo;
+    private _dialogInfo: PopupInfo;
 
     public title: string = 'Title of the dialog';
     public buttons: Array<ButtonInfo> = [
@@ -29,7 +29,7 @@ export class DialogDemoComponent {
         {
             label: 'cancel',
             callback: () => {
-                this._dialogRef.destroy()
+                this._dialogInfo.disposer()
             },
             clazz: ""
         }
@@ -39,16 +39,23 @@ export class DialogDemoComponent {
     }
 
     popup() {
-        this._popupService.popup(UseDialogComponent); //没有配options，默认使用模态
+        this._popupService.popup(UseDialogComponent, this._getModalOptions()); //没有配options，默认使用模态
     }
 
     popupAtPoint(event) {
         this._popupService.popup(UseDialog2Component, this._getUnModalOptions(event));
     }
 
+    popupModalDialogTemplate(tp){
+        this._dialogInfo = this._popupService.popup(tp, this._getModalOptions());
+    }
+
     popupDialogTemplate(tp){
-        this._dialogRef = this._popupService.popup(tp);
-        this._dialogDisposer = () => {this._dialogRef.destroy()};
+        this._dialogInfo = this._popupService.popup(tp, this._getUnModalOptions(event));
+    }
+
+    closeDialogTemplate(){
+        this._dialogInfo.disposer();
     }
 
     popupTemplate(tp){
@@ -56,12 +63,14 @@ export class DialogDemoComponent {
     }
 
     closeTemplate(){
-        this._templateRef.destroy();
+        this._templateRef.disposer();
     }
 
     private _getModalOptions(): PopupOptions {
         return {
-            modal: true //是否模态
+            modal: true, //是否模态
+            showEffect: PopupEffect.bubbleIn,
+            hideEffect: PopupEffect.bubbleOut
         };
     }
 

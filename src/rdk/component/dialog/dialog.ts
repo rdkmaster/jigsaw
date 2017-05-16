@@ -22,7 +22,6 @@ import {CommonModule} from "@angular/common";
 import {RdkButtonModule} from "../button/button";
 import {CommonUtils} from "../../core/utils/common-utils";
 
-
 export interface IDialog extends IPopupable {
     buttons: ButtonInfo[];
     title: string;
@@ -120,10 +119,10 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
 
     protected state: String = 'void';
     protected removeResizeEvent: Function;
+    protected removePopstateEvent: Function;
     protected popupElement: HTMLElement;
     protected isModal: boolean;
 
-    protected popupService: PopupService;
     protected renderer: Renderer2;
     protected elementRef: ElementRef;
 
@@ -155,6 +154,10 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
         if (this.removeResizeEvent) {
             this.removeResizeEvent();
         }
+        //销毁浏览器回退事件
+        if (this.removePopstateEvent) {
+            this.removePopstateEvent();
+        }
     }
 
     protected abstract getPopupElement(): HTMLElement;
@@ -172,22 +175,21 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
 
         //设置弹出位置和尺寸
         setTimeout(() => {
-            if(this.options){
-                //通过createEmbeddedView初始化时，options为undefined，计算位置和尺寸是在popupService里面，组件内部不计算
-                //通过createComponent初始化时，options至少是个{}，在组件内部计算位置和尺寸，options为{}时，默认模态
-                PopupService.setPopup(this.options, this.popupElement, this.renderer);
-            }
-
             if (this.top) {
                 this.renderer.setStyle(this.popupElement, 'top', this.top);
             }
 
+            if (this.isModal) {
+                this.onResize();
+            }
+
+            //window.history.back的监听
+            this.removePopstateEvent = this.renderer.listen('window', 'popstate', () => {
+                this.disposer();
+            });
+
             this.state = 'in';
         }, 0);
-
-        if (!this.options || this.options.modal) {
-            this.onResize();
-        }
     }
 
     protected onResize() {
@@ -200,11 +202,15 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
         })
     }
 
-    protected animationDone($event) {
+    /*protected animationDone($event) {
         if ($event.toState == 'void') {
-            this.disposer();
+            if(this.disposer){
+                this.disposer();
+            }else{
+                this.close.emit();
+            }
         }
-    }
+    }*/
 
 }
 
@@ -218,11 +224,9 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
     ]
 })
 export class RdkDialog extends AbstractDialogComponentBase {
-    constructor(popupService: PopupService,
-                renderer: Renderer2,
+    constructor(renderer: Renderer2,
                 elementRef: ElementRef) {
         super();
-        this.popupService = popupService;
         this.renderer = renderer;
         this.elementRef = elementRef;
     }

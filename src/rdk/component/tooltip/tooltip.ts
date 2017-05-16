@@ -78,16 +78,11 @@ export class RdkTooltip implements IPopupable, AfterContentInit {
 
     protected popupElement: HTMLElement;
 
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, private _popupService: PopupService) {
+    constructor(private _elementRef: ElementRef) {
     }
 
     ngAfterContentInit(){
         this.popupElement = this.getPopupElement();
-        let posType: string = PopupService.getPositionType(this.options.posType);
-        let position = PopupService.getPositionValue(this.options, this.popupElement);
-        this._renderer.setStyle(this.popupElement, 'position', posType);
-        this._renderer.setStyle(this.popupElement, 'top', position.top);
-        this._renderer.setStyle(this.popupElement, 'left', position.left);
     }
 
     protected getPopupElement(): HTMLElement {

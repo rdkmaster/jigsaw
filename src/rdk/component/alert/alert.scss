@@ -2,8 +2,15 @@
 
 $alert-prefix-cls: #{$rdk-prefix}-alert;
 
+:host{
+    position: fixed;
+    width: 400px;
+    z-index: 9999;
+}
+
 .#{$alert-prefix-cls}-box {
     display: inline-block;
+    width: 100%;
     @include opacity(0);
     .#{$alert-prefix-cls}-bg {
         background: #000;
@@ -19,7 +26,7 @@ $alert-prefix-cls: #{$rdk-prefix}-alert;
     }
     .#{$alert-prefix-cls} {
         @include clearfix;
-        width: 100px;
+        width: 100%;
         background: #FFF;
         border: 1px solid #ddd;
         border-radius: 4px;
@@ -96,6 +103,9 @@ $alert-prefix-cls: #{$rdk-prefix}-alert;
             margin-left: -54px;
             rdk-button {
                 margin-right: 8px;
+                &:last-child{
+                    margin-right: 0;
+                }
             }
         }
     }

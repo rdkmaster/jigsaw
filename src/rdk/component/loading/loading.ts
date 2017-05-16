@@ -12,9 +12,9 @@ export class RdkLoadingBase implements IPopupable, OnInit, OnDestroy {
 
     ngOnInit() {
         setTimeout(() => {
-            if (this.options) {
+            /*if (this.options) {
                 PopupService.setPopup(this.options, this._elementRef.nativeElement, this._renderer);
-            }
+            }*/
             //手动显示loading
             this._renderer.addClass(this._elementRef.nativeElement, 'in');
         }, 0);

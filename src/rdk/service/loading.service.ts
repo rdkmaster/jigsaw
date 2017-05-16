@@ -17,21 +17,21 @@ export class LoadingService {
         let ref: PopupRef;
         if (blockTo instanceof ElementRef) {
             if (blockBy instanceof Type) {
-                ref = this._popupService.popup(blockBy, this._getOptions(blockTo));
+                ref = this._popupService.popup(blockBy, this._getOptions(blockTo)).popupRef;
             } else if (blockBy instanceof TemplateRef) {
-                ref = this._popupService.popup(blockBy, this._getOptions(blockTo));
+                ref = this._popupService.popup(blockBy, this._getOptions(blockTo)).popupRef;
             } else {
-                ref = this._popupService.popup(RdkLoading, this._getOptions(blockTo));
+                ref = this._popupService.popup(RdkLoading, this._getOptions(blockTo)).popupRef;
             }
         } else if (blockTo) {
             blockBy = blockTo;
             if (blockBy instanceof Type) {
-                ref = this._popupService.popup(blockBy);
+                ref = this._popupService.popup(blockBy).popupRef;
             } else if (blockBy instanceof TemplateRef) {
-                ref = this._popupService.popup(blockBy);
+                ref = this._popupService.popup(blockBy).popupRef;
             }
         } else {
-            ref = this._popupService.popup(RdkLoading);
+            ref = this._popupService.popup(RdkLoading).popupRef;
         }
         return ref;
     }

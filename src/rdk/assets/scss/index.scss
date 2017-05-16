@@ -28,39 +28,83 @@ rdk-time{
 }
 /*时间组件样式end*/
 
-/*rdk-dropdown弹出动画start*/
+/*fadeIn start*/
 @-webkit-keyframes fadeIn {
     0% {
-        opacity: 0;
-    }
-    45% {
-        opacity: 0.4;
-    }
-    80% {
-        opacity: 0.8;
+        //opacity: 0;
+        display: none;
     }
     100% {
-        opacity: 1;
+        //opacity: 1;
+        display: block;
     }
 }
 @keyframes fadeIn {
     0% {
+        //opacity: 0;
+        display: none;
+    }
+    100% {
+        //opacity: 1;
+        display: block;
+    }
+ }
+.rdk-am-fade-in{
+    animation: fadeIn 2s ease-in-out;
+    -webkit-animation:fadeIn 2s ease-in-out;
+}
+/*fadeIn end*/
+
+/*fadeOut start*/
+@-webkit-keyframes fadeOut {
+    0% {
+        //opacity: 1;
+        display: block;
+    }
+    100% {
+        //opacity: 0;
+        display: none;
+    }
+}
+@keyframes fadeOut {
+    0% {
+        //opacity: 1;
+        display: block;
+    }
+    100% {
+        //opacity: 0;
+        display: none;
+    }
+}
+.rdk-am-fade-out{
+    animation: fadeOut 0.2s ease-in-out;
+    -webkit-animation:fadeOut 0.2s ease-in-out;
+}
+/*fadeOut end*/
+
+/*bubbleIn start*/
+@-webkit-keyframes bubbleIn {
+    0% {
         opacity: 0;
-    }
-    45% {
-        opacity: 0.4;
-    }
-    80% {
-        opacity: 0.8;
+        transform: scale(0);
     }
     100% {
         opacity: 1;
+        transform: scale(1);
     }
- }
-.rdk-drop-down-animations{
-    animation: fadeIn;
-    animation-duration: 0.25s;
-    -webkit-animation:fadeIn 0.25s;
 }
-/*rdk-dropdown弹出动画end*/
-
+@keyframes bubbleIn {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+.rdk-am-bubble-in{
+    animation: bubbleIn 0.2s ease-in-out;
+    -webkit-animation: bubbleIn 0.2s ease-in-out;
+}
+/*bubbleIn end*/
