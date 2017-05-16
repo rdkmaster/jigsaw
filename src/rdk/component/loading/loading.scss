@@ -10,11 +10,7 @@
     bottom: 0;
     z-index: 9999;
     background: #000;
-    @include prefixer(transition, opacity 0.3s $ease-in-out);
-    @include opacity(0);
-    &.in {
-        @include opacity(0.6);
-    }
+    @include opacity(0.6);
 }
 
 .spinner {

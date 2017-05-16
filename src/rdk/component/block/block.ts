@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {IPopupable, PopupDisposer, PopupOptions} from "../../service/popup.service";
+import {Component, EventEmitter} from "@angular/core";
+import {IPopupable} from "../../service/popup.service";
 
 @Component({
     selector: 'rdk-block',
@@ -7,7 +7,6 @@ import {IPopupable, PopupDisposer, PopupOptions} from "../../service/popup.servi
     styleUrls: ['block.scss']
 })
 export class RdkBlock implements IPopupable{
-    disposer: PopupDisposer;
     initData: any;
-    options: PopupOptions;
+    close: EventEmitter<any>;
 }

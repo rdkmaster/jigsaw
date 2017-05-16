@@ -8,7 +8,7 @@ import {
     TemplateRef,
     Type,
     ViewContainerRef,
-    ViewRef,
+    EventEmitter,
 } from "@angular/core";
 import {CommonUtils} from "../core/utils/common-utils";
 import {RdkBlock} from "../component/block/block";
@@ -62,9 +62,8 @@ export class PopupPositionValue {
 export type PopupDisposer = () => void;
 
 export interface IPopupable {
-    disposer: PopupDisposer;
     initData: any;
-    options: PopupOptions;
+    close: EventEmitter<any>;
 }
 
 export type PopupInfo = {
@@ -105,20 +104,34 @@ export class PopupService {
         const popupInfo: PopupInfo = this._popupFactory(what, options);
         const ref: PopupRef = popupInfo.popupRef;
         const popupElement: HTMLElement = popupInfo.element;
-        const disposer: PopupDisposer =  popupInfo.disposer;
-        if(ref instanceof ComponentRef){
-            ref.instance.disposer = disposer;
-            ref.instance.initData = initData;
-            ref.instance.options = options ? options : {modal: true};
-        }
+        const disposer: PopupDisposer = popupInfo.disposer;
 
+        //modal block
         let blockDisposer: PopupDisposer;
         if (PopupService.isModal(options)) {
-            const blockInfo: PopupInfo = this._popupFactory(RdkBlock, Object.create(null));
+            const blockOptions = {showEffect: PopupEffect.fadeIn, hideEffect: PopupEffect.fadeOut};
+            const blockInfo: PopupInfo = this._popupFactory(RdkBlock, blockOptions);
             blockDisposer = blockInfo.disposer;
-            PopupService.setShowAminimate(options, blockInfo.element, this._renderer);
+            PopupService.setShowAminimate(blockOptions, blockInfo.element, this._renderer);
         }
 
+        const popupDisposer: PopupDisposer = () => {
+            if (disposer) {
+                disposer();
+            }
+            if (blockDisposer) {
+                blockDisposer();
+            }
+        };
+
+        if (ref instanceof ComponentRef) {
+            //ref.instance.disposer = disposer;
+            //ref.instance.options = options ? options : {modal: true};
+            ref.instance.initData = initData;
+            ref.instance.close.subscribe(() => {
+                popupDisposer();
+            })
+        }
         this._beforePopup(popupElement);
         setTimeout(() => {
             PopupService.setPopup(options, popupElement, this._renderer);
@@ -127,18 +140,12 @@ export class PopupService {
         return {
             popupRef: ref,
             element: popupElement,
-            disposer: () => {
-                if(disposer){
-                    disposer();
-                }
-                if(blockDisposer){
-                    blockDisposer();
-                }
-            }
-        };
+            disposer: popupDisposer
+        }
     }
 
     private _beforePopup(popupElement) {
+        this._renderer.setStyle(popupElement, 'z-index', '10000');
         this._renderer.setStyle(popupElement, 'visibility', 'hidden');
     }
 
@@ -153,7 +160,7 @@ export class PopupService {
         }
     }
 
-    private _createPopup(what: Type<IPopupable> | TemplateRef<any>){
+    private _createPopup(what: Type<IPopupable> | TemplateRef<any>) {
         if (what instanceof TemplateRef) {
             return this._viewContainerRef.createEmbeddedView(what);
         } else {
@@ -176,7 +183,6 @@ export class PopupService {
     public static getDisposer(options: PopupOptions, popupRef: PopupRef, element: HTMLElement, renderer: Renderer2): PopupDisposer {
         return () => {
             PopupService.setHideAminimate(options, element, renderer, () => {
-                debugger
                 popupRef.destroy()
             });
         }

@@ -6,7 +6,7 @@ import {RdkLoadingBase} from "../../../../../../component/loading/loading";
     styleUrls: ['definedLoading.scss']
 })
 export class DefinedLoading extends RdkLoadingBase {
-    constructor(renderer: Renderer2, elementRef: ElementRef) {
-        super(renderer, elementRef);
+    constructor(renderer: Renderer2) {
+        super(renderer);
     }
 }

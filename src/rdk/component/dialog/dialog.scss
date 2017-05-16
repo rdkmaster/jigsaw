@@ -3,19 +3,16 @@
 $dialog-prefix-cls: #{$rdk-prefix}-dialog;
 
 :host{
-    position: fixed;
-    width: 400px;
-    z-index: 10000;
+    @include inline-block;
+    width: 100%;
 }
 
 .#{$dialog-prefix-cls} {
-    /*@include opacity(0);*/
     position: relative;
     background: #FFF;
     border: 1px solid #ddd;
     border-radius: 4px;
     cursor: move;
-    z-index: 10000;
     .#{$dialog-prefix-cls}-head{
         @include clearfix;
         line-height: 20px;

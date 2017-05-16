@@ -48,19 +48,6 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
         }
     }
 
-    private _disposer: PopupDisposer;
-
-    public get disposer(): PopupDisposer {
-        return this._disposer;
-    }
-
-    public set disposer(value: PopupDisposer) {
-        this._disposer = value;
-        if (this.dialog) {
-            this.dialog.disposer = value;
-        }
-    }
-
     private _buttons: ButtonInfo[];
 
     public get buttons(): ButtonInfo[] {
@@ -74,18 +61,8 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
         }
     }
 
-    private _options: PopupOptions;
-
-    public get options(): PopupOptions {
-        return this._options;
-    }
-
-    public set options(value: PopupOptions) {
-        this._options = value;
-        if (this.dialog) {
-            this.dialog.options = value;
-        }
-    }
+    @Output()
+    public close: EventEmitter<ButtonInfo> = new EventEmitter<ButtonInfo>();
 
     public dispose(answer?: ButtonInfo): void {
         if (this.dialog) {
@@ -95,14 +72,17 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
 
     public ngOnInit() {
         if (this.dialog) {
-            this.dialog.disposer = this.disposer;
-            this.dialog.options = this.options;
             this.dialog.buttons = this.buttons;
             this.dialog.title = this.title;
         }
     }
 
     public ngAfterViewInit() {
+        if (this.dialog) {
+            this.dialog.close.subscribe(answer => {
+                this.close.emit(answer);
+            })
+        }
     }
 }
 
@@ -111,13 +91,10 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
     public buttons: ButtonInfo[];
     @Input()
     public title: string;
-    @Input()
-    public disposer: () => void;
 
     public initData: any;
     public options: PopupOptions;
 
-    protected state: String = 'void';
     protected removeResizeEvent: Function;
     protected removePopstateEvent: Function;
     protected popupElement: HTMLElement;
@@ -145,7 +122,6 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
     }
 
     public dispose(answer?: ButtonInfo) {
-        this.state = 'void';
         this.close.emit(answer);
     }
 
@@ -185,10 +161,9 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
 
             //window.history.back的监听
             this.removePopstateEvent = this.renderer.listen('window', 'popstate', () => {
-                this.disposer();
+                this.dispose();
             });
 
-            this.state = 'in';
         }, 0);
     }
 
@@ -201,27 +176,12 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
                 (document.body.clientWidth / 2 - this.popupElement.offsetWidth / 2) + 'px');
         })
     }
-
-    /*protected animationDone($event) {
-        if ($event.toState == 'void') {
-            if(this.disposer){
-                this.disposer();
-            }else{
-                this.close.emit();
-            }
-        }
-    }*/
-
 }
 
 @Component({
     selector: 'rdk-dialog',
     templateUrl: 'dialog.html',
-    styleUrls: ['dialog.scss'],
-    animations: [
-        fadeIn,
-        bubbleIn
-    ]
+    styleUrls: ['dialog.scss']
 })
 export class RdkDialog extends AbstractDialogComponentBase {
     constructor(renderer: Renderer2,

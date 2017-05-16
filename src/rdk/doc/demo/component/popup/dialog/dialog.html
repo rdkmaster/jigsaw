@@ -1,3 +1,12 @@
+<rdk-dialog style="margin-bottom: 10px" [buttons]="buttons">
+    <span title><span class="fa fa-thumbs-up"></span>Title of the dialog</span>
+    <ul class="dialog-content">
+        <li>Dialog content...</li>
+        <li>Dialog content...</li>
+        <li>Dialog content...</li>
+    </ul>
+</rdk-dialog>
+
 <rdk-button width="150" (click)="popup()">
     modal dialog
 </rdk-button>
@@ -18,17 +27,8 @@
     template
 </rdk-button>
 
-<rdk-dialog [buttons]="buttons">
-    <span title><span class="fa fa-thumbs-up"></span>Title of the dialog</span>
-    <ul class="dialog-content">
-        <li>Dialog content...</li>
-        <li>Dialog content...</li>
-        <li>Dialog content...</li>
-    </ul>
-</rdk-dialog>
-
 <ng-template #tpDialog>
-    <rdk-dialog [buttons]="buttons" (close)="closeDialogTemplate()">
+    <rdk-dialog width="60%" [buttons]="buttons" (close)="closeDialogTemplate()">
         <span title><span class="fa fa-thumbs-up"></span>Title of the dialog</span>
         <ul class="dialog-content">
             <li>Dialog content...</li>

@@ -45,6 +45,7 @@ import {TableDataWithPopupDemoComponent} from "./withPopup/withPopup";
 import {RdkDialogModule} from "../../../../component/dialog/dialog";
 import {PopupService} from "../../../../service/popup.service";
 import {TableRendererOfTemplateRefDemoComponent} from "./rendererOfTemplateRef/rendererOfTemplateRef";
+import {RdkBlock} from "../../../../component/block/block";
 
 const tableDemoRoutes = [
     {
@@ -159,7 +160,8 @@ const tableDemoRoutes = [
         TableDataChangeDemoComponent,
         TableAddIDWithPagingComponent,
         TableDataWithPopupDemoComponent,
-        TableRendererOfTemplateRefDemoComponent
+        TableRendererOfTemplateRefDemoComponent,
+        RdkBlock
     ],
     imports: [
         RouterModule.forChild(tableDemoRoutes),
@@ -184,7 +186,8 @@ const tableDemoRoutes = [
         MyTableCell,
         MyTableHeadOption,
         MyTableCellOption,
-        MyTableCellEditor
+        MyTableCellEditor,
+        RdkBlock
     ],
     providers: [PopupService],
 })

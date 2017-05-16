@@ -3,30 +3,10 @@
 $alert-prefix-cls: #{$rdk-prefix}-alert;
 
 :host{
-    position: fixed;
-    width: 400px;
-    z-index: 9999;
-}
-
-.#{$alert-prefix-cls}-box {
-    display: inline-block;
+    @include inline-block;
     width: 100%;
-    @include opacity(0);
-    .#{$alert-prefix-cls}-bg {
-        background: #000;
-        opacity: 0.4;
-        position: fixed;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 9999;
-    }
     .#{$alert-prefix-cls} {
         @include clearfix;
-        width: 100%;
         background: #FFF;
         border: 1px solid #ddd;
         border-radius: 4px;
@@ -110,6 +90,7 @@ $alert-prefix-cls: #{$rdk-prefix}-alert;
         }
     }
 }
+
 
 
 
