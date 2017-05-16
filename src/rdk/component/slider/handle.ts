@@ -80,7 +80,7 @@ export class SliderHandle implements OnInit{
             posValue = posValue < offset? offset:posValue;
         }
 
-        let newValue = ((Math.abs(posValue - offset)) / size * (this._slider.max - this._slider.min) + this._slider.min); // 保留两位小数
+        let newValue = Math.abs(posValue - offset) / size * (this._slider.max - this._slider.min) + (this._slider.min-0); // 保留两位小数
 
         let m = this._calFloat(this._slider.step);
 
