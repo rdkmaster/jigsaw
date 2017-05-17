@@ -15,8 +15,7 @@ import {
     ViewChild
 } from '@angular/core';
 import {
-    PopupDisposer, PopupInfo, PopupOptions, PopupPositionType, PopupRef,
-    PopupService
+    PopupDisposer, PopupInfo, PopupOptions, PopupPositionType, PopupService
 } from 'rdk/service/popup.service';
 import {AbstractRDKComponent} from '../core';
 import {TagGroupValue} from '../tag/tag';

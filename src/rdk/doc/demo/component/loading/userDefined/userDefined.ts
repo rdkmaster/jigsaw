@@ -1,6 +1,6 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
-import {LoadingService} from "../../../../../service/loading.service"
-import {PopupInfo, PopupRef} from "../../../../../service/popup.service";
+import {Component, ElementRef, ViewChild} from "@angular/core";
+import {LoadingService} from "../../../../../service/loading.service";
+import {PopupInfo} from "../../../../../service/popup.service";
 import {DefinedLoading} from "./definedLoading/definedLoading";
 
 @Component({

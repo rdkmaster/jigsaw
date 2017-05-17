@@ -3,17 +3,17 @@
  */
 
 import {Component, TemplateRef} from '@angular/core';
-import {PopupDisposer, PopupRef, PopupService} from "../../../../../service/popup.service";
+import {PopupDisposer, PopupInfo, PopupService} from "../../../../../service/popup.service";
 
 @Component({
     templateUrl: 'title.html',
 })
 export class DialogTitleDemo  {
 
-    private _dialogRef: PopupRef;
+    private _dialogInfo: PopupInfo;
     private _dialogDisposer: PopupDisposer;
 
-    private _dialogRef1: PopupRef;
+    private _dialogInfo1: PopupInfo;
     private _dialogDisposer1: PopupDisposer;
 
     constructor(private popupService : PopupService){
@@ -21,13 +21,13 @@ export class DialogTitleDemo  {
     }
 
     popupDialog1(ele:TemplateRef<any>){
-       this._dialogRef = this.popupService.popup(ele);
-       this._dialogDisposer = () => this._dialogRef.destroy();
+       this._dialogInfo = this.popupService.popup(ele);
+       this._dialogDisposer = () => this._dialogInfo.dispose();
     }
 
     popupDialog2(ele:TemplateRef<any>){
-        this._dialogRef1 = this.popupService.popup(ele);
-        this._dialogDisposer1 = () => this._dialogRef1.destroy();
+        this._dialogInfo1 = this.popupService.popup(ele);
+        this._dialogDisposer1 = () => this._dialogInfo1.dispose();
     }
 
 }

@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
 import {Http} from "@angular/http";
-import {PopupService, PopupRef, PopupDisposer, PopupInfo} from "../../../../../service/popup.service";
+import {PopupService, PopupDisposer, PopupInfo} from "../../../../../service/popup.service";
 
 
 @Component({

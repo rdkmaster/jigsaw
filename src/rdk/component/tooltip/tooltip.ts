@@ -127,8 +127,8 @@ export class RdkTooltip implements OnDestroy {
     }
 
     private _closeTooltip():void {
-        if (this._tooltipInfo && this._tooltipInfo.disposer) {
-            this._tooltipInfo.disposer();
+        if (this._tooltipInfo && this._tooltipInfo.dispose) {
+            this._tooltipInfo.dispose();
         }
     }
 

@@ -1,12 +1,16 @@
 import {Component, ComponentRef} from "@angular/core";
 
-import {UseDialogComponent} from './use-dialog/use-dialog';
-import {UseDialog2Component} from './use-dialog2/use-dialog';
+import {UseDialogComponent} from "./use-dialog/use-dialog";
+import {UseDialog2Component} from "./use-dialog2/use-dialog";
 
 import {
-    PopupService, PopupOptions, PopupPositionType, PopupPoint, PopupDisposer, ButtonInfo, PopupRef, PopupEffect,
-    PopupInfo
-} from '../../../../../service/popup.service';
+    ButtonInfo,
+    PopupEffect,
+    PopupInfo,
+    PopupOptions,
+    PopupPositionType,
+    PopupService
+} from "../../../../../service/popup.service";
 
 @Component({
     templateUrl: 'dialog.html',
