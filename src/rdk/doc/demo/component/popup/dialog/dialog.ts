@@ -15,10 +15,29 @@ import {
 export class DialogDemoComponent {
 
     private _templateRef: PopupInfo;
+    private _modalDialogInfo: PopupInfo;
     private _dialogInfo: PopupInfo;
 
     public title: string = 'Title of the dialog';
-    public buttons: Array<ButtonInfo> = [
+    public buttons1: Array<ButtonInfo> = [
+        {
+            label: 'confirm',
+            callback: () => {
+                console.log('confirm callback success!')
+            },
+            clazz: ""
+        },
+        {
+            label: 'cancel',
+            callback: () => {
+                if(this._modalDialogInfo){
+                    this._modalDialogInfo.disposer()
+                }
+            },
+            clazz: ""
+        }
+    ];
+    public buttons2: Array<ButtonInfo> = [
         {
             label: 'confirm',
             callback: () => {
@@ -59,15 +78,27 @@ export class DialogDemoComponent {
     }
 
     popupModalDialogTemplate(tp){
-        this._dialogInfo = this._popupService.popup(tp, this._getModalOptions());
+        if(this._modalDialogInfo){
+            this.closeModalDialogTemplate()
+        }
+        this._modalDialogInfo = this._popupService.popup(tp, this._getModalOptions());
+    }
+
+    closeModalDialogTemplate(){
+        this._modalDialogInfo.disposer();
+        this._modalDialogInfo = null
     }
 
     popupDialogTemplate(tp){
+        if(this._dialogInfo){
+            this.closeDialogTemplate()
+        }
         this._dialogInfo = this._popupService.popup(tp, this._getUnModalOptions(event));
     }
 
     closeDialogTemplate(){
         this._dialogInfo.disposer();
+        this._dialogInfo = null
     }
 
     popupTemplate(tp){
