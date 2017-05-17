@@ -5,7 +5,6 @@ $input-prefix-cls: #{$rdk-prefix}-input;
 :host {
     @include inline-block();
     position: relative;
-    //width: 100%;
     width: 120px;
     height: $height-base;
     line-height: $height-base;
