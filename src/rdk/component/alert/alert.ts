@@ -138,8 +138,6 @@ abstract class RdkCommonAlert extends DialogBase {
     public abstract set dialog(value: RdkDialog);
 
     public message: string;
-    public callback: Function;
-    public callbackContext: any;
     public buttons = [{label: RdkAlert.OK_LABEL}];
     public level: AlertLevel = AlertLevel.info;
 
@@ -157,12 +155,6 @@ abstract class RdkCommonAlert extends DialogBase {
         }
     }
 
-    public onClose(answer: ButtonInfo): void {
-        if (!this.callback) {
-            return;
-        }
-        this.callback.call(this.callbackContext, answer);
-    }
 }
 
 @Component({
