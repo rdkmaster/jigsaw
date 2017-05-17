@@ -2,7 +2,7 @@
  * Created by 10177553 on 2017/4/26.
  */
 
-import {Component, Input, OnInit, Host, Inject, forwardRef, Output} from "@angular/core";
+import {Component, Input, OnInit, Host, Inject, forwardRef, TemplateRef, ContentChild} from "@angular/core";
 import {RdkCollapse, CollapseModule} from "./collapse";
 
 @Component({
@@ -12,6 +12,8 @@ import {RdkCollapse, CollapseModule} from "./collapse";
 export class RdkPanel implements OnInit{
 
     constructor(@Host() @Inject(forwardRef(() => RdkCollapse)) private _collapse) { }
+
+    @ContentChild("headRender") _headRender: TemplateRef<any>| any;
 
     @Input()
     public header: string;
