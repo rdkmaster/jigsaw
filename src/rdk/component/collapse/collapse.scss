@@ -2,6 +2,10 @@
 
 $collapse-prefix: #{$rdk-prefix}-collapse;
 
+.collapseHost {
+    display: block;
+}
+
 .#{$collapse-prefix} {
     background-color: $background-color-base;
     border: $border-width-base $border-style-base $border-color-base;

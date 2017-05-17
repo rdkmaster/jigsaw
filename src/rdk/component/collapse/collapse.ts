@@ -11,12 +11,11 @@ import {AbstractRDKComponent} from "../core";
     styleUrls: ['collapse.scss'],
     host: {
         '[style.width]': 'width',
-        '[style.display]':'display'
+        'class':'collapseHost'
     },
     encapsulation: ViewEncapsulation.None
 })
 export class RdkCollapse extends AbstractRDKComponent{
-    display = "block";
 
     @ContentChildren(RdkPanel) _rdkPanel: QueryList<RdkPanel>;
 
