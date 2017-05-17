@@ -1,10 +1,11 @@
-import {Component} from "@angular/core";
+import {Component, ComponentRef} from "@angular/core";
 
 import {UseDialogComponent} from './use-dialog/use-dialog';
 import {UseDialog2Component} from './use-dialog2/use-dialog';
 
 import {
-    PopupService, PopupOptions, PopupPositionType, PopupPoint, PopupDisposer, ButtonInfo, PopupRef
+    PopupService, PopupOptions, PopupPositionType, PopupPoint, PopupDisposer, ButtonInfo, PopupRef, PopupEffect,
+    PopupInfo
 } from '../../../../../service/popup.service';
 
 @Component({
@@ -13,24 +14,20 @@ import {
 })
 export class DialogDemoComponent {
 
-    private _templateRef: PopupRef;
-    private _dialogRef: PopupRef;
-    private _dialogDisposer: PopupDisposer;
+    private _templateRef: PopupInfo;
+    private _modalDialogInfo: PopupInfo;
+    private _dialogInfo: PopupInfo;
 
     public title: string = 'Title of the dialog';
     public buttons: Array<ButtonInfo> = [
         {
+            role: 'confirm',
             label: 'confirm',
-            callback: () => {
-                console.log('confirm callback success!')
-            },
             clazz: ""
         },
         {
+            role: 'cancel',
             label: 'cancel',
-            callback: () => {
-                this._dialogRef.destroy()
-            },
             clazz: ""
         }
     ];
@@ -38,36 +35,105 @@ export class DialogDemoComponent {
     constructor(private _popupService: PopupService) {
     }
 
+    /*
+    * popup component
+    * */
     popup() {
-        this._popupService.popup(UseDialogComponent); //没有配options，默认使用模态
+        const popupInfo = this._popupService.popup(UseDialogComponent, this._getModalOptions());
+        if(popupInfo.popupRef instanceof ComponentRef){
+            popupInfo.popupRef.instance.answer.subscribe(answer => {
+                this.disposeAnswer(answer, popupInfo)
+            })
+        }
     }
 
+    /*
+     * popup component at point
+     * */
     popupAtPoint(event) {
-        this._popupService.popup(UseDialog2Component, this._getUnModalOptions(event));
+        const popupInfo = this._popupService.popup(UseDialog2Component, this._getUnModalOptions(event));
+        if(popupInfo.popupRef instanceof ComponentRef){
+            popupInfo.popupRef.instance.answer.subscribe(answer => {
+                this.disposeAnswer(answer, popupInfo)
+            })
+        }
     }
 
-    popupDialogTemplate(tp){
-        this._dialogRef = this._popupService.popup(tp);
-        this._dialogDisposer = () => {this._dialogRef.destroy()};
+    /*
+    * popup template
+    * */
+    popupModalDialogTemplate(tp){
+        if(this._modalDialogInfo){
+            this.closeModalDialogTemplate()
+        }
+        this._modalDialogInfo = this._popupService.popup(tp, this._getModalOptions());
     }
 
+    closeModalDialogTemplate(){
+        this._modalDialogInfo.dispose();
+        this._modalDialogInfo = null
+    }
+
+    /*
+    * popup template at point
+    * */
+    popupDialogTemplate(tp, event){
+        if(this._dialogInfo){
+            this.closeDialogTemplate()
+        }
+        this._dialogInfo = this._popupService.popup(tp, this._getUnModalOptions(event));
+    }
+
+    closeDialogTemplate(){
+        this._dialogInfo.dispose();
+        this._dialogInfo = null
+    }
+
+    disposeAnswer(answer: ButtonInfo, cb){
+        if(answer){
+            if(answer.role == 'confirm'){
+                console.log('confirm callback success!')
+            }else if(answer.role == 'cancel'){
+                console.log('cancel callback success!');
+                if(typeof cb == 'function'){
+                    cb.call(this)
+                }else{
+                    cb.dispose()
+                }
+            }
+        }else{
+            if(typeof cb == 'function'){
+                cb.call(this)
+            }else{
+                cb.dispose()
+            }
+        }
+    }
+
+    /*
+    * popup user defined template
+    * */
     popupTemplate(tp){
         this._templateRef = this._popupService.popup(tp);
     }
 
     closeTemplate(){
-        this._templateRef.destroy();
+        this._templateRef.dispose();
     }
 
     private _getModalOptions(): PopupOptions {
         return {
-            modal: true //是否模态
+            modal: true, //是否模态
+            showEffect: PopupEffect.bubbleIn,
+            hideEffect: PopupEffect.bubbleOut
         };
     }
 
     private _getUnModalOptions(event): PopupOptions {
         return {
             modal: false, //是否模态
+            showEffect: PopupEffect.bubbleIn,
+            hideEffect: PopupEffect.bubbleOut,
             pos: {x: event.clientX, y: event.clientY}, //插入点
             posOffset: { //偏移位置
                 top: -10,

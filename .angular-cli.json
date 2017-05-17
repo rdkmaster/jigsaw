@@ -28,6 +28,7 @@
                 "../node_modules/font-awesome/css/font-awesome.min.css",
                 "../node_modules/ztree/css/zTreeStyle/zTreeStyle.css",
                 "rdk/assets/scss/index.scss",
+                "rdk/assets/scss/animate.scss",
                 "rdk/assets/scss/reset.scss"
             ],
             "scripts": [

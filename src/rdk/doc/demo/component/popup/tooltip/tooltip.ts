@@ -3,14 +3,15 @@ import {Component, ViewChild, ElementRef, ComponentRef} from "@angular/core";
 import {UseTooltipComponent} from './use-tooltip/use-tooltip';
 
 import {
-    PopupService, PopupOptions, PopupPositionType, PopupRef, IPopupable
+    PopupService, PopupOptions, PopupPositionType, PopupRef, IPopupable, PopupInfo, PopupEffect
 } from '../../../../../service/popup.service';
 
 @Component({
-    templateUrl: 'tooltip.html'
+    templateUrl: 'tooltip.html',
+    styleUrls: ['tooltip.scss']
 })
 export class TooltipDemoComponent {
-    private _tooltipRef: PopupRef;
+    private _tooltipInfo: PopupInfo;
 
     @ViewChild("insertPlace", {read: ElementRef}) insertPlaceEl: ElementRef;
 
@@ -18,16 +19,18 @@ export class TooltipDemoComponent {
     }
 
     popup() {
-        this._tooltipRef = this._popupService.popup(UseTooltipComponent, this._getTooltipOptions(this.insertPlaceEl));
+        this._tooltipInfo = this._popupService.popup(UseTooltipComponent, this._getTooltipOptions(this.insertPlaceEl));
     }
 
     close() {
-        this._tooltipRef.destroy();
+        this._tooltipInfo.dispose();
     }
 
     private _getTooltipOptions(insertPlaceEl: ElementRef): PopupOptions {
         return {
             modal: false, //是否模态
+            showEffect: PopupEffect.bubbleIn,
+            hideEffect: PopupEffect.bubbleOut,
             pos: insertPlaceEl, //插入点
             posOffset: { //偏移位置
                 bottom: -8,

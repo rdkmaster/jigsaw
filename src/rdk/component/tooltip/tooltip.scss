@@ -7,6 +7,7 @@ $tooltip-prefix-cls: #{$rdk-prefix}-tooltip;
 }
 
 .#{$tooltip-prefix-cls}{
+    position: relative;
     max-width: 250px;
     padding: 8px 10px;
     color: #fff;

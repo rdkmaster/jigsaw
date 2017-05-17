@@ -1,33 +1,11 @@
-import {Component, ElementRef, OnDestroy, OnInit, Renderer2} from "@angular/core";
-import {IPopupable, PopupDisposer, PopupOptions, PopupService} from "rdk/service/popup.service";
+import {Component, ElementRef, EventEmitter, NgModule, OnInit, Renderer2} from "@angular/core";
+import {IPopupable} from "rdk/service/popup.service";
+import {CommonModule} from "@angular/common";
+import {AbstractRDKComponent} from "../core";
 
-export class RdkLoadingBase implements IPopupable, OnInit, OnDestroy {
-    public disposer: PopupDisposer;
+export class RdkLoadingBase extends AbstractRDKComponent implements IPopupable {
     public initData: any;
-    public options: PopupOptions;
-    protected removeWindowListener: () => void;
-
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
-    }
-
-    ngOnInit() {
-        setTimeout(() => {
-            if (this.options) {
-                PopupService.setPopup(this.options, this._elementRef.nativeElement, this._renderer);
-            }
-            //手动显示loading
-            this._renderer.addClass(this._elementRef.nativeElement, 'in');
-        }, 0);
-
-        //window.history.back的监听
-        this.removeWindowListener = this._renderer.listen('window', 'popstate', () => {
-            this.disposer();
-        })
-    }
-
-    ngOnDestroy() {
-        this.removeWindowListener();
-    }
+    public answer: EventEmitter<any>;
 }
 
 @Component({
@@ -35,9 +13,30 @@ export class RdkLoadingBase implements IPopupable, OnInit, OnDestroy {
     templateUrl: 'loading.html',
     styleUrls: ['loading.scss']
 })
-export class RdkLoading extends RdkLoadingBase {
-    constructor(renderer: Renderer2, elementRef: ElementRef) {
-        super(renderer, elementRef);
+export class RdkLoading extends RdkLoadingBase implements OnInit{
+
+    private _popupElement: HTMLElement;
+
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef){
+        super();
+    }
+
+    ngOnInit(){
+        this._popupElement = this.getPopupElement();
+
+        if(this.width && this.height){
+            this._renderer.setStyle(this._popupElement, 'width', this.width);
+            this._renderer.setStyle(this._popupElement, 'height', this.height);
+
+            this._renderer.setStyle(this._popupElement.querySelector('.spinner'), 'width', this.width);
+            this._renderer.setStyle(this._popupElement.querySelector('.spinner'), 'height', this.height);
+            this._renderer.setStyle(this._popupElement.querySelector('.spinner'), 'margin-left', '-' + this._popupElement.offsetWidth / 2 + 'px');
+            this._renderer.setStyle(this._popupElement.querySelector('.spinner'), 'margin-top', '-' + this._popupElement.offsetHeight / 2 + 'px');
+        }
+    }
+
+    protected getPopupElement(): HTMLElement {
+        return this._elementRef.nativeElement;
     }
 }
 
@@ -47,8 +46,15 @@ export class RdkLoading extends RdkLoadingBase {
     styleUrls: ['loading-ball.scss']
 })
 export class RdkBallLoading extends RdkLoadingBase {
-    constructor(renderer: Renderer2, elementRef: ElementRef) {
-        super(renderer, elementRef);
-    }
+
+}
+
+@NgModule({
+    imports: [CommonModule],
+    declarations: [RdkLoading, RdkBallLoading],
+    exports: [RdkLoading, RdkBallLoading]
+})
+export class RdkLoadingModule {
+
 }
 

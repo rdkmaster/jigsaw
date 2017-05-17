@@ -16,18 +16,10 @@ export class CustomizedAlert extends DialogBase {
     public buttons: ButtonInfo[] = [
         {
             label: 'ok',
-            // callback: () => {
-            //     console.log('ok callback success!');
-            //     this.dispose();
-            // },
             clazz: 'button-ok'
         },
         {
-            label: 'cancel',
-            callback: () => {
-                console.log('cancel callback success!');
-                this.dispose();
-            }
+            label: 'cancel'
 
         }
     ];

@@ -1,9 +1,9 @@
-import {Component} from "@angular/core";
+import {Component, ComponentRef} from "@angular/core";
 
 import {CustomizedAlert} from './customized-alert/customized-alert';
 
 import {
-    PopupService, PopupOptions, PopupPositionType, PopupPoint, ButtonInfo, PopupDisposer
+    PopupService, PopupOptions, PopupPositionType, PopupPoint, ButtonInfo, PopupDisposer, PopupEffect, PopupInfo
 } from '../../../../../service/popup.service';
 import {RdkErrorAlert, RdkInfoAlert, RdkWarningAlert} from "../../../../../component/alert/alert";
 
@@ -15,45 +15,81 @@ export class AlertDemoComponent {
 
     answer = '';
 
+    infoInitData = {
+        message: 'this is a great info alert!', title: 'the title is optional'
+    };
+
     constructor(private _popupService: PopupService) {
     }
 
-    private alertCallback(answer:ButtonInfo) {
+    alertCallback(answer:ButtonInfo) {
         this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
     }
 
-    commonInfoAlert(event) {
-        this.answer = 'waiting for an answer';
-        this._popupService.popup(RdkInfoAlert, {modal: true}, {
-            message: 'this is a great info alert!', title: 'the title is optional',
-            callback: this.alertCallback, callbackContext: this
-        });
+    disposeAnswer(answer: ButtonInfo, popupInfo: PopupInfo){
+        this.alertCallback(answer);
+        popupInfo.dispose()
     }
 
-    commonWarningAlert(event) {
+    commonInfoAlert() {
         this.answer = 'waiting for an answer';
-        this._popupService.popup(RdkWarningAlert, {modal: true}, {
-            message: 'this is a great warning alert!',
-            callback: this.alertCallback, callbackContext: this
+        const popupInfo = this._popupService.popup(RdkInfoAlert, this._getModalOptions(), {
+            message: 'this is a great info alert!', title: 'the title is optional'
         });
+        if(popupInfo.popupRef instanceof ComponentRef){
+            popupInfo.popupRef.instance.answer.subscribe(answer => {
+                this.disposeAnswer(answer, popupInfo)
+            })
+        }
+    }
+
+    commonWarningAlert() {
+        this.answer = 'waiting for an answer';
+        const popupInfo = this._popupService.popup(RdkWarningAlert, this._getModalOptions(), {
+            message: 'this is a great warning alert!'
+        });
+        if(popupInfo.popupRef instanceof ComponentRef){
+            popupInfo.popupRef.instance.answer.subscribe(answer => {
+                this.disposeAnswer(answer, popupInfo)
+            })
+        }
     }
 
     commonErrorAlert(event) {
         this.answer = 'waiting for an answer';
-        this._popupService.popup(RdkErrorAlert, this._getDialogOptions(event), {
-            message: 'this is a great error alert!',
-            callback: this.alertCallback, callbackContext: this
+        const popupInfo = this._popupService.popup(RdkErrorAlert, this._getUnModalOptions(event), {
+            message: 'this is a great error alert!'
         });
+        if(popupInfo.popupRef instanceof ComponentRef){
+            popupInfo.popupRef.instance.answer.subscribe(answer => {
+                this.disposeAnswer(answer, popupInfo)
+            })
+        }
     }
 
     customizedAlert(event) {
         this.answer = 'waiting for an answer';
-        this._popupService.popup(CustomizedAlert, this._getDialogOptions(event));
+        const popupInfo = this._popupService.popup(CustomizedAlert, this._getUnModalOptions(event));
+        if(popupInfo.popupRef instanceof ComponentRef){
+            popupInfo.popupRef.instance.answer.subscribe(answer => {
+                this.disposeAnswer(answer, popupInfo)
+            })
+        }
     }
 
-    private _getDialogOptions(event): PopupOptions {
+    private _getModalOptions(): PopupOptions {
+        return {
+            modal: true, //是否模态
+            showEffect: PopupEffect.bubbleIn,
+            hideEffect: PopupEffect.bubbleOut
+        };
+    }
+
+    private _getUnModalOptions(event): PopupOptions {
         return {
             modal: false, //是否模态
+            showEffect: PopupEffect.bubbleIn,
+            hideEffect: PopupEffect.bubbleOut,
             pos: {x: event.clientX, y: event.clientY}, //插入点
             posOffset: { //偏移位置
                 top: -10,

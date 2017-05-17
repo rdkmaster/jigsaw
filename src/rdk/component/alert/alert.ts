@@ -1,20 +1,10 @@
-import {
-    AfterContentInit, Component, ElementRef, Input, NgModule, OnDestroy, Renderer2, ViewChild,
-    ViewEncapsulation
-} from "@angular/core";
-
-import {ButtonInfo, PopupService} from "../../service/popup.service";
-
-import {fadeIn} from "../animations/fade-in";
-import {bubbleIn} from "../animations/bubble-in";
+import {Component, ElementRef, Input, NgModule, Renderer2, ViewChild} from "@angular/core";
 import {AbstractDialogComponentBase, DialogBase, RdkDialog, RdkDialogModule} from "../dialog/dialog";
 import {CommonModule} from "@angular/common";
 import {RdkButtonModule} from "../button/button";
 import {RdkDraggableModule} from "../draggable/draggable";
-import { SharedModule } from "../../core/shared/shared.module"
-import { HttpModule , Http } from '@angular/http';
-import {TranslateModule, TranslateLoader, TranslateService} from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import {SharedModule} from "../../core/shared/shared.module";
+import {TranslateService} from "@ngx-translate/core";
 export enum AlertLevel {
     info, warning, error, confirm
 }
@@ -22,11 +12,7 @@ export enum AlertLevel {
 @Component({
     selector: 'rdk-alert',
     templateUrl: 'alert.html',
-    styleUrls: ['alert.scss'],
-    animations: [
-        fadeIn,
-        bubbleIn
-    ]
+    styleUrls: ['alert.scss']
 })
 export class RdkAlert extends AbstractDialogComponentBase {
     //TODO label需要国际化
@@ -43,11 +29,9 @@ export class RdkAlert extends AbstractDialogComponentBase {
     public static ERROR_TITLE: string = 'Error';
     public static CONFIRM_TITLE: string = 'Confirm';
 
-    constructor(popupService: PopupService,
-                renderer: Renderer2,
+    constructor(renderer: Renderer2,
                 elementRef: ElementRef) {
         super();
-        this.popupService = popupService;
         this.renderer = renderer;
         this.elementRef = elementRef;
     }
@@ -116,7 +100,7 @@ export class RdkAlert extends AbstractDialogComponentBase {
     }
 
     protected getPopupElement(): HTMLElement {
-        return this.elementRef.nativeElement.querySelector('.rdk-alert');
+        return this.elementRef.nativeElement;
     }
 
     protected init() {
@@ -127,26 +111,23 @@ export class RdkAlert extends AbstractDialogComponentBase {
 }
 
 abstract class RdkCommonAlert extends DialogBase {
+    @Input()
     public set initData(value: any) {
         if (!value) {
             return;
         }
         this.message = value.message ? value.message : 'the "message" property in the initData goes here.';
         this.title = value.title ? value.title : this._getDefaultTitle();
-        this.callback = value.callback;
-        this.callbackContext = value.callbackContext;
     }
 
     public abstract get dialog(): RdkDialog;
     public abstract set dialog(value: RdkDialog);
 
     public message: string;
-    public callback: Function;
-    public callbackContext: any;
-    public buttons = [{label: RdkAlert.OK_LABEL, callback: this.dispose, callbackContext: this}];
+    public buttons = [{label: RdkAlert.OK_LABEL}];
     public level: AlertLevel = AlertLevel.info;
 
-    private _getDefaultTitle():string {
+    private _getDefaultTitle(): string {
         switch (this.level) {
             case AlertLevel.warning:
                 return RdkAlert.WARNING_TITLE;
@@ -160,18 +141,12 @@ abstract class RdkCommonAlert extends DialogBase {
         }
     }
 
-    public onClose(answer: ButtonInfo): void {
-        if (!this.callback) {
-            return;
-        }
-        this.callback.call(this.callbackContext, answer);
-    }
 }
 
 @Component({
     templateUrl: 'common-alert.html',
+    styleUrls: ['common-alert.scss'],
     selector: 'rdk-info-alert',
-    encapsulation: ViewEncapsulation.None
 })
 export class RdkInfoAlert extends RdkCommonAlert {
     @ViewChild(RdkAlert) dialog: RdkDialog;
@@ -180,8 +155,8 @@ export class RdkInfoAlert extends RdkCommonAlert {
 
 @Component({
     templateUrl: 'common-alert.html',
+    styleUrls: ['common-alert.scss'],
     selector: 'rdk-warning-alert',
-    encapsulation: ViewEncapsulation.None
 })
 export class RdkWarningAlert extends RdkCommonAlert {
     @ViewChild(RdkAlert) dialog: RdkDialog;
@@ -190,20 +165,19 @@ export class RdkWarningAlert extends RdkCommonAlert {
 
 @Component({
     templateUrl: 'common-alert.html',
+    styleUrls: ['common-alert.scss'],
     selector: 'rdk-error-alert',
-    encapsulation: ViewEncapsulation.None
 })
 export class RdkErrorAlert extends RdkCommonAlert {
     @ViewChild(RdkAlert) dialog: RdkDialog;
     public level: AlertLevel = AlertLevel.error;
 }
 
-
 @NgModule({
-    imports: [RdkDialogModule, RdkDraggableModule, RdkButtonModule, CommonModule,SharedModule],
+    imports: [RdkDialogModule, RdkDraggableModule, RdkButtonModule, CommonModule, SharedModule],
     declarations: [RdkAlert, RdkInfoAlert, RdkWarningAlert, RdkErrorAlert],
     exports: [RdkDialogModule, RdkDraggableModule, RdkAlert, RdkInfoAlert, RdkWarningAlert, RdkErrorAlert],
-    providers:[TranslateService]
+    providers: [TranslateService]
 })
 export class RdkAlertModule {
 }
