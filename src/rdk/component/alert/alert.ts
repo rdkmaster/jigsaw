@@ -1,18 +1,9 @@
-import {
-    AfterContentInit, Component, ElementRef, Input, NgModule, OnDestroy, Renderer2, ViewChild,
-    ViewEncapsulation
-} from "@angular/core";
-
-import {ButtonInfo, PopupService} from "../../service/popup.service";
-
-import {fadeIn} from "../animations/fade-in";
-import {bubbleIn} from "../animations/bubble-in";
+import {Component, ElementRef, Input, NgModule,  Renderer2, ViewChild} from "@angular/core";
 import {AbstractDialogComponentBase, DialogBase, RdkDialog, RdkDialogModule} from "../dialog/dialog";
 import {CommonModule} from "@angular/common";
 import {RdkButtonModule} from "../button/button";
 import {RdkDraggableModule} from "../draggable/draggable";
 import { SharedModule } from "../../core/shared/shared.module"
-import { HttpModule , Http } from '@angular/http';
 import {TranslateModule, TranslateLoader, TranslateService} from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 export enum AlertLevel {
@@ -22,11 +13,7 @@ export enum AlertLevel {
 @Component({
     selector: 'rdk-alert',
     templateUrl: 'alert.html',
-    styleUrls: ['alert.scss'],
-    animations: [
-        fadeIn,
-        bubbleIn
-    ]
+    styleUrls: ['alert.scss']
 })
 export class RdkAlert extends AbstractDialogComponentBase {
     //TODO label需要国际化
