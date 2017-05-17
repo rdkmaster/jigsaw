@@ -132,8 +132,6 @@ abstract class RdkCommonAlert extends DialogBase {
         }
         this.message = value.message ? value.message : 'the "message" property in the initData goes here.';
         this.title = value.title ? value.title : this._getDefaultTitle();
-        this.callback = value.callback;
-        this.callbackContext = value.callbackContext;
     }
 
     public abstract get dialog(): RdkDialog;
@@ -142,7 +140,7 @@ abstract class RdkCommonAlert extends DialogBase {
     public message: string;
     public callback: Function;
     public callbackContext: any;
-    public buttons = [{label: RdkAlert.OK_LABEL, callback: this.dispose, callbackContext: this}];
+    public buttons = [{label: RdkAlert.OK_LABEL}];
     public level: AlertLevel = AlertLevel.info;
 
     private _getDefaultTitle():string {

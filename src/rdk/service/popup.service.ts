@@ -48,6 +48,7 @@ export enum PopupPositionType {
 export type PopupRef = ComponentRef<IPopupable> | EmbeddedViewRef<any>;
 
 export class ButtonInfo {
+    public role?: string;
     public label: string;
     public callback?: () => void;
     public callbackContext?: any;
@@ -63,7 +64,7 @@ export type PopupDisposer = () => void;
 
 export interface IPopupable {
     initData: any;
-    close: EventEmitter<any>;
+    answer: EventEmitter<any>;
 }
 
 export class PopupInfo {

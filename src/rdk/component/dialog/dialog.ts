@@ -6,17 +6,12 @@ import {
     EventEmitter,
     Input,
     NgModule,
-    OnDestroy,
     OnInit,
     Output,
     Renderer2
 } from "@angular/core";
-
-import {ButtonInfo, IPopupable, PopupDisposer, PopupOptions, PopupService} from "../../service/popup.service";
+import {ButtonInfo, IPopupable} from "../../service/popup.service";
 import {RdkDraggableModule} from "../draggable/draggable";
-
-import {fadeIn} from "../animations/fade-in";
-import {bubbleIn} from "../animations/bubble-in";
 import {AbstractRDKComponent} from "../core";
 import {CommonModule} from "@angular/common";
 import {RdkButtonModule} from "../button/button";
@@ -62,7 +57,7 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
     }
 
     @Output()
-    public close: EventEmitter<ButtonInfo> = new EventEmitter<ButtonInfo>();
+    public answer: EventEmitter<ButtonInfo> = new EventEmitter<ButtonInfo>();
 
     public dispose(answer?: ButtonInfo): void {
         if (this.dialog) {
@@ -79,8 +74,8 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
 
     public ngAfterViewInit() {
         if (this.dialog) {
-            this.dialog.close.subscribe(answer => {
-                this.close.emit(answer);
+            this.dialog.answer.subscribe(answer => {
+                this.answer.emit(answer);
             })
         }
     }
@@ -111,14 +106,14 @@ export abstract class AbstractDialogComponentBase extends AbstractRDKComponent i
     }
 
     @Output()
-    public close: EventEmitter<ButtonInfo> = new EventEmitter<ButtonInfo>();
+    public answer: EventEmitter<ButtonInfo> = new EventEmitter<ButtonInfo>();
 
     public ngAfterContentInit() {
         this.init();
     }
 
     public dispose(answer?: ButtonInfo) {
-        this.close.emit(answer);
+        this.answer.emit(answer);
     }
 
     protected abstract getPopupElement(): HTMLElement;

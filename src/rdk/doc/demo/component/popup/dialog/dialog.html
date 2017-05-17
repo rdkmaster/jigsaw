@@ -30,7 +30,7 @@
 </rdk-button>
 
 <ng-template #tpDialog1>
-    <rdk-dialog width="40%" [buttons]="buttons1" (close)="closeModalDialogTemplate()">
+    <rdk-dialog width="40%" [buttons]="buttons" (answer)="disposeAnswer($event, closeModalDialogTemplate)">
         <span title><span class="fa fa-thumbs-up"></span>Title of the dialog</span>
         <ul class="dialog-content">
             <li>Dialog content...</li>
@@ -41,7 +41,7 @@
 </ng-template>
 
 <ng-template #tpDialog2>
-    <rdk-dialog width="40%" [buttons]="buttons2" (close)="closeDialogTemplate()">
+    <rdk-dialog width="40%" [buttons]="buttons" (answer)="disposeAnswer($event, closeDialogTemplate)">
         <span title><span class="fa fa-thumbs-up"></span>Title of the dialog</span>
         <ul class="dialog-content">
             <li>Dialog content...</li>

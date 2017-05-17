@@ -9,7 +9,7 @@
     </div>
     <div class="rdk-dialog-button-group" *ngIf="buttons && buttons.length > 0">
         <rdk-button *ngFor="let bi of buttons"
-                    (click)="bi.callback && bi.callback.call(bi.callbackContext, bi)"
+                    (click)="dispose(bi)"
                     class="{{bi.clazz}}">{{bi.label}}
         </rdk-button>
     </div>

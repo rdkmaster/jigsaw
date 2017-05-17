@@ -4,7 +4,7 @@ import {CommonModule} from "@angular/common";
 
 export class RdkLoadingBase implements IPopupable {
     public initData: any;
-    public close: EventEmitter<any>;
+    public answer: EventEmitter<any>;
 }
 
 @Component({
