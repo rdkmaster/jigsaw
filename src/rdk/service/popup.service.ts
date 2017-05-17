@@ -103,20 +103,21 @@ export class PopupService {
     public popup(what: Type<IPopupable>, options?: PopupOptions, initData?: any): PopupInfo;
     public popup(what: TemplateRef<any>, options?: PopupOptions): PopupInfo;
     public popup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupInfo {
-        let popupRef: PopupRef,
+        let popupInfo: PopupInfo,
+            popupRef: PopupRef,
             element: HTMLElement,
             popupDisposer: PopupDisposer,
             blockDisposer: PopupDisposer,
             disposer: PopupDisposer,
             removeWindowListens: PopupDisposer[] = [];
 
-        const popupInfo: PopupInfo = this._popupFactory(what, options);
+        //popup block
+        blockDisposer = this._popupBlock(options);
+
+        popupInfo = this._popupFactory(what, options);
         popupRef = popupInfo.popupRef;
         element = popupInfo.element;
         popupDisposer = popupInfo.dispose;
-
-        //popup block
-        blockDisposer = this._popupBlock(options);
 
         //set disposer
         disposer = () => {
@@ -164,27 +165,22 @@ export class PopupService {
             const blockInfo: PopupInfo = this._popupFactory(RdkBlock, blockOptions);
             disposer = blockInfo.dispose;
             element = blockInfo.element;
-            this._beforeBlock(options, element, this._renderer);
+            this._setStyle(options, element, this._renderer);
             this._setPopup(blockOptions, element, this._renderer);
         }
         return disposer
     }
 
     private _beforePopup(options: PopupOptions, element: HTMLElement, renderer: Renderer2, disposer: PopupDisposer): PopupDisposer[] {
+        this._setStyle(options, element, renderer);
+        return this._setWindowListener(options, element, renderer, disposer);
+    }
+
+    private _setStyle(options: PopupOptions, element: HTMLElement, renderer: Renderer2): void {
         if (this._isGlobalModal(options)) {
             renderer.setStyle(element, 'z-index', '10000');
         } else {
             renderer.setStyle(element, 'z-index', '9000');
-        }
-        renderer.setStyle(element, 'visibility', 'hidden');
-        return this._setWindowListener(options, element, renderer, disposer);
-    }
-
-    private _beforeBlock(options: PopupOptions, element: HTMLElement, renderer: Renderer2): void {
-        if (this._isGlobalModal(options)) {
-            renderer.setStyle(element, 'z-index', '9999');
-        } else {
-            renderer.setStyle(element, 'z-index', '8999');
         }
         renderer.setStyle(element, 'visibility', 'hidden');
     }

@@ -77,7 +77,7 @@ export class DialogDemoComponent {
     /*
     * popup template at point
     * */
-    popupDialogTemplate(tp){
+    popupDialogTemplate(tp, event){
         if(this._dialogInfo){
             this.closeDialogTemplate()
         }
