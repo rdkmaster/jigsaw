@@ -1,5 +1,6 @@
 import {
-    AfterContentInit, Component, ComponentRef, Directive, ElementRef, EventEmitter, Input, NgModule, OnDestroy, OnInit,
+    AfterContentInit, Component, ComponentRef, Directive, ElementRef, EventEmitter, Input, NgModule, OnChanges,
+    OnDestroy, OnInit,
     Output, Renderer2, ViewChild
 } from "@angular/core";
 
@@ -61,11 +62,14 @@ export class RdkTooltipDialog implements IPopupable, AfterContentInit {
 }
 
 @Component({
-    template: '<rdk-tooltip-dialog>{{message}}</rdk-tooltip-dialog>'
+    template: '<rdk-tooltip-dialog><span innerHtml="fdfd"></span></rdk-tooltip-dialog>'
 })
 export class SimpleTooltipComponent extends TooltipBase {
     @ViewChild(RdkTooltipDialog) public tooltip: RdkTooltipDialog;
-    public message:string = '';
+
+    constructor(private _elementRef:ElementRef) {
+        super();
+    }
 
     private _initData:any;
 
@@ -75,7 +79,7 @@ export class SimpleTooltipComponent extends TooltipBase {
 
     public set initData(value: any) {
         this._initData = value;
-        this.message = value.message;
+        this._elementRef.nativeElement.querySelector('span').innerHTML = `${value.message}`;
     }
 }
 

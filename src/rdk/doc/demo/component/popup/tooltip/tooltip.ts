@@ -15,7 +15,7 @@ export class TooltipDemoComponent {
 
     @ViewChild("insertPlace", {read: ElementRef}) insertPlaceEl: ElementRef;
 
-    tooltipMessage:string = '这里是tooltip的内容';
+    tooltipMessage:string = '<span class="fa fa-thumbs-up"></span> 这里是tooltip的内容';
 
     constructor(private _popupService: PopupService) {
     }
