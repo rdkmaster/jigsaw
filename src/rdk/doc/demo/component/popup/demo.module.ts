@@ -7,7 +7,7 @@ import {RdkButtonModule} from "../../../../component/button/button";
 import {DialogDemoComponent} from "./dialog/dialog";
 import {TooltipDemoComponent} from "./tooltip/tooltip";
 import {RdkDialog, RdkDialogModule} from "../../../../component/dialog/dialog";
-import {RdkTooltip, RdkTooltipModule} from "../../../../component/tooltip/tooltip";
+import {RdkTooltipDialog, RdkTooltipModule} from "../../../../component/tooltip/tooltip";
 import {UseDialogComponent} from "./dialog/use-dialog/use-dialog";
 import {UseDialog2Component} from "./dialog/use-dialog2/use-dialog";
 import {UseTooltipComponent} from "./tooltip/use-tooltip/use-tooltip";
@@ -18,6 +18,7 @@ import {AlertDemoComponent} from "./alert/alert";
 
 import {CustomizedAlert} from "./alert/customized-alert/customized-alert";
 import {RdkBlock, RdkBlockModule} from "../../../../component/block/block";
+import {RdkInputModule} from "../../../../component/input/input";
 const popupDemoRoutes = [
     {
         path: '',
@@ -56,13 +57,14 @@ const popupDemoRoutes = [
         RdkDialogModule,
         RdkTooltipModule,
         RdkAlertModule,
-        RdkButtonModule
+        RdkButtonModule,
+        RdkInputModule
     ],
     providers: [PopupService],
     entryComponents: [
         RdkBlock,
         RdkDialog,
-        RdkTooltip,
+        RdkTooltipDialog,
         UseDialogComponent,
         UseDialog2Component,
         UseTooltipComponent,
