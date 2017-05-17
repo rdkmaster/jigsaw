@@ -23,7 +23,7 @@ export class LoadingDemoComponent {
 
     closeBlockLoading() {
         if (this.blockLoading) {
-            this.blockLoading.disposer();
+            this.blockLoading.dispose();
             this.blockLoading = null;
         }
     }
@@ -39,7 +39,7 @@ export class LoadingDemoComponent {
 
     closeGlobalLoading() {
         if (this.globalLoading) {
-            this.globalLoading.disposer();
+            this.globalLoading.dispose();
             this.globalLoading = null;
         }
     }

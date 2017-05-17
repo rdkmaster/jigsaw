@@ -23,7 +23,7 @@ export class TooltipDemoComponent {
     }
 
     close() {
-        this._tooltipInfo.disposer();
+        this._tooltipInfo.dispose();
     }
 
     private _getTooltipOptions(insertPlaceEl: ElementRef): PopupOptions {

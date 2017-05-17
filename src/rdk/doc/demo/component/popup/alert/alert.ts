@@ -27,12 +27,8 @@ export class AlertDemoComponent {
     }
 
     disposeAnswer(answer: ButtonInfo, popupInfo: PopupInfo){
-        if(answer){
-            this.alertCallback(answer);
-            popupInfo.disposer()
-        }else{
-            popupInfo.disposer()
-        }
+        this.alertCallback(answer);
+        popupInfo.dispose()
     }
 
     commonInfoAlert() {

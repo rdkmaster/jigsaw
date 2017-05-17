@@ -22,7 +22,7 @@ export class TableDataWithPopupDemoComponent {
     }
     popupTemplate(tp){
         this._popupInfo = this._popupService.popup(tp);
-        this._disposer = () => {this._popupInfo.disposer()}
+        this._disposer = () => {this._popupInfo.dispose()}
     }
 
 }

@@ -48,10 +48,8 @@ export enum PopupPositionType {
 export type PopupRef = ComponentRef<IPopupable> | EmbeddedViewRef<any>;
 
 export class ButtonInfo {
-    public role?: string;
+    [index:string]: any;
     public label: string;
-    public callback?: () => void;
-    public callbackContext?: any;
     public clazz?: string = '';
 }
 
@@ -64,13 +62,13 @@ export type PopupDisposer = () => void;
 
 export interface IPopupable {
     initData: any;
-    answer: EventEmitter<any>;
+    answer: EventEmitter<ButtonInfo>;
 }
 
 export class PopupInfo {
     popupRef: PopupRef;
     element: HTMLElement;
-    disposer: PopupDisposer
+    dispose: PopupDisposer
 }
 
 @Injectable()
@@ -115,7 +113,7 @@ export class PopupService {
         const popupInfo: PopupInfo = this._popupFactory(what, options);
         popupRef = popupInfo.popupRef;
         element = popupInfo.element;
-        popupDisposer = popupInfo.disposer;
+        popupDisposer = popupInfo.dispose;
 
         //popup block
         blockDisposer = this._popupBlock(options);
@@ -143,7 +141,7 @@ export class PopupService {
         return {
             popupRef: popupRef,
             element: element,
-            disposer: disposer
+            dispose: disposer
         }
     }
 
@@ -164,7 +162,7 @@ export class PopupService {
             }
 
             const blockInfo: PopupInfo = this._popupFactory(RdkBlock, blockOptions);
-            disposer = blockInfo.disposer;
+            disposer = blockInfo.dispose;
             element = blockInfo.element;
             this._beforeBlock(options, element, this._renderer);
             this._setPopup(blockOptions, element, this._renderer);
@@ -198,7 +196,7 @@ export class PopupService {
         return {
             popupRef: ref,
             element: element,
-            disposer: disposer
+            dispose: disposer
         }
     }
 

@@ -70,7 +70,7 @@ export class DialogDemoComponent {
     }
 
     closeModalDialogTemplate(){
-        this._modalDialogInfo.disposer();
+        this._modalDialogInfo.dispose();
         this._modalDialogInfo = null
     }
 
@@ -85,7 +85,7 @@ export class DialogDemoComponent {
     }
 
     closeDialogTemplate(){
-        this._dialogInfo.disposer();
+        this._dialogInfo.dispose();
         this._dialogInfo = null
     }
 
@@ -98,14 +98,14 @@ export class DialogDemoComponent {
                 if(typeof cb == 'function'){
                     cb.call(this)
                 }else{
-                    cb.disposer()
+                    cb.dispose()
                 }
             }
         }else{
             if(typeof cb == 'function'){
                 cb.call(this)
             }else{
-                cb.disposer()
+                cb.dispose()
             }
         }
     }
@@ -118,7 +118,7 @@ export class DialogDemoComponent {
     }
 
     closeTemplate(){
-        this._templateRef.disposer();
+        this._templateRef.dispose();
     }
 
     private _getModalOptions(): PopupOptions {
