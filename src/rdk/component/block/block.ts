@@ -9,7 +9,7 @@ import {CommonModule} from "@angular/common";
 })
 export class RdkBlock implements IPopupable{
     initData: any;
-    close: EventEmitter<any>;
+    answer: EventEmitter<any>;
 }
 
 @NgModule({

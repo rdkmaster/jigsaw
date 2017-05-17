@@ -48,6 +48,7 @@ export enum PopupPositionType {
 export type PopupRef = ComponentRef<IPopupable> | EmbeddedViewRef<any>;
 
 export class ButtonInfo {
+    public role?: string;
     public label: string;
     public callback?: () => void;
     public callbackContext?: any;
@@ -63,7 +64,7 @@ export type PopupDisposer = () => void;
 
 export interface IPopupable {
     initData: any;
-    close: EventEmitter<any>;
+    answer: EventEmitter<any>;
 }
 
 export class PopupInfo {
@@ -104,25 +105,25 @@ export class PopupService {
     public popup(what: Type<IPopupable>, options?: PopupOptions, initData?: any): PopupInfo;
     public popup(what: TemplateRef<any>, options?: PopupOptions): PopupInfo;
     public popup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupInfo {
-        let ref: PopupRef;
-        let popupElement: HTMLElement;
-        let disposer: PopupDisposer;
-        let blockDisposer: PopupDisposer;
-        let popupDisposer: PopupDisposer;
-        let removeWindowListens: PopupDisposer[] = [];
+        let popupRef: PopupRef,
+            element: HTMLElement,
+            popupDisposer: PopupDisposer,
+            blockDisposer: PopupDisposer,
+            disposer: PopupDisposer,
+            removeWindowListens: PopupDisposer[] = [];
 
         const popupInfo: PopupInfo = this._popupFactory(what, options);
-        ref = popupInfo.popupRef;
-        popupElement = popupInfo.element;
-        disposer = popupInfo.disposer;
+        popupRef = popupInfo.popupRef;
+        element = popupInfo.element;
+        popupDisposer = popupInfo.disposer;
 
         //popup block
         blockDisposer = this._popupBlock(options);
 
         //set disposer
-        popupDisposer = () => {
-            if (disposer) {
-                disposer();
+        disposer = () => {
+            if (popupDisposer) {
+                popupDisposer();
             }
             if (blockDisposer) {
                 blockDisposer();
@@ -131,30 +132,31 @@ export class PopupService {
         };
 
         //set popup
-        if (ref instanceof ComponentRef) {
-            ref.instance.initData = initData;
+        if (popupRef instanceof ComponentRef) {
+            popupRef.instance.initData = initData;
         }
-        removeWindowListens = this._beforePopup(options, popupElement, this._renderer, popupDisposer);
+        removeWindowListens = this._beforePopup(options, element, this._renderer, disposer);
         setTimeout(() => {
-            this._setPopup(options, popupElement, this._renderer);
+            this._setPopup(options, element, this._renderer);
         }, 0);
 
         return {
-            popupRef: ref,
-            element: popupElement,
-            disposer: popupDisposer
+            popupRef: popupRef,
+            element: element,
+            disposer: disposer
         }
     }
 
-    private _popupBlock(options: PopupOptions): PopupDisposer{
+    private _popupBlock(options: PopupOptions): PopupDisposer {
         let disposer: PopupDisposer;
+        let element: HTMLElement;
         if (this._isModal(options)) {
             const blockOptions: PopupOptions = {
                 modal: true,
                 showEffect: PopupEffect.fadeIn,
                 hideEffect: PopupEffect.fadeOut
             };
-            if(!CommonUtils.isEmptyObject(options)){
+            if (!CommonUtils.isEmptyObject(options)) {
                 blockOptions.pos = options.pos;
                 blockOptions.posOffset = options.posOffset;
                 blockOptions.posType = options.posType;
@@ -163,20 +165,35 @@ export class PopupService {
 
             const blockInfo: PopupInfo = this._popupFactory(RdkBlock, blockOptions);
             disposer = blockInfo.disposer;
-            this._setPopup(blockOptions, blockInfo.element, this._renderer);
+            element = blockInfo.element;
+            this._beforeBlock(options, element, this._renderer);
+            this._setPopup(blockOptions, element, this._renderer);
         }
         return disposer
     }
 
-    private _beforePopup(options:PopupOptions, popupElement, renderer: Renderer2, disposer: PopupDisposer): PopupDisposer[] {
-        this._renderer.setStyle(popupElement, 'z-index', '10000');
-        this._renderer.setStyle(popupElement, 'visibility', 'hidden');
-        return this._setWindowListener(options, popupElement, renderer, disposer);
+    private _beforePopup(options: PopupOptions, element: HTMLElement, renderer: Renderer2, disposer: PopupDisposer): PopupDisposer[] {
+        if (this._isGlobalModal(options)) {
+            renderer.setStyle(element, 'z-index', '10000');
+        } else {
+            renderer.setStyle(element, 'z-index', '9000');
+        }
+        renderer.setStyle(element, 'visibility', 'hidden');
+        return this._setWindowListener(options, element, renderer, disposer);
+    }
+
+    private _beforeBlock(options: PopupOptions, element: HTMLElement, renderer: Renderer2): void {
+        if (this._isGlobalModal(options)) {
+            renderer.setStyle(element, 'z-index', '9999');
+        } else {
+            renderer.setStyle(element, 'z-index', '8999');
+        }
+        renderer.setStyle(element, 'visibility', 'hidden');
     }
 
     private _popupFactory(what: Type<IPopupable> | TemplateRef<any>, options: PopupOptions): PopupInfo {
         const ref: PopupRef = this._createPopup(what);
-        const element: HTMLElement = this._getPopupElement(ref);
+        const element: HTMLElement = this._getElement(ref);
         const disposer: PopupDisposer = this._getDisposer(options, ref, element, this._renderer);
         return {
             popupRef: ref,
@@ -194,15 +211,15 @@ export class PopupService {
         }
     }
 
-    private _getPopupElement(ref: PopupRef): HTMLElement {
-        let popupElement: HTMLElement;
+    private _getElement(ref: PopupRef): HTMLElement {
+        let element: HTMLElement;
         if (ref instanceof ComponentRef) {
-            popupElement = ref.location.nativeElement.localName == 'ng-component' ?
+            element = ref.location.nativeElement.localName == 'ng-component' ?
                 ref.location.nativeElement.children[0] : ref.location.nativeElement;
         } else {
-            popupElement = ref.rootNodes.find(rootNode => rootNode instanceof HTMLElement);
+            element = ref.rootNodes.find(rootNode => rootNode instanceof HTMLElement);
         }
-        return popupElement
+        return element
     }
 
     private _getDisposer(options: PopupOptions, popupRef: PopupRef, element: HTMLElement, renderer: Renderer2): PopupDisposer {
@@ -247,7 +264,7 @@ export class PopupService {
 
     private _setWindowListener(options: PopupOptions, element: HTMLElement, renderer: Renderer2, disposer: PopupDisposer): PopupDisposer[] {
         let removeWindowListens: PopupDisposer[] = [];
-        if(this._isGlobalModal(options)){
+        if (this._isGlobalModal(options)) {
             removeWindowListens.push(renderer.listen('window', 'resize', () => {
                 renderer.setStyle(element, 'top',
                     (document.body.clientHeight / 2 - element.offsetHeight / 2) + 'px');

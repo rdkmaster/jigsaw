@@ -13,7 +13,7 @@ export abstract class TooltipBase implements ITooltip {
     public initData: any;
 
     @Output()
-    public close: EventEmitter<any> = new EventEmitter<any>();
+    public answer: EventEmitter<any> = new EventEmitter<any>();
 
     abstract get tooltip(): RdkTooltipDialog;
     abstract set tooltip(value: RdkTooltipDialog);
@@ -37,7 +37,7 @@ export abstract class TooltipBase implements ITooltip {
 export class RdkTooltipDialog implements IPopupable, AfterContentInit {
     public initData: any;
     @Output()
-    public close: EventEmitter<any> = new EventEmitter<any>();
+    public answer: EventEmitter<any> = new EventEmitter<any>();
 
     protected popupElement: HTMLElement;
 
@@ -53,7 +53,7 @@ export class RdkTooltipDialog implements IPopupable, AfterContentInit {
     }
 
     public dispose() {
-        this.close.emit();
+        this.answer.emit();
     }
 }
 

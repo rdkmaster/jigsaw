@@ -13,17 +13,13 @@ export class UseDialog2Component extends DialogBase {
     public title: string = `Title of the dialog`;
     public buttons: Array<ButtonInfo> = [
         {
+            role: 'confirm',
             label: 'confirm',
-            callback: () => {
-                console.log('confirm callback success!')
-            },
             clazz: ""
         },
         {
+            role: 'cancel',
             label: 'cancel',
-            callback: () => {
-                this.dispose();
-            },
             clazz: ""
         }
     ];

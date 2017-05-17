@@ -15,24 +15,19 @@ import {
 export class DialogDemoComponent {
 
     private _templateRef: PopupInfo;
+    private _modalDialogInfo: PopupInfo;
     private _dialogInfo: PopupInfo;
 
     public title: string = 'Title of the dialog';
     public buttons: Array<ButtonInfo> = [
         {
+            role: 'confirm',
             label: 'confirm',
-            callback: () => {
-                console.log('confirm callback success!')
-            },
             clazz: ""
         },
         {
+            role: 'cancel',
             label: 'cancel',
-            callback: () => {
-                if(this._dialogInfo){
-                    this._dialogInfo.disposer()
-                }
-            },
             clazz: ""
         }
     ];
@@ -40,36 +35,84 @@ export class DialogDemoComponent {
     constructor(private _popupService: PopupService) {
     }
 
+    /*
+    * popup component
+    * */
     popup() {
         const popupInfo = this._popupService.popup(UseDialogComponent, this._getModalOptions());
         if(popupInfo.popupRef instanceof ComponentRef){
-            popupInfo.popupRef.instance.close.subscribe(() => {
-                popupInfo.disposer()
+            popupInfo.popupRef.instance.answer.subscribe(answer => {
+                this.disposeAnswer(answer, popupInfo)
             })
         }
     }
 
+    /*
+     * popup component at point
+     * */
     popupAtPoint(event) {
         const popupInfo = this._popupService.popup(UseDialog2Component, this._getUnModalOptions(event));
         if(popupInfo.popupRef instanceof ComponentRef){
-            popupInfo.popupRef.instance.close.subscribe(() => {
-                popupInfo.disposer()
+            popupInfo.popupRef.instance.answer.subscribe(answer => {
+                this.disposeAnswer(answer, popupInfo)
             })
         }
     }
 
+    /*
+    * popup template
+    * */
     popupModalDialogTemplate(tp){
-        this._dialogInfo = this._popupService.popup(tp, this._getModalOptions());
+        if(this._modalDialogInfo){
+            this.closeModalDialogTemplate()
+        }
+        this._modalDialogInfo = this._popupService.popup(tp, this._getModalOptions());
     }
 
+    closeModalDialogTemplate(){
+        this._modalDialogInfo.disposer();
+        this._modalDialogInfo = null
+    }
+
+    /*
+    * popup template at point
+    * */
     popupDialogTemplate(tp){
+        if(this._dialogInfo){
+            this.closeDialogTemplate()
+        }
         this._dialogInfo = this._popupService.popup(tp, this._getUnModalOptions(event));
     }
 
     closeDialogTemplate(){
         this._dialogInfo.disposer();
+        this._dialogInfo = null
     }
 
+    disposeAnswer(answer: ButtonInfo, cb){
+        if(answer){
+            if(answer.role == 'confirm'){
+                console.log('confirm callback success!')
+            }else if(answer.role == 'cancel'){
+                console.log('cancel callback success!');
+                if(typeof cb == 'function'){
+                    cb.call(this)
+                }else{
+                    cb.disposer()
+                }
+            }
+        }else{
+            if(typeof cb == 'function'){
+                cb.call(this)
+            }else{
+                cb.disposer()
+            }
+        }
+    }
+
+    /*
+    * popup user defined template
+    * */
     popupTemplate(tp){
         this._templateRef = this._popupService.popup(tp);
     }
