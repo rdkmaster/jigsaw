@@ -15,6 +15,8 @@ export class TooltipDemoComponent {
 
     @ViewChild("insertPlace", {read: ElementRef}) insertPlaceEl: ElementRef;
 
+    tooltipMessage:string = '这里是tooltip的内容';
+
     constructor(private _popupService: PopupService) {
     }
 

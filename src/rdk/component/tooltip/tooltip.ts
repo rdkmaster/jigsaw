@@ -1,6 +1,9 @@
-import {AfterContentInit, Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Output} from "@angular/core";
+import {
+    AfterContentInit, Component, ComponentRef, Directive, ElementRef, EventEmitter, Input, NgModule, OnDestroy, OnInit,
+    Output, Renderer2, ViewChild
+} from "@angular/core";
 
-import {IPopupable} from "../../service/popup.service";
+import {IPopupable, PopupEffect, PopupInfo, PopupPositionType, PopupService} from "../../service/popup.service";
 import {bubbleIn} from "../animations/bubble-in";
 import {CommonModule} from "@angular/common";
 
@@ -58,25 +61,89 @@ export class RdkTooltipDialog implements IPopupable, AfterContentInit {
 }
 
 @Component({
-    selector: '[rdk-tooltip], [rdkTooltip]', template: ''
+    template: '<rdk-tooltip-dialog>{{message}}</rdk-tooltip-dialog>'
 })
-export class RdkTooltip implements OnInit {
-    @Input() public rdkTooltip:string = 'no message';
-    // @Input() public rdkTooltipPointerTo:string = 'no message';
+export class SimpleTooltipComponent extends TooltipBase {
+    @ViewChild(RdkTooltipDialog) public tooltip: RdkTooltipDialog;
+    public message:string = '';
 
-    constructor() {
+    private _initData:any;
+
+    public get initData(): any {
+        return this._initData;
     }
 
-    ngOnInit(): void {
-        console.log(this.rdkTooltip);
+    public set initData(value: any) {
+        this._initData = value;
+        this.message = value.message;
+    }
+}
+
+@Directive({
+    selector: '[rdk-tooltip], [rdkTooltip]'
+})
+export class RdkTooltip implements OnDestroy {
+    @Input() public rdkTooltip:string = 'no message';
+    private _tooltipInfo:PopupInfo;
+    private _removeMouseLeave:Function;
+    private _removeMouseEnter:Function;
+
+    constructor(private _popupService:PopupService, private _elementRef:ElementRef, renderer:Renderer2) {
+        const onEnter:(event: any) => boolean | void = () => {
+            if (this._removeMouseLeave) {
+                this._removeMouseLeave();
+            }
+            this._removeMouseLeave = renderer.listen(_elementRef.nativeElement, 'mouseleave', onLeave);
+            this._popupTooltip();
+        };
+        const onLeave:(event: any) => boolean | void = () => {
+            if (this._removeMouseEnter) {
+                this._removeMouseEnter();
+            }
+            this._removeMouseEnter = renderer.listen(_elementRef.nativeElement, 'mouseenter', onEnter);
+            this._closeTooltip();
+        };
+        this._removeMouseEnter = renderer.listen(_elementRef.nativeElement, 'mouseenter', onEnter);
+    }
+
+    private _popupTooltip():void {
+        this._tooltipInfo = this._popupService.popup(SimpleTooltipComponent, {
+            modal: false, //是否模态
+            showEffect: PopupEffect.bubbleIn,
+            hideEffect: PopupEffect.bubbleOut,
+            pos: this._elementRef, //插入点
+            posOffset: { //偏移位置
+                bottom: -8,
+                left: 0
+            },
+            posType: PopupPositionType.absolute, //定位类型
+        }, {
+            message: this.rdkTooltip
+        });
+    }
+
+    private _closeTooltip():void {
+        if (this._tooltipInfo && this._tooltipInfo.disposer) {
+            this._tooltipInfo.disposer();
+        }
+    }
+
+    ngOnDestroy(): void {
+        this._closeTooltip();
+        if (this._removeMouseLeave) {
+            this._removeMouseLeave();
+        }
+        if (this._removeMouseEnter) {
+            this._removeMouseEnter();
+        }
     }
 }
 
 @NgModule({
     imports: [CommonModule],
-    declarations: [RdkTooltipDialog, RdkTooltip],
-    exports: [RdkTooltipDialog, RdkTooltip]
+    declarations: [RdkTooltipDialog, RdkTooltip, SimpleTooltipComponent],
+    exports: [RdkTooltipDialog, RdkTooltip],
+    entryComponents: [SimpleTooltipComponent]
 })
 export class RdkTooltipModule {
-
 }
