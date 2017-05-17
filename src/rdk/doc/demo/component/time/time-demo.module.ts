@@ -1,8 +1,8 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {TimeBasicDemoComponent} from "./basic/basic";
+import {RdkTimeModule} from "../../../../component/time/index";
 
-import { RdkTimeModule } from "../../../../component/time/time";
 
 
 const inputDemoRoutes=[

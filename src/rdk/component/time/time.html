@@ -1,6 +1,8 @@
-<div class="input-group date time-box">
-    <input [class.rdk-time-hidden]="inline" type='text' class="form-control"/>
-    <span [class.rdk-time-hidden]="inline" class="input-group-addon">
-        <span class="glyphicon glyphicon-calendar"></span>
+<div *ngIf="grItems && grItems.length" class="time-granularity">
+    <span *ngFor="let item of grItems" (click)="changeGranularity(item)" [class.active]="item.value==_gr">
+        {{item.label}}
     </span>
+</div>
+<div class="input-group date time-box">
+
 </div>

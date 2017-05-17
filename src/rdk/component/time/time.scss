@@ -7,6 +7,52 @@ $time-prefix-cls: #{$rdk-prefix}-time;
     width: 300px;
     .time-box {
         width: 100%;
+        /deep/ {
+            .bootstrap-datetimepicker-widget table tr.active {
+                background-color: transparent;
+                td {
+                    background-color: #337ab7;
+                    border-radius: 0 !important;
+                    color: #fff;
+                    &:first-child {
+                        border-top-left-radius: 4px !important;
+                        border-bottom-left-radius: 4px !important;
+                    }
+                    &:last-child {
+                        border-top-right-radius: 4px !important;
+                        border-bottom-right-radius: 4px !important;
+                    }
+                }
+            }
+        }
+    }
+    .time-granularity {
+        display: flex;
+        justify-content: center;
+        &>span {
+            font-size: 12px;
+            display: inline-block;
+            height: 26px;
+            line-height: 26px;
+            padding: 0 10px;
+            border: 1px solid #008FD4;
+            border-right: 0;
+            color: #008FD4;
+            cursor: pointer;
+            &:first-child {
+                border-top-left-radius: 5px;
+                border-bottom-left-radius: 5px;
+            }
+            &:last-child {
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+                border-right: 1px solid #008FD4;
+            }
+            &.active {
+                background-color: #008FD4;
+                color: #fff;
+            }
+        }
     }
 }
 

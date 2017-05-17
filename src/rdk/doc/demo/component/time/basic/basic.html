@@ -1,6 +1,3 @@
 <h4>time</h4>
-<rdk-time [gr]="gr" [(date)]="date" (dateChange)="dateChange($event)"
-          [inline]="inline" [dateLimitStart]="dateLimitStart"
-          [dateLimitEnd]="dateLimitEnd"></rdk-time><br>
-<p class="notes">选择的时间是：{{date}}</p>
-
+<rdk-time gr="week" [(date)]="date"  (dateChange)="dateChange($event)"
+          [refreshInterval]="1000" limitEnd="now" weekStart="mon" [grItems]="grItems"></rdk-time><br>

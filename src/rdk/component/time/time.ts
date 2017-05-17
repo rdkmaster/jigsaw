@@ -2,13 +2,19 @@ import {NgModule, Component, Input, Output, ElementRef, OnInit, EventEmitter} fr
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {AbstractRDKComponent} from '../core';
-import {TimeService} from '../../service/time.service';
+import {TimeGr, TimeService, TimeWeekStart} from "./time-api";
 
-//declare let $: any;
-//declare let require: any;
+export type TimeWeekDay ={
+    week : number,
+    year:number
+}
 
-//let $ = require('jquery');
-//import "eonasdan-bootstrap-datetimepicker";
+export type Time = string | Date | TimeWeekDay;
+
+export type grItem = {
+    label : string,
+    value : TimeGr
+}
 
 @Component({
     selector: 'rdk-time',
@@ -19,120 +25,183 @@ import {TimeService} from '../../service/time.service';
         '[style.width]': 'width'
     }
 })
+
 export class RdkTime extends AbstractRDKComponent implements OnInit {
-    //组件是否初始化
-    private _initFlag: boolean;
 
-    private _value: string;
 
-    @Input() public inline: boolean = true;
+    private _value: Time;
 
     //组件暴露出去的时间数值，支持双向绑定
     @Input()
-    public get date(): string {
+    public get date(): Time {
         return this._value;
     }
 
-    public set date(newValue: string) {
-        if (this._value != newValue) {
-            this._value = this.timeService.format(newValue, this._format);
-            this._initFlag && this._setDate(this._value);
+    public set date(newValue: Time) {
+        if (newValue && this._value !=newValue) {
+            this._value = this.handleWeekValue(newValue);
+            this.setDate(this._value);
         }
     }
 
-    @Output() public dateChange = new EventEmitter<string>();
+    @Output() public dateChange = new EventEmitter<Time>();
 
-    //限制开始时间
-    @Input() public dateLimitStart: string;
 
-    //限制结束时间
-    @Input() public dateLimitEnd: string;
+    private _limitStart : string;
 
-    //时间格式
-    private _format: string = 'YYYY-MM-DD, HH:mm:ss';
+    @Input()
+    public set limitStart(value : string){
+        if(value) {
+            this._limitStart = value;
+            this.checkMacro();
+            if(this._timepicker){
+                this._timepicker.maxDate(TimeService.getDate(this._limitStart));
+            }
+        }
+    }
 
+    private _limitEnd : string;
+
+    @Input()
+    public set limitEnd(value : string){
+        if(value){
+            this._limitEnd = value;
+            this.checkMacro();
+            if(this._timepicker){
+                this._timepicker.maxDate(TimeService.getDate(this._limitEnd));
+            }
+        }
+    }
+
+    //时间刷新的间隔毫秒数，主要针对startDate或endDate设置为now或now-2h等需要不时刷新的场景
+    @Input() public refreshInterval:number;
+
+     //周开始设置，可选值 sun mon tue wed thu fri sat，默认值是sun
+     private _weekStart:TimeWeekStart;
+    @Input()
+    public set weekStart(value :string|TimeWeekStart){
+        if(value){
+            if (typeof value  === 'string'){
+                this._weekStart = TimeWeekStart[value];
+            }else{
+                this._weekStart = value;
+            }
+        }
+    }
+
+    private _gr : TimeGr;
     //粒度
     @Input()
-    public set gr(value) {
-        switch (value) {
-            case 'quarter':
-                this._format = 'YYYY-Q';
-                break;
-            case 'month':
-                this._format = 'YYYY-MM';
-                break;
-            case 'week':
-                this._format = 'YYYY-W';
-                break;
-            case 'day':
-                this._format = 'YYYY-MM-DD';
-                break;
-            case 'hour':
-                this._format = 'YYYY-MM-DD, HH';
-                break;
-            case 'minute':
-                this._format = 'YYYY-MM-DD, HH:mm';
-                break;
-            case 'second':
-                this._format = 'YYYY-MM-DD, HH:mm:ss';
-                break;
-            default:
-                this._format = 'YYYY-MM-DD, HH:mm:ss';
+    public set gr (value : TimeGr|string){
+        if(typeof value === 'string'){
+            value = TimeGr[value];
         }
+        if(this._timepicker){
+            this._timepicker.format(TimeService.getFormator(<TimeGr>value));
+            //handleViewMode
+            if(value == TimeGr.month){
+                this._timepicker.viewMode("months");
+            }else{
+                this._timepicker.viewMode("days");
+            }
+            this.handleValueChange(this._value,value);
+        }
+        this._gr =<TimeGr>value;
     }
+
+    @Input() private grItems : grItem[];
 
     //time插件容器（jq对象）
     private _timepicker: any;
 
-    constructor(private el: ElementRef, private timeService: TimeService) {
-        super();
-    }
+    //定时器Id
+    private _IntervalId : number;
 
-    //设置插件选中时间值
-    private _setDate(date) {
-        this._timepicker && this._timepicker.data("DateTimePicker").date(date);
+    constructor(private el: ElementRef) {
+        super();
+        this.gr = TimeGr.date;
+        this._value = 'now';
+        this.refreshInterval = 0;
+        this.weekStart = TimeWeekStart.sun;
     }
 
     ngOnInit() {
-        //require.ensure([], (require) => {//这里是异步的（webpack）
-        //require("bootstrap/dist/css/bootstrap.min.css");
-        //require("eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css");
-        //require("eonasdan-bootstrap-datetimepicker");
-
-        $(() => {
             let insert = this.el.nativeElement.querySelector(".time-box");
+            TimeService.setWeekStart(this._weekStart);
             $(insert).datetimepicker({
-                //locale: 'zh-cn',
-                inline: this.inline,
-                defaultDate: this._value,
-                format: this._format, // format: 'LT', //时刻
-                minDate: this.dateLimitStart,
-                maxDate: this.dateLimitEnd,
-                //viewMode: 'days', // 'decades','years','months','days', default: 'days'
-                //extraFormats: ['MM/dd/YYYY', 'MM/dd/YY'],
-                //showTodayButton: true,
-                //useCurrent: false
+                inline: true,
+                defaultDate: TimeService.getDate(this._value),
+                format: TimeService.getFormator(this._gr),
+                minDate:TimeService.getDate(this._limitStart),
+                maxDate:TimeService.getDate(this._limitEnd),
             }).on("dp.change", (e) => {
-                let changeValue = this.timeService.format(e.date, this._format);
-                if (this._value != changeValue) {
-                    this._value = changeValue;
-                    this.dateChange.emit(this._value);
-                }
+                this.handleValueChange(e.date,this._gr);
             });
-
-            this._timepicker = $(insert);
-            this._initFlag = true;
-        });
-        //}, 'datepicker');
+            this._timepicker = $(insert).data("DateTimePicker");
+            this.checkMacro();
+            this.handleValueChange(this._value,this._gr);
     }
 
-}
+    //设置插件选中时间值
+    private setDate(value : Time) {
+        if(this._timepicker) {
+            this._timepicker.date(TimeService.getDate(value));
+            this.handleValueChange(this._value,this._gr);
+        }
+    }
 
-@NgModule({
-    imports: [CommonModule, FormsModule],
-    declarations: [RdkTime],
-    exports: [RdkTime]
-})
-export class RdkTimeModule {
+    private changeGranularity (select : grItem){
+        this.gr = select.value;
+    }
+
+    public checkMacro(){
+        if(this._IntervalId) {
+            window.clearInterval(this._IntervalId);
+        }
+        if((TimeService.isMacro(this._limitStart) || TimeService.isMacro(this._limitEnd)) && this.refreshInterval!=0){
+            this._IntervalId = window.setInterval(() => {
+                this.handleLimitStartAndEnd(this._limitStart,this._limitEnd);
+            },this.refreshInterval);
+        }
+    }
+
+    public handleLimitStartAndEnd(start,end){
+        if(this._timepicker){
+            start&&this._timepicker.minDate(TimeService.getDate(start));
+            end&&this._timepicker.maxDate(TimeService.getDate(end));
+            if(this._gr== TimeGr.week){
+                this.handleWeekSelect();
+            }
+        }
+    }
+
+    private handleValueChange(date ,gr ){
+        date = this.handleWeekValue(date);
+        let changeValue = TimeService.formatWithGr(TimeService.getDate(date),gr);
+        if (this._value != changeValue || this._gr !=gr) {
+            this._value = changeValue;
+            if(gr!= TimeGr.week){
+                this.dateChange.emit(this._value);
+            }else{
+                this.handleWeekSelect();
+                this.dateChange.emit(this._value);
+            }
+        }
+    }
+
+    private handleWeekSelect(){
+        let weekNum = TimeService.getWeekofYear(this._value);
+        let year = TimeService.getYear(this._value);
+        this._value = {year:year,week:weekNum};
+        let trNode = this.el.nativeElement.querySelector(".time-box .datepicker .datepicker-days>table>tbody>tr>td.active").parentNode;
+        trNode.classList.add("active");
+    }
+
+    private handleWeekValue(newValue){
+        if(typeof newValue["week"] === 'number') {
+            return TimeService.getDateFromYearAndWeek(newValue["year"],newValue["week"])
+        }
+        return newValue;
+    }
 
 }
