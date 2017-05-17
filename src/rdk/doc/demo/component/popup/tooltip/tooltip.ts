@@ -3,7 +3,7 @@ import {Component, ViewChild, ElementRef, ComponentRef} from "@angular/core";
 import {UseTooltipComponent} from './use-tooltip/use-tooltip';
 
 import {
-    PopupService, PopupOptions, PopupPositionType, PopupRef, IPopupable, PopupInfo, PopupEffect
+    PopupService, PopupOptions, PopupPositionType, PopupInfo, PopupEffect
 } from '../../../../../service/popup.service';
 
 @Component({

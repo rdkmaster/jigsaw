@@ -1,14 +1,11 @@
-import {
-    Component, Renderer2, ElementRef, Input, AfterContentInit, OnDestroy, AfterViewInit,
-    OnInit, EventEmitter, Output, NgModule
-} from '@angular/core';
+import {AfterContentInit, Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Output} from "@angular/core";
 
-import {IPopupable, PopupDisposer, PopupOptions, PopupService} from '../../service/popup.service';
-import {bubbleIn} from '../animations/bubble-in';
+import {IPopupable} from "../../service/popup.service";
+import {bubbleIn} from "../animations/bubble-in";
 import {CommonModule} from "@angular/common";
 
 export interface ITooltip extends IPopupable {
-    tooltip: RdkTooltip;
+    tooltip: RdkTooltipDialog;
 }
 
 export abstract class TooltipBase implements ITooltip {
@@ -18,8 +15,8 @@ export abstract class TooltipBase implements ITooltip {
     @Output()
     public close: EventEmitter<any> = new EventEmitter<any>();
 
-    abstract get tooltip(): RdkTooltip;
-    abstract set tooltip(value: RdkTooltip);
+    abstract get tooltip(): RdkTooltipDialog;
+    abstract set tooltip(value: RdkTooltipDialog);
 
     public dispose(): void {
         if (this.tooltip) {
@@ -30,14 +27,14 @@ export abstract class TooltipBase implements ITooltip {
 }
 
 @Component({
-    selector: 'rdk-tooltip',
+    selector: 'rdk-tooltip-dialog',
     templateUrl: 'tooltip.html',
     styleUrls: ['tooltip.scss'],
     animations: [
         bubbleIn
     ]
 })
-export class RdkTooltip implements IPopupable, AfterContentInit {
+export class RdkTooltipDialog implements IPopupable, AfterContentInit {
     public initData: any;
     @Output()
     public close: EventEmitter<any> = new EventEmitter<any>();
@@ -52,19 +49,33 @@ export class RdkTooltip implements IPopupable, AfterContentInit {
     }
 
     protected getPopupElement(): HTMLElement {
-        return this._elementRef.nativeElement.querySelector('.rdk-tooltip');
+        return this._elementRef.nativeElement.querySelector('.rdk-tooltip-dialog');
     }
 
     public dispose() {
         this.close.emit();
     }
+}
 
+@Component({
+    selector: '[rdk-tooltip], [rdkTooltip]', template: ''
+})
+export class RdkTooltip implements OnInit {
+    @Input() public rdkTooltip:string = 'no message';
+    // @Input() public rdkTooltipPointerTo:string = 'no message';
+
+    constructor() {
+    }
+
+    ngOnInit(): void {
+        console.log(this.rdkTooltip);
+    }
 }
 
 @NgModule({
     imports: [CommonModule],
-    declarations: [RdkTooltip],
-    exports: [RdkTooltip]
+    declarations: [RdkTooltipDialog, RdkTooltip],
+    exports: [RdkTooltipDialog, RdkTooltip]
 })
 export class RdkTooltipModule {
 

@@ -7,7 +7,7 @@ import {RdkButtonModule} from "../../../../component/button/button";
 import {DialogDemoComponent} from "./dialog/dialog";
 import {TooltipDemoComponent} from "./tooltip/tooltip";
 import {RdkDialog, RdkDialogModule} from "../../../../component/dialog/dialog";
-import {RdkTooltip, RdkTooltipModule} from "../../../../component/tooltip/tooltip";
+import {RdkTooltipDialog, RdkTooltip, RdkTooltipModule} from "../../../../component/tooltip/tooltip";
 import {UseDialogComponent} from "./dialog/use-dialog/use-dialog";
 import {UseDialog2Component} from "./dialog/use-dialog2/use-dialog";
 import {UseTooltipComponent} from "./tooltip/use-tooltip/use-tooltip";
@@ -62,7 +62,7 @@ const popupDemoRoutes = [
     entryComponents: [
         RdkBlock,
         RdkDialog,
-        RdkTooltip,
+        RdkTooltipDialog,
         UseDialogComponent,
         UseDialog2Component,
         UseTooltipComponent,
