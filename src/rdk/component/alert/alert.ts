@@ -1,11 +1,10 @@
-import {Component, ElementRef, Input, NgModule,  Renderer2, ViewChild} from "@angular/core";
+import {Component, ElementRef, Input, NgModule, Renderer2, ViewChild} from "@angular/core";
 import {AbstractDialogComponentBase, DialogBase, RdkDialog, RdkDialogModule} from "../dialog/dialog";
 import {CommonModule} from "@angular/common";
 import {RdkButtonModule} from "../button/button";
 import {RdkDraggableModule} from "../draggable/draggable";
-import { SharedModule } from "../../core/shared/shared.module"
-import {TranslateModule, TranslateLoader, TranslateService} from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import {SharedModule} from "../../core/shared/shared.module";
+import {TranslateService} from "@ngx-translate/core";
 export enum AlertLevel {
     info, warning, error, confirm
 }
@@ -128,7 +127,7 @@ abstract class RdkCommonAlert extends DialogBase {
     public buttons = [{label: RdkAlert.OK_LABEL}];
     public level: AlertLevel = AlertLevel.info;
 
-    private _getDefaultTitle():string {
+    private _getDefaultTitle(): string {
         switch (this.level) {
             case AlertLevel.warning:
                 return RdkAlert.WARNING_TITLE;
@@ -175,10 +174,10 @@ export class RdkErrorAlert extends RdkCommonAlert {
 }
 
 @NgModule({
-    imports: [RdkDialogModule, RdkDraggableModule, RdkButtonModule, CommonModule,SharedModule],
+    imports: [RdkDialogModule, RdkDraggableModule, RdkButtonModule, CommonModule, SharedModule],
     declarations: [RdkAlert, RdkInfoAlert, RdkWarningAlert, RdkErrorAlert],
     exports: [RdkDialogModule, RdkDraggableModule, RdkAlert, RdkInfoAlert, RdkWarningAlert, RdkErrorAlert],
-    providers:[TranslateService]
+    providers: [TranslateService]
 })
 export class RdkAlertModule {
 }

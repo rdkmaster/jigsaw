@@ -48,7 +48,7 @@ export enum PopupPositionType {
 export type PopupRef = ComponentRef<IPopupable> | EmbeddedViewRef<any>;
 
 export class ButtonInfo {
-    [index:string]: any;
+    [index: string]: any;
     public label: string;
     public clazz?: string = '';
 }
