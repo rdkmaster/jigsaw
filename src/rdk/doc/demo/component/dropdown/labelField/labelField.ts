@@ -9,10 +9,7 @@ import {TagGroupValue} from "../../../../../component/tag/tag";
 @Component({
     templateUrl: 'labelField.html',
 })
-export class DropDownLabelFieldDemo implements OnInit {
-
-    constructor() {
-    }
+export class DropDownLabelFieldDemo {
 
     public labelField = "name";
     public selectedCity: TagGroupValue = [{name: "北京", closable: false}];
@@ -31,13 +28,5 @@ export class DropDownLabelFieldDemo implements OnInit {
         {name: "连云港3"},
         {name: "哈尔滨"}
     ];
-
-    public clickProcess(event: Event) {
-        event.stopPropagation();
-        event.preventDefault();
-    }
-
-    ngOnInit() {
-    }
 
 }

@@ -7,14 +7,10 @@ import {DropDownTrigger, DropdownInputValue} from "../../../../../component/drop
     templateUrl: './basic.html',
     styleUrls: ['basic.scss'],
 })
-export class RdkDropDownInput implements OnInit {
+export class RdkDropDownInput {
 
     private openTrigger = DropDownTrigger.mouseover;
     private closeTrigger = DropDownTrigger.mouseout;
-
-    constructor(private _render: Renderer2,
-                private _elementRef: ElementRef) {
-    }
 
     changeTrigger() {
         if (this.openTrigger === DropDownTrigger.click) {
@@ -48,13 +44,5 @@ export class RdkDropDownInput implements OnInit {
         {label: "连云港3"},
         {label: "哈尔滨"}
     ];
-
-    public preventAutoHide(event: Event) {
-        event.stopPropagation();
-        event.preventDefault();
-    }
-
-    ngOnInit() {
-    }
 
 }

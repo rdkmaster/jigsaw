@@ -7,7 +7,7 @@ import {Component, OnInit} from '@angular/core';
 @Component({
     templateUrl: 'change.html',
 })
-export class DropDownChangeDemo implements OnInit {
+export class DropDownChangeDemo {
 
     constructor() { }
 
@@ -35,12 +35,4 @@ export class DropDownChangeDemo implements OnInit {
     remove(data){
         this.removed = data.label;
     }
-
-    public clickProcess(event:Event){
-        event.stopPropagation();
-        event.preventDefault();
-    }
-
-    ngOnInit() { }
-
 }

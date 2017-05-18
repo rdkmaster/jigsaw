@@ -36,8 +36,4 @@ export class DropDownWidthDemo implements AfterViewInit {
         {label: "哈尔滨"}
     ];
 
-    public preventAutoHide(event:Event){
-        event.stopPropagation();
-        event.preventDefault();
-    }
 }
