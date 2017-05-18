@@ -152,7 +152,7 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
             return;
         }
 
-        this._$opened = true;
+        this._$opened = true; 
 
         //TODO 阻止click冒泡事件可以实现autoCloseDropDown这一属性
         if (this._closeTrigger === DropDownTrigger.click) {
