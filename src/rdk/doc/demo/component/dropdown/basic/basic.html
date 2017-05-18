@@ -5,7 +5,6 @@
         <rdk-button (click)="changeDisabled()">toggle disable</rdk-button>
     </div>
     <rdk-drop-down
-        class="drop-down"
         [pane]="dropcontent"
         [disabled]="disabled"
         [openTrigger]="openTrigger"
@@ -13,11 +12,11 @@
         [(value)]="selectedCity">
     </rdk-drop-down>
     <ng-template #dropcontent>
-        <rdk-tile-select class="drop-down-child"
-                         [(selectedItems)]="selectedCity" labelField="label"
-                         [multipleSelect]="true" [searchable]="true"
-                         [data]="citys"
-                         tileOptionWidth="100px">
+        <rdk-tile-select
+            [(selectedItems)]="selectedCity" labelField="label"
+            [multipleSelect]="true" [searchable]="true"
+            [data]="citys"
+            tileOptionWidth="100px">
         </rdk-tile-select>
     </ng-template>
 </div>

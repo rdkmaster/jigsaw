@@ -6,10 +6,15 @@ import {DropDownTrigger, DropdownInputValue} from "../../../../../component/drop
 })
 export class OpenDropDownDemo {
 
-    private isOpen: boolean = true;
+    private open: boolean = true;
+    public autoClose: boolean = true;
 
     toggleOpen() {
-        this.isOpen = !this.isOpen
+        this.open = !this.open
+    }
+
+    toggleAutoClose() {
+        this.autoClose = !this.autoClose
     }
 
     public selectedCity: DropdownInputValue = [{label: "北京", closable: false}];
@@ -28,10 +33,5 @@ export class OpenDropDownDemo {
         {label: "连云港3"},
         {label: "哈尔滨"}
     ];
-
-    /*public preventAutoHide(event: Event) {
-        event.stopPropagation();
-        event.preventDefault();
-    }*/
 
 }

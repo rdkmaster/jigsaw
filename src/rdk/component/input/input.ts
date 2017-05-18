@@ -18,7 +18,8 @@ export class RdkPrefixIcon {
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[style.line-height]': 'height'
+        '[style.line-height]': 'height',
+        '(click)': '_stopPropagation($event)'
     }
 })
 export class RdkInput extends AbstractRDKComponent implements AfterContentInit {
@@ -80,6 +81,11 @@ export class RdkInput extends AbstractRDKComponent implements AfterContentInit {
     private _handleBlur(event: FocusEvent) {
         this._focused = false;
         this._blurEmitter.emit(event);
+    }
+
+    private _stopPropagation(event){
+        event.preventDefault();
+        event.stopPropagation();
     }
 
     ngAfterContentInit() {

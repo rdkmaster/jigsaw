@@ -150,6 +150,9 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
     @Output()
     public openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+    @Input()
+    private autoCloseDropDown: boolean;
+
     private _timeout: any = null;
 
     private _openDropDown(): void {
@@ -195,10 +198,12 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
             });
         }
 
-        this._removePopupClickHandler = this._render.listen(this._popupElement, 'click', event => {
-            event.stopPropagation();
-            event.preventDefault();
-        });
+        if(!this.autoCloseDropDown){
+            this._removePopupClickHandler = this._render.listen(this._popupElement, 'click', event => {
+                event.stopPropagation();
+                event.preventDefault();
+            });
+        }
     }
 
     private _closeDropDown(): void {
