@@ -1,8 +1,8 @@
 <div class="rdk-drop-down"
      [class.rdk-drop-down-opened]="_$opened"
      [class.rdk-drop-down-disabled]="disabled"
-     (mouseover)="_$openDropDownByHover($event)"
-     (mouseout)="_$closeDropDownByHover($event)">
+     (mouseenter)="_$openDropDownByHover($event)"
+     (mouseleave)="_$closeDropDownByHover($event)">
     <div class="rdk-drop-down-selection" (click)="_$openDropDownByClick($event)">
         <div class="rdk-drop-down-selection-rendered">
             <div *ngIf="placeholder && (!value || value.length == 0)" class="rdk-drop-down-selection_placeholder">

@@ -1,7 +1,7 @@
 /**
  * Created by 10177553 on 2017/4/10.
  */
-import {Component, ElementRef, OnInit, Renderer2} from '@angular/core';
+import {Component} from '@angular/core';
 import {DropDownTrigger, DropdownInputValue} from "../../../../../component/dropdown/dropdown";
 @Component({
     templateUrl: './basic.html',
@@ -9,13 +9,13 @@ import {DropDownTrigger, DropdownInputValue} from "../../../../../component/drop
 })
 export class RdkDropDownInput {
 
-    private openTrigger = DropDownTrigger.mouseover;
-    private closeTrigger = DropDownTrigger.mouseout;
+    private openTrigger = DropDownTrigger.mouseenter;
+    private closeTrigger = DropDownTrigger.mouseleave;
 
     changeTrigger() {
         if (this.openTrigger === DropDownTrigger.click) {
-            this.openTrigger = DropDownTrigger.mouseover;
-            this.closeTrigger = DropDownTrigger.mouseout;
+            this.openTrigger = DropDownTrigger.mouseenter;
+            this.closeTrigger = DropDownTrigger.mouseleave;
         } else {
             this.openTrigger = DropDownTrigger.click;
             this.closeTrigger = DropDownTrigger.click;
