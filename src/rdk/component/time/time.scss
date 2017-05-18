@@ -5,23 +5,75 @@ $time-prefix-cls: #{$rdk-prefix}-time;
 :host {
     @include inline-block();
     width: 300px;
+    border: 1px solid $border-color-base ;
+    border-radius: $border-radius-base;
+    padding: 5px;
     .time-box {
         width: 100%;
         /deep/ {
-            .bootstrap-datetimepicker-widget table tr.active {
-                background-color: transparent;
-                td {
-                    background-color: #337ab7;
-                    border-radius: 0 !important;
-                    color: #fff;
-                    &:first-child {
-                        border-top-left-radius: 4px !important;
-                        border-bottom-left-radius: 4px !important;
+            .bootstrap-datetimepicker-widget table{
+                th, .year, .day{
+                    font-weight: bold;
+                }
+                tr{
+                    td{
+                        &.disabled{
+                            color: #dedede;
+                        }
+                        &.today:before{
+                            display: none;
+                        }
+                        &.expect-day{
+                            border-radius: 0;
+                            &.border-left{
+                                border-top-left-radius: 4px;
+                                border-bottom-left-radius: 4px;
+                            }
+                            &.border-right{
+                                border-top-right-radius: 4px;
+                                border-bottom-right-radius: 4px;
+                            }
+                            &:last-child{
+                                border-top-right-radius: 4px;
+                                border-bottom-right-radius: 4px;
+                            }
+                            &:first-child{
+                                border-top-left-radius: 4px;
+                                border-bottom-left-radius: 4px;
+                            }
+                            &:not(.active){
+                                background-color: #b8e3f7;
+                                color: #666;
+                                &:hover{
+                                    background:#3ab1ea;
+                                    color: #fff;
+                                }
+                            }
+                        }
                     }
-                    &:last-child {
-                        border-top-right-radius: 4px !important;
-                        border-bottom-right-radius: 4px !important;
-                    }
+                  &.active{
+                      background-color: transparent;
+                      td {
+                          background-color: #337ab7;
+                          border-radius: 0 !important;
+                          color: #fff;
+                          &:first-child {
+                              border-top-left-radius: 4px !important;
+                              border-bottom-left-radius: 4px !important;
+                          }
+                          &:last-child {
+                              border-top-right-radius: 4px !important;
+                              border-bottom-right-radius: 4px !important;
+                          }
+                          &.today:before{
+                              display: none;
+                          }
+                          &.expect-day{
+                              background:#3ab1ea;
+                              color: #fff;
+                          }
+                      }
+                  }
                 }
             }
         }
@@ -51,6 +103,38 @@ $time-prefix-cls: #{$rdk-prefix}-time;
             &.active {
                 background-color: #008FD4;
                 color: #fff;
+            }
+        }
+    }
+    .color-tips{
+        margin: 2px 0;
+        display: flex;
+        justify-content:space-between;
+        &>span{
+            transform: scale(1);
+            padding: 0 2px;
+            font-size: 10px;
+            color: #999;
+            &:before{
+                content: "";
+                color: #fff;
+                text-align: center;
+                position: absolute;
+                left: 0;
+                width: 16px;
+                height: 16px;
+                line-height: 16px;
+                border-radius: 4px;
+                transform: translate(-100%);
+            }
+            &:first-child{
+                margin-left: 17px;
+                &:before{
+                    background-color:  #3ab1ea;
+                }
+            }
+            &:last-child:before{
+                background-color:  #b8e3f7;
             }
         }
     }
