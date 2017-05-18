@@ -293,7 +293,7 @@ export class PopupService {
         renderer.setStyle(element, 'border', '1px solid #d9d9d9');
         renderer.setStyle(element, 'border-radius', '2px');
         renderer.setStyle(element, 'box-shadow', '1px 1px 1px #d9d9d9');
-        renderer.addClass(element, 'rdk-drop-down-animations');
+        renderer.setStyle(element, 'background', '#ffffff');
     }
 
     private _setShowAnimate(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {

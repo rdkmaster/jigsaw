@@ -1,25 +1,39 @@
-<div style="display: flex;height: 50px">
-    <rdk-button (click)="changeTrigger()">触发方式</rdk-button>
-    <hr style="width: 3px">
-    <rdk-button (click)="changeDisabled()">不可编辑toggle</rdk-button>
+<div class="dropdown-demo cmn-box">
+    <h3>basic demo</h3>
+    <div class="test-btn">
+        <rdk-button (click)="changeTrigger()">change trigger</rdk-button>
+        <rdk-button (click)="changeDisabled()">toggle disable</rdk-button>
+    </div>
+    <rdk-drop-down
+        class="drop-down"
+        [pane]="dropcontent"
+        [disabled]="disabled"
+        [openTrigger]="openTrigger"
+        [closeTrigger]="closeTrigger"
+        [(value)]="selectedCity">
+    </rdk-drop-down>
+    <ng-template #dropcontent>
+        <rdk-tile-select class="drop-down-child"
+                         [(selectedItems)]="selectedCity" labelField="label"
+                         [multipleSelect]="true" [searchable]="true"
+                         [data]="citys"
+                         tileOptionWidth="100px"
+                         (click)="preventAutoHide($event)">
+        </rdk-tile-select>
+    </ng-template>
 </div>
 
-<br>
-<rdk-drop-down
-    class="drop-down-father"
-    [pane]="dropcontent"
-    [disabled]="disabled"
-    [openTrigger]="openTrigger"
-    [closeTrigger]="closeTrigger"
-    [(value)]="selectedCity">
-
-</rdk-drop-down>
-<ng-template #dropcontent>
-    <rdk-tile-select class="drop-down-child"
-                     [(selectedItems)]="selectedCity" labelField="label"
-                     [multipleSelect]="true" [searchable]="true"
-                     [data]="citys"
-                     tileOptionWidth="100px"
-                     (click)="preventAutoHide($event)">
-    </rdk-tile-select>
-</ng-template>
+<div class="inline-test cmn-box">
+    <h3>行内布局测试</h3>
+    <span>用于行内测试</span>
+    <rdk-button width="200px" height="100px">用于行内测试</rdk-button>
+    <rdk-drop-down
+        class="drop-down-father"
+        [pane]="dropcontent"
+        [disabled]="disabled"
+        [openTrigger]="openTrigger"
+        [closeTrigger]="closeTrigger"
+        [(value)]="selectedCity">
+    </rdk-drop-down>
+    <span>用于行内测试</span>
+</div>
