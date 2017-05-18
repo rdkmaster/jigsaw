@@ -9,7 +9,7 @@ $checkbox-prefix-cls: #{$rdk-prefix}-checkbox;
     }
     // *********** 共通 ****************** end
 
-    display: inline-block;
+    @include inline-block;
     height: auto;
 
     .#{$checkbox-prefix-cls}-wrapper {
