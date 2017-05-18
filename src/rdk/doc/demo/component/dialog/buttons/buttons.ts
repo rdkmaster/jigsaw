@@ -3,7 +3,7 @@
  */
 
 import {Component, TemplateRef, ViewEncapsulation} from '@angular/core';
-import {ButtonInfo, PopupDisposer, PopupRef, PopupService} from "../../../../../service/popup.service";
+import {ButtonInfo, PopupDisposer, PopupInfo, PopupService} from "../../../../../service/popup.service";
 
 @Component({
     templateUrl: 'buttons.html',
@@ -12,7 +12,7 @@ import {ButtonInfo, PopupDisposer, PopupRef, PopupService} from "../../../../../
 })
 export class DialogButtonsDemo  {
 
-    private _dialogRef: PopupRef;
+    private _dialogInfo: PopupInfo;
     private _dialogDisposer: PopupDisposer;
 
     constructor(private popupService : PopupService){
@@ -48,8 +48,8 @@ export class DialogButtonsDemo  {
     }
 
     popupDialog1(ele:TemplateRef<any>){
-        this._dialogRef = this.popupService.popup(ele);
-        this._dialogDisposer = () => this._dialogRef.destroy();
+        this._dialogInfo = this.popupService.popup(ele);
+        this._dialogDisposer = () => this._dialogInfo.dispose();
     }
 
 

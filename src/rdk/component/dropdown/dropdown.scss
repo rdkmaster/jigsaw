@@ -34,6 +34,10 @@ $rdk-dropDown: #{$rdk-prefix}-drop-down;
                 position: relative;
                 line-height: 30px;
                 height: 30px;
+                /deep/ rdk-tag{
+                    vertical-align: -6px;
+                    margin-right: 4px;
+                }
             }
         }
 

@@ -3,7 +3,7 @@ popup
 </rdk-button>
 
 <ng-template #tp>
-<rdk-dialog top="20%" width="70%" title="table of dialog" [disposer]="_disposer">
+<rdk-dialog top="20%" width="70%" title="table of dialog" (answer)="_disposer()">
     <rdk-table [data]="tableData" height="400px"></rdk-table>
 </rdk-dialog>
 </ng-template>

@@ -2,33 +2,18 @@
 
 $alert-prefix-cls: #{$rdk-prefix}-alert;
 
-.#{$alert-prefix-cls}-box {
-    display: inline-block;
-    @include opacity(0);
-    .#{$alert-prefix-cls}-bg {
-        background: #000;
-        opacity: 0.4;
-        position: fixed;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 9999;
-    }
+:host{
+    @include inline-block;
+    width: 100%;
     .#{$alert-prefix-cls} {
         @include clearfix;
-        width: 100px;
         background: #FFF;
         border: 1px solid #ddd;
         border-radius: 4px;
         cursor: move;
-        z-index: 10000;
         position: relative;
         padding: 16px 16px 16px 70px;
         line-height: 18px;
-
         .#{$alert-prefix-cls}-icon {
 
             display: inline-block;
@@ -96,10 +81,14 @@ $alert-prefix-cls: #{$rdk-prefix}-alert;
             margin-left: -54px;
             rdk-button {
                 margin-right: 8px;
+                &:last-child{
+                    margin-right: 0;
+                }
             }
         }
     }
 }
+
 
 
 

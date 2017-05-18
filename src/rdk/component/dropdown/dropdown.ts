@@ -14,7 +14,9 @@ import {
     TemplateRef,
     ViewChild
 } from '@angular/core';
-import {PopupDisposer, PopupOptions, PopupPositionType, PopupRef, PopupService} from 'rdk/service/popup.service';
+import {
+    PopupDisposer, PopupInfo, PopupOptions, PopupPositionType, PopupService
+} from 'rdk/service/popup.service';
 import {AbstractRDKComponent} from '../core';
 import {TagGroupValue} from '../tag/tag';
 export type DropdownInputValue = TagGroupValue;
@@ -30,7 +32,6 @@ export enum DropDownTrigger {
     styleUrls: ['dropdown.scss']
 })
 export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnInit {
-    @ViewChild("dropDownContainer", {read: ElementRef}) private _dropDownContainer: ElementRef;
     private _disposePopup: PopupDisposer;
     private _popupElement: HTMLElement;
     private _removeClickHandler: Function;
@@ -147,10 +148,11 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
     private _timeout: any = null;
 
     private _openDropDown(): void {
-
         if (this.open) {
             return;
         }
+
+        this._$opened = true; 
 
         //TODO 阻止click冒泡事件可以实现autoCloseDropDown这一属性
         if (this._closeTrigger === DropDownTrigger.click) {
@@ -158,15 +160,18 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
         }
 
         const option: PopupOptions = {
-            pos: this._dropDownContainer, posType: PopupPositionType.absolute,
+            pos: this._elementRef,
+            posType: PopupPositionType.absolute,
             posOffset: {
-                top: this._dropDownContainer.nativeElement.offsetHeight
+                top: this._elementRef.nativeElement.offsetHeight
             },
             size: {width: Number(this._elementRef.nativeElement.offsetWidth)}
         };
-        const ref = this._popupService.popup(this._contentTemplateRef, option);
-        this._popupElement = ref['rootNodes'].find(rootNode => rootNode instanceof HTMLElement);
-        this._disposePopup = () => {ref.destroy()};
+        const popupInfo: PopupInfo = this._popupService.popup(this._contentTemplateRef, option);
+        this._popupElement = popupInfo.element;
+        this._disposePopup = () => {
+            popupInfo.dispose()
+        };
         PopupService.setBackground(this._popupElement, this._render);
 
         if (this._openTrigger === DropDownTrigger.mouseover && this._popupElement) {

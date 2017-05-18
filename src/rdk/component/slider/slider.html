@@ -18,7 +18,7 @@
     <slider-handle *ngFor="let item of _value;let i = index" value="{{item}}" [dimensions]="_dimensions" [key]="i" >
     </slider-handle>
 
-    <div class="rdk-slider-mark">
+    <div *ngIf="marks&& marks.length > 0" class="rdk-slider-mark">
         <span *ngFor="let mark of marks" class="rdk-slider-mark-text"
               [ngStyle]="mark.componentStyle"
              > {{mark.label}}</span>

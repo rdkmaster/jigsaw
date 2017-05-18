@@ -4,12 +4,11 @@ $switch-prefix: #{$rdk-prefix}-switch;
 $switch-duration: .3s;
 
 .#{$switch-prefix} {
+    @include inline-block;
     position: relative;
-    display: inline-block;
     height: 22px;
     min-width: 44px;
     line-height: 20px;
-    vertical-align: middle;
     border-radius: 20px;
     border: 1px solid #ccc;
     background-color: $disabled-color;

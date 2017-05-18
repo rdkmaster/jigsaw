@@ -5,6 +5,7 @@ import {Component, ElementRef, OnInit, Renderer2} from '@angular/core';
 import {DropDownTrigger, DropdownInputValue} from "../../../../../component/dropdown/dropdown";
 @Component({
     templateUrl: './basic.html',
+    styleUrls: ['basic.scss'],
 })
 export class RdkDropDownInput implements OnInit {
 

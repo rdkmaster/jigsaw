@@ -1,5 +1,5 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {PopupRef} from "../../../../../service/popup.service";
+import {PopupInfo} from "../../../../../service/popup.service";
 import {LoadingService} from "rdk/service/loading.service";
 
 @Component({
@@ -12,8 +12,8 @@ export class LoadingDemoComponent {
     constructor(public loadingService: LoadingService) {
     }
 
-    blockLoading: PopupRef;
-    globalLoading: PopupRef;
+    blockLoading: PopupInfo;
+    globalLoading: PopupInfo;
 
     popupBlockLoading() {
         if (!this.blockLoading) {
@@ -23,7 +23,7 @@ export class LoadingDemoComponent {
 
     closeBlockLoading() {
         if (this.blockLoading) {
-            this.blockLoading.destroy();
+            this.blockLoading.dispose();
             this.blockLoading = null;
         }
     }
@@ -39,7 +39,7 @@ export class LoadingDemoComponent {
 
     closeGlobalLoading() {
         if (this.globalLoading) {
-            this.globalLoading.destroy();
+            this.globalLoading.dispose();
             this.globalLoading = null;
         }
     }

@@ -3,12 +3,13 @@ import {CommonModule} from '@angular/common';
 import {RouterModule} from "@angular/router";
 import {DefinedLoadingDemoComponent } from "./userDefined/userDefined";
 import {LoadingService } from "../../../../service/loading.service"
-import {RdkBallLoading, RdkLoading} from "../../../../component/loading/loading";
+import {RdkBallLoading, RdkLoading, RdkLoadingModule} from "../../../../component/loading/loading";
 import {LoadingDemoComponent} from "./basic/loading";
 import {PopupService} from "../../../../service/popup.service";
 import {DefinedLoading} from "./userDefined/definedLoading/definedLoading";
 import {BallLoadingDemoComponent} from "./ballLoading/loading";
 import {DomInnerDemoComponent} from "./domInner/domInner";
+import {RdkBlock, RdkBlockModule} from "../../../../component/block/block";
 const loadingDemoRoutes = [
     {
         path: '', redirectTo: 'basic', pathMatch: 'full'
@@ -37,16 +38,16 @@ const loadingDemoRoutes = [
         BallLoadingDemoComponent,
         DefinedLoadingDemoComponent,
         DomInnerDemoComponent,
-        RdkLoading,
-        RdkBallLoading,
         DefinedLoading
     ],
     imports: [
         CommonModule,
+        RdkBlockModule,
+        RdkLoadingModule,
         RouterModule.forChild(loadingDemoRoutes)
     ],
     providers: [LoadingService, PopupService],
-    entryComponents:[RdkLoading, RdkBallLoading, DefinedLoading]
+    entryComponents:[RdkBlock, RdkLoading, RdkBallLoading, DefinedLoading]
 })
 export class LoadingDemoModule {
 }

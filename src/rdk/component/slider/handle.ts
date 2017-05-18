@@ -80,7 +80,7 @@ export class SliderHandle implements OnInit{
             posValue = posValue < offset? offset:posValue;
         }
 
-        let newValue = ((Math.abs(posValue - offset)) / size * (this._slider.max - this._slider.min) + this._slider.min); // 保留两位小数
+        let newValue = Math.abs(posValue - offset) / size * (this._slider.max - this._slider.min) + (this._slider.min-0); // 保留两位小数
 
         let m = this._calFloat(this._slider.step);
 
@@ -149,6 +149,10 @@ export class SliderHandle implements OnInit{
     // 改变value的值;
     private updateValuePosition(event?) {
         if(!this._dragged|| this._slider.disabled) return;
+
+        // 防止产生选中其他文本，造成鼠标放开后还可以拖拽的奇怪现象;
+        event.stopPropagation();
+        event.preventDefault();
 
         let pos = {
             x: event["clientX"],

@@ -92,6 +92,7 @@ export class RdkSlider implements OnInit, OnDestroy {
     }
 
     private _transformValueToPos(value?) {
+
         return (value - this.min)/(this.max - this.min) * 100;
     }
 

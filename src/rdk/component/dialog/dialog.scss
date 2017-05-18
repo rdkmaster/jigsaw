@@ -3,26 +3,8 @@
 $dialog-prefix-cls: #{$rdk-prefix}-dialog;
 
 :host{
-    position: fixed;
-    width: 400px;
-    z-index: 9999;
-}
-
-.#{$dialog-prefix-cls}-box{
-    @include opacity(0);
-}
-
-.#{$dialog-prefix-cls}-bg {
-    background: #000;
-    opacity: 0.4;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
+    @include inline-block;
     width: 100%;
-    height: 100%;
-    z-index: 9999;
 }
 
 .#{$dialog-prefix-cls} {
@@ -31,10 +13,8 @@ $dialog-prefix-cls: #{$rdk-prefix}-dialog;
     border: 1px solid #ddd;
     border-radius: 4px;
     cursor: move;
-    z-index: 10000;
     .#{$dialog-prefix-cls}-head{
         @include clearfix;
-        position: relative;
         line-height: 20px;
         padding: 14px 16px;
         color: #333;

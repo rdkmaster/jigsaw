@@ -2,9 +2,9 @@
  * Created by 10177553 on 2017/4/13.
  */
 
-import {Component, ElementRef, OnInit, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {
-    ButtonInfo, PopupDisposer, PopupOptions, PopupPoint, PopupPositionOffset, PopupPositionType, PopupRef,
+    PopupDisposer, PopupInfo, PopupOptions, PopupPoint, PopupPositionOffset, PopupPositionType,
     PopupService
 } from "../../../../../service/popup.service";
 
@@ -14,7 +14,7 @@ import {
 })
 export class DialogPopOptionDemo implements OnInit{
 
-    private _dialogRef: PopupRef;
+    private _dialogInfo: PopupInfo;
     private _dialogDisposer: PopupDisposer;
 
     private option : PopupOptions;
@@ -82,8 +82,8 @@ export class DialogPopOptionDemo implements OnInit{
             this.option.pos = this.detailPos;
         }
 
-        this._dialogRef = this.popupService.popup(ele,this.option);
-        this._dialogDisposer = () => this._dialogRef.destroy();
+        this._dialogInfo = this.popupService.popup(ele,this.option);
+        this._dialogDisposer = () => this._dialogInfo.dispose();
     }
 
 

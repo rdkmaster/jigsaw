@@ -1,3 +1,19 @@
+<h3 class="title">在文档流中：</h3>
+<rdk-tooltip-dialog class="dom-tooltip">
+    <span class="fa fa-thumbs-up"></span>
+    This is a message!<br>
+    This is a message!
+</rdk-tooltip-dialog>
+
+<h3 class="title">tooltip对话框</h3>
 <rdk-button #insertPlace width="100" (mouseenter)="popup()" (mouseleave)="close()">
     <span class="fa fa-thumbs-up"></span>点赞
+</rdk-button>
+
+<h3 class="title" style="padding-top: 40px">简单tooltip</h3>
+<rdk-input width="370" rdkTooltip="输入tooltip文本" [(value)]="tooltipMessage"></rdk-input>
+
+<p style="padding-top: 10px">
+<rdk-button width="180px" [rdkTooltip]="tooltipMessage">
+    鼠标挪到这里显示tooltip
 </rdk-button>

@@ -7,15 +7,15 @@ import { Component, OnInit } from '@angular/core';
     template: `
         <h4>1. 基本滑动条,滑动事件变化. </h4>
         <rdk-switch [(checked)]="disabled" size="small"></rdk-switch>
-        <rdk-slider [(value)]="value1" [disabled]="disabled" (change)="sliderChange($event)"></rdk-slider>{{value1}}
+        <rdk-slider [(value)]="value1" [disabled]="disabled" (change)="sliderChange($event)" min="20" max="100"></rdk-slider>{{value1}}
         <hr>
         <br>
-        <!--<h4>2. 设置了min和max的滑动条</h4>-->
-        <!--<rdk-slider [value]="value" [min]="min" [max]="max" (change)="sliderChange2($event)"></rdk-slider> <span>取值: {{value2}}</span>-->
-        <!--<hr>-->
-        <!--<br>-->
-        <!--<h4>3. 改变step</h4>-->
-        <!--<rdk-slider [value]="valueStep" min="0" max="2" step="0.01" (change)="sliderChange3($event)"></rdk-slider> <span>取值: {{value3}}</span>-->
+        <h4>2. 设置了min和max的滑动条</h4>
+        <rdk-slider style="margin: 20px 0; " [value]="value" [min]="min" [max]="max" (change)="sliderChange2($event)"></rdk-slider> <span>取值: {{value2}}</span>
+        <hr>
+        <br>
+        <h4>3. 改变step</h4>
+        <rdk-slider [value]="valueStep" min="0" max="2" step="0.01" (change)="sliderChange3($event)"></rdk-slider> <span>取值: {{value3}}</span>
         
         <hr>
         <br>
@@ -55,15 +55,15 @@ export class RdkSliderDemoBasic implements OnInit {
         console.log(value);
     }
 
-    marks = [{value: 20, label: '20oC'},
-    {value: 40, label: '40oC'},
-    {value: 60, label: '60oC', style: {
+    marks = [{value: 20, label: '20 ℃'},
+    {value: 40, label: '40 ℃'},
+    {value: 60, label: '60 ℃', style: {
         color: "red"
     }}]
 
-    marks2 = [{value: 20, label: '20oC'},
-        {value: 40, label: '40oC'},
-        {value: 80, label: '80oC', class: "markStyle-3"}]
+    marks2 = [{value: 20, label: '20 ℃'},
+        {value: 40, label: '40 ℃'},
+        {value: 80, label: '80 ℃', class: "markStyle-3"}]
 
     sliderChange(value) {
         console.info("当前值: " + value);

@@ -6,8 +6,8 @@ import {RdkButtonModule} from "../../../../component/button/button";
 
 import {DialogDemoComponent} from "./dialog/dialog";
 import {TooltipDemoComponent} from "./tooltip/tooltip";
-import {RdkDialog} from "../../../../component/dialog/dialog";
-import {RdkTooltip} from "../../../../component/tooltip/tooltip";
+import {RdkDialog, RdkDialogModule} from "../../../../component/dialog/dialog";
+import {RdkTooltipDialog, RdkTooltipModule} from "../../../../component/tooltip/tooltip";
 import {UseDialogComponent} from "./dialog/use-dialog/use-dialog";
 import {UseDialog2Component} from "./dialog/use-dialog2/use-dialog";
 import {UseTooltipComponent} from "./tooltip/use-tooltip/use-tooltip";
@@ -17,6 +17,8 @@ import {RdkAlertModule, RdkErrorAlert, RdkInfoAlert, RdkWarningAlert} from "../.
 import {AlertDemoComponent} from "./alert/alert";
 
 import {CustomizedAlert} from "./alert/customized-alert/customized-alert";
+import {RdkBlock, RdkBlockModule} from "../../../../component/block/block";
+import {RdkInputModule} from "../../../../component/input/input";
 const popupDemoRoutes = [
     {
         path: '',
@@ -40,21 +42,36 @@ const popupDemoRoutes = [
 
 @NgModule({
     declarations: [
-        DialogDemoComponent, TooltipDemoComponent, AlertDemoComponent, CustomizedAlert, UseDialogComponent, UseDialog2Component, RdkTooltip, UseTooltipComponent
+        DialogDemoComponent,
+        UseDialogComponent,
+        UseDialog2Component,
+        TooltipDemoComponent,
+        UseTooltipComponent,
+        AlertDemoComponent,
+        CustomizedAlert,
     ],
     imports: [
         RouterModule.forChild(popupDemoRoutes),
         CommonModule,
+        RdkBlockModule,
+        RdkDialogModule,
+        RdkTooltipModule,
         RdkAlertModule,
-        RdkButtonModule
-    ],
-    exports: [
-        DialogDemoComponent, TooltipDemoComponent, AlertDemoComponent
+        RdkButtonModule,
+        RdkInputModule
     ],
     providers: [PopupService],
     entryComponents: [
-        RdkDialog, UseDialogComponent, UseDialog2Component, RdkTooltip, UseTooltipComponent,
-        CustomizedAlert, RdkInfoAlert, RdkWarningAlert, RdkErrorAlert
+        RdkBlock,
+        RdkDialog,
+        RdkTooltipDialog,
+        UseDialogComponent,
+        UseDialog2Component,
+        UseTooltipComponent,
+        RdkInfoAlert,
+        RdkWarningAlert,
+        RdkErrorAlert,
+        CustomizedAlert,
     ]
 })
 export class PopupDemoModule {
