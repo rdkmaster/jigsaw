@@ -27,7 +27,7 @@ export class SliderHandle implements OnInit{
     public set value(value) {
         if(this._value === value) return;
 
-        this._value = value;
+        this._value = this._slider.verifyValue(value);
         this._valueToPos();
     }
 
@@ -72,7 +72,7 @@ export class SliderHandle implements OnInit{
         // bottom 在dom中的位置.
         let offset = this._slider.vertical?this.dimensions.bottom - top:this.dimensions.left - left;
         let size = this._slider.vertical?this.dimensions.height:this.dimensions.width;
-        let posValue = this._slider.vertical? pos.y-56: pos.x;
+        let posValue = this._slider.vertical? pos.y - 6: pos.x;
 
         if(this._slider.vertical) {
             posValue = posValue > offset? offset:posValue;
@@ -87,13 +87,7 @@ export class SliderHandle implements OnInit{
         // 解决出现的有时小数点多了N多位.
         newValue = Math.round(Math.round(newValue / this._slider.step) * this._slider.step * Math.pow(10, m)) / Math.pow(10, m);
 
-        if (newValue < this._slider.min) {
-            return this._slider.min;
-        } else if (newValue > this._slider.max) {
-            return this._slider.max;
-        } else {
-            return newValue;
-        }
+        return this._slider.verifyValue(newValue);
     }
 
     /**
