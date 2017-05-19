@@ -1,7 +1,6 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {TagBasicDemoComponent} from "./basic/basic";
-import {TagGroupDemoComponent} from "./tag-group/tag-group";
 
 import {RdkTagModule} from "../../../../component/tag/tag";
 
@@ -16,9 +15,6 @@ const TagDemoRoutes = [
         path: 'basic', component: TagBasicDemoComponent
     },
     {
-        path: 'tag-group', component: TagGroupDemoComponent
-    },
-    {
         path: '**', //fallback router must in the last
         component: TagBasicDemoComponent
     }
@@ -26,13 +22,13 @@ const TagDemoRoutes = [
 
 @NgModule({
     declarations: [
-        TagBasicDemoComponent, TagGroupDemoComponent
+        TagBasicDemoComponent
     ],
     imports: [
         RouterModule.forChild(TagDemoRoutes), RdkTagModule
     ],
     exports: [
-        TagBasicDemoComponent, TagGroupDemoComponent
+        TagBasicDemoComponent
     ],
     providers: []
 })
