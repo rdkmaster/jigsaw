@@ -53,7 +53,9 @@ export class RdkTag extends AbstractRDKComponent implements OnInit {
 
     @Output() public select = new EventEmitter<RdkTag>();
 
-    private _select() {
+    private _select(event) {
+        event.preventDefault();
+        event.stopPropagation();
         this.select.emit(this);
     }
 
