@@ -18,6 +18,7 @@ import {
 } from 'rdk/service/popup.service';
 import {AbstractRDKComponent} from '../core';
 import {TagGroupValue} from '../tag/tag';
+import {CommonUtils} from "../../core/utils/common-utils";
 export type DropdownInputValue = TagGroupValue;
 export enum DropDownTrigger {
     click,
@@ -44,27 +45,28 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
         super();
     }
 
-    private _value: DropdownInputValue = null;
+    private _value: any[] = [];
 
     @Input()
-    public get value(): DropdownInputValue {
+    public get value(): any[] {
         return this._value;
     }
 
-    public set value(value: DropdownInputValue) {
+    public set value(value: any[]) {
         this._value = value;
         this.valueChange.emit(this._value);
+        this._autoWidth();
     }
 
-    @Output() public valueChange = new EventEmitter<DropdownInputValue>();
+    @Output() public valueChange = new EventEmitter<any[]>();
 
     @Input() public labelField: string = 'label';
 
     @Output()
     public select = new EventEmitter<any>();
 
-    @Output()
-    public remove = new EventEmitter<any>();
+    /*@Output()
+    public remove = new EventEmitter<any>();*/
 
     @Input()
     public placeholder: string;
@@ -102,7 +104,7 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
         this._closeTrigger = value;
     }
 
-    private _dropDownWidth: string;
+    /*private _dropDownWidth: string;
     @Input()
     public get dropDownWidth(): string {
         return this._dropDownWidth;
@@ -110,7 +112,9 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
 
     public set dropDownWidth(width) {
         this._dropDownWidth = width;
-    }
+    }*/
+    @Input()
+    public dropDownWidth: string;
 
     private _contentTemplateRef: TemplateRef<any>;
 
@@ -153,6 +157,28 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
     @Input()
     private autoCloseDropDown: boolean;
 
+    @Input()
+    autoWidth: boolean;
+
+    private _removeTag(tag){
+        const index = this.value.indexOf(tag);
+        if(index != -1){
+            this.value.splice(index, 1);
+            this.value = <any[]>CommonUtils.shallowCopy(this.value);
+        }
+        this._autoWidth();
+    }
+
+    private _autoWidth(){
+        setTimeout(() => {
+            if(this.autoWidth){
+                if(this._popupElement){
+                    this._render.setStyle(this._popupElement, 'width', this._elementRef.nativeElement.offsetWidth + 'px');
+                }
+            }
+        }, 0)
+    }
+
     private _timeout: any = null;
     private _isSafeCloseTime: boolean = true;
 
@@ -171,7 +197,7 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
             posOffset: {
                 top: this._elementRef.nativeElement.offsetHeight
             },
-            size: {width: Number(this._elementRef.nativeElement.offsetWidth)}
+            size: {width: this.dropDownWidth ? this.dropDownWidth : this._elementRef.nativeElement.offsetWidth}
         };
         const popupInfo: PopupInfo = this._popupService.popup(this._contentTemplateRef, option);
         this._popupElement = popupInfo.element;

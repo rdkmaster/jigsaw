@@ -11,7 +11,7 @@
             <rdk-tag *ngFor="let tagItem of value"
                      [closable]='tagItem.closable'
                      (select)="select.emit(tagItem)"
-                     (close)="remove.emit(tagItem)">
+                     (close)="_removeTag(tagItem)">
                 {{tagItem[labelField]}}
             </rdk-tag>
         </div>

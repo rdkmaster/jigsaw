@@ -37,12 +37,7 @@ export class DropDownAutoWidthDemo implements OnInit {
         {label: "哈尔滨"}
     ];
 
-    public preventAutoHide(event: Event) {
-        event.stopPropagation();
-        event.preventDefault();
-    }
-
-    public adjustWidth() {
+    /*public adjustWidth() {
         setTimeout(() => {
             let width = this._elementRef.nativeElement.querySelector('.drop-down-father').offsetWidth + 'px';
             if (document.querySelector('rdk-tile-select')) {
@@ -50,7 +45,7 @@ export class DropDownAutoWidthDemo implements OnInit {
             }
         }, 0);
     }
-
+*/
     ngOnInit() {
 
     }
