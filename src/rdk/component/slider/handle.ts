@@ -27,7 +27,7 @@ export class SliderHandle implements OnInit{
     public set value(value) {
         if(this._value === value) return;
 
-        this._value = this._slider.verifyValue(value);
+        this._value = this._slider._verifyValue(value);
         this._valueToPos();
     }
 
@@ -87,7 +87,7 @@ export class SliderHandle implements OnInit{
         // 解决出现的有时小数点多了N多位.
         newValue = Math.round(Math.round(newValue / this._slider.step) * this._slider.step * Math.pow(10, m)) / Math.pow(10, m);
 
-        return this._slider.verifyValue(newValue);
+        return this._slider._verifyValue(newValue);
     }
 
     /**

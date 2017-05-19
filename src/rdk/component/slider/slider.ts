@@ -45,9 +45,9 @@ export class RdkSlider implements OnInit, OnDestroy {
         if(typeof value  === 'object') {
             this._value = value;
         } else if(this._value.length === 0) {
-            this._value.push(this.verifyValue(value));
+            this._value.push(this._verifyValue(value));
         } else if(this._value.length === 1) {
-            this._value[0] = this.verifyValue(value);
+            this._value[0] = this._verifyValue(value);
         }
 
         this._setTrackStyle();
@@ -127,8 +127,8 @@ export class RdkSlider implements OnInit, OnDestroy {
 
         // 兼容双触点.
         if(this.range) {
-            startPos = Math.min(this.verifyValue(this.value[0]), this.verifyValue(this.value[1]));
-            trackSize = Math.abs(this.verifyValue(this.value[0]) - this.verifyValue(this.value[1]));
+            startPos = Math.min(this._verifyValue(this.value[0]), this._verifyValue(this.value[1]));
+            trackSize = Math.abs(this._verifyValue(this.value[0]) - this._verifyValue(this.value[1]));
         }
 
         if(this.vertical) { // 垂直和水平两种
@@ -225,7 +225,7 @@ export class RdkSlider implements OnInit, OnDestroy {
      * @param value
      * @private
      */
-    public verifyValue(value: number) {
+    public _verifyValue(value: number) {
         if (value - this.min < 0) {
             return this.min;
         } else if (value - this.max > 0) {
