@@ -44,12 +44,11 @@ export class RdkTileSelect extends AbstractRDKComponent implements OnInit, After
     }
 
     public set selectedItems(newValue: any[]) {
-        if (!newValue || !newValue.length) {
-            return;
-        }
-        if (this._selectedItems != newValue) {
+        if (newValue instanceof Array && this._selectedItems != newValue) {
             this._selectedItems = newValue;
-            this._contentInit && this._setOptionState();
+            if(this._contentInit){
+                this._setOptionState();
+            }
         }
     }
 
@@ -106,16 +105,18 @@ export class RdkTileSelect extends AbstractRDKComponent implements OnInit, After
 
     //根据selectedItems设置选中的option
     private _setOptionState(): void {
-        this._selectedItems.length && this._options.length && this._options.forEach((option) => {
-            let _hasSelected = false;
-            this._selectedItems.forEach((optionItem) => {
-                if (CommonUtils.compareWithKeyProperty(option.optionItem, optionItem, <string[]>this.trackItemBy)) {
-                    _hasSelected = true;
-                }
+        if(this.selectedItems instanceof Array){
+            this._options.length && this._options.forEach((option) => {
+                let _hasSelected = false;
+                this._selectedItems.forEach((optionItem) => {
+                    if (CommonUtils.compareWithKeyProperty(option.optionItem, optionItem, <string[]>this.trackItemBy)) {
+                        _hasSelected = true;
+                    }
+                });
+                option.selected = _hasSelected;
+                option._cdref.detectChanges();
             });
-            option.selected = _hasSelected;
-            option._cdref.detectChanges();
-        });
+        }
     }
 
     ngOnInit() {

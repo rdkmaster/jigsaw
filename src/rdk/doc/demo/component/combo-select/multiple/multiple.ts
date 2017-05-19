@@ -1,44 +1,36 @@
-/**
- * Created by 10177553 on 2017/4/13.
- */
-
-import {Component, OnInit} from '@angular/core';
-
+import {Component} from '@angular/core';
 @Component({
-    template: `
-        <rdk-combo-select [pane]="dropcontent"
-                          placeholder="请输入姓名~"
-                          class="drop"
-                          [value]="selectedCity">
-        </rdk-combo-select>
-        <ng-template #dropcontent>
-            <rdk-tile-select [(selectedItems)]="selectedCity"
-                             labelField="label"
-                             [multipleSelect]="true"
-                             [searchable]="true"
-                             [data]="citys"
-                             tileOptionWidth="100px">
-            </rdk-tile-select>
-        </ng-template>
-    `,
-    styles: []
+    templateUrl: 'multiple.html',
+    styleUrls: ['multiple.scss'],
 })
-export class ComboSelectMultipleDemo implements OnInit {
+export class ComboSelectMultipleDemo {
 
-    constructor() {
+    public multiple: boolean = true;
+
+    toggleMultiple() {
+        this.multiple = !this.multiple;
+        this.selectedCity = []
     }
 
-    public selectedCity = [{label: "北京"}];
-    citys = [
-        {label: "北京"},
-        {label: "上海"},
+    valueChange(value){
+        console.log(value);
+    }
+
+    public selectedCity = [{label: "北京", closable: false}];
+    private citys = [
+        {label: "北京", closable: false},
+        {label: "上海", closable: false},
         {label: "南京"},
         {label: "深圳"},
         {label: "长沙"},
-        {label: "西安"}
+        {label: "西安"},
+        {label: "盐城"},
+        {label: "徐州"},
+        {label: "连云港"},
+        {label: "连云港1"},
+        {label: "连云港2"},
+        {label: "连云港3"},
+        {label: "哈尔滨"}
     ];
-
-    ngOnInit() {
-    }
 
 }
