@@ -4,8 +4,11 @@
 <hr>
 
 <rdk-drop-down [pane]="dropcontent"
-               placeholder="请输入姓名~" [value]="selectedCity"
-               (select)="select($event)" (remove)="remove($event)">
+               placeholder="请输入姓名~"
+               [value]="selectedCity"
+               (valueChange)="valueChange($event)"
+               (select)="select($event)"
+               (remove)="remove($event)">
 </rdk-drop-down>
 <ng-template #dropcontent>
     <rdk-tile-select [(selectedItems)]="selectedCity" labelField="label"

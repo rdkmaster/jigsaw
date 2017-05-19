@@ -35,4 +35,8 @@ export class DropDownChangeDemo {
     remove(data){
         this.removed = data.label;
     }
+
+    valueChange(value){
+        console.log(value);
+    }
 }
