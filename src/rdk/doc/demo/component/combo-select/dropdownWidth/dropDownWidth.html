@@ -1,0 +1,14 @@
+<rdk-combo-select #drop
+                  [pane]="dropcontent"
+                  placeholder="请输入城市~"
+                  dropDownWidth="400px"
+                  [value]="selectedCity">
+</rdk-combo-select>
+<ng-template #dropcontent>
+    <rdk-tile-select class="drop-down-child"
+                     [(selectedItems)]="selectedCity" labelField="label"
+                     [multipleSelect]="true" [searchable]="true"
+                     [data]="citys"
+                     tileOptionWidth="100px">
+    </rdk-tile-select>
+</ng-template>

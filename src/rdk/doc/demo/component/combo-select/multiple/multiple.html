@@ -1,0 +1,24 @@
+<div class="combo-select-demo cmn-box">
+    <h3>multiple demo</h3>
+    <div class="test-btn">
+        <rdk-button width="120px" (click)="toggleMultiple()">toggle multiple</rdk-button>
+    </div>
+    <rdk-combo-select
+        [pane]="dropcontent"
+        [(value)]="selectedCity"
+        (valueChange)="valueChange($event)"
+        [(open)]="open"
+        [autoCloseDropDown]="!multiple">
+    </rdk-combo-select>
+    <ng-template #dropcontent>
+        <rdk-tile-select
+            [(selectedItems)]="selectedCity"
+            labelField="label"
+            [multipleSelect]="multiple"
+            [searchable]="true"
+            [data]="citys"
+            tileOptionWidth="100px">
+        </rdk-tile-select>
+    </ng-template>
+</div>
+
