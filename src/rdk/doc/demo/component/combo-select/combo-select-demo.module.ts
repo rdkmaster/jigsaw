@@ -6,7 +6,7 @@ import {NgModule} from '@angular/core';
 
 import {ComboSelectBasicDemo} from "./basic/basic";
 import {RouterModule} from "@angular/router";
-import {RdkComboSelectModule} from "../../../../component/dropdown/index";
+import {RdkComboSelectModule} from "../../../../component/combo-select/index";
 import {ComboSelectMultipleDemo} from "./multiple/multiple";
 import {RdkTileSelect, RdkTileSelectModule, RdkTileOption} from "../../../../component/tile-select/tile-select";
 import {RdkButtonModule} from "../../../../component/button/button";

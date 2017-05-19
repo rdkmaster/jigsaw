@@ -2,7 +2,7 @@
  * Created by 10177553 on 2017/4/10.
  */
 import {Component} from '@angular/core';
-import {DropDownTrigger} from "../../../../../component/dropdown/combo-select";
+import {DropDownTrigger} from "../../../../../component/combo-select/combo-select";
 @Component({
     templateUrl: './basic.html',
     styleUrls: ['basic.scss'],

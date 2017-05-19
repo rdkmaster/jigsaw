@@ -3,7 +3,7 @@
  */
 
 import {Component, ViewChild, AfterViewInit} from '@angular/core';
-import {RdkComboSelect} from "../../../../../component/dropdown/combo-select";
+import {RdkComboSelect} from "../../../../../component/combo-select/combo-select";
 
 @Component({
     templateUrl: 'dropDownWidth.html',
