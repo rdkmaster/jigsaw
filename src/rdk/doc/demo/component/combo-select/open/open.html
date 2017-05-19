@@ -1,0 +1,24 @@
+<div class="dropdown-demo cmn-box">
+    <h3>open demo</h3>
+    <div class="test-btn">
+        <rdk-button width="120px" (click)="toggleOpen()">toggle open</rdk-button>
+        <rdk-button width="120px" (click)="toggleAutoClose()">toggle auto close</rdk-button>
+    </div>
+    <rdk-combo-select
+        [pane]="dropcontent"
+        [(value)]="selectedCity"
+        [(open)]="open"
+        [autoCloseDropDown]="autoClose">
+    </rdk-combo-select>
+    <ng-template #dropcontent>
+        <rdk-tile-select
+            [(selectedItems)]="selectedCity"
+            labelField="label"
+            [multipleSelect]="true"
+            [searchable]="true"
+            [data]="citys"
+            tileOptionWidth="100px">
+        </rdk-tile-select>
+    </ng-template>
+</div>
+

@@ -83,8 +83,8 @@ const demoListRoutes = [
         loadChildren: './component/tabs/tabs-demo.module#TabsDemoModule'
     },
     {
-        path: 'dropdown',
-        loadChildren: './component/dropdown/dropdown-demo.module#DropDownDemoModule'
+        path: 'combo-select',
+        loadChildren: './component/combo-select/combo-select-demo.module#ComboSelectDemoModule'
     },
     {
         path: 'slider',

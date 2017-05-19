@@ -1,19 +1,15 @@
-/**
- * Created by 10177553 on 2017/4/10.
- */
 import { NgModule } from '@angular/core';
-import {RdkDropDown} from "./dropdown";
+import {RdkComboSelect} from "./combo-select";
 import {CommonModule} from "@angular/common";
 import {RdkTagModule} from "../tag/tag";
-
 
 @NgModule({
     imports: [
         CommonModule,
         RdkTagModule
     ],
-    exports: [RdkDropDown],
-    declarations: [RdkDropDown],
+    exports: [RdkComboSelect],
+    declarations: [RdkComboSelect],
     providers: [],
 })
-export class RdkDropDownModule { }
+export class RdkComboSelectModule { }
