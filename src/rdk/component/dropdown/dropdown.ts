@@ -65,6 +65,9 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
     @Output()
     public select = new EventEmitter<any>();
 
+    @Output()
+    public remove = new EventEmitter<any>();
+
     @Input()
     public placeholder: string;
 
@@ -163,6 +166,7 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
         if (index != -1) {
             this.value.splice(index, 1);
             this.value = <any[]>CommonUtils.shallowCopy(this.value);
+            this.remove.emit(tag);
         }
         this._autoWidth();
     }

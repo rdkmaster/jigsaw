@@ -32,6 +32,14 @@ export class RdkDropDownInput implements OnInit{
         console.log(value);
     }
 
+    selectTag(value){
+        console.log(`selected ${value.label}`)
+    }
+
+    removeTag(value){
+        console.log(`removed ${value.label}`)
+    }
+
     public selectedCity = [{label: "北京", closable: false}];
     private citys = [
         {label: "北京", closable: false},
