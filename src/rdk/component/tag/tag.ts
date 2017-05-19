@@ -129,7 +129,9 @@ export class RdkTag extends AbstractRDKComponent implements OnInit {
 
     @Output() public close = new EventEmitter<RdkTag>();
 
-    private _close() {
+    private _close(event) {
+        event.preventDefault();
+        event.stopPropagation();
         this._state = 'inactive';
         this.close.emit(this);
     }

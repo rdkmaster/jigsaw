@@ -1,25 +1,21 @@
 /**
  * Created by 10177553 on 2017/4/10.
  */
-import {Component, ElementRef, OnInit, Renderer2} from '@angular/core';
+import {Component} from '@angular/core';
 import {DropDownTrigger, DropdownInputValue} from "../../../../../component/dropdown/dropdown";
 @Component({
     templateUrl: './basic.html',
     styleUrls: ['basic.scss'],
 })
-export class RdkDropDownInput implements OnInit {
+export class RdkDropDownInput {
 
-    private openTrigger = DropDownTrigger.mouseover;
-    private closeTrigger = DropDownTrigger.mouseout;
-
-    constructor(private _render: Renderer2,
-                private _elementRef: ElementRef) {
-    }
+    private openTrigger = DropDownTrigger.mouseenter;
+    private closeTrigger = DropDownTrigger.mouseleave;
 
     changeTrigger() {
         if (this.openTrigger === DropDownTrigger.click) {
-            this.openTrigger = DropDownTrigger.mouseover;
-            this.closeTrigger = DropDownTrigger.mouseout;
+            this.openTrigger = DropDownTrigger.mouseenter;
+            this.closeTrigger = DropDownTrigger.mouseleave;
         } else {
             this.openTrigger = DropDownTrigger.click;
             this.closeTrigger = DropDownTrigger.click;
@@ -48,13 +44,5 @@ export class RdkDropDownInput implements OnInit {
         {label: "连云港3"},
         {label: "哈尔滨"}
     ];
-
-    public preventAutoHide(event: Event) {
-        event.stopPropagation();
-        event.preventDefault();
-    }
-
-    ngOnInit() {
-    }
 
 }
