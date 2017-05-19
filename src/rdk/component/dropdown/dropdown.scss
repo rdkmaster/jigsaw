@@ -86,8 +86,15 @@ $rdk-dropDown: #{$rdk-prefix}-drop-down;
             top: 50%;
             right: 8px;
             line-height: 1px;
-
             @include prefixer(transition, transform 0.3s ease);
+        }
+
+        .#{$rdk-dropDown}-editable {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
         }
     }
 }

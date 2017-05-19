@@ -18,6 +18,7 @@ import {DropDownChangeDemo} from "./change/change";
 import {PopupService} from "rdk/service/popup.service";
 import {OpenDropDownDemo} from "./open/open";
 import {DisabledDropDownDemo} from "./disable/disable";
+import {DropDownEditableDemo} from "./editable/editable";
 const routes = [
     {
         path: 'basic', component: DropDownBasicDemo
@@ -43,6 +44,9 @@ const routes = [
     {
         path: 'disable', component: DisabledDropDownDemo
     },
+    {
+        path: 'editable', component: DropDownEditableDemo
+    },
 ];
 
 @NgModule({
@@ -62,7 +66,8 @@ const routes = [
         DropDownWidthDemo,
         DropDownChangeDemo,
         OpenDropDownDemo,
-        DisabledDropDownDemo
+        DisabledDropDownDemo,
+        DropDownEditableDemo
     ],
     providers: [PopupService]
 })

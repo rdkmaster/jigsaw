@@ -1,13 +1,12 @@
 <div class="dropdown-demo cmn-box">
-    <h3>disable demo</h3>
+    <h3>editable demo</h3>
     <div class="test-btn">
-        <rdk-button (click)="changeDisabled()">toggle disable</rdk-button>
+        <rdk-button width="120px" (click)="toggleEditable()">toggle editable</rdk-button>
     </div>
     <rdk-drop-down
         [pane]="dropcontent"
-        [disabled]="disabled"
         [(value)]="selectedCity"
-        [open]="true">
+        [editable]="editable">
     </rdk-drop-down>
     <ng-template #dropcontent>
         <rdk-tile-select

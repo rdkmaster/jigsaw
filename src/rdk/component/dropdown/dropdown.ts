@@ -156,10 +156,13 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
     public openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @Input()
-    private autoCloseDropDown: boolean;
+    public autoCloseDropDown: boolean;
 
     @Input()
-    autoWidth: boolean;
+    public autoWidth: boolean;
+
+    @Input()
+    public editable: boolean;
 
     private _removeTag(tag) {
         const index = this.value.indexOf(tag);
