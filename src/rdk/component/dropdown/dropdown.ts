@@ -65,9 +65,6 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
     @Output()
     public select = new EventEmitter<any>();
 
-    /*@Output()
-    public remove = new EventEmitter<any>();*/
-
     @Input()
     public placeholder: string;
 
@@ -104,15 +101,6 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
         this._closeTrigger = value;
     }
 
-    /*private _dropDownWidth: string;
-    @Input()
-    public get dropDownWidth(): string {
-        return this._dropDownWidth;
-    };
-
-    public set dropDownWidth(width) {
-        this._dropDownWidth = width;
-    }*/
     @Input()
     public dropDownWidth: string;
 

@@ -100,6 +100,7 @@ export class RdkTileSelect extends AbstractRDKComponent implements OnInit, After
             //添加选中数据
             this.selectedItems.push(optionItem);
         }
+        this.selectedItems = <any[]>CommonUtils.shallowCopy(this.selectedItems);
         this.selectedItemsChange.emit(this.selectedItems);
     }
 

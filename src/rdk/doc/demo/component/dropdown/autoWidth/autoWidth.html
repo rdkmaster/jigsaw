@@ -3,16 +3,16 @@
     [pane]="dropcontent"
     placeholder="请输入姓名~"
     autoWidth="true"
-    [openTrigger]="0"
-    [closeTrigger]="0"
     [(value)]="selectedCity">
 </rdk-drop-down>
 
 <ng-template #dropcontent>
     <rdk-tile-select #tile
                      class="drop-down-child"
-                     [(selectedItems)]="selectedCity" labelField="label"
-                     [multipleSelect]="true" [searchable]="true"
+                     [(selectedItems)]="selectedCity"
+                     labelField="label"
+                     [multipleSelect]="true"
+                     [searchable]="true"
                      [data]="citys"
                      tileOptionWidth="100px">
     </rdk-tile-select>
