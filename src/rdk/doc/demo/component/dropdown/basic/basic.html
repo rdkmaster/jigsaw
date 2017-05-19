@@ -2,15 +2,12 @@
     <h3>basic demo</h3>
     <div class="test-btn">
         <rdk-button (click)="changeTrigger()">change trigger</rdk-button>
-        <rdk-button (click)="changeDisabled()">toggle disable</rdk-button>
     </div>
     <rdk-drop-down
         [pane]="dropcontent"
-        [disabled]="disabled"
         [openTrigger]="openTrigger"
         [closeTrigger]="closeTrigger"
-        [(value)]="selectedCity"
-        [open]="true">
+        [(value)]="selectedCity">
     </rdk-drop-down>
     <ng-template #dropcontent>
         <rdk-tile-select

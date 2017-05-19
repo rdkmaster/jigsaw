@@ -4,7 +4,7 @@
 
 import {NgModule} from '@angular/core';
 
-import {RdkDropDownInput} from "./basic/basic";
+import {DropDownBasicDemo} from "./basic/basic";
 import {RouterModule} from "@angular/router";
 import {RdkDropDownModule} from "../../../../component/dropdown/index";
 import {DropDownMultipleDemo} from "./multiple/multiple";
@@ -17,9 +17,10 @@ import {DropDownWidthDemo} from "./dropdownWidth/dropDownWidth";
 import {DropDownChangeDemo} from "./change/change";
 import {PopupService} from "rdk/service/popup.service";
 import {OpenDropDownDemo} from "./open/open";
+import {DisabledDropDownDemo} from "./disable/disable";
 const routes = [
     {
-        path: 'basic', component: RdkDropDownInput
+        path: 'basic', component: DropDownBasicDemo
     },
     {
         path: 'multiple', component: DropDownMultipleDemo
@@ -39,6 +40,9 @@ const routes = [
     {
         path: 'open', component: OpenDropDownDemo
     },
+    {
+        path: 'disable', component: DisabledDropDownDemo
+    },
 ];
 
 @NgModule({
@@ -49,15 +53,16 @@ const routes = [
         RdkButtonModule,
         RdkInputModule
     ],
-    exports: [RdkDropDownInput, DropDownMultipleDemo],
+    exports: [DropDownBasicDemo, DropDownMultipleDemo],
     declarations: [
-        RdkDropDownInput,
+        DropDownBasicDemo,
         DropDownMultipleDemo,
         DropDownAutoWidthDemo,
         DropDownLabelFieldDemo,
         DropDownWidthDemo,
         DropDownChangeDemo,
-        OpenDropDownDemo
+        OpenDropDownDemo,
+        DisabledDropDownDemo
     ],
     providers: [PopupService]
 })

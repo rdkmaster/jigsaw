@@ -1,0 +1,21 @@
+<div class="dropdown-demo cmn-box">
+    <h3>basic demo</h3>
+    <div class="test-btn">
+        <rdk-button (click)="changeDisabled()">toggle disable</rdk-button>
+    </div>
+    <rdk-drop-down
+        [pane]="dropcontent"
+        [disabled]="disabled"
+        [(value)]="selectedCity"
+        [open]="true">
+    </rdk-drop-down>
+    <ng-template #dropcontent>
+        <rdk-tile-select
+            [(selectedItems)]="selectedCity" labelField="label"
+            [multipleSelect]="true" [searchable]="true"
+            [data]="citys"
+            tileOptionWidth="100px">
+        </rdk-tile-select>
+    </ng-template>
+</div>
+

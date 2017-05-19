@@ -1,13 +1,13 @@
 /**
  * Created by 10177553 on 2017/4/10.
  */
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {DropDownTrigger} from "../../../../../component/dropdown/dropdown";
 @Component({
     templateUrl: './basic.html',
     styleUrls: ['basic.scss'],
 })
-export class RdkDropDownInput implements OnInit{
+export class DropDownBasicDemo{
 
     private openTrigger = DropDownTrigger.mouseenter;
     private closeTrigger = DropDownTrigger.mouseleave;
@@ -20,12 +20,6 @@ export class RdkDropDownInput implements OnInit{
             this.openTrigger = DropDownTrigger.click;
             this.closeTrigger = DropDownTrigger.click;
         }
-    }
-
-    private disabled = false;
-
-    public changeDisabled() {
-        this.disabled = !this.disabled;
     }
 
     public selectedCity = [{label: "北京", closable: false}];
@@ -45,9 +39,4 @@ export class RdkDropDownInput implements OnInit{
         {label: "哈尔滨"}
     ];
 
-    ngOnInit(){
-        setTimeout(() => {
-            this.disabled = true
-        }, 3000)
-    }
 }
