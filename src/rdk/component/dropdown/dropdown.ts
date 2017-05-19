@@ -254,7 +254,7 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
         this._isSafeCloseTime = false;
         setTimeout(() => {
             this._isSafeCloseTime = true
-        }, 800)
+        }, 400)
     }
 
     private _$closeDropDownByHover(event) {
