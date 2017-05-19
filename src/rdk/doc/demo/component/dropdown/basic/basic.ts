@@ -2,7 +2,7 @@
  * Created by 10177553 on 2017/4/10.
  */
 import {Component, OnInit} from '@angular/core';
-import {DropDownTrigger, DropdownInputValue} from "../../../../../component/dropdown/dropdown";
+import {DropDownTrigger} from "../../../../../component/dropdown/dropdown";
 @Component({
     templateUrl: './basic.html',
     styleUrls: ['basic.scss'],
@@ -28,7 +28,11 @@ export class RdkDropDownInput implements OnInit{
         this.disabled = !this.disabled;
     }
 
-    public selectedCity: DropdownInputValue = [{label: "北京", closable: false}];
+    valueChange(value){
+        console.log(value);
+    }
+
+    public selectedCity = [{label: "北京", closable: false}];
     private citys = [
         {label: "北京", closable: false},
         {label: "上海", closable: false},

@@ -17,9 +17,7 @@ import {
     PopupDisposer, PopupInfo, PopupOptions, PopupPositionType, PopupService
 } from 'rdk/service/popup.service';
 import {AbstractRDKComponent} from '../core';
-import {TagGroupValue} from '../tag/tag';
 import {CommonUtils} from "../../core/utils/common-utils";
-export type DropdownInputValue = TagGroupValue;
 export enum DropDownTrigger {
     click,
     mouseenter,
@@ -53,9 +51,11 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
     }
 
     public set value(value: any[]) {
-        this._value = value;
-        this.valueChange.emit(this._value);
-        this._autoWidth();
+        if (this._value != value) {
+            this._value = value;
+            this.valueChange.emit(this._value);
+            this._autoWidth();
+        }
     }
 
     @Output() public valueChange = new EventEmitter<any[]>();

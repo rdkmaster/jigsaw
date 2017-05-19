@@ -10,6 +10,7 @@
         [openTrigger]="openTrigger"
         [closeTrigger]="closeTrigger"
         [(value)]="selectedCity"
+        (valueChange)="valueChange($event)"
         [open]="true">
     </rdk-drop-down>
     <ng-template #dropcontent>
