@@ -68,8 +68,18 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
     @Input()
     public placeholder: string;
 
+    private _disabled: boolean;
     @Input()
-    public disabled: boolean;
+    get disabled(): boolean {
+        return this._disabled;
+    }
+
+    set disabled(value: boolean) {
+        this._disabled = value;
+        if (value) {
+            this.open = false;
+        }
+    }
 
     public _trigger: DropDownTrigger = DropDownTrigger.click;
     @Input()
@@ -148,19 +158,19 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
     @Input()
     autoWidth: boolean;
 
-    private _removeTag(tag){
+    private _removeTag(tag) {
         const index = this.value.indexOf(tag);
-        if(index != -1){
+        if (index != -1) {
             this.value.splice(index, 1);
             this.value = <any[]>CommonUtils.shallowCopy(this.value);
         }
         this._autoWidth();
     }
 
-    private _autoWidth(){
+    private _autoWidth() {
         setTimeout(() => {
-            if(this.autoWidth){
-                if(this._popupElement){
+            if (this.autoWidth) {
+                if (this._popupElement) {
                     this._render.setStyle(this._popupElement, 'width', this._elementRef.nativeElement.offsetWidth + 'px');
                 }
             }
@@ -212,7 +222,7 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
             });
         }
 
-        if(!this.autoCloseDropDown){
+        if (!this.autoCloseDropDown) {
             this._removePopupClickHandler = this._render.listen(this._popupElement, 'click', event => {
                 event.stopPropagation();
                 event.preventDefault();
@@ -249,9 +259,9 @@ export class RdkDropDown extends AbstractRDKComponent implements OnDestroy, OnIn
     private _$openDropDownByClick(event) {
         event.preventDefault();
         event.stopPropagation();
-        if (this._openTrigger === DropDownTrigger.mouseenter && this.open && !this._isSafeCloseTime){
+        if (this._openTrigger === DropDownTrigger.mouseenter && this.open && !this._isSafeCloseTime) {
             return;
-        }else{
+        } else {
             this.open = !this.open;
         }
     }

@@ -1,13 +1,13 @@
 /**
  * Created by 10177553 on 2017/4/10.
  */
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DropDownTrigger, DropdownInputValue} from "../../../../../component/dropdown/dropdown";
 @Component({
     templateUrl: './basic.html',
     styleUrls: ['basic.scss'],
 })
-export class RdkDropDownInput {
+export class RdkDropDownInput implements OnInit{
 
     private openTrigger = DropDownTrigger.mouseenter;
     private closeTrigger = DropDownTrigger.mouseleave;
@@ -45,4 +45,9 @@ export class RdkDropDownInput {
         {label: "哈尔滨"}
     ];
 
+    ngOnInit(){
+        setTimeout(() => {
+            this.disabled = true
+        }, 3000)
+    }
 }
