@@ -73,10 +73,10 @@ export class DialogPopOptionDemo implements OnInit {
 
     popupDialog1(ele: TemplateRef<any>) {
         this.option.posOffset = {
-            top: Number(this.offset.top),
-            left: Number(this.offset.left),
-            right: Number(this.offset.right),
-            bottom: Number(this.offset.bottom)
+            top: this.offset.top === null ? this.offset.top : Number(this.offset.top),
+            left: this.offset.left === null ? this.offset.left : Number(this.offset.left),
+            right: this.offset.right === null ? this.offset.right : Number(this.offset.right),
+            bottom: this.offset.bottom === null ? this.offset.bottom : Number(this.offset.bottom)
         };
 
         if (this.selectedPos.label != "other") {
@@ -89,6 +89,10 @@ export class DialogPopOptionDemo implements OnInit {
             this.option = {
                 modal: true
             }
+        }
+
+        if(this._dialogInfo){
+            this._dialogInfo.dispose();
         }
 
         this._dialogInfo = this.popupService.popup(ele, this.option);
