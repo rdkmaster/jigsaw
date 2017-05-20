@@ -6,7 +6,8 @@ import {Component, TemplateRef} from "@angular/core";
 import {PopupDisposer, PopupInfo, PopupService} from "../../../../../service/popup.service";
 
 @Component({
-    templateUrl: 'top.html'
+    templateUrl: 'top.html',
+    styleUrls: ['top.scss']
 })
 export class DialogTopDemo  {
 

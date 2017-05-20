@@ -24,18 +24,18 @@
 </div>
 
 <br>
-<span>Offset</span>
-<rdk-input [(value)]="offset.top" placeholder="Top" width="200px"></rdk-input>
-<rdk-input [(value)]="offset.bottom" placeholder="Bottom" width="200px"></rdk-input>
-<rdk-input [(value)]="offset.left" placeholder="Left" width="200px"></rdk-input>
-<rdk-input [(value)]="offset.right" placeholder="Right" width="200px"></rdk-input>
+<span>Offset</span><br>
+top: <rdk-input [(value)]="offset.top" placeholder="Top" width="200px"></rdk-input><br>
+left: <rdk-input [(value)]="offset.left" placeholder="Left" width="200px"></rdk-input><br>
+bottom: <rdk-input [(value)]="offset.bottom" placeholder="Bottom" width="200px"></rdk-input><br>
+right: <rdk-input [(value)]="offset.right" placeholder="Right" width="200px"></rdk-input>
 <br>
 <rdk-button width="300px" (click)="popupDialog1(dialog1)">Click Me</rdk-button>
 
 
 
 <ng-template #dialog1>
-    <rdk-dialog title="dialog title" (answer)="close()" >
+    <rdk-dialog width="400px" title="dialog title" (answer)="close()" >
         <ul class="dialog-content">
             <li>Dialog content...</li>
             <li>Dialog content...</li>

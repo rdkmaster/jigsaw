@@ -32,8 +32,12 @@ export class DialogButtonsDemo  {
     ];
 
     message:String;
-    showInfo(buttinInfo:ButtonInfo) {
-        this.message = `${buttinInfo.label} button clicked!`;
+    showInfo(buttonInfo:ButtonInfo) {
+        if(buttonInfo){
+            this.message = `${buttonInfo.label} button clicked!`;
+        }else{
+            this.message = `dialog close bar clicked!`;
+        }
         this._dialogInfo.dispose();
     }
 

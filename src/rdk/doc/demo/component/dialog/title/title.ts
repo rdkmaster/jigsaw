@@ -7,6 +7,7 @@ import {PopupDisposer, PopupInfo, PopupService} from "../../../../../service/pop
 
 @Component({
     templateUrl: 'title.html',
+    styleUrls: ['tile.scss']
 })
 export class DialogTitleDemo {
 

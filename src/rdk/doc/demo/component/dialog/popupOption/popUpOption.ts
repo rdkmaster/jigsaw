@@ -10,81 +10,88 @@ import {
 
 @Component({
     templateUrl: 'popUpOption.html',
-    styleUrls : ['popUpOption.scss']
+    styleUrls: ['popUpOption.scss']
 })
-export class DialogPopOptionDemo implements OnInit{
+export class DialogPopOptionDemo implements OnInit {
 
     private _dialogInfo: PopupInfo;
 
-    private option : PopupOptions;
+    private option: PopupOptions;
 
-    private popPositionTypes : object[];
+    private popPositionTypes: object[];
 
-    private selectedPositionType :object;
+    private selectedPositionType: object;
 
-    private poses : object[];
+    private poses: object[];
 
-    private selectedPos : any;
+    private selectedPos: any;
 
-    private detailPos : PopupPoint;
+    private detailPos: PopupPoint;
 
-    private offset : PopupPositionOffset;
+    private offset: PopupPositionOffset;
 
-    @ViewChild("left") left : ElementRef;
-    @ViewChild("middle") middle : ElementRef;
-    @ViewChild("right") right : ElementRef;
+    @ViewChild("left") left: ElementRef;
+    @ViewChild("middle") middle: ElementRef;
+    @ViewChild("right") right: ElementRef;
 
-
-    constructor(private popupService : PopupService){
+    constructor(private popupService: PopupService) {
 
     }
 
-    ngOnInit(){
-
+    ngOnInit() {
         this.generatePopPosition();
         this.generatePopPos();
-        this.detailPos={x: null,y: null};
-        this.offset={top:null,left:null,right:null,bottom:null};
-
+        this.detailPos = {x: null, y: null};
+        this.offset = {top: 10, left: 10, right: null, bottom: null};
         this.option = {
-            modal : true,
-            posType : PopupPositionType.absolute,
-            posOffset : this.offset
-        }
-
+            modal: false,
+            posType: PopupPositionType.absolute
+        };
     }
 
     close() {
         this._dialogInfo.dispose();
     }
 
-    generatePopPos(){
+    generatePopPos() {
         this.poses = [];
-        this.poses.push({label:"left",ele : this.left});
-        this.poses.push({label:"middle",ele : this.middle});
-        this.poses.push({label:"right",ele : this.right});
-        this.poses.push({label:"other"});
+        this.poses.push({label: "left", ele: this.left});
+        this.poses.push({label: "middle", ele: this.middle});
+        this.poses.push({label: "right", ele: this.right});
+        this.poses.push({label: "other"});
         this.selectedPos = this.poses[0];
     }
 
-    generatePopPosition(){
+    generatePopPosition() {
         this.popPositionTypes = [];
-        for(let prop in PopupPositionType){
-            if(typeof PopupPositionType[prop] === 'number')
-                this.popPositionTypes.push({label:prop,id:PopupPositionType[prop]});
+        for (let prop in PopupPositionType) {
+            if (typeof PopupPositionType[prop] === 'number')
+                this.popPositionTypes.push({label: prop, id: PopupPositionType[prop]});
         }
         this.selectedPositionType = this.popPositionTypes[1];
     }
 
-    popupDialog1(ele:TemplateRef<any>){
-        if(this.selectedPos.label != "other"){
+    popupDialog1(ele: TemplateRef<any>) {
+        this.option.posOffset = {
+            top: Number(this.offset.top),
+            left: Number(this.offset.left),
+            right: Number(this.offset.right),
+            bottom: Number(this.offset.bottom)
+        };
+
+        if (this.selectedPos.label != "other") {
             this.option.pos = this.selectedPos.ele;
-        }else{
+        } else {
             this.option.pos = this.detailPos;
         }
 
-        this._dialogInfo = this.popupService.popup(ele,this.option);
-    }
+        if(this.option.modal){
+            this.option = {
+                modal: true
+            }
+        }
 
+        this._dialogInfo = this.popupService.popup(ele, this.option);
+    }
 
 }
