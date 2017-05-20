@@ -29,9 +29,6 @@ $dialog-prefix-cls: #{$rdk-prefix}-dialog;
             cursor: pointer;
         }
     }
-    .#{$dialog-prefix-cls}-content {
-        padding: 8px 16px 8px 16px;
-    }
     .#{$dialog-prefix-cls}-button-group {
         border-top: 1px solid $border-color-base;
         text-align: center;
