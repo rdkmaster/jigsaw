@@ -8,26 +8,24 @@ import {PopupDisposer, PopupInfo, PopupService} from "../../../../../service/pop
 @Component({
     templateUrl: 'title.html',
 })
-export class DialogTitleDemo  {
-
-    private _dialogInfo: PopupInfo;
-    private _dialogDisposer: PopupDisposer;
+export class DialogTitleDemo {
 
     private _dialogInfo1: PopupInfo;
-    private _dialogDisposer1: PopupDisposer;
+    private _dialogInfo2: PopupInfo;
 
-    constructor(private popupService : PopupService){
-
+    constructor(private popupService: PopupService) {
     }
 
-    popupDialog1(ele:TemplateRef<any>){
-       this._dialogInfo = this.popupService.popup(ele);
-       this._dialogDisposer = () => this._dialogInfo.dispose();
+    close(info: PopupInfo) {
+        info.dispose();
     }
 
-    popupDialog2(ele:TemplateRef<any>){
+    popupDialog1(ele: TemplateRef<any>) {
         this._dialogInfo1 = this.popupService.popup(ele);
-        this._dialogDisposer1 = () => this._dialogInfo1.dispose();
+    }
+
+    popupDialog2(ele: TemplateRef<any>) {
+        this._dialogInfo2 = this.popupService.popup(ele);
     }
 
 }

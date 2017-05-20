@@ -3,7 +3,7 @@
 <rdk-button width="300px" (click)="popupDialog2(dialog2)">自定义ElementTitle</rdk-button>
 
 <ng-template #dialog1>
-    <rdk-dialog title="dialog title" [disposer]="_dialogDisposer">
+    <rdk-dialog title="dialog title" (answer)="close(_dialogInfo1)">
         <ul class="dialog-content">
             <li>Dialog content...</li>
             <li>Dialog content...</li>
@@ -13,7 +13,7 @@
 </ng-template>
 
 <ng-template #dialog2>
-    <rdk-dialog [disposer]="_dialogDisposer1">
+    <rdk-dialog (answer)="close(_dialogInfo2)">
         <span title>Title of the dialog</span>
         <ul class="dialog-content">
             <li>Dialog content...</li>

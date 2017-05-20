@@ -15,7 +15,6 @@ import {
 export class DialogPopOptionDemo implements OnInit{
 
     private _dialogInfo: PopupInfo;
-    private _dialogDisposer: PopupDisposer;
 
     private option : PopupOptions;
 
@@ -55,7 +54,9 @@ export class DialogPopOptionDemo implements OnInit{
 
     }
 
-
+    close() {
+        this._dialogInfo.dispose();
+    }
 
     generatePopPos(){
         this.poses = [];
@@ -83,7 +84,6 @@ export class DialogPopOptionDemo implements OnInit{
         }
 
         this._dialogInfo = this.popupService.popup(ele,this.option);
-        this._dialogDisposer = () => this._dialogInfo.dispose();
     }
 
 
