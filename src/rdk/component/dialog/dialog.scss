@@ -2,7 +2,7 @@
 
 $dialog-prefix-cls: #{$rdk-prefix}-dialog;
 
-:host{
+:host {
     @include inline-block;
     width: 100%;
 }
@@ -13,7 +13,7 @@ $dialog-prefix-cls: #{$rdk-prefix}-dialog;
     border: 1px solid #ddd;
     border-radius: 4px;
     cursor: move;
-    .#{$dialog-prefix-cls}-head{
+    .#{$dialog-prefix-cls}-head {
         @include clearfix;
         line-height: 20px;
         padding: 14px 16px;
@@ -29,12 +29,15 @@ $dialog-prefix-cls: #{$rdk-prefix}-dialog;
             cursor: pointer;
         }
     }
+    .#{$dialog-prefix-cls}-content {
+        padding: 8px 16px 8px 16px;
+    }
     .#{$dialog-prefix-cls}-button-group {
         border-top: 1px solid $border-color-base;
         text-align: center;
         height: 50px;
         line-height: 50px;
-        rdk-button{
+        rdk-button {
             margin-right: 8px;
         }
     }
