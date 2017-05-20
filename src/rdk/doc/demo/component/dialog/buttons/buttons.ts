@@ -13,43 +13,36 @@ import {ButtonInfo, PopupDisposer, PopupInfo, PopupService} from "../../../../..
 export class DialogButtonsDemo  {
 
     private _dialogInfo: PopupInfo;
-    private _dialogDisposer: PopupDisposer;
 
     constructor(private popupService : PopupService){
-
     }
 
     private buttons: Array<ButtonInfo> = [
         {
             label: 'confirm',
-            callback: () => {
-                this.showInfo();
-            },
             clazz: "red"
         },{
             label: 'ok',
-            callback: () => {
-                console.log('ok callback success!')
-            },
             clazz: ""
         },
         {
             label: 'cancel',
-            callback: () => {
-
-            },
             clazz: ""
         }
     ];
 
     message:String;
-    showInfo(){
-        this.message = "confirm callback";
+    showInfo(buttonInfo:ButtonInfo) {
+        if(buttonInfo){
+            this.message = `${buttonInfo.label} button clicked!`;
+        }else{
+            this.message = `dialog close bar clicked!`;
+        }
+        this._dialogInfo.dispose();
     }
 
     popupDialog1(ele:TemplateRef<any>){
         this._dialogInfo = this.popupService.popup(ele);
-        this._dialogDisposer = () => this._dialogInfo.dispose();
     }
 
 

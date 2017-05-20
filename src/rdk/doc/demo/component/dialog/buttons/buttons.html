@@ -2,7 +2,7 @@
 
 {{message}}
 <ng-template #dialog1>
-    <rdk-dialog title="dialog title"  [buttons]="buttons"  [disposer]="_dialogDisposer" >
+    <rdk-dialog width="80%" title="dialog title"  [buttons]="buttons" (answer)="showInfo($event)" >
         <ul class="dialog-content">
             <li>Dialog content...</li>
             <li>Dialog content...</li>

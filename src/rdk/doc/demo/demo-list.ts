@@ -1,5 +1,6 @@
 import {NgModule, Component} from '@angular/core';
 import {RouterModule} from '@angular/router';
+import {RdkBlock, RdkBlockModule} from "../../component/block/block";
 
 @Component({
     selector: 'rdk-demo-list', templateUrl: 'demo-list.html',
@@ -110,13 +111,15 @@ const demoListRoutes = [
 
 @NgModule({
     imports: [
-        RouterModule.forChild(demoListRoutes)
+        RouterModule.forChild(demoListRoutes),
+        RdkBlockModule
     ],
     exports: [],
     declarations: [
         DemoListComponent
     ],
     providers: [],
+    entryComponents: [RdkBlock]
 })
 export class DemoListModule {
 }
