@@ -37,7 +37,7 @@ import {RdkSlider} from "../../../../../component/slider/slider";
     `,
     styleUrls:['./basic.scss']
 })
-export class RdkSliderDemoBasic implements OnInit, AfterViewInit {
+export class RdkSliderDemoBasic implements OnInit{
 
     @ViewChild('slider') verticalSlider: RdkSlider;
 
@@ -88,10 +88,5 @@ export class RdkSliderDemoBasic implements OnInit, AfterViewInit {
     ngOnInit() { }
 
     vertical = true;
-
-    ngAfterViewInit() {
-        //
-        // this.verticalSlider._refresh();
-    }
 
 }

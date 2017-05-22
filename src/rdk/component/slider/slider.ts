@@ -191,9 +191,6 @@ export class RdkSlider implements OnInit, OnDestroy {
         // 计算slider 的尺寸.
         this._dimensions = this._element.nativeElement.getBoundingClientRect();
 
-        console.log("init _dimensions: ");
-        console.log(this._dimensions);
-
         // 设置选中的轨道.
         this._setTrackStyle(this.value);
 
