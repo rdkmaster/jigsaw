@@ -1,7 +1,7 @@
 /**
  * Created by 10177553 on 2017/3/29.
  */
-import {Component, OnInit, Input, TemplateRef, ViewChild} from '@angular/core';
+import {Component, Input, TemplateRef, ViewChild} from '@angular/core';
 
 @Component({
     selector: 'rdk-tab-pane',
@@ -15,18 +15,14 @@ import {Component, OnInit, Input, TemplateRef, ViewChild} from '@angular/core';
     `
 })
 export class TabPane {
-
-    @Input()
-    public label: string;
-
     @Input()
     public disabled: boolean = false;
 
     @Input()
-    public icon: string;
+    public hidden: boolean = false;
 
     @Input()
-    public hidden: boolean = false;
+    public async: boolean;
 
     @ViewChild('title') title: TemplateRef<any>;
     @ViewChild('content') content: TemplateRef<any>;

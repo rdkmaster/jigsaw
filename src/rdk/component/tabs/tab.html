@@ -25,6 +25,7 @@
             contentKey="{{i}}"
             [content]=tab.content
             [isActive]="selectedIndex === i"
+            [async]="tab.async"
             [ngStyle]="{transform: 'translate3d('+(i-selectedIndex)*100+'%, 0px, 0px)'}">
         </rdk-tab-content>
     </div>

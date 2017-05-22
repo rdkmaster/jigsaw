@@ -92,16 +92,17 @@ export class RdkTab implements AfterViewInit {
         return this._tabPanes.find((item,index) => index === key);
     }
 
-    private _getTabLabelByIndex(key):TabLabel {
+    /*private _getTabLabelByIndex(key):TabLabel {
         return this._tabLabel.find((item,index) => index === key);
     }
 
     private _getTabContentByIndex(key):TabContent {
         return this._tabContent.find((item,index) => index === key);
-    }
+    }*/
 
     ngAfterViewInit() {
         this._setSelectIndex(this.selectedIndex);
+        this.tabPanes = this._tabPanes;
     }
 
     /*ngAfterViewChecked() {
@@ -164,8 +165,10 @@ export class RdkTab implements AfterViewInit {
         // 重新修改queryList. 不确定这么做有没有什么隐患.
         this._tabPanes.reset(tabTemp);
 
-        this._getTabLabelByIndex(index).destroy();
-        this._getTabContentByIndex(index).destroy();
+        this.tabPanes = this._tabPanes;
+
+        //this._getTabLabelByIndex(index).destroy();
+        //this._getTabContentByIndex(index).destroy();
 
         this._handleSelect();
     }

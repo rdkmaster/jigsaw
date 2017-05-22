@@ -14,7 +14,7 @@ export class RdkTabsComponent implements AfterViewInit{
     ngAfterViewInit(){
         console.log(this.myTab);
         this.myTab.tabPanes.forEach(
-            (tabPane)=>{console.log(tabPane.label)}
+            (tabPane)=>{console.log(tabPane.title)}
         );
     }
 

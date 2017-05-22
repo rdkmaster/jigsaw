@@ -4,8 +4,9 @@
 
 import {
     Component, Input, ViewContainerRef,
-    TemplateRef, AfterViewChecked, ViewChild, Renderer2, ElementRef, AfterViewInit
+    TemplateRef, ViewChild, Renderer2, ElementRef, AfterViewInit, EmbeddedViewRef
 } from '@angular/core';
+import {AbstractRDKComponent} from "../core";
 
 @Component({
     selector: 'rdk-tab-content',
@@ -15,10 +16,10 @@ import {
         '[class.rdk-tabs-tabpane-inactive]': '!isActive'
     },
     template: `
-        <div #body></div>
+        <ng-template #body></ng-template>
     `
 })
-export class TabContent implements AfterViewInit {
+export class TabContent extends AbstractRDKComponent implements AfterViewInit {
     @ViewChild('body', {read: ViewContainerRef}) _body: ViewContainerRef;
 
     @Input('content')
@@ -27,7 +28,14 @@ export class TabContent implements AfterViewInit {
     @Input()
     public contentKey: number;
 
-    constructor(private _render: Renderer2, private _element: ElementRef) {};
+    @Input()
+    public async: boolean;
+
+    private _contentRef: EmbeddedViewRef<any>;
+
+    constructor(private _render: Renderer2, private _element: ElementRef) {
+        super()
+    };
 
     private _isActive: boolean;
 
@@ -38,13 +46,32 @@ export class TabContent implements AfterViewInit {
 
     public set isActive(active: boolean) {
         this._isActive = active;
+        if (this.initialized) {
+            if (active) {
+                this.insert();
+            } else {
+                this.destroy();
+            }
+        }
     }
 
     ngAfterViewInit() {
-        this._body.createEmbeddedView(this._content);
+        if (!this.async || this._isActive) {
+            this._contentRef = this._body.createEmbeddedView(this._content);
+        }
+    }
+
+    public insert(): void {
+        if (!this._contentRef) {
+            this._contentRef = this._body.createEmbeddedView(this._content);
+        }
     }
 
     public destroy(): void {
-        this._render.parentNode(this._element.nativeElement).removeChild(this._element.nativeElement);
+        //this._render.parentNode(this._element.nativeElement).removeChild(this._element.nativeElement);
+        if (this._contentRef) {
+            this._contentRef.destroy();
+            this._contentRef = null
+        }
     }
 }
