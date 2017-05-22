@@ -3,8 +3,7 @@ import {
 } from '@angular/core';
 import {AbstractRDKComponent} from '../core';
 import {TimeGr, TimeService, TimeWeekStart} from "../../service/time.service";
-import {PopupInfo, PopupService} from "../../service/popup.service";
-import {PopupPositionType} from "../../../../../ng2_work/src/rdk/service/popup.service";
+import {PopupInfo, PopupService,PopupPositionType} from "../../service/popup.service";
 import {SimpleTooltipComponent} from "../tooltip/tooltip";
 
 
