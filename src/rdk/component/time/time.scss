@@ -54,7 +54,7 @@ $time-prefix-cls: #{$rdk-prefix}-time;
                   &.active{
                       background-color: transparent;
                       td {
-                          background-color: #337ab7;
+                          background-color: #337ab7 !important;
                           border-radius: 0 !important;
                           color: #fff;
                           &:first-child {
