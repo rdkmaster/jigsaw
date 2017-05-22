@@ -15,7 +15,6 @@ export class ColorfulLoadingDemoComponent {
 
     public setElementsStyle(tags:string, props:string, val:string | boolean | number) {
         let elements = this._el.nativeElement.querySelectorAll(tags);
-        console.log( elements );
         for (let index = 0; index < elements.length; ++index) {
             this._renderer.setStyle(elements[index],props,val);
         }

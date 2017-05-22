@@ -6,6 +6,50 @@ import {AbstractRDKComponent} from "../core";
 export class RdkLoadingBase extends AbstractRDKComponent implements IPopupable {
     public initData: any;
     public answer: EventEmitter<any>;
+    public unitColor:string;
+    public popupElement: HTMLElement;
+
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef){
+        super();
+    }
+
+    protected getColorElement() : NodeListOf<Element>{
+        return;
+    }
+
+    public get color():string {
+        return this.unitColor;
+    }
+
+    @Input()
+    public set color(rgb:string) {
+        this.unitColor = rgb;
+        this.setElementsStyle(this.getColorElement(),'backgroundColor',rgb);
+    }
+
+    protected getPopupElement(): HTMLElement {
+        return this._elementRef.nativeElement;
+    }
+
+    public setElementSize(selector: string, width: number | string , height: number | string) {
+        this.popupElement = this.getPopupElement();
+
+        if(width && height){
+            this._renderer.setStyle(this.popupElement, 'width', width);
+            this._renderer.setStyle(this.popupElement, 'height', height);
+            this._renderer.setStyle(this.popupElement.querySelector(selector), 'width', width);
+            this._renderer.setStyle(this.popupElement.querySelector(selector), 'height', height);
+            this._renderer.setStyle(this.popupElement.querySelector(selector), 'margin-left', '-' + this.popupElement.offsetWidth / 2 + 'px');
+            this._renderer.setStyle(this.popupElement.querySelector(selector), 'margin-top', '-' + this.popupElement.offsetHeight / 2 + 'px');
+        }
+    }
+
+    public setElementsStyle(elements:NodeListOf<Element>, props:string, val:string | boolean | number) {
+        for (let index = 0; index < elements.length; ++index) {
+            this._renderer.setStyle(elements[index],props,val);
+        }
+    }
+
 }
 
 @Component({
@@ -15,43 +59,19 @@ export class RdkLoadingBase extends AbstractRDKComponent implements IPopupable {
 })
 export class RdkLoading extends RdkLoadingBase implements OnInit{
 
-    private _color: string;
-    private _popupElement: HTMLElement;
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef){
-        super();
-    }
-
-    @Input()
-    public set color(rgb:string) {
-        this._color = rgb;
-        this._popupElement = this.getPopupElement();
-        let circleDivs = this._popupElement.querySelectorAll('.spinner-container > div');
-        for ( let index = 0; index < circleDivs.length; ++index ) {
-            this._renderer.setStyle(circleDivs[index], 'backgroundColor', rgb);
-        }
-    }
-
-    public get color():string {
-        return this._color;
+    constructor(private renderer: Renderer2, private elementRef: ElementRef){
+        super(renderer,elementRef);
     }
 
     ngOnInit(){
-        this._popupElement = this.getPopupElement();
-
-        if(this.width && this.height){
-            this._renderer.setStyle(this._popupElement, 'width', this.width);
-            this._renderer.setStyle(this._popupElement, 'height', this.height);
-
-            this._renderer.setStyle(this._popupElement.querySelector('.spinner'), 'width', this.width);
-            this._renderer.setStyle(this._popupElement.querySelector('.spinner'), 'height', this.height);
-            this._renderer.setStyle(this._popupElement.querySelector('.spinner'), 'margin-left', '-' + this._popupElement.offsetWidth / 2 + 'px');
-            this._renderer.setStyle(this._popupElement.querySelector('.spinner'), 'margin-top', '-' + this._popupElement.offsetHeight / 2 + 'px');
-        }
+        super.setElementSize('.spinner',this.width,this.height);
     }
 
-    protected getPopupElement(): HTMLElement {
-        return this._elementRef.nativeElement;
+
+    protected getColorElement() : NodeListOf<Element>{
+        return this.getPopupElement().querySelectorAll('.spinner-container > div');
     }
+
 }
 
 @Component({
@@ -60,29 +80,14 @@ export class RdkLoading extends RdkLoadingBase implements OnInit{
     styleUrls: ['loading-ball.scss']
 })
 export class RdkBallLoading extends RdkLoadingBase {
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef){
-        super();
-    }
-    private _color: string;
-    private _popupElement: HTMLElement;
-
-    @Input()
-    public set color(rgb:string) {
-        this._color = rgb;
-        this._popupElement = this.getPopupElement();
-        let circleDivs = this._popupElement.querySelectorAll('.rdk-loading-content > div');
-        for ( let index = 0; index < circleDivs.length; ++index ) {
-            this._renderer.setStyle(circleDivs[index], 'backgroundColor', rgb);
-        }
+    constructor(private renderer: Renderer2, private elementRef: ElementRef){
+        super(renderer,elementRef);
     }
 
-    public get color():string {
-        return this._color;
+    protected getColorElement() : NodeListOf<Element>{
+        return this.getPopupElement().querySelectorAll('.rdk-loading-content > div');
     }
 
-    protected getPopupElement(): HTMLElement {
-        return this._elementRef.nativeElement;
-    }
 }
 
 @NgModule({

@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, ElementRef, Renderer2} from "@angular/core";
 import {RdkLoadingBase} from "../../../../../../component/loading/loading";
 
 @Component({
@@ -6,5 +6,7 @@ import {RdkLoadingBase} from "../../../../../../component/loading/loading";
     styleUrls: ['definedLoading.scss']
 })
 export class DefinedLoading extends RdkLoadingBase {
-
+    constructor(private renderer:Renderer2,private el:ElementRef) {
+        super(renderer, el);
+    }
 }
