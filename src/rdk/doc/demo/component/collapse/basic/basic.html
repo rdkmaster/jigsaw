@@ -6,6 +6,7 @@
     <rdk-panel header="afdafd" isActive="true">
         密码: <input type="text" placeholder="请输入姓名~">
     </rdk-panel>
+
     <rdk-panel header="嵌套">
         <rdk-collapse>
             <rdk-panel header="测试col">
@@ -24,8 +25,13 @@
 <br>
 <hr>
 <br>
-<rdk-collapse mode="accordion" [style.display]="'inline-block'">
-    <rdk-panel header="测试col">
+<rdk-collapse mode="accordion">
+    <rdk-panel>
+        <ng-template #headRender>
+            <i class="fa fa-arrow-circle-right"></i>
+            <span style="color: blue;">测试自定义Title</span>
+            <i class="fa fa-arrow-circle-left"></i>
+        </ng-template>
         <input type="text" placeholder="请输入姓名~">
     </rdk-panel>
 
