@@ -7,10 +7,14 @@ import {RdkSliderDemoBasic} from "./basic/basic";
 import {RouterModule} from "@angular/router";
 import {RdkSliderModule} from "../../../../component/slider/index";
 import {RdkSwitchModule} from "../../../../component/switch/index";
+import {SliderVerticalDemo} from "./vertical/vertical";
 
 const routes = [
     {
         path: 'basic', component:RdkSliderDemoBasic
+    },
+    {
+        path: 'vertical', component:SliderVerticalDemo
     }
 ]
 
@@ -20,8 +24,8 @@ const routes = [
         RdkSliderModule,
         RdkSwitchModule
     ],
-    exports: [RdkSliderDemoBasic],
-    declarations: [RdkSliderDemoBasic],
+    exports: [RdkSliderDemoBasic, SliderVerticalDemo],
+    declarations: [RdkSliderDemoBasic, SliderVerticalDemo],
     providers: [],
 })
 export class SliderDemoModule { }
