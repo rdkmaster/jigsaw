@@ -1,6 +1,11 @@
-import {Component, Input, Output, ElementRef, OnInit, EventEmitter} from '@angular/core';
+import {
+    Component, Input, Output, ElementRef, OnInit, EventEmitter, Renderer2
+} from '@angular/core';
 import {AbstractRDKComponent} from '../core';
 import {TimeGr, TimeService, TimeWeekStart} from "../../service/time.service";
+import {PopupInfo, PopupService} from "../../service/popup.service";
+import {PopupPositionType} from "../../../../../ng2_work/src/rdk/service/popup.service";
+import {SimpleTooltipComponent} from "../tooltip/tooltip";
 
 
 export type TimeWeekDay = {
@@ -117,7 +122,7 @@ export class RdkTime extends AbstractRDKComponent implements OnInit {
     //定时器Id
     private _IntervalId: number;
 
-    constructor(private el: ElementRef) {
+    constructor(private el: ElementRef,private renderer: Renderer2,private popService:PopupService) {
         super();
         this.gr = TimeGr.date;
         this._value = 'now';
@@ -187,7 +192,7 @@ export class RdkTime extends AbstractRDKComponent implements OnInit {
                 this.handleWeekSelect();
                 this.dateChange.emit(this._value);
             }
-            RdkTime.handleRecommended(this.recommended,this.el.nativeElement);
+            this.handleRecommended(this.recommended,this.el.nativeElement,this.popService);
         }
     }
 
@@ -224,7 +229,9 @@ export class RdkTime extends AbstractRDKComponent implements OnInit {
         return nativeElement.querySelectorAll(selector);
     }
 
-    private static handleRecommended(value,nativeElement) {
+    private tooltipInfo:PopupInfo;
+
+    private  handleRecommended(value,nativeElement,popService) {
         if (value && value.length == 2) {
             value[0] = TimeService.getDate(value[0]);
             value[1] = TimeService.getDate(value[1]);
@@ -234,12 +241,35 @@ export class RdkTime extends AbstractRDKComponent implements OnInit {
             let monthsNode = RdkTime.getDataPickerNode("months",nativeElement);
             let monthsHeadNode = RdkTime.getDataPickerNode("months",nativeElement, true);
             RdkTime.searchDateForMonth(value, monthsNode, monthsHeadNode);
-
             let daysNode = RdkTime.getDataPickerNode("days",nativeElement);
             let daysHeadNode = RdkTime.getDataPickerNode("days",nativeElement, true);
             let daysObj = RdkTime.parseDay(daysHeadNode.innerText);
-
             RdkTime.searchDateForDay(value, daysNode, daysObj);
+            nativeElement.querySelectorAll(".time-box .datepicker .expect-day").forEach( node =>{
+                this.renderer.listen(node,"mouseenter",(event) =>{
+                    if(this.tooltipInfo){
+                        this.tooltipInfo.dispose();
+                        this.tooltipInfo = null;
+                    }
+                    this.tooltipInfo = popService.popup(SimpleTooltipComponent,{
+                        modal: false, //是否模态
+                        pos: {x:$(event.currentTarget).offset().left , y: $(event.currentTarget).offset().top},
+                        posOffset: { //偏移位置
+                            top: -40,
+                            left: 0
+                        },
+                        posType: PopupPositionType.fixed, //定位类型
+                    }, {
+                        message: "Recommended"
+                    });
+                });
+                this.renderer.listen(node,"mouseleave",()=>{
+                   if(this.tooltipInfo){
+                       this.tooltipInfo.dispose();
+                       this.tooltipInfo = null;
+                   }
+                })
+            });
         }
     }
 

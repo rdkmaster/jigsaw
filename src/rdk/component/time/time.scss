@@ -106,38 +106,6 @@ $time-prefix-cls: #{$rdk-prefix}-time;
             }
         }
     }
-    .color-tips{
-        margin: 2px 0;
-        display: flex;
-        justify-content:space-between;
-        &>span{
-            transform: scale(1);
-            padding: 0 2px;
-            font-size: 10px;
-            color: #999;
-            &:before{
-                content: "";
-                color: #fff;
-                text-align: center;
-                position: absolute;
-                left: 0;
-                width: 16px;
-                height: 16px;
-                line-height: 16px;
-                border-radius: 4px;
-                transform: translate(-100%);
-            }
-            &:first-child{
-                margin-left: 17px;
-                &:before{
-                    background-color:  #3ab1ea;
-                }
-            }
-            &:last-child:before{
-                background-color:  #b8e3f7;
-            }
-        }
-    }
 }
 
 .#{$time-prefix-cls}-hidden {
