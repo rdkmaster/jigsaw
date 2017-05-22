@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, NgModule, OnInit, Renderer2} from "@angular/core";
+import {Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Renderer2} from "@angular/core";
 import {IPopupable} from "rdk/service/popup.service";
 import {CommonModule} from "@angular/common";
 import {AbstractRDKComponent} from "../core";
@@ -15,10 +15,24 @@ export class RdkLoadingBase extends AbstractRDKComponent implements IPopupable {
 })
 export class RdkLoading extends RdkLoadingBase implements OnInit{
 
+    private _color: string;
     private _popupElement: HTMLElement;
-
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef){
         super();
+    }
+
+    @Input()
+    public set color(rgb:string) {
+        this._color = rgb;
+        this._popupElement = this.getPopupElement();
+        let circleDivs = this._popupElement.querySelectorAll('.spinner-container > div');
+        for ( let index = 0; index < circleDivs.length; ++index ) {
+            this._renderer.setStyle(circleDivs[index], 'backgroundColor', rgb);
+        }
+    }
+
+    public get color():string {
+        return this._color;
     }
 
     ngOnInit(){
@@ -46,7 +60,29 @@ export class RdkLoading extends RdkLoadingBase implements OnInit{
     styleUrls: ['loading-ball.scss']
 })
 export class RdkBallLoading extends RdkLoadingBase {
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef){
+        super();
+    }
+    private _color: string;
+    private _popupElement: HTMLElement;
 
+    @Input()
+    public set color(rgb:string) {
+        this._color = rgb;
+        this._popupElement = this.getPopupElement();
+        let circleDivs = this._popupElement.querySelectorAll('.rdk-loading-content > div');
+        for ( let index = 0; index < circleDivs.length; ++index ) {
+            this._renderer.setStyle(circleDivs[index], 'backgroundColor', rgb);
+        }
+    }
+
+    public get color():string {
+        return this._color;
+    }
+
+    protected getPopupElement(): HTMLElement {
+        return this._elementRef.nativeElement;
+    }
 }
 
 @NgModule({

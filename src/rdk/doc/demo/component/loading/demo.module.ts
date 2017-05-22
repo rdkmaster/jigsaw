@@ -10,6 +10,8 @@ import {DefinedLoading} from "./userDefined/definedLoading/definedLoading";
 import {BallLoadingDemoComponent} from "./ballLoading/loading";
 import {DomInnerDemoComponent} from "./domInner/domInner";
 import {RdkBlock, RdkBlockModule} from "../../../../component/block/block";
+import {ColorfulLoadingDemoComponent} from "./color/color";
+import {RdkButton} from "../../../../component/button/button";
 const loadingDemoRoutes = [
     {
         path: '', redirectTo: 'basic', pathMatch: 'full'
@@ -27,6 +29,9 @@ const loadingDemoRoutes = [
         path: 'domInner', component: DomInnerDemoComponent
     },
     {
+        path: 'color', component: ColorfulLoadingDemoComponent
+    },
+    {
         path: '**', //fallback router must in the last
         component: LoadingDemoComponent
     }
@@ -38,7 +43,9 @@ const loadingDemoRoutes = [
         BallLoadingDemoComponent,
         DefinedLoadingDemoComponent,
         DomInnerDemoComponent,
-        DefinedLoading
+        DefinedLoading,
+        ColorfulLoadingDemoComponent,
+        RdkButton
     ],
     imports: [
         CommonModule,
