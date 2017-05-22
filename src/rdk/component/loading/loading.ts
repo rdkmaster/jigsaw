@@ -6,7 +6,6 @@ import {AbstractRDKComponent} from "../core";
 export class RdkLoadingBase extends AbstractRDKComponent implements IPopupable {
     public initData: any;
     public answer: EventEmitter<any>;
-    public unitColor:string;
     public popupElement: HTMLElement;
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef){
@@ -14,16 +13,18 @@ export class RdkLoadingBase extends AbstractRDKComponent implements IPopupable {
     }
 
     protected getColorElement() : NodeListOf<Element>{
-        return;
+        return undefined;
     }
 
-    public get color():string {
-        return this.unitColor;
-    }
+    private _color:string;
 
     @Input()
+    public get color():string {
+        return this._color;
+    }
+
     public set color(rgb:string) {
-        this.unitColor = rgb;
+        this._color = rgb;
         this.setElementsStyle(this.getColorElement(),'backgroundColor',rgb);
     }
 
