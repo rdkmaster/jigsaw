@@ -49,7 +49,9 @@ const routes=[
     imports: [
         RouterModule.forChild(routes),
         RdkTabsModule,RdkInputModule,RdkButtonModule,
-        CommonModule
+        CommonModule,
+        RdkButtonModule,
+        RdkInputModule
     ],
     exports: [RdkTabsDemoComponent],
     declarations: [RdkTabsDemoComponent,RdkTabsWithInputComponent,RdkTabsWithNgForComponent,

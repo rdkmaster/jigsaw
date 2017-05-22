@@ -1,0 +1,32 @@
+<div class="container">
+    <rdk-tab (selectChange)="testEvent($event)">
+        <rdk-tab-pane>
+            <span rdk-title><span class="fa fa-gift"></span>tab 1</span>
+            tab content 1
+        </rdk-tab-pane>
+        <rdk-tab-pane>
+            <span rdk-title>tab <rdk-button width="20" height="20">ok</rdk-button></span>
+            <div class="tab-content">
+                <label>name: </label>
+                <rdk-input></rdk-input>
+                <br>
+                <label>gender: </label>
+                <rdk-input></rdk-input>
+                <br>
+                <rdk-button>confirm</rdk-button>
+            </div>
+        </rdk-tab-pane>
+        <rdk-tab-pane>
+            <span rdk-title>tab 3</span>
+            tab content 3
+        </rdk-tab-pane>
+        <rdk-tab-pane label="tab 4" [disabled]="true">
+            <span rdk-title>tab 4</span>
+            tab content 4
+        </rdk-tab-pane>
+        <rdk-tab-pane>
+            <span rdk-title><span class="fa fa-bicycle"></span>tab 5</span>
+            tab content 5
+        </rdk-tab-pane>
+    </rdk-tab>
+</div>

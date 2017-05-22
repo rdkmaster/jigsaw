@@ -8,6 +8,6 @@
     </div>
 
     <rdk-tab [selectedIndex]="activeIndex">
-        <tab-pane *ngFor="let tab of dynamicTabs" [disabled]="tab.disabled" label="{{tab.label}}"> {{tab.content}}</tab-pane>
+        <rdk-tab-pane *ngFor="let tab of dynamicTabs" [disabled]="tab.disabled" label="{{tab.label}}"> {{tab.content}}</rdk-tab-pane>
     </rdk-tab>
 </div>

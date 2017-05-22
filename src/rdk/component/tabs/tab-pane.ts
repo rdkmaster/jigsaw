@@ -4,10 +4,13 @@
 import {Component, OnInit, Input, TemplateRef, ViewChild} from '@angular/core';
 
 @Component({
-    selector: 'tab-pane',
+    selector: 'rdk-tab-pane',
     template: `
-         <ng-template>
-             <ng-content></ng-content>
+        <ng-template #title>
+            <ng-content select="[rdk-title]"></ng-content>
+        </ng-template>
+        <ng-template #content>
+            <ng-content></ng-content>
         </ng-template>
     `
 })
@@ -25,5 +28,6 @@ export class TabPane {
     @Input()
     public hidden: boolean = false;
 
-    @ViewChild(TemplateRef) content: TemplateRef<any>| any;
+    @ViewChild('title') title: TemplateRef<any>;
+    @ViewChild('content') content: TemplateRef<any>;
 }

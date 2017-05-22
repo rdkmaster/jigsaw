@@ -6,27 +6,26 @@
                 <div class="rdk-tabs-nav">
                     <!-- 负责实现动画效果 -->
                     <div class="rdk-tabs-ink-bar" [ngStyle]="_inkBarStyle"></div>
-                    <div tab-label class="rdk-tabs-tab"
-                         *ngFor="let tab of _tabPanes; let i = index" [key]="i"
-                         [class.rdk-tabs-tab-active]="selectedIndex === i"
-                         [class.rdk-tabs-tab-disabled]="tab.disabled"
-                         [class.rdk-tabs-tab-hidden]="tab.hidden"
-                         (click)="_tabClick(i)">
-                         <i *ngIf="tab.icon" class="{{tab.icon}}"></i>
-                         {{tab.label}}
-
-                    </div>
+                    <rdk-tab-label class="rdk-tabs-tab"
+                                   *ngFor="let tab of _tabPanes; let i = index"
+                                   [key]="i"
+                                   [title]="tab.title"
+                                   [class.rdk-tabs-tab-active]="selectedIndex === i"
+                                   [class.rdk-tabs-tab-disabled]="tab.disabled"
+                                   [class.rdk-tabs-tab-hidden]="tab.hidden"
+                                   (click)="_tabClick(i)">
+                    </rdk-tab-label>
                 </div>
             </div>
         </div>
     </div>
     <div class="rdk-tabs-content">
-        <tab-content
+        <rdk-tab-content
             *ngFor="let tab of _tabPanes; let i = index;"
             contentKey="{{i}}"
             [content]=tab.content
             [isActive]="selectedIndex === i"
             [ngStyle]="{transform: 'translate3d('+(i-selectedIndex)*100+'%, 0px, 0px)'}">
-        </tab-content>
+        </rdk-tab-content>
     </div>
 </div>

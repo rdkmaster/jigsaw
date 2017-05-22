@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 
 @Component({
-    selector: 'tab-content',
+    selector: 'rdk-tab-content',
     host: {
         '[class.rdk-tabs-tabpane]': 'true',
         '[class.rdk-tabs-tabpane-active]': 'isActive',

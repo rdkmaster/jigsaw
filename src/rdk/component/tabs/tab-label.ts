@@ -2,15 +2,24 @@
  * Created by 10177553 on 2017/3/29.
  */
 
-import {Directive, Input, ElementRef, Renderer2} from "@angular/core";
+import {
+    Input, ElementRef, Renderer2, TemplateRef, Component, ViewChild, ViewContainerRef, AfterViewChecked, AfterViewInit
+} from "@angular/core";
 
-@Directive({
-    selector: '[tab-label]'
+@Component({
+    selector: 'rdk-tab-label',
+    template: `
+        <div #body></div>
+    `
 })
-// Todo label 渲染器,以备将来支持html的渲染;
-export class TabLabel {
+export class TabLabel implements AfterViewInit{
     @Input()
     public key: number;
+
+    @Input('title')
+    private _title: TemplateRef<any>;
+
+    @ViewChild('body', {read: ViewContainerRef}) _body: ViewContainerRef;
 
     constructor( private _elementRef: ElementRef, private _render: Renderer2) {}
 
@@ -28,7 +37,12 @@ export class TabLabel {
         return this._elementRef.nativeElement.offsetWidth;
     }
 
+    ngAfterViewInit() {
+        this._body.createEmbeddedView(this._title);
+    }
+
     public destroy(): void {
         this._render.parentNode(this._elementRef.nativeElement).removeChild(this._elementRef.nativeElement);
     }
+
 }
