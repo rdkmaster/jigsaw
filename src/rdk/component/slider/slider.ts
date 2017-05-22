@@ -3,7 +3,7 @@
  */
 import {
     Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewEncapsulation, ViewChildren, QueryList, Renderer2,
-    OnDestroy
+    OnDestroy, ChangeDetectorRef
 } from '@angular/core';
 import {SliderHandle} from "./handle";
 import {CommonUtils} from "../../core/utils/common-utils";
@@ -20,11 +20,10 @@ import {CommonUtils} from "../../core/utils/common-utils";
 /**
  *       4. tooltips 支持. 暂不支持
  *       5. 点击的支持。
- *       6. 垂直滚动条有时候计算的高度不准确, 由于取的dom的bottom值不准确. 暂没有好的解决办法;
  */
 export class RdkSlider implements OnInit, OnDestroy {
 
-    constructor(private _element: ElementRef, private _render: Renderer2) { }
+    constructor(private _element: ElementRef, private _render: Renderer2, private _changeDetector: ChangeDetectorRef) { }
 
     @ViewChildren(SliderHandle) _sliderHandle: QueryList<SliderHandle>;
 
@@ -39,13 +38,13 @@ export class RdkSlider implements OnInit, OnDestroy {
             return this._value;
         }
     };
-    public set value(value:number|number[]) {
+    public set value(value:number| number[]) {
         if(typeof value  === 'object') {
             this._value = value;
         } else if(this._value.length === 0) {
-            this._value.push(value);
+            this._value.push(this._verifyValue(value));
         } else if(this._value.length === 1) {
-            this._value[0] = value;
+            this._value[0] = this._verifyValue(value);
         }
 
         this._setTrackStyle();
@@ -58,6 +57,11 @@ export class RdkSlider implements OnInit, OnDestroy {
         this._setTrackStyle();
 
         this.valueChange.emit(this.value);
+    }
+
+    // 最后重新计算一下, 垂直滚动条的位置.
+    public _refresh() {
+        this._dimensions = this._element.nativeElement.getBoundingClientRect();
     }
 
     @Output()
@@ -96,7 +100,7 @@ export class RdkSlider implements OnInit, OnDestroy {
         return (value - this.min)/(this.max - this.min) * 100;
     }
 
-    private _dimensions;
+    public _dimensions;
 
     @Input()
     public vertical: boolean = false;
@@ -119,8 +123,8 @@ export class RdkSlider implements OnInit, OnDestroy {
 
         // 兼容双触点.
         if(this.range) {
-            startPos = Math.min(this.value[0], this.value[1]);
-            trackSize = Math.abs(this.value[0] - this.value[1]);
+            startPos = Math.min(this._verifyValue(this.value[0]), this._verifyValue(this.value[1]));
+            trackSize = Math.abs(this._verifyValue(this.value[0]) - this._verifyValue(this.value[1]));
         }
 
         if(this.vertical) { // 垂直和水平两种
@@ -185,7 +189,8 @@ export class RdkSlider implements OnInit, OnDestroy {
 
     ngOnInit() {
         // 计算slider 的尺寸.
-        this._dimensions = this._element.nativeElement.getBoundingClientRect()
+        this._dimensions = this._element.nativeElement.getBoundingClientRect();
+
         // 设置选中的轨道.
         this._setTrackStyle(this.value);
 
@@ -194,6 +199,7 @@ export class RdkSlider implements OnInit, OnDestroy {
         // 注册resize事件;
         this.resize();
     }
+
     private _removeResizeEvent:Function;
 
     private resize() {
@@ -209,6 +215,21 @@ export class RdkSlider implements OnInit, OnDestroy {
     public ngOnDestroy() {
         if(this._removeResizeEvent) {
             this._removeResizeEvent();
+        }
+    }
+
+    /**
+     * 校验value的合法性. 大于最大值，取最大值, 小于最小值取最小值.
+     * @param value
+     * @private
+     */
+    public _verifyValue(value: number) {
+        if (value - this.min < 0) {
+            return this.min;
+        } else if (value - this.max > 0) {
+            return this.max;
+        } else {
+            return value;
         }
     }
 }

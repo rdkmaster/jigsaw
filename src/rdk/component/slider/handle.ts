@@ -20,14 +20,11 @@ export class SliderHandle implements OnInit{
     public key: number;
 
     @Input()
-    public dimensions;
-
-    @Input()
     public get value() { return this._value; }
     public set value(value) {
         if(this._value === value) return;
 
-        this._value = value;
+        this._value = this._slider._verifyValue(value);
         this._valueToPos();
     }
 
@@ -64,15 +61,14 @@ export class SliderHandle implements OnInit{
     private _dragged: boolean = false;
 
     public transformPosToValue(pos) {
-        // 取得尺寸
-        // 滚动条,减去全局滚动条的位置.
-        let top = document.body.scrollTop;
-        let left = document.body.scrollLeft;
+        // 更新取得的滑动条尺寸.
+        this._slider._refresh();
+        let dimensions = this._slider._dimensions;
 
         // bottom 在dom中的位置.
-        let offset = this._slider.vertical?this.dimensions.bottom - top:this.dimensions.left - left;
-        let size = this._slider.vertical?this.dimensions.height:this.dimensions.width;
-        let posValue = this._slider.vertical? pos.y-56: pos.x;
+        let offset = this._slider.vertical?dimensions.bottom: dimensions.left;
+        let size = this._slider.vertical?dimensions.height: dimensions.width;
+        let posValue = this._slider.vertical? pos.y - 6: pos.x;
 
         if(this._slider.vertical) {
             posValue = posValue > offset? offset:posValue;
@@ -87,13 +83,7 @@ export class SliderHandle implements OnInit{
         // 解决出现的有时小数点多了N多位.
         newValue = Math.round(Math.round(newValue / this._slider.step) * this._slider.step * Math.pow(10, m)) / Math.pow(10, m);
 
-        if (newValue < this._slider.min) {
-            return this._slider.min;
-        } else if (newValue > this._slider.max) {
-            return this._slider.max;
-        } else {
-            return newValue;
-        }
+        return this._slider._verifyValue(newValue);
     }
 
     /**

@@ -1,13 +1,14 @@
 /**
  * Created by 10177553 on 2017/4/13.
  */
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, AfterViewInit, ViewChild} from '@angular/core';
+import {RdkSlider} from "../../../../../component/slider/slider";
 
 @Component({
     template: `
         <h4>1. 基本滑动条,滑动事件变化. </h4>
         <rdk-switch [(checked)]="disabled" size="small"></rdk-switch>
-        <rdk-slider [(value)]="value1" [disabled]="disabled" (change)="sliderChange($event)" min="20" max="100"></rdk-slider>{{value1}}
+        <rdk-slider [(value)]="value1" [disabled]="disabled" (change)="sliderChange($event)" min="10"></rdk-slider> <span> 取值: {{value1}}</span>
         <hr>
         <br>
         <h4>2. 设置了min和max的滑动条</h4>
@@ -30,13 +31,16 @@ import { Component, OnInit } from '@angular/core';
         <hr>
         <br>
         <h4>6. 垂直滑动条.</h4>
-        <rdk-slider value="50" [vertical]="vertical" class="vertical" style="height: 240px; width: 60px;"></rdk-slider>
+        <rdk-slider [value]="rangeValue2" range="true" [vertical]="vertical" class="vertical" style="height: 240px; width: 60px;" ></rdk-slider>
         
-        <rdk-slider value="50" [marks]="marks2" [vertical]="vertical" class="vertical3"></rdk-slider>
+        <rdk-slider #slider value="120" [marks]="marks2"  min="20" [vertical]="vertical" class="vertical3"></rdk-slider>
     `,
     styleUrls:['./basic.scss']
 })
-export class RdkSliderDemoBasic implements OnInit {
+export class RdkSliderDemoBasic implements OnInit{
+
+    @ViewChild('slider') verticalSlider: RdkSlider;
+
     constructor() { }
 
     value1: number = 30;
@@ -78,6 +82,9 @@ export class RdkSliderDemoBasic implements OnInit {
     public sliderChange3(value) {
         this.value3 = value;
     }
+
+    rangeValue2 = [0, 160];
+
     ngOnInit() { }
 
     vertical = true;
