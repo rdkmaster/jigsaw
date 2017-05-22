@@ -20,7 +20,6 @@ import {CommonUtils} from "../../core/utils/common-utils";
 /**
  *       4. tooltips 支持. 暂不支持
  *       5. 点击的支持。
- *       6. 垂直滚动条有时候计算的高度不准确, 由于取的dom的bottom值不准确. 暂没有好的解决办法;
  */
 export class RdkSlider implements OnInit, OnDestroy {
 
@@ -40,8 +39,6 @@ export class RdkSlider implements OnInit, OnDestroy {
         }
     };
     public set value(value:number| number[]) {
-        // todo 校验 value
-
         if(typeof value  === 'object') {
             this._value = value;
         } else if(this._value.length === 0) {
@@ -63,9 +60,8 @@ export class RdkSlider implements OnInit, OnDestroy {
     }
 
     // 最后重新计算一下, 垂直滚动条的位置.
-    public refresh() {
+    public _refresh() {
         this._dimensions = this._element.nativeElement.getBoundingClientRect();
-        this._changeDetector.detectChanges();
     }
 
     @Output()
@@ -104,7 +100,7 @@ export class RdkSlider implements OnInit, OnDestroy {
         return (value - this.min)/(this.max - this.min) * 100;
     }
 
-    private _dimensions;
+    public _dimensions;
 
     @Input()
     public vertical: boolean = false;
@@ -193,7 +189,11 @@ export class RdkSlider implements OnInit, OnDestroy {
 
     ngOnInit() {
         // 计算slider 的尺寸.
-        this._dimensions = this._element.nativeElement.getBoundingClientRect()
+        this._dimensions = this._element.nativeElement.getBoundingClientRect();
+
+        console.log("init _dimensions: ");
+        console.log(this._dimensions);
+
         // 设置选中的轨道.
         this._setTrackStyle(this.value);
 
@@ -202,6 +202,7 @@ export class RdkSlider implements OnInit, OnDestroy {
         // 注册resize事件;
         this.resize();
     }
+
     private _removeResizeEvent:Function;
 
     private resize() {

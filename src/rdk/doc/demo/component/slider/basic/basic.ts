@@ -30,8 +30,8 @@ import {RdkSlider} from "../../../../../component/slider/slider";
         
         <hr>
         <br>
-        <!--<h4>6. 垂直滑动条.</h4>-->
-        <!--<rdk-slider [value]="rangeValue2" range="true" [vertical]="vertical" class="vertical" style="height: 240px; width: 60px;" ></rdk-slider>-->
+        <h4>6. 垂直滑动条.</h4>
+        <rdk-slider [value]="rangeValue2" range="true" [vertical]="vertical" class="vertical" style="height: 240px; width: 60px;" ></rdk-slider>
         
         <rdk-slider #slider value="120" [marks]="marks2"  min="20" [vertical]="vertical" class="vertical3"></rdk-slider>
     `,
@@ -91,7 +91,7 @@ export class RdkSliderDemoBasic implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
         //
-        this.verticalSlider.refresh();
+        // this.verticalSlider._refresh();
     }
 
 }
