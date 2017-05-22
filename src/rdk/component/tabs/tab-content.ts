@@ -4,7 +4,7 @@
 
 import {
     Component, Input, ViewContainerRef,
-    TemplateRef, AfterViewChecked, ViewChild, Renderer2, ElementRef
+    TemplateRef, AfterViewChecked, ViewChild, Renderer2, ElementRef, AfterViewInit
 } from '@angular/core';
 
 @Component({
@@ -18,7 +18,7 @@ import {
         <div #body></div>
     `
 })
-export class TabContent implements AfterViewChecked {
+export class TabContent implements AfterViewInit {
     @ViewChild('body', {read: ViewContainerRef}) _body: ViewContainerRef;
 
     @Input('content')
@@ -40,7 +40,7 @@ export class TabContent implements AfterViewChecked {
         this._isActive = active;
     }
 
-    ngAfterViewChecked() {
+    ngAfterViewInit() {
         this._body.createEmbeddedView(this._content);
     }
 

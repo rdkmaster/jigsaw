@@ -1,6 +1,6 @@
 import {
     Component, ContentChildren, QueryList, Input, ViewChildren,
-    AfterViewInit, Output, EventEmitter, AfterViewChecked, ChangeDetectorRef
+    AfterViewInit, Output, EventEmitter, ChangeDetectorRef
 } from '@angular/core';
 import {TabPane} from "./tab-pane";
 import {TabLabel} from "./tab-label";
@@ -11,7 +11,7 @@ import {TabContent} from "./tab-content";
     templateUrl: 'tab.html',
     styleUrls: ['./tab.scss']
 })
-export class RdkTab implements AfterViewInit, AfterViewChecked {
+export class RdkTab implements AfterViewInit {
 
     @ContentChildren(TabPane) _tabPanes: QueryList<TabPane>;
 
@@ -104,13 +104,13 @@ export class RdkTab implements AfterViewInit, AfterViewChecked {
         this._setSelectIndex(this.selectedIndex);
     }
 
-    ngAfterViewChecked() {
+    /*ngAfterViewChecked() {
         this._setSelectIndex(this.selectedIndex);
         // 因为已经做过"脏检查", 需要手动再触发检查
         this._changeDetector.detectChanges();
 
         this.tabPanes = this._tabPanes;
-    }
+    }*/
 
     /**
      * 隐藏对应的Tab页.
