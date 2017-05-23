@@ -1,5 +1,6 @@
 import {
-    Component, ContentChildren, QueryList, Input, ViewChildren, AfterViewInit, Output, EventEmitter
+    Component, ContentChildren, QueryList, Input, ViewChildren, AfterViewInit, Output, EventEmitter, TemplateRef,
+    ViewContainerRef, ComponentFactoryResolver
 } from '@angular/core';
 import {RdkPane} from "./tab-pane";
 import {RdkTabLabel} from "./tab-label";
@@ -12,6 +13,10 @@ import {AbstractRDKComponent} from "../core";
     styleUrls: ['./tab.scss']
 })
 export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
+
+    constructor(private _cfr: ComponentFactoryResolver, private _viewContainer: ViewContainerRef){
+        super()
+    }
 
     @ContentChildren(RdkPane)
     private _tabPanes: QueryList<RdkPane>;
@@ -151,17 +156,19 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
      * 添加tab页
      * @param tabPane
      */
-    public addTab(tabPane: RdkPane): void{
+    public addTab(title: TemplateRef<any>, content: TemplateRef<any>){
+        const factory = this._cfr.resolveComponentFactory(RdkPane);
+        let tabPane: RdkPane = this._viewContainer.createComponent(factory).instance;
+        tabPane.label = title;
+        tabPane.content = content;
+
         let tabTemp = this._tabPanes.toArray();
-        if(tabTemp.indexOf(tabPane) == -1){
-            tabTemp.push(tabPane);
-            this._tabPanes.reset(tabTemp);
-            this.length = this._tabPanes.length;
-            this.selectedIndex = this.length - 1;
-        }else{
-            console.warn("请不要重复添加同一个tabPane")
-        }
+        tabTemp.push(tabPane);
+        this._tabPanes.reset(tabTemp);
+        this.length = this._tabPanes.length;
+        this.selectedIndex = this._tabPanes.length - 1;
     }
+
 
     /**
      * 销毁指定的Tab页. 从0开始计数.

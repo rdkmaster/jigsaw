@@ -17,6 +17,7 @@ import {RdkShowTabComponent} from "./showTab/showTab";
 import {RdkDestoryTabComponent} from "./destoryTab/destoryTab";
 import {RdkTabsComponent} from "./tabs/Tabs";
 import {dynamicTabDemoComponent} from "./tabApi/dynamicTab";
+import {RdkPane} from "../../../../component/tabs/tab-pane";
 
 const routes=[
     {
@@ -57,6 +58,8 @@ const routes=[
     declarations: [RdkTabsDemoComponent,RdkTabsWithInputComponent,RdkTabsWithNgForComponent,
         RdkHideTabComponent,RdkShowTabComponent,RdkDestoryTabComponent,RdkTabsComponent, dynamicTabDemoComponent],
     providers: [],
-    schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+    schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+    entryComponents: [RdkPane]
+
 })
 export class TabsDemoModule { }

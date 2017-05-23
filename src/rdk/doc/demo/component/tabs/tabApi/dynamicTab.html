@@ -1,6 +1,6 @@
 <div class="container">
     <div class="tabBar">
-        <input type="button" value="增加" (click)="addTab(tabPane)">
+        <input type="button" value="增加" (click)="addTab(tabTitle, tabContent)">
         <input type="button" value="隐藏第一个Tab页" (click)="hideTab(0)">
         <input type="button" value="显示第一个Tab页" (click)="showTab(0)">
         <input type="button" value="删除第一个Tab页" (click)="removeTab(0)">
@@ -13,16 +13,17 @@
     </rdk-tab>
 </div>
 
-<rdk-pane #tabPane [async]="true">
-    <div rdk-title>tab <rdk-button width="20" height="20">ok</rdk-button></div>
-    <div rdk-body>
-        <label>name: </label>
-        <rdk-input></rdk-input>
-        <br>
-        <label>gender: </label>
-        <rdk-input></rdk-input>
-        <br>
-        <rdk-button>confirm</rdk-button>
-    </div>
-</rdk-pane>
+<ng-template #tabTitle>
+    tab <rdk-button width="20" height="20">ok</rdk-button>
+</ng-template>
+<ng-template #tabContent>
+    <label>name: </label>
+    <rdk-input></rdk-input>
+    <br>
+    <label>gender: </label>
+    <rdk-input></rdk-input>
+    <br>
+    <rdk-button>confirm</rdk-button>
+</ng-template>
+
 

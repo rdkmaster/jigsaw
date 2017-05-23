@@ -56,8 +56,8 @@ export class dynamicTabDemoComponent implements OnInit {
         this.tabs.showTab(index);
     }
 
-    public addTab(tabPane) {
-        this.tabs.addTab(tabPane)
+    public addTab(tabTitle, tabContent) {
+        this.tabs.addTab(tabTitle, tabContent)
     }
     ngOnInit() { }
 }
