@@ -150,8 +150,8 @@ export class RdkTime extends AbstractRDKComponent implements OnInit ,OnDestroy {
             inline: true,
             defaultDate: TimeService.getDate(this._value,this._gr),
             format: TimeService.getFormator(this._gr),
-            minDate: TimeService.getDate(this._limitStart),
-            maxDate: TimeService.getDate(this._limitEnd)
+            minDate: this._limitStart && TimeService.addDate(TimeService.getDate(this._limitStart),-1,'s'),
+            maxDate: this._limitEnd && TimeService.addDate(TimeService.getDate(this._limitEnd),1,'s')
         }).on("dp.change", (e) => {
             if(TimeService.formatWithGr(TimeService.getDate(this._value,this._gr), this._gr) !=
                 TimeService.formatWithGr(TimeService.getDate(e.date,this._gr), this._gr)){
@@ -187,8 +187,8 @@ export class RdkTime extends AbstractRDKComponent implements OnInit ,OnDestroy {
 
     private handleLimitStartAndEnd(start, end) {
         if (this._timepicker) {
-            start && this._timepicker.minDate(TimeService.getDate(start));
-            end && this._timepicker.maxDate(TimeService.getDate(end));
+            start && this._timepicker.minDate(TimeService.addDate(TimeService.getDate(start),-1,'s'));
+            end && this._timepicker.maxDate(TimeService.addDate(TimeService.getDate(end),1,'s'));
             if (this._gr == TimeGr.week) {
                 this.handleWeekSelect();
             }
