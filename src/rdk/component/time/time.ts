@@ -1,5 +1,5 @@
 import {
-    Component, Input, Output, ElementRef, OnInit, EventEmitter, Renderer2, ChangeDetectorRef
+    Component, Input, Output, ElementRef, OnInit, EventEmitter, Renderer2, ChangeDetectorRef, OnDestroy
 } from '@angular/core';
 import {AbstractRDKComponent} from '../core';
 import {TimeGr, TimeService, TimeWeekStart} from "../../service/time.service";
@@ -28,7 +28,7 @@ export type grItem = {
     }
 })
 
-export class RdkTime extends AbstractRDKComponent implements OnInit {
+export class RdkTime extends AbstractRDKComponent implements OnInit ,OnDestroy {
 
 
     private _value: Time;
@@ -135,6 +135,12 @@ export class RdkTime extends AbstractRDKComponent implements OnInit {
         this.initDatePicker();
         this.checkMacro();
 
+    }
+
+    ngOnDestroy(){
+        if(this._timepicker){
+            this._timepicker.destroy();
+        }
     }
 
     private initDatePicker(){
