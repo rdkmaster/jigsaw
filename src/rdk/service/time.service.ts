@@ -17,12 +17,13 @@ export class TimeService {
 
     private static timeUnitMap = new Map([['s','seconds'],['m','minutes'],['h',"hours"],['d','days'],['M','months'],['y','years']]);
 
-    private static init = TimeService.initMoment();
-
-
     private static initMoment(){
         moment.suppressDeprecationWarnings = 1;
     }
+
+    private static init = TimeService.initMoment();
+
+
 
     /**
      * 是否是时间宏字符串
