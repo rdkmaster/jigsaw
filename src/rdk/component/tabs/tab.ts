@@ -27,9 +27,7 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
 
     // tab页点击
     public _$tabClick(index) {
-        if (this.selectedIndex !== index) {
-            this.selectedIndex = index;
-        }
+        this.selectedIndex = index;
     }
 
     private _selectedIndex: number;
@@ -40,19 +38,24 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
     }
 
     public set selectedIndex(value: number) {
-        if (this._selectedIndex !== value && typeof value == 'number' && this.initialized) {
+        if (this._selectedIndex !== value && typeof value == 'number') {
             this._selectedIndex = value;
 
-            // 发出事件, 返回相应
-            this.selectChange.emit(this._getTabPaneByIndex(value));
-            this.selectedIndexChanged.emit(value);
-
-            this._asyncSetStyle(value);
+            if (this.initialized) {
+                this._handleSelectChange(value)
+            }
         }
     }
 
     @Output()
     public selectedIndexChanged = new EventEmitter<number>();
+
+    private _handleSelectChange(index) {
+        this.selectChange.emit(this._getTabPaneByIndex(index));
+        this.selectedIndexChanged.emit(index);
+
+        this._asyncSetStyle(index);
+    }
 
     private _inkBarStyle: object = {};
 
@@ -90,14 +93,19 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
         this.selectedIndex = this._tabPanes.toArray().findIndex(tabPane => !tabPane.disabled && !tabPane.hidden);
     }
 
-    private _asyncSetStyle(index: number): void{
+    private _asyncSetStyle(index: number): void {
         setTimeout(() => {
             this._setInkBarStyle(index);
         }, 0)
     }
 
     ngAfterViewInit() {
-        this._autoSelect();
+        if (this.selectedIndex !== null || this.selectedIndex !== undefined) {
+            this._handleSelectChange(this.selectedIndex)
+        } else {
+            this._autoSelect();
+        }
+
         this.tabPanes = this._tabPanes;
     }
 
