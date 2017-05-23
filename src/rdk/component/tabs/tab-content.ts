@@ -33,10 +33,6 @@ export class RdkTabContent extends AbstractRDKComponent implements AfterViewInit
 
     private _contentRef: EmbeddedViewRef<any>;
 
-    constructor(private _render: Renderer2, private _element: ElementRef) {
-        super()
-    };
-
     private _isActive: boolean;
 
     @Input()

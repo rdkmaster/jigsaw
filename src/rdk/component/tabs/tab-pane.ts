@@ -1,10 +1,10 @@
 /**
  * Created by 10177553 on 2017/3/29.
  */
-import {Component, ContentChild, Input, TemplateRef, ViewChild} from '@angular/core';
+import {Component, Input, TemplateRef, ViewChild} from '@angular/core';
 
 @Component({
-    selector: 'rdk-tab-pane',
+    selector: 'rdk-pane',
     template: `
         <ng-template #label>
             {{title}}
@@ -16,7 +16,7 @@ import {Component, ContentChild, Input, TemplateRef, ViewChild} from '@angular/c
         
     `
 })
-export class RdkTabPane {
+export class RdkPane {
     @Input()
     public title: string;
 

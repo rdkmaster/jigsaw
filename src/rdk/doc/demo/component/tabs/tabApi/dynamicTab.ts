@@ -3,7 +3,7 @@
  */
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {RdkTab} from "../../../../../component/tabs/tab";
-import {RdkTabPane} from "../../../../../component/tabs/tab-pane";
+import {RdkPane} from "../../../../../component/tabs/tab-pane";
 
 @Component({
     templateUrl: './dynamicTab.html',
@@ -26,7 +26,7 @@ import {RdkTabPane} from "../../../../../component/tabs/tab-pane";
 })
 export class dynamicTabDemoComponent implements OnInit {
     @ViewChild(RdkTab) tabs: RdkTab;
-    @ViewChild('tabPane') tabPane: RdkTabPane;
+    @ViewChild('tabPane') tabPane: RdkPane;
 
     activeIndex: number = 0;
 

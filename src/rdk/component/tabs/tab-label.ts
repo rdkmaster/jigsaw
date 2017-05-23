@@ -3,8 +3,7 @@
  */
 
 import {
-    Input, ElementRef, Renderer2, TemplateRef, Component, ViewChild, ViewContainerRef, AfterViewInit,
-    EmbeddedViewRef
+    Input, ElementRef, TemplateRef, Component, ViewChild, ViewContainerRef, AfterViewInit, EmbeddedViewRef
 } from "@angular/core";
 
 @Component({
@@ -24,7 +23,7 @@ export class RdkTabLabel implements AfterViewInit{
 
     private _labelRef: EmbeddedViewRef<any>;
 
-    constructor( private _elementRef: ElementRef, private _render: Renderer2) {}
+    constructor( private _elementRef: ElementRef) {}
 
     // label 左侧的距离
     public getOffsetLeft(): number {

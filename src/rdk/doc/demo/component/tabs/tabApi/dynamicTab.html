@@ -8,14 +8,14 @@
     </div>
 
     <rdk-tab [selectedIndex]="activeIndex">
-        <rdk-tab-pane *ngFor="let tab of dynamicTabs" [disabled]="tab.disabled" [title]="tab.label">
+        <rdk-pane *ngFor="let tab of dynamicTabs" [disabled]="tab.disabled" [title]="tab.label">
             {{tab.content}}
-        </rdk-tab-pane>
+        </rdk-pane>
     </rdk-tab>
 </div>
 
 
-<rdk-tab-pane #tabPane [async]="true">
+<rdk-pane #tabPane [async]="true">
     <span rdk-title>tab <rdk-button width="20" height="20">ok</rdk-button></span>
     <div class="tab-content">
         <label>name: </label>
@@ -26,4 +26,4 @@
         <br>
         <rdk-button>confirm</rdk-button>
     </div>
-</rdk-tab-pane>
+</rdk-pane>

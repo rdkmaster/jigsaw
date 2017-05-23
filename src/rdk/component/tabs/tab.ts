@@ -1,7 +1,7 @@
 import {
     Component, ContentChildren, QueryList, Input, ViewChildren, AfterViewInit, Output, EventEmitter
 } from '@angular/core';
-import {RdkTabPane} from "./tab-pane";
+import {RdkPane} from "./tab-pane";
 import {RdkTabLabel} from "./tab-label";
 import {RdkTabContent} from "./tab-content";
 import {AbstractRDKComponent} from "../core";
@@ -13,7 +13,7 @@ import {AbstractRDKComponent} from "../core";
 })
 export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
 
-    @ContentChildren(RdkTabPane) _tabPanes: QueryList<RdkTabPane>;
+    @ContentChildren(RdkPane) _tabPanes: QueryList<RdkPane>;
 
     // 声明不可修改的暴露属性.所有包含 TabPane
     public tabPanes = this._tabPanes;
@@ -23,7 +23,7 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
     @ViewChildren(RdkTabContent) _tabContent: QueryList<RdkTabContent>;
 
     @Output()
-    public selectChange = new EventEmitter<RdkTabPane>();
+    public selectChange = new EventEmitter<RdkPane>();
 
     // tab页点击
     public _$tabClick(index) {
@@ -85,7 +85,7 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
         }
     }
 
-    private _getTabPaneByIndex(key): RdkTabPane {
+    private _getTabPaneByIndex(key): RdkPane {
         return this._tabPanes.find((item, index) => index === key);
     }
 
