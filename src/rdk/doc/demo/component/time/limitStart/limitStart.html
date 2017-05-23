@@ -1,0 +1,7 @@
+<h4>LimitStart Time</h4>
+
+LimitStart : <rdk-tile-select [data]="datas" [(selectedItems)]="limitStart" [multipleSelect]="false"></rdk-tile-select>
+
+<rdk-time [(date)]="date" [limitStart]="limitStart[0].label"></rdk-time><br>
+
+Selected Time : {{date}}
