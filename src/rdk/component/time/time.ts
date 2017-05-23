@@ -137,12 +137,9 @@ export class RdkTime extends AbstractRDKComponent implements OnInit {
 
     }
 
-    private _first : boolean;
-
     private initDatePicker(){
         let insert = this.el.nativeElement.querySelector(".rdk-time-box");
         TimeService.setWeekStart(this._weekStart);
-        this._first = true;
         $(insert).datetimepicker({
             inline: true,
             defaultDate: TimeService.getDate(this._value,this._gr),
@@ -150,11 +147,10 @@ export class RdkTime extends AbstractRDKComponent implements OnInit {
             minDate: TimeService.getDate(this._limitStart),
             maxDate: TimeService.getDate(this._limitEnd)
         }).on("dp.change", (e) => {
-            if(this._first) {
-                this._first = false ;
-            }else{
+            if(TimeService.formatWithGr(TimeService.getDate(this._value,this._gr), this._gr) !=
+                TimeService.formatWithGr(TimeService.getDate(e.date,this._gr), this._gr)){
                 this.handleValueChange(e.date, this._gr);
-            }
+             }
         });
         this._timepicker = $(insert).data("DateTimePicker");
         this.handleValueChange(this._value, this._gr ,true);
