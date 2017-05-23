@@ -35,7 +35,7 @@ const routes=[
         path:'showTab', component: RdkShowTabComponent
     },
     {
-        path:'destoryTab', component: RdkDestoryTabComponent
+        path:'removeTab', component: RdkDestoryTabComponent
     },
     {
         path:'dynamicTab', component: dynamicTabDemoComponent
