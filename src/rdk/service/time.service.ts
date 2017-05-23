@@ -11,11 +11,11 @@ export enum TimeWeekStart {
 
 export class TimeService {
 
-    private static timeFormatMap = new Map([[TimeGr.second,'YYYY-MM-DD, HH:mm:ss'], [TimeGr.minute,'YYYY-MM-DD, HH:mm'],
-        [TimeGr.hour,'YYYY-MM-DD, HH'],[TimeGr.date,'YYYY-MM-DD'],
+    private static timeFormatMap = new Map([[TimeGr.second,'YYYY-MM-DD,HH:mm:ss'], [TimeGr.minute,'YYYY-MM-DD,HH:mm'],
+        [TimeGr.hour,'YYYY-MM-DD,HH'],[TimeGr.date,'YYYY-MM-DD'],
         [TimeGr.week,'YYYY-MM-DD'],[TimeGr.month,'YYYY-MM']]);
 
-    private static timeUnitMap = new Map([['h',"hours"],['d','days'],['m','months'],['y','years']]);
+    private static timeUnitMap = new Map([['s','seconds'],['m','minutes'],['h',"hours"],['d','days'],['M','months'],['y','years']]);
 
     private static init = TimeService.initMoment();
 
@@ -91,7 +91,8 @@ export class TimeService {
      * @param gr
      */
     public static formatWithGr(date, gr): string {
-        return moment(date).format(TimeService.getFormator(gr));
+        let format = TimeService.getFormator(gr);
+        return moment(date).format(format);
     }
 
 
@@ -136,7 +137,7 @@ export class TimeService {
      * @param str
      * @returns {any}
      */
-    public static getDate(str): any {
+    public static getDate(str,gr?): any {
         if (TimeService.isMacro(str)) {
             str = str.replace(/\s+/g, "");
             var fullPara = /([a-z]+)(\+|\-)?([\d]+)([a-z]+)?/i;
@@ -146,12 +147,11 @@ export class TimeService {
             } else { //无加减 now
                 return TimeService.timeMacroConvert(str);
             }
-        } else {
-            if (typeof str === 'string') {
-                return moment(str);
-            } else {
-                return str;
+        }else{
+            if(typeof str === "string" && gr){
+                return moment(str,TimeService.getFormator(gr));
             }
         }
+        return str;
     }
 }
