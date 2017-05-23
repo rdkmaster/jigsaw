@@ -100,7 +100,7 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        if (this.selectedIndex !== null || this.selectedIndex !== undefined) {
+        if (this.selectedIndex != null) {
             this._handleSelectChange(this.selectedIndex)
         } else {
             this._autoSelect();
