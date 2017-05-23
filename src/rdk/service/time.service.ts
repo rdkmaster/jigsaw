@@ -1,125 +1,48 @@
-import {Injectable} from '@angular/core';
 
-//let moment = require('moment');
-//import * as moment from 'moment';
 
-@Injectable()
+export enum TimeGr {
+    second,minute,hour,date,week,month
+}
+
+export enum TimeWeekStart {
+    sun ,mon ,tue ,wed ,thu ,fri ,sat
+}
+
+
 export class TimeService {
 
-    constructor() {
-        moment.locale('zh-cn');
+    private static timeFormatMap = new Map([[TimeGr.second,'YYYY-MM-DD,HH:mm:ss'], [TimeGr.minute,'YYYY-MM-DD,HH:mm'],
+        [TimeGr.hour,'YYYY-MM-DD,HH'],[TimeGr.date,'YYYY-MM-DD'],
+        [TimeGr.week,'YYYY-MM-DD'],[TimeGr.month,'YYYY-MM']]);
+
+    private static timeUnitMap = new Map([['s','seconds'],['m','minutes'],['h',"hours"],['d','days'],['M','months'],['y','years']]);
+
+    private static init = TimeService.initMoment();
+
+
+    private static initMoment(){
+        moment.suppressDeprecationWarnings = 1;
     }
 
-    /*
-     *
-     * 获取时间，支持时间宏，格式化
-     * @param 时间（时间宏，时间字符串，Date对象） 粒度
-     *
-     * */
-    public getDate(timeMacro, gr): string {
-        if (typeof timeMacro === 'string') {
-            var isLetter = /^[a-z]/i;
-            if (isLetter.test(timeMacro)) {
-                timeMacro = timeMacro.replace(/\s+/g, "");
-                var fullPara = /([a-z]+)(\+|\-)?([\d]+)([a-z]+)?/i;
-                var timeMacroArr = fullPara.exec(timeMacro);
-                if (timeMacroArr && timeMacroArr[2] != undefined) { //有加减 now-2d
-                    var result = null;
-                    if (timeMacroArr[2] == "+") {
-                        result = this.formatWithGr(this.addDate(this._timeMacroConvert(timeMacroArr[1]), timeMacroArr[3], timeMacroArr[4]), gr);
-                    }
-                    else if (timeMacroArr[2] == "-") {
-                        result = this.formatWithGr(this.subtractDate(this._timeMacroConvert(timeMacroArr[1]), timeMacroArr[3], timeMacroArr[4]), gr);
-                    }
-                    return result;
-                } else { //无加减 now
-                    return this.formatWithGr(this._timeMacroConvert(timeMacro), gr);
-                }
-            } else { //时间字符串 2017-03-10, 12:00:00
-                return this.formatWithGr(timeMacro, gr);
-            }
-        } else { //Date对象
-            return this.formatWithGr(timeMacro, gr);
+    /**
+     * 是否是时间宏字符串
+     * @param str
+     * @returns {boolean}
+     */
+    public static isMacro(str) : boolean{
+        if(typeof str === 'string'){
+            let hasLetter = /^[a-z]/i;
+            if(hasLetter.test(str)) return true;
         }
+        return false;
     }
 
-    /*
-     *
-     * 格式化时间
-     * @param 时间 时间格式
-     *
-     * */
-    public format(date, formator): string {
-        return moment(date).format(formator);
-    }
-
-    /*
-     *
-     * 格式化时间
-     * @param 时间 粒度
-     *
-     * */
-    public formatWithGr(date, gr): string {
-        return moment(date).format(this._getFormator(gr));
-    }
-
-    /*
-     *
-     * 时间加法
-     * @param 时间 数值 单位
-     *
-     * */
-    public addDate(date, num, unit): string {
-        return moment(date).add(num, unit);
-    }
-
-    /*
-     *
-     * 时间减法
-     * @param 时间 数值 单位
-     *
-     * */
-    public subtractDate(date, num, unit): string {
-        return moment(date).subtract(num, unit);
-    }
-
-    /*
-     *
-     * 获取时间格式
-     * @param 粒度
-     *
-     * */
-    private _getFormator(gr): string {
-        let format: string;
-        switch (gr) {
-            case 'quarter':
-                format = 'YYYY-Q';
-                break;
-            case 'month':
-                format = 'YYYY-MM';
-                break;
-            case 'week':
-                format = 'YYYY-W';
-                break;
-            case 'day':
-                format = 'YYYY-MM-DD';
-                break;
-            case 'hour':
-                format = 'YYYY-MM-DD, HH';
-                break;
-            case 'minute':
-                format = 'YYYY-MM-DD, HH:mm';
-                break;
-            case 'second':
-                format = 'YYYY-MM-DD, HH:mm:ss';
-                break;
-            default:
-                format = 'YYYY-MM-DD, HH:mm:ss';
-        }
-        return format;
-    }
-
-    private _timeMacroConvert(timeMacro): Date {
+    /**
+     * 特殊时间宏的转换
+     * @param timeMacro
+     * @returns {any}
+     */
+    private static timeMacroConvert(timeMacro): any {
         var date;
         switch (timeMacro) {
             case 'now':
@@ -132,4 +55,103 @@ export class TimeService {
         return date;
     }
 
+    /**
+     * 时间加减法
+     * @param date  时间
+     * @param num   数量 负数即为减法
+     * @param unit  单位
+     */
+    public static addDate(date, num, unit): string {
+        return moment(date).add(num, TimeService.timeUnitMap.get(unit));
+    }
+
+
+    /**
+     * 根据粒度获取格式化字符串
+     * @param gr
+     * @returns {string}
+     */
+    public static getFormator(gr:TimeGr): string {
+        return TimeService.timeFormatMap.has(gr)?TimeService.timeFormatMap.get(gr) : 'YYYY-MM-DD';
+    }
+
+
+    /**
+     * 时间格式化
+     * @param date
+     * @param formator
+     */
+    public static format(date, formator): string {
+        return moment(date).format(formator);
+    }
+
+    /**
+     * 根据粒度格式化时间
+     * @param date
+     * @param gr
+     */
+    public static formatWithGr(date, gr): string {
+        let format = TimeService.getFormator(gr);
+        return moment(date).format(format);
+    }
+
+
+    /**
+     * 设置默认周开始
+     * @param weekStart
+     */
+    public static setWeekStart(weekStart:TimeWeekStart = TimeWeekStart.sun){
+        let locale = moment.locale();
+        moment.updateLocale(locale, {
+            week : {
+                dow : weekStart
+            }
+        });
+    }
+
+
+
+    public static getWeekofYear(date) : number{
+        return moment(date).week();
+    }
+
+    public static getYear(date) : number{
+        return moment(date).year();
+    }
+
+    public static getMonth(date) : number{
+        return moment(date).month()+1;
+    }
+
+    public static getDay(date) : number{
+        return moment(date).date();
+    }
+
+
+    public static getDateFromYearAndWeek(year:number,week:number): Date{
+        return moment().year(year).week(week)
+    }
+
+    /**
+     * 根据字符串获取真实时间
+     * @param str
+     * @returns {any}
+     */
+    public static getDate(str,gr?): any {
+        if (TimeService.isMacro(str)) {
+            str = str.replace(/\s+/g, "");
+            var fullPara = /([a-z]+)(\+|\-)?([\d]+)([a-z]+)?/i;
+            var timeMacroArr = fullPara.exec(str);
+            if (timeMacroArr && timeMacroArr[2] != undefined) { //有加减 now-2d
+                return TimeService.addDate(TimeService.timeMacroConvert(timeMacroArr[1]), "" + timeMacroArr[2] + timeMacroArr[3], timeMacroArr[4]);
+            } else { //无加减 now
+                return TimeService.timeMacroConvert(str);
+            }
+        }else{
+            if(typeof str === "string" && gr){
+                return moment(str,TimeService.getFormator(gr));
+            }
+        }
+        return str;
+    }
 }

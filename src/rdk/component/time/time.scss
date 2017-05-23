@@ -5,12 +5,106 @@ $time-prefix-cls: #{$rdk-prefix}-time;
 :host {
     @include inline-block();
     width: 300px;
-    .time-box {
+    border: 1px solid $border-color-base ;
+    border-radius: $border-radius-base;
+    padding: 5px;
+    .#{$time-prefix-cls}-box {
         width: 100%;
+        /deep/ {
+            .bootstrap-datetimepicker-widget table{
+                th, .year, .day{
+                    font-weight: bold;
+                }
+                tr{
+                    td{
+                        &.disabled{
+                            color: #dedede;
+                        }
+                        &.today:before{
+                            display: none;
+                        }
+                        &.expect-day{
+                            border-radius: 0;
+                            &.border-left{
+                                border-top-left-radius: 4px;
+                                border-bottom-left-radius: 4px;
+                            }
+                            &.border-right{
+                                border-top-right-radius: 4px;
+                                border-bottom-right-radius: 4px;
+                            }
+                            &:last-child{
+                                border-top-right-radius: 4px;
+                                border-bottom-right-radius: 4px;
+                            }
+                            &:first-child{
+                                border-top-left-radius: 4px;
+                                border-bottom-left-radius: 4px;
+                            }
+                            &:not(.active){
+                                background-color: #b8e3f7;
+                                color: #666;
+                                &:hover{
+                                    background:#3ab1ea;
+                                    color: #fff;
+                                }
+                            }
+                        }
+                    }
+                  &.active{
+                      background-color: transparent;
+                      td {
+                          background-color: #337ab7 !important;
+                          border-radius: 0 !important;
+                          color: #fff;
+                          &:first-child {
+                              border-top-left-radius: 4px !important;
+                              border-bottom-left-radius: 4px !important;
+                          }
+                          &:last-child {
+                              border-top-right-radius: 4px !important;
+                              border-bottom-right-radius: 4px !important;
+                          }
+                          &.today:before{
+                              display: none;
+                          }
+                          &.expect-day{
+                              background:#3ab1ea;
+                              color: #fff;
+                          }
+                      }
+                  }
+                }
+            }
+        }
     }
-}
-
-.#{$time-prefix-cls}-hidden {
-    display: none !important;
+    .#{$time-prefix-cls}-granularity {
+        display: flex;
+        justify-content: center;
+        &>span {
+            font-size: 12px;
+            display: inline-block;
+            height: 26px;
+            line-height: 26px;
+            padding: 0 10px;
+            border: 1px solid #008FD4;
+            border-right: 0;
+            color: #008FD4;
+            cursor: pointer;
+            &:first-child {
+                border-top-left-radius: 5px;
+                border-bottom-left-radius: 5px;
+            }
+            &:last-child {
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+                border-right: 1px solid #008FD4;
+            }
+            &.active {
+                background-color: #008FD4;
+                color: #fff;
+            }
+        }
+    }
 }
 

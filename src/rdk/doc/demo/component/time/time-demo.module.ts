@@ -1,8 +1,17 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {TimeBasicDemoComponent} from "./basic/basic";
+import {RdkTimeModule} from "../../../../component/time/index";
+import {RdkButtonModule} from "../../../../component/button/button";
+import {TimeLimitEndComponent} from "./limitEnd/limitEnd";
+import {RdkTileSelectModule} from "../../../../component/tile-select/tile-select";
+import {TimeLimitStartComponent} from "./limitStart/limitStart";
+import {TimeWeekStartComponent} from "./weekStart/weekStart";
+import {TimeGrComponent} from "./gr/gr";
+import {TimeRecommendedComponent} from "./recommended/recommended";
+import {TimeGrItemsComponent} from "./grItems/grItems";
+import {TimeRefreshIntervalComponent} from "./refreshInterval/refreshInterval";
 
-import { RdkTimeModule } from "../../../../component/time/time";
 
 
 const inputDemoRoutes=[
@@ -13,6 +22,20 @@ const inputDemoRoutes=[
     },
     {
         path:'basic', component: TimeBasicDemoComponent
+    },{
+        path:'limitEnd', component: TimeLimitEndComponent
+    },{
+        path:'limitStart', component: TimeLimitStartComponent
+    },{
+        path:'weekStart', component: TimeWeekStartComponent
+    },{
+        path:'gr', component: TimeGrComponent
+    },{
+        path:'recommended', component: TimeRecommendedComponent
+    },{
+        path:'grItems', component: TimeGrItemsComponent
+    },{
+        path:'refreshInterval', component: TimeRefreshIntervalComponent
     },
     {
         path:'**', //fallback router must in the last
@@ -22,13 +45,11 @@ const inputDemoRoutes=[
 
 @NgModule({
     declarations: [
-        TimeBasicDemoComponent
+        TimeBasicDemoComponent,TimeLimitEndComponent,TimeLimitStartComponent,TimeWeekStartComponent,TimeRecommendedComponent,
+        TimeGrComponent,TimeGrItemsComponent,TimeRefreshIntervalComponent
     ],
     imports: [
-        RouterModule.forChild(inputDemoRoutes), RdkTimeModule
-    ],
-    exports: [
-        TimeBasicDemoComponent
+        RouterModule.forChild(inputDemoRoutes), RdkTimeModule,RdkButtonModule,RdkTileSelectModule
     ],
     providers: []
 })
