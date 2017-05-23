@@ -51,7 +51,6 @@ export class TabLabel implements AfterViewInit{
     }
 
     public destroy(): void {
-        //this._render.parentNode(this._elementRef.nativeElement).removeChild(this._elementRef.nativeElement);
         if (this._labelRef) {
             this._labelRef.destroy();
             this._labelRef = null

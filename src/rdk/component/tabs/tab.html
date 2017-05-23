@@ -1,5 +1,5 @@
 <div class="rdk-tabs">
-    <div *ngIf="_tabPanes&& _tabPanes.length > 0" class="rdk-tabs-bar">
+    <div *ngIf="_tabPanes && _tabPanes.length > 0" class="rdk-tabs-bar">
         <div class="rdk-tabs-nav-container">
             <!-- Todo 添加滚动条 -->
             <div class="rdk-tabs-nav-wrap">
@@ -13,13 +13,13 @@
                                    [class.rdk-tabs-tab-active]="selectedIndex === i"
                                    [class.rdk-tabs-tab-disabled]="tab.disabled"
                                    [class.rdk-tabs-tab-hidden]="tab.hidden"
-                                   (click)="_tabClick(i)">
+                                   (click)="_$tabClick(i)">
                     </rdk-tab-label>
                 </div>
             </div>
         </div>
     </div>
-    <div class="rdk-tabs-content">
+    <div class="rdk-tabs-content" *ngIf="_tabPanes && _tabPanes.length > 0">
         <rdk-tab-content
             *ngFor="let tab of _tabPanes; let i = index;"
             contentKey="{{i}}"

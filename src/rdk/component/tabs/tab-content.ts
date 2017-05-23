@@ -68,7 +68,6 @@ export class TabContent extends AbstractRDKComponent implements AfterViewInit {
     }
 
     public destroy(): void {
-        //this._render.parentNode(this._element.nativeElement).removeChild(this._element.nativeElement);
         if (this._contentRef) {
             this._contentRef.destroy();
             this._contentRef = null
