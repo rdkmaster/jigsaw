@@ -19,7 +19,7 @@ import {AbstractRDKComponent} from "../core";
         <ng-template #body></ng-template>
     `
 })
-export class TabContent extends AbstractRDKComponent implements AfterViewInit {
+export class RdkTabContent extends AbstractRDKComponent implements AfterViewInit {
     @ViewChild('body', {read: ViewContainerRef}) _body: ViewContainerRef;
 
     @Input('content')

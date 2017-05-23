@@ -13,12 +13,12 @@ import {
         <ng-template #body></ng-template>
     `
 })
-export class TabLabel implements AfterViewInit{
+export class RdkTabLabel implements AfterViewInit{
     @Input()
     public key: number;
 
-    @Input('title')
-    private _title: TemplateRef<any>;
+    @Input('label')
+    private _label: TemplateRef<any>;
 
     @ViewChild('body', {read: ViewContainerRef}) _body: ViewContainerRef;
 
@@ -46,7 +46,7 @@ export class TabLabel implements AfterViewInit{
 
     public insert(): void {
         if (!this._labelRef) {
-            this._labelRef = this._body.createEmbeddedView(this._title);
+            this._labelRef = this._body.createEmbeddedView(this._label);
         }
     }
 

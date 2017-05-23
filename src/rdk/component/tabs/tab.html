@@ -9,7 +9,7 @@
                     <rdk-tab-label class="rdk-tabs-tab"
                                    *ngFor="let tab of _tabPanes; let i = index"
                                    [key]="i"
-                                   [title]="tab.title"
+                                   [label]="tab.label"
                                    [class.rdk-tabs-tab-active]="selectedIndex === i"
                                    [class.rdk-tabs-tab-disabled]="tab.disabled"
                                    [class.rdk-tabs-tab-hidden]="tab.hidden"

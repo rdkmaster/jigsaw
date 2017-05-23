@@ -1,9 +1,9 @@
 import {
     Component, ContentChildren, QueryList, Input, ViewChildren, AfterViewInit, Output, EventEmitter
 } from '@angular/core';
-import {TabPane} from "./tab-pane";
-import {TabLabel} from "./tab-label";
-import {TabContent} from "./tab-content";
+import {RdkTabPane} from "./tab-pane";
+import {RdkTabLabel} from "./tab-label";
+import {RdkTabContent} from "./tab-content";
 import {AbstractRDKComponent} from "../core";
 
 @Component({
@@ -13,17 +13,17 @@ import {AbstractRDKComponent} from "../core";
 })
 export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
 
-    @ContentChildren(TabPane) _tabPanes: QueryList<TabPane>;
+    @ContentChildren(RdkTabPane) _tabPanes: QueryList<RdkTabPane>;
 
     // 声明不可修改的暴露属性.所有包含 TabPane
     public tabPanes = this._tabPanes;
 
-    @ViewChildren(TabLabel) _tabLabel: QueryList<TabLabel>;
+    @ViewChildren(RdkTabLabel) _tabLabel: QueryList<RdkTabLabel>;
 
-    @ViewChildren(TabContent) _tabContent: QueryList<TabContent>;
+    @ViewChildren(RdkTabContent) _tabContent: QueryList<RdkTabContent>;
 
     @Output()
-    public selectChange = new EventEmitter<TabPane>();
+    public selectChange = new EventEmitter<RdkTabPane>();
 
     // tab页点击
     public _$tabClick(index) {
@@ -85,7 +85,7 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
         }
     }
 
-    private _getTabPaneByIndex(key): TabPane {
+    private _getTabPaneByIndex(key): RdkTabPane {
         return this._tabPanes.find((item, index) => index === key);
     }
 
@@ -107,6 +107,7 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
         }
 
         this.tabPanes = this._tabPanes;
+        console.log(this.tabPanes);
     }
 
     /**
@@ -145,12 +146,15 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
         }
     }
 
+    public addTab(){
+
+    }
 
     /**
      * 销毁指定的Tab页. 从0开始计数.
      * @param index
      */
-    destroyTabPane(index) {
+    public destroyTabPane(index) {
         if (this._tabPanes.length - index < 1) {
             console.info("没有对应tab-pane 供删除");
             return;
