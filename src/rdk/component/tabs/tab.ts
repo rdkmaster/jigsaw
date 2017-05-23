@@ -13,17 +13,19 @@ import {AbstractRDKComponent} from "../core";
 })
 export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
 
-    @ContentChildren(RdkPane) _tabPanes: QueryList<RdkPane>;
+    @ContentChildren(RdkPane)
+    private _tabPanes: QueryList<RdkPane>;
 
-    // 声明不可修改的暴露属性.所有包含 TabPane
-    public tabPanes = this._tabPanes;
+    @ViewChildren(RdkTabLabel)
+    private _tabLabel: QueryList<RdkTabLabel>;
 
-    @ViewChildren(RdkTabLabel) _tabLabel: QueryList<RdkTabLabel>;
-
-    @ViewChildren(RdkTabContent) _tabContent: QueryList<RdkTabContent>;
+    @ViewChildren(RdkTabContent)
+    private _tabContent: QueryList<RdkTabContent>;
 
     @Output()
     public selectChange = new EventEmitter<RdkPane>();
+
+    public length: number;
 
     // tab页点击
     public _$tabClick(index) {
@@ -106,15 +108,14 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
             this._autoSelect();
         }
 
-        this.tabPanes = this._tabPanes;
-        console.log(this.tabPanes);
+        this.length = this._tabPanes.length;
     }
 
     /**
      * 隐藏对应的Tab页.
      * @param key (tab pane 的顺序.)
      */
-    public hideTabPane(index): void {
+    public hideTab(index): void {
         let tabPane = this._getTabPaneByIndex(index);
 
         if (!this._isTabPane(tabPane)) return;
@@ -128,7 +129,7 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
      * 显示对应的Tab页, 如果已经是显示的没有变化, 隐藏的显示, 没有打印出警告.
      * @param index
      */
-    public showTabPane(index) {
+    public showTab(index) {
         let tabPane = this._getTabPaneByIndex(index);
 
         if (!this._isTabPane(tabPane)) return;
@@ -146,15 +147,27 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
         }
     }
 
-    public addTab(){
-
+    /**
+     * 添加tab页
+     * @param tabPane
+     */
+    public addTab(tabPane: RdkPane): void{
+        let tabTemp = this._tabPanes.toArray();
+        if(tabTemp.indexOf(tabPane) == -1){
+            tabTemp.push(tabPane);
+            this._tabPanes.reset(tabTemp);
+            this.length = this._tabPanes.length;
+            this.selectedIndex = this.length - 1;
+        }else{
+            console.warn("请不要重复添加同一个tabPane")
+        }
     }
 
     /**
      * 销毁指定的Tab页. 从0开始计数.
      * @param index
      */
-    public destroyTabPane(index) {
+    public removeTab(index) {
         if (this._tabPanes.length - index < 1) {
             console.info("没有对应tab-pane 供删除");
             return;
@@ -165,8 +178,7 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
 
         // 重新修改queryList. 不确定这么做有没有什么隐患.
         this._tabPanes.reset(tabTemp);
-
-        this.tabPanes = this._tabPanes;
+        this.length = this._tabPanes.length;
 
         this._handleSelect();
     }

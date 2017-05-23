@@ -26,7 +26,6 @@ import {RdkPane} from "../../../../../component/tabs/tab-pane";
 })
 export class dynamicTabDemoComponent implements OnInit {
     @ViewChild(RdkTab) tabs: RdkTab;
-    @ViewChild('tabPane') tabPane: RdkPane;
 
     activeIndex: number = 0;
 
@@ -45,30 +44,20 @@ export class dynamicTabDemoComponent implements OnInit {
             disabled: false,
             content: '<input type="text" value="123"/>'
         }
-    ]
+    ];
 
-    public deleteTab(value) {
-        this.tabs.destroyTabPane(0);
+    public removeTab(index) {
+        this.tabs.removeTab(index);
     }
-    public deleteTabSec() {
-        this.dynamicTabs.splice(0,1);
-        this.activeIndex = this.dynamicTabs.length-1;
+    public hideTab(index):void {
+        this.tabs.hideTab(index);
     }
-    public hideTab():void {
-        this.tabs.hideTabPane(0);
-    }
-    public showTab():void {
-        this.tabs.showTabPane(0);
+    public showTab(index):void {
+        this.tabs.showTab(index);
     }
 
-    public addTabPane() {
-        let length = this.dynamicTabs.length-1;
-
-        this.dynamicTabs.push({
-            label: 'new Tab'+length,
-            content: 'new Tabs contents ' +length
-        })
-        this.activeIndex = this.dynamicTabs.length-1;
+    public addTab(tabPane) {
+        this.tabs.addTab(tabPane)
     }
     ngOnInit() { }
 }

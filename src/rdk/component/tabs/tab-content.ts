@@ -4,7 +4,7 @@
 
 import {
     Component, Input, ViewContainerRef,
-    TemplateRef, ViewChild, Renderer2, ElementRef, AfterViewInit, EmbeddedViewRef
+    TemplateRef, ViewChild, Renderer2, ElementRef, AfterViewInit, EmbeddedViewRef, ChangeDetectorRef
 } from '@angular/core';
 import {AbstractRDKComponent} from "../core";
 
@@ -20,6 +20,11 @@ import {AbstractRDKComponent} from "../core";
     `
 })
 export class RdkTabContent extends AbstractRDKComponent implements AfterViewInit {
+
+    constructor(private _changeDetector: ChangeDetectorRef){
+        super()
+    }
+
     @ViewChild('body', {read: ViewContainerRef}) _body: ViewContainerRef;
 
     @Input('content')
@@ -42,7 +47,7 @@ export class RdkTabContent extends AbstractRDKComponent implements AfterViewInit
 
     public set isActive(active: boolean) {
         this._isActive = active;
-        if (this.initialized) {
+        if (this.initialized && this.async) {
             if (active) {
                 this.insert();
             } else {
@@ -54,6 +59,7 @@ export class RdkTabContent extends AbstractRDKComponent implements AfterViewInit
     ngAfterViewInit() {
         if (!this.async || this._isActive) {
             this._contentRef = this._body.createEmbeddedView(this._content);
+            this._changeDetector.detectChanges()
         }
     }
 

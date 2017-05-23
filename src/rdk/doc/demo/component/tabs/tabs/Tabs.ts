@@ -9,13 +9,10 @@ import {RdkTab} from "../../../../../component/tabs/tab";
 })
 export class RdkTabsComponent implements AfterViewInit{
 
-    @ViewChild('myTab') myTab : RdkTab
+    @ViewChild('myTab') myTab : RdkTab;
 
     ngAfterViewInit(){
-        console.log(this.myTab);
-        this.myTab.tabPanes.forEach(
-            (tabPane)=>{console.log(tabPane.title)}
-        );
+        console.log(this.myTab.length);
     }
 
 }
