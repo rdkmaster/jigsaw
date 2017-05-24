@@ -51,7 +51,7 @@ export class RdkInput extends AbstractRDKComponent implements AfterContentInit {
 
     @Input() public clearable: boolean = true;
 
-    private _placeholder:string;
+    private _placeholder:string='';
     @Input()
     public set placeholder(txt:string) {
         this._placeholder = txt;
