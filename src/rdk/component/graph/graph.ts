@@ -169,7 +169,9 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
                       height?: number | string,
                       silent?: boolean
                   }): void {
-        this._graph.resize(opts);
+        this._renderer.listen("window", "resize", () => {
+            this._graph.resize(opts);
+        });
     }
 
     public dispatchAction(payload: Object): void {
