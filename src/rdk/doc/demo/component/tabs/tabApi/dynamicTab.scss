@@ -1,16 +1,14 @@
 .container {
     border: 1px solid #e9e9e9;
     border-radius: 4px;
-    display: inline-block;
     width: 100%;
-    position: relative;
-    margin: 0 0 16px;
-    -webkit-transition: all .2s;
-    transition: all .2s;
+    padding: 20px;
 }
-.tabBar {
-    margin: 10px;
-    background-color: #bbbbbb;
+.option-button-group {
+    margin-bottom: 30px;
+    rdk-button{
+        margin-right: 6px;
+    }
 }
 .content-box{
     .content-title{
@@ -24,10 +22,7 @@
         }
     }
     rdk-button{
-        margin: {
-            left: 100px;
-            bottom: 20px;
-        };
+        margin-left: 100px;
     }
 }
 

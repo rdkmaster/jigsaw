@@ -1,37 +1,14 @@
-/**
- * Created by 10177553 on 2017/4/5.
- */
-import {AfterViewInit, Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, TemplateRef, Type, ViewChild} from '@angular/core';
 import {RdkTab} from "../../../../../component/tabs/tab";
-import {RdkPane} from "../../../../../component/tabs/tab-pane";
+import {TabContentDefine} from "./tabContent/tabContent";
+import {ITabDefine} from "../../../../../component/tabs/tab-item";
 
 @Component({
     templateUrl: './dynamicTab.html',
-    styleUrls: ['dynamicTab.scss'],
-    entryComponents: [RdkPane]
+    styleUrls: ['dynamicTab.scss']
 })
 export class dynamicTabDemoComponent {
     @ViewChild(RdkTab) tabs: RdkTab;
-
-    activeIndex: number = 0;
-
-    constructor() {
-    }
-
-    dynamicTabs = [
-        {
-            label: 'Tab 1',
-            content: 'This is the _body of the first tab'
-        }, {
-            label: 'Tab 2',
-            disabled: true,
-            content: 'This is the _body of the second tab'
-        }, {
-            label: 'Tab 3',
-            disabled: false,
-            content: '<input type="text" value="123"/>'
-        }
-    ];
 
     public removeTab(index) {
         this.tabs.removeTab(index);
@@ -45,7 +22,7 @@ export class dynamicTabDemoComponent {
         this.tabs.showTab(index);
     }
 
-    public addTab(tabTitle: string | TemplateRef<any>, tabContent: TemplateRef<any>, initData?: Object) {
+    public addTab(tabTitle: string | TemplateRef<any>, tabContent: TemplateRef<any> | Type<ITabDefine>, initData?: Object) {
         this.tabs.addTab(tabTitle, tabContent, initData)
     }
 
@@ -61,7 +38,7 @@ export class dynamicTabDemoComponent {
     }
 
     public addTabWidthStringTitle(tabContent) {
-        this.addTab('added tab', tabContent, {
+        this.addTab('template tab', tabContent, {
             userInfo: {
                 username: 'Martin',
                 email: 'fff@163.com',
@@ -75,5 +52,8 @@ export class dynamicTabDemoComponent {
         this.addTab(tabTitle, tabContent)
     }
 
+    public addComponentTab() {
+        this.addTab('component tab', TabContentDefine, 'rdk')
+    }
 
 }

@@ -55,10 +55,10 @@ const routes=[
 @NgModule({
     imports: [
         RouterModule.forChild(routes),
-        RdkTabsModule,RdkInputModule,RdkButtonModule,
-        CommonModule,
+        RdkTabsModule,
+        RdkInputModule,
         RdkButtonModule,
-        RdkInputModule
+        CommonModule,
     ],
     exports: [RdkTabsDemoComponent],
     declarations: [
@@ -69,9 +69,11 @@ const routes=[
         RdkShowTabComponent,
         RdkDestoryTabComponent,
         RdkTabsComponent,
-        dynamicTabDemoComponent
+        dynamicTabDemoComponent,
+        TabContentDefine
     ],
     providers: [],
-    schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+    schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+    entryComponents: [RdkPane, TabContentDefine]
 })
 export class TabsDemoModule { }

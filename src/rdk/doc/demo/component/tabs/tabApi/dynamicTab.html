@@ -1,23 +1,31 @@
 <div class="container">
-    <div class="tabBar">
-        <input type="button" value="增加tab-模板标题" (click)="addTabWidthTemplateTitle(tabTitle, tabContent)">
-        <input type="button" value="增加tab-字符串标题" (click)="addTabWidthStringTitle(tabContent)">
-        <input type="button" value="增加router link tab" (click)="addRouterLinkTab(routerTabTitle, routerTabContent)">
-        <input type="button" value="隐藏第一个Tab页" (click)="hideTab(0)">
-        <input type="button" value="显示第一个Tab页" (click)="showTab(0)">
-        <input type="button" value="删除第一个Tab页" (click)="removeTab(0)">
+    <div class="option-button-group">
+        <rdk-button width="120" (click)="addTabWidthTemplateTitle(tabTitle, tabContent)">增加tab-模板标题</rdk-button>
+        <rdk-button width="120" (click)="addTabWidthStringTitle(tabContent)">增加tab-字符串标题</rdk-button>
+        <rdk-button width="120" (click)="addRouterLinkTab(routerTabTitle, routerTabContent)">增加router link tab</rdk-button>
+        <rdk-button width="120" (click)="addComponentTab()">增加component tab</rdk-button>
+        <rdk-button width="120" (click)="hideTab(0)">隐藏第一个Tab页</rdk-button>
+        <rdk-button width="120" (click)="showTab(0)">显示第一个Tab页</rdk-button>
+        <rdk-button width="120" (click)="removeTab(0)">删除第一个Tab页</rdk-button>
     </div>
 
-    <rdk-tab [selectedIndex]="activeIndex">
-        <rdk-pane *ngFor="let tab of dynamicTabs" [disabled]="tab.disabled" [title]="tab.label">
-            {{tab.content}}
+    <rdk-tab>
+        <rdk-pane title="Tab 1">
+            This is the body of the first tab
+        </rdk-pane>
+        <rdk-pane title="Tab 2" [disabled]="true">
+            This is the body of the first tab
+        </rdk-pane>
+        <rdk-pane title="Tab 3">
+            <rdk-input>
+                <a rdk-prefix-icon><span class="fa fa-search"></span></a>
+            </rdk-input>
         </rdk-pane>
     </rdk-tab>
 </div>
 
 <ng-template #tabTitle>
-    tab
-    <rdk-button width="20" height="20">ok</rdk-button>
+    <span class="fa fa-gift"></span>template tab
 </ng-template>
 <ng-template #tabContent let-userInfo="userInfo">
     <div class="content-box">

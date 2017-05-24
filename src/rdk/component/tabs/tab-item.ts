@@ -49,7 +49,9 @@ export abstract class RdkTabBase extends AbstractRDKComponent implements OnDestr
             return this._body.createEmbeddedView(what, initData);
         } else {
             const factory = this._componentFactory.resolveComponentFactory(what);
-            return this._body.createComponent(factory);
+            const componentRef = this._body.createComponent(factory);
+            componentRef.instance.initData = initData;
+            return componentRef;
         }
     }
 

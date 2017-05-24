@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from "@angular/router";
-import {TabContentDefine} from "./tabContent";
+import {TabContentComponent} from "./tabContent";
 import {RdkButtonModule} from "../../../../../../component/button/button";
 import {RdkInputModule} from "../../../../../../component/input/input";
 
 const routes=[
     {
-        path:'', component: TabContentDefine
+        path:'', component: TabContentComponent
     }
 ];
 
@@ -16,9 +16,8 @@ const routes=[
         RdkButtonModule,
         RdkInputModule
     ],
-    exports: [TabContentDefine],
     declarations: [
-        TabContentDefine
+        TabContentComponent
     ]
 })
 export class TabContentModule { }

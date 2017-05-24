@@ -5,6 +5,14 @@ import {ITabDefine} from "../../../../../../component/tabs/tab-item";
     templateUrl: 'tabContent.html',
     styleUrls: ['tabContent.scss']
 })
+export class TabContentComponent{
+
+}
+
+@Component({
+    templateUrl: 'tabContent.html',
+    styleUrls: ['tabContent.scss']
+})
 export class TabContentDefine implements ITabDefine{
-    initData: Object
+    initData: Object = 'zte'
 }
