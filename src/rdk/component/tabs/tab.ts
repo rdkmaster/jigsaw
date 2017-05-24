@@ -202,8 +202,11 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
         // 重新修改queryList. 不确定这么做有没有什么隐患.
         this._tabPanes.reset(tabTemp);
         this.length = this._tabPanes.length;
-
-        this._handleSelect();
+        if(this.selectedIndex == index){
+            this._handleSelect()
+        }else{
+            this.selectedIndex = this.selectedIndex -1
+        }
     }
 
     /**
