@@ -25,21 +25,4 @@ export class ZtreeDemoDataFromAjaxComponent {
         this.data.fromAjax("mock-data/tree/data.json");
         this.data.refresh();
     }
-
-    // public getTreeData() {
-    //     data.fromAjax("mock-data/tree/data.json");
-    //     this.http.get("mock-data/tree/data.json")
-    //         .toPromise()
-    //         .then(response => {
-    //             this.data = response.json() as TreeData[];
-    //         })
-    //         .catch((error) => {
-    //             console.error(error);
-    //             return Promise.reject(error);
-    //         });
-    // }
-    //
-    // ngOnInit() {
-    //     this.getTreeData();
-    // }
 }
