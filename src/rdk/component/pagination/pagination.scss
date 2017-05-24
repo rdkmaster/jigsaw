@@ -21,12 +21,12 @@ $paging-prefix-cls: #{$rdk-prefix}-paging;
         @include prefixer(transition, all .3s ease);
         &.#{$paging-prefix-cls}-prev:after, &.#{$paging-prefix-cls}-next:after{
             position: absolute;
-            left: 11px;
+            left: 9px;
             top: 10px;
             content: '';
             display: block;
-            width: 4px;
-            height: 6px;
+            width: 7px;
+            height: 7px;
             border-color: #666666;
         }
         &.#{$paging-prefix-cls}-prev:after{
