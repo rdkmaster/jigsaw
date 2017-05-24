@@ -7,32 +7,16 @@ import {RdkPane} from "../../../../../component/tabs/tab-pane";
 
 @Component({
     templateUrl: './dynamicTab.html',
-    styles:[ `
-        .container {
-            border: 1px solid #e9e9e9;
-            border-radius: 4px;
-            display: inline-block;
-            width: 100%;
-            position: relative;
-            margin: 0 0 16px;
-            -webkit-transition: all .2s;
-            transition: all .2s;
-        }
-        .tabBar {
-            margin: 10px;
-            background-color: #bbbbbb;
-        }
-    `],
-    entryComponents: []
+    styleUrls: ['dynamicTab.scss'],
+    entryComponents: [RdkPane]
 })
 export class dynamicTabDemoComponent {
     @ViewChild(RdkTab) tabs: RdkTab;
-    @ViewChild('tabTitle2') tabTitle2: TemplateRef<any>;
-    @ViewChild('tabContent2') tabContent2: TemplateRef<any>;
 
     activeIndex: number = 0;
 
-    constructor() { }
+    constructor() {
+    }
 
     dynamicTabs = [
         {
@@ -42,7 +26,7 @@ export class dynamicTabDemoComponent {
             label: 'Tab 2',
             disabled: true,
             content: 'This is the _body of the second tab'
-        },{
+        }, {
             label: 'Tab 3',
             disabled: false,
             content: '<input type="text" value="123"/>'
@@ -52,15 +36,44 @@ export class dynamicTabDemoComponent {
     public removeTab(index) {
         this.tabs.removeTab(index);
     }
-    public hideTab(index):void {
+
+    public hideTab(index): void {
         this.tabs.hideTab(index);
     }
-    public showTab(index):void {
+
+    public showTab(index): void {
         this.tabs.showTab(index);
     }
 
-    public addTab(tabTitle, tabContent) {
-        this.tabs.addTab(tabTitle, tabContent)
+    public addTab(tabTitle: string | TemplateRef<any>, tabContent: TemplateRef<any>, initData?: Object) {
+        this.tabs.addTab(tabTitle, tabContent, initData)
     }
+
+    public addTabWidthTemplateTitle(tabTitle, tabContent) {
+        this.addTab(tabTitle, tabContent, {
+            userInfo: {
+                username: 'Jerry',
+                email: 'ddd@qq.com',
+                phoneNumber: '1347559375',
+                address: '南京市雨花区软件大道1号'
+            }
+        })
+    }
+
+    public addTabWidthStringTitle(tabContent) {
+        this.addTab('added tab', tabContent, {
+            userInfo: {
+                username: 'Martin',
+                email: 'fff@163.com',
+                phoneNumber: '1733994499',
+                address: '南京市雨花区花神大道6号'
+            }
+        })
+    }
+
+    public addRouterLinkTab(tabTitle, tabContent) {
+        this.addTab(tabTitle, tabContent)
+    }
+
 
 }

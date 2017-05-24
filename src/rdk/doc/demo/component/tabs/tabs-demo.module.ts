@@ -72,8 +72,6 @@ const routes=[
         dynamicTabDemoComponent
     ],
     providers: [],
-    schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-    entryComponents: [RdkPane]
-
+    schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class TabsDemoModule { }

@@ -156,11 +156,16 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
      * 添加tab页
      * @param tabPane
      */
-    public addTab(title: TemplateRef<any>, content: TemplateRef<any>) {
+    public addTab(title: string | TemplateRef<any>, content: TemplateRef<any>, initData: Object) {
         const factory = this._cfr.resolveComponentFactory(RdkPane);
         let tabPane: RdkPane = this._viewContainer.createComponent(factory).instance;
-        tabPane.label = title;
+        if(typeof title == 'string'){
+            tabPane.title = title
+        }else{
+            tabPane.label = title;
+        }
         tabPane.content = content;
+        tabPane.initData = initData;
 
         let tabTemp = this._tabPanes.toArray();
         tabTemp.push(tabPane);

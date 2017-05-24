@@ -29,6 +29,9 @@ export class RdkPane {
     @Input()
     public async: boolean;
 
+    @Input()
+    public initData: Object;
+
     @ViewChild('label') label: TemplateRef<any>;
     @ViewChild('content') content: TemplateRef<any>;
 }

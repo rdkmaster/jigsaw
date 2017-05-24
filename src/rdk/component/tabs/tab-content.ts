@@ -36,6 +36,9 @@ export class RdkTabContent extends AbstractRDKComponent implements AfterViewInit
     @Input()
     public async: boolean;
 
+    @Input()
+    private initData: Object;
+
     private _contentRef: EmbeddedViewRef<any>;
 
     private _isActive: boolean;
@@ -58,14 +61,14 @@ export class RdkTabContent extends AbstractRDKComponent implements AfterViewInit
 
     ngAfterViewInit() {
         if (!this.async || this._isActive) {
-            this._contentRef = this._body.createEmbeddedView(this._content);
+            this._contentRef = this._body.createEmbeddedView(this._content, this.initData);
             this._changeDetector.detectChanges()
         }
     }
 
     public insert(): void {
         if (!this._contentRef) {
-            this._contentRef = this._body.createEmbeddedView(this._content);
+            this._contentRef = this._body.createEmbeddedView(this._content, this.initData);
         }
     }
 
