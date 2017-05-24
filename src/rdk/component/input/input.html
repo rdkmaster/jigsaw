@@ -3,6 +3,7 @@
 </div>
 <ng-content></ng-content>
 <input #input [class.rdk-input-long-indent]="_longIndent"
+       [placeholder]="placeholder"
        [(ngModel)]="value"
        (blur)="_handleBlur($event)"
        (focus)="_handleFocus($event)">

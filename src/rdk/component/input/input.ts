@@ -51,6 +51,16 @@ export class RdkInput extends AbstractRDKComponent implements AfterContentInit {
 
     @Input() public clearable: boolean = true;
 
+    private _placeholder:string;
+    @Input()
+    public set placeholder(txt:string) {
+        this._placeholder = txt;
+    }
+
+    public get placeholder() {
+        return this._placeholder;
+    }
+
     @Output('blur')
     get onBlur(): Observable<FocusEvent> {
         return this._blurEmitter.asObservable();
