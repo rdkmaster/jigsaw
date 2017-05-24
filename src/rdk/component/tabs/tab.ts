@@ -5,6 +5,7 @@ import {
 import {RdkPane} from "./tab-pane";
 import {ITabDefine, RdkTabContent, RdkTabLabel} from "./tab-item";
 import {AbstractRDKComponent} from "../core";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'rdk-tab',
@@ -13,7 +14,9 @@ import {AbstractRDKComponent} from "../core";
 })
 export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
 
-    constructor(private _cfr: ComponentFactoryResolver, private _viewContainer: ViewContainerRef) {
+    constructor(private _cfr: ComponentFactoryResolver,
+                private _viewContainer: ViewContainerRef,
+                private _router: Router) {
         super()
     }
 
@@ -177,14 +180,14 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
         //router link
         setTimeout(() => {
             let link = this._tabLabel.find(item => item.key === this.selectedIndex)
-                .elementRef.nativeElement.querySelector('a');
+                .elementRef.nativeElement.querySelector('[routerLink]');
             if (link) {
-                link.click()
+                this._router.navigate([window.location.pathname + '/' + link.getAttribute('routerLink')],
+                    { skipLocationChange: true });
             }
         }, 0)
 
     }
-
 
     /**
      * 销毁指定的Tab页. 从0开始计数.
