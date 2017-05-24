@@ -24,20 +24,20 @@ export class RdkTabLabel implements AfterViewInit{
 
     private _labelRef: EmbeddedViewRef<any>;
 
-    constructor( public _elementRef: ElementRef, private _changeDetector:ChangeDetectorRef) {}
+    constructor(public elementRef: ElementRef, private _changeDetector:ChangeDetectorRef) {}
 
     // label 左侧的距离
     public getOffsetLeft(): number {
-        return this._elementRef.nativeElement.offsetLeft;
+        return this.elementRef.nativeElement.offsetLeft;
     }
 
     public getOffsetTop(): number {
-        return this._elementRef.nativeElement.offsetTop;
+        return this.elementRef.nativeElement.offsetTop;
     }
 
     // 组件的宽度
     public getOffsetWidth(): number {
-        return this._elementRef.nativeElement.offsetWidth;
+        return this.elementRef.nativeElement.offsetWidth;
     }
 
     ngAfterViewInit() {

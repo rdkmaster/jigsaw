@@ -14,7 +14,7 @@ import {AbstractRDKComponent} from "../core";
 })
 export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
 
-    constructor(private _cfr: ComponentFactoryResolver, private _viewContainer: ViewContainerRef){
+    constructor(private _cfr: ComponentFactoryResolver, private _viewContainer: ViewContainerRef) {
         super()
     }
 
@@ -156,7 +156,7 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
      * 添加tab页
      * @param tabPane
      */
-    public addTab(title: TemplateRef<any>, content: TemplateRef<any>){
+    public addTab(title: TemplateRef<any>, content: TemplateRef<any>) {
         const factory = this._cfr.resolveComponentFactory(RdkPane);
         let tabPane: RdkPane = this._viewContainer.createComponent(factory).instance;
         tabPane.label = title;
@@ -167,6 +167,16 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
         this._tabPanes.reset(tabTemp);
         this.length = this._tabPanes.length;
         this.selectedIndex = this._tabPanes.length - 1;
+
+        //router link
+        setTimeout(() => {
+            let link = this._tabLabel.find(item => item.key === this.selectedIndex)
+                .elementRef.nativeElement.querySelector('a');
+            if (link) {
+                link.click()
+            }
+        }, 0)
+
     }
 
 

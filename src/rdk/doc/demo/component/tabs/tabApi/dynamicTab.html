@@ -1,6 +1,7 @@
 <div class="container">
     <div class="tabBar">
-        <input type="button" value="增加" (click)="addTab(tabTitle, tabContent)">
+        <input type="button" value="增加tab" (click)="addTab(tabTitle, tabContent)">
+        <input type="button" value="增加router link tab" (click)="addTab(routerTabTitle, routerTabContent)">
         <input type="button" value="隐藏第一个Tab页" (click)="hideTab(0)">
         <input type="button" value="显示第一个Tab页" (click)="showTab(0)">
         <input type="button" value="删除第一个Tab页" (click)="removeTab(0)">
@@ -26,4 +27,9 @@
     <rdk-button>confirm</rdk-button>
 </ng-template>
 
-
+<ng-template #routerTabTitle>
+    <a routerLink="tabPage">router link tab</a>
+</ng-template>
+<ng-template #routerTabContent>
+    <router-outlet></router-outlet>
+</ng-template>

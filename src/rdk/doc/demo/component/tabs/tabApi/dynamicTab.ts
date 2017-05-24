@@ -1,7 +1,7 @@
 /**
  * Created by 10177553 on 2017/4/5.
  */
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {RdkTab} from "../../../../../component/tabs/tab";
 import {RdkPane} from "../../../../../component/tabs/tab-pane";
 
@@ -22,10 +22,13 @@ import {RdkPane} from "../../../../../component/tabs/tab-pane";
             margin: 10px;
             background-color: #bbbbbb;
         }
-    `]
+    `],
+    entryComponents: []
 })
-export class dynamicTabDemoComponent implements OnInit {
+export class dynamicTabDemoComponent {
     @ViewChild(RdkTab) tabs: RdkTab;
+    @ViewChild('tabTitle2') tabTitle2: TemplateRef<any>;
+    @ViewChild('tabContent2') tabContent2: TemplateRef<any>;
 
     activeIndex: number = 0;
 
@@ -59,5 +62,5 @@ export class dynamicTabDemoComponent implements OnInit {
     public addTab(tabTitle, tabContent) {
         this.tabs.addTab(tabTitle, tabContent)
     }
-    ngOnInit() { }
+
 }

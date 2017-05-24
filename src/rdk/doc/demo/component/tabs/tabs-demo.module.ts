@@ -18,6 +18,7 @@ import {RdkDestoryTabComponent} from "./destoryTab/destoryTab";
 import {RdkTabsComponent} from "./tabs/Tabs";
 import {dynamicTabDemoComponent} from "./tabApi/dynamicTab";
 import {RdkPane} from "../../../../component/tabs/tab-pane";
+import {TabContentDefine} from "./tabApi/tabContent/tabContent";
 
 const routes=[
     {
@@ -39,7 +40,12 @@ const routes=[
         path:'removeTab', component: RdkDestoryTabComponent
     },
     {
-        path:'dynamicTab', component: dynamicTabDemoComponent
+        path:'dynamicTab',
+        component: dynamicTabDemoComponent,
+        children: [{
+            path: 'tabPage',
+            loadChildren: './tabApi/tabContent/tab-content.module#TabContentModule'
+        }]
     },
     {
         path:'Tabs', component: RdkTabsComponent
@@ -55,8 +61,16 @@ const routes=[
         RdkInputModule
     ],
     exports: [RdkTabsDemoComponent],
-    declarations: [RdkTabsDemoComponent,RdkTabsWithInputComponent,RdkTabsWithNgForComponent,
-        RdkHideTabComponent,RdkShowTabComponent,RdkDestoryTabComponent,RdkTabsComponent, dynamicTabDemoComponent],
+    declarations: [
+        RdkTabsDemoComponent,
+        RdkTabsWithInputComponent,
+        RdkTabsWithNgForComponent,
+        RdkHideTabComponent,
+        RdkShowTabComponent,
+        RdkDestoryTabComponent,
+        RdkTabsComponent,
+        dynamicTabDemoComponent
+    ],
     providers: [],
     schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
     entryComponents: [RdkPane]
