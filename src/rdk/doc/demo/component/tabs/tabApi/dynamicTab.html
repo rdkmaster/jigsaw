@@ -21,7 +21,7 @@
                 <a rdk-prefix-icon><span class="fa fa-search"></span></a>
             </rdk-input>
         </rdk-pane>
-        <rdk-pane>
+        <rdk-pane [async]="true">
             <div rdk-title><span routerLink="tabPage" [skipLocationChange]="true">router link tab</span></div>
             <div rdk-body><router-outlet></router-outlet></div>
         </rdk-pane>
@@ -50,9 +50,9 @@
     </div>
 </ng-template>
 
-<ng-template #routerTabTitle>
+<!--<ng-template #routerTabTitle>
     <span routerLink="tabPage" [skipLocationChange]="true">router link tab</span>
 </ng-template>
 <ng-template #routerTabContent>
     <router-outlet></router-outlet>
-</ng-template>
+</ng-template>-->
