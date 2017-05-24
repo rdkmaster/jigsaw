@@ -2,7 +2,7 @@
     <div class="option-button-group">
         <rdk-button width="120" (click)="addTabWidthTemplateTitle(tabTitle, tabContent)">增加tab-模板标题</rdk-button>
         <rdk-button width="120" (click)="addTabWidthStringTitle(tabContent)">增加tab-字符串标题</rdk-button>
-        <rdk-button width="120" (click)="addRouterLinkTab(routerTabTitle, routerTabContent)">增加router link tab</rdk-button>
+        <!--<rdk-button width="120" (click)="addRouterLinkTab(routerTabTitle, routerTabContent)">增加router link tab</rdk-button>-->
         <rdk-button width="120" (click)="addComponentTab()">增加component tab</rdk-button>
         <rdk-button width="120" (click)="hideTab(0)">隐藏第一个Tab页</rdk-button>
         <rdk-button width="120" (click)="showTab(0)">显示第一个Tab页</rdk-button>
@@ -20,6 +20,10 @@
             <rdk-input>
                 <a rdk-prefix-icon><span class="fa fa-search"></span></a>
             </rdk-input>
+        </rdk-pane>
+        <rdk-pane>
+            <div rdk-title><span routerLink="tabPage" [skipLocationChange]="true">router link tab</span></div>
+            <div rdk-body><router-outlet></router-outlet></div>
         </rdk-pane>
     </rdk-tab>
 </div>
@@ -47,7 +51,7 @@
 </ng-template>
 
 <ng-template #routerTabTitle>
-    <span routerLink="tabPage">router link tab</span>
+    <span routerLink="tabPage" [skipLocationChange]="true">router link tab</span>
 </ng-template>
 <ng-template #routerTabContent>
     <router-outlet></router-outlet>

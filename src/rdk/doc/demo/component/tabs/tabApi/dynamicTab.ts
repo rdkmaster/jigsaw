@@ -48,12 +48,12 @@ export class dynamicTabDemoComponent {
         })
     }
 
-    public addRouterLinkTab(tabTitle, tabContent) {
-        this.addTab(tabTitle, tabContent)
-    }
-
     public addComponentTab() {
         this.addTab('component tab', TabContentDefine, 'rdk')
     }
+
+    /*public addRouterLinkTab(tabTitle, tabContent) {
+        this.addTab(tabTitle, tabContent)
+    }*/
 
 }

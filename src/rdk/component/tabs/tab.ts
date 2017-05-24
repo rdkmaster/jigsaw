@@ -160,7 +160,7 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
      */
     public addTab(title: string | TemplateRef<any> | Type<ITabDefine>,
                   content: TemplateRef<any> | Type<ITabDefine>,
-                  initData: Object) {
+                  initData?: Object) {
         const factory = this._cfr.resolveComponentFactory(RdkPane);
         let tabPane: RdkPane = this._viewContainer.createComponent(factory).instance;
         if(typeof title == 'string'){
@@ -182,8 +182,7 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
             let link = this._tabLabel.find(item => item.key === this.selectedIndex)
                 .elementRef.nativeElement.querySelector('[routerLink]');
             if (link) {
-                this._router.navigate([window.location.pathname + '/' + link.getAttribute('routerLink')],
-                    { skipLocationChange: true });
+                link.click()
             }
         }, 0)
 
