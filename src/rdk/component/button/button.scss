@@ -4,9 +4,10 @@ $btn-prefix-cls: #{$rdk-prefix}-button;
 
 :host {
     @include inline-block();
-    width: 80px;
+    min-width: 80px;
+    padding:0 10px;
     height: $btn-size-height-base;
-    line-height: $btn-size-height-base - 2;
+    line-height: $btn-size-height-base - 4;
     font-size: $font-size-base;
     text-align: center;
     position: relative;
@@ -80,7 +81,7 @@ $btn-prefix-cls: #{$rdk-prefix}-button;
 }
 
 :host(a){
-    padding: 0;
+    padding: 0 10px;
     outline: none;
     text-decoration: none !important;
 }
