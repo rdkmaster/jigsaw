@@ -1,10 +1,9 @@
 import {
     Component, ContentChildren, QueryList, Input, ViewChildren, AfterViewInit, Output, EventEmitter, TemplateRef,
-    ViewContainerRef, ComponentFactoryResolver
+    ViewContainerRef, ComponentFactoryResolver, Type
 } from '@angular/core';
 import {RdkPane} from "./tab-pane";
-import {RdkTabLabel} from "./tab-label";
-import {RdkTabContent} from "./tab-content";
+import {ITabDefine, RdkTabContent, RdkTabLabel} from "./tab-item";
 import {AbstractRDKComponent} from "../core";
 
 @Component({
@@ -156,7 +155,9 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
      * 添加tab页
      * @param tabPane
      */
-    public addTab(title: string | TemplateRef<any>, content: TemplateRef<any>, initData: Object) {
+    public addTab(title: string | TemplateRef<any> | Type<ITabDefine>,
+                  content: TemplateRef<any> | Type<ITabDefine>,
+                  initData: Object) {
         const factory = this._cfr.resolveComponentFactory(RdkPane);
         let tabPane: RdkPane = this._viewContainer.createComponent(factory).instance;
         if(typeof title == 'string'){

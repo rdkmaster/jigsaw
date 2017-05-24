@@ -7,8 +7,7 @@ import {NgModule} from '@angular/core';
 import {RdkTab} from './tab';
 import {RdkPane} from "./tab-pane";
 import {CommonModule} from "@angular/common";
-import {RdkTabLabel} from "./tab-label";
-import {RdkTabContent} from "./tab-content";
+import {RdkTabContent, RdkTabLabel} from "./tab-item";
 
 @NgModule({
     imports: [CommonModule],

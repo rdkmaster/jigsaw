@@ -1,7 +1,8 @@
 /**
  * Created by 10177553 on 2017/3/29.
  */
-import {Component, Input, TemplateRef, ViewChild} from '@angular/core';
+import {Component, Input, TemplateRef, Type, ViewChild} from '@angular/core';
+import {ITabDefine} from "./tab-item";
 
 @Component({
     selector: 'rdk-pane',
@@ -13,7 +14,7 @@ import {Component, Input, TemplateRef, ViewChild} from '@angular/core';
         <ng-template #content>
             <ng-content></ng-content>
         </ng-template>
-        
+
     `
 })
 export class RdkPane {
@@ -32,6 +33,8 @@ export class RdkPane {
     @Input()
     public initData: Object;
 
-    @ViewChild('label') label: TemplateRef<any>;
-    @ViewChild('content') content: TemplateRef<any>;
+    @ViewChild('label') label: TemplateRef<any> | Type<ITabDefine>;
+    @ViewChild('content') content: TemplateRef<any> | Type<ITabDefine>;
 }
+
+

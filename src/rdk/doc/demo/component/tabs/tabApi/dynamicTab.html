@@ -21,7 +21,7 @@
 </ng-template>
 <ng-template #tabContent let-userInfo="userInfo">
     <div class="content-box">
-        <h3 class="content-title">Hi~! {{userInfo.username}}, place input your information</h3>
+        <h3 class="content-title">Hi {{userInfo.username}}, place input your information</h3>
         <div class="content-line">
             <label>e-mail: </label>
             <rdk-input [value]="userInfo.email"></rdk-input>
