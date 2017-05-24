@@ -9,8 +9,6 @@ import {TreeData} from "../../../../../core/data/tree-data";
     templateUrl: 'basic.html'
 })
 export class ZtreeDemoComponent {
-    public setting: ZTreeSettingSetting = {};
-
     public data: TreeData;
 
     constructor(public http: Http) {
