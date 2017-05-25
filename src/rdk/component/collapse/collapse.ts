@@ -4,7 +4,6 @@ import {
 import {CommonModule} from '@angular/common';
 import {RdkPanel} from "./collapse-panel";
 import {AbstractRDKComponent} from "../core";
-import {PortalHost} from "../../core/utils/portalHost";
 
 @Component({
     selector: 'rdk-collapse',
@@ -30,7 +29,7 @@ export enum CollapseModule {
 
 @NgModule({
     imports: [CommonModule],
-    declarations: [RdkCollapse, RdkPanel,PortalHost],
+    declarations: [RdkCollapse, RdkPanel],
     exports: [RdkCollapse, RdkPanel]
 })
 export class RdkCollapseModule { }
