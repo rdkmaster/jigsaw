@@ -1,8 +1,10 @@
-import {Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef} from "@angular/core";
+import {Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef, NgModule} from "@angular/core";
 import {TableCellRenderer} from "./table-api";
 import {TableCheckboxService, CheckboxState} from "./table-service";
-import {RdkInput} from "../input/input";
+import {RdkInput, RdkInputModule} from "../input/input";
 import {PageableTableData} from "../../core/data/table-data";
+import {CommonModule} from "@angular/common";
+import {RdkCheckBoxModule} from "../checkbox/index";
 
 /*
  * 默认表格渲染组件
@@ -148,6 +150,25 @@ export class TableCellEditor extends TableCellRenderer implements AfterViewInit 
     ngAfterViewInit(){
         this.input.focus();
     }
+
+}
+
+@NgModule({
+    declarations: [
+        DefaultCellRenderer,
+        TableHeadCheckbox,
+        TableCellCheckbox,
+        TableCellNum,
+        TableCellOption,
+        TableCellEditor
+    ],
+    imports: [
+        CommonModule,
+        RdkCheckBoxModule,
+        RdkInputModule
+    ],
+})
+export class RdkTableRendererModule{
 
 }
 
