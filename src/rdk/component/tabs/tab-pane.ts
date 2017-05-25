@@ -2,7 +2,7 @@
  * Created by 10177553 on 2017/3/29.
  */
 import {Component, Input, TemplateRef, Type, ViewChild} from '@angular/core';
-import {ITabDefine} from "./tab-item";
+import {IDynamicInstantiatable} from "../core";
 
 @Component({
     selector: 'rdk-pane',
@@ -33,8 +33,8 @@ export class RdkPane {
     @Input()
     public initData: Object;
 
-    @ViewChild('label') label: TemplateRef<any> | Type<ITabDefine>;
-    @ViewChild('content') content: TemplateRef<any> | Type<ITabDefine>;
+    @ViewChild('label') label: TemplateRef<any> | Type<IDynamicInstantiatable>;
+    @ViewChild('content') content: TemplateRef<any> | Type<IDynamicInstantiatable>;
 }
 
 

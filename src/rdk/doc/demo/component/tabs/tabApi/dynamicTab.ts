@@ -1,7 +1,7 @@
 import {Component, TemplateRef, Type, ViewChild} from '@angular/core';
 import {RdkTab} from "../../../../../component/tabs/tab";
 import {TabContentDefine} from "./tabContent/tabContent";
-import {ITabDefine} from "../../../../../component/tabs/tab-item";
+import {IDynamicInstantiatable} from "../../../../../component/core";
 
 @Component({
     templateUrl: './dynamicTab.html',
@@ -22,7 +22,7 @@ export class dynamicTabDemoComponent {
         this.tabs.showTab(index);
     }
 
-    public addTab(tabTitle: string | TemplateRef<any>, tabContent: TemplateRef<any> | Type<ITabDefine>, initData?: Object) {
+    public addTab(tabTitle: string | TemplateRef<any>, tabContent: TemplateRef<any> | Type<IDynamicInstantiatable>, initData?: Object) {
         this.tabs.addTab(tabTitle, tabContent, initData)
     }
 

@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {ITabDefine} from "../../../../../../component/tabs/tab-item";
+import {IDynamicInstantiatable} from "../../../../../../component/core";
 
 @Component({
     templateUrl: 'tabContent.html',
@@ -13,6 +13,6 @@ export class TabContentComponent{
     templateUrl: 'tabContent.html',
     styleUrls: ['tabContent.scss']
 })
-export class TabContentDefine implements ITabDefine{
+export class TabContentDefine implements IDynamicInstantiatable {
     initData: Object = 'zte'
 }

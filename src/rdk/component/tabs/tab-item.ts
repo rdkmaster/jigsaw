@@ -3,11 +3,8 @@ import {
     AfterViewInit, EmbeddedViewRef, ChangeDetectorRef, Type, ComponentFactoryResolver,
     ComponentRef, OnDestroy
 } from '@angular/core';
-import {AbstractRDKComponent} from "../core";
+import {AbstractRDKComponent, IDynamicInstantiatable} from "../core";
 
-export interface ITabDefine {
-    initData: Object;
-}
 
 export abstract class RdkTabBase extends AbstractRDKComponent implements OnDestroy {
 
@@ -19,7 +16,7 @@ export abstract class RdkTabBase extends AbstractRDKComponent implements OnDestr
     public key: number;
 
     @Input()
-    public tabItem: TemplateRef<any> | Type<ITabDefine>;
+    public tabItem: TemplateRef<any> | Type<IDynamicInstantiatable>;
 
     @Input()
     public initData: Object;
@@ -27,7 +24,7 @@ export abstract class RdkTabBase extends AbstractRDKComponent implements OnDestr
     @ViewChild('body', {read: ViewContainerRef})
     protected _body: ViewContainerRef;
 
-    protected _tabItemRef: EmbeddedViewRef<any> | ComponentRef<ITabDefine>;
+    protected _tabItemRef: EmbeddedViewRef<any> | ComponentRef<IDynamicInstantiatable>;
 
     protected _insert(): void {
         if (!this._tabItemRef) {
@@ -43,8 +40,8 @@ export abstract class RdkTabBase extends AbstractRDKComponent implements OnDestr
         }
     }
 
-    protected _createTab(what: Type<ITabDefine> | TemplateRef<any>,
-                         initData: Object): EmbeddedViewRef<any> | ComponentRef<ITabDefine> {
+    protected _createTab(what: Type<IDynamicInstantiatable> | TemplateRef<any>,
+                         initData: Object): EmbeddedViewRef<any> | ComponentRef<IDynamicInstantiatable> {
         if (what instanceof TemplateRef) {
             return this._body.createEmbeddedView(what, initData);
         } else {

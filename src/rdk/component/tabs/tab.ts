@@ -3,8 +3,8 @@ import {
     ViewContainerRef, ComponentFactoryResolver, Type
 } from '@angular/core';
 import {RdkPane} from "./tab-pane";
-import {ITabDefine, RdkTabContent, RdkTabLabel} from "./tab-item";
-import {AbstractRDKComponent} from "../core";
+import {RdkTabContent, RdkTabLabel} from "./tab-item";
+import {AbstractRDKComponent, IDynamicInstantiatable} from "../core";
 import {Router} from "@angular/router";
 
 @Component({
@@ -158,8 +158,8 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
      * 添加tab页
      * @param tabPane
      */
-    public addTab(title: string | TemplateRef<any> | Type<ITabDefine>,
-                  content: TemplateRef<any> | Type<ITabDefine>,
+    public addTab(title: string | TemplateRef<any> | Type<IDynamicInstantiatable>,
+                  content: TemplateRef<any> | Type<IDynamicInstantiatable>,
                   initData?: Object) {
         const factory = this._cfr.resolveComponentFactory(RdkPane);
         let tabPane: RdkPane = this._viewContainer.createComponent(factory).instance;

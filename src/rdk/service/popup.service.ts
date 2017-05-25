@@ -12,6 +12,7 @@ import {
 } from "@angular/core";
 import {CommonUtils} from "../core/utils/common-utils";
 import {RdkBlock} from "../component/block/block";
+import {IDynamicInstantiatable} from "../component/core";
 
 export enum PopupEffect {
     fadeIn, fadeOut, bubbleIn, bubbleOut
@@ -64,8 +65,7 @@ export class PopupPositionValue {
 
 export type PopupDisposer = () => void;
 
-export interface IPopupable {
-    initData: any;
+export interface IPopupable extends IDynamicInstantiatable {
     answer: EventEmitter<ButtonInfo>;
 }
 
