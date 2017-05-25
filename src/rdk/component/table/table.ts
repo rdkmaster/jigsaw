@@ -18,6 +18,7 @@ import {SortAs, SortOrder, CallbackRemoval} from "../../core/data/component-data
 import {AffixUtils} from "../../core/utils/internal-utils";
 import {TableCheckboxService} from "./table-service";
 import {DefaultCellRenderer} from "./table-renderer";
+import {RdkTooltipModule} from "../tooltip/tooltip";
 
 class HeadSetting {
     cellData: string | number;
@@ -1045,7 +1046,7 @@ export class RdkTableHeader extends TableCellBasic implements OnInit {
         RdkTable, RdkTableCell, RdkRendererHost, RdkTableHeader
     ],
     imports: [
-        CommonModule, RdkScrollBarModule
+        CommonModule, RdkScrollBarModule, RdkTooltipModule
     ],
     exports: [CommonModule, RdkTable, RdkTableCell, RdkRendererHost, RdkTableHeader]
 })

@@ -12,6 +12,7 @@ import {
 } from "@angular/core";
 import {CommonUtils} from "../core/utils/common-utils";
 import {RdkBlock} from "../component/block/block";
+import {AffixUtils} from "rdk/core/utils/internal-utils";
 
 export enum PopupEffect {
     fadeIn, fadeOut, bubbleIn, bubbleOut
@@ -375,41 +376,54 @@ export class PopupService {
      * 获取位置具体的top和left
      * */
     private _getPositionValue(options: PopupOptions, element: HTMLElement): PopupPositionValue {
-        let top: string = '';
-        let left: string = '';
-        if (this._isGlobalModal(options)) {
-            top = (document.body.clientHeight / 2 - element.offsetHeight / 2) + 'px';
-            left = (document.body.clientWidth / 2 - element.offsetWidth / 2) + 'px';
-        } else if (options.pos instanceof ElementRef) {
-            if (options.posOffset.top || options.posOffset.top == 0) {
-                top = (options.pos.nativeElement.offsetTop + options.posOffset.top) + 'px';
-            }
-            else if (options.posOffset.bottom || options.posOffset.bottom == 0) {
-                top = (options.pos.nativeElement.offsetTop - element.offsetHeight + options.posOffset.bottom) + 'px';
-            }
-            else {
-                top = options.pos.nativeElement.offsetTop + 'px';
-            }
+        let top: string = '',
+            left: string = '';
 
-            if (options.posOffset.left || options.posOffset.left == 0) {
-                left = (options.pos.nativeElement.offsetLeft + options.posOffset.left) + 'px';
-            }
-            else if (options.posOffset.right || options.posOffset.right == 0) {
-                left = (options.pos.nativeElement.offsetLeft - element.offsetWidth + options.posOffset.right) + 'px';
-            }
-            else {
-                left = options.pos.nativeElement.offsetLeft + 'px';
-            }
+        const popupWidth = element.offsetWidth,
+            popupHeight = element.offsetHeight;
+
+        if (this._isGlobalModal(options)) {
+            top = (document.body.clientHeight / 2 - popupHeight / 2) + 'px';
+            left = (document.body.clientWidth / 2 - popupWidth / 2) + 'px';
         } else {
-            if (options.posOffset.top) {
-                top = (options.pos.y + options.posOffset.top) + 'px';
-            } else {
-                top = options.pos.y + 'px';
-            }
-            if (options.posOffset.left) {
-                left = (options.pos.x + options.posOffset.left) + 'px';
-            } else {
-                left = options.pos.x + 'px';
+            const pos = options.pos,
+                posOffset = options.posOffset;
+
+            if (pos instanceof ElementRef) {
+                const posOffsetTop = AffixUtils.offset(pos.nativeElement).top,
+                    posOffsetLeft = AffixUtils.offset(pos.nativeElement).left;
+
+                if (posOffset && typeof posOffset.top == 'number') {
+                    top = (posOffsetTop + posOffset.top) + 'px';
+                } else if (posOffset && typeof posOffset.bottom == 'number') {
+                    top = (posOffsetTop - popupHeight + posOffset.bottom) + 'px';
+                } else {
+                    top = posOffsetTop + 'px';
+                }
+
+                if (posOffset && typeof posOffset.left == 'number') {
+                    left = (posOffsetLeft + posOffset.left) + 'px';
+                } else if (posOffset && typeof posOffset.right == 'number') {
+                    left = (posOffsetLeft - popupWidth + posOffset.right) + 'px';
+                } else {
+                    left = posOffsetLeft + 'px';
+                }
+            } else if (pos) {
+                if (typeof pos.y == 'number') {
+                    if (posOffset && typeof posOffset.top == 'number') {
+                        top = (pos.y + posOffset.top) + 'px';
+                    } else {
+                        top = pos.y + 'px';
+                    }
+                }
+
+                if (typeof pos.x == 'number') {
+                    if (posOffset && typeof posOffset.left == 'number') {
+                        left = (pos.x + posOffset.left) + 'px';
+                    } else {
+                        left = pos.x + 'px';
+                    }
+                }
             }
         }
 
