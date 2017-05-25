@@ -46,9 +46,6 @@ const routes=[
             path: 'tabPage',
             loadChildren: './tabApi/tabContent/tab-content.module#TabContentModule'
         }]
-    },
-    {
-        path:'Tabs', component: RdkTabsComponent
     }
 ];
 
