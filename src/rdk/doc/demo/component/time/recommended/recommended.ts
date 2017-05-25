@@ -6,10 +6,7 @@ import { Component } from "@angular/core";
 })
 export class TimeRecommendedComponent {
 
-
     date = new Date();
 
-
-    recommended = ["now-15d","now-10d"];
 }
 

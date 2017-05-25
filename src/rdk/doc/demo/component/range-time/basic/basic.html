@@ -1,0 +1,8 @@
+<h4>Basic RangeTime</h4>
+<h5>时间配置支持时间宏 s(秒),m(分钟),h(小时),d(天),M(月),y(年) 并且支持计算 如 now-10d now+10m</h5>
+
+<rdk-range-time [(beginDate)]="beginDate" [(endDate)]="endDate" [gr]="'date'" limitStart="now-3d"
+                limitEnd="now+6d" weekStart="mon" recommendedBegin="now-2d"
+                recommendedEnd="now+3d" [grItems]="grItems" ></rdk-range-time><br>
+
+BeginDate : {{beginDate | json}} , EndDate : {{endDate}}

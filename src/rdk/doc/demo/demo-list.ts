@@ -102,6 +102,9 @@ const demoListRoutes = [
     {
         path: 'dialog',
         loadChildren: './component/dialog/demo.module#DialogDemoModule'
+    },{
+        path: 'rangeTime',
+        loadChildren: './component/range-time/range-time-demo.module#RangeTimeDemoModule'
     },
     {
         path: '**', //fallback router must in the last

@@ -12,17 +12,19 @@ $time-prefix-cls: #{$rdk-prefix}-time;
         width: 100%;
         /deep/ {
             .bootstrap-datetimepicker-widget table{
-                th, .year, .day{
+                th, .year, .day,.month{
                     font-weight: bold;
                 }
                 tr{
                     td{
-                        &.disabled{
+                        &.disabled,span.disabled{
                             color: #dedede;
                         }
                         &.today:before{
                             display: none;
                         }
+                    }
+                    td, td span{
                         &.expect-day{
                             border-radius: 0;
                             &.border-left{

@@ -15,7 +15,7 @@ export class TimeService {
         [TimeGr.hour,'YYYY-MM-DD,HH'],[TimeGr.date,'YYYY-MM-DD'],
         [TimeGr.week,'YYYY-MM-DD'],[TimeGr.month,'YYYY-MM']]);
 
-    private static timeUnitMap = new Map([['s','seconds'],['m','minutes'],['h',"hours"],['d','days'],['M','months'],['y','years']]);
+    private static timeUnitMap = new Map([['s','seconds'],['m','minutes'],['h',"hours"],['d','days'],['w','weeks'],['M','months'],['y','years']]);
 
     private static init = TimeService.initMoment();
 
@@ -132,26 +132,30 @@ export class TimeService {
         return moment().year(year).week(week)
     }
 
+    public static getDate(str,gr:TimeGr){
+        return moment(str,TimeService.getFormator(gr));
+    }
+
     /**
      * 根据字符串获取真实时间
      * @param str
      * @returns {any}
      */
-    public static getDate(str,gr?): any {
+    public static getFormateDate(str,gr?): any {
+        let result = str ;
         if (TimeService.isMacro(str)) {
             str = str.replace(/\s+/g, "");
-            var fullPara = /([a-z]+)(\+|\-)?([\d]+)([a-z]+)?/i;
-            var timeMacroArr = fullPara.exec(str);
+            let fullPara = /([a-z]+)(\+|\-)?([\d]+)([a-z]+)?/i;
+            let timeMacroArr = fullPara.exec(str);
             if (timeMacroArr && timeMacroArr[2] != undefined) { //有加减 now-2d
-                return TimeService.addDate(TimeService.timeMacroConvert(timeMacroArr[1]), "" + timeMacroArr[2] + timeMacroArr[3], timeMacroArr[4]);
+                result= TimeService.addDate(TimeService.timeMacroConvert(timeMacroArr[1]), "" + timeMacroArr[2] + timeMacroArr[3], timeMacroArr[4]);
             } else { //无加减 now
-                return TimeService.timeMacroConvert(str);
-            }
-        }else{
-            if(typeof str === "string" && gr){
-                return moment(str,TimeService.getFormator(gr));
+                result= TimeService.timeMacroConvert(str);
             }
         }
-        return str;
+        if(result && (gr || (!gr &&gr==0)) || result instanceof Date){
+            result = TimeService.formatWithGr(moment(result,TimeService.getFormator(gr)),gr);
+        }
+        return result;
     }
 }
