@@ -1,11 +1,15 @@
 <h3 class="title">在文档流中：</h3>
 <rdk-dialog class="dom-dialog" width="300px" [buttons]="buttons">
-    <span title><span class="fa fa-thumbs-up"></span>Title of the dialog</span>
-    <ul class="dialog-content">
-        <li>Dialog content...</li>
-        <li>Dialog content...</li>
-        <li>Dialog content...</li>
-    </ul>
+    <div rdk-title>
+        <span class="fa fa-thumbs-up"></span>Title of the dialog
+    </div>
+    <div rdk-body>
+        <ul class="dialog-content">
+            <li>Dialog content...</li>
+            <li>Dialog content...</li>
+            <li>Dialog content...</li>
+        </ul>
+    </div>
 </rdk-dialog>
 
 <h3 class="title">弹出：</h3>
@@ -31,23 +35,31 @@
 
 <ng-template #tpDialog1>
     <rdk-dialog width="40%" [buttons]="buttons" (answer)="disposeAnswer($event, closeModalDialogTemplate)">
-        <span title><span class="fa fa-thumbs-up"></span>Title of the dialog</span>
-        <ul class="dialog-content">
-            <li>Dialog content...</li>
-            <li>Dialog content...</li>
-            <li>Dialog content...</li>
-        </ul>
+        <div rdk-title>
+            <span class="fa fa-thumbs-up"></span>Title of the dialog
+        </div>
+        <div rdk-body>
+            <ul class="dialog-content">
+                <li>Dialog content...</li>
+                <li>Dialog content...</li>
+                <li>Dialog content...</li>
+            </ul>
+        </div>
     </rdk-dialog>
 </ng-template>
 
 <ng-template #tpDialog2>
     <rdk-dialog width="40%" [buttons]="buttons" (answer)="disposeAnswer($event, closeDialogTemplate)">
-        <span title><span class="fa fa-thumbs-up"></span>Title of the dialog</span>
-        <ul class="dialog-content">
-            <li>Dialog content...</li>
-            <li>Dialog content...</li>
-            <li>Dialog content...</li>
-        </ul>
+        <div rdk-title>
+            <span class="fa fa-thumbs-up"></span>Title of the dialog
+        </div>
+        <div rdk-body>
+            <ul class="dialog-content">
+                <li>Dialog content...</li>
+                <li>Dialog content...</li>
+                <li>Dialog content...</li>
+            </ul>
+        </div>
     </rdk-dialog>
 </ng-template>
 
