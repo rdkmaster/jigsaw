@@ -13,8 +13,6 @@ export class RdkPanel implements OnInit{
 
     constructor(@Host() @Inject(forwardRef(() => RdkCollapse)) private _collapse) { }
 
-    @ContentChild("headRender") _headRender: TemplateRef<any>| any;
-
     @Input()
     public header: string;
 
