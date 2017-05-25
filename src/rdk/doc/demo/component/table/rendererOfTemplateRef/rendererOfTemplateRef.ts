@@ -54,7 +54,8 @@ export class TableRendererOfTemplateRefDemoComponent implements AfterContentInit
     ngAfterContentInit(){
         this._columns = [
             {
-                target: ['f1', 'f3', 'f5', 'f7'],
+                //target: ['f1', 'f3', 'f5', 'f7'],
+                target: ['name', 'salary', 'office'],
                 width: '15%',
                 header: {
                     renderer: this.headIcon
