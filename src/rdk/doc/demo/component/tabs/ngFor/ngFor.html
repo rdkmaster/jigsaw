@@ -1,8 +1,8 @@
 <div class="container">
     <rdk-tab (selectChange)="testEvent($event)">
-        <tab-pane *ngFor="let tabData of tabDatas"
-                   [label]="tabData" icon="fa fa-gift">
-            {{tabData}} Content
-        </tab-pane>
+        <rdk-pane *ngFor="let tabData of tabDatas">
+            <div rdk-title><span class="fa fa-gift"></span>{{tabData}}</div>
+            <div rdk-body>{{tabData}} Content</div>
+        </rdk-pane>
     </rdk-tab>
 </div>

@@ -1,29 +1,40 @@
 /**
  * Created by 10177553 on 2017/3/29.
  */
-import {Component, OnInit, Input, TemplateRef, ViewChild} from '@angular/core';
+import {Component, Input, TemplateRef, Type, ViewChild} from '@angular/core';
+import {ITabDefine} from "./tab-item";
 
 @Component({
-    selector: 'tab-pane',
+    selector: 'rdk-pane',
     template: `
-         <ng-template>
-             <ng-content></ng-content>
+        <ng-template #label>
+            {{title}}
+            <ng-content select="[rdk-title]"></ng-content>
         </ng-template>
+        <ng-template #content>
+            <ng-content></ng-content>
+        </ng-template>
+
     `
 })
-export class TabPane {
-
+export class RdkPane {
     @Input()
-    public label: string;
+    public title: string;
 
     @Input()
     public disabled: boolean = false;
 
     @Input()
-    public icon: string;
-
-    @Input()
     public hidden: boolean = false;
 
-    @ViewChild(TemplateRef) content: TemplateRef<any>| any;
+    @Input()
+    public async: boolean;
+
+    @Input()
+    public initData: Object;
+
+    @ViewChild('label') label: TemplateRef<any> | Type<ITabDefine>;
+    @ViewChild('content') content: TemplateRef<any> | Type<ITabDefine>;
 }
+
+

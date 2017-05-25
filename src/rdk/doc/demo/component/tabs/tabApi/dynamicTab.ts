@@ -1,72 +1,59 @@
-/**
- * Created by 10177553 on 2017/4/5.
- */
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, TemplateRef, Type, ViewChild} from '@angular/core';
 import {RdkTab} from "../../../../../component/tabs/tab";
+import {TabContentDefine} from "./tabContent/tabContent";
+import {ITabDefine} from "../../../../../component/tabs/tab-item";
 
 @Component({
     templateUrl: './dynamicTab.html',
-    styles:[ `
-        .container {
-            border: 1px solid #e9e9e9;
-            border-radius: 4px;
-            display: inline-block;
-            width: 100%;
-            position: relative;
-            margin: 0 0 16px;
-            -webkit-transition: all .2s;
-            transition: all .2s;
-        }
-        .tabBar {
-            margin: 10px;
-            background-color: #bbbbbb;
-        }
-    `]
+    styleUrls: ['dynamicTab.scss']
 })
-export class dynamicTabDemoComponent implements OnInit {
+export class dynamicTabDemoComponent {
     @ViewChild(RdkTab) tabs: RdkTab;
 
-    activeIndex: number = 0;
-
-    constructor() { }
-
-    dynamicTabs = [
-        {
-            label: 'Tab 1',
-            content: 'This is the _body of the first tab'
-        }, {
-            label: 'Tab 2',
-            disabled: true,
-            content: 'This is the _body of the second tab'
-        },{
-            label: 'Tab 3',
-            disabled: false,
-            content: '<input type="text" value="123"/>'
-        }
-    ]
-
-    public deleteTab(value) {
-        this.tabs.destroyTabPane(0);
-    }
-    public deleteTabSec() {
-        this.dynamicTabs.splice(0,1);
-        this.activeIndex = this.dynamicTabs.length-1;
-    }
-    public hideTab():void {
-        this.tabs.hideTabPane(0);
-    }
-    public showTab():void {
-        this.tabs.showTabPane(0);
+    public removeTab(index) {
+        this.tabs.removeTab(index);
     }
 
-    public addTabPane() {
-        let length = this.dynamicTabs.length-1;
+    public hideTab(index): void {
+        this.tabs.hideTab(index);
+    }
 
-        this.dynamicTabs.push({
-            label: 'new Tab'+length,
-            content: 'new Tabs contents ' +length
+    public showTab(index): void {
+        this.tabs.showTab(index);
+    }
+
+    public addTab(tabTitle: string | TemplateRef<any>, tabContent: TemplateRef<any> | Type<ITabDefine>, initData?: Object) {
+        this.tabs.addTab(tabTitle, tabContent, initData)
+    }
+
+    public addTabWidthTemplateTitle(tabTitle, tabContent) {
+        this.addTab(tabTitle, tabContent, {
+            userInfo: {
+                username: 'Jerry',
+                email: 'ddd@qq.com',
+                phoneNumber: '1347559375',
+                address: '南京市雨花区软件大道1号'
+            }
         })
-        this.activeIndex = this.dynamicTabs.length-1;
     }
-    ngOnInit() { }
+
+    public addTabWidthStringTitle(tabContent) {
+        this.addTab('template tab', tabContent, {
+            userInfo: {
+                username: 'Martin',
+                email: 'fff@163.com',
+                phoneNumber: '1733994499',
+                address: '南京市雨花区花神大道6号'
+            }
+        })
+    }
+
+    public addComponentTab() {
+        this.addTab('component tab', TabContentDefine, 'rdk')
+    }
+
+    /*public addRouterLinkTab(tabTitle, tabContent) {
+        this.addTab(tabTitle, tabContent)
+    }*/
+
 }

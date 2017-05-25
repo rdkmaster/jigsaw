@@ -5,15 +5,14 @@
 import {NgModule} from '@angular/core';
 
 import {RdkTab} from './tab';
-import {TabPane} from "./tab-pane";
+import {RdkPane} from "./tab-pane";
 import {CommonModule} from "@angular/common";
-import {TabLabel} from "./tab-label";
-import {TabContent} from "./tab-content";
+import {RdkTabContent, RdkTabLabel} from "./tab-item";
 
 @NgModule({
     imports: [CommonModule],
-    exports: [RdkTab, TabPane],
-    declarations: [RdkTab, TabPane, TabLabel, TabContent],
+    exports: [RdkTab, RdkPane],
+    declarations: [RdkTab, RdkPane, RdkTabLabel, RdkTabContent],
     providers: [],
 })
 export class RdkTabsModule { }
