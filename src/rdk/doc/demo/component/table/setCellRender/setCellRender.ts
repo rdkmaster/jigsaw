@@ -1,4 +1,4 @@
-import {Component, TemplateRef, ViewChild} from "@angular/core";
+import {AfterViewInit, Component, TemplateRef, ViewChild} from "@angular/core";
 import {TableData} from "../../../../../core/data/table-data";
 import {ColumnDefine, TableCellRenderer} from "../../../../../component/table/table-api";
 import {Http} from "@angular/http";
@@ -8,11 +8,11 @@ import {Http} from "@angular/http";
 
 
 @Component({
-  templateUrl: 'setCellRender.html'
+    templateUrl: 'setCellRender.html'
 })
-export class TableSetCellRenderDemoComponent {
+export class TableSetCellRenderDemoComponent implements AfterViewInit {
 
-    @ViewChild("jobCellRender") jobCellRender :TemplateRef<any>;
+    @ViewChild("jobCellRender") jobCellRender: TemplateRef<any>;
 
     tableData: TableData;
 
@@ -22,13 +22,18 @@ export class TableSetCellRenderDemoComponent {
         this.tableData.fromAjax('mock-data/table/data.json');
     }
 
-    private _columns: ColumnDefine[] = [
-        {
-            target: 'position',
-            cell: {
-                renderer:this.jobCellRender
+    private _columns: ColumnDefine[];
+
+    ngAfterViewInit() {
+        this._columns = [
+            {
+                target: 'position',
+                cell: {
+                    renderer: this.jobCellRender
+                }
             }
-        }];
+        ];
+    }
 }
 
 

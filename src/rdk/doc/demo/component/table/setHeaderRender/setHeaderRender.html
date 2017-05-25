@@ -1,5 +1,5 @@
 <rdk-table [data]="tableData" [columnDefines]="_columns" ></rdk-table>
 
-<ng-template #headerRender>
-    <span class="fa fa-map-signs"></span>{{cellData}}
+<ng-template #headerRender let-context="context">
+    <span class="fa fa-map-signs"></span>{{context.cellData}}
 </ng-template>
