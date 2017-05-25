@@ -14,11 +14,13 @@
 
 <ng-template #dialog2>
     <rdk-dialog width="60%" (answer)="close(_dialogInfo2)">
-        <span title>Title of the dialog</span>
-        <ul class="dialog-content">
-            <li>Dialog content...</li>
-            <li>Dialog content...</li>
-            <li>Dialog content...</li>
-        </ul>
+        <div rdk-title>Title of the dialog</div>
+        <div rdk-body>
+            <ul class="dialog-content">
+                <li>Dialog content...</li>
+                <li>Dialog content...</li>
+                <li>Dialog content...</li>
+            </ul>
+        </div>
     </rdk-dialog>
 </ng-template>
