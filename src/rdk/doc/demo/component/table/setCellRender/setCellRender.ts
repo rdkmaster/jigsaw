@@ -29,7 +29,7 @@ export class TableSetCellRenderDemoComponent implements AfterViewInit {
             {
                 target: 'position',
                 cell: {
-                    renderer: this.jobCellRender
+                    renderer: this.jobCellRender //通过ViewChild获取的TemplateRef,必须在AfterViewInit中才能拿到
                 }
             }
         ];

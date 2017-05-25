@@ -26,7 +26,7 @@ export class TableSetHeaderRenderDemoComponent implements AfterViewInit {
             {
                 target: ['name', 'position'],
                 header: {
-                    renderer: this.headerRender
+                    renderer: this.headerRender //通过ViewChild获取的TemplateRef,必须在AfterViewInit中才能拿到
                 }
             }
         ];
