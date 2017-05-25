@@ -6,7 +6,7 @@ import {RdkInputModule} from "../../../../../../component/input/input";
 
 const routes=[
     {
-        path:'', component: TabContentComponent
+        path:'', component: TabContentComponent, outlet: 'tabPage'
     }
 ];
 
