@@ -129,46 +129,6 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
         this._registerEvent();
     }
 
-    @Input()
-    public get width(): string {
-        return this._width;
-    }
-
-    public set width(value: string) {
-        value = typeof value === 'string' ? value : value + '';
-        const match = value ? value.match(/^\s*(\d+)(%|px)\s*$/) : null;
-
-        if (match && match[2] == '%') {
-            this._width = parseInt(match[1]) / 100 * this._elf.nativeElement.offsetWidth + 'px';
-        } else {
-            this._width = value + 'px';
-        }
-
-        if (this._graph) {
-            this._graph._resize({width: this._width, silent: true});
-        }
-    }
-
-    @Input()
-    public get height(): string {
-        return this._height;
-    }
-
-    public set height(value: string) {
-        value = typeof value === 'string' ? value : value + '';
-        const match = value ? value.match(/^\s*(\d+)(%|px)\s*$/) : null;
-
-        if (match && match[2] == '%') {
-            this._height = parseInt(match[1]) / 100 * this._elf.nativeElement.offsetHeight + 'px';
-        } else {
-            this._height = value + 'px';
-        }
-
-        if (this._graph) {
-            this._graph._resize({height: this._height, silent: true});
-        }
-    }
-
     private removeResizeEvent: Function;
 
     private _resize(opts?: {
