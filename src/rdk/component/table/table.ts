@@ -18,7 +18,9 @@ import {SortAs, SortOrder, CallbackRemoval} from "../../core/data/component-data
 import {AffixUtils} from "../../core/utils/internal-utils";
 import {TableCheckboxService} from "./table-service";
 import {DefaultCellRenderer} from "./table-renderer";
-import {RdkTooltipModule} from "../tooltip/tooltip";
+import {RdkTooltipModule, SimpleTooltipComponent} from "../tooltip/tooltip";
+import {CommonUtils} from "../../core/utils/common-utils";
+import {PopupEffect, PopupInfo, PopupPositionType, PopupService} from "../../service/popup.service";
 
 class HeadSetting {
     cellData: string | number;
@@ -34,6 +36,7 @@ class HeadSetting {
 
 class CellSetting {
     cellData: string | number;
+    width: string | number;
     visible: boolean;
     renderer: Type<TableCellRenderer> | TemplateRef<any>;
     class: string;
@@ -159,10 +162,13 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     @ViewChildren('fixedHeader', {read: ElementRef})
     private _fixedHeaders: QueryList<ElementRef>;
 
+    @ViewChildren('tableRow', {read: ElementRef})
+    private _rows: QueryList<ElementRef>;
+
     @ViewChildren(forwardRef(() => RdkTableHeader))
     private _rdkTableHeaders: QueryList<RdkTableHeader>;
 
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, private _popupService: PopupService) {
         super()
     }
 
@@ -495,6 +501,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         this._cellSettings.forEach(cellSettings => {
             let cellSetting: CellSetting = {
                 cellData: cellSettings[index].cellData,
+                width: null,
                 visible: true,
                 renderer: null,
                 class: '',
@@ -542,6 +549,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     private _insertCellSetting(pos, additionalColumn: AdditionalColumnDefine, cellSetting?: CellSetting, cellSettings?: CellSetting[]): void {
         cellSetting = cellSetting ? cellSetting : {
             cellData: '',
+            width: null,
             visible: true,
             renderer: null,
             class: '',
@@ -600,6 +608,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * */
     private _generateCellSetting(cellSetting: CellSetting,
                                  column: ColumnDefine | AdditionalColumnDefine): CellSetting {
+        cellSetting.width = column.width ? column.width : cellSetting.width;
         cellSetting.visible = column.visible === true || column.visible === false ? column.visible : cellSetting.visible;
         cellSetting.group = column.group === true || column.group === false ? column.group : cellSetting.group;
         const cell = column.cell;
@@ -633,6 +642,63 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         this._renderer.removeClass(this._fixedHead, 'rdk-table-hide');
     }
 
+    private _tooltipInfo: PopupInfo;
+    private _setCellContentWidth(){
+        //不配省略功能，就不需要设置单元格宽度
+        if(!this.lineEllipsis) return;
+
+        const hostWidth = this._elementRef.nativeElement.offsetWidth;
+        this._rows.forEach((row, rowIndex) => {
+            const elements: NodeListOf<Element> = row.nativeElement.querySelectorAll('.cell-content');
+            for (let colIndex = 0; colIndex < elements.length; ++colIndex) {
+                const element: Element = elements[colIndex];
+                const cellSetting: CellSetting = this._cellSettings[rowIndex][colIndex];
+                //没有渲染器或者用DefaultCellRenderer的单元格才能用省略
+                if(!cellSetting.renderer || cellSetting.renderer == DefaultCellRenderer){
+                    let width = CommonUtils.getCssValue(cellSetting.width);
+                    if(width.match(/^\s*\d+%\s*$/)){
+                        width = hostWidth * Number(width.replace(/%/, '')) / 100 + 'px';
+                        this._renderer.setStyle(element, 'width', width);
+                    }else {
+                        this._renderer.setStyle(element, 'width', width);
+                    }
+
+                    if(Number(width.replace(/px/, '')) < element.querySelector('span').offsetWidth){
+                        const tdElement: Element = element.parentElement;
+                        this._addTdTooltipListener(tdElement, cellSetting.cellData)
+                    }
+                }
+            }
+        })
+    }
+
+    private _addTdTooltipListener(tdElement: Element, message: string|number){
+        this._renderer.listen(tdElement,"mouseenter",() =>{
+            if(!this._tooltipInfo){
+                this._tooltipInfo = this._popupService.popup(SimpleTooltipComponent,{
+                    modal: false, //是否模态
+                    showEffect: PopupEffect.bubbleIn,
+                    hideEffect: PopupEffect.bubbleOut,
+                    pos: {x: AffixUtils.offset(tdElement).left , y: AffixUtils.offset(tdElement).top},
+                    posOffset: { //偏移位置
+                        top: -40,
+                        left: 0
+                    },
+                    posType: PopupPositionType.fixed, //定位类型
+                }, {
+                    message: message
+                });
+            }
+        });
+
+        this._renderer.listen(tdElement,"mouseleave",()=>{
+            if(this._tooltipInfo){
+                this._tooltipInfo.dispose();
+                this._tooltipInfo = null;
+            }
+        })
+    }
+
     private _whileScrolling(): void {
         this._scrollBar.whileScrolling.subscribe(scrollEvent => {
             if (scrollEvent.direction == 'x') {
@@ -661,10 +727,12 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      */
     public _asyncAlignHead() {
         setTimeout(() => {
+            this._setCellContentWidth();
             this._setFixedHeadWidth();
         }, 0);
 
         setTimeout(() => {
+            this._setCellContentWidth();
             this._setFixedHeadWidth();
         }, 1000);
     }
@@ -673,9 +741,11 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         this._removeWindowListener();
 
         this._removeWindowLoadListener = this._renderer.listen('window', 'load', () => {
+            this._setCellContentWidth();
             this._setFixedHeadWidth();
         });
         this._removeWindowResizeListener = this._renderer.listen('window', 'resize', () => {
+            this._setCellContentWidth();
             this._setFixedHeadWidth();
             this._floatHead();
             this._scrollBar.scrollTo([null, 'left']);
@@ -715,10 +785,16 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         this._subscribeSortChange();
     }
 
+    @Input() public lineEllipsis;
     private _init() {
         this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.rdk-table-box'),
             'max-height', this._maxHeight);
         this._fixedHead = this._elementRef.nativeElement.querySelector(".rdk-table-fixed-head");
+
+        if(this.lineEllipsis){
+            this._renderer.addClass(this._elementRef.nativeElement.querySelector('table.rdk-table tbody'),
+                'line-ellipsis');
+        }
     }
 
     ngOnInit() {
@@ -806,10 +882,10 @@ export class TableCellBasic implements AfterViewInit {
 @Component({
     selector: '[rdk-table-cell]',
     template: '<ng-template rdk-renderer-host></ng-template>',
-    host: {
+    /*host: {
         '[style.height]': '_rowHeight',
         '[style.line-height]': '_rowHeight'
-    }
+    }*/
 })
 export class RdkTableCell extends TableCellBasic implements OnInit {
     private _rowHeight: string = RdkTable.ROW_HEIGHT - 2 + 'px';
@@ -1048,7 +1124,8 @@ export class RdkTableHeader extends TableCellBasic implements OnInit {
     imports: [
         CommonModule, RdkScrollBarModule, RdkTooltipModule
     ],
-    exports: [CommonModule, RdkTable, RdkTableCell, RdkRendererHost, RdkTableHeader]
+    exports: [CommonModule, RdkTable, RdkTableCell, RdkRendererHost, RdkTableHeader],
+    providers: [PopupService]
 })
 export class RdkTableModule {
 }

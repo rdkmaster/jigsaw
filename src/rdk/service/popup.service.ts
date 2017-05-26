@@ -132,7 +132,6 @@ export class PopupService {
                 popupDisposer();
             }
 
-            console.log(blockDisposer);
             if (blockDisposer) {
                 blockDisposer();
             }

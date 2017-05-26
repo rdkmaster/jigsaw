@@ -24,6 +24,10 @@
 
 @mixin line-ellipsis($width) {
     width: $width;
+    @include line-ellipsis-style();
+}
+
+@mixin line-ellipsis-style() {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
