@@ -8,7 +8,7 @@ import {EchartOptions} from "rdk/core/data/echart-types";
 import {RdkGraph} from "../../../../../component/graph/graph";
 
 @Component({
-    template: '<rdk-graph [data]="data" #graph></rdk-graph>'
+    template: `<rdk-graph [data]="data" width="90%" #graph></rdk-graph>`
 })
 
 export class BasicGraphComponent implements OnInit {
