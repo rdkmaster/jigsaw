@@ -80,7 +80,7 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
     // 组件销毁, 注销实例
     ngOnDestroy() {
         // 销毁注册的全局事件;
-        this.removeResizeEvent();
+        this._removeResizeEvent();
 
         RdkGraph.echarts.dispose();
     }
@@ -167,7 +167,7 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
         }
     }
 
-    private removeResizeEvent: Function;
+    private _removeResizeEvent: Function;
 
     private _resize(opts?: {
         width?: number | string,
@@ -179,16 +179,15 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
 
     // 自动注册windows 事件;
     public resize(opts?: {
-                      width?: number | string,
-                      height?: number | string,
-                      silent?: boolean
-                  }): void {
-         // 如果已经注册了事件, 则删除对应的事件
-        if(this.removeResizeEvent) this.removeResizeEvent();
-
-        this.removeResizeEvent = this._renderer.listen("window", "resize", (opts) => {
-            this._resize(opts);
-        });
+        width?: number | string,
+        height?: number | string,
+        silent?: boolean
+    }): void {
+        if (!this._removeResizeEvent) {
+            this._removeResizeEvent = this._renderer.listen("window", "resize", (opts) => {
+                this._resize(opts);
+            });
+        }
     }
 
     public dispatchAction(payload: Object): void {
