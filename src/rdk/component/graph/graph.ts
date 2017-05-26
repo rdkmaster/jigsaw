@@ -16,11 +16,7 @@ import {CallbackRemoval} from "../../core/data/component-data";
 @Component({
     selector: 'rdk-graph',
     templateUrl: 'graph.html',
-    styleUrls: ['./graph.scss'],
-    host: {
-        "[style.width]": "width",
-        "[style.height]": "height"
-    }
+    styleUrls: ['./graph.scss']
 })
 export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy {
     // 全局 echarts 对象
@@ -69,9 +65,10 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
     }
 
     ngOnInit() {
-        const container = this._elf.nativeElement.querySelector(".rdk-graph");
-        this._renderer.setStyle(container, 'width', this._width);
-        this._renderer.setStyle(container, 'height', this._height);
+        let container = this._elf.nativeElement.querySelector(".rdk-graph");
+        this._renderer.setStyle(container, 'width', this.width);
+        this._renderer.setStyle(container, 'height', this.height);
+
         this._graph = echarts.init(container);
 
         if (this.data) this.setOption(this.data.options);
@@ -128,7 +125,6 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
         this._graph.setOption(option, true, lazyUpdate);
         this._registerEvent();
     }
-
     private removeResizeEvent: Function;
 
     private _resize(opts?: {
