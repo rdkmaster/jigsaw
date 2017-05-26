@@ -80,16 +80,6 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
         }
     }
 
-    public _trigger: DropDownTrigger = DropDownTrigger.click;
-    @Input()
-    public get trigger() {
-        return this._trigger;
-    }
-
-    public set trigger(value: DropDownTrigger) {
-        this._trigger = value;
-    }
-
     private _openTrigger: DropDownTrigger = DropDownTrigger.mouseenter;
     @Input()
     public get openTrigger(): DropDownTrigger {
@@ -97,7 +87,8 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
     }
 
     public set openTrigger(value: DropDownTrigger) {
-        this._openTrigger = value;
+        //从模板过来的值，不会受到类型的约束
+        this._openTrigger = typeof value === 'string' ? DropDownTrigger[<string>value] : value;
     }
 
     private _closeTrigger: DropDownTrigger = DropDownTrigger.mouseleave;
@@ -107,7 +98,8 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
     }
 
     public set closeTrigger(value: DropDownTrigger) {
-        this._closeTrigger = value;
+        //从模板过来的值，不会受到类型的约束
+        this._closeTrigger = typeof value === 'string' ? DropDownTrigger[<string>value] : value;
     }
 
     @Input()
