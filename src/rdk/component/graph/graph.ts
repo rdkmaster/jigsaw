@@ -183,7 +183,7 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
                       height?: number | string,
                       silent?: boolean
                   }): void {
-         // 如果已经注册了事件,则不重复注册;
+         // 如果已经注册了事件,则不重复注册；
         if(!this.removeResizeEvent) {
             this.removeResizeEvent = this._renderer.listen("window", "resize", (opts) => {
                 this._resize(opts);
