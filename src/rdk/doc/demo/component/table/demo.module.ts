@@ -46,6 +46,7 @@ import {RdkDialogModule} from "../../../../component/dialog/dialog";
 import {PopupService} from "../../../../service/popup.service";
 import {TableRendererOfTemplateRefDemoComponent} from "./rendererOfTemplateRef/rendererOfTemplateRef";
 import {RdkBlock, RdkBlockModule} from "../../../../component/block/block";
+import {TableLineEllipsisDemoComponent} from "./lineEllipsis/lineElliosis";
 
 const tableDemoRoutes = [
     {
@@ -119,6 +120,9 @@ const tableDemoRoutes = [
         path: 'rendererOfTemplateRef', component: TableRendererOfTemplateRefDemoComponent
     },
     {
+        path: 'lineEllipsis', component: TableLineEllipsisDemoComponent
+    },
+    {
         path: '**', //fallback router must in the last
         component: TableBasicDemoComponent
     }
@@ -155,6 +159,7 @@ const tableDemoRoutes = [
         TableAddIDWithPagingComponent,
         TableDataWithPopupDemoComponent,
         TableRendererOfTemplateRefDemoComponent,
+        TableLineEllipsisDemoComponent
     ],
     imports: [
         RouterModule.forChild(tableDemoRoutes),
