@@ -153,8 +153,12 @@ export class TimeService {
                 result= TimeService.timeMacroConvert(str);
             }
         }
-        if(result && (gr || (!gr &&gr==0)) || result instanceof Date){
-            result = TimeService.formatWithGr(moment(result,TimeService.getFormator(gr)),gr);
+        if(result && (gr || (!gr &&gr==0)) || result instanceof Date || result instanceof moment){
+            if(result instanceof moment){
+                result = TimeService.formatWithGr(result,gr);
+            }else{
+                result = TimeService.formatWithGr(moment(result,TimeService.getFormator(gr)),gr);
+            }
         }
         return result;
     }

@@ -12,11 +12,17 @@ export type TimeWeekDay = {
     year: number
 }
 
-export type Time = string | Date | TimeWeekDay;
+export type Time = string | Date | TimeWeekDay | Moment;
+
+export type Moment = {
+    _isAMomentObject : boolean,
+    [prop:string]: any;
+}
+
 
 export type ShortCut = {
-   label : string,
-    callback : () => [string,string];
+    label : string,
+    callback : () => [Time,Time];
 }
 
 export type GrItem = {
@@ -62,7 +68,7 @@ export class RdkTime extends AbstractRDKComponent implements OnInit ,OnDestroy {
     }
     //粒度
     @Input()
-    public set gr(value: TimeGr | string) {
+    public set gr(value: TimeGr | string ) {
         if (typeof value === 'string') {
             value = TimeGr[value];
         }
@@ -219,8 +225,8 @@ export class RdkTime extends AbstractRDKComponent implements OnInit ,OnDestroy {
             inline: true,
             defaultDate: TimeService.getDate(this._value,<TimeGr>this.gr),
             format: TimeService.getFormator(<TimeGr>this.gr),
-            minDate: this._limitStart && this.limitStart ,
-            maxDate: this._limitEnd && this.limitEnd
+            minDate: this._limitStart && TimeService.getDate(this.limitStart,<TimeGr>this.gr),
+            maxDate: this._limitEnd && TimeService.getDate(this.limitEnd,<TimeGr>this.gr)
         }).on("dp.change", (e) => {
             let changeValue = TimeService.getFormateDate(e.date,this.gr);
             if( this._value!= changeValue){
@@ -381,7 +387,7 @@ export class RdkTime extends AbstractRDKComponent implements OnInit ,OnDestroy {
             sourceNodes.forEach(node => {
                 let text = +node.innerText;
                 if (startMonth != endMonth) {
-                    if (!node.classList.contains("old") && node.classList.contains("new")) {
+                    if (!node.classList.contains("old") && !node.classList.contains("new")) {
                         if ((startMonth == headObj.month && text >= startDate) ||
                             (endMonth == headObj.month && text >= endDate)) {
                             node.classList.add("expect-day");

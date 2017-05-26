@@ -17,10 +17,10 @@ $range-time-prefix-cls: #{$rdk-prefix}-range-time;
     }
     .#{$range-time-prefix-cls}-shortcuts{
         position:absolute;
-        left:310px;
+        left:260px;
         display : flex;
         justify-content : center;
-        width:290px;
+        width:240px;
         top : 10px;
         &>span {
             font-size: 12px;
