@@ -75,6 +75,8 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
         this._graph = echarts.init(container);
 
         if (this.data) this.setOption(this.data.options);
+        // 默认跟随窗口变化自动变化
+        this.resize();
     }
 
     // 组件销毁, 注销实例
