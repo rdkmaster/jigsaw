@@ -11,7 +11,7 @@ import {BallLoadingDemoComponent} from "./ballLoading/loading";
 import {DomInnerDemoComponent} from "./domInner/domInner";
 import {RdkBlock, RdkBlockModule} from "../../../../component/block/block";
 import {ColorfulLoadingDemoComponent} from "./color/color";
-import {RdkButton} from "../../../../component/button/button";
+import {RdkButtonModule} from "../../../../component/button/button";
 const loadingDemoRoutes = [
     {
         path: '', redirectTo: 'basic', pathMatch: 'full'
@@ -45,12 +45,12 @@ const loadingDemoRoutes = [
         DomInnerDemoComponent,
         DefinedLoading,
         ColorfulLoadingDemoComponent,
-        RdkButton
     ],
     imports: [
         CommonModule,
         RdkBlockModule,
         RdkLoadingModule,
+        RdkButtonModule,
         RouterModule.forChild(loadingDemoRoutes)
     ],
     providers: [LoadingService, PopupService],

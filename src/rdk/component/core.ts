@@ -11,6 +11,10 @@ export class RdkRendererHost {
 import {Input} from "@angular/core";
 import {CommonUtils} from "../core/utils/common-utils";
 
+export interface IDynamicInstantiatable {
+    initData: any;
+}
+
 export interface IRDKComponent {
     //组件基础样式
     basicClass: string;

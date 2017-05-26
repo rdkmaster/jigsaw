@@ -53,12 +53,12 @@ export class TableAddCheckboxColumnDemoComponent{
         }
 
         this._selectedRows = "";
-        // this.myTable.getRenderers(0).forEach((renderer,index)=>{
-        //     if(renderer.renderer._checkboxState.checked == 1){
-        //         this._selectedRows = this._selectedRows + index + " , " ;
-        //     }
-        // });
-
+        this.myTable.getRenderers(0).forEach(renderer => {
+            const checkboxState = renderer.renderer.checkboxState;
+            if(checkboxState.checked == true){
+                this._selectedRows = this._selectedRows + checkboxState.row + " , " ;
+            }
+        });
 
     }
 

@@ -27,7 +27,7 @@ export class RdkTreeExt extends AbstractRDKComponent implements AfterViewInit, O
 
     public uniqueId: string = '__unique_id__';
 
-    public _setting: ZTreeSettingSetting;
+    public _setting: ZTreeSettingSetting = this._defaultSetting();
     @Input()
     public get setting(): ZTreeSettingSetting {
         return this._setting;
@@ -92,15 +92,15 @@ export class RdkTreeExt extends AbstractRDKComponent implements AfterViewInit, O
 
     private _defaultSetting() {
         let that = this;
-        let setObj:ZTreeSettingSetting = {
+        let setObj: ZTreeSettingSetting = {
             data: {
                 key: {
-                    children:  'nodes',
+                    children: 'nodes',
                     name: 'label'
                 }
             },
             check: {
-                enable:  true
+                enable: true
             },
             callback: {
                 onClick: on_click,
@@ -115,7 +115,7 @@ export class RdkTreeExt extends AbstractRDKComponent implements AfterViewInit, O
                 beforeEditName: before_editName
             },
             edit: {
-                enable:  true,
+                enable: true,
                 removeTitle: '',
                 renameTitle: ''
             },
@@ -155,7 +155,7 @@ export class RdkTreeExt extends AbstractRDKComponent implements AfterViewInit, O
             if (newName.length == 0) {
                 alert("Node name can not be empty.");
                 return false;
-            }else{
+            } else {
                 let extraInfo = {"newName": newName, "isCancel": isCancel};
                 that.setTreeEvent.call(that, "beforeRename", treeId, treeNode, undefined, extraInfo);
                 return true;

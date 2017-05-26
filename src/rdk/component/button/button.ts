@@ -11,7 +11,7 @@ import {AbstractRDKComponent} from '../core';
         '(click)': '_onClick()',
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[style.line-height]': 'height',
+        '[style.line-height]': '_calcLineHeight()',
         '[class.rdk-button-clicked]': "_clicked",
         '[class.rdk-button-size-small]': "presize === 'small'",
         '[class.rdk-button-size-large]': "presize === 'large'",
@@ -38,6 +38,10 @@ export class RdkButton extends AbstractRDKComponent {
             this._clicked = true;
             setTimeout(() => this._clicked = false, 360);
         }
+    }
+
+    private _calcLineHeight():string {
+        return parseInt(this.height) - 4 + 'px';
     }
 
 }

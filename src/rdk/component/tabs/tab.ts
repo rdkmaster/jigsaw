@@ -1,73 +1,79 @@
 import {
-    Component, ContentChildren, QueryList, Input, ViewChildren,
-    AfterViewInit, Output, EventEmitter, AfterViewChecked, ChangeDetectorRef
+    Component, ContentChildren, QueryList, Input, ViewChildren, AfterViewInit, Output, EventEmitter, TemplateRef,
+    ViewContainerRef, ComponentFactoryResolver, Type
 } from '@angular/core';
-import {TabPane} from "./tab-pane";
-import {TabLabel} from "./tab-label";
-import {TabContent} from "./tab-content";
+import {RdkPane} from "./tab-pane";
+import {RdkTabContent, RdkTabLabel} from "./tab-item";
+import {AbstractRDKComponent, IDynamicInstantiatable} from "../core";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'rdk-tab',
     templateUrl: 'tab.html',
     styleUrls: ['./tab.scss']
 })
-export class RdkTab implements AfterViewInit, AfterViewChecked {
+export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
 
-    @ContentChildren(TabPane) _tabPanes: QueryList<TabPane>;
+    constructor(private _cfr: ComponentFactoryResolver,
+                private _viewContainer: ViewContainerRef,
+                private _router: Router) {
+        super()
+    }
 
-    // 声明不可修改的暴露属性.所有包含 TabPane
-    public tabPanes = this._tabPanes;
+    @ContentChildren(RdkPane)
+    private _tabPanes: QueryList<RdkPane>;
 
-    @ViewChildren(TabLabel) _tabLabel: QueryList<TabLabel>;
+    @ViewChildren(RdkTabLabel)
+    private _tabLabel: QueryList<RdkTabLabel>;
 
-    @ViewChildren(TabContent) _tabContent: QueryList<TabContent>;
+    @ViewChildren(RdkTabContent)
+    private _tabContent: QueryList<RdkTabContent>;
 
     @Output()
-    public selectChange = new EventEmitter<TabPane>();
+    public selectChange = new EventEmitter<RdkPane>();
 
-    constructor(private _changeDetector: ChangeDetectorRef) {};
+    public length: number;
 
     // tab页点击
-    private _tabClick(index) {
-        if(this.selectedIndex === index) return;
-
-        // 设置当前的selectedIndex
-        this._setSelectIndex(index);
-
-        // 发出事件, 返回相应
-        this.selectChange.emit(this._getTabPaneByIndex(index));
-        this.selectedIndexChanged.emit(index);
+    public _$tabClick(index) {
+        this.selectedIndex = index;
     }
 
-    private _selectedIndex: number = 0;
+    private _selectedIndex: number;
 
     @Input()
-    public get selectedIndex():number {
+    public get selectedIndex(): number {
         return this._selectedIndex;
     }
-    public set selectedIndex(value: number) {
-        if(this._selectedIndex === value) return;
 
-        this._selectedIndex = value;
+    public set selectedIndex(value: number) {
+        if (this._selectedIndex !== value && typeof value == 'number') {
+            this._selectedIndex = value;
+
+            if (this.initialized) {
+                this._handleSelectChange(value)
+            }
+        }
     }
 
     @Output()
     public selectedIndexChanged = new EventEmitter<number>();
 
-    private _setSelectIndex(index):void {
-        this.selectedIndex = index;
+    private _handleSelectChange(index) {
+        this.selectChange.emit(this._getTabPaneByIndex(index));
+        this.selectedIndexChanged.emit(index);
 
-        this._setInkBarStyle(index);
+        this._asyncSetStyle(index);
     }
 
-    _inkBarStyle: {};
+    private _inkBarStyle: object = {};
 
     private _setInkBarStyle(index: number) {
         let labelPos = this._getLabelOffsetByKey(index);
 
         this._inkBarStyle = {
             'display': 'block',
-            'transform': 'translate3d('+ labelPos.offSet +'px, 0px, 0px)',
+            'transform': 'translate3d(' + labelPos.offSet + 'px, 0px, 0px)',
             'width': labelPos.width + 'px'
         }
     }
@@ -77,7 +83,7 @@ export class RdkTab implements AfterViewInit, AfterViewChecked {
         let currentLabel = this._tabLabel.find(item => item.key === key);
 
         // 非法的 key // 有可能getTop 等扩展Tab页时再重构.
-        if(currentLabel) { // 找到对应的Label
+        if (currentLabel) { // 找到对应的Label
             return {
                 offSet: currentLabel.getOffsetLeft(),
                 width: currentLabel.getOffsetWidth()
@@ -88,58 +94,59 @@ export class RdkTab implements AfterViewInit, AfterViewChecked {
         }
     }
 
-    private _getTabPaneByIndex(key):TabPane {
-        return this._tabPanes.find((item,index) => index === key);
+    private _getTabPaneByIndex(key): RdkPane {
+        return this._tabPanes.find((item, index) => index === key);
     }
 
-    private _getTabLabelByIndex(key):TabLabel {
-        return this._tabLabel.find((item,index) => index === key);
+    private _autoSelect() {
+        this.selectedIndex = this._tabPanes.toArray().findIndex(tabPane => !tabPane.disabled && !tabPane.hidden);
     }
 
-    private _getTabContentByIndex(key):TabContent {
-        return this._tabContent.find((item,index) => index === key);
+    private _asyncSetStyle(index: number): void {
+        setTimeout(() => {
+            this._setInkBarStyle(index);
+        }, 0)
     }
 
     ngAfterViewInit() {
-        this._setSelectIndex(this.selectedIndex);
-    }
+        if (this.selectedIndex != null) {
+            this._handleSelectChange(this.selectedIndex)
+        } else {
+            this._autoSelect();
+        }
 
-    ngAfterViewChecked() {
-        this._setSelectIndex(this.selectedIndex);
-        // 因为已经做过"脏检查", 需要手动再触发检查
-        this._changeDetector.detectChanges();
-
-        this.tabPanes = this._tabPanes;
+        this.length = this._tabPanes.length;
     }
 
     /**
      * 隐藏对应的Tab页.
      * @param key (tab pane 的顺序.)
      */
-    public hideTabPane(index):void {
+    public hideTab(index): void {
         let tabPane = this._getTabPaneByIndex(index);
 
-        if(!this._isTabPane(tabPane)) return;
+        if (!this._isTabPane(tabPane)) return;
 
         tabPane.hidden = true;
 
         this._handleSelect();
     }
+
     /**
      * 显示对应的Tab页, 如果已经是显示的没有变化, 隐藏的显示, 没有打印出警告.
      * @param index
      */
-    public showTabPane(index) {
+    public showTab(index) {
         let tabPane = this._getTabPaneByIndex(index);
 
-        if(!this._isTabPane(tabPane)) return;
+        if (!this._isTabPane(tabPane)) return;
 
         tabPane.hidden = false;
         this.selectedIndex = index;
     }
 
-    private _isTabPane(tabPane: any):boolean {
-        if(!tabPane) {
+    private _isTabPane(tabPane: any): boolean {
+        if (!tabPane) {
             console.info("没有找到对应的索引的tab-pane");
             return false;
         } else {
@@ -147,13 +154,46 @@ export class RdkTab implements AfterViewInit, AfterViewChecked {
         }
     }
 
+    /**
+     * 添加tab页
+     * @param tabPane
+     */
+    public addTab(title: string | TemplateRef<any> | Type<IDynamicInstantiatable>,
+                  content: TemplateRef<any> | Type<IDynamicInstantiatable>,
+                  initData?: Object) {
+        const factory = this._cfr.resolveComponentFactory(RdkPane);
+        let tabPane: RdkPane = this._viewContainer.createComponent(factory).instance;
+        if(typeof title == 'string'){
+            tabPane.title = title
+        }else{
+            tabPane.label = title;
+        }
+        tabPane.content = content;
+        tabPane.initData = initData;
+
+        let tabTemp = this._tabPanes.toArray();
+        tabTemp.push(tabPane);
+        this._tabPanes.reset(tabTemp);
+        this.length = this._tabPanes.length;
+        this.selectedIndex = this._tabPanes.length - 1;
+
+        //router link
+        setTimeout(() => {
+            let link = this._tabLabel.find(item => item.key === this.selectedIndex)
+                .elementRef.nativeElement.querySelector('[routerLink]');
+            if (link) {
+                link.click()
+            }
+        }, 0)
+
+    }
 
     /**
      * 销毁指定的Tab页. 从0开始计数.
      * @param index
      */
-    destroyTabPane(index) {
-        if(this._tabPanes.length - index < 1) {
+    public removeTab(index) {
+        if (this._tabPanes.length - index < 1) {
             console.info("没有对应tab-pane 供删除");
             return;
         }
@@ -163,11 +203,12 @@ export class RdkTab implements AfterViewInit, AfterViewChecked {
 
         // 重新修改queryList. 不确定这么做有没有什么隐患.
         this._tabPanes.reset(tabTemp);
-
-        this._getTabLabelByIndex(index).destroy();
-        this._getTabContentByIndex(index).destroy();
-
-        this._handleSelect();
+        this.length = this._tabPanes.length;
+        if(this.selectedIndex == index){
+            this._handleSelect()
+        }else{
+            this.selectedIndex = this.selectedIndex -1
+        }
     }
 
     /**
@@ -180,22 +221,12 @@ export class RdkTab implements AfterViewInit, AfterViewChecked {
      * @private
      */
     private _handleSelect() {
-
         let tabPane = this._getTabPaneByIndex(this.selectedIndex);
 
-        if(!tabPane|| tabPane.hidden|| tabPane.disabled) {
-            let canSelect = -1;
-
-            this._tabPanes.forEach((item, index) => {
-                if(!item.disabled&& !item.hidden) canSelect = index;
-            });
-
-            if(canSelect === -1) {
-                // 1. Todo 没有非disable和hidden的tab页时，怎么显示tab页.
-                console.info("取消显示");
-            } else {
-                this.selectedIndex = canSelect;
-            }
+        if (!tabPane || tabPane.hidden || tabPane.disabled) {
+            this._autoSelect()
+        } else {
+            this._asyncSetStyle(this.selectedIndex);
         }
     }
 }

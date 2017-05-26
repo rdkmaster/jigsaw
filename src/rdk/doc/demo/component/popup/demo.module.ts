@@ -19,6 +19,7 @@ import {AlertDemoComponent} from "./alert/alert";
 import {CustomizedAlert} from "./alert/customized-alert/customized-alert";
 import {RdkBlock, RdkBlockModule} from "../../../../component/block/block";
 import {RdkInputModule} from "../../../../component/input/input";
+import {PopupTracingEventComponent} from "./tracing-event/demo";
 const popupDemoRoutes = [
     {
         path: '',
@@ -35,6 +36,9 @@ const popupDemoRoutes = [
         path: 'alert', component: AlertDemoComponent
     },
     {
+        path: 'tracing-event', component: PopupTracingEventComponent
+    },
+    {
         path: '**', //fallback router must in the last
         component: DialogDemoComponent
     }
@@ -49,6 +53,7 @@ const popupDemoRoutes = [
         UseTooltipComponent,
         AlertDemoComponent,
         CustomizedAlert,
+        PopupTracingEventComponent
     ],
     imports: [
         RouterModule.forChild(popupDemoRoutes),

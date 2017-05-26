@@ -9,7 +9,7 @@ import {
     TableCellOption,
     TableCellNum,
     TableCellEditor,
-    DefaultCellRenderer
+    DefaultCellRenderer, RdkTableRendererModule
 } from "../../../../component/table/table-renderer";
 import {TableHeadSelect, TableHeadIcon} from "./renderer/table-renderer";
 import {RdkSelectModule} from "../../../../component/select/select";
@@ -130,14 +130,8 @@ const tableDemoRoutes = [
         TableRendererDemoComponent,
         TablePerformsDemoComponent,
         TableFixedHeadDemoComponent,
-        DefaultCellRenderer,
         TableHeadSelect,
         TableHeadIcon,
-        TableHeadCheckbox,
-        TableCellCheckbox,
-        TableCellOption,
-        TableCellNum,
-        TableCellEditor,
         TableColumnSetWidthDemoComponent,
         TableColumnSetVisibleDemoComponent,
         TableSetHeaderRenderDemoComponent,
@@ -165,13 +159,14 @@ const tableDemoRoutes = [
     imports: [
         RouterModule.forChild(tableDemoRoutes),
         RdkTableModule,
+        RdkTableRendererModule,
         RdkSelectModule,
         RdkCheckBoxModule,
         RdkPaginationModule,
         RdkInputModule,
         RdkButtonModule,
         RdkDialogModule,
-        RdkBlockModule
+        RdkBlockModule,
     ],
     exports: [ ],
     entryComponents: [
