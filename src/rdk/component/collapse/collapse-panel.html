@@ -9,9 +9,7 @@
         </ng-template>
 
         <!-- 自定义的header render.-->
-        <ng-template [ngIf]="_headRender">
-            <ng-template [portalHost]="_headRender"></ng-template>
-        </ng-template>
+        <ng-content select="[rdk-title]"></ng-content>
     </div>
     <div class="rdk-collapse-content">
         <ng-content></ng-content>
