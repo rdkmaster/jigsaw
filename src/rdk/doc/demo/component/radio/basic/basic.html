@@ -1,6 +1,7 @@
 <h4>单选按钮</h4>
 <rdk-radio-group [(value)]="selectedCity"
                  (valueChange)="radioChange($event)"
-                 [data]="citys">
+                 [data]="citys"
+                 trackItemBy="id">
 </rdk-radio-group>
 
