@@ -144,11 +144,16 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         return this._scrollBarOptions.mouseWheel.scrollAmount;
     }
 
+    @Input() public lineEllipsis;
+
     private _fixedHead: HTMLElement;
 
     private _headSettings: Array<HeadSetting> = [];
 
     private _cellSettings: Array<CellSetting>[] = [];
+
+    private _tooltipInfo: PopupInfo;
+    private _removeTdListeners: Function[] = [];
 
     private _removeWindowResizeListener: Function;
     private _removeWindowScrollListener: Function;
@@ -173,7 +178,8 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     public rendererList: any[] = [];
-    public getRenderers(column){
+
+    public getRenderers(column) {
         return this.rendererList.filter(renderer => renderer.column == column);
     }
 
@@ -642,11 +648,9 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         this._renderer.removeClass(this._fixedHead, 'rdk-table-hide');
     }
 
-    private _tooltipInfo: PopupInfo;
-    private _removeTdListeners: Function[] = [];
-    private _setCellContentWidth(){
+    private _setCellContentWidth() {
         //不设置省略功能，就不需要设置单元格宽度
-        if(!this.lineEllipsis) return;
+        if (!this.lineEllipsis) return;
 
         //清空之前的td-tooltip事件
         this._removeTdTooltipListeners();
@@ -658,16 +662,16 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
                 const element: Element = elements[colIndex];
                 const cellSetting: CellSetting = this._cellSettings[rowIndex][colIndex];
                 //没有渲染器或者用DefaultCellRenderer的单元格才能用省略
-                if(!cellSetting.renderer || cellSetting.renderer == DefaultCellRenderer){
+                if (!cellSetting.renderer || cellSetting.renderer == DefaultCellRenderer) {
                     let width = CommonUtils.getCssValue(cellSetting.width);
-                    if(width.match(/^\s*\d+%\s*$/)){
+                    if (width.match(/^\s*\d+%\s*$/)) {
                         width = hostWidth * Number(width.replace(/%/, '')) / 100 + 'px';
                         this._renderer.setStyle(element, 'width', width);
-                    }else {
+                    } else {
                         this._renderer.setStyle(element, 'width', width);
                     }
 
-                    if(Number(width.replace(/px/, '')) < element.querySelector('span').offsetWidth){
+                    if (Number(width.replace(/px/, '')) < element.querySelector('span').offsetWidth) {
                         const tdElement: Element = element.parentElement;
                         this._addTdTooltipListener(tdElement, cellSetting.cellData)
                     }
@@ -676,14 +680,14 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         })
     }
 
-    private _addTdTooltipListener(tdElement: Element, message: string|number){
-        this._removeTdListeners.push(this._renderer.listen(tdElement,"mouseenter",() =>{
-            if(!this._tooltipInfo){
-                this._tooltipInfo = this._popupService.popup(SimpleTooltipComponent,{
+    private _addTdTooltipListener(tdElement: Element, message: string | number) {
+        this._removeTdListeners.push(this._renderer.listen(tdElement, "mouseenter", () => {
+            if (!this._tooltipInfo) {
+                this._tooltipInfo = this._popupService.popup(SimpleTooltipComponent, {
                     modal: false, //是否模态
                     showEffect: PopupEffect.bubbleIn,
                     hideEffect: PopupEffect.bubbleOut,
-                    pos: {x: AffixUtils.offset(tdElement).left , y: AffixUtils.offset(tdElement).top},
+                    pos: {x: AffixUtils.offset(tdElement).left, y: AffixUtils.offset(tdElement).top},
                     posOffset: { //偏移位置
                         top: -40,
                         left: 0
@@ -695,16 +699,16 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
             }
         }));
 
-        this._removeTdListeners.push(this._renderer.listen(tdElement,"mouseleave",()=>{
-            if(this._tooltipInfo){
+        this._removeTdListeners.push(this._renderer.listen(tdElement, "mouseleave", () => {
+            if (this._tooltipInfo) {
                 this._tooltipInfo.dispose();
                 this._tooltipInfo = null;
             }
         }));
     }
 
-    private _removeTdTooltipListeners(){
-        if(this._removeTdListeners.length){
+    private _removeTdTooltipListeners() {
+        if (this._removeTdListeners.length) {
             this._removeTdListeners.forEach(removeTdListener => removeTdListener())
         }
     }
@@ -795,13 +799,12 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         this._subscribeSortChange();
     }
 
-    @Input() public lineEllipsis;
     private _init() {
         this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.rdk-table-box'),
             'max-height', this._maxHeight);
         this._fixedHead = this._elementRef.nativeElement.querySelector(".rdk-table-fixed-head");
 
-        if(this.lineEllipsis){
+        if (this.lineEllipsis) {
             this._renderer.addClass(this._elementRef.nativeElement.querySelector('table.rdk-table tbody'),
                 'line-ellipsis');
         }
@@ -894,9 +897,9 @@ export class TableCellBasic implements AfterViewInit {
     selector: '[rdk-table-cell]',
     template: '<ng-template rdk-renderer-host></ng-template>',
     /*host: {
-        '[style.height]': '_rowHeight',
-        '[style.line-height]': '_rowHeight'
-    }*/
+     '[style.height]': '_rowHeight',
+     '[style.line-height]': '_rowHeight'
+     }*/
 })
 export class RdkTableCell extends TableCellBasic implements OnInit {
     private _rowHeight: string = RdkTable.ROW_HEIGHT - 2 + 'px';
@@ -945,7 +948,7 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
         });
     }
 
-    private _cacheRenderer(renderer: TableCellRenderer, editorRenderer: TableCellRenderer){
+    private _cacheRenderer(renderer: TableCellRenderer, editorRenderer: TableCellRenderer) {
         let rendererInfo = this._rdkTable.rendererList.find(renderer => renderer.row == this.row
                             && renderer.column == this.column);
         if (rendererInfo) {
@@ -962,7 +965,7 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
         }
     }
 
-    private _rendererSubscribe(renderer: TableCellRenderer): void{
+    private _rendererSubscribe(renderer: TableCellRenderer): void {
         renderer.cellDataChange.subscribe(cellData => {
             if (cellData === undefined || cellData === null) {
                 //cellData === '' 认为是合法值
@@ -974,7 +977,7 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
         });
     }
 
-    private _editorRendererSubscribe(renderer: TableCellRenderer){
+    private _editorRendererSubscribe(renderer: TableCellRenderer) {
         renderer.cellDataChange.subscribe(cellData => {
             if (cellData === undefined || cellData === null) {
                 //cellData === '' 认为是合法值
