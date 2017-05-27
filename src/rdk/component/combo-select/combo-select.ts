@@ -257,6 +257,9 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
         if (this._openTrigger === DropDownTrigger.mouseenter && this.open && !this._isSafeCloseTime) {
             return;
         } else {
+            // 如果已经打开则不关闭;
+            if(this.open) return;
+
             this.open = !this.open;
         }
     }
