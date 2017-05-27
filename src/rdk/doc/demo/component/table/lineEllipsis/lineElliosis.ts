@@ -54,7 +54,8 @@ export class TableLineEllipsisDemoComponent {
             cell: {
                 editable: true,
                 editorRenderer: TableCellEditor,
-            }
+            },
+            group: true
         },
         {
             target: 'f3',

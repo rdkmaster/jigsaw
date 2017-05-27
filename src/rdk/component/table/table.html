@@ -47,7 +47,7 @@
                      *ngIf="cell.renderer"
                      rdk-table-cell
                      [tableData]="data"
-                     [cellData]="cell.cellData"
+                     [(cellData)]="cell.cellData"
                      [row]="rowIndex"
                      [column]="colIndex"
                      [field]="cell.field"

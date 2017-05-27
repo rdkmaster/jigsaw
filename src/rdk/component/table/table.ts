@@ -872,6 +872,8 @@ export class TableCellBasic implements AfterViewInit {
     public tableData: TableData;
     @Input()
     public cellData: any;
+    @Output()
+    public cellDataChange: EventEmitter<any> = new EventEmitter<any>();
     @Input()
     public row: number;
     @Input()
@@ -958,6 +960,8 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
     private _emitDataChange(cellData: string | number): void {
         let oldCellData = this.cellData;
         this.cellData = cellData;
+        //更新cellSetting
+        this.cellDataChange.emit(cellData);
 
         //更新tableData
         let rows = [];
