@@ -6,15 +6,17 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {AbstractGraphData} from "../../../../../core/data/graph-data";
 import {EchartOptions} from "rdk/core/data/echart-types";
 import {RdkGraph} from "../../../../../component/graph/graph";
+import {RdkInput} from "../../../../../component/input/input";
+import {Observable} from "rxjs/Observable";
 
 @Component({
     template: `
         autoResize:
         <rdk-switch [(checked)]="autoResize" (change)="resizeGraph()"></rdk-switch>
         width:
-        <rdk-input [(value)]="graphWidth" (blur)="resizeGraph()"></rdk-input>
+        <rdk-input [value]="graphWidth" #widthInput></rdk-input>
         height:
-        <rdk-input [(value)]="graphHeight" (blur)="resizeGraph()"></rdk-input><br><br>
+        <rdk-input [value]="graphHeight" #heightInput></rdk-input><br><br>
         <rdk-graph #graph [data]="data" [width]="graphWidth" [height]="graphHeight"
                    [autoResize]="autoResize"></rdk-graph>
     `
@@ -28,13 +30,25 @@ export class GraphResizeComponent implements OnInit {
 
     @ViewChild("graph") graph: RdkGraph;
 
+    @ViewChild("widthInput") widthInput: RdkInput;
+
+    @ViewChild("heightInput") heightInput: RdkInput;
+
     resizeGraph() {
         this.graph.resize();
     }
 
     ngOnInit() {
         this.data = new GraphDataDemo();
+        Observable.combineLatest(this.widthInput.valueChange,this.heightInput.valueChange).debounceTime(500)
+            .subscribe(
+            () => {
+                this.graphWidth = <string>this.widthInput.value;
+                this.graphHeight =<string>this.heightInput.value;
+            }
+        )
     }
+
 }
 
 export class GraphDataDemo extends AbstractGraphData {

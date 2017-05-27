@@ -52,6 +52,14 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
         });
     }
 
+//     Rx.Observable.create(function subscribe(observer) {
+//     observer.next(1);
+//     observer.next(2);
+//     observer.next(3);
+//     observer.complete();
+// });
+
+
     private _autoResize: boolean = true;
 
     @Input()
@@ -75,6 +83,15 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
 
     public set width(value: string) {
         this._width = CommonUtils.getCssValue(value);
+        this._handleResize();
+    }
+
+    private _handleResize(){
+        if(this._graph){
+            this._renderer.setStyle(this._graphContainer, 'width', this.width);
+            this._renderer.setStyle(this._graphContainer, 'height', this.height);
+            this.resize();
+        }
         if (this._needSetupResizeEvent()) {
             this._setupResizeEvent();
         } else {
@@ -89,11 +106,7 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
 
     public set height(value: string) {
         this._height = CommonUtils.getCssValue(value);
-        if (this._needSetupResizeEvent()) {
-            this._setupResizeEvent();
-        } else {
-            this._clearResizeEvent();
-        }
+        this._handleResize();
     }
 
     private _needSetupResizeEvent(): boolean {
@@ -111,13 +124,14 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
     private _isOptionsValid(obj): boolean {
         return !CommonUtils.isEmptyObject(obj);
     }
+    private _graphContainer;
 
     ngOnInit() {
-        let container = this._elf.nativeElement.querySelector(".rdk-graph");
-        this._renderer.setStyle(container, 'width', this.width);
-        this._renderer.setStyle(container, 'height', this.height);
+        this._graphContainer = this._elf.nativeElement.querySelector(".rdk-graph");
+        this._renderer.setStyle(this._graphContainer, 'width', this.width);
+        this._renderer.setStyle(this._graphContainer, 'height', this.height);
 
-        this._graph = echarts.init(container);
+        this._graph = echarts.init(this._graphContainer);
 
         if (this.data) this.setOption(this.data.options);
 
