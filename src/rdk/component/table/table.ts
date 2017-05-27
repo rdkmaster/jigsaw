@@ -643,9 +643,13 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     private _tooltipInfo: PopupInfo;
+    private _removeTdListeners: Function[] = [];
     private _setCellContentWidth(){
-        //不配省略功能，就不需要设置单元格宽度
+        //不设置省略功能，就不需要设置单元格宽度
         if(!this.lineEllipsis) return;
+
+        //清空之前的td-tooltip事件
+        this._removeTdTooltipListeners();
 
         const hostWidth = this._elementRef.nativeElement.offsetWidth;
         this._rows.forEach((row, rowIndex) => {
@@ -673,7 +677,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     private _addTdTooltipListener(tdElement: Element, message: string|number){
-        this._renderer.listen(tdElement,"mouseenter",() =>{
+        this._removeTdListeners.push(this._renderer.listen(tdElement,"mouseenter",() =>{
             if(!this._tooltipInfo){
                 this._tooltipInfo = this._popupService.popup(SimpleTooltipComponent,{
                     modal: false, //是否模态
@@ -689,14 +693,20 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
                     message: message
                 });
             }
-        });
+        }));
 
-        this._renderer.listen(tdElement,"mouseleave",()=>{
+        this._removeTdListeners.push(this._renderer.listen(tdElement,"mouseleave",()=>{
             if(this._tooltipInfo){
                 this._tooltipInfo.dispose();
                 this._tooltipInfo = null;
             }
-        })
+        }));
+    }
+
+    private _removeTdTooltipListeners(){
+        if(this._removeTdListeners.length){
+            this._removeTdListeners.forEach(removeTdListener => removeTdListener())
+        }
     }
 
     private _whileScrolling(): void {
@@ -814,6 +824,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
             this._removeRefreshCallback();
         }
         this._removeWindowListener();
+        this._removeTdTooltipListeners();
     }
 
 }
