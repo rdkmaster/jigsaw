@@ -52,6 +52,54 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
         });
     }
 
+    private _autoResize: boolean = true;
+
+    @Input()
+    public get autoResize(): boolean {
+        return this._autoResize;
+    }
+
+    public set autoResize(value: boolean) {
+        this._autoResize = value;
+        if (this._needSetupResizeEvent()) {
+            this._setupResizeEvent()
+        } else {
+            this._clearResizeEvent();
+        }
+    }
+
+    @Input()
+    public get width(): string {
+        return this._width;
+    }
+
+    public set width(value: string) {
+        this._width = CommonUtils.getCssValue(value);
+        if (this._needSetupResizeEvent()) {
+            this._setupResizeEvent();
+        } else {
+            this._clearResizeEvent();
+        }
+    }
+
+    @Input()
+    public get height(): string {
+        return this._height;
+    }
+
+    public set height(value: string) {
+        this._height = CommonUtils.getCssValue(value);
+        if (this._needSetupResizeEvent()) {
+            this._setupResizeEvent();
+        } else {
+            this._clearResizeEvent();
+        }
+    }
+
+    private _needSetupResizeEvent(): boolean {
+        return this.autoResize && (this.width[this.width.length - 1] == '%' || this.height[this.height.length - 1] == '%')
+    }
+
     constructor(private _elf: ElementRef, private _renderer: Renderer2) {
         super();
     }
@@ -72,16 +120,20 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
         this._graph = echarts.init(container);
 
         if (this.data) this.setOption(this.data.options);
-        // 默认跟随窗口变化自动变化
-        this.resize();
+
+        if (this.autoResize) {
+            // 默认跟随窗口变化自动变化
+            this._setupResizeEvent();
+        }
     }
 
     // 组件销毁, 注销实例
     ngOnDestroy() {
         // 销毁注册的全局事件;
-        this.removeResizeEvent();
-
-        RdkGraph.echarts.dispose();
+        this._clearResizeEvent();
+        if (this._graph) {
+            this._graph.dispose();
+        }
     }
 
     // 注册封装的echarts事件.
@@ -125,27 +177,36 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
         this._graph.setOption(option, true, lazyUpdate);
         this._registerEvent();
     }
-    private removeResizeEvent: Function;
 
-    private _resize(opts?: {
+    public resize(opts?: {
         width?: number | string,
         height?: number | string,
         silent?: boolean
     }): void {
-        this._graph.resize(opts);
+        if (this._graph) {
+            this._graph.resize();
+            // this._graph.resize(opts ? opts : {width: this.width, height: this.height, silence: true});
+        }
     }
 
+    private _resizeEventRemoval: Function;
+
     // 自动注册windows 事件;
-    public resize(opts?: {
-                      width?: number | string,
-                      height?: number | string,
-                      silent?: boolean
-                  }): void {
-         // 如果已经注册了事件,则不重复注册；
-        if(!this.removeResizeEvent) {
-            this.removeResizeEvent = this._renderer.listen("window", "resize", (opts) => {
-                this._resize(opts);
+    private _setupResizeEvent(): void {
+        // 如果已经注册了事件,则不重复注册；
+        if (!this._resizeEventRemoval) {
+            console.log("_setupResizeEvent");
+            this._resizeEventRemoval = this._renderer.listen("window", "resize", (opts) => {
+                this.resize(opts);
             });
+        }
+    }
+
+    private _clearResizeEvent(): void {
+        if (this._resizeEventRemoval) {
+            console.log("_clearResizeEvent");
+            this._resizeEventRemoval();
+            this._resizeEventRemoval = null;
         }
     }
 

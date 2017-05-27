@@ -8,13 +8,29 @@ import {EchartOptions} from "rdk/core/data/echart-types";
 import {RdkGraph} from "../../../../../component/graph/graph";
 
 @Component({
-    template: `<rdk-graph [data]="data" width="100%" #graph></rdk-graph>`
+    template: `
+        autoResize:
+        <rdk-switch [(checked)]="autoResize" (change)="resizeGraph()"></rdk-switch>
+        width:
+        <rdk-input [(value)]="graphWidth" (blur)="resizeGraph()"></rdk-input>
+        height:
+        <rdk-input [(value)]="graphHeight" (blur)="resizeGraph()"></rdk-input><br><br>
+        <rdk-graph #graph [data]="data" [width]="graphWidth" [height]="graphHeight"
+                   [autoResize]="autoResize"></rdk-graph>
+    `
 })
 
-export class BasicGraphComponent implements OnInit {
+export class GraphResizeComponent implements OnInit {
     data: AbstractGraphData;
+    autoResize: boolean = true;
+    graphWidth: string = '100%';
+    graphHeight: string = '300';
 
     @ViewChild("graph") graph: RdkGraph;
+
+    resizeGraph() {
+        this.graph.resize();
+    }
 
     ngOnInit() {
         this.data = new GraphDataDemo();
