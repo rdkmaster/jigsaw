@@ -53,6 +53,12 @@ type SortChangeEvent = {
     field: number
 }
 
+type RemoveTdListener = {
+    removeTdListener: Function,
+    row: number,
+    column: number
+}
+
 @Component({
     selector: 'rdk-table',
     templateUrl: 'table.html',
@@ -153,7 +159,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     private _cellSettings: Array<CellSetting>[] = [];
 
     private _tooltipInfo: PopupInfo;
-    private _removeTdListeners: Function[] = [];
+    private _removeTdListeners: Array<RemoveTdListener> = [];
 
     private _removeWindowResizeListener: Function;
     private _removeWindowScrollListener: Function;
@@ -648,12 +654,17 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         this._renderer.removeClass(this._fixedHead, 'rdk-table-hide');
     }
 
+    /**
+     * 设置单元格内容的宽度，如果内容超过宽度，并且设置了行省略，则使用'...'+tooltip的形式显示
+     * @private
+     */
     private _setCellContentWidth() {
         //不设置省略功能，就不需要设置单元格宽度
         if (!this.lineEllipsis) return;
 
         //清空之前的td-tooltip事件
-        this._removeTdTooltipListeners();
+        this._removeAllTdListeners();
+        this._removeTdListeners = [];
 
         const hostWidth = this._elementRef.nativeElement.offsetWidth;
         this._rows.forEach((row, rowIndex) => {
@@ -671,17 +682,16 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
                         this._renderer.setStyle(element, 'width', width);
                     }
 
-                    if (Number(width.replace(/px/, '')) < element.querySelector('span').offsetWidth) {
-                        const tdElement: Element = element.parentElement;
-                        this._addTdTooltipListener(tdElement, cellSetting.cellData)
+                    if (element.querySelector('span') && Number(width.replace(/px/, '')) < element.querySelector('span').offsetWidth) {
+                        this._addTdTooltipListener(element.parentElement, cellSetting.cellData, rowIndex, colIndex)
                     }
                 }
             }
         })
     }
 
-    private _addTdTooltipListener(tdElement: Element, message: string | number) {
-        this._removeTdListeners.push(this._renderer.listen(tdElement, "mouseenter", () => {
+    private _addTdTooltipListener(tdElement: Element, message: string | number, rowIndex: number, colIndex: number) {
+        const removeTdMouseEnterListener = this._renderer.listen(tdElement, "mouseenter", () => {
             if (!this._tooltipInfo) {
                 this._tooltipInfo = this._popupService.popup(SimpleTooltipComponent, {
                     modal: false, //是否模态
@@ -697,19 +707,31 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
                     message: message
                 });
             }
-        }));
+        });
 
-        this._removeTdListeners.push(this._renderer.listen(tdElement, "mouseleave", () => {
+        const removeTdMouseLeaveListener = this._renderer.listen(tdElement, "mouseleave", () => {
             if (this._tooltipInfo) {
                 this._tooltipInfo.dispose();
                 this._tooltipInfo = null;
             }
-        }));
+        });
+
+        this._removeTdListeners.push({removeTdListener: removeTdMouseEnterListener, row: rowIndex, column: colIndex});
+        this._removeTdListeners.push({removeTdListener: removeTdMouseLeaveListener, row: rowIndex, column: colIndex});
     }
 
-    private _removeTdTooltipListeners() {
+    private _removeAllTdListeners() {
         if (this._removeTdListeners.length) {
-            this._removeTdListeners.forEach(removeTdListener => removeTdListener())
+            this._removeTdListeners.forEach(removeTdListener => removeTdListener.removeTdListener())
+        }
+    }
+
+    public _removeTdListenersByIndex(row: number,column: number) {
+        if(this._removeTdListeners.length){
+            this._removeTdListeners
+                .filter(removeTdListener => removeTdListener.row == row
+                && removeTdListener.column == column)
+                .forEach(removeTdListener => removeTdListener.removeTdListener())
         }
     }
 
@@ -736,19 +758,23 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     /**
-     * 表头对齐
+     * 手动设置固定表头的宽度
      * @private
      */
-    public _asyncAlignHead() {
+    public _asyncSetFixedHeadWidth() {
         setTimeout(() => {
-            this._setCellContentWidth();
             this._setFixedHeadWidth();
         }, 0);
 
         setTimeout(() => {
-            this._setCellContentWidth();
             this._setFixedHeadWidth();
         }, 1000);
+    }
+
+    public _asyncSetCellContentWidth() {
+        setTimeout(() => {
+            this._setCellContentWidth();
+        }, 0);
     }
 
     private _addWindowListener() {
@@ -794,7 +820,8 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     private _refreshStyle() {
-        this._asyncAlignHead();
+        this._asyncSetCellContentWidth();
+        this._asyncSetFixedHeadWidth();
         this._addWindowListener();
         this._subscribeSortChange();
     }
@@ -827,7 +854,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
             this._removeRefreshCallback();
         }
         this._removeWindowListener();
-        this._removeTdTooltipListeners();
+        this._removeAllTdListeners();
     }
 
 }
@@ -950,7 +977,7 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
 
     private _cacheRenderer(renderer: TableCellRenderer, editorRenderer: TableCellRenderer) {
         let rendererInfo = this._rdkTable.rendererList.find(renderer => renderer.row == this.row
-                            && renderer.column == this.column);
+        && renderer.column == this.column);
         if (rendererInfo) {
             rendererInfo.renderer = renderer;
             rendererInfo.editorRenderer = editorRenderer;
@@ -989,7 +1016,10 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
             this.rendererHost.viewContainerRef.clear();
             this.insertRenderer();
             this._onClick();
-            this._rdkTable._asyncAlignHead();
+            //重新对齐表头
+            this._rdkTable._asyncSetFixedHeadWidth();
+            //重新绑定td的tooltip
+            this._rdkTable._asyncSetCellContentWidth();
         });
     }
 
@@ -1028,7 +1058,10 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
         this._goEditCallback = this.editable ? this._rdr.listen(this._el.nativeElement, 'click', () => {
             this.rendererHost.viewContainerRef.clear();
             this.insertEditorRenderer();
-            this._rdkTable._asyncAlignHead();
+            //重新对齐表头
+            this._rdkTable._asyncSetFixedHeadWidth();
+            //删除对应td的tooltip的事件
+            this._rdkTable._removeTdListenersByIndex(this.row, this.column);
         }) : null;
     }
 
