@@ -9,10 +9,16 @@ import {RouterModule} from "@angular/router";
 import {BasicLineGraphComponent} from "./line-bar-graph/basic/demo";
 import {AjaxLineGraphComponent} from "./line-bar-graph/from-axjx/demo";
 import {PieGraphDemoComponent} from "./pie/demo";
+import {GraphResizeComponent} from "./resize/demo";
+import {RdkInputModule} from "../../../../component/input/input";
+import {RdkSwitchModule} from "../../../../component/switch/index";
 
 const graphRoutes = [
     {
         path: 'basic', component: BasicGraphComponent
+    },
+    {
+        path: 'resize', component: GraphResizeComponent
     },
     {
         path: 'line-bar-graph-basic', component: BasicLineGraphComponent
@@ -28,15 +34,11 @@ const graphRoutes = [
 @NgModule({
     imports: [
         RouterModule.forChild(graphRoutes),
-        RdkGraphModule
-    ],
-    exports: [
-        BasicGraphComponent, BasicLineGraphComponent, AjaxLineGraphComponent, PieGraphDemoComponent
+        RdkGraphModule, RdkInputModule, RdkSwitchModule
     ],
     declarations: [
-        BasicGraphComponent, BasicLineGraphComponent, AjaxLineGraphComponent, PieGraphDemoComponent
+        BasicGraphComponent, BasicLineGraphComponent, AjaxLineGraphComponent, PieGraphDemoComponent, GraphResizeComponent
     ],
-    providers: [],
 })
 export class GraphDemoModule {
 }

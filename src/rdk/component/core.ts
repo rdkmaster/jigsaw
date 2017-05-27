@@ -31,9 +31,10 @@ export abstract class AbstractRDKComponent implements IRDKComponent, OnInit {
     protected _width: string;
     protected _height: string;
     protected _maxHeight: string;
+
     @Input()
     public get width(): string {
-        return this._width
+        return this._width;
     }
 
     public set width(value: string) {

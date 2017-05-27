@@ -16,11 +16,7 @@ import {CallbackRemoval} from "../../core/data/component-data";
 @Component({
     selector: 'rdk-graph',
     templateUrl: 'graph.html',
-    styleUrls: ['./graph.scss'],
-    host: {
-        "[style.width]": "width",
-        "[style.height]": "height"
-    }
+    styleUrls: ['./graph.scss']
 })
 export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy {
     // 全局 echarts 对象
@@ -56,6 +52,67 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
         });
     }
 
+//     Rx.Observable.create(function subscribe(observer) {
+//     observer.next(1);
+//     observer.next(2);
+//     observer.next(3);
+//     observer.complete();
+// });
+
+
+    private _autoResize: boolean = true;
+
+    @Input()
+    public get autoResize(): boolean {
+        return this._autoResize;
+    }
+
+    public set autoResize(value: boolean) {
+        this._autoResize = value;
+        if (this._needSetupResizeEvent()) {
+            this._setupResizeEvent()
+        } else {
+            this._clearResizeEvent();
+        }
+    }
+
+    @Input()
+    public get width(): string {
+        return this._width;
+    }
+
+    public set width(value: string) {
+        this._width = CommonUtils.getCssValue(value);
+        this._handleResize();
+    }
+
+    private _handleResize(){
+        if(this._graph){
+            this._renderer.setStyle(this._graphContainer, 'width', this.width);
+            this._renderer.setStyle(this._graphContainer, 'height', this.height);
+            this.resize();
+        }
+        if (this._needSetupResizeEvent()) {
+            this._setupResizeEvent();
+        } else {
+            this._clearResizeEvent();
+        }
+    }
+
+    @Input()
+    public get height(): string {
+        return this._height;
+    }
+
+    public set height(value: string) {
+        this._height = CommonUtils.getCssValue(value);
+        this._handleResize();
+    }
+
+    private _needSetupResizeEvent(): boolean {
+        return this.autoResize && (this.width[this.width.length - 1] == '%' || this.height[this.height.length - 1] == '%')
+    }
+
     constructor(private _elf: ElementRef, private _renderer: Renderer2) {
         super();
     }
@@ -67,19 +124,30 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
     private _isOptionsValid(obj): boolean {
         return !CommonUtils.isEmptyObject(obj);
     }
+    private _graphContainer;
 
     ngOnInit() {
-        const container = this._elf.nativeElement.querySelector(".rdk-graph");
-        this._renderer.setStyle(container, 'width', this._width);
-        this._renderer.setStyle(container, 'height', this._height);
-        this._graph = echarts.init(container);
+        this._graphContainer = this._elf.nativeElement.querySelector(".rdk-graph");
+        this._renderer.setStyle(this._graphContainer, 'width', this.width);
+        this._renderer.setStyle(this._graphContainer, 'height', this.height);
+
+        this._graph = echarts.init(this._graphContainer);
 
         if (this.data) this.setOption(this.data.options);
+
+        if (this.autoResize) {
+            // 默认跟随窗口变化自动变化
+            this._setupResizeEvent();
+        }
     }
 
     // 组件销毁, 注销实例
     ngOnDestroy() {
-        RdkGraph.echarts.dispose();
+        // 销毁注册的全局事件;
+        this._clearResizeEvent();
+        if (this._graph) {
+            this._graph.dispose();
+        }
     }
 
     // 注册封装的echarts事件.
@@ -124,52 +192,36 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
         this._registerEvent();
     }
 
-    @Input()
-    public get width(): string {
-        return this._width;
-    }
-
-    public set width(value: string) {
-        value = typeof value === 'string' ? value : value + '';
-        const match = value ? value.match(/^\s*(\d+)(%|px)\s*$/) : null;
-
-        if (match && match[2] == '%') {
-            this._width = parseInt(match[1]) / 100 * this._elf.nativeElement.offsetWidth + 'px';
-        } else {
-            this._width = value + 'px';
-        }
-
-        if (this._graph) {
-            this._graph.resize({width: this._width, silent: true});
-        }
-    }
-
-    @Input()
-    public get height(): string {
-        return this._height;
-    }
-
-    public set height(value: string) {
-        value = typeof value === 'string' ? value : value + '';
-        const match = value ? value.match(/^\s*(\d+)(%|px)\s*$/) : null;
-
-        if (match && match[2] == '%') {
-            this._height = parseInt(match[1]) / 100 * this._elf.nativeElement.offsetHeight + 'px';
-        } else {
-            this._height = value + 'px';
-        }
-
-        if (this._graph) {
-            this._graph.resize({height: this._height, silent: true});
-        }
-    }
-
     public resize(opts?: {
-                      width?: number | string,
-                      height?: number | string,
-                      silent?: boolean
-                  }): void {
-        this._graph.resize(opts);
+        width?: number | string,
+        height?: number | string,
+        silent?: boolean
+    }): void {
+        if (this._graph) {
+            this._graph.resize();
+            // this._graph.resize(opts ? opts : {width: this.width, height: this.height, silence: true});
+        }
+    }
+
+    private _resizeEventRemoval: Function;
+
+    // 自动注册windows 事件;
+    private _setupResizeEvent(): void {
+        // 如果已经注册了事件,则不重复注册；
+        if (!this._resizeEventRemoval) {
+            console.log("_setupResizeEvent");
+            this._resizeEventRemoval = this._renderer.listen("window", "resize", (opts) => {
+                this.resize(opts);
+            });
+        }
+    }
+
+    private _clearResizeEvent(): void {
+        if (this._resizeEventRemoval) {
+            console.log("_clearResizeEvent");
+            this._resizeEventRemoval();
+            this._resizeEventRemoval = null;
+        }
     }
 
     public dispatchAction(payload: Object): void {
