@@ -28,7 +28,7 @@ export class PopupOptions {
     size?: { width?: string | number, height?: string | number }
 }
 
-export type PopupPosition = PopupPoint | ElementRef;
+export type PopupPosition = PopupPoint | ElementRef | HTMLElement;
 
 export class PopupPoint {
     public x: number;
@@ -388,9 +388,17 @@ export class PopupService {
             const pos = options.pos,
                 posOffset = options.posOffset;
 
-            if (pos instanceof ElementRef) {
-                const posOffsetTop = AffixUtils.offset(pos.nativeElement).top,
+            if (pos instanceof ElementRef || pos instanceof HTMLElement) {
+                let posOffsetTop: number,
+                    posOffsetLeft: number;
+
+                if (pos instanceof ElementRef) {
+                    posOffsetTop = AffixUtils.offset(pos.nativeElement).top;
                     posOffsetLeft = AffixUtils.offset(pos.nativeElement).left;
+                } else if (pos instanceof HTMLElement) {
+                    posOffsetTop = AffixUtils.offset(pos).top;
+                    posOffsetLeft = AffixUtils.offset(pos).left;
+                }
 
                 if (posOffset && typeof posOffset.top == 'number') {
                     top = (posOffsetTop + posOffset.top) + 'px';

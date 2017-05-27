@@ -691,16 +691,16 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         })
     }
 
-    private _addTdTooltipListener(tdElement: Element, message: string | number, rowIndex: number, colIndex: number) {
+    private _addTdTooltipListener(tdElement: HTMLElement, message: string | number, rowIndex: number, colIndex: number) {
         const removeTdMouseEnterListener = this._renderer.listen(tdElement, "mouseenter", () => {
             if (!this._tooltipInfo) {
                 this._tooltipInfo = this._popupService.popup(SimpleTooltipComponent, {
                     modal: false, //是否模态
                     showEffect: PopupEffect.bubbleIn,
                     hideEffect: PopupEffect.bubbleOut,
-                    pos: {x: AffixUtils.offset(tdElement).left, y: AffixUtils.offset(tdElement).top},
+                    pos: tdElement,
                     posOffset: { //偏移位置
-                        top: -40,
+                        bottom: -8,
                         left: 0
                     },
                     posType: PopupPositionType.fixed, //定位类型
