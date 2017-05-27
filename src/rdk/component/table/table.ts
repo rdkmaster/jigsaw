@@ -682,7 +682,8 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
                         this._renderer.setStyle(element, 'width', width);
                     }
 
-                    if (element.querySelector('span') && Number(width.replace(/px/, '')) < element.querySelector('span').offsetWidth) {
+                    const cellText: HTMLElement = <HTMLElement>element.querySelector('span.rdk-table-cell-text');
+                    if (cellText && cellText.offsetWidth > Number(width.replace(/px/, ''))) {
                         this._addTdTooltipListener(element.parentElement, cellSetting.cellData, rowIndex, colIndex)
                     }
                 }
@@ -726,8 +727,8 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         }
     }
 
-    public _removeTdListenersByIndex(row: number,column: number) {
-        if(this._removeTdListeners.length){
+    public _removeTdListenersByIndex(row: number, column: number) {
+        if (this._removeTdListeners.length) {
             this._removeTdListeners
                 .filter(removeTdListener => removeTdListener.row == row
                 && removeTdListener.column == column)
@@ -925,13 +926,12 @@ export class TableCellBasic implements AfterViewInit {
 @Component({
     selector: '[rdk-table-cell]',
     template: '<ng-template rdk-renderer-host></ng-template>',
-    /*host: {
-     '[style.height]': '_rowHeight',
-     '[style.line-height]': '_rowHeight'
-     }*/
+    host: {
+        '[style.height]': '_rowHeight'
+    }
 })
 export class RdkTableCell extends TableCellBasic implements OnInit {
-    private _rowHeight: string = RdkTable.ROW_HEIGHT - 2 + 'px';
+    private _rowHeight: string;
 
     @Input()
     public editable: boolean = false;
@@ -1019,7 +1019,8 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
             }
             this.rendererHost.viewContainerRef.clear();
             this.insertRenderer();
-            this._onClick();
+            this._setGoEditListener();
+            this._setEditorCellHeight();
             //重新对齐表头
             this._rdkTable._asyncSetFixedHeadWidth();
             //重新绑定td的tooltip
@@ -1058,10 +1059,11 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
     /*
      * 如果可编辑，单元格绑定点击事件
      * */
-    private _onClick() {
+    private _setGoEditListener() {
         this._goEditCallback = this.editable ? this._rdr.listen(this._el.nativeElement, 'click', () => {
             this.rendererHost.viewContainerRef.clear();
             this.insertEditorRenderer();
+            this._setEditorCellHeight();
             //重新对齐表头
             this._rdkTable._asyncSetFixedHeadWidth();
             //删除对应td的tooltip的事件
@@ -1069,15 +1071,28 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
         }) : null;
     }
 
+    /**
+     * 处理可编辑的单元格内容为空时，设置下内容的高度
+     * @private
+     */
+    private _setEditorCellHeight() {
+        const cellText: HTMLElement = this._el.nativeElement.querySelector('span.rdk-table-cell-text');
+        if (cellText && cellText.offsetWidth == 0) {
+            this._rowHeight = this._el.nativeElement.parentElement.offsetHeight - 2 + 'px';
+        } else {
+            this._rowHeight = 'auto';
+        }
+    }
+
     ngOnInit() {
         //设置默认渲染器
         this.renderer = this.renderer ? this.renderer : DefaultCellRenderer;
 
-        //绑定点击事件
-        this._onClick();
-
         if (this.editable) {
             this._rdr.setStyle(this._el.nativeElement, 'cursor', 'pointer');
+            //绑定点击事件
+            this._setGoEditListener();
+            this._setEditorCellHeight();
         }
     }
 
