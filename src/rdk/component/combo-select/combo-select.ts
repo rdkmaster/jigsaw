@@ -8,11 +8,16 @@ import {
     Output,
     Renderer2,
     TemplateRef
-} from '@angular/core';
+} from "@angular/core";
 import {
-    PopupDisposer, PopupInfo, PopupOptions, PopupPositionType, PopupService
-} from 'rdk/service/popup.service';
-import {AbstractRDKComponent} from '../core';
+    PopupDisposer,
+    PopupInfo,
+    PopupOptions,
+    PopupPositionType,
+    PopupPositionValue,
+    PopupService
+} from "rdk/service/popup.service";
+import {AbstractRDKComponent} from "../core";
 import {CommonUtils} from "../../core/utils/common-utils";
 export enum DropDownTrigger {
     click,
@@ -191,6 +196,21 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
             posType: PopupPositionType.absolute,
             posOffset: {
                 top: this._elementRef.nativeElement.offsetHeight
+            },
+            posReviser: (pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue => {
+                const upDelta = this._elementRef.nativeElement.offsetHeight + popupElement.offsetHeight;
+                if (document.body.clientHeight <= upDelta) {
+                    //可视区域比弹出的UI高度还小就不要调整了
+                    return pos;
+                }
+
+                const needHeight = pos.top + popupElement.offsetHeight;
+                const totalHeight = document.body.scrollTop + document.body.clientHeight;
+                if (needHeight >= totalHeight && pos.top > upDelta) {
+                    //下方位置不够且上方位置足够的时候才做调整
+                    pos.top -= upDelta;
+                }
+                return pos;
             },
             size: {width: this.dropDownWidth ? this.dropDownWidth : this._elementRef.nativeElement.offsetWidth}
         };
