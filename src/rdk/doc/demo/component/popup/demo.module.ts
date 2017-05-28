@@ -5,6 +5,7 @@ import {RouterModule} from "@angular/router";
 import {RdkButtonModule} from "../../../../component/button/button";
 import {PopupService} from "../../../../service/popup.service";
 import {PopupTracingEventComponent} from "./tracing-event/demo";
+import {RdkDialogModule} from "../../../../component/dialog/dialog";
 
 const popupDemoRoutes = [
     {
@@ -24,6 +25,7 @@ const popupDemoRoutes = [
         RouterModule.forChild(popupDemoRoutes),
         CommonModule,
         RdkButtonModule,
+        RdkDialogModule
     ],
     providers: [PopupService],
     entryComponents: [
