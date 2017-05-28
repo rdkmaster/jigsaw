@@ -20,6 +20,11 @@ export enum DropDownTrigger {
     mouseleave,
 }
 
+export class ComboSelectValue {
+    [index:string]:any;
+    closable?: boolean;
+}
+
 @Component({
     selector: 'rdk-combo-select',
     templateUrl: 'combo-select.html',
@@ -39,14 +44,14 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
         super();
     }
 
-    private _value: any[] = [];
+    private _value: ComboSelectValue[] = [];
 
     @Input()
-    public get value(): any[] {
+    public get value(): ComboSelectValue[] {
         return this._value;
     }
 
-    public set value(value: any[]) {
+    public set value(value: ComboSelectValue[]) {
         if (this._value != value) {
             this._value = value;
             this.valueChange.emit(this._value);
@@ -148,9 +153,6 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
 
     @Input()
     public autoWidth: boolean;
-
-    @Input()
-    public editable: boolean = true;
 
     private _removeTag(tag) {
         const index = this.value.indexOf(tag);
