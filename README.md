@@ -29,7 +29,7 @@ npm start
 
 4. 浏览器里打开 http://localhost:4200 正常的话就能看到测试页面了，这表示你的开发环境搭建完毕。
 
-5. 后续直接在 `d:\rdk-ng2` 目录下运行 `npm start` 命令就可以启动开发环境了。但是我们推荐使用WebStorm作为IDE，Jigsaw专门针对这类IDE做了代码优化，让这些IDE可以精确提示更多的信息，节约你翻阅api文档的时间。
+5. 后续直接在 `d:\rdk-ng2` 目录下运行 `npm start` 命令就可以启动开发环境了。我们推荐使用WebStorm作为IDE，Jigsaw专门针对这类IDE做了代码优化，让这些IDE可以精确提示更多的信息，节约你翻阅api文档的时间。
 
 ## 组件开发云图
 ![](comp-map.png)
