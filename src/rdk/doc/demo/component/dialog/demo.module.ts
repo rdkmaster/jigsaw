@@ -11,14 +11,14 @@ import {DialogPopOptionDemo} from "./popupOption/popUpOption";
 import {RdkRadioModule} from "../../../../component/radio/radio";
 import {RdkInputModule} from "../../../../component/input/input";
 import {CommonModule} from "@angular/common";
+import {DialogInDomDemoComponent} from "./in-dom/demo";
+import {DialogMiscDemoComponent} from "./misc/dialog";
+import {UserDialogComponent} from "./misc/user-dialog/user-dialog";
+import {UserDialog2Component} from "./misc/user-dialog2/user-dialog";
 
 
 const dialogDemoRoutes=[
     {
-        path:'',
-        redirectTo:'basic',
-        pathMatch:'full'
-    },{
         path: 'title', component:DialogTitleDemo
     },{
         path: 'buttons', component:DialogButtonsDemo
@@ -26,17 +26,24 @@ const dialogDemoRoutes=[
         path: 'top', component:DialogTopDemo
     },{
         path :'popOption', component : DialogPopOptionDemo
+    },{
+        path :'in-dom', component : DialogInDomDemoComponent
+    },{
+        path :'misc', component : DialogMiscDemoComponent
     }
 ];
 
 @NgModule({
     declarations: [
-        DialogTitleDemo,DialogButtonsDemo,DialogTopDemo,DialogPopOptionDemo
+        DialogTitleDemo,DialogButtonsDemo,DialogTopDemo,DialogPopOptionDemo,
+        DialogInDomDemoComponent,DialogMiscDemoComponent,
+        UserDialogComponent,UserDialog2Component,
     ],
     imports: [
         RouterModule.forChild(dialogDemoRoutes),RdkButtonModule,RdkDialogModule,RdkSwitchModule,RdkRadioModule,
         RdkInputModule,CommonModule
     ],
-    providers: [PopupService]
+    providers: [PopupService],
+    entryComponents:[UserDialogComponent,UserDialog2Component]
 })
 export class DialogDemoModule { }

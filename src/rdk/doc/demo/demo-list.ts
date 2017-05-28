@@ -16,6 +16,10 @@ const demoListRoutes = [
         path: '', component: DemoListComponent
     },
     {
+        path: 'alert',
+        loadChildren: './component/alert/demo.module#AlertDemoModule'
+    },
+    {
         path: 'array-collection',
         loadChildren: './component/array-collection/demo.module#ArrayCollectionDemoModule'
     },
@@ -102,6 +106,10 @@ const demoListRoutes = [
     {
         path: 'dialog',
         loadChildren: './component/dialog/demo.module#DialogDemoModule'
+    },
+    {
+        path: 'tooltip',
+        loadChildren: './component/tooltip/demo.module#TooltipDemoModule'
     },
     {
         path: '**', //fallback router must in the last

@@ -417,7 +417,7 @@ export class PopupService {
         }
 
         const result = {top: top, left: left};
-        if (options.posReviser) {
+        if (options && options.posReviser) {
             const revised = options.posReviser(result, element);
             return revised ? revised : result;
         } else {

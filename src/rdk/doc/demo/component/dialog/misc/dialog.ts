@@ -1,7 +1,7 @@
 import {Component, ComponentRef} from "@angular/core";
 
-import {UseDialogComponent} from "./use-dialog/use-dialog";
-import {UseDialog2Component} from "./use-dialog2/use-dialog";
+import {UserDialogComponent} from "./user-dialog/user-dialog";
+import {UserDialog2Component} from "./user-dialog2/user-dialog";
 
 import {
     ButtonInfo,
@@ -16,7 +16,7 @@ import {
     templateUrl: 'dialog.html',
     styleUrls: ['dialog.scss']
 })
-export class DialogDemoComponent {
+export class DialogMiscDemoComponent {
 
     private _templateRef: PopupInfo;
     private _modalDialogInfo: PopupInfo;
@@ -43,7 +43,7 @@ export class DialogDemoComponent {
     * popup component
     * */
     popup() {
-        const popupInfo = this._popupService.popup(UseDialogComponent, this._getModalOptions());
+        const popupInfo = this._popupService.popup(UserDialogComponent, this._getModalOptions());
         if(popupInfo.popupRef instanceof ComponentRef){
             popupInfo.popupRef.instance.answer.subscribe(answer => {
                 this.disposeAnswer(answer, popupInfo)
@@ -55,7 +55,7 @@ export class DialogDemoComponent {
      * popup component at point
      * */
     popupAtPoint(event) {
-        const popupInfo = this._popupService.popup(UseDialog2Component, this._getUnModalOptions(event));
+        const popupInfo = this._popupService.popup(UserDialog2Component, this._getUnModalOptions(event));
         if(popupInfo.popupRef instanceof ComponentRef){
             popupInfo.popupRef.instance.answer.subscribe(answer => {
                 this.disposeAnswer(answer, popupInfo)

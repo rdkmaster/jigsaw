@@ -4,7 +4,7 @@ import {ButtonInfo, PopupEventType, PopupInfo, PopupService} from "../../../../.
 
 @Component({
     template: `
-        <button (click)="popup(tpDialog)">popup something</button><br>
+        <rdk-button (click)="popup(tpDialog)">popup something</rdk-button><br>
         <p *ngFor="let m of eventMessages">{{m}}</p>
         
         <ng-template #tpDialog>
