@@ -1,7 +1,13 @@
-<rdk-combo-select #drop
-                  [pane]="dropcontent"
+<p>绝对值宽度</p>
+<rdk-combo-select [pane]="dropcontent"
                   placeholder="请输入城市~"
                   dropDownWidth="400px"
+                  [value]="selectedCity">
+</rdk-combo-select>
+<p>百分比宽度</p>
+<rdk-combo-select [pane]="dropcontent"
+                  placeholder="请输入城市~"
+                  dropDownWidth="120%"
                   [value]="selectedCity">
 </rdk-combo-select>
 <ng-template #dropcontent>

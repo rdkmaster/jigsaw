@@ -212,7 +212,11 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
                 }
                 return pos;
             },
-            size: {width: this.dropDownWidth ? this.dropDownWidth : this._elementRef.nativeElement.offsetWidth}
+            size: {
+                width: this.dropDownWidth ?
+                    RdkComboSelect.translate2Number(this.dropDownWidth, this._elementRef.nativeElement.offsetWidth) :
+                    this._elementRef.nativeElement.offsetWidth
+            }
         };
         const popupInfo: PopupInfo = this._popupService.popup(this._contentTemplateRef, option);
         this._popupElement = popupInfo.element;
@@ -313,7 +317,22 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
         super.ngOnInit();
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy() {
         this.open = false;
+    }
+
+    private static translate2Number(value: string | number, baseValue?: string | number): string {
+        value = typeof value === 'string' ? value : value + '';
+        baseValue = baseValue && typeof baseValue === 'string' ? parseFloat(baseValue) : baseValue;
+        const match = value ? value.match(/^\s*(\d+)(%|px)\s*$/) : null;
+
+        if (match && match[2] === '%') {
+            return parseInt(match[1]) / 100 * <number>baseValue + 'px';
+        } else if (match && match[2] === 'px') {
+            return value;
+        } else {
+            return value + 'px';
+
+        }
     }
 }
