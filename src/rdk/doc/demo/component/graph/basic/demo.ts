@@ -2,16 +2,19 @@
  * Created by 10177553 on 2017/3/28.
  */
 
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AbstractGraphData} from "../../../../../core/data/graph-data";
 import {EchartOptions} from "rdk/core/data/echart-types";
+import {RdkGraph} from "../../../../../component/graph/graph";
 
 @Component({
-    template: '<rdk-graph [data]="data" ></rdk-graph>'
+    template: `<rdk-graph [data]="data" width="100%" #graph></rdk-graph>`
 })
 
 export class BasicGraphComponent implements OnInit {
     data: AbstractGraphData;
+
+    @ViewChild("graph") graph: RdkGraph;
 
     ngOnInit() {
         this.data = new GraphDataDemo();

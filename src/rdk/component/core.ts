@@ -11,6 +11,10 @@ export class RdkRendererHost {
 import {Input} from "@angular/core";
 import {CommonUtils} from "../core/utils/common-utils";
 
+export interface IDynamicInstantiatable {
+    initData: any;
+}
+
 export interface IRDKComponent {
     //组件基础样式
     basicClass: string;
@@ -27,9 +31,10 @@ export abstract class AbstractRDKComponent implements IRDKComponent, OnInit {
     protected _width: string;
     protected _height: string;
     protected _maxHeight: string;
+
     @Input()
     public get width(): string {
-        return this._width
+        return this._width;
     }
 
     public set width(value: string) {

@@ -13,6 +13,7 @@ import {
 import {CommonUtils} from "../core/utils/common-utils";
 import {RdkBlock} from "../component/block/block";
 import {AffixUtils} from "rdk/core/utils/internal-utils";
+import {IDynamicInstantiatable} from "../component/core";
 
 export enum PopupEffect {
     fadeIn, fadeOut, bubbleIn, bubbleOut
@@ -25,10 +26,16 @@ export class PopupOptions {
     pos?: PopupPosition; //控制弹出对象的左上角位置，下面2者选其一。
     posOffset?: PopupPositionOffset;
     posType?: PopupPositionType;
+    posReviser?: (pos: PopupPositionValue, popupElement: HTMLElement) => PopupPositionValue;
     size?: { width?: string | number, height?: string | number }
 }
 
 export type PopupPosition = PopupPoint | ElementRef | HTMLElement;
+
+export class PopupPositionValue {
+    left: number;
+    top: number;
+}
 
 export class PopupPoint {
     public x: number;
@@ -58,15 +65,9 @@ export class ButtonInfo {
     public clazz?: string = '';
 }
 
-export class PopupPositionValue {
-    public top?: string;
-    public left?: string;
-}
-
 export type PopupDisposer = () => void;
 
-export interface IPopupable {
-    initData: any;
+export interface IPopupable extends IDynamicInstantiatable {
     answer: EventEmitter<ButtonInfo>;
 }
 
@@ -193,6 +194,9 @@ export class PopupService {
     private _popupFactory(what: Type<IPopupable> | TemplateRef<any>, options: PopupOptions): PopupInfo {
         const ref: PopupRef = this._createPopup(what);
         const element: HTMLElement = this._getElement(ref);
+        //一出来就插入到文档流的最后，这给后续计算尺寸造成麻烦，这里给设置fixed，就可以避免影响滚动条位置
+        this._renderer.setStyle(element, 'position', 'fixed');
+        this._renderer.setStyle(element, 'top', 0);
         const disposer: PopupDisposer = this._getDisposer(options, ref, element, this._renderer);
         return {
             popupRef: ref, element: element, dispose: disposer,
@@ -353,8 +357,8 @@ export class PopupService {
         let posType: string = this._isGlobalModal(options) ? 'fixed' : this._getPositionType(options.posType);
         let position = this._getPositionValue(options, element);
         renderer.setStyle(element, 'position', posType);
-        renderer.setStyle(element, 'top', position.top);
-        renderer.setStyle(element, 'left', position.left);
+        renderer.setStyle(element, 'top', position.top + 'px');
+        renderer.setStyle(element, 'left', position.left + 'px');
     }
 
     /*
@@ -375,15 +379,16 @@ export class PopupService {
      * 获取位置具体的top和left
      * */
     private _getPositionValue(options: PopupOptions, element: HTMLElement): PopupPositionValue {
-        let top: string = '',
-            left: string = '';
+
+        let top: number = 0,
+            left: number = 0;
 
         const popupWidth = element.offsetWidth,
             popupHeight = element.offsetHeight;
 
         if (this._isGlobalModal(options)) {
-            top = (document.body.clientHeight / 2 - popupHeight / 2) + 'px';
-            left = (document.body.clientWidth / 2 - popupWidth / 2) + 'px';
+            top = (document.body.clientHeight / 2 - popupHeight / 2);
+            left = (document.body.clientWidth / 2 - popupWidth / 2);
         } else {
             const pos = options.pos,
                 posOffset = options.posOffset;
@@ -401,39 +406,45 @@ export class PopupService {
                 }
 
                 if (posOffset && typeof posOffset.top == 'number') {
-                    top = (posOffsetTop + posOffset.top) + 'px';
+                    top = (posOffsetTop + posOffset.top);
                 } else if (posOffset && typeof posOffset.bottom == 'number') {
-                    top = (posOffsetTop - popupHeight + posOffset.bottom) + 'px';
+                    top = (posOffsetTop - popupHeight + posOffset.bottom);
                 } else {
-                    top = posOffsetTop + 'px';
+                    top = posOffsetTop;
                 }
 
                 if (posOffset && typeof posOffset.left == 'number') {
-                    left = (posOffsetLeft + posOffset.left) + 'px';
+                    left = (posOffsetLeft + posOffset.left);
                 } else if (posOffset && typeof posOffset.right == 'number') {
-                    left = (posOffsetLeft - popupWidth + posOffset.right) + 'px';
+                    left = (posOffsetLeft - popupWidth + posOffset.right);
                 } else {
-                    left = posOffsetLeft + 'px';
+                    left = posOffsetLeft;
                 }
             } else if (pos) {
                 if (typeof pos.y == 'number') {
                     if (posOffset && typeof posOffset.top == 'number') {
-                        top = (pos.y + posOffset.top) + 'px';
+                        top = (pos.y + posOffset.top);
                     } else {
-                        top = pos.y + 'px';
+                        top = pos.y;
                     }
                 }
 
                 if (typeof pos.x == 'number') {
                     if (posOffset && typeof posOffset.left == 'number') {
-                        left = (pos.x + posOffset.left) + 'px';
+                        left = (pos.x + posOffset.left);
                     } else {
-                        left = pos.x + 'px';
+                        left = pos.x;
                     }
                 }
             }
         }
 
-        return {top: top, left: left};
+        const result = {top: top, left: left};
+        if (options && options.posReviser) {
+            const revised = options.posReviser(result, element);
+            return revised ? revised : result;
+        } else {
+            return result;
+        }
     }
 }

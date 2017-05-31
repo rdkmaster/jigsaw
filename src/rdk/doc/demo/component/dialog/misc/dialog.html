@@ -1,0 +1,62 @@
+
+<rdk-button width="150" (click)="popup()">
+    modal dialog
+</rdk-button>
+
+<rdk-button width="150" (click)="popupAtPoint($event)">
+    point dialog
+</rdk-button>
+
+<rdk-button width="150" (click)="popupModalDialogTemplate(tpDialog1)">
+    template modal dialog
+</rdk-button>
+
+<rdk-button width="150" (click)="popupDialogTemplate(tpDialog2, $event)">
+    template dialog
+</rdk-button>
+
+<rdk-button width="150" (click)="popupTemplate(tp)">
+    template
+</rdk-button>
+
+<ng-template #tpDialog1>
+    <rdk-dialog width="40%" [buttons]="buttons" (answer)="disposeAnswer($event, closeModalDialogTemplate)">
+        <div rdk-title>
+            <span class="fa fa-thumbs-up"></span>Title of the dialog
+        </div>
+        <div rdk-body>
+            <ul class="dialog-content">
+                <li>Dialog content...</li>
+                <li>Dialog content...</li>
+                <li>Dialog content...</li>
+            </ul>
+        </div>
+    </rdk-dialog>
+</ng-template>
+
+<ng-template #tpDialog2>
+    <rdk-dialog width="40%" [buttons]="buttons" (answer)="disposeAnswer($event, closeDialogTemplate)">
+        <div rdk-title>
+            <span class="fa fa-thumbs-up"></span>Title of the dialog
+        </div>
+        <div rdk-body>
+            <ul class="dialog-content">
+                <li>Dialog content...</li>
+                <li>Dialog content...</li>
+                <li>Dialog content...</li>
+            </ul>
+        </div>
+    </rdk-dialog>
+</ng-template>
+
+<ng-template #tp>
+    <div class="pop-win">
+        <span class="close-btn" (click)="closeTemplate()">X</span>
+        <h3>这是模板弹框</h3>
+        <div class="btn-group-box">
+            <rdk-button>确定</rdk-button>
+            <rdk-button (click)="closeTemplate()">取消</rdk-button>
+        </div>
+    </div>
+</ng-template>
+

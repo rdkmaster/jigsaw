@@ -33,16 +33,7 @@ $tab-prefix: #{$rdk-prefix}-tabs;
                 list-style: none;
                 float: left;
                 transition: transform 0.5s $ease-in-out;
-
-                &:before,
-                &:after {
-                    display: table;
-                    content: " ";
-                }
-
-                &:after {
-                    clear: both;
-                }
+                @include clearfix;
 
                 .#{$tab-prefix}-ink-bar {
                     position: absolute;
@@ -59,6 +50,16 @@ $tab-prefix: #{$rdk-prefix}-tabs;
                     pointer-events: none;
                     cursor: default;
                     color: $disabled-color;
+                }
+
+                /deep/ rdk-tab-label {
+                    a:hover{
+                        text-decoration: none;
+                        color: $primary-color;
+                    }
+                    * {
+                        outline: 0;
+                    }
                 }
 
                 .#{$tab-prefix}-tab {

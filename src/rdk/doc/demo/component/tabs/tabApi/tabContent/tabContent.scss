@@ -1,0 +1,16 @@
+.content-box{
+    padding-bottom: 10px;
+    .content-title{
+        margin-bottom: 20px;
+    }
+    .content-line{
+        margin-bottom: 10px;
+        label{
+            display: inline-block;
+            width: 100px;
+        }
+    }
+    rdk-button{
+        margin-left: 100px;
+    }
+}
