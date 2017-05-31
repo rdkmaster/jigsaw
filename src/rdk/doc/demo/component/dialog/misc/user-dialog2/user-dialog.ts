@@ -1,13 +1,13 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild} from "@angular/core";
 
-import {PopupService, ButtonInfo} from '../../../../../../service/popup.service';
-import {DialogBase, IDialog, RdkDialog} from "../../../../../../component/dialog/dialog";
+import {ButtonInfo} from "../../../../../../service/popup.service";
+import {DialogBase, RdkDialog} from "../../../../../../component/dialog/dialog";
 
 @Component({
-    templateUrl: 'use-dialog.html',
-    styleUrls: ['use-dialog.scss']
+    templateUrl: 'user-dialog.html',
+    styleUrls: ['user-dialog.scss']
 })
-export class UseDialog2Component extends DialogBase {
+export class UserDialog2Component extends DialogBase {
     @ViewChild(RdkDialog) dialog: RdkDialog;
 
     public title: string = `Title of the dialog`;

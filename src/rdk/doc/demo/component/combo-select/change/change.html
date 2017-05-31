@@ -5,7 +5,7 @@
 
 <rdk-combo-select [pane]="dropcontent"
                   placeholder="请输入姓名~"
-                  [value]="selectedCity"
+                  [(value)]="selectedCity"
                   (valueChange)="valueChange($event)"
                   (select)="select($event)"
                   (remove)="remove($event)">
@@ -17,5 +17,4 @@
                      tileOptionWidth="100px">
     </rdk-tile-select>
 </ng-template>
-
 

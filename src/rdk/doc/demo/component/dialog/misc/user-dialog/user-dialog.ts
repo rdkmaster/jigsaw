@@ -4,10 +4,10 @@ import {ButtonInfo} from "../../../../../../service/popup.service";
 import {DialogBase, RdkDialog} from "../../../../../../component/dialog/dialog";
 
 @Component({
-    templateUrl: 'use-dialog.html',
-    styleUrls: ['use-dialog.scss']
+    templateUrl: 'user-dialog.html',
+    styleUrls: ['user-dialog.scss']
 })
-export class UseDialogComponent extends DialogBase {
+export class UserDialogComponent extends DialogBase {
     @ViewChild(RdkDialog) public dialog:RdkDialog;
 
     public title: string = 'Title of the dialog';

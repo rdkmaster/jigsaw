@@ -1,10 +1,10 @@
 import {Component, ViewChild, ViewEncapsulation} from "@angular/core";
-
-import {ButtonInfo} from "../../../../../../service/popup.service";
-import {RdkAlert} from "../../../../../../component/alert/alert";
-import {DialogBase, RdkDialog} from "../../../../../../component/dialog/dialog";
+import {DialogBase, RdkDialog} from "../../../../../component/dialog/dialog";
+import {RdkAlert} from "../../../../../component/alert/alert";
+import {ButtonInfo} from "../../../../../service/popup.service";
 
 @Component({
+    selector: 'my-alert',
     templateUrl: 'customized-alert.html',
     styleUrls: ['customized-alert.scss'],
     encapsulation: ViewEncapsulation.None
@@ -19,8 +19,7 @@ export class CustomizedAlert extends DialogBase {
             clazz: 'button-ok'
         },
         {
-            label: 'cancel'
-
+            label: 'ignore'
         }
     ];
 

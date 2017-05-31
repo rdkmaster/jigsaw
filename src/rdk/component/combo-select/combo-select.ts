@@ -8,16 +8,26 @@ import {
     Output,
     Renderer2,
     TemplateRef
-} from '@angular/core';
+} from "@angular/core";
 import {
-    PopupDisposer, PopupInfo, PopupOptions, PopupPositionType, PopupService
-} from 'rdk/service/popup.service';
-import {AbstractRDKComponent} from '../core';
+    PopupDisposer,
+    PopupInfo,
+    PopupOptions,
+    PopupPositionType,
+    PopupPositionValue,
+    PopupService
+} from "rdk/service/popup.service";
+import {AbstractRDKComponent} from "../core";
 import {CommonUtils} from "../../core/utils/common-utils";
 export enum DropDownTrigger {
     click,
     mouseenter,
     mouseleave,
+}
+
+export class ComboSelectValue {
+    [index:string]:any;
+    closable?: boolean;
 }
 
 @Component({
@@ -39,14 +49,14 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
         super();
     }
 
-    private _value: any[] = [];
+    private _value: ComboSelectValue[] = [];
 
     @Input()
-    public get value(): any[] {
+    public get value(): ComboSelectValue[] {
         return this._value;
     }
 
-    public set value(value: any[]) {
+    public set value(value: ComboSelectValue[]) {
         if (this._value != value) {
             this._value = value;
             this.valueChange.emit(this._value);
@@ -149,9 +159,6 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
     @Input()
     public autoWidth: boolean;
 
-    @Input()
-    public editable: boolean = true;
-
     private _removeTag(tag) {
         const index = this.value.indexOf(tag);
         if (index != -1) {
@@ -190,7 +197,26 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
             posOffset: {
                 top: this._elementRef.nativeElement.offsetHeight
             },
-            size: {width: this.dropDownWidth ? this.dropDownWidth : this._elementRef.nativeElement.offsetWidth}
+            posReviser: (pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue => {
+                const upDelta = this._elementRef.nativeElement.offsetHeight + popupElement.offsetHeight;
+                if (document.body.clientHeight <= upDelta) {
+                    //可视区域比弹出的UI高度还小就不要调整了
+                    return pos;
+                }
+
+                const needHeight = pos.top + popupElement.offsetHeight;
+                const totalHeight = document.body.scrollTop + document.body.clientHeight;
+                if (needHeight >= totalHeight && pos.top > upDelta) {
+                    //下方位置不够且上方位置足够的时候才做调整
+                    pos.top -= upDelta;
+                }
+                return pos;
+            },
+            size: {
+                width: this.dropDownWidth ?
+                    RdkComboSelect.translate2Number(this.dropDownWidth, this._elementRef.nativeElement.offsetWidth) :
+                    this._elementRef.nativeElement.offsetWidth
+            }
         };
         const popupInfo: PopupInfo = this._popupService.popup(this._contentTemplateRef, option);
         this._popupElement = popupInfo.element;
@@ -294,7 +320,22 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
         super.ngOnInit();
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy() {
         this.open = false;
+    }
+
+    private static translate2Number(value: string | number, baseValue?: string | number): string {
+        value = typeof value === 'string' ? value : value + '';
+        baseValue = baseValue && typeof baseValue === 'string' ? parseFloat(baseValue) : baseValue;
+        const match = value ? value.match(/^\s*(\d+)(%|px)\s*$/) : null;
+
+        if (match && match[2] === '%') {
+            return parseInt(match[1]) / 100 * <number>baseValue + 'px';
+        } else if (match && match[2] === 'px') {
+            return value;
+        } else {
+            return value + 'px';
+
+        }
     }
 }
