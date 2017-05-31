@@ -9,12 +9,14 @@
             <div *ngIf="placeholder && (!value || value.length == 0)" class="rdk-combo-select-selection_placeholder">
                 {{placeholder}}
             </div>
-            <rdk-tag *ngFor="let tagItem of value"
-                     [closable]='tagItem.closable'
-                     (select)="_$tagClick(tagItem)"
-                     (close)="_removeTag(tagItem)">
+            <span (click)="_$tagClick()">
+                <rdk-tag *ngFor="let tagItem of value"
+                         [closable]='tagItem.closable'
+                         (select)="_$tagClick(tagItem)"
+                         (close)="_removeTag(tagItem)">
                 {{tagItem[labelField]}}
             </rdk-tag>
+            </span>
         </div>
     </div>
     <i class="fa fa-angle-down rdk-combo-select-arrow"></i>
