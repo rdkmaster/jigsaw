@@ -158,7 +158,6 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
 
     private _cellSettings: Array<CellSetting>[] = [];
 
-    private _tooltipInfo: PopupInfo;
     private _removeTdListeners: Array<RemoveTdListener> = [];
 
     private _removeWindowResizeListener: Function;
@@ -658,7 +657,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * 设置单元格内容的宽度，如果内容超过宽度，并且设置了行省略，则使用'...'+tooltip的形式显示
      * @private
      */
-    private _setCellContentWidth() {
+    private _setCellLineEllipsis() {
         //不设置省略功能，就不需要设置单元格宽度
         if (!this.lineEllipsis) return;
 
@@ -692,9 +691,11 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     private _addTdTooltipListener(tdElement: HTMLElement, message: string | number, rowIndex: number, colIndex: number) {
+        let tooltipInfo: PopupInfo;
+
         const removeTdMouseEnterListener = this._renderer.listen(tdElement, "mouseenter", () => {
-            if (!this._tooltipInfo) {
-                this._tooltipInfo = this._popupService.popup(SimpleTooltipComponent, {
+            if (!tooltipInfo) {
+                tooltipInfo = this._popupService.popup(SimpleTooltipComponent, {
                     modal: false, //是否模态
                     showEffect: PopupEffect.bubbleIn,
                     hideEffect: PopupEffect.bubbleOut,
@@ -711,9 +712,9 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         });
 
         const removeTdMouseLeaveListener = this._renderer.listen(tdElement, "mouseleave", () => {
-            if (this._tooltipInfo) {
-                this._tooltipInfo.dispose();
-                this._tooltipInfo = null;
+            if (tooltipInfo) {
+                tooltipInfo.dispose();
+                tooltipInfo = null;
             }
         });
 
@@ -772,9 +773,9 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         }, 1000);
     }
 
-    public _asyncSetCellContentWidth() {
+    public _asyncSetCellLineEllipsis() {
         setTimeout(() => {
-            this._setCellContentWidth();
+            this._setCellLineEllipsis();
         }, 0);
     }
 
@@ -782,11 +783,11 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         this._removeWindowListener();
 
         this._removeWindowLoadListener = this._renderer.listen('window', 'load', () => {
-            this._setCellContentWidth();
+            this._setCellLineEllipsis();
             this._setFixedHeadWidth();
         });
         this._removeWindowResizeListener = this._renderer.listen('window', 'resize', () => {
-            this._setCellContentWidth();
+            this._setCellLineEllipsis();
             this._setFixedHeadWidth();
             this._floatHead();
             this._scrollBar.scrollTo([null, 'left']);
@@ -821,7 +822,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     private _refreshStyle() {
-        this._asyncSetCellContentWidth();
+        this._asyncSetCellLineEllipsis();
         this._asyncSetFixedHeadWidth();
         this._addWindowListener();
         this._subscribeSortChange();
@@ -1024,7 +1025,7 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
             //重新对齐表头
             this._rdkTable._asyncSetFixedHeadWidth();
             //重新绑定td的tooltip
-            this._rdkTable._asyncSetCellContentWidth();
+            this._rdkTable._asyncSetCellLineEllipsis();
         });
     }
 
