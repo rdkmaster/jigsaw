@@ -703,7 +703,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
                         bottom: -8,
                         left: 0
                     },
-                    posType: PopupPositionType.fixed, //定位类型
+                    posType: PopupPositionType.absolute, //定位类型
                 }, {
                     message: message
                 });
