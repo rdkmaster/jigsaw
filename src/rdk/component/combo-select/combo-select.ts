@@ -283,11 +283,22 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
         if (this._openTrigger === DropDownTrigger.mouseenter && this.open && !this._isSafeCloseTime) {
             return;
         } else {
-            // 如果已经打开则不关闭;
-            if(this.open) return;
-
             this.open = !this.open;
         }
+    }
+
+    private _$tagClick(tagItem) {
+        // 阻止事件冒泡;
+        event.preventDefault();
+        event.stopPropagation();
+
+        // 返回选中的tag
+        this.select.emit(tagItem);
+
+        // 控制下拉状态;(如果没有打开下拉内容，下拉，如果已经下拉保持不变;)
+        if (this._openTrigger === DropDownTrigger.mouseenter || this.open|| this.disabled|| !this._isSafeCloseTime )  return;
+
+        this.open = true;
     }
 
     private _$openByHover(event): void {
