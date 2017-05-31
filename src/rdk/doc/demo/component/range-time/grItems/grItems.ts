@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import {TimeGr} from "../../../../../service/time.service";
 import {GrItem, ShortCut} from "../../../../../component/time/time";
-import {RangeTimeCallback} from "../../../../../component/range-time/shortcut-callbacks";
+import {RangeTimeDataRanges} from "../../../../../component/range-time/shortcut-dateranges";
 
 
 @Component({
@@ -14,8 +14,8 @@ export class RangeTimeGrItemsComponent {
     endDate = "now";
 
 
-    shortCuts :ShortCut[]= [{label:"My",callback:()=>["now-1w","now"]},
-                            {label:"上一周",callback:RangeTimeCallback.RecentWeek}];
+    shortCuts :ShortCut[]= [{label:"My",dateRange:["now-1w","now"]},
+                            {label:"这周",dateRange:RangeTimeDataRanges.RecentWeek}];
 
     grItems :GrItem[]= [
         {label: "Day", value: TimeGr.date, shortCuts:this.shortCuts,span:"2d"},

@@ -4,8 +4,6 @@ $range-time-prefix-cls: #{$rdk-prefix}-range-time;
 
 :host {
     @include inline-block();
-    border: 1px solid $border-color-base ;
-    border-radius: $border-radius-base;
     padding: 5px;
     position: relative;
     /deep/{
