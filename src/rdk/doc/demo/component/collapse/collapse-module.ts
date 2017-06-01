@@ -6,6 +6,7 @@ import { NgModule } from '@angular/core';
 import { CollapseBasicDemoComponent } from './basic/basic';
 import {RdkCollapseModule} from "../../../../component/collapse/collapse";
 import {RouterModule} from "@angular/router";
+import {RdkInputModule} from "../../../../component/input/input";
 
 const routes = [
     {
@@ -16,7 +17,8 @@ const routes = [
 @NgModule({
     imports: [
         RouterModule.forChild(routes),
-        RdkCollapseModule
+        RdkCollapseModule,
+        RdkInputModule
     ],
     exports: [CollapseBasicDemoComponent],
     declarations: [CollapseBasicDemoComponent],
