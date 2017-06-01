@@ -13,6 +13,8 @@ import {ButtonInfo} from "../../../../../service/popup.service";
 export class CustomizedAlert extends DialogBase {
     @ViewChild(RdkAlert) dialog: RdkDialog;
 
+    title:string = "a customized alert";
+
     public buttons: ButtonInfo[] = [
         {
             label: 'ok',
