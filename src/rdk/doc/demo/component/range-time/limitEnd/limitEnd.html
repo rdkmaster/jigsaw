@@ -1,0 +1,8 @@
+<h4>LimitEnd Time</h4>
+
+LimitEnd : <rdk-tile-select [data]="datas" [(selectedItems)]="limitEnd" [multipleSelect]="false"></rdk-tile-select>
+
+
+<rdk-range-time [(beginDate)]="beginDate" [limitEnd]="limitEnd[0].label" [(endDate)]="endDate" ></rdk-range-time><br>
+
+beginDate : {{beginDate}} ， end ： {{endDate}}

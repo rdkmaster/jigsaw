@@ -1,28 +1,43 @@
-
-
 export enum TimeGr {
-    second,minute,hour,date,week,month
+    second, minute, hour, date, week, month
 }
 
 export enum TimeWeekStart {
-    sun ,mon ,tue ,wed ,thu ,fri ,sat
+    sun, mon, tue, wed, thu, fri, sat
+}
+
+export type Moment = {
+    _isAMomentObject: boolean,
+    [prop: string]: any;
 }
 
 
 export class TimeService {
 
-    private static timeFormatMap = new Map([[TimeGr.second,'YYYY-MM-DD,HH:mm:ss'], [TimeGr.minute,'YYYY-MM-DD,HH:mm'],
-        [TimeGr.hour,'YYYY-MM-DD,HH'],[TimeGr.date,'YYYY-MM-DD'],
-        [TimeGr.week,'YYYY-MM-DD'],[TimeGr.month,'YYYY-MM']]);
+    private static timeFormatMap = new Map([
+        [TimeGr.second, 'YYYY-MM-DD,HH:mm:ss'],
+        [TimeGr.minute, 'YYYY-MM-DD,HH:mm'],
+        [TimeGr.hour, 'YYYY-MM-DD,HH'],
+        [TimeGr.date, 'YYYY-MM-DD'],
+        [TimeGr.week, 'YYYY-MM-DD'],
+        [TimeGr.month, 'YYYY-MM']
+    ]);
 
-    private static timeUnitMap = new Map([['s','seconds'],['m','minutes'],['h',"hours"],['d','days'],['M','months'],['y','years']]);
+    private static timeUnitMap = new Map([
+        ['s', 'seconds'],
+        ['m', 'minutes'],
+        ['h', "hours"],
+        ['d', 'days'],
+        ['w', 'weeks'],
+        ['M', 'months'],
+        ['y', 'years']
+    ]);
 
-    private static initMoment(){
+    private static initMoment() {
         moment.suppressDeprecationWarnings = 1;
     }
 
     private static init = TimeService.initMoment();
-
 
 
     /**
@@ -30,10 +45,10 @@ export class TimeService {
      * @param str
      * @returns {boolean}
      */
-    public static isMacro(str) : boolean{
-        if(typeof str === 'string'){
+    public static isMacro(str): boolean {
+        if (typeof str === 'string') {
             let hasLetter = /^[a-z]/i;
-            if(hasLetter.test(str)) return true;
+            if (hasLetter.test(str)) return true;
         }
         return false;
     }
@@ -44,7 +59,7 @@ export class TimeService {
      * @returns {any}
      */
     private static timeMacroConvert(timeMacro): any {
-        var date;
+        let date;
         switch (timeMacro) {
             case 'now':
                 date = new Date();
@@ -62,7 +77,7 @@ export class TimeService {
      * @param num   数量 负数即为减法
      * @param unit  单位
      */
-    public static addDate(date, num, unit): string {
+    public static addDate(date, num, unit): Moment {
         return moment(date).add(num, TimeService.timeUnitMap.get(unit));
     }
 
@@ -72,8 +87,8 @@ export class TimeService {
      * @param gr
      * @returns {string}
      */
-    public static getFormator(gr:TimeGr): string {
-        return TimeService.timeFormatMap.has(gr)?TimeService.timeFormatMap.get(gr) : 'YYYY-MM-DD';
+    public static getFormator(gr: TimeGr): string {
+        return TimeService.timeFormatMap.has(gr) ? TimeService.timeFormatMap.get(gr) : 'YYYY-MM-DD';
     }
 
 
@@ -101,58 +116,66 @@ export class TimeService {
      * 设置默认周开始
      * @param weekStart
      */
-    public static setWeekStart(weekStart:TimeWeekStart = TimeWeekStart.sun){
+    public static setWeekStart(weekStart: TimeWeekStart = TimeWeekStart.sun): void {
         let locale = moment.locale();
         moment.updateLocale(locale, {
-            week : {
-                dow : weekStart
+            week: {
+                dow: weekStart
             }
         });
     }
 
 
-
-    public static getWeekofYear(date) : number{
+    public static getWeekofYear(date): number {
         return moment(date).week();
     }
 
-    public static getYear(date) : number{
+    public static getYear(date): number {
         return moment(date).year();
     }
 
-    public static getMonth(date) : number{
-        return moment(date).month()+1;
+    public static getMonth(date): number {
+        return moment(date).month() + 1;
     }
 
-    public static getDay(date) : number{
+    public static getDay(date): number {
         return moment(date).date();
     }
 
 
-    public static getDateFromYearAndWeek(year:number,week:number): Date{
+    public static getDateFromYearAndWeek(year: number, week: number): Date {
         return moment().year(year).week(week)
+    }
+
+    public static getDate(str, gr: TimeGr): Moment {
+        return moment(str, TimeService.getFormator(gr));
     }
 
     /**
      * 根据字符串获取真实时间
      * @param str
+     * @param gr
      * @returns {any}
      */
-    public static getDate(str,gr?): any {
+    public static getFormateDate(str: any, gr?: TimeGr): any {
+        let result = str;
         if (TimeService.isMacro(str)) {
-            str = str.replace(/\s+/g, "");
-            var fullPara = /([a-z]+)(\+|\-)?([\d]+)([a-z]+)?/i;
-            var timeMacroArr = fullPara.exec(str);
+            str = (<string>str).replace(/\s+/g, "");
+            let fullPara = /([a-z]+)(\+|\-)?([\d]+)([a-z]+)?/i;
+            let timeMacroArr = fullPara.exec(str);
             if (timeMacroArr && timeMacroArr[2] != undefined) { //有加减 now-2d
-                return TimeService.addDate(TimeService.timeMacroConvert(timeMacroArr[1]), "" + timeMacroArr[2] + timeMacroArr[3], timeMacroArr[4]);
+                result = TimeService.addDate(TimeService.timeMacroConvert(timeMacroArr[1]), "" + timeMacroArr[2] + timeMacroArr[3], timeMacroArr[4]);
             } else { //无加减 now
-                return TimeService.timeMacroConvert(str);
-            }
-        }else{
-            if(typeof str === "string" && gr){
-                return moment(str,TimeService.getFormator(gr));
+                result = TimeService.timeMacroConvert(str);
             }
         }
-        return str;
+        if (result && (gr || (!gr && gr == 0)) || result instanceof Date || result instanceof moment) {
+            if (result instanceof moment) {
+                result = TimeService.formatWithGr(result, gr);
+            } else {
+                result = TimeService.formatWithGr(moment(result, TimeService.getFormator(gr)), gr);
+            }
+        }
+        return result;
     }
 }

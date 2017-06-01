@@ -1,14 +1,12 @@
-import { Component } from "@angular/core";
+import {Component} from "@angular/core";
+import {TimeGr, TimeService} from "../../../../../service/time.service";
 
 
 @Component({
-  templateUrl: 'comboSelect.html'
+    templateUrl: 'comboSelect.html'
 })
 export class ComboSelectDemoComponent {
-    date = "now";
-    comboValue = [];
-    dataChange(event){
-        this.comboValue = [{label: event,closable: false},{label: event,closable: false}];
-    }
+    singleTimeComboValue = [{label: TimeService.getDate('now', TimeGr.date), closable: false}];
+    rangeTimeComboValue = [{label: TimeService.getDate('now-7d', TimeGr.date)}, {label: TimeService.getDate('now', TimeGr.date)}];
 }
 

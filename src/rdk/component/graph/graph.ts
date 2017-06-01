@@ -175,7 +175,7 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
     }
 
     public registerTheme(themeName: string, theme: Object): void {
-        RdkGraph.echarts.registerMap(themeName, theme);
+        RdkGraph.echarts.registerTheme(themeName, theme);
     }
 
     public setOption(option: EchartOptions, lazyUpdate?: boolean) {

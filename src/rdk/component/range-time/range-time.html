@@ -1,0 +1,19 @@
+<div class="rdk-range-time">
+    <rdk-time [(date)]="_beginDate" [(gr)]="_gr" [limitStart]="_startTimeLimitStart"  [limitEnd]="_limitEnd"
+              (dateChange)="dateChange('beginDate',$event)" [refreshInterval]="_refreshInterval" [weekStart]="_weekStart"
+               [recommendedBegin]="_recommendedBegin" [recommendedEnd]="_recommendedEnd" [grItems]="_grItems" #timeStart
+              class.rdk-range-time-startTime="false" (grChange)="grChange($event)">
+    </rdk-time>
+    <rdk-time [(date)]="_endDate" [(gr)]="_gr" [limitStart]="_startTimeLimitEnd"  [limitEnd]="_endTimeLimitEnd"
+              (dateChange)="dateChange('endDate',$event)" [refreshInterval]="_refreshInterval" [weekStart]="_weekStart"
+              [recommendedBegin]="_recommendedBegin" [recommendedEnd]="_recommendedEnd" #timeEnd
+              [class.rdk-range-time-endTime]="(_grItems && _grItems.length!=0)">
+    </rdk-time>
+    <div *ngIf="_shortCuts && _shortCuts.length" class="rdk-range-time-shortcuts">
+        <span *ngFor="let item of _shortCuts" (click)="changeShortCut(item)">
+            {{item.label}}
+        </span>
+    </div>
+</div>
+
+

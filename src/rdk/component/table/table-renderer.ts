@@ -10,7 +10,7 @@ import {RdkCheckBoxModule} from "../checkbox/index";
  * 默认表格渲染组件
  * */
 @Component({
-    template: '<span>{{cellData}}</span>'
+    template: '<span class="rdk-table-cell-text">{{cellData}}</span>'
 })
 export class DefaultCellRenderer extends TableCellRenderer {
 }
