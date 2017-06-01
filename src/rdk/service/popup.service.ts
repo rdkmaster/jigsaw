@@ -12,6 +12,7 @@ import {
 } from "@angular/core";
 import {CommonUtils} from "../core/utils/common-utils";
 import {RdkBlock} from "../component/block/block";
+import {AffixUtils} from "rdk/core/utils/internal-utils";
 import {IDynamicInstantiatable} from "../component/core";
 
 export enum PopupEffect {
@@ -29,7 +30,7 @@ export class PopupOptions {
     size?: { width?: string | number, height?: string | number }
 }
 
-export type PopupPosition = PopupPoint | ElementRef;
+export type PopupPosition = PopupPoint | ElementRef | HTMLElement;
 
 export class PopupPositionValue {
     left: number;
@@ -378,41 +379,63 @@ export class PopupService {
      * 获取位置具体的top和left
      * */
     private _getPositionValue(options: PopupOptions, element: HTMLElement): PopupPositionValue {
-        let top = 0;
-        let left = 0;
-        if (this._isGlobalModal(options)) {
-            top = (document.body.clientHeight / 2 - element.offsetHeight / 2);
-            left = (document.body.clientWidth / 2 - element.offsetWidth / 2);
-        } else if (options.pos instanceof ElementRef) {
-            if (options.posOffset.top || options.posOffset.top == 0) {
-                top = (options.pos.nativeElement.offsetTop + options.posOffset.top);
-            }
-            else if (options.posOffset.bottom || options.posOffset.bottom == 0) {
-                top = (options.pos.nativeElement.offsetTop - element.offsetHeight + options.posOffset.bottom);
-            }
-            else {
-                top = options.pos.nativeElement.offsetTop;
-            }
 
-            if (options.posOffset.left || options.posOffset.left == 0) {
-                left = (options.pos.nativeElement.offsetLeft + options.posOffset.left);
-            }
-            else if (options.posOffset.right || options.posOffset.right == 0) {
-                left = (options.pos.nativeElement.offsetLeft - element.offsetWidth + options.posOffset.right);
-            }
-            else {
-                left = options.pos.nativeElement.offsetLeft;
-            }
+        let top: number = 0,
+            left: number = 0;
+
+        const popupWidth = element.offsetWidth,
+            popupHeight = element.offsetHeight;
+
+        if (this._isGlobalModal(options)) {
+            top = (document.body.clientHeight / 2 - popupHeight / 2);
+            left = (document.body.clientWidth / 2 - popupWidth / 2);
         } else {
-            if (options.posOffset.top) {
-                top = (options.pos.y + options.posOffset.top);
-            } else {
-                top = options.pos.y;
-            }
-            if (options.posOffset.left) {
-                left = (options.pos.x + options.posOffset.left);
-            } else {
-                left = options.pos.x;
+            const pos = options.pos,
+                posOffset = options.posOffset;
+
+            if (pos instanceof ElementRef || pos instanceof HTMLElement) {
+                let posOffsetTop: number,
+                    posOffsetLeft: number;
+
+                if (pos instanceof ElementRef) {
+                    posOffsetTop = AffixUtils.offset(pos.nativeElement).top;
+                    posOffsetLeft = AffixUtils.offset(pos.nativeElement).left;
+                } else if (pos instanceof HTMLElement) {
+                    posOffsetTop = AffixUtils.offset(pos).top;
+                    posOffsetLeft = AffixUtils.offset(pos).left;
+                }
+
+                if (posOffset && typeof posOffset.top == 'number') {
+                    top = (posOffsetTop + posOffset.top);
+                } else if (posOffset && typeof posOffset.bottom == 'number') {
+                    top = (posOffsetTop - popupHeight + posOffset.bottom);
+                } else {
+                    top = posOffsetTop;
+                }
+
+                if (posOffset && typeof posOffset.left == 'number') {
+                    left = (posOffsetLeft + posOffset.left);
+                } else if (posOffset && typeof posOffset.right == 'number') {
+                    left = (posOffsetLeft - popupWidth + posOffset.right);
+                } else {
+                    left = posOffsetLeft;
+                }
+            } else if (pos) {
+                if (typeof pos.y == 'number') {
+                    if (posOffset && typeof posOffset.top == 'number') {
+                        top = (pos.y + posOffset.top);
+                    } else {
+                        top = pos.y;
+                    }
+                }
+
+                if (typeof pos.x == 'number') {
+                    if (posOffset && typeof posOffset.left == 'number') {
+                        left = (pos.x + posOffset.left);
+                    } else {
+                        left = pos.x;
+                    }
+                }
             }
         }
 

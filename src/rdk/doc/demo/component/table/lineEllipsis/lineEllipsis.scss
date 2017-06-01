@@ -1,0 +1,21 @@
+.red-bg{
+    background: red;
+}
+.red-text{
+    color: #ffaa00;
+}
+.green-text{
+    color: #87d068;
+}
+.big-text{
+    font-size: 16px;
+    font-weight: 700;
+}
+
+p.message{
+    font-size: 14px;
+    padding-top: 10px;
+    span{
+        font-weight: 700;
+    }
+}
