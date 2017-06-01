@@ -18,7 +18,7 @@
 <rdk-radio-group [(value)]="selectedPos" [data]="poses">
 </rdk-radio-group>
 
-<div *ngIf="selectedPos.label=='other'" style="display: inline-block">
+<div *ngIf="selectedPos.label=='point'" style="display: inline-block">
     <rdk-input [(value)]="detailPos.x" placeholder="X" width="200px"></rdk-input>
     <rdk-input [(value)]="detailPos.y" placeholder="Y" width="200px"></rdk-input>
 </div>
