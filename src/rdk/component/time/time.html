@@ -1,6 +1,6 @@
 <div class="rdk-time">
-    <div *ngIf="_grItems && _grItems.length" class="rdk-time-granularity">
-    <span *ngFor="let item of _grItems" (click)="changeGranularity(item)" [class.active]="item.value==_gr">
+    <div *ngIf="grItems && grItems.length" class="rdk-time-granularity">
+    <span *ngFor="let item of grItems" (click)="changeGranularity(item)" [class.active]="item.value==gr">
         {{item.label}}
     </span>
     </div>

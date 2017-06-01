@@ -11,6 +11,7 @@ import {TimeGrComponent} from "./gr/gr";
 import {TimeRecommendedComponent} from "./recommended/recommended";
 import {TimeGrItemsComponent} from "./grItems/grItems";
 import {TimeRefreshIntervalComponent} from "./refreshInterval/refreshInterval";
+import {CommonModule} from "@angular/common";
 
 
 
@@ -49,7 +50,7 @@ const inputDemoRoutes=[
         TimeGrComponent,TimeGrItemsComponent,TimeRefreshIntervalComponent
     ],
     imports: [
-        RouterModule.forChild(inputDemoRoutes), RdkTimeModule,RdkButtonModule,RdkTileSelectModule
+        RouterModule.forChild(inputDemoRoutes), RdkTimeModule,RdkButtonModule,RdkTileSelectModule,CommonModule
     ],
     providers: []
 })

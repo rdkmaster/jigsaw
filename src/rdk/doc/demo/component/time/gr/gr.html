@@ -4,4 +4,4 @@ Gr : <rdk-tile-select [data]="datas" [(selectedItems)]="gr" [multipleSelect]="fa
 
 <rdk-time [(date)]="date" [gr]="gr[0].label" (dateChange)="dateChange($event)"></rdk-time><br>
 
-{{date}}
+{{date | json}}

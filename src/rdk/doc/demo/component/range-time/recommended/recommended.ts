@@ -4,9 +4,11 @@ import { Component } from "@angular/core";
 @Component({
   templateUrl: 'recommended.html'
 })
-export class TimeRecommendedComponent {
+export class RangeTimeRecommendedComponent {
 
-    date = new Date();
+    beginDate = "now-1d";
+
+    endDate = "now";
 
 }
 
