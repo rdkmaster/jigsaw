@@ -728,15 +728,6 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         }
     }
 
-    public _removeTdListenersByIndex(row: number, column: number) {
-        if (this._removeTdListeners.length) {
-            this._removeTdListeners
-                .filter(removeTdListener => removeTdListener.row == row
-                && removeTdListener.column == column)
-                .forEach(removeTdListener => removeTdListener.removeTdListener())
-        }
-    }
-
     private _whileScrolling(): void {
         this._scrollBar.whileScrolling.subscribe(scrollEvent => {
             if (scrollEvent.direction == 'x') {
@@ -1067,8 +1058,6 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
             this._setEditorCellHeight();
             //重新对齐表头
             this._rdkTable._asyncSetFixedHeadWidth();
-            //删除对应td的tooltip的事件
-            this._rdkTable._removeTdListenersByIndex(this.row, this.column);
         }) : null;
     }
 
