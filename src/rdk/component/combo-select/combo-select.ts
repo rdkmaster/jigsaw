@@ -33,7 +33,10 @@ export class ComboSelectValue {
 @Component({
     selector: 'rdk-combo-select',
     templateUrl: 'combo-select.html',
-    styleUrls: ['combo-select.scss']
+    styleUrls: ['combo-select.scss'],
+    host: {
+        '[style.min-width]': 'width',
+    }
 })
 export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, OnInit {
     private _disposePopup: PopupDisposer;
@@ -67,8 +70,6 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
     @Output() public valueChange = new EventEmitter<any[]>();
 
     @Input() public labelField: string = 'label';
-
-    @Input() public separator: string = ' ';
 
     @Output()
     public select = new EventEmitter<any>();
@@ -159,7 +160,7 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
     public autoCloseDropDown: boolean;
 
     @Input()
-    public autoWidth: boolean = true;
+    public autoWidth: boolean;
 
     private _removeTag(tag) {
         const index = this.value.indexOf(tag);
@@ -212,14 +213,12 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
                     //下方位置不够且上方位置足够的时候才做调整
                     pos.top -= upDelta;
                 }
-                console.log( this._elementRef.nativeElement.offsetWidth);
-                console.log(this._contentTemplateRef.elementRef.nativeElement.offsetWidth);
                 return pos;
             },
             size: {
                 width: this.dropDownWidth ?
                     RdkComboSelect.translate2Number(this.dropDownWidth, this._elementRef.nativeElement.offsetWidth) :
-                   "auto"
+                    this._elementRef.nativeElement.offsetWidth
             }
         };
         const popupInfo: PopupInfo = this._popupService.popup(this._contentTemplateRef, option);
@@ -227,7 +226,6 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
         this._disposePopup = () => {
             popupInfo.dispose()
         };
-        this._render.setStyle(this._popupElement,"min-width",this._elementRef.nativeElement.offsetWidth+"px");
         PopupService.setBackground(this._popupElement, this._render);
 
         if (this._openTrigger === DropDownTrigger.mouseenter && this._popupElement) {
