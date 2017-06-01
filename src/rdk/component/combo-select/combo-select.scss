@@ -6,7 +6,7 @@ $rdk-combo-select: #{$rdk-prefix}-combo-select;
 :host {
     @include inline-block;
     .#{$rdk-combo-select} {
-        min-width: 240px;
+        min-width: 100px;
         width: auto;
         display: inline-block;
         outline: none;

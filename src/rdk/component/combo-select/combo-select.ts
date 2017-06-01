@@ -159,7 +159,7 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
     public autoCloseDropDown: boolean;
 
     @Input()
-    public autoWidth: boolean;
+    public autoWidth: boolean = true;
 
     private _removeTag(tag) {
         const index = this.value.indexOf(tag);

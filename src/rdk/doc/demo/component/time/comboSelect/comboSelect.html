@@ -1,5 +1,5 @@
 
-<rdk-combo-select [pane]="singleTimePane" [(value)]="singleTimeComboValue">
+<rdk-combo-select [pane]="singleTimePane" [(value)]="singleTimeComboValue" width="1400px">
     <ng-template #singleTimePane>
         <rdk-time [(date)]="date" (dateChange)="singleTimeComboValue = [{label: $event,closable: false}]"></rdk-time>
     </ng-template>
