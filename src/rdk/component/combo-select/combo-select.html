@@ -11,12 +11,15 @@
                 {{placeholder}}
             </div>
             <span (click)="_$tagClick()">
-                <rdk-tag *ngFor="let tagItem of value"
-                         [closable]='tagItem.closable'
-                         (select)="_$tagClick(tagItem)"
-                         (close)="_removeTag(tagItem)">
-                {{tagItem[labelField]}}
-            </rdk-tag>
+                <ng-template ngFor let-tagItem [ngForOf]="value" let-i="index" let-isLast="last">
+                    <rdk-tag
+                              [closable]='tagItem.closable'
+                              (select)="_$tagClick(tagItem)"
+                              (close)="_removeTag(tagItem)">
+                             {{tagItem[labelField]}}
+                     </rdk-tag>
+                      <span *ngIf="separator && !isLast">{{separator}}</span>
+                </ng-template>
             </span>
         </div>
     </div>

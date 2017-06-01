@@ -1,0 +1,18 @@
+
+<rdk-combo-select [pane]="singleTimePane" [(value)]="singleTimeComboValue" width="1400px">
+    <ng-template #singleTimePane>
+        <rdk-time [(date)]="date" (dateChange)="singleTimeComboValue = [{label: $event,closable: false}]"></rdk-time>
+    </ng-template>
+</rdk-combo-select>
+Selected Time : {{date}}<br><br>
+
+
+<rdk-combo-select [pane]="rangeTimePane" [(value)]="rangeTimeComboValue">
+    <ng-template #rangeTimePane>
+        <rdk-range-time [(beginDate)]="beginDate" [(endDate)]="endDate"
+                        (beginDateChange)="rangeTimeComboValue = [{label: $event, closable: false}, rangeTimeComboValue[1]]"
+                        (endDateChange)="rangeTimeComboValue = [rangeTimeComboValue[0], {label: $event, closable: false}]">
+        </rdk-range-time><br>
+    </ng-template>
+</rdk-combo-select>
+Selected Time : {{beginDate}} - {{endDate}}

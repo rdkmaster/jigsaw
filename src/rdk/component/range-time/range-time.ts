@@ -11,10 +11,7 @@ type Time = string | Date | TimeWeekDay | Moment;
 @Component({
     selector: 'rdk-range-time',
     templateUrl: 'range-time.html',
-    styleUrls: ['range-time.scss'],
-    host: {
-        '[style.width]': 'width'
-    }
+    styleUrls: ['range-time.scss']
 })
 
 export class RdkRangeTime extends AbstractRDKComponent implements OnInit {
@@ -208,7 +205,7 @@ export class RdkRangeTime extends AbstractRDKComponent implements OnInit {
             }else{
                 this._startTimeLimitStart = limitStart
             }
-           
+
         }
     }
 
