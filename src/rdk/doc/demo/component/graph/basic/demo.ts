@@ -16,8 +16,16 @@ export class BasicGraphComponent implements OnInit {
 
     @ViewChild("graph") graph: RdkGraph;
 
+    patchOption = {
+        title: {
+            text: '补丁 - 堆叠区域图'
+        }
+    }
+
     ngOnInit() {
-        this.data = new GraphDataDemo();
+        let graphData = new GraphDataDemo();
+        this.data = graphData;
+        graphData.optionsPatch = this.patchOption;
     }
 }
 
