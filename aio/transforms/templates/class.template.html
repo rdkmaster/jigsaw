@@ -1,0 +1,9 @@
+{% import "lib/paramList.html" as params -%}
+{% extends 'layout/api-base.template.html' -%}
+
+{% block details %}
+  {% block additional %}{% endblock %}
+  {% include "includes/_description.html" %}
+  {% include "includes/_statics.html" %}
+  {% include "includes/_members.html" %}
+{% endblock %}
