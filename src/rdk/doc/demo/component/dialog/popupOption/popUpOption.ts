@@ -1,7 +1,3 @@
-/**
- * Created by 10177553 on 2017/4/13.
- */
-
 import {Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {
     PopupDisposer, PopupInfo, PopupOptions, PopupPoint, PopupPositionOffset, PopupPositionType,
@@ -58,7 +54,8 @@ export class DialogPopOptionDemo implements OnInit {
         this.poses.push({label: "left", ele: this.left});
         this.poses.push({label: "middle", ele: this.middle});
         this.poses.push({label: "right", ele: this.right});
-        this.poses.push({label: "other"});
+        this.poses.push({label: "no"});
+        this.poses.push({label: "point"});
         this.selectedPos = this.poses[0];
     }
 
@@ -79,16 +76,13 @@ export class DialogPopOptionDemo implements OnInit {
             bottom: this.offset.bottom === null ? this.offset.bottom : Number(this.offset.bottom)
         };
 
-        if (this.selectedPos.label != "other") {
+        if (this.selectedPos.label != "point") {
             this.option.pos = this.selectedPos.ele;
         } else {
-            this.option.pos = this.detailPos;
-        }
-
-        if(this.option.modal){
-            this.option = {
-                modal: true
-            }
+            this.option.pos = {
+                x: this.detailPos.x === null ? this.detailPos.x : Number(this.detailPos.x),
+                y: this.detailPos.y === null ? this.detailPos.y : Number(this.detailPos.y),
+            };
         }
 
         if(this._dialogInfo){

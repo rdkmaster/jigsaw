@@ -161,12 +161,6 @@ export class PopupService {
                 showEffect: PopupEffect.fadeIn,
                 hideEffect: PopupEffect.fadeOut
             };
-            if (!CommonUtils.isEmptyObject(options)) {
-                blockOptions.pos = options.pos;
-                blockOptions.posOffset = options.posOffset;
-                blockOptions.posType = options.posType;
-                blockOptions.size = options.size;
-            }
 
             const blockInfo: PopupInfo = this._popupFactory(RdkBlock, blockOptions);
             disposer = blockInfo.dispose;
@@ -183,7 +177,7 @@ export class PopupService {
     }
 
     private _setStyle(options: PopupOptions, element: HTMLElement, renderer: Renderer2): void {
-        if (this._isGlobalModal(options)) {
+        if (this._isModal(options)) {
             renderer.setStyle(element, 'z-index', '10000');
         } else {
             renderer.setStyle(element, 'z-index', '9000');
@@ -233,7 +227,7 @@ export class PopupService {
     }
 
     /**
-     * 是否模态，包括全局和局部的：
+     * 是否模态(popupService只提供全局模态)：
      * 没配options
      * 或options为空对象
      * 或者modal为true
@@ -245,15 +239,15 @@ export class PopupService {
     }
 
     /**
-     * 是否全局模态:
+     * 判断弹框是否居中显示:
      * 没配options
      * 或options为空对象
-     * 或者modal为true，并且没有配options.pos
+     * 或没有配options.pos
      * @param options
      * @returns {boolean}
      */
-    private _isGlobalModal(options: PopupOptions): boolean {
-        return CommonUtils.isEmptyObject(options) || (options.modal && !options.pos);
+    private _isGlobalPopup(options: PopupOptions): boolean {
+        return CommonUtils.isEmptyObject(options) || !options.pos;
     }
 
     private _setPopup(options: PopupOptions, element: HTMLElement, renderer: Renderer2, event?: EventEmitter<PopupEventType>) {
@@ -269,7 +263,7 @@ export class PopupService {
 
     private _setWindowListener(options: PopupOptions, element: HTMLElement, renderer: Renderer2, disposer: PopupDisposer): PopupDisposer[] {
         let removeWindowListens: PopupDisposer[] = [];
-        if (this._isGlobalModal(options)) {
+        if (this._isGlobalPopup(options)) {
             removeWindowListens.push(renderer.listen('window', 'resize', () => {
                 renderer.setStyle(element, 'top',
                     (document.body.clientHeight / 2 - element.offsetHeight / 2) + 'px');
@@ -354,7 +348,7 @@ export class PopupService {
      * 设置弹出的位置
      * */
     private _setPosition(options: PopupOptions, element: HTMLElement, renderer: Renderer2): void {
-        let posType: string = this._isGlobalModal(options) ? 'fixed' : this._getPositionType(options.posType);
+        let posType: string = this._isGlobalPopup(options) ? 'fixed' : this._getPositionType(options.posType);
         let position = this._getPositionValue(options, element);
         renderer.setStyle(element, 'position', posType);
         renderer.setStyle(element, 'top', position.top + 'px');
@@ -375,8 +369,12 @@ export class PopupService {
         }
     }
 
-    /*
+    /**
      * 获取位置具体的top和left
+     *
+     * options为{}或者null,或者options.pos没配时，默认相对屏幕居中显示
+     *
+     *
      * */
     private _getPositionValue(options: PopupOptions, element: HTMLElement): PopupPositionValue {
 
@@ -386,10 +384,10 @@ export class PopupService {
         const popupWidth = element.offsetWidth,
             popupHeight = element.offsetHeight;
 
-        if (this._isGlobalModal(options)) {
+        if (this._isGlobalPopup(options)) {
             top = (document.body.clientHeight / 2 - popupHeight / 2);
             left = (document.body.clientWidth / 2 - popupWidth / 2);
-        } else {
+        } else if (options) {
             const pos = options.pos,
                 posOffset = options.posOffset;
 
