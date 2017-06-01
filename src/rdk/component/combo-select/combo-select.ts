@@ -33,7 +33,10 @@ export class ComboSelectValue {
 @Component({
     selector: 'rdk-combo-select',
     templateUrl: 'combo-select.html',
-    styleUrls: ['combo-select.scss']
+    styleUrls: ['combo-select.scss'],
+    host: {
+        '[style.min-width]': 'width',
+    }
 })
 export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, OnInit {
     private _disposePopup: PopupDisposer;
