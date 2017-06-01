@@ -11,6 +11,8 @@ import {TimeGrComponent} from "./gr/gr";
 import {TimeRecommendedComponent} from "./recommended/recommended";
 import {TimeGrItemsComponent} from "./grItems/grItems";
 import {TimeRefreshIntervalComponent} from "./refreshInterval/refreshInterval";
+import {ComboSelectDemoComponent} from "./comboSelect/comboSelect";
+import {RdkComboSelectModule} from "../../../../component/combo-select/index";
 
 
 
@@ -36,6 +38,8 @@ const inputDemoRoutes=[
         path:'grItems', component: TimeGrItemsComponent
     },{
         path:'refreshInterval', component: TimeRefreshIntervalComponent
+    },{
+        path:'withComboSelect', component: ComboSelectDemoComponent
     },
     {
         path:'**', //fallback router must in the last
@@ -46,10 +50,10 @@ const inputDemoRoutes=[
 @NgModule({
     declarations: [
         TimeBasicDemoComponent,TimeLimitEndComponent,TimeLimitStartComponent,TimeWeekStartComponent,TimeRecommendedComponent,
-        TimeGrComponent,TimeGrItemsComponent,TimeRefreshIntervalComponent
+        TimeGrComponent,TimeGrItemsComponent,TimeRefreshIntervalComponent,ComboSelectDemoComponent
     ],
     imports: [
-        RouterModule.forChild(inputDemoRoutes), RdkTimeModule,RdkButtonModule,RdkTileSelectModule
+        RouterModule.forChild(inputDemoRoutes), RdkTimeModule,RdkButtonModule,RdkTileSelectModule,RdkComboSelectModule
     ],
     providers: []
 })

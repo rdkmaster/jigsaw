@@ -1,0 +1,7 @@
+
+<rdk-combo-select [pane]="dropcontent" [(value)]="comboValue">
+    <ng-template #dropcontent>
+        <rdk-time [(date)]="date" (dateChange)="dataChange($event)"></rdk-time>
+    </ng-template>
+</rdk-combo-select>
+Selected Time : {{date}}

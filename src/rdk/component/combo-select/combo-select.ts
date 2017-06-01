@@ -68,6 +68,8 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
 
     @Input() public labelField: string = 'label';
 
+    @Input() public separator: string = ' ';
+
     @Output()
     public select = new EventEmitter<any>();
 
