@@ -20,10 +20,10 @@ export class RdkCollapse extends AbstractRDKComponent{
     @ContentChildren(RdkPanel) _rdkPanel: QueryList<RdkPanel>;
 
     @Input()
-    public mode: string| CollapseModule = 'default';  // accordion
+    public mode: string| CollapseMode = 'default';  // accordion
 }
 
-export enum CollapseModule {
+export enum CollapseMode {
     default, accordion
 }
 

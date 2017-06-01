@@ -1,19 +1,20 @@
 <rdk-collapse width="80%">
-    <rdk-panel header="测试col" [isActive]="true">
+    <rdk-panel title="测试col" [isActive]="true">
         <input type="text" placeholder="请输入姓名~">
+        <rdk-input></rdk-input>
     </rdk-panel>
 
-    <rdk-panel header="afdafd" isActive="true">
+    <rdk-panel title="afdafd">
         密码: <input type="text" placeholder="请输入姓名~">
     </rdk-panel>
 
-    <rdk-panel header="嵌套">
-        <rdk-collapse>
-            <rdk-panel header="测试col">
+    <rdk-panel title="嵌套">
+        <rdk-collapse mode="accordion">
+            <rdk-panel title="测试col">
                 <input type="text" placeholder="请输入姓名~">
             </rdk-panel>
 
-            <rdk-panel header="afdafd" isactive="true">
+            <rdk-panel title="afdafd" isactive="true">
                 密码: <input type="text" placeholder="请输入姓名~">
             </rdk-panel>
         </rdk-collapse>
@@ -26,7 +27,7 @@
 <hr>
 <br>
 <rdk-collapse mode="accordion">
-    <rdk-panel>
+    <rdk-panel [isActive]="true">
         <div rdk-title>
             <i class="fa fa-arrow-circle-right"></i>
             <span style="color: blue;">测试自定义Title</span>
@@ -37,13 +38,13 @@
         </div>
     </rdk-panel>
 
-    <rdk-panel header="afdafd" isactive="true">
+    <rdk-panel title="afdafd">
         密码: <input type="text" placeholder="请输入姓名~">
     </rdk-panel>
-    <rdk-panel header="3" isactive="true">
+    <rdk-panel title="3">
         <p>今天是个好天气</p>
     </rdk-panel>
-    <rdk-panel header="4" isactive="true">
+    <rdk-panel title="4">
         <p>今天是个好日子~</p>
     </rdk-panel>
 </rdk-collapse>
