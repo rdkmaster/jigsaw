@@ -14,18 +14,30 @@ export type Moment = {
 
 export class TimeService {
 
-    private static timeFormatMap = new Map([[TimeGr.second, 'YYYY-MM-DD,HH:mm:ss'], [TimeGr.minute, 'YYYY-MM-DD,HH:mm'],
-        [TimeGr.hour, 'YYYY-MM-DD,HH'], [TimeGr.date, 'YYYY-MM-DD'],
-        [TimeGr.week, 'YYYY-MM-DD'], [TimeGr.month, 'YYYY-MM']]);
+    private static timeFormatMap = new Map([
+        [TimeGr.second, 'YYYY-MM-DD,HH:mm:ss'],
+        [TimeGr.minute, 'YYYY-MM-DD,HH:mm'],
+        [TimeGr.hour, 'YYYY-MM-DD,HH'],
+        [TimeGr.date, 'YYYY-MM-DD'],
+        [TimeGr.week, 'YYYY-MM-DD'],
+        [TimeGr.month, 'YYYY-MM']
+    ]);
 
-    private static timeUnitMap = new Map([['s', 'seconds'], ['m', 'minutes'], ['h', "hours"], ['d', 'days'], ['w', 'weeks'], ['M', 'months'], ['y', 'years']]);
+    private static timeUnitMap = new Map([
+        ['s', 'seconds'],
+        ['m', 'minutes'],
+        ['h', "hours"],
+        ['d', 'days'],
+        ['w', 'weeks'],
+        ['M', 'months'],
+        ['y', 'years']
+    ]);
 
-    private static initMoment(){
+    private static initMoment() {
         moment.suppressDeprecationWarnings = 1;
     }
 
     private static init = TimeService.initMoment();
-
 
 
     /**
