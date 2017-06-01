@@ -1,6 +1,7 @@
 <div class="rdk-combo-select"
      [class.rdk-combo-select-opened]="_$opened"
      [class.rdk-combo-select-disabled]="disabled"
+     [style.min-width]="width?width:'240px'"
      (mouseenter)="_$openByHover($event)"
      (mouseleave)="_$closeByHover($event)"
      (click)="_$openAndCloseByClick($event)">
