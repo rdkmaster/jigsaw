@@ -176,7 +176,7 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
         setTimeout(() => {
             if (this.autoWidth) {
                 if (this._popupElement) {
-                    this._render.setStyle(this._popupElement, 'width', this._elementRef.nativeElement.offsetWidth + 'px');
+                    this._render.setStyle(this._popupElement, 'min-width', this._elementRef.nativeElement.offsetWidth + 'px');
                 }
             }
         }, 0)
@@ -218,10 +218,12 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
             size: {
                 width: this.dropDownWidth ?
                     RdkComboSelect.translate2Number(this.dropDownWidth, this._elementRef.nativeElement.offsetWidth) :
-                    this._elementRef.nativeElement.offsetWidth
-            }
+                    "auto",
+                "min-width":this.dropDownWidth ? null :this._elementRef.nativeElement.offsetWidth
+            },
         };
         const popupInfo: PopupInfo = this._popupService.popup(this._contentTemplateRef, option);
+
         this._popupElement = popupInfo.element;
         this._disposePopup = () => {
             popupInfo.dispose()

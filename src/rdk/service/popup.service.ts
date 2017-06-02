@@ -27,7 +27,7 @@ export class PopupOptions {
     posOffset?: PopupPositionOffset;
     posType?: PopupPositionType;
     posReviser?: (pos: PopupPositionValue, popupElement: HTMLElement) => PopupPositionValue;
-    size?: { width?: string | number, height?: string | number }
+    size?: PopupSize;
 }
 
 export type PopupPosition = PopupPoint | ElementRef | HTMLElement;
@@ -35,6 +35,12 @@ export type PopupPosition = PopupPoint | ElementRef | HTMLElement;
 export class PopupPositionValue {
     left: number;
     top: number;
+}
+
+export class PopupSize{
+    width?: string | number;
+    height?: string | number;
+    ["min-width"]?:string | number;
 }
 
 export class PopupPoint {
@@ -283,8 +289,12 @@ export class PopupService {
     private _setSize(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
         if (!options || !options.size) return;
         let size = options.size;
+
         if (size.width) {
             renderer.setStyle(element, 'width', CommonUtils.getCssValue(size.width));
+        }
+        if (size["min-width"]) {
+            renderer.setStyle(element, 'min-width', CommonUtils.getCssValue(size["min-width"]));
         }
         if (size.height) {
             renderer.setStyle(element, 'height', CommonUtils.getCssValue(size.height));
