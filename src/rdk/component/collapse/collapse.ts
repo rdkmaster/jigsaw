@@ -2,7 +2,7 @@ import {
     NgModule, Component, ViewEncapsulation, QueryList, Input, ContentChildren
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {RdkPanel} from "./collapse-panel";
+import {RdkCollapsePane} from "./collapse-pane";
 import {AbstractRDKComponent} from "../core";
 
 @Component({
@@ -17,7 +17,7 @@ import {AbstractRDKComponent} from "../core";
 })
 export class RdkCollapse extends AbstractRDKComponent{
 
-    @ContentChildren(RdkPanel) _rdkPanel: QueryList<RdkPanel>;
+    @ContentChildren(RdkCollapsePane) _rdkPanel: QueryList<RdkCollapsePane>;
 
     @Input()
     public mode: string| CollapseMode = 'default';  // accordion
@@ -29,7 +29,7 @@ export enum CollapseMode {
 
 @NgModule({
     imports: [CommonModule],
-    declarations: [RdkCollapse, RdkPanel],
-    exports: [RdkCollapse, RdkPanel]
+    declarations: [RdkCollapse, RdkCollapsePane],
+    exports: [RdkCollapse, RdkCollapsePane]
 })
 export class RdkCollapseModule { }
