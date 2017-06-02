@@ -6,7 +6,7 @@ $range-time-prefix-cls: #{$rdk-prefix}-range-time;
     @include inline-block();
     padding: 5px;
     position: relative;
-    width : 515px;
+    width : 516px;
     /deep/{
         .#{$range-time-prefix-cls}-endTime,.#{$range-time-prefix-cls}-startTime{
             .rdk-time-box{

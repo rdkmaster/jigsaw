@@ -3,7 +3,7 @@ import {Component, OnInit} from '@angular/core';
     templateUrl: 'disable.html',
     styleUrls: ['disable.scss'],
 })
-export class DisabledComboSelectDemo implements OnInit{
+export class DisabledComboSelectDemo{
 
     private disabled = false;
 
@@ -28,9 +28,4 @@ export class DisabledComboSelectDemo implements OnInit{
         {label: "哈尔滨"}
     ];
 
-    ngOnInit(){
-        setTimeout(() => {
-            this.disabled = true
-        }, 3000)
-    }
 }

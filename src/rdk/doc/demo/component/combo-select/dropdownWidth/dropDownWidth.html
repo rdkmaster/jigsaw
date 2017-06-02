@@ -1,18 +1,25 @@
 <p>绝对值宽度</p>
-<rdk-combo-select [pane]="dropcontent"
-                  placeholder="请输入城市~"
-                  dropDownWidth="400px">
+<rdk-combo-select
+    placeholder="请输入城市~"
+    dropDownWidth="400px">
+    <rdk-tile-select
+        class="drop-down-child"
+        labelField="label"
+        [data]="citys"
+        width="400px"
+        tileOptionWidth="100px">
+    </rdk-tile-select>
 </rdk-combo-select>
 <p>百分比宽度</p>
-<rdk-combo-select [pane]="dropcontent"
-                  placeholder="请输入城市~"
-                  dropDownWidth="120%">
-</rdk-combo-select>
-<ng-template #dropcontent>
-    <rdk-tile-select class="drop-down-child"
-                     labelField="label"
-                     [multipleSelect]="true"
-                     [data]="citys"
-                     tileOptionWidth="100px">
+<rdk-combo-select
+    placeholder="请输入城市~"
+    dropDownWidth="120%">
+    <rdk-tile-select
+        class="drop-down-child"
+        labelField="label"
+        [data]="citys"
+        width="400px"
+        tileOptionWidth="100px">
     </rdk-tile-select>
-</ng-template>
+</rdk-combo-select>
+

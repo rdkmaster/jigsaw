@@ -1,25 +1,22 @@
 <div class="combo-select-demo cmn-box">
-<rdk-combo-select [value]="[{label:'ddd'}]"  [pane]="dropcontent">
-</rdk-combo-select>
+    <rdk-combo-select [value]="[{label:'ddd'}]">
+        <rdk-collapse mode="accordion">
+            <rdk-collapse-pane [isActive]="true">
+                <div rdk-title>
+                    <i class="fa fa-arrow-circle-right"></i>
+                    <span style="color: blue;">测试自定义Title</span>
+                    <i class="fa fa-arrow-circle-left"></i>
+                </div>
+                <div rdk-body>
+                    <input type="text" placeholder="请输入姓名~">
+                </div>
+            </rdk-collapse-pane>
 
-<ng-template #dropcontent>
-    <rdk-collapse mode="accordion">
-        <rdk-collapse-pane [isActive]="true">
-            <div rdk-title>
-                <i class="fa fa-arrow-circle-right"></i>
-                <span style="color: blue;">测试自定义Title</span>
-                <i class="fa fa-arrow-circle-left"></i>
-            </div>
-            <div rdk-body>
-                <input type="text" placeholder="请输入姓名~">
-            </div>
-        </rdk-collapse-pane>
-
-        <rdk-collapse-pane title="afdafd">
-            密码: <input type="text" placeholder="请输入姓名~">
-        </rdk-collapse-pane>
-    </rdk-collapse>
-</ng-template>
+            <rdk-collapse-pane title="afdafd">
+                密码: <input type="text" placeholder="请输入姓名~">
+            </rdk-collapse-pane>
+        </rdk-collapse>
+    </rdk-combo-select>
 </div>
 
 

@@ -7,7 +7,8 @@ import {
     OnInit,
     Output,
     Renderer2,
-    TemplateRef
+    TemplateRef,
+    ViewChild
 } from "@angular/core";
 import {
     PopupDisposer,
@@ -115,19 +116,8 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
         this._closeTrigger = typeof value === 'string' ? DropDownTrigger[<string>value] : value;
     }
 
-    @Input()
-    public dropDownWidth: string;
-
+    @ViewChild('dropContent')
     private _contentTemplateRef: TemplateRef<any>;
-
-    @Input()
-    public get pane(): TemplateRef<any> {
-        return this._contentTemplateRef;
-    };
-
-    public set pane(ref: TemplateRef<any>) {
-        this._contentTemplateRef = ref;
-    }
 
     private _$opened: boolean = false;
 
@@ -155,10 +145,10 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
     public openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @Input()
-    public autoCloseDropDown: boolean;
+    public autoClose: boolean; //自动关闭dropdown
 
     @Input()
-    public autoWidth: boolean;
+    public autoWidth: boolean; //自动同步dropdown宽度，与combo-select宽度相同
 
     private _removeTag(tag) {
         const index = this.value.indexOf(tag);
@@ -175,7 +165,7 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
             return;
         }
         setTimeout(() => {
-            this._render.setStyle(this._popupElement, 'min-width', this._elementRef.nativeElement.offsetWidth + 'px');
+            this._render.setStyle(this._popupElement, 'width', this._elementRef.nativeElement.offsetWidth + 'px');
         }, 0);
     }
 
@@ -213,11 +203,8 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
                 return pos;
             },
             size: {
-                width: this.dropDownWidth ?
-                    RdkComboSelect.translate2Number(this.dropDownWidth, this._elementRef.nativeElement.offsetWidth) :
-                    "auto",
-                minWidth: this.dropDownWidth ? null : this._elementRef.nativeElement.offsetWidth
-            },
+                minWidth: this.width ? this.width : 240
+            }
         };
         const popupInfo: PopupInfo = this._popupService.popup(this._contentTemplateRef, option);
 
@@ -245,12 +232,16 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
             });
         }
 
-        if (!this.autoCloseDropDown) {
+        //点击dropdown，自动关闭dropdown，主要用于单选的情况
+        if (!this.autoClose) {
             this._removePopupClickHandler = this._render.listen(this._popupElement, 'click', event => {
                 event.stopPropagation();
                 event.preventDefault();
             });
         }
+
+        //同步dropdown宽度
+        this._autoWidth();
     }
 
     private _closeDropDown(): void {
@@ -337,18 +328,4 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
         this.open = false;
     }
 
-    private static translate2Number(value: string | number, baseValue?: string | number): string {
-        value = typeof value === 'string' ? value : value + '';
-        baseValue = baseValue && typeof baseValue === 'string' ? parseFloat(baseValue) : baseValue;
-        const match = value ? value.match(/^\s*(\d+)(%|px)\s*$/) : null;
-
-        if (match && match[2] === '%') {
-            return parseInt(match[1]) / 100 * <number>baseValue + 'px';
-        } else if (match && match[2] === 'px') {
-            return value;
-        } else {
-            return value + 'px';
-
-        }
-    }
 }
