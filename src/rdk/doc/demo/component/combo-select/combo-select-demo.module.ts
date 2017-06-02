@@ -21,6 +21,7 @@ import {DisabledComboSelectDemo} from "./disable/disable";
 import {ComboSelectEditableDemo} from "./editable/editable";
 import {CollapseBasicDemo} from "./collapse/collapse";
 import {RdkCollapseModule} from "../../../../component/collapse/collapse";
+import {ComboSelectSetWidthDemo} from "./setWidth/setWidth";
 const routes = [
     {
         path: 'basic', component: ComboSelectBasicDemo
@@ -48,8 +49,12 @@ const routes = [
     },
     {
         path: 'editable', component: ComboSelectEditableDemo
-    },{
+    },
+    {
         path : 'collapse', component: CollapseBasicDemo
+    },
+    {
+        path : 'setWidth', component: ComboSelectSetWidthDemo
     }
 ];
 
@@ -62,7 +67,6 @@ const routes = [
         RdkInputModule,
         RdkCollapseModule
     ],
-    exports: [ComboSelectBasicDemo, ComboSelectMultipleDemo],
     declarations: [
         ComboSelectBasicDemo,
         ComboSelectMultipleDemo,
@@ -73,7 +77,8 @@ const routes = [
         OpenComboSelectDemo,
         DisabledComboSelectDemo,
         ComboSelectEditableDemo,
-        CollapseBasicDemo
+        CollapseBasicDemo,
+        ComboSelectSetWidthDemo
     ],
     providers: [PopupService]
 })
