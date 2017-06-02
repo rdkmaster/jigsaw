@@ -22,6 +22,7 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
     // 全局 echarts 对象
     public static echarts: any = echarts;
 
+    // TODO 当前属性判断不正确, 当前判断是是否option为空
     public dataValid: boolean = false;
 
     // 通过 echarts.init 创建的实例
@@ -51,14 +52,6 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
             this.setOption(value.options);
         });
     }
-
-//     Rx.Observable.create(function subscribe(observer) {
-//     observer.next(1);
-//     observer.next(2);
-//     observer.next(3);
-//     observer.complete();
-// });
-
 
     private _autoResize: boolean = true;
 
@@ -110,7 +103,13 @@ export class RdkGraph extends AbstractRDKComponent implements OnInit, OnDestroy 
     }
 
     private _needSetupResizeEvent(): boolean {
-        return this.autoResize && (this.width[this.width.length - 1] == '%' || this.height[this.height.length - 1] == '%')
+        if(this.width&& this.height) { // 防止没有数据时页面报错；
+            return this.autoResize && (this.width[this.width.length - 1] == '%' || this.height[this.height.length - 1] == '%')
+        } else {
+            return this.autoResize;
+        }
+
+
     }
 
     constructor(private _elf: ElementRef, private _renderer: Renderer2) {
