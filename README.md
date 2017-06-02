@@ -20,10 +20,11 @@ Jigsaw的组件不再是原子，它对组件的功能进行了二次抽象，�
     2. 否则，你只能使用下面脚本通过npm安装，由于国内奇葩的网络环境，可能会出现各种问题，请自行搜索解决吧。
 ```
 cd d:\rdk-ng2
-npm config set proxy=http://proxy.zte.com.cn:80 # 如果无代理，则请跳过这一步。
-npm install -g cnpm --registry=https://registry.npm.taobao.org
-cnpm install -g @angular/cli
-cnpm install
+npm config set proxy=http://proxy.zte.com.cn:80 #如果当前处于直连网络，则不可执行这个命令
+npm config set registry=https://registry.npm.taobao.org/
+npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass/
+npm install -g @angular/cli #可选，推荐将angular-cli装为全局命令
+npm install
 npm start
 ```
 
