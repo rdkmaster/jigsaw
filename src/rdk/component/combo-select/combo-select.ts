@@ -219,7 +219,7 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
                 width: this.dropDownWidth ?
                     RdkComboSelect.translate2Number(this.dropDownWidth, this._elementRef.nativeElement.offsetWidth) :
                     "auto",
-                "min-width":this.dropDownWidth ? null :this._elementRef.nativeElement.offsetWidth
+                minWidth:this.dropDownWidth ? null :this._elementRef.nativeElement.offsetWidth
             },
         };
         const popupInfo: PopupInfo = this._popupService.popup(this._contentTemplateRef, option);

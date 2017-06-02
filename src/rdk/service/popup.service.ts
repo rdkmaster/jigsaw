@@ -40,7 +40,7 @@ export class PopupPositionValue {
 export class PopupSize{
     width?: string | number;
     height?: string | number;
-    ["min-width"]?:string | number;
+    minWidth?:string | number;
 }
 
 export class PopupPoint {
@@ -293,8 +293,8 @@ export class PopupService {
         if (size.width) {
             renderer.setStyle(element, 'width', CommonUtils.getCssValue(size.width));
         }
-        if (size["min-width"]) {
-            renderer.setStyle(element, 'min-width', CommonUtils.getCssValue(size["min-width"]));
+        if (size.minWidth) {
+            renderer.setStyle(element, 'min-width', CommonUtils.getCssValue(size.minWidth));
         }
         if (size.height) {
             renderer.setStyle(element, 'height', CommonUtils.getCssValue(size.height));
