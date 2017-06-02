@@ -13,13 +13,13 @@ Jigsaw的组件不再是原子，它对组件的功能进行了二次抽象，�
 
 
 ## 用法
-1. 如果未安装nodejs，或者nodejs低于6.x.x，npm版本低于3.x.x，请先安装[nodejs](nodejs.org)。
-2. 下载或者clone本工程代码，假设保存到了 d:\rdk-ng2
+1. 如果未安装nodejs，或者nodejs低于6.x.x，npm版本低于3.x.x，请先安装[nodejs](https://nodejs.org)。
+2. 下载或者clone本工程代码，假设保存到了 d:\jigsaw
 3. 下载依赖包，有两个可选方式
-    1. 如果你有权限接入zte内部网络，推荐使用install.exe来部署环境。直接运行 `d:\rdk-ng2\install.exe` 即可。
+    1. 如果你有权限接入zte内部网络，推荐使用install.exe来部署环境。直接运行 `d:\jigsaw\install.exe` 即可。
     2. 否则，你只能使用下面脚本通过npm安装，由于国内奇葩的网络环境，可能会出现各种问题，请自行搜索解决吧。
 ```
-cd d:\rdk-ng2
+cd d:\jigsaw
 npm config set proxy=http://proxy.zte.com.cn:80 #如果当前处于直连网络，则不可执行这个命令
 npm config set registry=https://registry.npm.taobao.org/
 npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass/
@@ -30,7 +30,7 @@ npm start
 
 4. 浏览器里打开 http://localhost:4200 正常的话就能看到测试页面了，这表示你的开发环境搭建完毕。
 
-5. 后续直接在 `d:\rdk-ng2` 目录下运行 `npm start` 命令就可以启动开发环境了。我们推荐使用WebStorm作为IDE，Jigsaw专门针对这类IDE做了代码优化，让这些IDE可以精确提示更多的信息，节约你翻阅api文档的时间。
+5. 后续直接在 `d:\jigsaw` 目录下运行 `npm start` 命令就可以启动开发环境了。我们推荐使用WebStorm作为IDE，Jigsaw专门针对这类IDE做了代码优化，让这些IDE可以精确提示更多的信息，节约你翻阅api文档的时间。
 
 ## 组件开发云图
 ![](comp-map.png)
