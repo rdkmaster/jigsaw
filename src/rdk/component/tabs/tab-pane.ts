@@ -1,6 +1,3 @@
-/**
- * Created by 10177553 on 2017/3/29.
- */
 import {Component, Input, TemplateRef, Type, ViewChild} from '@angular/core';
 import {IDynamicInstantiatable} from "../core";
 

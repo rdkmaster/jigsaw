@@ -1,7 +1,3 @@
-/**
- * Created by 10177553 on 2017/4/26.
- */
-
 import {Component, Input, Host, Inject, forwardRef} from "@angular/core";
 import {RdkCollapse, CollapseMode} from "./collapse";
 
