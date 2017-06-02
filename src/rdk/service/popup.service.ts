@@ -323,6 +323,9 @@ export class PopupService {
             renderer.removeClass(element, popupEffect.hideEffect);
         }
 
+        //防止同一个HtmlElement被反复弹出和销毁，使的弹出时监听到上次销毁时的animationend事件
+        element.removeEventListener('animationend');
+
         renderer.setStyle(element, 'visibility', 'visible');
         renderer.addClass(element, popupEffect.showEffect);
 
