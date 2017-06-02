@@ -32,10 +32,10 @@ export type GrItem = {
 
 
 export class TimeConvert{
-    public static convertValue(value:Time,gr){
+    public static convertValue(value:Time,gr) : string{
         value = TimeConvert.handleWeekValue(value);
         value = TimeService.getFormateDate(value,gr);
-        return value;
+        return <string>value;
     }
 
     private static handleWeekValue(newValue) {
@@ -92,10 +92,10 @@ export class RdkTime extends AbstractRDKComponent implements OnInit ,OnDestroy {
             newValue = TimeConvert.convertValue(newValue,this.gr);
             if(newValue != this._value){
                 if(this._value && this.gr == TimeGr.week){
-                    let newValueYear = TimeService.getYear(newValue);
-                    let valueYear = TimeService.getYear(this._value);
-                    let newValueWeek = TimeService.getWeekofYear(newValue);
-                    let valueWeek = TimeService.getWeekofYear(this._value);
+                    let newValueYear = TimeService.getYear(<string>newValue);
+                    let valueYear = TimeService.getYear(<string>this._value);
+                    let newValueWeek = TimeService.getWeekofYear(<string>newValue);
+                    let valueWeek = TimeService.getWeekofYear(<string>this._value);
                     if(newValueYear== valueYear && newValueWeek==valueWeek) return;
                 }
                 let [value,] = this.handleValue(newValue);
@@ -223,10 +223,10 @@ export class RdkTime extends AbstractRDKComponent implements OnInit ,OnDestroy {
         this.destoryPicker();
         $(insert).datetimepicker({
             inline: true,
-            defaultDate: TimeService.getDate(this.date,<TimeGr>this.gr),
+            defaultDate: TimeService.getDate(<string>this.date,<TimeGr>this.gr),
             format: TimeService.getFormator(<TimeGr>this.gr),
-            minDate: this._limitStart && TimeService.getDate(this.limitStart,<TimeGr>this.gr),
-            maxDate: this._limitEnd && TimeService.getDate(this.limitEnd,<TimeGr>this.gr)
+            minDate: this._limitStart && TimeService.getDate(<string>this.limitStart,<TimeGr>this.gr),
+            maxDate: this._limitEnd && TimeService.getDate(<string>this.limitEnd,<TimeGr>this.gr)
         }).on("dp.change", (e) => {
             let changeValue = TimeService.getFormateDate(e.date,<TimeGr>this.gr);
             if( this.date!= changeValue){
@@ -256,7 +256,7 @@ export class RdkTime extends AbstractRDKComponent implements OnInit ,OnDestroy {
         if (this._intervalId) {
             window.clearInterval(this._intervalId);
         }
-        if ((TimeService.isMacro(this._limitStart) || TimeService.isMacro(this._limitEnd)) && this._refreshInterval != 0) {
+        if ((TimeService.isMacro(<string>this._limitStart) || TimeService.isMacro(<string>this._limitEnd)) && this._refreshInterval != 0) {
             this._intervalId = window.setInterval(() => {
                 this.handleLimitStartAndEnd();
             }, this._refreshInterval);
@@ -265,8 +265,8 @@ export class RdkTime extends AbstractRDKComponent implements OnInit ,OnDestroy {
 
     private handleLimitStartAndEnd() {
         if (this._timepicker) {
-            this._limitStart && this._timepicker.minDate(TimeService.addDate(this.limitStart,-1,'s'));
-            this._limitEnd && this._timepicker.maxDate(TimeService.addDate(this.limitEnd,1,'s'));
+            this._limitStart && this._timepicker.minDate(TimeService.addDate(<string>this.limitStart,-1,'s'));
+            this._limitEnd && this._timepicker.maxDate(TimeService.addDate(<string>this.limitEnd,1,'s'));
             this.weekHandle();
             this.handleRecommended(this.el.nativeElement,this.popService);
         }
@@ -304,8 +304,8 @@ export class RdkTime extends AbstractRDKComponent implements OnInit ,OnDestroy {
 
 
     private handleWeekSelect() {
-        let weekNum = TimeService.getWeekofYear(this.date);
-        let year = TimeService.getYear(this.date);
+        let weekNum = TimeService.getWeekofYear(<string>this.date);
+        let year = TimeService.getYear(<string>this.date);
         let trNode = this.el.nativeElement.querySelector(".rdk-time-box .datepicker .datepicker-days>table>tbody>tr>td.active").parentNode;
         trNode.classList.add("active");
         return {year: year, week: weekNum};
@@ -337,7 +337,7 @@ export class RdkTime extends AbstractRDKComponent implements OnInit ,OnDestroy {
         if (this._recommendedBegin && this._recommendedEnd) {
             this._recommendedBegin = TimeService.getFormateDate(this._recommendedBegin );
             this._recommendedEnd = TimeService.getFormateDate(this._recommendedEnd );
-            if (TimeService.getYear(this._recommendedBegin) != TimeService.getYear(this._recommendedEnd)) { //不支持跨年设置
+            if (TimeService.getYear(<string>this._recommendedBegin) != TimeService.getYear(<string>this._recommendedEnd)) { //不支持跨年设置
                 throw "recommended not support different year times!";
             }
             let monthsNode = RdkTime.getDataPickerNode("months",nativeElement);

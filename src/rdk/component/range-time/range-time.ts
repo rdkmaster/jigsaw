@@ -113,7 +113,7 @@ export class RdkRangeTime extends AbstractRDKComponent implements OnInit {
         return endTime;
     }
 
-    private static  calculateLimitEnd(startDate: Time, span, gr) :Date{
+    private static  calculateLimitEnd(startDate: string, span, gr) :Date{
         let endTime : Date= new Date(TimeService.format(TimeService.getDate(startDate, gr), 'YYYY-MM-DD'));
         endTime.setHours(23);
         endTime.setMinutes(59);

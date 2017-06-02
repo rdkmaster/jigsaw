@@ -11,6 +11,8 @@ export type Moment = {
     [prop: string]: any;
 }
 
+export type Time = Date|string|Moment;
+
 
 export class TimeService {
 
@@ -45,7 +47,7 @@ export class TimeService {
      * @param str
      * @returns {boolean}
      */
-    public static isMacro(str): boolean {
+    public static isMacro(str:string): boolean {
         if (typeof str === 'string') {
             let hasLetter = /^[a-z]/i;
             if (hasLetter.test(str)) return true;
@@ -58,7 +60,7 @@ export class TimeService {
      * @param timeMacro
      * @returns {any}
      */
-    private static timeMacroConvert(timeMacro): any {
+    private static timeMacroConvert(timeMacro:string): any {
         let date;
         switch (timeMacro) {
             case 'now':
@@ -77,7 +79,7 @@ export class TimeService {
      * @param num   数量 负数即为减法
      * @param unit  单位
      */
-    public static addDate(date, num, unit): Moment {
+    public static addDate(date:Time, num:string|number, unit:string): Moment {
         return moment(date).add(num, TimeService.timeUnitMap.get(unit));
     }
 
@@ -97,7 +99,7 @@ export class TimeService {
      * @param date
      * @param formator
      */
-    public static format(date, formator): string {
+    public static format(date:Time, formator:string): string {
         return moment(date).format(formator);
     }
 
@@ -106,7 +108,7 @@ export class TimeService {
      * @param date
      * @param gr
      */
-    public static formatWithGr(date, gr): string {
+    public static formatWithGr(date:Time, gr:TimeGr): string {
         let format = TimeService.getFormator(gr);
         return moment(date).format(format);
     }
@@ -126,19 +128,19 @@ export class TimeService {
     }
 
 
-    public static getWeekofYear(date): number {
+    public static getWeekofYear(date:Time): number {
         return moment(date).week();
     }
 
-    public static getYear(date): number {
+    public static getYear(date:Time): number {
         return moment(date).year();
     }
 
-    public static getMonth(date): number {
+    public static getMonth(date:Time): number {
         return moment(date).month() + 1;
     }
 
-    public static getDay(date): number {
+    public static getDay(date:Time): number {
         return moment(date).date();
     }
 
@@ -147,7 +149,7 @@ export class TimeService {
         return moment().year(year).week(week)
     }
 
-    public static getDate(str, gr: TimeGr): Moment {
+    public static getDate(str:Time, gr: TimeGr): Moment {
         return moment(str, TimeService.getFormator(gr));
     }
 
