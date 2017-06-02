@@ -302,9 +302,26 @@ export class PopupService {
     }
 
     private _setShowAnimate(options: PopupOptions, element: HTMLElement, renderer: Renderer2, event?: EventEmitter<PopupEventType>) {
-        options = options && options.showEffect ? options : {showEffect: PopupEffect.fadeIn};
+        if(options){
+            if(!options.showEffect){
+                options.showEffect = PopupEffect.fadeIn;
+            }
+            if(!options.hideEffect){
+                options.hideEffect = PopupEffect.fadeOut;
+            }
+        }else{
+            options = {showEffect: PopupEffect.fadeIn, hideEffect: PopupEffect.fadeOut};
+        }
+
+        const showEffect = 'rdk-am-' + this._getAnimateName(options.showEffect);
+        const hideEffect = 'rdk-am-' + this._getAnimateName(options.hideEffect);
+
+        //删除可能有的动画class，确保能触发动画的animationend事件
+        renderer.removeClass(element, showEffect);
+        renderer.removeClass(element, hideEffect);
+
         renderer.setStyle(element, 'visibility', 'visible');
-        renderer.addClass(element, 'rdk-am-' + this._getAnimateName(options.showEffect));
+        renderer.addClass(element, showEffect);
 
         if (event) {
             const removeElementListen = renderer.listen(element, 'animationend', () => {

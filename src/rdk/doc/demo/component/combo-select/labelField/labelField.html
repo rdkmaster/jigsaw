@@ -1,14 +1,15 @@
-<rdk-combo-select [pane]="dropcontent"
-                  placeholder="请输入姓名~"
-                  autoWidth="true"
-                  [labelField]="labelField"
-                  [(value)]="selectedCity">
-
-</rdk-combo-select>
-<ng-template #dropcontent>
-    <rdk-tile-select [(selectedItems)]="selectedCity" [labelField]="labelField"
-                     [multipleSelect]="true" [searchable]="true"
-                     [data]="citys"
-                     tileOptionWidth="100px">
+<rdk-combo-select
+    placeholder="请输入姓名~"
+    autoWidth="true"
+    [labelField]="labelField"
+    [(value)]="selectedCity">
+    <rdk-tile-select
+        [(selectedItems)]="selectedCity"
+        [labelField]="labelField"
+        [multipleSelect]="true"
+        [searchable]="true"
+        [data]="citys"
+        tileOptionWidth="100px">
     </rdk-tile-select>
-</ng-template>
+</rdk-combo-select>
+

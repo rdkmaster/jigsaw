@@ -5,12 +5,9 @@
         <rdk-button width="120px" (click)="toggleAutoClose()">toggle auto close</rdk-button>
     </div>
     <rdk-combo-select
-        [pane]="dropcontent"
         [(value)]="selectedCity"
         [(open)]="open"
         [autoCloseDropDown]="autoClose">
-    </rdk-combo-select>
-    <ng-template #dropcontent>
         <rdk-tile-select
             [(selectedItems)]="selectedCity"
             labelField="label"
@@ -19,6 +16,6 @@
             [data]="citys"
             tileOptionWidth="100px">
         </rdk-tile-select>
-    </ng-template>
+    </rdk-combo-select>
 </div>
 

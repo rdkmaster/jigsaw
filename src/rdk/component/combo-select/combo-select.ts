@@ -7,7 +7,8 @@ import {
     OnInit,
     Output,
     Renderer2,
-    TemplateRef
+    TemplateRef,
+    ViewChild
 } from "@angular/core";
 import {
     PopupDisposer,
@@ -118,16 +119,9 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
     @Input()
     public dropDownWidth: string;
 
+
+    @ViewChild('dropContent')
     private _contentTemplateRef: TemplateRef<any>;
-
-    @Input()
-    public get pane(): TemplateRef<any> {
-        return this._contentTemplateRef;
-    };
-
-    public set pane(ref: TemplateRef<any>) {
-        this._contentTemplateRef = ref;
-    }
 
     private _$opened: boolean = false;
 

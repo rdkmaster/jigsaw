@@ -4,16 +4,15 @@
         <rdk-button width="120px" (click)="toggleEditable()">toggle editable</rdk-button>
     </div>
     <rdk-combo-select
-        [pane]="dropcontent"
         [(value)]="selectedCity">
-    </rdk-combo-select>
-    <ng-template #dropcontent>
         <rdk-tile-select
-            [(selectedItems)]="selectedCity" labelField="label"
-            [multipleSelect]="true" [searchable]="true"
+            [(selectedItems)]="selectedCity"
+            labelField="label"
+            [multipleSelect]="true"
+            [searchable]="true"
             [data]="citys"
             tileOptionWidth="100px">
         </rdk-tile-select>
-    </ng-template>
+    </rdk-combo-select>
 </div>
 
