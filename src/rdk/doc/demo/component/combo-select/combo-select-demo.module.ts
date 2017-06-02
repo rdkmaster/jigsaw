@@ -19,6 +19,8 @@ import {PopupService} from "rdk/service/popup.service";
 import {OpenComboSelectDemo} from "./open/open";
 import {DisabledComboSelectDemo} from "./disable/disable";
 import {ComboSelectEditableDemo} from "./editable/editable";
+import {CollapseBasicDemo} from "./collapse/collapse";
+import {RdkCollapseModule} from "../../../../component/collapse/collapse";
 const routes = [
     {
         path: 'basic', component: ComboSelectBasicDemo
@@ -46,7 +48,9 @@ const routes = [
     },
     {
         path: 'editable', component: ComboSelectEditableDemo
-    },
+    },{
+        path : 'collapse', component: CollapseBasicDemo
+    }
 ];
 
 @NgModule({
@@ -55,7 +59,8 @@ const routes = [
         RdkComboSelectModule,
         RdkTileSelectModule,
         RdkButtonModule,
-        RdkInputModule
+        RdkInputModule,
+        RdkCollapseModule
     ],
     exports: [ComboSelectBasicDemo, ComboSelectMultipleDemo],
     declarations: [
@@ -67,7 +72,8 @@ const routes = [
         ComboSelectChangeDemo,
         OpenComboSelectDemo,
         DisabledComboSelectDemo,
-        ComboSelectEditableDemo
+        ComboSelectEditableDemo,
+        CollapseBasicDemo
     ],
     providers: [PopupService]
 })
