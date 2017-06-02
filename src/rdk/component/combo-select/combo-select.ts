@@ -26,7 +26,7 @@ export enum DropDownTrigger {
 }
 
 export class ComboSelectValue {
-    [index:string]:any;
+    [index: string]: any;
     closable?: boolean;
 }
 
@@ -173,13 +173,12 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
     }
 
     private _autoWidth() {
+        if (!this.autoWidth || !this._popupElement) {
+            return;
+        }
         setTimeout(() => {
-            if (this.autoWidth) {
-                if (this._popupElement) {
-                    this._render.setStyle(this._popupElement, 'width', this._elementRef.nativeElement.offsetWidth + 'px');
-                }
-            }
-        }, 0)
+            this._render.setStyle(this._popupElement, 'min-width', this._elementRef.nativeElement.offsetWidth + 'px');
+        }, 0);
     }
 
     private _timeout: any = null;
@@ -218,10 +217,12 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
             size: {
                 width: this.dropDownWidth ?
                     RdkComboSelect.translate2Number(this.dropDownWidth, this._elementRef.nativeElement.offsetWidth) :
-                    this._elementRef.nativeElement.offsetWidth
-            }
+                    "auto",
+                minWidth: this.dropDownWidth ? null : this._elementRef.nativeElement.offsetWidth
+            },
         };
         const popupInfo: PopupInfo = this._popupService.popup(this._contentTemplateRef, option);
+
         this._popupElement = popupInfo.element;
         this._disposePopup = () => {
             popupInfo.dispose()
@@ -299,7 +300,7 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
         this.select.emit(tagItem);
 
         // 控制下拉状态;(如果没有打开下拉内容，下拉，如果已经下拉保持不变;)
-        if (this._openTrigger === DropDownTrigger.mouseenter || this.open|| this.disabled|| !this._isSafeCloseTime )  return;
+        if (this._openTrigger === DropDownTrigger.mouseenter || this.open || this.disabled || !this._isSafeCloseTime)  return;
 
         this.open = true;
     }

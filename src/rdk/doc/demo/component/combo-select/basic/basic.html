@@ -4,7 +4,7 @@
         <rdk-button (click)="changeTrigger()">change trigger</rdk-button>
     </div>
     <rdk-combo-select
-        [pane]="dropcontent" 
+        [pane]="dropcontent"
         [openTrigger]="openTrigger"
         [closeTrigger]="closeTrigger"
         [(value)]="selectedCity">
@@ -13,7 +13,7 @@
         <rdk-tile-select
             [(selectedItems)]="selectedCity" labelField="label"
             [multipleSelect]="true" [searchable]="true"
-            [data]="citys"
+            [data]="citys" width="400px"
             tileOptionWidth="100px">
         </rdk-tile-select>
     </ng-template>
