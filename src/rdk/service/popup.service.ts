@@ -302,26 +302,19 @@ export class PopupService {
     }
 
     private _setShowAnimate(options: PopupOptions, element: HTMLElement, renderer: Renderer2, event?: EventEmitter<PopupEventType>) {
-        if(options){
-            if(!options.showEffect){
-                options.showEffect = PopupEffect.fadeIn;
-            }
-            if(!options.hideEffect){
-                options.hideEffect = PopupEffect.fadeOut;
-            }
-        }else{
-            options = {showEffect: PopupEffect.fadeIn, hideEffect: PopupEffect.fadeOut};
-        }
 
-        const showEffect = 'rdk-am-' + this._getAnimateName(options.showEffect);
-        const hideEffect = 'rdk-am-' + this._getAnimateName(options.hideEffect);
+        const popupEffect = PopupService._getPopupEffect(options);
 
         //删除可能有的动画class，确保能触发动画的animationend事件
-        renderer.removeClass(element, showEffect);
-        renderer.removeClass(element, hideEffect);
+        if(element.classList.contains(popupEffect.showEffect)){
+            renderer.removeClass(element, popupEffect.showEffect);
+        }
+        if(element.classList.contains(popupEffect.hideEffect)){
+            renderer.removeClass(element, popupEffect.hideEffect);
+        }
 
         renderer.setStyle(element, 'visibility', 'visible');
-        renderer.addClass(element, showEffect);
+        renderer.addClass(element, popupEffect.showEffect);
 
         if (event) {
             const removeElementListen = renderer.listen(element, 'animationend', () => {
@@ -332,34 +325,39 @@ export class PopupService {
     }
 
     private _setHideAnimate(options: PopupOptions, element: HTMLElement, renderer: Renderer2, cb: () => void) {
-        options = options && options.hideEffect ? options : {hideEffect: PopupEffect.fadeOut};
-        renderer.addClass(element, 'rdk-am-' + this._getAnimateName(options.hideEffect));
+        renderer.addClass(element, PopupService._getPopupEffect(options).hideEffect);
         const removeElementListen = renderer.listen(element, 'animationend', () => {
             removeElementListen();
             cb();
         });
     }
 
-    private _getAnimateName(popupEffect: PopupEffect): string {
-        let animateName: string;
-        switch (popupEffect) {
-            case 0:
-                animateName = 'fade-in';
-                break;
-            case 1:
-                animateName = 'fade-out';
-                break;
-            case 2:
-                animateName = 'bubble-in';
-                break;
-            case 3:
-                animateName = 'bubble-out';
-                break;
-            default:
-                animateName = 'fade-in';
+    private static _getPopupEffect(options: PopupOptions) {
+        let showEffect: string;
+        let hideEffect: string;
+        if (options) {
+            showEffect = PopupService._animateMap.has(options.showEffect) ?
+                PopupService._animateMap.get(options.showEffect) :
+                PopupService._animateMap.get(PopupEffect.fadeIn);
+            hideEffect = PopupService._animateMap.has(options.hideEffect) ?
+                PopupService._animateMap.get(options.hideEffect) :
+                PopupService._animateMap.get(PopupEffect.fadeOut);
+        } else {
+            showEffect = PopupService._animateMap.get(PopupEffect.fadeIn);
+            hideEffect = PopupService._animateMap.get(PopupEffect.fadeOut);
         }
-        return animateName;
+        return {
+            showEffect: showEffect,
+            hideEffect: hideEffect
+        }
     }
+
+    private static _animateMap = new Map([
+        [PopupEffect.fadeIn, 'rdk-am-fade-in'],
+        [PopupEffect.fadeOut, 'rdk-am-fade-out'],
+        [PopupEffect.bubbleIn, 'rdk-am-bubble-in'],
+        [PopupEffect.bubbleOut, 'rdk-am-bubble-out'],
+    ]);
 
     /*
      * 设置弹出的位置
