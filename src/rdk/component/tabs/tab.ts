@@ -2,7 +2,7 @@ import {
     Component, ContentChildren, QueryList, Input, ViewChildren, AfterViewInit, Output, EventEmitter, TemplateRef,
     ViewContainerRef, ComponentFactoryResolver, Type
 } from '@angular/core';
-import {RdkPane} from "./tab-pane";
+import {RdkTabPane} from "./tab-pane";
 import {RdkTabContent, RdkTabLabel} from "./tab-item";
 import {AbstractRDKComponent, IDynamicInstantiatable} from "../core";
 import {Router} from "@angular/router";
@@ -20,8 +20,8 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
         super()
     }
 
-    @ContentChildren(RdkPane)
-    private _tabPanes: QueryList<RdkPane>;
+    @ContentChildren(RdkTabPane)
+    private _tabPanes: QueryList<RdkTabPane>;
 
     @ViewChildren(RdkTabLabel)
     private _tabLabel: QueryList<RdkTabLabel>;
@@ -30,7 +30,7 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
     private _tabContent: QueryList<RdkTabContent>;
 
     @Output()
-    public selectChange = new EventEmitter<RdkPane>();
+    public selectChange = new EventEmitter<RdkTabPane>();
 
     public length: number;
 
@@ -94,7 +94,7 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
         }
     }
 
-    private _getTabPaneByIndex(key): RdkPane {
+    private _getTabPaneByIndex(key): RdkTabPane {
         return this._tabPanes.find((item, index) => index === key);
     }
 
@@ -161,8 +161,8 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
     public addTab(title: string | TemplateRef<any> | Type<IDynamicInstantiatable>,
                   content: TemplateRef<any> | Type<IDynamicInstantiatable>,
                   initData?: Object) {
-        const factory = this._cfr.resolveComponentFactory(RdkPane);
-        let tabPane: RdkPane = this._viewContainer.createComponent(factory).instance;
+        const factory = this._cfr.resolveComponentFactory(RdkTabPane);
+        let tabPane: RdkTabPane = this._viewContainer.createComponent(factory).instance;
         if(typeof title == 'string'){
             tabPane.title = title
         }else{

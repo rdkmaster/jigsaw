@@ -10,21 +10,21 @@
     </div>
 
     <rdk-tab>
-        <rdk-pane title="Tab 1">
+        <rdk-tab-pane title="Tab 1">
             This is the body of the first tab
-        </rdk-pane>
-        <rdk-pane title="Tab 2" [disabled]="true">
+        </rdk-tab-pane>
+        <rdk-tab-pane title="Tab 2" [disabled]="true">
             This is the body of the first tab
-        </rdk-pane>
-        <rdk-pane title="Tab 3">
+        </rdk-tab-pane>
+        <rdk-tab-pane title="Tab 3">
             <rdk-input>
                 <a rdk-prefix-icon><span class="fa fa-search"></span></a>
             </rdk-input>
-        </rdk-pane>
-        <rdk-pane [async]="true">
+        </rdk-tab-pane>
+        <rdk-tab-pane [async]="true">
             <div rdk-title><span routerLink="tabPage" [skipLocationChange]="true">router link tab</span></div>
             <div rdk-body><router-outlet name="tabPage"></router-outlet></div>
-        </rdk-pane>
+        </rdk-tab-pane>
     </rdk-tab>
 </div>
 

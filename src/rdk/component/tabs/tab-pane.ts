@@ -1,11 +1,8 @@
-/**
- * Created by 10177553 on 2017/3/29.
- */
 import {Component, Input, TemplateRef, Type, ViewChild} from '@angular/core';
 import {IDynamicInstantiatable} from "../core";
 
 @Component({
-    selector: 'rdk-pane',
+    selector: 'rdk-tab-pane',
     template: `
         <ng-template #label>
             {{title}}
@@ -17,7 +14,7 @@ import {IDynamicInstantiatable} from "../core";
 
     `
 })
-export class RdkPane {
+export class RdkTabPane {
     @Input()
     public title: string;
 
