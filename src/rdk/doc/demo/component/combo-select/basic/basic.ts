@@ -22,7 +22,7 @@ export class ComboSelectBasicDemo{
         }
     }
 
-    public selectedCity = [{label: "北京", closable: false}];
+    //public selectedCity = [{label: "北京", closable: false}];
     private citys = [
         {label: "北京", closable: false},
         {label: "上海", closable: false},
