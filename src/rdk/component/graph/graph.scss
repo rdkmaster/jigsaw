@@ -6,9 +6,18 @@ $rdk-graph: #{$rdk-prefix}-graph;
     width: 100%;
     height: 240px; // 默认高度;
     display: inline-block;
+    position: relative;
 
     .#{$rdk-graph} {
         width:100%;
         height: 240px;
     }
+
+}
+
+.no-data {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
 }
