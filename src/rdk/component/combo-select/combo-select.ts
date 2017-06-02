@@ -137,19 +137,17 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
     }
 
     public set open(value: boolean) {
-        if (value === this._$opened) {
+        if (value === this._$opened && !this.initialized) {
             return;
         }
         setTimeout(() => {
-            if (this.initialized) {
-                if (value) {
-                    this._openDropDown();
-                } else {
-                    this._closeDropDown();
-                }
-                this._$opened = value;
-                this.openChange.emit(value);
+            if (value) {
+                this._openDropDown();
+            } else {
+                this._closeDropDown();
             }
+            this._$opened = value;
+            this.openChange.emit(value);
         }, 0);
     }
 
