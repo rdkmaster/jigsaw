@@ -123,8 +123,21 @@ export class RdkSlider implements OnInit, OnDestroy {
 
         // 兼容双触点.
         if(this.range) {
-            startPos = Math.min(this._verifyValue(this.value[0]), this._verifyValue(this.value[1]));
-            trackSize = Math.abs(this._verifyValue(this.value[0]) - this._verifyValue(this.value[1]));
+            // 取得最大值.最小值, 在它们之间一条轨道.
+            if(typeof this.value === 'number') {
+                console.warn("范围模式下, 取值应该是个数组~");
+                return;
+            }
+            let max: number = this.value[0];
+            let min: number = this.value[0];
+
+            this.value.map(item => {
+                if (max - item < 0) max = item;
+                else if (item - min < 0) min = item;
+            });
+
+            startPos = this._verifyValue(min);
+            trackSize = Math.abs(this._verifyValue(max) - this._verifyValue(min));
         }
 
         if(this.vertical) { // 垂直和水平两种
