@@ -12,6 +12,7 @@ import {PieGraphDemoComponent} from "./pie/demo";
 import {GraphResizeComponent} from "./resize/demo";
 import {RdkInputModule} from "../../../../component/input/input";
 import {RdkSwitchModule} from "../../../../component/switch/index";
+import {GraphWithNoDataComponent} from "./nodata/nodata";
 
 const graphRoutes = [
     {
@@ -29,6 +30,9 @@ const graphRoutes = [
     {
         path: 'pie-graph-basic', component: PieGraphDemoComponent
     },
+    {
+        path: 'noData', component: GraphWithNoDataComponent
+    }
 ];
 
 @NgModule({
@@ -37,7 +41,7 @@ const graphRoutes = [
         RdkGraphModule, RdkInputModule, RdkSwitchModule
     ],
     declarations: [
-        BasicGraphComponent, BasicLineGraphComponent, AjaxLineGraphComponent, PieGraphDemoComponent, GraphResizeComponent
+        BasicGraphComponent, BasicLineGraphComponent, AjaxLineGraphComponent, PieGraphDemoComponent, GraphResizeComponent,GraphWithNoDataComponent
     ],
 })
 export class GraphDemoModule {
