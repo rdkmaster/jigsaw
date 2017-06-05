@@ -127,7 +127,7 @@ export class RdkSlider implements OnInit, OnDestroy {
         if(this.range) {
             // 取得最大值.最小值, 在它们之间一条轨道.
             if(typeof this.value === 'number') {
-                console.warn("范围模式下, 取值应该是个数组~");
+                console.error("范围模式下, 取值应该是个数组~");
                 return;
             }
             let max: number = this.value[0];
