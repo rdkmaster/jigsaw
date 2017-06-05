@@ -848,6 +848,11 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         }
         this._removeWindowListener();
         this._removeAllTdListeners();
+
+        this._scrollBar.whileScrolling.unsubscribe();
+        this._rdkTableHeaders.forEach(rdkTableHeaders => {
+            rdkTableHeaders.sortChange.unsubscribe();
+        })
     }
 
 }
@@ -922,7 +927,7 @@ export class TableCellBasic implements AfterViewInit {
         '[style.height]': '_rowHeight'
     }
 })
-export class RdkTableCell extends TableCellBasic implements OnInit {
+export class RdkTableCell extends TableCellBasic implements OnInit, OnDestroy {
     private _rowHeight: string;
 
     @Input()
@@ -1086,6 +1091,19 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
         }
     }
 
+    ngOnDestroy() {
+        if (this._goEditCallback) {
+            this._goEditCallback();
+        }
+
+        if (this.rendererRef instanceof ComponentRef) {
+            this.rendererRef.instance.cellDataChange.unsubscribe();
+        }
+
+        if (this.editorRendererRef instanceof ComponentRef) {
+            this.editorRendererRef.instance.cellDataChange.unsubscribe();
+        }
+    }
 }
 
 /*
@@ -1101,7 +1119,7 @@ export class RdkTableCell extends TableCellBasic implements OnInit {
         </div>`,
     styleUrls: ['table-head.scss']
 })
-export class RdkTableHeader extends TableCellBasic implements OnInit {
+export class RdkTableHeader extends TableCellBasic implements OnInit, OnDestroy {
     private _sortOrderClass: Object;
 
     private _setSortOrderClass(sortOrder: SortOrder): void {
@@ -1170,6 +1188,12 @@ export class RdkTableHeader extends TableCellBasic implements OnInit {
     ngOnInit() {
         //设置默认渲染器
         this.renderer = this.renderer ? this.renderer : DefaultCellRenderer;
+    }
+
+    ngOnDestroy() {
+        if (this.rendererRef instanceof ComponentRef) {
+            this.rendererRef.instance.cellDataChange.unsubscribe();
+        }
     }
 }
 
