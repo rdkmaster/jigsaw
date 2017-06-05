@@ -95,7 +95,9 @@ export class RdkSlider implements OnInit, OnDestroy {
         this._step = value;
     }
 
-    private _transformValueToPos(value?) {
+    public _transformValueToPos(value?) {
+        // 检验值的合法性, 不合法转换成默认可接受的合法值;
+        value = this._verifyValue(value);
 
         return (value - this.min)/(this.max - this.min) * 100;
     }
@@ -136,8 +138,8 @@ export class RdkSlider implements OnInit, OnDestroy {
                 else if (item - min < 0) min = item;
             });
 
-            startPos = this._transformValueToPos(this._verifyValue(min));
-            trackSize = Math.abs(this._transformValueToPos(this._verifyValue(max)) - this._transformValueToPos(this._verifyValue(min)));
+            startPos = this._transformValueToPos(min);
+            trackSize = Math.abs(this._transformValueToPos(max) - this._transformValueToPos(min));
         }
 
         if(this.vertical) { // 垂直和水平两种
