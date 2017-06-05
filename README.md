@@ -36,4 +36,5 @@ npm start
 ![](comp-map.png)
 
 ## 参与贡献
-建议优先处理没有打 `suspend` 标签的issue。所有的MR我们都会认真处理。
+- 建议优先处理没有打 `suspend` 标签的issue。所有的MR我们都会认真处理。
+- 我们的研发流程主要是在中兴内网进行，但是github上的issue和PR我们也时刻在会关注。
