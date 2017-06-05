@@ -7,13 +7,13 @@ import {TimeGr, TimeService} from "../../../../../service/time.service";
 })
 export class ComboSelectDemoComponent {
     date:string = 'now';
-    singleTimeComboValue = [{label: TimeService.getFormateDate(this.date, TimeGr.date), closable: false}];
+    singleTimeComboValue = [{label: TimeService.getFormatDate(this.date, TimeGr.date), closable: false}];
 
     beginDate:string = 'now-7d';
     endDate:string = 'now';
     rangeTimeComboValue = [
-        {label: TimeService.getFormateDate(this.beginDate, TimeGr.date), closable: false},
-        {label: TimeService.getFormateDate(this.endDate, TimeGr.date), closable: false}
+        {label: TimeService.getFormatDate(this.beginDate, TimeGr.date), closable: false},
+        {label: TimeService.getFormatDate(this.endDate, TimeGr.date), closable: false}
     ];
 }
 

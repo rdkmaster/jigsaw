@@ -6,20 +6,25 @@ export enum TimeWeekStart {
     sun, mon, tue, wed, thu, fri, sat
 }
 
+export type TimeWeekDay = {
+    week: number,
+    year: number
+}
+
 export type Moment = {
     _isAMomentObject: boolean,
     [prop: string]: any;
 }
 
-export type Time = Date|string|Moment;
+export type Time = Date|string|Moment|TimeWeekDay;
 
 
 export class TimeService {
 
     private static timeFormatMap = new Map([
-        [TimeGr.second, 'YYYY-MM-DD,HH:mm:ss'],
-        [TimeGr.minute, 'YYYY-MM-DD,HH:mm'],
-        [TimeGr.hour, 'YYYY-MM-DD,HH'],
+        [TimeGr.second, 'YYYY-MM-DD, HH:mm:ss'],
+        [TimeGr.minute, 'YYYY-MM-DD, HH:mm'],
+        [TimeGr.hour, 'YYYY-MM-DD, HH'],
         [TimeGr.date, 'YYYY-MM-DD'],
         [TimeGr.week, 'YYYY-MM-DD'],
         [TimeGr.month, 'YYYY-MM']
@@ -44,13 +49,13 @@ export class TimeService {
 
     /**
      * 是否是时间宏字符串
-     * @param str
+     * @param time
      * @returns {boolean}
      */
-    public static isMacro(str:string): boolean {
-        if (typeof str === 'string') {
-            let hasLetter = /^[a-z]/i;
-            if (hasLetter.test(str)) return true;
+    public static isMacro(time:Time): boolean {
+        if (typeof time === 'string') {
+            const hasLetter = /^[a-z]/i;
+            return hasLetter.test(time);
         }
         return false;
     }
@@ -60,7 +65,7 @@ export class TimeService {
      * @param timeMacro
      * @returns {any}
      */
-    private static timeMacroConvert(timeMacro:string): any {
+    private static convertBasicMacro(timeMacro:string): Date|string {
         let date;
         switch (timeMacro) {
             case 'now':
@@ -89,7 +94,7 @@ export class TimeService {
      * @param gr
      * @returns {string}
      */
-    public static getFormator(gr: TimeGr): string {
+    public static getFormatter(gr: TimeGr): string {
         return TimeService.timeFormatMap.has(gr) ? TimeService.timeFormatMap.get(gr) : 'YYYY-MM-DD';
     }
 
@@ -97,10 +102,10 @@ export class TimeService {
     /**
      * 时间格式化
      * @param date
-     * @param formator
+     * @param formatter
      */
-    public static format(date:Time, formator:string): string {
-        return moment(date).format(formator);
+    public static format(date:Time, formatter:string): string {
+        return moment(date).format(formatter);
     }
 
     /**
@@ -109,7 +114,7 @@ export class TimeService {
      * @param gr
      */
     public static formatWithGr(date:Time, gr:TimeGr): string {
-        let format = TimeService.getFormator(gr);
+        let format = TimeService.getFormatter(gr);
         return moment(date).format(format);
     }
 
@@ -128,7 +133,7 @@ export class TimeService {
     }
 
 
-    public static getWeekofYear(date:Time): number {
+    public static getWeekOfYear(date:Time): number {
         return moment(date).week();
     }
 
@@ -150,32 +155,32 @@ export class TimeService {
     }
 
     public static getDate(str:Time, gr: TimeGr): Moment {
-        return moment(str, TimeService.getFormator(gr));
+        return moment(str, TimeService.getFormatter(gr));
     }
 
     /**
      * 根据字符串获取真实时间
-     * @param str
+     * @param time
      * @param gr
      * @returns {any}
      */
-    public static getFormateDate(str: any, gr?: TimeGr): any {
-        let result = str;
-        if (TimeService.isMacro(str)) {
-            str = (<string>str).replace(/\s+/g, "");
+    public static getFormatDate(time: Time, gr?: TimeGr): Time {
+        let result = time;
+        if (TimeService.isMacro(time)) {
+            time = (<string>time).replace(/\s+/g, "");
             let fullPara = /([a-z]+)(\+|\-)?([\d]+)([a-z]+)?/i;
-            let timeMacroArr = fullPara.exec(str);
+            let timeMacroArr = fullPara.exec(time);
             if (timeMacroArr && timeMacroArr[2] != undefined) { //有加减 now-2d
-                result = TimeService.addDate(TimeService.timeMacroConvert(timeMacroArr[1]), "" + timeMacroArr[2] + timeMacroArr[3], timeMacroArr[4]);
+                result = TimeService.addDate(TimeService.convertBasicMacro(timeMacroArr[1]), "" + timeMacroArr[2] + timeMacroArr[3], timeMacroArr[4]);
             } else { //无加减 now
-                result = TimeService.timeMacroConvert(str);
+                result = TimeService.convertBasicMacro(time);
             }
         }
         if (result && (gr || (!gr && gr == 0)) || result instanceof Date || result instanceof moment) {
             if (result instanceof moment) {
                 result = TimeService.formatWithGr(result, gr);
             } else {
-                result = TimeService.formatWithGr(moment(result, TimeService.getFormator(gr)), gr);
+                result = TimeService.formatWithGr(moment(result, TimeService.getFormatter(gr)), gr);
             }
         }
         return result;

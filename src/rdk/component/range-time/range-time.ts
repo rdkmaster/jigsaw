@@ -1,12 +1,8 @@
-import {
-    Component, OnInit, Input, EventEmitter, Output, ViewChild
-} from '@angular/core';
-import {AbstractRDKComponent} from '../core';
-import {Moment, TimeGr, TimeService, TimeWeekStart} from "../../service/time.service";
-import {GrItem, ShortCut, TimeWeekDay, TimeConvert, RdkTime} from "../time/time";
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from "@angular/core";
+import {AbstractRDKComponent} from "../core";
+import {Time, TimeGr, TimeService, TimeWeekStart} from "../../service/time.service";
+import {GrItem, RdkTime, ShortCut, TimeConvert} from "../time/time";
 
-
-type Time = string | Date | TimeWeekDay | Moment;
 
 @Component({
     selector: 'rdk-range-time',
