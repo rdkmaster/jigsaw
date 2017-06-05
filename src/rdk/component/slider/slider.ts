@@ -136,8 +136,8 @@ export class RdkSlider implements OnInit, OnDestroy {
                 else if (item - min < 0) min = item;
             });
 
-            startPos = this._verifyValue(min);
-            trackSize = Math.abs(this._verifyValue(max) - this._verifyValue(min));
+            startPos = this._transformValueToPos(this._verifyValue(min));
+            trackSize = Math.abs(this._transformValueToPos(this._verifyValue(max)) - this._transformValueToPos(this._verifyValue(min)));
         }
 
         if(this.vertical) { // 垂直和水平两种
