@@ -5,12 +5,16 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
     template: `
-        <rdk-slider value="120" min="20" [vertical]="vertical" style="height: 360px; width: 120px;"></rdk-slider>
+        <rdk-slider [range]="range"  min="10" max="200" [value]="value" [vertical]="vertical" style="height: 360px; width: 120px;"></rdk-slider>
     `
 })
 export class SliderVerticalDemo implements OnInit {
 
     vertical: boolean = true;
+
+    value = [30, 40, 60]
+
+    range = true;
 
     constructor() { }
 

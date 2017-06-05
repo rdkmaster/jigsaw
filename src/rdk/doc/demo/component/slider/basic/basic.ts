@@ -53,7 +53,7 @@ export class RdkSliderDemoBasic implements OnInit{
 
     valueStep = 1;
 
-    rangeValue = [30, 60]
+    rangeValue = [30, 50, 60]
     handleValueChange(value) {
         console.log("传递出来的对象:");
         console.log(value);

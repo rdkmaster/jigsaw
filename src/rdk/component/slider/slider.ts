@@ -95,7 +95,9 @@ export class RdkSlider implements OnInit, OnDestroy {
         this._step = value;
     }
 
-    private _transformValueToPos(value?) {
+    public _transformValueToPos(value?) {
+        // 检验值的合法性, 不合法转换成默认可接受的合法值;
+        value = this._verifyValue(value);
 
         return (value - this.min)/(this.max - this.min) * 100;
     }
@@ -123,8 +125,21 @@ export class RdkSlider implements OnInit, OnDestroy {
 
         // 兼容双触点.
         if(this.range) {
-            startPos = Math.min(this._verifyValue(this.value[0]), this._verifyValue(this.value[1]));
-            trackSize = Math.abs(this._verifyValue(this.value[0]) - this._verifyValue(this.value[1]));
+            // 取得最大值.最小值, 在它们之间一条轨道.
+            if(typeof this.value === 'number') {
+                console.error("范围模式下, 取值应该是个数组~");
+                return;
+            }
+            let max: number = this.value[0];
+            let min: number = this.value[0];
+
+            this.value.map(item => {
+                if (max - item < 0) max = item;
+                else if (item - min < 0) min = item;
+            });
+
+            startPos = this._transformValueToPos(min);
+            trackSize = Math.abs(this._transformValueToPos(max) - this._transformValueToPos(min));
         }
 
         if(this.vertical) { // 垂直和水平两种

@@ -32,7 +32,7 @@ export class SliderHandle implements OnInit{
     public change = new  EventEmitter<number>();
 
     private _valueToPos() {
-        this._transformValueToPos();
+        this._offset = this._slider._transformValueToPos(this.value);
         this.setHandleStyle();
     }
 
@@ -52,10 +52,6 @@ export class SliderHandle implements OnInit{
                 left: this._offset + "%"
             }
         }
-    }
-
-    private _transformValueToPos() {
-        this._offset = (this.value - this._slider.min)/(this._slider.max - this._slider.min) * 100;
     }
 
     private _dragged: boolean = false;
