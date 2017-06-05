@@ -10,7 +10,6 @@ import {DialogBase, RdkDialog} from "../../../../../../component/dialog/dialog";
 export class UserDialogComponent extends DialogBase {
     @ViewChild(RdkDialog) public dialog:RdkDialog;
 
-    public title: string = 'Title of the dialog';
     public buttons: Array<ButtonInfo> = [
         {
             role: 'confirm',
