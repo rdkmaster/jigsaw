@@ -722,9 +722,28 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         this._removeTdListeners.push({removeTdListener: removeTdMouseLeaveListener, row: rowIndex, column: colIndex});
     }
 
+    public _reBindTooltipForCell(element: HTMLElement, message: any, rowIndex: number, colIndex: number){
+        //删除对应td的tooltip的事件
+        this._removeTdListenersByIndex(rowIndex, colIndex);
+        //重新绑定td的tooltip
+        const cellText: HTMLElement = <HTMLElement>element.querySelector('span.rdk-table-cell-text');
+        if (cellText && cellText.offsetWidth > element.offsetWidth) {
+            this._addTdTooltipListener(element.parentElement, message, rowIndex, colIndex);
+        }
+    }
+
     private _removeAllTdListeners() {
         if (this._removeTdListeners.length) {
             this._removeTdListeners.forEach(removeTdListener => removeTdListener.removeTdListener())
+        }
+    }
+
+    private _removeTdListenersByIndex(row: number, column: number) {
+        if (this._removeTdListeners.length) {
+            this._removeTdListeners
+                .filter(removeTdListener => removeTdListener.row == row
+                && removeTdListener.column == column)
+                .forEach(removeTdListener => removeTdListener.removeTdListener())
         }
     }
 
@@ -870,8 +889,6 @@ export class TableCellBasic implements AfterViewInit {
     public tableData: TableData;
     @Input()
     public cellData: any;
-    @Output()
-    public cellDataChange: EventEmitter<any> = new EventEmitter<any>();
     @Input()
     public row: number;
     @Input()
@@ -957,8 +974,6 @@ export class RdkTableCell extends TableCellBasic implements OnInit, OnDestroy {
     private _emitDataChange(cellData: string | number): void {
         let oldCellData = this.cellData;
         this.cellData = cellData;
-        //更新cellSetting
-        this.cellDataChange.emit(cellData);
 
         //更新tableData
         let rows = [];
@@ -1021,7 +1036,7 @@ export class RdkTableCell extends TableCellBasic implements OnInit, OnDestroy {
             //重新对齐表头
             this._rdkTable._asyncSetFixedHeadWidth();
             //重新绑定td的tooltip
-            this._rdkTable._asyncSetCellLineEllipsis();
+            this._rdkTable._reBindTooltipForCell(this._el.nativeElement, this.cellData, this.row, this.column);
         });
     }
 
