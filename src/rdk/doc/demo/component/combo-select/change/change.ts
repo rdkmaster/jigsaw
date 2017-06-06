@@ -3,6 +3,7 @@
  */
 
 import {Component, OnInit} from '@angular/core';
+import {ArrayCollection} from "../../../../../core/data/array-collection";
 
 @Component({
     templateUrl: 'change.html',
@@ -11,7 +12,7 @@ export class ComboSelectChangeDemo {
 
     constructor() { }
 
-    public selectedCity = [{label: "北京"}];
+    public selectedCity = new ArrayCollection([{label: "北京"}]);
 
     private citys = [
         {label: "北京"},

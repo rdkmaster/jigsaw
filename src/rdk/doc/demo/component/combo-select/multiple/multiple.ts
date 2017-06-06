@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {ArrayCollection} from "../../../../../core/data/array-collection";
 @Component({
     templateUrl: 'multiple.html',
     styleUrls: ['multiple.scss'],
@@ -9,14 +10,14 @@ export class ComboSelectMultipleDemo {
 
     toggleMultiple() {
         this.multiple = !this.multiple;
-        this.selectedCity = []
+        this.selectedCity = new ArrayCollection();
     }
 
     valueChange(value){
         console.log(value);
     }
 
-    public selectedCity = [{label: "北京", closable: false}];
+    public selectedCity: ArrayCollection<any> = new ArrayCollection([{label: "北京", closable: false}]);
     private citys = [
         {label: "北京", closable: false},
         {label: "上海", closable: false},

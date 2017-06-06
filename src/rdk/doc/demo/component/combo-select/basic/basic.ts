@@ -3,6 +3,7 @@
  */
 import {Component} from '@angular/core';
 import {DropDownTrigger} from "../../../../../component/combo-select/combo-select";
+import {ArrayCollection} from "../../../../../core/data/array-collection";
 @Component({
     templateUrl: './basic.html',
     styleUrls: ['basic.scss'],
@@ -22,7 +23,7 @@ export class ComboSelectBasicDemo{
         }
     }
 
-    //public selectedCity = [{label: "北京", closable: false}];
+    public selectedCity = new ArrayCollection();
     private citys = [
         {label: "北京", closable: false},
         {label: "上海", closable: false},

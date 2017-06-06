@@ -9,6 +9,8 @@ import {RdkInputModule} from '../input/input';
 import {AbstractRDKComponent} from '../core';
 import {CommonUtils} from '../../core/utils/common-utils';
 import {InternalUtils} from '../../core/utils/internal-utils';
+import {ArrayCollection} from "../../core/data/array-collection";
+import {CallbackRemoval} from "../../core/data/component-data";
 
 @Component({
     selector: 'rdk-tile-select',
@@ -20,7 +22,8 @@ import {InternalUtils} from '../../core/utils/internal-utils';
 })
 export class RdkTileSelect extends AbstractRDKComponent implements OnInit, AfterViewInit {
     private _contentInit: boolean = false;
-    private _selectedItems: any[] = [];
+    private _selectedItems: ArrayCollection<any> = new ArrayCollection();
+    private _removeRefreshCallback: CallbackRemoval;
 
     constructor(private _render: Renderer2,
                 private _elementRef: ElementRef) {
@@ -39,16 +42,23 @@ export class RdkTileSelect extends AbstractRDKComponent implements OnInit, After
     }
 
     @Input()
-    public get selectedItems(): any[] {
+    public get selectedItems(): ArrayCollection<any> {
         return this._selectedItems;
     }
 
-    public set selectedItems(newValue: any[]) {
-        if (newValue instanceof Array && this._selectedItems != newValue) {
+    public set selectedItems(newValue: ArrayCollection<any>) {
+        if (newValue instanceof ArrayCollection && this._selectedItems != newValue) {
             this._selectedItems = newValue;
             if(this._contentInit){
                 this._setOptionState();
             }
+
+            if(this._removeRefreshCallback){
+                this._removeRefreshCallback()
+            }
+            this._removeRefreshCallback = newValue.onRefresh(() => {
+                this._setOptionState();
+            });
         }
     }
 
@@ -99,13 +109,13 @@ export class RdkTileSelect extends AbstractRDKComponent implements OnInit, After
             //添加选中数据
             this.selectedItems.push(optionItem);
         }
-        this.selectedItems = <any[]>CommonUtils.shallowCopy(this.selectedItems);
+        this.selectedItems.refresh();
         this.selectedItemsChange.emit(this.selectedItems);
     }
 
     //根据selectedItems设置选中的option
     private _setOptionState(): void {
-        if(this.selectedItems instanceof Array){
+        if(this.selectedItems instanceof ArrayCollection){
             this._options.length && this._options.forEach((option) => {
                 let _hasSelected = false;
                 this._selectedItems.forEach((optionItem) => {

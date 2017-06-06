@@ -19,7 +19,8 @@ import {
     PopupService
 } from "rdk/service/popup.service";
 import {AbstractRDKComponent} from "../core";
-import {CommonUtils} from "../../core/utils/common-utils";
+import {CallbackRemoval} from "../../core/data/component-data";
+import {ArrayCollection} from "../../core/data/array-collection";
 export enum DropDownTrigger {
     click,
     mouseenter,
@@ -46,6 +47,7 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
     private _removePopupClickHandler: Function;
     private _removeMouseoverHandler: Function;
     private _removeMouseoutHandler: Function;
+    private _removeRefreshCallback: CallbackRemoval;
 
     constructor(private _render: Renderer2,
                 private _elementRef: ElementRef,
@@ -53,18 +55,26 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
         super();
     }
 
-    private _value: ComboSelectValue[] = [];
+    private _value: ArrayCollection<ComboSelectValue> = new ArrayCollection();
 
     @Input()
-    public get value(): ComboSelectValue[] {
+    public get value(): ArrayCollection<ComboSelectValue> {
         return this._value;
     }
 
-    public set value(value: ComboSelectValue[]) {
+    public set value(value: ArrayCollection<ComboSelectValue>) {
         if (this._value != value) {
             this._value = value;
             this.valueChange.emit(this._value);
             this._autoWidth();
+
+            if(this._removeRefreshCallback){
+                this._removeRefreshCallback()
+            }
+            this._removeRefreshCallback = value.onRefresh(() => {
+                this.valueChange.emit(this._value);
+                this._autoWidth();
+            });
         }
     }
 
@@ -154,7 +164,7 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
         const index = this.value.indexOf(tag);
         if (index != -1) {
             this.value.splice(index, 1);
-            this.value = <any[]>CommonUtils.shallowCopy(this.value);
+            this.value.refresh();
             this.remove.emit(tag);
         }
         this._autoWidth();

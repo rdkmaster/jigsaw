@@ -1,10 +1,11 @@
 import { Component,AfterContentInit} from "@angular/core";
+import {ArrayCollection} from "../../../../../core/data/array-collection";
 
 @Component({
   templateUrl: 'selectedItemsChange.html'
 })
 export class TileselecItemsChangeComponent{
-    public selectedCity:any[];
+    public selectedCity: ArrayCollection<any>;
     citys = [
         {label: "北京"},
         {label: "上海"},
@@ -16,7 +17,7 @@ export class TileselecItemsChangeComponent{
     constructor(){
 
     }
-    public basicSelectChange(cityArr:any[]){
+    public basicSelectChange(cityArr:ArrayCollection<any>){
         cityArr.forEach((city)=> console.log(`tileselect message is: ${city.label}`));
     }
 }

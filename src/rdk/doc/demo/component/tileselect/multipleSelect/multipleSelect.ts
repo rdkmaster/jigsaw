@@ -1,10 +1,11 @@
 import { Component,AfterContentInit} from "@angular/core";
+import {ArrayCollection} from "../../../../../core/data/array-collection";
 
 @Component({
   templateUrl: 'multipleSelect.html'
 })
 export class TileselectMultipleSelectDemoComponent implements AfterContentInit{
-    public selectedCity:any[];
+    public selectedCity: ArrayCollection<any>;
     citys = [
         {label: "北京"},
         {label: "上海"},
@@ -17,7 +18,7 @@ export class TileselectMultipleSelectDemoComponent implements AfterContentInit{
 
     }
     ngAfterContentInit() {
-        this.selectedCity=[{label: "深圳"}];
+        this.selectedCity= new ArrayCollection([{label: "深圳"}]);
     }
 }
 

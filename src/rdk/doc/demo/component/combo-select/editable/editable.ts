@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {ComboSelectValue} from "../../../../../component/combo-select/combo-select";
+import {ArrayCollection} from "../../../../../core/data/array-collection";
 @Component({
     templateUrl: 'editable.html',
     styleUrls: ['editable.scss'],
@@ -30,6 +31,6 @@ export class ComboSelectEditableDemo{
         {label: "哈尔滨"}
     ];
 
-    public selectedCity = [this.citys[0]];
+    public selectedCity = new ArrayCollection([this.citys[0]]);
 
 }
