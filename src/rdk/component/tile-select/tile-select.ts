@@ -75,7 +75,7 @@ export class RdkTileSelect extends AbstractRDKComponent implements OnInit, After
 
     @Input() public searchable: boolean = false;
 
-    @Input() public data: Array<object>;
+    @Input() public data: ArrayCollection<object>;
 
     @Input() public tileOptionWidth: string;
 
