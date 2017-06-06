@@ -1,16 +1,17 @@
 import {Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2} from "@angular/core";
 import {AbstractRDKComponent} from "../core";
-import {Time, TimeGr, TimeService, TimeWeekStart} from "../../service/time.service";
+import { TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../service/time.service";
 import {PopupInfo, PopupPositionType, PopupService} from "../../service/popup.service";
 import {SimpleTooltipComponent} from "../tooltip/tooltip";
+import {Time, WeekTime} from "rdk/service/time.types";
 
 
 export type ShortCut = {
     label: string,
-    dateRange: [Time, Time] | ShortCutFunction;
+    dateRange: [WeekTime, WeekTime] | ShortCutFunction;
 }
 
-export type ShortCutFunction = () => [Time, Time]
+export type ShortCutFunction = () => [WeekTime, WeekTime]
 
 export type GrItem = {
     label: string,
@@ -21,17 +22,17 @@ export type GrItem = {
 
 
 export class TimeConvert {
-    public static convertValue(value: Time, gr): string {
+    public static convertValue(value: WeekTime, gr): string {
         value = TimeConvert.handleWeekValue(value);
-        value = TimeService.getFormatDate(value, gr);
+        value = TimeService.getFormatDate(<Time>value, gr);
         return <string>value;
     }
 
-    private static handleWeekValue(newValue) {
+    private static handleWeekValue(newValue:WeekTime) : Time{
         if (typeof newValue["week"] === 'number') {
             return TimeService.getDateFromYearAndWeek(newValue["year"], newValue["week"])
         }
-        return newValue;
+        return <Time>newValue;
     }
 }
 
@@ -73,11 +74,11 @@ export class RdkTime extends AbstractRDKComponent implements OnInit, OnDestroy {
 
     //组件暴露出去的时间数值，支持双向绑定
     @Input()
-    public get date(): Time {
+    public get date(): WeekTime {
         return this._value ? this._value : TimeConvert.convertValue(new Date(), this.gr);
     }
 
-    public set date(newValue: Time) {
+    public set date(newValue: WeekTime) {
         if (newValue) {
             newValue = TimeConvert.convertValue(newValue, this.gr);
             if (newValue != this._value) {
@@ -96,7 +97,7 @@ export class RdkTime extends AbstractRDKComponent implements OnInit, OnDestroy {
     }
 
 
-    @Output() public dateChange = new EventEmitter<Time>();
+    @Output() public dateChange = new EventEmitter<WeekTime>();
 
     private _limitEnd: Time;
 
@@ -255,8 +256,8 @@ export class RdkTime extends AbstractRDKComponent implements OnInit, OnDestroy {
 
     private handleLimitStartAndEnd() {
         if (this._timepicker) {
-            this._limitStart && this._timepicker.minDate(TimeService.addDate(<string>this.limitStart, -1, 's'));
-            this._limitEnd && this._timepicker.maxDate(TimeService.addDate(<string>this.limitEnd, 1, 's'));
+            this._limitStart && this._timepicker.minDate(TimeService.addDate(<string>this.limitStart, -1, TimeUnit.s));
+            this._limitEnd && this._timepicker.maxDate(TimeService.addDate(<string>this.limitEnd, 1, TimeUnit.s));
             this.weekHandle();
             this.handleRecommended(this.el.nativeElement, this.popService);
         }

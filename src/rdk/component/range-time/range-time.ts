@@ -1,7 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from "@angular/core";
 import {AbstractRDKComponent} from "../core";
-import {Time, TimeGr, TimeService, TimeWeekStart} from "../../service/time.service";
+import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../service/time.service";
 import {GrItem, RdkTime, ShortCut, TimeConvert} from "../time/time";
+import {WeekTime} from "../../service/time.types";
+
 
 
 @Component({
@@ -28,13 +30,13 @@ export class RdkRangeTime extends AbstractRDKComponent implements OnInit {
         this._gr = <TimeGr>value;
     }
 
-    @Input("beginDate") private _beginDate: Time;
+    @Input("beginDate") private _beginDate: WeekTime;
 
-    @Input("endDate") private _endDate: Time;
+    @Input("endDate") private _endDate: WeekTime;
 
-    private _limitStart: Time;
+    private _limitStart: WeekTime;
 
-    public get limitStart():Time{
+    public get limitStart():WeekTime{
         return this._limitStart;
     }
 
@@ -66,26 +68,26 @@ export class RdkRangeTime extends AbstractRDKComponent implements OnInit {
 
     @Input("refreshInterval") private _refreshInterval: number;
 
-    @Input("recommendedBegin") private _recommendedBegin: Time;
+    @Input("recommendedBegin") private _recommendedBegin: WeekTime;
 
-    @Input("recommendedEnd") private _recommendedEnd: Time;
+    @Input("recommendedEnd") private _recommendedEnd: WeekTime;
 
 
     @Output() public change = new EventEmitter<any>();
 
-    @Output() public beginDateChange = new EventEmitter<Time>();
+    @Output() public beginDateChange = new EventEmitter<WeekTime>();
 
-    @Output() public endDateChange = new EventEmitter<Time>();
+    @Output() public endDateChange = new EventEmitter<WeekTime>();
 
     private _shortCuts: ShortCut[];
 
     //private _selectedShortCut: ShortCut;
 
-    private _endTimeLimitEnd: Time;
+    private _endTimeLimitEnd: WeekTime;
 
-    private _startTimeLimitEnd: Time;
+    private _startTimeLimitEnd: WeekTime;
 
-    private _startTimeLimitStart: Time;
+    private _startTimeLimitStart: WeekTime;
 
     ngOnInit() {
         this.init();
@@ -96,11 +98,11 @@ export class RdkRangeTime extends AbstractRDKComponent implements OnInit {
         this._endTimeLimitEnd = this.caculateLimitEnd();
     }
 
-    private caculateLimitEnd(): Time {
+    private caculateLimitEnd(): WeekTime {
         let item : GrItem = this._grItems && this._grItems.find(item => item.value == this.timeStart.gr);
-        let endTime :Time = this._limitEnd && TimeService.getDate(TimeConvert.convertValue(this._limitEnd, this.timeStart.gr), <TimeGr>this.timeStart.gr);
+        let endTime :WeekTime = this._limitEnd && TimeService.getDate(TimeConvert.convertValue(this._limitEnd, this.timeStart.gr), <TimeGr>this.timeStart.gr);
         if (item && item.span) {
-            let calculateTime : Time= RdkRangeTime.calculateLimitEnd(TimeConvert.convertValue(this._beginDate, this.timeStart.gr), item.span, this.timeStart.gr);
+            let calculateTime : WeekTime= RdkRangeTime.calculateLimitEnd(TimeConvert.convertValue(this._beginDate, this.timeStart.gr), item.span, this.timeStart.gr);
             calculateTime = TimeService.getDate(calculateTime, <TimeGr>this.timeStart.gr);
             if (!endTime ||  endTime > calculateTime) {
                 endTime = calculateTime;
@@ -133,7 +135,7 @@ export class RdkRangeTime extends AbstractRDKComponent implements OnInit {
                 let spanReg : RegExp= /([\d]+)([a-z]+)?/i;
                 span = span.replace(/\s+/g, "");
                 let gapArr : string[] = spanReg.exec(span);
-                endTime = new Date(TimeService.format(TimeService.addDate(endTime, gapArr[1], gapArr[2].toLowerCase()), 'YYYY-MM-DD,HH:mm:ss'));
+                endTime = new Date(TimeService.format(TimeService.addDate(endTime, gapArr[1], TimeUnit[gapArr[2].toLowerCase()]), 'YYYY-MM-DD,HH:mm:ss'));
                 switch (gapArr[2]) {
                     case "d":
                     case "D":
@@ -158,7 +160,7 @@ export class RdkRangeTime extends AbstractRDKComponent implements OnInit {
         return endTime;
     }
 
-    private  dateChange(key: string, value: Time) {
+    private  dateChange(key: string, value: WeekTime) {
         switch (key) {
             case "beginDate": {
                 this.beginDateChange.emit(value);

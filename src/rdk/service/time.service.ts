@@ -1,3 +1,4 @@
+import {Time,Moment} from "./time.types";
 export enum TimeGr {
     second, minute, hour, date, week, month
 }
@@ -6,38 +7,49 @@ export enum TimeWeekStart {
     sun, mon, tue, wed, thu, fri, sat
 }
 
-export type TimeWeekDay = {
-    week: number,
-    year: number
+export enum TimeUnit{
+    s,m,h,d,w,M,y
+
 }
 
-export type Moment = {
-    _isAMomentObject: boolean,
-    [prop: string]: any;
+export enum TimeFormatters{
+    yyyy_mm_dd_hh_mm_ss,yyyy_mm_dd_hh_mm,yyyy_mm_dd_hh,yyyy_mm_dd,yyyy_mm
 }
-
-export type Time = Date|string|Moment|TimeWeekDay;
 
 
 export class TimeService {
 
     private static timeFormatMap = new Map([
-        [TimeGr.second, 'YYYY-MM-DD, HH:mm:ss'],
-        [TimeGr.minute, 'YYYY-MM-DD, HH:mm'],
-        [TimeGr.hour, 'YYYY-MM-DD, HH'],
-        [TimeGr.date, 'YYYY-MM-DD'],
-        [TimeGr.week, 'YYYY-MM-DD'],
-        [TimeGr.month, 'YYYY-MM']
+        [TimeGr.second, TimeService.timeFormattersConvert(TimeFormatters.yyyy_mm_dd_hh_mm_ss)],
+        [TimeGr.minute, TimeService.timeFormattersConvert(TimeFormatters.yyyy_mm_dd_hh_mm)],
+        [TimeGr.hour, TimeService.timeFormattersConvert(TimeFormatters.yyyy_mm_dd_hh)],
+        [TimeGr.date, TimeService.timeFormattersConvert(TimeFormatters.yyyy_mm_dd)],
+        [TimeGr.week, TimeService.timeFormattersConvert(TimeFormatters.yyyy_mm_dd)],
+        [TimeGr.month, TimeService.timeFormattersConvert(TimeFormatters.yyyy_mm)]
     ]);
 
+    private static timeFormattersConvert(formatter : TimeFormatters):string{
+        switch (formatter){
+            case TimeFormatters.yyyy_mm_dd_hh_mm_ss : return "YYYY-MM-DD, HH:mm:ss";
+            case TimeFormatters.yyyy_mm_dd_hh_mm : return "YYYY-MM-DD, HH:mm";
+            case TimeFormatters.yyyy_mm_dd_hh : return "YYYY-MM-DD, HH";
+            case TimeFormatters.yyyy_mm_dd : return "YYYY-MM-DD";
+            case TimeFormatters.yyyy_mm : return "YYYY-MM";
+        }
+    }
+
+    public static timeUnitConvert(unit : TimeUnit):string{
+       return TimeUnit[unit];
+    }
+
     private static timeUnitMap = new Map([
-        ['s', 'seconds'],
-        ['m', 'minutes'],
-        ['h', "hours"],
-        ['d', 'days'],
-        ['w', 'weeks'],
-        ['M', 'months'],
-        ['y', 'years']
+        [TimeUnit.s, 'seconds'],
+        [TimeUnit.m, 'minutes'],
+        [TimeUnit.h, "hours"],
+        [TimeUnit.d, 'days'],
+        [TimeUnit.w, 'weeks'],
+        [TimeUnit.M, 'months'],
+        [TimeUnit.y, 'years']
     ]);
 
     private static initMoment() {
@@ -84,7 +96,7 @@ export class TimeService {
      * @param num   数量 负数即为减法
      * @param unit  单位
      */
-    public static addDate(date:Time, num:string|number, unit:string): Moment {
+    public static addDate(date:Time, num:string|number, unit:TimeUnit): Moment {
         return moment(date).add(num, TimeService.timeUnitMap.get(unit));
     }
 
@@ -104,7 +116,8 @@ export class TimeService {
      * @param date
      * @param formatter
      */
-    public static format(date:Time, formatter:string): string {
+    public static format(date:Time, formatter:string|TimeFormatters): string {
+        if(typeof formatter === "number") formatter = TimeService.timeFormattersConvert(formatter);
         return moment(date).format(formatter);
     }
 
@@ -171,7 +184,7 @@ export class TimeService {
             let fullPara = /([a-z]+)(\+|\-)?([\d]+)([a-z]+)?/i;
             let timeMacroArr = fullPara.exec(time);
             if (timeMacroArr && timeMacroArr[2] != undefined) { //有加减 now-2d
-                result = TimeService.addDate(TimeService.convertBasicMacro(timeMacroArr[1]), "" + timeMacroArr[2] + timeMacroArr[3], timeMacroArr[4]);
+                result = TimeService.addDate(TimeService.convertBasicMacro(timeMacroArr[1]), "" + timeMacroArr[2] + timeMacroArr[3], TimeUnit[timeMacroArr[4]]);
             } else { //无加减 now
                 result = TimeService.convertBasicMacro(time);
             }

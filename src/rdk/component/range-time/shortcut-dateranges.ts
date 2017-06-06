@@ -1,6 +1,6 @@
 
-import {Time} from "../../service/time.service";
 
+import {Time} from "../../service/time.types";
 export class RangeTimeDataRanges{
     public static RecentMonth():[Time,Time]{
         let start = moment().date(1);

@@ -1,5 +1,5 @@
 import {CommonModule} from "@angular/common";
-import {RdkTime, TimeConvert} from "./time";
+import {RdkTime} from "./time";
 import {NgModule} from "@angular/core";
 import {RdkTooltipModule} from "../tooltip/tooltip";
 import {PopupService} from "../../service/popup.service";
