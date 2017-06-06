@@ -7,6 +7,7 @@ import {FormsModule} from '@angular/forms';
 import {AbstractRDKComponent} from "../core";
 import {CommonUtils} from '../../core/utils/common-utils';
 import {InternalUtils} from '../../core/utils/internal-utils';
+import {ArrayCollection} from "../../core/data/array-collection";
 
 @Component({
     selector: 'rdk-radio-group',
@@ -36,7 +37,7 @@ export class RdkRadioGroup extends AbstractRDKComponent implements OnInit, After
     //显示在界面上的属性名
     @Input() public labelField: string = 'label';
 
-    @Input() public data: Array<object>;
+    @Input() public data: ArrayCollection<object>;
 
     @ViewChildren(forwardRef(() => RdkRadioButton))
     private _radios: QueryList<RdkRadioButton> = null;
