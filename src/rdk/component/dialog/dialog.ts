@@ -30,7 +30,7 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
     abstract get dialog(): RdkDialog;
     abstract set dialog(value: RdkDialog);
 
-    private _title: string = 'Untitled Dialog';
+    private _title: string = '';
 
     public get title(): string {
         return this._title;
