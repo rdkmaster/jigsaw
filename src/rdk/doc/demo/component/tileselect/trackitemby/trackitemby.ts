@@ -1,10 +1,11 @@
 import { Component,AfterContentInit} from "@angular/core";
+import {ArrayCollection} from "../../../../../core/data/array-collection";
 
 @Component({
   templateUrl: 'trackitemby.html'
 })
 export class TileselectTrackitembyDemoComponent implements AfterContentInit{
-    public selectedCity:any[];
+    public selectedCity:ArrayCollection<any>;
     citys = [
         {label: "北京",id:1},
         {label: "上海",id:2},
@@ -16,11 +17,11 @@ export class TileselectTrackitembyDemoComponent implements AfterContentInit{
     constructor(){
 
     }
-    public basicSelectChange(cityArr:any[]){
+    public basicSelectChange(cityArr:ArrayCollection<any>){
         cityArr.forEach((city)=> console.log(`tileselect message is: ${city.label}`));
     }
     ngAfterContentInit() {
-        this.selectedCity=[{label: "深圳",id:1},{label: "西安",id:6}];
+        this.selectedCity= new ArrayCollection([{label: "深圳",id:1},{label: "西安",id:6}]);
     }
 }
 

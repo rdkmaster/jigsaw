@@ -3,6 +3,7 @@
  */
 
 import {Component} from '@angular/core';
+import {ArrayCollection} from "../../../../../core/data/array-collection";
 
 @Component({
     templateUrl: 'labelField.html',
@@ -10,7 +11,7 @@ import {Component} from '@angular/core';
 export class ComboSelectLabelFieldDemo {
 
     public labelField = "name";
-    public selectedCity = [{name: "北京", closable: false}];
+    public selectedCity = new ArrayCollection([{name: "北京", closable: false}]);
     private citys = [
         {name: "北京", closable: false},
         {name: "上海", closable: false},

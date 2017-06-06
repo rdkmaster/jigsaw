@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {ArrayCollection} from "../../../../../core/data/array-collection";
 @Component({
     templateUrl: 'open.html',
     styleUrls: ['open.scss'],
@@ -16,7 +17,7 @@ export class OpenComboSelectDemo {
         this.autoClose = !this.autoClose
     }
 
-    public selectedCity = [{label: "北京", closable: false}];
+    public selectedCity = new ArrayCollection([{label: "北京", closable: false}]);
     private citys = [
         {label: "北京", closable: false},
         {label: "上海", closable: false},

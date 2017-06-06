@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {ArrayCollection} from "../../../../../core/data/array-collection";
 @Component({
     templateUrl: 'disable.html',
     styleUrls: ['disable.scss'],
@@ -11,7 +12,7 @@ export class DisabledComboSelectDemo{
         this.disabled = !this.disabled;
     }
 
-    public selectedCity = [{label: "北京", closable: false}];
+    public selectedCity = new ArrayCollection([{label: "北京", closable: false}]);
     private citys = [
         {label: "北京", closable: false},
         {label: "上海", closable: false},

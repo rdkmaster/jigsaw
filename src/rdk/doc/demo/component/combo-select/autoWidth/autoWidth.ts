@@ -5,12 +5,13 @@
 import {
     Component, OnInit
 } from '@angular/core';
+import {ArrayCollection} from "../../../../../core/data/array-collection";
 @Component({
     templateUrl: 'autoWidth.html'
 })
 export class ComboSelectAutoWidthDemo implements OnInit {
 
-    public selectedCity = [{label: "北京", closable: false}];
+    public selectedCity = new ArrayCollection([{label: "北京", closable: false}]);
     private citys = [
         {label: "北京", closable: false},
         {label: "上海", closable: false},
