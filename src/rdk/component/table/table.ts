@@ -722,7 +722,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         this._removeTdListeners.push({removeTdListener: removeTdMouseLeaveListener, row: rowIndex, column: colIndex});
     }
 
-    public _reBindTooltipForCell(element: HTMLElement, message: any, rowIndex: number, colIndex: number){
+    public _rebindTooltipForCell(element: HTMLElement, message: any, rowIndex: number, colIndex: number){
         //删除对应td的tooltip的事件
         this._removeTdListenersByIndex(rowIndex, colIndex);
         //重新绑定td的tooltip
@@ -783,7 +783,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         }, 1000);
     }
 
-    public _asyncSetCellLineEllipsis() {
+    private _asyncSetCellLineEllipsis() {
         setTimeout(() => {
             this._setCellLineEllipsis();
         }, 0);
@@ -1036,7 +1036,7 @@ export class RdkTableCell extends TableCellBasic implements OnInit, OnDestroy {
             //重新对齐表头
             this._rdkTable._asyncSetFixedHeadWidth();
             //重新绑定td的tooltip
-            this._rdkTable._reBindTooltipForCell(this._el.nativeElement, this.cellData, this.row, this.column);
+            this._rdkTable._rebindTooltipForCell(this._el.nativeElement, this.cellData, this.row, this.column);
         });
     }
 
