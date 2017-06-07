@@ -17,9 +17,9 @@ import {Subject} from "rxjs";
 import "rxjs/add/operator/map";
 
 class ArrayHacker {
-    public pointer;
+    public myself;
     constructor(arr: RDKArray<any>) {
-        this.pointer = arr;
+        this.myself = arr;
     }
 }
 
@@ -28,11 +28,11 @@ class ArrayHacker {
 // https://github.com/Microsoft/TypeScript/issues/14869
 export class RDKArray<T> implements Array<T> {
     private _agent: T[] = [];
-    private _me = new ArrayHacker(this);
+    private is = new ArrayHacker(this);
 
     public set(index: number, value: T): void {
         this._length = this._length > index ? this._length : index+1;
-        this._me.pointer[index] = value;
+        this.is.myself[index] = value;
     }
 
     public get(index: number): T {
