@@ -3,7 +3,7 @@ import {NgModule} from "@angular/core";
 import {RdkRangeTime} from "./range-time";
 import {RdkTimeModule} from "../time/index";
 @NgModule({
-    imports: [CommonModule,RdkTimeModule],
+    imports: [CommonModule, RdkTimeModule],
     declarations: [RdkRangeTime],
     exports: [RdkRangeTime],
 })

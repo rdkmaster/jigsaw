@@ -133,4 +133,9 @@ const demoListRoutes = [
     entryComponents: [RdkBlock]
 })
 export class DemoListModule {
+    constructor(){
+        Event
+    }
+
+
 }
