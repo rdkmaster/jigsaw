@@ -14,7 +14,7 @@ export class RangeTimeGrItemsComponent {
     endDate = "now";
 
 
-    shortcuts :Shortcut[]= [{label:"My",dateRange:["now-1w","now"]},
+    shortcuts :Shortcut[]= [{label:"自定义",dateRange:["now-15d","now"]},
                             {label:"这周",dateRange:RangeTimeDataRanges.RecentWeek}];
 
     grItems :GrItem[]= [
