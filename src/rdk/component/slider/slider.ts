@@ -36,7 +36,7 @@ export class RdkSlider implements OnInit, OnDestroy {
     @Input()
     public get value(): number | ArrayCollection<number> {
         // 兼容返回单个值， 和多触点的数组;
-        if (!this.range) {
+        if (this._value.length == 1) {
             return this._value[0];
         } else {
             return this._value;
@@ -140,24 +140,16 @@ export class RdkSlider implements OnInit, OnDestroy {
         let startPos: number = 0;
         let trackSize: number = typeof value !== 'undefined' ? this._transformValueToPos(value) : this._transformValueToPos(this.value); // 默认单触点位置
 
-        // 兼容双触点.
-        if (this.range) {
-            // 取得最大值.最小值, 在它们之间一条轨道.
-            if (typeof this.value === 'number') {
-                console.error("范围模式下, 取值应该是个数组~");
-                return;
-            }
-            let max: number = this.value[0];
-            let min: number = this.value[0];
+        let max: number = this.value[0];
+        let min: number = this.value[0];
 
-            this.value.map(item => {
-                if (max - item < 0) max = item;
-                else if (item - min < 0) min = item;
-            });
+        this._value.map(item => {
+            if (max - item < 0) max = item;
+            else if (item - min < 0) min = item;
+        });
 
-            startPos = this._transformValueToPos(min);
-            trackSize = Math.abs(this._transformValueToPos(max) - this._transformValueToPos(min));
-        }
+        startPos = this._transformValueToPos(min);
+        trackSize = Math.abs(this._transformValueToPos(max) - this._transformValueToPos(min));
 
         if (this.vertical) { // 垂直和水平两种
             this._trackStyle = {
@@ -170,10 +162,6 @@ export class RdkSlider implements OnInit, OnDestroy {
                 width: trackSize + "%"
             }
         }
-    }
-
-    _updateCanDragged(flag) {
-        this._dragged = flag;
     }
 
     // 多值时选择一个合适的触点. Todo 支持点击
