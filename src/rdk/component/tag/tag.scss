@@ -11,7 +11,7 @@ $tag-prefix-cls: #{$rdk-prefix}-tag;
     text-overflow: ellipsis;
     padding: 0 8px;
     height: 22px;
-    line-height: 22px;
+    line-height: 20px;
     border: 1px solid $border-color-base;
     border-radius: $border-radius-base;
     background: $gray-light;
@@ -27,6 +27,6 @@ $tag-prefix-cls: #{$rdk-prefix}-tag;
         vertical-align: 1px;
         position: absolute;
         right: 6px;
-        line-height: 22px;
+        line-height: 20px;
     }
 }
