@@ -31,15 +31,6 @@ export class TimeService {
         return <Time>newValue;
     }
 
-    private static timeFormatMap = new Map([
-        [TimeGr.second, TimeService.timeFormattersConvert(TimeFormatters.yyyy_mm_dd_hh_mm_ss)],
-        [TimeGr.minute, TimeService.timeFormattersConvert(TimeFormatters.yyyy_mm_dd_hh_mm)],
-        [TimeGr.hour, TimeService.timeFormattersConvert(TimeFormatters.yyyy_mm_dd_hh)],
-        [TimeGr.date, TimeService.timeFormattersConvert(TimeFormatters.yyyy_mm_dd)],
-        [TimeGr.week, TimeService.timeFormattersConvert(TimeFormatters.yyyy_mm_dd)],
-        [TimeGr.month, TimeService.timeFormattersConvert(TimeFormatters.yyyy_mm)]
-    ]);
-
     private static timeFormattersConvert(formatter : TimeFormatters):string{
         switch (formatter){
             case TimeFormatters.yyyy_mm_dd_hh_mm_ss : return "YYYY-MM-DD, HH:mm:ss";
@@ -49,6 +40,15 @@ export class TimeService {
             case TimeFormatters.yyyy_mm : return "YYYY-MM";
         }
     }
+
+    private static timeFormatMap = new Map([
+        [TimeGr.second, TimeService.timeFormattersConvert(TimeFormatters.yyyy_mm_dd_hh_mm_ss)],
+        [TimeGr.minute, TimeService.timeFormattersConvert(TimeFormatters.yyyy_mm_dd_hh_mm)],
+        [TimeGr.hour, TimeService.timeFormattersConvert(TimeFormatters.yyyy_mm_dd_hh)],
+        [TimeGr.date, TimeService.timeFormattersConvert(TimeFormatters.yyyy_mm_dd)],
+        [TimeGr.week, TimeService.timeFormattersConvert(TimeFormatters.yyyy_mm_dd)],
+        [TimeGr.month, TimeService.timeFormattersConvert(TimeFormatters.yyyy_mm)]
+    ]);
 
     public static timeUnitConvert(unit : TimeUnit):string{
        return TimeUnit[unit];
