@@ -191,7 +191,7 @@ export class RdkTime extends AbstractRDKComponent implements OnInit, OnDestroy {
     private _initDatePicker() {
         let insert = this._el.nativeElement.querySelector(".rdk-time-box");
         TimeService.setWeekStart(this._weekStart);
-        let [result, isChange] = this._handleValue(this.date);
+        let [result, isChange] = this._handleValue(<Time>this.date);
         if (isChange) {
             this._value = result;
         }
@@ -205,18 +205,18 @@ export class RdkTime extends AbstractRDKComponent implements OnInit, OnDestroy {
         }).on("dp.change", (e) => {
             let changeValue = TimeService.getFormatDate(e.date, <TimeGr>this.gr);
             if (this.date != changeValue) {
-                this._handleValueChange(changeValue, this.gr);
+                this._handleValueChange(changeValue, <TimeGr>this.gr);
             }
         });
         this._timepicker = $(insert).data("DateTimePicker");
-        this._handleValueChange(this.date, this.gr, true);
+        this._handleValueChange(<Time>this.date, <TimeGr>this.gr, true);
     }
 
     //设置插件选中时间值
     private _setDate(value: Time) {
         if (this._timepicker) {
             this._timepicker.date(TimeService.getFormatDate(value));
-            this._handleValueChange(this.date, this.gr);
+            this._handleValueChange(<Time>this.date, <TimeGr>this.gr);
             this._weekHandle();
             this._handleRecommended(this._el.nativeElement, this._popService);
         }
@@ -253,7 +253,7 @@ export class RdkTime extends AbstractRDKComponent implements OnInit, OnDestroy {
         }
     }
 
-    private _handleValueChange(changeValue, gr, emit?) {
+    private _handleValueChange(changeValue :Time, gr:TimeGr, emit?:boolean) {
         if (this.date != changeValue || emit) {
             this._value = changeValue;
             setTimeout(() => {
@@ -267,7 +267,7 @@ export class RdkTime extends AbstractRDKComponent implements OnInit, OnDestroy {
         }
     }
 
-    private _handleValue(value): [Time, boolean] {
+    private _handleValue(value:Time): [Time, boolean] {
         if (this._limitStart && value < this.limitStart) {
             return [this.limitStart, true];
         }
@@ -287,19 +287,19 @@ export class RdkTime extends AbstractRDKComponent implements OnInit, OnDestroy {
 
     private _tooltipInfo: PopupInfo;
 
-    private  _handleRecommended(nativeElement, popService) {
+    private  _handleRecommended(nativeElement:any, popService:PopupService) {
         if (this._recommendedBegin && this._recommendedEnd) {
             this._recommendedBegin = TimeService.getFormatDate(this._recommendedBegin);
             this._recommendedEnd = TimeService.getFormatDate(this._recommendedEnd);
             if (TimeService.getYear(<string>this._recommendedBegin) != TimeService.getYear(<string>this._recommendedEnd)) { //不支持跨年设置
                 throw "recommended not support different year times!";
             }
-            let monthsNode = RdkTime._getDataPickerNode("months", nativeElement);
-            let monthsHeadNode = RdkTime._getDataPickerNode("months", nativeElement, true);
+            const monthsNode :HTMLElement = RdkTime._getDataPickerNode("months", nativeElement);
+            const monthsHeadNode : HTMLElement = RdkTime._getDataPickerNode("months", nativeElement, true);
             RdkTime._searchDateForMonth(this._recommendedBegin, this._recommendedEnd, monthsNode, monthsHeadNode);
-            let daysNode = RdkTime._getDataPickerNode("days", nativeElement);
-            let daysHeadNode = RdkTime._getDataPickerNode("days", nativeElement, true);
-            let daysObj = RdkTime._parseDay(daysHeadNode.innerText);
+            const daysNode = RdkTime._getDataPickerNode("days", nativeElement);
+            const daysHeadNode :HTMLElement = RdkTime._getDataPickerNode("days", nativeElement, true);
+            const daysObj = RdkTime._parseDay(daysHeadNode.innerText);
             RdkTime._searchDateForDay(this._recommendedBegin, this._recommendedEnd, daysNode, daysObj);
             nativeElement.querySelectorAll(".rdk-time-box .datepicker .expect-day").forEach(node => {
                 this._renderer.listen(node, "mouseenter", (event) => {
@@ -329,17 +329,17 @@ export class RdkTime extends AbstractRDKComponent implements OnInit, OnDestroy {
         }
     }
 
-    private static _searchDateForDay(begin, end, sourceNodes, headObj) {
-        let startMonth = TimeService.getMonth(begin);
-        let endMonth = TimeService.getMonth(end);
+    private static _searchDateForDay(begin:Time, end:Time, sourceNodes:HTMLElement[], headObj:any) {
+        const startMonth = TimeService.getMonth(begin);
+        const endMonth = TimeService.getMonth(end);
 
-        let startDate = TimeService.getDay(begin);
-        let endDate = TimeService.getDay(end);
+        const startDate = TimeService.getDay(begin);
+        const endDate = TimeService.getDay(end);
 
         if (TimeService.getYear(begin) == headObj.year &&
             (startMonth == headObj.month || endMonth == headObj.month)) {
             sourceNodes.forEach(node => {
-                let text = +node.innerText;
+                const text = +node.innerText;
                 if (startMonth != endMonth) {
                     if (!node.classList.contains("old") && !node.classList.contains("new")) {
                         if ((startMonth == headObj.month && text >= startDate) ||
@@ -381,9 +381,9 @@ export class RdkTime extends AbstractRDKComponent implements OnInit, OnDestroy {
         }
     }
 
-    private static _parseDay(val) {
-        let charToNum = {一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9, 十: 10, 十一: 11, 十二: 12};
-        let enUsToNum = {
+    private static _parseDay(val:string) {
+        const charToNum = {一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9, 十: 10, 十一: 11, 十二: 12};
+        const enUsToNum = {
             January: 1,
             February: 2,
             March: 3,
@@ -399,19 +399,19 @@ export class RdkTime extends AbstractRDKComponent implements OnInit, OnDestroy {
         };
         let result = {};
         if (val.indexOf("月") == -1) {
-            val = val.split(/\s+/);
-            result["month"] = +enUsToNum[val[0]];
-            result["year"] = +val[1];
+            const valArr = val.split(/\s+/);
+            result["month"] = +enUsToNum[valArr[0]];
+            result["year"] = +valArr[1];
         } else {
-            val = val.split("月");
-            result["month"] = charToNum[val[0].trim()];
-            result["year"] = +(val[1].trim());
+            const valArr = val.split("月");
+            result["month"] = charToNum[valArr[0].trim()];
+            result["year"] = +(valArr[1].trim());
         }
         return result;
     }
 
-    private static _parseMonth(val) {
-        let enUsSimpleToNum = {
+    private static _parseMonth(val:string) {
+        const enUsSimpleToNum = {
             Jan: 1,
             Feb: 2,
             Mar: 3,
@@ -432,13 +432,13 @@ export class RdkTime extends AbstractRDKComponent implements OnInit, OnDestroy {
         }
     }
 
-    private static _searchDateForMonth(begin, end, sourceNodes, headNode) {
-        let startMonth = TimeService.getMonth(begin);
-        let endMonth = TimeService.getMonth(end);
+    private static _searchDateForMonth(begin:Time, end:Time, sourceNodes:any, headNode:any) {
+        const startMonth = TimeService.getMonth(begin);
+        const endMonth = TimeService.getMonth(end);
         if (TimeService.getYear(begin) == headNode.innerText) {
             sourceNodes.forEach(node => {
                 if (!node.classList.contains("disabled")) {
-                    let month = RdkTime._parseMonth(node.innerText);
+                    const month = RdkTime._parseMonth(node.innerText);
                     if (month >= startMonth && month <= endMonth) {
                         node.classList.add("expect-day");
                     }
@@ -453,9 +453,9 @@ export class RdkTime extends AbstractRDKComponent implements OnInit, OnDestroy {
         }
     }
 
-    private static _getDataPickerNode(granularity, nativeElement, isHead?) {
-        let selectorBefore = ".rdk-time-box .datepicker .datepicker-";
-        let selectorAfter = ">table>tbody>tr>";
+    private static _getDataPickerNode(granularity:string, nativeElement:any, isHead?:boolean) {
+        const selectorBefore : string = ".rdk-time-box .datepicker .datepicker-";
+        const selectorAfter :string = ">table>tbody>tr>";
         let nodeName = "";
         if (granularity == "years" || granularity == "months") {
             nodeName = "td>span:not(.disabled)";
@@ -464,7 +464,7 @@ export class RdkTime extends AbstractRDKComponent implements OnInit, OnDestroy {
         }
         let selector = selectorBefore + granularity + selectorAfter + nodeName;
         if (!!isHead) {
-            let theadNode = ">table>thead>tr>th.picker-switch[colspan]";
+            const theadNode = ">table>thead>tr>th.picker-switch[colspan]";
             selector = selectorBefore + granularity + theadNode;
             return nativeElement.querySelector(selector);
         }
