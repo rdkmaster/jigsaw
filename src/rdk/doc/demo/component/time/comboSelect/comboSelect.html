@@ -1,7 +1,7 @@
 <rdk-combo-select [(value)]="singleTimeComboValue" width="100px">
     <rdk-time
         [(date)]="date"
-        (dateChange)="singleTimeComboValue = [{label: $event,closable: false}]">
+        (dateChange)="handleDateChange($event)">
     </rdk-time>
 </rdk-combo-select>
 Selected Time : {{date}}<br><br>
@@ -11,8 +11,8 @@ Selected Time : {{date}}<br><br>
     <rdk-range-time
         [(beginDate)]="beginDate"
         [(endDate)]="endDate"
-        (beginDateChange)="rangeTimeComboValue = [{label: $event, closable: false}, rangeTimeComboValue[1]]"
-        (endDateChange)="rangeTimeComboValue = [rangeTimeComboValue[0], {label: $event, closable: false}]">
+        (beginDateChange)="handleDeginDateChange($event)"
+        (endDateChange)="handleEndDateChange($event)">
     </rdk-range-time>
 </rdk-combo-select>
 Selected Time : {{beginDate}} - {{endDate}}
