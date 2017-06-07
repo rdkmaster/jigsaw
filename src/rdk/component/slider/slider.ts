@@ -7,6 +7,8 @@ import {
 } from '@angular/core';
 import {SliderHandle} from "./handle";
 import {CommonUtils} from "../../core/utils/common-utils";
+import {ArrayCollection} from "../../core/data/array-collection";
+import {CallbackRemoval} from "../../core/data/component-data";
 
 @Component({
     selector: 'rdk-slider',
@@ -27,10 +29,11 @@ export class RdkSlider implements OnInit, OnDestroy {
 
     @ViewChildren(SliderHandle) _sliderHandle: QueryList<SliderHandle>;
 
-    private _value:Array<number> = [];
+    private _value: ArrayCollection<number> = new ArrayCollection<number>();
+    private _removeRefreshCallback: CallbackRemoval;
 
     @Input()
-    public get value():number|number[] {
+    public get value():number|ArrayCollection<number> {
         // 兼容返回单个值， 和多触点的数组;
         if(!this.range) {
             return this._value[0];
@@ -38,25 +41,30 @@ export class RdkSlider implements OnInit, OnDestroy {
             return this._value;
         }
     };
-    public set value(value:number| number[]) {
-        if(typeof value  === 'object') {
+    public set value(value:number| ArrayCollection<number>) {
+        if(value instanceof ArrayCollection) {
             this._value = value;
         } else if(this._value.length === 0) {
             this._value.push(this._verifyValue(value));
         } else if(this._value.length === 1) {
-            this._value[0] = this._verifyValue(value);
+            this._value.set(0, this._verifyValue(value));
         }
 
-        this._setTrackStyle();
+        //this._setTrackStyle();
+
+        if(this._removeRefreshCallback){
+            this._removeRefreshCallback()
+        }
+        this._removeRefreshCallback = this._value.onRefresh(() => {
+            this._setTrackStyle(this.value);
+            this.valueChange.emit(this.value);
+        });
     }
 
     // 设置单个的值
     public setValue(key, value) {
-        this._value[key] = value;
-
-        this._setTrackStyle();
-
-        this.valueChange.emit(this.value);
+        this._value.set(key, value);
+        this._value.refresh();
     }
 
     // 最后重新计算一下, 垂直滚动条的位置.
@@ -230,6 +238,10 @@ export class RdkSlider implements OnInit, OnDestroy {
     public ngOnDestroy() {
         if(this._removeResizeEvent) {
             this._removeResizeEvent();
+        }
+
+        if(this._removeRefreshCallback){
+            this._removeRefreshCallback()
         }
     }
 

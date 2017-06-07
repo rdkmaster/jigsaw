@@ -182,6 +182,26 @@ export class ArrayCollection<T> extends RDKArray<T> implements IAjaxComponentDat
     public http: Http;
     public dataReviser: DataReviser;
 
+    public concat(...items: any[]): ArrayCollection<T> {
+        const acArr = [];
+        for(let i = 0; i < this.length; i++){
+            acArr.push(this[i])
+        }
+        let itemArr = [];
+        items.forEach(item => {
+            itemArr = itemArr.concat(item);
+        });
+        return new ArrayCollection<T>(acArr.concat(itemArr));
+    }
+
+    public slice(start?: number, end?: number): ArrayCollection<T> {
+        const acArr = [];
+        for(let i = 0; i < this.length; i++){
+            acArr.push(this[i])
+        }
+        return new ArrayCollection<T>(acArr.slice(start, end));
+    }
+
     constructor(source?: T[]) {
         super();
         this._fromArray(source);
