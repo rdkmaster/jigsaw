@@ -1,4 +1,4 @@
-import {Time,Moment} from "./time.types";
+import {Time, Moment, WeekTime} from "./time.types";
 export enum TimeGr {
     second, minute, hour, date, week, month
 }
@@ -18,6 +18,18 @@ export enum TimeFormatters{
 
 
 export class TimeService {
+    public static convertValue(value: WeekTime, gr:TimeGr): string {
+        value = TimeService.handleWeekValue(value);
+        value = TimeService.getFormatDate(<Time>value, gr);
+        return <string>value;
+    }
+
+    private static handleWeekValue(newValue:WeekTime) : Time{
+        if (typeof newValue["week"] === 'number') {
+            return TimeService.getDateFromYearAndWeek(newValue["year"], newValue["week"])
+        }
+        return <Time>newValue;
+    }
 
     private static timeFormatMap = new Map([
         [TimeGr.second, TimeService.timeFormattersConvert(TimeFormatters.yyyy_mm_dd_hh_mm_ss)],

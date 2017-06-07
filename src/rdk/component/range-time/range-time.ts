@@ -1,9 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from "@angular/core";
 import {AbstractRDKComponent} from "../core";
 import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../service/time.service";
-import {GrItem, RdkTime, ShortCut, TimeConvert} from "../time/time";
+import {GrItem, RdkTime, Shortcut} from "../time/time";
 import {WeekTime} from "../../service/time.types";
-
 
 
 @Component({
@@ -14,12 +13,12 @@ import {WeekTime} from "../../service/time.types";
 
 export class RdkRangeTime extends AbstractRDKComponent implements OnInit {
 
-    @ViewChild("timeStart") private timeStart: RdkTime;
+    @ViewChild("timeStart") private _timeStart: RdkTime;
 
     private _gr: TimeGr;
 
-    public get gr() : TimeGr|string{
-        return this._gr ? this._gr :TimeGr.date;
+    public get gr(): TimeGr | string {
+        return this._gr ? this._gr : TimeGr.date;
     }
 
     @Input("gr")
@@ -36,7 +35,7 @@ export class RdkRangeTime extends AbstractRDKComponent implements OnInit {
 
     private _limitStart: WeekTime;
 
-    public get limitStart():WeekTime{
+    public get limitStart(): WeekTime {
         return this._limitStart;
     }
 
@@ -50,7 +49,7 @@ export class RdkRangeTime extends AbstractRDKComponent implements OnInit {
 
     private _limitEnd: string;
 
-    public get limitEnd():string{
+    public get limitEnd(): string {
         return this._limitEnd;
     }
 
@@ -58,7 +57,7 @@ export class RdkRangeTime extends AbstractRDKComponent implements OnInit {
     public set limitEnd(value) {
         if (value) {
             this._limitEnd = value;
-            this._endTimeLimitEnd = this.caculateLimitEnd();
+            this._endTimeLimitEnd = this._calculateLimitEnd();
         }
     }
 
@@ -79,7 +78,7 @@ export class RdkRangeTime extends AbstractRDKComponent implements OnInit {
 
     @Output() public endDateChange = new EventEmitter<WeekTime>();
 
-    private _shortCuts: ShortCut[];
+    private _shortcuts: Shortcut[];
 
     //private _selectedShortCut: ShortCut;
 
@@ -90,29 +89,29 @@ export class RdkRangeTime extends AbstractRDKComponent implements OnInit {
     private _startTimeLimitStart: WeekTime;
 
     ngOnInit() {
-        this.init();
+        this._init();
     }
 
-    private init() {
-        this._shortCuts = this.shortCuts();
-        this._endTimeLimitEnd = this.caculateLimitEnd();
+    private _init() {
+        this._shortcuts = this._getShortcuts();
+        this._endTimeLimitEnd = this._calculateLimitEnd();
     }
 
-    private caculateLimitEnd(): WeekTime {
-        let item : GrItem = this._grItems && this._grItems.find(item => item.value == this.timeStart.gr);
-        let endTime :WeekTime = this._limitEnd && TimeService.getDate(TimeConvert.convertValue(this._limitEnd, this.timeStart.gr), <TimeGr>this.timeStart.gr);
+    private _calculateLimitEnd(): WeekTime {
+        let item: GrItem = this._grItems && this._grItems.find(item => item.value == this._timeStart.gr);
+        let endTime: WeekTime = this._limitEnd && TimeService.getDate(TimeService.convertValue(this._limitEnd, <TimeGr>this._timeStart.gr), <TimeGr>this._timeStart.gr);
         if (item && item.span) {
-            let calculateTime : WeekTime= RdkRangeTime.calculateLimitEnd(TimeConvert.convertValue(this._beginDate, this.timeStart.gr), item.span, this.timeStart.gr);
-            calculateTime = TimeService.getDate(calculateTime, <TimeGr>this.timeStart.gr);
-            if (!endTime ||  endTime > calculateTime) {
+            let calculateTime: WeekTime = RdkRangeTime._calculateLimitEnd(TimeService.convertValue(this._beginDate, <TimeGr>this._timeStart.gr), item.span, this._timeStart.gr);
+            calculateTime = TimeService.getDate(calculateTime, <TimeGr>this._timeStart.gr);
+            if (!endTime || endTime > calculateTime) {
                 endTime = calculateTime;
             }
         }
         return endTime;
     }
 
-    private static  calculateLimitEnd(startDate: string, span, gr) :Date{
-        let endTime : Date= new Date(TimeService.format(TimeService.getDate(startDate, gr), 'YYYY-MM-DD'));
+    private static  _calculateLimitEnd(startDate: string, span, gr): Date {
+        let endTime: Date = new Date(TimeService.format(TimeService.getDate(startDate, gr), 'YYYY-MM-DD'));
         endTime.setHours(23);
         endTime.setMinutes(59);
         endTime.setSeconds(59);
@@ -132,9 +131,9 @@ export class RdkRangeTime extends AbstractRDKComponent implements OnInit {
                 endTime.setDate(31);
                 break;
             default:
-                let spanReg : RegExp= /([\d]+)([a-z]+)?/i;
+                let spanReg: RegExp = /([\d]+)([a-z]+)?/i;
                 span = span.replace(/\s+/g, "");
-                let gapArr : string[] = spanReg.exec(span);
+                let gapArr: string[] = spanReg.exec(span);
                 endTime = new Date(TimeService.format(TimeService.addDate(endTime, gapArr[1], TimeUnit[gapArr[2].toLowerCase()]), 'YYYY-MM-DD,HH:mm:ss'));
                 switch (gapArr[2]) {
                     case "d":
@@ -160,11 +159,11 @@ export class RdkRangeTime extends AbstractRDKComponent implements OnInit {
         return endTime;
     }
 
-    private  dateChange(key: string, value: WeekTime) {
+    private  _dateChange(key: string, value: WeekTime) {
         switch (key) {
             case "beginDate": {
                 this.beginDateChange.emit(value);
-                this._endTimeLimitEnd = this.caculateLimitEnd();
+                this._endTimeLimitEnd = this._calculateLimitEnd();
                 this._startTimeLimitEnd = value;
                 break;
             }
@@ -176,8 +175,8 @@ export class RdkRangeTime extends AbstractRDKComponent implements OnInit {
         this.change.emit({"beginDate": this._beginDate, "endDate": this._endDate});
     }
 
-    private shortCuts(): ShortCut[] {
-        let item :GrItem = this._grItems && this._grItems.find(item => item.value == this.timeStart.gr);
+    private _getShortcuts(): Shortcut[] {
+        let item: GrItem = this._grItems && this._grItems.find(item => item.value == this._timeStart.gr);
         if (item && item.shortCuts && item.shortCuts.length != 0) {
             return item.shortCuts;
         }
@@ -185,22 +184,22 @@ export class RdkRangeTime extends AbstractRDKComponent implements OnInit {
     }
 
 
-    private grChange(value: TimeGr) {
-        this.init();
+    private _grChange(value: TimeGr) {
+        this._init();
     }
 
-    private changeShortCut(selectedShortCut) {
+    private _changeShortcut(selectedShortCut) {
         if (selectedShortCut.dateRange) {
-            let [beginDate, endDate] =typeof  selectedShortCut.dateRange === "function"? selectedShortCut.dateRange.call(this):selectedShortCut.dateRange;
+            let [beginDate, endDate] = typeof  selectedShortCut.dateRange === "function" ? selectedShortCut.dateRange.call(this) : selectedShortCut.dateRange;
             this._endDate = endDate;
-            this._endTimeLimitEnd = this.caculateLimitEnd();
-            beginDate = TimeConvert.convertValue(beginDate, this.timeStart.gr);
-            let limitStart = this._limitStart && TimeConvert.convertValue(this._limitStart, this.timeStart.gr);
-            let limitEnd = this._limitEnd && TimeConvert.convertValue(this._limitEnd, this.timeStart.gr);
+            this._endTimeLimitEnd = this._calculateLimitEnd();
+            beginDate = TimeService.convertValue(beginDate, <TimeGr>this._timeStart.gr);
+            let limitStart = this._limitStart && TimeService.convertValue(this._limitStart, <TimeGr>this._timeStart.gr);
+            let limitEnd = this._limitEnd && TimeService.convertValue(this._limitEnd, <TimeGr>this._timeStart.gr);
             if (!((limitStart && beginDate < limitStart) || (limitEnd && beginDate > limitEnd))) {
                 this._beginDate = beginDate;
                 this._startTimeLimitStart = beginDate
-            }else{
+            } else {
                 this._startTimeLimitStart = limitStart
             }
 
