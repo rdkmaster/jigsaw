@@ -16,26 +16,37 @@ import {Http, RequestOptionsArgs, Response, URLSearchParams} from "@angular/http
 import {Subject} from "rxjs";
 import "rxjs/add/operator/map";
 
+class ArrayHacker {
+    public pointer;
+    constructor(arr: RDKArray<any>) {
+        this.pointer = arr;
+    }
+}
+
 // we have to implement the Array<T> interface due to this breaking change:
 // https://github.com/Microsoft/TypeScript/wiki/FAQ#why-doesnt-extending-built-ins-like-error-array-and-map-work
 // https://github.com/Microsoft/TypeScript/issues/14869
 export class RDKArray<T> implements Array<T> {
     private _agent: T[] = [];
+    private _me = new ArrayHacker(this);
 
     public set(index: number, value: T): void {
-        this._agent[index] = value;
+        this._length = this._length > index ? this._length : index+1;
+        this._me.pointer[index] = value;
     }
 
     public get(index: number): T {
-        return this._agent[index];
+        return this[index];
     }
 
+    private _length:number = 0;
+
     public get length(): number {
-        return this._agent.length;
+        return this._length;
     }
 
     public set length(value: number) {
-        this._agent.length = value;
+        this._length = value;
     }
 
     readonly [n: number]: T;
