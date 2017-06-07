@@ -8,6 +8,7 @@ import {AbstractRDKComponent} from "../core";
 import {CommonUtils} from '../../core/utils/common-utils';
 import {InternalUtils} from '../../core/utils/internal-utils';
 import {RdkScrollBarModule} from '../scrollbar/scrollbar';
+import {ArrayCollection} from "../../core/data/array-collection";
 
 @Directive({
     selector: '.rdk-option-list',
@@ -68,7 +69,7 @@ export class RdkSelect extends AbstractRDKComponent implements AfterViewInit, On
 
     @Input() public optionCount: number;
 
-    @Input() data: Array<object>;
+    @Input() data: ArrayCollection<object>;
 
     //获取映射的子组件option
     @ViewChildren(forwardRef(() => RdkOption))

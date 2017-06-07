@@ -16,26 +16,37 @@ import {Http, RequestOptionsArgs, Response, URLSearchParams} from "@angular/http
 import {Subject} from "rxjs";
 import "rxjs/add/operator/map";
 
+class ArrayHacker {
+    public myself;
+    constructor(arr: RDKArray<any>) {
+        this.myself = arr;
+    }
+}
+
 // we have to implement the Array<T> interface due to this breaking change:
 // https://github.com/Microsoft/TypeScript/wiki/FAQ#why-doesnt-extending-built-ins-like-error-array-and-map-work
 // https://github.com/Microsoft/TypeScript/issues/14869
 export class RDKArray<T> implements Array<T> {
     private _agent: T[] = [];
+    private is = new ArrayHacker(this);
 
     public set(index: number, value: T): void {
-        this._agent[index] = value;
+        this._length = this._length > index ? this._length : index+1;
+        this.is.myself[index] = value;
     }
 
     public get(index: number): T {
-        return this._agent[index];
+        return this[index];
     }
 
+    private _length:number = 0;
+
     public get length(): number {
-        return this._agent.length;
+        return this._length;
     }
 
     public set length(value: number) {
-        this._agent.length = value;
+        this._length = value;
     }
 
     readonly [n: number]: T;
@@ -170,6 +181,26 @@ export class RDKArray<T> implements Array<T> {
 export class ArrayCollection<T> extends RDKArray<T> implements IAjaxComponentData {
     public http: Http;
     public dataReviser: DataReviser;
+
+    public concat(...items: any[]): ArrayCollection<T> {
+        const acArr = [];
+        for(let i = 0; i < this.length; i++){
+            acArr.push(this[i])
+        }
+        let itemArr = [];
+        items.forEach(item => {
+            itemArr = itemArr.concat(item);
+        });
+        return new ArrayCollection<T>(acArr.concat(itemArr));
+    }
+
+    public slice(start?: number, end?: number): ArrayCollection<T> {
+        const acArr = [];
+        for(let i = 0; i < this.length; i++){
+            acArr.push(this[i])
+        }
+        return new ArrayCollection<T>(acArr.slice(start, end));
+    }
 
     constructor(source?: T[]) {
         super();

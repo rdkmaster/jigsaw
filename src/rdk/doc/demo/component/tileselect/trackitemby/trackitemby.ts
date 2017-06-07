@@ -6,14 +6,14 @@ import {ArrayCollection} from "../../../../../core/data/array-collection";
 })
 export class TileselectTrackitembyDemoComponent implements AfterContentInit{
     public selectedCity:ArrayCollection<any>;
-    citys = [
+    citys = new ArrayCollection([
         {label: "北京",id:1},
         {label: "上海",id:2},
         {label: "南京",id:3},
         {label: "深圳",id:4},
         {label: "长沙",id:5},
         {label: "西安",id:6}
-    ];
+    ]);
     constructor(){
 
     }

@@ -1,7 +1,7 @@
 import {
     NgModule, Component, ContentChildren, QueryList, Input, Output, EventEmitter,
     Optional, OnInit, forwardRef, AfterContentInit, ChangeDetectorRef, AfterViewInit, ViewChildren, Renderer2,
-    ElementRef
+    ElementRef, OnDestroy
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms'
@@ -20,7 +20,7 @@ import {CallbackRemoval} from "../../core/data/component-data";
         // '[style.width]': 'width'
     }
 })
-export class RdkTileSelect extends AbstractRDKComponent implements OnInit, AfterViewInit {
+export class RdkTileSelect extends AbstractRDKComponent implements OnInit, AfterViewInit, OnDestroy {
     private _contentInit: boolean = false;
     private _selectedItems: ArrayCollection<any> = new ArrayCollection();
     private _removeRefreshCallback: CallbackRemoval;
@@ -75,7 +75,7 @@ export class RdkTileSelect extends AbstractRDKComponent implements OnInit, After
 
     @Input() public searchable: boolean = false;
 
-    @Input() public data: Array<object>;
+    @Input() public data: ArrayCollection<object>;
 
     @Input() public tileOptionWidth: string;
 
@@ -142,6 +142,12 @@ export class RdkTileSelect extends AbstractRDKComponent implements OnInit, After
     ngAfterViewInit() {
         this._contentInit = true;
         this._setOptionState();
+    }
+
+    ngOnDestroy() {
+        if(this._removeRefreshCallback){
+            this._removeRefreshCallback()
+        }
     }
 }
 

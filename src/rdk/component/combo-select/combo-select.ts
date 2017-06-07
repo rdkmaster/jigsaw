@@ -336,6 +336,10 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
 
     public ngOnDestroy() {
         this.open = false;
+
+        if(this._removeRefreshCallback){
+            this._removeRefreshCallback()
+        }
     }
 
 }
