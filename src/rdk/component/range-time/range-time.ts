@@ -175,8 +175,8 @@ export class RdkRangeTime extends AbstractRDKComponent implements OnInit {
 
     private _getShortcuts(): Shortcut[] {
         let item: GrItem = this._grItems && this._grItems.find(item => item.value == this._timeStart.gr);
-        if (item && item.shortCuts && item.shortCuts.length != 0) {
-            return item.shortCuts;
+        if (item && item.shortcuts && item.shortcuts.length != 0) {
+            return item.shortcuts;
         }
         return null;
     }

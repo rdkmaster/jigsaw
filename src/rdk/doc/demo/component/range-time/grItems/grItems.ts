@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import {TimeGr} from "../../../../../service/time.service";
-import {GrItem, ShortCut} from "../../../../../component/time/time";
+import {GrItem, Shortcut} from "../../../../../component/time/time";
 import {RangeTimeDataRanges} from "../../../../../component/range-time/shortcut-dateranges";
 
 
@@ -14,11 +14,11 @@ export class RangeTimeGrItemsComponent {
     endDate = "now";
 
 
-    shortCuts :ShortCut[]= [{label:"My",dateRange:["now-1w","now"]},
+    shortcuts :Shortcut[]= [{label:"My",dateRange:["now-1w","now"]},
                             {label:"这周",dateRange:RangeTimeDataRanges.RecentWeek}];
 
     grItems :GrItem[]= [
-        {label: "Day", value: TimeGr.date, shortCuts:this.shortCuts,span:"2d"},
+        {label: "Day", value: TimeGr.date, shortcuts:this.shortcuts,span:"2d"},
         {label: "Week", value: TimeGr.week},
         {label: "Month", value: TimeGr.month}];
 
