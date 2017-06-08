@@ -1127,10 +1127,12 @@ export class RdkTableCell extends TableCellBasic implements OnInit, OnDestroy {
 @Component({
     selector: '[rdk-table-header]',
     template: `
-        <ng-template rdk-renderer-host></ng-template>
-        <div *ngIf="sortable" [ngClass]="_sortOrderClass">
-            <span (click)="_sortAsc()" class="rdk-table-sort-btn rdk-table-sort-up"></span>
-            <span (click)="_sortDes()" class="rdk-table-sort-btn rdk-table-sort-down"></span>
+        <div class="rdk-table-header-cell">
+            <ng-template rdk-renderer-host></ng-template>
+            <div *ngIf="sortable" [ngClass]="_sortOrderClass">
+                <span (click)="_sortAsc()" class="rdk-table-sort-btn rdk-table-sort-up"></span>
+                <span (click)="_sortDes()" class="rdk-table-sort-btn rdk-table-sort-down"></span>
+            </div>
         </div>`,
     styleUrls: ['table-head.scss']
 })
