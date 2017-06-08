@@ -939,13 +939,9 @@ export class TableCellBasic implements AfterViewInit {
  * */
 @Component({
     selector: '[rdk-table-cell]',
-    template: '<ng-template rdk-renderer-host></ng-template>',
-    host: {
-        '[style.height]': '_rowHeight'
-    }
+    template: '<ng-template rdk-renderer-host></ng-template>'
 })
 export class RdkTableCell extends TableCellBasic implements OnInit, OnDestroy {
-    private _rowHeight: string;
 
     @Input()
     public editable: boolean = false;
@@ -966,8 +962,8 @@ export class RdkTableCell extends TableCellBasic implements OnInit, OnDestroy {
     constructor(cfr: ComponentFactoryResolver,
                 cd: ChangeDetectorRef,
                 @Optional() rdkTable: RdkTable,
-                private _rdr: Renderer2,
-                private _el: ElementRef) {
+                private _renderer: Renderer2,
+                private _elementRef: ElementRef) {
         super(cfr, cd, rdkTable);
     }
 
@@ -1032,11 +1028,10 @@ export class RdkTableCell extends TableCellBasic implements OnInit, OnDestroy {
             this.rendererHost.viewContainerRef.clear();
             this.insertRenderer();
             this._setGoEditListener();
-            this._setEditorCellHeight();
             //重新对齐表头
             this._rdkTable._asyncSetFixedHeadWidth();
             //重新绑定td的tooltip
-            this._rdkTable._rebindTooltipForCell(this._el.nativeElement, this.cellData, this.row, this.column);
+            this._rdkTable._rebindTooltipForCell(this._elementRef.nativeElement, this.cellData, this.row, this.column);
         });
     }
 
@@ -1072,26 +1067,12 @@ export class RdkTableCell extends TableCellBasic implements OnInit, OnDestroy {
      * 如果可编辑，单元格绑定点击事件
      * */
     private _setGoEditListener() {
-        this._goEditCallback = this.editable ? this._rdr.listen(this._el.nativeElement, 'click', () => {
+        this._goEditCallback = this.editable ? this._renderer.listen(this._elementRef.nativeElement.parentElement, 'click', () => {
             this.rendererHost.viewContainerRef.clear();
             this.insertEditorRenderer();
-            this._setEditorCellHeight();
             //重新对齐表头
             this._rdkTable._asyncSetFixedHeadWidth();
         }) : null;
-    }
-
-    /**
-     * 处理可编辑的单元格内容为空时，设置下内容的高度
-     * @private
-     */
-    private _setEditorCellHeight() {
-        const cellText: HTMLElement = this._el.nativeElement.querySelector('span.rdk-table-cell-text');
-        if (cellText && cellText.offsetWidth == 0) {
-            this._rowHeight = this._el.nativeElement.parentElement.offsetHeight - 2 + 'px';
-        } else {
-            this._rowHeight = 'auto';
-        }
     }
 
     ngOnInit() {
@@ -1099,10 +1080,9 @@ export class RdkTableCell extends TableCellBasic implements OnInit, OnDestroy {
         this.renderer = this.renderer ? this.renderer : DefaultCellRenderer;
 
         if (this.editable) {
-            this._rdr.setStyle(this._el.nativeElement, 'cursor', 'pointer');
+            this._renderer.setStyle(this._elementRef.nativeElement.parentElement, 'cursor', 'pointer');
             //绑定点击事件
             this._setGoEditListener();
-            this._setEditorCellHeight();
         }
     }
 
