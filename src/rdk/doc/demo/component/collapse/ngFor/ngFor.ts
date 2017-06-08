@@ -11,9 +11,9 @@ import {RdkCollapse} from "../../../../../component/collapse/collapse";
 export class ngForDemoComponent {
 
     nes = [
-        {id: 1, name: "网元系列1", content: "content of ne1"},
-        {id: 2, name: "网元系列2", content: "content of ne2"},
-        {id: 3, name: "网元系列3", content: "content of ne3"}
+        {id: 1, name: "NE1", content: "content of ne1"},
+        {id: 2, name: "NE2", content: "content of ne2"},
+        {id: 3, name: "NE3", content: "content of ne3"}
     ];
 
     @ViewChild("coll_ne") collapse: RdkCollapse;
@@ -22,7 +22,7 @@ export class ngForDemoComponent {
     activePane: RdkCollapsePane;
 
     add() {
-        this.nes.push({id: 4, name: "网元系列" + (this.nes.length+1), content: "content of ne"+ (this.nes.length+1)})
+        this.nes.push({id: 4, name: "NE" + (this.nes.length+1), content: "content of ne"+ (this.nes.length+1)})
     }
 
     click() {
