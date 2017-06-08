@@ -1,0 +1,8 @@
+<rdk-button (click)="click()">获取当前展开的网元对象</rdk-button>
+
+<br>
+<rdk-collapse width="80%" mode="accordion" #coll_ne>
+    <rdk-collapse-pane *ngFor="let ne of nes" [title]="ne.name">
+
+    </rdk-collapse-pane>
+</rdk-collapse>
