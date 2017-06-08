@@ -1,6 +1,6 @@
 import {
     NgModule, Component, EventEmitter, Input, Output, ContentChildren, Directive, QueryList,
-    ElementRef, ViewChild, AfterContentInit, Renderer2
+    ElementRef, ViewChild, AfterContentInit, Renderer2, AfterViewInit
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
@@ -22,12 +22,13 @@ export class RdkPrefixIcon {
         '(click)': '_stopPropagation($event)'
     }
 })
-export class RdkInput extends AbstractRDKComponent implements AfterContentInit {
+export class RdkInput extends AbstractRDKComponent implements AfterContentInit, AfterViewInit {
     private _value: string | number; //input表单值
     private _longIndent: boolean = false;
     private _focused: boolean;
     private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
     private _blurEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
+
 
     constructor(private _render2: Renderer2,
                 private _elementRef: ElementRef) {
@@ -98,6 +99,32 @@ export class RdkInput extends AbstractRDKComponent implements AfterContentInit {
         event.stopPropagation();
     }
 
+    private _inputPaddingStyle: {};
+
+    /**
+     * 动态计算 input的padding-left 和padding-right (不确定图标的个数, 好空出对应的位置.)
+     * 当前计算方法根据图标的个数计算, 默认图标大小为12px , dom大小获取的不准确.
+     * @private
+     */
+    private _setInputPaddingStyle() {
+        let prefixIconLength = this._elementRef.nativeElement.querySelector(".rdk-input-icon-front").children.length;
+        let endIconLength = this._elementRef.nativeElement.querySelector(".rdk-input-icon-end").children.length;
+
+        let prefixIconPadding = 4;
+
+        const ICON_SIZE:number = 12;
+
+        // 没有图标默认前面空4个位置, 有一个
+        if (prefixIconLength !== 0) {
+            prefixIconPadding = ICON_SIZE * prefixIconLength + 8 + 4
+        }
+
+        this._inputPaddingStyle = {
+            "padding-left": prefixIconPadding + "px",
+            "padding-right": ICON_SIZE*endIconLength + 8 + "px"
+        }
+    }
+
     ngAfterContentInit() {
         this._iconFront && this._iconFront.length ? this._longIndent = true : null;
         setTimeout(() => {
@@ -105,6 +132,11 @@ export class RdkInput extends AbstractRDKComponent implements AfterContentInit {
         }, 0);
 
     }
+
+    ngAfterViewInit() {
+        this._setInputPaddingStyle();
+    }
+
 
 }
 
