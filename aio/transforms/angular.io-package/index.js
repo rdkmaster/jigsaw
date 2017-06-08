@@ -78,6 +78,9 @@ module.exports =
           readTypeScriptModules.sourceFiles = [
            'component/button/button.ts',
 		   'component/table/table.ts',
+
+
+           'component/collapse/collapse.ts',
           ];
 
           readFilesProcessor.basePath = PROJECT_ROOT;
