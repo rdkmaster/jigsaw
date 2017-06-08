@@ -302,6 +302,11 @@ export class RdkTime extends AbstractRDKComponent implements OnInit, OnDestroy {
             const daysObj = RdkTime._parseDay(daysHeadNode.innerText);
             RdkTime._searchDateForDay(this._recommendedBegin, this._recommendedEnd, daysNode, daysObj);
             nativeElement.querySelectorAll(".rdk-time-box .datepicker .expect-day").forEach(node => {
+
+                // #239 移除已经注册的事件. 点击事件会触发此操作, 造成重复注册事件. 引起tooltips 不能销毁.
+                node.removeEventListener("mouseenter");
+                node.removeEventListener("mouseleave");
+
                 this._renderer.listen(node, "mouseenter", (event) => {
                     if (this._tooltipInfo) {
                         this._tooltipInfo.dispose();
