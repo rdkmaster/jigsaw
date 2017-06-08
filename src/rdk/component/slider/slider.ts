@@ -78,9 +78,6 @@ export class RdkSlider implements OnInit, OnDestroy {
     @Output()
     public change = this.valueChange;
 
-    @Input()
-    public range: boolean = false;
-
     private _min: number = 0;
 
     @Input()
@@ -140,16 +137,18 @@ export class RdkSlider implements OnInit, OnDestroy {
         let startPos: number = 0;
         let trackSize: number = typeof value !== 'undefined' ? this._transformValueToPos(value) : this._transformValueToPos(this.value); // 默认单触点位置
 
-        let max: number = this.value[0];
-        let min: number = this.value[0];
+        if (this._value.length > 1) {
+            let max: number = this._value[0];
+            let min: number = this._value[0];
 
-        this._value.map(item => {
-            if (max - item < 0) max = item;
-            else if (item - min < 0) min = item;
-        });
+            this._value.map(item => {
+                if (max - item < 0) max = item;
+                else if (item - min < 0) min = item;
+            });
 
-        startPos = this._transformValueToPos(min);
-        trackSize = Math.abs(this._transformValueToPos(max) - this._transformValueToPos(min));
+            startPos = this._transformValueToPos(min);
+            trackSize = Math.abs(this._transformValueToPos(max) - this._transformValueToPos(min));
+        }
 
         if (this.vertical) { // 垂直和水平两种
             this._trackStyle = {

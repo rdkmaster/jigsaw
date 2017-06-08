@@ -15,8 +15,6 @@ export class SliderVerticalDemo implements OnInit {
 
     value = new ArrayCollection([30, 40, 60]);
 
-    range = true;
-
     constructor() { }
 
     ngOnInit() { }
