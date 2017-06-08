@@ -10,14 +10,25 @@ import {RdkCollapse} from "../../../../../component/collapse/collapse";
 })
 export class ngForDemoComponent {
 
-    nes = [{id:1,name:"网元系列1"},{id:2,name:"网元系列2"}];
+    nes = [
+        {id: 1, name: "网元系列1", content: "content of ne1"},
+        {id: 2, name: "网元系列2", content: "content of ne2"},
+        {id: 3, name: "网元系列2", content: "content of ne3"}
+    ];
 
-    @ViewChild("coll_ne") coll_ne :RdkCollapse;
+    @ViewChild("coll_ne") collapse: RdkCollapse;
 
 
-    activePane : RdkCollapsePane;
-    click(){
-        this.activePane = this.coll_ne._rdkPanel.find((pane) => pane.isActive == true)
-        alert( this.activePane.title );
+    activePane: RdkCollapsePane;
+
+    add() {
+        this.nes.push({id: 4, name: "网元系列2", content: "content of ne4"})
+    }
+
+    click() {
+        let found: string;
+        this.activePane = this.collapse.panes.find((pane) => pane.isActive == true);
+        found = this.activePane ? this.activePane.title : 'no pane';
+        alert(found + ' is activated!');
     }
 }
