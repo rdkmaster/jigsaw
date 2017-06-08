@@ -24,7 +24,7 @@ import {AbstractRDKComponent} from "../core";
 })
 export class RdkCollapse extends AbstractRDKComponent{
 
-    @ContentChildren(RdkCollapsePane) _rdkPanel: QueryList<RdkCollapsePane>;
+    @ContentChildren(RdkCollapsePane) panes: QueryList<RdkCollapsePane>;
 
     /**
      * 组件模式(默认值 "default",可同时展开多个面板; 手风琴, 只可展开一个活动的面板;)

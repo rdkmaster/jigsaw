@@ -18,9 +18,9 @@ export class RdkCollapsePane{
 
     private _onClick() {
         // 手风琴, 自动关闭其他的pane;
-        if (this._collapse && this._collapse._rdkPanel &&
+        if (this._collapse && this._collapse.panes &&
             (this._collapse.mode === "accordion" || this._collapse.mode === CollapseMode.accordion)) {
-            this._collapse._rdkPanel.forEach(item => {
+            this._collapse.panes.forEach(item => {
                 if (item !== this && item.isActive) {
                     item.isActive = false;
                 }

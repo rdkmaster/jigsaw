@@ -7,10 +7,15 @@ import { CollapseBasicDemoComponent } from './basic/basic';
 import {RdkCollapseModule} from "../../../../component/collapse/collapse";
 import {RouterModule} from "@angular/router";
 import {RdkInputModule} from "../../../../component/input/input";
+import {ngForDemoComponent} from "rdk/doc/demo/component/collapse/ngFor/ngFor";
+import {CommonModule} from "@angular/common";
+import {RdkButtonModule} from "../../../../component/button/button";
 
 const routes = [
     {
         path: 'basic', component:CollapseBasicDemoComponent
+    },{
+        path: 'ngFor', component:ngForDemoComponent
     }
 ]
 
@@ -18,10 +23,10 @@ const routes = [
     imports: [
         RouterModule.forChild(routes),
         RdkCollapseModule,
-        RdkInputModule
+        RdkInputModule,CommonModule,RdkButtonModule
     ],
     exports: [CollapseBasicDemoComponent],
-    declarations: [CollapseBasicDemoComponent],
+    declarations: [CollapseBasicDemoComponent,ngForDemoComponent],
     providers: [],
 })
 export class CollapseDemoModule { }
