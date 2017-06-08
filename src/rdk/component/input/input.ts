@@ -130,13 +130,11 @@ export class RdkInput extends AbstractRDKComponent implements AfterContentInit, 
         setTimeout(() => {
             this._render2.setStyle(this._elementRef.nativeElement, 'opacity', 1);
         }, 0);
-
     }
 
     ngAfterViewInit() {
         this._setInputPaddingStyle();
     }
-
 
 }
 
