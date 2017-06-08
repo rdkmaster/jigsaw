@@ -2,6 +2,7 @@
  * Created by 10177553 on 2017/5/17.
  */
 import { Component, OnInit } from '@angular/core';
+import {ArrayCollection} from "../../../../../core/data/array-collection";
 
 @Component({
     template: `
@@ -12,7 +13,7 @@ export class SliderVerticalDemo implements OnInit {
 
     vertical: boolean = true;
 
-    value = [30, 40, 60];
+    value = new ArrayCollection([30, 40, 60]);
 
     range = true;
 

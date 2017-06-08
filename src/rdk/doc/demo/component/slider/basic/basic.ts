@@ -3,6 +3,7 @@
  */
 import {Component, OnInit, AfterViewInit, ViewChild} from '@angular/core';
 import {RdkSlider} from "../../../../../component/slider/slider";
+import {ArrayCollection} from "../../../../../core/data/array-collection";
 
 @Component({
     template: `
@@ -26,14 +27,14 @@ import {RdkSlider} from "../../../../../component/slider/slider";
         <hr>
         <br>
         <h4>5. mark 节点.</h4>
-        <rdk-slider [marks]="marks" value="50"></rdk-slider>
+        <rdk-slider [marks]="marks" [value]="50"></rdk-slider>
         
         <hr>
         <br>
         <h4>6. 垂直滑动条.</h4>
         <rdk-slider [value]="rangeValue2" range="true" [vertical]="vertical" class="vertical" style="height: 240px; width: 60px;" ></rdk-slider>
         
-        <rdk-slider #slider value="120" [marks]="marks2"  min="20" [vertical]="vertical" class="vertical3"></rdk-slider>
+        <rdk-slider #slider [value]="120" [marks]="marks2"  min="20" [vertical]="vertical" class="vertical3"></rdk-slider>
     `,
     styleUrls:['./basic.scss']
 })
@@ -53,7 +54,7 @@ export class RdkSliderDemoBasic implements OnInit{
 
     valueStep = 1;
 
-    rangeValue = [30, 50, 60]
+    rangeValue = new ArrayCollection([30, 50, 60]);
     handleValueChange(value) {
         console.log("传递出来的对象:");
         console.log(value);
@@ -83,7 +84,7 @@ export class RdkSliderDemoBasic implements OnInit{
         this.value3 = value;
     }
 
-    rangeValue2 = [0, 160];
+    rangeValue2 = new ArrayCollection([10, 80]);
 
     ngOnInit() { }
 
