@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --host 0.0.0.0 --port 4201",
     "predocs": "rimraf src/content",
     "docs": "dgeni ./transforms/angular.io-package"
   },
