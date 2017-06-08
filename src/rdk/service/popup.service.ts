@@ -327,7 +327,7 @@ export class PopupService {
 
         //弹出EmbeddedViewRef时，防止同一个HtmlElement被反复弹出和销毁，使的弹出时监听到上次销毁时的animationend事件
         if(!(popupRef instanceof ComponentRef)){
-            element.removeEventListener('animationend');
+            element.removeEventListener('animationend'); 
         }
 
         renderer.setStyle(element, 'visibility', 'visible');
