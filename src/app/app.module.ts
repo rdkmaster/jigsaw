@@ -30,8 +30,12 @@ const appRoutes=[
     AppComponent
   ],
   imports: [
-    BrowserModule, FormsModule, HttpModule, RouterModule.forRoot(appRoutes), BrowserAnimationsModule
-      ,TranslateModule.forRoot({
+    BrowserModule,
+      FormsModule,
+      HttpModule,
+      RouterModule.forRoot(appRoutes, {useHash: true}),
+      BrowserAnimationsModule,
+      TranslateModule.forRoot({
               loader: {
                   provide: TranslateLoader,
                   useFactory: HttpLoaderFactory,
