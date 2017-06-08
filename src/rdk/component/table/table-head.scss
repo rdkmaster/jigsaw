@@ -2,6 +2,12 @@
 
 $table-prefix-cls: #{$rdk-prefix}-table;
 
+.#{$table-prefix-cls}-header-cell{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
 .#{$table-prefix-cls}-sort-box{
     @include inline-block;
     position: absolute;
