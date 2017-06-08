@@ -326,7 +326,6 @@ export class RdkTime extends AbstractRDKComponent implements OnInit, OnDestroy {
                 });
                 this._renderer.listen(node, "mouseleave", () => {
                     if (this._tooltipInfo) {
-                        // debugger;
                         this._tooltipInfo.dispose();
                         this._tooltipInfo = null;
                     }
