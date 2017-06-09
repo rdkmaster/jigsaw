@@ -15,7 +15,7 @@ import {CallbackRemoval} from "../../core/data/component-data";
     templateUrl: './slider.html',
     styleUrls: ['./slider.scss'],
     host: {
-        'class': 'sliderHost'
+        'class': 'rdk-slider-host'
     },
     encapsulation: ViewEncapsulation.None
 })
