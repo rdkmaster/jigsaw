@@ -25,10 +25,10 @@ import {CallbackRemoval} from "../../core/data/component-data";
  */
 export class RdkSlider implements OnInit, OnDestroy {
 
-    constructor(private _element: ElementRef, private _render: Renderer2, private _changeDetector: ChangeDetectorRef) {
-    }
+    constructor(private _element: ElementRef, private _render: Renderer2, private _changeDetector: ChangeDetectorRef) { }
 
-    @ViewChildren(SliderHandle) _sliderHandle: QueryList<SliderHandle>;
+    // Todo 支持滑动条点击.
+    @ViewChildren(SliderHandle) private _sliderHandle: QueryList<SliderHandle>;
 
     private _value: ArrayCollection<number> = new ArrayCollection<number>();
     private _removeRefreshCallback: CallbackRemoval;
@@ -62,7 +62,7 @@ export class RdkSlider implements OnInit, OnDestroy {
     }
 
     // 设置单个的值
-    public setValue(key, value) {
+    public _setValue(key, value) {
         this._value.set(key, value);
         this._value.refresh();
     }
@@ -85,7 +85,7 @@ export class RdkSlider implements OnInit, OnDestroy {
         return this._min;
     }
 
-    public set min(min) {
+    public set min(min: number) {
         this._min = min;
     }
 
@@ -95,7 +95,7 @@ export class RdkSlider implements OnInit, OnDestroy {
         return this._max;
     }
 
-    public set max(max) {
+    public set max(max: number) {
         this._max = max;
     }
 
@@ -105,7 +105,7 @@ export class RdkSlider implements OnInit, OnDestroy {
         return this._step;
     }
 
-    public set step(value) {
+    public set step(value: number) {
         this._step = value;
     }
 

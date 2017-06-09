@@ -96,7 +96,7 @@ export class SliderHandle implements OnInit{
         return m;
     }
 
-    _updateCanDragged(flag) {
+    _updateCanDragged(flag: boolean) {
         this._dragged = flag;
 
         if(flag) {
@@ -151,7 +151,7 @@ export class SliderHandle implements OnInit{
 
         this.value = newValue;
 
-        this._slider.setValue(this.key, newValue);
+        this._slider._setValue(this.key, newValue);
     }
 
     ngOnInit() {
