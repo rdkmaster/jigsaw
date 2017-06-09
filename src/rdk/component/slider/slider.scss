@@ -3,12 +3,13 @@
 
 $rdk-slider: #{$rdk-prefix}-slider;
 
-.sliderHost {
+.#{$rdk-slider}-host {
     height: 100%;
     width: 100%;
     display: inline-block;
     user-select: none;
 }
+
 ::selection {
     background-color: #fff;
     color: #666;
