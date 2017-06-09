@@ -152,7 +152,7 @@ export class PopupService {
         removeWindowListens = this._beforePopup(options, element, this._renderer, disposer);
         setTimeout(() => {
             event.emit(PopupEventType.instanceCreated);
-            this._setPopup(options, element, popupRef, this._renderer, event);
+            this._setPopup(options, element, this._renderer, event);
         }, 0);
 
         return {popupRef: popupRef, element: element, dispose: disposer, event: event}
@@ -161,7 +161,6 @@ export class PopupService {
     private _popupBlocker(options: PopupOptions): PopupDisposer {
         let disposer: PopupDisposer;
         let element: HTMLElement;
-        let popupRef: PopupRef;
         if (this._isModal(options)) {
             const blockOptions: PopupOptions = {
                 modal: true,
@@ -172,14 +171,14 @@ export class PopupService {
             const blockInfo: PopupInfo = this._popupFactory(RdkBlock, blockOptions);
             disposer = blockInfo.dispose;
             element = blockInfo.element;
-            popupRef = blockInfo.popupRef;
             this._setStyle(options, element, this._renderer);
-            this._setPopup(blockOptions, element, popupRef, this._renderer);
+            this._setPopup(blockOptions, element, this._renderer);
         }
         return disposer
     }
 
     private _beforePopup(options: PopupOptions, element: HTMLElement, renderer: Renderer2, disposer: PopupDisposer): PopupDisposer[] {
+        this._removeAmimate(options, element, renderer);
         this._setStyle(options, element, renderer);
         return this._setWindowListener(options, element, renderer, disposer);
     }
@@ -191,6 +190,21 @@ export class PopupService {
             renderer.setStyle(element, 'z-index', '9000');
         }
         renderer.setStyle(element, 'visibility', 'hidden');
+    }
+
+    private _removeAmimate(options: PopupOptions, element: HTMLElement, renderer: Renderer2){
+        const popupEffect = PopupService._getPopupEffect(options);
+
+        //删除可能有的动画class，确保能触发动画的animationend事件
+        if(element.classList.contains(popupEffect.showEffect)){
+            renderer.removeClass(element, popupEffect.showEffect);
+        }
+        if(element.classList.contains(popupEffect.hideEffect)){
+            renderer.removeClass(element, popupEffect.hideEffect);
+        }
+
+        //弹出EmbeddedViewRef时，防止同一个HtmlElement被反复弹出和销毁，使的弹出时监听到上次销毁时的animationend事件
+        element.removeEventListener('animationend');
     }
 
     private _popupFactory(what: Type<IPopupable> | TemplateRef<any>, options: PopupOptions): PopupInfo {
@@ -258,11 +272,11 @@ export class PopupService {
         return CommonUtils.isEmptyObject(options) || !options.pos;
     }
 
-    private _setPopup(options: PopupOptions, element: HTMLElement, popupRef: PopupRef,renderer: Renderer2, event?: EventEmitter<PopupEventType>) {
+    private _setPopup(options: PopupOptions, element: HTMLElement, renderer: Renderer2, event?: EventEmitter<PopupEventType>) {
         if (element && renderer) {
             this._setSize(options, element, renderer);
             this._setPosition(options, element, renderer);
-            this._setShowAnimate(options, element, popupRef, renderer, event);
+            this._setShowAnimate(options, element, renderer, event);
             if (event) {
                 event.emit(PopupEventType.positionReady);
             }
@@ -313,25 +327,9 @@ export class PopupService {
         renderer.setStyle(element, 'background', '#ffffff');
     }
 
-    private _setShowAnimate(options: PopupOptions, element: HTMLElement, popupRef: PopupRef, renderer: Renderer2, event?: EventEmitter<PopupEventType>) {
-
-        const popupEffect = PopupService._getPopupEffect(options);
-
-        //删除可能有的动画class，确保能触发动画的animationend事件
-        if(element.classList.contains(popupEffect.showEffect)){
-            renderer.removeClass(element, popupEffect.showEffect);
-        }
-        if(element.classList.contains(popupEffect.hideEffect)){
-            renderer.removeClass(element, popupEffect.hideEffect);
-        }
-
-        //弹出EmbeddedViewRef时，防止同一个HtmlElement被反复弹出和销毁，使的弹出时监听到上次销毁时的animationend事件
-        if(!(popupRef instanceof ComponentRef)){
-            element.removeEventListener('animationend'); 
-        }
-
+    private _setShowAnimate(options: PopupOptions, element: HTMLElement, renderer: Renderer2, event?: EventEmitter<PopupEventType>) {
         renderer.setStyle(element, 'visibility', 'visible');
-        renderer.addClass(element, popupEffect.showEffect);
+        renderer.addClass(element, PopupService._getPopupEffect(options).showEffect);
 
         if (event) {
             const removeElementListen = renderer.listen(element, 'animationend', () => {
