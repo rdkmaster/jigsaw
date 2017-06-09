@@ -692,8 +692,6 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
 
     private _tooltipInfo: PopupInfo;
     private _addTdTooltipListener(tdElement: HTMLElement, message: string | number, rowIndex: number, colIndex: number) {
-        let tooltipInfo: PopupInfo;
-
         const removeTdMouseEnterListener = this._renderer.listen(tdElement, "mouseenter", () => {
             if (!this._tooltipInfo) {
                 this._tooltipInfo = this._popupService.popup(SimpleTooltipComponent, {
