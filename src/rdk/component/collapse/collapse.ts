@@ -18,7 +18,7 @@ import {AbstractRDKComponent} from "../core";
     styleUrls: ['collapse.scss'],
     host: {
         '[style.width]': 'width',
-        'class':'collapseHost'
+        'class':'rdk-collapse-host'
     },
     encapsulation: ViewEncapsulation.None
 })
