@@ -2,7 +2,7 @@
 
 $collapse-prefix: #{$rdk-prefix}-collapse;
 
-.collapseHost {
+.#{$collapse-prefix}-host {
     display: block;
 }
 
