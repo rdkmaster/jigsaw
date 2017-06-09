@@ -7,7 +7,7 @@ import {RdkButtonModule} from "../../../../component/button/button";
 import {ButtonWidthHeightDemoComponent} from "./width_height/width_height";
 import {ButtonPresetDemoComponent} from "./preset/preset";
 import {RdkLoadingModule} from "../../../../component/loading/loading";
-import {ButtonWithLoadingComponent} from "./width-loading/demo";
+import {ButtonWithLoadingComponent} from "./with-loading/demo";
 
 const buttonDemoRoutes = [
     {
@@ -26,7 +26,7 @@ const buttonDemoRoutes = [
         path: 'preset', component: ButtonPresetDemoComponent
     },
     {
-        path: 'width-loading', component: ButtonWithLoadingComponent
+        path: 'with-loading', component: ButtonWithLoadingComponent
     },
     {
         path: '**', //fallback router must in the last

@@ -6,9 +6,6 @@ import {Component} from '@angular/core';
 export class DomInnerDemoComponent {
     isLoading: boolean;
     load(){
-        this.isLoading = true;
-        setTimeout(() => {
-            this.isLoading = false;
-        }, 3000)
+        this.isLoading = !this.isLoading;
     }
 }
