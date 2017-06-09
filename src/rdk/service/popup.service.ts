@@ -178,7 +178,7 @@ export class PopupService {
     }
 
     private _beforePopup(options: PopupOptions, element: HTMLElement, renderer: Renderer2, disposer: PopupDisposer): PopupDisposer[] {
-        this._removeAmimate(options, element, renderer);
+        this._removeAnimation(options, element, renderer);
         this._setStyle(options, element, renderer);
         return this._setWindowListener(options, element, renderer, disposer);
     }
@@ -192,7 +192,7 @@ export class PopupService {
         renderer.setStyle(element, 'visibility', 'hidden');
     }
 
-    private _removeAmimate(options: PopupOptions, element: HTMLElement, renderer: Renderer2){
+    private _removeAnimation(options: PopupOptions, element: HTMLElement, renderer: Renderer2){
         const popupEffect = PopupService._getPopupEffect(options);
 
         //删除可能有的动画class，确保能触发动画的animationend事件
