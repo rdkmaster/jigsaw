@@ -6,7 +6,7 @@ import {ArrayCollection} from "../../../../../core/data/array-collection";
 })
 export class RadioBasicDemoComponent {
     public selectedCity:{};
-    citys = new ArrayCollection([
+    cities = new ArrayCollection([
         {label: "北京", id: 0},
         {label: "上海", id: 2},
         {label: "南京", id: 3},
