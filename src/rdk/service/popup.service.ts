@@ -178,6 +178,7 @@ export class PopupService {
     }
 
     private _beforePopup(options: PopupOptions, element: HTMLElement, renderer: Renderer2, disposer: PopupDisposer): PopupDisposer[] {
+        this._removeAnimation(options, element, renderer);
         this._setStyle(options, element, renderer);
         return this._setWindowListener(options, element, renderer, disposer);
     }
@@ -189,6 +190,21 @@ export class PopupService {
             renderer.setStyle(element, 'z-index', '9000');
         }
         renderer.setStyle(element, 'visibility', 'hidden');
+    }
+
+    private _removeAnimation(options: PopupOptions, element: HTMLElement, renderer: Renderer2){
+        const popupEffect = PopupService._getPopupEffect(options);
+
+        //删除可能有的动画class，确保能触发动画的animationend事件
+        if(element.classList.contains(popupEffect.showEffect)){
+            renderer.removeClass(element, popupEffect.showEffect);
+        }
+        if(element.classList.contains(popupEffect.hideEffect)){
+            renderer.removeClass(element, popupEffect.hideEffect);
+        }
+
+        //弹出EmbeddedViewRef时，防止同一个HtmlElement被反复弹出和销毁，使的弹出时监听到上次销毁时的animationend事件
+        element.removeEventListener('animationend');
     }
 
     private _popupFactory(what: Type<IPopupable> | TemplateRef<any>, options: PopupOptions): PopupInfo {
@@ -312,22 +328,8 @@ export class PopupService {
     }
 
     private _setShowAnimate(options: PopupOptions, element: HTMLElement, renderer: Renderer2, event?: EventEmitter<PopupEventType>) {
-
-        const popupEffect = PopupService._getPopupEffect(options);
-
-        //删除可能有的动画class，确保能触发动画的animationend事件
-        if(element.classList.contains(popupEffect.showEffect)){
-            renderer.removeClass(element, popupEffect.showEffect);
-        }
-        if(element.classList.contains(popupEffect.hideEffect)){
-            renderer.removeClass(element, popupEffect.hideEffect);
-        }
-
-        //防止同一个HtmlElement被反复弹出和销毁，使的弹出时监听到上次销毁时的animationend事件
-        element.removeEventListener('animationend');
-
         renderer.setStyle(element, 'visibility', 'visible');
-        renderer.addClass(element, popupEffect.showEffect);
+        renderer.addClass(element, PopupService._getPopupEffect(options).showEffect);
 
         if (event) {
             const removeElementListen = renderer.listen(element, 'animationend', () => {
