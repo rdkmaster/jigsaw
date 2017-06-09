@@ -1,6 +1,6 @@
 import {
     NgModule, Component, EventEmitter, Input, Output, ContentChildren, Directive, QueryList,
-    ElementRef, ViewChild, AfterContentInit, Renderer2
+    ElementRef, ViewChild, AfterContentInit, Renderer2, AfterViewChecked, ChangeDetectorRef
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
@@ -22,15 +22,17 @@ export class RdkPrefixIcon {
         '(click)': '_stopPropagation($event)'
     }
 })
-export class RdkInput extends AbstractRDKComponent implements AfterContentInit {
+export class RdkInput extends AbstractRDKComponent implements AfterContentInit, AfterViewChecked {
     private _value: string | number; //input表单值
     private _longIndent: boolean = false;
     private _focused: boolean;
     private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
     private _blurEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 
+
     constructor(private _render2: Renderer2,
-                private _elementRef: ElementRef) {
+                private _elementRef: ElementRef,
+                private _changeDetectorRef: ChangeDetectorRef) {
         super();
     }
 
@@ -98,12 +100,41 @@ export class RdkInput extends AbstractRDKComponent implements AfterContentInit {
         event.stopPropagation();
     }
 
+    private _inputPaddingStyle: {};
+
+    /**
+     * 动态计算 input的padding-left 和padding-right (不确定图标的个数, 好空出对应的位置.)
+     * 当前计算方法根据图标的个数计算, 默认图标大小为12px , dom大小获取的不准确.
+     * @private
+     */
+    private _setInputPaddingStyle() {
+        let prefixIconWidth = this._elementRef.nativeElement.querySelector(".rdk-input-icon-front").offsetWidth;
+        let endIconWidth = this._elementRef.nativeElement.querySelector(".rdk-input-icon-end").offsetWidth;
+
+        let prefixIconPadding = prefixIconWidth + 4;
+        if(prefixIconWidth !== 0) {
+            prefixIconPadding = prefixIconPadding + 8;
+        }
+
+        let endPadding = endIconWidth + 8;
+
+        this._inputPaddingStyle = {
+            "padding-left": prefixIconPadding + "px",
+            "padding-right": endPadding + "px"
+        }
+
+        this._changeDetectorRef.detectChanges();
+    }
+
     ngAfterContentInit() {
         this._iconFront && this._iconFront.length ? this._longIndent = true : null;
         setTimeout(() => {
             this._render2.setStyle(this._elementRef.nativeElement, 'opacity', 1);
         }, 0);
+    }
 
+    ngAfterViewChecked() {
+        this._setInputPaddingStyle();
     }
 
 }

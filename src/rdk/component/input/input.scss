@@ -28,7 +28,6 @@ $input-prefix-cls: #{$rdk-prefix}-input;
         padding-right:20px;
         border: 1px solid $border-color-base;
         border-radius: 3px;
-        text-indent: 4px;
         outline: none;
         @include prefixer(transition, all 0.3s $ease-in-out);
         &:hover {
@@ -37,9 +36,6 @@ $input-prefix-cls: #{$rdk-prefix}-input;
         &:focus {
             border: 1px solid $primary-color;
             box-shadow: 0 0 0 2px $primary-color-shadow;
-        }
-        &.#{$input-prefix-cls}-long-indent{
-            text-indent: 24px;
         }
     }
     span.fa{
