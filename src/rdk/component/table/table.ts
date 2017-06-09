@@ -690,12 +690,13 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         })
     }
 
+    private _tooltipInfo: PopupInfo;
     private _addTdTooltipListener(tdElement: HTMLElement, message: string | number, rowIndex: number, colIndex: number) {
         let tooltipInfo: PopupInfo;
 
         const removeTdMouseEnterListener = this._renderer.listen(tdElement, "mouseenter", () => {
-            if (!tooltipInfo) {
-                tooltipInfo = this._popupService.popup(SimpleTooltipComponent, {
+            if (!this._tooltipInfo) {
+                this._tooltipInfo = this._popupService.popup(SimpleTooltipComponent, {
                     modal: false, //是否模态
                     showEffect: PopupEffect.bubbleIn,
                     hideEffect: PopupEffect.bubbleOut,
@@ -712,14 +713,18 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         });
 
         const removeTdMouseLeaveListener = this._renderer.listen(tdElement, "mouseleave", () => {
-            if (tooltipInfo) {
-                tooltipInfo.dispose();
-                tooltipInfo = null;
-            }
+            this._removeTooltip();
         });
 
         this._removeTdListeners.push({removeTdListener: removeTdMouseEnterListener, row: rowIndex, column: colIndex});
         this._removeTdListeners.push({removeTdListener: removeTdMouseLeaveListener, row: rowIndex, column: colIndex});
+    }
+
+    private _removeTooltip(){
+        if (this._tooltipInfo) {
+            this._tooltipInfo.dispose();
+            this._tooltipInfo = null;
+        }
     }
 
     public _rebindTooltipForCell(element: HTMLElement, message: any, rowIndex: number, colIndex: number){
@@ -749,6 +754,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
 
     private _whileScrolling(): void {
         this._scrollBar.whileScrolling.subscribe(scrollEvent => {
+            this._removeTooltip();
             if (scrollEvent.direction == 'x') {
                 this._renderer.setStyle(this._fixedHead, 'left', scrollEvent.left + 'px');
             }
@@ -871,7 +877,9 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         this._scrollBar.whileScrolling.unsubscribe();
         this._rdkTableHeaders.forEach(rdkTableHeaders => {
             rdkTableHeaders.sortChange.unsubscribe();
-        })
+        });
+
+        this._removeTooltip();
     }
 
 }
