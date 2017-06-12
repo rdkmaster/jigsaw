@@ -47,6 +47,7 @@ import {PopupService} from "../../../../service/popup.service";
 import {TableRendererOfTemplateRefDemoComponent} from "./rendererOfTemplateRef/rendererOfTemplateRef";
 import {RdkBlock, RdkBlockModule} from "../../../../component/block/block";
 import {TableLineEllipsisDemoComponent} from "./lineEllipsis/lineElliosis";
+import {TableAddIDWithDebouncePagingComponent} from "./addIDWithDebouncePaging/addIDWithDebouncePaging";
 
 const tableDemoRoutes = [
     {
@@ -114,6 +115,9 @@ const tableDemoRoutes = [
         path: 'addIDWithPaging', component: TableAddIDWithPagingComponent
     },
     {
+        path: 'addIDWithDebouncePaging', component: TableAddIDWithDebouncePagingComponent
+    },
+    {
         path: 'withPopup', component: TableDataWithPopupDemoComponent
     },
     {
@@ -159,7 +163,8 @@ const tableDemoRoutes = [
         TableAddIDWithPagingComponent,
         TableDataWithPopupDemoComponent,
         TableRendererOfTemplateRefDemoComponent,
-        TableLineEllipsisDemoComponent
+        TableLineEllipsisDemoComponent,
+        TableAddIDWithDebouncePagingComponent
     ],
     imports: [
         RouterModule.forChild(tableDemoRoutes),
