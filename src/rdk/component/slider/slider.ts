@@ -10,6 +10,12 @@ import {CommonUtils} from "../../core/utils/common-utils";
 import {ArrayCollection} from "../../core/data/array-collection";
 import {CallbackRemoval} from "../../core/data/component-data";
 
+/**
+ * @description 滑动条组件.
+ *
+ * 何时使用
+ * 当用户需要在数值区间/自定义区间内进行选择时
+ */
 @Component({
     selector: 'rdk-slider',
     templateUrl: './slider.html',
@@ -33,6 +39,10 @@ export class RdkSlider implements OnInit, OnDestroy {
     private _value: ArrayCollection<number> = new ArrayCollection<number>();
     private _removeRefreshCallback: CallbackRemoval;
 
+    /**
+     * slider的当前值, 类型 number | ArrayCollection<number> 支持多触点.
+     * @returns {any}
+     */
     @Input()
     public get value(): number | ArrayCollection<number> {
         // 兼容返回单个值， 和多触点的数组;
@@ -72,14 +82,23 @@ export class RdkSlider implements OnInit, OnDestroy {
         this._dimensions = this._element.nativeElement.getBoundingClientRect();
     }
 
+    /**
+     * 可以不用理会, 主要使 value 支持双向绑定
+     * @type {EventEmitter<number|ArrayCollection<number>>}
+     */
     @Output()
     public valueChange = new EventEmitter<number | ArrayCollection<number>>();
 
+    // 当滑动条的组件值变化时，对外发出的事件
     @Output()
     public change = this.valueChange;
 
     private _min: number = 0;
 
+    /**
+     * 可选范围的最小值
+     * @returns {number}
+     */
     @Input()
     public get min() {
         return this._min;
@@ -90,6 +109,11 @@ export class RdkSlider implements OnInit, OnDestroy {
     }
 
     private _max: number = 100;
+
+    /**
+     * 输入范围的可选最大值.
+     * @returns {number}
+     */
     @Input()
     public get max() {
         return this._max;
@@ -100,6 +124,11 @@ export class RdkSlider implements OnInit, OnDestroy {
     }
 
     private _step: number = 1;
+
+    /**
+     * 每次变化的最小值, 最小支持小数点后两位.
+     * @returns {number}
+     */
     @Input()
     public get step() {
         return this._step;
@@ -118,15 +147,26 @@ export class RdkSlider implements OnInit, OnDestroy {
 
     public _dimensions;
 
+    /**
+     * 垂直滑动条 默认 false
+     * @type {boolean}
+     */
     @Input()
     public vertical: boolean = false;
 
+    /**
+     * // TODO 暂未实现, 格式化tootips的样式.
+     */
     tipFormatter() {
         // Todo 格式化, 弹出信息.
     }
 
     private _dragged = false;
 
+    /**
+     * 是否禁用. 数据类型 boolean, 默认false;
+     * @type {boolean}
+     */
     @Input()
     public disabled: boolean = false;
 
@@ -169,6 +209,9 @@ export class RdkSlider implements OnInit, OnDestroy {
         // Todo
     }
 
+    /**
+     * marks 标签 使用格式为  [Object] 其中 Object 必须包含value 及label 可以有style 属性 例如:  marks = [{value: 20, label: '20 ℃'},
+     */
     @Input()
     public marks: [Object];
 
