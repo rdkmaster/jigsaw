@@ -33,7 +33,7 @@ const appRoutes=[
     BrowserModule,
       FormsModule,
       HttpModule,
-      RouterModule.forRoot(appRoutes, {useHash: true}),
+      RouterModule.forRoot(appRoutes),
       BrowserAnimationsModule,
       TranslateModule.forRoot({
               loader: {
