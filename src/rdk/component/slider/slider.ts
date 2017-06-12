@@ -2,13 +2,29 @@
  * Created by 10177553 on 2017/4/13.
  */
 import {
-    Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewEncapsulation, ViewChildren, QueryList, Renderer2,
-    OnDestroy, ChangeDetectorRef
-} from '@angular/core';
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output,
+    QueryList,
+    Renderer2,
+    ViewChildren,
+    ViewEncapsulation
+} from "@angular/core";
 import {SliderHandle} from "./handle";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {ArrayCollection} from "../../core/data/array-collection";
 import {CallbackRemoval} from "../../core/data/component-data";
+import {AbstractRDKComponent, IRDKComponent} from "../core";
+
+export class SliderMark {
+    value: number;
+    label: string;
+    style?: any;
+}
 
 @Component({
     selector: 'rdk-slider',
@@ -23,9 +39,11 @@ import {CallbackRemoval} from "../../core/data/component-data";
  *       4. tooltips 支持. 暂不支持
  *       5. 点击的支持。
  */
-export class RdkSlider implements OnInit, OnDestroy {
+export class RdkSlider extends AbstractRDKComponent implements OnInit, OnDestroy {
 
-    constructor(private _element: ElementRef, private _render: Renderer2, private _changeDetector: ChangeDetectorRef) { }
+    constructor(private _element: ElementRef, private _render: Renderer2) {
+        super();
+    }
 
     // Todo 支持滑动条点击.
     @ViewChildren(SliderHandle) private _sliderHandle: QueryList<SliderHandle>;
@@ -46,10 +64,9 @@ export class RdkSlider implements OnInit, OnDestroy {
     public set value(value: number | ArrayCollection<number>) {
         if (value instanceof ArrayCollection) {
             this._value = value;
-        } else if (this._value.length === 0) {
+        } else {
+            this._value.splice(0, this._value.length);
             this._value.push(this._verifyValue(value));
-        } else if (this._value.length === 1) {
-            this._value.set(0, this._verifyValue(value));
         }
 
         if (this._removeRefreshCallback) {
@@ -61,9 +78,15 @@ export class RdkSlider implements OnInit, OnDestroy {
         });
     }
 
-    // 设置单个的值
-    public _setValue(key, value) {
-        this._value.set(key, value);
+    /**
+     * 设置单个的值。内部使用
+     *
+     * @param index
+     * @param value
+     * @private
+     */
+    public _setValue(index: number, value: number) {
+        this._value.set(index, value);
         this._value.refresh();
     }
 
@@ -121,11 +144,9 @@ export class RdkSlider implements OnInit, OnDestroy {
     @Input()
     public vertical: boolean = false;
 
-    tipFormatter() {
-        // Todo 格式化, 弹出信息.
-    }
-
-    private _dragged = false;
+    // tipFormatter() {
+    //     // Todo 格式化, 弹出信息.
+    // }
 
     @Input()
     public disabled: boolean = false;
@@ -169,43 +190,57 @@ export class RdkSlider implements OnInit, OnDestroy {
         // Todo
     }
 
+    public _$marks: any[] = [];
+    private _marks: SliderMark[];
+
     @Input()
-    public marks: [Object];
+    public get marks(): SliderMark[] {
+        return this._marks;
+    }
 
-    _calMarks() {
-        if (!this.marks) return;
+    public set marks(value: SliderMark[]) {
+        this._marks = value;
+        this._calcMarks();
+    }
 
-        let size = Math.round(100 / this.marks.length);
+    private _calcMarks() {
+        if (!this._marks || !this.initialized) return;
+
+        this._$marks.splice(0, this._$marks.length);
+        let size = Math.round(100 / this._marks.length);
         let margin = -Math.floor(size / 2);
         let vertical = this.vertical;
 
-        this.marks.forEach(mark => {
-            // 添加垂直滚动条的支持;
+        this._marks.forEach(mark => {
+            const richMark:any = {};
             if (vertical) {
-                mark["dot"] = {
-                    bottom: this._transformValueToPos(mark["value"]) + "%"
+                richMark.dotStyle = {
+                    bottom: this._transformValueToPos(mark.value) + "%"
                 };
-                mark["componentStyle"] = {
-                    bottom: this._transformValueToPos(mark["value"]) + "%",
+                richMark.labelStyle = {
+                    bottom: this._transformValueToPos(mark.value) + "%",
                     "margin-bottom": margin + "%"
                 };
             } else {
-                mark["dot"] = {
+                richMark.dotStyle = {
                     top: "-2px",
-                    left: this._transformValueToPos(mark["value"]) + "%"
+                    left: this._transformValueToPos(mark.value) + "%"
                 };
-
-                mark["componentStyle"] = {
-                    left: this._transformValueToPos(mark["value"]) + "%",
+                richMark.labelStyle = {
+                    left: this._transformValueToPos(mark.value) + "%",
                     width: size + "%", "margin-left": margin + "%"
                 };
             }
             // 如果用户自定义了样式, 要进行样式的合并;
-            CommonUtils.extendObject(mark["componentStyle"], mark["style"]);
+            CommonUtils.extendObject(richMark.labelStyle, mark.style);
+            richMark.label = mark.label;
+            this._$marks.push(richMark);
         });
     }
 
     ngOnInit() {
+        super.ngOnInit();
+
         // 计算slider 的尺寸.
         this._dimensions = this._element.nativeElement.getBoundingClientRect();
 
@@ -213,7 +248,7 @@ export class RdkSlider implements OnInit, OnDestroy {
         this._setTrackStyle(this.value);
 
         // 设置标记.
-        this._calMarks();
+        this._calcMarks();
         // 注册resize事件;
         this.resize();
     }

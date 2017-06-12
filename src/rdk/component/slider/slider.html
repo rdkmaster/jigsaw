@@ -11,15 +11,12 @@
     <div class="rdk-slider-track" [ngStyle]="_trackStyle"></div>
 
     <div class="rdk-slider-step">
-        <span *ngFor="let mark of marks" class="rdk-slider-dot rdk-slider-dot-active"
-              [ngStyle]="mark.dot"></span>
+        <span *ngFor="let mark of _$marks" class="rdk-slider-dot rdk-slider-dot-active" [ngStyle]="mark.dotStyle"></span>
     </div>
 
-    <slider-handle *ngFor="let item of _value;let i = index" value="{{item}}" [key]="i" ></slider-handle>
+    <slider-handle *ngFor="let item of _value;let i = index" value="{{item}}" [key]="i"></slider-handle>
 
-    <div *ngIf="marks&& marks.length > 0" class="rdk-slider-mark">
-        <span *ngFor="let mark of marks" class="rdk-slider-mark-text"
-              [ngStyle]="mark.componentStyle"
-             > {{mark.label}}</span>
+    <div *ngIf="_$marks.length > 0" class="rdk-slider-mark">
+        <span *ngFor="let mark of _$marks" class="rdk-slider-mark-text" [ngStyle]="mark.labelStyle">{{mark.label}}</span>
     </div>
 </div>

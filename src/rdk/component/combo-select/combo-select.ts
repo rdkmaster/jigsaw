@@ -63,6 +63,9 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
     }
 
     public set value(value: ArrayCollection<ComboSelectValue>) {
+        if (this._value === value || !(value instanceof ArrayCollection)) {
+            return;
+        }
         if (this._value != value) {
             this._value = value;
             this.valueChange.emit(this._value);

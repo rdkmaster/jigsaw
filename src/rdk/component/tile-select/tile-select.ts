@@ -47,19 +47,21 @@ export class RdkTileSelect extends AbstractRDKComponent implements OnInit, After
     }
 
     public set selectedItems(newValue: ArrayCollection<any>) {
-        if (newValue instanceof ArrayCollection && this._selectedItems != newValue) {
-            this._selectedItems = newValue;
-            if(this._contentInit){
-                this._setOptionState();
-            }
-
-            if(this._removeRefreshCallback){
-                this._removeRefreshCallback()
-            }
-            this._removeRefreshCallback = newValue.onRefresh(() => {
-                this._setOptionState();
-            });
+        if (this._selectedItems === newValue || !(newValue instanceof ArrayCollection)) {
+            return;
         }
+
+        this._selectedItems = newValue;
+        if (this._contentInit) {
+            this._setOptionState();
+        }
+
+        if (this._removeRefreshCallback) {
+            this._removeRefreshCallback()
+        }
+        this._removeRefreshCallback = newValue.onRefresh(() => {
+            this._setOptionState();
+        });
     }
 
     @Output() public selectedItemsChange = new EventEmitter<any[]>();
@@ -115,7 +117,7 @@ export class RdkTileSelect extends AbstractRDKComponent implements OnInit, After
 
     //根据selectedItems设置选中的option
     private _setOptionState(): void {
-        if(this.selectedItems instanceof ArrayCollection){
+        if (this.selectedItems instanceof ArrayCollection) {
             this._options.length && this._options.forEach((option) => {
                 let _hasSelected = false;
                 this._selectedItems.forEach((optionItem) => {
@@ -145,7 +147,7 @@ export class RdkTileSelect extends AbstractRDKComponent implements OnInit, After
     }
 
     ngOnDestroy() {
-        if(this._removeRefreshCallback){
+        if (this._removeRefreshCallback) {
             this._removeRefreshCallback()
         }
     }
