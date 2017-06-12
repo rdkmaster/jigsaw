@@ -82,6 +82,7 @@ module.exports =
            // 'component/checkbox/checkbox.ts',
            'component/collapse/collapse.ts',
            'component/slider/slider.ts',
+           'component/switch/switch.ts',
           ];
 
           readFilesProcessor.basePath = PROJECT_ROOT;
