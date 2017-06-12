@@ -2,8 +2,8 @@
  * Created by 10177553 on 2017/3/23.
  */
 import {
-    Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output,
-    Renderer2, SimpleChanges
+    Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output,
+    Renderer2
 } from "@angular/core";
 import {AbstractGraphData} from "../../core/data/graph-data";
 
@@ -13,6 +13,11 @@ import {AbstractRDKComponent} from "../core";
 import {EchartOptions} from "../../core/data/echart-types";
 import {CallbackRemoval} from "../../core/data/component-data";
 
+/**
+ * @description graph 图标组件
+ * ### 封装的eCharts, 属性具体值参考eCharts 官方文档.
+ * <br /> <a href="http://echarts.baidu.com/api.html#echarts" target="_blank"> eCharts 文档</a>
+ */
 @Component({
     selector: 'rdk-graph',
     templateUrl: 'graph.html',

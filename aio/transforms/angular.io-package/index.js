@@ -83,6 +83,7 @@ module.exports =
            'component/collapse/collapse.ts',
            'component/slider/slider.ts',
            'component/switch/switch.ts',
+           'component/graph/graph.ts',
           ];
 
           readFilesProcessor.basePath = PROJECT_ROOT;
