@@ -22,11 +22,11 @@ export class TableAddIDWithPagingComponent {
     }
 
     getCurrentPage() {
-        this.pageable.changePage(this.pageable.pagingInfo);
+        this.pageable.fromAjax();
     }
 
     getPageSize() {
-        this.pageable.changePage(this.pageable.pagingInfo);
+        this.pageable.fromAjax();
     }
 
     private _columns: ColumnDefine[] = [{
