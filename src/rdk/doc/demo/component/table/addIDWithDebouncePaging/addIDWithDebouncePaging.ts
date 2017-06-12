@@ -1,14 +1,17 @@
-import {Component, ViewEncapsulation} from "@angular/core";
+import {AfterViewInit, Component, ViewChild} from "@angular/core";
 import {PageableTableData} from "../../../../../core/data/table-data";
 import {Http} from "@angular/http";
 import {TableCellNum} from "../../../../../component/table/table-renderer";
 import {AdditionalColumnDefine, ColumnDefine} from "../../../../../component/table/table-api";
+import {RdkPagination} from "../../../../../component/pagination/pagination";
 
 @Component({
-    templateUrl: 'addIDWithPaging.html'
+    templateUrl: 'addIDWithDebouncePaging.html'
 })
-export class TableAddIDWithPagingComponent {
+export class TableAddIDWithDebouncePagingComponent implements AfterViewInit{
     pageable: PageableTableData;
+
+    @ViewChild('paging') paging: RdkPagination;
 
     constructor(http: Http) {
         this.pageable = new PageableTableData(http, {
@@ -21,8 +24,11 @@ export class TableAddIDWithPagingComponent {
         this.pageable.fromAjax();
     }
 
-    getCurrentPage() {
-        this.pageable.fromAjax();
+    ngAfterViewInit(){
+        this.paging.currentChange.debounceTime(300).subscribe(() => {
+            console.log('pageable now query from ajax!');
+            this.pageable.fromAjax();
+        })
     }
 
     getPageSize() {
