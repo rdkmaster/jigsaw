@@ -1,8 +1,11 @@
-/**
- * Created by 10177553 on 2017/3/15.
- */
 import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
 
+/**
+ * @description 开关组件
+ *
+ * 何时使用
+ * 只有两种状态切换时.
+ */
 @Component({
     selector: 'rdk-switch',
     templateUrl: './switch.html',
@@ -12,15 +15,31 @@ import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
 export class RdkSwitch implements OnInit{
     private _content: any; // 当前显示的内容.
 
+    /**
+     * 开关状态打开时的文本.(只支持字符串)
+     */
     @Input()
     public onLabel: any;
+
+    /**
+     * 开关状态关闭时显示的文本(只支持字符串)
+     */
     @Input()
     public offLabel: any;
+
+    /**
+     * size 默认 'default' 可选值 ‘small’
+     * @type {string}
+     */
     @Input()
     public size: string = 'default';
 
     private _checked: boolean = false;
 
+    /**
+     * 选中 默认值false;
+     * @returns {boolean}
+     */
     @Input()
     public get checked(): boolean  { return this._checked};
     public set checked(value: boolean) {
@@ -29,6 +48,11 @@ export class RdkSwitch implements OnInit{
         this._setSwitchClass();
         this._setInnerValue();
     }
+
+    /**
+     * 可以忽略, 主要使checked 属性支持双向数据绑定.
+     * @type {EventEmitter<boolean>}
+     */
     @Output() public checkedChange = new EventEmitter<boolean>();
 
     /**
@@ -38,6 +62,11 @@ export class RdkSwitch implements OnInit{
     @Output() public change = this.checkedChange;
 
     private _disabled: boolean = false;
+
+    /**
+     * 是否禁用 类型 boolean 默认值 false;
+     * @returns {boolean}
+     */
     @Input()
     public get disabled(): boolean { return this._disabled; };
     public set disabled(value: boolean) {
