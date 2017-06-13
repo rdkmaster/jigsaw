@@ -96,6 +96,9 @@ export class RdkTime extends AbstractRDKComponent implements OnInit, OnDestroy {
             this._limitEnd = value;
             this._checkMacro();
             if (this._timepicker) {
+                if(this._timepicker.minDate() && this._timepicker.minDate() > TimeService.getDate(this.limitEnd, <TimeGr>this.gr)){
+                    this._timepicker.minDate(this.limitEnd)
+                }
                 this._timepicker.maxDate(this.limitEnd);
                 this._weekHandle();
                 this._handleRecommended(this._el.nativeElement, this._popService);
@@ -116,6 +119,9 @@ export class RdkTime extends AbstractRDKComponent implements OnInit, OnDestroy {
             this._limitStart = value;
             this._checkMacro();
             if (this._timepicker) {
+                if(this._timepicker.maxDate() && this._timepicker.maxDate() < TimeService.getDate(this.limitStart, <TimeGr>this.gr)){
+                    this._timepicker.maxDate(this.limitStart)
+                }
                 this._timepicker.minDate(this.limitStart);
                 this._weekHandle();
                 this._handleRecommended(this._el.nativeElement, this._popService);
