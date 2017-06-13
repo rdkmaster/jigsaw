@@ -70,12 +70,14 @@ $btn-prefix-cls: #{$rdk-prefix}-button;
     }
 
     &.#{$btn-prefix-cls}-size-large {
-        height:$btn-size-height-lg;
+        font-size: $btn-font-size-lg;
+        min-height:$btn-size-height-lg;
         line-height: $btn-size-height-lg - 2;
     }
 
     &.#{$btn-prefix-cls}-size-small {
-        height:$btn-size-height-sm;
+        font-size: $btn-font-size-sm;
+        min-height: $btn-size-height-sm;
         line-height: $btn-size-height-sm - 2;
     }
 }
