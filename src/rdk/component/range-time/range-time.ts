@@ -4,7 +4,6 @@ import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../service/time.s
 import {GrItem, RdkTime, Shortcut} from "../time/time";
 import {WeekTime} from "../../service/time.types";
 
-
 @Component({
     selector: 'rdk-range-time',
     templateUrl: 'range-time.html',
@@ -43,7 +42,6 @@ export class RdkRangeTime extends AbstractRDKComponent implements OnInit {
     public set limitStart(value:WeekTime) {
         if (value) {
             this._limitStart = value;
-            this._startTimeLimitStart = value;
         }
     }
 
@@ -189,18 +187,22 @@ export class RdkRangeTime extends AbstractRDKComponent implements OnInit {
     private _changeShortcut(selectedShortcut : Shortcut) {
         if (selectedShortcut.dateRange) {
             let [beginDate, endDate] = typeof  selectedShortcut.dateRange === "function" ? selectedShortcut.dateRange.call(this) : selectedShortcut.dateRange;
-            this._endDate = endDate;
-            this._endTimeLimitEnd = this._calculateLimitEnd();
+
             beginDate = TimeService.convertValue(beginDate, <TimeGr>this._timeStart.gr);
             let limitStart = this._limitStart && TimeService.convertValue(this._limitStart, <TimeGr>this._timeStart.gr);
             let limitEnd = this._limitEnd && TimeService.convertValue(this._limitEnd, <TimeGr>this._timeStart.gr);
             if (!((limitStart && beginDate < limitStart) || (limitEnd && beginDate > limitEnd))) {
                 this._beginDate = beginDate;
-                this._startTimeLimitStart = beginDate
             } else {
-                this._startTimeLimitStart = limitStart
+                this._beginDate = limitStart;
             }
 
+            this._endTimeLimitEnd = this._calculateLimitEnd();
+
+            setTimeout(() => {
+                //先设置好limit，再设置date
+                this._endDate = endDate;
+            }, 0)
         }
     }
 
