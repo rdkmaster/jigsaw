@@ -14,7 +14,7 @@ export class RangeTimeDataRanges {
 
     public static RecentWeek(): [Time, Time] {
         let start = moment().day(1);
-        let end = moment();
+        let end = moment().day(1).add(6, 'days');
         return [start, end]
     }
 

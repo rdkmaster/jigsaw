@@ -1,10 +1,10 @@
 <div class="rdk-range-time">
-    <rdk-time [(date)]="_beginDate" [(gr)]="_gr" [limitStart]="_startTimeLimitStart" [limitEnd]="_limitEnd"
+    <rdk-time [(date)]="_beginDate" [(gr)]="_gr" [limitStart]="_limitStart" [limitEnd]="_limitEnd"
               (dateChange)="_dateChange('beginDate',$event)" [refreshInterval]="_refreshInterval" [weekStart]="_weekStart"
               [recommendedBegin]="_recommendedBegin" [recommendedEnd]="_recommendedEnd" [grItems]="_grItems" #timeStart
               class.rdk-range-time-startTime="false" (grChange)="_grChange($event)">
     </rdk-time>
-    <rdk-time [(date)]="_endDate" [(gr)]="_gr" [limitStart]="_startTimeLimitEnd" [limitEnd]="_endTimeLimitEnd"
+    <rdk-time [(date)]="_endDate" [(gr)]="_gr" [limitStart]="_beginDate" [limitEnd]="_endTimeLimitEnd"
               (dateChange)="_dateChange('endDate',$event)" [refreshInterval]="_refreshInterval" [weekStart]="_weekStart"
               [recommendedBegin]="_recommendedBegin" [recommendedEnd]="_recommendedEnd" #timeEnd
               [class.rdk-range-time-endTime]="(_grItems && _grItems.length!=0)">

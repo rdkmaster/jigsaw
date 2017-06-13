@@ -18,7 +18,7 @@ export class RangeTimeGrItemsComponent {
                             {label:"这周",dateRange:RangeTimeDataRanges.RecentWeek}];
 
     grItems :GrItem[]= [
-        {label: "Day", value: TimeGr.date, shortcuts:this.shortcuts,span:"2d"},
+        {label: "Day", value: TimeGr.date, shortcuts:this.shortcuts,span:"15d"},
         {label: "Week", value: TimeGr.week},
         {label: "Month", value: TimeGr.month}];
 
