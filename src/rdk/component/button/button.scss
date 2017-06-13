@@ -6,7 +6,7 @@ $btn-prefix-cls: #{$rdk-prefix}-button;
     @include inline-block();
     min-width: 80px;
     padding:0 10px;
-    height: $btn-size-height-base;
+    min-height: $btn-size-height-base;
     line-height: $btn-size-height-base - 4;
     font-size: $font-size-base;
     text-align: center;
