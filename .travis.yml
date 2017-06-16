@@ -1,0 +1,19 @@
+language: node_js
+sudo: false
+
+node_js:
+  - '--lts'
+
+branches:
+  only:
+  - master
+
+before_install:
+  - npm i -g npm@^5.0.1
+
+install:
+  - npm install
+
+script:
+  - npm test
+
