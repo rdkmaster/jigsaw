@@ -1,9 +1,10 @@
 import {createPackageBuildTasks} from './packaging/build-tasks-gulp';
 
 // Create gulp tasks to build the different packages in the project.
-createPackageBuildTasks('cdk');
-createPackageBuildTasks('jigsaw', ['cdk']);
+//createPackageBuildTasks('cdk');
+//createPackageBuildTasks('jigsaw', ['cdk']);
 //createPackageBuildTasks('jigsaw-examples', ['jigsaw']);
+createPackageBuildTasks('jigsaw');
 
 import './tasks/ci';
 import './tasks/clean';

@@ -22,10 +22,10 @@ export * from './service/time.service';
 export * from './service/time.types';
 
 export * from './component/button/button';
-/*export * from './component/input/input';
+export * from './component/input/input';
 export * from './component/radio/radio';
 export * from './component/select/select';
 export * from './component/table/table';
 export * from './component/table/table-api';
-export * from './component/table/table-renderer';*/
+export * from './component/table/table-renderer';
 

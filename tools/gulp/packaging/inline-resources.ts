@@ -37,7 +37,7 @@ function inlineStyles(fileContent: string, filePath: string) {
     const styleUrls = eval(styleUrlsValue) as string[];
 
     const styleContents = styleUrls
-      .map(url => join(dirname(filePath), url))
+      .map(url => join(dirname(filePath), url.replace('.scss', '.css')))
       .map(path => loadResourceFile(path));
 
     return `styles: ["${styleContents.join(' ')}"]`;

@@ -18,11 +18,10 @@ export function inlineMetadataResources(metadata: any, componentResources: Map<s
   // Convert `styleUrls` to `styles`
   if (metadata.styleUrls && metadata.styleUrls.length) {
     metadata.styles = [];
-    for (const styleUrl of metadata.styleUrls) {
-        /*console.log(styleUrl);
-        console.log('----------------------------------------')*/
+    for (let styleUrl of metadata.styleUrls) {
+        styleUrl = styleUrl.replace('.scss', '.css');
         const fullResourcePath = componentResources.get(basename(styleUrl));
-      metadata.styles.push(readFileSync(fullResourcePath, 'utf-8'));
+        metadata.styles.push(readFileSync(fullResourcePath, 'utf-8'));
     }
     delete metadata.styleUrls;
   }
