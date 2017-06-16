@@ -1,5 +1,9 @@
-/*declare var module: {id: string};*/
-/*declare let $: any;*/
+declare var module: NodeModule;
+interface NodeModule {
+    id: string;
+}
+declare let $: any;
+declare let moment: any;
 
 /** Extends the interface for jasmine matchers to allow for custom matchers. */
 declare namespace jasmine {

@@ -8,7 +8,7 @@
     "importHelpers": true,
     "module": "es2015",
     "moduleResolution": "node",
-    "outDir": "../../dist/packages/material",
+    "outDir": "../../dist/packages/jigsaw",
     "rootDir": ".",
     "sourceMap": true,
     "inlineSources": true,
@@ -18,18 +18,18 @@
     "types": [],
     "baseUrl": ".",
     "paths": {
-      "@angular/cdk": ["../../dist/packages/cdk/public_api"]
+      "@rdk/cdk": ["../../dist/packages/cdk/public_api"]
     }
   },
   "files": [
     "public_api.ts",
-    "../typings.d.ts"
+    "typings.d.ts"
   ],
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
     "strictMetadataEmit": true,
     "flatModuleOutFile": "index.js",
-    "flatModuleId": "@angular/material",
+    "flatModuleId": "@rdk/jigsaw",
     "skipTemplateCodegen": true
   }
 }

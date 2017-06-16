@@ -19,7 +19,7 @@ const appDir = join(packagesDir, 'demo-app');
 const outDir = join(outputDir, 'packages', 'demo-app');
 
 /** Path to the output of the Material package. */
-const materialOutPath = join(outputDir, 'packages', 'material');
+const materialOutPath = join(outputDir, 'packages', 'jigsaw');
 
 /** Array of vendors that are required to serve the demo-app. */
 const appVendors = [
@@ -58,7 +58,7 @@ task('serve:devapp', ['build:devapp'], sequenceTask(
 task('stage-deploy:devapp', ['build:devapp'], () => {
   copyFiles(join(projectDir, 'node_modules'), vendorGlob, join(outDir, 'node_modules'));
   copyFiles(bundlesDir, '*.+(js|map)', join(outDir, 'dist/bundles'));
-  copyFiles(materialOutPath, '**/prebuilt/*.+(css|map)', join(outDir, 'dist/packages/material'));
+  copyFiles(materialOutPath, '**/prebuilt/*.+(css|map)', join(outDir, 'dist/packages/jigsaw'));
 });
 
 /**

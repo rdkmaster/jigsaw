@@ -19,7 +19,7 @@ const bundlesDir = join(outputDir, 'bundles');
  */
 export function composeRelease(packageName: string) {
   // To avoid refactoring of the project the package material will map to the source path `lib/`.
-  const sourcePath = join(packagesDir, packageName === 'material' ? 'rdk' : packageName);
+  const sourcePath = join(packagesDir, packageName === 'jigsaw' ? 'rdk' : packageName);
   const packagePath = join(outputDir, 'packages', packageName);
   const releasePath = join(outputDir, 'releases', packageName);
 
@@ -27,7 +27,7 @@ export function composeRelease(packageName: string) {
 
   copyFiles(packagePath, '**/*.+(d.ts|metadata.json)', join(releasePath, 'typings'));
   copyFiles(bundlesDir, `${packageName}.umd?(.min).js?(.map)`, join(releasePath, 'bundles'));
-  copyFiles(bundlesDir, `${packageName}?(.es5).js?(.map)`, join(releasePath, '@angular'));
+  copyFiles(bundlesDir, `${packageName}?(.es5).js?(.map)`, join(releasePath, '@rdk'));
   copyFiles(projectDir, 'LICENSE', releasePath);
   copyFiles(packagesDir, 'README.md', releasePath);
   copyFiles(sourcePath, 'package.json', releasePath);
@@ -35,5 +35,5 @@ export function composeRelease(packageName: string) {
   updatePackageVersion(releasePath);
   createTypingsReexportFile(releasePath, packageName);
   createMetadataReexportFile(releasePath, packageName);
-  addPureAnnotationsToFile(join(releasePath, '@angular', `${packageName}.es5.js`));
+  addPureAnnotationsToFile(join(releasePath, '@rdk', `${packageName}.es5.js`));
 }

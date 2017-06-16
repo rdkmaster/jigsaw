@@ -1,31 +1,31 @@
 {
-  "name": "@angular/material",
-  "version": "0.0.0-PLACEHOLDER",
-  "description": "Angular Material",
-  "main": "./bundles/material.umd.js",
-  "module": "./@angular/material.es5.js",
-  "es2015": "./@angular/material.js",
-  "typings": "./material.d.ts",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/angular/material2.git"
-  },
-  "keywords": [
-    "angular",
-    "material",
-    "material design",
-    "components"
-  ],
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/angular/material2/issues"
-  },
-  "homepage": "https://github.com/angular/material2#readme",
-  "peerDependencies": {
-    "@angular/core": "^4.0.0",
-    "@angular/common": "^4.0.0"
-  },
-  "dependencies": {
-    "tslib": "^1.7.1"
-  }
+    "name": "@rdk/jigsaw",
+    "version": "0.0.0",
+    "description": "RDK Jigsaw",
+    "main": "./bundles/jigsaw.umd.js",
+    "module": "./@rdk/jigsaw.es5.js",
+    "es2015": "./@rdk/jigsaw.js",
+    "typings": "./jigsaw.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/rdkmaster/jigsaw.git"
+    },
+    "keywords": [
+        "angular",
+        "jigsaw",
+        "rdk jigsaw",
+        "components"
+    ],
+    "license": "MIT",
+    "bugs": {
+        "url": "http://gitlab.zte.com.cn/10045812/jigsaw/issues"
+    },
+    "homepage": "",
+    "peerDependencies": {
+        "@angular/core": "^4.0.0",
+        "@angular/common": "^4.0.0"
+    },
+    "dependencies": {
+        "tslib": "^1.7.1"
+    }
 }

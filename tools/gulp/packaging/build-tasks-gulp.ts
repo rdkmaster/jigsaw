@@ -26,7 +26,7 @@ const htmlMinifierOptions = {
  */
 export function createPackageBuildTasks(packageName: string, requiredPackages: string[] = []) {
   // To avoid refactoring of the project the package material will map to the source path `lib/`.
-  const packageRoot = join(packagesDir, packageName === 'material' ? 'rdk' : packageName);
+  const packageRoot = join(packagesDir, packageName === 'jigsaw' ? 'rdk' : packageName);
   const packageOut = join(outputDir, 'packages', packageName);
 
   const tsconfigBuild = join(packageRoot, 'tsconfig-build.json');

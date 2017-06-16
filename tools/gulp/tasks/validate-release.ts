@@ -38,7 +38,7 @@ task('validate-release:check-bundles', () => {
 
 /** Task that validates the given release package before releasing. */
 function checkReleasePackage(packageName: string): string[] {
-  const bundlePath = join(releasesDir, packageName, '@angular', `${packageName}.js`);
+  const bundlePath = join(releasesDir, packageName, '@rdk', `${packageName}.js`);
   const bundleContent = readFileSync(bundlePath, 'utf8');
   let failures = [];
 
@@ -50,7 +50,7 @@ function checkReleasePackage(packageName: string): string[] {
     failures.push('Bundles are including references to external resources (templates or styles)');
   }
 
-  if (packageName === 'material') {
+  if (packageName === 'jigsaw') {
     failures = failures.concat(checkMaterialPackage());
   }
 
@@ -59,7 +59,7 @@ function checkReleasePackage(packageName: string): string[] {
 
 /** Function that includes special checks for the Material package. */
 function checkMaterialPackage(): string[] {
-  const packagePath = join(releasesDir, 'material');
+  const packagePath = join(releasesDir, 'jigsaw');
   const prebuiltThemesPath = join(packagePath, 'prebuilt-themes');
   const themingFilePath = join(packagePath, '_theming.scss');
   const failures = [];

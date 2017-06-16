@@ -12,6 +12,7 @@ import {
 import {Http, RequestOptionsArgs, Response, URLSearchParams} from "@angular/http";
 import {Subject} from "rxjs/Subject";
 import "rxjs/add/operator/map";
+import 'rxjs/add/operator/debounceTime';
 
 export type TableMatrixRow = Array<string|number>;
 export type TableDataHeader = string[];

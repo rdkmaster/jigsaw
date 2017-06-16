@@ -19,8 +19,8 @@ export function inlineMetadataResources(metadata: any, componentResources: Map<s
   if (metadata.styleUrls && metadata.styleUrls.length) {
     metadata.styles = [];
     for (const styleUrl of metadata.styleUrls) {
-        console.log(styleUrl);
-        console.log('----------------------------------------')
+        /*console.log(styleUrl);
+        console.log('----------------------------------------')*/
         const fullResourcePath = componentResources.get(basename(styleUrl));
       metadata.styles.push(readFileSync(fullResourcePath, 'utf-8'));
     }
