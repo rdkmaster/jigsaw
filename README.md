@@ -32,6 +32,9 @@ npm start
 
 5. 后续直接在 `d:\jigsaw` 目录下运行 `npm start` 命令就可以启动开发环境了。我们推荐使用[WebStorm](https://www.jetbrains.com/webstorm/)作为IDE，Jigsaw专门针对这类IDE做了代码优化，让这些IDE可以精确提示更多的信息，节约你翻阅api文档的时间。
 
+## 求星星！
+请随手在 github 的工程上[赏个星星](https://github.com/rdkmaster/jigsaw)，这是对我们最好的鼓励！
+
 ## 组件状态图
 ![](comp-map.png)
 
