@@ -49,11 +49,11 @@ export type TableHeadChangeEvent = {
     oldCellData: string|number
 }
 
-type TargetType = number|string|number[]|string[]|TargetFun;
+export type TargetType = number|string|number[]|string[]|TargetFun;
 
-type TargetFun = (field: string, index: number) => boolean;
+export type TargetFun = (field: string, index: number) => boolean;
 
-type Header = {
+export type Header = {
     text?: string,
     renderer?: Type<TableCellRenderer>|TemplateRef<any>,
     class?: string,
@@ -62,7 +62,7 @@ type Header = {
     defaultSortOrder?: SortOrder
 }
 
-type Cell = {
+export type Cell = {
     renderer?: Type<TableCellRenderer>|TemplateRef<any>,
     class?: string,
     editable?: boolean,

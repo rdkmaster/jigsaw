@@ -47,13 +47,13 @@ class CellSetting {
     rowSpan: number;
 }
 
-type SortChangeEvent = {
+export type SortChangeEvent = {
     sortAs: SortAs,
     order: SortOrder,
     field: number
 }
 
-type RemoveTdListener = {
+export type RemoveTdListener = {
     removeTdListener: Function,
     row: number,
     column: number

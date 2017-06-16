@@ -13,7 +13,8 @@ import {
 import {TableData} from "./table-data";
 
 import {Http, RequestOptionsArgs, Response, URLSearchParams} from "@angular/http";
-import {Subject} from "rxjs";
+import {Subject} from "rxjs/Subject";
+
 import "rxjs/add/operator/map";
 
 class ArrayHacker {
@@ -52,7 +53,8 @@ export class RDKArray<T> implements Array<T> {
     readonly [n: number]: T;
 
     public includes(searchElement: T, fromIndex?: number): boolean {
-        return this._agent.includes.apply(this, arguments);
+        //return this._agent.includes.apply(this, arguments);
+        return null;
     }
 
     public toString(): string {

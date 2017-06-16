@@ -12,7 +12,7 @@ import {
 } from "@angular/core";
 import {CommonUtils} from "../core/utils/common-utils";
 import {RdkBlock} from "../component/block/block";
-import {AffixUtils} from "rdk/core/utils/internal-utils";
+import {AffixUtils} from "../core/utils/internal-utils";
 import {IDynamicInstantiatable} from "../component/core";
 
 export enum PopupEffect {
