@@ -11,9 +11,6 @@ branches:
   only:
   - master
 
-before_install:
-  - npm i -g npm@^5.0.1
-
 install:
   - npm install
 
