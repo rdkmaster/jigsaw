@@ -9,12 +9,14 @@ import * as minimist from 'minimist';
 
 /** Packages that will be published to NPM by the release task. */
 export const releasePackages = [
-  'cdk',
-  'material',
+  //'cdk',
+  'jigsaw',
 ];
 
 /** Parse command-line arguments for release task. */
 const argv = minimist(process.argv.slice(3));
+
+const npm = process.platform === "win32" ? "npm.cmd" : "npm";
 
 /** Task that builds all releases that will be published. */
 task(':publish:build-releases', sequenceTask(
@@ -23,12 +25,12 @@ task(':publish:build-releases', sequenceTask(
 ));
 
 /** Make sure we're logged in. */
-task(':publish:whoami', execTask('npm', ['whoami'], {
-  silent: true,
+task(':publish:whoami', execTask(npm, ['whoami'], {
+  //silent: true,
   errMessage: 'You must be logged in to publish.'
 }));
 
-task(':publish:logout', execTask('npm', ['logout']));
+task(':publish:logout', execTask(npm, ['logout']));
 
 
 function _execNpmPublish(label: string, packageName: string): Promise<{}> {
@@ -49,7 +51,7 @@ function _execNpmPublish(label: string, packageName: string): Promise<{}> {
   process.chdir(packageDir);
   console.log(green(`Publishing ${packageName}...`));
 
-  const command = 'npm';
+  const command = npm;
   const args = ['publish', '--access', 'public', label ? `--tag` : undefined, label || undefined];
   return new Promise((resolve, reject) => {
     console.log(grey(`Executing: ${command} ${args.join(' ')}`));

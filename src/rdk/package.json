@@ -1,6 +1,6 @@
 {
-    "name": "@rdk/jigsaw",
-    "version": "0.0.0",
+    "name": "@rdkmaster/jigsaw",
+    "version": "0.0.1",
     "description": "RDK Jigsaw",
     "main": "./bundles/jigsaw.umd.js",
     "module": "./@rdk/jigsaw.es5.js",
