@@ -15,5 +15,5 @@ install:
   - npm install
 
 script:
-  - echo 'MOCK: test done!'
+  - echo 1
 
