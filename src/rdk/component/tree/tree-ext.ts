@@ -1,5 +1,5 @@
 import {Input, OnDestroy, AfterViewInit, Output, EventEmitter, NgModule, Component} from '@angular/core';
-import {AbstractRDKComponent} from "rdk/component/core";
+import {AbstractRDKComponent} from "../core";
 import {InternalUtils} from "../../core/utils/internal-utils";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {ZTreeSettingSetting} from "./ztree-types";

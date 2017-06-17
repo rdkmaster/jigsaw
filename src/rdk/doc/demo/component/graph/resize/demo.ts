@@ -8,6 +8,7 @@ import {EchartOptions} from "rdk/core/data/echart-types";
 import {RdkGraph} from "../../../../../component/graph/graph";
 import {RdkInput} from "../../../../../component/input/input";
 import {Observable} from "rxjs/Observable";
+import "rxjs/add/observable/combineLatest";
 
 @Component({
     template: `

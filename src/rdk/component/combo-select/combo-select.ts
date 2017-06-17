@@ -17,7 +17,7 @@ import {
     PopupPositionType,
     PopupPositionValue,
     PopupService
-} from "rdk/service/popup.service";
+} from "../../service/popup.service";
 import {AbstractRDKComponent} from "../core";
 import {CallbackRemoval} from "../../core/data/component-data";
 import {ArrayCollection} from "../../core/data/array-collection";

@@ -1,6 +1,6 @@
 {
     "name": "@rdkmaster/jigsaw",
-    "version": "0.0.1",
+    "version": "1.0.0-beta.1",
     "description": "RDK Jigsaw",
     "main": "./bundles/jigsaw.umd.js",
     "module": "./@rdk/jigsaw.es5.js",
@@ -11,19 +11,20 @@
         "url": "https://github.com/rdkmaster/jigsaw.git"
     },
     "keywords": [
-        "angular",
         "jigsaw",
         "rdk jigsaw",
+        "angular",
         "components"
     ],
     "license": "MIT",
     "bugs": {
         "url": "http://gitlab.zte.com.cn/10045812/jigsaw/issues"
     },
-    "homepage": "",
+    "homepage": "http://jigsaw.rdkapp.com/",
     "peerDependencies": {
         "@angular/core": "^4.0.0",
-        "@angular/common": "^4.0.0"
+        "@angular/common": "^4.0.0",
+        "@angular/router": "^4.0.0"
     },
     "dependencies": {
         "tslib": "^1.7.1"

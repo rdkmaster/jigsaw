@@ -5,7 +5,7 @@ import {
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {AbstractRDKComponent} from "../core";
-import {Observable} from "rxjs";
+import {Observable} from "rxjs/Observable";
 
 @Directive({selector: '[rdk-prefix-icon]'})
 export class RdkPrefixIcon {

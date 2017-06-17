@@ -3,10 +3,10 @@ import {AbstractRDKComponent} from "../core";
 import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../service/time.service";
 import {PopupInfo, PopupPositionType, PopupService} from "../../service/popup.service";
 import {SimpleTooltipComponent} from "../tooltip/tooltip";
-import {Time, WeekTime} from "rdk/service/time.types";
+import {Time, WeekTime} from "../../service/time.types";
 
 
-type ShortcutFunction = () => [WeekTime, WeekTime]
+export type ShortcutFunction = () => [WeekTime, WeekTime]
 
 export type Shortcut = {
     label: string,

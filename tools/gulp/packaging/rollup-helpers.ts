@@ -15,13 +15,14 @@ const ROLLUP_GLOBALS = {
   '@angular/common': 'ng.common',
   '@angular/forms': 'ng.forms',
   '@angular/http': 'ng.http',
+  '@angular/router': 'ng.router',
   '@angular/platform-browser': 'ng.platformBrowser',
   '@angular/platform-browser-dynamic': 'ng.platformBrowserDynamic',
   '@angular/platform-browser/animations': 'ng.platformBrowser.animations',
 
   // Local Angular packages inside of Material.
-  '@angular/material': 'ng.material',
-  '@angular/cdk': 'ng.cdk',
+  '@rdkmaster/jigsaw': 'ng.jigsaw',
+  //'@angular/cdk': 'ng.cdk',
 
   // Rxjs dependencies
   'rxjs/BehaviorSubject': 'Rx',
@@ -48,6 +49,32 @@ const ROLLUP_GLOBALS = {
   'rxjs/add/operator/switchMap': 'Rx.Observable.prototype',
   'rxjs/add/operator/takeUntil': 'Rx.Observable.prototype',
   'rxjs/add/operator/toPromise': 'Rx.Observable.prototype',
+
+    'rxjs/observable/combineLatest': 'Rx.Observable',
+    'rxjs/observable/forkJoin': 'Rx.Observable',
+    'rxjs/observable/fromEvent': 'Rx.Observable',
+    'rxjs/observable/merge': 'Rx.Observable',
+    'rxjs/observable/of': 'Rx.Observable',
+    'rxjs/observable/throw': 'Rx.Observable',
+    'rxjs/operator/auditTime': 'Rx.Observable.prototype',
+    'rxjs/operator/catch': 'Rx.Observable.prototype',
+    'rxjs/operator/debounceTime': 'Rx.Observable.prototype',
+    'rxjs/operator/do': 'Rx.Observable.prototype',
+    'rxjs/operator/filter': 'Rx.Observable.prototype',
+    'rxjs/operator/finally': 'Rx.Observable.prototype',
+    'rxjs/operator/first': 'Rx.Observable.prototype',
+    'rxjs/operator/let': 'Rx.Observable.prototype',
+    'rxjs/operator/map': 'Rx.Observable.prototype',
+    'rxjs/operator/share': 'Rx.Observable.prototype',
+    'rxjs/operator/startWith': 'Rx.Observable.prototype',
+    'rxjs/operator/switchMap': 'Rx.Observable.prototype',
+    'rxjs/operator/takeUntil': 'Rx.Observable.prototype',
+    'rxjs/operator/toPromise': 'Rx.Observable.prototype',
+
+    //@ngx-translate
+    '@ngx-translate': 'ngx',
+    '@ngx-translate/core/index': 'ngx.core',
+    '@ngx-translate/http-loader/index': 'ngx.http-loader',
 };
 
 export type BundleConfig = {
@@ -68,7 +95,7 @@ export function createRollupBundle(config: BundleConfig): Promise<any> {
   const writeOptions = {
     // Keep the moduleId empty because we don't want to force developers to a specific moduleId.
     moduleId: '',
-    moduleName: config.moduleName || 'ng.material',
+    moduleName: config.moduleName || 'ng.jigsaw',
     banner: buildConfig.licenseBanner,
     format: config.format,
     dest: config.dest,

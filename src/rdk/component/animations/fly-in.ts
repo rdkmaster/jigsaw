@@ -1,6 +1,6 @@
-import { trigger, state, style, transition, animate,keyframes } from '@angular/animations';
+import { trigger, state, style, transition, animate, keyframes, AnimationTriggerMetadata } from '@angular/animations';
 
-export const flyIn = trigger('flyIn', [
+export const flyIn: AnimationTriggerMetadata = trigger('flyIn', [
   state('in', style({transform: 'translateX(0)'})),
   transition('void => *', [
        animate(300, keyframes([
