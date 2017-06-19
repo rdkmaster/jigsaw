@@ -10,10 +10,11 @@ import {
     SortOrder
 } from "./component-data";
 import {Http, RequestOptionsArgs, Response, URLSearchParams} from "@angular/http";
-import {Subject} from "rxjs";
+import {Subject} from "rxjs/Subject";
 import "rxjs/add/operator/map";
+import 'rxjs/add/operator/debounceTime';
 
-type TableMatrixRow = Array<string|number>;
+export type TableMatrixRow = Array<string|number>;
 export type TableDataHeader = string[];
 export type TableDataField = string[];
 export type TableDataMatrix = TableMatrixRow[];

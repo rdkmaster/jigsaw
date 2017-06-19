@@ -1,5 +1,5 @@
 import {Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Renderer2} from "@angular/core";
-import {IPopupable} from "rdk/service/popup.service";
+import {IPopupable} from "../../service/popup.service";
 import {CommonModule} from "@angular/common";
 import {AbstractRDKComponent} from "../core";
 

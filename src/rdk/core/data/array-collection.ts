@@ -13,7 +13,8 @@ import {
 import {TableData} from "./table-data";
 
 import {Http, RequestOptionsArgs, Response, URLSearchParams} from "@angular/http";
-import {Subject} from "rxjs";
+import {Subject} from "rxjs/Subject";
+
 import "rxjs/add/operator/map";
 
 class ArrayHacker {

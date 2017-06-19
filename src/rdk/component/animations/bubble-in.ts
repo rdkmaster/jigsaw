@@ -1,6 +1,6 @@
-import { trigger, state, style, transition, animate,keyframes } from '@angular/animations';
+import { trigger, state, style, transition, animate,keyframes, AnimationTriggerMetadata } from '@angular/animations';
 
-export const bubbleIn = trigger('bubbleIn', [
+export const bubbleIn: AnimationTriggerMetadata = trigger('bubbleIn', [
     state('in', style({opacity: 1, transform: 'scale(1)'})),
     transition('void => *', [
         animate('0.2s ease-in-out', keyframes([

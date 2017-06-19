@@ -11,7 +11,7 @@ export class ZTreeSettingAsync {
 
 
 export enum ZTreeSettingViewSpeedLevel{
-    "slow", "normal", "fast"
+    slow, normal, fast
 }
 export class ZTreeSettingView {
     addDiyDom?: Function;
@@ -53,10 +53,10 @@ export class ZTreeSettingData {
 
 
 export enum ZTreeSettingCheckStyle{
-    "checkbox", "radio"
+    checkbox, radio
 }
 export enum ZTreeSettingCheckRadioType{
-    "level", "all"
+    level, all
 }
 export class ZTreeSettingCheck {
     autoCheckTrigger?: boolean;

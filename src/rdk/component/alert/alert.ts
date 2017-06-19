@@ -110,7 +110,7 @@ export class RdkAlert extends AbstractDialogComponentBase {
     }
 }
 
-abstract class RdkCommonAlert extends DialogBase {
+export abstract class RdkCommonAlert extends DialogBase {
     @Input()
     public set initData(value: any) {
         if (!value) {

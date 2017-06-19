@@ -1,6 +1,6 @@
-import { trigger, state, style, transition, animate,keyframes } from '@angular/animations';
+import { trigger, state, style, transition, animate, keyframes, AnimationTriggerMetadata } from '@angular/animations';
 
-export const fadeIn = trigger('fadeIn', [
+export const fadeIn: AnimationTriggerMetadata = trigger('fadeIn', [
   state('in', style({opacity: 1})),
   transition('void => *', [
        animate(200, keyframes([
