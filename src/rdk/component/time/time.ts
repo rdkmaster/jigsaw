@@ -6,11 +6,11 @@ import {SimpleTooltipComponent} from "../tooltip/tooltip";
 import {Time, WeekTime} from "../../service/time.types";
 
 
-export type ShortcutFunction = () => [WeekTime, WeekTime]
+export type TimeShortcutFunction = () => [WeekTime, WeekTime]
 
 export type Shortcut = {
     label: string,
-    dateRange: [WeekTime, WeekTime] | ShortcutFunction;
+    dateRange: [WeekTime, WeekTime] | TimeShortcutFunction;
 }
 
 export type GrItem = {

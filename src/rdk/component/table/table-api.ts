@@ -16,11 +16,11 @@ export class TableCellRenderer {
 }
 
 export type ColumnDefine = {
-    target: TargetType,
+    target: TableColumnTarget,
     visible?: boolean,
     width?: string,
-    header?: Header,
-    cell?: Cell,
+    header?: TableHeader,
+    cell?: TableCell,
     group?: boolean
 }
 
@@ -29,8 +29,8 @@ export type AdditionalColumnDefine = {
     field?: string|number,
     visible?: boolean,
     width?: string,
-    header?: Header,
-    cell?: Cell,
+    header?: TableHeader,
+    cell?: TableCell,
     group?: boolean
 }
 
@@ -49,11 +49,11 @@ export type TableHeadChangeEvent = {
     oldCellData: string|number
 }
 
-export type TargetType = number|string|number[]|string[]|TargetFun;
+export type TableColumnTarget = number|string|number[]|string[]|TableColumnTargetFunc;
 
-export type TargetFun = (field: string, index: number) => boolean;
+export type TableColumnTargetFunc = (field: string, index: number) => boolean;
 
-export type Header = {
+export type TableHeader = {
     text?: string,
     renderer?: Type<TableCellRenderer>|TemplateRef<any>,
     class?: string,
@@ -62,7 +62,7 @@ export type Header = {
     defaultSortOrder?: SortOrder
 }
 
-export type Cell = {
+export type TableCell = {
     renderer?: Type<TableCellRenderer>|TemplateRef<any>,
     class?: string,
     editable?: boolean,
