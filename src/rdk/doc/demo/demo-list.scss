@@ -1,0 +1,17 @@
+@import "../../assets/scss/core/basc";
+
+li {display: inline-block; margin-right: 12px;}
+
+.demo-wrap{
+    @include clearfix;
+    .left-box {
+        width: 20%;
+        float: left;
+        padding-right: 12px;
+    }
+    .right-box{
+        width: 80%;
+        float: left;
+    }
+}
+
