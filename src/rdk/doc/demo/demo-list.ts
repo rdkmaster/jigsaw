@@ -1,15 +1,24 @@
-import {NgModule, Component} from '@angular/core';
+import {NgModule, Component, Renderer2, ElementRef, OnInit} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {RdkBlock, RdkBlockModule} from "../../component/block/block";
 import {RdkCollapseModule} from "../../component/collapse/collapse";
+import {RdkScrollBarModule} from "../../component/scrollbar/scrollbar";
+import {AffixUtils} from "../../core/utils/internal-utils";
 
 @Component({
     selector: 'rdk-demo-list',
     templateUrl: 'demo-list.html',
     styleUrls: ['demo-list.scss']
 })
-export class DemoListComponent {
+export class DemoListComponent implements OnInit{
+    constructor(private elementRef: ElementRef){
 
+    }
+    navHeight: number;
+    ngOnInit(){
+        this.navHeight = (document.body.clientHeight -
+            AffixUtils.offset(this.elementRef.nativeElement.querySelector('.left-box')).top) - 10;
+    }
 }
 
 // 请按照组件的字符序排列
@@ -129,7 +138,8 @@ const demoListRoutes = [
     imports: [
         RouterModule.forChild(demoListRoutes),
         RdkBlockModule,
-        RdkCollapseModule
+        RdkCollapseModule,
+        RdkScrollBarModule
     ],
     exports: [],
     declarations: [
