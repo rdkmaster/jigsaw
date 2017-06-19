@@ -53,8 +53,7 @@ export class RDKArray<T> implements Array<T> {
     readonly [n: number]: T;
 
     public includes(searchElement: T, fromIndex?: number): boolean {
-        //return this._agent.includes.apply(this, arguments);
-        return null;
+        return this._agent.includes.apply(this, arguments);
     }
 
     public toString(): string {

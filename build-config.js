@@ -5,12 +5,12 @@
 const {join} = require('path');
 
 /** Current version of the project*/
-const buildVersion = require('./package.json').version;
+const buildVersion = require('./src/rdk/package.json').version;
 
 /** License that will be placed inside of all created bundles. */
 const buildLicense = `/**
-  * @license Angular Material v${buildVersion}
-  * Copyright (c) 2017 Google, Inc. https://material.angular.io/
+  * @license RDK Jigsaw v${buildVersion}
+  * Copyright (c) 2017 ZTE, Inc. http://jigsaw.rdkapp.com/
   * License: MIT
   */`;
 
