@@ -13,6 +13,7 @@ import {GraphResizeComponent} from "./resize/demo";
 import {RdkInputModule} from "../../../../component/input/input";
 import {RdkSwitchModule} from "../../../../component/switch/index";
 import {GraphWithNoDataComponent} from "./nodata/nodata";
+import {GraphSetSizeComponent} from "./setSize/setSize";
 
 const graphRoutes = [
     {
@@ -41,7 +42,8 @@ const graphRoutes = [
         RdkGraphModule, RdkInputModule, RdkSwitchModule
     ],
     declarations: [
-        BasicGraphComponent, BasicLineGraphComponent, AjaxLineGraphComponent, PieGraphDemoComponent, GraphResizeComponent,GraphWithNoDataComponent
+        BasicGraphComponent, BasicLineGraphComponent, AjaxLineGraphComponent, PieGraphDemoComponent, GraphResizeComponent,
+        GraphWithNoDataComponent, GraphSetSizeComponent
     ],
 })
 export class GraphDemoModule {
