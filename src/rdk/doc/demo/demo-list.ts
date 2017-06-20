@@ -671,7 +671,7 @@ export class DemoListComponent implements OnInit{
                 },
             ]
         },
-    ];
+    ].sort((a, b) => a.title.localeCompare(b.title));
 
     ngOnInit(){
         this.navHeight = (document.body.clientHeight -
