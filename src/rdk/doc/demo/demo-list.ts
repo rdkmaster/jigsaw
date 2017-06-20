@@ -1,118 +1,790 @@
-import {NgModule, Component} from '@angular/core';
+import {NgModule, Component, Renderer2, ElementRef, OnInit} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {RdkBlock, RdkBlockModule} from "../../component/block/block";
+import {RdkCollapseModule} from "../../component/collapse/collapse";
+import {RdkScrollBarModule} from "../../component/scrollbar/scrollbar";
+import {AffixUtils} from "../../core/utils/internal-utils";
+import {CommonModule} from "@angular/common";
 
 @Component({
-    selector: 'rdk-demo-list', templateUrl: 'demo-list.html',
-    styles: ['li {display: inline-block; margin-right: 12px;}']
+    selector: 'rdk-demo-list',
+    templateUrl: 'demo-list.html',
+    styleUrls: ['demo-list.scss']
 })
-export class DemoListComponent {
+export class DemoListComponent implements OnInit{
+    constructor(private elementRef: ElementRef){
 
+    }
+    navHeight: number;
+
+    navData: Object = [
+        {
+            title: 'Alert',
+            navList: [
+                {
+                    label: 'in-dom',
+                    url: '/demo/alert/in-dom'
+                },
+                {
+                    label: 'popup',
+                    url: '/demo/alert/popup'
+                },
+                {
+                    label: 'customized',
+                    url: '/demo/alert/customized'
+                }
+            ]
+        },
+        {
+            title: 'ArrayCollection',
+            navList: [
+                {
+                    label: 'ajax',
+                    url: '/demo/array-collection/ajax'
+                },
+                {
+                    label: 'basic',
+                    url: '/demo/array-collection/basic'
+                },
+                {
+                    label: 'server side pagination',
+                    url: '/demo/array-collection/server-side-pagination'
+                }
+            ]
+        },
+        {
+            title: 'Button',
+            navList: [
+                {
+                    label: 'basic',
+                    url: '/demo/button/basic'
+                },
+                {
+                    label: 'disable',
+                    url: '/demo/button/disable'
+                },
+                {
+                    label: 'width_height',
+                    url: '/demo/button/width_height'
+                },
+                {
+                    label: 'preset',
+                    url: '/demo/button/preset'
+                },
+                {
+                    label: 'with-loading-inside',
+                    url: '/demo/button/with-loading'
+                },
+                {
+                    label: 'with-loading-outside',
+                    url: '/demo/loading/domInner'
+                }
+            ]
+        },
+        {
+            title: 'CheckBox',
+            navList: [
+                {
+                    label: 'basic',
+                    url: '/demo/checkbox/basic'
+                },
+                {
+                    label: 'disable',
+                    url: '/demo/checkbox/disable'
+                }
+            ]
+        },
+        {
+            title: 'Loading',
+            navList: [
+                {
+                    label: 'basic',
+                    url: '/demo/loading/basic'
+                },
+                {
+                    label: 'ballLoading',
+                    url: '/demo/loading/ballLoading'
+                },
+                {
+                    label: 'userDefined',
+                    url: '/demo/loading/userDefined'
+                },
+                {
+                    label: 'with-loading-inside',
+                    url: '/demo/button/with-loading'
+                },
+                {
+                    label: 'with-loading-outside',
+                    url: '/demo/loading/domInner'
+                },
+                {
+                    label: 'color',
+                    url: '/demo/loading/color'
+                },
+            ]
+        },
+        {
+            title: 'Switch',
+            navList: [
+                {
+                    label: 'basic',
+                    url: '/demo/switch/basic'
+                }
+            ]
+        },
+        {
+            title: 'Table',
+            navList: [
+                {
+                    label: 'basic',
+                    url: '/demo/table/basic'
+                },
+                {
+                    label: 'renderer',
+                    url: '/demo/table/renderer'
+                },
+                {
+                    label: 'performs',
+                    url: '/demo/table/performs'
+                },
+                {
+                    label: 'setColumnWidth',
+                    url: '/demo/table/setColumnWidth'
+                },
+                {
+                    label: 'setColumnVisible',
+                    url: '/demo/table/setColumnVisible'
+                },
+                {
+                    label: 'setHeaderRender',
+                    url: '/demo/table/setHeaderRender'
+                },
+                {
+                    label: 'setHeaderClass',
+                    url: '/demo/table/setHeaderClass'
+                },
+                {
+                    label: 'setHeaderSort',
+                    url: '/demo/table/setHeaderSort'
+                },
+                {
+                    label: 'setCellRender',
+                    url: '/demo/table/setCellRender'
+                },
+                {
+                    label: 'setCellClass',
+                    url: '/demo/table/setCellClass'
+                },
+                {
+                    label: 'setCellEditable',
+                    url: '/demo/table/setCellEditable'
+                },
+                {
+                    label: 'setColumnGroup',
+                    url: '/demo/table/setColumnGroup'
+                },
+                {
+                    label: 'addColumn',
+                    url: '/demo/table/addColumn'
+                },
+                {
+                    label: 'addIDColumn',
+                    url: '/demo/table/addIDColumn'
+                },
+                {
+                    label: 'addCheckboxColumn',
+                    url: '/demo/table/addCheckboxColumn'
+                },
+                {
+                    label: 'fixedHead',
+                    url: '/demo/table/fixedHead'
+                },
+                {
+                    label: 'pageable',
+                    url: '/demo/table/pageable'
+                },
+                {
+                    label: 'dataFromAjax',
+                    url: '/demo/table/dataFromAjax'
+                },
+                {
+                    label: 'scrollAmount',
+                    url: '/demo/table/scrollAmount'
+                },
+                {
+                    label: 'withPopup',
+                    url: '/demo/table/withPopup'
+                },
+                {
+                    label: 'dataChange',
+                    url: '/demo/table/dataChange'
+                },
+                {
+                    label: 'addIDWithPaging',
+                    url: '/demo/table/addIDWithPaging'
+                },
+                {
+                    label: 'addIDWithDebouncePaging',
+                    url: '/demo/table/addIDWithDebouncePaging'
+                },
+                {
+                    label: 'rendererOfTemplateRef',
+                    url: '/demo/table/rendererOfTemplateRef'
+                },
+                {
+                    label: 'lineEllipsis',
+                    url: '/demo/table/lineEllipsis'
+                },
+            ]
+        },
+        {
+            title: 'Dialog',
+            navList: [
+                {
+                    label: 'title',
+                    url: '/demo/dialog/title'
+                },
+                {
+                    label: 'buttons',
+                    url: '/demo/dialog/buttons'
+                },
+                {
+                    label: 'top',
+                    url: '/demo/dialog/top'
+                },
+                {
+                    label: 'popOption',
+                    url: '/demo/dialog/popOption'
+                },
+                {
+                    label: 'in-dom',
+                    url: '/demo/dialog/in-dom'
+                },
+                {
+                    label: 'misc',
+                    url: '/demo/dialog/misc'
+                }
+            ]
+        },
+        {
+            title: 'Popup',
+            navList: [
+                {
+                    label: 'tracing-event',
+                    url: '/demo/popup/tracing-event'
+                },
+                {
+                    label: 'alert-popup',
+                    url: '/demo/alert/popup'
+                },
+                {
+                    label: 'dialog-popOption',
+                    url: '/demo/dialog/popOption'
+                },
+                {
+                    label: 'dialog-misc',
+                    url: '/demo/dialog/misc'
+                },
+                {
+                    label: 'tooltip-dialog',
+                    url: '/demo/tooltip/dialog'
+                }
+            ]
+        },
+        {
+            title: 'Input',
+            navList: [
+                {
+                    label: 'basic',
+                    url: '/demo/input/basic'
+                },
+                {
+                    label: 'valueChange',
+                    url: '/demo/input/valueChange'
+                },
+                {
+                    label: 'focus',
+                    url: '/demo/input/focus'
+                },
+                {
+                    label: 'prefixIcon',
+                    url: '/demo/input/prefixIcon'
+                },
+            ]
+        },
+        {
+            title: 'Scrollbar',
+            navList: [
+                {
+                    label: 'basic',
+                    url: '/demo/scrollbar/basic'
+                },
+                {
+                    label: 'user-define',
+                    url: '/demo/scrollbar/user-define'
+                },
+                {
+                    label: 'setOptions',
+                    url: '/demo/scrollbar/setOptions'
+                },
+            ]
+        },
+        {
+            title: 'Select',
+            navList: [
+                {
+                    label: 'basic',
+                    url: '/demo/select/basic'
+                },
+                {
+                    label: 'scroll',
+                    url: '/demo/select/scroll'
+                },
+                /*{
+                    label: 'checkbox',
+                    url: '/demo/select/checkbox'
+                },*/
+            ]
+        },
+        {
+            title: 'Radio',
+            navList: [
+                {
+                    label: 'basic',
+                    url: '/demo/radio/basic'
+                },
+                {
+                    label: 'labelField',
+                    url: '/demo/radio/labelField'
+                },
+                {
+                    label: 'trackItemBy',
+                    url: '/demo/radio/trackItemBy'
+                },
+            ]
+        },
+        {
+            title: 'Graph',
+            navList: [
+                {
+                    label: 'basic',
+                    url: '/demo/graph/basic'
+                },
+                {
+                    label: 'resize',
+                    url: '/demo/graph/resize'
+                },
+                {
+                    label: 'line-bar-graph-basic',
+                    url: '/demo/graph/line-bar-graph-basic'
+                },
+                {
+                    label: 'line-bar-graph-ajax',
+                    url: '/demo/graph/line-bar-graph-ajax'
+                },
+                {
+                    label: 'pie-graph-basic',
+                    url: '/demo/graph/pie-graph-basic'
+                },
+                {
+                    label: 'noData',
+                    url: '/demo/graph/noData'
+                },
+            ]
+        },
+        {
+            title: 'TileSelect',
+            navList: [
+                {
+                    label: 'basic',
+                    url: '/demo/tileselect/basic'
+                },
+                {
+                    label: 'SelectedItems',
+                    url: '/demo/tileselect/SelectedItems'
+                },
+                {
+                    label: 'MultipleSelect',
+                    url: '/demo/tileselect/MultipleSelect'
+                },
+                {
+                    label: 'tileOptionWidth',
+                    url: '/demo/tileselect/tileOptionWidth'
+                },
+                {
+                    label: 'searchable',
+                    url: '/demo/tileselect/searchable'
+                },
+                {
+                    label: 'labelField',
+                    url: '/demo/tileselect/labelField'
+                },
+                {
+                    label: 'ItemsChange',
+                    url: '/demo/tileselect/ItemsChange'
+                },
+                {
+                    label: 'trackitemby',
+                    url: '/demo/tileselect/trackitemby'
+                },
+            ]
+        },
+        {
+            title: 'Time',
+            navList: [
+                {
+                    label: 'basic',
+                    url: '/demo/time/basic'
+                },
+                {
+                    label: 'limitEnd',
+                    url: '/demo/time/limitEnd'
+                },
+                {
+                    label: 'limitStart',
+                    url: '/demo/time/limitStart'
+                },
+                {
+                    label: 'weekStart',
+                    url: '/demo/time/weekStart'
+                },
+                {
+                    label: 'gr',
+                    url: '/demo/time/gr'
+                },
+                {
+                    label: 'recommended',
+                    url: '/demo/time/recommended'
+                },
+                {
+                    label: 'grItems',
+                    url: '/demo/time/grItems'
+                },
+                {
+                    label: 'refreshInterval',
+                    url: '/demo/time/refreshInterval'
+                },
+                {
+                    label: 'withComboSelect',
+                    url: '/demo/time/withComboSelect'
+                },
+            ]
+        },
+        {
+            title: 'RangeTime',
+            navList: [
+                {
+                    label: 'basic',
+                    url: '/demo/rangeTime/basic'
+                },
+                {
+                    label: 'limitEnd',
+                    url: '/demo/rangeTime/limitEnd'
+                },
+                {
+                    label: 'limitStart',
+                    url: '/demo/rangeTime/limitStart'
+                },
+                {
+                    label: 'weekStart',
+                    url: '/demo/rangeTime/weekStart'
+                },
+                {
+                    label: 'gr',
+                    url: '/demo/rangeTime/gr'
+                },
+                {
+                    label: 'recommended',
+                    url: '/demo/rangeTime/recommended'
+                },
+                {
+                    label: 'grItems',
+                    url: '/demo/rangeTime/grItems'
+                },
+                {
+                    label: 'refreshInterval',
+                    url: '/demo/rangeTime/refreshInterval'
+                },
+            ]
+        },
+        {
+            title: 'Pagination',
+            navList: [
+                {
+                    label: 'basic',
+                    url: '/demo/pagination/basic'
+                },
+                {
+                    label: 'with-table-data',
+                    url: '/demo/pagination/with-table-data'
+                },
+            ]
+        },
+        {
+            title: 'Tag',
+            navList: [
+                {
+                    label: 'basic',
+                    url: '/demo/tag/basic'
+                }
+            ]
+        },
+        {
+            title: 'Tabs',
+            navList: [
+                {
+                    label: 'basic',
+                    url: '/demo/tabs/basic'
+                },
+                {
+                    label: 'dynamicTab',
+                    url: '/demo/tabs/dynamicTab'
+                },
+                {
+                    label: 'withInput',
+                    url: '/demo/tabs/withInput'
+                },
+                {
+                    label: 'withNgFor',
+                    url: '/demo/tabs/withNgFor'
+                },
+                {
+                    label: 'hideTab',
+                    url: '/demo/tabs/hideTab'
+                },
+                {
+                    label: 'showTab',
+                    url: '/demo/tabs/showTab'
+                },
+                {
+                    label: 'removeTab',
+                    url: '/demo/tabs/removeTab'
+                },
+            ]
+        },
+        {
+            title: 'ComboSelect',
+            navList: [
+                {
+                    label: 'basic',
+                    url: '/demo/combo-select/basic'
+                },
+                {
+                    label: 'multiple',
+                    url: '/demo/combo-select/multiple'
+                },
+                {
+                    label: 'autoWidth',
+                    url: '/demo/combo-select/autoWidth'
+                },
+                {
+                    label: 'labelField',
+                    url: '/demo/combo-select/labelField'
+                },
+                {
+                    label: 'change',
+                    url: '/demo/combo-select/change'
+                },
+                {
+                    label: 'open',
+                    url: '/demo/combo-select/open'
+                },
+                {
+                    label: 'disable',
+                    url: '/demo/combo-select/disable'
+                },
+                {
+                    label: 'editable',
+                    url: '/demo/combo-select/editable'
+                },
+                {
+                    label: 'collapse',
+                    url: '/demo/combo-select/collapse'
+                },
+                {
+                    label: 'setWidth',
+                    url: '/demo/combo-select/setWidth'
+                },
+            ]
+        },
+        {
+            title: 'Slider',
+            navList: [
+                {
+                    label: 'slider 全家桶',
+                    url: '/demo/slider/basic'
+                },
+                {
+                    label: 'slider 单独的垂直滚动条',
+                    url: '/demo/slider/vertical'
+                }
+            ]
+        },
+        {
+            title: 'ZTree',
+            navList: [
+                {
+                    label: 'ztree',
+                    url: '/demo/tree/basic'
+                },
+                {
+                    label: 'dataFromAjax',
+                    url: '/demo/tree/dataFromAjax'
+                },
+                {
+                    label: 'editable',
+                    url: '/demo/tree/editable'
+                },
+                {
+                    label: 'asyn',
+                    url: '/demo/tree/asyn'
+                },
+            ]
+        },
+        {
+            title: 'Collapse',
+            navList: [
+                {
+                    label: 'collapse 全家桶',
+                    url: '/demo/collapse/basic'
+                },
+                {
+                    label: 'ngFor',
+                    url: '/demo/collapse/ngFor'
+                }
+            ]
+        },
+        {
+            title: 'Tooltip',
+            navList: [
+                {
+                    label: 'in-dom',
+                    url: '/demo/tooltip/in-dom'
+                },
+                {
+                    label: 'dialog',
+                    url: '/demo/tooltip/dialog'
+                },
+                {
+                    label: 'inline',
+                    url: '/demo/tooltip/inline'
+                },
+            ]
+        },
+    ];
+
+    ngOnInit(){
+        this.navHeight = (document.body.clientHeight -
+            AffixUtils.offset(this.elementRef.nativeElement.querySelector('.left-box')).top) - 10;
+    }
 }
 
 // 请按照组件的字符序排列
 const demoListRoutes = [
     {
-        path: '', component: DemoListComponent
-    },
-    {
-        path: 'alert',
-        loadChildren: './component/alert/demo.module#AlertDemoModule'
-    },
-    {
-        path: 'array-collection',
-        loadChildren: './component/array-collection/demo.module#ArrayCollectionDemoModule'
-    },
-    {
-        path: 'button',
-        loadChildren: './component/button/demo.module#ButtonDemoModule'
-    },
-    {
-        path: 'checkbox',
-        loadChildren: './component/checkbox/demo.module#CheckBoxDemoModule'
-    },
-    {
-        path: 'loading',
-        loadChildren: './component/loading/demo.module#LoadingDemoModule'
-    },
-    {
-        path: 'input',
-        loadChildren: './component/input/demo.module#InputDemoModule'
-    },
-    {
-        path: 'popup',
-        loadChildren: './component/popup/demo.module#PopupDemoModule'
-    },
-    {
-        path: 'scrollbar',
-        loadChildren: './component/scrollbar/demo.module#ScrollbarDemoModule'
-    },
-    {
-        path: 'select',
-        loadChildren: './component/select/demo.module#SelectDemoModule'
-    },
-    {
-        path: 'table',
-        loadChildren: './component/table/demo.module#TableDemoModule'
-    },
-    {
-        path: 'switch',
-        loadChildren: './component/switch/switch-demo.module#SwitchDemoModule'
-    },
-    {
-        path: 'time',
-        loadChildren: './component/time/time-demo.module#TimeDemoModule'
-    },
-    {
-        path: 'radio',
-        loadChildren: './component/radio/radio-demo.module#RadioDemoModule'
-    },
-    {
-        path: 'tileselect',
-        loadChildren: './component/tileselect/tileselect-demo.module#TileSelectDemoModule'
-    },
-    {
-        path: 'graph',
-        loadChildren: './component/graph/graph-demo.module#GraphDemoModule'
-    },
-    {
-        path: 'pagination',
-        loadChildren: './component/pagination/pagination-demo.module#PaginationDemoModule'
-    },
-    {
-        path: 'tag',
-        loadChildren: './component/tag/tag-demo.module#TagDemoModule'
-    },
-    {
-        path: 'tabs',
-        loadChildren: './component/tabs/tabs-demo.module#TabsDemoModule'
-    },
-    {
-        path: 'combo-select',
-        loadChildren: './component/combo-select/combo-select-demo.module#ComboSelectDemoModule'
-    },
-    {
-        path: 'slider',
-        loadChildren: './component/slider/slider-demo.module#SliderDemoModule'
-    },
-    {
-        path:'tree',
-        loadChildren:'./component/ztree/demo.module#ZtreeDemoModule'
-    },
-    {
-        path: 'collapse',
-        loadChildren: './component/collapse/collapse-module#CollapseDemoModule'
-    },
-    {
-        path: 'dialog',
-        loadChildren: './component/dialog/demo.module#DialogDemoModule'
-    },{
-        path: 'rangeTime',
-        loadChildren: './component/range-time/range-time-demo.module#RangeTimeDemoModule'
-    },
-    {
-        path: 'tooltip',
-        loadChildren: './component/tooltip/demo.module#TooltipDemoModule'
+        path: '',
+        component: DemoListComponent,
+        children: [
+            {
+                path: 'alert',
+                loadChildren: './component/alert/demo.module#AlertDemoModule'
+            },
+            {
+                path: 'array-collection',
+                loadChildren: './component/array-collection/demo.module#ArrayCollectionDemoModule'
+            },
+            {
+                path: 'button',
+                loadChildren: './component/button/demo.module#ButtonDemoModule'
+            },
+            {
+                path: 'checkbox',
+                loadChildren: './component/checkbox/demo.module#CheckBoxDemoModule'
+            },
+            {
+                path: 'loading',
+                loadChildren: './component/loading/demo.module#LoadingDemoModule'
+            },
+            {
+                path: 'input',
+                loadChildren: './component/input/demo.module#InputDemoModule'
+            },
+            {
+                path: 'popup',
+                loadChildren: './component/popup/demo.module#PopupDemoModule'
+            },
+            {
+                path: 'scrollbar',
+                loadChildren: './component/scrollbar/demo.module#ScrollbarDemoModule'
+            },
+            {
+                path: 'select',
+                loadChildren: './component/select/demo.module#SelectDemoModule'
+            },
+            {
+                path: 'table',
+                loadChildren: './component/table/demo.module#TableDemoModule'
+            },
+            {
+                path: 'switch',
+                loadChildren: './component/switch/switch-demo.module#SwitchDemoModule'
+            },
+            {
+                path: 'time',
+                loadChildren: './component/time/time-demo.module#TimeDemoModule'
+            },
+            {
+                path: 'radio',
+                loadChildren: './component/radio/radio-demo.module#RadioDemoModule'
+            },
+            {
+                path: 'tileselect',
+                loadChildren: './component/tileselect/tileselect-demo.module#TileSelectDemoModule'
+            },
+            {
+                path: 'graph',
+                loadChildren: './component/graph/graph-demo.module#GraphDemoModule'
+            },
+            {
+                path: 'pagination',
+                loadChildren: './component/pagination/pagination-demo.module#PaginationDemoModule'
+            },
+            {
+                path: 'tag',
+                loadChildren: './component/tag/tag-demo.module#TagDemoModule'
+            },
+            {
+                path: 'tabs',
+                loadChildren: './component/tabs/tabs-demo.module#TabsDemoModule'
+            },
+            {
+                path: 'combo-select',
+                loadChildren: './component/combo-select/combo-select-demo.module#ComboSelectDemoModule'
+            },
+            {
+                path: 'slider',
+                loadChildren: './component/slider/slider-demo.module#SliderDemoModule'
+            },
+            {
+                path:'tree',
+                loadChildren:'./component/ztree/demo.module#ZtreeDemoModule'
+            },
+            {
+                path: 'collapse',
+                loadChildren: './component/collapse/collapse-module#CollapseDemoModule'
+            },
+            {
+                path: 'dialog',
+                loadChildren: './component/dialog/demo.module#DialogDemoModule'
+            },{
+                path: 'rangeTime',
+                loadChildren: './component/range-time/range-time-demo.module#RangeTimeDemoModule'
+            },
+            {
+                path: 'tooltip',
+                loadChildren: './component/tooltip/demo.module#TooltipDemoModule'
+            },
+        ]
     },
     {
         path: '**', //fallback router must in the last
@@ -123,7 +795,10 @@ const demoListRoutes = [
 @NgModule({
     imports: [
         RouterModule.forChild(demoListRoutes),
-        RdkBlockModule
+        CommonModule,
+        RdkBlockModule,
+        RdkCollapseModule,
+        RdkScrollBarModule
     ],
     exports: [],
     declarations: [
@@ -134,7 +809,7 @@ const demoListRoutes = [
 })
 export class DemoListModule {
     constructor(){
-        Event
+
     }
 
 
