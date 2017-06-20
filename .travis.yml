@@ -15,6 +15,6 @@ install:
   - npm install
 
 script:
-  - npm build
+  - ng build
   - gulp jigsaw:build-release:clean
 
