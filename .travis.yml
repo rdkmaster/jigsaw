@@ -17,4 +17,8 @@ install:
 script:
   - ng build
   - gulp jigsaw:build-release:clean
+  - ng test --code-coverage
+  - ng e2e
 
+after_script:
+- cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
