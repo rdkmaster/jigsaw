@@ -19,6 +19,5 @@ script:
   - gulp jigsaw:build-release:clean
   - ng test --code-coverage
   - ng e2e
+  - cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
 
-after_script:
-- cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
