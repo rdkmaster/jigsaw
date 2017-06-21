@@ -62,7 +62,7 @@ export class RdkTooltipDialog implements IPopupable, AfterContentInit {
 }
 
 @Component({
-    template: '<rdk-tooltip-dialog><span innerHtml="fdfd"></span></rdk-tooltip-dialog>'
+    template: '<rdk-tooltip-dialog><span innerHtml="tooltip"></span></rdk-tooltip-dialog>'
 })
 export class SimpleTooltipComponent extends TooltipBase {
     @ViewChild(RdkTooltipDialog) public tooltip: RdkTooltipDialog;
@@ -79,7 +79,9 @@ export class SimpleTooltipComponent extends TooltipBase {
 
     public set initData(value: any) {
         this._initData = value;
-        this._elementRef.nativeElement.querySelector('span').innerHTML = `${value.message}`;
+        if (value && value.message) {
+            this._elementRef.nativeElement.querySelector('span').innerHTML = `${value.message}`;
+        }
     }
 }
 
@@ -87,7 +89,7 @@ export class SimpleTooltipComponent extends TooltipBase {
     selector: '[rdk-tooltip], [rdkTooltip]'
 })
 export class RdkTooltip implements OnDestroy {
-    @Input() public rdkTooltip:string = 'no message';
+    @Input() public rdkTooltip:string;
     private _tooltipInfo:PopupInfo;
     private _removeMouseLeave:Function;
     private _removeMouseEnter:Function;
@@ -111,6 +113,9 @@ export class RdkTooltip implements OnDestroy {
     }
 
     private _popupTooltip():void {
+        if (!this.rdkTooltip) {
+            return;
+        }
         this._tooltipInfo = this._popupService.popup(SimpleTooltipComponent, {
             modal: false, //是否模态
             showEffect: PopupEffect.bubbleIn,
