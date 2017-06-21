@@ -35,9 +35,12 @@ npm start
 5. 后续直接在 `d:\jigsaw-seed` 目录下运行 `npm start` 命令就可以启动开发环境了。我们推荐使用[WebStorm](https://www.jetbrains.com/webstorm/)作为IDE，Jigsaw专门针对这类IDE做了代码优化，让这些IDE可以精确提示更多的信息，节约你翻阅api文档的时间。
 
 ### 集成到已有工程中
-1. 在你的工程下，执行如下脚本
+1. 在你的工程下，增加Jigsaw的依赖：
 ```
 npm install --save @rdkmaster/jigsaw
+```
+2. 安装其他的依赖项
+```
 npm install --save @ngx-translate/core@^6.0.1
 npm install --save @ngx-translate/http-loader@^6.0.3
 npm install --save core-js@^2.4.1 #不考虑IE系列可不安装
