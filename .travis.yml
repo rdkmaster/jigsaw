@@ -26,6 +26,7 @@ install:
 
 before_script:
   - mkdir -p $LOGS_DIR
+  - chmod +x scripts
   - ./scripts/sauce_connect_setup.sh
 
 script:
