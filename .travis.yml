@@ -1,12 +1,10 @@
 language: node_js
-sudo: false
 
 node_js:
-  - '--lts'
+  - "6"
 
 addons:
-  sauce_connect: true
-  chrome: stable
+  firefox: "latest"
 
 branches:
   only:
@@ -32,8 +30,8 @@ script:
   #- ng test --code-coverage --watch false
   #- cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
 
-  after_script:
-    - ./scripts/sauce_connect_teardown.sh
+after_script:
+  - ./scripts/sauce_connect_teardown.sh
 
-  sudo: false
+sudo: false
 
