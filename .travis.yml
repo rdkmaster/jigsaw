@@ -7,6 +7,7 @@ node_js:
 addons:
   sauce_connect:
     http_proxy: "http://proxy.zte.com.cn:80/"
+  chrome: stable
 
 branches:
   only:
@@ -22,8 +23,8 @@ install:
 
 script:
   - ng e2e
-  - ng build
-  - gulp jigsaw:build-release:clean
-  - ng test --code-coverage --watch false
-  - cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
+  #- ng build
+  #- gulp jigsaw:build-release:clean
+  #- ng test --code-coverage --watch false
+  #- cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
 

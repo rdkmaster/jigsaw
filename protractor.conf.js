@@ -30,13 +30,24 @@ let config = {
     }
 };
 
-if (process.env.TRAVIS) {
-    config.sauceUser = process.env.SAUCE_USERNAME;
-    config.sauceKey = process.env.SAUCE_ACCESS_KEY;
+if (process.env['TRAVIS']) {
+    config.sauceUser = process.env['SAUCE_USERNAME'];
+    config.sauceKey = process.env['SAUCE_ACCESS_KEY'];
     config.capabilities = {
         'browserName': 'chrome',
-        'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-        'build': process.env.TRAVIS_BUILD_NUMBER
+        'version': 'latest',
+        'chromedriverVersion': '2.28',
+        'tunnel-identifier': process.env['TRAVIS_JOB_ID'],
+        'build': process.env['TRAVIS_JOB_ID'],
+        'name': 'Jigsaw E2E Tests',
+
+        // Enables concurrent testing in the Webdriver. Currently runs five e2e files in parallel.
+        'maxInstances': 5,
+        'shardTestFiles': true,
+
+        // By default Saucelabs tries to record the whole e2e run. This can slow down the builds.
+        'recordVideo': false,
+        'recordScreenshots': false
     };
 }
 
