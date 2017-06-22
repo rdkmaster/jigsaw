@@ -5,8 +5,7 @@ node_js:
   - '--lts'
 
 addons:
-  sauce_connect:
-    http_proxy: "http://proxy.zte.com.cn:80/"
+  sauce_connect: true
   chrome: stable
 
 branches:
