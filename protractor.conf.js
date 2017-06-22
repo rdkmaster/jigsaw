@@ -37,8 +37,8 @@ if (process.env['TRAVIS']) {
         'browserName': 'chrome',
         'version': 'latest',
         'chromedriverVersion': '2.28',
-        'tunnel-identifier': process.env['TRAVIS_JOB_ID'],
-        'build': process.env['TRAVIS_JOB_ID'],
+        'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
+        'build': process.env['TRAVIS_BUILD_NUMBER'],
         'name': 'Jigsaw E2E Tests',
 
         // Enables concurrent testing in the Webdriver. Currently runs five e2e files in parallel.
