@@ -5,8 +5,8 @@ node_js:
   - '--lts'
 
 addons:
-  sauce_connect: true
-  chrome: stable
+  sauce_connect:
+    http_proxy: "http://proxy.zte.com.cn:80/"
 
 branches:
   only:
@@ -15,7 +15,7 @@ branches:
 env:
   global:
   - SAUCE_USERNAME=youhp
-  - SAUCE_ACCESS_KEY=eQKp1Q/lePy0VO0wZ7bcAastNjgnY2p5QjaGQ+qeVXn49h1l/8il6NLZOQrSg58rW0CJA8vGrmS5eTnOhW9s+gUJYnK45hR3ytmizWNM2ZrUfHY92wscVLXJ8dWVltGbwB4D8M9Kgjbbi+WyQVucdgKIvRxHarU/Ng0PKpxs+Lvust23waqXGPLQR8fq7jqHPQHdZU6vZVUWfMmrQt/cO/3IQ0xCskMfnad4i5hHk37aqC5wzrSQdRsRg9vWEW9Q/QwqcWzQm8VfJVDTCf2IMb3+LlvA/rS0JHOt3CBemTY8vf9KeIlm8JbsJH4NSqbGbpsqxsu1+Zo7QK+7rFaZznnhk5WdNL/8XPxcKOS+BvE6+6Szf6LSxu1R6CxE/mcA5EyKgcxa1MLNtjpsDT2awwcyk4XWPCup8M1aUseauAizV8dcqTJdbRsZ23QL5DPG6pA19B/uzBuLh55Th5zTSu3Bj2nBvpr90mK74y5KVBoH/C7ybS/iNNvec7MfRrqyiQ1KLrBV74QANKkEbYdCNJX1xGw5N1CX1s8ZLeo5dG1YqsaT4MLrnrWdCka4D8p3MDeWq/2eVtI977HVWV0Vuao2r71Odzog3V9b7HWoQQ0v5XO8+jtY0czHXR5OTrowGyCG+uXB66oyWtqPMjNDbufQv9vuyvF8ycJ8Lqxh1mY=
+  - SAUCE_ACCESS_KEY=eefb2f82-1299-421d-839f-2630b7357069
 
 install:
   - npm install
