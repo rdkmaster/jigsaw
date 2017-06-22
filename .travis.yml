@@ -5,11 +5,17 @@ node_js:
   - '--lts'
 
 addons:
+  jwt:
+    - secure: ej+KNKN0hyLzItd4DRrKaKjvztD9RS1yetJACSLgfDAcFjX0SrivMuK3xUcecIVuE2mr8utX6Sm5aN6UBMiQyji4wviEIOy1NQyySbKGnDGAZfl13ixKS9PVrEF760ZEKXAcqO9qTTqokYoTPNGCbmMoQa7FbJ6EoheAh1Ztq1LpugFS630KjH5GfTJ9BCkQw0KM1vUc+KYQk3WHhJdRTj1DH75/2QGWtDn0DFKa4dPqtejmE8pmUj0wuv/y5dGO7YL7fKFuUVuLL8yGBm4VVpbU32G4nty7ynJwViiqDtk/FjI811fNeRqx9FJQtj21O8kJ2LVPFr0mwlu8dZWTMV8icXk0VLl02soO1kXRYcO1iy2NIiiVXjjB1BojeG/PpBazw+ssFrIfwMLZ+4QKdVD9+Oj2xJEpYTjhRZfhkIgKQPKMZAhwHW5RBo6mjtsDKLhsrIPH4NZtWOtTEyGtoOo1gqBdDycMPryDodXvIDutA++8Crqtr8nCYCik0J07TO9bB5BVahfAyvTlnzKLQGCFkyXUZj/FKg39Hsy33fQdLPTxWXjHBwyz5VVDKeXJkeT9Axk0LNV5+O9ixiNNw1ofLan0I112Q6Qm9OcLgWTKy3HlskWJtAm2garLkED/RYKo7ScD4PVjgUgZ/Q/8wb8oXGYlXIdRKnS6PPyYO/E=
   chrome: stable
 
 branches:
   only:
   - master
+
+env:
+  global:
+  - SAUCE_USERNAME=youhp
 
 install:
   - npm install
@@ -18,5 +24,6 @@ script:
   - ng build
   - gulp jigsaw:build-release:clean
   - ng test --code-coverage --watch false
+  - ng e2e
   - cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
 
