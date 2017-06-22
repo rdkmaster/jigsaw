@@ -14,6 +14,8 @@ env:
   global:
   - SAUCE_USERNAME=youhp
   - SAUCE_ACCESS_KEY=eefb2f82-1299-421d-839f-2630b7357069
+  - BROWSER_PROVIDER_READY_FILE=/tmp/sauce-connect-ready
+  - LOGS_DIR=/tmp/logs
 
 install:
   - npm install
