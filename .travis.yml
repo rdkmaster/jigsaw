@@ -5,8 +5,7 @@ node_js:
   - '--lts'
 
 addons:
-  jwt:
-    - secure: ej+KNKN0hyLzItd4DRrKaKjvztD9RS1yetJACSLgfDAcFjX0SrivMuK3xUcecIVuE2mr8utX6Sm5aN6UBMiQyji4wviEIOy1NQyySbKGnDGAZfl13ixKS9PVrEF760ZEKXAcqO9qTTqokYoTPNGCbmMoQa7FbJ6EoheAh1Ztq1LpugFS630KjH5GfTJ9BCkQw0KM1vUc+KYQk3WHhJdRTj1DH75/2QGWtDn0DFKa4dPqtejmE8pmUj0wuv/y5dGO7YL7fKFuUVuLL8yGBm4VVpbU32G4nty7ynJwViiqDtk/FjI811fNeRqx9FJQtj21O8kJ2LVPFr0mwlu8dZWTMV8icXk0VLl02soO1kXRYcO1iy2NIiiVXjjB1BojeG/PpBazw+ssFrIfwMLZ+4QKdVD9+Oj2xJEpYTjhRZfhkIgKQPKMZAhwHW5RBo6mjtsDKLhsrIPH4NZtWOtTEyGtoOo1gqBdDycMPryDodXvIDutA++8Crqtr8nCYCik0J07TO9bB5BVahfAyvTlnzKLQGCFkyXUZj/FKg39Hsy33fQdLPTxWXjHBwyz5VVDKeXJkeT9Axk0LNV5+O9ixiNNw1ofLan0I112Q6Qm9OcLgWTKy3HlskWJtAm2garLkED/RYKo7ScD4PVjgUgZ/Q/8wb8oXGYlXIdRKnS6PPyYO/E=
+  sauce_connect: true
   chrome: stable
 
 branches:
@@ -16,14 +15,15 @@ branches:
 env:
   global:
   - SAUCE_USERNAME=youhp
+  - SAUCE_ACCESS_KEY=eQKp1Q/lePy0VO0wZ7bcAastNjgnY2p5QjaGQ+qeVXn49h1l/8il6NLZOQrSg58rW0CJA8vGrmS5eTnOhW9s+gUJYnK45hR3ytmizWNM2ZrUfHY92wscVLXJ8dWVltGbwB4D8M9Kgjbbi+WyQVucdgKIvRxHarU/Ng0PKpxs+Lvust23waqXGPLQR8fq7jqHPQHdZU6vZVUWfMmrQt/cO/3IQ0xCskMfnad4i5hHk37aqC5wzrSQdRsRg9vWEW9Q/QwqcWzQm8VfJVDTCf2IMb3+LlvA/rS0JHOt3CBemTY8vf9KeIlm8JbsJH4NSqbGbpsqxsu1+Zo7QK+7rFaZznnhk5WdNL/8XPxcKOS+BvE6+6Szf6LSxu1R6CxE/mcA5EyKgcxa1MLNtjpsDT2awwcyk4XWPCup8M1aUseauAizV8dcqTJdbRsZ23QL5DPG6pA19B/uzBuLh55Th5zTSu3Bj2nBvpr90mK74y5KVBoH/C7ybS/iNNvec7MfRrqyiQ1KLrBV74QANKkEbYdCNJX1xGw5N1CX1s8ZLeo5dG1YqsaT4MLrnrWdCka4D8p3MDeWq/2eVtI977HVWV0Vuao2r71Odzog3V9b7HWoQQ0v5XO8+jtY0czHXR5OTrowGyCG+uXB66oyWtqPMjNDbufQv9vuyvF8ycJ8Lqxh1mY=
 
 install:
   - npm install
 
 script:
+  - ng e2e
   - ng build
   - gulp jigsaw:build-release:clean
   - ng test --code-coverage --watch false
-  - ng e2e
   - cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
 

@@ -3,25 +3,14 @@
 
 const {SpecReporter} = require('jasmine-spec-reporter');
 
-var BROWSER_OPTIONS = {
-    LocalChrome: {
-        'browserName': 'chrome',
-    },
-    ChromeOnTravis: {
-        browserName: 'chrome',
-        chromeOptions: {
-            'args': ['--no-sandbox'],
-            'binary': process.env.CHROME_BIN,
-        }
-    }
-};
-
-exports.config = {
+let config = {
     allScriptsTimeout: 11000,
     specs: [
         './e2e/**/*.e2e-spec.ts'
     ],
-    capabilities: process.env.TRAVIS ? BROWSER_OPTIONS.ChromeOnTravis : BROWSER_OPTIONS.LocalChrome,
+    capabilities: {
+        'browserName': 'chrome',
+    },
     directConnect: true,
     baseUrl: 'http://localhost:4200/',
     framework: 'jasmine',
@@ -40,3 +29,15 @@ exports.config = {
         jasmine.getEnv().addReporter(new SpecReporter({spec: {displayStacktrace: true}}));
     }
 };
+
+if (process.env.TRAVIS) {
+    config.sauceUser = process.env.SAUCE_USERNAME;
+    config.sauceKey = process.env.SAUCE_ACCESS_KEY;
+    config.capabilities = {
+        'browserName': 'chrome',
+        'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+        'build': process.env.TRAVIS_BUILD_NUMBER
+    };
+}
+
+exports.config = config;
