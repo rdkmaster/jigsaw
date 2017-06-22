@@ -21,6 +21,7 @@ install:
   - npm install
 
 script:
+  - npm run update-webdriver
   - ng e2e
   #- ng build
   #- gulp jigsaw:build-release:clean
