@@ -20,6 +20,7 @@ env:
 before_install:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
+  - sleep 3 # give xvfb some time to start
 
 install:
   - npm install
@@ -31,7 +32,7 @@ before_script:
 
 script:
   - sh ./scripts/sauce_connect_block.sh
-  - ./node_modules/.bin/protractor protractor.conf.js
+  - ng e2e
   #- ng build
   #- gulp jigsaw:build-release:clean
   #- ng test --code-coverage --watch false
