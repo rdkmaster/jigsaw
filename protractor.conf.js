@@ -29,24 +29,30 @@ let config = {
 };
 
 if (process.env['TRAVIS']) {
-    config.sauceUser = process.env['SAUCE_USERNAME'];
-    config.sauceKey = process.env['SAUCE_ACCESS_KEY'];
+    const SAUCE_USERNAME = process.env['SAUCE_USERNAME'];
+    const SAUCE_ACCESS_KEY = process.env['SAUCE_ACCESS_KEY'];
+    //config.sauceUser = SAUCE_USERNAME;
+    //config.sauceKey = SAUCE_ACCESS_KEY;
     config.multiCapabilities = [
         {
             name: "chrome-tests",
             browserName: 'chrome',
             shardTestFiles: true,
             maxInstances: 1,
-            //'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
-            'build': process.env['TRAVIS_BUILD_NUMBER']
+            'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
+            'build': process.env['TRAVIS_BUILD_NUMBER'],
+            username: SAUCE_USERNAME,
+            accessKey: SAUCE_ACCESS_KEY,
         },
         {
             name: "firefox-tests",
             browserName: 'firefox',
             shardTestFiles: true,
             maxInstances: 1,
-            //'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
-            'build': process.env['TRAVIS_BUILD_NUMBER']
+            'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
+            'build': process.env['TRAVIS_BUILD_NUMBER'],
+            username: SAUCE_USERNAME,
+            accessKey: SAUCE_ACCESS_KEY,
         }
     ];
 } else {
