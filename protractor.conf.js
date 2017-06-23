@@ -31,8 +31,8 @@ let config = {
 if (process.env['TRAVIS']) {
     const SAUCE_USERNAME = process.env['SAUCE_USERNAME'];
     const SAUCE_ACCESS_KEY = process.env['SAUCE_ACCESS_KEY'];
-    //config.sauceUser = SAUCE_USERNAME;
-    //config.sauceKey = SAUCE_ACCESS_KEY;
+    config.sauceUser = SAUCE_USERNAME;
+    config.sauceKey = SAUCE_ACCESS_KEY;
     config.multiCapabilities = [
         {
             name: "chrome-tests",
