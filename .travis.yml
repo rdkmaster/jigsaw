@@ -26,11 +26,10 @@ install:
 
 before_script:
   - mkdir -p $LOGS_DIR
-  - chmod +x scripts
-  - ./scripts/sauce_connect_setup.sh
+  - sh ./scripts/sauce_connect_setup.sh
 
 script:
-  - ./scripts/sauce_connect_block.sh
+  - sh ./scripts/sauce_connect_block.sh
   - ng e2e
   #- ng build
   #- gulp jigsaw:build-release:clean
@@ -38,7 +37,7 @@ script:
   #- cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
 
 after_script:
-  - ./scripts/sauce_connect_teardown.sh
+  - sh ./scripts/sauce_connect_teardown.sh
 
 sudo: false
 
