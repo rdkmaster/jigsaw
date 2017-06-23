@@ -2,6 +2,7 @@
 // https://github.com/angular/protractor/blob/master/lib/config.ts
 
 const {SpecReporter} = require('jasmine-spec-reporter');
+const SauceLabs = require('saucelabs');
 
 let config = {
     allScriptsTimeout: 11000,
@@ -28,8 +29,11 @@ let config = {
 };
 
 if (process.env['TRAVIS']) {
-    config.sauceUser = process.env['SAUCE_USERNAME'];
-    config.sauceKey = process.env['SAUCE_ACCESS_KEY'];
+    const SAUCE_USERNAME = process.env['SAUCE_USERNAME'];
+    const SAUCE_ACCESS_KEY = process.env['SAUCE_ACCESS_KEY'];
+    let JOB_ID;
+    //config.sauceUser = SAUCE_USERNAME;
+    //config.sauceKey = SAUCE_ACCESS_KEY;
     config.multiCapabilities = [
         {
             name: "chrome-tests",
@@ -37,6 +41,8 @@ if (process.env['TRAVIS']) {
             platform: 'Windows 7',
             shardTestFiles: true,
             maxInstances: 1,
+            username: SAUCE_USERNAME,
+            accessKey: SAUCE_ACCESS_KEY,
             //'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
             //'build': process.env['TRAVIS_BUILD_NUMBER']
         },
@@ -46,10 +52,34 @@ if (process.env['TRAVIS']) {
             platform: 'Windows 7',
             shardTestFiles: true,
             maxInstances: 1,
+            username: SAUCE_USERNAME,
+            accessKey: SAUCE_ACCESS_KEY,
             //'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
             //'build': process.env['TRAVIS_BUILD_NUMBER']
         }
     ];
+
+    // Run for each capability
+    config.onComplete=function () {
+        // Get the session id and store it in the JOB_ID
+        return browser.getSession()
+            .then((session) => JOB_ID = session.getId());
+    };
+    // Run for each capability
+    config.onCleanUp=function (exitCode) {
+        const saucelabs = new SauceLabs({
+            username: SAUCE_USERNAME,
+            password: SAUCE_ACCESS_KEY
+        });
+
+        return new Promise((resolve, reject) => {
+            // Connect to Sauce Labs and update the
+            // job with the correct exit code status
+            saucelabs.updateJob(JOB_ID, {passed: exitCode === 0},
+                () => resolve(),
+                (error) => reject('Error:', error));
+        });
+    }
 } else {
     config.capabilities = {
         browserName: 'chrome'

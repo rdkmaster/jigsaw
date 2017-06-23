@@ -97,6 +97,7 @@
         "rollup": "^0.41.6",
         "rollup-plugin-node-resolve": "^3.0.0",
         "run-sequence": "^1.2.2",
+        "saucelabs": "^1.4.0",
         "scss-bundle": "^2.0.1-beta.7",
         "sorcery": "^0.10.0",
         "ts-node": "^3.0.4",
