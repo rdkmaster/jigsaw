@@ -3,9 +3,6 @@ language: node_js
 node_js:
   - "6"
 
-addons:
-  firefox: "latest"
-
 branches:
   only:
   - master
@@ -31,12 +28,12 @@ before_script:
   - ./scripts/sauce_connect_setup.sh
 
 script:
+  - ng build
+  - gulp jigsaw:build-release:clean
   - sh ./scripts/sauce_connect_block.sh
+  - ng test --code-coverage --watch false
   - ng e2e
-  #- ng build
-  #- gulp jigsaw:build-release:clean
-  #- ng test --code-coverage --watch false
-  #- cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
+  - cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
 
 after_script:
   - sh ./scripts/sauce_connect_teardown.sh
