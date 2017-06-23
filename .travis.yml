@@ -28,12 +28,12 @@ before_script:
   - ./scripts/sauce_connect_setup.sh
 
 script:
-  - ng build
-  - gulp jigsaw:build-release:clean
+  #- ng build
+  #- gulp jigsaw:build-release:clean
   - sh ./scripts/sauce_connect_block.sh
-  - ng test --code-coverage --watch false
+  #- ng test --code-coverage --watch false
   - ng e2e
-  - cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
+  #- cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
 
 after_script:
   - sh ./scripts/sauce_connect_teardown.sh

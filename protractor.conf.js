@@ -8,9 +8,6 @@ let config = {
     specs: [
         './e2e/**/*.e2e-spec.ts'
     ],
-    capabilities: {
-        'browserName': 'chrome',
-    },
     //directConnect: true,
     baseUrl: 'http://localhost:4200/',
     framework: 'jasmine',
@@ -35,16 +32,30 @@ if (process.env['TRAVIS']) {
     config.sauceKey = process.env['SAUCE_ACCESS_KEY'];
     config.multiCapabilities = [
         {
-            'browserName': 'chrome',
+            browserName: 'chrome',
+            platform: 'Windows 7',
+            shardTestFiles: true,
+            maxInstances: 3,
+            'screen-resolution': '1024x768',
             'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
             'build': process.env['TRAVIS_BUILD_NUMBER']
         },
         {
             browserName: 'firefox',
+            platform: 'Windows 7',
+            shardTestFiles: true,
+            maxInstances: 3,
+            'screen-resolution': '1024x768',
+            browserName: 'firefox',
             'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
             'build': process.env['TRAVIS_BUILD_NUMBER']
         }
     ];
+    config.maxSessions = 1;
+} else {
+    config.capabilities = {
+        'browserName': 'chrome'
+    }
 }
 
 exports.config = config;
