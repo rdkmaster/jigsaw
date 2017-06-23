@@ -32,27 +32,27 @@ if (process.env['TRAVIS']) {
     config.sauceKey = process.env['SAUCE_ACCESS_KEY'];
     config.multiCapabilities = [
         {
+            name: "chrome-tests",
             browserName: 'chrome',
             platform: 'Windows 7',
             shardTestFiles: true,
-            maxInstances: 3,
-            'screen-resolution': '1024x768',
+            maxInstances: 1,
             //'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
-            'build': process.env['TRAVIS_BUILD_NUMBER']
+            //'build': process.env['TRAVIS_BUILD_NUMBER']
         },
         {
+            name: "firefox-tests",
             browserName: 'firefox',
             platform: 'Windows 7',
             shardTestFiles: true,
-            maxInstances: 3,
-            'screen-resolution': '1024x768',
+            maxInstances: 1,
             //'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
-            'build': process.env['TRAVIS_BUILD_NUMBER']
+            //'build': process.env['TRAVIS_BUILD_NUMBER']
         }
     ];
 } else {
     config.capabilities = {
-        'browserName': 'chrome'
+        browserName: 'chrome'
     }
 }
 
