@@ -37,7 +37,7 @@ if (process.env['TRAVIS']) {
             shardTestFiles: true,
             maxInstances: 3,
             'screen-resolution': '1024x768',
-            'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
+            //'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
             'build': process.env['TRAVIS_BUILD_NUMBER']
         },
         {
@@ -46,12 +46,10 @@ if (process.env['TRAVIS']) {
             shardTestFiles: true,
             maxInstances: 3,
             'screen-resolution': '1024x768',
-            browserName: 'firefox',
-            'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
+            //'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
             'build': process.env['TRAVIS_BUILD_NUMBER']
         }
     ];
-    config.maxSessions = 1;
 } else {
     config.capabilities = {
         'browserName': 'chrome'
