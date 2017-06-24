@@ -8,9 +8,8 @@ let config = {
     specs: [
         './e2e/**/*.e2e-spec.ts'
     ],
-    maxSessions: 1,
+    //maxSessions: 1,
     baseUrl: 'http://localhost:4200/',
-    //seleniumAddress: 'http://localhost:4444/wd/hub',
     framework: 'jasmine',
     jasmineNodeOpts: {
         showColors: true,
@@ -18,7 +17,10 @@ let config = {
         print: function () {
         }
     },
-    /*beforeLaunch: function () {
+    /*
+    //beforeLaunch在protractor里面执行一次，如果使用multiCapabilities，
+    //tsconfig.json就不能放在beforeLaunch里面
+    beforeLaunch: function () {
         require('ts-node').register({
             project: 'e2e/tsconfig.e2e.json'
         });
@@ -42,7 +44,7 @@ if (process.env['TRAVIS']) {
             version: 'latest',
             platform: 'Windows 7',
             shardTestFiles: true,
-            maxInstances: 1,
+            //maxInstances: 1,
             'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
             'build': process.env['TRAVIS_BUILD_NUMBER']
         },
@@ -51,36 +53,21 @@ if (process.env['TRAVIS']) {
             version: 'latest',
             platform: 'OS X 10.10',
             shardTestFiles: true,
-            maxInstances: 1,
+            //maxInstances: 1,
             'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
             'build': process.env['TRAVIS_BUILD_NUMBER']
         }
     ];
-    /*config.onPrepare = function () {
-        jasmine.getEnv().addReporter(new SpecReporter({spec: {displayStacktrace: true}}));
-        //var caps = browser.getCapabilities()
-    };*/
-    /*config.onComplete = function () {
-        var printSessionId = function (jobName) {
-            browser.getSession().then(function (session) {
-                console.log('SauceOnDemandSessionID=' + session.getId() + ' job-name=' + jobName);
-            });
-        };
-        printSessionId("Insert Job Name Here");
-    }*/
 } else {
-    //config.directConnect = true;
-    /*config.multiCapabilities = [
+    config.directConnect = true;
+    config.multiCapabilities = [
         {
             browserName: 'chrome'
         },
-        {
+        /*{
             browserName: 'firefox'
-        }
-    ];*/
-    config.capabilities = {
-        browserName: 'firefox'
-    }
+        }*/
+    ];
 }
 
 exports.config = config;
