@@ -10,6 +10,7 @@ let config = {
     ],
     maxSessions: 1,
     baseUrl: 'http://localhost:4200/',
+    //seleniumAddress: 'http://localhost:4444/wd/hub',
     framework: 'jasmine',
     jasmineNodeOpts: {
         showColors: true,
@@ -17,13 +18,16 @@ let config = {
         print: function () {
         }
     },
-    beforeLaunch: function () {
+    /*beforeLaunch: function () {
         require('ts-node').register({
             project: 'e2e/tsconfig.e2e.json'
         });
-    },
+    },*/
     onPrepare() {
         jasmine.getEnv().addReporter(new SpecReporter({spec: {displayStacktrace: true}}));
+        require('ts-node').register({
+            project: 'e2e/tsconfig.e2e.json'
+        });
     }
 };
 
@@ -52,22 +56,30 @@ if (process.env['TRAVIS']) {
             'build': process.env['TRAVIS_BUILD_NUMBER']
         }
     ];
-    config.onPrepare = function () {
+    /*config.onPrepare = function () {
         jasmine.getEnv().addReporter(new SpecReporter({spec: {displayStacktrace: true}}));
-        var caps = browser.getCapabilities()
-    };
-    config.onComplete = function () {
+        //var caps = browser.getCapabilities()
+    };*/
+    /*config.onComplete = function () {
         var printSessionId = function (jobName) {
             browser.getSession().then(function (session) {
                 console.log('SauceOnDemandSessionID=' + session.getId() + ' job-name=' + jobName);
             });
         };
         printSessionId("Insert Job Name Here");
-    }
+    }*/
 } else {
-    config.directConnect = true;
+    //config.directConnect = true;
+    /*config.multiCapabilities = [
+        {
+            browserName: 'chrome'
+        },
+        {
+            browserName: 'firefox'
+        }
+    ];*/
     config.capabilities = {
-        browserName: 'chrome'
+        browserName: 'firefox'
     }
 }
 
