@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "",
+    "baseUrl": "tsconfig",
     "declaration": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,

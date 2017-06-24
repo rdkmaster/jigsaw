@@ -8,7 +8,6 @@ let config = {
     specs: [
         './e2e/**/*.e2e-spec.ts'
     ],
-    //maxSessions: 1,
     baseUrl: 'http://localhost:4200/',
     framework: 'jasmine',
     jasmineNodeOpts: {
@@ -34,17 +33,14 @@ let config = {
 };
 
 if (process.env['TRAVIS']) {
-    const SAUCE_USERNAME = process.env['SAUCE_USERNAME'];
-    const SAUCE_ACCESS_KEY = process.env['SAUCE_ACCESS_KEY'];
-    config.sauceUser = SAUCE_USERNAME;
-    config.sauceKey = SAUCE_ACCESS_KEY;
+    config.sauceUser = process.env['SAUCE_USERNAME'];
+    config.sauceKey = process.env['SAUCE_ACCESS_KEY'];
     config.multiCapabilities = [
         {
             browserName: 'chrome',
             version: 'latest',
             platform: 'Windows 7',
             shardTestFiles: true,
-            //maxInstances: 1,
             'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
             'build': process.env['TRAVIS_BUILD_NUMBER']
         },
@@ -53,7 +49,6 @@ if (process.env['TRAVIS']) {
             version: 'latest',
             platform: 'OS X 10.10',
             shardTestFiles: true,
-            //maxInstances: 1,
             'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
             'build': process.env['TRAVIS_BUILD_NUMBER']
         }
