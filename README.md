@@ -26,8 +26,8 @@ Jigsaw的组件不再是原子，它对组件的功能进行了二次抽象，�
 ```
 cd d:\jigsaw-seed
 npm config set proxy=http://proxy.zte.com.cn:80 #如果当前处于直连网络，则不可执行这个命令
-npm config set registry=https://registry.npm.taobao.org/
-npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass/
+npm config set registry=https://registry.npm.taobao.org/ # Chinese developer only
+npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass/ # Chinese developer only
 npm install -g @angular/cli # 推荐将angular-cli装为全局命令。可选。
 npm install
 npm start
