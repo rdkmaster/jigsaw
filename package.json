@@ -9,7 +9,8 @@
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
-        "webdriver-manager": "webdriver-manager --proxy http://proxy.zte.com.cn:80/ update"
+        "update-webdriver-proxy": "webdriver-manager --proxy http://proxy.zte.com.cn:80/ update",
+        "update-webdriver": "webdriver-manager update"
     },
     "private": true,
     "dependencies": {

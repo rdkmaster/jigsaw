@@ -8,7 +8,7 @@ const path = require('path');
 
 // Register TS compilation.
 require('ts-node').register({
-  project: path.join(__dirname, 'tools/gulp/tsconfig.json')
+  project: path.join(__dirname, 'build/tools/gulp/tsconfig.json')
 });
 
-require('./tools/gulp/gulpfile');
+require('./build/tools/gulp/gulpfile');
