@@ -32,19 +32,20 @@ if (process.env['TRAVIS']) {
     const SAUCE_ACCESS_KEY = process.env['SAUCE_ACCESS_KEY'];
     config.sauceUser = SAUCE_USERNAME;
     config.sauceKey = SAUCE_ACCESS_KEY;
-    config.seleniumAddress = 'http://ondemand.saucelabs.com:80/wd/hub';
     config.multiCapabilities = [
         {
-            name: "chrome-tests",
             browserName: 'chrome',
+            version: 'latest',
+            platform: 'Windows 7',
             shardTestFiles: true,
             maxInstances: 1,
             'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
             'build': process.env['TRAVIS_BUILD_NUMBER']
         },
         {
-            name: "firefox-tests",
             browserName: 'firefox',
+            version: 'latest',
+            platform: 'OS X 10.10',
             shardTestFiles: true,
             maxInstances: 1,
             'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
