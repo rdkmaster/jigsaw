@@ -9,7 +9,6 @@ let config = {
         './e2e/**/*.e2e-spec.ts'
     ],
     maxSessions: 1,
-    //directConnect: true,
     baseUrl: 'http://localhost:4200/',
     framework: 'jasmine',
     jasmineNodeOpts: {
@@ -33,6 +32,7 @@ if (process.env['TRAVIS']) {
     const SAUCE_ACCESS_KEY = process.env['SAUCE_ACCESS_KEY'];
     config.sauceUser = SAUCE_USERNAME;
     config.sauceKey = SAUCE_ACCESS_KEY;
+    config.seleniumAddress = 'http://ondemand.saucelabs.com:80/wd/hub';
     config.multiCapabilities = [
         {
             name: "chrome-tests",
@@ -40,9 +40,7 @@ if (process.env['TRAVIS']) {
             shardTestFiles: true,
             maxInstances: 1,
             'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
-            'build': process.env['TRAVIS_BUILD_NUMBER'],
-            username: SAUCE_USERNAME,
-            accessKey: SAUCE_ACCESS_KEY,
+            'build': process.env['TRAVIS_BUILD_NUMBER']
         },
         {
             name: "firefox-tests",
@@ -50,12 +48,23 @@ if (process.env['TRAVIS']) {
             shardTestFiles: true,
             maxInstances: 1,
             'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
-            'build': process.env['TRAVIS_BUILD_NUMBER'],
-            username: SAUCE_USERNAME,
-            accessKey: SAUCE_ACCESS_KEY,
+            'build': process.env['TRAVIS_BUILD_NUMBER']
         }
     ];
+    config.onPrepare = function () {
+        jasmine.getEnv().addReporter(new SpecReporter({spec: {displayStacktrace: true}}));
+        var caps = browser.getCapabilities()
+    };
+    config.onComplete = function () {
+        var printSessionId = function (jobName) {
+            browser.getSession().then(function (session) {
+                console.log('SauceOnDemandSessionID=' + session.getId() + ' job-name=' + jobName);
+            });
+        };
+        printSessionId("Insert Job Name Here");
+    }
 } else {
+    config.directConnect = true;
     config.capabilities = {
         browserName: 'chrome'
     }
