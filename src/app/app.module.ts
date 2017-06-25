@@ -17,11 +17,11 @@ const appRoutes=[
     },
     {
         path:'demo',
-        loadChildren:'../rdk/doc/demo/demo-list#DemoListModule'
+        loadChildren:'app/demo/demo-list#DemoListModule'
     },
     {
         path:'**',//fallback router must in the last
-        loadChildren:'../rdk/doc/demo/demo-list#DemoListModule'
+        loadChildren:'app/demo/demo-list#DemoListModule'
     }
 ];
 

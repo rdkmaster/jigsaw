@@ -1,0 +1,18 @@
+@import "../../rdk/assets/scss/core/_basc";
+
+li {display: inline-block; margin-right: 12px;}
+
+.demo-wrap{
+    @include clearfix;
+    .left-box {
+        width: 19%;
+        float: left;
+        height: 600px;
+        margin-right: 1%;
+    }
+    .right-box{
+        width: 80%;
+        float: left;
+    }
+}
+
