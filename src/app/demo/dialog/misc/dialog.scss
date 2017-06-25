@@ -1,0 +1,51 @@
+@import "../../../../rdk/assets/scss/core/_basc";
+
+h3.title{
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.dom-dialog{
+    margin-bottom: 30px;
+}
+
+ul.dialog-content{
+    padding: 20px;
+    li{
+        font-size: 12px;
+        color: #999;
+    }
+}
+
+/*弹框template样式*/
+.pop-win{
+    width: 400px;
+    height: 300px;
+    background: #FFF;
+    border: 1px solid #ddd;
+    h3{
+        height: 100px;
+        text-align: center;
+        margin-top: 56px;
+        line-height: 100px;
+        font-weight: normal !important;
+        margin-bottom: 0 !important;
+    }
+    .btn-group-box{
+        text-align: center;
+        btn-demo{
+            @include inline-block();
+            margin-right: 8px;
+        }
+    }
+    .close-btn{
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        font-weight: 700;
+        color: #666;
+        cursor: pointer;
+        line-height: 1;
+    }
+}
