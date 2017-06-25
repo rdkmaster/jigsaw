@@ -55,8 +55,8 @@ npm install --save web-animations-js@^2.2.5
 npm install --save ztree@^3.5.24"
 ```
 
-## 求星星！
-请随手赏个星星，这是对我们最好的鼓励！
+## 求星星！One More Star Please!
+请随手赏个星星，这是对我们最好的鼓励！This is the best encouragement for us.
 
 ## 组件状态图
 ![](comp-map.png)
