@@ -20,7 +20,7 @@ before_install:
   - #sleep 3 # give xvfb some time to start
 
 install:
-  - npm install
+  - #npm install
 
 before_script:
   - #mkdir -p $LOGS_DIR
@@ -28,8 +28,8 @@ before_script:
   - #./build/scripts/sauce_connect_setup.sh
 
 script:
-  - ng build
-  - gulp jigsaw:build-release:clean
+  - #ng build
+  - #gulp jigsaw:build-release:clean
   - sh build/scripts/build-with-seed.sh
   - #sh ./build/scripts/sauce_connect_block.sh
   - #ng test --code-coverage --watch false
