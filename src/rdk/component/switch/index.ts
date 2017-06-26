@@ -13,3 +13,5 @@ import { RdkSwitch } from './switch';
     providers: [],
 })
 export class RdkSwitchModule { }
+
+export * from './switch';

@@ -16,3 +16,6 @@ import {RdkTabContent, RdkTabLabel} from "./tab-item";
     providers: [],
 })
 export class RdkTabsModule { }
+
+export * from './tab';
+export * from './tab-pane';

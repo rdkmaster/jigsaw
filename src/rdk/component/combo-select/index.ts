@@ -13,3 +13,5 @@ import {RdkTagModule} from "../tag/tag";
     providers: [],
 })
 export class RdkComboSelectModule { }
+
+export * from './combo-select';

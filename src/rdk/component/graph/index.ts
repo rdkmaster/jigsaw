@@ -12,3 +12,5 @@ import { RdkGraph } from './graph';
     providers: [],
 })
 export class RdkGraphModule { }
+
+export * from './graph';
