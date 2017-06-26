@@ -75,6 +75,9 @@ const ROLLUP_GLOBALS = {
     '@ngx-translate': 'ngx',
     '@ngx-translate/core/index': 'ngx.core',
     '@ngx-translate/http-loader/index': 'ngx.http-loader',
+
+    //echarts
+    'echarts': 'echarts'
 };
 
 export type BundleConfig = {

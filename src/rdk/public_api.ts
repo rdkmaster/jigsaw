@@ -1,7 +1,7 @@
 /**
  * @module
  * @description
- * Entry point for all public APIs of Angular Material.
+ * Entry point for all public APIs of RDK Jigsaw.
  */
 export * from './component/core';
 
@@ -26,10 +26,10 @@ export * from './component/block/block';
 export * from './component/button/button';
 export * from './component/checkbox/index';
 export * from './component/collapse/collapse';
-export * from './component/combo-select/combo-select';
+export * from './component/combo-select/index';
 export * from './component/dialog/dialog';
 export * from './component/draggable/draggable';
-//export * from './component/graph/index';
+export * from './component/graph/index';
 export * from './component/input/input';
 export * from './component/loading/loading';
 export * from './component/pagination/pagination';
@@ -40,8 +40,6 @@ export * from './component/select/select';
 export * from './component/slider/index';
 export * from './component/switch/index';
 export * from './component/table/table';
-export * from './component/table/table-api';
-export * from './component/table/table-renderer';
 export * from './component/tabs/index';
 export * from './component/tag/tag';
 export * from './component/tile-select/tile-select';

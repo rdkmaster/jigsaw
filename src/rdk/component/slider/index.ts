@@ -16,3 +16,5 @@ import {SliderHandle} from "./handle";
     providers: [],
 })
 export class RdkSliderModule { }
+
+export * from './slider';

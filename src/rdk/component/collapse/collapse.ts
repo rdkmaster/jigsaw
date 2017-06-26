@@ -50,3 +50,5 @@ export enum CollapseMode {
     exports: [RdkCollapse, RdkCollapsePane]
 })
 export class RdkCollapseModule { }
+
+export * from "./collapse-pane";

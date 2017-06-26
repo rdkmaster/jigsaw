@@ -12,3 +12,5 @@ import {PopupService} from "../../service/popup.service";
 export class RdkTimeModule {
 
 }
+
+export * from './time';
