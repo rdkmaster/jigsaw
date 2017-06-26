@@ -1,11 +1,6 @@
 #!/bin/bash
 home=`pwd`
 
-echo '##############################'
-echo home=$home
-echo SEED_DIR=$SEED_DIR
-echo '##############################'
-
 mkdir -p $SEED_DIR
 git clone https://github.com/rdkmaster/jigsaw-seed.git $SEED_DIR
 cd $SEED_DIR
