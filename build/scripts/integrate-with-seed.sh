@@ -27,5 +27,5 @@ do
 	sed -i 's/from\s\+"\(\.\.\/\)*rdk\//from "@rdkmaster\/jigsaw\//g' $file
 	sed -i "s/from\s\+'\(\.\.\/\)*rdk\//from '@rdkmaster\/jigsaw\//g" $file
 done
-more  /home/travis/build/rdkmaster/jigsaw-seed/src/app/demo/table/addCheckboxColumn/addCheckboxColumn.ts
+
 cd $home
