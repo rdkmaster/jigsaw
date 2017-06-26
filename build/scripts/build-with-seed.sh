@@ -7,9 +7,9 @@ echo home=$home
 echo workDir=$workDir
 echo '##############################'
 
-if [ -e $workDir ]; then
+#if [ -e $workDir ]; then
 	rm -fr $workDir
-fi
+#fi
 mkdir -p $workDir
 git clone https://github.com/rdkmaster/jigsaw-seed.git $workDir
 cd $workDir
