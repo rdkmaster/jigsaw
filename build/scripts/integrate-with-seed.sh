@@ -28,6 +28,7 @@ do
 	if [ -d $file ]; then
 		continue
 	fi
+	echo "processing $file"
 	sed -i 's/from\s\+"\(\.\.\/\)\*rdk/from "@rdkmaster\/jigsaw\/typings/g' $file
 	sed -i "s/from\s\+'\(\.\.\/\)\*rdk/from '@rdkmaster\/jigsaw\/typings/g" $file
 done
