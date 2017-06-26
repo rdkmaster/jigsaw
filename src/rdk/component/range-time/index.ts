@@ -10,3 +10,6 @@ import {RdkTimeModule} from "../time/index";
 export class RdkRangeTimeModule {
 
 }
+
+export * from './range-time';
+export * from './shortcut-dateranges';

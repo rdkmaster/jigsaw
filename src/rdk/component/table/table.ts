@@ -1212,3 +1212,6 @@ export class RdkTableHeader extends TableCellBasic implements OnInit, OnDestroy 
 })
 export class RdkTableModule {
 }
+
+export * from './table-api';
+export * from './table-renderer';

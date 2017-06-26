@@ -1,6 +1,6 @@
 {
     "name": "@rdkmaster/jigsaw",
-    "version": "1.0.0-beta.2",
+    "version": "1.0.0-beta.4",
     "description": "RDK Jigsaw",
     "main": "./bundles/jigsaw.umd.js",
     "module": "./@rdk/jigsaw.es5.js",
@@ -18,7 +18,7 @@
     ],
     "license": "MIT",
     "bugs": {
-        "url": "http://gitlab.zte.com.cn/10045812/jigsaw/issues"
+        "url": "https://github.com/rdkmaster/jigsaw/issues"
     },
     "homepage": "http://jigsaw.rdkapp.com/",
     "peerDependencies": {
