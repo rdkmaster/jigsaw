@@ -9,6 +9,8 @@ echo '##############################'
 
 rm -fr $workDir
 mkdir -p $workDir
+echo #?
+ls $workDir
 git clone https://github.com/rdkmaster/jigsaw-seed.git $workDir
 cd $workDir
 npm install
