@@ -3,7 +3,7 @@ import {browser, by, element} from 'protractor';
 describe('button', () => {
     describe('button render', () => {
         beforeEach(() => {
-            browser.waitForAngularEnabled(false);
+            //browser.waitForAngularEnabled(false);
             browser.get('/demo/button');
         });
 

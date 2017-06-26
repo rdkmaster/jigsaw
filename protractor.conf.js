@@ -10,7 +10,8 @@ let config = {
         './e2e/**/*.e2e-spec.ts'
     ],
     baseUrl: 'http://localhost:4200/',
-    framework: 'jasmine',
+    useAllAngular2AppRoots: true,
+    framework: 'jasmine2',
     jasmineNodeOpts: {
         showColors: true,
         defaultTimeoutInterval: 30000,
@@ -30,6 +31,7 @@ let config = {
         require('ts-node').register({
             project: 'e2e/tsconfig.e2e.json'
         });
+        beforeEach(function() { browser.ignoreSynchronization = false; });
     }
 };
 
