@@ -1,9 +1,10 @@
 #!/bin/bash
 home=$(cd "$(dirname "$0")"; pwd)
-workDir="/tmp/jigsaw-seed"
+workDir="/home/travis/build/rdkmaster/jigsaw-seed"
 
 echo '##############################'
-echo $home
+echo home=$home
+echo workDir=$workDir
 echo '##############################'
 
 rm -fr $workDir
