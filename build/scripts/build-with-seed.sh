@@ -7,11 +7,15 @@ echo home=$home
 echo workDir=$workDir
 echo '##############################'
 
-rm -fr $workDir
+if [ -e $workDir ]; then
+	rm -fr $workDir
+fi
 mkdir -p $workDir
 git clone https://github.com/rdkmaster/jigsaw-seed.git $workDir
 cd $workDir
-ls $workDir
+echo '##############################'
+pwd
+echo '##############################'
 npm install
 
 
