@@ -51,10 +51,10 @@ export class DialogPopOptionDemo implements OnInit {
 
     generatePopPos() {
         this.poses = [];
-        this.poses.push({label: "left", ele: this.left});
-        this.poses.push({label: "middle", ele: this.middle});
-        this.poses.push({label: "right", ele: this.right});
-        this.poses.push({label: "no"});
+        this.poses.push({label: "red box", ele: this.left});
+        this.poses.push({label: "blue box", ele: this.middle});
+        this.poses.push({label: "green box", ele: this.right});
+        this.poses.push({label: "no reference"});
         this.poses.push({label: "point"});
         this.selectedPos = this.poses[0];
     }

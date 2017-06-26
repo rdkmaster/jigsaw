@@ -30,7 +30,7 @@ left: <rdk-input [(value)]="offset.left" placeholder="Left" width="200px"></rdk-
 bottom: <rdk-input [(value)]="offset.bottom" placeholder="Bottom" width="200px"></rdk-input><br>
 right: <rdk-input [(value)]="offset.right" placeholder="Right" width="200px"></rdk-input>
 <br>
-<rdk-button width="300px" (click)="popupDialog1(dialog1)">Click Me</rdk-button>
+<rdk-button width="200px" (click)="popupDialog1(dialog1)">Popup</rdk-button>
 
 <ng-template #dialog1>
     <rdk-dialog width="400px" title="dialog title" (answer)="close()" >
