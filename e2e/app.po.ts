@@ -2,7 +2,7 @@ import {browser, element, by} from 'protractor';
 
 export class Ng2RdkPage {
     navigateTo() {
-        browser.waitForAngularEnabled(false);
+        browser.waitForAngularEnabled(true);
         return browser.get('/');
     }
 
