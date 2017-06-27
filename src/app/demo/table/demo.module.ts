@@ -176,7 +176,6 @@ const tableDemoRoutes = [
         RdkInputModule,
         RdkButtonModule,
         RdkDialogModule,
-        RdkBlockModule,
     ],
     exports: [ ],
     entryComponents: [
@@ -191,8 +190,7 @@ const tableDemoRoutes = [
         MyTableCell,
         MyTableHeadOption,
         MyTableCellOption,
-        MyTableCellEditor,
-        RdkBlock
+        MyTableCellEditor
     ],
     providers: [PopupService],
 })

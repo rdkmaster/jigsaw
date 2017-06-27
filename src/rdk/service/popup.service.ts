@@ -37,10 +37,10 @@ export class PopupPositionValue {
     top: number;
 }
 
-export class PopupSize{
+export class PopupSize {
     width?: string | number;
     height?: string | number;
-    minWidth?:string | number;
+    minWidth?: string | number;
 }
 
 export class PopupPoint {
@@ -92,17 +92,32 @@ export class PopupService {
 
     constructor(private _cfr: ComponentFactoryResolver,
                 private _appRef: ApplicationRef) {
-        _appRef.components.length && _appRef.components.forEach(component => {
-            //TODO by chenxu 自动获取viewContainerRef，而不要应用提供
-            if (component.instance.hasOwnProperty('viewContainerRef')) {
-                this._viewContainerRef = component.instance.viewContainerRef;
-            }
-            if (component.instance.hasOwnProperty('renderer')) {
-                this._renderer = component.instance.renderer;
-            }
-        });
-        if (!this._viewContainerRef || !this._renderer) {
-            console.error("please add 'constructor(public viewContainerRef: ViewContainerRef, public renderer: Renderer2){}' into AppComponent");
+
+    }
+
+    private _init(): void {
+        this._initViewContainerRef();
+        this._initRenderer();
+    }
+
+    private _initViewContainerRef(): void {
+        if (!this._viewContainerRef) {
+            this._appRef.components.length && this._appRef.components.forEach(component => {
+                //TODO by chenxu 自动获取viewContainerRef，而不要应用提供
+                if (component.instance.hasOwnProperty('viewContainerRef')) {
+                    this._viewContainerRef = component.instance.viewContainerRef;
+                }
+            });
+        }
+    }
+
+    private _initRenderer(): void {
+        if (!this._renderer) {
+            this._appRef.components.length && this._appRef.components.forEach(component => {
+                if (component.instance.hasOwnProperty('renderer')) {
+                    this._renderer = component.instance.renderer;
+                }
+            });
         }
     }
 
@@ -116,6 +131,12 @@ export class PopupService {
     public popup(what: Type<IPopupable>, options?: PopupOptions, initData?: any): PopupInfo;
     public popup(what: TemplateRef<any>, options?: PopupOptions): PopupInfo;
     public popup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupInfo {
+        this._init();
+        if (!this._viewContainerRef || !this._renderer) {
+            console.error("please add 'constructor(public viewContainerRef: ViewContainerRef, public renderer: Renderer2){}' into AppComponent");
+            return;
+        }
+
         let popupInfo: PopupInfo,
             popupRef: PopupRef,
             element: HTMLElement,
@@ -192,14 +213,14 @@ export class PopupService {
         renderer.setStyle(element, 'visibility', 'hidden');
     }
 
-    private _removeAnimation(options: PopupOptions, element: HTMLElement, renderer: Renderer2){
+    private _removeAnimation(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
         const popupEffect = PopupService._getPopupEffect(options);
 
         //删除可能有的动画class，确保能触发动画的animationend事件
-        if(element.classList.contains(popupEffect.showEffect)){
+        if (element.classList.contains(popupEffect.showEffect)) {
             renderer.removeClass(element, popupEffect.showEffect);
         }
-        if(element.classList.contains(popupEffect.hideEffect)){
+        if (element.classList.contains(popupEffect.hideEffect)) {
             renderer.removeClass(element, popupEffect.hideEffect);
         }
 

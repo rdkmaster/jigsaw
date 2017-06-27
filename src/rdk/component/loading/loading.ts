@@ -2,6 +2,7 @@ import {Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Renderer2}
 import {IPopupable} from "../../service/popup.service";
 import {CommonModule} from "@angular/common";
 import {AbstractRDKComponent} from "../core";
+import {RdkBlock, RdkBlockModule} from "../block/block";
 
 export class RdkLoadingBase extends AbstractRDKComponent implements IPopupable {
     public initData: any;
@@ -92,9 +93,10 @@ export class RdkBallLoading extends RdkLoadingBase {
 }
 
 @NgModule({
-    imports: [CommonModule],
+    imports: [CommonModule, RdkBlockModule],
     declarations: [RdkLoading, RdkBallLoading],
-    exports: [RdkLoading, RdkBallLoading]
+    exports: [RdkLoading, RdkBallLoading],
+    entryComponents: [RdkBlock, RdkLoading, RdkBallLoading]
 })
 export class RdkLoadingModule {
 

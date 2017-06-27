@@ -34,10 +34,7 @@ const popupDemoRoutes = [
         RdkAlertModule,
         RdkButtonModule,
     ],
-    providers: [PopupService],
-    entryComponents: [
-        RdkInfoAlert, RdkWarningAlert, RdkErrorAlert, CustomizedAlert
-    ]
+    providers: [PopupService]
 })
 export class AlertDemoModule {
 }

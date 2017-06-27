@@ -14,6 +14,7 @@ import {RdkTabContent, RdkTabLabel} from "./tab-item";
     exports: [RdkTab, RdkTabPane],
     declarations: [RdkTab, RdkTabPane, RdkTabLabel, RdkTabContent],
     providers: [],
+    entryComponents: [RdkTabPane]
 })
 export class RdkTabsModule { }
 

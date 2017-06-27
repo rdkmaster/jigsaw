@@ -49,13 +49,12 @@ const loadingDemoRoutes = [
     ],
     imports: [
         CommonModule,
-        RdkBlockModule,
         RdkLoadingModule,
         RdkButtonModule,
         RouterModule.forChild(loadingDemoRoutes)
     ],
     providers: [LoadingService, PopupService],
-    entryComponents:[RdkBlock, RdkLoading, RdkBallLoading, DefinedLoading]
+    entryComponents:[DefinedLoading]
 })
 export class LoadingDemoModule {
 }

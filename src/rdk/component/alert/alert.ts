@@ -177,7 +177,8 @@ export class RdkErrorAlert extends RdkCommonAlert {
     imports: [RdkDialogModule, RdkDraggableModule, RdkButtonModule, CommonModule, SharedModule],
     declarations: [RdkAlert, RdkInfoAlert, RdkWarningAlert, RdkErrorAlert],
     exports: [RdkDialogModule, RdkDraggableModule, RdkAlert, RdkInfoAlert, RdkWarningAlert, RdkErrorAlert],
-    providers: [TranslateService]
+    providers: [TranslateService],
+    entryComponents: [RdkInfoAlert, RdkWarningAlert, RdkErrorAlert]
 })
 export class RdkAlertModule {
 }

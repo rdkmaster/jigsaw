@@ -1,6 +1,5 @@
 import {NgModule, Component, Renderer2, ElementRef, OnInit} from '@angular/core';
 import {RouterModule} from '@angular/router';
-import {RdkBlock, RdkBlockModule} from "../../rdk/component/block/block";
 import {RdkCollapseModule} from "../../rdk/component/collapse/collapse";
 import {RdkScrollBarModule} from "../../rdk/component/scrollbar/scrollbar";
 import {AffixUtils} from "../../rdk/core/utils/internal-utils";
@@ -796,7 +795,6 @@ const demoListRoutes = [
     imports: [
         RouterModule.forChild(demoListRoutes),
         CommonModule,
-        RdkBlockModule,
         RdkCollapseModule,
         RdkScrollBarModule
     ],
@@ -805,7 +803,6 @@ const demoListRoutes = [
         DemoListComponent
     ],
     providers: [],
-    entryComponents: [RdkBlock]
 })
 export class DemoListModule {
     constructor(){
