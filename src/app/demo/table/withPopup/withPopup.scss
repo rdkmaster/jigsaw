@@ -1,4 +1,3 @@
-@import "../../../../rdk/assets/scss/core/_basc";
 
 /*弹框template样式*/
 .pop-bg{
@@ -35,7 +34,10 @@
     .btn-group-box{
         text-align: center;
         btn-demo{
-            @include inline-block();
+            display: inline-block;
+            *zoom: 1;
+            *display: inline;
+            vertical-align: middle;
             margin-right: 8px;
     }
 }
