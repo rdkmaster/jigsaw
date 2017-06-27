@@ -46,7 +46,7 @@ task('screenshots', () => {
 });
 
 function updateFileResult(database: firebase.database.Database, prNumber: string,
-                          filenameKey: string, result: boolean) {
+                          filenameKey: string, result: boolean):any {
   return getPullRequestRef(database, prNumber).child('results').child(filenameKey).set(result);
 }
 
@@ -56,13 +56,13 @@ function updateResult(database: firebase.database.Database, prNumber: string, re
 }
 
 function getPullRequestRef(database: firebase.database.Database | admin.database.Database,
-                           prNumber: string) {
+                           prNumber: string):any {
   let secureToken = getSecureToken();
   return database.ref(FIREBASE_REPORT).child(prNumber).child(secureToken);
 }
 
 function updateTravis(database: firebase.database.Database,
-                      prNumber: string) {
+                      prNumber: string):any {
   return getPullRequestRef(database, prNumber).update({
     sha: process.env['TRAVIS_PULL_REQUEST_SHA'],
     travis: process.env['TRAVIS_JOB_ID'],
