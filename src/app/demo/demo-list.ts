@@ -796,7 +796,7 @@ const demoListRoutes = [
     imports: [
         RouterModule.forChild(demoListRoutes),
         CommonModule,
-        RdkBlockModule,
+        //RdkBlockModule,
         RdkCollapseModule,
         RdkScrollBarModule
     ],
@@ -805,7 +805,7 @@ const demoListRoutes = [
         DemoListComponent
     ],
     providers: [],
-    entryComponents: [RdkBlock]
+    //entryComponents: [RdkBlock]
 })
 export class DemoListModule {
     constructor(){

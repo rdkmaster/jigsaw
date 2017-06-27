@@ -16,6 +16,7 @@ import {AbstractRDKComponent} from "../core";
 import {CommonModule} from "@angular/common";
 import {RdkButtonModule} from "../button/button";
 import {CommonUtils} from "../../core/utils/common-utils";
+import {RdkBlock, RdkBlockModule} from "../block/block";
 
 export interface IDialog extends IPopupable {
     buttons: ButtonInfo[];
@@ -154,9 +155,10 @@ export class RdkDialog extends AbstractDialogComponentBase {
 }
 
 @NgModule({
-    imports: [CommonModule, RdkButtonModule, RdkDraggableModule],
+    imports: [CommonModule, RdkButtonModule, RdkDraggableModule, RdkBlockModule],
     declarations: [RdkDialog],
-    exports: [RdkDialog]
+    exports: [RdkDialog],
+    entryComponents: [RdkBlock]
 })
 export class RdkDialogModule {
 }
