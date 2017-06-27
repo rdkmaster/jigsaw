@@ -24,8 +24,8 @@ do
 		continue
 	fi
 	echo "processing $file"
-	sed -i 's/\(}\s\+from\s\+\)"\(\.\.\/\)*rdk\/.\+"\s*;?\s*$/\1"@rdkmaster\/jigsaw";/g' $file
-	sed -i "s/\(}\s\+from\s\+\)'\(\.\.\/\)*rdk\/.\+'\s*;?\s*$/\1'@rdkmaster\/jigsaw';/g" $file
+	sed -i 's/\(}\s\+from\s\+\)"\(\.\.\/\)*rdk\/.\+"\s*;\?\s*$/\1"@rdkmaster\/jigsaw";/g' $file
+	sed -i "s/\(}\s\+from\s\+\)'\(\.\.\/\)*rdk\/.\+'\s*;\?\s*$/\1'@rdkmaster\/jigsaw';/g" $file
 done
 
 cd $home
