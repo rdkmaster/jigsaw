@@ -95,20 +95,29 @@ export class PopupService {
 
     }
 
-    private _getVcrAndRenderer() {
-        if (!this._viewContainerRef || !this._renderer) {
+    private _init(): void {
+        this._initViewContainerRef();
+        this._initRenderer();
+    }
+
+    private _initViewContainerRef(): void {
+        if (!this._viewContainerRef) {
             this._appRef.components.length && this._appRef.components.forEach(component => {
                 //TODO by chenxu 自动获取viewContainerRef，而不要应用提供
                 if (component.instance.hasOwnProperty('viewContainerRef')) {
                     this._viewContainerRef = component.instance.viewContainerRef;
                 }
+            });
+        }
+    }
+
+    private _initRenderer(): void {
+        if (!this._renderer) {
+            this._appRef.components.length && this._appRef.components.forEach(component => {
                 if (component.instance.hasOwnProperty('renderer')) {
                     this._renderer = component.instance.renderer;
                 }
             });
-            if (!this._viewContainerRef || !this._renderer) {
-                console.error("please add 'constructor(public viewContainerRef: ViewContainerRef, public renderer: Renderer2){}' into AppComponent");
-            }
         }
     }
 
@@ -122,7 +131,11 @@ export class PopupService {
     public popup(what: Type<IPopupable>, options?: PopupOptions, initData?: any): PopupInfo;
     public popup(what: TemplateRef<any>, options?: PopupOptions): PopupInfo;
     public popup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupInfo {
-        this._getVcrAndRenderer();
+        this._init();
+        if (!this._viewContainerRef || !this._renderer) {
+            console.error("please add 'constructor(public viewContainerRef: ViewContainerRef, public renderer: Renderer2){}' into AppComponent");
+            return;
+        }
 
         let popupInfo: PopupInfo,
             popupRef: PopupRef,
