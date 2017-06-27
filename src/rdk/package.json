@@ -14,17 +14,18 @@
         "jigsaw",
         "rdk jigsaw",
         "angular",
-        "components"
+        "components",
+        "typescript"
     ],
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/rdkmaster/jigsaw/issues"
     },
-    "homepage": "http://jigsaw.rdkapp.com/",
+    "homepage": "http://rdk.zte.com.cn/jigsaw",
     "peerDependencies": {
-        "@angular/core": "^4.0.0",
-        "@angular/common": "^4.0.0",
-        "@angular/router": "^4.0.0"
+        "@angular/core": "^4.2.4",
+        "@angular/common": "^4.2.4",
+        "@angular/router": "^4.2.4"
     },
     "dependencies": {
         "tslib": "^1.7.1"
