@@ -13,6 +13,7 @@ env:
   - SAUCE_ACCESS_KEY=eefb2f82-1299-421d-839f-2630b7357069
   - BROWSER_PROVIDER_READY_FILE=/tmp/sauce-connect-ready
   - LOGS_DIR=/tmp/logs
+  - SEED_DIR=`pwd`/../jigsaw-seed
 
 before_install:
   - export DISPLAY=:99.0
@@ -28,12 +29,15 @@ before_script:
   - ./build/scripts/sauce_connect_setup.sh
 
 script:
-  - ng build
+  - #ng build
   - gulp jigsaw:build-release:clean
+  - #ng test --code-coverage --watch false
+  - #cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
+  - sh build/scripts/integrate-with-seed.sh
   - sh ./build/scripts/sauce_connect_block.sh
-  - ng test --code-coverage --watch false
+  - # run e2e in seed directory
+  - cd $SEED_DIR
   - ng e2e
-  - cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
 
 after_script:
   - sh ./build/scripts/sauce_connect_teardown.sh

@@ -1,4 +1,3 @@
-@import "../../../../rdk/assets/scss/core/_basc";
 
 h3.title{
     font-size: 20px;
@@ -34,7 +33,10 @@ ul.dialog-content{
     .btn-group-box{
         text-align: center;
         btn-demo{
-            @include inline-block();
+            display: inline-block;
+            *zoom: 1;
+            *display: inline;
+            vertical-align: middle;
             margin-right: 8px;
         }
     }
