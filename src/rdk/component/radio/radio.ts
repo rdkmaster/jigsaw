@@ -72,7 +72,7 @@ export class RdkRadioGroup extends AbstractRDKComponent implements OnInit, After
 export class RdkRadioButton implements OnInit {
     @Input() public radioItem: any;
 
-    private _radioLabel: string;
+    public _$radioLabel: string;
 
     private _radioGroup: RdkRadioGroup;
 
@@ -93,7 +93,7 @@ export class RdkRadioButton implements OnInit {
 
     ngOnInit() {
         //初始化radio显示值
-        this._radioLabel = this.radioItem[this._radioGroup.labelField];
+        this._$radioLabel = this.radioItem[this._radioGroup.labelField];
     }
 
 }
