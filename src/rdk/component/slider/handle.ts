@@ -38,17 +38,17 @@ export class SliderHandle implements OnInit{
 
     private _offset: number = 0;
 
-    private _handleStyle = {};
+    public _$handleStyle = {};
 
     private setHandleStyle() {
         if(isNaN(this._offset)) return;
 
         if(this._slider.vertical) { // 兼容垂直滑动条;
-            this._handleStyle = {
+            this._$handleStyle = {
                 bottom: this._offset + "%"
             }
         } else {
-            this._handleStyle = {
+            this._$handleStyle = {
                 left: this._offset + "%"
             }
         }
@@ -96,7 +96,7 @@ export class SliderHandle implements OnInit{
         return m;
     }
 
-    _updateCanDragged(flag: boolean) {
+    public _$updateCanDragged(flag: boolean) {
         this._dragged = flag;
 
         if(flag) {
@@ -111,7 +111,7 @@ export class SliderHandle implements OnInit{
 
     _registerGlobalEvent() {
         this.globalEventMouseMove = this._render.listen("document", "mousemove", (e) => {
-            this.updateValuePosition(e);
+            this._$updateValuePosition(e);
         });
         this.globalEventMouseUp = this._render.listen("document", "mouseup", () => {
             this._dragged = false;
@@ -133,7 +133,7 @@ export class SliderHandle implements OnInit{
     }
 
     // 改变value的值;
-    private updateValuePosition(event?) {
+    public _$updateValuePosition(event?) {
         if(!this._dragged|| this._slider.disabled) return;
 
         // 防止产生选中其他文本，造成鼠标放开后还可以拖拽的奇怪现象;

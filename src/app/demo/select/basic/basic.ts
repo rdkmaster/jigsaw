@@ -6,6 +6,7 @@ import {ArrayCollection} from "../../../../rdk/core/data/array-collection";
   styleUrls: ['basic.css']
 })
 export class SelectBasicDemoComponent {
+    selectedCityForSelect: any;
     cityListForSelect = new ArrayCollection([
         {label: "北京"},
         {label: "上海"},

@@ -14,7 +14,7 @@
         <span *ngFor="let mark of _$marks" class="rdk-slider-dot rdk-slider-dot-active" [ngStyle]="mark.dotStyle"></span>
     </div>
 
-    <slider-handle *ngFor="let item of _value;let i = index" value="{{item}}" [key]="i"></slider-handle>
+    <slider-handle *ngFor="let item of _$value;let i = index" value="{{item}}" [key]="i"></slider-handle>
 
     <div *ngIf="_$marks.length > 0" class="rdk-slider-mark">
         <span *ngFor="let mark of _$marks" class="rdk-slider-mark-text" [ngStyle]="mark.labelStyle">{{mark.label}}</span>
