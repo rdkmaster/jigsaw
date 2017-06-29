@@ -14,7 +14,7 @@ import {Http, RequestOptionsArgs, Response, URLSearchParams} from "@angular/http
 import {Subject} from "rxjs/Subject";
 import "rxjs/add/operator/map";
 import 'rxjs/add/operator/debounceTime';
-import {CommonUtils} from "rdk/core/utils/common-utils";
+import {CommonUtils} from "../utils/common-utils";
 
 export type TableMatrixRow = Array<string|number>;
 export type TableDataHeader = string[];
