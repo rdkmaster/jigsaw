@@ -87,7 +87,7 @@ export class RdkSliderDemoBasic implements OnInit {
 
     value2
 
-    private sliderChange2(value) {
+     sliderChange2(value) {
         this.value2 = value;
     }
 

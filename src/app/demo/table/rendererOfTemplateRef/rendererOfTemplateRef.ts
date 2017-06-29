@@ -16,8 +16,8 @@ export class TableRendererOfTemplateRefDemoComponent implements AfterContentInit
     tableData: TableData;
     nativeValue: string = ' - native';
 
-    private _columns: ColumnDefine[];
-    private _additionalColumns: AdditionalColumnDefine[];
+     _columns: ColumnDefine[];
+     _additionalColumns: AdditionalColumnDefine[];
 
     constructor(http: Http) {
 

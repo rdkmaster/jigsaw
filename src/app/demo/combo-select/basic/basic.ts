@@ -10,8 +10,8 @@ import {ArrayCollection} from "../../../../rdk/core/data/array-collection";
 })
 export class ComboSelectBasicDemo{
 
-    private openTrigger = DropDownTrigger.mouseenter;
-    private closeTrigger = DropDownTrigger.mouseleave;
+     openTrigger = DropDownTrigger.mouseenter;
+     closeTrigger = DropDownTrigger.mouseleave;
 
     changeTrigger() {
         if (this.openTrigger === DropDownTrigger.click) {
@@ -24,7 +24,7 @@ export class ComboSelectBasicDemo{
     }
 
     public selectedCity = new ArrayCollection();
-    private citys = [
+     citys = [
         {label: "北京", closable: false},
         {label: "上海", closable: false},
         {label: "南京"},

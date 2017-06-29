@@ -11,8 +11,8 @@ import {PopupInfo, PopupService} from "../../../../rdk/service/popup.service";
 })
 export class DialogTitleDemo {
 
-    private _dialogInfo1: PopupInfo;
-    private _dialogInfo2: PopupInfo;
+     _dialogInfo1: PopupInfo;
+     _dialogInfo2: PopupInfo;
 
     constructor(private popupService: PopupService) {
     }

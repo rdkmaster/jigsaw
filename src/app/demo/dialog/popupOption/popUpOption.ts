@@ -10,21 +10,21 @@ import {
 })
 export class DialogPopOptionDemo implements OnInit {
 
-    private _dialogInfo: PopupInfo;
+     _dialogInfo: PopupInfo;
 
-    private option: PopupOptions;
+     option: PopupOptions;
 
-    private popPositionTypes: object[];
+     popPositionTypes: object[];
 
-    private selectedPositionType: object;
+     selectedPositionType: object;
 
-    private poses: object[];
+     poses: object[];
 
-    private selectedPos: any;
+     selectedPos: any;
 
-    private detailPos: PopupPoint;
+     detailPos: PopupPoint;
 
-    private offset: PopupPositionOffset;
+     offset: PopupPositionOffset;
 
     @ViewChild("left") left: ElementRef;
     @ViewChild("middle") middle: ElementRef;

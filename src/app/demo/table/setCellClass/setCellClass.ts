@@ -22,7 +22,7 @@ export class TableSetCellClassDemoComponent {
 
 
 
-    private _columns: ColumnDefine[] = [
+     _columns: ColumnDefine[] = [
         {
             target: 'name',
             cell: {

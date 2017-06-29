@@ -9,7 +9,7 @@ import {TreeData} from "../../../../rdk/core/data/tree-data";
     templateUrl: 'editable.html'
 })
 export class ZtreeDemoEditableComponent {
-    private data : TreeData;
+     data : TreeData;
     public setting: ZTreeSettingSetting = {
         data: {
             key: {

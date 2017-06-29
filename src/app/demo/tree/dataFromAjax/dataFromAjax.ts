@@ -9,7 +9,7 @@ import {TreeData} from "../../../../rdk/core/data/tree-data";
     templateUrl: 'dataFromAjax.html'
 })
 export class ZtreeDemoDataFromAjaxComponent {
-    private data : TreeData;
+     data : TreeData;
     public setting: ZTreeSettingSetting = {
         data: {
             key: {

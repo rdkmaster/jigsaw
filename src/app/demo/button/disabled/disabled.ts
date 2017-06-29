@@ -4,6 +4,7 @@ import {Component} from "@angular/core";
     templateUrl: 'disabled.html'
 })
 export class ButtonDisableDemoComponent {
+    disabled: boolean;
     click() {
         alert('nothing happened!')
     }
