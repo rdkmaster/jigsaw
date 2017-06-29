@@ -233,6 +233,9 @@ export class DemoListComponent implements OnInit{
                 {
                     label: 'lineEllipsis',
                     url: '/demo/table/lineEllipsis'
+                }, {
+                    label: 'localPaging',
+                    url: '/demo/table/localPaging'
                 },
             ]
         },

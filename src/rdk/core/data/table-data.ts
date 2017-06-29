@@ -7,12 +7,14 @@ import {
     ISortable,
     PagingInfo,
     SortAs,
-    SortOrder
+    SortOrder,
+    IPageable,
 } from "./component-data";
 import {Http, RequestOptionsArgs, Response, URLSearchParams} from "@angular/http";
 import {Subject} from "rxjs/Subject";
 import "rxjs/add/operator/map";
 import 'rxjs/add/operator/debounceTime';
+import {CommonUtils} from "rdk/core/utils/common-utils";
 
 export type TableMatrixRow = Array<string|number>;
 export type TableDataHeader = string[];
@@ -120,13 +122,17 @@ export class TableData extends TableDataBase implements ISortable {
     public sort(as: SortAs, order: SortOrder, field: string | number): void;
     public sort(sort: DataSortInfo): void;
     public sort(as, order?: SortOrder, field?: string | number): void {
+        this.sortData(this.data,as,order,field);
+    }
+
+    protected sortData(data:TableDataMatrix,as, order?: SortOrder, field?: string | number){
         field = typeof field === 'string' ? this.field.indexOf(field) : field;
         this.sortInfo = as instanceof DataSortInfo ? as : new DataSortInfo(as, order, field);
         const orderFlag = this.sortInfo.order == SortOrder.asc ? 1 : -1;
         if (this.sortInfo.as == SortAs.number) {
-            this.data.sort((a, b) => orderFlag * (Number(a[field]) - Number(b[field])));
+            data.sort((a, b) => orderFlag * (Number(a[field]) - Number(b[field])));
         } else {
-            this.data.sort((a, b) => orderFlag * String(a[field]).localeCompare(String(b[field])));
+            data.sort((a, b) => orderFlag * String(a[field]).localeCompare(String(b[field])));
         }
     }
 }
@@ -316,5 +322,126 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this._filterSubject = null;
         this._sortSubject.unsubscribe();
         this._sortSubject = null;
+    }
+}
+
+export class LocalPageableTableData extends TableData implements IPageable {
+    public pagingInfo: PagingInfo;
+    public currentFilterData :TableDataMatrix;
+    public bakData : TableDataMatrix;
+
+    constructor() {
+        super();
+        this.pagingInfo = new PagingInfo();
+    }
+
+    public fromObject(data: any): LocalPageableTableData {
+        super.fromObject(data);
+        this.currentFilterData = <TableDataMatrix>CommonUtils.shallowCopy(this.data);
+        this.bakData = <TableDataMatrix>CommonUtils.shallowCopy(this.data);
+        this._updatePagingInfo();
+        return this;
+    }
+
+    private _updatePagingInfo(){
+        this.pagingInfo.totalRecord = this.currentFilterData.length;
+        this.pagingInfo.totalPage = Math.ceil(this.pagingInfo.totalRecord / this.pagingInfo.pageSize);
+        this.firstPage();
+    }
+
+    public filter(callbackfn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
+    public filter(term: string, fields?: string[] | number[]): void;
+    public filter(term: DataFilterInfo): void;
+    public filter(term, fields?: string[] | number[]): void {
+        if (term instanceof Function) {
+            this.currentFilterData = this.bakData.filter(term);
+        }
+        let key:string;
+        if(term instanceof DataFilterInfo){
+            key = term.key;
+            fields = term.fields
+        }else {
+            key = term;
+        }
+        let numberFields : number[];
+        if(fields && fields.length!=0){
+            if(typeof fields[0] === 'string'){
+                (<string[]>fields).forEach(field => {
+                        numberFields.push(this.field.findIndex(item => item==field))
+                    }
+                )
+            }else{
+                numberFields = <number[]>fields;
+            }
+            this.currentFilterData = this.bakData.filter((data)=> data.filter((index,item)=>
+                numberFields.find(num => num==index)).filter(item => (<string>item).indexOf(key)!=-1).length!= 0);
+        }else{
+            this.currentFilterData = this.bakData.filter(
+                (data)=> data.filter(item => (<string>item).indexOf(key)!=-1).length !=0)
+        }
+        this._updatePagingInfo();
+    }
+
+    public sort(compareFn?: (a: any, b: any) => number): any;
+    public sort(as: SortAs, order: SortOrder, field: string | number): void;
+    public sort(sort: DataSortInfo): void;
+    public sort(as, order?: SortOrder, field?: string | number): void {
+        super.sortData(this.currentFilterData,as,order,field);
+        this.changePage(this.pagingInfo.currentPage);
+    }
+
+    public changePage(currentPage: number, pageSize?: number): void;
+    public changePage(info: PagingInfo): void;
+    public changePage(currentPage, pageSize?: number): void {
+        if(!this.currentFilterData){
+            return;
+        }
+        const pi:PagingInfo = currentPage instanceof PagingInfo ? currentPage : new PagingInfo(currentPage, pageSize?+pageSize:this.pagingInfo.pageSize);
+
+        if (pi.pageSize > 0) {
+            this.pagingInfo.pageSize = pi.pageSize;
+            this.pagingInfo.totalPage = Math.ceil(this.pagingInfo.totalRecord / this.pagingInfo.pageSize);
+        } else {
+            console.error(`invalid pageSize[${pi.pageSize}], it should be greater than 0`);
+        }
+
+        if (pi.currentPage >= 1 && pi.currentPage <= this.pagingInfo.totalPage) {
+            this.pagingInfo.currentPage = pi.currentPage;
+        } else {
+            console.error(`invalid currentPage[${pi.currentPage}], it should be between in [1, ${this.pagingInfo.totalPage}]`);
+        }
+
+
+        const begin = (this.pagingInfo.currentPage -1)*this.pagingInfo.pageSize;
+        const end = this.pagingInfo.currentPage *this.pagingInfo.pageSize<this.pagingInfo.totalRecord?this.pagingInfo.currentPage *this.pagingInfo.pageSize:this.pagingInfo.totalRecord;
+        this.data = this.currentFilterData.slice(begin,end);
+
+        this.refresh();
+
+    }
+
+    public firstPage(): void {
+        this.changePage(1);
+    }
+
+    public previousPage(): void {
+        this.changePage(this.pagingInfo.currentPage - 1);
+    }
+
+    public nextPage(): void {
+        this.changePage(this.pagingInfo.currentPage + 1);
+    }
+
+    public lastPage(): void {
+        this.changePage(this.pagingInfo.pageSize);
+    }
+
+    public destroy(): void {
+        super.destroy();
+        this.http = null;
+        this.pagingInfo = null;
+        this.sortInfo = null;
+        this.currentFilterData = null;
+        this.bakData = null;
     }
 }

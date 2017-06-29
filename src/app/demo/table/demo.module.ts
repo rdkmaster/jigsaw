@@ -48,6 +48,7 @@ import {TableRendererOfTemplateRefDemoComponent} from "./rendererOfTemplateRef/r
 import {RdkBlock, RdkBlockModule} from "../../../rdk/component/block/block";
 import {TableLineEllipsisDemoComponent} from "./lineEllipsis/lineElliosis";
 import {TableAddIDWithDebouncePagingComponent} from "./addIDWithDebouncePaging/addIDWithDebouncePaging";
+import {LocalPagingDataDemoComponent} from "./localPagingData/localPagingData";
 
 const tableDemoRoutes = [
     {
@@ -127,6 +128,9 @@ const tableDemoRoutes = [
         path: 'lineEllipsis', component: TableLineEllipsisDemoComponent
     },
     {
+        path: 'localPaging', component: LocalPagingDataDemoComponent
+    },
+    {
         path: '**', //fallback router must in the last
         component: TableBasicDemoComponent
     }
@@ -164,7 +168,8 @@ const tableDemoRoutes = [
         TableDataWithPopupDemoComponent,
         TableRendererOfTemplateRefDemoComponent,
         TableLineEllipsisDemoComponent,
-        TableAddIDWithDebouncePagingComponent
+        TableAddIDWithDebouncePagingComponent,
+        LocalPagingDataDemoComponent
     ],
     imports: [
         RouterModule.forChild(tableDemoRoutes),
