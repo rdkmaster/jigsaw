@@ -25,10 +25,10 @@ Jigsaw的组件不再是原子，它对组件的功能进行了二次抽象，�
 3. 下载依赖包，执行如下脚本
 ```
 cd d:\jigsaw-seed
-npm config set proxy=http://proxy.zte.com.cn:80 #如果当前处于直连网络，则不可执行这个命令
-npm config set registry=https://registry.npm.taobao.org/ # Chinese developer only
-npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass/ # Chinese developer only
-npm install -g @angular/cli # 推荐将angular-cli装为全局命令。可选。
+npm config set proxy=http://proxy.zte.com.cn:80                          # 直连网络下不可执行这个命令
+npm config set registry=https://registry.npm.taobao.org/                 # Chinese developers only
+npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass # Chinese developers only
+npm install -g @angular/cli                                              # 推荐。可选。
 npm install
 npm start
 ```
@@ -55,6 +55,9 @@ npm install --save web-animations-js@^2.2.5
 npm install --save ztree@^3.5.24"
 ```
 
+## 快速上手
+[Jigsaw Tourist](https://github.com/rdkmaster/jigsaw-tourist) 是一个专门为新手准备的教学工程，它说明了从零开始如何使用jigsaw来构建一个难度中等的应用页面。
+
 ## 求星星！One More Star Please!
 请随手赏个星星，这是对我们最好的鼓励！This is the best encouragement for us.
 
@@ -62,4 +65,11 @@ npm install --save ztree@^3.5.24"
 ![](comp-map.png)
 
 ## 参与贡献
-建议优先处理没有打 `suspend` 标签的issue。所有的PR我们都欢迎并会认真处理。
+我们认为如下的行为都是在做贡献：
+- 默默的关注；
+- watch/star/fork 这个工程；
+- 给我们[提bug/需求/建议](https://github.com/rdkmaster/jigsaw/issues)；
+- 给我们写写文档，写点小文章；
+- 更有效的是给我们推送PR，所有的PR我们都欢迎并会认真处理；
+	- 请优先处理没有打 `suspend` 标签的issue；
+	- [这里](https://github.com/rdkmaster/jigsaw/blob/master/doc/coding-spec.md)是一份简单的代码规范，请尽量遵守它；
