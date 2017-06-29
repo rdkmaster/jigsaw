@@ -22,7 +22,7 @@ import {RdkTooltipModule, SimpleTooltipComponent} from "../tooltip/tooltip";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {PopupEffect, PopupInfo, PopupPositionType, PopupService} from "../../service/popup.service";
 
-class HeadSetting {
+export class HeadSetting {
     cellData: string | number;
     width: string | number;
     visible: boolean;
@@ -34,7 +34,7 @@ class HeadSetting {
     field: number;
 }
 
-class CellSetting {
+export class CellSetting {
     cellData: string | number;
     width: string | number;
     visible: boolean;
