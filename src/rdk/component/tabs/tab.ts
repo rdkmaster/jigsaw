@@ -21,7 +21,7 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
     }
 
     @ContentChildren(RdkTabPane)
-    private _tabPanes: QueryList<RdkTabPane>;
+    public _$tabPanes: QueryList<RdkTabPane>;
 
     @ViewChildren(RdkTabLabel)
     private _tabLabel: QueryList<RdkTabLabel>;
@@ -95,11 +95,11 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
     }
 
     private _getTabPaneByIndex(key): RdkTabPane {
-        return this._tabPanes.find((item, index) => index === key);
+        return this._$tabPanes.find((item, index) => index === key);
     }
 
     private _autoSelect() {
-        this.selectedIndex = this._tabPanes.toArray().findIndex(tabPane => !tabPane.disabled && !tabPane.hidden);
+        this.selectedIndex = this._$tabPanes.toArray().findIndex(tabPane => !tabPane.disabled && !tabPane.hidden);
     }
 
     private _asyncSetStyle(index: number): void {
@@ -115,7 +115,7 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
             this._autoSelect();
         }
 
-        this.length = this._tabPanes.length;
+        this.length = this._$tabPanes.length;
     }
 
     /**
@@ -171,11 +171,11 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
         tabPane.content = content;
         tabPane.initData = initData;
 
-        let tabTemp = this._tabPanes.toArray();
+        let tabTemp = this._$tabPanes.toArray();
         tabTemp.push(tabPane);
-        this._tabPanes.reset(tabTemp);
-        this.length = this._tabPanes.length;
-        this.selectedIndex = this._tabPanes.length - 1;
+        this._$tabPanes.reset(tabTemp);
+        this.length = this._$tabPanes.length;
+        this.selectedIndex = this._$tabPanes.length - 1;
 
         //router link
         setTimeout(() => {
@@ -193,17 +193,17 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
      * @param index
      */
     public removeTab(index) {
-        if (this._tabPanes.length - index < 1) {
+        if (this._$tabPanes.length - index < 1) {
             console.info("没有对应tab-pane 供删除");
             return;
         }
 
-        let tabTemp = this._tabPanes.toArray();
+        let tabTemp = this._$tabPanes.toArray();
         tabTemp.splice(index, 1); // 去掉要删除的元素;
 
         // 重新修改queryList. 不确定这么做有没有什么隐患.
-        this._tabPanes.reset(tabTemp);
-        this.length = this._tabPanes.length;
+        this._$tabPanes.reset(tabTemp);
+        this.length = this._$tabPanes.length;
         if(this.selectedIndex == index){
             this._handleSelect()
         }else{
