@@ -16,7 +16,7 @@ export class RdkCollapsePane{
     @Input()
     public isActive: boolean = false;
 
-    private _onClick() {
+    public _$onClick() {
         // 手风琴, 自动关闭其他的pane;
         if (this._collapse && this._collapse.panes &&
             (this._collapse.mode === "accordion" || this._collapse.mode === CollapseMode.accordion)) {

@@ -36,7 +36,7 @@ export class RdkAlert extends AbstractDialogComponentBase {
         this.elementRef = elementRef;
     }
 
-    private _alertClass = {
+    public _$alertClass = {
         'rdk-alert-info': true,
         'rdk-alert-warning': false,
         'rdk-alert-error': false
@@ -66,7 +66,7 @@ export class RdkAlert extends AbstractDialogComponentBase {
                 this._level = AlertLevel.info;
         }
 
-        this._alertClass = {
+        this._$alertClass = {
             'rdk-alert-info': this._level == AlertLevel.info,
             'rdk-alert-warning': this._level == AlertLevel.warning,
             'rdk-alert-error': this._level == AlertLevel.error
