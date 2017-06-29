@@ -8,7 +8,7 @@
     <!--(click)="_updateCanDragged(false)"-->
 
     <div class="rdk-slider-rail"></div>
-    <div class="rdk-slider-track" [ngStyle]="_trackStyle"></div>
+    <div class="rdk-slider-track" [ngStyle]="_$trackStyle"></div>
 
     <div class="rdk-slider-step">
         <span *ngFor="let mark of _$marks" class="rdk-slider-dot rdk-slider-dot-active" [ngStyle]="mark.dotStyle"></span>

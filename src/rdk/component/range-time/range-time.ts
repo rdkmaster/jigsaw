@@ -55,7 +55,7 @@ export class RdkRangeTime extends AbstractRDKComponent implements OnInit {
     public set limitEnd(value:WeekTime) {
         if (value) {
             this._$limitEnd = value;
-            this._endTimeLimitEnd = this._calculateLimitEnd();
+            this._$endTimeLimitEnd = this._calculateLimitEnd();
         }
     }
 
@@ -78,7 +78,7 @@ export class RdkRangeTime extends AbstractRDKComponent implements OnInit {
 
     public _$shortcuts: Shortcut[];
 
-    private _endTimeLimitEnd: WeekTime;
+    public _$endTimeLimitEnd: WeekTime;
 
     private _startTimeLimitEnd: WeekTime;
 
@@ -90,7 +90,7 @@ export class RdkRangeTime extends AbstractRDKComponent implements OnInit {
 
     private _init() {
         this._$shortcuts = this._getShortcuts();
-        this._endTimeLimitEnd = this._calculateLimitEnd();
+        this._$endTimeLimitEnd = this._calculateLimitEnd();
     }
 
     private _calculateLimitEnd(): WeekTime {
@@ -159,7 +159,7 @@ export class RdkRangeTime extends AbstractRDKComponent implements OnInit {
         switch (key) {
             case "beginDate": {
                 this.beginDateChange.emit(value);
-                this._endTimeLimitEnd = this._calculateLimitEnd();
+                this._$endTimeLimitEnd = this._calculateLimitEnd();
                 this._startTimeLimitEnd = value;
                 break;
             }
@@ -197,7 +197,7 @@ export class RdkRangeTime extends AbstractRDKComponent implements OnInit {
                 this._$beginDate = limitStart;
             }
 
-            this._endTimeLimitEnd = this._calculateLimitEnd();
+            this._$endTimeLimitEnd = this._calculateLimitEnd();
 
             setTimeout(() => {
                 //先设置好limit，再设置date

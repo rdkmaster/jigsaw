@@ -4,7 +4,7 @@
               [recommendedBegin]="_$recommendedBegin" [recommendedEnd]="_$recommendedEnd" [grItems]="_$grItems" #timeStart
               class.rdk-range-time-startTime="false" (grChange)="_$grChange($event)">
     </rdk-time>
-    <rdk-time [(date)]="_$endDate" [(gr)]="_$gr" [limitStart]="_$beginDate" [limitEnd]="_endTimeLimitEnd"
+    <rdk-time [(date)]="_$endDate" [(gr)]="_$gr" [limitStart]="_$beginDate" [limitEnd]="_$endTimeLimitEnd"
               (dateChange)="_$dateChange('endDate',$event)" [refreshInterval]="_$refreshInterval" [weekStart]="_$weekStart"
               [recommendedBegin]="_$recommendedBegin" [recommendedEnd]="_$recommendedEnd" #timeEnd
               [class.rdk-range-time-endTime]="(_$grItems && _$grItems.length!=0)">

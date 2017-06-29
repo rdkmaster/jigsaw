@@ -21,6 +21,7 @@ export class TableHeadIcon extends TableCellRenderer {
                </rdk-select>`
 })
 export class TableHeadSelect extends TableCellRenderer {
+    selectedCityForSelect: any;
     cityListForSelect = [
         {label: "北京"},
         {label: "上海"},

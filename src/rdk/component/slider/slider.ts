@@ -188,7 +188,7 @@ export class RdkSlider extends AbstractRDKComponent implements OnInit, OnDestroy
     @Input()
     public disabled: boolean = false;
 
-    private _trackStyle = {};
+    public _$trackStyle = {};
 
     private _setTrackStyle(value?) {
         // 兼容双触点.
@@ -209,12 +209,12 @@ export class RdkSlider extends AbstractRDKComponent implements OnInit, OnDestroy
         }
 
         if (this.vertical) { // 垂直和水平两种
-            this._trackStyle = {
+            this._$trackStyle = {
                 bottom: startPos + "%",
                 height: trackSize + "%"
             }
         } else {
-            this._trackStyle = {
+            this._$trackStyle = {
                 left: startPos + "%",
                 width: trackSize + "%"
             }
