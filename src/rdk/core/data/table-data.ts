@@ -16,7 +16,7 @@ import "rxjs/add/operator/map";
 import 'rxjs/add/operator/debounceTime';
 import {CommonUtils} from "../utils/common-utils";
 
-export type TableMatrixRow = Array<string|number>;
+export type TableMatrixRow = Array<string | number>;
 export type TableDataHeader = string[];
 export type TableDataField = string[];
 export type TableDataMatrix = TableMatrixRow[];
@@ -121,11 +121,11 @@ export class TableData extends TableDataBase implements ISortable {
 
     public sort(as: SortAs, order: SortOrder, field: string | number): void;
     public sort(sort: DataSortInfo): void;
-    public sort(as, order?: SortOrder, field?: string | number): void {
-        this.sortData(this.data,as,order,field);
+    public sort(as: SortAs | DataSortInfo, order?: SortOrder, field?: string | number): void {
+        this.sortData(this.data, as, order, field);
     }
 
-    protected sortData(data:TableDataMatrix,as, order?: SortOrder, field?: string | number){
+    protected sortData(data: TableDataMatrix, as: SortAs | DataSortInfo, order?: SortOrder, field?: string | number) {
         field = typeof field === 'string' ? this.field.indexOf(field) : field;
         this.sortInfo = as instanceof DataSortInfo ? as : new DataSortInfo(as, order, field);
         const orderFlag = this.sortInfo.order == SortOrder.asc ? 1 : -1;
@@ -273,8 +273,8 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     public changePage(currentPage: number, pageSize?: number): void;
     public changePage(info: PagingInfo): void;
     public changePage(currentPage, pageSize?: number): void {
-        const pi:PagingInfo = currentPage instanceof PagingInfo ? currentPage : new PagingInfo(currentPage, +pageSize);
-        let needRefresh:boolean = false;
+        const pi: PagingInfo = currentPage instanceof PagingInfo ? currentPage : new PagingInfo(currentPage, +pageSize);
+        let needRefresh: boolean = false;
 
         if (pi.currentPage >= 1 && pi.currentPage <= this.pagingInfo.totalPage) {
             this.pagingInfo.currentPage = pi.currentPage;
@@ -327,8 +327,8 @@ export class PageableTableData extends TableData implements IServerSidePageable,
 
 export class LocalPageableTableData extends TableData implements IPageable {
     public pagingInfo: PagingInfo;
-    public currentFilterData :TableDataMatrix;
-    public bakData : TableDataMatrix;
+    public currentFilterData: TableDataMatrix;
+    public bakData: TableDataMatrix;
 
     constructor() {
         super();
@@ -343,7 +343,7 @@ export class LocalPageableTableData extends TableData implements IPageable {
         return this;
     }
 
-    private _updatePagingInfo(){
+    private _updatePagingInfo() {
         this.pagingInfo.totalRecord = this.currentFilterData.length;
         this.pagingInfo.totalPage = Math.ceil(this.pagingInfo.totalRecord / this.pagingInfo.pageSize);
         this.firstPage();
@@ -356,28 +356,36 @@ export class LocalPageableTableData extends TableData implements IPageable {
         if (term instanceof Function) {
             this.currentFilterData = this.bakData.filter(term);
         }
-        let key:string;
-        if(term instanceof DataFilterInfo){
+        let key: string;
+        if (term instanceof DataFilterInfo) {
             key = term.key;
             fields = term.fields
-        }else {
+        } else {
             key = term;
         }
-        let numberFields : number[];
-        if(fields && fields.length!=0){
-            if(typeof fields[0] === 'string'){
+        if (fields && fields.length != 0) {
+            let numberFields: number[];
+            if (typeof fields[0] === 'string') {
                 (<string[]>fields).forEach(field => {
-                        numberFields.push(this.field.findIndex(item => item==field))
+                        numberFields.push(this.field.findIndex(item => item == field))
                     }
                 )
-            }else{
+            } else {
                 numberFields = <number[]>fields;
             }
-            this.currentFilterData = this.bakData.filter((data)=> data.filter((index,item)=>
-                numberFields.find(num => num==index)).filter(item => (<string>item).indexOf(key)!=-1).length!= 0);
-        }else{
             this.currentFilterData = this.bakData.filter(
-                (data)=> data.filter(item => (<string>item).indexOf(key)!=-1).length !=0)
+                row => row.filter(
+                    (index, item) => numberFields.find(num => num == index)
+                ).filter(
+                    item => (<string>item).indexOf(key) != -1
+                ).length != 0
+            );
+        } else {
+            this.currentFilterData = this.bakData.filter(
+                row => row.filter(
+                    item => (<string>item).indexOf(key) != -1
+                ).length != 0
+            );
         }
         this._updatePagingInfo();
     }
@@ -386,38 +394,37 @@ export class LocalPageableTableData extends TableData implements IPageable {
     public sort(as: SortAs, order: SortOrder, field: string | number): void;
     public sort(sort: DataSortInfo): void;
     public sort(as, order?: SortOrder, field?: string | number): void {
-        super.sortData(this.currentFilterData,as,order,field);
+        super.sortData(this.currentFilterData, as, order, field);
         this.changePage(this.pagingInfo.currentPage);
     }
 
     public changePage(currentPage: number, pageSize?: number): void;
     public changePage(info: PagingInfo): void;
     public changePage(currentPage, pageSize?: number): void {
-        if(!this.currentFilterData){
+        if (!this.currentFilterData) {
             return;
         }
-        const pi:PagingInfo = currentPage instanceof PagingInfo ? currentPage : new PagingInfo(currentPage, pageSize?+pageSize:this.pagingInfo.pageSize);
 
-        if (pi.pageSize > 0) {
-            this.pagingInfo.pageSize = pi.pageSize;
-            this.pagingInfo.totalPage = Math.ceil(this.pagingInfo.totalRecord / this.pagingInfo.pageSize);
-        } else {
+        const pi: PagingInfo = currentPage instanceof PagingInfo ? currentPage : new PagingInfo(currentPage, pageSize ? +pageSize : this.pagingInfo.pageSize);
+        if (pi.pageSize <= 0) {
             console.error(`invalid pageSize[${pi.pageSize}], it should be greater than 0`);
+            return;
         }
+        this.pagingInfo.pageSize = pi.pageSize;
+        this.pagingInfo.totalPage = Math.ceil(this.pagingInfo.totalRecord / this.pagingInfo.pageSize);
 
         if (pi.currentPage >= 1 && pi.currentPage <= this.pagingInfo.totalPage) {
             this.pagingInfo.currentPage = pi.currentPage;
         } else {
             console.error(`invalid currentPage[${pi.currentPage}], it should be between in [1, ${this.pagingInfo.totalPage}]`);
+            return;
         }
 
-
-        const begin = (this.pagingInfo.currentPage -1)*this.pagingInfo.pageSize;
-        const end = this.pagingInfo.currentPage *this.pagingInfo.pageSize<this.pagingInfo.totalRecord?this.pagingInfo.currentPage *this.pagingInfo.pageSize:this.pagingInfo.totalRecord;
-        this.data = this.currentFilterData.slice(begin,end);
+        const begin = (this.pagingInfo.currentPage - 1) * this.pagingInfo.pageSize;
+        const end = this.pagingInfo.currentPage * this.pagingInfo.pageSize < this.pagingInfo.totalRecord ? this.pagingInfo.currentPage * this.pagingInfo.pageSize : this.pagingInfo.totalRecord;
+        this.data = this.currentFilterData.slice(begin, end);
 
         this.refresh();
-
     }
 
     public firstPage(): void {
