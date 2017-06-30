@@ -62,5 +62,5 @@ npm install --save @rdkmaster/jigsaw
 	- [这里](https://github.com/rdkmaster/jigsaw/blob/master/doc/coding-spec.md)是一份简单的代码规范，请尽量遵守它；
 
 ## 正在打算换工作？
-- 我们需要至少一名有经验的前端工程师，他的主要职责是全职加入这个组件库的开发，详情[点击这里](http://rdk.zte.com.cn/jobs)；
+- 我们至少需要一名有经验的前端工程师，他的主要职责是全职加入这个组件库的开发，详情[点击这里](http://rdk.zte.com.cn/jobs)；
 - 我们至少需要一名有经验的服务端工程师，他的主要职责是全职加入[RDK](https://github.com/rdkmaster/rdk)后端的开发，详情点击[点击这里](http://rdk.zte.com.cn/jobs)；
