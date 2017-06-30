@@ -68,8 +68,12 @@ npm install --save ztree@^3.5.24"
 我们认为如下的行为都是在做贡献：
 - 默默的关注；
 - watch/star/fork 这个工程；
-- 给我们[提bug/需求/建议](https://github.com/rdkmaster/jigsaw/issues)；
+- 给我们[提bug/需求/建议](https://github.com/rdkmaster/jigsaw/issues/new)；
 - 给我们写写文档，写点小文章；
 - 更有效的是给我们推送PR，所有的PR我们都欢迎并会认真处理；
-	- 请优先处理没有打 `suspend` 标签的issue；
+	- 请优先处理没有打 `suspend` 标签的[issue](https://github.com/rdkmaster/jigsaw/issues)；
 	- [这里](https://github.com/rdkmaster/jigsaw/blob/master/doc/coding-spec.md)是一份简单的代码规范，请尽量遵守它；
+
+## 正在打算换工作？
+- 我们需要至少一名有经验的前端工程师，他的主要职责是全职加入这个组件库的开发，详情[点击这里](http://rdk.zte.com.cn/jobs)；
+- 我们至少需要一名有经验的服务端工程师，他的主要职责是全职加入[RDK](https://github.com/rdkmaster/rdk)后端的开发，详情点击[点击这里](http://rdk.zte.com.cn/jobs)；
