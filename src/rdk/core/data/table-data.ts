@@ -8,7 +8,7 @@ import {
     PagingInfo,
     SortAs,
     SortOrder,
-    IPageable,
+    IPageable, DataLevel,
 } from "./component-data";
 import {Http, RequestOptionsArgs, Response, URLSearchParams} from "@angular/http";
 import {Subject} from "rxjs/Subject";
@@ -330,6 +330,7 @@ export class LocalPageableTableData extends TableData implements IPageable {
     public currentFilterData: TableDataMatrix;
     public bakData: TableDataMatrix;
 
+    private dataLevel : DataLevel = DataLevel.pristine;
     constructor() {
         super();
         this.pagingInfo = new PagingInfo();
@@ -395,6 +396,9 @@ export class LocalPageableTableData extends TableData implements IPageable {
     public sort(sort: DataSortInfo): void;
     public sort(as, order?: SortOrder, field?: string | number): void {
         super.sortData(this.currentFilterData, as, order, field);
+        if(this.dataLevel == DataLevel.pristine){
+            this.dataLevel = DataLevel.sorted;
+        }
         this.changePage(this.pagingInfo.currentPage);
     }
 
@@ -424,7 +428,8 @@ export class LocalPageableTableData extends TableData implements IPageable {
         const end = this.pagingInfo.currentPage * this.pagingInfo.pageSize < this.pagingInfo.totalRecord ? this.pagingInfo.currentPage * this.pagingInfo.pageSize : this.pagingInfo.totalRecord;
         this.data = this.currentFilterData.slice(begin, end);
 
-        this.refresh();
+        this.refresh(this.dataLevel);
+
     }
 
     public firstPage(): void {

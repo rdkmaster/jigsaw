@@ -115,12 +115,12 @@ export class ComponentDataHelper {
         return this._getRemoval(this._refreshCallbacks, callback);
     }
 
-    public invokeRefreshCallback(): void {
+    public invokeRefreshCallback(dataLevels? : DataLevel|DataLevel[]): void {
         if (this._timeout !== null) {
             return;
         }
         this._timeout = setTimeout(() => {
-            this._refreshCallbacks.forEach(callback => ComponentDataHelper._safeInvokeCallback(callback.context, callback.fn));
+            this._refreshCallbacks.forEach(callback => ComponentDataHelper._safeInvokeCallback(callback.context, callback.fn,dataLevels));
             this._timeout = null;
         }, 0);
     }
@@ -182,4 +182,8 @@ export class DataSortInfo {
                 public order: SortOrder = SortOrder.asc,
                 public field: string | number) {
     }
+}
+
+export enum DataLevel{
+    pristine, sorted
 }

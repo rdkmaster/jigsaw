@@ -1,6 +1,6 @@
 import {
     IAjaxComponentData, DataReviser, DataRefreshCallback, ComponentDataHelper, CallbackRemoval, AjaxSuccessCallback,
-    AjaxErrorCallback, AjaxCompleteCallback
+    AjaxErrorCallback, AjaxCompleteCallback, DataLevel
 } from "./component-data";
 import {Http, RequestOptionsArgs, Response} from "@angular/http";
 import "rxjs/add/operator/map";
@@ -50,8 +50,8 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
 
     protected componentDataHelper: ComponentDataHelper = new ComponentDataHelper();
 
-    public refresh(): void {
-        this.componentDataHelper.invokeRefreshCallback();
+    public refresh(dataLevels? : DataLevel|DataLevel[]): void {
+        this.componentDataHelper.invokeRefreshCallback(dataLevels);
     }
 
     public onRefresh(callback: (thisData: AbstractGeneralCollection<T>) => void, context?: any): CallbackRemoval {
