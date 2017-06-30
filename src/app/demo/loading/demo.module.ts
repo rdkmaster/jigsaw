@@ -12,6 +12,7 @@ import {RdkBallLoading, RdkLoading, RdkLoadingModule} from "../../../rdk/compone
 import {RdkButtonModule} from "../../../rdk/component/button/button";
 import {LoadingService} from "../../../rdk/service/loading.service";
 import {PopupService} from "../../../rdk/service/popup.service";
+import {RdkInputModule} from "../../../rdk/component/input/input";
 
 const loadingDemoRoutes = [
     {
@@ -51,6 +52,7 @@ const loadingDemoRoutes = [
         CommonModule,
         RdkLoadingModule,
         RdkButtonModule,
+        RdkInputModule,
         RouterModule.forChild(loadingDemoRoutes)
     ],
     providers: [LoadingService, PopupService],
