@@ -19,7 +19,7 @@ export class TableSetHeaderRenderDemoComponent implements AfterViewInit {
         this.tableData.fromAjax('mock-data/table/data.json');
     }
 
-    private _columns: ColumnDefine[];
+     _columns: ColumnDefine[];
 
     ngAfterViewInit() {
         this._columns = [

@@ -6,6 +6,7 @@ import {ArrayCollection} from "../../../../rdk/core/data/array-collection";
   styleUrls: ['scroll.css']
 })
 export class SelectScrollDemoComponent {
+    selectedCityForSelect: any;
     cityListForSelect = new ArrayCollection([
         {label: "北京"},
         {label: "上海"},

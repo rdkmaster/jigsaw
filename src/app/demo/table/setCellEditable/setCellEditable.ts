@@ -43,7 +43,7 @@ export class TableSetCellEditableDemoComponent {
         this.tableData.fromAjax('mock-data/table/data.json');
     }
 
-    private _columns: ColumnDefine[] = [
+     _columns: ColumnDefine[] = [
         {
             target: 'position',
             width: '20%',
@@ -56,7 +56,7 @@ export class TableSetCellEditableDemoComponent {
 
         }];
 
-    private _changeMsg : string;
+     _changeMsg : string;
 
     public onCellChange(value) {
         this._changeMsg = `field: '${value.field}', row: ${value.row}, column: ${value.column}, rawColumn: ${value.rawColumn}, cellData: ${value.cellData}, oldCellData: ${value.oldCellData}`;

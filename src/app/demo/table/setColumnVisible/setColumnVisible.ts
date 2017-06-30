@@ -21,7 +21,7 @@ export class TableColumnSetVisibleDemoComponent {
         this.tableData.fromAjax('mock-data/table/data.json');
     }
 
-    private _columns: ColumnDefine[] = [
+     _columns: ColumnDefine[] = [
         {
             target: 'name',
             visible: false

@@ -1,16 +1,16 @@
 <div class="rdk-range-time">
-    <rdk-time [(date)]="_beginDate" [(gr)]="_gr" [limitStart]="_limitStart" [limitEnd]="_limitEnd"
-              (dateChange)="_dateChange('beginDate',$event)" [refreshInterval]="_refreshInterval" [weekStart]="_weekStart"
-              [recommendedBegin]="_recommendedBegin" [recommendedEnd]="_recommendedEnd" [grItems]="_grItems" #timeStart
-              class.rdk-range-time-startTime="false" (grChange)="_grChange($event)">
+    <rdk-time [(date)]="_$beginDate" [(gr)]="_$gr" [limitStart]="_$limitStart" [limitEnd]="_$limitEnd"
+              (dateChange)="_$dateChange('beginDate',$event)" [refreshInterval]="_$refreshInterval" [weekStart]="_$weekStart"
+              [recommendedBegin]="_$recommendedBegin" [recommendedEnd]="_$recommendedEnd" [grItems]="_$grItems" #timeStart
+              class.rdk-range-time-startTime="false" (grChange)="_$grChange($event)">
     </rdk-time>
-    <rdk-time [(date)]="_endDate" [(gr)]="_gr" [limitStart]="_beginDate" [limitEnd]="_endTimeLimitEnd"
-              (dateChange)="_dateChange('endDate',$event)" [refreshInterval]="_refreshInterval" [weekStart]="_weekStart"
-              [recommendedBegin]="_recommendedBegin" [recommendedEnd]="_recommendedEnd" #timeEnd
-              [class.rdk-range-time-endTime]="(_grItems && _grItems.length!=0)">
+    <rdk-time [(date)]="_$endDate" [(gr)]="_$gr" [limitStart]="_$beginDate" [limitEnd]="_$endTimeLimitEnd"
+              (dateChange)="_$dateChange('endDate',$event)" [refreshInterval]="_$refreshInterval" [weekStart]="_$weekStart"
+              [recommendedBegin]="_$recommendedBegin" [recommendedEnd]="_$recommendedEnd" #timeEnd
+              [class.rdk-range-time-endTime]="(_$grItems && _$grItems.length!=0)">
     </rdk-time>
-    <div *ngIf="_shortcuts && _shortcuts.length" class="rdk-range-time-shortcuts">
-        <span *ngFor="let item of _shortcuts" (click)="_changeShortcut(item)">
+    <div *ngIf="_$shortcuts && _$shortcuts.length" class="rdk-range-time-shortcuts">
+        <span *ngFor="let item of _$shortcuts" (click)="_changeShortcut(item)">
             {{item.label}}
         </span>
     </div>

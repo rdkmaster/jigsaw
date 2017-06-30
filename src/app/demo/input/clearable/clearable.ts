@@ -4,6 +4,6 @@ import {Component} from "@angular/core";
   templateUrl: 'clearable.html'
 })
 export class InputClearableDemoComponent {
-
+    inputValue: any;
 }
 

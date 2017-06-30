@@ -5,7 +5,7 @@ import {ArrayCollection} from "../../../../rdk/core/data/array-collection";
   templateUrl: 'labelField.html'
 })
 export class RadioLabelFieldDemoComponent {
-    public selectedCity:{};
+    public selectedCity={name: "西安",id:"6"};
     citys = new ArrayCollection([
         {name: "北京",id:"1"},
         {name: "上海",id:"2"},
@@ -15,7 +15,6 @@ export class RadioLabelFieldDemoComponent {
         {name: "西安",id:"6"}
     ]);
     constructor(){
-        this.selectedCity={name: "西安",id:"6"};
     }
     public radioChange(message:any){
         console.log(`switch message is: ${message.name}`);

@@ -13,7 +13,7 @@ import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
 })
 
 export class RdkSwitch implements OnInit{
-    private _content: any; // 当前显示的内容.
+    public _$content: any; // 当前显示的内容.
 
     /**
      * 开关状态打开时的文本.(只支持字符串)
@@ -74,7 +74,7 @@ export class RdkSwitch implements OnInit{
         this._setSwitchClass();
     }
 
-    private _switchClick() {
+    public _$switchClick() {
         if(!this.disabled) {
             this.checked = !this.checked;
 
@@ -83,13 +83,13 @@ export class RdkSwitch implements OnInit{
         }
     }
 
-    private _switchClass: {};
+    public _$switchClass: {};
 
     /**
      * 更新控件样式的方法
      */
     private _setSwitchClass() {
-        this._switchClass = {
+        this._$switchClass = {
             'rdk-switch': 'true',
             'rdk-switch-small': this.size === 'small'? true : false,
             'rdk-switch-checked': this.checked,
@@ -101,7 +101,7 @@ export class RdkSwitch implements OnInit{
      * 设置选中和费选中的值.
      */
     private _setInnerValue() {
-        this._content = this.checked ? this.onLabel : this.offLabel;
+        this._$content = this.checked ? this.onLabel : this.offLabel;
     }
 
     public ngOnInit() {

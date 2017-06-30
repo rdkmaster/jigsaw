@@ -1,7 +1,7 @@
 <table class="rdk-table-fixed-head rdk-table-hide">
     <thead>
     <tr>
-        <td #fixedHeader rdk-table-header *ngFor="let head of _headSettings; index as colIndex"
+        <td #fixedHeader rdk-table-header *ngFor="let head of _$headSettings; index as colIndex"
             [tableData]="data"
             [cellData]="head.cellData"
             [column]="colIndex"
@@ -18,11 +18,11 @@
     </thead>
 </table>
 
-<div class="rdk-table-box" rdk-scroll-bar scrollBarTheme="minimal-dark" [scrollBarOptions]="_scrollBarOptions">
+<div class="rdk-table-box" rdk-scroll-bar scrollBarTheme="minimal-dark" [scrollBarOptions]="_$scrollBarOptions">
     <table class="rdk-table">
         <thead>
         <tr>
-            <td #header rdk-table-header *ngFor="let head of _headSettings; index as colIndex"
+            <td #header rdk-table-header *ngFor="let head of _$headSettings; index as colIndex"
                 [tableData]="data"
                 [cellData]="head.cellData"
                 [column]="colIndex"
@@ -38,7 +38,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr #tableRow *ngFor="let row of _cellSettings; index as rowIndex;">
+        <tr #tableRow *ngFor="let row of _$cellSettings; index as rowIndex;">
             <td *ngFor="let cell of row; index as colIndex"
                 [attr.rowspan]="cell.rowSpan > 1 ? cell.rowSpan : null"
                 [style.display]="cell.rowSpan ? 'table-cell' : 'none'"

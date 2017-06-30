@@ -1,5 +1,5 @@
 <div class="rdk-tabs">
-    <div *ngIf="_tabPanes && _tabPanes.length > 0" class="rdk-tabs-bar">
+    <div *ngIf="_$tabPanes && _$tabPanes.length > 0" class="rdk-tabs-bar">
         <div class="rdk-tabs-nav-container">
             <!-- Todo 添加滚动条 -->
             <div class="rdk-tabs-nav-wrap">
@@ -7,7 +7,7 @@
                     <!-- 负责实现动画效果 -->
                     <div class="rdk-tabs-ink-bar" [ngStyle]="_inkBarStyle"></div>
                     <rdk-tab-label class="rdk-tabs-tab"
-                                   *ngFor="let tab of _tabPanes; let i = index"
+                                   *ngFor="let tab of _$tabPanes; let i = index"
                                    [key]="i"
                                    [tabItem]="tab.label"
                                    [class.rdk-tabs-tab-active]="selectedIndex === i"
@@ -19,9 +19,9 @@
             </div>
         </div>
     </div>
-    <div class="rdk-tabs-content" *ngIf="_tabPanes && _tabPanes.length > 0">
+    <div class="rdk-tabs-content" *ngIf="_$tabPanes && _$tabPanes.length > 0">
         <rdk-tab-content
-            *ngFor="let tab of _tabPanes; let i = index;"
+            *ngFor="let tab of _$tabPanes; let i = index;"
             [key]="i"
             [tabItem]=tab.content
             [isActive]="selectedIndex === i"

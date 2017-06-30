@@ -14,7 +14,7 @@ export class ComboSelectChangeDemo {
 
     public selectedCity = new ArrayCollection([{label: "北京"}]);
 
-    private citys = [
+     citys = [
         {label: "北京"},
         {label: "上海"},
         {label: "南京"},

@@ -24,7 +24,7 @@ export class RdkPrefixIcon {
 })
 export class RdkInput extends AbstractRDKComponent implements AfterContentInit, AfterViewChecked {
     private _value: string | number; //input表单值
-    private _longIndent: boolean = false;
+    public _$longIndent: boolean = false;
     private _focused: boolean;
     private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
     private _blurEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
@@ -85,12 +85,12 @@ export class RdkInput extends AbstractRDKComponent implements AfterContentInit, 
         this.value = null;
     }
 
-    private _handleFocus(event: FocusEvent) {
+    public _$handleFocus(event: FocusEvent) {
         this._focused = true;
         this._focusEmitter.emit(event);
     }
 
-    private _handleBlur(event: FocusEvent) {
+    public _$handleBlur(event: FocusEvent) {
         this._focused = false;
         this._blurEmitter.emit(event);
     }
@@ -100,7 +100,7 @@ export class RdkInput extends AbstractRDKComponent implements AfterContentInit, 
         event.stopPropagation();
     }
 
-    private _inputPaddingStyle: {};
+    public _$inputPaddingStyle: {};
 
     /**
      * 动态计算 input的padding-left 和padding-right (不确定图标的个数, 好空出对应的位置.)
@@ -118,7 +118,7 @@ export class RdkInput extends AbstractRDKComponent implements AfterContentInit, 
 
         let endPadding = endIconWidth + 8;
 
-        this._inputPaddingStyle = {
+        this._$inputPaddingStyle = {
             "padding-left": prefixIconPadding + "px",
             "padding-right": endPadding + "px"
         }
@@ -127,7 +127,7 @@ export class RdkInput extends AbstractRDKComponent implements AfterContentInit, 
     }
 
     ngAfterContentInit() {
-        this._iconFront && this._iconFront.length ? this._longIndent = true : null;
+        this._iconFront && this._iconFront.length ? this._$longIndent = true : null;
         setTimeout(() => {
             this._render2.setStyle(this._elementRef.nativeElement, 'opacity', 1);
         }, 0);

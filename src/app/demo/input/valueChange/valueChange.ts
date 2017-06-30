@@ -4,6 +4,7 @@ import {Component} from "@angular/core";
   templateUrl: 'valueChange.html'
 })
 export class InputValueChangeDemoComponent {
+    inputValue: any;
     valueChanged(message: string) {
 
         console.log(`input value is: ${message}`);

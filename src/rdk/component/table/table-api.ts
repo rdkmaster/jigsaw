@@ -3,7 +3,7 @@ import {TableData} from "../../core/data/table-data";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 
 export class TableCellRenderer {
-    protected dispatchChangeEvent(value: string|number|TableHeadChangeEvent): void{
+    public dispatchChangeEvent(value: string|number|TableHeadChangeEvent): void{
         this.cellDataChange.emit(value)
     }
 

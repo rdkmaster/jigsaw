@@ -1,10 +1,10 @@
 {
     "name": "@rdkmaster/jigsaw",
-    "version": "1.0.0-beta.5",
+    "version": "1.0.0-beta.6",
     "description": "RDK Jigsaw",
     "main": "./bundles/jigsaw.umd.js",
-    "module": "./@rdk/jigsaw.es5.js",
-    "es2015": "./@rdk/jigsaw.js",
+    "module": "./@rdkmaster/jigsaw.es5.js",
+    "es2015": "./@rdkmaster/jigsaw.js",
     "typings": "./jigsaw.d.ts",
     "repository": {
         "type": "git",

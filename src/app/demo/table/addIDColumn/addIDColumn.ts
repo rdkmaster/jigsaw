@@ -18,7 +18,7 @@ export class TableAddIDColumnDemoComponent {
 
 
 
-    private _additionalColumns: AdditionalColumnDefine[] = [{
+     _additionalColumns: AdditionalColumnDefine[] = [{
             pos : 0,
             header: {
                 text: '#'

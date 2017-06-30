@@ -6,14 +6,14 @@ import {ArrayCollection} from "../../../../rdk/core/data/array-collection";
 })
 export class DisabledComboSelectDemo{
 
-    private disabled = false;
+     disabled = false;
 
     public changeDisabled() {
         this.disabled = !this.disabled;
     }
 
     public selectedCity = new ArrayCollection([{label: "北京", closable: false}]);
-    private citys = [
+     citys = [
         {label: "北京", closable: false},
         {label: "上海", closable: false},
         {label: "南京"},

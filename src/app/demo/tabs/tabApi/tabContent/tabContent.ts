@@ -6,7 +6,7 @@ import {IDynamicInstantiatable} from "../../../../../rdk/component/core";
     styleUrls: ['tabContent.scss']
 })
 export class TabContentComponent{
-
+    initData: any;
 }
 
 @Component({

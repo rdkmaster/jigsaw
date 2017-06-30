@@ -11,8 +11,8 @@ import {PopupService, PopupDisposer, PopupInfo} from "../../../../rdk/service/po
 
 export class TableDataWithPopupDemoComponent {
 
-    private _popupInfo: PopupInfo;
-    private _disposer: PopupDisposer;
+     _popupInfo: PopupInfo;
+     _disposer: PopupDisposer;
 
     tableData: TableData;
     constructor(http: Http,private _popupService: PopupService) {

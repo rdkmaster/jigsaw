@@ -118,7 +118,7 @@ export class RdkCheckBox extends AbstractRDKComponent implements OnInit, AfterCo
      * @param event
      * @private
      */
-    private _onCheckboxClick(event: Event) {
+    public _$onCheckboxClick(event: Event) {
         event.stopPropagation();
         event.preventDefault();
 
@@ -131,10 +131,10 @@ export class RdkCheckBox extends AbstractRDKComponent implements OnInit, AfterCo
     /**
      * 更新checkbox的样式信息
      */
-    private _checkboxClass: { };
+    public _$checkboxClass: { };
 
     private _setCheckBoxClass() {
-        this._checkboxClass = {
+        this._$checkboxClass = {
             'rdk-checkbox': 'true',
             'rdk-checkbox-checked': this._checked,
             'rdk-checkbox-indeterminate': this._checked === CheckBoxStatus.indeterminate,

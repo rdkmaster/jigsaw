@@ -22,7 +22,7 @@ export class TableSetHeaderClassDemoComponent {
 
 
 
-    private _columns: ColumnDefine[] = [
+     _columns: ColumnDefine[] = [
         {
             target: 'name',
             header: {

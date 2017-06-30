@@ -20,7 +20,7 @@ export class TableSetHeaderSortDemoComponent {
 
 
 
-    private _columns: ColumnDefine[] = [
+     _columns: ColumnDefine[] = [
         {
             target: 'salary',
             header: {

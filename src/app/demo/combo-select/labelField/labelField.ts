@@ -12,7 +12,7 @@ export class ComboSelectLabelFieldDemo {
 
     public labelField = "name";
     public selectedCity = new ArrayCollection([{name: "北京", closable: false}]);
-    private citys = [
+     citys = [
         {name: "北京", closable: false},
         {name: "上海", closable: false},
         {name: "南京"},

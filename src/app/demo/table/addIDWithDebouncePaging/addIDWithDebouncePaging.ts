@@ -35,12 +35,12 @@ export class TableAddIDWithDebouncePagingComponent implements AfterViewInit{
         this.pageable.fromAjax();
     }
 
-    private _columns: ColumnDefine[] = [{
+     _columns: ColumnDefine[] = [{
         target: 'id',
         visible: false
     }];
 
-    private _additionalColumns: AdditionalColumnDefine[] = [{
+     _additionalColumns: AdditionalColumnDefine[] = [{
         pos: 0,
         header: {
             text: '#'

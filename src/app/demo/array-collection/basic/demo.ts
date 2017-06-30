@@ -71,7 +71,7 @@ export class ArrayCollectionBasicDemoComponent implements OnInit {
         console.log(ac.toString() == arr.toString());
     }
 
-    private consoleAppend(ac: ArrayCollection<number>, arr: Array<number>, msg: string): void {
+     consoleAppend(ac: ArrayCollection<number>, arr: Array<number>, msg: string): void {
         if (this.isEqual(ac, arr)) {
             this.consoleTexts.push({test: true, msg: msg + ' success'})
         } else {
@@ -82,7 +82,7 @@ export class ArrayCollectionBasicDemoComponent implements OnInit {
         }
     }
 
-    private consoleAppendForStr(acStr: string | number, arrStr: string | number, msg: string): void {
+     consoleAppendForStr(acStr: string | number, arrStr: string | number, msg: string): void {
         if (acStr == arrStr) {
             this.consoleTexts.push({test: true, msg: msg + ' success'})
         } else {
@@ -92,7 +92,7 @@ export class ArrayCollectionBasicDemoComponent implements OnInit {
         }
     }
 
-    private isEqual(ac: ArrayCollection<number>, arr: Array<number>) {
+     isEqual(ac: ArrayCollection<number>, arr: Array<number>) {
         return ac.length == arr.length && ac.toString() == arr.toString();
     }
 

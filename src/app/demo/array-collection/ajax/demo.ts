@@ -21,7 +21,7 @@ export class ArrayCollectionAjaxDemoComponent {
         });
     }
 
-    private consoleAppend(msg: string): void {
+     consoleAppend(msg: string): void {
         this.consoleTexts.push((this.consoleTexts.length + 1) + ': ' + msg);
     }
 }

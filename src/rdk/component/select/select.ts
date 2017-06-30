@@ -33,11 +33,11 @@ export class OptionList extends AbstractRDKComponent{
     }
 })
 export class RdkSelect extends AbstractRDKComponent implements AfterViewInit, OnDestroy, OnInit {
-    private _optionListHidden: boolean = true; // 设置option列表是否显示
+    public _$optionListHidden: boolean = true; // 设置option列表是否显示
     private _value: any; // select表单值
     private _contentInit: boolean = false; //子组件加载标记
     private _documentListen: Function; // document事件解绑函数
-    private _selectedLabel: string;
+    public _$selectedLabel: string;
 
     //select form表单值
     @Input()
@@ -48,7 +48,7 @@ export class RdkSelect extends AbstractRDKComponent implements AfterViewInit, On
     public set value(newValue: any) {
         if (newValue && this._value != newValue) {
             this._value = newValue;
-            this._selectedLabel = newValue[this.labelField];
+            this._$selectedLabel = newValue[this.labelField];
             this._contentInit && this._updateSelectedOption();
         }
     }
@@ -82,11 +82,11 @@ export class RdkSelect extends AbstractRDKComponent implements AfterViewInit, On
     //点击组件，显示\隐藏option列表
     private _toggleClick(event: Event): void {
         event.stopPropagation();
-        this._optionListHidden = !this._optionListHidden;
-        if (this._optionListHidden) {
+        this._$optionListHidden = !this._$optionListHidden;
+        if (this._$optionListHidden) {
             this._documentListen();
         } else {
-            this._documentListen = this._renderer.listen('document', 'click', () => this._optionListHidden = true);
+            this._documentListen = this._renderer.listen('document', 'click', () => this._$optionListHidden = true);
         }
     }
     //更改option选中状态
@@ -136,7 +136,7 @@ export class RdkSelect extends AbstractRDKComponent implements AfterViewInit, On
 export class RdkOption implements OnInit {
     @Input() public optionItem: any;
 
-    private _optionLabel: string;
+    public _$optionLabel: string;
 
     private _selectCmp: RdkSelect;
 
@@ -159,7 +159,7 @@ export class RdkOption implements OnInit {
 
     ngOnInit() {
         //初始化option显示值
-        this._optionLabel = this.optionItem[this._selectCmp.labelField];
+        this._$optionLabel = this.optionItem[this._selectCmp.labelField];
         this._selectCmp.height ? this._height = this._selectCmp.height : null;
     }
 

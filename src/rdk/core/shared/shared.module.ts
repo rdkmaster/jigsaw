@@ -4,7 +4,7 @@ import {TranslateModule, TranslateLoader, TranslateService} from '@ngx-translate
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 export function HttpLoaderFactory(http: Http) {
-    return new TranslateHttpLoader(http, '/src/rdk/i18n/', '.json');
+    return new TranslateHttpLoader(http, 'rdk/i18n/', '.json');
 }
 
 @NgModule({

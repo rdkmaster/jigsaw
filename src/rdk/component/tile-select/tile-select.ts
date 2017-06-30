@@ -166,7 +166,7 @@ export class RdkTileSelect extends AbstractRDKComponent implements OnInit, After
 export class RdkTileOption extends AbstractRDKComponent implements OnInit {
     @Input() public optionItem: any; //option对象
 
-    private _optionLabel: string; //显示在页面上的值
+    public _$optionLabel: string; //显示在页面上的值
     private _tileSelect: RdkTileSelect; //父组件
 
     public selected: boolean = false;//选中状态
@@ -177,7 +177,7 @@ export class RdkTileOption extends AbstractRDKComponent implements OnInit {
     }
 
     //点击组件触发
-    private _onClick(): void {
+    public _$onClick(): void {
         if (this._tileSelect.multipleSelect) { //多选
             this.selected = !this.selected;//切换组件选中状态
             this._tileSelect.updateSelectItems(this.optionItem, this.selected);
@@ -194,7 +194,7 @@ export class RdkTileOption extends AbstractRDKComponent implements OnInit {
 
     ngOnInit() {
         //初始化option显示值
-        this._optionLabel = this.optionItem[this._tileSelect.labelField];
+        this._$optionLabel = this.optionItem[this._tileSelect.labelField];
     }
 
 }
