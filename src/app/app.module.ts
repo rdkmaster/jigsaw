@@ -12,7 +12,7 @@ import {RouterModule} from "@angular/router";
 import {RdkJigsawModule} from '@rdkmaster/jigsaw';
 
 export function HttpLoaderFactory(http: Http) {
-    return new TranslateHttpLoader(http, '/src/app/i18n/', '.json');
+    return new TranslateHttpLoader(http, 'app/i18n/', '.json');
 }
 
 const appRoutes = [
