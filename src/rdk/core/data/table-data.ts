@@ -359,7 +359,7 @@ export class LocalPageableTableData extends TableData implements IPageable {
         let key: string;
         if (term instanceof DataFilterInfo) {
             key = term.key;
-            fields = term.fields
+            fields = term.field
         } else {
             key = term;
         }

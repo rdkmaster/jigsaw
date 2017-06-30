@@ -165,7 +165,7 @@ export class PagingInfo {
 }
 
 export class DataFilterInfo {
-    constructor(public key: string = '', public fields?: string[] | number[]) {
+    constructor(public key: string = '', public field?: string[] | number[]) {
     }
 }
 
