@@ -3,6 +3,9 @@
  * @description
  * Entry point for all public APIs of RDK Jigsaw.
  */
+
+export * from './module';
+
 export * from './component/core';
 
 export * from './core/data/array-collection';
