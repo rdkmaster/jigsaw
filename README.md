@@ -6,13 +6,13 @@
 
 
 ## 名字的内涵
-Jigsaw原意是一种拼图游戏，游戏的过程和现代web页面开发过程很类似，游戏者按照既定的蓝图将杂乱的碎片组合成一幅图，我们使用这个名字正是为了让web页面开发者能够像玩Jigsaw游戏一样，边玩边开发你的页面。
+Jigsaw原意是七巧板，一种拼图游戏。游戏的过程和现代web页面开发过程很类似，游戏者按照既定的蓝图将杂乱的碎片组合成一幅图，我们使用这个名字正是为了让web页面开发者能够像玩Jigsaw游戏一样，边玩边开发你的页面。
 
 **组合**是Jigsaw的灵魂，我们致力于将组合做到极致。
 
-把若干组件按照一定的顺序排列、布局之后可以得到一个应用页面，这是通常意义上的组合，我们将这个层次的组合称归之为Level one。Level one 的组合把组件当做原子，不可再拆分。
+把若干组件按照一定的顺序排列&布局之后可以得到一个应用页面，这是通常意义上的组合，我们将这个层次的组合称归之为Level one。Level one 的组合把组件当做原子，不可再拆分。
 
-Jigsaw的组件不再是原子，它对组件的功能进行了二次抽象，同时，允许组件的局部高度定制化，甚至有的组件做到完全的可定制化。这里提到的定制化，换句话说，就是另一种形式的组合。小到类似`rdk-button`这样的基础组件，大到`rdk-table`这样的巨无霸组件，你看到的几乎每个UI元素，都是可以与其他组件再组合来覆盖其默认行为。原子组件是有限的，组合才能产生无限的可能。我们将这个层次的组合归为Level two。
+Jigsaw的组件不再是原子，它对组件的功能进行了二次抽象，同时，允许组件的局部高度定制化，甚至有的组件做到完全的可定制化。小到类似`rdk-button`这样的基础组件，大到`rdk-table`这样的巨无霸组件，你看到的几乎每个UI元素，都是可以与其他组件再组合来覆盖其默认行为。原子组件是有限的，组合才能产生无限的可能。这里提到的定制化，换句话说，就是另一种形式的组合，我们将这个层次的组合归为Level two。
 
 用Jigsaw，尽情释放你的想象力吧！
 
@@ -26,24 +26,20 @@ Jigsaw的组件不再是原子，它对组件的功能进行了二次抽象，�
 ```
 cd d:\jigsaw-seed
 npm config set proxy=http://proxy.zte.com.cn:80                          # 直连网络下不可执行这个命令
-npm config set registry=https://registry.npm.taobao.org/                 # Chinese developers only
-npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass # Chinese developers only
-npm install -g @angular/cli                                              # 推荐。可选。
+npm config set registry=https://registry.npm.taobao.org/                 # for Chinese developers only
+npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass # for Chinese developers only
+npm install -g @angular/cli                                              # 强烈推荐，可选。
 npm install
 npm start
 ```
 4. 浏览器里打开 http://localhost:4200 如果看到欢迎页，表示你的开发环境搭建完毕。
-5. 后续直接在 `d:\jigsaw-seed` 目录下运行 `npm start` 命令就可以启动开发环境了。我们推荐使用[WebStorm](https://www.jetbrains.com/webstorm/)作为IDE，Jigsaw专门针对这类IDE做了代码优化，让这些IDE可以精确提示更多的信息，节约你翻阅api文档的时间。
+5. 后续直接在 `d:\jigsaw-seed` 目录下运行 `npm start` 命令就可以启动开发环境了。Jigsaw专门针对现代的IDE做了代码优化，让这些IDE可以精确提示更多的信息，节约你翻阅api文档的时间。我们推荐使用[WebStorm](https://www.jetbrains.com/webstorm/)作为IDE。
 
 ### 集成到已有工程中
-在你的工程下，增加Jigsaw的依赖：
-```
-npm install --save @rdkmaster/jigsaw
-```
-请务必注意Jigsaw当前使用的Angular和TS版本与当前工程的版本是否兼容。
+[具体过程请看这里](https://github.com/rdkmaster/jigsaw/blob/master/doc/integrate-jigsaw-with-your-project.md)
 
 ## 快速上手
-[Jigsaw Tourist](https://github.com/rdkmaster/jigsaw-tourist) 是一个专门为新手准备的教学工程，它说明了从零开始如何使用jigsaw来构建一个难度中等的应用页面。
+[Jigsaw Tourist](https://github.com/rdkmaster/jigsaw-tourist) 是一个专门为新手准备的教学工程，它展示了从零开始如何使用jigsaw来构建一个难度中等的应用页面。
 
 ## 求星星！One More Star Please!
 请随手赏个星星，这是对我们最好的鼓励！This is the best encouragement for us.
