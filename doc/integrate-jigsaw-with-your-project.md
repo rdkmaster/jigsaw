@@ -11,8 +11,7 @@ npm install --save @rdkmaster/jigsaw
 ```
 请务必注意Jigsaw当前使用的Angular和TS版本与当前工程的版本是否兼容。
 
-2. 修改 .angular-cli.json
-在 `scripts` 节点下，增加如下条目，注意排除重复条目：
+2. 打开 .angular-cli.json，在 `scripts` 节点下，增加如下条目，注意排除重复条目：
 
 ```
 "../node_modules/jquery/dist/jquery.min.js",
@@ -24,11 +23,10 @@ npm install --save @rdkmaster/jigsaw
 "../node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"
 ```
 
-在 `styles` 节点下，增加如下条目，注意排除重复条目：
+3. 打开 .angular-cli.json，在 `styles` 节点下，增加如下条目，注意排除重复条目：
 ```
 "../node_modules/bootstrap/dist/css/bootstrap.min.css",
 "../node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css",
-"styles.scss",
 "../node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css",
 "../node_modules/font-awesome/css/font-awesome.min.css",
 "../node_modules/ztree/css/zTreeStyle/zTreeStyle.css"
