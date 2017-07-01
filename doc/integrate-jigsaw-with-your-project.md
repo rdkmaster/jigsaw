@@ -3,7 +3,7 @@
 
 # 原工程基于 [Angular CLI](https://github.com/angular/angular-cli) 构建的
 
-## 增加Jigsaw的依赖
+1. 增加Jigsaw的依赖
 
 在你的工程下，增加Jigsaw的依赖：
 ```
@@ -11,7 +11,7 @@ npm install --save @rdkmaster/jigsaw
 ```
 请务必注意Jigsaw当前使用的Angular和TS版本与当前工程的版本是否兼容。
 
-## 修改 .angular-cli.json
+2. 修改 .angular-cli.json
 在 `scripts` 节点下，增加如下条目，注意排除重复条目：
 
 ```
@@ -41,9 +41,7 @@ npm install --save @rdkmaster/jigsaw
 # 原工程用其他方式构建的
 你肯定是资深玩家，请热心的你给推送PR给我们以完善这个文档，这样可以帮助到更多的巧粉。
 
-一般来说，下面这一步是必须的：
-
-在你的工程下，增加Jigsaw的依赖：
+你至少需要在你的工程下，增加Jigsaw的依赖：
 ```
 npm install --save @rdkmaster/jigsaw
 ```
