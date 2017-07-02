@@ -22,15 +22,15 @@ export class DemoListComponent implements OnInit{
             navList: [
                 {
                     label: 'in-dom',
-                    url: '/demo/alert/in-dom'
+                    url: '/alert/in-dom'
                 },
                 {
                     label: 'popup',
-                    url: '/demo/alert/popup'
+                    url: '/alert/popup'
                 },
                 {
                     label: 'customized',
-                    url: '/demo/alert/customized'
+                    url: '/alert/customized'
                 }
             ]
         },
@@ -39,15 +39,15 @@ export class DemoListComponent implements OnInit{
             navList: [
                 {
                     label: 'ajax',
-                    url: '/demo/array-collection/ajax'
+                    url: '/array-collection/ajax'
                 },
                 {
                     label: 'basic',
-                    url: '/demo/array-collection/basic'
+                    url: '/array-collection/basic'
                 },
                 {
                     label: 'server side pagination',
-                    url: '/demo/array-collection/server-side-pagination'
+                    url: '/array-collection/server-side-pagination'
                 }
             ]
         },
@@ -56,27 +56,27 @@ export class DemoListComponent implements OnInit{
             navList: [
                 {
                     label: 'basic',
-                    url: '/demo/button/basic'
+                    url: '/button/basic'
                 },
                 {
                     label: 'disable',
-                    url: '/demo/button/disable'
+                    url: '/button/disable'
                 },
                 {
                     label: 'width_height',
-                    url: '/demo/button/width_height'
+                    url: '/button/width_height'
                 },
                 {
                     label: 'preset',
-                    url: '/demo/button/preset'
+                    url: '/button/preset'
                 },
                 {
                     label: 'with-loading-inside',
-                    url: '/demo/button/with-loading'
+                    url: '/button/with-loading'
                 },
                 {
                     label: 'with-loading-outside',
-                    url: '/demo/loading/domInner'
+                    url: '/loading/domInner'
                 }
             ]
         },
@@ -85,11 +85,11 @@ export class DemoListComponent implements OnInit{
             navList: [
                 {
                     label: 'basic',
-                    url: '/demo/checkbox/basic'
+                    url: '/checkbox/basic'
                 },
                 {
                     label: 'disable',
-                    url: '/demo/checkbox/disable'
+                    url: '/checkbox/disable'
                 }
             ]
         },
@@ -98,27 +98,27 @@ export class DemoListComponent implements OnInit{
             navList: [
                 {
                     label: 'basic',
-                    url: '/demo/loading/basic'
+                    url: '/loading/basic'
                 },
                 {
                     label: 'ballLoading',
-                    url: '/demo/loading/ballLoading'
+                    url: '/loading/ballLoading'
                 },
                 {
                     label: 'userDefined',
-                    url: '/demo/loading/userDefined'
+                    url: '/loading/userDefined'
                 },
                 {
                     label: 'with-loading-inside',
-                    url: '/demo/button/with-loading'
+                    url: '/button/with-loading'
                 },
                 {
                     label: 'with-loading-outside',
-                    url: '/demo/loading/domInner'
+                    url: '/loading/domInner'
                 },
                 {
                     label: 'color',
-                    url: '/demo/loading/color'
+                    url: '/loading/color'
                 },
             ]
         },
@@ -127,7 +127,7 @@ export class DemoListComponent implements OnInit{
             navList: [
                 {
                     label: 'basic',
-                    url: '/demo/switch/basic'
+                    url: '/switch/basic'
                 }
             ]
         },
@@ -136,103 +136,103 @@ export class DemoListComponent implements OnInit{
             navList: [
                 {
                     label: 'basic',
-                    url: '/demo/table/basic'
+                    url: '/table/basic'
                 },
                 {
                     label: 'renderer',
-                    url: '/demo/table/renderer'
+                    url: '/table/renderer'
                 },
                 {
                     label: 'performs',
-                    url: '/demo/table/performs'
+                    url: '/table/performs'
                 },
                 {
                     label: 'setColumnWidth',
-                    url: '/demo/table/setColumnWidth'
+                    url: '/table/setColumnWidth'
                 },
                 {
                     label: 'setColumnVisible',
-                    url: '/demo/table/setColumnVisible'
+                    url: '/table/setColumnVisible'
                 },
                 {
                     label: 'setHeaderRender',
-                    url: '/demo/table/setHeaderRender'
+                    url: '/table/setHeaderRender'
                 },
                 {
                     label: 'setHeaderClass',
-                    url: '/demo/table/setHeaderClass'
+                    url: '/table/setHeaderClass'
                 },
                 {
                     label: 'setHeaderSort',
-                    url: '/demo/table/setHeaderSort'
+                    url: '/table/setHeaderSort'
                 },
                 {
                     label: 'setCellRender',
-                    url: '/demo/table/setCellRender'
+                    url: '/table/setCellRender'
                 },
                 {
                     label: 'setCellClass',
-                    url: '/demo/table/setCellClass'
+                    url: '/table/setCellClass'
                 },
                 {
                     label: 'setCellEditable',
-                    url: '/demo/table/setCellEditable'
+                    url: '/table/setCellEditable'
                 },
                 {
                     label: 'setColumnGroup',
-                    url: '/demo/table/setColumnGroup'
+                    url: '/table/setColumnGroup'
                 },
                 {
                     label: 'addColumn',
-                    url: '/demo/table/addColumn'
+                    url: '/table/addColumn'
                 },
                 {
                     label: 'addIDColumn',
-                    url: '/demo/table/addIDColumn'
+                    url: '/table/addIDColumn'
                 },
                 {
                     label: 'addCheckboxColumn',
-                    url: '/demo/table/addCheckboxColumn'
+                    url: '/table/addCheckboxColumn'
                 },
                 {
                     label: 'fixedHead',
-                    url: '/demo/table/fixedHead'
+                    url: '/table/fixedHead'
                 },
                 {
                     label: 'pageable',
-                    url: '/demo/table/pageable'
+                    url: '/table/pageable'
                 },
                 {
                     label: 'dataFromAjax',
-                    url: '/demo/table/dataFromAjax'
+                    url: '/table/dataFromAjax'
                 },
                 {
                     label: 'scrollAmount',
-                    url: '/demo/table/scrollAmount'
+                    url: '/table/scrollAmount'
                 },
                 {
                     label: 'withPopup',
-                    url: '/demo/table/withPopup'
+                    url: '/table/withPopup'
                 },
                 {
                     label: 'dataChange',
-                    url: '/demo/table/dataChange'
+                    url: '/table/dataChange'
                 },
                 {
                     label: 'addIDWithPaging',
-                    url: '/demo/table/addIDWithPaging'
+                    url: '/table/addIDWithPaging'
                 },
                 {
                     label: 'addIDWithDebouncePaging',
-                    url: '/demo/table/addIDWithDebouncePaging'
+                    url: '/table/addIDWithDebouncePaging'
                 },
                 {
                     label: 'rendererOfTemplateRef',
-                    url: '/demo/table/rendererOfTemplateRef'
+                    url: '/table/rendererOfTemplateRef'
                 },
                 {
                     label: 'lineEllipsis',
-                    url: '/demo/table/lineEllipsis'
+                    url: '/table/lineEllipsis'
                 },
             ]
         },
@@ -241,27 +241,27 @@ export class DemoListComponent implements OnInit{
             navList: [
                 {
                     label: 'title',
-                    url: '/demo/dialog/title'
+                    url: '/dialog/title'
                 },
                 {
                     label: 'buttons',
-                    url: '/demo/dialog/buttons'
+                    url: '/dialog/buttons'
                 },
                 {
                     label: 'top',
-                    url: '/demo/dialog/top'
+                    url: '/dialog/top'
                 },
                 {
                     label: 'popOption',
-                    url: '/demo/dialog/popOption'
+                    url: '/dialog/popOption'
                 },
                 {
                     label: 'in-dom',
-                    url: '/demo/dialog/in-dom'
+                    url: '/dialog/in-dom'
                 },
                 {
                     label: 'misc',
-                    url: '/demo/dialog/misc'
+                    url: '/dialog/misc'
                 }
             ]
         },
@@ -270,23 +270,23 @@ export class DemoListComponent implements OnInit{
             navList: [
                 {
                     label: 'tracing-event',
-                    url: '/demo/popup/tracing-event'
+                    url: '/popup/tracing-event'
                 },
                 {
                     label: 'alert-popup',
-                    url: '/demo/alert/popup'
+                    url: '/alert/popup'
                 },
                 {
                     label: 'dialog-popOption',
-                    url: '/demo/dialog/popOption'
+                    url: '/dialog/popOption'
                 },
                 {
                     label: 'dialog-misc',
-                    url: '/demo/dialog/misc'
+                    url: '/dialog/misc'
                 },
                 {
                     label: 'tooltip-dialog',
-                    url: '/demo/tooltip/dialog'
+                    url: '/tooltip/dialog'
                 }
             ]
         },
@@ -295,19 +295,19 @@ export class DemoListComponent implements OnInit{
             navList: [
                 {
                     label: 'basic',
-                    url: '/demo/input/basic'
+                    url: '/input/basic'
                 },
                 {
                     label: 'valueChange',
-                    url: '/demo/input/valueChange'
+                    url: '/input/valueChange'
                 },
                 {
                     label: 'focus',
-                    url: '/demo/input/focus'
+                    url: '/input/focus'
                 },
                 {
                     label: 'prefixIcon',
-                    url: '/demo/input/prefixIcon'
+                    url: '/input/prefixIcon'
                 },
             ]
         },
@@ -316,15 +316,15 @@ export class DemoListComponent implements OnInit{
             navList: [
                 {
                     label: 'basic',
-                    url: '/demo/scrollbar/basic'
+                    url: '/scrollbar/basic'
                 },
                 {
                     label: 'user-define',
-                    url: '/demo/scrollbar/user-define'
+                    url: '/scrollbar/user-define'
                 },
                 {
                     label: 'setOptions',
-                    url: '/demo/scrollbar/setOptions'
+                    url: '/scrollbar/setOptions'
                 },
             ]
         },
@@ -333,15 +333,15 @@ export class DemoListComponent implements OnInit{
             navList: [
                 {
                     label: 'basic',
-                    url: '/demo/select/basic'
+                    url: '/select/basic'
                 },
                 {
                     label: 'scroll',
-                    url: '/demo/select/scroll'
+                    url: '/select/scroll'
                 },
                 /*{
                     label: 'checkbox',
-                    url: '/demo/select/checkbox'
+                    url: '/select/checkbox'
                 },*/
             ]
         },
@@ -350,15 +350,15 @@ export class DemoListComponent implements OnInit{
             navList: [
                 {
                     label: 'basic',
-                    url: '/demo/radio/basic'
+                    url: '/radio/basic'
                 },
                 {
                     label: 'labelField',
-                    url: '/demo/radio/labelField'
+                    url: '/radio/labelField'
                 },
                 {
                     label: 'trackItemBy',
-                    url: '/demo/radio/trackItemBy'
+                    url: '/radio/trackItemBy'
                 },
             ]
         },
@@ -367,27 +367,27 @@ export class DemoListComponent implements OnInit{
             navList: [
                 {
                     label: 'basic',
-                    url: '/demo/graph/basic'
+                    url: '/graph/basic'
                 },
                 {
                     label: 'resize',
-                    url: '/demo/graph/resize'
+                    url: '/graph/resize'
                 },
                 {
                     label: 'line-bar-graph-basic',
-                    url: '/demo/graph/line-bar-graph-basic'
+                    url: '/graph/line-bar-graph-basic'
                 },
                 {
                     label: 'line-bar-graph-ajax',
-                    url: '/demo/graph/line-bar-graph-ajax'
+                    url: '/graph/line-bar-graph-ajax'
                 },
                 {
                     label: 'pie-graph-basic',
-                    url: '/demo/graph/pie-graph-basic'
+                    url: '/graph/pie-graph-basic'
                 },
                 {
                     label: 'noData',
-                    url: '/demo/graph/noData'
+                    url: '/graph/noData'
                 },
             ]
         },
@@ -396,35 +396,35 @@ export class DemoListComponent implements OnInit{
             navList: [
                 {
                     label: 'basic',
-                    url: '/demo/tileselect/basic'
+                    url: '/tileselect/basic'
                 },
                 {
                     label: 'SelectedItems',
-                    url: '/demo/tileselect/SelectedItems'
+                    url: '/tileselect/SelectedItems'
                 },
                 {
                     label: 'MultipleSelect',
-                    url: '/demo/tileselect/MultipleSelect'
+                    url: '/tileselect/MultipleSelect'
                 },
                 {
                     label: 'tileOptionWidth',
-                    url: '/demo/tileselect/tileOptionWidth'
+                    url: '/tileselect/tileOptionWidth'
                 },
                 {
                     label: 'searchable',
-                    url: '/demo/tileselect/searchable'
+                    url: '/tileselect/searchable'
                 },
                 {
                     label: 'labelField',
-                    url: '/demo/tileselect/labelField'
+                    url: '/tileselect/labelField'
                 },
                 {
                     label: 'ItemsChange',
-                    url: '/demo/tileselect/ItemsChange'
+                    url: '/tileselect/ItemsChange'
                 },
                 {
                     label: 'trackitemby',
-                    url: '/demo/tileselect/trackitemby'
+                    url: '/tileselect/trackitemby'
                 },
             ]
         },
@@ -433,39 +433,39 @@ export class DemoListComponent implements OnInit{
             navList: [
                 {
                     label: 'basic',
-                    url: '/demo/time/basic'
+                    url: '/time/basic'
                 },
                 {
                     label: 'limitEnd',
-                    url: '/demo/time/limitEnd'
+                    url: '/time/limitEnd'
                 },
                 {
                     label: 'limitStart',
-                    url: '/demo/time/limitStart'
+                    url: '/time/limitStart'
                 },
                 {
                     label: 'weekStart',
-                    url: '/demo/time/weekStart'
+                    url: '/time/weekStart'
                 },
                 {
                     label: 'gr',
-                    url: '/demo/time/gr'
+                    url: '/time/gr'
                 },
                 {
                     label: 'recommended',
-                    url: '/demo/time/recommended'
+                    url: '/time/recommended'
                 },
                 {
                     label: 'grItems',
-                    url: '/demo/time/grItems'
+                    url: '/time/grItems'
                 },
                 {
                     label: 'refreshInterval',
-                    url: '/demo/time/refreshInterval'
+                    url: '/time/refreshInterval'
                 },
                 {
                     label: 'withComboSelect',
-                    url: '/demo/time/withComboSelect'
+                    url: '/time/withComboSelect'
                 },
             ]
         },
@@ -474,35 +474,35 @@ export class DemoListComponent implements OnInit{
             navList: [
                 {
                     label: 'basic',
-                    url: '/demo/rangeTime/basic'
+                    url: '/rangeTime/basic'
                 },
                 {
                     label: 'limitEnd',
-                    url: '/demo/rangeTime/limitEnd'
+                    url: '/rangeTime/limitEnd'
                 },
                 {
                     label: 'limitStart',
-                    url: '/demo/rangeTime/limitStart'
+                    url: '/rangeTime/limitStart'
                 },
                 {
                     label: 'weekStart',
-                    url: '/demo/rangeTime/weekStart'
+                    url: '/rangeTime/weekStart'
                 },
                 {
                     label: 'gr',
-                    url: '/demo/rangeTime/gr'
+                    url: '/rangeTime/gr'
                 },
                 {
                     label: 'recommended',
-                    url: '/demo/rangeTime/recommended'
+                    url: '/rangeTime/recommended'
                 },
                 {
                     label: 'grItems',
-                    url: '/demo/rangeTime/grItems'
+                    url: '/rangeTime/grItems'
                 },
                 {
                     label: 'refreshInterval',
-                    url: '/demo/rangeTime/refreshInterval'
+                    url: '/rangeTime/refreshInterval'
                 },
             ]
         },
@@ -511,11 +511,11 @@ export class DemoListComponent implements OnInit{
             navList: [
                 {
                     label: 'basic',
-                    url: '/demo/pagination/basic'
+                    url: '/pagination/basic'
                 },
                 {
                     label: 'with-table-data',
-                    url: '/demo/pagination/with-table-data'
+                    url: '/pagination/with-table-data'
                 },
             ]
         },
@@ -524,7 +524,7 @@ export class DemoListComponent implements OnInit{
             navList: [
                 {
                     label: 'basic',
-                    url: '/demo/tag/basic'
+                    url: '/tag/basic'
                 }
             ]
         },
@@ -533,31 +533,31 @@ export class DemoListComponent implements OnInit{
             navList: [
                 {
                     label: 'basic',
-                    url: '/demo/tabs/basic'
+                    url: '/tabs/basic'
                 },
                 {
                     label: 'dynamicTab',
-                    url: '/demo/tabs/dynamicTab'
+                    url: '/tabs/dynamicTab'
                 },
                 {
                     label: 'withInput',
-                    url: '/demo/tabs/withInput'
+                    url: '/tabs/withInput'
                 },
                 {
                     label: 'withNgFor',
-                    url: '/demo/tabs/withNgFor'
+                    url: '/tabs/withNgFor'
                 },
                 {
                     label: 'hideTab',
-                    url: '/demo/tabs/hideTab'
+                    url: '/tabs/hideTab'
                 },
                 {
                     label: 'showTab',
-                    url: '/demo/tabs/showTab'
+                    url: '/tabs/showTab'
                 },
                 {
                     label: 'removeTab',
-                    url: '/demo/tabs/removeTab'
+                    url: '/tabs/removeTab'
                 },
             ]
         },
@@ -566,43 +566,43 @@ export class DemoListComponent implements OnInit{
             navList: [
                 {
                     label: 'basic',
-                    url: '/demo/combo-select/basic'
+                    url: '/combo-select/basic'
                 },
                 {
                     label: 'multiple',
-                    url: '/demo/combo-select/multiple'
+                    url: '/combo-select/multiple'
                 },
                 {
                     label: 'autoWidth',
-                    url: '/demo/combo-select/autoWidth'
+                    url: '/combo-select/autoWidth'
                 },
                 {
                     label: 'labelField',
-                    url: '/demo/combo-select/labelField'
+                    url: '/combo-select/labelField'
                 },
                 {
                     label: 'change',
-                    url: '/demo/combo-select/change'
+                    url: '/combo-select/change'
                 },
                 {
                     label: 'open',
-                    url: '/demo/combo-select/open'
+                    url: '/combo-select/open'
                 },
                 {
                     label: 'disable',
-                    url: '/demo/combo-select/disable'
+                    url: '/combo-select/disable'
                 },
                 {
                     label: 'editable',
-                    url: '/demo/combo-select/editable'
+                    url: '/combo-select/editable'
                 },
                 {
                     label: 'collapse',
-                    url: '/demo/combo-select/collapse'
+                    url: '/combo-select/collapse'
                 },
                 {
                     label: 'setWidth',
-                    url: '/demo/combo-select/setWidth'
+                    url: '/combo-select/setWidth'
                 },
             ]
         },
@@ -611,11 +611,11 @@ export class DemoListComponent implements OnInit{
             navList: [
                 {
                     label: 'slider 全家桶',
-                    url: '/demo/slider/basic'
+                    url: '/slider/basic'
                 },
                 {
                     label: 'slider 单独的垂直滚动条',
-                    url: '/demo/slider/vertical'
+                    url: '/slider/vertical'
                 }
             ]
         },
@@ -624,19 +624,19 @@ export class DemoListComponent implements OnInit{
             navList: [
                 {
                     label: 'tree',
-                    url: '/demo/tree/basic'
+                    url: '/tree/basic'
                 },
                 {
                     label: 'dataFromAjax',
-                    url: '/demo/tree/dataFromAjax'
+                    url: '/tree/dataFromAjax'
                 },
                 {
                     label: 'editable',
-                    url: '/demo/tree/editable'
+                    url: '/tree/editable'
                 },
                 {
                     label: 'async',
-                    url: '/demo/tree/async'
+                    url: '/tree/async'
                 },
             ]
         },
@@ -645,11 +645,11 @@ export class DemoListComponent implements OnInit{
             navList: [
                 {
                     label: 'collapse 全家桶',
-                    url: '/demo/collapse/basic'
+                    url: '/collapse/basic'
                 },
                 {
                     label: 'ngFor',
-                    url: '/demo/collapse/ngFor'
+                    url: '/collapse/ngFor'
                 }
             ]
         },
@@ -658,15 +658,15 @@ export class DemoListComponent implements OnInit{
             navList: [
                 {
                     label: 'in-dom',
-                    url: '/demo/tooltip/in-dom'
+                    url: '/tooltip/in-dom'
                 },
                 {
                     label: 'dialog',
-                    url: '/demo/tooltip/dialog'
+                    url: '/tooltip/dialog'
                 },
                 {
                     label: 'inline',
-                    url: '/demo/tooltip/inline'
+                    url: '/tooltip/inline'
                 },
             ]
         },

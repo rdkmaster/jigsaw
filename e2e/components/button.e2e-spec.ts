@@ -4,7 +4,7 @@ describe('button', () => {
     describe('button render', () => {
         beforeEach(() => {
             browser.waitForAngularEnabled(false);
-            browser.get('/demo/button');
+            browser.get('/button/basic');
         });
 
         it('should render a button', async () => {

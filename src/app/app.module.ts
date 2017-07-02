@@ -17,10 +17,7 @@ export function HttpLoaderFactory(http: Http) {
 
 const appRoutes = [
     {
-        path: '', redirectTo: 'demo', pathMatch: 'full'
-    },
-    {
-        path: 'demo',
+        path: '',
         loadChildren: 'app/demo/demo-list#DemoListModule'
     },
     {
