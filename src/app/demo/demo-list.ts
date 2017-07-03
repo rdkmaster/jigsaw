@@ -232,10 +232,10 @@ export class DemoListComponent implements OnInit{
                 },
                 {
                     label: 'lineEllipsis',
-                    url: '/demo/table/lineEllipsis'
+                    url: '/table/lineEllipsis'
                 }, {
                     label: 'localPaging',
-                    url: '/demo/table/localPaging'
+                    url: '/table/localPaging'
                 },
             ]
         },

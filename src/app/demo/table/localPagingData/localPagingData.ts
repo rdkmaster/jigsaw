@@ -32,7 +32,7 @@ export class LocalPagingDataDemoComponent {
             target: 'salary',
             header: {
                 sortable:true,
-                sortAs: SortAs.number,
+                sortAs: SortAs.string,
                 defaultSortOrder: SortOrder.asc,
             }
         },{

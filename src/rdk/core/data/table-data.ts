@@ -1,3 +1,8 @@
+import {Http, RequestOptionsArgs, URLSearchParams} from "@angular/http";
+import {Subject} from "rxjs/Subject";
+import "rxjs/add/operator/map";
+import 'rxjs/add/operator/debounceTime';
+
 import {AbstractGeneralCollection} from "./general-collection";
 import {
     DataFilterInfo,
@@ -10,10 +15,6 @@ import {
     SortOrder,
     IPageable
 } from "./component-data";
-import {Http, RequestOptionsArgs, Response, URLSearchParams} from "@angular/http";
-import {Subject} from "rxjs/Subject";
-import "rxjs/add/operator/map";
-import 'rxjs/add/operator/debounceTime';
 import {CommonUtils} from "../utils/common-utils";
 
 export type TableMatrixRow = Array<string | number>;
@@ -47,9 +48,9 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
         return TableDataBase.isTableData(data);
     }
 
-    protected ajaxSuccessHandler(data,refresh?:boolean): void {
+    protected ajaxSuccessHandler(data, refresh?: boolean): void {
         if (this.isDataValid(data)) {
-            this.fromObject(data,refresh);
+            this.fromObject(data, refresh);
         } else {
             console.log('invalid raw TableData received from server...');
             this.clearData();
@@ -58,7 +59,7 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
         this.componentDataHelper.invokeAjaxSuccessCallback(data);
     }
 
-    public fromObject(data: any,refresh:boolean=true): TableDataBase {
+    public fromObject(data: any, refresh: boolean = true): TableDataBase {
         if (!this.isDataValid(data)) {
             throw new Error('invalid raw TableData object!');
         }
@@ -69,7 +70,7 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
         TableDataBase.arrayAppend(this.field, data.field);
         TableDataBase.arrayAppend(this.header, data.header);
 
-        if(refresh){
+        if (refresh) {
             this.refresh();
         }
 
@@ -218,7 +219,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this._ajax();
     }
 
-    private _ajax(refresh?:boolean): void {
+    private _ajax(refresh?: boolean): void {
         this._busy = true;
 
         const params: URLSearchParams = this._requestOptions.params as URLSearchParams;
@@ -244,7 +245,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
                 return tableData;
             })
             .subscribe(
-                tableData => this.ajaxSuccessHandler(tableData,refresh),
+                tableData => this.ajaxSuccessHandler(tableData, refresh),
                 error => this.ajaxErrorHandler(error),
                 () => this.ajaxCompleteHandler()
             );
@@ -333,8 +334,6 @@ export class LocalPageableTableData extends TableData implements IPageable {
     public currentFilterData: TableDataMatrix;
     public bakData: TableDataMatrix;
 
-    private needRefresh : boolean = true;
-
     constructor() {
         super();
         this.pagingInfo = new PagingInfo();
@@ -400,14 +399,12 @@ export class LocalPageableTableData extends TableData implements IPageable {
     public sort(sort: DataSortInfo): void;
     public sort(as, order?: SortOrder, field?: string | number): void {
         super.sortData(this.currentFilterData, as, order, field);
-        this.needRefresh = false;
-        this.changePage(this.pagingInfo.currentPage);
-        this.needRefresh = true ;
+        this.changePage(this.pagingInfo.currentPage, undefined, true);
     }
 
-    public changePage(currentPage: number, pageSize?: number): void;
+    public changePage(currentPage: number, pageSize?: number, noRefresh?: boolean): void;
     public changePage(info: PagingInfo): void;
-    public changePage(currentPage, pageSize?: number): void {
+    public changePage(currentPage, pageSize?: number, noRefresh?: boolean): void {
         if (!this.currentFilterData) {
             return;
         }
@@ -431,11 +428,9 @@ export class LocalPageableTableData extends TableData implements IPageable {
         const end = this.pagingInfo.currentPage * this.pagingInfo.pageSize < this.pagingInfo.totalRecord ? this.pagingInfo.currentPage * this.pagingInfo.pageSize : this.pagingInfo.totalRecord;
         this.data = this.currentFilterData.slice(begin, end);
 
-        if(this.needRefresh){
+        if (!noRefresh) {
             this.refresh();
         }
-
-
     }
 
     public firstPage(): void {
