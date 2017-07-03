@@ -15,7 +15,7 @@
                     <rdk-tag
                               [closable]='tagItem.closable'
                               (select)="_$tagClick(tagItem)"
-                              (close)="_removeTag(tagItem)">
+                              (close)="_$removeTag(tagItem)">
                              {{tagItem[labelField]}}
                      </rdk-tag>
                       <span *ngIf="separator && !isLast">{{separator}}</span>

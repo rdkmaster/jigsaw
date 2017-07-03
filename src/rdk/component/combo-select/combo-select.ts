@@ -45,8 +45,8 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
     private _popupElement: HTMLElement;
     private _removeWindowClickHandler: Function;
     private _removePopupClickHandler: Function;
-    private _removeMouseoverHandler: Function;
-    private _removeMouseoutHandler: Function;
+    private _removeMouseOverHandler: Function;
+    private _removeMouseOutHandler: Function;
     private _removeRefreshCallback: CallbackRemoval;
 
     constructor(private _render: Renderer2,
@@ -71,7 +71,7 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
             this.valueChange.emit(this._value);
             this._autoWidth();
 
-            if(this._removeRefreshCallback){
+            if (this._removeRefreshCallback) {
                 this._removeRefreshCallback()
             }
             this._removeRefreshCallback = value.onRefresh(() => {
@@ -96,11 +96,11 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
 
     private _disabled: boolean;
     @Input()
-    get disabled(): boolean {
+    public get disabled(): boolean {
         return this._disabled;
     }
 
-    set disabled(value: boolean) {
+    public set disabled(value: boolean) {
         this._disabled = value;
         if (value) {
             this.open = false;
@@ -163,7 +163,7 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
     @Input()
     public autoWidth: boolean; //自动同步dropdown宽度，与combo-select宽度相同
 
-    private _removeTag(tag) {
+    public _$removeTag(tag) {
         const index = this.value.indexOf(tag);
         if (index != -1) {
             this.value.splice(index, 1);
@@ -182,8 +182,7 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
         }, 0);
     }
 
-    private _timeout: any = null;
-    private _isSafeCloseTime: boolean = true;
+    private _rollOutDenouncesTimer: any = null;
 
     private _openDropDown(): void {
         if (this._$opened) {
@@ -222,23 +221,21 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
         const popupInfo: PopupInfo = this._popupService.popup(this._contentTemplateRef, option);
 
         this._popupElement = popupInfo.element;
-        this._disposePopup = () => {
-            popupInfo.dispose()
-        };
+        this._disposePopup = popupInfo.dispose;
         PopupService.setBackground(this._popupElement, this._render);
 
         if (this._openTrigger === DropDownTrigger.mouseenter && this._popupElement) {
-            this._removeMouseoverHandler = this._render.listen(this._popupElement, 'mouseenter', () => {
-                if (this._timeout) {
-                    clearTimeout(this._timeout);
-                    this._timeout = null;
+            this._removeMouseOverHandler = this._render.listen(this._popupElement, 'mouseenter', () => {
+                if (this._rollOutDenouncesTimer) {
+                    clearTimeout(this._rollOutDenouncesTimer);
+                    this._rollOutDenouncesTimer = null;
                 }
             });
         }
         if (this._closeTrigger === DropDownTrigger.mouseleave && this._popupElement) {
-            this._removeMouseoutHandler = this._render.listen(this._popupElement, 'mouseleave', () => {
-                if (!this._timeout) {
-                    this._timeout = setTimeout(() => {
+            this._removeMouseOutHandler = this._render.listen(this._popupElement, 'mouseleave', () => {
+                if (!this._rollOutDenouncesTimer) {
+                    this._rollOutDenouncesTimer = setTimeout(() => {
                         this.open = false;
                     }, 200);
                 }
@@ -270,24 +267,23 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
             this._removePopupClickHandler();
             this._removePopupClickHandler = null;
         }
-        if (this._removeMouseoverHandler) {
-            this._removeMouseoverHandler();
-            this._removeMouseoverHandler = null;
+        if (this._removeMouseOverHandler) {
+            this._removeMouseOverHandler();
+            this._removeMouseOverHandler = null;
         }
-        if (this._removeMouseoutHandler) {
-            this._removeMouseoutHandler();
-            this._removeMouseoutHandler = null;
+        if (this._removeMouseOutHandler) {
+            this._removeMouseOutHandler();
+            this._removeMouseOutHandler = null;
         }
     }
 
     public _$openAndCloseByClick(event) {
         event.preventDefault();
         event.stopPropagation();
-        if (this._openTrigger === DropDownTrigger.mouseenter && this.open && !this._isSafeCloseTime) {
+        if (this._openTrigger === DropDownTrigger.mouseenter && this.open) {
             return;
-        } else {
-            this.open = !this.open;
         }
+        this.open = !this.open;
     }
 
     private _$tagClick(tagItem) {
@@ -299,7 +295,7 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
         this.select.emit(tagItem);
 
         // 控制下拉状态;(如果没有打开下拉内容，下拉，如果已经下拉保持不变;)
-        if (this._openTrigger === DropDownTrigger.mouseenter || this.open || this.disabled || !this._isSafeCloseTime)  return;
+        if (this._openTrigger === DropDownTrigger.mouseenter || this.open || this.disabled) return;
 
         this.open = true;
     }
@@ -308,23 +304,19 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
         if (this._openTrigger !== DropDownTrigger.mouseenter) return;
         event.preventDefault();
         event.stopPropagation();
-        if (this._timeout) {
-            clearTimeout(this._timeout);
-            this._timeout = null;
+        if (this._rollOutDenouncesTimer) {
+            clearTimeout(this._rollOutDenouncesTimer);
+            this._rollOutDenouncesTimer = null;
         }
         this.open = true;
-        this._isSafeCloseTime = false;
-        setTimeout(() => {
-            this._isSafeCloseTime = true
-        }, 400)
     }
 
     public _$closeByHover(event) {
         if (this.closeTrigger !== DropDownTrigger.mouseleave) return;
         event.preventDefault();
         event.stopPropagation();
-        if (!this._timeout) {
-            this._timeout = setTimeout(() => {
+        if (!this._rollOutDenouncesTimer) {
+            this._rollOutDenouncesTimer = setTimeout(() => {
                 this.open = false;
             }, 200);
         }
@@ -337,9 +329,10 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
     public ngOnDestroy() {
         this.open = false;
 
-        if(this._removeRefreshCallback){
+        if (this._removeRefreshCallback) {
             this._removeRefreshCallback()
         }
+        this._rollOutDenouncesTimer = null;
     }
 
 }
