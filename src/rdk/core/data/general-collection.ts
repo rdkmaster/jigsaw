@@ -1,6 +1,6 @@
 import {
     IAjaxComponentData, DataReviser, DataRefreshCallback, ComponentDataHelper, CallbackRemoval, AjaxSuccessCallback,
-    AjaxErrorCallback, AjaxCompleteCallback, DataLevel
+    AjaxErrorCallback, AjaxCompleteCallback
 } from "./component-data";
 import {Http, RequestOptionsArgs, Response} from "@angular/http";
 import "rxjs/add/operator/map";

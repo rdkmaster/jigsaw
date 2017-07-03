@@ -8,7 +8,7 @@ import {
     PagingInfo,
     SortAs,
     SortOrder,
-    IPageable, DataLevel,
+    IPageable
 } from "./component-data";
 import {Http, RequestOptionsArgs, Response, URLSearchParams} from "@angular/http";
 import {Subject} from "rxjs/Subject";
