@@ -47,9 +47,9 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
         return TableDataBase.isTableData(data);
     }
 
-    protected ajaxSuccessHandler(data): void {
+    protected ajaxSuccessHandler(data,refresh?:boolean): void {
         if (this.isDataValid(data)) {
-            this.fromObject(data);
+            this.fromObject(data,refresh);
         } else {
             console.log('invalid raw TableData received from server...');
             this.clearData();
@@ -58,7 +58,7 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
         this.componentDataHelper.invokeAjaxSuccessCallback(data);
     }
 
-    public fromObject(data: any): TableDataBase {
+    public fromObject(data: any,refresh:boolean=true): TableDataBase {
         if (!this.isDataValid(data)) {
             throw new Error('invalid raw TableData object!');
         }
@@ -68,7 +68,10 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
         TableDataBase.arrayAppend(this.data, data.data);
         TableDataBase.arrayAppend(this.field, data.field);
         TableDataBase.arrayAppend(this.header, data.header);
-        this.refresh();
+
+        if(refresh){
+            this.refresh();
+        }
 
         return this;
     }
@@ -194,7 +197,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         });
         this._sortSubject.debounceTime(300).subscribe(sort => {
             this.sortInfo = sort;
-            this._ajax();
+            this._ajax(false);
         });
     }
 
@@ -215,7 +218,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this._ajax();
     }
 
-    private _ajax(): void {
+    private _ajax(refresh?:boolean): void {
         this._busy = true;
 
         const params: URLSearchParams = this._requestOptions.params as URLSearchParams;
@@ -241,7 +244,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
                 return tableData;
             })
             .subscribe(
-                tableData => this.ajaxSuccessHandler(tableData),
+                tableData => this.ajaxSuccessHandler(tableData,refresh),
                 error => this.ajaxErrorHandler(error),
                 () => this.ajaxCompleteHandler()
             );
@@ -330,7 +333,8 @@ export class LocalPageableTableData extends TableData implements IPageable {
     public currentFilterData: TableDataMatrix;
     public bakData: TableDataMatrix;
 
-    private dataLevel : DataLevel = DataLevel.pristine;
+    private needRefresh : boolean = true;
+
     constructor() {
         super();
         this.pagingInfo = new PagingInfo();
@@ -396,10 +400,9 @@ export class LocalPageableTableData extends TableData implements IPageable {
     public sort(sort: DataSortInfo): void;
     public sort(as, order?: SortOrder, field?: string | number): void {
         super.sortData(this.currentFilterData, as, order, field);
-        if(this.dataLevel == DataLevel.pristine){
-            this.dataLevel = DataLevel.sorted;
-        }
+        this.needRefresh = false;
         this.changePage(this.pagingInfo.currentPage);
+        this.needRefresh = true ;
     }
 
     public changePage(currentPage: number, pageSize?: number): void;
@@ -428,7 +431,10 @@ export class LocalPageableTableData extends TableData implements IPageable {
         const end = this.pagingInfo.currentPage * this.pagingInfo.pageSize < this.pagingInfo.totalRecord ? this.pagingInfo.currentPage * this.pagingInfo.pageSize : this.pagingInfo.totalRecord;
         this.data = this.currentFilterData.slice(begin, end);
 
-        this.refresh(this.dataLevel);
+        if(this.needRefresh){
+            this.refresh();
+        }
+
 
     }
 

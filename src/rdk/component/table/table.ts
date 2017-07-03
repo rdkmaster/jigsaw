@@ -14,7 +14,7 @@ import {
 
 import {RdkScrollBarModule} from "../scrollbar/scrollbar";
 import {RdkScrollBar} from "../scrollbar/scrollbar";
-import {SortAs, SortOrder, CallbackRemoval, DataLevel} from "../../core/data/component-data";
+import {SortAs, SortOrder, CallbackRemoval} from "../../core/data/component-data";
 import {AffixUtils} from "../../core/utils/internal-utils";
 import {TableCheckboxService} from "./table-service";
 import {DefaultCellRenderer} from "./table-renderer";
@@ -86,11 +86,8 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback();
         }
-        this._removeRefreshCallback = value.onRefresh((dataLevels:any) => {
-            if(!(dataLevels instanceof Array) ){
-                dataLevels = [dataLevels]
-            }
-            this._refresh(<DataLevel[]>dataLevels);
+        this._removeRefreshCallback = value.onRefresh(() => {
+            this._refresh();
         });
 
         if (this._hasInit) {
@@ -198,9 +195,9 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     /*
      * 重新渲染
      * */
-    private _refresh(dataLevels?:DataLevel[]) {
+    private _refresh() {
         this._beforeRefresh();
-        this._transformData(dataLevels);
+        this._transformData();
         this._refreshStyle();
     }
 
@@ -417,11 +414,9 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     /*
      * 执行默认排序，data和columns数据合并转换，生成headSettings和cellSettings，渲染head和cell
      * */
-    private _transformData(dataLevels?:DataLevel[]): void {
-        if(!(dataLevels && dataLevels.length!=0 && dataLevels.findIndex(item=> item==DataLevel.sorted)!=-1)){
-            this._transformHeadSettings();
-            this._dataDefaultSort();
-        }
+    private _transformData(): void {
+        this._transformHeadSettings();
+        this._dataDefaultSort();
         this._transformCellSettings();
     }
 

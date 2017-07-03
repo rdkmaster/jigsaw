@@ -50,8 +50,8 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
 
     protected componentDataHelper: ComponentDataHelper = new ComponentDataHelper();
 
-    public refresh(dataLevels? : DataLevel|DataLevel[]): void {
-        this.componentDataHelper.invokeRefreshCallback(dataLevels);
+    public refresh(): void {
+        this.componentDataHelper.invokeRefreshCallback();
     }
 
     public onRefresh(callback: (thisData: AbstractGeneralCollection<T>) => void, context?: any): CallbackRemoval {
