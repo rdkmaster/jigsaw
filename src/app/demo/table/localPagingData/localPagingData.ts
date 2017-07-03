@@ -27,7 +27,7 @@ export class LocalPagingDataDemoComponent {
         this.pageable.changePage(this.pageable.pagingInfo);
     }
 
-    _columns: ColumnDefine[] = [
+    columns: ColumnDefine[] = [
         {
             target: 'salary',
             header: {
