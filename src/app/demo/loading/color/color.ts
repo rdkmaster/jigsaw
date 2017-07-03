@@ -11,7 +11,7 @@ export class ColorfulLoadingDemoComponent {
     }
     public colors = ['rgb(255, 0, 0 )','rgb(255, 165, 0 )','rgb(255, 255, 0 )','rgb(0, 255, 0 )','rgb(0, 127, 255 )','rgb(0, 0, 255 )','rgb(139, 0, 255 )'];
 
-    private _pause = 'running';
+     _pause = 'running';
 
     public setElementsStyle(tags:string, props:string, val:string | boolean | number) {
         let elements = this._el.nativeElement.querySelectorAll(tags);

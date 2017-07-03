@@ -29,7 +29,7 @@
     "annotateForClosureCompiler": true,
     "strictMetadataEmit": true,
     "flatModuleOutFile": "index.js",
-    "flatModuleId": "@rdk/jigsaw",
+    "flatModuleId": "@rdkmaster/jigsaw",
     "skipTemplateCodegen": true
   }
 }

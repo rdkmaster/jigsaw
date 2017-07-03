@@ -4,5 +4,6 @@ import {Component} from "@angular/core";
   templateUrl: 'disabled.html'
 })
 export class CheckBoxDisableDemoComponent {
+    enabled: boolean;
 }
 

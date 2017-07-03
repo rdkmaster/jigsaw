@@ -15,7 +15,7 @@ export class ComboSelectEditableDemo{
         this.selectedCity.forEach(item => item.closable = this.editable);
     }
 
-    private citys:ComboSelectValue[] = [
+     citys:ComboSelectValue[] = [
         {label: "北京"},
         {label: "上海"},
         {label: "南京"},

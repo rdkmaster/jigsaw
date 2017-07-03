@@ -5,7 +5,7 @@ import {RdkInput} from "../../../../rdk/component/input/input";
   templateUrl: 'basic.html'
 })
 export class InputBasicDemoComponent {
-    // inputValue=10;
+    inputValue: any;
     valueChanged(message: string) {
 
         console.log(`input value is: ${message}`);

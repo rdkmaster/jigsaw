@@ -2,8 +2,7 @@
 <rdk-table height="400px"
            [data]="tableData"
            [columnDefines]="_columns"
-           [additionalColumnDefines]="_additionalColumns"
-           (dataChange)="onCellChange($event)"></rdk-table>
+           [additionalColumnDefines]="_additionalColumns"></rdk-table>
 
 <!--
     let-context="context" 声明了context，context的结构是 {cellData: string|number, row:number, column:number}

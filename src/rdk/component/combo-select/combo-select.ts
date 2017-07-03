@@ -132,7 +132,7 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
     @ViewChild('dropContent')
     private _contentTemplateRef: TemplateRef<any>;
 
-    private _$opened: boolean = false;
+    public _$opened: boolean = false;
 
     @Input()
     public get open(): boolean {
@@ -280,10 +280,7 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
         }
     }
 
-    //TODO 后续再优化：所有组件，凡是html模板中用到的变量&方法，都以 _$ 开头。
-    //TODO 因为上次用--prod编译的时候，好像报在html模板中不能用private变量，因此用下划线开头。
-    //TODO 对于那些变量&方法，即在html模板中用到，又需要暴露给应用的，则额外再定义一个非 _$ 开头的变量or方法暴露出去。
-    private _$openAndCloseByClick(event) {
+    public _$openAndCloseByClick(event) {
         event.preventDefault();
         event.stopPropagation();
         if (this._openTrigger === DropDownTrigger.mouseenter && this.open && !this._isSafeCloseTime) {
@@ -307,7 +304,7 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
         this.open = true;
     }
 
-    private _$openByHover(event): void {
+    public _$openByHover(event): void {
         if (this._openTrigger !== DropDownTrigger.mouseenter) return;
         event.preventDefault();
         event.stopPropagation();
@@ -322,7 +319,7 @@ export class RdkComboSelect extends AbstractRDKComponent implements OnDestroy, O
         }, 400)
     }
 
-    private _$closeByHover(event) {
+    public _$closeByHover(event) {
         if (this.closeTrigger !== DropDownTrigger.mouseleave) return;
         event.preventDefault();
         event.stopPropagation();

@@ -27,7 +27,7 @@ export function composeRelease(packageName: string) {
 
   copyFiles(packagePath, '**/*.+(d.ts|metadata.json)', join(releasePath, 'typings'));
   copyFiles(bundlesDir, `${packageName}.umd?(.min).js?(.map)`, join(releasePath, 'bundles'));
-  copyFiles(bundlesDir, `${packageName}?(.es5).js?(.map)`, join(releasePath, '@rdk'));
+  copyFiles(bundlesDir, `${packageName}?(.es5).js?(.map)`, join(releasePath, '@rdkmaster'));
   copyFiles(projectDir, 'LICENSE', releasePath);
   copyFiles(packagesDir, 'README.md', releasePath);
   copyFiles(sourcePath, 'package.json', releasePath);
@@ -35,5 +35,5 @@ export function composeRelease(packageName: string) {
   updatePackageVersion(releasePath);
   createTypingsReexportFile(releasePath, packageName);
   createMetadataReexportFile(releasePath, packageName);
-  addPureAnnotationsToFile(join(releasePath, '@rdk', `${packageName}.es5.js`));
+  addPureAnnotationsToFile(join(releasePath, '@rdkmaster', `${packageName}.es5.js`));
 }

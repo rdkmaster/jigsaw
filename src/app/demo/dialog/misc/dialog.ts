@@ -13,9 +13,9 @@ import {
 })
 export class DialogMiscDemoComponent {
 
-    private _templateRef: PopupInfo;
-    private _modalDialogInfo: PopupInfo;
-    private _dialogInfo: PopupInfo;
+     _templateRef: PopupInfo;
+     _modalDialogInfo: PopupInfo;
+     _dialogInfo: PopupInfo;
 
     public title: string = 'Title of the dialog';
     public buttons: Array<ButtonInfo> = [
@@ -120,7 +120,7 @@ export class DialogMiscDemoComponent {
         this._templateRef.dispose();
     }
 
-    private _getModalOptions(): PopupOptions {
+     _getModalOptions(): PopupOptions {
         return {
             modal: true, //是否模态
             showEffect: PopupEffect.bubbleIn,
@@ -128,7 +128,7 @@ export class DialogMiscDemoComponent {
         };
     }
 
-    private _getUnModalOptions(event): PopupOptions {
+     _getUnModalOptions(event): PopupOptions {
         return {
             modal: false, //是否模态
             showEffect: PopupEffect.bubbleIn,

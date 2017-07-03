@@ -42,7 +42,7 @@ export class TableLineEllipsisDemoComponent {
         ], ['f1', 'f2', 'f3', 'f4', 'f5', 'f6'], ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
     }
 
-    private _columns: ColumnDefine[] = [
+     _columns: ColumnDefine[] = [
         {
             target: 'f1',
             width: '15%',
@@ -76,7 +76,7 @@ export class TableLineEllipsisDemoComponent {
         }
     ];
 
-    private _additionalColumns: AdditionalColumnDefine[] = [
+     _additionalColumns: AdditionalColumnDefine[] = [
         {
             pos: 0,
             width: '60px',
@@ -117,7 +117,7 @@ export class TableLineEllipsisDemoComponent {
         }
     }
 
-    private _changeMsg: string;
+     _changeMsg: string;
 
 }
 

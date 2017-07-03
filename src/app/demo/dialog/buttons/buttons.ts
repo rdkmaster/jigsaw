@@ -12,12 +12,12 @@ import {ButtonInfo, PopupDisposer, PopupInfo, PopupService} from "../../../../rd
 })
 export class DialogButtonsDemo  {
 
-    private _dialogInfo: PopupInfo;
+     _dialogInfo: PopupInfo;
 
     constructor(private popupService : PopupService){
     }
 
-    private buttons: Array<ButtonInfo> = [
+     buttons: Array<ButtonInfo> = [
         {
             label: 'confirm',
             clazz: "red"

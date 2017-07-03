@@ -46,7 +46,7 @@ export class TableAddColumnDemoComponent {
     }
 
 
-    private _additionalColumns: AdditionalColumnDefine[] = [{
+     _additionalColumns: AdditionalColumnDefine[] = [{
         header: {
             renderer: MyTableHeadOption,
         },

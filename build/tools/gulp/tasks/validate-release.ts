@@ -38,7 +38,7 @@ task('validate-release:check-bundles', () => {
 
 /** Task that validates the given release package before releasing. */
 function checkReleasePackage(packageName: string): string[] {
-  const bundlePath = join(releasesDir, packageName, '@rdk', `${packageName}.js`);
+  const bundlePath = join(releasesDir, packageName, '@rdkmaster', `${packageName}.js`);
   const bundleContent = readFileSync(bundlePath, 'utf8');
   let failures = [];
 

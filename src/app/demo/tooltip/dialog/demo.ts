@@ -12,7 +12,7 @@ import {UserTooltipDialogComponent} from "./user-defined-tooltip-dialog";
     `
 })
 export class TooltipDialogDemoComponent {
-    private _tooltipInfo: PopupInfo;
+     _tooltipInfo: PopupInfo;
     @ViewChild("insertPlace", {read: ElementRef}) insertPlaceEl: ElementRef;
 
     constructor(private _popupService: PopupService) {

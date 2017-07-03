@@ -10,10 +10,10 @@ import {PopupInfo, PopupService} from "../../../../rdk/service/popup.service";
     styleUrls: ['top.scss']
 })
 export class DialogTopDemo  {
+    message: string;
+     _dialogInfo: PopupInfo;
 
-    private _dialogInfo: PopupInfo;
-
-    private top = "20%";
+     top = "20%";
 
     constructor(private popupService : PopupService){
     }

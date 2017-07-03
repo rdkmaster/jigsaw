@@ -5,7 +5,7 @@ import {RdkInput} from "../../../../rdk/component/input/input";
   templateUrl: 'focus.html'
 })
 export class InputFocusDemoComponent {
-
+    inputValue: any;
     @ViewChild('myInput') myInput:RdkInput;
     click() {
         this.myInput.focus();

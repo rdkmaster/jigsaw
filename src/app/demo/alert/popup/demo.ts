@@ -74,7 +74,7 @@ export class AlertPopupDemoComponent {
         }
     }
 
-    private _getModalOptions(): PopupOptions {
+     _getModalOptions(): PopupOptions {
         return {
             modal: true, //是否模态
             showEffect: PopupEffect.bubbleIn,
@@ -82,7 +82,7 @@ export class AlertPopupDemoComponent {
         };
     }
 
-    private _getUnModalOptions(event): PopupOptions {
+     _getUnModalOptions(event): PopupOptions {
         return {
             modal: false, //是否模态
             showEffect: PopupEffect.bubbleIn,

@@ -6,7 +6,7 @@ import {ArrayCollection} from "../../../../rdk/core/data/array-collection";
 })
 export class OpenComboSelectDemo {
 
-    private open: boolean = true;
+     open: boolean = true;
     public autoClose: boolean = true;
 
     toggleOpen() {
@@ -18,7 +18,7 @@ export class OpenComboSelectDemo {
     }
 
     public selectedCity = new ArrayCollection([{label: "北京", closable: false}]);
-    private citys = [
+     citys = [
         {label: "北京", closable: false},
         {label: "上海", closable: false},
         {label: "南京"},

@@ -20,14 +20,14 @@ export class DefaultCellRenderer extends TableCellRenderer {
  * */
 @Component({
     template: `<rdk-checkbox  [(checked)]="cellData"
-                (checkedChange)="_toggleSelectAll($event)"></rdk-checkbox>`
+                (checkedChange)="_$toggleSelectAll($event)"></rdk-checkbox>`
 })
 export class TableHeadCheckbox extends TableCellRenderer implements OnInit {
     constructor(private tableRendererService: TableCheckboxService, private _changeDetector: ChangeDetectorRef) {
         super();
     }
 
-    private _toggleSelectAll(checked) {
+    public _$toggleSelectAll(checked) {
         this.tableRendererService.headState = checked;
 
         let rows = [];
@@ -60,7 +60,7 @@ export class TableHeadCheckbox extends TableCellRenderer implements OnInit {
  * cell checkbox renderer
  * */
 @Component({
-    template: '<rdk-checkbox [(checked)]="cellData" (checkedChange)="_checkedChangeHandle($event)"></rdk-checkbox>'
+    template: '<rdk-checkbox [(checked)]="cellData" (checkedChange)="_$checkedChangeHandle($event)"></rdk-checkbox>'
 })
 export class TableCellCheckbox extends TableCellRenderer implements OnInit {
     constructor(private tableRendererService: TableCheckboxService, private _changeDetector: ChangeDetectorRef) {
@@ -79,7 +79,7 @@ export class TableCellCheckbox extends TableCellRenderer implements OnInit {
         }
     }
 
-    private _checkedChangeHandle(checked) {
+    public _$checkedChangeHandle(checked) {
         this.checkboxState.checked = checked;
         this._setHeadCheckboxState();
         this.dispatchChangeEvent(checked);

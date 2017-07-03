@@ -16,11 +16,11 @@ export class ButtonPresetDemoComponent {
         alert('hello rdk button');
     }
 
-    changeSize(type: string) {
+    changeSize(type?: string) {
         this.size = type;
     }
 
-    changeASize(type: string) {
+    changeASize(type?: string) {
         this.aSize = type;
     }
 }

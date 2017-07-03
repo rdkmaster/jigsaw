@@ -2,9 +2,9 @@
     <span rdk-prefix-icon class="fa fa-search"></span>
 </rdk-input>
 
-<div class="rdk-paging-prev rdk-paging-page" [class.rdk-paging-disabled]="_prevDisabled" (click)="_pagePrev()"></div>
-<rdk-paging-item *ngFor="let pageNumber of _pageNumbers" [pageNumber]="pageNumber"></rdk-paging-item>
-<div class="rdk-paging-next rdk-paging-page" [class.rdk-paging-disabled]="_nextDisabled" (click)="_pageNext()"></div>
+<div class="rdk-paging-prev rdk-paging-page" [class.rdk-paging-disabled]="_$prevDisabled" (click)="_$pagePrev()"></div>
+<rdk-paging-item *ngFor="let pageNumber of _$pageNumbers" [pageNumber]="pageNumber"></rdk-paging-item>
+<div class="rdk-paging-next rdk-paging-page" [class.rdk-paging-disabled]="_$nextDisabled" (click)="_$pageNext()"></div>
 
 <rdk-select *ngIf="pageSizeOptions"
             [value]="_pageSize"

@@ -25,9 +25,9 @@ type PageSizeData = {
 })
 export class RdkPagination extends AbstractRDKComponent implements OnInit, AfterViewInit {
     private _totalPage: number;
-    private _pageNumbers: number[] = [];
-    private _prevDisabled: boolean = false;
-    private _nextDisabled: boolean = false;
+    public _$pageNumbers: number[] = [];
+    public _$prevDisabled: boolean = false;
+    public _$nextDisabled: boolean = false;
     private _current: number;
     private _showPages: number[] = [];
     private _firstPage: RdkPagingItem;
@@ -172,7 +172,7 @@ export class RdkPagination extends AbstractRDKComponent implements OnInit, After
     /*
      * 上一页
      * */
-    private _pagePrev(): void {
+    public _$pagePrev(): void {
         let pageCur = this._pages.find(page => page.current == true);
         if (!pageCur) return;
         let pageNum = pageCur.pageNumber;
@@ -186,7 +186,7 @@ export class RdkPagination extends AbstractRDKComponent implements OnInit, After
     /*
      * 下一页
      * */
-    private _pageNext(): void {
+    public _$pageNext(): void {
         let pageCur = this._pages.find(page => page.current == true);
         if (!pageCur) return;
         let pageNum = pageCur.pageNumber;
@@ -260,17 +260,17 @@ export class RdkPagination extends AbstractRDKComponent implements OnInit, After
      * */
     private _canablePrevAndNext(): void {
         if (this._totalPage == 1) {
-            this._prevDisabled = true;
-            this._nextDisabled = true;
+            this._$prevDisabled = true;
+            this._$nextDisabled = true;
         } else if (this.current == 1) {
-            this._prevDisabled = true;
-            this._nextDisabled = false;
+            this._$prevDisabled = true;
+            this._$nextDisabled = false;
         } else if (this.current == this._totalPage) {
-            this._nextDisabled = true;
-            this._prevDisabled = false;
+            this._$nextDisabled = true;
+            this._$prevDisabled = false;
         } else {
-            this._prevDisabled = false;
-            this._nextDisabled = false;
+            this._$prevDisabled = false;
+            this._$nextDisabled = false;
         }
     }
 
@@ -311,7 +311,7 @@ export class RdkPagination extends AbstractRDKComponent implements OnInit, After
         for (let i = 0; i < this._totalPage; i++) {
             pageNumbers.push(i + 1);
         }
-        this._pageNumbers = pageNumbers;
+        this._$pageNumbers = pageNumbers;
 
         //验证current合法性
         if (this.current <= 0 || this.current > this._totalPage) this.current = 1;

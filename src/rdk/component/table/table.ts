@@ -22,7 +22,7 @@ import {RdkTooltipModule, SimpleTooltipComponent} from "../tooltip/tooltip";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {PopupEffect, PopupInfo, PopupPositionType, PopupService} from "../../service/popup.service";
 
-class HeadSetting {
+export class HeadSetting {
     cellData: string | number;
     width: string | number;
     visible: boolean;
@@ -34,7 +34,7 @@ class HeadSetting {
     field: number;
 }
 
-class CellSetting {
+export class CellSetting {
     cellData: string | number;
     width: string | number;
     visible: boolean;
@@ -131,7 +131,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
 
     public static ROW_HEIGHT: number = 30;
 
-    private _scrollBarOptions: any = {
+    public _$scrollBarOptions: any = {
         snapAmount: RdkTable.ROW_HEIGHT,
         mouseWheel: {enable: true, scrollAmount: RdkTable.ROW_HEIGHT * 3}
     };
@@ -139,7 +139,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     @Input()
     public set scrollAmount(value: number) {
         if (typeof value == 'number' && value > 0) {
-            this._scrollBarOptions = {
+            this._$scrollBarOptions = {
                 snapAmount: RdkTable.ROW_HEIGHT,
                 mouseWheel: {enable: true, scrollAmount: RdkTable.ROW_HEIGHT * value}
             };
@@ -147,16 +147,16 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     public get scrollAmount(): number {
-        return this._scrollBarOptions.mouseWheel.scrollAmount;
+        return this._$scrollBarOptions.mouseWheel.scrollAmount;
     }
 
     @Input() public lineEllipsis;
 
     private _fixedHead: HTMLElement;
 
-    private _headSettings: Array<HeadSetting> = [];
+    public _$headSettings: Array<HeadSetting> = [];
 
-    private _cellSettings: Array<CellSetting>[] = [];
+    public _$cellSettings: Array<CellSetting>[] = [];
 
     private _removeTdListeners: Array<RemoveTdListener> = [];
 
@@ -205,9 +205,9 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * 初始化_headSettings
      * */
     private _initHeadSettings(): void {
-        this._headSettings = [];
+        this._$headSettings = [];
         this.data.header.forEach((cellData, index) => {
-            this._headSettings.push({
+            this._$headSettings.push({
                 cellData: cellData,
                 width: null,
                 visible: true,
@@ -225,7 +225,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * 初始化_cellSettings
      * */
     private _initCellSettings(): void {
-        this._cellSettings = [];
+        this._$cellSettings = [];
         this.data.data.forEach(row => {
             let cellSettings = [];
             row.forEach((cellData, index) => {
@@ -242,7 +242,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
                     rowSpan: 1
                 })
             });
-            this._cellSettings.push(cellSettings);
+            this._$cellSettings.push(cellSettings);
         });
     }
 
@@ -293,16 +293,16 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * 过滤掉不显示的列头
      * */
     private _filterHeadSettings(): void {
-        this._headSettings = this._headSettings ? this._headSettings.filter(headSetting => headSetting.visible) : null;
+        this._$headSettings = this._$headSettings ? this._$headSettings.filter(headSetting => headSetting.visible) : null;
     }
 
     /*
      * 过滤掉不显示的列
      * */
     private _filterCellSettings(): void {
-        if (this._cellSettings) {
-            this._cellSettings.forEach((cellSettings, index) => {
-                this._cellSettings[index] = cellSettings.filter(cellSetting => cellSetting.visible);
+        if (this._$cellSettings) {
+            this._$cellSettings.forEach((cellSettings, index) => {
+                this._$cellSettings[index] = cellSettings.filter(cellSetting => cellSetting.visible);
             });
         }
     }
@@ -323,10 +323,10 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * 列检查合并单元格
      * */
     private _checkRowSpan(rowSpans, rowSpan, rowIndex, colIndex, cellSetting) {
-        for (let i = 0; i < this._cellSettings.length - rowIndex - 1; i++) {
-            if (this._cellSettings[rowIndex + i + 1][colIndex].cellData == cellSetting.cellData) {
+        for (let i = 0; i < this._$cellSettings.length - rowIndex - 1; i++) {
+            if (this._$cellSettings[rowIndex + i + 1][colIndex].cellData == cellSetting.cellData) {
                 rowSpan += 1;
-                if (i == this._cellSettings.length - rowIndex - 2) {
+                if (i == this._$cellSettings.length - rowIndex - 2) {
                     this._setRowSpan(rowSpans, rowSpan, colIndex, cellSetting);
                 }
             } else {
@@ -341,7 +341,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * */
     private _mergeCellWithGroup(): void {
         let rowSpans: number[] = [];
-        this._cellSettings.forEach((cellSettings, rowIndex) => {
+        this._$cellSettings.forEach((cellSettings, rowIndex) => {
             cellSettings.forEach((cellSetting, colIndex) => {
                 let rowSpan: number = 1;
                 if (rowIndex == 0) {
@@ -370,9 +370,9 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * 原始数据排序
      * */
     private _dataDefaultSort() {
-        if (this._headSettings) {
+        if (this._$headSettings) {
             //默认按第一个排序
-            let headSetting = this._headSettings.find(headSetting => headSetting.sortable &&
+            let headSetting = this._$headSettings.find(headSetting => headSetting.sortable &&
                 (headSetting.defaultSortOrder == SortOrder.asc || headSetting.defaultSortOrder == SortOrder.des)
             );
             if (headSetting) {
@@ -425,7 +425,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * */
     private _mergeHeadSetting(index, column: ColumnDefine): void {
         if (index >= 0 && index < this.data.header.length) {
-            this._generateHeadSetting(this._headSettings[index], column);
+            this._generateHeadSetting(this._$headSettings[index], column);
         }
     }
 
@@ -434,7 +434,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * */
     private _mergeCellSetting(index, column: ColumnDefine): void {
         if (index >= 0 && index < this.data.header.length) {
-            this._cellSettings.forEach(cellSettings => {
+            this._$cellSettings.forEach(cellSettings => {
                 this._generateCellSetting(cellSettings[index], column);
             });
         }
@@ -445,8 +445,8 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * */
     private _getIndexInHeadSettings(pos): number {
         let index = null;
-        for (let i = 0; i < this._headSettings.length; i++) {
-            if (this._headSettings[i].field == pos) {
+        for (let i = 0; i < this._$headSettings.length; i++) {
+            if (this._$headSettings[i].field == pos) {
                 index = i;
                 break;
             }
@@ -459,8 +459,8 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
      * */
     private _getIndexInCellSettings(pos): number {
         let index = null;
-        for (let i = 0; i < this._cellSettings[0].length; i++) {
-            if (this._cellSettings[0][i].field == pos) {
+        for (let i = 0; i < this._$cellSettings[0].length; i++) {
+            if (this._$cellSettings[0][i].field == pos) {
                 index = i;
                 break;
             }
@@ -489,7 +489,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
 
         //插入列头
         let headSetting: HeadSetting = {
-            cellData: this._headSettings[index].cellData,
+            cellData: this._$headSettings[index].cellData,
             width: null,
             visible: true,
             renderer: null,
@@ -497,7 +497,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
             sortable: false,
             sortAs: SortAs.string,
             defaultSortOrder: SortOrder.default,
-            field: this._headSettings[index].field
+            field: this._$headSettings[index].field
         };
         this._insertHeadSetting(pos, additionalColumn, headSetting);
     }
@@ -509,7 +509,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         let index = this._getIndexInCellSettings(this._getPosInField(target));
 
         //插入列
-        this._cellSettings.forEach(cellSettings => {
+        this._$cellSettings.forEach(cellSettings => {
             let cellSetting: CellSetting = {
                 cellData: cellSettings[index].cellData,
                 width: null,
@@ -545,10 +545,10 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
         };
         headSetting = this._generateHeadSetting(headSetting, additionalColumn);
         if (pos != -1) {
-            const index = this._headSettings.indexOf(this._headSettings.find(headSetting => headSetting.field == pos));
-            this._headSettings.splice(index, 0, headSetting);
+            const index = this._$headSettings.indexOf(this._$headSettings.find(headSetting => headSetting.field == pos));
+            this._$headSettings.splice(index, 0, headSetting);
         } else {
-            this._headSettings.push(headSetting)
+            this._$headSettings.push(headSetting)
         }
     }
 
@@ -574,12 +574,12 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
 
         if (!cellSettings) {
             if (pos != -1) {
-                this._cellSettings.forEach((cellSettings) => {
+                this._$cellSettings.forEach((cellSettings) => {
                     const index = cellSettings.indexOf(cellSettings.find(cellSetting => cellSetting.field == pos));
                     cellSettings.splice(index, 0, cellSetting);
                 })
             } else {
-                this._cellSettings.forEach((cellSettings) => {
+                this._$cellSettings.forEach((cellSettings) => {
                     cellSettings.push(cellSetting);
                 })
             }
@@ -670,7 +670,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
             const elements: NodeListOf<Element> = row.nativeElement.querySelectorAll('.cell-content');
             for (let colIndex = 0; colIndex < elements.length; ++colIndex) {
                 const element: Element = elements[colIndex];
-                const cellSetting: CellSetting = this._cellSettings[rowIndex][colIndex];
+                const cellSetting: CellSetting = this._$cellSettings[rowIndex][colIndex];
                 //没有渲染器或者用DefaultCellRenderer的单元格才能用省略
                 if (!cellSetting.renderer || cellSetting.renderer == DefaultCellRenderer) {
                     let width = CommonUtils.getCssValue(cellSetting.width);

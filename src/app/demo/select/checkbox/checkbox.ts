@@ -6,6 +6,7 @@ import {ArrayCollection} from "../../../../rdk/core/data/array-collection";
     styleUrls: ['checkbox.css']
 })
 export class SelectCheckboxDemoComponent {
+    selectedCityForSelect: any;
     cityListForSelect = new ArrayCollection([
         {label: "北京"},
         {label: "上海"},

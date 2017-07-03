@@ -54,7 +54,7 @@ export class RdkSlider extends AbstractRDKComponent implements OnInit, OnDestroy
     // Todo 支持滑动条点击.
     @ViewChildren(SliderHandle) private _sliderHandle: QueryList<SliderHandle>;
 
-    private _value: ArrayCollection<number> = new ArrayCollection<number>();
+    public _$value: ArrayCollection<number> = new ArrayCollection<number>();
     private _removeRefreshCallback: CallbackRemoval;
 
     /**
@@ -64,25 +64,25 @@ export class RdkSlider extends AbstractRDKComponent implements OnInit, OnDestroy
     @Input()
     public get value(): number | ArrayCollection<number> {
         // 兼容返回单个值， 和多触点的数组;
-        if (this._value.length == 1) {
-            return this._value[0];
+        if (this._$value.length == 1) {
+            return this._$value[0];
         } else {
-            return this._value;
+            return this._$value;
         }
     }
 
     public set value(value: number | ArrayCollection<number>) {
         if (value instanceof ArrayCollection) {
-            this._value = value;
+            this._$value = value;
         } else {
-            this._value.splice(0, this._value.length);
-            this._value.push(this._verifyValue(value));
+            this._$value.splice(0, this._$value.length);
+            this._$value.push(this._verifyValue(value));
         }
 
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback()
         }
-        this._removeRefreshCallback = this._value.onRefresh(() => {
+        this._removeRefreshCallback = this._$value.onRefresh(() => {
             this._setTrackStyle(this.value);
             this.valueChange.emit(this.value);
         });
@@ -96,8 +96,8 @@ export class RdkSlider extends AbstractRDKComponent implements OnInit, OnDestroy
      * @private
      */
     public _setValue(index: number, value: number) {
-        this._value.set(index, value);
-        this._value.refresh();
+        this._$value.set(index, value);
+        this._$value.refresh();
     }
 
     // 最后重新计算一下, 垂直滚动条的位置.
@@ -188,18 +188,18 @@ export class RdkSlider extends AbstractRDKComponent implements OnInit, OnDestroy
     @Input()
     public disabled: boolean = false;
 
-    private _trackStyle = {};
+    public _$trackStyle = {};
 
     private _setTrackStyle(value?) {
         // 兼容双触点.
         let startPos: number = 0;
         let trackSize: number = typeof value !== 'undefined' ? this._transformValueToPos(value) : this._transformValueToPos(this.value); // 默认单触点位置
 
-        if (this._value.length > 1) {
-            let max: number = this._value[0];
-            let min: number = this._value[0];
+        if (this._$value.length > 1) {
+            let max: number = this._$value[0];
+            let min: number = this._$value[0];
 
-            this._value.map(item => {
+            this._$value.map(item => {
                 if (max - item < 0) max = item;
                 else if (item - min < 0) min = item;
             });
@@ -209,12 +209,12 @@ export class RdkSlider extends AbstractRDKComponent implements OnInit, OnDestroy
         }
 
         if (this.vertical) { // 垂直和水平两种
-            this._trackStyle = {
+            this._$trackStyle = {
                 bottom: startPos + "%",
                 height: trackSize + "%"
             }
         } else {
-            this._trackStyle = {
+            this._$trackStyle = {
                 left: startPos + "%",
                 width: trackSize + "%"
             }

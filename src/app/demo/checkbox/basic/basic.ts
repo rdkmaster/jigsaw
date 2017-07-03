@@ -5,6 +5,7 @@ import {CheckBoxStatus} from "../../../../rdk/component/checkbox/checkbox";
   templateUrl: 'basic.html'
 })
 export class CheckBoxBasicDemoComponent {
+    checked: boolean;
     enableIndeterminate:boolean = false;
 
     // 第二个组件

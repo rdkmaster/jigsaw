@@ -12,9 +12,9 @@ import {RdkTable} from "../../../../rdk/component/table/table";
 export class TableAddCheckboxColumnDemoComponent{
     tableData: TableData;
 
-    private _changeMsg: string;
+     _changeMsg: string;
 
-    private _selectedRows: string;
+     _selectedRows: string;
 
     @ViewChild('myTable') myTable: RdkTable;
 
@@ -35,7 +35,7 @@ export class TableAddCheckboxColumnDemoComponent{
         this.tableData.fromAjax('mock-data/table/data.json');
     }
 
-    private _additionalColumns: AdditionalColumnDefine[] = [{
+     _additionalColumns: AdditionalColumnDefine[] = [{
         pos: 0,
         header: {
             renderer: TableHeadCheckbox,

@@ -51,7 +51,7 @@ export class TablePerformsDemoComponent{
         this.tableData = new TableData(data, field, header);
     }
 
-    private _columns: ColumnDefine[] = [
+     _columns: ColumnDefine[] = [
         {
             target: (field, index) => {
                 return index >= 0

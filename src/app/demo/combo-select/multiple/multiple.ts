@@ -18,7 +18,7 @@ export class ComboSelectMultipleDemo {
     }
 
     public selectedCity: ArrayCollection<any> = new ArrayCollection([{label: "北京", closable: false}]);
-    private citys = [
+     citys = [
         {label: "北京", closable: false},
         {label: "上海", closable: false},
         {label: "南京"},

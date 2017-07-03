@@ -30,7 +30,7 @@ export class TableAddIDWithPagingComponent {
         this.pageable.fromAjax();
     }
 
-    private _columns: ColumnDefine[] = [{
+     _columns: ColumnDefine[] = [{
         target: 'id',
         header: {
             sortable: true,
@@ -39,7 +39,7 @@ export class TableAddIDWithPagingComponent {
         }
     }];
 
-    private _additionalColumns: AdditionalColumnDefine[] = [{
+     _additionalColumns: AdditionalColumnDefine[] = [{
         pos: 0,
         header: {
             text: '#'

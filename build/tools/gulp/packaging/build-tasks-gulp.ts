@@ -1,6 +1,7 @@
 import {task, watch, src, dest} from 'gulp';
 import {join} from 'path';
 import {main as tsc} from '@angular/tsc-wrapped';
+//import {main as ngc} from '@angular/compiler-cli';
 import {buildConfig} from './build-config';
 import {sequenceTask, sassBuildTask, copyTask, triggerLivereload} from '../util/task_helpers';
 import {composeRelease} from './build-release';
