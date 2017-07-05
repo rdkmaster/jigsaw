@@ -1,11 +1,10 @@
 import {
     Component, ContentChildren, QueryList, Input, ViewChildren, AfterViewInit, Output, EventEmitter, TemplateRef,
-    ViewContainerRef, ComponentFactoryResolver, Type
+    ViewContainerRef, ComponentFactoryResolver, Type, ChangeDetectorRef
 } from '@angular/core';
 import {RdkTabPane} from "./tab-pane";
 import {RdkTabContent, RdkTabLabel} from "./tab-item";
 import {AbstractRDKComponent, IDynamicInstantiatable} from "../core";
-import {Router} from "@angular/router";
 
 @Component({
     selector: 'rdk-tab',
@@ -15,8 +14,8 @@ import {Router} from "@angular/router";
 export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
 
     constructor(private _cfr: ComponentFactoryResolver,
-                private _viewContainer: ViewContainerRef,
-                private _router: Router) {
+                private _changeDetector: ChangeDetectorRef,
+                private _viewContainer: ViewContainerRef) {
         super()
     }
 
@@ -39,20 +38,21 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
         this.selectedIndex = index;
     }
 
-    private _selectedIndex: number;
+    public _$selectedIndex: number;
 
     @Input()
     public get selectedIndex(): number {
-        return this._selectedIndex;
+        return this._$selectedIndex;
     }
 
     public set selectedIndex(value: number) {
-        if (this._selectedIndex !== value && typeof value == 'number') {
-            this._selectedIndex = value;
+        if (this._$selectedIndex !== value && typeof value == 'number') {
+            this._$selectedIndex = value;
 
             if (this.initialized) {
                 this._handleSelectChange(value)
             }
+            this._changeDetector.detectChanges();
         }
     }
 
