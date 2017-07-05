@@ -10,6 +10,8 @@ import {Http} from "@angular/http";
 })
 export class RdkTabsWithInputComponent implements OnInit {
 
+    selectedIndex = 0;
+
     tableData: TableData;
 
     tabDatas = [{title:"111",key:"XXX",content:"content 111"},{title:"222",key:"YYY",content:"content 222"}];
