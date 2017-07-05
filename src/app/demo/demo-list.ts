@@ -540,8 +540,8 @@ export class DemoListComponent implements OnInit{
                     url: '/tabs/dynamicTab'
                 },
                 {
-                    label: 'withInput',
-                    url: '/tabs/withInput'
+                    label: 'withInputAndTable',
+                    url: '/tabs/withInputAndTable'
                 },
                 {
                     label: 'withNgFor',
