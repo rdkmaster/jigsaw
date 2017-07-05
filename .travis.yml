@@ -9,7 +9,7 @@ branches:
 
 env:
   global:
-  - SAUCE_USERNAME=gogocx@163.com
+  - SAUCE_USERNAME=oicqcx
   - SAUCE_ACCESS_KEY=36eb7e40-8a38-4824-8cc0-0e5c102eaf44
   - BROWSER_PROVIDER_READY_FILE=/tmp/sauce-connect-ready
   - LOGS_DIR=/tmp/logs
