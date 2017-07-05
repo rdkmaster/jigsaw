@@ -10,7 +10,7 @@
                                    *ngFor="let tab of _$tabPanes; let i = index"
                                    [key]="i"
                                    [tabItem]="tab.label"
-                                   [class.rdk-tabs-tab-active]="selectedIndex === i"
+                                   [class.rdk-tabs-tab-active]="_$selectedIndex === i"
                                    [class.rdk-tabs-tab-disabled]="tab.disabled"
                                    [class.rdk-tabs-tab-hidden]="tab.hidden"
                                    (click)="_$tabClick(i)">
@@ -23,11 +23,11 @@
         <rdk-tab-content
             *ngFor="let tab of _$tabPanes; let i = index;"
             [key]="i"
-            [tabItem]=tab.content
+            [tabItem]="tab.content"
             [isActive]="selectedIndex === i"
             [async]="tab.async"
             [initData]="tab.initData"
-            [ngStyle]="{transform: 'translate3d('+(i-selectedIndex)*100+'%, 0px, 0px)'}">
+            [ngStyle]="{transform: 'translate3d('+(i-_$selectedIndex)*100+'%, 0px, 0px)'}">
         </rdk-tab-content>
     </div>
 </div>
