@@ -6,7 +6,7 @@ import {
 import {CommonModule} from "@angular/common";
 
 import {RdkRendererHost, AbstractRDKComponent} from "../core";
-import {TableData} from "../../core/data/table-data";
+import {TableData, TableDataHeader} from "../../core/data/table-data";
 import {
     TableCellRenderer, ColumnDefine, AdditionalColumnDefine, TableDataChangeEvent,
     TableHeadChangeEvent
@@ -73,6 +73,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     private _data: TableData;
     private _removeRefreshCallback: CallbackRemoval;
     private _hasInit: boolean; //组件是否已初始化
+    private _bakHeaderData: TableDataHeader = [];
 
     @Input()
     public get data(): TableData {
@@ -87,7 +88,14 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
             this._removeRefreshCallback();
         }
         this._removeRefreshCallback = value.onRefresh(() => {
-            this._refresh();
+            if(this.data.header.length != 0){
+                if(this._bakHeaderData.toString() === this.data.header.toString()){
+                    this._transformCellSettings();
+                    this._refreshStyle();
+                }else{
+                    this._refresh();
+                }
+            }
         });
 
         if (this._hasInit) {
@@ -189,6 +197,7 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
     }
 
     private _beforeRefresh() {
+        this._bakHeaderData = this.data.header;
         this._renderer.addClass(this._fixedHead, 'rdk-table-hide');
     }
 
@@ -829,7 +838,6 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
             this._rdkTableHeaders.length && this._rdkTableHeaders.forEach(rdkTableHeaders => {
                 rdkTableHeaders.sortChange.subscribe(value => {
                     this.data.sort(value.sortAs, value.order, value.field);
-                    this._transformCellSettings();
                 })
             })
         }, 0);
