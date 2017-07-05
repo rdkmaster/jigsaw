@@ -57,11 +57,11 @@ export class RdkTab extends AbstractRDKComponent implements AfterViewInit {
     }
 
     @Output()
-    public selectedIndexChanged = new EventEmitter<number>();
+    public selectedIndexChange = new EventEmitter<number>();
 
     private _handleSelectChange(index) {
         this.selectChange.emit(this._getTabPaneByIndex(index));
-        this.selectedIndexChanged.emit(index);
+        this.selectedIndexChange.emit(index);
 
         this._asyncSetStyle(index);
     }

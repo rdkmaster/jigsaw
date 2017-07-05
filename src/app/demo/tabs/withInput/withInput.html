@@ -1,6 +1,6 @@
 <div class="container">
     <rdk-button (click)="getTableData()">1111</rdk-button>
-    <rdk-tab [selectedIndex]="0">
+    <rdk-tab [(selectedIndex)]="selectedIndex">
         <rdk-tab-pane *ngFor="let tabData of tabDatas">
             <div rdk-title><span class="fa fa-gift"></span>{{tabData.title}}</div>
             <div rdk-body>
@@ -19,4 +19,5 @@
             </rdk-input>
         </rdk-tab-pane>
     </rdk-tab>
+    {{selectedIndex}}
 </div>
