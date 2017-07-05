@@ -3,14 +3,7 @@ import {RouterModule} from "@angular/router";
 import {TableBasicDemoComponent} from "./basic/basic";
 import {TableRendererDemoComponent} from "./renderer/renderer";
 import {RdkTableModule} from "../../../rdk/component/table/table";
-import {
-    TableHeadCheckbox,
-    TableCellCheckbox,
-    TableCellOption,
-    TableCellNum,
-    TableCellEditor,
-    DefaultCellRenderer, RdkTableRendererModule
-} from "../../../rdk/component/table/table-renderer";
+import {RdkTableRendererModule} from "../../../rdk/component/table/table-renderer";
 import {TableHeadSelect, TableHeadIcon} from "./renderer/table-renderer";
 import {RdkSelectModule} from "../../../rdk/component/select/select";
 import {RdkCheckBoxModule} from "../../../rdk/component/checkbox/index";
@@ -45,7 +38,6 @@ import {TableDataWithPopupDemoComponent} from "./withPopup/withPopup";
 import {RdkDialogModule} from "../../../rdk/component/dialog/dialog";
 import {PopupService} from "../../../rdk/service/popup.service";
 import {TableRendererOfTemplateRefDemoComponent} from "./rendererOfTemplateRef/rendererOfTemplateRef";
-import {RdkBlock, RdkBlockModule} from "../../../rdk/component/block/block";
 import {TableLineEllipsisDemoComponent} from "./lineEllipsis/lineElliosis";
 import {TableAddIDWithDebouncePagingComponent} from "./addIDWithDebouncePaging/addIDWithDebouncePaging";
 
@@ -179,14 +171,8 @@ const tableDemoRoutes = [
     ],
     exports: [ ],
     entryComponents: [
-        DefaultCellRenderer,
         TableHeadSelect,
         TableHeadIcon,
-        TableHeadCheckbox,
-        TableCellCheckbox,
-        TableCellOption,
-        TableCellNum,
-        TableCellEditor,
         MyTableCell,
         MyTableHeadOption,
         MyTableCellOption,

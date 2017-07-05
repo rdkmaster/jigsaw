@@ -1,8 +1,17 @@
 <div class="container">
-    <rdk-tab (selectChange)="testEvent($event)">
+    <rdk-button (click)="getTableData()">1111</rdk-button>
+    <rdk-tab [selectedIndex]="0">
+        <rdk-tab-pane *ngFor="let tabData of tabDatas">
+            <div rdk-title><span class="fa fa-gift"></span>{{tabData.title}}</div>
+            <div rdk-body>
+                <rdk-table height="400px" [data]="this[tabData.key]"></rdk-table>
+            </div>
+        </rdk-tab-pane>
         <rdk-tab-pane>
-            <div rdk-title><span class="fa fa-gift"></span>tab 1</div>
-            <div rdk-body>tab content 1</div>
+            <div rdk-title><span class="fa fa-gift"></span>table data</div>
+            <div rdk-body>
+                <rdk-table height="400px" [data]="tableData"></rdk-table>
+            </div>
         </rdk-tab-pane>
         <rdk-tab-pane title="tab 2123123123123123123">
             <rdk-input #myInput width="80%">

@@ -17,7 +17,10 @@ import {RdkScrollBar} from "../scrollbar/scrollbar";
 import {SortAs, SortOrder, CallbackRemoval} from "../../core/data/component-data";
 import {AffixUtils} from "../../core/utils/internal-utils";
 import {TableCheckboxService} from "./table-service";
-import {DefaultCellRenderer} from "./table-renderer";
+import {
+    DefaultCellRenderer, RdkTableRendererModule, TableCellCheckbox, TableCellEditor, TableCellNum, TableCellOption,
+    TableHeadCheckbox
+} from "./table-renderer";
 import {RdkTooltipModule, SimpleTooltipComponent} from "../tooltip/tooltip";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {PopupEffect, PopupInfo, PopupPositionType, PopupService} from "../../service/popup.service";
@@ -1205,10 +1208,18 @@ export class RdkTableHeader extends TableCellBasic implements OnInit, OnDestroy 
         RdkTable, RdkTableCell, RdkRendererHost, RdkTableHeader
     ],
     imports: [
-        CommonModule, RdkScrollBarModule, RdkTooltipModule
+        CommonModule, RdkScrollBarModule, RdkTooltipModule, RdkTableRendererModule,
     ],
     exports: [CommonModule, RdkTable, RdkTableCell, RdkRendererHost, RdkTableHeader],
-    providers: [PopupService]
+    providers: [PopupService],
+    entryComponents: [
+        DefaultCellRenderer,
+        TableHeadCheckbox,
+        TableCellCheckbox,
+        TableCellOption,
+        TableCellNum,
+        TableCellEditor
+    ]
 })
 export class RdkTableModule {
 }

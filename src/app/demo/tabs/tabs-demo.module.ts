@@ -19,13 +19,14 @@ import {RdkTabsComponent} from "./tabs/Tabs";
 import {dynamicTabDemoComponent} from "./tabApi/dynamicTab";
 import {RdkTabPane} from "../../../rdk/component/tabs/tab-pane";
 import {TabContentDefine} from "./tabApi/tabContent/tabContent";
+import {RdkTableModule} from "../../../rdk/component/table/table";
 
 const routes=[
     {
         path:'basic', component: RdkTabsDemoComponent
     },
     {
-        path:'withInput', component: RdkTabsWithInputComponent
+        path:'withInputAndTable', component: RdkTabsWithInputComponent
     },
     {
         path:'withNgFor', component: RdkTabsWithNgForComponent
@@ -56,6 +57,7 @@ const routes=[
         RdkInputModule,
         RdkButtonModule,
         CommonModule,
+        RdkTableModule
     ],
     exports: [RdkTabsDemoComponent],
     declarations: [

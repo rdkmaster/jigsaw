@@ -71,8 +71,10 @@ export class RdkScrollBar implements OnInit {
             // 销毁当前滚动条
             this._scrollBarJq.mCustomScrollbar("destroy");
         }
-        // 创建滚动条
-        this._scrollBarJq.mCustomScrollbar(option);
+        // 创建滚动条(tab-pane ngFor和table使用是会报错，所以改成异步了，见issue#83)
+        setTimeout(() => {
+            this._scrollBarJq.mCustomScrollbar(option);
+        }, 0);
     }
 
     /*
