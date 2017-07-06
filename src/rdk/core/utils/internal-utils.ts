@@ -87,4 +87,18 @@ export class AffixUtils {
     public static isWindow(obj): boolean {
         return obj != null && obj === obj.window;
     }
+
+    /*
+     * 获取DTD声明和未声明的body
+     *
+     * */
+    public static getDocumentBody(){
+        if (document.compatMode === "CSS1Compat"){
+            //DTD已声明
+            return document.documentElement;
+        } else {
+            //DTD未声明
+            return document.body;
+        }
+    }
 }
