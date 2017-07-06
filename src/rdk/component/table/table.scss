@@ -21,6 +21,10 @@ $table-prefix-cls: #{$rdk-prefix}-table;
 .#{$table-prefix-cls}-box{
     width: 100%;
     height: 100%;
+    border-bottom: 1px solid $border-color-base;
+    .#{$table-prefix-cls} tbody tr:last-child td{
+        border-bottom: none;
+    }
 }
 
 table{
