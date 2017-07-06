@@ -26,3 +26,4 @@ export class ZtreeDemoDataFromAjaxComponent {
         this.data.refresh();
     }
 }
+
