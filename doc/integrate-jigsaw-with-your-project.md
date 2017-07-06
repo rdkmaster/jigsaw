@@ -100,8 +100,7 @@ echarts/dist/echarts.min.js
 <a name="ver-dep"></a>
 # 依赖Angular/TS版本检查和解决办法
 Jigsaw依赖的重要版本：
-- Jigsaw需要Angular版本4.0.0以上，推荐使用4.2.4；
-	- 使用这些命令来解决
+- Jigsaw需要Angular版本4.0.0以上，推荐使用4.2.4，使用这些命令来解决
 ```
 npm install --save @angular/animations@4.2.4
 npm install --save @angular/common@4.2.4
@@ -113,8 +112,7 @@ npm install --save @angular/platform-browser@4.2.4
 npm install --save @angular/platform-browser-dynamic@4.2.4
 npm install --save @angular/router@4.2.4
 ```
-- Jigsaw需要TypeScript版本2.3以上，目前还不支持2.4；
-	- 使用这个命令来解决
+- Jigsaw需要TypeScript版本2.3以上，目前还不支持2.4，使用这个命令来解决
 ```
 npm i --save typescript@2.3.2
 ```
