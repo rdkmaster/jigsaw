@@ -1,5 +1,5 @@
 import { Component,AfterContentInit} from "@angular/core";
-import {ArrayCollection} from "../../../../rdk/core/data/array-collection";
+import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 @Component({
   templateUrl: 'multipleSelect.html'

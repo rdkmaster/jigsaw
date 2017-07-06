@@ -3,13 +3,13 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpModule, Http} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {RouterModule} from "@angular/router";
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import {AppComponent} from './app.component';
-import {RouterModule} from "@angular/router";
 
-import {RdkJigsawModule} from '@rdkmaster/jigsaw';
+import {JigsawModule} from '@rdkmaster/jigsaw';
 
 export function HttpLoaderFactory(http: Http) {
     return new TranslateHttpLoader(http, 'app/i18n/', '.json');
@@ -44,7 +44,7 @@ const appRoutes = [
                 }, isolate: true
             }
         ),
-        RdkJigsawModule
+        JigsawModule
     ],
     providers: [],
     bootstrap: [AppComponent]

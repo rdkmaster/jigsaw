@@ -1,0 +1,19 @@
+<div class="jigsaw-range-time">
+    <jigsaw-time [(date)]="_$beginDate" [(gr)]="_$gr" [limitStart]="_$limitStart" [limitEnd]="_$limitEnd"
+                 (dateChange)="_$dateChange('beginDate',$event)" [refreshInterval]="_$refreshInterval" [weekStart]="_$weekStart"
+                 [recommendedBegin]="_$recommendedBegin" [recommendedEnd]="_$recommendedEnd" [grItems]="_$grItems" #timeStart
+                 class.jigsaw-range-time-startTime="false" (grChange)="_$grChange($event)">
+    </jigsaw-time>
+    <jigsaw-time [(date)]="_$endDate" [(gr)]="_$gr" [limitStart]="_$beginDate" [limitEnd]="_$endTimeLimitEnd"
+                 (dateChange)="_$dateChange('endDate',$event)" [refreshInterval]="_$refreshInterval" [weekStart]="_$weekStart"
+                 [recommendedBegin]="_$recommendedBegin" [recommendedEnd]="_$recommendedEnd" #timeEnd
+                 [class.jigsaw-range-time-endTime]="(_$grItems && _$grItems.length!=0)">
+    </jigsaw-time>
+    <div *ngIf="_$shortcuts && _$shortcuts.length" class="jigsaw-range-time-shortcuts">
+        <span *ngFor="let item of _$shortcuts" (click)="_changeShortcut(item)">
+            {{item.label}}
+        </span>
+    </div>
+</div>
+
+

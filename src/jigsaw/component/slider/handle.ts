@@ -1,0 +1,160 @@
+/**
+ * Created by 10177553 on 2017/4/19.
+ */
+
+import {
+    Input, Output, EventEmitter, Renderer2, Component, OnInit, ViewEncapsulation, forwardRef, Inject, Host
+} from "@angular/core";
+import {JigsawSlider} from "./slider";
+
+@Component({
+    selector: 'slider-handle',
+    templateUrl: './handle.html',
+    encapsulation: ViewEncapsulation.None
+})
+export class JigsawSliderHandle implements OnInit{
+
+    private _value: number;
+
+    @Input()
+    public key: number;
+
+    @Input()
+    public get value() { return this._value; }
+    public set value(value) {
+        if(this._value === value) return;
+
+        this._value = this._slider._verifyValue(value);
+        this._valueToPos();
+    }
+
+    @Output()
+    public change = new  EventEmitter<number>();
+
+    private _valueToPos() {
+        this._offset = this._slider._transformValueToPos(this.value);
+        this.setHandleStyle();
+    }
+
+    private _offset: number = 0;
+
+    public _$handleStyle = {};
+
+    private setHandleStyle() {
+        if(isNaN(this._offset)) return;
+
+        if(this._slider.vertical) { // 兼容垂直滑动条;
+            this._$handleStyle = {
+                bottom: this._offset + "%"
+            }
+        } else {
+            this._$handleStyle = {
+                left: this._offset + "%"
+            }
+        }
+    }
+
+    private _dragged: boolean = false;
+
+    public transformPosToValue(pos) {
+        // 更新取得的滑动条尺寸.
+        this._slider._refresh();
+        let dimensions = this._slider._dimensions;
+
+        // bottom 在dom中的位置.
+        let offset = this._slider.vertical?dimensions.bottom: dimensions.left;
+        let size = this._slider.vertical?dimensions.height: dimensions.width;
+        let posValue = this._slider.vertical? pos.y - 6: pos.x;
+
+        if(this._slider.vertical) {
+            posValue = posValue > offset? offset:posValue;
+        } else {
+            posValue = posValue < offset? offset:posValue;
+        }
+
+        let newValue = Math.abs(posValue - offset) / size * (this._slider.max - this._slider.min) + (this._slider.min-0); // 保留两位小数
+
+        let m = this._calFloat(this._slider.step);
+
+        // 解决出现的有时小数点多了N多位.
+        newValue = Math.round(Math.round(newValue / this._slider.step) * this._slider.step * Math.pow(10, m)) / Math.pow(10, m);
+
+        return this._slider._verifyValue(newValue);
+    }
+
+    /**
+     * 计算需要保留小数的位数.
+     * @param value
+     * @private
+     */
+    _calFloat(value: number): number {
+        // 增加步长的计算;
+        let m = 0;
+        try {
+            m = this._slider.step.toString().split(".")[1].length;
+        } catch(e) { }
+        return m;
+    }
+
+    public _$updateCanDragged(flag: boolean) {
+        this._dragged = flag;
+
+        if(flag) {
+            this._registerGlobalEvent();
+        } else {
+            this._destroyGlobalEvent();
+        }
+    }
+
+    globalEventMouseMove: Function;
+    globalEventMouseUp: Function;
+
+    _registerGlobalEvent() {
+        this.globalEventMouseMove = this._render.listen("document", "mousemove", (e) => {
+            this._$updateValuePosition(e);
+        });
+        this.globalEventMouseUp = this._render.listen("document", "mouseup", () => {
+            this._dragged = false;
+            this._destroyGlobalEvent();
+        });
+
+    }
+
+    _destroyGlobalEvent() {
+        if(this.globalEventMouseMove) { this.globalEventMouseMove(); }
+
+        if(this.globalEventMouseUp)  { this.globalEventMouseUp(); }
+    }
+
+    private _slider:JigsawSlider; // 父组件;
+
+    constructor(private _render: Renderer2,@Host() @Inject(forwardRef(() => JigsawSlider)) slider: JigsawSlider) {
+        this._slider = slider;
+    }
+
+    // 改变value的值;
+    public _$updateValuePosition(event?) {
+        if(!this._dragged|| this._slider.disabled) return;
+
+        // 防止产生选中其他文本，造成鼠标放开后还可以拖拽的奇怪现象;
+        event.stopPropagation();
+        event.preventDefault();
+
+        let pos = {
+            x: event["clientX"],
+            y: event["clientY"]
+        }
+
+        let newValue = this.transformPosToValue(pos);
+
+        if(this.value === newValue) return;
+
+        this.value = newValue;
+
+        this._slider._setValue(this.key, newValue);
+    }
+
+    ngOnInit() {
+        this._valueToPos();
+    }
+}

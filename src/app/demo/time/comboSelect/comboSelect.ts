@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
-import {TimeGr, TimeService} from "../../../../rdk/service/time.service";
-import {ArrayCollection} from "../../../../rdk/core/data/array-collection";
+import {TimeGr, TimeService} from "jigsaw/service/time.service";
+import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 
 @Component({

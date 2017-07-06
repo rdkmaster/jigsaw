@@ -1,8 +1,8 @@
 import {NgModule} from "@angular/core";
 import { HttpModule } from '@angular/http';
 import {RouterModule} from "@angular/router";
+import { JigsawTreeExtModule } from "jigsaw/component/tree/tree-ext"
 import {ZtreeDemoComponent} from "./basic/basic";
-import { RdkTreeExtModule } from "../../../rdk/component/tree/tree-ext"
 import {ZtreeDemoDataFromAjaxComponent} from "./dataFromAjax/dataFromAjax";
 import {ZtreeDemoEditableComponent} from "./editable/editable";
 import {ZtreeAsynDemoComponent} from "./async/async";
@@ -33,7 +33,7 @@ const ztreeDemoRoutes=[
         ZtreeDemoComponent,ZtreeDemoDataFromAjaxComponent,ZtreeDemoEditableComponent,ZtreeAsynDemoComponent
     ],
     imports: [
-        RouterModule.forChild(ztreeDemoRoutes),RdkTreeExtModule,HttpModule
+        RouterModule.forChild(ztreeDemoRoutes),JigsawTreeExtModule,HttpModule
     ],
     exports: [
         ZtreeDemoComponent

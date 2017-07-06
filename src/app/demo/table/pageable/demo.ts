@@ -1,7 +1,6 @@
 import {Component} from "@angular/core";
-import {PageableTableData, TableData} from "../../../../rdk/core/data/table-data";
 import {Http} from "@angular/http";
-import {PageableArray} from "../../../../rdk/core/data/array-collection";
+import {PageableTableData} from "jigsaw/core/data/table-data";
 
 @Component({
   templateUrl: 'demo.html'

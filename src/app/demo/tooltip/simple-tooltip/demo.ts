@@ -2,12 +2,12 @@ import {Component} from "@angular/core";
 
 @Component({
     template: `
-        编辑tooltip <rdk-input width="370" [(value)]="tooltipMessage"></rdk-input>
+        编辑tooltip <jigsaw-input width="370" [(value)]="tooltipMessage"></jigsaw-input>
 
         <p style="padding-top: 10px">
-        <rdk-button width="180px" [rdkTooltip]="tooltipMessage">
+        <jigsaw-button width="180px" [jigsawTooltip]="tooltipMessage">
             鼠标挪到这里显示tooltip
-        </rdk-button>
+        </jigsaw-button>
     `
 })
 export class SimpleTooltipDemoComponent {

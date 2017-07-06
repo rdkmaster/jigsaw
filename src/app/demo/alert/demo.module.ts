@@ -1,10 +1,11 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 
-import {RdkButtonModule} from "../../../rdk/component/button/button";
+import {JigsawButtonModule} from "jigsaw/component/button/button";
+import {JigsawAlertModule} from "jigsaw/component/alert/alert";
+import {PopupService} from "jigsaw/service/popup.service";
+
 import {AlertInDomDemoComponent} from "./in-dom/demo";
-import {RdkAlertModule, RdkErrorAlert, RdkInfoAlert, RdkWarningAlert} from "../../../rdk/component/alert/alert";
-import {PopupService} from "../../../rdk/service/popup.service";
 import {AlertPopupDemoComponent} from "./popup/demo";
 import {CustomizedAlert} from "./customized/customized-alert";
 import {CustomizeAlertDemoComponent} from "./customized/demo";
@@ -31,8 +32,8 @@ const popupDemoRoutes = [
     ],
     imports: [
         RouterModule.forChild(popupDemoRoutes),
-        RdkAlertModule,
-        RdkButtonModule,
+        JigsawAlertModule,
+        JigsawButtonModule,
     ],
     providers: [PopupService]
 })

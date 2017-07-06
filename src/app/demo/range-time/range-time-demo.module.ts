@@ -1,10 +1,10 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {RdkButtonModule} from "../../../rdk/component/button/button";
-import {RdkTileSelectModule} from "../../../rdk/component/tile-select/tile-select";
-import {RangeTimeBasicDemoComponent} from "./basic/basic";
-import {RdkRangeTimeModule} from "../../../rdk/component/range-time/index";
 import {CommonModule} from "@angular/common";
+import {JigsawButtonModule} from "jigsaw/component/button/button";
+import {JigsawTileSelectModule} from "jigsaw/component/tile-select/tile-select";
+import {JigsawRangeTimeModule} from "jigsaw/component/range-time/index";
+import {RangeTimeBasicDemoComponent} from "./basic/basic";
 import {RangeTimeGrComponent} from "./gr/gr";
 import {RangeTimeGrItemsComponent} from "./grItems/grItems";
 import {RangeTimeLimitEndComponent} from "./limitEnd/limitEnd";
@@ -12,8 +12,6 @@ import {RangeTimeLimitStartComponent} from "./limitStart/limitStart";
 import {RangeTimeRecommendedComponent} from "./recommended/recommended";
 import {RangeTimeRefreshIntervalComponent} from "./refreshInterval/refreshInterval";
 import {RangeTimeWeekStartComponent} from "./weekStart/weekStart";
-
-
 
 
 const rangeTimeDemoRoutes=[
@@ -52,7 +50,7 @@ const rangeTimeDemoRoutes=[
         RangeTimeWeekStartComponent
     ],
     imports: [
-        RouterModule.forChild(rangeTimeDemoRoutes), RdkRangeTimeModule,RdkButtonModule,RdkTileSelectModule,CommonModule
+        RouterModule.forChild(rangeTimeDemoRoutes), JigsawRangeTimeModule,JigsawButtonModule,JigsawTileSelectModule,CommonModule
     ],
     providers: []
 })

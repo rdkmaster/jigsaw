@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, TemplateRef, ViewChild} from "@angular/core";
-import {TableData} from "../../../../rdk/core/data/table-data";
-import {ColumnDefine, TableCellRenderer} from "../../../../rdk/component/table/table-api";
+import {TableData} from "jigsaw/core/data/table-data";
+import {ColumnDefine, TableCellRenderer} from "jigsaw/component/table/table-api";
 import {Http} from "@angular/http";
 /*
  * 自定义表头渲染组件

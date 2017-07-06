@@ -1,8 +1,8 @@
 <h4>单选按钮-TrackItemBy</h4>
-<rdk-radio-group [(value)]="selectedProduct"  labelField="pro_name"
-                 (valueChange)="radioChange($event)" trackItemBy="pro_name,pro_type"
-                 [data]="products">
-</rdk-radio-group>
+<jigsaw-radio-group [(value)]="selectedProduct"  labelField="pro_name"
+                   (valueChange)="radioChange($event)" trackItemBy="pro_name,pro_type"
+                   [data]="products">
+</jigsaw-radio-group>
 
 选择的城市的ID号是 : {{selectedProduct.pro_name}}
 

@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from "@angular/router";
 import {TabContentComponent} from "./tabContent";
-import {RdkButtonModule} from "../../../../../rdk/component/button/button";
-import {RdkInputModule} from "../../../../../rdk/component/input/input";
+import {JigsawButtonModule} from "jigsaw/component/button/button";
+import {JigsawInputModule} from "jigsaw/component/input/input";
 
 const routes=[
     {
@@ -13,8 +13,8 @@ const routes=[
 @NgModule({
     imports: [
         RouterModule.forChild(routes),
-        RdkButtonModule,
-        RdkInputModule
+        JigsawButtonModule,
+        JigsawInputModule
     ],
     declarations: [
         TabContentComponent

@@ -2,11 +2,14 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {CommonModule} from "@angular/common";
 
+import {JigsawTimeModule} from "jigsaw/component/time/index";
+import {JigsawButtonModule} from "jigsaw/component/button/button";
+import {JigsawTileSelectModule} from "jigsaw/component/tile-select/tile-select";
+import {JigsawComboSelectModule} from "jigsaw/component/combo-select/index";
+import {JigsawRangeTimeModule} from "jigsaw/component/range-time/index";
+
 import {TimeBasicDemoComponent} from "./basic/basic";
-import {RdkTimeModule} from "../../../rdk/component/time/index";
-import {RdkButtonModule} from "../../../rdk/component/button/button";
 import {TimeLimitEndComponent} from "./limitEnd/limitEnd";
-import {RdkTileSelectModule} from "../../../rdk/component/tile-select/tile-select";
 import {TimeLimitStartComponent} from "./limitStart/limitStart";
 import {TimeWeekStartComponent} from "./weekStart/weekStart";
 import {TimeGrComponent} from "./gr/gr";
@@ -14,8 +17,6 @@ import {TimeRecommendedComponent} from "./recommended/recommended";
 import {TimeGrItemsComponent} from "./grItems/grItems";
 import {TimeRefreshIntervalComponent} from "./refreshInterval/refreshInterval";
 import {ComboSelectDemoComponent} from "./comboSelect/comboSelect";
-import {RdkComboSelectModule} from "../../../rdk/component/combo-select/index";
-import {RdkRangeTimeModule} from "../../../rdk/component/range-time/index";
 
 
 const inputDemoRoutes = [
@@ -55,8 +56,8 @@ const inputDemoRoutes = [
         TimeGrComponent, TimeGrItemsComponent, TimeRefreshIntervalComponent, ComboSelectDemoComponent
     ],
     imports: [
-        RouterModule.forChild(inputDemoRoutes), CommonModule, RdkTimeModule, RdkButtonModule, RdkTileSelectModule,
-        RdkComboSelectModule, RdkRangeTimeModule
+        RouterModule.forChild(inputDemoRoutes), CommonModule, JigsawTimeModule, JigsawButtonModule, JigsawTileSelectModule,
+        JigsawComboSelectModule, JigsawRangeTimeModule
     ],
     providers: []
 })

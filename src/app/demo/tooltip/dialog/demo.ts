@@ -1,13 +1,13 @@
 import {Component, ElementRef, ViewChild} from "@angular/core";
-import {PopupEffect, PopupInfo, PopupPositionType, PopupService} from "../../../../rdk/service/popup.service";
+import {PopupEffect, PopupInfo, PopupPositionType, PopupService} from "jigsaw/service/popup.service";
 import {UserTooltipDialogComponent} from "./user-defined-tooltip-dialog";
 
 @Component({
     template: `
         <div style="padding-top: 40px">
-            <rdk-button #insertPlace (mouseenter)="popup()" (mouseleave)="close()">
+            <jigsaw-button #insertPlace (mouseenter)="popup()" (mouseleave)="close()">
                 <span class="fa fa-thumbs-up"></span>tooltip dialog!
-            </rdk-button>
+            </jigsaw-button>
         </div>
     `
 })

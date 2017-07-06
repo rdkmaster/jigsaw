@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
-import {LocalPageableTableData} from "../../../../rdk/core/data/table-data";
 import {Http} from "@angular/http";
-import {ColumnDefine} from "../../../../rdk/component/table/table-api";
-import {SortAs, SortOrder} from "../../../../rdk/core/data/component-data";
+import {LocalPageableTableData} from "../../../../jigsaw/core/data/table-data";
+import {ColumnDefine} from "../../../../jigsaw/component/table/table-api";
+import {SortAs, SortOrder} from "../../../../jigsaw/core/data/component-data";
 
 
 

@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
-import {ZTreeSettingSetting} from "../../../../rdk/component/tree/ztree-types";
-import {TreeData} from "../../../../rdk/core/data/tree-data";
+import {ZTreeSettingSetting} from "jigsaw/component/tree/ztree-types";
+import {TreeData} from "jigsaw/core/data/tree-data";
 
 @Component({
     templateUrl: 'async.html'

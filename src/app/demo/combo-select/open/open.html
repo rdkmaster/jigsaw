@@ -1,21 +1,21 @@
 <div class="combo-select-demo cmn-box">
     <h3>open demo</h3>
     <div class="test-btn">
-        <rdk-button width="120px" (click)="toggleOpen()">toggle open</rdk-button>
-        <rdk-button width="120px" (click)="toggleAutoClose()">toggle auto close</rdk-button>
+        <jigsaw-button width="120px" (click)="toggleOpen()">toggle open</jigsaw-button>
+        <jigsaw-button width="120px" (click)="toggleAutoClose()">toggle auto close</jigsaw-button>
     </div>
-    <rdk-combo-select
+    <jigsaw-combo-select
         [(value)]="selectedCity"
         [(open)]="open"
         [autoClose]="autoClose">
-        <rdk-tile-select
+        <jigsaw-tile-select
             [(selectedItems)]="selectedCity"
             labelField="label"
             [searchable]="true"
             [data]="citys"
             width="400px"
             tileOptionWidth="100px">
-        </rdk-tile-select>
-    </rdk-combo-select>
+        </jigsaw-tile-select>
+    </jigsaw-combo-select>
 </div>
 

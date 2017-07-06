@@ -2,15 +2,15 @@
  * Created by 10177553 on 2017/3/28.
  */
 import {Component} from '@angular/core';
-import {LineBarGraphData, LineBarGraphDataByRow} from "../../../../../rdk/core/data/graph-data";
+import {LineBarGraphData} from "jigsaw/core/data/graph-data";
 import {Http} from "@angular/http";
 
 @Component({
     template: `
-        <rdk-graph [data]="data"
+        <jigsaw-graph [data]="data"
                    [(width)]="graphWidth"
                    [(height)]="graphHeight">
-        </rdk-graph>
+        </jigsaw-graph>
     `
 })
 export class AjaxLineGraphComponent {

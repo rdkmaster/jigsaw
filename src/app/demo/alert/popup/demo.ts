@@ -2,22 +2,22 @@ import {Component, ComponentRef} from "@angular/core";
 import {
     ButtonInfo, PopupEffect, PopupInfo, PopupOptions, PopupPositionType,
     PopupService
-} from "../../../../rdk/service/popup.service";
-import {RdkErrorAlert, RdkInfoAlert, RdkWarningAlert} from "../../../../rdk/component/alert/alert";
+} from "jigsaw/service/popup.service";
+import {JigsawErrorAlert, JigsawInfoAlert, JigsawWarningAlert} from "jigsaw/component/alert/alert";
 
 @Component({
     template: `
-        <rdk-button width="170" (click)="commonInfoAlert()">
+        <jigsaw-button width="170" (click)="commonInfoAlert()">
             common info alert
-        </rdk-button>
+        </jigsaw-button>
     
-        <rdk-button width="170" (click)="commonWarningAlert()">
+        <jigsaw-button width="170" (click)="commonWarningAlert()">
             common warning alert
-        </rdk-button>
+        </jigsaw-button>
     
-        <rdk-button width="170" (click)="commonErrorAlert($event)">
+        <jigsaw-button width="170" (click)="commonErrorAlert($event)">
             common error alert
-        </rdk-button>
+        </jigsaw-button>
     
         <p style="margin-top: 20px; font-size: 16px">{{answer}}</p>
     `
@@ -40,7 +40,7 @@ export class AlertPopupDemoComponent {
 
     commonInfoAlert() {
         this.answer = 'waiting for an answer';
-        const popupInfo = this._popupService.popup(RdkInfoAlert, this._getModalOptions(), {
+        const popupInfo = this._popupService.popup(JigsawInfoAlert, this._getModalOptions(), {
             message: 'this is a great info alert!', title: 'the title is optional'
         });
         if(popupInfo.popupRef instanceof ComponentRef){
@@ -52,7 +52,7 @@ export class AlertPopupDemoComponent {
 
     commonWarningAlert() {
         this.answer = 'waiting for an answer';
-        const popupInfo = this._popupService.popup(RdkWarningAlert, this._getModalOptions(), {
+        const popupInfo = this._popupService.popup(JigsawWarningAlert, this._getModalOptions(), {
             message: 'this is a great warning alert!'
         });
         if(popupInfo.popupRef instanceof ComponentRef){
@@ -64,7 +64,7 @@ export class AlertPopupDemoComponent {
 
     commonErrorAlert(event) {
         this.answer = 'waiting for an answer';
-        const popupInfo = this._popupService.popup(RdkErrorAlert, this._getUnModalOptions(event), {
+        const popupInfo = this._popupService.popup(JigsawErrorAlert, this._getUnModalOptions(event), {
             message: 'this is a great error alert!'
         });
         if(popupInfo.popupRef instanceof ComponentRef){

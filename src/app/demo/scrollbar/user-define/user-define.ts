@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {ScrollEvent} from "../../../../rdk/component/scrollbar/scrollbar";
+import {ScrollEvent} from "jigsaw/component/scrollbar/scrollbar";
 
 @Component({
   templateUrl: 'user-define.html',

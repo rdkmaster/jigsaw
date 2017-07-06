@@ -1,8 +1,8 @@
 import {Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {
-    PopupDisposer, PopupInfo, PopupOptions, PopupPoint, PopupPositionOffset, PopupPositionType,
+    PopupInfo, PopupOptions, PopupPoint, PopupPositionOffset, PopupPositionType,
     PopupService
-} from "../../../../rdk/service/popup.service";
+} from "jigsaw/service/popup.service";
 
 @Component({
     templateUrl: 'popUpOption.html',

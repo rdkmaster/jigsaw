@@ -1,6 +1,6 @@
 import {Component, ViewChild} from "@angular/core";
-import {DialogBase, RdkDialog} from "../../../../../rdk/component/dialog/dialog";
-import {ButtonInfo} from "../../../../../rdk/service/popup.service";
+import {DialogBase, JigsawDialog} from "jigsaw/component/dialog/dialog";
+import {ButtonInfo} from "jigsaw/service/popup.service";
 
 
 @Component({
@@ -8,7 +8,7 @@ import {ButtonInfo} from "../../../../../rdk/service/popup.service";
     styleUrls: ['user-dialog.scss']
 })
 export class UserDialog2Component extends DialogBase {
-    @ViewChild(RdkDialog) dialog: RdkDialog;
+    @ViewChild(JigsawDialog) dialog: JigsawDialog;
 
     public title: string = `Title of the dialog`;
     public buttons: Array<ButtonInfo> = [

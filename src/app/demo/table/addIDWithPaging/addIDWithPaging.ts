@@ -1,9 +1,9 @@
-import {Component, ViewEncapsulation} from "@angular/core";
-import {PageableTableData} from "../../../../rdk/core/data/table-data";
+import {Component} from "@angular/core";
 import {Http} from "@angular/http";
-import {TableCellNum} from "../../../../rdk/component/table/table-renderer";
-import {AdditionalColumnDefine, ColumnDefine} from "../../../../rdk/component/table/table-api";
-import {SortAs, SortOrder} from "../../../../rdk/core/data/component-data";
+import {PageableTableData} from "jigsaw/core/data/table-data";
+import {TableCellNum} from "jigsaw/component/table/table-renderer";
+import {AdditionalColumnDefine, ColumnDefine} from "jigsaw/component/table/table-api";
+import {SortAs, SortOrder} from "jigsaw/core/data/component-data";
 
 @Component({
     templateUrl: 'addIDWithPaging.html'

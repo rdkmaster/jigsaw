@@ -1,0 +1,9 @@
+<div class="jigsaw-tile-select-search">
+    <jigsaw-input *ngIf="searchable" width="100%">
+        <span jigsaw-prefix-icon class="fa fa-search"></span>
+    </jigsaw-input>
+</div>
+<ng-content></ng-content>
+<jigsaw-tile-option [width]="tileOptionWidth" [height]="tileOptionHeight" *ngFor="let optionItem of data" [optionItem]="optionItem">
+</jigsaw-tile-option>
+

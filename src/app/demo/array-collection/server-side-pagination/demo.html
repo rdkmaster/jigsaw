@@ -1,4 +1,4 @@
-<p><strong>Tip:</strong> use <a href="/demo/pagination/basic">rdk-pagination</a> in your product development is strongly recommended!</p>
+<p><strong>Tip:</strong> use <a href="/demo/pagination/basic">jigsaw-pagination</a> in your product development is strongly recommended!</p>
 <p [ngClass]="tipClass" *ngIf="!ready"><strong>Tip:</strong> this demo shows how use ServerSidePagingArray, <a (click)="start()">continue</a>.</p>
 <div *ngIf="ready">
     <p>
@@ -6,8 +6,8 @@
             showing {{pageable.pagingInfo.pageSize}} items / page, {{pageable.pagingInfo.totalRecord}} records totally.</span>
     </p>
     <p>
-        <rdk-button [disabled]="pageable.busy || pageable.pagingInfo.currentPage == 1" (click)="previousPage()">last page</rdk-button>
-        <rdk-button [disabled]="pageable.busy || pageable.pagingInfo.currentPage == pageable.pagingInfo.totalPage" (click)="nextPage()">next page</rdk-button>
+        <jigsaw-button [disabled]="pageable.busy || pageable.pagingInfo.currentPage == 1" (click)="previousPage()">last page</jigsaw-button>
+        <jigsaw-button [disabled]="pageable.busy || pageable.pagingInfo.currentPage == pageable.pagingInfo.totalPage" (click)="nextPage()">next page</jigsaw-button>
     </p>
 </div>
 <p *ngIf="!!errorInfo" style="color: red">Error: {{errorInfo}}</p>

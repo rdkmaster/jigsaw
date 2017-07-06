@@ -1,0 +1,22 @@
+<jigsaw-input class="jigsaw-paging-search" *ngIf="searchable" width="80">
+    <span jigsaw-prefix-icon class="fa fa-search"></span>
+</jigsaw-input>
+
+<div class="jigsaw-paging-prev jigsaw-paging-page" [class.jigsaw-paging-disabled]="_$prevDisabled" (click)="_$pagePrev()"></div>
+<jigsaw-paging-item *ngFor="let pageNumber of _$pageNumbers" [pageNumber]="pageNumber"></jigsaw-paging-item>
+<div class="jigsaw-paging-next jigsaw-paging-page" [class.jigsaw-paging-disabled]="_$nextDisabled" (click)="_$pageNext()"></div>
+
+<jigsaw-select *ngIf="pageSizeOptions"
+            [value]="_pageSize"
+            (valueChange)="_changePageSize($event)"
+            trackItemBy="value"
+            labelField="label"
+            width="80"
+            [data]="pageSizeOptions">
+</jigsaw-select>
+
+<div class="jigsaw-paging-goto" *ngIf="showQuickJumper">
+    <span>Goto</span>
+    <jigsaw-input #input (keyup.enter)="_goto(input.value)" width="50"></jigsaw-input>
+</div>
+

@@ -1,9 +1,8 @@
-import {Component, OnInit} from "@angular/core";
-import {ZTreeSettingSetting} from "../../../../rdk/component/tree/ztree-types"
-import {Headers, Http, RequestOptions} from "@angular/http";
+import {Component} from "@angular/core";
+import {Http} from "@angular/http";
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
-import {TreeData} from "../../../../rdk/core/data/tree-data";
+import {TreeData} from "jigsaw/core/data/tree-data";
 
 @Component({
     templateUrl: 'basic.html'

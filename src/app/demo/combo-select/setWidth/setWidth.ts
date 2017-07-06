@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {DropDownTrigger} from "../../../../rdk/component/combo-select/combo-select";
+import {DropDownTrigger} from "jigsaw/component/combo-select/combo-select";
 @Component({
     templateUrl: './setWidth.html',
     styleUrls: ['./setWidth.scss'],

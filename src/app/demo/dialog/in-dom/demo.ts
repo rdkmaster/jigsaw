@@ -1,20 +1,20 @@
 import {Component} from "@angular/core";
-import {ButtonInfo} from "../../../../rdk/service/popup.service";
+import {ButtonInfo} from "../../../../jigsaw/service/popup.service";
 
 @Component({
     template: `
-        <rdk-dialog width="300px" [buttons]="buttons">
-            <div rdk-title>
+        <jigsaw-dialog width="300px" [buttons]="buttons">
+            <div jigsaw-title>
                 <span class="fa fa-thumbs-up"></span>Title of the dialog
             </div>
-            <div rdk-body>
+            <div jigsaw-body>
                 <ul class="dialog-content">
                     <li>Dialog content...</li>
                     <li>Dialog content...</li>
                     <li>Dialog content...</li>
                 </ul>
             </div>
-        </rdk-dialog>
+        </jigsaw-dialog>
     `
 })
 export class DialogInDomDemoComponent {

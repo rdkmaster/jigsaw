@@ -1,0 +1,33 @@
+<div class="jigsaw-tabs">
+    <div *ngIf="_$tabPanes && _$tabPanes.length > 0" class="jigsaw-tabs-bar">
+        <div class="jigsaw-tabs-nav-container">
+            <!-- Todo 添加滚动条 -->
+            <div class="jigsaw-tabs-nav-wrap">
+                <div class="jigsaw-tabs-nav">
+                    <!-- 负责实现动画效果 -->
+                    <div class="jigsaw-tabs-ink-bar" [ngStyle]="_inkBarStyle"></div>
+                    <jigsaw-tab-label class="jigsaw-tabs-tab"
+                                   *ngFor="let tab of _$tabPanes; let i = index"
+                                   [key]="i"
+                                   [tabItem]="tab.label"
+                                   [class.jigsaw-tabs-tab-active]="_$selectedIndex === i"
+                                   [class.jigsaw-tabs-tab-disabled]="tab.disabled"
+                                   [class.jigsaw-tabs-tab-hidden]="tab.hidden"
+                                   (click)="_$tabClick(i)">
+                    </jigsaw-tab-label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="jigsaw-tabs-content" *ngIf="_$tabPanes && _$tabPanes.length > 0">
+        <jigsaw-tab-content
+            *ngFor="let tab of _$tabPanes; let i = index;"
+            [key]="i"
+            [tabItem]="tab.content"
+            [isActive]="selectedIndex === i"
+            [async]="tab.async"
+            [initData]="tab.initData"
+            [ngStyle]="{transform: 'translate3d('+(i-_$selectedIndex)*100+'%, 0px, 0px)'}">
+        </jigsaw-tab-content>
+    </div>
+</div>

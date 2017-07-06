@@ -1,14 +1,14 @@
 import {Component, TemplateRef, Type, ViewChild} from '@angular/core';
-import {RdkTab} from "../../../../rdk/component/tabs/tab";
+import {JigsawTab} from "jigsaw/component/tabs/tab";
+import {IDynamicInstantiatable} from "jigsaw/component/core";
 import {TabContentDefine} from "./tabContent/tabContent";
-import {IDynamicInstantiatable} from "../../../../rdk/component/core";
 
 @Component({
     templateUrl: './dynamicTab.html',
     styleUrls: ['dynamicTab.scss']
 })
-export class dynamicTabDemoComponent {
-    @ViewChild(RdkTab) tabs: RdkTab;
+export class DynamicTabDemoComponent {
+    @ViewChild(JigsawTab) tabs: JigsawTab;
 
     public removeTab(index) {
         this.tabs.removeTab(index);
@@ -49,7 +49,7 @@ export class dynamicTabDemoComponent {
     }
 
     public addComponentTab() {
-        this.addTab('component tab', TabContentDefine, 'rdk')
+        this.addTab('component tab', TabContentDefine, 'jigsaw')
     }
 
     /*public addRouterLinkTab(tabTitle, tabContent) {

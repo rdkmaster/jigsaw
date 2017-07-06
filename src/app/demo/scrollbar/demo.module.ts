@@ -1,8 +1,8 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
+import {JigsawScrollBarModule} from "jigsaw/component/scrollbar/scrollbar";
 import {ScrollbarBasicDemoComponent} from "./basic/basic";
 import {ScrollbarUserdefineDemoComponent} from "./user-define/user-define";
-import {RdkScrollBarModule} from "../../../rdk/component/scrollbar/scrollbar";
 import {ScrollbarSetOptionsDemoComponent} from "./setOptions/setOptions";
 
 const scrollbarDemoRoutes=[
@@ -31,7 +31,7 @@ const scrollbarDemoRoutes=[
         ScrollbarBasicDemoComponent,ScrollbarUserdefineDemoComponent,ScrollbarSetOptionsDemoComponent
     ],
     imports: [
-        RouterModule.forChild(scrollbarDemoRoutes), RdkScrollBarModule
+        RouterModule.forChild(scrollbarDemoRoutes), JigsawScrollBarModule
     ],
     exports: [
         ScrollbarBasicDemoComponent,ScrollbarUserdefineDemoComponent,ScrollbarSetOptionsDemoComponent

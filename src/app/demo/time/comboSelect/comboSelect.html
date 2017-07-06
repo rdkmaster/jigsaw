@@ -1,18 +1,18 @@
-<rdk-combo-select [(value)]="singleTimeComboValue" width="100px">
-    <rdk-time
+<jigsaw-combo-select [(value)]="singleTimeComboValue" width="100px">
+    <jigsaw-time
         [(date)]="date"
         (dateChange)="handleDateChange($event)">
-    </rdk-time>
-</rdk-combo-select>
+    </jigsaw-time>
+</jigsaw-combo-select>
 Selected Time : {{date}}<br><br>
 
 
-<rdk-combo-select [(value)]="rangeTimeComboValue">
-    <rdk-range-time
+<jigsaw-combo-select [(value)]="rangeTimeComboValue">
+    <jigsaw-range-time
         [(beginDate)]="beginDate"
         [(endDate)]="endDate"
         (beginDateChange)="handleDeginDateChange($event)"
         (endDateChange)="handleEndDateChange($event)">
-    </rdk-range-time>
-</rdk-combo-select>
+    </jigsaw-range-time>
+</jigsaw-combo-select>
 Selected Time : {{beginDate}} - {{endDate}}

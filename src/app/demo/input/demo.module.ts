@@ -2,13 +2,14 @@
 
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {InputBasicDemoComponent} from "./basic/basic";
 
-import {RdkInputModule} from "../../../rdk/component/input/input";
+import {JigsawInputModule} from "jigsaw/component/input/input";
+import {JigsawButtonModule} from "jigsaw/component/button/button";
+
+import {InputBasicDemoComponent} from "./basic/basic";
 import {InputValueChangeDemoComponent} from "./valueChange/valueChange";
 import {InputClearableDemoComponent} from "./clearable/clearable";
 import {InputFocusDemoComponent} from "./focus/focus";
-import {RdkButtonModule} from "../../../rdk/component/button/button";
 import {InputPrefixIconDemoComponent} from "./prefixIcon/prefixIcon";
 
 
@@ -41,7 +42,7 @@ const inputDemoRoutes=[
         ,InputFocusDemoComponent,InputPrefixIconDemoComponent
     ],
     imports: [
-        RouterModule.forChild(inputDemoRoutes), RdkInputModule,RdkButtonModule
+        RouterModule.forChild(inputDemoRoutes), JigsawInputModule,JigsawButtonModule
     ],
     exports: [
         InputBasicDemoComponent

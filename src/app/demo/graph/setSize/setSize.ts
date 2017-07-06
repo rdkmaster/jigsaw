@@ -3,7 +3,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import {AbstractGraphData} from "../../../../rdk/core/data/graph-data";
+import {AbstractGraphData} from "jigsaw/core/data/graph-data";
 
 @Component({
     templateUrl:"setSize.html"

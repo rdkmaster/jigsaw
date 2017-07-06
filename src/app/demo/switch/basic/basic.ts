@@ -1,5 +1,4 @@
 import { Component } from "@angular/core";
-import { RdkSwitchModule } from "../../../../rdk/component/switch/index";
 
 @Component({
   templateUrl: 'basic.html'

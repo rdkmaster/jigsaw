@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 
 @Component({
     template: `
-        <rdk-info-alert [initData]="infoInitData"></rdk-info-alert>
+        <jigsaw-info-alert [initData]="infoInitData"></jigsaw-info-alert>
     `
 })
 export class AlertInDomDemoComponent {

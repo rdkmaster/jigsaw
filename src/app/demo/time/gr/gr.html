@@ -1,7 +1,7 @@
 <h4>Gr</h4>
 
-Gr : <rdk-tile-select [data]="datas" [(selectedItems)]="gr" [multipleSelect]="false"></rdk-tile-select><br>
+Gr : <jigsaw-tile-select [data]="datas" [(selectedItems)]="gr" [multipleSelect]="false"></jigsaw-tile-select><br>
 
-<rdk-time [(date)]="date" [gr]="gr[0].label" (dateChange)="dateChange($event)"></rdk-time><br>
+<jigsaw-time [(date)]="date" [gr]="gr[0].label" (dateChange)="dateChange($event)"></jigsaw-time><br>
 
 {{date | json}}

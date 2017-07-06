@@ -3,15 +3,15 @@
  */
 
 import {Component} from "@angular/core";
-import {LineBarGraphData, LineBarGraphDataByRow} from "../../../../../rdk/core/data/graph-data";
+import {LineBarGraphData, LineBarGraphDataByRow} from "jigsaw/core/data/graph-data";
 
 @Component({
     template: `
         <p>数据的一列为一个系列情形，请使用 LineBarGraphData 作为数据。这个和一般的数据库表的结构非常契合，推荐优先使用。</p>
-        <rdk-graph [data]="dataByCol"></rdk-graph>
+        <jigsaw-graph [data]="dataByCol"></jigsaw-graph>
         <br>
         <p>数据的一行为一个系列情形，请使用 LineBarGraphDataByRow 作为数据。</p>
-        <rdk-graph [data]="dataByRow"></rdk-graph>
+        <jigsaw-graph [data]="dataByRow"></jigsaw-graph>
     `
 })
 

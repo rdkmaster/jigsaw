@@ -1,21 +1,21 @@
 
 <p>预设颜色</p>
-<rdk-button  type="danger">Danger</rdk-button>
+<jigsaw-button  type="danger">Danger</jigsaw-button>
 
-<rdk-button>Default</rdk-button>
+<jigsaw-button>Default</jigsaw-button>
 
-<rdk-button  type="primary">Primary</rdk-button>
+<jigsaw-button  type="primary">Primary</jigsaw-button>
 
 <br>
 <br>
 <br>
 <p>另一种写法</p>
 
-<a rdk-button  type="danger">Danger</a>
+<a jigsaw-button  type="danger">Danger</a>
 
-<a rdk-button >Default</a>
+<a jigsaw-button >Default</a>
 
-<a rdk-button  type="primary">Primary</a>
+<a jigsaw-button  type="primary">Primary</a>
 
 <br>
 <br>
@@ -24,11 +24,11 @@
 <br>
 <p>当前尺寸: {{size || "default"}}</p>
 <br>
-<rdk-button  [presize]="size" type="primary" (click)="changeSize('small')">Small</rdk-button>
+<jigsaw-button  [presize]="size" type="primary" (click)="changeSize('small')">Small</jigsaw-button>
 
-<rdk-button  [presize]="size" type="primary" (click)="changeSize()">Default</rdk-button>
+<jigsaw-button  [presize]="size" type="primary" (click)="changeSize()">Default</jigsaw-button>
 
-<rdk-button  [presize]="size" type="primary" (click)="changeSize('large')">Large</rdk-button>
+<jigsaw-button  [presize]="size" type="primary" (click)="changeSize('large')">Large</jigsaw-button>
 
 <br>
 <br>
@@ -36,8 +36,8 @@
 <br>
 <p>当前尺寸: {{aSize || "default"}}</p>
 <br>
-<a rdk-button  [presize]="aSize" type="primary" (click)="changeASize('small')">Small</a>
+<a jigsaw-button  [presize]="aSize" type="primary" (click)="changeASize('small')">Small</a>
 
-<a rdk-button  [presize]="aSize" type="primary" (click)="changeASize()">Default</a>
+<a jigsaw-button  [presize]="aSize" type="primary" (click)="changeASize()">Default</a>
 
-<a rdk-button  [presize]="aSize" type="primary" (click)="changeASize('large')">Large</a>
+<a jigsaw-button  [presize]="aSize" type="primary" (click)="changeASize('large')">Large</a>

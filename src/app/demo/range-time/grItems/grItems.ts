@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
-import {TimeGr} from "../../../../rdk/service/time.service";
-import {GrItem, Shortcut} from "../../../../rdk/component/time/time";
-import {RangeTimeDataRanges} from "../../../../rdk/component/range-time/shortcut-dateranges";
+import {TimeGr} from "jigsaw/service/time.service";
+import {GrItem, Shortcut} from "jigsaw/component/time/time";
+import {RangeTimeDataRanges} from "jigsaw/component/range-time/shortcut-dateranges";
 
 
 @Component({

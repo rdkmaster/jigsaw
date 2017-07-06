@@ -3,23 +3,23 @@
  */
 
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {AbstractGraphData} from "../../../../rdk/core/data/graph-data";
-import {EchartOptions} from "rdk/core/data/echart-types";
-import {RdkGraph} from "../../../../rdk/component/graph/graph";
-import {RdkInput} from "../../../../rdk/component/input/input";
+import {AbstractGraphData} from "jigsaw/core/data/graph-data";
+import {EchartOptions} from "jigsaw/core/data/echart-types";
+import {JigsawGraph} from "jigsaw/component/graph/graph";
+import {JigsawInput} from "jigsaw/component/input/input";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/observable/combineLatest";
 
 @Component({
     template: `
         autoResize:
-        <rdk-switch [(checked)]="autoResize" (change)="resizeGraph()"></rdk-switch>
+        <jigsaw-switch [(checked)]="autoResize" (change)="resizeGraph()"></jigsaw-switch>
         width:
-        <rdk-input [value]="graphWidth" #widthInput></rdk-input>
+        <jigsaw-input [value]="graphWidth" #widthInput></jigsaw-input>
         height:
-        <rdk-input [value]="graphHeight" #heightInput></rdk-input><br><br>
-        <rdk-graph #graph [data]="data" [width]="graphWidth" [height]="graphHeight"
-                   [autoResize]="autoResize"></rdk-graph>
+        <jigsaw-input [value]="graphHeight" #heightInput></jigsaw-input><br><br>
+        <jigsaw-graph #graph [data]="data" [width]="graphWidth" [height]="graphHeight"
+                   [autoResize]="autoResize"></jigsaw-graph>
     `
 })
 
@@ -29,11 +29,11 @@ export class GraphResizeComponent implements OnInit {
     graphWidth: string = '100%';
     graphHeight: string = '300';
 
-    @ViewChild("graph") graph: RdkGraph;
+    @ViewChild("graph") graph: JigsawGraph;
 
-    @ViewChild("widthInput") widthInput: RdkInput;
+    @ViewChild("widthInput") widthInput: JigsawInput;
 
-    @ViewChild("heightInput") heightInput: RdkInput;
+    @ViewChild("heightInput") heightInput: JigsawInput;
 
     resizeGraph() {
         this.graph.resize();

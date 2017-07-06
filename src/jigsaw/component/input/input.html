@@ -1,0 +1,15 @@
+<div class="jigsaw-input-icon-front">
+    <ng-content select="[jigsaw-prefix-icon]"></ng-content>
+</div>
+<ng-content></ng-content>
+<input #input [class.jigsaw-input-long-indent]="_$longIndent"
+       [ngStyle]="_$inputPaddingStyle"
+       [placeholder]="placeholder"
+       [(ngModel)]="value"
+       (blur)="_$handleBlur($event)"
+       (focus)="_$handleFocus($event)">
+<div class="jigsaw-input-icon-end">
+    <span *ngIf="clearable" (click)="_clearValue($event)" [hidden]="!value && value != 0" class="fa fa-times"></span>
+    <ng-content select="[jigsaw-icon]"></ng-content>
+</div>
+

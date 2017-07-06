@@ -2,20 +2,20 @@
     <h1>set width demo</h1>
     <h3>combo-select自定义宽度</h3>
     <p>drop down的宽度总是不小于combo-select的宽度</p>
-    <rdk-input [(value)]="width"></rdk-input>
+    <jigsaw-input [(value)]="width"></jigsaw-input>
 
-    <rdk-combo-select [width]="width">
+    <jigsaw-combo-select [width]="width">
         <div>This is a small drop down</div>
-    </rdk-combo-select>
+    </jigsaw-combo-select>
 </div>
 
 <div class="combo-select-demo cmn-box">
     <h3>drop down自定义宽度</h3>
     <p>drop down自定义宽度,在drop down内容中设置</p>
-    <rdk-input [(value)]="width2"></rdk-input>
+    <jigsaw-input [(value)]="width2"></jigsaw-input>
 
-    <rdk-combo-select>
-        <rdk-input [width]="width2" value="drop down input"></rdk-input>
-    </rdk-combo-select>
+    <jigsaw-combo-select>
+        <jigsaw-input [width]="width2" value="drop down input"></jigsaw-input>
+    </jigsaw-combo-select>
 </div>
 

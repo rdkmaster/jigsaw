@@ -1,6 +1,5 @@
-import {Component, OnInit, ViewChild, Output, EventEmitter, AfterViewInit} from "@angular/core";
-import {TableCellRenderer} from "../../../../rdk/component/table/table-api";
-import {RdkInput} from "../../../../rdk/component/input/input";
+import {Component} from "@angular/core";
+import {TableCellRenderer} from "jigsaw/component/table/table-api";
 
 /*
  * 自定义表头渲染组件
@@ -15,10 +14,10 @@ export class TableHeadIcon extends TableCellRenderer {
  * 自定义表头渲染组件
  * */
 @Component({
-    template: `{{cellData}} <rdk-select [(value)]="selectedCityForSelect"
+    template: `{{cellData}} <jigsaw-select [(value)]="selectedCityForSelect"
                    placeholder="请选择"
                    [data]="cityListForSelect" width="70" height="20">
-               </rdk-select>`
+               </jigsaw-select>`
 })
 export class TableHeadSelect extends TableCellRenderer {
     selectedCityForSelect: any;

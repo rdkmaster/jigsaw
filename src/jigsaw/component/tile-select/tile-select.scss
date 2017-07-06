@@ -1,0 +1,13 @@
+@import "../../assets/scss/core/basc";
+
+$select-prefix-cls: #{$jigsaw-prefix}-tile-select;
+
+:host {
+    @include inline-block();
+    opacity: 0;
+    .#{$select-prefix-cls}-search {
+        margin-bottom: 8px;
+    }
+}
+
+

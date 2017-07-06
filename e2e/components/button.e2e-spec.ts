@@ -1,4 +1,4 @@
-import {browser, by, element, ExpectedConditions} from 'protractor';
+import {browser, by, element} from 'protractor';
 
 describe('button', () => {
     describe('button render', () => {
@@ -8,7 +8,7 @@ describe('button', () => {
         });
 
         it('should render a button', async () => {
-            expect(element(by.css('.demo-wrap .right-box rdk-button')).getText()).toEqual('click me');
+            expect(element(by.css('.demo-wrap .right-box jigsaw-button')).getText()).toEqual('click me');
         });
     });
 });

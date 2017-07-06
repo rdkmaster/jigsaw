@@ -3,10 +3,10 @@ import {Component} from "@angular/core";
 
 @Component({
     template: `
-        <rdk-button (click)="onClick()" type="primary" height="32px">
-            <rdk-loading *ngIf="isLoading" width="16px" height="16px" color="white"></rdk-loading>
+        <jigsaw-button (click)="onClick()" type="primary" height="32px">
+            <jigsaw-loading *ngIf="isLoading" width="16px" height="16px" color="white"></jigsaw-loading>
             <span style="padding-left: 5px">{{label}}</span>
-        </rdk-button>
+        </jigsaw-button>
     `
 })
 export class ButtonWithLoadingComponent {

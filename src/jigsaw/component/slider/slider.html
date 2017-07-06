@@ -1,0 +1,22 @@
+<div class="jigsaw-slider"
+     [class.jigsaw-slider-disabled]="disabled"
+     [class.jigsaw-slider-with-marks]="marks&& marks.length > 0"
+     [class.jigsaw-slider-vertical]="vertical"
+>
+    <!--(mousedown)="_updateCanDragged(true)"-->
+    <!--(mouseup)="_updateValuePosition($event)"-->
+    <!--(click)="_updateCanDragged(false)"-->
+
+    <div class="jigsaw-slider-rail"></div>
+    <div class="jigsaw-slider-track" [ngStyle]="_$trackStyle"></div>
+
+    <div class="jigsaw-slider-step">
+        <span *ngFor="let mark of _$marks" class="jigsaw-slider-dot jigsaw-slider-dot-active" [ngStyle]="mark.dotStyle"></span>
+    </div>
+
+    <slider-handle *ngFor="let item of _$value;let i = index" value="{{item}}" [key]="i"></slider-handle>
+
+    <div *ngIf="_$marks.length > 0" class="jigsaw-slider-mark">
+        <span *ngFor="let mark of _$marks" class="jigsaw-slider-mark-text" [ngStyle]="mark.labelStyle">{{mark.label}}</span>
+    </div>
+</div>

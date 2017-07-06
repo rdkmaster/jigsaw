@@ -4,45 +4,44 @@
 
 import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
-import { RdkTabsDemoComponent } from './basic/basic';
-import {RdkTabsModule} from "../../../rdk/component/tabs/index";
+import {JigsawTabsDemoComponent} from './basic/basic';
 import {RouterModule} from "@angular/router";
-import {RdkInputModule} from "../../../rdk/component/input/input";
-import {RdkButtonModule} from "../../../rdk/component/button/button";
-import {RdkTabsWithInputComponent} from "./withInput/withInput";
-import {RdkTabsWithNgForComponent} from "./ngFor/ngFor";
+import {JigsawInputModule} from "jigsaw/component/input/input";
+import {JigsawButtonModule} from "jigsaw/component/button/button";
+import {JigsawTableModule} from "jigsaw/component/table/table";
+import {JigsawTabsModule} from "jigsaw/component/tabs/index";
+import {JigsawTabsWithInputComponent} from "./withInput/withInput";
+import {JigsawTabsWithNgForComponent} from "./ngFor/ngFor";
 import {CommonModule} from "@angular/common";
-import {RdkHideTabComponent} from "./hideTab/hideTab";
-import {RdkShowTabComponent} from "./showTab/showTab";
-import {RdkDestoryTabComponent} from "./destoryTab/destoryTab";
-import {RdkTabsComponent} from "./tabs/Tabs";
-import {dynamicTabDemoComponent} from "./tabApi/dynamicTab";
-import {RdkTabPane} from "../../../rdk/component/tabs/tab-pane";
+import {JigsawHideTabComponent} from "./hideTab/hideTab";
+import {JigsawShowTabComponent} from "./showTab/showTab";
+import {JigsawDestoryTabComponent} from "./destoryTab/destoryTab";
+import {JigsawTabsComponent} from "./tabs/Tabs";
+import {DynamicTabDemoComponent} from "./tabApi/dynamicTab";
 import {TabContentDefine} from "./tabApi/tabContent/tabContent";
-import {RdkTableModule} from "../../../rdk/component/table/table";
 
-const routes=[
+const routes = [
     {
-        path:'basic', component: RdkTabsDemoComponent
+        path: 'basic', component: JigsawTabsDemoComponent
     },
     {
-        path:'withInputAndTable', component: RdkTabsWithInputComponent
+        path: 'withInputAndTable', component: JigsawTabsWithInputComponent
     },
     {
-        path:'withNgFor', component: RdkTabsWithNgForComponent
+        path: 'withNgFor', component: JigsawTabsWithNgForComponent
     },
     {
-        path:'hideTab', component: RdkHideTabComponent
+        path: 'hideTab', component: JigsawHideTabComponent
     },
     {
-        path:'showTab', component: RdkShowTabComponent
+        path: 'showTab', component: JigsawShowTabComponent
     },
     {
-        path:'removeTab', component: RdkDestoryTabComponent
+        path: 'removeTab', component: JigsawDestoryTabComponent
     },
     {
-        path:'dynamicTab',
-        component: dynamicTabDemoComponent,
+        path: 'dynamicTab',
+        component: DynamicTabDemoComponent,
         children: [{
             path: 'tabPage',
             loadChildren: './tabApi/tabContent/tab-content.module#TabContentModule'
@@ -53,26 +52,27 @@ const routes=[
 @NgModule({
     imports: [
         RouterModule.forChild(routes),
-        RdkTabsModule,
-        RdkInputModule,
-        RdkButtonModule,
         CommonModule,
-        RdkTableModule
+        JigsawTabsModule,
+        JigsawInputModule,
+        JigsawButtonModule,
+        JigsawTableModule
     ],
-    exports: [RdkTabsDemoComponent],
+    exports: [JigsawTabsDemoComponent],
     declarations: [
-        RdkTabsDemoComponent,
-        RdkTabsWithInputComponent,
-        RdkTabsWithNgForComponent,
-        RdkHideTabComponent,
-        RdkShowTabComponent,
-        RdkDestoryTabComponent,
-        RdkTabsComponent,
-        dynamicTabDemoComponent,
+        JigsawTabsDemoComponent,
+        JigsawTabsWithInputComponent,
+        JigsawTabsWithNgForComponent,
+        JigsawHideTabComponent,
+        JigsawShowTabComponent,
+        JigsawDestoryTabComponent,
+        JigsawTabsComponent,
+        DynamicTabDemoComponent,
         TabContentDefine
     ],
     providers: [],
-    schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
     entryComponents: [TabContentDefine]
 })
-export class TabsDemoModule { }
+export class TabsDemoModule {
+}

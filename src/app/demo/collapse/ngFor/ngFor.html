@@ -1,8 +1,8 @@
-<rdk-button (click)="click()">获取当前展开的网元对象</rdk-button> <rdk-button (click)="add()">增加一个</rdk-button>
+<jigsaw-button (click)="click()">获取当前展开的网元对象</jigsaw-button> <jigsaw-button (click)="add()">增加一个</jigsaw-button>
 
 <br>
-<rdk-collapse width="80%" mode="accordion" #coll_ne>
-    <rdk-collapse-pane *ngFor="let ne of nes" [title]="ne.name">
+<jigsaw-collapse width="80%" mode="accordion" #coll_ne>
+    <jigsaw-collapse-pane *ngFor="let ne of nes" [title]="ne.name">
         <div>{{ne.content}}</div>
-    </rdk-collapse-pane>
-</rdk-collapse>
+    </jigsaw-collapse-pane>
+</jigsaw-collapse>

@@ -1,13 +1,13 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {PopupService} from "../../../rdk/service/popup.service";
-import {RdkTooltipModule} from "../../../rdk/component/tooltip/tooltip";
+import {PopupService} from "jigsaw/service/popup.service";
+import {JigsawTooltipModule} from "jigsaw/component/tooltip/tooltip";
+import {JigsawButtonModule} from "jigsaw/component/button/button";
+import {JigsawInputModule} from "jigsaw/component/input/input";
 import {TooltipInDomDemoComponent} from "./in-dom/demo";
 import {TooltipDialogDemoComponent} from "./dialog/demo";
-import {RdkButtonModule} from "../../../rdk/component/button/button";
 import {UserTooltipDialogComponent} from "./dialog/user-defined-tooltip-dialog";
 import {SimpleTooltipDemoComponent} from "./simple-tooltip/demo";
-import {RdkInputModule} from "../../../rdk/component/input/input";
 
 
 const popupDemoRoutes = [
@@ -33,7 +33,7 @@ const popupDemoRoutes = [
     ],
     imports: [
         RouterModule.forChild(popupDemoRoutes),
-        RdkTooltipModule, RdkButtonModule, RdkInputModule
+        JigsawTooltipModule, JigsawButtonModule, JigsawInputModule
     ],
     providers: [PopupService],
     entryComponents: [

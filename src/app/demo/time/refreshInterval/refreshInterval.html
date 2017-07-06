@@ -1,6 +1,6 @@
 <p>主要针对 limitStart 或 limitEnd 的值是时间宏的时候，周期性自动刷新 limitStart 或 limitEnd 为当前时刻对应的值。</p>
 <p>切换到选择时间的状态，可以看到 limitStart 被一秒钟自动刷新一次，由于date的初始值是当前时刻，limitStart改变了之后，date的值也会被自动改变</p>
 
-<rdk-time [(date)]="date" gr="second" limitStart="now"  [refreshInterval]="1000"></rdk-time><br>
+<jigsaw-time [(date)]="date" gr="second" limitStart="now"  [refreshInterval]="1000"></jigsaw-time><br>
 
 {{date}}

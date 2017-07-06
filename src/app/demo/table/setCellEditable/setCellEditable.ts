@@ -1,8 +1,8 @@
 import {Component, AfterViewInit, ViewChild, ViewEncapsulation} from "@angular/core";
-import {TableData} from "../../../../rdk/core/data/table-data";
-import {ColumnDefine, TableCellRenderer} from "../../../../rdk/component/table/table-api";
-import {RdkInput} from "../../../../rdk/component/input/input";
+import {TableData} from "jigsaw/core/data/table-data";
 import {Http} from "@angular/http";
+import {ColumnDefine, TableCellRenderer} from "jigsaw/component/table/table-api";
+import {JigsawInput} from "jigsaw/component/input/input";
 
 
 /*
@@ -18,11 +18,11 @@ export class MyTableCell extends TableCellRenderer {
  * 编辑单元格渲染器
  * */
 @Component({
-    template: `<rdk-input #input [(value)]="cellData" [clearable]="false" (blur)="dispatchChangeEvent(cellData)"></rdk-input>`
+    template: `<jigsaw-input #input [(value)]="cellData" [clearable]="false" (blur)="dispatchChangeEvent(cellData)"></jigsaw-input>`
 })
 export class MyTableCellEditor extends TableCellRenderer implements AfterViewInit{
 
-    @ViewChild(RdkInput) input: RdkInput;
+    @ViewChild(JigsawInput) input: JigsawInput;
 
     ngAfterViewInit(){
         this.input.focus();

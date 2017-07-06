@@ -1,6 +1,5 @@
-import {Component, ElementRef, QueryList, ViewChild} from '@angular/core';
-import {LoadingService} from "rdk/service/loading.service";
-import {PopupInfo} from "../../../../rdk/service/popup.service";
+import {Component, ElementRef, ViewChild} from '@angular/core';
+import {LoadingService} from "jigsaw/service/loading.service";
 
 @Component({
     templateUrl: 'loading.html',

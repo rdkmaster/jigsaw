@@ -24,12 +24,12 @@ export class ColorfulLoadingDemoComponent {
         if( this._pause == 'paused') {
             this._pause = 'runing';
             this.setElementsStyle('.spinner-container > div','animationPlayState','running');
-            this.setElementsStyle('.rdk-loading-content > div','animationPlayState','running');
+            this.setElementsStyle('.jigsaw-loading-content > div','animationPlayState','running');
 
         } else {
             this._pause = 'paused';
             this.setElementsStyle('.spinner-container > div','animationPlayState','paused');
-            this.setElementsStyle('.rdk-loading-content > div','animationPlayState','paused');
+            this.setElementsStyle('.jigsaw-loading-content > div','animationPlayState','paused');
         }
     }
     // animation-play-state

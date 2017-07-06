@@ -1,15 +1,15 @@
 /**
  * Created by 10177553 on 2017/3/29.
  */
-import {Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
-import {RdkTab} from "../../../../rdk/component/tabs/tab";
+import {Component, ViewChild, AfterViewInit} from '@angular/core';
+import {JigsawTab} from "jigsaw/component/tabs/tab";
 
 @Component({
     templateUrl:"Tabs.html"
 })
-export class RdkTabsComponent implements AfterViewInit{
+export class JigsawTabsComponent implements AfterViewInit{
 
-    @ViewChild('myTab') myTab : RdkTab;
+    @ViewChild('myTab') myTab : JigsawTab;
 
     ngAfterViewInit(){
         console.log(this.myTab.length);
