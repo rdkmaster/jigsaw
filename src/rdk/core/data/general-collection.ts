@@ -7,6 +7,7 @@ import "rxjs/add/operator/map";
 
 export abstract class AbstractGeneralCollection<T = any> implements IAjaxComponentData {
     public abstract fromObject(data: T): AbstractGeneralCollection<T>;
+
     protected abstract ajaxSuccessHandler(data): void;
 
     public http: Http;
