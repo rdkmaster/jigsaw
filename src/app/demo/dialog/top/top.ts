@@ -3,7 +3,7 @@
  */
 
 import {Component, TemplateRef} from "@angular/core";
-import {PopupInfo, PopupService} from "../../../../rdk/service/popup.service";
+import {PopupInfo, PopupService} from "jigsaw/service/popup.service";
 
 @Component({
     templateUrl: 'top.html',

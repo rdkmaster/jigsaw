@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {CheckBoxStatus} from "../../../../rdk/component/checkbox/checkbox";
+import {CheckBoxStatus} from "jigsaw/component/checkbox/checkbox";
 
 @Component({
   templateUrl: 'basic.html'

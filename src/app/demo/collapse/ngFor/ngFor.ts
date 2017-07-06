@@ -2,8 +2,8 @@
  * Created by 10177553 on 2017/4/26.
  */
 import {Component, ViewChild} from '@angular/core';
-import {RdkCollapse} from "../../../../rdk/component/collapse/collapse";
-import {RdkCollapsePane} from "../../../../rdk/component/collapse/collapse-pane";
+import {JigsawCollapse} from "jigsaw/component/collapse/collapse";
+import {JigsawCollapsePane} from "jigsaw/component/collapse/collapse-pane";
 
 @Component({
     templateUrl: './ngFor.html'
@@ -16,10 +16,10 @@ export class ngForDemoComponent {
         {id: 3, name: "NE3", content: "content of ne3"}
     ];
 
-    @ViewChild("coll_ne") collapse: RdkCollapse;
+    @ViewChild("coll_ne") collapse: JigsawCollapse;
 
 
-    activePane: RdkCollapsePane;
+    activePane: JigsawCollapsePane;
 
     add() {
         this.nes.push({id: 4, name: "NE" + (this.nes.length+1), content: "content of ne"+ (this.nes.length+1)})

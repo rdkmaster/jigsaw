@@ -1,15 +1,15 @@
 /**
  * Created by 10177553 on 2017/3/29.
  */
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {RdkTab} from "../../../../rdk/component/tabs/tab";
+import {Component, ViewChild} from '@angular/core';
+import {JigsawTab} from "jigsaw/component/tabs/tab";
 
 @Component({
     templateUrl:"destoryTab.html"
 })
-export class RdkDestoryTabComponent {
+export class JigsawDestoryTabComponent {
 
-    @ViewChild('myTab') myTab: RdkTab;
+    @ViewChild('myTab') myTab: JigsawTab;
 
     destroyTab() {
         this.myTab.removeTab(0);

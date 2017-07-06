@@ -3,8 +3,8 @@
  */
 
 import {Component, ViewChild, AfterViewInit} from '@angular/core';
-import {RdkComboSelect} from "../../../../rdk/component/combo-select/combo-select";
-import {ArrayCollection} from "../../../../rdk/core/data/array-collection";
+import {JigsawComboSelect} from "jigsaw/component/combo-select/combo-select";
+import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 @Component({
     templateUrl: 'dropDownWidth.html',
@@ -13,7 +13,7 @@ export class ComboSelectWidthDemo implements AfterViewInit {
     public dropDownWidth="120%";
     public selectedCity = new ArrayCollection([{label: "北京"}]);
 
-    @ViewChild(RdkComboSelect) comboSelect:RdkComboSelect;
+    @ViewChild(JigsawComboSelect) comboSelect:JigsawComboSelect;
 
     constructor() {
     }

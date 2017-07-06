@@ -1,30 +1,28 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {TableBasicDemoComponent} from "./basic/basic";
+import {JigsawTableModule} from "jigsaw/component/table/table";
+import {JigsawTableRendererModule} from "jigsaw/component/table/table-renderer";
+import {JigsawSelectModule} from "jigsaw/component/select/select";
+import {JigsawCheckBoxModule} from "jigsaw/component/checkbox/index";
+import {JigsawPaginationModule} from "jigsaw/component/pagination/pagination";
+import {JigsawInputModule} from "jigsaw/component/input/input";
+import {JigsawDialogModule} from "jigsaw/component/dialog/dialog";
+import {PopupService} from "jigsaw/service/popup.service";
+import {JigsawButtonModule} from "jigsaw/component/button/button";
 import {TableRendererDemoComponent} from "./renderer/renderer";
-import {RdkTableModule} from "../../../rdk/component/table/table";
-import {RdkTableRendererModule} from "../../../rdk/component/table/table-renderer";
 import {TableHeadSelect, TableHeadIcon} from "./renderer/table-renderer";
-import {RdkSelectModule} from "../../../rdk/component/select/select";
-import {RdkCheckBoxModule} from "../../../rdk/component/checkbox/index";
-import {RdkPaginationModule} from "../../../rdk/component/pagination/pagination";
-import {RdkInputModule} from "../../../rdk/component/input/input";
 import {TablePerformsDemoComponent} from "./performs/performs";
-import {
-    TableSetHeaderRenderDemoComponent
-} from "./setHeaderRender/setHeaderRender";
+import {TableSetHeaderRenderDemoComponent} from "./setHeaderRender/setHeaderRender";
 import {TableSetHeaderClassDemoComponent} from "./setHeaderClass/setHeaderClass";
 import {TableColumnSetWidthDemoComponent} from "./setColumnWidth/setColumnWidth";
 import {TableColumnSetVisibleDemoComponent} from "./setColumnVisible/setColumnVisible";
 import {TableSetHeaderSortDemoComponent} from "./setHeaderSort/setHeaderSort";
-import {TableSetCellRenderDemoComponent
-} from "./setCellRender/setCellRender";
+import {TableSetCellRenderDemoComponent} from "./setCellRender/setCellRender";
 import {TableSetCellClassDemoComponent} from "./setCellClass/setCellClass";
 import {TableColumnGroupDemoComponent} from "./setColumnGroup/setColumnGroup";
 import {TableSetCellEditableDemoComponent, MyTableCellEditor, MyTableCell} from "./setCellEditable/setCellEditable";
-import {
-    TableAddColumnDemoComponent, MyTableHeadOption, MyTableCellOption
-} from "./addColumn/addColumn";
+import {TableAddColumnDemoComponent, MyTableHeadOption, MyTableCellOption} from "./addColumn/addColumn";
 import {TableFixedHeadDemoComponent} from "./fixedHead/fixedHead";
 import {TablePageableDemoComponent} from "./pageable/demo";
 import {TableDataFromAjaxDemoComponent} from "./dataFromAjax/dataFromAjax";
@@ -32,11 +30,8 @@ import {TableScrollAmountDemoComponent} from "./scrollAmount/scrollAmount";
 import {TableAddIDColumnDemoComponent} from "./addIDColumn/addIDColumn";
 import {TableAddCheckboxColumnDemoComponent} from "./addCheckboxColumn/addCheckboxColumn";
 import {TableDataChangeDemoComponent} from "./dataChange/dataChange";
-import {RdkButtonModule} from "../../../rdk/component/button/button";
 import {TableAddIDWithPagingComponent} from "./addIDWithPaging/addIDWithPaging";
 import {TableDataWithPopupDemoComponent} from "./withPopup/withPopup";
-import {RdkDialogModule} from "../../../rdk/component/dialog/dialog";
-import {PopupService} from "../../../rdk/service/popup.service";
 import {TableRendererOfTemplateRefDemoComponent} from "./rendererOfTemplateRef/rendererOfTemplateRef";
 import {TableLineEllipsisDemoComponent} from "./lineEllipsis/lineElliosis";
 import {TableAddIDWithDebouncePagingComponent} from "./addIDWithDebouncePaging/addIDWithDebouncePaging";
@@ -165,14 +160,14 @@ const tableDemoRoutes = [
     ],
     imports: [
         RouterModule.forChild(tableDemoRoutes),
-        RdkTableModule,
-        RdkTableRendererModule,
-        RdkSelectModule,
-        RdkCheckBoxModule,
-        RdkPaginationModule,
-        RdkInputModule,
-        RdkButtonModule,
-        RdkDialogModule,
+        JigsawTableModule,
+        JigsawTableRendererModule,
+        JigsawSelectModule,
+        JigsawCheckBoxModule,
+        JigsawPaginationModule,
+        JigsawInputModule,
+        JigsawButtonModule,
+        JigsawDialogModule,
     ],
     exports: [ ],
     entryComponents: [

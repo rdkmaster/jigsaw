@@ -10,10 +10,10 @@
     display: inline-block!important;
 }
 
-rdk-slider:focus, rdk-slider:hover {
+jigsaw-slider:focus, jigsaw-slider:hover {
     outline: none;
 }
 
-rdk-slider::selection {
+jigsaw-slider::selection {
     background-color: transparent;
 }

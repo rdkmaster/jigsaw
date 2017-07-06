@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {TileselectBasicDemoComponent} from "./basic/basic";
 import {CommonModule} from '@angular/common';//todo 使用ng-for时需要引用
-import { RdkTileSelectModule } from "../../../rdk/component/tile-select/tile-select";
+import { JigsawTileSelectModule } from "jigsaw/component/tile-select/tile-select";
 import { TileselectTrackitembyDemoComponent } from "./trackitemby/trackitemby"
 import {TileselectSelectedItemsComponent} from "./selectedItems/selectedItems";
 import {TileselectMultipleSelectDemoComponent} from "./multipleSelect/multipleSelect";
@@ -49,7 +49,7 @@ const inputDemoRoutes=[
         ,TileselectLabelFieldComponent,TileselecItemsChangeComponent
     ],
     imports: [
-        RouterModule.forChild(inputDemoRoutes), RdkTileSelectModule,CommonModule
+        RouterModule.forChild(inputDemoRoutes), JigsawTileSelectModule,CommonModule
     ],
     exports: [
         TileselectBasicDemoComponent,TileselectTrackitembyDemoComponent

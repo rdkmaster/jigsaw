@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
-import {TableData} from "../../../../rdk/core/data/table-data";
 import {Http} from "@angular/http";
+import {TableData} from "jigsaw/core/data/table-data";
 
 
 @Component({

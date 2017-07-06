@@ -1,5 +1,5 @@
 import {Component, ViewEncapsulation} from "@angular/core";
-import {TableData} from "../../../../rdk/core/data/table-data";
+import {TableData} from "jigsaw/core/data/table-data";
 import {
     TableHeadCheckbox,
     TableCellCheckbox,
@@ -7,9 +7,9 @@ import {
     TableCellNum,
     TableCellEditor,
     DefaultCellRenderer
-} from "../../../../rdk/component/table/table-renderer";
-import {SortAs, SortOrder} from "../../../../rdk/core/data/component-data";
-import {ColumnDefine, AdditionalColumnDefine} from "../../../../rdk/component/table/table-api";
+} from "jigsaw/component/table/table-renderer";
+import {SortAs, SortOrder} from "jigsaw/core/data/component-data";
+import {ColumnDefine, AdditionalColumnDefine} from "jigsaw/component/table/table-api";
 
 @Component({
     templateUrl: 'lineEllipsis.html',

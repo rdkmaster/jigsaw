@@ -3,15 +3,15 @@
  */
 
 import {NgModule} from "@angular/core";
-import {RdkGraphModule} from "../../../rdk/component/graph/index";
-import {BasicGraphComponent} from "./basic/demo";
 import {RouterModule} from "@angular/router";
+import {JigsawGraphModule} from "jigsaw/component/graph/index";
+import {JigsawInputModule} from "jigsaw/component/input/input";
+import {JigsawSwitchModule} from "jigsaw/component/switch/index";
+import {BasicGraphComponent} from "./basic/demo";
 import {BasicLineGraphComponent} from "./line-bar-graph/basic/demo";
 import {AjaxLineGraphComponent} from "./line-bar-graph/from-axjx/demo";
 import {PieGraphDemoComponent} from "./pie/demo";
 import {GraphResizeComponent} from "./resize/demo";
-import {RdkInputModule} from "../../../rdk/component/input/input";
-import {RdkSwitchModule} from "../../../rdk/component/switch/index";
 import {GraphWithNoDataComponent} from "./nodata/nodata";
 import {GraphSetSizeComponent} from "./setSize/setSize";
 
@@ -39,7 +39,7 @@ const graphRoutes = [
 @NgModule({
     imports: [
         RouterModule.forChild(graphRoutes),
-        RdkGraphModule, RdkInputModule, RdkSwitchModule
+        JigsawGraphModule, JigsawInputModule, JigsawSwitchModule
     ],
     declarations: [
         BasicGraphComponent, BasicLineGraphComponent, AjaxLineGraphComponent, PieGraphDemoComponent, GraphResizeComponent,

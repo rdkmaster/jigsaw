@@ -1,0 +1,67 @@
+<table class="jigsaw-table-fixed-head jigsaw-table-hide">
+    <thead>
+    <tr>
+        <td #fixedHeader jigsaw-table-header *ngFor="let head of _$headSettings; index as colIndex"
+            [tableData]="data"
+            [cellData]="head.cellData"
+            [column]="colIndex"
+            [row]="0"
+            [field]="head.field"
+            [renderer]="head.renderer"
+            [sortable]="head.sortable"
+            [sortAs]="head.sortAs"
+            [defaultSortOrder]="head.defaultSortOrder"
+            width="{{head.width}}"
+            class="{{head.class}}">
+        </td>
+    </tr>
+    </thead>
+</table>
+
+<div class="jigsaw-table-box" jigsaw-scroll-bar scrollBarTheme="minimal-dark" [scrollBarOptions]="_$scrollBarOptions">
+    <table class="jigsaw-table">
+        <thead>
+        <tr>
+            <td #header jigsaw-table-header *ngFor="let head of _$headSettings; index as colIndex"
+                [tableData]="data"
+                [cellData]="head.cellData"
+                [column]="colIndex"
+                [row]="0"
+                [field]="head.field"
+                [renderer]="head.renderer"
+                [sortable]="head.sortable"
+                [sortAs]="head.sortAs"
+                [defaultSortOrder]="head.defaultSortOrder"
+                width="{{head.width}}"
+                class="{{head.class}}">
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr #tableRow *ngFor="let row of _$cellSettings; index as rowIndex;">
+            <td *ngFor="let cell of row; index as colIndex"
+                [attr.rowspan]="cell.rowSpan > 1 ? cell.rowSpan : null"
+                [style.display]="cell.rowSpan ? 'table-cell' : 'none'"
+                class="{{cell.class}}">
+                <div class="cell-content"
+                     *ngIf="cell.renderer"
+                     jigsaw-table-cell
+                     [tableData]="data"
+                     [cellData]="cell.cellData"
+                     [row]="rowIndex"
+                     [column]="colIndex"
+                     [field]="cell.field"
+                     [renderer]="cell.renderer"
+                     [editable]="cell.editable"
+                     [editorRenderer]="cell.editorRenderer"
+                     [group]="cell.group"
+                     [rowSpan]="cell.rowSpan"></div>
+                <div class="cell-content"
+                     *ngIf="!cell.renderer"><span class="jigsaw-table-cell-text">{{cell.cellData}}</span></div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+

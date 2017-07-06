@@ -1,9 +1,9 @@
-import {AfterContentInit, Component, ViewChild} from "@angular/core";
-import {TableData} from "../../../../rdk/core/data/table-data";
-import {AdditionalColumnDefine} from "../../../../rdk/component/table/table-api";
-import {TableHeadCheckbox, TableCellCheckbox} from "../../../../rdk/component/table/table-renderer";
+import {Component, ViewChild} from "@angular/core";
 import {Http} from "@angular/http";
-import {RdkTable} from "../../../../rdk/component/table/table";
+import {TableData} from "jigsaw/core/data/table-data";
+import {AdditionalColumnDefine} from "jigsaw/component/table/table-api";
+import {TableHeadCheckbox, TableCellCheckbox} from "jigsaw/component/table/table-renderer";
+import {JigsawTable} from "jigsaw/component/table/table";
 
 
 @Component({
@@ -16,7 +16,7 @@ export class TableAddCheckboxColumnDemoComponent{
 
      _selectedRows: string;
 
-    @ViewChild('myTable') myTable: RdkTable;
+    @ViewChild('myTable') myTable: JigsawTable;
 
     constructor(http: Http) {
         this.tableData = new TableData();

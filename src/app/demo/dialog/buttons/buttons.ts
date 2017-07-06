@@ -3,7 +3,7 @@
  */
 
 import {Component, TemplateRef, ViewEncapsulation} from '@angular/core';
-import {ButtonInfo, PopupDisposer, PopupInfo, PopupService} from "../../../../rdk/service/popup.service";
+import {ButtonInfo, PopupDisposer, PopupInfo, PopupService} from "jigsaw/service/popup.service";
 
 @Component({
     templateUrl: 'buttons.html',

@@ -1,0 +1,67 @@
+{
+    "name": "@rdkmaster/jigsaw",
+    "version": "1.0.0-beta.10",
+    "description": "Jigsaw, the next generation component set for RDK",
+    "main": "./bundles/jigsaw.umd.js",
+    "module": "./@rdkmaster/jigsaw.es5.js",
+    "es2015": "./@rdkmaster/jigsaw.js",
+    "typings": "./jigsaw.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/rdkmaster/jigsaw.git"
+    },
+    "keywords": [
+        "jigsaw",
+        "rdk",
+        "angular",
+        "components",
+        "typescript"
+    ],
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/rdkmaster/jigsaw/issues"
+    },
+    "homepage": "http://rdk.zte.com.cn/jigsaw",
+    "peerDependencies": {
+        "@angular/common": "~4.0.0",
+        "@angular/compiler": "~4.0.0",
+        "@angular/core": "~4.0.0",
+        "@angular/forms": "~4.0.0",
+        "@angular/http": "~4.0.0",
+        "@angular/platform-browser": "~4.0.0",
+        "@angular/platform-browser-dynamic": "~4.0.0",
+        "@angular/router": "~4.0.0",
+        "@angular/animations": "~4.0.0",
+        "core-js": "^2.4.1",
+        "rxjs": "5.0.1",
+        "zone.js": "^0.8.4"
+    },
+    "dependencies": {
+        "@ngx-translate/core": "^6.0.1",
+        "@ngx-translate/http-loader": "0.0.3",
+        "core-js": "^2.4.1",
+        "echarts": "3.5.2",
+        "eonasdan-bootstrap-datetimepicker": "^4.17.47",
+        "font-awesome": "^4.7.0",
+        "jquery": "^3.1.1",
+        "jquery-mousewheel": "^3.1.13",
+        "malihu-custom-scrollbar-plugin": "^3.1.5",
+        "web-animations-js": "^2.2.5",
+        "ztree": "^3.5.24",
+        "tslib": "^1.7.1"
+    },
+    "devDependencies": {
+        "@ngx-translate/core": "^6.0.1",
+        "@ngx-translate/http-loader": "0.0.3",
+        "core-js": "^2.4.1",
+        "echarts": "3.5.2",
+        "eonasdan-bootstrap-datetimepicker": "^4.17.47",
+        "font-awesome": "^4.7.0",
+        "jquery": "^3.1.1",
+        "jquery-mousewheel": "^3.1.13",
+        "malihu-custom-scrollbar-plugin": "^3.1.5",
+        "web-animations-js": "^2.2.5",
+        "ztree": "^3.5.24",
+        "tslib": "^1.7.1"
+    }
+}

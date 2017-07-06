@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
     templateUrl: 'basic.html',
     styleUrls:['basic.scss']
 })
-export class RdkTabsDemoComponent implements OnInit {
+export class JigsawTabsDemoComponent implements OnInit {
 
     testEvent(value) {
         console.info(value);

@@ -18,7 +18,7 @@ const releasesDir = join(outputDir, 'releases');
 const materialOutputPath = join(outputDir, 'packages', 'jigsaw');
 
 // Path to the sources of the Material package.
-const materialPath = join(packagesDir, 'rdk');
+const materialPath = join(packagesDir, 'jigsaw');
 // Path to the release output of material.
 const releasePath = join(releasesDir, 'jigsaw');
 // The entry-point for the scss theming bundle.

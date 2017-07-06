@@ -1,20 +1,20 @@
 <div class="combo-select-demo cmn-box">
     <h3>basic demo</h3>
     <div class="test-btn">
-        <rdk-button (click)="changeTrigger()">change trigger</rdk-button>
+        <jigsaw-button (click)="changeTrigger()">change trigger</jigsaw-button>
     </div>
-    <rdk-combo-select
+    <jigsaw-combo-select
         [openTrigger]="openTrigger"
         [closeTrigger]="closeTrigger"
         [(value)]="selectedCity">
-        <rdk-tile-select
+        <jigsaw-tile-select
             [(selectedItems)]="selectedCity"
             labelField="label"
             [searchable]="true"
             [data]="citys"
             width="400px"
             tileOptionWidth="100px">
-        </rdk-tile-select>
-    </rdk-combo-select>
+        </jigsaw-tile-select>
+    </jigsaw-combo-select>
 </div>
 

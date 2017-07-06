@@ -1,0 +1,76 @@
+@import "../../assets/scss/core/basc";
+
+$table-prefix-cls: #{$jigsaw-prefix}-table;
+
+:host{
+    @include inline-block;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    vertical-align: top;
+    /deep/ {
+        .mCSB_scrollTools_vertical{
+            margin: 41px 0 0 !important;
+        }
+        .mCSB_scrollTools_horizontal{
+            margin: 0 0 !important;
+        }
+    }
+}
+
+.#{$table-prefix-cls}-box{
+    width: 100%;
+    height: 100%;
+}
+
+table{
+    width: 100%;
+    text-align: center;
+    td{
+        border: 1px solid $border-color-base;
+    }
+    thead{
+        color: #333;
+        tr{
+            height: 40px;
+            td{
+                background: $gray-light;
+            }
+        }
+    }
+    tbody{
+        &.line-ellipsis{
+            td .cell-content{
+                @include line-ellipsis-style();
+            }
+        }
+        tr{
+            height: 30px;
+            &:nth-child(2n){
+                background: $component-background;
+            }
+            &:nth-child(2n-1){
+                background: lighten($primary-color, 50%);
+            }
+            &:hover{
+                td:not([rowspan]){
+                    background: $primary-color-hover;
+                }
+            }
+            td[rowspan]{
+                background: $component-background;
+            }
+        }
+    }
+    &.#{$table-prefix-cls}-fixed-head{
+        position: absolute;
+        z-index: 10;
+    }
+}
+
+.#{$table-prefix-cls}-hide{
+    display: none;
+}
+
+
+

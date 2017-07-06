@@ -1,51 +1,51 @@
 /**
  * Created by 10177553 on 2017/4/13.
  */
-import {Component, OnInit, AfterViewInit, ViewChild} from '@angular/core';
-import {RdkSlider, SliderMark} from "../../../../rdk/component/slider/slider";
-import {ArrayCollection} from "../../../../rdk/core/data/array-collection";
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {JigsawSlider, SliderMark} from "jigsaw/component/slider/slider";
+import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 @Component({
     template: `
         <h4>1. 基本滑动条,滑动事件变化. </h4>
-        <rdk-switch [(checked)]="disabled" size="small"></rdk-switch>
-        <rdk-slider [(value)]="value1" [disabled]="disabled" (change)="sliderChange($event)" min="10"></rdk-slider>
+        <jigsaw-switch [(checked)]="disabled" size="small"></jigsaw-switch>
+        <jigsaw-slider [(value)]="value1" [disabled]="disabled" (change)="sliderChange($event)" min="10"></jigsaw-slider>
         <span> 取值: {{value1}}</span>
         <hr>
         <br>
         <h4>2. 设置了min和max的滑动条</h4>
-        <rdk-slider style="margin: 20px 0; " [value]="value" [min]="min" [max]="max"
-                    (change)="sliderChange2($event)"></rdk-slider> <span>取值: {{value2}}</span>
+        <jigsaw-slider style="margin: 20px 0; " [value]="value" [min]="min" [max]="max"
+                    (change)="sliderChange2($event)"></jigsaw-slider> <span>取值: {{value2}}</span>
         <hr>
         <br>
         <h4>3. 改变step</h4>
-        <rdk-slider [value]="valueStep" min="0" max="2" step="0.01" (change)="sliderChange3($event)"></rdk-slider>
+        <jigsaw-slider [value]="valueStep" min="0" max="2" step="0.01" (change)="sliderChange3($event)"></jigsaw-slider>
         <span>取值: {{value3}}</span>
 
         <hr>
         <br>
         <h4>4. 双触点滑动条</h4>
-        <rdk-slider [(value)]="rangeValue" (change)="handleValueChange($event)"></rdk-slider>
+        <jigsaw-slider [(value)]="rangeValue" (change)="handleValueChange($event)"></jigsaw-slider>
 
         <hr>
         <br>
         <h4>5. mark 节点.</h4>
-        <rdk-slider [marks]="marks" [value]="50"></rdk-slider>
+        <jigsaw-slider [marks]="marks" [value]="50"></jigsaw-slider>
 
         <hr>
         <br>
         <h4>6. 垂直滑动条.</h4>
-        <rdk-slider [value]="rangeValue2" [vertical]="vertical" class="vertical"
-                    style="height: 240px; width: 60px;"></rdk-slider>
+        <jigsaw-slider [value]="rangeValue2" [vertical]="vertical" class="vertical"
+                    style="height: 240px; width: 60px;"></jigsaw-slider>
 
-        <rdk-slider #slider [value]="120" [marks]="marks2" min="20" [vertical]="vertical"
-                    class="vertical3"></rdk-slider>
+        <jigsaw-slider #slider [value]="120" [marks]="marks2" min="20" [vertical]="vertical"
+                    class="vertical3"></jigsaw-slider>
     `,
     styleUrls: ['./basic.scss']
 })
-export class RdkSliderDemoBasic implements OnInit {
+export class JigsawSliderDemoBasic implements OnInit {
 
-    @ViewChild('slider') verticalSlider: RdkSlider;
+    @ViewChild('slider') verticalSlider: JigsawSlider;
 
     constructor() {
     }

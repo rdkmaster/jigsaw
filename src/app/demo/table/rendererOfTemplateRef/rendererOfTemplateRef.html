@@ -1,8 +1,8 @@
 <p>带渲染器的表格单元格</p>
-<rdk-table height="400px"
+<jigsaw-table height="400px"
            [data]="tableData"
            [columnDefines]="_columns"
-           [additionalColumnDefines]="_additionalColumns"></rdk-table>
+           [additionalColumnDefines]="_additionalColumns"></jigsaw-table>
 
 <!--
     let-context="context" 声明了context，context的结构是 {cellData: string|number, row:number, column:number}
@@ -12,7 +12,7 @@
 </ng-template>
 
 <ng-template #checkboxRenderer let-context="context">
-    <rdk-checkbox [checked]="context.cellData"></rdk-checkbox>
+    <jigsaw-checkbox [checked]="context.cellData"></jigsaw-checkbox>
 </ng-template>
 
 <ng-template #cellOption let-context="context">

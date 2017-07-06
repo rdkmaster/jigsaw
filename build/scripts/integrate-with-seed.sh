@@ -6,7 +6,7 @@ git clone https://github.com/rdkmaster/jigsaw-seed.git $SEED_DIR
 cd $SEED_DIR
 npm install
 
-#update rdk npm package
+#update jigsaw npm package
 rm -fr node_modules/@rdkmaster/jigsaw
 cp -r $home/dist/releases/jigsaw node_modules/@rdkmaster/
 
@@ -27,8 +27,8 @@ do
 		continue
 	fi
 	echo "processing $file"
-	sed -i 's/\(}\s\+from\s\+\)"\(\.\.\/\)*rdk\/.\+"\s*;\?\s*$/\1"@rdkmaster\/jigsaw";/g' $file
-	sed -i "s/\(}\s\+from\s\+\)'\(\.\.\/\)*rdk\/.\+'\s*;\?\s*$/\1'@rdkmaster\/jigsaw';/g" $file
+	sed -i 's/\(}\s\+from\s\+\)"\(\.\.\/\)*jigsaw\/.\+"\s*;\?\s*$/\1"@rdkmaster\/jigsaw";/g' $file
+	sed -i "s/\(}\s\+from\s\+\)'\(\.\.\/\)*jigsaw\/.\+'\s*;\?\s*$/\1'@rdkmaster\/jigsaw';/g" $file
 done
 
 cd $home

@@ -1,12 +1,12 @@
-import {NgModule, Component, Renderer2, ElementRef, OnInit} from '@angular/core';
+import {NgModule, Component, ElementRef, OnInit} from '@angular/core';
 import {RouterModule} from '@angular/router';
-import {RdkCollapseModule} from "../../rdk/component/collapse/collapse";
-import {RdkScrollBarModule} from "../../rdk/component/scrollbar/scrollbar";
-import {AffixUtils} from "../../rdk/core/utils/internal-utils";
 import {CommonModule} from "@angular/common";
+import {JigsawCollapseModule} from "jigsaw/component/collapse/collapse";
+import {JigsawScrollBarModule} from "jigsaw/component/scrollbar/scrollbar";
+import {AffixUtils} from "jigsaw/core/utils/internal-utils";
 
 @Component({
-    selector: 'rdk-demo-list',
+    selector: 'jigsaw-demo-list',
     templateUrl: 'demo-list.html',
     styleUrls: ['demo-list.scss']
 })
@@ -798,8 +798,8 @@ const demoListRoutes = [
     imports: [
         RouterModule.forChild(demoListRoutes),
         CommonModule,
-        RdkCollapseModule,
-        RdkScrollBarModule
+        JigsawCollapseModule,
+        JigsawScrollBarModule
     ],
     exports: [],
     declarations: [

@@ -13,7 +13,7 @@ export class ButtonPresetDemoComponent {
 
     constructor(private elementRef: ElementRef) {}
     onClick() {
-        alert('hello rdk button');
+        alert('hello jigsaw button');
     }
 
     changeSize(type?: string) {

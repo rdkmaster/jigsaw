@@ -1,7 +1,7 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {LoadingService} from "rdk/service/loading.service";
-import {PopupInfo} from "../../../../rdk/service/popup.service";
-import {RdkBallLoading} from "../../../../rdk/component/loading/loading";
+import {LoadingService} from "jigsaw/service/loading.service";
+import {PopupInfo} from "jigsaw/service/popup.service";
+import {JigsawBallLoading} from "jigsaw/component/loading/loading";
 
 @Component({
     templateUrl: 'loading.html',
@@ -18,7 +18,7 @@ export class BallLoadingDemoComponent{
 
     popupBlockLoading() {
         if (!this.blockLoading) {
-            this.blockLoading = this.loadingService.show(this.block, RdkBallLoading);
+            this.blockLoading = this.loadingService.show(this.block, JigsawBallLoading);
         }
     }
 
@@ -31,7 +31,7 @@ export class BallLoadingDemoComponent{
 
     popupGlobalLoading() {
         if (!this.globalLoading) {
-            this.globalLoading = this.loadingService.show(RdkBallLoading);
+            this.globalLoading = this.loadingService.show(JigsawBallLoading);
             setTimeout(() => {
                 this.closeGlobalLoading();
             }, 3000)

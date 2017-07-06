@@ -7,38 +7,38 @@
 
 <br>
 
-<span>是否模态：</span>  <rdk-switch [(checked)]="option.modal"></rdk-switch>
+<span>是否模态：</span>  <jigsaw-switch [(checked)]="option.modal"></jigsaw-switch>
 <br>
 <span>PositionType：</span>
-<rdk-radio-group [(value)]="selectedPositionType" [data]="popPositionTypes" trackItemBy="id">
-</rdk-radio-group>
+<jigsaw-radio-group [(value)]="selectedPositionType" [data]="popPositionTypes" trackItemBy="id">
+</jigsaw-radio-group>
 <br>
 
 <span>参照物:</span>
-<rdk-radio-group [(value)]="selectedPos" [data]="poses">
-</rdk-radio-group>
+<jigsaw-radio-group [(value)]="selectedPos" [data]="poses">
+</jigsaw-radio-group>
 
 <div *ngIf="selectedPos.label=='point'" style="display: inline-block">
-    <rdk-input [(value)]="detailPos.x" placeholder="X" width="200px"></rdk-input>
-    <rdk-input [(value)]="detailPos.y" placeholder="Y" width="200px"></rdk-input>
+    <jigsaw-input [(value)]="detailPos.x" placeholder="X" width="200px"></jigsaw-input>
+    <jigsaw-input [(value)]="detailPos.y" placeholder="Y" width="200px"></jigsaw-input>
 </div>
 
 <br>
 <span>Offset</span><br>
-top: <rdk-input [(value)]="offset.top" placeholder="Top" width="200px"></rdk-input><br>
-left: <rdk-input [(value)]="offset.left" placeholder="Left" width="200px"></rdk-input><br>
-bottom: <rdk-input [(value)]="offset.bottom" placeholder="Bottom" width="200px"></rdk-input><br>
-right: <rdk-input [(value)]="offset.right" placeholder="Right" width="200px"></rdk-input>
+top: <jigsaw-input [(value)]="offset.top" placeholder="Top" width="200px"></jigsaw-input><br>
+left: <jigsaw-input [(value)]="offset.left" placeholder="Left" width="200px"></jigsaw-input><br>
+bottom: <jigsaw-input [(value)]="offset.bottom" placeholder="Bottom" width="200px"></jigsaw-input><br>
+right: <jigsaw-input [(value)]="offset.right" placeholder="Right" width="200px"></jigsaw-input>
 <br>
-<rdk-button width="200px" (click)="popupDialog1(dialog1)">Popup</rdk-button>
+<jigsaw-button width="200px" (click)="popupDialog1(dialog1)">Popup</jigsaw-button>
 
 <ng-template #dialog1>
-    <rdk-dialog width="400px" title="dialog title" (answer)="close()" >
+    <jigsaw-dialog width="400px" title="dialog title" (answer)="close()" >
         <ul class="dialog-content">
             <li>Dialog content...</li>
             <li>Dialog content...</li>
             <li>Dialog content...</li>
         </ul>
-    </rdk-dialog>
+    </jigsaw-dialog>
 </ng-template>
 

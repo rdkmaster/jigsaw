@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
-import {TableData} from "../../../../rdk/core/data/table-data";
-import {AdditionalColumnDefine} from "../../../../rdk/component/table/table-api";
-import {TableCellNum} from "../../../../rdk/component/table/table-renderer";
 import {Http} from "@angular/http";
+import {TableData} from "jigsaw/core/data/table-data";
+import {AdditionalColumnDefine} from "jigsaw/component/table/table-api";
+import {TableCellNum} from "jigsaw/component/table/table-renderer";
 
 @Component({
   templateUrl: 'addIDColumn.html'

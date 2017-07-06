@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {DialogTitleDemo} from "./title/title";
-import {RdkDialogModule} from "rdk/component/dialog/dialog";
+import {JigsawDialogModule} from "jigsaw/component/dialog/dialog";
 import {DialogButtonsDemo} from "./buttons/buttons";
 import {DialogTopDemo} from "./top/top";
 import {DialogPopOptionDemo} from "./popupOption/popUpOption";
@@ -10,11 +10,11 @@ import {DialogInDomDemoComponent} from "./in-dom/demo";
 import {DialogMiscDemoComponent} from "./misc/dialog";
 import {UserDialogComponent} from "./misc/user-dialog/user-dialog";
 import {UserDialog2Component} from "./misc/user-dialog2/user-dialog";
-import {RdkButtonModule} from "../../../rdk/component/button/button";
-import {RdkSwitchModule} from "../../../rdk/component/switch/index";
-import {RdkRadioModule} from "../../../rdk/component/radio/radio";
-import {RdkInputModule} from "../../../rdk/component/input/input";
-import {PopupService} from "../../../rdk/service/popup.service";
+import {JigsawButtonModule} from "jigsaw/component/button/button";
+import {JigsawSwitchModule} from "jigsaw/component/switch/index";
+import {JigsawRadioModule} from "jigsaw/component/radio/radio";
+import {JigsawInputModule} from "jigsaw/component/input/input";
+import {PopupService} from "jigsaw/service/popup.service";
 
 
 const dialogDemoRoutes=[
@@ -40,8 +40,8 @@ const dialogDemoRoutes=[
         UserDialogComponent,UserDialog2Component,
     ],
     imports: [
-        RouterModule.forChild(dialogDemoRoutes),CommonModule,RdkButtonModule,
-        RdkInputModule,RdkDialogModule,RdkSwitchModule,RdkRadioModule
+        RouterModule.forChild(dialogDemoRoutes),CommonModule,JigsawButtonModule,
+        JigsawInputModule,JigsawDialogModule,JigsawSwitchModule,JigsawRadioModule
     ],
     providers: [PopupService],
     entryComponents:[UserDialogComponent,UserDialog2Component]

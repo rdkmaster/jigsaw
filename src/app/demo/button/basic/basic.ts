@@ -5,7 +5,7 @@ import {Component} from "@angular/core";
 })
 export class ButtonBasicDemoComponent {
     onClick() {
-        alert('hello rdk button');
+        alert('hello jigsaw button');
     }
 }
 

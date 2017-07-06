@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import { RdkPaginationModule } from "../../../rdk/component/pagination/pagination";
+import { JigsawPaginationModule } from "jigsaw/component/pagination/pagination";
 import { PaginationBasicDemoComponent } from "./basic/demo";
 import {ServerSidePagingDemoComponent} from "./with-table-data/demo";
 
@@ -28,7 +28,7 @@ const inputDemoRoutes=[
         PaginationBasicDemoComponent, ServerSidePagingDemoComponent
     ],
     imports: [
-        RouterModule.forChild(inputDemoRoutes), RdkPaginationModule
+        RouterModule.forChild(inputDemoRoutes), JigsawPaginationModule
     ],
     exports: [
         PaginationBasicDemoComponent, ServerSidePagingDemoComponent

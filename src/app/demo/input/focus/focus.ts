@@ -1,12 +1,12 @@
 import {Component, ViewChild} from "@angular/core";
-import {RdkInput} from "../../../../rdk/component/input/input";
+import {JigsawInput} from "jigsaw/component/input/input";
 
 @Component({
   templateUrl: 'focus.html'
 })
 export class InputFocusDemoComponent {
     inputValue: any;
-    @ViewChild('myInput') myInput:RdkInput;
+    @ViewChild('myInput') myInput:JigsawInput;
     click() {
         this.myInput.focus();
     }

@@ -1,0 +1,51 @@
+@import "../../assets/scss/core/basc";
+
+$range-time-prefix-cls: #{$jigsaw-prefix}-range-time;
+
+:host {
+    @include inline-block();
+    padding: 5px;
+    position: relative;
+    width : 516px;
+    /deep/{
+        .#{$range-time-prefix-cls}-endTime,.#{$range-time-prefix-cls}-startTime{
+            .jigsaw-time-box{
+                padding-top:26px;
+            }
+        }
+    }
+
+    .#{$range-time-prefix-cls}-shortcuts{
+        position:absolute;
+        left:260px;
+        display : flex;
+        justify-content : center;
+        width:240px;
+        top : 10px;
+        &>span {
+            font-size: 12px;
+            display: inline-block;
+            height: 26px;
+            line-height: 26px;
+            padding: 0 10px;
+            border: 1px solid #008FD4;
+            border-right: 0;
+            color: #008FD4;
+            cursor: pointer;
+            &:first-child {
+                border-top-left-radius: 5px;
+                border-bottom-left-radius: 5px;
+            }
+            &:last-child {
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+                border-right: 1px solid #008FD4;
+            }
+            &.active {
+                background-color: #008FD4;
+                color: #fff;
+            }
+        }
+    }
+}
+

@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {TagBasicDemoComponent} from "./basic/basic";
 
-import {RdkTagModule} from "../../../rdk/component/tag/tag";
+import {JigsawTagModule} from "jigsaw/component/tag/tag";
 
 
 const TagDemoRoutes = [
@@ -25,7 +25,7 @@ const TagDemoRoutes = [
         TagBasicDemoComponent
     ],
     imports: [
-        RouterModule.forChild(TagDemoRoutes), RdkTagModule
+        RouterModule.forChild(TagDemoRoutes), JigsawTagModule
     ],
     exports: [
         TagBasicDemoComponent

@@ -1,0 +1,61 @@
+@import "../../assets/scss/core/basc";
+
+$collapse-prefix: #{$jigsaw-prefix}-collapse;
+
+.#{$collapse-prefix}-host {
+    display: block;
+}
+
+.#{$collapse-prefix} {
+    background-color: $background-color-base;
+    border: $border-width-base $border-style-base $border-color-base;
+    border-bottom: none;
+    border-radius: 4px;
+
+    .#{$collapse-prefix}-item {
+        border-bottom: $border-width-base $border-style-base $border-color-base;
+
+        .#{$collapse-prefix}-header {
+            position: relative;
+            height: 38px;
+            line-height: 38px;
+            cursor: pointer;
+            color: rgba(0, 0, 0, .85);
+            padding-left: 16px;
+
+            .arrow {
+                position: absolute;
+                right: 16px;
+                top: 50%;
+                margin-top: -7px;
+
+                @include prefixer(transition, all .5s ease);
+            }
+        }
+
+        .#{$collapse-prefix}-content {
+            overflow: hidden;
+            padding: 16px 16px;
+            color: rgba(0, 0, 0, .65);
+            background-color: $component-background;
+
+            @include prefixer(transition, all .3s ease);
+        }
+
+        &-inactive {
+            > .#{$collapse-prefix}-header {
+                .arrow {
+                    @include prefixer(transform, rotate(90deg));
+                }
+            }
+
+            > .#{$collapse-prefix}-content {
+                height: 0px;
+                padding: 0px;
+                @include prefixer(transform, scaleY(0));
+                @include prefixer(transform-origin, top);
+            }
+        }
+    }
+}
+

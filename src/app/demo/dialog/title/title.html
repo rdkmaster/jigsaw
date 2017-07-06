@@ -1,26 +1,26 @@
-<rdk-button width="300px" (click)="popupDialog1(dialog1)">通过属性配置</rdk-button>
+<jigsaw-button width="300px" (click)="popupDialog1(dialog1)">通过属性配置</jigsaw-button>
 
-<rdk-button width="300px" (click)="popupDialog2(dialog2)">自定义ElementTitle</rdk-button>
+<jigsaw-button width="300px" (click)="popupDialog2(dialog2)">自定义ElementTitle</jigsaw-button>
 
 <ng-template #dialog1>
-    <rdk-dialog width="80%" title="dialog title" (answer)="close(_dialogInfo1)">
+    <jigsaw-dialog width="80%" title="dialog title" (answer)="close(_dialogInfo1)">
         <ul class="dialog-content">
             <li>Dialog content...</li>
             <li>Dialog content...</li>
             <li>Dialog content...</li>
         </ul>
-    </rdk-dialog>
+    </jigsaw-dialog>
 </ng-template>
 
 <ng-template #dialog2>
-    <rdk-dialog width="60%" (answer)="close(_dialogInfo2)">
-        <div rdk-title>Title of the dialog</div>
-        <div rdk-body>
+    <jigsaw-dialog width="60%" (answer)="close(_dialogInfo2)">
+        <div jigsaw-title>Title of the dialog</div>
+        <div jigsaw-body>
             <ul class="dialog-content">
                 <li>Dialog content...</li>
                 <li>Dialog content...</li>
                 <li>Dialog content...</li>
             </ul>
         </div>
-    </rdk-dialog>
+    </jigsaw-dialog>
 </ng-template>

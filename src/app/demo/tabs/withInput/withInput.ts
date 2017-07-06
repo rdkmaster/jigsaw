@@ -2,13 +2,13 @@
  * Created by 10177553 on 2017/3/29.
  */
 import { Component, OnInit } from '@angular/core';
-import {TableData} from "../../../../rdk/core/data/table-data";
 import {Http} from "@angular/http";
+import {TableData} from "jigsaw/core/data/table-data";
 
 @Component({
     templateUrl:"withInput.html"
 })
-export class RdkTabsWithInputComponent implements OnInit {
+export class JigsawTabsWithInputComponent implements OnInit {
 
     selectedIndex = 0;
 

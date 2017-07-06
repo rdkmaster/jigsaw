@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {PageableArray} from "../../../../rdk/core/data/array-collection";
+import {PageableArray} from "jigsaw/core/data/array-collection";
 import {Http} from "@angular/http";
 
 @Component({

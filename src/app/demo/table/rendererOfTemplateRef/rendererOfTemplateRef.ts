@@ -1,7 +1,7 @@
 import {AfterContentInit, Component, TemplateRef, ViewChild, ViewEncapsulation} from "@angular/core";
-import {TableData} from "../../../../rdk/core/data/table-data";
-import {AdditionalColumnDefine, ColumnDefine} from "../../../../rdk/component/table/table-api";
 import {Http} from "@angular/http";
+import {TableData} from "jigsaw/core/data/table-data";
+import {AdditionalColumnDefine, ColumnDefine} from "jigsaw/component/table/table-api";
 
 @Component({
     templateUrl: 'rendererOfTemplateRef.html',

@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {SwitchBasicDemoComponent} from "./basic/basic";
 
-import { RdkSwitchModule } from "../../../rdk/component/switch/index";
+import { JigsawSwitchModule } from "jigsaw/component/switch/index";
 
 
 const inputDemoRoutes=[
@@ -25,7 +25,7 @@ const inputDemoRoutes=[
         SwitchBasicDemoComponent
     ],
     imports: [
-        RouterModule.forChild(inputDemoRoutes), RdkSwitchModule
+        RouterModule.forChild(inputDemoRoutes), JigsawSwitchModule
     ],
     exports: [
         SwitchBasicDemoComponent

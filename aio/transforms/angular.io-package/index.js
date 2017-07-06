@@ -20,10 +20,10 @@ const contentPackage = require('../content-package');
 const rhoPackage = require('../rho-package');
 
 const PROJECT_ROOT = path.resolve(__dirname, '../../..');
-const API_SOURCE_PATH = path.resolve(PROJECT_ROOT, 'src/rdk');
+const API_SOURCE_PATH = path.resolve(PROJECT_ROOT, 'src/jigsaw');
 const AIO_PATH = path.resolve(PROJECT_ROOT, 'aio');
 const AIO_MARKET_PATH = path.resolve(AIO_PATH, 'market');
-const CONTENTS_PATH = path.resolve(PROJECT_ROOT, 'src/rdk/doc');
+const CONTENTS_PATH = path.resolve(PROJECT_ROOT, 'src/jigsaw/doc');
 const TEMPLATES_PATH = path.resolve(AIO_PATH, 'transforms/templates');
 const OUTPUT_PATH = path.resolve(AIO_PATH, 'src/content');
 const DOCS_OUTPUT_PATH = path.resolve(OUTPUT_PATH, 'docs');

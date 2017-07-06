@@ -1,31 +1,31 @@
 <div class="container">
     <div class="option-button-group">
-        <rdk-button width="120" (click)="addTabWidthTemplateTitle(tabTitle, tabContent)">增加tab-模板标题</rdk-button>
-        <rdk-button width="136" (click)="addTabWidthStringTitle(tabContent)">增加tab-字符串标题</rdk-button>
-        <!--<rdk-button width="120" (click)="addRouterLinkTab(routerTabTitle, routerTabContent)">增加router link tab</rdk-button>-->
-        <rdk-button width="136" (click)="addComponentTab()">增加component tab</rdk-button>
-        <rdk-button width="120" (click)="hideTab(0)">隐藏第一个Tab页</rdk-button>
-        <rdk-button width="120" (click)="showTab(0)">显示第一个Tab页</rdk-button>
-        <rdk-button width="120" (click)="removeTab(0)">删除第一个Tab页</rdk-button>
+        <jigsaw-button width="120" (click)="addTabWidthTemplateTitle(tabTitle, tabContent)">增加tab-模板标题</jigsaw-button>
+        <jigsaw-button width="136" (click)="addTabWidthStringTitle(tabContent)">增加tab-字符串标题</jigsaw-button>
+        <!--<jigsaw-button width="120" (click)="addRouterLinkTab(routerTabTitle, routerTabContent)">增加router link tab</jigsaw-button>-->
+        <jigsaw-button width="136" (click)="addComponentTab()">增加component tab</jigsaw-button>
+        <jigsaw-button width="120" (click)="hideTab(0)">隐藏第一个Tab页</jigsaw-button>
+        <jigsaw-button width="120" (click)="showTab(0)">显示第一个Tab页</jigsaw-button>
+        <jigsaw-button width="120" (click)="removeTab(0)">删除第一个Tab页</jigsaw-button>
     </div>
 
-    <rdk-tab>
-        <rdk-tab-pane title="Tab 1">
+    <jigsaw-tab>
+        <jigsaw-tab-pane title="Tab 1">
             This is the body of the first tab
-        </rdk-tab-pane>
-        <rdk-tab-pane title="Tab 2" [disabled]="true">
+        </jigsaw-tab-pane>
+        <jigsaw-tab-pane title="Tab 2" [disabled]="true">
             This is the body of the first tab
-        </rdk-tab-pane>
-        <rdk-tab-pane title="Tab 3">
-            <rdk-input>
-                <a rdk-prefix-icon><span class="fa fa-search"></span></a>
-            </rdk-input>
-        </rdk-tab-pane>
-        <rdk-tab-pane [async]="true">
-            <div rdk-title><span routerLink="tabPage" [skipLocationChange]="true">router link tab</span></div>
-            <div rdk-body><router-outlet name="tabPage"></router-outlet></div>
-        </rdk-tab-pane>
-    </rdk-tab>
+        </jigsaw-tab-pane>
+        <jigsaw-tab-pane title="Tab 3">
+            <jigsaw-input>
+                <a jigsaw-prefix-icon><span class="fa fa-search"></span></a>
+            </jigsaw-input>
+        </jigsaw-tab-pane>
+        <jigsaw-tab-pane [async]="true">
+            <div jigsaw-title><span routerLink="tabPage" [skipLocationChange]="true">router link tab</span></div>
+            <div jigsaw-body><router-outlet name="tabPage"></router-outlet></div>
+        </jigsaw-tab-pane>
+    </jigsaw-tab>
 </div>
 
 <ng-template #tabTitle>
@@ -36,17 +36,17 @@
         <h3 class="content-title">Hi {{userInfo.username}}, please input your information</h3>
         <div class="content-line">
             <label>e-mail: </label>
-            <rdk-input [value]="userInfo.email"></rdk-input>
+            <jigsaw-input [value]="userInfo.email"></jigsaw-input>
         </div>
         <div class="content-line">
             <label>phone number: </label>
-            <rdk-input [value]="userInfo.phoneNumber"></rdk-input>
+            <jigsaw-input [value]="userInfo.phoneNumber"></jigsaw-input>
         </div>
         <div class="content-line">
             <label>address: </label>
-            <rdk-input width="400px" [value]="userInfo.address"></rdk-input>
+            <jigsaw-input width="400px" [value]="userInfo.address"></jigsaw-input>
         </div>
-        <rdk-button>submit</rdk-button>
+        <jigsaw-button>submit</jigsaw-button>
     </div>
 </ng-template>
 

@@ -1,14 +1,14 @@
 import {Component} from "@angular/core";
-import {ButtonInfo, PopupEventType, PopupInfo, PopupService} from "../../../../rdk/service/popup.service";
+import {ButtonInfo, PopupEventType, PopupInfo, PopupService} from "jigsaw/service/popup.service";
 
 
 @Component({
     template: `
-        <rdk-button (click)="popup(tpDialog)">popup something</rdk-button><br>
+        <jigsaw-button (click)="popup(tpDialog)">popup something</jigsaw-button><br>
         <p *ngFor="let m of eventMessages">{{m}}</p>
 
         <ng-template #tpDialog>
-            <rdk-dialog width="40%" title="The title" [buttons]="buttons" (answer)="
+            <jigsaw-dialog width="40%" title="The title" [buttons]="buttons" (answer)="
                         popupInfo.dispose();
                         eventMessages.push('----------------------------------------')
             ">
@@ -19,7 +19,7 @@ import {ButtonInfo, PopupEventType, PopupInfo, PopupService} from "../../../../r
                         <li>Dialog content...</li>
                     </ul>
                 </div>
-            </rdk-dialog>
+            </jigsaw-dialog>
         </ng-template>
     `
 })

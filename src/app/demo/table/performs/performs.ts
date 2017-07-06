@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
-import {TableData} from "../../../../rdk/core/data/table-data";
-import {ColumnDefine} from "../../../../rdk/component/table/table-api";
+import {TableData} from "jigsaw/core/data/table-data";
+import {ColumnDefine} from "jigsaw/component/table/table-api";
+import {DefaultCellRenderer} from "jigsaw/component/table/table-renderer";
 import {TableHeadIcon} from "../renderer/table-renderer";
-import {DefaultCellRenderer} from "../../../../rdk/component/table/table-renderer";
 
 @Component({
     templateUrl: 'performs.html',

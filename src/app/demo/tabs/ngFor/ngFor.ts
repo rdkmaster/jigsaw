@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
     templateUrl:"ngFor.html"
 })
-export class RdkTabsWithNgForComponent implements OnInit {
+export class JigsawTabsWithNgForComponent implements OnInit {
 
     constructor() { }
 

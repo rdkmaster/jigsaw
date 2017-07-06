@@ -1,10 +1,10 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {CommonModule} from "@angular/common";
+import {JigsawButtonModule} from "jigsaw/component/button/button";
 import {ArrayCollectionAjaxDemoComponent} from "./ajax/demo";
 import {ArrayCollectionBasicDemoComponent} from "./basic/demo";
 import {ServerSidePaginationDemoComponent} from "./server-side-pagination/demo";
-import {RdkButtonModule} from "../../../rdk/component/button/button";
 
 const buttonDemoRoutes = [
     {
@@ -30,7 +30,7 @@ const buttonDemoRoutes = [
         ArrayCollectionBasicDemoComponent, ArrayCollectionAjaxDemoComponent, ServerSidePaginationDemoComponent
     ],
     imports: [
-        RouterModule.forChild(buttonDemoRoutes), CommonModule, RdkButtonModule
+        RouterModule.forChild(buttonDemoRoutes), CommonModule, JigsawButtonModule
     ],
     exports: [
         ArrayCollectionBasicDemoComponent, ArrayCollectionAjaxDemoComponent, ServerSidePaginationDemoComponent

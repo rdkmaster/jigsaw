@@ -1,7 +1,7 @@
 <h4>WeekStart</h4>
 
-WeekStart : <rdk-tile-select [data]="datas" [(selectedItems)]="weekStart" [multipleSelect]="false"></rdk-tile-select>
+WeekStart : <jigsaw-tile-select [data]="datas" [(selectedItems)]="weekStart" [multipleSelect]="false"></jigsaw-tile-select>
 
-<rdk-range-time [(beginDate)]="beginDate" [(endDate)]="endDate" [weekStart]="weekStart[0].label" ></rdk-range-time><br>
+<jigsaw-range-time [(beginDate)]="beginDate" [(endDate)]="endDate" [weekStart]="weekStart[0].label" ></jigsaw-range-time><br>
 
 beginDate : {{beginDate}} ， end ： {{endDate}}

@@ -2,8 +2,8 @@
  * Created by 10177553 on 2017/4/10.
  */
 import {Component} from '@angular/core';
-import {DropDownTrigger} from "../../../../rdk/component/combo-select/combo-select";
-import {ArrayCollection} from "../../../../rdk/core/data/array-collection";
+import {DropDownTrigger} from "jigsaw/component/combo-select/combo-select";
+import {ArrayCollection} from "jigsaw/core/data/array-collection";
 @Component({
     templateUrl: './basic.html',
     styleUrls: ['basic.scss'],

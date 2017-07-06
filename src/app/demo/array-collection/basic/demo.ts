@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit, ViewEncapsulation} from "@angular/core";
-import {ArrayCollection, PageableArray} from "../../../../rdk/core/data/array-collection";
+import {ArrayCollection, PageableArray} from "jigsaw/core/data/array-collection";
 import {Http} from "@angular/http";
 
 type TestMsg = {

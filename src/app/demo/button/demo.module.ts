@@ -1,12 +1,12 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
+import {JigsawCheckBoxModule} from "jigsaw/component/checkbox/index";
+import {JigsawButtonModule} from "jigsaw/component/button/button";
+import {JigsawLoadingModule} from "jigsaw/component/loading/loading";
 import {ButtonBasicDemoComponent} from "./basic/basic";
 import {ButtonDisableDemoComponent} from "./disabled/disabled";
-import {RdkCheckBoxModule} from "../../../rdk/component/checkbox/index";
-import {RdkButtonModule} from "../../../rdk/component/button/button";
 import {ButtonWidthHeightDemoComponent} from "./width_height/width_height";
 import {ButtonPresetDemoComponent} from "./preset/preset";
-import {RdkLoadingModule} from "../../../rdk/component/loading/loading";
 import {ButtonWithLoadingComponent} from "./with-loading/demo";
 
 const buttonDemoRoutes = [
@@ -40,7 +40,7 @@ const buttonDemoRoutes = [
         ButtonWithLoadingComponent
     ],
     imports: [
-        RouterModule.forChild(buttonDemoRoutes), RdkCheckBoxModule, RdkButtonModule, RdkLoadingModule
+        RouterModule.forChild(buttonDemoRoutes), JigsawCheckBoxModule, JigsawButtonModule, JigsawLoadingModule
     ],
     exports: [
     ],

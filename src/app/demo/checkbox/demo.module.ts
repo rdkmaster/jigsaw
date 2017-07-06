@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {RdkCheckBoxModule} from "../../../rdk/component/checkbox/index";
-import {RdkSwitchModule} from "../../../rdk/component/switch/index";
+import {JigsawCheckBoxModule} from "jigsaw/component/checkbox/index";
+import {JigsawSwitchModule} from "jigsaw/component/switch/index";
 import {CheckBoxDisableDemoComponent} from "./disabled/disabled";
 import {CheckBoxBasicDemoComponent} from "./basic/basic";
 
@@ -26,7 +26,7 @@ const checkboxDemoRoutes = [
         CheckBoxBasicDemoComponent, CheckBoxDisableDemoComponent
     ],
     imports: [
-        RouterModule.forChild(checkboxDemoRoutes), RdkCheckBoxModule, RdkSwitchModule
+        RouterModule.forChild(checkboxDemoRoutes), JigsawCheckBoxModule, JigsawSwitchModule
     ],
     exports: [
         CheckBoxBasicDemoComponent, CheckBoxDisableDemoComponent

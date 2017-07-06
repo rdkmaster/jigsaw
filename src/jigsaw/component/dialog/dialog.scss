@@ -1,0 +1,47 @@
+@import "../../assets/scss/core/_basc";
+
+$dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
+
+:host {
+    @include inline-block;
+    width: 100%;
+}
+
+.#{$dialog-prefix-cls} {
+    position: relative;
+    background: #FFF;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: move;
+    .#{$dialog-prefix-cls}-head {
+        @include clearfix;
+        line-height: 20px;
+        padding: 14px 16px;
+        color: #333;
+        font-size: 14px;
+        background: $component-background;
+        border-bottom: 1px solid $border-color-base;
+        /deep/ [jigsaw-title]{
+            float: left;
+        }
+        .#{$dialog-prefix-cls}-close {
+            float: right;
+            font-size: 18px;
+            font-weight: normal;
+            color: #999;
+            cursor: pointer;
+        }
+    }
+    .#{$dialog-prefix-cls}-button-group {
+        border-top: 1px solid $border-color-base;
+        text-align: center;
+        height: 50px;
+        line-height: 50px;
+        jigsaw-button {
+            margin-right: 8px;
+        }
+    }
+}
+
+
+

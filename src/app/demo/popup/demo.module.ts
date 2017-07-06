@@ -2,10 +2,10 @@ import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
 
-import {RdkButtonModule} from "../../../rdk/component/button/button";
-import {PopupService} from "../../../rdk/service/popup.service";
+import {JigsawButtonModule} from "jigsaw/component/button/button";
+import {PopupService} from "jigsaw/service/popup.service";
+import {JigsawDialogModule} from "jigsaw/component/dialog/dialog";
 import {PopupTracingEventComponent} from "./tracing-event/demo";
-import {RdkDialogModule} from "../../../rdk/component/dialog/dialog";
 
 const popupDemoRoutes = [
     {
@@ -24,8 +24,8 @@ const popupDemoRoutes = [
     imports: [
         RouterModule.forChild(popupDemoRoutes),
         CommonModule,
-        RdkButtonModule,
-        RdkDialogModule
+        JigsawButtonModule,
+        JigsawDialogModule
     ],
     providers: [PopupService],
     entryComponents: [

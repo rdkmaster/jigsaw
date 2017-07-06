@@ -1,9 +1,9 @@
 import {AfterViewInit, Component, ViewChild} from "@angular/core";
-import {PageableTableData} from "../../../../rdk/core/data/table-data";
 import {Http} from "@angular/http";
-import {TableCellNum} from "../../../../rdk/component/table/table-renderer";
-import {AdditionalColumnDefine, ColumnDefine} from "../../../../rdk/component/table/table-api";
-import {RdkPagination} from "../../../../rdk/component/pagination/pagination";
+import {PageableTableData} from "jigsaw/core/data/table-data";
+import {AdditionalColumnDefine, ColumnDefine} from "jigsaw/component/table/table-api";
+import {JigsawPagination} from "jigsaw/component/pagination/pagination";
+import {TableCellNum} from "jigsaw/component/table/table-renderer";
 
 @Component({
     templateUrl: 'addIDWithDebouncePaging.html'
@@ -11,7 +11,7 @@ import {RdkPagination} from "../../../../rdk/component/pagination/pagination";
 export class TableAddIDWithDebouncePagingComponent implements AfterViewInit{
     pageable: PageableTableData;
 
-    @ViewChild('paging') paging: RdkPagination;
+    @ViewChild('paging') paging: JigsawPagination;
 
     constructor(http: Http) {
         this.pageable = new PageableTableData(http, {

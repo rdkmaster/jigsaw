@@ -1,0 +1,101 @@
+@import "./core/basc";
+
+/*fadeIn start*/
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.jigsaw-am-fade-in{
+    animation: fadeIn 0.3s $ease-in-out;
+    -webkit-animation:fadeIn 0.3s $ease-in-out;
+}
+/*fadeIn end*/
+
+/*fadeOut start*/
+@-webkit-keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+.jigsaw-am-fade-out{
+    animation: fadeOut 0.3s $ease-in-out;
+    -webkit-animation:fadeOut 0.3s $ease-in-out;
+}
+/*fadeOut end*/
+
+/*bubbleIn start*/
+@-webkit-keyframes bubbleIn {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+@keyframes bubbleIn {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+.jigsaw-am-bubble-in{
+    animation: bubbleIn 0.3s $ease-in-out;
+    -webkit-animation: bubbleIn 0.3s $ease-in-out;
+}
+/*bubbleIn end*/
+
+/*bubbleOut start*/
+@-webkit-keyframes bubbleOut {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+@keyframes bubbleOut {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+.jigsaw-am-bubble-out{
+    animation: bubbleOut 0.3s $ease-in-out;
+    -webkit-animation: bubbleOut 0.3s $ease-in-out;
+}
+/*bubbleIn end*/

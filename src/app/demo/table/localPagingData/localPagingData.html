@@ -1,5 +1,5 @@
-<rdk-table [data]="pageable" [columnDefines]="columns"></rdk-table>
-<rdk-pagination
+<jigsaw-table [data]="pageable" [columnDefines]="columns"></jigsaw-table>
+<jigsaw-pagination
     [total]="pageable.pagingInfo.totalRecord"
     [(pageSize)]="pageable.pagingInfo.pageSize"
     [(current)]="pageable.pagingInfo.currentPage"
@@ -8,4 +8,4 @@
     [showQuickJumper]="true"
     (currentChange)="getCurrentPage()"
     (pageSizeChange)="getPageSize()"
-></rdk-pagination>
+></jigsaw-pagination>

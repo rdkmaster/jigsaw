@@ -1,0 +1,69 @@
+@import "../../assets/scss/core/basc";
+
+$input-prefix-cls: #{$jigsaw-prefix}-input;
+
+:host {
+    @include inline-block();
+    position: relative;
+    width: 120px;
+    height: $height-base;
+    line-height: $height-base;
+    font-size: $font-size-base;
+    opacity: 0;
+    .#{$input-prefix-cls}-icon-front{
+        position: absolute;
+        left: 8px;
+        top: 0;
+        line-height: inherit;
+    }
+    .#{$input-prefix-cls}-icon-end{
+        position: absolute;
+        right: 8px;
+        top: 0;
+        line-height: inherit;
+    }
+    input {
+        width: 100%;
+        height: 100%;
+        padding-right:20px;
+        border: 1px solid $border-color-base;
+        border-radius: 3px;
+        outline: none;
+        @include prefixer(transition, all 0.3s $ease-in-out);
+        &:hover {
+            border: 1px solid $primary-color;
+        }
+        &:focus {
+            border: 1px solid $primary-color;
+            box-shadow: 0 0 0 2px $primary-color-shadow;
+        }
+    }
+    span.fa{
+        cursor: pointer;
+        &[hidden]{
+            display: none !important;
+        }
+    }
+}
+
+:host-context(.theme-blue) input {
+    &:hover {
+        border: 1px solid $primary-color;
+    }
+    &:focus {
+        border: 1px solid $primary-color;
+        box-shadow: 0 0 0 2px $primary-color-shadow;
+    }
+}
+
+:host-context(.theme-orange) input {
+    &:hover {
+        border: 1px solid $orange;
+    }
+    &:focus {
+        border: 1px solid $orange;
+        box-shadow: 0 0 0 2px $orange-shadow;
+    }
+}
+
+
