@@ -651,12 +651,17 @@ export class RdkTable extends AbstractRDKComponent implements AfterViewInit, OnD
 
     private _setFixedHeadWidth(): void {
         const hostWidth = this._elementRef.nativeElement.offsetWidth + 'px';
-        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.rdk-table'), 'width', hostWidth);
 
+        //消除table非必要的横向滚动条(可能会有的小数点像素的四舍五入产生的滚动条)，这里手动让.rdk-table和.rdk-table-box宽度相同
+        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.rdk-table'), 'width', hostWidth);
+        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.rdk-table-box'), 'width', hostWidth);
+
+        //获取表格的实际宽度
         const tableWidth = this._elementRef.nativeElement.querySelector('.rdk-table').offsetWidth + 'px';
+
+        //设置浮动表头的宽度
         this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.rdk-table-fixed-head'), 'width', tableWidth);
-        this._renderer.setStyle(
-            this._elementRef.nativeElement.querySelector('.rdk-table-box .mCSB_container:first-child'), 'width', tableWidth);
+        //设置浮动表头单元格宽度
         this._fixedHeaders.forEach((fixedHeader, index) => {
             this._renderer.setStyle(fixedHeader.nativeElement, 'width',
                 this._headers.toArray()[index].nativeElement.offsetWidth + 'px');

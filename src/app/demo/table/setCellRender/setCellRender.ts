@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, TemplateRef, ViewChild} from "@angular/core";
+import {AfterContentInit, AfterViewInit, Component, TemplateRef, ViewChild} from "@angular/core";
 import {TableData} from "../../../../rdk/core/data/table-data";
 import {ColumnDefine, TableCellRenderer} from "../../../../rdk/component/table/table-api";
 import {Http} from "@angular/http";
@@ -10,7 +10,7 @@ import {Http} from "@angular/http";
 @Component({
     templateUrl: 'setCellRender.html'
 })
-export class TableSetCellRenderDemoComponent implements AfterViewInit {
+export class TableSetCellRenderDemoComponent implements AfterContentInit {
 
     @ViewChild("jobCellRender") jobCellRender: TemplateRef<any>;
 
@@ -24,12 +24,13 @@ export class TableSetCellRenderDemoComponent implements AfterViewInit {
 
      _columns: ColumnDefine[];
 
-    ngAfterViewInit() {
+    ngAfterContentInit() {
+        //请不要在ngAfterViewInit里面赋值，会报变更检查错误
         this._columns = [
             {
                 target: 'position',
                 cell: {
-                    renderer: this.jobCellRender //通过ViewChild获取的TemplateRef,必须在AfterViewInit中才能拿到
+                    renderer: this.jobCellRender //通过ViewChild获取的TemplateRef,必须在AfterViewInit之后才能拿到
                 }
             }
         ];

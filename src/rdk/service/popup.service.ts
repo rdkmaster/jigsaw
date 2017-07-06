@@ -436,8 +436,9 @@ export class PopupService {
             popupHeight = element.offsetHeight;
 
         if (this._isGlobalPopup(options)) {
-            top = (document.body.clientHeight / 2 - popupHeight / 2);
-            left = (document.body.clientWidth / 2 - popupWidth / 2);
+            const documentBody = AffixUtils.getDocumentBody();
+            top = (documentBody.clientHeight / 2 - popupHeight / 2);
+            left = (documentBody.clientWidth / 2 - popupWidth / 2);
         } else if (options) {
             const pos = options.pos,
                 posOffset = options.posOffset;

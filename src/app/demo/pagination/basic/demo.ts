@@ -4,7 +4,7 @@ import { Component } from "@angular/core";
   templateUrl: 'demo.html'
 })
 export class PaginationBasicDemoComponent {
-    currentPage: number;
+    currentPage: number = 1;
 
     getCurrentPage(message:any){
         console.log("current page is: "+message);
