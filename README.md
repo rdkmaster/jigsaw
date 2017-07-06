@@ -41,6 +41,10 @@ npm start
 ## 快速上手
 [Jigsaw Tourist](https://github.com/rdkmaster/jigsaw-tourist) 是一个专门为新手准备的教学工程，它展示了从零开始如何使用jigsaw来构建一个难度中等的应用页面。
 
+上手过程中有任何困难，请关注Jigsaw的官方微信公众号，在那里可以加入SOS群和我们开发者直接对话：
+
+![](doc/image/qr-weixin.jpg)
+
 ## 求星星！One More Star Please!
 请随手赏个星星，这是对我们最好的鼓励！This is the best encouragement for us.
 
