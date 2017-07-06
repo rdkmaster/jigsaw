@@ -5,7 +5,7 @@ import {UserDialog2Component} from "./user-dialog2/user-dialog";
 import {
     ButtonInfo, PopupEffect, PopupInfo, PopupOptions, PopupPositionType,
     PopupService
-} from "../../../../jigsaw/service/popup.service";
+} from "jigsaw/service/popup.service";
 
 @Component({
     templateUrl: 'dialog.html',

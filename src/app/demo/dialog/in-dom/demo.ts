@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {ButtonInfo} from "../../../../jigsaw/service/popup.service";
+import {ButtonInfo} from "jigsaw/service/popup.service";
 
 @Component({
     template: `

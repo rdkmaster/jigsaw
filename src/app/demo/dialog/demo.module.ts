@@ -10,11 +10,11 @@ import {DialogInDomDemoComponent} from "./in-dom/demo";
 import {DialogMiscDemoComponent} from "./misc/dialog";
 import {UserDialogComponent} from "./misc/user-dialog/user-dialog";
 import {UserDialog2Component} from "./misc/user-dialog2/user-dialog";
-import {JigsawButtonModule} from "../../../jigsaw/component/button/button";
-import {JigsawSwitchModule} from "../../../jigsaw/component/switch/index";
-import {JigsawRadioModule} from "../../../jigsaw/component/radio/radio";
-import {JigsawInputModule} from "../../../jigsaw/component/input/input";
-import {PopupService} from "../../../jigsaw/service/popup.service";
+import {JigsawButtonModule} from "jigsaw/component/button/button";
+import {JigsawSwitchModule} from "jigsaw/component/switch/index";
+import {JigsawRadioModule} from "jigsaw/component/radio/radio";
+import {JigsawInputModule} from "jigsaw/component/input/input";
+import {PopupService} from "jigsaw/service/popup.service";
 
 
 const dialogDemoRoutes=[

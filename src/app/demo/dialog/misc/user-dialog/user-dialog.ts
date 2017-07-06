@@ -1,7 +1,7 @@
 import {Component, ViewChild} from "@angular/core";
 
-import {ButtonInfo} from "../../../../../jigsaw/service/popup.service";
-import {DialogBase, JigsawDialog} from "../../../../../jigsaw/component/dialog/dialog";
+import {ButtonInfo} from "jigsaw/service/popup.service";
+import {DialogBase, JigsawDialog} from "jigsaw/component/dialog/dialog";
 
 @Component({
     templateUrl: 'user-dialog.html',

@@ -1,9 +1,9 @@
-import {Component, OnInit} from "@angular/core";
-import {ZTreeSettingSetting} from "../../../../jigsaw/component/tree/ztree-types"
+import {Component} from "@angular/core";
 import {Http} from "@angular/http";
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
-import {TreeData} from "../../../../jigsaw/core/data/tree-data";
+import {ZTreeSettingSetting} from "jigsaw/component/tree/ztree-types"
+import {TreeData} from "jigsaw/core/data/tree-data";
 
 @Component({
     templateUrl: 'dataFromAjax.html'
