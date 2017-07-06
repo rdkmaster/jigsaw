@@ -3,6 +3,7 @@ import {PageableTableData} from "../../../../rdk/core/data/table-data";
 import {Http} from "@angular/http";
 import {TableCellNum} from "../../../../rdk/component/table/table-renderer";
 import {AdditionalColumnDefine, ColumnDefine} from "../../../../rdk/component/table/table-api";
+import {SortAs, SortOrder} from "../../../../rdk/core/data/component-data";
 
 @Component({
     templateUrl: 'addIDWithPaging.html'
@@ -31,7 +32,11 @@ export class TableAddIDWithPagingComponent {
 
      _columns: ColumnDefine[] = [{
         target: 'id',
-        visible: false
+        header: {
+            sortable: true,
+            sortAs: SortAs.number,
+            defaultSortOrder: SortOrder.asc,
+        }
     }];
 
      _additionalColumns: AdditionalColumnDefine[] = [{
