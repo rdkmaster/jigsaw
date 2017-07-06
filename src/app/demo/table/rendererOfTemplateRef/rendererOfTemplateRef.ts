@@ -52,21 +52,15 @@ export class TableRendererOfTemplateRefDemoComponent implements AfterContentInit
     }
 
     ngAfterContentInit(){
+        //请不要在ngAfterViewInit里面赋值，会报变更检查错误
         this._columns = [
             {
-                //target: ['f1', 'f3', 'f5', 'f7'],
                 target: ['name', 'salary', 'office'],
                 width: '15%',
                 header: {
                     renderer: this.headIcon
                 }
-            },
-            /*{
-                target: 'f4',
-                cell: {
-                    renderer: this.checkboxRenderer
-                }
-            }*/
+            }
         ];
         this._additionalColumns = [
             {
