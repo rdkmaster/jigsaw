@@ -9,10 +9,8 @@
 ```
 npm install --save @rdkmaster/jigsaw
 ```
-请务必注意Jigsaw当前使用的Angular和TS版本与当前工程的版本是否兼容。
-
-2. 打开 .angular-cli.json，在 `scripts` 节点下，增加如下条目，注意排除重复条目：
-
+2. 检查Jigsaw当前使用的Angular和TS版本与当前工程的版本是否兼容，[详见这里](#ver-dep)。
+3. 编辑 `.angular-cli.json`，在 `scripts` 节点下，增加如下条目，注意排除重复条目：
 ```
 "../node_modules/jquery/dist/jquery.min.js",
 "../node_modules/jquery-mousewheel/jquery.mousewheel.js",
@@ -23,7 +21,7 @@ npm install --save @rdkmaster/jigsaw
 "../node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"
 ```
 
-3. 打开 .angular-cli.json，在 `styles` 节点下，增加如下条目，注意排除重复条目：
+4. 编辑 `.angular-cli.json`，在 `styles` 节点下，增加如下条目，注意排除重复条目：
 ```
 "../node_modules/bootstrap/dist/css/bootstrap.min.css",
 "../node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css",
@@ -34,7 +32,39 @@ npm install --save @rdkmaster/jigsaw
 
 # 原工程基于 [angular quickstart](https://github.com/angular/quickstart) 构建的
 
-待添加，欢迎推送PR给我们。
+1. 增加Jigsaw的依赖
+
+在你的工程下，增加Jigsaw的依赖：
+```
+npm install --save @rdkmaster/jigsaw
+```
+2. 检查Jigsaw当前使用的Angular和TS版本与当前工程的版本是否兼容，[详见这里](#ver-dep)。
+3. 编辑 `src/systemjs.config.js`，在`map`节点下，增加如下一行：
+```
+// Jigsaw bundles
+'@rdkmaster/jigsaw': 'npm:@rdkmaster/jigsaw/bundles/jigsaw.umd.js',
+'@ngx-translate/core/index': 'npm:@ngx-translate/core/bundles/core.umd.js',
+'@ngx-translate/http-loader/index': 'npm:@ngx-translate/http-loader/bundles/http-loader.umd.js',
+'echarts': 'npm:echarts/dist/echarts.min.js',
+```
+4. 编辑 `src/index.html`，在head节点插入如下内容
+```
+<!-- 引入Jigsaw的依赖的css -->
+<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css">
+<link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="node_modules/ztree/css/zTreeStyle/zTreeStyle.css">
+
+<!-- 引入Jigsaw需要的依赖，这些依赖没有出umd包，只能配置在这里 -->
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="node_modules/jquery-mousewheel/jquery.mousewheel.js"></script>
+<script src="node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="node_modules/moment/min/moment.min.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="node_modules/ztree/js/jquery.ztree.all.js"></script>
+<script src="node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+```
 
 # 原工程用其他方式构建的
 你肯定是资深玩家，请热心的你给推送PR给我们以完善这个文档，这样可以帮助到更多的巧粉。
@@ -43,3 +73,46 @@ npm install --save @rdkmaster/jigsaw
 ```
 npm install --save @rdkmaster/jigsaw
 ```
+
+以及在适当的位置加入如下js和css文件的依赖
+```
+bootstrap/dist/css/bootstrap.min.css
+eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css
+malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css
+font-awesome/css/font-awesome.min.css
+ztree/css/zTreeStyle/zTreeStyle.css
+
+jquery/dist/jquery.min.js
+jquery-mousewheel/jquery.mousewheel.js
+malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js
+moment/min/moment.min.js
+bootstrap/dist/js/bootstrap.min.js
+ztree/js/jquery.ztree.all.js
+eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js
+
+//如下几个提供了umd包，如果不想用umd包，则请将文件名中的 .umd 去掉即可
+jigsaw/bundles/jigsaw.umd.js
+@ngx-translate/core/bundles/core.umd.js
+@ngx-translate/http-loader/bundles/http-loader.umd.js
+echarts/dist/echarts.min.js
+```
+
+# 本文附件
+<a name="ver-dep"></a>
+## 依赖版本的说明
+Jigsaw依赖的重要版本：
+- Jigsaw需要Angular版本4.0.0以上，推荐使用4.2.4；
+	- 使用这个命令来解决
+```
+npm install --save @angular/animations@4.2.4
+npm install --save @angular/common@4.2.4
+npm install --save @angular/compiler@4.2.4
+npm install --save @angular/core@4.2.4
+npm install --save @angular/forms@4.2.4
+npm install --save @angular/http@4.2.4
+npm install --save @angular/platform-browser@4.2.4
+npm install --save @angular/platform-browser-dynamic@4.2.4
+npm install --save @angular/router@4.2.4
+```
+- Jigsaw需要TypeScript版本2.3以上，目前还不支持2.4；
+	- 使用这个命令来解决 `npm i --save typescript@2.3.2`
