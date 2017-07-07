@@ -1,4 +1,4 @@
-###在angular项目中配置懒加载路由
+### 在angular项目中配置懒加载路由
 
 比如AppModule中引入带loadChildren的路由
 ```
@@ -42,7 +42,7 @@ export class ButtonDemoModule {
 ![加载效果](image/angular_lazy_load.gif "加载效果")
 
 
-###路由懒加载是如何打包的
+### webpack是如何打包的
 
 在使用angular-cli构建的angular项目中，angular-cli是使用了webpack进行打包的，先看看webpack是如何实现懒加载的。
 
@@ -80,7 +80,7 @@ __webpack_require__
 __webpack_require__.e
 ```
 
-#####webpackJsonp
+#### webpackJsonp
 
 webpack利用JSONP技术，先在浏览器定义好webpackJsonp这个函数，然后从后端下载用webpackJsonp进行封装的js，
 浏览器获取这样的js文件就可以立即执行了。webpackJsonp的源码如下：
@@ -135,7 +135,7 @@ webpackJsonp([12, 33],{
 })
 ```
 
-#####__webpack_require__
+#### \_\_webpack\_require\_\_
 
 主要根据moduleId从全局的modules加载模块。源码如下：
 ```javascript
@@ -164,7 +164,7 @@ function __webpack_require__(moduleId) {
 }
 ```
 
-#####__webpack_require__.e
+#### \_\_webpack\_require\_\_.e
 
 通过动态插入script标签的方式，加载对应的chunk包文件，可以看看源码
 ```javascript
@@ -182,7 +182,7 @@ __webpack_require__.e = function requireEnsure(chunkId) {
 }
 ```
 
-####angular-cli打包
+### angular-cli是如何打包的
 angular-cli里面对webpack进行了定制化开发，不同于前面说的使用require.ensure进行切片打包，angular-cli
 让webpack识别router里的'loadChildren'关键字进行打包。让我们来看看打包后的文件。
 
