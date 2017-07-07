@@ -36,14 +36,14 @@ npm start
 5. 后续直接在 `d:\jigsaw-seed` 目录下运行 `npm start` 命令就可以启动开发环境了。Jigsaw专门针对现代的IDE做了代码优化，让这些IDE可以精确提示更多的信息，节约你翻阅api文档的时间。我们推荐使用[WebStorm](https://www.jetbrains.com/webstorm/)作为IDE。
 
 ### 集成到已有工程中
-[具体过程请看这里](https://github.com/rdkmaster/jigsaw/blob/master/doc/integrate-jigsaw-with-your-project.md)
+[具体过程请看这里](https://github.com/rdkmaster/jigsaw/blob/master/docs/integrate-jigsaw-with-your-project.md)
 
 ## 快速上手
 [Jigsaw Tourist](https://github.com/rdkmaster/jigsaw-tourist) 是一个专门为新手准备的教学工程，它展示了从零开始如何使用jigsaw来构建一个难度中等的应用页面。
 
 上手过程中有任何困难，请关注Jigsaw的官方微信公众号，在那里可以加入SOS群和我们开发者直接对话：
 
-![](doc/image/qr-weixin.jpg)
+![](docs/image/qr-weixin.jpg)
 
 ## 求星星！One More Star Please!
 请随手赏个星星，这是对我们最好的鼓励！This is the best encouragement for us.
@@ -59,7 +59,7 @@ npm start
 - 给我们写写文档，写点小文章；
 - 更有效的是给我们推送PR，所有的PR我们都欢迎并会认真处理；
 	- 请优先处理没有打 `suspend` 标签的[issue](https://github.com/rdkmaster/jigsaw/issues)；
-	- [这里](https://github.com/rdkmaster/jigsaw/blob/master/doc/coding-spec.md)是一份简单的代码规范，请尽量遵守它；
+	- [这里](https://github.com/rdkmaster/jigsaw/blob/master/docs/coding-spec.md)是一份简单的代码规范，请尽量遵守它；
 
 ## 正在打算换工作？
 - 我们至少需要一名有经验的前端工程师，他的主要职责是全职加入这个组件库的开发，详情[点击这里](http://rdk.zte.com.cn/jobs)；
