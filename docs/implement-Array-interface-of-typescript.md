@@ -23,7 +23,7 @@
 
 ```
 const data = {
-	prop1: 123
+    prop1: 123
 }
 ```
 
@@ -57,10 +57,10 @@ data.prop1 = 456;
 
 ```
 class JigsawArray<T> implements Array<T> {
-	private _agent: T[] = [];
-	public push(...items: T[]): number {
-	    return this._agent.push.apply(this, arguments);
-	}
+    private _agent: T[] = [];
+    public push(...items: T[]): number {
+        return this._agent.push.apply(this, arguments);
+    }
 }
 ```
 
@@ -70,8 +70,8 @@ class JigsawArray<T> implements Array<T> {
 - 第2行我们声明了一个普通数组，叫 `_agent`；
 - 第3行我们实现了 `Array<T>` 接口的 `push()` 方法；
 - 第4行是最最关键的一行代码。我们来将它解剖开来，看看是如何移花接木的。
-	- `this._agent.push.apply()` 这部分代码很简单，字面上看，它通过 `apply()` 调用了普通数组对象 `_agent` 的 `push()` 方法。
-	- 最关键在于 `apply()` 的第一个参数值是 `this`，这意味着 `push()` 方法是作用到了 `this` 上，而不是 `this._agent` 上！这带来的效果就是，`this._agent.push()` 直接对 `JigsawArray` 这类进行了操作，而 `this._agent` 并没有任何变化。这就是移花接木的效果了。
+    - `this._agent.push.apply()` 这部分代码很简单，字面上看，它通过 `apply()` 调用了普通数组对象 `_agent` 的 `push()` 方法。
+    - 最关键在于 `apply()` 的第一个参数值是 `this`，这意味着 `push()` 方法是作用到了 `this` 上，而不是 `this._agent` 上！这带来的效果就是，`this._agent.push()` 直接对 `JigsawArray` 这类进行了操作，而 `this._agent` 并没有任何变化。这就是移花接木的效果了。
 
 搞定了 `push()` 方法，其他的方法都按照类似的方式来，分分钟就把 `Array<T>` 接口实现好了，100出头行代码。但是，真的就结束了吗？
 
@@ -83,7 +83,7 @@ class JigsawArray<T> implements Array<T> {
 [n: number]: T;
 ```
 
-这是ts特有的语法，叫做 Index signature。一个类加上这行表示当前类可以接收一个类型为数字的下标，这就是典型的数组操作了：
+这是ts特有的语法，叫做 Index signature，中文翻译成啥我也不知道。加上这行表示当前类可以接收一个类型为数字的下标，这就是典型的数组操作了：
 
 ```
 a[0] = 1;
@@ -116,7 +116,7 @@ console.log(a.length); // 11
 由于ts不允许我们覆盖 Index signature，所以这问题我们无法解决。
 
 
-## 填 `length` 属性遗留的坑
+## 填 `length` 遗留的坑
 
 前一小节的`length`问题如果留着不管，这就是一个坑，作为新时代有责任心的人，明知道有坑而不去填，那肯定说不过去！我们充分利用ts的语法，在这个 Index signature 前面加个readonly关键字，这样，应用在尝试使用下标修改 `JigsawArray` 的时候，编译器就报错！
 
@@ -124,7 +124,7 @@ console.log(a.length); // 11
 Error:(60, 9) TS2542:Index signature in type 'JigsawArray<number>' only permits reading.
 ```
 
-坑是填上了，但是我们也关上了数组下标操作这个大门，我们必须在别的地方开个窗户不是吗？我们需要增加一对get/set方法，用于模拟下标操作：
+坑是填上了，但是我们也关上了数组下标操作这个大门，我们必须在别的地方开个窗户不是吗？于是，我们需要增加一对get/set方法，用于模拟下标操作：
 
 ```
 public set(index: number, value: T): void {
@@ -145,7 +145,7 @@ public get(index: number): T {
 Index signature in type 'JigsawArray<T>' only permits reading.
 ```
 
-这是为什么呢？原来，我们前面给 Index signature 设置了readonly了，还记得不？既然 Index signature 是只读的，那编译器报`set()`出错是理所应当的！这个问题看起来又无解了，咋办？大风大浪都过来了，难道就在这个小阴沟了翻船吗？
+这是为什么呢？原来，我们前面给 Index signature 设置了readonly了，还记得不？既然 Index signature 是只读的，那编译器这里报这个错是理所应当的！这个问题看起来又无解了，咋办？大风大浪都过来了，难道就在这个小阴沟了翻船吗？
 
 我们来想办法欺骗一下ts编译器，先定义一个类
 
@@ -175,11 +175,3 @@ public set(index: number, value: T): void {
 ```
 
 唯一的区别是把原来的 `this[index]` 改成了 `this.is.myself[index]`，再编译一下，成功通过，看来，编译器真的被我们骗过去拉！
-
-## 最后
-
-我们花了九牛二虎之力终于实现了 `Array<T>` 接口，完整的代码请[访问这里](https://github.com/rdkmaster/jigsaw/blob/master/src/jigsaw/core/data/array-collection.ts)，从第30行开始到第180行结束。
-
-有任何疑问，或者建议，请通过 RDK 团队的公众号和我们取得联系。
-
-![微信扫一扫](image/qr-weixin.jpg)
