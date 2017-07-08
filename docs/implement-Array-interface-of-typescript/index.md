@@ -1,9 +1,12 @@
 
 # 快速实现TypeScript的`Array<T>`接口
+
+![Array in TypeScript](ts.vs.array.png)
+
 `Array<T>` 是ts中很常见的一个类型，大家往往以为它是一个普通类，实际上这是一个接口！今天我们来讨论一下为何要实现这个接口，以及用什么样的方法最快的去实现它。
 
 ## 背景
-一切源于ts2.2到ts2.3之间的[这个Breaking Change](https://github.com/Microsoft/TypeScript/wiki/Breaking-Changes#extending-built-ins-like-error-array-and-map-may-no-longer-work)。
+一切源于ts2.2到ts2.3之间的这个Breaking Change (http://t.cn/RKLb9WS)
 
 下面简单介绍一下这个 Breaking Change。
 
@@ -37,7 +40,7 @@ data.prop1 = 456;
 
 > 实际上是有办法可以感知到，但是非常消耗性能。
 
-这一点让组件无法及时感知数据的变化并作出反应，造成组件的易用性下降。Angular官方给出了两种解决方案，但是 [Jigsaw](https://github.com/rdkmaster/jigsaw) 开发团队认为都不好，所以 [Jigsaw](https://github.com/rdkmaster/jigsaw) 团队创造出了第三种方式。
+这一点让组件无法及时感知数据的变化并作出反应，造成组件的易用性下降。Angular官方给出了两种解决方案，但是 Jigsaw (https://github.com/rdkmaster/jigsaw) 开发团队认为都不好，所以 [Jigsaw](https://github.com/rdkmaster/jigsaw) 团队创造出了第三种方式。
 
 > 这第三种方式的详情和本文主题关系不大，先不展开，后续笔者也会编写专门的文章说明
 
@@ -48,6 +51,8 @@ data.prop1 = 456;
 `Array<T>` 接口中，一共有33个方法，保守估计需要大几千行代码才能实现，如果再考虑到bug和性能等因素，这几乎就是一个不可能完成的事情。笔者第一个想到的方法是去翻ts的源码，但是花了几乎一整个下午也没能找到ts源码中实现 `Array<T>` 接口的代码。。。
 
 如果找不到办法扩展 `Array<T>` 接口，那Jigsaw的整个数据体系将要全部重新设计、重新实现。
+
+![Oh, no~~~](oh-no.png)
 
 在几近绝望的时候，笔者想到了js的`apply`函数的第一个参数，这个参数指明了当前这个函数的作用对象（即`this`），利用这个参数，我们就可以使出移花接木、隔山打牛的招数，巧妙的实现 `Array<T>` 接口。
 
@@ -175,3 +180,9 @@ public set(index: number, value: T): void {
 ```
 
 唯一的区别是把原来的 `this[index]` 改成了 `this.is.myself[index]`，再编译一下，成功通过，看来，编译器真的被我们骗过去拉！
+
+![](happy.png)
+
+## 最后
+
+我们终于巧妙的实现了 Array<T> 接口，完整的代码请直接访问Jigsaw的源码，直通车 http://t.cn/RKLqtTr  从第30行开始到第180行结束。
