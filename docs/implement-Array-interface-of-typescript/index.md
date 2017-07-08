@@ -185,4 +185,4 @@ public set(index: number, value: T): void {
 
 ## 最后
 
-我们终于巧妙的实现了 Array<T> 接口，完整的代码请直接访问Jigsaw的源码，直通车 http://t.cn/RKLqtTr  从第30行开始到第180行结束。
+我们终于巧妙的实现了 Array<T> 接口，完整的代码请直接访问Jigsaw的源码，直通车 http://t.cn/RKU6szn
