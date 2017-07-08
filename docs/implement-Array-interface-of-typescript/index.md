@@ -186,3 +186,9 @@ public set(index: number, value: T): void {
 ## 最后
 
 我们终于巧妙的实现了 Array<T> 接口，完整的代码请直接访问Jigsaw的源码，直通车 <http://t.cn/RKU6szn>
+
+---
+
+关于上述文章，如果有任何问题，欢迎通过RDK官方公众号和我们取得联系：
+
+![](../image/qr-weixin.jpg)
