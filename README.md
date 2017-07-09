@@ -63,5 +63,5 @@ npm start
 
 ## 正在打算换工作？
 - 我们需要诺干有经验的前端工程师，他的主要职责是全职加入这个组件库的开发；
-- 我们需要诺干有经验的服务端工程师，他的主要职责是全职加入[RDK](https://mp.weixin.qq.com/s/GLV65kCIYF9pSCOvOG2sFQ)后端的开发；
+- 我们需要诺干有经验的服务端工程师，他的主要职责是全职加入[RDK](https://github.com/rdkmaster/rdk)后端的开发；
 - 详情[点击这里](https://mp.weixin.qq.com/s/GLV65kCIYF9pSCOvOG2sFQ)；
