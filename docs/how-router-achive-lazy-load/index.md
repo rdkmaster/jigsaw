@@ -39,7 +39,7 @@ export class ButtonDemoModule {
 ```
 
 加载效果： 
-![加载效果](image/angular_lazy_load.gif "加载效果")
+![加载效果](angular_lazy_load.gif "加载效果")
 
 
 ### webpack是如何打包的
@@ -66,10 +66,10 @@ output: {
 ```
 
 切片： 
-![切片](image/webpack_chunk.png "切片")
+![切片](webpack_chunk.png "切片")
 
 加载效果： 
-![加载效果](image/webpack_lazy_load.gif "加载效果")
+![加载效果](webpack_lazy_load.gif "加载效果")
 
 那么问题来了，webpack是如何懒加载切片文件的呢？我们可以扒开打包后的文件来看看。
 
