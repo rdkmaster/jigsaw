@@ -7,7 +7,7 @@
 
 过程中碰到问题请多多与 Jigsaw Seed (<https://github.com/rdkmaster/jigsaw-seed>) 的相关配置文件对比，也欢迎关注Jigsaw的官方微信公众号，在那里可以加入SOS群和我们开发者直接对话。
 
-![](image/qr-weixin.jpg)
+![](../image/qr-weixin.jpg)
 
 可能的话，请把你碰到的问题[报告给我们](https://github.com/rdkmaster/jigsaw/issues/new)，这样可以帮助到更多的巧粉。
 
