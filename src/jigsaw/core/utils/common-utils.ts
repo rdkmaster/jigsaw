@@ -91,7 +91,7 @@ export class CommonUtils {
      */
     public static getCssValue(value: string|number): string{
         value = typeof value === 'string' ? value : value + '';
-        const match = value ? value.match(/^[0-9]{1,}$/) : null;
+        const match = value ? value.match(/^\s*\d+\s*$/) : null;
         return match ? (value + 'px') : value;
     }
 }
