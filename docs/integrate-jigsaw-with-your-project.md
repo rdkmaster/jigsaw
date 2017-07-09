@@ -1,13 +1,15 @@
 
 # 将Jigsaw集成到现有工程下的方法
 
-碰到问题请多多与 [Jigsaw Seed](https://github.com/rdkmaster/jigsaw-seed) 的相关配置文件对比，也欢迎关注Jigsaw的官方微信公众号，在那里可以加入SOS群和我们开发者直接对话。
+今天我们来聊聊如何将 Jigsaw (<https://github.com/rdkmaster/jigsaw>) 集成到已有的Angular工程下，过程中碰到问题请多多与 Jigsaw Seed (<https://github.com/rdkmaster/jigsaw-seed>) 的相关配置文件对比，也欢迎关注Jigsaw的官方微信公众号，在那里可以加入SOS群和我们开发者直接对话。
 
 ![](image/qr-weixin.jpg)
 
 可能的话，请把你碰到的问题[报告给我们](https://github.com/rdkmaster/jigsaw/issues/new)，这样可以帮助到更多的巧粉。
 
-## 原工程基于 [Angular CLI](https://github.com/angular/angular-cli) 构建的
+## 原工程基于 Angular CLI 构建的
+
+Angular CLI (<https://github.com/angular/angular-cli>) 是构建Angular工程的首选，Jigsaw也推荐用它构建工程。
 
 1. 增加Jigsaw的依赖
 在你的工程下，增加Jigsaw的依赖：
@@ -15,7 +17,7 @@
 npm install --save @rdkmaster/jigsaw
 ```
 
-2. 检查Jigsaw当前使用的Angular和TS版本与当前工程的版本是否兼容，[详见这里](#ver-dep)。
+2. 检查Jigsaw当前使用的Angular和TS版本与当前工程的版本是否兼容，[请查看本文附件1](#ver-dep)。
 
 3. 编辑 `.angular-cli.json`，在 `scripts` 节点下，增加如下条目，注意排除重复条目：
 ```
@@ -40,21 +42,23 @@ npm install --save @rdkmaster/jigsaw
 5. 编辑你的 `AppComponent` 所在的文件，把它的构造函数改为：
 ```
 constructor(public viewContainerRef: ViewContainerRef, public renderer: Renderer2, /* 原有其他依赖注入项 */) {
-...
+    ...
 }
 ```
-这是由于我们的`PopupService`实现上的缺陷造成的，参考[这个issue](https://github.com/rdkmaster/jigsaw/issues/33)。
+这是由于我们的`PopupService`实现上的缺陷造成的，参考这个issue <https://github.com/rdkmaster/jigsaw/issues/33>。
 
-## 原工程基于 [angular quickstart](https://github.com/angular/quickstart) 构建的
+## 原工程基于 angular quickstart 构建的
+
+angular quickstart 工程地址是 <https://github.com/angular/quickstart>
 
 1. 增加Jigsaw的依赖
 在你的工程下，增加Jigsaw的依赖：
 ```
 npm install --save @rdkmaster/jigsaw
 ```
-如果npm报 `UNMET PEER DEPENDENCY @angular/animations` 的警告，则请通过[这个方法](#peer-dep-warn)解决，否则后续会有编译错误。
+如果npm报 `UNMET PEER DEPENDENCY @angular/animations` 的警告，则请通过[本文附件2](#peer-dep-warn)的提供方法来解决，否则后续会有编译错误。
 
-2. 检查Jigsaw当前使用的Angular和TS版本与当前工程的版本是否兼容，[详见这里](#ver-dep)。
+2. 检查Jigsaw当前使用的Angular和TS版本与当前工程的版本是否兼容，[请查看本文附件1](#ver-dep)。
 
 3. 编辑 `src/systemjs.config.js`，在`map`节点下，增加如下一行：
 ```
@@ -87,10 +91,10 @@ npm install --save @rdkmaster/jigsaw
 5. 编辑你的 `AppComponent` 所在的文件，把它的构造函数改为：
 ```
 constructor(public viewContainerRef: ViewContainerRef, public renderer: Renderer2, /* 原有其他依赖注入项 */) {
-...
+    ...
 }
 ```
-这是由于我们的`PopupService`实现上的缺陷造成的，参考[这个issue](https://github.com/rdkmaster/jigsaw/issues/33)。
+这是由于我们的`PopupService`实现上的缺陷造成的，参考这个issue <https://github.com/rdkmaster/jigsaw/issues/33>。
 
 ## 原工程用其他方式构建的
 你肯定是资深玩家，请热心的你给推送PR给我们以完善这个文档，这样可以帮助到更多的巧粉。
@@ -123,9 +127,8 @@ jigsaw/bundles/jigsaw.umd.js
 echarts/dist/echarts.min.js
 ```
 
-## 附件
 <a name="ver-dep"></a>
-### 依赖Angular/TS版本检查和解决办法
+## 附件1：依赖Angular/TS版本检查和解决办法
 Jigsaw依赖的重要版本：
 - Jigsaw需要Angular版本4.0.0以上，推荐使用4.2.4，使用这些命令来解决
 ```
@@ -145,7 +148,7 @@ npm i --save typescript@2.3.2
 ```
 
 <a name="peer-dep-warn"></a>
-## 安装Jigsaw的时候npm报warning
+## 附件2：安装Jigsaw的时候npm报warning
 默认的 angular quickstart 并没有加入对 `@angular/animations` 的依赖，但是Jigsaw对它有依赖，所以安装Jigsaw的时候，会报一个WARN：
 ```
 npm install --save @rdkmaster/jigsaw
