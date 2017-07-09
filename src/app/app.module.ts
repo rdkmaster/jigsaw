@@ -18,11 +18,11 @@ export function HttpLoaderFactory(http: Http) {
 const appRoutes = [
     {
         path: '',
-        loadChildren: 'app/demo/demo-list#DemoListModule'
+        loadChildren: 'app/e2e-testee/demo-list#DemoListModule'
     },
     {
         path: '**',//fallback router must in the last
-        loadChildren: 'app/demo/demo-list#DemoListModule'
+        loadChildren: 'app/e2e-testee/demo-list#DemoListModule'
     }
 ];
 
