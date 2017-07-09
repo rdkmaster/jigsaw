@@ -1,7 +1,11 @@
 
 # 将Jigsaw集成到现有工程下的方法
 
-今天我们来聊聊如何将 Jigsaw (<https://github.com/rdkmaster/jigsaw>) 集成到已有的Angular工程下，过程中碰到问题请多多与 Jigsaw Seed (<https://github.com/rdkmaster/jigsaw-seed>) 的相关配置文件对比，也欢迎关注Jigsaw的官方微信公众号，在那里可以加入SOS群和我们开发者直接对话。
+![](title.jpg)
+
+我们来聊聊如何将 Jigsaw (https://github.com/rdkmaster/jigsaw) 和已有的Angular工程集成到一起，本文将主流的两种基础工程做了详细的集成说明，相信在你的工程下使用Jigsaw将不费吹灰之力。
+
+过程中碰到问题请多多与 Jigsaw Seed (<https://github.com/rdkmaster/jigsaw-seed>) 的相关配置文件对比，也欢迎关注Jigsaw的官方微信公众号，在那里可以加入SOS群和我们开发者直接对话。
 
 ![](image/qr-weixin.jpg)
 
