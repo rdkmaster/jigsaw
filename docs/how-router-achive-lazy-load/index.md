@@ -153,7 +153,7 @@ __webpack_require__.e = function requireEnsure(chunkId) {
 }
 ```
 
-### angular-cli是如何打包的
+## angular-cli是如何打包的
 angular-cli里面对webpack进行了定制化开发，不同于前面说的使用require.ensure进行切片打包，angular-cli
 让webpack识别router里的'loadChildren'关键字进行打包。让我们来看看打包后的文件。
 
