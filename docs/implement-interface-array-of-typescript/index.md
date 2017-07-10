@@ -187,8 +187,6 @@ public set(index: number, value: T): void {
 
 我们终于巧妙的实现了 Array<T> 接口，完整的代码请直接访问Jigsaw的源码，直通车 <http://t.cn/RKU6szn>
 
-## 和我们联系
+## 题外话
 
-关于这篇文章，如果有任何问题，欢迎通过RDK官方公众号和我们取得联系：
-
-![](../image/qr-weixin.jpg)
+这些文章都是我们在研发Jigsaw七巧板过程中的技术总结，如果你喜欢这个文章，请帮忙到 Jigsaw七巧板 (<https://github.com/rdkmaster/jigsaw>)的工程上点个星星鼓励我们一下，这样我们会更有动力写出类似高质量的文章。Jigsaw七巧板现在处于起步阶段，非常需要各位的呵护。
