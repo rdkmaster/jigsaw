@@ -54,7 +54,7 @@ _如果你喜欢Jigsaw组件库，请帮忙点个星星鼓励我们一下_
 
 ## 路由懒加载在Angular里的处理流程
 
-我们直接深入学习了 Angular 路由的代码，发现我们在路由模块中的配置，实际上是一个 `Route` 数组，路由组件会根据浏览器的url和这个数组，
+我们深入学习了 Angular 路由的代码，发现我们在路由模块中的配置，实际上是一个 `Route` 数组，路由组件会根据浏览器的url和这个数组，
 找到这段路由的配置信息，包含对应的组件、路由插座、是否有守护、数据等信息。
 
 路由懒加载的关键一步是：当 `Route` 数组中出现 `loadChildren` 配置信息时，路由模块会调用注入 `NgModuleFactoryLoader` 服务，发起请求下载对应的包文件，然后再执行路由的后续加载组件视图的操作。
@@ -189,8 +189,10 @@ var map = {
     ]
 };
 function webpackAsyncContext(req) {
-    var ids = map[req]; if(!ids)
+    var ids = map[req];
+    if(!ids) {
         return Promise.reject(new Error("Cannot find module '" + req + "'."));
+    }
     // __webpack_require__.e就是webpack用于懒加载的函数
     return __webpack_require__.e(ids[1]).then(function() {
         return __webpack_require__(ids[0]);
@@ -228,8 +230,10 @@ http://localhost:4200/button/basic
 
 这个过程就是angilar-cli加载路由的 `loadChildren` 的过程。
 
-## 题外话
 看完了这个文章，我们发现Angular的代码和Angular-cli的关系是如此的紧（耦）密（合），所以请给我一个不使用angular-cli来初始化你的工程的理由！
 
 
+## 题外话
+
+这些文章都是我们在研发Jigsaw七巧板过程中的技术总结，如果你喜欢这个文章，请帮忙到 Jigsaw七巧板 (<https://github.com/rdkmaster/jigsaw>)的工程上点个星星鼓励我们一下，这样我们会更有动力写出类似高质量的文章。Jigsaw七巧板现在处于起步阶段，非常需要各位的呵护。
 
