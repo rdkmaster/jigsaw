@@ -53,7 +53,7 @@ export class ButtonDemoModule {
 ![处理流程](lazy_load_process.png "处理流程")
 
 ## 路由懒加载是如何打包的
-在使用angular-cli构建的angular项目中，angular-cli是使用了webpack进行打包的，先看看webpack是如何实现懒加载的。
+angular-cli是使用了webpack进行打包的，先看看webpack是如何实现懒加载的。
 
 ### webpack是如何打包的
 比如js中引用了第三方插件，我们现在要对第三方插件进行懒加载，可以在js代码中使用require.ensure，webpack可以通过require.ensure区分正常require进行切片。
@@ -135,7 +135,7 @@ webpackJsonp([12, 33],{
 
 主要根据moduleId从全局的modules加载模块。
 
-#### \_\_webpack\_require\_\_.e
+### \_\_webpack\_require\_\_.e
 
 通过动态插入script标签的方式，下载对应的chunk包文件，可以看看源码
 ```javascript
@@ -196,7 +196,7 @@ webpackJsonp([11,32],{
     })
 })
 ```
-用户浏览器输入http://localhost:4200/button/basic，RouterMoudule会通过注入的NgModuleFactoryLoader
+用户浏览器输入localhost:4200/button/basic，RouterMoudule会通过注入的NgModuleFactoryLoader
 调取angular-cli的webpackAsyncContext函数。webpackAsyncContext通过map拿到对应的chunkId，调用__webpack_require__.e的动态下载对应的chunk包文件，下载
 完成后，调用__webpack_require__执行对应的模块。这个过程就是angilar-cli加载路由的loadChildren的过程。
 
