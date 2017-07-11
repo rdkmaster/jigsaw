@@ -38,8 +38,8 @@ npm start
 ### 集成到已有工程中
 [具体过程请看这里](https://github.com/rdkmaster/jigsaw/blob/master/docs/integrate-jigsaw-with-your-project.md)
 
-## 快速上手
-[Jigsaw Tourist](https://github.com/rdkmaster/jigsaw-tourist) 是一个专门为新手准备的教学工程，它展示了从零开始如何使用jigsaw来构建一个难度中等的应用页面。
+## 新手宝典
+[Jigsaw Tourist](https://github.com/rdkmaster/jigsaw-tourist) 是一个专门为新手准备的教学工程，它展示了从零开始如何使用jigsaw来构建一个难度中等的应用页面。[单击这里](docs/tourist/index.md)，勇敢的迈出你在Jigsaw的第一步吧。
 
 上手过程中有任何困难，请关注Jigsaw的官方微信公众号，在那里可以加入SOS群和我们开发者直接对话：
 

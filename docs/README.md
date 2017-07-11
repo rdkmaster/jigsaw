@@ -1,6 +1,8 @@
 
 # Jigsaw的文档
+
 ## 原创文章
+- [新手宝典](tourist/index.md) - 每个新手都值得拥有。
 - [Angular的路由是如何实现懒加载的](how-router-achive-lazy-load/index.md)
 - [将Jigsaw集成到现有工程下的方法](integrate-your-project-with-jigsaw/index.md)
 - [巧妙快速实现TypeScript的Array<T>接口](implement-interface-array-of-typescript/index.md)
