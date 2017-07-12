@@ -36,7 +36,7 @@ npm start
 5. 后续直接在 `d:\jigsaw-seed` 目录下运行 `npm start` 命令就可以启动开发环境了。Jigsaw专门针对现代的IDE做了代码优化，让这些IDE可以精确提示更多的信息，节约你翻阅api文档的时间。我们推荐使用[WebStorm](https://www.jetbrains.com/webstorm/)作为IDE。
 
 ### 集成到已有工程中
-[具体过程请看这里](https://github.com/rdkmaster/jigsaw/blob/master/docs/integrate-jigsaw-with-your-project.md)
+[具体过程请看这里](docs/integrate-your-project-with-jigsaw/index.md)
 
 ## 新手宝典
 [Jigsaw Tourist](https://github.com/rdkmaster/jigsaw-tourist) 是一个专门为新手准备的教学工程，它展示了从零开始如何使用jigsaw来构建一个难度中等的应用页面。[单击这里](docs/tourist/index.md)，勇敢的迈出你在Jigsaw的第一步吧。
