@@ -23,14 +23,15 @@
 <p>预设尺寸</p>
 <br>
 <p>当前尺寸: {{size || "default"}}</p>
-<br>
-<jigsaw-button  [presize]="size" type="primary" (click)="changeSize('small')">Small</jigsaw-button>
+
+<div id="preset-list">
+<jigsaw-button id="test-button"  [presize]="size" type="primary" (click)="changeSize('small')">Small</jigsaw-button>
 
 <jigsaw-button  [presize]="size" type="primary" (click)="changeSize()">Default</jigsaw-button>
 
-<jigsaw-button  [presize]="size" type="primary" (click)="changeSize('large')">Large</jigsaw-button>
+<jigsaw-button [presize]="size" type="primary" (click)="changeSize('large')">Large</jigsaw-button>
+</div>
 
-<br>
 <br>
 <p>另一种写法</p>
 <br>
