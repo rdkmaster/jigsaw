@@ -6,6 +6,7 @@ import {JigsawInput} from "jigsaw/component/input/input";
 })
 export class InputFocusDemoComponent {
     inputValue: any;
+    focusMessage: string;
     @ViewChild('myInput') myInput:JigsawInput;
     click() {
         this.myInput.focus();
@@ -13,6 +14,7 @@ export class InputFocusDemoComponent {
 
     focusHandler(event){
         console.log(event);
+        this.focusMessage = 'input component focused'
     }
 
 }
