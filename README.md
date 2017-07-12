@@ -62,6 +62,8 @@ npm start
 	- [这里](https://github.com/rdkmaster/jigsaw/blob/master/docs/coding-spec.md)是一份简单的代码规范，请尽量遵守它；
 
 ## 正在打算换工作？
+加入我们，白菜价送套市区房子！位于宁双路楚翘城往东200m处。绝不是吹牛，我很认真！
+
 - 我们需要诺干有经验的前端工程师，他的主要职责是全职加入这个组件库的开发；
 - 我们需要诺干有经验的服务端工程师，他的主要职责是全职加入[RDK](https://github.com/rdkmaster/rdk)后端的开发；
 - 详情[点击这里](https://mp.weixin.qq.com/s/GLV65kCIYF9pSCOvOG2sFQ)；
