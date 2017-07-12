@@ -1,8 +1,13 @@
 import {browser, by, element, ExpectedConditions} from 'protractor';
 
 describe('button', () => {
+    beforeEach(() => {
+        browser.waitForAngularEnabled(false);
+    });
+
     describe('test disabled', () => {
         beforeEach(() => {
+            browser.waitForAngularEnabled(false);
             browser.get('/button/disable');
         });
 
@@ -75,8 +80,8 @@ describe('button', () => {
 
         it('should display different background when set type', () => {
             const typeList = element(by.id('type-list')).all(by.tagName('jigsaw-button'));
-
-            expect(typeList.get(0).getCssValue('background-color')).toBe('rgba(255, 85, 1, 1)');
+            browser.sleep(300);
+            expect(typeList.get(0).getCssValue('background-color')).toBe('rgba(255, 85, 0, 1)');
             expect(typeList.get(1).getCssValue('background-color')).toBe('rgba(255, 255, 255, 1)');
             expect(typeList.get(2).getCssValue('background-color')).toBe('rgba(16, 142, 233, 1)');
         })

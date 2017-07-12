@@ -1,6 +1,10 @@
 import {browser, element, by} from "protractor";
 
 describe('input', () => {
+    beforeEach(() => {
+        browser.waitForAngularEnabled(false);
+    });
+
     describe('test bidirectional bindings and clearable', () => {
         beforeEach(() => {
             browser.get('input/basic');
