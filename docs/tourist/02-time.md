@@ -2,7 +2,7 @@
 
 众多大数据应用中选择条件永远离不开时间，我们就以时间选择器的使用来打开Jigsaw的大门。
 
-_**app.component.html  **_中添加 html 片段
+_**app.component.html**_ 中添加 html 片段
 
 ```
  <span>时间选择:</span> 
@@ -20,7 +20,7 @@ _**app.component.ts**_ 中添加代码片段
 
 ![](assets/pic_1.png)
 
-到目前为止，时间选择器已经显示出来了，但是一般而言，我们做应用时直接将时间这样显示的很少，一般都是配合input框，点击之后下拉出可供选择的时间。Jigsaw中的_**jigsaw-combo-select  **_组件正适合做这件事。
+到目前为止，时间选择器已经显示出来了，但是一般而言，我们做应用时直接将时间这样显示的很少，一般都是配合input框，点击之后下拉出可供选择的时间。Jigsaw中的 _**jigsaw-combo-select**_ 组件正适合做这件事。
 
 _**app.component.html  **_中修改 html 片段为
 
@@ -35,7 +35,7 @@ _**app.component.html  **_中修改 html 片段为
 
 ![](assets/pic-2.gif)
 
-OK，是不是使用 起来挺容易的，其实这么小小的一小步你就已经开始使用了Jigsaw的一大两点_**组合**_的功能了，当然目前整个时间显示还不太完美，我们需要给comboSelect初始值来显示当前的时间，需要给time添加change事件来监控时间选择的变化并且同步到comboSelect上面去。完整代码如下
+OK，是不是使用 起来挺容易的，其实这么小小的一小步你就已经开始使用了Jigsaw的一大两点 _**组合**_ 的功能了，当然目前整个时间显示还不太完美，我们需要给comboSelect初始值来显示当前的时间，需要给time添加change事件来监控时间选择的变化并且同步到comboSelect上面去。完整代码如下
 
 _**app.component.html**_
 
