@@ -1,5 +1,5 @@
-<jigsaw-button (click)="click()" >Input 获取焦点</jigsaw-button>
+<jigsaw-button id="call-function" (click)="click()" >Input 获取焦点</jigsaw-button>
 
 <jigsaw-input [(value)]="inputValue" (focus)="focusHandler($event)" #myInput></jigsaw-input>
 
-
+<p id="focus-message">{{focusMessage}}</p>

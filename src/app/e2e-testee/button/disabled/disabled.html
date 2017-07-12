@@ -1,2 +1,4 @@
-<jigsaw-button [(disabled)]="disabled" (click)="click()">click me</jigsaw-button>
-<jigsaw-checkbox [(checked)]="disabled">disable / enable</jigsaw-checkbox>
+<jigsaw-button id="test-button" [(disabled)]="disabled" (click)="click()">click me</jigsaw-button>
+<jigsaw-checkbox id="toggle-disabled" [(checked)]="disabled">disable / enable</jigsaw-checkbox>
+<br>
+<span id="click-counter">{{clickCount}}</span>
