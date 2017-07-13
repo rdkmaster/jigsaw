@@ -1,7 +1,8 @@
 <h4>单选按钮</h4>
-<jigsaw-radio-group [(value)]="selectedCity"
+<jigsaw-radio-group id="test-radio" [(value)]="selectedCity"
                  (valueChange)="radioChange($event)"
                  [data]="cities"
                  trackItemBy="id">
 </jigsaw-radio-group>
 
+<p id="select-message">{{selectedCity.label}}</p>

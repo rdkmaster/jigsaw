@@ -1,10 +1,10 @@
 
-<jigsaw-checkbox  [(checked)]="checked" [(enableIndeterminate)]="enableIndeterminate">click me</jigsaw-checkbox>
-<span>The checkbox value is {{checked}}!</span>
+<jigsaw-checkbox id="test-checkbox" [(checked)]="checked" [(enableIndeterminate)]="enableIndeterminate">click me</jigsaw-checkbox>
+<span id="state-message">The checkbox value is {{checked}}!</span>
 
 <br>
 <span>启用中间状态</span>
-<jigsaw-switch [(checked)]="enableIndeterminate"></jigsaw-switch>
+<jigsaw-switch id="set-middle-state" [(checked)]="enableIndeterminate"></jigsaw-switch>
 <br>
 <hr>
 <br>

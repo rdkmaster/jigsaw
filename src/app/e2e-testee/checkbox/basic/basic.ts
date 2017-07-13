@@ -5,7 +5,7 @@ import {CheckBoxStatus} from "jigsaw/component/checkbox/checkbox";
   templateUrl: 'basic.html'
 })
 export class CheckBoxBasicDemoComponent {
-    checked: boolean;
+    checked = CheckBoxStatus.unchecked;
     enableIndeterminate:boolean = false;
 
     // 第二个组件

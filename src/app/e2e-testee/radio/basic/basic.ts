@@ -5,7 +5,7 @@ import {ArrayCollection} from "jigsaw/core/data/array-collection";
   templateUrl: 'basic.html'
 })
 export class RadioBasicDemoComponent {
-    public selectedCity:{};
+    public selectedCity;
     cities = new ArrayCollection([
         {label: "北京", id: 0},
         {label: "上海", id: 2},
