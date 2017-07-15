@@ -4,7 +4,7 @@ describe('select', () => {
     beforeEach(() => {
         browser.waitForAngularEnabled(false);
     });
-    describe('text basic functions', () => {
+    describe('test basic functions', () => {
         beforeEach(() => {
             browser.get('select/basic');
         });

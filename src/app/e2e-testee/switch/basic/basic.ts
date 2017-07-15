@@ -5,7 +5,7 @@ import { Component } from "@angular/core";
 })
 export class SwitchBasicDemoComponent {
     public testSwitch(message:any){
-        console.log("switch message is: "+message);
+        alert("switch message is: "+message);
     }
 }
 
