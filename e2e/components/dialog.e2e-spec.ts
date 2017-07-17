@@ -26,7 +26,7 @@ describe('dialog', () => {
 
             await expectPopupByModal(popupDialog, 0.2);
 
-            expectClosePopup('.jigsaw-dialog-close', popupDialog, popupBlock);
+            await expectClosePopup('.jigsaw-dialog-close', popupDialog, popupBlock);
         });
 
         it('should popup a custom dialog at point when click the button', async () => {
@@ -42,9 +42,7 @@ describe('dialog', () => {
 
             await expectPopupAtPoint(trigger2, popupDialog, {x: 100, y: 10}, {x: 10, y: -10});
 
-            await browser.wait(ExpectedConditions.presenceOf(element(by.css('.jigsaw-dialog-close'))));
-
-            expectClosePopup('.jigsaw-dialog-close', popupDialog, popupBlock);
+            await expectClosePopup('.jigsaw-dialog-close', popupDialog, popupBlock);
         });
 
         it('should popup a template dialog as modal when click the button', async () => {
@@ -60,7 +58,7 @@ describe('dialog', () => {
 
             await expectPopupByModal(popupDialog);
 
-            expectClosePopup('.jigsaw-dialog-close', popupDialog, popupBlock);
+            await expectClosePopup('.jigsaw-dialog-close', popupDialog, popupBlock);
         });
 
         it('should popup a template dialog at point when click the button', async () => {
@@ -76,9 +74,7 @@ describe('dialog', () => {
 
             await expectPopupAtPoint(trigger4, popupDialog, {x: 100, y: 10}, {x: 10, y: -10});
 
-            await browser.wait(ExpectedConditions.presenceOf(element(by.css('.jigsaw-dialog-close'))));
-
-            expectClosePopup('.jigsaw-dialog-close', popupDialog, popupBlock);
+            await expectClosePopup('.jigsaw-dialog-close', popupDialog, popupBlock);
         });
 
     })

@@ -1,10 +1,11 @@
-import {browser, by} from "protractor";
+import {browser, by, element, ExpectedConditions} from "protractor";
 
 export type Position = { top: number, left: number };
 export type Size = { width: number, height: number };
 export type Offset = { x: number, y: number };
 
-export function expectClosePopup(selector: string, popupEl, popupBlock?) {
+export async function expectClosePopup(selector: string, popupEl, popupBlock?) {
+    await browser.wait(ExpectedConditions.presenceOf(element(by.css(selector))));
     popupEl.element(by.css(selector)).click();
     browser.sleep(400);
     if (popupBlock) {
