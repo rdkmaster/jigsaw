@@ -1,11 +1,8 @@
 import {NgModule} from "@angular/core";
-import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
 
-import {JigsawButtonModule} from "jigsaw/component/button/button";
-import {PopupService} from "jigsaw/service/popup.service";
-import {JigsawDialogModule} from "jigsaw/component/dialog/dialog";
-import {PopupTracingEventComponent} from "./tracing-event/demo";
+import {PopupTracingEventComponent} from "./tracing-event/app.component";
+import {PopupTracingEventModule} from "./tracing-event/app.module";
 
 const popupDemoRoutes = [
     {
@@ -18,17 +15,9 @@ const popupDemoRoutes = [
 ];
 
 @NgModule({
-    declarations: [
-        PopupTracingEventComponent
-    ],
     imports: [
         RouterModule.forChild(popupDemoRoutes),
-        CommonModule,
-        JigsawButtonModule,
-        JigsawDialogModule
-    ],
-    providers: [PopupService],
-    entryComponents: [
+        PopupTracingEventModule
     ]
 })
 export class PopupDemoModule {
