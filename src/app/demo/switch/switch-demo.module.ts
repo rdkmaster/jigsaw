@@ -1,8 +1,7 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {SwitchBasicDemoComponent} from "./basic/basic";
-
-import { JigsawSwitchModule } from "jigsaw/component/switch/index";
+import {SwitchBasicDemoComponent} from "./basic/app.component";
+import {SwitchBasicDemoModule} from "./basic/app.module";
 
 
 const inputDemoRoutes=[
@@ -21,15 +20,8 @@ const inputDemoRoutes=[
 ];
 
 @NgModule({
-    declarations: [
-        SwitchBasicDemoComponent
-    ],
     imports: [
-        RouterModule.forChild(inputDemoRoutes), JigsawSwitchModule
-    ],
-    exports: [
-        SwitchBasicDemoComponent
-    ],
-    providers: []
+        RouterModule.forChild(inputDemoRoutes), SwitchBasicDemoComponent
+    ]
 })
 export class SwitchDemoModule { }

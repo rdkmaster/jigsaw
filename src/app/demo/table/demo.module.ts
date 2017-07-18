@@ -1,41 +1,83 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {TableBasicDemoComponent} from "./basic/basic";
-import {JigsawTableModule} from "jigsaw/component/table/table";
-import {JigsawTableRendererModule} from "jigsaw/component/table/table-renderer";
-import {JigsawSelectModule} from "jigsaw/component/select/select";
-import {JigsawCheckBoxModule} from "jigsaw/component/checkbox/index";
-import {JigsawPaginationModule} from "jigsaw/component/pagination/pagination";
-import {JigsawInputModule} from "jigsaw/component/input/input";
-import {JigsawDialogModule} from "jigsaw/component/dialog/dialog";
-import {PopupService} from "jigsaw/service/popup.service";
-import {JigsawButtonModule} from "jigsaw/component/button/button";
-import {TableRendererDemoComponent} from "./renderer/renderer";
-import {TableHeadSelect, TableHeadIcon} from "./renderer/table-renderer";
-import {TablePerformsDemoComponent} from "./performs/performs";
-import {TableSetHeaderRenderDemoComponent} from "./setHeaderRender/setHeaderRender";
-import {TableSetHeaderClassDemoComponent} from "./setHeaderClass/setHeaderClass";
-import {TableColumnSetWidthDemoComponent} from "./setColumnWidth/setColumnWidth";
-import {TableColumnSetVisibleDemoComponent} from "./setColumnVisible/setColumnVisible";
-import {TableSetHeaderSortDemoComponent} from "./setHeaderSort/setHeaderSort";
-import {TableSetCellRenderDemoComponent} from "./setCellRender/setCellRender";
-import {TableSetCellClassDemoComponent} from "./setCellClass/setCellClass";
-import {TableColumnGroupDemoComponent} from "./setColumnGroup/setColumnGroup";
-import {TableSetCellEditableDemoComponent, MyTableCellEditor, MyTableCell} from "./setCellEditable/setCellEditable";
-import {TableAddColumnDemoComponent, MyTableHeadOption, MyTableCellOption} from "./addColumn/addColumn";
-import {TableFixedHeadDemoComponent} from "./fixedHead/fixedHead";
-import {TablePageableDemoComponent} from "./pageable/demo";
-import {TableDataFromAjaxDemoComponent} from "./dataFromAjax/dataFromAjax";
-import {TableScrollAmountDemoComponent} from "./scrollAmount/scrollAmount";
-import {TableAddIDColumnDemoComponent} from "./addIDColumn/addIDColumn";
-import {TableAddCheckboxColumnDemoComponent} from "./addCheckboxColumn/addCheckboxColumn";
-import {TableDataChangeDemoComponent} from "./dataChange/dataChange";
-import {TableAddIDWithPagingComponent} from "./addIDWithPaging/addIDWithPaging";
-import {TableDataWithPopupDemoComponent} from "./withPopup/withPopup";
-import {TableRendererOfTemplateRefDemoComponent} from "./rendererOfTemplateRef/rendererOfTemplateRef";
-import {TableLineEllipsisDemoComponent} from "./lineEllipsis/lineElliosis";
-import {TableAddIDWithDebouncePagingComponent} from "./addIDWithDebouncePaging/addIDWithDebouncePaging";
-import {LocalPagingDataDemoComponent} from "./localPagingData/localPagingData";
+
+import {TableAddCheckboxColumnDemoComponent} from "./addCheckboxColumn/app.component";
+import {TableAddCheckboxColumnDemoModule} from "./addCheckboxColumn/app.module";
+
+import {TableAddColumnDemoComponent} from "./addColumn/app.component";
+import {TableAddColumnDemoModule} from "./addColumn/app.module";
+
+import {TableAddIDColumnDemoComponent} from "./addIDColumn/app.component";
+import {TableAddIDColumnDemoModule} from "./addIDColumn/app.module";
+
+import {TableAddIDWithDebouncePagingComponent} from "./addIDWithDebouncePaging/app.component";
+import {TableAddIDWithDebouncePagingModule} from "./addIDWithDebouncePaging/app.module";
+
+import {TableAddIDWithPagingComponent} from "./addIDWithPaging/app.component";
+import {TableAddIDWithPagingModule} from "./addIDWithPaging/app.module";
+
+import {TableBasicDemoComponent} from "./basic/app.component";
+import {TableBasicDemoModule} from "./basic/app.module";
+
+import {TableDataChangeDemoComponent} from "./dataChange/app.component";
+import {TableDataChangeDemoModule} from "./dataChange/app.module";
+
+import {TableDataFromAjaxDemoComponent} from "./dataFromAjax/app.component";
+import {TableDataFromAjaxDemoModule} from "./dataFromAjax/app.module";
+
+import {TableFixedHeadDemoComponent} from "./fixedHead/app.component";
+import {TableFixedHeadDemoModule} from "./fixedHead/app.module";
+
+import {TableLineEllipsisDemoComponent} from "./lineEllipsis/app.component";
+import {TableLineEllipsisDemoModule} from "./lineEllipsis/app.module";
+
+import {LocalPagingDataDemoComponent} from "./localPagingData/app.component";
+import {LocalPagingDataDemoModule} from "./localPagingData/app.module";
+
+import {TablePageableDemoComponent} from "./pageable/app.component";
+import {TablePageableDemoModule} from "./pageable/app.module";
+
+import {TablePerformsDemoComponent} from "./performs/app.component";
+import {TablePerformsDemoModule} from "./performs/app.module";
+
+import {TableRendererDemoComponent} from "./renderer/app.component";
+import {TableRendererDemoModule} from "./renderer/app.module";
+
+import {TableRendererOfTemplateRefDemoComponent} from "./rendererOfTemplateRef/app.component";
+import {TableRendererOfTemplateRefDemoModule} from "./rendererOfTemplateRef/app.module";
+
+import {TableScrollAmountDemoComponent} from "./scrollAmount/app.component";
+import {TableScrollAmountDemoModule} from "./scrollAmount/app.module";
+
+import {TableSetCellClassDemoComponent} from "./setCellClass/app.component";
+import {TableSetCellClassDemoModule} from "./setCellClass/app.module";
+
+import {TableSetCellEditableDemoComponent} from "./setCellEditable/app.component";
+import {TableSetCellEditableDemoModule} from "./setCellEditable/app.module";
+
+import {TableSetCellRenderDemoComponent} from "./setCellRender/app.component";
+import {TableSetCellRenderDemoModule} from "./setCellRender/app.module";
+
+import {TableColumnGroupDemoComponent} from "./setColumnGroup/app.component";
+import {TableColumnGroupDemoModule} from "./setColumnGroup/app.module";
+
+import {TableColumnSetVisibleDemoComponent} from "./setColumnVisible/app.component";
+import {TableColumnSetVisibleDemoModule} from "./setColumnVisible/app.module";
+
+import {TableColumnSetWidthDemoComponent} from "./setColumnWidth/app.component";
+import {TableColumnSetWidthDemoModule} from "./setColumnWidth/app.module";
+
+import {TableSetHeaderClassDemoComponent} from "./setHeaderClass/app.component";
+import {TableSetHeaderClassDemoModule} from "./setHeaderClass/app.module";
+
+import {TableSetHeaderRenderDemoComponent} from "./setHeaderRender/app.component";
+import {TableSetHeaderRenderDemoModule} from "./setHeaderRender/app.module";
+
+import {TableSetHeaderSortDemoComponent} from "./setHeaderSort/app.component";
+import {TableSetHeaderSortDemoModule} from "./setHeaderSort/app.module";
+
+import {TableDataWithPopupDemoComponent} from "./withPopup/app.component";
+import {TableDataWithPopupDemoModule} from "./withPopup/app.module";
 
 const tableDemoRoutes = [
     {
@@ -82,9 +124,11 @@ const tableDemoRoutes = [
     },
     {
         path: 'addColumn', component: TableAddColumnDemoComponent
-    },{
+    },
+    {
         path: 'addIDColumn', component: TableAddIDColumnDemoComponent
-    },{
+    },
+    {
         path: 'addCheckboxColumn', component: TableAddCheckboxColumnDemoComponent
     },
     {
@@ -124,61 +168,17 @@ const tableDemoRoutes = [
 ];
 
 @NgModule({
-    declarations: [
-        TableBasicDemoComponent,
-        TableRendererDemoComponent,
-        TablePerformsDemoComponent,
-        TableFixedHeadDemoComponent,
-        TableHeadSelect,
-        TableHeadIcon,
-        TableColumnSetWidthDemoComponent,
-        TableColumnSetVisibleDemoComponent,
-        TableSetHeaderRenderDemoComponent,
-        TableSetHeaderClassDemoComponent,
-        TableSetHeaderSortDemoComponent,
-        TableSetCellRenderDemoComponent,
-        TableSetCellClassDemoComponent,
-        TableColumnGroupDemoComponent,
-        MyTableCellEditor,
-        MyTableCell,
-        TableSetCellEditableDemoComponent,
-        MyTableHeadOption,
-        MyTableCellOption,
-        TableAddColumnDemoComponent,
-        TablePageableDemoComponent,
-        TableDataFromAjaxDemoComponent,
-        TableScrollAmountDemoComponent,
-        TableAddIDColumnDemoComponent,
-        TableAddCheckboxColumnDemoComponent,
-        TableDataChangeDemoComponent,
-        TableAddIDWithPagingComponent,
-        TableDataWithPopupDemoComponent,
-        TableRendererOfTemplateRefDemoComponent,
-        TableLineEllipsisDemoComponent,
-        TableAddIDWithDebouncePagingComponent,
-        LocalPagingDataDemoComponent
-    ],
     imports: [
         RouterModule.forChild(tableDemoRoutes),
-        JigsawTableModule,
-        JigsawTableRendererModule,
-        JigsawSelectModule,
-        JigsawCheckBoxModule,
-        JigsawPaginationModule,
-        JigsawInputModule,
-        JigsawButtonModule,
-        JigsawDialogModule,
-    ],
-    exports: [ ],
-    entryComponents: [
-        TableHeadSelect,
-        TableHeadIcon,
-        MyTableCell,
-        MyTableHeadOption,
-        MyTableCellOption,
-        MyTableCellEditor
-    ],
-    providers: [PopupService],
+        TableAddCheckboxColumnDemoModule, TableAddColumnDemoModule, TableAddIDColumnDemoModule, TableAddIDWithDebouncePagingModule,
+        TableAddIDWithPagingModule, TableBasicDemoModule, TableDataChangeDemoModule, TableDataFromAjaxDemoModule,
+        TableFixedHeadDemoModule, TableLineEllipsisDemoModule, LocalPagingDataDemoModule, TablePageableDemoModule,
+        TablePerformsDemoModule, TableRendererDemoModule, TableRendererOfTemplateRefDemoModule, TableScrollAmountDemoModule,
+        TableSetCellClassDemoModule, TableSetCellEditableDemoModule, TableSetCellRenderDemoModule, TableColumnGroupDemoModule,
+        TableColumnSetVisibleDemoModule, TableColumnSetWidthDemoModule, TableSetHeaderClassDemoModule, TableSetHeaderRenderDemoModule,
+        TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule
+
+    ]
 })
 export class TableDemoModule {
 }
