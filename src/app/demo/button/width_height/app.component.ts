@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 
 @Component({
-    templateUrl: 'width_height.html'
+    templateUrl: './app.component.html'
 })
 export class ButtonWidthHeightDemoComponent {
 

@@ -4,7 +4,7 @@
 import { Component, ElementRef } from '@angular/core';
 
 @Component({
-    templateUrl: 'preset.html'
+    templateUrl: './app.component.html'
 })
 
 export class ButtonPresetDemoComponent {

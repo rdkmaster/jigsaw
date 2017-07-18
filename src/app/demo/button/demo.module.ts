@@ -1,13 +1,15 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {JigsawCheckBoxModule} from "jigsaw/component/checkbox/index";
-import {JigsawButtonModule} from "jigsaw/component/button/button";
-import {JigsawLoadingModule} from "jigsaw/component/loading/loading";
-import {ButtonBasicDemoComponent} from "./basic/basic";
-import {ButtonDisableDemoComponent} from "./disabled/disabled";
-import {ButtonWidthHeightDemoComponent} from "./width_height/width_height";
-import {ButtonPresetDemoComponent} from "./preset/preset";
-import {ButtonWithLoadingComponent} from "./with-loading/demo";
+import {ButtonBasicDemoComponent} from "./basic/app.component";
+import {ButtonDisableDemoComponent} from "./disabled/app.component";
+import {ButtonWidthHeightDemoComponent} from "./width_height/app.component";
+import {ButtonPresetDemoComponent} from "./preset/app.component";
+import {ButtonWithLoadingComponent} from "./with-loading/app.component";
+import {ButtonBasicDemoModule} from "./basic/app.module";
+import {ButtonDisableDemoModule} from "./disabled/app.module";
+import {ButtonPresetDemoModule} from "app/demo/button/preset/app.module";
+import {ButtonWidthHeightDemoModule} from "app/demo/button/width_height/app.module";
+import {ButtonWithLoadingModule} from "app/demo/button/with-loading/app.module";
 
 const buttonDemoRoutes = [
     {
@@ -35,12 +37,13 @@ const buttonDemoRoutes = [
 ];
 
 @NgModule({
-    declarations: [
-        ButtonBasicDemoComponent, ButtonDisableDemoComponent,ButtonWidthHeightDemoComponent,ButtonPresetDemoComponent,
-        ButtonWithLoadingComponent
-    ],
     imports: [
-        RouterModule.forChild(buttonDemoRoutes), JigsawCheckBoxModule, JigsawButtonModule, JigsawLoadingModule
+        RouterModule.forChild(buttonDemoRoutes),
+        ButtonBasicDemoModule,
+        ButtonDisableDemoModule,
+        ButtonPresetDemoModule,
+        ButtonWidthHeightDemoModule,
+        ButtonWithLoadingModule
     ],
     exports: [
     ],

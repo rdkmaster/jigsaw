@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 
 @Component({
-    templateUrl: 'disabled.html'
+    templateUrl: './app.component.html'
 })
 export class ButtonDisableDemoComponent {
     disabled: boolean;
