@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 import {TreeData} from "jigsaw/core/data/tree-data";
 
 @Component({
-    templateUrl: 'basic.html'
+    templateUrl: './app.component.html'
 })
 export class ZtreeDemoComponent {
     public data: TreeData;
@@ -79,7 +79,4 @@ export class ZtreeDemoComponent {
         console.log("click");
         console.log(msg);
     }
-
-
-
 }

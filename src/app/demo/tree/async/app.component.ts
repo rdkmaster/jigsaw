@@ -3,7 +3,7 @@ import {ZTreeSettingSetting} from "jigsaw/component/tree/ztree-types";
 import {TreeData} from "jigsaw/core/data/tree-data";
 
 @Component({
-    templateUrl: 'async.html'
+    templateUrl: 'app.component.html'
 })
 export class ZtreeAsynDemoComponent {
     public setting: ZTreeSettingSetting = {

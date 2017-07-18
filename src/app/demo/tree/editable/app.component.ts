@@ -6,9 +6,9 @@ import {ZTreeSettingSetting} from "jigsaw/component/tree/ztree-types"
 import {TreeData} from "jigsaw/core/data/tree-data";
 
 @Component({
-    templateUrl: 'dataFromAjax.html'
+    templateUrl: './app.component.html'
 })
-export class ZtreeDemoDataFromAjaxComponent {
+export class ZtreeDemoEditableComponent {
      data : TreeData;
     public setting: ZTreeSettingSetting = {
         data: {
@@ -16,6 +16,9 @@ export class ZtreeDemoDataFromAjaxComponent {
                 children: 'nodes',
                 name: 'label'
             }
+        },
+        edit : {
+            enable : true
         }
     };
 
@@ -26,4 +29,3 @@ export class ZtreeDemoDataFromAjaxComponent {
         this.data.refresh();
     }
 }
-

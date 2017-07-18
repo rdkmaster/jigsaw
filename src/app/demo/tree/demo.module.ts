@@ -1,11 +1,18 @@
 import {NgModule} from "@angular/core";
-import { HttpModule } from '@angular/http';
+import {HttpModule} from '@angular/http';
 import {RouterModule} from "@angular/router";
-import { JigsawTreeExtModule } from "jigsaw/component/tree/tree-ext"
-import {ZtreeDemoComponent} from "./basic/basic";
-import {ZtreeDemoDataFromAjaxComponent} from "./dataFromAjax/dataFromAjax";
-import {ZtreeDemoEditableComponent} from "./editable/editable";
-import {ZtreeAsynDemoComponent} from "./async/async";
+
+import {ZtreeDemoComponent} from "./basic/app.component";
+import {TreeBasicDemoModule} from "./basic/app.module";
+
+import {ZtreeAsynDemoComponent} from "./async/app.component";
+import {TreeAsyncDemoModule} from "./async/app.module";
+
+import {ZtreeDemoDataFromAjaxComponent} from "./dataFromAjax/app.component";
+import {TreeAjaxDataDemoModule} from "./dataFromAjax/app.module";
+
+import {ZtreeDemoEditableComponent} from "./editable/app.component";
+import {TreeEditableDemoModule} from "./editable/app.module";
 
 const ztreeDemoRoutes=[
     {
@@ -29,14 +36,11 @@ const ztreeDemoRoutes=[
 ];
 
 @NgModule({
-    declarations: [
-        ZtreeDemoComponent,ZtreeDemoDataFromAjaxComponent,ZtreeDemoEditableComponent,ZtreeAsynDemoComponent
-    ],
     imports: [
-        RouterModule.forChild(ztreeDemoRoutes),JigsawTreeExtModule,HttpModule
+        RouterModule.forChild(ztreeDemoRoutes), HttpModule, TreeAsyncDemoModule,
+        TreeBasicDemoModule, TreeAjaxDataDemoModule, TreeEditableDemoModule
     ],
     exports: [
-        ZtreeDemoComponent
     ],
     providers: []
 })
