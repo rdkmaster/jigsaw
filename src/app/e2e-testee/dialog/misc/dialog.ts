@@ -133,7 +133,7 @@ export class DialogMiscDemoComponent {
             modal: false, //是否模态
             showEffect: PopupEffect.bubbleIn,
             hideEffect: PopupEffect.bubbleOut,
-            pos: {x: event.clientX, y: event.clientY}, //插入点
+            pos: {x: event.pageX, y: event.pageY}, //插入点
             posOffset: { //偏移位置
                 top: -10,
                 left: 10,

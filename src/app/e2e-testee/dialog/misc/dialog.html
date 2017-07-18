@@ -1,19 +1,19 @@
 
-<jigsaw-button width="150" (click)="popup()">
+<jigsaw-button id="trigger1" width="150" (click)="popup()">
     modal dialog
 </jigsaw-button>
 
-<jigsaw-button width="150" (click)="popupAtPoint($event)">
+<jigsaw-button id="trigger2" width="150" (click)="popupAtPoint($event)">
     point dialog
-</jigsaw-button>
+</jigsaw-button><br><br>
 
-<jigsaw-button width="150" (click)="popupModalDialogTemplate(tpDialog1)">
+<jigsaw-button id="trigger3" width="150" (click)="popupModalDialogTemplate(tpDialog1)">
     template modal dialog
 </jigsaw-button>
 
-<jigsaw-button width="150" (click)="popupDialogTemplate(tpDialog2, $event)">
+<jigsaw-button id="trigger4" width="150" (click)="popupDialogTemplate(tpDialog2, $event)">
     template dialog
-</jigsaw-button>
+</jigsaw-button><br><br>
 
 <jigsaw-button width="150" (click)="popupTemplate(tp)">
     template
