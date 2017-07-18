@@ -1,0 +1,8 @@
+<div class="container">
+    <jigsaw-tab (selectChange)="testEvent()">
+        <jigsaw-tab-pane *ngFor="let tabData of tabDatas">
+            <div jigsaw-title><span class="fa fa-gift"></span>{{tabData}}</div>
+            <div jigsaw-body>{{tabData}} Content</div>
+        </jigsaw-tab-pane>
+    </jigsaw-tab>
+</div>

@@ -1,0 +1,14 @@
+<span>Top:</span><jigsaw-input [(value)]="top" width="200px"></jigsaw-input>
+<jigsaw-button width="300px" (click)="popupDialog1(dialog1)">Top</jigsaw-button>
+
+{{message}}
+<ng-template #dialog1>
+    <jigsaw-dialog width="80%" title="dialog title"  [top]="top" (answer)="close()">
+        <ul class="dialog-content">
+            <li>Dialog content...</li>
+            <li>Dialog content...</li>
+            <li>Dialog content...</li>
+        </ul>
+    </jigsaw-dialog>
+</ng-template>
+

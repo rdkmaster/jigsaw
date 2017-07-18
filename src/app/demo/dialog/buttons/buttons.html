@@ -1,0 +1,13 @@
+<jigsaw-button width="300px" (click)="popupDialog1(dialog1)">点击我</jigsaw-button>
+
+{{message}}
+<ng-template #dialog1>
+    <jigsaw-dialog width="80%" [title]="'dialog title'"  [buttons]="buttons" (answer)="showInfo($event)" >
+        <ul class="dialog-content">
+            <li>Dialog content...</li>
+            <li>Dialog content...</li>
+            <li>Dialog content...</li>
+        </ul>
+    </jigsaw-dialog>
+</ng-template>
+
