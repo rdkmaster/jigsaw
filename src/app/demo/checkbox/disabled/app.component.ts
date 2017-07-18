@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {CheckBoxStatus} from "../../../../jigsaw/component/checkbox/checkbox";
 
 @Component({
-  templateUrl: 'disabled.html'
+  templateUrl: './app.component.html'
 })
 export class CheckBoxDisableDemoComponent {
     checked = CheckBoxStatus.unchecked;

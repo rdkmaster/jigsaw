@@ -2,8 +2,10 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {JigsawCheckBoxModule} from "jigsaw/component/checkbox/index";
 import {JigsawSwitchModule} from "jigsaw/component/switch/index";
-import {CheckBoxDisableDemoComponent} from "./disabled/disabled";
-import {CheckBoxBasicDemoComponent} from "./basic/basic";
+import {CheckBoxDisableDemoComponent} from "./disabled/app.component";
+import {CheckBoxBasicDemoComponent} from "./basic/app.component";
+import {CheckBoxBasicDemoModule} from "./basic/app.module";
+import {CheckBoxDisableDemoModule} from "./disabled/app.module";
 
 const checkboxDemoRoutes = [
     {
@@ -22,16 +24,11 @@ const checkboxDemoRoutes = [
 ];
 
 @NgModule({
-    declarations: [
-        CheckBoxBasicDemoComponent, CheckBoxDisableDemoComponent
-    ],
     imports: [
-        RouterModule.forChild(checkboxDemoRoutes), JigsawCheckBoxModule, JigsawSwitchModule
-    ],
-    exports: [
-        CheckBoxBasicDemoComponent, CheckBoxDisableDemoComponent
-    ],
-    providers: []
+        RouterModule.forChild(checkboxDemoRoutes),
+        CheckBoxBasicDemoModule,
+        CheckBoxDisableDemoModule
+    ]
 })
 export class CheckBoxDemoModule {
 }
