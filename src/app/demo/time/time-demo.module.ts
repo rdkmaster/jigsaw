@@ -1,23 +1,32 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {CommonModule} from "@angular/common";
 
-import {JigsawTimeModule} from "jigsaw/component/time/index";
-import {JigsawButtonModule} from "jigsaw/component/button/button";
-import {JigsawTileSelectModule} from "jigsaw/component/tile-select/tile-select";
-import {JigsawComboSelectModule} from "jigsaw/component/combo-select/index";
-import {JigsawRangeTimeModule} from "jigsaw/component/range-time/index";
+import {TimeBasicDemoComponent} from "./basic/app.component";
+import {TimeBasicDemoModule} from "./basic/app.module";
 
-import {TimeBasicDemoComponent} from "./basic/basic";
-import {TimeLimitEndComponent} from "./limitEnd/limitEnd";
-import {TimeLimitStartComponent} from "./limitStart/limitStart";
-import {TimeWeekStartComponent} from "./weekStart/weekStart";
-import {TimeGrComponent} from "./gr/gr";
-import {TimeRecommendedComponent} from "./recommended/recommended";
-import {TimeGrItemsComponent} from "./grItems/grItems";
-import {TimeRefreshIntervalComponent} from "./refreshInterval/refreshInterval";
-import {ComboSelectDemoComponent} from "./comboSelect/comboSelect";
+import {ComboSelectDemoComponent} from "./comboSelect/app.component";
+import {TimeComboDemoModule} from "./comboSelect/app.module";
 
+import {TimeGrComponent} from "./gr/app.component";
+import {TimeGrDemoModule} from "./gr/app.module";
+
+import {TimeGrItemsComponent} from "./grItems/app.component";
+import {TimeGrItemsDemoModule} from "./grItems/app.module";
+
+import {TimeLimitEndComponent} from "./limitEnd/app.component";
+import {TimeLimitEndDemoModule} from "./limitEnd/app.module";
+
+import {TimeLimitStartComponent} from "./limitStart/app.component";
+import {TimeLimitStartDemoModule} from "./limitStart/app.module";
+
+import {TimeRecommendedComponent} from "./recommended/app.component";
+import {TimeRecommendedDemoModule} from "./recommended/app.module";
+
+import {TimeRefreshIntervalComponent} from "./refreshInterval/app.component";
+import {TimeRrefreshIntervalDemoModule} from "./refreshInterval/app.module";
+
+import {TimeWeekStartComponent} from "./weekStart/app.component";
+import {TimeWeekStartDemoModule} from "./weekStart/app.module";
 
 const inputDemoRoutes = [
     {
@@ -51,13 +60,10 @@ const inputDemoRoutes = [
 ];
 
 @NgModule({
-    declarations: [
-        TimeBasicDemoComponent, TimeLimitEndComponent, TimeLimitStartComponent, TimeWeekStartComponent, TimeRecommendedComponent,
-        TimeGrComponent, TimeGrItemsComponent, TimeRefreshIntervalComponent, ComboSelectDemoComponent
-    ],
     imports: [
-        RouterModule.forChild(inputDemoRoutes), CommonModule, JigsawTimeModule, JigsawButtonModule, JigsawTileSelectModule,
-        JigsawComboSelectModule, JigsawRangeTimeModule
+        RouterModule.forChild(inputDemoRoutes),
+        TimeBasicDemoModule, TimeComboDemoModule, TimeGrDemoModule, TimeGrItemsDemoModule, TimeLimitEndDemoModule,
+        TimeLimitStartDemoModule, TimeRecommendedDemoModule, TimeRrefreshIntervalDemoModule, TimeWeekStartDemoModule
     ],
     providers: []
 })

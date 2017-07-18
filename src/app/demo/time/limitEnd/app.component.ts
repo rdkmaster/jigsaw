@@ -2,7 +2,7 @@ import {AfterContentInit, Component} from "@angular/core";
 
 
 @Component({
-  templateUrl: 'limitEnd.html'
+  templateUrl: './app.component.html'
 })
 export class TimeLimitEndComponent implements AfterContentInit{
     date = "now";

@@ -1,9 +1,9 @@
 import { Component } from "@angular/core";
-import {TimeGr} from "jigsaw/service/time.service";
+import { TimeGr } from "jigsaw/service/time.service";
 
 
 @Component({
-  templateUrl: 'grItems.html'
+  templateUrl: './app.component.html'
 })
 export class TimeGrItemsComponent {
 

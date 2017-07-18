@@ -1,8 +1,8 @@
-import {AfterContentInit, Component} from "@angular/core";
+import {Component} from "@angular/core";
 
 
 @Component({
-  templateUrl: 'gr.html'
+  templateUrl: './app.component.html'
 })
 export class TimeGrComponent {
     date = "now";

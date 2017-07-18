@@ -4,7 +4,7 @@ import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 
 @Component({
-    templateUrl: 'comboSelect.html'
+    templateUrl: './app.component.html'
 })
 export class ComboSelectDemoComponent {
     date:string = 'now';

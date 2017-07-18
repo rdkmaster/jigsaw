@@ -2,11 +2,9 @@ import { Component } from "@angular/core";
 
 
 @Component({
-  templateUrl: 'recommended.html'
+  templateUrl: './app.component.html'
 })
-export class TimeRecommendedComponent {
-
+export class TimeRefreshIntervalComponent {
     date = new Date();
-
 }
 
