@@ -9,18 +9,28 @@ if (fs.existsSync(outputHome)) {
     process.exit(1);
 }
 
-var demoSetFolders = fs.readdirSync(demoHome);
-demoSetFolders.forEach(demoFolder => {
-    var pathname = demoHome + demoFolder;
-    var stat = fs.lstatSync(pathname);
-    if (stat.isDirectory()) {
-        processDemoSet(pathname + '/');
+if (process.argv.length > 2) {
+    var dir = demoHome + process.argv[2];
+    if (!dir.match(/[\\/]$/)) {
+        dir += '/';
     }
-});
+    makePlunker(dir);
+} else {
+    makeAllPlunkers(demoHome);
+}
+
+function makeAllPlunkers(demoHome) {
+    var demoSetFolders = fs.readdirSync(demoHome);
+    demoSetFolders.forEach(demoFolder => {
+        var pathname = demoHome + demoFolder;
+        var stat = fs.lstatSync(pathname);
+        if (stat.isDirectory()) {
+            processDemoSet(pathname + '/');
+        }
+    });
+}
 
 function processDemoSet(demoSetFolder) {
-    console.log('processing ' + demoSetFolder);
-
     var demoFolders = fs.readdirSync(demoSetFolder);
     demoFolders.forEach(demoFolder => {
         var pathname = demoSetFolder + demoFolder;
@@ -29,7 +39,6 @@ function processDemoSet(demoSetFolder) {
             makePlunker(pathname + '/');
         }
     });
-
 }
 
 function makePlunker(demoFolder) {
