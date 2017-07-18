@@ -1,10 +1,12 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {CommonModule} from '@angular/common';//todo 使用ng-for时需要引用
-import { JigsawRadioModule } from "jigsaw/component/radio/radio";
-import {RadioBasicDemoComponent} from "./basic/basic";
-import {RadioLabelFieldDemoComponent} from "./labelField/labelField";
-import {RadioTrackItemByDemoComponent} from "./trackItemBy/trackItemBy";
+
+import {RadioBasicDemoComponent} from "./basic/app.component";
+import {RadioLabelFieldDemoComponent} from "./labelField/app.component";
+import {RadioTrackItemByDemoComponent} from "./trackItemBy/app.component";
+import {RadioBasicDemoModule} from "./basic/app.module";
+import {RadioLabelFieldDemoModule} from "./labelField/app.module";
+import {RadioTrackItemByDemoModule} from "./trackItemBy/app.module";
 
 const inputDemoRoutes=[
     {
@@ -28,15 +30,11 @@ const inputDemoRoutes=[
 ];
 
 @NgModule({
-    declarations: [
-        RadioBasicDemoComponent,RadioLabelFieldDemoComponent,RadioTrackItemByDemoComponent
-    ],
     imports: [
-        RouterModule.forChild(inputDemoRoutes), JigsawRadioModule,CommonModule
-    ],
-    exports: [
-        RadioBasicDemoComponent
-    ],
-    providers: []
+        RouterModule.forChild(inputDemoRoutes),
+        RadioBasicDemoModule,
+        RadioLabelFieldDemoModule,
+        RadioTrackItemByDemoModule
+    ]
 })
 export class RadioDemoModule { }

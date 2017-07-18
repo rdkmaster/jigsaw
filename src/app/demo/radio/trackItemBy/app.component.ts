@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 @Component({
-  templateUrl: 'trackItemBy.html'
+  templateUrl: './app.component.html'
 })
 export class RadioTrackItemByDemoComponent {
     public selectedProduct={pro_name: "魅族",pro_type:"255"};
