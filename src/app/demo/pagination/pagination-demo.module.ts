@@ -1,8 +1,9 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import { JigsawPaginationModule } from "jigsaw/component/pagination/pagination";
-import { PaginationBasicDemoComponent } from "./basic/demo";
-import {ServerSidePagingDemoComponent} from "./with-table-data/demo";
+import { PaginationBasicDemoComponent } from "./basic/app.component";
+import {ServerSidePagingDemoComponent} from "./with-table-data/app.component";
+import {ServerSidePagingDemoModule} from "./with-table-data/app.module";
+import {PaginationBasicDemoModule} from "./basic/app.module";
 
 
 const inputDemoRoutes=[
@@ -24,15 +25,10 @@ const inputDemoRoutes=[
 ];
 
 @NgModule({
-    declarations: [
-        PaginationBasicDemoComponent, ServerSidePagingDemoComponent
-    ],
     imports: [
-        RouterModule.forChild(inputDemoRoutes), JigsawPaginationModule
-    ],
-    exports: [
-        PaginationBasicDemoComponent, ServerSidePagingDemoComponent
-    ],
-    providers: []
+        RouterModule.forChild(inputDemoRoutes),
+        PaginationBasicDemoModule,
+        ServerSidePagingDemoModule
+    ]
 })
 export class PaginationDemoModule { }

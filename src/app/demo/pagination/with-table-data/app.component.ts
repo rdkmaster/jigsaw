@@ -3,7 +3,7 @@ import {Http, RequestOptionsArgs} from "@angular/http";
 import {PageableTableData} from "jigsaw/core/data/table-data";
 
 @Component({
-  templateUrl: 'demo.html'
+  templateUrl: './app.component.html'
 })
 export class ServerSidePagingDemoComponent {
     public pageable:PageableTableData;
