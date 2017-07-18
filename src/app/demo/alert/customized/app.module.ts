@@ -7,6 +7,6 @@ import {CustomizedAlert} from "./customized-alert";
     imports: [JigsawAlertModule],
     exports: [CustomizeAlertDemoComponent]
 })
-export class CustomizeAlertDemoModule{
+export class CustomizeAlertDemoModule {
 
 }
