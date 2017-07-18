@@ -4,6 +4,11 @@ var outputHome = './live-demo/'
 var demoHome = getDemoHome();
 var template = getTemplate();
 
+if (fs.existsSync(outputHome)) {
+    console.error("ERROR: remove output dir and try again: " + outputHome);
+    process.exit(1);
+}
+
 var demoSetFolders = fs.readdirSync(demoHome);
 demoSetFolders.forEach(demoFolder => {
     var pathname = demoHome + demoFolder;
@@ -31,15 +36,27 @@ function makePlunker(demoFolder) {
     console.log('make plunker for ' + demoFolder);
     var content = [];
     readDemoContent(content, demoFolder);
+    var appCompFound = false;
+    var appModuleFound = false;
     content.forEach(item => {
         item.path = 'app/' + item.path.substring(demoFolder.length);
         if (item.path == 'app/app.component.ts') {
             item.code = fixAppComponentTs(item.code);
+            appCompFound = true;
         }
         if (item.path == 'app/app.module.ts') {
             item.code = fixAppModuleTs(item.code);
+            appModuleFound = true
         }
     });
+    if (!appCompFound) {
+        console.error('ERROR: need this file: ' + demoFolder + 'app.module.ts');
+        process.exit(100);
+    }
+    if (!appModuleFound) {
+        console.error('ERROR: need this file: ' + demoFolder + 'app.component.ts');
+        process.exit(100);
+    }
 
     content.push(getIndexHtml());
     content.push(getMainTs());
@@ -61,15 +78,6 @@ function makePlunker(demoFolder) {
 }
 
 function readDemoContent(content, demoFolder) {
-    if (!fs.existsSync(demoFolder + 'app.module.ts')) {
-        console.error('need this file: ' + demoFolder + 'app.module.ts');
-        process.exit(100);
-    }
-    if (!fs.existsSync(demoFolder + 'app.component.ts')) {
-        console.error('need this file: ' + demoFolder + 'app.component.ts');
-        process.exit(100);
-    }
-
     var demoFiles = fs.readdirSync(demoFolder);
     demoFiles.forEach(demoFile => {
         var pathname = demoFolder + demoFile;
