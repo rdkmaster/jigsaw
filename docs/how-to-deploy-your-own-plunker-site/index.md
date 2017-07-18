@@ -111,7 +111,7 @@ configure.coffee里面删除
 并将[config.json](config.json)文件拷贝到plunker_embed目录下
 
 # Github 认证
-访问(https://github.com/settings/applications)，创建新的OAuth Application。你的回调URL应该为`/auth/github`; 完整的参考: `http://plunk.example.com/auth/github`
+访问 <https://github.com/settings/applications>，创建新的OAuth Application。你的回调URL应该为`/auth/github`; 完整的参考: `http://plunk.example.com/auth/github`
 
 完成之后记下你的 `Client ID` and `Client Secret`。然后将值配置到你的plunker的配置文件中（上面所拷贝的配置文件）
 
