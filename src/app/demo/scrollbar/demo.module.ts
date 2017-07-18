@@ -1,9 +1,11 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {JigsawScrollBarModule} from "jigsaw/component/scrollbar/scrollbar";
-import {ScrollbarBasicDemoComponent} from "./basic/basic";
-import {ScrollbarUserdefineDemoComponent} from "./user-define/user-define";
-import {ScrollbarSetOptionsDemoComponent} from "./setOptions/setOptions";
+import {ScrollbarBasicDemoComponent} from "./basic/app.component";
+import {ScrollbarUserdefineDemoComponent} from "./user-define/app.component";
+import {ScrollbarSetOptionsDemoComponent} from "./setOptions/app.component";
+import {ScrollbarBasicDemoModule} from "./basic/app.module";
+import {ScrollbarSetOptionsDemoModule} from "./setOptions/app.module";
+import {ScrollbarUserdefineDemoModule} from "./user-define/app.module";
 
 const scrollbarDemoRoutes=[
     {
@@ -27,15 +29,11 @@ const scrollbarDemoRoutes=[
 ];
 
 @NgModule({
-    declarations: [
-        ScrollbarBasicDemoComponent,ScrollbarUserdefineDemoComponent,ScrollbarSetOptionsDemoComponent
-    ],
     imports: [
-        RouterModule.forChild(scrollbarDemoRoutes), JigsawScrollBarModule
-    ],
-    exports: [
-        ScrollbarBasicDemoComponent,ScrollbarUserdefineDemoComponent,ScrollbarSetOptionsDemoComponent
-    ],
-    providers: []
+        RouterModule.forChild(scrollbarDemoRoutes),
+        ScrollbarBasicDemoModule,
+        ScrollbarUserdefineDemoModule,
+        ScrollbarSetOptionsDemoModule
+    ]
 })
 export class ScrollbarDemoModule { }

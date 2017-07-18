@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
 
 @Component({
-  templateUrl: 'setOptions.html',
-  styleUrls: ['setOptions.scss']
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
 export class ScrollbarSetOptionsDemoComponent {
     scrollBarOptions: Object = {

@@ -2,8 +2,8 @@ import {Component} from "@angular/core";
 import {ScrollEvent} from "jigsaw/component/scrollbar/scrollbar";
 
 @Component({
-  templateUrl: 'user-define.html',
-  styleUrls: ['user-define.css']
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
 export class ScrollbarUserdefineDemoComponent {
     public testScrollEvent(message:ScrollEvent){
