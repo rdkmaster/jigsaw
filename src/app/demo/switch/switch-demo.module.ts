@@ -21,7 +21,7 @@ const inputDemoRoutes=[
 
 @NgModule({
     imports: [
-        RouterModule.forChild(inputDemoRoutes), SwitchBasicDemoComponent
+        RouterModule.forChild(inputDemoRoutes), SwitchBasicDemoModule
     ]
 })
 export class SwitchDemoModule { }

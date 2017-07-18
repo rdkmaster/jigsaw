@@ -1,10 +1,4 @@
-<h4>switch</h4>
-
-<h2>switch</h2>
-<jigsaw-switch id="test-switch1" (checkedChange)="testSwitch($event)"></jigsaw-switch>
 <jigsaw-switch [checked]="true" [disabled]="false"></jigsaw-switch>
-<jigsaw-switch id="test-switch2" [checked]="true" [disabled]="true"></jigsaw-switch>
-<br/>
-<br/>
-<jigsaw-switch id="test-switch3" onLabel="a" offLabel="b"></jigsaw-switch>
-
+<jigsaw-switch id="test-switch2" [checked]="true" [disabled]="true"></jigsaw-switch><br><br>
+<jigsaw-switch id="test-switch3" onLabel="Jigsaw is great!" offLabel="Jigsaw is perfect!"></jigsaw-switch>
+<jigsaw-switch id="test-switch1" [(checked)]="checked"></jigsaw-switch><span>result: {{checked}}</span><br><br>

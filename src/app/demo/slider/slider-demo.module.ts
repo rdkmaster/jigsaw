@@ -3,10 +3,12 @@
  */
 import { NgModule } from '@angular/core';
 import {RouterModule} from "@angular/router";
-import {JigsawSliderModule} from "jigsaw/component/slider/index";
-import {JigsawSwitchModule} from "jigsaw/component/switch/index";
-import {SliderVerticalDemo} from "./vertical/vertical";
-import {JigsawSliderDemoBasic} from "./basic/basic";
+
+import {SliderVerticalDemo} from "./vertical/app.component";
+import {SliderVerticalDemoModule} from "./vertical/app.module";
+
+import {JigsawSliderDemoBasic} from "./basic/app.component";
+import {JigsawSliderDemoModule} from "./basic/app.module";
 
 const routes = [
     {
@@ -19,12 +21,7 @@ const routes = [
 
 @NgModule({
     imports: [
-        RouterModule.forChild(routes),
-        JigsawSliderModule,
-        JigsawSwitchModule
-    ],
-    exports: [JigsawSliderDemoBasic, SliderVerticalDemo],
-    declarations: [JigsawSliderDemoBasic, SliderVerticalDemo],
-    providers: [],
+        RouterModule.forChild(routes), JigsawSliderDemoModule, SliderVerticalDemoModule
+    ]
 })
 export class SliderDemoModule { }

@@ -41,7 +41,7 @@ import {ArrayCollection} from "jigsaw/core/data/array-collection";
         <jigsaw-slider #slider [value]="120" [marks]="marks2" min="20" [vertical]="vertical"
                     class="vertical3"></jigsaw-slider>
     `,
-    styleUrls: ['./basic.scss']
+    styleUrls: ['./app.component.scss']
 })
 export class JigsawSliderDemoBasic implements OnInit {
 
