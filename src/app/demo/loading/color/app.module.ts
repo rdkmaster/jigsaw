@@ -1,8 +1,8 @@
 import {NgModule} from "@angular/core";
-import {ColorfulLoadingDemoComponent} from "./app.component";
-import {JigsawLoadingModule} from "../../../../jigsaw/component/loading/loading";
-import {JigsawButtonModule} from "../../../../jigsaw/component/button/button";
 import {CommonModule} from "@angular/common";
+import {JigsawLoadingModule} from "jigsaw/component/loading/loading";
+import {JigsawButtonModule} from "jigsaw/component/button/button";
+import {ColorfulLoadingDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [ColorfulLoadingDemoComponent],

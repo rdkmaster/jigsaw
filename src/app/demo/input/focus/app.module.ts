@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
+import {JigsawInputModule} from "jigsaw/component/input/input";
+import {JigsawButtonModule} from "jigsaw/component/button/button";
 import {InputFocusDemoComponent} from "./app.component";
-import {JigsawInputModule} from "../../../../jigsaw/component/input/input";
-import {JigsawButtonModule} from "../../../../jigsaw/component/button/button";
 @NgModule({
     declarations: [InputFocusDemoComponent],
     imports: [JigsawInputModule,JigsawButtonModule]

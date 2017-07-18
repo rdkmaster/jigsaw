@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
+import {JigsawRangeTimeModule} from "jigsaw/component/range-time/index";
 import {RangeTimeGrItemsComponent} from "./app.component";
-import {JigsawRangeTimeModule} from "../../../../jigsaw/component/range-time/index";
 @NgModule({
     declarations: [RangeTimeGrItemsComponent],
     imports: [JigsawRangeTimeModule]

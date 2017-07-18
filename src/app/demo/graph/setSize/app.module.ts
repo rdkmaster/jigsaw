@@ -1,7 +1,7 @@
 
 import {NgModule} from "@angular/core";
+import {JigsawGraphModule} from "jigsaw/component/graph/index";
 import {GraphSetSizeComponent} from "./app.component";
-import {JigsawGraphModule} from "../../../../jigsaw/component/graph/index";
 @NgModule({
     declarations: [GraphSetSizeComponent],
     imports: [JigsawGraphModule]

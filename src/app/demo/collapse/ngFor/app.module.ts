@@ -1,8 +1,8 @@
 import {NgModule} from "@angular/core";
-import {ngForDemoComponent} from "./app.component";
-import {JigsawCollapseModule} from "../../../../jigsaw/component/collapse/collapse";
 import {CommonModule} from "@angular/common";
-import {JigsawButtonModule} from "../../../../jigsaw/component/button/button";
+import {JigsawCollapseModule} from "jigsaw/component/collapse/collapse";
+import {JigsawButtonModule} from "jigsaw/component/button/button";
+import {ngForDemoComponent} from "./app.component";
 @NgModule({
     declarations: [ngForDemoComponent],
     imports: [CommonModule,JigsawCollapseModule,JigsawButtonModule]

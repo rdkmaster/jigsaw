@@ -6,15 +6,12 @@ import {DialogTopDemo} from "./top/app.component";
 import {DialogPopOptionDemo} from "./popupOption/app.component";
 import {DialogInDomDemoComponent} from "./in-dom/app.component";
 import {DialogMiscDemoComponent} from "./misc/app.component";
-import {UserDialogComponent} from "./misc/user-dialog/user-dialog";
-import {UserDialog2Component} from "./misc/user-dialog2/user-dialog";
 import {DialogButtonsDemoModule} from "./buttons/app.module";
 import {DialogInDomDemoModule} from "./in-dom/app.module";
 import {DialogMiscDemoModule} from "./misc/app.module";
 import {DialogPopOptionDemoModule} from "./popupOption/app.module";
 import {DialogTitleDemoModule} from "./title/app.module";
 import {DialogTopDemoModule} from "./top/app.module";
-import {PopupService} from "../../../jigsaw/service/popup.service";
 
 
 const dialogDemoRoutes=[

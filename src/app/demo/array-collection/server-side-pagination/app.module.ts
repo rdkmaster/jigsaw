@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
-import {ServerSidePaginationDemoComponent} from "./app.component";
-import {JigsawButtonModule} from "../../../../jigsaw/component/button/button";
 import {CommonModule} from "@angular/common";
+import {JigsawButtonModule} from "jigsaw/component/button/button";
+import {ServerSidePaginationDemoComponent} from "./app.component";
 @NgModule({
     declarations: [ServerSidePaginationDemoComponent],
     imports: [JigsawButtonModule, CommonModule]

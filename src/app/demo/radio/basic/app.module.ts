@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
+import {JigsawRadioModule} from "jigsaw/component/radio/radio";
 import {RadioBasicDemoComponent} from "./app.component";
-import {JigsawRadioModule} from "../../../../jigsaw/component/radio/radio";
 @NgModule({
     declarations: [RadioBasicDemoComponent],
     imports: [JigsawRadioModule]

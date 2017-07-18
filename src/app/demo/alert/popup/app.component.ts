@@ -2,8 +2,8 @@ import {Component, ComponentRef} from "@angular/core";
 import {
     ButtonInfo, PopupEffect, PopupInfo, PopupOptions, PopupPositionType,
     PopupService
-} from "../../../../jigsaw/service/popup.service";
-import {JigsawErrorAlert, JigsawInfoAlert, JigsawWarningAlert} from "../../../../jigsaw/component/alert/alert";
+} from "jigsaw/service/popup.service";
+import {JigsawErrorAlert, JigsawInfoAlert, JigsawWarningAlert} from "jigsaw/component/alert/alert";
 
 @Component({
     template: `

@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
+import {JigsawPaginationModule} from "jigsaw/component/pagination/pagination";
 import {ServerSidePagingDemoComponent} from "./app.component";
-import {JigsawPaginationModule} from "../../../../jigsaw/component/pagination/pagination";
 @NgModule({
     declarations: [ServerSidePagingDemoComponent],
     imports: [JigsawPaginationModule]

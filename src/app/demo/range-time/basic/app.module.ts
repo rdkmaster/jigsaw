@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
-import {RangeTimeBasicDemoComponent} from "./app.component";
-import {JigsawRangeTimeModule} from "../../../../jigsaw/component/range-time/index";
 import {CommonModule} from "@angular/common";
+import {JigsawRangeTimeModule} from "jigsaw/component/range-time/index";
+import {RangeTimeBasicDemoComponent} from "./app.component";
 @NgModule({
     declarations: [RangeTimeBasicDemoComponent],
     imports: [JigsawRangeTimeModule, CommonModule]

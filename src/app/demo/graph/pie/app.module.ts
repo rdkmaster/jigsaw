@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
+import {JigsawGraphModule} from "jigsaw/component/graph/index";
 import {PieGraphDemoComponent} from "./app.component";
-import {JigsawGraphModule} from "../../../../jigsaw/component/graph/index";
 @NgModule({
     declarations: [PieGraphDemoComponent],
     imports: [JigsawGraphModule]

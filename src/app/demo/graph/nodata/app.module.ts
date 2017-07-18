@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
+import {JigsawGraphModule} from "jigsaw/component/graph/index";
 import {GraphWithNoDataComponent} from "./app.component";
-import {JigsawGraphModule} from "../../../../jigsaw/component/graph/index";
 @NgModule({
     declarations: [GraphWithNoDataComponent],
     imports: [JigsawGraphModule]

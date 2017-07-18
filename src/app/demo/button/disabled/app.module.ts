@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
+import {JigsawButtonModule} from "jigsaw/component/button/button";
+import {JigsawCheckBoxModule} from "jigsaw/component/checkbox/index";
 import {ButtonDisableDemoComponent} from "./app.component";
-import {JigsawButtonModule} from "../../../../jigsaw/component/button/button";
-import {JigsawCheckBoxModule} from "../../../../jigsaw/component/checkbox/index";
 
 @NgModule({
     declarations: [ButtonDisableDemoComponent],

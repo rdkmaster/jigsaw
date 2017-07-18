@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
+import {JigsawGraphModule} from "jigsaw/component/graph/index";
 import {AjaxLineGraphComponent} from "./app.component";
-import {JigsawGraphModule} from "../../../../../jigsaw/component/graph/index";
 @NgModule({
     declarations: [AjaxLineGraphComponent],
     imports: [JigsawGraphModule]

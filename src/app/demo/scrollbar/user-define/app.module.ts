@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
+import {JigsawScrollBarModule} from "jigsaw/component/scrollbar/scrollbar";
 import {ScrollbarUserdefineDemoComponent} from "./app.component";
-import {JigsawScrollBarModule} from "../../../../jigsaw/component/scrollbar/scrollbar";
 @NgModule({
     declarations: [ScrollbarUserdefineDemoComponent],
     imports: [JigsawScrollBarModule]
