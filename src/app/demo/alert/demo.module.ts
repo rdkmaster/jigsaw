@@ -5,10 +5,13 @@ import {JigsawButtonModule} from "jigsaw/component/button/button";
 import {JigsawAlertModule} from "jigsaw/component/alert/alert";
 import {PopupService} from "jigsaw/service/popup.service";
 
-import {AlertInDomDemoComponent} from "./in-dom/demo";
-import {AlertPopupDemoComponent} from "./popup/demo";
+import {AlertInDomDemoComponent} from "./in-dom/app.component";
+import {AlertPopupDemoComponent} from "./popup/app.component";
 import {CustomizedAlert} from "./customized/customized-alert";
-import {CustomizeAlertDemoComponent} from "./customized/demo";
+import {CustomizeAlertDemoComponent} from "./customized/app.component";
+import {AlertPopupDemoModule} from "./popup/app.module";
+import {AlertInDomDemoModule} from "./in-dom/app.module";
+import {CustomizeAlertDemoModule} from "./customized/app.module";
 
 const popupDemoRoutes = [
     {
@@ -27,13 +30,11 @@ const popupDemoRoutes = [
 ];
 
 @NgModule({
-    declarations: [
-        AlertInDomDemoComponent, AlertPopupDemoComponent, CustomizeAlertDemoComponent, CustomizedAlert
-    ],
     imports: [
         RouterModule.forChild(popupDemoRoutes),
-        JigsawAlertModule,
-        JigsawButtonModule,
+        AlertInDomDemoModule,
+        AlertPopupDemoModule,
+        CustomizeAlertDemoModule
     ],
     providers: [PopupService]
 })
