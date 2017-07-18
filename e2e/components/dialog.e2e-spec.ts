@@ -13,7 +13,7 @@ describe('dialog', () => {
             browser.get('dialog/misc');
         });
 
-        it('should popup a custom dialog as modal when click the button', async () => {
+        /*it('should popup a custom dialog as modal when click the button', async () => {
             let popupBlock = element(by.tagName('jigsaw-block'));
             let popupDialog = element(by.tagName('jigsaw-dialog'));
             expect(popupBlock.isPresent()).toBe(false);
@@ -83,7 +83,7 @@ describe('dialog', () => {
             await expectPopupAtPoint(trigger4, popupDialog, {x: 100, y: 10}, {x: 10, y: -10});
 
             await expectClosePopup(popupDialog, popupBlock);
-        });
+        });*/
 
     })
 });
