@@ -97,7 +97,7 @@ function fixAppModuleTs(appModuleCode) {
         .replace(/\bimports\s*:\s*\[\s*(.*)\s*\]\s*,/,
             (found, imports) => 'imports: [BrowserModule, ' + imports + '],')
         .replace(/export\s+class\s+(.+)\s+{/, 'export class AppModule {')
-        .replace(/\}\s+from\s+&.+?;(\.\.\/)*jigsaw\/.+/, '} from &#x27;@rdkmaster/jigsaw&#x27;');
+        .replace(/\}\s+from\s+&.+?;(\.\.\/)*jigsaw\/.+/g, '} from &#x27;@rdkmaster/jigsaw&#x27;');
 }
 
 function makeDirs(path) {
