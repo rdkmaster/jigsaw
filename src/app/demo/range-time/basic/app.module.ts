@@ -4,6 +4,7 @@ import {JigsawRangeTimeModule} from "jigsaw/component/range-time/index";
 import {RangeTimeBasicDemoComponent} from "./app.component";
 @NgModule({
     declarations: [RangeTimeBasicDemoComponent],
+    bootstrap: [RangeTimeBasicDemoComponent],
     imports: [JigsawRangeTimeModule, CommonModule]
 })
 export class RangeTimeBasicDemoModule{

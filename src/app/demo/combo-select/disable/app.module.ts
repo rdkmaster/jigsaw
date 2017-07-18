@@ -5,6 +5,7 @@ import {JigsawButtonModule} from "jigsaw/component/button/button";
 import {JigsawComboSelectModule} from "jigsaw/component/combo-select/index";
 @NgModule({
     declarations: [DisabledComboSelectDemo],
+    bootstrap: [ DisabledComboSelectDemo ],
     imports: [JigsawComboSelectModule,JigsawTileSelectModule, JigsawButtonModule]
 })
 export class DisabledComboSelectDemoModule{

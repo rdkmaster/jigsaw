@@ -5,6 +5,7 @@ import {JigsawComboSelectModule} from "jigsaw/component/combo-select/index";
 import {ComboSelectSetWidthDemo} from "./app.component";
 @NgModule({
     declarations: [ComboSelectSetWidthDemo],
+    bootstrap: [ ComboSelectSetWidthDemo ],
     imports: [JigsawComboSelectModule,JigsawTileSelectModule, JigsawInputModule]
 })
 export class ComboSelectSetWidthDemoModule{

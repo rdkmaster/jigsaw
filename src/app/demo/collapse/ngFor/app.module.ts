@@ -5,6 +5,7 @@ import {JigsawButtonModule} from "jigsaw/component/button/button";
 import {ngForDemoComponent} from "./app.component";
 @NgModule({
     declarations: [ngForDemoComponent],
+    bootstrap: [ ngForDemoComponent ],
     imports: [CommonModule,JigsawCollapseModule,JigsawButtonModule]
 })
 export class ngForDemoModule{

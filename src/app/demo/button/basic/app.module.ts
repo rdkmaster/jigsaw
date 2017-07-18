@@ -4,6 +4,7 @@ import {ButtonBasicDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [ButtonBasicDemoComponent],
+    bootstrap: [ ButtonBasicDemoComponent ],
     imports: [JigsawButtonModule]
 })
 export class ButtonBasicDemoModule{

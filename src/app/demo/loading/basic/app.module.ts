@@ -7,6 +7,7 @@ import {PopupService} from "jigsaw/service/popup.service";
 import {LoadingBasicDemoComponent} from "./app.component";
 @NgModule({
     declarations: [LoadingBasicDemoComponent],
+    bootstrap: [LoadingBasicDemoComponent],
     imports: [JigsawLoadingModule,JigsawInputModule,JigsawButtonModule],
     providers: [PopupService,LoadingService]
 })

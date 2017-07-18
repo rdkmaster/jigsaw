@@ -4,6 +4,7 @@ import {JigsawButtonModule} from "jigsaw/component/button/button";
 import {ServerSidePaginationDemoComponent} from "./app.component";
 @NgModule({
     declarations: [ServerSidePaginationDemoComponent],
+    bootstrap: [ ServerSidePaginationDemoComponent ],
     imports: [JigsawButtonModule, CommonModule]
 })
 export class ServerSidePaginationDemoModule{

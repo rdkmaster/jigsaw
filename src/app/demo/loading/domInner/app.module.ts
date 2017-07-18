@@ -5,6 +5,7 @@ import {JigsawButtonModule} from "jigsaw/component/button/button";
 import {DomInnerDemoComponent} from "./app.component";
 @NgModule({
     declarations: [DomInnerDemoComponent],
+    bootstrap: [DomInnerDemoComponent],
     imports: [JigsawLoadingModule,JigsawButtonModule,CommonModule]
 })
 export class DomInnerDemoModule{

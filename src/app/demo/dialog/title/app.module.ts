@@ -5,6 +5,7 @@ import {PopupService} from "jigsaw/service/popup.service";
 import {DialogTitleDemo} from "./app.component";
 @NgModule({
     declarations: [DialogTitleDemo],
+    bootstrap: [ DialogTitleDemo ],
     imports: [JigsawDialogModule,JigsawButtonModule],
     providers: [PopupService],
 })

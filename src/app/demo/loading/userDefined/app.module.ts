@@ -6,6 +6,7 @@ import {DefinedLoadingDemoComponent} from "./app.component";
 import {DefinedLoading} from "./definedLoading/definedLoading";
 @NgModule({
     declarations: [DefinedLoadingDemoComponent,DefinedLoading],
+    bootstrap: [DefinedLoadingDemoComponent],
     imports: [JigsawLoadingModule],
     providers: [PopupService,LoadingService],
     entryComponents:[DefinedLoading]

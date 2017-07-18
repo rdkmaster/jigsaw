@@ -11,6 +11,7 @@ export function HttpLoaderFactory(http: Http) {
 
 @NgModule({
     declarations: [AlertInDomDemoComponent],
+    bootstrap: [ AlertInDomDemoComponent ],
     imports: [
         JigsawAlertModule,
         TranslateModule.forRoot({

@@ -6,6 +6,7 @@ import {JigsawInputModule} from "jigsaw/component/input/input";
 import {PopupService} from "jigsaw/service/popup.service";
 @NgModule({
     declarations: [DialogTopDemo],
+    bootstrap: [ DialogTopDemo ],
     imports: [JigsawDialogModule,JigsawButtonModule,JigsawInputModule],
     providers: [PopupService]
 })

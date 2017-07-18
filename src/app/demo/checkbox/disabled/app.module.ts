@@ -4,6 +4,7 @@ import {JigsawSwitchModule} from "jigsaw/component/switch/index";
 import {CheckBoxDisableDemoComponent} from "./app.component";
 @NgModule({
     declarations: [CheckBoxDisableDemoComponent],
+    bootstrap: [ CheckBoxDisableDemoComponent ],
     imports: [JigsawCheckBoxModule, JigsawSwitchModule]
 })
 export class CheckBoxDisableDemoModule{

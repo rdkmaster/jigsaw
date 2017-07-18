@@ -7,6 +7,7 @@ import {UserDialogComponent} from "./user-dialog/user-dialog";
 import {UserDialog2Component} from "./user-dialog2/user-dialog";
 @NgModule({
     declarations: [DialogMiscDemoComponent,UserDialogComponent,UserDialog2Component],
+    bootstrap: [ DialogMiscDemoComponent ],
     imports: [JigsawDialogModule,JigsawButtonModule],
     entryComponents:[UserDialogComponent,UserDialog2Component],
     providers: [PopupService]

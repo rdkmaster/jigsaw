@@ -7,7 +7,7 @@ import { TableHeadIcon, TableHeadSelect } from "./table-renderer";
 @NgModule({
     imports: [ JigsawTableModule, JigsawSelectModule ],
     declarations: [ TableRendererDemoComponent, TableHeadSelect, TableHeadIcon ],
-    bootstrap: [ TableRendererDemoComponent ],
+    bootstrap: [ TableRendererDemoComponent ], // 这个是给plunker用的，不能去掉。
     entryComponents: [
         TableHeadSelect, TableHeadIcon
     ]

@@ -6,6 +6,7 @@ import {PopupService} from "jigsaw/service/popup.service";
 import {PopupTracingEventComponent} from "./app.component";
 @NgModule({
     declarations: [PopupTracingEventComponent],
+    bootstrap: [PopupTracingEventComponent],
     imports: [JigsawDialogModule,JigsawButtonModule,CommonModule],
     providers: [PopupService]
 })

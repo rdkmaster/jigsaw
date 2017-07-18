@@ -4,6 +4,7 @@ import {JigsawTileSelectModule} from "jigsaw/component/tile-select/tile-select";
 import {RangeTimeLimitEndComponent} from "./app.component";
 @NgModule({
     declarations: [RangeTimeLimitEndComponent],
+    bootstrap: [RangeTimeLimitEndComponent],
     imports: [JigsawRangeTimeModule,JigsawTileSelectModule]
 })
 export class RangeTimeLimitEndModule{

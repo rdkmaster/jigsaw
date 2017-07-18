@@ -4,6 +4,7 @@ import {JigsawCollapseModule} from "jigsaw/component/collapse/collapse";
 import {JigsawComboSelectModule} from "jigsaw/component/combo-select/index";
 @NgModule({
     declarations: [CollapseBasicDemo],
+    bootstrap: [ CollapseBasicDemo ],
     imports: [JigsawComboSelectModule,JigsawCollapseModule]
 })
 export class CollapseBasicDemoModule{

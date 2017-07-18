@@ -4,6 +4,7 @@ import {JigsawComboSelectModule} from "jigsaw/component/combo-select/index";
 import {ComboSelectLabelFieldDemo} from "./app.component";
 @NgModule({
     declarations: [ComboSelectLabelFieldDemo],
+    bootstrap: [ ComboSelectLabelFieldDemo ],
     imports: [JigsawComboSelectModule,JigsawTileSelectModule]
 })
 export class ComboSelectLabelFieldDemoModule{

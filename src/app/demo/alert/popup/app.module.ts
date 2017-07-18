@@ -5,6 +5,7 @@ import {PopupService} from "jigsaw/service/popup.service";
 import {AlertPopupDemoComponent} from "./app.component";
 @NgModule({
     declarations: [AlertPopupDemoComponent],
+    bootstrap: [ AlertPopupDemoComponent ],
     imports: [JigsawAlertModule, JigsawButtonModule],
     providers: [PopupService]
 })

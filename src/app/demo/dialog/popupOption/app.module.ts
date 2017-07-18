@@ -9,6 +9,7 @@ import {PopupService} from "jigsaw/service/popup.service";
 import {CommonModule} from "@angular/common";
 @NgModule({
     declarations: [DialogPopOptionDemo],
+    bootstrap: [ DialogPopOptionDemo ],
     imports: [
         JigsawDialogModule,
         JigsawButtonModule,
