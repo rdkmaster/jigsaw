@@ -2,7 +2,7 @@ import {Component, ViewChild} from "@angular/core";
 import {JigsawInput} from "jigsaw/component/input/input";
 
 @Component({
-  templateUrl: 'focus.html'
+  templateUrl: './app.component.html'
 })
 export class InputFocusDemoComponent {
     inputValue: any;

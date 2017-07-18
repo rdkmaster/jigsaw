@@ -1,17 +1,17 @@
 
-
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 
-import {JigsawInputModule} from "jigsaw/component/input/input";
-import {JigsawButtonModule} from "jigsaw/component/button/button";
-
-import {InputBasicDemoComponent} from "./basic/basic";
-import {InputValueChangeDemoComponent} from "./valueChange/valueChange";
-import {InputClearableDemoComponent} from "./clearable/clearable";
-import {InputFocusDemoComponent} from "./focus/focus";
-import {InputPrefixIconDemoComponent} from "./prefixIcon/prefixIcon";
-
+import {InputBasicDemoComponent} from "./basic/app.component";
+import {InputValueChangeDemoComponent} from "./valueChange/app.component";
+import {InputClearableDemoComponent} from "./clearable/app.component";
+import {InputFocusDemoComponent} from "./focus/app.component";
+import {InputPrefixIconDemoComponent} from "./prefixIcon/app.component";
+import {InputBasicDemoModule} from "./basic/app.module";
+import {InputValueChangeDemoModule} from "./valueChange/app.module";
+import {InputClearableDemoModule} from "./clearable/app.module";
+import {InputFocusDemoModule} from "./focus/app.module";
+import {InputPrefixIconDemoModule} from "./prefixIcon/app.module";
 
 const inputDemoRoutes=[
     {
@@ -37,16 +37,13 @@ const inputDemoRoutes=[
 ];
 
 @NgModule({
-    declarations: [
-        InputBasicDemoComponent,InputValueChangeDemoComponent,InputClearableDemoComponent
-        ,InputFocusDemoComponent,InputPrefixIconDemoComponent
-    ],
     imports: [
-        RouterModule.forChild(inputDemoRoutes), JigsawInputModule,JigsawButtonModule
-    ],
-    exports: [
-        InputBasicDemoComponent
-    ],
-    providers: []
+        RouterModule.forChild(inputDemoRoutes),
+        InputBasicDemoModule,
+        InputValueChangeDemoModule,
+        InputClearableDemoModule,
+        InputFocusDemoModule,
+        InputPrefixIconDemoModule
+    ]
 })
 export class InputDemoModule { }

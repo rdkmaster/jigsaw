@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 
 @Component({
-  templateUrl: 'clearable.html'
+  templateUrl: './app.component.html'
 })
 export class InputClearableDemoComponent {
     inputValue: any;

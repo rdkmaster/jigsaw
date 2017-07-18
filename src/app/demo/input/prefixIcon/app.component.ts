@@ -2,14 +2,9 @@ import {Component, ViewChild} from "@angular/core";
 import {JigsawInput} from "jigsaw/component/input/input";
 
 @Component({
-  templateUrl: 'basic.html'
+  templateUrl: './app.component.html'
 })
-export class InputBasicDemoComponent {
-    inputValue: any;
-    valueChanged(message: string) {
-
-        console.log(`input value is: ${message}`);
-    }
+export class InputPrefixIconDemoComponent {
 
     @ViewChild('myInput') myInput:JigsawInput;
     click() {
