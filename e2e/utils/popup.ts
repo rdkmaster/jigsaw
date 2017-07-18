@@ -5,7 +5,8 @@ export type Size = { width: number, height: number };
 export type Offset = { x: number, y: number };
 
 export async function expectClosePopup(popupEl, popupBlock?) {
-    const closeBar = popupEl.element(by.css('.fa-times')).click();
+    const closeBar = popupEl.element(by.css('.fa-times'));
+    browser.executeScript("arguments[0].scrollIntoView();", closeBar.getWebElement());
     browser.executeScript('arguments[0].click()', closeBar.getWebElement());
     browser.actions().mouseMove(closeBar).click().perform();
     browser.sleep(400);

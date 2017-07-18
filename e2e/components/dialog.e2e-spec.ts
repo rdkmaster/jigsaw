@@ -22,7 +22,7 @@ describe('dialog', () => {
             const trigger1 = element(by.id('trigger1'));
             trigger1.click();
 
-            browser.sleep(300);
+            browser.sleep(400);
 
             await expectPopupBlock(popupBlock);
 
