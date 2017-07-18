@@ -4,9 +4,8 @@ export type Position = { top: number, left: number };
 export type Size = { width: number, height: number };
 export type Offset = { x: number, y: number };
 
-export async function expectClosePopup(selector: string, popupEl, popupBlock?) {
-    await browser.wait(ExpectedConditions.presenceOf(element(by.css(selector))));
-    popupEl.element(by.css(selector)).click();
+export async function expectClosePopup(popupEl, popupBlock?) {
+    popupEl.element(by.css('.fa-times')).click();
     browser.sleep(400);
     if (popupBlock) {
         expect(popupBlock.isPresent()).toBe(false);

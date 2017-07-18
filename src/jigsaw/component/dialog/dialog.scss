@@ -30,6 +30,8 @@ $dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
             font-weight: normal;
             color: #999;
             cursor: pointer;
+            width: 14px;
+            height: 18px;
         }
     }
     .#{$dialog-prefix-cls}-button-group {
