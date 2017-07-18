@@ -2,10 +2,9 @@ import { Component } from "@angular/core";
 
 
 @Component({
-  templateUrl: 'recommended.html'
+  templateUrl: './app.component.html'
 })
-export class RangeTimeRecommendedComponent {
-
+export class RangeTimeBasicDemoComponent {
     beginDate = "now-1d";
 
     endDate = "now";

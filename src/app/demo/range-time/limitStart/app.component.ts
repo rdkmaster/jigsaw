@@ -2,7 +2,7 @@ import {AfterContentInit, Component} from "@angular/core";
 
 
 @Component({
-  templateUrl: 'limitStart.html'
+  templateUrl: './app.component.html'
 })
 export class RangeTimeLimitStartComponent implements AfterContentInit{
     beginDate = "now-1d";

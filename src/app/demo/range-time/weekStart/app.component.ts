@@ -2,7 +2,7 @@ import {AfterContentInit, Component} from "@angular/core";
 
 
 @Component({
-  templateUrl: 'weekStart.html'
+  templateUrl: './app.component.html'
 })
 export class RangeTimeWeekStartComponent implements AfterContentInit{
     beginDate = "now-1d";

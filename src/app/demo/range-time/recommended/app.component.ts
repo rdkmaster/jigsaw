@@ -2,9 +2,10 @@ import { Component } from "@angular/core";
 
 
 @Component({
-  templateUrl: 'refreshInterval.html'
+  templateUrl: './app.component.html'
 })
-export class RangeTimeRefreshIntervalComponent {
+export class RangeTimeRecommendedComponent {
+
     beginDate = "now-1d";
 
     endDate = "now";

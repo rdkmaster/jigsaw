@@ -5,7 +5,7 @@ import {RangeTimeDataRanges} from "jigsaw/component/range-time/shortcut-daterang
 
 
 @Component({
-  templateUrl: 'grItems.html'
+  templateUrl: './app.component.html'
 })
 export class RangeTimeGrItemsComponent {
 
