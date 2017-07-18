@@ -6,19 +6,19 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 
 import {BasicGraphComponent} from "./basic/app.component";
-import {BasicLineGraphComponent} from "./line-bar-graph/basic/app.component";
-import {AjaxLineGraphComponent} from "./line-bar-graph/from-axjx/app.component";
+import {BasicLineGraphComponent} from "./line-bar-graph-basic/app.component";
 import {PieGraphDemoComponent} from "./pie/app.component";
 import {GraphResizeComponent} from "./resize/app.component";
 import {GraphWithNoDataComponent} from "./nodata/app.component";
-import {GraphSetSizeComponent} from "./setSize/app.component";
 import {BasicGraphModule} from "./basic/app.module";
-import {BasicLineGraphModule} from "./line-bar-graph/basic/app.module";
-import {AjaxLineGraphModule} from "./line-bar-graph/from-axjx/app.module";
+import {BasicLineGraphModule} from "./line-bar-graph-basic/app.module";
 import {PieGraphDemoModule} from "./pie/app.module";
 import {GraphResizeModule} from "./resize/app.module";
 import {GraphWithNoDataModule} from "./nodata/app.module";
 import {GraphSetSizeModule} from "./setSize/app.module";
+
+import {AjaxLineGraphComponent} from "./line-bar-graph-ajax/app.component";
+import {AjaxLineGraphModule} from "./line-bar-graph-ajax/app.module";
 
 const graphRoutes = [
     {

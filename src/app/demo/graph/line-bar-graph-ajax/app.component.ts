@@ -2,8 +2,8 @@
  * Created by 10177553 on 2017/3/28.
  */
 import {Component} from '@angular/core';
-import {LineBarGraphData} from "jigsaw/core/data/graph-data";
 import {Http} from "@angular/http";
+import {LineBarGraphData} from "jigsaw/core/data/graph-data";
 
 @Component({
     template: `
