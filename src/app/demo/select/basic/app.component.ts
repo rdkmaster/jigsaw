@@ -2,8 +2,8 @@ import {Component} from "@angular/core";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 @Component({
-  templateUrl: 'basic.html',
-  styleUrls: ['basic.css']
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
 export class SelectBasicDemoComponent {
     selectedCityForSelect: any;

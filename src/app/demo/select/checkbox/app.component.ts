@@ -2,10 +2,10 @@ import {Component} from "@angular/core";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 @Component({
-  templateUrl: 'scroll.html',
-  styleUrls: ['scroll.css']
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css']
 })
-export class SelectScrollDemoComponent {
+export class SelectCheckboxDemoComponent {
     selectedCityForSelect: any;
     cityListForSelect = new ArrayCollection([
         {label: "北京"},
