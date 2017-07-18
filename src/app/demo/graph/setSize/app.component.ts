@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import {AbstractGraphData} from "jigsaw/core/data/graph-data";
 
 @Component({
-    templateUrl:"setSize.html"
+    templateUrl:"./app.component.html"
 })
 
 export class GraphSetSizeComponent  implements OnInit {

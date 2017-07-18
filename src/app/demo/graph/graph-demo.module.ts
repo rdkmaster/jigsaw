@@ -4,16 +4,21 @@
 
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {JigsawGraphModule} from "jigsaw/component/graph/index";
-import {JigsawInputModule} from "jigsaw/component/input/input";
-import {JigsawSwitchModule} from "jigsaw/component/switch/index";
-import {BasicGraphComponent} from "./basic/demo";
-import {BasicLineGraphComponent} from "./line-bar-graph/basic/demo";
-import {AjaxLineGraphComponent} from "./line-bar-graph/from-axjx/demo";
-import {PieGraphDemoComponent} from "./pie/demo";
-import {GraphResizeComponent} from "./resize/demo";
-import {GraphWithNoDataComponent} from "./nodata/nodata";
-import {GraphSetSizeComponent} from "./setSize/setSize";
+
+import {BasicGraphComponent} from "./basic/app.component";
+import {BasicLineGraphComponent} from "./line-bar-graph/basic/app.component";
+import {AjaxLineGraphComponent} from "./line-bar-graph/from-axjx/app.component";
+import {PieGraphDemoComponent} from "./pie/app.component";
+import {GraphResizeComponent} from "./resize/app.component";
+import {GraphWithNoDataComponent} from "./nodata/app.component";
+import {GraphSetSizeComponent} from "./setSize/app.component";
+import {BasicGraphModule} from "./basic/app.module";
+import {BasicLineGraphModule} from "./line-bar-graph/basic/app.module";
+import {AjaxLineGraphModule} from "./line-bar-graph/from-axjx/app.module";
+import {PieGraphDemoModule} from "./pie/app.module";
+import {GraphResizeModule} from "./resize/app.module";
+import {GraphWithNoDataModule} from "./nodata/app.module";
+import {GraphSetSizeModule} from "./setSize/app.module";
 
 const graphRoutes = [
     {
@@ -39,12 +44,14 @@ const graphRoutes = [
 @NgModule({
     imports: [
         RouterModule.forChild(graphRoutes),
-        JigsawGraphModule, JigsawInputModule, JigsawSwitchModule
-    ],
-    declarations: [
-        BasicGraphComponent, BasicLineGraphComponent, AjaxLineGraphComponent, PieGraphDemoComponent, GraphResizeComponent,
-        GraphWithNoDataComponent, GraphSetSizeComponent
-    ],
+        BasicGraphModule,
+        BasicLineGraphModule,
+        AjaxLineGraphModule,
+        PieGraphDemoModule,
+        GraphResizeModule,
+        GraphWithNoDataModule,
+        GraphSetSizeModule
+    ]
 })
 export class GraphDemoModule {
 }
