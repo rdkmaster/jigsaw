@@ -2,9 +2,10 @@ import { Component} from "@angular/core";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 @Component({
-  templateUrl: 'tileOptionWidth.html'
+  templateUrl: './app.component.html'
 })
-export class TileselectOptionWidthComponent {
+export class TileselecItemsChangeComponent{
+    public selectedCity: ArrayCollection<any>;
     citys = new ArrayCollection([
         {label: "北京"},
         {label: "上海"},
@@ -15,6 +16,9 @@ export class TileselectOptionWidthComponent {
     ]);
     constructor(){
 
+    }
+    public basicSelectChange(cityArr:ArrayCollection<any>){
+        cityArr.forEach((city)=> console.log(`tileselect message is: ${city.label}`));
     }
 }
 

@@ -1,8 +1,8 @@
 import { Component} from "@angular/core";
-import {ArrayCollection} from "jigsaw/core/data/array-collection";
+import { ArrayCollection } from "jigsaw/core/data/array-collection";
 
 @Component({
-  templateUrl: 'searchable.html'
+  templateUrl: './app.component.html'
 })
 export class TileselectSearchableComponent {
 
