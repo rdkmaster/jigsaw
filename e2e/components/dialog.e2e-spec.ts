@@ -22,6 +22,8 @@ describe('dialog', () => {
             const trigger1 = element(by.id('trigger1'));
             trigger1.click();
 
+            browser.sleep(300);
+
             await expectPopupBlock(popupBlock);
 
             await expectPopupByModal(popupDialog, 0.2);
@@ -37,6 +39,8 @@ describe('dialog', () => {
 
             const trigger2 = element(by.id('trigger2'));
             browser.actions().mouseMove(trigger2, {x: 100, y: 10}).click().perform();
+
+            browser.sleep(300);
 
             expect(popupBlock.isPresent()).toBe(false);
 
@@ -54,6 +58,8 @@ describe('dialog', () => {
             const trigger3 = element(by.id('trigger3'));
             trigger3.click();
 
+            browser.sleep(300);
+
             await expectPopupBlock(popupBlock);
 
             await expectPopupByModal(popupDialog);
@@ -69,6 +75,8 @@ describe('dialog', () => {
 
             const trigger4 = element(by.id('trigger4'));
             browser.actions().mouseMove(trigger4, {x: 100, y: 10}).click().perform();
+
+            browser.sleep(300);
 
             expect(popupBlock.isPresent()).toBe(false);
 
