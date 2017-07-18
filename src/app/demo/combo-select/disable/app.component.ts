@@ -1,20 +1,15 @@
 import {Component} from '@angular/core';
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 @Component({
-    templateUrl: 'open.html',
-    styleUrls: ['open.scss'],
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
 })
-export class OpenComboSelectDemo {
+export class DisabledComboSelectDemo{
 
-     open: boolean = true;
-    public autoClose: boolean = true;
+     disabled = false;
 
-    toggleOpen() {
-        this.open = !this.open
-    }
-
-    toggleAutoClose() {
-        this.autoClose = !this.autoClose
+    public changeDisabled() {
+        this.disabled = !this.disabled;
     }
 
     public selectedCity = new ArrayCollection([{label: "北京", closable: false}]);

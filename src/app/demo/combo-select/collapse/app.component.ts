@@ -3,7 +3,7 @@
  */
 import {Component} from '@angular/core';
 @Component({
-    templateUrl: './collapse.html'
+    templateUrl: './app.component.html'
 })
 export class CollapseBasicDemo{
 

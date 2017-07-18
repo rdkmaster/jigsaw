@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import {JigsawComboSelect} from "./combo-select";
 import {CommonModule} from "@angular/common";
 import {JigsawTagModule} from "../tag/tag";
+import {PopupService} from "../../service/popup.service";
 
 @NgModule({
     imports: [
@@ -10,7 +11,7 @@ import {JigsawTagModule} from "../tag/tag";
     ],
     exports: [JigsawComboSelect],
     declarations: [JigsawComboSelect],
-    providers: [],
+    providers: [PopupService],
 })
 export class JigsawComboSelectModule { }
 

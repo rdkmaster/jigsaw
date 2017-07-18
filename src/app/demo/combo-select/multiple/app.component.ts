@@ -1,18 +1,23 @@
 import {Component} from '@angular/core';
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 @Component({
-    templateUrl: 'disable.html',
-    styleUrls: ['disable.scss'],
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
 })
-export class DisabledComboSelectDemo{
+export class ComboSelectMultipleDemo {
 
-     disabled = false;
+    public multiple: boolean = true;
 
-    public changeDisabled() {
-        this.disabled = !this.disabled;
+    toggleMultiple() {
+        this.multiple = !this.multiple;
+        this.selectedCity = new ArrayCollection();
     }
 
-    public selectedCity = new ArrayCollection([{label: "北京", closable: false}]);
+    valueChange(value){
+        console.log(value);
+    }
+
+    public selectedCity: ArrayCollection<any> = new ArrayCollection([{label: "北京", closable: false}]);
      citys = [
         {label: "北京", closable: false},
         {label: "上海", closable: false},

@@ -1,15 +1,21 @@
-/**
- * Created by 10177553 on 2017/4/13.
- */
-
-import {
-    Component, OnInit
-} from '@angular/core';
+import {Component} from '@angular/core';
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 @Component({
-    templateUrl: 'autoWidth.html'
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
 })
-export class ComboSelectAutoWidthDemo implements OnInit {
+export class OpenComboSelectDemo {
+
+     open: boolean = true;
+    public autoClose: boolean = true;
+
+    toggleOpen() {
+        this.open = !this.open
+    }
+
+    toggleAutoClose() {
+        this.autoClose = !this.autoClose
+    }
 
     public selectedCity = new ArrayCollection([{label: "北京", closable: false}]);
      citys = [
@@ -27,9 +33,5 @@ export class ComboSelectAutoWidthDemo implements OnInit {
         {label: "连云港3"},
         {label: "哈尔滨"}
     ];
-
-    ngOnInit() {
-
-    }
 
 }

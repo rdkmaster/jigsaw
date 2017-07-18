@@ -2,8 +2,8 @@ import {Component} from '@angular/core';
 import {ComboSelectValue} from "jigsaw/component/combo-select/combo-select";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 @Component({
-    templateUrl: 'editable.html',
-    styleUrls: ['editable.scss'],
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
 })
 export class ComboSelectEditableDemo{
 

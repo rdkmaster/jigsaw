@@ -7,7 +7,7 @@ import {JigsawComboSelect} from "jigsaw/component/combo-select/combo-select";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 @Component({
-    templateUrl: 'dropDownWidth.html',
+    templateUrl: './app.component.html',
 })
 export class ComboSelectWidthDemo implements AfterViewInit {
     public dropDownWidth="120%";

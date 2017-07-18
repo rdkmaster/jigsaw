@@ -5,8 +5,8 @@ import {Component} from '@angular/core';
 import {DropDownTrigger} from "jigsaw/component/combo-select/combo-select";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 @Component({
-    templateUrl: './basic.html',
-    styleUrls: ['basic.scss'],
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
 })
 export class ComboSelectBasicDemo{
 

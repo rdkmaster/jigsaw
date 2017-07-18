@@ -4,25 +4,30 @@
 
 import {NgModule} from '@angular/core';
 
-import {ComboSelectBasicDemo} from "./basic/basic";
+import {ComboSelectBasicDemo} from "./basic/app.component";
 import {RouterModule} from "@angular/router";
-import {JigsawComboSelectModule} from "jigsaw/component/combo-select/index";
-import {JigsawTileSelectModule} from "jigsaw/component/tile-select/tile-select";
-import {JigsawButtonModule} from "jigsaw/component/button/button";
-import {JigsawInputModule} from "jigsaw/component/input/input";
-import {PopupService} from "jigsaw/service/popup.service";
-import {JigsawCollapseModule} from "jigsaw/component/collapse/collapse";
 
-import {ComboSelectMultipleDemo} from "./multiple/multiple";
-import {ComboSelectAutoWidthDemo} from "./autoWidth/autoWidth";
-import {ComboSelectLabelFieldDemo} from "./labelField/labelField";
-import {ComboSelectWidthDemo} from "./dropdownWidth/dropDownWidth";
-import {ComboSelectChangeDemo} from "./change/change";
-import {OpenComboSelectDemo} from "./open/open";
-import {DisabledComboSelectDemo} from "./disable/disable";
-import {ComboSelectEditableDemo} from "./editable/editable";
-import {CollapseBasicDemo} from "./collapse/collapse";
-import {ComboSelectSetWidthDemo} from "./setWidth/setWidth";
+import {ComboSelectMultipleDemo} from "./multiple/app.component";
+import {ComboSelectAutoWidthDemo} from "./autoWidth/app.component";
+import {ComboSelectLabelFieldDemo} from "./labelField/app.component";
+import {ComboSelectWidthDemo} from "./dropdownWidth/app.component";
+import {ComboSelectChangeDemo} from "./change/app.component";
+import {OpenComboSelectDemo} from "./open/app.component";
+import {DisabledComboSelectDemo} from "./disable/app.component";
+import {ComboSelectEditableDemo} from "./editable/app.component";
+import {CollapseBasicDemo} from "./collapse/app.component";
+import {ComboSelectSetWidthDemo} from "./setWidth/app.component";
+import {ComboSelectAutoWidthDemoModule} from "./autoWidth/app.module";
+import {ComboSelectBasicDemoModule} from "./basic/app.module";
+import {ComboSelectChangeDemoModule} from "./change/app.module";
+import {CollapseBasicDemoModule} from "./collapse/app.module";
+import {DisabledComboSelectDemoModule} from "./disable/app.module";
+import {ComboSelectWidthDemoModule} from "./dropdownWidth/app.module";
+import {ComboSelectLabelFieldDemoModule} from "./labelField/app.module";
+import {ComboSelectMultipleDemoModule} from "./multiple/app.module";
+import {OpenComboSelectDemoModule} from "./open/app.module";
+import {ComboSelectSetWidthDemoModule} from "./setWidth/app.module";
+import {ComboSelectEditableDemoModule} from "./editable/app.module";
 const routes = [
     {
         path: 'basic', component: ComboSelectBasicDemo
@@ -62,26 +67,18 @@ const routes = [
 @NgModule({
     imports: [
         RouterModule.forChild(routes),
-        JigsawComboSelectModule,
-        JigsawTileSelectModule,
-        JigsawButtonModule,
-        JigsawInputModule,
-        JigsawCollapseModule
-    ],
-    declarations: [
-        ComboSelectBasicDemo,
-        ComboSelectMultipleDemo,
-        ComboSelectAutoWidthDemo,
-        ComboSelectLabelFieldDemo,
-        ComboSelectWidthDemo,
-        ComboSelectChangeDemo,
-        OpenComboSelectDemo,
-        DisabledComboSelectDemo,
-        ComboSelectEditableDemo,
-        CollapseBasicDemo,
-        ComboSelectSetWidthDemo
-    ],
-    providers: [PopupService]
+        ComboSelectAutoWidthDemoModule,
+        ComboSelectBasicDemoModule,
+        ComboSelectChangeDemoModule,
+        CollapseBasicDemoModule,
+        DisabledComboSelectDemoModule,
+        ComboSelectWidthDemoModule,
+        ComboSelectEditableDemoModule,
+        ComboSelectLabelFieldDemoModule,
+        ComboSelectMultipleDemoModule,
+        OpenComboSelectDemoModule,
+        ComboSelectSetWidthDemoModule
+    ]
 })
 export class ComboSelectDemoModule {
 }

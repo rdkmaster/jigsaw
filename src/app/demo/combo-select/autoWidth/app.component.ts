@@ -1,23 +1,17 @@
-import {Component} from '@angular/core';
+/**
+ * Created by 10177553 on 2017/4/13.
+ */
+
+import {
+    Component, OnInit
+} from '@angular/core';
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 @Component({
-    templateUrl: 'multiple.html',
-    styleUrls: ['multiple.scss'],
+    templateUrl: './app.component.html'
 })
-export class ComboSelectMultipleDemo {
+export class ComboSelectAutoWidthDemo implements OnInit {
 
-    public multiple: boolean = true;
-
-    toggleMultiple() {
-        this.multiple = !this.multiple;
-        this.selectedCity = new ArrayCollection();
-    }
-
-    valueChange(value){
-        console.log(value);
-    }
-
-    public selectedCity: ArrayCollection<any> = new ArrayCollection([{label: "北京", closable: false}]);
+    public selectedCity = new ArrayCollection([{label: "北京", closable: false}]);
      citys = [
         {label: "北京", closable: false},
         {label: "上海", closable: false},
@@ -33,5 +27,9 @@ export class ComboSelectMultipleDemo {
         {label: "连云港3"},
         {label: "哈尔滨"}
     ];
+
+    ngOnInit() {
+
+    }
 
 }
