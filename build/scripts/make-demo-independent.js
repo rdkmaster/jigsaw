@@ -83,21 +83,25 @@ function readDemoContent(content, demoFolder) {
 }
 
 function fixAppComponentTs(appCompCode) {
-    return appCompCode.replace(/\btemplateUrl\s*:\s*\&.+?;\s*(.*)\s*\&.+?;/, (found, templateUrl) => {
-        if (templateUrl.substring(0, 2) !== './') {
-            templateUrl = './' + templateUrl;
-        }
-        return 'templateUrl: &#x27;' + templateUrl + '&#x27;';
-    }).replace(/@Component\({/, '@Component({\n    selector: &#x27;jigsaw-app&#x27;,');
+    return appCompCode
+        .replace(/\btemplateUrl\s*:\s*\&.+?;\s*(.*)\s*\&.+?;/, (found, templateUrl) => {
+            if (templateUrl.substring(0, 2) !== './') {
+                templateUrl = './' + templateUrl;
+            }
+            return 'templateUrl: &#x27;' + templateUrl + '&#x27;';
+        })
+        .replace(/@Component\({/, '@Component({\n    selector: &#x27;jigsaw-app&#x27;,')
+        .replace(/\}\s+from\s+&.+?;(\.\.\/)*jigsaw\/.+/g, '} from &#x27;@rdkmaster/jigsaw&#x27;');
 }
 
 function fixAppModuleTs(appModuleCode) {
-    appModuleCode = "import {BrowserModule} from '@angular/platform-browser';\n" + appModuleCode;
+    appModuleCode = "import {BrowserModule} from '@angular/platform-browser';\n" +
+        "import {HttpModule} from '@angular/http';\n" + appModuleCode;
     return appModuleCode
         .replace(/\bimports\s*:\s*\[\s*(.*)\s*\]\s*,/,
-            (found, imports) => 'imports: [BrowserModule, ' + imports + '],')
+            (found, imports) => 'imports: [BrowserModule, HttpModule, ' + imports + '],')
         .replace(/export\s+class\s+(.+)\s+{/, 'export class AppModule {')
-        .replace(/\}\s+from\s+&.+?;(\.\.\/)*jigsaw\/.+/, '} from &#x27;@rdkmaster/jigsaw&#x27;');
+        .replace(/\}\s+from\s+&.+?;(\.\.\/)*jigsaw\/.+/g, '} from &#x27;@rdkmaster/jigsaw&#x27;');
 }
 
 function makeDirs(path) {
