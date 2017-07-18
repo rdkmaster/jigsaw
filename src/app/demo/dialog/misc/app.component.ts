@@ -8,8 +8,8 @@ import {
 } from "jigsaw/service/popup.service";
 
 @Component({
-    templateUrl: 'dialog.html',
-    styleUrls: ['dialog.scss']
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
 })
 export class DialogMiscDemoComponent {
 

@@ -6,8 +6,8 @@ import {Component, TemplateRef} from "@angular/core";
 import {PopupInfo, PopupService} from "jigsaw/service/popup.service";
 
 @Component({
-    templateUrl: 'top.html',
-    styleUrls: ['top.scss']
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
 })
 export class DialogTopDemo  {
     message: string;

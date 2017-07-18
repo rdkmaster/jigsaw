@@ -1,20 +1,20 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {DialogTitleDemo} from "./title/title";
-import {JigsawDialogModule} from "jigsaw/component/dialog/dialog";
-import {DialogButtonsDemo} from "./buttons/buttons";
-import {DialogTopDemo} from "./top/top";
-import {DialogPopOptionDemo} from "./popupOption/popUpOption";
-import {CommonModule} from "@angular/common";
-import {DialogInDomDemoComponent} from "./in-dom/demo";
-import {DialogMiscDemoComponent} from "./misc/dialog";
+import {DialogTitleDemo} from "./title/app.component";
+import {DialogButtonsDemo} from "./buttons/app.component";
+import {DialogTopDemo} from "./top/app.component";
+import {DialogPopOptionDemo} from "./popupOption/app.component";
+import {DialogInDomDemoComponent} from "./in-dom/app.component";
+import {DialogMiscDemoComponent} from "./misc/app.component";
 import {UserDialogComponent} from "./misc/user-dialog/user-dialog";
 import {UserDialog2Component} from "./misc/user-dialog2/user-dialog";
-import {JigsawButtonModule} from "jigsaw/component/button/button";
-import {JigsawSwitchModule} from "jigsaw/component/switch/index";
-import {JigsawRadioModule} from "jigsaw/component/radio/radio";
-import {JigsawInputModule} from "jigsaw/component/input/input";
-import {PopupService} from "jigsaw/service/popup.service";
+import {DialogButtonsDemoModule} from "./buttons/app.module";
+import {DialogInDomDemoModule} from "./in-dom/app.module";
+import {DialogMiscDemoModule} from "./misc/app.module";
+import {DialogPopOptionDemoModule} from "./popupOption/app.module";
+import {DialogTitleDemoModule} from "./title/app.module";
+import {DialogTopDemoModule} from "./top/app.module";
+import {PopupService} from "../../../jigsaw/service/popup.service";
 
 
 const dialogDemoRoutes=[
@@ -34,16 +34,14 @@ const dialogDemoRoutes=[
 ];
 
 @NgModule({
-    declarations: [
-        DialogTitleDemo,DialogButtonsDemo,DialogTopDemo,DialogPopOptionDemo,
-        DialogInDomDemoComponent,DialogMiscDemoComponent,
-        UserDialogComponent,UserDialog2Component,
-    ],
     imports: [
-        RouterModule.forChild(dialogDemoRoutes),CommonModule,JigsawButtonModule,
-        JigsawInputModule,JigsawDialogModule,JigsawSwitchModule,JigsawRadioModule
-    ],
-    providers: [PopupService],
-    entryComponents:[UserDialogComponent,UserDialog2Component]
+        RouterModule.forChild(dialogDemoRoutes),
+        DialogButtonsDemoModule,
+        DialogInDomDemoModule,
+        DialogMiscDemoModule,
+        DialogPopOptionDemoModule,
+        DialogTitleDemoModule,
+        DialogTopDemoModule
+    ]
 })
 export class DialogDemoModule { }

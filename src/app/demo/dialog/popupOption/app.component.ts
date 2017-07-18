@@ -5,8 +5,8 @@ import {
 } from "jigsaw/service/popup.service";
 
 @Component({
-    templateUrl: 'popUpOption.html',
-    styleUrls: ['popUpOption.scss']
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
 })
 export class DialogPopOptionDemo implements OnInit {
 

@@ -6,8 +6,8 @@ import {Component, TemplateRef, ViewEncapsulation} from '@angular/core';
 import {ButtonInfo, PopupDisposer, PopupInfo, PopupService} from "jigsaw/service/popup.service";
 
 @Component({
-    templateUrl: 'buttons.html',
-    styleUrls :['buttons.scss'],
+    templateUrl: './app.component.html',
+    styleUrls :['./app.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class DialogButtonsDemo  {
