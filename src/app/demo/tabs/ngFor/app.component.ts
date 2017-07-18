@@ -4,7 +4,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-    templateUrl:"ngFor.html"
+    templateUrl:"./app.component.html"
 })
 export class JigsawTabsWithNgForComponent implements OnInit {
 

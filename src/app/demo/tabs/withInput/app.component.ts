@@ -6,7 +6,7 @@ import {Http} from "@angular/http";
 import {TableData} from "jigsaw/core/data/table-data";
 
 @Component({
-    templateUrl:"withInput.html"
+    templateUrl:"./app.component.html"
 })
 export class JigsawTabsWithInputComponent implements OnInit {
 

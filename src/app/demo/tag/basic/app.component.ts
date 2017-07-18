@@ -1,11 +1,9 @@
 import {Component} from "@angular/core";
 
 @Component({
-    templateUrl: 'basic.html',
-    styleUrls: ['basic.scss']
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
 })
 export class TagBasicDemoComponent {
-
-
 }
 

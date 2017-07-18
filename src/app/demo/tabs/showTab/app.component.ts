@@ -5,14 +5,14 @@ import {Component, ViewChild} from '@angular/core';
 import {JigsawTab} from "jigsaw/component/tabs/tab";
 
 @Component({
-    templateUrl:"destoryTab.html"
+    templateUrl:"./app.component.html"
 })
-export class JigsawDestoryTabComponent {
+export class JigsawShowTabComponent {
 
     @ViewChild('myTab') myTab: JigsawTab;
 
-    destroyTab() {
-        this.myTab.removeTab(0);
+    showTab() {
+        this.myTab.showTab(1);
     }
 
 }

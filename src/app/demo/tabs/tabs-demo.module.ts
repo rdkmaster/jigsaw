@@ -3,22 +3,28 @@
  */
 
 import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-
-import {JigsawTabsDemoComponent} from './basic/basic';
 import {RouterModule} from "@angular/router";
-import {JigsawInputModule} from "jigsaw/component/input/input";
-import {JigsawButtonModule} from "jigsaw/component/button/button";
-import {JigsawTableModule} from "jigsaw/component/table/table";
-import {JigsawTabsModule} from "jigsaw/component/tabs/index";
-import {JigsawTabsWithInputComponent} from "./withInput/withInput";
-import {JigsawTabsWithNgForComponent} from "./ngFor/ngFor";
-import {CommonModule} from "@angular/common";
-import {JigsawHideTabComponent} from "./hideTab/hideTab";
-import {JigsawShowTabComponent} from "./showTab/showTab";
-import {JigsawDestoryTabComponent} from "./destoryTab/destoryTab";
-import {JigsawTabsComponent} from "./tabs/Tabs";
-import {DynamicTabDemoComponent} from "./tabApi/dynamicTab";
-import {TabContentDefine} from "./tabApi/tabContent/tabContent";
+
+import {JigsawTabsDemoComponent} from './basic/app.component';
+import {TabsBasicDemoModule} from './basic/app.module';
+
+import {JigsawDestoryTabComponent} from "./destoryTab/app.component";
+import {TabsDestroyDemoModule} from "./destoryTab/app.module";
+
+import {JigsawHideTabComponent} from "./hideTab/app.component";
+import {TabsHideTabDemoModule} from "./hideTab/app.module";
+
+import {JigsawTabsWithNgForComponent} from "./ngFor/app.component";
+import {TabsWithNgForDemoModule} from "./ngFor/app.module";
+
+import {JigsawShowTabComponent} from "./showTab/app.component";
+import {TabsShowTabDemoModule} from "./showTab/app.module";
+
+import {DynamicTabDemoComponent} from "./tabApi/app.component";
+import {DynamicTabDemoModule} from "./tabApi/app.module";
+
+import {JigsawTabsWithInputComponent} from "./withInput/app.component";
+import {TabsWithInputDemoModule} from "./withInput/app.module";
 
 const routes = [
     {
@@ -52,27 +58,11 @@ const routes = [
 @NgModule({
     imports: [
         RouterModule.forChild(routes),
-        CommonModule,
-        JigsawTabsModule,
-        JigsawInputModule,
-        JigsawButtonModule,
-        JigsawTableModule
+        TabsBasicDemoModule, TabsDestroyDemoModule, TabsHideTabDemoModule, TabsShowTabDemoModule,
+        DynamicTabDemoModule, TabsWithInputDemoModule, TabsWithNgForDemoModule
+
     ],
-    exports: [JigsawTabsDemoComponent],
-    declarations: [
-        JigsawTabsDemoComponent,
-        JigsawTabsWithInputComponent,
-        JigsawTabsWithNgForComponent,
-        JigsawHideTabComponent,
-        JigsawShowTabComponent,
-        JigsawDestoryTabComponent,
-        JigsawTabsComponent,
-        DynamicTabDemoComponent,
-        TabContentDefine
-    ],
-    providers: [],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    entryComponents: [TabContentDefine]
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class TabsDemoModule {
 }

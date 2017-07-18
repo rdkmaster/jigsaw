@@ -5,7 +5,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {JigsawTab} from "jigsaw/component/tabs/tab";
 
 @Component({
-    templateUrl:"hideTab.html"
+    templateUrl:"./app.component.html"
 })
 export class JigsawHideTabComponent implements OnInit {
 

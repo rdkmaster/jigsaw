@@ -4,8 +4,8 @@ import {IDynamicInstantiatable} from "jigsaw/component/core";
 import {TabContentDefine} from "./tabContent/tabContent";
 
 @Component({
-    templateUrl: './dynamicTab.html',
-    styleUrls: ['dynamicTab.scss']
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
 })
 export class DynamicTabDemoComponent {
     @ViewChild(JigsawTab) tabs: JigsawTab;

@@ -1,8 +1,8 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {TagBasicDemoComponent} from "./basic/basic";
 
-import {JigsawTagModule} from "jigsaw/component/tag/tag";
+import {TagBasicDemoComponent} from "./basic/app.component";
+import {TagBasicDemoModule} from "./basic/app.module";
 
 
 const TagDemoRoutes = [
@@ -21,16 +21,9 @@ const TagDemoRoutes = [
 ];
 
 @NgModule({
-    declarations: [
-        TagBasicDemoComponent
-    ],
     imports: [
-        RouterModule.forChild(TagDemoRoutes), JigsawTagModule
-    ],
-    exports: [
-        TagBasicDemoComponent
-    ],
-    providers: []
+        RouterModule.forChild(TagDemoRoutes), TagBasicDemoModule
+    ]
 })
 export class TagDemoModule {
 }
