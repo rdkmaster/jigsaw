@@ -5,11 +5,13 @@ import { NgModule } from '@angular/core';
 import {RouterModule} from "@angular/router";
 import {CommonModule} from "@angular/common";
 
-import { CollapseBasicDemoComponent } from './basic/basic';
-import {ngForDemoComponent} from "./ngFor/ngFor";
+import { CollapseBasicDemoComponent } from './basic/app.component';
+import {ngForDemoComponent} from "./ngFor/app.component";
 import {JigsawCollapseModule} from "jigsaw/component/collapse/collapse";
 import {JigsawInputModule} from "jigsaw/component/input/input";
 import {JigsawButtonModule} from "jigsaw/component/button/button";
+import {ngForDemoModule} from "./ngFor/app.module";
+import {CollapseBasicDemoModule} from "./basic/app.module";
 
 const routes = [
     {
@@ -22,11 +24,8 @@ const routes = [
 @NgModule({
     imports: [
         RouterModule.forChild(routes),
-        JigsawCollapseModule,
-        JigsawInputModule,CommonModule,JigsawButtonModule
-    ],
-    exports: [CollapseBasicDemoComponent],
-    declarations: [CollapseBasicDemoComponent,ngForDemoComponent],
-    providers: [],
+        CollapseBasicDemoModule,
+        ngForDemoModule
+    ]
 })
 export class CollapseDemoModule { }

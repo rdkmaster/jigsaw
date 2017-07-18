@@ -4,8 +4,7 @@ import {JigsawAlertModule} from "../../../../jigsaw/component/alert/alert";
 import {CustomizedAlert} from "./customized-alert";
 @NgModule({
     declarations: [CustomizeAlertDemoComponent, CustomizedAlert],
-    imports: [JigsawAlertModule],
-    exports: [CustomizeAlertDemoComponent]
+    imports: [JigsawAlertModule]
 })
 export class CustomizeAlertDemoModule {
 

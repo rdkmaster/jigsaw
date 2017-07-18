@@ -5,8 +5,7 @@ import {JigsawCheckBoxModule} from "../../../../jigsaw/component/checkbox/index"
 
 @NgModule({
     declarations: [ButtonDisableDemoComponent],
-    imports: [JigsawButtonModule,JigsawCheckBoxModule],
-    exports: [ButtonDisableDemoComponent]
+    imports: [JigsawButtonModule,JigsawCheckBoxModule]
 })
 export class ButtonDisableDemoModule{
 

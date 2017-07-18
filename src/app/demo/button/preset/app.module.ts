@@ -4,8 +4,7 @@ import {JigsawButtonModule} from "../../../../jigsaw/component/button/button";
 
 @NgModule({
     declarations: [ButtonPresetDemoComponent],
-    imports: [JigsawButtonModule],
-    exports: [ButtonPresetDemoComponent]
+    imports: [JigsawButtonModule]
 })
 export class ButtonPresetDemoModule{
 

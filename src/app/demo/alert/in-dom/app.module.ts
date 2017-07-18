@@ -21,8 +21,7 @@ export function HttpLoaderFactory(http: Http) {
                 }, isolate: true
             }
         ),
-    ],
-    exports: [AlertInDomDemoComponent]
+    ]
 })
 export class AlertInDomDemoModule {
 

@@ -3,8 +3,7 @@ import {ArrayCollectionAjaxDemoComponent} from "./app.component";
 import {CommonModule} from "@angular/common";
 @NgModule({
     declarations: [ArrayCollectionAjaxDemoComponent],
-    imports: [CommonModule],
-    exports: [ArrayCollectionAjaxDemoComponent]
+    imports: [CommonModule]
 })
 export class ArrayCollectionAjaxDemoModule{
 

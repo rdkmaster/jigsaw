@@ -1,6 +1,5 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {PopupService} from "jigsaw/service/popup.service";
 import {AlertInDomDemoComponent} from "./in-dom/app.component";
 import {AlertPopupDemoComponent} from "./popup/app.component";
 import {CustomizeAlertDemoComponent} from "./customized/app.component";
@@ -30,8 +29,7 @@ const popupDemoRoutes = [
         AlertInDomDemoModule,
         AlertPopupDemoModule,
         CustomizeAlertDemoModule
-    ],
-    providers: [PopupService]
+    ]
 })
 export class AlertDemoModule {
 }

@@ -6,7 +6,7 @@ import {JigsawCollapse} from "jigsaw/component/collapse/collapse";
 import {JigsawCollapsePane} from "jigsaw/component/collapse/collapse-pane";
 
 @Component({
-    templateUrl: './ngFor.html'
+    templateUrl: './app.component.html'
 })
 export class ngForDemoComponent {
 

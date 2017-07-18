@@ -32,11 +32,7 @@ const buttonDemoRoutes = [
         ArrayCollectionAjaxDemoModule,
         ArrayCollectionBasicDemoModule,
         ServerSidePaginationDemoModule
-    ],
-    exports: [
-        ArrayCollectionBasicDemoComponent, ArrayCollectionAjaxDemoComponent, ServerSidePaginationDemoComponent
-    ],
-    providers: []
+    ]
 })
 export class ArrayCollectionDemoModule {
 }

@@ -6,8 +6,7 @@ import {CommonModule} from "@angular/common";
 
 @NgModule({
     declarations: [ButtonWithLoadingComponent],
-    imports: [CommonModule,JigsawButtonModule,JigsawLoadingModule],
-    exports: [ButtonWithLoadingComponent]
+    imports: [CommonModule,JigsawButtonModule,JigsawLoadingModule]
 })
 export class ButtonWithLoadingModule{
 
