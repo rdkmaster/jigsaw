@@ -1,7 +1,7 @@
 # 如何部署一个你自己的plunker服务器
 plunker是一个在线演示代码的工具，具备分享等功能。它是目前唯一一个能够完美演示Angular应用的工具。但是，非常可惜的是它的官网处于墙外，中国大陆用户难以使用，同时，国内到国外的网速也很慢，体验很差......
 
-等等，何不我们来部署一个呢？这里有一个基本上已经完成了的：<wwww.rdkmaster.com:8000/edit>
+等等，何不我们来部署一个呢？这里有一个基本上已经完成了的：<www.rdkmaster.com:8000/edit>
 
 ## Install NodeJS v0.10.22 and NPM
 linux环境的话，最好安装 https://github.com/creationix/nvm 用来管理node版本的工具，可以自由切换版本。
