@@ -3,7 +3,7 @@
  */
 import {Component, ElementRef, Renderer2} from '@angular/core';
 @Component ( {
-    templateUrl:'color.html'
+    templateUrl:'./app.component.html'
 })
 export class ColorfulLoadingDemoComponent {
     constructor(private _renderer: Renderer2,private _el: ElementRef) {

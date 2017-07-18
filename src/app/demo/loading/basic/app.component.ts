@@ -2,10 +2,10 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {LoadingService} from "jigsaw/service/loading.service";
 
 @Component({
-    templateUrl: 'loading.html',
-    styleUrls: ['loading.scss']
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
 })
-export class LoadingDemoComponent {
+export class LoadingBasicDemoComponent {
     constructor(public loadingService: LoadingService) {
     }
 

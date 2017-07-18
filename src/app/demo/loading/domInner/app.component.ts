@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 
 @Component({
-    templateUrl: 'domInner.html'
+    templateUrl: './app.component.html'
 })
 export class DomInnerDemoComponent {
     isLoading: boolean;

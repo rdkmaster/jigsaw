@@ -1,13 +1,13 @@
-import {Component, ElementRef, ViewChild} from "@angular/core";
-import {DefinedLoading} from "./definedLoading/definedLoading";
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {LoadingService} from "jigsaw/service/loading.service";
 import {PopupInfo} from "jigsaw/service/popup.service";
+import {JigsawBallLoading} from "jigsaw/component/loading/loading";
 
 @Component({
-    templateUrl: 'userDefined.html',
-    styleUrls: ['userDefined.scss']
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
 })
-export class DefinedLoadingDemoComponent {
+export class BallLoadingDemoComponent{
     @ViewChild('block') block: ElementRef;
 
     constructor(public loadingService: LoadingService) {
@@ -18,7 +18,7 @@ export class DefinedLoadingDemoComponent {
 
     popupBlockLoading() {
         if (!this.blockLoading) {
-            this.blockLoading = this.loadingService.show(this.block, DefinedLoading);
+            this.blockLoading = this.loadingService.show(this.block, JigsawBallLoading);
         }
     }
 
@@ -31,15 +31,15 @@ export class DefinedLoadingDemoComponent {
 
     popupGlobalLoading() {
         if (!this.globalLoading) {
-            this.globalLoading = this.loadingService.show(DefinedLoading);
+            this.globalLoading = this.loadingService.show(JigsawBallLoading);
             setTimeout(() => {
                 this.closeGlobalLoading();
             }, 3000)
         }
     }
 
-    closeGlobalLoading() {
-        if (this.globalLoading) {
+    closeGlobalLoading(){
+        if(this.globalLoading){
             this.globalLoading.dispose();
             this.globalLoading = null;
         }

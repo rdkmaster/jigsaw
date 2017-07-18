@@ -1,24 +1,23 @@
 import {NgModule} from "@angular/core";
-import {CommonModule} from '@angular/common';
 import {RouterModule} from "@angular/router";
-import {JigsawLoadingModule} from "jigsaw/component/loading/loading";
-import {JigsawButtonModule} from "jigsaw/component/button/button";
-import {LoadingService} from "jigsaw/service/loading.service";
-import {PopupService} from "jigsaw/service/popup.service";
-import {JigsawInputModule} from "jigsaw/component/input/input";
-import {DefinedLoadingDemoComponent } from "./userDefined/userDefined";
-import {LoadingDemoComponent} from "./basic/loading";
-import {DefinedLoading} from "./userDefined/definedLoading/definedLoading";
-import {BallLoadingDemoComponent} from "./ballLoading/loading";
-import {DomInnerDemoComponent} from "./domInner/domInner";
-import {ColorfulLoadingDemoComponent} from "./color/color";
+
+import {DefinedLoadingDemoComponent } from "./userDefined/app.component";
+import {LoadingBasicDemoComponent} from "./basic/app.component";
+import {BallLoadingDemoComponent} from "./ballLoading/app.component";
+import {DomInnerDemoComponent} from "./domInner/app.component";
+import {ColorfulLoadingDemoComponent} from "./color/app.component";
+import {BallLoadingDemoModule} from "./ballLoading/app.module";
+import {DefinedLoadingDemoModule} from "./userDefined/app.module";
+import {DomInnerDemoModule} from "./domInner/app.module";
+import {ColorfulLoadingDemoModule} from "./color/app.module";
+import {LoadingBasicDemoModule} from "./basic/app.module";
 
 const loadingDemoRoutes = [
     {
         path: '', redirectTo: 'basic', pathMatch: 'full'
     },
     {
-        path: 'basic', component: LoadingDemoComponent
+        path: 'basic', component: LoadingBasicDemoComponent
     },
     {
         path: 'ballLoading', component: BallLoadingDemoComponent
@@ -34,28 +33,19 @@ const loadingDemoRoutes = [
     },
     {
         path: '**', //fallback router must in the last
-        component: LoadingDemoComponent
+        component: LoadingBasicDemoComponent
     }
 ];
 
 @NgModule({
-    declarations: [
-        LoadingDemoComponent,
-        BallLoadingDemoComponent,
-        DefinedLoadingDemoComponent,
-        DomInnerDemoComponent,
-        DefinedLoading,
-        ColorfulLoadingDemoComponent,
-    ],
     imports: [
-        CommonModule,
-        JigsawLoadingModule,
-        JigsawButtonModule,
-        JigsawInputModule,
-        RouterModule.forChild(loadingDemoRoutes)
-    ],
-    providers: [LoadingService, PopupService],
-    entryComponents:[DefinedLoading]
+        RouterModule.forChild(loadingDemoRoutes),
+        LoadingBasicDemoModule,
+        BallLoadingDemoModule,
+        DefinedLoadingDemoModule,
+        DomInnerDemoModule,
+        ColorfulLoadingDemoModule,
+    ]
 })
 export class LoadingDemoModule {
 }
