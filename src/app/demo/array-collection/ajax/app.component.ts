@@ -3,7 +3,7 @@ import {ArrayCollection} from "jigsaw/core/data/array-collection";
 import {Http} from "@angular/http";
 
 @Component({
-    templateUrl: 'demo.html'
+    templateUrl: './app.component.html'
 })
 export class ArrayCollectionAjaxDemoComponent {
     consoleTexts = new ArrayCollection<string>();

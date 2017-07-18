@@ -1,10 +1,11 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {CommonModule} from "@angular/common";
-import {JigsawButtonModule} from "jigsaw/component/button/button";
-import {ArrayCollectionAjaxDemoComponent} from "./ajax/demo";
-import {ArrayCollectionBasicDemoComponent} from "./basic/demo";
-import {ServerSidePaginationDemoComponent} from "./server-side-pagination/demo";
+import {ArrayCollectionAjaxDemoComponent} from "./ajax/app.component";
+import {ArrayCollectionBasicDemoComponent} from "./basic/app.component";
+import {ServerSidePaginationDemoComponent} from "./server-side-pagination/app.component";
+import {ArrayCollectionAjaxDemoModule} from "./ajax/app.module";
+import {ArrayCollectionBasicDemoModule} from "./basic/app.module";
+import {ServerSidePaginationDemoModule} from "./server-side-pagination/app.module";
 
 const buttonDemoRoutes = [
     {
@@ -26,11 +27,11 @@ const buttonDemoRoutes = [
 ];
 
 @NgModule({
-    declarations: [
-        ArrayCollectionBasicDemoComponent, ArrayCollectionAjaxDemoComponent, ServerSidePaginationDemoComponent
-    ],
     imports: [
-        RouterModule.forChild(buttonDemoRoutes), CommonModule, JigsawButtonModule
+        RouterModule.forChild(buttonDemoRoutes),
+        ArrayCollectionAjaxDemoModule,
+        ArrayCollectionBasicDemoModule,
+        ServerSidePaginationDemoModule
     ],
     exports: [
         ArrayCollectionBasicDemoComponent, ArrayCollectionAjaxDemoComponent, ServerSidePaginationDemoComponent

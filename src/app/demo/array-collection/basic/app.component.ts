@@ -8,7 +8,7 @@ type TestMsg = {
 }
 
 @Component({
-    templateUrl: 'demo.html',
+    templateUrl: './app.component.html',
     styles: ['.error{color: red}'],
     encapsulation: ViewEncapsulation.None
 })

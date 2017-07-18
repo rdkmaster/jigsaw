@@ -3,7 +3,7 @@ import {PageableArray} from "jigsaw/core/data/array-collection";
 import {Http} from "@angular/http";
 
 @Component({
-    templateUrl: 'demo.html', styles: ['.alert {color: red;}']
+    templateUrl: './app.component.html', styles: ['.alert {color: red;}']
 })
 export class ServerSidePaginationDemoComponent {
     pageable: PageableArray;
