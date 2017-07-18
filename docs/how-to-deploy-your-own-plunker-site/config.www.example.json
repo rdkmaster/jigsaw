@@ -1,0 +1,19 @@
+{
+  "host": "plunk.example.com",
+  "url": {
+    "www": "http://plunk.example.com",
+    "collab": "http://collab.example.com:8001",
+    "api": "http://api.example.com:8002",
+    "embed": "http://embed.example.com:8003",
+    "run": "http://run.example.com:8004",
+    "carbonadsH": "You can probably ignore this",
+    "carbonadsV": "...and this"
+  },
+  "PORT": 8000,
+  "oauth": {
+    "github": {
+      "id": "YOUR_CLIENT_ID",
+      "secret": "YOUR_CLIENT_SECRET"
+    }
+  }
+}
