@@ -1,13 +1,15 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {PopupService} from "jigsaw/service/popup.service";
-import {JigsawTooltipModule} from "jigsaw/component/tooltip/tooltip";
-import {JigsawButtonModule} from "jigsaw/component/button/button";
-import {JigsawInputModule} from "jigsaw/component/input/input";
-import {TooltipInDomDemoComponent} from "./in-dom/demo";
-import {TooltipDialogDemoComponent} from "./dialog/demo";
-import {UserTooltipDialogComponent} from "./dialog/user-defined-tooltip-dialog";
-import {SimpleTooltipDemoComponent} from "./simple-tooltip/demo";
+
+import {TooltipDialogDemoComponent} from "./dialog/app.component";
+import {TooltipDialogDemoModule} from "./dialog/app.module";
+
+import {TooltipInDomDemoComponent} from "./in-dom/app.component";
+import {TooltipInDomDemoModule} from "./in-dom/app.module";
+
+import {SimpleTooltipDemoComponent} from "./simple-tooltip/app.component";
+import {SimpleTooltipDemoModule} from "./simple-tooltip/app.module";
 
 
 const popupDemoRoutes = [
@@ -27,18 +29,11 @@ const popupDemoRoutes = [
 ];
 
 @NgModule({
-    declarations: [
-        TooltipInDomDemoComponent, TooltipDialogDemoComponent, UserTooltipDialogComponent,
-        SimpleTooltipDemoComponent
-    ],
     imports: [
         RouterModule.forChild(popupDemoRoutes),
-        JigsawTooltipModule, JigsawButtonModule, JigsawInputModule
+        TooltipDialogDemoModule, TooltipInDomDemoModule, SimpleTooltipDemoModule
     ],
-    providers: [PopupService],
-    entryComponents: [
-        UserTooltipDialogComponent
-    ]
+    providers: [PopupService]
 })
 export class TooltipDemoModule {
 }
