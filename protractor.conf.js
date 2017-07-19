@@ -38,7 +38,7 @@ if (process.env['TRAVIS']) {
     config.multiCapabilities = [
         {
             browserName: 'chrome',
-            version: 'latest',
+            version: '2.30',
             platform: 'Windows 7',
             shardTestFiles: true,
             'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
