@@ -1,4 +1,6 @@
-import { Component,AfterContentInit} from "@angular/core";
+import {
+    Component, AfterContentInit, Renderer2, ViewContainerRef
+} from "@angular/core";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 @Component({
@@ -14,8 +16,8 @@ export class TileselectTrackItemByDemoComponent implements AfterContentInit{
         {label: "长沙",id:5},
         {label: "西安",id:6}
     ]);
-    constructor(){
-
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
     }
     public basicSelectChange(cityArr:ArrayCollection<any>){
         cityArr.forEach((city)=> console.log(`tileselect message is: ${city.label}`));

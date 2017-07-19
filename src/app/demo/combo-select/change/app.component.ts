@@ -2,7 +2,7 @@
  * Created by 10177553 on 2017/4/13.
  */
 
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Renderer2, ViewContainerRef} from '@angular/core';
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 @Component({
@@ -10,11 +10,13 @@ import {ArrayCollection} from "jigsaw/core/data/array-collection";
 })
 export class ComboSelectChangeDemo {
 
-    constructor() { }
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
+    }
 
     public selectedCity = new ArrayCollection([{label: "北京"}]);
 
-     citys = [
+    citys = [
         {label: "北京"},
         {label: "上海"},
         {label: "南京"},

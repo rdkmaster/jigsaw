@@ -1,4 +1,7 @@
-import {AfterContentInit, Component, TemplateRef, ViewChild, ViewEncapsulation} from "@angular/core";
+import {
+    AfterContentInit, Component, TemplateRef, ViewChild, ViewEncapsulation,
+    Renderer2, ViewContainerRef
+} from "@angular/core";
 import {Http} from "@angular/http";
 import {TableData} from "jigsaw/core/data/table-data";
 import {AdditionalColumnDefine, ColumnDefine} from "jigsaw/component/table/table-api";
@@ -19,32 +22,11 @@ export class TableRendererOfTemplateRefDemoComponent implements AfterContentInit
      _columns: ColumnDefine[];
      _additionalColumns: AdditionalColumnDefine[];
 
-    constructor(http: Http) {
-
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2, http: Http) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/table/data.json');
-
-        // this.tableData = new TableData([
-        //     [22, 12, 11, 0, 12, 12, 111],
-        //     [22, 23, 11, 1, 23, 23, 111],
-        //     [22, 43, 11, 1, 43, 77, 111],
-        //     [22, 12, 12, 0, 12, 77, 111],
-        //     [23, 55, 23, 1, 23, 23, 111],
-        //     [43, 55, 43, 0, 44, 43, 111],
-        //     [12, 55, 12, 1, 44, 12, 111],
-        //     [23, 55, 23, 1, 44, 23, 111],
-        //     [43, 43, 43, 0, 44, 43, 111],
-        //     [12, 12, 33, 0, 12, 66, 111],
-        //     [23, 23, 33, 0, 88, 66, 111],
-        //     [43, 43, 33, 1, 88, 66, 111],
-        //     [12, 11, 12, 1, 88, 66, 111],
-        //     [23, 11, 23, 0, 23, 23, 111],
-        //     [43, 43, 43, 1, 43, 43, 111],
-        //     [12, 12, 12, 1, 99, 12, 111],
-        //     [23, 23, 23, 0, 99, 23, 111],
-        //     [43, 43, 43, 1, 99, 43, 111]
-        // ], ['f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7'], ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7']);
     }
 
     handleClick(context){

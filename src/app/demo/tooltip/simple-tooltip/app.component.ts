@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 
 @Component({
     template: `
@@ -12,5 +12,8 @@ import {Component} from "@angular/core";
 })
 export class SimpleTooltipDemoComponent {
     tooltipMessage:string = '这是一个内联tooltip  <span class="fa fa-thumbs-up"></span>';
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
+    }
 }
 

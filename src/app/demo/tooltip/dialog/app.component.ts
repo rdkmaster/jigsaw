@@ -1,4 +1,6 @@
-import {Component, ElementRef, ViewChild} from "@angular/core";
+import {
+    Component, ElementRef, ViewChild, Renderer2, ViewContainerRef
+} from "@angular/core";
 import {PopupEffect, PopupInfo, PopupPositionType, PopupService} from "jigsaw/service/popup.service";
 import {UserTooltipDialogComponent} from "./user-defined-tooltip-dialog";
 
@@ -15,7 +17,9 @@ export class TooltipDialogDemoComponent {
      _tooltipInfo: PopupInfo;
     @ViewChild("insertPlace", {read: ElementRef}) insertPlaceEl: ElementRef;
 
-    constructor(private _popupService: PopupService) {
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2,
+                private _popupService: PopupService) {
     }
 
     popup() {

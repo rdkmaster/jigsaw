@@ -1,4 +1,7 @@
-import {Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {
+    Component, ElementRef, OnInit, TemplateRef, ViewChild,
+    Renderer2, ViewContainerRef
+} from '@angular/core';
 import {
     PopupInfo, PopupOptions, PopupPoint, PopupPositionOffset, PopupPositionType,
     PopupService
@@ -30,8 +33,9 @@ export class DialogPopOptionDemo implements OnInit {
     @ViewChild("middle") middle: ElementRef;
     @ViewChild("right") right: ElementRef;
 
-    constructor(private popupService: PopupService) {
-
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2,
+                private popupService: PopupService) {
     }
 
     ngOnInit() {

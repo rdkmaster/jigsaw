@@ -1,7 +1,9 @@
 /**
  * Created by 10177553 on 2017/3/29.
  */
-import {Component, ViewChild} from '@angular/core';
+import {
+	Component, ViewChild, Renderer2, ViewContainerRef
+} from '@angular/core';
 import {JigsawTab} from "jigsaw/component/tabs/tab";
 
 @Component({
@@ -15,4 +17,7 @@ export class JigsawShowTabComponent {
         this.myTab.showTab(1);
     }
 
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
+    }
 }

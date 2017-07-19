@@ -1,4 +1,6 @@
-import {AfterViewInit, Component, ViewChild} from "@angular/core";
+import {
+    AfterViewInit, Component, ViewChild, Renderer2, ViewContainerRef
+} from "@angular/core";
 import {Http} from "@angular/http";
 import {PageableTableData} from "jigsaw/core/data/table-data";
 import {AdditionalColumnDefine, ColumnDefine} from "jigsaw/component/table/table-api";
@@ -13,7 +15,8 @@ export class TableAddIDWithDebouncePagingComponent implements AfterViewInit{
 
     @ViewChild('paging') paging: JigsawPagination;
 
-    constructor(http: Http) {
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2, http: Http) {
         this.pageable = new PageableTableData(http, {
             url: 'http://localhost:4200/mock-data/array-collection/paging-data.json',
             params: {aa: 11, bb: 22}, method: 'get'

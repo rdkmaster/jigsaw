@@ -1,4 +1,7 @@
-import {AfterContentInit, Component, TemplateRef, ViewChild} from "@angular/core";
+import {
+    AfterContentInit, Component, TemplateRef, ViewChild,
+    Renderer2, ViewContainerRef
+} from "@angular/core";
 import {Http} from "@angular/http";
 import {TableData} from "jigsaw/core/data/table-data";
 import {ColumnDefine} from "jigsaw/component/table/table-api";
@@ -16,7 +19,8 @@ export class TableSetCellRenderDemoComponent implements AfterContentInit {
 
     tableData: TableData;
 
-    constructor(http: Http) {
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2, http: Http) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/table/data.json');

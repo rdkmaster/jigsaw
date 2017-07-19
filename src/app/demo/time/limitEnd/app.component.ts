@@ -1,4 +1,6 @@
-import {AfterContentInit, Component} from "@angular/core";
+import {
+	AfterContentInit, Component, Renderer2, ViewContainerRef
+} from "@angular/core";
 
 
 @Component({
@@ -10,6 +12,10 @@ export class TimeLimitEndComponent implements AfterContentInit{
     datas = [{label:"now"},{label:"now+1d"},{label:"now+5d"}];
 
     limitEnd
+
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
+    }
 
     ngAfterContentInit() {
         this.limitEnd = [{label:"now"}];

@@ -2,7 +2,9 @@
  * Created by 10177553 on 2017/3/28.
  */
 
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {
+    Component, OnInit, ViewChild, Renderer2, ViewContainerRef
+} from '@angular/core';
 import {AbstractGraphData} from "jigsaw/core/data/graph-data";
 import {EchartOptions} from "jigsaw/core/data/echart-types";
 import {JigsawGraph} from "jigsaw/component/graph/graph";
@@ -15,6 +17,10 @@ export class BasicGraphComponent implements OnInit {
     data: AbstractGraphData;
 
     @ViewChild("graph") graph: JigsawGraph;
+    
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
+    }
 
     patchOption = {
         title: {

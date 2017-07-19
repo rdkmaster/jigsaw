@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Renderer2, ViewContainerRef} from '@angular/core';
 import {ComboSelectValue} from "jigsaw/component/combo-select/combo-select";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 @Component({
@@ -6,7 +6,10 @@ import {ArrayCollection} from "jigsaw/core/data/array-collection";
     styleUrls: ['./app.component.scss'],
 })
 export class ComboSelectEditableDemo{
-
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
+    }
+    
     editable: boolean = true;
 
     toggleEditable() {

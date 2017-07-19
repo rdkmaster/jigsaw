@@ -1,7 +1,7 @@
 /**
  * Created by 10177553 on 2017/5/17.
  */
-import { Component } from '@angular/core';
+import { Component, Renderer2, ViewContainerRef } from '@angular/core';
 import { ArrayCollection } from "jigsaw/core/data/array-collection";
 
 @Component({
@@ -12,4 +12,7 @@ import { ArrayCollection } from "jigsaw/core/data/array-collection";
 export class SliderVerticalDemo {
     vertical: boolean = true;
     value = new ArrayCollection([30, 40, 60]);
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
+    }
 }

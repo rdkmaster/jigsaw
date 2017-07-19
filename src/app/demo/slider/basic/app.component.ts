@@ -1,7 +1,9 @@
 /**
  * Created by 10177553 on 2017/4/13.
  */
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {
+    Component, OnInit, ViewChild, Renderer2, ViewContainerRef
+} from '@angular/core';
 import {JigsawSlider, SliderMark} from "jigsaw/component/slider/slider";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
@@ -47,7 +49,8 @@ export class JigsawSliderDemoBasic implements OnInit {
 
     @ViewChild('slider') verticalSlider: JigsawSlider;
 
-    constructor() {
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
     }
 
     value1: number = 30;

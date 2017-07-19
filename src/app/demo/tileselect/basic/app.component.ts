@@ -1,4 +1,4 @@
-import { Component} from "@angular/core";
+import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 import { ArrayCollection } from "jigsaw/core/data/array-collection";
 
 @Component({
@@ -14,9 +14,8 @@ export class TileselectBasicDemoComponent{
         {label: "长沙"},
         {label: "西安"}
     ]);
-    constructor(){
-
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
     }
-
 }
 

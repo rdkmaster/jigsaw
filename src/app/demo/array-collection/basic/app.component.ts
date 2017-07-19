@@ -1,4 +1,7 @@
-import {Component, ElementRef, OnInit, ViewEncapsulation} from "@angular/core";
+import {
+    Component, ElementRef, OnInit, ViewEncapsulation,
+    Renderer2, ViewContainerRef
+} from "@angular/core";
 import {ArrayCollection, PageableArray} from "jigsaw/core/data/array-collection";
 import {Http} from "@angular/http";
 
@@ -15,7 +18,9 @@ type TestMsg = {
 export class ArrayCollectionBasicDemoComponent implements OnInit {
     consoleTexts = new ArrayCollection<TestMsg>();
 
-    constructor(http: Http, private elementRef: ElementRef) {
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2,
+                http: Http, private elementRef: ElementRef) {
         const arr: number[] = [1, 2, 3, 4, 5, 6, 7, 8];
         const ac: ArrayCollection<number> = new ArrayCollection([1, 2, 3, 4, 5, 6, 7, 8]);
         this.consoleAppend(ac, arr, 'new');

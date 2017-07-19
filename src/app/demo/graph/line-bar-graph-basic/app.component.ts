@@ -2,7 +2,7 @@
  * Created by 10177553 on 2017/3/28.
  */
 
-import {Component} from "@angular/core";
+import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 import {LineBarGraphData, LineBarGraphDataByRow} from "jigsaw/core/data/graph-data";
 
 @Component({
@@ -18,8 +18,8 @@ import {LineBarGraphData, LineBarGraphDataByRow} from "jigsaw/core/data/graph-da
 export class BasicLineGraphComponent {
     dataByRow: LineBarGraphDataByRow;
     dataByCol: LineBarGraphData;
-
-    constructor() {
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
         this.dataByRow = new LineBarGraphDataByRow();
         this.dataByRow.data = [
             [120, 132, 101, 134, 90, 230, 210],

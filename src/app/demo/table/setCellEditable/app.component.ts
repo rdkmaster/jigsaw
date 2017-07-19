@@ -1,4 +1,7 @@
-import {Component, AfterViewInit, ViewChild, ViewEncapsulation} from "@angular/core";
+import {
+    Component, AfterViewInit, ViewChild, ViewEncapsulation,
+    Renderer2, ViewContainerRef
+} from "@angular/core";
 import {TableData} from "jigsaw/core/data/table-data";
 import {Http} from "@angular/http";
 import {ColumnDefine, TableCellRenderer} from "jigsaw/component/table/table-api";
@@ -37,7 +40,8 @@ export class MyTableCellEditor extends TableCellRenderer implements AfterViewIni
 export class TableSetCellEditableDemoComponent {
     tableData: TableData;
 
-    constructor(http: Http) {
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2, http: Http) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/table/data.json');

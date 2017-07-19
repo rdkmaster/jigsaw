@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 import {ButtonInfo, PopupEventType, PopupInfo, PopupService} from "jigsaw/service/popup.service";
 
 
@@ -27,7 +27,9 @@ export class PopupTracingEventComponent {
     public popupInfo: PopupInfo;
     public eventMessages: string[] = ['event tracing message goes here:', '========================'];
 
-    constructor(public popupService: PopupService) {
+    constructor(public popupService: PopupService,
+                public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
     }
 
     popup(tpDialog) {

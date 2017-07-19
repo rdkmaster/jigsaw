@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 import {TimeGr} from "jigsaw/service/time.service";
 import {GrItem, Shortcut} from "jigsaw/component/time/time";
 import {RangeTimeDataRanges} from "jigsaw/component/range-time/shortcut-dateranges";
@@ -21,6 +21,10 @@ export class RangeTimeGrItemsComponent {
         {label: "Day", value: TimeGr.date, shortcuts:this.shortcuts,span:"15d"},
         {label: "Week", value: TimeGr.week},
         {label: "Month", value: TimeGr.month}];
+
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
+    }
 
 }
 

@@ -1,4 +1,4 @@
-import {Component, ComponentRef} from "@angular/core";
+import {Component, ComponentRef, Renderer2, ViewContainerRef} from "@angular/core";
 import {
     ButtonInfo, PopupEffect, PopupInfo, PopupOptions, PopupPositionType,
     PopupService
@@ -26,7 +26,9 @@ export class AlertPopupDemoComponent {
 
     answer = '';
 
-    constructor(private _popupService: PopupService) {
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2,
+                private _popupService: PopupService) {
     }
 
     alertCallback(answer:ButtonInfo) {

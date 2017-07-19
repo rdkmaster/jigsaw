@@ -1,14 +1,17 @@
 /**
  * Created by 10177553 on 2017/3/29.
  */
-import { Component, OnInit } from '@angular/core';
+import {
+	Component, OnInit, Renderer2, ViewContainerRef
+} from '@angular/core';
 
 @Component({
     templateUrl:"./app.component.html"
 })
 export class JigsawTabsWithNgForComponent implements OnInit {
-
-    constructor() { }
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
+    }
 
     tabDatas : Array<string>
 

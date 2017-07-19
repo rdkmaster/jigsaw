@@ -1,4 +1,6 @@
-import {Component, ViewEncapsulation} from "@angular/core";
+import {
+    Component, ViewEncapsulation, Renderer2, ViewContainerRef
+} from "@angular/core";
 import {TableData} from "jigsaw/core/data/table-data";
 import {
     TableHeadCheckbox,
@@ -18,8 +20,8 @@ import {ColumnDefine, AdditionalColumnDefine} from "jigsaw/component/table/table
 })
 export class TableLineEllipsisDemoComponent {
     tableData: TableData;
-
-    constructor() {
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
         this.tableData = new TableData([
             [22, '66打个广告，打个', '66打个广告，打个广告打个广告打个广告', 0, 12, 12],
             [22, 22, 11, 1, 23, 22],

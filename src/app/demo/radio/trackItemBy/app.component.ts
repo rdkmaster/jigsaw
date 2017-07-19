@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 @Component({
@@ -11,7 +11,8 @@ export class RadioTrackItemByDemoComponent {
         {pro_name: "苹果",pro_type:"110"},
         {pro_name: "魅族",pro_type:"255"},
     ]);
-    constructor(){
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
     }
     public radioChange(message:any){
         console.log(`switch message is: ${message.pro_name}`);

@@ -1,7 +1,7 @@
 /**
  * Created by 10177553 on 2017/3/28.
  */
-import {Component} from '@angular/core';
+import {Component, Renderer2, ViewContainerRef} from '@angular/core';
 import {Http} from "@angular/http";
 import {LineBarGraphData} from "jigsaw/core/data/graph-data";
 
@@ -19,7 +19,8 @@ export class AjaxLineGraphComponent {
     public graphWidth;
     public graphHeight;
 
-    constructor(http: Http) {
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2, http: Http) {
         this.graphWidth = "600";
         this.graphHeight = "250";
 

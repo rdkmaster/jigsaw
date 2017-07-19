@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 
 
 @Component({
@@ -6,5 +6,8 @@ import { Component } from "@angular/core";
 })
 export class TimeRefreshIntervalComponent {
     date = new Date();
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
+    }
 }
 

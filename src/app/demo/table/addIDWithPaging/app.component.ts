@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 import {Http} from "@angular/http";
 import {PageableTableData} from "jigsaw/core/data/table-data";
 import {TableCellNum} from "jigsaw/component/table/table-renderer";
@@ -11,7 +11,8 @@ import {SortAs, SortOrder} from "jigsaw/core/data/component-data";
 export class TableAddIDWithPagingComponent {
     pageable: PageableTableData;
 
-    constructor(http: Http) {
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2, http: Http) {
         this.pageable = new PageableTableData(http, {
             url: 'http://localhost:4200/mock-data/array-collection/paging-data.json',
             params: {aa: 11, bb: 22}, method: 'get'

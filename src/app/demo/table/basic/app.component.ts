@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 import {TableData} from "jigsaw/core/data/table-data";
 
 @Component({
@@ -6,7 +6,8 @@ import {TableData} from "jigsaw/core/data/table-data";
 })
 export class TableBasicDemoComponent {
     tableData: TableData;
-    constructor() {
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
         this.tableData = new TableData(
             [
                 [

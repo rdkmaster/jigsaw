@@ -1,5 +1,5 @@
 
-import {Component} from "@angular/core";
+import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 
 @Component({
     template: `
@@ -10,6 +10,9 @@ import {Component} from "@angular/core";
     `
 })
 export class ButtonWithLoadingComponent {
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
+    }
     isLoading = false;
     label: string = 'click to load';
     onClick() {

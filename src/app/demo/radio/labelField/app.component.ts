@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 @Component({
@@ -14,7 +14,8 @@ export class RadioLabelFieldDemoComponent {
         {name: "长沙",id:"5"},
         {name: "西安",id:"6"}
     ]);
-    constructor(){
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
     }
     public radioChange(message:any){
         console.log(`switch message is: ${message.name}`);

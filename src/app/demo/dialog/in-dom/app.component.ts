@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 import {ButtonInfo} from "jigsaw/service/popup.service";
 
 @Component({
@@ -18,6 +18,9 @@ import {ButtonInfo} from "jigsaw/service/popup.service";
     `
 })
 export class DialogInDomDemoComponent {
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
+    }
     public buttons: Array<ButtonInfo> = [
         {
             role: 'confirm',

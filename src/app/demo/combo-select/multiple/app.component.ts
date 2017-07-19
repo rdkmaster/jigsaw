@@ -1,11 +1,14 @@
-import {Component} from '@angular/core';
+import {Component, Renderer2, ViewContainerRef} from '@angular/core';
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
 })
 export class ComboSelectMultipleDemo {
-
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
+    }
+    
     public multiple: boolean = true;
 
     toggleMultiple() {

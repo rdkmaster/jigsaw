@@ -1,4 +1,4 @@
-import {Component, ViewChild} from "@angular/core";
+import {Component, ViewChild, Renderer2, ViewContainerRef} from "@angular/core";
 import {JigsawInput} from "jigsaw/component/input/input";
 
 @Component({
@@ -6,8 +6,12 @@ import {JigsawInput} from "jigsaw/component/input/input";
 })
 export class InputBasicDemoComponent {
     inputValue: any;
-    valueChanged(message: string) {
 
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
+    }
+
+    valueChanged(message: string) {
         console.log(`input value is: ${message}`);
     }
 

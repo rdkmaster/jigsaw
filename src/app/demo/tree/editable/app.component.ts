@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 import {Http} from "@angular/http";
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
@@ -22,7 +22,8 @@ export class ZtreeDemoEditableComponent {
         }
     };
 
-    constructor(public http: Http) {
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2, public http: Http) {
         this.data = new TreeData();
         this.data.http = http;
         this.data.fromAjax("mock-data/tree/data.json");

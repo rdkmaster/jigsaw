@@ -1,4 +1,7 @@
-import {Component, TemplateRef, Type, ViewChild} from '@angular/core';
+import {
+    Component, TemplateRef, Type, ViewChild,
+    Renderer2, ViewContainerRef
+} from '@angular/core';
 import {JigsawTab} from "jigsaw/component/tabs/tab";
 import {IDynamicInstantiatable} from "jigsaw/component/core";
 import {TabContentDefine} from "./tabContent/tabContent";
@@ -9,6 +12,10 @@ import {TabContentDefine} from "./tabContent/tabContent";
 })
 export class DynamicTabDemoComponent {
     @ViewChild(JigsawTab) tabs: JigsawTab;
+
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
+    }
 
     public removeTab(index) {
         this.tabs.removeTab(index);

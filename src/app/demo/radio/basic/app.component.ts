@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 @Component({
@@ -14,7 +14,9 @@ export class RadioBasicDemoComponent {
         {label: "长沙", id: 5},
         {label: "西安", id: 6}
     ]);
-    constructor(){
+
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
         // 三种设置值的方式;
         // 1 根据名字设置默认值;(默认, 根据label设置值)
         // this.selectedCity={label: "西安",id: 6};

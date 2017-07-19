@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation} from "@angular/core";
+import {Component, ViewEncapsulation, Renderer2, ViewContainerRef} from "@angular/core";
 
 @Component({
     template: `
@@ -7,5 +7,8 @@ import {Component, ViewEncapsulation} from "@angular/core";
     encapsulation: ViewEncapsulation.None
 })
 export class CustomizeAlertDemoComponent {
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
+    }
 }
 

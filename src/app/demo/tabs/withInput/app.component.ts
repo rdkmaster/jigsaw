@@ -1,7 +1,9 @@
 /**
  * Created by 10177553 on 2017/3/29.
  */
-import { Component, OnInit } from '@angular/core';
+import {
+    Component, OnInit, Renderer2, ViewContainerRef
+} from '@angular/core';
 import {Http} from "@angular/http";
 import {TableData} from "jigsaw/core/data/table-data";
 
@@ -16,7 +18,8 @@ export class JigsawTabsWithInputComponent implements OnInit {
 
     tabDatas = [{title:"111",key:"XXX",content:"content 111"},{title:"222",key:"YYY",content:"content 222"}];
 
-    constructor(http: Http) {
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2, http: Http) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/table/data.json');

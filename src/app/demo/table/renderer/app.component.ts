@@ -1,4 +1,6 @@
-import {Component, ViewEncapsulation} from "@angular/core";
+import {
+    Component, ViewEncapsulation, Renderer2, ViewContainerRef
+} from "@angular/core";
 import {TableData} from "jigsaw/core/data/table-data";
 import {
     TableHeadCheckbox,
@@ -19,8 +21,9 @@ import {TableHeadSelect, TableHeadIcon} from "./table-renderer";
 })
 export class TableRendererDemoComponent {
     tableData: TableData;
-
-    constructor() {
+    
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
         this.tableData = new TableData([
             [22, 12, 11, 0, 12, 12, 111],
             [22, 23, 11, 1, 23, 23, 111],

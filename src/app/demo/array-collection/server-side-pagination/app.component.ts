@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 import {PageableArray} from "jigsaw/core/data/array-collection";
 import {Http} from "@angular/http";
 
@@ -11,7 +11,8 @@ export class ServerSidePaginationDemoComponent {
     errorInfo = "";
     tipClass = {'alert': !!this.errorInfo};
 
-    constructor(http: Http) {
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2, http: Http) {
         this.pageable = new PageableArray(http,
             {url: 'http://localhost:4200/mock-data/array-collection/paging-data.json', params: {aa: 11, bb: 22}});
         this.pageable.onAjaxSuccess(this.onAjaxSuccess, this);

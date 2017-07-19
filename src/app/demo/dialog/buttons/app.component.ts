@@ -2,7 +2,10 @@
  * Created by 10177553 on 2017/4/13.
  */
 
-import {Component, TemplateRef, ViewEncapsulation} from '@angular/core';
+import {
+    Component, TemplateRef, ViewEncapsulation,
+    Renderer2, ViewContainerRef
+} from '@angular/core';
 import {ButtonInfo, PopupDisposer, PopupInfo, PopupService} from "jigsaw/service/popup.service";
 
 @Component({
@@ -17,7 +20,7 @@ export class DialogButtonsDemo  {
     constructor(private popupService : PopupService){
     }
 
-     buttons: Array<ButtonInfo> = [
+    buttons: Array<ButtonInfo> = [
         {
             label: 'confirm',
             clazz: "red"

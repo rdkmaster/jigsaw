@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 import { TimeGr } from "jigsaw/service/time.service";
 
 
@@ -6,7 +6,9 @@ import { TimeGr } from "jigsaw/service/time.service";
   templateUrl: './app.component.html'
 })
 export class TimeGrItemsComponent {
-
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
+    }
 
     date = new Date();
 
@@ -14,6 +16,5 @@ export class TimeGrItemsComponent {
         {label: "Day", value: TimeGr.date},
         {label: "Week", value: TimeGr.week},
         {label: "Month", value: TimeGr.month}];
-
 }
 

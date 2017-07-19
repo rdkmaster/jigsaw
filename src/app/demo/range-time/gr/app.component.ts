@@ -1,10 +1,12 @@
-import {AfterContentInit, Component} from "@angular/core";
+import {
+	AfterContentInit, Component, Renderer2, ViewContainerRef
+} from "@angular/core";
 
 
 @Component({
   templateUrl: './app.component.html'
 })
-export class RangeTimeGrComponent implements AfterContentInit{
+export class RangeTimeGrComponent implements AfterContentInit {
     beginDate = "now-1d";
 
     endDate = "now";
@@ -13,6 +15,10 @@ export class RangeTimeGrComponent implements AfterContentInit{
         {label:"date"},{label:"week"},{label:"month"}];
 
     gr
+
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
+    }
 
     ngAfterContentInit() {
         this.gr= [this.datas[3]];

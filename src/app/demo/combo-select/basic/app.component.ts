@@ -1,7 +1,7 @@
 /**
  * Created by 10177553 on 2017/4/10.
  */
-import {Component} from '@angular/core';
+import {Component, Renderer2, ViewContainerRef} from '@angular/core';
 import {DropDownTrigger} from "jigsaw/component/combo-select/combo-select";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 @Component({
@@ -9,9 +9,12 @@ import {ArrayCollection} from "jigsaw/core/data/array-collection";
     styleUrls: ['./app.component.scss'],
 })
 export class ComboSelectBasicDemo{
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
+    }
 
-     openTrigger = DropDownTrigger.mouseenter;
-     closeTrigger = DropDownTrigger.mouseleave;
+    openTrigger = DropDownTrigger.mouseenter;
+    closeTrigger = DropDownTrigger.mouseleave;
 
     changeTrigger() {
         if (this.openTrigger === DropDownTrigger.click) {

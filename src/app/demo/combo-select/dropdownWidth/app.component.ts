@@ -2,7 +2,7 @@
  * Created by 10177553 on 2017/4/13.
  */
 
-import {Component, ViewChild, AfterViewInit} from '@angular/core';
+import {Component, ViewChild, AfterViewInit, Renderer2, ViewContainerRef} from '@angular/core';
 import {JigsawComboSelect} from "jigsaw/component/combo-select/combo-select";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
@@ -15,7 +15,8 @@ export class ComboSelectWidthDemo implements AfterViewInit {
 
     @ViewChild(JigsawComboSelect) comboSelect:JigsawComboSelect;
 
-    constructor() {
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
     }
 
     ngAfterViewInit() {

@@ -3,14 +3,17 @@
  */
 
 import {
-    Component, OnInit
+    Component, OnInit, Renderer2, ViewContainerRef
 } from '@angular/core';
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 @Component({
     templateUrl: './app.component.html'
 })
 export class ComboSelectAutoWidthDemo implements OnInit {
-
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
+    }
+    
     public selectedCity = new ArrayCollection([{label: "北京", closable: false}]);
      citys = [
         {label: "北京", closable: false},

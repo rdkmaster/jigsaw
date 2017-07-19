@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 import {ZTreeSettingSetting} from "jigsaw/component/tree/ztree-types";
 import {TreeData} from "jigsaw/core/data/tree-data";
 
@@ -26,8 +26,9 @@ export class ZtreeAsynDemoComponent {
     };
 
     public data = new TreeData();
-
-    constructor() {
+    
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
         this.data.fromObject([
             {key: '1', name: 'n1', label: "n1", isParent: true},
             {key: '2', name: 'n2', label: "n2", isParent: true},

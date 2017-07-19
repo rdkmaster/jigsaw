@@ -1,4 +1,6 @@
-import {Component, ViewChild} from "@angular/core";
+import {
+    Component, ViewChild, Renderer2, ViewContainerRef
+} from "@angular/core";
 import {Http} from "@angular/http";
 import {TableData} from "jigsaw/core/data/table-data";
 import {AdditionalColumnDefine} from "jigsaw/component/table/table-api";
@@ -18,7 +20,8 @@ export class TableAddCheckboxColumnDemoComponent{
 
     @ViewChild('myTable') myTable: JigsawTable;
 
-    constructor(http: Http) {
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2, http: Http) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.onAjaxComplete(() => {

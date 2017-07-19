@@ -1,5 +1,4 @@
-import {Component, ComponentRef} from "@angular/core";
-
+import {Component, ComponentRef, Renderer2, ViewContainerRef} from "@angular/core";
 import {UserDialogComponent} from "./user-dialog/user-dialog";
 import {UserDialog2Component} from "./user-dialog2/user-dialog";
 import {
@@ -31,7 +30,9 @@ export class DialogMiscDemoComponent {
         }
     ];
 
-    constructor(private _popupService: PopupService) {
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2,
+                private _popupService: PopupService) {
     }
 
     /*

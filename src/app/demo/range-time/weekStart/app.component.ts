@@ -1,4 +1,6 @@
-import {AfterContentInit, Component} from "@angular/core";
+import {
+	AfterContentInit, Component, Renderer2, ViewContainerRef
+} from "@angular/core";
 
 
 @Component({
@@ -13,6 +15,10 @@ export class RangeTimeWeekStartComponent implements AfterContentInit{
         {label:"wed"},{label:"thu"},{label:"fri"},{label:"sat"}];
 
     weekStart
+
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
+    }
 
     ngAfterContentInit() {
         this.weekStart= [this.datas[0]];

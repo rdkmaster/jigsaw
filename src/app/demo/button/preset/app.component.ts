@@ -1,7 +1,7 @@
 /**
  * Created by 10184437 on 2017/5/10.
  */
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewContainerRef } from '@angular/core';
 
 @Component({
     templateUrl: './app.component.html'
@@ -11,7 +11,9 @@ export class ButtonPresetDemoComponent {
     public size: string = "";
     public aSize: string = "";
 
-    constructor(private elementRef: ElementRef) {}
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2,
+                private elementRef: ElementRef) {}
     onClick() {
         alert('hello jigsaw button');
     }

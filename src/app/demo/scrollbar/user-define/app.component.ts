@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 import {ScrollEvent} from "jigsaw/component/scrollbar/scrollbar";
 
 @Component({
@@ -6,6 +6,10 @@ import {ScrollEvent} from "jigsaw/component/scrollbar/scrollbar";
   styleUrls: ['./app.component.css']
 })
 export class ScrollbarUserdefineDemoComponent {
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
+    }
+
     public testScrollEvent(message:ScrollEvent){
         console.log("scroll is move:"+ message.draggerTop);
     }

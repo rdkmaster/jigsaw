@@ -1,7 +1,7 @@
 /**
  * Created by 10177553 on 2017/3/28.
  */
-import { Component } from '@angular/core';
+import { Component, Renderer2, ViewContainerRef } from '@angular/core';
 import {PieGraphData, PieGraphDataByColumn, PieGraphDataByRow} from "jigsaw/core/data/graph-data";
 import {Http} from "@angular/http";
 
@@ -25,7 +25,8 @@ export class PieGraphDemoComponent {
     public pieGraphDataByCol: PieGraphDataByColumn;
     public pieGraphDataByRow: PieGraphDataByRow;
 
-    constructor(http:Http) {
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2, http:Http) {
         const s = [
             {value:335, name:'直接访问'},
             {value:310, name:'邮件营销'},

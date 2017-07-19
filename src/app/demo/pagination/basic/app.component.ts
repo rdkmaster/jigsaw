@@ -1,10 +1,14 @@
-import { Component } from "@angular/core";
+import { Component, Renderer2, ViewContainerRef } from "@angular/core";
 
 @Component({
   templateUrl: './app.component.html'
 })
 export class PaginationBasicDemoComponent {
     currentPage: number = 1;
+
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
+    }
 
     getCurrentPage(message:any){
         console.log("current page is: "+message);

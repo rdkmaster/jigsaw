@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 import {Http} from "@angular/http";
 import {LocalPageableTableData} from "jigsaw/core/data/table-data";
 import {ColumnDefine} from "jigsaw/component/table/table-api";
@@ -11,7 +11,8 @@ import {SortAs, SortOrder} from "jigsaw/core/data/component-data";
 export class LocalPagingDataDemoComponent {
 
     pageable: LocalPageableTableData;
-    constructor(http: Http) {
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2, http: Http) {
         this.pageable = new LocalPageableTableData();
         this.pageable.http = http;
         this.pageable.fromAjax('mock-data/table/data.json');

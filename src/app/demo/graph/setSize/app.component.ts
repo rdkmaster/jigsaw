@@ -2,7 +2,7 @@
  * Created by 10177553 on 2017/3/28.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewContainerRef } from '@angular/core';
 import {AbstractGraphData} from "jigsaw/core/data/graph-data";
 
 @Component({
@@ -11,8 +11,13 @@ import {AbstractGraphData} from "jigsaw/core/data/graph-data";
 
 export class GraphSetSizeComponent  implements OnInit {
     data: AbstractGraphData;
-     graphWidth ;
-     graphHeight;
+    graphWidth: string;
+    graphHeight: string;
+
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
+    }
+
     ngOnInit() {
         this.data = new GraphDataSetSize();
          this.graphWidth = "80%";
