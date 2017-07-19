@@ -34,19 +34,24 @@ describe('dialog', () => {
         it('should popup a custom dialog at point when click the button', async () => {
             let popupBlock = element(by.tagName('jigsaw-block'));
             let popupDialog = element(by.tagName('jigsaw-dialog'));
-            expect(popupBlock.isPresent()).toBe(false);
-            expect(popupDialog.isPresent()).toBe(false);
+            expect(popupBlock.isPresent()).toBe(false, 'not popup block');
+            expect(popupDialog.isPresent()).toBe(false, 'not popup dialog');
 
             const trigger2 = element(by.id('trigger2'));
             browser.actions().mouseMove(trigger2, {x: 100, y: 10}).click().perform();
 
             browser.sleep(800);
+            let popupBlocks = element.all(by.tagName('jigsaw-block'));
+            let popupDialogs = element.all(by.tagName('jigsaw-dialog'));
+
+            expect(popupBlocks.count()).toBe(0);
+            expect(popupDialogs.count()).toBe(1);
 
             expect(popupBlock.isPresent()).toBe(false);
 
-            await expectPopupAtPoint(trigger2, popupDialog, {x: 100, y: 10}, {x: 10, y: -10});
+            await expectPopupAtPoint(trigger2, popupDialogs.get(0), {x: 100, y: 10}, {x: 10, y: -10});
 
-            await expectClosePopup(popupDialog, popupBlock);
+            await expectClosePopup(popupDialogs.get(0));
         });
 
         /*it('should popup a template dialog as modal when click the button', async () => {
