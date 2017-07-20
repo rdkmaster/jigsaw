@@ -11,19 +11,22 @@ describe('graph', () => {
         it('should show the graph view', () => {
             browser.get('graph/basic');
             //expectGraphRendered('test-graph');
-            expectToExist(getGraphCanvas());
+            expectToExist(getGraphCanvas('test-graph'));
         });
 
-        xit('should show the line bar graph basic', () => {
+        it('should show the line bar graph basic', () => {
             browser.get('graph/line-bar-graph-basic');
-            expectGraphRendered('test-graph1');
-            expectGraphRendered('test-graph2');
+            //expectGraphRendered('test-graph1');
+            //expectGraphRendered('test-graph2');
+            expectToExist(getGraphCanvas('test-graph1'));
+            expectToExist(getGraphCanvas('test-graph2'));
         });
 
         it('should show the line bar graph witch data from ajax', () => {
             browser.get('graph/line-bar-graph-ajax');
             //expectGraphRendered('test-graph');
-            expectToExist(getGraphCanvas());
+            browser.sleep(1000);
+            expectToExist(getGraphCanvas('test-graph'));
         });
 
         xit('should show the pie graph', () => {
@@ -55,8 +58,8 @@ describe('graph', () => {
             expect(element(by.id(id)).element(by.tagName('canvas')).isPresent()).toBe(true);
         }
 
-        function getGraphCanvas(): ElementFinder {
-            return element(by.id('test-graph')).element(by.tagName('canvas'));
+        function getGraphCanvas(id: string): ElementFinder {
+            return element(by.id(id)).element(by.tagName('canvas'));
         }
     })
 });
