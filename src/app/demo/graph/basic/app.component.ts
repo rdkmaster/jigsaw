@@ -8,7 +8,7 @@ import {EchartOptions} from "jigsaw/core/data/echart-types";
 import {JigsawGraph} from "jigsaw/component/graph/graph";
 
 @Component({
-    template: `<jigsaw-graph [data]="data" width="100%" #graph></jigsaw-graph>`
+    template: `<jigsaw-graph id="test-graph" [data]="data" width="100%" #graph></jigsaw-graph>`
 })
 
 export class BasicGraphComponent implements OnInit {

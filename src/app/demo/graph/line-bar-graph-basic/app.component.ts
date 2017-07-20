@@ -8,10 +8,10 @@ import {LineBarGraphData, LineBarGraphDataByRow} from "jigsaw/core/data/graph-da
 @Component({
     template: `
         <p>数据的一列为一个系列情形，请使用 LineBarGraphData 作为数据。这个和一般的数据库表的结构非常契合，推荐优先使用。</p>
-        <jigsaw-graph [data]="dataByCol"></jigsaw-graph>
+        <jigsaw-graph id="test-graph1" [data]="dataByCol"></jigsaw-graph>
         <br>
         <p>数据的一行为一个系列情形，请使用 LineBarGraphDataByRow 作为数据。</p>
-        <jigsaw-graph [data]="dataByRow"></jigsaw-graph>
+        <jigsaw-graph id="test-graph2" [data]="dataByRow"></jigsaw-graph>
     `
 })
 

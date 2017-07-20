@@ -7,7 +7,7 @@ import {LineBarGraphData} from "jigsaw/core/data/graph-data";
 
 @Component({
     template: `
-        <jigsaw-graph [data]="data"
+        <jigsaw-graph id="test-graph" [data]="data"
                    [(width)]="graphWidth"
                    [(height)]="graphHeight">
         </jigsaw-graph>
