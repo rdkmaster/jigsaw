@@ -6,10 +6,11 @@ export type Offset = { x: number, y: number };
 
 export async function expectClosePopup(popupEl, popupBlock?) {
     const closeBar = popupEl.element(by.css('.fa-times'));
-    browser.executeScript("arguments[0].scrollIntoView();", closeBar.getWebElement());
+    /*browser.executeScript("arguments[0].scrollIntoView();", closeBar.getWebElement());
     browser.executeScript('arguments[0].click()', closeBar.getWebElement());
-    browser.actions().mouseMove(closeBar).click().perform();
-    browser.sleep(400);
+    browser.actions().mouseMove(closeBar).click().perform();*/
+    closeBar.click();
+    browser.sleep(800);
     if (popupBlock) {
         expect(popupBlock.isPresent()).toBe(false);
     }

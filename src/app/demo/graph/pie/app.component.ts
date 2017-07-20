@@ -9,15 +9,15 @@ import {Http} from "@angular/http";
     template: `
         <h3>使用 PieGraphData 作为输入数据</h3>
         <p>对于数据不是直接来自于数据库的时候，推荐使用这个数据类型构建饼图，简单又直接。</p>
-        <jigsaw-graph [data]="pieGraphData" [width]="400" [height]="300"></jigsaw-graph>
+        <jigsaw-graph id="test-graph1" [data]="pieGraphData" [width]="400" [height]="300"></jigsaw-graph>
 
         <h3>使用 PieGraphDataByColumn 作为输入数据</h3>
         <p>对于数据直接来自于数据库，并且对某一列的数据做对比的时候，推荐使用这个数据类型构建饼图。提供给组件的数据至少需要这3个属性"data"/"rowDescriptor"/"header"，并且都是数组。</p>
-        <jigsaw-graph [data]="pieGraphDataByCol" [width]="400" [height]="300"></jigsaw-graph>
+        <jigsaw-graph id="test-graph2" [data]="pieGraphDataByCol" [width]="400" [height]="300"></jigsaw-graph>
 
         <h3>使用 PieGraphDataByRow 作为输入数据</h3>
         <p>对于数据直接来自于数据库，并且对某一行的数据做对比的时候，推荐使用这个数据类型构建饼图。提供给组件的数据至少需要这3个属性"data"/"rowDescriptor"/"header"，并且都是数组。</p>
-        <jigsaw-graph [data]="pieGraphDataByRow" [width]="400" [height]="300"></jigsaw-graph>
+        <jigsaw-graph id="test-graph3" [data]="pieGraphDataByRow" [width]="400" [height]="300"></jigsaw-graph>
     `
 })
 export class PieGraphDemoComponent {

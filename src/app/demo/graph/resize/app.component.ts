@@ -17,10 +17,10 @@ import "rxjs/add/observable/combineLatest";
         autoResize:
         <jigsaw-switch [(checked)]="autoResize" (change)="resizeGraph()"></jigsaw-switch>
         width:
-        <jigsaw-input [value]="graphWidth" #widthInput></jigsaw-input>
+        <jigsaw-input id="graph-width" [value]="graphWidth" #widthInput></jigsaw-input>
         height:
-        <jigsaw-input [value]="graphHeight" #heightInput></jigsaw-input><br><br>
-        <jigsaw-graph #graph [data]="data" [width]="graphWidth" [height]="graphHeight"
+        <jigsaw-input id="graph-height" [value]="graphHeight" #heightInput></jigsaw-input><br><br>
+        <jigsaw-graph id="test-graph" #graph [data]="data" [width]="graphWidth" [height]="graphHeight"
                    [autoResize]="autoResize"></jigsaw-graph>
     `
 })
