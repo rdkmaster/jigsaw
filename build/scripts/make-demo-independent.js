@@ -44,6 +44,7 @@ function processDemoSet(demoSetFolder) {
 function makePlunker(demoFolder) {
     console.log('make plunker for ' + demoFolder);
     var content = [];
+    var mockDatas = [];
     readDemoContent(content, demoFolder);
     var appCompFound = false;
     var appModuleFound = false;
@@ -53,6 +54,7 @@ function makePlunker(demoFolder) {
             item.code = fixImport(item.code);
             item.code = fixTemplateUrl(item.code);
             item.code = fixStyleUrls(item.code);
+            findMockDatas(item.code).forEach(mockData => mockDatas.push(mockData));
         }
         if (item.path == 'app/app.component.ts') {
             item.code = fixAppComponentTs(item.code);
@@ -70,6 +72,8 @@ function makePlunker(demoFolder) {
         console.error('ERROR: need this file: ' + demoFolder + 'app.component.ts');
         process.exit(100);
     }
+
+    mockDatas.forEach(mockData => content.push(mockData));
 
     content.push(getIndexHtml());
     content.push(getMainTs());
@@ -105,7 +109,7 @@ function readDemoContent(content, demoFolder) {
 }
 
 function fixTemplateUrl(code) {
-    return code.replace(/\btemplateUrl\s*:\s*['"]\s*(.*)\s*['"]/g, (found, templateUrl) => {
+    return code.replace(/\btemplateUrl\s*:\s*['"]\s*(.*?)\s*['"]/g, (found, templateUrl) => {
         if (templateUrl.substring(0, 2) !== './') {
             templateUrl = './' + templateUrl;
         }
@@ -157,6 +161,23 @@ function fixImport(code) {
     return jigsawImportString + '\n' + rawImports.join(';\n') + code;
 }
 
+function findMockDatas(code) {
+    var ret = [];
+    var match = code.match(/mock-data\/.*?['"]/g);
+    if (!match) {
+        return ret;
+    }
+    var map = {};
+    match.forEach(path => {
+        path = path.substring(0, path.length-1);
+        map[path] = readCode(`${demoHome}/../../${path}`);
+    });
+    for (var path in map) {
+        ret.push({path: path, code: map[path]})
+    }
+    return ret;
+}
+
 function fixAppComponentTs(appCompCode) {
     return appCompCode.replace(/@Component\({/, '@Component({\n    selector: "jigsaw-app",');
 }
@@ -169,15 +190,11 @@ function fixAppModuleTs(appModuleCode) {
 
     var match = appModuleCode.match(/\bimports\s*:\s*\[([\s\S]*?)\]/);
     if (!match) {
-        console.error('ERROR: invalid app.module.ts, need "imports" in the NgModule,\n' +
-            'source code shows as follow: \n' + appModuleCode);
-        process.exit(200);
+        return appModuleCode;
     }
     var imports = match[1].split(/,/g).map(item => item.trim());
     if (imports.length == 0) {
-        console.error('ERROR: invalid app.module.ts, the "imports" property need at least one module,\n' +
-            'source code shows as follow: \n' + appModuleCode);
-        process.exit(201);
+        return appModuleCode;
     }
 
     imports.unshift('BrowserModule', 'BrowserAnimationsModule', 'HttpModule');
@@ -188,12 +205,7 @@ function fixAppModuleTs(appModuleCode) {
     importString += '    ]';
 
     return appModuleCode.substring(0, match.index) + importString +
-        appModuleCode.substring(match.index + match[0].length);
-
-    // return appModuleCode
-    //     .replace(/\bimports\s*:\s*\[\s*(.*?)\s*\]/,
-    //         (found, imports) => 'imports: [BrowserModule, BrowserAnimationsModule, HttpModule, ' + imports + '],')
-    //     .replace(/export\s+class\s+(.+?)\s*{/, 'export class AppModule {');
+           appModuleCode.substring(match.index + match[0].length);
 }
 
 function escapeCode(code) {
