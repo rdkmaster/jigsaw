@@ -1,0 +1,33 @@
+.left{
+    width:20%;
+    height:300px;
+    color:red;
+    float:left;
+    background-color: red;
+}
+
+.middle{
+    width:20%;
+    height:300px;
+    color:blue;
+    float:left;
+    background-color: blue;
+    margin-left: 10%;
+}
+
+.right{
+    width:20%;
+    height:300px;
+    color:green;
+    float:left;
+    background-color: green;
+    margin-left: 10%;
+}
+
+ul.dialog-content{
+    padding: 20px;
+    li{
+        font-size: 12px;
+        color: #999;
+    }
+}

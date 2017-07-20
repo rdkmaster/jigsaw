@@ -1,0 +1,19 @@
+
+.vertical {
+    height: 240px;
+    width: 120px;
+}
+
+.vertical3 {
+    height: 360px;
+    width: 120px;
+    display: inline-block!important;
+}
+
+jigsaw-slider:focus, jigsaw-slider:hover {
+    outline: none;
+}
+
+jigsaw-slider::selection {
+    background-color: transparent;
+}

@@ -1,0 +1,21 @@
+li {display: inline-block; margin-right: 12px;}
+
+.demo-wrap{
+    *zoom: 1;
+    &:after {
+        clear: both;
+        content: "";
+        display: block;
+    }
+    .left-box {
+        width: 19%;
+        float: left;
+        height: 600px;
+        margin-right: 1%;
+    }
+    .right-box{
+        width: 80%;
+        float: left;
+    }
+}
+

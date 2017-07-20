@@ -1,0 +1,8 @@
+<h4>tileselect</h4>
+<jigsaw-tile-select [(selectedItems)]="selectedCity" labelField="label"
+                    trackItemBy="id" [multipleSelect]="true" [searchable]="true"
+                    (selectedItemsChange)="basicSelectChange($event)"
+                    [data]="citys"
+                    tileOptionWidth="100px">
+</jigsaw-tile-select>
+

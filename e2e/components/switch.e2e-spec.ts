@@ -10,16 +10,13 @@ describe('switch', () => {
             browser.get('switch/basic');
         });
 
-        it('should emit checkedChange event when change the checked state', async () => {
+        it('should change the binding property when change the checked state', async () => {
             const switchEl = element(by.id('test-switch1'));
+            const result = element(by.id('result-message'));
             switchEl.click();
-            const alert = browser.driver.switchTo().alert();
-            expect(alert.getText()).toBe('switch message is: true');
-            alert.dismiss();
-            await browser.wait(ExpectedConditions.not(ExpectedConditions.alertIsPresent()));
+            expect(result.getText()).toBe('result: true');
             switchEl.click();
-            expect(browser.driver.switchTo().alert().getText()).toBe('switch message is: false');
-            alert.dismiss();
+            expect(result.getText()).toBe('result: false');
         });
 
         it('should click invalid when set disabled', () => {
@@ -31,11 +28,11 @@ describe('switch', () => {
 
         it('should render onLabel and offLabel when set onLabel and offLabel', () => {
             const switchEl = element(by.id('test-switch3'));
-            expect(switchEl.element(by.css('.jigsaw-switch-inner')).getText()).toBe('b');
+            expect(switchEl.element(by.css('.jigsaw-switch-inner')).getText()).toBe('Jigsaw is perfect!');
             switchEl.click();
-            expect(switchEl.element(by.css('.jigsaw-switch-inner')).getText()).toBe('a');
+            expect(switchEl.element(by.css('.jigsaw-switch-inner')).getText()).toBe('Jigsaw is great!');
             switchEl.click();
-            expect(switchEl.element(by.css('.jigsaw-switch-inner')).getText()).toBe('b');
+            expect(switchEl.element(by.css('.jigsaw-switch-inner')).getText()).toBe('Jigsaw is perfect!');
         })
     })
 });

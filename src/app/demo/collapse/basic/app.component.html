@@ -1,0 +1,53 @@
+<jigsaw-collapse width="80%">
+    <jigsaw-collapse-pane title="测试col" [isActive]="true">
+        <input type="text" placeholder="请输入姓名~">
+        <jigsaw-input></jigsaw-input>
+    </jigsaw-collapse-pane>
+
+    <jigsaw-collapse-pane title="afdafd">
+        密码: <input type="text" placeholder="请输入姓名~">
+    </jigsaw-collapse-pane>
+
+    <jigsaw-collapse-pane title="嵌套">
+        <jigsaw-collapse mode="accordion">
+            <jigsaw-collapse-pane title="测试col">
+                <input type="text" placeholder="请输入姓名~">
+            </jigsaw-collapse-pane>
+
+            <jigsaw-collapse-pane title="afdafd" isactive="true">
+                密码: <input type="text" placeholder="请输入姓名~">
+            </jigsaw-collapse-pane>
+        </jigsaw-collapse>
+    </jigsaw-collapse-pane>
+</jigsaw-collapse>
+<br>
+<br>
+<h4>accordion</h4>
+<br>
+<hr>
+<br>
+<jigsaw-collapse mode="accordion">
+    <jigsaw-collapse-pane [isActive]="true">
+        <div jigsaw-title>
+            <i class="fa fa-arrow-circle-right"></i>
+            <span style="color: blue;">测试自定义Title</span>
+            <i class="fa fa-arrow-circle-left"></i>
+        </div>
+        <div jigsaw-body>
+            <input type="text" placeholder="请输入姓名~">
+        </div>
+    </jigsaw-collapse-pane>
+
+    <jigsaw-collapse-pane title="afdafd">
+        密码: <input type="text" placeholder="请输入姓名~">
+    </jigsaw-collapse-pane>
+    <jigsaw-collapse-pane title="3">
+        <p>今天是个好天气</p>
+    </jigsaw-collapse-pane>
+    <jigsaw-collapse-pane title="4">
+        <p>今天是个好日子~</p>
+    </jigsaw-collapse-pane>
+</jigsaw-collapse>
+<br>
+<hr>
+<br>

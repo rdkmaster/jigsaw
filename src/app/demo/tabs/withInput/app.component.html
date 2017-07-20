@@ -1,0 +1,23 @@
+<div class="container">
+    <jigsaw-button (click)="getTableData()">1111</jigsaw-button>
+    <jigsaw-tab [(selectedIndex)]="selectedIndex">
+        <jigsaw-tab-pane *ngFor="let tabData of tabDatas">
+            <div jigsaw-title><span class="fa fa-gift"></span>{{tabData.title}}</div>
+            <div jigsaw-body>
+                <jigsaw-table height="400px" [data]="this[tabData.key]"></jigsaw-table>
+            </div>
+        </jigsaw-tab-pane>
+        <jigsaw-tab-pane>
+            <div jigsaw-title><span class="fa fa-gift"></span>table data</div>
+            <div jigsaw-body>
+                <jigsaw-table height="400px" [data]="tableData"></jigsaw-table>
+            </div>
+        </jigsaw-tab-pane>
+        <jigsaw-tab-pane title="tab 2123123123123123123">
+            <jigsaw-input #myInput width="80%">
+                <a jigsaw-prefix-icon><span class="fa fa-search"></span></a>
+            </jigsaw-input>
+        </jigsaw-tab-pane>
+    </jigsaw-tab>
+    {{selectedIndex}}
+</div>

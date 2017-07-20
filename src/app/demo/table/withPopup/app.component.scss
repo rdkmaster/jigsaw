@@ -1,0 +1,54 @@
+
+/*弹框template样式*/
+.pop-bg{
+    background: #000;
+    opacity: 0.4;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+}
+.pop-win{
+    width: 400px;
+    height: 300px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -150px;
+    margin-left: -200px;
+    background: #FFF;
+    border: 1px solid #ddd;
+    z-index: 10000;
+    h3{
+        height: 100px;
+        text-align: center;
+        margin-top: 56px;
+        line-height: 100px;
+        font-weight: normal !important;
+        margin-bottom: 0 !important;
+}
+    .btn-group-box{
+        text-align: center;
+        btn-demo{
+            display: inline-block;
+            *zoom: 1;
+            *display: inline;
+            vertical-align: middle;
+            margin-right: 8px;
+    }
+}
+    .close-btn{
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        font-weight: 700;
+        color: #666;
+        cursor: pointer;
+        line-height: 1;
+}
+}

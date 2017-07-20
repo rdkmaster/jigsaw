@@ -1,0 +1,20 @@
+<div class="demo-wrap">
+    <div class="left-box demo-nav"
+         jigsaw-scroll-bar
+         scrollBarTheme="minimal-dark"
+         scrollBarAxis="y"
+         [style.height.px]="navHeight">
+        <jigsaw-collapse mode="accordion">
+            <jigsaw-collapse-pane *ngFor="let data of navData; index as i" [title]="data.title"  [isActive]="i == 0">
+                <ul>
+                    <li *ngFor="let nav of data.navList"><a [routerLink]="nav.url">{{nav.label}}</a></li>
+                </ul>
+            </jigsaw-collapse-pane>
+        </jigsaw-collapse>
+    </div>
+    <div class="right-box demo-content">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+
+
