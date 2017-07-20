@@ -7,7 +7,6 @@ describe('button', () => {
 
     describe('test disabled', () => {
         beforeEach(() => {
-            browser.waitForAngularEnabled(false);
             browser.get('/button/disable');
         });
 
