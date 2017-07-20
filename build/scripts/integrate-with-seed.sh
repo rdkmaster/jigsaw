@@ -14,11 +14,14 @@ cp -r $home/dist/releases/jigsaw node_modules/@rdkmaster/
 rm -fr ./e2e
 cp -r $home/e2e ./
 
-rm -fr src/app src/assets src/styles.scss
-cp -r $home/src/app $home/src/assets $home/src/styles.scss src/
+rm -fr src/app src/styles.scss
+cp -r $home/src/app $home/src/styles.scss src/
 
 rm -fr ./protractor.conf.js
-cp -r $home/protractor.conf.js ./
+cp -r $home/protractor.conf.js src/
+
+rm -fr src/mock-data
+cp -r $home/src/mock-data ./
 
 cd src/app
 for file in `find $PWD | xargs ls -d`

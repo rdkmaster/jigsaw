@@ -10,8 +10,8 @@ describe('graph', () => {
 
         it('should show the graph view', () => {
             browser.get('graph/basic');
-            //expectGraphRendered('test-graph');
-            expectToExist(getGraphCanvas('test-graph'));
+            expectGraphRendered('test-graph');
+            //expectToExist(getGraphCanvas('test-graph'));
         });
 
         it('should show the line bar graph basic', () => {
