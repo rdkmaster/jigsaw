@@ -18,10 +18,10 @@ rm -fr src/app src/styles.scss
 cp -r $home/src/app $home/src/styles.scss src/
 
 rm -fr ./protractor.conf.js
-cp -r $home/protractor.conf.js src/
+cp -r $home/protractor.conf.js ./
 
 rm -fr src/mock-data
-cp -r $home/src/mock-data ./
+cp -r $home/src/mock-data src/
 
 cd src/app
 for file in `find $PWD | xargs ls -d`
