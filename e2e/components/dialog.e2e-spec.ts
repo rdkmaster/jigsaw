@@ -13,7 +13,7 @@ describe('dialog', () => {
             browser.get('dialog/misc');
         });
 
-        /*it('should popup a custom dialog as modal when click the button', async () => {
+        xit('should popup a custom dialog as modal when click the button', async () => {
             let popupBlock = element(by.tagName('jigsaw-block'));
             let popupDialog = element(by.tagName('jigsaw-dialog'));
             expect(popupBlock.isPresent()).toBe(false);
@@ -29,9 +29,9 @@ describe('dialog', () => {
             await expectPopupByModal(popupDialog, 0.2);
 
             await expectClosePopup(popupDialog, popupBlock);
-        });*/
+        });
 
-        it('should popup a custom dialog at point when click the button', async () => {
+        xit('should popup a custom dialog at point when click the button', async () => {
             let popupBlock = element(by.tagName('jigsaw-block'));
             let popupDialog = element(by.tagName('jigsaw-dialog'));
             expect(popupBlock.isPresent()).toBe(false, 'not popup block');
@@ -54,7 +54,7 @@ describe('dialog', () => {
             await expectClosePopup(popupDialogs.get(0));
         });
 
-        /*it('should popup a template dialog as modal when click the button', async () => {
+        xit('should popup a template dialog as modal when click the button', async () => {
             let popupBlock = element(by.tagName('jigsaw-block'));
             let popupDialog = element(by.tagName('jigsaw-dialog'));
             expect(popupBlock.isPresent()).toBe(false);
@@ -70,9 +70,9 @@ describe('dialog', () => {
             await expectPopupByModal(popupDialog);
 
             await expectClosePopup(popupDialog, popupBlock);
-        });*/
+        });
 
-        it('should popup a template dialog at point when click the button', async () => {
+        xit('should popup a template dialog at point when click the button', async () => {
             let popupBlock = element(by.tagName('jigsaw-block'));
             let popupDialog = element(by.tagName('jigsaw-dialog'));
             expect(popupBlock.isPresent()).toBe(false);

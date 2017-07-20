@@ -6,7 +6,7 @@ const {SpecReporter} = require('jasmine-spec-reporter');
 let config = {
     allScriptsTimeout: 11000,
     specs: [
-        './e2e/**/dialog.e2e-spec.ts'
+        './e2e/**/*.e2e-spec.ts'
     ],
     baseUrl: 'http://localhost:4200/',
     framework: 'jasmine',
@@ -38,7 +38,7 @@ if (process.env['TRAVIS']) {
     config.multiCapabilities = [
         {
             browserName: 'chrome',
-            version: '2.30',
+            version: 'latest',
             platform: 'Windows 7',
             shardTestFiles: true,
             'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
