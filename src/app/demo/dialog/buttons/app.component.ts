@@ -17,7 +17,9 @@ export class DialogButtonsDemo  {
 
      _dialogInfo: PopupInfo;
 
-    constructor(private popupService : PopupService){
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2,
+                private popupService : PopupService){
     }
 
     buttons: Array<ButtonInfo> = [
