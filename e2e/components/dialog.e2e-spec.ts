@@ -22,6 +22,8 @@ describe('dialog', () => {
             const trigger1 = element(by.id('trigger1'));
             trigger1.click();
 
+            browser.sleep(350);
+
             await expectPopupBlock(popupBlock);
 
             await expectPopupByModal(popupDialog, 0.2);
@@ -38,17 +40,13 @@ describe('dialog', () => {
             const trigger2 = element(by.id('trigger2'));
             browser.actions().mouseMove(trigger2, {x: 100, y: 10}).click().perform();
 
-            let popupBlocks = element.all(by.tagName('jigsaw-block'));
-            let popupDialogs = element.all(by.tagName('jigsaw-dialog'));
-
-            expect(popupBlocks.count()).toBe(0);
-            expect(popupDialogs.count()).toBe(1);
+            browser.sleep(350);
 
             expect(popupBlock.isPresent()).toBe(false);
 
-            await expectPopupAtPoint(trigger2, popupDialogs.get(0), {x: 100, y: 10}, {x: 10, y: -10});
+            await expectPopupAtPoint(trigger2, popupDialog, {x: 100, y: 10}, {x: 10, y: -10});
 
-            await expectClosePopup(popupDialogs.get(0));
+            await expectClosePopup(popupDialog, popupBlock);
         });
 
         it('should popup a template dialog as modal when click the button', async () => {
@@ -59,6 +57,8 @@ describe('dialog', () => {
 
             const trigger3 = element(by.id('trigger3'));
             trigger3.click();
+
+            browser.sleep(350);
 
             await expectPopupBlock(popupBlock);
 
@@ -75,6 +75,8 @@ describe('dialog', () => {
 
             const trigger4 = element(by.id('trigger4'));
             browser.actions().mouseMove(trigger4, {x: 100, y: 10}).click().perform();
+
+            browser.sleep(350);
 
             expect(popupBlock.isPresent()).toBe(false);
 
