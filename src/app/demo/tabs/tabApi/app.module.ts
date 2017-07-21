@@ -12,7 +12,7 @@ import { TabContentDefine, TabContentComponent } from "./tabContent/tabContent";
     imports: [
         RouterModule.forChild([
             {
-                path:'', component: TabContentComponent, outlet: 'tabPage'
+                path:'tabPage', loadChildren: './tabContent/tab-content.module#TabContentModule'
             }
         ]),
         TabContentModule, JigsawTabsModule, JigsawButtonModule, JigsawInputModule
