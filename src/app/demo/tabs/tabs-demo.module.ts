@@ -46,12 +46,7 @@ const routes = [
         path: 'removeTab', component: JigsawDestoryTabComponent
     },
     {
-        path: 'dynamicTab',
-        component: DynamicTabDemoComponent,
-        children: [{
-            path: 'tabPage',
-            loadChildren: './tabApi/tabContent/tab-content.module#TabContentModule'
-        }]
+        path: 'dynamicTab', component: DynamicTabDemoComponent
     }
 ];
 

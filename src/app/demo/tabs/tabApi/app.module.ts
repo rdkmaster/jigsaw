@@ -5,12 +5,19 @@ import { JigsawInputModule } from "jigsaw/component/input/input";
 import { JigsawTabsModule } from "jigsaw/component/tabs/index";
 
 import { DynamicTabDemoComponent }  from './app.component';
-import { TabContentDefine } from "./tabContent/tabContent";
+import { TabContentModule } from "./tabContent/tab-content.module";
+import { TabContentDefine, TabContentComponent } from "./tabContent/tabContent";
 
 @NgModule({
-    imports: [ JigsawTabsModule, JigsawButtonModule, JigsawInputModule, RouterModule ],
-    declarations: [ DynamicTabDemoComponent, TabContentDefine ],
-    bootstrap: [ DynamicTabDemoComponent ],
-    entryComponents: [TabContentDefine]
+    imports: [
+        RouterModule.forChild([
+            {
+                path:'', component: TabContentComponent, outlet: 'tabPage'
+            }
+        ]),
+        TabContentModule, JigsawTabsModule, JigsawButtonModule, JigsawInputModule
+    ],
+    declarations: [ DynamicTabDemoComponent ],
+    bootstrap: [ DynamicTabDemoComponent ]
 })
 export class DynamicTabDemoModule {}
