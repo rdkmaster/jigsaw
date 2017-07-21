@@ -54,6 +54,7 @@ function makePlunker(demoFolder) {
             item.code = fixImport(item.code);
             item.code = fixTemplateUrl(item.code);
             item.code = fixStyleUrls(item.code);
+            item.code = fixCodeForDemoOnly(item.code);
             findMockDatas(item.code).forEach(mockData => mockDatas.push(mockData));
         }
         if (item.path == 'app/app.component.ts') {
@@ -167,6 +168,10 @@ function fixImport(code) {
     return jigsawImportString + '\n' + rawImports.join(';\n') + code;
 }
 
+function fixCodeForDemoOnly(code) {
+    return code.replace(/\/\* #for-live-demo-only#([\s\S]*?)\*\//g, (found, codeForDemo) => codeForDemo.trim());
+}
+
 function findMockDatas(code) {
     var ret = [];
     var match = code.match(/mock-data\/.*?['"]/g);
@@ -216,20 +221,16 @@ function fixAppModuleTs(appModuleCode) {
     if (!match) {
         return appModuleCode;
     }
-    var imports = match[1].split(/,/g).map(item => item.trim());
-    if (imports.length == 0) {
-        return appModuleCode;
-    }
 
-    imports.unshift('BrowserModule', 'BrowserAnimationsModule', 'HttpModule');
-    var importString = 'imports: [\n';
-    for(var i = 0, len = imports.length; i < len; i += 3) {
-       importString += '        ' + imports.slice(i, i + 3).join(', ') + ',\n';
-    }
-    importString += '    ]';
+    return appModuleCode.replace(/\bimports\s*:\s*\[([\s\S]*?)\]/, (found, importString) => {
+        return `
 
-    return appModuleCode.substring(0, match.index) + importString +
-           appModuleCode.substring(match.index + match[0].length);
+    imports: [
+        BrowserModule, BrowserAnimationsModule, HttpModule,
+        ${importString.trim()}
+    ]`.trim();
+
+    });
 }
 
 function escapeCode(code) {
