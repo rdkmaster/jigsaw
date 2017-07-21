@@ -24,6 +24,9 @@ describe('dialog', () => {
 
             browser.sleep(350);
 
+            popupBlock = element(by.tagName('jigsaw-block'));
+            popupDialog = element(by.tagName('jigsaw-dialog'));
+
             await expectPopupBlock(popupBlock);
 
             await expectPopupByModal(popupDialog, 0.2);
@@ -41,6 +44,9 @@ describe('dialog', () => {
             browser.actions().mouseMove(trigger2, {x: 100, y: 10}).click().perform();
 
             browser.sleep(350);
+
+            popupBlock = element(by.tagName('jigsaw-block'));
+            popupDialog = element(by.tagName('jigsaw-dialog'));
 
             expect(popupBlock.isPresent()).toBe(false);
 
@@ -60,6 +66,9 @@ describe('dialog', () => {
 
             browser.sleep(350);
 
+            popupBlock = element(by.tagName('jigsaw-block'));
+            popupDialog = element(by.tagName('jigsaw-dialog'));
+
             await expectPopupBlock(popupBlock);
 
             await expectPopupByModal(popupDialog);
@@ -77,6 +86,9 @@ describe('dialog', () => {
             browser.actions().mouseMove(trigger4, {x: 100, y: 10}).click().perform();
 
             browser.sleep(350);
+
+            popupBlock = element(by.tagName('jigsaw-block'));
+            popupDialog = element(by.tagName('jigsaw-dialog'));
 
             expect(popupBlock.isPresent()).toBe(false);
 
