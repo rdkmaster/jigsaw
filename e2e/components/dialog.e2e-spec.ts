@@ -23,74 +23,59 @@ describe('dialog', () => {
 
             await browser.wait(ExpectedConditions.presenceOf(element(by.css('.jigsaw-dialog'))));
 
-            await expectPopupBlock(element(by.tagName('jigsaw-block')));
+            await expectPopupBlock('jigsaw-block');
 
-            await expectPopupByModal(element(by.tagName('jigsaw-dialog')), 0.2);
+            await expectPopupByModal('jigsaw-dialog', 0.2);
 
-            await expectClosePopup(element(by.tagName('jigsaw-dialog')), element(by.tagName('jigsaw-block')));
+            await expectClosePopup('jigsaw-dialog', 'jigsaw-block');
         });
 
-        xit('should popup a custom dialog at point when click the button', async () => {
-            let popupBlock = element(by.tagName('jigsaw-block'));
-            let popupDialog = element(by.tagName('jigsaw-dialog'));
-            expect(popupBlock.isPresent()).toBe(false, 'not popup block');
-            expect(popupDialog.isPresent()).toBe(false, 'not popup dialog');
+        it('should popup a custom dialog at point when click the button', async () => {
+            expect(element(by.tagName('jigsaw-block')).isPresent()).toBe(false, 'not popup block');
+            expect(element(by.tagName('jigsaw-dialog')).isPresent()).toBe(false, 'not popup dialog');
 
             const trigger2 = element(by.id('trigger2'));
             browser.actions().mouseMove(trigger2, {x: 100, y: 10}).click().perform();
 
             browser.sleep(350);
 
-            popupBlock = element(by.tagName('jigsaw-block'));
-            popupDialog = element(by.tagName('jigsaw-dialog'));
+            expect(element(by.tagName('jigsaw-block')).isPresent()).toBe(false);
 
-            expect(popupBlock.isPresent()).toBe(false);
+            await expectPopupAtPoint(trigger2, 'jigsaw-dialog', {x: 100, y: 10}, {x: 10, y: -10});
 
-            await expectPopupAtPoint(trigger2, popupDialog, {x: 100, y: 10}, {x: 10, y: -10});
-
-            await expectClosePopup(popupDialog, popupBlock);
+            await expectClosePopup('jigsaw-dialog', 'jigsaw-block');
         });
 
-        xit('should popup a template dialog as modal when click the button', async () => {
-            let popupBlock = element(by.tagName('jigsaw-block'));
-            let popupDialog = element(by.tagName('jigsaw-dialog'));
-            expect(popupBlock.isPresent()).toBe(false);
-            expect(popupDialog.isPresent()).toBe(false);
+        it('should popup a template dialog as modal when click the button', async () => {
+            expect(element(by.tagName('jigsaw-block')).isPresent()).toBe(false);
+            expect(element(by.tagName('jigsaw-dialog')).isPresent()).toBe(false);
 
             const trigger3 = element(by.id('trigger3'));
             trigger3.click();
 
             browser.sleep(350);
 
-            popupBlock = element(by.tagName('jigsaw-block'));
-            popupDialog = element(by.tagName('jigsaw-dialog'));
+            await expectPopupBlock('jigsaw-block');
 
-            await expectPopupBlock(popupBlock);
+            await expectPopupByModal('jigsaw-dialog');
 
-            await expectPopupByModal(popupDialog);
-
-            await expectClosePopup(popupDialog, popupBlock);
+            await expectClosePopup('jigsaw-dialog', 'jigsaw-block');
         });
 
-        xit('should popup a template dialog at point when click the button', async () => {
-            let popupBlock = element(by.tagName('jigsaw-block'));
-            let popupDialog = element(by.tagName('jigsaw-dialog'));
-            expect(popupBlock.isPresent()).toBe(false);
-            expect(popupDialog.isPresent()).toBe(false);
+        it('should popup a template dialog at point when click the button', async () => {
+            expect(element(by.tagName('jigsaw-block')).isPresent()).toBe(false);
+            expect(element(by.tagName('jigsaw-dialog')).isPresent()).toBe(false);
 
             const trigger4 = element(by.id('trigger4'));
             browser.actions().mouseMove(trigger4, {x: 100, y: 10}).click().perform();
 
             browser.sleep(350);
 
-            popupBlock = element(by.tagName('jigsaw-block'));
-            popupDialog = element(by.tagName('jigsaw-dialog'));
+            expect(element(by.tagName('jigsaw-block')).isPresent()).toBe(false);
 
-            expect(popupBlock.isPresent()).toBe(false);
+            await expectPopupAtPoint(trigger4, 'jigsaw-dialog', {x: 100, y: 10}, {x: 10, y: -10});
 
-            await expectPopupAtPoint(trigger4, popupDialog, {x: 100, y: 10}, {x: 10, y: -10});
-
-            await expectClosePopup(popupDialog, popupBlock);
+            await expectClosePopup('jigsaw-dialog', 'jigsaw-block');
         });
 
     })
