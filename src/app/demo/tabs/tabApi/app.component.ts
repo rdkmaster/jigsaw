@@ -58,9 +58,4 @@ export class DynamicTabDemoComponent {
     public addComponentTab() {
         this.addTab('component tab', TabContentDefine, 'jigsaw')
     }
-
-    /*public addRouterLinkTab(tabTitle, tabContent) {
-        this.addTab(tabTitle, tabContent)
-    }*/
-
 }

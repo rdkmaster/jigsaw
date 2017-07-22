@@ -1,8 +1,8 @@
-import {NgModule} from '@angular/core';
-import {RouterModule} from "@angular/router";
-import {TabContentComponent} from "./tabContent";
-import {JigsawButtonModule} from "jigsaw/component/button/button";
-import {JigsawInputModule} from "jigsaw/component/input/input";
+import { NgModule } from '@angular/core';
+import { RouterModule } from "@angular/router";
+import { JigsawButtonModule } from "jigsaw/component/button/button";
+import { JigsawInputModule } from "jigsaw/component/input/input";
+import { TabContentComponent, TabContentDefine } from "./tabContent";
 
 const routes=[
     {
@@ -13,11 +13,11 @@ const routes=[
 @NgModule({
     imports: [
         RouterModule.forChild(routes),
-        JigsawButtonModule,
-        JigsawInputModule
+        JigsawButtonModule, JigsawInputModule
     ],
     declarations: [
-        TabContentComponent
-    ]
+        TabContentComponent, TabContentDefine
+    ],
+    entryComponents: [ TabContentDefine, TabContentComponent ]
 })
 export class TabContentModule { }
