@@ -3,8 +3,8 @@ import {AbstractDialogComponentBase, DialogBase, JigsawDialog, JigsawDialogModul
 import {CommonModule} from "@angular/common";
 import {JigsawButtonModule} from "../button/button";
 import {JigsawDraggableModule} from "../draggable/draggable";
-import {SharedModule} from "../../core/shared/shared.module";
-import {TranslateService} from "@ngx-translate/core";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {InternalUtils} from "../../core/utils/internal-utils";
 export enum AlertLevel {
     info, warning, error, confirm
 }
@@ -15,22 +15,7 @@ export enum AlertLevel {
     styleUrls: ['alert.scss']
 })
 export class JigsawAlert extends AbstractDialogComponentBase {
-    //TODO label需要国际化
-    public static OK_LABEL: string = 'OK';
-    public static CANCEL_LABEL: string = 'Cancel';
-    public static YES_LABEL: string = 'Yes';
-    public static NO_LABEL: string = 'No';
-    public static ABORT_LABEL: string = 'Abort';
-    public static IGNORE_LABEL: string = 'Ignore';
-    public static RETRY_LABEL: string = 'Retry';
-
-    public static INFO_TITLE: string = 'Information';
-    public static WARNING_TITLE: string = 'Warning';
-    public static ERROR_TITLE: string = 'Error';
-    public static CONFIRM_TITLE: string = 'Confirm';
-
-    constructor(renderer: Renderer2,
-                elementRef: ElementRef) {
+    constructor(renderer: Renderer2, elementRef: ElementRef) {
         super();
         this.renderer = renderer;
         this.elementRef = elementRef;
@@ -124,23 +109,22 @@ export abstract class JigsawCommonAlert extends DialogBase {
     public abstract set dialog(value: JigsawDialog);
 
     public message: string;
-    public buttons = [{label: JigsawAlert.OK_LABEL}];
+    public buttons = [{label: 'alert.button.ok'}];
     public level: AlertLevel = AlertLevel.info;
 
     private _getDefaultTitle(): string {
         switch (this.level) {
             case AlertLevel.warning:
-                return JigsawAlert.WARNING_TITLE;
+                return 'alert.title.warning';
 
             case AlertLevel.error:
-                return JigsawAlert.ERROR_TITLE;
+                return 'alert.title.error';
 
             case AlertLevel.info:
             default:
-                return JigsawAlert.INFO_TITLE;
+                return 'alert.title.info';
         }
     }
-
 }
 
 @Component({
@@ -174,11 +158,50 @@ export class JigsawErrorAlert extends JigsawCommonAlert {
 }
 
 @NgModule({
-    imports: [JigsawDialogModule, JigsawDraggableModule, JigsawButtonModule, CommonModule, SharedModule],
+    imports: [JigsawDialogModule, JigsawDraggableModule, JigsawButtonModule, CommonModule, TranslateModule],
     declarations: [JigsawAlert, JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert],
     exports: [JigsawDialogModule, JigsawDraggableModule, JigsawAlert, JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert],
     providers: [TranslateService],
     entryComponents: [JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert]
 })
 export class JigsawAlertModule {
+    constructor(translateService: TranslateService) {
+        InternalUtils.initI18n(translateService, 'alert', {
+            'zh-CN': {
+                button: {
+                    "ok": "确定",
+                    "cancel": "取消",
+                    "yes": "是",
+                    "no": "否",
+                    "abort": "终止",
+                    "ignore": "忽略",
+                    "retry": "重试"
+                },
+                title: {
+                    "info": "提示",
+                    "warning": "告警",
+                    "error": "错误",
+                    "confirm": "确认"
+                }
+            },
+            'en-US': {
+                button: {
+                    "ok": "OK",
+                    "cancel": "Cancel",
+                    "yes": "Yes",
+                    "no": "No",
+                    "abort": "Abort",
+                    "ignore": "Ignore",
+                    "retry": "Retry"
+                },
+                title: {
+                    "info": "Information",
+                    "warning": "Warning",
+                    "error": "Error",
+                    "confirm": "Confirm"
+                }
+            }
+        });
+        translateService.setDefaultLang(translateService.getBrowserCultureLang())
+    }
 }

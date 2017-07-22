@@ -1,3 +1,6 @@
+import {TranslateService} from "@ngx-translate/core";
+import {CommonUtils} from "./common-utils";
+
 export class InternalUtils {
     public static _uniqueIdIndex = 0;
     public static _defaultPrefix = '__unique_id__';
@@ -13,7 +16,6 @@ export class InternalUtils {
         return trackItemBy.split(/\s*,\s*/g);
     }
 
-
     /*
      * 创建元素唯一ID
      *
@@ -26,6 +28,27 @@ export class InternalUtils {
         return prefix + this._uniqueIdIndex;
     };
 
+    private static _initI18nWithLang(translateService: TranslateService, compName: string, translations: Object, lang:string):void {
+        let curLangTransByApp:Object;
+        const compTrans = TranslateService[compName];
+        if (compTrans) {
+            curLangTransByApp = compTrans[lang];
+        }
+        if (!curLangTransByApp) {
+            curLangTransByApp = {};
+        }
+        let curLangTrans:Object = translations[lang];
+        for (let prop in curLangTransByApp) delete curLangTrans[prop];
+        CommonUtils.extendObject(curLangTrans, curLangTransByApp);
+        let resultTrans = {};
+        resultTrans[compName] = curLangTrans;
+        translateService.setTranslation(lang, resultTrans);
+    }
+
+    public static initI18n(translateService: TranslateService, compName: string, translations: Object): void {
+        InternalUtils._initI18nWithLang(translateService, compName, translations, 'en-US');
+        InternalUtils._initI18nWithLang(translateService, compName, translations, 'zh-CN');
+    }
 }
 
 /*
@@ -92,8 +115,8 @@ export class AffixUtils {
      * 获取DTD声明和未声明的body
      *
      * */
-    public static getDocumentBody(){
-        if (document.compatMode === "CSS1Compat"){
+    public static getDocumentBody() {
+        if (document.compatMode === "CSS1Compat") {
             //DTD已声明
             return document.documentElement;
         } else {

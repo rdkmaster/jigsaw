@@ -11,9 +11,7 @@
                 "assets",
                 "jigsaw/assets",
                 "favicon.ico",
-                "mock-data",
-                "app/i18n",
-                "jigsaw/i18n"
+                "mock-data"
             ],
             "index": "index.html",
             "main": "main.ts",
