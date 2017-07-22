@@ -15,7 +15,6 @@ export * from './core/data/general-collection';
 export * from './core/data/graph-data';
 export * from './core/data/table-data';
 export * from './core/data/tree-data';
-export * from './core/shared/shared.module';
 export * from './core/utils/common-utils';
 export * from './core/utils/internal-utils';
 

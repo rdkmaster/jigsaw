@@ -43,7 +43,6 @@ doSearch() {
 "assets": [
         "assets",
         "favicon.ico",
-        "app/i18n"
         "mock-data"
       ],
 ```

@@ -10,7 +10,7 @@ export class AppComponent implements OnInit {
     constructor(public viewContainerRef: ViewContainerRef, public renderer: Renderer2) {
     }
 
-    title: string = 'Jigsaw';
+    jigsawTitle: string = 'jigsaw-title';
 
     ngOnInit(): void {
     }

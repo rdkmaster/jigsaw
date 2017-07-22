@@ -1,6 +1,6 @@
 <div class="jigsaw-alert" [ngClass]="_$alertClass" jigsaw-draggable>
     <i class="jigsaw-alert-icon fa "></i>
-    <span class="jigsaw-alert-title">{{title}}</span>
+    <span class="jigsaw-alert-title">{{title | translate}}</span>
     <span class="jigsaw-alert-close fa fa-times" (click)='dispose()'></span>
     <div class="jigsaw-alert-content">
         <ng-content></ng-content>
@@ -8,7 +8,7 @@
     <div class="jigsaw-alert-button-group" *ngIf="buttons && buttons.length > 0">
         <jigsaw-button *ngFor="let bi of buttons"
                     (click)="dispose(bi)"
-                    class="{{bi.clazz}}">{{bi.label}}
+                    class="{{bi.clazz}}">{{bi.label | translate}}
         </jigsaw-button>
     </div>
 </div>
