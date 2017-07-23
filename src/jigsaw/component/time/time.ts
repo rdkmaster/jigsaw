@@ -1,10 +1,12 @@
 import {Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2} from "@angular/core";
-import {AbstractJigsawComponent} from "../core";
-import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../service/time.service";
-import {PopupInfo, PopupPositionType, PopupService} from "../../service/popup.service";
-import {SimpleTooltipComponent} from "../tooltip/tooltip";
-import {Time, WeekTime} from "../../service/time.types";
+import {Subscriber} from "rxjs/Subscriber";
 import {TranslateService} from "@ngx-translate/core";
+import {AbstractJigsawComponent} from "jigsaw/component/core";
+import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "jigsaw/service/time.service";
+import {PopupInfo, PopupPositionType, PopupService} from "jigsaw/service/popup.service";
+import {SimpleTooltipComponent} from "jigsaw/component/tooltip/tooltip";
+import {Time, WeekTime} from "jigsaw/service/time.types";
+import {TranslateHelper} from "jigsaw/core/utils/translate-helper";
 
 
 export type TimeShortcutFunction = () => [WeekTime, WeekTime]
@@ -81,7 +83,6 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
             }
         }
     }
-
 
     @Output() public dateChange = new EventEmitter<WeekTime>();
 
@@ -172,12 +173,20 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
 
     //定时器Id
     private _intervalId: number;
+    private _langChangeSubscriber: Subscriber<any>;
 
     constructor(private _el: ElementRef, private _renderer: Renderer2,
                 private _popService: PopupService, private _translateService: TranslateService) {
         super();
         this._refreshInterval = 0;
         this.weekStart = TimeWeekStart.sun;
+
+        this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(langInfo => {
+            if (!this._timepicker) {
+                return;
+            }
+            this._timepicker.locale(langInfo.curLang);
+        });
     }
 
     ngOnInit() {
@@ -188,6 +197,7 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
 
     ngOnDestroy() {
         this._destroyPicker();
+        this._langChangeSubscriber.unsubscribe();
     }
 
     private _destroyPicker() {
