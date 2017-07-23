@@ -1,4 +1,4 @@
-# 你所不知道的plunker用法 —— 分享Jigsaw七巧板完美解决 Live Demo 的方法
+# 你所不知道的plunker用法 —— 分享Jigsaw七巧板的 Live Demo 解决方案
 
 用 Angular 实现的页面，由于其对开发环境的要求比较高，这给Jigsaw七巧板 (<http://rdk.zte.com.cn>) 如何解决 Live Demo 带来了诸多的困难。本文主要介绍 plunker 的一个不为大众所知的用法，完美的解决了 Live Demo 的运行和维护。这个方法并非Jigsaw七巧板的原创，我们只是把过程详细记录下来。相信多数基于Angular的demo也会碰到类似困难，希望通过本文能够帮助到这些项目，让他们少走弯路。
 
@@ -179,11 +179,6 @@ https://embed.plnkr.co?show=preview
 - Live Demo 能保证在最新的代码下运行，这个问题在类似Jigsaw这样的发布npm包的项目下才有；
 - 完全自动化生成 plunker demo 的页面；
 
-显然，目前我们离这个目标还有一定距离，来吧，继续往下看吧。
-
-### IDE在refactoring
-在不对IDE做任何配置的情况下要达到这样的目标，最简单的方法就是将demo代码放在主工程下维护。但是这样做最大的困难就是 Live Demo 是独立看运行的一个个Angular页面，这如何与主工程集成在一起？
-
-一般成熟的开源项目都会有完备的CI流程，Jigsaw也不例外。我们尽管把demo代码和主工程融合在一起，剩下的问题，交给CI来完成了。
-
-### CI流程
+解决这个问题的关键是：
+- 将demo与主工程集成在一起，这样IDE从能够管理到这些demo；
+- 写个小工具，自动将主工程上的demo转换为前文的那个表单页面。这部分与Jigsaw的实现耦合比较紧，就不详细写出来了。这个是Jigsaw这个工具的地址 <http://t.cn/RKkXkIe>，感兴趣的可以看看源码，使用nodejs运行。

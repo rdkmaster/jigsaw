@@ -7,6 +7,7 @@
 - [将Jigsaw集成到现有工程下的方法](integrate-your-project-with-jigsaw/index.md)
 - [巧妙快速实现TypeScript的Array<T>接口](implement-interface-array-of-typescript/index.md)
 - [Plunker安装指南](how-to-deploy-your-own-plunker-site/index.md)
+- [你所不知道的plunker用法 —— Jigsaw七巧板的 Live Demo 解决方案](the-usage-of-plunker-that-you-do-not-know/index.md)
 
 ## demo列表
 API文档正在编写中，下面是我们自己部署的plunker服务器上的demo列表：
