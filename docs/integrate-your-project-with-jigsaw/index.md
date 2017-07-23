@@ -67,10 +67,10 @@ npm install --save @rdkmaster/jigsaw
 3. 编辑 `src/systemjs.config.js`，在`map`节点下，增加如下一行：
 ```
  // Jigsaw bundles
-'@rdkmaster/jigsaw': 'npm:@rdkmaster/jigsaw/bundles/jigsaw.umd.js',
-'@ngx-translate/core/index': 'npm:@ngx-translate/core/bundles/core.umd.js',
+'@rdkmaster/jigsaw':                'npm:@rdkmaster/jigsaw/bundles/jigsaw.umd.js',
+'@ngx-translate/core/index':        'npm:@ngx-translate/core/bundles/core.umd.js',
 '@ngx-translate/http-loader/index': 'npm:@ngx-translate/http-loader/bundles/http-loader.umd.js',
-'echarts': 'npm:echarts/dist/echarts.min.js'
+'echarts':                          'npm:echarts/dist/echarts.min.js'
 ```
 
 4. 编辑 `src/index.html`，在head节点插入如下内容

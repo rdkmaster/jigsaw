@@ -1,5 +1,6 @@
 import {TranslateService} from "@ngx-translate/core";
 import {CommonUtils} from "./common-utils";
+import {TranslateHelper} from "./translate-helper";
 
 export class InternalUtils {
     public static _uniqueIdIndex = 0;
@@ -30,7 +31,7 @@ export class InternalUtils {
 
     private static _initI18nWithLang(translateService: TranslateService, compName: string, translations: Object, lang:string):void {
         let curLangTransByApp:Object;
-        const compTrans = TranslateService[compName];
+        const compTrans = TranslateHelper[compName];
         if (compTrans) {
             curLangTransByApp = compTrans[lang];
         }
@@ -46,8 +47,8 @@ export class InternalUtils {
     }
 
     public static initI18n(translateService: TranslateService, compName: string, translations: Object): void {
-        InternalUtils._initI18nWithLang(translateService, compName, translations, 'en-US');
-        InternalUtils._initI18nWithLang(translateService, compName, translations, 'zh-CN');
+        InternalUtils._initI18nWithLang(translateService, compName, translations, 'en');
+        InternalUtils._initI18nWithLang(translateService, compName, translations, 'zh');
     }
 }
 

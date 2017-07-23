@@ -7,7 +7,7 @@ import {AlertPopupDemoModule} from "./popup/app.module";
 import {AlertInDomDemoModule} from "./in-dom/app.module";
 import {CustomizeAlertDemoModule} from "./customized/app.module";
 
-const popupDemoRoutes = [
+const routes = [
     {
         path: 'in-dom', component: AlertInDomDemoComponent
     },
@@ -25,7 +25,7 @@ const popupDemoRoutes = [
 
 @NgModule({
     imports: [
-        RouterModule.forChild(popupDemoRoutes),
+        RouterModule.forChild(routes),
         AlertInDomDemoModule,
         AlertPopupDemoModule,
         CustomizeAlertDemoModule
