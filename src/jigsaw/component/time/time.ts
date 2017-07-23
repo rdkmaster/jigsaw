@@ -1,12 +1,12 @@
 import {Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2} from "@angular/core";
 import {Subscriber} from "rxjs/Subscriber";
 import {TranslateService} from "@ngx-translate/core";
-import {AbstractJigsawComponent} from "jigsaw/component/core";
-import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "jigsaw/service/time.service";
-import {PopupInfo, PopupPositionType, PopupService} from "jigsaw/service/popup.service";
-import {SimpleTooltipComponent} from "jigsaw/component/tooltip/tooltip";
-import {Time, WeekTime} from "jigsaw/service/time.types";
-import {TranslateHelper} from "jigsaw/core/utils/translate-helper";
+import {AbstractJigsawComponent} from "../core";
+import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../service/time.service";
+import {PopupInfo, PopupPositionType, PopupService} from "../../service/popup.service";
+import {SimpleTooltipComponent} from "../tooltip/tooltip";
+import {Time, WeekTime} from "../../service/time.types";
+import {TranslateHelper} from "../../core/utils/translate-helper";
 
 
 export type TimeShortcutFunction = () => [WeekTime, WeekTime]

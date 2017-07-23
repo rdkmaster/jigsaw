@@ -5,8 +5,9 @@ import {JigsawButtonModule} from "jigsaw/component/button/button";
 import {PopupService} from "jigsaw/service/popup.service";
 import {JigsawTimeModule} from "jigsaw/component/time/index";
 import {JigsawRangeTimeModule} from "jigsaw/component/range-time/index";
+import {TranslateHelper} from "jigsaw/core/utils/translate-helper";
+
 import {I18nFullDemoComponent} from "./app.component";
-import {TranslateHelper} from "../../../../jigsaw/core/utils/translate-helper";
 
 /**
  * 覆盖控件内部的国际化词条
@@ -37,8 +38,8 @@ export class I18nFullDemoModule {
         }, true);
         ts.setTranslation('en', {
             desc: 'A complete example shows how to use i18n with Jigsaw.',
-            lang: 'the current language is <b>{{lang}}</b>',
-            alertText: 'this is a great info alert!'
+            lang: 'The current language is <b>{{lang}}</b>',
+            alertText: 'This is a great info alert!'
         }, true);
     }
 }
