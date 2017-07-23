@@ -29,7 +29,7 @@ export class JigsawI18nLoader extends TranslateLoader {
         const en = {
             'jigsaw-title': '<a href="https://github.com/rdkmaster/jigsaw">Jigsaw</a>\'s temporary site'
         };
-        return Observable.of(lang == 'en-US' ? en : zh);
+        return Observable.of(lang == 'en' ? en : zh);
     }
 }
 
@@ -56,6 +56,8 @@ export class JigsawI18nLoader extends TranslateLoader {
 })
 export class AppModule {
     constructor(translateService: TranslateService) {
-        translateService.setDefaultLang(translateService.getBrowserCultureLang());
+        const lang: string = translateService.getBrowserLang();
+        translateService.setDefaultLang(lang);
+        translateService.use(lang);
     }
 }

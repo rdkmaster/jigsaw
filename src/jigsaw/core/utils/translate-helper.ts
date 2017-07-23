@@ -4,8 +4,8 @@ import {EventEmitter} from "@angular/core";
 import {TranslateService} from "@ngx-translate/core";
 
 export class TranslateHelper {
-    public static alert: { en: {}, zh: {} };
-    public static time: {};
+    public static alert = { en: {}, zh: {} };
+    public static time = {};
 
     public static languageChangEvent = new EventEmitter<{oldLang: string, curLang: string}>();
 
@@ -15,6 +15,10 @@ export class TranslateHelper {
         TranslateHelper.languageChangEvent.emit({
             oldLang: oldLang, curLang: lang
         });
+    }
+
+    public static defineLocale(translateService: TranslateService, lang: string, translations: Object):void {
+
     }
 }
 
