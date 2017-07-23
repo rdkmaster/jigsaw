@@ -37,8 +37,8 @@ export class InternalUtils {
         if (!curLangTransByApp) {
             curLangTransByApp = {};
         }
+
         let curLangTrans:Object = translations[lang];
-        for (let prop in curLangTransByApp) delete curLangTrans[prop];
         CommonUtils.extendObject(curLangTrans, curLangTransByApp);
         let resultTrans = {};
         resultTrans[compName] = curLangTrans;
