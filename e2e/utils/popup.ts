@@ -1,46 +1,49 @@
-import {browser, by, element, ElementFinder} from "protractor";
+import {browser, by, element, ElementFinder, ExpectedConditions} from "protractor";
+import {waitForNotPresence} from "./asserts";
 
 export type Position = { top: number, left: number };
 export type Size = { width: number, height: number };
 export type Offset = { x: number, y: number };
 
 export async function expectClosePopup(selector: string, blockSelector?: string) {
-    element(by.tagName(selector)).element(by.css('.fa-times')).click();
-    browser.sleep(350);
+    element(by.css(selector)).element(by.css('.fa-times')).click();
+
+    await waitForNotPresence('.jigsaw-dialog');
+
     if (blockSelector) {
-        expect(element(by.tagName(blockSelector)).isPresent()).toBe(false);
+        expect(element(by.css(blockSelector)).isPresent()).toBe(false);
     }
-    expect(element(by.tagName(selector)).isPresent()).toBe(false);
+    expect(element(by.css(selector)).isPresent()).toBe(false);
 }
 
 export async function expectPopupBlock(selector: string) {
-    expect(element(by.tagName(selector)).isPresent()).toBe(true);
+    expect(element(by.css(selector)).isPresent()).toBe(true);
 
-    expect(element(by.tagName(selector)).getCssValue('position')).toBe('fixed');
-    expect(element(by.tagName(selector)).getCssValue('top')).toBe('0px');
-    expect(element(by.tagName(selector)).getCssValue('left')).toBe('0px');
+    expect(element(by.css(selector)).getCssValue('position')).toBe('fixed');
+    expect(element(by.css(selector)).getCssValue('top')).toBe('0px');
+    expect(element(by.css(selector)).getCssValue('left')).toBe('0px');
 
-    const blockSize = await element(by.tagName(selector)).getSize();
+    const blockSize = await element(by.css(selector)).getSize();
     const windowSize = await getWindowSize();
     expect(blockSize.width).toBe(windowSize.width);
     expect(blockSize.height).toBe(windowSize.height);
 }
 
 export async function expectPopupByModal(selector: string, top?: number) {
-    expect(element(by.tagName(selector)).isPresent()).toBe(true);
-    const popupSize = await element(by.tagName(selector)).getSize();
+    expect(element(by.css(selector)).isPresent()).toBe(true);
+    const popupSize = await element(by.css(selector)).getSize();
     const popupPosition = await getPopupPosition(popupSize, top);
-    expect(element(by.tagName(selector)).getCssValue('position')).toBe('fixed');
-    expect(element(by.tagName(selector)).getCssValue('top')).toBe(popupPosition.top + 'px');
-    expect(element(by.tagName(selector)).getCssValue('left')).toBe(popupPosition.left + 'px');
+    expect(element(by.css(selector)).getCssValue('position')).toBe('fixed');
+    expect(element(by.css(selector)).getCssValue('top')).toBe(popupPosition.top + 'px');
+    expect(element(by.css(selector)).getCssValue('left')).toBe(popupPosition.left + 'px');
 }
 
 export async function expectPopupAtPoint(trigger: ElementFinder, selector: string, triggerOffset: Offset, popupOffset: Offset) {
-    expect(element(by.tagName(selector)).isPresent()).toBe(true);
-    expect(element(by.tagName(selector)).getCssValue('position')).toBe('absolute');
-    expect(element(by.tagName(selector)).getCssValue('top')).toBe(
+    expect(element(by.css(selector)).isPresent()).toBe(true);
+    expect(element(by.css(selector)).getCssValue('position')).toBe('absolute');
+    expect(element(by.css(selector)).getCssValue('top')).toBe(
         Math.floor((await trigger.getLocation()).y) + triggerOffset.y + popupOffset.y + 'px');
-    expect(element(by.tagName(selector)).getCssValue('left')).toBe(
+    expect(element(by.css(selector)).getCssValue('left')).toBe(
         Math.floor((await trigger.getLocation()).x) + triggerOffset.x + popupOffset.x + 'px');
 }
 
