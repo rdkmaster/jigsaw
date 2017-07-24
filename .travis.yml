@@ -43,3 +43,4 @@ after_script:
 
 sudo: false
 
+dist: precise

@@ -46,32 +46,36 @@ function makePlunker(demoFolder) {
     var content = [];
     var mockDatas = [];
     readDemoContent(content, demoFolder);
-    var appCompFound = false;
-    var appModuleFound = false;
-    content.forEach(item => {
+    var compContentIndex = -1;
+    var moduleContentIndex = -1;
+    content.forEach((item, idx) => {
         item.path = 'app/' + item.path.substring(demoFolder.length);
         if (item.path.match(/.+\.ts$/i)) {
             item.code = fixImport(item.code);
             item.code = fixTemplateUrl(item.code);
             item.code = fixStyleUrls(item.code);
+            item.code = fixCodeForDemoOnly(item.code);
             findMockDatas(item.code).forEach(mockData => mockDatas.push(mockData));
         }
         if (item.path == 'app/app.component.ts') {
-            item.code = fixAppComponentTs(item.code);
-            appCompFound = true;
+            compContentIndex = idx;
         } else if (item.path == 'app/app.module.ts') {
-            item.code = fixAppModuleTs(item.code);
-            appModuleFound = true;
+            moduleContentIndex = idx;
         }
     });
-    if (!appCompFound) {
+    if (compContentIndex == -1) {
         console.error('ERROR: need this file: ' + demoFolder + 'app.module.ts');
         process.exit(100);
     }
-    if (!appModuleFound) {
+    if (moduleContentIndex == -1) {
         console.error('ERROR: need this file: ' + demoFolder + 'app.component.ts');
         process.exit(100);
     }
+
+    var moduleItem = content[moduleContentIndex];
+    moduleItem.code = fixAppModuleTs(moduleItem.code);
+    var compItem = content[compContentIndex];
+    compItem.code = fixAppComponentTs(compItem.code, moduleItem.code);
 
     mockDatas.forEach(mockData => content.push(mockData));
 
@@ -87,7 +91,10 @@ function makePlunker(demoFolder) {
         html += `<input type="hidden" name="entries[${path}][encoding]" value="utf8" />\n`;
         html += `<input type="hidden" name="entries[${path}][content]" value="${item.code}" />\n`;
     });
-    var plunker = template.replace('<!-- replaced-by-content -->', html);
+
+    var plunker = template
+        .replace('<!-- replace-by-content -->', html)
+        .replace('<!-- replace-by-title -->', demoFolder.substring(demoHome.length, demoFolder.length-1));
 
     var saveTo = outputHome + demoFolder.substring(demoHome.length);
     makeDirs(saveTo);
@@ -161,6 +168,10 @@ function fixImport(code) {
     return jigsawImportString + '\n' + rawImports.join(';\n') + code;
 }
 
+function fixCodeForDemoOnly(code) {
+    return code.replace(/\/\* #for-live-demo-only#([\s\S]*?)\*\//g, (found, codeForDemo) => codeForDemo.trim());
+}
+
 function findMockDatas(code) {
     var ret = [];
     var match = code.match(/mock-data\/.*?['"]/g);
@@ -178,8 +189,26 @@ function findMockDatas(code) {
     return ret;
 }
 
-function fixAppComponentTs(appCompCode) {
-    return appCompCode.replace(/@Component\({/, '@Component({\n    selector: "jigsaw-app",');
+function fixAppComponentTs(compCode, moduleCode) {
+    var match = moduleCode.match(/bootstrap\s*:\s*\[\s*(\w+?)\s*\]/);
+    if (!match) {
+        console.error('ERROR: need bootstrap property in the app.module.ts, the code is:\n' + moduleCode);
+        process.exit(200);
+    }
+
+    var mainComp = match[1];
+    return compCode.replace(/@Component\s*\(\s*\{([\s\S]*?)\}\s*\)[\s\S]*?export\s+class\s+(\w+?)\b/g,
+        (found, props, className) => {
+            if (className != mainComp) {
+                return found;
+            }
+            if (found.match(/selector\s*:/)) {
+                console.error('ERROR: more than one "selector" appears, remove the "selector" property, ' +
+                    'the code is:\n' + found);
+                process.exit(201);
+            }
+            return found.replace(/@Component\s*\(\s*\{/, '@Component({\n    selector: "jigsaw-live-demo",');
+        });
 }
 
 function fixAppModuleTs(appModuleCode) {
@@ -192,20 +221,16 @@ function fixAppModuleTs(appModuleCode) {
     if (!match) {
         return appModuleCode;
     }
-    var imports = match[1].split(/,/g).map(item => item.trim());
-    if (imports.length == 0) {
-        return appModuleCode;
-    }
 
-    imports.unshift('BrowserModule', 'BrowserAnimationsModule', 'HttpModule');
-    var importString = 'imports: [\n';
-    for(var i = 0, len = imports.length; i < len; i += 3) {
-       importString += '        ' + imports.slice(i, i + 3).join(', ') + ',\n';
-    }
-    importString += '    ]';
+    return appModuleCode.replace(/\bimports\s*:\s*\[([\s\S]*?)\]/, (found, importString) => {
+        return `
 
-    return appModuleCode.substring(0, match.index) + importString +
-           appModuleCode.substring(match.index + match[0].length);
+    imports: [
+        BrowserModule, BrowserAnimationsModule, HttpModule,
+        ${importString.trim()}
+    ]`.trim();
+
+    });
 }
 
 function escapeCode(code) {

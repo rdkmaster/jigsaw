@@ -4,9 +4,9 @@ plunker是一个在线演示代码的工具，具备分享等功能。它是目�
 等等，何不我们来部署一个呢？这里有一个基本上已经完成了的：<www.rdkmaster.com:8000/edit>
 
 ## Install NodeJS v0.10.22 and NPM
-linux环境的话，最好安装 https://github.com/creationix/nvm 用来管理node版本的工具，可以自由切换版本。
+linux环境的话，最好安装 <https://github.com/creationix/nvm> 用来管理node版本的工具，可以自由切换版本。
 
-安装完之后到 https://npm.taobao.org/mirrors/node/v0.10.22/ 目录下载合适的node版本包。解压缩到nvm的文件夹中，目录结构如下
+安装完之后到 <https://npm.taobao.org/mirrors/node/v0.10.22/>目录下载合适的node版本包。解压缩到nvm的文件夹中，目录结构如下
 
 ![](2017-07-12_102301.png)
 
@@ -23,10 +23,10 @@ v0.10.22文件夹下面的结构如下
 
     npm install
 
-并且将 [config.api.example.json](config.api.example.json) 文件放到plunker_api的文件夹下。
+并且将 config.api.example.json (http://t.cn/RKshWKi) 放到plunker_api的文件夹下。
 
 ## Install mongodb
-到 https://www.mongodb.org/dl/linux/ 下载2.6.12版本解压到合适目录，假设这里解压到 `/home/plunker/mongodb-linux-x86_64-2.6.12` 目录
+到 <https://www.mongodb.org/dl/linux/> 下载2.6.12版本解压到合适目录，假设这里解压到 `/home/plunker/mongodb-linux-x86_64-2.6.12` 目录
 
     mkdir db
 
@@ -42,7 +42,7 @@ v0.10.22文件夹下面的结构如下
     > db.addUser("DB_USERNAME", "DB_PASSWORD")
     > exit
 
-设置完毕后修改 [config.api.example.json](config.api.example.json) 文件mongodb节点的数据库信息。
+设置完毕后修改 config.api.example.json (http://t.cn/RKshWKi) 文件mongodb节点的数据库信息。
 
 ## Install plunker_www
 
@@ -54,7 +54,7 @@ package.json 里面 connect-assets 值换为  "2.5.0",
 
     npm install
 
-把[config.www.example.json](config.www.example.json)文件放到plunker_www的文件夹下。
+把 config.www.example.json (http://t.cn/RKs7zB9) 放到plunker_www的文件夹下。
 
 ## Install plunker_run
 
@@ -74,7 +74,7 @@ server.js删除如下代码
 
     npm install
 
-[config.run.example.json](config.run.example.json) 文件放到plunker_run的文件夹下。
+config.run.example.json (http://t.cn/RKs7Oj4) 文件放到plunker_run的文件夹下。
 
 ## Install plunker_embed
 
@@ -113,17 +113,17 @@ configure.coffee里面删除
 
     npm install
 
-并将[config.json](config.json)文件拷贝到plunker_embed目录下
+并将 config.json (http://t.cn/RKs7c4W) 文件拷贝到plunker_embed目录下
 
 ## Github 认证
 访问 <https://github.com/settings/applications>，创建新的OAuth Application。你的回调URL应该为`/auth/github`; 完整的参考: `http://plunk.example.com/auth/github`
 
 完成之后记下你的 `Client ID` and `Client Secret`。然后将值配置到你的plunker的配置文件中（上面所拷贝的配置文件）
 
-最后将plunker_api\resources目录下的plunks.coffee用文件夹中提供的替换。改好的在[这里](plunks.coffee)。
+最后将plunker_api\resources目录下的plunks.coffee用文件夹中提供的替换。改好的在 http://t.cn/RKs7Th1
 
 ## 启动 
-下载 [start.sh](start.sh) 到plunker目录下，执行 sh start.sh 启动。整个工程结构如下
+下载 start.sh (http://t.cn/RKs7R9n) 到plunker目录下，执行 `sh start.sh` 启动。整个工程结构如下
 
 ![](2017-07-12_111333.png)
 
@@ -135,4 +135,9 @@ configure.coffee里面删除
       将显示出来的进程杀死
 
 ## 注意
-npm install完毕之后看一下各个项目里面的assets\vendor目录下有链接的github地址可能没下载全，需要手动下载。
+`npm install`完毕之后看一下各个项目里面的 `assets\vendor` 目录下有链接的github地址可能没下载全，需要手动下载。
+
+
+## 题外话
+
+这些文章都是我们在研发Jigsaw七巧板过程中的技术总结，如果你喜欢这个文章，请帮忙到 Jigsaw七巧板 (<https://github.com/rdkmaster/jigsaw>)的工程上点个星星鼓励我们一下，这样我们会更有动力写出类似高质量的文章。Jigsaw七巧板现在处于起步阶段，非常需要各位的呵护。

@@ -7,7 +7,7 @@ import {ArrayCollectionAjaxDemoModule} from "./ajax/app.module";
 import {ArrayCollectionBasicDemoModule} from "./basic/app.module";
 import {ServerSidePaginationDemoModule} from "./server-side-pagination/app.module";
 
-const buttonDemoRoutes = [
+const routes = [
     {
         path: '', redirectTo: 'basic', pathMatch: 'full'
     },
@@ -28,7 +28,7 @@ const buttonDemoRoutes = [
 
 @NgModule({
     imports: [
-        RouterModule.forChild(buttonDemoRoutes),
+        RouterModule.forChild(routes),
         ArrayCollectionAjaxDemoModule,
         ArrayCollectionBasicDemoModule,
         ServerSidePaginationDemoModule

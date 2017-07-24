@@ -1,19 +1,14 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {HttpModule, Http} from '@angular/http';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpModule} from '@angular/http';
 import {RouterModule} from "@angular/router";
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
+import {JigsawModule} from '@rdkmaster/jigsaw';
+import {Observable} from "rxjs/Observable";
 
 import {AppComponent} from './app.component';
-
-import {JigsawModule} from '@rdkmaster/jigsaw';
-
-export function HttpLoaderFactory(http: Http) {
-    return new TranslateHttpLoader(http, 'app/i18n/', '.json');
-}
 
 const appRoutes = [
     {
@@ -25,6 +20,18 @@ const appRoutes = [
         loadChildren: 'app/demo/demo-list#DemoListModule'
     }
 ];
+
+export class JigsawI18nLoader extends TranslateLoader {
+    getTranslation(lang: string): Observable<any> {
+        const zh = {
+            'jigsaw-title': '<a href="https://github.com/rdkmaster/jigsaw">Jigsaw</a> 临时演示环境'
+        };
+        const en = {
+            'jigsaw-title': '<a href="https://github.com/rdkmaster/jigsaw">Jigsaw</a>\'s temporary site'
+        };
+        return Observable.of(lang == 'en' ? en : zh);
+    }
+}
 
 @NgModule({
     declarations: [
@@ -38,16 +45,19 @@ const appRoutes = [
         BrowserAnimationsModule,
         TranslateModule.forRoot({
                 loader: {
-                    provide: TranslateLoader,
-                    useFactory: HttpLoaderFactory,
-                    deps: [Http]
+                    provide: TranslateLoader, useClass: JigsawI18nLoader
                 }, isolate: true
             }
         ),
         JigsawModule
     ],
-    providers: [],
+    providers: [TranslateService],
     bootstrap: [AppComponent]
 })
 export class AppModule {
+    constructor(translateService: TranslateService) {
+        const lang: string = translateService.getBrowserLang();
+        translateService.setDefaultLang(lang);
+        translateService.use(lang);
+    }
 }

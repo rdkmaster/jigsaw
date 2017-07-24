@@ -613,11 +613,11 @@ export class DemoListComponent implements OnInit{
             title: 'Slider',
             navList: [
                 {
-                    label: 'slider 全家桶',
+                    label: 'slider-full',
                     url: '/slider/basic'
                 },
                 {
-                    label: 'slider 单独的垂直滚动条',
+                    label: 'slider-vertical',
                     url: '/slider/vertical'
                 }
             ]
@@ -671,6 +671,15 @@ export class DemoListComponent implements OnInit{
                     label: 'inline',
                     url: '/tooltip/inline'
                 },
+            ]
+        },
+        {
+            title: 'Internationally',
+            navList: [
+                {
+                    label: 'i18n-full',
+                    url: '/i18n/i18n-full'
+                }
             ]
         },
     ].sort((a, b) => a.title.localeCompare(b.title));
@@ -785,6 +794,10 @@ const demoListRoutes = [
             {
                 path: 'tooltip',
                 loadChildren: './tooltip/demo.module#TooltipDemoModule'
+            },
+            {
+                path: 'i18n',
+                loadChildren: './i18n/demo.module#I18nDemoModule'
             },
         ]
     },

@@ -44,10 +44,7 @@ const buttonDemoRoutes = [
         ButtonPresetDemoModule,
         ButtonWidthHeightDemoModule,
         ButtonWithLoadingModule
-    ],
-    exports: [
-    ],
-    providers: []
+    ]
 })
 export class ButtonDemoModule {
 }
