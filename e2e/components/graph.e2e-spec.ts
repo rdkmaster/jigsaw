@@ -1,5 +1,5 @@
-import {browser, element, by, ProtractorBy, ElementFinder} from 'protractor';
-import {WebElement} from "selenium-webdriver";
+import {browser, element, by, ElementFinder} from 'protractor';
+import {expectToExist} from "../utils/asserts";
 
 describe('graph', () => {
     beforeEach(() => {
@@ -10,35 +10,30 @@ describe('graph', () => {
 
         it('should show the graph view', () => {
             browser.get('graph/basic');
-            expectGraphRendered('test-graph');
-            //expectToExist(getGraphCanvas('test-graph'));
+            expectToExist(getGraphCanvas('test-graph'));
         });
 
         it('should show the line bar graph basic', () => {
             browser.get('graph/line-bar-graph-basic');
-            //expectGraphRendered('test-graph1');
-            //expectGraphRendered('test-graph2');
             expectToExist(getGraphCanvas('test-graph1'));
             expectToExist(getGraphCanvas('test-graph2'));
         });
 
         it('should show the line bar graph witch data from ajax', () => {
             browser.get('graph/line-bar-graph-ajax');
-            //expectGraphRendered('test-graph');
-            browser.sleep(1000);
             expectToExist(getGraphCanvas('test-graph'));
         });
 
-        xit('should show the pie graph', () => {
+        it('should show the pie graph', () => {
             browser.get('graph/pie-graph-basic');
-            expectGraphRendered('test-graph1');
-            expectGraphRendered('test-graph2');
-            expectGraphRendered('test-graph3');
+            expectToExist(getGraphCanvas('test-graph1'));
+            expectToExist(getGraphCanvas('test-graph2'));
+            expectToExist(getGraphCanvas('test-graph3'));
         });
 
-        xit('should change size', async () => {
+        it('should change size', async () => {
             browser.get('graph/resize');
-            expectGraphRendered('test-graph');
+            expectToExist(getGraphCanvas('test-graph'));
             const graphCanvas = element(by.id('test-graph')).element(by.tagName('canvas'));
             const graphWidthInput = element(by.id('graph-width')).element(by.tagName('input'));
             const graphHeightInput = element(by.id('graph-height')).element(by.tagName('input'));
@@ -54,30 +49,9 @@ describe('graph', () => {
             expect(graphSize.height).toBe(200);
         });
 
-        function expectGraphRendered(id){
-            expect(element(by.id(id)).element(by.tagName('canvas')).isPresent()).toBe(true);
-        }
-
         function getGraphCanvas(id: string): ElementFinder {
             return element(by.id(id)).element(by.tagName('canvas'));
         }
     })
 });
 
-export function expectToExist(selector: string | WebElement | ElementFinder, selectorType: string = 'id', expected = true) {
-    return waitForElement(selector, selectorType).then((isPresent: boolean) => {
-        expect(isPresent).toBe(expected, `Expected "${selector}"${expected ? '' : ' not'} to exist`);
-    });
-}
-
-export function waitForElement(selector: string | WebElement | ElementFinder, selectorType: string) {
-    if(typeof selector === 'string'){
-        if(selectorType == 'css'){
-            return browser.isElementPresent(by.css(selector) as ProtractorBy);
-        }else if(selectorType == 'id'){
-            return browser.isElementPresent(by.id(selector) as ProtractorBy);
-        }
-    }else{
-        return browser.isElementPresent(selector);
-    }
-}
