@@ -22,7 +22,7 @@ describe('dialog', () => {
             trigger1.click();
 
             //await waitForPresence('.jigsaw-dialog');
-            browser.sleep(2000);
+            await browser.sleep(2000);
 
             await expectPopupBlock('jigsaw-block');
 
