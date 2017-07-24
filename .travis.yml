@@ -30,12 +30,12 @@ before_script:
 
 script:
   - gulp jigsaw:build-release:clean
-  - #ng test --code-coverage --watch false
-  - #cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
+  - ng test --code-coverage --watch false
+  - cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
   - sh build/scripts/integrate-with-seed.sh
   - sh ./build/scripts/sauce_connect_block.sh
   - cd $SEED_DIR # run e2e in seed directory
-  - #ng build --prod
+  - ng build --prod
   - ng e2e
 
 after_script:
@@ -43,3 +43,4 @@ after_script:
 
 sudo: false
 
+dist: precise
