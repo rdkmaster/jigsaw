@@ -14,9 +14,5 @@ export class TranslateHelper {
             oldLang: oldLang, curLang: lang
         });
     }
-
-    public static defineLocale(translateService: TranslateService, lang: string, translations: Object):void {
-
-    }
 }
 

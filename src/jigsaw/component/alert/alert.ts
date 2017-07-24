@@ -159,7 +159,7 @@ export class JigsawErrorAlert extends JigsawCommonAlert {
 }
 
 @NgModule({
-    imports: [JigsawDialogModule, JigsawDraggableModule, JigsawButtonModule, CommonModule, TranslateModule],
+    imports: [JigsawDialogModule, JigsawDraggableModule, JigsawButtonModule, CommonModule, TranslateModule.forRoot()],
     declarations: [JigsawAlert, JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert],
     exports: [JigsawDialogModule, JigsawDraggableModule, JigsawAlert, JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert],
     providers: [TranslateService],
