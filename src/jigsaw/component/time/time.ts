@@ -23,7 +23,6 @@ export type GrItem = {
     shortcuts?: Shortcut[];
 }
 
-
 @Component({
     selector: 'jigsaw-time',
     templateUrl: 'time.html',

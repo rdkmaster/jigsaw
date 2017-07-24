@@ -24,7 +24,7 @@ TranslateHelper.alert.en = {
     bootstrap: [ I18nFullDemoComponent ],
     imports: [
         JigsawAlertModule, JigsawButtonModule, JigsawTimeModule, JigsawRangeTimeModule,
-        TranslateModule
+        TranslateModule/* #for-live-demo-only# .forRoot() */
     ],
     providers: [PopupService, TranslateService]
 })
