@@ -14,15 +14,14 @@ describe('dialog', () => {
             browser.get('dialog/misc');
         });
 
-        it('should popup a custom dialog as modal when click the button', async () => {
+        xit('should popup a custom dialog as modal when click the button', async () => {
             expectToExist('jigsaw-block', false);
             expectToExist('jigsaw-dialog', false);
 
             const trigger1 = element(by.id('trigger1'));
             trigger1.click();
 
-            //await waitForPresence('.jigsaw-dialog');
-            await browser.sleep(2000);
+            await waitForPresence('.jigsaw-dialog');
 
             await expectPopupBlock('jigsaw-block');
 
@@ -31,7 +30,7 @@ describe('dialog', () => {
             await expectClosePopup('jigsaw-dialog', 'jigsaw-block');
         });
 
-        xit('should popup a custom dialog at point when click the button', async () => {
+        it('should popup a custom dialog at point when click the button', async () => {
             expectToExist('jigsaw-block', false);
             expectToExist('jigsaw-dialog', false);
 
@@ -63,7 +62,7 @@ describe('dialog', () => {
             await expectClosePopup('jigsaw-dialog', 'jigsaw-block');
         });
 
-        xit('should popup a template dialog at point when click the button', async () => {
+        it('should popup a template dialog at point when click the button', async () => {
             expectToExist('jigsaw-block', false);
             expectToExist('jigsaw-dialog', false);
 
