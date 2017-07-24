@@ -1,6 +1,8 @@
 
 # Jigsaw的文档
 
+如果你打算给我们推送文章，那请先读一下我们的[文章约定](coding-spec.md)。
+
 ## 原创文章
 - [新手宝典](tourist/index.md) - 每个新手都值得拥有。
 - [Angular的路由是如何实现懒加载的](how-router-achive-lazy-load/index.md)
