@@ -7,6 +7,7 @@ import {PopupInfo, PopupPositionType, PopupService} from "../../service/popup.se
 import {SimpleTooltipComponent} from "../tooltip/tooltip";
 import {Time, WeekTime} from "../../service/time.types";
 import {TranslateHelper} from "../../core/utils/translate-helper";
+import {ElementEventHelper} from "../../core/utils/common-utils";
 
 
 export type TimeShortcutFunction = () => [WeekTime, WeekTime]
@@ -405,6 +406,8 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
 
     private _tooltipInfo: PopupInfo;
 
+    private _eventHelper: ElementEventHelper = new ElementEventHelper();
+
     private  _handleRecommended(nativeElement:any, popService:PopupService) {
         if (this._recommendedBegin && this._recommendedEnd) {
             this._recommendedBegin = TimeService.getFormatDate(this._recommendedBegin);
@@ -422,10 +425,22 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
             nativeElement.querySelectorAll(".jigsaw-time-box .datepicker .expect-day").forEach(node => {
 
                 // #239 移除已经注册的事件. 点击事件会触发此操作, 造成重复注册事件. 引起tooltips 不能销毁.
-                node.removeEventListener("mouseenter");
-                node.removeEventListener("mouseleave");
+                const removeMouseenterListeners = this._eventHelper.get(node, 'mouseenter');
+                if(removeMouseenterListeners instanceof Array){
+                    removeMouseenterListeners.forEach(removeMouseenterListener => {
+                        removeMouseenterListener();
+                        this._eventHelper.del(node, 'mouseenter', removeMouseenterListener);
+                    })
+                }
+                const removeMouseleaveListeners = this._eventHelper.get(node, 'mouseleave');
+                if(removeMouseleaveListeners instanceof Array){
+                    removeMouseleaveListeners.forEach(removeMouseleaveListener => {
+                        removeMouseleaveListener();
+                        this._eventHelper.del(node, 'mouseleave', removeMouseleaveListener);
+                    })
+                }
 
-                this._renderer.listen(node, "mouseenter", (event) => {
+                const removeMouseenterListener = this._renderer.listen(node, "mouseenter", (event) => {
                     if (this._tooltipInfo) {
                         this._tooltipInfo.dispose();
                         this._tooltipInfo = null;
@@ -442,12 +457,15 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
                         message: "Recommended"
                     });
                 });
-                this._renderer.listen(node, "mouseleave", () => {
+                this._eventHelper.put(node, "mouseenter", removeMouseenterListener);
+
+                const removeMouseleaveListener = this._renderer.listen(node, "mouseleave", () => {
                     if (this._tooltipInfo) {
                         this._tooltipInfo.dispose();
                         this._tooltipInfo = null;
                     }
-                })
+                });
+                this._eventHelper.put(node, "mouseleave", removeMouseleaveListener);
             });
         }
     }

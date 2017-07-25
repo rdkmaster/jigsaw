@@ -29,8 +29,8 @@ export class InternalUtils {
         return prefix + this._uniqueIdIndex;
     };
 
-    private static _initI18nWithLang(translateService: TranslateService, compName: string, translations: Object, lang:string):void {
-        let curLangTransByApp:Object;
+    private static _initI18nWithLang(translateService: TranslateService, compName: string, translations: Object, lang: string): void {
+        let curLangTransByApp: Object;
         const compTrans = TranslateHelper[compName];
         if (compTrans) {
             curLangTransByApp = compTrans[lang];
@@ -39,7 +39,7 @@ export class InternalUtils {
             curLangTransByApp = {};
         }
 
-        let curLangTrans:Object = translations[lang];
+        let curLangTrans: Object = translations[lang];
         CommonUtils.extendObject(curLangTrans, curLangTransByApp);
         let resultTrans = {};
         resultTrans[compName] = curLangTrans;
