@@ -1,17 +1,18 @@
 import {
     Component, ViewEncapsulation, Renderer2, ViewContainerRef
 } from "@angular/core";
-import {TableData} from "jigsaw/core/data/table-data";
+import {
+    TableData
+} from "jigsaw/core/data/table-data";
 import {
     TableHeadCheckbox,
     TableCellCheckbox,
-    TableCellOption,
     TableCellNum,
-    TableCellEditor,
-    DefaultCellRenderer
+    TableCellEditor
 } from "jigsaw/component/table/table-renderer";
-import {SortAs, SortOrder} from "jigsaw/core/data/component-data";
-import {ColumnDefine, AdditionalColumnDefine} from "jigsaw/component/table/table-api";
+import {
+    ColumnDefine, AdditionalColumnDefine, TableCellRenderer
+} from "jigsaw/component/table/table-api";
 
 @Component({
     templateUrl: './app.component.html',
@@ -123,3 +124,12 @@ export class TableLineEllipsisDemoComponent {
 
 }
 
+/*
+ * 操作列
+ * */
+@Component({
+    template: '<a href="javascript:;">修改</a> <a href="javascript:;">删除</a>',
+    styles: [`a{color: #ffaa00} a:hover{text-decoration: underline}`]
+})
+export class TableCellOption extends TableCellRenderer {
+}

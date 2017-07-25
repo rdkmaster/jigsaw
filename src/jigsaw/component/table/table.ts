@@ -18,7 +18,7 @@ import {SortAs, SortOrder, CallbackRemoval} from "../../core/data/component-data
 import {AffixUtils} from "../../core/utils/internal-utils";
 import {TableCheckboxService} from "./table-service";
 import {
-    DefaultCellRenderer, JigsawTableRendererModule, TableCellCheckbox, TableCellEditor, TableCellNum, TableCellOption,
+    DefaultCellRenderer, JigsawTableRendererModule, TableCellCheckbox, TableCellEditor, TableCellNum,
     TableHeadCheckbox
 } from "./table-renderer";
 import {JigsawTooltipModule, SimpleTooltipComponent} from "../tooltip/tooltip";
@@ -651,7 +651,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
 
     private _setFixedHeadWidth(): void {
         const hostWidth = this._elementRef.nativeElement.offsetWidth + 'px';
-        
+
         //消除table非必要的横向滚动条(可能会有的小数点像素的四舍五入产生的滚动条)，这里手动让.jigsaw-table和.jigsaw-table-box宽度相同
         this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.jigsaw-table'), 'width', hostWidth);
         this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.jigsaw-table-box'), 'width', hostWidth);
@@ -1230,7 +1230,6 @@ export class JigsawTableHeader extends TableCellBasic implements OnInit, OnDestr
         DefaultCellRenderer,
         TableHeadCheckbox,
         TableCellCheckbox,
-        TableCellOption,
         TableCellNum,
         TableCellEditor
     ]

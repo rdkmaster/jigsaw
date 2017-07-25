@@ -19,11 +19,11 @@ export class ServerSidePaginationDemoComponent {
         this.pageable.onAjaxError(this.onAjaxError, this);
     }
 
-     onAjaxSuccess(data): void {
+    onAjaxSuccess(data): void {
         this.ready = true;
     }
 
-     onAjaxError(err): void {
+    onAjaxError(err): void {
         this.ready = false;
         this.errorInfo = err;
     }

@@ -128,16 +128,6 @@ export class TableCellNum extends TableCellRenderer implements OnInit {
 }
 
 /*
- * 操作列
- * */
-@Component({
-    template: '<a href="javascript:;">修改</a> <a href="javascript:;">删除</a>',
-    styles: [`a{color: #ffaa00} a:hover{text-decoration: underline}`]
-})
-export class TableCellOption extends TableCellRenderer {
-}
-
-/*
  * 编辑单元格渲染器
  * */
 @Component({
@@ -159,7 +149,6 @@ export class TableCellEditor extends TableCellRenderer implements AfterViewInit 
         TableHeadCheckbox,
         TableCellCheckbox,
         TableCellNum,
-        TableCellOption,
         TableCellEditor
     ],
     imports: [

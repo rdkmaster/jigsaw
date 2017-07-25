@@ -217,20 +217,20 @@ function fixAppModuleTs(appModuleCode) {
         "import {HttpModule} from '@angular/http';\n" +
         appModuleCode.replace(/export\s+class\s+(.+?)\s*{/, 'export class AppModule {');
 
+    var re = /\bimports\s*:\s*\[([\s\S]*?)\]/;
     var match = appModuleCode.match(/\bimports\s*:\s*\[([\s\S]*?)\]/);
-    if (!match) {
-        return appModuleCode;
+    if (match) {
+        return appModuleCode.replace(re, (found, importString) => '' +
+            '    imports: [\n' +
+            '        BrowserModule, BrowserAnimationsModule, HttpModule,\n' + 
+            '        ' + importString.trim() + '\n' +
+            '    ]'
+        );
+    } else {
+        return appModuleCode.replace('@NgModule({',
+            '@NgModule({\n    imports: [BrowserModule, BrowserAnimationsModule, HttpModule],');
     }
 
-    return appModuleCode.replace(/\bimports\s*:\s*\[([\s\S]*?)\]/, (found, importString) => {
-        return `
-
-    imports: [
-        BrowserModule, BrowserAnimationsModule, HttpModule,
-        ${importString.trim()}
-    ]`.trim();
-
-    });
 }
 
 function escapeCode(code) {
