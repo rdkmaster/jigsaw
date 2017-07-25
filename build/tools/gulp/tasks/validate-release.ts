@@ -61,7 +61,7 @@ function checkReleasePackage(packageName: string): string[] {
 function checkMaterialPackage(): string[] {
   const packagePath = join(releasesDir, 'jigsaw');
   const prebuiltThemesPath = join(packagePath, 'prebuilt-themes');
-  const themingFilePath = join(packagePath, '_theming.scss');
+  const themingFilePath = join(packagePath, 'theming.scss');
   const failures = [];
 
   if (glob('*.css', {cwd: prebuiltThemesPath}).length === 0) {
