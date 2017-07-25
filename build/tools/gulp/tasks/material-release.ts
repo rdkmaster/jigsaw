@@ -9,6 +9,8 @@ import {buildConfig} from '../packaging/build-config';
 // There are no type definitions available for these imports.
 const gulpRename = require('gulp-rename');
 
+const gulpSass = require('gulp-sass');
+
 const {packagesDir, outputDir} = buildConfig;
 
 /** Path to the directory where all releases are created. */
@@ -22,9 +24,9 @@ const materialPath = join(packagesDir, 'jigsaw');
 // Path to the release output of material.
 const releasePath = join(releasesDir, 'jigsaw');
 // The entry-point for the scss theming bundle.
-const themingEntryPointPath = join(materialPath, 'core', 'theming', '_all-theme.scss');
+const themingEntryPointPath = join(materialPath, 'core', 'theming', 'all-theme.scss');
 // Output path for the scss theming bundle.
-const themingBundlePath = join(releasePath, '_theming.scss');
+const themingBundlePath = join(releasePath, 'theming.scss');
 // Matches all pre-built theme css files
 const prebuiltThemeGlob = join(materialOutputPath, '**/theming/prebuilt/*.css?(.map)');
 // Matches all SCSS files in the library.
@@ -42,7 +44,8 @@ task('jigsaw:build-release', ['jigsaw:prepare-release'], () => composeRelease('j
  */
 task('jigsaw:prepare-release', sequenceTask(
   'jigsaw:build',
-  ['jigsaw:copy-prebuilt-themes', 'jigsaw:bundle-theming-scss']
+  ['jigsaw:copy-prebuilt-themes', 'jigsaw:bundle-theming-scss'],
+  'jigsaw:compile-theming-scss'
 ));
 
 /** Copies all prebuilt themes into the release package under `prebuilt-themes/` */
@@ -63,4 +66,11 @@ task('jigsaw:bundle-theming-scss', () => {
     mkdirpSync(releasePath);
     writeFileSync(themingBundlePath, result.bundledContent);
   });
+});
+
+/** compile theming.scss to css */
+task('jigsaw:compile-theming-scss', () => {
+    src(join(releasePath, 'theming.scss'))
+        .pipe(gulpSass())
+        .pipe(dest(releasePath));
 });
