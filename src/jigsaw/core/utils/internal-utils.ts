@@ -1,7 +1,7 @@
 import {TranslateService} from "@ngx-translate/core";
 import {CommonUtils} from "./common-utils";
 import {TranslateHelper} from "./translate-helper";
-import {CallbackRemoval} from "jigsaw/core/data/component-data";
+import {CallbackRemoval} from "../data/component-data";
 
 export class InternalUtils {
     public static _uniqueIdIndex = 0;

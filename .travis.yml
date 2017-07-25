@@ -9,8 +9,8 @@ branches:
 
 env:
   global:
-  - SAUCE_USERNAME=yhpqqforjigsaw
-  - SAUCE_ACCESS_KEY=b25ddc31-024e-4111-86ba-687a1f72bfa2
+  - SAUCE_USERNAME=zhumingpeng
+  - SAUCE_ACCESS_KEY=4bd0b879-772a-4add-8e76-2705bc42d00e
   - BROWSER_PROVIDER_READY_FILE=/tmp/sauce-connect-ready
   - LOGS_DIR=/tmp/logs
   - SEED_DIR=`pwd`/../jigsaw-seed
