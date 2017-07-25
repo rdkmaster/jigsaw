@@ -1,3 +1,5 @@
+import {CallbackRemoval} from "../data/component-data";
+
 export class CommonUtils {
 
     /**
@@ -23,15 +25,15 @@ export class CommonUtils {
      * */
     public static compareWithKeyProperty(item1: any, item2: any, trackItemBy: string[]): boolean {
         for (let i = 0; i < trackItemBy.length; i++) {
-            if(typeof item1 === 'object'&& typeof item2 === 'object') {
+            if (typeof item1 === 'object' && typeof item2 === 'object') {
                 if (item1[trackItemBy[i]] != item2[trackItemBy[i]]) {
                     return false;
                 }
-            } else if(typeof item1 !== 'object'&& typeof item2 === 'object') {
+            } else if (typeof item1 !== 'object' && typeof item2 === 'object') {
                 if (item1 != item2[trackItemBy[i]]) {
                     return false;
                 }
-            } else if(typeof item1 === 'object'&& typeof item2 !== 'object'){
+            } else if (typeof item1 === 'object' && typeof item2 !== 'object') {
                 if (item1[trackItemBy[i]] != item2) {
                     return false;
                 }
@@ -89,9 +91,57 @@ export class CommonUtils {
      * @param value
      * @returns string
      */
-    public static getCssValue(value: string|number): string{
+    public static getCssValue(value: string | number): string {
         value = typeof value === 'string' ? value : value + '';
         const match = value ? value.match(/^\s*\d+\s*$/) : null;
         return match ? (value + 'px') : value;
+    }
+}
+
+export class ElementEventHelper {
+    private _eventCaches: ElementEventCache[] = [];
+
+    public put(element: HTMLElement, eventType: string, eventListener: CallbackRemoval) {
+        const eventCache = this._findEventCache(element, eventType);
+        if (eventCache && !eventCache.handles.find(handle => handle == eventListener)) {
+            eventCache.handles.push(eventListener)
+        } else {
+            this._eventCaches.push(new ElementEventCache(element, eventType, [eventListener]));
+        }
+    }
+
+    public get(element: HTMLElement, eventType: string) {
+        const eventCache = this._findEventCache(element, eventType);
+        return eventCache ? eventCache.handles : null;
+    }
+
+    public del(element: HTMLElement, eventType: string, eventListener?: CallbackRemoval) {
+        const eventCache = this._findEventCache(element, eventType);
+        if (!eventCache) {
+            return;
+        }
+        if (eventListener) {
+            const index = eventCache.handles.findIndex(handle => handle == eventListener);
+            if (index != -1) {
+                eventCache.handles.splice(index, 1);
+            }
+        } else {
+            eventCache.handles = [];
+        }
+    }
+
+    private _findEventCache(element: HTMLElement, type: string) {
+        return this._eventCaches.find(eventCache => eventCache.element === element
+            && eventCache.type === type);
+    }
+}
+
+/**
+ * 事件存储及事件服务
+ */
+export class ElementEventCache {
+    constructor(public element: HTMLElement,
+                public type: string,
+                public handles: CallbackRemoval[] = []) {
     }
 }
