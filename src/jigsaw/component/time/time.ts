@@ -52,7 +52,7 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
         if (<TimeGr>value != this._gr) {
             this._gr = <TimeGr>value;
             this._value = TimeService.getFormatDate(this._value, this._gr);
-            if (this._timepicker) {
+            if (this._timePicker) {
                 this._initDatePicker();
             }
         }
@@ -97,11 +97,11 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
         if (value) {
             this._limitEnd = value;
             this._checkMacro();
-            if (this._timepicker) {
-                if(this._timepicker.minDate() && this._timepicker.minDate() > TimeService.getDate(this.limitEnd, <TimeGr>this.gr)){
-                    this._timepicker.minDate(this.limitEnd)
+            if (this._timePicker) {
+                if(this._timePicker.minDate() && this._timePicker.minDate() > TimeService.getDate(this.limitEnd, <TimeGr>this.gr)){
+                    this._timePicker.minDate(this.limitEnd)
                 }
-                this._timepicker.maxDate(this.limitEnd);
+                this._timePicker.maxDate(this.limitEnd);
                 this._weekHandle();
                 this._handleRecommended(this._el.nativeElement, this._popService);
             }
@@ -120,11 +120,11 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
         if (value) {
             this._limitStart = value;
             this._checkMacro();
-            if (this._timepicker) {
-                if(this._timepicker.maxDate() && this._timepicker.maxDate() < TimeService.getDate(this.limitStart, <TimeGr>this.gr)){
-                    this._timepicker.maxDate(this.limitStart)
+            if (this._timePicker) {
+                if(this._timePicker.maxDate() && this._timePicker.maxDate() < TimeService.getDate(this.limitStart, <TimeGr>this.gr)){
+                    this._timePicker.maxDate(this.limitStart)
                 }
-                this._timepicker.minDate(this.limitStart);
+                this._timePicker.minDate(this.limitStart);
                 this._weekHandle();
                 this._handleRecommended(this._el.nativeElement, this._popService);
             }
@@ -153,7 +153,7 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
             } else {
                 this._weekStart = value;
             }
-            if (this._timepicker) {
+            if (this._timePicker) {
                 TimeService.setWeekStart(this._weekStart);
                 this._initDatePicker();
                 this._handleRecommended(this._el.nativeElement, this._popService);
@@ -169,7 +169,7 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
 
 
     //time插件容器（jq对象）
-    private _timepicker: any;
+    private _timePicker: any;
 
     //定时器Id
     private _intervalId: number;
@@ -182,51 +182,13 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
         this.weekStart = TimeWeekStart.sun;
 
         this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(
-            langInfo => this._timepicker && this._timepicker.locale(langInfo.curLang));
+            langInfo => this._timePicker && this._timePicker.locale(langInfo.curLang));
     }
 
     ngOnInit() {
+        this._defineLocale();
         this._initDatePicker();
         this._checkMacro();
-
-    }
-
-    ngOnDestroy() {
-        this._destroyPicker();
-        this._langChangeSubscriber.unsubscribe();
-    }
-
-    private _destroyPicker() {
-        if (this._timepicker) {
-            this._timepicker.destroy();
-        }
-    }
-
-    private _initDatePicker() {
-        let insert = this._el.nativeElement.querySelector(".jigsaw-time-box");
-        TimeService.setWeekStart(this._weekStart);
-        let [result, isChange] = this._handleValue(<Time>this.date);
-        if (isChange) {
-            this._value = result;
-        }
-        this._destroyPicker();
-        $(insert).datetimepicker({
-            inline: true,
-            defaultDate: TimeService.getDate(<string>this.date, <TimeGr>this.gr),
-            format: TimeService.getFormatter(<TimeGr>this.gr),
-            minDate: this._limitStart && TimeService.getDate(<string>this.limitStart, <TimeGr>this.gr),
-            maxDate: this._limitEnd && TimeService.getDate(<string>this.limitEnd, <TimeGr>this.gr)
-        }).on("dp.change", (e) => {
-            let changeValue = TimeService.getFormatDate(e.date, <TimeGr>this.gr);
-            if (this.date != changeValue) {
-                this._handleValueChange(changeValue, <TimeGr>this.gr);
-            }
-        });
-        this._timepicker = $(insert).data("DateTimePicker");
-        this._defineLocale();
-        this._timepicker.locale(this._translateService.getBrowserLang());
-
-        this._handleValueChange(<Time>this.date, <TimeGr>this.gr, true);
     }
 
     private _defineLocale() {
@@ -326,10 +288,49 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
         });
     }
 
+    ngOnDestroy() {
+        this._destroyPicker();
+        this._langChangeSubscriber.unsubscribe();
+    }
+
+    private _destroyPicker() {
+        if (this._timePicker) {
+            this._timePicker.destroy();
+        }
+    }
+
+    private _initDatePicker() {
+        const insert = this._el.nativeElement.querySelector(".jigsaw-time-box");
+        TimeService.setWeekStart(this._weekStart);
+        let [result, isChange] = this._handleValue(<Time>this.date);
+        if (isChange) {
+            this._value = result;
+        }
+        this._destroyPicker();
+        const picker = $(insert).datetimepicker({
+            inline: true,
+            defaultDate: TimeService.getDate(<string>this.date, <TimeGr>this.gr),
+            format: TimeService.getFormatter(<TimeGr>this.gr),
+            minDate: this._limitStart && TimeService.getDate(<string>this.limitStart, <TimeGr>this.gr),
+            maxDate: this._limitEnd && TimeService.getDate(<string>this.limitEnd, <TimeGr>this.gr)
+        });
+        picker.off('dp.change');
+        picker.on("dp.change", (e) => {
+            let changeValue = TimeService.getFormatDate(e.date, <TimeGr>this.gr);
+            if (this.date != changeValue) {
+                this._handleValueChange(changeValue, <TimeGr>this.gr);
+            }
+        });
+        this._timePicker = $(insert).data("DateTimePicker");
+        this._timePicker.locale(this._translateService.getBrowserLang());
+
+        this._handleValueChange(<Time>this.date, <TimeGr>this.gr, true);
+    }
+
     //设置插件选中时间值
     private _setDate(value: Time) {
-        if (this._timepicker) {
-            this._timepicker.date(TimeService.getFormatDate(value));
+        if (this._timePicker) {
+            this._timePicker.date(TimeService.getFormatDate(value));
             this._handleValueChange(<Time>this.date, <TimeGr>this.gr);
             this._weekHandle();
             this._handleRecommended(this._el.nativeElement, this._popService);
@@ -353,9 +354,9 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
     }
 
     private _handleLimitStartAndEnd() {
-        if (this._timepicker) {
-            this._limitStart && this._timepicker.minDate(TimeService.addDate(<string>this.limitStart, -1, TimeUnit.s));
-            this._limitEnd && this._timepicker.maxDate(TimeService.addDate(<string>this.limitEnd, 1, TimeUnit.s));
+        if (this._timePicker) {
+            this._limitStart && this._timePicker.minDate(TimeService.addDate(<string>this.limitStart, -1, TimeUnit.s));
+            this._limitEnd && this._timePicker.maxDate(TimeService.addDate(<string>this.limitEnd, 1, TimeUnit.s));
             this._weekHandle();
             this._handleRecommended(this._el.nativeElement, this._popService);
         }
