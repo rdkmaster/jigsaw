@@ -1,6 +1,7 @@
 import {TranslateService} from "@ngx-translate/core";
 import {CommonUtils} from "./common-utils";
 import {TranslateHelper} from "./translate-helper";
+import {CallbackRemoval} from "jigsaw/core/data/component-data";
 
 export class InternalUtils {
     public static _uniqueIdIndex = 0;
@@ -29,8 +30,8 @@ export class InternalUtils {
         return prefix + this._uniqueIdIndex;
     };
 
-    private static _initI18nWithLang(translateService: TranslateService, compName: string, translations: Object, lang:string):void {
-        let curLangTransByApp:Object;
+    private static _initI18nWithLang(translateService: TranslateService, compName: string, translations: Object, lang: string): void {
+        let curLangTransByApp: Object;
         const compTrans = TranslateHelper[compName];
         if (compTrans) {
             curLangTransByApp = compTrans[lang];
@@ -39,7 +40,7 @@ export class InternalUtils {
             curLangTransByApp = {};
         }
 
-        let curLangTrans:Object = translations[lang];
+        let curLangTrans: Object = translations[lang];
         CommonUtils.extendObject(curLangTrans, curLangTransByApp);
         let resultTrans = {};
         resultTrans[compName] = curLangTrans;
@@ -124,5 +125,54 @@ export class AffixUtils {
             //DTD未声明
             return document.body;
         }
+    }
+}
+
+/*
+ *事件存储及事件服务
+ * */
+export class EventProvider {
+    private _eventCaches: Array<EventCache> = [];
+
+    public set(element: HTMLElement, type: string, removeElementListener: CallbackRemoval) {
+        const eventCache = this._findEventCache(element, type);
+        if (eventCache && !eventCache.handles.find(handle => handle == removeElementListener)) {
+            eventCache.handles.push(removeElementListener)
+        } else {
+            this._eventCaches.push(new EventCache(element, type, [removeElementListener]));
+        }
+    }
+
+    public get(element: HTMLElement, type: string) {
+        const eventCache = this._findEventCache(element, type);
+        return eventCache ? eventCache.handles : null;
+    }
+
+    public del(element: HTMLElement, type: string, removeElementListener?: CallbackRemoval) {
+        const eventCache = this._findEventCache(element, type);
+        if (eventCache) {
+            if (removeElementListener) {
+                const index = eventCache.handles.findIndex(handle => handle == removeElementListener);
+                if (index != -1) {
+                    eventCache.handles.splice(index, 1);
+                }
+            } else {
+                eventCache.handles = [];
+            }
+        } else {
+            return;
+        }
+    }
+
+    private _findEventCache(element: HTMLElement, type: string) {
+        return this._eventCaches.find(eventCache => eventCache.element === element
+        && eventCache.type === type);
+    }
+}
+
+export class EventCache {
+    constructor(public element: HTMLElement,
+                public type: string,
+                public handles: Array<CallbackRemoval> = []) {
     }
 }

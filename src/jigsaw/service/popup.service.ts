@@ -12,7 +12,7 @@ import {
 } from "@angular/core";
 import {CommonUtils} from "../core/utils/common-utils";
 import {JigsawBlock} from "../component/block/block";
-import {AffixUtils} from "../core/utils/internal-utils";
+import {AffixUtils, EventProvider} from "../core/utils/internal-utils";
 import {IDynamicInstantiatable} from "../component/core";
 
 export enum PopupEffect {
@@ -89,6 +89,8 @@ export class PopupService {
     //全局插入点
     private _viewContainerRef: ViewContainerRef;
     private _renderer: Renderer2;
+
+    private _eventProvider: EventProvider = new EventProvider();
 
     constructor(private _cfr: ComponentFactoryResolver,
                 private _appRef: ApplicationRef) {
@@ -225,7 +227,12 @@ export class PopupService {
         }
 
         //弹出EmbeddedViewRef时，防止同一个HtmlElement被反复弹出和销毁，使的弹出时监听到上次销毁时的animationend事件
-        element.removeEventListener('animationend');
+        const removeEventListeners = this._eventProvider.get(element, 'animationend');
+        if(removeEventListeners instanceof Array){
+            removeEventListeners.forEach(removeEventListener => {
+                removeEventListener()
+            })
+        }
     }
 
     private _popupFactory(what: Type<IPopupable> | TemplateRef<any>, options: PopupOptions): PopupInfo {
@@ -355,8 +362,10 @@ export class PopupService {
         if (event) {
             const removeElementListen = renderer.listen(element, 'animationend', () => {
                 removeElementListen();
+                this._eventProvider.del(element, 'animationend', removeElementListen);
                 event.emit(PopupEventType.ready);
             });
+            this._eventProvider.set(element, 'animationend', removeElementListen);
         }
     }
 
@@ -364,8 +373,10 @@ export class PopupService {
         renderer.addClass(element, PopupService._getPopupEffect(options).hideEffect);
         const removeElementListen = renderer.listen(element, 'animationend', () => {
             removeElementListen();
+            this._eventProvider.del(element, 'animationend', removeElementListen);
             cb();
         });
+        this._eventProvider.set(element, 'animationend', removeElementListen);
     }
 
     private static _getPopupEffect(options: PopupOptions) {
