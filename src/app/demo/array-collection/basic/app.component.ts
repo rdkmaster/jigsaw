@@ -1,8 +1,5 @@
-import {
-    Component, ElementRef, OnInit, ViewEncapsulation,
-    Renderer2, ViewContainerRef
-} from "@angular/core";
-import {ArrayCollection, PageableArray} from "jigsaw/core/data/array-collection";
+import {Component, ElementRef, OnInit, Renderer2, ViewContainerRef, ViewEncapsulation} from "@angular/core";
+import {ArrayCollection} from "jigsaw/core/data/array-collection";
 import {Http} from "@angular/http";
 
 type TestMsg = {
