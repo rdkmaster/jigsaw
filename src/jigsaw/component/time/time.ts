@@ -181,12 +181,8 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
         this._refreshInterval = 0;
         this.weekStart = TimeWeekStart.sun;
 
-        this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(langInfo => {
-            if (!this._timepicker) {
-                return;
-            }
-            this._timepicker.locale(langInfo.curLang);
-        });
+        this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(
+            langInfo => this._timepicker && this._timepicker.locale(langInfo.curLang));
     }
 
     ngOnInit() {
@@ -268,7 +264,7 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
                 }
             },
             meridiem : function (hour, minute, isLower) {
-                var hm = hour * 100 + minute;
+                let hm = hour * 100 + minute;
                 if (hm < 600) {
                     return '凌晨';
                 } else if (hm < 900) {
@@ -603,7 +599,7 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
             nodeName = "td:not(.disabled)";
         }
         let selector = selectorBefore + granularity + selectorAfter + nodeName;
-        if (!!isHead) {
+        if (isHead) {
             const theadNode = ">table>thead>tr>th.picker-switch[colspan]";
             selector = selectorBefore + granularity + theadNode;
             return nativeElement.querySelector(selector);
