@@ -228,9 +228,10 @@ export class PopupService {
 
         //弹出EmbeddedViewRef时，防止同一个HtmlElement被反复弹出和销毁，使的弹出时监听到上次销毁时的animationend事件
         const removeEventListeners = this._eventProvider.get(element, 'animationend');
-        if(removeEventListeners instanceof Array){
+        if (removeEventListeners instanceof Array) {
             removeEventListeners.forEach(removeEventListener => {
-                removeEventListener()
+                removeEventListener();
+                this._eventProvider.del(element, 'animationend', removeEventListener);
             })
         }
     }
