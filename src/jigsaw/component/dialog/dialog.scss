@@ -12,7 +12,6 @@ $dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
     background: #FFF;
     border: 1px solid #ddd;
     border-radius: 4px;
-    cursor: move;
     .#{$dialog-prefix-cls}-head {
         @include clearfix;
         line-height: 20px;
@@ -21,6 +20,7 @@ $dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
         font-size: 14px;
         background: $component-background;
         border-bottom: 1px solid $border-color-base;
+        cursor: move;
         /deep/ [jigsaw-title]{
             float: left;
         }
