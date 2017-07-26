@@ -2,7 +2,7 @@
 我们今天来玩一个老掉牙的技术：正则表达式。这个文章也不是正则表达式的入门，网上有大把的入门文章可以看，我们这里谈的是正则表达式的实战。所以如果你对正则有一定基础的，推荐你仔细阅读，这个文章不会让你失望的。
 
 ## 辣么从哪开始呢？
-这事要从这篇文章说起[《你所不知道的plunker用法 —— 分享Jigsaw七巧板的 Live Demo 解决方案》](...)，文章的最后提到我们实现了一个小工具用于将 Jigsaw (<https://github.com/rdkmaster/jigsaw>) 主工程中的demo代码转为可独立运行的plunker代码，我们今天就来看看这个工具是如何做到的。具体实现过程和 Jigsaw (<https://github.com/rdkmaster/jigsaw>) 工程耦合太重，没必要在本文展开，我们主要关注这个工具的正则表达式部分。没错，我们要做的，就是拿正则表达式来解析TypeScript代码，并将这些代码硬生生转为其他形态的代码。
+这事要从这篇文章说起[《你所不知道的plunker用法 —— 分享Jigsaw七巧板的 Live Demo 解决方案》](https://mp.weixin.qq.com/s?__biz=MzIwMTYyMDEyMg==&amp;mid=2247483734&amp;idx=1&amp;sn=f7a1da7f8bba13a8b28307e48fb06a5e&amp;chksm=96ea6ea3a19de7b59240fa0d99915c07cc1db3fd172102c82f2c4a0771b25b02cff9cd57d182#rd)，文章的最后提到我们实现了一个小工具用于将 Jigsaw (<https://github.com/rdkmaster/jigsaw>) 主工程中的demo代码转为可独立运行的plunker代码，我们今天就来看看这个工具是如何做到的。具体实现过程和 Jigsaw (<https://github.com/rdkmaster/jigsaw>) 工程耦合太重，没必要在本文展开，我们主要关注这个工具的正则表达式部分。没错，我们要做的，就是拿正则表达式来解析TypeScript代码，并将这些代码硬生生转为其他形态的代码。
 
 ## 先看看我们到底要做啥
 看图说话
