@@ -14,6 +14,10 @@ import {CommonUtils, ElementEventHelper} from "../core/utils/common-utils";
 import {JigsawBlock} from "../component/block/block";
 import {AffixUtils} from "../core/utils/internal-utils";
 import {IDynamicInstantiatable} from "../component/core";
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/map';
+import {Subscription} from "rxjs/Subscription";
 
 export enum PopupEffect {
     fadeIn, fadeOut, bubbleIn, bubbleOut
@@ -93,7 +97,9 @@ export class PopupService {
     private _eventHelper: ElementEventHelper = new ElementEventHelper();
 
     constructor(private _cfr: ComponentFactoryResolver,
-                private _appRef: ApplicationRef) {
+                private _appRef: ApplicationRef,
+                private _router: Router,
+                private _activatedRoute: ActivatedRoute) {
 
     }
 
@@ -121,6 +127,20 @@ export class PopupService {
                 }
             });
         }
+    }
+
+    private _disposerSubscribe(disposer: PopupDisposer): void {
+        const disposerSubscription: Subscription = this._router.events
+            .filter(event => event instanceof NavigationEnd)
+            .map(() => this._activatedRoute)
+            .map(route => {
+                while (route.firstChild) route = route.firstChild;
+                return route;
+            })
+            .subscribe(() => {
+                disposerSubscription.unsubscribe();
+                disposer();
+            });
     }
 
     /**
@@ -203,7 +223,8 @@ export class PopupService {
     private _beforePopup(options: PopupOptions, element: HTMLElement, renderer: Renderer2, disposer: PopupDisposer): PopupDisposer[] {
         this._removeAnimation(options, element, renderer);
         this._setStyle(options, element, renderer);
-        return this._setWindowListener(options, element, renderer, disposer);
+        this._disposerSubscribe(disposer);
+        return this._setWindowListener(options, element, renderer);
     }
 
     private _setStyle(options: PopupOptions, element: HTMLElement, renderer: Renderer2): void {
@@ -312,7 +333,7 @@ export class PopupService {
         }
     }
 
-    private _setWindowListener(options: PopupOptions, element: HTMLElement, renderer: Renderer2, disposer: PopupDisposer): PopupDisposer[] {
+    private _setWindowListener(options: PopupOptions, element: HTMLElement, renderer: Renderer2): PopupDisposer[] {
         let removeWindowListens: PopupDisposer[] = [];
         if (this._isGlobalPopup(options)) {
             removeWindowListens.push(renderer.listen('window', 'resize', () => {
@@ -322,9 +343,6 @@ export class PopupService {
                     (document.body.clientWidth / 2 - element.offsetWidth / 2) + 'px');
             }));
         }
-        removeWindowListens.push(renderer.listen('window', 'popstate', () => {
-            disposer()
-        }));
         return removeWindowListens;
     }
 
