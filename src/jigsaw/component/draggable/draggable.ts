@@ -1,4 +1,4 @@
-import {Directive, Renderer2, ElementRef, NgModule, OnInit, Input, OnDestroy} from "@angular/core";
+import {Directive, Renderer2, ElementRef, NgModule, OnInit, Input, OnDestroy, NgZone} from "@angular/core";
 import {AffixUtils} from "../../core/utils/internal-utils";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {CallbackRemoval} from "../../core/data/component-data";
@@ -19,7 +19,8 @@ export class JigsawDraggable implements OnInit, OnDestroy {
     public affectedSelector: string;
 
     constructor(private _renderer: Renderer2,
-                private _elementRef: ElementRef) {
+                private _elementRef: ElementRef,
+                private _zone: NgZone) {
     }
 
     private _dragStart = (event) => {
@@ -33,12 +34,14 @@ export class JigsawDraggable implements OnInit, OnDestroy {
     };
 
     private _dragMove = (event) => {
-        if (this._draging) {
-            const ox = event.clientX - this._position[0];
-            const oy = event.clientY - this._position[1];
-            this._renderer.setStyle(this._dragTarget, 'left', ox + 'px');
-            this._renderer.setStyle(this._dragTarget, 'top', oy + 'px');
-        }
+        this._zone.runOutsideAngular(() => {
+            if (this._draging) {
+                const ox = event.clientX - this._position[0];
+                const oy = event.clientY - this._position[1];
+                this._renderer.setStyle(this._dragTarget, 'left', ox + 'px');
+                this._renderer.setStyle(this._dragTarget, 'top', oy + 'px');
+            }
+        })
     };
 
     private _dragEnd = () => {
