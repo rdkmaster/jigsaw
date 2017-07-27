@@ -96,6 +96,45 @@ export class CommonUtils {
         const match = value ? value.match(/^\s*\d+\s*$/) : null;
         return match ? (value + 'px') : value;
     }
+
+    /**
+     *
+     * @param element
+     * @param selector 支持'.className' '#id' '[attr]' 'tagName'
+     * @returns {HTMLElement}
+     */
+    public static getParentNodeBySelector(element: HTMLElement, selector: string): HTMLElement {
+        if (element instanceof HTMLElement){
+            let parent = element.parentElement;
+            selector = selector.trim();
+            if (selector.match(/^#.+/)) {
+                selector = selector.replace("#", '');
+                while (parent && parent.getAttribute('id') !== selector) {
+                    parent = parent.parentElement;
+                }
+                return parent;
+            } else if (selector.match(/^\..+/)) {
+                selector = selector.replace(".", '');
+                while (parent && !parent.classList.contains(selector)) {
+                    parent = parent.parentElement;
+                }
+                return parent;
+            } else if (selector.match(/^\[.+\]$/)) {
+                selector = selector.replace(/[\[\]]/g, '');
+                while (parent && !parent.hasAttribute(selector)) {
+                    parent = parent.parentElement;
+                }
+                return parent;
+            } else {
+                while (parent && parent.tagName.toLowerCase() !== selector) {
+                    parent = parent.parentElement;
+                }
+                return parent;
+            }
+        }else {
+            return null;
+        }
+    }
 }
 
 export class ElementEventHelper {

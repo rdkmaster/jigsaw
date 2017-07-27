@@ -1,41 +1,89 @@
-import {Directive, Renderer2, ElementRef, NgModule} from "@angular/core";
-
+import {Directive, Renderer2, ElementRef, NgModule, OnInit, Input, OnDestroy, NgZone} from "@angular/core";
+import {AffixUtils} from "../../core/utils/internal-utils";
+import {CommonUtils} from "../../core/utils/common-utils";
+import {CallbackRemoval} from "../../core/data/component-data";
 
 @Directive({
-    selector: '[jigsaw-draggable]',
-    host:{
-        '[attr.draggable]': 'true',
-        '(dragstart)': '_onDragstart($event)',
-        //'(draggable)': '_onDrag($event)',
-        '(dragend)': '_onDragend($event)'
-    }
+    selector: '[jigsaw-draggable]'
 })
-export class JigsawDraggable{
-    private _ox: number;
-    private _oy: number;
-    private _cx: number;
-    private _cy: number;
+export class JigsawDraggable implements OnInit, OnDestroy {
+    private _dragTarget: HTMLElement;
+    private _host: HTMLElement;
+    private _draging: boolean = false;
+    private _position: number[];
+    private _removeHostMouseDownListener: CallbackRemoval;
+    private _removeWindowMouseMoveListener: CallbackRemoval;
+    private _removeWindowMouseUpListener: CallbackRemoval;
 
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef){
+    @Input()
+    public affectedSelector: string;
+
+    constructor(private _renderer: Renderer2,
+                private _elementRef: ElementRef,
+                private _zone: NgZone) {
     }
 
-    _onDragstart(event){
-        event.dataTransfer.effectAllowed = 'move';
-        event.dataTransfer.setData('text', 'jigsaw draggable');
-        this._cx = event.clientX;
-        this._cy = event.clientY;
+    private _dragStart = (event) => {
+        this._position = [event.clientX - AffixUtils.offset(this._dragTarget).left,
+            event.clientY - AffixUtils.offset(this._dragTarget).top];
+        this._draging = true;
+        this._removeWindowMouseMoveListener = this._renderer.listen(document, 'mousemove', this._dragMove);
+        this._removeWindowMouseUpListener = this._renderer.listen(document, 'mouseup', this._dragEnd);
+        event.preventDefault();
+        event.stopPropagation();
+    };
 
+    private _dragMove = (event) => {
+        this._zone.runOutsideAngular(() => {
+            if (this._draging) {
+                const ox = event.clientX - this._position[0];
+                const oy = event.clientY - this._position[1];
+                this._renderer.setStyle(this._dragTarget, 'left', ox + 'px');
+                this._renderer.setStyle(this._dragTarget, 'top', oy + 'px');
+            }
+        })
+    };
+
+    private _dragEnd = () => {
+        this._draging = false;
+        this._position = null;
+        this._removeWindowListener();
+    };
+
+    ngOnInit() {
+        this._host = this._elementRef.nativeElement;
+        this._dragTarget = this.affectedSelector ?
+            CommonUtils.getParentNodeBySelector(this._host, this.affectedSelector) : this._host;
+
+        setTimeout(() => {
+            if (this._isElementAffixed(this._dragTarget)) {
+                this._removeHostMouseDownListener = this._renderer.listen(this._host, 'mousedown', this._dragStart);
+            }
+        })
     }
 
-    _onDragend(event){
+    private _isElementAffixed(element: HTMLElement): boolean {
+        if (!(element instanceof HTMLElement)) return false;
+        const positionType = element.style.position;
+        return positionType == 'fixed' || positionType == 'absolute';
+    }
 
-        this._ox = event.clientX - this._cx + this._elementRef.nativeElement.offsetLeft;
-        this._oy = event.clientY - this._cy + this._elementRef.nativeElement.offsetTop;
-        this._renderer.setStyle(this._elementRef.nativeElement, 'left', this._ox + 'px');
-        this._renderer.setStyle(this._elementRef.nativeElement, 'top', this._oy + 'px');
+    private _removeWindowListener(){
+        if(this._removeWindowMouseMoveListener){
+            this._removeWindowMouseMoveListener();
+        }
+        if(this._removeWindowMouseUpListener){
+            this._removeWindowMouseUpListener();
+        }
+    }
+
+    ngOnDestroy(){
+        if(this._removeHostMouseDownListener){
+            this._removeHostMouseDownListener();
+        }
+        this._removeWindowListener();
     }
 }
-
 
 @NgModule({
     imports: [],
