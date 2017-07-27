@@ -18,13 +18,16 @@ export class JigsawDraggable implements OnInit, OnDestroy {
     @Input()
     public affectedSelector: string;
 
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
+    constructor(private _renderer: Renderer2,
+                private _elementRef: ElementRef) {
     }
 
     private _dragStart = (event) => {
         this._position = [event.clientX - AffixUtils.offset(this._dragTarget).left,
             event.clientY - AffixUtils.offset(this._dragTarget).top];
         this._draging = true;
+        this._removeWindowMouseMoveListener = this._renderer.listen(document, 'mousemove', this._dragMove);
+        this._removeWindowMouseUpListener = this._renderer.listen(document, 'mouseup', this._dragEnd);
         event.preventDefault();
         event.stopPropagation();
     };
@@ -41,6 +44,7 @@ export class JigsawDraggable implements OnInit, OnDestroy {
     private _dragEnd = () => {
         this._draging = false;
         this._position = null;
+        this._removeWindowListener();
     };
 
     ngOnInit() {
@@ -51,8 +55,6 @@ export class JigsawDraggable implements OnInit, OnDestroy {
         setTimeout(() => {
             if (this._isElementAffixed(this._dragTarget)) {
                 this._removeHostMouseDownListener = this._renderer.listen(this._host, 'mousedown', this._dragStart);
-                this._removeWindowMouseMoveListener = this._renderer.listen(document, 'mousemove', this._dragMove);
-                this._removeWindowMouseUpListener = this._renderer.listen(document, 'mouseup', this._dragEnd);
             }
         })
     }
@@ -63,10 +65,20 @@ export class JigsawDraggable implements OnInit, OnDestroy {
         return positionType == 'fixed' || positionType == 'absolute';
     }
 
+    private _removeWindowListener(){
+        if(this._removeWindowMouseMoveListener){
+            this._removeWindowMouseMoveListener();
+        }
+        if(this._removeWindowMouseUpListener){
+            this._removeWindowMouseUpListener();
+        }
+    }
+
     ngOnDestroy(){
-        this._removeHostMouseDownListener();
-        this._removeWindowMouseMoveListener();
-        this._removeWindowMouseUpListener();
+        if(this._removeHostMouseDownListener){
+            this._removeHostMouseDownListener();
+        }
+        this._removeWindowListener();
     }
 }
 
