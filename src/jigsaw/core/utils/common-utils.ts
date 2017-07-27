@@ -104,39 +104,36 @@ export class CommonUtils {
      * @returns {HTMLElement}
      */
     public static getParentNodeBySelector(element: HTMLElement, selector: string): HTMLElement {
-        if (!(element instanceof HTMLElement)) return;
-        let parent = element.parentElement;
-        selector = selector.trim();
-        if (selector.match(/^#.+/)) {
-            selector = selector.replace("#", '');
-            while (parent.getAttribute('id') !== selector) {
-                parent = parent.parentElement;
-                if (!parent) return null;
+        if (element instanceof HTMLElement){
+            let parent = element.parentElement;
+            selector = selector.trim();
+            if (selector.match(/^#.+/)) {
+                selector = selector.replace("#", '');
+                while (parent && parent.getAttribute('id') !== selector) {
+                    parent = parent.parentElement;
+                }
+                return parent;
+            } else if (selector.match(/^\..+/)) {
+                selector = selector.replace(".", '');
+                while (parent && !parent.classList.contains(selector)) {
+                    parent = parent.parentElement;
+                }
+                return parent;
+            } else if (selector.match(/^\[.+\]$/)) {
+                selector = selector.replace(/[\[\]]/g, '');
+                while (parent && !parent.hasAttribute(selector)) {
+                    parent = parent.parentElement;
+                }
+                return parent;
+            } else {
+                while (parent && parent.tagName.toLowerCase() !== selector) {
+                    parent = parent.parentElement;
+                }
+                return parent;
             }
-            return parent;
-        } else if (selector.match(/^\..+/)) {
-            selector = selector.replace(".", '');
-            while (!parent.classList.contains(selector)) {
-                parent = parent.parentElement;
-                if (!parent) return null;
-            }
-            return parent;
-        } else if (selector.match(/^\[.+\]$/)) {
-            selector = selector.replace(/[\[\]]/g, '');
-            while (!parent.hasAttribute(selector)) {
-                parent = parent.parentElement;
-                if (!parent) return null;
-            }
-            return parent;
-        } else if (!selector.match(/[#.\[\]]/)) {
-            while (parent.tagName.toLowerCase() !== selector) {
-                parent = parent.parentElement;
-                if (!parent) return null;
-            }
-            return parent;
+        }else {
+            return null;
         }
-
-        return null;
     }
 }
 
