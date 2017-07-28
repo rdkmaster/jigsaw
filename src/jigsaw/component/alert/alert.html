@@ -1,14 +1,20 @@
-<div class="jigsaw-alert" [ngClass]="_$alertClass" jigsaw-draggable>
-    <i class="jigsaw-alert-icon fa "></i>
-    <span class="jigsaw-alert-title">{{title | translate}}</span>
-    <span class="jigsaw-alert-close fa fa-times" (click)='dispose()'></span>
+<div class="jigsaw-alert" [ngClass]="_$alertClass">
+    <div class="jigsaw-alert-head" jigsaw-draggable draggableAffected=".jigsaw-common-alert">
+        <i class="jigsaw-alert-icon fa "></i>
+        <span class="jigsaw-alert-title">{{title | translate}}</span>
+        <span class="jigsaw-alert-close fa fa-times" (click)='dispose()'></span>
+    </div>
+
     <div class="jigsaw-alert-content">
         <ng-content></ng-content>
     </div>
+
     <div class="jigsaw-alert-button-group" *ngIf="buttons && buttons.length > 0">
-        <jigsaw-button *ngFor="let bi of buttons"
-                    (click)="dispose(bi)"
-                    class="{{bi.clazz}}">{{bi.label | translate}}
+        <jigsaw-button
+            *ngFor="let bi of buttons"
+            (click)="dispose(bi)"
+            class="{{bi.clazz}}">
+            {{bi.label | translate}}
         </jigsaw-button>
     </div>
 </div>

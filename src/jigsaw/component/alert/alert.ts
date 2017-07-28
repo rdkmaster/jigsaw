@@ -132,6 +132,9 @@ export abstract class JigsawCommonAlert extends DialogBase {
     templateUrl: 'common-alert.html',
     styleUrls: ['common-alert.scss'],
     selector: 'jigsaw-info-alert',
+    host: {
+        '[class.jigsaw-common-alert]': 'true'
+    }
 })
 export class JigsawInfoAlert extends JigsawCommonAlert {
     @ViewChild(JigsawAlert) dialog: JigsawDialog;
@@ -142,6 +145,9 @@ export class JigsawInfoAlert extends JigsawCommonAlert {
     templateUrl: 'common-alert.html',
     styleUrls: ['common-alert.scss'],
     selector: 'jigsaw-warning-alert',
+    host: {
+        '[class.jigsaw-common-alert]': 'true'
+    }
 })
 export class JigsawWarningAlert extends JigsawCommonAlert {
     @ViewChild(JigsawAlert) dialog: JigsawDialog;
@@ -152,6 +158,9 @@ export class JigsawWarningAlert extends JigsawCommonAlert {
     templateUrl: 'common-alert.html',
     styleUrls: ['common-alert.scss'],
     selector: 'jigsaw-error-alert',
+    host: {
+        '[class.jigsaw-common-alert]': 'true'
+    }
 })
 export class JigsawErrorAlert extends JigsawCommonAlert {
     @ViewChild(JigsawAlert) dialog: JigsawDialog;
