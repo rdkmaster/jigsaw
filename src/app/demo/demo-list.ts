@@ -682,6 +682,15 @@ export class DemoListComponent implements OnInit{
                 }
             ]
         },
+        {
+            title: 'Draggable',
+            navList: [
+                {
+                    label: 'h5-drag',
+                    url: '/draggable/h5-drag'
+                }
+            ]
+        }
     ].sort((a, b) => a.title.localeCompare(b.title));
 
     ngOnInit(){
@@ -799,6 +808,10 @@ const demoListRoutes = [
                 path: 'i18n',
                 loadChildren: './i18n/demo.module#I18nDemoModule'
             },
+            {
+                path: 'draggable',
+                loadChildren: './draggable/demo.module#DraggableDemoModule'
+            }
         ]
     },
     {
