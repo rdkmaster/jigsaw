@@ -4,7 +4,7 @@ import {CommonUtils} from "../../core/utils/common-utils";
 import {CallbackRemoval} from "../../core/data/component-data";
 
 @Directive({
-    selector: '[jigsaw-draggable]'
+    selector: '[jigsaw-draggable], [jigsawDraggable]'
 })
 export class JigsawDraggable implements OnInit, OnDestroy {
     private _dragTarget: HTMLElement;
@@ -16,7 +16,7 @@ export class JigsawDraggable implements OnInit, OnDestroy {
     private _removeWindowMouseUpListener: CallbackRemoval;
 
     @Input()
-    public jigsawDraggableAffected: string;
+    public draggableAffected: string;
 
     constructor(private _renderer: Renderer2,
                 private _elementRef: ElementRef,
@@ -52,8 +52,8 @@ export class JigsawDraggable implements OnInit, OnDestroy {
 
     ngOnInit() {
         this._host = this._elementRef.nativeElement;
-        this._dragTarget = this.jigsawDraggableAffected ?
-            CommonUtils.getParentNodeBySelector(this._host, this.jigsawDraggableAffected) : this._host;
+        this._dragTarget = this.draggableAffected ?
+            CommonUtils.getParentNodeBySelector(this._host, this.draggableAffected) : this._host;
 
         setTimeout(() => {
             if (this._isElementAffixed(this._dragTarget)) {
