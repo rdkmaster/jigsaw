@@ -16,7 +16,7 @@ export class JigsawDraggable implements OnInit, OnDestroy {
     private _removeWindowMouseUpListener: CallbackRemoval;
 
     @Input()
-    public affectedSelector: string;
+    public jigsawDraggableAffected: string;
 
     constructor(private _renderer: Renderer2,
                 private _elementRef: ElementRef,
@@ -24,13 +24,13 @@ export class JigsawDraggable implements OnInit, OnDestroy {
     }
 
     private _dragStart = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
         this._position = [event.clientX - AffixUtils.offset(this._dragTarget).left,
             event.clientY - AffixUtils.offset(this._dragTarget).top];
         this._draging = true;
         this._removeWindowMouseMoveListener = this._renderer.listen(document, 'mousemove', this._dragMove);
         this._removeWindowMouseUpListener = this._renderer.listen(document, 'mouseup', this._dragEnd);
-        event.preventDefault();
-        event.stopPropagation();
     };
 
     private _dragMove = (event) => {
@@ -52,8 +52,8 @@ export class JigsawDraggable implements OnInit, OnDestroy {
 
     ngOnInit() {
         this._host = this._elementRef.nativeElement;
-        this._dragTarget = this.affectedSelector ?
-            CommonUtils.getParentNodeBySelector(this._host, this.affectedSelector) : this._host;
+        this._dragTarget = this.jigsawDraggableAffected ?
+            CommonUtils.getParentNodeBySelector(this._host, this.jigsawDraggableAffected) : this._host;
 
         setTimeout(() => {
             if (this._isElementAffixed(this._dragTarget)) {

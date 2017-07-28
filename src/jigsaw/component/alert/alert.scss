@@ -6,38 +6,38 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
     @include inline-block;
     width: 100%;
     .#{$alert-prefix-cls} {
-        @include clearfix;
         background: #FFF;
         border: 1px solid #ddd;
         border-radius: 4px;
-        cursor: move;
         position: relative;
-        padding: 16px 16px 16px 70px;
-        line-height: 18px;
-        .#{$alert-prefix-cls}-icon {
-
-            display: inline-block;
-            vertical-align: middle;
-            position: absolute;
-            top: 10px;
-            left: 20px;
-            font-size: 36px;
-        }
-        .#{$alert-prefix-cls}-title {
-            font-size: 20px;
-            display: inline-block;
-            vertical-align: middle;
+        padding: 16px;
+        .#{$alert-prefix-cls}-head{
+            @include clearfix;
+            margin: 0 -16px;
+            cursor: move;
+            .#{$alert-prefix-cls}-icon {
+                @include inline-block;
+                vertical-align: middle;
+                font-size: 36px;
+                margin: 0 16px 0 20px;
+            }
+            .#{$alert-prefix-cls}-title {
+                font-size: 20px;
+                display: inline-block;
+                vertical-align: middle;
+            }
+            .#{$alert-prefix-cls}-close {
+                float: right;
+                font-size: 20px;
+                color: #999;
+                cursor: pointer;
+                @include inline-block;
+                vertical-align: middle;
+                margin-right: 16px;
+            }
         }
         .#{$alert-prefix-cls}-content {
-            padding-top: 16px;
-        }
-        .#{$alert-prefix-cls}-close {
-            float: right;
-            font-size: 20px;
-            color: #999;
-            cursor: pointer;
-            display: inline-block;
-            vertical-align: middle;
+            padding: 16px 0 0 56px;
         }
 
         &-info {
@@ -78,7 +78,6 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
             text-align: center;
             height: 50px;
             line-height: 50px;
-            margin-left: -54px;
             jigsaw-button {
                 margin-right: 8px;
                 &:last-child{
