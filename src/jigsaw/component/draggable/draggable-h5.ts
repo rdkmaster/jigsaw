@@ -2,7 +2,7 @@ import {Directive, ElementRef, NgModule, Output, EventEmitter} from "@angular/co
 
 export enum DragEventType {
     dragstart, dragend, dragover, dragenter, drag, drop
-};
+}
 
 @Directive({
     selector: '[jigsaw-draggable-h5]',
@@ -23,7 +23,7 @@ export class JigsawH5Draggable{
     }
 
     @Output()
-    drapEvent: EventEmitter<DragEventType> = new EventEmitter<DragEventType>();
+    drapEvent: EventEmitter<Event> = new EventEmitter<Event>();
 
     private _selectStartHandle(event){
         return false;
@@ -34,7 +34,7 @@ export class JigsawH5Draggable{
         //拖拽效果
         event.dataTransfer.effectAllowed = 'move';
         event.dataTransfer.setDragImage(event.target, 0, 0);
-
+        event.eventType = DragEventType.dragstart;
         this.drapEvent.emit(event);
         return true;
     }
@@ -42,6 +42,7 @@ export class JigsawH5Draggable{
     private _dragEndHandle(event){
         /*拖拽结束*/
         //event.dataTransfer.clearData("text");
+        event.eventType = DragEventType.dragend;
         this.drapEvent.emit(event);
         return false
     }
@@ -49,23 +50,27 @@ export class JigsawH5Draggable{
     private _dragOverHandle(event){
         /*拖拽元素在目标元素头上移动的时候*/
         event.preventDefault();
+        event.eventType = DragEventType.dragover;
         this.drapEvent.emit(event);
         return true;
     }
 
     private _dragEnterHandle(event){
         /*拖拽元素进入目标元素头上的时候*/
+        event.eventType = DragEventType.dragenter;
         this.drapEvent.emit(event);
         return true;
     }
 
     private _dragHandle(event){
         /*拖拽元素的时候*/
+        event.eventType = DragEventType.drag;
         this.drapEvent.emit(event);
     }
 
     private _dropHandle(event){
         /*拖拽元素进入目标元素头上，同时鼠标松开的时候*/
+        event.eventType = DragEventType.drop;
         this.drapEvent.emit(event);
         return false;
     }
