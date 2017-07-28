@@ -69,8 +69,9 @@ this.detectContentChildrenChanges(throwOnChange);
 
 > 译者：
 >
-> -《轻量级angularJs1.x实现》的地址是 <https://github.com/mgechev/light-angularjs/blob/master/lib/Scope.js#L61-L79>
-> - 这里一下子提及了angularJs1.x的好几个概念，包括scope，数据绑定，指令。不熟悉angularJs1.x的同学理解起来费劲，想弄懂的话，自行搜索吧。个人认为可以无视，毕竟这个文章的重点不是在这里。你就认为Angular2+的处理方式比angularJs1.x牛逼很多就好了，哈哈。
+> 《轻量级angularJs1.x实现》的地址是 <https://github.com/mgechev/light-angularjs/blob/master/lib/Scope.js#L61-L79
+>
+> 这里一下子提及了angularJs1.x的好几个概念，包括scope，数据绑定，指令。不熟悉angularJs1.x的同学理解起来费劲，想弄懂的话，自行搜索吧。个人认为可以无视，毕竟这个文章的重点不是在这里。你就认为Angular2+的处理方式比angularJs1.x牛逼很多就好了，哈哈。
 
 上面代码包含了一个来自angular-seed的某个编译后的组件的代码，这些代码是由编译器生成的，包含了一个 `detectChangesInternal` 方法的实现。Angular框架通过直接属性访问的方式读取了数据绑定中的某些值，并且采用了最高效的方式与新的值做比较。一旦Angular框架发现这些值发生了变化，它就立即更新只受这些数据波及的DOM元素。
 
@@ -135,8 +136,9 @@ Angular编译器最cool的一个点是它可以在页面运行时（例如在用
 
 > 译者：
 >
-> -《Angular2编译器》一文链接 <https://www.youtube.com/watch?v=kW9cJsvcsGo>
-> - 它的胶片链接 <https://speakerdeck.com/mgechev/angular-toolset-support?slide=69>
+> 《Angular2编译器》一文链接 <https://www.youtube.com/watch?v=kW9cJsvcsGo>
+>
+> 它的胶片链接 <https://speakerdeck.com/mgechev/angular-toolset-support?slide=69>
 
 Angular模板编译器收到一个组件和它的上下文（可以这认为是组件在组件树上的位置）作为输入，并产生了如下文件：
 - `*.ngfactory.ts` 我们在说明组件上下文的小节会仔细看看这些文件
@@ -412,3 +414,8 @@ Angular的编译器利用了JS虚拟机的内联缓存机制，极大的提升�
 - 2.5X Smaller Angular 2 Applications with Google Closure Compiler <http://blog.mgechev.com/2016/07/21/even-smaller-angular2-applications-closure-tree-shaking/>
 - Who Killed My Battery: Analyzing Mobile Browser Energy Consumption <https://crypto.stanford.edu/~dabo/pubs/abstracts/browserpower.html>
 - Angular的源码 <https://github.com/angular/angular>
+
+
+## 题外话
+
+这些文章都是我们在研发Jigsaw七巧板过程中的技术总结，如果你喜欢这个文章，请帮忙到 Jigsaw七巧板的工程上点个星星鼓励我们一下（点击阅读原文看直达 <https://github.com/rdkmaster/jigsaw>），这样我们会更有动力写出类似高质量的文章。Jigsaw七巧板现在处于起步阶段，非常需要各位的呵护。
