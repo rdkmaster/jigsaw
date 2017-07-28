@@ -384,3 +384,31 @@ class ThirdPartyComponent {
 
 ![](aot.png)
 
+Angular编译器不仅能够生产JavaScript，还能够生成TypeScript，这一点还带给我们要给非常棒的特性：在模板中进行类型检查。
+
+由于应用的模板是纯JavaScript/TypeScript，我们可以精确的知道哪些东西在哪被用到了，这一点让我们可以对代码进行**有效的摇树操作**，它能够把所有的未使用过的指令/模块从我们生产环境中的应用代码包中给删除掉。这首要的一点是，我们的应用程序代码包中，再也无需包含 `@angular/compiler` 这个模块，因为我们在应用的运行时根本就用不到它。
+
+**有一点需要注意的是，一个中大型的应用代码包，在进行AoT编译过之后，可能会比使用JiT方式编译的代码包要大一些**。这是因为 `ngc` 生成的对JS虚拟机友好的代码比基于HTML模板的代码要冗长一些，并且这些代码还包含了脏检查逻辑。如果你想降低你的应用代码的尺寸，你可以通过懒加载的方式来实现，Angular内建的路由已经支持这一点了。
+
+**在某些场合，JiT模式的编译根本就无法进行**，这是由于JiT在浏览器中，不仅生成代码，它还使用 `eval` 来运行它们，浏览器的内容安全策略以及特定的环境不允许这些被生成的代码被动态的运行。
+
+最后一个但不是唯一的：**节能**！在接受到的是编译后的代码时，用户的设备可以花更少的时间运行他们，这节约了电池的电力。节能的量有多少呢？下面是我做的一些有趣的计算的结果：
+
+基于《Who Killed My Battery: Analyzing Mobile Browser Energy Consumption》这偏文章的结论，访问Wikipedia时，下载和解析jQuery的过程大约需要消耗4焦耳的能量。这个文章没有提及所使用的jQuery的确切版本，基于文章发表的日期，我估计版本号是1.8.x。Wikipedia采用了gzip对静态资源做压缩，这意味着jQuery1.8.3的尺寸约33k。而被最小化并且gzip压缩后的 `@angular/compiler` 包的尺寸在103k，这意味着对这些代码的下载和解析需要消耗12.5焦的能量（我们可以忽略JiT的运算还会增加能耗的事实，这是因为jQuery和`@angular/compiler`这两个场景，都是使用了要给单一的TCP链接，这从是最大的能耗所在）。
+
+iPhone6s的电池容量是6.9Wh，即24840焦。基于AngularJs1.x官网的月访问量可以得知现在大约有一百万名Angular开发者，平均每位开发者构建了5个应用，每个应用每天约100名用户。5个app * 1m * 100用户 = 500m，在使用JiT编译这些应用，他们就需要下载 `@angular/compiler` 包，这将给地球带来 500m * 12.5J = 6250000000J焦（=1736.111111111千瓦时）的能量消耗。根据Google搜索结果，1千瓦时约等于12美分，这意味着我们每天需要消耗约 210 美元。注意到我们还没进一步对代码做摇树操作，这可能会让我们的应用程序代码降低至少一半！
+
+![](better-place.jpg)
+
+## 结论
+Angular的编译器利用了JS虚拟机的内联缓存机制，极大的提升了我们的应用程序的性能。首要的一点是我们把编译过程作为构建应用的一个环节，这不仅解决了非法`eval`的问题，还允许我们对代码做高效的摇树，降低了首次渲染的时间。
+
+不在运行时编译是否让我们失去是什么吗？在一些非常极端的场景下，我们会按需生成组件的模板，这就需要我们价值一个未编译的组件，并在浏览器中执行编译的过程，在这样的场景下，我们就需要在我们的应用代码包中包含 `@angular/compiler` 模块。AoT编译的另一个潜在缺点是，它会造成中大型应用的代码包尺寸变大。由于生成的组件模板的JavaScript代码比组件模板本身的尺寸更大，这就可能造成最终代码包的尺寸更大一些。
+
+总的来说，AoT编译是一个很好的技术，现在它已经被集成到了Angular-seed和`angular-cli`中，所以，你今天就可以去使用它了。
+
+## 参考资料
+- 内联缓存 <http://mrale.ph/blog/2012/06/03/explaining-js-vms-in-js-inline-caches.html>
+- 2.5X Smaller Angular 2 Applications with Google Closure Compiler <http://blog.mgechev.com/2016/07/21/even-smaller-angular2-applications-closure-tree-shaking/>
+- Who Killed My Battery: Analyzing Mobile Browser Energy Consumption <https://crypto.stanford.edu/~dabo/pubs/abstracts/browserpower.html>
+- Angular的源码 <https://github.com/angular/angular>
