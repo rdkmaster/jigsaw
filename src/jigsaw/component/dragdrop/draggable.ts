@@ -85,11 +85,4 @@ export class JigsawDraggable implements OnInit, OnDestroy {
     }
 }
 
-@NgModule({
-    imports: [],
-    declarations: [JigsawDraggable],
-    exports: [JigsawDraggable]
-})
-export class JigsawDraggableModule {
-}
 

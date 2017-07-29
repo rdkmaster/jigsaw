@@ -11,12 +11,12 @@ import {
     Renderer2
 } from "@angular/core";
 import {ButtonInfo, IPopupable} from "../../service/popup.service";
-import {JigsawDraggableModule} from "../draggable/draggable";
 import {AbstractJigsawComponent} from "../core";
 import {CommonModule} from "@angular/common";
 import {JigsawButtonModule} from "../button/button";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {JigsawBlock, JigsawBlockModule} from "../block/block";
+import {JigsawDraggableModule} from "../dragdrop/index";
 
 export interface IDialog extends IPopupable {
     buttons: ButtonInfo[];

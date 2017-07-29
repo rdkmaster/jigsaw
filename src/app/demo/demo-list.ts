@@ -683,11 +683,11 @@ export class DemoListComponent implements OnInit{
             ]
         },
         {
-            title: 'Draggable',
+            title: 'Drag&Drop',
             navList: [
                 {
-                    label: 'h5-drag',
-                    url: '/draggable/h5-drag'
+                    label: 'drag-to-replace',
+                    url: '/dragdrop/drag-to-replace'
                 }
             ]
         }
@@ -809,8 +809,8 @@ const demoListRoutes = [
                 loadChildren: './i18n/demo.module#I18nDemoModule'
             },
             {
-                path: 'draggable',
-                loadChildren: './draggable/demo.module#DraggableDemoModule'
+                path: 'dragdrop',
+                loadChildren: './dragdrop/demo.module#DragDropDemoModule'
             }
         ]
     },

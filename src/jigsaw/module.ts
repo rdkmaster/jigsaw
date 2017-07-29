@@ -7,7 +7,7 @@ import {JigsawCheckBoxModule} from './component/checkbox/index';
 import {JigsawCollapseModule} from './component/collapse/collapse';
 import {JigsawComboSelectModule} from './component/combo-select/index';
 import {JigsawDialogModule} from './component/dialog/dialog';
-import {JigsawDraggableModule} from './component/draggable/draggable';
+import {JigsawDraggableModule, JigsawH5DraggableModule, JigsawH5DroppableModule} from './component/dragdrop/index';
 import {JigsawGraphModule} from './component/graph/index';
 import {JigsawInputModule} from './component/input/input';
 import {JigsawLoadingModule} from './component/loading/loading';
@@ -35,6 +35,8 @@ const JIGSAW_MODULE = [
     JigsawComboSelectModule,
     JigsawDialogModule,
     JigsawDraggableModule,
+    JigsawH5DraggableModule,
+    JigsawH5DroppableModule,
     JigsawGraphModule,
     JigsawInputModule,
     JigsawLoadingModule,

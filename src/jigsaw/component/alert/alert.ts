@@ -2,10 +2,10 @@ import {Component, ElementRef, Input, NgModule, Renderer2, ViewChild} from "@ang
 import {AbstractDialogComponentBase, DialogBase, JigsawDialog, JigsawDialogModule} from "../dialog/dialog";
 import {CommonModule} from "@angular/common";
 import {JigsawButtonModule} from "../button/button";
-import {JigsawDraggableModule} from "../draggable/draggable";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {InternalUtils} from "../../core/utils/internal-utils";
 import {TranslateHelper} from "../../core/utils/translate-helper";
+import {JigsawDraggableModule} from "../dragdrop/index";
 export enum AlertLevel {
     info, warning, error, confirm
 }
