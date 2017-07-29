@@ -1,9 +1,11 @@
+.drag-wrap{
+    float: left;
+    margin-right: 10px;
+}
 .com-box{
     width: 100px;
     height: 100px;
     line-height: 100px;
-    float: left;
-    margin-right: 10px;
     text-align: center;
     button{
         display: inline-block;
