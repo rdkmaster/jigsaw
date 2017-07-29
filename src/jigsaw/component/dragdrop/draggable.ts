@@ -9,7 +9,7 @@ import {CallbackRemoval} from "../../core/data/component-data";
 export class JigsawDraggable implements OnInit, OnDestroy {
     private _dragTarget: HTMLElement;
     private _host: HTMLElement;
-    private _draging: boolean = false;
+    private _dragging: boolean = false;
     private _position: number[];
     private _removeHostMouseDownListener: CallbackRemoval;
     private _removeWindowMouseMoveListener: CallbackRemoval;
@@ -28,14 +28,14 @@ export class JigsawDraggable implements OnInit, OnDestroy {
         event.stopPropagation();
         this._position = [event.clientX - AffixUtils.offset(this._dragTarget).left,
             event.clientY - AffixUtils.offset(this._dragTarget).top];
-        this._draging = true;
+        this._dragging = true;
         this._removeWindowMouseMoveListener = this._renderer.listen(document, 'mousemove', this._dragMove);
         this._removeWindowMouseUpListener = this._renderer.listen(document, 'mouseup', this._dragEnd);
     };
 
     private _dragMove = (event) => {
         this._zone.runOutsideAngular(() => {
-            if (this._draging) {
+            if (this._dragging) {
                 const ox = event.clientX - this._position[0];
                 const oy = event.clientY - this._position[1];
                 this._renderer.setStyle(this._dragTarget, 'left', ox + 'px');
@@ -45,7 +45,7 @@ export class JigsawDraggable implements OnInit, OnDestroy {
     };
 
     private _dragEnd = () => {
-        this._draging = false;
+        this._dragging = false;
         this._position = null;
         this._removeWindowListener();
     };
