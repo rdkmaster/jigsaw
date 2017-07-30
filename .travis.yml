@@ -33,6 +33,7 @@ script:
   - ng test --code-coverage --watch false
   - cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
   - sh build/scripts/integrate-with-seed.sh
+  - node make-demo-independent.js
   - sh ./build/scripts/sauce_connect_block.sh
   - cd $SEED_DIR # run e2e in seed directory
   - ng build --prod
