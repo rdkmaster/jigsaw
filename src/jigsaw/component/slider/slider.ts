@@ -54,6 +54,9 @@ export class JigsawSlider extends AbstractJigsawComponent implements OnInit, OnD
     // Todo 支持滑动条点击.
     @ViewChildren(JigsawSliderHandle) private _sliderHandle: QueryList<JigsawSliderHandle>;
 
+    /**
+     * @internal
+     */
     public _$value: ArrayCollection<number> = new ArrayCollection<number>();
     private _removeRefreshCallback: CallbackRemoval;
 
@@ -188,6 +191,9 @@ export class JigsawSlider extends AbstractJigsawComponent implements OnInit, OnD
     @Input()
     public disabled: boolean = false;
 
+    /**
+     * @internal
+     */
     public _$trackStyle = {};
 
     private _setTrackStyle(value?) {
@@ -222,11 +228,14 @@ export class JigsawSlider extends AbstractJigsawComponent implements OnInit, OnD
     }
 
     // 多值时选择一个合适的触点. Todo 支持点击
-    _updateValuePosition() {
-        // let handle = this._sliderHandle.first;
-        // Todo
-    }
+    // _updateValuePosition() {
+    //     // let handle = this._sliderHandle.first;
+    //     // Todo
+    // }
 
+    /**
+     * @internal
+     */
     public _$marks: any[] = [];
     private _marks: SliderMark[];
 

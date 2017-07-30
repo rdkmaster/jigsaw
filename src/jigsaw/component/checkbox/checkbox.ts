@@ -130,6 +130,7 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements OnInit, A
 
     /**
      * 更新checkbox的样式信息
+     * @internal
      */
     public _$checkboxClass: { };
 

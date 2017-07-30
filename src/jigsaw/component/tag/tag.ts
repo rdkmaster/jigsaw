@@ -45,6 +45,9 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
 
     @Output() public close = new EventEmitter<JigsawTag>();
 
+    /**
+     * @internal
+     */
     public _$close(event) {
         event.preventDefault();
         event.stopPropagation();
@@ -53,6 +56,9 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
 
     @Output() public select = new EventEmitter<JigsawTag>();
 
+    /**
+     * @internal
+     */
     public _$select(event) {
         event.preventDefault();
         event.stopPropagation();

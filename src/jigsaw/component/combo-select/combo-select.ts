@@ -132,6 +132,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements OnDest
     @ViewChild('dropContent')
     private _contentTemplateRef: TemplateRef<any>;
 
+    /**
+     * @internal
+     */
     public _$opened: boolean = false;
 
     @Input()
@@ -163,6 +166,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements OnDest
     @Input()
     public autoWidth: boolean; //自动同步dropdown宽度，与combo-select宽度相同
 
+    /**
+     * @internal
+     */
     public _$removeTag(tag) {
         const index = this.value.indexOf(tag);
         if (index != -1) {
@@ -277,6 +283,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements OnDest
         }
     }
 
+    /**
+     * @internal
+     */
     public _$openAndCloseByClick(event) {
         event.preventDefault();
         event.stopPropagation();
@@ -300,6 +309,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements OnDest
         this.open = true;
     }
 
+    /**
+     * @internal
+     */
     public _$openByHover(event): void {
         if (this._openTrigger !== DropDownTrigger.mouseenter) return;
         event.preventDefault();
@@ -311,6 +323,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements OnDest
         this.open = true;
     }
 
+    /**
+     * @internal
+     */
     public _$closeByHover(event) {
         if (this.closeTrigger !== DropDownTrigger.mouseleave) return;
         event.preventDefault();

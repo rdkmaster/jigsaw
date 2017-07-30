@@ -13,6 +13,9 @@ import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
 })
 
 export class JigsawSwitch implements OnInit{
+    /**
+     * @internal
+     */
     public _$content: any; // 当前显示的内容.
 
     /**
@@ -74,6 +77,9 @@ export class JigsawSwitch implements OnInit{
         this._setSwitchClass();
     }
 
+    /**
+     * @internal
+     */
     public _$switchClick() {
         if(!this.disabled) {
             this.checked = !this.checked;
@@ -83,6 +89,9 @@ export class JigsawSwitch implements OnInit{
         }
     }
 
+    /**
+     * @internal
+     */
     public _$switchClass: {};
 
     /**

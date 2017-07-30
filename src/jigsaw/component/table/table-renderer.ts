@@ -27,6 +27,9 @@ export class TableHeadCheckbox extends TableCellRenderer implements OnInit {
         super();
     }
 
+    /**
+     * @internal
+     */
     public _$toggleSelectAll(checked) {
         this.tableRendererService.headState = checked;
 
@@ -79,6 +82,9 @@ export class TableCellCheckbox extends TableCellRenderer implements OnInit {
         }
     }
 
+    /**
+     * @internal
+     */
     public _$checkedChangeHandle(checked) {
         this.checkboxState.checked = checked;
         this._setHeadCheckboxState();
