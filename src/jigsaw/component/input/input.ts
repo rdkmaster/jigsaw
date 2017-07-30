@@ -24,10 +24,14 @@ export class JigsawPrefixIcon {
 })
 export class JigsawInput extends AbstractJigsawComponent implements AfterContentInit, AfterViewChecked {
     private _value: string | number; //input表单值
-    public _$longIndent: boolean = false;
     private _focused: boolean;
     private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
     private _blurEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
+
+    /**
+     * @internal
+     */
+    public _$longIndent: boolean = false;
 
 
     constructor(private _render2: Renderer2,
@@ -85,11 +89,17 @@ export class JigsawInput extends AbstractJigsawComponent implements AfterContent
         this.value = null;
     }
 
+    /**
+     * @internal
+     */
     public _$handleFocus(event: FocusEvent) {
         this._focused = true;
         this._focusEmitter.emit(event);
     }
 
+    /**
+     * @internal
+     */
     public _$handleBlur(event: FocusEvent) {
         this._focused = false;
         this._blurEmitter.emit(event);
@@ -100,6 +110,9 @@ export class JigsawInput extends AbstractJigsawComponent implements AfterContent
         event.stopPropagation();
     }
 
+    /**
+     * @internal
+     */
     public _$inputPaddingStyle: {};
 
     /**

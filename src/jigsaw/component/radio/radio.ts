@@ -72,6 +72,9 @@ export class JigsawRadioGroup extends AbstractJigsawComponent implements OnInit,
 export class JigsawRadioButton implements OnInit {
     @Input() public radioItem: any;
 
+    /**
+     * @internal
+     */
     public _$radioLabel: string;
 
     private _radioGroup: JigsawRadioGroup;
