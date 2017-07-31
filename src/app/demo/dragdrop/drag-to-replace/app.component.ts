@@ -6,12 +6,12 @@ import {JigsawDroppable} from "jigsaw/component/dragdrop/droppable";
     templateUrl: 'app.component.html',
     styleUrls: ['app.component.scss']
 })
-export class DragToReplaceDemoComponent implements AfterViewInit{
+export class DragToReplaceDemoComponent implements AfterViewInit {
     @ViewChildren(JigsawDraggable) draggables: QueryList<JigsawDraggable>;
     @ViewChildren(JigsawDroppable) droppables: QueryList<JigsawDroppable>;
     private _replacedEl: string;
 
-    ngAfterViewInit(){
+    ngAfterViewInit() {
         this.draggables.forEach(draggable => {
             const draggableEl = draggable.elementRef.nativeElement;
 
@@ -26,7 +26,7 @@ export class DragToReplaceDemoComponent implements AfterViewInit{
 
             draggable.dragEnd.subscribe(event => {
                 console.log('drag end');
-                if(this._replacedEl){
+                if (this._replacedEl) {
                     draggableEl.innerHTML = this._replacedEl;
                 }
                 this._replacedEl = null;
@@ -43,6 +43,10 @@ export class DragToReplaceDemoComponent implements AfterViewInit{
 
             droppable.dragOver.subscribe(event => {
                 console.log('drag over');
+                if (parseInt(event.target.querySelector('span').innerText) > 333) {
+                    //判断禁止拖放行为
+                    event.dataTransfer.dropEffect = 'none';
+                }
             });
 
             droppable.dropped.subscribe(event => {
