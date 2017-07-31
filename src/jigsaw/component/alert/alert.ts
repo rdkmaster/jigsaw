@@ -5,7 +5,7 @@ import {JigsawButtonModule} from "../button/button";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {InternalUtils} from "../../core/utils/internal-utils";
 import {TranslateHelper} from "../../core/utils/translate-helper";
-import {JigsawDraggableModule} from "../dragdrop/index";
+import {JigsawMoveableModule} from "../dragdrop/index";
 export enum AlertLevel {
     info, warning, error, confirm
 }
@@ -168,9 +168,9 @@ export class JigsawErrorAlert extends JigsawCommonAlert {
 }
 
 @NgModule({
-    imports: [JigsawDialogModule, JigsawDraggableModule, JigsawButtonModule, CommonModule, TranslateModule.forRoot()],
+    imports: [JigsawDialogModule, JigsawMoveableModule, JigsawButtonModule, CommonModule, TranslateModule.forRoot()],
     declarations: [JigsawAlert, JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert],
-    exports: [JigsawDialogModule, JigsawDraggableModule, JigsawAlert, JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert],
+    exports: [JigsawDialogModule, JigsawMoveableModule, JigsawAlert, JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert],
     providers: [TranslateService],
     entryComponents: [JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert]
 })

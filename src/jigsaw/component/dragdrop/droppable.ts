@@ -1,7 +1,7 @@
 import {Directive, ElementRef, Output, EventEmitter, NgZone} from "@angular/core";
 
 @Directive({
-    selector: '[jigsaw-droppable-h5]',
+    selector: '[jigsaw-droppable], [jigsawDroppable]',
     host:{
         '(dragenter)': '_dragEnterHandle($event)',
         '(dragleave)': '_dragLeaveHandle($event)',
@@ -9,7 +9,7 @@ import {Directive, ElementRef, Output, EventEmitter, NgZone} from "@angular/core
         '(drop)': '_dropHandle($event)'
     }
 })
-export class JigsawH5Droppable{
+export class JigsawDroppable{
 
     constructor(public elementRef: ElementRef, private _zone: NgZone){
     }

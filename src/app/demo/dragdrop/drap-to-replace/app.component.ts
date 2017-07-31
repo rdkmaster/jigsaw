@@ -1,14 +1,14 @@
 import {AfterViewInit, Component, QueryList, ViewChildren} from "@angular/core";
-import {JigsawH5Draggable} from "jigsaw/component/dragdrop/draggable-h5";
-import {JigsawH5Droppable} from "jigsaw/component/dragdrop/droppable-h5";
+import {JigsawDraggable} from "jigsaw/component/dragdrop/draggable";
+import {JigsawDroppable} from "jigsaw/component/dragdrop/droppable";
 
 @Component({
     templateUrl: 'app.component.html',
     styleUrls: ['app.component.scss']
 })
 export class DragToReplaceDemoComponent implements AfterViewInit{
-    @ViewChildren(JigsawH5Draggable) draggables: QueryList<JigsawH5Draggable>;
-    @ViewChildren(JigsawH5Droppable) droppables: QueryList<JigsawH5Droppable>;
+    @ViewChildren(JigsawDraggable) draggables: QueryList<JigsawDraggable>;
+    @ViewChildren(JigsawDroppable) droppables: QueryList<JigsawDroppable>;
     private _replacedEl: string;
 
     ngAfterViewInit(){

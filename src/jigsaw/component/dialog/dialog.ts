@@ -16,7 +16,7 @@ import {CommonModule} from "@angular/common";
 import {JigsawButtonModule} from "../button/button";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {JigsawBlock, JigsawBlockModule} from "../block/block";
-import {JigsawDraggableModule} from "../dragdrop/index";
+import {JigsawMoveableModule} from "../dragdrop/index";
 
 export interface IDialog extends IPopupable {
     buttons: ButtonInfo[];
@@ -155,7 +155,7 @@ export class JigsawDialog extends AbstractDialogComponentBase {
 }
 
 @NgModule({
-    imports: [CommonModule, JigsawButtonModule, JigsawDraggableModule, JigsawBlockModule],
+    imports: [CommonModule, JigsawButtonModule, JigsawMoveableModule, JigsawBlockModule],
     declarations: [JigsawDialog],
     exports: [JigsawDialog],
     entryComponents: [JigsawBlock]
