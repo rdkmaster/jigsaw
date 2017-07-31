@@ -1,8 +1,4 @@
-import {Directive, ElementRef, Output, EventEmitter} from "@angular/core";
-
-export enum DragEventType {
-    dragstart, drag, dragend
-}
+import {Directive, ElementRef, Output, EventEmitter, NgZone} from "@angular/core";
 
 @Directive({
     selector: '[jigsaw-draggable-h5]',
@@ -16,11 +12,18 @@ export enum DragEventType {
 })
 export class JigsawH5Draggable{
 
-    constructor(public elementRef: ElementRef){
+    constructor(public elementRef: ElementRef, private _zone: NgZone){
     }
 
     @Output()
-    drapEvent: EventEmitter<Event> = new EventEmitter<Event>();
+    dragStart: EventEmitter<Event> = new EventEmitter<Event>();
+
+    @Output()
+    dragEnd: EventEmitter<Event> = new EventEmitter<Event>();
+
+    // 用drag命名会报错，可能与原生的冲突了
+    @Output()
+    dragging: EventEmitter<Event> = new EventEmitter<Event>();
 
     private _selectStartHandle(event){
         return false;
@@ -31,23 +34,22 @@ export class JigsawH5Draggable{
         //拖拽效果
         event.dataTransfer.effectAllowed = 'move';
         event.dataTransfer.setDragImage(event.target, 0, 0);
-        event.eventType = DragEventType.dragstart;
-        this.drapEvent.emit(event);
+        this.dragStart.emit(event);
         return true;
     }
 
     private _dragEndHandle(event){
         /*拖拽结束*/
         //event.dataTransfer.clearData("text");
-        event.eventType = DragEventType.dragend;
-        this.drapEvent.emit(event);
+        this.dragEnd.emit(event);
         return false
     }
 
     private _dragHandle(event){
         /*拖拽元素的时候*/
-        event.eventType = DragEventType.drag;
-        this.drapEvent.emit(event);
+        this._zone.runOutsideAngular(() => {
+            this.dragging.emit(event);
+        })
     }
 
 }

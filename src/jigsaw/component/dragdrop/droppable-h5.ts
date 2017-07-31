@@ -1,8 +1,4 @@
-import {Directive, ElementRef, Output, EventEmitter} from "@angular/core";
-
-export enum DropEventType {
-    dragover, dragenter, dragleave, drop
-}
+import {Directive, ElementRef, Output, EventEmitter, NgZone} from "@angular/core";
 
 @Directive({
     selector: '[jigsaw-droppable-h5]',
@@ -15,38 +11,46 @@ export enum DropEventType {
 })
 export class JigsawH5Droppable{
 
-    constructor(public elementRef: ElementRef){
+    constructor(public elementRef: ElementRef, private _zone: NgZone){
     }
 
     @Output()
-    dropEvent: EventEmitter<Event> = new EventEmitter<Event>();
+    dragEnter: EventEmitter<Event> = new EventEmitter<Event>();
+
+    @Output()
+    dragLeave: EventEmitter<Event> = new EventEmitter<Event>();
+
+    @Output()
+    dragOver: EventEmitter<Event> = new EventEmitter<Event>();
+
+    // 用drop命名会报错，可能与原生的冲突了
+    @Output()
+    dropped: EventEmitter<Event> = new EventEmitter<Event>();
 
     private _dragEnterHandle(event){
         /*拖拽元素进入目标元素头上的时候*/
-        event.eventType = DropEventType.dragenter;
-        this.dropEvent.emit(event);
+        this.dragEnter.emit(event);
         return true;
     }
 
     private _dragLeaveHandle(event){
         /*拖拽元素离开目标元素头上的时候*/
-        event.eventType = DropEventType.dragleave;
-        this.dropEvent.emit(event);
+        this.dragLeave.emit(event);
         return true;
     }
 
     private _dragOverHandle(event){
         /*拖拽元素在目标元素头上移动的时候*/
-        event.preventDefault();
-        event.eventType = DropEventType.dragover;
-        this.dropEvent.emit(event);
-        return true;
+        this._zone.runOutsideAngular(() => {
+            event.preventDefault();
+            this.dragOver.emit(event);
+            return true;
+        })
     }
 
     private _dropHandle(event){
         /*拖拽元素进入目标元素头上，同时鼠标松开的时候*/
-        event.eventType = DropEventType.drop;
-        this.dropEvent.emit(event);
+        this.dropped.emit(event);
         return false;
     }
 }
