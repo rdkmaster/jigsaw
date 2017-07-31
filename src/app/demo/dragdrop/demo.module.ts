@@ -1,7 +1,9 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {DragToReplaceDemoModule} from "./drap-to-replace/app.module";
-import {DragToReplaceDemoComponent} from "./drap-to-replace/app.component";
+import {DragToReplaceDemoModule} from "./drag-to-replace/app.module";
+import {DragToReplaceDemoComponent} from "./drag-to-replace/app.component";
+import {DragIntoCmptDemoComponent} from "./drag-into-component/app.component";
+import {DragIntoCmptDemoModule} from "./drag-into-component/app.module";
 
 const draggableDemoRoutes = [
     {
@@ -9,6 +11,9 @@ const draggableDemoRoutes = [
     },
     {
         path: 'drag-to-replace', component: DragToReplaceDemoComponent
+    },
+    {
+        path: 'drag-into-component', component: DragIntoCmptDemoComponent
     },
     {
         path: '**', //fallback router must in the last
@@ -19,7 +24,8 @@ const draggableDemoRoutes = [
 @NgModule({
     imports: [
         RouterModule.forChild(draggableDemoRoutes),
-        DragToReplaceDemoModule
+        DragToReplaceDemoModule,
+        DragIntoCmptDemoModule
     ]
 })
 export class DragDropDemoModule {

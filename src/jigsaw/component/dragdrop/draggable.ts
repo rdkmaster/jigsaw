@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Output, EventEmitter, NgZone} from "@angular/core";
+import {Directive, ElementRef, Output, EventEmitter, NgZone, Input} from "@angular/core";
 
 @Directive({
     selector: '[jigsaw-draggable], [jigsawDraggable]',
@@ -14,6 +14,9 @@ export class JigsawDraggable{
 
     constructor(public elementRef: ElementRef, private _zone: NgZone){
     }
+
+    @Input()
+    dragData: any;
 
     @Output()
     dragStart: EventEmitter<Event> = new EventEmitter<Event>();
