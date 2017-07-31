@@ -71,12 +71,11 @@ export class DragIntoCmptDemoComponent implements AfterViewInit{
 
         this.droppable.dropped.subscribe(event => {
             console.log('drop');
-            console.log(this.employees);
-            const employee = JSON.parse(event.dataTransfer.getData('text'));
-            const index = this.employees.findIndex(employee => employee.toString() === employee.toString());
+            const employeeData = JSON.parse(event.dataTransfer.getData('text'));
+            const index = this.employees.findIndex(employee => employee.toString() === employeeData.toString());
             if(index != -1){
                 this.employees.splice(index, 1);
-                this.tableData.data.push(employee);
+                this.tableData.data.push(employeeData);
                 this.tableData.refresh();
             }
         })

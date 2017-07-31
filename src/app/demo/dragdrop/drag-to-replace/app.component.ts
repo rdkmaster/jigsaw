@@ -39,11 +39,15 @@ export class DragToReplaceDemoComponent implements AfterViewInit {
 
             droppable.dragEnter.subscribe(event => {
                 console.log('drag enter');
+                if (parseInt(droppableEl.querySelector('span').innerText) > 333) {
+                    //判断禁止拖放行为
+                    event.dataTransfer.dropEffect = 'none';
+                }
             });
 
             droppable.dragOver.subscribe(event => {
                 console.log('drag over');
-                if (parseInt(event.target.querySelector('span').innerText) > 333) {
+                if (parseInt(droppableEl.querySelector('span').innerText) > 333) {
                     //判断禁止拖放行为
                     event.dataTransfer.dropEffect = 'none';
                 }
