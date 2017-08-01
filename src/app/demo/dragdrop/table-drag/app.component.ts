@@ -1,19 +1,15 @@
-import {AfterViewInit, Component, QueryList, ViewChild, ViewChildren} from "@angular/core";
+import {Component} from "@angular/core";
 import {TableData} from "jigsaw/core/data/table-data";
 import {AdditionalColumnDefine} from "jigsaw/component/table/table-api";
 import {TableDelRow, TableReplaceRow} from "./table-renderer";
-import {JigsawDroppable} from "../../../../jigsaw/directive/dragdrop/droppable";
-import {JigsawDraggable} from "../../../../jigsaw/directive/dragdrop/draggable";
+import {DragInfo} from "../../../../jigsaw/directive/dragdrop/draggable";
 
 
 @Component({
     templateUrl: 'app.component.html',
     styleUrls: ['app.component.scss']
 })
-export class TableDragDemoComponent implements AfterViewInit{
-    @ViewChildren(JigsawDraggable) draggables: QueryList<JigsawDraggable>;
-    @ViewChild('tableDrop', {read: JigsawDroppable}) tableDrop: JigsawDroppable;
-    @ViewChild('trashDrop', {read: JigsawDroppable}) trashDrop: JigsawDroppable;
+export class TableDragDemoComponent{
     tableData: TableData;
 
     employees: any[] = [
@@ -71,69 +67,57 @@ export class TableDragDemoComponent implements AfterViewInit{
         }
     ];
 
-    ngAfterViewInit(){
-        //拖拽用户块
-        this.draggables.forEach(draggable => {
-            draggable.dragStart.subscribe(event => {
-                console.log('drag start');
-                event.dataTransfer.setData('text', JSON.stringify(draggable.dragData));
-            });
-
-            draggable.dragging.subscribe(event => {
-                console.log('drag');
-            });
-
-            draggable.dragEnd.subscribe(event => {
-                console.log('drag end');
-            })
-        });
-
-        this.tableDrop.dragEnter.subscribe(event => {
-            console.log('drag enter');
-            event.dataTransfer.dropEffect = 'move';
-        });
-
-        this.tableDrop.dragOver.subscribe(event => {
-            console.log('drag over');
-            event.dataTransfer.dropEffect = 'move';
-        });
-
-        this.tableDrop.dragLeave.subscribe(event => {
-            console.log('drag leave');
-        });
-
-        //数据拖入表格
-        this.tableDrop.dropped.subscribe(event => {
-            console.log('drop');
-            const employeeData = JSON.parse(event.dataTransfer.getData('text'));
-            const index = this.employees.findIndex(employee => employee.toString() === employeeData.toString());
-            if(index != -1){
-                this.employees.splice(index, 1);
-                this.tableData.data.push(employeeData);
-                this.tableData.refresh();
-            }
-        });
-
-
-        this.trashDrop.dragEnter.subscribe(event => {
-            console.log('drag enter');
-            event.dataTransfer.dropEffect = 'copy';
-        });
-
-        this.trashDrop.dragOver.subscribe(event => {
-            console.log('drag over');
-            event.dataTransfer.dropEffect = 'copy';
-        });
-
-        this.trashDrop.dragLeave.subscribe(event => {
-            console.log('drag leave');
-        });
-
-        //表格行数据放入垃圾桶
-        this.trashDrop.dropped.subscribe(event => {
-            const delRowIndex = parseInt(event.dataTransfer.getData('text'));
-            this.tableData.data.splice(delRowIndex, 1);
-            this.tableData.refresh();
-        });
+    //拖拽用户块
+    dragStartHandle(dragInfo: DragInfo){
+        console.log('drag start');
+        dragInfo.event.dataTransfer.setData('text', JSON.stringify(dragInfo.dragData));
     }
+
+    //数据拖入表格
+    tableDragEnterHandle(dragInfo: DragInfo){
+        console.log('drag enter');
+        dragInfo.event.dataTransfer.dropEffect = 'move';
+    }
+
+    tableDragOverHandle(dragInfo: DragInfo){
+        console.log('drag over');
+        dragInfo.event.dataTransfer.dropEffect = 'move';
+    }
+
+    tableDragLeaveHandle(dragInfo: DragInfo){
+        console.log('drag leave');
+    }
+
+    tableDroppedHandle(dragInfo: DragInfo){
+        console.log('drop');
+        const employeeData = JSON.parse(dragInfo.event.dataTransfer.getData('text'));
+        const index = this.employees.findIndex(employee => employee.toString() === employeeData.toString());
+        if(index != -1){
+            this.employees.splice(index, 1);
+            this.tableData.data.push(employeeData);
+            this.tableData.refresh();
+        }
+    }
+
+    //表格行数据放入垃圾桶
+    trashDragEnterHandle(dragInfo: DragInfo){
+        console.log('drag enter');
+        dragInfo.event.dataTransfer.dropEffect = 'copy';
+    }
+
+    trashDragOverHandle(dragInfo: DragInfo){
+        console.log('drag over');
+        dragInfo.event.dataTransfer.dropEffect = 'copy';
+    }
+
+    trashDragLeaveHandle(dragInfo: DragInfo){
+        console.log('drag leave');
+    }
+
+    trashDroppedHandle(dragInfo: DragInfo){
+        const delRowIndex = parseInt(dragInfo.event.dataTransfer.getData('text'));
+        this.tableData.data.splice(delRowIndex, 1);
+        this.tableData.refresh();
+    }
+
 }

@@ -690,10 +690,6 @@ export class DemoListComponent implements OnInit{
                     url: '/dragdrop/drag-to-replace'
                 },
                 {
-                    label: 'drag-into-component',
-                    url: '/dragdrop/drag-into-component'
-                },
-                {
                     label: 'table-drag',
                     url: '/dragdrop/table-drag'
                 }

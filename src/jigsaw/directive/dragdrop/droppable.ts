@@ -1,4 +1,5 @@
 import {Directive, ElementRef, Output, EventEmitter, NgZone, OnInit, Renderer2} from "@angular/core";
+import {DragInfo} from "./draggable";
 
 @Directive({
     selector: '[jigsaw-droppable], [jigsawDroppable]',
@@ -10,33 +11,37 @@ import {Directive, ElementRef, Output, EventEmitter, NgZone, OnInit, Renderer2} 
 })
 export class JigsawDroppable implements OnInit{
 
-    constructor(private _renderer: Renderer2, public elementRef: ElementRef, private _zone: NgZone){
+    private _hostElement: HTMLElement;
+
+    //dragenter、dragleave、drop有可能是其子元素触发的，所以有必要保存elementRef
+    constructor(private _renderer: Renderer2, private elementRef: ElementRef, private _zone: NgZone){
+        this._hostElement = this.elementRef.nativeElement;
     }
 
     @Output()
-    dragEnter: EventEmitter<Event> = new EventEmitter<Event>();
+    dragEnter: EventEmitter<DragInfo> = new EventEmitter<DragInfo>();
 
     @Output()
-    dragLeave: EventEmitter<Event> = new EventEmitter<Event>();
+    dragLeave: EventEmitter<DragInfo> = new EventEmitter<DragInfo>();
 
     @Output()
-    dragOver: EventEmitter<Event> = new EventEmitter<Event>();
+    dragOver: EventEmitter<DragInfo> = new EventEmitter<DragInfo>();
 
     // 用drop命名会报错，可能与原生的冲突了
     @Output()
-    dropped: EventEmitter<Event> = new EventEmitter<Event>();
+    dropped: EventEmitter<DragInfo> = new EventEmitter<DragInfo>();
 
     private _dragEnterHandle(event){
         /*拖拽元素进入目标元素头上的时候*/
         event.stopPropagation();
-        this.dragEnter.emit(event);
+        this.dragEnter.emit(new DragInfo(this._hostElement, null, event));
         return true;
     }
 
     private _dragLeaveHandle(event){
         /*拖拽元素离开目标元素头上的时候*/
         event.stopPropagation();
-        this.dragLeave.emit(event);
+        this.dragLeave.emit(new DragInfo(this._hostElement, null, event));
         return false;
     }
 
@@ -44,14 +49,14 @@ export class JigsawDroppable implements OnInit{
         /*拖拽元素在目标元素头上移动的时候*/
         event.preventDefault();
         event.stopPropagation();
-        this.dragOver.emit(event);
+        this.dragOver.emit(new DragInfo(this._hostElement, null, event));
         return true;
     };
 
     private _dropHandle(event){
         /*拖拽元素进入目标元素头上，同时鼠标松开的时候*/
         event.stopPropagation();
-        this.dropped.emit(event);
+        this.dropped.emit(new DragInfo(this._hostElement, null, event));
         return false;
     }
 

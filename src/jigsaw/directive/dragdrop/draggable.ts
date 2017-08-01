@@ -1,61 +1,67 @@
 import {Directive, ElementRef, Output, EventEmitter, NgZone, Input, OnInit, Renderer2} from "@angular/core";
 
+export class DragInfo {
+    constructor(public element: HTMLElement, public dragData: any, public event: DragEvent){}
+}
+
 @Directive({
     selector: '[jigsaw-draggable], [jigsawDraggable]',
-    host:{
+    host: {
         '[attr.draggable]': 'true',
         '(selectstart)': '_selectStartHandle($event)',
         '(dragstart)': '_dragStartHandle($event)',
         '(dragend)': '_dragEndHandle($event)'
     }
 })
-export class JigsawDraggable implements OnInit{
+export class JigsawDraggable implements OnInit {
 
-    constructor(private _renderer: Renderer2,public elementRef: ElementRef, private _zone: NgZone){
+    private _hostElement: HTMLElement;
+    constructor(private _renderer: Renderer2, private elementRef: ElementRef, private _zone: NgZone) {
+        this._hostElement = this.elementRef.nativeElement;
     }
 
     @Input()
-    dragData: any;
+    public dragData: any;
 
     @Output()
-    dragStart: EventEmitter<Event> = new EventEmitter<Event>();
+    dragStart: EventEmitter<DragInfo> = new EventEmitter<DragInfo>();
 
     @Output()
-    dragEnd: EventEmitter<Event> = new EventEmitter<Event>();
+    dragEnd: EventEmitter<DragInfo> = new EventEmitter<DragInfo>();
 
     // 用drag命名会报错，可能与原生的冲突了
     @Output()
-    dragging: EventEmitter<Event> = new EventEmitter<Event>();
+    dragging: EventEmitter<DragInfo> = new EventEmitter<DragInfo>();
 
-    private _selectStartHandle(event){
+    private _selectStartHandle(event) {
         return false;
     }
 
-    private _dragStartHandle(event){
+    private _dragStartHandle(event) {
         /*拖拽开始*/
         //拖拽效果
         event.stopPropagation();
         event.dataTransfer.effectAllowed = 'move';
         event.dataTransfer.setDragImage(event.target, 0, 0);
-        this.dragStart.emit(event);
+        this.dragStart.emit(new DragInfo(this._hostElement, this.dragData, event));
         return true;
     }
 
-    private _dragEndHandle(event){
+    private _dragEndHandle(event) {
         /*拖拽结束*/
         //event.dataTransfer.clearData("text");
         event.stopPropagation();
-        this.dragEnd.emit(event);
+        this.dragEnd.emit(new DragInfo(this._hostElement, this.dragData, event));
         return false
     }
 
     private _dragHandle = (event) => {
         /*拖拽元素的时候*/
         event.stopPropagation();
-        this.dragging.emit(event);
+        this.dragging.emit(new DragInfo(this._hostElement, this.dragData, event));
     };
 
-    ngOnInit(){
+    ngOnInit() {
         this._zone.runOutsideAngular(() => {
             this._renderer.listen(this.elementRef.nativeElement, 'drag', this._dragHandle);
         })
