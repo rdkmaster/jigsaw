@@ -70,7 +70,10 @@ export class TableReplaceRow extends TableCellRenderer implements AfterViewInit 
         console.log('drop');
         const insertRowIndex = parseInt(dragInfo.event.dataTransfer.getData('text'));
         if (insertRowIndex >= 0 && this.row != insertRowIndex) {
-            this.tableData.data.splice(this.row - 1, 0, this.tableData.data.splice(insertRowIndex, 1)[0]);
+            const thisRow = this.tableData.data[this.row];
+            const insertRow = this.tableData.data.splice(insertRowIndex, 1)[0];
+            const thisRowIndex = this.tableData.data.indexOf(thisRow);
+            this.tableData.data.splice(thisRowIndex, 0, insertRow);
             this.tableData.refresh();
         }
     }
