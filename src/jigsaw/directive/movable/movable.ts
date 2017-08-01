@@ -1,7 +1,6 @@
-import {Directive, Renderer2, ElementRef, OnInit, Input, OnDestroy, NgZone} from "@angular/core";
+import {Directive, ElementRef, Input, NgZone, OnDestroy, OnInit, Renderer2} from "@angular/core";
 import {AffixUtils} from "../../core/utils/internal-utils";
-import {CommonUtils} from "../../core/utils/common-utils";
-import {CallbackRemoval} from "../../core/data/component-data";
+import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 
 @Directive({
     selector: '[jigsaw-movable], [jigsawMovable]'
@@ -11,6 +10,7 @@ export class JigsawMovable implements OnInit, OnDestroy {
     private _host: HTMLElement;
     private _moving: boolean = false;
     private _position: number[];
+
     private _removeHostMouseDownListener: CallbackRemoval;
     private _removeWindowMouseMoveListener: CallbackRemoval;
     private _removeWindowMouseUpListener: CallbackRemoval;
@@ -29,7 +29,15 @@ export class JigsawMovable implements OnInit, OnDestroy {
         this._position = [event.clientX - AffixUtils.offset(this._movableTarget).left,
             event.clientY - AffixUtils.offset(this._movableTarget).top];
         this._moving = true;
+
+        if (this._removeWindowMouseMoveListener) {
+            this._removeWindowMouseMoveListener();
+        }
         this._removeWindowMouseMoveListener = this._renderer.listen(document, 'mousemove', this._dragMove);
+
+        if (this._removeWindowMouseUpListener) {
+            this._removeWindowMouseUpListener();
+        }
         this._removeWindowMouseUpListener = this._renderer.listen(document, 'mouseup', this._dragEnd);
     };
 
@@ -55,11 +63,14 @@ export class JigsawMovable implements OnInit, OnDestroy {
         this._movableTarget = this.movableAffected ?
             CommonUtils.getParentNodeBySelector(this._host, this.movableAffected) : this._host;
 
-        setTimeout(() => {
-            if (this._isElementAffixed(this._movableTarget)) {
-                this._removeHostMouseDownListener = this._renderer.listen(this._host, 'mousedown', this._dragStart);
+        if (this._isElementAffixed(this._movableTarget)) {
+            if (this._removeHostMouseDownListener) {
+                this._removeHostMouseDownListener();
             }
-        })
+            setTimeout(() => {
+                this._removeHostMouseDownListener = this._renderer.listen(this._host, 'mousedown', this._dragStart);
+            })
+        }
     }
 
     private _isElementAffixed(element: HTMLElement): boolean {
@@ -68,17 +79,17 @@ export class JigsawMovable implements OnInit, OnDestroy {
         return positionType == 'fixed' || positionType == 'absolute';
     }
 
-    private _removeWindowListener(){
-        if(this._removeWindowMouseMoveListener){
+    private _removeWindowListener() {
+        if (this._removeWindowMouseMoveListener) {
             this._removeWindowMouseMoveListener();
         }
-        if(this._removeWindowMouseUpListener){
+        if (this._removeWindowMouseUpListener) {
             this._removeWindowMouseUpListener();
         }
     }
 
-    ngOnDestroy(){
-        if(this._removeHostMouseDownListener){
+    ngOnDestroy() {
+        if (this._removeHostMouseDownListener) {
             this._removeHostMouseDownListener();
         }
         this._removeWindowListener();

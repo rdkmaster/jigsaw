@@ -1,9 +1,9 @@
-import {
-    IAjaxComponentData, DataReviser, DataRefreshCallback, ComponentDataHelper, CallbackRemoval, AjaxSuccessCallback,
-    AjaxErrorCallback, AjaxCompleteCallback
-} from "./component-data";
 import {Http, RequestOptionsArgs, Response} from "@angular/http";
 import "rxjs/add/operator/map";
+import {
+    IAjaxComponentData, DataReviser, ComponentDataHelper
+} from "./component-data";
+import {CallbackRemoval} from "../utils/common-utils";
 
 export abstract class AbstractGeneralCollection<T = any> implements IAjaxComponentData {
     public abstract fromObject(data: T): AbstractGeneralCollection<T>;

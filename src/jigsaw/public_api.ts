@@ -53,3 +53,4 @@ export * from './component/tree/ztree-types';
 
 export * from './directive/dragdrop/index';
 export * from './directive/movable/index';
+export {CallbackRemoval} from "./core/utils/common-utils";

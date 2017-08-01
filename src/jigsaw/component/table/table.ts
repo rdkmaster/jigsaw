@@ -14,7 +14,7 @@ import {
 
 import {JigsawScrollBarModule} from "../scrollbar/scrollbar";
 import {JigsawScrollBar} from "../scrollbar/scrollbar";
-import {SortAs, SortOrder, CallbackRemoval} from "../../core/data/component-data";
+import {SortAs, SortOrder} from "../../core/data/component-data";
 import {AffixUtils} from "../../core/utils/internal-utils";
 import {TableCheckboxService} from "./table-service";
 import {
@@ -22,7 +22,7 @@ import {
     TableHeadCheckbox
 } from "./table-renderer";
 import {JigsawTooltipModule, SimpleTooltipComponent} from "../tooltip/tooltip";
-import {CommonUtils} from "../../core/utils/common-utils";
+import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {PopupEffect, PopupInfo, PopupPositionType, PopupService} from "../../service/popup.service";
 
 export class HeadSetting {

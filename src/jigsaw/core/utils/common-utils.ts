@@ -1,5 +1,3 @@
-import {CallbackRemoval} from "../data/component-data";
-
 export class CommonUtils {
 
     /**
@@ -136,6 +134,8 @@ export class CommonUtils {
         }
     }
 }
+
+export type CallbackRemoval = () => void;
 
 export class ElementEventHelper {
     private _eventCaches: ElementEventCache[] = [];

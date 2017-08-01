@@ -4,7 +4,7 @@ import {InternalUtils} from "../../core/utils/internal-utils";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {ZTreeSettingSetting} from "./ztree-types";
 import {TreeData} from "../../core/data/tree-data";
-import {CallbackRemoval} from "../../core/data/component-data";
+import {CallbackRemoval} from "../../core/utils/common-utils";
 
 export class TreeEventData {
     treeId: string;
