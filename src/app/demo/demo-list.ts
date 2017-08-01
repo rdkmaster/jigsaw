@@ -682,6 +682,15 @@ export class DemoListComponent implements OnInit{
                 }
             ]
         },
+        {
+            title: 'Misc',
+            navList: [
+                {
+                    label: 'zone-for-performance',
+                    url: '/misc/zone-for-performance'
+                }
+            ]
+        },
     ].sort((a, b) => a.title.localeCompare(b.title));
 
     ngOnInit(){
@@ -799,6 +808,10 @@ const demoListRoutes = [
                 path: 'i18n',
                 loadChildren: './i18n/demo.module#I18nDemoModule'
             },
+            {
+                path: 'misc',
+                loadChildren: './misc/demo.module#MiscDemoModule'
+            },
         ]
     },
     {
@@ -821,9 +834,4 @@ const demoListRoutes = [
     providers: [],
 })
 export class DemoListModule {
-    constructor(){
-
-    }
-
-
 }
