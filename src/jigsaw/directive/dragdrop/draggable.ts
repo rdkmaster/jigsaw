@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Output, EventEmitter, NgZone, Input} from "@angular/core";
+import {Directive, ElementRef, Output, EventEmitter, NgZone, Input, OnInit, Renderer2} from "@angular/core";
 
 @Directive({
     selector: '[jigsaw-draggable], [jigsawDraggable]',
@@ -6,13 +6,12 @@ import {Directive, ElementRef, Output, EventEmitter, NgZone, Input} from "@angul
         '[attr.draggable]': 'true',
         '(selectstart)': '_selectStartHandle($event)',
         '(dragstart)': '_dragStartHandle($event)',
-        '(dragend)': '_dragEndHandle($event)',
-        '(drag)': '_dragHandle($event)'
+        '(dragend)': '_dragEndHandle($event)'
     }
 })
-export class JigsawDraggable{
+export class JigsawDraggable implements OnInit{
 
-    constructor(public elementRef: ElementRef, private _zone: NgZone){
+    constructor(private _renderer: Renderer2,public elementRef: ElementRef, private _zone: NgZone){
     }
 
     @Input()
@@ -48,10 +47,14 @@ export class JigsawDraggable{
         return false
     }
 
-    private _dragHandle(event){
+    private _dragHandle = (event) => {
         /*拖拽元素的时候*/
+        this.dragging.emit(event);
+    };
+
+    ngOnInit(){
         this._zone.runOutsideAngular(() => {
-            this.dragging.emit(event);
+            this._renderer.listen(this.elementRef.nativeElement, 'drag', this._dragHandle);
         })
     }
 

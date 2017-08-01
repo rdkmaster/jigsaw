@@ -29,19 +29,19 @@ export class JigsawMovable implements OnInit, OnDestroy {
         this._position = [event.clientX - AffixUtils.offset(this._movableTarget).left,
             event.clientY - AffixUtils.offset(this._movableTarget).top];
         this._moving = true;
-        this._removeWindowMouseMoveListener = this._renderer.listen(document, 'mousemove', this._dragMove);
+        this._zone.runOutsideAngular(() => {
+            this._removeWindowMouseMoveListener = this._renderer.listen(document, 'mousemove', this._dragMove);
+        });
         this._removeWindowMouseUpListener = this._renderer.listen(document, 'mouseup', this._dragEnd);
     };
 
     private _dragMove = (event) => {
-        this._zone.runOutsideAngular(() => {
-            if (this._moving) {
-                const ox = event.clientX - this._position[0];
-                const oy = event.clientY - this._position[1];
-                this._renderer.setStyle(this._movableTarget, 'left', ox + 'px');
-                this._renderer.setStyle(this._movableTarget, 'top', oy + 'px');
-            }
-        })
+        if (this._moving) {
+            const ox = event.clientX - this._position[0];
+            const oy = event.clientY - this._position[1];
+            this._renderer.setStyle(this._movableTarget, 'left', ox + 'px');
+            this._renderer.setStyle(this._movableTarget, 'top', oy + 'px');
+        }
     };
 
     private _dragEnd = () => {

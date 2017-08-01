@@ -1,17 +1,16 @@
-import {Directive, ElementRef, Output, EventEmitter, NgZone} from "@angular/core";
+import {Directive, ElementRef, Output, EventEmitter, NgZone, OnInit, Renderer2} from "@angular/core";
 
 @Directive({
     selector: '[jigsaw-droppable], [jigsawDroppable]',
     host:{
         '(dragenter)': '_dragEnterHandle($event)',
         '(dragleave)': '_dragLeaveHandle($event)',
-        '(dragover)': '_dragOverHandle($event)',
         '(drop)': '_dropHandle($event)'
     }
 })
-export class JigsawDroppable{
+export class JigsawDroppable implements OnInit{
 
-    constructor(public elementRef: ElementRef, private _zone: NgZone){
+    constructor(private _renderer: Renderer2, public elementRef: ElementRef, private _zone: NgZone){
     }
 
     @Output()
@@ -39,19 +38,23 @@ export class JigsawDroppable{
         return false;
     }
 
-    private _dragOverHandle(event){
+    private _dragOverHandle = (event) => {
         /*拖拽元素在目标元素头上移动的时候*/
-        this._zone.runOutsideAngular(() => {
-            event.preventDefault();
-            this.dragOver.emit(event);
-            return true;
-        })
-    }
+        event.preventDefault();
+        this.dragOver.emit(event);
+        return true;
+    };
 
     private _dropHandle(event){
         /*拖拽元素进入目标元素头上，同时鼠标松开的时候*/
         this.dropped.emit(event);
         return false;
+    }
+
+    ngOnInit(){
+        this._zone.runOutsideAngular(() => {
+            this._renderer.listen(this.elementRef.nativeElement, 'dragover', this._dragOverHandle)
+        })
     }
 }
 
