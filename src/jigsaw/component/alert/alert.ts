@@ -23,6 +23,9 @@ export class JigsawAlert extends AbstractDialogComponentBase {
         this.elementRef = elementRef;
     }
 
+    /**
+     * @internal
+     */
     public _$alertClass = {
         'jigsaw-alert-info': true,
         'jigsaw-alert-warning': false,

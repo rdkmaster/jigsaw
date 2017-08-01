@@ -38,6 +38,9 @@ export class JigsawSliderHandle implements OnInit{
 
     private _offset: number = 0;
 
+    /**
+     * @internal
+     */
     public _$handleStyle = {};
 
     private setHandleStyle() {
@@ -96,6 +99,9 @@ export class JigsawSliderHandle implements OnInit{
         return m;
     }
 
+    /**
+     * @internal
+     */
     public _$updateCanDragged(flag: boolean) {
         this._dragged = flag;
 
@@ -132,7 +138,10 @@ export class JigsawSliderHandle implements OnInit{
         this._slider = slider;
     }
 
-    // 改变value的值;
+    /**
+     * 改变value的值
+     * @internal
+     */
     public _$updateValuePosition(event?) {
         if(!this._dragged|| this._slider.disabled) return;
 

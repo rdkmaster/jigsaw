@@ -14,6 +14,9 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements OnInit {
 
     @ViewChild("timeStart") private _timeStart: JigsawTime;
 
+    /**
+     * @internal
+     */
     public _$gr: TimeGr;
 
     public get gr(): TimeGr | string {
@@ -28,10 +31,19 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements OnInit {
         this._$gr = <TimeGr>value;
     }
 
+    /**
+     * @internal
+     */
     @Input("beginDate") public _$beginDate: WeekTime;
 
+    /**
+     * @internal
+     */
     @Input("endDate") public _$endDate: WeekTime;
 
+    /**
+     * @internal
+     */
     public _$limitStart: WeekTime;
 
     public get limitStart(): WeekTime {
@@ -45,6 +57,9 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements OnInit {
         }
     }
 
+    /**
+     * @internal
+     */
     public _$limitEnd: WeekTime;
 
     public get limitEnd(): WeekTime {
@@ -59,14 +74,29 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements OnInit {
         }
     }
 
+    /**
+     * @internal
+     */
     @Input("weekStart") public _$weekStart: TimeWeekStart | string;
 
+    /**
+     * @internal
+     */
     @Input("grItems") public _$grItems: GrItem[];
 
+    /**
+     * @internal
+     */
     @Input("refreshInterval") public _$refreshInterval: number;
 
+    /**
+     * @internal
+     */
     @Input("recommendedBegin") public _$recommendedBegin: WeekTime;
 
+    /**
+     * @internal
+     */
     @Input("recommendedEnd") public _$recommendedEnd: WeekTime;
 
 
@@ -76,8 +106,14 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements OnInit {
 
     @Output() public endDateChange = new EventEmitter<WeekTime>();
 
+    /**
+     * @internal
+     */
     public _$shortcuts: Shortcut[];
 
+    /**
+     * @internal
+     */
     public _$endTimeLimitEnd: WeekTime;
 
     private _startTimeLimitEnd: WeekTime;
@@ -155,6 +191,9 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements OnInit {
         return endTime;
     }
 
+    /**
+     * @internal
+     */
     public _$dateChange(key: string, value: WeekTime) {
         switch (key) {
             case "beginDate": {
@@ -179,7 +218,9 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements OnInit {
         return null;
     }
 
-
+    /**
+     * @internal
+     */
     public _$grChange(value: TimeGr) {
         this._init();
     }

@@ -16,6 +16,9 @@ export class JigsawCollapsePane{
     @Input()
     public isActive: boolean = false;
 
+    /**
+     * @internal
+     */
     public _$onClick() {
         // 手风琴, 自动关闭其他的pane;
         if (this._collapse && this._collapse.panes &&
