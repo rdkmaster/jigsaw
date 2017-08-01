@@ -87,7 +87,7 @@ export class JigsawAlert extends AbstractDialogComponentBase {
     }
 
     protected getPopupElement(): HTMLElement {
-        return this.elementRef.nativeElement;
+        return this.elementRef.nativeElement.parentElement;
     }
 
     protected init() {

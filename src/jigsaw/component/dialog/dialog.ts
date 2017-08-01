@@ -132,6 +132,9 @@ export abstract class AbstractDialogComponentBase extends AbstractJigsawComponen
             if (this.top) {
                 this.renderer.setStyle(this.popupElement, 'top', this.top);
             }
+            if(this.popupElement.style.position != 'fixed' && this.popupElement.style.position != 'absolute'){
+                this.renderer.setStyle(this.popupElement.querySelector('.jigsaw-dialog-base-head'), 'cursor', 'inherit');
+            }
         }, 0);
     }
 }
