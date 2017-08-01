@@ -36,7 +36,7 @@ export class JigsawDroppable{
     private _dragLeaveHandle(event){
         /*拖拽元素离开目标元素头上的时候*/
         this.dragLeave.emit(event);
-        return true;
+        return false;
     }
 
     private _dragOverHandle(event){

@@ -53,6 +53,10 @@ export class DragToReplaceDemoComponent implements AfterViewInit {
                 }
             });
 
+            droppable.dragLeave.subscribe(event => {
+                console.log('drag leave');
+            });
+
             droppable.dropped.subscribe(event => {
                 console.log('drop');
                 this._replacedEl = droppableEl.innerHTML;

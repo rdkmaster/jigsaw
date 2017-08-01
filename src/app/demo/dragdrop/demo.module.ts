@@ -4,6 +4,8 @@ import {DragToReplaceDemoModule} from "./drag-to-replace/app.module";
 import {DragToReplaceDemoComponent} from "./drag-to-replace/app.component";
 import {DragIntoCmptDemoComponent} from "./drag-into-component/app.component";
 import {DragIntoCmptDemoModule} from "./drag-into-component/app.module";
+import {TableDragDemoModule} from "./table-drag/app.module";
+import {TableDragDemoComponent} from "./table-drag/app.component";
 
 const draggableDemoRoutes = [
     {
@@ -16,6 +18,9 @@ const draggableDemoRoutes = [
         path: 'drag-into-component', component: DragIntoCmptDemoComponent
     },
     {
+        path: 'table-drag', component: TableDragDemoComponent
+    },
+    {
         path: '**', //fallback router must in the last
         component: DragToReplaceDemoComponent
     }
@@ -25,7 +30,8 @@ const draggableDemoRoutes = [
     imports: [
         RouterModule.forChild(draggableDemoRoutes),
         DragToReplaceDemoModule,
-        DragIntoCmptDemoModule
+        DragIntoCmptDemoModule,
+        TableDragDemoModule
     ]
 })
 export class DragDropDemoModule {
