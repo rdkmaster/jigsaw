@@ -1,9 +1,9 @@
-import {AfterContentInit, AfterViewInit, Component, QueryList, Renderer2, ViewChild, ViewChildren} from "@angular/core";
-import {JigsawDraggable} from "jigsaw/component/dragdrop/draggable";
-import {JigsawDroppable} from "jigsaw/component/dragdrop/droppable";
-import {TableData} from "../../../../jigsaw/core/data/table-data";
-import {AdditionalColumnDefine, TableCellRenderer} from "../../../../jigsaw/component/table/table-api";
-import {CommonUtils} from "../../../../jigsaw/core/utils/common-utils";
+import {AfterViewInit, Component, Renderer2, ViewChild} from "@angular/core";
+import {JigsawDraggable} from "jigsaw/directive/dragdrop/draggable";
+import {JigsawDroppable} from "jigsaw/directive/dragdrop/droppable";
+import {TableData} from "jigsaw/core/data/table-data";
+import {AdditionalColumnDefine, TableCellRenderer} from "jigsaw/component/table/table-api";
+import {CommonUtils} from "jigsaw/core/utils/common-utils";
 
 /*
  * 操作列
