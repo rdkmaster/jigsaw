@@ -32,7 +32,6 @@ export * from './component/checkbox/index';
 export * from './component/collapse/collapse';
 export * from './component/combo-select/index';
 export * from './component/dialog/dialog';
-export * from './component/dragdrop/index';
 export * from './component/graph/index';
 export * from './component/input/input';
 export * from './component/loading/loading';
@@ -52,3 +51,5 @@ export * from './component/tooltip/tooltip';
 export * from './component/tree/tree-ext';
 export * from './component/tree/ztree-types';
 
+export * from './directive/dragdrop/index';
+export * from './directive/movable/index';

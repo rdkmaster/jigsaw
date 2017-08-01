@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, QueryList, ViewChildren} from "@angular/core";
-import {JigsawDraggable} from "jigsaw/component/dragdrop/draggable";
-import {JigsawDroppable} from "jigsaw/component/dragdrop/droppable";
+import {JigsawDraggable} from "jigsaw/directive/dragdrop/draggable";
+import {JigsawDroppable} from "jigsaw/directive/dragdrop/droppable";
 
 @Component({
     templateUrl: 'app.component.html',

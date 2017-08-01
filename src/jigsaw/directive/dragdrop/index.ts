@@ -1,14 +1,6 @@
 import {NgModule} from "@angular/core";
-import {JigsawMoveable} from "./moveable";
 import {JigsawDraggable} from "./draggable";
 import {JigsawDroppable} from "./droppable";
-
-@NgModule({
-    declarations: [JigsawMoveable],
-    exports: [JigsawMoveable]
-})
-export class JigsawMoveableModule {
-}
 
 @NgModule({
     declarations: [JigsawDraggable],
@@ -24,7 +16,6 @@ export class JigsawDraggableModule {
 export class JigsawDroppableModule {
 }
 
-export * from './moveable';
 export * from './draggable';
 export * from './droppable';
 

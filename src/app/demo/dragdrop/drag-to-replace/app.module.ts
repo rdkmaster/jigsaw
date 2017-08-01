@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 import {DragToReplaceDemoComponent} from "./app.component";
-import {JigsawDraggableModule, JigsawDroppableModule} from "jigsaw/component/dragdrop/index";
+import {JigsawDraggableModule, JigsawDroppableModule} from "jigsaw/directive/dragdrop/index";
 
 @NgModule({
     imports: [JigsawDraggableModule, JigsawDroppableModule],

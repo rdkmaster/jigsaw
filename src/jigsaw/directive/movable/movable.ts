@@ -4,10 +4,10 @@ import {CommonUtils} from "../../core/utils/common-utils";
 import {CallbackRemoval} from "../../core/data/component-data";
 
 @Directive({
-    selector: '[jigsaw-moveable], [jigsawMoveable]'
+    selector: '[jigsaw-movable], [jigsawMovable]'
 })
-export class JigsawMoveable implements OnInit, OnDestroy {
-    private _moveableTarget: HTMLElement;
+export class JigsawMovable implements OnInit, OnDestroy {
+    private _movableTarget: HTMLElement;
     private _host: HTMLElement;
     private _moving: boolean = false;
     private _position: number[];
@@ -16,7 +16,7 @@ export class JigsawMoveable implements OnInit, OnDestroy {
     private _removeWindowMouseUpListener: CallbackRemoval;
 
     @Input()
-    public moveableAffected: string;
+    public movableAffected: string;
 
     constructor(private _renderer: Renderer2,
                 private _elementRef: ElementRef,
@@ -26,8 +26,8 @@ export class JigsawMoveable implements OnInit, OnDestroy {
     private _dragStart = (event) => {
         event.preventDefault();
         event.stopPropagation();
-        this._position = [event.clientX - AffixUtils.offset(this._moveableTarget).left,
-            event.clientY - AffixUtils.offset(this._moveableTarget).top];
+        this._position = [event.clientX - AffixUtils.offset(this._movableTarget).left,
+            event.clientY - AffixUtils.offset(this._movableTarget).top];
         this._moving = true;
         this._removeWindowMouseMoveListener = this._renderer.listen(document, 'mousemove', this._dragMove);
         this._removeWindowMouseUpListener = this._renderer.listen(document, 'mouseup', this._dragEnd);
@@ -38,8 +38,8 @@ export class JigsawMoveable implements OnInit, OnDestroy {
             if (this._moving) {
                 const ox = event.clientX - this._position[0];
                 const oy = event.clientY - this._position[1];
-                this._renderer.setStyle(this._moveableTarget, 'left', ox + 'px');
-                this._renderer.setStyle(this._moveableTarget, 'top', oy + 'px');
+                this._renderer.setStyle(this._movableTarget, 'left', ox + 'px');
+                this._renderer.setStyle(this._movableTarget, 'top', oy + 'px');
             }
         })
     };
@@ -52,11 +52,11 @@ export class JigsawMoveable implements OnInit, OnDestroy {
 
     ngOnInit() {
         this._host = this._elementRef.nativeElement;
-        this._moveableTarget = this.moveableAffected ?
-            CommonUtils.getParentNodeBySelector(this._host, this.moveableAffected) : this._host;
+        this._movableTarget = this.movableAffected ?
+            CommonUtils.getParentNodeBySelector(this._host, this.movableAffected) : this._host;
 
         setTimeout(() => {
-            if (this._isElementAffixed(this._moveableTarget)) {
+            if (this._isElementAffixed(this._movableTarget)) {
                 this._removeHostMouseDownListener = this._renderer.listen(this._host, 'mousedown', this._dragStart);
             }
         })
