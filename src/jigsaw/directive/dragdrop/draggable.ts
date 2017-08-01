@@ -34,6 +34,7 @@ export class JigsawDraggable implements OnInit{
     private _dragStartHandle(event){
         /*拖拽开始*/
         //拖拽效果
+        event.stopPropagation();
         event.dataTransfer.effectAllowed = 'move';
         event.dataTransfer.setDragImage(event.target, 0, 0);
         this.dragStart.emit(event);
@@ -43,12 +44,14 @@ export class JigsawDraggable implements OnInit{
     private _dragEndHandle(event){
         /*拖拽结束*/
         //event.dataTransfer.clearData("text");
+        event.stopPropagation();
         this.dragEnd.emit(event);
         return false
     }
 
     private _dragHandle = (event) => {
         /*拖拽元素的时候*/
+        event.stopPropagation();
         this.dragging.emit(event);
     };
 

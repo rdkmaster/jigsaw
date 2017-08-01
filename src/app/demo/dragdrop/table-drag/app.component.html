@@ -1,4 +1,14 @@
 
-<jigsaw-table [data]="tableData" [additionalColumnDefines]="additionalColumns"></jigsaw-table>
+<div class="drop-list-wrap" jigsaw-scroll-bar scrollBarTheme="minimal-dark" scrollBarAxis="y">
+    <div *ngFor="let employee of employees" [dragData]="employee" class="drag-wrap" jigsaw-draggable>
+        <div class="com-box">
+            {{employee[0]}}
+        </div>
+    </div>
+</div>
 
+<div class="drop-wrap">
+    <jigsaw-table jigsaw-droppable #tableDrop [data]="tableData" [additionalColumnDefines]="additionalColumns"></jigsaw-table>
 
+    <div class="trash-box" jigsaw-droppable #trashDrop>trash box</div>
+</div>

@@ -28,12 +28,14 @@ export class JigsawDroppable implements OnInit{
 
     private _dragEnterHandle(event){
         /*拖拽元素进入目标元素头上的时候*/
+        event.stopPropagation();
         this.dragEnter.emit(event);
         return true;
     }
 
     private _dragLeaveHandle(event){
         /*拖拽元素离开目标元素头上的时候*/
+        event.stopPropagation();
         this.dragLeave.emit(event);
         return false;
     }
@@ -41,12 +43,14 @@ export class JigsawDroppable implements OnInit{
     private _dragOverHandle = (event) => {
         /*拖拽元素在目标元素头上移动的时候*/
         event.preventDefault();
+        event.stopPropagation();
         this.dragOver.emit(event);
         return true;
     };
 
     private _dropHandle(event){
         /*拖拽元素进入目标元素头上，同时鼠标松开的时候*/
+        event.stopPropagation();
         this.dropped.emit(event);
         return false;
     }
