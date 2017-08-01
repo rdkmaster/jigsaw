@@ -69,6 +69,10 @@ export class DragIntoCmptDemoComponent implements AfterViewInit{
             console.log('drag over');
         });
 
+        this.droppable.dragLeave.subscribe(event => {
+            console.log('drag leave');
+        });
+
         this.droppable.dropped.subscribe(event => {
             console.log('drop');
             const employeeData = JSON.parse(event.dataTransfer.getData('text'));
