@@ -8,7 +8,8 @@ import {CallbackRemoval} from "../../core/utils/common-utils";
         '[attr.draggable]': 'true',
         '(selectstart)': '_selectStartHandle($event)',
         '(dragstart)': '_dragStartHandle($event)',
-        '(dragend)': '_dragEndHandle($event)'
+        '(dragend)': '_dragEndHandle($event)',
+        '(mousedown)': '_mouseDownHandle($event)'
     }
 })
 export class JigsawDraggable implements OnInit, OnDestroy {
@@ -28,12 +29,25 @@ export class JigsawDraggable implements OnInit, OnDestroy {
         return false;
     }
 
+    private _offsetX:number = 0;
+    private _offsetY:number = 0;
+
+    /**
+     * dragstart给的事件的offsetX和offsetY不准确，通过mousedown事件来弥补
+     * @param event
+     * @private
+     */
+    private _mouseDownHandle(event) {
+        this._offsetX = event.offsetY;
+        this._offsetY = event.offsetY;
+    }
+
     private _dragStartHandle(event) {
         /*拖拽开始*/
         //拖拽效果
         event.stopPropagation();
         event.dataTransfer.effectAllowed = 'move';
-        event.dataTransfer.setDragImage(event.target, 0, 0);
+        event.dataTransfer.setDragImage(event.target, this._offsetX, this._offsetY);
         this.jigsawDragStart.emit(new DragDropInfo(event, this._elementRef.nativeElement));
         return true;
     }
