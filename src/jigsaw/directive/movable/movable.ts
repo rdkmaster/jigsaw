@@ -33,7 +33,9 @@ export class JigsawMovable implements OnInit, OnDestroy {
         if (this._removeWindowMouseMoveListener) {
             this._removeWindowMouseMoveListener();
         }
-        this._removeWindowMouseMoveListener = this._renderer.listen(document, 'mousemove', this._dragMove);
+        this._zone.runOutsideAngular(() => {
+            this._removeWindowMouseMoveListener = this._renderer.listen(document, 'mousemove', this._dragMove);
+        });
 
         if (this._removeWindowMouseUpListener) {
             this._removeWindowMouseUpListener();
@@ -42,14 +44,12 @@ export class JigsawMovable implements OnInit, OnDestroy {
     };
 
     private _dragMove = (event) => {
-        this._zone.runOutsideAngular(() => {
-            if (this._moving) {
-                const ox = event.clientX - this._position[0];
-                const oy = event.clientY - this._position[1];
-                this._renderer.setStyle(this._movableTarget, 'left', ox + 'px');
-                this._renderer.setStyle(this._movableTarget, 'top', oy + 'px');
-            }
-        })
+        if (this._moving) {
+            const ox = event.clientX - this._position[0];
+            const oy = event.clientY - this._position[1];
+            this._renderer.setStyle(this._movableTarget, 'left', ox + 'px');
+            this._renderer.setStyle(this._movableTarget, 'top', oy + 'px');
+        }
     };
 
     private _dragEnd = () => {

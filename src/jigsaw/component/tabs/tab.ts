@@ -19,6 +19,9 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit 
         super()
     }
 
+    /**
+     * @internal
+     */
     @ContentChildren(JigsawTabPane)
     public _$tabPanes: QueryList<JigsawTabPane>;
 
@@ -33,11 +36,17 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit 
 
     public length: number;
 
-    // tab页点击
+    /**
+     * tab页点击
+     * @internal
+     */
     public _$tabClick(index) {
         this.selectedIndex = index;
     }
 
+    /**
+     * @internal
+     */
     public _$selectedIndex: number;
 
     @Input()

@@ -23,6 +23,9 @@ export class JigsawAlert extends AbstractDialogComponentBase {
         this.elementRef = elementRef;
     }
 
+    /**
+     * @internal
+     */
     public _$alertClass = {
         'jigsaw-alert-info': true,
         'jigsaw-alert-warning': false,
@@ -87,7 +90,7 @@ export class JigsawAlert extends AbstractDialogComponentBase {
     }
 
     protected getPopupElement(): HTMLElement {
-        return this.elementRef.nativeElement;
+        return this.elementRef.nativeElement.parentElement;
     }
 
     protected init() {

@@ -142,6 +142,9 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
 
     public static ROW_HEIGHT: number = 30;
 
+    /**
+     * @internal
+     */
     public _$scrollBarOptions: any = {
         snapAmount: JigsawTable.ROW_HEIGHT,
         mouseWheel: {enable: true, scrollAmount: JigsawTable.ROW_HEIGHT * 3}
@@ -165,8 +168,14 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
 
     private _fixedHead: HTMLElement;
 
+    /**
+     * @internal
+     */
     public _$headSettings: Array<HeadSetting> = [];
 
+    /**
+     * @internal
+     */
     public _$cellSettings: Array<CellSetting>[] = [];
 
     private _removeTdListeners: Array<RemoveTdListener> = [];

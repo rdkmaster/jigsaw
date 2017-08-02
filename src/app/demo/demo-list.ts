@@ -690,15 +690,20 @@ export class DemoListComponent implements OnInit{
                     url: '/dragdrop/drag-to-replace'
                 },
                 {
-                    label: 'drag-into-component',
-                    url: '/dragdrop/drag-into-component'
-                },
-                {
                     label: 'table-drag',
                     url: '/dragdrop/table-drag'
                 }
             ]
-        }
+        },
+        {
+            title: 'Misc',
+            navList: [
+                {
+                    label: 'zone-for-performance',
+                    url: '/misc/zone-for-performance'
+                }
+            ]
+        },
     ].sort((a, b) => a.title.localeCompare(b.title));
 
     ngOnInit(){
@@ -819,7 +824,12 @@ const demoListRoutes = [
             {
                 path: 'dragdrop',
                 loadChildren: './dragdrop/demo.module#DragDropDemoModule'
-            }
+            },
+            {
+                path: 'misc',
+                loadChildren: './misc/demo.module#MiscDemoModule'
+            },
+
         ]
     },
     {
@@ -842,9 +852,4 @@ const demoListRoutes = [
     providers: [],
 })
 export class DemoListModule {
-    constructor(){
-
-    }
-
-
 }

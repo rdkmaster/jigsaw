@@ -33,10 +33,17 @@ export class OptionList extends AbstractJigsawComponent{
     }
 })
 export class JigsawSelect extends AbstractJigsawComponent implements AfterViewInit, OnDestroy, OnInit {
+    /**
+     * @internal
+     */
     public _$optionListHidden: boolean = true; // 设置option列表是否显示
     private _value: any; // select表单值
     private _contentInit: boolean = false; //子组件加载标记
     private _documentListen: Function; // document事件解绑函数
+
+    /**
+     * @internal
+     */
     public _$selectedLabel: string;
 
     //select form表单值
@@ -136,6 +143,9 @@ export class JigsawSelect extends AbstractJigsawComponent implements AfterViewIn
 export class JigsawOption implements OnInit {
     @Input() public optionItem: any;
 
+    /**
+     * @internal
+     */
     public _$optionLabel: string;
 
     private _selectCmp: JigsawSelect;

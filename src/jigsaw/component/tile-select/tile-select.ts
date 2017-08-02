@@ -176,7 +176,10 @@ export class JigsawTileOption extends AbstractJigsawComponent implements OnInit 
         this._tileSelect = tileSelect;
     }
 
-    //点击组件触发
+    /**
+     * 点击组件触发
+     * @internal
+     */
     public _$onClick(): void {
         if (this._tileSelect.multipleSelect) { //多选
             this.selected = !this.selected;//切换组件选中状态

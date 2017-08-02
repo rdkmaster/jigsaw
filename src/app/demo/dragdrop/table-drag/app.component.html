@@ -1,4 +1,32 @@
 
-<jigsaw-table [data]="tableData" [additionalColumnDefines]="additionalColumns"></jigsaw-table>
+<div class="drop-list-wrap" jigsaw-scroll-bar scrollBarTheme="minimal-dark" scrollBarAxis="y">
+    <div *ngFor="let employee of employees"
+         [dragData]="employee"
+         class="drag-wrap"
+         jigsaw-draggable
+         (dragStart)="dragStartHandle($event)">
+        <div class="com-box">
+            {{employee[0]}}
+        </div>
+    </div>
+</div>
 
+<div class="drop-wrap">
+    <jigsaw-table
+        jigsaw-droppable
+        #tableDrop
+        [data]="tableData"
+        [additionalColumnDefines]="additionalColumns"
+        (dragEnter)="tableDragEnterHandle($event)"
+        (dragOver)="tableDragOverHandle($event)"
+        (dragLeave)="tableDragLeaveHandle($event)"
+        (dropped)="tableDroppedHandle($event)"></jigsaw-table>
 
+    <div class="trash-box"
+         jigsaw-droppable
+         #trashDrop
+         (dragEnter)="trashDragEnterHandle($event)"
+         (dragOver)="trashDragOverHandle($event)"
+         (dragLeave)="trashDragLeaveHandle($event)"
+         (dropped)="trashDroppedHandle($event)">trash box</div>
+</div>

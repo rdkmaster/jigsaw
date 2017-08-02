@@ -25,9 +25,6 @@ type PageSizeData = {
 })
 export class JigsawPagination extends AbstractJigsawComponent implements OnInit, AfterViewInit {
     private _totalPage: number;
-    public _$pageNumbers: number[] = [];
-    public _$prevDisabled: boolean = false;
-    public _$nextDisabled: boolean = false;
     private _current: number;
     private _showPages: number[] = [];
     private _firstPage: JigsawPagingItem;
@@ -37,6 +34,20 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     private _pageNumberInit: boolean = false;
     // TODO 国际化
     private _pageSize: PageSizeData = {value: null, label: 'null/Page'};
+    /**
+     * @internal
+     */
+    public _$pageNumbers: number[] = [];
+
+    /**
+     * @internal
+     */
+    public _$prevDisabled: boolean = false;
+
+    /**
+     * @internal
+     */
+    public _$nextDisabled: boolean = false;
 
     // 当前页(双绑)
     @Input()
@@ -169,9 +180,10 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         }
     }
 
-    /*
+    /**
      * 上一页
-     * */
+     * @internal
+     */
     public _$pagePrev(): void {
         let pageCur = this._pages.find(page => page.current == true);
         if (!pageCur) return;
@@ -183,9 +195,10 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         this.current = pageNum;
     }
 
-    /*
+    /**
      * 下一页
-     * */
+     * @internal
+     */
     public _$pageNext(): void {
         let pageCur = this._pages.find(page => page.current == true);
         if (!pageCur) return;
