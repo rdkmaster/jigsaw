@@ -7,23 +7,28 @@ import {LoadingService} from "jigsaw/service/loading.service";
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class LoadingBasicDemoComponent {
+export class LoadingFullDemoComponent {
     constructor(public loadingService: LoadingService,
                 public viewContainerRef: ViewContainerRef,
                 public renderer: Renderer2) {
     }
 
-    @ViewChild('block1')
-    private _block1: ElementRef;
-    @ViewChild('block2')
-    private _block2: ElementRef;
+    @ViewChild('block')
+    private _block: ElementRef;
 
-    popupBlockLoading(index: number) {
-        const block = index == 1 ? this._block1 : this._block2;
-        const blockLoading = this.loadingService.show(block);
+    public isLoading: boolean = false;
+    public label:string = 'submit';
+
+    popupBlockLoading() {
+        const blockLoading = this.loadingService.show(this._block);
         setTimeout(() => {
             blockLoading.dispose();
         }, 3000)
+    }
+
+    startToLoad() {
+        this.isLoading = !this.isLoading;
+        this.label = this.isLoading ? 'load done' : 'submit';
     }
 
     popupGlobalLoading() {

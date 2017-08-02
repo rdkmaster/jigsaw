@@ -56,6 +56,7 @@ export class JigsawInput extends AbstractJigsawComponent implements AfterContent
     @Output() public valueChange: EventEmitter<string | number> = new EventEmitter<string | number>();
 
     @Input() public clearable: boolean = true;
+    @Input() public disabled: boolean = false;
 
     private _placeholder:string='';
     @Input()

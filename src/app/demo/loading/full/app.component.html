@@ -3,7 +3,7 @@
 
 <div class="wrap">
     <div class="block">
-        <div #block1 class="content-box">
+        <div #block class="content-box">
             <h3 class="content-title">a simple form</h3>
             <div class="content-line">
                 <label>e-mail: </label>
@@ -17,23 +17,27 @@
                 <label>address: </label>
                 <jigsaw-input ></jigsaw-input>
             </div>
-            <jigsaw-button (click)="popupBlockLoading(1)">submit</jigsaw-button>
+            <jigsaw-button (click)="popupBlockLoading()">submit</jigsaw-button>
         </div>
-        <div #block2 class="content-box">
+        <div class="content-box">
             <h3 class="content-title">another simple form</h3>
             <div class="content-line">
                 <label>e-mail: </label>
-                <jigsaw-input></jigsaw-input>
+                <jigsaw-input [disabled]="isLoading"></jigsaw-input>
             </div>
             <div class="content-line">
                 <label>phone number: </label>
-                <jigsaw-input></jigsaw-input>
+                <jigsaw-input [disabled]="isLoading"></jigsaw-input>
             </div>
             <div class="content-line">
                 <label>address: </label>
-                <jigsaw-input ></jigsaw-input>
+                <jigsaw-input [disabled]="isLoading"></jigsaw-input>
             </div>
-            <jigsaw-button (click)="popupBlockLoading(2)">submit</jigsaw-button>
+
+            <jigsaw-button (click)="startToLoad()" height="32px">
+                <jigsaw-loading *ngIf="isLoading" width="16px" height="16px" color="blue"></jigsaw-loading>
+                <span style="padding-left: 5px">{{label}}</span>
+            </jigsaw-button>
         </div>
     </div>
 </div>

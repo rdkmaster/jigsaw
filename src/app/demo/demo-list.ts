@@ -97,8 +97,8 @@ export class DemoListComponent implements OnInit{
             title: 'Loading',
             navList: [
                 {
-                    label: 'basic',
-                    url: '/loading/basic'
+                    label: 'loading-full',
+                    url: '/loading/loading-full'
                 },
                 {
                     label: 'ballLoading',

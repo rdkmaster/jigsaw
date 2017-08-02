@@ -6,6 +6,7 @@
        [ngStyle]="_$inputPaddingStyle"
        [placeholder]="placeholder"
        [(ngModel)]="value"
+       [disabled]="disabled"
        (blur)="_$handleBlur($event)"
        (focus)="_$handleFocus($event)">
 <div class="jigsaw-input-icon-end">
