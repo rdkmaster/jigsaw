@@ -41,7 +41,7 @@ export class TableDragReplaceRow extends TableCellRenderer implements AfterViewI
         console.log('drag start');
         dragInfo.event.dataTransfer.setData('text', this.row + '');
         dragInfo.event.dataTransfer.effectAllowed = 'link';
-        dragInfo.event.dataTransfer.setDragImage(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'), 100, 10);
+        dragInfo.event.dataTransfer.setDragImage(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'), 50, 10);
     }
 
     dragEndHandle(dragInfo: DragInfo) {
@@ -53,15 +53,18 @@ export class TableDragReplaceRow extends TableCellRenderer implements AfterViewI
         console.log('drag enter');
         dragInfo.event.dataTransfer.dropEffect = 'link';
         this.resetSelectedRow();
-
-        this._renderer.setStyle(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'),
-            'border-top', '2px solid #108ee9')
+        if(dragInfo.event.dataTransfer.effectAllowed == 'link'){
+            this._renderer.setStyle(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'),
+                'border-top', '2px solid #108ee9')
+        }
     }
 
     dragOverHandle(dragInfo: DragInfo) {
         dragInfo.event.dataTransfer.dropEffect = 'link';
-        this._renderer.setStyle(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'),
-            'border-top', '2px solid #108ee9')
+        if(dragInfo.event.dataTransfer.effectAllowed == 'link'){
+            this._renderer.setStyle(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'),
+                'border-top', '2px solid #108ee9')
+        }
     }
 
     dragLeaveHandle(dragInfo: DragInfo) {
