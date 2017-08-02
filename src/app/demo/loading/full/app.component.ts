@@ -27,8 +27,12 @@ export class LoadingFullDemoComponent {
     }
 
     startToLoad() {
-        this.isLoading = !this.isLoading;
-        this.label = this.isLoading ? 'load done' : 'submit';
+        this.isLoading = true;
+        this.label = 'loading...';
+        setTimeout(() => {
+            this.isLoading = false;
+            this.label = 'submit';
+        }, 3000)
     }
 
     popupGlobalLoading() {
