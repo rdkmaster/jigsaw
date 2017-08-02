@@ -233,9 +233,14 @@ export class DemoListComponent implements OnInit{
                 {
                     label: 'lineEllipsis',
                     url: '/table/lineEllipsis'
-                }, {
+                },
+                {
                     label: 'localPaging',
                     url: '/table/localPaging'
+                },
+                {
+                    label: 'swimLaneDiagram',
+                    url: '/table/swimLaneDiagram'
                 },
             ]
         },

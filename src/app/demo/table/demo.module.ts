@@ -78,6 +78,8 @@ import {TableSetHeaderSortDemoModule} from "./setHeaderSort/app.module";
 
 import {TableDataWithPopupDemoComponent} from "./withPopup/app.component";
 import {TableDataWithPopupDemoModule} from "./withPopup/app.module";
+import {swimLaneDiagramDemoComponent} from "./swimLaneDiagram/app.component";
+import {swimLaneDiagramDemoModule} from "./swimLaneDiagram/app.module";
 
 const tableDemoRoutes = [
     {
@@ -162,6 +164,9 @@ const tableDemoRoutes = [
         path: 'localPaging', component: LocalPagingDataDemoComponent
     },
     {
+        path: 'swimLaneDiagram', component: swimLaneDiagramDemoComponent
+    },
+    {
         path: '**', //fallback router must in the last
         component: TableBasicDemoComponent
     }
@@ -176,7 +181,7 @@ const tableDemoRoutes = [
         TablePerformsDemoModule, TableRendererDemoModule, TableRendererOfTemplateRefDemoModule, TableScrollAmountDemoModule,
         TableSetCellClassDemoModule, TableSetCellEditableDemoModule, TableSetCellRenderDemoModule, TableColumnGroupDemoModule,
         TableColumnSetVisibleDemoModule, TableColumnSetWidthDemoModule, TableSetHeaderClassDemoModule, TableSetHeaderRenderDemoModule,
-        TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule
+        TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, swimLaneDiagramDemoModule
 
     ]
 })
