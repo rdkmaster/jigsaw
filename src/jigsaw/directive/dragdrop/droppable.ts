@@ -1,47 +1,49 @@
-import {Directive, ElementRef, Output, EventEmitter, NgZone, OnInit, Renderer2} from "@angular/core";
-import {DragInfo} from "./draggable";
+import {Directive, ElementRef, Output, EventEmitter, NgZone, OnInit, Renderer2, OnDestroy} from "@angular/core";
+import {DragDropInfo} from "./index";
+import {CallbackRemoval} from "../../core/utils/common-utils";
 
 @Directive({
     selector: '[jigsaw-droppable], [jigsawDroppable]',
-    host:{
+    host: {
         '(dragenter)': '_dragEnterHandle($event)',
         '(dragleave)': '_dragLeaveHandle($event)',
         '(drop)': '_dropHandle($event)'
     }
 })
-export class JigsawDroppable implements OnInit{
-
-    private _hostElement: HTMLElement;
-
-    //dragenter、dragleave、drop有可能是其子元素触发的，所以有必要保存elementRef
-    constructor(private _renderer: Renderer2, private elementRef: ElementRef, private _zone: NgZone){
-        this._hostElement = this.elementRef.nativeElement;
+export class JigsawDroppable implements OnInit, OnDestroy {
+    /**
+     * jigsawDragEnter、jigsawDragLeave、jigsawDrop 有可能是其子元素触发的，所以有必要保存elementRef
+     *
+     * @param {Renderer2} _renderer
+     * @param {ElementRef} _elementRef
+     * @param {NgZone} _zone
+     */
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, private _zone: NgZone) {
     }
 
     @Output()
-    jigsawDragEnter: EventEmitter<DragInfo> = new EventEmitter<DragInfo>();
+    public jigsawDragEnter: EventEmitter<DragDropInfo> = new EventEmitter<DragDropInfo>();
 
     @Output()
-    jigsawDragLeave: EventEmitter<DragInfo> = new EventEmitter<DragInfo>();
+    public jigsawDragLeave: EventEmitter<DragDropInfo> = new EventEmitter<DragDropInfo>();
 
     @Output()
-    jigsawDragOver: EventEmitter<DragInfo> = new EventEmitter<DragInfo>();
+    public jigsawDragOver: EventEmitter<DragDropInfo> = new EventEmitter<DragDropInfo>();
 
-    // 用drop命名会报错，可能与原生的冲突了
     @Output()
-    jigsawDrop: EventEmitter<DragInfo> = new EventEmitter<DragInfo>();
+    public jigsawDrop: EventEmitter<DragDropInfo> = new EventEmitter<DragDropInfo>();
 
-    private _dragEnterHandle(event){
+    private _dragEnterHandle(event) {
         /*拖拽元素进入目标元素头上的时候*/
         event.stopPropagation();
-        this.jigsawDragEnter.emit(new DragInfo(this._hostElement, null, event));
+        this.jigsawDragEnter.emit(new DragDropInfo(event, this._elementRef.nativeElement));
         return true;
     }
 
-    private _dragLeaveHandle(event){
+    private _dragLeaveHandle(event) {
         /*拖拽元素离开目标元素头上的时候*/
         event.stopPropagation();
-        this.jigsawDragLeave.emit(new DragInfo(this._hostElement, null, event));
+        this.jigsawDragLeave.emit(new DragDropInfo(event, this._elementRef.nativeElement));
         return false;
     }
 
@@ -49,21 +51,30 @@ export class JigsawDroppable implements OnInit{
         /*拖拽元素在目标元素头上移动的时候*/
         event.preventDefault();
         event.stopPropagation();
-        this.jigsawDragOver.emit(new DragInfo(this._hostElement, null, event));
+        this.jigsawDragOver.emit(new DragDropInfo(event, this._elementRef.nativeElement));
         return true;
     };
 
-    private _dropHandle(event){
+    private _dropHandle(event) {
         /*拖拽元素进入目标元素头上，同时鼠标松开的时候*/
         event.stopPropagation();
-        this.jigsawDrop.emit(new DragInfo(this._hostElement, null, event));
+        this.jigsawDrop.emit(new DragDropInfo(event, this._elementRef.nativeElement));
         return false;
     }
 
-    ngOnInit(){
+    private _removeDragOverHandler:CallbackRemoval;
+
+    ngOnInit() {
         this._zone.runOutsideAngular(() => {
-            this._renderer.listen(this.elementRef.nativeElement, 'dragover', this._dragOverHandle)
+            this._removeDragOverHandler = this._renderer.listen(
+                this._elementRef.nativeElement, 'dragover', this._dragOverHandle)
         })
+    }
+
+    ngOnDestroy() {
+        if (this._removeDragOverHandler) {
+            this._removeDragOverHandler();
+        }
     }
 }
 

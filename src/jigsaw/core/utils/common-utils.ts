@@ -102,7 +102,7 @@ export class CommonUtils {
      * @returns {HTMLElement}
      */
     public static getParentNodeBySelector(element: HTMLElement, selector: string): HTMLElement {
-        if (element instanceof HTMLElement){
+        if (element instanceof HTMLElement) {
             let parent = element.parentElement;
             selector = selector.trim();
             if (selector.match(/^#.+/)) {
@@ -129,7 +129,7 @@ export class CommonUtils {
                 }
                 return parent;
             }
-        }else {
+        } else {
             return null;
         }
     }

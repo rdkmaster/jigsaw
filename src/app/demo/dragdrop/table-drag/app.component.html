@@ -1,15 +1,11 @@
-
-<div class="drop-list-wrap" jigsaw-scroll-bar scrollBarTheme="minimal-dark" scrollBarAxis="y">
-    <div *ngFor="let employee of employees"
-         [dragData]="employee"
-         class="drag-wrap"
-         jigsaw-draggable
-         (jigsawDragStart)="dragStartHandle($event)">
-        <div class="com-box">
-            {{employee[0]}}
-        </div>
-    </div>
-</div>
+<h3>Drag a tag and drop it to the table</h3>
+<br>
+<span class="tag-wrapper" *ngFor="let employee of employees"
+     jigsaw-draggable (jigsawDragStart)="dragStartHandle($event, employee)">
+    <jigsaw-tag>{{employee[0]}}</jigsaw-tag>
+</span>
+<br>
+<br>
 
 <div class="drop-wrap">
     <jigsaw-table
@@ -28,5 +24,6 @@
          (jigsawDragEnter)="trashDragEnterHandle($event)"
          (jigsawDragOver)="trashDragOverHandle($event)"
          (jigsawDragLeave)="trashDragLeaveHandle($event)"
-         (jigsawDrop)="trashDropHandle($event)">trash box</div>
+         (jigsawDrop)="trashDropHandle($event)">trash box - drag and drop an item here to remove it from the table
+    </div>
 </div>

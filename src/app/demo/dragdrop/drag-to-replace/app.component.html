@@ -4,41 +4,16 @@
      (jigsawDragEnd)="dragEndHandle($event)"
      (jigsawDragEnter)="dragEnterHandle($event)"
      (jigsawDragOver)="dragOverHandle($event)"
-     (jigsawDrop)="dropHandle($event)">
-    <div class="com-box box1">
-        <span>111</span>
-    </div>
-</div>
-<div class="drag-wrap"
-     jigsaw-draggable jigsaw-droppable
-     (jigsawDragStart)="dragStartHandle($event)"
-     (jigsawDragEnd)="dragEndHandle($event)"
-     (jigsawDragEnter)="dragEnterHandle($event)"
-     (jigsawDragOver)="dragOverHandle($event)"
-     (jigsawDrop)="dropHandle($event)">
-    <div class="com-box box2">
-        <span>222</span>
-    </div>
-</div>
-<div class="drag-wrap"
-     jigsaw-draggable jigsaw-droppable
-     (jigsawDragStart)="dragStartHandle($event)"
-     (jigsawDragEnd)="dragEndHandle($event)"
-     (jigsawDragEnter)="dragEnterHandle($event)"
-     (jigsawDragOver)="dragOverHandle($event)"
-     (jigsawDrop)="dropHandle($event)">
-    <div class="com-box box3">
-        <span>333</span>
-    </div>
-</div>
-<div class="drag-wrap"
-     jigsaw-draggable jigsaw-droppable
-     (jigsawDragStart)="dragStartHandle($event)"
-     (jigsawDragEnd)="dragEndHandle($event)"
-     (jigsawDragEnter)="dragEnterHandle($event)"
-     (jigsawDragOver)="dragOverHandle($event)"
-     (jigsawDrop)="dropHandle($event)">
-    <div class="com-box box4">
-        <span>444</span>
+     (jigsawDrop)="dropHandle($event)"
+
+     *ngFor="let info of [
+                {label: '111', clazz: 'box1'},
+                {label: '222', clazz: 'box2'},
+                {label: '333', clazz: 'box3'},
+                {label: '444', clazz: 'box4'}
+            ]"
+>
+    <div class="com-box {{info.clazz}}">
+        <span>{{info.label}}</span>
     </div>
 </div>

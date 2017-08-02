@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, Renderer2} from "@angular/core";
 import {TableCellRenderer} from "jigsaw/component/table/table-api";
-import {DragInfo} from "jigsaw/directive/dragdrop/draggable";
+import {DragDropInfo} from "jigsaw/directive/dragdrop/index";
 import {CommonUtils} from "jigsaw/core/utils/common-utils";
 
 /*
@@ -32,49 +32,49 @@ export class TableDragReplaceRow extends TableCellRenderer implements AfterViewI
     }
 
     resetSelectedRow() {
-        for (var i = 0; i < this.allRows.length; ++i) {
+        for (let i = 0; i < this.allRows.length; ++i) {
             this._renderer.setStyle(this.allRows[i], 'border-top', '1px solid #d9d9d9')
         }
     }
 
-    dragStartHandle(dragInfo: DragInfo) {
+    dragStartHandle(dragInfo: DragDropInfo) {
         console.log('drag start');
-        dragInfo.event.dataTransfer.setData('text', this.row + '');
+        dragInfo.dragDropData = this.row;
         dragInfo.event.dataTransfer.effectAllowed = 'link';
         dragInfo.event.dataTransfer.setDragImage(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'), 50, 10);
     }
 
-    dragEndHandle(dragInfo: DragInfo) {
+    dragEndHandle(dragInfo: DragDropInfo) {
         console.log('drag end');
         this.resetSelectedRow();
     }
 
-    dragEnterHandle(dragInfo: DragInfo) {
+    dragEnterHandle(dragInfo: DragDropInfo) {
         console.log('drag enter');
         dragInfo.event.dataTransfer.dropEffect = 'link';
         this.resetSelectedRow();
-        if(dragInfo.event.dataTransfer.effectAllowed == 'link'){
+        if (dragInfo.event.dataTransfer.effectAllowed == 'link') {
             this._renderer.setStyle(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'),
                 'border-top', '2px solid #108ee9')
         }
     }
 
-    dragOverHandle(dragInfo: DragInfo) {
+    dragOverHandle(dragInfo: DragDropInfo) {
         dragInfo.event.dataTransfer.dropEffect = 'link';
-        if(dragInfo.event.dataTransfer.effectAllowed == 'link'){
+        if (dragInfo.event.dataTransfer.effectAllowed == 'link') {
             this._renderer.setStyle(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'),
                 'border-top', '2px solid #108ee9')
         }
     }
 
-    dragLeaveHandle(dragInfo: DragInfo) {
+    dragLeaveHandle(dragInfo: DragDropInfo) {
         console.log('drag leave');
         this.resetSelectedRow();
     }
 
-    dropHandle(dragInfo: DragInfo) {
+    dropHandle(dragInfo: DragDropInfo) {
         console.log('drop');
-        const insertRowIndex = parseInt(dragInfo.event.dataTransfer.getData('text'));
+        const insertRowIndex = dragInfo.dragDropData;
         if (insertRowIndex >= 0 && this.row != insertRowIndex) {
             const thisRow = this.tableData.data[this.row];
             const insertRow = this.tableData.data.splice(insertRowIndex, 1)[0];
@@ -107,9 +107,9 @@ export class TableDragReplaceRow extends TableCellRenderer implements AfterViewI
     }`]
 })
 export class TableDragDeleteRow extends TableCellRenderer {
-    dragStartHandle(dragInfo: DragInfo) {
+    dragStartHandle(dragInfo: DragDropInfo) {
         console.log('drag start');
-        dragInfo.event.dataTransfer.setData('text', this.row + '');
+        dragInfo.dragDropData = this.row;
         dragInfo.event.dataTransfer.effectAllowed = 'copy';
         dragInfo.event.dataTransfer.setDragImage(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'), 600, 10);
     }
