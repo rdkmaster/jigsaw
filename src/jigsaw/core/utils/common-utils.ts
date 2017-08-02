@@ -1,5 +1,3 @@
-import {CallbackRemoval} from "../data/component-data";
-
 export class CommonUtils {
 
     /**
@@ -104,7 +102,7 @@ export class CommonUtils {
      * @returns {HTMLElement}
      */
     public static getParentNodeBySelector(element: HTMLElement, selector: string): HTMLElement {
-        if (element instanceof HTMLElement){
+        if (element instanceof HTMLElement) {
             let parent = element.parentElement;
             selector = selector.trim();
             if (selector.match(/^#.+/)) {
@@ -131,11 +129,13 @@ export class CommonUtils {
                 }
                 return parent;
             }
-        }else {
+        } else {
             return null;
         }
     }
 }
+
+export type CallbackRemoval = () => void;
 
 export class ElementEventHelper {
     private _eventCaches: ElementEventCache[] = [];

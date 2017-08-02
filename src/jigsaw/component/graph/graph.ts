@@ -11,7 +11,7 @@ import * as echarts from "echarts";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {AbstractJigsawComponent} from "../core";
 import {EchartOptions} from "../../core/data/echart-types";
-import {CallbackRemoval} from "../../core/data/component-data";
+import {CallbackRemoval} from "../../core/utils/common-utils";
 
 /**
  * @description graph 图标组件

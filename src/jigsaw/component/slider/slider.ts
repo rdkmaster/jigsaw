@@ -17,7 +17,7 @@ import {
 import {JigsawSliderHandle} from "./handle";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {ArrayCollection} from "../../core/data/array-collection";
-import {CallbackRemoval} from "../../core/data/component-data";
+import {CallbackRemoval} from "../../core/utils/common-utils";
 import {AbstractJigsawComponent, IJigsawComponent} from "../core";
 
 export class SliderMark {

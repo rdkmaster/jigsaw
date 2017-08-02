@@ -1,5 +1,6 @@
 
-import {Directive, OnInit, ViewContainerRef} from "@angular/core";
+import {Directive, OnInit, ViewContainerRef, Input} from "@angular/core";
+import {CommonUtils} from "../core/utils/common-utils";
 
 @Directive({
     selector: '[jigsaw-renderer-host]',
@@ -8,8 +9,6 @@ export class JigsawRendererHost {
     constructor(public viewContainerRef: ViewContainerRef) { }
 }
 
-import {Input} from "@angular/core";
-import {CommonUtils} from "../core/utils/common-utils";
 
 export interface IDynamicInstantiatable {
     initData: any;

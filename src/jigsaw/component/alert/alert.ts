@@ -2,10 +2,11 @@ import {Component, ElementRef, Input, NgModule, Renderer2, ViewChild} from "@ang
 import {AbstractDialogComponentBase, DialogBase, JigsawDialog, JigsawDialogModule} from "../dialog/dialog";
 import {CommonModule} from "@angular/common";
 import {JigsawButtonModule} from "../button/button";
-import {JigsawDraggableModule} from "../draggable/draggable";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {InternalUtils} from "../../core/utils/internal-utils";
 import {TranslateHelper} from "../../core/utils/translate-helper";
+import {JigsawMovableModule} from "../../directive/movable/index";
+
 export enum AlertLevel {
     info, warning, error, confirm
 }
@@ -89,7 +90,7 @@ export class JigsawAlert extends AbstractDialogComponentBase {
     }
 
     protected getPopupElement(): HTMLElement {
-        return this.elementRef.nativeElement;
+        return this.elementRef.nativeElement.parentElement;
     }
 
     protected init() {
@@ -171,9 +172,9 @@ export class JigsawErrorAlert extends JigsawCommonAlert {
 }
 
 @NgModule({
-    imports: [JigsawDialogModule, JigsawDraggableModule, JigsawButtonModule, CommonModule, TranslateModule.forRoot()],
+    imports: [JigsawDialogModule, JigsawMovableModule, JigsawButtonModule, CommonModule, TranslateModule.forRoot()],
     declarations: [JigsawAlert, JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert],
-    exports: [JigsawDialogModule, JigsawDraggableModule, JigsawAlert, JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert],
+    exports: [JigsawDialogModule, JigsawMovableModule, JigsawAlert, JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert],
     providers: [TranslateService],
     entryComponents: [JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert]
 })

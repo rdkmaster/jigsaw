@@ -1,7 +1,7 @@
 import {RequestOptionsArgs, Response} from "@angular/http";
+import {CallbackRemoval} from "../utils/common-utils";
 
 export type DataReviser = (data: any) => any;
-export type CallbackRemoval = () => void;
 
 export interface IComponentData {
     dataReviser: DataReviser;

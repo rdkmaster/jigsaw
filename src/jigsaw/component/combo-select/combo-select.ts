@@ -19,7 +19,7 @@ import {
     PopupService
 } from "../../service/popup.service";
 import {AbstractJigsawComponent} from "../core";
-import {CallbackRemoval} from "../../core/data/component-data";
+import {CallbackRemoval} from "../../core/utils/common-utils";
 import {ArrayCollection} from "../../core/data/array-collection";
 export enum DropDownTrigger {
     click,
