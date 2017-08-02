@@ -4,7 +4,7 @@
          [dragData]="employee"
          class="drag-wrap"
          jigsaw-draggable
-         (dragStart)="dragStartHandle($event)">
+         (jigsawDragStart)="dragStartHandle($event)">
         <div class="com-box">
             {{employee[0]}}
         </div>
@@ -17,16 +17,16 @@
         #tableDrop
         [data]="tableData"
         [additionalColumnDefines]="additionalColumns"
-        (dragEnter)="tableDragEnterHandle($event)"
-        (dragOver)="tableDragOverHandle($event)"
-        (dragLeave)="tableDragLeaveHandle($event)"
-        (dropped)="tableDroppedHandle($event)"></jigsaw-table>
+        (jigsawDragEnter)="tableDragEnterHandle($event)"
+        (jigsawDragOver)="tableDragOverHandle($event)"
+        (jigsawDragLeave)="tableDragLeaveHandle($event)"
+        (jigsawDrop)="tableDropHandle($event)"></jigsaw-table>
 
     <div class="trash-box"
          jigsaw-droppable
          #trashDrop
-         (dragEnter)="trashDragEnterHandle($event)"
-         (dragOver)="trashDragOverHandle($event)"
-         (dragLeave)="trashDragLeaveHandle($event)"
-         (dropped)="trashDroppedHandle($event)">trash box</div>
+         (jigsawDragEnter)="trashDragEnterHandle($event)"
+         (jigsawDragOver)="trashDragOverHandle($event)"
+         (jigsawDragLeave)="trashDragLeaveHandle($event)"
+         (jigsawDrop)="trashDropHandle($event)">trash box</div>
 </div>

@@ -24,14 +24,14 @@ export class JigsawDraggable implements OnInit {
     public dragData: any;
 
     @Output()
-    dragStart: EventEmitter<DragInfo> = new EventEmitter<DragInfo>();
+    jigsawDragStart: EventEmitter<DragInfo> = new EventEmitter<DragInfo>();
 
     @Output()
-    dragEnd: EventEmitter<DragInfo> = new EventEmitter<DragInfo>();
+    jigsawDragEnd: EventEmitter<DragInfo> = new EventEmitter<DragInfo>();
 
     // 用drag命名会报错，可能与原生的冲突了
     @Output()
-    dragging: EventEmitter<DragInfo> = new EventEmitter<DragInfo>();
+    jigsawDrag: EventEmitter<DragInfo> = new EventEmitter<DragInfo>();
 
     private _selectStartHandle(event) {
         return false;
@@ -43,7 +43,7 @@ export class JigsawDraggable implements OnInit {
         event.stopPropagation();
         event.dataTransfer.effectAllowed = 'move';
         event.dataTransfer.setDragImage(event.target, 0, 0);
-        this.dragStart.emit(new DragInfo(this._hostElement, this.dragData, event));
+        this.jigsawDragStart.emit(new DragInfo(this._hostElement, this.dragData, event));
         return true;
     }
 
@@ -51,14 +51,14 @@ export class JigsawDraggable implements OnInit {
         /*拖拽结束*/
         //event.dataTransfer.clearData("text");
         event.stopPropagation();
-        this.dragEnd.emit(new DragInfo(this._hostElement, this.dragData, event));
+        this.jigsawDragEnd.emit(new DragInfo(this._hostElement, this.dragData, event));
         return false
     }
 
     private _dragHandle = (event) => {
         /*拖拽元素的时候*/
         event.stopPropagation();
-        this.dragging.emit(new DragInfo(this._hostElement, this.dragData, event));
+        this.jigsawDrag.emit(new DragInfo(this._hostElement, this.dragData, event));
     };
 
     ngOnInit() {

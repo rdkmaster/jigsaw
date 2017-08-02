@@ -1,7 +1,7 @@
-import {Component} from "@angular/core";
+import {Component, ElementRef, Renderer2} from "@angular/core";
 import {TableData} from "jigsaw/core/data/table-data";
 import {AdditionalColumnDefine} from "jigsaw/component/table/table-api";
-import {TableDelRow, TableReplaceRow} from "./table-renderer";
+import {TableDragDeleteRow, TableDragReplaceRow} from "./table-renderer";
 import {DragInfo} from "../../../../jigsaw/directive/dragdrop/draggable";
 
 
@@ -22,7 +22,7 @@ export class TableDragDemoComponent{
         ["Johnny","Accountant","$16346","2017/4/26","R&D Dept III",403]
     ];
 
-    constructor(){
+    constructor(public renderer: Renderer2, public elementRef: ElementRef){
         this.tableData = new TableData([
             ["Emily","Coder","$15128","2017/4/21","HR II",316],
             ["Shirley","Accountant","$11845","2017/4/25","R&D Dept II",711],
@@ -46,23 +46,24 @@ export class TableDragDemoComponent{
 
     additionalColumns: AdditionalColumnDefine[] = [
         {
+            pos: 0,
             width: '10%',
             header: {
-                text: '换行',
+                text: '拖拽换行',
                 class: 'red-text'
             },
             cell: {
-                renderer: TableReplaceRow
+                renderer: TableDragReplaceRow
             }
         },
         {
             width: '10%',
             header: {
-                text: '删除',
+                text: '拖拽删除',
                 class: 'red-text'
             },
             cell: {
-                renderer: TableDelRow
+                renderer: TableDragDeleteRow
             }
         }
     ];
@@ -77,19 +78,27 @@ export class TableDragDemoComponent{
     tableDragEnterHandle(dragInfo: DragInfo){
         console.log('drag enter');
         dragInfo.event.dataTransfer.dropEffect = 'move';
+        if(dragInfo.event.dataTransfer.effectAllowed == 'move'){
+            this.renderer.addClass(this.elementRef.nativeElement.querySelector('jigsaw-table'), 'over');
+        }
     }
 
     tableDragOverHandle(dragInfo: DragInfo){
         console.log('drag over');
         dragInfo.event.dataTransfer.dropEffect = 'move';
+        if(dragInfo.event.dataTransfer.effectAllowed == 'move'){
+            this.renderer.addClass(this.elementRef.nativeElement.querySelector('jigsaw-table'), 'over');
+        }
     }
 
     tableDragLeaveHandle(dragInfo: DragInfo){
         console.log('drag leave');
+        this.renderer.removeClass(this.elementRef.nativeElement.querySelector('jigsaw-table'), 'over');
     }
 
-    tableDroppedHandle(dragInfo: DragInfo){
+    tableDropHandle(dragInfo: DragInfo){
         console.log('drop');
+        this.renderer.removeClass(this.elementRef.nativeElement.querySelector('jigsaw-table'), 'over');
         const employeeData = JSON.parse(dragInfo.event.dataTransfer.getData('text'));
         const index = this.employees.findIndex(employee => employee.toString() === employeeData.toString());
         if(index != -1){
@@ -108,13 +117,18 @@ export class TableDragDemoComponent{
     trashDragOverHandle(dragInfo: DragInfo){
         console.log('drag over');
         dragInfo.event.dataTransfer.dropEffect = 'copy';
+        if(dragInfo.event.dataTransfer.effectAllowed == 'copy'){
+            this.renderer.addClass(this.elementRef.nativeElement.querySelector('.trash-box'), 'over');
+        }
     }
 
     trashDragLeaveHandle(dragInfo: DragInfo){
         console.log('drag leave');
+        this.renderer.removeClass(this.elementRef.nativeElement.querySelector('.trash-box'), 'over');
     }
 
-    trashDroppedHandle(dragInfo: DragInfo){
+    trashDropHandle(dragInfo: DragInfo){
+        this.renderer.removeClass(this.elementRef.nativeElement.querySelector('.trash-box'), 'over');
         const delRowIndex = parseInt(dragInfo.event.dataTransfer.getData('text'));
         this.tableData.data.splice(delRowIndex, 1);
         this.tableData.refresh();

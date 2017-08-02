@@ -10,12 +10,12 @@ import {CommonUtils} from "jigsaw/core/utils/common-utils";
     template: `
         <div class="option-box"
              jigsaw-draggable jigsaw-droppable
-             (dragStart)="dragStartHandle($event)"
-             (dragEnd)="dragEndHandle($event)"
-             (dragEnter)="dragEnterHandle($event)"
-             (dragOver)="dragOverHandle($event)"
-             (dragLeave)="dragLeaveHandle($event)"
-             (dropped)="droppedHandle($event)">
+             (jigsawDragStart)="dragStartHandle($event)"
+             (jigsawDragEnd)="dragEndHandle($event)"
+             (jigsawDragEnter)="dragEnterHandle($event)"
+             (jigsawDragOver)="dragOverHandle($event)"
+             (jigsawDragLeave)="dragLeaveHandle($event)"
+             (jigsawDrop)="dropHandle($event)">
             <span class="fa fa-arrows-alt"></span>
         </div>`,
     styles: [`.option-box {
@@ -23,7 +23,7 @@ import {CommonUtils} from "jigsaw/core/utils/common-utils";
         cursor: move
     }`]
 })
-export class TableReplaceRow extends TableCellRenderer implements AfterViewInit {
+export class TableDragReplaceRow extends TableCellRenderer implements AfterViewInit {
 
     private allRows: any;
 
@@ -41,7 +41,7 @@ export class TableReplaceRow extends TableCellRenderer implements AfterViewInit 
         console.log('drag start');
         dragInfo.event.dataTransfer.setData('text', this.row + '');
         dragInfo.event.dataTransfer.effectAllowed = 'link';
-        dragInfo.event.dataTransfer.setDragImage(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'), 600, 10);
+        dragInfo.event.dataTransfer.setDragImage(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'), 50, 10);
     }
 
     dragEndHandle(dragInfo: DragInfo) {
@@ -53,20 +53,26 @@ export class TableReplaceRow extends TableCellRenderer implements AfterViewInit 
         console.log('drag enter');
         dragInfo.event.dataTransfer.dropEffect = 'link';
         this.resetSelectedRow();
-
-        this._renderer.setStyle(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'),
-            'border-top', '4px solid #d9d9d9')
+        if(dragInfo.event.dataTransfer.effectAllowed == 'link'){
+            this._renderer.setStyle(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'),
+                'border-top', '2px solid #108ee9')
+        }
     }
 
     dragOverHandle(dragInfo: DragInfo) {
         dragInfo.event.dataTransfer.dropEffect = 'link';
+        if(dragInfo.event.dataTransfer.effectAllowed == 'link'){
+            this._renderer.setStyle(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'),
+                'border-top', '2px solid #108ee9')
+        }
     }
 
     dragLeaveHandle(dragInfo: DragInfo) {
         console.log('drag leave');
+        this.resetSelectedRow();
     }
 
-    droppedHandle(dragInfo: DragInfo) {
+    dropHandle(dragInfo: DragInfo) {
         console.log('drop');
         const insertRowIndex = parseInt(dragInfo.event.dataTransfer.getData('text'));
         if (insertRowIndex >= 0 && this.row != insertRowIndex) {
@@ -92,7 +98,7 @@ export class TableReplaceRow extends TableCellRenderer implements AfterViewInit 
     template: `
         <div class="option-box"
              jigsaw-draggable
-             (dragStart)="dragStartHandle($event)">
+             (jigsawDragStart)="dragStartHandle($event)">
             <span class="fa fa-trash"></span>
         </div>`,
     styles: [`.option-box {
@@ -100,7 +106,7 @@ export class TableReplaceRow extends TableCellRenderer implements AfterViewInit 
         cursor: move
     }`]
 })
-export class TableDelRow extends TableCellRenderer {
+export class TableDragDeleteRow extends TableCellRenderer {
     dragStartHandle(dragInfo: DragInfo) {
         console.log('drag start');
         dragInfo.event.dataTransfer.setData('text', this.row + '');
