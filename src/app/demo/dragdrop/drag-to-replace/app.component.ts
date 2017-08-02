@@ -38,7 +38,7 @@ export class DragToReplaceDemoComponent{
         }
     }
 
-    droppedHandle(dragInfo: DragInfo){
+    dropHandle(dragInfo: DragInfo){
         console.log('drop');
         this._replacedEl = dragInfo.element.innerHTML;
         dragInfo.element.innerHTML = dragInfo.event.dataTransfer.getData('text');
