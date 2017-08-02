@@ -3,7 +3,7 @@
 [![npm version](https://badge.fury.io/js/%40rdkmaster%2Fjigsaw.svg)](https://badge.fury.io/js/%40rdkmaster%2Fjigsaw)
 [![Build Status](https://travis-ci.org/rdkmaster/jigsaw.svg?branch=master)](https://travis-ci.org/rdkmaster/jigsaw)
 [![Coverage Status](https://coveralls.io/repos/github/rdkmaster/jigsaw/badge.svg?branch=master)](https://coveralls.io/github/rdkmaster/jigsaw?branch=master)
-[![e2e testcases](http://rdkmaster.com/rdk/service/app/common/server/get-e2e-testcase-count)](http://rdkmaster.com/rdk/service/app/common/server/get-e2e-testcase-count)
+[![e2e testcases](http://rdkmaster.com/rdk/service/app/badges/server/get-e2e-testcase-count)](http://rdkmaster.com/rdk/service/app/common/server/get-e2e-testcase-count)
 
 
 ## 名字的内涵
