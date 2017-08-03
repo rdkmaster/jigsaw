@@ -8,6 +8,7 @@
 [![component count](http://rdkmaster.com/rdk/service/app/badges/server/get-badge?type=components)](http://rdk.zte.com.cn/component)
 [![directives count](http://rdkmaster.com/rdk/service/app/badges/server/get-badge?type=directives)](http://rdk.zte.com.cn/component)
 [![injectables count](http://rdkmaster.com/rdk/service/app/badges/server/get-badge?type=injectables)](http://rdk.zte.com.cn/component)
+[![demo count](http://rdkmaster.com/rdk/service/app/badges/server/get-badge?type=demo)](http://rdk.zte.com.cn/component)
 [![e2e testcases count](http://rdkmaster.com/rdk/service/app/badges/server/get-badge?type=e2e%20testcases)](http://rdk.zte.com.cn)
 
 ## 名字的内涵
