@@ -2,10 +2,13 @@
 
 [![npm version](https://badge.fury.io/js/%40rdkmaster%2Fjigsaw.svg)](https://badge.fury.io/js/%40rdkmaster%2Fjigsaw)
 [![Build Status](https://travis-ci.org/rdkmaster/jigsaw.svg?branch=master)](https://travis-ci.org/rdkmaster/jigsaw)
-[![e2e testcases](http://rdkmaster.com/rdk/service/app/badges/server/get-e2e-testcase-count)](http://rdkmaster.com/rdk/service/app/badges/server/get-e2e-testcase-count)
 [![Code Coverage Status](https://coveralls.io/repos/github/rdkmaster/jigsaw/badge.svg?branch=master)](https://coveralls.io/github/rdkmaster/jigsaw?branch=master)
-[![Doc Coverage Status](http://rdkmaster.com/rdk/service/app/badges/server/get-doc-coverage)](http://rdkmaster.com/doc/coverage.html)
+[![Doc Coverage Status](http://rdkmaster.com/rdk/service/app/badges/server/get-badge?type=documentation)](http://rdkmaster.com/doc/coverage.html)
 
+[![component count](http://rdkmaster.com/rdk/service/app/badges/server/get-badge?type=components)](http://rdk.zte.com.cn/component)
+[![directives count](http://rdkmaster.com/rdk/service/app/badges/server/get-badge?type=directives)](http://rdk.zte.com.cn/component)
+[![injectables count](http://rdkmaster.com/rdk/service/app/badges/server/get-badge?type=injectables)](http://rdk.zte.com.cn/component)
+[![e2e testcases count](http://rdkmaster.com/rdk/service/app/badges/server/get-badge?type=e2e%20testcases)](http://rdk.zte.com.cn)
 
 ## 名字的内涵
 Jigsaw原意是七巧板，一种拼图游戏。游戏的过程和现代web页面开发过程很类似，游戏者按照既定的蓝图将杂乱的碎片组合成一幅图，我们使用这个名字正是为了让web页面开发者能够像玩Jigsaw游戏一样，边玩边开发你的页面。
