@@ -1,4 +1,4 @@
-#h5的drag&drop简介
+# h5的drag&drop简介
 
 ## 概念
 - drag target(拖拽元素) 被拖动的元素
@@ -126,6 +126,6 @@ dropNode.addEventListener("dragleave", function( event ) {
 ![hover](hover.gif "hover")
 
 
-##demo地址
+## demo地址
 jigsaw项目(<https://github.com/rdkmaster/jigsaw>)里面启动服务,浏览器输入
 `http://localhost:4200/dragdrop/table-drag`
