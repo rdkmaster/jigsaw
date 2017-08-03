@@ -1,0 +1,16 @@
+.ne-list{
+    clear: both;
+    overflow: hidden;
+    text-align: center;
+    margin-bottom: 20px;
+    li{
+        display: inline-block;
+        width: 150px;
+        height: 76px;
+        line-height: 1.5;
+        text-align: center;
+        margin-right: 10px;
+        padding: 10px 0;
+        background: #ffbf00;
+    }
+}

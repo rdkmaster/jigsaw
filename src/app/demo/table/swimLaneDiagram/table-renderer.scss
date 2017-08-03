@@ -1,0 +1,81 @@
+@mixin line-ellipsis-style() {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.lane-box {
+    position: relative;
+
+    p {
+        width: 80%;
+        display: inline-block;
+        &.signal-desc {
+            @include line-ellipsis-style();
+        }
+        &.from-to {
+            span {
+                width: 40%;
+                @include line-ellipsis-style();
+            }
+            span:first-child {
+                float: left;
+            }
+            span:last-child {
+                float: right;
+            }
+        }
+    }
+
+    b {
+        &.arrow {
+            display: block;
+            height: 0;
+            border-top: 2px solid #333;
+            position: relative;
+            &:after {
+                display: block;
+                content: ' ';
+                width: 8px;
+                height: 8px;
+                border-top: 1px solid #333;
+                border-right: 1px solid #333;
+                position: absolute;
+            }
+        }
+        &.right-arrow:after {
+            left: 0;
+            top: -5px;
+            transform: rotate(225deg);
+        }
+
+        &.left-arrow:after {
+            top: -5px;
+            right: 1px;
+            transform: rotate(45deg);
+        }
+    }
+
+    i {
+        &.use-time {
+            position: absolute;
+            top: -8px;
+        }
+
+        &.left {
+            left: 0;
+        }
+
+        &.right {
+            right: 0;
+        }
+    }
+
+}
+
+.dashed-line {
+    height: 0;
+    border: 1px dashed #666;
+}
+
+
