@@ -100,22 +100,22 @@ export class swimLaneDiagramDemoComponent {
 
             const data: any[] = [];
             for (let j = 0; j < this.tableData.field.length; j++) {
-                data[j] = '';
+                data[j] = null;
             }
 
-            data[0] = this.swimLaneData[i].signalid;
-            data[1] = this.swimLaneData[i].timestamp;
+            data[0] = swimLane.signalid;
+            data[1] = new Date(swimLane.timestamp / 1000).toLocaleString();
             let usetime: number | string;
             if (i == 0) {
-                usetime = '';
+                usetime = null;
             } else {
                 usetime = swimLane.timestamp - this.swimLaneData[i - 1].timestamp;
             }
             data[swimLaneIndex + 2] = {
                 usetime: usetime,
-                signaldesc: 'NAS_EPS Service request',
-                fromnedesc: '100.89.140.69',
-                tonedesc: 'XNMME03',
+                signaldesc: swimLane.signaldesc,
+                fromnedesc: swimLane.fromnedesc,
+                tonedesc: swimLane.tonedesc,
                 neList: this.neList
             };
 
@@ -125,14 +125,20 @@ export class swimLaneDiagramDemoComponent {
         console.log(this.tableData.data);
     }
 
-    columnDefines: ColumnDefine[] = [{
-        target: (field, index) => {
-            return index > 1
+    columnDefines: ColumnDefine[] = [
+        {
+            target: 0,
+            width: '10%'
         },
-        cell: {
-            renderer: TableSwimLaneCell
+        {
+            target: (field, index) => {
+                return index > 1
+            },
+            cell: {
+                renderer: TableSwimLaneCell
+            }
         }
-    }]
+    ]
 }
 
 

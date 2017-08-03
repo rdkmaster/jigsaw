@@ -5,29 +5,25 @@ import {TableCellRenderer} from "jigsaw/component/table/table-api";
  * 泳道流程图
  * */
 @Component({
-    template: `<div class="lane-box">
-        <p>{{cellData.signaldesc}}</p>
-        <b [ngClass]="arrow"></b>
-        <p>
-            <span>{{cellData.fromnedesc}}</span>
-            <span>{{cellData.tonedesc}}</span>
-        </p>
-    </div>`,
-    styles: [`
-        b.arrow{display: block;height: 0;border-top: 2px solid #333;position: relative}
-        b.arrow:after{
-            display: block;content: ' ';width: 8px; height: 8px;border-top: 1px solid #333; border-right: 1px solid #333;
-            position: absolute;
-        }
-        b.left-arrow:after{top: -5px;transform: rotate(225deg);}
-        b.right-arrow:after{top: -5px;right: 0;transform: rotate(45deg);}
-    `]
+    template: `
+        <div *ngIf="cellData" class="lane-box">
+            <p class="signal-desc">{{cellData.signaldesc}}</p>
+            <b class="arrow {{getArrowDirect()}}-arrow"></b>
+            <p class="from-to">
+                <span>{{cellData.fromnedesc}}</span>
+                <span>{{cellData.tonedesc}}</span>
+            </p>
+            <i *ngIf="cellData.usetime" class="use-time {{getArrowDirect()}}">+{{cellData.usetime}}</i>
+        </div>
+        <div *ngIf="!cellData" class="dashed-line"></div>
+    `,
+    styleUrls: ['./table-renderer.scss']
 })
 export class TableSwimLaneCell extends TableCellRenderer {
-    arrow = {
-        'arrow': true,
-        'left-arrow': true,
-        'right-arrow': false
+    getArrowDirect(){
+        const fromNeIndex = this.cellData.neList.findIndex(ne => ne.desc === this.cellData.fromnedesc);
+        const toNeIndex = this.cellData.neList.findIndex(ne => ne.desc === this.cellData.tonedesc);
+        return fromNeIndex - toNeIndex < 0 ? 'left' : 'right';
     }
 }
 
