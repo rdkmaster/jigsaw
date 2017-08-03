@@ -2,7 +2,7 @@ import {NgModule, Component, ElementRef, OnInit} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {CommonModule} from "@angular/common";
 import {JigsawCollapseModule} from "jigsaw/component/collapse/collapse";
-import {JigsawScrollBarModule} from "jigsaw/component/scrollbar/scrollbar";
+import {JigsawScrollBarModule} from "jigsaw/directive/scrollbar/scrollbar";
 import {AffixUtils} from "jigsaw/core/utils/internal-utils";
 
 @Component({

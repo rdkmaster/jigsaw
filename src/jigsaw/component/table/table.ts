@@ -12,8 +12,8 @@ import {
     TableHeadChangeEvent
 } from "./table-api";
 
-import {JigsawScrollBarModule} from "../scrollbar/scrollbar";
-import {JigsawScrollBar} from "../scrollbar/scrollbar";
+import {JigsawScrollBarModule} from "../../directive/scrollbar/scrollbar";
+import {JigsawScrollBar} from "../../directive/scrollbar/scrollbar";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 import {AffixUtils} from "../../core/utils/internal-utils";
 import {TableCheckboxService} from "./table-service";

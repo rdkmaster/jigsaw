@@ -1,5 +1,5 @@
 import {Component, Renderer2, ViewContainerRef} from "@angular/core";
-import {ScrollEvent} from "jigsaw/component/scrollbar/scrollbar";
+import {ScrollEvent} from "jigsaw/directive/scrollbar/scrollbar";
 
 @Component({
   templateUrl: './app.component.html',

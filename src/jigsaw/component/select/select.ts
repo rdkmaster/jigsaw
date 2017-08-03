@@ -7,7 +7,7 @@ import {FormsModule} from '@angular/forms';
 import {AbstractJigsawComponent} from "../core";
 import {CommonUtils} from '../../core/utils/common-utils';
 import {InternalUtils} from '../../core/utils/internal-utils';
-import {JigsawScrollBarModule} from '../scrollbar/scrollbar';
+import {JigsawScrollBarModule} from '../../directive/scrollbar/scrollbar';
 import {ArrayCollection} from "../../core/data/array-collection";
 
 @Directive({
