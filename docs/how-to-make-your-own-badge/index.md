@@ -49,4 +49,4 @@ res.put('Content-Type', 'image/svg+xml');
 通过前文的介绍，我们通过非常简单的方式就可以获得自己的专属徽章，大家快快去做自己的徽章吧。
 
 ## 题外话
-这些文章是Jigsaw七巧板团队开发过程中碰到的难题的解决方法，或者成员的学习成果。我相信这些文章对喜欢Angular，喜欢Jigsaw的人，都同样值得一读。欢迎以任何形式转发，但是请保留Jigsaw七巧板的签名和链接 <https://github.com/rdkmaster/jigsaw> 点击阅读原文可以帮助我们改进这篇文章。
+这些文章是Jigsaw七巧板团队开发过程中碰到的难题的解决方法，或者是团队成员的学习成果。我相信这些文章对喜欢Angular，喜欢Jigsaw的人，都同样值得一读。欢迎以任何形式转发，但是请保留Jigsaw七巧板的签名和链接 <https://github.com/rdkmaster/jigsaw> 点击阅读原文可以帮助我们改进这篇文章。
