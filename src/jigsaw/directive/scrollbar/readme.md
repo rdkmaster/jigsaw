@@ -5,7 +5,7 @@
 ### 1  添加scrollBar 组件
 将滚动条添加到需要使用滚动条的ngMdule的declarations中
 ### 2 添加scrollBar到需要滚动条的组件
-    <div jigsaw-scrollBar class="bar"><div>
+    <div jigsawScrollBar class="bar"><div>
 **注意: 添加滚动条的元素,需要设置宽高，和overflow:auto(heidder)**
 
 

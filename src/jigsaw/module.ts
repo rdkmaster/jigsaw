@@ -13,7 +13,7 @@ import {JigsawLoadingModule} from './component/loading/loading';
 import {JigsawPaginationModule} from './component/pagination/pagination';
 import {JigsawRadioModule} from './component/radio/radio';
 import {JigsawRangeTimeModule} from './component/range-time/index';
-import {JigsawScrollBarModule} from './component/scrollbar/scrollbar';
+import {JigsawScrollBarModule} from './directive/scrollbar/scrollbar';
 import {JigsawSelectModule} from './component/select/select';
 import {JigsawSliderModule} from './component/slider/index';
 import {JigsawSwitchModule} from './component/switch/index';

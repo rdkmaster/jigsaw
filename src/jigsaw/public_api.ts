@@ -38,7 +38,7 @@ export * from './component/loading/loading';
 export * from './component/pagination/pagination';
 export * from './component/radio/radio';
 export * from './component/range-time/index';
-export * from './component/scrollbar/scrollbar';
+export * from './directive/scrollbar/scrollbar';
 export * from './component/select/select';
 export * from './component/slider/index';
 export * from './component/switch/index';
