@@ -1,12 +1,12 @@
 import {CommonModule} from "@angular/common";
 import {NgModule} from "@angular/core";
-import {TranslateService} from "@ngx-translate/core";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {JigsawTooltipModule} from "../tooltip/tooltip";
 import {PopupService} from "../../service/popup.service";
 import {JigsawTime} from "./time";
 
 @NgModule({
-    imports: [CommonModule, JigsawTooltipModule],
+    imports: [CommonModule, JigsawTooltipModule, TranslateModule.forRoot()],
     declarations: [JigsawTime],
     exports: [JigsawTime],
     providers: [PopupService, TranslateService],
