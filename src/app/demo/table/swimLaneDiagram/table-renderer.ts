@@ -13,7 +13,7 @@ import {TableCellRenderer} from "jigsaw/component/table/table-api";
                 <span>{{cellData.fromnedesc}}</span>
                 <span>{{cellData.tonedesc}}</span>
             </p>
-            <i *ngIf="cellData.usetime" class="use-time {{getArrowDirect()}}">+{{cellData.usetime}}</i>
+            <i *ngIf="cellData.usetime" class="use-time {{getArrowDirect()}}">+{{cellData.usetime}}ms</i>
         </div>
         <div *ngIf="!cellData" class="dashed-line"></div>
     `,

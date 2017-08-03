@@ -10,18 +10,18 @@
     p {
         width: 80%;
         display: inline-block;
-        &.signal-desc{
+        &.signal-desc {
             @include line-ellipsis-style();
         }
-        &.from-to{
-            span{
+        &.from-to {
+            span {
                 width: 40%;
                 @include line-ellipsis-style();
             }
-            span:first-child{
+            span:first-child {
                 float: left;
             }
-            span:last-child{
+            span:last-child {
                 float: right;
             }
         }
