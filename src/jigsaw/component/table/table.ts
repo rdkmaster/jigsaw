@@ -166,6 +166,8 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
 
     @Input() public lineEllipsis;
 
+    @Input() public hideHead: boolean;
+
     private _fixedHead: HTMLElement;
 
     /**

@@ -1,4 +1,4 @@
-<table class="jigsaw-table-fixed-head jigsaw-table-hide">
+<table [style.display]="hideHead ? 'none' : 'table'" class="jigsaw-table-fixed-head jigsaw-table-hide">
     <thead>
     <tr>
         <td #fixedHeader jigsaw-table-header *ngFor="let head of _$headSettings; index as colIndex"
@@ -18,7 +18,7 @@
     </thead>
 </table>
 
-<div class="jigsaw-table-box" jigsaw-scroll-bar scrollBarTheme="minimal-dark" [scrollBarOptions]="_$scrollBarOptions">
+<div class="jigsaw-table-box" [class.jigsaw-table-hide-head]="hideHead" jigsaw-scroll-bar scrollBarTheme="minimal-dark" [scrollBarOptions]="_$scrollBarOptions">
     <table class="jigsaw-table">
         <thead>
         <tr>
