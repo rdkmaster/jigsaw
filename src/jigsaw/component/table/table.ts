@@ -696,7 +696,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
 
         const hostWidth = this._elementRef.nativeElement.offsetWidth;
         this._rows.forEach((row, rowIndex) => {
-            const elements: NodeListOf<Element> = row.nativeElement.querySelectorAll('.cell-content');
+            const elements: NodeListOf<Element> = row.nativeElement.querySelectorAll('.jigsaw-table-cell-content');
             for (let colIndex = 0; colIndex < elements.length; ++colIndex) {
                 const element: Element = elements[colIndex];
                 const cellSetting: CellSetting = this._$cellSettings[rowIndex][colIndex];
@@ -877,7 +877,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
 
         if (this.lineEllipsis) {
             this._renderer.addClass(this._elementRef.nativeElement.querySelector('table.jigsaw-table tbody'),
-                'line-ellipsis');
+                'jigsaw-table-line-ellipsis');
         }
     }
 

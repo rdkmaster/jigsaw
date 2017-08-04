@@ -45,8 +45,8 @@ table{
         }
     }
     tbody{
-        &.line-ellipsis{
-            td .cell-content{
+        &.#{$table-prefix-cls}-line-ellipsis{
+            td .#{$table-prefix-cls}-cell-content{
                 @include line-ellipsis-style();
             }
         }
