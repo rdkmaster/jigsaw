@@ -381,7 +381,7 @@ export const navInfo = [
             },
             {
                 label: 'noData',
-                url: '/graph/noData'
+                url: '/graph/no-data'
             },
         ]
     },
