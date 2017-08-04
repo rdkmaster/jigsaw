@@ -36,7 +36,7 @@ describe('checkbox', () => {
 
     describe('test disabled', () => {
         beforeEach(() => {
-            browser.get('checkbox/disable');
+            browser.get('checkbox/disabled');
         });
 
         it('should disabled when set disabled', () => {
