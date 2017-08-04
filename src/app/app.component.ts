@@ -18,7 +18,7 @@ export class AppComponent {
         if (!match) {
             return;
         }
-        window.open(document.baseURI + match[1] + '/index.html', '_blank');
+        window.open('/jigsaw/live-demo/' + match[1] + '/index.html', '_blank');
     }
 }
 
