@@ -8,8 +8,8 @@ import {TooltipDialogDemoModule} from "./dialog/app.module";
 import {TooltipInDomDemoComponent} from "./in-dom/app.component";
 import {TooltipInDomDemoModule} from "./in-dom/app.module";
 
-import {SimpleTooltipDemoComponent} from "./simple-tooltip/app.component";
-import {SimpleTooltipDemoModule} from "./simple-tooltip/app.module";
+import {SimpleTooltipDemoComponent} from "./inline/app.component";
+import {SimpleTooltipDemoModule} from "./inline/app.module";
 
 
 const popupDemoRoutes = [

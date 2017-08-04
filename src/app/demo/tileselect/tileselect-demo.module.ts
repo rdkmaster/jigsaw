@@ -39,10 +39,10 @@ const inputDemoRoutes=[
         path:'trackitemby', component: TileselectTrackItemByDemoComponent
     },
     {
-        path:'SelectedItems', component: TileselectSelectedItemsComponent
+        path:'selectedItems', component: TileselectSelectedItemsComponent
     },
     {
-        path:'MultipleSelect', component: TileselectMultipleSelectDemoComponent
+        path:'multipleSelect', component: TileselectMultipleSelectDemoComponent
     },
     {
         path:'tileOptionWidth', component: TileselectOptionWidthComponent
@@ -54,7 +54,7 @@ const inputDemoRoutes=[
         path:'labelField', component: TileselectLabelFieldComponent
     },
     {
-        path:'ItemsChange', component: TileselecItemsChangeComponent
+        path:'selectedItemsChange', component: TileselecItemsChangeComponent
     },
     {
         path:'**', //fallback router must in the last

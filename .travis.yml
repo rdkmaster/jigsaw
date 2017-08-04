@@ -9,8 +9,8 @@ branches:
 
 env:
   global:
-  - SAUCE_USERNAME=EmilyEmily
-  - SAUCE_ACCESS_KEY=4f6ccf14-3251-41e4-9f02-ff7423400d40
+  - SAUCE_USERNAME=pkozlowski
+  - SAUCE_ACCESS_KEY=173aa66e-43e6-4e34-b873-9cb037b8ae5c
   - BROWSER_PROVIDER_READY_FILE=/tmp/sauce-connect-ready
   - LOGS_DIR=/tmp/logs
   - SEED_DIR=`pwd`/../jigsaw-seed
@@ -29,6 +29,7 @@ before_script:
   - ./build/scripts/sauce_connect_setup.sh
 
 script:
+  - gulp ensure-url-matches-path
   - gulp jigsaw:build-release:clean
   - ng test --code-coverage --watch false
   - cat ./coverage/lcov.info | ./node_modules/.bin/coveralls

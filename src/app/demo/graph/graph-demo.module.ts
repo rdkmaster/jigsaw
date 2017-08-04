@@ -9,14 +9,13 @@ import {BasicGraphComponent} from "./basic/app.component";
 import {BasicLineGraphComponent} from "./line-bar-graph-basic/app.component";
 import {PieGraphDemoComponent} from "./pie/app.component";
 import {GraphResizeComponent} from "./resize/app.component";
-import {GraphWithNoDataComponent} from "./nodata/app.component";
+import {GraphWithNoDataComponent} from "./no-data/app.component";
 import {BasicGraphModule} from "./basic/app.module";
 import {BasicLineGraphModule} from "./line-bar-graph-basic/app.module";
 import {PieGraphDemoModule} from "./pie/app.module";
 import {GraphResizeModule} from "./resize/app.module";
-import {GraphWithNoDataModule} from "./nodata/app.module";
+import {GraphWithNoDataModule} from "./no-data/app.module";
 import {GraphSetSizeModule} from "./setSize/app.module";
-
 import {AjaxLineGraphComponent} from "./line-bar-graph-ajax/app.component";
 import {AjaxLineGraphModule} from "./line-bar-graph-ajax/app.module";
 
@@ -34,10 +33,10 @@ const graphRoutes = [
         path: 'line-bar-graph-ajax', component: AjaxLineGraphComponent
     },
     {
-        path: 'pie-graph-basic', component: PieGraphDemoComponent
+        path: 'pie', component: PieGraphDemoComponent
     },
     {
-        path: 'noData', component: GraphWithNoDataComponent
+        path: 'no-data', component: GraphWithNoDataComponent
     }
 ];
 

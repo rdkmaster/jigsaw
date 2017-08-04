@@ -31,10 +31,10 @@ const routes = [
         path: 'basic', component: JigsawTabsDemoComponent
     },
     {
-        path: 'withInputAndTable', component: JigsawTabsWithInputComponent
+        path: 'withInput', component: JigsawTabsWithInputComponent
     },
     {
-        path: 'withNgFor', component: JigsawTabsWithNgForComponent
+        path: 'ngFor', component: JigsawTabsWithNgForComponent
     },
     {
         path: 'hideTab', component: JigsawHideTabComponent
@@ -43,10 +43,10 @@ const routes = [
         path: 'showTab', component: JigsawShowTabComponent
     },
     {
-        path: 'removeTab', component: JigsawDestoryTabComponent
+        path: 'destoryTab', component: JigsawDestoryTabComponent
     },
     {
-        path: 'dynamicTab', component: DynamicTabDemoComponent,
+        path: 'tabApi', component: DynamicTabDemoComponent,
         children: [
             {
                 path:'tabPage', loadChildren: './tabApi/tabContent/tab-content.module#TabContentModule'

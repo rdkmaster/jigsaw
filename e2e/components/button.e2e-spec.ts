@@ -7,7 +7,7 @@ describe('button', () => {
 
     describe('test disabled', () => {
         beforeEach(() => {
-            browser.get('/button/disable');
+            browser.get('/button/disabled');
         });
 
         it('should click invalid when set disabled', () => {
