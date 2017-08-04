@@ -242,6 +242,10 @@ export class DemoListComponent implements OnInit{
                     label: 'swimLaneDiagram',
                     url: '/table/swimLaneDiagram'
                 },
+                {
+                    label: 'hideHead',
+                    url: '/table/hideHead'
+                },
             ]
         },
         {
