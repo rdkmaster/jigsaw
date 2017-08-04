@@ -5,14 +5,19 @@ import {Component, OnInit, Renderer2, ViewContainerRef} from "@angular/core";
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
 
     constructor(public viewContainerRef: ViewContainerRef, public renderer: Renderer2) {
     }
 
     jigsawTitle: string = 'jigsaw-title';
 
-    ngOnInit(): void {
+    gotoPlunker(): void {
+        let match = location.pathname.match(/\/(.*?\/.*?)$/);
+        if (!match) {
+            return;
+        }
+        window.open(document.baseURI + match[1] + '/index.html', '_blank');
     }
 }
 
