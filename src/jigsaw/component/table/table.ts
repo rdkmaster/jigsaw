@@ -108,6 +108,9 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
 
     @Output() public dataChange = new EventEmitter<TableDataChangeEvent>();
 
+    @Output()
+    public select: EventEmitter<number> = new EventEmitter<number>();
+
     private _columnDefines: ColumnDefine[];
 
     @Input()
@@ -800,6 +803,17 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
         } else if (top >= maxTop) {
             this._renderer.setStyle(this._fixedHead, 'top', maxTop);
         }
+    }
+
+    public _$handleRowSelect(rowIndex: number){
+        this._rows.forEach((row, index) => {
+            if(index === rowIndex){
+                this._renderer.addClass(row.nativeElement, 'jigsaw-table-row-selected');
+                this.select.emit(rowIndex);
+            }else {
+                this._renderer.removeClass(row.nativeElement, 'jigsaw-table-row-selected');
+            }
+        })
     }
 
     /**

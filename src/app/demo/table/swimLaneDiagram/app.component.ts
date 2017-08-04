@@ -139,15 +139,9 @@ export class swimLaneDiagramDemoComponent {
             }
         }
     ]
+
+    handleRowSelect(rowIndex: number){
+        console.log(rowIndex);
+    }
 }
 
-
-/*[1, 1499755079939243, 'NAS_EPS Service request', '100.89.140.69', 'XNMME03'],
-    [2, 1499755079944271, 'S1AP InitialContextSetupRequest', 'XNMME03', '100.89.140.69'],
-    [3, 1499755080028953, 'NAS_EPS Service request', 'XNMME03', '100.89.140.69'],
-    [4, 1499755080030389, 'S1AP InitialContextSetupRequest', '100.89.140.69', 'XNMME03'],
-    [5, 1499755080035498, 'GTPV2 Modify Bearer Request', 'XNMME03', 'XNSAEGW02'],
-    [6, 1499755080040392, 'GTPV2 Modify Bearer Response', 'XNSAEGW02', 'XNMME03'],
-    [7, 1499755080049906, 'GTPV2 Update Bearer Request', 'XNSAEGW02', 'XNMME03'],
-    [8, 1499755080064918, 'GTPV2 Update Bearer Response', 'XNMME03', 'XNSAEGW02'],
-    [9, 1499755080068520, 'NAS_EPS Service request', '100.89.140.69', 'XNMME03']*/

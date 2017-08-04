@@ -63,6 +63,9 @@ table{
                     background: $primary-color-hover;
                 }
             }
+            &.#{$table-prefix-cls}-row-selected{
+                background: $primary-color-hover;
+            }
             td[rowspan]{
                 background: $component-background;
             }

@@ -7,4 +7,4 @@
    </li>
 </ul>
 
-<jigsaw-table [data]="tableData" [columnDefines]="columnDefines"></jigsaw-table>
+<jigsaw-table [data]="tableData" [columnDefines]="columnDefines" (select)="handleRowSelect($event)"></jigsaw-table>
