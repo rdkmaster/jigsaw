@@ -17,13 +17,19 @@
             span {
                 width: 40%;
                 @include line-ellipsis-style();
+                &.left{
+                    float:left;
+                }
+                &.right{
+                    float:right;
+                }
             }
-            span:first-child {
-                float: left;
-            }
-            span:last-child {
-                float: right;
-            }
+            //span:first-child {
+            //    float: left;
+            //}
+            //span:last-child {
+            //    float: right;
+            //}
         }
     }
 
