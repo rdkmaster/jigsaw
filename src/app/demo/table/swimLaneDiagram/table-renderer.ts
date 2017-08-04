@@ -10,8 +10,8 @@ import {TableCellRenderer} from "jigsaw/component/table/table-api";
             <p class="signal-desc">{{cellData.signaldesc}}</p>
             <b class="arrow {{getArrowDirect()}}-arrow"></b>
             <p class="from-to">
-                <span>{{cellData.fromnedesc}}</span>
-                <span>{{cellData.tonedesc}}</span>
+                <span class="{{getArrowDirect()==='right' ? 'right' : 'left'}}">{{cellData.fromnedesc}}</span>
+                <span class="{{getArrowDirect()==='right' ? 'left' : 'right'}}">{{cellData.tonedesc}}</span>
             </p>
             <i *ngIf="cellData.usetime" class="use-time {{getArrowDirect()}}">+{{cellData.usetime}}ms</i>
         </div>
