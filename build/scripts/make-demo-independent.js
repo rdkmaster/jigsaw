@@ -4,20 +4,15 @@ var outputHome = './live-demo/'
 var demoHome = getDemoHome();
 var template = getTemplate();
 
+var outputHome = process.argv.length > 2 ? process.argv[2] : './live-demo/';
 if (fs.existsSync(outputHome)) {
     console.error("ERROR: remove output dir and try again: " + outputHome);
     process.exit(1);
 }
+outputHome = outputHome ? outputHome.trim() : './live-demo/';
+outputHome = outputHome.match(/[\/\\]$/) ? outputHome : outputHome + '/';
 
-if (process.argv.length > 2) {
-    var dir = demoHome + process.argv[2];
-    if (!dir.match(/[\\/]$/)) {
-        dir += '/';
-    }
-    makePlunker(dir);
-} else {
-    makeAllPlunkers(demoHome);
-}
+makeAllPlunkers(demoHome);
 
 function makeAllPlunkers(demoHome) {
     var demoSetFolders = fs.readdirSync(demoHome);
@@ -42,7 +37,6 @@ function processDemoSet(demoSetFolder) {
 }
 
 function makePlunker(demoFolder) {
-    console.log('make plunker for ' + demoFolder);
     var content = [];
     var mockDatas = [];
     readDemoContent(content, demoFolder);
@@ -98,8 +92,9 @@ function makePlunker(demoFolder) {
 
     var saveTo = outputHome + demoFolder.substring(demoHome.length);
     makeDirs(saveTo);
-    saveTo += 'plunker.embed.html';
+    saveTo += 'index.html';
     fs.writeFileSync(saveTo, plunker);
+    console.log('made plunker to ' + saveTo);
 }
 
 function readDemoContent(content, demoFolder) {
@@ -263,33 +258,33 @@ function getDemoHome() {
 }
 
 function getTemplate() {
-    return fs.readFileSync('./demo-independent-templates/plunker.embed.template.html').toString();
+    return fs.readFileSync(__dirname + '/demo-independent-templates/plunker.embed.template.html').toString();
 }
 
 function getIndexHtml() {
     return {
         path: 'index.html',
-        code: readCode('./demo-independent-templates/index.html')
+        code: readCode(__dirname + '/demo-independent-templates/index.html')
     }
 }
 
 function getMainTs() {
     return {
         path: 'main.ts',
-        code: readCode('./demo-independent-templates/main.ts')
+        code: readCode(__dirname + '/demo-independent-templates/main.ts')
     }
 }
 
 function getSystemJsAngularLoader() {
     return {
         path: 'systemjs-angular-loader.js',
-        code: readCode('./demo-independent-templates/systemjs-angular-loader.js')
+        code: readCode(__dirname + '/demo-independent-templates/systemjs-angular-loader.js')
     }
 }
 
 function getSystemJsConfig() {
     return {
         path: 'systemjs.config.js',
-        code: readCode('./demo-independent-templates/systemjs.config.js')
+        code: readCode(__dirname + '/demo-independent-templates/systemjs.config.js')
     }
 }
