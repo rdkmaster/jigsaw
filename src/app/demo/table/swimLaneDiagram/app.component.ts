@@ -1,5 +1,5 @@
 import {
-    Component, Renderer2, ViewContainerRef
+    Component, Renderer2, ViewContainerRef, ViewEncapsulation
 } from "@angular/core";
 import {TableData} from "jigsaw/core/data/table-data";
 import {ColumnDefine} from "../../../../jigsaw/component/table/table-api";
@@ -8,6 +8,7 @@ import {TableSwimLaneCell} from "./table-renderer";
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['app.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class swimLaneDiagramDemoComponent {
     tableData: TableData;
@@ -128,17 +129,22 @@ export class swimLaneDiagramDemoComponent {
     columnDefines: ColumnDefine[] = [
         {
             target: 0,
-            width: '10%'
+            width: '50px'
+        },
+        {
+            target: 1,
+            width: '150px'
         },
         {
             target: (field, index) => {
                 return index > 1
             },
+            width: '200px',
             cell: {
                 renderer: TableSwimLaneCell
             }
         }
-    ]
+    ];
 
     handleRowSelect(rowIndex: number){
         console.log(rowIndex);
