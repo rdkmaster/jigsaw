@@ -60,7 +60,7 @@ export class DemoListComponent implements OnInit{
                 },
                 {
                     label: 'disable',
-                    url: '/button/disable'
+                    url: '/button/disabled'
                 },
                 {
                     label: 'width_height',
@@ -89,7 +89,7 @@ export class DemoListComponent implements OnInit{
                 },
                 {
                     label: 'disable',
-                    url: '/checkbox/disable'
+                    url: '/checkbox/disabled'
                 }
             ]
         },
@@ -98,7 +98,7 @@ export class DemoListComponent implements OnInit{
             navList: [
                 {
                     label: 'loading-full',
-                    url: '/loading/loading-full'
+                    url: '/loading/full'
                 },
                 {
                     label: 'ballLoading',
@@ -236,7 +236,7 @@ export class DemoListComponent implements OnInit{
                 },
                 {
                     label: 'localPaging',
-                    url: '/table/localPaging'
+                    url: '/table/localPagingData'
                 },
                 {
                     label: 'swimLaneDiagram',
@@ -265,7 +265,7 @@ export class DemoListComponent implements OnInit{
                 },
                 {
                     label: 'popOption',
-                    url: '/dialog/popOption'
+                    url: '/dialog/popupOption'
                 },
                 {
                     label: 'in-dom',
@@ -290,7 +290,7 @@ export class DemoListComponent implements OnInit{
                 },
                 {
                     label: 'dialog-popOption',
-                    url: '/dialog/popOption'
+                    url: '/dialog/popupOption'
                 },
                 {
                     label: 'dialog-misc',
@@ -395,7 +395,7 @@ export class DemoListComponent implements OnInit{
                 },
                 {
                     label: 'pie-graph-basic',
-                    url: '/graph/pie-graph-basic'
+                    url: '/graph/pie'
                 },
                 {
                     label: 'noData',
@@ -412,30 +412,30 @@ export class DemoListComponent implements OnInit{
                 },
                 {
                     label: 'SelectedItems',
-                    url: '/tileselect/SelectedItems'
+                    url: '/tileselect/selectedItems'
                 },
                 {
                     label: 'MultipleSelect',
-                    url: '/tileselect/MultipleSelect'
+                    url: '/tileselect/multipleSelect'
                 },
                 {
-                    label: 'tileOptionWidth',
+                    label: 'TileOptionWidth',
                     url: '/tileselect/tileOptionWidth'
                 },
                 {
-                    label: 'searchable',
+                    label: 'Searchable',
                     url: '/tileselect/searchable'
                 },
                 {
-                    label: 'labelField',
+                    label: 'LabelField',
                     url: '/tileselect/labelField'
                 },
                 {
                     label: 'ItemsChange',
-                    url: '/tileselect/ItemsChange'
+                    url: '/tileselect/selectedItemsChange'
                 },
                 {
-                    label: 'trackitemby',
+                    label: 'TrackItemBy',
                     url: '/tileselect/trackitemby'
                 },
             ]
@@ -477,7 +477,7 @@ export class DemoListComponent implements OnInit{
                 },
                 {
                     label: 'withComboSelect',
-                    url: '/time/withComboSelect'
+                    url: '/time/comboSelect'
                 },
             ]
         },
@@ -486,35 +486,35 @@ export class DemoListComponent implements OnInit{
             navList: [
                 {
                     label: 'basic',
-                    url: '/rangeTime/basic'
+                    url: '/range-time/basic'
                 },
                 {
                     label: 'limitEnd',
-                    url: '/rangeTime/limitEnd'
+                    url: '/range-time/limitEnd'
                 },
                 {
                     label: 'limitStart',
-                    url: '/rangeTime/limitStart'
+                    url: '/range-time/limitStart'
                 },
                 {
                     label: 'weekStart',
-                    url: '/rangeTime/weekStart'
+                    url: '/range-time/weekStart'
                 },
                 {
                     label: 'gr',
-                    url: '/rangeTime/gr'
+                    url: '/range-time/gr'
                 },
                 {
                     label: 'recommended',
-                    url: '/rangeTime/recommended'
+                    url: '/range-time/recommended'
                 },
                 {
                     label: 'grItems',
-                    url: '/rangeTime/grItems'
+                    url: '/range-time/grItems'
                 },
                 {
                     label: 'refreshInterval',
-                    url: '/rangeTime/refreshInterval'
+                    url: '/range-time/refreshInterval'
                 },
             ]
         },
@@ -548,16 +548,16 @@ export class DemoListComponent implements OnInit{
                     url: '/tabs/basic'
                 },
                 {
-                    label: 'dynamicTab',
-                    url: '/tabs/dynamicTab'
+                    label: 'tabApi',
+                    url: '/tabs/tabApi'
                 },
                 {
                     label: 'withInputAndTable',
-                    url: '/tabs/withInputAndTable'
+                    url: '/tabs/withInput'
                 },
                 {
                     label: 'withNgFor',
-                    url: '/tabs/withNgFor'
+                    url: '/tabs/ngFor'
                 },
                 {
                     label: 'hideTab',
@@ -569,7 +569,7 @@ export class DemoListComponent implements OnInit{
                 },
                 {
                     label: 'removeTab',
-                    url: '/tabs/removeTab'
+                    url: '/tabs/destoryTab'
                 },
             ]
         },
@@ -819,7 +819,7 @@ const demoListRoutes = [
                 path: 'dialog',
                 loadChildren: './dialog/demo.module#DialogDemoModule'
             },{
-                path: 'rangeTime',
+                path: 'range-time',
                 loadChildren: './range-time/range-time-demo.module#RangeTimeDemoModule'
             },
             {

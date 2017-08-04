@@ -17,7 +17,7 @@ const loadingDemoRoutes = [
         path: '', redirectTo: 'basic', pathMatch: 'full'
     },
     {
-        path: 'loading-full', component: LoadingFullDemoComponent
+        path: 'full', component: LoadingFullDemoComponent
     },
     {
         path: 'ballLoading', component: BallLoadingDemoComponent

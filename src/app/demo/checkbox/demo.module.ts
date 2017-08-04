@@ -15,7 +15,7 @@ const checkboxDemoRoutes = [
         path: 'basic', component: CheckBoxBasicDemoComponent
     },
     {
-        path: 'disable', component: CheckBoxDisableDemoComponent
+        path: 'disabled', component: CheckBoxDisableDemoComponent
     },
     {
         path: '**', //fallback router must in the last

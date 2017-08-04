@@ -34,7 +34,7 @@ const graphRoutes = [
         path: 'line-bar-graph-ajax', component: AjaxLineGraphComponent
     },
     {
-        path: 'pie-graph-basic', component: PieGraphDemoComponent
+        path: 'pie', component: PieGraphDemoComponent
     },
     {
         path: 'noData', component: GraphWithNoDataComponent
