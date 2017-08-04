@@ -20,7 +20,7 @@
 - `dragleave` 拖拽离开拖放目标
 - `drop` 拖拽元素在拖放目标中被放下
 
-注: 需要在`dragover`事件中静止鼠标默认事件，不然`drop`事件无法触发
+注: 需要在`dragover`事件中禁止鼠标默认事件，不然`drop`事件无法触发
 
 ## DataTransfer对象
 在拖放操作中被保存的拖放数据
@@ -58,7 +58,7 @@
 一般在`dragstart`的时候设置需要传递的数据
 
 参数:
-- `format` 一般是'text'或者'url',
+- `format` 一般是'text'或者'url'
 - `data` 需要注意的是data参数也是字符串类型的,如果想传递一个对象需要用`JSON.stringify`
 ```javascript
 dragNode.addEventListener("dragstart", function( event ) {
@@ -125,13 +125,14 @@ export class JigsawDroppable implements OnInit, OnDestroy {}
 可以封装一个数据对象，把原生event，dom等放进去，然后通过`EventEmitter`发给实例。
 ```
 export class JigsawDraggable implements OnInit, OnDestroy {
+    constractor(private _elementRef: ElementRef)
     @Output()
     public jigsawDragEnter: EventEmitter<DragDropInfo> = new EventEmitter<DragDropInfo>();
     
     private _dragEnterHandle(event) {
         /*拖拽元素进入目标元素头上的时候*/
         event.stopPropagation();
-        this.jigsawDragEnter.emit(new DragDropInfo(event));
+        this.jigsawDragEnter.emit(new DragDropInfo(event, this._elementRef.nativeElement));
         return true;
     }
 }
@@ -187,16 +188,16 @@ dragOverHandle(dragInfo){
 拖放目标的dragover和dragleave，可以模拟鼠标的hover行为
 ```
 dragOverHandle(dragInfo){
-    dragInfo.event.target.style.borderColor = '#108ee9';
+    dragInfo.element.style.borderColor = '#108ee9';
 }
 
 dragLeaveHandle(dragInfo){
-    dragInfo.event.target.style.borderColor = '#d9d9d9';
+    dragInfo.element.style.borderColor = '#d9d9d9';
 }
 ```
 ![hover](hover.gif "hover")
 
-## url地址
-jigsaw项目(<https://github.com/rdkmaster/jigsaw>)
+## 地址
+代码地址(<https://github.com/rdkmaster/jigsaw/tree/drag-doc/src/jigsaw/directive/dragdrop>)
 
-demo地址(<http://rdk.zte.com.cn/component/dragdrop/table-drag>)
+在线演示地址(<http://rdk.zte.com.cn/component/dragdrop/table-drag>)
