@@ -62,14 +62,12 @@ export class JigsawTooltipDialog implements IPopupable, AfterContentInit {
 }
 
 @Component({
-    template: '<jigsaw-tooltip-dialog><span [innerHtml]="tooltip"></span></jigsaw-tooltip-dialog>'
+    template: '<jigsaw-tooltip-dialog><span [innerHtml]="tooltipMessage"></span></jigsaw-tooltip-dialog>'
 })
 export class SimpleTooltipComponent extends TooltipBase {
     @ViewChild(JigsawTooltipDialog) public tooltip: JigsawTooltipDialog;
 
-    constructor(private _elementRef:ElementRef) {
-        super();
-    }
+    public tooltipMessage:string = '';
 
     private _initData:any;
 
@@ -80,7 +78,7 @@ export class SimpleTooltipComponent extends TooltipBase {
     public set initData(value: any) {
         this._initData = value;
         if (value && value.message) {
-            this._elementRef.nativeElement.querySelector('span').innerHTML = `${value.message}`;
+            this.tooltipMessage = value.message;
         }
     }
 }
