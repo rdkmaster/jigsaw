@@ -29,6 +29,7 @@ before_script:
   - ./build/scripts/sauce_connect_setup.sh
 
 script:
+  - gulp ensure-url-matches-path
   - gulp jigsaw:build-release:clean
   - ng test --code-coverage --watch false
   - cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
