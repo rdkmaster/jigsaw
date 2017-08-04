@@ -234,11 +234,12 @@ function escapeCode(code) {
 }
 
 function makeDirs(path) {
-    var pathPartials = path.split(/[/\\]/g);
+    var pathPartials = path.split(/[\/\\]/g);
     for(var i = 1; i < pathPartials.length; i++) {
         var arr = pathPartials.slice(0, i);
         var p = arr.join('/');
-        if (fs.existsSync(p)) {
+        // p == '' if path is absolute
+        if (fs.existsSync(p) || !p) {
             continue;
         }
         fs.mkdirSync(p, 755);
