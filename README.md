@@ -28,13 +28,23 @@ Jigsaw的组件不再是原子，它对组件的功能进行了二次抽象，�
 我们强烈推荐使用 [Jigsaw Seed](https://github.com/rdkmaster/jigsaw-seed) 来作为新工程的开始。具体步骤为：
 1. 如果未安装nodejs，或者nodejs低于6.x.x，npm版本低于3.x.x，请先安装[nodejs](https://nodejs.org)。
 2. [下载](https://github.com/rdkmaster/jigsaw-seed/archive/master.zip)或者[clone](https://github.com/rdkmaster/jigsaw-seed) Jigsaw Seed 的源码。假设保存到了 `d:\jigsaw-seed`。
-3. 下载依赖包，执行如下脚本
+3. 下载依赖包，执行如下脚本（推荐国内用户使用如下流程）
 ```
 cd d:\jigsaw-seed
-npm config set proxy=http://proxy.zte.com.cn:80                          # 直连网络下不可执行这个命令
+npm install -g cnpm --registry=https://registry.npm.taobao.org           # 如果已有cnpm则可跳过
+cnpm install -g @angular/cli                                             # 强烈推荐，可选
+cnpm install
+cnpm start
+```
+
+目前已知某些情况下cnpm无法正常工作（比如你处于zte内网），则只能通过下面的方式进行：
+
+```
+cd d:\jigsaw-seed
+npm config set proxy=http://proxy.zte.com.cn:80
 npm config set registry=https://registry.npm.taobao.org/                 # for Chinese developers only
 npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass # for Chinese developers only
-npm install -g @angular/cli                                              # 强烈推荐，可选。
+npm install -g @angular/cli                                              # 强烈推荐，可选
 npm install
 npm start
 ```
@@ -64,8 +74,8 @@ npm start
 - 给我们[提bug/需求/建议](https://github.com/rdkmaster/jigsaw/issues/new)；
 - 给我们写写文档，写点小文章；
 - 更有效的是给我们推送PR，所有的PR我们都欢迎并会认真处理；
-	- 请优先处理没有打 `suspend` 标签的[issue](https://github.com/rdkmaster/jigsaw/issues)；
-	- [这里](https://github.com/rdkmaster/jigsaw/blob/master/docs/coding-spec.md)是一份简单的代码规范，请尽量遵守它；
+    - 请优先处理没有打 `suspend` 标签的[issue](https://github.com/rdkmaster/jigsaw/issues)；
+    - [这里](https://github.com/rdkmaster/jigsaw/blob/master/docs/coding-spec.md)是一份简单的代码规范，请尽量遵守它；
 
 ## 正在打算换工作？
 加入我们，白菜价送套市区房子！位于宁双路楚翘城往东200m处。绝不是吹牛，我很认真！
