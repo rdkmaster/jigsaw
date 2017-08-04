@@ -80,6 +80,8 @@ import {TableDataWithPopupDemoComponent} from "./withPopup/app.component";
 import {TableDataWithPopupDemoModule} from "./withPopup/app.module";
 import {swimLaneDiagramDemoComponent} from "./swimLaneDiagram/app.component";
 import {swimLaneDiagramDemoModule} from "./swimLaneDiagram/app.module";
+import {TableHideHeadDemoModule} from "./hideHead/app.module";
+import {TableHideHeadDemoComponent} from "./hideHead/app.component";
 
 const tableDemoRoutes = [
     {
@@ -167,6 +169,9 @@ const tableDemoRoutes = [
         path: 'swimLaneDiagram', component: swimLaneDiagramDemoComponent
     },
     {
+        path: 'hideHead', component: TableHideHeadDemoComponent
+    },
+    {
         path: '**', //fallback router must in the last
         component: TableBasicDemoComponent
     }
@@ -181,7 +186,7 @@ const tableDemoRoutes = [
         TablePerformsDemoModule, TableRendererDemoModule, TableRendererOfTemplateRefDemoModule, TableScrollAmountDemoModule,
         TableSetCellClassDemoModule, TableSetCellEditableDemoModule, TableSetCellRenderDemoModule, TableColumnGroupDemoModule,
         TableColumnSetVisibleDemoModule, TableColumnSetWidthDemoModule, TableSetHeaderClassDemoModule, TableSetHeaderRenderDemoModule,
-        TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, swimLaneDiagramDemoModule
+        TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, swimLaneDiagramDemoModule, TableHideHeadDemoModule
 
     ]
 })
