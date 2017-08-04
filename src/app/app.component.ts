@@ -13,7 +13,8 @@ export class AppComponent {
     jigsawTitle: string = 'jigsaw-title';
 
     gotoPlunker(): void {
-        let match = location.pathname.match(/\/(.*?\/.*?)$/);
+        //这是给临时演示网站准备的，后续正式ued上线了，还要再改一下
+        let match = location.pathname.match(/.+\/(.+?\/.+?)$/);
         if (!match) {
             return;
         }
