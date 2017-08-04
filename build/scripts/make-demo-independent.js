@@ -215,15 +215,14 @@ function fixAppModuleTs(appModuleCode) {
     var re = /\bimports\s*:\s*\[([\s\S]*?)\]/;
     var match = appModuleCode.match(/\bimports\s*:\s*\[([\s\S]*?)\]/);
     if (match) {
-        return appModuleCode.replace(re, (found, importString) => '' +
-            '    imports: [\n' +
+        return appModuleCode.replace(re, (found, importString) => 'imports: [\n' +
             '        BrowserModule, BrowserAnimationsModule, HttpModule,\n' + 
             '        ' + importString.trim() + '\n' +
             '    ]'
         );
     } else {
         return appModuleCode.replace('@NgModule({',
-            '@NgModule({\n    imports: [BrowserModule, BrowserAnimationsModule, HttpModule],');
+            '@NgModule({\nimports: [BrowserModule, BrowserAnimationsModule, HttpModule],');
     }
 
 }
