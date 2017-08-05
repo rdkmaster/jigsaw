@@ -8,7 +8,7 @@ import {
     TemplateRef,
     Type,
     ViewContainerRef,
-    EventEmitter,
+    EventEmitter, Optional,
 } from "@angular/core";
 import {CommonUtils, ElementEventHelper} from "../core/utils/common-utils";
 import {JigsawBlock} from "../component/block/block";
@@ -98,8 +98,8 @@ export class PopupService {
 
     constructor(private _cfr: ComponentFactoryResolver,
                 private _appRef: ApplicationRef,
-                private _router: Router,
-                private _activatedRoute: ActivatedRoute) {
+                @Optional() private _router: Router,
+                @Optional() private _activatedRoute: ActivatedRoute) {
 
     }
 
@@ -130,17 +130,19 @@ export class PopupService {
     }
 
     private _disposerSubscribe(disposer: PopupDisposer): void {
-        const disposerSubscription: Subscription = this._router.events
-            .filter(event => event instanceof NavigationEnd)
-            .map(() => this._activatedRoute)
-            .map(route => {
-                while (route.firstChild) route = route.firstChild;
-                return route;
-            })
-            .subscribe(() => {
-                disposerSubscription.unsubscribe();
-                disposer();
-            });
+        if(this._router){
+            const disposerSubscription: Subscription = this._router.events
+                .filter(event => event instanceof NavigationEnd)
+                .map(() => this._activatedRoute)
+                .map(route => {
+                    while (route.firstChild) route = route.firstChild;
+                    return route;
+                })
+                .subscribe(() => {
+                    disposerSubscription.unsubscribe();
+                    disposer();
+                });
+        }
     }
 
     /**
