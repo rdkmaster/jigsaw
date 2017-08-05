@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {DragDropInfo} from "jigsaw/directive/dragdrop/index";
+import {DragDropInfo} from "jigsaw/directive/dragdrop/types";
 
 @Component({
     templateUrl: 'app.component.html',

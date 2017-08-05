@@ -2,8 +2,7 @@
  * Created by 10177553 on 2017/4/26.
  */
 import {Component, ViewChild, Renderer2, ViewContainerRef} from '@angular/core';
-import {JigsawCollapse} from "jigsaw/component/collapse/collapse";
-import {JigsawCollapsePane} from "jigsaw/component/collapse/collapse-pane";
+import {JigsawCollapse, JigsawCollapsePane} from "jigsaw/component/collapse/collapse";
 
 @Component({
     templateUrl: './app.component.html'
@@ -12,7 +11,7 @@ export class ngForDemoComponent {
     constructor(public viewContainerRef: ViewContainerRef,
                 public renderer: Renderer2) {
     }
-    
+
     nes = [
         {id: 1, name: "NE1", content: "content of ne1"},
         {id: 2, name: "NE2", content: "content of ne2"},

@@ -1,9 +1,56 @@
 import {
-    NgModule, Component, ViewEncapsulation, QueryList, Input, ContentChildren
+    Component,
+    ContentChildren,
+    forwardRef,
+    Host,
+    Inject,
+    Input,
+    NgModule,
+    QueryList,
+    ViewEncapsulation
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {JigsawCollapsePane} from "./collapse-pane";
 import {AbstractJigsawComponent} from "../core";
+
+/**
+ * 组件模式.
+ */
+export enum CollapseMode {
+    default, accordion
+}
+
+@Component({
+    selector: 'jigsaw-collapse-pane',
+    templateUrl: './collapse-pane.html'
+})
+export class JigsawCollapsePane{
+
+    constructor(@Host() @Inject(forwardRef(() => JigsawCollapse)) private _collapse) {
+    }
+
+    @Input()
+    public title: string;
+
+    @Input()
+    public isActive: boolean = false;
+
+    /**
+     * @internal
+     */
+    public _$onClick() {
+        // 手风琴, 自动关闭其他的pane;
+        if (this._collapse && this._collapse.panes &&
+            (this._collapse.mode === "accordion" || this._collapse.mode === CollapseMode.accordion)) {
+            this._collapse.panes.forEach(item => {
+                if (item !== this && item.isActive) {
+                    item.isActive = false;
+                }
+            })
+        }
+
+        this.isActive = !this.isActive;
+    }
+}
 
 /**
  * @description 折叠容器组件.
@@ -35,13 +82,6 @@ export class JigsawCollapse extends AbstractJigsawComponent{
 }
 
 /**
- * 组件模式.
- */
-export enum CollapseMode {
-    default, accordion
-}
-
-/**
  * 折叠面板组件模块. (使用时直接引入模块就好.)
  */
 @NgModule({
@@ -51,4 +91,3 @@ export enum CollapseMode {
 })
 export class JigsawCollapseModule { }
 
-export * from "./collapse-pane";

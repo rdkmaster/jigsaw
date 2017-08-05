@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, Renderer2} from "@angular/core";
 import {TableCellRenderer} from "jigsaw/component/table/table-api";
-import {DragDropInfo} from "jigsaw/directive/dragdrop/index";
+import {DragDropInfo} from "jigsaw/directive/dragdrop/types";
 import {CommonUtils} from "jigsaw/core/utils/common-utils";
 
 /*

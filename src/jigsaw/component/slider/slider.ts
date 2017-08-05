@@ -4,7 +4,7 @@
 import {
     Component,
     ElementRef,
-    EventEmitter,
+    EventEmitter, forwardRef, Host, Inject,
     Input,
     OnDestroy,
     OnInit,
@@ -14,16 +14,176 @@ import {
     ViewChildren,
     ViewEncapsulation
 } from "@angular/core";
-import {JigsawSliderHandle} from "./handle";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {ArrayCollection} from "../../core/data/array-collection";
 import {CallbackRemoval} from "../../core/utils/common-utils";
-import {AbstractJigsawComponent, IJigsawComponent} from "../core";
+import {AbstractJigsawComponent} from "../core";
 
 export class SliderMark {
     value: number;
     label: string;
     style?: any;
+}
+
+@Component({
+    selector: 'slider-handle',
+    templateUrl: './handle.html',
+    encapsulation: ViewEncapsulation.None
+})
+export class JigsawSliderHandle implements OnInit{
+
+    private _value: number;
+
+    @Input()
+    public key: number;
+
+    @Input()
+    public get value() { return this._value; }
+    public set value(value) {
+        if(this._value === value) return;
+
+        this._value = this._slider._verifyValue(value);
+        this._valueToPos();
+    }
+
+    @Output()
+    public change = new  EventEmitter<number>();
+
+    private _valueToPos() {
+        this._offset = this._slider._transformValueToPos(this.value);
+        this.setHandleStyle();
+    }
+
+    private _offset: number = 0;
+
+    /**
+     * @internal
+     */
+    public _$handleStyle = {};
+
+    private setHandleStyle() {
+        if(isNaN(this._offset)) return;
+
+        if(this._slider.vertical) { // 兼容垂直滑动条;
+            this._$handleStyle = {
+                bottom: this._offset + "%"
+            }
+        } else {
+            this._$handleStyle = {
+                left: this._offset + "%"
+            }
+        }
+    }
+
+    private _dragged: boolean = false;
+
+    public transformPosToValue(pos) {
+        // 更新取得的滑动条尺寸.
+        this._slider._refresh();
+        let dimensions = this._slider._dimensions;
+
+        // bottom 在dom中的位置.
+        let offset = this._slider.vertical?dimensions.bottom: dimensions.left;
+        let size = this._slider.vertical?dimensions.height: dimensions.width;
+        let posValue = this._slider.vertical? pos.y - 6: pos.x;
+
+        if(this._slider.vertical) {
+            posValue = posValue > offset? offset:posValue;
+        } else {
+            posValue = posValue < offset? offset:posValue;
+        }
+
+        let newValue = Math.abs(posValue - offset) / size * (this._slider.max - this._slider.min) + (this._slider.min-0); // 保留两位小数
+
+        let m = this._calFloat(this._slider.step);
+
+        // 解决出现的有时小数点多了N多位.
+        newValue = Math.round(Math.round(newValue / this._slider.step) * this._slider.step * Math.pow(10, m)) / Math.pow(10, m);
+
+        return this._slider._verifyValue(newValue);
+    }
+
+    /**
+     * 计算需要保留小数的位数.
+     * @param value
+     * @private
+     */
+    _calFloat(value: number): number {
+        // 增加步长的计算;
+        let m = 0;
+        try {
+            m = this._slider.step.toString().split(".")[1].length;
+        } catch(e) { }
+        return m;
+    }
+
+    /**
+     * @internal
+     */
+    public _$updateCanDragged(flag: boolean) {
+        this._dragged = flag;
+
+        if(flag) {
+            this._registerGlobalEvent();
+        } else {
+            this._destroyGlobalEvent();
+        }
+    }
+
+    globalEventMouseMove: Function;
+    globalEventMouseUp: Function;
+
+    _registerGlobalEvent() {
+        this.globalEventMouseMove = this._render.listen("document", "mousemove", (e) => {
+            this._$updateValuePosition(e);
+        });
+        this.globalEventMouseUp = this._render.listen("document", "mouseup", () => {
+            this._dragged = false;
+            this._destroyGlobalEvent();
+        });
+
+    }
+
+    _destroyGlobalEvent() {
+        if(this.globalEventMouseMove) { this.globalEventMouseMove(); }
+
+        if(this.globalEventMouseUp)  { this.globalEventMouseUp(); }
+    }
+
+    private _slider:JigsawSlider; // 父组件;
+
+    constructor(private _render: Renderer2,@Host() @Inject(forwardRef(() => JigsawSlider)) slider: JigsawSlider) {
+        this._slider = slider;
+    }
+
+    /**
+     * 改变value的值
+     * @internal
+     */
+    public _$updateValuePosition(event?) {
+        if(!this._dragged|| this._slider.disabled) return;
+
+        // 防止产生选中其他文本，造成鼠标放开后还可以拖拽的奇怪现象;
+        event.stopPropagation();
+        event.preventDefault();
+
+        let pos = {
+            x: event["clientX"],
+            y: event["clientY"]
+        };
+
+        let newValue = this.transformPosToValue(pos);
+
+        if(this.value === newValue) return;
+
+        this.value = newValue;
+
+        this._slider._setValue(this.key, newValue);
+    }
+
+    ngOnInit() {
+        this._valueToPos();
+    }
 }
 
 /**
@@ -41,10 +201,6 @@ export class SliderMark {
     },
     encapsulation: ViewEncapsulation.None
 })
-/**
- *       4. tooltips 支持. 暂不支持
- *       5. 点击的支持。
- */
 export class JigsawSlider extends AbstractJigsawComponent implements OnInit, OnDestroy {
 
     constructor(private _element: ElementRef, private _render: Renderer2) {
@@ -180,10 +336,6 @@ export class JigsawSlider extends AbstractJigsawComponent implements OnInit, OnD
     @Input()
     public vertical: boolean = false;
 
-    // tipFormatter() {
-    //     // Todo 格式化, 弹出信息.
-    // }
-
     /**
      * 是否禁用. 数据类型 boolean, 默认false;
      * @type {boolean}
@@ -226,12 +378,6 @@ export class JigsawSlider extends AbstractJigsawComponent implements OnInit, OnD
             }
         }
     }
-
-    // 多值时选择一个合适的触点. Todo 支持点击
-    // _updateValuePosition() {
-    //     // let handle = this._sliderHandle.first;
-    //     // Todo
-    // }
 
     /**
      * @internal
