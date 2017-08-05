@@ -250,7 +250,7 @@ function readCode(path) {
 }
 
 function getDemoHome() {
-    var pathPartials = __dirname.split(/[/\\]/g);
+    var pathPartials = __dirname.split(/[\/\\]/g);
     pathPartials.pop();
     pathPartials.pop();
     var demoHome = pathPartials.join('/') + '/src/app/demo/';
