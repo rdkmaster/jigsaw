@@ -1,6 +1,5 @@
 import {
-    Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Optional, Output,
-    Renderer2
+    Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Renderer2, Output
 } from "@angular/core";
 import {Subscriber} from "rxjs/Subscriber";
 import {AbstractJigsawComponent} from "../core";
@@ -109,7 +108,6 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
             }
         }
     }
-
 
     private _limitStart: Time;
 
