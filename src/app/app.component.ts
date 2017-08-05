@@ -1,4 +1,4 @@
-import {Component, OnInit, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 
 @Component({
     selector: 'app-root',

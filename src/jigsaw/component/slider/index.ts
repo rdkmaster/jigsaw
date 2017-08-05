@@ -1,11 +1,10 @@
 /**
  * Created by 10177553 on 2017/4/13.
  */
-import { NgModule } from '@angular/core';
-
-import { JigsawSlider } from './slider';
+import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {JigsawSliderHandle} from "./handle";
+
+import {JigsawSlider, JigsawSliderHandle} from './slider';
 
 @NgModule({
     imports: [

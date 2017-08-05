@@ -1,5 +1,5 @@
 import {Directive, ElementRef, Output, EventEmitter, NgZone, OnInit, Renderer2, OnDestroy} from "@angular/core";
-import {DragDropInfo} from "./index";
+import {DragDropInfo} from "./types";
 import {CallbackRemoval} from "../../core/utils/common-utils";
 
 @Directive({
