@@ -1,13 +1,14 @@
-import {Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2} from "@angular/core";
+import {
+    Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Renderer2, Output
+} from "@angular/core";
 import {Subscriber} from "rxjs/Subscriber";
-import {TranslateService} from "@ngx-translate/core";
 import {AbstractJigsawComponent} from "../core";
 import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../service/time.service";
 import {PopupInfo, PopupPositionType, PopupService} from "../../service/popup.service";
 import {SimpleTooltipComponent} from "../tooltip/tooltip";
 import {Time, WeekTime} from "../../service/time.types";
 import {TranslateHelper} from "../../core/utils/translate-helper";
-import {ElementEventHelper} from "../../core/utils/common-utils";
+import {ElementEventHelper, CommonUtils} from "../../core/utils/common-utils";
 
 
 export type TimeShortcutFunction = () => [WeekTime, WeekTime]
@@ -98,7 +99,7 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
             this._limitEnd = value;
             this._checkMacro();
             if (this._timePicker) {
-                if(this._timePicker.minDate() && this._timePicker.minDate() > TimeService.getDate(this.limitEnd, <TimeGr>this.gr)){
+                if (this._timePicker.minDate() && this._timePicker.minDate() > TimeService.getDate(this.limitEnd, <TimeGr>this.gr)) {
                     this._timePicker.minDate(this.limitEnd)
                 }
                 this._timePicker.maxDate(this.limitEnd);
@@ -107,7 +108,6 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
             }
         }
     }
-
 
     private _limitStart: Time;
 
@@ -121,7 +121,7 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
             this._limitStart = value;
             this._checkMacro();
             if (this._timePicker) {
-                if(this._timePicker.maxDate() && this._timePicker.maxDate() < TimeService.getDate(this.limitStart, <TimeGr>this.gr)){
+                if (this._timePicker.maxDate() && this._timePicker.maxDate() < TimeService.getDate(this.limitStart, <TimeGr>this.gr)) {
                     this._timePicker.maxDate(this.limitStart)
                 }
                 this._timePicker.minDate(this.limitStart);
@@ -176,7 +176,7 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
     private _langChangeSubscriber: Subscriber<any>;
 
     constructor(private _el: ElementRef, private _renderer: Renderer2,
-                private _popService: PopupService, private _translateService: TranslateService) {
+                private _popService: PopupService) {
         super();
         this._refreshInterval = 0;
         this.weekStart = TimeWeekStart.sun;
@@ -193,22 +193,22 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
 
     private _defineLocale() {
         moment.defineLocale('zh', {
-            months : '一月_二月_三月_四月_五月_六月_七月_八月_九月_十月_十一月_十二月'.split('_'),
-            monthsShort : '1月_2月_3月_4月_5月_6月_7月_8月_9月_10月_11月_12月'.split('_'),
-            weekdays : '星期日_星期一_星期二_星期三_星期四_星期五_星期六'.split('_'),
-            weekdaysShort : '周日_周一_周二_周三_周四_周五_周六'.split('_'),
-            weekdaysMin : '日_一_二_三_四_五_六'.split('_'),
-            longDateFormat : {
-                LT : 'HH:mm',
-                LTS : 'HH:mm:ss',
-                L : 'YYYY年MMMD日',
-                LL : 'YYYY年MMMD日',
-                LLL : 'YYYY年MMMD日Ah点mm分',
-                LLLL : 'YYYY年MMMD日ddddAh点mm分',
-                l : 'YYYY年MMMD日',
-                ll : 'YYYY年MMMD日',
-                lll : 'YYYY年MMMD日 HH:mm',
-                llll : 'YYYY年MMMD日dddd HH:mm'
+            months: '一月_二月_三月_四月_五月_六月_七月_八月_九月_十月_十一月_十二月'.split('_'),
+            monthsShort: '1月_2月_3月_4月_5月_6月_7月_8月_9月_10月_11月_12月'.split('_'),
+            weekdays: '星期日_星期一_星期二_星期三_星期四_星期五_星期六'.split('_'),
+            weekdaysShort: '周日_周一_周二_周三_周四_周五_周六'.split('_'),
+            weekdaysMin: '日_一_二_三_四_五_六'.split('_'),
+            longDateFormat: {
+                LT: 'HH:mm',
+                LTS: 'HH:mm:ss',
+                L: 'YYYY年MMMD日',
+                LL: 'YYYY年MMMD日',
+                LLL: 'YYYY年MMMD日Ah点mm分',
+                LLLL: 'YYYY年MMMD日ddddAh点mm分',
+                l: 'YYYY年MMMD日',
+                ll: 'YYYY年MMMD日',
+                lll: 'YYYY年MMMD日 HH:mm',
+                llll: 'YYYY年MMMD日dddd HH:mm'
             },
             meridiemParse: /凌晨|早上|上午|中午|下午|晚上/,
             meridiemHour: function (hour, meridiem) {
@@ -225,7 +225,7 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
                     return hour >= 11 ? hour : hour + 12;
                 }
             },
-            meridiem : function (hour, minute, isLower) {
+            meridiem: function (hour, minute, isLower) {
                 let hm = hour * 100 + minute;
                 if (hm < 600) {
                     return '凌晨';
@@ -241,16 +241,16 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
                     return '晚上';
                 }
             },
-            calendar : {
-                sameDay : '[今天]LT',
-                nextDay : '[明天]LT',
-                nextWeek : '[下]ddddLT',
-                lastDay : '[昨天]LT',
-                lastWeek : '[上]ddddLT',
-                sameElse : 'L'
+            calendar: {
+                sameDay: '[今天]LT',
+                nextDay: '[明天]LT',
+                nextWeek: '[下]ddddLT',
+                lastDay: '[昨天]LT',
+                lastWeek: '[上]ddddLT',
+                sameElse: 'L'
             },
             dayOfMonthOrdinalParse: /\d{1,2}(日|月|周)/,
-            ordinal : function (number, period) {
+            ordinal: function (number, period) {
                 switch (period) {
                     case 'd':
                     case 'D':
@@ -265,25 +265,25 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
                         return number;
                 }
             },
-            relativeTime : {
-                future : '%s内',
-                past : '%s前',
-                s : '几秒',
-                m : '1 分钟',
-                mm : '%d 分钟',
-                h : '1 小时',
-                hh : '%d 小时',
-                d : '1 天',
-                dd : '%d 天',
-                M : '1 个月',
-                MM : '%d 个月',
-                y : '1 年',
-                yy : '%d 年'
+            relativeTime: {
+                future: '%s内',
+                past: '%s前',
+                s: '几秒',
+                m: '1 分钟',
+                mm: '%d 分钟',
+                h: '1 小时',
+                hh: '%d 小时',
+                d: '1 天',
+                dd: '%d 天',
+                M: '1 个月',
+                MM: '%d 个月',
+                y: '1 年',
+                yy: '%d 年'
             },
-            week : {
+            week: {
                 // GB/T 7408-1994《数据元和交换格式·信息交换·日期和时间表示法》与ISO 8601:1988等效
-                dow : 1, // Monday is the first day of the week.
-                doy : 4  // The week that contains Jan 4th is the first week of the year.
+                dow: 1, // Monday is the first day of the week.
+                doy: 4  // The week that contains Jan 4th is the first week of the year.
             }
         });
     }
@@ -322,7 +322,7 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
             }
         });
         this._timePicker = $(insert).data("DateTimePicker");
-        this._timePicker.locale(this._translateService.getBrowserLang());
+        this._timePicker.locale(CommonUtils.getBrowserLang());
 
         this._handleValueChange(<Time>this.date, <TimeGr>this.gr, true);
     }
@@ -368,7 +368,7 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
         }
     }
 
-    private _handleValueChange(changeValue :Time, gr:TimeGr, emit?:boolean) {
+    private _handleValueChange(changeValue: Time, gr: TimeGr, emit?: boolean) {
         if (this.date != changeValue || emit) {
             this._value = changeValue;
             setTimeout(() => {
@@ -382,7 +382,7 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
         }
     }
 
-    private _handleValue(value:Time): [Time, boolean] {
+    private _handleValue(value: Time): [Time, boolean] {
         if (this._limitStart && value < this.limitStart) {
             return [this.limitStart, true];
         }
@@ -404,32 +404,32 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
 
     private _eventHelper: ElementEventHelper = new ElementEventHelper();
 
-    private  _handleRecommended(nativeElement:any, popService:PopupService) {
+    private _handleRecommended(nativeElement: any, popService: PopupService) {
         if (this._recommendedBegin && this._recommendedEnd) {
             this._recommendedBegin = TimeService.getFormatDate(this._recommendedBegin);
             this._recommendedEnd = TimeService.getFormatDate(this._recommendedEnd);
             if (TimeService.getYear(<string>this._recommendedBegin) != TimeService.getYear(<string>this._recommendedEnd)) { //不支持跨年设置
                 throw "recommended not support different year times!";
             }
-            const monthsNode :HTMLElement = JigsawTime._getDataPickerNode("months", nativeElement);
-            const monthsHeadNode : HTMLElement = JigsawTime._getDataPickerNode("months", nativeElement, true);
+            const monthsNode: HTMLElement = JigsawTime._getDataPickerNode("months", nativeElement);
+            const monthsHeadNode: HTMLElement = JigsawTime._getDataPickerNode("months", nativeElement, true);
             JigsawTime._searchDateForMonth(this._recommendedBegin, this._recommendedEnd, monthsNode, monthsHeadNode);
             const daysNode = JigsawTime._getDataPickerNode("days", nativeElement);
-            const daysHeadNode :HTMLElement = JigsawTime._getDataPickerNode("days", nativeElement, true);
+            const daysHeadNode: HTMLElement = JigsawTime._getDataPickerNode("days", nativeElement, true);
             const daysObj = JigsawTime._parseDay(daysHeadNode.innerText);
             JigsawTime._searchDateForDay(this._recommendedBegin, this._recommendedEnd, daysNode, daysObj);
             nativeElement.querySelectorAll(".jigsaw-time-box .datepicker .expect-day").forEach(node => {
 
                 // #239 移除已经注册的事件. 点击事件会触发此操作, 造成重复注册事件. 引起tooltips 不能销毁.
                 const removeMouseenterListeners = this._eventHelper.get(node, 'mouseenter');
-                if(removeMouseenterListeners instanceof Array){
+                if (removeMouseenterListeners instanceof Array) {
                     removeMouseenterListeners.forEach(removeMouseenterListener => {
                         removeMouseenterListener();
                         this._eventHelper.del(node, 'mouseenter', removeMouseenterListener);
                     })
                 }
                 const removeMouseleaveListeners = this._eventHelper.get(node, 'mouseleave');
-                if(removeMouseleaveListeners instanceof Array){
+                if (removeMouseleaveListeners instanceof Array) {
                     removeMouseleaveListeners.forEach(removeMouseleaveListener => {
                         removeMouseleaveListener();
                         this._eventHelper.del(node, 'mouseleave', removeMouseleaveListener);
@@ -466,7 +466,7 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
         }
     }
 
-    private static _searchDateForDay(begin:Time, end:Time, sourceNodes:HTMLElement[], headObj:any) {
+    private static _searchDateForDay(begin: Time, end: Time, sourceNodes: HTMLElement[], headObj: any) {
         const startMonth = TimeService.getMonth(begin);
         const endMonth = TimeService.getMonth(end);
 
@@ -518,7 +518,7 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
         }
     }
 
-    private static _parseDay(val:string) {
+    private static _parseDay(val: string) {
         const charToNum = {一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9, 十: 10, 十一: 11, 十二: 12};
         const enUsToNum = {
             January: 1,
@@ -547,7 +547,7 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
         return result;
     }
 
-    private static _parseMonth(val:string) {
+    private static _parseMonth(val: string) {
         const enUsSimpleToNum = {
             Jan: 1,
             Feb: 2,
@@ -569,7 +569,7 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
         }
     }
 
-    private static _searchDateForMonth(begin:Time, end:Time, sourceNodes:any, headNode:any) {
+    private static _searchDateForMonth(begin: Time, end: Time, sourceNodes: any, headNode: any) {
         const startMonth = TimeService.getMonth(begin);
         const endMonth = TimeService.getMonth(end);
         if (TimeService.getYear(begin) == headNode.innerText) {
@@ -590,9 +590,9 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
         }
     }
 
-    private static _getDataPickerNode(granularity:string, nativeElement:any, isHead?:boolean) {
-        const selectorBefore : string = ".jigsaw-time-box .datepicker .datepicker-";
-        const selectorAfter :string = ">table>tbody>tr>";
+    private static _getDataPickerNode(granularity: string, nativeElement: any, isHead?: boolean) {
+        const selectorBefore: string = ".jigsaw-time-box .datepicker .datepicker-";
+        const selectorAfter: string = ">table>tbody>tr>";
         let nodeName = "";
         if (granularity == "years" || granularity == "months") {
             nodeName = "td>span:not(.disabled)";

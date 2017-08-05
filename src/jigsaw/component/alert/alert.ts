@@ -1,8 +1,8 @@
 import {Component, ElementRef, Input, NgModule, Renderer2, ViewChild} from "@angular/core";
-import {AbstractDialogComponentBase, DialogBase, JigsawDialog, JigsawDialogModule} from "../dialog/dialog";
 import {CommonModule} from "@angular/common";
-import {JigsawButtonModule} from "../button/button";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {AbstractDialogComponentBase, DialogBase, JigsawDialog, JigsawDialogModule} from "../dialog/dialog";
+import {JigsawButtonModule} from "../button/button";
 import {InternalUtils} from "../../core/utils/internal-utils";
 import {TranslateHelper} from "../../core/utils/translate-helper";
 import {JigsawMovableModule} from "../../directive/movable/index";
