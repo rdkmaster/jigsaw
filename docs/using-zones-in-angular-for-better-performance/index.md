@@ -118,15 +118,48 @@ export class AppComponent {
 }
 ```
 
+我们注入了`NgZone`，并在`mouseDown()`这个回调函数中调用了`runOutsideAngular()`方法，我们在这个方法中监听了`mousemove`事件，这确保了`mousemove`事件的回调函数的确是在我们开始拖拽框框的时候才被注册到dom上了。同时，我们保留被选择的框框的dom元素，这样我们才可以在`mouseMove()`中更新框框的`x`和`y`属性。注意到我们是直接对框框的dom元素进行操作的，而不是修改框框的数据对象通过绑定方式实现的拖拽效果，这是因为在zone外面，我们无法触发变化检测，绑定也就失效了。换句话说，我们**确实**更新了dom元素了，因此我们可以看到框框在移动，但是移动过程中，我们并未对框框的数据做出修改。
 
+并且，要注意我们还把`mouseMove()`回调函数从组件的模板中删除了。我们还可以将`mouseUp()`回调函数也像`mouseMove()`一样，从模板中删除，并以代码的方式实现绑定，但是这样做并不能带来实质性的性能提升，因此我们还是将它保留在了模板中，以让实现变得简单一些：
 
+```
+<svg (mousedown)="mouseDown($event)"
+      (mouseup)="mouseUp($event)">
 
+  <svg:g box *ngFor="let box of boxes" [box]="box">
+  </svg:g>
 
+</svg>
+```
+
+下一步，我们需要确保在鼠标松开（`mouseUp`）的时候，我们能够正确更新框框对应的位置数据，并且，我们希望立即进行变化检测来让视图和数据模型恢复同步。`NgZone`一个很酷的功能是，它不仅能够让我们的代码运行在Angular zone的外头，还能够让代码继续回到Angular的zone中执行，这最终会再次触发Angular的变化检测。我们需要做的就是调用`NgZone.run()`，把需要执行的代码传递给它。
+
+这是我们的`mouseUp()`的代码：
+
+```
+@Component(...)
+export class AppComponent {
+  ...
+  mouseUp(event) {
+    // Run this code inside Angular's Zone and perform change detection
+    this.zone.run(() => {
+      this.updateBox(this.currentId, event.clientX + this.offsetX, event.clientY + this.offsetY);
+      this.currentId = null;
+    });
+
+    window.document.removeEventListener('mousemove', this.mouseMove);
+  }
+}
+```
+
+需要注意，我们在**每一次的`mouseUp`**中都会删除`mousemove`事件的回调函数，否则在鼠标移动的过程，它的回调函数就会继续执行，这会造成即使鼠标已经被释放，但是框框却仍然跟着鼠标移动的问题，从而让我们的拖拽功能失效。进一步的，我们要尽可能的把事件回调函数聚集在一起，否则不仅会造成一些奇怪的副作用，还会消耗内存。
+
+## 测算性能
 
 
 
 
 ## 附录
-[1] how to make our Angular apps fast: <https://blog.thoughtram.io/angular/2017/02/02/making-your-angular-app-fast.html>
-[2] Understanding Zones: <https://blog.thoughtram.io/angular/2016/01/22/understanding-zones.html>
-[3] Zones in Angular: <https://blog.thoughtram.io/angular/2016/02/01/zones-in-angular-2.html>
+- [1] how to make our Angular apps fast: <https://blog.thoughtram.io/angular/2017/02/02/making-your-angular-app-fast.html>
+- [2] Understanding Zones: <https://blog.thoughtram.io/angular/2016/01/22/understanding-zones.html>
+- [3] Zones in Angular: <https://blog.thoughtram.io/angular/2016/02/01/zones-in-angular-2.html>
