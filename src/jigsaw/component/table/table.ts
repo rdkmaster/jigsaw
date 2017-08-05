@@ -108,8 +108,21 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
 
     @Output() public dataChange = new EventEmitter<TableDataChangeEvent>();
 
+    private _select: number;
+    @Input()
+    get select(): number {
+        return this._select;
+    }
+
+    set select(value: number) {
+        this._select = value;
+        if(this._hasInit){
+            this._$handleRowSelect(value);
+        }
+    }
+
     @Output()
-    public select: EventEmitter<number> = new EventEmitter<number>();
+    public selectChange: EventEmitter<number> = new EventEmitter<number>();
 
     private _columnDefines: ColumnDefine[];
 
@@ -809,7 +822,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
         this._rows.forEach((row, index) => {
             if(index === rowIndex){
                 this._renderer.addClass(row.nativeElement, 'jigsaw-table-row-selected');
-                this.select.emit(rowIndex);
+                this.selectChange.emit(rowIndex);
             }else {
                 this._renderer.removeClass(row.nativeElement, 'jigsaw-table-row-selected');
             }
@@ -833,6 +846,12 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     private _asyncSetCellLineEllipsis() {
         setTimeout(() => {
             this._setCellLineEllipsis();
+        }, 0);
+    }
+
+    private _asyncSelectRow() {
+        setTimeout(() => {
+            this._$handleRowSelect(this._select);
         }, 0);
     }
 
@@ -880,6 +899,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     private _refreshStyle() {
         this._asyncSetCellLineEllipsis();
         this._asyncSetFixedHeadWidth();
+        this._asyncSelectRow();
         this._addWindowListener();
         this._subscribeSortChange();
     }
@@ -905,6 +925,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
 
     ngAfterViewInit() {
         this._whileScrolling();
+        this._$handleRowSelect(this._select);
     }
 
     ngOnDestroy() {

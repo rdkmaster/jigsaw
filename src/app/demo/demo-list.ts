@@ -246,6 +246,10 @@ export class DemoListComponent implements OnInit{
                     label: 'hideHead',
                     url: '/table/hideHead'
                 },
+                {
+                    label: 'selectRow',
+                    url: '/table/selectRow'
+                },
             ]
         },
         {

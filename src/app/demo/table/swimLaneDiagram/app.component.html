@@ -9,6 +9,6 @@
 
 <jigsaw-table width="620px" [data]="tableData"
               [columnDefines]="columnDefines"
-              (select)="handleRowSelect($event)"
+              (selectChange)="handleRowSelect($event)"
               [hideHead]="true">
 </jigsaw-table>
