@@ -22,3 +22,5 @@ import './tasks/coverage';
 import './tasks/material-release';
 import './tasks/universal';
 import './tasks/validate-release';
+
+import './tasks/ensure-url-matches-path'

@@ -165,7 +165,7 @@ const tableDemoRoutes = [
         path: 'lineEllipsis', component: TableLineEllipsisDemoComponent
     },
     {
-        path: 'localPaging', component: LocalPagingDataDemoComponent
+        path: 'localPagingData', component: LocalPagingDataDemoComponent
     },
     {
         path: 'swimLaneDiagram', component: swimLaneDiagramDemoComponent

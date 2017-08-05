@@ -22,7 +22,7 @@ const dialogDemoRoutes=[
     },{
         path: 'top', component:DialogTopDemo
     },{
-        path :'popOption', component : DialogPopOptionDemo
+        path :'popupOption', component : DialogPopOptionDemo
     },{
         path :'in-dom', component : DialogInDomDemoComponent
     },{

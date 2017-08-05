@@ -51,7 +51,7 @@ const inputDemoRoutes = [
     }, {
         path: 'refreshInterval', component: TimeRefreshIntervalComponent
     }, {
-        path: 'withComboSelect', component: ComboSelectDemoComponent
+        path: 'comboSelect', component: ComboSelectDemoComponent
     },
     {
         path: '**', //fallback router must in the last
