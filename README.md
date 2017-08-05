@@ -3,7 +3,7 @@
 [![npm version](https://badge.fury.io/js/%40rdkmaster%2Fjigsaw.svg)](https://badge.fury.io/js/%40rdkmaster%2Fjigsaw)
 [![Build Status](https://travis-ci.org/rdkmaster/jigsaw.svg?branch=master)](https://travis-ci.org/rdkmaster/jigsaw)
 [![Code Coverage Status](https://coveralls.io/repos/github/rdkmaster/jigsaw/badge.svg?branch=master)](https://coveralls.io/github/rdkmaster/jigsaw?branch=master)
-[![Doc Coverage Status](http://rdkmaster.com/rdk/service/app/badges/server/get-badge?type=documentation)](http://rdkmaster.com/doc/coverage.html)
+[![Doc Coverage Status](http://rdkmaster.com/rdk/service/app/badges/server/get-badge?type=documentation)](http://rdkmaster.com/jigsaw/doc/coverage.html)
 <br>
 [![component count](http://rdkmaster.com/rdk/service/app/badges/server/get-badge?type=components)](http://rdk.zte.com.cn/component)
 [![directives count](http://rdkmaster.com/rdk/service/app/badges/server/get-badge?type=directives)](http://rdk.zte.com.cn/component)
