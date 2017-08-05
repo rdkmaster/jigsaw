@@ -228,6 +228,10 @@ export const navInfo = [
                 label: 'hideHead',
                 url: '/table/hideHead'
             },
+            {
+                label: 'selectRow',
+                url: '/table/selectRow'
+            },
         ]
     },
     {

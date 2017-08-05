@@ -18,7 +18,7 @@ export class DemoListComponent implements OnInit{
     navHeight: number;
 
     navData: Object = navInfo;
-
+    
     ngOnInit(){
         this.navHeight = (document.body.clientHeight -
             AffixUtils.offset(this.elementRef.nativeElement.querySelector('.left-box')).top) - 10;

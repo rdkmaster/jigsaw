@@ -1,10 +1,14 @@
 
 <ul class="ne-list">
-   <li *ngFor="let ne of neList">
+   <li *ngFor="let ne of neList; index as liIndex" class="li-{{liIndex}}">
        {{ne.name}}<br>
        {{ne.desc}}<br>
        {{ne.ip}}
    </li>
 </ul>
 
-<jigsaw-table [data]="tableData" [columnDefines]="columnDefines"></jigsaw-table>
+<jigsaw-table width="620px" [data]="tableData"
+              [columnDefines]="columnDefines"
+              (selectChange)="handleRowSelect($event)"
+              [hideHead]="true">
+</jigsaw-table>

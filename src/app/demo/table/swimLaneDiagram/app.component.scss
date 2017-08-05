@@ -1,16 +1,32 @@
 .ne-list{
-    clear: both;
-    overflow: hidden;
-    text-align: center;
+    position: relative;
+    height: 76px;
     margin-bottom: 20px;
     li{
-        display: inline-block;
+        position: absolute;
         width: 150px;
         height: 76px;
         line-height: 1.5;
         text-align: center;
-        margin-right: 10px;
         padding: 10px 0;
         background: #ffbf00;
+        &.li-0{
+            left: 130px;
+        }
+        &.li-1{
+            left: 337px;
+        }
+        &.li-2{
+            left: 544px;
+        }
+        &:after{
+            position: absolute;
+            display: block;
+            content: ' ';
+            height: 20px;
+            border-left: 1px dashed #666;
+            left: 50%;
+            bottom: -20px;
+        }
     }
 }
