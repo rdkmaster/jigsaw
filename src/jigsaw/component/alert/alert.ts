@@ -1,8 +1,8 @@
-import {Component, ElementRef, Input, NgModule, Renderer2, ViewChild} from "@angular/core";
+import {Component, ElementRef, Input, NgModule, Optional, Renderer2, ViewChild} from "@angular/core";
 import {AbstractDialogComponentBase, DialogBase, JigsawDialog, JigsawDialogModule} from "../dialog/dialog";
 import {CommonModule} from "@angular/common";
 import {JigsawButtonModule} from "../button/button";
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {TranslateService} from "@ngx-translate/core";
 import {InternalUtils} from "../../core/utils/internal-utils";
 import {TranslateHelper} from "../../core/utils/translate-helper";
 import {JigsawMovableModule} from "../../directive/movable/index";
@@ -172,53 +172,55 @@ export class JigsawErrorAlert extends JigsawCommonAlert {
 }
 
 @NgModule({
-    imports: [JigsawDialogModule, JigsawMovableModule, JigsawButtonModule, CommonModule, TranslateModule.forRoot()],
+    imports: [JigsawDialogModule, JigsawMovableModule, JigsawButtonModule, CommonModule],
     declarations: [JigsawAlert, JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert],
     exports: [JigsawDialogModule, JigsawMovableModule, JigsawAlert, JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert],
     providers: [TranslateService],
     entryComponents: [JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert]
 })
 export class JigsawAlertModule {
-    constructor(translateService: TranslateService) {
-        InternalUtils.initI18n(translateService, 'alert', {
-            zh: {
-                button: {
-                    ok: "确定",
-                    cancel: "取消",
-                    yes: "是",
-                    no: "否",
-                    abort: "终止",
-                    ignore: "忽略",
-                    retry: "重试"
+    constructor(@Optional() translateService: TranslateService) {
+        if (translateService) {
+            InternalUtils.initI18n(translateService, 'alert', {
+                zh: {
+                    button: {
+                        ok: "确定",
+                        cancel: "取消",
+                        yes: "是",
+                        no: "否",
+                        abort: "终止",
+                        ignore: "忽略",
+                        retry: "重试"
+                    },
+                    title: {
+                        info: "提示",
+                        warning: "警告",
+                        error: "错误",
+                        confirm: "确认"
+                    }
                 },
-                title: {
-                    info: "提示",
-                    warning: "警告",
-                    error: "错误",
-                    confirm: "确认"
+                en: {
+                    button: {
+                        ok: "OK",
+                        cancel: "Cancel",
+                        yes: "Yes",
+                        no: "No",
+                        abort: "Abort",
+                        ignore: "Ignore",
+                        retry: "Retry"
+                    },
+                    title: {
+                        info: "Information",
+                        warning: "Warning",
+                        error: "Error",
+                        confirm: "Confirm"
+                    }
                 }
-            },
-            en: {
-                button: {
-                    ok: "OK",
-                    cancel: "Cancel",
-                    yes: "Yes",
-                    no: "No",
-                    abort: "Abort",
-                    ignore: "Ignore",
-                    retry: "Retry"
-                },
-                title: {
-                    info: "Information",
-                    warning: "Warning",
-                    error: "Error",
-                    confirm: "Confirm"
-                }
-            }
-        });
-        translateService.setDefaultLang(translateService.getBrowserLang());
-        TranslateHelper.languageChangEvent.subscribe(langInfo => {
-            translateService.use(langInfo.curLang);
-        });
+            });
+            translateService.setDefaultLang(translateService.getBrowserLang());
+            TranslateHelper.languageChangEvent.subscribe(langInfo => {
+                translateService.use(langInfo.curLang);
+            });
+        }
     }
 }

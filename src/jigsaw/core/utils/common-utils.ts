@@ -133,6 +133,50 @@ export class CommonUtils {
             return null;
         }
     }
+
+    /**
+     * Returns the language code name from the browser, e.g. "zh"
+     *
+     * @returns string
+     */
+    public static getBrowserLang(): string {
+        if (typeof window === 'undefined' || typeof window.navigator === 'undefined') {
+            return undefined;
+        }
+
+        // to avoid compiler mis-error.
+        const w:any = window;
+        let browserLang: any = w.navigator.languages ? w.navigator.languages[0] : null;
+        browserLang = browserLang || w.navigator.language || w.navigator.browserLanguage || w.navigator.userLanguage;
+
+        if (browserLang.indexOf('-') !== -1) {
+            browserLang = browserLang.split('-')[0];
+        }
+
+        if (browserLang.indexOf('_') !== -1) {
+            browserLang = browserLang.split('_')[0];
+        }
+
+        return browserLang;
+    }
+
+    /**
+     * Returns the culture language code name from the browser, e.g. "zh-CN"
+     *
+     * @returns string
+     */
+    public getBrowserCultureLang(): string {
+        if (typeof window === 'undefined' || typeof window.navigator === 'undefined') {
+            return undefined;
+        }
+
+        // to avoid compiler mis-error.
+        const w:any = window;
+        let browserCultureLang: any = w.navigator.languages ? w.navigator.languages[0] : null;
+        browserCultureLang = browserCultureLang || w.navigator.language || w.navigator.browserLanguage || w.navigator.userLanguage;
+
+        return browserCultureLang;
+    }
 }
 
 export type CallbackRemoval = () => void;
