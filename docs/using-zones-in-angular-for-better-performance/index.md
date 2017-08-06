@@ -29,13 +29,17 @@ Jordi Corllell提出了另一个方法，利用zone API来让我们的代码执�
 
 注意两个demo的差异并不是特别容易察觉，优化后的版本的js每一帧的运行性能明显提升了。在给出具体的性能数据之前，我们先来快速了解一下zone，以及来看看demo的代码，并讨论一下Jordi是如何利用Angular的`NgZone`这个API让demo达到这样的性能的。
 
-> 译者：原文的用词很容易给人造成误解。作者说的 _不易察觉_ 是指demo表现上不容易被察觉，实际上只要你拖拽两个demo上的框框就会明显感觉到差距了。
+> 译者：原文的用词很容易给人造成误解。
+>
+> 作者说的 _不易察觉_ 是指demo表现上不容易被察觉，而非指优化的效果，实际上只要你拖拽两个demo上的框框就会明显感觉到差距了。
+>
+> 足够细心的话，你还可以发现优化前的demo，即使不拖拽框框，而仅仅让鼠标在框框上不停的移动，也会让cpu冲高。
 
 ## zone的概念
 在我们开始使用Angular的`NgZone`这个zone API之前，我们需要先搞清楚zone到底是啥东西，以及为哈它在Angular里很有用。在这个方面我们不会太过深入，因为在这之前，我已经写了这两篇文章了：
 
 - 理解zone[2]：讨论了普通情况下的zone的概念，以及它在分析异步代码执行方面的用途；
-- Angular中的zone：讨论了Angular是如何利用zone的API创建了`NgZone`，`NgZone`让Angular自身以及Angular使用者的代码在zone内外运行。
+- Angular中的zone[3]：讨论了Angular是如何利用zone的API创建了`NgZone`，`NgZone`让Angular自身以及Angular使用者的代码在zone内外运行。
 
 如果你还没阅读过这两个文章，我们隆重推荐你阅读一下他们，他们会让你对zone是啥以及它能够做啥有一个坚实的理解。简单的说，zone对浏览器的异步API做了封装，并对外发出异步任务何时开始何时结束的通知。Angular利用了这一点，从而获得异步任务执行结束的通知。异步任务包括了`xhr`调用，`setTimeout()`，以及各种各样的用户事件，例如 `click`, `submit`, `mousedown`...
 
@@ -222,7 +226,7 @@ private _dragMove = (event) => {
 
 主要流程和本文前面部分介绍的基本上一样，我们主要看看Jigsaw七巧板的改进之处。注意到我们并没有使用`window`对象的API了吗？我使用的是一个非常Angular-friendly的方式：`this._renderer.setStyle()`。这样既利用了zone的强大功能，又避开了前文demo的缺陷。
 
-下面给出几个在线demo，打开就可以看到效果
+下面给出几个在线demo，打开就可以看到`jigsawMovable`效果
 - <http://rdk.zte.com.cn/jigsaw/live-demo/dialog/misc/index.html>
 - <http://rdk.zte.com.cn/jigsaw/live-demo/alert/popup/index.html>
 
@@ -236,7 +240,7 @@ private _dragMove = (event) => {
 
 
 ## 题外话
-这些文章是Jigsaw七巧板团队开发过程中碰到的难题的解决方法，或者是团队成员的学习成果。我相信这些文章对喜欢Angular，喜欢Jigsaw的人，都同样值得一读。欢迎以任何形式转发，但是请保留Jigsaw七巧板的签名和链接 <https://github.com/rdkmaster/jigsaw> 点击阅读原文可以帮助我们改进这篇文章。
+这些文章是Jigsaw七巧板团队开发过程中碰到的难题的解决方法，或者是团队成员的学习成果。我相信这些文章对喜欢Angular，喜欢Jigsaw的人，都同样值得一读。欢迎以任何形式转发，但是请保留Jigsaw七巧板的签名和链接 <https://github.com/rdkmaster/jigsaw> 点击[阅读原文](https://github.com/rdkmaster/jigsaw/blob/master/docs/using-zones-in-angular-for-better-performance/index.md)可以帮助我们改进这篇文章。
 
 
 ## 附录
