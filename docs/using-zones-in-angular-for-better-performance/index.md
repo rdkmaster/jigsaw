@@ -29,7 +29,7 @@ Jordi Corllell提出了另一个方法，利用zone API来让我们的代码执�
 
 注意两个demo的差异并不是特别容易察觉，优化后的版本的js每一帧的运行性能明显提升了。在给出具体的性能数据之前，我们先来快速了解一下zone，以及来看看demo的代码，并讨论一下Jordi是如何利用Angular的`NgZone`这个API让demo达到这样的性能的。
 
-> 译者：原文的用词很容易给人造成误解。作者说的_不易察觉_是指demo表现上不容易被察觉，实际上只要你拖拽两个demo上的框框就会明显感觉到差距了。
+> 译者：原文的用词很容易给人造成误解。作者说的 _不易察觉_ 是指demo表现上不容易被察觉，实际上只要你拖拽两个demo上的框框就会明显感觉到差距了。
 
 ## zone的概念
 在我们开始使用Angular的`NgZone`这个zone API之前，我们需要先搞清楚zone到底是啥东西，以及为哈它在Angular里很有用。在这个方面我们不会太过深入，因为在这之前，我已经写了这两篇文章了：
@@ -227,6 +227,12 @@ private _dragMove = (event) => {
 - <http://rdk.zte.com.cn/jigsaw/live-demo/alert/popup/index.html>
 
 `jigsawMovable`指令的完整代码可以在这里[6]找到。
+
+为了方便对比效果，我们把原文的两个demo合成在一起了，左边是在zone里运行的，右边是改进后的：
+
+![](compare.png)
+
+- <http://rdk.zte.com.cn/jigsaw/live-demo/misc/zone-for-performance/index.html>
 
 
 ## 题外话
