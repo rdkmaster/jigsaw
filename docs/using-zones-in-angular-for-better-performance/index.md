@@ -152,14 +152,91 @@ export class AppComponent {
 }
 ```
 
-需要注意，我们在**每一次的`mouseUp`**中都会删除`mousemove`事件的回调函数，否则在鼠标移动的过程，它的回调函数就会继续执行，这会造成即使鼠标已经被释放，但是框框却仍然跟着鼠标移动的问题，从而让我们的拖拽功能失效。进一步的，我们要尽可能的把事件回调函数聚集在一起，否则不仅会造成一些奇怪的副作用，还会消耗内存。
+需要注意，我们在**每一次的**`mouseUp`中都会删除`mousemove`事件的回调函数，否则在鼠标移动的过程，它的回调函数就会继续执行，这会造成即使鼠标已经被释放，但是框框却仍然跟着鼠标移动的问题，从而让我们的拖拽功能失效。进一步的，我们要尽可能的把事件回调函数聚集在一起，否则不仅会造成一些奇怪的副作用，还会消耗内存。
 
 ## 测算性能
+既然我们已经知道了Jordi是如何实现这个demo的了，我们再来看看一些技术数据吧。下图的数据是我们在相同的电脑上通过相同的统计方式得到的。统计方法可以参考我们之前关于性能的文章[4]
+
+![](dnd-perf-profile-5.png)
+
+## 结论
+可以使用zone来避开Angular的变化检测，这个方法不会导致变化检测器离线，也不会导致应用代码变复杂。实际上，这说明zone的API非常容易使用的，特别是使用Angular的`NgZone`的API来让代码运行在zone之内和zone之外也非常简单。基于前面的统计数据，我们可以认为这个方法是我们所有相关文章所使用的各种方法中性能最好的。使用zone的API的开发体验比其他文章中介绍的方法也要更好，因为这个方法比起手工使变化检测器离线要更容易实现。这无疑是迄今为止我们对性能改进方面最优雅的方法了。
+
+尽管如此，我们要注意到这个方法带来了一些（可修复的）负面影响。例如，我们使用了dom的API，以及全局`window`对象，这都是我们应该尽力避免的。如果我们需要使用服务端渲染（SSR）这些代码，直接引用`window`对象会导致一些问题，我们后续将会针对这些特定的SSR问题进行讨论。然而这个demo就目前而言，这不是一个大问题。
+
+我们再次对Jordi Collell[5]给这个demo的改进提出的这个方法表示感谢。
+
+（原文全文完）
+
+## Jigsaw七巧板在这方面的实践
+> 注意这里的第一人称“我”或者“我们”均指Jigsaw七巧板开发团队，而非前文中的作者。
+
+我们在实现Jigsaw七巧板的`jigsawMovable`指令过程中，也使用到了这个技巧。并且我们的实践避开了作者在“结论”小节提及的那个负面影响。`jigsawMovable`指令主要是用在对具有浮动特性的组件做拖拽改变位置的场景，一个非常典型的应用场景是弹出式对话框拖拽标题改变位置。
+
+我们来快速的过一下这个功能，以增加读者对zone的理解。
+
+在用户鼠标按下对话框的标题的时候，下面的回调函数被执行：
+
+```
+private _dragStart = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    this._position = [event.clientX - AffixUtils.offset(this._movableTarget).left,
+        event.clientY - AffixUtils.offset(this._movableTarget).top];
+    this._moving = true;
+
+    if (this._removeWindowMouseMoveListener) {
+        this._removeWindowMouseMoveListener();
+    }
+    this._zone.runOutsideAngular(() => {
+        this._removeWindowMouseMoveListener = this._renderer.listen(document, 'mousemove', this._dragMove);
+    });
+
+    if (this._removeWindowMouseUpListener) {
+        this._removeWindowMouseUpListener();
+    }
+    this._removeWindowMouseUpListener = this._renderer.listen(document, 'mouseup', this._dragEnd);
+};
+```
+
+注意看这3行
+
+```
+this._zone.runOutsideAngular(() => {
+    this._removeWindowMouseMoveListener = this._renderer.listen(document, 'mousemove', this._dragMove);
+});
+```
+
+我们把鼠标移动事件注册过程放在了zone外面，这样，鼠标移动过程，Angular就不会对下面的代码做任何变化检测了：
+
+```
+private _dragMove = (event) => {
+    if (this._moving) {
+        const ox = event.clientX - this._position[0];
+        const oy = event.clientY - this._position[1];
+        this._renderer.setStyle(this._movableTarget, 'left', ox + 'px');
+        this._renderer.setStyle(this._movableTarget, 'top', oy + 'px');
+    }
+};
+```
+
+主要流程和本文前面部分介绍的基本上一样，我们主要看看Jigsaw七巧板的改进之处。注意到我们并没有使用`window`对象的API了吗？我使用的是一个非常Angular-friendly的方式：`this._renderer.setStyle()`。这样既利用了zone的强大功能，又避开了前文demo的缺陷。
+
+下面给出几个在线demo，打开就可以看到效果
+- <http://rdk.zte.com.cn/jigsaw/live-demo/dialog/misc/index.html>
+- <http://rdk.zte.com.cn/jigsaw/live-demo/alert/popup/index.html>
+
+`jigsawMovable`指令的完整代码可以在这里[6]找到。
 
 
+## 题外话
+这些文章是Jigsaw七巧板团队开发过程中碰到的难题的解决方法，或者是团队成员的学习成果。我相信这些文章对喜欢Angular，喜欢Jigsaw的人，都同样值得一读。欢迎以任何形式转发，但是请保留Jigsaw七巧板的签名和链接 <https://github.com/rdkmaster/jigsaw> 点击阅读原文可以帮助我们改进这篇文章。
 
 
 ## 附录
 - [1] how to make our Angular apps fast: <https://blog.thoughtram.io/angular/2017/02/02/making-your-angular-app-fast.html>
 - [2] Understanding Zones: <https://blog.thoughtram.io/angular/2016/01/22/understanding-zones.html>
 - [3] Zones in Angular: <https://blog.thoughtram.io/angular/2016/02/01/zones-in-angular-2.html>
+- [4] article on performance: <https://blog.thoughtram.io/angular/2017/02/02/making-your-angular-app-fast.html>
+- [5] Jordi Collell: <https://twitter.com/galigan>
+- [6] code of jigsawMovable: <https://github.com/rdkmaster/jigsaw/blob/master/src/jigsaw/directive/movable/movable.ts>
