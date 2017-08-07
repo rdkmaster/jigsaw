@@ -28,4 +28,64 @@ jigsaw-time{
 }
 /*时间组件样式end*/
 
+/*zTree组件样式start*/
+@mixin font-awesone(){
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.ztree li span.button{
+    @include font-awesone();
+    background: none;
+    font-size: 14px;
+    color: $primary-color-light;
+    &.ico_open{
+        &:before{
+            content: "\f07c";
+        }
+    }
+    &.ico_close{
+        &:before{
+            content: "\f07b";
+        }
+    }
+    &.ico_docu{
+        &:before{
+            content: "\f15c";
+        }
+    }
+    &.chk{
+        border: 1px solid $primary-color-light;
+        border-radius: 2px;
+        font-size: 12px;
+        &.checkbox_true_full:before, &.checkbox_true_full_focus:before{
+            content: "\f00c";
+        }
+    }
+    &.edit{
+        &:before{
+            content: "\f044";
+        }
+    }
+    &.remove{
+        &:before{
+            content: "\f014";
+        }
+    }
+    &.noline_open, &.center_open, &.bottom_open, &.roots_open{
+        &:before{
+            content: "\f106";
+        }
+    }
+    &.noline_close, &.center_close, &.bottom_close, &.roots_close{
+        &:before{
+            content: "\f107";
+        }
+    }
+}
+/*zTree组件样式end*/
+
 
