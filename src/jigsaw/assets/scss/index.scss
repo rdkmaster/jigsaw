@@ -21,22 +21,84 @@ jigsaw-time{
     .bootstrap-datetimepicker-widget table td.old, .bootstrap-datetimepicker-widget table td.new {
         color: $text-color-secondary;
     }
+    .bootstrap-datetimepicker-widget table td span.active,
+    .bootstrap-datetimepicker-widget table td.active,
+    .bootstrap-datetimepicker-widget table td.active:hover,
+    .jigsaw-time-box .bootstrap-datetimepicker-widget table tr.active td{
+        background-color: $primary-color;
+    }
 
-    .glyphicon-chevron-left:before, .glyphicon-chevron-right:before {
-        color: $text-color-secondary;
+    .bootstrap-datetimepicker-widget table th.picker-switch{
+        font-weight: 700 !important;
+    }
+    .bootstrap-datetimepicker-widget table thead tr:first-child th{
+        &:hover{
+            background: none;
+            color: $primary-color;
+        }
+        span.glyphicon{
+            @include font-awesone();
+            font-size: 16px;
+            &.glyphicon-chevron-left:before{
+                content: "\f104";
+            }
+            &.glyphicon-chevron-right:before{
+                content: "\f105";
+            }
+        }
+
+    }
+
+    .bootstrap-datetimepicker-widget .picker-switch a[data-action]{
+        color: $primary-color;
+        &:hover{
+            color: $primary-color-light;
+        }
+    }
+    .bootstrap-datetimepicker-widget a[data-action]{
+        color: #666;
+        &:hover{
+            color: $primary-color;
+        }
+    }
+
+    .bootstrap-datetimepicker-widget .picker-switch td span{
+        &.glyphicon{
+            @include font-awesone();
+            font-size: 14px;
+            line-height: 2.5;
+            &.glyphicon-time:before{
+                content: "\f017";
+            }
+            &.glyphicon-calendar:before{
+                content: "\f073";
+            }
+        }
+    }
+
+    .bootstrap-datetimepicker-widget table td a.btn span{
+        &.glyphicon{
+            @include font-awesone();
+            font-size: 16px;
+            line-height: 54px;
+            &.glyphicon-chevron-up:before{
+                content: "\f106";
+            }
+            &.glyphicon-chevron-down:before{
+                content: "\f107";
+            }
+        }
+    }
+
+    .bootstrap-datetimepicker-widget .timepicker-hour,
+    .bootstrap-datetimepicker-widget .timepicker-minute,
+    .bootstrap-datetimepicker-widget .timepicker-second{
+        font-weight: 400;
     }
 }
 /*时间组件样式end*/
 
 /*zTree组件样式start*/
-@mixin font-awesone(){
-    font: normal normal normal 14px/1 FontAwesome;
-    font-size: inherit;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
 .ztree li span.button{
     @include font-awesone();
     background: none;
