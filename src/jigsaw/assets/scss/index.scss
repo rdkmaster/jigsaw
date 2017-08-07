@@ -21,6 +21,21 @@ jigsaw-time{
     .bootstrap-datetimepicker-widget table td.old, .bootstrap-datetimepicker-widget table td.new {
         color: $text-color-secondary;
     }
+
+    .bootstrap-datetimepicker-widget table td.day{
+        height: 14px;
+        line-height: 14px;
+    }
+
+    .bootstrap-datetimepicker-widget .datepicker-decades tbody td span{
+        display: none;
+        &.decade {
+            display: inline-block;
+            line-height: 24px !important;
+            width: 72px;
+        }
+    }
+
     .bootstrap-datetimepicker-widget table td span.active,
     .bootstrap-datetimepicker-widget table td.active,
     .bootstrap-datetimepicker-widget table td.active:hover,
@@ -63,10 +78,12 @@ jigsaw-time{
     }
 
     .bootstrap-datetimepicker-widget .picker-switch td span{
+        height: 24px;
+        line-height: 24px;
         &.glyphicon{
             @include font-awesone();
             font-size: 14px;
-            line-height: 2.5;
+            line-height: 24px;
             &.glyphicon-time:before{
                 content: "\f017";
             }
@@ -76,11 +93,16 @@ jigsaw-time{
         }
     }
 
+    .bootstrap-datetimepicker-widget table td span{
+        height: 24px;
+        line-height: 24px;
+    }
+
     .bootstrap-datetimepicker-widget table td a.btn span{
         &.glyphicon{
             @include font-awesone();
             font-size: 16px;
-            line-height: 54px;
+            line-height: 24px;
             &.glyphicon-chevron-up:before{
                 content: "\f106";
             }
