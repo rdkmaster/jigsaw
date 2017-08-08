@@ -3,7 +3,7 @@
 [![npm version](https://badge.fury.io/js/%40rdkmaster%2Fjigsaw.svg)](https://badge.fury.io/js/%40rdkmaster%2Fjigsaw)
 [![Build Status](https://travis-ci.org/rdkmaster/jigsaw.svg?branch=master)](https://travis-ci.org/rdkmaster/jigsaw)
 [![Code Coverage Status](https://coveralls.io/repos/github/rdkmaster/jigsaw/badge.svg?branch=master)](https://coveralls.io/github/rdkmaster/jigsaw?branch=master)
-[![Doc Coverage Status](http://rdkmaster.com/rdk/service/app/badges/server/get-badge?type=documentation)](http://rdkmaster.com/doc/coverage.html)
+[![Doc Coverage Status](http://rdkmaster.com/rdk/service/app/badges/server/get-badge?type=documentation)](http://rdkmaster.com/jigsaw/doc/coverage.html)
 <br>
 [![component count](http://rdkmaster.com/rdk/service/app/badges/server/get-badge?type=components)](http://rdk.zte.com.cn/component)
 [![directives count](http://rdkmaster.com/rdk/service/app/badges/server/get-badge?type=directives)](http://rdk.zte.com.cn/component)
@@ -28,13 +28,23 @@ Jigsaw的组件不再是原子，它对组件的功能进行了二次抽象，�
 我们强烈推荐使用 [Jigsaw Seed](https://github.com/rdkmaster/jigsaw-seed) 来作为新工程的开始。具体步骤为：
 1. 如果未安装nodejs，或者nodejs低于6.x.x，npm版本低于3.x.x，请先安装[nodejs](https://nodejs.org)。
 2. [下载](https://github.com/rdkmaster/jigsaw-seed/archive/master.zip)或者[clone](https://github.com/rdkmaster/jigsaw-seed) Jigsaw Seed 的源码。假设保存到了 `d:\jigsaw-seed`。
-3. 下载依赖包，执行如下脚本
+3. 下载依赖包，执行如下脚本（推荐国内用户使用如下流程）
 ```
 cd d:\jigsaw-seed
-npm config set proxy=http://proxy.zte.com.cn:80                          # 直连网络下不可执行这个命令
+npm install -g cnpm --registry=https://registry.npm.taobao.org           # 如果已有cnpm则可跳过
+cnpm install -g @angular/cli                                             # 强烈推荐，可选
+cnpm install
+cnpm start
+```
+
+目前已知某些情况下cnpm无法正常工作（比如你处于zte内网），则只能通过下面的方式进行：
+
+```
+cd d:\jigsaw-seed
+npm config set proxy=http://proxy.zte.com.cn:80
 npm config set registry=https://registry.npm.taobao.org/                 # for Chinese developers only
 npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass # for Chinese developers only
-npm install -g @angular/cli                                              # 强烈推荐，可选。
+npm install -g @angular/cli                                              # 强烈推荐，可选
 npm install
 npm start
 ```
@@ -51,6 +61,9 @@ npm start
 
 ![](docs/image/qr-weixin.jpg)
 
+## 新手进阶
+我们给已经学习了[Tour of Heroes](https://angular.io/tutorial)和[Jigsaw Tourist](https://github.com/rdkmaster/jigsaw/blob/master/docs/tourist/index.md)的同学准备了一个进阶版的工程[Any Badge](https://github.com/rdkmaster/any-badge)这是一个前端基于Jigsaw、后端基于[RDK](https://github.com/rdkmaster/rdk)的全功能项目，它是Jigsaw和RDK融合在一起开发完整应用的最佳实践。
+
 ## 求星星！One More Star Please!
 请随手赏个星星，这是对我们最好的鼓励！This is the best encouragement for us.
 
@@ -64,12 +77,12 @@ npm start
 - 给我们[提bug/需求/建议](https://github.com/rdkmaster/jigsaw/issues/new)；
 - 给我们写写文档，写点小文章；
 - 更有效的是给我们推送PR，所有的PR我们都欢迎并会认真处理；
-	- 请优先处理没有打 `suspend` 标签的[issue](https://github.com/rdkmaster/jigsaw/issues)；
-	- [这里](https://github.com/rdkmaster/jigsaw/blob/master/docs/coding-spec.md)是一份简单的代码规范，请尽量遵守它；
+    - 请优先处理没有打 `suspend` 标签的[issue](https://github.com/rdkmaster/jigsaw/issues)；
+    - [这里](https://github.com/rdkmaster/jigsaw/blob/master/docs/coding-spec.md)是一份简单的代码规范，请尽量遵守它；
 
 ## 正在打算换工作？
 加入我们，白菜价送套市区房子！位于宁双路楚翘城往东200m处。绝不是吹牛，我很认真！
 
-- 我们需要诺干有经验的前端工程师，他的主要职责是全职加入这个组件库的开发；
-- 我们需要诺干有经验的服务端工程师，他的主要职责是全职加入[RDK](https://github.com/rdkmaster/rdk)后端的开发；
+- 我们需要若干有经验的前端工程师，他的主要职责是全职加入这个组件库的开发；
+- 我们需要若干有经验的服务端工程师，他的主要职责是全职加入[RDK](https://github.com/rdkmaster/rdk)后端的开发；
 - 详情[点击这里](https://mp.weixin.qq.com/s/GLV65kCIYF9pSCOvOG2sFQ)；

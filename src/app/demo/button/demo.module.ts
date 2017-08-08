@@ -19,7 +19,7 @@ const buttonDemoRoutes = [
         path: 'basic', component: ButtonBasicDemoComponent
     },
     {
-        path: 'disable', component: ButtonDisableDemoComponent
+        path: 'disabled', component: ButtonDisableDemoComponent
     },
     {
         path: 'width_height', component: ButtonWidthHeightDemoComponent

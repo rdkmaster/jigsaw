@@ -8,7 +8,7 @@ import {
     TemplateRef,
     Type,
     ViewContainerRef,
-    EventEmitter,
+    EventEmitter, Optional,
 } from "@angular/core";
 import {CommonUtils, ElementEventHelper} from "../core/utils/common-utils";
 import {JigsawBlock} from "../component/block/block";
@@ -24,14 +24,63 @@ export enum PopupEffect {
 }
 
 export class PopupOptions {
-    modal?: boolean; //是否模态
-    showEffect?: PopupEffect = PopupEffect.fadeIn;//弹出的动效，fadeIn/fadeOut，wipeIn/wipeOut
-    hideEffect?: PopupEffect = PopupEffect.fadeOut; //隐藏的动效，fadeIn/fadeOut，wipeIn/wipeOut
-    pos?: PopupPosition; //控制弹出对象的左上角位置，下面2者选其一。
+    /**
+     * 是否模态
+     * @type {boolean} 默认值是false
+     */
+    modal?: boolean;
+
+    /**
+     * 弹出的动效，fadeIn/fadeOut，wipeIn/wipeOut
+     *
+     * @type {PopupEffect}
+     */
+    showEffect?: PopupEffect = PopupEffect.fadeIn;
+
+    /**
+     * 隐藏的动效，fadeIn/fadeOut，wipeIn/wipeOut
+     * @type {PopupEffect}
+     */
+    hideEffect?: PopupEffect = PopupEffect.fadeOut;
+
+    /**
+     * 控制弹出对象的相对位置，可以是相对一个点({@link PopupPoint})，也可以相对一个组件或者dom元素。
+     * @type {PopupPosition}
+     */
+    pos?: PopupPosition;
+
+    /**
+     * 弹出位置的偏移量，注意left属性是以弹出组件的左侧为基准，top属性是以弹出组件的上方为基准，right属性是以弹出组件的右侧为基准，bottom是以弹出组件的下方为基准点。
+     * @type {PopupPositionOffset}
+     */
     posOffset?: PopupPositionOffset;
+
+    /**
+     * 弹出的组件的定位方式，和css的 absolute/fixed 含义类似
+     * @type {PopupPositionType}
+     */
     posType?: PopupPositionType;
+
+    /**
+     * 弹出位置修正函数，在PopupService自动计算的位置无法满足需要的时候，可以通过它来修正，在一些需要精确定位的场景非常有用，函数的定义如下：
+     *
+     * ```
+     * (pos: PopupPositionValue, popupElement: HTMLElement) => PopupPositionValue
+     * ```
+     */
     posReviser?: (pos: PopupPositionValue, popupElement: HTMLElement) => PopupPositionValue;
+
+    /**
+     * 弹出组件的尺寸，某些组件在定义的时候没有设置尺寸，这样在弹出的时候位置不可控，通过这个属性可以精确控制弹出组件的尺寸。
+     * @type {PopupSize}
+     */
     size?: PopupSize;
+
+    /**
+     * 当应用页面的路由改变了的时候，自动将弹出的组件销毁。
+     * @type {boolean} 默认值是true
+     */
+    disposeOnRouterChanged?: boolean = true;
 }
 
 export type PopupPosition = PopupPoint | ElementRef | HTMLElement;
@@ -98,8 +147,8 @@ export class PopupService {
 
     constructor(private _cfr: ComponentFactoryResolver,
                 private _appRef: ApplicationRef,
-                private _router: Router,
-                private _activatedRoute: ActivatedRoute) {
+                @Optional() private _router: Router,
+                @Optional() private _activatedRoute: ActivatedRoute) {
 
     }
 
@@ -129,7 +178,10 @@ export class PopupService {
         }
     }
 
-    private _disposerSubscribe(disposer: PopupDisposer): void {
+    private _listenRouterChange(disposer: PopupDisposer): void {
+        if (!this._router) {
+            return;
+        }
         const disposerSubscription: Subscription = this._router.events
             .filter(event => event instanceof NavigationEnd)
             .map(() => this._activatedRoute)
@@ -205,7 +257,7 @@ export class PopupService {
         let disposer: PopupDisposer;
         let element: HTMLElement;
         if (this._isModal(options)) {
-            const blockOptions: PopupOptions = {
+            const blockOptions: PopupOptions = <PopupOptions>{
                 modal: true,
                 showEffect: PopupEffect.fadeIn,
                 hideEffect: PopupEffect.fadeOut
@@ -223,7 +275,9 @@ export class PopupService {
     private _beforePopup(options: PopupOptions, element: HTMLElement, renderer: Renderer2, disposer: PopupDisposer): PopupDisposer[] {
         this._removeAnimation(options, element, renderer);
         this._setStyle(options, element, renderer);
-        this._disposerSubscribe(disposer);
+        if (!options || !options.disposeOnRouterChanged) {
+            this._listenRouterChange(disposer);
+        }
         return this._setWindowListener(options, element, renderer);
     }
 

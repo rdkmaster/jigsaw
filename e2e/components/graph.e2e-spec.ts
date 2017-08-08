@@ -25,7 +25,7 @@ describe('graph', () => {
         });
 
         it('should show the pie graph', () => {
-            browser.get('graph/pie-graph-basic');
+            browser.get('graph/pie');
             expectToExist(getGraphCanvas('test-graph1'));
             expectToExist(getGraphCanvas('test-graph2'));
             expectToExist(getGraphCanvas('test-graph3'));

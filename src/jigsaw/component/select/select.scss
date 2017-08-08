@@ -78,5 +78,9 @@ $option-prefix-cls: #{$jigsaw-prefix}-option;
             @include opacity(0);
             @include prefixer(transform, scale(1, 0));
         }
+        /deep/ > .mCSB_scrollTools.mCSB_scrollTools_vertical{
+            opacity: 1 !important;
+            margin: 0 0 !important;
+        }
     }
 }

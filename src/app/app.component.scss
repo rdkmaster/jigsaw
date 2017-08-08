@@ -4,11 +4,17 @@
         padding-bottom: 8px;
         margin-bottom: 14px;
         border-bottom: 1px solid #d9d9d9;
+        position: relative;
         h3{
             font-size: 28px;
         }
         p{
             font-size: 16px;
+        }
+        jigsaw-button{
+            position: absolute;
+            right: 0;
+            bottom: 8px;
         }
     }
 }

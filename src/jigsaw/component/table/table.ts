@@ -108,6 +108,22 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
 
     @Output() public dataChange = new EventEmitter<TableDataChangeEvent>();
 
+    private _select: number;
+    @Input()
+    get select(): number {
+        return this._select;
+    }
+
+    set select(value: number) {
+        this._select = value;
+        if(this._hasInit){
+            this._$handleRowSelect(value);
+        }
+    }
+
+    @Output()
+    public selectChange: EventEmitter<number> = new EventEmitter<number>();
+
     private _columnDefines: ColumnDefine[];
 
     @Input()
@@ -165,6 +181,8 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     }
 
     @Input() public lineEllipsis;
+
+    @Input() public hideHead: boolean;
 
     private _fixedHead: HTMLElement;
 
@@ -694,7 +712,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
 
         const hostWidth = this._elementRef.nativeElement.offsetWidth;
         this._rows.forEach((row, rowIndex) => {
-            const elements: NodeListOf<Element> = row.nativeElement.querySelectorAll('.cell-content');
+            const elements: NodeListOf<Element> = row.nativeElement.querySelectorAll('.jigsaw-table-cell-content');
             for (let colIndex = 0; colIndex < elements.length; ++colIndex) {
                 const element: Element = elements[colIndex];
                 const cellSetting: CellSetting = this._$cellSettings[rowIndex][colIndex];
@@ -800,6 +818,17 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
         }
     }
 
+    public _$handleRowSelect(rowIndex: number){
+        this._rows.forEach((row, index) => {
+            if(index === rowIndex){
+                this._renderer.addClass(row.nativeElement, 'jigsaw-table-row-selected');
+                this.selectChange.emit(rowIndex);
+            }else {
+                this._renderer.removeClass(row.nativeElement, 'jigsaw-table-row-selected');
+            }
+        })
+    }
+
     /**
      * 手动设置固定表头的宽度
      * @private
@@ -817,6 +846,12 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     private _asyncSetCellLineEllipsis() {
         setTimeout(() => {
             this._setCellLineEllipsis();
+        }, 0);
+    }
+
+    private _asyncSelectRow() {
+        setTimeout(() => {
+            this._$handleRowSelect(this._select);
         }, 0);
     }
 
@@ -864,6 +899,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     private _refreshStyle() {
         this._asyncSetCellLineEllipsis();
         this._asyncSetFixedHeadWidth();
+        this._asyncSelectRow();
         this._addWindowListener();
         this._subscribeSortChange();
     }
@@ -875,7 +911,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
 
         if (this.lineEllipsis) {
             this._renderer.addClass(this._elementRef.nativeElement.querySelector('table.jigsaw-table tbody'),
-                'line-ellipsis');
+                'jigsaw-table-line-ellipsis');
         }
     }
 
@@ -889,6 +925,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
 
     ngAfterViewInit() {
         this._whileScrolling();
+        this._$handleRowSelect(this._select);
     }
 
     ngOnDestroy() {
