@@ -16,7 +16,8 @@ import {AbstractJigsawComponent} from '../core';
         '[class.jigsaw-button-size-small]': "presize === 'small'",
         '[class.jigsaw-button-size-large]': "presize === 'large'",
         '[class.jigsaw-button-color-primary]': "type === 'primary'",
-        '[class.jigsaw-button-color-danger]': "type === 'danger'"
+        '[class.jigsaw-button-color-warning]': "type === 'warning'",
+        '[class.jigsaw-button-color-error]': "type === 'error'"
     }
 })
 export class JigsawButton extends AbstractJigsawComponent {
@@ -24,8 +25,8 @@ export class JigsawButton extends AbstractJigsawComponent {
     //按钮不可点击状态
     @Input() public disabled: boolean = false;
 
-    //按钮颜色类型, '', primary, danger
-    @Input() public type: string = '';
+    //按钮颜色类型, default, primary, warning, error
+    @Input() public type: string = 'default';
 
     //按钮预设尺寸， small, '', large
     @Input() public presize = '';

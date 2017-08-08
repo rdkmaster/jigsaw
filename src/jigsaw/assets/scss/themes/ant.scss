@@ -2,14 +2,14 @@
 $jigsaw-prefix           : jigsaw;
 
 // Color
-$primary-color          : #008fd4;
+$primary-color          : #108ee9;
 $success-color          : #87d068;
-$error-color            : #ec6d6d;
-$highlight-color        : #ec6d6d;
-$warning-color          : #f99660;
+$error-color            : #f50;
+$highlight-color        : #f50;
+$warning-color          : #fa0;
 $normal-color           : #d9d9d9;
 $default-color          : #fff;
-$disabled-color         : #cdcdcd;
+$disabled-color         : rgba(0,0,0,.25);
 
 $primary-1: saturate($primary-color, 80%);  // replace tint($primary-color, 90%)
 $primary-2: saturate($primary-color, 60%);  // replace tint($primary-color, 90%)
@@ -95,28 +95,21 @@ $shadow-1-right         : 1px 0 6px $shadow-color;
 $shadow-2               : 0 2px 8px $shadow-color;
 
 // Buttons
-$btn-primary-bg: $primary-color;
-$btn-primary-bg-hover: mix(#000, $primary-color, 8%);
-$btn-primary-bg-active: mix(#000, $primary-color, 15%);
-
-$btn-warning-bg: $warning-color;
-$btn-warning-bg-hover: mix(#000, $warning-color, 8%);
-$btn-warning-bg-active: mix(#000, $warning-color, 15%);
-
-$btn-error-bg: $error-color;
-$btn-error-bg-hover: mix(#000, $error-color, 8%);
-$btn-error-bg-active: mix(#000, $error-color, 15%);
-
-$btn-default-bg: $default-color;
-$btn-default-border: $border-color-base;
-$btn-default-box-shadow: $border-color-base;
-
-$btn-default-font-color: $primary-color;
-$btn-others-font-color: $default-color;
-
 $btn-font-weight        : 500;
 $btn-border-radius-base : $border-radius-base;
 $btn-border-radius-sm   : $border-radius-sm;
+
+$btn-primary-color      : #fff;
+$btn-primary-bg         : $primary-color;
+$btn-group-border       : shade($primary-color, 5%);
+
+$btn-default-color      : $text-color;
+$btn-default-bg         : $background-color-base;
+$btn-default-border     : $border-color-base;
+
+$btn-ghost-color        : $text-color;
+$btn-ghost-bg           : transparent;
+$btn-ghost-border       : $border-color-base;
 
 $btn-disable-color      : rgba(0, 0, 0, 0.247059);
 $btn-disable-bg         : $background-color-base;
