@@ -13,6 +13,13 @@
 .mCSB_inside > .mCSB_container {
     margin-right: 0;
 }
+.mCS-minimal-dark.mCSB_scrollTools .mCSB_dragger_bar{
+    background-color: lighten($primary-color, 40%) !important;
+}
+.mCS-minimal-dark.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar,
+.mCS-minimal-dark.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar{
+    background-color: lighten($primary-color, 30%) !important;
+}
 /*滚动条样式end*/
 
 /*时间组件样式start*/
@@ -172,12 +179,4 @@ jigsaw-time{
 }
 /*zTree组件样式end*/
 
-/*scroll-bar样式start*/
-.mCS-minimal-dark.mCSB_scrollTools .mCSB_dragger_bar{
-    background-color: lighten($primary-color, 40%) !important;
-}
-.mCS-minimal-dark.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar,
-.mCS-minimal-dark.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar{
-    background-color: lighten($primary-color, 30%) !important;
-}
-/*scroll-bar样式end*/
+
