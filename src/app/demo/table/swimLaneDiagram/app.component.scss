@@ -10,14 +10,22 @@
         text-align: center;
         padding: 10px 0;
         background: #ffbf00;
+        div{
+            position: absolute;
+            z-index: 9999999;
+            margin: 12px 0px 0px 125px;
+            overflow: visible;
+            white-space: nowrap;
+            background-color: #ffbf00;
+        }
         &.li-0{
-            left: 130px;
+            left: 125px;
         }
         &.li-1{
-            left: 337px;
+            left: 325px;
         }
         &.li-2{
-            left: 544px;
+            left: 525px;
         }
         &:after{
             position: absolute;
