@@ -823,7 +823,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
         }
     }
 
-    public _$handleRowSelect(rowIndex: number){
+    public _$handleRowClick(rowIndex: number){
         this._rows.forEach((row, index) => {
             if(index === rowIndex){
                 this._renderer.addClass(row.nativeElement, 'jigsaw-table-row-selected');
@@ -834,7 +834,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
         })
     }
 
-    public _$handleDbRowSelect(rowIndex: number){
+    public _$handleRowDoubleClick(rowIndex: number){
         this._rows.forEach((row, index) => {
             if(index === rowIndex){
                 this.dbSelectChange.emit(rowIndex);
