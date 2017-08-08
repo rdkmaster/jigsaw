@@ -1,10 +1,20 @@
 
 <ul class="ne-list">
-   <li *ngFor="let ne of neList">
+   <li *ngFor="let ne of neList; index as liIndex" class="li-{{liIndex}}"
+       (mouseover)="neHover=true;curentIndex=liIndex" (mouseleave)="neHover=false;curentIndex=liIndex">
        {{ne.name}}<br>
        {{ne.desc}}<br>
        {{ne.ip}}
+       <div *ngIf="neHover&&curentIndex==liIndex">
+           {{'swimLane.title.neName' | translate}}:{{ne.name}}  <br/>
+           {{'swimLane.title.neType' | translate}}:{{ne.desc}}  <br/>
+           {{'swimLane.title.nodeIp' | translate}}:{{ne.ip}}
+       </div>
    </li>
 </ul>
 
-<jigsaw-table [data]="tableData" [columnDefines]="columnDefines"></jigsaw-table>
+<jigsaw-table   [data]="tableData"
+              [columnDefines]="columnDefines"
+              (selectChange)="handleRowSelect($event)"
+              [hideHead]="true">
+</jigsaw-table>
