@@ -117,7 +117,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     set select(value: number) {
         this._select = value;
         if(this._hasInit){
-            this._$handleRowSelect(value);
+            this._$handleRowClick(value);
         }
     }
 
@@ -864,7 +864,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
 
     private _asyncSelectRow() {
         setTimeout(() => {
-            this._$handleRowSelect(this._select);
+            this._$handleRowClick(this._select);
         }, 0);
     }
 
@@ -938,7 +938,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
 
     ngAfterViewInit() {
         this._whileScrolling();
-        this._$handleRowSelect(this._select);
+        this._$handleRowClick(this._select);
     }
 
     ngOnDestroy() {
