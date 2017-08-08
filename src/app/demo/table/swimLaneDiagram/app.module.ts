@@ -3,10 +3,10 @@ import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {JigsawTableModule} from "jigsaw/component/table/table";
 import {swimLaneDiagramDemoComponent} from './app.component';
 import {TableSwimLaneCell} from "./table-renderer";
-import {TranslateHelper,InternalUtils} from "@rdkmaster/jigsaw";
+import {TranslateHelper, InternalUtils} from "@rdkmaster/jigsaw";
 
 @NgModule({
-    imports: [JigsawTableModule,TranslateModule.forRoot()],
+    imports: [JigsawTableModule, TranslateModule.forRoot()],
     declarations: [swimLaneDiagramDemoComponent, TableSwimLaneCell],
     bootstrap: [swimLaneDiagramDemoComponent],
     entryComponents: [TableSwimLaneCell]

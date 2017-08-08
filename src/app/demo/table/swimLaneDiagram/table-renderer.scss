@@ -18,11 +18,11 @@
             span {
                 width: 40%;
                 @include line-ellipsis-style();
-                &.left{
-                    float:left;
+                &.left {
+                    float: left;
                 }
-                &.right{
-                    float:right;
+                &.right {
+                    float: right;
                 }
             }
             //span:first-child {
@@ -34,7 +34,7 @@
         }
     }
 
-    div{
+    div {
         z-index: 500;
     }
 
@@ -89,7 +89,7 @@
     border: 1px dashed #666;
 }
 
-.signal-desc-title{
+.signal-desc-title {
     z-index: 999999999999;
     position: absolute;
     height: 20px;
@@ -97,10 +97,11 @@
     background-color: #ffbf00;
     margin: 0px 0px 0px 180px;
 }
-.ne-desc-title{
+
+.ne-desc-title {
     @extend .signal-desc-title;
     height: 40px;
-    &.left{
+    &.left {
         margin: 0px 0px 0px 90px;
     }
 }

@@ -1,21 +1,20 @@
-
 <ul class="ne-list">
-   <li *ngFor="let ne of neList; index as liIndex" class="li-{{liIndex}}"
-       (mouseover)="neHover=true;currentIndex=liIndex" (mouseleave)="neHover=false;currentIndex=liIndex">
-       {{ne.name}}<br>
-       {{ne.desc}}<br>
-       {{ne.ip}}
-       <div *ngIf="neHover&&currentIndex==liIndex">
-           {{'swimLane.title.neName' | translate}}:{{ne.name}}  <br/>
-           {{'swimLane.title.neType' | translate}}:{{ne.desc}}  <br/>
-           {{'swimLane.title.nodeIp' | translate}}:{{ne.ip}}
-       </div>
-   </li>
+    <li *ngFor="let ne of neList; index as liIndex" class="li-{{liIndex}}"
+        (mouseover)="neHover=true;currentIndex=liIndex" (mouseleave)="neHover=false;currentIndex=liIndex">
+        {{ne.name}}<br>
+        {{ne.desc}}<br>
+        {{ne.ip}}
+        <div *ngIf="neHover&&currentIndex==liIndex">
+            {{'swimLane.title.neName' | translate}}:{{ne.name}} <br/>
+            {{'swimLane.title.neType' | translate}}:{{ne.desc}} <br/>
+            {{'swimLane.title.nodeIp' | translate}}:{{ne.ip}}
+        </div>
+    </li>
 </ul>
 
-<jigsaw-table   [data]="tableData"
+<jigsaw-table [data]="tableData"
               [columnDefines]="columnDefines"
               (selectChange)="handleRowSelect($event)"
-                (dbSelectChange)="handleDbRowSelect($event)"
+              (dbSelectChange)="handleDbRowSelect($event)"
               [hideHead]="true">
 </jigsaw-table>
