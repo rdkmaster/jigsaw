@@ -29,7 +29,6 @@ export class TableSwimLaneCell extends TableCellRenderer {
     getArrowDirect(){
         const fromNeIndex = this.cellData.neList.findIndex(ne => ne.desc === this.cellData.fromnedesc);
         const toNeIndex = this.cellData.neList.findIndex(ne => ne.desc === this.cellData.tonedesc);
-        console.log(this.row+' '+ this.column);
         return fromNeIndex - toNeIndex < 0 ? 'left' : 'right';
     }
 }

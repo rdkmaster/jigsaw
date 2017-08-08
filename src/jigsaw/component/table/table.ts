@@ -124,6 +124,9 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     @Output()
     public selectChange: EventEmitter<number> = new EventEmitter<number>();
 
+    @Output()
+    public dbSelectChange: EventEmitter<number> = new EventEmitter<number>();
+
     private _columnDefines: ColumnDefine[];
 
     @Input()
@@ -827,6 +830,14 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
                 this.selectChange.emit(rowIndex);
             }else {
                 this._renderer.removeClass(row.nativeElement, 'jigsaw-table-row-selected');
+            }
+        })
+    }
+
+    public _$handleDbRowSelect(rowIndex: number){
+        this._rows.forEach((row, index) => {
+            if(index === rowIndex){
+                this.dbSelectChange.emit(rowIndex);
             }
         })
     }

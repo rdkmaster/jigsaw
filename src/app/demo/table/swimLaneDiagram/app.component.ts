@@ -192,5 +192,9 @@ export class swimLaneDiagramDemoComponent {
     handleRowSelect(rowIndex: number){
         console.log(rowIndex);
     }
+
+    handleDbRowSelect(rowIndex: number){
+        console.log(rowIndex);
+    }
 }
 
