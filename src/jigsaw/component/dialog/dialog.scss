@@ -26,12 +26,13 @@ $dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
         }
         .#{$dialog-prefix-cls}-close {
             float: right;
-            font-size: 18px;
-            font-weight: normal;
+            font-size: 24px;
             color: #999;
             cursor: pointer;
-            width: 14px;
-            height: 18px;
+            margin-top: -3px;
+            &:hover{
+                color: $primary-color-light;
+            }
         }
     }
     .#{$dialog-prefix-cls}-button-group {
