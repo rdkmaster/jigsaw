@@ -61,6 +61,9 @@ npm start
 
 ![](docs/image/qr-weixin.jpg)
 
+## 新手进阶
+我们给已经学习了[Tour of Heroes](https://angular.io/tutorial)和[Jigsaw Tourist](https://github.com/rdkmaster/jigsaw/blob/master/docs/tourist/index.md)的同学准备了一个进阶版的工程[Any Badge](https://github.com/rdkmaster/any-badge)这是一个前端基于Jigsaw、后端基于[RDK](https://github.com/rdkmaster/rdk)的全功能项目，它是Jigsaw和RDK融合在一起开发完整应用的最佳实践。
+
 ## 求星星！One More Star Please!
 请随手赏个星星，这是对我们最好的鼓励！This is the best encouragement for us.
 
