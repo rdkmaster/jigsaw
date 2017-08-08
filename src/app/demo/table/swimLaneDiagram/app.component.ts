@@ -13,6 +13,8 @@ import {TableSwimLaneCell} from "./table-renderer";
 export class swimLaneDiagramDemoComponent {
     tableData: TableData;
     elementRef: ElementRef;
+    neHover:boolean=true;
+    currentIndex:any;
 
     neList = [
         {name: 'eNB', desc: '100.89.140.69', ip: '100.89.140.69'},

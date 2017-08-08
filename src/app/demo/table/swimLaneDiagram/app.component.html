@@ -1,7 +1,7 @@
 
 <ul class="ne-list">
    <li *ngFor="let ne of neList; index as liIndex" class="li-{{liIndex}}"
-       (mouseover)="let neHover=true;let currentIndex=liIndex" (mouseleave)="let neHover=false;let currentIndex=liIndex">
+       (mouseover)="neHover=true;currentIndex=liIndex" (mouseleave)="neHover=false;currentIndex=liIndex">
        {{ne.name}}<br>
        {{ne.desc}}<br>
        {{ne.ip}}
