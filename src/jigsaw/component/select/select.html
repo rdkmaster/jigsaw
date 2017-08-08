@@ -3,8 +3,13 @@
         <span [hidden]="_$selectedLabel">{{placeholder}}</span>{{_$selectedLabel}}
         <span class="jigsaw-select-icon-down fa fa-angle-down"></span>
     </div>
-    <div class="jigsaw-option-list jigsaw-option-hidden" jigsaw-scroll-bar scrollBarAxis="y" [width]="optionWidth"
-         [height]="optionHeight" [class.jigsaw-option-hidden]="_$optionListHidden">
+    <div class="jigsaw-option-list jigsaw-option-hidden"
+         jigsaw-scroll-bar
+         scrollBarAxis="y"
+         scrollBarTheme="minimal-dark"
+         [width]="optionWidth"
+         [height]="optionHeight"
+         [class.jigsaw-option-hidden]="_$optionListHidden">
         <ng-content></ng-content>
         <jigsaw-select-option *ngFor="let optionItem of data" [optionItem]="optionItem"></jigsaw-select-option>
     </div>

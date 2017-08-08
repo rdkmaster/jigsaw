@@ -1,8 +1,26 @@
 @import "./core/basc";
 
-/*滚动条样式start*/
-.mCSB_scrollTools{
-    width: 10px;
+/*滚动条样式start(针对'minimal-dark'这个皮肤做的修改)*/
+.mCustomScrollbar .mCS-minimal-dark.mCSB_scrollTools{
+    &.mCSB_scrollTools_vertical{
+        width: 10px !important;
+        .mCSB_dragger_bar{
+            margin-right: 0;
+        }
+    }
+    &.mCSB_scrollTools_horizontal{
+        height: 10px !important;
+        .mCSB_dragger_bar{
+            margin-bottom: 0;
+        }
+    }
+    .mCSB_dragger_bar{
+        background-color: lighten($primary-color, 40%) !important;
+    }
+    .mCSB_dragger:active .mCSB_dragger_bar,
+    .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar{
+        background-color: lighten($primary-color, 30%) !important;
+    }
 }
 .mCSB_container_wrapper{
     margin-right: 0;
