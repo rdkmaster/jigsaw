@@ -7,11 +7,11 @@ import {TableCellRenderer} from "jigsaw/component/table/table-api";
 @Component({
     template: `
         <div *ngIf="cellData.haveSignal" class="lane-box">
-            <p class="signal-desc" (mouseover)="hover=true" (mouseleave)="hover=false">{{cellData.signaldesc}}</p>
+            <p class="signal-desc" (mouseover)="let hover=true" (mouseleave)="let hover=false">{{cellData.signaldesc}}</p>
             <b class="arrow {{getArrowDirect()}}-arrow"></b>
             <p class="from-to">
-                <span class="{{getArrowDirect()==='right' ? 'right' : 'left'}}" (mouseover)="fromNeHover=true" (mouseleave)="fromNeHover=false">{{cellData.fromnedesc}}</span>
-                <span class="{{getArrowDirect()==='right' ? 'left' : 'right'}}" (mouseover)="toNeHover=true" (mouseleave)="toNeHover=false">{{cellData.tonedesc}}</span>
+                <span class="{{getArrowDirect()==='right' ? 'right' : 'left'}}" (mouseover)="let fromNeHover=true" (mouseleave)="let fromNeHover=false">{{cellData.fromnedesc}}</span>
+                <span class="{{getArrowDirect()==='right' ? 'left' : 'right'}}" (mouseover)="let toNeHover=true" (mouseleave)="let toNeHover=false">{{cellData.tonedesc}}</span>
             </p>
             <i *ngIf="cellData.usetime" class="use-time {{getArrowDirect()}}">+{{cellData.usetime}}ms</i>
         </div>

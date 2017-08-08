@@ -1,11 +1,11 @@
 
 <ul class="ne-list">
    <li *ngFor="let ne of neList; index as liIndex" class="li-{{liIndex}}"
-       (mouseover)="neHover=true;curentIndex=liIndex" (mouseleave)="neHover=false;curentIndex=liIndex">
+       (mouseover)="let neHover=true;let currentIndex=liIndex" (mouseleave)="let neHover=false;let currentIndex=liIndex">
        {{ne.name}}<br>
        {{ne.desc}}<br>
        {{ne.ip}}
-       <div *ngIf="neHover&&curentIndex==liIndex">
+       <div *ngIf="neHover&&currentIndex==liIndex">
            {{'swimLane.title.neName' | translate}}:{{ne.name}}  <br/>
            {{'swimLane.title.neType' | translate}}:{{ne.desc}}  <br/>
            {{'swimLane.title.nodeIp' | translate}}:{{ne.ip}}
