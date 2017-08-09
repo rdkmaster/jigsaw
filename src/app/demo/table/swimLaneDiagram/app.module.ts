@@ -2,13 +2,13 @@ import {NgModule} from '@angular/core';
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {JigsawTableModule} from "jigsaw/component/table/table";
 import {TranslateHelper} from "jigsaw/core/utils/translate-helper";
-import {swimLaneDiagramDemoComponent} from './app.component';
+import {SwimLaneDiagramDemoComponent} from './app.component';
 import {TableSwimLaneCell} from "./table-renderer";
 
 @NgModule({
     imports: [JigsawTableModule, TranslateModule.forRoot()],
-    declarations: [swimLaneDiagramDemoComponent, TableSwimLaneCell],
-    bootstrap: [swimLaneDiagramDemoComponent],
+    declarations: [SwimLaneDiagramDemoComponent, TableSwimLaneCell],
+    bootstrap: [SwimLaneDiagramDemoComponent],
     entryComponents: [TableSwimLaneCell]
 })
 export class swimLaneDiagramDemoModule {

@@ -10,7 +10,7 @@ import {TableSwimLaneCell} from "./table-renderer";
     styleUrls: ['app.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class swimLaneDiagramDemoComponent {
+export class SwimLaneDiagramDemoComponent {
     tableData: TableData;
     elementRef: ElementRef;
     neHover: boolean = true;

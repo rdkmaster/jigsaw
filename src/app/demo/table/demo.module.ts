@@ -78,7 +78,7 @@ import {TableSetHeaderSortDemoModule} from "./setHeaderSort/app.module";
 
 import {TableDataWithPopupDemoComponent} from "./withPopup/app.component";
 import {TableDataWithPopupDemoModule} from "./withPopup/app.module";
-import {swimLaneDiagramDemoComponent} from "./swimLaneDiagram/app.component";
+import {SwimLaneDiagramDemoComponent} from "./swimLaneDiagram/app.component";
 import {swimLaneDiagramDemoModule} from "./swimLaneDiagram/app.module";
 import {TableHideHeadDemoModule} from "./hideHead/app.module";
 import {TableHideHeadDemoComponent} from "./hideHead/app.component";
@@ -168,7 +168,7 @@ const tableDemoRoutes = [
         path: 'localPagingData', component: LocalPagingDataDemoComponent
     },
     {
-        path: 'swimLaneDiagram', component: swimLaneDiagramDemoComponent
+        path: 'swimLaneDiagram', component: SwimLaneDiagramDemoComponent
     },
     {
         path: 'hideHead', component: TableHideHeadDemoComponent
