@@ -28,16 +28,7 @@ Jigsaw的组件不再是原子，它对组件的功能进行了二次抽象，�
 我们强烈推荐使用 [Jigsaw Seed](https://github.com/rdkmaster/jigsaw-seed) 来作为新工程的开始。具体步骤为：
 1. 如果未安装nodejs，或者nodejs低于6.x.x，npm版本低于3.x.x，请先安装[nodejs](https://nodejs.org)。
 2. [下载](https://github.com/rdkmaster/jigsaw-seed/archive/master.zip)或者[clone](https://github.com/rdkmaster/jigsaw-seed) Jigsaw Seed 的源码。假设保存到了 `d:\jigsaw-seed`。
-3. 下载依赖包，执行如下脚本（推荐国内用户使用如下流程）
-```
-cd d:\jigsaw-seed
-npm install -g cnpm --registry=https://registry.npm.taobao.org           # 如果已有cnpm则可跳过
-cnpm install -g @angular/cli                                             # 强烈推荐，可选
-cnpm install
-cnpm start
-```
-
-目前已知某些情况下cnpm无法正常工作（比如你处于zte内网），则只能通过下面的方式进行：
+3. 下载依赖包，执行如下脚本（不能使用cnpm安装，会有问题，暂时未找到原因）
 
 ```
 cd d:\jigsaw-seed
