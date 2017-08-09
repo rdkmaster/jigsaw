@@ -835,11 +835,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     }
 
     public _$handleRowDoubleClick(rowIndex: number){
-        this._rows.forEach((row, index) => {
-            if(index === rowIndex){
-                this.doubleClick.emit(rowIndex);
-            }
-        })
+        this.doubleClick.emit(rowIndex);
     }
 
     /**
