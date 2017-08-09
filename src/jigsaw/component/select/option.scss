@@ -12,10 +12,10 @@ $option-prefix-cls: #{$jigsaw-prefix}-option;
 
 :host-context(.theme-blue) .#{$option-prefix-cls} {
     &:hover {
-        background-color: $primary-color-hover;
+        background-color: $select-option-hover-bg;
     }
     &.#{$option-prefix-cls}-on, &.#{$option-prefix-cls}-on:hover {
-        background-color: $gray-light;
+        background-color: $select-option-selected-bg;
     }
 }
 
@@ -24,7 +24,7 @@ $option-prefix-cls: #{$jigsaw-prefix}-option;
         background-color: $orange-hover;
     }
     &.#{$option-prefix-cls}-on, &.#{$option-prefix-cls}-on:hover {
-        background-color: $gray-light;
+        background-color: $select-option-selected-bg;
     }
 }
 
@@ -35,9 +35,10 @@ $option-prefix-cls: #{$jigsaw-prefix}-option;
     box-sizing: border-box;
     @include line-ellipsis(100%);
     &:hover {
-        background-color: $primary-color-hover;
+        background-color: $select-option-hover-bg;
     }
     &.#{$option-prefix-cls}-on, &.#{$option-prefix-cls}-on:hover {
-        background-color: $gray-light;
+        color: $font-color-level-one;
+        background-color: $select-option-selected-bg;
     }
 }

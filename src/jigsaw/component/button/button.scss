@@ -116,10 +116,10 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
 :host-context(.theme-blue) {
     background: $primary-color;
     &:hover {
-        background: $primary-color-light;
+        background: $btn-primary-bg-hover;
     }
     &.#{$btn-prefix-cls}-clicked:after {
-        border: 0 solid $primary-color-light;
+        border: 0 solid $btn-primary-bg-active;
     }
 }
 

@@ -32,7 +32,7 @@ $switch-duration: .3s;
         top: 1px;
 
         border-radius: 18px;
-        background-color: $component-background;
+        background-color: $default-color;
         content: " ";
         cursor: pointer;
         transition: all $switch-duration, width $switch-duration;

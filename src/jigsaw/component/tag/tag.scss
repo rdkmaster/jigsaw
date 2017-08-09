@@ -14,14 +14,14 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
     line-height: 20px;
     border: 1px solid $border-color-base;
     border-radius: $border-radius-base;
-    background: $gray-light;
+    background: $tag-bg-default;
     cursor: pointer;
     //transform-origin: 0 0;
     &.#{$tag-prefix-cls}-close{
         padding-right: 20px;
     }
     &.#{$tag-prefix-cls}-color{
-        color: $text-color-white;
+        color: $font-color-white;
     }
     .fa{
         vertical-align: 1px;

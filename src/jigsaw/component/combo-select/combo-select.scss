@@ -18,7 +18,7 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
         .#{$jigsaw-combo-select}-selection {
             display: block;
             user-select: none;
-            background-color: $component-background;
+            background-color: $default-color;
             border-radius: $border-radius-base;
             border: $border-width-base $border-style-base $border-color-base;
             transition: all .3s $ease-in-out;
@@ -66,7 +66,7 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
             padding: 5px;
 
             border: $border-width-base $border-style-base $border-color-base;
-            background: $component-background;
+            background: $default-color;
             box-shadow: $box-shadow-base;
             border-radius: $border-radius-base;
 
