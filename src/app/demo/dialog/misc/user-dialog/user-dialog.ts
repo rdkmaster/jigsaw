@@ -14,12 +14,13 @@ export class UserDialogComponent extends DialogBase {
         {
             role: 'confirm',
             label: 'confirm',
-            clazz: ""
+            clazz: '',
+            type: 'primary'
         },
         {
             role: 'cancel',
             label: 'cancel',
-            clazz: ""
+            clazz: ''
         }
     ];
 }

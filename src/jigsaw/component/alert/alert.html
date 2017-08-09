@@ -12,6 +12,7 @@
     <div class="jigsaw-alert-button-group" *ngIf="buttons && buttons.length > 0">
         <jigsaw-button
             *ngFor="let bi of buttons"
+            type="{{bi.type}}"
             (click)="dispose(bi)"
             class="{{bi.clazz}}">
             {{bi.label | translate}}
