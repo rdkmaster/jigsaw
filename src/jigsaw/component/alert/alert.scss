@@ -29,11 +29,11 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
             .#{$alert-prefix-cls}-close {
                 float: right;
                 font-size: 24px;
-                color: $font-color-level-three;
+                color: $alert-close-bar-color;
                 cursor: pointer;
                 margin-right: 20px;
                 &:hover{
-                    color: $primary-color;
+                    color: $alert-close-bar-hover-color;
                 }
             }
         }

@@ -18,7 +18,10 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     @include prefixer(transition, all .3s $ease-in-out);
     background-color: $btn-default-bg;
     border: 1px solid $btn-default-border;
-    color: $btn-default-font-color;
+    color: $btn-default-color;
+    &:hover{
+        color: $btn-default-hover-color;
+    }
 
     &.#{$btn-prefix-cls}-clicked:after {
         content: '';
@@ -43,7 +46,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
 
     &.#{$btn-prefix-cls}-color-primary {
         background-color: $btn-primary-bg;
-        color: $btn-others-font-color;
+        color: $btn-others-color;
         border:1px solid $btn-primary-bg;
         &:hover {
             background: $btn-primary-bg-hover;
@@ -58,7 +61,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
 
     &.#{$btn-prefix-cls}-color-warning {
         background-color: $btn-warning-bg;
-        color: $btn-others-font-color;
+        color: $btn-others-color;
         border:1px solid $btn-warning-bg;
         &:hover {
             background: $btn-warning-bg-hover;
@@ -73,7 +76,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
 
     &.#{$btn-prefix-cls}-color-error {
         background-color: $btn-error-bg;
-        color: $btn-others-font-color;
+        color: $btn-others-color;
         border:1px solid $btn-error-bg;
         &:hover {
             background: $btn-error-bg-hover;
