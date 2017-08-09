@@ -15,11 +15,11 @@
         }
     }
     .mCSB_dragger_bar{
-        background-color: lighten($primary-color, 40%) !important;
+        background-color: $scroll-bar-bg !important;
     }
     .mCSB_dragger:active .mCSB_dragger_bar,
     .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar{
-        background-color: lighten($primary-color, 30%) !important;
+        background-color: $scroll-bar-active-bg !important;
     }
 }
 .mCSB_container_wrapper{
@@ -35,9 +35,9 @@
 
 /*时间组件样式start*/
 jigsaw-time{
-    color: $text-color;
+    color: $font-color-level-two;
     .bootstrap-datetimepicker-widget table td.old, .bootstrap-datetimepicker-widget table td.new {
-        color: $text-color-secondary;
+        color: $font-color-level-three;
     }
 
     .bootstrap-datetimepicker-widget table td.day{
@@ -58,7 +58,7 @@ jigsaw-time{
     .bootstrap-datetimepicker-widget table td.active,
     .bootstrap-datetimepicker-widget table td.active:hover,
     .jigsaw-time-box .bootstrap-datetimepicker-widget table tr.active td{
-        background-color: $primary-color;
+        background-color: $time-base-color;
     }
 
     .bootstrap-datetimepicker-widget table th.picker-switch{
@@ -67,7 +67,7 @@ jigsaw-time{
     .bootstrap-datetimepicker-widget table thead tr:first-child th{
         &:hover{
             background: none;
-            color: $primary-color;
+            color: $time-base-color;
         }
         span.glyphicon{
             @include font-awesone();
@@ -83,15 +83,15 @@ jigsaw-time{
     }
 
     .bootstrap-datetimepicker-widget .picker-switch a[data-action]{
-        color: $primary-color;
+        color: $time-base-color;
         &:hover{
-            color: $primary-color-light;
+            color: $time-hover-color;
         }
     }
     .bootstrap-datetimepicker-widget a[data-action]{
-        color: #666;
+        color: $font-color-level-two;
         &:hover{
-            color: $primary-color;
+            color: $time-base-color;
         }
     }
 
@@ -143,7 +143,7 @@ jigsaw-time{
     @include font-awesone();
     background: none;
     font-size: 14px;
-    color: $primary-color-light;
+    color: $ztree-font-color;
     &.ico_open{
         &:before{
             content: "\f07c";
@@ -160,7 +160,7 @@ jigsaw-time{
         }
     }
     &.chk{
-        border: 1px solid $primary-color-light;
+        border: 1px solid $ztree-font-color;
         border-radius: 2px;
         font-size: 12px;
         &.checkbox_true_full:before, &.checkbox_true_full_focus:before{

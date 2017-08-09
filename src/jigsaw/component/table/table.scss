@@ -33,14 +33,14 @@ table{
     width: 100%;
     text-align: center;
     td{
-        border: 1px solid $border-color-base;
+        border: 1px solid $table-border-color;
     }
     thead{
-        color: #333;
+        color: $font-color-level-one;
         tr{
             height: 40px;
             td{
-                background: $gray-light;
+                background: $table-head-bg;
             }
         }
     }
@@ -53,21 +53,21 @@ table{
         tr{
             height: 30px;
             &:nth-child(2n){
-                background: $component-background;
+                background: $table-default-bg;
             }
             &:nth-child(2n-1){
-                background: lighten($primary-color, 50%);
+                background: $table-odd-row-bg;
             }
             &:hover{
                 td:not([rowspan]){
-                    background: $primary-color-hover;
+                    background: $table-hover-row-bg;
                 }
             }
             &.#{$table-prefix-cls}-row-selected{
-                background: $primary-color-hover;
+                background: $table-hover-row-bg;
             }
             td[rowspan]{
-                background: $component-background;
+                background: $table-default-bg;
             }
         }
     }

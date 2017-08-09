@@ -9,7 +9,7 @@ $option-prefix-cls: #{$jigsaw-prefix}-option;
     height: $height-base;
     line-height: $height-base;
     font-size: $font-size-base;
-    color: $text-color;
+    color: $font-color-level-two;
 }
 
 :host-context(.theme-blue) .#{$select-prefix-cls}-box .#{$select-prefix-cls} {

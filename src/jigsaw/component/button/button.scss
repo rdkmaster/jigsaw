@@ -13,7 +13,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     position: relative;
     border-radius: $btn-border-radius-base;
     cursor: pointer;
-    box-shadow: 4px 4px 6px $btn-default-box-shadow;
+    box-shadow: $btn-default-box-shadow;
     user-select: none;
     @include prefixer(transition, all .3s $ease-in-out);
     background-color: $btn-default-bg;
