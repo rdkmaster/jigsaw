@@ -8,9 +8,11 @@
         <ng-content></ng-content>
     </div>
     <div class="jigsaw-dialog-button-group" *ngIf="buttons && buttons.length > 0">
-        <jigsaw-button *ngFor="let bi of buttons"
-                    (click)="dispose(bi)"
-                    class="{{bi.clazz}}">{{bi.label}}
+        <jigsaw-button
+            *ngFor="let bi of buttons"
+            type="{{bi.type}}"
+            (click)="dispose(bi)"
+            class="{{bi.clazz}}">{{bi.label}}
         </jigsaw-button>
     </div>
 </div>

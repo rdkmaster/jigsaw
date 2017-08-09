@@ -35,11 +35,16 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         }
         &:focus {
             border: 1px solid $primary-color;
-            box-shadow: 0 0 0 2px $primary-color-shadow;
+            box-shadow: $input-box-shadow;
         }
     }
-    span.fa{
+    span.jigsaw-input-clear-bar{
         cursor: pointer;
+        font-size: 16px;
+        line-height: 1;
+        &:hover{
+            color: #000;
+        }
         &[hidden]{
             display: none !important;
         }
@@ -52,7 +57,7 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
     }
     &:focus {
         border: 1px solid $primary-color;
-        box-shadow: 0 0 0 2px $primary-color-shadow;
+        box-shadow: $input-box-shadow;
     }
 }
 

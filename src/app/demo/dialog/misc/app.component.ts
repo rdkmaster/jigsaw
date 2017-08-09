@@ -21,12 +21,13 @@ export class DialogMiscDemoComponent {
         {
             role: 'confirm',
             label: 'confirm',
-            clazz: ""
+            clazz: '',
+            type: 'primary'
         },
         {
             role: 'cancel',
             label: 'cancel',
-            clazz: ""
+            clazz: ''
         }
     ];
 

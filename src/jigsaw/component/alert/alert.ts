@@ -143,6 +143,7 @@ export abstract class JigsawCommonAlert extends DialogBase {
 export class JigsawInfoAlert extends JigsawCommonAlert {
     @ViewChild(JigsawAlert) dialog: JigsawDialog;
     public level: AlertLevel = AlertLevel.info;
+    public buttons = [{label: 'alert.button.ok', 'type': 'primary'}];
 }
 
 @Component({
@@ -156,6 +157,7 @@ export class JigsawInfoAlert extends JigsawCommonAlert {
 export class JigsawWarningAlert extends JigsawCommonAlert {
     @ViewChild(JigsawAlert) dialog: JigsawDialog;
     public level: AlertLevel = AlertLevel.warning;
+    public buttons = [{label: 'alert.button.ok', 'type': 'warning'}];
 }
 
 @Component({
@@ -169,6 +171,7 @@ export class JigsawWarningAlert extends JigsawCommonAlert {
 export class JigsawErrorAlert extends JigsawCommonAlert {
     @ViewChild(JigsawAlert) dialog: JigsawDialog;
     public level: AlertLevel = AlertLevel.error;
+    public buttons = [{label: 'alert.button.ok', 'type': 'error'}];
 }
 
 @NgModule({

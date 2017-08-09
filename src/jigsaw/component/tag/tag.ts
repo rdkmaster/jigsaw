@@ -13,7 +13,7 @@ import {AbstractJigsawComponent} from "../core";
         '[style.line-height]': 'height',
         '[style.background]': 'color',
         '[style.border-color]': 'color',
-        '[class.jigsaw-tag-close]': '_closable',
+        '[class.jigsaw-tag-closable]': '_closable',
         '[class.jigsaw-tag-color]': '!!color',
         '[@AnimationDestroy]': '_state',
         '(@AnimationDestroy.done)': '_animationDone($event)',

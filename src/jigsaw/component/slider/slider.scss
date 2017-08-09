@@ -64,7 +64,7 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
         height: 14px;
         border-radius: 50%;
         border: 2px solid mix($primary-color, #fff, 50%);
-        background-color: $component-background;
+        background-color: $default-color;
         z-index: 2;
 
         transition: border-color 0.3s ease, transform .3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
@@ -116,7 +116,7 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
             width: 8px;
             height: 8px;
             border: 2px solid $border-color-split;
-            background-color: $component-background;
+            background-color: $default-color;
             cursor: pointer;
             border-radius: 50%;
             vertical-align: middle;
@@ -142,7 +142,7 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
         .#{$jigsaw-slider}-handle,
         .#{$jigsaw-slider}-dot {
             border-color: $disabled-color!important;
-            background-color: $component-background;
+            background-color: $default-color;
             cursor: not-allowed;
             box-shadow: none;
         }

@@ -18,7 +18,7 @@ $option-prefix-cls: #{$jigsaw-prefix}-option;
     }
     &.#{$select-prefix-cls}-opened {
         border-color: $primary-color;
-        box-shadow: 0 0 0 2px $primary-color-shadow;
+        box-shadow: $select-box-shadow;
     }
 }
 
@@ -38,19 +38,19 @@ $option-prefix-cls: #{$jigsaw-prefix}-option;
     height: 100%;
     .#{$select-prefix-cls} {
         border: 1px solid $border-color-base;
-        border-radius: 4px;
+        border-radius: $border-radius-base;
         cursor: pointer;
         @include line-ellipsis(100%);
         height: 100%;
         padding: 0 6px;
         box-sizing: border-box;
-        @include prefixer(transition, all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1));
+        @include prefixer(transition, all 0.3s $ease-in-out);
         &:hover {
             border-color: $primary-color;
         }
         &.#{$select-prefix-cls}-opened {
             border-color: $primary-color;
-            box-shadow: 0 0 0 2px $primary-color-shadow;
+            box-shadow: $select-box-shadow;
             .#{$select-prefix-cls}-icon-down {
                 @include prefixer(transform, rotate(180deg));
             }
@@ -59,7 +59,7 @@ $option-prefix-cls: #{$jigsaw-prefix}-option;
             position: absolute;
             right: 8px;
             line-height: inherit;
-            @include prefixer(transition, transform 0.2s ease);
+            @include prefixer(transition, transform 0.2s $ease-in-out);
         }
 
     }
@@ -68,9 +68,9 @@ $option-prefix-cls: #{$jigsaw-prefix}-option;
         position: absolute;
         z-index: 1;
         border: 1px solid $border-color-base;
-        background: $component-background;
-        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
-        border-radius: 4px;
+        background: $default-color;
+        box-shadow: $box-shadow-base;
+        border-radius: $border-radius-base;
         @include prefixer(transition, all 0.3s $ease-in-out);
         @include prefixer(transform-origin, 0 0);
         &.#{$option-prefix-cls}-hidden {

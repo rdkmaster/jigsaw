@@ -11,35 +11,25 @@ $normal-color           : #d9d9d9;
 $default-color          : #fff;
 $disabled-color         : #cdcdcd;
 
-$primary-1: saturate($primary-color, 80%);  // replace tint($primary-color, 90%)
-$primary-2: saturate($primary-color, 60%);  // replace tint($primary-color, 90%)
-$primary-3: saturate($primary-color, 40%);  // replace tint($primary-color, 90%)
-$primary-4: saturate($primary-color, 20%);  // replace tint($primary-color, 90%)
-$primary-5: $primary-color;
-$primary-6: desaturate($primary-color, 20%);
-$primary-7: desaturate($primary-color, 40%);
-$primary-8: desaturate($primary-color, 60%);
-$primary-9: desaturate($primary-color, 80%);
+$primary-1: desaturate($primary-color, 10%);
+$primary-2: desaturate($primary-color, 20%);
+$primary-3: desaturate($primary-color, 30%);
+$primary-4: desaturate($primary-color, 40%);
+$primary-5: desaturate($primary-color, 50%);
+$primary-6: desaturate($primary-color, 60%);
+$primary-7: desaturate($primary-color, 70%);
+$primary-8: desaturate($primary-color, 80%);
+$primary-9: desaturate($primary-color, 90%);
 $primary-10: desaturate($primary-color, 100%);
-
-$primary-color-light: lighten($primary-color, 10%);
-$primary-color-shadow: lighten($primary-color, 40%);
-$primary-color-hover: lighten($primary-color, 46%);
-
-$gray: #d9d9d9;
-$gray-light: lighten($gray, 11%);
-$gray-dark: darken($gray, 30%);
-$gray-dark-second: darken($gray, 20%);
 
 // ------ Base & Require ------
 $body-background        : #fff;
-$component-background   : #fff;
 $font-family            : -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
 $code-family            : Consolas, Menlo, Courier, monospace;
 $font-color-level-one   : #333;
 $font-color-level-two   : #666;
 $font-color-level-three : #999;
-$text-color-white       : #ffffff;
+$font-color-white       : #fff;
 $heading-color          : #404040;
 $font-size-base         : 12px;
 $font-size-lg           : $font-size-base + 2px;
@@ -53,9 +43,9 @@ $iconfont-css-prefix    : anticon;
 $icon-url               : "https://at.alicdn.com/t/font_r5u29ls31bgldi";
 
 // LINK
-$link-color             : #108ee9;
-$link-hover-color       : tint($link-color, 20%);
-$link-active-color      : shade($link-color, 5%);
+$link-color             : #008fd4;
+$link-hover-color       : mix(#fff, $link-color, 20%);
+$link-active-color      : mix(#000, $link-color, 5%);
 $link-hover-decoration  : none;
 
 // Animation
@@ -96,60 +86,86 @@ $shadow-1-right         : 1px 0 6px $shadow-color;
 $shadow-2               : 0 2px 8px $shadow-color;
 
 // Buttons
-$btn-primary-bg: $primary-color;
-$btn-primary-bg-hover: mix(#000, $primary-color, 8%);
-$btn-primary-bg-active: mix(#000, $primary-color, 15%);
+$btn-primary-bg          : $primary-color;
+$btn-primary-bg-hover    : mix(#000, $primary-color, 8%);
+$btn-primary-bg-active   : mix(#000, $primary-color, 15%);
 
-$btn-warning-bg: $warning-color;
-$btn-warning-bg-hover: mix(#000, $warning-color, 8%);
-$btn-warning-bg-active: mix(#000, $warning-color, 15%);
+$btn-warning-bg          : $warning-color;
+$btn-warning-bg-hover    : mix(#000, $warning-color, 8%);
+$btn-warning-bg-active   : mix(#000, $warning-color, 15%);
 
-$btn-error-bg: $error-color;
-$btn-error-bg-hover: mix(#000, $error-color, 8%);
-$btn-error-bg-active: mix(#000, $error-color, 15%);
+$btn-error-bg            : $error-color;
+$btn-error-bg-hover      : mix(#000, $error-color, 8%);
+$btn-error-bg-active     : mix(#000, $error-color, 15%);
 
-$btn-default-bg: $default-color;
-$btn-default-border: $border-color-base;
-$btn-default-box-shadow: $box-shadow-base;
+$btn-default-bg          : $default-color;
+$btn-default-border      : $border-color-base;
+$btn-default-box-shadow  : $box-shadow-base;
+$btn-default-color       : $primary-color;
+$btn-default-hover-color : lighten($primary-color, 10%);
+$btn-others-color        : $default-color;
 
-$btn-default-font-color: $primary-color;
-$btn-others-font-color: $default-color;
+$btn-font-weight         : 500;
+$btn-border-radius-base  : $border-radius-base;
+$btn-border-radius-sm    : $border-radius-sm;
 
-$btn-font-weight        : 500;
-$btn-border-radius-base : $border-radius-base;
-$btn-border-radius-sm   : $border-radius-sm;
+$btn-disable-color       : rgba(0, 0, 0, 0.247059);
+$btn-disable-bg          : $background-color-base;
+$btn-disable-border      : $border-color-base;
 
-$btn-disable-color      : rgba(0, 0, 0, 0.247059);
-$btn-disable-bg         : $background-color-base;
-$btn-disable-border     : $border-color-base;
+$btn-font-size-sm        : $font-size-base - 2px;
+$btn-font-size-lg        : $font-size-lg;
 
-$btn-padding-base       : 4px 15px;
-$btn-font-size-sm       : $font-size-base - 2px;
-$btn-font-size-lg       : $font-size-lg;
-$btn-padding-lg         : 4px 15px 5px 15px;
-$btn-padding-sm         : 1px 7px;
-
-$btn-circle-size        : 28px;
-$btn-circle-size-lg     : 32px;
-$btn-circle-size-sm     : 22px;
-
-$btn-size-height-base   : $height-base;
-$btn-size-height-sm     : 20px;
-$btn-size-height-lg     : 36px;
+$btn-size-height-base    : $height-base;
+$btn-size-height-sm      : 20px;
+$btn-size-height-lg      : 36px;
 
 // Table
-$table-head-bg: lighten($normal-color, 11%);
-$table-odd-row-bg: lighten($primary-color, 56%);
-$table-hover-row-bg: lighten($primary-color, 50%);
+$table-head-bg      : lighten($normal-color, 11%);
+$table-odd-row-bg   : lighten($primary-color, 56%);
+$table-hover-row-bg : lighten($primary-color, 50%);
 
 // Scroll bar
-$scroll-bar-bg: lighten($primary-color, 50%);
-$scroll-bar-active-bg: lighten($primary-color, 40%);
+$scroll-bar-bg        : lighten($primary-color, 50%);
+$scroll-bar-active-bg : lighten($primary-color, 40%);
 
 // Time
 $time-hover-color: lighten($primary-color, 10%);
 
-// Media queries breakpoints
+// Select
+$select-box-shadow          : 0 0 0 2px lighten($primary-color, 40%);
+$select-option-hover-bg     : lighten($primary-color, 56%);
+$select-option-selected-bg  : lighten($normal-color, 12%);
+
+// Input
+$input-box-shadow            : 0 0 0 2px lighten($primary-color, 40%);
+$input-height-base           : 28px;
+$input-height-lg             : 32px;
+$input-height-sm             : 22px;
+$input-padding-horizontal    : 7px;
+$input-padding-vertical-base : 4px;
+$input-padding-vertical-sm   : 1px;
+$input-padding-vertical-lg   : 6px;
+$input-placeholder-color     : #ccc;
+$input-color                 : $font-color-level-two;
+$input-border-color          : $border-color-base;
+$input-bg                    : #fff;
+$input-hover-border-color    : $primary-color;
+$input-disabled-bg           : $background-color-base;
+
+// Tag
+$tag-bg-default: lighten($normal-color, 11%);
+
+// Dialog
+$dialog-head-color             : $primary-color;
+$dialog-close-bar-color        : $primary-color;
+$dialog-close-bar-hover-color  : lighten($primary-color, 10%);
+
+// Alert
+$alert-close-bar-color         : $dialog-close-bar-color;
+$alert-close-bar-hover-color   : $dialog-close-bar-hover-color;
+
+    // Media queries breakpoints
 // Extra small screen / phone
 $screen-xs              : 480px;
 $screen-xs-min          : $screen-xs;
@@ -196,22 +212,6 @@ $animation-duration-fast: .1s; // Tooltip
 $label-required-color        : $highlight-color;
 $label-color                 : $font-color-level-two;
 $form-item-margin-bottom     : 24px;
-
-// Input
-// ---
-$input-height-base           : 28px;
-$input-height-lg             : 32px;
-$input-height-sm             : 22px;
-$input-padding-horizontal    : 7px;
-$input-padding-vertical-base : 4px;
-$input-padding-vertical-sm   : 1px;
-$input-padding-vertical-lg   : 6px;
-$input-placeholder-color     : #ccc;
-$input-color                 : $font-color-level-two;
-$input-border-color          : $border-color-base;
-$input-bg                    : #fff;
-$input-hover-border-color    : $primary-color;
-$input-disabled-bg           : $background-color-base;
 
 // Tooltip
 // ---
