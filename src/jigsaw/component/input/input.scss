@@ -38,8 +38,13 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
             box-shadow: $input-box-shadow;
         }
     }
-    span.fa{
+    span.jigsaw-input-clear-bar{
         cursor: pointer;
+        font-size: 16px;
+        line-height: 1;
+        &:hover{
+            color: #000;
+        }
         &[hidden]{
             display: none !important;
         }
