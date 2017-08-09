@@ -9,16 +9,16 @@ $dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
 
 .#{$dialog-prefix-cls} {
     position: relative;
-    background: #FFF;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    background: $default-color;
+    border: 1px solid $border-color-base;
+    border-radius: $border-radius-base;
     .#{$dialog-prefix-cls}-head {
         @include clearfix;
         line-height: 20px;
         padding: 14px 16px;
         color: #333;
         font-size: 14px;
-        background: $component-background;
+        background: $default-color;
         border-bottom: 1px solid $border-color-base;
         cursor: move;
         /deep/ [jigsaw-title]{
@@ -27,11 +27,11 @@ $dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
         .#{$dialog-prefix-cls}-close {
             float: right;
             font-size: 24px;
-            color: #999;
+            color: $font-color-level-three;
             cursor: pointer;
             margin-top: -3px;
             &:hover{
-                color: $primary-color-light;
+                color: $primary-color;
             }
         }
     }

@@ -6,7 +6,7 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
     @include inline-block;
     width: 100%;
     .#{$alert-prefix-cls} {
-        background: #FFF;
+        background: $default-color;
         border-radius: 4px;
         position: relative;
         padding: 0 10px 10px;
@@ -29,11 +29,11 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
             .#{$alert-prefix-cls}-close {
                 float: right;
                 font-size: 24px;
-                color: #999;
+                color: $font-color-level-three;
                 cursor: pointer;
                 margin-right: 20px;
                 &:hover{
-                    color: $primary-color-light;
+                    color: $primary-color;
                 }
             }
         }

@@ -33,7 +33,7 @@ table{
     width: 100%;
     text-align: center;
     td{
-        border: 1px solid $table-border-color;
+        border: 1px solid $border-color-base;
     }
     thead{
         color: $font-color-level-one;
@@ -53,7 +53,7 @@ table{
         tr{
             height: 30px;
             &:nth-child(2n){
-                background: $table-default-bg;
+                background: $default-color;
             }
             &:nth-child(2n-1){
                 background: $table-odd-row-bg;
@@ -67,7 +67,7 @@ table{
                 background: $table-hover-row-bg;
             }
             td[rowspan]{
-                background: $table-default-bg;
+                background: $default-color;
             }
         }
     }
