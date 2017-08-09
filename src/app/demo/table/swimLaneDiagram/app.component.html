@@ -15,6 +15,6 @@
 <jigsaw-table [data]="tableData"
               [columnDefines]="columnDefines"
               (selectChange)="handleRowSelect($event)"
-              (dbSelectChange)="handleDbRowSelect($event)"
+              (doubleClick)="handleDbRowSelect($event)"
               [hideHead]="true">
 </jigsaw-table>

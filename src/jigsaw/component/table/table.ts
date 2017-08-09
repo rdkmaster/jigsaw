@@ -125,7 +125,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     public selectChange: EventEmitter<number> = new EventEmitter<number>();
 
     @Output()
-    public dbSelectChange: EventEmitter<number> = new EventEmitter<number>();
+    public doubleClick: EventEmitter<number> = new EventEmitter<number>();
 
     private _columnDefines: ColumnDefine[];
 
@@ -837,7 +837,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     public _$handleRowDoubleClick(rowIndex: number){
         this._rows.forEach((row, index) => {
             if(index === rowIndex){
-                this.dbSelectChange.emit(rowIndex);
+                this.doubleClick.emit(rowIndex);
             }
         })
     }
