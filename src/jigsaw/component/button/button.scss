@@ -11,20 +11,15 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     font-size: $font-size-base;
     text-align: center;
     position: relative;
-    border-radius: 3px;
+    border-radius: $btn-border-radius-base;
     cursor: pointer;
-    box-shadow: 4px 4px 6px $border-color-base;
+    box-shadow: $btn-default-box-shadow;
     user-select: none;
     @include prefixer(transition, all .3s $ease-in-out);
-    background-color: $default-color;
-    border:1px solid $border-color-base;
-    color: $text-color ;
+    background-color: $btn-default-bg;
+    border: 1px solid $btn-default-border;
+    color: $btn-default-font-color;
 
-    &:hover {
-        background: lighten($default-color,10%);
-        border: 1px solid $primary-color;
-        color: $primary-color;
-    }
     &.#{$btn-prefix-cls}-clicked:after {
         content: '';
         position: absolute;
@@ -33,39 +28,61 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
         bottom: -1px;
         right: -1px;
         border-radius: inherit;
-        border: 1px solid darken($primary-color,10%);
-        color: $primary-color;
+        border: 1px solid darken($btn-default-border,10%);
         opacity: 0.4;
         @include prefixer(animation, buttonEffect 0.36s $ease-out forwards);
         display: block;
     }
     .#{$btn-prefix-cls}-icon {
         @include inline-block();
-        /*vertical-align: -5px;*/
         /deep/ img {
             vertical-align: top;
             height: 20px;
         }
     }
 
-    &.#{$btn-prefix-cls}-color-danger {
-        background-color: $error-color;
-        color: $text-color-white;
-        border:1px solid $error-color;
-        &.#{$btn-prefix-cls}-clicked:after {
-            border: 0 solid lighten($error-color, 10%);
-        }
+    &.#{$btn-prefix-cls}-color-primary {
+        background-color: $btn-primary-bg;
+        color: $btn-others-font-color;
+        border:1px solid $btn-primary-bg;
         &:hover {
-            background: lighten($error-color, 10%);
+            background: $btn-primary-bg-hover;
+        }
+        &:active {
+            background: $btn-primary-bg-active;
+        }
+        &.#{$btn-prefix-cls}-clicked:after{
+            border: 1px solid darken($btn-primary-bg,10%);
         }
     }
 
-    &.#{$btn-prefix-cls}-color-primary {
-        background-color: $btn-primary-bg;
-        color: $btn-primary-color;
-        border:1px solid $btn-group-border;
+    &.#{$btn-prefix-cls}-color-warning {
+        background-color: $btn-warning-bg;
+        color: $btn-others-font-color;
+        border:1px solid $btn-warning-bg;
         &:hover {
-            background: $primary-color-light;
+            background: $btn-warning-bg-hover;
+        }
+        &:active {
+            background: $btn-warning-bg-active;
+        }
+        &.#{$btn-prefix-cls}-clicked:after{
+            border: 1px solid darken($btn-warning-bg,10%);
+        }
+    }
+
+    &.#{$btn-prefix-cls}-color-error {
+        background-color: $btn-error-bg;
+        color: $btn-others-font-color;
+        border:1px solid $btn-error-bg;
+        &:hover {
+            background: $btn-error-bg-hover;
+        }
+        &:active {
+            background: $btn-error-bg-active;
+        }
+        &.#{$btn-prefix-cls}-clicked:after{
+            border: 1px solid darken($btn-error-bg,10%);
         }
     }
 

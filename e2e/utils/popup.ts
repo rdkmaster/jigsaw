@@ -6,7 +6,7 @@ export type Size = { width: number, height: number };
 export type Offset = { x: number, y: number };
 
 export async function expectClosePopup(selector: string, blockSelector?: string) {
-    element(by.css(selector)).element(by.css('.fa-times')).click();
+    element(by.css(selector)).element(by.css('.jigsaw-popup-close')).click();
 
     await waitForNotPresence('.jigsaw-dialog');
 

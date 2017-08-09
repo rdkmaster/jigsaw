@@ -80,9 +80,10 @@ describe('button', () => {
         it('should display different background when set type', () => {
             const typeList = element(by.id('type-list')).all(by.tagName('jigsaw-button'));
             browser.sleep(300);
-            expect(typeList.get(0).getCssValue('background-color')).toBe('rgba(255, 85, 0, 1)');
-            expect(typeList.get(1).getCssValue('background-color')).toBe('rgba(255, 255, 255, 1)');
-            expect(typeList.get(2).getCssValue('background-color')).toBe('rgba(16, 142, 233, 1)');
+            expect(typeList.get(0).getCssValue('background-color')).toBe('rgba(255, 255, 255, 1)');
+            expect(typeList.get(1).getCssValue('background-color')).toBe('rgba(0, 143, 212, 1)');
+            expect(typeList.get(2).getCssValue('background-color')).toBe('rgba(249, 150, 96, 1)');
+            expect(typeList.get(3).getCssValue('background-color')).toBe('rgba(236, 109, 109, 1)');
         })
     })
 });

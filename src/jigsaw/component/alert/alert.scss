@@ -6,34 +6,35 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
     @include inline-block;
     width: 100%;
     .#{$alert-prefix-cls} {
-        background: #FFF;
-        border: 1px solid #ddd;
+        background: $default-color;
         border-radius: 4px;
         position: relative;
-        padding: 16px;
+        padding: 0 10px 10px;
+        border: 1px solid $border-color-base;
         .#{$alert-prefix-cls}-head{
             @include clearfix;
-            margin: 0 -16px;
+            margin: 0 -10px;
+            padding-top: 10px;
             cursor: move;
+            line-height: 36px;
             .#{$alert-prefix-cls}-icon {
-                @include inline-block;
                 vertical-align: middle;
                 font-size: 36px;
                 margin: 0 16px 0 20px;
             }
             .#{$alert-prefix-cls}-title {
                 font-size: 20px;
-                display: inline-block;
                 vertical-align: middle;
             }
             .#{$alert-prefix-cls}-close {
                 float: right;
-                font-size: 20px;
-                color: #999;
+                font-size: 24px;
+                color: $font-color-level-three;
                 cursor: pointer;
-                @include inline-block;
-                vertical-align: middle;
-                margin-right: 16px;
+                margin-right: 20px;
+                &:hover{
+                    color: $primary-color;
+                }
             }
         }
         .#{$alert-prefix-cls}-content {
@@ -41,37 +42,20 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
         }
 
         &-info {
-            border: 1px solid #d2eafb;
-            background-color: #ecf6fd;
-
-            .#{$alert-prefix-cls}-icon {
-                color: #108ee9;
-            }
-            .#{$alert-prefix-cls}-title {
-                color: #108ee9;
+            .#{$alert-prefix-cls}-icon, .#{$alert-prefix-cls}-title {
+                color: $primary-color;
             }
         }
 
         &-warning {
-            border: 1px solid #fff3cf;
-            background-color: #fffaeb;
-            .#{$alert-prefix-cls}-icon {
-                color: #ffbf00;
-            }
-            .#{$alert-prefix-cls}-title {
-                color: #ffbf00;
+            .#{$alert-prefix-cls}-icon, .#{$alert-prefix-cls}-title {
+                color: $warning-color;
             }
         }
         &-error {
-            border: 1px solid #fcdbd9;
-            background-color: #fef0ef;
-            .#{$alert-prefix-cls}-icon {
-                color: #f04134;
+            .#{$alert-prefix-cls}-icon, .#{$alert-prefix-cls}-title {
+                color: $error-color;
             }
-            .#{$alert-prefix-cls}-title {
-                color: #f04134;
-            }
-
         }
 
         .#{$alert-prefix-cls}-button-group {
