@@ -6,7 +6,7 @@ import {swimLaneDiagramDemoComponent} from './app.component';
 import {TableSwimLaneCell} from "./table-renderer";
 
 @NgModule({
-    imports: [JigsawTableModule,TranslateModule.forRoot()],
+    imports: [JigsawTableModule, TranslateModule.forRoot()],
     declarations: [swimLaneDiagramDemoComponent, TableSwimLaneCell],
     bootstrap: [swimLaneDiagramDemoComponent],
     entryComponents: [TableSwimLaneCell]
