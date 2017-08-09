@@ -23,7 +23,7 @@ describe('input', () => {
         it('should clear value when click the clear bar', () => {
             const inputEl = element(by.id('test-input')),
                 input = inputEl.element(by.tagName('input')),
-                clearBar = inputEl.element(by.css('.fa-times'));
+                clearBar = inputEl.element(by.css('.jigsaw-input-clear-bar'));
 
             input.sendKeys('abc123');
             expect(input.getAttribute('value')).toBe('abc123');
