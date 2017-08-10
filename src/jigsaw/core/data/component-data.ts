@@ -120,8 +120,8 @@ export class ComponentDataHelper {
             return;
         }
         this._timeout = setTimeout(() => {
-            this._refreshCallbacks.forEach(callback => ComponentDataHelper._safeInvokeCallback(callback.context, callback.fn));
             this._timeout = null;
+            this._refreshCallbacks.forEach(callback => ComponentDataHelper._safeInvokeCallback(callback.context, callback.fn));
         }, 0);
     }
 

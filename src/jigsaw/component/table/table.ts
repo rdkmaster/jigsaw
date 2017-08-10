@@ -413,7 +413,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     /*
      * 原始数据排序
      * */
-    private _dataDefaultSort() {
+    private _dataDefaultSort(): boolean {
         if (this._$headSettings) {
             //默认按第一个排序
             let headSetting = this._$headSettings.find(headSetting => headSetting.sortable &&
@@ -421,8 +421,10 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
             );
             if (headSetting) {
                 this.data.sort(headSetting.sortAs, headSetting.defaultSortOrder, headSetting.field);
+                return true;
             }
         }
+        return false
     }
 
     /*
@@ -460,8 +462,8 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
      * */
     private _transformData(): void {
         this._transformHeadSettings();
-        this._dataDefaultSort();
-        this._transformCellSettings();
+        const defaultSorted = this._dataDefaultSort();
+        if(!defaultSorted) this._transformCellSettings();
     }
 
     /*
