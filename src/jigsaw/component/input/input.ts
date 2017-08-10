@@ -3,7 +3,7 @@ import {
     ElementRef, ViewChild, AfterContentInit, Renderer2, AfterViewChecked, ChangeDetectorRef
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {FormsModule} from "@angular/forms";
+import {ControlValueAccessor, FormsModule} from "@angular/forms";
 import {AbstractJigsawComponent} from "../core";
 import {Observable} from "rxjs/Observable";
 
@@ -22,7 +22,7 @@ export class JigsawPrefixIcon {
         '(click)': '_stopPropagation($event)'
     }
 })
-export class JigsawInput extends AbstractJigsawComponent implements AfterContentInit, AfterViewChecked {
+export class JigsawInput extends AbstractJigsawComponent implements ControlValueAccessor, AfterContentInit, AfterViewChecked {
     private _value: string | number; //input表单值
     private _focused: boolean;
     private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
@@ -33,11 +33,26 @@ export class JigsawInput extends AbstractJigsawComponent implements AfterContent
      */
     public _$longIndent: boolean = false;
 
-
     constructor(private _render2: Renderer2,
                 private _elementRef: ElementRef,
                 private _changeDetectorRef: ChangeDetectorRef) {
         super();
+    }
+
+    private _propagateChange:any = () => {};
+
+    public writeValue(value: any): void {
+        if (value === undefined || value === null) {
+            return;
+        }
+        this._value = value.toString();
+    }
+
+    public registerOnChange(fn: any): void {
+        this._propagateChange = fn;
+    }
+
+    public registerOnTouched(fn: any): void {
     }
 
     //input form表单值
