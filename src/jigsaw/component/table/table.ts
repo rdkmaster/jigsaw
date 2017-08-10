@@ -90,20 +90,30 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
             this._removeRefreshCallback();
         }
         this._removeRefreshCallback = value.onRefresh(() => {
-            if(this.data.header.length != 0){
-                if(this._bakHeaderData.toString() === this.data.header.toString()){
-                    this._transformCellSettings();
-                    this._refreshStyle();
-                }else{
-                    this._refresh();
+            if (this.data.header.length != 0) {
+                if (this._bakHeaderData.toString() === this.data.header.toString()) {
+                    this._update('cell');
+                } else {
+                    this._update();
                 }
             }
         });
 
         if (this.initialized) {
-            this._refresh();
+            this._update();
         }
     };
+
+    private _update(field: string = 'all') {
+        if (field == 'all') {
+            this._beforeRefresh();
+            this._transformData();
+            this._refreshStyle();
+        } else if (field == 'cell') {
+            this._transformCellSettings();
+            this._refreshStyle();
+        }
+    }
 
     @Output() public dataChange = new EventEmitter<TableDataChangeEvent>();
 
@@ -115,7 +125,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
 
     set select(value: number) {
         this._select = value;
-        if(this.initialized){
+        if (this.initialized) {
             this._$handleRowClick(value);
         }
     }
@@ -137,7 +147,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
         if (this.columnDefines != value) {
             this._columnDefines = value;
             if (this.initialized) {
-                this._refresh();
+                this._update();
             }
         }
     }
@@ -153,7 +163,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
         if (this.additionalColumnDefines != value) {
             this._additionalColumnDefines = value;
             if (this.initialized) {
-                this._refresh();
+                this._update();
             }
         }
     }
@@ -233,15 +243,6 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     private _beforeRefresh() {
         this._bakHeaderData = this.data.header;
         this._renderer.addClass(this._fixedHead, 'jigsaw-table-hide');
-    }
-
-    /*
-     * 重新渲染
-     * */
-    private _refresh() {
-        this._beforeRefresh();
-        this._transformData();
-        this._refreshStyle();
     }
 
     /*
@@ -462,7 +463,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     private _transformData(): void {
         this._transformHeadSettings();
         const defaultSorted = this._dataDefaultSort();
-        if(!defaultSorted) this._transformCellSettings();
+        if (!defaultSorted) this._transformCellSettings();
     }
 
     /*
@@ -742,6 +743,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     }
 
     private _tooltipInfo: PopupInfo;
+
     private _addTdTooltipListener(tdElement: HTMLElement, message: string | number, rowIndex: number, colIndex: number) {
         const removeTdMouseEnterListener = this._renderer.listen(tdElement, "mouseenter", () => {
             if (!this._tooltipInfo) {
@@ -769,14 +771,14 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
         this._removeTdListeners.push({removeTdListener: removeTdMouseLeaveListener, row: rowIndex, column: colIndex});
     }
 
-    private _removeTooltip(){
+    private _removeTooltip() {
         if (this._tooltipInfo) {
             this._tooltipInfo.dispose();
             this._tooltipInfo = null;
         }
     }
 
-    public _rebindTooltipForCell(element: HTMLElement, message: any, rowIndex: number, colIndex: number){
+    public _rebindTooltipForCell(element: HTMLElement, message: any, rowIndex: number, colIndex: number) {
         //删除对应td的tooltip的事件
         this._removeTdListenersByIndex(rowIndex, colIndex);
         //重新绑定td的tooltip
@@ -796,7 +798,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
         if (this._removeTdListeners.length) {
             this._removeTdListeners
                 .filter(removeTdListener => removeTdListener.row == row
-                && removeTdListener.column == column)
+                    && removeTdListener.column == column)
                 .forEach(removeTdListener => removeTdListener.removeTdListener())
         }
     }
@@ -824,18 +826,18 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
         }
     }
 
-    public _$handleRowClick(rowIndex: number){
+    public _$handleRowClick(rowIndex: number) {
         this._rows.forEach((row, index) => {
-            if(index === rowIndex){
+            if (index === rowIndex) {
                 this._renderer.addClass(row.nativeElement, 'jigsaw-table-row-selected');
                 this.selectChange.emit(rowIndex);
-            }else {
+            } else {
                 this._renderer.removeClass(row.nativeElement, 'jigsaw-table-row-selected');
             }
         })
     }
 
-    public _$handleRowDoubleClick(rowIndex: number){
+    public _$handleRowDoubleClick(rowIndex: number) {
         this.doubleClick.emit(rowIndex);
     }
 
@@ -928,7 +930,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     ngOnInit() {
         this._init();
         if (this.data instanceof TableData && this.data.header.length) {
-            this._refresh();
+            this._update();
         }
         super.ngOnInit();
     }
@@ -1068,7 +1070,7 @@ export class JigsawTableCell extends TableCellBasic implements OnInit, OnDestroy
 
     private _cacheRenderer(renderer: TableCellRenderer, editorRenderer: TableCellRenderer) {
         let rendererInfo = this._jigsawTable.rendererList.find(renderer => renderer.row == this.row
-        && renderer.column == this.column);
+            && renderer.column == this.column);
         if (rendererInfo) {
             rendererInfo.renderer = renderer;
             rendererInfo.editorRenderer = editorRenderer;
