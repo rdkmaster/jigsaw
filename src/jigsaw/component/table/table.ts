@@ -75,7 +75,6 @@ export type RemoveTdListener = {
 export class JigsawTable extends AbstractJigsawComponent implements AfterViewInit, OnDestroy, OnInit {
     private _data: TableData;
     private _removeRefreshCallback: CallbackRemoval;
-    private _hasInit: boolean; //组件是否已初始化
     private _bakHeaderData: TableDataHeader = [];
 
     @Input()
@@ -101,7 +100,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
             }
         });
 
-        if (this._hasInit) {
+        if (this.initialized) {
             this._refresh();
         }
     };
@@ -116,7 +115,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
 
     set select(value: number) {
         this._select = value;
-        if(this._hasInit){
+        if(this.initialized){
             this._$handleRowClick(value);
         }
     }
@@ -137,7 +136,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     public set columnDefines(value: ColumnDefine[]) {
         if (this.columnDefines != value) {
             this._columnDefines = value;
-            if (this._hasInit) {
+            if (this.initialized) {
                 this._refresh();
             }
         }
@@ -153,7 +152,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     public set additionalColumnDefines(value: AdditionalColumnDefine[]) {
         if (this.additionalColumnDefines != value) {
             this._additionalColumnDefines = value;
-            if (this._hasInit) {
+            if (this.initialized) {
                 this._refresh();
             }
         }
@@ -931,7 +930,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
         if (this.data instanceof TableData && this.data.header.length) {
             this._refresh();
         }
-        this._hasInit = true;
+        super.ngOnInit();
     }
 
     ngAfterViewInit() {
