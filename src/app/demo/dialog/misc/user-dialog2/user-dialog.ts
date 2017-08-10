@@ -13,16 +13,16 @@ export class UserDialog2Component extends DialogBase {
     public title: string = `Title of the dialog`;
     public buttons: Array<ButtonInfo> = [
         {
-            role: 'confirm',
-            label: 'confirm',
-            clazz: '',
-            type: 'primary'
-        },
-        {
             role: 'cancel',
             label: 'cancel',
             clazz: ''
-        }
+        },
+        {
+            role: 'edit',
+            label: 'edit',
+            clazz: '',
+            type: 'warning'
+        },
     ];
 
 }
