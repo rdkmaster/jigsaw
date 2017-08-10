@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef, NgModule} from "@angular/core";
+import {Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef, NgModule, OnDestroy} from "@angular/core";
 import {TableCellRenderer} from "./table-api";
 import {TableCheckboxService, CheckboxState} from "./table-service";
 import {JigsawInput, JigsawInputModule} from "../input/input";
@@ -22,7 +22,7 @@ export class DefaultCellRenderer extends TableCellRenderer {
     template: `<jigsaw-checkbox  [(checked)]="cellData"
                 (checkedChange)="_$toggleSelectAll($event)"></jigsaw-checkbox>`
 })
-export class TableHeadCheckbox extends TableCellRenderer implements OnInit {
+export class TableHeadCheckbox extends TableCellRenderer implements OnInit, OnDestroy {
     constructor(private tableRendererService: TableCheckboxService, private _changeDetector: ChangeDetectorRef) {
         super();
     }
@@ -57,6 +57,10 @@ export class TableHeadCheckbox extends TableCellRenderer implements OnInit {
             this._changeDetector.detectChanges();
         });
     }
+
+    ngOnDestroy() {
+        this.tableRendererService.reset();
+    }
 }
 
 /*
@@ -65,7 +69,7 @@ export class TableHeadCheckbox extends TableCellRenderer implements OnInit {
 @Component({
     template: '<jigsaw-checkbox [(checked)]="cellData" (checkedChange)="_$checkedChangeHandle($event)"></jigsaw-checkbox>'
 })
-export class TableCellCheckbox extends TableCellRenderer implements OnInit {
+export class TableCellCheckbox extends TableCellRenderer implements OnInit, OnDestroy {
     constructor(private tableRendererService: TableCheckboxService, private _changeDetector: ChangeDetectorRef) {
         super();
     }
@@ -114,6 +118,10 @@ export class TableCellCheckbox extends TableCellRenderer implements OnInit {
             this._setHeadCheckboxState();
         }
         this._changeDetector.detectChanges();
+    }
+
+    ngOnDestroy() {
+        this.tableRendererService.reset();
     }
 }
 

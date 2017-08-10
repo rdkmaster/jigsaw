@@ -16,27 +16,6 @@ export class TableCheckboxService{
     public checkboxUnSelectAll: (() => void)[] = [];
     public headState: boolean|number;
 
-    /*public headCheckboxSelect: () => void;
-    public headCheckboxUnSelect: () => void;
-    public headCheckboxIndeterminate: () => void;
-    headListen(selectListener: () => void, unSelectListener: () => void, IndeterminateListener: () => void){
-        this.headCheckboxSelect = selectListener;
-        this.headCheckboxUnSelect = unSelectListener;
-        this.headCheckboxIndeterminate = IndeterminateListener;
-    }
-
-    headSelect(){
-        this.headCheckboxSelect();
-    }
-
-    headUnSelect(){
-        this.headCheckboxUnSelect();
-    }
-
-    headIndeterminate(){
-        this.headCheckboxIndeterminate();
-    }
-*/
     public headCheckboxSelect: (() => void)[] = [];
     public headCheckboxUnSelect: (() => void)[] = [];
     public headCheckboxIndeterminate: (() => void)[] = [];
@@ -45,6 +24,10 @@ export class TableCheckboxService{
         this.headCheckboxSelect.push(selectListener);
         this.headCheckboxUnSelect.push(unSelectListener);
         this.headCheckboxIndeterminate.push(IndeterminateListener);
+
+        if(this._resetFlag){
+            this._resetFlag = false;
+        }
     }
 
     headSelect(){
@@ -62,6 +45,10 @@ export class TableCheckboxService{
     listen(selectListener, unSelectListener){
         this.checkboxSelectAll.push(selectListener);
         this.checkboxUnSelectAll.push(unSelectListener);
+
+        if(this._resetFlag){
+            this._resetFlag = false;
+        }
     }
 
     selectAll(){
@@ -70,6 +57,22 @@ export class TableCheckboxService{
 
     unSelectAll(){
         this.checkboxUnSelectAll.forEach(checkboxUnSelect => checkboxUnSelect());
+    }
+
+    private _resetFlag: boolean;
+    reset(){
+        if(!this._resetFlag){
+            this.checkboxStates = [];
+            this.checkboxSelectAll = [];
+            this.checkboxUnSelectAll = [];
+
+            this.headState = 0;
+            this.headCheckboxSelect = [];
+            this.headCheckboxUnSelect = [];
+            this.headCheckboxIndeterminate = [];
+
+            this._resetFlag = true;
+        }
     }
 
 }
