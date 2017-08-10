@@ -59,6 +59,9 @@ $radio-prefix-cls: #{$jigsaw-prefix}-radio;
                 opacity: 1;
             }
         }
+        &:hover{
+            border-color: $primary-color;
+        }
     }
 }
 

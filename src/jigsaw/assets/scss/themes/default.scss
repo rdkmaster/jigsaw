@@ -165,6 +165,13 @@ $dialog-close-bar-hover-color  : mix(#000, $primary-color, 15%);
 $alert-close-bar-color         : $dialog-close-bar-color;
 $alert-close-bar-hover-color   : $dialog-close-bar-hover-color;
 
+// Checkbox
+$checkbox-checked-bg           : $default-color;
+$checkbox-checked-inner        : $primary-color;
+
+// Arrow
+
+
     // Media queries breakpoints
 // Extra small screen / phone
 $screen-xs              : 480px;
