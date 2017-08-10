@@ -41,7 +41,7 @@ export class DialogMiscDemoComponent {
             role: 'delete',
             label: 'delete',
             clazz: '',
-            type: 'error'
+            type: 'danger'
         },
     ];
 

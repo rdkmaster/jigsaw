@@ -17,7 +17,7 @@ import {AbstractJigsawComponent} from '../core';
         '[class.jigsaw-button-size-large]': "presize === 'large'",
         '[class.jigsaw-button-color-primary]': "type === 'primary'",
         '[class.jigsaw-button-color-warning]': "type === 'warning'",
-        '[class.jigsaw-button-color-error]': "type === 'error'"
+        '[class.jigsaw-button-color-error]': "type === 'error' || type === 'danger'"
     }
 })
 export class JigsawButton extends AbstractJigsawComponent {
