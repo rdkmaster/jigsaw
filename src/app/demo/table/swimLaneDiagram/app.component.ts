@@ -1,5 +1,5 @@
 import {
-    Component, Renderer2, ElementRef, ViewContainerRef, ViewEncapsulation
+    Component, Renderer2, ElementRef, ViewContainerRef, ViewEncapsulation, ChangeDetectorRef
 } from "@angular/core";
 import {TableData} from "jigsaw/core/data/table-data";
 import {ColumnDefine} from "../../../../jigsaw/component/table/table-api";
@@ -107,7 +107,7 @@ export class SwimLaneDiagramDemoComponent {
     ];
 
     constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2, elementRef: ElementRef) {
+                public renderer: Renderer2, elementRef: ElementRef, public changeDetector: ChangeDetectorRef) {
         this.elementRef = elementRef;
         this.tableData = new TableData([], ['id', 'date'], ['id', 'date']);
         for (let i = 0; i < this.neList.length; i++) {
@@ -185,6 +185,7 @@ export class SwimLaneDiagramDemoComponent {
                 width: this.elementRef.nativeElement.parentElement.clientWidth - 200 - (this.neList.length - 1) * 200 + 'px'
             }
         ];
+        this.changeDetector.detectChanges();
     }
 
     columnDefines: ColumnDefine[];
