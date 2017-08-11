@@ -1,6 +1,6 @@
 <style>
     label {
-        width: 90px;
+        width: 105px;
         text-align: right;
         padding-right: 12px;
     }
@@ -30,6 +30,12 @@
         <jigsaw-radio-group ngModel name="gender" trackItemBy="id" required
                             [data]="[{label: 'Male', id: 0},{label: 'Female', id: 1}]">
         </jigsaw-radio-group>
+    </div>
+    <div>
+        <label>Last Job During</label>
+        <jigsaw-combo-select [(value)]="rangeTimeComboValue" width="200px">
+            <jigsaw-range-time [(ngModel)]="rangeTime" name="lastJobDuring" (change)="handleDateChange()"></jigsaw-range-time>
+        </jigsaw-combo-select>
     </div>
     <div>
         <label></label>

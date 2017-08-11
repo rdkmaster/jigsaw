@@ -153,7 +153,6 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
     public writeValue(value: any): void {
         this._checked = this._fixCheckValue(value);
         this._setCheckBoxClass();
-        console.log(value);
     }
 
     public registerOnChange(fn: any): void {

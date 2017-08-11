@@ -11,8 +11,7 @@ Selected Time : {{date}}<br><br>
     <jigsaw-range-time
         [(beginDate)]="beginDate"
         [(endDate)]="endDate"
-        (beginDateChange)="handleDeginDateChange($event)"
-        (endDateChange)="handleEndDateChange($event)">
+        (change)="handleRangeDateChange()">
     </jigsaw-range-time>
 </jigsaw-combo-select>
 Selected Time : {{beginDate}} - {{endDate}}

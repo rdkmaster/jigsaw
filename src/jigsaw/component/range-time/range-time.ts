@@ -37,12 +37,36 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     /**
      * @internal
      */
-    @Input("beginDate") public _$beginDate: WeekTime;
+    public _$dateChange(key: string, value: WeekTime) {
+        const val = {};
+        val[key] = value;
+        this.writeValue(val);
+        this._propagateChange({"beginDate": this._beginDate, "endDate": this._endDate});
+    }
 
-    /**
-     * @internal
-     */
-    @Input("endDate") public _$endDate: WeekTime;
+    private _beginDate: WeekTime;
+
+    @Input()
+    public get beginDate(): WeekTime {
+        return this._beginDate;
+    }
+
+    public set beginDate(value: WeekTime) {
+        this.writeValue({beginDate: value});
+        this._propagateChange({"beginDate": this._beginDate, "endDate": this._endDate});
+    }
+
+    private _endDate: WeekTime;
+
+    @Input()
+    public get endDate(): WeekTime {
+        return this._endDate;
+    }
+
+    public set endDate(value: WeekTime) {
+        this.writeValue({endDate: value});
+        this._propagateChange({"beginDate": this._beginDate, "endDate": this._endDate});
+    }
 
     /**
      * @internal
@@ -134,9 +158,14 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
 
     private _calculateLimitEnd(): WeekTime {
         let item: GrItem = this._$grItems && this._$grItems.find(item => item.value == this._timeStart.gr);
-        let endTime: WeekTime = this._$limitEnd && TimeService.getDate(TimeService.convertValue(this._$limitEnd, <TimeGr>this._timeStart.gr), <TimeGr>this._timeStart.gr);
+        let endTime: WeekTime = null;
+        if (this._$limitEnd) {
+            endTime = TimeService.getDate(TimeService.convertValue(
+                this._$limitEnd, <TimeGr>this._timeStart.gr), <TimeGr>this._timeStart.gr);
+        }
         if (item && item.span) {
-            let calculateTime: WeekTime = JigsawRangeTime._calculateLimitEnd(TimeService.convertValue(this._$beginDate, <TimeGr>this._timeStart.gr), item.span, <TimeGr>this._timeStart.gr);
+            let calculateTime: WeekTime = JigsawRangeTime._calculateLimitEnd(TimeService.convertValue(this._beginDate,
+                <TimeGr>this._timeStart.gr), item.span, <TimeGr>this._timeStart.gr);
             calculateTime = TimeService.getDate(calculateTime, <TimeGr>this._timeStart.gr);
             if (!endTime || endTime > calculateTime) {
                 endTime = calculateTime;
@@ -194,25 +223,6 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
         return endTime;
     }
 
-    /**
-     * @internal
-     */
-    public _$dateChange(key: string, value: WeekTime) {
-        switch (key) {
-            case "beginDate": {
-                this.beginDateChange.emit(value);
-                this._$endTimeLimitEnd = this._calculateLimitEnd();
-                this._startTimeLimitEnd = value;
-                break;
-            }
-            case "endDate": {
-                this.endDateChange.emit(value);
-                break;
-            }
-        }
-        this.change.emit({"beginDate": this._$beginDate, "endDate": this._$endDate});
-    }
-
     private _getShortcuts(): Shortcut[] {
         let item: GrItem = this._$grItems && this._$grItems.find(item => item.value == this._timeStart.gr);
         if (item && item.shortcuts && item.shortcuts.length != 0) {
@@ -236,16 +246,16 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
             let limitStart = this._$limitStart && TimeService.convertValue(this._$limitStart, <TimeGr>this._timeStart.gr);
             let limitEnd = this._$limitEnd && TimeService.convertValue(this._$limitEnd, <TimeGr>this._timeStart.gr);
             if (!((limitStart && beginDate < limitStart) || (limitEnd && beginDate > limitEnd))) {
-                this._$beginDate = beginDate;
+                this._beginDate = beginDate;
             } else {
-                this._$beginDate = limitStart;
+                this._beginDate = limitStart;
             }
 
             this._$endTimeLimitEnd = this._calculateLimitEnd();
 
             setTimeout(() => {
                 //先设置好limit，再设置date
-                this._$endDate = endDate;
+                this._endDate = endDate;
             }, 0)
         }
     }
@@ -253,12 +263,21 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     private _propagateChange:any = () => {};
 
     public writeValue(value: any): void {
-        // if (value && this._value != value) {
-        //     this._value = value;
-        //     if (this.initialized) {
-        //         this._updateSelectedRadio();
-        //     }
-        // }
+        if (!value) {
+            return;
+        }
+        if (value.hasOwnProperty('beginDate')) {
+            this._beginDate = TimeService.convertValue(value.beginDate, <TimeGr>this.gr);
+            this._$endTimeLimitEnd = this._calculateLimitEnd();
+            this._startTimeLimitEnd = this._beginDate;
+            this.beginDateChange.emit(this._beginDate);
+            this.change.emit({"beginDate": this._beginDate, "endDate": this._endDate});
+        }
+        if (value.hasOwnProperty('endDate')) {
+            this._endDate = TimeService.convertValue(value.endDate, <TimeGr>this.gr);
+            this.endDateChange.emit(this._endDate);
+            this.change.emit({"beginDate": this._beginDate, "endDate": this._endDate});
+        }
     }
 
     public registerOnChange(fn: any): void {
