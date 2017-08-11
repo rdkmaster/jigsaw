@@ -1,4 +1,4 @@
-<jigsaw-table style="margin-bottom: 10px;" maxHeight="400px" [data]="pageable" [columnDefines]="columns" [additionalColumnDefines]="additionalColumns"></jigsaw-table>
+<jigsaw-table style="margin-bottom: 10px;" maxHeight="400px" [data]="pageable" [columnDefines]="_columns" [additionalColumnDefines]="_additionalColumns"></jigsaw-table>
 <jigsaw-pagination
         [total]="pageable.pagingInfo.totalRecord"
         [(pageSize)]="pageable.pagingInfo.pageSize"
@@ -6,4 +6,6 @@
         [pageSizeOptions]="[5, 10, 20]"
         [searchable]="true"
         [showQuickJumper]="true"
+        (currentChange)="getCurrentPage()"
+        (pageSizeChange)="getPageSize()"
 ></jigsaw-pagination>

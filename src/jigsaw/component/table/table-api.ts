@@ -1,4 +1,4 @@
-import {Input, Type, Output, EventEmitter, TemplateRef} from "@angular/core";
+import {EventEmitter, Input, Output, TemplateRef, Type} from "@angular/core";
 import {TableData} from "../../core/data/table-data";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 
@@ -67,4 +67,40 @@ export type TableCell = {
     class?: string,
     editable?: boolean,
     editorRenderer?: Type<TableCellRenderer>
+}
+
+export class TableHeadSetting {
+    cellData: string | number;
+    width: string | number;
+    visible: boolean;
+    renderer: Type<TableCellRenderer> | TemplateRef<any>;
+    class: string;
+    sortable: boolean;
+    sortAs: SortAs;
+    defaultSortOrder: SortOrder;
+    field: number;
+}
+
+export class TableCellSetting {
+    cellData: string | number;
+    width: string | number;
+    visible: boolean;
+    renderer: Type<TableCellRenderer> | TemplateRef<any>;
+    class: string;
+    editable: boolean;
+    editorRenderer: Type<TableCellRenderer> | TemplateRef<any>;
+    group: boolean;
+    field: number;
+    rowSpan: number;
+}
+
+export type SortChangeEvent = {
+    sortAs: SortAs,
+    order: SortOrder,
+    field: number
+}
+export type RemoveTdListener = {
+    removeTdListener: Function,
+    row: number,
+    column: number
 }

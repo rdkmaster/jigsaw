@@ -2,15 +2,11 @@
  * Created by 10177553 on 2017/3/14.
  */
 
-import {
-    Component, Input, EventEmitter, Output, OnInit, AfterContentInit, Renderer2, ElementRef
-} from '@angular/core';
+import {AfterContentInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2} from '@angular/core';
 import {AbstractJigsawComponent} from '../core';
+import {CheckBoxStatus} from "./typings";
 
 
-export enum CheckBoxStatus {
-    unchecked, checked, indeterminate
-}
 export type CheckBoxValue = boolean | CheckBoxStatus;
 
 @Component({

@@ -1,75 +1,65 @@
-
 import {Injectable} from "@angular/core";
+import {CheckBoxStatus} from "../checkbox/typings";
 
-export type CheckboxState = {
+export type TableCheckboxInfo = {
     row: number,
-    checked: boolean|number
+    checked: boolean | number
 }
 
 /*
  * checkbox renderer service
  * */
 @Injectable()
-export class TableCheckboxService{
-    public checkboxStates: CheckboxState[] = [];
+export class TableCheckboxService {
+    public checkboxStates: TableCheckboxInfo[] = [];
     public checkboxSelectAll: (() => void)[] = [];
     public checkboxUnSelectAll: (() => void)[] = [];
-    public headState: boolean|number;
+    public headState: CheckBoxStatus;
 
-    /*public headCheckboxSelect: () => void;
-    public headCheckboxUnSelect: () => void;
-    public headCheckboxIndeterminate: () => void;
-    headListen(selectListener: () => void, unSelectListener: () => void, IndeterminateListener: () => void){
-        this.headCheckboxSelect = selectListener;
-        this.headCheckboxUnSelect = unSelectListener;
-        this.headCheckboxIndeterminate = IndeterminateListener;
-    }
-
-    headSelect(){
-        this.headCheckboxSelect();
-    }
-
-    headUnSelect(){
-        this.headCheckboxUnSelect();
-    }
-
-    headIndeterminate(){
-        this.headCheckboxIndeterminate();
-    }
-*/
     public headCheckboxSelect: (() => void)[] = [];
     public headCheckboxUnSelect: (() => void)[] = [];
     public headCheckboxIndeterminate: (() => void)[] = [];
 
-    headListen(selectListener, unSelectListener, IndeterminateListener){
+    public headListen(selectListener, unSelectListener, indeterminateListener) {
         this.headCheckboxSelect.push(selectListener);
         this.headCheckboxUnSelect.push(unSelectListener);
-        this.headCheckboxIndeterminate.push(IndeterminateListener);
+        this.headCheckboxIndeterminate.push(indeterminateListener);
     }
 
-    headSelect(){
+    public headSelect() {
         this.headCheckboxSelect.forEach(checkboxSelect => checkboxSelect());
     }
 
-    headUnSelect(){
+    public headUnSelect() {
         this.headCheckboxUnSelect.forEach(checkboxUnSelect => checkboxUnSelect());
     }
 
-    headIndeterminate(){
+    public headIndeterminate() {
         this.headCheckboxIndeterminate.forEach(checkboxIndeterminate => checkboxIndeterminate());
     }
 
-    listen(selectListener, unSelectListener){
+    public listen(selectListener, unSelectListener) {
         this.checkboxSelectAll.push(selectListener);
         this.checkboxUnSelectAll.push(unSelectListener);
     }
 
-    selectAll(){
+    public selectAll() {
         this.checkboxSelectAll.forEach(checkboxSelect => checkboxSelect());
     }
 
-    unSelectAll(){
+    public unSelectAll() {
         this.checkboxUnSelectAll.forEach(checkboxUnSelect => checkboxUnSelect());
+    }
+
+    public reset() {
+        this.checkboxStates = [];
+        this.checkboxSelectAll = [];
+        this.checkboxUnSelectAll = [];
+
+        this.headState = CheckBoxStatus.unchecked;
+        this.headCheckboxSelect = [];
+        this.headCheckboxUnSelect = [];
+        this.headCheckboxIndeterminate = [];
     }
 
 }
