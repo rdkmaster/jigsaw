@@ -38,7 +38,6 @@ $option-prefix-cls: #{$jigsaw-prefix}-option;
         background-color: $select-option-hover-bg;
     }
     &.#{$option-prefix-cls}-on, &.#{$option-prefix-cls}-on:hover {
-        color: $font-color-level-one;
         background-color: $select-option-selected-bg;
     }
 }

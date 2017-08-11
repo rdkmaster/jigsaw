@@ -74,7 +74,10 @@ $outline-width          : 2px;
 $outline-color          : $primary-color;
 
 // Background color
-$background-color-base  : #f7f7f7;        // basic gray background
+$background-color-base        : #f7f7f7;        // basic gray background
+$background-color-level-one   : #dedede;
+$background-color-level-tow   : #eee;
+$background-color-level-three : #f3f3f3;
 
 // Shadow
 $shadow-color           : rgba(0, 0, 0, .2);
@@ -121,32 +124,26 @@ $btn-size-height-sm      : 20px;
 $btn-size-height-lg      : 36px;
 
 // Table
-$table-head-bg      : lighten($normal-color, 11%);
-$table-odd-row-bg   : lighten($primary-color, 56%);
-$table-hover-row-bg : lighten($primary-color, 50%);
+$table-head-color   : $primary-color;
+$table-head-bg      : $background-color-level-tow;
+$table-odd-row-bg   : $background-color-level-three;
+$table-hover-row-bg : #e2eef9;
+$table-select-row-bg: #cde4fa;
 
 // Scroll bar
-$scroll-bar-bg        : lighten($primary-color, 50%);
-$scroll-bar-active-bg : lighten($primary-color, 40%);
+$scroll-bar-bg        : fade-out($primary-color, .7);
+$scroll-bar-active-bg : fade-out($primary-color, .5);
 
 // Time
 $time-hover-color: lighten($primary-color, 10%);
 
 // Select
-$select-box-shadow          : 0 0 0 2px lighten($primary-color, 40%);
-$select-option-hover-bg     : lighten($primary-color, 56%);
-$select-option-selected-bg  : lighten($normal-color, 12%);
+$select-box-shadow          : 0 0 0 2px fade-out($primary-color, .8);
+$select-option-hover-bg     : #e2eef9;
+$select-option-selected-bg  : #cde4fa;
 
 // Input
-$input-box-shadow            : 0 0 0 2px lighten($primary-color, 40%);
-$input-height-base           : 28px;
-$input-height-lg             : 32px;
-$input-height-sm             : 22px;
-$input-padding-horizontal    : 7px;
-$input-padding-vertical-base : 4px;
-$input-padding-vertical-sm   : 1px;
-$input-padding-vertical-lg   : 6px;
-$input-placeholder-color     : #ccc;
+$input-box-shadow            : 0 0 0 2px fade-out($primary-color, .8);
 $input-color                 : $font-color-level-two;
 $input-border-color          : $border-color-base;
 $input-bg                    : #fff;
@@ -169,8 +166,8 @@ $alert-close-bar-hover-color   : $dialog-close-bar-hover-color;
 $checkbox-checked-bg           : $primary-color;
 $checkbox-checked-inner        : $default-color;
 
-// Arrow
-
+// Collapse
+$collapse-head-bg              : $background-color-level-tow;
 
     // Media queries breakpoints
 // Extra small screen / phone

@@ -36,7 +36,7 @@ table{
         border: 1px solid $border-color-base;
     }
     thead{
-        color: $font-color-level-one;
+        color: $table-head-color;
         tr{
             height: 40px;
             td{
@@ -53,10 +53,10 @@ table{
         tr{
             height: 30px;
             &:nth-child(2n){
-                background: $default-color;
+                background: $table-odd-row-bg;
             }
             &:nth-child(2n-1){
-                background: $table-odd-row-bg;
+                background: $default-color;
             }
             &:hover{
                 td:not([rowspan]){
@@ -64,7 +64,9 @@ table{
                 }
             }
             &.#{$table-prefix-cls}-row-selected{
-                background: $table-hover-row-bg;
+                td:not([rowspan]){
+                    background: $table-select-row-bg;
+                }
             }
             td[rowspan]{
                 background: $default-color;
