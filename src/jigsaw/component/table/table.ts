@@ -1,66 +1,57 @@
 import {
-    Component, Input, NgModule, ComponentFactoryResolver, AfterViewInit, ViewChild, Type, ChangeDetectorRef, ElementRef,
-    Renderer2, OnInit, ComponentRef, Output, EventEmitter, ViewChildren, QueryList, forwardRef, OnDestroy, Optional,
-    TemplateRef, EmbeddedViewRef
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    ComponentRef,
+    ElementRef,
+    EmbeddedViewRef,
+    EventEmitter,
+    forwardRef,
+    Input,
+    NgModule,
+    OnDestroy,
+    OnInit,
+    Optional,
+    Output,
+    QueryList,
+    Renderer2,
+    TemplateRef,
+    Type,
+    ViewChild,
+    ViewChildren
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 
-import {JigsawRendererHost, AbstractJigsawComponent} from "../core";
+import {AbstractJigsawComponent, JigsawRendererHost} from "../core";
 import {TableData, TableDataHeader} from "../../core/data/table-data";
 import {
-    TableCellRenderer, ColumnDefine, AdditionalColumnDefine, TableDataChangeEvent,
+    AdditionalColumnDefine,
+    TableCellSetting,
+    ColumnDefine,
+    TableHeadSetting,
+    RemoveTdListener,
+    SortChangeEvent,
+    TableCellRenderer,
+    TableDataChangeEvent,
     TableHeadChangeEvent
 } from "./table-api";
 
-import {JigsawScrollBarModule} from "../../directive/scrollbar/scrollbar";
-import {JigsawScrollBar} from "../../directive/scrollbar/scrollbar";
+import {JigsawScrollBar, JigsawScrollBarModule} from "../../directive/scrollbar/scrollbar";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 import {AffixUtils} from "../../core/utils/internal-utils";
 import {TableCheckboxService} from "./table-service";
 import {
-    DefaultCellRenderer, JigsawTableRendererModule, TableCellCheckbox, TableCellEditor, TableCellNum,
+    DefaultCellRenderer,
+    JigsawTableRendererModule,
+    TableCellCheckbox,
+    TableCellEditor,
+    TableCellNum,
     TableHeadCheckbox
 } from "./table-renderer";
 import {JigsawTooltipModule, SimpleTooltipComponent} from "../tooltip/tooltip";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {PopupEffect, PopupInfo, PopupPositionType, PopupService} from "../../service/popup.service";
-
-export class HeadSetting {
-    cellData: string | number;
-    width: string | number;
-    visible: boolean;
-    renderer: Type<TableCellRenderer> | TemplateRef<any>;
-    class: string;
-    sortable: boolean;
-    sortAs: SortAs;
-    defaultSortOrder: SortOrder;
-    field: number;
-}
-
-export class CellSetting {
-    cellData: string | number;
-    width: string | number;
-    visible: boolean;
-    renderer: Type<TableCellRenderer> | TemplateRef<any>;
-    class: string;
-    editable: boolean;
-    editorRenderer: Type<TableCellRenderer> | TemplateRef<any>;
-    group: boolean;
-    field: number;
-    rowSpan: number;
-}
-
-export type SortChangeEvent = {
-    sortAs: SortAs,
-    order: SortOrder,
-    field: number
-}
-
-export type RemoveTdListener = {
-    removeTdListener: Function,
-    row: number,
-    column: number
-}
 
 @Component({
     selector: 'jigsaw-table',
@@ -99,19 +90,20 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
             }
         });
 
-        if (this.initialized) {
-            this._update();
-        }
+        this._update();
     };
 
-    private _update(field: string = 'all') {
-        if (field == 'all') {
-            this._beforeRefresh();
+    private _update(scope: string = 'all') {
+        if (!this.initialized) {
+            return;
+        }
+        if (scope == 'all') {
+            this._beforeUpdate();
             this._transformData();
-            this._refreshStyle();
-        } else if (field == 'cell') {
+            this._updateStyle();
+        } else if (scope == 'cell') {
             this._transformCellSettings();
-            this._refreshStyle();
+            this._updateStyle();
         }
     }
 
@@ -146,9 +138,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     public set columnDefines(value: ColumnDefine[]) {
         if (this.columnDefines != value) {
             this._columnDefines = value;
-            if (this.initialized) {
-                this._update();
-            }
+            this._update();
         }
     }
 
@@ -162,9 +152,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     public set additionalColumnDefines(value: AdditionalColumnDefine[]) {
         if (this.additionalColumnDefines != value) {
             this._additionalColumnDefines = value;
-            if (this.initialized) {
-                this._update();
-            }
+            this._update();
         }
     }
 
@@ -203,12 +191,12 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     /**
      * @internal
      */
-    public _$headSettings: Array<HeadSetting> = [];
+    public _$headSettings: Array<TableHeadSetting> = [];
 
     /**
      * @internal
      */
-    public _$cellSettings: Array<CellSetting>[] = [];
+    public _$cellSettings: Array<TableCellSetting>[] = [];
 
     private _removeTdListeners: Array<RemoveTdListener> = [];
 
@@ -240,7 +228,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
         return this.rendererList.filter(renderer => renderer.column == column);
     }
 
-    private _beforeRefresh() {
+    private _beforeUpdate() {
         this._bakHeaderData = this.data.header;
         this._renderer.addClass(this._fixedHead, 'jigsaw-table-hide');
     }
@@ -463,7 +451,9 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     private _transformData(): void {
         this._transformHeadSettings();
         const defaultSorted = this._dataDefaultSort();
-        if (!defaultSorted) this._transformCellSettings();
+        if (!defaultSorted) {
+            this._transformCellSettings();
+        }
     }
 
     /*
@@ -534,7 +524,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
         let index = this._getIndexInHeadSettings(this._getPosInField(target));
 
         //插入列头
-        let headSetting: HeadSetting = {
+        let headSetting: TableHeadSetting = {
             cellData: this._$headSettings[index].cellData,
             width: null,
             visible: true,
@@ -556,7 +546,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
 
         //插入列
         this._$cellSettings.forEach(cellSettings => {
-            let cellSetting: CellSetting = {
+            let cellSetting: TableCellSetting = {
                 cellData: cellSettings[index].cellData,
                 width: null,
                 visible: true,
@@ -576,8 +566,8 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
      * 插入表头列
      * */
     private _insertHeadSetting(pos, additionalColumn: AdditionalColumnDefine): void
-    private _insertHeadSetting(pos, additionalColumn: AdditionalColumnDefine, headSetting?: HeadSetting): void
-    private _insertHeadSetting(pos, additionalColumn: AdditionalColumnDefine, headSetting?: HeadSetting): void {
+    private _insertHeadSetting(pos, additionalColumn: AdditionalColumnDefine, headSetting?: TableHeadSetting): void
+    private _insertHeadSetting(pos, additionalColumn: AdditionalColumnDefine, headSetting?: TableHeadSetting): void {
         headSetting = headSetting ? headSetting : {
             cellData: '',
             width: null,
@@ -602,8 +592,8 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
      * 插入单元格列
      * */
     private _insertCellSetting(pos, additionalColumn: AdditionalColumnDefine): void
-    private _insertCellSetting(pos, additionalColumn: AdditionalColumnDefine, cellSetting?: CellSetting, cellSettings?: CellSetting[]): void
-    private _insertCellSetting(pos, additionalColumn: AdditionalColumnDefine, cellSetting?: CellSetting, cellSettings?: CellSetting[]): void {
+    private _insertCellSetting(pos, additionalColumn: AdditionalColumnDefine, cellSetting?: TableCellSetting, cellSettings?: TableCellSetting[]): void
+    private _insertCellSetting(pos, additionalColumn: AdditionalColumnDefine, cellSetting?: TableCellSetting, cellSettings?: TableCellSetting[]): void {
         cellSetting = cellSetting ? cellSetting : {
             cellData: '',
             width: null,
@@ -642,8 +632,8 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     /*
      * 根据column的数据生成headSetting，支持多个column数据的合并
      * */
-    private _generateHeadSetting(headSetting: HeadSetting,
-                                 column: ColumnDefine | AdditionalColumnDefine): HeadSetting {
+    private _generateHeadSetting(headSetting: TableHeadSetting,
+                                 column: ColumnDefine | AdditionalColumnDefine): TableHeadSetting {
         headSetting.width = column.width ? column.width : headSetting.width;
         headSetting.visible = column.visible === true || column.visible === false ? column.visible : headSetting.visible;
 
@@ -663,8 +653,8 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     /*
      * 根据column的数据生成cellSetting，支持多个column数据的合并
      * */
-    private _generateCellSetting(cellSetting: CellSetting,
-                                 column: ColumnDefine | AdditionalColumnDefine): CellSetting {
+    private _generateCellSetting(cellSetting: TableCellSetting,
+                                 column: ColumnDefine | AdditionalColumnDefine): TableCellSetting {
         cellSetting.width = column.width ? column.width : cellSetting.width;
         cellSetting.visible = column.visible === true || column.visible === false ? column.visible : cellSetting.visible;
         cellSetting.group = column.group === true || column.group === false ? column.group : cellSetting.group;
@@ -722,7 +712,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
             const elements: NodeListOf<Element> = row.nativeElement.querySelectorAll('.jigsaw-table-cell-content');
             for (let colIndex = 0; colIndex < elements.length; ++colIndex) {
                 const element: Element = elements[colIndex];
-                const cellSetting: CellSetting = this._$cellSettings[rowIndex][colIndex];
+                const cellSetting: TableCellSetting = this._$cellSettings[rowIndex][colIndex];
                 //没有渲染器或者用DefaultCellRenderer的单元格才能用省略
                 if (!cellSetting.renderer || cellSetting.renderer == DefaultCellRenderer) {
                     let width = CommonUtils.getCssValue(cellSetting.width);
@@ -908,7 +898,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
         }, 0);
     }
 
-    private _refreshStyle() {
+    private _updateStyle() {
         this._asyncSetCellLineEllipsis();
         this._asyncSetFixedHeadWidth();
         this._asyncSelectRow();
@@ -928,11 +918,11 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     }
 
     ngOnInit() {
+        super.ngOnInit();
         this._init();
         if (this.data instanceof TableData && this.data.header.length) {
             this._update();
         }
-        super.ngOnInit();
     }
 
     ngAfterViewInit() {
