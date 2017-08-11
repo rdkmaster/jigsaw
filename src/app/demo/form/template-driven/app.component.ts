@@ -1,5 +1,4 @@
-import {Component, OnInit} from "@angular/core";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {Component} from "@angular/core";
 
 
 @Component({
@@ -8,6 +7,8 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 export class TemplateDrivenDemoComponent {
     firstName: string = 'jigsaw';
     remember: boolean = true;
+    gender:object = null;
+
     formValue:any;
 
     submit(formValue) {

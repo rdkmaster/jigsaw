@@ -7,9 +7,14 @@ import {JigsawCheckBoxModule} from "jigsaw/component/checkbox/index";
 import {JigsawButtonModule} from "jigsaw/component/button/button";
 
 import {TemplateDrivenDemoComponent} from "./app.component";
+import {JigsawRadioModule} from "jigsaw/component/radio/radio";
 
 @NgModule({
-    imports: [JigsawInputModule, JigsawCheckBoxModule, JigsawButtonModule, FormsModule, ReactiveFormsModule, CommonModule],
+    imports: [
+        FormsModule, ReactiveFormsModule, CommonModule,
+        JigsawInputModule, JigsawCheckBoxModule, JigsawButtonModule,
+        JigsawRadioModule
+    ],
     declarations: [TemplateDrivenDemoComponent],
     bootstrap: [TemplateDrivenDemoComponent],
     entryComponents: []

@@ -1,36 +1,48 @@
 <style>
     label {
-        width: 80px;
+        width: 90px;
         text-align: right;
+        padding-right: 12px;
     }
+
     fieldset div {
         padding-bottom: 6px;
+    }
+
+    .result {
+        padding-top: 12px;
     }
 </style>
 <form #form="ngForm" (ngSubmit)="submit(form.value)">
     <fieldset ngModelGroup="name">
         <div>
             <label>First Nname:</label>
-            <jigsaw-input [ngModel]="firstName" width="200px" name="firstname" ></jigsaw-input>
+            <jigsaw-input [ngModel]="firstName" width="200px" name="firstname"></jigsaw-input>
         </div>
 
         <div>
             <label>Last Name:</label>
-            <jigsaw-input width="200px" name="lastname" ngModel></jigsaw-input>
+            <jigsaw-input width="200px" name="lastname" ngModel required></jigsaw-input>
         </div>
     </fieldset>
     <div>
+        <label>Gender</label>
+        <jigsaw-radio-group ngModel name="gender" trackItemBy="id" required
+                            [data]="[{label: 'Male', id: 0},{label: 'Female', id: 1}]">
+        </jigsaw-radio-group>
+    </div>
+    <div>
         <label></label>
-        <jigsaw-checkbox [ngModel]="remember" name="remember" >Remember me</jigsaw-checkbox>
+        <jigsaw-checkbox [ngModel]="remember" name="remember">Remember me</jigsaw-checkbox>
     </div>
 
     <div style="padding-top: 12px;">
         <label></label>
-        <button jigsaw-button type="submit" colorType="primary">Submit</button>
-
-        <jigsaw-button colorType="primary">submit</jigsaw-button>
+        <button jigsaw-button type="submit" colorType="primary" [disabled]="!form.valid">Submit</button>
     </div>
 </form>
 
-<p style="padding-top: 12px;">Click submit, and the form value should be shown here:</p>
-<p>{{formValue|json}}</p>
+<div class="result">
+    <p>Submit the form, and the form value should be shown here:</p>
+    <p>{{formValue|json}}</p>
+</div>

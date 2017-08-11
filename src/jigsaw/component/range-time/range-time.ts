@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from "@angular/core";
+import {Component, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild} from "@angular/core";
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../core";
 import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../service/time.service";
 import {GrItem, JigsawTime, Shortcut} from "../time/time";
@@ -7,10 +8,12 @@ import {WeekTime} from "../../service/time.types";
 @Component({
     selector: 'jigsaw-range-time',
     templateUrl: 'range-time.html',
-    styleUrls: ['range-time.scss']
+    styleUrls: ['range-time.scss'],
+    providers: [
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRangeTime), multi: true },
+    ]
 })
-
-export class JigsawRangeTime extends AbstractJigsawComponent implements OnInit {
+export class JigsawRangeTime extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
 
     @ViewChild("timeStart") private _timeStart: JigsawTime;
 
@@ -245,6 +248,24 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements OnInit {
                 this._$endDate = endDate;
             }, 0)
         }
+    }
+
+    private _propagateChange:any = () => {};
+
+    public writeValue(value: any): void {
+        // if (value && this._value != value) {
+        //     this._value = value;
+        //     if (this.initialized) {
+        //         this._updateSelectedRadio();
+        //     }
+        // }
+    }
+
+    public registerOnChange(fn: any): void {
+        this._propagateChange = fn;
+    }
+
+    public registerOnTouched(fn: any): void {
     }
 
 }
