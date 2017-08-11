@@ -1,9 +1,9 @@
 import {
     NgModule, Component, EventEmitter, Input, Output, ContentChildren, Directive, QueryList,
-    ElementRef, ViewChild, AfterContentInit, Renderer2, AfterViewChecked, ChangeDetectorRef
+    ElementRef, ViewChild, AfterContentInit, Renderer2, AfterViewChecked, ChangeDetectorRef, forwardRef
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {ControlValueAccessor, FormsModule} from "@angular/forms";
+import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../core";
 import {Observable} from "rxjs/Observable";
 
@@ -20,7 +20,10 @@ export class JigsawPrefixIcon {
         '[style.height]': 'height',
         '[style.line-height]': 'height',
         '(click)': '_stopPropagation($event)'
-    }
+    },
+    providers: [
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawInput), multi: true },
+    ]
 })
 export class JigsawInput extends AbstractJigsawComponent implements ControlValueAccessor, AfterContentInit, AfterViewChecked {
     private _value: string | number; //input表单值
@@ -65,6 +68,7 @@ export class JigsawInput extends AbstractJigsawComponent implements ControlValue
         if (this._value != newValue) {
             this._value = newValue;
             this.valueChange.emit(newValue);
+            this._propagateChange(newValue)
         }
     }
 
@@ -93,9 +97,11 @@ export class JigsawInput extends AbstractJigsawComponent implements ControlValue
         return this._focusEmitter.asObservable();
     }
 
-    @ContentChildren(JigsawPrefixIcon) _iconFront: QueryList<JigsawPrefixIcon> = null;
+    @ContentChildren(JigsawPrefixIcon)
+    private _iconFront: QueryList<JigsawPrefixIcon> = null;
 
-    @ViewChild('input') _inputElement: ElementRef;
+    @ViewChild('input')
+    private _inputElement: ElementRef;
 
     public focus() {
         this._inputElement.nativeElement.focus();
@@ -150,7 +156,7 @@ export class JigsawInput extends AbstractJigsawComponent implements ControlValue
         this._$inputPaddingStyle = {
             "padding-left": prefixIconPadding + "px",
             "padding-right": endPadding + "px"
-        }
+        };
 
         this._changeDetectorRef.detectChanges();
     }

@@ -3,35 +3,40 @@
  */
 
 import {
-    Component, Input, EventEmitter, Output, OnInit, AfterContentInit, Renderer2, ElementRef
+    Component, Input, EventEmitter, Output, OnInit, AfterContentInit, Renderer2, ElementRef, forwardRef
 } from '@angular/core';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from '../core';
 
 
 export enum CheckBoxStatus {
     unchecked, checked, indeterminate
 }
+
 export type CheckBoxValue = boolean | CheckBoxStatus;
 
+/**
+ * checkbox 组件
+ */
 @Component({
     selector: 'jigsaw-checkbox',
     templateUrl: './checkbox.html',
     styleUrls: ['./checkbox.scss'],
     host: {
         '[style.width]': 'width',
-    }
+    },
+    providers: [
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawCheckBox), multi: true },
+    ]
 })
+export class JigsawCheckBox extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, AfterContentInit {
 
-/**
- * checkbox 组件
- */
-export class JigsawCheckBox extends AbstractJigsawComponent implements OnInit, AfterContentInit {
-
-    /*
-    * enableIndeterminate为true时，用户可以点出中间状态；
-    * 为false时，用户不可点出中间状态，但可赋予组件中间状态
-    * */
+    /**
+     * enableIndeterminate为true时，用户可以点出中间状态；
+     * 为false时，用户不可点出中间状态，但可赋予组件中间状态
+     */
     private _enableIndeterminate: boolean = false;
+
     @Input()
     public get enableIndeterminate(): boolean {
         return this._enableIndeterminate;
@@ -52,8 +57,7 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements OnInit, A
     }
 
     public set checked(value: CheckBoxValue) {
-        this._checked = this._fixCheckValue(value);
-        this._setCheckBoxClass();
+        this.writeValue(value);
     }
 
     @Output()
@@ -73,7 +77,7 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements OnInit, A
         this._setCheckBoxClass();
     }
 
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef){
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
         super();
     }
 
@@ -81,9 +85,9 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements OnInit, A
         this._setCheckBoxClass();
     }
 
-    public ngAfterContentInit(){
+    public ngAfterContentInit() {
         const labelEl = this._elementRef.nativeElement.querySelector('.jigsaw-checkbox-label');
-        if(labelEl.innerText.trim() === ''){
+        if (labelEl.innerText.trim() === '') {
             this._renderer.setStyle(labelEl, 'padding', '0');
         }
     }
@@ -92,17 +96,18 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements OnInit, A
 
     private _toggle(): void {
         const index = this._valueCandidates.indexOf(this._checked);
-        if(index == -1){
+        if (index == -1) {
             this._checked = this._valueCandidates[1];
-        }else{
+        } else {
             this._checked = this._valueCandidates[(index + 1) % this._valueCandidates.length];
         }
 
         this.checkedChange.emit(this._checked);
+        this._propagateChange(this._checked);
     }
 
-    private _fixCheckValue(value:CheckBoxValue):CheckBoxStatus {
-        let v:CheckBoxStatus;
+    private _fixCheckValue(value: CheckBoxValue): CheckBoxStatus {
+        let v: CheckBoxStatus;
         if (value === undefined || value == null) {
             v = CheckBoxStatus.unchecked;
         } else if (typeof value === 'number') {
@@ -132,7 +137,7 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements OnInit, A
      * 更新checkbox的样式信息
      * @internal
      */
-    public _$checkboxClass: { };
+    public _$checkboxClass: {};
 
     private _setCheckBoxClass() {
         this._$checkboxClass = {
@@ -141,5 +146,20 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements OnInit, A
             'jigsaw-checkbox-indeterminate': this._checked === CheckBoxStatus.indeterminate,
             'jigsaw-checkbox-disabled': this.disabled
         }
+    }
+
+    private _propagateChange:any = () => {};
+
+    public writeValue(value: any): void {
+        this._checked = this._fixCheckValue(value);
+        this._setCheckBoxClass();
+        console.log(value);
+    }
+
+    public registerOnChange(fn: any): void {
+        this._propagateChange = fn;
+    }
+
+    public registerOnTouched(fn: any): void {
     }
 }
