@@ -1,20 +1,20 @@
 <jigsaw-collapse id="test-collapse1" width="80%">
-    <jigsaw-collapse-pane head="测试col" [isActive]="true">
+    <jigsaw-collapse-pane header="测试col" [isActive]="true">
         <input type="text" placeholder="请输入姓名~">
         <jigsaw-input></jigsaw-input>
     </jigsaw-collapse-pane>
 
-    <jigsaw-collapse-pane head="afdafd">
+    <jigsaw-collapse-pane header="afdafd">
         密码: <input type="text" placeholder="请输入姓名~">
     </jigsaw-collapse-pane>
 
-    <jigsaw-collapse-pane head="嵌套">
+    <jigsaw-collapse-pane header="嵌套">
         <jigsaw-collapse mode="accordion">
-            <jigsaw-collapse-pane head="测试col">
+            <jigsaw-collapse-pane header="测试col">
                 <input type="text" placeholder="请输入姓名~">
             </jigsaw-collapse-pane>
 
-            <jigsaw-collapse-pane head="afdafd" isactive="true">
+            <jigsaw-collapse-pane header="afdafd" isactive="true">
                 密码: <input type="text" placeholder="请输入姓名~">
             </jigsaw-collapse-pane>
         </jigsaw-collapse>
@@ -28,7 +28,7 @@
 <br>
 <jigsaw-collapse id="test-collapse2" mode="accordion">
     <jigsaw-collapse-pane [isActive]="true">
-        <div jigsaw-head>
+        <div jigsaw-title>
             <i class="fa fa-arrow-circle-right"></i>
             <span style="color: blue;">测试自定义head</span>
             <i class="fa fa-arrow-circle-left"></i>
@@ -38,13 +38,13 @@
         </div>
     </jigsaw-collapse-pane>
 
-    <jigsaw-collapse-pane head="afdafd">
+    <jigsaw-collapse-pane header="afdafd">
         密码: <input type="text" placeholder="请输入姓名~">
     </jigsaw-collapse-pane>
-    <jigsaw-collapse-pane head="3">
+    <jigsaw-collapse-pane header="3">
         <p>今天是个好天气</p>
     </jigsaw-collapse-pane>
-    <jigsaw-collapse-pane head="4">
+    <jigsaw-collapse-pane header="4">
         <p>今天是个好日子~</p>
     </jigsaw-collapse-pane>
 </jigsaw-collapse>

@@ -28,7 +28,7 @@ export class JigsawCollapsePane{
     constructor(@Host() @Inject(forwardRef(() => JigsawCollapse)) private _collapse) {
     }
 
-    @Input('head')
+    @Input('header')
     public title: string;
 
     @Input()
