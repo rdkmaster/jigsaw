@@ -164,7 +164,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     public _$scrollBarOptions: any = {
         snapAmount: JigsawTable.ROW_HEIGHT,
         mouseWheel: {enable: true, scrollAmount: JigsawTable.ROW_HEIGHT * 3},
-        scrollInertia: 0
+        // scrollInertia: 0,
     };
 
     @Input()
@@ -173,7 +173,6 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
             this._$scrollBarOptions = {
                 snapAmount: JigsawTable.ROW_HEIGHT,
                 mouseWheel: {enable: true, scrollAmount: JigsawTable.ROW_HEIGHT * value},
-                scrollInertia: 0
             };
         }
     }
