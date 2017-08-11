@@ -1,4 +1,4 @@
-import {Component, ComponentRef, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component, ComponentRef, Renderer2, ViewContainerRef, ViewEncapsulation} from "@angular/core";
 import {UserDialogComponent} from "./user-dialog/user-dialog";
 import {UserDialog2Component} from "./user-dialog2/user-dialog";
 import {
@@ -8,7 +8,8 @@ import {
 
 @Component({
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    styleUrls: ['./app.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class DialogMiscDemoComponent {
 
@@ -19,16 +20,29 @@ export class DialogMiscDemoComponent {
     public title: string = 'Title of the dialog';
     public buttons: Array<ButtonInfo> = [
         {
+            role: 'cancel',
+            label: 'cancel',
+            clazz: ''
+        },
+        {
             role: 'confirm',
             label: 'confirm',
             clazz: '',
             type: 'primary'
         },
+    ];
+    public buttons2: Array<ButtonInfo> = [
         {
             role: 'cancel',
             label: 'cancel',
             clazz: ''
-        }
+        },
+        {
+            role: 'delete',
+            label: 'delete',
+            clazz: '',
+            type: 'danger'
+        },
     ];
 
     constructor(public viewContainerRef: ViewContainerRef,
