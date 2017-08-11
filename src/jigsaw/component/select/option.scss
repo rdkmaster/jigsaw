@@ -10,24 +10,6 @@ $option-prefix-cls: #{$jigsaw-prefix}-option;
     font-size: $font-size-base;
 }
 
-:host-context(.theme-blue) .#{$option-prefix-cls} {
-    &:hover {
-        background-color: $select-option-hover-bg;
-    }
-    &.#{$option-prefix-cls}-on, &.#{$option-prefix-cls}-on:hover {
-        background-color: $select-option-selected-bg;
-    }
-}
-
-:host-context(.theme-orange) .#{$option-prefix-cls} {
-    &:hover {
-        background-color: $orange-hover;
-    }
-    &.#{$option-prefix-cls}-on, &.#{$option-prefix-cls}-on:hover {
-        background-color: $select-option-selected-bg;
-    }
-}
-
 .#{$option-prefix-cls} {
     height: 100%;
     cursor: pointer;

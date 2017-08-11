@@ -51,24 +51,5 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
     }
 }
 
-:host-context(.theme-blue) input {
-    &:hover {
-        border: 1px solid $primary-color;
-    }
-    &:focus {
-        border: 1px solid $primary-color;
-        box-shadow: $input-box-shadow;
-    }
-}
-
-:host-context(.theme-orange) input {
-    &:hover {
-        border: 1px solid $orange;
-    }
-    &:focus {
-        border: 1px solid $orange;
-        box-shadow: 0 0 0 2px $orange-shadow;
-    }
-}
 
 

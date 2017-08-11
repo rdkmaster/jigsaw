@@ -12,26 +12,6 @@ $option-prefix-cls: #{$jigsaw-prefix}-option;
     color: $font-color-level-two;
 }
 
-:host-context(.theme-blue) .#{$select-prefix-cls}-box .#{$select-prefix-cls} {
-    &:hover {
-        border-color: $primary-color;
-    }
-    &.#{$select-prefix-cls}-opened {
-        border-color: $primary-color;
-        box-shadow: $select-box-shadow;
-    }
-}
-
-:host-context(.theme-orange) .#{$select-prefix-cls}-box .#{$select-prefix-cls} {
-    &:hover {
-        border-color: $orange;
-    }
-    &.#{$select-prefix-cls}-opened {
-        border-color: $orange;
-        box-shadow: 0 0 0 2px $orange-shadow;
-    }
-}
-
 .#{$select-prefix-cls}-box {
     position: relative;
     width: 100%;

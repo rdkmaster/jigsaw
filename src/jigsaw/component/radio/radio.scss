@@ -6,18 +6,6 @@ $radio-prefix-cls: #{$jigsaw-prefix}-radio;
     @include inline-block();
 }
 
-:host-context(.theme-blue) .#{$radio-prefix-cls}-button .#{$radio-prefix-cls}-inner {
-    &:after {
-        background-color: $primary-color;
-    }
-}
-
-:host-context(.theme-orange) .#{$radio-prefix-cls}-button .#{$radio-prefix-cls}-inner {
-    &:after {
-        background-color: $orange;
-    }
-}
-
 .#{$radio-prefix-cls}-button {
     font-size: $font-size-base;
     margin-right: 10px;

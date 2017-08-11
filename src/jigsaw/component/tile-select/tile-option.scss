@@ -15,24 +15,6 @@ $option-prefix-cls: #{$jigsaw-prefix}-tile-option;
     }
 }
 
-:host-context(.theme-blue) .#{$option-prefix-cls} {
-    &:hover, &.#{$option-prefix-cls}-on {
-        color: $primary-color;
-    }
-    &.#{$option-prefix-cls}-on {
-        border: 1px solid $primary-color;
-    }
-}
-
-:host-context(.theme-orange) .#{$option-prefix-cls} {
-    &:hover, &.#{$option-prefix-cls}-on {
-        color: $orange;
-    }
-    &.#{$option-prefix-cls}-on {
-        border: 1px solid $orange;
-    }
-}
-
 .#{$option-prefix-cls} {
     vertical-align: top;
     cursor: pointer;

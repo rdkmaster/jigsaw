@@ -117,26 +117,6 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     border-color: $btn-disable-border;
 }
 
-:host-context(.theme-blue) {
-    background: $primary-color;
-    &:hover {
-        background: $btn-primary-bg-hover;
-    }
-    &.#{$btn-prefix-cls}-clicked:after {
-        border: 0 solid $btn-primary-bg-active;
-    }
-}
-
-:host-context(.theme-orange){
-    background: $orange;
-    &:hover {
-        background: $orange-light;
-    }
-    &.#{$btn-prefix-cls}-clicked:after {
-        border: 0 solid $orange-light;
-    }
-}
-
 @include keyframes(buttonEffect) {
     to {
         @include opacity(0);
