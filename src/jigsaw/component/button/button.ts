@@ -17,7 +17,7 @@ import {AbstractJigsawComponent} from '../core';
         '[class.jigsaw-button-size-large]': "preSize === 'large'",
         '[class.jigsaw-button-color-primary]': "colorType === 'primary'",
         '[class.jigsaw-button-color-warning]': "colorType === 'warning'",
-        '[class.jigsaw-button-color-error]': "colorType === 'error'"
+        '[class.jigsaw-button-color-error]': "colorType === 'error' || colorType === 'danger'"
     }
 })
 export class JigsawButton extends AbstractJigsawComponent {
@@ -45,7 +45,7 @@ export class JigsawButton extends AbstractJigsawComponent {
         }
     }
 
-    private _calcLineHeight():string {
+    private _calcLineHeight(): string {
         return parseInt(this.height) - 4 + 'px';
     }
 

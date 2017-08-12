@@ -11,13 +11,12 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
     color: $font-color-level-two;
 
     &-bar {
-        border-bottom: $border-width-base $border-style-base $border-color-base;
+        border-bottom: $border-width-base $border-style-base $primary-color;
         margin-bottom: 16px;
         outline: none;
     }
 
     &-nav-container {
-        overflow: hidden;
         font-size: $font-size-lg;
         line-height: $line-height-base;
         box-sizing: border-box;
@@ -26,8 +25,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
         @include clearfix;
 
         .#{$tab-prefix}-nav-wrap {
-            overflow: hidden;
-
+            @include clearfix();
             .#{$tab-prefix}-nav {
                 position: relative;
                 list-style: none;
@@ -44,6 +42,20 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
                     background-color: $primary-color;
                     transition: transform 0.3s $ease-in-out;
                     transform-origin: 0 0;
+                    &:after {
+                        position: absolute;
+                        top: 2px;
+                        left: 50%;
+                        margin-left: -4px;
+                        width: 0;
+                        height: 0;
+                        border: {
+                            width: 4px 4px;
+                            style: solid;
+                            color: $primary-color transparent transparent transparent;
+                        };
+                        content: '';
+                    }
                 }
 
                 .#{$tab-prefix}-tab-disabled {

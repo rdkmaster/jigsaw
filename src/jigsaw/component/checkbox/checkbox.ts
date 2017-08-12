@@ -6,12 +6,9 @@ import {
     Component, Input, EventEmitter, Output, OnInit, AfterContentInit, Renderer2, ElementRef, forwardRef
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+
 import {AbstractJigsawComponent} from '../core';
-
-
-export enum CheckBoxStatus {
-    unchecked, checked, indeterminate
-}
+import {CheckBoxStatus} from "./typings";
 
 export type CheckBoxValue = boolean | CheckBoxStatus;
 

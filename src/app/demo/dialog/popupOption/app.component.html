@@ -33,7 +33,7 @@ right: <jigsaw-input [(value)]="offset.right" placeholder="Right" width="200px">
 <jigsaw-button width="200px" (click)="popupDialog1(dialog1)">Popup</jigsaw-button>
 
 <ng-template #dialog1>
-    <jigsaw-dialog width="400px" title="dialog title" (answer)="close()" >
+    <jigsaw-dialog width="400px" header="dialog title" (answer)="close()" >
         <ul class="dialog-content">
             <li>Dialog content...</li>
             <li>Dialog content...</li>

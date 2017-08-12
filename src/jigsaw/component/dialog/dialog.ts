@@ -85,7 +85,7 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
 export abstract class AbstractDialogComponentBase extends AbstractJigsawComponent implements IPopupable, AfterContentInit {
     @Input()
     public buttons: ButtonInfo[];
-    @Input()
+    @Input('header')
     public title: string;
 
     public initData: any;

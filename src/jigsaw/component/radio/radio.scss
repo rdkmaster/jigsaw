@@ -51,10 +51,16 @@ $radio-prefix-cls: #{$jigsaw-prefix}-radio;
             @include prefixer(transfrom, scale(0));
             @include prefixer(transition, all 0.3s $ease-in-out-circ);
         }
-        &.#{$radio-prefix-cls}-checked:after {
-            @include prefixer(transform, scale(1));
-            @include prefixer(transition, all 0.3s $ease-in-out-circ);
-            opacity: 1;
+        &.#{$radio-prefix-cls}-checked{
+            border-color: $primary-color;
+            &:after {
+                @include prefixer(transform, scale(1));
+                @include prefixer(transition, all 0.3s $ease-in-out-circ);
+                opacity: 1;
+            }
+        }
+        &:hover{
+            border-color: $primary-color;
         }
     }
 }

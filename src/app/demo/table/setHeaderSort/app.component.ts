@@ -24,7 +24,7 @@ export class TableSetHeaderSortDemoComponent {
             target: 'salary',
             header: {
                 sortable:true,
-                sortAs: SortAs.number,
+                sortAs: SortAs.string,
                 defaultSortOrder: SortOrder.asc,
             }
         },{

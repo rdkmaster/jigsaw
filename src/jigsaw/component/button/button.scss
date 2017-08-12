@@ -21,6 +21,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     color: $btn-default-color;
     &:hover{
         color: $btn-default-hover-color;
+        border: 1px solid $btn-default-hover-color;
     }
 
     &.#{$btn-prefix-cls}-clicked:after {
@@ -31,7 +32,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
         bottom: -1px;
         right: -1px;
         border-radius: inherit;
-        border: 1px solid darken($btn-default-border,10%);
+        border: 1px solid darken($btn-default-hover-color,10%);
         opacity: 0.4;
         @include prefixer(animation, buttonEffect 0.36s $ease-out forwards);
         display: block;

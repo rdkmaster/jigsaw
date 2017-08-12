@@ -2,7 +2,7 @@
 
 <br>
 <jigsaw-collapse width="80%" mode="accordion" #coll_ne>
-    <jigsaw-collapse-pane *ngFor="let ne of nes" [title]="ne.name">
+    <jigsaw-collapse-pane *ngFor="let ne of nes" [header]="ne.name">
         <div>{{ne.content}}</div>
     </jigsaw-collapse-pane>
 </jigsaw-collapse>

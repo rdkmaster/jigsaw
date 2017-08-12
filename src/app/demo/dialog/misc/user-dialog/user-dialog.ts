@@ -12,16 +12,16 @@ export class UserDialogComponent extends DialogBase {
 
     public buttons: Array<ButtonInfo> = [
         {
+            role: 'cancel',
+            label: 'cancel',
+            clazz: ''
+        },
+        {
             role: 'confirm',
             label: 'confirm',
             clazz: '',
             type: 'primary'
         },
-        {
-            role: 'cancel',
-            label: 'cancel',
-            clazz: ''
-        }
     ];
 }
 
