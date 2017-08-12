@@ -16,6 +16,10 @@ label {
     padding-top: 12px;
 }
 
+.error {
+    color: red;
+}
+
 .value-border {
     display: inline-block;
     border: 1px #d9d9d9 solid;
