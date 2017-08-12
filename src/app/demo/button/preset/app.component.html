@@ -31,11 +31,11 @@
 <p>当前尺寸: {{size || "default"}}</p>
 
 <div id="presize-list">
-<jigsaw-button id="test-button" [preSize]="size" [colorType]="primary" (click)="changeSize('small')">Small</jigsaw-button>
+<jigsaw-button id="test-button" [preSize]="size" colorType="primary" (click)="changeSize('small')">Small</jigsaw-button>
 
-<jigsaw-button [preSize]="size" [colorType]="primary" (click)="changeSize()">Default</jigsaw-button>
+<jigsaw-button [preSize]="size" colorType="primary" (click)="changeSize()">Default</jigsaw-button>
 
-<jigsaw-button [preSize]="size" [colorType]="primary" (click)="changeSize('large')">Large</jigsaw-button>
+<jigsaw-button [preSize]="size" colorType="primary" (click)="changeSize('large')">Large</jigsaw-button>
 </div>
 
 <br>
@@ -43,8 +43,8 @@
 <br>
 <p>当前尺寸: {{aSize || "default"}}</p>
 <br>
-<a jigsaw-button [preSize]="aSize" type="primary" (click)="changeASize('small')">Small</a>
+<a jigsaw-button [preSize]="aSize" colorType="primary" (click)="changeASize('small')">Small</a>
 
-<a jigsaw-button [preSize]="aSize" type="primary" (click)="changeASize()">Default</a>
+<a jigsaw-button [preSize]="aSize" colorType="primary" (click)="changeASize()">Default</a>
 
-<a jigsaw-button [preSize]="aSize" type="primary" (click)="changeASize('large')">Large</a>
+<a jigsaw-button [preSize]="aSize" colorType="primary" (click)="changeASize('large')">Large</a>
