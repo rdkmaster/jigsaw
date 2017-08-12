@@ -8,6 +8,7 @@
     .field {
         padding-bottom: 6px;
     }
+
     .separated {
         padding-top: 12px;
     }
@@ -15,34 +16,86 @@
     .result {
         padding-top: 12px;
     }
+
+    .value-border {
+        display: inline-block;
+        border: 1px #d9d9d9 solid;
+        padding-left: 8px;
+        width: 250px;
+        border-radius: 4px;
+    }
 </style>
 <form #form="ngForm" (ngSubmit)="submit(form.value)">
     <fieldset ngModelGroup="name">
         <div class="field">
-            <label>First Nname:</label>
-            <jigsaw-input [ngModel]="firstName" width="200px" name="firstname"></jigsaw-input>
+            <label>First Name</label>
+            <jigsaw-input [ngModel]="firstName" width="250px" name="firstname"></jigsaw-input>
         </div>
 
         <div class="field">
-            <label>Last Name:</label>
-            <jigsaw-input width="200px" name="lastname" ngModel required></jigsaw-input>
+            <label>Last Name *</label>
+            <jigsaw-input width="250px" name="lastname" ngModel required></jigsaw-input>
         </div>
     </fieldset>
     <div class="field">
-        <label>Gender</label>
+        <label>Gender *</label>
         <jigsaw-radio-group ngModel name="gender" trackItemBy="id" required
                             [data]="[{label: 'Male', id: 0},{label: 'Female', id: 1}]">
         </jigsaw-radio-group>
     </div>
     <div class="field">
         <label>Birthday</label>
-        <jigsaw-time name="birthday" [(ngModel)]="birthday" width="200px"></jigsaw-time>
+        <jigsaw-time name="birthday" [(ngModel)]="birthday" width="250px"></jigsaw-time>
     </div>
     <div class="field">
-        <label>Last Job During</label>
-        <jigsaw-combo-select [(value)]="rangeTimeComboValue" width="200px">
-            <jigsaw-range-time [(ngModel)]="rangeTime" name="lastJobDuring" (change)="handleDateChange()"></jigsaw-range-time>
+        <label>A Range Time</label>
+        <!--
+            notice that, jigsaw-combo-select it self is form-friendly too! but we recommend that use ngModel
+            in the inner component of jigsaw-combo-select if it is a form-friendly component, this is will make
+            your form more user-friendly.
+        -->
+        <jigsaw-combo-select [(value)]="rangeTimeComboValue" width="250px">
+            <jigsaw-range-time [(ngModel)]="rangeTime" name="lastJobDuring"
+                               (change)="handleDateChange()"></jigsaw-range-time>
         </jigsaw-combo-select>
+    </div>
+    <div class="field">
+        <label>Come From</label>
+        <jigsaw-select [(ngModel)]="comeFrom" name="comeFrom" placeholder="Where are you come from"
+                       width="250px" [optionCount]="5"
+                       [data]="[
+                            {label: 'Bei Jing'}, {label: 'Shang Hai'}, {label: 'Nan Jing'}, {label: 'Shen Zhen'},
+                            {label: 'Chang Sha'}, {label: 'Cheng Du'}, {label: 'Chong Qing'}, {label: 'Hong Kong'},
+                            {label: 'Tai Wan'}, {label: 'Xi An'}
+                       ]">
+        </jigsaw-select>
+    </div>
+    <div class="field">
+        <label>Favorite Fruit</label>
+        <!--
+            you can compose any form-unfriendly components with jigsaw-combo-select to make it form-friendly.
+        -->
+        <jigsaw-combo-select [(ngModel)]="favoriteFruit" name="favoriteFruit" width="250px">
+            <jigsaw-table width="600px" height="400px" [data]="fruitList"></jigsaw-table>
+        </jigsaw-combo-select>
+    </div>
+    <div class="field">
+        <label>Favorite Cities</label>
+        <div class="value-border">
+            <jigsaw-tile-select ngModel name="favoriteCities" width="250px" tileOptionWidth="72px" [data]="[
+                    {label: 'Bei Jing'}, {label: 'Shang Hai'}, {label: 'Nan Jing'}, {label: 'Shen Zhen'},
+                    {label: 'Chang Sha'}, {label: 'Cheng Du'}, {label: 'Chong Qing'}, {label: 'Hong Kong'},
+                    {label: 'Tai Wan'}, {label: 'Xi An'}]">
+            </jigsaw-tile-select>
+        </div>
+    </div>
+    <div class="field">
+        <label>Score</label>
+        <jigsaw-slider [ngModel]="score" name="score" width="250px"></jigsaw-slider>
+    </div>
+    <div class="field">
+        <label>Jigsaw is Great?</label>
+        <jigsaw-switch [ngModel]="isGreat" name="isGreat"></jigsaw-switch>
     </div>
     <div class="field">
         <label></label>
@@ -59,3 +112,5 @@
     <p>Submit the form, and the form value should be shown here:</p>
     <p>{{formValue|json}}</p>
 </div>
+
+

@@ -1,9 +1,10 @@
 import {
-    NgModule, Component, ContentChildren, QueryList, AfterContentInit, Input, forwardRef, Optional, OnDestroy,
-    OnInit, Output, EventEmitter, ChangeDetectorRef, Directive, Renderer2, ElementRef, ViewChildren, AfterViewInit
+    NgModule, Component, QueryList, Input, forwardRef, Optional, OnDestroy,
+    OnInit, Output, EventEmitter, ChangeDetectorRef, Directive, Renderer2, ElementRef,
+    ViewChildren, AfterViewInit
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {AbstractJigsawComponent} from "../core";
 import {CommonUtils} from '../../core/utils/common-utils';
 import {InternalUtils} from '../../core/utils/internal-utils';
@@ -30,15 +31,18 @@ export class OptionList extends AbstractJigsawComponent{
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[style.line-height]': 'height'
-    }
+    },
+    providers: [
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSelect), multi: true },
+    ]
 })
-export class JigsawSelect extends AbstractJigsawComponent implements AfterViewInit, OnDestroy, OnInit {
+export class JigsawSelect extends AbstractJigsawComponent implements ControlValueAccessor, AfterViewInit, OnDestroy, OnInit {
+
     /**
      * @internal
      */
     public _$optionListHidden: boolean = true; // 设置option列表是否显示
     private _value: any; // select表单值
-    private _contentInit: boolean = false; //子组件加载标记
     private _documentListen: Function; // document事件解绑函数
 
     /**
@@ -54,10 +58,9 @@ export class JigsawSelect extends AbstractJigsawComponent implements AfterViewIn
 
     public set value(newValue: any) {
         if (newValue && this._value != newValue) {
-            this._value = newValue;
-            this._$selectedLabel = newValue[this.labelField];
-            this._contentInit && this._updateSelectedOption();
+            this._propagateChange(newValue);
         }
+        this.writeValue(newValue);
     }
 
     @Output() public valueChange: EventEmitter<any> = new EventEmitter<any>();
@@ -76,7 +79,16 @@ export class JigsawSelect extends AbstractJigsawComponent implements AfterViewIn
 
     @Input() public optionCount: number;
 
-    @Input() data: ArrayCollection<object>;
+    private _data: ArrayCollection<object>;
+
+    @Input()
+    public get data(): ArrayCollection<object>|object[] {
+        return this._data;
+    }
+
+    public set data(value: ArrayCollection<object>|object[]) {
+        this._data = value instanceof ArrayCollection ? value : new ArrayCollection(value);
+    }
 
     //获取映射的子组件option
     @ViewChildren(forwardRef(() => JigsawOption))
@@ -107,7 +119,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements AfterViewIn
 
     private _setOptionListHeight(){
         if(this.optionCount){
-            if ( this.data && this.data.length > this.optionCount) {
+            if ( this._data && this._data.length > this.optionCount) {
                 this.optionHeight = this._elementRef.nativeElement.offsetHeight * this.optionCount + 'px';
             }
 
@@ -115,19 +127,40 @@ export class JigsawSelect extends AbstractJigsawComponent implements AfterViewIn
     }
 
     ngOnInit() {
+        super.ngOnInit();
         this.trackItemBy = InternalUtils.initTrackItemBy(<string>this.trackItemBy, this.labelField);
         this._setOptionListHeight();
     }
 
     ngAfterViewInit() {
-        this._contentInit = true;
-        this.value && this._updateSelectedOption();
+        if (this.value) {
+            this._updateSelectedOption();
+        }
     }
 
     ngOnDestroy() {
         this._documentListen && this._documentListen();//解绑document上的点击事件
     }
 
+    private _propagateChange:any = () => {};
+
+    public writeValue(value: any): void {
+        if (!value || this._value == value) {
+            return;
+        }
+        this._value = value;
+        this._$selectedLabel = value[this.labelField];
+        if (this.initialized) {
+            this._updateSelectedOption();
+        }
+    }
+
+    public registerOnChange(fn: any): void {
+        this._propagateChange = fn;
+    }
+
+    public registerOnTouched(fn: any): void {
+    }
 }
 
 @Component({

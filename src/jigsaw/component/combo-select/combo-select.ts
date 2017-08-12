@@ -1,7 +1,7 @@
 import {
     Component,
     ElementRef,
-    EventEmitter,
+    EventEmitter, forwardRef,
     Input,
     OnDestroy,
     OnInit,
@@ -10,6 +10,7 @@ import {
     TemplateRef,
     ViewChild
 } from "@angular/core";
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {
     PopupDisposer,
     PopupInfo,
@@ -21,6 +22,7 @@ import {
 import {AbstractJigsawComponent} from "../core";
 import {CallbackRemoval} from "../../core/utils/common-utils";
 import {ArrayCollection} from "../../core/data/array-collection";
+
 export enum DropDownTrigger {
     click,
     mouseenter,
@@ -38,9 +40,12 @@ export class ComboSelectValue {
     styleUrls: ['combo-select.scss'],
     host: {
         '[style.min-width]': 'width',
-    }
+    },
+    providers: [
+        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawComboSelect), multi: true},
+    ]
 })
-export class JigsawComboSelect extends AbstractJigsawComponent implements OnDestroy, OnInit {
+export class JigsawComboSelect extends AbstractJigsawComponent implements ControlValueAccessor, OnDestroy, OnInit {
     private _disposePopup: PopupDisposer;
     private _popupElement: HTMLElement;
     private _removeWindowClickHandler: Function;
@@ -63,21 +68,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements OnDest
     }
 
     public set value(value: ArrayCollection<ComboSelectValue>) {
-        if (this._value === value || !(value instanceof ArrayCollection)) {
-            return;
-        }
-        if (this._value != value) {
-            this._value = value;
-            this.valueChange.emit(this._value);
-            this._autoWidth();
-
-            if (this._removeRefreshCallback) {
-                this._removeRefreshCallback()
-            }
-            this._removeRefreshCallback = value.onRefresh(() => {
-                this.valueChange.emit(this._value);
-                this._autoWidth();
-            });
+        this.writeValue(value);
+        if (value && this._value != value && value instanceof ArrayCollection) {
+            this._propagateChange(value);
         }
     }
 
@@ -350,4 +343,31 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements OnDest
         this._rollOutDenouncesTimer = null;
     }
 
+    private _propagateChange: any = () => {};
+
+    public writeValue(value: any): void {
+        if (!value || this._value === value || !(value instanceof ArrayCollection)) {
+            return;
+        }
+
+        this._value = value;
+        this.valueChange.emit(this._value);
+        this._autoWidth();
+
+        if (this._removeRefreshCallback) {
+            this._removeRefreshCallback()
+        }
+        this._removeRefreshCallback = value.onRefresh(() => {
+            this.valueChange.emit(this._value);
+            this._propagateChange(this._value);
+            this._autoWidth();
+        });
+    }
+
+    public registerOnChange(fn: any): void {
+        this._propagateChange = fn;
+    }
+
+    public registerOnTouched(fn: any): void {
+    }
 }

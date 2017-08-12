@@ -17,23 +17,16 @@ import {
 import {TableData} from "./table-data";
 import {CallbackRemoval} from "../utils/common-utils";
 
-class ArrayHacker {
-    public myself;
-    constructor(arr: JigsawArray<any>) {
-        this.myself = arr;
-    }
-}
-
 // we have to implement the Array<T> interface due to this breaking change:
 // https://github.com/Microsoft/TypeScript/wiki/FAQ#why-doesnt-extending-built-ins-like-error-array-and-map-work
 // https://github.com/Microsoft/TypeScript/issues/14869
 export class JigsawArray<T> implements Array<T> {
     private _agent: T[] = [];
-    private is = new ArrayHacker(this);
 
     public set(index: number, value: T): void {
         this._length = this._length > index ? this._length : index+1;
-        this.is.myself[index] = value;
+        const thiz:any = this;
+        thiz[index] = value;
     }
 
     public get(index: number): T {

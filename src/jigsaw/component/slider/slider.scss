@@ -16,10 +16,11 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
 }
 
 .#{$jigsaw-slider} {
-    display: block;
+    display: inline-block;
     position: relative;
     margin: 10px 6px;
     height: 12px;
+    min-width: 30px;
     border-radius: 4px;
     cursor: pointer;
     background-color: $border-color-split;
