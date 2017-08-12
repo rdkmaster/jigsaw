@@ -72,8 +72,9 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
 
     public set date(newValue: WeekTime) {
         this.writeValue(newValue);
-        this._propagateChange(this._value);
-        console.log(this._value);
+        if (newValue && newValue != this._value) {
+            this._propagateChange(this._value);
+        }
     }
 
     @Output() public dateChange = new EventEmitter<WeekTime>();
@@ -123,8 +124,9 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     }
 
 
-    //时间刷新的间隔毫秒数，主要针对startDate或endDate设置为now或now-2h等需要不时刷新的场景
-    //@Input("refreshInterval") private _refreshInterval: number;
+    /**
+     * 时间刷新的间隔毫秒数，主要针对startDate或endDate设置为now或now-2h等需要不时刷新的场景
+     */
     private _refreshInterval: number;
     @Input()
     public set refreshInterval(value: number) {
@@ -134,7 +136,9 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         }
     }
 
-    //周开始设置，可选值 sun mon tue wed thu fri sat，默认值是sun
+    /**
+     * 周开始设置，可选值 sun mon tue wed thu fri sat，默认值是sun
+     */
     private _weekStart: TimeWeekStart;
     @Input()
     public set weekStart(value: string | TimeWeekStart) {
@@ -159,7 +163,9 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     @Input("recommendedEnd") private _recommendedEnd: Time;
 
 
-    //time插件容器（jq对象）
+    /**
+     * time插件容器（jq对象）
+     */
     private _timePicker: any;
 
     //定时器Id
@@ -321,8 +327,8 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     //设置插件选中时间值
     private _setDate(value: Time) {
         if (this._timePicker) {
+            this._handleValueChange(value, <TimeGr>this.gr);
             this._timePicker.date(TimeService.getFormatDate(value));
-            this._handleValueChange(<Time>this.date, <TimeGr>this.gr);
             this._weekHandle();
             this._handleRecommended(this._el.nativeElement, this._popService);
         }
@@ -363,11 +369,9 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         if (this.date != changeValue || emit) {
             this._value = changeValue;
             setTimeout(() => {
-                if (gr != TimeGr.week) {
-                    this.dateChange.emit(this._value);
-                } else {
-                    this.dateChange.emit(this._handleWeekSelect());
-                }
+                const val = gr == TimeGr.week ? this._handleWeekSelect() : this._value;
+                this.dateChange.emit(val);
+                this._propagateChange(val);
             }, 0);
             this._handleRecommended(this._el.nativeElement, this._popService);
         }
@@ -618,8 +622,8 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
             if (newValueYear == valueYear && newValueWeek == valueWeek) return;
         }
         let [value,] = this._handleValue(newValue);
-        this._value = value;
-        this._setDate(this._value);
+        // this._value = value;
+        this._setDate(value);
     }
 
     public registerOnChange(fn: any): void {
