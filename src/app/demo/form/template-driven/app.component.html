@@ -5,8 +5,11 @@
         padding-right: 12px;
     }
 
-    fieldset div {
+    .field {
         padding-bottom: 6px;
+    }
+    .separated {
+        padding-top: 12px;
     }
 
     .result {
@@ -15,34 +18,38 @@
 </style>
 <form #form="ngForm" (ngSubmit)="submit(form.value)">
     <fieldset ngModelGroup="name">
-        <div>
+        <div class="field">
             <label>First Nname:</label>
             <jigsaw-input [ngModel]="firstName" width="200px" name="firstname"></jigsaw-input>
         </div>
 
-        <div>
+        <div class="field">
             <label>Last Name:</label>
             <jigsaw-input width="200px" name="lastname" ngModel required></jigsaw-input>
         </div>
     </fieldset>
-    <div>
+    <div class="field">
         <label>Gender</label>
         <jigsaw-radio-group ngModel name="gender" trackItemBy="id" required
                             [data]="[{label: 'Male', id: 0},{label: 'Female', id: 1}]">
         </jigsaw-radio-group>
     </div>
-    <div>
+    <div class="field">
+        <label>Birthday</label>
+        <jigsaw-time name="birthday" [(ngModel)]="birthday" width="200px"></jigsaw-time>
+    </div>
+    <div class="field">
         <label>Last Job During</label>
         <jigsaw-combo-select [(value)]="rangeTimeComboValue" width="200px">
             <jigsaw-range-time [(ngModel)]="rangeTime" name="lastJobDuring" (change)="handleDateChange()"></jigsaw-range-time>
         </jigsaw-combo-select>
     </div>
-    <div>
+    <div class="field">
         <label></label>
         <jigsaw-checkbox [ngModel]="remember" name="remember">Remember me</jigsaw-checkbox>
     </div>
 
-    <div style="padding-top: 12px;">
+    <div class="field separated">
         <label></label>
         <button jigsaw-button type="submit" colorType="primary" [disabled]="!form.valid">Submit</button>
     </div>

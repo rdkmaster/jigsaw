@@ -8,6 +8,7 @@ import {JigsawButtonModule} from "jigsaw/component/button/button";
 import {JigsawRadioModule} from "jigsaw/component/radio/radio";
 import {JigsawComboSelectModule} from "jigsaw/component/combo-select/index";
 import {JigsawRangeTimeModule} from "jigsaw/component/range-time/index";
+import {JigsawTimeModule} from "jigsaw/component/time/index";
 
 import {TemplateDrivenDemoComponent} from "./app.component";
 
@@ -15,7 +16,8 @@ import {TemplateDrivenDemoComponent} from "./app.component";
     imports: [
         FormsModule, ReactiveFormsModule, CommonModule,
         JigsawInputModule, JigsawCheckBoxModule, JigsawButtonModule,
-        JigsawRadioModule, JigsawComboSelectModule, JigsawRangeTimeModule
+        JigsawRadioModule, JigsawComboSelectModule, JigsawRangeTimeModule,
+        JigsawTimeModule
     ],
     declarations: [TemplateDrivenDemoComponent],
     bootstrap: [TemplateDrivenDemoComponent],

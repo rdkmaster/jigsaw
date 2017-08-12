@@ -10,6 +10,7 @@ export class TemplateDrivenDemoComponent {
     firstName: string = 'jigsaw';
     remember: boolean = true;
     rangeTime = {beginDate: 'now-7d', endDate: 'now'};
+    birthday: string = 'now-30y';
     rangeTimeComboValue = new ArrayCollection([
         {label: TimeService.getFormatDate(this.rangeTime.beginDate, TimeGr.date), closable: false},
         {label: TimeService.getFormatDate(this.rangeTime.endDate, TimeGr.date), closable: false}

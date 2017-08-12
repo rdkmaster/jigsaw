@@ -1,6 +1,7 @@
 import {
-    Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Renderer2, Output
+    Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Renderer2, Output, forwardRef
 } from "@angular/core";
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {Subscriber} from "rxjs/Subscriber";
 import {AbstractJigsawComponent} from "../core";
 import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../service/time.service";
@@ -31,10 +32,12 @@ export type GrItem = {
     styleUrls: ['time.scss'],
     host: {
         '[style.width]': 'width'
-    }
+    },
+    providers: [
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTime), multi: true },
+    ]
 })
-
-export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDestroy {
+export class JigsawTime extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
     @Output() public grChange = new EventEmitter<TimeGr>();
 
@@ -68,21 +71,9 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
     }
 
     public set date(newValue: WeekTime) {
-        if (newValue) {
-            newValue = TimeService.convertValue(newValue, <TimeGr>this.gr);
-            if (newValue != this._value) {
-                if (this._value && this.gr == TimeGr.week) {
-                    let newValueYear = TimeService.getYear(<string>newValue);
-                    let valueYear = TimeService.getYear(<string>this._value);
-                    let newValueWeek = TimeService.getWeekOfYear(<string>newValue);
-                    let valueWeek = TimeService.getWeekOfYear(<string>this._value);
-                    if (newValueYear == valueYear && newValueWeek == valueWeek) return;
-                }
-                let [value,] = this._handleValue(newValue);
-                this._value = value;
-                this._setDate(this._value);
-            }
-        }
+        this.writeValue(newValue);
+        this._propagateChange(this._value);
+        console.log(this._value);
     }
 
     @Output() public dateChange = new EventEmitter<WeekTime>();
@@ -608,4 +599,33 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
         return nativeElement.querySelectorAll(selector);
     }
 
+
+    private _propagateChange:any = () => {};
+
+    public writeValue(newValue: any): void {
+        if (!newValue) {
+            return;
+        }
+        newValue = TimeService.convertValue(newValue, <TimeGr>this.gr);
+        if (newValue == this._value) {
+            return;
+        }
+        if (this._value && this.gr == TimeGr.week) {
+            let newValueYear = TimeService.getYear(<string>newValue);
+            let valueYear = TimeService.getYear(<string>this._value);
+            let newValueWeek = TimeService.getWeekOfYear(<string>newValue);
+            let valueWeek = TimeService.getWeekOfYear(<string>this._value);
+            if (newValueYear == valueYear && newValueWeek == valueWeek) return;
+        }
+        let [value,] = this._handleValue(newValue);
+        this._value = value;
+        this._setDate(this._value);
+    }
+
+    public registerOnChange(fn: any): void {
+        this._propagateChange = fn;
+    }
+
+    public registerOnTouched(fn: any): void {
+    }
 }
