@@ -7,9 +7,9 @@
 
         <div class="field">
             <label>Last Name *</label>
-            <jigsaw-input width="250px" name="lastname" ngModel required></jigsaw-input>
-            <span [hidden]="false" class="error">
-                Name is required
+            <jigsaw-input width="250px" name="lastname" ngModel required #lastname="ngModel"></jigsaw-input>
+            <span [hidden]="lastname.valid || lastname.pristine || lastname.touched" class="error">
+                Last name is required
             </span>
         </div>
     </fieldset>
