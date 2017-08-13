@@ -7,9 +7,11 @@
 
         <div class="field">
             <label>Last Name *</label>
-            <jigsaw-input width="250px" name="lastname" ngModel required #lastname="ngModel"></jigsaw-input>
+            <jigsaw-input width="250px" name="lastname" ngModel required minlength="5"
+                          [pattern]="lastNamePattern" #lastname="ngModel">
+            </jigsaw-input>
             <span [hidden]="lastname.valid || lastname.pristine || lastname.touched" class="error">
-                Last name is required
+                Last name should be more than 5 alphabets.
             </span>
         </div>
     </fieldset>
@@ -59,15 +61,16 @@
         <label>Favorite Cities</label>
         <div class="value-border">
             <jigsaw-tile-select ngModel name="favoriteCities" width="250px" tileOptionWidth="72px" [data]="[
-                    {label: 'Bei Jing'}, {label: 'Shang Hai'}, {label: 'Nan Jing'}, {label: 'Shen Zhen'},
-                    {label: 'Chang Sha'}, {label: 'Cheng Du'}, {label: 'Chong Qing'}, {label: 'Hong Kong'},
-                    {label: 'Tai Wan'}, {label: 'Xi An'}]">
+                    {label: 'Bei Jing'}, {label: 'Shang Hai'}, {label: 'Nan Jing'},
+                    {label: 'Chang Sha'}, {label: 'Cheng Du'}, {label: 'Chong Qing'}]">
             </jigsaw-tile-select>
         </div>
     </div>
     <div class="field">
         <label>Score</label>
+        <div style="display: inline-block; width: 250px; height: 20px;">
         <jigsaw-slider [ngModel]="score" name="score" width="250px"></jigsaw-slider>
+        </div>
     </div>
     <div class="field">
         <label>Jigsaw is Great?</label>

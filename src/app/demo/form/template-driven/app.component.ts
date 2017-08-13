@@ -34,6 +34,7 @@ export class TemplateDrivenDemoComponent {
         ],
         ["name", "price", "desc", "origin"],
         ["Name", "Price", "Description", "Origin"]);
+    lastNamePattern = /^[a-z]+$/i;
 
     submit(formValue) {
         console.log(formValue);
