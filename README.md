@@ -29,7 +29,7 @@ With Jigsaw, unleash your imagination!
 ### A brand new start with Jigsaw
 We strongly recommend to use [Jigsaw Seed](https://github.com/rdkmaster/jigsaw-seed) as the seed of all new projects. The specific steps are:
 1. Install or update [nodejs](https://nodejs.org), node 6.x.x and npm 3.x.x or later is required;
-2. [Download](https://github.com/rdkmaster/jigsaw-seed/archive/master.zip)或者[clone](https://github.com/rdkmaster/jigsaw-seed) the source of Jigsaw Seed, assumed being saved to `d:\jigsaw-seed`;
+2. [Download](https://github.com/rdkmaster/jigsaw-seed/archive/master.zip) or [clone](https://github.com/rdkmaster/jigsaw-seed) the source of Jigsaw Seed, assumed being saved to `d:\jigsaw-seed`;
 3. Download all dependencies by excuting the following script:
 
 ```
@@ -42,7 +42,7 @@ npm install
 npm start
 ```
 
-**Attensions for the Chinese developers**, do NOT use `cnpm` to install the dependencies, we are still looking for the reason.
+**Attensions to the Chinese developers**, do NOT use `cnpm` to install the dependencies, we are still looking for the reason.
 
 4. Open `http://localhost:4200` in your browser, your development environment is completed set up if you can see the welcome page;
 5. Afterwards you can directly run `npm start` in the `d:\jigsaw-seed` directory to start the development environment;
