@@ -30,19 +30,19 @@ With Jigsaw, unleash your imagination!
 We strongly recommend to use [Jigsaw Seed](https://github.com/rdkmaster/jigsaw-seed) as the seed of all new projects. The specific steps are:
 1. Install or update [nodejs](https://nodejs.org), node 6.x.x and npm 3.x.x or later is required;
 2. [Download](https://github.com/rdkmaster/jigsaw-seed/archive/master.zip)或者[clone](https://github.com/rdkmaster/jigsaw-seed) the source of Jigsaw Seed, assumed being saved to `d:\jigsaw-seed`;
-3. Download all dependencies by excuting the following script:（不能使用cnpm安装，会有问题，暂时未找到原因）
+3. Download all dependencies by excuting the following script:
 
 ```
 cd d:\jigsaw-seed
-npm config set proxy=http://proxy.zte.com.cn:80
+npm config set proxy=http://proxy.zte.com.cn:80                          # do this if neccessary
 npm config set registry=https://registry.npm.taobao.org/                 # for Chinese developers only
 npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass # for Chinese developers only
-npm install -g @angular/cli                                              # 强烈推荐，可选
+npm install -g @angular/cli                                              # optional, but strongly recommended
 npm install
 npm start
 ```
 
-Attension for the Chinese developers, do NOT use `cnpm` to install the dependencies, we are still looking for the reason.
+**Attensions for the Chinese developers**, do NOT use `cnpm` to install the dependencies, we are still looking for the reason.
 
 4. Open `http://localhost:4200` in your browser, your development environment is completed set up if you can see the welcome page;
 5. Afterwards you can directly run `npm start` in the `d:\jigsaw-seed` directory to start the development environment;
