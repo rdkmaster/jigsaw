@@ -2,24 +2,28 @@
 <jigsaw-combo-select
     placeholder="请输入城市~"
     dropDownWidth="400px">
-    <jigsaw-tile-select
-        class="drop-down-child"
-        labelField="label"
-        [data]="citys"
-        width="400px"
-        tileOptionWidth="100px">
-    </jigsaw-tile-select>
+    <ng-template>
+        <jigsaw-tile-select
+            class="drop-down-child"
+            labelField="label"
+            [data]="citys"
+            width="400px"
+            tileOptionWidth="100px">
+        </jigsaw-tile-select>
+    </ng-template>
 </jigsaw-combo-select>
 <p>百分比宽度</p>
 <jigsaw-combo-select
     placeholder="请输入城市~"
     dropDownWidth="120%">
-    <jigsaw-tile-select
-        class="drop-down-child"
-        labelField="label"
-        [data]="citys"
-        width="400px"
-        tileOptionWidth="100px">
-    </jigsaw-tile-select>
+    <ng-template>
+        <jigsaw-tile-select
+            class="drop-down-child"
+            labelField="label"
+            [data]="citys"
+            width="400px"
+            tileOptionWidth="100px">
+        </jigsaw-tile-select>
+    </ng-template>
 </jigsaw-combo-select>
 

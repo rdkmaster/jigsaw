@@ -8,14 +8,16 @@
         [(value)]="selectedCity"
         [(open)]="open"
         [autoClose]="autoClose">
-        <jigsaw-tile-select
-            [(selectedItems)]="selectedCity"
-            labelField="label"
-            [searchable]="true"
-            [data]="citys"
-            width="400px"
-            tileOptionWidth="100px">
-        </jigsaw-tile-select>
+        <ng-template>
+            <jigsaw-tile-select
+                [(selectedItems)]="selectedCity"
+                labelField="label"
+                [searchable]="true"
+                [data]="citys"
+                width="400px"
+                tileOptionWidth="100px">
+            </jigsaw-tile-select>
+        </ng-template>
     </jigsaw-combo-select>
 </div>
 
