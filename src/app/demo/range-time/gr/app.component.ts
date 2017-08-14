@@ -1,5 +1,5 @@
 import {
-	AfterContentInit, Component, Renderer2, ViewContainerRef
+    AfterContentInit, ChangeDetectorRef, Component, Renderer2, ViewContainerRef
 } from "@angular/core";
 
 
@@ -17,11 +17,12 @@ export class RangeTimeGrComponent implements AfterContentInit {
     gr
 
     constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
+                public renderer: Renderer2, public changeDetectorRef: ChangeDetectorRef) {
     }
 
     ngAfterContentInit() {
         this.gr= [this.datas[3]];
+        this.changeDetectorRef.detectChanges();
     }
 
 }

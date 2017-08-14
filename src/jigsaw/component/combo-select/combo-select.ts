@@ -1,5 +1,6 @@
 import {
     Component,
+    ContentChild,
     ElementRef,
     EventEmitter, forwardRef,
     Input,
@@ -7,8 +8,7 @@ import {
     OnInit,
     Output,
     Renderer2,
-    TemplateRef,
-    ViewChild
+    TemplateRef
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {
@@ -122,8 +122,8 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         this._closeTrigger = typeof value === 'string' ? DropDownTrigger[<string>value] : value;
     }
 
-    @ViewChild('dropContent')
-    private _contentTemplateRef: TemplateRef<any>;
+    @ContentChild(TemplateRef)
+    private _contentTemplateRef: any;
 
     /**
      * @internal

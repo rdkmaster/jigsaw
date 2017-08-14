@@ -33,8 +33,10 @@
             your form more user-friendly.
         -->
         <jigsaw-combo-select [(value)]="rangeTimeComboValue" width="250px">
-            <jigsaw-range-time [(ngModel)]="rangeTime" name="lastJobDuring"
-                               (change)="handleDateChange()"></jigsaw-range-time>
+            <ng-template>
+                <jigsaw-range-time [(ngModel)]="rangeTime" name="lastJobDuring"
+                                   (change)="handleDateChange()"></jigsaw-range-time>
+            </ng-template>
         </jigsaw-combo-select>
     </div>
     <div class="field">
@@ -54,7 +56,9 @@
             you can compose any form-unfriendly components with jigsaw-combo-select to make it form-friendly.
         -->
         <jigsaw-combo-select [(ngModel)]="favoriteFruit" name="favoriteFruit" width="250px">
-            <jigsaw-table width="600px" height="400px" [data]="fruitList"></jigsaw-table>
+            <ng-template>
+                <jigsaw-table width="600px" [data]="fruitList"></jigsaw-table>
+            </ng-template>
         </jigsaw-combo-select>
     </div>
     <div class="field">

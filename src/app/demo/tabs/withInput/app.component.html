@@ -1,22 +1,24 @@
 <div class="container">
     <jigsaw-button (click)="getTableData()">GetTableData</jigsaw-button>
     <jigsaw-tab [(selectedIndex)]="selectedIndex">
-        <jigsaw-tab-pane *ngFor="let tabData of tabDatas">
+        <jigsaw-tab-pane *ngFor="let tabData of tabDatas" [async]="true">
             <div jigsaw-title><span class="fa fa-gift"></span>{{tabData.title}}</div>
-            <div jigsaw-body>
+            <ng-template>
                 <jigsaw-table height="400px" [data]="this[tabData.key]"></jigsaw-table>
-            </div>
+            </ng-template>
         </jigsaw-tab-pane>
-        <jigsaw-tab-pane>
+        <jigsaw-tab-pane [async]="true">
             <div jigsaw-title><span class="fa fa-gift"></span>table data</div>
-            <div jigsaw-body>
+            <ng-template>
                 <jigsaw-table height="400px" [data]="tableData"></jigsaw-table>
-            </div>
+            </ng-template>
         </jigsaw-tab-pane>
         <jigsaw-tab-pane title="a looooooooooooooooooong tab name">
-            <jigsaw-input #myInput width="80%">
-                <a jigsaw-prefix-icon><span class="fa fa-search"></span></a>
-            </jigsaw-input>
+            <ng-template>
+                <jigsaw-input #myInput width="80%">
+                    <a jigsaw-prefix-icon><span class="fa fa-search"></span></a>
+                </jigsaw-input>
+            </ng-template>
         </jigsaw-tab-pane>
     </jigsaw-tab>
     {{selectedIndex}}

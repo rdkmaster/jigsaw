@@ -10,19 +10,21 @@
 
     <jigsaw-tab>
         <jigsaw-tab-pane title="Tab 1">
-            This is the body of the first tab
+            <ng-template>This is the body of the first tab</ng-template>
         </jigsaw-tab-pane>
         <jigsaw-tab-pane title="Tab 2" [disabled]="true">
-            This is the body of the first tab
+            <ng-template>This is the body of the first tab</ng-template>
         </jigsaw-tab-pane>
         <jigsaw-tab-pane title="Tab 3">
-            <jigsaw-input>
-                <a jigsaw-prefix-icon><span class="fa fa-search"></span></a>
-            </jigsaw-input>
+            <ng-template>
+                <jigsaw-input>
+                    <a jigsaw-prefix-icon><span class="fa fa-search"></span></a>
+                </jigsaw-input>
+            </ng-template>
         </jigsaw-tab-pane>
         <jigsaw-tab-pane [async]="true">
             <div jigsaw-title><span routerLink="tabPage" [skipLocationChange]="true">router link tab</span></div>
-            <div jigsaw-body><router-outlet name="tabPage"></router-outlet></div>
+            <ng-template><router-outlet name="tabPage"></router-outlet></ng-template>
         </jigsaw-tab-pane>
     </jigsaw-tab>
 </div>

@@ -1,5 +1,5 @@
 import {
-	AfterContentInit, Component, Renderer2, ViewContainerRef
+    AfterContentInit, ChangeDetectorRef, Component, Renderer2, ViewContainerRef
 } from "@angular/core";
 
 
@@ -16,11 +16,12 @@ export class RangeTimeLimitStartComponent implements AfterContentInit{
     limitStart
 
     constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
+                public renderer: Renderer2, public changeDetectorRef: ChangeDetectorRef) {
     }
 
     ngAfterContentInit() {
         this.limitStart= [{label:"now"}];
+        this.changeDetectorRef.detectChanges();
     }
 }
 
