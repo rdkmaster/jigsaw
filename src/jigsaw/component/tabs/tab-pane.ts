@@ -1,4 +1,4 @@
-import {Component, Input, TemplateRef, Type, ViewChild} from '@angular/core';
+import {Component, ContentChild, Input, TemplateRef, Type, ViewChild} from '@angular/core';
 import {IDynamicInstantiatable} from "../core";
 
 @Component({
@@ -8,10 +8,7 @@ import {IDynamicInstantiatable} from "../core";
             {{title}}
             <ng-content select="[jigsaw-title]"></ng-content>
         </ng-template>
-        <ng-template #content>
-            <ng-content></ng-content>
-        </ng-template>
-
+        <ng-content></ng-content>
     `
 })
 export class JigsawTabPane {
@@ -31,7 +28,7 @@ export class JigsawTabPane {
     public initData: Object;
 
     @ViewChild('label') label: TemplateRef<any> | Type<IDynamicInstantiatable>;
-    @ViewChild('content') content: TemplateRef<any> | Type<IDynamicInstantiatable>;
+    @ContentChild(TemplateRef) content: TemplateRef<any> | Type<IDynamicInstantiatable>;
 }
 
 
