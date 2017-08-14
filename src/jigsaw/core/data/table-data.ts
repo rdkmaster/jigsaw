@@ -80,9 +80,7 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
             return;
         }
         if (source instanceof Array) {
-            source.forEach(item => {
-                dest.push(item);
-            });
+            source.forEach(item => dest.push(item));
         } else {
             dest.push(source);
 
