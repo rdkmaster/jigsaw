@@ -5,7 +5,7 @@ import {AbstractJigsawComponent} from '../core';
 @Component({
     selector: 'jigsaw-button, a[jigsaw-button]',
     templateUrl: 'button.html',
-    styleUrls: ['button.scss'],
+    //styleUrls: ['button.scss'],
     host: {
         '[class.jigsaw-button-disabled]': 'disabled',
         '(click)': '_onClick()',

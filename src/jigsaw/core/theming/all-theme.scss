@@ -1,3 +1,14 @@
 @import "../../assets/scss/index.scss";
 @import "../../assets/scss/animate.scss";
 @import "../../assets/scss/reset.scss";
+
+@import "../../component/button/button";
+
+
+/*@mixin generate-jigsaw-theme($theme) {
+    @include gr-button-theme($theme);
+
+
+}*/
+
+

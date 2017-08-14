@@ -1,0 +1,26 @@
+@import "../../../assets/scss/core/func";
+@import "../all-theme";
+
+// Color
+$primary-color: #108ee9;
+$success-color: #87d068;
+$error-color: #f50;
+$highlight-color: #f50;
+$warning-color: #fa0;
+$normal-color: #d9d9d9;
+$default-color: #fff;
+$disabled-color: rgba(0, 0, 0, .25);
+
+$theme: generate-theme-map(
+        $primary-color,
+        $success-color,
+        $error-color,
+        $highlight-color,
+        $warning-color,
+        $normal-color,
+        $default-color,
+        $disabled-color);
+
+@include generate-jigsaw-theme($theme);
+
+

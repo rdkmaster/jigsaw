@@ -1,0 +1,93 @@
+// Prefix
+$jigsaw-prefix           : jigsaw;
+
+// ------ Base & Require ------
+$body-background        : #fff;
+$font-family            : -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$code-family            : Consolas, Menlo, Courier, monospace;
+$font-color-level-one   : #333;
+$font-color-level-two   : #666;
+$font-color-level-three : #999;
+$font-color-white       : #fff;
+$font-size-base         : 12px;
+$font-size-lg           : $font-size-base + 2px;
+$line-height-base       : 1.5;
+$border-radius-base     : 4px;
+$border-radius-sm       : 2px;
+$height-base            : 28px;
+
+// ICONFONT
+$iconfont-css-prefix    : anticon;
+$icon-url               : "https://at.alicdn.com/t/font_r5u29ls31bgldi";
+
+// LINK
+$link-color             : $primary-color;
+$link-hover-color       : mix(#fff, $link-color, 20%);
+$link-active-color      : mix(#000, $link-color, 5%);
+$link-hover-decoration  : none;
+
+// Animation
+$ease-out            : cubic-bezier(0.215, 0.61, 0.355, 1);
+$ease-in             : cubic-bezier(0.55, 0.055, 0.675, 0.19);
+$ease-in-out         : cubic-bezier(0.645, 0.045, 0.355, 1);
+$ease-out-back       : cubic-bezier(0.12, 0.4, 0.29, 1.46);
+$ease-in-back        : cubic-bezier(0.71, -0.46, 0.88, 0.6);
+$ease-in-out-back    : cubic-bezier(0.71, -0.46, 0.29, 1.46);
+$ease-out-circ       : cubic-bezier(0.08, 0.82, 0.17, 1);
+$ease-in-circ        : cubic-bezier(0.6, 0.04, 0.98, 0.34);
+$ease-in-out-circ    : cubic-bezier(0.78, 0.14, 0.15, 0.86);
+$ease-out-quint      : cubic-bezier(0.23, 1, 0.32, 1);
+$ease-in-quint       : cubic-bezier(0.755, 0.05, 0.855, 0.06);
+$ease-in-out-quint   : cubic-bezier(0.86, 0, 0.07, 1);
+
+// Border color
+$border-color-base      : #d9d9d9;        // base border outline a component
+$border-color-split     : #e9e9e9;        // split border inside a component
+$border-width-base      : 1px;            // width of the border for a component
+$border-style-base      : solid;          // style of a components border
+
+// Outline
+$outline-blur-size      : 0;
+$outline-width          : 2px;
+$outline-color          : $primary-color;
+
+// Background color
+$background-color-base        : #f7f7f7;        // basic gray background
+$background-color-level-one   : #dedede;
+$background-color-level-tow   : #eee;
+$background-color-level-three : #f3f3f3;
+
+// Shadow
+$shadow-color           : rgba(0, 0, 0, .2);
+$shadow-1-down          : 0 1px 6px $shadow-color;
+$box-shadow-base        : $shadow-1-down;
+$shadow-1-up            : 0 -1px 6px $shadow-color;
+$shadow-1-left          : -1px 0 6px $shadow-color;
+$shadow-1-right         : 1px 0 6px $shadow-color;
+$shadow-2               : 0 2px 8px $shadow-color;
+
+// z-index list
+$zindex-affix           : 10;
+$zindex-back-top        : 10;
+$zindex-modal-mask      : 1000;
+$zindex-modal           : 1000;
+$zindex-notification    : 1010;
+$zindex-message         : 1010;
+$zindex-popover         : 1030;
+$zindex-picker          : 1050;
+$zindex-dropdown        : 1050;
+$zindex-tooltip         : 1060;
+
+// Animation
+$animation-duration-slow: .3s; // Modal
+$animation-duration-base: .2s;
+$animation-duration-fast: .1s; // Tooltip
+
+// Form
+// ---
+$label-required-color        : $highlight-color;
+$label-color                 : $font-color-level-two;
+$form-item-margin-bottom     : 24px;
+
+
+
