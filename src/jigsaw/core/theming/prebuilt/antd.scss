@@ -1,11 +1,255 @@
-$primary-color: #108ee9;
-$success-color: #87d068;
-$error-color: #f50;
-$highlight-color: #f50;
-$warning-color: #fa0;
-$normal-color: #d9d9d9;
-$default-color: #fff;
-$disabled-color: rgba(0, 0, 0, .25);
+// Prefix
+$jigsaw-prefix           : jigsaw;
+
+// Color
+$primary-color          : #108ee9;
+$success-color          : #87d068;
+$error-color            : #f50;
+$highlight-color        : #f50;
+$warning-color          : #fa0;
+$normal-color           : #d9d9d9;
+$default-color          : #fff;
+$disabled-color         : rgba(0,0,0,.25);
+
+$primary-1: saturate($primary-color, 80%);  // replace tint($primary-color, 90%)
+$primary-2: saturate($primary-color, 60%);  // replace tint($primary-color, 90%)
+$primary-3: saturate($primary-color, 40%);  // replace tint($primary-color, 90%)
+$primary-4: saturate($primary-color, 20%);  // replace tint($primary-color, 90%)
+$primary-5: $primary-color;
+$primary-6: desaturate($primary-color, 20%);
+$primary-7: desaturate($primary-color, 40%);
+$primary-8: desaturate($primary-color, 60%);
+$primary-9: desaturate($primary-color, 80%);
+$primary-10: desaturate($primary-color, 100%);
+
+// ------ Base & Require ------
+$body-background        : #fff;
+$font-family            : -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$code-family            : Consolas, Menlo, Courier, monospace;
+$font-color-level-one   : #333;
+$font-color-level-two   : #666;
+$font-color-level-three : #999;
+$font-color-white       : #fff;
+$heading-color          : #404040;
+$font-size-base         : 12px;
+$font-size-lg           : $font-size-base + 2px;
+$line-height-base       : 1.5;
+$border-radius-base     : 4px;
+$border-radius-sm       : 2px;
+$height-base            : 28px;
+
+// ICONFONT
+$iconfont-css-prefix    : anticon;
+$icon-url               : "https://at.alicdn.com/t/font_r5u29ls31bgldi";
+
+// LINK
+$link-color             : #108ee9;
+$link-hover-color       : tint($link-color, 20%);
+$link-active-color      : shade($link-color, 5%);
+$link-hover-decoration  : none;
+
+// Animation
+$ease-out            : cubic-bezier(0.215, 0.61, 0.355, 1);
+$ease-in             : cubic-bezier(0.55, 0.055, 0.675, 0.19);
+$ease-in-out         : cubic-bezier(0.645, 0.045, 0.355, 1);
+$ease-out-back       : cubic-bezier(0.12, 0.4, 0.29, 1.46);
+$ease-in-back        : cubic-bezier(0.71, -0.46, 0.88, 0.6);
+$ease-in-out-back    : cubic-bezier(0.71, -0.46, 0.29, 1.46);
+$ease-out-circ       : cubic-bezier(0.08, 0.82, 0.17, 1);
+$ease-in-circ        : cubic-bezier(0.6, 0.04, 0.98, 0.34);
+$ease-in-out-circ    : cubic-bezier(0.78, 0.14, 0.15, 0.86);
+$ease-out-quint      : cubic-bezier(0.23, 1, 0.32, 1);
+$ease-in-quint       : cubic-bezier(0.755, 0.05, 0.855, 0.06);
+$ease-in-out-quint   : cubic-bezier(0.86, 0, 0.07, 1);
+
+// Border color
+$border-color-base      : #d9d9d9;        // base border outline a component
+$border-color-split     : #e9e9e9;        // split border inside a component
+$border-width-base      : 1px;            // width of the border for a component
+$border-style-base      : solid;          // style of a components border
+
+// Outline
+$outline-blur-size      : 0;
+$outline-width          : 2px;
+$outline-color          : $primary-color;
+
+// Background color
+$background-color-base  : #f7f7f7;        // basic gray background
+$background-color-level-one   : #dedede;
+$background-color-level-tow   : #eee;
+$background-color-level-three : #f3f3f3;
+
+// Shadow
+$shadow-color           : rgba(0, 0, 0, .2);
+$shadow-1-down          : 0 1px 6px $shadow-color;
+$box-shadow-base        : $shadow-1-down;
+$shadow-1-up            : 0 -1px 6px $shadow-color;
+$shadow-1-left          : -1px 0 6px $shadow-color;
+$shadow-1-right         : 1px 0 6px $shadow-color;
+$shadow-2               : 0 2px 8px $shadow-color;
+
+// Buttons
+$btn-primary-bg          : $primary-color;
+$btn-primary-bg-hover    : mix(#000, $primary-color, 8%);
+$btn-primary-bg-active   : mix(#000, $primary-color, 15%);
+
+$btn-warning-bg          : $warning-color;
+$btn-warning-bg-hover    : mix(#000, $warning-color, 8%);
+$btn-warning-bg-active   : mix(#000, $warning-color, 15%);
+
+$btn-error-bg            : $error-color;
+$btn-error-bg-hover      : mix(#000, $error-color, 8%);
+$btn-error-bg-active     : mix(#000, $error-color, 15%);
+
+$btn-default-bg          : $default-color;
+$btn-default-border      : $border-color-base;
+$btn-default-box-shadow  : $box-shadow-base;
+$btn-default-color       : $primary-color;
+$btn-default-hover-color : $btn-primary-bg-hover;
+$btn-others-color        : $default-color;
+
+$btn-font-weight         : 500;
+$btn-border-radius-base  : $border-radius-base;
+$btn-border-radius-sm    : $border-radius-sm;
+
+$btn-disable-color       : rgba(0, 0, 0, 0.247059);
+$btn-disable-bg          : $background-color-base;
+$btn-disable-border      : $border-color-base;
+
+$btn-font-size-sm        : $font-size-base - 2px;
+$btn-font-size-lg        : $font-size-lg;
+
+$btn-size-height-base    : $height-base;
+$btn-size-height-sm      : 20px;
+$btn-size-height-lg      : 36px;
+
+// Table
+$table-head-color   : $primary-color;
+$table-head-bg      : $background-color-level-tow;
+$table-odd-row-bg   : $background-color-level-three;
+$table-hover-row-bg : #e2eef9;
+$table-select-row-bg: #cde4fa;
+
+// Scroll bar
+$scroll-bar-bg        : fade-out($primary-color, .7);
+$scroll-bar-active-bg : fade-out($primary-color, .5);
+
+// Time
+$time-hover-color: lighten($primary-color, 10%);
+
+// Select
+$select-box-shadow          : 0 0 0 2px fade-out($primary-color, .8);
+$select-option-hover-bg     : #e2eef9;
+$select-option-selected-bg  : #cde4fa;
+
+// Input
+$input-box-shadow            : 0 0 0 2px fade-out($primary-color, .8);
+$input-color                 : $font-color-level-two;
+$input-border-color          : $border-color-base;
+$input-bg                    : #fff;
+$input-hover-border-color    : $primary-color;
+$input-disabled-bg           : $background-color-base;
+
+// Tag
+$tag-bg-default: lighten($normal-color, 11%);
+
+// Dialog
+$dialog-head-color             : $primary-color;
+$dialog-close-bar-color        : $primary-color;
+$dialog-close-bar-hover-color  : mix(#000, $primary-color, 15%);
+
+// Alert
+$alert-close-bar-color         : $dialog-close-bar-color;
+$alert-close-bar-hover-color   : $dialog-close-bar-hover-color;
+
+// Checkbox
+$checkbox-checked-bg           : $primary-color;
+$checkbox-checked-inner        : $default-color;
+
+// Collapse
+$collapse-head-bg              : $background-color-level-tow;
+
+// Media queries breakpoints
+// Extra small screen / phone
+$screen-xs              : 480px;
+$screen-xs-min          : $screen-xs;
+$screen-xs-max          : ($screen-xs-min - 1);
+
+// Small screen / tablet
+$screen-sm              : 768px;
+$screen-sm-min          : $screen-sm;
+$screen-sm-max          : ($screen-sm-min - 1);
+
+// Medium screen / desktop
+$screen-md              : 992px;
+$screen-md-min          : $screen-md;
+$screen-md-max          : ($screen-md-min - 1);
+
+// Large screen / wide desktop
+$screen-lg              : 1200px;
+$screen-lg-min          : $screen-lg;
+$screen-lg-max          : ($screen-lg-min - 1);
+
+// Layout and Grid system
+$grid-columns           : 24;
+$grid-gutter-width      : 0;
+
+// z-index list
+$zindex-affix           : 10;
+$zindex-back-top        : 10;
+$zindex-modal-mask      : 1000;
+$zindex-modal           : 1000;
+$zindex-notification    : 1010;
+$zindex-message         : 1010;
+$zindex-popover         : 1030;
+$zindex-picker          : 1050;
+$zindex-dropdown        : 1050;
+$zindex-tooltip         : 1060;
+
+// Animation
+$animation-duration-slow: .3s; // Modal
+$animation-duration-base: .2s;
+$animation-duration-fast: .1s; // Tooltip
+
+// Form
+// ---
+$label-required-color        : $highlight-color;
+$label-color                 : $font-color-level-two;
+$form-item-margin-bottom     : 24px;
+
+// Tooltip
+// ---
+//* Tooltip max width
+$tooltip-max-width: 250px;
+//** Tooltip text color
+$tooltip-color: #fff;
+//** Tooltip background color
+$tooltip-bg: rgba(64, 64, 64, .85);
+//** Tooltip arrow width
+$tooltip-arrow-width: 5px;
+//** Tooltip distance with trigger
+$tooltip-distance: $tooltip-arrow-width - 1 + 4;
+//** Tooltip arrow color
+$tooltip-arrow-color: $tooltip-bg;
+
+// Popover
+// ---
+//** Popover body background color
+$popover-bg: #fff;
+//** Popover maximum width
+$popover-min-width: 177px;
+//** Popover arrow width
+$popover-arrow-width: 4px;
+//** Popover arrow color
+$popover-arrow-color: $popover-bg;
+//** Popover outer arrow width
+$popover-arrow-outer-width: ($popover-arrow-width + 1);
+//** Popover outer arrow color
+$popover-arrow-outer-color: fade-out($border-color-base, 0.3);
+
+// Progress
+// --
+$process-default-color: $primary-color;
 
 @import "../all-theme";
 
