@@ -29,7 +29,6 @@ export type GrItem = {
 @Component({
     selector: 'jigsaw-time',
     templateUrl: 'time.html',
-    //styleUrls: ['time.scss'],
     host: {
         '[style.width]': 'width'
     },

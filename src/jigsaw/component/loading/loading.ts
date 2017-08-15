@@ -57,7 +57,6 @@ export class JigsawLoadingBase extends AbstractJigsawComponent implements IPopup
 @Component({
     selector: 'jigsaw-loading',
     templateUrl: 'loading.html',
-    //styleUrls: ['loading.scss']
 })
 export class JigsawLoading extends JigsawLoadingBase implements OnInit{
 
@@ -79,7 +78,6 @@ export class JigsawLoading extends JigsawLoadingBase implements OnInit{
 @Component({
     selector: 'jigsaw-ball-loading',
     templateUrl: 'loading-ball.html',
-    //styleUrls: ['loading-ball.scss']
 })
 export class JigsawBallLoading extends JigsawLoadingBase {
     constructor(private renderer: Renderer2, private elementRef: ElementRef){

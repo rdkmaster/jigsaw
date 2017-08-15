@@ -56,7 +56,6 @@ import {PopupEffect, PopupInfo, PopupPositionType, PopupService} from "../../ser
 @Component({
     selector: 'jigsaw-table',
     templateUrl: 'table.html',
-    //styleUrls: ['table.scss'],
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height'
@@ -1184,7 +1183,6 @@ export class JigsawTableCell extends TableCellBasic implements OnInit, OnDestroy
                 <span (click)="_sortDes()" class="jigsaw-table-sort-btn jigsaw-table-sort-down"></span>
             </div>
         </div>`,
-    //styleUrls: ['table-head.scss']
 })
 export class JigsawTableHeader extends TableCellBasic implements OnInit, OnDestroy {
     private _sortOrderClass: Object;

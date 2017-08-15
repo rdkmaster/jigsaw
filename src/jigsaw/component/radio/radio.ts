@@ -107,7 +107,6 @@ export class JigsawRadioGroup extends AbstractJigsawComponent implements Control
 @Component({
     selector: 'jigsaw-radio-button',
     templateUrl: 'radio.html',
-    //styleUrls: ['radio.scss'],
     host: {
         "(click)": "_onClick()"
     }

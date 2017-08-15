@@ -14,7 +14,6 @@ export class JigsawPrefixIcon {
 @Component({
     selector: 'jigsaw-input',
     templateUrl: 'input.html',
-    //styleUrls: ['input.scss'],
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',

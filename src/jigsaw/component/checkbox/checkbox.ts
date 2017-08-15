@@ -18,7 +18,6 @@ export type CheckBoxValue = boolean | CheckBoxStatus;
 @Component({
     selector: 'jigsaw-checkbox',
     templateUrl: './checkbox.html',
-    //styleUrls: ['./checkbox.scss'],
     host: {
         '[style.width]': 'width',
     },

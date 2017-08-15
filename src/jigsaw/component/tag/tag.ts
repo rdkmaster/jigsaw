@@ -6,7 +6,6 @@ import {AbstractJigsawComponent} from "../core";
 @Component({
     selector: 'jigsaw-tag',
     templateUrl: 'tag.html',
-    //styleUrls: ['tag.scss'],
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',

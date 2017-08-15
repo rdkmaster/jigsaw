@@ -134,7 +134,6 @@ export abstract class JigsawCommonAlert extends DialogBase {
 
 @Component({
     templateUrl: 'common-alert.html',
-    //styleUrls: ['common-alert.scss'],
     selector: 'jigsaw-info-alert',
     host: {
         '[class.jigsaw-common-alert]': 'true'

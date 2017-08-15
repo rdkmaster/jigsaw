@@ -26,7 +26,6 @@ import {ArrayCollection} from "../../core/data/array-collection";
 @Component({
     selector: 'jigsaw-tile-select',
     templateUrl: 'tile-select.html',
-    //styleUrls: ['tile-select.scss'],
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTileSelect), multi: true},
     ]
@@ -196,7 +195,6 @@ export class JigsawTileSelect extends AbstractJigsawComponent implements Control
 @Component({
     selector: 'jigsaw-tile-option',
     templateUrl: 'tile-option.html',
-    //styleUrls: ['tile-option.scss'],
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',

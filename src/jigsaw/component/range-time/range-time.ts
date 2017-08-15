@@ -8,7 +8,6 @@ import {WeekTime} from "../../service/time.types";
 @Component({
     selector: 'jigsaw-range-time',
     templateUrl: 'range-time.html',
-    //styleUrls: ['range-time.scss'],
     providers: [
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRangeTime), multi: true },
     ]

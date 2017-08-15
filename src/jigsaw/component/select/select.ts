@@ -25,7 +25,6 @@ export class OptionList extends AbstractJigsawComponent{
 @Component({
     selector: 'jigsaw-select',
     templateUrl: 'select.html',
-    //styleUrls: ['select.scss'],
     host: {
         "(click)": "_toggleClick($event)",
         '[style.width]': 'width',
