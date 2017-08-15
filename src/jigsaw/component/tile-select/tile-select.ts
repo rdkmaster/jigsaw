@@ -15,7 +15,7 @@ import {CallbackRemoval} from "../../core/utils/common-utils";
 @Component({
     selector: 'jigsaw-tile-select',
     templateUrl: 'tile-select.html',
-    styleUrls: ['tile-select.scss'],
+    //styleUrls: ['tile-select.scss'],
     host: {
         // '[style.width]': 'width'
     }
@@ -156,7 +156,7 @@ export class JigsawTileSelect extends AbstractJigsawComponent implements OnInit,
 @Component({
     selector: 'jigsaw-tile-option',
     templateUrl: 'tile-option.html',
-    styleUrls: ['tile-option.scss'],
+    //styleUrls: ['tile-option.scss'],
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',

@@ -9,7 +9,7 @@ import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
 @Component({
     selector: 'jigsaw-switch',
     templateUrl: './switch.html',
-    styleUrls: ['./switch.scss']
+    //styleUrls: ['./switch.scss']
 })
 
 export class JigsawSwitch implements OnInit{

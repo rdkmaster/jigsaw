@@ -24,7 +24,7 @@ export class OptionList extends AbstractJigsawComponent{
 @Component({
     selector: 'jigsaw-select',
     templateUrl: 'select.html',
-    styleUrls: ['select.scss'],
+    //styleUrls: ['select.scss'],
     host: {
         "(click)": "_toggleClick($event)",
         '[style.width]': 'width',
@@ -133,7 +133,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements AfterViewIn
 @Component({
     selector: 'jigsaw-select-option',
     templateUrl: 'option.html',
-    styleUrls: ['option.scss'],
+    //styleUrls: ['option.scss'],
     host: {
         "(click)": "_onClick()",
         '[style.height]': '_height',

@@ -7,7 +7,7 @@ import {WeekTime} from "../../service/time.types";
 @Component({
     selector: 'jigsaw-range-time',
     templateUrl: 'range-time.html',
-    styleUrls: ['range-time.scss']
+    //styleUrls: ['range-time.scss']
 })
 
 export class JigsawRangeTime extends AbstractJigsawComponent implements OnInit {

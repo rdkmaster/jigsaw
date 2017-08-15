@@ -21,7 +21,7 @@ import {CallbackRemoval} from "../../core/utils/common-utils";
 @Component({
     selector: 'jigsaw-graph',
     templateUrl: 'graph.html',
-    styleUrls: ['./graph.scss']
+    //styleUrls: ['./graph.scss']
 })
 export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDestroy {
     // 全局 echarts 对象

@@ -195,7 +195,7 @@ export class JigsawSliderHandle implements OnInit{
 @Component({
     selector: 'jigsaw-slider',
     templateUrl: './slider.html',
-    styleUrls: ['./slider.scss'],
+    //styleUrls: ['./slider.scss'],
     host: {
         'class': 'jigsaw-slider-host'
     },

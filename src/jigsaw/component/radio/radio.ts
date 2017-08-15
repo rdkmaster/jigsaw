@@ -64,7 +64,7 @@ export class JigsawRadioGroup extends AbstractJigsawComponent implements OnInit,
 @Component({
     selector: 'jigsaw-radio-button',
     templateUrl: 'radio.html',
-    styleUrls: ['radio.scss'],
+    //styleUrls: ['radio.scss'],
     host: {
         "(click)": "_onClick()"
     }

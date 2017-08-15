@@ -5,7 +5,7 @@ import {CommonModule} from "@angular/common";
 @Component({
     selector: 'jigsaw-block',
     template: `<div class="jigsaw-block"></div>`,
-    styleUrls: ['block.scss']
+    //styleUrls: ['block.scss']
 })
 export class JigsawBlock implements IPopupable{
     initData: any;

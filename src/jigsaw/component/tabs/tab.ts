@@ -9,7 +9,7 @@ import {AbstractJigsawComponent, IDynamicInstantiatable} from "../core";
 @Component({
     selector: 'jigsaw-tab',
     templateUrl: 'tab.html',
-    styleUrls: ['./tab.scss']
+    //styleUrls: ['./tab.scss']
 })
 export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit {
 

@@ -1,180 +1,129 @@
 @import "../../assets/scss/core/basc";
 
-@mixin gr-button-theme($theme) {
-    // theme start
-    $primary-color: map_get($theme, primary);
-    $success-color: map_get($theme, success);
-    $error-color: map_get($theme, error);
-    $highlight-color: map_get($theme, highlight);
-    $warning-color: map_get($theme, warning);
-    $normal-color: map_get($theme, normal);
-    $default-color: map_get($theme, default);
-    $disabled-color: map_get($theme, disabled);
-    // theme end
+$btn-prefix-cls: #{$jigsaw-prefix}-button;
 
-    // button setting start
-    $btn-primary-bg          : $primary-color;
-    $btn-primary-bg-hover    : mix(#000, $primary-color, 8%);
-    $btn-primary-bg-active   : mix(#000, $primary-color, 15%);
+:host {
+    @include inline-block();
+    min-width: 80px;
+    padding:0 10px;
+    min-height: $btn-size-height-base;
+    line-height: $btn-size-height-base - 4;
+    font-size: $font-size-base;
+    text-align: center;
+    position: relative;
+    border-radius: $btn-border-radius-base;
+    cursor: pointer;
+    box-shadow: $btn-default-box-shadow;
+    user-select: none;
+    @include prefixer(transition, all .3s $ease-in-out);
+    background-color: $btn-default-bg;
+    border: 1px solid $btn-default-border;
+    color: $btn-default-color;
+    &:hover{
+        color: $btn-default-hover-color;
+        border: 1px solid $btn-default-hover-color;
+    }
 
-    $btn-warning-bg          : $warning-color;
-    $btn-warning-bg-hover    : mix(#000, $warning-color, 8%);
-    $btn-warning-bg-active   : mix(#000, $warning-color, 15%);
-
-    $btn-error-bg            : $error-color;
-    $btn-error-bg-hover      : mix(#000, $error-color, 8%);
-    $btn-error-bg-active     : mix(#000, $error-color, 15%);
-
-    $btn-default-bg          : $default-color;
-    $btn-default-border      : $border-color-base;
-    $btn-default-box-shadow  : $box-shadow-base;
-    $btn-default-color       : $primary-color;
-    $btn-default-hover-color : $btn-primary-bg-hover;
-    $btn-others-color        : $default-color;
-
-    $btn-font-weight         : 500;
-    $btn-border-radius-base  : $border-radius-base;
-    $btn-border-radius-sm    : $border-radius-sm;
-
-    $btn-disable-color       : rgba(0, 0, 0, 0.247059);
-    $btn-disable-bg          : $background-color-base;
-    $btn-disable-border      : $border-color-base;
-
-    $btn-font-size-sm        : $font-size-base - 2px;
-    $btn-font-size-lg        : $font-size-lg;
-
-    $btn-size-height-base    : $height-base;
-    $btn-size-height-sm      : 20px;
-    $btn-size-height-lg      : 36px;
-
-    $btn-prefix-cls: #{$jigsaw-prefix}-button;
-    // button setting end
-
-    :host {
+    &.#{$btn-prefix-cls}-clicked:after {
+        content: '';
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        bottom: -1px;
+        right: -1px;
+        border-radius: inherit;
+        border: 1px solid darken($btn-default-hover-color,10%);
+        opacity: 0.4;
+        @include prefixer(animation, buttonEffect 0.36s $ease-out forwards);
+        display: block;
+    }
+    .#{$btn-prefix-cls}-icon {
         @include inline-block();
-        min-width: 80px;
-        padding: 0 10px;
-        min-height: $btn-size-height-base;
-        line-height: $btn-size-height-base - 4;
-        font-size: $font-size-base;
-        text-align: center;
-        position: relative;
-        border-radius: $btn-border-radius-base;
-        cursor: pointer;
-        box-shadow: $btn-default-box-shadow;
-        user-select: none;
-        @include prefixer(transition, all .3s $ease-in-out);
-        background-color: $btn-default-bg;
-        border: 1px solid $btn-default-border;
-        color: $btn-default-color;
+        /deep/ img {
+            vertical-align: top;
+            height: 20px;
+        }
+    }
+
+    &.#{$btn-prefix-cls}-color-primary {
+        background-color: $btn-primary-bg;
+        color: $btn-others-color;
+        border:1px solid $btn-primary-bg;
         &:hover {
-            color: $btn-default-hover-color;
-            border: 1px solid $btn-default-hover-color;
+            background: $btn-primary-bg-hover;
         }
-
-        &.#{$btn-prefix-cls}-clicked:after {
-            content: '';
-            position: absolute;
-            top: -1px;
-            left: -1px;
-            bottom: -1px;
-            right: -1px;
-            border-radius: inherit;
-            border: 1px solid darken($btn-default-hover-color, 10%);
-            opacity: 0.4;
-            @include prefixer(animation, buttonEffect 0.36s $ease-out forwards);
-            display: block;
+        &:active {
+            background: $btn-primary-bg-active;
         }
-        .#{$btn-prefix-cls}-icon {
-            @include inline-block();
-            /deep/ img {
-                vertical-align: top;
-                height: 20px;
-            }
-        }
-
-        &.#{$btn-prefix-cls}-color-primary {
-            background-color: $btn-primary-bg;
-            color: $btn-others-color;
-            border: 1px solid $btn-primary-bg;
-            &:hover {
-                background: $btn-primary-bg-hover;
-            }
-            &:active {
-                background: $btn-primary-bg-active;
-            }
-            &.#{$btn-prefix-cls}-clicked:after {
-                border: 1px solid darken($btn-primary-bg, 10%);
-            }
-        }
-
-        &.#{$btn-prefix-cls}-color-warning {
-            background-color: $btn-warning-bg;
-            color: $btn-others-color;
-            border: 1px solid $btn-warning-bg;
-            &:hover {
-                background: $btn-warning-bg-hover;
-            }
-            &:active {
-                background: $btn-warning-bg-active;
-            }
-            &.#{$btn-prefix-cls}-clicked:after {
-                border: 1px solid darken($btn-warning-bg, 10%);
-            }
-        }
-
-        &.#{$btn-prefix-cls}-color-error {
-            background-color: $btn-error-bg;
-            color: $btn-others-color;
-            border: 1px solid $btn-error-bg;
-            &:hover {
-                background: $btn-error-bg-hover;
-            }
-            &:active {
-                background: $btn-error-bg-active;
-            }
-            &.#{$btn-prefix-cls}-clicked:after {
-                border: 1px solid darken($btn-error-bg, 10%);
-            }
-        }
-
-        &.#{$btn-prefix-cls}-size-large {
-            font-size: $btn-font-size-lg;
-            min-height: $btn-size-height-lg;
-            line-height: $btn-size-height-lg - 2;
-        }
-
-        &.#{$btn-prefix-cls}-size-small {
-            font-size: $btn-font-size-sm;
-            min-height: $btn-size-height-sm;
-            line-height: $btn-size-height-sm - 2;
+        &.#{$btn-prefix-cls}-clicked:after{
+            border: 1px solid darken($btn-primary-bg,10%);
         }
     }
 
-    :host(a) {
-        padding: 0 10px;
-        outline: none;
-        text-decoration: none !important;
-    }
-
-    :host(.#{$btn-prefix-cls}-disabled) {
-        pointer-events: none;
-        cursor: default;
-        color: $btn-disable-color;
-        background-color: $btn-disable-bg;
-        border-color: $btn-disable-border;
-    }
-
-    @include keyframes(buttonEffect) {
-        to {
-            @include opacity(0);
-            top: -6px;
-            left: -6px;
-            bottom: -6px;
-            right: -6px;
-            border-width: 6px;
+    &.#{$btn-prefix-cls}-color-warning {
+        background-color: $btn-warning-bg;
+        color: $btn-others-color;
+        border:1px solid $btn-warning-bg;
+        &:hover {
+            background: $btn-warning-bg-hover;
+        }
+        &:active {
+            background: $btn-warning-bg-active;
+        }
+        &.#{$btn-prefix-cls}-clicked:after{
+            border: 1px solid darken($btn-warning-bg,10%);
         }
     }
 
+    &.#{$btn-prefix-cls}-color-error {
+        background-color: $btn-error-bg;
+        color: $btn-others-color;
+        border:1px solid $btn-error-bg;
+        &:hover {
+            background: $btn-error-bg-hover;
+        }
+        &:active {
+            background: $btn-error-bg-active;
+        }
+        &.#{$btn-prefix-cls}-clicked:after{
+            border: 1px solid darken($btn-error-bg,10%);
+        }
+    }
+
+    &.#{$btn-prefix-cls}-size-large {
+        font-size: $btn-font-size-lg;
+        min-height:$btn-size-height-lg;
+        line-height: $btn-size-height-lg - 2;
+    }
+
+    &.#{$btn-prefix-cls}-size-small {
+        font-size: $btn-font-size-sm;
+        min-height: $btn-size-height-sm;
+        line-height: $btn-size-height-sm - 2;
+    }
 }
 
+:host(a){
+    padding: 0 10px;
+    outline: none;
+    text-decoration: none !important;
+}
+
+:host(.#{$btn-prefix-cls}-disabled) {
+    pointer-events: none;
+    cursor: default;
+    color: $btn-disable-color;
+    background-color: $btn-disable-bg;
+    border-color: $btn-disable-border;
+}
+
+@include keyframes(buttonEffect) {
+    to {
+        @include opacity(0);
+        top: -6px;
+        left: -6px;
+        bottom: -6px;
+        right: -6px;
+        border-width: 6px;
+    }
+}

@@ -17,7 +17,7 @@ type PageSizeData = {
 @Component({
     selector: 'jigsaw-pagination',
     templateUrl: 'pagination.html',
-    styleUrls: ['pagination.scss'],
+    //styleUrls: ['pagination.scss'],
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height'
@@ -363,7 +363,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
 @Component({
     selector: 'jigsaw-paging-item',
     templateUrl: 'page.html',
-    styleUrls: ['page.scss'],
+    //styleUrls: ['page.scss'],
     host: {
         '(click)': '_onClick()',
         '[class.jigsaw-page-current]': 'current',

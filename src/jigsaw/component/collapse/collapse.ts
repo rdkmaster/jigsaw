@@ -62,7 +62,7 @@ export class JigsawCollapsePane{
 @Component({
     selector: 'jigsaw-collapse',
     templateUrl: 'collapse.html',
-    styleUrls: ['collapse.scss'],
+    //styleUrls: ['collapse.scss'],
     host: {
         '[style.width]': 'width',
         'class':'jigsaw-collapse-host'

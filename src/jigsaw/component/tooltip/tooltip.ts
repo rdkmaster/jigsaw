@@ -33,7 +33,7 @@ export abstract class TooltipBase implements ITooltip {
 @Component({
     selector: 'jigsaw-tooltip-dialog',
     templateUrl: 'tooltip.html',
-    styleUrls: ['tooltip.scss'],
+    //styleUrls: ['tooltip.scss'],
     animations: [
         bubbleIn
     ]
