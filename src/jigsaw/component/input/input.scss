@@ -2,7 +2,7 @@
 
 $input-prefix-cls: #{$jigsaw-prefix}-input;
 
-:host {
+#{$input-prefix-cls} {
     @include inline-block();
     position: relative;
     width: 120px;

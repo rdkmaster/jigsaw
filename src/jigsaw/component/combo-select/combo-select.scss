@@ -1,9 +1,8 @@
 @import "../../assets/scss/core/basc";
-@import "../../assets/scss/reset";
 
 $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
 
-:host {
+#{$jigsaw-combo-select} {
     @include inline-block;
     .#{$jigsaw-combo-select} {
         min-width: 240px;

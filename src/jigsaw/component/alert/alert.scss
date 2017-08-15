@@ -2,7 +2,7 @@
 
 $alert-prefix-cls: #{$jigsaw-prefix}-alert;
 
-:host{
+#{$alert-prefix-cls}{
     @include inline-block;
     width: 100%;
     .#{$alert-prefix-cls} {

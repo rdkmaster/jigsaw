@@ -2,7 +2,7 @@
 
 $radio-prefix-cls: #{$jigsaw-prefix}-radio;
 
-:host {
+#{$radio-prefix-cls}-button {
     @include inline-block();
 }
 

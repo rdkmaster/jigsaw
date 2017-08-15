@@ -2,10 +2,10 @@
 
 $btn-prefix-cls: #{$jigsaw-prefix}-button;
 
-:host {
+#{$btn-prefix-cls}, a[#{$btn-prefix-cls}], button[#{$btn-prefix-cls}] {
     @include inline-block();
     min-width: 80px;
-    padding:0 10px;
+    padding: 0 10px;
     min-height: $btn-size-height-base;
     line-height: $btn-size-height-base - 4;
     font-size: $font-size-base;
@@ -19,7 +19,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     background-color: $btn-default-bg;
     border: 1px solid $btn-default-border;
     color: $btn-default-color;
-    &:hover{
+    &:hover {
         color: $btn-default-hover-color;
         border: 1px solid $btn-default-hover-color;
     }
@@ -32,7 +32,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
         bottom: -1px;
         right: -1px;
         border-radius: inherit;
-        border: 1px solid darken($btn-default-hover-color,10%);
+        border: 1px solid darken($btn-default-hover-color, 10%);
         opacity: 0.4;
         @include prefixer(animation, buttonEffect 0.36s $ease-out forwards);
         display: block;
@@ -48,51 +48,51 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     &.#{$btn-prefix-cls}-color-primary {
         background-color: $btn-primary-bg;
         color: $btn-others-color;
-        border:1px solid $btn-primary-bg;
+        border: 1px solid $btn-primary-bg;
         &:hover {
             background: $btn-primary-bg-hover;
         }
         &:active {
             background: $btn-primary-bg-active;
         }
-        &.#{$btn-prefix-cls}-clicked:after{
-            border: 1px solid darken($btn-primary-bg,10%);
+        &.#{$btn-prefix-cls}-clicked:after {
+            border: 1px solid darken($btn-primary-bg, 10%);
         }
     }
 
     &.#{$btn-prefix-cls}-color-warning {
         background-color: $btn-warning-bg;
         color: $btn-others-color;
-        border:1px solid $btn-warning-bg;
+        border: 1px solid $btn-warning-bg;
         &:hover {
             background: $btn-warning-bg-hover;
         }
         &:active {
             background: $btn-warning-bg-active;
         }
-        &.#{$btn-prefix-cls}-clicked:after{
-            border: 1px solid darken($btn-warning-bg,10%);
+        &.#{$btn-prefix-cls}-clicked:after {
+            border: 1px solid darken($btn-warning-bg, 10%);
         }
     }
 
     &.#{$btn-prefix-cls}-color-error {
         background-color: $btn-error-bg;
         color: $btn-others-color;
-        border:1px solid $btn-error-bg;
+        border: 1px solid $btn-error-bg;
         &:hover {
             background: $btn-error-bg-hover;
         }
         &:active {
             background: $btn-error-bg-active;
         }
-        &.#{$btn-prefix-cls}-clicked:after{
-            border: 1px solid darken($btn-error-bg,10%);
+        &.#{$btn-prefix-cls}-clicked:after {
+            border: 1px solid darken($btn-error-bg, 10%);
         }
     }
 
     &.#{$btn-prefix-cls}-size-large {
         font-size: $btn-font-size-lg;
-        min-height:$btn-size-height-lg;
+        min-height: $btn-size-height-lg;
         line-height: $btn-size-height-lg - 2;
     }
 
@@ -101,26 +101,26 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
         min-height: $btn-size-height-sm;
         line-height: $btn-size-height-sm - 2;
     }
+
+    &.#{$btn-prefix-cls}-disabled {
+        pointer-events: none;
+        cursor: default;
+        color: $btn-disable-color;
+        background-color: $btn-disable-bg;
+        border-color: $btn-disable-border;
+    }
 }
 
-:host(a){
+a[#{$btn-prefix-cls}] {
     padding: 0 10px;
     outline: none;
     text-decoration: none !important;
 }
 
-:host(button){
+button[#{$btn-prefix-cls}] {
     padding: 0 10px;
     outline: none;
     text-decoration: none !important;
-}
-
-:host(.#{$btn-prefix-cls}-disabled) {
-    pointer-events: none;
-    cursor: default;
-    color: $btn-disable-color;
-    background-color: $btn-disable-bg;
-    border-color: $btn-disable-border;
 }
 
 @include keyframes(buttonEffect) {

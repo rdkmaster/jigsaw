@@ -2,7 +2,7 @@
 
 $tooltip-prefix-cls: #{$jigsaw-prefix}-tooltip;
 
-:host{
+#{$tooltip-prefix-cls}{
     @include inline-block;
 }
 

@@ -2,12 +2,61 @@
 
 $table-prefix-cls: #{$jigsaw-prefix}-table;
 
-:host{
+#{$table-prefix-cls}{
     @include inline-block;
     position: relative;
     width: 100%;
     overflow: hidden;
     vertical-align: top;
+    table{
+        width: 100%;
+        text-align: center;
+        td{
+            border: 1px solid $border-color-base;
+        }
+        thead{
+            color: $table-head-color;
+            tr{
+                height: 40px;
+                td{
+                    background: $table-head-bg;
+                }
+            }
+        }
+        tbody{
+            &.#{$table-prefix-cls}-line-ellipsis{
+                td .#{$table-prefix-cls}-cell-content{
+                    @include line-ellipsis-style();
+                }
+            }
+            tr{
+                height: 30px;
+                &:nth-child(2n){
+                    background: $table-odd-row-bg;
+                }
+                &:nth-child(2n-1){
+                    background: $default-color;
+                }
+                &:hover{
+                    td:not([rowspan]){
+                        background: $table-hover-row-bg;
+                    }
+                }
+                &.#{$table-prefix-cls}-row-selected{
+                    td:not([rowspan]){
+                        background: $table-select-row-bg;
+                    }
+                }
+                td[rowspan]{
+                    background: $default-color;
+                }
+            }
+        }
+        &.#{$table-prefix-cls}-fixed-head{
+            position: absolute;
+            z-index: 10;
+        }
+    }
 }
 
 .#{$table-prefix-cls}-box{
@@ -26,56 +75,6 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
         /deep/ > .mCSB_scrollTools_vertical{
             margin: 0 0 !important;
         }
-    }
-}
-
-table{
-    width: 100%;
-    text-align: center;
-    td{
-        border: 1px solid $border-color-base;
-    }
-    thead{
-        color: $table-head-color;
-        tr{
-            height: 40px;
-            td{
-                background: $table-head-bg;
-            }
-        }
-    }
-    tbody{
-        &.#{$table-prefix-cls}-line-ellipsis{
-            td .#{$table-prefix-cls}-cell-content{
-                @include line-ellipsis-style();
-            }
-        }
-        tr{
-            height: 30px;
-            &:nth-child(2n){
-                background: $table-odd-row-bg;
-            }
-            &:nth-child(2n-1){
-                background: $default-color;
-            }
-            &:hover{
-                td:not([rowspan]){
-                    background: $table-hover-row-bg;
-                }
-            }
-            &.#{$table-prefix-cls}-row-selected{
-                td:not([rowspan]){
-                    background: $table-select-row-bg;
-                }
-            }
-            td[rowspan]{
-                background: $default-color;
-            }
-        }
-    }
-    &.#{$table-prefix-cls}-fixed-head{
-        position: absolute;
-        z-index: 10;
     }
 }
 

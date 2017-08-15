@@ -1,6 +1,8 @@
 @import "../../assets/scss/core/basc";
 
-:host {
+$loading-prefix-cls: #{$jigsaw-prefix}-loading;
+
+#{$loading-prefix-cls} {
     @include inline-block;
     position: relative;
     width: 40px;

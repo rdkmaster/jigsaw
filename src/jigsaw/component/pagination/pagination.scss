@@ -1,8 +1,9 @@
 @import "../../assets/scss/core/basc";
 
 $paging-prefix-cls: #{$jigsaw-prefix}-paging;
+$pagination-prefix-cls: #{$jigsaw-prefix}-pagination;
 
-:host {
+#{$pagination-prefix-cls} {
     @include inline-block();
     font-size: $font-size-base;
     user-select: none;

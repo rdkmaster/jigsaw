@@ -2,7 +2,7 @@
 
 $select-prefix-cls: #{$jigsaw-prefix}-tile-select;
 
-:host {
+#{$select-prefix-cls} {
     @include inline-block();
     opacity: 0;
     .#{$select-prefix-cls}-search {

@@ -1,6 +1,7 @@
 @import "../../assets/scss/core/basc";
 
 $loading-prefix-cls: #{$jigsaw-prefix}-loading;
+$ball-loading-prefix-cls: #{$jigsaw-prefix}-ball-loading;
 
 @function delay($interval, $count, $index) {
     @return ($index * $interval) - ($interval * $count);
@@ -52,7 +53,7 @@ $amount: 10px;
     }
 }
 
-:host {
+#{$ball-loading-prefix-cls} {
     @include inline-block;
     position: relative;
     height: 15px;

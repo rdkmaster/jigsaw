@@ -2,7 +2,7 @@
 
 $checkbox-prefix-cls: #{$jigsaw-prefix}-checkbox;
 
-:host {
+#{$checkbox-prefix-cls} {
     // *********** 共通 ****************** start
     label {
         margin: 0;

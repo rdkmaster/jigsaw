@@ -2,7 +2,7 @@
 
 $option-prefix-cls: #{$jigsaw-prefix}-tile-option;
 
-:host {
+#{$option-prefix-cls} {
     @include inline-block();
     width: 50px;
     height: $height-base;
