@@ -1,4 +1,4 @@
-<jigsaw-button type="primary" (click)="pauseLoading()">{{_pause == 'paused' ? 'Running' : 'Paused'}}</jigsaw-button>
+<jigsaw-button colorType="primary" (click)="pauseLoading()">{{paused == 'paused' ? 'Run' : 'Pause'}}</jigsaw-button>
 <div class="wrap" style="height: 300px;background: #fff;padding: 20px 20px;display: flex;flex-wrap: wrap">
     <div *ngFor="let color of colors" style="display: flex;height: 100px;width: 200px;    justify-content: space-around;    align-items: center;" >
         <jigsaw-loading [color]="color" ></jigsaw-loading>

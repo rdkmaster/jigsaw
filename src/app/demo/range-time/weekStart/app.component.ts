@@ -1,5 +1,5 @@
 import {
-	AfterContentInit, Component, Renderer2, ViewContainerRef
+    AfterContentInit, ChangeDetectorRef, Component, Renderer2, ViewContainerRef
 } from "@angular/core";
 
 
@@ -17,11 +17,12 @@ export class RangeTimeWeekStartComponent implements AfterContentInit{
     weekStart
 
     constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
+                public renderer: Renderer2, public changeDetectorRef: ChangeDetectorRef) {
     }
 
     ngAfterContentInit() {
         this.weekStart= [this.datas[0]];
+        this.changeDetectorRef.detectChanges();
     }
 }
 

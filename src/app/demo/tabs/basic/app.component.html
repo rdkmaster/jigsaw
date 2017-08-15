@@ -2,13 +2,13 @@
     <jigsaw-tab (selectChange)="testEvent($event)" [selectedIndex]="2">
         <jigsaw-tab-pane>
             <div jigsaw-title><span class="fa fa-gift"></span>tab 1</div>
-            <div jigsaw-body>tab content 1</div>
+            <ng-template>tab content 1</ng-template>
         </jigsaw-tab-pane>
         <jigsaw-tab-pane [async]="true">
             <div jigsaw-title>
                 <span>tab <jigsaw-button width="20" height="20">ok</jigsaw-button></span>
             </div>
-            <div jigsaw-body>
+            <ng-template>
                 <label>name: </label>
                 <jigsaw-input></jigsaw-input>
                 <br>
@@ -16,17 +16,19 @@
                 <jigsaw-input></jigsaw-input>
                 <br>
                 <jigsaw-button>confirm</jigsaw-button>
-            </div>
+            </ng-template>
         </jigsaw-tab-pane>
         <jigsaw-tab-pane title="tab 3">
-            tab content 3
+            <ng-template>tab content 3</ng-template>
         </jigsaw-tab-pane>
         <jigsaw-tab-pane title="tab 4" [disabled]="true">
-            tab content 4
+            <ng-template>tab content 4</ng-template>
         </jigsaw-tab-pane>
-        <jigsaw-tab-pane>
+        <jigsaw-tab-pane [async]="true">
             <div jigsaw-title><span class="fa fa-bicycle"></span>tab 5</div>
-            <div jigsaw-body>tab content 5</div>
+            <ng-template>
+                <jigsaw-table [data]="fruitList"></jigsaw-table>
+            </ng-template>
         </jigsaw-tab-pane>
     </jigsaw-tab>
 </div>

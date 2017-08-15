@@ -1,34 +1,43 @@
 import {
-    NgModule, Component, ContentChildren, QueryList, Input, Output, EventEmitter,
-    Optional, OnInit, forwardRef, AfterContentInit, ChangeDetectorRef, AfterViewInit, ViewChildren, Renderer2,
-    ElementRef, OnDestroy
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    EventEmitter,
+    forwardRef,
+    Input,
+    NgModule,
+    OnDestroy,
+    OnInit,
+    Optional,
+    Output,
+    QueryList,
+    Renderer2,
+    ViewChildren
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms'
+import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms'
 import {JigsawInputModule} from '../input/input';
 import {AbstractJigsawComponent} from '../core';
-import {CommonUtils} from '../../core/utils/common-utils';
+import {CallbackRemoval, CommonUtils} from '../../core/utils/common-utils';
 import {InternalUtils} from '../../core/utils/internal-utils';
 import {ArrayCollection} from "../../core/data/array-collection";
-import {CallbackRemoval} from "../../core/utils/common-utils";
 
 @Component({
     selector: 'jigsaw-tile-select',
     templateUrl: 'tile-select.html',
     //styleUrls: ['tile-select.scss'],
-    host: {
-        // '[style.width]': 'width'
-    }
+    providers: [
+        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTileSelect), multi: true},
+    ]
 })
-export class JigsawTileSelect extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
-    private _contentInit: boolean = false;
-    private _selectedItems: ArrayCollection<any> = new ArrayCollection();
+export class JigsawTileSelect extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, AfterViewInit, OnDestroy {
+
     private _removeRefreshCallback: CallbackRemoval;
 
     constructor(private _render: Renderer2,
                 private _elementRef: ElementRef) {
         super();
-
     }
 
     public set width(value: string) {
@@ -41,27 +50,18 @@ export class JigsawTileSelect extends AbstractJigsawComponent implements OnInit,
         this._render.setStyle(this._elementRef.nativeElement, 'height', this._height);
     }
 
+    private _selectedItems = new ArrayCollection<object>();
+
     @Input()
-    public get selectedItems(): ArrayCollection<any> {
+    public get selectedItems(): ArrayCollection<object> | object[] {
         return this._selectedItems;
     }
 
-    public set selectedItems(newValue: ArrayCollection<any>) {
-        if (this._selectedItems === newValue || !(newValue instanceof ArrayCollection)) {
-            return;
+    public set selectedItems(newValue: ArrayCollection<object> | object[]) {
+        this.writeValue(newValue);
+        if (this._selectedItems !== newValue) {
+            this._propagateChange(newValue);
         }
-
-        this._selectedItems = newValue;
-        if (this._contentInit) {
-            this._setOptionState();
-        }
-
-        if (this._removeRefreshCallback) {
-            this._removeRefreshCallback()
-        }
-        this._removeRefreshCallback = newValue.onRefresh(() => {
-            this._setOptionState();
-        });
     }
 
     @Output() public selectedItemsChange = new EventEmitter<any[]>();
@@ -77,7 +77,16 @@ export class JigsawTileSelect extends AbstractJigsawComponent implements OnInit,
 
     @Input() public searchable: boolean = false;
 
-    @Input() public data: ArrayCollection<object>;
+    private _data: ArrayCollection<object>;
+
+    @Input()
+    public get data(): ArrayCollection<object> | object[] {
+        return this._data;
+    }
+
+    public set data(value: ArrayCollection<object> | object[]) {
+        this._data = value instanceof ArrayCollection ? value : new ArrayCollection(value);
+    }
 
     @Input() public tileOptionWidth: string;
 
@@ -96,7 +105,7 @@ export class JigsawTileSelect extends AbstractJigsawComponent implements OnInit,
             } else {
                 this._selectedItems.forEach(selectedItem => {
                     if (CommonUtils.compareWithKeyProperty(selectedItem, optionItem, <string[]>this.trackItemBy)) {
-                        this.selectedItems.splice(this.selectedItems.indexOf(selectedItem), 1);
+                        this._selectedItems.splice(this.selectedItems.indexOf(selectedItem), 1);
                     }
                 });
             }
@@ -105,33 +114,36 @@ export class JigsawTileSelect extends AbstractJigsawComponent implements OnInit,
                 //去除其他option选中
                 if (!CommonUtils.compareWithKeyProperty(option.optionItem, optionItem, <string[]>this.trackItemBy) && option.selected) {
                     option.selected = false;
-                    this.selectedItems.splice(this.selectedItems.indexOf(option.optionItem), 1);
+                    this._selectedItems.splice(this.selectedItems.indexOf(option.optionItem), 1);
                 }
             });
             //添加选中数据
             this.selectedItems.push(optionItem);
         }
-        this.selectedItems.refresh();
+        this._selectedItems.refresh();
         this.selectedItemsChange.emit(this.selectedItems);
+        this._propagateChange(this.selectedItems);
     }
 
     //根据selectedItems设置选中的option
     private _setOptionState(): void {
-        if (this.selectedItems instanceof ArrayCollection) {
-            this._options.length && this._options.forEach((option) => {
-                let _hasSelected = false;
-                this._selectedItems.forEach((optionItem) => {
-                    if (CommonUtils.compareWithKeyProperty(option.optionItem, optionItem, <string[]>this.trackItemBy)) {
-                        _hasSelected = true;
-                    }
-                });
-                option.selected = _hasSelected;
-                option._cdref.detectChanges();
-            });
+        if (!(this.selectedItems instanceof ArrayCollection) || !this._options.length) {
+            return;
         }
+        this._options.forEach((option) => {
+            let _hasSelected = false;
+            this._selectedItems.forEach((optionItem) => {
+                if (CommonUtils.compareWithKeyProperty(option.optionItem, optionItem, <string[]>this.trackItemBy)) {
+                    _hasSelected = true;
+                }
+            });
+            option.selected = _hasSelected;
+            option._cdref.detectChanges();
+        });
     }
 
     ngOnInit() {
+        super.ngOnInit();
         this.trackItemBy = InternalUtils.initTrackItemBy(<string>this.trackItemBy, this.labelField);
         setTimeout(() => {
             this._render.setStyle(this._elementRef.nativeElement, 'width', this._width);
@@ -142,7 +154,6 @@ export class JigsawTileSelect extends AbstractJigsawComponent implements OnInit,
     }
 
     ngAfterViewInit() {
-        this._contentInit = true;
         this._setOptionState();
     }
 
@@ -150,6 +161,35 @@ export class JigsawTileSelect extends AbstractJigsawComponent implements OnInit,
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback()
         }
+    }
+
+    private _propagateChange: any = () => {
+    };
+
+    public writeValue(newValue: any): void {
+        if (this._selectedItems === newValue) {
+            return;
+        }
+        newValue = newValue instanceof ArrayCollection ? newValue : new ArrayCollection(newValue);
+
+        this._selectedItems = newValue;
+        if (this.initialized) {
+            this._setOptionState();
+        }
+
+        if (this._removeRefreshCallback) {
+            this._removeRefreshCallback()
+        }
+        this._removeRefreshCallback = newValue.onRefresh(() => {
+            this._setOptionState();
+        });
+    }
+
+    public registerOnChange(fn: any): void {
+        this._propagateChange = fn;
+    }
+
+    public registerOnTouched(fn: any): void {
     }
 }
 

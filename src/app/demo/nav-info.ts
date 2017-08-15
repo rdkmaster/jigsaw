@@ -691,6 +691,15 @@ export const navInfo = [
         ]
     },
     {
+        title: 'Form',
+        navList: [
+            {
+                label: 'template driven',
+                url: '/form/template-driven'
+            }
+        ]
+    },
+    {
         title: 'Misc',
         navList: [
             {

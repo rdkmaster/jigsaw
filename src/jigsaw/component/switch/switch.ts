@@ -1,4 +1,5 @@
-import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnInit, forwardRef} from '@angular/core';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 /**
  * @description 开关组件
@@ -9,10 +10,13 @@ import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
 @Component({
     selector: 'jigsaw-switch',
     templateUrl: './switch.html',
-    //styleUrls: ['./switch.scss']
+    //styleUrls: ['./switch.scss'],
+    providers: [
+        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSwitch), multi: true},
+    ]
 })
 
-export class JigsawSwitch implements OnInit{
+export class JigsawSwitch implements ControlValueAccessor, OnInit {
     /**
      * @internal
      */
@@ -46,10 +50,8 @@ export class JigsawSwitch implements OnInit{
     @Input()
     public get checked(): boolean  { return this._checked};
     public set checked(value: boolean) {
-        this._checked = value;
-
-        this._setSwitchClass();
-        this._setInnerValue();
+        this.writeValue(value);
+        this._propagateChange(value);
     }
 
     /**
@@ -86,6 +88,7 @@ export class JigsawSwitch implements OnInit{
 
             // 发出事件
             this.checkedChange.emit(this.checked);
+            this._propagateChange(this.checked);
         }
     }
 
@@ -100,7 +103,7 @@ export class JigsawSwitch implements OnInit{
     private _setSwitchClass() {
         this._$switchClass = {
             'jigsaw-switch': 'true',
-            'jigsaw-switch-small': this.size === 'small'? true : false,
+            'jigsaw-switch-small': this.size === 'small',
             'jigsaw-switch-checked': this.checked,
             'jigsaw-switch-disabled': this.disabled
         }
@@ -116,5 +119,20 @@ export class JigsawSwitch implements OnInit{
     public ngOnInit() {
         this._setSwitchClass();
         this._setInnerValue();
+    }
+
+    private _propagateChange: any = () => {};
+
+    public writeValue(value: any): void {
+        this._checked = !!value;
+        this._setSwitchClass();
+        this._setInnerValue();
+    }
+
+    public registerOnChange(fn: any): void {
+        this._propagateChange = fn;
+    }
+
+    public registerOnTouched(fn: any): void {
     }
 }

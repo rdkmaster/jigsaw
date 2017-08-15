@@ -14,6 +14,7 @@ import {
     ViewChildren,
     ViewEncapsulation
 } from "@angular/core";
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {ArrayCollection} from "../../core/data/array-collection";
 import {CallbackRemoval} from "../../core/utils/common-utils";
@@ -178,7 +179,7 @@ export class JigsawSliderHandle implements OnInit{
 
         this.value = newValue;
 
-        this._slider._setValue(this.key, newValue);
+        this._slider._updateValue(this.key, newValue);
     }
 
     ngOnInit() {
@@ -199,9 +200,12 @@ export class JigsawSliderHandle implements OnInit{
     host: {
         'class': 'jigsaw-slider-host'
     },
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    providers: [
+        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSlider), multi: true},
+    ]
 })
-export class JigsawSlider extends AbstractJigsawComponent implements OnInit, OnDestroy {
+export class JigsawSlider extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
     constructor(private _element: ElementRef, private _render: Renderer2) {
         super();
@@ -231,20 +235,8 @@ export class JigsawSlider extends AbstractJigsawComponent implements OnInit, OnD
     }
 
     public set value(value: number | ArrayCollection<number>) {
-        if (value instanceof ArrayCollection) {
-            this._$value = value;
-        } else {
-            this._$value.splice(0, this._$value.length);
-            this._$value.push(this._verifyValue(value));
-        }
-
-        if (this._removeRefreshCallback) {
-            this._removeRefreshCallback()
-        }
-        this._removeRefreshCallback = this._$value.onRefresh(() => {
-            this._setTrackStyle(this.value);
-            this.valueChange.emit(this.value);
-        });
+        this.writeValue(value);
+        this._propagateChange(this.value);
     }
 
     /**
@@ -252,20 +244,23 @@ export class JigsawSlider extends AbstractJigsawComponent implements OnInit, OnD
      *
      * @param index
      * @param value
-     * @private
+     * @internal
      */
-    public _setValue(index: number, value: number) {
+    public _updateValue(index: number, value: number) {
         this._$value.set(index, value);
         this._$value.refresh();
     }
 
-    // 最后重新计算一下, 垂直滚动条的位置.
+    /**
+     * 最后重新计算一下，垂直滚动条的位置
+     * @internal
+     */
     public _refresh() {
         this._dimensions = this._element.nativeElement.getBoundingClientRect();
     }
 
     /**
-     * 可以不用理会, 主要使 value 支持双向绑定
+     * 使 value 支持双向绑定
      * @type {EventEmitter<number|ArrayCollection<number>>}
      */
     @Output()
@@ -483,5 +478,32 @@ export class JigsawSlider extends AbstractJigsawComponent implements OnInit, OnD
         } else {
             return value;
         }
+    }
+
+    private _propagateChange: any = () => {};
+
+    public writeValue(value: any): void {
+        if (value instanceof ArrayCollection) {
+            this._$value = value;
+        } else {
+            this._$value.splice(0, this._$value.length);
+            this._$value.push(this._verifyValue(+value));
+        }
+
+        if (this._removeRefreshCallback) {
+            this._removeRefreshCallback()
+        }
+        this._removeRefreshCallback = this._$value.onRefresh(() => {
+            this._setTrackStyle(this.value);
+            this.valueChange.emit(this.value);
+            this._propagateChange(this.value);
+        });
+    }
+
+    public registerOnChange(fn: any): void {
+        this._propagateChange = fn;
+    }
+
+    public registerOnTouched(fn: any): void {
     }
 }

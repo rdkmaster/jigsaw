@@ -15,7 +15,7 @@ export class ColorfulLoadingDemoComponent {
     }
     public colors = ['rgb(255, 0, 0 )','rgb(255, 165, 0 )','rgb(255, 255, 0 )','rgb(0, 255, 0 )','rgb(0, 127, 255 )','rgb(0, 0, 255 )','rgb(139, 0, 255 )'];
 
-     _pause = 'running';
+    public paused = 'running';
 
     public setElementsStyle(tags:string, props:string, val:string | boolean | number) {
         let elements = this._el.nativeElement.querySelectorAll(tags);
@@ -25,13 +25,13 @@ export class ColorfulLoadingDemoComponent {
     }
 
     public pauseLoading() {
-        if( this._pause == 'paused') {
-            this._pause = 'runing';
+        if( this.paused == 'paused') {
+            this.paused = 'runing';
             this.setElementsStyle('.spinner-container > div','animationPlayState','running');
             this.setElementsStyle('.jigsaw-loading-content > div','animationPlayState','running');
 
         } else {
-            this._pause = 'paused';
+            this.paused = 'paused';
             this.setElementsStyle('.spinner-container > div','animationPlayState','paused');
             this.setElementsStyle('.jigsaw-loading-content > div','animationPlayState','paused');
         }

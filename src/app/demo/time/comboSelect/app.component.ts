@@ -16,21 +16,20 @@ export class ComboSelectDemoComponent {
         {label: TimeService.getFormatDate(this.beginDate, TimeGr.date), closable: false},
         {label: TimeService.getFormatDate(this.endDate, TimeGr.date), closable: false}
     ]);
-    
+
     constructor(public viewContainerRef: ViewContainerRef,
                 public renderer: Renderer2) {
     }
 
     handleDateChange(value){
-        this.singleTimeComboValue = new ArrayCollection([{label: value,closable: false}]);
+        this.singleTimeComboValue[0].label = this.date;
+        this.singleTimeComboValue.refresh();
     }
 
-    handleDeginDateChange(value){
-        this.rangeTimeComboValue = new ArrayCollection([{label:value, closable: false}, this.rangeTimeComboValue[1]]);
-    }
-
-    handleEndDateChange(value){
-        this.rangeTimeComboValue = new ArrayCollection([this.rangeTimeComboValue[0], {label: value, closable: false}]);
+    handleRangeDateChange(){
+        this.rangeTimeComboValue[0].label = this.beginDate;
+        this.rangeTimeComboValue[1].label = this.endDate;
+        this.rangeTimeComboValue.refresh();
     }
 }
 

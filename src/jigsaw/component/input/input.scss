@@ -38,7 +38,7 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
             box-shadow: $input-box-shadow;
         }
     }
-    span.jigsaw-input-clear-bar{
+    span.#{$input-prefix-cls}-clear-bar{
         cursor: pointer;
         font-size: 16px;
         line-height: 1;

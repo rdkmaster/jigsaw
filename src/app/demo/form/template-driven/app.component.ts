@@ -1,16 +1,28 @@
-/**
- * Created by 10177553 on 2017/3/29.
- */
-import {
-	Component, Renderer2, ViewContainerRef
-} from '@angular/core';
+import {Component} from "@angular/core";
+import {ArrayCollection} from "jigsaw/core/data/array-collection";
+import {TimeGr, TimeService} from "jigsaw/service/time.service";
 import {TableData} from "jigsaw/core/data/table-data";
 
+
 @Component({
-    templateUrl: './app.component.html',
-    styleUrls:['./app.component.scss']
+    templateUrl: 'app.component.html',
+    styleUrls: ['app.component.css']
 })
-export class JigsawTabsDemoComponent {
+export class TemplateDrivenDemoComponent {
+    firstName: string = 'jigsaw';
+    remember: boolean = true;
+    rangeTime = {beginDate: 'now-7d', endDate: 'now'};
+    birthday: string = 'now-30y';
+    rangeTimeComboValue = new ArrayCollection([
+        {label: TimeService.getFormatDate(this.rangeTime.beginDate, TimeGr.date), closable: false},
+        {label: TimeService.getFormatDate(this.rangeTime.endDate, TimeGr.date), closable: false}
+    ]);
+    comeFrom: any = {label: 'Nan Jing'};
+    favoriteFruit: ArrayCollection<any>;
+    score: number = 30;
+    isGreat: boolean = true;
+
+    formValue: any;
     fruitList: TableData = new TableData(
         [
             ["banana", "$12.0", "The banana is an edible fruit – botanically a berry – produced by several kinds of large herbaceous flowering plants in the genus Musa.", "Southeast Asia"],
@@ -22,12 +34,19 @@ export class JigsawTabsDemoComponent {
         ],
         ["name", "price", "desc", "origin"],
         ["Name", "Price", "Description", "Origin"]);
+    lastNamePattern = /^[a-z]+$/i;
 
-    testEvent(value) {
-        console.info(value);
+    submit(formValue) {
+        console.log(formValue);
+        this.formValue = formValue;
     }
 
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
+    handleDateChange() {
+        this.rangeTimeComboValue[0].label = this.rangeTime.beginDate;
+        this.rangeTimeComboValue[1].label = this.rangeTime.endDate;
+        this.rangeTimeComboValue.refresh();
+    }
+
+    constructor() {
     }
 }
