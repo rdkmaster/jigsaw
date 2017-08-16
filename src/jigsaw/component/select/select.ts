@@ -165,7 +165,6 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 @Component({
     selector: 'jigsaw-select-option',
     templateUrl: 'option.html',
-    //styleUrls: ['option.scss'],
     host: {
         "(click)": "_onClick()",
         '[style.height]': '_height',

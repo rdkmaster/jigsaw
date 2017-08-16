@@ -85,10 +85,12 @@ export function createPackageBuildTasks(packageName: string, requiredPackages: s
    * Asset tasks. Building SASS files and inlining CSS, HTML files into the ESM output.
    */
   task(`${packageName}:assets`, [
-    `${packageName}:assets:scss`, `${packageName}:assets:copy-styles`, `${packageName}:assets:html`
+      `${packageName}:assets:scss`,
+      `${packageName}:assets:copy-styles`,
+      `${packageName}:assets:html`
   ]);
 
-  task(`${packageName}:assets:scss`, sassBuildTask(packageOut, packageRoot, true));
+  task(`${packageName}:assets:scss`, sassBuildTask(packageOut, join(packageRoot,'**/theming/prebuilt/*.scss'), true));
   task(`${packageName}:assets:copy-styles`, copyTask(stylesGlob, packageOut));
   task(`${packageName}:assets:html`, () => {
     return src(htmlGlob).pipe(htmlmin(htmlMinifierOptions)).pipe(dest(packageOut));

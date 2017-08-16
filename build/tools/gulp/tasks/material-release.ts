@@ -45,7 +45,6 @@ task('jigsaw:build-release', ['jigsaw:prepare-release'], () => composeRelease('j
 task('jigsaw:prepare-release', sequenceTask(
   'jigsaw:build',
   ['jigsaw:copy-prebuilt-themes', 'jigsaw:bundle-theming-scss'],
-  'jigsaw:compile-theming-scss'
 ));
 
 /** Copies all prebuilt themes into the release package under `prebuilt-themes/` */
