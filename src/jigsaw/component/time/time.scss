@@ -10,72 +10,70 @@ $time-prefix-cls: #{$jigsaw-prefix}-time;
     padding: 5px;
     .#{$time-prefix-cls}-box {
         width: 100%;
-        /deep/ {
-            .bootstrap-datetimepicker-widget table{
-                th, .year, .day,.month{
-                    font-weight: 400;
+        .bootstrap-datetimepicker-widget table{
+            th, .year, .day,.month{
+                font-weight: 400;
+            }
+            tr{
+                td{
+                    &.disabled,span.disabled{
+                        color: #dedede;
+                    }
+                    &.today:before{
+                        display: none;
+                    }
                 }
-                tr{
-                    td{
-                        &.disabled,span.disabled{
-                            color: #dedede;
+                td, td span{
+                    &.expect-day{
+                        border-radius: 0;
+                        &.border-left{
+                            border-top-left-radius: 4px;
+                            border-bottom-left-radius: 4px;
+                        }
+                        &.border-right{
+                            border-top-right-radius: 4px;
+                            border-bottom-right-radius: 4px;
+                        }
+                        &:last-child{
+                            border-top-right-radius: 4px;
+                            border-bottom-right-radius: 4px;
+                        }
+                        &:first-child{
+                            border-top-left-radius: 4px;
+                            border-bottom-left-radius: 4px;
+                        }
+                        &:not(.active){
+                            background-color: lighten($primary-color, 30%);
+                            color: #666;
+                            &:hover{
+                                background: $primary-color;
+                                color: #fff;
+                            }
+                        }
+                    }
+                }
+                &.active{
+                    background-color: transparent;
+                    td {
+                        background-color: $primary-color !important;
+                        border-radius: 0 !important;
+                        color: #fff;
+                        &:first-child {
+                            border-top-left-radius: 4px !important;
+                            border-bottom-left-radius: 4px !important;
+                        }
+                        &:last-child {
+                            border-top-right-radius: 4px !important;
+                            border-bottom-right-radius: 4px !important;
                         }
                         &.today:before{
                             display: none;
                         }
-                    }
-                    td, td span{
                         &.expect-day{
-                            border-radius: 0;
-                            &.border-left{
-                                border-top-left-radius: 4px;
-                                border-bottom-left-radius: 4px;
-                            }
-                            &.border-right{
-                                border-top-right-radius: 4px;
-                                border-bottom-right-radius: 4px;
-                            }
-                            &:last-child{
-                                border-top-right-radius: 4px;
-                                border-bottom-right-radius: 4px;
-                            }
-                            &:first-child{
-                                border-top-left-radius: 4px;
-                                border-bottom-left-radius: 4px;
-                            }
-                            &:not(.active){
-                                background-color: lighten($primary-color, 30%);
-                                color: #666;
-                                &:hover{
-                                    background: $primary-color;
-                                    color: #fff;
-                                }
-                            }
+                            background:#3ab1ea;
+                            color: #fff;
                         }
                     }
-                  &.active{
-                      background-color: transparent;
-                      td {
-                          background-color: $primary-color !important;
-                          border-radius: 0 !important;
-                          color: #fff;
-                          &:first-child {
-                              border-top-left-radius: 4px !important;
-                              border-bottom-left-radius: 4px !important;
-                          }
-                          &:last-child {
-                              border-top-right-radius: 4px !important;
-                              border-bottom-right-radius: 4px !important;
-                          }
-                          &.today:before{
-                              display: none;
-                          }
-                          &.expect-day{
-                              background:#3ab1ea;
-                              color: #fff;
-                          }
-                      }
-                  }
                 }
             }
         }

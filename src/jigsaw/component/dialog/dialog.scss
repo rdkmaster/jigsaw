@@ -21,7 +21,7 @@ $dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
         background: $default-color;
         border-bottom: 1px solid $border-color-base;
         cursor: move;
-        /deep/ [jigsaw-title]{
+        [jigsaw-title]{
             float: left;
         }
         .#{$dialog-prefix-cls}-close {

@@ -7,11 +7,9 @@ $range-time-prefix-cls: #{$jigsaw-prefix}-range-time;
     padding: 5px;
     position: relative;
     width : 516px;
-    /deep/{
-        .#{$range-time-prefix-cls}-endTime,.#{$range-time-prefix-cls}-startTime{
-            .jigsaw-time-box{
-                padding-top:26px;
-            }
+    .#{$range-time-prefix-cls}-endTime,.#{$range-time-prefix-cls}-startTime{
+        .jigsaw-time-box{
+            padding-top:26px;
         }
     }
 

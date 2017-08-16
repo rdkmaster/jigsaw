@@ -33,7 +33,7 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
                 position: relative;
                 line-height: 30px;
                 height: 30px;
-                /deep/ jigsaw-tag{
+                jigsaw-tag{
                     vertical-align: -6px;
                     margin-right: 4px;
                 }

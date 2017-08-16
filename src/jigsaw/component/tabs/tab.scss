@@ -64,7 +64,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
                     color: $disabled-color;
                 }
 
-                /deep/ jigsaw-tab-label {
+                jigsaw-tab-label {
                     a:hover{
                         text-decoration: none;
                         color: $primary-color;

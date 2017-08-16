@@ -39,7 +39,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     }
     .#{$btn-prefix-cls}-icon {
         @include inline-block();
-        /deep/ img {
+        img {
             vertical-align: top;
             height: 20px;
         }
