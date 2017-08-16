@@ -18,7 +18,8 @@ export class JigsawPrefixIcon {
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[style.line-height]': 'height',
-        '(click)': '_stopPropagation($event)'
+        '(click)': '_stopPropagation($event)',
+        '[class.jigsaw-input]': 'true'
     },
     providers: [
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawInput), multi: true },

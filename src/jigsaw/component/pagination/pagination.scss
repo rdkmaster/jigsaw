@@ -1,13 +1,12 @@
 @import "../../assets/scss/core/basc";
 
 $paging-prefix-cls: #{$jigsaw-prefix}-paging;
-$pagination-prefix-cls: #{$jigsaw-prefix}-pagination;
 
-#{$pagination-prefix-cls} {
+.#{$paging-prefix-cls} {
     @include inline-block();
     font-size: $font-size-base;
     user-select: none;
-    .#{$paging-prefix-cls}-page{
+    &-page{
         position: relative;
         @include inline-block;
         width: 28px;
@@ -68,7 +67,7 @@ $pagination-prefix-cls: #{$jigsaw-prefix}-pagination;
     jigsaw-select{
         margin-right: 8px;
     }
-    .#{$paging-prefix-cls}-goto{
+    &-goto{
         @include inline-block;
         height: 28px;
         line-height: 28px;

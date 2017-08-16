@@ -19,7 +19,8 @@ type PageSizeData = {
     templateUrl: 'pagination.html',
     host: {
         '[style.width]': 'width',
-        '[style.height]': 'height'
+        '[style.height]': 'height',
+        '[class.jigsaw-paging]': 'true'
     }
 })
 export class JigsawPagination extends AbstractJigsawComponent implements OnInit, AfterViewInit {
@@ -366,6 +367,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         '(click)': '_onClick()',
         '[class.jigsaw-page-current]': 'current',
         '[class.jigsaw-page-hidden]': '!_isShow',
+        '[class.jigsaw-page-item]': 'true'
     }
 })
 export class JigsawPagingItem {

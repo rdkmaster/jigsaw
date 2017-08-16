@@ -2,90 +2,91 @@
 
 $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
 
-#{$jigsaw-combo-select} {
+.#{$jigsaw-combo-select}-host {
     @include inline-block;
-    .#{$jigsaw-combo-select} {
-        min-width: 240px;
-        width: auto;
-        display: inline-block;
-        outline: none;
+}
+
+.#{$jigsaw-combo-select} {
+    min-width: 240px;
+    width: auto;
+    display: inline-block;
+    outline: none;
+    position: relative;
+    color: $font-color-level-two;
+    font-size: $font-size-base;
+    cursor: pointer;
+
+    &-selection {
+        display: block;
+        user-select: none;
+        background-color: $default-color;
+        border-radius: $border-radius-base;
+        border: $border-width-base $border-style-base $border-color-base;
+        transition: all .3s $ease-in-out;
+        white-space:nowrap;
+
+        &:hover {
+            border-color: $primary-color;
+        }
+    }
+
+    &-selection &-selection-rendered {
+        display: block;
+        margin: 0 20px 0 7px;
         position: relative;
-        color: $font-color-level-two;
-        font-size: $font-size-base;
-        cursor: pointer;
-
-        .#{$jigsaw-combo-select}-selection {
-            display: block;
-            user-select: none;
-            background-color: $default-color;
-            border-radius: $border-radius-base;
-            border: $border-width-base $border-style-base $border-color-base;
-            transition: all .3s $ease-in-out;
-            white-space:nowrap;
-
-            &:hover {
-                border-color: $primary-color;
-            }
-
-            .#{$jigsaw-combo-select}-selection-rendered {
-                display: block;
-                margin: 0 20px 0 7px;
-                position: relative;
-                line-height: 30px;
-                height: 30px;
-                jigsaw-tag{
-                    vertical-align: -6px;
-                    margin-right: 4px;
-                }
-            }
+        line-height: 30px;
+        height: 30px;
+        jigsaw-tag{
+            vertical-align: -6px;
+            margin-right: 4px;
         }
+    }
 
-        &-disabled {
-            color: $disabled-color;
-            pointer-events: none;
+    &-disabled {
+        color: $disabled-color;
+        pointer-events: none;
+    }
 
-            .#{$jigsaw-combo-select}-selection {
-                background-color: $background-color-base;
-                cursor: not-allowed;
+    &-disabled &-selection {
+        background-color: $background-color-base;
+        cursor: not-allowed;
 
-                &:hover, &:active, &:focus {
-                    border-color: $background-color-base;
-                    box-shadow: none;
-                }
-            }
+        &:hover, &:active, &:focus {
+            border-color: $background-color-base;
+            box-shadow: none;
         }
+    }
 
-        .#{$jigsaw-combo-select}-content {
-            position: absolute;
-            width: 100%;
-            z-index: $zindex-dropdown;
-            overflow: hidden;
+    &-content {
+        position: absolute;
+        width: 100%;
+        z-index: $zindex-dropdown;
+        overflow: hidden;
 
-            margin-top: 3px;
-            padding: 5px;
+        margin-top: 3px;
+        padding: 5px;
 
-            border: $border-width-base $border-style-base $border-color-base;
-            background: $default-color;
-            box-shadow: $box-shadow-base;
-            border-radius: $border-radius-base;
+        border: $border-width-base $border-style-base $border-color-base;
+        background: $default-color;
+        box-shadow: $box-shadow-base;
+        border-radius: $border-radius-base;
 
-            @include opacity(0);
-            @include prefixer(transition, all 0.3s $ease-in-out);
-        }
+        @include opacity(0);
+        @include prefixer(transition, all 0.3s $ease-in-out);
+    }
 
-        &-opened {
-            .#{$jigsaw-combo-select}-arrow {
-                @include prefixer(transform, rotate(180deg));
-            }
-
-        }
-
+    &-opened {
         .#{$jigsaw-combo-select}-arrow {
-            position: absolute;
-            top: 50%;
-            right: 8px;
-            line-height: 1px;
-            @include prefixer(transition, transform 0.3s ease);
+            @include prefixer(transform, rotate(180deg));
         }
+
+    }
+
+    &-arrow {
+        position: absolute;
+        top: 50%;
+        right: 8px;
+        line-height: 1px;
+        @include prefixer(transition, transform 0.3s ease);
     }
 }

@@ -14,6 +14,9 @@ export enum AlertLevel {
 @Component({
     selector: 'jigsaw-alert',
     templateUrl: 'alert.html',
+    host: {
+        '[class.jigsaw-alert-host]': 'true'
+    }
 })
 export class JigsawAlert extends AbstractDialogComponentBase {
     constructor(renderer: Renderer2, elementRef: ElementRef) {

@@ -1,9 +1,8 @@
 @import "../../assets/scss/core/basc";
 
 $page-prefix-cls: #{$jigsaw-prefix}-page;
-$paging-item-prefix-cls: #{$jigsaw-prefix}-paging-item;
 
-#{$paging-item-prefix-cls}{
+.#{$page-prefix-cls}-item{
     @include inline-block();
     margin-right: 8px;
     vertical-align: top;

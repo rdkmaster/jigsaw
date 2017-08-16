@@ -39,6 +39,7 @@ export class ComboSelectValue {
     templateUrl: 'combo-select.html',
     host: {
         '[style.min-width]': 'width',
+        'class.jigsaw-combo-select-host': 'true'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawComboSelect), multi: true},

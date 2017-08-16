@@ -64,7 +64,7 @@ export class JigsawCollapsePane{
     templateUrl: 'collapse.html',
     host: {
         '[style.width]': 'width',
-        'class':'jigsaw-collapse-host'
+        '[class.jigsaw-collapse-host]':'true'
     },
     encapsulation: ViewEncapsulation.None
 })

@@ -2,7 +2,7 @@
 
 $btn-prefix-cls: #{$jigsaw-prefix}-button;
 
-#{$btn-prefix-cls}, a[#{$btn-prefix-cls}], button[#{$btn-prefix-cls}] {
+.#{$btn-prefix-cls} {
     @include inline-block();
     min-width: 80px;
     padding: 0 10px;
@@ -37,7 +37,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
         @include prefixer(animation, buttonEffect 0.36s $ease-out forwards);
         display: block;
     }
-    .#{$btn-prefix-cls}-icon {
+    &-icon {
         @include inline-block();
         img {
             vertical-align: top;
