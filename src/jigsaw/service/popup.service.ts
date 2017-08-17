@@ -128,6 +128,7 @@ export type PopupDisposer = () => void;
 
 export interface IPopupable extends IDynamicInstantiatable {
     answer: EventEmitter<ButtonInfo>;
+    [index: string]: any;
 }
 
 export class PopupInfo {
