@@ -34,10 +34,10 @@ export class LoadingService {
             };
 
             return {
-                popupRef: popupInfo.popupRef,
                 element: popupInfo.element,
                 dispose: dispose,
-                answer: popupInfo.answer
+                answer: popupInfo.answer,
+                instance: popupInfo.instance
             }
         } else if (blockTo) {
             blockBy = blockTo;

@@ -131,7 +131,7 @@ export interface IPopupable extends IDynamicInstantiatable {
 }
 
 export class PopupInfo {
-    popupRef: PopupRef;
+    instance: IPopupable;
     element: HTMLElement;
     dispose: PopupDisposer;
     answer: EventEmitter<ButtonInfo>;
@@ -221,8 +221,7 @@ export class PopupService {
 
         //popup block
         blockDisposer = this._popupBlocker(options);
-        popupInfo = this._popupFactory(what, options);
-        popupRef = popupInfo.popupRef;
+        [popupInfo, popupRef] = this._popupFactory(what, options);
         element = popupInfo.element;
         popupDisposer = popupInfo.dispose;
 
@@ -248,8 +247,8 @@ export class PopupService {
         }, 0);
 
         return {
-            popupRef: popupRef, element: element, dispose: disposer,
-            answer: popupInfo.popupRef['instance'].answer
+            instance: popupRef['instance'], element: element, dispose: disposer,
+            answer: popupRef['instance'] ? popupRef['instance'].answer : undefined
         }
     }
 
@@ -263,7 +262,7 @@ export class PopupService {
                 hideEffect: PopupEffect.fadeOut
             };
 
-            const blockInfo: PopupInfo = this._popupFactory(JigsawBlock, blockOptions);
+            const [blockInfo,] = this._popupFactory(JigsawBlock, blockOptions);
             disposer = blockInfo.dispose;
             element = blockInfo.element;
             this._setStyle(options, element, this._renderer);
@@ -311,16 +310,14 @@ export class PopupService {
         }
     }
 
-    private _popupFactory(what: Type<IPopupable> | TemplateRef<any>, options: PopupOptions): PopupInfo {
+    private _popupFactory(what: Type<IPopupable> | TemplateRef<any>, options: PopupOptions): [PopupInfo, PopupRef] {
         const ref: PopupRef = this._createPopup(what);
         const element: HTMLElement = this._getElement(ref);
         //一出来就插入到文档流的最后，这给后续计算尺寸造成麻烦，这里给设置fixed，就可以避免影响滚动条位置
         this._renderer.setStyle(element, 'position', 'fixed');
         this._renderer.setStyle(element, 'top', 0);
         const disposer: PopupDisposer = this._getDisposer(options, ref, element, this._renderer);
-        return {
-            popupRef: ref, element: element, dispose: disposer, answer: null
-        }
+        return [{ element: element, dispose: disposer, answer: null, instance: null }, ref];
     }
 
     private _createPopup(what: Type<IPopupable> | TemplateRef<any>) {
