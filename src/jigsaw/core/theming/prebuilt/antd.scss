@@ -3,6 +3,7 @@ $jigsaw-prefix           : jigsaw;
 
 // Color
 $primary-color          : #108ee9;
+$info-color             : #108ee9;
 $success-color          : #87d068;
 $error-color            : #f50;
 $highlight-color        : #f50;
@@ -11,10 +12,10 @@ $normal-color           : #d9d9d9;
 $default-color          : #fff;
 $disabled-color         : rgba(0,0,0,.25);
 
-$primary-1: saturate($primary-color, 80%);  // replace tint($primary-color, 90%)
-$primary-2: saturate($primary-color, 60%);  // replace tint($primary-color, 90%)
-$primary-3: saturate($primary-color, 40%);  // replace tint($primary-color, 90%)
-$primary-4: saturate($primary-color, 20%);  // replace tint($primary-color, 90%)
+$primary-1: saturate($primary-color, 80%);
+$primary-2: saturate($primary-color, 60%);
+$primary-3: saturate($primary-color, 40%);
+$primary-4: saturate($primary-color, 20%);
 $primary-5: $primary-color;
 $primary-6: desaturate($primary-color, 20%);
 $primary-7: desaturate($primary-color, 40%);
@@ -26,10 +27,10 @@ $primary-10: desaturate($primary-color, 100%);
 $body-background        : #fff;
 $font-family            : -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
 $code-family            : Consolas, Menlo, Courier, monospace;
-$font-color-level-one   : #333;
-$font-color-level-two   : #666;
-$font-color-level-three : #999;
-$font-color-white       : #fff;
+$text-color-level-one   : #333;
+$text-color-level-two   : #666;
+$text-color-level-three : #999;
+$text-color-of-bg       : #fff;
 $heading-color          : #404040;
 $font-size-base         : 12px;
 $font-size-lg           : $font-size-base + 2px;
@@ -37,6 +38,8 @@ $line-height-base       : 1.5;
 $border-radius-base     : 4px;
 $border-radius-sm       : 2px;
 $height-base            : 28px;
+$height-sm              : $height-base - 8px;
+$height-lg              : $height-base + 8px;
 
 // ICONFONT
 $iconfont-css-prefix    : anticon;
@@ -88,6 +91,10 @@ $shadow-1-left          : -1px 0 6px $shadow-color;
 $shadow-1-right         : 1px 0 6px $shadow-color;
 $shadow-2               : 0 2px 8px $shadow-color;
 
+// Disable states
+$disabled-text-color    : rgba(0, 0, 0, .25);
+$disabled-bg-color      : $disabled-color;
+
 // Buttons
 $btn-primary-bg          : $primary-color;
 $btn-primary-bg-hover    : mix(#000, $primary-color, 8%);
@@ -101,27 +108,11 @@ $btn-error-bg            : $error-color;
 $btn-error-bg-hover      : mix(#000, $error-color, 8%);
 $btn-error-bg-active     : mix(#000, $error-color, 15%);
 
-$btn-default-bg          : $default-color;
 $btn-default-border      : $border-color-base;
-$btn-default-box-shadow  : $box-shadow-base;
+$btn-default-bg          : $default-color;
+$btn-default-box-shadow  : none;
 $btn-default-color       : $primary-color;
 $btn-default-hover-color : $btn-primary-bg-hover;
-$btn-others-color        : $default-color;
-
-$btn-font-weight         : 500;
-$btn-border-radius-base  : $border-radius-base;
-$btn-border-radius-sm    : $border-radius-sm;
-
-$btn-disable-color       : rgba(0, 0, 0, 0.247059);
-$btn-disable-bg          : $background-color-base;
-$btn-disable-border      : $border-color-base;
-
-$btn-font-size-sm        : $font-size-base - 2px;
-$btn-font-size-lg        : $font-size-lg;
-
-$btn-size-height-base    : $height-base;
-$btn-size-height-sm      : 20px;
-$btn-size-height-lg      : 36px;
 
 // Table
 $table-head-color   : $primary-color;

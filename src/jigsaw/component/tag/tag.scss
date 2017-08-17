@@ -20,7 +20,7 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
         padding-right: 20px;
     }
     &.#{$tag-prefix-cls}-color{
-        color: $font-color-white;
+        color: $text-color-of-bg;
     }
     .#{$tag-prefix-cls}-close-bar{
         position: absolute;

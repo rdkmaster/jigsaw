@@ -6,12 +6,12 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     @include inline-block();
     min-width: 80px;
     padding: 0 10px;
-    min-height: $btn-size-height-base;
-    line-height: $btn-size-height-base - 4;
+    min-height: $height-base;
+    line-height: $height-base - 4px;
     font-size: $font-size-base;
     text-align: center;
     position: relative;
-    border-radius: $btn-border-radius-base;
+    border-radius: $border-radius-base;
     cursor: pointer;
     box-shadow: $btn-default-box-shadow;
     user-select: none;
@@ -47,7 +47,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
 
     &.#{$btn-prefix-cls}-color-primary {
         background-color: $btn-primary-bg;
-        color: $btn-others-color;
+        color: $text-color-of-bg;
         border: 1px solid $btn-primary-bg;
         &:hover {
             background: $btn-primary-bg-hover;
@@ -62,7 +62,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
 
     &.#{$btn-prefix-cls}-color-warning {
         background-color: $btn-warning-bg;
-        color: $btn-others-color;
+        color: $text-color-of-bg;
         border: 1px solid $btn-warning-bg;
         &:hover {
             background: $btn-warning-bg-hover;
@@ -77,7 +77,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
 
     &.#{$btn-prefix-cls}-color-error {
         background-color: $btn-error-bg;
-        color: $btn-others-color;
+        color: $text-color-of-bg;
         border: 1px solid $btn-error-bg;
         &:hover {
             background: $btn-error-bg-hover;
@@ -91,23 +91,23 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     }
 
     &.#{$btn-prefix-cls}-size-large {
-        font-size: $btn-font-size-lg;
-        min-height: $btn-size-height-lg;
-        line-height: $btn-size-height-lg - 2;
+        font-size: $font-size-lg;
+        min-height: $height-lg;
+        line-height: $height-lg - 2px;
     }
 
     &.#{$btn-prefix-cls}-size-small {
-        font-size: $btn-font-size-sm;
-        min-height: $btn-size-height-sm;
-        line-height: $btn-size-height-sm - 2;
+        font-size: $font-size-sm;
+        min-height: $height-sm;
+        line-height: $height-sm - 2px;
     }
 
     &.#{$btn-prefix-cls}-disabled {
         pointer-events: none;
         cursor: default;
-        color: $btn-disable-color;
-        background-color: $btn-disable-bg;
-        border-color: $btn-disable-border;
+        color: $disabled-text-color;
+        background-color: $disabled-bg-color;
+        border-color: $border-color-base;
     }
 }
 
