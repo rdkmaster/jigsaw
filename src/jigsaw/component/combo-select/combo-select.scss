@@ -12,7 +12,7 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
     display: inline-block;
     outline: none;
     position: relative;
-    color: $text-color-level-two;
+    color: $text-color-lv2;
     font-size: $font-size-base;
     cursor: pointer;
 
@@ -48,11 +48,11 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
     }
 
     &-disabled &-selection {
-        background-color: $background-color-base;
+        background-color: $disabled-bg;
         cursor: not-allowed;
 
         &:hover, &:active, &:focus {
-            border-color: $background-color-base;
+            border-color: $disabled-bg;
             box-shadow: none;
         }
     }

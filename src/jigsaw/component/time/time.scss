@@ -17,7 +17,7 @@ $time-prefix-cls: #{$jigsaw-prefix}-time;
             tr{
                 td{
                     &.disabled,span.disabled{
-                        color: #dedede;
+                        color: $disabled-color;
                     }
                     &.today:before{
                         display: none;

@@ -35,9 +35,9 @@
 
 /*时间组件样式start*/
 jigsaw-time{
-    color: $text-color-level-two;
+    color: $text-color-lv2;
     .bootstrap-datetimepicker-widget table td.old, .bootstrap-datetimepicker-widget table td.new {
-        color: $text-color-level-three;
+        color: $text-color-lv3;
     }
 
     .bootstrap-datetimepicker-widget table td.day{
@@ -89,7 +89,7 @@ jigsaw-time{
         }
     }
     .bootstrap-datetimepicker-widget a[data-action]{
-        color: $text-color-level-two;
+        color: $text-color-lv2;
         &:hover{
             color: $primary-color;
         }

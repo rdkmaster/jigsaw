@@ -95,10 +95,10 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
             vertical-align: middle;
             text-align: center;
             cursor: pointer;
-            color: $text-color-level-three;
+            color: $text-color-lv3;
 
             &-active {
-                color: $text-color-level-two;
+                color: $text-color-lv2;
             }
         }
     }

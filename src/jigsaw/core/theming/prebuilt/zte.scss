@@ -1,5 +1,5 @@
 // Prefix
-$jigsaw-prefix           : jigsaw;
+$jigsaw-prefix          : jigsaw;
 
 // Color
 $primary-color          : #008fd4;
@@ -10,7 +10,6 @@ $highlight-color        : #ec6d6d;
 $warning-color          : #f99660;
 $normal-color           : #d9d9d9;
 $default-color          : #fff;
-$disabled-color         : #f7f7f7;
 
 $primary-1: desaturate($primary-color, 10%);
 $primary-2: desaturate($primary-color, 20%);
@@ -27,9 +26,9 @@ $primary-10: desaturate($primary-color, 100%);
 $body-background        : #fff;
 $font-family            : "Microsoft YaHei", Arial;
 $code-family            : Consolas, Menlo, Courier, monospace;
-$text-color-level-one   : #333;
-$text-color-level-two   : #666;
-$text-color-level-three : #999;
+$text-color-lv1         : #333;
+$text-color-lv2         : #666;
+$text-color-lv3         : #999;
 $text-color-of-bg       : #fff;
 $font-size-base         : 12px;
 $font-size-sm           : $font-size-base - 2px;
@@ -73,23 +72,24 @@ $outline-width          : 2px;
 $outline-color          : $primary-color;
 
 // Background color
-$background-color-base        : #f7f7f7;        // basic gray background
-$background-color-level-one   : #dedede;
-$background-color-level-tow   : #eee;
-$background-color-level-three : #f3f3f3;
+$background-color-base        : #f7f7f7;
+$background-color-lv1         : #dedede;
+$background-color-lv2         : #eee;
+$background-color-lv3         : #f3f3f3;
 
 // Shadow
-$shadow-color           : rgba(0, 0, 0, .2);
+$shadow-color           : rgba(#000, .2);
 $shadow-1-down          : 0 1px 6px $shadow-color;
-$box-shadow-base        : $shadow-1-down;
 $shadow-1-up            : 0 -1px 6px $shadow-color;
 $shadow-1-left          : -1px 0 6px $shadow-color;
 $shadow-1-right         : 1px 0 6px $shadow-color;
 $shadow-2               : 0 2px 8px $shadow-color;
+$box-shadow-base        : $shadow-1-down;
 
 // Disable states
-$disabled-text-color    : rgba(0, 0, 0, .25);
-$disabled-bg-color      : $disabled-color;
+$disabled-color         : rgba(#000, .25);
+$disabled-bg            : $background-color-base;
+$disabled-bg-dark       : #f4f4f4; // switch组件disabled bg
 
 // Buttons
 $btn-primary-bg          : $primary-color;
@@ -111,11 +111,11 @@ $btn-default-color       : $primary-color;
 $btn-default-hover-color : $btn-primary-bg-hover;
 
 // Table
-$table-head-color   : $primary-color;
-$table-head-bg      : $background-color-level-tow;
-$table-odd-row-bg   : $background-color-level-three;
-$table-hover-row-bg : #e2eef9;
-$table-select-row-bg: #cde4fa;
+$table-head-color        : $primary-color;
+$table-head-bg           : $background-color-lv2;
+$table-odd-row-bg        : $background-color-lv3;
+$table-hover-row-bg      : #e2eef9;
+$table-select-row-bg     : #cde4fa;
 
 // Scroll bar
 $scroll-bar-bg        : fade-out($primary-color, .7);
@@ -131,7 +131,7 @@ $select-option-selected-bg  : #cde4fa;
 
 // Input
 $input-box-shadow            : 0 0 0 2px fade-out($primary-color, .8);
-$input-color                 : $text-color-level-two;
+$input-color                 : $text-color-lv2;
 $input-border-color          : $border-color-base;
 $input-bg                    : #fff;
 $input-hover-border-color    : $primary-color;
@@ -154,7 +154,7 @@ $checkbox-checked-bg           : $primary-color;
 $checkbox-checked-inner        : $default-color;
 
 // Collapse
-$collapse-head-bg              : $background-color-level-tow;
+$collapse-head-bg              : $background-color-lv2;
 
 // z-index list
 $zindex-affix           : 10;
@@ -176,7 +176,7 @@ $animation-duration-fast: .1s; // Tooltip
 // Form
 // ---
 $label-required-color        : $highlight-color;
-$label-color                 : $text-color-level-two;
+$label-color                 : $text-color-lv2;
 $form-item-margin-bottom     : 24px;
 
 
