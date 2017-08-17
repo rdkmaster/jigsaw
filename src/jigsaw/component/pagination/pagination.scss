@@ -19,50 +19,19 @@ $paging-prefix-cls: #{$jigsaw-prefix}-paging;
         cursor: pointer;
         vertical-align: top;
         @include prefixer(transition, all .3s ease);
-        &.#{$paging-prefix-cls}-prev:after, &.#{$paging-prefix-cls}-next:after{
-            position: absolute;
-            left: 9px;
-            top: 10px;
-            content: '';
-            display: block;
-            width: 7px;
-            height: 7px;
-            border-color: #666666;
-        }
-        &.#{$paging-prefix-cls}-prev:after{
-            border: {
-                left: 1px solid;
-                top: 1px solid;
-            };
-            @include prefixer(transform, rotate(-45deg))
-        }
-        &.#{$paging-prefix-cls}-next:after{
-            border: {
-                right: 1px solid;
-                top: 1px solid;
-            };
-            @include prefixer(transform, rotate(45deg))
-        }
         &.#{$paging-prefix-cls}-disabled{
             cursor: not-allowed;
-            &.#{$paging-prefix-cls}-prev:after, &.#{$paging-prefix-cls}-next:after{
-                border-color: $disabled-color;
-            }
+            border: 1px solid $border-color-base;
+            color: $disabled-color;
             &:hover{
                 border: 1px solid $border-color-base;
-                &.#{$paging-prefix-cls}-prev:after, &.#{$paging-prefix-cls}-next:after{
-                    border-color: $disabled-color;
-                }
+                color: $disabled-color;
             }
         }
         &:hover{
             border: 1px solid $primary-color;
             color: $primary-color;
-            &.#{$paging-prefix-cls}-prev:after, &.#{$paging-prefix-cls}-next:after{
-                border-color: $primary-color;
-            }
         }
-
     }
     jigsaw-select{
         margin-right: 8px;
