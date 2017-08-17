@@ -134,7 +134,7 @@ export class PopupInfo {
     popupRef: PopupRef;
     element: HTMLElement;
     dispose: PopupDisposer;
-    event: EventEmitter<PopupEventType>;
+    answer: EventEmitter<PopupEventType>;
 }
 
 @Injectable()
@@ -226,7 +226,7 @@ export class PopupService {
         popupRef = popupInfo.popupRef;
         element = popupInfo.element;
         popupDisposer = popupInfo.dispose;
-        event = popupInfo.event;
+        event = popupInfo.answer;
 
         //set disposer
         disposer = () => {
@@ -250,7 +250,7 @@ export class PopupService {
             this._setPopup(options, element, this._renderer, event);
         }, 0);
 
-        return {popupRef: popupRef, element: element, dispose: disposer, event: event}
+        return {popupRef: popupRef, element: element, dispose: disposer, answer: event}
     }
 
     private _popupBlocker(options: PopupOptions): PopupDisposer {
@@ -320,7 +320,7 @@ export class PopupService {
         const disposer: PopupDisposer = this._getDisposer(options, ref, element, this._renderer);
         return {
             popupRef: ref, element: element, dispose: disposer,
-            event: new EventEmitter<PopupEventType>()
+            answer: new EventEmitter<PopupEventType>()
         }
     }
 

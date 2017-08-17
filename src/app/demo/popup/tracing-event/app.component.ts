@@ -34,7 +34,7 @@ export class PopupTracingEventComponent {
 
     popup(tpDialog) {
         this.popupInfo = this.popupService.popup(tpDialog);
-        this.popupInfo.event.subscribe(event => {
+        this.popupInfo.answer.subscribe(event => {
             this.eventMessages.push('event [' + PopupEventType[event] + '] launched!');
         });
     }

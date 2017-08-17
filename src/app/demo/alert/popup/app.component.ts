@@ -46,7 +46,7 @@ export class AlertPopupDemoComponent {
             message: 'this is a great info alert!', title: 'the title is optional'
         });
         if(popupInfo.popupRef instanceof ComponentRef){
-            popupInfo.popupRef.instance.answer.subscribe(answer => {
+            popupInfo.answer.subscribe(answer => {
                 this.disposeAnswer(answer, popupInfo)
             })
         }
@@ -58,7 +58,7 @@ export class AlertPopupDemoComponent {
             message: 'this is a great warning alert!'
         });
         if(popupInfo.popupRef instanceof ComponentRef){
-            popupInfo.popupRef.instance.answer.subscribe(answer => {
+            popupInfo.answer.subscribe(answer => {
                 this.disposeAnswer(answer, popupInfo)
             })
         }
@@ -70,7 +70,7 @@ export class AlertPopupDemoComponent {
             message: 'this is a great error alert!'
         });
         if(popupInfo.popupRef instanceof ComponentRef){
-            popupInfo.popupRef.instance.answer.subscribe(answer => {
+            popupInfo.answer.subscribe(answer => {
                 this.disposeAnswer(answer, popupInfo)
             })
         }

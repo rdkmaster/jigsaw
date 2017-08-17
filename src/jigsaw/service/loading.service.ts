@@ -37,7 +37,7 @@ export class LoadingService {
                 popupRef: popupInfo.popupRef,
                 element: popupInfo.element,
                 dispose: dispose,
-                event: popupInfo.event
+                answer: popupInfo.answer
             }
         } else if (blockTo) {
             blockBy = blockTo;

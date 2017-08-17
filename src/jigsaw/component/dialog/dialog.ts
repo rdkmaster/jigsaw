@@ -5,7 +5,7 @@ import {
     ElementRef,
     EventEmitter,
     Input,
-    NgModule,
+    NgModule, OnDestroy,
     OnInit,
     Output,
     Renderer2
@@ -82,7 +82,9 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
     }
 }
 
-export abstract class AbstractDialogComponentBase extends AbstractJigsawComponent implements IPopupable, AfterContentInit {
+export abstract class AbstractDialogComponentBase extends AbstractJigsawComponent
+    implements IPopupable, AfterContentInit, OnDestroy {
+
     @Input()
     public buttons: ButtonInfo[];
     @Input('header')
@@ -96,6 +98,7 @@ export abstract class AbstractDialogComponentBase extends AbstractJigsawComponen
     protected elementRef: ElementRef;
 
     private _top: string;
+
     //设置距离顶部高度
     @Input()
     public get top(): string {
@@ -132,10 +135,14 @@ export abstract class AbstractDialogComponentBase extends AbstractJigsawComponen
             if (this.top) {
                 this.renderer.setStyle(this.popupElement, 'top', this.top);
             }
-            if(this.popupElement.style.position != 'fixed' && this.popupElement.style.position != 'absolute'){
+            if (this.popupElement.style.position != 'fixed' && this.popupElement.style.position != 'absolute') {
                 this.renderer.setStyle(this.popupElement.querySelector('.jigsaw-dialog-base-head'), 'cursor', 'inherit');
             }
         }, 0);
+    }
+
+    ngOnDestroy() {
+        this.answer.unsubscribe();
     }
 }
 
