@@ -35,7 +35,7 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         }
         &:focus {
             border: 1px solid $primary-color;
-            box-shadow: $input-box-shadow;
+            box-shadow: $box-focus-shadow;
         }
     }
     &-clear-bar{

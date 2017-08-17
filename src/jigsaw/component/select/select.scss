@@ -30,7 +30,7 @@ $option-prefix-cls: #{$jigsaw-prefix}-option;
         }
         &.#{$select-prefix-cls}-opened {
             border-color: $primary-color;
-            box-shadow: $select-box-shadow;
+            box-shadow: $box-focus-shadow;
             .#{$select-prefix-cls}-icon-down {
                 @include prefixer(transform, rotate(180deg));
             }

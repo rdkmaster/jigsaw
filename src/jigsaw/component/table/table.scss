@@ -39,12 +39,12 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
                 }
                 &:hover{
                     td:not([rowspan]){
-                        background: $table-hover-row-bg;
+                        background: $state-hover-bg;
                     }
                 }
                 &.#{$table-prefix-cls}-row-selected{
                     td:not([rowspan]){
-                        background: $table-select-row-bg;
+                        background: $state-active-bg;
                     }
                 }
                 td[rowspan]{
