@@ -134,7 +134,7 @@ export class PopupInfo {
     popupRef: PopupRef;
     element: HTMLElement;
     dispose: PopupDisposer;
-    answer: EventEmitter<PopupEventType>;
+    answer: EventEmitter<ButtonInfo>;
 }
 
 @Injectable()
@@ -214,7 +214,6 @@ export class PopupService {
         let popupInfo: PopupInfo,
             popupRef: PopupRef,
             element: HTMLElement,
-            event: EventEmitter<PopupEventType>,
             popupDisposer: PopupDisposer,
             blockDisposer: PopupDisposer,
             disposer: PopupDisposer,
@@ -226,7 +225,6 @@ export class PopupService {
         popupRef = popupInfo.popupRef;
         element = popupInfo.element;
         popupDisposer = popupInfo.dispose;
-        event = popupInfo.answer;
 
         //set disposer
         disposer = () => {
@@ -246,11 +244,13 @@ export class PopupService {
         }
         removeWindowListens = this._beforePopup(options, element, this._renderer, disposer);
         setTimeout(() => {
-            event.emit(PopupEventType.instanceCreated);
-            this._setPopup(options, element, this._renderer, event);
+            this._setPopup(options, element, this._renderer);
         }, 0);
 
-        return {popupRef: popupRef, element: element, dispose: disposer, answer: event}
+        return {
+            popupRef: popupRef, element: element, dispose: disposer,
+            answer: popupInfo.popupRef['instance'].answer
+        }
     }
 
     private _popupBlocker(options: PopupOptions): PopupDisposer {
@@ -319,8 +319,7 @@ export class PopupService {
         this._renderer.setStyle(element, 'top', 0);
         const disposer: PopupDisposer = this._getDisposer(options, ref, element, this._renderer);
         return {
-            popupRef: ref, element: element, dispose: disposer,
-            answer: new EventEmitter<PopupEventType>()
+            popupRef: ref, element: element, dispose: disposer, answer: null
         }
     }
 
@@ -376,14 +375,11 @@ export class PopupService {
         return CommonUtils.isEmptyObject(options) || !options.pos;
     }
 
-    private _setPopup(options: PopupOptions, element: HTMLElement, renderer: Renderer2, event?: EventEmitter<PopupEventType>) {
+    private _setPopup(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
         if (element && renderer) {
             this._setSize(options, element, renderer);
             this._setPosition(options, element, renderer);
-            this._setShowAnimate(options, element, renderer, event);
-            if (event) {
-                event.emit(PopupEventType.positionReady);
-            }
+            this._setShowAnimate(options, element, renderer);
         }
     }
 
@@ -428,18 +424,15 @@ export class PopupService {
         renderer.setStyle(element, 'background', '#ffffff');
     }
 
-    private _setShowAnimate(options: PopupOptions, element: HTMLElement, renderer: Renderer2, event?: EventEmitter<PopupEventType>) {
+    private _setShowAnimate(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
         renderer.setStyle(element, 'visibility', 'visible');
         renderer.addClass(element, PopupService._getPopupEffect(options).showEffect);
 
-        if (event) {
-            const removeElementListen = renderer.listen(element, 'animationend', () => {
-                removeElementListen();
-                this._eventHelper.del(element, 'animationend', removeElementListen);
-                event.emit(PopupEventType.ready);
-            });
-            this._eventHelper.put(element, 'animationend', removeElementListen);
-        }
+        const removeElementListen = renderer.listen(element, 'animationend', () => {
+            removeElementListen();
+            this._eventHelper.del(element, 'animationend', removeElementListen);
+        });
+        this._eventHelper.put(element, 'animationend', removeElementListen);
     }
 
     private _setHideAnimate(options: PopupOptions, element: HTMLElement, renderer: Renderer2, cb: () => void) {
