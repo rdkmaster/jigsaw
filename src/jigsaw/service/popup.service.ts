@@ -240,6 +240,7 @@ export class PopupService {
 
         //set popup
         if (popupRef instanceof ComponentRef) {
+            popupRef.instance.dispose = disposer;
             popupRef.instance.initData = initData;
         }
         removeWindowListens = this._beforePopup(options, element, this._renderer, disposer);

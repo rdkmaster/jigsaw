@@ -22,6 +22,7 @@ export interface IDialog extends IPopupable {
     buttons: ButtonInfo[];
     title: string;
     dialog: JigsawDialog;
+    dispose: (answer?: ButtonInfo)=>void;
 }
 
 export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
@@ -33,6 +34,7 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
 
     private _title: string = '';
 
+    @Input()
     public get title(): string {
         return this._title;
     }
@@ -46,6 +48,7 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
 
     private _buttons: ButtonInfo[];
 
+    @Input()
     public get buttons(): ButtonInfo[] {
         return this._buttons;
     }
@@ -60,11 +63,7 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
     @Output()
     public answer: EventEmitter<ButtonInfo> = new EventEmitter<ButtonInfo>();
 
-    public dispose(answer?: ButtonInfo): void {
-        if (this.dialog) {
-            this.dialog.dispose(answer);
-        }
-    }
+    public dispose: (answer?: ButtonInfo) => void;
 
     public ngOnInit() {
         if (this.dialog) {
