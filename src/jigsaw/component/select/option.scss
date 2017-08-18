@@ -17,9 +17,9 @@ $option-prefix-cls: #{$jigsaw-prefix}-option;
     box-sizing: border-box;
     @include line-ellipsis(100%);
     &:hover {
-        background-color: $state-hover-bg;
+        background-color: $item-hover-bg;
     }
     &.#{$option-prefix-cls}-on, &.#{$option-prefix-cls}-on:hover {
-        background-color: $state-active-bg;
+        background-color: $item-active-bg;
     }
 }

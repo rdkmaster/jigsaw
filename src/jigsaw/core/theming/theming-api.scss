@@ -1,28 +1,28 @@
-@mixin setDialogHead($color, $hoverColor) {
+@mixin setDialog($headColor, $hoverColor) {
     .jigsaw-dialog .jigsaw-dialog-head {
-        color: $color;
+        color: $headColor;
         .jigsaw-dialog-close {
-            color: $color;
+            color: $headColor;
             &:hover {
                 color: $hoverColor;
             }
         }
     }
     .jigsaw-alert .jigsaw-alert-head .jigsaw-alert-close{
-        color: $color;
+        color: $headColor;
         &:hover{
             color: $hoverColor;
         }
     }
 }
 
-@mixin setCheckboxChecked($bgColor, $innerColor){
+@mixin setCheckbox($checkedBgColor, $checkedInnerColor){
     .jigsaw-checkbox-host{
         .jigsaw-checkbox-wrapper .jigsaw-checkbox-checked, .jigsaw-checkbox-wrapper .jigsaw-checkbox-indeterminate{
-            background-color: $bgColor;
+            background-color: $checkedBgColor;
         }
         .jigsaw-checkbox-wrapper .jigsaw-checkbox-checked:after{
-            border-color: $innerColor;
+            border-color: $checkedInnerColor;
         }
     }
 }
@@ -48,8 +48,12 @@
     jigsaw-tag.jigsaw-tag-host{background: $bgColor}
 }
 
-@mixin setCollapseHead($bgColor){
+@mixin setCollapse($headBgColor){
     .jigsaw-collapse-host .jigsaw-collapse-item .jigsaw-collapse-header{
-        background: $bgColor;
+        background: $headBgColor;
     }
+}
+
+@mixin setButton($textColor){
+    .jigsaw-button{color: $textColor}
 }

@@ -14,14 +14,20 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     border-radius: $border-radius-base;
     cursor: pointer;
     box-shadow: $btn-default-box-shadow;
+    font-weight: $btn-font-weight;
     user-select: none;
     @include prefixer(transition, all .3s $ease-in-out);
     background-color: $btn-default-bg;
     border: 1px solid $btn-default-border;
-    color: $btn-default-color;
+    color: $text-color;
     &:hover {
-        color: $btn-default-hover-color;
-        border: 1px solid $btn-default-hover-color;
+        color: $btn-default-bg-hover;
+        border: 1px solid $btn-default-bg-hover;
+    }
+
+    &:active {
+        color: $btn-default-bg-active;
+        border: 1px solid $btn-default-bg-active;
     }
 
     &.#{$btn-prefix-cls}-clicked:after {
@@ -32,7 +38,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
         bottom: -1px;
         right: -1px;
         border-radius: inherit;
-        border: 1px solid darken($btn-default-hover-color, 10%);
+        border: 1px solid darken($btn-default-bg-hover, 10%);
         opacity: 0.4;
         @include prefixer(animation, buttonEffect 0.36s $ease-out forwards);
         display: block;

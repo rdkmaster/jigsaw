@@ -7,20 +7,97 @@ $highlight-color        : #f50;
 $warning-color          : #fa0;
 $normal-color           : #d9d9d9;
 $default-color          : #fff;
-$disabled-color         : rgba(0,0,0,.25);
 
-$primary-1: saturate($primary-color, 80%);
-$primary-2: saturate($primary-color, 60%);
-$primary-3: saturate($primary-color, 40%);
-$primary-4: saturate($primary-color, 20%);
-$primary-5: $primary-color;
-$primary-6: desaturate($primary-color, 20%);
-$primary-7: desaturate($primary-color, 40%);
-$primary-8: desaturate($primary-color, 60%);
-$primary-9: desaturate($primary-color, 80%);
-$primary-10: desaturate($primary-color, 100%);
+// Palette
+$primary-1              : mix(#fff, $primary-color, 90%);
+$primary-2              : mix(#fff, $primary-color, 80%);
+$primary-3              : mix(#fff, $primary-color, 60%);
+$primary-4              : mix(#fff, $primary-color, 40%);
+$primary-5              : mix(#fff, $primary-color, 20%);
+$primary-6              : $primary-color;
+$primary-7              : mix(#000, $primary-color, 10%);
+$primary-8              : mix(#000, $primary-color, 20%);
+$primary-9              : mix(#000, $primary-color, 30%);
+$primary-10             : mix(#000, $primary-color, 40%);
 
+// ------ Base & Require ------
+$body-background        : #fff;
+$font-family            : "Helvetica Neue For Number", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$code-family            : Consolas, Menlo, Courier, monospace;
+$heading-color          : rgba(#000, .85);
+$heading-color-dark     : rgba(#000, .97);
+$text-color             : rgba(#000, .65);
+$text-color-secondary   : rgba(#000, .43);
+$text-color-dark        : rgba(#000, .91);
+$text-color-secondary-dark: rgba(#000, .67);
+$text-color-of-bg       : #fff;
+$font-size-base         : 12px;
+$font-size-sm           : $font-size-base - 2px;
+$font-size-lg           : $font-size-base + 2px;
+$line-height-base       : 1.5;
+$border-radius-base     : 4px;
+$border-radius-sm       : 2px;
+$height-base            : 28px;
+$height-sm              : 22px;
+$height-lg              : 32px;
 
+// Border color
+$border-color-base      : #d9d9d9;
+$border-color-split     : #e9e9e9;
+$border-width-base      : 1px;
+$border-style-base      : solid;
+
+// Background color
+$background-color-base  : #f7f7f7;
+
+// Shadow
+$shadow-color           : rgba(#000, .2);
+$shadow-1-down          : 0 1px 6px $shadow-color;
+$shadow-1-up            : 0 -1px 6px $shadow-color;
+$shadow-1-left          : -1px 0 6px $shadow-color;
+$shadow-1-right         : 1px 0 6px $shadow-color;
+$shadow-2               : 0 2px 8px $shadow-color;
+$box-shadow-base        : $shadow-1-down;
+$box-focus-shadow       : 0 0 0 2px fade-out($primary-color, .8);
+
+// Disabled
+$disabled-color         : rgba(#000, .25);
+$disabled-bg            : $background-color-base;
+$disabled-bg-dark       : #f4f4f4; // switch组件disabled bg
+
+// The background colors for active and hover states for things like
+// list items or table cells.
+$item-hover-bg          : $primary-1;
+$item-active-bg         : $primary-2;
+
+// Buttons
+$btn-primary-bg         : $primary-color;
+$btn-primary-bg-hover   : $primary-7;
+$btn-primary-bg-active  : $primary-8;
+
+$btn-warning-bg         : $warning-color;
+$btn-warning-bg-hover   : mix(#000, $warning-color, 10%);
+$btn-warning-bg-active  : mix(#000, $warning-color, 20%);
+
+$btn-error-bg           : $error-color;
+$btn-error-bg-hover     : mix(#000, $error-color, 10%);
+$btn-error-bg-active    : mix(#000, $error-color, 20%);
+
+$btn-default-border     : $border-color-base;
+$btn-default-bg         : $default-color;
+$btn-default-bg-hover   : $btn-primary-bg-hover;
+$btn-default-bg-active  : $btn-primary-bg-active;
+$btn-default-box-shadow : none;
+
+$btn-font-weight        : 500;
+
+// Scroll bar
+$scroll-bar-bg          : fade-out($primary-color, .7);
+$scroll-bar-active-bg   : fade-out($primary-color, .5);
+
+@import "./_common";
+@import "../all-theme";
+@import "../theming-api";
 
 
 
