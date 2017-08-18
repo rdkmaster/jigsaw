@@ -20,29 +20,30 @@ import {JigsawMovableModule} from "../../directive/movable/index";
 
 export interface IDialog extends IPopupable {
     buttons: ButtonInfo[];
-    title: string;
+    caption: string;
     dialog: JigsawDialog;
     dispose: (answer?: ButtonInfo)=>void;
 }
 
 export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
 
+    @Input()
     public initData: any;
 
     abstract get dialog(): JigsawDialog;
     abstract set dialog(value: JigsawDialog);
 
-    private _title: string = '';
+    private _caption: string = '';
 
     @Input()
-    public get title(): string {
-        return this._title;
+    public get caption(): string {
+        return this._caption;
     }
 
-    public set title(value: string) {
-        this._title = value;
+    public set caption(value: string) {
+        this._caption = value;
         if (this.dialog) {
-            this.dialog.title = value;
+            this.dialog.caption = value;
         }
     }
 
@@ -68,7 +69,7 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
     public ngOnInit() {
         if (this.dialog) {
             this.dialog.buttons = this.buttons;
-            this.dialog.title = this.title;
+            this.dialog.caption = this.caption;
         }
     }
 
@@ -86,9 +87,9 @@ export abstract class AbstractDialogComponentBase extends AbstractJigsawComponen
 
     @Input()
     public buttons: ButtonInfo[];
-    @Input('header')
-    public title: string;
-
+    @Input()
+    public caption: string;
+    @Input()
     public initData: any;
 
     protected popupElement: HTMLElement;
