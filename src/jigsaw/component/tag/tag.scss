@@ -14,7 +14,7 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
     line-height: 20px;
     border: 1px solid $border-color-base;
     border-radius: $border-radius-base;
-    background: $tag-bg-default;
+    background: $background-color-base;
     cursor: pointer;
     &.#{$tag-prefix-cls}-closable{
         padding-right: 20px;
@@ -28,7 +28,7 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
         line-height: 18px;
         font-size: 16px;
         &:hover{
-            color: #000;
+            color: $text-color-dark;
         }
     }
 }

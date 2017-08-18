@@ -34,9 +34,9 @@ $collapse-prefix: #{$jigsaw-prefix}-collapse;
         height: 38px;
         line-height: 38px;
         cursor: pointer;
-        color: $text-color-lv2;
+        color: $heading-color;
         padding-left: 16px;
-        background: $collapse-head-bg;
+        background: $background-color-base;
     }
 
     &-header &-arrow {

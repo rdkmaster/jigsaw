@@ -15,11 +15,11 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
             border: 1px solid $border-color-base;
         }
         thead{
-            color: $table-head-color;
+            color: $heading-color;
             tr{
                 height: 40px;
                 td{
-                    background: $table-head-bg;
+                    background: $background-color-base;
                 }
             }
         }
@@ -32,7 +32,7 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
             tr{
                 height: 30px;
                 &:nth-child(2n){
-                    background: $table-odd-row-bg;
+                    background: $default-color;
                 }
                 &:nth-child(2n-1){
                     background: $default-color;

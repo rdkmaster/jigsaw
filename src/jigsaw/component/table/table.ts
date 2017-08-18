@@ -58,7 +58,8 @@ import {PopupEffect, PopupInfo, PopupPositionType, PopupService} from "../../ser
     templateUrl: 'table.html',
     host: {
         '[style.width]': 'width',
-        '[style.height]': 'height'
+        '[style.height]': 'height',
+        '[class.jigsaw-table-host]': 'true'
     },
     providers: [TableCheckboxService]
 })

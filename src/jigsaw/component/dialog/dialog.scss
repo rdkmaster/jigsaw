@@ -16,7 +16,7 @@ $dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
         @include clearfix;
         line-height: 20px;
         padding: 14px 16px;
-        color: $dialog-head-color;
+        color: $heading-color;
         font-size: 14px;
         background: $default-color;
         border-bottom: 1px solid $border-color-base;
@@ -29,11 +29,11 @@ $dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
     &-head &-close {
         float: right;
         font-size: 24px;
-        color: $dialog-close-bar-color;
+        color: $text-color;
         cursor: pointer;
         margin-top: -3px;
         &:hover{
-            color: $dialog-close-bar-hover-color;
+            color: $text-color-dark;
         }
     }
 

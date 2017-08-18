@@ -8,24 +8,28 @@ $warning-color          : #f99660;
 $normal-color           : #d9d9d9;
 $default-color          : #fff;
 
-$primary-1: desaturate($primary-color, 10%);
-$primary-2: desaturate($primary-color, 20%);
-$primary-3: desaturate($primary-color, 30%);
-$primary-4: desaturate($primary-color, 40%);
-$primary-5: desaturate($primary-color, 50%);
-$primary-6: desaturate($primary-color, 60%);
-$primary-7: desaturate($primary-color, 70%);
-$primary-8: desaturate($primary-color, 80%);
-$primary-9: desaturate($primary-color, 90%);
-$primary-10: desaturate($primary-color, 100%);
+// Palette
+$primary-1              : desaturate($primary-color, 10%);
+$primary-2              : desaturate($primary-color, 20%);
+$primary-3              : desaturate($primary-color, 30%);
+$primary-4              : desaturate($primary-color, 40%);
+$primary-5              : desaturate($primary-color, 50%);
+$primary-6              : desaturate($primary-color, 60%);
+$primary-7              : desaturate($primary-color, 70%);
+$primary-8              : desaturate($primary-color, 80%);
+$primary-9              : desaturate($primary-color, 90%);
+$primary-10             : desaturate($primary-color, 100%);
 
 // ------ Base & Require ------
 $body-background        : #fff;
 $font-family            : "Microsoft YaHei", Arial;
 $code-family            : Consolas, Menlo, Courier, monospace;
-$text-color-lv1         : #333;
-$text-color-lv2         : #666;
-$text-color-lv3         : #999;
+$heading-color          : #333;
+$heading-color-dark     : #222;
+$text-color             : #666;
+$text-color-secondary   : #999;
+$text-color-dark        : #444;
+$text-color-secondary-dark: #777;
 $text-color-of-bg       : #fff;
 $font-size-base         : 12px;
 $font-size-sm           : $font-size-base - 2px;
@@ -44,10 +48,7 @@ $border-width-base      : 1px;
 $border-style-base      : solid;
 
 // Background color
-$background-color-base        : #f7f7f7;
-$background-color-lv1         : #dedede;
-$background-color-lv2         : #eee;
-$background-color-lv3         : #f3f3f3;
+$background-color-base  : #f7f7f7;
 
 // Shadow
 $shadow-color           : rgba(#000, .2);
@@ -67,55 +68,43 @@ $disabled-bg-dark       : #f4f4f4; // switch组件disabled bg
 // Hover states
 $state-hover-bg         : #e2eef9;
 
-//Active states
+// Active states
 $state-active-bg        : #cde4fa;
 
 // Buttons
-$btn-primary-bg          : $primary-color;
-$btn-primary-bg-hover    : mix(#000, $primary-color, 8%);
-$btn-primary-bg-active   : mix(#000, $primary-color, 15%);
+$btn-primary-bg         : $primary-color;
+$btn-primary-bg-hover   : mix(#000, $primary-color, 8%);
+$btn-primary-bg-active  : mix(#000, $primary-color, 15%);
 
-$btn-warning-bg          : $warning-color;
-$btn-warning-bg-hover    : mix(#000, $warning-color, 8%);
-$btn-warning-bg-active   : mix(#000, $warning-color, 15%);
+$btn-warning-bg         : $warning-color;
+$btn-warning-bg-hover   : mix(#000, $warning-color, 8%);
+$btn-warning-bg-active  : mix(#000, $warning-color, 15%);
 
-$btn-error-bg            : $error-color;
-$btn-error-bg-hover      : mix(#000, $error-color, 8%);
-$btn-error-bg-active     : mix(#000, $error-color, 15%);
+$btn-error-bg           : $error-color;
+$btn-error-bg-hover     : mix(#000, $error-color, 8%);
+$btn-error-bg-active    : mix(#000, $error-color, 15%);
 
-$btn-default-border      : $border-color-base;
-$btn-default-bg          : $default-color;
-$btn-default-box-shadow  : none;
-$btn-default-color       : $primary-color;
+$btn-default-border     : $border-color-base;
+$btn-default-bg         : $default-color;
+$btn-default-box-shadow : none;
+$btn-default-color      : $primary-color;
 $btn-default-hover-color : $btn-primary-bg-hover;
 
-// Table
-$table-head-color        : $primary-color;
-$table-head-bg           : $background-color-lv2;
-$table-odd-row-bg        : $background-color-lv3;
-
 // Scroll bar
-$scroll-bar-bg           : fade-out($primary-color, .7);
-$scroll-bar-active-bg    : fade-out($primary-color, .5);
+$scroll-bar-bg          : fade-out($primary-color, .7);
+$scroll-bar-active-bg   : fade-out($primary-color, .5);
 
-// Tag
-$tag-bg-default          : $background-color-lv3;
-
-// Dialog
-$dialog-head-color             : $primary-color;
-$dialog-close-bar-color        : $primary-color;
-$dialog-close-bar-hover-color  : mix(#000, $primary-color, 15%);
-
-// Alert
-$alert-close-bar-color         : $dialog-close-bar-color;
-$alert-close-bar-hover-color   : $dialog-close-bar-hover-color;
-
-// Checkbox
-$checkbox-checked-bg           : $primary-color;
-$checkbox-checked-inner        : #fff;
-
-// Collapse
-$collapse-head-bg              : $background-color-lv2;
-
-@import "./common";
+@import "./_common";
 @import "../all-theme";
+@import "../theming-api";
+
+// ------ Own for zte ------
+$background-color-lv1   : #dedede;
+$background-color-lv2   : #eee;
+$background-color-lv3   : #f3f3f3;
+@include setDialogHead($primary-color, mix(#000, $primary-color, 15%));
+@include setTable($background-color-lv2, $primary-color, $default-color, $background-color-lv3);
+@include setTag($background-color-lv3);
+@include setCollapseHead($background-color-lv2);
+
+

@@ -43,7 +43,7 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         font-size: 16px;
         line-height: 1;
         &:hover{
-            color: #000;
+            color: $text-color-dark;
         }
         &[hidden]{
             display: none !important;
