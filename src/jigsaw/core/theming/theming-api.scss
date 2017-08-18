@@ -8,52 +8,67 @@
             }
         }
     }
-    .jigsaw-alert .jigsaw-alert-head .jigsaw-alert-close{
+    .jigsaw-alert .jigsaw-alert-head .jigsaw-alert-close {
         color: $headColor;
-        &:hover{
+        &:hover {
             color: $hoverColor;
         }
     }
 }
 
-@mixin setCheckbox($checkedBgColor, $checkedInnerColor){
-    .jigsaw-checkbox-host{
-        .jigsaw-checkbox-wrapper .jigsaw-checkbox-checked, .jigsaw-checkbox-wrapper .jigsaw-checkbox-indeterminate{
+@mixin setCheckbox($checkedBgColor, $checkedInnerColor) {
+    .jigsaw-checkbox-host {
+        .jigsaw-checkbox-wrapper .jigsaw-checkbox-checked, .jigsaw-checkbox-wrapper .jigsaw-checkbox-indeterminate {
             background-color: $checkedBgColor;
         }
-        .jigsaw-checkbox-wrapper .jigsaw-checkbox-checked:after{
+        .jigsaw-checkbox-wrapper .jigsaw-checkbox-checked:after {
             border-color: $checkedInnerColor;
         }
     }
 }
 
-@mixin setTable($headBgColor, $headTextColor, $oddRowBgColor, $evenRowBgColor){
-    jigsaw-table.jigsaw-table-host table{
-        thead{
+@mixin setTable($headBgColor, $headTextColor, $oddRowBgColor, $evenRowBgColor) {
+    jigsaw-table.jigsaw-table-host table {
+        thead {
             color: $headTextColor;
-            tr td{
+            tr td {
                 background: $headBgColor;
             }
         }
-        tbody tr:nth-child(2n){
+        tbody tr:nth-child(2n) {
             background: $evenRowBgColor;
         }
-        tbody tr:nth-child(2n-1){
+        tbody tr:nth-child(2n-1) {
             background: $oddRowBgColor;
         }
     }
 }
 
-@mixin setTag($bgColor){
-    jigsaw-tag.jigsaw-tag-host{background: $bgColor}
+@mixin setTag($defaultBgColor) {
+    jigsaw-tag.jigsaw-tag-host {
+        background: $defaultBgColor
+    }
 }
 
-@mixin setCollapse($headBgColor){
-    .jigsaw-collapse-host .jigsaw-collapse-item .jigsaw-collapse-header{
+@mixin setCollapse($headBgColor) {
+    .jigsaw-collapse-host .jigsaw-collapse-item .jigsaw-collapse-header {
         background: $headBgColor;
     }
 }
 
-@mixin setButton($textColor){
-    .jigsaw-button{color: $textColor}
+@mixin setButton($defaultTextColor) {
+    .jigsaw-button {
+        color: $defaultTextColor
+    }
+}
+
+@mixin setTabs($tabLineColor, $showTriangle: true) {
+    .jigsaw-tabs {
+        .jigsaw-tabs-bar {
+            border-bottom: 1px solid $tabLineColor;
+        }
+        .jigsaw-tabs-nav-container .jigsaw-tabs-nav-wrap .jigsaw-tabs-nav .jigsaw-tabs-ink-bar:after {
+            display: if($showTriangle, block, none);
+        }
+    }
 }
