@@ -1,3 +1,7 @@
+/**
+ * 用来提供给用户定制组件样式的 mixin api
+ */
+
 @mixin setDialog($headColor, $hoverColor) {
     .jigsaw-dialog .jigsaw-dialog-head {
         color: $headColor;
