@@ -70,7 +70,7 @@ jigsaw-time{
             color: $primary-color;
         }
         span.glyphicon{
-            @include font-awesone();
+            @include font-awesome();
             font-size: 16px;
             &.glyphicon-chevron-left:before{
                 content: "\f104";
@@ -96,7 +96,7 @@ jigsaw-time{
         height: 24px;
         line-height: 24px;
         &.glyphicon{
-            @include font-awesone();
+            @include font-awesome();
             font-size: 14px;
             line-height: 24px;
             &.glyphicon-time:before{
@@ -115,7 +115,7 @@ jigsaw-time{
 
     .bootstrap-datetimepicker-widget table td a.btn span{
         &.glyphicon{
-            @include font-awesone();
+            @include font-awesome();
             font-size: 16px;
             line-height: 24px;
             &.glyphicon-chevron-up:before{
@@ -137,7 +137,7 @@ jigsaw-time{
 
 /*zTree组件样式start*/
 .ztree li span.button{
-    @include font-awesone();
+    @include font-awesome();
     background: none;
     font-size: 14px;
     color: $primary-color;
