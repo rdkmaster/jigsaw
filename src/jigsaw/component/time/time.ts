@@ -1,6 +1,7 @@
 import {
-    Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Renderer2, Output
+    Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Renderer2, Output, forwardRef
 } from "@angular/core";
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {Subscriber} from "rxjs/Subscriber";
 import {AbstractJigsawComponent} from "../core";
 import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../service/time.service";
@@ -31,10 +32,12 @@ export type GrItem = {
     styleUrls: ['time.scss'],
     host: {
         '[style.width]': 'width'
-    }
+    },
+    providers: [
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTime), multi: true },
+    ]
 })
-
-export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDestroy {
+export class JigsawTime extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
     @Output() public grChange = new EventEmitter<TimeGr>();
 
@@ -68,20 +71,9 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
     }
 
     public set date(newValue: WeekTime) {
-        if (newValue) {
-            newValue = TimeService.convertValue(newValue, <TimeGr>this.gr);
-            if (newValue != this._value) {
-                if (this._value && this.gr == TimeGr.week) {
-                    let newValueYear = TimeService.getYear(<string>newValue);
-                    let valueYear = TimeService.getYear(<string>this._value);
-                    let newValueWeek = TimeService.getWeekOfYear(<string>newValue);
-                    let valueWeek = TimeService.getWeekOfYear(<string>this._value);
-                    if (newValueYear == valueYear && newValueWeek == valueWeek) return;
-                }
-                let [value,] = this._handleValue(newValue);
-                this._value = value;
-                this._setDate(this._value);
-            }
+        this.writeValue(newValue);
+        if (newValue && newValue != this._value) {
+            this._propagateChange(this._value);
         }
     }
 
@@ -132,8 +124,9 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
     }
 
 
-    //时间刷新的间隔毫秒数，主要针对startDate或endDate设置为now或now-2h等需要不时刷新的场景
-    //@Input("refreshInterval") private _refreshInterval: number;
+    /**
+     * 时间刷新的间隔毫秒数，主要针对startDate或endDate设置为now或now-2h等需要不时刷新的场景
+     */
     private _refreshInterval: number;
     @Input()
     public set refreshInterval(value: number) {
@@ -143,7 +136,9 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
         }
     }
 
-    //周开始设置，可选值 sun mon tue wed thu fri sat，默认值是sun
+    /**
+     * 周开始设置，可选值 sun mon tue wed thu fri sat，默认值是sun
+     */
     private _weekStart: TimeWeekStart;
     @Input()
     public set weekStart(value: string | TimeWeekStart) {
@@ -168,7 +163,9 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
     @Input("recommendedEnd") private _recommendedEnd: Time;
 
 
-    //time插件容器（jq对象）
+    /**
+     * time插件容器（jq对象）
+     */
     private _timePicker: any;
 
     //定时器Id
@@ -330,8 +327,8 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
     //设置插件选中时间值
     private _setDate(value: Time) {
         if (this._timePicker) {
+            this._handleValueChange(value, <TimeGr>this.gr);
             this._timePicker.date(TimeService.getFormatDate(value));
-            this._handleValueChange(<Time>this.date, <TimeGr>this.gr);
             this._weekHandle();
             this._handleRecommended(this._el.nativeElement, this._popService);
         }
@@ -372,11 +369,9 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
         if (this.date != changeValue || emit) {
             this._value = changeValue;
             setTimeout(() => {
-                if (gr != TimeGr.week) {
-                    this.dateChange.emit(this._value);
-                } else {
-                    this.dateChange.emit(this._handleWeekSelect());
-                }
+                const val = gr == TimeGr.week ? this._handleWeekSelect() : this._value;
+                this.dateChange.emit(val);
+                this._propagateChange(val);
             }, 0);
             this._handleRecommended(this._el.nativeElement, this._popService);
         }
@@ -608,4 +603,33 @@ export class JigsawTime extends AbstractJigsawComponent implements OnInit, OnDes
         return nativeElement.querySelectorAll(selector);
     }
 
+
+    private _propagateChange:any = () => {};
+
+    public writeValue(newValue: any): void {
+        if (!newValue) {
+            return;
+        }
+        newValue = TimeService.convertValue(newValue, <TimeGr>this.gr);
+        if (newValue == this._value) {
+            return;
+        }
+        if (this._value && this.gr == TimeGr.week) {
+            let newValueYear = TimeService.getYear(<string>newValue);
+            let valueYear = TimeService.getYear(<string>this._value);
+            let newValueWeek = TimeService.getWeekOfYear(<string>newValue);
+            let valueWeek = TimeService.getWeekOfYear(<string>this._value);
+            if (newValueYear == valueYear && newValueWeek == valueWeek) return;
+        }
+        let [value,] = this._handleValue(newValue);
+        // this._value = value;
+        this._setDate(value);
+    }
+
+    public registerOnChange(fn: any): void {
+        this._propagateChange = fn;
+    }
+
+    public registerOnTouched(fn: any): void {
+    }
 }

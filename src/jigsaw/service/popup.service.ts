@@ -128,13 +128,14 @@ export type PopupDisposer = () => void;
 
 export interface IPopupable extends IDynamicInstantiatable {
     answer: EventEmitter<ButtonInfo>;
+    [index: string]: any;
 }
 
 export class PopupInfo {
-    popupRef: PopupRef;
+    instance: IPopupable;
     element: HTMLElement;
     dispose: PopupDisposer;
-    event: EventEmitter<PopupEventType>;
+    answer: EventEmitter<ButtonInfo>;
 }
 
 @Injectable()
@@ -214,7 +215,6 @@ export class PopupService {
         let popupInfo: PopupInfo,
             popupRef: PopupRef,
             element: HTMLElement,
-            event: EventEmitter<PopupEventType>,
             popupDisposer: PopupDisposer,
             blockDisposer: PopupDisposer,
             disposer: PopupDisposer,
@@ -222,11 +222,9 @@ export class PopupService {
 
         //popup block
         blockDisposer = this._popupBlocker(options);
-        popupInfo = this._popupFactory(what, options);
-        popupRef = popupInfo.popupRef;
+        [popupInfo, popupRef] = this._popupFactory(what, options);
         element = popupInfo.element;
         popupDisposer = popupInfo.dispose;
-        event = popupInfo.event;
 
         //set disposer
         disposer = () => {
@@ -242,15 +240,18 @@ export class PopupService {
 
         //set popup
         if (popupRef instanceof ComponentRef) {
+            popupRef.instance.dispose = disposer;
             popupRef.instance.initData = initData;
         }
         removeWindowListens = this._beforePopup(options, element, this._renderer, disposer);
         setTimeout(() => {
-            event.emit(PopupEventType.instanceCreated);
-            this._setPopup(options, element, this._renderer, event);
+            this._setPopup(options, element, this._renderer);
         }, 0);
 
-        return {popupRef: popupRef, element: element, dispose: disposer, event: event}
+        return {
+            instance: popupRef['instance'], element: element, dispose: disposer,
+            answer: popupRef['instance'] ? popupRef['instance'].answer : undefined
+        }
     }
 
     private _popupBlocker(options: PopupOptions): PopupDisposer {
@@ -263,7 +264,7 @@ export class PopupService {
                 hideEffect: PopupEffect.fadeOut
             };
 
-            const blockInfo: PopupInfo = this._popupFactory(JigsawBlock, blockOptions);
+            const [blockInfo,] = this._popupFactory(JigsawBlock, blockOptions);
             disposer = blockInfo.dispose;
             element = blockInfo.element;
             this._setStyle(options, element, this._renderer);
@@ -311,17 +312,14 @@ export class PopupService {
         }
     }
 
-    private _popupFactory(what: Type<IPopupable> | TemplateRef<any>, options: PopupOptions): PopupInfo {
+    private _popupFactory(what: Type<IPopupable> | TemplateRef<any>, options: PopupOptions): [PopupInfo, PopupRef] {
         const ref: PopupRef = this._createPopup(what);
         const element: HTMLElement = this._getElement(ref);
         //一出来就插入到文档流的最后，这给后续计算尺寸造成麻烦，这里给设置fixed，就可以避免影响滚动条位置
         this._renderer.setStyle(element, 'position', 'fixed');
         this._renderer.setStyle(element, 'top', 0);
         const disposer: PopupDisposer = this._getDisposer(options, ref, element, this._renderer);
-        return {
-            popupRef: ref, element: element, dispose: disposer,
-            event: new EventEmitter<PopupEventType>()
-        }
+        return [{ element: element, dispose: disposer, answer: null, instance: null }, ref];
     }
 
     private _createPopup(what: Type<IPopupable> | TemplateRef<any>) {
@@ -376,14 +374,11 @@ export class PopupService {
         return CommonUtils.isEmptyObject(options) || !options.pos;
     }
 
-    private _setPopup(options: PopupOptions, element: HTMLElement, renderer: Renderer2, event?: EventEmitter<PopupEventType>) {
+    private _setPopup(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
         if (element && renderer) {
             this._setSize(options, element, renderer);
             this._setPosition(options, element, renderer);
-            this._setShowAnimate(options, element, renderer, event);
-            if (event) {
-                event.emit(PopupEventType.positionReady);
-            }
+            this._setShowAnimate(options, element, renderer);
         }
     }
 
@@ -428,18 +423,15 @@ export class PopupService {
         renderer.setStyle(element, 'background', '#ffffff');
     }
 
-    private _setShowAnimate(options: PopupOptions, element: HTMLElement, renderer: Renderer2, event?: EventEmitter<PopupEventType>) {
+    private _setShowAnimate(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
         renderer.setStyle(element, 'visibility', 'visible');
         renderer.addClass(element, PopupService._getPopupEffect(options).showEffect);
 
-        if (event) {
-            const removeElementListen = renderer.listen(element, 'animationend', () => {
-                removeElementListen();
-                this._eventHelper.del(element, 'animationend', removeElementListen);
-                event.emit(PopupEventType.ready);
-            });
-            this._eventHelper.put(element, 'animationend', removeElementListen);
-        }
+        const removeElementListen = renderer.listen(element, 'animationend', () => {
+            removeElementListen();
+            this._eventHelper.del(element, 'animationend', removeElementListen);
+        });
+        this._eventHelper.put(element, 'animationend', removeElementListen);
     }
 
     private _setHideAnimate(options: PopupOptions, element: HTMLElement, renderer: Renderer2, cb: () => void) {

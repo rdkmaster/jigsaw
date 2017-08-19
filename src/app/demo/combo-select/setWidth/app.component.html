@@ -5,7 +5,9 @@
     <jigsaw-input [(value)]="width"></jigsaw-input>
 
     <jigsaw-combo-select [width]="width">
-        <div>This is a small drop down</div>
+        <ng-template>
+            <div>This is a small drop down</div>
+        </ng-template>
     </jigsaw-combo-select>
 </div>
 
@@ -15,7 +17,9 @@
     <jigsaw-input [(value)]="width2"></jigsaw-input>
 
     <jigsaw-combo-select>
-        <jigsaw-input [width]="width2" value="drop down input"></jigsaw-input>
+        <ng-template>
+            <jigsaw-input [width]="width2" value="drop down input"></jigsaw-input>
+        </ng-template>
     </jigsaw-combo-select>
 </div>
 

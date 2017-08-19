@@ -5,7 +5,7 @@ import {
     ElementRef,
     EventEmitter,
     Input,
-    NgModule,
+    NgModule, OnDestroy,
     OnInit,
     Output,
     Renderer2
@@ -20,32 +20,36 @@ import {JigsawMovableModule} from "../../directive/movable/index";
 
 export interface IDialog extends IPopupable {
     buttons: ButtonInfo[];
-    title: string;
+    caption: string;
     dialog: JigsawDialog;
+    dispose: (answer?: ButtonInfo)=>void;
 }
 
 export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
 
+    @Input()
     public initData: any;
 
     abstract get dialog(): JigsawDialog;
     abstract set dialog(value: JigsawDialog);
 
-    private _title: string = '';
+    private _caption: string = '';
 
-    public get title(): string {
-        return this._title;
+    @Input()
+    public get caption(): string {
+        return this._caption;
     }
 
-    public set title(value: string) {
-        this._title = value;
+    public set caption(value: string) {
+        this._caption = value;
         if (this.dialog) {
-            this.dialog.title = value;
+            this.dialog.caption = value;
         }
     }
 
     private _buttons: ButtonInfo[];
 
+    @Input()
     public get buttons(): ButtonInfo[] {
         return this._buttons;
     }
@@ -60,16 +64,12 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
     @Output()
     public answer: EventEmitter<ButtonInfo> = new EventEmitter<ButtonInfo>();
 
-    public dispose(answer?: ButtonInfo): void {
-        if (this.dialog) {
-            this.dialog.dispose(answer);
-        }
-    }
+    public dispose: (answer?: ButtonInfo) => void;
 
     public ngOnInit() {
         if (this.dialog) {
             this.dialog.buttons = this.buttons;
-            this.dialog.title = this.title;
+            this.dialog.caption = this.caption;
         }
     }
 
@@ -82,12 +82,14 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
     }
 }
 
-export abstract class AbstractDialogComponentBase extends AbstractJigsawComponent implements IPopupable, AfterContentInit {
+export abstract class AbstractDialogComponentBase extends AbstractJigsawComponent
+    implements IPopupable, AfterContentInit, OnDestroy {
+
     @Input()
     public buttons: ButtonInfo[];
-    @Input('header')
-    public title: string;
-
+    @Input()
+    public caption: string;
+    @Input()
     public initData: any;
 
     protected popupElement: HTMLElement;
@@ -96,6 +98,7 @@ export abstract class AbstractDialogComponentBase extends AbstractJigsawComponen
     protected elementRef: ElementRef;
 
     private _top: string;
+
     //设置距离顶部高度
     @Input()
     public get top(): string {
@@ -132,10 +135,14 @@ export abstract class AbstractDialogComponentBase extends AbstractJigsawComponen
             if (this.top) {
                 this.renderer.setStyle(this.popupElement, 'top', this.top);
             }
-            if(this.popupElement.style.position != 'fixed' && this.popupElement.style.position != 'absolute'){
+            if (this.popupElement.style.position != 'fixed' && this.popupElement.style.position != 'absolute') {
                 this.renderer.setStyle(this.popupElement.querySelector('.jigsaw-dialog-base-head'), 'cursor', 'inherit');
             }
         }, 0);
+    }
+
+    ngOnDestroy() {
+        this.answer.unsubscribe();
     }
 }
 

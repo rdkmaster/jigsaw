@@ -2,7 +2,7 @@
     <jigsaw-tab (selectChange)="testEvent()">
         <jigsaw-tab-pane *ngFor="let tabData of tabDatas">
             <div jigsaw-title><span class="fa fa-gift"></span>{{tabData}}</div>
-            <div jigsaw-body>{{tabData}} Content</div>
+            <ng-template>{{tabData}} Content</ng-template>
         </jigsaw-tab-pane>
     </jigsaw-tab>
 </div>

@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from '../core';
 
 @Component({
-    selector: 'jigsaw-button, a[jigsaw-button]',
+    selector: 'jigsaw-button, a[jigsaw-button], button[jigsaw-button]',
     templateUrl: 'button.html',
     styleUrls: ['button.scss'],
     host: {
@@ -13,11 +13,11 @@ import {AbstractJigsawComponent} from '../core';
         '[style.height]': 'height',
         '[style.line-height]': '_calcLineHeight()',
         '[class.jigsaw-button-clicked]': "_clicked",
-        '[class.jigsaw-button-size-small]': "presize === 'small'",
-        '[class.jigsaw-button-size-large]': "presize === 'large'",
-        '[class.jigsaw-button-color-primary]': "type === 'primary'",
-        '[class.jigsaw-button-color-warning]': "type === 'warning'",
-        '[class.jigsaw-button-color-error]': "type === 'error' || type === 'danger'"
+        '[class.jigsaw-button-size-small]': "preSize === 'small'",
+        '[class.jigsaw-button-size-large]': "preSize === 'large'",
+        '[class.jigsaw-button-color-primary]': "colorType === 'primary'",
+        '[class.jigsaw-button-color-warning]': "colorType === 'warning'",
+        '[class.jigsaw-button-color-error]': "colorType === 'error' || colorType === 'danger'"
     }
 })
 export class JigsawButton extends AbstractJigsawComponent {
@@ -25,11 +25,15 @@ export class JigsawButton extends AbstractJigsawComponent {
     //按钮不可点击状态
     @Input() public disabled: boolean = false;
 
-    //按钮颜色类型, default, primary, warning, error
-    @Input() public type: string = 'default';
+    /**
+     * 按钮颜色类型 default, primary, warning, error。默认值是default
+     */
+    @Input() public colorType: string = 'default';
 
-    //按钮预设尺寸， small, '', large
-    @Input() public presize = '';
+    /**
+     * 按钮预设尺寸 default, small, large。默认值是default
+     */
+    @Input() public preSize = 'default';
 
     //按钮动画执行状态
     private _clicked: boolean = false;
@@ -41,7 +45,7 @@ export class JigsawButton extends AbstractJigsawComponent {
         }
     }
 
-    private _calcLineHeight():string {
+    private _calcLineHeight(): string {
         return parseInt(this.height) - 4 + 'px';
     }
 

@@ -78,8 +78,7 @@ export class TimeService {
      */
     public static isMacro(time:Time): boolean {
         if (typeof time === 'string') {
-            const hasLetter = /^[a-z]/i;
-            return hasLetter.test(time);
+            return !!time.match(/^\s*(now|today|yestoday|tomorrow)\s*([+-]\s*\d+\s*\w+)?\s*$/i);
         }
         return false;
     }
@@ -196,10 +195,17 @@ export class TimeService {
             let fullPara = /([a-z]+)(\+|\-)?([\d]+)([a-z]+)?/i;
             let timeMacroArr = fullPara.exec(time);
             if (timeMacroArr && timeMacroArr[2] != undefined) { //有加减 now-2d
-                result = TimeService.addDate(TimeService.convertBasicMacro(timeMacroArr[1]), "" + timeMacroArr[2] + timeMacroArr[3], TimeUnit[timeMacroArr[4]]);
+                result = TimeService.addDate(
+                    TimeService.convertBasicMacro(timeMacroArr[1]),
+                    "" + timeMacroArr[2] + timeMacroArr[3],
+                    TimeUnit[timeMacroArr[4]]);
             } else { //无加减 now
                 result = TimeService.convertBasicMacro(time);
             }
+        }
+        if (typeof result === 'string') {
+            result = new Date(result);
+            result = isNaN(result.valueOf()) ? new Date() : result;
         }
         if (result && (gr || (!gr && gr == 0)) || result instanceof Date || result instanceof moment) {
             if (result instanceof moment) {

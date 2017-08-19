@@ -7,15 +7,17 @@
         [(value)]="selectedCity"
         (valueChange)="valueChange($event)"
         [autoClose]="!multiple">
-        <jigsaw-tile-select
-            [(selectedItems)]="selectedCity"
-            labelField="label"
-            [multipleSelect]="multiple"
-            [searchable]="true"
-            [data]="citys"
-            width="400px"
-            tileOptionWidth="100px">
-        </jigsaw-tile-select>
+        <ng-template>
+            <jigsaw-tile-select
+                [(selectedItems)]="selectedCity"
+                labelField="label"
+                [multipleSelect]="multiple"
+                [searchable]="true"
+                [data]="citys"
+                width="400px"
+                tileOptionWidth="100px">
+            </jigsaw-tile-select>
+        </ng-template>
     </jigsaw-combo-select>
 </div>
 

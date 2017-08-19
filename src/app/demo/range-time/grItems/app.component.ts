@@ -1,4 +1,7 @@
-import {Component, Renderer2, ViewContainerRef} from "@angular/core";
+import {
+    AfterContentInit, AfterViewInit, ChangeDetectorRef, Component, Renderer2,
+    ViewContainerRef
+} from "@angular/core";
 import {TimeGr} from "jigsaw/service/time.service";
 import {GrItem, Shortcut} from "jigsaw/component/time/time";
 import {RangeTimeDataRanges} from "jigsaw/component/range-time/shortcut-dateranges";
@@ -7,7 +10,7 @@ import {RangeTimeDataRanges} from "jigsaw/component/range-time/shortcut-daterang
 @Component({
   templateUrl: './app.component.html'
 })
-export class RangeTimeGrItemsComponent {
+export class RangeTimeGrItemsComponent implements AfterViewInit{
 
     beginDate = "now-1d";
 
@@ -23,7 +26,11 @@ export class RangeTimeGrItemsComponent {
         {label: "Month", value: TimeGr.month}];
 
     constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
+                public renderer: Renderer2, public changeDetectorRef: ChangeDetectorRef) {
+    }
+
+    ngAfterViewInit(){
+        this.changeDetectorRef.detectChanges();
     }
 
 }

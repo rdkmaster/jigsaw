@@ -267,10 +267,6 @@ export const navInfo = [
         title: 'Popup',
         navList: [
             {
-                label: 'tracing-event',
-                url: '/popup/tracing-event'
-            },
-            {
                 label: 'alert-popup',
                 url: '/alert/popup'
             },
@@ -687,6 +683,15 @@ export const navInfo = [
             {
                 label: 'table-drag',
                 url: '/dragdrop/table-drag'
+            }
+        ]
+    },
+    {
+        title: 'Form',
+        navList: [
+            {
+                label: 'template driven',
+                url: '/form/template-driven'
             }
         ]
     },

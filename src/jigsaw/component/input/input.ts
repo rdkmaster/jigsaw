@@ -1,9 +1,9 @@
 import {
     NgModule, Component, EventEmitter, Input, Output, ContentChildren, Directive, QueryList,
-    ElementRef, ViewChild, AfterContentInit, Renderer2, AfterViewChecked, ChangeDetectorRef
+    ElementRef, ViewChild, AfterContentInit, Renderer2, AfterViewChecked, ChangeDetectorRef, forwardRef
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {FormsModule} from "@angular/forms";
+import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../core";
 import {Observable} from "rxjs/Observable";
 
@@ -20,9 +20,12 @@ export class JigsawPrefixIcon {
         '[style.height]': 'height',
         '[style.line-height]': 'height',
         '(click)': '_stopPropagation($event)'
-    }
+    },
+    providers: [
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawInput), multi: true },
+    ]
 })
-export class JigsawInput extends AbstractJigsawComponent implements AfterContentInit, AfterViewChecked {
+export class JigsawInput extends AbstractJigsawComponent implements ControlValueAccessor, AfterContentInit, AfterViewChecked {
     private _value: string | number; //input表单值
     private _focused: boolean;
     private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
@@ -33,11 +36,26 @@ export class JigsawInput extends AbstractJigsawComponent implements AfterContent
      */
     public _$longIndent: boolean = false;
 
-
     constructor(private _render2: Renderer2,
                 private _elementRef: ElementRef,
                 private _changeDetectorRef: ChangeDetectorRef) {
         super();
+    }
+
+    private _propagateChange:any = () => {};
+
+    public writeValue(value: any): void {
+        if (value === undefined || value === null) {
+            return;
+        }
+        this._value = value.toString();
+    }
+
+    public registerOnChange(fn: any): void {
+        this._propagateChange = fn;
+    }
+
+    public registerOnTouched(fn: any): void {
     }
 
     //input form表单值
@@ -50,6 +68,7 @@ export class JigsawInput extends AbstractJigsawComponent implements AfterContent
         if (this._value != newValue) {
             this._value = newValue;
             this.valueChange.emit(newValue);
+            this._propagateChange(newValue)
         }
     }
 
@@ -78,9 +97,11 @@ export class JigsawInput extends AbstractJigsawComponent implements AfterContent
         return this._focusEmitter.asObservable();
     }
 
-    @ContentChildren(JigsawPrefixIcon) _iconFront: QueryList<JigsawPrefixIcon> = null;
+    @ContentChildren(JigsawPrefixIcon)
+    private _iconFront: QueryList<JigsawPrefixIcon> = null;
 
-    @ViewChild('input') _inputElement: ElementRef;
+    @ViewChild('input')
+    private _inputElement: ElementRef;
 
     public focus() {
         this._inputElement.nativeElement.focus();
@@ -135,7 +156,7 @@ export class JigsawInput extends AbstractJigsawComponent implements AfterContent
         this._$inputPaddingStyle = {
             "padding-left": prefixIconPadding + "px",
             "padding-right": endPadding + "px"
-        }
+        };
 
         this._changeDetectorRef.detectChanges();
     }

@@ -5,8 +5,8 @@ import {HttpModule} from '@angular/http';
 import {RouterModule} from "@angular/router";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
-import {JigsawModule} from '@rdkmaster/jigsaw';
 import {Observable} from "rxjs/Observable";
+import {JigsawButtonModule} from "jigsaw/component/button/button";
 
 import {AppComponent} from './app.component';
 
@@ -49,7 +49,7 @@ export class JigsawI18nLoader extends TranslateLoader {
                 }, isolate: true
             }
         ),
-        JigsawModule
+        JigsawButtonModule
     ],
     providers: [TranslateService],
     bootstrap: [AppComponent]

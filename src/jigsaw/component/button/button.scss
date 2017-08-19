@@ -109,6 +109,12 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     text-decoration: none !important;
 }
 
+:host(button){
+    padding: 0 10px;
+    outline: none;
+    text-decoration: none !important;
+}
+
 :host(.#{$btn-prefix-cls}-disabled) {
     pointer-events: none;
     cursor: default;
