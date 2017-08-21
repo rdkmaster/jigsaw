@@ -2,21 +2,48 @@
  * 用来提供给用户定制组件样式的 mixin api
  */
 
-@mixin setDialog($headColor, $hoverColor) {
-    .jigsaw-dialog .jigsaw-dialog-head {
-        color: $headColor;
-        .jigsaw-dialog-close {
-            color: $headColor;
-            &:hover {
-                color: $hoverColor;
-            }
-        }
-    }
-    .jigsaw-alert .jigsaw-alert-head .jigsaw-alert-close {
-        color: $headColor;
+@mixin setPopupCloseBar($color, $hoverColor){
+    .jigsaw-dialog .jigsaw-dialog-head .jigsaw-dialog-close {
+        color: $color;
         &:hover {
             color: $hoverColor;
         }
+    }
+    .jigsaw-alert .jigsaw-alert-head .jigsaw-alert-close {
+        color: $color;
+        &:hover {
+            color: $hoverColor;
+        }
+    }
+}
+
+@mixin setDialogHead($textColor, $bgColor, $height){
+    .jigsaw-dialog{
+        .jigsaw-dialog-head {
+            color: $textColor;
+            padding: {
+                top: 0;
+                bottom: 0;
+            };
+            height: $height;
+            line-height: $height;
+            background: $bgColor;
+        }
+    }
+}
+
+@mixin setDialogButton($buttonAlign: center){
+    .jigsaw-dialog{
+        .jigsaw-dialog-button-group {
+            text-align: $buttonAlign;
+        }
+    }
+}
+
+@mixin setButton($defaultTextColor, $defaultFontSize: 12px){
+    .jigsaw-button{
+        color: $defaultTextColor;
+        font-size: $defaultFontSize;
     }
 }
 
@@ -57,12 +84,6 @@
 @mixin setCollapse($headBgColor) {
     .jigsaw-collapse-host .jigsaw-collapse-item .jigsaw-collapse-header {
         background: $headBgColor;
-    }
-}
-
-@mixin setButton($defaultTextColor) {
-    .jigsaw-button {
-        color: $defaultTextColor
     }
 }
 

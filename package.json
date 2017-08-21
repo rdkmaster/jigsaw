@@ -4,7 +4,7 @@
     "license": "MIT",
     "scripts": {
         "ng": "ng",
-        "start": "ng serve --poll 500 --proxy-config proxy-config.json",
+        "start": "ng serve --poll 500 --proxy-config proxy-config.json --host 10.43.94.29",
         "build": "ng build",
         "test": "ng test",
         "lint": "ng lint",

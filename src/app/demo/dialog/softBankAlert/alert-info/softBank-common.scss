@@ -1,0 +1,13 @@
+$info-color             : #41addc;
+$success-color          : #87d068;
+$error-color            : #ec6d6d;
+$warning-color          : #e78f4e;
+
+@mixin clearfix() {
+    *zoom: 1;
+    &:after {
+        clear: both;
+        content: "";
+        display: block;
+    }
+}

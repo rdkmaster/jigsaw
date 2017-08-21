@@ -7,15 +7,15 @@ import {JigsawErrorAlert, JigsawInfoAlert, JigsawWarningAlert} from "jigsaw/comp
 
 @Component({
     template: `
-        <jigsaw-button width="170" (click)="commonInfoAlert()">
+        <jigsaw-button width="175" (click)="commonInfoAlert()">
             common info alert
         </jigsaw-button>
     
-        <jigsaw-button width="170" (click)="commonWarningAlert()">
+        <jigsaw-button width="175" (click)="commonWarningAlert()">
             common warning alert
         </jigsaw-button>
     
-        <jigsaw-button width="170" (click)="commonErrorAlert($event)">
+        <jigsaw-button width="175" (click)="commonErrorAlert($event)">
             common error alert
         </jigsaw-button>
     

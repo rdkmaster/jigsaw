@@ -1,10 +1,10 @@
 // Color
-$primary-color          : #008fd4;
-$info-color             : #008fd4;
+$primary-color          : #41addc;
+$info-color             : #41addc;
 $success-color          : #87d068;
 $error-color            : #ec6d6d;
 $highlight-color        : #ec6d6d;
-$warning-color          : #f99660;
+$warning-color          : #e78f4e;
 $normal-color           : #d9d9d9;
 $default-color          : #fff;
 
@@ -37,7 +37,7 @@ $font-size-lg           : $font-size-base + 2px;
 $line-height-base       : 1.5;
 $border-radius-base     : 4px;
 $border-radius-sm       : 2px;
-$height-base            : 28px;
+$height-base            : 30px;
 $height-sm              : $height-base - 8px;
 $height-lg              : $height-base + 8px;
 
@@ -103,9 +103,15 @@ $scroll-bar-active-bg   : fade-out($primary-color, .5);
 $background-color-lv1   : #dedede;
 $background-color-lv2   : #eee;
 $background-color-lv3   : #f3f3f3;
-@include setDialog($primary-color, mix(#000, $primary-color, 15%));
+
+@include setPopupCloseBar($primary-color, $primary-7);
+@include setDialogHead($primary-color, #f2f2f2, 30px);
+@include setDialogButton(right);
+
+@include setButton($primary-color, 14px);
+
 @include setTable($background-color-lv2, $primary-color, $default-color, $background-color-lv3);
 @include setTag($background-color-lv3);
 @include setCollapse($background-color-lv2);
-@include setButton($primary-color);
 @include setTabs($primary-color);
+
