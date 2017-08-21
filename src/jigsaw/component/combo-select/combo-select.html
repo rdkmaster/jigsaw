@@ -10,17 +10,15 @@
             <div *ngIf="placeholder && (!value || value.length == 0)" class="jigsaw-combo-select-selection_placeholder">
                 {{placeholder}}
             </div>
-            <span>
-                <ng-template ngFor let-tagItem [ngForOf]="value" let-i="index" let-isLast="last">
-                    <jigsaw-tag
-                              [closable]='tagItem.closable'
-                              (select)="_$tagClick(tagItem)"
-                              (close)="_$removeTag(tagItem)">
-                             {{tagItem[labelField]}}
-                     </jigsaw-tag>
-                      <span *ngIf="separator && !isLast">{{separator}}</span>
-                </ng-template>
-            </span>
+            <ng-template ngFor let-tagItem [ngForOf]="value" let-i="index" let-isLast="last">
+                <jigsaw-tag
+                    [closable]='tagItem.closable'
+                    (select)="_$tagClick(tagItem)"
+                    (close)="_$removeTag(tagItem)">
+                    {{tagItem[labelField]}}
+                </jigsaw-tag>
+                <span *ngIf="separator && !isLast">{{separator}}</span>
+            </ng-template>
         </div>
     </div>
     <i class="fa fa-angle-down jigsaw-combo-select-arrow"></i>

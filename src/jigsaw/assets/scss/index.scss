@@ -2,16 +2,32 @@
 
 /*滚动条样式start(针对'minimal-dark'这个皮肤做的修改)*/
 .mCustomScrollbar .mCS-minimal-dark.mCSB_scrollTools{
+    margin: 0;
+    &:hover, &.mCSB_scrollTools_onDrag {
+        .mCSB_draggerContainer{
+            background: $background-color-base;
+        }
+    }
     &.mCSB_scrollTools_vertical{
         width: 10px !important;
         .mCSB_dragger_bar{
             margin-right: 0;
+        }
+        &:hover, &.mCSB_scrollTools_onDrag{
+            .mCSB_dragger_bar{
+                width: 8px;
+            }
         }
     }
     &.mCSB_scrollTools_horizontal{
         height: 10px !important;
         .mCSB_dragger_bar{
             margin-bottom: 0;
+        }
+        &:hover, &.mCSB_scrollTools_onDrag{
+            .mCSB_dragger_bar{
+                height: 8px;
+            }
         }
     }
     .mCSB_dragger_bar{
@@ -157,29 +173,45 @@ jigsaw-time{
         }
     }
     &.chk{
-        border: 1px solid $primary-color;
+        border: 1px solid $text-color-secondary;
         border-radius: 2px;
         font-size: 12px;
-        &.checkbox_true_full:before, &.checkbox_true_full_focus:before{
-            content: "\f00c";
+        &.checkbox_true_full, &.checkbox_true_full_focus{
+            border: 1px solid $primary-color;
+            &:before{
+                content: "\f00c";
+            }
         }
     }
     &.edit{
+        margin-left: 5px;
+        vertical-align: middle;
+        color: $text-color-secondary;
         &:before{
             content: "\f044";
         }
+        &:hover{
+            color: $primary-color;
+        }
     }
     &.remove{
+        vertical-align: middle;
+        color: $text-color-secondary;
         &:before{
             content: "\f014";
         }
+        &:hover{
+            color: $primary-color;
+        }
     }
     &.noline_open, &.center_open, &.bottom_open, &.roots_open{
+        color: $text-color-secondary;
         &:before{
             content: "\f106";
         }
     }
     &.noline_close, &.center_close, &.bottom_close, &.roots_close{
+        color: $text-color-secondary;
         &:before{
             content: "\f107";
         }
