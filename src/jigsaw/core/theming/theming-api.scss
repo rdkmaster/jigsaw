@@ -32,18 +32,22 @@
     }
 }
 
-@mixin setDialogButton($buttonAlign: center){
+@mixin setDialogButton($buttonAlign: center, $showButtonLine: true){
     .jigsaw-dialog{
         .jigsaw-dialog-button-group {
             text-align: $buttonAlign;
+            border-top: 1px solid if($showButtonLine, $border-color-base, transparent);
         }
     }
 }
 
-@mixin setButton($defaultTextColor, $defaultFontSize: 12px){
+@mixin setButton($defaultTextColor, $defaultFontSize: 12px, $withAnimation: true){
     .jigsaw-button{
         color: $defaultTextColor;
         font-size: $defaultFontSize;
+        &.#{$btn-prefix-cls}-clicked:after {
+            content: if($withAnimation, '', none);
+        }
     }
 }
 
