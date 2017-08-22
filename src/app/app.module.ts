@@ -41,7 +41,7 @@ export class JigsawI18nLoader extends TranslateLoader {
         BrowserModule,
         FormsModule,
         HttpModule,
-        RouterModule.forRoot(appRoutes),
+        RouterModule.forRoot(appRoutes, {useHash: true}),
         BrowserAnimationsModule,
         TranslateModule.forRoot({
                 loader: {
