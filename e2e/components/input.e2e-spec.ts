@@ -25,8 +25,8 @@ describe('input', () => {
                 input = inputEl.element(by.tagName('input')),
                 clearBar = inputEl.element(by.css('.jigsaw-input-clear-bar'));
 
-            input.sendKeys('456');
-            expect(input.getAttribute('value')).toBe('abc123456');
+            input.sendKeys('abc123');
+            expect(input.getAttribute('value')).toBe('abc123');
             clearBar.click();
             expect(input.getAttribute('value')).toBe('');
         })
