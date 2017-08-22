@@ -28,14 +28,14 @@
     <div class="field">
         <label>A Range Time</label>
         <!--
-            notice that, jigsaw-combo-select it self is form-friendly too! but we recommend that use ngModel
+            notice: jigsaw-combo-select it self is form-friendly too! but we recommend to use ngModel
             in the inner component of jigsaw-combo-select if it is a form-friendly component, this is will make
             your form more user-friendly.
         -->
         <jigsaw-combo-select [(value)]="rangeTimeComboValue" width="250px">
             <ng-template>
                 <jigsaw-range-time [(ngModel)]="rangeTime" name="lastJobDuring"
-                                   (change)="handleDateChange()"></jigsaw-range-time>
+                                   (change)="onDateChange()"></jigsaw-range-time>
             </ng-template>
         </jigsaw-combo-select>
     </div>
@@ -53,11 +53,16 @@
     <div class="field">
         <label>Favorite Fruit</label>
         <!--
-            you can compose any form-unfriendly components with jigsaw-combo-select to make it form-friendly.
+            you can compose any form-unfriendly components with jigsaw-combo-select to make it form-friendly
+            for example, jigsaw-table is not form-friendly, you can still use jigsaw-table in the form, just simply
+            compose it with jigsaw-combo-select.
         -->
-        <jigsaw-combo-select [(ngModel)]="favoriteFruit" name="favoriteFruit" width="250px">
+        <jigsaw-combo-select [(ngModel)]="favoriteFruit" (valueChange)="onFavoriteFruitRemoved($event)" name="favoriteFruit" width="250px">
             <ng-template>
-                <jigsaw-table width="600px" [data]="fruitList"></jigsaw-table>
+                <div style="padding: 6px; width: 700px;">
+                    <jigsaw-table [data]="fruitList" [columnDefines]="columnDef" [select]="selectedIndex"
+                                  (selectChange)="onFavoriteFruitChange($event)"></jigsaw-table>
+                </div>
             </ng-template>
         </jigsaw-combo-select>
     </div>
@@ -73,7 +78,7 @@
     <div class="field">
         <label>Score</label>
         <div style="display: inline-block; width: 250px; height: 20px;">
-        <jigsaw-slider [ngModel]="score" name="score" width="250px"></jigsaw-slider>
+            <jigsaw-slider [ngModel]="score" name="score" width="250px"></jigsaw-slider>
         </div>
     </div>
     <div class="field">

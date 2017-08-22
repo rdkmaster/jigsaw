@@ -7,7 +7,7 @@ describe('radio', () => {
 
     describe('test basic function', () => {
         beforeEach(() => {
-            browser.get('radio/basic');
+            browser.get('/#/radio/basic');
         });
 
         it('should checked when click radio button', () => {
