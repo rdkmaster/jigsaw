@@ -91,6 +91,10 @@ export const navInfo = [
                 url: '/loading/userDefined'
             },
             {
+                label: 'softBankLoading',
+                url: '/loading/softBankLoading'
+            },
+            {
                 label: 'with-loading-inside',
                 url: '/button/with-loading'
             },

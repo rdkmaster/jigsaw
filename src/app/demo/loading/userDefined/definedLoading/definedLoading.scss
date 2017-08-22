@@ -45,10 +45,10 @@ $line-width: 4px !default;
     animation-fill-mode: both;
 }
 
-:host {
+.jigsaw-loading-background {
     display: inline-block;
     height: 50px;
-    width: 70px;
+    width: 35px;
 }
 
 .jigsaw-loading-content {
@@ -56,14 +56,13 @@ $line-width: 4px !default;
     left: 50%;
     top: 50%;
     height: 50px;
-    width: 70px;
+    width: 35px;
     margin-top: -20px;
-    margin-left: -35px;
+    margin-left: -17px;
     @include line-scale();
     > div {
         @include lines();
         @include global-animation();
         display: inline-block;
     }
-
 }

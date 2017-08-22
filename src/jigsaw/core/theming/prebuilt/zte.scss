@@ -111,7 +111,8 @@ $background-color-lv3   : #f3f3f3;
 @include setButton($primary-color, 14px, false);
 
 @include setTable($background-color-lv2, $primary-color, $default-color, $background-color-lv3);
-@include setTag($background-color-lv3, 25px);
+@include setTag(#fff, 25px);
+@include setTagCloseBarInCenter(25px);
 @include setCollapse($background-color-lv2);
 @include setTabs($primary-color);
 

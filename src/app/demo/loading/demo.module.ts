@@ -11,6 +11,8 @@ import {DefinedLoadingDemoModule} from "./userDefined/app.module";
 import {DomInnerDemoModule} from "./domInner/app.module";
 import {ColorfulLoadingDemoModule} from "./color/app.module";
 import {LoadingFullDemoModule} from "./full/app.module";
+import {SoftBankLoadingDemoModule} from "./softBankLoading/app.module";
+import {SoftBankLoadingDemoComponent} from "./softBankLoading/app.component";
 
 const loadingDemoRoutes = [
     {
@@ -24,6 +26,9 @@ const loadingDemoRoutes = [
     },
     {
         path: 'userDefined', component: DefinedLoadingDemoComponent
+    },
+    {
+        path: 'softBankLoading', component: SoftBankLoadingDemoComponent
     },
     {
         path: 'domInner', component: DomInnerDemoComponent
@@ -45,6 +50,7 @@ const loadingDemoRoutes = [
         DefinedLoadingDemoModule,
         DomInnerDemoModule,
         ColorfulLoadingDemoModule,
+        SoftBankLoadingDemoModule
     ]
 })
 export class LoadingDemoModule {

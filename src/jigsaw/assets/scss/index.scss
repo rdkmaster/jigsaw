@@ -9,7 +9,7 @@
         }
     }
     &.mCSB_scrollTools_vertical{
-        width: 10px !important;
+        width: 8px;
         .mCSB_dragger_bar{
             margin-right: 0;
         }
@@ -20,22 +20,23 @@
         }
     }
     &.mCSB_scrollTools_horizontal{
-        height: 10px !important;
+        height: 8px;
         .mCSB_dragger_bar{
-            margin-bottom: 0;
+            margin-top: 3px;
         }
         &:hover, &.mCSB_scrollTools_onDrag{
             .mCSB_dragger_bar{
                 height: 8px;
+                margin-top: 0;
             }
         }
     }
     .mCSB_dragger_bar{
-        background-color: $scroll-bar-bg !important;
+        background-color: $scroll-bar-bg;
     }
     .mCSB_dragger:active .mCSB_dragger_bar,
     .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar{
-        background-color: $scroll-bar-active-bg !important;
+        background-color: $scroll-bar-active-bg;
     }
 }
 .mCSB_container_wrapper{
