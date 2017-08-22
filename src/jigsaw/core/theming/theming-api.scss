@@ -121,11 +121,8 @@
     }
 }
 
-@mixin setTabs($tabLineColor, $showTriangle: true) {
+@mixin setTabsTriangle($showTriangle: true) {
     .jigsaw-tabs {
-        .jigsaw-tabs-bar {
-            border-bottom: 1px solid $tabLineColor;
-        }
         .jigsaw-tabs-nav-container .jigsaw-tabs-nav-wrap .jigsaw-tabs-nav .jigsaw-tabs-ink-bar:after {
             display: if($showTriangle, block, none);
         }

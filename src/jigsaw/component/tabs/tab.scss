@@ -96,6 +96,18 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
                     &-hidden {
                         display: none;
                     }
+
+                    span.fa{
+                        margin-right: 6px;
+                    }
+
+                    a:hover{
+                        text-decoration: none;
+                        color: $primary-color;
+                    }
+                    * {
+                        outline: 0;
+                    }
                 }
 
                 .#{$tab-prefix}-tab-active {

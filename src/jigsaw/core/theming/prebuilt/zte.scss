@@ -85,8 +85,8 @@ $btn-error-bg-active    : mix(#000, $error-color, 20%);
 
 $btn-default-border     : $border-color-base;
 $btn-default-bg         : $default-color;
-$btn-default-bg-hover   : $btn-primary-bg-hover;
-$btn-default-bg-active  : $btn-primary-bg-active;
+$btn-default-bg-hover   : $primary-5;
+$btn-default-bg-active  : $primary-7;
 $btn-default-box-shadow : none;
 
 $btn-font-weight        : 500;
@@ -114,5 +114,5 @@ $background-color-lv3   : #f3f3f3;
 @include setTag(#fff, 25px);
 @include setTagCloseBarInCenter(25px);
 @include setCollapse($background-color-lv2);
-@include setTabs($primary-color);
+@include setTabsTriangle(true);
 

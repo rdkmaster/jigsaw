@@ -8,11 +8,10 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
     width: 100%;
     display: inline-block;
     user-select: none;
-}
-
-::selection {
-    background-color: #fff;
-    color: #666;
+    ::selection {
+        background-color: #fff;
+        color: #666;
+    }
 }
 
 .#{$jigsaw-slider} {
