@@ -25,6 +25,7 @@
                 "../node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css",
                 "../node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css",
                 "../node_modules/font-awesome/css/font-awesome.min.css",
+                "../node_modules/@rdkmaster/icon-font/css/iconfont.css",
                 "../node_modules/ztree/css/zTreeStyle/zTreeStyle.css",
                 "styles.scss",
                 "jigsaw/core/theming/prebuilt/zte.scss"

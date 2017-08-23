@@ -62,19 +62,39 @@
     }
 }
 
-@mixin setTable($headBgColor, $headTextColor, $oddRowBgColor, $evenRowBgColor) {
+@mixin setTableHead($bgColor, $textColor, $fontSize, $borderColor, $borderWidth){
     jigsaw-table.jigsaw-table-host table {
         thead {
-            color: $headTextColor;
+            color: $textColor;
+            font-size: $fontSize;
             tr td {
-                background: $headBgColor;
+                background: $bgColor;
+                border-bottom: $borderWidth solid $borderColor;
             }
+        }
+    }
+}
+
+@mixin setTableBody($textColor, $fontSize, $oddRowBgColor, $evenRowBgColor) {
+    jigsaw-table.jigsaw-table-host table {
+        tbody{
+            color: $textColor;
+            font-size: $fontSize;
         }
         tbody tr:nth-child(2n) {
             background: $evenRowBgColor;
         }
         tbody tr:nth-child(2n-1) {
             background: $oddRowBgColor;
+        }
+    }
+}
+
+@mixin setTableTextAlign(){
+    jigsaw-table.jigsaw-table-host table {
+        td {
+            text-align: left;
+            text-indent: 20px;
         }
     }
 }

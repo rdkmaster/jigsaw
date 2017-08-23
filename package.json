@@ -4,7 +4,7 @@
     "license": "MIT",
     "scripts": {
         "ng": "ng",
-        "start": "ng serve --poll 500 --proxy-config proxy-config.json --host 10.43.94.29",
+        "start": "ng serve --poll 500 --proxy-config proxy-config.json --host 10.43.94.26",
         "build": "ng build",
         "test": "ng test",
         "lint": "ng lint",
@@ -40,6 +40,7 @@
         "@angular/compiler-cli": "^4.3.3",
         "@angular/tsc-wrapped": "^4.3.3",
         "@google-cloud/storage": "^1.1.1",
+        "@rdkmaster/icon-font": "^1.0.2",
         "@rdkmaster/jigsaw": "^1.0.0-beta.9",
         "@types/chalk": "^0.4.31",
         "@types/fs-extra": "^3.0.1",

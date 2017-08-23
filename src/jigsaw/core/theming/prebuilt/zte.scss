@@ -5,7 +5,7 @@ $success-color          : #87d068;
 $error-color            : #ec6d6d;
 $highlight-color        : #ec6d6d;
 $warning-color          : #e78f4e;
-$normal-color           : #d9d9d9;
+$normal-color           : #dcdcdc;
 $default-color          : #fff;
 
 // Palette
@@ -42,7 +42,7 @@ $height-sm              : $height-base - 8px;
 $height-lg              : $height-base + 8px;
 
 // Border color
-$border-color-base      : #d9d9d9;
+$border-color-base      : #dcdcdc;
 $border-color-split     : #e9e9e9;
 $border-width-base      : 1px;
 $border-style-base      : solid;
@@ -110,7 +110,10 @@ $background-color-lv3   : #f3f3f3;
 
 @include setButton($primary-color, 14px, false);
 
-@include setTable($background-color-lv2, $primary-color, $default-color, $background-color-lv3);
+@include setTableHead(#f4f6f8, #294e79, 14px, #008fd4, 2px);
+@include setTableBody(#333, 12px, #fff, #f8f8f8);
+//@include setTableTextAlign();
+
 @include setTag(#fff, 25px);
 @include setTagCloseBarInCenter(25px);
 @include setCollapse($background-color-lv2);

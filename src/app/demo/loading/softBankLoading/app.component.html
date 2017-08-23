@@ -20,5 +20,17 @@
     </div>
 
     <button (click)="popupGlobalLoading()">popupGlobalLoading</button>
+    <br><br>
+
+    <jigsaw-button (click)="startToLoad()">
+        <span class="iconfont icon-e8dd jigsaw-am-rotation" *ngIf="isLoading"></span>
+        <span>{{label}} </span>
+    </jigsaw-button>
+    <br><br>
+
+    <jigsaw-button (click)="startToLoad()">
+        <span>{{label}} </span>
+    </jigsaw-button>
+    <span class="iconfont icon-e8dd jigsaw-am-rotation" *ngIf="isLoading"></span>
 </div>
 

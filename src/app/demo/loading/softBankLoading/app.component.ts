@@ -48,4 +48,15 @@ export class SoftBankLoadingDemoComponent {
             this.globalLoading = null;
         }
     }
+
+    isLoading: boolean = false;
+    label:string = 'submit';
+    startToLoad() {
+        this.isLoading = true;
+        this.label = 'loading...';
+        setTimeout(() => {
+            this.isLoading = false;
+            this.label = 'submit';
+        }, 3000)
+    }
 }
