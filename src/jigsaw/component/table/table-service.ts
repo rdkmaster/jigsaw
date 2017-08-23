@@ -1,9 +1,9 @@
 import {Injectable} from "@angular/core";
 import {CheckBoxStatus} from "../checkbox/typings";
 
-export type TableCheckboxInfo = {
-    row: number,
-    checked: boolean | number
+export class TableCheckboxInfo {
+    row: number;
+    checked: boolean | number;
 }
 
 /*

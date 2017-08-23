@@ -6,7 +6,7 @@ import {
 } from "./component-data";
 import {CallbackRemoval} from "../utils/common-utils";
 
-export abstract class AbstractGeneralCollection<T = any> extends EventEmitter<any> implements IAjaxComponentData {
+export abstract class AbstractGeneralCollection<T = any> implements IAjaxComponentData {
     public abstract fromObject(data: T): AbstractGeneralCollection<T>;
 
     protected abstract ajaxSuccessHandler(data): void;
@@ -88,6 +88,20 @@ export abstract class AbstractGeneralCollection<T = any> extends EventEmitter<an
         this.componentDataHelper.clearCallbacks();
         this.componentDataHelper = null;
         this.dataReviser = null;
+    }
+
+    private _emitter = new EventEmitter<any>();
+
+    public emit(value?: any): void {
+        this._emitter.emit(value);
+    }
+
+    public subscribe(generatorOrNext?: any, error?: any, complete?: any): any {
+        return this._emitter.subscribe(generatorOrNext, error, complete);
+    }
+
+    public unsubscribe() {
+        this._emitter.unsubscribe();
     }
 }
 

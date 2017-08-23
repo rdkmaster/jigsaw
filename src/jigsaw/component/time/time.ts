@@ -14,15 +14,15 @@ import {ElementEventHelper, CommonUtils} from "../../core/utils/common-utils";
 
 export type TimeShortcutFunction = () => [WeekTime, WeekTime]
 
-export type Shortcut = {
-    label: string,
+export class Shortcut {
+    label: string;
     dateRange: [WeekTime, WeekTime] | TimeShortcutFunction;
 }
 
-export type GrItem = {
-    label: string,
-    value: TimeGr,
-    span?: string,
+export class GrItem {
+    label: string;
+    value: TimeGr;
+    span?: string;
     shortcuts?: Shortcut[];
 }
 
