@@ -34,8 +34,8 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
         display: block;
         margin: 0 20px 0 7px;
         position: relative;
-        line-height: 30px;
-        height: 30px;
+        line-height: $height-base - 2px;
+        height: $height-base;
         jigsaw-tag{
             vertical-align: middle;
             margin-right: 4px;

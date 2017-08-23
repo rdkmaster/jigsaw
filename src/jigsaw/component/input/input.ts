@@ -146,7 +146,7 @@ export class JigsawInput extends AbstractJigsawComponent implements ControlValue
         let prefixIconWidth = this._elementRef.nativeElement.querySelector(".jigsaw-input-icon-front").offsetWidth;
         let endIconWidth = this._elementRef.nativeElement.querySelector(".jigsaw-input-icon-end").offsetWidth;
 
-        let prefixIconPadding = prefixIconWidth + 4;
+        let prefixIconPadding = prefixIconWidth + 10;
         if(prefixIconWidth !== 0) {
             prefixIconPadding = prefixIconPadding + 8;
         }

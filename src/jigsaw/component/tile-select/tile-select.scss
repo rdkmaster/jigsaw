@@ -7,6 +7,7 @@ $select-prefix-cls: #{$jigsaw-prefix}-tile-select;
     opacity: 0;
     .#{$select-prefix-cls}-search {
         margin-bottom: 8px;
+        margin-right: 8px;
     }
 }
 
