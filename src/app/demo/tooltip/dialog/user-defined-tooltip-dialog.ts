@@ -11,6 +11,6 @@ import {JigsawTooltipDialog, TooltipBase} from "jigsaw/component/tooltip/tooltip
 })
 export class UserTooltipDialogComponent extends TooltipBase{
     @ViewChild(JigsawTooltipDialog) public tooltip: JigsawTooltipDialog;
-    
+
 }
 

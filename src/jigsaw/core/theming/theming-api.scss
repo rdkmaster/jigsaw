@@ -217,3 +217,25 @@
         }
     }
 }
+
+@mixin setTime($grTabColor){
+    jigsaw-time .jigsaw-time-granularity > span{
+        border: 1px solid $grTabColor;
+        border-right: 0;
+        color: $grTabColor;
+        &.active{
+            background: $grTabColor;
+        }
+        &:last-child{
+            border-right: 1px solid $grTabColor;
+        }
+    }
+    jigsaw-range-time .jigsaw-range-time-shortcuts > span{
+        border: 1px solid $grTabColor;
+        color: $grTabColor;
+        border-right: 0;
+        &:last-child{
+            border-right: 1px solid $grTabColor;
+        }
+    }
+}
