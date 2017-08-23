@@ -41,12 +41,77 @@
     }
 }
 
-@mixin setButton($defaultTextColor, $defaultFontSize: 12px, $withAnimation: true){
-    .jigsaw-button{
+@mixin setBtnDefault($defaultTextColor, $defaultFontSize: 12px){
+    .#{$btn-prefix-cls}{
         color: $defaultTextColor;
         font-size: $defaultFontSize;
-        &.#{$btn-prefix-cls}-clicked:after {
-            content: if($withAnimation, '', none);
+    }
+}
+
+@mixin showBtnAnimation($withAnimation: true){
+    .#{$btn-prefix-cls}.#{$btn-prefix-cls}-clicked:after {
+        content: if($withAnimation, '', none);
+    }
+}
+
+@mixin setBtnActive($activeType){
+    $btn-primary-hover: mix(#fff, $primary-color, 20%);
+    $btn-primary-active: mix(#000, $primary-color, 10%);
+    $btn-warning-hover: mix(#fff, $warning-color, 20%);
+    $btn-warning-active: mix(#000, $warning-color, 10%);
+    $btn-error-hover: mix(#fff, $error-color, 20%);
+    $btn-error-active: mix(#000, $error-color, 10%);
+    @if($activeType == light-to-dark){
+        $btn-primary-hover: mix(#fff, $primary-color, 20%);
+        $btn-primary-active: mix(#000, $primary-color, 10%);
+        $btn-warning-hover: mix(#fff, $warning-color, 20%);
+        $btn-warning-active: mix(#000, $warning-color, 10%);
+        $btn-error-hover: mix(#fff, $error-color, 20%);
+        $btn-error-active: mix(#000, $error-color, 10%);
+    } @else if($activeType == dark-to-dark){
+        $btn-primary-hover: mix(#000, $primary-color, 10%);
+        $btn-primary-active: mix(#000, $primary-color, 20%);
+        $btn-warning-hover: mix(#000, $warning-color, 10%);
+        $btn-warning-active: mix(#000, $warning-color, 20%);
+        $btn-error-hover: mix(#000, $error-color, 10%);
+        $btn-error-active: mix(#000, $error-color, 20%);
+    }
+    .#{$btn-prefix-cls}{
+        &:hover {
+            color: $btn-primary-hover;
+            border: 1px solid $btn-primary-hover;
+        }
+
+        &:active {
+            color: $btn-primary-active;
+            border: 1px solid $btn-primary-active;
+        }
+
+        &.#{$btn-prefix-cls}-color-primary{
+            &:hover {
+                background: $btn-primary-hover;
+            }
+            &:active {
+                background: $btn-primary-active;
+            }
+        }
+
+        &.#{$btn-prefix-cls}-color-warning{
+            &:hover {
+                background: $btn-warning-hover;
+            }
+            &:active {
+                background: $btn-warning-active;
+            }
+        }
+
+        &.#{$btn-prefix-cls}-color-error{
+            &:hover {
+                background: $btn-error-hover;
+            }
+            &:active {
+                background: $btn-error-active;
+            }
         }
     }
 }
@@ -90,11 +155,15 @@
     }
 }
 
-@mixin setTableTextAlign(){
+@mixin setTableTextAlign($textAlign, $sidePadding: 0){
     jigsaw-table.jigsaw-table-host table {
         td {
-            text-align: left;
-            text-indent: 20px;
+            text-align: $textAlign;
+            @if($textAlign == left){
+                padding-left: $sidePadding;
+            } @else if($textAlign == right){
+                padding-right: $sidePadding;
+            }
         }
     }
 }

@@ -71,51 +71,32 @@ $item-hover-bg          : $primary-1;
 $item-active-bg         : $primary-2;
 
 // Buttons
-$btn-primary-bg         : $primary-color;
-$btn-primary-bg-hover   : $primary-7;
-$btn-primary-bg-active  : $primary-8;
-
-$btn-warning-bg         : $warning-color;
-$btn-warning-bg-hover   : mix(#000, $warning-color, 10%);
-$btn-warning-bg-active  : mix(#000, $warning-color, 20%);
-
-$btn-error-bg           : $error-color;
-$btn-error-bg-hover     : mix(#000, $error-color, 10%);
-$btn-error-bg-active    : mix(#000, $error-color, 20%);
-
-$btn-default-border     : $border-color-base;
-$btn-default-bg         : $default-color;
-$btn-default-bg-hover   : $primary-5;
-$btn-default-bg-active  : $primary-7;
-$btn-default-box-shadow : none;
-
+$btn-box-shadow         : none;
 $btn-font-weight        : 500;
 
 // Scroll bar
 $scroll-bar-bg          : fade-out(#008fd4, .7);
-$scroll-bar-active-bg    : fade-out(#008fd4, .5);
+$scroll-bar-active-bg   : fade-out(#008fd4, .5);
 
 @import "./_common";
 @import "../all-theme";
 @import "../theming-api";
 
 // ------ Own for zte ------
-$background-color-lv1   : #dedede;
-$background-color-lv2   : #eee;
-$background-color-lv3   : #f3f3f3;
-
 @include setPopupCloseBar($primary-color, $primary-7);
 @include setDialogHead($primary-color, #f2f2f2, 30px);
 @include setDialogButton(right, false);
 
-@include setButton($primary-color, 14px, false);
+@include setBtnDefault($primary-color, 14px);
+@include showBtnAnimation(false);
+//@include setBtnActive(light-to-dark);
 
 @include setTableHead(#f4f6f8, #294e79, 14px, #008fd4, 2px);
 @include setTableBody(#333, 12px, #fff, #f8f8f8);
-//@include setTableTextAlign();
+@include setTableTextAlign(left, 20px);
 
 @include setTag(#fff, 25px);
 @include setTagCloseBarInCenter(25px);
-@include setCollapse($background-color-lv2);
+@include setCollapse(#f4f6f8);
 @include setTabsTriangle(true);
 

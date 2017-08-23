@@ -71,24 +71,7 @@ $item-hover-bg          : $primary-1;
 $item-active-bg         : $primary-2;
 
 // Buttons
-$btn-primary-bg         : $primary-color;
-$btn-primary-bg-hover   : $primary-7;
-$btn-primary-bg-active  : $primary-8;
-
-$btn-warning-bg         : $warning-color;
-$btn-warning-bg-hover   : mix(#000, $warning-color, 10%);
-$btn-warning-bg-active  : mix(#000, $warning-color, 20%);
-
-$btn-error-bg           : $error-color;
-$btn-error-bg-hover     : mix(#000, $error-color, 10%);
-$btn-error-bg-active    : mix(#000, $error-color, 20%);
-
-$btn-default-border     : $border-color-base;
-$btn-default-bg         : $default-color;
-$btn-default-bg-hover   : $btn-primary-bg-hover;
-$btn-default-bg-active  : $btn-primary-bg-active;
 $btn-default-box-shadow : none;
-
 $btn-font-weight        : 500;
 
 // Scroll bar
