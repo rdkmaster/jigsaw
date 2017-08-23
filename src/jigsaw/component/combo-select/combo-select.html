@@ -1,7 +1,6 @@
 <div class="jigsaw-combo-select"
      [class.jigsaw-combo-select-opened]="_$opened"
      [class.jigsaw-combo-select-disabled]="disabled"
-     [style.min-width]="width?width:'240px'"
      (mouseenter)="_$openByHover($event)"
      (mouseleave)="_$closeByHover($event)"
      (click)="_$openAndCloseByClick($event)">
@@ -21,6 +20,8 @@
             </ng-template>
         </div>
     </div>
+    <i class="fa fa-times-circle jigsaw-combo-select-clear"
+       *ngIf="clearable && value && value.length != 0" (click)="_$clearValue()"></i>
     <i class="fa fa-angle-down jigsaw-combo-select-arrow"></i>
 </div>
 <ng-content></ng-content>

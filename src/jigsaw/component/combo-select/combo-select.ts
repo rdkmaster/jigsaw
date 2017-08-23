@@ -38,7 +38,7 @@ export class ComboSelectValue {
     selector: 'jigsaw-combo-select',
     templateUrl: 'combo-select.html',
     host: {
-        '[style.min-width]': 'width',
+        '[style.width]': 'width',
         '[class.jigsaw-combo-select-host]': 'true'
     },
     providers: [
@@ -158,6 +158,17 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     @Input()
     public autoWidth: boolean; //自动同步dropdown宽度，与combo-select宽度相同
+
+    @Input()
+    public clearable: boolean = false;
+
+    /**
+     * @internal
+     */
+    public _$clearValue(){
+        this.value = new ArrayCollection<ComboSelectValue>();
+        this._autoWidth();
+    }
 
     /**
      * @internal

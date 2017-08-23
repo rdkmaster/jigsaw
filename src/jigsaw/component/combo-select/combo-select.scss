@@ -4,38 +4,33 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
 
 .#{$jigsaw-combo-select}-host {
     @include inline-block;
+    width: 240px;
 }
 
 .#{$jigsaw-combo-select} {
-    min-width: 240px;
-    width: auto;
-    display: inline-block;
-    outline: none;
     position: relative;
     color: $text-color;
     font-size: $font-size-base;
     cursor: pointer;
 
     &-selection {
-        display: block;
-        user-select: none;
         background-color: $default-color;
         border-radius: $border-radius-base;
         border: $border-width-base $border-style-base $border-color-base;
         transition: all .3s $ease-in-out;
+        user-select: none;
         white-space:nowrap;
-
+        padding: 0 30px 0 7px;
         &:hover {
             border-color: $primary-color;
+            box-shadow: $box-focus-shadow;
         }
     }
 
     &-selection &-selection-rendered {
-        display: block;
-        margin: 0 20px 0 7px;
-        position: relative;
         line-height: $height-base - 2px;
         height: $height-base;
+        overflow: hidden;
         jigsaw-tag{
             vertical-align: middle;
             margin-right: 4px;
@@ -88,5 +83,15 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
         right: 8px;
         line-height: 1px;
         @include prefixer(transition, transform 0.3s ease);
+    }
+
+    &-clear {
+        position: absolute;
+        top: 50%;
+        right: 18px;
+        line-height: 28px;
+        height: 28px;
+        width: 12px;
+        transform: translateY(-50%);
     }
 }

@@ -6,7 +6,9 @@
     <jigsaw-combo-select
         [openTrigger]="openTrigger"
         [closeTrigger]="closeTrigger"
-        [(value)]="selectedCity">
+        [(value)]="selectedCity"
+        width="300"
+        [clearable]="true">
         <ng-template>
             <jigsaw-tile-select
                 [(selectedItems)]="selectedCity"

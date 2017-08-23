@@ -6,7 +6,8 @@
     <jigsaw-combo-select
         [(value)]="selectedCity"
         (valueChange)="valueChange($event)"
-        [autoClose]="!multiple">
+        [autoClose]="!multiple"
+        [clearable]="true">
         <ng-template>
             <jigsaw-tile-select
                 [(selectedItems)]="selectedCity"
