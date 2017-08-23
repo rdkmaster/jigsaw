@@ -1,4 +1,5 @@
 import {Http, RequestOptionsArgs, Response, URLSearchParams} from "@angular/http";
+import {EventEmitter} from "@angular/core";
 import {Subject} from "rxjs/Subject";
 import "rxjs/add/operator/map";
 
@@ -23,17 +24,17 @@ import {CallbackRemoval} from "../utils/common-utils";
 export class JigsawArray<T> implements Array<T> {
     private _agent: T[] = [];
 
-    public set(index: number, value: T): void {
-        this._length = this._length > index ? this._length : index+1;
-        const thiz:any = this;
+    public set (index: number, value: T): void {
+        this._length = this._length > index ? this._length : index + 1;
+        const thiz: any = this;
         thiz[index] = value;
     }
 
-    public get(index: number): T {
+    public get (index: number): T {
         return this[index];
     }
 
-    private _length:number = 0;
+    private _length: number = 0;
 
     public get length(): number {
         return this._length;
@@ -178,7 +179,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
 
     public concat(...items: any[]): ArrayCollection<T> {
         const acArr = [];
-        for(let i = 0; i < this.length; i++){
+        for (let i = 0; i < this.length; i++) {
             acArr.push(this[i])
         }
         let itemArr = [];
@@ -190,7 +191,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
 
     public slice(start?: number, end?: number): ArrayCollection<T> {
         const acArr = [];
-        for(let i = 0; i < this.length; i++){
+        for (let i = 0; i < this.length; i++) {
             acArr.push(this[i])
         }
         return new ArrayCollection<T>(acArr.slice(start, end));
@@ -313,6 +314,21 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
         this.componentDataHelper.clearCallbacks();
         this.componentDataHelper = null;
         this.dataReviser = null;
+        this._emitter.unsubscribe();
+    }
+
+    private _emitter = new EventEmitter<any>();
+
+    public emit(value?: any): void {
+        this._emitter.emit(value);
+    }
+
+    public subscribe(generatorOrNext?: any, error?: any, complete?: any): any {
+        return this._emitter.subscribe(generatorOrNext, error, complete);
+    }
+
+    public unsubscribe() {
+        this._emitter.unsubscribe();
     }
 }
 
@@ -468,8 +484,8 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
     public changePage(currentPage: number, pageSize?: number): void;
     public changePage(info: PagingInfo): void;
     public changePage(currentPage, pageSize?: number): void {
-        const pi:PagingInfo = currentPage instanceof PagingInfo ? currentPage : new PagingInfo(currentPage, +pageSize);
-        let needRefresh:boolean = false;
+        const pi: PagingInfo = currentPage instanceof PagingInfo ? currentPage : new PagingInfo(currentPage, +pageSize);
+        let needRefresh: boolean = false;
 
         if (pi.currentPage >= 1 && pi.currentPage <= this.pagingInfo.totalPage) {
             this.pagingInfo.currentPage = pi.currentPage;

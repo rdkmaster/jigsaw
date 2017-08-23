@@ -1,11 +1,12 @@
 import {Http, RequestOptionsArgs, Response} from "@angular/http";
+import {EventEmitter} from "@angular/core";
 import "rxjs/add/operator/map";
 import {
     IAjaxComponentData, DataReviser, ComponentDataHelper
 } from "./component-data";
 import {CallbackRemoval} from "../utils/common-utils";
 
-export abstract class AbstractGeneralCollection<T = any> implements IAjaxComponentData {
+export abstract class AbstractGeneralCollection<T = any> extends EventEmitter<any> implements IAjaxComponentData {
     public abstract fromObject(data: T): AbstractGeneralCollection<T>;
 
     protected abstract ajaxSuccessHandler(data): void;
