@@ -11,8 +11,10 @@ import {DefinedLoadingDemoModule} from "./userDefined/app.module";
 import {DomInnerDemoModule} from "./domInner/app.module";
 import {ColorfulLoadingDemoModule} from "./color/app.module";
 import {LoadingFullDemoModule} from "./full/app.module";
-import {SoftBankLoadingDemoModule} from "./softBankLoading/app.module";
-import {SoftBankLoadingDemoComponent} from "./softBankLoading/app.component";
+import {BubbleLoadingDemoComponent} from "./bubbleLoading/app.component";
+import {BubbleLoadingDemoModule} from "./bubbleLoading/app.module";
+import {FontLoadingDemoComponent} from "./fontLoading/app.component";
+import {FontLoadingDemoModule} from "./fontLoading/app.module";
 
 const loadingDemoRoutes = [
     {
@@ -25,10 +27,13 @@ const loadingDemoRoutes = [
         path: 'ballLoading', component: BallLoadingDemoComponent
     },
     {
-        path: 'userDefined', component: DefinedLoadingDemoComponent
+        path: 'bubbleLoading', component: BubbleLoadingDemoComponent
     },
     {
-        path: 'softBankLoading', component: SoftBankLoadingDemoComponent
+        path: 'fontLoading', component: FontLoadingDemoComponent
+    },
+    {
+        path: 'userDefined', component: DefinedLoadingDemoComponent
     },
     {
         path: 'domInner', component: DomInnerDemoComponent
@@ -47,10 +52,11 @@ const loadingDemoRoutes = [
         RouterModule.forChild(loadingDemoRoutes),
         LoadingFullDemoModule,
         BallLoadingDemoModule,
+        BubbleLoadingDemoModule,
+        FontLoadingDemoModule,
         DefinedLoadingDemoModule,
         DomInnerDemoModule,
         ColorfulLoadingDemoModule,
-        SoftBankLoadingDemoModule
     ]
 })
 export class LoadingDemoModule {

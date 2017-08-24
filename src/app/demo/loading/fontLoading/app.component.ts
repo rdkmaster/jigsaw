@@ -3,13 +3,13 @@ import {
 } from '@angular/core';
 import {LoadingService} from "jigsaw/service/loading.service";
 import {PopupInfo} from "jigsaw/service/popup.service";
-import {JigsawBallLoading, JigsawBubbleLoading} from "jigsaw/component/loading/loading";
+import {JigsawFontLoading} from "jigsaw/component/loading/loading";
 
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class BubbleLoadingDemoComponent{
+export class FontLoadingDemoComponent{
     @ViewChild('block') block: ElementRef;
 
     constructor(public loadingService: LoadingService,
@@ -22,7 +22,7 @@ export class BubbleLoadingDemoComponent{
 
     popupBlockLoading() {
         if (!this.blockLoading) {
-            this.blockLoading = this.loadingService.show(this.block, JigsawBubbleLoading);
+            this.blockLoading = this.loadingService.show(this.block, JigsawFontLoading);
         }
     }
 
@@ -35,7 +35,7 @@ export class BubbleLoadingDemoComponent{
 
     popupGlobalLoading() {
         if (!this.globalLoading) {
-            this.globalLoading = this.loadingService.show(JigsawBubbleLoading);
+            this.globalLoading = this.loadingService.show(JigsawFontLoading);
             setTimeout(() => {
                 this.closeGlobalLoading();
             }, 3000)

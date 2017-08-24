@@ -83,16 +83,20 @@ export const navInfo = [
                 url: '/loading/full'
             },
             {
+                label: 'bubbleLoading',
+                url: '/loading/bubbleLoading'
+            },
+            {
+                label: 'fontLoading',
+                url: '/loading/fontLoading'
+            },
+            {
                 label: 'ballLoading',
                 url: '/loading/ballLoading'
             },
             {
                 label: 'userDefined',
                 url: '/loading/userDefined'
-            },
-            {
-                label: 'softBankLoading',
-                url: '/loading/softBankLoading'
             },
             {
                 label: 'with-loading-inside',

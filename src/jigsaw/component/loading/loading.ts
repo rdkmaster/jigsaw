@@ -17,7 +17,7 @@ export class JigsawLoadingBase extends AbstractJigsawComponent implements IPopup
         return undefined;
     }
 
-    private _color:string;
+    protected _color:string;
 
     @Input()
     public get color():string {
@@ -26,7 +26,9 @@ export class JigsawLoadingBase extends AbstractJigsawComponent implements IPopup
 
     public set color(rgb:string) {
         this._color = rgb;
-        this.setElementsStyle(this.getColorElement(),'backgroundColor',rgb);
+        if(this.getColorElement()){
+            this.setElementsStyle(this.getColorElement(),'backgroundColor',rgb);
+        }
     }
 
     protected getPopupElement(): HTMLElement {
@@ -56,7 +58,7 @@ export class JigsawLoadingBase extends AbstractJigsawComponent implements IPopup
 
 @Component({
     selector: 'jigsaw-loading',
-    templateUrl: 'loading-bubble.html',
+    templateUrl: 'loading-ring.html',
 })
 export class JigsawLoading extends JigsawLoadingBase implements OnInit{
 
@@ -65,12 +67,43 @@ export class JigsawLoading extends JigsawLoadingBase implements OnInit{
     }
 
     ngOnInit(){
-        super.setElementSize('.spinner',this.width,this.height);
+        super.setElementSize('.loadingProcess',this.width,this.height);
+    }
+
+}
+
+@Component({
+    selector: 'jigsaw-font-loading',
+    templateUrl: 'loading-font.html',
+})
+export class JigsawFontLoading extends JigsawLoadingBase implements OnInit{
+
+    constructor(private renderer: Renderer2, private elementRef: ElementRef){
+        super(renderer,elementRef);
+    }
+
+    ngOnInit(){
+        this.setElementSize('.jigsaw-font-loading',this.width,this.height);
     }
 
 
     protected getColorElement() : NodeListOf<Element>{
-        return this.getPopupElement().querySelectorAll('.spinner-container > div');
+        return this.getPopupElement().querySelectorAll('.jigsaw-font-loading');
+    }
+
+    public set color(rgb:string) {
+        this._color = rgb;
+        if(this.getColorElement()){
+            this.setElementsStyle(this.getColorElement(),'color',rgb);
+        }
+    }
+
+    public setElementSize(selector: string, width: number | string , height: number | string) {
+        super.setElementSize(selector, width, height);
+        if(width && height){
+            this.renderer.setStyle(this.popupElement.querySelector(selector), 'font-size', width);
+            this.renderer.setStyle(this.popupElement.querySelector(selector), 'line-height', height);
+        }
     }
 
 }
@@ -113,9 +146,9 @@ export class JigsawBallLoading extends JigsawLoadingBase {
 
 @NgModule({
     imports: [CommonModule, JigsawBlockModule],
-    declarations: [JigsawLoading, JigsawBallLoading],
-    exports: [JigsawLoading, JigsawBallLoading],
-    entryComponents: [JigsawBlock, JigsawLoading, JigsawBallLoading]
+    declarations: [JigsawLoading, JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading],
+    exports: [JigsawLoading, JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading],
+    entryComponents: [JigsawBlock, JigsawLoading, JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading]
 })
 export class JigsawLoadingModule {
 

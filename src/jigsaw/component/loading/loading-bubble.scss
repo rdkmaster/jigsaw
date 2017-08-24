@@ -1,8 +1,8 @@
 @import "../../assets/scss/core/basc";
 
-$loading-prefix-cls: #{$jigsaw-prefix}-loading;
+$bubble-loading-prefix-cls: #{$jigsaw-prefix}-bubble-loading;
 
-#{$loading-prefix-cls} {
+#{$bubble-loading-prefix-cls} {
     @include inline-block;
     position: relative;
     width: 40px;
