@@ -12,7 +12,7 @@ import {JigsawScrollBarModule} from '../../directive/scrollbar/scrollbar';
 import {ArrayCollection} from "../../core/data/array-collection";
 
 @Directive({
-    selector: '.jigsaw-option-list',
+    selector: '.jigsaw-select-option-list',
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height'

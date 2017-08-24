@@ -43,10 +43,16 @@
     }
 }
 .mCSB_container_wrapper{
-    margin-right: 0;
+    margin: 0;
     & > .mCSB_container {
-        padding-right: 0;
+        padding: 0;
     }
+}
+.mCSB_vertical_horizontal > .mCSB_scrollTools.mCSB_scrollTools_horizontal{
+    right: 0;
+}
+.mCSB_vertical_horizontal > .mCSB_scrollTools.mCSB_scrollTools_vertical{
+    bottom: 0;
 }
 .mCSB_inside > .mCSB_container {
     margin-right: 0;

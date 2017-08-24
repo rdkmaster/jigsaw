@@ -1,7 +1,7 @@
 @import "../../assets/scss/core/basc";
 
 $select-prefix-cls: #{$jigsaw-prefix}-select;
-$option-prefix-cls: #{$jigsaw-prefix}-option;
+$select-option-prefix-cls: #{$jigsaw-prefix}-select-option;
 
 #{$select-prefix-cls} {
     @include inline-block();
@@ -10,6 +10,7 @@ $option-prefix-cls: #{$jigsaw-prefix}-option;
     line-height: $height-base;
     font-size: $font-size-base;
     color: $text-color;
+    
 }
 
 .#{$select-prefix-cls}-box {
@@ -28,14 +29,14 @@ $option-prefix-cls: #{$jigsaw-prefix}-option;
         &:hover {
             border-color: $primary-color;
         }
-        &.#{$select-prefix-cls}-opened {
+        &#{&}-opened {
             border-color: $primary-color;
             box-shadow: $box-focus-shadow;
             .#{$select-prefix-cls}-icon-down {
                 @include prefixer(transform, rotate(180deg));
             }
         }
-        .#{$select-prefix-cls}-icon-down{
+        &-icon-down{
             position: absolute;
             right: 8px;
             line-height: inherit;
@@ -43,7 +44,7 @@ $option-prefix-cls: #{$jigsaw-prefix}-option;
         }
 
     }
-    .#{$option-prefix-cls}-list {
+    .#{$select-option-prefix-cls}-list {
         width: 100%;
         position: absolute;
         z-index: 1;
@@ -53,7 +54,7 @@ $option-prefix-cls: #{$jigsaw-prefix}-option;
         border-radius: $border-radius-base;
         @include prefixer(transition, all 0.3s $ease-in-out);
         @include prefixer(transform-origin, 0 0);
-        &.#{$option-prefix-cls}-hidden {
+        &.#{$select-option-prefix-cls}-hidden {
             display: none\9;
             @include opacity(0);
             @include prefixer(transform, scale(1, 0));
