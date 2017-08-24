@@ -6,19 +6,12 @@
     <jigsaw-combo-select
         [openTrigger]="openTrigger"
         [closeTrigger]="closeTrigger"
-        [(value)]="selectedCity"
-        width="300"
-        [clearable]="true">
+        [(value)]="selectedCity" (select)="onTagSelect($event)" (remove)="onTagRemove($event)">
         <ng-template>
-            <jigsaw-tile-select
-                [(selectedItems)]="selectedCity"
-                labelField="label"
-                [searchable]="true"
-                [data]="citys"
-                width="400px"
-                tileOptionWidth="22.8%"
-                style="padding: 8px 0 8px 8px">
-            </jigsaw-tile-select>
+            <div class="drop-down-container">
+                <jigsaw-button *ngFor="let city of cities;" [colorType]="city.type"
+                               (click)="onCityClick(city)">{{city.label}}</jigsaw-button>
+            </div>
         </ng-template>
     </jigsaw-combo-select>
 </div>

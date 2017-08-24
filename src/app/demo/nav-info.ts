@@ -275,10 +275,6 @@ export const navInfo = [
         title: 'Popup',
         navList: [
             {
-                label: 'tracing-event',
-                url: '/popup/tracing-event'
-            },
-            {
                 label: 'alert-popup',
                 url: '/alert/popup'
             },

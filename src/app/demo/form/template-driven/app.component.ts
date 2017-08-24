@@ -1,7 +1,8 @@
-import {Component} from "@angular/core";
+import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 import {TimeGr, TimeService} from "jigsaw/service/time.service";
 import {TableData} from "jigsaw/core/data/table-data";
+import {ColumnDefine} from "jigsaw/component/table/table-api";
 
 
 @Component({
@@ -34,6 +35,11 @@ export class TemplateDrivenDemoComponent {
         ],
         ["name", "price", "desc", "origin"],
         ["Name", "Price", "Description", "Origin"]);
+    columnDef: ColumnDefine[] = [
+        {target: 'desc', width: '60%'}
+    ];
+    selectedIndex: number = 0;
+
     lastNamePattern = /^[a-z]+$/i;
 
     submit(formValue) {
@@ -41,12 +47,25 @@ export class TemplateDrivenDemoComponent {
         this.formValue = formValue;
     }
 
-    handleDateChange() {
+    onDateChange() {
         this.rangeTimeComboValue[0].label = this.rangeTime.beginDate;
         this.rangeTimeComboValue[1].label = this.rangeTime.endDate;
         this.rangeTimeComboValue.refresh();
     }
 
-    constructor() {
+    onFavoriteFruitChange(selected) {
+        this.favoriteFruit = new ArrayCollection<any>([{label: this.fruitList.data[selected][0]}]);
+        this.selectedIndex = selected;
+    }
+
+    onFavoriteFruitRemoved(value) {
+        if (value.length == 0) {
+            this.selectedIndex = -1;
+        }
+    }
+
+    constructor(public viewContainerRef: ViewContainerRef,
+                public renderer: Renderer2) {
+        this.favoriteFruit = new ArrayCollection<any>([{label: this.fruitList.data[0][0]}]);
     }
 }

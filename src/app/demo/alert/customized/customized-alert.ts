@@ -13,7 +13,7 @@ import {ButtonInfo} from "jigsaw/service/popup.service";
 export class CustomizedAlert extends DialogBase {
     @ViewChild(JigsawAlert) dialog: JigsawDialog;
 
-    title:string = "a customized alert";
+    caption:string = "a customized alert";
 
     public buttons: ButtonInfo[] = [
         {

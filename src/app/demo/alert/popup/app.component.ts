@@ -45,11 +45,9 @@ export class AlertPopupDemoComponent {
         const popupInfo = this._popupService.popup(JigsawInfoAlert, this._getModalOptions(), {
             message: 'this is a great info alert!', title: 'the title is optional'
         });
-        if(popupInfo.popupRef instanceof ComponentRef){
-            popupInfo.popupRef.instance.answer.subscribe(answer => {
-                this.disposeAnswer(answer, popupInfo)
-            })
-        }
+        popupInfo.answer.subscribe(answer => {
+            this.disposeAnswer(answer, popupInfo)
+        })
     }
 
     commonWarningAlert() {
@@ -57,11 +55,9 @@ export class AlertPopupDemoComponent {
         const popupInfo = this._popupService.popup(JigsawWarningAlert, this._getModalOptions(), {
             message: 'this is a great warning alert!'
         });
-        if(popupInfo.popupRef instanceof ComponentRef){
-            popupInfo.popupRef.instance.answer.subscribe(answer => {
-                this.disposeAnswer(answer, popupInfo)
-            })
-        }
+        popupInfo.answer.subscribe(answer => {
+            this.disposeAnswer(answer, popupInfo)
+        })
     }
 
     commonErrorAlert(event) {
@@ -69,11 +65,9 @@ export class AlertPopupDemoComponent {
         const popupInfo = this._popupService.popup(JigsawErrorAlert, this._getUnModalOptions(event), {
             message: 'this is a great error alert!'
         });
-        if(popupInfo.popupRef instanceof ComponentRef){
-            popupInfo.popupRef.instance.answer.subscribe(answer => {
-                this.disposeAnswer(answer, popupInfo)
-            })
-        }
+        popupInfo.answer.subscribe(answer => {
+            this.disposeAnswer(answer, popupInfo)
+        })
     }
 
      _getModalOptions(): PopupOptions {

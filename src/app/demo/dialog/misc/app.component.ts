@@ -55,11 +55,9 @@ export class DialogMiscDemoComponent {
     * */
     popup() {
         const popupInfo = this._popupService.popup(UserDialogComponent, this._getModalOptions());
-        if(popupInfo.popupRef instanceof ComponentRef){
-            popupInfo.popupRef.instance.answer.subscribe(answer => {
-                this.disposeAnswer(answer, popupInfo)
-            })
-        }
+        popupInfo.answer.subscribe(answer => {
+            this.disposeAnswer(answer, popupInfo)
+        })
     }
 
     /*
@@ -67,11 +65,9 @@ export class DialogMiscDemoComponent {
      * */
     popupAtPoint(event) {
         const popupInfo = this._popupService.popup(UserDialog2Component, this._getUnModalOptions(event));
-        if(popupInfo.popupRef instanceof ComponentRef){
-            popupInfo.popupRef.instance.answer.subscribe(answer => {
-                this.disposeAnswer(answer, popupInfo)
-            })
-        }
+        popupInfo.answer.subscribe(answer => {
+            this.disposeAnswer(answer, popupInfo)
+        })
     }
 
     /*

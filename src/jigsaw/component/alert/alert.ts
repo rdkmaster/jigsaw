@@ -109,7 +109,7 @@ export abstract class JigsawCommonAlert extends DialogBase {
             return;
         }
         this.message = value.message ? value.message : 'the "message" property in the initData goes here.';
-        this.title = value.title ? value.title : this._getDefaultTitle();
+        this.caption = value.title ? value.title : this._getDefaultTitle();
     }
 
     public abstract get dialog(): JigsawDialog;

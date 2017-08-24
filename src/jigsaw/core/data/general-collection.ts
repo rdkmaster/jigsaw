@@ -1,4 +1,5 @@
 import {Http, RequestOptionsArgs, Response} from "@angular/http";
+import {EventEmitter} from "@angular/core";
 import "rxjs/add/operator/map";
 import {
     IAjaxComponentData, DataReviser, ComponentDataHelper
@@ -87,6 +88,20 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
         this.componentDataHelper.clearCallbacks();
         this.componentDataHelper = null;
         this.dataReviser = null;
+    }
+
+    private _emitter = new EventEmitter<any>();
+
+    public emit(value?: any): void {
+        this._emitter.emit(value);
+    }
+
+    public subscribe(generatorOrNext?: any, error?: any, complete?: any): any {
+        return this._emitter.subscribe(generatorOrNext, error, complete);
+    }
+
+    public unsubscribe() {
+        this._emitter.unsubscribe();
     }
 }
 

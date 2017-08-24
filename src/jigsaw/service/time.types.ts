@@ -1,6 +1,6 @@
 export type Moment = {
     _isAMomentObject: boolean,
-    [prop: string]: any;
+    [prop: string]: any
 }
 
 export type Time = Date|string|Moment;

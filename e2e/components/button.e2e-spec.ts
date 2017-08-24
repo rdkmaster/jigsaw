@@ -7,7 +7,7 @@ describe('button', () => {
 
     describe('test disabled', () => {
         beforeEach(() => {
-            browser.get('/button/disabled');
+            browser.get('/#/button/disabled');
         });
 
         it('should click invalid when set disabled', () => {
@@ -34,7 +34,7 @@ describe('button', () => {
 
     describe('test width and height', () => {
         beforeEach(() => {
-            browser.get('button/width_height');
+            browser.get('/#/button/width_height');
         });
 
         it('should change size when set width and height', async () => {
@@ -46,7 +46,7 @@ describe('button', () => {
 
     describe('test preset size and type', () => {
         beforeEach(() => {
-            browser.get('button/preset');
+            browser.get('/#/button/preset');
         });
 
         it('should display different size when set presize', async () => {

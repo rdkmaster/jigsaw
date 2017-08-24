@@ -11,65 +11,71 @@
 [![demo count](http://rdkmaster.com/rdk/service/app/badges/server/get-badge?type=demo)](http://rdk.zte.com.cn/component)
 [![e2e testcases count](http://rdkmaster.com/rdk/service/app/badges/server/get-badge?type=e2e%20testcases)](http://rdk.zte.com.cn)
 
-## 名字的内涵
-Jigsaw原意是七巧板，一种拼图游戏。游戏的过程和现代web页面开发过程很类似，游戏者按照既定的蓝图将杂乱的碎片组合成一幅图，我们使用这个名字正是为了让web页面开发者能够像玩Jigsaw游戏一样，边玩边开发你的页面。
+[README中文版](README.zh.md)
 
-**组合**是Jigsaw的灵魂，我们致力于将组合做到极致。
+## Meaning Of Name
+ Jigsaw is a puzzle game. The process of this game, during which the player combine the messy pieces into a picture in accordance with the established blueprint, is similar to the development process of modern web page. We use Jigsaw as this component set’s name, hoping to make web page developers to combine the messy pieces of functions into your web page, just like playing jigsaw puzzle.
 
-把若干组件按照一定的顺序排列&布局之后可以得到一个应用页面，这是通常意义上的组合，我们将这个层次的组合称归之为Level I。Level I 的组合把组件当做原子，不可再拆分。
+The soul of Jigsaw is **combination**, and we are committed to develop combination to the extreme level.
 
-Jigsaw的组件不再是原子，它对组件的功能进行了二次抽象，同时，允许组件的局部高度定制化，甚至有的组件做到完全的可定制化。小到类似`jigsaw-button`这样的基础组件，大到`jigsaw-table`这样的巨无霸组件，你看到的几乎每个UI元素，都是可以与其他组件再组合来覆盖其默认行为。原子组件是有限的，组合才能产生无限的可能。这里提到的定制化，换句话说，就是另一种形式的组合，我们将这个层次的组合归为Level II。
+When several components are sorted and arranged in a certain order, you can get an application page. This is a normal combination, which we definee as **Level I** combination. In this level, all the components are like atoms, which means they can only act what they were made.
 
-用Jigsaw，尽情释放你的想象力吧！
+But Jigsaw's components are no longer atoms, we made a secondary abstraction of the functionality of the components, while allowing parts of the components highly customizable, some component even fully customizable. Small to  basic components like `jigsaw-button`, large to  giant components such as `jigsaw-table`, almost every UI element you see can be combined with other components to change its default behavior, and therefor to enhance the capability of components. Atomic components are limited, but the combination can produce infinite possibilities. The customization mentioned here, in other words, is another form of combination, and we call this level of combination as Level II.
+
+With Jigsaw, unleash your imagination!
 
 
-## 用法
-### 全新的开始
-我们强烈推荐使用 [Jigsaw Seed](https://github.com/rdkmaster/jigsaw-seed) 来作为新工程的开始。具体步骤为：
-1. 如果未安装nodejs，或者nodejs低于6.x.x，npm版本低于3.x.x，请先安装[nodejs](https://nodejs.org)。
-2. [下载](https://github.com/rdkmaster/jigsaw-seed/archive/master.zip)或者[clone](https://github.com/rdkmaster/jigsaw-seed) Jigsaw Seed 的源码。假设保存到了 `d:\jigsaw-seed`。
-3. 下载依赖包，执行如下脚本（不能使用cnpm安装，会有问题，暂时未找到原因）
+## Get started
+### A brand new start with Jigsaw
+We strongly recommend to use [Jigsaw Seed](https://github.com/rdkmaster/jigsaw-seed) as the seed of all new projects. The specific steps are:
+1. Install or update [nodejs](https://nodejs.org), node 6.x.x and npm 3.x.x or later is required;
+2. [Download](https://github.com/rdkmaster/jigsaw-seed/archive/master.zip) or [clone](https://github.com/rdkmaster/jigsaw-seed) the source of Jigsaw Seed, assumed being saved to `d:\jigsaw-seed`;
+3. Install all dependencies by excuting the following script:
 
 ```
 cd d:\jigsaw-seed
-npm config set proxy=http://proxy.zte.com.cn:80
+npm config set proxy=http://proxy.zte.com.cn:80                          # do this if neccessary
 npm config set registry=https://registry.npm.taobao.org/                 # for Chinese developers only
 npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass # for Chinese developers only
-npm install -g @angular/cli                                              # 强烈推荐，可选
+npm install -g @angular/cli                                              # optional, but strongly recommended
 npm install
 npm start
 ```
-4. 浏览器里打开 http://localhost:4200 如果看到欢迎页，表示你的开发环境搭建完毕。
-5. 后续直接在 `d:\jigsaw-seed` 目录下运行 `npm start` 命令就可以启动开发环境了。Jigsaw专门针对现代的IDE做了代码优化，让这些IDE可以精确提示更多的信息，节约你翻阅api文档的时间。我们推荐使用[WebStorm](https://www.jetbrains.com/webstorm/)作为IDE。
 
-### 集成到已有工程中
-[具体过程请看这里](docs/integrate-your-project-with-jigsaw/index.md)
+**Attensions to the Chinese developers**, do **NOT** use `cnpm` to install the dependencies, we are still looking for the reason.
 
-## 新手宝典
-[Jigsaw Tourist](https://github.com/rdkmaster/jigsaw-tourist) 是一个专门为新手准备的教学工程，它展示了从零开始如何使用jigsaw来构建一个难度中等的应用页面。[单击这里](docs/tourist/index.md)，勇敢的迈出你在Jigsaw的第一步吧。
+4. Open `http://localhost:4200` in your browser, your development environment is completed set up if you can see the welcome page;
+5. Afterwards you can directly run `npm start` in the `d:\jigsaw-seed` directory to start the development environment;
+6. Jigsaw has specifically done code optimization for the modern IDE, so that IDE can accurately prompt more information, saving your time of reading api document. We recommend using [WebStorm](https://www.jetbrains.com/webstorm/) as IDE.
 
-上手过程中有任何困难，请关注Jigsaw的官方微信公众号，在那里可以加入SOS群和我们开发者直接对话：
+### Use Jigsaw with your developing project
+See the specific process [here](docs/integrate-your-project-with-jigsaw/index.md)
+
+## A bible for the beginners
+[Jigsaw Tourist](https://github.com/rdkmaster/jigsaw-tourist) is a tutorial dedication to the beginners, which shows how to use Jigsaw from scratch to build a simple application page. Click [here](docs/tourist/index.md), bravely take your first step in Jigsaw.
+
+If there is any difficulty in getting started, please add Jigsaw's official WeChat, where you can join the SOS group and have a dialogue with our developers directly.
 
 ![](docs/image/qr-weixin.jpg)
 
-## 新手进阶
-我们给已经学习了[Tour of Heroes](https://angular.io/tutorial)和[Jigsaw Tourist](https://github.com/rdkmaster/jigsaw/blob/master/docs/tourist/index.md)的同学准备了一个进阶版的工程[Any Badge](https://github.com/rdkmaster/any-badge)这是一个前端基于Jigsaw、后端基于[RDK](https://github.com/rdkmaster/rdk)的全功能项目，它是Jigsaw和RDK融合在一起开发完整应用的最佳实践。
+## A advanced guide
+[Any Badge](https://github.com/rdkmaster/any-badge) is a best practice of using Jigsaw and [RDK](https://github.com/rdkmaster/rdk) to create a full featured web application. It is a very good choice to read the source code of [Any Badge](https://github.com/rdkmaster/any-badge), which helps your to learn more about Jigsaw and RDK, after you finish reading the [Tour of Heroes](https://angular.io/tutorial) and the [Jigsaw Tourist](https://github.com/rdkmaster/jigsaw/blob/master/docs/tourist/index.md).
 
-## 求星星！One More Star Please!
-请随手赏个星星，这是对我们最好的鼓励！This is the best encouragement for us.
+## One More Star Please!
+This is the best encouragement for us.
 
-## 组件状态图
+## The status of all components
 ![](comp-map.png)
 
-## 参与贡献
-我们认为如下的行为都是在做贡献：
-- 默默的关注；
-- watch/star/fork 这个工程；
-- 给我们[提bug/需求/建议](https://github.com/rdkmaster/jigsaw/issues/new)；
-- 给我们写写文档，写点小文章；
-- 更有效的是给我们推送PR，所有的PR我们都欢迎并会认真处理；
-    - 请优先处理没有打 `suspend` 标签的[issue](https://github.com/rdkmaster/jigsaw/issues)；
-    - [这里](https://github.com/rdkmaster/jigsaw/blob/master/docs/coding-spec.md)是一份简单的代码规范，请尽量遵守它；
+## Contribution
+We believe that the following acts are doing contributions:
+- Quietly concern about Jigsaw;
+- Watch/star/fork it;
+- Reporting a bug or give us any suggestions by [submitting an issue](https://github.com/rdkmaster/jigsaw/issues/new);
+- Write or translate the api documentation, or any articals about Jigsaw.
+- The more effective way to contribute is to push us PRs, all PRs are welcome and will be dealt with seriously;
+    - Give priority to the [issues](https://github.com/rdkmaster/jigsaw/issues) without a `suspend` tag;
+    - This is a simple [code specification](docs/coding-spec.md), please try to follow it;
 
 ## 正在打算换工作？
 加入我们，白菜价送套市区房子！位于宁双路楚翘城往东200m处。绝不是吹牛，我很认真！

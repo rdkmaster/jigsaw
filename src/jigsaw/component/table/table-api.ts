@@ -15,58 +15,58 @@ export class TableCellRenderer {
     @Output() cellDataChange: EventEmitter<string|number|TableHeadChangeEvent> = new EventEmitter<string|number|TableHeadChangeEvent>();
 }
 
-export type ColumnDefine = {
-    target: TableColumnTarget,
-    visible?: boolean,
-    width?: string,
-    header?: TableHeader,
-    cell?: TableCell,
-    group?: boolean
+export class ColumnDefine {
+    target: TableColumnTarget;
+    visible?: boolean;
+    width?: string;
+    header?: TableHeader;
+    cell?: TableCell;
+    group?: boolean;
 }
 
-export type AdditionalColumnDefine = {
-    pos?: number,
-    field?: string|number,
-    visible?: boolean,
-    width?: string,
-    header?: TableHeader,
-    cell?: TableCell,
-    group?: boolean
+export class AdditionalColumnDefine {
+    pos?: number;
+    field?: string|number;
+    visible?: boolean;
+    width?: string;
+    header?: TableHeader;
+    cell?: TableCell;
+    group?: boolean;
 }
 
-export type TableDataChangeEvent = {
-    field: string|number,
-    row: number|number[],
-    column: number,
-    rawColumn: number,
-    cellData: string|number,
-    oldCellData: string|number
+export class TableDataChangeEvent {
+    field: string|number;
+    row: number|number[];
+    column: number;
+    rawColumn: number;
+    cellData: string|number;
+    oldCellData: string|number;
 }
 
-export type TableHeadChangeEvent = {
-    rows: number[],
-    cellData: string|number,
-    oldCellData: string|number
+export class TableHeadChangeEvent {
+    rows: number[];
+    cellData: string|number;
+    oldCellData: string|number;
 }
 
 export type TableColumnTarget = number|string|number[]|string[]|TableColumnTargetFunc;
 
 export type TableColumnTargetFunc = (field: string, index: number) => boolean;
 
-export type TableHeader = {
-    text?: string,
-    renderer?: Type<TableCellRenderer>|TemplateRef<any>,
-    class?: string,
-    sortable?: boolean,
-    sortAs?: SortAs,
-    defaultSortOrder?: SortOrder
+export class TableHeader {
+    text?: string;
+    renderer?: Type<TableCellRenderer>|TemplateRef<any>;
+    class?: string;
+    sortable?: boolean;
+    sortAs?: SortAs;
+    defaultSortOrder?: SortOrder;
 }
 
-export type TableCell = {
-    renderer?: Type<TableCellRenderer>|TemplateRef<any>,
-    class?: string,
-    editable?: boolean,
-    editorRenderer?: Type<TableCellRenderer>
+export class TableCell {
+    renderer?: Type<TableCellRenderer>|TemplateRef<any>;
+    class?: string;
+    editable?: boolean;
+    editorRenderer?: Type<TableCellRenderer>;
 }
 
 export class TableHeadSetting {
@@ -94,13 +94,13 @@ export class TableCellSetting {
     rowSpan: number;
 }
 
-export type SortChangeEvent = {
-    sortAs: SortAs,
-    order: SortOrder,
-    field: number
+export class SortChangeEvent {
+    sortAs: SortAs;
+    order: SortOrder;
+    field: number;
 }
-export type RemoveTdListener = {
-    removeTdListener: Function,
-    row: number,
-    column: number
+export class RemoveTdListener {
+    removeTdListener: Function;
+    row: number;
+    column: number;
 }

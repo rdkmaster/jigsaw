@@ -10,7 +10,7 @@ import {ButtonInfo} from "jigsaw/service/popup.service";
 export class UserDialog2Component extends DialogBase {
     @ViewChild(JigsawDialog) dialog: JigsawDialog;
 
-    public title: string = `Title of the dialog`;
+    public caption: string = `Title of the dialog`;
     public buttons: Array<ButtonInfo> = [
         {
             role: 'cancel',
