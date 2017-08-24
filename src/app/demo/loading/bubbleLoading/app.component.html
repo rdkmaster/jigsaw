@@ -1,6 +1,6 @@
 <div class="wrap">
-    <button (click)="popupBlockLoading()">popupCmpLoading</button>
-    <button (click)="closeBlockLoading()">closeCmpLoading</button>
+    <button (click)="popupBlockLoading()">popupBlockLoading</button>
+    <button (click)="closeBlockLoading()">closeBlockLoading</button>
     <div #block class="block">
         <div>
             <p>这里需要一段文字，虽然我认真写了，但是估计没多少人会仔细看。</p>
@@ -20,17 +20,4 @@
     </div>
 
     <button (click)="popupGlobalLoading()">popupGlobalLoading</button>
-    <br><br>
-
-    <jigsaw-button (click)="startToLoad()">
-        <span class="iconfont icon-e8dd jigsaw-am-rotation" *ngIf="isLoading"></span>
-        <span>{{label}} </span>
-    </jigsaw-button>
-    <br><br>
-
-    <jigsaw-button (click)="startToLoad()">
-        <span>{{label}} </span>
-    </jigsaw-button>
-    <span class="iconfont icon-e8dd jigsaw-am-rotation" *ngIf="isLoading"></span>
 </div>
-
