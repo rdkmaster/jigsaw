@@ -75,6 +75,7 @@ $btn-default-box-shadow : none;
 $btn-font-weight        : 500;
 
 // Scroll bar
+$scroll-field-bg        : $border-color-base;
 $scroll-bar-bg          : fade-out($primary-color, .7);
 $scroll-bar-active-bg   : fade-out($primary-color, .5);
 

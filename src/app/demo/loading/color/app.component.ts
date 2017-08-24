@@ -29,11 +29,12 @@ export class ColorfulLoadingDemoComponent {
             this.paused = 'runing';
             this.setElementsStyle('.spinner-container > div','animationPlayState','running');
             this.setElementsStyle('.jigsaw-loading-content > div','animationPlayState','running');
-
+            this.setElementsStyle('.jigsaw-font-loading','animationPlayState','running');
         } else {
             this.paused = 'paused';
             this.setElementsStyle('.spinner-container > div','animationPlayState','paused');
             this.setElementsStyle('.jigsaw-loading-content > div','animationPlayState','paused');
+            this.setElementsStyle('.jigsaw-font-loading','animationPlayState','paused');
         }
     }
     // animation-play-state
