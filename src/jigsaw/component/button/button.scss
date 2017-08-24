@@ -30,7 +30,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
         border: 1px solid $primary-7;
     }
 
-    &.#{$btn-prefix-cls}-clicked:after {
+    &#{&}-clicked:after {
         content: '';
         position: absolute;
         top: -1px;
@@ -51,7 +51,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
         }
     }
 
-    &.#{$btn-prefix-cls}-color-primary {
+    &#{&}-color-primary {
         background-color: $primary-color;
         color: $text-color-of-bg;
         border: 1px solid $primary-color;
@@ -66,7 +66,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
         }
     }
 
-    &.#{$btn-prefix-cls}-color-warning {
+    &#{&}-color-warning {
         background-color: $warning-color;
         color: $text-color-of-bg;
         border: 1px solid $warning-color;
@@ -81,7 +81,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
         }
     }
 
-    &.#{$btn-prefix-cls}-color-error {
+    &#{&}-color-error {
         background-color: $error-color;
         color: $text-color-of-bg;
         border: 1px solid $error-color;
@@ -96,19 +96,19 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
         }
     }
 
-    &.#{$btn-prefix-cls}-size-large {
+    &#{&}-size-large {
         font-size: $font-size-lg;
         min-height: $height-lg;
         line-height: $height-lg - 2px;
     }
 
-    &.#{$btn-prefix-cls}-size-small {
+    &#{&}-size-small {
         font-size: $font-size-sm;
         min-height: $height-sm;
         line-height: $height-sm - 2px;
     }
 
-    &.#{$btn-prefix-cls}-disabled {
+    &#{&}-disabled {
         pointer-events: none;
         cursor: default;
         color: $disabled-color;

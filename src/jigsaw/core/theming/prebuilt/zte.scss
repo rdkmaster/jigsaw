@@ -89,15 +89,13 @@ $scroll-bar-active-bg   : fade-out(#008fd4, .5);
 
 @include setBtnDefault($primary-color, 14px);
 @include showBtnAnimation(false);
-//@include setBtnActive(light-to-dark);
 
 @include setTableHead(#f4f6f8, #294e79, 14px, #008fd4, 2px);
 @include setTableBody(#333, 12px, #fff, #f8f8f8);
 @include setTableTextAlign(left, 20px);
 
 @include setTag(#fff, 25px);
-@include setTagCloseBarInCenter(25px);
 @include setCollapse(#f4f6f8);
-@include setTabsTriangle(true);
+@include setTabTriangle(true);
 
-@include setTime(#008fd4);
+@include setTimeGrTab(#008fd4);
