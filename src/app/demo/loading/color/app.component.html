@@ -1,7 +1,8 @@
 <jigsaw-button colorType="primary" (click)="pauseLoading()">{{paused == 'paused' ? 'Run' : 'Pause'}}</jigsaw-button>
-<div class="wrap" style="height: 300px;background: #fff;padding: 20px 20px;display: flex;flex-wrap: wrap">
-    <div *ngFor="let color of colors" style="display: flex;height: 100px;width: 200px;    justify-content: space-around;    align-items: center;" >
-        <jigsaw-loading [color]="color" ></jigsaw-loading>
+<div class="wrap" style="padding: 20px 0;">
+    <div *ngFor="let color of colors" style="margin: 0 40px 40px 0;float:left">
+        <jigsaw-bubble-loading style="margin-right: 20px" [color]="color"></jigsaw-bubble-loading>
+        <jigsaw-font-loading style="margin-right: 20px" [color]="color"></jigsaw-font-loading>
         <jigsaw-ball-loading [color]="color"></jigsaw-ball-loading>
     </div>
 </div>
