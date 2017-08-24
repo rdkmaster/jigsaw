@@ -6,7 +6,10 @@
     <jigsaw-combo-select
         [openTrigger]="openTrigger"
         [closeTrigger]="closeTrigger"
-        [(value)]="selectedCity" (select)="onTagSelect($event)" (remove)="onTagRemove($event)">
+        [(value)]="selectedCity"
+        (select)="onTagSelect($event)"
+        (remove)="onTagRemove($event)"
+        maxWidth="500">
         <ng-template>
             <div class="drop-down-container">
                 <jigsaw-button *ngFor="let city of cities;" [colorType]="city.type"

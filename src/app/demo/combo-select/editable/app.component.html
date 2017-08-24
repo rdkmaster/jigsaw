@@ -4,7 +4,7 @@
         <jigsaw-button (click)="toggleEditable()">toggle editable</jigsaw-button>
     </div>
     <jigsaw-combo-select
-        [(value)]="selectedCity">
+        [(value)]="selectedCity" maxWidth="500" [clearable]="true">
         <ng-template>
             <jigsaw-tile-select
                 [(selectedItems)]="selectedCity"

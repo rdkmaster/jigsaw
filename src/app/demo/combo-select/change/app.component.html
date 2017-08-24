@@ -7,7 +7,9 @@
     [(value)]="selectedCity"
     (valueChange)="valueChange($event)"
     (select)="select($event)"
-    (remove)="remove($event)">
+    (remove)="remove($event)"
+    maxWidth="500"
+    [clearable]="true">
     <ng-template>
         <jigsaw-tile-select
             [(selectedItems)]="selectedCity"

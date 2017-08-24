@@ -1,7 +1,9 @@
 <jigsaw-combo-select
     placeholder="请输入姓名~"
     autoWidth="true"
-    [(value)]="selectedCity">
+    [(value)]="selectedCity"
+    [clearable]="true"
+    maxWidth="500">
     <ng-template>
         <jigsaw-tile-select
             [(selectedItems)]="selectedCity"

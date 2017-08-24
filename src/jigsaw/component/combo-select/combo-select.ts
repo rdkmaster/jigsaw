@@ -20,7 +20,7 @@ import {
     PopupService
 } from "../../service/popup.service";
 import {AbstractJigsawComponent} from "../core";
-import {CallbackRemoval} from "../../core/utils/common-utils";
+import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {ArrayCollection} from "../../core/data/array-collection";
 
 export enum DropDownTrigger {
@@ -38,7 +38,7 @@ export class ComboSelectValue {
     selector: 'jigsaw-combo-select',
     templateUrl: 'combo-select.html',
     host: {
-        '[style.width]': 'width',
+        '[style.min-width]': 'width',
         '[class.jigsaw-combo-select-host]': 'true'
     },
     providers: [
@@ -122,6 +122,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         this._closeTrigger = typeof value === 'string' ? DropDownTrigger[<string>value] : value;
     }
 
+    @Input()
+    public maxWidth: string;
+
     @ContentChild(TemplateRef)
     private _contentTemplateRef: any;
 
@@ -165,7 +168,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     /**
      * @internal
      */
-    public _$clearValue(){
+    public _$clearValue() {
         this.value = new ArrayCollection<ComboSelectValue>();
         this._autoWidth();
     }
@@ -343,6 +346,12 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     public ngOnInit() {
         super.ngOnInit();
+        let maxWidth: string | number = CommonUtils.getCssValue(this.maxWidth);
+        if (!maxWidth.match(/%/)) {
+            maxWidth = parseInt(maxWidth.replace('px', ''));
+            this._render.setStyle(this._elementRef.nativeElement.querySelector('.jigsaw-combo-select-selection-rendered'),
+                'max-width', (maxWidth - 39) + 'px')
+        }
     }
 
     public ngOnDestroy() {
@@ -354,7 +363,8 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         this._rollOutDenouncesTimer = null;
     }
 
-    private _propagateChange: any = () => {};
+    private _propagateChange: any = () => {
+    };
 
     public writeValue(value: any): void {
         if (!value || this._value === value || !(value instanceof ArrayCollection)) {

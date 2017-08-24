@@ -7,7 +7,9 @@
     <jigsaw-combo-select
         [(value)]="selectedCity"
         [(open)]="open"
-        [autoClose]="autoClose">
+        [autoClose]="autoClose"
+        maxWidth="500"
+        [clearable]="true">
         <ng-template>
             <jigsaw-tile-select
                 [(selectedItems)]="selectedCity"

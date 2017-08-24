@@ -4,7 +4,7 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
 
 .#{$jigsaw-combo-select}-host {
     @include inline-block;
-    width: 240px;
+    min-width: 240px;
 }
 
 .#{$jigsaw-combo-select} {
