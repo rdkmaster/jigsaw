@@ -1,11 +1,11 @@
 @import "./core/basc";
 
 /*滚动条样式start(针对'minimal-dark'这个皮肤做的修改)*/
-.mCustomScrollbar .mCS-minimal-dark.mCSB_scrollTools{
+.mCustomScrollbar .mCS-dark.mCSB_scrollTools{
     margin: 0;
     &:hover, &.mCSB_scrollTools_onDrag {
         .mCSB_draggerContainer{
-            background: $background-color-base;
+            background: $scroll-field-bg;
         }
     }
     &.mCSB_scrollTools_vertical{
@@ -31,12 +31,15 @@
             }
         }
     }
-    .mCSB_dragger_bar{
+    .mCSB_dragger .mCSB_dragger_bar, .mCSB_dragger:hover .mCSB_dragger_bar{
         background-color: $scroll-bar-bg;
     }
     .mCSB_dragger:active .mCSB_dragger_bar,
     .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar{
         background-color: $scroll-bar-active-bg;
+    }
+    .mCSB_draggerRail{
+        display: none;
     }
 }
 .mCSB_container_wrapper{
@@ -177,6 +180,10 @@ jigsaw-time{
         border: 1px solid $text-color-secondary;
         border-radius: 2px;
         font-size: 12px;
+        cursor: pointer;
+        &:hover{
+            border: 1px solid $primary-color;
+        }
         &.checkbox_true_full, &.checkbox_true_full_focus{
             border: 1px solid $primary-color;
             &:before{

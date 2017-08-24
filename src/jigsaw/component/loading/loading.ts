@@ -56,9 +56,30 @@ export class JigsawLoadingBase extends AbstractJigsawComponent implements IPopup
 
 @Component({
     selector: 'jigsaw-loading',
-    templateUrl: 'loading.html',
+    templateUrl: 'loading-bubble.html',
 })
 export class JigsawLoading extends JigsawLoadingBase implements OnInit{
+
+    constructor(private renderer: Renderer2, private elementRef: ElementRef){
+        super(renderer,elementRef);
+    }
+
+    ngOnInit(){
+        super.setElementSize('.spinner',this.width,this.height);
+    }
+
+
+    protected getColorElement() : NodeListOf<Element>{
+        return this.getPopupElement().querySelectorAll('.spinner-container > div');
+    }
+
+}
+
+@Component({
+    selector: 'jigsaw-bubble-loading',
+    templateUrl: 'loading-bubble.html',
+})
+export class JigsawBubbleLoading extends JigsawLoadingBase implements OnInit{
 
     constructor(private renderer: Renderer2, private elementRef: ElementRef){
         super(renderer,elementRef);
