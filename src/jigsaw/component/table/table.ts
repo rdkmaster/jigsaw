@@ -830,6 +830,10 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
         this.doubleClick.emit(rowIndex);
     }
 
+    public _$trackByJsonString(index, item) {
+        return JSON.stringify(item);
+    }
+
     /**
      * 手动设置固定表头的宽度
      * @private
