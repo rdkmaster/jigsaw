@@ -17,7 +17,7 @@ git clone https://github.com/rdkmaster/jigsaw-seed.git
 * ```
   cd d:\jigsaw-seed
   # 直连网络下不可执行这个命令
-  npm config set proxy=http://10.20.300.11:80                              
+  npm config set proxy=http://proxy.zte.com.cn:80                              
   # for Chinese developers only
   npm config set registry=https://registry.npm.taobao.org/
   # for Chinese developers only                 
