@@ -56,7 +56,7 @@ export type TableColumnTargetFunc = (field: string, index: number) => boolean;
 export class TableHeader {
     text?: string;
     renderer?: Type<TableCellRenderer>|TemplateRef<any>;
-    class?: string;
+    clazz?: string;
     sortable?: boolean;
     sortAs?: SortAs;
     defaultSortOrder?: SortOrder;
@@ -64,7 +64,7 @@ export class TableHeader {
 
 export class TableCell {
     renderer?: Type<TableCellRenderer>|TemplateRef<any>;
-    class?: string;
+    clazz?: string;
     editable?: boolean;
     editorRenderer?: Type<TableCellRenderer>;
 }
@@ -74,7 +74,7 @@ export class TableHeadSetting {
     width: string | number;
     visible: boolean;
     renderer: Type<TableCellRenderer> | TemplateRef<any>;
-    class: string;
+    clazz: string;
     sortable: boolean;
     sortAs: SortAs;
     defaultSortOrder: SortOrder;
@@ -86,7 +86,7 @@ export class TableCellSetting {
     width: string | number;
     visible: boolean;
     renderer: Type<TableCellRenderer> | TemplateRef<any>;
-    class: string;
+    clazz: string;
     editable: boolean;
     editorRenderer: Type<TableCellRenderer> | TemplateRef<any>;
     group: boolean;
@@ -103,4 +103,12 @@ export class RemoveTdListener {
     removeTdListener: Function;
     row: number;
     column: number;
+}
+
+export class TableRendererInfo {
+    row: number;
+    column: number;
+    rawColumn: number;
+    renderer: TableCellRenderer;
+    editorRenderer: TableCellRenderer;
 }

@@ -25,7 +25,7 @@ export class TableSetCellClassDemoComponent {
         {
             target: 'name',
             cell: {
-                class:'red-text'
+                clazz:'red-text'
             }
         }];
 }

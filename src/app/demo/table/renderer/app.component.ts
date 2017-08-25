@@ -21,6 +21,10 @@ import {TableHeadSelect, TableHeadIcon} from "./table-renderer";
     styles: [`a{color: #ffaa00} a:hover{text-decoration: underline}`]
 })
 export class TableCellOption extends TableCellRenderer {
+    constructor() {
+        super();
+        console.log('dddddddddddddddddddddddddd')
+    }
 }
 
 @Component({
@@ -53,6 +57,11 @@ export class TableRendererDemoComponent {
             [23, 23, 23, 0, 99, 23, 111],
             [43, 43, 43, 1, 99, 43, 111]
         ], ['f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7'], ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7']);
+
+        setTimeout(() => {
+            this.tableData.data.push([43, 43, 43, 1, 99, 43, 111]);
+            this.tableData.refresh();
+        }, 3000)
     }
 
      _columns: ColumnDefine[] = [
@@ -64,7 +73,7 @@ export class TableRendererDemoComponent {
             },
             cell: {
                 renderer: DefaultCellRenderer,
-                class: 'green-text'
+                clazz: 'green-text'
             },
             group: true
         },
@@ -72,7 +81,7 @@ export class TableRendererDemoComponent {
             target: 'f2',
             width: '10%',
             header: {
-                class: 'red-text',
+                clazz: 'red-text',
                 sortable: true,
                 sortAs: SortAs.number,
                 defaultSortOrder: SortOrder.des
@@ -128,13 +137,13 @@ export class TableRendererDemoComponent {
                 return index > 2
             },
             header: {
-                class: 'big-text'
+                clazz: 'big-text'
             }
         },
         {
             target: ['f1', 'f5'],
             header: {
-                class: 'green-text'
+                clazz: 'green-text'
             }
         }
     ];
@@ -176,7 +185,7 @@ export class TableRendererDemoComponent {
             width: '10%',
             header: {
                 text: '操作',
-                class: 'red-text'
+                clazz: 'red-text'
             },
             cell: {
                 renderer: TableCellOption

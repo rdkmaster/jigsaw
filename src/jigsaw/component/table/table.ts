@@ -34,7 +34,7 @@ import {
     SortChangeEvent,
     TableCellRenderer,
     TableDataChangeEvent,
-    TableHeadChangeEvent
+    TableHeadChangeEvent, TableRendererInfo
 } from "./table-api";
 
 import {JigsawScrollBar, JigsawScrollBarModule} from "../../directive/scrollbar/scrollbar";
@@ -190,14 +190,14 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     /**
      * @internal
      */
-    public _$headSettings: Array<TableHeadSetting> = [];
+    public _$headSettings: TableHeadSetting[] = [];
 
     /**
      * @internal
      */
-    public _$cellSettings: Array<TableCellSetting>[] = [];
+    public _$cellSettings: TableCellSetting[][] = [];
 
-    private _removeTdListeners: Array<RemoveTdListener> = [];
+    private _removeTdListeners: RemoveTdListener[] = [];
 
     private _removeWindowResizeListener: Function;
     private _removeWindowScrollListener: Function;
@@ -221,10 +221,10 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
         super()
     }
 
-    public rendererList: any[] = [];
+    public allRenderers: TableRendererInfo[] = [];
 
-    public getRenderers(column) {
-        return this.rendererList.filter(renderer => renderer.column == column);
+    public getRenderers(column: number): TableRendererInfo[] {
+        return this.allRenderers.filter(renderer => renderer.column == column);
     }
 
     private _beforeUpdate() {
@@ -243,7 +243,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
                 width: null,
                 visible: true,
                 renderer: null,
-                class: '',
+                clazz: '',
                 sortable: false,
                 sortAs: SortAs.string,
                 defaultSortOrder: SortOrder.default,
@@ -258,14 +258,15 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     private _initCellSettings(): void {
         this._$cellSettings = [];
         this.data.data.forEach(row => {
-            let cellSettings = [];
+            let cellSettings: TableCellSetting[] = [];
             row.forEach((cellData, index) => {
                 //TODO 性能热点
                 cellSettings.push({
                     cellData: cellData,
+                    width: undefined,
                     visible: true,
                     renderer: null,
-                    class: '',
+                    clazz: '',
                     editable: false,
                     editorRenderer: null,
                     group: false,
@@ -301,7 +302,8 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
             }
             else if (typeof column.target === 'number') {
                 cb.call(this, column.target, column);
-            } else if (typeof column.target === 'string') {
+            }
+            else if (typeof column.target === 'string') {
                 cb.call(this, this.data.field.indexOf(column.target), column);
             }
         });
@@ -528,7 +530,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
             width: null,
             visible: true,
             renderer: null,
-            class: '',
+            clazz: '',
             sortable: false,
             sortAs: SortAs.string,
             defaultSortOrder: SortOrder.default,
@@ -550,7 +552,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
                 width: null,
                 visible: true,
                 renderer: null,
-                class: '',
+                clazz: '',
                 editable: false,
                 editorRenderer: null,
                 group: false,
@@ -564,15 +566,13 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     /*
      * 插入表头列
      * */
-    private _insertHeadSetting(pos, additionalColumn: AdditionalColumnDefine): void
-    private _insertHeadSetting(pos, additionalColumn: AdditionalColumnDefine, headSetting?: TableHeadSetting): void
     private _insertHeadSetting(pos, additionalColumn: AdditionalColumnDefine, headSetting?: TableHeadSetting): void {
         headSetting = headSetting ? headSetting : {
             cellData: '',
             width: null,
             visible: true,
             renderer: null,
-            class: '',
+            clazz: '',
             sortable: false,
             sortAs: SortAs.string,
             defaultSortOrder: SortOrder.default,
@@ -590,15 +590,13 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     /*
      * 插入单元格列
      * */
-    private _insertCellSetting(pos, additionalColumn: AdditionalColumnDefine): void
-    private _insertCellSetting(pos, additionalColumn: AdditionalColumnDefine, cellSetting?: TableCellSetting, cellSettings?: TableCellSetting[]): void
     private _insertCellSetting(pos, additionalColumn: AdditionalColumnDefine, cellSetting?: TableCellSetting, cellSettings?: TableCellSetting[]): void {
         cellSetting = cellSetting ? cellSetting : {
             cellData: '',
             width: null,
             visible: true,
             renderer: null,
-            class: '',
+            clazz: '',
             editable: false,
             editorRenderer: null,
             group: false,
@@ -640,7 +638,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
         if (header) {
             headSetting.cellData = header.text ? header.text : headSetting.cellData;
             headSetting.renderer = header.renderer ? header.renderer : headSetting.renderer;
-            headSetting.class = typeof header.class == 'string' && header.class !== '' ? headSetting.class + " " + header.class : headSetting.class;
+            headSetting.clazz = typeof header.clazz == 'string' && header.clazz !== '' ? headSetting.clazz + " " + header.clazz : headSetting.clazz;
             headSetting.sortable = header.sortable === true || header.sortable === false ? header.sortable : headSetting.sortable;
             headSetting.sortAs = header.sortAs !== null && header.sortAs !== undefined ? header.sortAs : headSetting.sortAs;
             headSetting.defaultSortOrder = header.defaultSortOrder !== null && header.defaultSortOrder !== undefined ?
@@ -660,7 +658,7 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
         const cell = column.cell;
         if (cell) {
             cellSetting.renderer = cell.renderer ? cell.renderer : cellSetting.renderer;
-            cellSetting.class = typeof cell.class == 'string' && cell.class !== '' ? cellSetting.class + " " + cell.class : cellSetting.class;
+            cellSetting.clazz = typeof cell.clazz == 'string' && cell.clazz !== '' ? cellSetting.clazz + " " + cell.clazz : cellSetting.clazz;
             cellSetting.editable = cell.editable === true || cell.editable === false ? cell.editable : cellSetting.editable;
             cellSetting.editorRenderer = cell.editorRenderer ? cell.editorRenderer : cellSetting.editorRenderer;
 
@@ -831,7 +829,6 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
     }
 
     public _$trackByJsonString(index, item) {
-        return JSON.stringify(item);
     }
 
     /**
@@ -1062,13 +1059,13 @@ export class JigsawTableCell extends TableCellBasic implements OnInit, OnDestroy
     }
 
     private _cacheRenderer(renderer: TableCellRenderer, editorRenderer: TableCellRenderer) {
-        let rendererInfo = this._jigsawTable.rendererList.find(renderer => renderer.row == this.row
-            && renderer.column == this.column);
+        let rendererInfo = this._jigsawTable.allRenderers.find(renderer =>
+            renderer.row == this.row && renderer.column == this.column);
         if (rendererInfo) {
             rendererInfo.renderer = renderer;
             rendererInfo.editorRenderer = editorRenderer;
         } else {
-            this._jigsawTable.rendererList.push({
+            this._jigsawTable.allRenderers.push({
                 row: this.row,
                 column: this.column,
                 rawColumn: this.field,

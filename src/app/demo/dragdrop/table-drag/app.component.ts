@@ -1,4 +1,4 @@
-import {Component, ElementRef, Renderer2} from "@angular/core";
+import {Component, ElementRef, Renderer2, ViewEncapsulation} from "@angular/core";
 import {TableData} from "jigsaw/core/data/table-data";
 import {AdditionalColumnDefine} from "jigsaw/component/table/table-api";
 import {TableDragDeleteRow, TableDragReplaceRow} from "./table-renderer";
@@ -7,7 +7,8 @@ import {DragDropInfo} from "../../../../jigsaw/directive/dragdrop/types";
 
 @Component({
     templateUrl: 'app.component.html',
-    styleUrls: ['app.component.scss']
+    styleUrls: ['app.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class TableDragDemoComponent {
     tableData: TableData;
@@ -37,7 +38,7 @@ export class TableDragDemoComponent {
             width: '10%',
             header: {
                 text: '拖拽换行',
-                class: 'red-text'
+                clazz: 'red-text'
             },
             cell: {
                 renderer: TableDragReplaceRow
@@ -48,7 +49,7 @@ export class TableDragDemoComponent {
             width: '10%',
             header: {
                 text: '拖拽删除',
-                class: 'red-text'
+                clazz: 'red-text'
             },
             cell: {
                 renderer: TableDragDeleteRow

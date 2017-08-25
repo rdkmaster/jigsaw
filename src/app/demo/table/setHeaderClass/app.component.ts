@@ -25,7 +25,7 @@ export class TableSetHeaderClassDemoComponent {
         {
             target: 'name',
             header: {
-                class: 'red-text'
+                clazz: 'red-text'
             }
         }];
 }

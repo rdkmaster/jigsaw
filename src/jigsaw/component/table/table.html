@@ -2,7 +2,7 @@
     <thead>
     <tr>
         <td #fixedHeader jigsaw-table-header
-            *ngFor="let head of _$headSettings; trackBy: _$trackByJsonString; index as colIndex"
+            *ngFor="let head of _$headSettings; index as colIndex"
             [tableData]="data"
             [cellData]="head.cellData"
             [column]="colIndex"
@@ -13,7 +13,7 @@
             [sortAs]="head.sortAs"
             [defaultSortOrder]="head.defaultSortOrder"
             width="{{head.width}}"
-            class="{{head.class}}">
+            class="{{head.clazz}}">
         </td>
     </tr>
     </thead>
@@ -36,7 +36,7 @@
                 [sortAs]="head.sortAs"
                 [defaultSortOrder]="head.defaultSortOrder"
                 width="{{head.width}}"
-                class="{{head.class}}">
+                class="{{head.clazz}}">
             </td>
         </tr>
         </thead>
