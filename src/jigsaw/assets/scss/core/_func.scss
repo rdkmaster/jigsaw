@@ -1,22 +1,3 @@
-@function generate-theme-map(
-    $primary-color,
-    $success-color,
-    $error-color,
-    $highlight-color,
-    $warning-color,
-    $normal-color,
-    $default-color,
-    $disabled-color) {
-    @return (
-        primary: $primary-color,
-        success: $success-color,
-        error: $error-color,
-        highlight:$highlight-color,
-        warning:$warning-color,
-        normal:$normal-color,
-        default:$default-color,
-        disabled:$disabled-color
-    );
-}
+
 
 
