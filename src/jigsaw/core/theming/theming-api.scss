@@ -1,30 +1,19 @@
+/* 用来提供给用户定制组件样式的 mixin api */
+
 /**
- * 用来提供给用户定制组件样式的 mixin api
+ * 设置弹框的字体颜色，背景色，高度
+ * @param $textColor
+ * @param $bgColor
+ * @param $height
  */
-
-@mixin setPopupCloseBar($color, $hoverColor){
-    .jigsaw-dialog .jigsaw-dialog-head .jigsaw-dialog-close {
-        color: $color;
-        &:hover {
-            color: $hoverColor;
-        }
-    }
-    .jigsaw-alert .jigsaw-alert-head .jigsaw-alert-close {
-        color: $color;
-        &:hover {
-            color: $hoverColor;
-        }
-    }
-}
-
-@mixin setDialogHead($textColor, $bgColor, $height){
-    .jigsaw-dialog{
+@mixin setDialogHead($textColor, $bgColor, $height) {
+    .jigsaw-dialog {
         .jigsaw-dialog-head {
             color: $textColor;
             padding: {
                 top: 0;
                 bottom: 0;
-            };
+            }
             height: $height;
             line-height: $height;
             background: $bgColor;
@@ -32,8 +21,13 @@
     }
 }
 
-@mixin setDialogButton($buttonAlign: center, $showButtonLine: true){
-    .jigsaw-dialog{
+/**
+ * 设置弹框的按钮位置，是否显示分隔线
+ * @param $buttonAlign 默认center
+ * @param $showButtonLine 默认true
+ */
+@mixin setDialogButton($buttonAlign: center, $showButtonLine: true) {
+    .jigsaw-dialog {
         .jigsaw-dialog-button-group {
             text-align: $buttonAlign;
             border-top: 1px solid if($showButtonLine, $border-color-base, transparent);
@@ -41,19 +35,21 @@
     }
 }
 
-@mixin setBtnDefault($defaultTextColor, $defaultFontSize: 12px){
-    .#{$btn-prefix-cls}{
-        color: $defaultTextColor;
-        font-size: $defaultFontSize;
-    }
-}
-
-@mixin showBtnAnimation($withAnimation: true){
+/**
+ * 设置按钮动画的开关
+ * @param $withAnimation 默认true
+ */
+@mixin showBtnAnimation($withAnimation: true) {
     .#{$btn-prefix-cls}.#{$btn-prefix-cls}-clicked:after {
         content: if($withAnimation, '', none);
     }
 }
 
+/**
+ * 设置checkbox的背景色和inner的颜色
+ * @param $checkedBgColor
+ * @param $checkedInnerColor
+ */
 @mixin setCheckbox($checkedBgColor, $checkedInnerColor) {
     .jigsaw-checkbox-host {
         .jigsaw-checkbox-wrapper .jigsaw-checkbox-checked, .jigsaw-checkbox-wrapper .jigsaw-checkbox-indeterminate {
@@ -65,22 +61,37 @@
     }
 }
 
-@mixin setTableHead($bgColor, $textColor, $fontSize, $borderColor, $borderWidth){
+/**
+ * 设置表格背景色，字体颜色，字体大小，下边线颜色，下边线宽度
+ * @param $bgColor
+ * @param $textColor
+ * @param $fontSize
+ * @param $borderBottomColor
+ * @param $borderBottomWidth
+ */
+@mixin setTableHead($bgColor, $textColor, $fontSize, $borderBottomColor, $borderBottomWidth) {
     jigsaw-table.jigsaw-table-host table {
         thead {
             color: $textColor;
             font-size: $fontSize;
             tr td {
                 background: $bgColor;
-                border-bottom: $borderWidth solid $borderColor;
+                border-bottom: $borderBottomWidth solid $borderBottomColor;
             }
         }
     }
 }
 
+/**
+ * 设置表格表体的字体颜色，字体大小，奇数行背景色，偶数行背景色
+ * @param $textColor
+ * @param $fontSize
+ * @param $oddRowBgColor
+ * @param $evenRowBgColor
+ */
 @mixin setTableBody($textColor, $fontSize, $oddRowBgColor, $evenRowBgColor) {
     jigsaw-table.jigsaw-table-host table {
-        tbody{
+        tbody {
             color: $textColor;
             font-size: $fontSize;
         }
@@ -93,36 +104,55 @@
     }
 }
 
-@mixin setTableTextAlign($textAlign, $sidePadding: 0){
+/**
+ * 设置表格单元格文字对齐方式，及左对齐或右对齐时距离边线的边距
+ * @param $textAlign 默认center
+ * @param $sidePadding 默认0
+ */
+@mixin setTableTextAlign($textAlign: center, $sidePadding: 0) {
     jigsaw-table.jigsaw-table-host table {
         td {
             text-align: $textAlign;
-            @if($textAlign == left){
+            @if ($textAlign == left) {
                 padding-left: $sidePadding;
-            } @else if($textAlign == right){
+            } @else if ($textAlign == right) {
                 padding-right: $sidePadding;
             }
         }
     }
 }
 
+/**
+ * 设置tag的默认背景色，高度
+ * @param $defaultBgColor
+ * @param $height
+ * @param
+ */
 @mixin setTag($defaultBgColor, $height) {
     jigsaw-tag.jigsaw-tag-host {
         background: $defaultBgColor;
         height: $height;
         line-height: $height - 2;
-        .#{$tag-prefix-cls}-close-bar{
+        .#{$tag-prefix-cls}-close-bar {
             line-height: $height - 3;
         }
     }
 }
 
+/**
+ * 设置collapse头部背景色
+ * @param $headBgColor
+ */
 @mixin setCollapse($headBgColor) {
     .jigsaw-collapse-host .jigsaw-collapse-item .jigsaw-collapse-header {
         background: $headBgColor;
     }
 }
 
+/**
+ * 设置是否显示tab-line下的三角
+ * @param $showTriangle 默认true
+ */
 @mixin setTabTriangle($showTriangle: true) {
     .jigsaw-tabs {
         .jigsaw-tabs-nav-container .jigsaw-tabs-nav-wrap .jigsaw-tabs-nav .jigsaw-tabs-ink-bar:after {
@@ -131,27 +161,3 @@
     }
 }
 
-@mixin setTimeGrTab($grTabColor){
-    jigsaw-time .jigsaw-time-granularity > span{
-        border: 1px solid $grTabColor;
-        border-right: 0;
-        color: $grTabColor;
-        &.active{
-            background: $grTabColor;
-        }
-        &:last-child{
-            border-right: 1px solid $grTabColor;
-        }
-    }
-    jigsaw-range-time .jigsaw-range-time-shortcuts > span{
-        border: 1px solid $grTabColor;
-        color: $grTabColor;
-        border-right: 0;
-        &:last-child{
-            border-right: 1px solid $grTabColor;
-        }
-        &.active {
-            background-color: $grTabColor;
-        }
-    }
-}
