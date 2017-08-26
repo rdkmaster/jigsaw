@@ -28,7 +28,7 @@ $select-option-prefix-cls: #{$jigsaw-prefix}-select-option;
         &:hover {
             border-color: $primary-color;
         }
-        &#{&}-opened {
+        &.#{$select-prefix-cls}-opened {
             border-color: $primary-color;
             box-shadow: $box-focus-shadow;
             .#{$select-prefix-cls}-icon-down {
