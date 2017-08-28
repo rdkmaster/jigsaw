@@ -1,30 +1,36 @@
-@import "../../assets/scss/core/basc";
+@import "../../assets/scss/core/base";
 
 $btn-prefix-cls: #{$jigsaw-prefix}-button;
 
-:host {
+.#{$btn-prefix-cls} {
     @include inline-block();
     min-width: 80px;
-    padding:0 10px;
-    min-height: $btn-size-height-base;
-    line-height: $btn-size-height-base - 4;
+    padding: 0 10px;
+    min-height: $height-base;
+    line-height: $height-base - 2px;
     font-size: $font-size-base;
     text-align: center;
     position: relative;
-    border-radius: $btn-border-radius-base;
+    border-radius: $border-radius-base;
     cursor: pointer;
-    box-shadow: $btn-default-box-shadow;
+    box-shadow: $btn-box-shadow;
+    font-weight: $btn-font-weight;
     user-select: none;
     @include prefixer(transition, all .3s $ease-in-out);
-    background-color: $btn-default-bg;
-    border: 1px solid $btn-default-border;
-    color: $btn-default-color;
-    &:hover{
-        color: $btn-default-hover-color;
-        border: 1px solid $btn-default-hover-color;
+    background-color: #fff;
+    border: 1px solid $border-color-base;
+    color: $text-color;
+    &:hover {
+        color: $primary-5;
+        border: 1px solid $primary-5;
     }
 
-    &.#{$btn-prefix-cls}-clicked:after {
+    &:active {
+        color: $primary-7;
+        border: 1px solid $primary-7;
+    }
+
+    &#{&}-clicked:after {
         content: '';
         position: absolute;
         top: -1px;
@@ -32,115 +38,95 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
         bottom: -1px;
         right: -1px;
         border-radius: inherit;
-        border: 1px solid darken($btn-default-hover-color,10%);
+        border: 1px solid $primary-7;
         opacity: 0.4;
         @include prefixer(animation, buttonEffect 0.36s $ease-out forwards);
         display: block;
     }
-    .#{$btn-prefix-cls}-icon {
+    &-icon {
         @include inline-block();
-        /deep/ img {
+        img {
             vertical-align: top;
             height: 20px;
         }
     }
 
-    &.#{$btn-prefix-cls}-color-primary {
-        background-color: $btn-primary-bg;
-        color: $btn-others-color;
-        border:1px solid $btn-primary-bg;
+    &#{&}-color-primary {
+        background-color: $primary-color;
+        color: $text-color-of-bg;
+        border: 1px solid $primary-color;
         &:hover {
-            background: $btn-primary-bg-hover;
+            background: $primary-7;
         }
         &:active {
-            background: $btn-primary-bg-active;
+            background: $primary-8;
         }
-        &.#{$btn-prefix-cls}-clicked:after{
-            border: 1px solid darken($btn-primary-bg,10%);
+        &.#{$btn-prefix-cls}-clicked:after {
+            border: 1px solid $primary-7;
         }
     }
 
-    &.#{$btn-prefix-cls}-color-warning {
-        background-color: $btn-warning-bg;
-        color: $btn-others-color;
-        border:1px solid $btn-warning-bg;
+    &#{&}-color-warning {
+        background-color: $warning-color;
+        color: $text-color-of-bg;
+        border: 1px solid $warning-color;
         &:hover {
-            background: $btn-warning-bg-hover;
+            background: mix(#000, $warning-color, 10%);
         }
         &:active {
-            background: $btn-warning-bg-active;
+            background: mix(#000, $warning-color, 20%);
         }
-        &.#{$btn-prefix-cls}-clicked:after{
-            border: 1px solid darken($btn-warning-bg,10%);
+        &.#{$btn-prefix-cls}-clicked:after {
+            border: 1px solid mix(#000, $warning-color, 10%);
         }
     }
 
-    &.#{$btn-prefix-cls}-color-error {
-        background-color: $btn-error-bg;
-        color: $btn-others-color;
-        border:1px solid $btn-error-bg;
+    &#{&}-color-error {
+        background-color: $error-color;
+        color: $text-color-of-bg;
+        border: 1px solid $error-color;
         &:hover {
-            background: $btn-error-bg-hover;
+            background: mix(#000, $error-color, 10%);
         }
         &:active {
-            background: $btn-error-bg-active;
+            background: mix(#000, $error-color, 20%);
         }
-        &.#{$btn-prefix-cls}-clicked:after{
-            border: 1px solid darken($btn-error-bg,10%);
+        &.#{$btn-prefix-cls}-clicked:after {
+            border: 1px solid mix(#000, $error-color, 10%);
         }
     }
 
-    &.#{$btn-prefix-cls}-size-large {
-        font-size: $btn-font-size-lg;
-        min-height:$btn-size-height-lg;
-        line-height: $btn-size-height-lg - 2;
+    &#{&}-size-large {
+        font-size: $font-size-lg;
+        min-height: $height-lg;
+        line-height: $height-lg - 2px;
     }
 
-    &.#{$btn-prefix-cls}-size-small {
-        font-size: $btn-font-size-sm;
-        min-height: $btn-size-height-sm;
-        line-height: $btn-size-height-sm - 2;
+    &#{&}-size-small {
+        font-size: $font-size-sm;
+        min-height: $height-sm;
+        line-height: $height-sm - 2px;
+    }
+
+    &#{&}-disabled {
+        pointer-events: none;
+        cursor: default;
+        color: $disabled-color;
+        background-color: $disabled-bg;
+        border-color: $border-color-base;
     }
 }
 
-:host(a){
+a[#{$btn-prefix-cls}] {
     padding: 0 10px;
     outline: none;
     text-decoration: none !important;
 }
 
-:host(button){
+button[#{$btn-prefix-cls}] {
     padding: 0 10px;
     outline: none;
     text-decoration: none !important;
-}
-
-:host(.#{$btn-prefix-cls}-disabled) {
-    pointer-events: none;
-    cursor: default;
-    color: $btn-disable-color;
-    background-color: $btn-disable-bg;
-    border-color: $btn-disable-border;
-}
-
-:host-context(.theme-blue) {
-    background: $primary-color;
-    &:hover {
-        background: $btn-primary-bg-hover;
-    }
-    &.#{$btn-prefix-cls}-clicked:after {
-        border: 0 solid $btn-primary-bg-active;
-    }
-}
-
-:host-context(.theme-orange){
-    background: $orange;
-    &:hover {
-        background: $orange-light;
-    }
-    &.#{$btn-prefix-cls}-clicked:after {
-        border: 0 solid $orange-light;
-    }
 }
 
 @include keyframes(buttonEffect) {

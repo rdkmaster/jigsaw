@@ -7,7 +7,9 @@
     [(value)]="selectedCity"
     (valueChange)="valueChange($event)"
     (select)="select($event)"
-    (remove)="remove($event)">
+    (remove)="remove($event)"
+    maxWidth="500"
+    [clearable]="true">
     <ng-template>
         <jigsaw-tile-select
             [(selectedItems)]="selectedCity"
@@ -15,7 +17,8 @@
             [searchable]="true"
             [data]="citys"
             width="400px"
-            tileOptionWidth="100px">
+            tileOptionWidth="22.8%"
+            style="padding: 8px 0 8px 8px">
         </jigsaw-tile-select>
     </ng-template>
 </jigsaw-combo-select>

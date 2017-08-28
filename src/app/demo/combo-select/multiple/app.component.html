@@ -1,12 +1,14 @@
 <div class="combo-select-demo cmn-box">
     <h3>multiple demo</h3>
     <div class="test-btn">
-        <jigsaw-button width="120px" (click)="toggleMultiple()">toggle multiple</jigsaw-button>
+        <jigsaw-button (click)="toggleMultiple()">toggle multiple</jigsaw-button>
     </div>
     <jigsaw-combo-select
         [(value)]="selectedCity"
         (valueChange)="valueChange($event)"
-        [autoClose]="!multiple">
+        [autoClose]="!multiple"
+        [clearable]="true"
+        maxWidth="500">
         <ng-template>
             <jigsaw-tile-select
                 [(selectedItems)]="selectedCity"
@@ -15,7 +17,8 @@
                 [searchable]="true"
                 [data]="citys"
                 width="400px"
-                tileOptionWidth="100px">
+                tileOptionWidth="22.8%"
+                style="padding: 8px 0 8px 8px">
             </jigsaw-tile-select>
         </ng-template>
     </jigsaw-combo-select>

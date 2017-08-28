@@ -1,7 +1,7 @@
 <h4>LimitEnd Time</h4>
 
-LimitEnd : <jigsaw-tile-select [data]="datas" [(selectedItems)]="limitEnd" [multipleSelect]="false"></jigsaw-tile-select>
-
+LimitEnd : <jigsaw-tile-select [data]="datas" [(selectedItems)]="limitEnd" [multipleSelect]="false" [tileOptionWidth]="80"></jigsaw-tile-select>
+<br>
 <jigsaw-time [(date)]="date" [limitEnd]="limitEnd[0].label"></jigsaw-time><br>
 
-Selected Time : {{date}}
+<p>Selected Time : {{date}}</p>

@@ -5,7 +5,8 @@ import {Component, ViewChild, Renderer2, ViewContainerRef} from '@angular/core';
 import {JigsawCollapse, JigsawCollapsePane} from "jigsaw/component/collapse/collapse";
 
 @Component({
-    templateUrl: './app.component.html'
+    templateUrl: './app.component.html',
+    styles: [`.collapse-content{font-size: 14px}`]
 })
 export class ngForDemoComponent {
     constructor(public viewContainerRef: ViewContainerRef,

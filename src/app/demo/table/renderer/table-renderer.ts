@@ -5,7 +5,8 @@ import {TableCellRenderer} from "jigsaw/component/table/table-api";
  * 自定义表头渲染组件
  * */
 @Component({
-    template: '<span class="fa fa-bus"></span>{{cellData}}'
+    template: '<span class="fa fa-bus"></span>{{cellData}}',
+    styles: [`.fa{margin-right: 5px}`]
 })
 export class TableHeadIcon extends TableCellRenderer {
 }
@@ -14,10 +15,11 @@ export class TableHeadIcon extends TableCellRenderer {
  * 自定义表头渲染组件
  * */
 @Component({
-    template: `{{cellData}} <jigsaw-select [(value)]="selectedCityForSelect"
+    template: `{{cellData}} <jigsaw-select class="select" [(value)]="selectedCityForSelect"
                    placeholder="请选择"
                    [data]="cityListForSelect" width="70" height="20">
-               </jigsaw-select>`
+               </jigsaw-select>`,
+    styles: [`.select{margin-left: 5px}`]
 })
 export class TableHeadSelect extends TableCellRenderer {
     selectedCityForSelect: any;

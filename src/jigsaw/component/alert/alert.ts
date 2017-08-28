@@ -14,7 +14,9 @@ export enum AlertLevel {
 @Component({
     selector: 'jigsaw-alert',
     templateUrl: 'alert.html',
-    styleUrls: ['alert.scss']
+    host: {
+        '[class.jigsaw-alert-host]': 'true'
+    }
 })
 export class JigsawAlert extends AbstractDialogComponentBase {
     constructor(renderer: Renderer2, elementRef: ElementRef) {
@@ -134,7 +136,6 @@ export abstract class JigsawCommonAlert extends DialogBase {
 
 @Component({
     templateUrl: 'common-alert.html',
-    styleUrls: ['common-alert.scss'],
     selector: 'jigsaw-info-alert',
     host: {
         '[class.jigsaw-common-alert]': 'true'
@@ -148,7 +149,6 @@ export class JigsawInfoAlert extends JigsawCommonAlert {
 
 @Component({
     templateUrl: 'common-alert.html',
-    styleUrls: ['common-alert.scss'],
     selector: 'jigsaw-warning-alert',
     host: {
         '[class.jigsaw-common-alert]': 'true'
@@ -162,7 +162,6 @@ export class JigsawWarningAlert extends JigsawCommonAlert {
 
 @Component({
     templateUrl: 'common-alert.html',
-    styleUrls: ['common-alert.scss'],
     selector: 'jigsaw-error-alert',
     host: {
         '[class.jigsaw-common-alert]': 'true'

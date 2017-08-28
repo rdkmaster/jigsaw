@@ -15,7 +15,8 @@ import {ButtonInfo} from "jigsaw/service/popup.service";
                 </ul>
             </div>
         </jigsaw-dialog>
-    `
+    `,
+    styles: [`.fa{margin-right: 5px}`]
 })
 export class DialogInDomDemoComponent {
     constructor(public viewContainerRef: ViewContainerRef,

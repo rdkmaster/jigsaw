@@ -18,9 +18,9 @@ export type CheckBoxValue = boolean | CheckBoxStatus;
 @Component({
     selector: 'jigsaw-checkbox',
     templateUrl: './checkbox.html',
-    styleUrls: ['./checkbox.scss'],
     host: {
         '[style.width]': 'width',
+        '[class.jigsaw-checkbox-host]': 'true'
     },
     providers: [
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawCheckBox), multi: true },

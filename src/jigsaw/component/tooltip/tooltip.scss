@@ -1,8 +1,8 @@
-@import "../../assets/scss/core/_basc";
+@import "../../assets/scss/core/base";
 
 $tooltip-prefix-cls: #{$jigsaw-prefix}-tooltip;
 
-:host{
+#{$tooltip-prefix-cls}{
     @include inline-block;
 }
 

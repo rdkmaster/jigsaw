@@ -1,6 +1,8 @@
-@import "../../assets/scss/core/basc";
+@import "../../assets/scss/core/base";
 
-:host {
+$bubble-loading-prefix-cls: #{$jigsaw-prefix}-bubble-loading;
+
+#{$bubble-loading-prefix-cls} {
     @include inline-block;
     position: relative;
     width: 40px;

@@ -2,12 +2,14 @@
     <h3>open demo</h3>
     <div class="test-btn">
         <jigsaw-button width="120px" (click)="toggleOpen()">toggle open</jigsaw-button>
-        <jigsaw-button width="120px" (click)="toggleAutoClose()">toggle auto close</jigsaw-button>
+        <jigsaw-button width="150px" (click)="toggleAutoClose()">toggle auto close</jigsaw-button>
     </div>
     <jigsaw-combo-select
         [(value)]="selectedCity"
         [(open)]="open"
-        [autoClose]="autoClose">
+        [autoClose]="autoClose"
+        maxWidth="500"
+        [clearable]="true">
         <ng-template>
             <jigsaw-tile-select
                 [(selectedItems)]="selectedCity"
@@ -15,7 +17,8 @@
                 [searchable]="true"
                 [data]="citys"
                 width="400px"
-                tileOptionWidth="100px">
+                tileOptionWidth="22.8%"
+                style="padding: 8px 0 8px 8px">
             </jigsaw-tile-select>
         </ng-template>
     </jigsaw-combo-select>

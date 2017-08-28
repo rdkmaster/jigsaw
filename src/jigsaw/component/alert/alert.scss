@@ -1,77 +1,75 @@
-@import "../../assets/scss/core/_basc";
+@import "../../assets/scss/core/base";
 
 $alert-prefix-cls: #{$jigsaw-prefix}-alert;
 
-:host{
+.#{$alert-prefix-cls}-host{
     @include inline-block;
     width: 100%;
-    .#{$alert-prefix-cls} {
-        background: $default-color;
-        border-radius: 4px;
-        position: relative;
-        padding: 0 10px 10px;
-        border: 1px solid $border-color-base;
-        .#{$alert-prefix-cls}-head{
-            @include clearfix;
-            margin: 0 -10px;
-            padding-top: 10px;
-            cursor: move;
-            line-height: 36px;
-            .#{$alert-prefix-cls}-icon {
-                vertical-align: middle;
-                font-size: 36px;
-                margin: 0 16px 0 20px;
-            }
-            .#{$alert-prefix-cls}-title {
-                font-size: 20px;
-                vertical-align: middle;
-            }
-            .#{$alert-prefix-cls}-close {
-                float: right;
-                font-size: 24px;
-                color: $alert-close-bar-color;
-                cursor: pointer;
-                margin-right: 20px;
-                &:hover{
-                    color: $alert-close-bar-hover-color;
-                }
-            }
-        }
-        .#{$alert-prefix-cls}-content {
-            padding: 16px 0 0 56px;
-        }
+}
 
-        &-info {
-            .#{$alert-prefix-cls}-icon, .#{$alert-prefix-cls}-title {
-                color: $primary-color;
-            }
-        }
+.#{$alert-prefix-cls} {
+    background: $default-color;
+    border-radius: 4px;
+    position: relative;
+    padding: 0 10px 10px;
+    border: 1px solid $border-color-base;
 
-        &-warning {
-            .#{$alert-prefix-cls}-icon, .#{$alert-prefix-cls}-title {
-                color: $warning-color;
-            }
-        }
-        &-error {
-            .#{$alert-prefix-cls}-icon, .#{$alert-prefix-cls}-title {
-                color: $error-color;
-            }
-        }
+    &-head{
+        @include clearfix;
+        margin: 0 -10px;
+        padding-top: 10px;
+        cursor: move;
+        line-height: 36px;
+    }
 
-        .#{$alert-prefix-cls}-button-group {
-            text-align: center;
-            height: 50px;
-            line-height: 50px;
-            jigsaw-button {
-                margin-right: 8px;
-                &:last-child{
-                    margin-right: 0;
-                }
+    &-head &-icon {
+        vertical-align: middle;
+        font-size: 36px;
+        margin: 0 16px 0 20px;
+    }
+    &-head &-title {
+        font-size: 20px;
+        vertical-align: middle;
+    }
+    &-head &-close {
+        float: right;
+        font-size: 24px;
+        color: $text-color;
+        cursor: pointer;
+        margin-right: 20px;
+        &:hover{
+            color: $text-color-dark;
+        }
+    }
+
+    &-content {
+        padding: 16px 0 0 56px;
+    }
+
+    &-info &-icon, &-info &-title{
+        color: $primary-color;
+    }
+
+    &-warning &-icon, &-warning &-title{
+        color: $warning-color;
+    }
+
+    &-error &-icon, &-error &-title{
+        color: $error-color;
+    }
+
+    &-button-group {
+        text-align: center;
+        height: 50px;
+        line-height: 50px;
+        jigsaw-button {
+            margin-right: 8px;
+            &:last-child{
+                margin-right: 0;
             }
         }
     }
 }
-
 
 
 

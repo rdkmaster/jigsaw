@@ -6,7 +6,6 @@ import {AbstractJigsawComponent} from "../core";
 @Component({
     selector: 'jigsaw-tag',
     templateUrl: 'tag.html',
-    styleUrls: ['tag.scss'],
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
@@ -15,6 +14,7 @@ import {AbstractJigsawComponent} from "../core";
         '[style.border-color]': 'color',
         '[class.jigsaw-tag-closable]': '_closable',
         '[class.jigsaw-tag-color]': '!!color',
+        '[class.jigsaw-tag-host]': 'true',
         '[@AnimationDestroy]': '_state',
         '(@AnimationDestroy.done)': '_animationDone($event)',
     },

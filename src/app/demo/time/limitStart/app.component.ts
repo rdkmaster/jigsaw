@@ -4,7 +4,11 @@ import {
 
 
 @Component({
-  templateUrl: './app.component.html'
+    templateUrl: './app.component.html',
+    styles: [`
+        h4{font-size: 20px;margin-bottom: 20px;}
+        p{font-size: 14px;margin: 10px 0 20px 0}
+    `]
 })
 export class TimeLimitStartComponent implements AfterContentInit{
     date = "now";

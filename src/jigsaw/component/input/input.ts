@@ -14,12 +14,12 @@ export class JigsawPrefixIcon {
 @Component({
     selector: 'jigsaw-input',
     templateUrl: 'input.html',
-    styleUrls: ['input.scss'],
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[style.line-height]': 'height',
-        '(click)': '_stopPropagation($event)'
+        '(click)': '_stopPropagation($event)',
+        '[class.jigsaw-input]': 'true'
     },
     providers: [
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawInput), multi: true },
@@ -146,7 +146,7 @@ export class JigsawInput extends AbstractJigsawComponent implements ControlValue
         let prefixIconWidth = this._elementRef.nativeElement.querySelector(".jigsaw-input-icon-front").offsetWidth;
         let endIconWidth = this._elementRef.nativeElement.querySelector(".jigsaw-input-icon-end").offsetWidth;
 
-        let prefixIconPadding = prefixIconWidth + 4;
+        let prefixIconPadding = prefixIconWidth + 10;
         if(prefixIconWidth !== 0) {
             prefixIconPadding = prefixIconPadding + 8;
         }

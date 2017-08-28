@@ -8,5 +8,9 @@ export class TagBasicDemoComponent {
     constructor(public viewContainerRef: ViewContainerRef,
                 public renderer: Renderer2) {
     }
+
+    handleClose(tag){
+        console.log(tag)
+    }
 }
 

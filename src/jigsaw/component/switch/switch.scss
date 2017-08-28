@@ -1,7 +1,6 @@
-@import "../../assets/scss/core/basc";
+@import "../../assets/scss/core/base";
 
 $switch-prefix: #{$jigsaw-prefix}-switch;
-$switch-duration: .3s;
 
 .#{$switch-prefix} {
     @include inline-block;
@@ -10,14 +9,14 @@ $switch-duration: .3s;
     min-width: 44px;
     line-height: 20px;
     border-radius: 20px;
-    border: 1px solid #ccc;
+    border: 1px solid transparent;
     background-color: $disabled-color;
     cursor: pointer;
-    transition: all $switch-duration;
+    transition: all $animation-duration-slow;
     user-select: none;
 
     .#{$switch-prefix}-inner {
-        color: #fff;
+        color: $default-color;
         font-size: $font-size-base;
         margin-left: 24px;
         margin-right: 6px;
@@ -35,7 +34,7 @@ $switch-duration: .3s;
         background-color: $default-color;
         content: " ";
         cursor: pointer;
-        transition: all $switch-duration, width $switch-duration;
+        transition: all $animation-duration-slow, width $animation-duration-slow;
     }
 
     &:active:after {
@@ -71,11 +70,11 @@ $switch-duration: .3s;
 
     &-disabled {
         cursor: not-allowed;
-        background-color: #f4f4f4;
-        border-color: #f4f4f4;
+        background-color: $disabled-bg-dark;
+        border-color: $disabled-bg-dark;
 
         &:after {
-            background-color: #ccc;
+            background-color: $disabled-color;
             cursor: not-allowed;
         }
 

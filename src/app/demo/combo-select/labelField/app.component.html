@@ -2,15 +2,18 @@
     placeholder="请输入姓名~"
     autoWidth="true"
     [labelField]="labelField"
-    [(value)]="selectedCity">
+    [(value)]="selectedCity"
+    [clearable]="true"
+    maxWidth="500"
+    [clearable]="true">
     <ng-template>
         <jigsaw-tile-select
             [(selectedItems)]="selectedCity"
             [labelField]="labelField"
             [searchable]="true"
             [data]="citys"
-            width="400px"
-            tileOptionWidth="100px">
+            tileOptionWidth="21.4%"
+            style="padding: 8px 0 8px 8px">
         </jigsaw-tile-select>
     </ng-template>
 </jigsaw-combo-select>

@@ -1,44 +1,53 @@
+<div class="popup-option-demo">
+    <div class="show-box">
+        <div #left class="left box">left</div>
+        <div #middle class="middle box">middle</div>
+        <div #right class="right box">right</div>
+    </div>
 
-<div style="overflow:hidden;padding-top:100px">
-    <div #left class="left">left</div>
-    <div #middle class="middle">middle</div>
-    <div #right class="right">right</div>
+    <div class="line-box"><label>是否模态：</label>
+        <jigsaw-switch [(checked)]="option.modal"></jigsaw-switch>
+    </div>
+    <div class="line-box">
+        <label>PositionType：</label>
+        <jigsaw-radio-group [(value)]="selectedPositionType" [data]="popPositionTypes" trackItemBy="id">
+        </jigsaw-radio-group>
+    </div>
+    <div class="line-box">
+        <label>参照物:</label>
+        <jigsaw-radio-group [(value)]="selectedPos" [data]="poses"></jigsaw-radio-group>
+        <div class="point-set" *ngIf="selectedPos.label=='point'">
+            <jigsaw-input [(value)]="detailPos.x" placeholder="X" width="200px"></jigsaw-input>
+            <jigsaw-input [(value)]="detailPos.y" placeholder="Y" width="200px"></jigsaw-input>
+        </div>
+    </div>
+
+    <label>Offset</label><br>
+    <div class="line-box">
+        <label>top: </label>
+        <jigsaw-input [(value)]="offset.top" placeholder="Top" width="200px"></jigsaw-input>
+    </div>
+    <div class="line-box">
+        <label>left: </label>
+        <jigsaw-input [(value)]="offset.left" placeholder="Left" width="200px"></jigsaw-input>
+    </div>
+    <div class="line-box">
+        <label>bottom: </label>
+        <jigsaw-input [(value)]="offset.bottom" placeholder="Bottom" width="200px"></jigsaw-input>
+    </div>
+    <div class="line-box">
+        <label>right: </label>
+        <jigsaw-input [(value)]="offset.right" placeholder="Right" width="200px"></jigsaw-input>
+    </div>
+    <jigsaw-button width="200px" (click)="popupDialog1(dialog1)">Popup</jigsaw-button>
+
+    <ng-template #dialog1>
+        <jigsaw-dialog width="400px" header="dialog title" (answer)="close()">
+            <ul class="dialog-content">
+                <li>Dialog content...</li>
+                <li>Dialog content...</li>
+                <li>Dialog content...</li>
+            </ul>
+        </jigsaw-dialog>
+    </ng-template>
 </div>
-
-<br>
-
-<span>是否模态：</span>  <jigsaw-switch [(checked)]="option.modal"></jigsaw-switch>
-<br>
-<span>PositionType：</span>
-<jigsaw-radio-group [(value)]="selectedPositionType" [data]="popPositionTypes" trackItemBy="id">
-</jigsaw-radio-group>
-<br>
-
-<span>参照物:</span>
-<jigsaw-radio-group [(value)]="selectedPos" [data]="poses">
-</jigsaw-radio-group>
-
-<div *ngIf="selectedPos.label=='point'" style="display: inline-block">
-    <jigsaw-input [(value)]="detailPos.x" placeholder="X" width="200px"></jigsaw-input>
-    <jigsaw-input [(value)]="detailPos.y" placeholder="Y" width="200px"></jigsaw-input>
-</div>
-
-<br>
-<span>Offset</span><br>
-top: <jigsaw-input [(value)]="offset.top" placeholder="Top" width="200px"></jigsaw-input><br>
-left: <jigsaw-input [(value)]="offset.left" placeholder="Left" width="200px"></jigsaw-input><br>
-bottom: <jigsaw-input [(value)]="offset.bottom" placeholder="Bottom" width="200px"></jigsaw-input><br>
-right: <jigsaw-input [(value)]="offset.right" placeholder="Right" width="200px"></jigsaw-input>
-<br>
-<jigsaw-button width="200px" (click)="popupDialog1(dialog1)">Popup</jigsaw-button>
-
-<ng-template #dialog1>
-    <jigsaw-dialog width="400px" caption="dialog title" (answer)="close()" >
-        <ul class="dialog-content">
-            <li>Dialog content...</li>
-            <li>Dialog content...</li>
-            <li>Dialog content...</li>
-        </ul>
-    </jigsaw-dialog>
-</ng-template>
-

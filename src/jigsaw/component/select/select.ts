@@ -12,7 +12,7 @@ import {JigsawScrollBarModule} from '../../directive/scrollbar/scrollbar';
 import {ArrayCollection} from "../../core/data/array-collection";
 
 @Directive({
-    selector: '.jigsaw-option-list',
+    selector: '.jigsaw-select-option-list',
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height'
@@ -25,7 +25,6 @@ export class OptionList extends AbstractJigsawComponent{
 @Component({
     selector: 'jigsaw-select',
     templateUrl: 'select.html',
-    styleUrls: ['select.scss'],
     host: {
         "(click)": "_toggleClick($event)",
         '[style.width]': 'width',
@@ -166,7 +165,6 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 @Component({
     selector: 'jigsaw-select-option',
     templateUrl: 'option.html',
-    styleUrls: ['option.scss'],
     host: {
         "(click)": "_onClick()",
         '[style.height]': '_height',

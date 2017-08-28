@@ -1,10 +1,10 @@
 <div class="combo-select-demo cmn-box">
     <h3>editable demo</h3>
     <div class="test-btn">
-        <jigsaw-button width="120px" (click)="toggleEditable()">toggle editable</jigsaw-button>
+        <jigsaw-button (click)="toggleEditable()">toggle editable</jigsaw-button>
     </div>
     <jigsaw-combo-select
-        [(value)]="selectedCity">
+        [(value)]="selectedCity" maxWidth="500" [clearable]="true">
         <ng-template>
             <jigsaw-tile-select
                 [(selectedItems)]="selectedCity"
@@ -12,7 +12,8 @@
                 [searchable]="true"
                 [data]="citys"
                 width="400px"
-                tileOptionWidth="100px">
+                tileOptionWidth="22.8%"
+                style="padding: 8px 0 8px 8px">
             </jigsaw-tile-select>
         </ng-template>
     </jigsaw-combo-select>

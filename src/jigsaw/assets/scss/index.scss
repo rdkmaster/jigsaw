@@ -1,43 +1,72 @@
-@import "./core/basc";
+@import "core/base";
 
 /*滚动条样式start(针对'minimal-dark'这个皮肤做的修改)*/
-.mCustomScrollbar .mCS-minimal-dark.mCSB_scrollTools{
+.mCustomScrollbar .mCS-dark.mCSB_scrollTools{
+    margin: 0;
+    &:hover, &.mCSB_scrollTools_onDrag {
+        .mCSB_draggerContainer{
+            background: $scroll-field-bg;
+        }
+    }
     &.mCSB_scrollTools_vertical{
-        width: 10px !important;
+        width: 8px;
         .mCSB_dragger_bar{
             margin-right: 0;
         }
-    }
-    &.mCSB_scrollTools_horizontal{
-        height: 10px !important;
-        .mCSB_dragger_bar{
-            margin-bottom: 0;
+        &:hover, &.mCSB_scrollTools_onDrag{
+            .mCSB_dragger_bar{
+                width: 8px;
+            }
         }
     }
-    .mCSB_dragger_bar{
-        background-color: $scroll-bar-bg !important;
+    &.mCSB_scrollTools_horizontal{
+        height: 8px;
+        .mCSB_dragger_bar{
+            margin-top: 3px;
+        }
+        &:hover, &.mCSB_scrollTools_onDrag{
+            .mCSB_dragger_bar{
+                height: 8px;
+                margin-top: 0;
+            }
+        }
+    }
+    .mCSB_dragger .mCSB_dragger_bar, .mCSB_dragger:hover .mCSB_dragger_bar{
+        background-color: $scroll-bar-bg;
     }
     .mCSB_dragger:active .mCSB_dragger_bar,
     .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar{
-        background-color: $scroll-bar-active-bg !important;
+        background-color: $scroll-bar-active-bg;
+    }
+    .mCSB_draggerRail{
+        display: none;
     }
 }
 .mCSB_container_wrapper{
-    margin-right: 0;
+    margin: 0;
     & > .mCSB_container {
-        padding-right: 0;
+        padding: 0;
     }
+}
+.mCSB_vertical_horizontal > .mCSB_scrollTools.mCSB_scrollTools_horizontal{
+    right: 0;
+}
+.mCSB_vertical_horizontal > .mCSB_scrollTools.mCSB_scrollTools_vertical{
+    bottom: 0;
 }
 .mCSB_inside > .mCSB_container {
     margin-right: 0;
+}
+.mCustomScrollBox.mCSB_vertical_horizontal.mCSB_inside > .mCSB_container_wrapper.mCS_no_scrollbar_x.mCS_x_hidden{
+    position: relative;
 }
 /*滚动条样式end*/
 
 /*时间组件样式start*/
 jigsaw-time{
-    color: $font-color-level-two;
+    color: $text-color;
     .bootstrap-datetimepicker-widget table td.old, .bootstrap-datetimepicker-widget table td.new {
-        color: $font-color-level-three;
+        color: $text-color-secondary;
     }
 
     .bootstrap-datetimepicker-widget table td.day{
@@ -70,7 +99,7 @@ jigsaw-time{
             color: $primary-color;
         }
         span.glyphicon{
-            @include font-awesone();
+            @include font-awesome();
             font-size: 16px;
             &.glyphicon-chevron-left:before{
                 content: "\f104";
@@ -84,12 +113,9 @@ jigsaw-time{
 
     .bootstrap-datetimepicker-widget .picker-switch a[data-action]{
         color: $primary-color;
-        &:hover{
-            color: $time-hover-color;
-        }
     }
     .bootstrap-datetimepicker-widget a[data-action]{
-        color: $font-color-level-two;
+        color: $text-color;
         &:hover{
             color: $primary-color;
         }
@@ -99,7 +125,7 @@ jigsaw-time{
         height: 24px;
         line-height: 24px;
         &.glyphicon{
-            @include font-awesone();
+            @include font-awesome();
             font-size: 14px;
             line-height: 24px;
             &.glyphicon-time:before{
@@ -118,7 +144,7 @@ jigsaw-time{
 
     .bootstrap-datetimepicker-widget table td a.btn span{
         &.glyphicon{
-            @include font-awesone();
+            @include font-awesome();
             font-size: 16px;
             line-height: 24px;
             &.glyphicon-chevron-up:before{
@@ -140,7 +166,7 @@ jigsaw-time{
 
 /*zTree组件样式start*/
 .ztree li span.button{
-    @include font-awesone();
+    @include font-awesome();
     background: none;
     font-size: 14px;
     color: $primary-color;
@@ -160,29 +186,49 @@ jigsaw-time{
         }
     }
     &.chk{
-        border: 1px solid $primary-color;
+        border: 1px solid $text-color-secondary;
         border-radius: 2px;
         font-size: 12px;
-        &.checkbox_true_full:before, &.checkbox_true_full_focus:before{
-            content: "\f00c";
+        cursor: pointer;
+        &:hover{
+            border: 1px solid $primary-color;
+        }
+        &.checkbox_true_full, &.checkbox_true_full_focus{
+            border: 1px solid $primary-color;
+            &:before{
+                content: "\f00c";
+            }
         }
     }
     &.edit{
+        margin-left: 5px;
+        vertical-align: middle;
+        color: $text-color-secondary;
         &:before{
             content: "\f044";
         }
+        &:hover{
+            color: $primary-color;
+        }
     }
     &.remove{
+        vertical-align: middle;
+        color: $text-color-secondary;
         &:before{
             content: "\f014";
         }
+        &:hover{
+            color: $primary-color;
+        }
     }
     &.noline_open, &.center_open, &.bottom_open, &.roots_open{
+        color: $text-color-secondary;
         &:before{
             content: "\f106";
         }
     }
     &.noline_close, &.center_close, &.bottom_close, &.roots_close{
+        color: $text-color-secondary;
         &:before{
             content: "\f107";
         }

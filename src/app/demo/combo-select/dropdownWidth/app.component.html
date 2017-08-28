@@ -1,14 +1,17 @@
 <p>绝对值宽度</p>
 <jigsaw-combo-select
     placeholder="请输入城市~"
-    dropDownWidth="400px">
+    dropDownWidth="400px"
+    maxWidth="500"
+    [clearable]="true">
     <ng-template>
         <jigsaw-tile-select
             class="drop-down-child"
             labelField="label"
             [data]="citys"
             width="400px"
-            tileOptionWidth="100px">
+            tileOptionWidth="22.8%"
+            style="padding: 8px 0 8px 8px">
         </jigsaw-tile-select>
     </ng-template>
 </jigsaw-combo-select>
@@ -22,7 +25,8 @@
             labelField="label"
             [data]="citys"
             width="400px"
-            tileOptionWidth="100px">
+            tileOptionWidth="22.8%"
+            style="padding: 8px 0 8px 8px">
         </jigsaw-tile-select>
     </ng-template>
 </jigsaw-combo-select>

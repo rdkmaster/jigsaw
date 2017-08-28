@@ -8,5 +8,21 @@
     -webkit-transition: all .2s;
     transition: all .2s;
     padding-bottom: 10px;
-    /*width: 360px;*/
+}
+
+.content-box{
+    padding-bottom: 10px;
+    .content-title{
+        margin-bottom: 20px;
+    }
+    .content-line{
+        margin-bottom: 10px;
+        label{
+            display: inline-block;
+            width: 100px;
+        }
+    }
+    jigsaw-button{
+        margin-left: 104px;
+    }
 }

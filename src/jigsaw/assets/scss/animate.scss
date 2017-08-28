@@ -1,4 +1,4 @@
-@import "./core/basc";
+@import "core/base";
 
 /*fadeIn start*/
 @-webkit-keyframes fadeIn {
@@ -99,3 +99,15 @@
     -webkit-animation: bubbleOut 0.3s $ease-in-out;
 }
 /*bubbleIn end*/
+
+/*rotation start*/
+.jigsaw-am-rotation {
+    animation: rotation .8s linear infinite;
+}
+
+@keyframes rotation {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+/*rotation end*/

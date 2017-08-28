@@ -17,10 +17,10 @@ type PageSizeData = {
 @Component({
     selector: 'jigsaw-pagination',
     templateUrl: 'pagination.html',
-    styleUrls: ['pagination.scss'],
     host: {
         '[style.width]': 'width',
-        '[style.height]': 'height'
+        '[style.height]': 'height',
+        '[class.jigsaw-paging]': 'true'
     }
 })
 export class JigsawPagination extends AbstractJigsawComponent implements OnInit, AfterViewInit {
@@ -363,11 +363,11 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
 @Component({
     selector: 'jigsaw-paging-item',
     templateUrl: 'page.html',
-    styleUrls: ['page.scss'],
     host: {
         '(click)': '_onClick()',
         '[class.jigsaw-page-current]': 'current',
         '[class.jigsaw-page-hidden]': '!_isShow',
+        '[class.jigsaw-page-item]': 'true'
     }
 })
 export class JigsawPagingItem {
