@@ -32,8 +32,12 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     private _pageSizeOptions: any[];
     private _hostInit: boolean = false;
     private _pageNumberInit: boolean = false;
+
     // TODO 国际化
-    private _pageSize: PageSizeData = {value: null, label: 'null/Page'};
+    /**
+     * @internal
+     */
+    public _$pageSize: PageSizeData = {value: null, label: 'null/Page'};
     /**
      * @internal
      */
@@ -76,9 +80,9 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     }
 
     set total(value: number) {
-        if(this._total != value){
+        if (this._total != value) {
             this._total = value;
-            if(this._hostInit){
+            if (this._hostInit) {
                 this._renderPages();
             }
         }
@@ -90,16 +94,16 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     // 每页条数
     @Input()
     public get pageSize(): number {
-        return this._pageSize ? this._pageSize.value : null;
+        return this._$pageSize ? this._$pageSize.value : null;
     }
 
     public set pageSize(newValue: number) {
         newValue = newValue ? newValue : 10;
         if (this.pageSize != newValue) {
-            this._pageSize.value = newValue;
-            this._pageSize.label = newValue + '/Page';
+            this._$pageSize.value = newValue;
+            this._$pageSize.label = newValue + '/Page';
             this.pageSizeChange.emit(newValue);
-            if(this._hostInit){
+            if (this._hostInit) {
                 this._renderPages();
             }
         }

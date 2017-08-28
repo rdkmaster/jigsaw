@@ -1179,17 +1179,20 @@ export class JigsawTableCell extends TableCellBasic implements OnInit, OnDestroy
     template: `
         <div class="jigsaw-table-header-cell">
             <ng-template jigsaw-renderer-host></ng-template>
-            <div *ngIf="sortable" [ngClass]="_sortOrderClass">
+            <div *ngIf="sortable" [ngClass]="_$sortOrderClass">
                 <span (click)="_sortAsc()" class="jigsaw-table-sort-btn jigsaw-table-sort-up"></span>
                 <span (click)="_sortDes()" class="jigsaw-table-sort-btn jigsaw-table-sort-down"></span>
             </div>
         </div>`,
 })
 export class JigsawTableHeader extends TableCellBasic implements OnInit, OnDestroy {
-    private _sortOrderClass: Object;
+    /**
+     * @internal
+     */
+    public _$sortOrderClass: Object;
 
     private _setSortOrderClass(sortOrder: SortOrder): void {
-        this._sortOrderClass = {
+        this._$sortOrderClass = {
             'jigsaw-table-sort-box': true,
             'jigsaw-table-asc': sortOrder == SortOrder.asc,
             'jigsaw-table-des': sortOrder == SortOrder.des

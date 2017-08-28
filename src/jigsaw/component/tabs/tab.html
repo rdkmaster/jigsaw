@@ -5,7 +5,7 @@
             <div class="jigsaw-tabs-nav-wrap">
                 <div class="jigsaw-tabs-nav">
                     <!-- 负责实现动画效果 -->
-                    <div class="jigsaw-tabs-ink-bar" [ngStyle]="_inkBarStyle"></div>
+                    <div class="jigsaw-tabs-ink-bar" [ngStyle]="_$inkBarStyle"></div>
                     <jigsaw-tab-label class="jigsaw-tabs-tab"
                                    *ngFor="let tab of _$tabPanes; let i = index"
                                    [key]="i"

@@ -40,10 +40,13 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
 
     @Output() public grChange = new EventEmitter<TimeGr>();
 
-    private _gr: TimeGr;
+    /**
+     * @internal
+     */
+    public _$gr: TimeGr = TimeGr.date;
 
     public get gr(): TimeGr | string {
-        return (this._gr || this._gr === TimeGr.second) ? this._gr : TimeGr.date;
+        return this._$gr;
     }
 
     //粒度
@@ -52,9 +55,9 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         if (typeof value === 'string') {
             value = TimeGr[value];
         }
-        if (<TimeGr>value != this._gr) {
-            this._gr = <TimeGr>value;
-            this._value = TimeService.getFormatDate(this._value, this._gr);
+        if (<TimeGr>value != this._$gr) {
+            this._$gr = <TimeGr>value;
+            this._value = TimeService.getFormatDate(this._value, this._$gr);
             if (this._timePicker) {
                 this._initDatePicker();
             }

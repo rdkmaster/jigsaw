@@ -1,6 +1,6 @@
 <div class="jigsaw-time">
     <div *ngIf="grItems && grItems.length" class="jigsaw-time-granularity">
-    <span *ngFor="let item of grItems" (click)="_changeGranularity(item)" [class.active]="item.value==gr">
+    <span *ngFor="let item of grItems" (click)="_changeGranularity(item)" [class.active]="item.value==_$gr">
         {{item.label}}
     </span>
     </div>
