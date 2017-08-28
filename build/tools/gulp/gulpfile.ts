@@ -8,7 +8,7 @@ import './tasks/default';
 //import './tasks/lint';
 import './tasks/publish';
 //import './tasks/aot';
-import './tasks/material-release';
+import './tasks/jigsaw-release';
 import './tasks/validate-release';
 
 import './tasks/ensure-url-matches-path'

@@ -26,7 +26,7 @@ const htmlMinifierOptions = {
  * @param requiredPackages Required packages that will be built before building the current package.
  */
 export function createPackageBuildTasks(packageName: string, requiredPackages: string[] = []) {
-  // To avoid refactoring of the project the package material will map to the source path `lib/`.
+  // To avoid refactoring of the project the package Jigsaw will map to the source path `lib/`.
   const packageRoot = join(packagesDir, packageName === 'jigsaw' ? 'jigsaw' : packageName);
   const packageOut = join(outputDir, 'packages', packageName);
 

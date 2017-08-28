@@ -18,7 +18,7 @@ const bundlesDir = join(outputDir, 'bundles');
  * file. Additionally the package will be Closure Compiler and AOT compatible.
  */
 export function composeRelease(packageName: string) {
-  // To avoid refactoring of the project the package material will map to the source path `lib/`.
+  // To avoid refactoring of the project the package Jigsaw will map to the source path `lib/`.
   const sourcePath = join(packagesDir, packageName === 'jigsaw' ? 'jigsaw' : packageName);
   const packagePath = join(outputDir, 'packages', packageName);
   const releasePath = join(outputDir, 'releases', packageName);

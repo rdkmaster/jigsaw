@@ -16,32 +16,32 @@ const {packagesDir, outputDir} = buildConfig;
 /** Path to the directory where all releases are created. */
 const releasesDir = join(outputDir, 'releases');
 
-/** Path to the output of the Material package. */
-const materialOutputPath = join(outputDir, 'packages', 'jigsaw');
+/** Path to the output of the Jigsaw package. */
+const jigsawOutputPath = join(outputDir, 'packages', 'jigsaw');
 
-// Path to the sources of the Material package.
-const materialPath = join(packagesDir, 'jigsaw');
-// Path to the release output of material.
+// Path to the sources of the Jigsaw package.
+const jigsawPath = join(packagesDir, 'jigsaw');
+// Path to the release output of jigsaw.
 const releasePath = join(releasesDir, 'jigsaw');
 // The entry-point for the scss theming bundle.
-const themingEntryPointPath = join(materialPath, 'core', 'theming', 'all-theme.scss');
+const themingEntryPointPath = join(jigsawPath, 'core', 'theming', 'all-theme.scss');
 // Output path for the scss theming bundle.
 const themingBundlePath = join(releasePath, 'theming.scss');
 // Matches all pre-built theme css files
-const prebuiltThemeGlob = join(materialOutputPath, '**/theming/prebuilt/*.css?(.map)');
-const prebuiltThemeSettingsGlob = join(materialOutputPath, '**/theming/prebuilt/settings/*.scss');
-const themingApiGlob = join(materialOutputPath, '**/theming/theming-api.scss');
+const prebuiltThemeGlob = join(jigsawOutputPath, '**/theming/prebuilt/*.css?(.map)');
+const prebuiltThemeSettingsGlob = join(jigsawOutputPath, '**/theming/prebuilt/settings/*.scss');
+const themingApiGlob = join(jigsawOutputPath, '**/theming/theming-api.scss');
 // Matches all SCSS files in the library.
-const allScssGlob = join(materialPath, '**/*.scss');
+const allScssGlob = join(jigsawPath, '**/*.scss');
 
 /**
- * Overwrite the release task for the material package. The material release will include special
+ * Overwrite the release task for the jigsaw package. The jigsaw release will include special
  * files, like a bundled theming SCSS file or all prebuilt themes.
  */
 task('jigsaw:build-release', ['jigsaw:prepare-release'], () => composeRelease('jigsaw'));
 
 /**
- * Task that will build the material package. It will also copy all prebuilt themes and build
+ * Task that will build the jigsaw package. It will also copy all prebuilt themes and build
  * a bundled SCSS file for theming
  */
 task('jigsaw:prepare-release', sequenceTask(

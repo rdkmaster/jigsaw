@@ -51,25 +51,25 @@ function checkReleasePackage(packageName: string): string[] {
   }
 
   if (packageName === 'jigsaw') {
-    failures = failures.concat(checkMaterialPackage());
+    failures = failures.concat(checkJigsawPackage());
   }
 
   return failures;
 }
 
-/** Function that includes special checks for the Material package. */
-function checkMaterialPackage(): string[] {
+/** Function that includes special checks for the Jigsaw package. */
+function checkJigsawPackage(): string[] {
   const packagePath = join(releasesDir, 'jigsaw');
   const prebuiltThemesPath = join(packagePath, 'prebuilt-themes');
   const themingFilePath = join(packagePath, 'theming.scss');
   const failures = [];
 
   if (glob('*.css', {cwd: prebuiltThemesPath}).length === 0) {
-    failures.push('Prebuilt themes are not present in the Material release output.');
+    failures.push('Prebuilt themes are not present in the Jigsaw release output.');
   }
 
   if (!existsSync(themingFilePath)) {
-    failures.push('The theming SCSS file is not present in the Material release output.');
+    failures.push('The theming SCSS file is not present in the Jigsaw release output.');
   }
 
   return failures;
