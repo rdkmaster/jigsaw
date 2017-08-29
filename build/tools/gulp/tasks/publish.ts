@@ -9,7 +9,6 @@ import * as minimist from 'minimist';
 
 /** Packages that will be published to NPM by the release task. */
 export const releasePackages = [
-  //'cdk',
   'jigsaw',
 ];
 
@@ -108,17 +107,32 @@ task(':publish', async () => {
   process.chdir(currentDir);
 });
 
-task('publish', sequenceTask(
-  ':publish:whoami',
+task(':publish-js', sequenceTask(
   ':publish:build-releases',
   'validate-release:check-bundles',
-  ':publish',
-  ':publish:logout',
+  ':publish'
 ));
 
-task('publish-labs', sequenceTask(
-    ':publish:whoami',
+task(':publish-ts', sequenceTask(
     ':publish:build-labs-releases',
     ':publish',
-    ':publish:logout',
+));
+
+task('publish-js', sequenceTask(
+    ':publish:whoami',
+    ':publish-js',
+    ':publish:logout'
+));
+
+task('publish-ts', sequenceTask(
+    ':publish:whoami',
+    ':publish-ts',
+    ':publish:logout'
+));
+
+task('publish', sequenceTask(
+    ':publish:whoami',
+    ':publish-js',
+    ':publish-ts',
+    ':publish:logout'
 ));
