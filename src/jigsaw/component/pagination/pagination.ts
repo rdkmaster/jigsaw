@@ -9,7 +9,7 @@ import {JigsawSelectModule} from '../select/select';
 import {JigsawInputModule} from '../input/input';
 import {AbstractJigsawComponent} from "../core";
 
-type PageSizeData = {
+export type PageSizeData = {
     value: number,
     label: string
 }
