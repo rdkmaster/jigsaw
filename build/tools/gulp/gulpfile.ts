@@ -9,6 +9,7 @@ import './tasks/default';
 import './tasks/publish';
 //import './tasks/aot';
 import './tasks/jigsaw-release';
+import './tasks/jigsaw-labs-release';
 import './tasks/validate-release';
 
 import './tasks/ensure-url-matches-path'

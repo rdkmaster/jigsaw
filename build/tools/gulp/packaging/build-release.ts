@@ -6,6 +6,7 @@ import {inlinePackageMetadataFiles} from './metadata-inlining';
 import {createTypingsReexportFile} from './typings-reexport';
 import {createMetadataReexportFile} from './metadata-reexport';
 import {buildConfig} from './build-config';
+import {updatePackageForLabs} from "./package-for-labs";
 
 const {packagesDir, outputDir, projectDir} = buildConfig;
 
@@ -18,7 +19,6 @@ const bundlesDir = join(outputDir, 'bundles');
  * file. Additionally the package will be Closure Compiler and AOT compatible.
  */
 export function composeRelease(packageName: string) {
-  // To avoid refactoring of the project the package Jigsaw will map to the source path `lib/`.
   const sourcePath = join(packagesDir, packageName === 'jigsaw' ? 'jigsaw' : packageName);
   const packagePath = join(outputDir, 'packages', packageName);
   const releasePath = join(outputDir, 'releases', packageName);
@@ -36,4 +36,18 @@ export function composeRelease(packageName: string) {
   createTypingsReexportFile(releasePath, packageName);
   createMetadataReexportFile(releasePath, packageName);
   addPureAnnotationsToFile(join(releasePath, '@rdkmaster', `${packageName}.es5.js`));
+}
+
+export function composeLabsRelease(packageName: string) {
+    const sourcePath = join(packagesDir, packageName === 'jigsaw' ? 'jigsaw' : packageName);
+    const packagePath = join(outputDir, 'packages', packageName);
+    const releasePath = join(outputDir, 'releases', packageName);
+
+    copyFiles(packagePath, '**/*.+(d.ts)', releasePath);
+    copyFiles(projectDir, 'LICENSE', releasePath);
+    copyFiles(packagesDir, 'README.md', releasePath);
+    copyFiles(sourcePath, 'package.json', releasePath);
+
+    updatePackageForLabs(releasePath);
+    //createTypingsReexportFile(releasePath, packageName);
 }

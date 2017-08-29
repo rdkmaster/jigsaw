@@ -4,7 +4,7 @@ import {main as tsc} from '@angular/tsc-wrapped';
 //import {main as ngc} from '@angular/compiler-cli';
 import {buildConfig} from './build-config';
 import {sequenceTask, sassBuildTask, copyTask, triggerLivereload} from '../util/task_helpers';
-import {composeRelease} from './build-release';
+import {composeLabsRelease, composeRelease} from './build-release';
 import {buildPackageBundles} from './build-bundles';
 import {inlineResourcesForDirectory} from './inline-resources';
 
@@ -64,6 +64,9 @@ export function createPackageBuildTasks(packageName: string, requiredPackages: s
    */
   task(`${packageName}:build-release:clean`, sequenceTask('clean', `${packageName}:build-release`));
   task(`${packageName}:build-release`, [`${packageName}:build`], () => composeRelease(packageName));
+
+    task(`${packageName}:build-labs-release:clean`, sequenceTask('clean', `${packageName}:build-labs-release`));
+    task(`${packageName}:build-labs-release`, [`${packageName}:build`], () => composeLabsRelease(packageName));
   /**
    * TypeScript compilation tasks. Tasks are creating ESM, FESM, UMD bundles for releases.
    */
