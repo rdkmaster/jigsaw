@@ -122,6 +122,9 @@ export class ButtonInfo {
     [index: string]: any;
     public label: string;
     public clazz?: string = '';
+    public type?: string;
+    public disabled?: boolean;
+    public preSize?: string;
 }
 
 export type PopupDisposer = () => void;

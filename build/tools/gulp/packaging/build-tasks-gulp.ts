@@ -4,7 +4,7 @@ import {main as tsc} from '@angular/tsc-wrapped';
 //import {main as ngc} from '@angular/compiler-cli';
 import {buildConfig} from './build-config';
 import {sequenceTask, sassBuildTask, copyTask, triggerLivereload} from '../util/task_helpers';
-import {composeRelease} from './build-release';
+import {composeLabsRelease, composeRelease} from './build-release';
 import {buildPackageBundles} from './build-bundles';
 import {inlineResourcesForDirectory} from './inline-resources';
 
@@ -26,7 +26,7 @@ const htmlMinifierOptions = {
  * @param requiredPackages Required packages that will be built before building the current package.
  */
 export function createPackageBuildTasks(packageName: string, requiredPackages: string[] = []) {
-  // To avoid refactoring of the project the package material will map to the source path `lib/`.
+  // To avoid refactoring of the project the package Jigsaw will map to the source path `lib/`.
   const packageRoot = join(packagesDir, packageName === 'jigsaw' ? 'jigsaw' : packageName);
   const packageOut = join(outputDir, 'packages', packageName);
 
@@ -59,20 +59,14 @@ export function createPackageBuildTasks(packageName: string, requiredPackages: s
     `${packageName}:build:bundles`,
   ));
 
-  task(`${packageName}:build-tests`, sequenceTask(
-    // Build all required tests before building.
-    ...requiredPackages.map(pkgName => `${pkgName}:build-tests`),
-    // Build the ESM output that includes all test files. Also build assets for the package.
-    [`${packageName}:build:esm:tests`, `${packageName}:assets`],
-    // Inline assets into ESM output.
-    `${packageName}:assets:inline`
-  ));
-
   /**
    * Release tasks for the package. Tasks compose the release output for the package.
    */
   task(`${packageName}:build-release:clean`, sequenceTask('clean', `${packageName}:build-release`));
   task(`${packageName}:build-release`, [`${packageName}:build`], () => composeRelease(packageName));
+
+    task(`${packageName}:build-labs-release:clean`, sequenceTask('clean', `${packageName}:build-labs-release`));
+    task(`${packageName}:build-labs-release`, [`${packageName}:build`], () => composeLabsRelease(packageName));
   /**
    * TypeScript compilation tasks. Tasks are creating ESM, FESM, UMD bundles for releases.
    */

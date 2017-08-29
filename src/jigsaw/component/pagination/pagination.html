@@ -7,7 +7,7 @@
 <div class="jigsaw-paging-next jigsaw-paging-page fa fa-angle-right" [class.jigsaw-paging-disabled]="_$nextDisabled" (click)="_$pageNext()"></div>
 
 <jigsaw-select *ngIf="pageSizeOptions"
-            [value]="_pageSize"
+            [value]="_$pageSize"
             (valueChange)="_changePageSize($event)"
             trackItemBy="value"
             labelField="label"
