@@ -24,6 +24,11 @@ task(':publish:build-releases', sequenceTask(
   releasePackages.map(packageName => `${packageName}:build-release`)
 ));
 
+task(':publish:build-labs-releases', sequenceTask(
+    'clean',
+    releasePackages.map(packageName => `${packageName}:build-labs-release`)
+));
+
 /** Make sure we're logged in. */
 task(':publish:whoami', execTask(npm, ['whoami'], {
   //silent: true,
@@ -109,4 +114,11 @@ task('publish', sequenceTask(
   'validate-release:check-bundles',
   ':publish',
   ':publish:logout',
+));
+
+task('publish-labs', sequenceTask(
+    ':publish:whoami',
+    ':publish:build-labs-releases',
+    ':publish',
+    ':publish:logout',
 ));
