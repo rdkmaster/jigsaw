@@ -216,7 +216,7 @@ function fixAppModuleTs(appModuleCode) {
     var match = appModuleCode.match(/\bimports\s*:\s*\[([\s\S]*?)\]/);
     if (match) {
         return appModuleCode.replace(re, (found, importString) => 'imports: [\n' +
-            '        BrowserModule, BrowserAnimationsModule, HttpModule,\n' + 
+            '        BrowserModule, BrowserAnimationsModule, HttpModule,\n' +
             '        ' + importString.trim() + '\n' +
             '    ]'
         );
@@ -253,7 +253,7 @@ function getDemoHome() {
     var pathPartials = __dirname.split(/[\/\\]/g);
     pathPartials.pop();
     pathPartials.pop();
-    var demoHome = pathPartials.join('/') + '/src/app/demo/';
+    var demoHome = pathPartials.join('/') + '/src/app/e2e-testee/';
     return demoHome;
 }
 
