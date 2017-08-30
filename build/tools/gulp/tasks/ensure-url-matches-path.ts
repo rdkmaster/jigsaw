@@ -1,13 +1,13 @@
 import {task} from 'gulp';
 import {join} from 'path';
 import {existsSync} from "fs"
-import {navInfo} from "../../../../src/app/demo/nav-info"
+import {navInfo} from "../../../../src/app/e2e-testee/nav-info"
 
 /**
  * 确保demo的url和它的源码路径一致，这样在demo运行时，就可以直接跳转到它对应的plunker上了。
  */
 task('ensure-url-matches-path', () => {
-    const demoHome = join(__dirname, '../../../../src/app/demo');
+    const demoHome = join(__dirname, '../../../../src/app/e2e-testee');
     let unmatchedUrls:string[] = [];
     navInfo.forEach(navItem => {
         navItem.navList.forEach(nav => {

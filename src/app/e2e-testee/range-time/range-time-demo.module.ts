@@ -10,7 +10,7 @@ import {RangeTimeRecommendedComponent} from "./recommended/app.component";
 import {RangeTimeRefreshIntervalComponent} from "./refreshInterval/app.component";
 import {RangeTimeWeekStartComponent} from "./weekStart/app.component";
 import {RangeTimeBasicDemoModule} from "./basic/app.module";
-import {RangeTimeGrModule} from "app/demo/range-time/gr/app.module";
+import {RangeTimeGrModule} from "app/e2e-testee/range-time/gr/app.module";
 import {RangeTimeLimitEndModule} from "./limitEnd/app.module";
 import {RangeTimeRecommendedModule} from "./recommended/app.module";
 import {RangeTimeRefreshIntervalModule} from "./refreshInterval/app.module";
