@@ -65,7 +65,11 @@ export class TimeService {
     ]);
 
     private static initMoment() {
-        moment.suppressDeprecationWarnings = 1;
+        try {
+            moment.suppressDeprecationWarnings = 1;
+        }catch(e) {
+
+        }
     }
 
     private static init = TimeService.initMoment();
