@@ -15,14 +15,15 @@ makeAllPlunkers('live-demo');
 
 function makeAllPlunkers(dirName) {
     demoHome = getDemoHome(dirName);
-    outputHome = outputHomeRoot + dirName + '/';
+
     var demoSetFolders = fs.readdirSync(demoHome);
     demoSetFolders.forEach(demoFolder => {
+        outputHome = outputHomeRoot;
         var pathname = demoHome + demoFolder;
         var stat = fs.lstatSync(pathname);
         if (stat.isDirectory()) {
             if(dirName == 'live-demo'){
-                makePlunker(pathname + '/');
+                makePlunker(pathname + '/', dirName);
             } else if(dirName == 'e2e-testee') {
                 processDemoSet(pathname + '/');
             }
@@ -41,7 +42,7 @@ function processDemoSet(demoSetFolder) {
     });
 }
 
-function makePlunker(demoFolder) {
+function makePlunker(demoFolder, dirName) {
     var content = [];
     var mockDatas = [];
     readDemoContent(content, demoFolder);
@@ -95,7 +96,8 @@ function makePlunker(demoFolder) {
         .replace('<!-- replace-by-content -->', html)
         .replace('<!-- replace-by-title -->', demoFolder.substring(demoHome.length, demoFolder.length-1));
 
-    var saveTo = outputHome + demoFolder.substring(demoHome.length);
+    var saveTo = outputHome + demoFolder.substring(demoHome.length) + (dirName ? dirName + '/' : '');
+    console.log(saveTo);
     makeDirs(saveTo);
     saveTo += 'index.html';
     fs.writeFileSync(saveTo, plunker);
