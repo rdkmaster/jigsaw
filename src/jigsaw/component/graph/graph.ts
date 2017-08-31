@@ -9,7 +9,7 @@ import {AbstractGraphData} from "../../core/data/graph-data";
 
 import * as echarts from "echarts";
 import {CommonUtils} from "../../core/utils/common-utils";
-import {AbstractJigsawComponent} from "../core";
+import {AbstractJigsawComponent} from "../common";
 import {EchartOptions} from "../../core/data/echart-types";
 import {CallbackRemoval} from "../../core/utils/common-utils";
 

@@ -13,7 +13,7 @@ import {
 import {CommonUtils, ElementEventHelper} from "../core/utils/common-utils";
 import {JigsawBlock} from "../component/block/block";
 import {AffixUtils} from "../core/utils/internal-utils";
-import {IDynamicInstantiatable} from "../component/core";
+import {IDynamicInstantiatable} from "../component/common";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';

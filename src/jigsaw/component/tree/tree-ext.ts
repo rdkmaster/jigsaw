@@ -1,5 +1,5 @@
 import {Input, OnDestroy, AfterViewInit, Output, EventEmitter, NgModule, Component} from '@angular/core';
-import {AbstractJigsawComponent} from "../core";
+import {AbstractJigsawComponent} from "../common";
 import {InternalUtils} from "../../core/utils/internal-utils";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {ZTreeSettingSetting} from "./ztree-types";

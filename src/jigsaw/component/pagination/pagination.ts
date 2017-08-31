@@ -7,7 +7,7 @@ import {FormsModule} from '@angular/forms';
 
 import {JigsawSelectModule} from '../select/select';
 import {JigsawInputModule} from '../input/input';
-import {AbstractJigsawComponent} from "../core";
+import {AbstractJigsawComponent} from "../common";
 
 export type PageSizeData = {
     value: number,

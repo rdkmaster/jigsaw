@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 
 import {PopupService} from "jigsaw/service/popup.service";
-import {JigsawLazyLoadedModule} from "jigsaw/component/core";
+import {JigsawLazyLoadedModule} from "jigsaw/component/common";
 
 import {DefinedLoadingDemoComponent } from "./userDefined/app.component";
 import {LoadingFullDemoComponent} from "./full/app.component";

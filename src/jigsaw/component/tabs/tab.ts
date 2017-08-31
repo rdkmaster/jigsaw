@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import {JigsawTabPane} from "./tab-pane";
 import {JigsawTabContent, JigsawTabLabel} from "./tab-item";
-import {AbstractJigsawComponent, IDynamicInstantiatable} from "../core";
+import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
 
 @Component({
     selector: 'jigsaw-tab',

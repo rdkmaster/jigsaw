@@ -4,7 +4,7 @@ import {
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {AbstractJigsawComponent} from "../core";
+import {AbstractJigsawComponent} from "../common";
 import {Observable} from "rxjs/Observable";
 
 @Directive({selector: '[jigsaw-prefix-icon]'})
