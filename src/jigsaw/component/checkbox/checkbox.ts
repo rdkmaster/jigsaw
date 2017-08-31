@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
-import {AbstractJigsawComponent} from '../core';
+import {AbstractJigsawComponent} from '../common';
 import {CheckBoxStatus} from "./typings";
 
 export type CheckBoxValue = boolean | CheckBoxStatus;

@@ -1,6 +1,6 @@
 import {NgModule, Component, Input} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {AbstractJigsawComponent} from '../core';
+import {AbstractJigsawComponent} from '../common';
 
 @Component({
     selector: 'jigsaw-button, a[jigsaw-button], button[jigsaw-button]',

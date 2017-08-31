@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 
-import {DefinedLoadingDemoComponent } from "./userDefined/app.component";
+import {DefinedLoadingDemoComponent} from "./userDefined/app.component";
 import {LoadingFullDemoComponent} from "./full/app.component";
 import {BallLoadingDemoComponent} from "./ballLoading/app.component";
 import {DomInnerDemoComponent} from "./domInner/app.component";

@@ -13,20 +13,20 @@ import {ButtonInfo} from "jigsaw/service/popup.service";
 export class CustomizedAlert extends DialogBase {
     @ViewChild(JigsawAlert) dialog: JigsawDialog;
 
-    caption:string = "a customized alert";
+    caption:string = "高度定制化的对话框";
 
     public buttons: ButtonInfo[] = [
         {
-            label: 'ok',
+            label: '很好',
             clazz: 'button-ok'
         },
         {
-            label: 'ignore'
+            label: '很棒'
         }
     ];
 
-    afterClose(message: any) {
-        console.log("after close..." + message);
+    afterClose(answer: ButtonInfo) {
+        console.log("after close..." + (answer ? answer.label : ''));
     }
 
 }

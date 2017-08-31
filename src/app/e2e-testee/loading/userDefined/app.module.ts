@@ -12,5 +12,4 @@ import {DefinedLoading} from "./definedLoading/definedLoading";
     entryComponents:[DefinedLoading]
 })
 export class DefinedLoadingDemoModule{
-
 }

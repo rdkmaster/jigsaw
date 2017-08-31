@@ -23,7 +23,7 @@ export * from './service/loading.service';
 export * from './service/time.service';
 export * from './service/time.types';
 
-export * from './component/core';
+export * from './component/common';
 export * from './component/alert/alert';
 export * from './component/block/block';
 export * from './component/button/button';
@@ -38,6 +38,7 @@ export * from './component/loading/loading';
 export * from './component/pagination/pagination';
 export * from './component/radio/radio';
 export * from './component/range-time/index';
+export * from './component/root/root';
 export * from './component/select/select';
 export * from './component/slider/index';
 export * from './component/switch/index';

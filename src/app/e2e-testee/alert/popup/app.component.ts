@@ -1,22 +1,25 @@
-import {Component, ComponentRef, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component} from "@angular/core";
 import {
-    ButtonInfo, PopupEffect, PopupInfo, PopupOptions, PopupPositionType,
-    PopupService
-} from "jigsaw/service/popup.service";
-import {JigsawErrorAlert, JigsawInfoAlert, JigsawWarningAlert} from "jigsaw/component/alert/alert";
+    JigsawConfirmAlert, JigsawErrorAlert, JigsawInfoAlert,
+    JigsawWarningAlert
+} from "jigsaw/component/alert/alert";
 
 @Component({
     template: `
         <jigsaw-button width="175" (click)="commonInfoAlert()">
-            common info alert
+            通用信息提示框
         </jigsaw-button>
     
         <jigsaw-button width="175" (click)="commonWarningAlert()">
-            common warning alert
+            通用警告提示框
         </jigsaw-button>
     
-        <jigsaw-button width="175" (click)="commonErrorAlert($event)">
-            common error alert
+        <jigsaw-button width="175" (click)="commonErrorAlert()">
+            通用错误提示框
+        </jigsaw-button>
+    
+        <jigsaw-button width="175" (click)="commonConfirmAlert()">
+            通用确认提示框
         </jigsaw-button>
     
         <p style="margin-top: 20px; font-size: 16px">{{answer}}</p>
@@ -26,70 +29,34 @@ export class AlertPopupDemoComponent {
 
     answer = '';
 
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2,
-                private _popupService: PopupService) {
-    }
-
-    alertCallback(answer:ButtonInfo) {
-        this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
-    }
-
-    disposeAnswer(answer: ButtonInfo, popupInfo: PopupInfo){
-        this.alertCallback(answer);
-        popupInfo.dispose()
-    }
-
     commonInfoAlert() {
         this.answer = 'waiting for an answer';
-        const popupInfo = this._popupService.popup(JigsawInfoAlert, this._getModalOptions(), {
-            message: 'this is a great info alert!', title: 'the title is optional'
+        JigsawInfoAlert.show('this is a great info alert!', answer => {
+            this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
         });
-        popupInfo.answer.subscribe(answer => {
-            this.disposeAnswer(answer, popupInfo)
-        })
     }
 
     commonWarningAlert() {
         this.answer = 'waiting for an answer';
-        const popupInfo = this._popupService.popup(JigsawWarningAlert, this._getModalOptions(), {
-            message: 'this is a great warning alert!'
+        JigsawWarningAlert.show('this is a great warning alert!', answer => {
+            this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
         });
-        popupInfo.answer.subscribe(answer => {
-            this.disposeAnswer(answer, popupInfo)
-        })
     }
 
-    commonErrorAlert(event) {
+    commonErrorAlert() {
         this.answer = 'waiting for an answer';
-        const popupInfo = this._popupService.popup(JigsawErrorAlert, this._getUnModalOptions(event), {
-            message: 'this is a great error alert!'
-        });
-        popupInfo.answer.subscribe(answer => {
-            this.disposeAnswer(answer, popupInfo)
-        })
+        JigsawErrorAlert.show('this is a great warning alert!', answer => {
+            this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
+        }, null, null, false);
     }
 
-     _getModalOptions(): PopupOptions {
-        return {
-            modal: true, //是否模态
-            showEffect: PopupEffect.bubbleIn,
-            hideEffect: PopupEffect.bubbleOut
-        };
-    }
-
-     _getUnModalOptions(event): PopupOptions {
-        return {
-            modal: false, //是否模态
-            showEffect: PopupEffect.bubbleIn,
-            hideEffect: PopupEffect.bubbleOut,
-            pos: {x: event.clientX, y: event.clientY}, //插入点
-            posOffset: { //偏移位置
-                top: -10,
-                left: 10,
+    commonConfirmAlert() {
+        this.answer = 'waiting for an answer';
+        JigsawConfirmAlert.show('Jigsaw is great, do you agree?', answer => {
+                this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
             },
-            posType: PopupPositionType.absolute, //定位类型
-        };
+            /* custom your own buttons*/
+            [{label: 'alert.button.yes'}, {label: 'alert.button.no'}, {label: "不知道"}]);
     }
 }
 

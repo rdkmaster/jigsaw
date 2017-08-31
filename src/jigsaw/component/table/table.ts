@@ -23,7 +23,7 @@ import {
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 
-import {AbstractJigsawComponent, JigsawRendererHost} from "../core";
+import {AbstractJigsawComponent, JigsawRendererHost} from "../common";
 import {TableData, TableDataHeader} from "../../core/data/table-data";
 import {
     AdditionalColumnDefine,

@@ -13,11 +13,12 @@ import {
 import {CommonUtils, ElementEventHelper} from "../core/utils/common-utils";
 import {JigsawBlock} from "../component/block/block";
 import {AffixUtils} from "../core/utils/internal-utils";
-import {IDynamicInstantiatable} from "../component/core";
+import {IDynamicInstantiatable} from "../component/common";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import {Subscription} from "rxjs/Subscription";
+import {JigsawRoot} from "../component/root/root";
 
 export enum PopupEffect {
     fadeIn, fadeOut, bubbleIn, bubbleOut
@@ -143,43 +144,28 @@ export class PopupInfo {
 
 @Injectable()
 export class PopupService {
-    //全局插入点
-    private _viewContainerRef: ViewContainerRef;
-    private _renderer: Renderer2;
+    private static _instance: PopupService;
+
+    public static get instance():PopupService {
+        return PopupService._instance;
+    }
+
+    /**
+     * 全局插入点
+     * @internal
+     */
+    public static _viewContainerRef: ViewContainerRef;
+    /**
+     * @internal
+     */
+    public static _renderer: Renderer2;
 
     private _eventHelper: ElementEventHelper = new ElementEventHelper();
 
     constructor(private _cfr: ComponentFactoryResolver,
-                private _appRef: ApplicationRef,
                 @Optional() private _router: Router,
                 @Optional() private _activatedRoute: ActivatedRoute) {
-
-    }
-
-    private _init(): void {
-        this._initViewContainerRef();
-        this._initRenderer();
-    }
-
-    private _initViewContainerRef(): void {
-        if (!this._viewContainerRef) {
-            this._appRef.components.length && this._appRef.components.forEach(component => {
-                //TODO by chenxu 自动获取viewContainerRef，而不要应用提供
-                if (component.instance.hasOwnProperty('viewContainerRef')) {
-                    this._viewContainerRef = component.instance.viewContainerRef;
-                }
-            });
-        }
-    }
-
-    private _initRenderer(): void {
-        if (!this._renderer) {
-            this._appRef.components.length && this._appRef.components.forEach(component => {
-                if (component.instance.hasOwnProperty('renderer')) {
-                    this._renderer = component.instance.renderer;
-                }
-            });
-        }
+        PopupService._instance = this;
     }
 
     private _listenRouterChange(disposer: PopupDisposer): void {
@@ -209,9 +195,8 @@ export class PopupService {
     public popup(what: Type<IPopupable>, options?: PopupOptions, initData?: any): PopupInfo;
     public popup(what: TemplateRef<any>, options?: PopupOptions): PopupInfo;
     public popup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupInfo {
-        this._init();
-        if (!this._viewContainerRef || !this._renderer) {
-            console.error("please add 'constructor(public viewContainerRef: ViewContainerRef, public renderer: Renderer2){}' into AppComponent");
+        if (!PopupService._viewContainerRef || !PopupService._renderer) {
+            console.error("please use 'jigsaw-root' element as the root of your root component");
             return;
         }
 
@@ -246,9 +231,9 @@ export class PopupService {
             popupRef.instance.dispose = disposer;
             popupRef.instance.initData = initData;
         }
-        removeWindowListens = this._beforePopup(options, element, this._renderer, disposer);
+        removeWindowListens = this._beforePopup(options, element, PopupService._renderer, disposer);
         setTimeout(() => {
-            this._setPopup(options, element, this._renderer);
+            this._setPopup(options, element, PopupService._renderer);
         }, 0);
 
         return {
@@ -270,8 +255,8 @@ export class PopupService {
             const [blockInfo,] = this._popupFactory(JigsawBlock, blockOptions);
             disposer = blockInfo.dispose;
             element = blockInfo.element;
-            this._setStyle(options, element, this._renderer);
-            this._setPopup(blockOptions, element, this._renderer);
+            this._setStyle(options, element, PopupService._renderer);
+            this._setPopup(blockOptions, element, PopupService._renderer);
         }
         return disposer
     }
@@ -319,18 +304,18 @@ export class PopupService {
         const ref: PopupRef = this._createPopup(what);
         const element: HTMLElement = this._getElement(ref);
         //一出来就插入到文档流的最后，这给后续计算尺寸造成麻烦，这里给设置fixed，就可以避免影响滚动条位置
-        this._renderer.setStyle(element, 'position', 'fixed');
-        this._renderer.setStyle(element, 'top', 0);
-        const disposer: PopupDisposer = this._getDisposer(options, ref, element, this._renderer);
+        PopupService._renderer.setStyle(element, 'position', 'fixed');
+        PopupService._renderer.setStyle(element, 'top', 0);
+        const disposer: PopupDisposer = this._getDisposer(options, ref, element, PopupService._renderer);
         return [{ element: element, dispose: disposer, answer: null, instance: null }, ref];
     }
 
     private _createPopup(what: Type<IPopupable> | TemplateRef<any>) {
         if (what instanceof TemplateRef) {
-            return this._viewContainerRef.createEmbeddedView(what);
+            return PopupService._viewContainerRef.createEmbeddedView(what);
         } else {
             const factory = this._cfr.resolveComponentFactory(what);
-            return this._viewContainerRef.createComponent(factory);
+            return PopupService._viewContainerRef.createComponent(factory);
         }
     }
 

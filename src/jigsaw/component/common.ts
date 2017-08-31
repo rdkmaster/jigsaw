@@ -1,6 +1,7 @@
 
 import {Directive, OnInit, ViewContainerRef, Input} from "@angular/core";
 import {CommonUtils} from "../core/utils/common-utils";
+import {PopupService} from "../service/popup.service";
 
 @Directive({
     selector: '[jigsaw-renderer-host]',

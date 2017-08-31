@@ -5,8 +5,7 @@ import {JigsawBlock} from "../component/block/block";
 
 @Injectable()
 export class LoadingService {
-
-    constructor(private _popupService: PopupService) {
+    constructor(private _popupService:PopupService) {
     }
 
     public show(blockTo?: ElementRef): PopupInfo
@@ -18,14 +17,14 @@ export class LoadingService {
         let popupInfo: PopupInfo;
         if (blockTo instanceof ElementRef) {
             //弹出局部Modal，针对loading的特殊处理
-            const blockInfo = this._popupService.popup(JigsawBlock, this._getOptions(blockTo));
+            const blockInfo = this._popupService.popup(JigsawBlock, LoadingService._getOptions(blockTo));
 
             if (blockBy instanceof Type) {
-                popupInfo = this._popupService.popup(blockBy, this._getOptions(blockTo));
+                popupInfo = this._popupService.popup(blockBy, LoadingService._getOptions(blockTo));
             } else if (blockBy instanceof TemplateRef) {
-                popupInfo = this._popupService.popup(blockBy, this._getOptions(blockTo));
+                popupInfo = this._popupService.popup(blockBy, LoadingService._getOptions(blockTo));
             } else {
-                popupInfo = this._popupService.popup(JigsawLoading, this._getOptions(blockTo));
+                popupInfo = this._popupService.popup(JigsawLoading, LoadingService._getOptions(blockTo));
             }
 
             const dispose = () => {
@@ -52,7 +51,7 @@ export class LoadingService {
         return popupInfo;
     }
 
-    private _getOptions(elementRef: ElementRef): PopupOptions {
+    private static _getOptions(elementRef: ElementRef): PopupOptions {
         let element = elementRef.nativeElement;
         return {
             modal: false, //是否模态

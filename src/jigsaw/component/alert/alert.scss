@@ -2,7 +2,7 @@
 
 $alert-prefix-cls: #{$jigsaw-prefix}-alert;
 
-.#{$alert-prefix-cls}-host{
+.#{$alert-prefix-cls}-host {
     @include inline-block;
     width: 100%;
 }
@@ -14,7 +14,7 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
     padding: 0 10px 10px;
     border: 1px solid $border-color-base;
 
-    &-head{
+    &-head {
         @include clearfix;
         margin: 0 -10px;
         padding-top: 10px;
@@ -37,7 +37,7 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
         color: $text-color;
         cursor: pointer;
         margin-right: 20px;
-        &:hover{
+        &:hover {
             color: $text-color-dark;
         }
     }
@@ -46,16 +46,20 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
         padding: 16px 0 0 56px;
     }
 
-    &-info &-icon, &-info &-title{
+    &-info &-icon, &-info &-title {
         color: $primary-color;
     }
 
-    &-warning &-icon, &-warning &-title{
+    &-warning &-icon, &-warning &-title {
         color: $warning-color;
     }
 
-    &-error &-icon, &-error &-title{
+    &-error &-icon, &-error &-title {
         color: $error-color;
+    }
+
+    &-confirm &-icon, &-confirm &-title {
+        color: $primary-color;
     }
 
     &-button-group {
@@ -64,7 +68,7 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
         line-height: 50px;
         jigsaw-button {
             margin-right: 8px;
-            &:last-child{
+            &:last-child {
                 margin-right: 0;
             }
         }

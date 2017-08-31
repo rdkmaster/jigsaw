@@ -1,5 +1,5 @@
 import {RequestOptionsArgs, Response} from "@angular/http";
-import {CallbackRemoval} from "../utils/common-utils";
+import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
 
 export type DataReviser = (data: any) => any;
 
@@ -121,29 +121,20 @@ export class ComponentDataHelper {
         }
         this._timeout = setTimeout(() => {
             this._timeout = null;
-            this._refreshCallbacks.forEach(callback => ComponentDataHelper._safeInvokeCallback(callback.context, callback.fn));
+            this._refreshCallbacks.forEach(callback => CommonUtils.safeInvokeCallback(callback.context, callback.fn));
         }, 0);
     }
 
     public invokeAjaxSuccessCallback(data: any): void {
-        this._ajaxSuccessCallbacks.forEach(callback => ComponentDataHelper._safeInvokeCallback(callback.context, callback.fn, data));
+        this._ajaxSuccessCallbacks.forEach(callback => CommonUtils.safeInvokeCallback(callback.context, callback.fn, data));
     }
 
     public invokeAjaxErrorCallback(error: Response): void {
-        this._ajaxErrorCallbacks.forEach(callback => ComponentDataHelper._safeInvokeCallback(callback.context, callback.fn, error));
+        this._ajaxErrorCallbacks.forEach(callback => CommonUtils.safeInvokeCallback(callback.context, callback.fn, error));
     }
 
     public invokeAjaxCompleteCallback(): void {
-        this._ajaxCompleteCallbacks.forEach(callback => ComponentDataHelper._safeInvokeCallback(callback.context, callback.fn));
-    }
-
-    private static _safeInvokeCallback(context: any, callback: Function, ...args): any {
-        try {
-            return callback.apply(context, args);
-        } catch (e) {
-            console.error('invoke callback error: ' + e);
-            console.error(e.stack);
-        }
+        this._ajaxCompleteCallbacks.forEach(callback => CommonUtils.safeInvokeCallback(callback.context, callback.fn));
     }
 
     public clearCallbacks(): void {

@@ -3,7 +3,7 @@ import {
     Renderer2, ViewContainerRef
 } from '@angular/core';
 import {JigsawTab} from "jigsaw/component/tabs/tab";
-import {IDynamicInstantiatable} from "jigsaw/component/core";
+import {IDynamicInstantiatable} from "jigsaw/component/common";
 import {TabContentDefine} from "./tabContent/tabContent";
 
 @Component({

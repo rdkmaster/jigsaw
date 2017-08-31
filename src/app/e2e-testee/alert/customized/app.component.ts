@@ -2,7 +2,7 @@ import {Component, ViewEncapsulation, Renderer2, ViewContainerRef} from "@angula
 
 @Component({
     template: `
-        <my-alert></my-alert>
+        <div style="width: 400px"><my-alert></my-alert></div>
     `,
     encapsulation: ViewEncapsulation.None
 })
