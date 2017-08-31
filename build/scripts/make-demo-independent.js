@@ -1,27 +1,31 @@
-
 var fs = require('fs');
-var outputHome = './live-demo/'
-var demoHome = getDemoHome();
 var template = getTemplate();
-
+var demoHome = null;
 var outputHome = process.argv.length > 2 ? process.argv[2] : './live-demo/';
+
 if (fs.existsSync(outputHome)) {
     console.error("ERROR: remove output dir and try again: " + outputHome);
     process.exit(1);
 }
 outputHome = outputHome ? outputHome.trim() : './live-demo/';
-outputHome = outputHome.match(/[\/\\]$/) ? outputHome : outputHome + '/';
+var outputHomeRoot = outputHome.match(/[\/\\]$/) ? outputHome : outputHome + '/';
 
-makeAllPlunkers(demoHome);
+makeAllPlunkers('e2e-testee');
+makeAllPlunkers('live-demo');
 
-function makeAllPlunkers(demoHome) {
+function makeAllPlunkers(dirName) {
+    demoHome = getDemoHome(dirName);
+    outputHome = outputHomeRoot + dirName + '/';
     var demoSetFolders = fs.readdirSync(demoHome);
     demoSetFolders.forEach(demoFolder => {
         var pathname = demoHome + demoFolder;
         var stat = fs.lstatSync(pathname);
         if (stat.isDirectory()) {
-            processDemoSet(pathname + '/');
-            //makePlunker(pathname + '/');
+            if(dirName == 'live-demo'){
+                makePlunker(pathname + '/');
+            } else if(dirName == 'e2e-testee') {
+                processDemoSet(pathname + '/');
+            }
         }
     });
 }
@@ -250,11 +254,11 @@ function readCode(path) {
     return fs.readFileSync(path).toString();
 }
 
-function getDemoHome() {
+function getDemoHome(dirName) {
     var pathPartials = __dirname.split(/[\/\\]/g);
     pathPartials.pop();
     pathPartials.pop();
-    var demoHome = pathPartials.join('/') + '/src/app/e2e-testee/';
+    var demoHome = pathPartials.join('/') + '/src/app/'+ dirName + '/';
     return demoHome;
 }
 
