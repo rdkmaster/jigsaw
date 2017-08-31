@@ -67,9 +67,6 @@ export abstract class AbstractJigsawComponent implements IJigsawComponent, OnIni
 }
 
 export class JigsawLazyLoadedModule {
-    constructor(ps:PopupService) {
-        if (ps) {
-            PopupService.instance = ps;
-        }
+    constructor(ps:PopupService /* need this to notify the app developer to instantiate there own PopupService */) {
     }
 }

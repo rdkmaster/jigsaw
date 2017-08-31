@@ -16,8 +16,8 @@ import {
     template: '<ng-content></ng-content>'
 })
 export class JigsawRoot {
-    constructor(viewContainerRef: ViewContainerRef, renderer: Renderer2, ps:PopupService) {
-        PopupService.instance = ps;
+    constructor(viewContainerRef: ViewContainerRef, renderer: Renderer2,
+                ps:PopupService /* do not remove this line, need for global PopupService instantiate! */) {
         PopupService._viewContainerRef = viewContainerRef;
         PopupService._renderer = renderer;
     }

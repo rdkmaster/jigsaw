@@ -144,7 +144,11 @@ export class PopupInfo {
 
 @Injectable()
 export class PopupService {
-    public static instance: PopupService;
+    private static _instance: PopupService;
+
+    public static get instance():PopupService {
+        return PopupService._instance;
+    }
 
     /**
      * 全局插入点
@@ -161,7 +165,7 @@ export class PopupService {
     constructor(private _cfr: ComponentFactoryResolver,
                 @Optional() private _router: Router,
                 @Optional() private _activatedRoute: ActivatedRoute) {
-
+        PopupService._instance = this;
     }
 
     private _listenRouterChange(disposer: PopupDisposer): void {
