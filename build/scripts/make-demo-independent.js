@@ -21,7 +21,7 @@ function makeAllPlunkers(demoHome) {
         var stat = fs.lstatSync(pathname);
         if (stat.isDirectory()) {
             processDemoSet(pathname + '/');
-            makePlunker(pathname + '/');
+            //makePlunker(pathname + '/');
         }
     });
 }
@@ -254,7 +254,7 @@ function getDemoHome() {
     var pathPartials = __dirname.split(/[\/\\]/g);
     pathPartials.pop();
     pathPartials.pop();
-    var demoHome = pathPartials.join('/') + '/src/app/live-demo/';
+    var demoHome = pathPartials.join('/') + '/src/app/e2e-testee/';
     return demoHome;
 }
 

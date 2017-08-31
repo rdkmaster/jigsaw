@@ -4,7 +4,7 @@ import {Component, Renderer2, ViewContainerRef} from "@angular/core";
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class ButtonDemoComponent {
+export class ButtonLiveDemoComponent {
     constructor(public viewContainerRef: ViewContainerRef,
                 public renderer: Renderer2) {
     }

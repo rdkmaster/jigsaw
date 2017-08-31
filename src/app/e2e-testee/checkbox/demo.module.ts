@@ -6,6 +6,8 @@ import {CheckBoxDisableDemoComponent} from "./disabled/app.component";
 import {CheckBoxBasicDemoComponent} from "./basic/app.component";
 import {CheckBoxBasicDemoModule} from "./basic/app.module";
 import {CheckBoxDisableDemoModule} from "./disabled/app.module";
+import {CheckBoxLiveDemoComponent} from "../../live-demo/checkbox/app.component";
+import {CheckBoxLiveDemoModule} from "../../live-demo/checkbox/app.module";
 
 const checkboxDemoRoutes = [
     {
@@ -18,6 +20,9 @@ const checkboxDemoRoutes = [
         path: 'disabled', component: CheckBoxDisableDemoComponent
     },
     {
+        path: 'live-demo', component: CheckBoxLiveDemoComponent
+    },
+    {
         path: '**', //fallback router must in the last
         component: CheckBoxBasicDemoComponent
     }
@@ -27,7 +32,8 @@ const checkboxDemoRoutes = [
     imports: [
         RouterModule.forChild(checkboxDemoRoutes),
         CheckBoxBasicDemoModule,
-        CheckBoxDisableDemoModule
+        CheckBoxDisableDemoModule,
+        CheckBoxLiveDemoModule
     ]
 })
 export class CheckBoxDemoModule {

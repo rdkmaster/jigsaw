@@ -59,6 +59,10 @@ export const navInfo = [
             {
                 label: 'with-loading-outside',
                 url: '/loading/domInner'
+            },
+            {
+                label: 'live-demo',
+                url: '/button/live-demo'
             }
         ]
     },
@@ -72,6 +76,10 @@ export const navInfo = [
             {
                 label: 'disable',
                 url: '/checkbox/disabled'
+            },
+            {
+                label: 'live-demo',
+                url: '/checkbox/live-demo'
             }
         ]
     },
@@ -310,6 +318,10 @@ export const navInfo = [
             {
                 label: 'prefixIcon',
                 url: '/input/prefixIcon'
+            },
+            {
+                label: 'live-demo',
+                url: '/input/live-demo'
             },
         ]
     },

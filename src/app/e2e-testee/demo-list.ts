@@ -1,4 +1,4 @@
-import {NgModule, Component, ElementRef, OnInit} from '@angular/core';
+import {NgModule, Component, ElementRef, OnInit, ViewEncapsulation} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {CommonModule} from "@angular/common";
 import {JigsawCollapseModule} from "jigsaw/component/collapse/collapse";
@@ -9,7 +9,8 @@ import {navInfo} from './nav-info'
 @Component({
     selector: 'jigsaw-demo-list',
     templateUrl: 'demo-list.html',
-    styleUrls: ['demo-list.scss']
+    styleUrls: ['demo-list.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class DemoListComponent implements OnInit {
     constructor(private elementRef: ElementRef) {

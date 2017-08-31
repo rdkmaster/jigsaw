@@ -1,11 +1,11 @@
 import {NgModule} from "@angular/core";
 import {JigsawInputModule} from "jigsaw/component/input/input";
-import {InputDemoComponent} from "./app.component";
+import {InputLiveDemoComponent} from "./app.component";
 @NgModule({
-    declarations: [InputDemoComponent],
-    bootstrap: [ InputDemoComponent ],
+    declarations: [InputLiveDemoComponent],
+    bootstrap: [ InputLiveDemoComponent ],
     imports: [JigsawInputModule]
 })
-export class InputDemoModule{
+export class InputLiveDemoModule{
 
 }

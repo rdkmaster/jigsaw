@@ -1,6 +1,6 @@
-<div class="demo-wrap">
+<div class="live-demo-wrap">
     <h2>Checkbox</h2>
-    <div class="demo-1 demo">
+    <div class="demo-1 live-demo">
         <h3>状态</h3>
         <p>三种状态：<code>unchecked</code> <code>checked</code> <code>indeterminate</code></p>
         <jigsaw-checkbox [(checked)]="demo1Checked" [(enableIndeterminate)]="enableIndeterminate">click me</jigsaw-checkbox>
@@ -11,13 +11,13 @@
         <p class="message">The checkbox value is <span>{{demo1Checked}}</span>!</p>
     </div>
 
-    <div class="demo-2 demo">
+    <div class="demo-2 live-demo">
         <h3>默认中间状态</h3>
         <p>默认中间状态，点击切换其他两个状态</p>
         <jigsaw-checkbox [(checked)]="demo2Checked" [enableIndeterminate]="false">click me</jigsaw-checkbox>
     </div>
 
-    <div class="demo-3 demo">
+    <div class="demo-3 live-demo">
         <h3>不可点击状态</h3>
         <jigsaw-checkbox [(checked)]="demo3Checked" [(disabled)]="!enabled">a great checkbox!</jigsaw-checkbox>
         <div class="toggle">

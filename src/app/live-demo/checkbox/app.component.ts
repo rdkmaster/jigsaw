@@ -5,7 +5,7 @@ import {CheckBoxStatus} from "jigsaw/component/checkbox/typings";
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class CheckBoxDemoComponent {
+export class CheckBoxLiveDemoComponent {
     constructor(public viewContainerRef: ViewContainerRef,
                 public renderer: Renderer2) {
     }

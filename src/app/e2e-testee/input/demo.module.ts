@@ -12,6 +12,8 @@ import {InputValueChangeDemoModule} from "./valueChange/app.module";
 import {InputClearableDemoModule} from "./clearable/app.module";
 import {InputFocusDemoModule} from "./focus/app.module";
 import {InputPrefixIconDemoModule} from "./prefixIcon/app.module";
+import {InputLiveDemoComponent} from "../../live-demo/input/app.component";
+import {InputLiveDemoModule} from "../../live-demo/input/app.module";
 
 const inputDemoRoutes=[
     {
@@ -29,6 +31,8 @@ const inputDemoRoutes=[
         path:'focus', component: InputFocusDemoComponent
     },{
         path:'prefixIcon', component: InputPrefixIconDemoComponent
+    },{
+        path:'live-demo', component: InputLiveDemoComponent
     },
     {
         path:'**', //fallback router must in the last
@@ -43,7 +47,8 @@ const inputDemoRoutes=[
         InputValueChangeDemoModule,
         InputClearableDemoModule,
         InputFocusDemoModule,
-        InputPrefixIconDemoModule
+        InputPrefixIconDemoModule,
+        InputLiveDemoModule
     ]
 })
 export class InputDemoModule { }
