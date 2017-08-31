@@ -1,6 +1,4 @@
-import {
-    Component, ElementRef, ViewChild, Renderer2, ViewContainerRef
-} from "@angular/core";
+import {Component, ElementRef, ViewChild} from "@angular/core";
 import {DefinedLoading} from "./definedLoading/definedLoading";
 import {LoadingService} from "jigsaw/service/loading.service";
 import {PopupInfo} from "jigsaw/service/popup.service";
@@ -20,7 +18,7 @@ export class DefinedLoadingDemoComponent {
 
     popupBlockLoading() {
         if (!this.blockLoading) {
-            this.blockLoading = LoadingService.show(this.block, DefinedLoading);
+            this.blockLoading = this.loadingService.show(this.block, DefinedLoading);
         }
     }
 
@@ -33,7 +31,7 @@ export class DefinedLoadingDemoComponent {
 
     popupGlobalLoading() {
         if (!this.globalLoading) {
-            this.globalLoading = LoadingService.show(DefinedLoading);
+            this.globalLoading = this.loadingService.show(DefinedLoading);
             setTimeout(() => {
                 this.closeGlobalLoading();
             }, 3000)

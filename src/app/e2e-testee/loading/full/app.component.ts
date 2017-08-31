@@ -12,8 +12,11 @@ export class LoadingFullDemoComponent {
     public isLoading: boolean = false;
     public label:string = 'submit';
 
+    constructor(public loadingService: LoadingService) {
+    }
+
     popupBlockLoading() {
-        const blockLoading = LoadingService.show(this._block);
+        const blockLoading = this.loadingService.show(this._block);
         setTimeout(() => {
             blockLoading.dispose();
         }, 3000)
@@ -29,7 +32,7 @@ export class LoadingFullDemoComponent {
     }
 
     popupGlobalLoading() {
-        const globalLoading = LoadingService.show();
+        const globalLoading = this.loadingService.show();
         setTimeout(() => {
             globalLoading.dispose();
         }, 3000)

@@ -13,9 +13,12 @@ export class FontLoadingDemoComponent{
     blockLoading: PopupInfo;
     globalLoading: PopupInfo;
 
+    constructor(public loadingService: LoadingService) {
+    }
+
     popupBlockLoading() {
         if (!this.blockLoading) {
-            this.blockLoading = LoadingService.show(this.block, JigsawFontLoading);
+            this.blockLoading = this.loadingService.show(this.block, JigsawFontLoading);
         }
     }
 
@@ -28,7 +31,7 @@ export class FontLoadingDemoComponent{
 
     popupGlobalLoading() {
         if (!this.globalLoading) {
-            this.globalLoading = LoadingService.show(JigsawFontLoading);
+            this.globalLoading = this.loadingService.show(JigsawFontLoading);
             setTimeout(() => {
                 this.closeGlobalLoading();
             }, 3000)

@@ -15,8 +15,6 @@ import {BubbleLoadingDemoComponent} from "./bubbleLoading/app.component";
 import {BubbleLoadingDemoModule} from "./bubbleLoading/app.module";
 import {FontLoadingDemoComponent} from "./fontLoading/app.component";
 import {FontLoadingDemoModule} from "./fontLoading/app.module";
-import {JigsawLazyLoadedModule} from "../../../jigsaw/component/common";
-import {PopupService} from "../../../jigsaw/service/popup.service";
 
 const loadingDemoRoutes = [
     {
@@ -61,8 +59,5 @@ const loadingDemoRoutes = [
         ColorfulLoadingDemoModule,
     ]
 })
-export class LoadingDemoModule extends JigsawLazyLoadedModule {
-    constructor(ps:PopupService) {
-        super(ps);
-    }
+export class LoadingDemoModule {
 }

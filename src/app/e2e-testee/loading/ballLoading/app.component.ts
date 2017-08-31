@@ -7,15 +7,18 @@ import {JigsawBallLoading} from "jigsaw/component/loading/loading";
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class BallLoadingDemoComponent{
+export class BallLoadingDemoComponent {
     @ViewChild('block') block: ElementRef;
 
     blockLoading: PopupInfo;
     globalLoading: PopupInfo;
 
+    constructor(public loadingService: LoadingService) {
+    }
+
     popupBlockLoading() {
         if (!this.blockLoading) {
-            this.blockLoading = LoadingService.show(this.block, JigsawBallLoading);
+            this.blockLoading = this.loadingService.show(this.block, JigsawBallLoading);
         }
     }
 
@@ -28,15 +31,15 @@ export class BallLoadingDemoComponent{
 
     popupGlobalLoading() {
         if (!this.globalLoading) {
-            this.globalLoading = LoadingService.show(JigsawBallLoading);
+            this.globalLoading = this.loadingService.show(JigsawBallLoading);
             setTimeout(() => {
                 this.closeGlobalLoading();
             }, 3000)
         }
     }
 
-    closeGlobalLoading(){
-        if(this.globalLoading){
+    closeGlobalLoading() {
+        if (this.globalLoading) {
             this.globalLoading.dispose();
             this.globalLoading = null;
         }

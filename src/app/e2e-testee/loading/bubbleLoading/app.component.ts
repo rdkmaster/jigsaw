@@ -10,7 +10,7 @@ import {JigsawBubbleLoading} from "jigsaw/component/loading/loading";
 export class BubbleLoadingDemoComponent {
     @ViewChild('block') block: ElementRef;
 
-    constructor() {
+    constructor(public loadingService: LoadingService) {
     }
 
     blockLoading: PopupInfo;
@@ -18,7 +18,7 @@ export class BubbleLoadingDemoComponent {
 
     popupBlockLoading() {
         if (!this.blockLoading) {
-            this.blockLoading = LoadingService.show(this.block, JigsawBubbleLoading);
+            this.blockLoading = this.loadingService.show(this.block, JigsawBubbleLoading);
         }
     }
 
@@ -31,7 +31,7 @@ export class BubbleLoadingDemoComponent {
 
     popupGlobalLoading() {
         if (!this.globalLoading) {
-            this.globalLoading = LoadingService.show(JigsawBubbleLoading);
+            this.globalLoading = this.loadingService.show(JigsawBubbleLoading);
             setTimeout(() => {
                 this.closeGlobalLoading();
             }, 3000)

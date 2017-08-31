@@ -1,9 +1,8 @@
-import {Component, ComponentRef, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component} from "@angular/core";
 import {
-    ButtonInfo, PopupEffect, PopupInfo, PopupOptions, PopupPositionType,
-    PopupService
-} from "jigsaw/service/popup.service";
-import {JigsawConfirmAlert, JigsawErrorAlert, JigsawInfoAlert, JigsawWarningAlert} from "jigsaw/component/alert/alert";
+    JigsawConfirmAlert, JigsawErrorAlert, JigsawInfoAlert,
+    JigsawWarningAlert
+} from "jigsaw/component/alert/alert";
 
 @Component({
     template: `
@@ -15,11 +14,11 @@ import {JigsawConfirmAlert, JigsawErrorAlert, JigsawInfoAlert, JigsawWarningAler
             通用警告提示框
         </jigsaw-button>
     
-        <jigsaw-button width="175" (click)="commonErrorAlert($event)">
+        <jigsaw-button width="175" (click)="commonErrorAlert()">
             通用错误提示框
         </jigsaw-button>
     
-        <jigsaw-button width="175" (click)="commonConfirmAlert($event)">
+        <jigsaw-button width="175" (click)="commonConfirmAlert()">
             通用确认提示框
         </jigsaw-button>
     
@@ -29,11 +28,6 @@ import {JigsawConfirmAlert, JigsawErrorAlert, JigsawInfoAlert, JigsawWarningAler
 export class AlertPopupDemoComponent {
 
     answer = '';
-
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2,
-                private _popupService: PopupService) {
-    }
 
     commonInfoAlert() {
         this.answer = 'waiting for an answer';
@@ -51,14 +45,14 @@ export class AlertPopupDemoComponent {
 
     commonErrorAlert() {
         this.answer = 'waiting for an answer';
-        let p = JigsawErrorAlert.show('this is a great warning alert!', answer => {
+        JigsawErrorAlert.show('this is a great warning alert!', answer => {
             this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
         }, null, null, false);
     }
 
     commonConfirmAlert() {
         this.answer = 'waiting for an answer';
-        let p = JigsawConfirmAlert.show('Jigsaw is great, do you agree?', answer => {
+        JigsawConfirmAlert.show('Jigsaw is great, do you agree?', answer => {
                 this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
             },
             /* custom your own buttons*/
