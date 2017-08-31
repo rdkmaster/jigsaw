@@ -8,7 +8,7 @@ if (fs.existsSync(outputHome)) {
     process.exit(1);
 }
 outputHome = outputHome ? outputHome.trim() : './live-demo/';
-var outputHomeRoot = outputHome.match(/[\/\\]$/) ? outputHome : outputHome + '/';
+outputHome = outputHome.match(/[\/\\]$/) ? outputHome : outputHome + '/';
 
 makeAllPlunkers('e2e-testee');
 makeAllPlunkers('live-demo');
@@ -18,7 +18,6 @@ function makeAllPlunkers(dirName) {
 
     var demoSetFolders = fs.readdirSync(demoHome);
     demoSetFolders.forEach(demoFolder => {
-        outputHome = outputHomeRoot;
         var pathname = demoHome + demoFolder;
         var stat = fs.lstatSync(pathname);
         if (stat.isDirectory()) {
@@ -97,7 +96,6 @@ function makePlunker(demoFolder, dirName) {
         .replace('<!-- replace-by-title -->', demoFolder.substring(demoHome.length, demoFolder.length-1));
 
     var saveTo = outputHome + demoFolder.substring(demoHome.length) + (dirName ? dirName + '/' : '');
-    console.log(saveTo);
     makeDirs(saveTo);
     saveTo += 'index.html';
     fs.writeFileSync(saveTo, plunker);
