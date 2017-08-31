@@ -9,6 +9,7 @@ import {Observable} from "rxjs/Observable";
 import {JigsawButtonModule} from "jigsaw/component/button/button";
 
 import {AppComponent} from './app.component';
+import {JigsawRootModule} from "../jigsaw/component/root/root";
 
 const appRoutes = [
     {
@@ -49,7 +50,7 @@ export class JigsawI18nLoader extends TranslateLoader {
                 }, isolate: true
             }
         ),
-        JigsawButtonModule
+        JigsawRootModule, JigsawButtonModule
     ],
     providers: [TranslateService],
     bootstrap: [AppComponent]

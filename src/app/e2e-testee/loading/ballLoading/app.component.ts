@@ -1,6 +1,4 @@
-import {
-    Component, ElementRef, ViewChild, Renderer2, ViewContainerRef
-} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {LoadingService} from "jigsaw/service/loading.service";
 import {PopupInfo} from "jigsaw/service/popup.service";
 import {JigsawBallLoading} from "jigsaw/component/loading/loading";
@@ -9,16 +7,14 @@ import {JigsawBallLoading} from "jigsaw/component/loading/loading";
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class BallLoadingDemoComponent{
+export class BallLoadingDemoComponent {
     @ViewChild('block') block: ElementRef;
-
-    constructor(public loadingService: LoadingService,
-                public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
-    }
 
     blockLoading: PopupInfo;
     globalLoading: PopupInfo;
+
+    constructor(public loadingService: LoadingService) {
+    }
 
     popupBlockLoading() {
         if (!this.blockLoading) {
@@ -42,8 +38,8 @@ export class BallLoadingDemoComponent{
         }
     }
 
-    closeGlobalLoading(){
-        if(this.globalLoading){
+    closeGlobalLoading() {
+        if (this.globalLoading) {
             this.globalLoading.dispose();
             this.globalLoading = null;
         }

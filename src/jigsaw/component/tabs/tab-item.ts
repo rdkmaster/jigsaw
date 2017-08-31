@@ -3,7 +3,7 @@ import {
     AfterViewInit, EmbeddedViewRef, ChangeDetectorRef, Type, ComponentFactoryResolver,
     ComponentRef, OnDestroy
 } from '@angular/core';
-import {AbstractJigsawComponent, IDynamicInstantiatable} from "../core";
+import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
 
 
 export abstract class JigsawTabBase extends AbstractJigsawComponent implements OnDestroy {

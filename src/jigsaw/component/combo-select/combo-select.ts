@@ -19,7 +19,7 @@ import {
     PopupPositionValue,
     PopupService
 } from "../../service/popup.service";
-import {AbstractJigsawComponent} from "../core";
+import {AbstractJigsawComponent} from "../common";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {ArrayCollection} from "../../core/data/array-collection";
 

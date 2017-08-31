@@ -2,16 +2,15 @@
  * Created by 10184437 on 2017/5/22.
  */
 import {
-    Component, ElementRef, Renderer2, ViewContainerRef
+    Component, ElementRef, Renderer2
 } from '@angular/core';
+
 @Component ( {
     templateUrl:'./app.component.html'
 })
 export class ColorfulLoadingDemoComponent {
-    constructor(public renderer: Renderer2,
-                public viewContainerRef: ViewContainerRef,
+    constructor(private _renderer: Renderer2,
                 private _el: ElementRef) {
-
     }
     public colors = ['rgb(255, 0, 0 )','rgb(255, 165, 0 )','rgb(255, 255, 0 )','rgb(0, 255, 0 )','rgb(0, 127, 255 )','rgb(0, 0, 255 )','rgb(139, 0, 255 )'];
 
@@ -20,7 +19,7 @@ export class ColorfulLoadingDemoComponent {
     public setElementsStyle(tags:string, props:string, val:string | boolean | number) {
         let elements = this._el.nativeElement.querySelectorAll(tags);
         for (let index = 0; index < elements.length; ++index) {
-            this.renderer.setStyle(elements[index],props,val);
+            this._renderer.setStyle(elements[index],props,val);
         }
     }
 
@@ -37,6 +36,4 @@ export class ColorfulLoadingDemoComponent {
             this.setElementsStyle('.jigsaw-font-loading','animationPlayState','paused');
         }
     }
-    // animation-play-state
-
 }

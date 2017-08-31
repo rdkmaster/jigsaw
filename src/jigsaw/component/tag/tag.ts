@@ -1,7 +1,7 @@
 import {Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Output, Renderer2} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AnimationDestroy} from "../animations/destroy";
-import {AbstractJigsawComponent} from "../core";
+import {AbstractJigsawComponent} from "../common";
 
 @Component({
     selector: 'jigsaw-tag',

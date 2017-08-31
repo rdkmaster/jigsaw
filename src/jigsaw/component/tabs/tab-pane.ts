@@ -1,5 +1,5 @@
 import {Component, ContentChild, Input, TemplateRef, Type, ViewChild} from '@angular/core';
-import {IDynamicInstantiatable} from "../core";
+import {IDynamicInstantiatable} from "../common";
 
 @Component({
     selector: 'jigsaw-tab-pane',

@@ -165,7 +165,7 @@ export class CommonUtils {
      *
      * @returns string
      */
-    public getBrowserCultureLang(): string {
+    public static getBrowserCultureLang(): string {
         if (typeof window === 'undefined' || typeof window.navigator === 'undefined') {
             return undefined;
         }
@@ -176,6 +176,18 @@ export class CommonUtils {
         browserCultureLang = browserCultureLang || w.navigator.language || w.navigator.browserLanguage || w.navigator.userLanguage;
 
         return browserCultureLang;
+    }
+
+    public static safeInvokeCallback(context: any, callback: Function, ...args): any {
+        if (callback === null || callback === undefined) {
+            return undefined;
+        }
+        try {
+            return callback.apply(context, args);
+        } catch (e) {
+            console.error('invoke callback error: ' + e);
+            console.error(e.stack);
+        }
     }
 }
 
