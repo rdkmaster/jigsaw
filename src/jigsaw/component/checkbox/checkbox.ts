@@ -28,12 +28,15 @@ export type CheckBoxValue = boolean | CheckBoxStatus;
 })
 export class JigsawCheckBox extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, AfterContentInit {
 
-    /**
-     * enableIndeterminate为true时，用户可以点出中间状态；
-     * 为false时，用户不可点出中间状态，但可赋予组件中间状态
-     */
     private _enableIndeterminate: boolean = false;
 
+    /**
+     * 等于`true`时，用户可以点出中间状态；
+     *
+     * 等于`false`时，用户不可点出中间状态，但可赋予组件中间状态(`checked`属性);
+     *
+     * Default value: `false`
+     */
     @Input()
     public get enableIndeterminate(): boolean {
         return this._enableIndeterminate;
@@ -48,6 +51,19 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
     }
 
     private _checked: CheckBoxStatus = CheckBoxStatus.unchecked;
+
+    /**
+     * checkbox选中状态
+     *
+     * ```typescript
+     * enum CheckBoxStatus {
+     *     unchecked, checked, indeterminate
+     * }
+     * ```
+     *
+     * Default value: `CheckBoxStatus.unchecked`
+     *
+     */
     @Input()
     public get checked(): CheckBoxValue {
         return this._checked
@@ -57,13 +73,27 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
         this.writeValue(value);
     }
 
+    /**
+     * 选中状态变化事件
+     * @type {EventEmitter<any>}
+     */
     @Output()
     public checkedChange: EventEmitter<CheckBoxValue> = new EventEmitter();
 
+    /**
+     * 选中状态变化事件
+     * @type {EventEmitter<any>}
+     */
     @Output()
     public change = this.checkedChange;
 
     private _disabled: boolean = false;
+
+    /**
+     * checkbox不可点击状态
+     *
+     * Default value: false
+     */
     @Input()
     public get disabled(): boolean {
         return this._disabled;
