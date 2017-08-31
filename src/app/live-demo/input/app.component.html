@@ -1,0 +1,27 @@
+<div class="demo-wrap">
+    <h2>Input</h2>
+    <div class="demo-1 demo">
+        <h3>用法</h3>
+        <p>value属性支持双向绑定</p>
+        <jigsaw-input [(value)]="demo1InputValue" placeholder="请输入。。。"></jigsaw-input>
+        <p class="message">输入值是：<span>{{demo1InputValue}}</span></p>
+    </div>
+
+    <div class="demo-2 demo">
+        <h3>关闭清空按钮</h3>
+        <jigsaw-input [(value)]="demo2InputValue" [clearable]="false"></jigsaw-input>
+    </div>
+
+    <div class="demo-3 demo">
+        <h3>事件</h3>
+        <p>通过valueChange事件监听value变化</p>
+        <jigsaw-input [(value)]="demo3InputValue" (valueChange)="valueChanged($event)"></jigsaw-input>
+        <p class="message"></p>
+    </div>
+
+</div>
+
+
+
+
+

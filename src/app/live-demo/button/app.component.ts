@@ -21,12 +21,6 @@ export class ButtonDemoComponent {
         this.clickCount++;
     }
 
-    // demo-3
-    size: string = '';
-    changeSize(type?: string) {
-        this.size = type;
-    }
-
     // demo-7
     isLoading = false;
     label: string = 'click to load';
