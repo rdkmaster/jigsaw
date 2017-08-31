@@ -5,27 +5,23 @@ import {JigsawBlock} from "../component/block/block";
 
 @Injectable()
 export class LoadingService {
-
-    constructor(private _popupService: PopupService) {
-    }
-
-    public show(blockTo?: ElementRef): PopupInfo
-    public show(blockBy?: Type<IPopupable>): PopupInfo
-    public show(blockBy?: TemplateRef<any>): PopupInfo
-    public show(blockTo?: ElementRef, blockBy?: Type<IPopupable>): PopupInfo
-    public show(blockTo?: ElementRef, blockBy?: TemplateRef<any>): PopupInfo
-    public show(blockTo?: ElementRef | Type<IPopupable> | TemplateRef<any>, blockBy?: Type<IPopupable> | TemplateRef<any>): PopupInfo {
+    public static show(blockTo?: ElementRef): PopupInfo
+    public static show(blockBy?: Type<IPopupable>): PopupInfo
+    public static show(blockBy?: TemplateRef<any>): PopupInfo
+    public static show(blockTo?: ElementRef, blockBy?: Type<IPopupable>): PopupInfo
+    public static show(blockTo?: ElementRef, blockBy?: TemplateRef<any>): PopupInfo
+    public static show(blockTo?: ElementRef | Type<IPopupable> | TemplateRef<any>, blockBy?: Type<IPopupable> | TemplateRef<any>): PopupInfo {
         let popupInfo: PopupInfo;
         if (blockTo instanceof ElementRef) {
             //弹出局部Modal，针对loading的特殊处理
-            const blockInfo = this._popupService.popup(JigsawBlock, this._getOptions(blockTo));
+            const blockInfo = PopupService.instance.popup(JigsawBlock, LoadingService._getOptions(blockTo));
 
             if (blockBy instanceof Type) {
-                popupInfo = this._popupService.popup(blockBy, this._getOptions(blockTo));
+                popupInfo = PopupService.instance.popup(blockBy, LoadingService._getOptions(blockTo));
             } else if (blockBy instanceof TemplateRef) {
-                popupInfo = this._popupService.popup(blockBy, this._getOptions(blockTo));
+                popupInfo = PopupService.instance.popup(blockBy, LoadingService._getOptions(blockTo));
             } else {
-                popupInfo = this._popupService.popup(JigsawLoading, this._getOptions(blockTo));
+                popupInfo = PopupService.instance.popup(JigsawLoading, LoadingService._getOptions(blockTo));
             }
 
             const dispose = () => {
@@ -42,17 +38,17 @@ export class LoadingService {
         } else if (blockTo) {
             blockBy = blockTo;
             if (blockBy instanceof Type) {
-                popupInfo = this._popupService.popup(blockBy);
+                popupInfo = PopupService.instance.popup(blockBy);
             } else if (blockBy instanceof TemplateRef) {
-                popupInfo = this._popupService.popup(blockBy);
+                popupInfo = PopupService.instance.popup(blockBy);
             }
         } else {
-            popupInfo = this._popupService.popup(JigsawLoading);
+            popupInfo = PopupService.instance.popup(JigsawLoading);
         }
         return popupInfo;
     }
 
-    private _getOptions(elementRef: ElementRef): PopupOptions {
+    private static _getOptions(elementRef: ElementRef): PopupOptions {
         let element = elementRef.nativeElement;
         return {
             modal: false, //是否模态

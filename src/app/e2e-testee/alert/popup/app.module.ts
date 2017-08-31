@@ -3,6 +3,7 @@ import {JigsawAlertModule} from "jigsaw/component/alert/alert";
 import {JigsawButtonModule} from "jigsaw/component/button/button";
 import {PopupService} from "jigsaw/service/popup.service";
 import {AlertPopupDemoComponent} from "./app.component";
+
 @NgModule({
     declarations: [AlertPopupDemoComponent],
     bootstrap: [ AlertPopupDemoComponent ],
@@ -10,5 +11,4 @@ import {AlertPopupDemoComponent} from "./app.component";
     providers: [PopupService]
 })
 export class AlertPopupDemoModule {
-
 }

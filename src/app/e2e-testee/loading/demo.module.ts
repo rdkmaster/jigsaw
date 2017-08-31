@@ -1,6 +1,9 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 
+import {PopupService} from "jigsaw/service/popup.service";
+import {JigsawLazyLoadedModule} from "jigsaw/component/core";
+
 import {DefinedLoadingDemoComponent } from "./userDefined/app.component";
 import {LoadingFullDemoComponent} from "./full/app.component";
 import {BallLoadingDemoComponent} from "./ballLoading/app.component";
@@ -57,7 +60,11 @@ const loadingDemoRoutes = [
         DefinedLoadingDemoModule,
         DomInnerDemoModule,
         ColorfulLoadingDemoModule,
-    ]
+    ],
+    providers: [PopupService]
 })
-export class LoadingDemoModule {
+export class LoadingDemoModule extends JigsawLazyLoadedModule {
+    constructor(ps:PopupService) {
+        super(ps);
+    }
 }

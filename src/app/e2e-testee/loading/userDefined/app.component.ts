@@ -12,9 +12,7 @@ import {PopupInfo} from "jigsaw/service/popup.service";
 export class DefinedLoadingDemoComponent {
     @ViewChild('block') block: ElementRef;
 
-    constructor(public loadingService: LoadingService,
-                public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
+    constructor(public loadingService: LoadingService) {
     }
 
     blockLoading: PopupInfo;
@@ -22,7 +20,7 @@ export class DefinedLoadingDemoComponent {
 
     popupBlockLoading() {
         if (!this.blockLoading) {
-            this.blockLoading = this.loadingService.show(this.block, DefinedLoading);
+            this.blockLoading = LoadingService.show(this.block, DefinedLoading);
         }
     }
 
@@ -35,7 +33,7 @@ export class DefinedLoadingDemoComponent {
 
     popupGlobalLoading() {
         if (!this.globalLoading) {
-            this.globalLoading = this.loadingService.show(DefinedLoading);
+            this.globalLoading = LoadingService.show(DefinedLoading);
             setTimeout(() => {
                 this.closeGlobalLoading();
             }, 3000)

@@ -1,20 +1,16 @@
-import {
-    Component, ElementRef, ViewChild, Renderer2, ViewContainerRef
-} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {LoadingService} from "jigsaw/service/loading.service";
 import {PopupInfo} from "jigsaw/service/popup.service";
-import {JigsawBallLoading, JigsawBubbleLoading} from "jigsaw/component/loading/loading";
+import {JigsawBubbleLoading} from "jigsaw/component/loading/loading";
 
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class BubbleLoadingDemoComponent{
+export class BubbleLoadingDemoComponent {
     @ViewChild('block') block: ElementRef;
 
-    constructor(public loadingService: LoadingService,
-                public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
+    constructor() {
     }
 
     blockLoading: PopupInfo;
@@ -22,7 +18,7 @@ export class BubbleLoadingDemoComponent{
 
     popupBlockLoading() {
         if (!this.blockLoading) {
-            this.blockLoading = this.loadingService.show(this.block, JigsawBubbleLoading);
+            this.blockLoading = LoadingService.show(this.block, JigsawBubbleLoading);
         }
     }
 
@@ -35,22 +31,23 @@ export class BubbleLoadingDemoComponent{
 
     popupGlobalLoading() {
         if (!this.globalLoading) {
-            this.globalLoading = this.loadingService.show(JigsawBubbleLoading);
+            this.globalLoading = LoadingService.show(JigsawBubbleLoading);
             setTimeout(() => {
                 this.closeGlobalLoading();
             }, 3000)
         }
     }
 
-    closeGlobalLoading(){
-        if(this.globalLoading){
+    closeGlobalLoading() {
+        if (this.globalLoading) {
             this.globalLoading.dispose();
             this.globalLoading = null;
         }
     }
 
     public isLoading: boolean = false;
-    public label:string = 'submit';
+    public label: string = 'submit';
+
     startToLoad() {
         this.isLoading = true;
         this.label = 'loading...';

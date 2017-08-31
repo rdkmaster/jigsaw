@@ -10,7 +10,7 @@ import {
     Output,
     Renderer2
 } from "@angular/core";
-import {ButtonInfo, IPopupable} from "../../service/popup.service";
+import {ButtonInfo, IPopupable, PopupService} from "../../service/popup.service";
 import {AbstractJigsawComponent} from "../core";
 import {CommonModule} from "@angular/common";
 import {JigsawButtonModule} from "../button/button";
@@ -22,7 +22,7 @@ export interface IDialog extends IPopupable {
     buttons: ButtonInfo[];
     caption: string;
     dialog: JigsawDialog;
-    dispose: (answer?: ButtonInfo)=>void;
+    dispose: (answer?: ButtonInfo) => void;
 }
 
 export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
@@ -151,8 +151,7 @@ export abstract class AbstractDialogComponentBase extends AbstractJigsawComponen
     templateUrl: 'dialog.html',
 })
 export class JigsawDialog extends AbstractDialogComponentBase {
-    constructor(renderer: Renderer2,
-                elementRef: ElementRef) {
+    constructor(renderer: Renderer2, elementRef: ElementRef) {
         super();
         this.renderer = renderer;
         this.elementRef = elementRef;

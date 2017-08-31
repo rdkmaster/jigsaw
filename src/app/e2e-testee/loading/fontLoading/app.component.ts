@@ -1,6 +1,4 @@
-import {
-    Component, ElementRef, ViewChild, Renderer2, ViewContainerRef
-} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {LoadingService} from "jigsaw/service/loading.service";
 import {PopupInfo} from "jigsaw/service/popup.service";
 import {JigsawFontLoading} from "jigsaw/component/loading/loading";
@@ -12,17 +10,12 @@ import {JigsawFontLoading} from "jigsaw/component/loading/loading";
 export class FontLoadingDemoComponent{
     @ViewChild('block') block: ElementRef;
 
-    constructor(public loadingService: LoadingService,
-                public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
-    }
-
     blockLoading: PopupInfo;
     globalLoading: PopupInfo;
 
     popupBlockLoading() {
         if (!this.blockLoading) {
-            this.blockLoading = this.loadingService.show(this.block, JigsawFontLoading);
+            this.blockLoading = LoadingService.show(this.block, JigsawFontLoading);
         }
     }
 
@@ -35,7 +28,7 @@ export class FontLoadingDemoComponent{
 
     popupGlobalLoading() {
         if (!this.globalLoading) {
-            this.globalLoading = this.loadingService.show(JigsawFontLoading);
+            this.globalLoading = LoadingService.show(JigsawFontLoading);
             setTimeout(() => {
                 this.closeGlobalLoading();
             }, 3000)
