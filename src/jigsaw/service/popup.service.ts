@@ -18,7 +18,7 @@ import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import {Subscription} from "rxjs/Subscription";
-import {JigsawRoot} from "../component/appcation/application";
+import {JigsawRoot} from "../component/root/root";
 
 export enum PopupEffect {
     fadeIn, fadeOut, bubbleIn, bubbleOut

@@ -33,5 +33,5 @@ export class JigsawRoot {
         JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading, JigsawLoading
     ]
 })
-export class JigsawApplicationModule {
+export class JigsawRootModule {
 }
