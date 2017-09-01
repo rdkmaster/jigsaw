@@ -69,6 +69,9 @@ const demoListRoutes = [
                 path: "input",
                 loadChildren: "./input/demo.module#InputDemoModule"
             }, {
+                path: "list",
+                loadChildren: "./list/demo.module#ListDemoModule"
+            }, {
                 path: "loading",
                 loadChildren: "./loading/demo.module#LoadingDemoModule"
             }, {

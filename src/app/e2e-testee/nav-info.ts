@@ -724,4 +724,13 @@ export const navInfo = [
             }
         ]
     },
+    {
+        title: 'List',
+        navList: [
+            {
+                label: 'basic',
+                url: '/list/basic'
+            }
+        ]
+    }
 ].sort((a, b) => a.title.localeCompare(b.title));

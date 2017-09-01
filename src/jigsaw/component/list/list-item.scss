@@ -1,0 +1,26 @@
+$list-item-prefix-cls: #{$jigsaw-prefix}-list-item;
+
+.#{$list-item-prefix-cls} {
+    display: block;
+    padding: 5px 8px;
+    min-height: $height-base;
+    cursor: pointer;
+    box-sizing: border-box;
+    &:hover {
+        background: $item-hover-bg;
+    }
+    &.#{$list-item-prefix-cls}-active {
+        background: $item-active-bg;
+    }
+    &-title-box {
+        @include clearfix();
+    }
+    &-title {
+        float: left;
+        color: #333;
+    }
+    &-sub-title {
+        float: right;
+        color: #999;
+    }
+}
