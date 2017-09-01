@@ -1,18 +1,31 @@
 import {EventEmitter, Input, Output, TemplateRef, Type} from "@angular/core";
-import {TableData} from "../../core/data/table-data";
+import {LocalPageableTableData, PageableTableData, TableData} from "../../core/data/table-data";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 
+export type TableColumnTargetFinder = (field: string, index: number) => boolean;
+export type TableColumnTarget = number|string|(number|string)[]|TableColumnTargetFinder;
+export type TableCellDataGenerator = (tableData: TableData, row: number, column:number) => any;
+
+export const tableRowIndexGenerator:TableCellDataGenerator = (tableData: TableData, row: number, column:number) => {
+    let index = 1;
+    if (tableData instanceof PageableTableData || tableData instanceof LocalPageableTableData) {
+        index += (tableData.pagingInfo.currentPage - 1) * tableData.pagingInfo.pageSize - 1;
+    }
+    index += row;
+    return index;
+};
+
 export class TableCellRenderer {
-    public dispatchChangeEvent(value: string|number|TableHeadChangeEvent): void{
+    public dispatchChangeEvent(value: any): void{
         this.cellDataChange.emit(value)
     }
 
-    @Input() tableData: TableData;
-    @Input() cellData: any;
-    @Input() row: number;
-    @Input() column: number;
+    @Input() public tableData: TableData;
+    @Input() public cellData: any;
+    @Input() public row: number;
+    @Input() public column: number;
 
-    @Output() cellDataChange: EventEmitter<string|number|TableHeadChangeEvent> = new EventEmitter<string|number|TableHeadChangeEvent>();
+    @Output() public cellDataChange = new EventEmitter<any>();
 }
 
 export class ColumnDefine {
@@ -26,7 +39,7 @@ export class ColumnDefine {
 
 export class AdditionalColumnDefine {
     pos?: number;
-    field?: string|number;
+    field?: string;
     visible?: boolean;
     width?: string;
     header?: TableHeader;
@@ -49,10 +62,6 @@ export class TableHeadChangeEvent {
     oldCellData: string|number;
 }
 
-export type TableColumnTarget = number|string|number[]|string[]|TableColumnTargetFunc;
-
-export type TableColumnTargetFunc = (field: string, index: number) => boolean;
-
 export class TableHeader {
     text?: string;
     renderer?: Type<TableCellRenderer>|TemplateRef<any>;
@@ -67,6 +76,7 @@ export class TableCell {
     clazz?: string;
     editable?: boolean;
     editorRenderer?: Type<TableCellRenderer>;
+    data?: any | TableCellDataGenerator;
 }
 
 export class TableHeadSetting {

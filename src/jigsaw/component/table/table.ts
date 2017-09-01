@@ -23,7 +23,7 @@ import {
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 
-import {AbstractJigsawComponent, JigsawRendererHost} from "../core";
+import {AbstractJigsawComponent, JigsawCommonModule, JigsawRendererHost} from "../core";
 import {TableData, TableDataHeader} from "../../core/data/table-data";
 import {
     AdditionalColumnDefine,
@@ -948,6 +948,15 @@ export class JigsawTable extends AbstractJigsawComponent implements AfterViewIni
 }
 
 export class TableCellBasic implements AfterViewInit {
+    private _cellData: any;
+    @Input()
+    get cellData(): any {
+        return this._cellData;
+    }
+
+    set cellData(value: any) {
+        this._cellData = value;
+    }
     protected _jigsawTable: JigsawTable;
 
     constructor(protected componentFactoryResolver: ComponentFactoryResolver,
@@ -958,8 +967,6 @@ export class TableCellBasic implements AfterViewInit {
 
     @Input()
     public tableData: TableData;
-    @Input()
-    public cellData: any;
     @Input()
     public row: number;
     @Input()
@@ -979,13 +986,13 @@ export class TableCellBasic implements AfterViewInit {
     protected rendererFactory(renderer: Type<TableCellRenderer> | TemplateRef<any>): ComponentRef<TableCellRenderer> | EmbeddedViewRef<any> {
         if (renderer instanceof TemplateRef) {
             return this.rendererHost.viewContainerRef.createEmbeddedView(renderer, {
-                context: {cellData: this.cellData, row: this.row, column: this.column}
+                context: {cellData: this._cellData, row: this.row, column: this.column}
             });
         } else {
             let componentFactory = this.componentFactoryResolver.resolveComponentFactory(renderer);
             let componentRef = this.rendererHost.viewContainerRef.createComponent(componentFactory);
             componentRef.instance.tableData = this.tableData;
-            componentRef.instance.cellData = this.cellData;
+            componentRef.instance.cellData = this._cellData;
             componentRef.instance.row = this.row;
             componentRef.instance.column = this.column;
             return componentRef;
@@ -1147,6 +1154,7 @@ export class JigsawTableCell extends TableCellBasic implements OnInit, OnDestroy
     }
 
     ngOnInit() {
+        // console.log(this.cellData);
         //设置默认渲染器
         this.renderer = this.renderer ? this.renderer : DefaultCellRenderer;
 
@@ -1172,9 +1180,6 @@ export class JigsawTableCell extends TableCellBasic implements OnInit, OnDestroy
     }
 }
 
-/*
- * 表头单元格
- * */
 @Component({
     selector: '[jigsaw-table-header]',
     template: `
@@ -1187,6 +1192,11 @@ export class JigsawTableCell extends TableCellBasic implements OnInit, OnDestroy
         </div>`,
     styleUrls: ['table-head.scss']
 })
+/**
+ * 表头单元格
+ *
+ * @internal
+ */
 export class JigsawTableHeader extends TableCellBasic implements OnInit, OnDestroy {
     private _sortOrderClass: Object;
 
@@ -1267,12 +1277,12 @@ export class JigsawTableHeader extends TableCellBasic implements OnInit, OnDestr
 
 @NgModule({
     declarations: [
-        JigsawTable, JigsawTableCell, JigsawRendererHost, JigsawTableHeader
+        JigsawTable, JigsawTableCell, JigsawTableHeader
     ],
     imports: [
-        CommonModule, JigsawScrollBarModule, JigsawTooltipModule, JigsawTableRendererModule,
+        CommonModule, JigsawScrollBarModule, JigsawTooltipModule, JigsawTableRendererModule, JigsawCommonModule
     ],
-    exports: [CommonModule, JigsawTable, JigsawTableCell, JigsawRendererHost, JigsawTableHeader],
+    exports: [CommonModule, JigsawTable, JigsawTableCell, JigsawTableHeader],
     providers: [PopupService],
     entryComponents: [
         DefaultCellRenderer,

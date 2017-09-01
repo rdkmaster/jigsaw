@@ -17,7 +17,7 @@ import {
 } from "./component-data";
 import {CommonUtils} from "../utils/common-utils";
 
-export type TableMatrixRow = Array<string | number>;
+export type TableMatrixRow = (string | number)[];
 export type TableDataHeader = string[];
 export type TableDataField = string[];
 export type TableDataMatrix = TableMatrixRow[];
@@ -114,11 +114,21 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
         this.clearData();
         console.log('destroying TableDataBase....');
     }
+
+    public insertColumn(pos: number, data: string | number | (string | number)[], field: string, header: string):void {
+        pos = isNaN(pos) ? this.data.length : pos;
+        this.data.forEach((row, index) => row.splice(pos, 0, data instanceof Array ? data[index] : data));
+        this.field.splice(pos, 0, field);
+        this.header.splice(pos, 0, header);
+    }
+
+    // public mirror():TableDataBase {
+    //     return new TableDataBase(this.data, this.field, this.header);
+    // }
 }
 
-export class TableData extends TableDataBase implements ISortable {
+export class TableData extends TableDataBase implements ISortable, IFilterable {
     public sortInfo: DataSortInfo;
-
     public sort(as: SortAs, order: SortOrder, field: string | number): void;
     public sort(sort: DataSortInfo): void;
     public sort(as: SortAs | DataSortInfo, order?: SortOrder, field?: string | number): void {
@@ -136,10 +146,30 @@ export class TableData extends TableDataBase implements ISortable {
         }
         this.refresh();
     }
+
+    public filterInfo: DataFilterInfo;
+    public filter(term: string, fields?: (string | number)[]): void;
+    public filter(term: DataFilterInfo): void;
+    public filter(term, fields?: (string | number)[]): void {
+        throw new Error("Method not implemented.");
+    }
+
+    // public mirror():TableDataBase {
+    //     const td: TableData = <TableData>super.mirror();
+    //     td.http = this.http;
+    //     td.dataReviser = this.dataReviser;
+    //     td.sortInfo = this.sortInfo;
+    //     td.filterInfo = this.filterInfo;
+    //     return td;
+    // }
+
+    public destroy() {
+        this.sortInfo = null;
+        this.filterInfo = null;
+    }
 }
 
-export class PageableTableData extends TableData implements IServerSidePageable, IFilterable {
-    public filterInfo: DataFilterInfo;
+export class PageableTableData extends TableData implements IServerSidePageable, IFilterable, ISortable {
     public pagingInfo: PagingInfo;
 
     private _filterSubject = new Subject<DataFilterInfo>();
@@ -316,20 +346,25 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this.http = null;
         this.sourceRequestOptions = null;
         this.pagingInfo = null;
-        this.filterInfo = null;
-        this.sortInfo = null;
         this._requestOptions = null;
         this._filterSubject.unsubscribe();
         this._filterSubject = null;
         this._sortSubject.unsubscribe();
         this._sortSubject = null;
     }
+
+    // public mirror():PageableTableData {
+    //     const td:PageableTableData = <PageableTableData>super.mirror();
+    //     td.pagingInfo = this.pagingInfo;
+    //     td.sourceRequestOptions = this.sourceRequestOptions;
+    //     return td;
+    // }
 }
 
-export class LocalPageableTableData extends TableData implements IPageable {
+export class LocalPageableTableData extends TableData implements IPageable, IFilterable, ISortable {
     public pagingInfo: PagingInfo;
-    public currentFilterData: TableDataMatrix;
-    public bakData: TableDataMatrix;
+    public filteredData: TableDataMatrix;
+    public originalData: TableDataMatrix;
 
     constructor() {
         super();
@@ -338,14 +373,14 @@ export class LocalPageableTableData extends TableData implements IPageable {
 
     public fromObject(data: any): LocalPageableTableData {
         super.fromObject(data);
-        this.currentFilterData = <TableDataMatrix>CommonUtils.shallowCopy(this.data);
-        this.bakData = <TableDataMatrix>CommonUtils.shallowCopy(this.data);
+        this.filteredData = this.data;
+        this.originalData = <TableDataMatrix>CommonUtils.deepCopy(this.data);
         this._updatePagingInfo();
         return this;
     }
 
     private _updatePagingInfo() {
-        this.pagingInfo.totalRecord = this.currentFilterData.length;
+        this.pagingInfo.totalRecord = this.filteredData.length;
         this.pagingInfo.totalPage = Math.ceil(this.pagingInfo.totalRecord / this.pagingInfo.pageSize);
         this.firstPage();
     }
@@ -353,9 +388,9 @@ export class LocalPageableTableData extends TableData implements IPageable {
     public filter(callbackfn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
     public filter(term: string, fields?: string[] | number[]): void;
     public filter(term: DataFilterInfo): void;
-    public filter(term, fields?: string[] | number[]): void {
+    public filter(term, fields?: (string | number)[]): void {
         if (term instanceof Function) {
-            this.currentFilterData = this.bakData.filter(term);
+            this.filteredData = this.originalData.filter(term);
         }
         let key: string;
         if (term instanceof DataFilterInfo) {
@@ -374,7 +409,7 @@ export class LocalPageableTableData extends TableData implements IPageable {
             } else {
                 numberFields = <number[]>fields;
             }
-            this.currentFilterData = this.bakData.filter(
+            this.filteredData = this.originalData.filter(
                 row => row.filter(
                     (index, item) => numberFields.find(num => num == index)
                 ).filter(
@@ -382,7 +417,7 @@ export class LocalPageableTableData extends TableData implements IPageable {
                 ).length != 0
             );
         } else {
-            this.currentFilterData = this.bakData.filter(
+            this.filteredData = this.originalData.filter(
                 row => row.filter(
                     item => (<string>item).indexOf(key) != -1
                 ).length != 0
@@ -395,14 +430,14 @@ export class LocalPageableTableData extends TableData implements IPageable {
     public sort(as: SortAs, order: SortOrder, field: string | number): void;
     public sort(sort: DataSortInfo): void;
     public sort(as, order?: SortOrder, field?: string | number): void {
-        super.sortData(this.currentFilterData, as, order, field);
+        super.sortData(this.filteredData, as, order, field);
         this.changePage(this.pagingInfo.currentPage, undefined);
     }
 
     public changePage(currentPage: number, pageSize?: number): void;
     public changePage(info: PagingInfo): void;
     public changePage(currentPage, pageSize?: number): void {
-        if (!this.currentFilterData) {
+        if (!this.filteredData) {
             return;
         }
 
@@ -423,7 +458,7 @@ export class LocalPageableTableData extends TableData implements IPageable {
 
         const begin = (this.pagingInfo.currentPage - 1) * this.pagingInfo.pageSize;
         const end = this.pagingInfo.currentPage * this.pagingInfo.pageSize < this.pagingInfo.totalRecord ? this.pagingInfo.currentPage * this.pagingInfo.pageSize : this.pagingInfo.totalRecord;
-        this.data = this.currentFilterData.slice(begin, end);
+        this.data = this.filteredData.slice(begin, end);
 
         this.refresh();
     }
@@ -446,10 +481,17 @@ export class LocalPageableTableData extends TableData implements IPageable {
 
     public destroy(): void {
         super.destroy();
-        this.http = null;
         this.pagingInfo = null;
         this.sortInfo = null;
-        this.currentFilterData = null;
-        this.bakData = null;
+        this.filteredData = null;
+        this.originalData = null;
     }
+
+    // public mirror():LocalPageableTableData {
+    //     const td:LocalPageableTableData = <LocalPageableTableData>super.mirror();
+    //     td.pagingInfo = this.pagingInfo;
+    //     td.filteredData = this.filteredData;
+    //     td.originalData = this.originalData;
+    //     return td;
+    // }
 }

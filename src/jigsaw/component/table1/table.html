@@ -1,0 +1,50 @@
+<table>
+    <thead>
+    <tr>
+        <td *ngFor="let head of _$headerSettings; index as colIndex" width="{{head.width}}" class="{{head.clazz}}">
+            <jigsaw-table-header #headerInstance
+                                 [tableData]="data"
+                                 [cellData]="head.cellData"
+                                 [column]="colIndex"
+                                 [row]="0"
+                                 [field]="head.field"
+                                 [renderer]="head.renderer"
+                                 [sortable]="head.sortable"
+                                 [sortAs]="head.sortAs"
+                                 [defaultSortOrder]="head.defaultSortOrder"
+                                 (change)="_$onHeaderChange($event)"
+                                 (sort)="_$onHeaderSortChange($event)">
+            </jigsaw-table-header>
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let row of _$cellSettings">
+        <td *ngFor="let cell of row; index as colIndex"
+            [attr.rowspan]="cell.rowSpan > 1 ? cell.rowSpan : null"
+            [style.display]="cell.rowSpan ? 'table-cell' : 'none'"
+            class="{{cell.class}}">
+
+            <div class="jigsaw-table-cell-content"
+                 *ngIf="!cell.renderer; else rendererCell">
+                <span class="jigsaw-table-cell-text">{{cell.cellData}}</span>
+            </div>
+            <ng-template #rendererCell>
+                <jigsaw-table-cell
+                    class="jigsaw-table-cell-content"
+                    [tableData]="data"
+                    [cellData]="cell.cellData"
+                    [row]="rowIndex"
+                    [column]="colIndex"
+                    [field]="cell.field"
+                    [renderer]="cell.renderer"
+                    [editable]="cell.editable"
+                    [editorRenderer]="cell.editorRenderer"
+                    [group]="cell.group"
+                    [rowSpan]="cell.rowSpan">
+                </jigsaw-table-cell>
+            </ng-template>
+        </td>
+    </tr>
+    </tbody>
+</table>

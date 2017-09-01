@@ -22,7 +22,8 @@ export class DefaultCellRenderer extends TableCellRenderer {
 @Component({
     template: `
         <jigsaw-checkbox [(checked)]="cellData"
-                         (checkedChange)="_$toggleSelectAll($event)"></jigsaw-checkbox>`
+                         (checkedChange)="_$toggleSelectAll($event)">
+        </jigsaw-checkbox>`
 })
 export class TableHeadCheckbox extends TableCellRenderer implements OnInit, OnDestroy {
     constructor(private _tableRendererService: TableCheckboxService, private _changeDetector: ChangeDetectorRef) {

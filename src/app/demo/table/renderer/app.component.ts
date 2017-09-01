@@ -1,5 +1,5 @@
 import {
-    Component, ViewEncapsulation, Renderer2, ViewContainerRef
+    Component, ViewEncapsulation, Renderer2, ViewContainerRef, ViewChild
 } from "@angular/core";
 import {TableData} from "jigsaw/core/data/table-data";
 import {
@@ -10,8 +10,13 @@ import {
     DefaultCellRenderer
 } from "jigsaw/component/table/table-renderer";
 import {SortAs, SortOrder} from "jigsaw/core/data/component-data";
-import {ColumnDefine, AdditionalColumnDefine, TableCellRenderer} from "jigsaw/component/table/table-api";
+import {
+    ColumnDefine, AdditionalColumnDefine, TableCellRenderer,
+    tableRowIndexGenerator
+} from "jigsaw/component/table/table-api";
 import {TableHeadSelect, TableHeadIcon} from "./table-renderer";
+import {JigsawTable} from "jigsaw/component/table/table";
+import {CommonUtils} from "../../../../jigsaw/core/utils/common-utils";
 
 /*
  * 操作列
@@ -34,118 +39,85 @@ export class TableCellOption extends TableCellRenderer {
 })
 export class TableRendererDemoComponent {
     tableData: TableData;
+    @ViewChild('table') table:JigsawTable;
 
     constructor(public viewContainerRef: ViewContainerRef,
                 public renderer: Renderer2) {
         this.tableData = new TableData([
-            [22, 12, 11, 0, 12, 12, 111],
-            [22, 23, 11, 1, 23, 23, 111],
-            [22, 43, 11, 1, 43, 77, 111],
-            [22, 12, 12, 0, 12, 77, 111],
-            [23, 55, 23, 1, 23, 23, 111],
-            [43, 55, 43, 0, 44, 43, 111],
-            [12, 55, 12, 1, 44, 12, 111],
-            [23, 55, 23, 1, 44, 23, 111],
-            [43, 43, 43, 0, 44, 43, 111],
-            [12, 12, 33, 0, 12, 66, 111],
-            [23, 23, 33, 0, 88, 66, 111],
-            [43, 43, 33, 1, 88, 66, 111],
-            [12, 11, 12, 1, 88, 66, 111],
-            [23, 11, 23, 0, 23, 23, 111],
-            [43, 43, 43, 1, 43, 43, 111],
-            [12, 12, 12, 1, 99, 12, 111],
-            [23, 23, 23, 0, 99, 23, 111],
-            [43, 43, 43, 1, 99, 43, 111]
+            [11, 12, 13, 14, 15, 16, 17],
+            [21, 22, 23, 24, 25, 26, 27],
+            [31, 32, 33, 34, 35, 36, 37],
+            [41, 42, 43, 44, 45, 46, 47],
+            [51, 52, 53, 54, 55, 56, 57],
         ], ['f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7'], ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7']);
 
+        let to = 0;
+        let interval = 100;
+
+        to += interval;
         setTimeout(() => {
-            this.tableData.data.push([43, 43, 43, 1, 99, 43, 111]);
+            // this.tableData = new TableData(this.tableData.data, this.tableData.field, this.tableData.header);
+            this.tableData.data[0][2] = 888;
             this.tableData.refresh();
-        }, 3000)
+        }, to);
+        //
+        // to += interval;
+        // setTimeout(() => {
+        //     // this.tableData = new TableData(this.tableData.data, this.tableData.field, this.tableData.header);
+        //     this.tableData.data.push([51, 52, 53, 54, 55, 56, 57]);
+        //     this.tableData.refresh();
+        // }, to)
+        //
+        // to += interval;
+        // setTimeout(() => {
+        //     // this.tableData = new TableData(this.tableData.data, this.tableData.field, this.tableData.header);
+        //     this.tableData.data.splice(3, 1, [61, 62, 63, 64, 65, 66, 67], [71, 52, 73, 74, 75, 76, 77]);
+        //     this.tableData.refresh();
+        // }, to)
+        //
+        // to += interval;
+        // setTimeout(() => {
+        //     // this.tableData = new TableData(this.tableData.data, this.tableData.field, this.tableData.header);
+        //     this.tableData.data.forEach(row => row.push(88));
+        //     this.tableData.field.push('f8');
+        //     this.tableData.header.push('h8');
+        //
+        //     this.tableData.data.forEach(row => row.splice(2, 0, 99));
+        //     this.tableData.field.splice(2, 0, 'f9');
+        //     this.tableData.header.splice(2, 0, 'h9');
+        //
+        //     this.tableData.refresh();
+        // }, to)
+        //
+        // to += interval;
+        // setTimeout(() => {
+        //     const cd = this._columns.concat();
+        //     cd.push({target: 'f9', group: true, visible: true});
+        //     this._columns = cd;
+        // }, to);
     }
 
      _columns: ColumnDefine[] = [
-        {
-            target: 'f1',
-            width: '15%',
-            header: {
-                renderer: TableHeadSelect
-            },
-            cell: {
-                renderer: DefaultCellRenderer,
-                clazz: 'green-text'
-            },
-            group: true
-        },
-        {
-            target: 'f2',
-            width: '10%',
-            header: {
-                clazz: 'red-text',
-                sortable: true,
-                sortAs: SortAs.number,
-                defaultSortOrder: SortOrder.des
-            },
-            cell: {
-                //renderer: TableCellDefault, //支持不写renderer
-                editable: true,
-                editorRenderer: TableCellEditor,
-            }
-        },
-        {
-            target: 'f3',
-            header: {
-                renderer: TableHeadIcon,
-                sortable: true,
-                sortAs: SortAs.number
-            },
-            cell: {
-                renderer: DefaultCellRenderer
-            },
-            group: true
-        },
-        {
-            target: 'f4',
-            //visible: false
-        },
-        {
-            target: 'f5',
-            header: {
-                renderer: TableHeadIcon,
-                sortable: false
-            },
-            cell: {
-                renderer: DefaultCellRenderer
-            },
-            group: true
-        },
-        {
-            target: 'f6',
-            header: {
-                sortable: true,
-                sortAs: SortAs.string,
-                defaultSortOrder: SortOrder.default
-            },
-            group: true
-        },
-        {
-            target: 6,
-            visible: false,
-        },
-        {
-            target: (field, index) => {
-                return index > 2
-            },
-            header: {
-                clazz: 'big-text'
-            }
-        },
-        {
-            target: ['f1', 'f5'],
-            header: {
-                clazz: 'green-text'
-            }
-        }
+         {
+             target: ['f1', 'f2'],
+             width: '15%',
+             header: {
+                 renderer: TableHeadSelect,
+                 sortable: true
+             },
+             cell: {
+                 renderer: DefaultCellRenderer,
+                 clazz: 'green-text'
+             },
+             group: true
+         },
+         {
+             target: ['f3'], visible: false
+         },
+         {
+             target: (f, i) => f == 'f4',
+             header: {text: 'red-text'}
+         },
     ];
 
      _additionalColumns: AdditionalColumnDefine[] = [
@@ -156,7 +128,7 @@ export class TableRendererDemoComponent {
                 text: '#',
             },
             cell: {
-                renderer: TableCellNum
+                data: tableRowIndexGenerator
             }
         },
         {
@@ -164,10 +136,11 @@ export class TableRendererDemoComponent {
             field: 'f4',
             width: '60px',
             header: {
-                renderer: TableHeadCheckbox
+                sortable: true
+                // renderer: TableHeadCheckbox
             },
             cell: {
-                renderer: TableCellCheckbox
+                // renderer: TableCellCheckbox
             }
         },
         /*{

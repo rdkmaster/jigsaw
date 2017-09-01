@@ -1,10 +1,6 @@
 export class CommonUtils {
 
-    /**
-     * 浅拷贝一个对象
-     * @param source
-     */
-    public static shallowCopy(source: Object): Object {
+    private static copy(source: Object, isDeep:boolean): Object {
         if (source === null || source === undefined || typeof source !== 'object') {
             return source;
         }
@@ -12,9 +8,25 @@ export class CommonUtils {
         let copy = (source instanceof Array) ? [] : {};
         for (let attr in source) {
             if (!source.hasOwnProperty(attr)) continue;
-            copy[attr] = CommonUtils.shallowCopy(source[attr]);
+            copy[attr] = isDeep ? CommonUtils.copy(source[attr], true) : source[attr];
         }
         return copy;
+    }
+
+    /**
+     * 浅拷贝一个对象
+     * @param source
+     */
+    public static shallowCopy(source: Object): Object {
+        return CommonUtils.copy(source, false);
+    }
+
+    /**
+     * 浅拷贝一个对象
+     * @param source
+     */
+    public static deepCopy(source: Object): Object {
+        return CommonUtils.copy(source, true);
     }
 
     /**
@@ -165,7 +177,7 @@ export class CommonUtils {
      *
      * @returns string
      */
-    public getBrowserCultureLang(): string {
+    public static getBrowserCultureLang(): string {
         if (typeof window === 'undefined' || typeof window.navigator === 'undefined') {
             return undefined;
         }

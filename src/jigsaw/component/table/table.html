@@ -48,6 +48,9 @@
                 [style.display]="cell.rowSpan ? 'table-cell' : 'none'"
                 class="{{cell.class}}">
                 <div class="jigsaw-table-cell-content"
+                             *ngIf="!cell.renderer; else complexCell"><span class="jigsaw-table-cell-text">{{cell.cellData}}</span></div>
+                <ng-template #complexCell>
+                <div class="jigsaw-table-cell-content"
                      *ngIf="cell.renderer"
                      jigsaw-table-cell
                      [tableData]="data"
@@ -60,8 +63,7 @@
                      [editorRenderer]="cell.editorRenderer"
                      [group]="cell.group"
                      [rowSpan]="cell.rowSpan"></div>
-                <div class="jigsaw-table-cell-content"
-                     *ngIf="!cell.renderer"><span class="jigsaw-table-cell-text">{{cell.cellData}}</span></div>
+                </ng-template>
             </td>
         </tr>
         </tbody>
