@@ -1,10 +1,8 @@
-
 var fs = require('fs');
-var outputHome = './live-demo/'
-var demoHome = getDemoHome();
 var template = getTemplate();
-
+var demoHome = null;
 var outputHome = process.argv.length > 2 ? process.argv[2] : './live-demo/';
+
 if (fs.existsSync(outputHome)) {
     console.error("ERROR: remove output dir and try again: " + outputHome);
     process.exit(1);
@@ -12,15 +10,22 @@ if (fs.existsSync(outputHome)) {
 outputHome = outputHome ? outputHome.trim() : './live-demo/';
 outputHome = outputHome.match(/[\/\\]$/) ? outputHome : outputHome + '/';
 
-makeAllPlunkers(demoHome);
+makeAllPlunkers('e2e-testee');
+makeAllPlunkers('live-demo');
 
-function makeAllPlunkers(demoHome) {
+function makeAllPlunkers(dirName) {
+    demoHome = getDemoHome(dirName);
+
     var demoSetFolders = fs.readdirSync(demoHome);
     demoSetFolders.forEach(demoFolder => {
         var pathname = demoHome + demoFolder;
         var stat = fs.lstatSync(pathname);
         if (stat.isDirectory()) {
-            processDemoSet(pathname + '/');
+            if(dirName == 'live-demo'){
+                makePlunker(pathname + '/', dirName);
+            } else if(dirName == 'e2e-testee') {
+                processDemoSet(pathname + '/');
+            }
         }
     });
 }
@@ -36,7 +41,7 @@ function processDemoSet(demoSetFolder) {
     });
 }
 
-function makePlunker(demoFolder) {
+function makePlunker(demoFolder, dirName) {
     var content = [];
     var mockDatas = [];
     readDemoContent(content, demoFolder);
@@ -90,7 +95,7 @@ function makePlunker(demoFolder) {
         .replace('<!-- replace-by-content -->', html)
         .replace('<!-- replace-by-title -->', demoFolder.substring(demoHome.length, demoFolder.length-1));
 
-    var saveTo = outputHome + demoFolder.substring(demoHome.length);
+    var saveTo = outputHome + demoFolder.substring(demoHome.length) + (dirName ? dirName + '/' : '');
     makeDirs(saveTo);
     saveTo += 'index.html';
     fs.writeFileSync(saveTo, plunker);
@@ -249,11 +254,11 @@ function readCode(path) {
     return fs.readFileSync(path).toString();
 }
 
-function getDemoHome() {
+function getDemoHome(dirName) {
     var pathPartials = __dirname.split(/[\/\\]/g);
     pathPartials.pop();
     pathPartials.pop();
-    var demoHome = pathPartials.join('/') + '/src/app/e2e-testee/';
+    var demoHome = pathPartials.join('/') + '/src/app/'+ dirName + '/';
     return demoHome;
 }
 
