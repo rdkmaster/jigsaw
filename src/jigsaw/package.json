@@ -1,6 +1,6 @@
 {
     "name": "@rdkmaster/jigsaw",
-    "version": "1.0.0-beta.17",
+    "version": "1.0.0-beta.18",
     "description": "Jigsaw, the next generation component set for RDK",
     "main": "./bundles/jigsaw.umd.js",
     "module": "./@rdkmaster/jigsaw.es5.js",
@@ -39,6 +39,7 @@
     "dependencies": {
         "@ngx-translate/core": "^6.0.1",
         "@ngx-translate/http-loader": "0.0.3",
+        "@rdkmaster/icon-font": "^1.0.2",
         "core-js": "^2.4.1",
         "echarts": "3.5.2",
         "eonasdan-bootstrap-datetimepicker": "^4.17.47",
@@ -53,6 +54,7 @@
     "devDependencies": {
         "@ngx-translate/core": "^6.0.1",
         "@ngx-translate/http-loader": "0.0.3",
+        "@rdkmaster/icon-font": "^1.0.2",
         "core-js": "^2.4.1",
         "echarts": "3.5.2",
         "eonasdan-bootstrap-datetimepicker": "^4.17.47",

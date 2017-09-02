@@ -1,12 +1,11 @@
 import {Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Output, Renderer2} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AnimationDestroy} from "../animations/destroy";
-import {AbstractJigsawComponent} from "../core";
+import {AbstractJigsawComponent} from "../common";
 
 @Component({
     selector: 'jigsaw-tag',
     templateUrl: 'tag.html',
-    styleUrls: ['tag.scss'],
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
@@ -15,6 +14,7 @@ import {AbstractJigsawComponent} from "../core";
         '[style.border-color]': 'color',
         '[class.jigsaw-tag-closable]': '_closable',
         '[class.jigsaw-tag-color]': '!!color',
+        '[class.jigsaw-tag-host]': 'true',
         '[@AnimationDestroy]': '_state',
         '(@AnimationDestroy.done)': '_animationDone($event)',
     },

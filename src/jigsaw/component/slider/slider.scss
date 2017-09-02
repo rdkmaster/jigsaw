@@ -1,4 +1,4 @@
-@import "../../assets/scss/core/basc";
+@import "../../assets/scss/core/base";
 @import "../../assets/scss/reset";
 
 $jigsaw-slider: #{$jigsaw-prefix}-slider;
@@ -8,11 +8,10 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
     width: 100%;
     display: inline-block;
     user-select: none;
-}
-
-::selection {
-    background-color: #fff;
-    color: #666;
+    ::selection {
+        background-color: #fff;
+        color: #666;
+    }
 }
 
 .#{$jigsaw-slider} {
@@ -95,10 +94,10 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
             vertical-align: middle;
             text-align: center;
             cursor: pointer;
-            color: $font-color-level-three;
+            color: $text-color-secondary;
 
             &-active {
-                color: $font-color-level-two;
+                color: $text-color;
             }
         }
     }

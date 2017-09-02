@@ -10,7 +10,6 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 @Component({
     selector: 'jigsaw-switch',
     templateUrl: './switch.html',
-    styleUrls: ['./switch.scss'],
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSwitch), multi: true},
     ]

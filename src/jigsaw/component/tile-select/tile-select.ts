@@ -18,7 +18,7 @@ import {
 import {CommonModule} from '@angular/common';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms'
 import {JigsawInputModule} from '../input/input';
-import {AbstractJigsawComponent} from '../core';
+import {AbstractJigsawComponent} from '../common';
 import {CallbackRemoval, CommonUtils} from '../../core/utils/common-utils';
 import {InternalUtils} from '../../core/utils/internal-utils';
 import {ArrayCollection} from "../../core/data/array-collection";
@@ -26,7 +26,6 @@ import {ArrayCollection} from "../../core/data/array-collection";
 @Component({
     selector: 'jigsaw-tile-select',
     templateUrl: 'tile-select.html',
-    styleUrls: ['tile-select.scss'],
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTileSelect), multi: true},
     ]
@@ -196,7 +195,6 @@ export class JigsawTileSelect extends AbstractJigsawComponent implements Control
 @Component({
     selector: 'jigsaw-tile-option',
     templateUrl: 'tile-option.html',
-    styleUrls: ['tile-option.scss'],
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',

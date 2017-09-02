@@ -20,7 +20,7 @@ const ROLLUP_GLOBALS = {
   '@angular/platform-browser-dynamic': 'ng.platformBrowserDynamic',
   '@angular/platform-browser/animations': 'ng.platformBrowser.animations',
 
-  // Local Angular packages inside of Material.
+  // Local Angular packages inside of Jigsaw.
   '@rdkmaster/jigsaw': 'ng.jigsaw',
   //'@angular/cdk': 'ng.cdk',
 

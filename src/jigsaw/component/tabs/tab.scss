@@ -1,5 +1,4 @@
-@import "../../assets/scss/core/basc";
-@import "../../assets/scss/reset";
+@import "../../assets/scss/core/base";
 
 $tab-prefix: #{$jigsaw-prefix}-tabs;
 
@@ -8,10 +7,10 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
     position: relative;
     overflow: hidden;
     @include clearfix;
-    color: $font-color-level-two;
+    color: $text-color;
 
     &-bar {
-        border-bottom: $border-width-base $border-style-base $primary-color;
+        border-bottom: $border-width-base $border-style-base $border-color-base;
         margin-bottom: 16px;
         outline: none;
     }
@@ -37,7 +36,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
                     position: absolute;
                     z-index: 1;
                     left: 0;
-                    bottom: 0;
+                    bottom: -1px;
                     height: 2px;
                     background-color: $primary-color;
                     transition: transform 0.3s $ease-in-out;
@@ -55,6 +54,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
                             color: $primary-color transparent transparent transparent;
                         };
                         content: '';
+                        display: none;
                     }
                 }
 
@@ -64,7 +64,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
                     color: $disabled-color;
                 }
 
-                /deep/ jigsaw-tab-label {
+                jigsaw-tab-label {
                     a:hover{
                         text-decoration: none;
                         color: $primary-color;
@@ -95,6 +95,18 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
 
                     &-hidden {
                         display: none;
+                    }
+
+                    span.fa{
+                        margin-right: 6px;
+                    }
+
+                    a:hover{
+                        text-decoration: none;
+                        color: $primary-color;
+                    }
+                    * {
+                        outline: 0;
                     }
                 }
 

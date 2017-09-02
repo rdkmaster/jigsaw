@@ -4,12 +4,11 @@ import {
 } from '@angular/core';
 import {JigsawTabPane} from "./tab-pane";
 import {JigsawTabContent, JigsawTabLabel} from "./tab-item";
-import {AbstractJigsawComponent, IDynamicInstantiatable} from "../core";
+import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
 
 @Component({
     selector: 'jigsaw-tab',
     templateUrl: 'tab.html',
-    styleUrls: ['./tab.scss']
 })
 export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit {
 
@@ -75,12 +74,15 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit 
         this._asyncSetStyle(index);
     }
 
-    private _inkBarStyle: object = {};
+    /**
+     * @internal
+     */
+    public _$inkBarStyle: object = {};
 
     private _setInkBarStyle(index: number) {
         let labelPos = this._getLabelOffsetByKey(index);
 
-        this._inkBarStyle = {
+        this._$inkBarStyle = {
             'display': 'block',
             'transform': 'translate3d(' + labelPos.offSet + 'px, 0px, 0px)',
             'width': labelPos.width + 'px'

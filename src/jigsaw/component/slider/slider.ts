@@ -18,7 +18,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {ArrayCollection} from "../../core/data/array-collection";
 import {CallbackRemoval} from "../../core/utils/common-utils";
-import {AbstractJigsawComponent} from "../core";
+import {AbstractJigsawComponent} from "../common";
 
 export class SliderMark {
     value: number;
@@ -196,7 +196,6 @@ export class JigsawSliderHandle implements OnInit{
 @Component({
     selector: 'jigsaw-slider',
     templateUrl: './slider.html',
-    styleUrls: ['./slider.scss'],
     host: {
         'class': 'jigsaw-slider-host'
     },

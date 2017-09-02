@@ -1,0 +1,25 @@
+<div class="combo-select-demo cmn-box">
+    <h3>disable demo</h3>
+    <div class="test-btn">
+        <jigsaw-button (click)="changeDisabled()">toggle disable</jigsaw-button>
+    </div>
+    <jigsaw-combo-select
+        [disabled]="disabled"
+        [(value)]="selectedCity"
+        [open]="true"
+        maxWidth="500"
+        [clearable]="true">
+        <ng-template>
+            <jigsaw-tile-select
+                [(selectedItems)]="selectedCity"
+                labelField="label"
+                [searchable]="true"
+                [data]="citys"
+                width="400px"
+                tileOptionWidth="22.8%"
+                style="padding: 8px 0 8px 8px">
+            </jigsaw-tile-select>
+        </ng-template>
+    </jigsaw-combo-select>
+</div>
+

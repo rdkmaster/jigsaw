@@ -1,8 +1,8 @@
-@import "../../assets/scss/core/basc";
+@import "../../assets/scss/core/base";
 
 $tag-prefix-cls: #{$jigsaw-prefix}-tag;
 
-:host{
+#{$tag-prefix-cls}{
     @include inline-block;
     position: relative;
     max-width: 200px;
@@ -14,13 +14,13 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
     line-height: 20px;
     border: 1px solid $border-color-base;
     border-radius: $border-radius-base;
-    background: $tag-bg-default;
+    background: $background-color-base;
     cursor: pointer;
     &.#{$tag-prefix-cls}-closable{
         padding-right: 20px;
     }
     &.#{$tag-prefix-cls}-color{
-        color: $font-color-white;
+        color: $text-color-of-bg;
     }
     .#{$tag-prefix-cls}-close-bar{
         position: absolute;
@@ -28,7 +28,7 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
         line-height: 18px;
         font-size: 16px;
         &:hover{
-            color: #000;
+            color: $text-color-dark;
         }
     }
 }

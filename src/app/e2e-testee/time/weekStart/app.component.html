@@ -1,0 +1,9 @@
+<h4>WeekStart</h4>
+
+WeekStart:<jigsaw-tile-select [data]="datas" [(selectedItems)]="weekStart" [multipleSelect]="false">
+</jigsaw-tile-select><br>
+
+<jigsaw-time [(date)]="date" [weekStart]="weekStart[0].label">
+</jigsaw-time><br>
+
+<p>Selected Time : {{date}}</p>

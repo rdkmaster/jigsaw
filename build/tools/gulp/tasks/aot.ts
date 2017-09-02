@@ -15,7 +15,7 @@ const demoAppOut = join(outputDir, 'packages', 'demo-app');
 /** Path to the tsconfig file that builds the AOT files. */
 const tsconfigFile = join(demoAppOut, 'tsconfig-aot.json');
 
-/** Builds the demo-app and material. To be able to run NGC, apply the metadata workaround. */
+/** Builds the demo-app and jigsaw. To be able to run NGC, apply the metadata workaround. */
 task('aot:deps', sequenceTask(
   //'build:devapp',
   ['jigsaw:build-release'/*, 'cdk:build-release'*/],
@@ -23,7 +23,7 @@ task('aot:deps', sequenceTask(
 ));
 
 // As a workaround for https://github.com/angular/angular/issues/12249, we need to
-// copy the Material and CDK ESM output inside of the demo-app output.
+// copy the Jigsaw and CDK ESM output inside of the demo-app output.
 task('aot:copy-release', () => {
   copySync(join(releasesDir, 'jigsaw'), join(demoAppOut, 'jigsaw'));
   //copySync(join(releasesDir, 'cdk'), join(demoAppOut, 'cdk'));

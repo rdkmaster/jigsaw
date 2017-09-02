@@ -10,7 +10,7 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {AbstractJigsawComponent} from "../core";
+import {AbstractJigsawComponent} from "../common";
 
 /**
  * 组件模式.
@@ -62,10 +62,9 @@ export class JigsawCollapsePane{
 @Component({
     selector: 'jigsaw-collapse',
     templateUrl: 'collapse.html',
-    styleUrls: ['collapse.scss'],
     host: {
         '[style.width]': 'width',
-        'class':'jigsaw-collapse-host'
+        '[class.jigsaw-collapse-host]':'true'
     },
     encapsulation: ViewEncapsulation.None
 })

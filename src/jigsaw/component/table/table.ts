@@ -3,9 +3,10 @@ import {
     Renderer2, AfterViewInit
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {AbstractJigsawComponent, JigsawCommonModule} from "../core";
+import {AbstractJigsawComponent, JigsawCommonModule} from "../common";
 import {JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent} from "./table-inner.components";
 import {TableData} from "../../core/data/table-data";
+
 import {
     AdditionalColumnDefine,
     ColumnDefine, SortChangeEvent,
@@ -23,7 +24,6 @@ import {JigsawScrollBarModule} from "../../directive/scrollbar/scrollbar";
 @Component({
     selector: 'jigsaw-table, j-table',
     templateUrl: 'table.html',
-    styleUrls: ['table.scss'],
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',

@@ -1,7 +1,6 @@
 <div class="jigsaw-combo-select"
      [class.jigsaw-combo-select-opened]="_$opened"
      [class.jigsaw-combo-select-disabled]="disabled"
-     [style.min-width]="width?width:'240px'"
      (mouseenter)="_$openByHover($event)"
      (mouseleave)="_$closeByHover($event)"
      (click)="_$openAndCloseByClick($event)">
@@ -10,19 +9,18 @@
             <div *ngIf="placeholder && (!value || value.length == 0)" class="jigsaw-combo-select-selection_placeholder">
                 {{placeholder}}
             </div>
-            <span>
-                <ng-template ngFor let-tagItem [ngForOf]="value" let-i="index" let-isLast="last">
-                    <jigsaw-tag
-                              [closable]='tagItem.closable'
-                              (select)="_$tagClick(tagItem)"
-                              (close)="_$removeTag(tagItem)">
-                             {{tagItem[labelField]}}
-                     </jigsaw-tag>
-                      <span *ngIf="separator && !isLast">{{separator}}</span>
-                </ng-template>
-            </span>
+            <ng-template ngFor let-tagItem [ngForOf]="value" let-i="index" let-isLast="last">
+                <jigsaw-tag
+                    [closable]='tagItem.closable'
+                    (select)="_$tagClick(tagItem)"
+                    (close)="_$removeTag(tagItem)">
+                    {{tagItem[labelField]}}
+                </jigsaw-tag>
+            </ng-template>
         </div>
     </div>
+    <i class="fa fa-times-circle jigsaw-combo-select-clear"
+       *ngIf="clearable && value && value.length != 0" (click)="_$clearValue()"></i>
     <i class="fa fa-angle-down jigsaw-combo-select-arrow"></i>
 </div>
 <ng-content></ng-content>

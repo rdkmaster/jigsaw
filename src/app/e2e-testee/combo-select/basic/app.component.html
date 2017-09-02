@@ -1,0 +1,21 @@
+<div class="combo-select-demo cmn-box">
+    <h3>basic demo</h3>
+    <div class="test-btn">
+        <jigsaw-button (click)="changeTrigger()">change trigger</jigsaw-button>
+    </div>
+    <jigsaw-combo-select
+        [openTrigger]="openTrigger"
+        [closeTrigger]="closeTrigger"
+        [(value)]="selectedCity"
+        (select)="onTagSelect($event)"
+        (remove)="onTagRemove($event)"
+        maxWidth="500">
+        <ng-template>
+            <div class="drop-down-container">
+                <jigsaw-button *ngFor="let city of cities;" [colorType]="city.type"
+                               (click)="onCityClick(city)">{{city.label}}</jigsaw-button>
+            </div>
+        </ng-template>
+    </jigsaw-combo-select>
+</div>
+

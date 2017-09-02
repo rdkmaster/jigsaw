@@ -9,7 +9,6 @@ import * as minimist from 'minimist';
 
 /** Packages that will be published to NPM by the release task. */
 export const releasePackages = [
-  //'cdk',
   'jigsaw',
 ];
 
@@ -22,6 +21,11 @@ const npm = process.platform === "win32" ? "npm.cmd" : "npm";
 task(':publish:build-releases', sequenceTask(
   'clean',
   releasePackages.map(packageName => `${packageName}:build-release`)
+));
+
+task(':publish:build-labs-releases', sequenceTask(
+    'clean',
+    releasePackages.map(packageName => `${packageName}:build-labs-release`)
 ));
 
 /** Make sure we're logged in. */
@@ -103,10 +107,32 @@ task(':publish', async () => {
   process.chdir(currentDir);
 });
 
-task('publish', sequenceTask(
-  ':publish:whoami',
+task(':publish-js', sequenceTask(
   ':publish:build-releases',
   'validate-release:check-bundles',
-  ':publish',
-  ':publish:logout',
+  ':publish'
+));
+
+task(':publish-ts', sequenceTask(
+    ':publish:build-labs-releases',
+    ':publish',
+));
+
+task('publish-js', sequenceTask(
+    ':publish:whoami',
+    ':publish-js',
+    ':publish:logout'
+));
+
+task('publish-ts', sequenceTask(
+    ':publish:whoami',
+    ':publish-ts',
+    ':publish:logout'
+));
+
+task('publish', sequenceTask(
+    ':publish:whoami',
+    ':publish-js',
+    ':publish-ts',
+    ':publish:logout'
 ));

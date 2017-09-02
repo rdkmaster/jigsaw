@@ -1,21 +1,9 @@
-@import "../../assets/scss/core/basc";
+@import "../../assets/scss/core/base";
 
 $radio-prefix-cls: #{$jigsaw-prefix}-radio;
 
-:host {
+#{$radio-prefix-cls}-button {
     @include inline-block();
-}
-
-:host-context(.theme-blue) .#{$radio-prefix-cls}-button .#{$radio-prefix-cls}-inner {
-    &:after {
-        background-color: $primary-color;
-    }
-}
-
-:host-context(.theme-orange) .#{$radio-prefix-cls}-button .#{$radio-prefix-cls}-inner {
-    &:after {
-        background-color: $orange;
-    }
 }
 
 .#{$radio-prefix-cls}-button {

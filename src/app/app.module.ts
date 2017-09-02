@@ -9,15 +9,16 @@ import {Observable} from "rxjs/Observable";
 import {JigsawButtonModule} from "jigsaw/component/button/button";
 
 import {AppComponent} from './app.component';
+import {JigsawRootModule} from "../jigsaw/component/root/root";
 
 const appRoutes = [
     {
         path: '',
-        loadChildren: 'app/demo/demo-list#DemoListModule'
+        loadChildren: 'app/e2e-testee/demo-list#DemoListModule'
     },
     {
         path: '**',//fallback router must in the last
-        loadChildren: 'app/demo/demo-list#DemoListModule'
+        loadChildren: 'app/e2e-testee/demo-list#DemoListModule'
     }
 ];
 
@@ -49,7 +50,7 @@ export class JigsawI18nLoader extends TranslateLoader {
                 }, isolate: true
             }
         ),
-        JigsawButtonModule
+        JigsawRootModule, JigsawButtonModule
     ],
     providers: [TranslateService],
     bootstrap: [AppComponent]

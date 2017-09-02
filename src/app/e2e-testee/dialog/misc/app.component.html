@@ -1,0 +1,62 @@
+
+<jigsaw-button id="trigger1" width="175" (click)="popup()">
+    modal dialog
+</jigsaw-button>
+
+<jigsaw-button id="trigger2" width="175" (click)="popupAtPoint($event)">
+    point dialog
+</jigsaw-button><br><br>
+
+<jigsaw-button id="trigger3" width="175" (click)="popupModalDialogTemplate(tpDialog1)">
+    template modal dialog
+</jigsaw-button>
+
+<jigsaw-button id="trigger4" width="175" (click)="popupDialogTemplate(tpDialog2, $event)">
+    template dialog
+</jigsaw-button><br><br>
+
+<jigsaw-button width="175" (click)="popupTemplate(tp)">
+    template
+</jigsaw-button>
+
+<ng-template #tpDialog1>
+    <jigsaw-dialog width="40%" [buttons]="buttons" (answer)="disposeAnswer($event, closeModalDialogTemplate)">
+        <div jigsaw-title>
+            <span class="fa fa-thumbs-up"></span>Title of the dialog
+        </div>
+        <div jigsaw-body>
+            <ul class="dialog-content">
+                <li>Dialog content...</li>
+                <li>Dialog content...</li>
+                <li>Dialog content...</li>
+            </ul>
+        </div>
+    </jigsaw-dialog>
+</ng-template>
+
+<ng-template #tpDialog2>
+    <jigsaw-dialog width="40%" [buttons]="buttons2" (answer)="disposeAnswer($event, closeDialogTemplate)">
+        <div jigsaw-title>
+            <span class="fa fa-thumbs-up"></span>Title of the dialog
+        </div>
+        <div jigsaw-body>
+            <ul class="dialog-content">
+                <li>Dialog content...</li>
+                <li>Dialog content...</li>
+                <li>Dialog content...</li>
+            </ul>
+        </div>
+    </jigsaw-dialog>
+</ng-template>
+
+<ng-template #tp>
+    <div class="pop-win">
+        <span class="close-btn" (click)="closeTemplate()">X</span>
+        <h3>这是模板弹框</h3>
+        <div class="btn-group-box">
+            <jigsaw-button>确定</jigsaw-button>
+            <jigsaw-button (click)="closeTemplate()">取消</jigsaw-button>
+        </div>
+    </div>
+</ng-template>
+

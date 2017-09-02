@@ -5,14 +5,14 @@ import {
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {AbstractJigsawComponent} from "../core";
+import {AbstractJigsawComponent} from "../common";
 import {CommonUtils} from '../../core/utils/common-utils';
 import {InternalUtils} from '../../core/utils/internal-utils';
 import {JigsawScrollBarModule} from '../../directive/scrollbar/scrollbar';
 import {ArrayCollection} from "../../core/data/array-collection";
 
 @Directive({
-    selector: '.jigsaw-option-list',
+    selector: '.jigsaw-select-option-list',
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height'
@@ -25,7 +25,6 @@ export class OptionList extends AbstractJigsawComponent{
 @Component({
     selector: 'jigsaw-select',
     templateUrl: 'select.html',
-    styleUrls: ['select.scss'],
     host: {
         "(click)": "_toggleClick($event)",
         '[style.width]': 'width',
@@ -166,7 +165,6 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 @Component({
     selector: 'jigsaw-select-option',
     templateUrl: 'option.html',
-    styleUrls: ['option.scss'],
     host: {
         "(click)": "_onClick()",
         '[style.height]': '_height',

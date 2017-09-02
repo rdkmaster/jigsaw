@@ -1,0 +1,23 @@
+@import "../../assets/scss/core/base";
+
+$font-loading-prefix-cls: #{$jigsaw-prefix}-font-loading;
+
+#{$font-loading-prefix-cls} {
+    @include inline-block;
+    position: relative;
+    width: 40px;
+    height: 40px;
+}
+
+.#{$font-loading-prefix-cls}{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 40px;
+    color: #fff;
+    left: 50%;
+    top: 50%;
+    margin-left: -20px;
+    margin-top: -20px;
+}

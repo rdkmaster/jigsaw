@@ -1,8 +1,8 @@
-@import "../../assets/scss/core/basc";
+@import "../../assets/scss/core/base";
 
-$option-prefix-cls: #{$jigsaw-prefix}-option;
+$select-option-prefix-cls: #{$jigsaw-prefix}-select-option;
 
-:host {
+#{$select-option-prefix-cls} {
     display: block;
     width: 100%;
     height: $height-base;
@@ -10,34 +10,16 @@ $option-prefix-cls: #{$jigsaw-prefix}-option;
     font-size: $font-size-base;
 }
 
-:host-context(.theme-blue) .#{$option-prefix-cls} {
-    &:hover {
-        background-color: $select-option-hover-bg;
-    }
-    &.#{$option-prefix-cls}-on, &.#{$option-prefix-cls}-on:hover {
-        background-color: $select-option-selected-bg;
-    }
-}
-
-:host-context(.theme-orange) .#{$option-prefix-cls} {
-    &:hover {
-        background-color: $orange-hover;
-    }
-    &.#{$option-prefix-cls}-on, &.#{$option-prefix-cls}-on:hover {
-        background-color: $select-option-selected-bg;
-    }
-}
-
-.#{$option-prefix-cls} {
+.#{$select-option-prefix-cls} {
     height: 100%;
     cursor: pointer;
     padding: 0 6px;
     box-sizing: border-box;
     @include line-ellipsis(100%);
     &:hover {
-        background-color: $select-option-hover-bg;
+        background-color: $item-hover-bg;
     }
-    &.#{$option-prefix-cls}-on, &.#{$option-prefix-cls}-on:hover {
-        background-color: $select-option-selected-bg;
+    &.#{$select-option-prefix-cls}-on, &.#{$select-option-prefix-cls}-on:hover {
+        background-color: $item-active-bg;
     }
 }

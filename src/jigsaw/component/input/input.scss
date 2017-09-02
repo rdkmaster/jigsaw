@@ -1,8 +1,8 @@
-@import "../../assets/scss/core/basc";
+@import "../../assets/scss/core/base";
 
 $input-prefix-cls: #{$jigsaw-prefix}-input;
 
-:host {
+.#{$input-prefix-cls} {
     @include inline-block();
     position: relative;
     width: 120px;
@@ -10,13 +10,13 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
     line-height: $height-base;
     font-size: $font-size-base;
     opacity: 0;
-    .#{$input-prefix-cls}-icon-front{
+    &-icon-front{
         position: absolute;
         left: 8px;
         top: 0;
         line-height: inherit;
     }
-    .#{$input-prefix-cls}-icon-end{
+    &-icon-end{
         position: absolute;
         right: 8px;
         top: 0;
@@ -35,15 +35,15 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         }
         &:focus {
             border: 1px solid $primary-color;
-            box-shadow: $input-box-shadow;
+            box-shadow: $box-focus-shadow;
         }
     }
-    span.#{$input-prefix-cls}-clear-bar{
+    &-clear-bar{
         cursor: pointer;
         font-size: 16px;
         line-height: 1;
         &:hover{
-            color: #000;
+            color: $text-color-dark;
         }
         &[hidden]{
             display: none !important;
@@ -51,24 +51,5 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
     }
 }
 
-:host-context(.theme-blue) input {
-    &:hover {
-        border: 1px solid $primary-color;
-    }
-    &:focus {
-        border: 1px solid $primary-color;
-        box-shadow: $input-box-shadow;
-    }
-}
-
-:host-context(.theme-orange) input {
-    &:hover {
-        border: 1px solid $orange;
-    }
-    &:focus {
-        border: 1px solid $orange;
-        box-shadow: 0 0 0 2px $orange-shadow;
-    }
-}
 
 

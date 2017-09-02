@@ -14,10 +14,10 @@ git clone https://github.com/rdkmaster/jigsaw-seed.git
 
 * 下载依赖包，执行以下脚本
 
-* ```
+```
   cd d:\jigsaw-seed
   # 直连网络下不可执行这个命令
-  npm config set proxy=http://10.20.300.11:80                              
+  npm config set proxy=http://proxy.zte.com.cn:80                              
   # for Chinese developers only
   npm config set registry=https://registry.npm.taobao.org/
   # for Chinese developers only                 
@@ -26,7 +26,8 @@ git clone https://github.com/rdkmaster/jigsaw-seed.git
   npm install -g @angular/cli                                              
   npm install
   npm start
-  ```
+```
+
 * 浏览器里打开 [http://localhost:4200](http://localhost:4200/) 如果看到欢迎页，表示你的开发环境搭建完毕。
 
 * 后续直接在`d:\jigsaw-seed`目录下运行`npm start`命令就可以启动开发环境了。Jigsaw专门针对现代的IDE做了代码优化，让这些IDE可以精确提示更多的信息，节约你翻阅api文档的时间。我们推荐使用[WebStorm](https://www.jetbrains.com/webstorm/)作为IDE。

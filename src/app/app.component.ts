@@ -1,4 +1,4 @@
-import {Component, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component} from "@angular/core";
 
 @Component({
     selector: 'app-root',
@@ -6,10 +6,6 @@ import {Component, Renderer2, ViewContainerRef} from "@angular/core";
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
-    constructor(public viewContainerRef: ViewContainerRef, public renderer: Renderer2) {
-    }
-
     jigsawTitle: string = 'jigsaw-title';
 
     gotoPlunker(): void {

@@ -1,8 +1,8 @@
-@import "../../assets/scss/core/_basc";
+@import "../../assets/scss/core/base";
 
 $dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
 
-:host {
+#{$dialog-prefix-cls} {
     @include inline-block;
     width: 100%;
 }
@@ -12,30 +12,31 @@ $dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
     background: $default-color;
     border: 1px solid $border-color-base;
     border-radius: $border-radius-base;
-    .#{$dialog-prefix-cls}-head {
+    &-head {
         @include clearfix;
         line-height: 20px;
         padding: 14px 16px;
-        color: $dialog-head-color;
+        color: $heading-color;
         font-size: 14px;
         background: $default-color;
         border-bottom: 1px solid $border-color-base;
         cursor: move;
-        /deep/ [jigsaw-title]{
+        [jigsaw-title]{
             float: left;
         }
-        .#{$dialog-prefix-cls}-close {
-            float: right;
-            font-size: 24px;
-            color: $dialog-close-bar-color;
-            cursor: pointer;
-            margin-top: -3px;
-            &:hover{
-                color: $dialog-close-bar-hover-color;
-            }
+    }
+
+    &-head &-close {
+        float: right;
+        font-size: 24px;
+        color: $text-color;
+        cursor: pointer;
+        &:hover{
+            color: $text-color-dark;
         }
     }
-    .#{$dialog-prefix-cls}-button-group {
+
+    &-button-group {
         border-top: 1px solid $border-color-base;
         text-align: center;
         height: 50px;

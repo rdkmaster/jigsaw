@@ -189,6 +189,18 @@ export class CommonUtils {
 
         return browserCultureLang;
     }
+
+    public static safeInvokeCallback(context: any, callback: Function, ...args): any {
+        if (callback === null || callback === undefined) {
+            return undefined;
+        }
+        try {
+            return callback.apply(context, args);
+        } catch (e) {
+            console.error('invoke callback error: ' + e);
+            console.error(e.stack);
+        }
+    }
 }
 
 export type CallbackRemoval = () => void;

@@ -1,5 +1,5 @@
-@import "../../assets/scss/core/_basc";
+@import "../../assets/scss/core/base";
 
-:host{
+jigsaw-info-alert, jigsaw-warning-alert, jigsaw-error-alert, jigsaw-confirm-alert {
     @include inline-block
 }

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild} from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {AbstractJigsawComponent} from "../core";
+import {AbstractJigsawComponent} from "../common";
 import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../service/time.service";
 import {GrItem, JigsawTime, Shortcut} from "../time/time";
 import {WeekTime} from "../../service/time.types";
@@ -8,7 +8,6 @@ import {WeekTime} from "../../service/time.types";
 @Component({
     selector: 'jigsaw-range-time',
     templateUrl: 'range-time.html',
-    styleUrls: ['range-time.scss'],
     providers: [
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRangeTime), multi: true },
     ]

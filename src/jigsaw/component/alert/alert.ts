@@ -1,4 +1,12 @@
-import {Component, ElementRef, Input, NgModule, Renderer2, ViewChild} from "@angular/core";
+import {
+    Component,
+    ElementRef,
+    Input,
+    NgModule,
+    Renderer2,
+    ViewChild,
+    Type,
+} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {AbstractDialogComponentBase, DialogBase, JigsawDialog, JigsawDialogModule} from "../dialog/dialog";
@@ -6,15 +14,22 @@ import {JigsawButtonModule} from "../button/button";
 import {InternalUtils} from "../../core/utils/internal-utils";
 import {TranslateHelper} from "../../core/utils/translate-helper";
 import {JigsawMovableModule} from "../../directive/movable/index";
+import {PopupService, ButtonInfo, PopupEffect, PopupInfo, PopupOptions} from "../../service/popup.service";
+import {CommonUtils} from "../../core/utils/common-utils";
+import {JigsawBlock} from "../block/block";
 
 export enum AlertLevel {
     info, warning, error, confirm
 }
 
+export type AlertCallback = (button: ButtonInfo) => void;
+
 @Component({
     selector: 'jigsaw-alert',
     templateUrl: 'alert.html',
-    styleUrls: ['alert.scss']
+    host: {
+        '[class.jigsaw-alert-host]': 'true'
+    }
 })
 export class JigsawAlert extends AbstractDialogComponentBase {
     constructor(renderer: Renderer2, elementRef: ElementRef) {
@@ -29,7 +44,8 @@ export class JigsawAlert extends AbstractDialogComponentBase {
     public _$alertClass = {
         'jigsaw-alert-info': true,
         'jigsaw-alert-warning': false,
-        'jigsaw-alert-error': false
+        'jigsaw-alert-error': false,
+        'jigsaw-alert-confirm': false
     };
 
     private _level: AlertLevel = AlertLevel.info;
@@ -50,6 +66,11 @@ export class JigsawAlert extends AbstractDialogComponentBase {
                 this._level = AlertLevel.error;
                 break;
 
+            case AlertLevel.confirm:
+            case "confirm":
+                this._level = AlertLevel.confirm;
+                break;
+
             case AlertLevel.info:
             case "info":
             default:
@@ -59,7 +80,8 @@ export class JigsawAlert extends AbstractDialogComponentBase {
         this._$alertClass = {
             'jigsaw-alert-info': this._level == AlertLevel.info,
             'jigsaw-alert-warning': this._level == AlertLevel.warning,
-            'jigsaw-alert-error': this._level == AlertLevel.error
+            'jigsaw-alert-error': this._level == AlertLevel.error,
+            'jigsaw-alert-confirm': this._level == AlertLevel.confirm
         }
     }
 
@@ -76,6 +98,9 @@ export class JigsawAlert extends AbstractDialogComponentBase {
                     break;
                 case AlertLevel.error:
                     this._icon = "fa-times-circle";
+                    break;
+                case AlertLevel.confirm:
+                    this._icon = "fa-question";
                     break;
                 default:
                     this._icon = "fa-check-circle";
@@ -108,6 +133,7 @@ export abstract class JigsawCommonAlert extends DialogBase {
         }
         this.message = value.message ? value.message : 'the "message" property in the initData goes here.';
         this.caption = value.title ? value.title : this._getDefaultTitle();
+        this.buttons = value.buttons ? value.buttons : this.buttons;
     }
 
     public abstract get dialog(): JigsawDialog;
@@ -117,6 +143,28 @@ export abstract class JigsawCommonAlert extends DialogBase {
     public buttons = [{label: 'alert.button.ok'}];
     public level: AlertLevel = AlertLevel.info;
 
+    public static showAlert(what: Type<JigsawCommonAlert>,
+                            message: string,
+                            callback?: AlertCallback,
+                            buttons?: ButtonInfo[],
+                            caption?: string,
+                            modal: boolean = true,
+                            popupOptions?: PopupOptions): PopupInfo {
+        const po = popupOptions ? popupOptions : {
+            modal: modal, //是否模态
+            showEffect: PopupEffect.bubbleIn,
+            hideEffect: PopupEffect.bubbleOut
+        };
+        const popupInfo = PopupService.instance.popup(what, po,
+            {message: message, title: caption, buttons: buttons});
+        popupInfo.answer.subscribe(answer => {
+            CommonUtils.safeInvokeCallback(null, callback, answer);
+            popupInfo.answer.unsubscribe();
+            popupInfo.dispose();
+        });
+        return popupInfo;
+    }
+
     private _getDefaultTitle(): string {
         switch (this.level) {
             case AlertLevel.warning:
@@ -124,6 +172,9 @@ export abstract class JigsawCommonAlert extends DialogBase {
 
             case AlertLevel.error:
                 return 'alert.title.error';
+
+            case AlertLevel.confirm:
+                return 'alert.title.confirm';
 
             case AlertLevel.info:
             default:
@@ -134,7 +185,6 @@ export abstract class JigsawCommonAlert extends DialogBase {
 
 @Component({
     templateUrl: 'common-alert.html',
-    styleUrls: ['common-alert.scss'],
     selector: 'jigsaw-info-alert',
     host: {
         '[class.jigsaw-common-alert]': 'true'
@@ -142,13 +192,23 @@ export abstract class JigsawCommonAlert extends DialogBase {
 })
 export class JigsawInfoAlert extends JigsawCommonAlert {
     @ViewChild(JigsawAlert) dialog: JigsawDialog;
-    public level: AlertLevel = AlertLevel.info;
-    public buttons = [{label: 'alert.button.ok', 'type': 'primary'}];
+    @Input() public message: string;
+    @Input() public caption:string;
+    @Input() public level: AlertLevel = AlertLevel.info;
+    @Input() public buttons = [{label: 'alert.button.ok', 'type': 'primary'}];
+
+    public static show(message: string,
+                       callback?: AlertCallback,
+                       buttons?: ButtonInfo[],
+                       caption?: string,
+                       modal: boolean = true,
+                       popupOptions?: PopupOptions): PopupInfo {
+        return JigsawCommonAlert.showAlert(JigsawInfoAlert, message, callback, buttons, caption, modal, popupOptions);
+    }
 }
 
 @Component({
     templateUrl: 'common-alert.html',
-    styleUrls: ['common-alert.scss'],
     selector: 'jigsaw-warning-alert',
     host: {
         '[class.jigsaw-common-alert]': 'true'
@@ -156,13 +216,23 @@ export class JigsawInfoAlert extends JigsawCommonAlert {
 })
 export class JigsawWarningAlert extends JigsawCommonAlert {
     @ViewChild(JigsawAlert) dialog: JigsawDialog;
-    public level: AlertLevel = AlertLevel.warning;
-    public buttons = [{label: 'alert.button.ok', 'type': 'warning'}];
+    @Input() public message: string;
+    @Input() public caption:string;
+    @Input() public level: AlertLevel = AlertLevel.warning;
+    @Input() public buttons = [{label: 'alert.button.ok', 'type': 'warning'}];
+
+    public static show(message: string,
+                       callback?: AlertCallback,
+                       buttons?: ButtonInfo[],
+                       caption?: string,
+                       modal: boolean = true,
+                       popupOptions?: PopupOptions): PopupInfo {
+        return JigsawCommonAlert.showAlert(JigsawWarningAlert, message, callback, buttons, caption, modal, popupOptions);
+    }
 }
 
 @Component({
     templateUrl: 'common-alert.html',
-    styleUrls: ['common-alert.scss'],
     selector: 'jigsaw-error-alert',
     host: {
         '[class.jigsaw-common-alert]': 'true'
@@ -170,16 +240,54 @@ export class JigsawWarningAlert extends JigsawCommonAlert {
 })
 export class JigsawErrorAlert extends JigsawCommonAlert {
     @ViewChild(JigsawAlert) dialog: JigsawDialog;
-    public level: AlertLevel = AlertLevel.error;
-    public buttons = [{label: 'alert.button.ok', 'type': 'error'}];
+    @Input() public message: string;
+    @Input() public caption:string;
+    @Input() public level: AlertLevel = AlertLevel.error;
+    @Input() public buttons = [{label: 'alert.button.ok', 'type': 'error'}];
+
+    public static show(message: string,
+                       callback?: AlertCallback,
+                       buttons?: ButtonInfo[],
+                       caption?: string,
+                       modal: boolean = true,
+                       popupOptions?: PopupOptions): PopupInfo {
+        return JigsawCommonAlert.showAlert(JigsawErrorAlert, message, callback, buttons, caption, modal, popupOptions);
+    }
+}
+
+@Component({
+    templateUrl: 'common-alert.html',
+    selector: 'jigsaw-confirm-alert',
+    host: {
+        '[class.jigsaw-common-alert]': 'true'
+    }
+})
+export class JigsawConfirmAlert extends JigsawCommonAlert {
+    @ViewChild(JigsawAlert) dialog: JigsawDialog;
+    @Input() public message: string;
+    @Input() public caption:string;
+    @Input() public level: AlertLevel = AlertLevel.confirm;
+    @Input() public buttons = [{label: 'alert.button.yes', 'type': 'primary'}, {label: 'alert.button.no'}];
+
+    public static show(message: string,
+                       callback?: AlertCallback,
+                       buttons?: ButtonInfo[],
+                       caption?: string,
+                       modal: boolean = true,
+                       popupOptions?: PopupOptions): PopupInfo {
+        return JigsawCommonAlert.showAlert(JigsawConfirmAlert, message, callback, buttons, caption, modal, popupOptions);
+    }
 }
 
 @NgModule({
     imports: [JigsawDialogModule, JigsawMovableModule, JigsawButtonModule, CommonModule, TranslateModule.forRoot()],
-    declarations: [JigsawAlert, JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert],
-    exports: [JigsawDialogModule, JigsawMovableModule, JigsawAlert, JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert],
+    declarations: [JigsawAlert, JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert, JigsawConfirmAlert],
+    exports: [
+        JigsawDialogModule, JigsawMovableModule, JigsawAlert, JigsawInfoAlert, JigsawWarningAlert,
+        JigsawErrorAlert, JigsawConfirmAlert
+    ],
     providers: [TranslateService],
-    entryComponents: [JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert]
+    entryComponents: [JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert, JigsawBlock]
 })
 export class JigsawAlertModule {
     constructor(translateService: TranslateService) {
