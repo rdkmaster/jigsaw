@@ -26,7 +26,8 @@ import {JigsawScrollBarModule} from "../../directive/scrollbar/scrollbar";
     styleUrls: ['table.scss'],
     host: {
         '[style.width]': 'width',
-        '[style.height]': 'height'
+        '[style.height]': 'height',
+        '[class.jigsaw-table-host]': 'true'
     },
 })
 export class JigsawTable extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
