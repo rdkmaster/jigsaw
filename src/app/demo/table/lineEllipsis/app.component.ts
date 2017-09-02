@@ -5,14 +5,11 @@ import {
     TableData
 } from "jigsaw/core/data/table-data";
 import {
-    TableHeadCheckbox,
-    TableCellCheckbox,
-    TableCellNum,
-    TableCellEditor
+    TableCellCheckboxRenderer, TableCellRendererBase, TableCellTextEditorRenderer, TableHeadCheckboxRenderer
 } from "jigsaw/component/table/table-renderer";
 import {
-    ColumnDefine, AdditionalColumnDefine, TableCellRenderer
-} from "jigsaw/component/table/table-api";
+    ColumnDefine, AdditionalColumnDefine, tableRowIndexGenerator
+} from "jigsaw/component/table/table-typings";
 
 @Component({
     templateUrl: './app.component.html',
@@ -56,7 +53,7 @@ export class TableLineEllipsisDemoComponent {
             width: '10%',
             cell: {
                 editable: true,
-                editorRenderer: TableCellEditor,
+                editorRenderer: TableCellTextEditorRenderer,
             },
             group: true
         },
@@ -87,7 +84,7 @@ export class TableLineEllipsisDemoComponent {
                 text: '#',
             },
             cell: {
-                renderer: TableCellNum
+                data: tableRowIndexGenerator
             }
         },
         {
@@ -95,10 +92,10 @@ export class TableLineEllipsisDemoComponent {
             field: 'f4',
             width: '60px',
             header: {
-                renderer: TableHeadCheckbox
+                renderer: TableHeadCheckboxRenderer
             },
             cell: {
-                renderer: TableCellCheckbox
+                renderer: TableCellCheckboxRenderer
             }
         },
         {
@@ -131,5 +128,5 @@ export class TableLineEllipsisDemoComponent {
     template: '<a href="javascript:;">修改</a> <a href="javascript:;">删除</a>',
     styles: [`a{color: #ffaa00} a:hover{text-decoration: underline}`]
 })
-export class TableCellOption extends TableCellRenderer {
+export class TableCellOption extends TableCellRendererBase {
 }

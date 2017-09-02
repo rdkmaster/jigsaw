@@ -1,4 +1,7 @@
-<jigsaw-table1 [data]="tableData" [columnDefines]="_columns" [additionalColumnDefine]="_additionalColumns"></jigsaw-table1>
-
+<jigsaw-table [data]="tableData" [columnDefines]="_columns"
+              [additionalColumnDefines]="_additionalColumns"
+              (dataChange)="onCellChange($event)">
+</jigsaw-table>
+<p>{{_changeMsg}}</p>
 
 

@@ -1,36 +1,10 @@
-import {
-    Component, ViewEncapsulation, Renderer2, ViewContainerRef, ViewChild
-} from "@angular/core";
+import {Component, Renderer2, ViewChild, ViewContainerRef, ViewEncapsulation} from "@angular/core";
 import {TableData} from "jigsaw/core/data/table-data";
-import {
-    TableHeadCheckbox,
-    TableCellCheckbox,
-    TableCellNum,
-    TableCellEditor,
-    DefaultCellRenderer
-} from "jigsaw/component/table/table-renderer";
-import {SortAs, SortOrder} from "jigsaw/core/data/component-data";
-import {
-    ColumnDefine, AdditionalColumnDefine, TableCellRenderer,
-    tableRowIndexGenerator
-} from "jigsaw/component/table/table-api";
-import {TableHeadSelect, TableHeadIcon} from "./table-renderer";
-import {JigsawTable} from "jigsaw/component/table/table";
-import {CommonUtils} from "../../../../jigsaw/core/utils/common-utils";
+import {DefaultCellRenderer} from "jigsaw/component/table/table-renderer";
+import {AdditionalColumnDefine, ColumnDefine, tableRowIndexGenerator} from "jigsaw/component/table/table-typings";
+import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/component/table/table-renderer";
+import {TableCellOperation, TableHeadSelect} from "./table-renderer";
 
-/*
- * 操作列
- * */
-@Component({
-    template: '<a href="javascript:;">修改</a> <a href="javascript:;">删除</a>',
-    styles: [`a{color: #ffaa00} a:hover{text-decoration: underline}`]
-})
-export class TableCellOption extends TableCellRenderer {
-    constructor() {
-        super();
-        console.log('dddddddddddddddddddddddddd')
-    }
-}
 
 @Component({
     templateUrl: './app.component.html',
@@ -39,7 +13,6 @@ export class TableCellOption extends TableCellRenderer {
 })
 export class TableRendererDemoComponent {
     tableData: TableData;
-    @ViewChild('table') table:JigsawTable;
 
     constructor(public viewContainerRef: ViewContainerRef,
                 public renderer: Renderer2) {
@@ -107,6 +80,7 @@ export class TableRendererDemoComponent {
              },
              cell: {
                  renderer: DefaultCellRenderer,
+                 editable: true,
                  clazz: 'green-text'
              },
              group: true
@@ -128,7 +102,8 @@ export class TableRendererDemoComponent {
                 text: '#',
             },
             cell: {
-                data: tableRowIndexGenerator
+                data: tableRowIndexGenerator,
+                clazz: 'green-text'
             }
         },
         {
@@ -136,11 +111,13 @@ export class TableRendererDemoComponent {
             field: 'f4',
             width: '60px',
             header: {
-                sortable: true
-                // renderer: TableHeadCheckbox
+                sortable: true,
+                renderer: TableHeadCheckboxRenderer
             },
             cell: {
-                // renderer: TableCellCheckbox
+                editable: true,
+                renderer: TableCellCheckboxRenderer,
+                data: (td, row, col) => row % 2,
             }
         },
         /*{
@@ -158,10 +135,10 @@ export class TableRendererDemoComponent {
             width: '10%',
             header: {
                 text: '操作',
-                clazz: 'red-text'
+                clazz: 'green-text'
             },
             cell: {
-                renderer: TableCellOption
+                renderer: TableCellOperation
             }
         },
         /*{

@@ -1,11 +1,22 @@
-import {Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef, NgModule, OnDestroy} from "@angular/core";
-import {TableCellRenderer} from "./table-api";
-import {TableCheckboxService, TableCheckboxInfo} from "./table-service";
-import {JigsawInput, JigsawInputModule} from "../input/input";
-import {PageableTableData} from "../../core/data/table-data";
+import {AfterViewInit, Component, EventEmitter, Input, NgModule, OnDestroy, Output, ViewChild} from "@angular/core";
 import {CommonModule} from "@angular/common";
+import {JigsawInput, JigsawInputModule} from "../input/input";
 import {JigsawCheckBoxModule} from "../checkbox/index";
 import {CheckBoxStatus} from "../checkbox/typings";
+import {TableData} from "../../core/data/table-data";
+
+export class TableCellRendererBase {
+    public dispatchChangeEvent(value: any): void {
+        this.cellDataChange.emit(value)
+    }
+
+    @Input() public tableData: TableData;
+    @Input() public cellData: any;
+    @Input() public row: number;
+    @Input() public column: number;
+
+    @Output() public cellDataChange = new EventEmitter<any>();
+}
 
 /*
  * 默认表格渲染组件
@@ -13,135 +24,7 @@ import {CheckBoxStatus} from "../checkbox/typings";
 @Component({
     template: '<span class="jigsaw-table-cell-text">{{cellData}}</span>'
 })
-export class DefaultCellRenderer extends TableCellRenderer {
-}
-
-/*
- * head checkbox renderer
- * */
-@Component({
-    template: `
-        <jigsaw-checkbox [(checked)]="cellData"
-                         (checkedChange)="_$toggleSelectAll($event)">
-        </jigsaw-checkbox>`
-})
-export class TableHeadCheckbox extends TableCellRenderer implements OnInit, OnDestroy {
-    constructor(private _tableRendererService: TableCheckboxService, private _changeDetector: ChangeDetectorRef) {
-        super();
-    }
-
-    /**
-     * @internal
-     */
-    public _$toggleSelectAll(checked: CheckBoxStatus) {
-        this._tableRendererService.headState = checked;
-
-        let rows = [];
-        this._tableRendererService.checkboxStates.forEach(checkboxState => {
-            if (checkboxState.checked != checked) {
-                rows.push(checkboxState.row);
-            }
-        });
-
-        checked ? this._tableRendererService.selectAll() : this._tableRendererService.unSelectAll();
-
-        this.dispatchChangeEvent({rows: rows, cellData: checked, oldCellData: checked ? 0 : 1});
-    }
-
-    ngOnInit() {
-        this._tableRendererService.headListen(() => {
-            this._tableRendererService.headState = this.cellData = CheckBoxStatus.checked;
-            this._changeDetector.detectChanges();
-        }, () => {
-            this._tableRendererService.headState = this.cellData = CheckBoxStatus.unchecked;
-            this._changeDetector.detectChanges();
-        }, () => {
-            this._tableRendererService.headState = this.cellData = CheckBoxStatus.indeterminate;
-            this._changeDetector.detectChanges();
-        });
-    }
-
-    ngOnDestroy() {
-        this._tableRendererService.reset();
-    }
-}
-
-/*
- * cell checkbox renderer
- * */
-@Component({
-    template: '<jigsaw-checkbox [(checked)]="cellData" (checkedChange)="_$checkedChangeHandle($event)"></jigsaw-checkbox>'
-})
-export class TableCellCheckbox extends TableCellRenderer implements OnInit, OnDestroy {
-    constructor(private tableRendererService: TableCheckboxService, private _changeDetector: ChangeDetectorRef) {
-        super();
-    }
-
-    public checkboxState: TableCheckboxInfo;
-
-    private _setHeadCheckboxState() {
-        if (!this.tableRendererService.checkboxStates.find(checkboxState => checkboxState.checked == false)) {
-            this.tableRendererService.headState != CheckBoxStatus.checked && this.tableRendererService.headSelect();
-        } else if (!this.tableRendererService.checkboxStates.find(checkboxState => checkboxState.checked == true)) {
-            this.tableRendererService.headState != CheckBoxStatus.unchecked && this.tableRendererService.headUnSelect();
-        } else {
-            this.tableRendererService.headState != CheckBoxStatus.indeterminate && this.tableRendererService.headIndeterminate();
-        }
-    }
-
-    /**
-     * @internal
-     */
-    public _$checkedChangeHandle(checked) {
-        this.checkboxState.checked = checked;
-        this._setHeadCheckboxState();
-        this.dispatchChangeEvent(checked);
-    }
-
-    public setCheckboxState(checked) {
-        checked = checked ? 1 : 0;
-        this.checkboxState.checked = this.cellData = checked;
-        this._setHeadCheckboxState();
-        this.dispatchChangeEvent(checked);
-    }
-
-    ngOnInit() {
-        this.cellData = this.cellData ? 1 : 0;
-        this.tableRendererService.listen(() => {
-                this.checkboxState.checked = this.cellData = 1;
-                this._changeDetector.detectChanges();
-            },
-            () => {
-                this.checkboxState.checked = this.cellData = 0;
-                this._changeDetector.detectChanges();
-            });
-        this.checkboxState = {row: this.row, checked: this.cellData};
-        this.tableRendererService.checkboxStates.push(this.checkboxState);
-        if (this.tableRendererService.headState != CheckBoxStatus.indeterminate) {
-            this._setHeadCheckboxState();
-        }
-        this._changeDetector.detectChanges();
-    }
-
-    ngOnDestroy() {
-        this.tableRendererService.reset();
-    }
-}
-
-/*
- * 编号列
- * */
-@Component({
-    template: '<span>{{number}}</span>'
-})
-export class TableCellNum extends TableCellRenderer implements OnInit {
-    number: number;
-
-    ngOnInit() {
-        this.number = this.tableData instanceof PageableTableData ?
-            (this.tableData.pagingInfo.currentPage - 1) * this.tableData.pagingInfo.pageSize + this.row + 1 :
-            this.row + 1;
-    }
+export class DefaultCellRenderer extends TableCellRendererBase {
 }
 
 /*
@@ -149,32 +32,107 @@ export class TableCellNum extends TableCellRenderer implements OnInit {
  * */
 @Component({
     template: `
-        <jigsaw-input #input [(value)]="cellData" width="100%" [clearable]="false"
-                      (blur)="dispatchChangeEvent(cellData)"></jigsaw-input>`
+        <jigsaw-input #input [(value)]="cellData" width="100%"
+                      (blur)="dispatchChangeEvent(cellData)">
+        </jigsaw-input>
+    `
 })
-export class TableCellEditor extends TableCellRenderer implements AfterViewInit {
+export class TableCellTextEditorRenderer extends TableCellRendererBase implements AfterViewInit {
 
     @ViewChild(JigsawInput) input: JigsawInput;
 
     ngAfterViewInit() {
         this.input.focus();
     }
+}
 
+/*
+ * head checkbox renderer
+ * */
+@Component({
+    template: `<jigsaw-checkbox [(checked)]="cellData"></jigsaw-checkbox>`
+})
+export class TableHeadCheckboxRenderer extends TableCellRendererBase implements OnDestroy {
+    private _cellData;
+
+    public get cellData() {
+        return this._cellData;
+    }
+
+    public set cellData(value) {
+        this._cellData = value;
+        if (value != CheckBoxStatus.indeterminate) {
+            this.tableData.data.forEach(row => row[this.column] = value);
+            this.tableData.refresh();
+        }
+    }
+
+    private _removeRefreshCallback: Function;
+    private _tableData: TableData;
+
+    public get tableData(): TableData {
+        return this._tableData;
+    }
+
+    public set tableData(value: TableData) {
+        if (!value || value == this._tableData) {
+            return;
+        }
+        this._tableData = value;
+
+        this._removeRefreshCallback && this._removeRefreshCallback();
+        this._removeRefreshCallback = this._tableData.onRefresh(() => {
+            let type = 0;
+            this._tableData.data.forEach(row => type |= (!!row[this.column] ? 2 : 1));
+            switch (type) {
+                case 3:
+                    this._cellData = CheckBoxStatus.indeterminate;
+                    break;
+                case 2:
+                    this._cellData = CheckBoxStatus.checked;
+                    break;
+                case 1:
+                case 0:
+                default:
+                    this._cellData = CheckBoxStatus.unchecked;
+            }
+        });
+    }
+
+    ngOnDestroy() {
+        this._removeRefreshCallback && this._removeRefreshCallback();
+    }
+}
+
+/*
+ * head checkbox renderer
+ * */
+@Component({
+    template: `<jigsaw-checkbox [(checked)]="cellData"></jigsaw-checkbox>`
+})
+export class TableCellCheckboxRenderer extends TableCellRendererBase {
+    private _cellData;
+
+    public get cellData() {
+        return this._cellData;
+    }
+
+    public set cellData(value) {
+        this._cellData = value;
+        if (this.tableData && this.row != undefined && this.column != undefined) {
+            this.tableData.data[this.row][this.column] = value;
+            this.tableData.refresh();
+        }
+    }
 }
 
 @NgModule({
     declarations: [
-        DefaultCellRenderer,
-        TableHeadCheckbox,
-        TableCellCheckbox,
-        TableCellNum,
-        TableCellEditor
+        DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer, TableCellCheckboxRenderer
     ],
     imports: [
-        CommonModule,
-        JigsawCheckBoxModule,
-        JigsawInputModule
-    ],
+        CommonModule, JigsawCheckBoxModule, JigsawInputModule
+    ]
 })
 export class JigsawTableRendererModule {
 }

@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from "@angular/core";
-import {TableCellRenderer} from "jigsaw/component/table/table-api";
+import {TableCellRendererBase} from "jigsaw/component/table/table-renderer";
 import {TableData} from "../../../../jigsaw/core/data/table-data";
 
 /*
@@ -8,7 +8,7 @@ import {TableData} from "../../../../jigsaw/core/data/table-data";
 @Component({
     template: '<span class="fa fa-bus"></span>{{cellData}}'
 })
-export class TableHeadIcon extends TableCellRenderer {
+export class TableHeadIcon extends TableCellRendererBase {
 }
 
 /*
@@ -22,7 +22,7 @@ export class TableHeadIcon extends TableCellRenderer {
                        [data]="cityListForSelect" width="70" height="20">
         </jigsaw-select>`
 })
-export class TableHeadSelect extends TableCellRenderer implements OnDestroy {
+export class TableHeadSelect extends TableCellRendererBase implements OnDestroy {
     selectedCityForSelect: any;
     cityListForSelect = [];
 
@@ -54,3 +54,16 @@ export class TableHeadSelect extends TableCellRenderer implements OnDestroy {
     }
 }
 
+/*
+ * 操作列
+ * */
+@Component({
+    template: '<a href="javascript:;">修改</a> <a href="javascript:;">删除</a>',
+    styles: [`a{color: #ffaa00} a:hover{text-decoration: underline}`]
+})
+export class TableCellOperation extends TableCellRendererBase {
+    constructor() {
+        super();
+        console.log('dddddddddddddddddddddddddd')
+    }
+}

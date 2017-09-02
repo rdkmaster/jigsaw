@@ -4,8 +4,9 @@ import {
 } from "@angular/core";
 import {TableData} from "jigsaw/core/data/table-data";
 import {Http} from "@angular/http";
-import {ColumnDefine, TableCellRenderer} from "jigsaw/component/table/table-api";
+import {ColumnDefine} from "jigsaw/component/table/table-typings";
 import {JigsawInput} from "jigsaw/component/input/input";
+import {TableCellRendererBase} from "../../../../jigsaw/component/table/table-renderer";
 
 
 /*
@@ -14,7 +15,7 @@ import {JigsawInput} from "jigsaw/component/input/input";
 @Component({
     template: '<span>{{cellData}}</span>'
 })
-export class MyTableCell extends TableCellRenderer {
+export class MyTableCell extends TableCellRendererBase {
 }
 
 /*
@@ -23,7 +24,7 @@ export class MyTableCell extends TableCellRenderer {
 @Component({
     template: `<jigsaw-input #input [(value)]="cellData" [clearable]="false" (blur)="dispatchChangeEvent(cellData)"></jigsaw-input>`
 })
-export class MyTableCellEditor extends TableCellRenderer implements AfterViewInit{
+export class MyTableCellEditor extends TableCellRendererBase implements AfterViewInit{
 
     @ViewChild(JigsawInput) input: JigsawInput;
 

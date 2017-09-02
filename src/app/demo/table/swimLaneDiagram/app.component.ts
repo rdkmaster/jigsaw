@@ -2,7 +2,7 @@ import {
     Component, Renderer2, ElementRef, ViewContainerRef, ViewEncapsulation, ChangeDetectorRef
 } from "@angular/core";
 import {TableData} from "jigsaw/core/data/table-data";
-import {ColumnDefine} from "../../../../jigsaw/component/table/table-api";
+import {ColumnDefine} from "../../../../jigsaw/component/table/table-typings";
 import {TableSwimLaneCell} from "./table-renderer";
 
 @Component({

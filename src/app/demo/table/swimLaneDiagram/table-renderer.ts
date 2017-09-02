@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {TableCellRenderer} from "jigsaw/component/table/table-api";
+import {TableCellRendererBase} from "jigsaw/component/table/table-renderer";
 
 /*
  * 泳道流程图
@@ -28,7 +28,7 @@ import {TableCellRenderer} from "jigsaw/component/table/table-api";
     `,
     styleUrls: ['./table-renderer.scss']
 })
-export class TableSwimLaneCell extends TableCellRenderer {
+export class TableSwimLaneCell extends TableCellRendererBase {
     hover: boolean;
     fromNeHover: boolean;
     toNeHover: boolean;

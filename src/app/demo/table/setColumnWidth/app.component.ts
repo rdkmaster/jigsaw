@@ -1,6 +1,6 @@
 import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 import {TableData} from "jigsaw/core/data/table-data";
-import {ColumnDefine} from "jigsaw/component/table/table-api";
+import {ColumnDefine} from "jigsaw/component/table/table-typings";
 import {Http} from "@angular/http";
 
 @Component({
