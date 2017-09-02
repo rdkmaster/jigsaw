@@ -1,6 +1,6 @@
 <jigsaw-table [data]="tableData" [columnDefines]="_columns"
-              [additionalColumnDefines]="_additionalColumns"
-              (dataChange)="onCellChange($event)">
+              [additionalColumnDefines]="_additionalColumns" [lineEllipsis]="true"
+              (dataChange)="onCellChange($event)" [select]="selectedRow">
 </jigsaw-table>
 <p>{{_changeMsg}}</p>
 

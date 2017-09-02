@@ -1,4 +1,4 @@
-@import "../../assets/scss/core/basc";
+@import "../../assets/scss/core/base";
 
 $table-prefix-cls: #{$jigsaw-prefix}-table;
 
@@ -39,19 +39,19 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     margin-bottom: 14%;
     &:after{
         bottom: 0;
-        border-color: transparent transparent #aaa transparent;
+        border-color: transparent transparent $text-color transparent;
     }
     &:hover:after{
-        border-bottom-color: #333;
+        border-bottom-color: $text-color-dark;
     }
 }
 .#{$table-prefix-cls}-sort-down{
     &:after{
         top: 0;
-        border-color: #aaa transparent transparent transparent;
+        border-color: $text-color transparent transparent transparent;
     }
     &:hover:after{
-        border-top-color: #333;
+        border-top-color: $text-color-dark;
     }
 }
 

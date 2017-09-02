@@ -1,5 +1,7 @@
-import {Component, EventEmitter, Input, NgModule, OnDestroy, OnInit, Output, ViewChildren, ElementRef, QueryList,
-    Renderer2} from "@angular/core";
+import {
+    Component, EventEmitter, Input, NgModule, OnDestroy, OnInit, Output, ViewChildren, ElementRef, QueryList,
+    Renderer2, AfterViewInit
+} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule} from "../core";
 import {JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent} from "./table-inner.components";
@@ -16,6 +18,7 @@ import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer} from "./table-renderer";
 import {PopupService} from "../../service/popup.service";
+import {JigsawScrollBarModule} from "../../directive/scrollbar/scrollbar";
 
 @Component({
     selector: 'jigsaw-table, j-table',
@@ -26,17 +29,17 @@ import {PopupService} from "../../service/popup.service";
         '[style.height]': 'height'
     },
 })
-export class JigsawTable extends AbstractJigsawComponent implements OnInit, OnDestroy {
+export class JigsawTable extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
     @Output()
     public sort = new EventEmitter<SortChangeEvent>();
 
     //todo fix this
     @Input()
-    public lineEllipsis:boolean = false;
+    public lineEllipsis: boolean = false;
 
     //todo fix this
     @Input()
-    public hideHead:boolean = false;
+    public hideHead: boolean = false;
 
     private _select: number;
 
@@ -48,7 +51,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, OnDe
     public set select(value: number) {
         this._select = value;
         if (this.initialized) {
-            this._$handleRowClick(value);
+            this._$selectRow(value);
         }
     }
 
@@ -138,7 +141,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, OnDe
                 //todo change TableData cell type to any
                 if (<any>settings.cellData instanceof Function) {
                     // it is a `TableCellDataGenerator`, we need to use it to generate a value
-                    const generator:Function = <any>settings.cellData;
+                    const generator: Function = <any>settings.cellData;
                     settings.cellData = generator(this.data, i, fieldIndex);
                 }
 
@@ -261,6 +264,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, OnDe
         this._mixInAdditionalColumns();
         this._updateHeaderSettings();
         this._updateCellSettings();
+        this._setCellLineEllipsis();
     }
 
     private _removeRefreshCallback: CallbackRemoval;
@@ -337,25 +341,69 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, OnDe
         });
     }
 
-    @ViewChildren('tableRow', {read: ElementRef})
-    private _rows: QueryList<ElementRef>;
+    @Output()
+    public doubleClick: EventEmitter<number> = new EventEmitter<number>();
 
-    public _$handleRowClick(rowIndex: number) {
-        this._rows.forEach((row, index) => {
+    public _$handleRowDoubleClick(rowIndex: number) {
+        this.doubleClick.emit(rowIndex);
+    }
+
+    @ViewChildren('tableRow', {read: ElementRef})
+    private _rowElementRefs: QueryList<ElementRef>;
+
+    public _$selectRow(rowIndex: number, suppressEvent: boolean = false) {
+        this._rowElementRefs.forEach((row, index) => {
             if (index === rowIndex) {
                 this._renderer.addClass(row.nativeElement, 'jigsaw-table-row-selected');
-                this.selectChange.emit(rowIndex);
+                if (!suppressEvent) {
+                    this.selectChange.emit(rowIndex);
+                }
             } else {
                 this._renderer.removeClass(row.nativeElement, 'jigsaw-table-row-selected');
             }
         })
     }
 
-    @Output()
-    public doubleClick: EventEmitter<number> = new EventEmitter<number>();
+    /**
+     * 设置单元格内容的宽度，如果内容超过宽度，并且设置了行省略，则使用'...'+tooltip的形式显示
+     * @private
+     */
+    private _setCellLineEllipsis() {
+        //不设置省略功能，就不需要设置单元格宽度
+        if (!this.lineEllipsis || !this._rowElementRefs) return;
 
-    public _$handleRowDoubleClick(rowIndex: number) {
-        this.doubleClick.emit(rowIndex);
+        const hostWidth = this._elementRef.nativeElement.offsetWidth;
+        this._rowElementRefs.forEach((row, rowIndex) => {
+            const elements: NodeListOf<Element> = row.nativeElement.querySelectorAll('.jigsaw-table-cell-content');
+            for (let colIndex = 0; colIndex < elements.length; ++colIndex) {
+                const element: Element = elements[colIndex];
+                const cellSetting: TableCellSetting = this._$cellSettings[rowIndex][colIndex];
+                if (cellSetting.renderer && cellSetting.renderer != DefaultCellRenderer) {
+                    //没有渲染器或者用DefaultCellRenderer的单元格才能用省略
+                    continue;
+                }
+                if (!cellSetting.width) {
+                    continue;
+                }
+                let width = CommonUtils.getCssValue(cellSetting.width);
+                if (width.match(/^\s*\d+%\s*$/)) {
+                    width = hostWidth * Number(width.replace(/%/, '')) / 100 + '';
+                } else {
+                    width = width.replace(/px/, '');
+                }
+                this._renderer.setStyle(element, 'width', width + 'px');
+
+                const cellText: HTMLElement = <HTMLElement>element.querySelector('span.jigsaw-table-cell-text');
+                if (cellText && cellText.offsetWidth > +width) {
+                    cellText.setAttribute('title', cellSetting.cellData.toString());
+                }
+            }
+        })
+    }
+
+    ngAfterViewInit() {
+        this._$selectRow(this.select, true);
+        this._setCellLineEllipsis();
     }
 
     ngOnInit() {
@@ -374,11 +422,19 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, OnDe
         this._$cellSettings = null;
         this._$headerSettings = null;
     }
+
+    /**
+     * @internal
+     */
+    public _$scrollBarOptions: any = {
+        snapAmount: 30,
+        mouseWheel: {enable: true, scrollAmount: 90},
+    };
 }
 
 @NgModule({
     declarations: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
-    imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule],
+    imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, JigsawScrollBarModule],
     exports: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
     entryComponents: [TableCellTextEditorRenderer, DefaultCellRenderer]
 })
