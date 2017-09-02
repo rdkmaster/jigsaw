@@ -12,7 +12,6 @@ export class ComboSelectLabelFieldDemo {
     constructor(public viewContainerRef: ViewContainerRef,
                 public renderer: Renderer2) {
     }
-    public labelField = "name";
     public selectedCity = new ArrayCollection([{name: "北京", closable: false}]);
     citys = [
         {name: "北京", closable: false},

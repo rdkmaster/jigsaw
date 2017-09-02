@@ -2,7 +2,7 @@
 
 $option-prefix-cls: #{$jigsaw-prefix}-tile-option;
 
-#{$option-prefix-cls} {
+.#{$option-prefix-cls} {
     @include inline-block();
     width: 50px;
     height: $height-base;
@@ -13,21 +13,14 @@ $option-prefix-cls: #{$jigsaw-prefix}-tile-option;
         right: 8px;
         bottom: 8px;
     }
-}
-
-.#{$option-prefix-cls} {
-    vertical-align: top;
     cursor: pointer;
-    width: 100%;
-    height: 100%;
     border: 1px solid $border-color-base;
-    line-height: inherit;
     border-radius: 4px;
     @include prefixer(transition, all .3s $ease-in-out);
-    &:hover, &.#{$option-prefix-cls}-on {
+    &:hover, &.#{$option-prefix-cls}-active {
         color: $primary-color;
     }
-    &.#{$option-prefix-cls}-on {
+    &.#{$option-prefix-cls}-active {
         border: 1px solid $primary-color;
     }
 }

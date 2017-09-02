@@ -1,19 +1,19 @@
 <j-list width="200">
-    <j-list-item *ngFor="let title of titles">
+    <j-list-item *ngFor="let title of titles" [value]="title">
         <span j-title>{{title.title}}</span>
         <div j-sub-title>{{title.subTitle}} <span *ngIf="title.subMenu" class="fa fa-angle-right"></span></div>
     </j-list-item>
 </j-list>
 <br><br>
 <j-list width="350">
-    <j-list-item *ngFor="let title of titles" #listItem>
+    <j-list-item *ngFor="let title of titles" #listItem [value]="title">
         <div j-title><jigsaw-checkbox [(checked)]="listItem.active">{{title.title}}</jigsaw-checkbox></div>
         <div j-sub-title>{{title.subTitle}} <span *ngIf="title.subMenu" class="fa fa-angle-right"></span></div>
     </j-list-item>
 </j-list>
 <br><br>
 <j-list [multipleSelect]="true">
-    <j-list-item *ngFor="let goods of goodsList" #listItem>
+    <j-list-item *ngFor="let goods of goodsList" #listItem [value]="goods">
         <div class="goods-box">
             <jigsaw-checkbox [(checked)]="listItem.active"></jigsaw-checkbox>
             <span class="logo fa fa-{{goods.logo}}"></span>

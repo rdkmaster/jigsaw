@@ -17,5 +17,12 @@ export class TileselectBasicDemoComponent{
     constructor(public viewContainerRef: ViewContainerRef,
                 public renderer: Renderer2) {
     }
+
+    multipleSelect: boolean;
+    selectedItemsByString: string;
+
+    handleSelect(selectedItems){
+        this.selectedItemsByString = selectedItems.map(item => {return item.label}).toString()
+    }
 }
 

@@ -1,10 +1,9 @@
 @import "../../assets/scss/core/base";
 
-$select-prefix-cls: #{$jigsaw-prefix}-tile-select;
+$select-prefix-cls: #{$jigsaw-prefix}-tile;
 
-#{$select-prefix-cls} {
+.#{$select-prefix-cls} {
     @include inline-block();
-    opacity: 0;
     .#{$select-prefix-cls}-search {
         margin-bottom: 8px;
         margin-right: 8px;

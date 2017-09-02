@@ -2,28 +2,32 @@ import {AfterContentInit, Component, ContentChildren, EventEmitter, Input, NgMod
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {AbstractJigsawComponent} from "../common";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 @Component({
     selector: 'j-list-item',
     templateUrl: 'list-item.html',
     host: {
         '[class.jigsaw-list-item]': 'true',
-        '[class.jigsaw-list-item-active]': 'active',
+        '[class.jigsaw-list-item-active]': 'selected',
         '(click)': '_$handleClick()'
     }
 })
 export class JigsawListItem extends AbstractJigsawComponent{
     @Input()
-    active: boolean = false;
+    value: any;
+
+    @Input()
+    selected: boolean = false;
 
     @Output()
-    activeChange = new EventEmitter<any>();
+    selectedChange = new EventEmitter<any>();
 
     /**
      * @internal
      */
     public _$handleClick(){
-        this.activeChange.emit(this);
+        this.selectedChange.emit(this);
     }
 }
 
@@ -40,26 +44,46 @@ export class JigsawList extends AbstractJigsawComponent implements AfterContentI
     @ContentChildren(JigsawListItem) items: QueryList<JigsawListItem>;
 
     @Input()
-    multipleSelect: boolean = false;
+    public selectedItems: object[];
+
+    @Output()
+    public selectedItemsChange = new EventEmitter<object[]>();
+
+    @Input()
+    public multipleSelect: boolean = false;
+
+    //设置对象的标识
+    @Input()
+    public trackItemBy: string | string[];
 
     private _singleSelect(clickedItem: JigsawListItem){
         this.items.forEach(item => {
-            item.active = item === clickedItem ? true : false;
+            item.selected = item === clickedItem ? true : false;
         })
     }
 
     ngAfterContentInit(){
         this.items.forEach(item => {
-            item.activeChange.subscribe(() => {
+            item.selectedChange.subscribe(() => {
                 if(this.multipleSelect){
                     // 多选模式
-                    item.active = !item.active;
+                    item.selected = !item.selected;
+                    if(item.selected){
+                        // 选中
+                        this.selectedItems.push(item.value);
+                    } else {
+                        // 取消选中
+                        this.selectedItems.splice(this.selectedItems.findIndex(selectedItem =>
+                            selectedItem.toString() === item.value.toString(), 1));
+                    }
                 } else{
                     // 单选模式
-                    if(!item.active){
+                    if(!item.selected){
                         this._singleSelect(item);
+                        this.selectedItems = [item.value];
                     }
                 }
+                this.selectedItemsChange.emit(this.selectedItems);
             })
         })
     }

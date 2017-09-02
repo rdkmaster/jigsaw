@@ -1,3 +1,9 @@
-<jigsaw-tile-select [data]="citys">
-</jigsaw-tile-select>
+切换多选：<jigsaw-switch [(checked)]="multipleSelect"></jigsaw-switch>
 
+<jigsaw-tile [multipleSelect]="multipleSelect" trackItemBy="label" (selectedItemsChange)="handleSelect($event)">
+    <jigsaw-tile-option *ngFor="let city of citys" [value]="city">
+        {{city.label}}
+    </jigsaw-tile-option>
+</jigsaw-tile>
+<br>
+{{selectedItemsByString}}

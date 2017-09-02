@@ -1,4 +1,7 @@
 <h4>tileselect</h4>
-<jigsaw-tile-select  [data]="citys" tileOptionWidth="200px">
-</jigsaw-tile-select>
+<jigsaw-tile trackItemBy="label">
+    <jigsaw-tile-option *ngFor="let city of citys" [value]="city">
+        {{city.label}}
+    </jigsaw-tile-option>
+</jigsaw-tile>
 

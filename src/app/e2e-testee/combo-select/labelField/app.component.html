@@ -7,14 +7,15 @@
     maxWidth="500"
     [clearable]="true">
     <ng-template>
-        <jigsaw-tile-select
+        <jigsaw-tile
             [(selectedItems)]="selectedCity"
-            [labelField]="labelField"
+            trackItemBy="name"
             [searchable]="true"
-            [data]="citys"
-            tileOptionWidth="21.4%"
             style="padding: 8px 0 8px 8px">
-        </jigsaw-tile-select>
+            <jigsaw-tile-option *ngFor="let city of citys" [value]="city" width="21.4%">
+                {{city.label}}
+            </jigsaw-tile-option>
+        </jigsaw-tile>
     </ng-template>
 </jigsaw-combo-select>
 

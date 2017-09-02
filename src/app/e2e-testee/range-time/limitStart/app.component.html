@@ -1,6 +1,6 @@
 <h4>LimitStart Time</h4>
 
-LimitStart : <jigsaw-tile-select [data]="datas" [(selectedItems)]="limitStart" [multipleSelect]="false" [tileOptionWidth]="80"></jigsaw-tile-select>
+LimitStart : <jigsaw-tile [data]="datas" [(selectedItems)]="limitStart" [multipleSelect]="false" [tileOptionWidth]="80"></jigsaw-tile>
 <br>
 <jigsaw-range-time [(beginDate)]="beginDate" [limitStart]="limitStart[0].label" [(endDate)]="endDate" ></jigsaw-range-time><br>
 
