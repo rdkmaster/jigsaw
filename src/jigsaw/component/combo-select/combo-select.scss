@@ -94,5 +94,8 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
         width: 12px;
         transform: translateY(-50%);
         color: $text-color-secondary;
+        .#{$jigsaw-combo-select}-disabled & {
+            color: darken($disabled-bg, 8%);
+        }
     }
 }

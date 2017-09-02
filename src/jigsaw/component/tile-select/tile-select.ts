@@ -86,16 +86,18 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         if (!(this.selectedItems instanceof ArrayCollection) || !this._items.length) {
             return;
         }
-        this._items.forEach(item => {
-            let _hasSelected = false;
-            this._selectedItems.forEach(selectedItem => {
-                if (CommonUtils.compareWithKeyProperty(item.value, selectedItem, <string[]>this.trackItemBy)) {
-                    _hasSelected = true;
-                }
+        setTimeout(() => {
+            this._items.forEach(item => {
+                let hasSelected = false;
+                this._selectedItems.forEach(selectedItem => {
+                    if (CommonUtils.compareWithKeyProperty(item.value, selectedItem, <string[]>this.trackItemBy)) {
+                        hasSelected = true;
+                    }
+                });
+                item.selected = hasSelected;
+                item.changeDetector.detectChanges();
             });
-            item.selected = _hasSelected;
-            item.changeDetector.detectChanges();
-        });
+        })
     }
 
     ngOnInit() {
