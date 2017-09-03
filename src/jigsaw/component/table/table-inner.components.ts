@@ -16,7 +16,7 @@ import {
     Type,
     ViewChild
 } from "@angular/core";
-import {JigsawRendererHost} from "../core";
+import {JigsawRendererHost} from "../common";
 import {SortChangeEvent, TableDataChangeEvent} from "./table-typings";
 import {TableData} from "../../core/data/table-data";
 import {SortAs, SortOrder} from "../../core/data/component-data";
@@ -87,8 +87,7 @@ export class TableInternalCellBase implements AfterViewInit {
                 <span (click)="_$sortAsc()" class="jigsaw-table-sort-btn jigsaw-table-sort-up"></span>
                 <span (click)="_$sortDes()" class="jigsaw-table-sort-btn jigsaw-table-sort-down"></span>
             </div>
-        </div>`,
-    styleUrls: ['table-head.scss']
+        </div>`
 })
 /**
  * 表头单元格

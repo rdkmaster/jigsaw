@@ -20,6 +20,7 @@ import {SortAs, SortOrder} from "../../core/data/component-data";
 import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer} from "./table-renderer";
 import {PopupService} from "../../service/popup.service";
 import {JigsawScrollBarModule} from "../../directive/scrollbar/scrollbar";
+import {AffixUtils} from "../../core/utils/internal-utils";
 
 @Component({
     selector: 'jigsaw-table, j-table',
@@ -31,6 +32,10 @@ import {JigsawScrollBarModule} from "../../directive/scrollbar/scrollbar";
     },
 })
 export class JigsawTable extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
+        super()
+    }
+
     @Output()
     public sort = new EventEmitter<SortChangeEvent>();
 
@@ -58,10 +63,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     @Output()
     public selectChange: EventEmitter<number> = new EventEmitter<number>();
-
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, private _popupService: PopupService) {
-        super()
-    }
 
     /**
      * @internal
@@ -211,29 +212,32 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     private _mixInAdditionalColumns(): void {
-        if (this._additionalColumnDefines) {
-            for (let i = this._additionalColumnDefines.length - 1; i >= 0; i--) {
-                const acd = this._additionalColumnDefines[i];
-                if (this.data.field.indexOf(acd.field) != -1) {
-                    // existed
-                    continue;
-                }
-
-                const cd: ColumnDefine = {
-                    target: acd.field,
-                    header: acd.header,
-                    group: acd.group,
-                    cell: acd.cell,
-                    width: acd.width,
-                    visible: acd.visible
-                };
-                const pos = acd.pos == undefined || acd.pos == null ? this._data.field.length : acd.pos;
-                this.columnDefines.splice(pos, 0, cd);
-                // the acd.cell.data could be a `TableCellDataGenerator`
-                this.data.insertColumn(pos, acd.cell.data, acd.field, acd.header.text ? acd.header.text : acd.field);
-            }
+        if (!this._additionalColumnDefines) {
+            return;
         }
+        for (let i = this._additionalColumnDefines.length - 1; i >= 0; i--) {
+            const acd = this._additionalColumnDefines[i];
+            if (this.data.field.indexOf(acd.field) != -1) {
+                // existed
+                continue;
+            }
 
+            const cd: ColumnDefine = {
+                target: acd.field,
+                header: acd.header,
+                group: acd.group,
+                cell: acd.cell,
+                width: acd.width,
+                visible: acd.visible
+            };
+            const pos = acd.pos == undefined || acd.pos == null ? this._data.field.length : acd.pos;
+            this.columnDefines.splice(pos, 0, cd);
+            // the acd.cell.data could be a `TableCellDataGenerator`
+            this.data.insertColumn(pos, acd.cell.data, acd.field, acd.header.text ? acd.header.text : acd.field);
+        }
+    }
+
+    private _normalizeColumnTarget() {
         // normalize the target to `TableColumnTargetFinder`
         this.columnDefines.forEach((colDef, index) => {
             const cd = <ColumnDefine>CommonUtils.shallowCopy(colDef);
@@ -262,10 +266,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             console.error('invalid table data, need a "field" property.');
             return;
         }
-        this._mixInAdditionalColumns();
         this._updateHeaderSettings();
         this._updateCellSettings();
         this._setCellLineEllipsis();
+        this._sortColumnByDefault();
     }
 
     private _removeRefreshCallback: CallbackRemoval;
@@ -284,9 +288,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback();
         }
-        this._removeRefreshCallback = value.onRefresh(this._update, this);
         this._data = value;
+
+        this._removeRefreshCallback = value.onRefresh(this._update, this);
         this._checkAdditionalColumnFields();
+        this._mixInAdditionalColumns();
+        this._normalizeColumnTarget();
         this._update();
     }
 
@@ -304,8 +311,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (!value || value == this._columnDefines) {
             return;
         }
+        if (!this._columnDefines) {
+            console.warn('do not support updating the columnDefines yet! ' +
+                'you can give the table every possible column defines when you init the table.');
+            return;
+        }
         this._columnDefines = value;
-        this._update();
     }
 
     private _additionalColumnDefines: AdditionalColumnDefine[] = [];
@@ -320,12 +331,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return;
         }
         if (!this._additionalColumnDefines) {
-            console.warn('do not support updating the additionalColumnDefine yet!');
+            console.warn('do not support updating the additionalColumnDefine yet! ' +
+                'you can give the table every possible column defines when you init the table.');
             return;
         }
         this._additionalColumnDefines = value;
         this._checkAdditionalColumnFields();
-        this._update();
     }
 
     private _checkAdditionalColumnFields(): void {
@@ -366,6 +377,59 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     /**
+     * 一旦数据有更新，表格将自动对已经设置了排序的行做自动排序处理。在某些情况下会很方便，但是在表格数据量大的时候，可能会有性能问题，
+     * 表格数据量大的时候，最好关闭这个选项，由应用自行对`data`属性做排序。也可以不自动排序，由用户自行点击列头触发行排序
+     *
+     * @type {boolean}
+     */
+    @Input() public autoSortOnChange: boolean = false;
+
+    private _sortedColumn: number = -1;
+    private _sortedOrder: SortOrder;
+
+    private _sortColumnByDefault() {
+        if (this._sortedColumn == -1) {
+            // the user has sorted some column manually, we do not sort by default.
+            return;
+        }
+        let headSetting = this._$headerSettings.find(headSetting => headSetting.sortable &&
+            (headSetting.defaultSortOrder == SortOrder.asc || headSetting.defaultSortOrder == SortOrder.des)
+        );
+        if (!headSetting) {
+            // no default sort column given by the user.
+            return;
+        }
+        this.data.sort(headSetting.sortAs, headSetting.defaultSortOrder, headSetting.field);
+    }
+
+    @ViewChildren('floatingHeader', {read: ElementRef})
+    private _floatingHeaders: QueryList<ElementRef>;
+    @ViewChildren('realHeader', {read: ElementRef})
+    private _realHeaders: QueryList<ElementRef>;
+
+    private _setFloatingHeadWidth(): void {
+        const ne = this._elementRef.nativeElement;
+        const hostWidth = ne.offsetWidth + 'px';
+
+        //消除table非必要的横向滚动条(可能会有的小数点像素的四舍五入产生的滚动条)，这里手动让.jigsaw-table和.jigsaw-table-box宽度相同
+        this._renderer.setStyle(ne.querySelector('.jigsaw-table'), 'width', hostWidth);
+        this._renderer.setStyle(ne.querySelector('.jigsaw-table-box'), 'width', hostWidth);
+
+        //获取表格的实际宽度
+        const tableWidth = ne.querySelector('.jigsaw-table').offsetWidth + 'px';
+
+        //设置浮动表头的宽度
+        this._renderer.setStyle(ne.querySelector('.jigsaw-table-fixed-head'), 'width', tableWidth);
+
+        const realHeaderArray = this._realHeaders.toArray();
+        //设置浮动表头单元格宽度
+        this._floatingHeaders.forEach((floatingHeader, index) => {
+            this._renderer.setStyle(floatingHeader.nativeElement, 'width',
+                realHeaderArray[index].nativeElement.offsetWidth + 'px');
+        });
+    }
+
+    /**
      * 设置单元格内容的宽度，如果内容超过宽度，并且设置了行省略，则使用'...'+tooltip的形式显示
      * @private
      */
@@ -402,26 +466,101 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         })
     }
 
+    private _removeWindowScrollListener: Function;
+    private _removeWindowResizeListener: Function;
+
+    private _addWindowListener() {
+        this._removeWindowListener();
+
+        // this._removeWindowLoadListener = this._renderer.listen('window', 'load', () => {
+        //     this._setCellLineEllipsis();
+        //     this._setFixedHeadWidth();
+        // });
+        this._removeWindowResizeListener = this._renderer.listen('window', 'resize', () => {
+            this._setCellLineEllipsis();
+            this._setFloatingHeadWidth();
+            this._floatHead();
+            // this._scrollBar.scrollTo([null, 'left']);
+            // this._renderer.setStyle(this._floatingHeadElement, 'left', 0);
+        });
+        this._removeWindowScrollListener = this._renderer.listen('window', 'scroll', () => {
+            this._floatHead();
+        });
+    }
+
+    private _floatingHeadElement: HTMLElement;
+
+    private _floatHead() {
+        const maxTop = this._elementRef.nativeElement.offsetHeight - this._floatingHeadElement.offsetHeight;
+        let tableDocumentTop = AffixUtils.offset(this._elementRef.nativeElement).top;
+        let scrollTop = AffixUtils.getScrollTop();
+        let top = scrollTop - tableDocumentTop;
+        if (top > 0 && top < maxTop) {
+            this._renderer.setStyle(this._floatingHeadElement, 'top', top + 'px');
+        } else if (top <= 0) {
+            this._renderer.setStyle(this._floatingHeadElement, 'top', '0px');
+        } else if (top >= maxTop) {
+            this._renderer.setStyle(this._floatingHeadElement, 'top', maxTop);
+        }
+    }
+
+    private _removeWindowListener() {
+        // if (this._removeWindowLoadListener) {
+        //     this._removeWindowLoadListener();
+        //     this._removeWindowLoadListener = null;
+        // }
+        if (this._removeWindowScrollListener) {
+            this._removeWindowScrollListener();
+            this._removeWindowScrollListener = null;
+        }
+        if (this._removeWindowResizeListener) {
+            this._removeWindowResizeListener();
+            this._removeWindowResizeListener = null;
+        }
+    }
+
     ngAfterViewInit() {
         this._$selectRow(this.select, true);
         this._setCellLineEllipsis();
+        this._setFloatingHeadWidth();
     }
 
     ngOnInit() {
         super.ngOnInit();
+
+        this._mixInAdditionalColumns();
+        this._normalizeColumnTarget();
         this._update();
+
+        this._addWindowListener();
+
+        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.jigsaw-table-box'),
+            'max-height', this._maxHeight);
+        this._floatingHeadElement = this._elementRef.nativeElement.querySelector(".jigsaw-table-fixed-head");
+
+        if (this.lineEllipsis) {
+            this._renderer.addClass(this._elementRef.nativeElement.querySelector('table.jigsaw-table tbody'),
+                'jigsaw-table-line-ellipsis');
+        }
     }
 
     ngOnDestroy() {
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback();
+            this._removeRefreshCallback = null;
         }
+        this._removeWindowListener();
+
         this._data = null;
         this._lastFields = null;
         this._columnDefines = null;
         this._additionalColumnDefines = null;
         this._$cellSettings = null;
         this._$headerSettings = null;
+        this._floatingHeadElement = null;
+        this._floatingHeaders = null;
+        this._realHeaders = null;
+        this._rowElementRefs = null;
     }
 
     /**

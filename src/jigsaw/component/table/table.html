@@ -1,7 +1,7 @@
-<table [style.display]="hideHead ? 'none' : 'table'" class="jigsaw-table-fixed-head jigsaw-table-hide">
+<table [style.display]="hideHead || !initialized ? 'none' : 'table'" class="jigsaw-table-fixed-head">
     <thead>
     <tr>
-        <td *ngFor="let head of _$headerSettings; index as colIndex"
+        <td #floatingHeader *ngFor="let head of _$headerSettings; index as colIndex"
             width="{{head.width}}" class="{{head.clazz}}">
             <jigsaw-table-header [tableData]="data"
                                  [cellData]="head.cellData"
@@ -19,11 +19,11 @@
     </thead>
 </table>
 
-<div class="jigsaw-table-box" [class.jigsaw-table-hide-head]="hideHead" jigsaw-scroll-bar [scrollBarOptions]="_$scrollBarOptions">
+<div class="jigsaw-table-box" [class.jigsaw-table-hide-head]="hideHead">
     <table class="jigsaw-table">
         <thead>
         <tr>
-            <td *ngFor="let head of _$headerSettings; index as colIndex"
+            <td  #realHeader *ngFor="let head of _$headerSettings; index as colIndex"
                 width="{{head.width}}" class="{{head.clazz}}">
                 <jigsaw-table-header [tableData]="data"
                                      [cellData]="head.cellData"
