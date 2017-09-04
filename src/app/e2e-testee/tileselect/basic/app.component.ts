@@ -19,10 +19,19 @@ export class TileselectBasicDemoComponent{
     }
 
     multipleSelect: boolean;
-    selectedItemsByString: string;
+    selectedItemsStr1: string;
 
     handleSelect(selectedItems){
-        this.selectedItemsByString = selectedItems.map(item => {return item.label}).toString()
+        this.selectedItemsStr1 = selectedItems.map(item => {return item.label}).toString()
+    }
+
+    selectedItems2 = [
+        {label: "上海"},
+        {label: "深圳"},
+    ];
+    selectedItemsStr2: string;
+    handleSelect2(selectedItems){
+        this.selectedItemsStr2 = selectedItems.map(item => {return item.label}).toString()
     }
 }
 

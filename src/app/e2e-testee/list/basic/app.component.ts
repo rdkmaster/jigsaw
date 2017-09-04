@@ -4,7 +4,7 @@ import {Component} from "@angular/core";
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class ListBasicDemoComponent{
+export class ListBasicDemoComponent {
     titles = [
         {
             title: 'Settings',
@@ -54,15 +54,41 @@ export class ListBasicDemoComponent{
     selectedItems1: string;
     selectedItems2: string;
     selectedItems3: string;
-    handleSelect(selectedItems){
-        this.selectedItems1 = selectedItems.map(item => {return item.title}).toString()
+
+    handleSelect(selectedItems) {
+        this.selectedItems1 = selectedItems.map(item => {
+            return item.title
+        }).toString()
     }
 
-    handleSelect2(selectedItems){
-        this.selectedItems2 = selectedItems.map(item => {return item.title}).toString()
+    handleSelect2(selectedItems) {
+        this.selectedItems2 = selectedItems.map(item => {
+            return item.title
+        }).toString()
     }
 
-    handleSelect3(selectedItems){
-        this.selectedItems3 = selectedItems.map(item => {return item.name}).toString()
+    handleSelect3(selectedItems) {
+        this.selectedItems3 = selectedItems.map(item => {
+            return item.name
+        }).toString()
     }
+
+    selectedItems4 = [
+        {
+            logo: 'camera',
+            name: 'camera',
+            desc: 'A camera is an optical instrument for recording or capturing images, which may be stored locally, transmitted to another location, or both.'
+        },{
+            logo: 'futbol-o',
+            name: 'football',
+            desc: 'Football is a family of team sports that involve, to varying degrees, kicking a ball with the foot to score a goal. '
+        },
+    ];
+    selectedItemsStr4: string;
+    handleSelect4(selectedItems) {
+        this.selectedItemsStr4 = selectedItems.map(item => {
+            return item.name
+        }).toString()
+    }
+
 }

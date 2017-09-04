@@ -1,9 +1,29 @@
-切换多选：<jigsaw-switch [(checked)]="multipleSelect"></jigsaw-switch>
+<div class="live-demo-wrap">
+    <h2>Tile</h2>
+    <div class="demo-1 live-demo">
+        <h3>单选/多选</h3>
+        <jigsaw-tile [multipleSelect]="multipleSelect" trackItemBy="label" (selectedItemsChange)="handleSelect($event)">
+            <jigsaw-tile-option *ngFor="let city of citys" [value]="city">
+                {{city.label}}
+            </jigsaw-tile-option>
+        </jigsaw-tile>
+        <div class="toggle">
+            <label>切换多选：</label>
+            <jigsaw-switch [(checked)]="multipleSelect"></jigsaw-switch>
+        </div>
+        <p class="message">选中的菜单是: <span>{{selectedItemsStr1}}</span></p>
+    </div>
+    <div class="demo-2 live-demo">
+        <h3>有初始选中值</h3>
+        <jigsaw-tile [multipleSelect]="true"
+                     trackItemBy="label"
+                     [selectedItems]="selectedItems2"
+                     (selectedItemsChange)="handleSelect2($event)">
+            <jigsaw-tile-option *ngFor="let city of citys" [value]="city">
+                {{city.label}}
+            </jigsaw-tile-option>
+        </jigsaw-tile>
 
-<jigsaw-tile [multipleSelect]="multipleSelect" trackItemBy="label" (selectedItemsChange)="handleSelect($event)">
-    <jigsaw-tile-option *ngFor="let city of citys" [value]="city">
-        {{city.label}}
-    </jigsaw-tile-option>
-</jigsaw-tile>
-<br>
-{{selectedItemsByString}}
+        <p class="message">选中的菜单是: <span>{{selectedItemsStr2}}</span></p>
+    </div>
+</div>
