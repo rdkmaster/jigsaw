@@ -12,6 +12,11 @@ $list-item-prefix-cls: #{$jigsaw-prefix}-list-item;
     &.#{$list-item-prefix-cls}-active {
         background: $item-active-bg;
     }
+    &.#{$list-item-prefix-cls}-disabled {
+        background: $background-color-base;
+        color: $text-color-secondary;
+        cursor: not-allowed;
+    }
     &-title-box {
         @include clearfix();
     }

@@ -158,6 +158,8 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
 export class AbstractJigsawItemComponent extends AbstractJigsawComponent{
     @Input() public value: any;
 
+    @Input() public disabled: boolean = false;
+
     @Input()
     public selected: boolean = false; // 选中状态
 
@@ -202,6 +204,7 @@ export class JigsawTileSelect extends AbstractJigsawGroupComponent{
         '[style.line-height]': 'height',
         '[class.jigsaw-tile-option]': 'true',
         '[class.jigsaw-tile-option-active]': 'selected',
+        '[class.jigsaw-tile-option-disabled]': 'disabled',
         '(click)': '_$handleClick()'
     }
 })
@@ -216,7 +219,9 @@ export class JigsawTileOption extends AbstractJigsawItemComponent {
      * @internal
      */
     public _$handleClick(): void {
-        this.selectedChange.emit(this);
+        if(!this.disabled){
+            this.selectedChange.emit(this);
+        }
     }
 
 }

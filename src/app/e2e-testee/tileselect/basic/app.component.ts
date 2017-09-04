@@ -8,10 +8,10 @@ export class TileselectBasicDemoComponent{
 
     citys = new ArrayCollection([
         {label: "北京"},
-        {label: "上海"},
+        {label: "上海", disabled: true},
         {label: "南京"},
         {label: "深圳"},
-        {label: "长沙"},
+        {label: "长沙", disabled: true},
         {label: "西安"}
     ]);
     constructor(public viewContainerRef: ViewContainerRef,
@@ -32,6 +32,15 @@ export class TileselectBasicDemoComponent{
     selectedItemsStr2: string;
     handleSelect2(selectedItems){
         this.selectedItemsStr2 = selectedItems.map(item => {return item.label}).toString()
+    }
+
+    selectedItems3 = [
+        {label: "南京"},
+        {label: "深圳"},
+    ];
+    selectedItemsStr3: string;
+    handleSelect3(selectedItems){
+        this.selectedItemsStr3 = selectedItems.map(item => {return item.label}).toString()
     }
 }
 

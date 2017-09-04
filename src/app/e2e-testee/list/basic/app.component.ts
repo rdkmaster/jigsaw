@@ -42,7 +42,8 @@ export class ListBasicDemoComponent {
         {
             logo: 'car',
             name: 'car',
-            desc: 'A car (or automobile) is a wheeled motor vehicle used for transportation.'
+            desc: 'A car (or automobile) is a wheeled motor vehicle used for transportation.',
+            disabled: true
         },
         {
             logo: 'futbol-o',
@@ -91,4 +92,10 @@ export class ListBasicDemoComponent {
         }).toString()
     }
 
+    selectedItemsStr5: string;
+    handleSelect5(selectedItems) {
+        this.selectedItemsStr5 = selectedItems.map(item => {
+            return item.name
+        }).toString()
+    }
 }

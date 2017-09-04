@@ -9,6 +9,7 @@ $option-prefix-cls: #{$jigsaw-prefix}-tile-option;
     line-height: $height-base;
     font-size: $font-size-base;
     text-align: center;
+    color: $text-color;
     margin: {
         right: 8px;
         bottom: 8px;
@@ -22,5 +23,10 @@ $option-prefix-cls: #{$jigsaw-prefix}-tile-option;
     }
     &.#{$option-prefix-cls}-active {
         border: 1px solid $primary-color;
+    }
+    &.#{$option-prefix-cls}-disabled {
+        background: $background-color-base;
+        color: $text-color-secondary;
+        cursor: not-allowed;
     }
 }

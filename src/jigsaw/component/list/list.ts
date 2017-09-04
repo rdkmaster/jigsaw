@@ -35,6 +35,7 @@ export class JigsawList extends AbstractJigsawGroupComponent implements AfterCon
     host: {
         '[class.jigsaw-list-item]': 'true',
         '[class.jigsaw-list-item-active]': 'selected',
+        '[class.jigsaw-list-item-disabled]': 'disabled',
         '(click)': '_$handleClick()'
     }
 })
@@ -48,7 +49,9 @@ export class JigsawListItem extends AbstractJigsawItemComponent{
      * @internal
      */
     public _$handleClick(): void {
-        this.selectedChange.emit(this);
+        if(!this.disabled){
+            this.selectedChange.emit(this);
+        }
     }
 }
 
