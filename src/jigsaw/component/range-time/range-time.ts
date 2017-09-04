@@ -265,17 +265,21 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
         if (!value) {
             return;
         }
-        if (value.hasOwnProperty('beginDate')) {
-            this._beginDate = TimeService.convertValue(value.beginDate, <TimeGr>this.gr);
-            this._$endTimeLimitEnd = this._calculateLimitEnd();
-            this._startTimeLimitEnd = this._beginDate;
-            this.beginDateChange.emit(this._beginDate);
-            this.change.emit({"beginDate": this._beginDate, "endDate": this._endDate});
+        if (value.hasOwnProperty('beginDate') && this._beginDate != value.beginDate) {
+            setTimeout(() => {
+                this._beginDate = TimeService.convertValue(value.beginDate, <TimeGr>this.gr);
+                this._$endTimeLimitEnd = this._calculateLimitEnd();
+                this._startTimeLimitEnd = this._beginDate;
+                this.beginDateChange.emit(this._beginDate);
+                this.change.emit({"beginDate": this._beginDate, "endDate": this._endDate});
+            }, 0);
         }
-        if (value.hasOwnProperty('endDate')) {
-            this._endDate = TimeService.convertValue(value.endDate, <TimeGr>this.gr);
-            this.endDateChange.emit(this._endDate);
-            this.change.emit({"beginDate": this._beginDate, "endDate": this._endDate});
+        if (value.hasOwnProperty('endDate') && this._endDate != value.endDate) {
+            setTimeout(() => {
+                this._endDate = TimeService.convertValue(value.endDate, <TimeGr>this.gr);
+                this.endDateChange.emit(this._endDate);
+                this.change.emit({"beginDate": this._beginDate, "endDate": this._endDate});
+            }, 0);
         }
     }
 
