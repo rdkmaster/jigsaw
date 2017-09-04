@@ -1,6 +1,7 @@
 <h4>WeekStart</h4>
 
-WeekStart:<jigsaw-tile [data]="datas" [(selectedItems)]="weekStart" [multipleSelect]="false">
+WeekStart:<jigsaw-tile trackItemBy="label" [(selectedItems)]="weekStart" [multipleSelect]="false">
+    <jigsaw-tile-option *ngFor="let item of datas" [value]="item">{{item.label}}</jigsaw-tile-option>
 </jigsaw-tile><br>
 
 <jigsaw-time [(date)]="date" [weekStart]="weekStart[0].label">

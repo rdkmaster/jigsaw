@@ -69,9 +69,10 @@
     <div class="field">
         <label>Favorite Cities</label>
         <div class="value-border">
-            <jigsaw-tile ngModel name="favoriteCities" width="250px" tileOptionWidth="72px" [data]="[
+            <jigsaw-tile ngModel name="favoriteCities" width="250px" trackItemBy="label">
+                <jigsaw-tile-option *ngFor="let item of [
                     {label: 'Bei Jing'}, {label: 'Shang Hai'}, {label: 'Nan Jing'},
-                    {label: 'Chang Sha'}, {label: 'Cheng Du'}, {label: 'Chong Qing'}]">
+                    {label: 'Chang Sha'}, {label: 'Cheng Du'}, {label: 'Chong Qing'}]" [value]="item" width="72">{{item.label}}</jigsaw-tile-option>
             </jigsaw-tile>
         </div>
     </div>
