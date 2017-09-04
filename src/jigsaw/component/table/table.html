@@ -1,4 +1,4 @@
-<table [style.display]="hideHead || !initialized ? 'none' : 'table'" class="jigsaw-table-fixed-head">
+<table [style.display]="hideHeader || !initialized ? 'none' : 'table'" class="jigsaw-table-floating-header">
     <thead>
     <tr>
         <td #floatingHeader *ngFor="let head of _$headerSettings; index as colIndex"
@@ -19,7 +19,7 @@
     </thead>
 </table>
 
-<div class="jigsaw-table-box" [class.jigsaw-table-hide-head]="hideHead">
+<div class="jigsaw-table-box" [class.jigsaw-table-hide-head]="hideHeader">
     <table class="jigsaw-table">
         <thead>
         <tr>

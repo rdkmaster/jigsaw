@@ -1,6 +1,6 @@
 import {
     Component, EventEmitter, Input, NgModule, OnDestroy, OnInit, Output, ViewChildren, ElementRef, QueryList,
-    Renderer2, AfterViewInit
+    Renderer2, AfterViewInit, NgZone
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule} from "../common";
@@ -32,7 +32,7 @@ import {AffixUtils} from "../../core/utils/internal-utils";
     },
 })
 export class JigsawTable extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, private _zone:NgZone) {
         super()
     }
 
@@ -43,9 +43,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @Input()
     public lineEllipsis: boolean = false;
 
-    //todo fix this
     @Input()
-    public hideHead: boolean = false;
+    public hideHeader: boolean = false;
 
     private _select: number;
 
@@ -269,7 +268,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._updateHeaderSettings();
         this._updateCellSettings();
         this._setCellLineEllipsis();
-        this._sortColumnByDefault();
+        this._sortColumn();
     }
 
     private _removeRefreshCallback: CallbackRemoval;
@@ -382,23 +381,22 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      *
      * @type {boolean}
      */
-    @Input() public autoSortOnChange: boolean = false;
+    @Input()
+    public autoSort: boolean = false;
 
     private _sortedColumn: number = -1;
     private _sortedOrder: SortOrder;
 
-    private _sortColumnByDefault() {
-        if (this._sortedColumn == -1) {
-            // the user has sorted some column manually, we do not sort by default.
+    private _sortColumn():void {
+        if (!this.autoSort) {
             return;
         }
         let headSetting = this._$headerSettings.find(headSetting => headSetting.sortable &&
             (headSetting.defaultSortOrder == SortOrder.asc || headSetting.defaultSortOrder == SortOrder.des)
         );
-        if (!headSetting) {
-            // no default sort column given by the user.
-            return;
-        }
+        // if (headSetting) {
+        //     this._sortedColumn = headSetting.field;
+        // }
         this.data.sort(headSetting.sortAs, headSetting.defaultSortOrder, headSetting.field);
     }
 
@@ -419,7 +417,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         const tableWidth = ne.querySelector('.jigsaw-table').offsetWidth + 'px';
 
         //设置浮动表头的宽度
-        this._renderer.setStyle(ne.querySelector('.jigsaw-table-fixed-head'), 'width', tableWidth);
+        this._renderer.setStyle(ne.querySelector('.jigsaw-table-floating-header'), 'width', tableWidth);
 
         const realHeaderArray = this._realHeaders.toArray();
         //设置浮动表头单元格宽度
@@ -466,6 +464,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         })
     }
 
+    @Input()
+    public floatingHeader: boolean = false;
+
     private _removeWindowScrollListener: Function;
     private _removeWindowResizeListener: Function;
 
@@ -483,14 +484,20 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             // this._scrollBar.scrollTo([null, 'left']);
             // this._renderer.setStyle(this._floatingHeadElement, 'left', 0);
         });
-        this._removeWindowScrollListener = this._renderer.listen('window', 'scroll', () => {
-            this._floatHead();
-        });
+
+        if (this.floatingHeader && !this.hideHeader) {
+            this._zone.runOutsideAngular(() => {
+                this._removeWindowScrollListener = this._renderer.listen('window', 'scroll', () => {
+                    this._floatHead();
+                });
+            });
+        }
     }
 
     private _floatingHeadElement: HTMLElement;
 
     private _floatHead() {
+        // todo 改用决定定位+display是否none来实现表头浮动
         const maxTop = this._elementRef.nativeElement.offsetHeight - this._floatingHeadElement.offsetHeight;
         let tableDocumentTop = AffixUtils.offset(this._elementRef.nativeElement).top;
         let scrollTop = AffixUtils.getScrollTop();
@@ -536,7 +543,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
         this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.jigsaw-table-box'),
             'max-height', this._maxHeight);
-        this._floatingHeadElement = this._elementRef.nativeElement.querySelector(".jigsaw-table-fixed-head");
+        this._floatingHeadElement = this._elementRef.nativeElement.querySelector(".jigsaw-table-floating-header");
 
         if (this.lineEllipsis) {
             this._renderer.addClass(this._elementRef.nativeElement.querySelector('table.jigsaw-table tbody'),

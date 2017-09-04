@@ -52,7 +52,7 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
                 }
             }
         }
-        &.#{$table-prefix-cls}-fixed-head {
+        &.#{$table-prefix-cls}-floating-header {
             position: absolute;
             z-index: 10;
         }

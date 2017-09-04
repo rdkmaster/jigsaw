@@ -14,7 +14,7 @@ import {TableCellOperation, TableHeadSelect} from "./table-renderer";
 export class TableRendererDemoComponent {
     tableData: TableData;
     selectedRow = 2;
-    hideHead = false
+    hideHeader = false
 
     constructor(public viewContainerRef: ViewContainerRef,
                 public renderer: Renderer2) {
