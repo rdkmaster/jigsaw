@@ -1,26 +1,39 @@
-<j-list width="200">
-    <j-list-item *ngFor="let title of titles" [value]="title">
-        <span j-title>{{title.title}}</span>
-        <div j-sub-title>{{title.subTitle}} <span *ngIf="title.subMenu" class="fa fa-angle-right"></span></div>
-    </j-list-item>
-</j-list>
-<br><br>
-<j-list width="350">
-    <j-list-item *ngFor="let title of titles" #listItem [value]="title">
-        <div j-title><jigsaw-checkbox [(checked)]="listItem.active">{{title.title}}</jigsaw-checkbox></div>
-        <div j-sub-title>{{title.subTitle}} <span *ngIf="title.subMenu" class="fa fa-angle-right"></span></div>
-    </j-list-item>
-</j-list>
-<br><br>
-<j-list [multipleSelect]="true">
-    <j-list-item *ngFor="let goods of goodsList" #listItem [value]="goods">
-        <div class="goods-box">
-            <jigsaw-checkbox [(checked)]="listItem.active"></jigsaw-checkbox>
-            <span class="logo fa fa-{{goods.logo}}"></span>
-            <p>{{goods.desc}}</p>
-        </div>
-    </j-list-item>
-</j-list>
-<br><br>
-
+<div class="live-demo-wrap">
+    <h2>List</h2>
+    <div class="demo-1 live-demo">
+        <h3>菜单</h3>
+        <j-list [multipleSelect]="false" width="200" trackItemBy="title" (selectedItemsChange)="handleSelect($event)">
+            <j-list-item *ngFor="let title of titles" [value]="title">
+                <span j-title>{{title.title}}</span>
+                <div j-sub-title>{{title.subTitle}} <span *ngIf="title.subMenu" class="fa fa-angle-right"></span></div>
+            </j-list-item>
+        </j-list>
+        <p class="message">选中的菜单是: <span>{{selectedItems1}}</span></p>
+    </div>
+    <div class="demo-2 live-demo">
+        <h3>带checkbox的选项</h3>
+        <j-list [multipleSelect]="false" width="350" trackItemBy="title" (selectedItemsChange)="handleSelect2($event)">
+            <j-list-item *ngFor="let title of titles" #listItem [value]="title">
+                <div j-title>
+                    <jigsaw-checkbox [(checked)]="listItem.selected">{{title.title}}</jigsaw-checkbox>
+                </div>
+                <div j-sub-title>{{title.subTitle}} <span *ngIf="title.subMenu" class="fa fa-angle-right"></span></div>
+            </j-list-item>
+        </j-list>
+        <p class="message">选中的菜单是: <span>{{selectedItems2}}</span></p>
+    </div>
+    <div class="demo-3 live-demo">
+        <h3>带checkbox的列表</h3>
+        <j-list [multipleSelect]="true" trackItemBy="name" (selectedItemsChange)="handleSelect3($event)">
+            <j-list-item *ngFor="let goods of goodsList" #listItem [value]="goods">
+                <div class="goods-box">
+                    <jigsaw-checkbox [(checked)]="listItem.selected"></jigsaw-checkbox>
+                    <span class="logo fa fa-{{goods.logo}}"></span>
+                    <p>{{goods.desc}}</p>
+                </div>
+            </j-list-item>
+        </j-list>
+        <p class="message">选中的菜单是: <span>{{selectedItems3}}</span></p>
+    </div>
+</div>
 

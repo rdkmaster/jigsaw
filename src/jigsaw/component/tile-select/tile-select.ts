@@ -1,27 +1,21 @@
 import {
     AfterContentInit,
-    AfterViewInit,
     ChangeDetectorRef,
     Component, ContentChildren,
-    ElementRef,
     EventEmitter,
     forwardRef,
     Input,
     NgModule,
     OnDestroy,
     OnInit,
-    Optional,
     Output,
     QueryList,
-    Renderer2,
-    ViewChildren
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms'
 import {JigsawInputModule} from '../input/input';
 import {AbstractJigsawComponent} from '../common';
 import {CallbackRemoval, CommonUtils} from '../../core/utils/common-utils';
-import {InternalUtils} from '../../core/utils/internal-utils';
 import {ArrayCollection} from "../../core/data/array-collection";
 
 export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, AfterContentInit, OnDestroy{
@@ -132,8 +126,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         }
     }
 
-    private _propagateChange: any = () => {
-    };
+    private _propagateChange: any = () => {};
 
     public writeValue(newValue: any): void {
         if (this._selectedItems === newValue) {

@@ -1,8 +1,30 @@
-import {AfterContentInit, Component, ContentChildren, EventEmitter, Input, NgModule, Output, QueryList} from "@angular/core";
+import {
+    AfterContentInit, ChangeDetectorRef, Component, ContentChildren, forwardRef, Input, NgModule,
+    QueryList
+} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {FormsModule} from "@angular/forms";
-import {AbstractJigsawComponent} from "../common";
-import {CommonUtils} from "../../core/utils/common-utils";
+import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {AbstractJigsawGroupComponent, AbstractJigsawItemComponent} from "../tile-select/tile-select";
+
+@Component({
+    selector: 'j-list',
+    template: '<ng-content></ng-content>',
+    host: {
+        '[class.jigsaw-list]': 'true',
+        '[style.width]': 'width',
+        '[style.height]': 'height',
+    },
+    providers: [
+        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawList), multi: true},
+    ]
+})
+export class JigsawList extends AbstractJigsawGroupComponent implements AfterContentInit{
+    @Input() public searchable: boolean = false;
+
+    //获取映射的子组件
+    @ContentChildren(forwardRef(() => JigsawListItem))
+    protected _items: QueryList<JigsawListItem>;
+}
 
 @Component({
     selector: 'j-list-item',
@@ -13,79 +35,17 @@ import {CommonUtils} from "../../core/utils/common-utils";
         '(click)': '_$handleClick()'
     }
 })
-export class JigsawListItem extends AbstractJigsawComponent{
-    @Input()
-    value: any;
-
-    @Input()
-    selected: boolean = false;
-
-    @Output()
-    selectedChange = new EventEmitter<any>();
+export class JigsawListItem extends AbstractJigsawItemComponent{
+    constructor(public changeDetector: ChangeDetectorRef) {
+        super(changeDetector);
+    }
 
     /**
+     * 点击组件触发
      * @internal
      */
-    public _$handleClick(){
+    public _$handleClick(): void {
         this.selectedChange.emit(this);
-    }
-}
-
-@Component({
-    selector: 'j-list',
-    template: '<ng-content></ng-content>',
-    host: {
-        '[class.jigsaw-list]': 'true',
-        '[style.width]': 'width',
-        '[style.height]': 'height',
-    }
-})
-export class JigsawList extends AbstractJigsawComponent implements AfterContentInit{
-    @ContentChildren(JigsawListItem) items: QueryList<JigsawListItem>;
-
-    @Input()
-    public selectedItems: object[];
-
-    @Output()
-    public selectedItemsChange = new EventEmitter<object[]>();
-
-    @Input()
-    public multipleSelect: boolean = false;
-
-    //设置对象的标识
-    @Input()
-    public trackItemBy: string | string[];
-
-    private _singleSelect(clickedItem: JigsawListItem){
-        this.items.forEach(item => {
-            item.selected = item === clickedItem ? true : false;
-        })
-    }
-
-    ngAfterContentInit(){
-        this.items.forEach(item => {
-            item.selectedChange.subscribe(() => {
-                if(this.multipleSelect){
-                    // 多选模式
-                    item.selected = !item.selected;
-                    if(item.selected){
-                        // 选中
-                        this.selectedItems.push(item.value);
-                    } else {
-                        // 取消选中
-                        this.selectedItems.splice(this.selectedItems.findIndex(selectedItem =>
-                            selectedItem.toString() === item.value.toString(), 1));
-                    }
-                } else{
-                    // 单选模式
-                    if(!item.selected){
-                        this._singleSelect(item);
-                        this.selectedItems = [item.value];
-                    }
-                }
-                this.selectedItemsChange.emit(this.selectedItems);
-            })
-        })
     }
 }
 
