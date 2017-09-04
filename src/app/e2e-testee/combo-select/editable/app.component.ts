@@ -9,7 +9,7 @@ export class ComboSelectEditableDemo{
     constructor(public viewContainerRef: ViewContainerRef,
                 public renderer: Renderer2) {
     }
-    
+
     editable: boolean = true;
 
     toggleEditable() {
@@ -34,6 +34,22 @@ export class ComboSelectEditableDemo{
         {label: "哈尔滨"}
     ];
 
+    citysBak = this.citys;
+    filter: string = '';
+
     public selectedCity = new ArrayCollection([this.citys[0]]);
+
+    handleFilter(filter){
+        if(filter){
+            this.citys = this.citysBak.filter(city => city.label.includes(filter));
+        }else{
+            //空字符串
+            this.citys = this.citysBak;
+        }
+    }
+
+    handleSelecttedItemsChange(){
+        this.filter='';
+    }
 
 }

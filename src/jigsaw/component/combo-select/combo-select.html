@@ -9,14 +9,16 @@
             <div *ngIf="placeholder && (!value || value.length == 0)" class="jigsaw-combo-select-selection_placeholder">
                 {{placeholder}}
             </div>
-            <ng-template ngFor let-tagItem [ngForOf]="value" let-i="index" let-isLast="last">
-                <jigsaw-tag
-                    [closable]='tagItem.closable'
-                    (select)="_$tagClick(tagItem)"
-                    (close)="_$removeTag(tagItem)">
-                    {{tagItem[labelField]}}
-                </jigsaw-tag>
-            </ng-template>
+            <jigsaw-tag *ngFor="let tagItem of value"
+                        [closable]='tagItem.closable'
+                        (select)="_$tagClick(tagItem)"
+                        (close)="_$removeTag(tagItem)">
+                {{tagItem[labelField]}}
+            </jigsaw-tag>
+            <jigsaw-input #editor *ngIf="editable" [(value)]="filter"
+                          width="50" height="80%"
+                          [clearable]="false">
+            </jigsaw-input>
         </div>
     </div>
     <i class="fa fa-times-circle jigsaw-combo-select-clear"

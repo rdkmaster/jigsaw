@@ -1,4 +1,5 @@
 import {
+    AfterViewInit,
     Component,
     ContentChild,
     ElementRef,
@@ -8,7 +9,7 @@ import {
     OnInit,
     Output,
     Renderer2,
-    TemplateRef
+    TemplateRef, ViewChild
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {
@@ -22,6 +23,7 @@ import {
 import {AbstractJigsawComponent} from "../common";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {ArrayCollection} from "../../core/data/array-collection";
+import {JigsawInput} from "../input/input";
 
 export enum DropDownTrigger {
     click,
@@ -45,7 +47,7 @@ export class ComboSelectValue {
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawComboSelect), multi: true},
     ]
 })
-export class JigsawComboSelect extends AbstractJigsawComponent implements ControlValueAccessor, OnDestroy, OnInit {
+export class JigsawComboSelect extends AbstractJigsawComponent implements ControlValueAccessor, OnDestroy, OnInit, AfterViewInit {
     private _disposePopup: PopupDisposer;
     private _popupElement: HTMLElement;
     private _removeWindowClickHandler: Function;
@@ -164,6 +166,20 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     @Input()
     public clearable: boolean = false;
+
+    @Input()
+    public editable: boolean = true;
+
+    @Input()
+    public debounceTime = 300;
+
+    @ViewChild('editor') editor: JigsawInput;
+
+    @Input()
+    public filter: string;
+
+    @Output()
+    public filterChange = new EventEmitter<any>();
 
     /**
      * @internal
@@ -352,6 +368,13 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             this._render.setStyle(this._elementRef.nativeElement.querySelector('.jigsaw-combo-select-selection-rendered'),
                 'max-width', (maxWidth - 39) + 'px')
         }
+    }
+
+    public ngAfterViewInit(){
+        this.editor.valueChange.debounceTime(this.debounceTime).subscribe(filter => {
+            console.log(filter);
+            this.filterChange.emit(filter);
+        })
     }
 
     public ngOnDestroy() {
