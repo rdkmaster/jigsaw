@@ -26,8 +26,10 @@ _**app.component.html  **_中修改 html 片段为
 
 ```
 <jigsaw-combo-select  openTrigger="click">
-    <jigsaw-range-time [(beginDate)]="beginDate" [(endDate)]="endDate">
-    </jigsaw-range-time>
+    <ng-template>
+        <jigsaw-range-time [(beginDate)]="beginDate" [(endDate)]="endDate">
+        </jigsaw-range-time>
+    </ng-template>
 </jigsaw-combo-select>
 ```
 
@@ -42,9 +44,11 @@ _**app.component.html**_
 ```
 <span>时间选择:</span>
   <jigsaw-combo-select [(value)]="rangeTimeComboValue" openTrigger="click">
-    <jigsaw-range-time [(beginDate)]="beginDate" [(endDate)]="endDate" 
+    <ng-template>
+        <jigsaw-range-time [(beginDate)]="beginDate" [(endDate)]="endDate" 
        (change)="handleChange($event)">
-    </jigsaw-range-time>
+        </jigsaw-range-time>
+    </ng-template>
   </jigsaw-combo-select>
 ```
 
