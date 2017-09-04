@@ -25,7 +25,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     @Input() public trackItemBy: string | string[];
 
     //判断是否支持多选
-    @Input() public multipleSelect: boolean = true;
+    @Input() public multipleSelect: boolean;
 
     private _selectedItems = new ArrayCollection<object>();
 
@@ -181,11 +181,13 @@ export class AbstractJigsawItemComponent extends AbstractJigsawComponent{
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTileSelect), multi: true},
     ]
 })
-export class JigsawTileSelect extends AbstractJigsawGroupComponent implements ControlValueAccessor, OnInit{
+export class JigsawTileSelect extends AbstractJigsawGroupComponent{
 
     @Input() public searchable: boolean = false;
 
-    //获取映射的子组件
+    // 默认多选
+    public multipleSelect: boolean = true;
+
     @ContentChildren(forwardRef(() => JigsawTileOption))
     protected _items: QueryList<JigsawTileOption>;
 

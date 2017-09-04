@@ -21,7 +21,10 @@ import {AbstractJigsawGroupComponent, AbstractJigsawItemComponent} from "../tile
 export class JigsawList extends AbstractJigsawGroupComponent implements AfterContentInit{
     @Input() public searchable: boolean = false;
 
-    //获取映射的子组件
+    // 默认单选
+    public multipleSelect: boolean = false;
+
+    // 获取映射的子组件
     @ContentChildren(forwardRef(() => JigsawListItem))
     protected _items: QueryList<JigsawListItem>;
 }

@@ -2,7 +2,7 @@
     <h2>List</h2>
     <div class="demo-1 live-demo">
         <h3>菜单</h3>
-        <j-list [multipleSelect]="false" width="200" trackItemBy="title" (selectedItemsChange)="handleSelect($event)">
+        <j-list width="200" trackItemBy="title" (selectedItemsChange)="handleSelect($event)">
             <j-list-item *ngFor="let title of titles" [value]="title">
                 <span j-title>{{title.title}}</span>
                 <div j-sub-title>{{title.subTitle}} <span *ngIf="title.subMenu" class="fa fa-angle-right"></span></div>
@@ -12,7 +12,7 @@
     </div>
     <div class="demo-2 live-demo">
         <h3>带checkbox的选项</h3>
-        <j-list [multipleSelect]="false" width="350" trackItemBy="title" (selectedItemsChange)="handleSelect2($event)">
+        <j-list width="350" trackItemBy="title" (selectedItemsChange)="handleSelect2($event)">
             <j-list-item *ngFor="let title of titles" #listItem [value]="title">
                 <div j-title>
                     <jigsaw-checkbox [(checked)]="listItem.selected">{{title.title}}</jigsaw-checkbox>
