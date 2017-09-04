@@ -60,19 +60,23 @@ _**app.component.html  **_
 <div class="condition">
   <span>时间选择:</span>
   <jigsaw-combo-select [(value)]="rangeTimeComboValue" openTrigger="click">
-    <jigsaw-range-time [(beginDate)]="beginDate" [(endDate)]="endDate" 
-    (change)="handleChange($event)"></jigsaw-range-time>
+    <ng-template>
+        <jigsaw-range-time [(beginDate)]="beginDate" [(endDate)]="endDate" 
+        (change)="handleChange($event)"></jigsaw-range-time>
+    </ng-template>    
   </jigsaw-combo-select>
   <jigsaw-checkbox [enableIndeterminate]="false" [(checked)]="status">多时段设置</jigsaw-checkbox>
   <jigsaw-combo-select [(value)]="selectedPeriodTimes" openTrigger="click" [disabled]="!status">
-    <jigsaw-tile-select
-      [(selectedItems)]="selectedPeriodTimes"
-      labelField="label"
-      [searchable]="true"
-      [data]="periodTimes"
-      width="350px"
-      tileOptionWidth="100px">
-    </jigsaw-tile-select>
+    <ng-template>
+        <jigsaw-tile-select
+          [(selectedItems)]="selectedPeriodTimes"
+          labelField="label"
+          [searchable]="true"
+          [data]="periodTimes"
+          width="350px"
+          tileOptionWidth="100px">
+        </jigsaw-tile-select>
+    </ng-template>
   </jigsaw-combo-select>
   <span>快速选择:</span>
   <jigsaw-radio-group (valueChange)="quickChoiceChange($event)"
@@ -82,38 +86,44 @@ _**app.component.html  **_
   <br>
   <span>业务类型:</span>
   <jigsaw-combo-select [(value)]="selectBusinessType" openTrigger="click" width="400px">
-    <jigsaw-tile-select
-      [(selectedItems)]="selectBusinessType"
-      labelField="label"
-      [searchable]="true"
-      [data]="businessTypes"  [multipleSelect]="false"
-      width="350px"
-      tileOptionWidth="100px">
-    </jigsaw-tile-select>
+    <ng-template>
+        <jigsaw-tile-select
+          [(selectedItems)]="selectBusinessType"
+          labelField="label"
+          [searchable]="true"
+          [data]="businessTypes"  [multipleSelect]="false"
+          width="350px"
+          tileOptionWidth="100px">
+        </jigsaw-tile-select>
+    </ng-template>
   </jigsaw-combo-select>
 
   <span>接口：</span>
   <jigsaw-combo-select [(value)]="selectInterface" openTrigger="click" width="400px">
-    <jigsaw-tile-select
-      [(selectedItems)]="selectInterface"
-      labelField="label"
-      [searchable]="true"
-      [data]="interfaces"
-      width="350px"
-      tileOptionWidth="100px">
-    </jigsaw-tile-select>
+    <ng-template>
+        <jigsaw-tile-select
+          [(selectedItems)]="selectInterface"
+          labelField="label"
+          [searchable]="true"
+          [data]="interfaces"
+          width="350px"
+          tileOptionWidth="100px">
+        </jigsaw-tile-select>
+    </ng-template>
   </jigsaw-combo-select>
   <br>
   <span>查询条件:</span>
   <jigsaw-combo-select [(value)]="selectUserType" openTrigger="click" width="120px">
-    <jigsaw-tile-select
-      [(selectedItems)]="selectUserType"
-      labelField="label"
-      [searchable]="true"
-      [data]="userTypes" [multipleSelect]="false"
-      width="100px"
-      tileOptionWidth="100px">
-    </jigsaw-tile-select>
+    <ng-template>
+        <jigsaw-tile-select
+          [(selectedItems)]="selectUserType"
+          labelField="label"
+          [searchable]="true"
+          [data]="userTypes" [multipleSelect]="false"
+          width="100px"
+          tileOptionWidth="100px">
+        </jigsaw-tile-select>
+    </ng-template>
   </jigsaw-combo-select>
   <jigsaw-input [(value)]="userInfo" height="32px"></jigsaw-input>
   <span style="margin-left:100px">显示方式：</span>

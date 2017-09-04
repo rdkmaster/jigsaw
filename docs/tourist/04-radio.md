@@ -60,19 +60,23 @@ _**app.component.html  **_
 <div>
   <span>时间选择:</span>
   <jigsaw-combo-select [(value)]="rangeTimeComboValue" openTrigger="click">
-    <jigsaw-range-time [(beginDate)]="beginDate" [(endDate)]="endDate" 
-    (change)="handleChange($event)"></jigsaw-range-time>
+    <ng-template>
+        <jigsaw-range-time [(beginDate)]="beginDate" [(endDate)]="endDate" 
+        (change)="handleChange($event)"></jigsaw-range-time>
+    </ng-template>
   </jigsaw-combo-select>
   <jigsaw-checkbox [enableIndeterminate]="false" [(checked)]="status">多时段设置</jigsaw-checkbox>
   <jigsaw-combo-select [(value)]="selectedPeriodTimes" openTrigger="click" [disabled]="!status">
-    <jigsaw-tile-select
-      [(selectedItems)]="selectedPeriodTimes"
-      labelField="label"
-      [searchable]="true"
-      [data]="periodTimes"
-      width="350px"
-      tileOptionWidth="100px">
-    </jigsaw-tile-select>
+    <ng-template>
+        <jigsaw-tile-select
+          [(selectedItems)]="selectedPeriodTimes"
+          labelField="label"
+          [searchable]="true"
+          [data]="periodTimes"
+          width="350px"
+          tileOptionWidth="100px">
+        </jigsaw-tile-select>
+    </ng-template>
   </jigsaw-combo-select>
   <span>快速选择:</span>
   <jigsaw-radio-group (valueChange)="quickChoiceChange($event)"
