@@ -168,7 +168,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public clearable: boolean = false;
 
     @Input()
-    public editable: boolean = true;
+    public editable: boolean = false;
 
     @Input()
     public debounceTime = 300;
@@ -373,7 +373,6 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public ngAfterViewInit(){
         if(this.editor){
             this.editor.valueChange.debounceTime(this.debounceTime).subscribe(filter => {
-                console.log(filter);
                 this.filterChange.emit(filter);
             })
         }

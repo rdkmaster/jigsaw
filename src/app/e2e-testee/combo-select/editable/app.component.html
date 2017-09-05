@@ -1,12 +1,10 @@
 <div class="combo-select-demo cmn-box">
-    <h3>editable demo</h3>
-    <div class="test-btn">
-        <jigsaw-button (click)="toggleEditable()">toggle editable</jigsaw-button>
-    </div>
+    <h3>editable - auto complete</h3>
     <jigsaw-combo-select
+        maxWidth="500"
         [(value)]="selectedCity"
         [clearable]="true"
-        [editable]="editable"
+        [editable]="true"
         [(filter)]="filter"
         (filterChange)="handleFilter($event)">
         <ng-template>

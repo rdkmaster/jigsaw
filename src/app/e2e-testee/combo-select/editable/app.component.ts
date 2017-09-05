@@ -11,14 +11,6 @@ export class ComboSelectEditableDemo {
                 public renderer: Renderer2) {
     }
 
-    editable: boolean = true;
-
-    toggleEditable() {
-        this.editable = !this.editable;
-        this.citys.forEach(item => item.closable = this.editable);
-        this.selectedCity.forEach(item => item.closable = this.editable);
-    }
-
     citys: ComboSelectValue[] = [
         {label: "北京"},
         {label: "上海"},
