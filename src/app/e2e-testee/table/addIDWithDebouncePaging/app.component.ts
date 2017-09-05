@@ -3,7 +3,7 @@ import {
 } from "@angular/core";
 import {Http} from "@angular/http";
 import {PageableTableData} from "jigsaw/core/data/table-data";
-import {AdditionalColumnDefine, ColumnDefine, tableRowIndexGenerator} from "jigsaw/component/table/table-typings";
+import {AdditionalColumnDefine, ColumnDefine, TableCellValueGenerators} from "jigsaw/component/table/table-typings";
 import {JigsawPagination} from "jigsaw/component/pagination/pagination";
 
 @Component({
@@ -48,7 +48,7 @@ export class TableAddIDWithDebouncePagingComponent implements AfterViewInit{
             text: '#'
         },
         cell: {
-            data: tableRowIndexGenerator
+            data: TableCellValueGenerators.rowIndexGenerator
         }
     }]
 }

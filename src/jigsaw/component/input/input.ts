@@ -18,23 +18,23 @@ export class JigsawPrefixIcon {
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[style.line-height]': 'height',
-        '(click)': '_stopPropagation($event)',
+        '(click)': '_$stopPropagation($event)',
         '[class.jigsaw-input]': 'true'
     },
     providers: [
-        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawInput), multi: true },
+        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawInput), multi: true},
     ]
 })
 export class JigsawInput extends AbstractJigsawComponent implements ControlValueAccessor, AfterContentInit, AfterViewChecked {
-    private _value: string | number; //input表单值
-    private _focused: boolean;
-    private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
-    private _blurEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 
-    /**
-     * @internal
-     */
-    public _$longIndent: boolean = false;
+    @Input() public clearable: boolean = true;
+    @Input() public disabled: boolean = false;
+
+    @Output('focus')
+    private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
+
+    @Output('blur')
+    private _blurEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 
     constructor(private _render2: Renderer2,
                 private _elementRef: ElementRef,
@@ -42,7 +42,8 @@ export class JigsawInput extends AbstractJigsawComponent implements ControlValue
         super();
     }
 
-    private _propagateChange:any = () => {};
+    private _propagateChange: any = () => {
+    };
 
     public writeValue(value: any): void {
         if (value === undefined || value === null) {
@@ -58,43 +59,32 @@ export class JigsawInput extends AbstractJigsawComponent implements ControlValue
     public registerOnTouched(fn: any): void {
     }
 
-    //input form表单值
+    private _value: string = ''; //input表单值
+
     @Input()
-    public get value(): string | number {
+    public get value(): string {
         return this._value;
     }
 
-    public set value(newValue: string | number) {
+    public set value(newValue: string) {
         if (this._value != newValue) {
-            this._value = newValue;
-            this.valueChange.emit(newValue);
-            this._propagateChange(newValue)
+            this._value = newValue === undefined || newValue === null ? '' : newValue;
+            this.valueChange.emit(this._value);
+            this._propagateChange(this._value)
         }
     }
 
-    @Output() public valueChange: EventEmitter<string | number> = new EventEmitter<string | number>();
+    @Output()
+    public valueChange: EventEmitter<string> = new EventEmitter<string>();
 
-    @Input() public clearable: boolean = true;
-    @Input() public disabled: boolean = false;
-
-    private _placeholder:string='';
+    private _placeholder: string = '';
     @Input()
-    public set placeholder(txt:string) {
+    public set placeholder(txt: string) {
         this._placeholder = txt;
     }
 
     public get placeholder() {
         return this._placeholder;
-    }
-
-    @Output('blur')
-    get onBlur(): Observable<FocusEvent> {
-        return this._blurEmitter.asObservable();
-    }
-
-    @Output('focus')
-    get onFocus(): Observable<FocusEvent> {
-        return this._focusEmitter.asObservable();
     }
 
     @ContentChildren(JigsawPrefixIcon)
@@ -104,30 +94,51 @@ export class JigsawInput extends AbstractJigsawComponent implements ControlValue
     private _inputElement: ElementRef;
 
     public focus() {
+        this.focused = true;
         this._inputElement.nativeElement.focus();
     }
 
-    private _clearValue(event): void {
-        this.value = null;
+    /**
+     * @internal
+     */
+    public _$clearValue(event): void {
+        this.value = '';
+        this.focus();
     }
+
+    public focused: boolean = false;
 
     /**
      * @internal
      */
     public _$handleFocus(event: FocusEvent) {
-        this._focused = true;
+        this.focused = true;
         this._focusEmitter.emit(event);
     }
+
+    @Input()
+    public blurOnClear:boolean = true;
 
     /**
      * @internal
      */
     public _$handleBlur(event: FocusEvent) {
-        this._focused = false;
-        this._blurEmitter.emit(event);
+        this.focused = false;
+        if (this.blurOnClear) {
+            this._blurEmitter.emit(event);
+        } else {
+            setTimeout(() => {
+                if (!this.focused) {
+                    this._blurEmitter.emit(event);
+                }
+            }, 150);
+        }
     }
 
-    private _stopPropagation(event){
+    /**
+     * @internal
+     */
+    public _$stopPropagation(event) {
         event.preventDefault();
         event.stopPropagation();
     }
@@ -147,7 +158,7 @@ export class JigsawInput extends AbstractJigsawComponent implements ControlValue
         let endIconWidth = this._elementRef.nativeElement.querySelector(".jigsaw-input-icon-end").offsetWidth;
 
         let prefixIconPadding = prefixIconWidth + 10;
-        if(prefixIconWidth !== 0) {
+        if (prefixIconWidth !== 0) {
             prefixIconPadding = prefixIconPadding + 8;
         }
 
@@ -162,7 +173,6 @@ export class JigsawInput extends AbstractJigsawComponent implements ControlValue
     }
 
     ngAfterContentInit() {
-        this._iconFront && this._iconFront.length ? this._$longIndent = true : null;
         setTimeout(() => {
             this._render2.setStyle(this._elementRef.nativeElement, 'opacity', 1);
         }, 0);

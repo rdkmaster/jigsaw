@@ -4,17 +4,39 @@ import {SortAs, SortOrder} from "../../core/data/component-data";
 import {TableCellRendererBase} from "./table-renderer";
 
 export type TableColumnTargetFinder = (field: string, index: number) => boolean;
-export type TableColumnTarget = number|string|(number|string)[]|TableColumnTargetFinder;
-export type TableCellDataGenerator = (tableData: TableData, row: number, column:number) => any;
+export type TableColumnTarget = number | string | (number | string)[] | TableColumnTargetFinder;
+export type TableCellDataGenerator = (tableData: TableData, row: number, column: number) => any;
 
-export const tableRowIndexGenerator:TableCellDataGenerator = (tableData: TableData, row: number) => {
-    let index = 1;
-    if (tableData instanceof PageableTableData || tableData instanceof LocalPageableTableData) {
-        index += (tableData.pagingInfo.currentPage - 1) * tableData.pagingInfo.pageSize - 1;
+export function statelessGenerator() {
+    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+        TableCellValueGenerators.markStateless(descriptor.value);
+    };
+}
+
+export class TableCellValueGenerators {
+    @statelessGenerator()
+    public static rowIndexGenerator(tableData: TableData, row: number): any {
+        let index = 1;
+        if (tableData instanceof PageableTableData || tableData instanceof LocalPageableTableData) {
+            index += (tableData.pagingInfo.currentPage - 1) * tableData.pagingInfo.pageSize - 1;
+        }
+        index += row;
+        return index;
     }
-    index += row;
-    return index;
-};
+
+    private static _statelessGenerators: TableCellDataGenerator[] = [];
+
+    public static markStateless(generator:TableCellDataGenerator):void {
+        if (this.isStateless(generator)) {
+            return;
+        }
+        this._statelessGenerators.push(generator);
+    }
+
+    public static isStateless(generator: TableCellDataGenerator):boolean {
+        return !!this._statelessGenerators.find(g => g === generator);
+    }
+}
 
 export class ColumnDefine {
     target: TableColumnTarget;
@@ -36,17 +58,17 @@ export class AdditionalColumnDefine {
 }
 
 export class TableDataChangeEvent {
-    field: string|number;
-    row: number|number[];
+    field: string | number;
+    row: number | number[];
     column: number;
     rawColumn: number;
-    cellData: string|number;
-    oldCellData: string|number;
+    cellData: string | number;
+    oldCellData: string | number;
 }
 
 export class TableHeader {
     text?: string;
-    renderer?: Type<TableCellRendererBase>|TemplateRef<any>;
+    renderer?: Type<TableCellRendererBase> | TemplateRef<any>;
     clazz?: string;
     sortable?: boolean;
     sortAs?: SortAs;
@@ -54,7 +76,7 @@ export class TableHeader {
 }
 
 export class TableCell {
-    renderer?: Type<TableCellRendererBase>|TemplateRef<any>;
+    renderer?: Type<TableCellRendererBase> | TemplateRef<any>;
     clazz?: string;
     editable?: boolean;
     editorRenderer?: Type<TableCellRendererBase>;

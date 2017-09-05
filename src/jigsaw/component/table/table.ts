@@ -10,7 +10,7 @@ import {TableData} from "../../core/data/table-data";
 import {
     AdditionalColumnDefine,
     ColumnDefine, SortChangeEvent,
-    TableCellSetting,
+    TableCellSetting, TableCellValueGenerators,
     TableColumnTargetFinder,
     TableDataChangeEvent,
     TableHeadSetting
@@ -144,6 +144,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                     // it is a `TableCellDataGenerator`, we need to use it to generate a value
                     const generator: Function = <any>settings.cellData;
                     settings.cellData = generator(this.data, i, fieldIndex);
+
+                    if (!TableCellValueGenerators.isStateless(<any>this.data.data[i][index])) {
+                        this.data.data[i][index] = settings.cellData;
+                    }
                 }
 
                 if (matchedColumnDef && matchedColumnDef.group) {

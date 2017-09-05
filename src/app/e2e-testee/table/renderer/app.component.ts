@@ -1,7 +1,7 @@
 import {Component, Renderer2, ViewChild, ViewContainerRef, ViewEncapsulation} from "@angular/core";
 import {TableData} from "jigsaw/core/data/table-data";
 import {DefaultCellRenderer} from "jigsaw/component/table/table-renderer";
-import {AdditionalColumnDefine, ColumnDefine, tableRowIndexGenerator} from "jigsaw/component/table/table-typings";
+import {AdditionalColumnDefine, ColumnDefine, TableCellValueGenerators} from "jigsaw/component/table/table-typings";
 import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/component/table/table-renderer";
 import {TableCellOperation, TableHeadSelect} from "./table-renderer";
 
@@ -109,7 +109,7 @@ export class TableRendererDemoComponent {
                 text: '#',
             },
             cell: {
-                data: tableRowIndexGenerator,
+                data: TableCellValueGenerators.rowIndexGenerator,
                 clazz: 'green-text'
             }
         },
