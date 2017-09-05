@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from "@angular/common";
 import { JigsawTimeModule } from "jigsaw/component/time/index";
-import { JigsawTileSelectModule } from "jigsaw/component/tile-select/tile-select";
+import { JigsawTileSelectModule } from "jigsaw/component/tile/tile";
 import { TimeLimitEndComponent }  from './app.component';
 
 @NgModule({

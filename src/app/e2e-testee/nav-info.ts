@@ -406,11 +406,11 @@ export const navInfo = [
         ]
     },
     {
-        title: 'TileSelect',
+        title: 'Tile',
         navList: [
             {
-                label: 'basic',
-                url: '/tileselect/basic'
+                label: 'live-demo',
+                url: '/tileselect/live-demo'
             },
             {
                 label: 'SelectedItems',

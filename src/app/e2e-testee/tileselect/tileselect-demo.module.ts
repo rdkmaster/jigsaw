@@ -1,8 +1,8 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 
-import {TileselectBasicDemoComponent} from "./basic/app.component";
-import {TileSelectBasicDemoModule} from "./basic/app.module";
+import {TileselectBasicDemoComponent} from "../../live-demo/tile/app.component";
+import {TileSelectBasicDemoModule} from "../../live-demo/tile/app.module";
 
 import {TileselectLabelFieldComponent} from "./labelField/app.component";
 import {TileSelectLabelFieldDemoModule} from "./labelField/app.module";
@@ -33,7 +33,7 @@ const inputDemoRoutes=[
         pathMatch:'full'
     },
     {
-        path:'basic', component: TileselectBasicDemoComponent
+        path:'live-demo', component: TileselectBasicDemoComponent
     },
     {
         path:'trackitemby', component: TileselectTrackItemByDemoComponent

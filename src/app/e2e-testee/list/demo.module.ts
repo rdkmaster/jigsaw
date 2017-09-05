@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {ListBasicDemoModule} from "./basic/app.module";
-import {ListBasicDemoComponent} from "./basic/app.component";
+import {ListBasicDemoModule} from "../../live-demo/list/app.module";
+import {ListBasicDemoComponent} from "../../live-demo/list/app.component";
 
 const routeConfig = [
     {

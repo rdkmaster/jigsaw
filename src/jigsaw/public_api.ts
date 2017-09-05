@@ -46,7 +46,7 @@ export * from './component/table/table';
 export * from "./component/table/table-api";
 export * from './component/tabs/index';
 export * from './component/tag/tag';
-export * from './component/tile-select/tile-select';
+export * from './component/tile/tile';
 export * from './component/time/index';
 export * from './component/tooltip/tooltip';
 export * from './component/tree/tree-ext';
@@ -56,4 +56,6 @@ export * from './directive/scrollbar/scrollbar';
 export * from "./directive/dragdrop/types";
 export * from './directive/dragdrop/index';
 export * from './directive/movable/index';
+export {AbstractJigsawGroupComponent} from "./component/tile/common";
+export {AbstractJigsawOptionComponent} from "./component/tile/common";
 

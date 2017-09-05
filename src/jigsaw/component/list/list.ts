@@ -4,7 +4,8 @@ import {
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {AbstractJigsawGroupComponent, AbstractJigsawItemComponent} from "../tile-select/tile-select";
+import {AbstractJigsawOptionComponent} from "../tile/common";
+import {AbstractJigsawGroupComponent} from "../tile/common";
 
 @Component({
     selector: 'j-list',
@@ -25,21 +26,21 @@ export class JigsawList extends AbstractJigsawGroupComponent implements AfterCon
     public multipleSelect: boolean = false;
 
     // 获取映射的子组件
-    @ContentChildren(forwardRef(() => JigsawListItem))
-    protected _items: QueryList<JigsawListItem>;
+    @ContentChildren(forwardRef(() => JigsawListOption))
+    protected _items: QueryList<JigsawListOption>;
 }
 
 @Component({
-    selector: 'j-list-item',
-    templateUrl: 'list-item.html',
+    selector: 'j-list-option',
+    templateUrl: 'list-option.html',
     host: {
-        '[class.jigsaw-list-item]': 'true',
-        '[class.jigsaw-list-item-active]': 'selected',
-        '[class.jigsaw-list-item-disabled]': 'disabled',
+        '[class.jigsaw-list-option]': 'true',
+        '[class.jigsaw-list-option-active]': 'selected',
+        '[class.jigsaw-list-option-disabled]': 'disabled',
         '(click)': '_$handleClick()'
     }
 })
-export class JigsawListItem extends AbstractJigsawItemComponent{
+export class JigsawListOption extends AbstractJigsawOptionComponent{
     constructor(public changeDetector: ChangeDetectorRef) {
         super(changeDetector);
     }
@@ -57,8 +58,8 @@ export class JigsawListItem extends AbstractJigsawItemComponent{
 
 @NgModule({
     imports: [CommonModule, FormsModule],
-    declarations: [JigsawList, JigsawListItem],
-    exports: [JigsawList, JigsawListItem]
+    declarations: [JigsawList, JigsawListOption],
+    exports: [JigsawList, JigsawListOption]
 })
 export class JigsawListModule{
 
