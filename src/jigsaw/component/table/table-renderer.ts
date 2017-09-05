@@ -32,8 +32,7 @@ export class DefaultCellRenderer extends TableCellRendererBase {
  * */
 @Component({
     template: `
-        <jigsaw-input #input [(value)]="cellData" width="100%"
-                      (blur)="dispatchChangeEvent(cellData)">
+        <jigsaw-input #input [value]="cellData" width="100%" (blur)="dispatchChangeEvent(cellData)">
         </jigsaw-input>
     `
 })
@@ -108,20 +107,15 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase implements 
  * head checkbox renderer
  * */
 @Component({
-    template: `<jigsaw-checkbox [(checked)]="cellData"></jigsaw-checkbox>`
+    template: `
+        <jigsaw-checkbox [checked]="cellData" (checkedChange)="onChange($event)">
+        </jigsaw-checkbox>
+    `
 })
 export class TableCellCheckboxRenderer extends TableCellRendererBase {
-    private _cellData;
-
-    public get cellData() {
-        return this._cellData;
-    }
-
-    public set cellData(value) {
-        this._cellData = value;
-        if (this.tableData && this.row != undefined && this.column != undefined) {
-            this.tableData.data[this.row][this.column] = value;
-            this.tableData.refresh();
+    onChange(value) {
+        if (value != this.cellData) {
+            this.dispatchChangeEvent(value);
         }
     }
 }
