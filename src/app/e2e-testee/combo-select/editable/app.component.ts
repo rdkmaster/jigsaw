@@ -1,11 +1,12 @@
 import {Component, Renderer2, ViewContainerRef} from '@angular/core';
 import {ComboSelectValue} from "jigsaw/component/combo-select/combo-select";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
+
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
 })
-export class ComboSelectEditableDemo{
+export class ComboSelectEditableDemo {
     constructor(public viewContainerRef: ViewContainerRef,
                 public renderer: Renderer2) {
     }
@@ -18,7 +19,7 @@ export class ComboSelectEditableDemo{
         this.selectedCity.forEach(item => item.closable = this.editable);
     }
 
-     citys:ComboSelectValue[] = [
+    citys: ComboSelectValue[] = [
         {label: "北京"},
         {label: "上海"},
         {label: "南京"},
@@ -34,22 +35,18 @@ export class ComboSelectEditableDemo{
         {label: "哈尔滨"}
     ];
 
+    public selectedCity = new ArrayCollection([this.citys[0]]);
+
     citysBak = this.citys;
     filter: string = '';
 
-    public selectedCity = new ArrayCollection([this.citys[0]]);
-
-    handleFilter(filter){
-        if(filter){
-            this.citys = this.citysBak.filter(city => city.label.includes(filter));
-        }else{
+    handleFilter(filter) {
+        if (filter) {
+            this.citysBak = this.citys.filter(city => city.label.includes(filter));
+        } else {
             //空字符串
-            this.citys = this.citysBak;
+            this.citysBak = this.citys;
         }
-    }
-
-    handleSelecttedItemsChange(){
-        this.filter='';
     }
 
 }

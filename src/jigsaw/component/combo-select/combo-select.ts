@@ -371,10 +371,12 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     public ngAfterViewInit(){
-        this.editor.valueChange.debounceTime(this.debounceTime).subscribe(filter => {
-            console.log(filter);
-            this.filterChange.emit(filter);
-        })
+        if(this.editor){
+            this.editor.valueChange.debounceTime(this.debounceTime).subscribe(filter => {
+                console.log(filter);
+                this.filterChange.emit(filter);
+            })
+        }
     }
 
     public ngOnDestroy() {

@@ -75,13 +75,13 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         this._propagateChange(this.selectedItems);
     }
 
-    //根据selectedItems设置选中的option
-    private _setItemState(): void {
+    //根据selectedItems设置选中的items
+    private _setItemState(items: QueryList<AbstractJigsawItemComponent>): void {
         if (!(this.selectedItems instanceof ArrayCollection) || !this._items.length) {
             return;
         }
         setTimeout(() => {
-            this._items.forEach(item => {
+            items.forEach(item => {
                 let hasSelected = false;
                 this._selectedItems.forEach(selectedItem => {
                     if (CommonUtils.compareWithKeyProperty(item.value, selectedItem, <string[]>this.trackItemBy)) {
@@ -94,18 +94,12 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         })
     }
 
-    ngOnInit() {
-        super.ngOnInit();
-        if(this.trackItemBy){
-            this.trackItemBy = (<string>this.trackItemBy).split(/\s*,\s*/g);
-        }else{
-            console.warn('please input trackItemBy attribute in jigsaw-title control')
-        }
-    }
-
-    ngAfterContentInit() {
-        this._setItemState();
-        this._items.forEach(item => {
+    private _subscribeItemSelectedChange(items: QueryList<AbstractJigsawItemComponent>){
+        items.forEach(item => {
+            // 取消可能重复的订阅事件
+            if(item.selectedChange.observers.length){
+                item.selectedChange.observers = [];
+            }
             item.selectedChange.subscribe(() => {
                 if (this.multipleSelect) { //多选
                     item.selected = !item.selected;//切换组件选中状态
@@ -117,7 +111,25 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
                     }
                 }
             })
-        })
+        });
+    }
+
+    ngOnInit() {
+        super.ngOnInit();
+        if(this.trackItemBy){
+            this.trackItemBy = (<string>this.trackItemBy).split(/\s*,\s*/g);
+        }else{
+            console.warn('please input trackItemBy attribute in jigsaw-title control')
+        }
+    }
+
+    ngAfterContentInit() {
+        this._setItemState(this._items);
+        this._subscribeItemSelectedChange(this._items);
+        this._items.changes.subscribe(items => {
+            this._setItemState(items);
+            this._subscribeItemSelectedChange(items);
+        });
     }
 
     ngOnDestroy() {
@@ -136,14 +148,14 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
 
         this._selectedItems = newValue;
         if (this.initialized) {
-            this._setItemState();
+            this._setItemState(this._items);
         }
 
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback()
         }
         this._removeRefreshCallback = newValue.onRefresh(() => {
-            this._setItemState();
+            this._setItemState(this._items);
         });
     }
 
