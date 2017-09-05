@@ -13,8 +13,8 @@ $list-item-prefix-cls: #{$jigsaw-prefix}-list-item;
         background: $item-active-bg;
     }
     &.#{$list-item-prefix-cls}-disabled {
-        background: $background-color-base;
-        color: $text-color-secondary;
+        background: $disabled-bg;
+        color: $disabled-color;
         cursor: not-allowed;
     }
     &-title-box {
