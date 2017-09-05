@@ -2,11 +2,11 @@
 
 $radio-prefix-cls: #{$jigsaw-prefix}-radio;
 
-#{$radio-prefix-cls}-button {
+#{$radio-prefix-cls}-option {
     @include inline-block();
 }
 
-.#{$radio-prefix-cls}-button {
+.#{$radio-prefix-cls}-option {
     font-size: $font-size-base;
     margin-right: 10px;
     cursor: pointer;

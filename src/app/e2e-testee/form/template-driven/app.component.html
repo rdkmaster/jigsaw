@@ -17,9 +17,11 @@
     </fieldset>
     <div class="field">
         <label>Gender *</label>
-        <jigsaw-radio-group ngModel name="gender" trackItemBy="id" required
-                            [data]="[{label: 'Male', id: 0},{label: 'Female', id: 1}]">
-        </jigsaw-radio-group>
+        <jigsaw-radio ngModel name="gender" trackItemBy="id" required>
+            <jigsaw-radio-option *ngFor="let item of [{label: 'Male', id: 0},{label: 'Female', id: 1}]" [value]="item">
+                {{item.label}}
+            </jigsaw-radio-option>
+        </jigsaw-radio>
     </div>
     <div class="field">
         <label>Birthday</label>
