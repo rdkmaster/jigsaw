@@ -30,7 +30,6 @@ export class ComboSelectEditableDemo {
     public selectedCity = new ArrayCollection([this.citys[0]]);
 
     citysBak = this.citys;
-    filter: string = '';
 
     handleFilter(filter) {
         if (filter) {
