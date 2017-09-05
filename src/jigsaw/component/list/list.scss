@@ -3,4 +3,6 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
 .#{$list-prefix-cls} {
     @include inline-block();
     width: 300px;
+    border: 1px solid $border-color-base;
+    border-radius: $border-radius-base;
 }

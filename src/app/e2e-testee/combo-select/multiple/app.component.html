@@ -4,6 +4,8 @@
         <jigsaw-button (click)="toggleMultiple()">toggle multiple</jigsaw-button>
     </div>
     <jigsaw-combo-select
+        [openTrigger]="0"
+        [closeTrigger]="0"
         [(value)]="selectedCity"
         (valueChange)="valueChange($event)"
         [autoClose]="!multiple"
@@ -15,8 +17,7 @@
                 trackItemBy="label"
                 [multipleSelect]="multiple"
                 [searchable]="true"
-                width="400px"
-                style="padding: 8px 0 8px 8px">
+                width="400px">
                 <jigsaw-tile-option *ngFor="let city of citys" [value]="city" width="22.8%">
                     {{city.label}}
                 </jigsaw-tile-option>
