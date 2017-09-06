@@ -10,12 +10,15 @@
     </div>
     <div class="line-box">
         <label>PositionType：</label>
-        <jigsaw-radio [(value)]="selectedPositionType" [data]="popPositionTypes" trackItemBy="id">
+        <jigsaw-radio [(value)]="selectedPositionType" trackItemBy="id">
+            <jigsaw-radio-option *ngFor="let popPositionType of popPositionTypes" [value]="popPositionType">{{popPositionType.label}}</jigsaw-radio-option>
         </jigsaw-radio>
     </div>
     <div class="line-box">
         <label>参照物:</label>
-        <jigsaw-radio [(value)]="selectedPos" [data]="poses"></jigsaw-radio>
+        <jigsaw-radio [(value)]="selectedPos" trackItemBy="label">
+            <jigsaw-radio-option *ngFor="let pose of poses" [value]="pose">{{pose.label}}</jigsaw-radio-option>
+        </jigsaw-radio>
         <div class="point-set" *ngIf="selectedPos.label=='point'">
             <jigsaw-input [(value)]="detailPos.x" placeholder="X" width="200px"></jigsaw-input>
             <jigsaw-input [(value)]="detailPos.y" placeholder="Y" width="200px"></jigsaw-input>

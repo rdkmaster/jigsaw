@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, ContentChildren, forwardRef, Input, NgModu
 import {CommonModule} from '@angular/common';
 import {FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms'
 import {JigsawInputModule} from '../input/input';
-import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "./common";
+import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "./group-common";
 
 @Component({
     selector: 'jigsaw-tile',

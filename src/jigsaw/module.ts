@@ -20,7 +20,7 @@ import {JigsawSwitchModule} from './component/switch/index';
 import {JigsawTableModule, JigsawTableRendererModule} from './component/table/table';
 import {JigsawTabsModule} from './component/tabs/index';
 import {JigsawTagModule} from './component/tag/tag';
-import {JigsawTileSelectModule} from './component/tile/tile';
+import {JigsawTileSelectModule} from './component/list-and-tile/tile';
 import {JigsawTimeModule} from './component/time/index';
 import {JigsawTooltipModule} from './component/tooltip/tooltip';
 import {JigsawTreeExtModule} from './component/tree/tree-ext';

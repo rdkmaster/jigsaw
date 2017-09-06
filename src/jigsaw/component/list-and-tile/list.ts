@@ -4,8 +4,8 @@ import {
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {AbstractJigsawOptionComponent} from "../tile/common";
-import {AbstractJigsawGroupComponent} from "../tile/common";
+import {AbstractJigsawOptionComponent} from "./group-common";
+import {AbstractJigsawGroupComponent} from "./group-common";
 
 @Component({
     selector: 'j-list',

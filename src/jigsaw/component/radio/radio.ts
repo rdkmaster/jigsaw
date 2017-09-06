@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "../tile/common";
+import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "../list-and-tile/group-common";
 import {ArrayCollection} from "../../core/data/array-collection";
 
 @Component({
