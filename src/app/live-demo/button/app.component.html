@@ -1,13 +1,13 @@
 <div class="live-demo-wrap">
     <h2>Button</h2>
-    <div class="demo-1 live-demo">
+    <div class="demo-1 live-demo live-demo-block">
         <h3>写法</h3>
         <p class="comment">支持标签和属性两种写法</p>
         <jigsaw-button colorType="primary">click me</jigsaw-button>
         <a jigsaw-button colorType="primary">另一种写法</a>
     </div>
 
-    <div class="demo-2 live-demo">
+    <div class="demo-2 live-demo live-demo-block">
         <h3>类型</h3>
         <p class="comment">四种类型：<code>default</code> <code>primary</code> <code>warning</code> <code>error|danger</code></p>
         <jigsaw-button>Default</jigsaw-button>
@@ -16,7 +16,7 @@
         <jigsaw-button colorType="danger">Danger</jigsaw-button>
     </div>
 
-    <div class="demo-3 live-demo">
+    <div class="demo-3 live-demo live-demo-block">
         <h3>尺寸</h3>
         <p class="comment">三种尺寸：<code>small</code> <code>default</code> <code>large</code></p>
         <jigsaw-button preSize="small" colorType="primary">Small</jigsaw-button>
@@ -24,26 +24,26 @@
         <jigsaw-button preSize="large" colorType="primary">Large</jigsaw-button>
     </div>
 
-    <div class="demo-4 live-demo">
+    <div class="demo-4 live-demo live-demo-block">
         <h3>设置宽高</h3>
         <p class="comment">宽高支持 <code>number</code> <code>px</code> <code>%</code></p>
         <jigsaw-button width="150px" height="40">click me</jigsaw-button>
         <jigsaw-button width="20%">click me</jigsaw-button>
     </div>
 
-    <div class="demo-5 live-demo">
+    <div class="demo-5 live-demo live-demo-block">
         <h3>绑定click事件</h3>
         <jigsaw-button (click)="canClick()">click me</jigsaw-button>
     </div>
 
-    <div class="demo-6 live-demo">
+    <div class="demo-6 live-demo live-demo-block">
         <h3>不可点击状态</h3>
         <jigsaw-button [(disabled)]="disabled" (click)="changeClickCount()">click me</jigsaw-button>
         <jigsaw-checkbox [(checked)]="disabled">disable/enable</jigsaw-checkbox>
         <p class="message">点击次数<span>{{clickCount}}</span></p>
     </div>
 
-    <div class="demo-7 live-demo">
+    <div class="demo-7 live-demo live-demo-block">
         <h3>内嵌图标</h3>
         <jigsaw-button>
             <span class="fa fa-area-chart"></span>
