@@ -9,7 +9,7 @@ export class ComboSelectEditableDemo{
     constructor(public viewContainerRef: ViewContainerRef,
                 public renderer: Renderer2) {
     }
-    
+
     editable: boolean = true;
 
     toggleEditable() {

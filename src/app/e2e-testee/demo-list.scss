@@ -1,4 +1,4 @@
-li {display: inline-block; margin-right: 12px;}
+jigsaw-collapse.nav-list .jigsaw-collapse-content li {display: inline-block; margin-right: 12px;}
 
 .demo-wrap{
     *zoom: 1;
@@ -33,9 +33,20 @@ li {display: inline-block; margin-right: 12px;}
     font-weight: 700;
 }
 
+/* demo容器 block */
+.live-demo-wrap .live-demo-block{
+    float: left;
+    width: 48%;
+    min-width: 300px;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    padding: 8px;
+    margin-right: 2%;
+}
+
 /* demo容器 */
 .live-demo-wrap .live-demo {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     padding-left: 10px;
 }
 
@@ -44,13 +55,23 @@ li {display: inline-block; margin-right: 12px;}
     margin: 0 0 10px -10px;
     color: #333;
     font-size: 18px;
-    border-left: 3px solid #c7254e;
     padding: 2px 14px;
-
+    position: relative;
+    border-left: 1px solid #c7254e;
+}
+.live-demo.live-demo-block h3{margin: 0 0 10px 0;}
+.live-demo h3:before{
+    position: absolute;
+    left: -1px;
+    top: 0;
+    content: '';
+    border-style: solid;
+    border-width: 6px 10px;
+    border-color: transparent transparent transparent #c7254e;
 }
 
 /* demo文字描述 */
-.live-demo p {
+.live-demo p.comment {
     margin-bottom: 10px;
     color: #666;
     font-size: 14px;
@@ -61,12 +82,23 @@ li {display: inline-block; margin-right: 12px;}
     margin-top: 10px;
     margin-bottom: 0;
     color: #999;
+    font-size: 14px;
 }
 
 /* demo消息高亮字 */
 .live-demo p.message span {
     margin: 0 4px;
     color: #666;
+}
+
+/* toggle */
+.live-demo .toggle {
+    padding-top: 10px;
+    color: #999;
+}
+.live-demo .toggle label{
+    margin-right: 10px;
+    font-weight: normal;
 }
 
 /* demo code */

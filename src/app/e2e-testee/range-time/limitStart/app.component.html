@@ -1,6 +1,8 @@
 <h4>LimitStart Time</h4>
 
-LimitStart : <jigsaw-tile-select [data]="datas" [(selectedItems)]="limitStart" [multipleSelect]="false" [tileOptionWidth]="80"></jigsaw-tile-select>
+LimitStart : <jigsaw-tile trackItemBy="label" [(selectedItems)]="limitStart" [multipleSelect]="false" >
+    <jigsaw-tile-option *ngFor="let item of datas" width="80" [value]="item">{{item.label}}</jigsaw-tile-option>
+</jigsaw-tile>
 <br>
 <jigsaw-range-time [(beginDate)]="beginDate" [limitStart]="limitStart[0].label" [(endDate)]="endDate" ></jigsaw-range-time><br>
 

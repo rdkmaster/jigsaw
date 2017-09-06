@@ -6,10 +6,10 @@ _**app.component.html  **_中添加 html 片段
 
 ```
  <span>快速选择:</span>
- <jigsaw-radio-group (valueChange)="quickChoiceChange($event)"
-                   [data]="quickChoices"
+ <jigsaw-radios (valueChange)="quickChoiceChange($event)"
                    trackItemBy="id" [(value)]="selectedChoice">
- </jigsaw-radio-group>
+    <jigsaw-radio-option *ngFor="let quickChoice of quickChoices" [value]="quickChoice">{{quickChoice.label}}</jigsaw-radio-option>
+ </jigsaw-radios>
 ```
 
 _**app.component.ts**_ 中添加代码片段
@@ -60,25 +60,29 @@ _**app.component.html  **_
 <div>
   <span>时间选择:</span>
   <jigsaw-combo-select [(value)]="rangeTimeComboValue" openTrigger="click">
-    <jigsaw-range-time [(beginDate)]="beginDate" [(endDate)]="endDate" 
-    (change)="handleChange($event)"></jigsaw-range-time>
+    <ng-template>
+        <jigsaw-range-time [(beginDate)]="beginDate" [(endDate)]="endDate" 
+        (change)="handleChange($event)"></jigsaw-range-time>
+    </ng-template>
   </jigsaw-combo-select>
   <jigsaw-checkbox [enableIndeterminate]="false" [(checked)]="status">多时段设置</jigsaw-checkbox>
   <jigsaw-combo-select [(value)]="selectedPeriodTimes" openTrigger="click" [disabled]="!status">
-    <jigsaw-tile-select
-      [(selectedItems)]="selectedPeriodTimes"
-      labelField="label"
-      [searchable]="true"
-      [data]="periodTimes"
-      width="350px"
-      tileOptionWidth="100px">
-    </jigsaw-tile-select>
+    <ng-template>
+        <jigsaw-tile
+          [(selectedItems)]="selectedPeriodTimes"
+          trackItemBy="label"
+          width="350px">
+          <jigsaw-tile-option *ngFor="let periodTime of periodTimes" [value]="periodTime" width="100px">
+            {{periodTime.label}}
+          </jigsaw-tile-option>
+        </jigsaw-tile>
+    </ng-template>
   </jigsaw-combo-select>
   <span>快速选择:</span>
-  <jigsaw-radio-group (valueChange)="quickChoiceChange($event)"
-                      [data]="quickChoices"
+  <jigsaw-radios (valueChange)="quickChoiceChange($event)"
                       trackItemBy="id" [(value)]="selectedChoice">
-  </jigsaw-radio-group>
+    <jigsaw-radio-option *ngFor="let quickChoice of quickChoices" [value]="quickChoice">{{quickChoice.label}}</jigsaw-radio-option>
+  </jigsaw-radios>
 </div>
 ```
 

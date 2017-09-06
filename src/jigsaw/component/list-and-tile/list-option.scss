@@ -1,0 +1,31 @@
+$list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
+
+.#{$list-option-prefix-cls} {
+    display: block;
+    padding: 5px 8px;
+    min-height: $height-base;
+    cursor: pointer;
+    box-sizing: border-box;
+    &:hover {
+        background: $item-hover-bg;
+    }
+    &.#{$list-option-prefix-cls}-active {
+        background: $item-active-bg;
+    }
+    &.#{$list-option-prefix-cls}-disabled {
+        background: $background-color-base;
+        color: $text-color-secondary;
+        cursor: not-allowed;
+    }
+    &-title-box {
+        @include clearfix();
+    }
+    &-title {
+        float: left;
+        color: #333;
+    }
+    &-sub-title {
+        float: right;
+        color: #999;
+    }
+}

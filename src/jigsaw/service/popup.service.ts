@@ -82,6 +82,12 @@ export class PopupOptions {
      * @type {boolean} 默认值是true
      */
     disposeOnRouterChanged?: boolean = true;
+
+    /**
+     * 弹框是否要加边框
+     * @type {boolean}
+     */
+    showBorder?: boolean;
 }
 
 export type PopupPosition = PopupPoint | ElementRef | HTMLElement;
@@ -366,6 +372,7 @@ export class PopupService {
         if (element && renderer) {
             this._setSize(options, element, renderer);
             this._setPosition(options, element, renderer);
+            this._setBackground(options, element, renderer);
             this._setShowAnimate(options, element, renderer);
         }
     }
@@ -404,11 +411,13 @@ export class PopupService {
     /*
      * 设置边框、阴影、动画
      * */
-    public static setBackground(element: HTMLElement, renderer: Renderer2) {
-        renderer.setStyle(element, 'border', '1px solid #d9d9d9');
-        renderer.setStyle(element, 'border-radius', '2px');
-        renderer.setStyle(element, 'box-shadow', '1px 1px 1px #d9d9d9');
+    private _setBackground(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
+        renderer.setStyle(element, 'box-shadow', '1px 1px 6px rgba(0, 0, 0, .2)');
         renderer.setStyle(element, 'background', '#ffffff');
+        if (options && options.showBorder) {
+            renderer.setStyle(element, 'border', '1px solid #dcdcdc');
+            renderer.setStyle(element, 'border-radius', '4px');
+        }
     }
 
     private _setShowAnimate(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {

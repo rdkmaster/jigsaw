@@ -21,7 +21,7 @@ import {JigsawTableModule} from './component/table/table';
 import {JigsawTableRendererModule} from "./component/table/table-renderer";
 import {JigsawTabsModule} from './component/tabs/index';
 import {JigsawTagModule} from './component/tag/tag';
-import {JigsawTileSelectModule} from './component/tile-select/tile-select';
+import {JigsawTileSelectModule} from './component/list-and-tile/tile';
 import {JigsawTimeModule} from './component/time/index';
 import {JigsawTooltipModule} from './component/tooltip/tooltip';
 import {JigsawTreeExtModule} from './component/tree/tree-ext';
