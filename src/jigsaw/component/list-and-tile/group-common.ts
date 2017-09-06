@@ -6,10 +6,23 @@ import {ArrayCollection} from "../../core/data/array-collection";
 import {JigsawTileOption} from "./tile";
 
 export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implements ControlValueAccessor, AfterContentInit, OnDestroy {
+
     protected _removeRefreshCallback: CallbackRemoval;
 
     //设置对象的标识
-    @Input() public trackItemBy: string | string[];
+    private _trackItemBy: string[] = [];
+
+    @Input()
+    public get trackItemBy(): string | string[] {
+        return this._trackItemBy;
+    }
+
+    public set trackItemBy(value: string | string[]) {
+        if (!value) {
+            return;
+        }
+        this._trackItemBy = typeof value === 'string' ? value.split(/\s*,\s*/g) : value;
+    }
 
     //判断是否支持多选
     @Input() public multipleSelect: boolean;
@@ -39,7 +52,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
                 this.selectedItems.push(itemValue);
             } else {
                 this._selectedItems.forEach(selectedItemValue => {
-                    if (CommonUtils.compareWithKeyProperty(selectedItemValue, itemValue, <string[]>this.trackItemBy)) {
+                    if (CommonUtils.compareWithKeyProperty(selectedItemValue, itemValue, this._trackItemBy)) {
                         this._selectedItems.splice(this.selectedItems.indexOf(selectedItemValue), 1);
                     }
                 });
@@ -47,7 +60,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         } else { //单选选中
             this._items.length && this._items.forEach((item: AbstractJigsawOptionComponent) => {
                 //去除其他option选中
-                if (!CommonUtils.compareWithKeyProperty(item.value, itemValue, <string[]>this.trackItemBy) && item.selected) {
+                if (!CommonUtils.compareWithKeyProperty(item.value, itemValue, this._trackItemBy) && item.selected) {
                     item.selected = false;
                     item.changeDetector.detectChanges();
                     this._selectedItems.splice(this.selectedItems.indexOf(item.value), 1);
@@ -75,7 +88,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
             this._items.forEach(item => {
                 let hasSelected = false;
                 this._selectedItems.forEach(selectedItem => {
-                    if (CommonUtils.compareWithKeyProperty(item.value, selectedItem, <string[]>this.trackItemBy)) {
+                    if (CommonUtils.compareWithKeyProperty(item.value, selectedItem, this._trackItemBy)) {
                         hasSelected = true;
                     }
                 });
@@ -86,12 +99,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     }
 
     ngAfterContentInit() {
-        if (this.trackItemBy) {
-            this.trackItemBy = (<string>this.trackItemBy).split(/\s*,\s*/g);
-        } else if (this._items[0] && this._items[0].value instanceof Object) {
-            // item数值是object时要求必须输入trackItemBy
-            console.warn('please input trackItemBy attribute in jigsaw group')
-        }
+        let warned: boolean = false;
         this._setItemState();
         this._items.forEach(item => {
             item.selectedChange.subscribe(() => {
@@ -104,14 +112,20 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
                         this._updateSelectItemsForForm(item.value, item.selected);
                     }
                 }
-            })
-        })
+
+                if (item.value instanceof Object && !warned) {
+                    console.warn('please use trackItemBy attribute to help us to identify the items');
+                    warned = true;
+                }
+            });
+        });
     }
 
     ngOnDestroy() {
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback()
         }
+        this._items.forEach(item => item.selectedChange.unsubscribe());
     }
 
     protected _propagateChange: any = () => {
@@ -155,7 +169,7 @@ export class AbstractJigsawOptionComponent extends AbstractJigsawComponent {
     public selected: boolean = false; // 选中状态
 
     @Output()
-    public selectedChange = new EventEmitter<JigsawTileOption>();
+    public selectedChange = new EventEmitter<AbstractJigsawOptionComponent>();
 
     public changeDetector: ChangeDetectorRef
 

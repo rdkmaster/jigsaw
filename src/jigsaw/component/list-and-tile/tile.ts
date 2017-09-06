@@ -5,8 +5,8 @@ import {JigsawInputModule} from '../input/input';
 import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "./group-common";
 
 @Component({
-    selector: 'jigsaw-tile',
-    templateUrl: 'tile.html',
+    selector: 'jigsaw-tile,j-tile',
+    template: '<ng-content></ng-content>',
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
@@ -17,9 +17,6 @@ import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "./gro
     ]
 })
 export class JigsawTile extends AbstractJigsawGroupComponent {
-
-    @Input() public searchable: boolean = false;
-
     // 默认多选
     public multipleSelect: boolean = true;
 
@@ -29,7 +26,7 @@ export class JigsawTile extends AbstractJigsawGroupComponent {
 }
 
 @Component({
-    selector: 'jigsaw-tile-option',
+    selector: 'jigsaw-tile-option,j-tile-option',
     template: '<ng-content></ng-content>',
     host: {
         '[style.width]': 'width',

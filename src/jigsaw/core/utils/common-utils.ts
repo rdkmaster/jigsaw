@@ -23,7 +23,7 @@ export class CommonUtils {
      * #2 没有提供trackItemBy时,直接比较两个参数
      * */
     public static compareWithKeyProperty(item1: any, item2: any, trackItemBy: string[]): boolean {
-        if (trackItemBy) {
+        if (trackItemBy && trackItemBy.length > 0) {
             for (let i = 0; i < trackItemBy.length; i++) {
                 if (typeof item1 === 'object' && typeof item2 === 'object') {
                     if (item1[trackItemBy[i]] != item2[trackItemBy[i]]) {

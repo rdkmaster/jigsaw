@@ -425,10 +425,6 @@ export const navInfo = [
                 url: '/tileselect/tileOptionWidth'
             },
             {
-                label: 'Searchable',
-                url: '/tileselect/searchable'
-            },
-            {
                 label: 'LabelField',
                 url: '/tileselect/labelField'
             },

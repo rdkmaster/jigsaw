@@ -10,9 +10,6 @@ import {TileSelectLabelFieldDemoModule} from "./labelField/app.module";
 import {TileselectMultipleSelectDemoComponent} from "./multipleSelect/app.component";
 import {TileSelectMultiSelectDemoModule} from "./multipleSelect/app.module";
 
-import {TileselectSearchableComponent} from "./searchable/app.component";
-import {TileSelectSearchableDemoModule} from "./searchable/app.module";
-
 import {TileselectSelectedItemsComponent} from "./selectedItems/app.component";
 import {TileSelectSelectedItemsDemoModule} from "./selectedItems/app.module";
 
@@ -48,9 +45,6 @@ const inputDemoRoutes=[
         path:'tileOptionWidth', component: TileselectOptionWidthComponent
     },
     {
-        path:'searchable', component: TileselectSearchableComponent
-    },
-    {
         path:'labelField', component: TileselectLabelFieldComponent
     },
     {
@@ -66,7 +60,7 @@ const inputDemoRoutes=[
     imports: [
         RouterModule.forChild(inputDemoRoutes),
         TileSelectBasicDemoModule, TileSelectLabelFieldDemoModule, TileSelectMultiSelectDemoModule,
-        TileSelectSearchableDemoModule, TileSelectSelectedItemsDemoModule, TileSelectItemsChangeDemoModule,
+        TileSelectSelectedItemsDemoModule, TileSelectItemsChangeDemoModule,
         TileSelectOptionWidthDemoModule, TileSelectTrackItemByDemoModule
     ]
 })

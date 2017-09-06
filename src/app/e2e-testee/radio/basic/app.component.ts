@@ -2,7 +2,7 @@ import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 @Component({
-  templateUrl: './app.component.html'
+    templateUrl: './app.component.html'
 })
 export class RadioBasicDemoComponent {
     public selectedCity;
@@ -17,9 +17,10 @@ export class RadioBasicDemoComponent {
 
     constructor(public viewContainerRef: ViewContainerRef,
                 public renderer: Renderer2) {
-        this.selectedCity={label: "西安",id: 6};
+        this.selectedCity = {id: 6};
     }
-    public radioChange(message:any){
+
+    public radioChange(message: any) {
         console.log(`switch message is: ${message.label}`);
     }
 }

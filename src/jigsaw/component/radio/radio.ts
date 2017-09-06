@@ -17,14 +17,14 @@ import {ArrayCollection} from "../../core/data/array-collection";
     selector: 'jigsaw-radio',
     template: '<ng-content></ng-content>',
     providers: [
-        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRadioGroup), multi: true },
+        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRadioGroup), multi: true},
     ]
 })
-export class JigsawRadioGroup extends AbstractJigsawGroupComponent{
+export class JigsawRadioGroup extends AbstractJigsawGroupComponent {
 
     @Input()
     public get value(): any {
-        return this.selectedItems && this.selectedItems.length != 0  ? this.selectedItems[0] : null;
+        return this.selectedItems && this.selectedItems.length != 0 ? this.selectedItems[0] : null;
     }
 
     public set value(newValue: any) {
@@ -41,11 +41,11 @@ export class JigsawRadioGroup extends AbstractJigsawGroupComponent{
 
     // 重写selectedItems
     @Input()
-    public get selectedItems(): ArrayCollection<object> | object[] {
+    public get selectedItems(): ArrayCollection<any> | any[] {
         return this._selectedItems;
     }
 
-    public set selectedItems(newValue: ArrayCollection<object> | object[]) {
+    public set selectedItems(newValue: ArrayCollection<any> | any[]) {
         this._setSelectedItems(newValue);
     }
 
@@ -73,7 +73,7 @@ export class JigsawRadioGroup extends AbstractJigsawGroupComponent{
         '[class.jigsaw-radio-option-disabled]': 'disabled'
     }
 })
-export class JigsawRadioOption extends AbstractJigsawOptionComponent{
+export class JigsawRadioOption extends AbstractJigsawOptionComponent {
     constructor(public changeDetector: ChangeDetectorRef) {
         super();
     }
@@ -83,7 +83,7 @@ export class JigsawRadioOption extends AbstractJigsawOptionComponent{
      * @internal
      */
     public _$handleClick(): void {
-        if(!this.disabled){
+        if (!this.disabled) {
             this.selectedChange.emit(this);
         }
     }

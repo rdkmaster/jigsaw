@@ -76,7 +76,6 @@ _**app.component.html  **_
     <jigsaw-tile-select
       [(selectedItems)]="selectedPeriodTimes"
       labelField="label"
-      [searchable]="true"
       [data]="periodTimes"
       width="350px"
       tileOptionWidth="100px">
@@ -93,7 +92,6 @@ _**app.component.html  **_
     <jigsaw-tile-select
       [(selectedItems)]="selectBusinessType"
       labelField="label"
-      [searchable]="true"
       [data]="businessTypes"  [multipleSelect]="false"
       width="350px"
       tileOptionWidth="100px">
@@ -105,7 +103,6 @@ _**app.component.html  **_
     <jigsaw-tile-select
       [(selectedItems)]="selectInterface"
       labelField="label"
-      [searchable]="true"
       [data]="interfaces"
       width="350px"
       tileOptionWidth="100px">
@@ -117,7 +114,6 @@ _**app.component.html  **_
     <jigsaw-tile-select
       [(selectedItems)]="selectUserType"
       labelField="label"
-      [searchable]="true"
       [data]="userTypes" [multipleSelect]="false"
       width="100px"
       tileOptionWidth="100px">

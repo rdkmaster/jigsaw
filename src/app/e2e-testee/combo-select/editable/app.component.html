@@ -9,7 +9,6 @@
             <jigsaw-tile
                 [(selectedItems)]="selectedCity"
                 trackItemBy="label"
-                [searchable]="true"
                 width="400px">
                 <jigsaw-tile-option *ngFor="let city of citys" [value]="city" width="22.8%">
                     {{city.label}}

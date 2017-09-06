@@ -24,7 +24,7 @@
 
     <div class="demo-3 live-demo live-demo-block">
         <h3>不可点击状态</h3>
-        <jigsaw-radio [(value)]="selectedCity3" trackItemBy="name"
+        <jigsaw-radio [(value)]="selectedCity3" trackItemBy="id"
                       (valueChange)="radioChange($event)">
             <jigsaw-radio-option *ngFor="let item of citys3" [value]="item" [disabled]="item.disabled">
                 {{item.name}}

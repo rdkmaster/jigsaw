@@ -1,5 +1,5 @@
 import {
-    AfterContentInit, ChangeDetectorRef, Component, ContentChildren, forwardRef, Input, NgModule,
+    AfterContentInit, ChangeDetectorRef, Component, ContentChildren, forwardRef, NgModule,
     QueryList
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
@@ -8,7 +8,7 @@ import {AbstractJigsawOptionComponent} from "./group-common";
 import {AbstractJigsawGroupComponent} from "./group-common";
 
 @Component({
-    selector: 'j-list',
+    selector: 'jigsaw-list,j-list',
     template: '<ng-content></ng-content>',
     host: {
         '[class.jigsaw-list]': 'true',
@@ -20,8 +20,6 @@ import {AbstractJigsawGroupComponent} from "./group-common";
     ]
 })
 export class JigsawList extends AbstractJigsawGroupComponent implements AfterContentInit {
-    @Input() public searchable: boolean = false;
-
     // 默认单选
     public multipleSelect: boolean = false;
 
@@ -31,7 +29,7 @@ export class JigsawList extends AbstractJigsawGroupComponent implements AfterCon
 }
 
 @Component({
-    selector: 'j-list-option',
+    selector: 'jigsaw-list-option,j-list-option',
     templateUrl: 'list-option.html',
     host: {
         '[class.jigsaw-list-option]': 'true',
