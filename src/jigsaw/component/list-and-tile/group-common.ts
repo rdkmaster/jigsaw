@@ -99,7 +99,10 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     }
 
     ngAfterContentInit() {
-        let warned: boolean = false;
+        if (this._trackItemBy.length == 0 && this._items.find(item => item.value instanceof Object)) {
+            console.warn('please use trackItemBy attribute to help us to identify the items');
+        }
+
         this._setItemState();
         this._items.forEach(item => {
             item.selectedChange.subscribe(() => {
@@ -111,11 +114,6 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
                         item.selected = true;
                         this._updateSelectItemsForForm(item.value, item.selected);
                     }
-                }
-
-                if (item.value instanceof Object && !warned) {
-                    console.warn('please use trackItemBy attribute to help us to identify the items');
-                    warned = true;
                 }
             });
         });
