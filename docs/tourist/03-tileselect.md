@@ -7,13 +7,14 @@ _**app.component.html  **_中添加 html 片段，并且同样直接加上comboS
 ```
 <jigsaw-combo-select [(value)]="selectedPeriodTimes" openTrigger="click" [disabled]="!status">
     <ng-template>
-        <jigsaw-tile-select
+        <jigsaw-tile
           [(selectedItems)]="selectedPeriodTimes"
-          labelField="label"
-          [data]="periodTimes"
-          width="350px"
-          tileOptionWidth="100px">
-        </jigsaw-tile-select>
+          trackItemBy="label"
+          width="350px">
+          <jigsaw-tile-option *ngFor="let periodTime of periodTimes" [value]="periodTime" width="100px">
+            {{periodTime.label}}
+          </jigsaw-tile-option>
+        </jigsaw-tile>
     </ng-template>
 </jigsaw-combo-select>
 ```
@@ -39,13 +40,14 @@ _**app.component.html  **_中修改如下
  <jigsaw-checkbox [enableIndeterminate]="false" [(checked)]="status">多时段设置</jigsaw-checkbox>
   <jigsaw-combo-select [(value)]="selectedPeriodTimes" openTrigger="click" [disabled]="!status">
     <ng-template>
-        <jigsaw-tile-select
+        <jigsaw-tile
           [(selectedItems)]="selectedPeriodTimes"
-          labelField="label"
-          [data]="periodTimes"
-          width="350px"
-          tileOptionWidth="100px">
-        </jigsaw-tile-select>
+          trackItemBy="label"
+          width="350px">
+          <jigsaw-tile-option *ngFor="let periodTime of periodTimes" [value]="periodTime" width="100px">
+            {{periodTime.label}}
+          </jigsaw-tile-option>
+        </jigsaw-tile>
     </ng-template>
   </jigsaw-combo-select>
 ```
@@ -68,13 +70,14 @@ _**app.component.html  **_
   <jigsaw-checkbox [enableIndeterminate]="false" [(checked)]="status">多时段设置</jigsaw-checkbox>
   <jigsaw-combo-select [(value)]="selectedPeriodTimes" openTrigger="click" [disabled]="!status">
     <ng-template>
-        <jigsaw-tile-select
+        <jigsaw-tile
           [(selectedItems)]="selectedPeriodTimes"
-          labelField="label"
-          [data]="periodTimes"
-          width="350px"
-          tileOptionWidth="100px">
-        </jigsaw-tile-select>
+          trackItemBy="label"
+          width="350px">
+          <jigsaw-tile-option *ngFor="let periodTime of periodTimes" [value]="periodTime" width="100px">
+            {{periodTime.label}}
+          </jigsaw-tile-option>
+        </jigsaw-tile>
     </ng-template>
   </jigsaw-combo-select>
 </div>
