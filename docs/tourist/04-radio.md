@@ -71,7 +71,6 @@ _**app.component.html  **_
         <jigsaw-tile-select
           [(selectedItems)]="selectedPeriodTimes"
           labelField="label"
-          [searchable]="true"
           [data]="periodTimes"
           width="350px"
           tileOptionWidth="100px">

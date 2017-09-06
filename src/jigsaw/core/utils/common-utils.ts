@@ -20,24 +20,29 @@ export class CommonUtils {
     /**
      * 比较两个对象是否相等
      * #1 添加string及简单值 和对象中trackItemBy 属性对比的支持;
+     * #2 没有提供trackItemBy时,直接比较两个参数
      * */
     public static compareWithKeyProperty(item1: any, item2: any, trackItemBy: string[]): boolean {
-        for (let i = 0; i < trackItemBy.length; i++) {
-            if (typeof item1 === 'object' && typeof item2 === 'object') {
-                if (item1[trackItemBy[i]] != item2[trackItemBy[i]]) {
-                    return false;
-                }
-            } else if (typeof item1 !== 'object' && typeof item2 === 'object') {
-                if (item1 != item2[trackItemBy[i]]) {
-                    return false;
-                }
-            } else if (typeof item1 === 'object' && typeof item2 !== 'object') {
-                if (item1[trackItemBy[i]] != item2) {
-                    return false;
+        if (trackItemBy && trackItemBy.length > 0) {
+            for (let i = 0; i < trackItemBy.length; i++) {
+                if (typeof item1 === 'object' && typeof item2 === 'object') {
+                    if (item1[trackItemBy[i]] != item2[trackItemBy[i]]) {
+                        return false;
+                    }
+                } else if (typeof item1 !== 'object' && typeof item2 === 'object') {
+                    if (item1 != item2[trackItemBy[i]]) {
+                        return false;
+                    }
+                } else if (typeof item1 === 'object' && typeof item2 !== 'object') {
+                    if (item1[trackItemBy[i]] != item2) {
+                        return false;
+                    }
                 }
             }
+            return true;
+        } else {
+            return item1 == item2 ? true : false;
         }
-        return true;
     }
 
     // 判断是否是空对象.
@@ -145,7 +150,7 @@ export class CommonUtils {
         }
 
         // to avoid compiler mis-error.
-        const w:any = window;
+        const w: any = window;
         let browserLang: any = w.navigator.languages ? w.navigator.languages[0] : null;
         browserLang = browserLang || w.navigator.language || w.navigator.browserLanguage || w.navigator.userLanguage;
 
@@ -171,7 +176,7 @@ export class CommonUtils {
         }
 
         // to avoid compiler mis-error.
-        const w:any = window;
+        const w: any = window;
         let browserCultureLang: any = w.navigator.languages ? w.navigator.languages[0] : null;
         browserCultureLang = browserCultureLang || w.navigator.language || w.navigator.browserLanguage || w.navigator.userLanguage;
 

@@ -2,7 +2,7 @@
     <h2>Checkbox</h2>
     <div class="demo-1 live-demo">
         <h3>状态</h3>
-        <p>三种状态：<code>unchecked</code> <code>checked</code> <code>indeterminate</code></p>
+        <p class="comment">三种状态：<code>unchecked</code> <code>checked</code> <code>indeterminate</code></p>
         <jigsaw-checkbox [(checked)]="demo1Checked" [(enableIndeterminate)]="enableIndeterminate">click me</jigsaw-checkbox>
         <div class="toggle">
             <label>启用中间状态:</label>
@@ -13,7 +13,7 @@
 
     <div class="demo-2 live-demo">
         <h3>默认中间状态</h3>
-        <p>默认中间状态，点击切换其他两个状态</p>
+        <p class="comment">默认中间状态，点击切换其他两个状态</p>
         <jigsaw-checkbox [(checked)]="demo2Checked" [enableIndeterminate]="false">click me</jigsaw-checkbox>
     </div>
 

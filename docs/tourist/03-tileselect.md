@@ -10,7 +10,6 @@ _**app.component.html  **_中添加 html 片段，并且同样直接加上comboS
         <jigsaw-tile-select
           [(selectedItems)]="selectedPeriodTimes"
           labelField="label"
-          [searchable]="true"
           [data]="periodTimes"
           width="350px"
           tileOptionWidth="100px">
@@ -43,7 +42,6 @@ _**app.component.html  **_中修改如下
         <jigsaw-tile-select
           [(selectedItems)]="selectedPeriodTimes"
           labelField="label"
-          [searchable]="true"
           [data]="periodTimes"
           width="350px"
           tileOptionWidth="100px">
@@ -73,7 +71,6 @@ _**app.component.html  **_
         <jigsaw-tile-select
           [(selectedItems)]="selectedPeriodTimes"
           labelField="label"
-          [searchable]="true"
           [data]="periodTimes"
           width="350px"
           tileOptionWidth="100px">

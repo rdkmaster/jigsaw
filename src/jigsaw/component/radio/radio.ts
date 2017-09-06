@@ -1,152 +1,99 @@
 import {
-    AfterViewInit,
     ChangeDetectorRef,
-    Component,
+    Component, ContentChildren,
     EventEmitter,
     forwardRef,
     Input,
     NgModule,
-    OnInit,
-    Optional,
     Output,
     QueryList,
-    ViewChildren
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {AbstractJigsawComponent} from "../common";
-import {CommonUtils} from '../../core/utils/common-utils';
-import {InternalUtils} from '../../core/utils/internal-utils';
+import {FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "../list-and-tile/group-common";
 import {ArrayCollection} from "../../core/data/array-collection";
 
 @Component({
-    selector: 'jigsaw-radio-group',
-    templateUrl: 'radio-group.html',
+    selector: 'jigsaw-radios',
+    template: '<ng-content></ng-content>',
     providers: [
-        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRadioGroup), multi: true },
+        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRadioGroup), multi: true},
     ]
 })
-export class JigsawRadioGroup extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, AfterViewInit {
-
-    private _value: any = null;
+export class JigsawRadioGroup extends AbstractJigsawGroupComponent {
 
     @Input()
     public get value(): any {
-        return this._value;
+        return this.selectedItems && this.selectedItems.length != 0 ? this.selectedItems[0] : null;
     }
 
     public set value(newValue: any) {
-        if (newValue && this._value != newValue) {
-            this._propagateChange(newValue);
-        }
         this.writeValue(newValue);
     }
 
     @Output() public valueChange: EventEmitter<any> = new EventEmitter<any>();
 
-    //设置对象的标识
-    @Input() public trackItemBy: string|string[];
+    // 默认多选
+    public multipleSelect: boolean = false;
 
-    //显示在界面上的属性名
-    @Input() public labelField: string = 'label';
+    @ContentChildren(forwardRef(() => JigsawRadioOption))
+    protected _items: QueryList<JigsawRadioOption>;
 
-    private _data: ArrayCollection<object>;
-
+    // 重写selectedItems
     @Input()
-    public get data(): ArrayCollection<object>|object[] {
-        return this._data;
+    public get selectedItems(): ArrayCollection<any> | any[] {
+        return this._selectedItems;
     }
 
-    public set data(value: ArrayCollection<object>|object[]) {
-        this._data = value instanceof ArrayCollection ? value : new ArrayCollection(value);
+    public set selectedItems(newValue: ArrayCollection<any> | any[]) {
+        this._setSelectedItems(newValue);
     }
 
-    @ViewChildren(forwardRef(() => JigsawRadioButton))
-    private _radios: QueryList<JigsawRadioButton> = null;
+    // 重写_updateSelectItems
+    protected _updateSelectItemsForForm(itemValue, selected): void {
+        this._updateSelectItems(itemValue, selected);
+        this.valueChange.emit(this.selectedItems[0]);
+        this._propagateChange(this.selectedItems[0]);
+    }
 
-    private _updateSelectedRadio(): void {
-        if (this._radios.length) {
-            this._radios.forEach(radio => {
-                radio.checked = CommonUtils.compareWithKeyProperty(this.value, radio.radioItem, <string[]>this.trackItemBy);
-                radio.cdRef.detectChanges();
-            });
+    // 重写writeValue
+    public writeValue(newValue: any): void {
+        if (newValue && this.value != newValue) {
+            this.selectedItems = [newValue];
         }
-        this.valueChange.emit(this.value);
-    }
-
-    ngOnInit() {
-        super.ngOnInit();
-        this.trackItemBy = InternalUtils.initTrackItemBy(<string>this.trackItemBy, this.labelField);
-    }
-
-    ngAfterViewInit() {
-        if (this.value) {
-            this._updateSelectedRadio();
-        }
-    }
-
-    private _propagateChange:any = () => {};
-
-    public writeValue(value: any): void {
-        if (value && this._value != value) {
-            this._value = value;
-            if (this.initialized) {
-                this._updateSelectedRadio();
-            }
-        }
-    }
-
-    public registerOnChange(fn: any): void {
-        this._propagateChange = fn;
-    }
-
-    public registerOnTouched(fn: any): void {
     }
 }
 
 @Component({
-    selector: 'jigsaw-radio-button',
-    templateUrl: 'radio.html',
+    selector: 'jigsaw-radio-option',
+    templateUrl: 'radio-option.html',
     host: {
-        "(click)": "_onClick()"
+        '(click)': '_$handleClick()',
+        '[class.jigsaw-radio-option]': 'true',
+        '[class.jigsaw-radio-option-disabled]': 'disabled'
     }
 })
-export class JigsawRadioButton implements OnInit {
-    @Input() public radioItem: any;
+export class JigsawRadioOption extends AbstractJigsawOptionComponent {
+    constructor(public changeDetector: ChangeDetectorRef) {
+        super();
+    }
 
     /**
+     * 点击组件触发
      * @internal
      */
-    public _$radioLabel: string;
-
-    private _radioGroup: JigsawRadioGroup;
-
-    public checked: boolean = false;
-
-    constructor(@Optional() radioGroup: JigsawRadioGroup, public cdRef: ChangeDetectorRef) {
-        this._radioGroup = radioGroup;
-    }
-
-    private _onClick(): void {
-        if (!this.checked) {
-            this.checked = true;
+    public _$handleClick(): void {
+        if (!this.disabled) {
+            this.selectedChange.emit(this);
         }
-        if (this._radioGroup) {
-            this._radioGroup.value = this.radioItem;//更新内部value
-        }
-    }
-
-    ngOnInit() {
-        //初始化radio显示值
-        this._$radioLabel = this.radioItem[this._radioGroup.labelField];
     }
 
 }
 
 @NgModule({
     imports: [CommonModule, FormsModule],
-    declarations: [JigsawRadioGroup, JigsawRadioButton],
-    exports: [JigsawRadioGroup, JigsawRadioButton]
+    declarations: [JigsawRadioGroup, JigsawRadioOption],
+    exports: [JigsawRadioGroup, JigsawRadioOption]
 })
 export class JigsawRadioModule {
 

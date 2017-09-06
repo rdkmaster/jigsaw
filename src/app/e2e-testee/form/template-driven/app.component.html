@@ -17,9 +17,11 @@
     </fieldset>
     <div class="field">
         <label>Gender *</label>
-        <jigsaw-radio-group ngModel name="gender" trackItemBy="id" required
-                            [data]="[{label: 'Male', id: 0},{label: 'Female', id: 1}]">
-        </jigsaw-radio-group>
+        <jigsaw-radios ngModel name="gender" trackItemBy="id" required>
+            <jigsaw-radio-option *ngFor="let item of [{label: 'Male', id: 0},{label: 'Female', id: 1}]" [value]="item">
+                {{item.label}}
+            </jigsaw-radio-option>
+        </jigsaw-radios>
     </div>
     <div class="field">
         <label>Birthday</label>
@@ -68,12 +70,11 @@
     </div>
     <div class="field">
         <label>Favorite Cities</label>
-        <div class="value-border">
-            <jigsaw-tile-select ngModel name="favoriteCities" width="250px" tileOptionWidth="72px" [data]="[
+        <jigsaw-tile ngModel name="favoriteCities" width="250px" trackItemBy="label">
+            <jigsaw-tile-option *ngFor="let item of [
                     {label: 'Bei Jing'}, {label: 'Shang Hai'}, {label: 'Nan Jing'},
-                    {label: 'Chang Sha'}, {label: 'Cheng Du'}, {label: 'Chong Qing'}]">
-            </jigsaw-tile-select>
-        </div>
+                    {label: 'Chang Sha'}, {label: 'Cheng Du'}, {label: 'Chong Qing'}]" [value]="item" width="72">{{item.label}}</jigsaw-tile-option>
+        </jigsaw-tile>
     </div>
     <div class="field">
         <label>Score</label>

@@ -27,8 +27,8 @@
                 "../node_modules/font-awesome/css/font-awesome.min.css",
                 "../node_modules/@rdkmaster/icon-font/css/iconfont.css",
                 "../node_modules/ztree/css/zTreeStyle/zTreeStyle.css",
-                "styles.scss",
-                "jigsaw/core/theming/prebuilt/zte.scss"
+                "jigsaw/core/theming/prebuilt/zte.scss",
+                "styles.scss"
             ],
             "scripts": [
                 "../node_modules/jquery/dist/jquery.min.js",

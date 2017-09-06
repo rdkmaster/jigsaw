@@ -3,7 +3,7 @@
          jigsaw-scroll-bar
          scrollBarAxis="y"
          [style.height.px]="navHeight">
-        <jigsaw-collapse mode="accordion">
+        <jigsaw-collapse class="nav-list" mode="accordion">
             <jigsaw-collapse-pane *ngFor="let data of navData; index as i" [header]="data.title" [isActive]="i == 0">
                 <ul>
                     <li *ngFor="let nav of data.navList"><a [routerLink]="nav.url">{{nav.label}}</a></li>

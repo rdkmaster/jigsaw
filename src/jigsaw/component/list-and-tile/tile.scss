@@ -1,0 +1,16 @@
+@import "../../assets/scss/core/base";
+
+$select-prefix-cls: #{$jigsaw-prefix}-tile;
+
+.#{$select-prefix-cls} {
+    @include inline-block();
+    border: 1px solid $border-color-base;
+    border-radius: $border-radius-base;
+    padding: 8px 0px 0px 8px;
+    .#{$select-prefix-cls}-search {
+        margin-bottom: 8px;
+        margin-right: 8px;
+    }
+}
+
+

@@ -2,10 +2,10 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 
 import {RadioBasicDemoComponent} from "./basic/app.component";
-import {RadioLabelFieldDemoComponent} from "./labelField/app.component";
+import {RadioLiveDemoComponent} from "../../live-demo/radio/app.component";
 import {RadioTrackItemByDemoComponent} from "./trackItemBy/app.component";
 import {RadioBasicDemoModule} from "./basic/app.module";
-import {RadioLabelFieldDemoModule} from "./labelField/app.module";
+import {RadioLiveDemoModule} from "../../live-demo/radio/app.module";
 import {RadioTrackItemByDemoModule} from "./trackItemBy/app.module";
 
 const inputDemoRoutes=[
@@ -18,7 +18,7 @@ const inputDemoRoutes=[
         path:'basic', component: RadioBasicDemoComponent
     },
     {
-        path:'labelField', component:RadioLabelFieldDemoComponent
+        path:'live-demo', component:RadioLiveDemoComponent
     },
     {
         path:'trackItemBy', component:RadioTrackItemByDemoComponent
@@ -33,7 +33,7 @@ const inputDemoRoutes=[
     imports: [
         RouterModule.forChild(inputDemoRoutes),
         RadioBasicDemoModule,
-        RadioLabelFieldDemoModule,
+        RadioLiveDemoModule,
         RadioTrackItemByDemoModule
     ]
 })
