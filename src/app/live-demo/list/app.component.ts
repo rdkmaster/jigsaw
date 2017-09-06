@@ -1,4 +1,5 @@
 import {Component} from "@angular/core";
+import {ArrayCollection} from "../../../jigsaw/core/data/array-collection";
 
 @Component({
     templateUrl: './app.component.html',
@@ -28,6 +29,16 @@ export class ListBasicDemoComponent {
         }
     ];
 
+    selectedItems1: string;
+    handleSelect(selectedItems) {
+        this.selectedItems1 = selectedItems.map(item => item.title).toString()
+    }
+
+    selectedItems2: string;
+    handleSelect2(selectedItems) {
+        this.selectedItems2 = selectedItems.map(item => item.title).toString()
+    }
+
     goodsList = [
         {
             logo: 'bicycle',
@@ -50,52 +61,42 @@ export class ListBasicDemoComponent {
             name: 'football',
             desc: 'Football is a family of team sports that involve, to varying degrees, kicking a ball with the foot to score a goal. '
         },
-    ];
-
-    selectedItems1: string;
-    selectedItems2: string;
-    selectedItems3: string;
-
-    handleSelect(selectedItems) {
-        this.selectedItems1 = selectedItems.map(item => {
-            return item.title
-        }).toString()
-    }
-
-    handleSelect2(selectedItems) {
-        this.selectedItems2 = selectedItems.map(item => {
-            return item.title
-        }).toString()
-    }
-
-    handleSelect3(selectedItems) {
-        this.selectedItems3 = selectedItems.map(item => {
-            return item.name
-        }).toString()
-    }
-
-    selectedItems4 = [
         {
-            logo: 'camera',
-            name: 'camera',
-            desc: 'A camera is an optical instrument for recording or capturing images, which may be stored locally, transmitted to another location, or both.'
-        },{
-            logo: 'futbol-o',
-            name: 'football',
-            desc: 'Football is a family of team sports that involve, to varying degrees, kicking a ball with the foot to score a goal. '
+            logo: 'book',
+            name: 'book',
+            desc: 'A book is a set of sheets of paper, parchment, or similar materials that are fastened together to hinge at one side.'
+        },
+        {
+            logo: 'puzzle-piece',
+            name: 'puzzle-piece',
+            desc: 'A puzzle is a game, problem, or toy that tests a person\'s ingenuity or knowledge.'
         },
     ];
-    selectedItemsStr4: string;
-    handleSelect4(selectedItems) {
-        this.selectedItemsStr4 = selectedItems.map(item => {
-            return item.name
-        }).toString()
+
+    selectedItems3 = [
+        {
+            logo: 'bicycle',
+            name: 'bicycle',
+            desc: 'A bicycle, also called a cycle or bike, is a human-powered, pedal-driven, single-track vehicle, having two wheels attached to a frame, one behind the other.'
+        },
+        {
+            logo: 'book',
+            name: 'book',
+            desc: 'A book is a set of sheets of paper, parchment, or similar materials that are fastened together to hinge at one side.'
+        },
+    ];
+
+    selectedItemsStr3: string  = this.selectedItems3.map(item => item.name).toString();
+
+    handleSelect3(selectedItems) {
+        this.selectedItemsStr3 = selectedItems.map(item => item.name).toString()
     }
 
-    selectedItemsStr5: string;
-    handleSelect5(selectedItems) {
-        this.selectedItemsStr5 = selectedItems.map(item => {
-            return item.name
-        }).toString()
-    }
+    selectedItems4 = new ArrayCollection([
+        {
+            logo: 'book',
+            name: 'book',
+            desc: 'A book is a set of sheets of paper, parchment, or similar materials that are fastened together to hinge at one side.'
+        },
+    ])
 }

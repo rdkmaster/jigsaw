@@ -14,7 +14,7 @@ import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "../li
 import {ArrayCollection} from "../../core/data/array-collection";
 
 @Component({
-    selector: 'jigsaw-radio',
+    selector: 'jigsaw-radios',
     template: '<ng-content></ng-content>',
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRadioGroup), multi: true},
