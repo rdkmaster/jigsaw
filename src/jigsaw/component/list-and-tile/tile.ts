@@ -16,7 +16,7 @@ import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "./gro
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTile), multi: true},
     ]
 })
-export class JigsawTile extends AbstractJigsawGroupComponent{
+export class JigsawTile extends AbstractJigsawGroupComponent {
 
     @Input() public searchable: boolean = false;
 
@@ -52,7 +52,7 @@ export class JigsawTileOption extends AbstractJigsawOptionComponent {
      * @internal
      */
     public _$handleClick(): void {
-        if(!this.disabled){
+        if (!this.disabled) {
             this.selectedChange.emit(this);
         }
     }

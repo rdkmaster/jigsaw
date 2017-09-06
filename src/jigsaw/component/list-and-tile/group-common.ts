@@ -1,11 +1,11 @@
 import {AbstractJigsawComponent} from "../common";
 import {ControlValueAccessor} from "@angular/forms";
-import {AfterContentInit, ChangeDetectorRef, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList} from "@angular/core";
+import {AfterContentInit, ChangeDetectorRef, EventEmitter, Input, OnDestroy, Output, QueryList} from "@angular/core";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {ArrayCollection} from "../../core/data/array-collection";
 import {JigsawTileOption} from "./tile";
 
-export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, AfterContentInit, OnDestroy {
+export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implements ControlValueAccessor, AfterContentInit, OnDestroy {
     protected _removeRefreshCallback: CallbackRemoval;
 
     //设置对象的标识
@@ -14,14 +14,14 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     //判断是否支持多选
     @Input() public multipleSelect: boolean;
 
-    protected _selectedItems = new ArrayCollection<object>();
+    protected _selectedItems = new ArrayCollection<any>();
 
     @Input()
-    public get selectedItems(): ArrayCollection<object> | object[] {
+    public get selectedItems(): ArrayCollection<any> | any[] {
         return this._selectedItems;
     }
 
-    public set selectedItems(newValue: ArrayCollection<object> | object[]) {
+    public set selectedItems(newValue: ArrayCollection<any> | any[]) {
         this.writeValue(newValue);
         if (this._selectedItems !== newValue) {
             this._propagateChange(newValue);
@@ -85,16 +85,13 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         })
     }
 
-    ngOnInit() {
-        super.ngOnInit();
+    ngAfterContentInit() {
         if (this.trackItemBy) {
             this.trackItemBy = (<string>this.trackItemBy).split(/\s*,\s*/g);
-        } else {
-            console.warn('please input trackItemBy attribute in jigsaw-title control')
+        } else if (this._items[0] && this._items[0].value instanceof Object) {
+            // item数值是object时要求必须输入trackItemBy
+            console.warn('please input trackItemBy attribute in jigsaw-title')
         }
-    }
-
-    ngAfterContentInit() {
         this._setItemState();
         this._items.forEach(item => {
             item.selectedChange.subscribe(() => {
@@ -117,7 +114,8 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         }
     }
 
-    protected _propagateChange: any = () => {};
+    protected _propagateChange: any = () => {
+    };
 
     protected _setSelectedItems(newValue: any): void {
         if (this._selectedItems === newValue) {

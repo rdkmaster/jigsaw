@@ -19,7 +19,7 @@ import {AbstractJigsawGroupComponent} from "./group-common";
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawList), multi: true},
     ]
 })
-export class JigsawList extends AbstractJigsawGroupComponent implements AfterContentInit{
+export class JigsawList extends AbstractJigsawGroupComponent implements AfterContentInit {
     @Input() public searchable: boolean = false;
 
     // 默认单选
@@ -40,7 +40,7 @@ export class JigsawList extends AbstractJigsawGroupComponent implements AfterCon
         '(click)': '_$handleClick()'
     }
 })
-export class JigsawListOption extends AbstractJigsawOptionComponent{
+export class JigsawListOption extends AbstractJigsawOptionComponent {
     constructor(public changeDetector: ChangeDetectorRef) {
         super(changeDetector);
     }
@@ -50,7 +50,7 @@ export class JigsawListOption extends AbstractJigsawOptionComponent{
      * @internal
      */
     public _$handleClick(): void {
-        if(!this.disabled){
+        if (!this.disabled) {
             this.selectedChange.emit(this);
         }
     }
@@ -61,6 +61,6 @@ export class JigsawListOption extends AbstractJigsawOptionComponent{
     declarations: [JigsawList, JigsawListOption],
     exports: [JigsawList, JigsawListOption]
 })
-export class JigsawListModule{
+export class JigsawListModule {
 
 }

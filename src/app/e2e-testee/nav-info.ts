@@ -367,8 +367,8 @@ export const navInfo = [
                 url: '/radio/basic'
             },
             {
-                label: 'labelField',
-                url: '/radio/labelField'
+                label: 'live-demo',
+                url: '/radio/live-demo'
             },
             {
                 label: 'trackItemBy',
