@@ -1,16 +1,29 @@
 @import "../../assets/scss/core/base";
 
-$radio-prefix-cls: #{$jigsaw-prefix}-radio;
+$radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
 
-#{$radio-prefix-cls}-option {
+.#{$radio-option-prefix-cls} {
     @include inline-block();
-}
-
-.#{$radio-prefix-cls}-option {
     font-size: $font-size-base;
     margin-right: 10px;
     cursor: pointer;
-    .#{$radio-prefix-cls}-inner {
+    &.#{$radio-option-prefix-cls}-disabled {
+        color: $disabled-color;
+        cursor: not-allowed;
+        .#{$radio-option-prefix-cls}-inner {
+            background: $disabled-bg;
+            &:after {
+                background-color: $disabled-color;
+            }
+            &.#{$radio-option-prefix-cls}-checked{
+                border-color: $border-color-base;
+            }
+            &:hover{
+                border-color: $border-color-base;
+            }
+        }
+    }
+    .#{$radio-option-prefix-cls}-inner {
         @include inline-block();
         position: relative;
         top: 0;
@@ -39,7 +52,7 @@ $radio-prefix-cls: #{$jigsaw-prefix}-radio;
             @include prefixer(transfrom, scale(0));
             @include prefixer(transition, all 0.3s $ease-in-out-circ);
         }
-        &.#{$radio-prefix-cls}-checked{
+        &.#{$radio-option-prefix-cls}-checked{
             border-color: $primary-color;
             &:after {
                 @include prefixer(transform, scale(1));

@@ -27,5 +27,16 @@ export class RadioLiveDemoComponent {
     citys2 = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安"]);
     selectedCity2="西安";
 
+    // demo3
+    selectedCity3={name: "西安",id:"6"};
+    citys3 = new ArrayCollection([
+        {name: "北京",id:"1"},
+        {name: "上海",id:"2",disabled: true},
+        {name: "南京",id:"3"},
+        {name: "深圳",id:"4"},
+        {name: "长沙",id:"5",disabled: true},
+        {name: "西安",id:"6",disabled: true}
+    ]);
+
 }
 

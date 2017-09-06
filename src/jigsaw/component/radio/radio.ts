@@ -68,7 +68,9 @@ export class JigsawRadioGroup extends AbstractJigsawGroupComponent{
     selector: 'jigsaw-radio-option',
     templateUrl: 'radio-option.html',
     host: {
-        "(click)": "_$handleClick()"
+        '(click)': '_$handleClick()',
+        '[class.jigsaw-radio-option]': 'true',
+        '[class.jigsaw-radio-option-disabled]': 'disabled'
     }
 })
 export class JigsawRadioOption extends AbstractJigsawOptionComponent{
