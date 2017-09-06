@@ -75,7 +75,7 @@ export class JigsawRadioGroup extends AbstractJigsawGroupComponent{
 })
 export class JigsawRadioOption extends AbstractJigsawOptionComponent{
     constructor(public changeDetector: ChangeDetectorRef) {
-        super(changeDetector);
+        super();
     }
 
     /**

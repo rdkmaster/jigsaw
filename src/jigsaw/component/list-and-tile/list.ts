@@ -42,7 +42,7 @@ export class JigsawList extends AbstractJigsawGroupComponent implements AfterCon
 })
 export class JigsawListOption extends AbstractJigsawOptionComponent {
     constructor(public changeDetector: ChangeDetectorRef) {
-        super(changeDetector);
+        super();
     }
 
     /**

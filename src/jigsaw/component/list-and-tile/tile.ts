@@ -44,7 +44,7 @@ export class JigsawTile extends AbstractJigsawGroupComponent {
 export class JigsawTileOption extends AbstractJigsawOptionComponent {
 
     constructor(public changeDetector: ChangeDetectorRef) {
-        super(changeDetector);
+        super();
     }
 
     /**

@@ -90,7 +90,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
             this.trackItemBy = (<string>this.trackItemBy).split(/\s*,\s*/g);
         } else if (this._items[0] && this._items[0].value instanceof Object) {
             // item数值是object时要求必须输入trackItemBy
-            console.warn('please input trackItemBy attribute in jigsaw-title')
+            console.warn('please input trackItemBy attribute in jigsaw group')
         }
         this._setItemState();
         this._items.forEach(item => {
@@ -131,9 +131,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback()
         }
-        this._removeRefreshCallback = newValue.onRefresh(() => {
-            this._setItemState();
-        });
+        this._removeRefreshCallback = newValue.onRefresh(this._setItemState, this);
     }
 
     public writeValue(newValue: any): void {
@@ -159,7 +157,6 @@ export class AbstractJigsawOptionComponent extends AbstractJigsawComponent {
     @Output()
     public selectedChange = new EventEmitter<JigsawTileOption>();
 
-    constructor(public changeDetector: ChangeDetectorRef) {
-        super();
-    }
+    public changeDetector: ChangeDetectorRef
+
 }
