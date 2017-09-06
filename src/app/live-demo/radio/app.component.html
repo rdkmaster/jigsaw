@@ -3,33 +3,33 @@
     <div class="demo-1 live-demo live-demo-block">
         <h3>数据是对象数组</h3>
         <p class="comment">数据是对象数组时必须输入<code>trackItemBy</code></p>
-        <jigsaw-radio [(value)]="selectedCity" trackItemBy="name"
-                      (valueChange)="radioChange($event)">
+        <jigsaw-radios [(value)]="selectedCity" trackItemBy="name"
+                       (valueChange)="radioChange($event)">
             <jigsaw-radio-option *ngFor="let item of citys" [value]="item">
                 {{item.name}}
             </jigsaw-radio-option>
-        </jigsaw-radio>
+        </jigsaw-radios>
         <p class="message">选择的城市的ID号是: <span>{{selectedCity.id}}</span></p>
     </div>
     <div class="demo-2 live-demo live-demo-block">
         <h3>数据是字符串数组</h3>
         <p class="comment">数据是对象数组时不需要输入<code>trackItemBy</code></p>
-        <jigsaw-radio [(value)]="selectedCity2">
+        <jigsaw-radios [(value)]="selectedCity2">
             <jigsaw-radio-option *ngFor="let item of citys2" [value]="item">
                 {{item}}
             </jigsaw-radio-option>
-        </jigsaw-radio>
+        </jigsaw-radios>
         <p class="message">选择的城市是: <span>{{selectedCity2}}</span></p>
     </div>
 
     <div class="demo-3 live-demo live-demo-block">
         <h3>不可点击状态</h3>
-        <jigsaw-radio [(value)]="selectedCity3" trackItemBy="name"
-                      (valueChange)="radioChange($event)">
+        <jigsaw-radios [(value)]="selectedCity3" trackItemBy="name"
+                       (valueChange)="radioChange($event)">
             <jigsaw-radio-option *ngFor="let item of citys3" [value]="item" [disabled]="item.disabled">
                 {{item.name}}
             </jigsaw-radio-option>
-        </jigsaw-radio>
+        </jigsaw-radios>
         <p class="message">选择的城市的ID号是: <span>{{selectedCity3.id}}</span></p>
     </div>
 </div>
