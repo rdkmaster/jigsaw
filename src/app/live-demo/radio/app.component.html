@@ -9,7 +9,7 @@
                 {{item.name}}
             </jigsaw-radio-option>
         </jigsaw-radios>
-        <p class="message">选择的城市的ID号是: <span>{{selectedCity.id}}</span></p>
+        <p class="message">选择的城市的ID号是: <span>{{selectedCity.name}}</span></p>
     </div>
     <div class="demo-2 live-demo live-demo-block">
         <h3>数据是字符串数组</h3>
@@ -24,7 +24,7 @@
 
     <div class="demo-3 live-demo live-demo-block">
         <h3>不可点击状态</h3>
-        <jigsaw-radio [(value)]="selectedCity3" trackItemBy="id"
+        <jigsaw-radios [(value)]="selectedCity3" trackItemBy="id"
                       (valueChange)="radioChange($event)">
             <jigsaw-radio-option *ngFor="let item of citys3" [value]="item" [disabled]="item.disabled">
                 {{item.name}}
