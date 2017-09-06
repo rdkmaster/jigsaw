@@ -7,11 +7,11 @@ import {
     NgModule,
     Output,
     QueryList,
-    OnInit,
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "../tile/common";
+import {ArrayCollection} from "../../core/data/array-collection";
 
 @Component({
     selector: 'jigsaw-radio',
@@ -20,7 +20,7 @@ import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "../ti
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRadioGroup), multi: true },
     ]
 })
-export class JigsawRadioGroup extends AbstractJigsawGroupComponent implements OnInit{
+export class JigsawRadioGroup extends AbstractJigsawGroupComponent{
 
     @Input()
     public get value(): any {
@@ -28,9 +28,7 @@ export class JigsawRadioGroup extends AbstractJigsawGroupComponent implements On
     }
 
     public set value(newValue: any) {
-        if (newValue && this.value != newValue) {
-           this.selectedItems = [newValue];
-        }
+        this.writeValue(newValue);
     }
 
     @Output() public valueChange: EventEmitter<any> = new EventEmitter<any>();
@@ -41,15 +39,29 @@ export class JigsawRadioGroup extends AbstractJigsawGroupComponent implements On
     @ContentChildren(forwardRef(() => JigsawRadioOption))
     protected _items: QueryList<JigsawRadioOption>;
 
-    ngOnInit(){
-        super.ngOnInit();
-        this.selectedItemsChange.subscribe(selectedItems => {
-            if(selectedItems && selectedItems.length != 0){
-                this.valueChange.emit(selectedItems[0]);
-            }
-        })
+    // 重写selectedItems
+    @Input()
+    public get selectedItems(): ArrayCollection<object> | object[] {
+        return this._selectedItems;
     }
 
+    public set selectedItems(newValue: ArrayCollection<object> | object[]) {
+        this._setSelectedItems(newValue);
+    }
+
+    // 重写_updateSelectItems
+    protected _updateSelectItemsForForm(itemValue, selected): void {
+        this._updateSelectItems(itemValue, selected);
+        this.valueChange.emit(this.selectedItems[0]);
+        this._propagateChange(this.selectedItems[0]);
+    }
+
+    // 重写writeValue
+    public writeValue(newValue: any): void {
+        if (newValue && this.value != newValue) {
+            this.selectedItems = [newValue];
+        }
+    }
 }
 
 @Component({

@@ -6,7 +6,7 @@ import {ArrayCollection} from "../../core/data/array-collection";
 import {JigsawTileOption} from "./tile";
 
 export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, AfterContentInit, OnDestroy {
-    private _removeRefreshCallback: CallbackRemoval;
+    protected _removeRefreshCallback: CallbackRemoval;
 
     //设置对象的标识
     @Input() public trackItemBy: string | string[];
@@ -14,7 +14,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     //判断是否支持多选
     @Input() public multipleSelect: boolean;
 
-    private _selectedItems = new ArrayCollection<object>();
+    protected _selectedItems = new ArrayCollection<object>();
 
     @Input()
     public get selectedItems(): ArrayCollection<object> | object[] {
@@ -33,8 +33,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     //获取映射的items
     protected _items: QueryList<AbstractJigsawOptionComponent>;
 
-    //根据选中的item更新selectedItems
-    private _updateSelectItems(itemValue, selected): void {
+    protected _updateSelectItems(itemValue, selected): void {
         if (this.multipleSelect) { //多选
             if (selected) {
                 this.selectedItems.push(itemValue);
@@ -46,7 +45,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
                 });
             }
         } else { //单选选中
-            this._items.length && this._items.forEach((item: JigsawTileOption) => {
+            this._items.length && this._items.forEach((item: AbstractJigsawOptionComponent) => {
                 //去除其他option选中
                 if (!CommonUtils.compareWithKeyProperty(item.value, itemValue, <string[]>this.trackItemBy) && item.selected) {
                     item.selected = false;
@@ -59,11 +58,16 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         }
         this._selectedItems.refresh();
         this.selectedItemsChange.emit(this.selectedItems);
+    }
+
+    //根据选中的item更新selectedItems
+    protected _updateSelectItemsForForm(itemValue, selected): void {
+        this._updateSelectItems(itemValue, selected);
         this._propagateChange(this.selectedItems);
     }
 
     //根据selectedItems设置选中的option
-    private _setItemState(): void {
+    protected _setItemState(): void {
         if (!(this.selectedItems instanceof ArrayCollection) || !this._items.length) {
             return;
         }
@@ -96,11 +100,11 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
             item.selectedChange.subscribe(() => {
                 if (this.multipleSelect) { //多选
                     item.selected = !item.selected;//切换组件选中状态
-                    this._updateSelectItems(item.value, item.selected);
+                    this._updateSelectItemsForForm(item.value, item.selected);
                 } else { //单选
                     if (!item.selected) {
                         item.selected = true;
-                        this._updateSelectItems(item.value, item.selected);
+                        this._updateSelectItemsForForm(item.value, item.selected);
                     }
                 }
             })
@@ -113,10 +117,9 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         }
     }
 
-    private _propagateChange: any = () => {
-    };
+    protected _propagateChange: any = () => {};
 
-    public writeValue(newValue: any): void {
+    protected _setSelectedItems(newValue: any): void {
         if (this._selectedItems === newValue) {
             return;
         }
@@ -133,6 +136,10 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         this._removeRefreshCallback = newValue.onRefresh(() => {
             this._setItemState();
         });
+    }
+
+    public writeValue(newValue: any): void {
+        this._setSelectedItems(newValue);
     }
 
     public registerOnChange(fn: any): void {
