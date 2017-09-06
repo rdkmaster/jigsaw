@@ -4,8 +4,6 @@
         <jigsaw-button (click)="toggleMultiple()">toggle multiple</jigsaw-button>
     </div>
     <jigsaw-combo-select
-        [openTrigger]="0"
-        [closeTrigger]="0"
         [(value)]="selectedCity"
         (valueChange)="valueChange($event)"
         [autoClose]="!multiple"
