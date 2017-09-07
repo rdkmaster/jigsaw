@@ -273,7 +273,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
         return this;
     }
 
-    private _fromArray(source: T[]): boolean {
+    protected _fromArray(source: T[]): boolean {
         let needRefresh = this.length > 0;
 
         this.splice(0, this.length);
@@ -543,21 +543,45 @@ export class DirectPageableArray extends PageableArray {
     }
 }
 
-export class LocalPageableArray extends ArrayCollection<any> implements IPageable {
+export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageable {
     public pagingInfo: PagingInfo;
     public filterInfo: DataFilterInfo;
     public sortInfo: DataSortInfo;
-    public busy: boolean = false;
 
-    constructor() {
-        super();
-        console.error("unsupported yet!");
+    private _bakData: T[];
+
+    private _filterSubject = new Subject<DataFilterInfo>();
+
+    constructor(source?: T[]) {
+        super(source);
+        this._bakData = source;
+        this._initSubjects();
+    }
+
+    private _initSubjects(): void {
+        this._filterSubject.debounceTime(300).subscribe(filter => {
+            this.filterInfo = filter;
+            this._fromArray(this._bakData.filter(item => {
+                if(typeof this.filterInfo.field[0] == 'string'){
+                    return !!(<string[]>this.filterInfo.field).filter(field => {
+                        return item[field].includes(this.filterInfo.key)
+                    }).length
+                }else{
+                    return false
+                }
+            }))
+        });
     }
 
     public filter(callbackfn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
     public filter(term: string, fields?: string[] | number[]): void;
     public filter(term: DataFilterInfo): void;
     public filter(term, fields?: string[] | number[]): void {
+        if (term instanceof Function) {
+            throw 'filter function is NOT accepted by this class!';
+        }
+        const pfi = term instanceof DataFilterInfo ? term : new DataFilterInfo(term, fields);
+        this._filterSubject.next(pfi);
     }
 
     public sort(compareFn?: (a: any, b: any) => number): any;

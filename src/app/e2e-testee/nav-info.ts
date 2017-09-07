@@ -614,6 +614,10 @@ export const navInfo = [
                 label: 'setWidth',
                 url: '/combo-select/setWidth'
             },
+            {
+                label: 'auto-complete',
+                url: '/combo-select/auto-complete'
+            },
         ]
     },
     {

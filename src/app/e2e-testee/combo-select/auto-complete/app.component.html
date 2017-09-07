@@ -1,0 +1,21 @@
+<div class="combo-select-demo cmn-box">
+    <h3>auto complete</h3>
+    <j-auto-complete
+        maxWidth="500"
+        [(value)]="selectedCity"
+        [clearable]="true"
+        [data]="citys"
+        filterKey="label">
+        <ng-template>
+            <jigsaw-tile
+                [(selectedItems)]="selectedCity"
+                trackItemBy="label"
+                width="400px">
+                <jigsaw-tile-option *ngFor="let item of citys" [value]="item" width="22.8%">
+                    {{item.label}}
+                </jigsaw-tile-option>
+            </jigsaw-tile>
+        </ng-template>
+    </j-auto-complete>
+</div>
+

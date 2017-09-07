@@ -127,8 +127,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     @Input()
     public maxWidth: string;
 
+    @Input()
     @ContentChild(TemplateRef)
-    private _contentTemplateRef: any;
+    public popupTemplate: any;
 
     /**
      * @internal
@@ -188,7 +189,8 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
      * @internal
      */
     public _$clearValue() {
-        this.value = new ArrayCollection<ComboSelectValue>();
+        this.value.splice(0, this.value.length);
+        this.value.refresh();
         this._autoWidth();
     }
 
@@ -251,11 +253,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             },
             showBorder: this.showBorder
         };
-        const popupInfo: PopupInfo = this._popupService.popup(this._contentTemplateRef, option);
+        const popupInfo: PopupInfo = this._popupService.popup(this.popupTemplate, option);
 
         this._popupElement = popupInfo.element;
         this._disposePopup = popupInfo.dispose;
-        //PopupService.setBackground(this._popupElement, this._render);
 
         if (this._openTrigger === DropDownTrigger.mouseenter && this._popupElement) {
             this._removeMouseOverHandler = this._render.listen(this._popupElement, 'mouseenter', () => {

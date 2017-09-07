@@ -28,6 +28,8 @@ import {ComboSelectMultipleDemoModule} from "./multiple/app.module";
 import {OpenComboSelectDemoModule} from "./open/app.module";
 import {ComboSelectSetWidthDemoModule} from "./setWidth/app.module";
 import {ComboSelectEditableDemoModule} from "./editable/app.module";
+import {AutoCompleteDemo} from "./auto-complete/app.component";
+import {AutoCompleteDemoModule} from "./auto-complete/app.module";
 const routes = [
     {
         path: 'basic', component: ComboSelectBasicDemo
@@ -61,6 +63,9 @@ const routes = [
     },
     {
         path : 'setWidth', component: ComboSelectSetWidthDemo
+    },
+    {
+        path : 'auto-complete', component: AutoCompleteDemo
     }
 ];
 
@@ -77,7 +82,8 @@ const routes = [
         ComboSelectLabelFieldDemoModule,
         ComboSelectMultipleDemoModule,
         OpenComboSelectDemoModule,
-        ComboSelectSetWidthDemoModule
+        ComboSelectSetWidthDemoModule,
+        AutoCompleteDemoModule
     ]
 })
 export class ComboSelectDemoModule {
