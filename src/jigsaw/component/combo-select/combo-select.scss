@@ -91,23 +91,21 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
         .#{$jigsaw-combo-select}-arrow {
             @include prefixer(transform, rotate(180deg));
         }
-
     }
 
     &-arrow {
         position: absolute;
         top: 50%;
         right: 8px;
-        line-height: 1px;
-        @include prefixer(transition, transform 0.3s ease);
+        transform-origin: 50% 20%;
+        transform: translateY(-50%);
+        transition: transform 0.3s $ease-in-out;
     }
 
     &-clear {
         position: absolute;
         top: 50%;
         right: 18px;
-        line-height: 28px;
-        height: 28px;
         width: 12px;
         transform: translateY(-50%);
         color: $text-color-secondary;

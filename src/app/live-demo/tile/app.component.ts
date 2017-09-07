@@ -28,6 +28,7 @@ export class TileselectBasicDemoComponent{
 
     clearSelectedItems(){
         this.selectedItems1 = new ArrayCollection();
+        this.selectedItemsStr1 = '';
     }
 
     selectedItems2 = [
