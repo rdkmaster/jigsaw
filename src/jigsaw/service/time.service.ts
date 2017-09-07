@@ -1,4 +1,5 @@
 import {Time, Moment, WeekTime} from "./time.types";
+import {CommonUtils} from "../core/utils/common-utils";
 export enum TimeGr {
     second, minute, hour, date, week, month
 }
@@ -198,7 +199,7 @@ export class TimeService {
             time = (<string>time).replace(/\s+/g, "");
             let fullPara = /([a-z]+)(\+|\-)?([\d]+)([a-z]+)?/i;
             let timeMacroArr = fullPara.exec(time);
-            if (timeMacroArr && timeMacroArr[2] != undefined) { //有加减 now-2d
+            if (timeMacroArr && CommonUtils.isDefined(timeMacroArr[2])) { //有加减 now-2d
                 result = TimeService.addDate(
                     TimeService.convertBasicMacro(timeMacroArr[1]),
                     "" + timeMacroArr[2] + timeMacroArr[3],

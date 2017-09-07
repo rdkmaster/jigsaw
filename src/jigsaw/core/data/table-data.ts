@@ -17,7 +17,7 @@ import {
 } from "./component-data";
 import {CommonUtils} from "../utils/common-utils";
 
-export type TableMatrixRow = (string | number)[];
+export type TableMatrixRow = any[];
 export type TableDataHeader = string[];
 export type TableDataField = string[];
 export type TableDataMatrix = TableMatrixRow[];
@@ -115,16 +115,12 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
         console.log('destroying TableDataBase....');
     }
 
-    public insertColumn(pos: number, data: string | number | (string | number)[], field: string, header: string):void {
+    public insertColumn(pos: number, data: any | any[], field: string, header: string):void {
         pos = isNaN(pos) ? this.data.length : pos;
         this.data.forEach((row, index) => row.splice(pos, 0, data instanceof Array ? data[index] : data));
         this.field.splice(pos, 0, field);
         this.header.splice(pos, 0, header);
     }
-
-    // public mirror():TableDataBase {
-    //     return new TableDataBase(this.data, this.field, this.header);
-    // }
 }
 
 export class TableData extends TableDataBase implements ISortable, IFilterable {
@@ -153,15 +149,6 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
     public filter(term, fields?: (string | number)[]): void {
         throw new Error("Method not implemented.");
     }
-
-    // public mirror():TableDataBase {
-    //     const td: TableData = <TableData>super.mirror();
-    //     td.http = this.http;
-    //     td.dataReviser = this.dataReviser;
-    //     td.sortInfo = this.sortInfo;
-    //     td.filterInfo = this.filterInfo;
-    //     return td;
-    // }
 
     public destroy() {
         this.sortInfo = null;
@@ -352,13 +339,6 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this._sortSubject.unsubscribe();
         this._sortSubject = null;
     }
-
-    // public mirror():PageableTableData {
-    //     const td:PageableTableData = <PageableTableData>super.mirror();
-    //     td.pagingInfo = this.pagingInfo;
-    //     td.sourceRequestOptions = this.sourceRequestOptions;
-    //     return td;
-    // }
 }
 
 export class LocalPageableTableData extends TableData implements IPageable, IFilterable, ISortable {
@@ -486,12 +466,4 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
         this.filteredData = null;
         this.originalData = null;
     }
-
-    // public mirror():LocalPageableTableData {
-    //     const td:LocalPageableTableData = <LocalPageableTableData>super.mirror();
-    //     td.pagingInfo = this.pagingInfo;
-    //     td.filteredData = this.filteredData;
-    //     td.originalData = this.originalData;
-    //     return td;
-    // }
 }

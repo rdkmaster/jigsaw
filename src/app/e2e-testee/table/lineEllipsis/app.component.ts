@@ -110,10 +110,10 @@ export class TableLineEllipsisDemoComponent {
     ];
 
     public onCellChange(value) {
-        this._changeMsg = `field: '${value.field}', row: ${value.row}, column: ${value.column}, rawColumn: ${value.rawColumn}, cellData: ${value.cellData}, oldCellData: ${value.oldCellData}`;
+        this._changeMsg = `field: '${value.field}', row: ${value.row}, column: ${value.column}, cellData: ${value.cellData}, oldCellData: ${value.oldCellData}`;
         let rows = value.row instanceof Array ? value.row : [value.row];
         for(let row of rows){
-            console.log(this.tableData.data[row][value.rawColumn]);
+            console.log(this.tableData.data[row][value.column]);
         }
     }
 

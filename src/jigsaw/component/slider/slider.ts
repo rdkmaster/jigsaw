@@ -345,7 +345,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
     private _setTrackStyle(value?) {
         // 兼容双触点.
         let startPos: number = 0;
-        let trackSize: number = typeof value !== 'undefined' ? this._transformValueToPos(value) : this._transformValueToPos(this.value); // 默认单触点位置
+        let trackSize: number = CommonUtils.isDefined(value) ? this._transformValueToPos(value) : this._transformValueToPos(this.value); // 默认单触点位置
 
         if (this._$value.length > 1) {
             let max: number = this._$value[0];

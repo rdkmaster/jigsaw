@@ -6,6 +6,7 @@ import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../common";
 import {Observable} from "rxjs/Observable";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 @Directive({selector: '[jigsaw-prefix-icon]'})
 export class JigsawPrefixIcon {
@@ -46,7 +47,7 @@ export class JigsawInput extends AbstractJigsawComponent implements ControlValue
     };
 
     public writeValue(value: any): void {
-        if (value === undefined || value === null) {
+        if (CommonUtils.isUndefined(value)) {
             return;
         }
         this._value = value.toString();
@@ -68,7 +69,7 @@ export class JigsawInput extends AbstractJigsawComponent implements ControlValue
 
     public set value(newValue: string) {
         if (this._value != newValue) {
-            this._value = newValue === undefined || newValue === null ? '' : newValue;
+            this._value = CommonUtils.isDefined(newValue) ? newValue : '';
             this.valueChange.emit(this._value);
             this._propagateChange(this._value)
         }

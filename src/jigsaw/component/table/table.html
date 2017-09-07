@@ -1,13 +1,12 @@
 <table [style.display]="hideHeader || !initialized ? 'none' : 'table'" class="jigsaw-table-floating-header">
     <thead>
     <tr>
-        <td #floatingHeader *ngFor="let head of _$headerSettings; index as colIndex"
+        <td #floatingHeader *ngFor="let head of _$headerSettings;"
             width="{{head.width}}" class="{{head.clazz}}">
             <jigsaw-table-header [tableData]="data"
                                  [cellData]="head.cellData"
-                                 [column]="colIndex"
+                                 [column]="head.field"
                                  [row]="0"
-                                 [field]="head.field"
                                  [renderer]="head.renderer"
                                  [sortable]="head.sortable"
                                  [sortAs]="head.sortAs"
@@ -23,13 +22,12 @@
     <table class="jigsaw-table">
         <thead>
         <tr>
-            <td  #realHeader *ngFor="let head of _$headerSettings; index as colIndex"
+            <td #realHeader *ngFor="let head of _$headerSettings;"
                 width="{{head.width}}" class="{{head.clazz}}">
                 <jigsaw-table-header [tableData]="data"
                                      [cellData]="head.cellData"
-                                     [column]="colIndex"
+                                     [column]="head.field"
                                      [row]="0"
-                                     [field]="head.field"
                                      [renderer]="head.renderer"
                                      [sortable]="head.sortable"
                                      [sortAs]="head.sortAs"
@@ -42,7 +40,7 @@
         <tbody>
         <tr #tableRow *ngFor="let row of _$cellSettings; index as rowIndex"
             (click)="_$selectRow(rowIndex)" (dblclick)="_$handleRowDoubleClick(rowIndex)">
-            <td *ngFor="let cell of row; index as colIndex"
+            <td *ngFor="let cell of row;"
                 [attr.rowspan]="cell.rowSpan > 1 ? cell.rowSpan : null"
                 [style.display]="cell.rowSpan ? 'table-cell' : 'none'"
                 class="{{cell.clazz}}">
@@ -57,8 +55,7 @@
                         [tableData]="data"
                         [cellData]="cell.cellData"
                         [row]="rowIndex"
-                        [column]="colIndex"
-                        [field]="cell.field"
+                        [column]="cell.field"
                         [renderer]="cell.renderer"
                         [editable]="cell.editable"
                         [editorRenderer]="cell.editorRenderer"

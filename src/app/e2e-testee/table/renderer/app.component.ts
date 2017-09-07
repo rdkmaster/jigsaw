@@ -20,23 +20,23 @@ export class TableRendererDemoComponent {
                 public renderer: Renderer2) {
         this.tableData = new TableData([
             [11, 12, 13, 14, 15, 16, 17],
-            [21, 22, 23, 24, 25, 26, 27],
-            [31, 32, 33, 34, 35, 36, 37],
-            [41, 42, 43, 44, 45, 46, 47],
-            [51, 52, 53, 54, 55, 56, 12],
+            // [21, 22, 23, 24, 25, 26, 27],
+            // [31, 32, 33, 34, 35, 36, 37],
+            // [41, 42, 43, 44, 45, 46, 47],
+            // [51, 52, 53, 54, 55, 56, 12],
         ], ['f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7'], ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7']);
 
         let to = 0;
         let interval = 100;
 
-        to += interval;
-        setTimeout(() => {
-            // this.tableData = new TableData(this.tableData.data, this.tableData.field, this.tableData.header);
-            this.tableData.data[0][2] = 888;
-            this.tableData.refresh();
-
-            this.selectedRow = 4;
-        }, to);
+        // to += interval;
+        // setTimeout(() => {
+        //     // this.tableData = new TableData(this.tableData.data, this.tableData.field, this.tableData.header);
+        //     this.tableData.data[0][2] = 888;
+        //     this.tableData.refresh();
+        //
+        //     this.selectedRow = 4;
+        // }, to);
         //
         // to += interval;
         // setTimeout(() => {
@@ -76,7 +76,7 @@ export class TableRendererDemoComponent {
 
      _columns: ColumnDefine[] = [
          {
-             target: ['f1', 'f2'],
+             target: ['f1', 'f7'],
              width: '15%',
              header: {
                  renderer: TableHeadSelect,
@@ -93,11 +93,11 @@ export class TableRendererDemoComponent {
              target: ['f3'], visible: false
          },
          {
-             target: ['f7'], width: '120px'
+             target: ['f6'], width: '120px'
          },
          {
              target: (f, i) => f == 'f4',
-             header: {text: 'red-text'}
+             header: {text: 'custom header text'}
          },
     ];
 
@@ -161,10 +161,10 @@ export class TableRendererDemoComponent {
     ];
 
     public onCellChange(value) {
-        this._changeMsg = `field: '${value.field}', row: ${value.row}, column: ${value.column}, rawColumn: ${value.rawColumn}, cellData: ${value.cellData}, oldCellData: ${value.oldCellData}`;
+        this._changeMsg = `field: '${value.field}', row: ${value.row}, column: ${value.column}, cellData: ${value.cellData}, oldCellData: ${value.oldCellData}`;
         let rows = value.row instanceof Array ? value.row : [value.row];
         for(let row of rows){
-            console.log(this.tableData.data[row][value.rawColumn]);
+            console.log(this.tableData.data[row][value.column]);
         }
     }
 

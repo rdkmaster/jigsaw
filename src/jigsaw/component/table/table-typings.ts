@@ -61,7 +61,6 @@ export class TableDataChangeEvent {
     field: string | number;
     row: number | number[];
     column: number;
-    rawColumn: number;
     cellData: string | number;
     oldCellData: string | number;
 }
@@ -96,7 +95,7 @@ export class TableHeadSetting {
 }
 
 export class TableCellSetting {
-    cellData: string | number;
+    cellData: any;
     width: string | number;
     visible: boolean;
     renderer: Type<TableCellRendererBase> | TemplateRef<any>;

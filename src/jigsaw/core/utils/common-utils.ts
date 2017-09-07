@@ -1,7 +1,7 @@
 export class CommonUtils {
 
     private static copy(source: Object, isDeep:boolean): Object {
-        if (source === null || source === undefined || typeof source !== 'object') {
+        if (this.isUndefined(source) || typeof source !== 'object') {
             return source;
         }
 
@@ -75,7 +75,7 @@ export class CommonUtils {
         }
 
         // 目标对象为空，则直接将对象复制给obj
-        if (targetObject === null || targetObject === undefined) {
+        if (this.isUndefined(targetObject)) {
             targetObject = {};
         }
 
@@ -196,7 +196,7 @@ export class CommonUtils {
     }
 
     public static safeInvokeCallback(context: any, callback: Function, ...args): any {
-        if (callback === null || callback === undefined) {
+        if (CommonUtils.isUndefined(callback)) {
             return undefined;
         }
         try {
@@ -205,6 +205,14 @@ export class CommonUtils {
             console.error('invoke callback error: ' + e);
             console.error(e.stack);
         }
+    }
+
+    public static isDefined(value):boolean {
+        return value != undefined && value != null;
+    }
+
+    public static isUndefined(value):boolean {
+        return !this.isDefined(value);
     }
 }
 
