@@ -5,7 +5,7 @@ import {ArrayCollection, LocalPageableArray} from "jigsaw/core/data/array-collec
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
 })
-export class AutoCompleteDemo {
+export class ComboSelectAutoCompleteDemo {
     constructor(public viewContainerRef: ViewContainerRef,
                 public renderer: Renderer2) {
     }
@@ -30,13 +30,8 @@ export class AutoCompleteDemo {
 
     citysBak = this.citys;
 
-    handleFilter(filter) {
-        if (filter) {
-            this.citysBak = this.citys.filter(city => city.label.includes(filter));
-        } else {
-            //空字符串
-            this.citysBak = this.citys;
-        }
+    handleFilter(filterKey) {
+        this.citys.filter(filterKey, ['label']);
     }
 
 }

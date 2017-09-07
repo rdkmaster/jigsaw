@@ -127,9 +127,8 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     @Input()
     public maxWidth: string;
 
-    @Input()
     @ContentChild(TemplateRef)
-    public popupTemplate: any;
+    private _contentTemplateRef: any;
 
     /**
      * @internal
@@ -253,7 +252,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             },
             showBorder: this.showBorder
         };
-        const popupInfo: PopupInfo = this._popupService.popup(this.popupTemplate, option);
+        const popupInfo: PopupInfo = this._popupService.popup(this._contentTemplateRef, option);
 
         this._popupElement = popupInfo.element;
         this._disposePopup = popupInfo.dispose;

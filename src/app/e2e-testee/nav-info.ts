@@ -603,8 +603,8 @@ export const navInfo = [
                 url: '/combo-select/disable'
             },
             {
-                label: 'editable',
-                url: '/combo-select/editable'
+                label: 'auto-complete',
+                url: '/combo-select/auto-complete'
             },
             {
                 label: 'collapse',
@@ -613,10 +613,6 @@ export const navInfo = [
             {
                 label: 'setWidth',
                 url: '/combo-select/setWidth'
-            },
-            {
-                label: 'auto-complete',
-                url: '/combo-select/auto-complete'
             },
         ]
     },
