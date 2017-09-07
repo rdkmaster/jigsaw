@@ -7,6 +7,11 @@ $range-time-prefix-cls: #{$jigsaw-prefix}-range-time;
     padding: 5px;
     position: relative;
     width : 516px;
+    border: 1px solid $border-color-base ;
+    border-radius: $border-radius-base;
+    jigsaw-time{
+        border: none;
+    }
     .#{$range-time-prefix-cls}-endTime,.#{$range-time-prefix-cls}-startTime{
         .jigsaw-time-box{
             padding-top:26px;

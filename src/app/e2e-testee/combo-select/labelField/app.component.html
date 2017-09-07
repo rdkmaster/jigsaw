@@ -8,9 +8,7 @@
     <ng-template>
         <jigsaw-tile
             [(selectedItems)]="selectedCity"
-            trackItemBy="name"
-            [searchable]="true"
-            style="padding: 8px 0 8px 8px">
+            trackItemBy="name">
             <jigsaw-tile-option *ngFor="let city of citys" [value]="city" width="21.4%">
                 {{city.name}}
             </jigsaw-tile-option>

@@ -159,6 +159,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @Input()
+    public showBorder: boolean;
+
+    @Input()
     public autoClose: boolean; //自动关闭dropdown
 
     @Input()
@@ -245,13 +248,14 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             },
             size: {
                 minWidth: this.width ? this.width : 240
-            }
+            },
+            showBorder: this.showBorder
         };
         const popupInfo: PopupInfo = this._popupService.popup(this._contentTemplateRef, option);
 
         this._popupElement = popupInfo.element;
         this._disposePopup = popupInfo.dispose;
-        PopupService.setBackground(this._popupElement, this._render);
+        //PopupService.setBackground(this._popupElement, this._render);
 
         if (this._openTrigger === DropDownTrigger.mouseenter && this._popupElement) {
             this._removeMouseOverHandler = this._render.listen(this._popupElement, 'mouseenter', () => {

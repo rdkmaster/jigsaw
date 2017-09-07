@@ -1,6 +1,6 @@
-$list-item-prefix-cls: #{$jigsaw-prefix}-list-item;
+$list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
 
-.#{$list-item-prefix-cls} {
+.#{$list-option-prefix-cls} {
     display: block;
     padding: 5px 8px;
     min-height: $height-base;
@@ -9,10 +9,10 @@ $list-item-prefix-cls: #{$jigsaw-prefix}-list-item;
     &:hover {
         background: $item-hover-bg;
     }
-    &.#{$list-item-prefix-cls}-active {
+    &.#{$list-option-prefix-cls}-active {
         background: $item-active-bg;
     }
-    &.#{$list-item-prefix-cls}-disabled {
+    &.#{$list-option-prefix-cls}-disabled {
         background: $disabled-bg;
         color: $disabled-color;
         cursor: not-allowed;

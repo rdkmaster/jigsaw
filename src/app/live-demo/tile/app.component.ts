@@ -19,10 +19,15 @@ export class TileselectBasicDemoComponent{
     }
 
     multipleSelect: boolean;
+    selectedItems1 = new ArrayCollection();
     selectedItemsStr1: string;
 
     handleSelect(selectedItems){
-        this.selectedItemsStr1 = selectedItems.map(item => {return item.label}).toString()
+        this.selectedItemsStr1 = selectedItems.map(item => item.label).toString()
+    }
+
+    clearSelectedItems(){
+        this.selectedItems1 = new ArrayCollection();
     }
 
     selectedItems2 = [
@@ -31,7 +36,7 @@ export class TileselectBasicDemoComponent{
     ];
     selectedItemsStr2: string;
     handleSelect2(selectedItems){
-        this.selectedItemsStr2 = selectedItems.map(item => {return item.label}).toString()
+        this.selectedItemsStr2 = selectedItems.map(item => item.label).toString()
     }
 
     selectedItems3 = [
@@ -40,7 +45,7 @@ export class TileselectBasicDemoComponent{
     ];
     selectedItemsStr3: string;
     handleSelect3(selectedItems){
-        this.selectedItemsStr3 = selectedItems.map(item => {return item.label}).toString()
+        this.selectedItemsStr3 = selectedItems.map(item => item.label).toString()
     }
 }
 

@@ -3,8 +3,6 @@
 # compiled output
 /dist
 /tmp
-/doc
-/build/scripts/live-demo
 
 # dependencies
 /node_modules

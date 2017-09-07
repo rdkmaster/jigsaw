@@ -14,7 +14,7 @@
 [README中文版](README.zh.md)
 
 ## Meaning Of Name
- Jigsaw is a puzzle game. The process of this game, during which the player combine the messy pieces into a picture in accordance with the established blueprint, is similar to the development process of modern web page. We use Jigsaw as this component set’s name, hoping to make web page developers to combine the messy pieces of functions into your web page, just like playing jigsaw puzzle.
+We name this suite of components from a puzzle game. The process of this game, during which the player combine the messy pieces into a picture in accordance with the established blueprint, is similar to the development process of modern web page. We use Jigsaw as this component set’s name, hoping to make web page developers to combine the messy pieces of functions into your web page, just like playing jigsaw puzzle.
 
 The soul of Jigsaw is **combination**, and we are committed to develop combination to the extreme level.
 

@@ -13,7 +13,7 @@ import {JigsawSelectModule} from "jigsaw/component/select/select";
 import {JigsawTableModule} from "jigsaw/component/table/table";
 import {JigsawSliderModule} from "jigsaw/component/slider/index";
 import {JigsawSwitchModule} from "jigsaw/component/switch/index";
-import {JigsawTileSelectModule} from "jigsaw/component/tile-select/tile-select";
+import {JigsawTileSelectModule} from "jigsaw/component/list-and-tile/tile";
 
 import {TemplateDrivenDemoComponent} from "./app.component";
 

@@ -367,8 +367,8 @@ export const navInfo = [
                 url: '/radio/basic'
             },
             {
-                label: 'labelField',
-                url: '/radio/labelField'
+                label: 'live-demo',
+                url: '/radio/live-demo'
             },
             {
                 label: 'trackItemBy',
@@ -406,11 +406,11 @@ export const navInfo = [
         ]
     },
     {
-        title: 'TileSelect',
+        title: 'Tile',
         navList: [
             {
-                label: 'basic',
-                url: '/tileselect/basic'
+                label: 'live-demo',
+                url: '/tileselect/live-demo'
             },
             {
                 label: 'SelectedItems',
@@ -423,10 +423,6 @@ export const navInfo = [
             {
                 label: 'TileOptionWidth',
                 url: '/tileselect/tileOptionWidth'
-            },
-            {
-                label: 'Searchable',
-                url: '/tileselect/searchable'
             },
             {
                 label: 'LabelField',
