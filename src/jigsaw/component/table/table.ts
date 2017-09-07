@@ -352,7 +352,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this.additionalColumnDefines.forEach((acd, index) => {
             if (this.data.field.indexOf(acd.field) != -1) {
                 console.warn('conflict field in additional column, using default, origin field=' + acd.field);
-                acd.field = '';
+                acd.field = undefined;
             }
             //todo 如果应用原来给的field就是 additional-field-n，那还是有问题。
             acd.field = CommonUtils.isDefined(acd.field) ? acd.field : `additional-field-${index}`;

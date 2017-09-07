@@ -62,7 +62,7 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase implements 
 
     public set cellData(value) {
         this._cellData = value;
-        if (value != CheckBoxStatus.indeterminate) {
+        if (value == CheckBoxStatus.checked && value == CheckBoxStatus.unchecked) {
             this.tableData.data.forEach(row => row[this.column] = value);
             this.tableData.refresh();
         }
