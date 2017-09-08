@@ -59,10 +59,6 @@ export const navInfo = [
             {
                 label: 'with-loading-outside',
                 url: '/loading/domInner'
-            },
-            {
-                label: 'live-demo',
-                url: '/button/live-demo'
             }
         ]
     },
@@ -76,10 +72,6 @@ export const navInfo = [
             {
                 label: 'disable',
                 url: '/checkbox/disabled'
-            },
-            {
-                label: 'live-demo',
-                url: '/checkbox/live-demo'
             }
         ]
     },
@@ -318,11 +310,7 @@ export const navInfo = [
             {
                 label: 'prefixIcon',
                 url: '/input/prefixIcon'
-            },
-            {
-                label: 'live-demo',
-                url: '/input/live-demo'
-            },
+            }
         ]
     },
     {
@@ -367,10 +355,6 @@ export const navInfo = [
                 url: '/radio/basic'
             },
             {
-                label: 'live-demo',
-                url: '/radio/live-demo'
-            },
-            {
                 label: 'trackItemBy',
                 url: '/radio/trackItemBy'
             },
@@ -409,32 +393,28 @@ export const navInfo = [
         title: 'Tile',
         navList: [
             {
-                label: 'live-demo',
-                url: '/tileselect/live-demo'
-            },
-            {
                 label: 'SelectedItems',
-                url: '/tileselect/selectedItems'
+                url: '/tile/selectedItems'
             },
             {
                 label: 'MultipleSelect',
-                url: '/tileselect/multipleSelect'
+                url: '/tile/multipleSelect'
             },
             {
                 label: 'TileOptionWidth',
-                url: '/tileselect/tileOptionWidth'
+                url: '/tile/tileOptionWidth'
             },
             {
                 label: 'LabelField',
-                url: '/tileselect/labelField'
+                url: '/tile/labelField'
             },
             {
                 label: 'ItemsChange',
-                url: '/tileselect/selectedItemsChange'
+                url: '/tile/selectedItemsChange'
             },
             {
                 label: 'TrackItemBy',
-                url: '/tileselect/trackitemby'
+                url: '/tile/trackitemby'
             },
         ]
     },
@@ -719,14 +699,39 @@ export const navInfo = [
                 url: '/misc/zone-for-performance'
             }
         ]
-    },
-    {
-        title: 'List',
-        navList: [
-            {
-                label: 'basic',
-                url: '/list/basic'
-            }
-        ]
     }
 ].sort((a, b) => a.title.localeCompare(b.title));
+
+navInfo.unshift({
+        title: 'Live Demo',
+        navList: [
+            {
+                label: 'button',
+                url: '/button/button-full'
+            },
+            {
+                label: 'checkbox',
+                url: '/checkbox/checkbox-full'
+            },
+            {
+                label: 'input',
+                url: '/input/input-full'
+            },
+            {
+                label: 'list',
+                url: '/list/list-full'
+            },
+            {
+                label: 'radio',
+                url: '/radio/radio-full'
+            },
+            {
+                label: 'tile',
+                url: '/tile/tile-full'
+            },
+            {
+                label: 'select',
+                url: '/select/select-full'
+            }
+        ]
+    });

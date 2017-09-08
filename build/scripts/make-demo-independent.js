@@ -21,11 +21,7 @@ function makeAllPlunkers(dirName) {
         var pathname = demoHome + demoFolder;
         var stat = fs.lstatSync(pathname);
         if (stat.isDirectory()) {
-            if(dirName == 'live-demo'){
-                makePlunker(pathname + '/', dirName);
-            } else if(dirName == 'e2e-testee') {
-                processDemoSet(pathname + '/');
-            }
+            processDemoSet(pathname + '/');
         }
     });
 }
@@ -98,8 +94,12 @@ function makePlunker(demoFolder, dirName) {
     var saveTo = outputHome + demoFolder.substring(demoHome.length) + (dirName ? dirName + '/' : '');
     makeDirs(saveTo);
     saveTo += 'index.html';
-    fs.writeFileSync(saveTo, plunker);
-    console.log('made plunker to ' + saveTo);
+    if (fs.existsSync(saveTo)) {
+        console.error('file name conflict: ' + saveTo);
+    } else {
+        fs.writeFileSync(saveTo, plunker);
+        console.log('made plunker to ' + saveTo);
+    }
 }
 
 function readDemoContent(content, demoFolder) {
