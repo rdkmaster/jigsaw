@@ -18,6 +18,9 @@ describe('input', () => {
             input.sendKeys('abc123');
             expect(input.getAttribute('value')).toBe('abc123');
             expect(bindProperty.getText()).toBe('abc123');
+
+            input.sendKeys('');
+            expect(bindProperty.getText()).toBe('');
         });
 
         it('should clear value when click the clear bar', () => {
