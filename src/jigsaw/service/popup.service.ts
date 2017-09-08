@@ -122,7 +122,7 @@ export enum PopupEventType {
 }
 
 export enum PopupZIndex {
-    'popover' = 1030, 'modal' = 1000
+    modal = 1000, popover = 1030
 }
 
 export type PopupRef = ComponentRef<IPopupable> | EmbeddedViewRef<any>;
