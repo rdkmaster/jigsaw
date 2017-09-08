@@ -7,12 +7,13 @@ import {navInfo} from "../../../../src/app/e2e-testee/nav-info"
  * 确保demo的url和它的源码路径一致，这样在demo运行时，就可以直接跳转到它对应的plunker上了。
  */
 task('ensure-url-matches-path', () => {
-    const demoHome = join(__dirname, '../../../../src/app/e2e-testee');
+    const testeeHome = join(__dirname, '../../../../src/app/e2e-testee');
+    const demoHome = join(__dirname, '../../../../src/app/live-demo');
     let unmatchedUrls:string[] = [];
     navInfo.forEach(navItem => {
         navItem.navList.forEach(nav => {
-            // console.log(join(demoHome, nav.url));
-            if (!existsSync(join(demoHome, nav.url, 'app.module.ts'))) {
+            console.log(join(testeeHome, nav.url, 'app.module.ts'))
+            if (!existsSync(join(testeeHome, nav.url, 'app.module.ts')) && !existsSync(join(demoHome, nav.url, 'app.module.ts'))) {
                 unmatchedUrls.push(nav.url);
             }
         });

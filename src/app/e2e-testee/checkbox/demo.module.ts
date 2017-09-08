@@ -1,17 +1,15 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {JigsawCheckBoxModule} from "jigsaw/component/checkbox/index";
-import {JigsawSwitchModule} from "jigsaw/component/switch/index";
 import {CheckBoxDisableDemoComponent} from "./disabled/app.component";
 import {CheckBoxBasicDemoComponent} from "./basic/app.component";
 import {CheckBoxBasicDemoModule} from "./basic/app.module";
 import {CheckBoxDisableDemoModule} from "./disabled/app.module";
-import {CheckBoxLiveDemoComponent} from "../../live-demo/checkbox/app.component";
-import {CheckBoxLiveDemoModule} from "../../live-demo/checkbox/app.module";
+import {CheckBoxFullComponent} from "../../live-demo/checkbox/checkbox-full/app.component";
+import {CheckBoxFullModule} from "../../live-demo/checkbox/checkbox-full/app.module";
 
 const checkboxDemoRoutes = [
     {
-        path: '', redirectTo: 'basic', pathMatch: 'full'
+        path: 'checkbox-full', component: CheckBoxFullComponent
     },
     {
         path: 'basic', component: CheckBoxBasicDemoComponent
@@ -20,11 +18,8 @@ const checkboxDemoRoutes = [
         path: 'disabled', component: CheckBoxDisableDemoComponent
     },
     {
-        path: 'live-demo', component: CheckBoxLiveDemoComponent
-    },
-    {
         path: '**', //fallback router must in the last
-        component: CheckBoxBasicDemoComponent
+        component: CheckBoxFullComponent
     }
 ];
 
@@ -33,7 +28,7 @@ const checkboxDemoRoutes = [
         RouterModule.forChild(checkboxDemoRoutes),
         CheckBoxBasicDemoModule,
         CheckBoxDisableDemoModule,
-        CheckBoxLiveDemoModule
+        CheckBoxFullModule
     ]
 })
 export class CheckBoxDemoModule {

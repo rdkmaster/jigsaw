@@ -1,28 +1,23 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {ListBasicDemoModule} from "../../live-demo/list/app.module";
-import {ListBasicDemoComponent} from "../../live-demo/list/app.component";
+import {ListFullDemoModule} from "../../live-demo/list/list-full/app.module";
+import {ListFullDemoComponent} from "../../live-demo/list/list-full/app.component";
 
 const routeConfig = [
     {
-        path: '',
-        redirectTo: 'basic',
-        pathMatch: 'full'
+        path: 'list-full',
+        component: ListFullDemoComponent
     },
     {
-        path: 'basic',
-        component: ListBasicDemoComponent
-    },
-    {
-        path: '**',
-        component: ListBasicDemoComponent
+        path: '**', //fallback router must in the last
+        component: ListFullDemoComponent
     }
 ];
 
 @NgModule({
     imports: [
         RouterModule.forChild(routeConfig),
-        ListBasicDemoModule
+        ListFullDemoModule
     ]
 })
 export class ListDemoModule{

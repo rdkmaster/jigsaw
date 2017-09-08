@@ -1,11 +1,11 @@
 import {Component} from "@angular/core";
-import {ArrayCollection} from "../../../jigsaw/core/data/array-collection";
+import {ArrayCollection} from "../../../../jigsaw/core/data/array-collection";
 
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class ListBasicDemoComponent {
+export class ListFullDemoComponent {
     titles = [
         {
             title: 'Settings',
