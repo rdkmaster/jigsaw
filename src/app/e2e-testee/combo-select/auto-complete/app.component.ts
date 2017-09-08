@@ -1,5 +1,6 @@
 import {Component, Renderer2, ViewContainerRef} from '@angular/core';
-import {ArrayCollection, LocalPageableArray} from "jigsaw/core/data/array-collection";
+import {ArrayCollection, LocalPageableArray, PageableArray} from "jigsaw/core/data/array-collection";
+import {Http} from "@angular/http";
 
 @Component({
     templateUrl: './app.component.html',
@@ -7,7 +8,19 @@ import {ArrayCollection, LocalPageableArray} from "jigsaw/core/data/array-collec
 })
 export class ComboSelectAutoCompleteDemo {
     constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
+                public renderer: Renderer2, public http: Http) {
+        this.citys2 = new PageableArray(http, {
+            url: 'http://localhost:4200/mock-data/array-collection/citys.json',
+            params: {aa: 11, bb: 22},
+            method: 'get'
+        });
+        this.citys2.fromAjax();
+    }
+
+    citys2: PageableArray;
+    selectedCity2: ArrayCollection<any>=new ArrayCollection([{id: 1, name: '北京'}]);
+    handleFilter2(filterKey){
+        this.citys2.filter(filterKey, ['name']);
     }
 
     citys = new LocalPageableArray([
@@ -27,8 +40,6 @@ export class ComboSelectAutoCompleteDemo {
     ]);
 
     public selectedCity = new ArrayCollection([this.citys[0]]);
-
-    citysBak = this.citys;
 
     handleFilter(filterKey) {
         this.citys.filter(filterKey, ['label']);
