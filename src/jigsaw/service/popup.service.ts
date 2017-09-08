@@ -121,7 +121,9 @@ export enum PopupEventType {
     instanceCreated, positionReady, ready
 }
 
-export const PopupZIndex = new Map([['popover', 1030],['modal', 1000]]);
+export enum PopupZIndex {
+    'popover' = 1030, 'modal' = 1000
+}
 
 export type PopupRef = ComponentRef<IPopupable> | EmbeddedViewRef<any>;
 
@@ -278,9 +280,9 @@ export class PopupService {
 
     private _setStyle(options: PopupOptions, element: HTMLElement, renderer: Renderer2): void {
         if (this._isModal(options)) {
-            renderer.setStyle(element, 'z-index', PopupZIndex.get('modal'));
+            renderer.setStyle(element, 'z-index', PopupZIndex.modal);
         } else {
-            renderer.setStyle(element, 'z-index', PopupZIndex.get('popover'));
+            renderer.setStyle(element, 'z-index', PopupZIndex.popover);
         }
         renderer.setStyle(element, 'visibility', 'hidden');
     }
