@@ -147,8 +147,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         setTimeout(() => {
             if (value) {
                 this._openDropDown();
+                this.editor.focus();
             } else {
                 this._closeDropDown();
+                this.filter = '';
             }
             this._$opened = value;
             this.openChange.emit(value);
