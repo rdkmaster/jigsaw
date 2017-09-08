@@ -19,8 +19,8 @@ describe('input', () => {
             expect(input.getAttribute('value')).toBe('abc123');
             expect(bindProperty.getText()).toBe('abc123');
 
-            input.sendKeys('');
-            expect(bindProperty.getText()).toBe('');
+            const clearBar = inputEl.element(by.css('.jigsaw-input-clear-bar'));
+            clearBar.click();
         });
 
         it('should clear value when click the clear bar', () => {

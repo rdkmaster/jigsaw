@@ -42,7 +42,7 @@ describe('select', () => {
 
         it('should select the clicked option when click the option', () => {
             const selectEl = element(by.id('test-select')),
-                optionListEl = selectEl.element(by.css('.jigsaw-option-list')),
+                optionListEl = selectEl.element(by.css('.jigsaw-select-option-list')),
                 optionEl1 = optionListEl.all(by.tagName('jigsaw-select-option')).get(1),
                 optionEl2 = optionListEl.all(by.tagName('jigsaw-select-option')).get(2);
 
