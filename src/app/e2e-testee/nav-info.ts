@@ -728,6 +728,10 @@ navInfo.unshift({
             {
                 label: 'tile',
                 url: '/tile/tile-full'
+            },
+            {
+                label: 'auto-complete',
+                url: '/combo-select/auto-complete'
             }
         ]
     });
