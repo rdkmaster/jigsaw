@@ -50,20 +50,20 @@ describe('select', () => {
             browser.sleep(300);
 
             //选择第二项
-            const optionElText1 = optionEl1.element(by.css('.jigsaw-option')).getText();
+            const optionElText1 = optionEl1.element(by.css('.jigsaw-select-option')).getText();
             optionEl1.click();
             expect(selectEl.element(by.css('.jigsaw-select')).getText()).toBe(optionElText1);
-            expect(optionEl1.element(by.css('.jigsaw-option-on')).isPresent()).toBe(true);
+            expect(optionEl1.element(by.css('.jigsaw-select-option-on')).isPresent()).toBe(true);
 
             selectEl.click();
             browser.sleep(300);
 
             //选择第三项
-            const optionElText2 = optionEl2.element(by.css('.jigsaw-option')).getText();
+            const optionElText2 = optionEl2.element(by.css('.jigsaw-select-option')).getText();
             optionEl2.click();
             expect(selectEl.element(by.css('.jigsaw-select')).getText()).toBe(optionElText2);
-            expect(optionEl2.element(by.css('.jigsaw-option-on')).isPresent()).toBe(true);
-            expect(optionEl1.element(by.css('.jigsaw-option-on')).isPresent()).toBe(false);
+            expect(optionEl2.element(by.css('.jigsaw-select-option-on')).isPresent()).toBe(true);
+            expect(optionEl1.element(by.css('.jigsaw-select-option-on')).isPresent()).toBe(false);
         })
     })
 });
