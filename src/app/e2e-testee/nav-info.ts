@@ -353,6 +353,10 @@ export const navInfo = [
                 label: 'scroll',
                 url: '/select/scroll'
             },
+            {
+                label: 'live-demo',
+                url: '/select/live-demo'
+            },
             /*{
                 label: 'checkbox',
                 url: '/select/checkbox'
