@@ -111,8 +111,8 @@ const demoListRoutes = [
                 path: "tag",
                 loadChildren: "./tag/tag-demo.module#TagDemoModule"
             }, {
-                path: "tileselect",
-                loadChildren: "./tileselect/tileselect-demo.module#TileSelectDemoModule"
+                path: "tile",
+                loadChildren: "./tile/tile-demo.module#TileSelectDemoModule"
             }, {
                 path: "time",
                 loadChildren: "./time/time-demo.module#TimeDemoModule"
