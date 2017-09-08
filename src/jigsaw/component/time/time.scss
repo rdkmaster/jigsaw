@@ -8,6 +8,7 @@ $time-prefix-cls: #{$jigsaw-prefix}-time;
     border: 1px solid $border-color-base ;
     border-radius: $border-radius-base;
     padding: 5px;
+    background: #fff;
     .#{$time-prefix-cls}-box {
         width: 100%;
         .bootstrap-datetimepicker-widget table{

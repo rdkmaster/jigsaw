@@ -87,6 +87,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 
     public set data(value: ArrayCollection<object>|object[]) {
         this._data = value instanceof ArrayCollection ? value : new ArrayCollection(value);
+        this._data.onRefresh(this._setOptionListHeight, this);
     }
 
     //获取映射的子组件option

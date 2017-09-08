@@ -15,6 +15,7 @@ export class LocalPagingDataDemoComponent {
                 public renderer: Renderer2, http: Http) {
         this.pageable = new LocalPageableTableData();
         this.pageable.http = http;
+        this.pageable.pagingInfo.pageSize = 10;
         this.pageable.fromAjax('mock-data/table/data.json');
     }
 

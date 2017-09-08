@@ -9,6 +9,8 @@ import {SelectCheckboxDemoModule} from "./checkbox/app.module";
 
 import {SelectScrollDemoComponent} from "./scroll/app.component";
 import {SelectScrollDemoModule} from "./scroll/app.module";
+import {SelectFullComponent} from "../../live-demo/select/select-full/app.component";
+import {SelectFullModule} from "../../live-demo/select/select-full/app.module";
 
 const selectDemoRoutes = [
     {
@@ -26,6 +28,9 @@ const selectDemoRoutes = [
         path: 'checkbox', component: SelectCheckboxDemoComponent
     },
     {
+        path: 'select-full', component: SelectFullComponent
+    },
+    {
         path: '**', //fallback router must in the last
         component: SelectBasicDemoComponent
     }
@@ -33,7 +38,11 @@ const selectDemoRoutes = [
 
 @NgModule({
     imports: [
-        RouterModule.forChild(selectDemoRoutes), SelectBasicDemoModule, SelectCheckboxDemoModule, SelectScrollDemoModule
+        RouterModule.forChild(selectDemoRoutes),
+        SelectBasicDemoModule,
+        SelectCheckboxDemoModule,
+        SelectScrollDemoModule,
+        SelectFullModule
     ]
 })
 export class SelectDemoModule {
