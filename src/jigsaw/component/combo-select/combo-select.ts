@@ -176,7 +176,8 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     @Input()
     public debounceTime = 300;
 
-    @ViewChild('editor') editor: JigsawInput;
+    @ViewChild('editor')
+    public editor: JigsawInput;
 
     @Input()
     public filter: string;

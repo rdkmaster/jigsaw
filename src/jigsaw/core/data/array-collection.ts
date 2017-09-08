@@ -24,13 +24,13 @@ import {CallbackRemoval} from "../utils/common-utils";
 export class JigsawArray<T> implements Array<T> {
     private _agent: T[] = [];
 
-    public set (index: number, value: T): void {
+    public set(index: number, value: T): void {
         this._length = this._length > index ? this._length : index + 1;
         const thiz: any = this;
         thiz[index] = value;
     }
 
-    public get (index: number): T {
+    public get(index: number): T {
         return this[index];
     }
 
@@ -545,8 +545,6 @@ export class DirectPageableArray extends PageableArray {
 
 export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageable {
     public pagingInfo: PagingInfo;
-    public filterInfo: DataFilterInfo;
-    public sortInfo: DataSortInfo;
 
     private _bakData: T[];
 
@@ -560,16 +558,10 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
 
     private _initSubjects(): void {
         this._filterSubject.debounceTime(300).subscribe(filter => {
-            this.filterInfo = filter;
-            this._fromArray(this._bakData.filter(item => {
-                if(typeof this.filterInfo.field[0] == 'string'){
-                    return !!(<string[]>this.filterInfo.field).filter(field => {
-                        return item[field].includes(this.filterInfo.key)
-                    }).length
-                }else{
-                    return false
-                }
-            }))
+            this._fromArray(this._bakData.filter(item => (<any[]>filter.field).find(field => {
+                const value:string = item[field] === undefined || item[field] === null ? '' : item[field].toString();
+                return value.includes(filter.key)
+            })));
         });
     }
 
@@ -588,22 +580,34 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
     public sort(as: SortAs, order: SortOrder, field: string | number): void;
     public sort(sort: DataSortInfo): void;
     public sort(as, order?: SortOrder, field?: string | number): void {
+        throw new Error('not implemented yet!');
     }
 
     public changePage(currentPage: number, pageSize?: number): void;
     public changePage(info: PagingInfo): void;
     public changePage(currentPage, pageSize?: number): void {
+        throw new Error('not implemented yet!');
     }
 
     public firstPage(): void {
+        throw new Error('not implemented yet!');
     }
 
     public previousPage(): void {
+        throw new Error('not implemented yet!');
     }
 
     public nextPage(): void {
+        throw new Error('not implemented yet!');
     }
 
     public lastPage(): void {
+        throw new Error('not implemented yet!');
+    }
+
+    public destroy() {
+        super.destroy();
+        this._filterSubject.unsubscribe();
+        this._bakData = null;
     }
 }

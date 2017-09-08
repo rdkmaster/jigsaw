@@ -100,9 +100,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     private _subscribeItemSelectedChange(items: QueryList<AbstractJigsawOptionComponent>){
         items.forEach(item => {
             // 取消可能重复的订阅事件
-            if(item.selectedChange.observers.length){
-                item.selectedChange.observers = [];
-            }
+            item.selectedChange.observers.length = 0;
             item.selectedChange.subscribe(() => {
                 if (this.multipleSelect) { //多选
                     item.selected = !item.selected;//切换组件选中状态

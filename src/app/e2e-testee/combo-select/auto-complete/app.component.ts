@@ -10,7 +10,7 @@ export class ComboSelectAutoCompleteDemo {
                 public renderer: Renderer2) {
     }
 
-    citys = new LocalPageableArray([
+    cities = new LocalPageableArray([
         {label: "北京"},
         {label: "上海"},
         {label: "南京"},
@@ -26,12 +26,10 @@ export class ComboSelectAutoCompleteDemo {
         {label: "哈尔滨"}
     ]);
 
-    public selectedCity = new ArrayCollection([this.citys[0]]);
-
-    citysBak = this.citys;
+    public selectedCity = new ArrayCollection([this.cities[0]]);
 
     handleFilter(filterKey) {
-        this.citys.filter(filterKey, ['label']);
+        this.cities.filter(filterKey, ['label']);
     }
 
 }
