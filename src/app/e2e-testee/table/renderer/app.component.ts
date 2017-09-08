@@ -20,30 +20,30 @@ export class TableRendererDemoComponent {
                 public renderer: Renderer2) {
         this.tableData = new TableData([
             [11, 12, 13, 14, 15, 16, 17],
-            // [21, 22, 23, 24, 25, 26, 27],
-            // [31, 32, 33, 34, 35, 36, 37],
+            [21, 22, 23, 24, 25, 26, 27],
+            [31, 32, 33, 34, 35, 36, 37],
             // [41, 42, 43, 44, 45, 46, 47],
             // [51, 52, 53, 54, 55, 56, 12],
         ], ['f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7'], ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7']);
 
         let to = 0;
-        let interval = 100;
+        let interval = 1000;
 
-        // to += interval;
-        // setTimeout(() => {
-        //     // this.tableData = new TableData(this.tableData.data, this.tableData.field, this.tableData.header);
-        //     this.tableData.data[0][2] = 888;
-        //     this.tableData.refresh();
+        to += interval;
+        setTimeout(() => {
+            // this.tableData = new TableData(this.tableData.data, this.tableData.field, this.tableData.header);
+            this.tableData.data[0][2] = 888;
+            this.tableData.refresh();
+
+            this.selectedRow = 4;
+        }, to);
         //
-        //     this.selectedRow = 4;
-        // }, to);
-        //
-        // to += interval;
-        // setTimeout(() => {
-        //     // this.tableData = new TableData(this.tableData.data, this.tableData.field, this.tableData.header);
-        //     this.tableData.data.push([51, 52, 53, 54, 55, 56, 57]);
-        //     this.tableData.refresh();
-        // }, to)
+        to += interval;
+        setTimeout(() => {
+            // this.tableData = new TableData(this.tableData.data, this.tableData.field, this.tableData.header);
+            this.tableData.data.push([51, 52, 53, 54, 55, 56, 57]);
+            this.tableData.refresh();
+        }, to)
         //
         // to += interval;
         // setTimeout(() => {

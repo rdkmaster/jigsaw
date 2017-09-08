@@ -61,8 +61,8 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase implements 
     }
 
     public set cellData(value) {
-        this._cellData = value;
-        if (value == CheckBoxStatus.checked && value == CheckBoxStatus.unchecked) {
+        this._cellData = this._isValid(value) ? value : this._cellData;
+        if (this._cellData != CheckBoxStatus.indeterminate) {
             this.tableData.data.forEach(row => row[this.column] = value);
             this.tableData.refresh();
         }
@@ -81,23 +81,30 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase implements 
         }
         this._tableData = value;
 
+        this._setCellData();
         this._removeRefreshCallback && this._removeRefreshCallback();
-        this._removeRefreshCallback = this._tableData.onRefresh(() => {
-            let type = 0;
-            this._tableData.data.forEach(row => type |= (!!row[this.column] ? 2 : 1));
-            switch (type) {
-                case 3:
-                    this._cellData = CheckBoxStatus.indeterminate;
-                    break;
-                case 2:
-                    this._cellData = CheckBoxStatus.checked;
-                    break;
-                case 1:
-                case 0:
-                default:
-                    this._cellData = CheckBoxStatus.unchecked;
-            }
-        });
+        this._removeRefreshCallback = this._tableData.onRefresh(this._setCellData, this);
+    }
+
+    private _setCellData():void {
+        let type = 0;
+        this._tableData.data.forEach(row => type |= (!!row[this.column] ? 2 : 1));
+        switch (type) {
+            case 3:
+                this._cellData = CheckBoxStatus.indeterminate;
+                break;
+            case 2:
+                this._cellData = CheckBoxStatus.checked;
+                break;
+            case 1:
+            case 0:
+            default:
+                this._cellData = CheckBoxStatus.unchecked;
+        }
+    }
+
+    private _isValid(value):boolean {
+        return value == CheckBoxStatus.checked || value == CheckBoxStatus.unchecked || value == CheckBoxStatus.indeterminate;
     }
 
     ngOnDestroy() {

@@ -136,7 +136,7 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
 
     private _fixCheckValue(value: CheckBoxValue): CheckBoxStatus {
         let v: CheckBoxStatus;
-        if (CommonUtils.isUndefined(v)) {
+        if (CommonUtils.isUndefined(value)) {
             v = CheckBoxStatus.unchecked;
         } else if (typeof value === 'number') {
             v = value > CheckBoxStatus.indeterminate ? CheckBoxStatus.checked : value;

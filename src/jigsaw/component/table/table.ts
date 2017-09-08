@@ -140,17 +140,19 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                     settings.editorRenderer = settings.editorRenderer ? settings.editorRenderer : TableCellTextEditorRenderer;
                 }
 
-                settings.cellData = this.data.data[i][index];
-                if (settings.cellData instanceof Function) {
-                    // it is a `TableCellDataGenerator`, we need to use it to generate a value
-                    const generator: Function = settings.cellData;
+                const generator = matchedColumnDef && matchedColumnDef.cell && matchedColumnDef.cell.data instanceof Function ?
+                    matchedColumnDef.cell.data : null;
+                const originVal = this.data.data[i][index];
+                if (generator) {
                     settings.cellData = generator(this.data, i, index);
-
-                    if (!TableCellValueGenerators.isStateless(this.data.data[i][index])) {
-                        this.data.data[i][index] = settings.cellData;
+                    this.data.data[i][index] = settings.cellData;
+                    if (originVal != settings.cellData) {
+                        console.warn(`stateless cell data generator is overriding the common value [${originVal}]`);
                     }
+                } else {
+                    settings.cellData = originVal;
                 }
-                settings.cellData = CommonUtils.isDefined(settings) ? settings.cellData : '';
+                settings.cellData = CommonUtils.isDefined(settings.cellData) ? settings.cellData : '';
 
                 if (matchedColumnDef && matchedColumnDef.group) {
                     if (groupSetting && groupSetting.cellData == settings.cellData) {
@@ -260,6 +262,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 cd.target = (field, index) => !!targets.find((f, i) => (f == field || i == index));
             }
         });
+    }
+
+    private _isGenerator(colDef: ColumnDefine):boolean {
+        return colDef && colDef.cell && colDef.cell.data && colDef.cell.data instanceof Function;
     }
 
     private _update(): void {
