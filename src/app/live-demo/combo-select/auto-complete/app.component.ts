@@ -9,18 +9,18 @@ import {Http} from "@angular/http";
 export class ComboSelectAutoCompleteDemo {
     constructor(public viewContainerRef: ViewContainerRef,
                 public renderer: Renderer2, public http: Http) {
-        this.citys2 = new PageableArray(http, {
-            url: 'http://localhost:4200/mock-data/array-collection/paging-citys.json',
+        this.cities2 = new PageableArray(http, {
+            url: 'http://localhost:4200/mock-data/array-collection/paging-cities.json',
             params: {aa: 11, bb: 22},
             method: 'get'
         });
-        this.citys2.fromAjax();
+        this.cities2.fromAjax();
     }
 
-    citys2: PageableArray;
+    cities2: PageableArray;
     selectedCity2: ArrayCollection<any>=new ArrayCollection([{id: 1, name: '北京'}]);
     handleFilter2(filterKey){
-        this.citys2.filter(filterKey, ['name']);
+        this.cities2.filter(filterKey, ['name']);
     }
 
     cities = new LocalPageableArray([

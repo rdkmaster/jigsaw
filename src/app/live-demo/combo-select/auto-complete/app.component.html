@@ -6,14 +6,14 @@
             maxWidth="500"
             [(value)]="selectedCity"
             [clearable]="true"
-            [editable]="true"
+            [searchable]="true"
             (filterChange)="handleFilter($event)">
             <ng-template>
                 <jigsaw-tile
                     [(selectedItems)]="selectedCity"
                     trackItemBy="label"
                     width="400px">
-                    <jigsaw-tile-option *ngFor="let city of citys" [value]="city" width="22.8%">
+                    <jigsaw-tile-option *ngFor="let city of cities" [value]="city" width="22.8%">
                         {{city.label}}
                     </jigsaw-tile-option>
                 </jigsaw-tile>
@@ -27,14 +27,14 @@
             labelField="name"
             [(value)]="selectedCity2"
             [clearable]="true"
-            [editable]="true"
+            [searchable]="true"
             (filterChange)="handleFilter2($event)">
             <ng-template>
                 <jigsaw-tile
                     [(selectedItems)]="selectedCity2"
                     trackItemBy="id"
                     width="400px">
-                    <jigsaw-tile-option *ngFor="let city of citys2" [value]="city" width="22.8%">
+                    <jigsaw-tile-option *ngFor="let city of cities2" [value]="city" width="22.8%">
                         {{city.name}}
                     </jigsaw-tile-option>
                 </jigsaw-tile>

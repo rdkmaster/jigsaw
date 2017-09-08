@@ -173,7 +173,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public clearable: boolean = false;
 
     @Input()
-    public editable: boolean = false;
+    public searchable: boolean = false;
 
     @Input()
     public debounceTime = 300;

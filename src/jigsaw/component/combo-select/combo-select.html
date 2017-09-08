@@ -15,7 +15,7 @@
                         (close)="_$removeTag(tagItem)">
                 {{tagItem[labelField]}}
             </jigsaw-tag>
-            <jigsaw-input #editor *ngIf="editable" [(value)]="filter"
+            <jigsaw-input #editor *ngIf="searchable" [(value)]="filter"
                           width="100%" height="80%"
                           [clearable]="false" placeholder='请输入关键字'>
             </jigsaw-input>
