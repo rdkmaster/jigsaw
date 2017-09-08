@@ -147,7 +147,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         setTimeout(() => {
             if (value) {
                 this._openDropDown();
-                this.editor.focus();
+                if(this.editor) this.editor.focus();
             } else {
                 this._closeDropDown();
                 this.filter = '';
@@ -350,6 +350,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             this._rollOutDenouncesTimer = null;
         }
         this.open = true;
+        if(this.editor) this.editor.select();
     }
 
     /**
@@ -379,6 +380,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public ngAfterViewInit(){
         if(this.editor){
             this.editor.valueChange.debounceTime(this.debounceTime).subscribe(filter => {
+                if(filter) this.open = true;
                 this.filterChange.emit(filter);
             })
         }

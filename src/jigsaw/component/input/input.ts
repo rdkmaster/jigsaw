@@ -107,6 +107,10 @@ export class JigsawInput extends AbstractJigsawComponent implements ControlValue
         this._inputElement.nativeElement.focus();
     }
 
+    public select() {
+        this._inputElement.nativeElement.select();
+    }
+
     private _clearValue(event): void {
         this.value = null;
     }
