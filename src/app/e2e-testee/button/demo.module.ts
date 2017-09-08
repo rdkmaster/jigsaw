@@ -10,12 +10,12 @@ import {ButtonDisableDemoModule} from "./disabled/app.module";
 import {ButtonPresetDemoModule} from "app/e2e-testee/button/preset/app.module";
 import {ButtonWidthHeightDemoModule} from "app/e2e-testee/button/width_height/app.module";
 import {ButtonWithLoadingModule} from "app/e2e-testee/button/with-loading/app.module";
-import {ButtonLiveDemoComponent} from "../../live-demo/button/app.component";
-import {ButtonLiveDemoModule} from "../../live-demo/button/app.module";
+import {ButtonFullComponent} from "../../live-demo/button/button-full/app.component";
+import {ButtonFullModule} from "../../live-demo/button/button-full/app.module";
 
 const buttonDemoRoutes = [
     {
-        path: '', redirectTo: 'basic', pathMatch: 'full'
+        path: 'button-full', component: ButtonFullComponent
     },
     {
         path: 'basic', component: ButtonBasicDemoComponent
@@ -33,11 +33,8 @@ const buttonDemoRoutes = [
         path: 'with-loading', component: ButtonWithLoadingComponent
     },
     {
-        path: 'live-demo', component: ButtonLiveDemoComponent
-    },
-    {
         path: '**', //fallback router must in the last
-        component: ButtonBasicDemoComponent
+        component: ButtonFullComponent
     }
 ];
 
@@ -49,7 +46,7 @@ const buttonDemoRoutes = [
         ButtonPresetDemoModule,
         ButtonWidthHeightDemoModule,
         ButtonWithLoadingModule,
-        ButtonLiveDemoModule
+        ButtonFullModule
     ]
 })
 export class ButtonDemoModule {
