@@ -4,7 +4,7 @@ import { ArrayCollection } from "jigsaw/core/data/array-collection";
 @Component({
   templateUrl: './app.component.html'
 })
-export class TileselectBasicDemoComponent{
+export class TileselectFullDemoComponent{
 
     citys = new ArrayCollection([
         {label: "北京"},

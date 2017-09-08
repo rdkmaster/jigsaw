@@ -26,6 +26,7 @@ import {JigsawTooltipModule} from './component/tooltip/tooltip';
 import {JigsawTreeExtModule} from './component/tree/tree-ext';
 import {JigsawMovableModule} from "./directive/movable/index";
 import {JigsawDraggableModule, JigsawDroppableModule} from './directive/dragdrop/index';
+import {JigsawRootModule} from "./component/root/root";
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
@@ -55,7 +56,8 @@ const JIGSAW_MODULE = [
     JigsawTileSelectModule,
     JigsawTimeModule,
     JigsawTooltipModule,
-    JigsawTreeExtModule
+    JigsawTreeExtModule,
+    JigsawRootModule
 ];
 
 @NgModule({

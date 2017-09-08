@@ -273,7 +273,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
         return this;
     }
 
-    protected _fromArray(source: T[]): boolean {
+    private _fromArray(source: T[]): boolean {
         let needRefresh = this.length > 0;
 
         this.splice(0, this.length);
@@ -558,7 +558,7 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
 
     private _initSubjects(): void {
         this._filterSubject.debounceTime(300).subscribe(filter => {
-            this._fromArray(this._bakData.filter(item => (<any[]>filter.field).find(field => {
+            this.fromArray(this._bakData.filter(item => (<any[]>filter.field).find(field => {
                 const value:string = item[field] === undefined || item[field] === null ? '' : item[field].toString();
                 return value.includes(filter.key)
             })));
