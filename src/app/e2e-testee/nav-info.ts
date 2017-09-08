@@ -732,6 +732,10 @@ navInfo.unshift({
             {
                 label: 'tile',
                 url: '/tile/tile-full'
+            },
+            {
+                label: 'select',
+                url: '/select/select-full'
             }
         ]
     });

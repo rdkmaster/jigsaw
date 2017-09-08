@@ -9,8 +9,8 @@ import {SelectCheckboxDemoModule} from "./checkbox/app.module";
 
 import {SelectScrollDemoComponent} from "./scroll/app.component";
 import {SelectScrollDemoModule} from "./scroll/app.module";
-import {SelectLiveDemoComponent} from "../../live-demo/select/app.component";
-import {SelectLiveDemoModule} from "../../live-demo/select/app.module";
+import {SelectFullComponent} from "../../live-demo/select/select-full/app.component";
+import {SelectFullModule} from "../../live-demo/select/select-full/app.module";
 
 const selectDemoRoutes = [
     {
@@ -28,7 +28,7 @@ const selectDemoRoutes = [
         path: 'checkbox', component: SelectCheckboxDemoComponent
     },
     {
-        path: 'live-demo', component: SelectLiveDemoComponent
+        path: 'select-full', component: SelectFullComponent
     },
     {
         path: '**', //fallback router must in the last
@@ -42,7 +42,7 @@ const selectDemoRoutes = [
         SelectBasicDemoModule,
         SelectCheckboxDemoModule,
         SelectScrollDemoModule,
-        SelectLiveDemoModule
+        SelectFullModule
     ]
 })
 export class SelectDemoModule {

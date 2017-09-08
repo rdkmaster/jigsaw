@@ -6,7 +6,7 @@ import {Http} from "@angular/http";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class SelectLiveDemoComponent {
+export class SelectFullComponent {
     constructor(public viewContainerRef: ViewContainerRef,
                 public renderer: Renderer2, public http: Http) {
         this.citys2 = new ArrayCollection();
