@@ -10,7 +10,7 @@ export class ComboSelectAutoCompleteDemo {
     constructor(public viewContainerRef: ViewContainerRef,
                 public renderer: Renderer2, public http: Http) {
         this.citys2 = new PageableArray(http, {
-            url: 'http://localhost:4200/mock-data/array-collection/citys.json',
+            url: 'http://localhost:4200/mock-data/array-collection/paging-citys.json',
             params: {aa: 11, bb: 22},
             method: 'get'
         });
