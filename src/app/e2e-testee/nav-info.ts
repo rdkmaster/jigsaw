@@ -730,6 +730,10 @@ navInfo.unshift({
                 url: '/tile/tile-full'
             },
             {
+                label: 'select',
+                url: '/select/select-full'
+            },
+            {
                 label: 'auto-complete',
                 url: '/combo-select/auto-complete'
             }

@@ -1,5 +1,4 @@
 import {
-    ApplicationRef,
     ComponentFactoryResolver,
     ComponentRef,
     ElementRef,
@@ -18,7 +17,6 @@ import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import {Subscription} from "rxjs/Subscription";
-import {JigsawRoot} from "../component/root/root";
 
 export enum PopupEffect {
     fadeIn, fadeOut, bubbleIn, bubbleOut
@@ -121,6 +119,10 @@ export enum PopupPositionType {
 
 export enum PopupEventType {
     instanceCreated, positionReady, ready
+}
+
+export enum PopupZIndex {
+    modal = 1000, popover = 1030
 }
 
 export type PopupRef = ComponentRef<IPopupable> | EmbeddedViewRef<any>;
@@ -278,9 +280,9 @@ export class PopupService {
 
     private _setStyle(options: PopupOptions, element: HTMLElement, renderer: Renderer2): void {
         if (this._isModal(options)) {
-            renderer.setStyle(element, 'z-index', '10000');
+            renderer.setStyle(element, 'z-index', PopupZIndex.modal);
         } else {
-            renderer.setStyle(element, 'z-index', '9000');
+            renderer.setStyle(element, 'z-index', PopupZIndex.popover);
         }
         renderer.setStyle(element, 'visibility', 'hidden');
     }
@@ -412,8 +414,9 @@ export class PopupService {
      * 设置边框、阴影、动画
      * */
     private _setBackground(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
-        renderer.setStyle(element, 'box-shadow', '1px 1px 6px rgba(0, 0, 0, .2)');
-        renderer.setStyle(element, 'background', '#ffffff');
+        if(!this._isModal(options)){
+            renderer.setStyle(element, 'box-shadow', '1px 1px 6px rgba(0, 0, 0, .2)');
+        }
         if (options && options.showBorder) {
             renderer.setStyle(element, 'border', '1px solid #dcdcdc');
             renderer.setStyle(element, 'border-radius', '4px');

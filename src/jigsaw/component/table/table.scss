@@ -54,7 +54,7 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
         }
         &.#{$table-prefix-cls}-fixed-head{
             position: absolute;
-            z-index: 10;
+            z-index: $zindex-affix;
         }
     }
 }
@@ -65,9 +65,6 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     > .mCSB_vertical_horizontal > .mCSB_scrollTools_vertical{
         margin: 40px 0 0 !important;
     }
-    /*> .mCSB_scrollTools_horizontal{
-        margin: 0 0 !important;
-    }*/
     &.#{$table-prefix-cls}-hide-head{
         table{
             margin-top: -40px;

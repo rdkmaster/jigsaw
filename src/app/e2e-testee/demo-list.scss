@@ -46,9 +46,10 @@ jigsaw-collapse.nav-list .jigsaw-collapse-content li {display: inline-block; mar
 
 /* demo容器 */
 .live-demo-wrap .live-demo {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     padding-left: 10px;
 }
+.live-demo.live-demo-block{margin-bottom: 20px}
 
 /* demo标题 */
 .live-demo h3 {
