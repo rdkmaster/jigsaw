@@ -12,7 +12,7 @@ export class ComboSelectAutoCompleteDemo {
     lpaCountries: LocalPageableArray<ComboSelectValue>;
     spaCountries: PageableArray;
     selectedCountries: any;
-    selectedCountries2: ArrayCollection<ComboSelectValue> = new ArrayCollection([{enName: 'china'}]);
+    selectedCountries2: ArrayCollection<ComboSelectValue> = new ArrayCollection();
 
     constructor(public http: Http) {
         this.lpaCountries = new LocalPageableArray<ComboSelectValue>();
@@ -21,11 +21,11 @@ export class ComboSelectAutoCompleteDemo {
         // 这里模拟实际的场景：服务端返回的数据结构不能直接用的场景，需要对数据做一些简单的转换
         // RDK的服务端返回的数据多数是TableData格式，直接调用对应api做转换就行了
         // 如果服务端返回的就是一个数组，则就无需写这些代码了
-        this.lpaCountries.dataReviser = (td:TableData) => TableData.toArray(td);
-        this.lpaCountries.onAjaxComplete(() => {
-            // index=17 is china
-            this.selectedCountries = this.lpaCountries.get(17);
-        });
+        this.lpaCountries.dataReviser = (td: TableData) => TableData.toArray(td);
+        // 如果需要设置默认值，则可以放开下面这几行代码
+        // this.lpaCountries.onAjaxComplete(() => {
+        //     this.selectedCountries = this.lpaCountries.get(17);
+        // });
 
         this.spaCountries = new PageableArray(http, {
             url: 'http://localhost:4200/mock-data/array-collection/countries.json',
@@ -38,11 +38,19 @@ export class ComboSelectAutoCompleteDemo {
         this.spaCountries.pagingInfo.pageSize = 1000;
     }
 
-    onOpen(open:boolean) {
-        if (!open || this.spaCountries.busy) {
-            //正在查询或者已经查询了，就不再去查询数据了
+    onLocalSearchOpen(open) {
+        if (!open) {
             return;
         }
+        // 重置数据集
+        this.lpaCountries.filter('', ['enName', 'zhName']);
+    }
+
+    onServerSearchOpen(open: boolean) {
+        if (!open || this.spaCountries.busy) {
+            return;
+        }
+        //正在查询或者已经查询了，就不再去查询数据了
         this.spaCountries.filter('', ['enName', 'zhName']);
     }
 

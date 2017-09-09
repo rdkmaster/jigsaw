@@ -7,7 +7,8 @@
                              [clearable]="true"
                              labelField="enName"
                              [searchable]="true"
-                             searchPlaceholder="search a country..."
+                             placeholder="search a country..."
+                             (openChange)="onLocalSearchOpen($event)"
                              (searchKeywordChange)="handleSearching($event, lpaCountries)">
             <ng-template>
                 <div class="dropdown">
@@ -30,8 +31,8 @@
                              labelField="enName"
                              [searchable]="true"
                              [searching]="spaCountries.busy"
-                             searchPlaceholder="输入中文也行"
-                             (openChange)="onOpen($event)"
+                             placeholder="输入中文也行"
+                             (openChange)="onServerSearchOpen($event)"
                              (searchKeywordChange)="handleSearching($event, spaCountries)">
             <ng-template>
                 <div class="dropdown">
@@ -43,6 +44,7 @@
                 </div>
             </ng-template>
         </jigsaw-combo-select>
+        <p>selected countries: {{toCountriesString(selectedCountries2)}}</p>
     </div>
 </div>
 

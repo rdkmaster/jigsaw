@@ -183,9 +183,6 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public searching: boolean = false;
 
     @Input()
-    public searchPlaceholder: string = 'Type to search...';
-
-    @Input()
     public searchKeyword: string = '';
 
     @Output()
