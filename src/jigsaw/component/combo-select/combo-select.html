@@ -6,7 +6,7 @@
      (click)="_$openAndCloseByClick($event)">
     <div class="jigsaw-combo-select-selection">
         <div class="jigsaw-combo-select-selection-rendered">
-            <div *ngIf="placeholder && (!value || value.length == 0)" class="jigsaw-combo-select-selection_placeholder">
+            <div *ngIf="placeholder && value.length == 0">
                 {{placeholder}}
             </div>
             <jigsaw-tag *ngFor="let tagItem of value"
