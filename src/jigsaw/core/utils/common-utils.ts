@@ -194,6 +194,10 @@ export class CommonUtils {
             console.error(e.stack);
         }
     }
+
+    public static isDefined(source: any) {
+        return source !== undefined && source !== null;
+    }
 }
 
 export type CallbackRemoval = () => void;

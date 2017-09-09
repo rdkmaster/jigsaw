@@ -2,42 +2,46 @@
     <h2>Auto Complete</h2>
     <div class="demo-1 live-demo">
         <h3>本地数据过滤</h3>
-        <jigsaw-combo-select
-            maxWidth="500"
-            [(value)]="selectedCity"
-            [clearable]="true"
-            [searchable]="true"
-            (filterChange)="handleFilter($event)">
+        <jigsaw-combo-select maxWidth="500"
+                             [(value)]="selectedCountries"
+                             [clearable]="true"
+                             labelField="enName"
+                             [searchable]="true"
+                             searchPlaceholder="Type a country name"
+                             (searchKeywordChange)="handleFilter($event)">
             <ng-template>
-                <jigsaw-tile
-                    [(selectedItems)]="selectedCity"
-                    trackItemBy="label"
-                    width="400px">
-                    <jigsaw-tile-option *ngFor="let city of cities" [value]="city" width="22.8%">
-                        {{city.label}}
-                    </jigsaw-tile-option>
-                </jigsaw-tile>
+                <div class="dropdown">
+                    <jigsaw-tile [(selectedItems)]="selectedCountries" trackItemBy="enName" width="550px">
+                        <jigsaw-tile-option *ngFor="let country of lpaCountries" [value]="country" width="100px">
+                            {{country.enName}}
+                        </jigsaw-tile-option>
+                    </jigsaw-tile>
+                </div>
             </ng-template>
         </jigsaw-combo-select>
+        <p>selected countries: {{toCountriesString(selectedCountries)}}</p>
     </div>
+
+    <!--上下两段html几乎一样的，差别仅在于喂给 jigsaw-combo-select 的数据类型-->
+
     <div class="demo-2 live-demo">
         <h3>服务端数据过滤</h3>
-        <jigsaw-combo-select
-            maxWidth="500"
-            labelField="name"
-            [(value)]="selectedCity2"
-            [clearable]="true"
-            [searchable]="true"
-            (filterChange)="handleFilter2($event)">
+        <jigsaw-combo-select maxWidth="500"
+                             [(value)]="selectedCountries2"
+                             [clearable]="true"
+                             labelField="enName"
+                             [searchable]="true"
+                             [searching]="isLoading"
+                             searchPlaceholder="输入中文也行"
+                             (searchKeywordChange)="handleFilter2($event)">
             <ng-template>
-                <jigsaw-tile
-                    [(selectedItems)]="selectedCity2"
-                    trackItemBy="id"
-                    width="400px">
-                    <jigsaw-tile-option *ngFor="let city of cities2" [value]="city" width="22.8%">
-                        {{city.name}}
-                    </jigsaw-tile-option>
-                </jigsaw-tile>
+                <div class="dropdown">
+                    <jigsaw-tile [(selectedItems)]="selectedCountries2" trackItemBy="enName" width="550px">
+                        <jigsaw-tile-option *ngFor="let country of spaCountries" [value]="country" width="100px">
+                            {{country.enName}}
+                        </jigsaw-tile-option>
+                    </jigsaw-tile>
+                </div>
             </ng-template>
         </jigsaw-combo-select>
     </div>

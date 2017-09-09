@@ -78,6 +78,7 @@ export class JigsawInput extends AbstractJigsawComponent implements ControlValue
     @Input() public disabled: boolean = false;
 
     private _placeholder:string='';
+
     @Input()
     public set placeholder(txt:string) {
         this._placeholder = txt;

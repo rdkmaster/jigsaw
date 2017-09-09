@@ -1,48 +1,73 @@
 import {Component, Renderer2, ViewContainerRef} from '@angular/core';
-import {ArrayCollection, LocalPageableArray, PageableArray} from "jigsaw/core/data/array-collection";
 import {Http} from "@angular/http";
+import {ArrayCollection, LocalPageableArray, PageableArray} from "jigsaw/core/data/array-collection";
+import {ComboSelectValue} from "jigsaw/component/combo-select/combo-select";
+import {TableData} from "jigsaw/core/data/table-data";
+import {LoadingService} from "jigsaw/service/loading.service";
 
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
 })
 export class ComboSelectAutoCompleteDemo {
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2, public http: Http) {
-        this.cities2 = new PageableArray(http, {
-            url: 'http://localhost:4200/mock-data/array-collection/paging-cities.json',
-            params: {aa: 11, bb: 22},
+    lpaCountries: LocalPageableArray<ComboSelectValue>;
+    spaCountries: PageableArray;
+    selectedCountries: any;
+    selectedCountries2: ArrayCollection<ComboSelectValue> = new ArrayCollection([{enName: 'china'}]);
+    isLoading:boolean = false;
+
+    constructor(public http: Http) {
+        this.lpaCountries = new LocalPageableArray<ComboSelectValue>();
+        this.lpaCountries.http = http;
+        this.lpaCountries.fromAjax('mock-data/array-collection/countries.json');
+        // 这里模拟实际的场景：服务端返回的数据结构不能直接用的场景，需要对数据做一些简单的转换
+        // RDK的服务端返回的数据多数是TableData格式，直接调用对应api做转换就行了
+        // 如果服务端返回的就是一个数组，则就无需写这些代码了
+        this.lpaCountries.dataReviser = (td:TableData) => TableData.toArray(td);
+        this.lpaCountries.onAjaxComplete(() => {
+            // index=17 is china
+            this.selectedCountries = this.lpaCountries.get(17);
+        });
+
+        this.spaCountries = new PageableArray(http, {
+            url: 'http://localhost:4200/mock-data/array-collection/countries.json',
+            // 在这个例子中不需要带参数，但是为了演示如何带参数给服务端，
+            // 这里还是随便给了一些参数，可以在浏览器的network页中看效果
+            params: {someData: 'this param is not necessary in this example.'},
             method: 'get'
         });
-        this.cities2.fromAjax();
+        // 我们这里不演示服务端分页功能，因此只给一页数据就好
+        this.spaCountries.pagingInfo.pageSize = 1000;
+        // 为了更好的体验，在过滤过程中，我们给加上loading效果
+        this.spaCountries.filterEvent.subscribe(() => this.isLoading = true);
+        this.spaCountries.onAjaxComplete(() => this.isLoading = false);
+        this.spaCountries.fromAjax();
     }
 
-    cities2: PageableArray;
-    selectedCity2: ArrayCollection<any>=new ArrayCollection([{id: 1, name: '北京'}]);
-    handleFilter2(filterKey){
-        this.cities2.filter(filterKey, ['name']);
+    toCountriesString(countries: any): string {
+        if (!countries) {
+            return '';
+        }
+
+        // 要注意，我们为了简单，把this.countries的类型定为了any，
+        // 并在ajax请求完成之后，直接给设置了一个单值，而非创建一个ArrayCollection实例
+        // jigsaw-combo-select组件能够兼容这样的情况，并且会自动将this.countries的值转为ArrayCollection
+        // 但是在jigsaw-combo-select组件完成调整类型之前，angular还是会调用这个方法，因此必须做兼容判断
+        // 实际使用时，建议尽量像 selectedCountries2 一样严格使用类型
+        if (countries instanceof ArrayCollection) {
+            let result = '';
+            countries.forEach(c => result += c.zhName + ', ');
+            return result;
+        } else {
+            return countries.zhName;
+        }
     }
 
-    cities = new LocalPageableArray([
-        {label: "北京"},
-        {label: "上海"},
-        {label: "南京"},
-        {label: "深圳"},
-        {label: "长沙"},
-        {label: "西安"},
-        {label: "盐城"},
-        {label: "徐州"},
-        {label: "连云港"},
-        {label: "连云港1"},
-        {label: "连云港2"},
-        {label: "连云港3"},
-        {label: "哈尔滨"}
-    ]);
-
-    public selectedCity = new ArrayCollection([this.cities[0]]);
+    handleFilter2(filterKey) {
+        this.spaCountries.filter(filterKey, ['enName', 'zhName']);
+    }
 
     handleFilter(filterKey) {
-        this.cities.filter(filterKey, ['label']);
+        this.lpaCountries.filter(filterKey, ['enName', 'zhName']);
     }
-
 }

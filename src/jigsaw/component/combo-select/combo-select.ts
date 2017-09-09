@@ -47,7 +47,7 @@ export class ComboSelectValue {
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawComboSelect), multi: true},
     ]
 })
-export class JigsawComboSelect extends AbstractJigsawComponent implements ControlValueAccessor, OnDestroy, OnInit, AfterViewInit {
+export class JigsawComboSelect extends AbstractJigsawComponent implements ControlValueAccessor, OnDestroy, OnInit {
     private _disposePopup: PopupDisposer;
     private _popupElement: HTMLElement;
     private _removeWindowClickHandler: Function;
@@ -65,14 +65,14 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     private _value: ArrayCollection<ComboSelectValue> = new ArrayCollection();
 
     @Input()
-    public get value(): ArrayCollection<ComboSelectValue> {
+    public get value(): ArrayCollection<ComboSelectValue> | ComboSelectValue[] {
         return this._value;
     }
 
-    public set value(value: ArrayCollection<ComboSelectValue>) {
+    public set value(value: ArrayCollection<ComboSelectValue> | ComboSelectValue[]) {
         this.writeValue(value);
-        if (value && this._value != value && value instanceof ArrayCollection) {
-            this._propagateChange(value);
+        if (value && this._value != value) {
+            this._propagateChange(this._value);
         }
     }
 
@@ -87,9 +87,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public remove = new EventEmitter<any>();
 
     @Input()
-    public placeholder: string;
+    public placeholder: string = '';
 
     private _disabled: boolean;
+
     @Input()
     public get disabled(): boolean {
         return this._disabled;
@@ -103,6 +104,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     private _openTrigger: DropDownTrigger = DropDownTrigger.mouseenter;
+
     @Input()
     public get openTrigger(): DropDownTrigger {
         return this._openTrigger;
@@ -114,6 +116,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     private _closeTrigger: DropDownTrigger = DropDownTrigger.mouseleave;
+
     @Input()
     public get closeTrigger(): DropDownTrigger {
         return this._closeTrigger;
@@ -150,7 +153,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
                 if(this.editor) this.editor.focus();
             } else {
                 this._closeDropDown();
-                this.filter = '';
+                this.searchKeyword = '';
             }
             this._$opened = value;
             this.openChange.emit(value);
@@ -175,24 +178,27 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     @Input()
     public searchable: boolean = false;
 
-    @Input()
-    public debounceTime = 300;
-
     @ViewChild('editor')
     public editor: JigsawInput;
 
     @Input()
-    public filter: string;
+    public searching:boolean = false;
+
+    @Input()
+    public searchPlaceholder: string = 'Type to search...';
+
+    @Input()
+    public searchKeyword: string = '';
 
     @Output()
-    public filterChange = new EventEmitter<any>();
+    public searchKeywordChange = new EventEmitter<any>();
 
     /**
      * @internal
      */
     public _$clearValue() {
-        this.value.splice(0, this.value.length);
-        this.value.refresh();
+        this._value.splice(0, this._value.length);
+        this._value.refresh();
         this._autoWidth();
     }
 
@@ -200,10 +206,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
      * @internal
      */
     public _$removeTag(tag) {
-        const index = this.value.indexOf(tag);
+        const index = this._value.indexOf(tag);
         if (index != -1) {
-            this.value.splice(index, 1);
-            this.value.refresh();
+            this._value.splice(index, 1);
+            this._value.refresh();
             this.remove.emit(tag);
         }
         this._autoWidth();
@@ -378,13 +384,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         }
     }
 
-    public ngAfterViewInit(){
-        if(this.editor){
-            this.editor.valueChange.debounceTime(this.debounceTime).subscribe(filter => {
-                if(filter) this.open = true;
-                this.filterChange.emit(filter);
-            })
-        }
+    public _$handleEditorChange() {
+        if(this.searchKeyword) this.open = true;
+        this.searchKeywordChange.emit(this.searchKeyword);
     }
 
     public ngOnDestroy() {
@@ -400,18 +402,18 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     };
 
     public writeValue(value: any): void {
-        if (!value || this._value === value || !(value instanceof ArrayCollection)) {
+        if (!value || this._value === value) {
             return;
         }
 
-        this._value = value;
-        this.valueChange.emit(this._value);
+        this._value = value instanceof ArrayCollection ? value : new ArrayCollection(value);
+        setTimeout(() => this.valueChange.emit(this._value));
         this._autoWidth();
 
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback()
         }
-        this._removeRefreshCallback = value.onRefresh(() => {
+        this._removeRefreshCallback = this._value.onRefresh(() => {
             this.valueChange.emit(this._value);
             this._propagateChange(this._value);
             this._autoWidth();

@@ -20,7 +20,7 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
         border: $border-width-base $border-style-base $border-color-base;
         transition: all .3s $ease-in-out;
         user-select: none;
-        white-space:nowrap;
+        white-space: nowrap;
         padding: 0 30px 0 7px;
         &:hover {
             border-color: $primary-color;
@@ -32,22 +32,22 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
         height: $height-base;
         overflow: hidden;
         font-size: 0;
-        &:before{
+        &:before {
             @include inline-block();
             content: '';
             height: 100%;
             vertical-align: middle;
         }
-        jigsaw-tag{
+        jigsaw-tag {
             vertical-align: middle;
             margin-right: 4px;
         }
-        jigsaw-input{
-            input{
+        jigsaw-input {
+            input {
                 padding: 0 !important;
                 font-size: $font-size-base;
                 border: none;
-                &:focus{
+                &:focus {
                     box-shadow: none;
                 }
             }
