@@ -1,9 +1,8 @@
-import {Component, Renderer2, ViewContainerRef} from '@angular/core';
+import {Component} from '@angular/core';
 import {Http} from "@angular/http";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "jigsaw/core/data/array-collection";
 import {ComboSelectValue} from "jigsaw/component/combo-select/combo-select";
 import {TableData} from "jigsaw/core/data/table-data";
-import {LoadingService} from "jigsaw/service/loading.service";
 
 @Component({
     templateUrl: './app.component.html',
@@ -14,7 +13,6 @@ export class ComboSelectAutoCompleteDemo {
     spaCountries: PageableArray;
     selectedCountries: any;
     selectedCountries2: ArrayCollection<ComboSelectValue> = new ArrayCollection([{enName: 'china'}]);
-    isLoading:boolean = false;
 
     constructor(public http: Http) {
         this.lpaCountries = new LocalPageableArray<ComboSelectValue>();
@@ -38,10 +36,14 @@ export class ComboSelectAutoCompleteDemo {
         });
         // 我们这里不演示服务端分页功能，因此只给一页数据就好
         this.spaCountries.pagingInfo.pageSize = 1000;
-        // 为了更好的体验，在过滤过程中，我们给加上loading效果
-        this.spaCountries.filterEvent.subscribe(() => this.isLoading = true);
-        this.spaCountries.onAjaxComplete(() => this.isLoading = false);
-        this.spaCountries.fromAjax();
+    }
+
+    onOpen(open:boolean) {
+        if (!open || this.spaCountries.busy) {
+            //正在查询或者已经查询了，就不再去查询数据了
+            return;
+        }
+        this.spaCountries.filter('', ['enName', 'zhName']);
     }
 
     toCountriesString(countries: any): string {
@@ -63,11 +65,12 @@ export class ComboSelectAutoCompleteDemo {
         }
     }
 
-    handleFilter2(filterKey) {
-        this.spaCountries.filter(filterKey, ['enName', 'zhName']);
-    }
-
-    handleFilter(filterKey) {
-        this.lpaCountries.filter(filterKey, ['enName', 'zhName']);
+    handleSearching(filterKey, data) {
+        filterKey = filterKey ? filterKey.trim() : '';
+        if (!filterKey) {
+            // 初始化完成之后，angular会发出这个事件。无效的过滤请求跳过
+            return;
+        }
+        data.filter(filterKey, ['enName', 'zhName']);
     }
 }

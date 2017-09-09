@@ -92,7 +92,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
                     }
                 });
                 item.selected = hasSelected;
-                item.changeDetector.detectChanges();
+                // item.changeDetector.detectChanges();
             });
         })
     }

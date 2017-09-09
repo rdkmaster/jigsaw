@@ -144,20 +144,18 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     public set open(value: boolean) {
-        if (value === this._$opened && !this.initialized) {
+        if (value === this._$opened || !this.initialized) {
             return;
         }
-        setTimeout(() => {
-            if (value) {
-                this._openDropDown();
-                if(this.editor) this.editor.focus();
-            } else {
-                this._closeDropDown();
-                this.searchKeyword = '';
-            }
-            this._$opened = value;
-            this.openChange.emit(value);
-        }, 0);
+        if (value) {
+            this._openDropDown();
+            if (this.editor) this.editor.focus();
+        } else {
+            this._closeDropDown();
+            this.searchKeyword = '';
+        }
+        this._$opened = value;
+        this.openChange.emit(value);
     }
 
     @Output()
@@ -182,7 +180,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public editor: JigsawInput;
 
     @Input()
-    public searching:boolean = false;
+    public searching: boolean = false;
 
     @Input()
     public searchPlaceholder: string = 'Type to search...';
@@ -357,7 +355,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             this._rollOutDenouncesTimer = null;
         }
         this.open = true;
-        if(this.editor) this.editor.select();
+        if (this.editor) this.editor.select();
     }
 
     /**
@@ -385,7 +383,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     public _$handleEditorChange() {
-        if(this.searchKeyword) this.open = true;
+        if (this.searchKeyword) this.open = true;
         this.searchKeywordChange.emit(this.searchKeyword);
     }
 

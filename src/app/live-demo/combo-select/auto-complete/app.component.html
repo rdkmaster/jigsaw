@@ -8,7 +8,7 @@
                              labelField="enName"
                              [searchable]="true"
                              searchPlaceholder="search a country..."
-                             (searchKeywordChange)="handleFilter($event)">
+                             (searchKeywordChange)="handleSearching($event, lpaCountries)">
             <ng-template>
                 <div class="dropdown">
                     <jigsaw-tile [(selectedItems)]="selectedCountries" trackItemBy="enName" width="550px">
@@ -22,8 +22,6 @@
         <p>selected countries: {{toCountriesString(selectedCountries)}}</p>
     </div>
 
-    <!--上下两段html几乎一样的，差别仅在于喂给 jigsaw-combo-select 的数据类型-->
-
     <div class="demo-2 live-demo">
         <h3>服务端数据过滤</h3>
         <jigsaw-combo-select maxWidth="500"
@@ -31,9 +29,10 @@
                              [clearable]="true"
                              labelField="enName"
                              [searchable]="true"
-                             [searching]="isLoading"
+                             [searching]="spaCountries.busy"
                              searchPlaceholder="输入中文也行"
-                             (searchKeywordChange)="handleFilter2($event)">
+                             (openChange)="onOpen($event)"
+                             (searchKeywordChange)="handleSearching($event, spaCountries)">
             <ng-template>
                 <div class="dropdown">
                     <jigsaw-tile [(selectedItems)]="selectedCountries2" trackItemBy="enName" width="550px">
