@@ -57,6 +57,9 @@ const demoListRoutes = [
                 path: "dragdrop",
                 loadChildren: "./dragdrop/demo.module#DragDropDemoModule"
             }, {
+                path: "fish-bone",
+                loadChildren: "./fish-bone/demo.module#FishBoneDemoModule"
+            }, {
                 path: "form",
                 loadChildren: "./form/demo.module#FormDemoModule"
             }, {

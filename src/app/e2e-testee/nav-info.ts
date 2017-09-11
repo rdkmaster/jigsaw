@@ -732,6 +732,10 @@ navInfo.unshift({
             {
                 label: 'select',
                 url: '/select/select-full'
+            },
+            {
+                label: 'fish-bone',
+                url: '/fish-bone/fish-bone-full'
             }
         ]
     });
