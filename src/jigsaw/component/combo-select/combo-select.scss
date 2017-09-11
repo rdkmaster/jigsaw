@@ -55,6 +55,7 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
         .#{$jigsaw-combo-select}-placeholder{
             @include inline-block();
             font-size: $font-size-base;
+            color: $text-color-secondary;
         }
     }
 
