@@ -1,4 +1,4 @@
-import {Http, RequestOptionsArgs, Response, URLSearchParams} from "@angular/http";
+import {Http, RequestOptionsArgs, Response, ResponseOptions, URLSearchParams} from "@angular/http";
 import {EventEmitter} from "@angular/core";
 import {Subject} from "rxjs/Subject";
 import "rxjs/add/operator/map";
@@ -202,10 +202,14 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
         this._fromArray(source);
     }
 
-    protected _busy: boolean;
+    protected _busy: boolean = false;
 
     get busy(): boolean {
         return this._busy;
+    }
+
+    protected ajaxStartHandler(): void {
+        this.componentDataHelper.invokeAjaxStartCallback();
     }
 
     protected ajaxSuccessHandler(data: T[]): void {
@@ -221,10 +225,19 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
     }
 
     protected ajaxErrorHandler(error: Response): void {
-        console.error('get data from paging server error!! detail: ' + error);
+        if (!error) {
+            console.error('get data from paging server error!! detail: the array collection is busy now!');
+            const options = new ResponseOptions({ body: 'ERROR: the array collection is busy now!' });
+            error = new Response(options.merge({ url: '' }));
+            error.ok = false;
+            error.status = 409;
+            error.statusText = 'ERROR: the array collection is busy now!';
+        } else {
+            console.error('get data from paging server error!! detail: ' + error);
+            this._busy = false;
+            this.fromArray([]);
+        }
 
-        this._busy = false;
-        this.fromArray([]);
         this.componentDataHelper.invokeAjaxErrorCallback(error);
     }
 
@@ -296,6 +309,10 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
         return this.componentDataHelper.getRefreshRemoval({fn: callback, context: context});
     }
 
+    public onAjaxStart(callback: () => void, context?: any): CallbackRemoval {
+        return this.componentDataHelper.getAjaxStartRemoval({fn: callback, context: context});
+    }
+
     public onAjaxSuccess(callback: (data: any) => void, context?: any): CallbackRemoval {
         return this.componentDataHelper.getAjaxSuccessRemoval({fn: callback, context: context});
     }
@@ -339,21 +356,7 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
     public sortInfo: DataSortInfo;
 
     private _filterSubject = new Subject<DataFilterInfo>();
-
-    private _filterEvent = new EventEmitter<DataFilterInfo>();
-
-    public get filterEvent(): EventEmitter<DataFilterInfo> {
-        return this._filterEvent;
-    }
-
     private _sortSubject = new Subject<DataSortInfo>();
-
-    private _sortEvent = new EventEmitter<DataSortInfo>();
-
-    public get sortEvent(): EventEmitter<DataSortInfo> {
-        return this._sortEvent;
-    }
-
     private _requestOptions: RequestOptionsArgs;
 
     constructor(public http: Http, public sourceRequestOptions: RequestOptionsArgs) {
@@ -401,12 +404,10 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
     private _initSubjects(): void {
         this._filterSubject.debounceTime(300).subscribe(filter => {
             this.filterInfo = filter;
-            this.filterEvent.emit(filter);
             this._ajax();
         });
         this._sortSubject.debounceTime(300).subscribe(sort => {
             this.sortInfo = sort;
-            this.sortEvent.emit(sort);
             this._ajax();
         });
     }
@@ -429,7 +430,13 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
     }
 
     private _ajax(): void {
+        if (this._busy) {
+            this.ajaxErrorHandler(null);
+            return;
+        }
+
         this._busy = true;
+        this.ajaxStartHandler();
 
         const params: URLSearchParams = this._requestOptions.params as URLSearchParams;
         params.set('paging', JSON.stringify(this.pagingInfo));
@@ -550,10 +557,6 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this._filterSubject = null;
         this._sortSubject.unsubscribe();
         this._sortSubject = null;
-        this._filterEvent.unsubscribe();
-        this._filterEvent = null;
-        this._sortEvent.unsubscribe();
-        this._sortEvent = null;
     }
 }
 
@@ -586,7 +589,7 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
     private _initSubjects(): void {
         this._filterSubject.debounceTime(300).subscribe(filter => {
             super.fromArray(this._bakData.filter(item => (<any[]>filter.field).find(field => {
-                const value:string = item[field] === undefined || item[field] === null ? '' : item[field].toString();
+                const value: string = item[field] === undefined || item[field] === null ? '' : item[field].toString();
                 return value.includes(filter.key)
             })));
         });
