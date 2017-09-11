@@ -78,6 +78,7 @@ export class JigsawInput extends AbstractJigsawComponent implements ControlValue
     @Input() public disabled: boolean = false;
 
     private _placeholder:string='';
+
     @Input()
     public set placeholder(txt:string) {
         this._placeholder = txt;
@@ -105,6 +106,10 @@ export class JigsawInput extends AbstractJigsawComponent implements ControlValue
 
     public focus() {
         this._inputElement.nativeElement.focus();
+    }
+
+    public select() {
+        this._inputElement.nativeElement.select();
     }
 
     private _clearValue(event): void {

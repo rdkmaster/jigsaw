@@ -16,7 +16,7 @@ import {
 } from "./component-data";
 
 import {TableData} from "./table-data";
-import {CallbackRemoval} from "../utils/common-utils";
+import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
 
 // we have to implement the Array<T> interface due to this breaking change:
 // https://github.com/Microsoft/TypeScript/wiki/FAQ#why-doesnt-extending-built-ins-like-error-array-and-map-work
@@ -24,13 +24,13 @@ import {CallbackRemoval} from "../utils/common-utils";
 export class JigsawArray<T> implements Array<T> {
     private _agent: T[] = [];
 
-    public set (index: number, value: T): void {
+    public set(index: number, value: T): void {
         this._length = this._length > index ? this._length : index + 1;
         const thiz: any = this;
         thiz[index] = value;
     }
 
-    public get (index: number): T {
+    public get(index: number): T {
         return this[index];
     }
 
@@ -274,10 +274,11 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
     }
 
     private _fromArray(source: T[]): boolean {
+        source = source instanceof Array ? source : CommonUtils.isDefined(source) ? [source] : [];
         let needRefresh = this.length > 0;
 
         this.splice(0, this.length);
-        if (source) {
+        if (source.length > 0) {
             needRefresh = needRefresh || source.length > 0;
             source.forEach(item => this.push(item));
         }
@@ -338,7 +339,21 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
     public sortInfo: DataSortInfo;
 
     private _filterSubject = new Subject<DataFilterInfo>();
+
+    private _filterEvent = new EventEmitter<DataFilterInfo>();
+
+    public get filterEvent(): EventEmitter<DataFilterInfo> {
+        return this._filterEvent;
+    }
+
     private _sortSubject = new Subject<DataSortInfo>();
+
+    private _sortEvent = new EventEmitter<DataSortInfo>();
+
+    public get sortEvent(): EventEmitter<DataSortInfo> {
+        return this._sortEvent;
+    }
+
     private _requestOptions: RequestOptionsArgs;
 
     constructor(public http: Http, public sourceRequestOptions: RequestOptionsArgs) {
@@ -386,10 +401,12 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
     private _initSubjects(): void {
         this._filterSubject.debounceTime(300).subscribe(filter => {
             this.filterInfo = filter;
+            this.filterEvent.emit(filter);
             this._ajax();
         });
         this._sortSubject.debounceTime(300).subscribe(sort => {
             this.sortInfo = sort;
+            this.sortEvent.emit(sort);
             this._ajax();
         });
     }
@@ -533,6 +550,10 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this._filterSubject = null;
         this._sortSubject.unsubscribe();
         this._sortSubject = null;
+        this._filterEvent.unsubscribe();
+        this._filterEvent = null;
+        this._sortEvent.unsubscribe();
+        this._sortEvent = null;
     }
 }
 
@@ -543,43 +564,77 @@ export class DirectPageableArray extends PageableArray {
     }
 }
 
-export class LocalPageableArray extends ArrayCollection<any> implements IPageable {
+export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageable {
     public pagingInfo: PagingInfo;
-    public filterInfo: DataFilterInfo;
-    public sortInfo: DataSortInfo;
-    public busy: boolean = false;
 
-    constructor() {
-        super();
-        console.error("unsupported yet!");
+    private _bakData: T[] = [];
+
+    private _filterSubject = new Subject<DataFilterInfo>();
+
+    constructor(source?: T[]) {
+        super(source);
+        this._bakData = source;
+        this._initSubjects();
+    }
+
+    public fromArray(source: T[]): ArrayCollection<T> {
+        const result = super.fromArray(source);
+        this._bakData = source;
+        return result;
+    }
+
+    private _initSubjects(): void {
+        this._filterSubject.debounceTime(300).subscribe(filter => {
+            super.fromArray(this._bakData.filter(item => (<any[]>filter.field).find(field => {
+                const value:string = item[field] === undefined || item[field] === null ? '' : item[field].toString();
+                return value.includes(filter.key)
+            })));
+        });
     }
 
     public filter(callbackfn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
     public filter(term: string, fields?: string[] | number[]): void;
     public filter(term: DataFilterInfo): void;
     public filter(term, fields?: string[] | number[]): void {
+        if (term instanceof Function) {
+            throw 'filter function is NOT accepted by this class!';
+        }
+        const pfi = term instanceof DataFilterInfo ? term : new DataFilterInfo(term, fields);
+        this._filterSubject.next(pfi);
     }
 
     public sort(compareFn?: (a: any, b: any) => number): any;
     public sort(as: SortAs, order: SortOrder, field: string | number): void;
     public sort(sort: DataSortInfo): void;
     public sort(as, order?: SortOrder, field?: string | number): void {
+        throw new Error('not implemented yet!');
     }
 
     public changePage(currentPage: number, pageSize?: number): void;
     public changePage(info: PagingInfo): void;
     public changePage(currentPage, pageSize?: number): void {
+        throw new Error('not implemented yet!');
     }
 
     public firstPage(): void {
+        throw new Error('not implemented yet!');
     }
 
     public previousPage(): void {
+        throw new Error('not implemented yet!');
     }
 
     public nextPage(): void {
+        throw new Error('not implemented yet!');
     }
 
     public lastPage(): void {
+        throw new Error('not implemented yet!');
+    }
+
+    public destroy() {
+        super.destroy();
+        this._filterSubject.unsubscribe();
+        this._bakData = null;
     }
 }

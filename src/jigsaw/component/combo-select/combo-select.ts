@@ -1,4 +1,5 @@
 import {
+    AfterViewInit,
     Component,
     ContentChild,
     ElementRef,
@@ -8,7 +9,7 @@ import {
     OnInit,
     Output,
     Renderer2,
-    TemplateRef
+    TemplateRef, ViewChild
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {
@@ -22,6 +23,7 @@ import {
 import {AbstractJigsawComponent} from "../common";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {ArrayCollection} from "../../core/data/array-collection";
+import {JigsawInput} from "../input/input";
 
 export enum DropDownTrigger {
     click,
@@ -63,14 +65,14 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     private _value: ArrayCollection<ComboSelectValue> = new ArrayCollection();
 
     @Input()
-    public get value(): ArrayCollection<ComboSelectValue> {
+    public get value(): ArrayCollection<ComboSelectValue> | ComboSelectValue[] {
         return this._value;
     }
 
-    public set value(value: ArrayCollection<ComboSelectValue>) {
+    public set value(value: ArrayCollection<ComboSelectValue> | ComboSelectValue[]) {
         this.writeValue(value);
-        if (value && this._value != value && value instanceof ArrayCollection) {
-            this._propagateChange(value);
+        if (value && this._value != value) {
+            this._propagateChange(this._value);
         }
     }
 
@@ -85,9 +87,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public remove = new EventEmitter<any>();
 
     @Input()
-    public placeholder: string;
+    public placeholder: string = '';
 
     private _disabled: boolean;
+
     @Input()
     public get disabled(): boolean {
         return this._disabled;
@@ -101,6 +104,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     private _openTrigger: DropDownTrigger = DropDownTrigger.mouseenter;
+
     @Input()
     public get openTrigger(): DropDownTrigger {
         return this._openTrigger;
@@ -112,6 +116,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     private _closeTrigger: DropDownTrigger = DropDownTrigger.mouseleave;
+
     @Input()
     public get closeTrigger(): DropDownTrigger {
         return this._closeTrigger;
@@ -139,18 +144,18 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     public set open(value: boolean) {
-        if (value === this._$opened && !this.initialized) {
+        if (value === this._$opened || !this.initialized) {
             return;
         }
-        setTimeout(() => {
-            if (value) {
-                this._openDropDown();
-            } else {
-                this._closeDropDown();
-            }
-            this._$opened = value;
-            this.openChange.emit(value);
-        }, 0);
+        if (value) {
+            this._openDropDown();
+            if (this.editor) this.editor.focus();
+        } else {
+            this._closeDropDown();
+            this.searchKeyword = '';
+        }
+        this._$opened = value;
+        this.openChange.emit(value);
     }
 
     @Output()
@@ -168,11 +173,27 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     @Input()
     public clearable: boolean = false;
 
+    @Input()
+    public searchable: boolean = false;
+
+    @ViewChild('editor')
+    public editor: JigsawInput;
+
+    @Input()
+    public searching: boolean = false;
+
+    @Input()
+    public searchKeyword: string = '';
+
+    @Output()
+    public searchKeywordChange = new EventEmitter<any>();
+
     /**
      * @internal
      */
     public _$clearValue() {
-        this.value = new ArrayCollection<ComboSelectValue>();
+        this._value.splice(0, this._value.length);
+        this._value.refresh();
         this._autoWidth();
     }
 
@@ -180,10 +201,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
      * @internal
      */
     public _$removeTag(tag) {
-        const index = this.value.indexOf(tag);
+        const index = this._value.indexOf(tag);
         if (index != -1) {
-            this.value.splice(index, 1);
-            this.value.refresh();
+            this._value.splice(index, 1);
+            this._value.refresh();
             this.remove.emit(tag);
         }
         this._autoWidth();
@@ -239,7 +260,6 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
         this._popupElement = popupInfo.element;
         this._disposePopup = popupInfo.dispose;
-        //PopupService.setBackground(this._popupElement, this._render);
 
         if (this._openTrigger === DropDownTrigger.mouseenter && this._popupElement) {
             this._removeMouseOverHandler = this._render.listen(this._popupElement, 'mouseenter', () => {
@@ -332,6 +352,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             this._rollOutDenouncesTimer = null;
         }
         this.open = true;
+        if (this.editor) this.editor.select();
     }
 
     /**
@@ -358,6 +379,11 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         }
     }
 
+    public _$handleEditorChange() {
+        if (this.searchKeyword) this.open = true;
+        this.searchKeywordChange.emit(this.searchKeyword);
+    }
+
     public ngOnDestroy() {
         this.open = false;
 
@@ -371,18 +397,18 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     };
 
     public writeValue(value: any): void {
-        if (!value || this._value === value || !(value instanceof ArrayCollection)) {
+        if (!value || this._value === value) {
             return;
         }
 
-        this._value = value;
-        this.valueChange.emit(this._value);
+        this._value = value instanceof ArrayCollection ? value : new ArrayCollection(value);
+        setTimeout(() => this.valueChange.emit(this._value));
         this._autoWidth();
 
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback()
         }
-        this._removeRefreshCallback = value.onRefresh(() => {
+        this._removeRefreshCallback = this._value.onRefresh(() => {
             this.valueChange.emit(this._value);
             this._propagateChange(this._value);
             this._autoWidth();

@@ -3,7 +3,6 @@ import {ControlValueAccessor} from "@angular/forms";
 import {AfterContentInit, ChangeDetectorRef, EventEmitter, Input, OnDestroy, Output, QueryList} from "@angular/core";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {ArrayCollection} from "../../core/data/array-collection";
-import {JigsawTileOption} from "./tile";
 
 export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implements ControlValueAccessor, AfterContentInit, OnDestroy {
 
@@ -80,12 +79,12 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     }
 
     //根据selectedItems设置选中的option
-    protected _setItemState(): void {
-        if (!(this.selectedItems instanceof ArrayCollection) || !this._items.length) {
+    protected _setItemState(items: QueryList<AbstractJigsawOptionComponent>): void {
+        if (!(this.selectedItems instanceof ArrayCollection) || !items.length) {
             return;
         }
         setTimeout(() => {
-            this._items.forEach(item => {
+            items.forEach(item => {
                 let hasSelected = false;
                 this._selectedItems.forEach(selectedItem => {
                     if (CommonUtils.compareWithKeyProperty(item.value, selectedItem, this._trackItemBy)) {
@@ -93,18 +92,15 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
                     }
                 });
                 item.selected = hasSelected;
-                item.changeDetector.detectChanges();
+                // item.changeDetector.detectChanges();
             });
         })
     }
 
-    ngAfterContentInit() {
-        if (this._trackItemBy.length == 0 && this._items.find(item => item.value instanceof Object)) {
-            console.warn('please use trackItemBy attribute to help us to identify the items');
-        }
-
-        this._setItemState();
-        this._items.forEach(item => {
+    private _subscribeItemSelectedChange(items: QueryList<AbstractJigsawOptionComponent>){
+        items.forEach(item => {
+            // 取消可能重复的订阅事件
+            item.selectedChange.observers.length = 0;
             item.selectedChange.subscribe(() => {
                 if (this.multipleSelect) { //多选
                     item.selected = !item.selected;//切换组件选中状态
@@ -115,7 +111,16 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
                         this._updateSelectItemsForForm(item.value, item.selected);
                     }
                 }
-            });
+            })
+        });
+    }
+
+    ngAfterContentInit() {
+        this._setItemState(this._items);
+        this._subscribeItemSelectedChange(this._items);
+        this._items.changes.subscribe(items => {
+            this._setItemState(items);
+            this._subscribeItemSelectedChange(items);
         });
     }
 
@@ -137,13 +142,13 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
 
         this._selectedItems = newValue;
         if (this.initialized) {
-            this._setItemState();
+            this._setItemState(this._items);
         }
 
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback()
         }
-        this._removeRefreshCallback = newValue.onRefresh(this._setItemState, this);
+        this._removeRefreshCallback = newValue.onRefresh(() => this._setItemState(this._items));
     }
 
     public writeValue(newValue: any): void {

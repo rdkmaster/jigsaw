@@ -6,17 +6,19 @@
      (click)="_$openAndCloseByClick($event)">
     <div class="jigsaw-combo-select-selection">
         <div class="jigsaw-combo-select-selection-rendered">
-            <div *ngIf="placeholder && (!value || value.length == 0)" class="jigsaw-combo-select-selection_placeholder">
+            <jigsaw-tag *ngFor="let tagItem of value"
+                        [closable]='tagItem.closable'
+                        (select)="_$tagClick(tagItem)"
+                        (close)="_$removeTag(tagItem)">
+                {{tagItem[labelField]}}
+            </jigsaw-tag>
+            <jigsaw-input #editor *ngIf="searchable && !disabled" [(value)]="searchKeyword" [disabled]="searching"
+                          width="100%" height="80%" (valueChange)="_$handleEditorChange()"
+                          [clearable]="false" [placeholder]="value.length == 0 ? placeholder : ''">
+            </jigsaw-input>
+            <div class="jigsaw-combo-select-placeholder" *ngIf="placeholder && value.length == 0 && !searchable">
                 {{placeholder}}
             </div>
-            <ng-template ngFor let-tagItem [ngForOf]="value" let-i="index" let-isLast="last">
-                <jigsaw-tag
-                    [closable]='tagItem.closable'
-                    (select)="_$tagClick(tagItem)"
-                    (close)="_$removeTag(tagItem)">
-                    {{tagItem[labelField]}}
-                </jigsaw-tag>
-            </ng-template>
         </div>
     </div>
     <i class="fa fa-times-circle jigsaw-combo-select-clear"

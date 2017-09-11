@@ -71,7 +71,7 @@ export class JigsawScrollBar implements OnInit {
             // 销毁当前滚动条
             this._scrollBarJq.mCustomScrollbar("destroy");
         }
-        this._scrollBarJq.mCustomScrollbar(option);
+        // this._scrollBarJq.mCustomScrollbar(option);
     }
 
     /*
