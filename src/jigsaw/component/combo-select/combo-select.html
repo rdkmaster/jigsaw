@@ -16,7 +16,7 @@
                           width="100%" height="80%" (valueChange)="_$handleEditorChange()"
                           [clearable]="false" [placeholder]="value.length == 0 ? placeholder : ''">
             </jigsaw-input>
-            <div *ngIf="placeholder && value.length == 0 && !searchable">
+            <div class="jigsaw-combo-select-placeholder" *ngIf="placeholder && value.length == 0 && !searchable">
                 {{placeholder}}
             </div>
         </div>
