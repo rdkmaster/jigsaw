@@ -1,4 +1,4 @@
-import {Http, RequestOptionsArgs, URLSearchParams} from "@angular/http";
+import {Http, RequestOptionsArgs, Response, ResponseOptions, URLSearchParams} from "@angular/http";
 import {Subject} from "rxjs/Subject";
 import "rxjs/add/operator/map";
 import 'rxjs/add/operator/debounceTime';
@@ -16,7 +16,6 @@ import {
     IPageable
 } from "./component-data";
 import {CommonUtils} from "../utils/common-utils";
-import {EventEmitter} from "@angular/core";
 
 export type TableMatrixRow = Array<string | number>;
 export type TableDataHeader = string[];
@@ -151,21 +150,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     public pagingInfo: PagingInfo;
 
     private _filterSubject = new Subject<DataFilterInfo>();
-
-    private _filterEvent = new EventEmitter<DataFilterInfo>();
-
-    public get filterEvent(): EventEmitter<DataFilterInfo> {
-        return this._filterEvent;
-    }
-
     private _sortSubject = new Subject<DataSortInfo>();
-
-    private _sortEvent = new EventEmitter<DataSortInfo>();
-
-    public get sortEvent(): EventEmitter<DataSortInfo> {
-        return this._sortEvent;
-    }
-
     private _requestOptions: RequestOptionsArgs;
 
     constructor(public http: Http, public sourceRequestOptions: RequestOptionsArgs) {
@@ -213,12 +198,10 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     private _initSubjects(): void {
         this._filterSubject.debounceTime(300).subscribe(filter => {
             this.filterInfo = filter;
-            this.filterEvent.emit(filter);
             this._ajax();
         });
         this._sortSubject.debounceTime(300).subscribe(sort => {
             this.sortInfo = sort;
-            this.sortEvent.emit(sort);
             this._ajax();
         });
     }
@@ -241,7 +224,13 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     }
 
     private _ajax(): void {
+        if (this._busy) {
+            this.ajaxErrorHandler(null);
+            return;
+        }
+
         this._busy = true;
+        this.ajaxStartHandler();
 
         const params: URLSearchParams = this._requestOptions.params as URLSearchParams;
         params.set('paging', JSON.stringify(this.pagingInfo));
@@ -347,10 +336,6 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this._filterSubject = null;
         this._sortSubject.unsubscribe();
         this._sortSubject = null;
-        this._filterEvent.unsubscribe();
-        this._filterEvent = null;
-        this._sortEvent.unsubscribe();
-        this._sortEvent = null;
     }
 }
 

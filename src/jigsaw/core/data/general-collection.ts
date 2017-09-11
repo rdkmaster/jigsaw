@@ -1,4 +1,4 @@
-import {Http, RequestOptionsArgs, Response} from "@angular/http";
+import {Http, RequestOptionsArgs, Response, ResponseOptions} from "@angular/http";
 import {EventEmitter} from "@angular/core";
 import "rxjs/add/operator/map";
 import {
@@ -39,8 +39,15 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
             return;
         }
 
-        const op = ComponentDataHelper.castToRequestOptionsArgs(options);
+        if (this._busy) {
+            this.ajaxErrorHandler(null);
+            return;
+        }
+
         this._busy = true;
+        this.ajaxStartHandler();
+
+        const op = ComponentDataHelper.castToRequestOptionsArgs(options);
         this.http.request(op.url, op)
             .map(res => this.reviseData(res))
             .subscribe(
@@ -60,6 +67,10 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
         return this.componentDataHelper.getRefreshRemoval({fn: callback, context: context});
     }
 
+    public onAjaxStart(callback: (data: T) => void, context?: any): CallbackRemoval {
+        return this.componentDataHelper.getAjaxStartRemoval({fn: callback, context: context});
+    }
+
     public onAjaxSuccess(callback: (data: T) => void, context?: any): CallbackRemoval {
         return this.componentDataHelper.getAjaxSuccessRemoval({fn: callback, context: context});
     }
@@ -72,10 +83,24 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
         return this.componentDataHelper.getAjaxCompleteRemoval({fn: callback, context: context});
     }
 
-    protected ajaxErrorHandler(error): void {
-        console.error('get data from paging server error!! detail: ' + error);
+    protected ajaxStartHandler():void {
+        this.componentDataHelper.invokeAjaxStartCallback();
+    }
+
+    protected ajaxErrorHandler(error: Response): void {
+        if (!error) {
+            console.error('get data from paging server error!! detail: the data collection is busy now!');
+            const options = new ResponseOptions({ body: 'ERROR: the data collection is busy now!' });
+            error = new Response(options.merge({ url: '' }));
+            error.ok = false;
+            error.status = 409;
+            error.statusText = 'ERROR: the data collection is busy now!';
+        } else {
+            console.error('get data from paging server error!! detail: ' + error);
+            this._busy = false;
+        }
+
         this.componentDataHelper.invokeAjaxErrorCallback(error);
-        this._busy = false;
     }
 
     protected ajaxCompleteHandler(): void {
