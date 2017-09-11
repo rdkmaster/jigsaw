@@ -115,11 +115,22 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
         console.log('destroying TableDataBase....');
     }
 
-    public insertColumn(pos: number, data: any | any[], field: string, header: string):void {
-        pos = isNaN(pos) ? this.data.length : pos;
-        this.data.forEach((row, index) => row.splice(pos, 0, data instanceof Array ? data[index] : data));
-        this.field.splice(pos, 0, field);
-        this.header.splice(pos, 0, header);
+    public insertColumn(column: number, data: any | any[], field: string, header: string):void {
+        column = isNaN(column) ? this.data.length : column;
+        this.data.forEach((row, index) => row.splice(column, 0, data instanceof Array ? data[index] : data));
+        this.field.splice(column, 0, field);
+        this.header.splice(column, 0, header);
+    }
+
+    public removeColumn(column:number):TableData {
+        if (isNaN(column) || column < 0 || column >= this.field.length) {
+            return new TableData();
+        }
+        const matrix = [];
+        this.data.forEach(row => matrix.push(row.splice(column, 1)));
+        const field = this.field.splice(column, 1);
+        const header = this.header.splice(column, 1);
+        return new TableData(matrix, field, header);
     }
 }
 

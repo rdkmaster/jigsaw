@@ -27,7 +27,7 @@ export class TableCellValueGenerators {
     private static _statelessGenerators: TableCellDataGenerator[] = [];
 
     public static markStateless(generator:TableCellDataGenerator):void {
-        if (this.isStateless(generator)) {
+        if (!generator || this.isStateless(generator)) {
             return;
         }
         this._statelessGenerators.push(generator);

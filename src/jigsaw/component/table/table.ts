@@ -108,20 +108,20 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         // remove extra lines if necessary
         this._$cellSettings.splice(this.data.data.length, this._$cellSettings.length);
 
-        this.data.field.forEach((field, index) => {
+        this.data.field.forEach((field, colIndex) => {
             let matchedColumnDef = this.columnDefines.find(
-                colDef => (<TableColumnTargetFinder>colDef.target)(field, index));
+                colDef => (<TableColumnTargetFinder>colDef.target)(field, colIndex));
             if (matchedColumnDef && matchedColumnDef.visible === false) {
                 return;
             }
 
             let originIndex = this._lastFields.indexOf(field);
-            let sTemplate: TableCellSetting = this._createCellSettings(matchedColumnDef, index);
+            let sTemplate: TableCellSetting = this._createCellSettings(matchedColumnDef, colIndex);
             let groupSetting: TableCellSetting;
             let settings: TableCellSetting;
-            for (let i = 0, len = this.data.data.length; i < len; i++) {
+            for (let rowIndex = 0, len = this.data.data.length; rowIndex < len; rowIndex++) {
                 try {
-                    settings = settingsBackup[i][originIndex];
+                    settings = settingsBackup[rowIndex][originIndex];
                 } catch (e) {
                     settings = undefined;
                 }
@@ -130,10 +130,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 }
                 settings.rowSpan = 1;
 
-                if (!this._$cellSettings[i]) {
+                if (!this._$cellSettings[rowIndex]) {
                     this._$cellSettings.push([]);
                 }
-                this._$cellSettings[i].push(settings);
+                this._$cellSettings[rowIndex].push(settings);
 
                 if (settings.editable) {
                     settings.renderer = settings.renderer ? settings.renderer : DefaultCellRenderer;
@@ -142,13 +142,21 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
                 const generator = matchedColumnDef && matchedColumnDef.cell && matchedColumnDef.cell.data instanceof Function ?
                     matchedColumnDef.cell.data : null;
-                const originVal = this.data.data[i][index];
+                const originVal = this.data.data[rowIndex][colIndex];
                 if (generator) {
-                    settings.cellData = generator(this.data, i, index);
-                    this.data.data[i][index] = settings.cellData;
-                    if (originVal != settings.cellData) {
-                        console.warn(`stateless cell data generator is overriding the common value [${originVal}]`);
+                    const generatedValue = generator(this.data, rowIndex, colIndex);
+                    if (TableCellValueGenerators.isStateless(generator)) {
+                        settings.cellData = generatedValue;
+                        if (originVal !== undefined && generatedValue != originVal) {
+                            console.warn(`the generated value [${generatedValue}] is overriding the original cell value [${originVal}] at (${rowIndex}, ${colIndex}), set the original cell value to undefined to suppress this warning.`);
+                        }
+                    } else {
+                        if (originVal !== undefined && generatedValue != originVal) {
+                            console.warn(`original cell value [${originVal}] is overriding the generated value [${generatedValue}] at (${rowIndex}, ${colIndex}), set the original cell value to undefined to suppress this warning.`);
+                        }
+                        settings.cellData = originVal === undefined ? generatedValue : originVal;
                     }
+                    this.data.data[rowIndex][colIndex] = settings.cellData;
                 } else {
                     settings.cellData = originVal;
                 }
@@ -223,8 +231,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
         for (let i = this._additionalColumnDefines.length - 1; i >= 0; i--) {
             const acd = this._additionalColumnDefines[i];
-            if (this.data.field.indexOf(acd.field) != -1) {
-                // existed
+            if (!acd.field || this.data.field.indexOf(acd.field) != -1) {
+                // existed or invalid field define
                 continue;
             }
 
@@ -239,7 +247,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             const pos = CommonUtils.isDefined(acd.pos) ? acd.pos : this._data.field.length;
             this.columnDefines.splice(pos, 0, cd);
             // the acd.cell.data could be a `TableCellDataGenerator`
-            this.data.insertColumn(pos, acd.cell.data, acd.field, acd.header.text ? acd.header.text : acd.field);
+            const cellData = acd.cell.data instanceof Function ? undefined : acd.cell.data;
+            this.data.insertColumn(pos, cellData, acd.field, acd.header.text ? acd.header.text : acd.field);
         }
     }
 
@@ -264,10 +273,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         });
     }
 
-    private _isGenerator(colDef: ColumnDefine):boolean {
-        return colDef && colDef.cell && colDef.cell.data && colDef.cell.data instanceof Function;
-    }
-
     private _update(): void {
         if (!this.initialized || !this._data) {
             return;
@@ -276,10 +281,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             console.error('invalid table data, need a "field" property.');
             return;
         }
+        console.log(this.data.data);
         this._updateHeaderSettings();
         this._updateCellSettings();
         this._setCellLineEllipsis();
-        this._sortColumn();
+        this._setFloatingHeadWidth();
 
         console.log(this._$cellSettings);
     }
@@ -323,7 +329,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (!value || value == this._columnDefines) {
             return;
         }
-        if (!this._columnDefines) {
+        if (this._columnDefines.length > 0) {
             console.warn('do not support updating the columnDefines yet! ' +
                 'you can give the table every possible column defines when you init the table.');
             return;
@@ -342,9 +348,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (!value || value == this._additionalColumnDefines) {
             return;
         }
-        if (!this._additionalColumnDefines) {
+        if (this._additionalColumnDefines.length > 0) {
             console.warn('do not support updating the additionalColumnDefine yet! ' +
-                'you can give the table every possible column defines when you init the table.');
+                'you can give the table every possible additional column defines when you init the table.');
             return;
         }
         this._additionalColumnDefines = value;
@@ -388,30 +394,33 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         })
     }
 
-    /**
-     * 一旦数据有更新，表格将自动对已经设置了排序的行做自动排序处理。在某些情况下会很方便，但是在表格数据量大的时候，可能会有性能问题，
-     * 表格数据量大的时候，最好关闭这个选项，由应用自行对`data`属性做排序。也可以不自动排序，由用户自行点击列头触发行排序
-     *
-     * @type {boolean}
-     */
+    // /**
+    //  * 一旦数据有更新，表格将自动对已经设置了排序的行做自动排序处理。在某些情况下会很方便，但是在表格数据量大的时候，可能会有性能问题，
+    //  * 表格数据量大的时候，最好关闭这个选项，由应用自行对`data`属性做排序。也可以不自动排序，由用户自行点击列头触发行排序
+    //  *
+    //  * @type {boolean}
+    //  */
+    // @Input()
+    // public autoSort: boolean = false;
+    //
+    // private _sortedColumn: number = -1;
+    // private _sortedOrder: SortOrder;
+    //
+    // private _sortColumn(): void {
+    //     if (!this.autoSort) {
+    //         return;
+    //     }
+    //     let headSetting = this._$headerSettings.find(headSetting => headSetting.sortable &&
+    //         (headSetting.defaultSortOrder == SortOrder.asc || headSetting.defaultSortOrder == SortOrder.des)
+    //     );
+    //     // if (headSetting) {
+    //     //     this._sortedColumn = headSetting.field;
+    //     // }
+    //     this.data.sort(headSetting.sortAs, headSetting.defaultSortOrder, headSetting.field);
+    // }
+
     @Input()
-    public autoSort: boolean = false;
-
-    private _sortedColumn: number = -1;
-    private _sortedOrder: SortOrder;
-
-    private _sortColumn(): void {
-        if (!this.autoSort) {
-            return;
-        }
-        let headSetting = this._$headerSettings.find(headSetting => headSetting.sortable &&
-            (headSetting.defaultSortOrder == SortOrder.asc || headSetting.defaultSortOrder == SortOrder.des)
-        );
-        // if (headSetting) {
-        //     this._sortedColumn = headSetting.field;
-        // }
-        this.data.sort(headSetting.sortAs, headSetting.defaultSortOrder, headSetting.field);
-    }
+    public floatingHeader: boolean = false;
 
     @ViewChildren('floatingHeader', {read: ElementRef})
     private _floatingHeaders: QueryList<ElementRef>;
@@ -419,6 +428,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _realHeaders: QueryList<ElementRef>;
 
     private _setFloatingHeadWidth(): void {
+        if (!this.floatingHeader || !this._realHeaders || !this._floatingHeaders || !this._floatingHeadElement) {
+            return;
+        }
+
         const ne = this._elementRef.nativeElement;
         const hostWidth = ne.offsetWidth + 'px';
 
@@ -477,9 +490,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         })
     }
 
-    @Input()
-    public floatingHeader: boolean = false;
-
     private _removeWindowScrollListener: Function;
     private _removeWindowResizeListener: Function;
 
@@ -510,7 +520,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _floatingHeadElement: HTMLElement;
 
     private _floatHead() {
-        // todo 改用决定定位+display是否none来实现表头浮动
+        // todo 改用绝对定位+display是否none来实现表头浮动
         const maxTop = this._elementRef.nativeElement.offsetHeight - this._floatingHeadElement.offsetHeight;
         let tableDocumentTop = AffixUtils.offset(this._elementRef.nativeElement).top;
         let scrollTop = AffixUtils.getScrollTop();
