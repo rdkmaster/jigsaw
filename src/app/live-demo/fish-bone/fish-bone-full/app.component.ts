@@ -85,8 +85,47 @@ export class FishBoneFullComponent{
                     ]
                 }
             ]
+        },
+        {
+            label: '父节点3',
+            nodes: [
+                {
+                    label: '父节点31',
+                    nodes: [
+                        {
+                            label: 'end'
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            label: '父节点4',
+            nodes: [
+                {
+                    label: '父节点41',
+                    nodes: [
+                        {
+                            label: 'end'
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            label: '父节点5',
+            nodes: [
+                {
+                    label: '父节点51',
+                    nodes: [
+                        {
+                            label: 'end'
+                        }
+                    ]
+                }
+            ]
         }
-    ]
+    ];
 
     data2= [
         {
