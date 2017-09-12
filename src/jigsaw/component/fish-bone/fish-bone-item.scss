@@ -1,0 +1,73 @@
+@import "../../assets/scss/core/base";
+
+.jigsaw-fish-bone-item{
+    position: absolute;
+    transform-origin: 0 0;
+    background: #ddd;
+    width: 100px;
+    height: 2px;
+    /*@include inline-block;
+    vertical-align: top;
+    position: relative;
+    padding-left: 50px;*/
+}
+.jigsaw-fish-bone-item > p{
+    position: absolute;
+    left:20px;
+    font-size: 12px;
+    line-height: 1;
+}
+
+.jigsaw-fish-bone-item-rotate-up{transform: rotate(-60deg);}
+.jigsaw-fish-bone-item-rotate-down{transform: rotate(60deg);}
+.jigsaw-fish-bone-up .jigsaw-fish-bone-item-rotate-up > p{top: -16px;}
+.jigsaw-fish-bone-up .jigsaw-fish-bone-item-rotate-down > p{top: -16px;}
+.jigsaw-fish-bone-down .jigsaw-fish-bone-item-rotate-up > p{top: -16px;}
+.jigsaw-fish-bone-down .jigsaw-fish-bone-item-rotate-down > p{top: 6px;}
+
+.bone-level-1{
+    height: 4px;
+}
+.bone-level-2{
+    height: 3px;
+}
+.bone-level-3{
+    height: 2px;
+}
+.bone-level-4{
+    height: 1px;
+}
+
+.bone-1{
+    width: 400px;
+    left: 100px;
+}
+.bone-11{
+    width: 300px;
+    left: 50px;
+}
+.bone-12{
+    width: 300px;
+    left: 200px;
+}
+.bone-111{
+    width: 100px;
+    left: 100px;
+}
+.bone-112{
+    width: 100px;
+    left: 200px;
+}
+.bone-121{
+    width: 100px;
+    left: 100px;
+}
+.bone-1111{
+    width: 50px;
+    left: 50px;
+}
+
+.bone-2{
+    width: 400px;
+    left: 100px;
+}

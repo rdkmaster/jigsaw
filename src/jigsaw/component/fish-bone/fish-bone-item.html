@@ -1,0 +1,9 @@
+<p>{{data.label}}</p>
+<j-fish-bone-item *ngFor="let itemData of data.nodes; index as i; first as isFirst"
+                  class="jigsaw-fish-bone-item-rotate-{{childRotate}}"
+                  [childRotate]="childRotate == 'up' ? 'down' : 'up'"
+                  [data]="itemData"
+                  [level]="level + 1"
+                  [parentFishBone]="this" [isFirstNode]="i === 0">
+</j-fish-bone-item>
+

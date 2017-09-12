@@ -1,1 +1,61 @@
+<!--<div class="bone-main">
+    <div class="bone" *ngFor="let item of data">
+        <p>{{item.label}}</p>
+        <div class="bone" *ngFor="let itemChild of item.nodes">
+            <p>{{itemChild.label}}</p>
+        </div>
+    </div>
 
+    <div class="bone-1 bone rotate-up bone-level-1 bone-up">
+        <p>父节点1</p>
+        <div class="bone-11 bone rotate-down bone-level-2">
+            <p>父节点11</p>
+            <div class="bone-111 bone rotate-up bone-level-3">
+                <p>子节点111</p>
+                <div class="bone-1111 bone rotate-down bone-level-4">
+                    <p>end</p>
+                </div>
+            </div>
+            <div class="bone-112 bone rotate-up bone-level-3">
+                <p>子节点112</p>
+            </div>
+        </div>
+        <div class="bone-12 bone rotate-down bone-level-2">
+            <p>父节点12</p>
+            <div class="bone-121 bone rotate-up bone-level-3">
+                <p>子节点121</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="bone-2 bone rotate-down bone-level-1 bone-down">
+        <p>父节点2</p>
+        <div class="bone-11 bone rotate-up bone-level-2">
+            <p>父节点21</p>
+            <div class="bone-111 bone rotate-down bone-level-3">
+                <p>子节点211</p>
+                <div class="bone-1111 bone rotate-up bone-level-4">
+                    <p>end</p>
+                </div>
+            </div>
+            <div class="bone-112 bone rotate-down bone-level-3">
+                <p>子节点212</p>
+            </div>
+        </div>
+        <div class="bone-12 bone rotate-up bone-level-2">
+            <p>父节点22</p>
+            <div class="bone-121 bone rotate-down bone-level-3">
+                <p>子节点221</p>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+<j-fish-bone-item
+    *ngFor="let itemData of data; even as isEven; odd as isOdd; index as i"
+    class="jigsaw-fish-bone-item-rotate-{{isEven? 'up' : 'down'}} jigsaw-fish-bone-{{isEven? 'up' : 'down'}}"
+    [childRotate]="isEven ? 'down' : 'up'"
+    [style.left]="100 * i + 'px'"
+    [style.position]="'absolute'"
+    [data]="itemData" [level]="0">
+</j-fish-bone-item>
