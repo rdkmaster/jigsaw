@@ -1,8 +1,9 @@
 import {
-    Component, NgModule, Input, ViewChildren, QueryList, forwardRef, AfterViewInit, Renderer2, ElementRef,
+    Component, NgModule, Input, ViewChildren, QueryList, forwardRef, AfterViewInit, Renderer2, ElementRef, EventEmitter, OnInit,
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent} from "../common";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 @Component({
     selector: 'j-fish-bone, jigsaw-fish-bone',
@@ -11,48 +12,83 @@ import {AbstractJigsawComponent} from "../common";
         '[class.jigsaw-fish-bone]': 'true'
     }
 })
-export class JigsawFishBone implements AfterViewInit{
-    constructor(public renderer: Renderer2, public elementRef: ElementRef){
+export class JigsawFishBone implements AfterViewInit {
+    constructor(public renderer: Renderer2, public elementRef: ElementRef) {
     }
 
     @Input()
     public data: object[];
 
-    @ViewChildren(forwardRef(() => JigsawFishBoneItem) )
-    public fishBoneChildren: QueryList<JigsawFishBoneItem>;
+    @ViewChildren(forwardRef(() => JigsawFishBoneItem))
+    private _fishBoneMainChildren: QueryList<JigsawFishBoneItem>;
 
-    setFishBonePosition(fishBoneItems){
+    /**
+    *
+    * 按照父到子的顺序设置节点偏移量
+    * */
+    private _setFishBonePosition(fishBoneItems) {
         let fishBoneItemsArray = fishBoneItems.toArray();
         fishBoneItems.forEach((fishBoneItem, index) => {
-            if(index === 0){
+            if (index === 0) {
                 // 如果是第一个节点，默认偏移50
                 fishBoneItem.left = 50;
-                this.renderer.setStyle(fishBoneItem.itemEl, 'left', fishBoneItem.left + 'px');
-            }else{
+            } else {
                 // left偏移量等于前一个同级节点的偏移加maxField
-                fishBoneItem.left = fishBoneItemsArray[index-1].left + fishBoneItemsArray[index-1].getMaxField() + 30;
-                this.renderer.setStyle(fishBoneItem.itemEl, 'left', fishBoneItem.left + 'px');
+                fishBoneItem.left = fishBoneItemsArray[index - 1].getNumberLeft() + fishBoneItemsArray[index - 1].getMaxField() + 30;
             }
-            this.setFishBonePosition(fishBoneItem.fishBoneChildren);
+            this._setFishBonePosition(fishBoneItem.fishBoneChildren);
         })
     }
 
-    setFishBoneWidth(fishBoneItems){
+    /**
+    *
+    * 按照父到子的顺序设置节点宽度
+    * */
+    private _setFishBoneWidth(fishBoneItems) {
         fishBoneItems.forEach(fishBoneItem => {
-            if(fishBoneItem.fishBoneChildren.last){
+            if (fishBoneItem.fishBoneChildren.last) {
                 //取其最后一个子节点的left偏移值 + 30px
-                fishBoneItem.width = fishBoneItem.fishBoneChildren.last.left + 30;
+                fishBoneItem.width = fishBoneItem.fishBoneChildren.last.getNumberLeft() + 30;
             }
-
-            this.setFishBoneWidth(fishBoneItem.fishBoneChildren);
+            this._setFishBoneWidth(fishBoneItem.fishBoneChildren);
         })
     }
 
-    ngAfterViewInit(){
+    private _FishBoneItems: Array<JigsawFishBoneItem> = [];
+
+    /**
+    *
+    * 按照子到父的顺序存储节点
+    * */
+    private _cacheFishBoneItems(fishBoneItems) {
+        fishBoneItems.forEach(fishBoneItem => {
+            fishBoneItem.rectifyEvent.subscribe(() => {
+                this._FishBoneItems.push(fishBoneItem);
+            });
+            this._cacheFishBoneItems(fishBoneItem.fishBoneChildren);
+        })
+    }
+
+    /**
+    *
+    * 按照子到父的顺序修正节点的偏移量和宽度
+    * */
+    private _rectifyAll(){
+        this._FishBoneItems.forEach(fishBoneItem => {
+            fishBoneItem.rectify();
+        })
+    }
+
+    ngAfterViewInit() {
+        this._cacheFishBoneItems(this._fishBoneMainChildren);
+
         setTimeout(() => {
-            this.setFishBonePosition(this.fishBoneChildren);
-            this.setFishBoneWidth(this.fishBoneChildren);
-        },0)
+            this._setFishBonePosition(this._fishBoneMainChildren);
+            this._setFishBoneWidth(this._fishBoneMainChildren);
+            setTimeout(() => {
+                this._rectifyAll();
+            }, 0)
+        }, 0)
     }
 }
 
@@ -62,14 +98,15 @@ export class JigsawFishBone implements AfterViewInit{
     host: {
         '[class.jigsaw-fish-bone-item]': 'true',
         '[style.width]': 'width',
+        '[style.left]': 'left',
     }
 })
-export class JigsawFishBoneItem extends AbstractJigsawComponent{
-    public itemEl: HTMLElement;
+export class JigsawFishBoneItem extends AbstractJigsawComponent implements AfterViewInit{
+    private _itemEl: HTMLElement;
 
-    constructor(public renderer: Renderer2, public elementRef: ElementRef){
+    constructor(elementRef: ElementRef) {
         super();
-        this.itemEl = elementRef.nativeElement;
+        this._itemEl = elementRef.nativeElement;
     }
 
     @Input()
@@ -78,39 +115,51 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent{
     @Input()
     public childRotate: string;
 
-    @ViewChildren(forwardRef(() => JigsawFishBoneItem) )
+    @ViewChildren(forwardRef(() => JigsawFishBoneItem))
     public fishBoneChildren: QueryList<JigsawFishBoneItem>;
 
     @Input()
-    parentFishBone: JigsawFishBoneItem;
+    public parentFishBone: JigsawFishBoneItem;
 
     @Input()
-    level: number = 0;
+    public level: number = 0;
 
     @Input()
-    index: number = 0;
+    public index: number = 0;
 
-    maxField: number = 0;
+    public maxField: number = 0;
 
-    public left: number = 0;
+    private _left: string;
+
+    public get left(): string {
+        return this._left;
+    }
+
+    public set left(value: string) {
+        this._left = CommonUtils.getCssValue(value);
+    }
+
+    public getNumberLeft(): number {
+        return parseInt(this.left.replace('px', ''));
+    }
 
     /**
      * 获取最大范围
      * 子节点的宽度 + 最后的子子节点的maxField 的最大值
      *
-    * */
-    getMaxField(){
-        if(this.fishBoneChildren.length){
+     * */
+    public getMaxField(): number {
+        if (this.fishBoneChildren.length) {
             this.fishBoneChildren.forEach(fishBoneItem => {
-                let fishBoneItemWidth = fishBoneItem.itemEl.offsetWidth;
+                let fishBoneItemWidth = fishBoneItem._itemEl.offsetWidth;
                 let childMaxField = 0;
-                if(fishBoneItem.fishBoneChildren.last){
+                if (fishBoneItem.fishBoneChildren.last) {
                     childMaxField = fishBoneItem.fishBoneChildren.last.maxField;
                 }
                 let maxField = fishBoneItemWidth + childMaxField;
                 this.maxField = maxField > this.maxField ? maxField : this.maxField;
             });
-        }else{
+        } else {
             this.maxField = 30;
         }
 
@@ -122,30 +171,33 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent{
      * 调整偏移量
      * 调整宽度
      */
-    rectify(){
+    public rectify() {
         this.getMaxField();
-        if(this.index !== 0){
+        if (this.index !== 0) {
             const preFishBone = this.parentFishBone.fishBoneChildren.toArray()[this.index - 1];
-            this.left = preFishBone.maxField + preFishBone.left + 30;
-            this.renderer.setStyle(this.itemEl, 'left', this.left + 'px');
+            this.left = preFishBone.maxField + preFishBone.getNumberLeft() + 30 + 'px';
         }
 
-        if(this.fishBoneChildren.last){
-            this.width = this.fishBoneChildren.last.left + 30 + 'px';
+        if (this.fishBoneChildren.last) {
+            this.width = this.fishBoneChildren.last.getNumberLeft() + 30 + 'px';
         }
     }
 
-    ngAfterViewInit(){
+    public rectifyEvent = new EventEmitter<JigsawFishBoneItem>();
+
+    ngAfterViewInit() {
         // 宽度由最后一个子节点的left值决定，所以要先计算各节点的left偏移量，left偏移量等于前一个同级节点的偏移加maxField
         // 如果是第一个节点，默认偏移50
         // 没有子节点时，默认宽度为100，写在css里
 
         // maxField依赖子节点的宽度
         // 先渲染最里面的子节点，逐层向上渲染
-        setTimeout(() => {
-            this.rectify();
-        },2000)
 
+        // 异步发送事件，为了最外面的父组件能够在ngAfterViewInit中订阅到子组件的事件
+        // 如果立即发送事件，则父组件订阅不到事件
+        setTimeout(() => {
+            this.rectifyEvent.emit(this);
+        },0);
     }
 }
 
