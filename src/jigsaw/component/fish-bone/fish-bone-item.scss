@@ -4,12 +4,9 @@
     position: absolute;
     transform-origin: 0 0;
     background: #ddd;
-    width: 100px;
+    min-width: 100px;
     height: 2px;
-    /*@include inline-block;
-    vertical-align: top;
-    position: relative;
-    padding-left: 50px;*/
+    transition: all .6s $ease-in-out;
 }
 .jigsaw-fish-bone-item > p{
     position: absolute;
@@ -21,7 +18,7 @@
 .jigsaw-fish-bone-item-rotate-up{transform: rotate(-60deg);}
 .jigsaw-fish-bone-item-rotate-down{transform: rotate(60deg);}
 .jigsaw-fish-bone-up .jigsaw-fish-bone-item-rotate-up > p{top: -16px;}
-.jigsaw-fish-bone-up .jigsaw-fish-bone-item-rotate-down > p{top: -16px;}
+.jigsaw-fish-bone-up .jigsaw-fish-bone-item-rotate-down > p{top: 6px;}
 .jigsaw-fish-bone-down .jigsaw-fish-bone-item-rotate-up > p{top: -16px;}
 .jigsaw-fish-bone-down .jigsaw-fish-bone-item-rotate-down > p{top: 6px;}
 

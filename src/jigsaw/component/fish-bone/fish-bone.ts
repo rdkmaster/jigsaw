@@ -1,9 +1,8 @@
 import {
-    Component, NgModule, Input, ViewChildren, QueryList, forwardRef, AfterViewInit, Renderer2, ElementRef, OnInit,
+    Component, NgModule, Input, ViewChildren, QueryList, forwardRef, AfterViewInit, Renderer2, ElementRef,
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent} from "../common";
-import set = Reflect.set;
 
 @Component({
     selector: 'j-fish-bone, jigsaw-fish-bone',
@@ -22,31 +21,17 @@ export class JigsawFishBone implements AfterViewInit{
     @ViewChildren(forwardRef(() => JigsawFishBoneItem) )
     public fishBoneChildren: QueryList<JigsawFishBoneItem>;
 
-
-    setParentMaxField(fishBoneItems){
-        /*let parentMaxField;
-        fishBoneItems.forEach(fishBoneItem => {
-            console.log(fishBoneItem);
-            parentMaxField = fishBoneItem.maxField;
-            this.setParentMaxField(fishBoneItem.fishBoneChildren)
-        })*/
-    }
-
     setFishBonePosition(fishBoneItems){
         let fishBoneItemsArray = fishBoneItems.toArray();
         fishBoneItems.forEach((fishBoneItem, index) => {
             if(index === 0){
-                // 第一个固定偏移50px
-                this.renderer.setStyle(fishBoneItem.itemEl, 'left', '100px');
-                fishBoneItem.left = 100;
-
-                /*const parentFishBone = fishBoneItem.parentFishBone;
-                parentFishBone.parentFishBone.fishBoneChildren*/
+                // 如果是第一个节点，默认偏移50
+                fishBoneItem.left = 50;
+                this.renderer.setStyle(fishBoneItem.itemEl, 'left', fishBoneItem.left + 'px');
             }else{
                 // left偏移量等于前一个同级节点的偏移加maxField
-                fishBoneItem.left = fishBoneItemsArray[index-1].left + fishBoneItemsArray[index-1].maxField + 20;
+                fishBoneItem.left = fishBoneItemsArray[index-1].left + fishBoneItemsArray[index-1].getMaxField() + 30;
                 this.renderer.setStyle(fishBoneItem.itemEl, 'left', fishBoneItem.left + 'px');
-
             }
             this.setFishBonePosition(fishBoneItem.fishBoneChildren);
         })
@@ -55,8 +40,8 @@ export class JigsawFishBone implements AfterViewInit{
     setFishBoneWidth(fishBoneItems){
         fishBoneItems.forEach(fishBoneItem => {
             if(fishBoneItem.fishBoneChildren.last){
-                //取其最后一个子节点的left偏移值 + 20px
-                fishBoneItem.width = fishBoneItem.fishBoneChildren.last.left + 20;
+                //取其最后一个子节点的left偏移值 + 30px
+                fishBoneItem.width = fishBoneItem.fishBoneChildren.last.left + 30;
             }
 
             this.setFishBoneWidth(fishBoneItem.fishBoneChildren);
@@ -65,7 +50,6 @@ export class JigsawFishBone implements AfterViewInit{
 
     ngAfterViewInit(){
         setTimeout(() => {
-            this.setParentMaxField(this.fishBoneChildren);
             this.setFishBonePosition(this.fishBoneChildren);
             this.setFishBoneWidth(this.fishBoneChildren);
         },0)
@@ -77,7 +61,7 @@ export class JigsawFishBone implements AfterViewInit{
     templateUrl: './fish-bone-item.html',
     host: {
         '[class.jigsaw-fish-bone-item]': 'true',
-        '[style.width]': 'width'
+        '[style.width]': 'width',
     }
 })
 export class JigsawFishBoneItem extends AbstractJigsawComponent{
@@ -104,35 +88,63 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent{
     level: number = 0;
 
     @Input()
-    isFirstNode: boolean;
+    index: number = 0;
 
-    maxField: number = 50;
+    maxField: number = 0;
 
-    left: number = 0;
+    public left: number = 0;
+
+    /**
+     * 获取最大范围
+     * 子节点的宽度 + 最后的子子节点的maxField 的最大值
+     *
+    * */
+    getMaxField(){
+        if(this.fishBoneChildren.length){
+            this.fishBoneChildren.forEach(fishBoneItem => {
+                let fishBoneItemWidth = fishBoneItem.itemEl.offsetWidth;
+                let childMaxField = 0;
+                if(fishBoneItem.fishBoneChildren.last){
+                    childMaxField = fishBoneItem.fishBoneChildren.last.maxField;
+                }
+                let maxField = fishBoneItemWidth + childMaxField;
+                this.maxField = maxField > this.maxField ? maxField : this.maxField;
+            });
+        }else{
+            this.maxField = 30;
+        }
+
+        return this.maxField;
+    }
+
+    /**
+     * 调整最大范围
+     * 调整偏移量
+     * 调整宽度
+     */
+    rectify(){
+        this.getMaxField();
+        if(this.index !== 0){
+            const preFishBone = this.parentFishBone.fishBoneChildren.toArray()[this.index - 1];
+            this.left = preFishBone.maxField + preFishBone.left + 30;
+            this.renderer.setStyle(this.itemEl, 'left', this.left + 'px');
+        }
+
+        if(this.fishBoneChildren.last){
+            this.width = this.fishBoneChildren.last.left + 30 + 'px';
+        }
+    }
 
     ngAfterViewInit(){
-        // 先渲染最里面的子节点，逐层向上渲染
-        if(!this.fishBoneChildren.length){
-            this.width = '100px';
-        }
-        
-        this.fishBoneChildren.forEach(fishBoneItem => {
-            let fishBoneItemWidth = fishBoneItem.elementRef.nativeElement.offsetWidth;
-            this.maxField =  fishBoneItemWidth > this.maxField ? fishBoneItemWidth : this.maxField;
-        });
+        // 宽度由最后一个子节点的left值决定，所以要先计算各节点的left偏移量，left偏移量等于前一个同级节点的偏移加maxField
+        // 如果是第一个节点，默认偏移50
+        // 没有子节点时，默认宽度为100，写在css里
 
-        //console.log(this.parentFishBone);
+        // maxField依赖子节点的宽度
+        // 先渲染最里面的子节点，逐层向上渲染
         setTimeout(() => {
-            if(this.isFirstNode
-                && this.parentFishBone
-                && this.parentFishBone.parentFishBone
-                && this.parentFishBone.parentFishBone.fishBoneChildren){
-                console.log(this.parentFishBone.parentFishBone.fishBoneChildren);
-                this.parentFishBone.parentFishBone.fishBoneChildren.forEach(fishBoneItem => {
-                    console.log(fishBoneItem.width);
-                })
-            }
-        }, 0)
+            this.rectify();
+        },2000)
 
     }
 }
