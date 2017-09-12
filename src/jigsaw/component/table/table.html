@@ -11,7 +11,7 @@
                                  [sortable]="head.sortable"
                                  [sortAs]="head.sortAs"
                                  [defaultSortOrder]="head.defaultSortOrder"
-                                 (sort)="sort.emit($event)">
+                                 (sort)="_$onSort($event)">
             </jigsaw-table-header>
         </td>
     </tr>
@@ -22,7 +22,7 @@
     <table class="jigsaw-table">
         <thead>
         <tr>
-            <td #realHeader *ngFor="let head of _$headerSettings;"
+            <td #fixedHeader *ngFor="let head of _$headerSettings;"
                 width="{{head.width}}" class="{{head.clazz}}">
                 <jigsaw-table-header [tableData]="data"
                                      [cellData]="head.cellData"
@@ -32,7 +32,7 @@
                                      [sortable]="head.sortable"
                                      [sortAs]="head.sortAs"
                                      [defaultSortOrder]="head.defaultSortOrder"
-                                     (sort)="sort.emit($event)">
+                                     (sort)="_$onSort($event)">
                 </jigsaw-table-header>
             </td>
         </tr>

@@ -103,7 +103,7 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
 
     public _$sortOrderClass: Object;
 
-    public _$updateSortOrderClass(sortOrder: SortOrder): void {
+    public updateSortOrderClass(sortOrder: SortOrder): void {
         this._$sortOrderClass = {
             'jigsaw-table-sort-box': true,
             'jigsaw-table-asc': sortOrder == SortOrder.asc,
@@ -114,7 +114,7 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
     @Input()
     public set defaultSortOrder(newValue) {
         if (newValue != null) {
-            this._$updateSortOrderClass(newValue);
+            this.updateSortOrderClass(newValue);
         }
     };
 
@@ -136,7 +136,7 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
     }
 
     private _sort(order: SortOrder): void {
-        this._$updateSortOrderClass(order);
+        this.updateSortOrderClass(order);
         this.sort.emit({sortAs: this.sortAs, order: order, field: this.column});
         this.tableData.sort(this.sortAs, order, this.column);
     }
