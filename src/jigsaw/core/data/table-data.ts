@@ -1,4 +1,4 @@
-import {Http, RequestOptionsArgs, URLSearchParams} from "@angular/http";
+import {Http, RequestOptionsArgs, Response, ResponseOptions, URLSearchParams} from "@angular/http";
 import {Subject} from "rxjs/Subject";
 import "rxjs/add/operator/map";
 import 'rxjs/add/operator/debounceTime';
@@ -154,6 +154,13 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
         this.refresh();
     }
 
+    public static toArray(tableData: any): any[] {
+        if (!TableData.isTableData(tableData)) {
+            return [];
+        }
+        return new TableData(tableData.data, tableData.field, tableData.header).toArray();
+    }
+
     public filterInfo: DataFilterInfo;
     public filter(term: string, fields?: (string | number)[]): void;
     public filter(term: DataFilterInfo): void;
@@ -245,7 +252,13 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     }
 
     private _ajax(): void {
+        if (this._busy) {
+            this.ajaxErrorHandler(null);
+            return;
+        }
+
         this._busy = true;
+        this.ajaxStartHandler();
 
         const params: URLSearchParams = this._requestOptions.params as URLSearchParams;
         params.set('paging', JSON.stringify(this.pagingInfo));

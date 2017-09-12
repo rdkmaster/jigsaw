@@ -208,7 +208,7 @@ export class CommonUtils {
     }
 
     public static isDefined(value):boolean {
-        return value != undefined && value != null;
+        return value !== undefined && value !== null;
     }
 
     public static isUndefined(value):boolean {

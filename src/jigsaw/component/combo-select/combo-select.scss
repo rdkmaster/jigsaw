@@ -5,6 +5,7 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
 .#{$jigsaw-combo-select}-host {
     @include inline-block;
     min-width: 240px;
+    max-width: 100%;
 }
 
 .#{$jigsaw-combo-select} {
@@ -19,7 +20,7 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
         border: $border-width-base $border-style-base $border-color-base;
         transition: all .3s $ease-in-out;
         user-select: none;
-        white-space:nowrap;
+        white-space: nowrap;
         padding: 0 30px 0 7px;
         &:hover {
             border-color: $primary-color;
@@ -28,12 +29,33 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
     }
 
     &-selection &-selection-rendered {
-        line-height: $height-base - 2px;
         height: $height-base;
         overflow: hidden;
-        jigsaw-tag{
+        font-size: 0;
+        &:before {
+            @include inline-block();
+            content: '';
+            height: 100%;
+            vertical-align: middle;
+        }
+        jigsaw-tag {
             vertical-align: middle;
             margin-right: 4px;
+        }
+        jigsaw-input {
+            input {
+                padding: 0 !important;
+                font-size: $font-size-base;
+                border: none;
+                &:focus {
+                    box-shadow: none;
+                }
+            }
+        }
+        .#{$jigsaw-combo-select}-placeholder{
+            @include inline-block();
+            font-size: $font-size-base;
+            color: $text-color-secondary;
         }
     }
 
@@ -74,23 +96,21 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
         .#{$jigsaw-combo-select}-arrow {
             @include prefixer(transform, rotate(180deg));
         }
-
     }
 
     &-arrow {
         position: absolute;
         top: 50%;
         right: 8px;
-        line-height: 1px;
-        @include prefixer(transition, transform 0.3s ease);
+        transform-origin: 50% 20%;
+        transform: translateY(-50%);
+        transition: transform 0.3s $ease-in-out;
     }
 
     &-clear {
         position: absolute;
         top: 50%;
         right: 18px;
-        line-height: 28px;
-        height: 28px;
         width: 12px;
         transform: translateY(-50%);
         color: $text-color-secondary;

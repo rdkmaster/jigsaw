@@ -64,6 +64,9 @@ $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
             border-color: $primary-color;
         }
     }
+    .#{$radio-option-prefix-cls}-content{
+        @include inline-block();
+    }
 }
 
 

@@ -27,7 +27,6 @@ export class JigsawPrefixIcon {
     ]
 })
 export class JigsawInput extends AbstractJigsawComponent implements ControlValueAccessor, AfterContentInit, AfterViewChecked {
-
     @Input() public clearable: boolean = true;
     @Input() public disabled: boolean = false;
 
@@ -79,6 +78,7 @@ export class JigsawInput extends AbstractJigsawComponent implements ControlValue
     public valueChange: EventEmitter<string> = new EventEmitter<string>();
 
     private _placeholder: string = '';
+
     @Input()
     public set placeholder(txt: string) {
         this._placeholder = txt;
@@ -95,8 +95,12 @@ export class JigsawInput extends AbstractJigsawComponent implements ControlValue
     private _inputElement: ElementRef;
 
     public focus() {
-        this.focused = true;
+        this._focused = true;
         this._inputElement.nativeElement.focus();
+    }
+
+    public select() {
+        this._inputElement.nativeElement.select();
     }
 
     /**
@@ -107,13 +111,17 @@ export class JigsawInput extends AbstractJigsawComponent implements ControlValue
         this.focus();
     }
 
-    public focused: boolean = false;
+    private _focused: boolean = false;
+
+    public get focused(): boolean {
+        return this._focused;
+    }
 
     /**
      * @internal
      */
     public _$handleFocus(event: FocusEvent) {
-        this.focused = true;
+        this._focused = true;
         this._focusEmitter.emit(event);
     }
 
@@ -124,12 +132,12 @@ export class JigsawInput extends AbstractJigsawComponent implements ControlValue
      * @internal
      */
     public _$handleBlur(event: FocusEvent) {
-        this.focused = false;
+        this._focused = false;
         if (this.blurOnClear) {
             this._blurEmitter.emit(event);
         } else {
             setTimeout(() => {
-                if (!this.focused) {
+                if (!this._focused) {
                     this._blurEmitter.emit(event);
                 }
             }, 150);
