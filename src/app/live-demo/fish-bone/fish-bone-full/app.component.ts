@@ -183,6 +183,42 @@ export class FishBoneFullComponent{
                     ]
                 }
             ]
+        },
+        {
+            label: 'FDFDFDF',
+            nodes: [
+                {
+                    label: '飞飞狒狒飞飞狒狒',
+                    nodes: [
+                        {
+                            label: 'ddddddddddddddddd',
+                            nodes: [
+                                {
+                                    label: 'dddddddddddddd'
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            label: 'FDFDFDF',
+            nodes: [
+                {
+                    label: '飞飞狒狒飞飞狒狒',
+                    nodes: [
+                        {
+                            label: 'ddddddddddddddddd',
+                            nodes: [
+                                {
+                                    label: 'dddddddddddddd'
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

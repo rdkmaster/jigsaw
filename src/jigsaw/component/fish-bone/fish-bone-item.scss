@@ -2,40 +2,58 @@
 
 $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
 
-.#{$fish-bone-prefix-cls}-item{
+.#{$fish-bone-prefix-cls}-item {
     position: absolute;
     transform-origin: 0 50%;
-    background: #ddd;
     min-width: 100px;
     height: 1px;
     transition: left 1s $ease-in-out;
-    &:not(.#{$fish-bone-prefix-cls}-level-0){
+    &:not(.#{$fish-bone-prefix-cls}-level-0) {
         left: 0;
         opacity: 0;
     }
-    > p{
+    > p {
         position: absolute;
         width: 100%;
         text-align: center;
         font-size: 12px;
         line-height: 1;
     }
-    &-rotate-up{transform: rotate(-60deg);}
-    &-rotate-down{transform: rotate(60deg);}
-    .#{$fish-bone-prefix-cls}-up &-rotate-up > p{top: -16px;}
-    .#{$fish-bone-prefix-cls}-up &-rotate-down > p{top: 6px;}
-    .#{$fish-bone-prefix-cls}-down &-rotate-up > p{top: -16px;}
-    .#{$fish-bone-prefix-cls}-down &-rotate-down > p{top: 6px;}
+    &-rotate-up {
+        transform: rotate(-60deg);
+    }
+    &-rotate-down {
+        transform: rotate(60deg);
+    }
+    .#{$fish-bone-prefix-cls}-up &-rotate-up > p {
+        top: -16px;
+    }
+    .#{$fish-bone-prefix-cls}-up &-rotate-down > p {
+        top: 6px;
+    }
+    .#{$fish-bone-prefix-cls}-down &-rotate-up > p {
+        top: -16px;
+    }
+    .#{$fish-bone-prefix-cls}-down &-rotate-down > p {
+        top: 6px;
+    }
+
+    .#{$fish-bone-prefix-cls}-white & {
+        background: #BABABA;
+    }
+    .#{$fish-bone-prefix-cls}-dark & {
+        background: #6B6B6B;
+    }
 }
 
-.#{$fish-bone-prefix-cls}-level{
-    &-0{
+.#{$fish-bone-prefix-cls}-level {
+    &-0 {
         height: 4px;
     }
-    &-1{
-    height: 3px;
+    &-1 {
+        height: 3px;
     }
-    &-2{
+    &-2 {
         height: 2px;
     }
 }

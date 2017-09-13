@@ -9,7 +9,11 @@ import {fadeIn} from "../animations/fade-in";
     selector: 'j-fish-bone, jigsaw-fish-bone',
     templateUrl: './fish-bone.html',
     host: {
-        '[class.jigsaw-fish-bone]': 'true'
+        '[class.jigsaw-fish-bone]': 'true',
+        '[class.jigsaw-fish-bone-left]': 'direction === "left"',
+        '[class.jigsaw-fish-bone-right]': 'direction === "right"',
+        '[class.jigsaw-fish-bone-white]': 'theme === "white"',
+        '[class.jigsaw-fish-bone-dark]': 'theme === "dark"',
     }
 })
 export class JigsawFishBone implements AfterViewInit {
@@ -19,17 +23,23 @@ export class JigsawFishBone implements AfterViewInit {
     @Input()
     public data: object[];
 
+    @Input()
+    public direction: string = 'left';
+
+    @Input()
+    public theme: string = 'white';
+
     @ViewChildren(forwardRef(() => JigsawFishBoneItem))
     private _fishBoneMainChildren: QueryList<JigsawFishBoneItem>;
 
     /**
-    *
-    * 按照父到子的顺序设置节点偏移量
-    * */
+     *
+     * 按照父到子的顺序设置节点偏移量
+     * */
     private _setFishBonePosition(fishBoneItems) {
         let fishBoneItemsArray = fishBoneItems.toArray();
         fishBoneItems.forEach((fishBoneItem, index) => {
-            if(fishBoneItem.level !== 0){
+            if (fishBoneItem.level !== 0) {
                 if (index === 0) {
                     // 如果是第一个节点，默认偏移50
                     fishBoneItem.left = 50;
@@ -44,9 +54,9 @@ export class JigsawFishBone implements AfterViewInit {
     }
 
     /**
-    *
-    * 按照父到子的顺序设置节点宽度
-    * */
+     *
+     * 按照父到子的顺序设置节点宽度
+     * */
     private _setFishBoneWidth(fishBoneItems) {
         fishBoneItems.forEach(fishBoneItem => {
             if (fishBoneItem.fishBoneChildren.last) {
@@ -62,9 +72,9 @@ export class JigsawFishBone implements AfterViewInit {
     private _FishBoneItems: Array<JigsawFishBoneItem> = [];
 
     /**
-    *
-    * 按照子到父的顺序存储节点
-    * */
+     *
+     * 按照子到父的顺序存储节点
+     * */
     private _cacheFishBoneItems(fishBoneItems) {
         fishBoneItems.forEach(fishBoneItem => {
             fishBoneItem.rectifyEvent.subscribe(() => {
@@ -75,10 +85,10 @@ export class JigsawFishBone implements AfterViewInit {
     }
 
     /**
-    *
-    * 按照子到父的顺序修正节点的偏移量和宽度
-    * */
-    private _rectifyAll(){
+     *
+     * 按照子到父的顺序修正节点的偏移量和宽度
+     * */
+    private _rectifyAll() {
         this._FishBoneItems.forEach(fishBoneItem => {
             fishBoneItem.rectify();
         })
@@ -88,12 +98,12 @@ export class JigsawFishBone implements AfterViewInit {
      *
      * 计算最外层的父节点的偏移
      */
-    private _setFishBoneMainPosition(fishBoneMainChildren){
+    private _setFishBoneMainPosition(fishBoneMainChildren) {
         const fishBoneMainArray = fishBoneMainChildren.toArray();
-        fishBoneMainChildren.forEach((fishBoneItem, index)=> {
-            if(index <= 1){
+        fishBoneMainChildren.forEach((fishBoneItem, index) => {
+            if (index <= 1) {
                 fishBoneItem.left = 0;
-            }else {
+            } else {
                 const prePreFishBoneMain = fishBoneMainArray[index - 2];
                 fishBoneItem.left = prePreFishBoneMain.left + prePreFishBoneMain.getMaxField() + 30;
             }
@@ -122,10 +132,10 @@ export class JigsawFishBone implements AfterViewInit {
         fadeIn
     ]
 })
-export class JigsawFishBoneItem extends AbstractJigsawComponent implements AfterViewInit{
+export class JigsawFishBoneItem extends AbstractJigsawComponent implements AfterViewInit {
     public itemEl: HTMLElement;
 
-    constructor(private _renderer: Renderer2,elementRef: ElementRef) {
+    constructor(private _renderer: Renderer2, elementRef: ElementRef) {
         super();
         this.itemEl = elementRef.nativeElement;
     }
@@ -201,7 +211,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
 
     public rectifyEvent = new EventEmitter();
 
-    ngOnInit(){
+    ngOnInit() {
         super.ngOnInit();
         this._$state = 'in'
     }
@@ -218,7 +228,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
         // 如果立即发送事件，则父组件订阅不到事件
         setTimeout(() => {
             this.rectifyEvent.emit();
-        },0);
+        }, 0);
 
     }
 }
