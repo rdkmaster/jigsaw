@@ -1,6 +1,8 @@
 @import "../../assets/scss/core/base";
 
-.jigsaw-fish-bone{
+$fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
+
+.#{$fish-bone-prefix-cls}{
     @include inline-block();
     width: 100%;
     height: 4px;
@@ -8,12 +10,11 @@
     padding: 400px 0;
     position: relative;
 }
-.jigsaw-fish-bone-main{
+.#{$fish-bone-prefix-cls}-main{
     position: relative;
     height: 4px;
     background: #ddd;
 }
 
-
-.jigsaw-fish-bone-up > p{top: -16px;}
-.jigsaw-fish-bone-down > p{top: 6px;}
+.#{$fish-bone-prefix-cls}-up > p{top: -16px;}
+.#{$fish-bone-prefix-cls}-down > p{top: 6px;}

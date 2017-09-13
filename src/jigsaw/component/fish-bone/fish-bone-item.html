@@ -1,6 +1,6 @@
 <p>{{data.label}}</p>
 <j-fish-bone-item *ngFor="let itemData of data.nodes; index as i; first as isFirst"
-                  class="jigsaw-fish-bone-item-rotate-{{childRotate}}"
+                  class="jigsaw-fish-bone-item-rotate-{{childRotate}} jigsaw-fish-bone-level-{{level + 1}}"
                   [childRotate]="childRotate == 'up' ? 'down' : 'up'"
                   [data]="itemData"
                   [level]="level + 1"
