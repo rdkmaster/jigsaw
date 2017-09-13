@@ -1,5 +1,5 @@
 import {
-    Component, NgModule, Input, ViewChildren, QueryList, forwardRef, AfterViewInit, Renderer2, ElementRef, EventEmitter, OnInit,
+    Component, NgModule, Input, ViewChildren, QueryList, forwardRef, AfterViewInit, Renderer2, ElementRef, EventEmitter,
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent} from "../common";
@@ -17,7 +17,7 @@ import {fadeIn} from "../animations/fade-in";
         '[style.width]': 'width'
     }
 })
-export class JigsawFishBone extends AbstractJigsawComponent implements AfterViewInit, OnInit {
+export class JigsawFishBone extends AbstractJigsawComponent implements AfterViewInit {
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
         super();
     }
@@ -113,14 +113,27 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
         })
     }
 
-    ngOnInit() {
-        super.ngOnInit();
-        if (this.height) {
-            this._renderer.setStyle(this._elementRef.nativeElement, 'padding-top',
-                (parseInt(this.height.replace('px', '')) - 4) / 2 + 'px');
-            this._renderer.setStyle(this._elementRef.nativeElement, 'padding-bottom',
-                (parseInt(this.height.replace('px', '')) - 4) / 2 + 'px');
-        }
+    private _getMaxHeight(cb){
+        return Math.max.apply(null, this._fishBoneMainChildren.filter(cb).reduce((arr, fishBoneItem) => {
+            const lastChild = fishBoneItem.fishBoneChildren.last;
+            if (lastChild) {
+                arr.push(lastChild.maxField + lastChild.left);
+            }
+            return arr
+        }, []));
+    }
+
+    private _setHostScope() {
+        const downHeight = this._getMaxHeight((fishBoneItem, index) => {
+            return (index + 1) % 2 === 0;
+        });
+
+        const upHeight = this._getMaxHeight((fishBoneItem, index) => {
+            return (index + 1) % 2 === 1;
+        });
+
+        this._renderer.setStyle(this._elementRef.nativeElement, 'padding-top', upHeight + 'px');
+        this._renderer.setStyle(this._elementRef.nativeElement, 'padding-bottom', downHeight + 'px');
     }
 
     ngAfterViewInit() {
@@ -130,6 +143,7 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
             this._setFishBoneWidth(this._fishBoneMainChildren);
             this._rectifyAll();
             this._setFishBoneMainPosition(this._fishBoneMainChildren);
+            this._setHostScope();
         }, 0)
     }
 }

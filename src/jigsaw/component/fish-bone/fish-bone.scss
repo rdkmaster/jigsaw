@@ -7,7 +7,7 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
     @include inline-block();
     width: 100%;
     height: 4px;
-    padding: 400px 55px 400px 115px;
+    padding: 400px 80px 400px 146px;
     position: relative;
     box-sizing: border-box;
 
@@ -42,11 +42,10 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
 
     &-head, &-foot {
         position: absolute;
-        top: 50%;
-        transform: translate(0, -50%) rotateY(180deg);
     }
     &-head {
         left: 0;
+        transform: translate(-104%, -50%) rotateY(180deg);
         i {
             position: absolute;
             left: 30%;
@@ -58,6 +57,7 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
     }
     &-foot {
         right: 0;
+        transform: translate(104%, -46%) rotateY(180deg);
     }
 
     /* jigsaw-fish-bone-left jigsaw-fish-bone-left 鱼骨方向标识，放在host上*/
