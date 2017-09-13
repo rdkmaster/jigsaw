@@ -1,7 +1,6 @@
-
-<jigsaw-table [data]="tableData" [columnDefines]="_columns" [hideHeader]="hideHeader" [floatingHeader]="true"
-              [additionalColumnDefines]="_additionalColumns" [lineEllipsis]="true"
-              (dataChange)="onCellChange($event)" [select]="selectedRow">
+<jigsaw-table [data]="tableData" [columnDefines]="columnDefines" [floatingHeader]="true"
+              [additionalColumnDefines]="extraColumnDefines" [lineEllipsis]="true"
+              (dataChange)="onCellChange($event)">
 </jigsaw-table>
 <p>{{_changeMsg}}</p>
 

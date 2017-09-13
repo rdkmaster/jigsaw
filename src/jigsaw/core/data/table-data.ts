@@ -103,7 +103,18 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
         return result;
     }
 
+    private _clearedCount:number = 0;
+
+    /**
+     * change of this value indicates that the table data is totally refreshed
+     * @returns {number}
+     */
+    public get clearedCount():number {
+        return this._clearedCount;
+    }
+
     protected clearData(): void {
+        this._clearedCount++;
         this.data.splice(0, this.data.length);
         this.header.splice(0, this.header.length);
         this.field.splice(0, this.field.length);

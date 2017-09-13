@@ -4,6 +4,7 @@ import {DefaultCellRenderer} from "jigsaw/component/table/table-renderer";
 import {AdditionalColumnDefine, ColumnDefine, TableCellValueGenerators} from "jigsaw/component/table/table-typings";
 import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/component/table/table-renderer";
 import {TableCellOperation, TableHeadSelect} from "./table-renderer";
+import {Http} from "@angular/http";
 
 
 @Component({
@@ -13,62 +14,20 @@ import {TableCellOperation, TableHeadSelect} from "./table-renderer";
 })
 export class TableRendererDemoComponent {
     tableData: TableData;
-    selectedRow = 2;
-    hideHeader = false
 
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
-        this.tableData = new TableData([
-            [11, 12, 13, 14, 15, 16, 17],
-            [21, 22, 23, 24, 25, 26, 27],
-            [31, 32, 33, 34, 35, 36, 37],
-            [41, 42, 43, 44, 45, 46, 47],
-            [51, 52, 53, 54, 55, 56, 12],
-            [31, 32, 33, 34, 35, 36, 37],
-            [41, 42, 43, 44, 45, 46, 47],
-            [51, 52, 53, 54, 55, 56, 12],
-            [31, 32, 33, 34, 35, 36, 37],
-            [41, 42, 43, 44, 45, 46, 47],
-            [51, 52, 53, 54, 55, 56, 12],
-        ], ['f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7'], ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7']);
-
-        let to = 0;
-        let interval = 1000;
-
-        // to += interval;
-        // setTimeout(() => {
-        //     // this.tableData = new TableData(this.tableData.data, this.tableData.field, this.tableData.header);
-        //     this.tableData.data[0][2] = 888;
-        //     this.tableData.refresh();
-        //
-        //     this.selectedRow = 4;
-        // }, to);
-        //
-        // to += interval;
-        // setTimeout(() => {
-        //     // this.tableData = new TableData(this.tableData.data, this.tableData.field, this.tableData.header);
-        //     this.tableData.data.push([61, 62, 63, 64, 65, 66, 67], [undefined, undefined, 73, 74, 75, 76, 77, 78]);
-        //     this.tableData.refresh();
-        // }, to)
-        //
-        // to += interval;
-        // setTimeout(() => {
-        //     // this.tableData = new TableData(this.tableData.data, this.tableData.field, this.tableData.header);
-        //     this.tableData.data.splice(3, 1, [61, 62, 63, 64, 65, 66, 67], [71, 52, 73, 74, 75, 76, 77]);
-        //     this.tableData.refresh();
-        // }, to)
-        //
-        to += interval;
-        setTimeout(() => {
-            // this.tableData = new TableData(this.tableData.data, this.tableData.field, this.tableData.header);
-            this.tableData.insertColumn(3, 333, 'inserted', 'inserted');
-            this.tableData.refresh();
-        }, to)
+    constructor(public http: Http) {
+        this.tableData = new TableData();
+        this.tableData.http = http;
+        this.tableData.fromAjax('mock-data/table/data.json');
+        // this.tableData.dataReviser = data => {
+        //     data.data.splice(50, 10000);
+        //     return data;
+        // }
     }
 
-    _columns: ColumnDefine[] = [
+    columnDefines: ColumnDefine[] = [
         {
-            target: ['f1', 'f7'],
+            target: ['name', 'f7'],
             width: '10%',
             header: {
                 renderer: TableHeadSelect,
@@ -82,10 +41,10 @@ export class TableRendererDemoComponent {
             group: true
         },
         {
-            target: ['f3'], visible: false
+            target: 'other', visible: false
         },
         {
-            target: ['f6'], width: '80px'
+            target: 3, width: '180px'
         },
         {
             target: (f, i) => f == 'f4',
@@ -93,7 +52,7 @@ export class TableRendererDemoComponent {
         },
     ];
 
-    _additionalColumns: AdditionalColumnDefine[] = [
+    extraColumnDefines: AdditionalColumnDefine[] = [
         {
             pos: 0,
             width: '30px',
@@ -115,11 +74,11 @@ export class TableRendererDemoComponent {
             },
             cell: {
                 renderer: TableCellCheckboxRenderer,
-                data: (td, row, col) => row % 2,
+                data: (td, row, col) => td.data[row][3] == 'Coder',
             }
         },
         {
-            //pos: -1, //不写pos也表示插入到最后
+            //pos: -1, //不写pos表示插入到最后
             width: '10%',
             header: {
                 text: '操作',

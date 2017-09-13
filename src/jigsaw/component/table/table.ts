@@ -67,7 +67,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @internal
      */
     public _$headerSettings: TableHeadSetting[] = [];
-    private _headerSettingsBackup:{[field:string]: TableHeadSetting} = {};
+    private _headerSettingsBackup: { [field: string]: TableHeadSetting } = {};
 
     private _updateHeaderSettings(): void {
         const oldBackup = CommonUtils.shallowCopy(this._headerSettingsBackup);
@@ -97,7 +97,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @internal
      */
     public _$cellSettings: TableCellSetting[][] = [];
-    private _cellSettingsBackup:{[field:string]: TableCellSetting[]} = {};
+    private _cellSettingsBackup: { [field: string]: TableCellSetting[] } = {};
 
     private _updateCellSettings(): void {
         // clear origin settings, but keep the origin row array ref,
@@ -222,8 +222,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         return settings;
     }
 
-    private _mixInAdditionalColumns(): void {
-        if (!this._additionalColumnDefines) {
+    private _mixInData(): void {
+        if (!this._additionalColumnDefines || !this.data) {
             return;
         }
         for (let i = this._additionalColumnDefines.length - 1; i >= 0; i--) {
@@ -232,42 +232,30 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 // existed or invalid field define
                 continue;
             }
-
-            const cd: ColumnDefine = {
-                target: acd.field,
-                header: acd.header,
-                group: acd.group,
-                cell: acd.cell,
-                width: acd.width,
-                visible: acd.visible
-            };
             const pos = CommonUtils.isDefined(acd.pos) ? acd.pos : this._data.field.length;
-            this.columnDefines.splice(pos, 0, cd);
             // the acd.cell.data could be a `TableCellDataGenerator`
             const cellData = acd.cell.data instanceof Function ? undefined : acd.cell.data;
             this.data.insertColumn(pos, cellData, acd.field, acd.header.text ? acd.header.text : acd.field);
         }
     }
 
-    private _normalizeColumnTarget() {
-        // normalize the target to `TableColumnTargetFinder`
-        this.columnDefines.forEach((colDef, index) => {
-            const cd = <ColumnDefine>CommonUtils.shallowCopy(colDef);
-            this.columnDefines[index] = cd;
-            if (!cd.hasOwnProperty('target')) {
-                console.error('invalid column target, need a "target" property!');
-                return;
-            }
-            let targets;
-            if (typeof cd.target == 'number' || typeof cd.target == 'string') {
-                targets = [cd.target];
-            } else if (cd.target instanceof Array) {
-                targets = cd.target
-            }
-            if (CommonUtils.isDefined(targets)) {
-                cd.target = (field, index) => !!targets.find((f, i) => (f == field || i == index));
-            }
-        });
+    private _fixColumnDefineTarget(colDef:ColumnDefine):ColumnDefine {
+        let targets;
+        if (typeof colDef.target == 'number' || typeof colDef.target == 'string') {
+            targets = [colDef.target];
+        } else if (colDef.target instanceof Array) {
+            targets = colDef.target
+        } else if (colDef.target instanceof Function) {
+            return;
+        } else {
+            colDef.target = () => false;
+            return;
+        }
+        if (CommonUtils.isDefined(targets) && targets.length > 0) {
+            colDef.target = (field, index) => !!targets.find(
+                f => (typeof f === 'string' && f === field) || (typeof f === 'number' && f === index));
+        }
+        return colDef;
     }
 
     private _update(): void {
@@ -278,6 +266,14 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             console.error('invalid table data, need a "field" property.');
             return;
         }
+
+        if (this.data.clearedCount != this._dataClearedCount) {
+            console.log('table data updated.');
+            this._dataClearedCount = this.data.clearedCount;
+            this._checkAdditionalColumnFields();
+            this._mixInData();
+        }
+
         this._updateHeaderSettings();
         this._updateCellSettings();
         this._setCellLineEllipsis();
@@ -285,6 +281,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     private _removeRefreshCallback: CallbackRemoval;
+    private _dataClearedCount: number = 0;
     private _data: TableData;
 
     @Input()
@@ -300,11 +297,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             this._removeRefreshCallback();
         }
         this._data = value;
+        this._dataClearedCount = value.clearedCount;
 
         this._removeRefreshCallback = value.onRefresh(this._update, this);
-        this._checkAdditionalColumnFields();
-        this._mixInAdditionalColumns();
-        this._normalizeColumnTarget();
         this._update();
     }
 
@@ -328,6 +323,20 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return;
         }
         this._columnDefines = value;
+        this._normalizeColumnTarget();
+    }
+
+    private _normalizeColumnTarget() {
+        // normalize the target to `TableColumnTargetFinder`
+        this.columnDefines.forEach((colDef, index) => {
+            const cd = <ColumnDefine>CommonUtils.shallowCopy(colDef);
+            this.columnDefines[index] = cd;
+            if (!cd.hasOwnProperty('target')) {
+                console.error('invalid column target, need a "target" property!');
+                return;
+            }
+            this._fixColumnDefineTarget(cd);
+        });
     }
 
     private _additionalColumnDefines: AdditionalColumnDefine[] = [];
@@ -537,9 +546,33 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @ViewChildren(JigsawTableHeaderInternalComponent)
     private _headerComponents: QueryList<JigsawTableHeaderInternalComponent>;
 
-    public _$onSort(sortInfo):void {
+    public _$onSort(sortInfo): void {
         this._headerComponents.forEach(comp => sortInfo.field != comp.column && comp.updateSortOrderClass(SortOrder.default));
         this.sort.emit(sortInfo);
+    }
+
+    private _mixInColumns(): void {
+        if (!this._additionalColumnDefines || !this.data) {
+            return;
+        }
+        for (let i = this._additionalColumnDefines.length - 1; i >= 0; i--) {
+            const acd = this._additionalColumnDefines[i];
+            if (!acd.field || this.data.field.indexOf(acd.field) != -1) {
+                // existed or invalid field define
+                continue;
+            }
+
+            const cd: ColumnDefine = this._fixColumnDefineTarget({
+                target: acd.field,
+                header: acd.header,
+                group: acd.group,
+                cell: acd.cell,
+                width: acd.width,
+                visible: acd.visible
+            });
+            const pos = CommonUtils.isDefined(acd.pos) ? acd.pos : this._data.field.length;
+            this.columnDefines.splice(pos, 0, cd);
+        }
     }
 
     ngAfterViewInit() {
@@ -551,8 +584,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     ngOnInit() {
         super.ngOnInit();
 
-        this._mixInAdditionalColumns();
-        this._normalizeColumnTarget();
+        this._mixInColumns();
+        // this._normalizeColumnTarget();
         this._update();
 
         this._addWindowListener();
