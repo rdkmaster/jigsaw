@@ -113,17 +113,17 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
         })
     }
 
-    private _getMaxHeight(cb){
+    private _getMaxHeight(cb) {
         return Math.max.apply(null, this._fishBoneMainChildren.filter(cb).reduce((arr, fishBoneItem) => {
             const lastChild = fishBoneItem.fishBoneChildren.last;
             if (lastChild) {
-                arr.push(lastChild.maxField + lastChild.left);
+                arr.push(lastChild.maxRange + lastChild.left);
             }
             return arr
         }, []));
     }
 
-    private _setHostScope() {
+    private _setHostRangeHeight() {
         const downHeight = this._getMaxHeight((fishBoneItem, index) => {
             return (index + 1) % 2 === 0;
         });
@@ -143,7 +143,7 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
             this._setFishBoneWidth(this._fishBoneMainChildren);
             this._rectifyAll();
             this._setFishBoneMainPosition(this._fishBoneMainChildren);
-            this._setHostScope();
+            this._setHostRangeHeight();
         }, 0)
     }
 }
@@ -184,7 +184,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
     @Input()
     public index: number = 0;
 
-    public maxField: number = 0;
+    public maxRange: number = 0;
 
     public left: number = 0;
 
@@ -200,16 +200,16 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
                 let fishBoneItemWidth = fishBoneItem.itemEl.offsetWidth;
                 let childMaxField = 0;
                 if (fishBoneItem.fishBoneChildren.last) {
-                    childMaxField = fishBoneItem.fishBoneChildren.last.maxField;
+                    childMaxField = fishBoneItem.fishBoneChildren.last.maxRange;
                 }
                 let maxField = fishBoneItemWidth + childMaxField;
-                this.maxField = maxField > this.maxField ? maxField : this.maxField;
+                this.maxRange = maxField > this.maxRange ? maxField : this.maxRange;
             });
         } else {
-            this.maxField = 30;
+            this.maxRange = 30;
         }
 
-        return this.maxField;
+        return this.maxRange;
     }
 
     /**
@@ -223,7 +223,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
             // 最外层的父节点另外计算
             // index = 0 的采用默认值
             const preFishBone = this.parentFishBone.fishBoneChildren.toArray()[this.index - 1];
-            this.left = preFishBone.maxField + preFishBone.left + 30;
+            this.left = preFishBone.maxRange + preFishBone.left + 30;
             // 用setStyle保持同步，绑定[style.left]是异步的
             this._renderer.setStyle(this.itemEl, 'left', this.left + 'px');
         }
