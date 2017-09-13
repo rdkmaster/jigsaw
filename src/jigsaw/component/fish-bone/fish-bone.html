@@ -1,10 +1,8 @@
 <div class="jigsaw-fish-bone-main">
     <j-fish-bone-item
         *ngFor="let itemData of data; even as isEven; odd as isOdd; index as i"
-        class="jigsaw-fish-bone-item-rotate-{{isEven? 'up' : 'down'}} jigsaw-fish-bone-{{isEven? 'up' : 'down'}}"
+        class="jigsaw-fish-bone-item-rotate-{{isEven? 'up' : 'down'}} jigsaw-fish-bone-{{isEven? 'up' : 'down'}} jigsaw-fish-bone-main"
         [childRotate]="isEven ? 'down' : 'up'"
-        [style.left]="100 * i + 'px'"
-        [style.position]="'absolute'"
         [data]="itemData"
         [level]="0">
     </j-fish-bone-item>

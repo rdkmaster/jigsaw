@@ -6,7 +6,11 @@
     background: #ddd;
     min-width: 100px;
     height: 2px;
-    //transition: all .6s $ease-in-out;
+    transition: left 1s $ease-in-out;
+}
+.jigsaw-fish-bone-item:not(.jigsaw-fish-bone-main){
+    left: 0;
+    opacity: 0;
 }
 .jigsaw-fish-bone-item > p{
     position: absolute;

@@ -3,6 +3,7 @@ import {
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent} from "../common";
+import {fadeIn} from "../animations/fade-in";
 
 @Component({
     selector: 'j-fish-bone, jigsaw-fish-bone',
@@ -91,7 +92,7 @@ export class JigsawFishBone implements AfterViewInit {
         const fishBoneMainArray = fishBoneMainChildren.toArray();
         fishBoneMainChildren.forEach((fishBoneItem, index)=> {
             if(index <= 1){
-                fishBoneItem.left = 100 * index;
+                fishBoneItem.left = 0;
             }else {
                 const prePreFishBoneMain = fishBoneMainArray[index - 2];
                 fishBoneItem.left = prePreFishBoneMain.left + prePreFishBoneMain.getMaxField() + 30;
@@ -116,7 +117,10 @@ export class JigsawFishBone implements AfterViewInit {
     templateUrl: './fish-bone-item.html',
     host: {
         '[class.jigsaw-fish-bone-item]': 'true',
-    }
+    },
+    animations: [
+        fadeIn
+    ]
 })
 export class JigsawFishBoneItem extends AbstractJigsawComponent implements AfterViewInit{
     public itemEl: HTMLElement;
@@ -147,6 +151,8 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
     public maxField: number = 0;
 
     public left: number = 0;
+
+    public _$state;
 
     /**
      * 获取最大范围
@@ -195,6 +201,11 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
 
     public rectifyEvent = new EventEmitter();
 
+    ngOnInit(){
+        super.ngOnInit();
+        this._$state = 'in'
+    }
+
     ngAfterViewInit() {
         // 宽度由最后一个子节点的left值决定，所以要先计算各节点的left偏移量，left偏移量等于前一个同级节点的偏移加maxField
         // 如果是第一个节点，默认偏移50
@@ -208,6 +219,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
         setTimeout(() => {
             this.rectifyEvent.emit();
         },0);
+
     }
 }
 
