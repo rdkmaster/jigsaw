@@ -2,6 +2,7 @@
 
 $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
 
+/* jigsaw-fish-bone-item 单个鱼骨的class */
 .#{$fish-bone-prefix-cls}-item {
     position: absolute;
     transform-origin: 0 50%;
@@ -17,8 +18,11 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
         width: 100%;
         text-align: center;
         font-size: 12px;
-        line-height: 1;
+        line-height: 1.2;
     }
+
+    /* jigsaw-fish-bone-item-rotate-up jigsaw-fish-bone-item-rotate-down 一个鱼骨向上向下旋转,放在各自鱼骨上 */
+    /* jigsaw-fish-bone-up jigsaw-fish-bone-down 一个鱼骨树在上面还是在下面，放在最外层的节点上 */
     &-rotate-up {
         transform: rotate(-60deg);
     }
@@ -26,16 +30,19 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
         transform: rotate(60deg);
     }
     .#{$fish-bone-prefix-cls}-up &-rotate-up > p {
-        top: -16px;
+        bottom: 4px;
     }
-    .#{$fish-bone-prefix-cls}-up &-rotate-down > p {
-        top: 6px;
+    .#{$fish-bone-prefix-cls}-up &-rotate-down:not(.#{$fish-bone-prefix-cls}-item-no-child) > p {
+        top: 4px;
+    }
+    .#{$fish-bone-prefix-cls}-up &-rotate-down.#{$fish-bone-prefix-cls}-item-no-child > p {
+        bottom: 4px;
     }
     .#{$fish-bone-prefix-cls}-down &-rotate-up > p {
-        top: -16px;
+        bottom: 6px;
     }
     .#{$fish-bone-prefix-cls}-down &-rotate-down > p {
-        top: 6px;
+        top: 4px;
     }
 
     .#{$fish-bone-prefix-cls}-white & {

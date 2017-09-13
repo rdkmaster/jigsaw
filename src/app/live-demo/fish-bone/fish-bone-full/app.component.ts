@@ -173,10 +173,10 @@ export class FishBoneFullComponent{
                     label: '飞飞狒狒飞飞狒狒',
                     nodes: [
                         {
-                            label: 'ddddddddddddddddd',
+                            label: 'dddddddd',
                             nodes: [
                                 {
-                                    label: 'dddddddddddddd'
+                                    label: 'dddddd'
                                 }
                             ]
                         }
@@ -191,10 +191,10 @@ export class FishBoneFullComponent{
                     label: '飞飞狒狒飞飞狒狒',
                     nodes: [
                         {
-                            label: 'ddddddddddddddddd',
+                            label: 'ddddddddd',
                             nodes: [
                                 {
-                                    label: 'dddddddddddddd'
+                                    label: 'ddddddd'
                                 }
                             ]
                         }
@@ -209,10 +209,10 @@ export class FishBoneFullComponent{
                     label: '飞飞狒狒飞飞狒狒',
                     nodes: [
                         {
-                            label: 'ddddddddddddddddd',
+                            label: 'dddddddd',
                             nodes: [
                                 {
-                                    label: 'dddddddddddddd'
+                                    label: 'dddddd'
                                 }
                             ]
                         }

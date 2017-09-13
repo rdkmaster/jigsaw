@@ -1,5 +1,5 @@
 import {
-    Component, NgModule, Input, ViewChildren, QueryList, forwardRef, AfterViewInit, Renderer2, ElementRef, EventEmitter,
+    Component, NgModule, Input, ViewChildren, QueryList, forwardRef, AfterViewInit, Renderer2, ElementRef, EventEmitter, OnInit,
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent} from "../common";
@@ -14,10 +14,12 @@ import {fadeIn} from "../animations/fade-in";
         '[class.jigsaw-fish-bone-right]': 'direction === "right"',
         '[class.jigsaw-fish-bone-white]': 'theme === "white"',
         '[class.jigsaw-fish-bone-dark]': 'theme === "dark"',
+        '[style.width]': 'width'
     }
 })
-export class JigsawFishBone implements AfterViewInit {
-    constructor(public renderer: Renderer2, public elementRef: ElementRef) {
+export class JigsawFishBone extends AbstractJigsawComponent implements AfterViewInit, OnInit {
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
+        super();
     }
 
     @Input()
@@ -47,7 +49,7 @@ export class JigsawFishBone implements AfterViewInit {
                     // left偏移量等于前一个同级节点的偏移加maxField
                     fishBoneItem.left = fishBoneItemsArray[index - 1].left + fishBoneItemsArray[index - 1].getMaxField() + 30;
                 }
-                this.renderer.setStyle(fishBoneItem.itemEl, 'left', fishBoneItem.left + 'px');
+                this._renderer.setStyle(fishBoneItem.itemEl, 'left', fishBoneItem.left + 'px');
             }
             this._setFishBonePosition(fishBoneItem.fishBoneChildren);
         })
@@ -63,7 +65,7 @@ export class JigsawFishBone implements AfterViewInit {
                 // 取其最后一个子节点的left偏移值 + 30px
                 // 没有子节点，宽度为默认值100，写在css里
                 fishBoneItem.width = fishBoneItem.fishBoneChildren.last.left + 30;
-                this.renderer.setStyle(fishBoneItem.itemEl, 'width', fishBoneItem.width);
+                this._renderer.setStyle(fishBoneItem.itemEl, 'width', fishBoneItem.width);
             }
             this._setFishBoneWidth(fishBoneItem.fishBoneChildren);
         })
@@ -107,8 +109,18 @@ export class JigsawFishBone implements AfterViewInit {
                 const prePreFishBoneMain = fishBoneMainArray[index - 2];
                 fishBoneItem.left = prePreFishBoneMain.left + prePreFishBoneMain.getMaxField() + 30;
             }
-            this.renderer.setStyle(fishBoneItem.itemEl, 'left', fishBoneItem.left + 'px');
+            this._renderer.setStyle(fishBoneItem.itemEl, 'left', fishBoneItem.left + 'px');
         })
+    }
+
+    ngOnInit() {
+        super.ngOnInit();
+        if (this.height) {
+            this._renderer.setStyle(this._elementRef.nativeElement, 'padding-top',
+                (parseInt(this.height.replace('px', '')) - 4) / 2 + 'px');
+            this._renderer.setStyle(this._elementRef.nativeElement, 'padding-bottom',
+                (parseInt(this.height.replace('px', '')) - 4) / 2 + 'px');
+        }
     }
 
     ngAfterViewInit() {
@@ -167,7 +179,6 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
     /**
      * 获取最大范围
      * 子节点的宽度 + 最后的子子节点的maxField 的最大值
-     *
      * */
     public getMaxField(): number {
         if (this.fishBoneChildren.length) {
@@ -229,6 +240,11 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
         setTimeout(() => {
             this.rectifyEvent.emit();
         }, 0);
+
+        // 标识没有子节点
+        if (!this.fishBoneChildren.length) {
+            this._renderer.addClass(this.itemEl, 'jigsaw-fish-bone-item-no-child');
+        }
 
     }
 }

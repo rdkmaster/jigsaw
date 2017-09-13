@@ -2,13 +2,16 @@
 
 $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
 
+/* jigsaw-fish-bone 鱼骨host class*/
 .#{$fish-bone-prefix-cls} {
     @include inline-block();
     width: 100%;
     height: 4px;
     padding: 400px 55px 400px 115px;
     position: relative;
+    box-sizing: border-box;
 
+    /* jigsaw-fish-bone-white jigsaw-fish-bone-dark 鱼骨主题标识 放在host上*/
     &-white {
         background: #FFF;
         .#{$fish-bone-prefix-cls}-head i, .#{$fish-bone-prefix-cls}-main {
@@ -16,18 +19,20 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
         }
     }
     &-dark {
-        background: #000;
+        background: #313333;
         .#{$fish-bone-prefix-cls}-head i, .#{$fish-bone-prefix-cls}-main {
             background: #6B6B6B;
         }
     }
 
+    /* jigsaw-fish-bone-main 鱼骨中轴横线*/
     &-main {
         position: relative;
         height: 4px;
         background: #BABABA;
     }
 
+    /* jigsaw-fish-bone-up jigsaw-fish-bone-down 一个鱼骨树在上面还是在下面，放在最外层的节点上 */
     &-up > p {
         top: -16px;
     }
@@ -55,6 +60,7 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
         right: 0;
     }
 
+    /* jigsaw-fish-bone-left jigsaw-fish-bone-left 鱼骨方向标识，放在host上*/
     &-left {
 
     }
