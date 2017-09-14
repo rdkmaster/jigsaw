@@ -1,9 +1,11 @@
 import {
-    Component, NgModule, Input, ViewChildren, QueryList, forwardRef, AfterViewInit, Renderer2, ElementRef, EventEmitter,
+    Component, NgModule, Input, ViewChildren, QueryList, forwardRef, AfterViewInit, Renderer2, ElementRef, EventEmitter, OnDestroy, OnInit,
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent} from "../common";
 import {fadeIn} from "../animations/fade-in";
+import {CallbackRemoval} from "../../core/utils/common-utils";
+import {JigsawScrollBarModule} from "../../directive/scrollbar/scrollbar";
 
 @Component({
     selector: 'j-fish-bone, jigsaw-fish-bone',
@@ -17,7 +19,7 @@ import {fadeIn} from "../animations/fade-in";
         '[style.width]': 'width'
     }
 })
-export class JigsawFishBone extends AbstractJigsawComponent implements AfterViewInit {
+export class JigsawFishBone extends AbstractJigsawComponent implements AfterViewInit, OnDestroy, OnInit {
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
         super();
     }
@@ -32,9 +34,9 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
     public theme: string = 'white';
 
     @ViewChildren(forwardRef(() => JigsawFishBoneItem))
-    private _fishBoneMainChildren: QueryList<JigsawFishBoneItem>;
+    private _firstLevelBones: QueryList<JigsawFishBoneItem>;
 
-    private _FishBoneItems: Array<JigsawFishBoneItem> = [];
+    private _allFishBones: Array<JigsawFishBoneItem> = [];
 
     /**
      *
@@ -43,7 +45,7 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
     private _cacheFishBoneItems(fishBoneItems) {
         fishBoneItems.forEach(fishBoneItem => {
             fishBoneItem.rectifyEvent.subscribe(() => {
-                this._FishBoneItems.push(fishBoneItem);
+                this._allFishBones.push(fishBoneItem);
             });
             this._cacheFishBoneItems(fishBoneItem.fishBoneChildren);
         })
@@ -57,7 +59,7 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
      *
      * */
     private _setAllBoneAttribute() {
-        this._FishBoneItems.forEach(fishBoneItem => {
+        this._allFishBones.forEach(fishBoneItem => {
             fishBoneItem.setBoneAttribute();
         })
     }
@@ -66,7 +68,7 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
      *
      * 计算最外层的父节点的偏移
      */
-    private _setFishBoneMainOffset(fishBoneMainChildren) {
+    private _setFirstLevelBoneOffset(fishBoneMainChildren) {
         const fishBoneMainArray = fishBoneMainChildren.toArray();
         fishBoneMainChildren.forEach((fishBoneItem, index) => {
             if (index <= 1) {
@@ -80,7 +82,7 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
     }
 
     private _getMaxHeight(cb) {
-        return Math.max(...this._fishBoneMainChildren.filter(cb).reduce((arr, fishBoneItem) => {
+        return Math.max(...this._firstLevelBones.filter(cb).reduce((arr, fishBoneItem) => {
             const lastChild = fishBoneItem.fishBoneChildren.last;
             if (lastChild) {
                 arr.push(lastChild.rangeHeight + lastChild.left);
@@ -89,26 +91,90 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
         }, []));
     }
 
-    private _setHostRangeHeight() {
-        const downHeight = this._getMaxHeight((fishBoneItem, index) => {
-            return (index + 1) % 2 === 0;
-        });
-
+    private _setRangeHeight() {
+        // 上部的高度
         const upHeight = this._getMaxHeight((fishBoneItem, index) => {
             return (index + 1) % 2 === 1;
         });
 
-        this._renderer.setStyle(this._elementRef.nativeElement, 'padding-top', upHeight + 'px');
-        this._renderer.setStyle(this._elementRef.nativeElement, 'padding-bottom', downHeight + 'px');
+        // 下部的高度
+        const downHeight = this._getMaxHeight((fishBoneItem, index) => {
+            return (index + 1) % 2 === 0;
+        });
+
+        const host = this._elementRef.nativeElement;
+        // 横向的主骨
+        const mainBone = host.querySelector('.jigsaw-fish-bone-main');
+        // 鱼骨的范围框，和整个鱼骨的宽度和高度相同
+        const fishBoneRange = host.querySelector('.jigsaw-fish-bone-range');
+        // 鱼骨组件的外框，和组件设置的宽高相同
+        const fishBoneFramework = host.querySelector('.jigsaw-fish-bone-framework');
+
+        this._renderer.setStyle(fishBoneRange, 'height', upHeight + downHeight + 'px');
+        // 设置主骨在范围框中的位置
+        this._renderer.setStyle(mainBone, 'top', upHeight + 'px');
+        if(this.height){
+            // 组件设置高度，加上外框的滚动条
+            this._renderer.setStyle(fishBoneFramework, 'overflow-y', 'scroll');
+        }else {
+            // 组件不设置高度，去掉外框的滚动条，组件自适应范围框的高度
+            this._renderer.setStyle(host, 'height', upHeight + downHeight + 'px');
+            this._renderer.setStyle(fishBoneFramework, 'overflow-y', 'hidden');
+        }
     }
 
+    private _setRangeWidth() {
+        const maxOffsetBone = this._firstLevelBones.toArray().sort((item1, item2) => item2.left - item1.left)[0];
+        const host = this._elementRef.nativeElement;
+        const mainBone = host.querySelector('.jigsaw-fish-bone-main');
+        const fishBoneRange = host.querySelector('.jigsaw-fish-bone-range');
+        const fishBoneFramework = host.querySelector('.jigsaw-fish-bone-framework');
+        const hostWidth = host.offsetWidth;
+        if (maxOffsetBone) {
+            // 主骨的最小宽度
+            const boneWidth = maxOffsetBone.left + maxOffsetBone.rangeHeight;
+            // 组件范围框的宽度，主骨宽度+鱼头+鱼尾
+            const rangeWidth = boneWidth + 146 + 80;
+
+            if (rangeWidth > hostWidth) {
+                // 范围宽度大于组件宽度，即溢出
+                // 主骨宽度等于主骨最小宽度
+                this._renderer.setStyle(mainBone, 'width', boneWidth + 'px');
+                // 鱼骨范围宽度
+                this._renderer.setStyle(fishBoneRange, 'width', rangeWidth + 'px');
+                // 加上外框的滚动条
+                this._renderer.setStyle(fishBoneFramework, 'overflow-x', 'scroll');
+            } else {
+                // 范围宽度小于组件宽度
+                // 主骨宽度等于组件宽度-鱼头-鱼尾，即自适应组件宽度
+                this._renderer.setStyle(mainBone, 'width', hostWidth - 80 - 146 + 'px');
+                // 范围宽度等于组件宽度
+                this._renderer.setStyle(fishBoneRange, 'width', hostWidth + 'px');
+                // 去掉外框的滚动条
+                this._renderer.setStyle(fishBoneFramework, 'overflow-x', 'hidden');
+            }
+        }
+    }
+
+    private _removeWindowListener: CallbackRemoval;
+
     ngAfterViewInit() {
-        this._cacheFishBoneItems(this._fishBoneMainChildren);
+        this._cacheFishBoneItems(this._firstLevelBones);
         setTimeout(() => {
             this._setAllBoneAttribute();
-            this._setFishBoneMainOffset(this._fishBoneMainChildren);
-            this._setHostRangeHeight();
-        }, 0)
+            this._setFirstLevelBoneOffset(this._firstLevelBones);
+            this._setRangeHeight();
+            this._setRangeWidth();
+        }, 0);
+
+        this._removeWindowListener = this._renderer.listen('window',
+            'resize', () => this._setRangeWidth());
+    }
+
+    ngOnDestroy() {
+        if (this._removeWindowListener) {
+            this._removeWindowListener();
+        }
     }
 }
 
@@ -179,7 +245,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
                 const lastChild = fishBoneItem.fishBoneChildren.last;
                 if (lastChild && lastChild.rangeHeight != 0) {
                     childRange = lastChild.rangeHeight + lastChild.left;
-                }else{
+                } else {
                     childRange = fishBoneItem.itemEl.offsetWidth;
                 }
                 arr.push(childRange);
@@ -194,7 +260,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
      * 计算偏移并设置样式
      * @private
      */
-    private _setOffset(){
+    private _setOffset() {
         if (this.level !== 0 && this.index !== 0) {
             // 最外层的父节点另外计算
             // index = 0 的采用默认值
@@ -206,7 +272,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
      * 计算宽度并设置样式
      * @private
      */
-    private _setWidth(){
+    private _setWidth() {
         if (this.fishBoneChildren.last) {
             // 取其最后一个子节点的left偏移值 + 30px
             // 没有子节点，宽度为默认值100，写在css里
@@ -230,7 +296,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
      * 计算偏移的通用方法
      * @param fishBoneItem
      */
-    public calculateOffsetLeft(fishBoneItem){
+    public calculateOffsetLeft(fishBoneItem) {
         // fishBoneItem.rangeHeight 为0时，取30
         const rangeHeight = fishBoneItem.rangeHeight ? fishBoneItem.rangeHeight : 30;
         this.left = fishBoneItem.left + rangeHeight + 30;
@@ -266,7 +332,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
 }
 
 @NgModule({
-    imports: [CommonModule],
+    imports: [CommonModule, JigsawScrollBarModule],
     declarations: [JigsawFishBone, JigsawFishBoneItem],
     exports: [JigsawFishBone]
 })
