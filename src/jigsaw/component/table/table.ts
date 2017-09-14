@@ -227,15 +227,15 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return;
         }
         for (let i = this._additionalColumnDefines.length - 1; i >= 0; i--) {
-            const acd = this._additionalColumnDefines[i];
-            if (!acd.field || this.data.field.indexOf(acd.field) != -1) {
-                // existed or invalid field define
+            const field = 'additional-field-' + i;
+            if (this.data.field.find(f => f == field)) {
                 continue;
             }
+            const acd = this._additionalColumnDefines[i];
             const pos = CommonUtils.isDefined(acd.pos) ? acd.pos : this._data.field.length;
             // the acd.cell.data could be a `TableCellDataGenerator`
             const cellData = acd.cell.data instanceof Function ? undefined : acd.cell.data;
-            this.data.insertColumn(pos, cellData, acd.field, acd.header.text ? acd.header.text : acd.field);
+            this.data.insertColumn(pos, cellData, field, acd.header.text ? acd.header.text : field);
         }
     }
 
@@ -267,21 +267,31 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return;
         }
 
-        if (this.data.clearedCount != this._dataClearedCount) {
-            console.log('table data updated.');
-            this._dataClearedCount = this.data.clearedCount;
-            this._checkAdditionalColumnFields();
-            this._mixInData();
-        }
-
+        this._mixInData();
         this._updateHeaderSettings();
         this._updateCellSettings();
-        this._setCellLineEllipsis();
+        setTimeout(() => this._setCellLineEllipsis(), 0);
         setTimeout(() => this._setFloatingHeadWidth(), 0);
     }
 
+    private _additionalData: TableData;
+
+    @Input()
+    public get additionalData(): TableData {
+        return this._additionalData;
+    }
+
+    public set additionalData(value: TableData) {
+        if (!value || this._additionalData == value) {
+            return;
+        }
+        this._additionalData = value;
+    }
+
+    @Output()
+    public additionalDataChange = new EventEmitter<TableData>();
+
     private _removeRefreshCallback: CallbackRemoval;
-    private _dataClearedCount: number = 0;
     private _data: TableData;
 
     @Input()
@@ -293,14 +303,13 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (value == this._data || !value) {
             return;
         }
+        this._data = value;
+        this._update();
+
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback();
         }
-        this._data = value;
-        this._dataClearedCount = value.clearedCount;
-
         this._removeRefreshCallback = value.onRefresh(this._update, this);
-        this._update();
     }
 
     @Output()
@@ -356,21 +365,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return;
         }
         this._additionalColumnDefines = value;
-        this._checkAdditionalColumnFields();
-    }
-
-    private _checkAdditionalColumnFields(): void {
-        if (!this.data || !this.additionalColumnDefines) {
-            return;
-        }
-        this.additionalColumnDefines.forEach((acd, index) => {
-            if (this.data.field.indexOf(acd.field) != -1) {
-                console.warn('conflict field in additional column, using default, origin field=' + acd.field);
-                acd.field = undefined;
-            }
-            //todo 如果应用原来给的field就是 additional-field-n，那还是有问题。
-            acd.field = CommonUtils.isDefined(acd.field) ? acd.field : `additional-field-${index}`;
-        });
     }
 
     @Output()
@@ -557,13 +551,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
         for (let i = this._additionalColumnDefines.length - 1; i >= 0; i--) {
             const acd = this._additionalColumnDefines[i];
-            if (!acd.field || this.data.field.indexOf(acd.field) != -1) {
-                // existed or invalid field define
-                continue;
-            }
-
             const cd: ColumnDefine = this._fixColumnDefineTarget({
-                target: acd.field,
+                target: 'additional-field-' + i,
                 header: acd.header,
                 group: acd.group,
                 cell: acd.cell,

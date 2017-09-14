@@ -18,7 +18,7 @@ export class TableCellValueGenerators {
     public static rowIndexGenerator(tableData: TableData, row: number): any {
         let index = 1;
         if (tableData instanceof PageableTableData || tableData instanceof LocalPageableTableData) {
-            index += (tableData.pagingInfo.currentPage - 1) * tableData.pagingInfo.pageSize - 1;
+            index += (tableData.pagingInfo.currentPage - 1) * tableData.pagingInfo.pageSize;
         }
         index += row;
         return index;
@@ -49,7 +49,6 @@ export class ColumnDefine {
 
 export class AdditionalColumnDefine {
     pos?: number;
-    field?: string;
     visible?: boolean;
     width?: string;
     header?: TableHeader;

@@ -1,5 +1,5 @@
 import {Component, Renderer2, ViewChild, ViewContainerRef, ViewEncapsulation} from "@angular/core";
-import {TableData} from "jigsaw/core/data/table-data";
+import {LocalPageableTableData, TableData} from "jigsaw/core/data/table-data";
 import {DefaultCellRenderer} from "jigsaw/component/table/table-renderer";
 import {AdditionalColumnDefine, ColumnDefine, TableCellValueGenerators} from "jigsaw/component/table/table-typings";
 import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/component/table/table-renderer";
@@ -13,21 +13,27 @@ import {Http} from "@angular/http";
     encapsulation: ViewEncapsulation.None
 })
 export class TableRendererDemoComponent {
-    tableData: TableData;
+    tableData: LocalPageableTableData;
+    additionalData: TableData = new TableData();
 
     constructor(public http: Http) {
-        this.tableData = new TableData();
+        this.tableData = new LocalPageableTableData();
+        this.tableData.pagingInfo.pageSize = 10;
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/table/data.json');
         // this.tableData.dataReviser = data => {
         //     data.data.splice(50, 10000);
         //     return data;
         // }
+
+        // setTimeout(()=> {
+        //     this.additionalData = new TableData();
+        // }, 2000)
     }
 
     columnDefines: ColumnDefine[] = [
         {
-            target: ['name', 'f7'],
+            target: ['position', 'f7'],
             width: '10%',
             header: {
                 renderer: TableHeadSelect,
@@ -52,7 +58,7 @@ export class TableRendererDemoComponent {
         },
     ];
 
-    extraColumnDefines: AdditionalColumnDefine[] = [
+    additionalColumnDefines: AdditionalColumnDefine[] = [
         {
             pos: 0,
             width: '30px',
@@ -66,7 +72,6 @@ export class TableRendererDemoComponent {
         },
         {
             pos: 0,
-            field: 'f4',
             width: '60px',
             header: {
                 sortable: true,

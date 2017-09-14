@@ -17,9 +17,8 @@ export class TableHeadIcon extends TableCellRendererBase {
  * */
 @Component({
     template: `
-        {{cellData}}
         <jigsaw-select [value]="selected"
-                       placeholder="请选择" (valueChange)="dispatchChangeEvent($event)"
+                       placeholder="{{this.cellData}}" (valueChange)="dispatchChangeEvent($event)"
                        [data]="listItems" width="70" height="20">
         </jigsaw-select>`
 })
@@ -36,13 +35,16 @@ export class TableHeadSelect extends TableCellRendererBase implements OnDestroy 
             return;
         }
         this._removeRefreshCallback && this._removeRefreshCallback();
-        this._removeRefreshCallback = value.onRefresh(() => {
-            this.listItems = [];
-            value.data.forEach(row => {
-                if (!this.listItems.find(item => item.label === row[this.column])) {
-                    this.listItems.push({label: row[this.column]});
-                }
-            });
+        this._removeRefreshCallback = value.onRefresh(this._initListItems, this);
+        this._initListItems();
+    }
+
+    private _initListItems():void {
+        this.listItems = [];
+        this.tableData.data.forEach(row => {
+            if (!this.listItems.find(item => item.label === row[this.column])) {
+                this.listItems.push({label: row[this.column]});
+            }
         });
     }
 

@@ -89,7 +89,6 @@ export class TableLineEllipsisDemoComponent {
         },
         {
             pos: 0,
-            field: 'f4',
             width: '60px',
             header: {
                 renderer: TableHeadCheckboxRenderer

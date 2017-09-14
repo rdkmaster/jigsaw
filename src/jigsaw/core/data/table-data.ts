@@ -103,18 +103,7 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
         return result;
     }
 
-    private _clearedCount:number = 0;
-
-    /**
-     * change of this value indicates that the table data is totally refreshed
-     * @returns {number}
-     */
-    public get clearedCount():number {
-        return this._clearedCount;
-    }
-
     protected clearData(): void {
-        this._clearedCount++;
         this.data.splice(0, this.data.length);
         this.header.splice(0, this.header.length);
         this.field.splice(0, this.field.length);
@@ -388,8 +377,8 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
 
     public fromObject(data: any): LocalPageableTableData {
         super.fromObject(data);
-        this.filteredData = this.data;
         this.originalData = <TableDataMatrix>CommonUtils.deepCopy(this.data);
+        this.filteredData = this.originalData;
         this._updatePagingInfo();
         return this;
     }
@@ -406,37 +395,38 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
     public filter(term, fields?: (string | number)[]): void {
         if (term instanceof Function) {
             this.filteredData = this.originalData.filter(term);
-        }
-        let key: string;
-        if (term instanceof DataFilterInfo) {
-            key = term.key;
-            fields = term.field
         } else {
-            key = term;
-        }
-        if (fields && fields.length != 0) {
-            let numberFields: number[];
-            if (typeof fields[0] === 'string') {
-                (<string[]>fields).forEach(field => {
-                        numberFields.push(this.field.findIndex(item => item == field))
-                    }
-                )
+            let key: string;
+            if (term instanceof DataFilterInfo) {
+                key = term.key;
+                fields = term.field
             } else {
-                numberFields = <number[]>fields;
+                key = term;
             }
-            this.filteredData = this.originalData.filter(
-                row => row.filter(
-                    (index, item) => numberFields.find(num => num == index)
-                ).filter(
-                    item => (<string>item).indexOf(key) != -1
-                ).length != 0
-            );
-        } else {
-            this.filteredData = this.originalData.filter(
-                row => row.filter(
-                    item => (<string>item).indexOf(key) != -1
-                ).length != 0
-            );
+            if (fields && fields.length != 0) {
+                let numberFields: number[];
+                if (typeof fields[0] === 'string') {
+                    (<string[]>fields).forEach(field => {
+                            numberFields.push(this.field.findIndex(item => item == field))
+                        }
+                    )
+                } else {
+                    numberFields = <number[]>fields;
+                }
+                this.filteredData = this.originalData.filter(
+                    row => row.filter(
+                        (index, item) => numberFields.find(num => num == index)
+                    ).filter(
+                        item => (<string>item).indexOf(key) != -1
+                    ).length != 0
+                );
+            } else {
+                this.filteredData = this.originalData.filter(
+                    row => row.filter(
+                        item => (<string>item).indexOf(key) != -1
+                    ).length != 0
+                );
+            }
         }
         this._updatePagingInfo();
     }
