@@ -34,43 +34,6 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
     @ViewChildren(forwardRef(() => JigsawFishBoneItem))
     private _fishBoneMainChildren: QueryList<JigsawFishBoneItem>;
 
-    /**
-     *
-     * 按照父到子的顺序设置节点偏移量
-     * */
-    private _setFishBonePosition(fishBoneItems) {
-        let fishBoneItemsArray = fishBoneItems.toArray();
-        fishBoneItems.forEach((fishBoneItem, index) => {
-            if (fishBoneItem.level !== 0) {
-                if (index === 0) {
-                    // 如果是第一个节点，默认偏移50
-                    fishBoneItem.left = 50;
-                } else {
-                    // left偏移量等于前一个同级节点的偏移加maxField
-                    fishBoneItem.left = fishBoneItemsArray[index - 1].left + fishBoneItemsArray[index - 1].getMaxField() + 30;
-                }
-                this._renderer.setStyle(fishBoneItem.itemEl, 'left', fishBoneItem.left + 'px');
-            }
-            this._setFishBonePosition(fishBoneItem.fishBoneChildren);
-        })
-    }
-
-    /**
-     *
-     * 按照父到子的顺序设置节点宽度
-     * */
-    private _setFishBoneWidth(fishBoneItems) {
-        fishBoneItems.forEach(fishBoneItem => {
-            if (fishBoneItem.fishBoneChildren.last) {
-                // 取其最后一个子节点的left偏移值 + 30px
-                // 没有子节点，宽度为默认值100，写在css里
-                fishBoneItem.width = fishBoneItem.fishBoneChildren.last.left + 30;
-                this._renderer.setStyle(fishBoneItem.itemEl, 'width', fishBoneItem.width);
-            }
-            this._setFishBoneWidth(fishBoneItem.fishBoneChildren);
-        })
-    }
-
     private _FishBoneItems: Array<JigsawFishBoneItem> = [];
 
     /**
@@ -88,11 +51,14 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
 
     /**
      *
-     * 按照子到父的顺序修正节点的偏移量和宽度
+     * 按照子到父的顺序设置节点的偏移量和宽度
+     * 节点的偏移前一个同级节点的 left + rangeHeight
+     * 父节点的宽度依赖最后一个子节点的 left + rangHeight
+     *
      * */
-    private _rectifyAll() {
+    private _setAllBoneAttribute() {
         this._FishBoneItems.forEach(fishBoneItem => {
-            fishBoneItem.rectify();
+            fishBoneItem.setBoneAttribute();
         })
     }
 
@@ -100,24 +66,24 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
      *
      * 计算最外层的父节点的偏移
      */
-    private _setFishBoneMainPosition(fishBoneMainChildren) {
+    private _setFishBoneMainOffset(fishBoneMainChildren) {
         const fishBoneMainArray = fishBoneMainChildren.toArray();
         fishBoneMainChildren.forEach((fishBoneItem, index) => {
             if (index <= 1) {
+                // 最外层的鱼骨 前面两个偏移0px
                 fishBoneItem.left = 0;
             } else {
-                const prePreFishBoneMain = fishBoneMainArray[index - 2];
-                fishBoneItem.left = prePreFishBoneMain.left + prePreFishBoneMain.getMaxField() + 30;
+                // 最外层的鱼骨是上下排列的，所以用前前节点计算
+                fishBoneItem.calculateOffsetLeft(fishBoneMainArray[index - 2]);
             }
-            this._renderer.setStyle(fishBoneItem.itemEl, 'left', fishBoneItem.left + 'px');
         })
     }
 
     private _getMaxHeight(cb) {
-        return Math.max.apply(null, this._fishBoneMainChildren.filter(cb).reduce((arr, fishBoneItem) => {
+        return Math.max(...this._fishBoneMainChildren.filter(cb).reduce((arr, fishBoneItem) => {
             const lastChild = fishBoneItem.fishBoneChildren.last;
             if (lastChild) {
-                arr.push(lastChild.maxRange + lastChild.left);
+                arr.push(lastChild.rangeHeight + lastChild.left);
             }
             return arr
         }, []));
@@ -139,10 +105,8 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
     ngAfterViewInit() {
         this._cacheFishBoneItems(this._fishBoneMainChildren);
         setTimeout(() => {
-            this._setFishBonePosition(this._fishBoneMainChildren);
-            this._setFishBoneWidth(this._fishBoneMainChildren);
-            this._rectifyAll();
-            this._setFishBoneMainPosition(this._fishBoneMainChildren);
+            this._setAllBoneAttribute();
+            this._setFishBoneMainOffset(this._fishBoneMainChildren);
             this._setHostRangeHeight();
         }, 0)
     }
@@ -159,6 +123,7 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
     ]
 })
 export class JigsawFishBoneItem extends AbstractJigsawComponent implements AfterViewInit {
+
     public itemEl: HTMLElement;
 
     constructor(private _renderer: Renderer2, elementRef: ElementRef) {
@@ -184,69 +149,104 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
     @Input()
     public index: number = 0;
 
-    public maxRange: number = 0;
+    public rangeHeight: number = 0;
 
-    public left: number = 0;
+    // 默认偏移50，后面只有第一个节点是默认值
+    private _left: number = 50;
+
+    get left(): number {
+        return this._left;
+    }
+
+    set left(value: number) {
+        this._left = value;
+        // 用setStyle保持同步，绑定[style.left]是异步的
+        this._renderer.setStyle(this.itemEl, 'left', value + 'px');
+    }
 
     public _$state;
 
     /**
-     * 获取最大范围
-     * 子节点的宽度 + 最后的子子节点的maxField 的最大值
+     * 获取最大范围高度
+     * 比较各子节点伸展高度
+     * 伸展高度：子节点有子节点，并且最后一个子节点的rangeHeight不等于0，取其最后一个子节点的rangeHeight + left；
+     *          其他取子节点自身的宽度
      * */
-    public getMaxField(): number {
+    private _setRangeHeight() {
         if (this.fishBoneChildren.length) {
-            this.fishBoneChildren.forEach(fishBoneItem => {
-                let fishBoneItemWidth = fishBoneItem.itemEl.offsetWidth;
-                let childMaxField = 0;
-                if (fishBoneItem.fishBoneChildren.last) {
-                    childMaxField = fishBoneItem.fishBoneChildren.last.maxRange;
+            this.rangeHeight = Math.max(...this.fishBoneChildren.reduce((arr, fishBoneItem) => {
+                let childRange = 0;
+                const lastChild = fishBoneItem.fishBoneChildren.last;
+                if (lastChild && lastChild.rangeHeight != 0) {
+                    childRange = lastChild.rangeHeight + lastChild._left;
+                }else{
+                    childRange = fishBoneItem.itemEl.offsetWidth;
                 }
-                let maxField = fishBoneItemWidth + childMaxField;
-                this.maxRange = maxField > this.maxRange ? maxField : this.maxRange;
-            });
+                arr.push(childRange);
+                return arr;
+            }, []));
         } else {
-            this.maxRange = 30;
+            this.rangeHeight = 0;
         }
-
-        return this.maxRange;
     }
 
     /**
-     * 调整最大范围
-     * 调整偏移量
-     * 调整宽度
+     * 计算偏移并设置样式
+     * @private
      */
-    public rectify() {
-        this.getMaxField();
+    private _setOffset(){
         if (this.level !== 0 && this.index !== 0) {
             // 最外层的父节点另外计算
             // index = 0 的采用默认值
-            const preFishBone = this.parentFishBone.fishBoneChildren.toArray()[this.index - 1];
-            this.left = preFishBone.maxRange + preFishBone.left + 30;
-            // 用setStyle保持同步，绑定[style.left]是异步的
-            this._renderer.setStyle(this.itemEl, 'left', this.left + 'px');
+            this.calculateOffsetLeft(this.parentFishBone.fishBoneChildren.toArray()[this.index - 1]);
         }
+    }
 
+    /**
+     * 计算宽度并设置样式
+     * @private
+     */
+    private _setWidth(){
         if (this.fishBoneChildren.last) {
-            this.width = this.fishBoneChildren.last.left + 30 + 'px';
+            // 取其最后一个子节点的left偏移值 + 30px
+            // 没有子节点，宽度为默认值100，写在css里
+            this.width = this.fishBoneChildren.last._left + 30 + 'px';
             this._renderer.setStyle(this.itemEl, 'width', this.width);
         }
+    }
+
+    /**
+     * 设置范围高度
+     * 设置偏移
+     * 设置宽度
+     */
+    public setBoneAttribute() {
+        this._setRangeHeight();
+        this._setOffset();
+        this._setWidth();
+    }
+
+    /**
+     * 计算偏移的通用方法
+     * @param fishBoneItem
+     */
+    public calculateOffsetLeft(fishBoneItem){
+        this.left = fishBoneItem.left + fishBoneItem.rangeHeight + 30;
     }
 
     public rectifyEvent = new EventEmitter();
 
     ngOnInit() {
         super.ngOnInit();
-        this._$state = 'in'
+        this._$state = 'in';
     }
 
     ngAfterViewInit() {
-        // 宽度由最后一个子节点的left值决定，所以要先计算各节点的left偏移量，left偏移量等于前一个同级节点的偏移加maxField
-        // 如果是第一个节点，默认偏移50
+        // 宽度由最后一个子节点的left值决定，所以要先计算各节点的left偏移量，left偏移量等于前一个同级节点的偏移加rangeHeight
+        // 如果是第一个节点，默认偏移50，写在css里
         // 没有子节点时，默认宽度为100，写在css里
 
-        // maxField依赖子节点的宽度
+        // rangeHeight依赖子节点的宽度
         // 先渲染最里面的子节点，逐层向上渲染
 
         // 异步发送事件，为了最外面的父组件能够在ngAfterViewInit中订阅到子组件的事件
@@ -255,7 +255,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
             this.rectifyEvent.emit();
         }, 0);
 
-        // 标识没有子节点
+        // 标识没有子节点的，没有子节点的节点文本放在上面
         if (!this.fishBoneChildren.length) {
             this._renderer.addClass(this.itemEl, 'jigsaw-fish-bone-item-no-child');
         }

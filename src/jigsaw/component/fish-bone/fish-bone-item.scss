@@ -5,13 +5,21 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
 /* jigsaw-fish-bone-item 单个鱼骨的class */
 .#{$fish-bone-prefix-cls}-item {
     position: absolute;
-    transform-origin: 0 50%;
+    /* 鱼骨的最小长度是100px */
     min-width: 100px;
+    /* 鱼骨的默认偏移是50px */
+    left: 50px;
+    /* 鱼骨的默认宽度是1px */
     height: 1px;
     transition: left 1s $ease-in-out;
+    transform-origin: 0 50%;
     &:not(.#{$fish-bone-prefix-cls}-level-0) {
-        left: 0;
+        /* 除了最外面的父节点，其他节点先隐藏 */
         opacity: 0;
+    }
+    &.#{$fish-bone-prefix-cls}-level-0 {
+        /* 最外面的父节点的偏移默认是0 */
+        left: 0;
     }
     > p {
         position: absolute;
@@ -35,6 +43,7 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
     .#{$fish-bone-prefix-cls}-up &-rotate-down:not(.#{$fish-bone-prefix-cls}-item-no-child) > p {
         top: 4px;
     }
+    /* 没有子节点的节点文本放在上面 */
     .#{$fish-bone-prefix-cls}-up &-rotate-down.#{$fish-bone-prefix-cls}-item-no-child > p {
         bottom: 4px;
     }
