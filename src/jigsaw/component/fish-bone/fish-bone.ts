@@ -154,11 +154,11 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
     // 默认偏移50，后面只有第一个节点是默认值
     private _left: number = 50;
 
-    get left(): number {
+    public get left(): number {
         return this._left;
     }
 
-    set left(value: number) {
+    public set left(value: number) {
         this._left = value;
         // 用setStyle保持同步，绑定[style.left]是异步的
         this._renderer.setStyle(this.itemEl, 'left', value + 'px');
@@ -178,7 +178,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
                 let childRange = 0;
                 const lastChild = fishBoneItem.fishBoneChildren.last;
                 if (lastChild && lastChild.rangeHeight != 0) {
-                    childRange = lastChild.rangeHeight + lastChild._left;
+                    childRange = lastChild.rangeHeight + lastChild.left;
                 }else{
                     childRange = fishBoneItem.itemEl.offsetWidth;
                 }
@@ -210,7 +210,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
         if (this.fishBoneChildren.last) {
             // 取其最后一个子节点的left偏移值 + 30px
             // 没有子节点，宽度为默认值100，写在css里
-            this.width = this.fishBoneChildren.last._left + 30 + 'px';
+            this.width = this.fishBoneChildren.last.left + 30 + 'px';
             this._renderer.setStyle(this.itemEl, 'width', this.width);
         }
     }
@@ -231,7 +231,9 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
      * @param fishBoneItem
      */
     public calculateOffsetLeft(fishBoneItem){
-        this.left = fishBoneItem.left + fishBoneItem.rangeHeight + 30;
+        // fishBoneItem.rangeHeight 为0时，取30
+        const rangeHeight = fishBoneItem.rangeHeight ? fishBoneItem.rangeHeight : 30;
+        this.left = fishBoneItem.left + rangeHeight + 30;
     }
 
     public rectifyEvent = new EventEmitter();
