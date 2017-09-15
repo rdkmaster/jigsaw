@@ -13,6 +13,7 @@ env:
   - SAUCE_ACCESS_KEY=173aa66e-43e6-4e34-b873-9cb037b8ae5c
   - BROWSER_PROVIDER_READY_FILE=/tmp/sauce-connect-ready
   - LOGS_DIR=/tmp/logs
+  - TOURIST_DIR=`pwd`/../jigsaw-tourist
   - SEED_DIR=`pwd`/../jigsaw-seed
 
 before_install:
@@ -33,7 +34,7 @@ script:
   - gulp jigsaw:build-release:clean
   - ng test --code-coverage --watch false
   - cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
-  - sh build/scripts/build-tourist.sh `pwd`/../jigsaw-tourist
+  - sh build/scripts/build-tourist.sh "jigsaw-tourist"
   - sh build/scripts/integrate-with-seed.sh
   - sh build/scripts/sauce_connect_block.sh
   - cd $SEED_DIR # run e2e in seed directory
