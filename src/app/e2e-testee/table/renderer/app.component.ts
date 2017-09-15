@@ -79,7 +79,7 @@ export class TableRendererDemoComponent {
             },
             cell: {
                 renderer: TableCellCheckboxRenderer,
-                data: (td, row, col) => td.data[row][3] == 'Coder',
+                data: (td, row, col) => td.data[row][1] == 'Coder',
             }
         },
         {

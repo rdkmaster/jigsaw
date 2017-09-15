@@ -53,7 +53,7 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
             this.fromObject(data);
         } else {
             console.log('invalid raw TableData received from server...');
-            this.clearData();
+            this.clear();
             this.refresh();
         }
         this.componentDataHelper.invokeAjaxSuccessCallback(data);
@@ -64,7 +64,7 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
             throw new Error('invalid raw TableData object!');
         }
 
-        this.clearData();
+        this.clear();
 
         TableDataBase.arrayAppend(this.data, data.data);
         TableDataBase.arrayAppend(this.field, data.field);
@@ -103,7 +103,7 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
         return result;
     }
 
-    protected clearData(): void {
+    public clear(): void {
         this.data.splice(0, this.data.length);
         this.header.splice(0, this.header.length);
         this.field.splice(0, this.field.length);
@@ -111,7 +111,7 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
 
     public destroy(): void {
         super.destroy();
-        this.clearData();
+        this.clear();
         console.log('destroying TableDataBase....');
     }
 

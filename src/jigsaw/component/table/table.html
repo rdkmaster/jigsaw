@@ -4,6 +4,7 @@
         <td #floatingHeader *ngFor="let head of _$headerSettings;"
             width="{{head.width}}" class="{{head.clazz}}">
             <jigsaw-table-header [tableData]="data"
+                                 [additionalData]="additionalData"
                                  [cellData]="head.cellData"
                                  [column]="head.field"
                                  [row]="0"
@@ -25,6 +26,7 @@
             <td #fixedHeader *ngFor="let head of _$headerSettings;"
                 width="{{head.width}}" class="{{head.clazz}}">
                 <jigsaw-table-header [tableData]="data"
+                                     [additionalData]="additionalData"
                                      [cellData]="head.cellData"
                                      [column]="head.field"
                                      [row]="0"

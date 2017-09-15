@@ -33,7 +33,7 @@ import {AffixUtils} from "../../core/utils/internal-utils";
 })
 export class JigsawTable extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef, private _zone: NgZone) {
-        super()
+        super();
     }
 
     @Output()
@@ -46,15 +46,15 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @Input()
     public hideHeader: boolean = false;
 
-    private _select: number;
+    private _selectedRow: number;
 
     @Input()
-    public get select(): number {
-        return this._select;
+    public get selectedRow(): number {
+        return this._selectedRow;
     }
 
-    public set select(value: number) {
-        this._select = value;
+    public set selectedRow(value: number) {
+        this._selectedRow = value;
         if (this.initialized) {
             this._$selectRow(value);
         }
@@ -63,18 +63,39 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @Output()
     public selectChange: EventEmitter<number> = new EventEmitter<number>();
 
+    private _getColumnIndex(field:string): [number, TableData] {
+        let index = this.data.field.indexOf(field);
+        if (index != -1) {
+            return [index, this.data];
+        }
+        index = this.additionalData.field.indexOf(field);
+        if (index != -1) {
+            return [index, this.additionalData];
+        }
+        return [-1, undefined];
+    }
+
+    private _getHeaderValueByField(field):string {
+        let [index, tableData] = this._getColumnIndex(field);
+        if (index == -1) {
+            console.error('no header value found, unknown field: ' + field);
+            return '';
+        }
+        return tableData.header[index];
+    }
+
     /**
      * @internal
      */
     public _$headerSettings: TableHeadSetting[] = [];
     private _headerSettingsBackup: { [field: string]: TableHeadSetting } = {};
 
-    private _updateHeaderSettings(): void {
+    private _updateHeaderSettings(mixedFields: string[]): void {
         const oldBackup = CommonUtils.shallowCopy(this._headerSettingsBackup);
         this._headerSettingsBackup = {};
         this._$headerSettings.splice(0, this._$headerSettings.length);
 
-        this.data.field.forEach((field, index) => {
+        mixedFields.forEach((field, index) => {
             let matchedColumnDef = this.columnDefines.find(
                 colDef => (<TableColumnTargetFinder>colDef.target)(field, index));
             if (matchedColumnDef && matchedColumnDef.visible === false) {
@@ -83,14 +104,38 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
             let settings = oldBackup[field];
             if (!settings) {
-                settings = this._createHeaderSettings(matchedColumnDef, index);
+                settings = this._createHeaderSettings(matchedColumnDef, field);
             }
             if (settings.cellData === null) {
-                settings.cellData = this.data.header[index];
+                settings.cellData = this._getHeaderValueByField(field);
             }
             this._$headerSettings.push(settings);
             this._headerSettingsBackup[field] = settings;
         });
+    }
+
+    private _getCellDataByField(field:string, row:number):any {
+        let [index, tableData] = this._getColumnIndex(field);
+        if (index == -1) {
+            console.error('no cell data found, unknown field: ' + field);
+            return '';
+        }
+        if (!tableData.data[row]) {
+            tableData.data[row] = [];
+        }
+        return tableData.data[row][index];
+    }
+
+    private _setCellDataByField(field: string, row: number, data:any):void {
+        let [index, tableData] = this._getColumnIndex(field);
+        if (index == -1) {
+            console.error('no cell data found, unable to set, field: ' + field);
+            return;
+        }
+        if (!tableData.data[row]) {
+            tableData.data[row] = [];
+        }
+        tableData.data[row][index] = data;
     }
 
     /**
@@ -99,19 +144,19 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     public _$cellSettings: TableCellSetting[][] = [];
     private _cellSettingsBackup: { [field: string]: TableCellSetting[] } = {};
 
-    private _updateCellSettings(): void {
+    private _updateCellSettings(mixedFields: string[]): void {
         // clear origin settings, but keep the origin row array ref,
         // which will avoid ngFor from rerendering the dom
-        this._$cellSettings.forEach(row => {
-            row.splice(0, row.length);
-        });
+        this._$cellSettings.forEach(row => row.splice(0, row.length));
+        const dataLen = this.data.data.length;
         // remove extra lines if necessary
-        this._$cellSettings.splice(this.data.data.length, this._$cellSettings.length);
+        this._$cellSettings.splice(dataLen, this._$cellSettings.length);
+        this.additionalData.data.splice(dataLen, this._$cellSettings.length);
 
         let oldBackup = CommonUtils.shallowCopy(this._cellSettingsBackup);
         this._cellSettingsBackup = {};
 
-        this.data.field.forEach((field, colIndex) => {
+        mixedFields.forEach((field, colIndex) => {
             let matchedColumnDef = this.columnDefines.find(
                 colDef => (<TableColumnTargetFinder>colDef.target)(field, colIndex));
             if (matchedColumnDef && matchedColumnDef.visible === false) {
@@ -121,10 +166,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             // prepare for backing up the new settings
             this._cellSettingsBackup[field] = [];
 
-            let sTemplate: TableCellSetting = this._createCellSettings(matchedColumnDef, colIndex);
+            let sTemplate: TableCellSetting = this._createCellSettings(matchedColumnDef, field);
             let groupSetting: TableCellSetting;
             let settings: TableCellSetting;
-            for (let rowIndex = 0, len = this.data.data.length; rowIndex < len; rowIndex++) {
+            for (let rowIndex = 0; rowIndex < dataLen; rowIndex++) {
                 settings = oldBackup[field] ? oldBackup[field][rowIndex] : undefined;
                 if (!settings) {
                     settings = <TableCellSetting>CommonUtils.shallowCopy(sTemplate);
@@ -145,15 +190,16 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
                 const generator = matchedColumnDef && matchedColumnDef.cell && matchedColumnDef.cell.data instanceof Function ?
                     matchedColumnDef.cell.data : null;
-                const originVal = this.data.data[rowIndex][colIndex];
+                const originVal = this._getCellDataByField(field, rowIndex);
                 if (generator) {
-                    const generatedValue = generator(this.data, rowIndex, colIndex);
+                    const [realIndex,] = this._getColumnIndex(field);
+                    const generatedValue = generator(this.data, rowIndex, realIndex, this.additionalData);
                     if (TableCellValueGenerators.isStateless(generator)) {
                         settings.cellData = generatedValue;
                     } else {
                         settings.cellData = originVal === undefined ? generatedValue : originVal;
                     }
-                    this.data.data[rowIndex][colIndex] = settings.cellData;
+                    this._setCellDataByField(field, rowIndex, settings.cellData);
                 } else {
                     settings.cellData = originVal;
                 }
@@ -171,7 +217,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         });
     }
 
-    private _createCellSettings(columnDefine: ColumnDefine, fieldIndex: number): TableCellSetting {
+    private _createCellSettings(columnDefine: ColumnDefine, field: string): TableCellSetting {
         let settings: TableCellSetting = {
             cellData: '',
             width: undefined,
@@ -181,7 +227,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             editable: false,
             editorRenderer: null,
             group: false,
-            field: fieldIndex,
+            field: field,
             rowSpan: 1
         };
         settings.width = columnDefine && columnDefine.width;
@@ -196,7 +242,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         return settings;
     }
 
-    private _createHeaderSettings(columnDefine: ColumnDefine, fieldIndex: number): TableHeadSetting {
+    private _createHeaderSettings(columnDefine: ColumnDefine, field: string): TableHeadSetting {
         let settings: TableHeadSetting = {
             cellData: null,
             width: null,
@@ -206,7 +252,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             sortable: false,
             sortAs: SortAs.string,
             defaultSortOrder: SortOrder.default,
-            field: fieldIndex
+            field: field
         };
         settings.width = columnDefine && columnDefine.width;
         let headerDef = columnDefine && columnDefine.header;
@@ -222,21 +268,18 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         return settings;
     }
 
-    private _mixInData(): void {
+    private _getMixedFields(): string[] {
         if (!this._additionalColumnDefines || !this.data) {
-            return;
+            return [];
         }
+        const result = this.data.field.concat();
         for (let i = this._additionalColumnDefines.length - 1; i >= 0; i--) {
             const field = 'additional-field-' + i;
-            if (this.data.field.find(f => f == field)) {
-                continue;
-            }
             const acd = this._additionalColumnDefines[i];
             const pos = CommonUtils.isDefined(acd.pos) ? acd.pos : this._data.field.length;
-            // the acd.cell.data could be a `TableCellDataGenerator`
-            const cellData = acd.cell.data instanceof Function ? undefined : acd.cell.data;
-            this.data.insertColumn(pos, cellData, field, acd.header.text ? acd.header.text : field);
+            result.splice(pos, 0, field);
         }
+        return result;
     }
 
     private _fixColumnDefineTarget(colDef:ColumnDefine):ColumnDefine {
@@ -267,14 +310,14 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return;
         }
 
-        this._mixInData();
-        this._updateHeaderSettings();
-        this._updateCellSettings();
+        const mixedFields = this._getMixedFields();
+        this._updateHeaderSettings(mixedFields);
+        this._updateCellSettings(mixedFields);
         setTimeout(() => this._setCellLineEllipsis(), 0);
         setTimeout(() => this._setFloatingHeadWidth(), 0);
     }
 
-    private _additionalData: TableData;
+    private _additionalData = new TableData();
 
     @Input()
     public get additionalData(): TableData {
@@ -282,14 +325,13 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     public set additionalData(value: TableData) {
-        if (!value || this._additionalData == value) {
-            return;
-        }
-        this._additionalData = value;
     }
 
     @Output()
     public additionalDataChange = new EventEmitter<TableData>();
+
+    @Input()
+    public trackRowBy: string;
 
     private _removeRefreshCallback: CallbackRemoval;
     private _data: TableData;
@@ -304,6 +346,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return;
         }
         this._data = value;
+        this._additionalData.data.splice(0, this._additionalData.data.length);
         this._update();
 
         if (this._removeRefreshCallback) {
@@ -546,7 +589,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     private _mixInColumns(): void {
-        if (!this._additionalColumnDefines || !this.data) {
+        if (!this._additionalColumnDefines) {
             return;
         }
         for (let i = this._additionalColumnDefines.length - 1; i >= 0; i--) {
@@ -564,8 +607,18 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
     }
 
+    private _initAdditionalData():void {
+        if (!this.additionalColumnDefines) {
+            return;
+        }
+        this.additionalColumnDefines.forEach((acd, i) => {
+            this._additionalData.field.push('additional-field-' + i);
+            this._additionalData.header.push(acd.header.text);
+        });
+    }
+
     ngAfterViewInit() {
-        this._$selectRow(this.select, true);
+        this._$selectRow(this.selectedRow, true);
         this._setCellLineEllipsis();
         this._setFloatingHeadWidth();
     }
@@ -574,7 +627,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         super.ngOnInit();
 
         this._mixInColumns();
-        // this._normalizeColumnTarget();
+        this._initAdditionalData();
         this._update();
 
         this._addWindowListener();

@@ -1,5 +1,5 @@
 <jigsaw-button (click)="selectedRow = 2">选择第三行</jigsaw-button>
 
-<jigsaw-table height="400px" [data]="tableData" [(select)]="selectedRow"></jigsaw-table>
+<jigsaw-table height="400px" [data]="tableData" [(selectedRow)]="selectedRow"></jigsaw-table>
 
 <p>row index {{selectedRow}} was selected</p>

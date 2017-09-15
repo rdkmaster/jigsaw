@@ -31,6 +31,8 @@ export class TableInternalCellBase implements AfterViewInit {
     @Input()
     public tableData: TableData;
     @Input()
+    public additionalData: TableData;
+    @Input()
     public cellData: any;
     @Input()
     public row: number;

@@ -90,7 +90,7 @@ export class TableHeadSetting {
     sortable: boolean;
     sortAs: SortAs;
     defaultSortOrder: SortOrder;
-    field: number;
+    field: string;
 }
 
 export class TableCellSetting {
@@ -102,7 +102,7 @@ export class TableCellSetting {
     editable: boolean;
     editorRenderer: Type<TableCellRendererBase> | TemplateRef<any>;
     group: boolean;
-    field: number;
+    field: string;
     rowSpan: number;
 }
 

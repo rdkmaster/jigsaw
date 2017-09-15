@@ -94,7 +94,7 @@ export abstract class AbstractGraphData extends TableDataBase {
 
     public ajaxErrorHandler(error): void {
         super.ajaxErrorHandler(error);
-        this.clearData();
+        this.clear();
         this.refresh();
     }
 
@@ -102,7 +102,7 @@ export abstract class AbstractGraphData extends TableDataBase {
         if (!AbstractGraphData.isGraphData(data)) {
             throw new Error('invalid graph data, need at least a "data" property which type is Array!');
         }
-        this.clearData();
+        this.clear();
 
         TableDataBase.arrayAppend(this.data, data.data);
         if (data.hasOwnProperty('header')) {
@@ -126,8 +126,8 @@ export abstract class AbstractGraphData extends TableDataBase {
         }
     }
 
-    protected clearData(): void {
-        super.clearData();
+    public clear(): void {
+        super.clear();
         this.rowDescriptor.splice(0, this.rowDescriptor.length);
         this.echartOptions = null;
     }
