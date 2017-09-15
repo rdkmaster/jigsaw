@@ -16,7 +16,7 @@ rm -fr ./e2e
 cp -r $home/e2e ./
 
 rm -fr src/app src/assets src/styles.scss
-cp -r $home/src/app $home/src/assets $home/src/styles.scss src/
+cp -r $home/src/app $home/src/styles.scss src/
 
 rm -fr ./protractor.conf.js
 cp -r $home/protractor.conf.js ./
