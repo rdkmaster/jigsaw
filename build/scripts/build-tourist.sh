@@ -1,14 +1,7 @@
 #!/bin/bash
 home=`pwd`
 
-touristDir=$1
-echo "--------------------------------------------------"
-echo `pwd`
-echo $touristDir
-exit
-
-
-
+touristDir=`pwd`/../jigsaw-tourist
 mkdir -p $touristDir
 git clone https://github.com/rdkmaster/jigsaw-tourist.git $touristDir
 cd $touristDir

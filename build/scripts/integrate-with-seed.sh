@@ -1,9 +1,10 @@
 #!/bin/bash
 home=`pwd`
 
-mkdir -p $SEED_DIR
-git clone https://github.com/rdkmaster/jigsaw-seed.git $SEED_DIR
-cd $SEED_DIR
+seedDir=`pwd`/../jigsaw-seed
+mkdir -p $seedDir
+git clone https://github.com/rdkmaster/jigsaw-seed.git $seedDir
+cd $seedDir
 npm install
 
 #update jigsaw npm package
