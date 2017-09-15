@@ -583,8 +583,8 @@ export const navInfo = [
                 url: '/combo-select/disable'
             },
             {
-                label: 'editable',
-                url: '/combo-select/editable'
+                label: 'auto-complete',
+                url: '/combo-select/auto-complete'
             },
             {
                 label: 'collapse',
@@ -734,8 +734,13 @@ navInfo.unshift({
                 url: '/select/select-full'
             },
             {
+
                 label: 'fish-bone',
                 url: '/fish-bone/fish-bone-full'
+            },
+            {
+                label: 'auto-complete',
+                url: '/combo-select/auto-complete'
             }
         ]
     });

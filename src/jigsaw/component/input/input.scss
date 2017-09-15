@@ -38,6 +38,15 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
             box-shadow: $box-focus-shadow;
         }
     }
+    input::-webkit-input-placeholder {
+        color: $text-color-secondary;
+    }
+    input:-ms-input-placeholder {
+        color: $text-color-secondary;
+    }
+    input:-moz-placeholder {
+        color: $text-color-secondary;
+    }
     &-clear-bar{
         cursor: pointer;
         font-size: 16px;

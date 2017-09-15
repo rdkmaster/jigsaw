@@ -15,6 +15,7 @@ export interface IAjaxComponentData extends IComponentData {
     busy: boolean;
 
     fromAjax(options: RequestOptionsArgs | string): void;
+    onAjaxStart   (callback: () => void, context?: any): CallbackRemoval;
     onAjaxSuccess (callback: (data: any) => void, context?: any): CallbackRemoval;
     onAjaxError   (callback: (error: Response) => void, context?: any): CallbackRemoval;
     onAjaxComplete(callback: () => void, context?: any): CallbackRemoval;
@@ -95,9 +96,14 @@ export class ComponentDataHelper {
 
     private _timeout: any = null;
     private _refreshCallbacks: DataRefreshCallback[] = [];
+    private _ajaxStartCallbacks: AjaxSuccessCallback[] = [];
     private _ajaxSuccessCallbacks: AjaxSuccessCallback[] = [];
     private _ajaxErrorCallbacks: AjaxSuccessCallback[] = [];
     private _ajaxCompleteCallbacks: AjaxSuccessCallback[] = [];
+
+    public getAjaxStartRemoval(callback: AjaxSuccessCallback): CallbackRemoval {
+        return this._getRemoval(this._ajaxStartCallbacks, callback);
+    }
 
     public getAjaxSuccessRemoval(callback: AjaxSuccessCallback): CallbackRemoval {
         return this._getRemoval(this._ajaxSuccessCallbacks, callback);
@@ -125,6 +131,10 @@ export class ComponentDataHelper {
         }, 0);
     }
 
+    public invokeAjaxStartCallback(): void {
+        this._ajaxStartCallbacks.forEach(callback => CommonUtils.safeInvokeCallback(callback.context, callback.fn));
+    }
+
     public invokeAjaxSuccessCallback(data: any): void {
         this._ajaxSuccessCallbacks.forEach(callback => CommonUtils.safeInvokeCallback(callback.context, callback.fn, data));
     }
@@ -139,6 +149,7 @@ export class ComponentDataHelper {
 
     public clearCallbacks(): void {
         this._refreshCallbacks.splice(0, this._refreshCallbacks.length);
+        this._ajaxStartCallbacks.splice(0, this._ajaxStartCallbacks.length);
         this._ajaxSuccessCallbacks.splice(0, this._ajaxSuccessCallbacks.length);
         this._ajaxErrorCallbacks.splice(0, this._ajaxErrorCallbacks.length);
         this._ajaxCompleteCallbacks.splice(0, this._ajaxCompleteCallbacks.length);
