@@ -3,6 +3,7 @@ home=`pwd`
 
 touristDir=$1
 echo "--------------------------------------------------"
+echo `pwd`
 echo $touristDir
 exit
 
