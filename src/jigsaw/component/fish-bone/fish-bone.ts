@@ -6,6 +6,7 @@ import {AbstractJigsawComponent} from "../common";
 import {fadeIn} from "../animations/fade-in";
 import {CallbackRemoval} from "../../core/utils/common-utils";
 import {JigsawScrollBarModule} from "../../directive/scrollbar/scrollbar";
+import {TreeData} from "../../core/data/tree-data";
 
 @Component({
     selector: 'j-fish-bone, jigsaw-fish-bone',
@@ -25,7 +26,7 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
     }
 
     @Input()
-    public data: object[];
+    public data: TreeData;
 
     @Input()
     public direction: string = 'left';
@@ -93,12 +94,12 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
 
     private _setRangeHeight() {
         // 上部的高度
-        const upHeight = Math.cos(30*0.017453293) * this._getMaxHeight((fishBoneItem, index) => {
+        const upHeight = Math.cos(30 * 0.017453293) * this._getMaxHeight((fishBoneItem, index) => {
             return (index + 1) % 2 === 1;
         }) + 30;
 
         // 下部的高度
-        const downHeight = Math.cos(30*0.017453293) * this._getMaxHeight((fishBoneItem, index) => {
+        const downHeight = Math.cos(30 * 0.017453293) * this._getMaxHeight((fishBoneItem, index) => {
             return (index + 1) % 2 === 0;
         }) + 30;
 
@@ -113,10 +114,10 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
         this._renderer.setStyle(fishBoneRange, 'height', upHeight + downHeight + 'px');
         // 设置主骨在范围框中的位置
         this._renderer.setStyle(mainBone, 'top', upHeight + 'px');
-        if(this.height){
+        if (this.height) {
             // 组件设置高度，加上外框的滚动条
             this._renderer.setStyle(fishBoneFramework, 'overflow-y', 'scroll');
-        }else {
+        } else {
             // 组件不设置高度，去掉外框的滚动条，组件自适应范围框的高度
             this._renderer.setStyle(host, 'height', upHeight + downHeight + 'px');
             this._renderer.setStyle(fishBoneFramework, 'overflow-y', 'hidden');
@@ -200,7 +201,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
     }
 
     @Input()
-    public data: object[];
+    public data: TreeData;
 
     @Input()
     public childRotate: string;
@@ -254,7 +255,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
                 return arr;
             }, []));
         } else {
-            this.rangeHeight = this._itemContent.offsetHeight / Math.sin(60*0.017453293);
+            this.rangeHeight = this._itemContent.offsetHeight / Math.sin(60 * 0.017453293);
         }
     }
 
@@ -292,9 +293,9 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
             this._renderer.setStyle(this._itemContent, 'width', '100%');
         } else {
             // 没有子节点，宽度为内容的宽度+高度，内容的最小宽度为100px，写在css里
-            this.width = this._itemContent.offsetHeight / Math.tan(60*0.017453293) + this._itemContent.offsetWidth + 'px';
+            this.width = this._itemContent.offsetHeight / Math.tan(60 * 0.017453293) + this._itemContent.offsetWidth + 'px';
             // 纠正内容和鱼骨交叉
-            this._renderer.setStyle(this._itemContent, 'left', this._itemContent.offsetHeight / Math.tan(60*0.017453293) + 'px');
+            this._renderer.setStyle(this._itemContent, 'left', this._itemContent.offsetHeight / Math.tan(60 * 0.017453293) + 'px');
         }
         // 设置鱼骨宽度样式
         this._renderer.setStyle(this.itemEl, 'width', this.width);

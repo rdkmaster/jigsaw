@@ -7,6 +7,6 @@ import {FishBoneFullComponent} from "./app.component";
     declarations: [FishBoneFullComponent],
     bootstrap: [FishBoneFullComponent]
 })
-export class FishBoneFullModule{
+export class FishBoneFullModule {
 
 }

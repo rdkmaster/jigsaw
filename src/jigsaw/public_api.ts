@@ -54,6 +54,7 @@ export * from './component/tooltip/tooltip';
 export * from './component/tree/tree-ext';
 export * from './component/tree/ztree-types';
 export * from './component/fish-bone/fish-bone';
+export * from './component/chart-icon/chart-icon';
 
 export * from './directive/scrollbar/scrollbar';
 export * from "./directive/dragdrop/types";
