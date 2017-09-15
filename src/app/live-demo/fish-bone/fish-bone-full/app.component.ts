@@ -1,11 +1,11 @@
-import {Component, ViewEncapsulation} from "@angular/core";
+import {AfterViewInit, Component, ViewEncapsulation} from "@angular/core";
 
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
     encapsulation: ViewEncapsulation.None
 })
-export class FishBoneFullComponent{
+export class FishBoneFullComponent implements AfterViewInit{
     data = [
         {
             label: '<span class="orange"><span class="fa fa-group"></span>父节点1</span>',
@@ -23,17 +23,17 @@ export class FishBoneFullComponent{
                                             label: "子节点11111",
                                             nodes: [
                                                 {
-                                                    label: '<span class="green"><span class="fa fa-bar-chart"></span>end</span>'
+                                                    label: '<span class="line">5,3,9,6,5,9,7,3,5,2</span>'
                                                 }
                                             ]
                                         }
                                     ]
                                 },
                                 {
-                                    label: '<span class="fa fa-area-chart"></span>end'
+                                    label: '<span class="bar-colours-1">5,3,9,6,5,9,7,3,5,2</span>'
                                 },
                                 {
-                                    label: '<span class="fa fa-area-chart"></span>end'
+                                    label: '<span class="pie-colours-2">5,3,9,6,5</span>'
                                 }
                             ]
                         },
@@ -221,5 +221,24 @@ export class FishBoneFullComponent{
                 }
             ]
         }
-    ]
+    ];
+
+    ngAfterViewInit(){
+        $(".bar-colours-1").peity("bar", {
+            fill: ["red", "green", "blue"],
+            height: 50,
+            width: 100
+        });
+        $(".pie-colours-2").peity("pie", {
+            fill: function(_, i, all) {
+                var g = (i / all.length) * 255;
+                return "rgb(255, " + g + ", 0)"
+            },
+            radius: 48,
+        });
+        $(".line").peity("line", {
+            height: 80,
+            width: 100
+        });
+    }
 }

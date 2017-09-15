@@ -41,10 +41,10 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
     }
 
     /* jigsaw-fish-bone-up jigsaw-fish-bone-down 一个鱼骨树在上面还是在下面，放在最外层的节点上 */
-    &-up > p {
+    &-up > .#{$fish-bone-prefix-cls}-item-content {
         top: -16px;
     }
-    &-down > p {
+    &-down > .#{$fish-bone-prefix-cls}-item-content {
         top: 6px;
     }
 
@@ -76,7 +76,7 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
     &-right {
         .#{$fish-bone-prefix-cls}-range{
             transform: rotateY(180deg);
-            p {
+            .#{$fish-bone-prefix-cls}-item-content {
                 transform: rotateY(180deg);
             }
         }

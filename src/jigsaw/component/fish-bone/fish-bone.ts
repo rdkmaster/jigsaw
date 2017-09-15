@@ -93,14 +93,14 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
 
     private _setRangeHeight() {
         // 上部的高度
-        const upHeight = this._getMaxHeight((fishBoneItem, index) => {
+        const upHeight = Math.cos(30*0.017453293) * this._getMaxHeight((fishBoneItem, index) => {
             return (index + 1) % 2 === 1;
-        });
+        }) + 30;
 
         // 下部的高度
-        const downHeight = this._getMaxHeight((fishBoneItem, index) => {
+        const downHeight = Math.cos(30*0.017453293) * this._getMaxHeight((fishBoneItem, index) => {
             return (index + 1) % 2 === 0;
-        });
+        }) + 30;
 
         const host = this._elementRef.nativeElement;
         // 横向的主骨
@@ -191,10 +191,12 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
 export class JigsawFishBoneItem extends AbstractJigsawComponent implements AfterViewInit {
 
     public itemEl: HTMLElement;
+    private _itemContent: HTMLElement;
 
     constructor(private _renderer: Renderer2, elementRef: ElementRef) {
         super();
         this.itemEl = elementRef.nativeElement;
+
     }
 
     @Input()
@@ -243,7 +245,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
             this.rangeHeight = Math.max(...this.childBones.reduce((arr, fishBoneItem) => {
                 let childRange = 0;
                 const lastChild = fishBoneItem.childBones.last;
-                if (lastChild && lastChild.rangeHeight != 0) {
+                if (lastChild && lastChild.rangeHeight > 30) {
                     childRange = lastChild.rangeHeight + lastChild.left;
                 } else {
                     childRange = fishBoneItem.itemEl.offsetWidth;
@@ -252,7 +254,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
                 return arr;
             }, []));
         } else {
-            this.rangeHeight = 0;
+            this.rangeHeight = this._itemContent.offsetHeight / Math.sin(60*0.017453293);
         }
     }
 
@@ -269,16 +271,33 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
     }
 
     /**
+     * 计算偏移的通用方法
+     * @param fishBoneItem
+     */
+    public calculateOffsetLeft(fishBoneItem) {
+        // fishBoneItem.rangeHeight 为0时，取30
+        const rangeHeight = fishBoneItem.rangeHeight > 30 ? fishBoneItem.rangeHeight : 30;
+        this.left = fishBoneItem.left + rangeHeight + 30;
+    }
+
+    /**
      * 计算宽度并设置样式
      * @private
      */
     private _setWidth() {
         if (this.childBones.last) {
             // 取其最后一个子节点的left偏移值 + 30px
-            // 没有子节点，宽度为默认值100，写在css里
             this.width = this.childBones.last.left + 30 + 'px';
-            this._renderer.setStyle(this.itemEl, 'width', this.width);
+            // 有子节点时，内容宽度设成和鱼骨宽度相同
+            this._renderer.setStyle(this._itemContent, 'width', '100%');
+        } else {
+            // 没有子节点，宽度为内容的宽度+高度，内容的最小宽度为100px，写在css里
+            this.width = this._itemContent.offsetHeight / Math.tan(60*0.017453293) + this._itemContent.offsetWidth + 'px';
+            // 纠正内容和鱼骨交叉
+            this._renderer.setStyle(this._itemContent, 'left', this._itemContent.offsetHeight / Math.tan(60*0.017453293) + 'px');
         }
+        // 设置鱼骨宽度样式
+        this._renderer.setStyle(this.itemEl, 'width', this.width);
     }
 
     /**
@@ -292,21 +311,12 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
         this._setWidth();
     }
 
-    /**
-     * 计算偏移的通用方法
-     * @param fishBoneItem
-     */
-    public calculateOffsetLeft(fishBoneItem) {
-        // fishBoneItem.rangeHeight 为0时，取30
-        const rangeHeight = fishBoneItem.rangeHeight ? fishBoneItem.rangeHeight : 30;
-        this.left = fishBoneItem.left + rangeHeight + 30;
-    }
-
     public rectifyEvent = new EventEmitter();
 
     ngOnInit() {
         super.ngOnInit();
         this._$state = 'in';
+        this._itemContent = <HTMLElement>this.itemEl.querySelector('.jigsaw-fish-bone-item-content');
     }
 
     ngAfterViewInit() {

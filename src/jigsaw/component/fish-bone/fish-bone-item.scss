@@ -21,9 +21,9 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
         /* 最外面的父节点的偏移默认是0 */
         left: 0;
     }
-    > p {
+    > .#{$fish-bone-prefix-cls}-item-content {
         position: absolute;
-        width: 100%;
+        min-width: 100px;
         text-align: center;
         font-size: 12px;
         line-height: 1.2;
@@ -37,20 +37,20 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
     &-rotate-down {
         transform: rotate(60deg);
     }
-    .#{$fish-bone-prefix-cls}-up &-rotate-up > p {
+    .#{$fish-bone-prefix-cls}-up &-rotate-up > .#{$fish-bone-prefix-cls}-item-content {
         bottom: 4px;
     }
-    .#{$fish-bone-prefix-cls}-up &-rotate-down:not(.#{$fish-bone-prefix-cls}-item-no-child) > p {
+    .#{$fish-bone-prefix-cls}-up &-rotate-down:not(.#{$fish-bone-prefix-cls}-item-no-child) > .#{$fish-bone-prefix-cls}-item-content {
         top: 4px;
     }
     /* 没有子节点的节点文本放在上面 */
-    .#{$fish-bone-prefix-cls}-up &-rotate-down.#{$fish-bone-prefix-cls}-item-no-child > p {
+    .#{$fish-bone-prefix-cls}-up &-rotate-down.#{$fish-bone-prefix-cls}-item-no-child > .#{$fish-bone-prefix-cls}-item-content {
         bottom: 4px;
     }
-    .#{$fish-bone-prefix-cls}-down &-rotate-up > p {
+    .#{$fish-bone-prefix-cls}-down &-rotate-up > .#{$fish-bone-prefix-cls}-item-content {
         bottom: 6px;
     }
-    .#{$fish-bone-prefix-cls}-down &-rotate-down > p {
+    .#{$fish-bone-prefix-cls}-down &-rotate-down > .#{$fish-bone-prefix-cls}-item-content {
         top: 4px;
     }
 
