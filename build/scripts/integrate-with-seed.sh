@@ -2,6 +2,11 @@
 home=`pwd`
 
 seedDir=$1
+echo '1111111111111111111111111111111111111111111111111111111111111111111111'
+echo $1
+exit
+
+
 mkdir -p $seedDir
 git clone https://github.com/rdkmaster/jigsaw-seed.git $seedDir
 cd $seedDir
