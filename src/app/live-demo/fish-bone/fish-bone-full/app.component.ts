@@ -1,16 +1,17 @@
-import {Component} from "@angular/core";
+import {Component, ViewEncapsulation} from "@angular/core";
 
 @Component({
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+    styleUrls: ['./app.component.css'],
+    encapsulation: ViewEncapsulation.None
 })
 export class FishBoneFullComponent{
     data = [
         {
-            label: '父节点1',
+            label: '<span class="orange"><span class="fa fa-group"></span>父节点1</span>',
             nodes: [
                 {
-                    label: '父节点11',
+                    label: '<span class="fa fa-line-chart"></span>父节点11',
                     nodes: [
                         {
                             label: '子节点111',
@@ -22,17 +23,17 @@ export class FishBoneFullComponent{
                                             label: "子节点11111",
                                             nodes: [
                                                 {
-                                                    label: 'end'
+                                                    label: '<span class="green"><span class="fa fa-bar-chart"></span>end</span>'
                                                 }
                                             ]
                                         }
                                     ]
                                 },
                                 {
-                                    label: 'end'
+                                    label: '<span class="fa fa-area-chart"></span>end'
                                 },
                                 {
-                                    label: 'end'
+                                    label: '<span class="fa fa-area-chart"></span>end'
                                 }
                             ]
                         },
@@ -52,19 +53,19 @@ export class FishBoneFullComponent{
             ]
         },
         {
-            label: '父节点2',
+            label: '<span class="orange"><span class="fa fa-folder"></span>父节点2</span>',
             nodes: [
                 {
-                    label: '父节点21',
+                    label: '<span class="fa fa-line-chart"></span>父节点21',
                     nodes: [
                         {
                             label: '子节点211',
                             nodes: [
                                 {
-                                    label: 'end'
+                                    label: '<span class="fa fa-bar-chart"></span>end'
                                 },
                                 {
-                                    label: 'end'
+                                    label: '<span class="fa fa-bar-chart"></span>end'
                                 },
                                 {
                                     label: 'end'
@@ -87,39 +88,39 @@ export class FishBoneFullComponent{
             ]
         },
         {
-            label: '父节点3',
+            label: '<span class="orange"><span class="fa fa-line-chart"></span>父节点3</span>',
             nodes: [
                 {
                     label: '父节点31',
                     nodes: [
                         {
-                            label: 'end'
+                            label: '<span class="fa fa-bar-chart"></span>end'
                         }
                     ]
                 }
             ]
         },
         {
-            label: '父节点4',
+            label: '<span class="orange">父节点4</span>',
             nodes: [
                 {
                     label: '父节点41',
                     nodes: [
                         {
-                            label: 'end'
+                            label: '<span class="green">end</span>'
                         }
                     ]
                 }
             ]
         },
         {
-            label: '父节点5',
+            label: '<span class="orange">父节点5</span>',
             nodes: [
                 {
                     label: '父节点51',
                     nodes: [
                         {
-                            label: 'end'
+                            label: '<span class="green">end</span>'
                         }
                     ]
                 }
@@ -129,7 +130,7 @@ export class FishBoneFullComponent{
 
     data2= [
         {
-            label: '单进程性能',
+            label: '<span class="orange">单进程性能</span>',
             nodes: [
                 {
                     label: '并发能力与网口速率上限有关'
@@ -149,7 +150,7 @@ export class FishBoneFullComponent{
                             label: '单主机CPU极限',
                             nodes: [
                                 {
-                                    label: '约？并发'
+                                    label: '并发'
                                 }
                             ]
                         }
@@ -167,7 +168,7 @@ export class FishBoneFullComponent{
             ]
         },
         {
-            label: 'FDFDFDF',
+            label: '<span class="orange">FDFDFDF</span>',
             nodes: [
                 {
                     label: '飞飞狒狒飞飞狒狒',
@@ -176,7 +177,7 @@ export class FishBoneFullComponent{
                             label: 'dddddddd',
                             nodes: [
                                 {
-                                    label: 'dddddd'
+                                    label: '<span class="green"><span class="fa fa-bar-chart"></span>dddddd</span>'
                                 }
                             ]
                         }
@@ -185,16 +186,16 @@ export class FishBoneFullComponent{
             ]
         },
         {
-            label: 'FDFDFDF',
+            label: '<span class="orange">FDFDFDF</span>',
             nodes: [
                 {
                     label: '飞飞狒狒飞飞狒狒',
                     nodes: [
                         {
-                            label: 'ddddddddd',
+                            label: '<span class="fa fa-bar-chart"></span>ddddddddd',
                             nodes: [
                                 {
-                                    label: 'ddddddd'
+                                    label: '<span class="green">ddddddd</span>'
                                 }
                             ]
                         }
@@ -203,7 +204,7 @@ export class FishBoneFullComponent{
             ]
         },
         {
-            label: 'FDFDFDF',
+            label: '<span class="orange">FDFDFDF</span>',
             nodes: [
                 {
                     label: '飞飞狒狒飞飞狒狒',
@@ -212,7 +213,7 @@ export class FishBoneFullComponent{
                             label: 'dddddddd',
                             nodes: [
                                 {
-                                    label: 'dddddd'
+                                    label: '<span class="green"><span class="fa fa-bar-chart"></span>dddddd</span>'
                                 }
                             ]
                         }

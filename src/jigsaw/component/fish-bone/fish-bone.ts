@@ -47,7 +47,7 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
             fishBoneItem.rectifyEvent.subscribe(() => {
                 this._allFishBones.push(fishBoneItem);
             });
-            this._cacheFishBoneItems(fishBoneItem.fishBoneChildren);
+            this._cacheFishBoneItems(fishBoneItem.childBones);
         })
     }
 
@@ -83,7 +83,7 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
 
     private _getMaxHeight(cb) {
         return Math.max(...this._firstLevelBones.filter(cb).reduce((arr, fishBoneItem) => {
-            const lastChild = fishBoneItem.fishBoneChildren.last;
+            const lastChild = fishBoneItem.childBones.last;
             if (lastChild) {
                 arr.push(lastChild.rangeHeight + lastChild.left);
             }
@@ -204,10 +204,10 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
     public childRotate: string;
 
     @ViewChildren(forwardRef(() => JigsawFishBoneItem))
-    public fishBoneChildren: QueryList<JigsawFishBoneItem>;
+    public childBones: QueryList<JigsawFishBoneItem>;
 
     @Input()
-    public parentFishBone: JigsawFishBoneItem;
+    public parentBone: JigsawFishBoneItem;
 
     @Input()
     public level: number = 0;
@@ -239,10 +239,10 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
      *          其他取子节点自身的宽度
      * */
     private _setRangeHeight() {
-        if (this.fishBoneChildren.length) {
-            this.rangeHeight = Math.max(...this.fishBoneChildren.reduce((arr, fishBoneItem) => {
+        if (this.childBones.length) {
+            this.rangeHeight = Math.max(...this.childBones.reduce((arr, fishBoneItem) => {
                 let childRange = 0;
-                const lastChild = fishBoneItem.fishBoneChildren.last;
+                const lastChild = fishBoneItem.childBones.last;
                 if (lastChild && lastChild.rangeHeight != 0) {
                     childRange = lastChild.rangeHeight + lastChild.left;
                 } else {
@@ -264,7 +264,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
         if (this.level !== 0 && this.index !== 0) {
             // 最外层的父节点另外计算
             // index = 0 的采用默认值
-            this.calculateOffsetLeft(this.parentFishBone.fishBoneChildren.toArray()[this.index - 1]);
+            this.calculateOffsetLeft(this.parentBone.childBones.toArray()[this.index - 1]);
         }
     }
 
@@ -273,10 +273,10 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
      * @private
      */
     private _setWidth() {
-        if (this.fishBoneChildren.last) {
+        if (this.childBones.last) {
             // 取其最后一个子节点的left偏移值 + 30px
             // 没有子节点，宽度为默认值100，写在css里
-            this.width = this.fishBoneChildren.last.left + 30 + 'px';
+            this.width = this.childBones.last.left + 30 + 'px';
             this._renderer.setStyle(this.itemEl, 'width', this.width);
         }
     }
@@ -324,7 +324,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
         }, 0);
 
         // 标识没有子节点的，没有子节点的节点文本放在上面
-        if (!this.fishBoneChildren.length) {
+        if (!this.childBones.length) {
             this._renderer.addClass(this.itemEl, 'jigsaw-fish-bone-item-no-child');
         }
 
