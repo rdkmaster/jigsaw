@@ -11,13 +11,13 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
     /* jigsaw-fish-bone-white jigsaw-fish-bone-dark 鱼骨主题标识 放在host上*/
     &-white {
         background: #FFF;
-        .#{$fish-bone-prefix-cls}-head i, .#{$fish-bone-prefix-cls}-main {
+        .#{$fish-bone-prefix-cls}-head p:before, .#{$fish-bone-prefix-cls}-main {
             background: #BABABA;
         }
     }
     &-dark {
         background: #313333;
-        .#{$fish-bone-prefix-cls}-head i, .#{$fish-bone-prefix-cls}-main {
+        .#{$fish-bone-prefix-cls}-head p:before, .#{$fish-bone-prefix-cls}-main {
             background: #6B6B6B;
         }
     }
@@ -54,13 +54,24 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
     &-head {
         left: 0;
         transform: translate(-104%, -50%) rotateY(180deg);
-        i {
+        p {
             position: absolute;
-            left: 30%;
-            top: 30%;
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
+            width: 75%;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) rotateY(180deg);
+            max-height: 44px;
+            line-height: 1.2;
+            text-align: center;
+            &:before {
+                position: absolute;
+                left: 30%;
+                top: -16px;
+                width: 15px;
+                height: 15px;
+                border-radius: 50%;
+                content: '';
+            }
         }
     }
     &-foot {
@@ -74,6 +85,11 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
     }
 
     &-right {
+        .#{$fish-bone-prefix-cls}-head{
+            p{
+                transform: translate(-50%, -50%) rotateY(0deg);
+            }
+        }
         .#{$fish-bone-prefix-cls}-range {
             transform: rotateY(180deg);
             .#{$fish-bone-prefix-cls}-item-content {

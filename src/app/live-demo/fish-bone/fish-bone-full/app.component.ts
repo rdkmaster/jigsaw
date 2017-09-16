@@ -11,6 +11,7 @@ export class FishBoneFullComponent implements AfterViewInit {
 
     constructor(){
         this.data = new TreeData();
+        this.data.label = '<span class="orange">目标标题</span>';
         this.data.fromObject([
                 {
                     label: '<span class="orange"><span class="fa fa-group"></span>父节点1</span>',
@@ -122,100 +123,199 @@ export class FishBoneFullComponent implements AfterViewInit {
                 }
             ]);
         this.data2 = new TreeData();
+        this.data2.label = '<span class="orange">申论万能思维体系</span>';
         this.data2.fromObject([
             {
-                label: '<span class="orange">单进程性能</span>',
+                label: '<span class="orange">实务维度</span>',
                 nodes: [
                     {
-                        label: '并发能力与网口速率上限有关'
-                    },
-                    {
-                        label: '模拟实际测试代码',
+                        label: '主体',
                         nodes: [
                             {
-                                label: '单进程内存与并发的关系',
+                                label: '构成',
                                 nodes: [
                                     {
-                                        label: '大约是16G/100并发基本呈线性增长'
+                                        label: '政府',
+                                    },
+                                    {
+                                        label: '企业',
+                                    },
+                                    {
+                                        label: '民众',
                                     }
                                 ]
                             },
                             {
-                                label: '单主机CPU极限',
+                                label: '方面',
                                 nodes: [
                                     {
-                                        label: '并发'
+                                        label: '利益',
+                                        nodes: [
+                                            {
+                                                label: '经济利益-钱'
+                                            },
+                                            {
+                                                label: '政治利益-权利和权力'
+                                            },
+                                            {
+                                                label: '文化利益-精神需求'
+                                            },
+                                            {
+                                                label: '民生利益-生活需求'
+                                            },
+                                            {
+                                                label: '生态利益'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        label: '思想',
+                                        nodes: [
+                                            {
+                                                label: '理念'
+                                            },
+                                            {
+                                                label: '意识'
+                                            },
+                                            {
+                                                label: '常识、知识'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        label: '素质',
+                                        nodes: [
+                                            {
+                                                label: '业务素质'
+                                            },
+                                            {
+                                                label: '思想道德素质'
+                                            },
+                                            {
+                                                label: '心理素质'
+                                            },
+                                            {
+                                                label: '身体素质'
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    /*{
+                        label: '技术',
+                        nodes: [
+                            {
+                                label: '1、技术手段、技术路径'
+                            },
+                            {
+                                label: '2、人：干部、队伍、人才、编制'
+                            },
+                            {
+                                label: '3、财：财政、贷款、民间成本'
+                            },
+                            {
+                                label: '4、物：设备、设施（基础设施和配套设施）'
+                            }
+                        ]
+                    },
+                    {
+                        label: '制度',
+                        nodes: [
+                            {
+                                label: '非正式制度：风俗、习惯'
+                            },
+                            {
+                                label: '正式制度',
+                                nodes: [
+                                    {
+                                        label: '规则：静态制度'
+                                    },
+                                    {
+                                        label: '机制：系统制度的应用'
+                                    },
+                                    {
+                                        label: '体制（政策）：规则与机制的统称'
                                     }
                                 ]
                             }
                         ]
                     },
                     {
-                        label: '单进程空载极限',
+                        label: '环境',
                         nodes: [
                             {
-                                label: '保守并发量约100万这是保守计算值'
+                                label: '自然地理环境'
+                            },
+                            {
+                                label: '社会人文环境'
                             }
                         ]
-
-                    }
+                    }*/
                 ]
             },
             {
-                label: '<span class="orange">FDFDFDF</span>',
+                label: '<span class="orange">时间维度</span>',
                 nodes: [
                     {
-                        label: '飞飞狒狒飞飞狒狒',
-                        nodes: [
-                            {
-                                label: 'dddddddd',
-                                nodes: [
-                                    {
-                                        label: '<span class="green"><span class="fa fa-bar-chart"></span>dddddd</span>'
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                label: '<span class="orange">FDFDFDF</span>',
-                nodes: [
+                        label: '微观：事前、事中、事后'
+                    },
                     {
-                        label: '飞飞狒狒飞飞狒狒',
+                        label: '宏观',
                         nodes: [
                             {
-                                label: '<span class="fa fa-bar-chart"></span>ddddddddd',
-                                nodes: [
-                                    {
-                                        label: '<span class="green">ddddddd</span>'
-                                    }
-                                ]
-                            }
+                                label: '过去、历史、传统'
+                            },
+                            {
+                                label: '现在、现状、现代'
+                            },
+                            {
+                                label: '未来、将来'
+                            },
                         ]
                     }
                 ]
             },
             {
-                label: '<span class="orange">FDFDFDF</span>',
+                label: '<span class="orange">空间维度</span>',
                 nodes: [
                     {
-                        label: '飞飞狒狒飞飞狒狒',
+                        label: '物理空间',
                         nodes: [
                             {
-                                label: 'dddddddd',
-                                nodes: [
-                                    {
-                                        label: '<span class="green"><span class="fa fa-bar-chart"></span>dddddd</span>'
-                                    }
-                                ]
+                                label: '本地、本国、民族'
+                            },
+                            {
+                                label: '外地、外国、世界'
                             }
                         ]
+                    },
+                    {
+                        label: '思维空间',
+                        nodes: [
+                            {
+                                label: '内因'
+                            },
+                            {
+                                label: '外因'
+                            }
+                        ]
+                    },
+                ]
+            },
+            {
+                label: '<span class="orange">价值维度</span>',
+                nodes: [
+                    {
+                        label: '利、积极、成绩、意义、经验'
+                    },
+                    {
+                        label: '弊、消极、问题、危害、教训'
                     }
                 ]
             }
-        ])
+        ]);
     }
 
     data: TreeData;

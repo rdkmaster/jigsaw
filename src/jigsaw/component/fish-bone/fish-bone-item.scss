@@ -62,15 +62,7 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
     }
 }
 
-.#{$fish-bone-prefix-cls}-level {
-    &-0 {
-        height: 4px;
-    }
-    &-1 {
-        height: 3px;
-    }
-    &-2 {
-        height: 2px;
-    }
+.#{$fish-bone-prefix-cls}-level-0 {
+    height: 2px;
 }
 
