@@ -82,11 +82,15 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
         })
     }
 
-    private _getMaxHeight(cb) {
+    private _getMaxRangeHeight(cb) {
         return Math.max(...this._firstLevelBones.filter(cb).reduce((arr, fishBoneItem) => {
             const lastChild = fishBoneItem.childBones.last;
             if (lastChild) {
+                // 有子节点
                 arr.push(lastChild.rangeHeight + lastChild.left);
+            } else {
+                // 没有子节点
+                arr.push(fishBoneItem.itemEl.offsetWidth);
             }
             return arr
         }, []));
@@ -94,12 +98,12 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
 
     private _setRangeHeight() {
         // 上部的高度
-        const upHeight = Math.cos(30 * 0.017453293) * this._getMaxHeight((fishBoneItem, index) => {
+        const upHeight = Math.cos(30 * 0.017453293) * this._getMaxRangeHeight((fishBoneItem, index) => {
             return (index + 1) % 2 === 1;
         }) + 30;
 
         // 下部的高度
-        const downHeight = Math.cos(30 * 0.017453293) * this._getMaxHeight((fishBoneItem, index) => {
+        const downHeight = Math.cos(30 * 0.017453293) * this._getMaxRangeHeight((fishBoneItem, index) => {
             return (index + 1) % 2 === 0;
         }) + 30;
 
