@@ -197,7 +197,6 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
     constructor(private _renderer: Renderer2, elementRef: ElementRef) {
         super();
         this.itemEl = elementRef.nativeElement;
-
     }
 
     @Input()
@@ -217,6 +216,9 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
 
     @Input()
     public index: number = 0;
+
+    @Input()
+    public firstLevelRotate: string;
 
     public rangeHeight: number = 0;
 
@@ -255,7 +257,15 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
                 return arr;
             }, []));
         } else {
-            this.rangeHeight = this._itemContent.offsetHeight / Math.sin(60 * 0.017453293);
+            // 没有子节点
+            if (this.firstLevelRotate == 'up') {
+                // 主骨在上面
+                this.rangeHeight = this._itemContent.offsetHeight / Math.sin(60 * 0.017453293);
+            } else if (this.firstLevelRotate == 'down') {
+                // 主骨在下面
+                this.rangeHeight = 0;
+            }
+
         }
     }
 
@@ -264,10 +274,24 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
      * @private
      */
     private _setOffset() {
-        if (this.level !== 0 && this.index !== 0) {
+        if (this.level !== 0) {
             // 最外层的父节点另外计算
-            // index = 0 的采用默认值
-            this.calculateOffsetLeft(this.parentBone.childBones.toArray()[this.index - 1]);
+            if (this.firstLevelRotate == 'down' && this.childBones.length === 0) {
+                // 主骨在下面，没有子节点
+                if (this.index === 0) {
+                    // 第一个如果内容大于默认值，则由内容撑开
+                    const contentHeight = this._itemContent.offsetHeight / Math.sin(60 * 0.017453293) + 30;
+                    this.left = contentHeight > 50 ? contentHeight : 50;
+                } else {
+                    // 后面的也要加上自身内容
+                    const preBone = this.parentBone.childBones.toArray()[this.index - 1];
+                    //const rangeHeight = preBone.rangeHeight > 30 ? preBone.rangeHeight : 30;
+                    this.left = preBone.left + preBone.rangeHeight + 30 + this._itemContent.offsetHeight / Math.sin(60 * 0.017453293);
+                }
+            } else if (this.index !== 0) {
+                // 第一个节点是默认偏移50px，写在css里面
+                this.calculateOffsetLeft(this.parentBone.childBones.toArray()[this.index - 1]);
+            }
         }
     }
 
@@ -292,10 +316,15 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
             // 有子节点时，内容宽度设成和鱼骨宽度相同
             this._renderer.setStyle(this._itemContent, 'width', '100%');
         } else {
-            // 没有子节点，宽度为内容的宽度+高度，内容的最小宽度为100px，写在css里
-            this.width = this._itemContent.offsetHeight / Math.tan(60 * 0.017453293) + this._itemContent.offsetWidth + 'px';
-            // 纠正内容和鱼骨交叉
-            this._renderer.setStyle(this._itemContent, 'left', this._itemContent.offsetHeight / Math.tan(60 * 0.017453293) + 'px');
+            if (this.firstLevelRotate == 'down') {
+                // 主骨在下面， 没有子节点
+                this.width = this._itemContent.offsetWidth + 'px';
+            } else if (this.firstLevelRotate == 'up') {
+                // 主骨在上面，没有子节点，宽度为内容的宽度+高度，内容的最小宽度为100px，写在css里
+                this.width = this._itemContent.offsetHeight / Math.tan(60 * 0.017453293) + this._itemContent.offsetWidth + 'px';
+                // 纠正内容和鱼骨交叉
+                this._renderer.setStyle(this._itemContent, 'left', this._itemContent.offsetHeight / Math.tan(60 * 0.017453293) + 'px');
+            }
         }
         // 设置鱼骨宽度样式
         this._renderer.setStyle(this.itemEl, 'width', this.width);

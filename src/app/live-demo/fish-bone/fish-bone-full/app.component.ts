@@ -32,6 +32,9 @@ export class FishBoneFullComponent implements AfterViewInit {
                                                             label: '<span class="line">5,3,9,6,5,9,7,3,5,2</span>'
                                                         }
                                                     ]
+                                                },
+                                                {
+                                                    label: 'end'
                                                 }
                                             ]
                                         }
@@ -65,10 +68,20 @@ export class FishBoneFullComponent implements AfterViewInit {
                                             label: '<span class="fa fa-bar-chart"></span>end'
                                         },
                                         {
-                                            label: '<span class="fa fa-bar-chart"></span>end'
+                                            label: '<span class="line">5,3,9,6,5,9,7,3,5,2</span>'
                                         },
                                         {
-                                            label: 'end'
+                                            label: `
+                                            <div class="jigsaw-table-host">
+                                            <table>
+                                                <thead><tr><td>ID</td><td>name</td><td>gender</td><td>city</td></tr></thead>
+                                                <tbody>
+                                                    <tr><td>1</td><td>tom</td><td>1</td><td>nj</td></tr>
+                                                    <tr><td>2</td><td>jerry</td><td>0</td><td>shz</td></tr>
+                                                    <tr><td>3</td><td>json</td><td>1</td><td>sh</td></tr>
+                                                </tbody>
+                                            </table>
+                                            </div>`
                                         }
                                     ]
                                 },
@@ -104,12 +117,10 @@ export class FishBoneFullComponent implements AfterViewInit {
                     label: '<span class="orange">父节点4</span>',
                     nodes: [
                         {
-                            label: '父节点41',
-                            nodes: [
-                                {
-                                    label: '<span class="green">end</span>'
-                                }
-                            ]
+                            label: '<span class="bar-colours-1">5,3,9,6,5,9,7,3,5,2</span>'
+                        },
+                        {
+                            label: 'end'
                         }
                     ]
                 },

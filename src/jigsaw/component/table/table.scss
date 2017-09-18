@@ -2,7 +2,7 @@
 
 $table-prefix-cls: #{$jigsaw-prefix}-table;
 
-#{$table-prefix-cls}{
+.#{$table-prefix-cls}-host{
     @include inline-block;
     position: relative;
     width: 100%;
