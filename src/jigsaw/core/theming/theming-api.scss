@@ -144,7 +144,9 @@
 @mixin setTableTextAlign($textAlign: center, $sidePadding: 0) {
     jigsaw-table.jigsaw-table-host table {
         td {
-            text-align: $textAlign;
+            @if($textAlign != default){
+                text-align: $textAlign;
+            }
             @if ($textAlign == left) {
                 padding-left: $sidePadding;
             } @else if ($textAlign == right) {
@@ -162,11 +164,15 @@
  */
 @mixin setTag($defaultBgColor, $height) {
     jigsaw-tag.jigsaw-tag-host {
-        background: $defaultBgColor;
-        height: $height;
-        line-height: $height - 2;
-        .#{$tag-prefix-cls}-close-bar {
-            line-height: $height - 3;
+        @if($defaultBgColor != default){
+            background: $defaultBgColor;
+        }
+        @if($height != dafault){
+            height: $height;
+            line-height: $height - 2;
+            .#{$tag-prefix-cls}-close-bar {
+                line-height: $height - 3;
+            }
         }
     }
 }
