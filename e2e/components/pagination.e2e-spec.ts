@@ -38,7 +38,7 @@ describe('pagination', () => {
             gotoEl.click();
             gotoEl.sendKeys(3);
             gotoEl.sendKeys(protractor.Key.ENTER);
-            await  browser.wait(ExpectedConditions.presenceOf(element(by.css('.jigsaw-page-current'))));
+           browser.sleep(300);
             expect(jigsawPagingEl.element(by.css('.jigsaw-page-current')).getText()).toBe('3');
         });
         it('should change the number of pieces per page', () => {
