@@ -1,4 +1,4 @@
-import {browser, element, by, protractor} from "protractor";
+import {browser, element, by, protractor,ExpectedConditions} from "protractor";
 // import {beforeEach} from "selenium-webdriver/testing";
 
 describe('pagination', () => {
@@ -28,7 +28,7 @@ describe('pagination', () => {
             pageItemEl.get(4).element(by.tagName('SPAN')).click();
             expect(jigsawPagingEl.element(by.css('.jigsaw-page-current')).getText()).toBe('5');
         });
-        it('should go to specified page when click button or send keys to "Goto" input', () => {
+        it('should go to specified page when click button or send keys to "Goto" input', async() => {
             const jigsawPagingEl = element(by.css('.jigsaw-paging')),
                 pageItemEl = jigsawPagingEl.all(by.tagName('jigsaw-paging-item')),
                 buttonEl = element(by.tagName('BUTTON')),
@@ -38,6 +38,7 @@ describe('pagination', () => {
             gotoEl.click();
             gotoEl.sendKeys(3);
             gotoEl.sendKeys(protractor.Key.ENTER);
+            await  browser.wait(ExpectedConditions.presenceOf(element(by.css('.jigsaw-page-current'))));
             expect(jigsawPagingEl.element(by.css('.jigsaw-page-current')).getText()).toBe('3');
         });
         it('should change the number of pieces per page', () => {
