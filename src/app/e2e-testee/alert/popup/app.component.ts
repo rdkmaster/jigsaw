@@ -45,7 +45,7 @@ export class AlertPopupDemoComponent {
 
     commonErrorAlert() {
         this.answer = 'waiting for an answer';
-        JigsawErrorAlert.show('this is a great warning alert!', answer => {
+        JigsawErrorAlert.show('this is a great error alert!', answer => {
             this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
         }, null, null, false);
     }
