@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ViewEncapsulation} from "@angular/core";
-import {ChartIcon, ChartType} from "../../../../jigsaw/component/chart-icon/chart-icon";
+import {ChartIconFactory, ChartType} from "../../../../jigsaw/component/chart-icon/chart-icon-factory";
 import {TreeData} from "../../../../jigsaw/core/data/tree-data";
 
 @Component({
@@ -334,13 +334,13 @@ export class FishBoneFullComponent implements AfterViewInit {
     data2: TreeData;
 
     ngAfterViewInit() {
-        new ChartIcon(".bar-colours-1", ChartType.bar, {
+        ChartIconFactory.create(".bar-colours-1", ChartType.bar, {
             fill: ["red", "green", "blue"],
             height: 50,
             width: 100
         });
 
-        new ChartIcon(".pie-colours-2", ChartType.pie, {
+        ChartIconFactory.create(".pie-colours-2", ChartType.pie, {
             fill: function (_, i, all) {
                 var g = (i / all.length) * 255;
                 return "rgb(255, " + g + ", 0)"
@@ -348,7 +348,7 @@ export class FishBoneFullComponent implements AfterViewInit {
             radius: 48,
         });
 
-        new ChartIcon(".line", ChartType.line, {
+        ChartIconFactory.create(".line", ChartType.line, {
             height: 80,
             width: 100
         });
