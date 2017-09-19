@@ -4,7 +4,7 @@ import {AnimationDestroy} from "../animations/destroy";
 import {AbstractJigsawComponent} from "../common";
 
 @Component({
-    selector: 'jigsaw-tag',
+    selector: 'jigsaw-tag, j-tag',
     templateUrl: 'tag.html',
     host: {
         '[style.width]': 'width',

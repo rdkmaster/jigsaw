@@ -2,7 +2,7 @@
 
 $block-prefix-cls: #{$jigsaw-prefix}-block;
 
-#{$block-prefix-cls}{
+.#{$block-prefix-cls}-host{
     @include inline-block;
     position: relative;
     width: 100%;

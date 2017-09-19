@@ -8,7 +8,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
  * 只有两种状态切换时.
  */
 @Component({
-    selector: 'jigsaw-switch',
+    selector: 'jigsaw-switch, j-switch',
     templateUrl: './switch.html',
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSwitch), multi: true},

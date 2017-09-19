@@ -3,7 +3,7 @@ import {AffixUtils} from "../../core/utils/internal-utils";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 
 @Directive({
-    selector: '[jigsaw-movable], [jigsawMovable]'
+    selector: '[jigsaw-movable], [jigsawMovable], [j-movable]'
 })
 export class JigsawMovable implements OnInit, OnDestroy {
     private _movableTarget: HTMLElement;

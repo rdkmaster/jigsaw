@@ -2,7 +2,7 @@
 
 $tag-prefix-cls: #{$jigsaw-prefix}-tag;
 
-#{$tag-prefix-cls}{
+.#{$tag-prefix-cls}-host{
     @include inline-block;
     position: relative;
     max-width: 200px;

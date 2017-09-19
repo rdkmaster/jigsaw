@@ -5,7 +5,7 @@
 import {Directive, Input, ElementRef, OnInit, Output, EventEmitter, NgModule} from '@angular/core';
 
 @Directive({
-    selector: '[jigsaw-scroll-bar], [jigsawScrollBar]'
+    selector: '[jigsaw-scroll-bar], [jigsawScrollBar], [j-scroll-bar]'
 })
 export class JigsawScrollBar implements OnInit {
     private _scrollBarJq: any;

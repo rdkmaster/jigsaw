@@ -2,7 +2,7 @@
 
 $select-option-prefix-cls: #{$jigsaw-prefix}-select-option;
 
-#{$select-option-prefix-cls} {
+.#{$select-option-prefix-cls}-host {
     display: block;
     width: 100%;
     height: $height-base;

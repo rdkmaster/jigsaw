@@ -2,7 +2,7 @@
 
 $bubble-loading-prefix-cls: #{$jigsaw-prefix}-bubble-loading;
 
-#{$bubble-loading-prefix-cls} {
+.#{$bubble-loading-prefix-cls}-host {
     @include inline-block;
     position: relative;
     width: 40px;

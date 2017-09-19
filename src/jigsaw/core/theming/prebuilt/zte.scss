@@ -39,7 +39,7 @@
  * 设置时间控件粒度tab的颜色
  */
 @mixin setTimeGrTab($grTabColor) {
-    jigsaw-time .jigsaw-time-granularity > span {
+    .jigsaw-time-host .jigsaw-time-granularity > span {
         border: 1px solid $grTabColor;
         border-right: 0;
         color: $grTabColor;
@@ -50,7 +50,7 @@
             border-right: 1px solid $grTabColor;
         }
     }
-    jigsaw-range-time .jigsaw-range-time-shortcuts > span {
+    .jigsaw-range-time-host .jigsaw-range-time-shortcuts > span {
         border: 1px solid $grTabColor;
         color: $grTabColor;
         border-right: 0;

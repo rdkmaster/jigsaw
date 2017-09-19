@@ -5,7 +5,7 @@ import {JigsawInputModule} from '../input/input';
 import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "./group-common";
 
 @Component({
-    selector: 'jigsaw-tile,j-tile',
+    selector: 'jigsaw-tile, j-tile',
     template: '<ng-content></ng-content>',
     host: {
         '[style.width]': 'width',
