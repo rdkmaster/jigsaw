@@ -11,7 +11,7 @@ import {ArrayCollection} from "jigsaw/core/data/array-collection";
     template: `
         <h4>1. 基本滑动条,滑动事件变化. </h4>
         <jigsaw-switch [(checked)]="disabled" size="small"></jigsaw-switch>
-        <jigsaw-slider [(value)]="value1" [disabled]="disabled" (change)="sliderChange($event)" min="10"></jigsaw-slider>
+        <jigsaw-slider [(value)]="value1" [disabled]="disabled" (change)="sliderChange($event)" min="10" width="200"></jigsaw-slider>
         <span> 取值: {{value1}}</span>
         <hr>
         <br>

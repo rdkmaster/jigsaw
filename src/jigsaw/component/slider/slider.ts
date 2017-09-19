@@ -197,7 +197,8 @@ export class JigsawSliderHandle implements OnInit{
     selector: 'jigsaw-slider, j-slider',
     templateUrl: './slider.html',
     host: {
-        'class': 'jigsaw-slider-host'
+        'class': 'jigsaw-slider-host',
+        '[style.width]': 'width',
     },
     encapsulation: ViewEncapsulation.None,
     providers: [
