@@ -57,7 +57,8 @@
 .mCSB_inside > .mCSB_container {
     margin-right: 0;
 }
-.mCustomScrollBox.mCSB_vertical_horizontal.mCSB_inside > .mCSB_container_wrapper.mCS_no_scrollbar_x.mCS_x_hidden{
+.mCustomScrollBox.mCSB_vertical_horizontal.mCSB_inside > .mCSB_container_wrapper.mCS_no_scrollbar_x.mCS_x_hidden,
+.mCustomScrollBox.mCSB_vertical_horizontal.mCSB_inside > .mCSB_container_wrapper.mCS_y_hidden.mCS_no_scrollbar_y {
     position: relative;
 }
 /*滚动条样式end*/
