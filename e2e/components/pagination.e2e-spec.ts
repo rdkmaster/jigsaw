@@ -35,11 +35,22 @@ describe('pagination', () => {
                 gotoEl = element(by.css('.jigsaw-paging-goto .ng-valid'));
             buttonEl.click();
             expect(jigsawPagingEl.element(by.css('.jigsaw-page-current')).getText()).toBe('6');
+            pageItemEl.get(4).element(by.tagName('SPAN')).click();
             gotoEl.click();
             gotoEl.sendKeys(1);
             gotoEl.sendKeys(protractor.Key.ENTER);
+<<<<<<< Updated upstream
             browser.wait(pageItemEl.get(0).getCssValue('background-color'));
             expect(jigsawPagingEl.element(by.css('.jigsaw-page-current')).getText()).toBe('1');
+=======
+<<<<<<< Updated upstream
+           browser.sleep(300);
+            expect(jigsawPagingEl.element(by.css('.jigsaw-page-current')).getText()).toBe('3');
+=======
+            browser.sleep(1000);
+            expect(jigsawPagingEl.element(by.css('.jigsaw-page-current')).getText()).toBe('1');
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
         });
         it('should change the number of pieces per page', () => {
             const jigsawPagingEl = element(by.css('.jigsaw-paging')),
