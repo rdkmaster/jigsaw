@@ -1,4 +1,5 @@
 /* 用来提供给用户定制组件样式的 mixin api */
+/* param等于default，则使用默认样式 */
 
 /**
  * 设置弹框的字体颜色，背景色，高度
@@ -9,14 +10,20 @@
 @mixin setDialogHead($textColor, $bgColor, $height) {
     .jigsaw-dialog {
         .jigsaw-dialog-head {
-            color: $textColor;
-            padding: {
-                top: 0;
-                bottom: 0;
+            @if ($textColor != default) {
+                color: $textColor;
             }
-            height: $height;
-            line-height: $height;
-            background: $bgColor;
+            @if ($bgColor != default) {
+                background: $bgColor;
+            }
+            @if ($height != default) {
+                padding: {
+                    top: 0;
+                    bottom: 0;
+                }
+                height: $height;
+                line-height: $height;
+            }
         }
     }
 }
@@ -29,7 +36,9 @@
 @mixin setDialogButton($buttonAlign: center, $showButtonLine: true) {
     .jigsaw-dialog {
         .jigsaw-dialog-button-group {
-            text-align: $buttonAlign;
+            @if ($buttonAlign != default) {
+                text-align: $buttonAlign;
+            }
             border-top: 1px solid if($showButtonLine, $border-color-base, transparent);
         }
     }
@@ -53,10 +62,14 @@
 @mixin setCheckbox($checkedBgColor, $checkedInnerColor) {
     .jigsaw-checkbox-host {
         .jigsaw-checkbox-wrapper .jigsaw-checkbox-checked, .jigsaw-checkbox-wrapper .jigsaw-checkbox-indeterminate {
-            background-color: $checkedBgColor;
+            @if ($checkedBgColor != default) {
+                background-color: $checkedBgColor;
+            }
         }
         .jigsaw-checkbox-wrapper .jigsaw-checkbox-checked:after {
-            border-color: $checkedInnerColor;
+            @if ($checkedInnerColor != default) {
+                border-color: $checkedInnerColor;
+            }
         }
     }
 }
@@ -72,11 +85,22 @@
 @mixin setTableHead($bgColor, $textColor, $fontSize, $borderBottomColor, $borderBottomWidth) {
     .jigsaw-table-host table {
         thead {
-            color: $textColor;
-            font-size: $fontSize;
+            @if ($textColor != default) {
+                color: $textColor;
+            }
+            @if ($fontSize != default) {
+                font-size: $fontSize;
+            }
             tr td {
-                background: $bgColor;
-                border-bottom: $borderBottomWidth solid $borderBottomColor;
+                @if ($bgColor != default) {
+                    background: $bgColor;
+                }
+                @if ($borderBottomWidth != default) {
+                    border-bottom-width: $borderBottomWidth;
+                }
+                @if ($borderBottomColor != default) {
+                    border-bottom-color: $borderBottomColor;
+                }
             }
         }
     }
@@ -92,14 +116,22 @@
 @mixin setTableBody($textColor, $fontSize, $oddRowBgColor, $evenRowBgColor) {
     .jigsaw-table-host table {
         tbody {
-            color: $textColor;
-            font-size: $fontSize;
+            @if ($textColor != default) {
+                color: $textColor;
+            }
+            @if ($fontSize != default) {
+                font-size: $fontSize;
+            }
         }
         tbody tr:nth-child(2n) {
-            background: $evenRowBgColor;
+            @if ($evenRowBgColor != default) {
+                background: $evenRowBgColor;
+            }
         }
         tbody tr:nth-child(2n-1) {
-            background: $oddRowBgColor;
+            @if ($oddRowBgColor != default) {
+                background: $oddRowBgColor;
+            }
         }
     }
 }
@@ -112,7 +144,9 @@
 @mixin setTableTextAlign($textAlign: center, $sidePadding: 0) {
     .jigsaw-table-host table {
         td {
-            text-align: $textAlign;
+            @if($textAlign != default){
+                text-align: $textAlign;
+            }
             @if ($textAlign == left) {
                 padding-left: $sidePadding;
             } @else if ($textAlign == right) {
@@ -130,11 +164,15 @@
  */
 @mixin setTag($defaultBgColor, $height) {
     .jigsaw-tag-host {
-        background: $defaultBgColor;
-        height: $height;
-        line-height: $height - 2;
-        .#{$tag-prefix-cls}-close-bar {
-            line-height: $height - 3;
+        @if($defaultBgColor != default){
+            background: $defaultBgColor;
+        }
+        @if($height != dafault){
+            height: $height;
+            line-height: $height - 2;
+            .#{$tag-prefix-cls}-close-bar {
+                line-height: $height - 3;
+            }
         }
     }
 }

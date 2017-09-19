@@ -37,7 +37,8 @@
                 "../node_modules/moment/min/moment.min.js",
                 "../node_modules/bootstrap/dist/js/bootstrap.min.js",
                 "../node_modules/ztree/js/jquery.ztree.all.js",
-                "../node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"
+                "../node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js",
+                "../node_modules/peity/jquery.peity.min.js"
             ],
             "environmentSource": "environments/environment.ts",
             "environments": {

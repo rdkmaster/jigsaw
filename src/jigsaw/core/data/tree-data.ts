@@ -11,7 +11,7 @@ export class TreeData extends GeneralCollection<any> {
             return this;
         }
         if (data instanceof Array) {
-            data = {nodes: data, label: ''};
+            data = {nodes: data, label: this.label};
         }
 
         for (let key in data) {

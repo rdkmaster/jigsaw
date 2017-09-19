@@ -1,0 +1,12 @@
+<div class="jigsaw-fish-bone-item-content" [innerHtml]="data.label"></div>
+<j-fish-bone-item *ngFor="let itemData of data.nodes; index as i; first as isFirst"
+                  class="jigsaw-fish-bone-item-rotate-{{childRotate}} jigsaw-fish-bone-level-{{level + 1}}"
+                  [childRotate]="childRotate == 'up' ? 'down' : 'up'"
+                  [firstLevelRotate]="firstLevelRotate"
+                  [data]="itemData"
+                  [level]="level + 1"
+                  [parentBone]="this"
+                  [index]="i"
+                  [@fadeIn]="_$state">
+</j-fish-bone-item>
+
