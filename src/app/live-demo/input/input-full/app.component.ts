@@ -30,7 +30,8 @@ export class InputFullComponent {
     focusInput() {
         this.myInput.focus();
     }
-    focusHandler(){
+    focusHandler(event){
+        console.log(event);
         this.focusMessage = 'input component focused'
     }
 
