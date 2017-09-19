@@ -194,7 +194,7 @@ export class JigsawSliderHandle implements OnInit{
  * 当用户需要在数值区间/自定义区间内进行选择时
  */
 @Component({
-    selector: 'jigsaw-slider',
+    selector: 'jigsaw-slider, j-slider',
     templateUrl: './slider.html',
     host: {
         'class': 'jigsaw-slider-host'

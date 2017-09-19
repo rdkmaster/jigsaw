@@ -15,7 +15,7 @@ export type PageSizeData = {
 }
 
 @Component({
-    selector: 'jigsaw-pagination',
+    selector: 'jigsaw-pagination, j-pagination',
     templateUrl: 'pagination.html',
     host: {
         '[style.width]': 'width',
@@ -365,7 +365,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
 }
 
 @Component({
-    selector: 'jigsaw-paging-item',
+    selector: 'jigsaw-paging-item, j-paging-item',
     templateUrl: 'page.html',
     host: {
         '(click)': '_onClick()',

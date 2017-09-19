@@ -23,7 +23,7 @@ export class OptionList extends AbstractJigsawComponent{
 }
 
 @Component({
-    selector: 'jigsaw-select',
+    selector: 'jigsaw-select, j-select',
     templateUrl: 'select.html',
     host: {
         "(click)": "_toggleClick($event)",
@@ -164,7 +164,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 }
 
 @Component({
-    selector: 'jigsaw-select-option',
+    selector: 'jigsaw-select-option, j-select-option',
     templateUrl: 'option.html',
     host: {
         "(click)": "_onClick()",

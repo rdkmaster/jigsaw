@@ -54,7 +54,7 @@ import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {PopupEffect, PopupInfo, PopupPositionType, PopupService} from "../../service/popup.service";
 
 @Component({
-    selector: 'jigsaw-table',
+    selector: 'jigsaw-table, j-table',
     templateUrl: 'table.html',
     host: {
         '[style.width]': 'width',

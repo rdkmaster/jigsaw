@@ -8,7 +8,7 @@ import {AbstractJigsawOptionComponent} from "./group-common";
 import {AbstractJigsawGroupComponent} from "./group-common";
 
 @Component({
-    selector: 'jigsaw-list,j-list',
+    selector: 'jigsaw-list, j-list',
     template: '<ng-content></ng-content>',
     host: {
         '[class.jigsaw-list]': 'true',

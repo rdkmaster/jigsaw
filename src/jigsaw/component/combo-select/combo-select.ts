@@ -37,7 +37,7 @@ export class ComboSelectValue {
 }
 
 @Component({
-    selector: 'jigsaw-combo-select',
+    selector: 'jigsaw-combo-select, j-combo-select',
     templateUrl: 'combo-select.html',
     host: {
         '[style.min-width]': 'width',

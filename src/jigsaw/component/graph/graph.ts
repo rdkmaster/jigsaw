@@ -19,7 +19,7 @@ import {CallbackRemoval} from "../../core/utils/common-utils";
  * <br /> <a href="http://echarts.baidu.com/api.html#echarts" target="_blank"> eCharts 文档</a>
  */
 @Component({
-    selector: 'jigsaw-graph',
+    selector: 'jigsaw-graph, j-graph',
     templateUrl: 'graph.html',
 })
 export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDestroy {

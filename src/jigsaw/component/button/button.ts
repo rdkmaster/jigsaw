@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from '../common';
 
 @Component({
-    selector: 'jigsaw-button, a[jigsaw-button], button[jigsaw-button]',
+    selector: 'jigsaw-button, a[jigsaw-button], button[jigsaw-button], j-button, a[j-button], button[j-button]',
     templateUrl: 'button.html',
     host: {
         '[class.jigsaw-button]': 'true',

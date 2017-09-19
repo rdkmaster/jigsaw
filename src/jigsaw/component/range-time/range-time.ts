@@ -6,7 +6,7 @@ import {GrItem, JigsawTime, Shortcut} from "../time/time";
 import {WeekTime} from "../../service/time.types";
 
 @Component({
-    selector: 'jigsaw-range-time',
+    selector: 'jigsaw-range-time, j-range-time',
     templateUrl: 'range-time.html',
     providers: [
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRangeTime), multi: true },

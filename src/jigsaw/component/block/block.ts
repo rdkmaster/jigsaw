@@ -3,7 +3,7 @@ import {IPopupable} from "../../service/popup.service";
 import {CommonModule} from "@angular/common";
 
 @Component({
-    selector: 'jigsaw-block',
+    selector: 'jigsaw-block, j-block',
     template: `<div class="jigsaw-block"></div>`,
 })
 export class JigsawBlock implements IPopupable{

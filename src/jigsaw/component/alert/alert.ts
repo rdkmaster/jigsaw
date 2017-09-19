@@ -25,7 +25,7 @@ export enum AlertLevel {
 export type AlertCallback = (button: ButtonInfo) => void;
 
 @Component({
-    selector: 'jigsaw-alert',
+    selector: 'jigsaw-alert, j-alert',
     templateUrl: 'alert.html',
     host: {
         '[class.jigsaw-alert-host]': 'true'
@@ -185,7 +185,7 @@ export abstract class JigsawCommonAlert extends DialogBase {
 
 @Component({
     templateUrl: 'common-alert.html',
-    selector: 'jigsaw-info-alert',
+    selector: 'jigsaw-info-alert, j-info-alert',
     host: {
         '[class.jigsaw-common-alert]': 'true'
     }
@@ -209,7 +209,7 @@ export class JigsawInfoAlert extends JigsawCommonAlert {
 
 @Component({
     templateUrl: 'common-alert.html',
-    selector: 'jigsaw-warning-alert',
+    selector: 'jigsaw-warning-alert, j-warning-alert',
     host: {
         '[class.jigsaw-common-alert]': 'true'
     }
@@ -233,7 +233,7 @@ export class JigsawWarningAlert extends JigsawCommonAlert {
 
 @Component({
     templateUrl: 'common-alert.html',
-    selector: 'jigsaw-error-alert',
+    selector: 'jigsaw-error-alert, j-error-alert',
     host: {
         '[class.jigsaw-common-alert]': 'true'
     }
@@ -257,7 +257,7 @@ export class JigsawErrorAlert extends JigsawCommonAlert {
 
 @Component({
     templateUrl: 'common-alert.html',
-    selector: 'jigsaw-confirm-alert',
+    selector: 'jigsaw-confirm-alert, j-confirm-alert',
     host: {
         '[class.jigsaw-common-alert]': 'true'
     }

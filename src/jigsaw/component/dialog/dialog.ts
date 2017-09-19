@@ -147,7 +147,7 @@ export abstract class AbstractDialogComponentBase extends AbstractJigsawComponen
 }
 
 @Component({
-    selector: 'jigsaw-dialog',
+    selector: 'jigsaw-dialog, j-dialog',
     templateUrl: 'dialog.html',
 })
 export class JigsawDialog extends AbstractDialogComponentBase {

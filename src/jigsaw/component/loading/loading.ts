@@ -57,7 +57,7 @@ export class JigsawLoadingBase extends AbstractJigsawComponent implements IPopup
 }
 
 @Component({
-    selector: 'jigsaw-loading',
+    selector: 'jigsaw-loading, j-loading',
     templateUrl: 'loading-ring.html',
 })
 export class JigsawLoading extends JigsawLoadingBase implements OnInit{
@@ -73,7 +73,7 @@ export class JigsawLoading extends JigsawLoadingBase implements OnInit{
 }
 
 @Component({
-    selector: 'jigsaw-font-loading',
+    selector: 'jigsaw-font-loading, j-font-loading',
     templateUrl: 'loading-font.html',
 })
 export class JigsawFontLoading extends JigsawLoadingBase implements OnInit{
@@ -109,7 +109,7 @@ export class JigsawFontLoading extends JigsawLoadingBase implements OnInit{
 }
 
 @Component({
-    selector: 'jigsaw-bubble-loading',
+    selector: 'jigsaw-bubble-loading, j-bubble-loading',
     templateUrl: 'loading-bubble.html',
 })
 export class JigsawBubbleLoading extends JigsawLoadingBase implements OnInit{
@@ -130,7 +130,7 @@ export class JigsawBubbleLoading extends JigsawLoadingBase implements OnInit{
 }
 
 @Component({
-    selector: 'jigsaw-ball-loading',
+    selector: 'jigsaw-ball-loading, j-ball-loading',
     templateUrl: 'loading-ball.html',
 })
 export class JigsawBallLoading extends JigsawLoadingBase {
