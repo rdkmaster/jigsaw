@@ -734,6 +734,11 @@ navInfo.unshift({
                 url: '/select/select-full'
             },
             {
+
+                label: 'fish-bone',
+                url: '/fish-bone/fish-bone-full'
+            },
+            {
                 label: 'auto-complete',
                 url: '/combo-select/auto-complete'
             }
