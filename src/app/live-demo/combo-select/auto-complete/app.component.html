@@ -2,7 +2,7 @@
     <h2>Auto Complete</h2>
     <div class="demo-1 live-demo">
         <h3>本地数据过滤</h3>
-        <jigsaw-combo-select maxWidth="500"
+        <j-combo-select maxWidth="500"
                              [(value)]="selectedCountries"
                              [clearable]="true"
                              labelField="enName"
@@ -12,20 +12,20 @@
                              (searchKeywordChange)="handleSearching($event, lpaCountries)">
             <ng-template>
                 <div class="dropdown">
-                    <jigsaw-tile [(selectedItems)]="selectedCountries" trackItemBy="enName" width="550px">
-                        <jigsaw-tile-option *ngFor="let country of lpaCountries" [value]="country" width="100px">
+                    <j-tile [(selectedItems)]="selectedCountries" trackItemBy="enName" width="550px">
+                        <j-tile-option *ngFor="let country of lpaCountries" [value]="country" width="100px">
                             {{country.enName}}
-                        </jigsaw-tile-option>
-                    </jigsaw-tile>
+                        </j-tile-option>
+                    </j-tile>
                 </div>
             </ng-template>
-        </jigsaw-combo-select>
+        </j-combo-select>
         <p>selected countries: {{toCountriesString(selectedCountries)}}</p>
     </div>
 
     <div class="demo-2 live-demo">
         <h3>服务端数据过滤</h3>
-        <jigsaw-combo-select maxWidth="500"
+        <j-combo-select maxWidth="500"
                              [(value)]="selectedCountries2"
                              [clearable]="true"
                              labelField="enName"
@@ -36,14 +36,14 @@
                              (searchKeywordChange)="handleSearching($event, spaCountries)">
             <ng-template>
                 <div class="dropdown">
-                    <jigsaw-tile [(selectedItems)]="selectedCountries2" trackItemBy="enName" width="550px">
-                        <jigsaw-tile-option *ngFor="let country of spaCountries" [value]="country" width="100px">
+                    <j-tile [(selectedItems)]="selectedCountries2" trackItemBy="enName" width="550px">
+                        <j-tile-option *ngFor="let country of spaCountries" [value]="country" width="100px">
                             {{country.enName}}
-                        </jigsaw-tile-option>
-                    </jigsaw-tile>
+                        </j-tile-option>
+                    </j-tile>
                 </div>
             </ng-template>
-        </jigsaw-combo-select>
+        </j-combo-select>
         <p>selected countries: {{toCountriesString(selectedCountries2)}}</p>
     </div>
 </div>

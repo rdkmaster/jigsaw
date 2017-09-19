@@ -2,23 +2,23 @@
     <h2>Select</h2>
     <div class="demo-1 live-demo live-demo-block">
         <h3>基本用法</h3>
-        <jigsaw-select [(value)]="selectedCity"
+        <j-select [(value)]="selectedCity"
                        (valueChange)="selectChange($event)"
                        placeholder="请选择城市"
                        [optionCount]="4"
                        [data]="citys">
-        </jigsaw-select>
+        </j-select>
         <p class="message">选择的城市是 <span>{{selectedCityName}}</span></p>
     </div>
     <div class="demo-2 live-demo live-demo-block">
         <h3>服务端取数据</h3>
-        <jigsaw-select [(value)]="selectedCity2"
+        <j-select [(value)]="selectedCity2"
                        (valueChange)="selectChange2($event)"
                        labelField="name"
                        placeholder="请选择城市"
                        [optionCount]="4"
                        [data]="citys2">
-        </jigsaw-select>
+        </j-select>
         <p class="message">选择的城市是 <span>{{selectedCityName2}}</span></p>
     </div>
 </div>
