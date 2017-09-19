@@ -20,7 +20,7 @@ import {CallbackRemoval} from "../../core/utils/common-utils";
  */
 @Component({
     selector: 'jigsaw-graph, j-graph',
-    templateUrl: 'graph.html',
+    templateUrl: 'graph.html'
 })
 export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDestroy {
     // 全局 echarts 对象
@@ -130,6 +130,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     private _graphContainer;
 
     ngOnInit() {
+        this._renderer.addClass(this._elf.nativeElement, 'jigsaw-graph-host');
         this._graphContainer = this._elf.nativeElement.querySelector(".jigsaw-graph");
         this._renderer.setStyle(this._graphContainer, 'width', this.width);
         this._renderer.setStyle(this._graphContainer, 'height', this.height);

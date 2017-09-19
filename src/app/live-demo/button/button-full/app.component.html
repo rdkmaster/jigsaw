@@ -3,55 +3,55 @@
     <div class="demo-1 live-demo live-demo-block">
         <h3>写法</h3>
         <p class="comment">支持标签和属性两种写法</p>
-        <jigsaw-button colorType="primary">click me</jigsaw-button>
-        <a jigsaw-button colorType="primary">另一种写法</a>
+        <j-button colorType="primary">click me</j-button>
+        <a j-button colorType="primary">另一种写法</a>
     </div>
 
     <div class="demo-2 live-demo live-demo-block">
         <h3>类型</h3>
         <p class="comment">四种类型：<code>default</code> <code>primary</code> <code>warning</code> <code>error|danger</code></p>
-        <jigsaw-button>Default</jigsaw-button>
-        <jigsaw-button colorType="primary">Primary</jigsaw-button>
-        <jigsaw-button colorType="warning">Warning</jigsaw-button>
-        <jigsaw-button colorType="danger">Danger</jigsaw-button>
+        <j-button>Default</j-button>
+        <j-button colorType="primary">Primary</j-button>
+        <j-button colorType="warning">Warning</j-button>
+        <j-button colorType="danger">Danger</j-button>
     </div>
 
     <div class="demo-3 live-demo live-demo-block">
         <h3>尺寸</h3>
         <p class="comment">三种尺寸：<code>small</code> <code>default</code> <code>large</code></p>
-        <jigsaw-button preSize="small" colorType="primary">Small</jigsaw-button>
-        <jigsaw-button preSize="default" colorType="primary">Default</jigsaw-button>
-        <jigsaw-button preSize="large" colorType="primary">Large</jigsaw-button>
+        <j-button preSize="small" colorType="primary">Small</j-button>
+        <j-button preSize="default" colorType="primary">Default</j-button>
+        <j-button preSize="large" colorType="primary">Large</j-button>
     </div>
 
     <div class="demo-4 live-demo live-demo-block">
         <h3>设置宽高</h3>
         <p class="comment">宽高支持 <code>number</code> <code>px</code> <code>%</code></p>
-        <jigsaw-button width="150px" height="40">click me</jigsaw-button>
-        <jigsaw-button width="20%">click me</jigsaw-button>
+        <j-button width="150px" height="40">click me</j-button>
+        <j-button width="20%">click me</j-button>
     </div>
 
     <div class="demo-5 live-demo live-demo-block">
         <h3>绑定click事件</h3>
-        <jigsaw-button (click)="canClick()">click me</jigsaw-button>
+        <j-button (click)="canClick()">click me</j-button>
     </div>
 
     <div class="demo-6 live-demo live-demo-block">
         <h3>不可点击状态</h3>
-        <jigsaw-button [(disabled)]="disabled" (click)="changeClickCount()">click me</jigsaw-button>
-        <jigsaw-checkbox [(checked)]="disabled">disable/enable</jigsaw-checkbox>
+        <j-button [(disabled)]="disabled" (click)="changeClickCount()">click me</j-button>
+        <j-checkbox [(checked)]="disabled">disable/enable</j-checkbox>
         <p class="message">点击次数<span>{{clickCount}}</span></p>
     </div>
 
     <div class="demo-7 live-demo live-demo-block">
         <h3>内嵌图标</h3>
-        <jigsaw-button>
+        <j-button>
             <span class="fa fa-area-chart"></span>
             <span>确定</span>
-        </jigsaw-button>
-        <jigsaw-button (click)="onClick()" colorType="primary">
-            <jigsaw-font-loading *ngIf="isLoading" width="16px" height="16px" color="white"></jigsaw-font-loading>
+        </j-button>
+        <j-button (click)="onClick()" colorType="primary">
+            <j-font-loading *ngIf="isLoading" width="16px" height="16px" color="white"></j-font-loading>
             <span>{{label}}</span>
-        </jigsaw-button>
+        </j-button>
     </div>
 </div>

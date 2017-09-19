@@ -2,7 +2,7 @@
 
 $range-time-prefix-cls: #{$jigsaw-prefix}-range-time;
 
-#{$range-time-prefix-cls} {
+.#{$range-time-prefix-cls}-host {
     @include inline-block();
     padding: 5px;
     position: relative;

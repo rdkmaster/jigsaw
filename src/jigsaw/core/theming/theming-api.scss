@@ -70,7 +70,7 @@
  * @param $borderBottomWidth
  */
 @mixin setTableHead($bgColor, $textColor, $fontSize, $borderBottomColor, $borderBottomWidth) {
-    jigsaw-table.jigsaw-table-host table {
+    .jigsaw-table-host table {
         thead {
             color: $textColor;
             font-size: $fontSize;
@@ -90,7 +90,7 @@
  * @param $evenRowBgColor
  */
 @mixin setTableBody($textColor, $fontSize, $oddRowBgColor, $evenRowBgColor) {
-    jigsaw-table.jigsaw-table-host table {
+    .jigsaw-table-host table {
         tbody {
             color: $textColor;
             font-size: $fontSize;
@@ -110,7 +110,7 @@
  * @param $sidePadding 默认0
  */
 @mixin setTableTextAlign($textAlign: center, $sidePadding: 0) {
-    jigsaw-table.jigsaw-table-host table {
+    .jigsaw-table-host table {
         td {
             text-align: $textAlign;
             @if ($textAlign == left) {
@@ -129,7 +129,7 @@
  * @param
  */
 @mixin setTag($defaultBgColor, $height) {
-    jigsaw-tag.jigsaw-tag-host {
+    .jigsaw-tag-host {
         background: $defaultBgColor;
         height: $height;
         line-height: $height - 2;

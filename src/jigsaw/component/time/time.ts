@@ -30,7 +30,8 @@ export class GrItem {
     selector: 'jigsaw-time, j-time',
     templateUrl: 'time.html',
     host: {
-        '[style.width]': 'width'
+        '[style.width]': 'width',
+        '[class.jigsaw-time-host]': 'true'
     },
     providers: [
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTime), multi: true },

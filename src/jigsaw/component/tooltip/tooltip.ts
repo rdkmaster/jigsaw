@@ -44,7 +44,8 @@ export class JigsawTooltipDialog implements IPopupable, AfterContentInit {
 
     protected popupElement: HTMLElement;
 
-    constructor(private _elementRef: ElementRef) {
+    constructor(private _elementRef: ElementRef, private _renderer: Renderer2) {
+        this._renderer.addClass(this._elementRef.nativeElement, 'jigsaw-tooltip-dialog');
     }
 
     ngAfterContentInit() {

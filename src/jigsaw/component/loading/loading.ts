@@ -9,25 +9,25 @@ export class JigsawLoadingBase extends AbstractJigsawComponent implements IPopup
     public answer: EventEmitter<any>;
     public popupElement: HTMLElement;
 
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef){
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
         super();
     }
 
-    protected getColorElement() : NodeListOf<Element>{
+    protected getColorElement(): NodeListOf<Element> {
         return undefined;
     }
 
-    protected _color:string;
+    protected _color: string;
 
     @Input()
-    public get color():string {
+    public get color(): string {
         return this._color;
     }
 
-    public set color(rgb:string) {
+    public set color(rgb: string) {
         this._color = rgb;
-        if(this.getColorElement()){
-            this.setElementsStyle(this.getColorElement(),'backgroundColor',rgb);
+        if (this.getColorElement()) {
+            this.setElementsStyle(this.getColorElement(), 'backgroundColor', rgb);
         }
     }
 
@@ -35,10 +35,10 @@ export class JigsawLoadingBase extends AbstractJigsawComponent implements IPopup
         return this._elementRef.nativeElement;
     }
 
-    public setElementSize(selector: string, width: number | string , height: number | string) {
+    public setElementSize(selector: string, width: number | string, height: number | string) {
         this.popupElement = this.getPopupElement();
 
-        if(width && height){
+        if (width && height) {
             this._renderer.setStyle(this.popupElement, 'width', width);
             this._renderer.setStyle(this.popupElement, 'height', height);
             this._renderer.setStyle(this.popupElement.querySelector(selector), 'width', width);
@@ -48,9 +48,9 @@ export class JigsawLoadingBase extends AbstractJigsawComponent implements IPopup
         }
     }
 
-    public setElementsStyle(elements:NodeListOf<Element>, props:string, val:string | boolean | number) {
+    public setElementsStyle(elements: NodeListOf<Element>, props: string, val: string | boolean | number) {
         for (let index = 0; index < elements.length; ++index) {
-            this._renderer.setStyle(elements[index],props,val);
+            this._renderer.setStyle(elements[index], props, val);
         }
     }
 
@@ -58,49 +58,51 @@ export class JigsawLoadingBase extends AbstractJigsawComponent implements IPopup
 
 @Component({
     selector: 'jigsaw-loading, j-loading',
-    templateUrl: 'loading-ring.html',
+    templateUrl: 'loading-ring.html'
 })
-export class JigsawLoading extends JigsawLoadingBase implements OnInit{
+export class JigsawLoading extends JigsawLoadingBase implements OnInit {
 
-    constructor(private renderer: Renderer2, private elementRef: ElementRef){
-        super(renderer,elementRef);
+    constructor(private renderer: Renderer2, private elementRef: ElementRef) {
+        super(renderer, elementRef);
     }
 
-    ngOnInit(){
-        super.setElementSize('.loadingProcess',this.width,this.height);
+    ngOnInit() {
+        this.renderer.addClass(this.elementRef.nativeElement, 'jigsaw-loading-host');
+        super.setElementSize('.loadingProcess', this.width, this.height);
     }
 
 }
 
 @Component({
     selector: 'jigsaw-font-loading, j-font-loading',
-    templateUrl: 'loading-font.html',
+    templateUrl: 'loading-font.html'
 })
-export class JigsawFontLoading extends JigsawLoadingBase implements OnInit{
+export class JigsawFontLoading extends JigsawLoadingBase implements OnInit {
 
-    constructor(private renderer: Renderer2, private elementRef: ElementRef){
-        super(renderer,elementRef);
+    constructor(private renderer: Renderer2, private elementRef: ElementRef) {
+        super(renderer, elementRef);
     }
 
-    ngOnInit(){
-        this.setElementSize('.jigsaw-font-loading',this.width,this.height);
+    ngOnInit() {
+        this.renderer.addClass(this.elementRef.nativeElement, 'jigsaw-font-loading-host');
+        this.setElementSize('.jigsaw-font-loading', this.width, this.height);
     }
 
 
-    protected getColorElement() : NodeListOf<Element>{
+    protected getColorElement(): NodeListOf<Element> {
         return this.getPopupElement().querySelectorAll('.jigsaw-font-loading');
     }
 
-    public set color(rgb:string) {
+    public set color(rgb: string) {
         this._color = rgb;
-        if(this.getColorElement()){
-            this.setElementsStyle(this.getColorElement(),'color',rgb);
+        if (this.getColorElement()) {
+            this.setElementsStyle(this.getColorElement(), 'color', rgb);
         }
     }
 
-    public setElementSize(selector: string, width: number | string , height: number | string) {
+    public setElementSize(selector: string, width: number | string, height: number | string) {
         super.setElementSize(selector, width, height);
-        if(width && height){
+        if (width && height) {
             this.renderer.setStyle(this.popupElement.querySelector(selector), 'font-size', width);
             this.renderer.setStyle(this.popupElement.querySelector(selector), 'line-height', height);
         }
@@ -110,20 +112,21 @@ export class JigsawFontLoading extends JigsawLoadingBase implements OnInit{
 
 @Component({
     selector: 'jigsaw-bubble-loading, j-bubble-loading',
-    templateUrl: 'loading-bubble.html',
+    templateUrl: 'loading-bubble.html'
 })
-export class JigsawBubbleLoading extends JigsawLoadingBase implements OnInit{
+export class JigsawBubbleLoading extends JigsawLoadingBase implements OnInit {
 
-    constructor(private renderer: Renderer2, private elementRef: ElementRef){
-        super(renderer,elementRef);
+    constructor(private renderer: Renderer2, private elementRef: ElementRef) {
+        super(renderer, elementRef);
     }
 
-    ngOnInit(){
-        super.setElementSize('.spinner',this.width,this.height);
+    ngOnInit() {
+        this.renderer.addClass(this.elementRef.nativeElement, 'jigsaw-bubble-loading-host');
+        super.setElementSize('.spinner', this.width, this.height);
     }
 
 
-    protected getColorElement() : NodeListOf<Element>{
+    protected getColorElement(): NodeListOf<Element> {
         return this.getPopupElement().querySelectorAll('.spinner-container > div');
     }
 
@@ -131,14 +134,18 @@ export class JigsawBubbleLoading extends JigsawLoadingBase implements OnInit{
 
 @Component({
     selector: 'jigsaw-ball-loading, j-ball-loading',
-    templateUrl: 'loading-ball.html',
+    templateUrl: 'loading-ball.html'
 })
-export class JigsawBallLoading extends JigsawLoadingBase {
-    constructor(private renderer: Renderer2, private elementRef: ElementRef){
-        super(renderer,elementRef);
+export class JigsawBallLoading extends JigsawLoadingBase implements OnInit  {
+    constructor(private renderer: Renderer2, private elementRef: ElementRef) {
+        super(renderer, elementRef);
     }
 
-    protected getColorElement() : NodeListOf<Element>{
+    ngOnInit() {
+        this.renderer.addClass(this.elementRef.nativeElement, 'jigsaw-ball-loading-host');
+    }
+
+    protected getColorElement(): NodeListOf<Element> {
         return this.getPopupElement().querySelectorAll('.jigsaw-loading-content > div');
     }
 

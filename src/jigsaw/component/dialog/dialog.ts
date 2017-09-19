@@ -155,6 +155,7 @@ export class JigsawDialog extends AbstractDialogComponentBase {
         super();
         this.renderer = renderer;
         this.elementRef = elementRef;
+        this.renderer.addClass(this.elementRef.nativeElement, 'jigsaw-dialog-host');
     }
 
     protected getPopupElement(): HTMLElement {

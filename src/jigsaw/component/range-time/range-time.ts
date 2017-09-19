@@ -10,7 +10,10 @@ import {WeekTime} from "../../service/time.types";
     templateUrl: 'range-time.html',
     providers: [
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRangeTime), multi: true },
-    ]
+    ],
+    host: {
+        '[class.jigsaw-range-time-host]': 'true'
+    }
 })
 export class JigsawRangeTime extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
 

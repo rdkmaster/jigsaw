@@ -1,4 +1,4 @@
-import {Component, EventEmitter, NgModule} from "@angular/core";
+import {Component, ElementRef, EventEmitter, NgModule, Renderer2} from "@angular/core";
 import {IPopupable} from "../../service/popup.service";
 import {CommonModule} from "@angular/common";
 
@@ -9,6 +9,9 @@ import {CommonModule} from "@angular/common";
 export class JigsawBlock implements IPopupable{
     initData: any;
     answer: EventEmitter<any>;
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef){
+        this._renderer.addClass(this._elementRef.nativeElement, 'jigsaw-block-host');
+    }
 }
 
 @NgModule({

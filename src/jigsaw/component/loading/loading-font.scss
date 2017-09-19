@@ -2,7 +2,7 @@
 
 $font-loading-prefix-cls: #{$jigsaw-prefix}-font-loading;
 
-#{$font-loading-prefix-cls} {
+.#{$font-loading-prefix-cls}-host {
     @include inline-block;
     position: relative;
     width: 40px;
