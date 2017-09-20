@@ -8,8 +8,7 @@ import {JigsawInput} from "../../../../jigsaw/component/input/input";
 export class InputFullComponent {
 
 
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2, public elementRef: ElementRef) {
+    constructor(public elementRef: ElementRef) {
     }
 
     // demo-1

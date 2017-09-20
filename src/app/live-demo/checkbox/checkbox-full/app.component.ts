@@ -6,10 +6,6 @@ import {CheckBoxStatus} from "jigsaw/component/checkbox/typings";
     styleUrls: ['./app.component.css']
 })
 export class CheckBoxFullComponent {
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
-    }
-
     //demo-1
     demo1Checked = CheckBoxStatus.unchecked;
     enableIndeterminate: boolean = false;
