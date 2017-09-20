@@ -84,6 +84,8 @@ import {TableHideHeadDemoModule} from "./hideHead/app.module";
 import {TableHideHeadDemoComponent} from "./hideHead/app.component";
 import {TableSelectRowDemoComponent} from "./selectRow/app.component";
 import {TableSelectRowDemoModule} from "./selectRow/app.module";
+import {TableRendererLiveDemo} from "../../live-demo/table/table-renderer/app.component";
+import {TableRendererLiveDemoModule} from "../../live-demo/table/table-renderer/app.module";
 
 const tableDemoRoutes = [
     {
@@ -177,6 +179,9 @@ const tableDemoRoutes = [
         path: 'selectRow', component: TableSelectRowDemoComponent
     },
     {
+        path: 'table-renderer', component: TableRendererLiveDemo
+    },
+    {
         path: '**', //fallback router must in the last
         component: TableBasicDemoComponent
     }
@@ -191,7 +196,8 @@ const tableDemoRoutes = [
         TablePerformsDemoModule, TableRendererDemoModule, TableRendererOfTemplateRefDemoModule, TableScrollAmountDemoModule,
         TableSetCellClassDemoModule, TableSetCellEditableDemoModule, TableSetCellRenderDemoModule, TableColumnGroupDemoModule,
         TableColumnSetVisibleDemoModule, TableColumnSetWidthDemoModule, TableSetHeaderClassDemoModule, TableSetHeaderRenderDemoModule,
-        TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, swimLaneDiagramDemoModule, TableHideHeadDemoModule, TableSelectRowDemoModule
+        TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, swimLaneDiagramDemoModule, TableHideHeadDemoModule, TableSelectRowDemoModule,
+        TableRendererLiveDemoModule
     ]
 })
 export class TableDemoModule {
