@@ -52,7 +52,6 @@ describe('tabs', () => {
                 tableEl=element(by.tagName('TABLE'));
             expect(tableEl.getText()).toBe('');
             getTableDate.click();
-           // await browser.wait(ExpectedConditions.presenceOf(element(by.tagName('TD'))));
             expect(tableEl.getText()).not.toBe('');
         })
     });
