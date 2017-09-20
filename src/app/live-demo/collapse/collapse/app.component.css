@@ -1,0 +1,27 @@
+.fa{
+    margin-right: 4px;
+}
+
+.form-box {
+    padding-bottom: 10px;
+}
+
+.form-box .form-title {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.form-box .form-line {
+    margin-bottom: 10px;
+
+}
+
+.form-line label {
+    display: inline-block;
+    width: 100px;
+    font-weight: normal;
+}
+
+.form-box j-button {
+    margin-left: 104px;
+}

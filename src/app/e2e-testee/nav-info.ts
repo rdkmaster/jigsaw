@@ -745,6 +745,10 @@ navInfo.unshift({
             {
                 label: 'table-renderer',
                 url: '/table/table-renderer'
+            },
+            {
+                label: 'collapse',
+                url: '/collapse/collapse-full'
             }
         ]
     });

@@ -1,0 +1,69 @@
+<div class="live-demo-wrap">
+    <h2>Collapse</h2>
+    <div class="demo-1 live-demo">
+        <h3>标题和内容</h3>
+        <p class="comment">
+            标题如果是纯文本，可以用<code>header</code>属性<br>
+            标题不是纯文本，使用<code>j-title</code><code>j-body</code>
+        </p>
+        <j-collapse>
+            <j-collapse-pane [isActive]="true">
+                <div j-title>
+                    <span class="fa fa-user"></span>Information
+                </div>
+                <div j-body>
+                    <div class="form-box">
+                        <div class="form-line">
+                            <label>name:</label>
+                            <j-input></j-input>
+                        </div>
+                        <div class="form-line">
+                            <label>position:</label>
+                            <j-input></j-input>
+                        </div>
+                        <div class="form-line">
+                            <label>office:</label>
+                            <j-input></j-input>
+                        </div>
+                        <j-button>Submit</j-button>
+                    </div>
+                </div>
+            </j-collapse-pane>
+
+            <j-collapse-pane>
+                <div j-title>
+                    <span class="fa fa-table"></span>Table
+                </div>
+                <div j-body>
+                    <j-table [data]="tableData" height="200"></j-table>
+                </div>
+            </j-collapse-pane>
+
+            <j-collapse-pane>
+                <div j-title>
+                    <span class="fa fa-bar-chart"></span>Graph
+                </div>
+                <div j-body>
+                    <j-collapse mode="accordion">
+                        <j-collapse-pane header="pie">
+                            <jigsaw-graph [data]="pieGraphDataByCol" [width]="400" [height]="300"></jigsaw-graph>
+                        </j-collapse-pane>
+
+                        <j-collapse-pane header="line" [isActive]="true">
+                            <jigsaw-graph [data]="lineBarGraphData"></jigsaw-graph>
+                        </j-collapse-pane>
+                    </j-collapse>
+                </div>
+            </j-collapse-pane>
+        </j-collapse>
+    </div>
+
+    <div class="demo-1 live-demo">
+        <h3>手风琴</h3>
+        <j-collapse width="50%" mode="accordion">
+            <j-collapse-pane [header]="goods.name" [isActive]="goods.active" *ngFor="let goods of goodsList">
+                {{goods.desc}}
+            </j-collapse-pane>
+        </j-collapse>
+    </div>
+</div>
