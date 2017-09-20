@@ -8,9 +8,9 @@ import {JigsawGraphModule} from "jigsaw/component/graph/index";
 
 @NgModule({
     declarations: [CollapseFullComponent],
-    bootstrap: [ CollapseFullComponent ],
+    bootstrap: [CollapseFullComponent],
     imports: [JigsawCollapseModule, JigsawButtonModule, JigsawInputModule, JigsawTableModule, JigsawGraphModule]
 })
-export class CollapseFullModule{
+export class CollapseFullModule {
 
 }
