@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, Renderer2, ViewChild} from "@angular/core";
+import {Component, OnInit, ViewChild} from "@angular/core";
 import {Http} from "@angular/http";
 import {TableData} from "jigsaw/core/data/table-data";
 import {AdditionalColumnDefine, ColumnDefine, TableDataChangeEvent} from "jigsaw/component/table/table-api";
@@ -48,7 +48,6 @@ export class TableRendererLiveDemo {
         },
         {
             pos: 0,
-            field: 'f4',
             width: '60px',
             header: {
                 renderer: TableHeadCheckbox
