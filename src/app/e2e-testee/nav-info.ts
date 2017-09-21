@@ -753,6 +753,10 @@ navInfo.unshift({
             {
                 label: 'combo-select',
                 url: '/combo-select/combo-select-full'
+            },
+            {
+                label: 'time',
+                url: '/time/time-full'
             }
         ]
     });

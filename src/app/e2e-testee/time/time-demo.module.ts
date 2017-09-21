@@ -27,6 +27,8 @@ import {TimeRrefreshIntervalDemoModule} from "./refreshInterval/app.module";
 
 import {TimeWeekStartComponent} from "./weekStart/app.component";
 import {TimeWeekStartDemoModule} from "./weekStart/app.module";
+import {TimeFullComponent} from "../../live-demo/time/time-full/app.component";
+import {TimeFullModule} from "../../live-demo/time/time-full/app.module";
 
 const inputDemoRoutes = [
     {
@@ -54,6 +56,9 @@ const inputDemoRoutes = [
         path: 'comboSelect', component: ComboSelectDemoComponent
     },
     {
+        path: 'time-full', component: TimeFullComponent
+    },
+    {
         path: '**', //fallback router must in the last
         component: TimeBasicDemoComponent
     }
@@ -63,7 +68,8 @@ const inputDemoRoutes = [
     imports: [
         RouterModule.forChild(inputDemoRoutes),
         TimeBasicDemoModule, TimeComboDemoModule, TimeGrDemoModule, TimeGrItemsDemoModule, TimeLimitEndDemoModule,
-        TimeLimitStartDemoModule, TimeRecommendedDemoModule, TimeRrefreshIntervalDemoModule, TimeWeekStartDemoModule
+        TimeLimitStartDemoModule, TimeRecommendedDemoModule, TimeRrefreshIntervalDemoModule, TimeWeekStartDemoModule,
+        TimeFullModule
     ],
     providers: []
 })

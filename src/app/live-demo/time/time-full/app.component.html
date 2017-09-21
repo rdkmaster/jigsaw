@@ -1,0 +1,66 @@
+<div class="live-demo-wrap">
+    <h2>Time</h2>
+    <div class="clearfix">
+        <div class="demo-1 live-demo live-demo-block">
+            <h3>Limit</h3>
+            <div class="toggle up">
+                <label>limitStart: </label>
+                <j-radios [(value)]="limitStart">
+                    <j-radio-option *ngFor="let item of limitStartList" [value]="item">{{item}}</j-radio-option>
+                </j-radios>
+                <br>
+                <label>limitEnd: </label>
+                <j-radios [(value)]="limitEnd">
+                    <j-radio-option *ngFor="let item of limitEndList" [value]="item">{{item}}</j-radio-option>
+                </j-radios>
+            </div>
+            <j-time [(date)]="date1" gr="date" [limitStart]="limitStart" [limitEnd]="limitEnd"></j-time>
+            <p class="message">Selected Time: <span>{{date1}}</span></p>
+        </div>
+        <div class="demo-2 live-demo live-demo-block">
+            <h3>Gr</h3>
+            <div class="toggle up">
+                <label>gr: </label>
+                <j-radios [(value)]="gr">
+                    <j-radio-option *ngFor="let item of grList" [value]="item">{{item}}</j-radio-option>
+                </j-radios>
+            </div>
+            <jigsaw-time [(date)]="date2" [gr]="gr"></jigsaw-time>
+            <p class="message">Selected Time: <span>{{date2 | json}}</span></p>
+        </div>
+    </div>
+    <div class="clearfix">
+        <div class="demo-3 live-demo live-demo-block">
+            <h3>GrItems</h3>
+            <jigsaw-time [(date)]="date3" [grItems]="grItems"></jigsaw-time>
+            <p class="message">Selected Time: <span>{{date3 | json}}</span></p>
+        </div>
+        <div class="demo-4 live-demo live-demo-block">
+            <h3>Recommend</h3>
+            <jigsaw-time [(date)]="date4" recommendedBegin="now-15d" recommendedEnd="now-10d"></jigsaw-time>
+        </div>
+    </div>
+    <div class="clearfix">
+        <div class="demo-5 live-demo live-demo-block">
+            <h3>WeekStart</h3>
+            <div class="toggle up">
+                <label>weekStart: </label>
+                <j-radios [(value)]="weekStart">
+                    <j-radio-option *ngFor="let item of weekStartList" [value]="item">{{item}}</j-radio-option>
+                </j-radios>
+            </div>
+            <jigsaw-time [(date)]="date5" [weekStart]="weekStart"></jigsaw-time>
+            <p class="message">Selected Time: <span>{{date5}}</span></p>
+        </div>
+        <div class="demo-6 live-demo live-demo-block">
+            <h3>WeekStart</h3>
+            <p class="comment">
+                主要针对<code>limitStart</code>或<code>limitEnd</code>的值是时间宏的时候，周期性自动刷新<code>limitStart</code>或<code>limitEnd</code>为当前时刻对应的值。<br>
+                切换到选择时间的状态，可以看到<code>limitStart</code>被一秒钟自动刷新一次，由于<code>date</code>的初始值是当前时刻，<code>limitStart</code>改变了之后，<code>date</code>的值也会被自动改变
+            </p>
+            <jigsaw-time [(date)]="date6" gr="second" limitStart="now" [refreshInterval]="1000"></jigsaw-time>
+            <p class="message">Selected Time: <span>{{date6}}</span></p>
+        </div>
+    </div>
+</div>
+
