@@ -6,7 +6,7 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
 .#{$jigsaw-slider}-host {
     height: 100%;
     width: 100%;
-    display: inline-block;
+    @include inline-block;
     user-select: none;
     ::selection {
         background-color: #fff;

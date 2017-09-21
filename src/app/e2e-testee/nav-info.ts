@@ -741,6 +741,14 @@ navInfo.unshift({
             {
                 label: 'auto-complete',
                 url: '/combo-select/auto-complete'
+            },
+            {
+                label: 'table-renderer',
+                url: '/table/table-renderer'
+            },
+            {
+                label: 'collapse',
+                url: '/collapse/collapse-full'
             }
         ]
     });

@@ -5,10 +5,6 @@ import {Component, Renderer2, ViewContainerRef} from "@angular/core";
     styleUrls: ['./app.component.css']
 })
 export class RadioFullComponent {
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
-    }
-
     // demo1
     selectedCity = {name: "北京"};
     citys = [

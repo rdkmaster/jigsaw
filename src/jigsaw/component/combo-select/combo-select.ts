@@ -147,15 +147,18 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         if (value === this._$opened || !this.initialized) {
             return;
         }
-        if (value) {
-            this._openDropDown();
-            if (this.editor) this.editor.focus();
-        } else {
-            this._closeDropDown();
-            this.searchKeyword = '';
-        }
-        this._$opened = value;
-        this.openChange.emit(value);
+        setTimeout(() => {
+            // toggle open 外部控制时，用setTimeout变更检查
+            if (value) {
+                this._openDropDown();
+                if(this.editor) this.editor.focus();
+            } else {
+                this._closeDropDown();
+                this.searchKeyword = '';
+            }
+            this._$opened = value;
+            this.openChange.emit(value);
+        }, 0);
     }
 
     @Output()
