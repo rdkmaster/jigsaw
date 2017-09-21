@@ -1,0 +1,44 @@
+<div class="live-demo-wrap">
+    <h2>Combo Select</h2>
+    <div class="demo-1 live-demo">
+        <h3>基本属性</h3>
+        <div class="toggle">
+            <j-button (click)="changeTrigger()">change trigger</j-button>
+            <j-button (click)="toggleMultipleAndAutoClose()">toggle multiple and auto close</j-button>
+            <j-button (click)="toggle('open')">toggle open</j-button>
+            <j-button (click)="toggle('autoWidth')">toggle auto width</j-button>
+            <j-button (click)="toggle('disabled')">toggle disabled</j-button>
+        </div>
+        <p class="message">
+            selected: <span>{{selected}}</span><br>
+            removed: <span>{{removed}}</span>
+        </p>
+        <j-combo-select
+            [showBorder]="true"
+            [clearable]="true"
+            [openTrigger]="openTrigger"
+            [closeTrigger]="closeTrigger"
+            [autoClose]="autoClose"
+            [autoWidth]="autoWidth"
+            [(open)]="open"
+            [disabled]="disabled"
+            [(value)]="selectedCities"
+            (valueChange)="valueChange($event)"
+            (select)="onTagSelect($event)"
+            (remove)="onTagRemove($event)"
+            maxWidth="450"
+            placeholder="请选择城市">
+            <ng-template>
+                <j-tile
+                    [(selectedItems)]="selectedCities"
+                    trackItemBy="label"
+                    [multipleSelect]="multiple"
+                    width="400px">
+                    <j-tile-option *ngFor="let city of cities" [value]="city" width="22.8%">
+                        {{city.label}}
+                    </j-tile-option>
+                </j-tile>
+            </ng-template>
+        </j-combo-select>
+    </div>
+</div>

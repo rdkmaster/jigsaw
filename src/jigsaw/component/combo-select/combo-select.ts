@@ -144,7 +144,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     public set open(value: boolean) {
-        if (value === this._$opened || !this.initialized) {
+        if (value === this._$opened || !this.initialized || (this.disabled && value)) {
+            // 设置值等于当前值
+            // 没有初始化完成
+            // 控件disabled，并且想打开下拉
             return;
         }
         setTimeout(() => {

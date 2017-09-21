@@ -28,7 +28,7 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
         }
     }
 
-    &-selection &-selection-rendered {
+    &-selection-rendered {
         height: $height-base;
         overflow: hidden;
         font-size: 0;
@@ -52,16 +52,21 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
                 }
             }
         }
-        .#{$jigsaw-combo-select}-placeholder{
-            @include inline-block();
-            font-size: $font-size-base;
-            color: $text-color-secondary;
-        }
+    }
+
+    &-placeholder {
+        @include inline-block();
+        font-size: $font-size-base;
+        color: $text-color-secondary;
     }
 
     &-disabled {
         color: $disabled-color;
         pointer-events: none;
+    }
+
+    &-disabled &-placeholder {
+        color: $disabled-color;
     }
 
     &-disabled &-selection {
@@ -92,10 +97,8 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
         @include prefixer(transition, all 0.3s $ease-in-out);
     }
 
-    &-opened {
-        .#{$jigsaw-combo-select}-arrow {
-            @include prefixer(transform, rotate(180deg));
-        }
+    &-opened &-arrow {
+        @include prefixer(transform, rotate(180deg));
     }
 
     &-arrow {
@@ -114,8 +117,10 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
         width: 12px;
         transform: translateY(-50%);
         color: $text-color-secondary;
-        .#{$jigsaw-combo-select}-disabled & {
-            color: darken($disabled-bg, 8%);
-        }
     }
+
+    &-disabled &-clear {
+        color: darken($disabled-bg, 8%);
+    }
+
 }

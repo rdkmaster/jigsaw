@@ -749,6 +749,10 @@ navInfo.unshift({
             {
                 label: 'collapse',
                 url: '/collapse/collapse-full'
+            },
+            {
+                label: 'combo-select',
+                url: '/combo-select/combo-select-full'
             }
         ]
     });

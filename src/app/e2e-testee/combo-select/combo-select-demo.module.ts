@@ -28,6 +28,8 @@ import {ComboSelectMultipleDemoModule} from "./multiple/app.module";
 import {OpenComboSelectDemoModule} from "./open/app.module";
 import {ComboSelectSetWidthDemoModule} from "./setWidth/app.module";
 import {ComboSelectAutoCompleteDemoModule} from "../../live-demo/combo-select/auto-complete/app.module";
+import {ComboSelectFullComponent} from "../../live-demo/combo-select/combo-select-full/app.component";
+import {ComboSelectFullModule} from "../../live-demo/combo-select/combo-select-full/app.module";
 
 const routes = [
     {
@@ -62,6 +64,9 @@ const routes = [
     },
     {
         path : 'setWidth', component: ComboSelectSetWidthDemo
+    },
+    {
+        path: 'combo-select-full', component: ComboSelectFullComponent
     }
 ];
 
@@ -78,7 +83,8 @@ const routes = [
         ComboSelectLabelFieldDemoModule,
         ComboSelectMultipleDemoModule,
         OpenComboSelectDemoModule,
-        ComboSelectSetWidthDemoModule
+        ComboSelectSetWidthDemoModule,
+        ComboSelectFullModule
     ]
 })
 export class ComboSelectDemoModule {
