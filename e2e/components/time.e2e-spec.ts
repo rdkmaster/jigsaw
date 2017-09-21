@@ -30,8 +30,8 @@ describe('time', () => {
             const weekStartOp = element.all(by.tagName('jigsaw-tile-option')),
                 weekStartEl = element(by.css('.datepicker-days')).all(by.tagName('TR')).get(1).all(by.tagName('TH')).get(0);
               expect(weekStartEl.getText()).toBe('Su');
-            weekStartOp.get(2).click();
-            expect(weekStartEl.getText()).toBe('Tu');
+            weekStartOp.get(3).click();
+            expect(weekStartEl.getText()).toBe('We');
         })
     });
 });
