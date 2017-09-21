@@ -34,16 +34,18 @@ export class ComboSelectFullComponent {
     disabled: boolean = false;
     autoWidth: boolean = false;
 
-    selected:string = '';
-    removed:string = '';
-    onTagSelect(data){
+    selected: string = '';
+    removed: string = '';
+
+    onTagSelect(data) {
         this.selected = data.label;
     }
-    onTagRemove(data){
+
+    onTagRemove(data) {
         this.removed = data.label;
     }
 
-    valueChange(value){
+    valueChange(value) {
         console.log(value);
     }
 
@@ -65,7 +67,7 @@ export class ComboSelectFullComponent {
         this.selectedCities = new ArrayCollection();
     }
 
-    toggle(attr: string){
+    toggle(attr: string) {
         this[attr] = !this[attr];
     }
 
