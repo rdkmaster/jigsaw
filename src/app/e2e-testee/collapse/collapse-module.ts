@@ -12,8 +12,8 @@ import {JigsawInputModule} from "jigsaw/component/input/input";
 import {JigsawButtonModule} from "jigsaw/component/button/button";
 import {ngForDemoModule} from "./ngFor/app.module";
 import {CollapseBasicDemoModule} from "./basic/app.module";
-import {CollapseFullComponent} from "../../live-demo/collapse/collapse/app.component";
-import {CollapseFullModule} from "../../live-demo/collapse/collapse/app.module";
+import {CollapseFullComponent} from "../../live-demo/collapse/collapse-full/app.component";
+import {CollapseFullModule} from "../../live-demo/collapse/collapse-full/app.module";
 
 const routes = [
     {
