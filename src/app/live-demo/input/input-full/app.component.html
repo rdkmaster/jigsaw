@@ -1,38 +1,44 @@
 <div class="live-demo-wrap">
     <h2>Input</h2>
-    <div class="demo-1 live-demo">
-        <h3>用法</h3>
-        <p class="comment"><code>value</code>属性支持双向绑定</p>
-        <j-input [(value)]="demo1InputValue" placeholder="请输入。。。"></j-input>
-        <p class="message">输入值是：<span>{{demo1InputValue}}</span></p>
+
+    <div class="clearfix">
+        <div class="demo-1 live-demo live-demo-block">
+            <h3>用法</h3>
+            <p class="comment"><code>value</code>属性支持双向绑定</p>
+            <j-input [(value)]="demo1InputValue" placeholder="请输入。。。"></j-input>
+            <p class="message">输入值是：<span>{{demo1InputValue}}</span></p>
+        </div>
+
+        <div class="demo-2 live-demo live-demo-block">
+            <h3>关闭清除功能</h3>
+            <j-input [(value)]="demo2InputValue" [clearable]="false"></j-input>
+        </div>
     </div>
 
-    <div class="demo-2 live-demo">
-        <h3>关闭清除功能</h3>
-        <j-input [(value)]="demo2InputValue" [clearable]="false"></j-input>
+    <div class="clearfix">
+        <div class="demo-3 live-demo live-demo-block">
+            <h3>事件</h3>
+            <p class="comment">通过<code>valueChange</code>事件监听value变化</p>
+            <j-input (valueChange)="valueChanged($event)" width="200px"></j-input>
+            <p class="message"></p>
+        </div>
+
+        <div class="demo-4 live-demo live-demo-block">
+            <h3>获取焦点</h3>
+            <j-button (click)="focusInput()">点击获取焦点</j-button>
+            <j-input (focus)="focusHandler($event)" #myInput></j-input>
+            <p class="message">{{focusMessage}}</p>
+        </div>
     </div>
 
-    <div class="demo-3 live-demo">
-        <h3>事件</h3>
-        <p class="comment">通过<code>valueChange</code>事件监听value变化</p>
-        <j-input (valueChange)="valueChanged($event)" width="200px"></j-input>
-        <p class="message"></p>
+    <div class="clearfix">
+        <div class="demo-5 live-demo live-demo-block">
+            <h3>加入图标，并有交互</h3>
+            <j-input [(value)]="demo5InputValue" width="30%" placeholder="请输入姓名~">
+                <a j-prefix-icon (click)="iconClickHandler()"><span class="fa fa-search"></span></a>
+            </j-input>
+        </div>
     </div>
-
-    <div class="demo-4 live-demo">
-        <h3>获取焦点</h3>
-        <j-button (click)="focusInput()">点击获取焦点</j-button>
-        <j-input (focus)="focusHandler($event)" #myInput></j-input>
-        <p class="message">{{focusMessage}}</p>
-    </div>
-
-    <div class="demo-5 live-demo">
-        <h3>加入图标，并有交互</h3>
-        <j-input [(value)]="demo5InputValue" width="30%" placeholder="请输入姓名~">
-            <a j-prefix-icon (click)="iconClickHandler()"><span class="fa fa-search"></span></a>
-        </j-input>
-    </div>
-
 </div>
 
 
