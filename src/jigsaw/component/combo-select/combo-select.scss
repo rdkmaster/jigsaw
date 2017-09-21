@@ -38,17 +38,18 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
             height: 100%;
             vertical-align: middle;
         }
-        jigsaw-tag {
+        .jigsaw-tag-host {
             vertical-align: middle;
             margin-right: 4px;
         }
-        jigsaw-input {
+        .jigsaw-input {
             input {
                 padding: 0 !important;
                 font-size: $font-size-base;
                 border: none;
-                &:focus {
+                &:focus, &:hover {
                     box-shadow: none;
+                    border: none;
                 }
             }
         }
