@@ -38,6 +38,8 @@ export interface IServerSidePageable extends IPageable {
 
 export interface ISortable extends IAjaxComponentData {
     sortInfo: DataSortInfo;
+
+    sort(compareFn?: (a: any[], b: any[]) => number): void;
     sort(as: SortAs, order: SortOrder, field: string | number): void;
     sort(sort: DataSortInfo): void;
 }

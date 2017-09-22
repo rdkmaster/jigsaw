@@ -4,13 +4,17 @@ import {
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule} from "../common";
-import {JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent} from "./table-inner.components";
+import {
+    JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent,
+    TableInternalCellBase
+} from "./table-inner.components";
 import {TableData} from "../../core/data/table-data";
 
 import {
-    AdditionalColumnDefine,
+    _getColumnIndex,
+    AdditionalColumnDefine, AdditionalTableData,
     ColumnDefine, SortChangeEvent,
-    TableCellSetting, TableCellValueGenerators,
+    TableCellSetting,
     TableColumnTargetFinder,
     TableDataChangeEvent,
     TableHeadSetting
@@ -64,15 +68,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     public selectChange: EventEmitter<number> = new EventEmitter<number>();
 
     private _getColumnIndex(field:string): [number, TableData] {
-        let index = this.data.field.indexOf(field);
-        if (index != -1) {
-            return [index, this.data];
-        }
-        index = this.additionalData.field.indexOf(field);
-        if (index != -1) {
-            return [index, this.additionalData];
-        }
-        return [-1, undefined];
+        return _getColumnIndex(this.data, this._additionalData, field);
     }
 
     private _getHeaderValueByField(field):string {
@@ -151,7 +147,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         const dataLen = this.data.data.length;
         // remove extra lines if necessary
         this._$cellSettings.splice(dataLen, this._$cellSettings.length);
-        this.additionalData.data.splice(dataLen, this._$cellSettings.length);
+        this._additionalData.data.splice(dataLen, this._$cellSettings.length);
 
         let oldBackup = CommonUtils.shallowCopy(this._cellSettingsBackup);
         this._cellSettingsBackup = {};
@@ -167,6 +163,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             this._cellSettingsBackup[field] = [];
 
             let sTemplate: TableCellSetting = this._createCellSettings(matchedColumnDef, field);
+            const [realColIndex,] = this._getColumnIndex(field);
             let groupSetting: TableCellSetting;
             let settings: TableCellSetting;
             for (let rowIndex = 0; rowIndex < dataLen; rowIndex++) {
@@ -192,13 +189,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                     matchedColumnDef.cell.data : null;
                 const originVal = this._getCellDataByField(field, rowIndex);
                 if (generator) {
-                    const [realIndex,] = this._getColumnIndex(field);
-                    const generatedValue = generator(this.data, rowIndex, realIndex, this.additionalData);
-                    if (TableCellValueGenerators.isStateless(generator)) {
-                        settings.cellData = generatedValue;
-                    } else {
-                        settings.cellData = originVal === undefined ? generatedValue : originVal;
-                    }
+                    settings.cellData = generator(this.data, rowIndex, realColIndex, this._additionalData);
                     this._setCellDataByField(field, rowIndex, settings.cellData);
                 } else {
                     settings.cellData = originVal;
@@ -317,7 +308,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         setTimeout(() => this._setFloatingHeadWidth(), 0);
     }
 
-    private _additionalData = new TableData();
+    private _additionalData = new AdditionalTableData();
 
     @Input()
     public get additionalData(): TableData {
@@ -325,15 +316,26 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     public set additionalData(value: TableData) {
+        //ignore incoming data.
     }
 
     @Output()
     public additionalDataChange = new EventEmitter<TableData>();
 
-    @Input()
-    public trackRowBy: string;
+    private _trackRowBy: string;
 
-    private _removeRefreshCallback: CallbackRemoval;
+    @Input()
+    public get trackRowBy(): string {
+        return this._trackRowBy;
+    }
+
+    public set trackRowBy(value: string) {
+        this._trackRowBy = value;
+        this._additionalData.trackRowBy = value;
+    }
+
+    private _removeTableDataRefresh: CallbackRemoval;
+    private _removeAdditionalDataRefresh: CallbackRemoval;
     private _data: TableData;
 
     @Input()
@@ -347,12 +349,19 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
         this._data = value;
         this._additionalData.data.splice(0, this._additionalData.data.length);
+        this._additionalData.clearCachedValues();
+        this._additionalData.originData = value;
+
         this._update();
 
-        if (this._removeRefreshCallback) {
-            this._removeRefreshCallback();
+        if (this._removeTableDataRefresh) {
+            this._removeTableDataRefresh();
         }
-        this._removeRefreshCallback = value.onRefresh(this._update, this);
+        this._removeTableDataRefresh = value.onRefresh(this._update, this);
+
+        if (!this._removeAdditionalDataRefresh) {
+            this._removeAdditionalDataRefresh = this._additionalData.onRefresh(this._update, this);
+        }
     }
 
     @Output()
@@ -584,7 +593,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _headerComponents: QueryList<JigsawTableHeaderInternalComponent>;
 
     public _$onSort(sortInfo): void {
-        this._headerComponents.forEach(comp => sortInfo.field != comp.column && comp.updateSortOrderClass(SortOrder.default));
+        this._headerComponents.forEach(comp => sortInfo.field != comp.field && comp.updateSortOrderClass(SortOrder.default));
         this.sort.emit(sortInfo);
     }
 
@@ -643,9 +652,13 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     ngOnDestroy() {
-        if (this._removeRefreshCallback) {
-            this._removeRefreshCallback();
-            this._removeRefreshCallback = null;
+        if (this._removeTableDataRefresh) {
+            this._removeTableDataRefresh();
+            this._removeTableDataRefresh = null;
+        }
+        if (this._removeAdditionalDataRefresh) {
+            this._removeAdditionalDataRefresh();
+            this._removeAdditionalDataRefresh = null;
         }
         this._removeWindowListener();
 

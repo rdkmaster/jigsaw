@@ -22,38 +22,17 @@ export class TableHeadIcon extends TableCellRendererBase {
                        [data]="listItems" width="70" height="20">
         </jigsaw-select>`
 })
-export class TableHeadSelect extends TableCellRendererBase implements OnDestroy {
+export class TableHeadSelect extends TableCellRendererBase {
     selected: any;
     listItems = [];
 
-    private _removeRefreshCallback;
-    private _tableData:TableData;
-
-    set tableData(value) {
-        this._tableData = value;
-        if (!value) {
-            return;
-        }
-        this._removeRefreshCallback && this._removeRefreshCallback();
-        this._removeRefreshCallback = value.onRefresh(this._initListItems, this);
-        this._initListItems();
-    }
-
-    private _initListItems():void {
+    protected onDataRefresh():void {
         this.listItems = [];
         this.tableData.data.forEach(row => {
             if (!this.listItems.find(item => item.label === row[this.column])) {
                 this.listItems.push({label: row[this.column]});
             }
         });
-    }
-
-    get tableData() {
-        return this._tableData;
-    }
-
-    ngOnDestroy() {
-        this._removeRefreshCallback && this._removeRefreshCallback();
     }
 }
 

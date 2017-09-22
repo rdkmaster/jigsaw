@@ -136,20 +136,27 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
 
 export class TableData extends TableDataBase implements ISortable, IFilterable {
     public sortInfo: DataSortInfo;
+
+    public sort(compareFn?: (a: any[], b: any[]) => number): void;
     public sort(as: SortAs, order: SortOrder, field: string | number): void;
     public sort(sort: DataSortInfo): void;
-    public sort(as: SortAs | DataSortInfo, order?: SortOrder, field?: string | number): void {
+    public sort(as: SortAs | DataSortInfo | Function, order?: SortOrder, field?: string | number): void {
         this.sortData(this.data, as, order, field);
     }
 
-    protected sortData(data: TableDataMatrix, as: SortAs | DataSortInfo, order?: SortOrder, field?: string | number) {
+    protected sortData(data: TableDataMatrix, as: SortAs | DataSortInfo | Function, order?: SortOrder, field?: string | number) {
         field = typeof field === 'string' ? this.field.indexOf(field) : field;
-        this.sortInfo = as instanceof DataSortInfo ? as : new DataSortInfo(as, order, field);
-        const orderFlag = this.sortInfo.order == SortOrder.asc ? 1 : -1;
-        if (this.sortInfo.as == SortAs.number) {
-            data.sort((a, b) => orderFlag * (Number(a[field]) - Number(b[field])));
+        if (as instanceof Function) {
+            // cast to any to peace the compiler.
+            data.sort(<any>as);
         } else {
-            data.sort((a, b) => orderFlag * String(a[field]).localeCompare(String(b[field])));
+            this.sortInfo = as instanceof DataSortInfo ? as : new DataSortInfo(as, order, field);
+            const orderFlag = this.sortInfo.order == SortOrder.asc ? 1 : -1;
+            if (this.sortInfo.as == SortAs.number) {
+                data.sort((a, b) => orderFlag * (Number(a[field]) - Number(b[field])));
+            } else {
+                data.sort((a, b) => orderFlag * String(a[field]).localeCompare(String(b[field])));
+            }
         }
         this.refresh();
     }
@@ -305,6 +312,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this._filterSubject.next(pfi);
     }
 
+    public sort(compareFn?: (a: any[], b: any[]) => number): void;
     public sort(as: SortAs, order: SortOrder, field: string | number): void;
     public sort(sort: DataSortInfo): void;
     public sort(as, order?: SortOrder, field?: string | number): void {

@@ -17,10 +17,10 @@ import {
     ViewChild
 } from "@angular/core";
 import {JigsawRendererHost} from "../common";
-import {SortChangeEvent, TableDataChangeEvent} from "./table-typings";
+import {_getColumnIndex, SortChangeEvent, TableDataChangeEvent} from "./table-typings";
+import {DefaultCellRenderer, TableCellRendererBase} from "./table-renderer";
 import {TableData} from "../../core/data/table-data";
 import {SortAs, SortOrder} from "../../core/data/component-data";
-import {DefaultCellRenderer, TableCellRendererBase} from "../table/table-renderer";
 import {CommonUtils} from "../../core/utils/common-utils";
 
 export class TableInternalCellBase implements AfterViewInit {
@@ -28,23 +28,56 @@ export class TableInternalCellBase implements AfterViewInit {
                 protected changeDetector: ChangeDetectorRef) {
     }
 
-    @Input()
-    public tableData: TableData;
-    @Input()
-    public additionalData: TableData;
+    @ViewChild(JigsawRendererHost)
+    protected rendererHost: JigsawRendererHost;
+    protected targetData: TableData;
+    protected rendererRef: ComponentRef<TableCellRendererBase> | EmbeddedViewRef<any>;
+
     @Input()
     public cellData: any;
     @Input()
     public row: number;
     @Input()
-    public column: number;
+    public field: string;
     @Input()
     public renderer: Type<TableCellRendererBase> | TemplateRef<any>;
 
-    protected rendererRef: ComponentRef<TableCellRendererBase> | EmbeddedViewRef<any>;
+    private _column: number = -1;
 
-    @ViewChild(JigsawRendererHost)
-    protected rendererHost: JigsawRendererHost;
+    public get column(): number {
+        return this._column;
+    }
+
+    private _tableData: TableData;
+
+    @Input()
+    public get tableData(): TableData {
+        return this._tableData;
+    }
+
+    public set tableData(value: TableData) {
+        this._tableData = value;
+        this._initTargetData();
+    }
+
+    private _additionalData: TableData;
+
+    @Input()
+    public get additionalData(): TableData {
+        return this._additionalData;
+    }
+
+    public set additionalData(value: TableData) {
+        this._additionalData = value;
+        this._initTargetData();
+    }
+
+    private _initTargetData(): void {
+        if (!this.tableData || !this.additionalData) {
+            return;
+        }
+        [this._column, this.targetData] = _getColumnIndex(this._tableData, this._additionalData, this.field);
+    }
 
     /*
      * 渲染器制造工厂
@@ -52,14 +85,18 @@ export class TableInternalCellBase implements AfterViewInit {
     protected rendererFactory(renderer: Type<TableCellRendererBase> | TemplateRef<any>): ComponentRef<TableCellRendererBase> | EmbeddedViewRef<any> {
         if (renderer instanceof TemplateRef) {
             return this.rendererHost.viewContainerRef.createEmbeddedView(renderer, {
-                context: {cellData: this.cellData, row: this.row, column: this.column}
+                context: {
+                    tableData: this.tableData, additionalData: this.additionalData,
+                    cellData: this.cellData, row: this.row, field: this.field
+                }
             });
         } else {
             let componentFactory = this.componentFactoryResolver.resolveComponentFactory(renderer);
             let componentRef = this.rendererHost.viewContainerRef.createComponent(componentFactory);
             componentRef.instance.row = this.row;
-            componentRef.instance.column = this.column;
+            componentRef.instance.field = this.field;
             componentRef.instance.tableData = this.tableData;
+            componentRef.instance.additionalData = this.additionalData;
             componentRef.instance.cellData = this.cellData;
             return componentRef;
         }
@@ -139,8 +176,8 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
 
     private _sort(order: SortOrder): void {
         this.updateSortOrderClass(order);
-        this.sort.emit({sortAs: this.sortAs, order: order, field: this.column});
-        this.tableData.sort(this.sortAs, order, this.column);
+        this.sort.emit({sortAs: this.sortAs, order: order, field: this.field});
+        this.tableData.sort(this.sortAs, order, this.field);
     }
 
     ngOnInit() {
@@ -193,12 +230,12 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         for (let i = 0; i < this.rowSpan; i++) {
             rows.push(this.row + i);
             // update tableData directly, therefor table.ts need not to do this.
-            this.tableData.data[this.row + i][this.column] = cellData;
-            this.tableData.refresh();
+            this.targetData.data[this.row + i][this.column] = cellData;
         }
+        this.targetData.refresh();
 
-        const change:TableDataChangeEvent = {
-            field: this.tableData.field[this.column],
+        const change: TableDataChangeEvent = {
+            field: this.field,
             row: rows,
             column: this.column,
             cellData: cellData,
@@ -206,7 +243,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         };
         this.edit.emit(change);
 
-        this.cellData = cellData;
+        // this.cellData = cellData;
     }
 
     private _rendererSubscribe(renderer: TableCellRendererBase): void {
@@ -215,9 +252,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
                 //cellData === '' 认为是合法值
                 return;
             }
-            if (this.cellData != cellData) {
-                this._emitDataChange(cellData);
-            }
+            this._emitDataChange(cellData);
         });
     }
 

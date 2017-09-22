@@ -1,7 +1,7 @@
-import {Component, Renderer2, ViewChild, ViewContainerRef, ViewEncapsulation} from "@angular/core";
+import {Component, ViewEncapsulation} from "@angular/core";
 import {LocalPageableTableData, TableData} from "jigsaw/core/data/table-data";
 import {DefaultCellRenderer} from "jigsaw/component/table/table-renderer";
-import {AdditionalColumnDefine, ColumnDefine, TableCellValueGenerators} from "jigsaw/component/table/table-typings";
+import {AdditionalColumnDefine, ColumnDefine, rowIndexGenerator} from "jigsaw/component/table/table-typings";
 import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/component/table/table-renderer";
 import {TableCellOperation, TableHeadSelect} from "./table-renderer";
 import {Http} from "@angular/http";
@@ -13,6 +13,7 @@ import {Http} from "@angular/http";
     encapsulation: ViewEncapsulation.None
 })
 export class TableRendererDemoComponent {
+    message: string = 'change message goes here ...';
     tableData: LocalPageableTableData;
     additionalData: TableData = new TableData();
 
@@ -25,16 +26,12 @@ export class TableRendererDemoComponent {
         //     data.data.splice(50, 10000);
         //     return data;
         // }
-
-        // setTimeout(()=> {
-        //     this.additionalData = new TableData();
-        // }, 2000)
     }
 
     columnDefines: ColumnDefine[] = [
         {
             target: ['position', 'f7'],
-            width: '10%',
+            width: '20%',
             header: {
                 renderer: TableHeadSelect,
                 sortable: true
@@ -49,24 +46,31 @@ export class TableRendererDemoComponent {
         {
             target: 'other', visible: false
         },
+        // {
+        //     target: 4,
+        //     cell: {
+        //         renderer: TableCellCheckboxRenderer,
+        //         data: (td, row, col) => td.data[row][col] % 2
+        //     },
+        //     header: {
+        //         renderer: TableHeadCheckboxRenderer
+        //     }
+        // },
         {
-            target: 3, width: '180px'
-        },
-        {
-            target: (f, i) => f == 'f4',
-            header: {text: 'custom header text'}
+            target: (f, i) => f == 'name',
+            header: {sortable: true}
         },
     ];
 
     additionalColumnDefines: AdditionalColumnDefine[] = [
         {
             pos: 0,
-            width: '30px',
+            width: '50px',
             header: {
                 text: '#',
             },
             cell: {
-                data: TableCellValueGenerators.rowIndexGenerator,
+                data: rowIndexGenerator,
                 clazz: 'green-text'
             }
         },
@@ -74,7 +78,6 @@ export class TableRendererDemoComponent {
             pos: 0,
             width: '60px',
             header: {
-                sortable: true,
                 renderer: TableHeadCheckboxRenderer
             },
             cell: {
@@ -96,14 +99,11 @@ export class TableRendererDemoComponent {
     ];
 
     public onCellChange(value) {
-        this._changeMsg = `field: '${value.field}', row: ${value.row}, column: ${value.column}, cellData: ${value.cellData}, oldCellData: ${value.oldCellData}`;
+        this.message = `field: '${value.field}', row: ${value.row}, column: ${value.column}, cellData: ${value.cellData}, oldCellData: ${value.oldCellData}`;
         let rows = value.row instanceof Array ? value.row : [value.row];
         for (let row of rows) {
             console.log(this.tableData.data[row][value.column]);
         }
     }
-
-    _changeMsg: string;
-
 }
 

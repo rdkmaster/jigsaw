@@ -1,7 +1,18 @@
+
+<p>{{message}}</p>
 <jigsaw-table [data]="tableData" [columnDefines]="columnDefines" [floatingHeader]="true"
               [additionalColumnDefines]="additionalColumnDefines" [lineEllipsis]="false"
               [(additionalData)]="additionalData"
               (dataChange)="onCellChange($event)">
 </jigsaw-table>
-<p>{{_changeMsg}}</p>
-
+<br><br>
+<jigsaw-pagination
+    [total]="tableData.pagingInfo.totalRecord"
+    [(pageSize)]="tableData.pagingInfo.pageSize"
+    [(current)]="tableData.pagingInfo.currentPage"
+    [pageSizeOptions]="[5, 10, 20]"
+    [searchable]="true"
+    [showQuickJumper]="true"
+    (currentChange)="tableData.changePage(tableData.pagingInfo)"
+    (pageSizeChange)="tableData.changePage(tableData.pagingInfo)"
+></jigsaw-pagination>
