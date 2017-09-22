@@ -48,6 +48,5 @@ describe('slider', () => {
             browser.actions().dragAndDrop(sliderHandle.get(9), {x: 0, y: 5000}).perform();browser.sleep(5000);
             expect(handleTag.get(9).getAttribute('ng-reflect-value')).toBe('20');
         });
-
     });
 });
