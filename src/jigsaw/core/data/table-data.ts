@@ -115,14 +115,14 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
         console.log('destroying TableDataBase....');
     }
 
-    public insertColumn(column: number, data: any | any[], field: string, header: string):void {
+    public insertColumn(column: number, data: any | any[], field: string, header: string): void {
         column = isNaN(column) ? this.data.length : column;
         this.data.forEach((row, index) => row.splice(column, 0, data instanceof Array ? data[index] : data));
         this.field.splice(column, 0, field);
         this.header.splice(column, 0, header);
     }
 
-    public removeColumn(column:number):TableData {
+    public removeColumn(column: number): TableData {
         if (isNaN(column) || column < 0 || column >= this.field.length) {
             return new TableData();
         }
@@ -135,6 +135,14 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
 }
 
 export class TableData extends TableDataBase implements ISortable, IFilterable {
+    public static of(rawData: any): TableData {
+        return TableData.isTableData(rawData) ? new TableData(rawData.data, rawData.field, rawData.header) : new TableData();
+    }
+
+    public static toArray(rawData: any): any[] {
+        return TableData.of(rawData).toArray();
+    }
+
     public sortInfo: DataSortInfo;
 
     public sort(compareFn?: (a: any[], b: any[]) => number): void;
@@ -161,14 +169,8 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
         this.refresh();
     }
 
-    public static toArray(tableData: any): any[] {
-        if (!TableData.isTableData(tableData)) {
-            return [];
-        }
-        return new TableData(tableData.data, tableData.field, tableData.header).toArray();
-    }
-
     public filterInfo: DataFilterInfo;
+
     public filter(term: string, fields?: (string | number)[]): void;
     public filter(term: DataFilterInfo): void;
     public filter(term, fields?: (string | number)[]): void {

@@ -22,10 +22,13 @@ export class TableRendererDemoComponent {
         this.tableData.pagingInfo.pageSize = 10;
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/table/data.json');
-        // this.tableData.dataReviser = data => {
-        //     data.data.splice(50, 10000);
-        //     return data;
-        // }
+        this.tableData.dataReviser = rawData => {
+            const td = TableData.of(rawData);
+            const colData = [];
+            td.data.forEach(row => colData.push(row[2]));
+            td.insertColumn(3, colData, 'salary1', 'xinzi');
+            return td;
+        }
     }
 
     columnDefines: ColumnDefine[] = [
@@ -46,16 +49,16 @@ export class TableRendererDemoComponent {
         {
             target: 'other', visible: false
         },
-        // {
-        //     target: 4,
-        //     cell: {
-        //         renderer: TableCellCheckboxRenderer,
-        //         data: (td, row, col) => td.data[row][col] % 2
-        //     },
-        //     header: {
-        //         renderer: TableHeadCheckboxRenderer
-        //     }
-        // },
+        {
+            target: 'salary1',
+            cell: {
+                renderer: TableCellCheckboxRenderer,
+                data: (td, row, col) => td.data[row][col] % 2
+            },
+            header: {
+                renderer: TableHeadCheckboxRenderer
+            }
+        },
         {
             target: (f, i) => f == 'name',
             header: {sortable: true}
