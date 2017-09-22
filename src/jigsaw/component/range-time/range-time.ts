@@ -150,7 +150,9 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     private _startTimeLimitStart: WeekTime;
 
     ngOnInit() {
-        this._init();
+        setTimeout(() => {
+            this._init();
+        });
     }
 
     private _init() {

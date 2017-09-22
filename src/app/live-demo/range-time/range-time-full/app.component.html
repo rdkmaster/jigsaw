@@ -1,0 +1,80 @@
+<div class="live-demo-wrap">
+    <h2>Range Time</h2>
+    <div class="demo-1 live-demo">
+        <h3>Limit</h3>
+        <div class="toggle up">
+            <label>limitStart: </label>
+            <j-radios [(value)]="limitStart">
+                <j-radio-option *ngFor="let item of limitStartList" [value]="item">{{item}}</j-radio-option>
+            </j-radios>
+            <br>
+            <label>limitEnd: </label>
+            <j-radios [(value)]="limitEnd">
+                <j-radio-option *ngFor="let item of limitEndList" [value]="item">{{item}}</j-radio-option>
+            </j-radios>
+        </div>
+        <j-range-time
+            [(beginDate)]="beginDate1"
+            [(endDate)]="endDate1"
+            [limitStart]="limitStart"
+            [limitEnd]="limitEnd">
+        </j-range-time>
+        <p class="message">beginDate: <span>{{beginDate1}}</span>, end: <span>{{endDate1}}</span></p>
+    </div>
+
+    <div class="demo-2 live-demo">
+        <h3>Gr</h3>
+        <div class="toggle up">
+            <label>gr: </label>
+            <j-radios [(value)]="gr">
+                <j-radio-option *ngFor="let item of grList" [value]="item">{{item}}</j-radio-option>
+            </j-radios>
+        </div>
+        <j-range-time [(beginDate)]="beginDate2" [(endDate)]="endDate2" [gr]="gr"></j-range-time>
+        <p class="message">beginDate: <span>{{beginDate2 | json}}</span>, end: <span>{{endDate2 | json}}</span></p>
+    </div>
+
+    <div class="demo-3 live-demo">
+        <h3>GrItems</h3>
+        <j-range-time [(beginDate)]="beginDate3" [(endDate)]="endDate3" [grItems]="grItems"></j-range-time>
+        <p class="message">beginDate: <span>{{beginDate3}}</span>, end: <span>{{endDate3}}</span></p>
+    </div>
+
+    <div class="demo-4 live-demo">
+        <h3>Recommend</h3>
+        <j-range-time
+            [(beginDate)]="beginDate4"
+            [(endDate)]="endDate4"
+            recommendedBegin="now"
+            recommendedEnd="now+3d">
+        </j-range-time>
+        <p class="message">beginDate: <span>{{beginDate4}}</span>, end: <span>{{endDate4}}</span></p>
+    </div>
+
+    <div class="demo-5 live-demo">
+        <h3>WeekStart</h3>
+        <div class="toggle up">
+            <label>weekStart: </label>
+            <j-radios [(value)]="weekStart">
+                <j-radio-option *ngFor="let item of weekStartList" [value]="item">{{item}}</j-radio-option>
+            </j-radios>
+        </div>
+        <j-range-time [(beginDate)]="beginDate5" [(endDate)]="endDate5" [weekStart]="weekStart"></j-range-time>
+        <p class="message">beginDate: <span>{{beginDate5}}</span>, end: <span>{{endDate5}}</span></p>
+    </div>
+
+    <div class="demo-6 live-demo">
+        <h3>RefreshInterval</h3>
+        <p class="comment">
+            <code>refreshInterval</code>，时间刷新的间隔毫秒数，主要针对<code>limitStart</code>或<code>limitEnd</code>设置为<code>now</code>或<code>now-2h</code>等需要不时刷新的场景
+        </p>
+        <j-range-time
+            [(beginDate)]="beginDate6"
+            [(endDate)]="endDate6"
+            gr="second"
+            limitStart="now"
+            refreshInterval="1000">
+        </j-range-time>
+        <p class="message">beginDate: <span>{{beginDate6}}</span>, end: <span>{{endDate6}}</span></p>
+    </div>
+</div>
