@@ -5,7 +5,7 @@ import {AbstractJigsawComponent} from "../common";
 import {CommonUtils} from "../../core/utils/common-utils";
 
 @Component({
-    selector: 'jigsaw-tag',
+    selector: 'jigsaw-tag, j-tag',
     templateUrl: 'tag.html',
     host: {
         '[style.width]': 'width',

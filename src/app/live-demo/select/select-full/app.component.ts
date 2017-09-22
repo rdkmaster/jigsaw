@@ -7,8 +7,7 @@ import {Http} from "@angular/http";
   styleUrls: ['./app.component.css']
 })
 export class SelectFullComponent {
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2, public http: Http) {
+    constructor(public http: Http) {
         this.citys2 = new ArrayCollection();
         this.citys2.http = http;
         this.citys2.fromAjax('mock-data/array-collection/citys.json');

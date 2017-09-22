@@ -2,7 +2,7 @@
 
 $dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
 
-#{$dialog-prefix-cls} {
+.#{$dialog-prefix-cls}-host {
     @include inline-block;
     width: 100%;
 }

@@ -15,7 +15,7 @@ export class TreeEventData {
 
 
 @Component({
-    selector: 'jigsaw-tree-ext',
+    selector: 'jigsaw-tree-ext, j-tree-ext',
     template: `
         <div [id]="uniqueId" class="ztree"></div>`
 })

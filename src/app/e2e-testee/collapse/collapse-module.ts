@@ -12,12 +12,17 @@ import {JigsawInputModule} from "jigsaw/component/input/input";
 import {JigsawButtonModule} from "jigsaw/component/button/button";
 import {ngForDemoModule} from "./ngFor/app.module";
 import {CollapseBasicDemoModule} from "./basic/app.module";
+import {CollapseFullComponent} from "../../live-demo/collapse/collapse-full/app.component";
+import {CollapseFullModule} from "../../live-demo/collapse/collapse-full/app.module";
 
 const routes = [
     {
         path: 'basic', component:CollapseBasicDemoComponent
     },{
         path: 'ngFor', component:ngForDemoComponent
+    },
+    {
+        path: 'collapse-full', component: CollapseFullComponent
     }
 ]
 
@@ -25,7 +30,8 @@ const routes = [
     imports: [
         RouterModule.forChild(routes),
         CollapseBasicDemoModule,
-        ngForDemoModule
+        ngForDemoModule,
+        CollapseFullModule
     ]
 })
 export class CollapseDemoModule { }

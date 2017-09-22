@@ -33,7 +33,6 @@ $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
         border: 1px solid $border-color-base;
         border-radius: 14px;
         background-color: $default-color;
-        vertical-align: -2px;
         margin-right: 5px;
         @include prefixer(transition, all 0.3s);
         &:after {

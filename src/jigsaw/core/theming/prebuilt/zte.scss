@@ -9,7 +9,7 @@
 @include showBtnAnimation(false);
 
 @include setTableHead(#f4f6f8, #294e79, 14px, #008fd4, 2px);
-@include setTableBody(#333, 12px, #fff, #f8f8f8);
+@include setTableBody(#333, default, default, #f8f8f8);
 @include setTableTextAlign(left, 20px);
 
 @include setTag(#fff, 25px);
@@ -39,7 +39,7 @@
  * 设置时间控件粒度tab的颜色
  */
 @mixin setTimeGrTab($grTabColor) {
-    jigsaw-time .jigsaw-time-granularity > span {
+    .jigsaw-time-host .jigsaw-time-granularity > span {
         border: 1px solid $grTabColor;
         border-right: 0;
         color: $grTabColor;
@@ -50,7 +50,7 @@
             border-right: 1px solid $grTabColor;
         }
     }
-    jigsaw-range-time .jigsaw-range-time-shortcuts > span {
+    .jigsaw-range-time-host .jigsaw-range-time-shortcuts > span {
         border: 1px solid $grTabColor;
         color: $grTabColor;
         border-right: 0;

@@ -37,7 +37,7 @@ export class ComboSelectValue {
 }
 
 @Component({
-    selector: 'jigsaw-combo-select',
+    selector: 'jigsaw-combo-select, j-combo-select',
     templateUrl: 'combo-select.html',
     host: {
         '[style.min-width]': 'width',
@@ -144,18 +144,24 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     public set open(value: boolean) {
-        if (value === this._$opened || !this.initialized) {
+        if (value === this._$opened || !this.initialized || (this.disabled && value)) {
+            // 设置值等于当前值
+            // 没有初始化完成
+            // 控件disabled，并且想打开下拉
             return;
         }
-        if (value) {
-            this._openDropDown();
-            if (this.editor) this.editor.focus();
-        } else {
-            this._closeDropDown();
-            this.searchKeyword = '';
-        }
-        this._$opened = value;
-        this.openChange.emit(value);
+        setTimeout(() => {
+            // toggle open 外部控制时，用setTimeout变更检查
+            if (value) {
+                this._openDropDown();
+                if(this.editor) this.editor.focus();
+            } else {
+                this._closeDropDown();
+                this.searchKeyword = '';
+            }
+            this._$opened = value;
+            this.openChange.emit(value);
+        }, 0);
     }
 
     @Output()

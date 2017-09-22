@@ -21,7 +21,7 @@
         margin: 0;
         padding: 0;
       }
-      /* common start */
+      /* live demo common start */
       /* 容器 */
       .live-demo-wrap {
           padding: 10px;
@@ -35,21 +35,34 @@
           font-weight: 700;
       }
 
+      /* demo容器 block */
+      .live-demo-wrap .live-demo-block{
+          float: left;
+          width: 48%;
+          min-width: 300px;
+          border: 1px solid #dcdcdc;
+          border-radius: 4px;
+          padding: 8px;
+          margin-right: 2%;
+      }
+
       /* demo容器 */
       .live-demo-wrap .live-demo {
           margin-bottom: 30px;
           padding-left: 10px;
       }
+      .live-demo.live-demo-block{margin-bottom: 20px}
 
       /* demo标题 */
       .live-demo h3 {
           margin: 0 0 10px -10px;
           color: #333;
-          font-size: 18px;
+          font-size: 16px;
           padding: 2px 14px;
           position: relative;
           border-left: 1px solid #c7254e;
       }
+      .live-demo.live-demo-block h3{margin: 0 0 10px 0;}
       .live-demo h3:before{
           position: absolute;
           left: -1px;
@@ -72,6 +85,7 @@
           margin-top: 10px;
           margin-bottom: 0;
           color: #999;
+          font-size: 14px;
       }
 
       /* demo消息高亮字 */
@@ -98,7 +112,7 @@
           background-color: rgba(27, 31, 35, 0.05);
           border-radius: 3px;
       }
-      /* common end */
+      /* live demo common end */
     </style>
 
     <!-- 引入Jigsaw需要的依赖，这些依赖没有出umd包，只能配置在这里 -->

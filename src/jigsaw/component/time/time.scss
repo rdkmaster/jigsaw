@@ -2,7 +2,7 @@
 
 $time-prefix-cls: #{$jigsaw-prefix}-time;
 
-#{$time-prefix-cls} {
+.#{$time-prefix-cls}-host {
     @include inline-block();
     width: 250px;
     border: 1px solid $border-color-base ;

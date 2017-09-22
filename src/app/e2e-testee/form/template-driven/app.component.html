@@ -37,6 +37,8 @@
         <jigsaw-combo-select [(value)]="rangeTimeComboValue" width="250px">
             <ng-template>
                 <jigsaw-range-time [(ngModel)]="rangeTime" name="lastJobDuring"
+                                   [(beginDate)]="rangeTime.beginDate"
+                                   [(endDate)]="rangeTime.endDate"
                                    (change)="onDateChange()"></jigsaw-range-time>
             </ng-template>
         </jigsaw-combo-select>
@@ -78,9 +80,9 @@
     </div>
     <div class="field">
         <label>Score</label>
-        <div style="display: inline-block; width: 250px; height: 20px;">
+
             <jigsaw-slider [ngModel]="score" name="score" width="250px"></jigsaw-slider>
-        </div>
+
     </div>
     <div class="field">
         <label>Jigsaw is Great?</label>

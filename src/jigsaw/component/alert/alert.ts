@@ -25,7 +25,7 @@ export enum AlertLevel {
 export type AlertCallback = (button: ButtonInfo) => void;
 
 @Component({
-    selector: 'jigsaw-alert',
+    selector: 'jigsaw-alert, j-alert',
     templateUrl: 'alert.html',
     host: {
         '[class.jigsaw-alert-host]': 'true'
@@ -181,16 +181,22 @@ export abstract class JigsawCommonAlert extends DialogBase {
                 return 'alert.title.info';
         }
     }
+
+    constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef){
+        super();
+        this._renderer.addClass(this._elementRef.nativeElement, 'jigsaw-common-alert');
+    }
 }
 
 @Component({
     templateUrl: 'common-alert.html',
-    selector: 'jigsaw-info-alert',
-    host: {
-        '[class.jigsaw-common-alert]': 'true'
-    }
+    selector: 'jigsaw-info-alert, j-info-alert'
 })
 export class JigsawInfoAlert extends JigsawCommonAlert {
+    constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef){
+        super(_renderer, _elementRef);
+    }
+
     @ViewChild(JigsawAlert) dialog: JigsawDialog;
     @Input() public message: string;
     @Input() public caption:string;
@@ -209,12 +215,13 @@ export class JigsawInfoAlert extends JigsawCommonAlert {
 
 @Component({
     templateUrl: 'common-alert.html',
-    selector: 'jigsaw-warning-alert',
-    host: {
-        '[class.jigsaw-common-alert]': 'true'
-    }
+    selector: 'jigsaw-warning-alert, j-warning-alert'
 })
 export class JigsawWarningAlert extends JigsawCommonAlert {
+    constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef){
+        super(_renderer, _elementRef);
+    }
+
     @ViewChild(JigsawAlert) dialog: JigsawDialog;
     @Input() public message: string;
     @Input() public caption:string;
@@ -233,12 +240,13 @@ export class JigsawWarningAlert extends JigsawCommonAlert {
 
 @Component({
     templateUrl: 'common-alert.html',
-    selector: 'jigsaw-error-alert',
-    host: {
-        '[class.jigsaw-common-alert]': 'true'
-    }
+    selector: 'jigsaw-error-alert, j-error-alert',
 })
 export class JigsawErrorAlert extends JigsawCommonAlert {
+    constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef){
+        super(_renderer, _elementRef);
+    }
+
     @ViewChild(JigsawAlert) dialog: JigsawDialog;
     @Input() public message: string;
     @Input() public caption:string;
@@ -257,12 +265,13 @@ export class JigsawErrorAlert extends JigsawCommonAlert {
 
 @Component({
     templateUrl: 'common-alert.html',
-    selector: 'jigsaw-confirm-alert',
-    host: {
-        '[class.jigsaw-common-alert]': 'true'
-    }
+    selector: 'jigsaw-confirm-alert, j-confirm-alert'
 })
 export class JigsawConfirmAlert extends JigsawCommonAlert {
+    constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef){
+        super(_renderer, _elementRef);
+    }
+
     @ViewChild(JigsawAlert) dialog: JigsawDialog;
     @Input() public message: string;
     @Input() public caption:string;

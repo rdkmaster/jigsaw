@@ -2,7 +2,7 @@
 
 $tooltip-prefix-cls: #{$jigsaw-prefix}-tooltip;
 
-#{$tooltip-prefix-cls}{
+.#{$tooltip-prefix-cls}-dialog{
     @include inline-block;
 }
 

@@ -14,9 +14,6 @@ export class TileselectFullDemoComponent{
         {label: "长沙", disabled: true},
         {label: "西安"}
     ]);
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
-    }
 
     multipleSelect: boolean;
     selectedItems1 = new ArrayCollection();

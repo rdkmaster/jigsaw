@@ -28,6 +28,7 @@ import {JigsawTreeExtModule} from './component/tree/tree-ext';
 import {JigsawMovableModule} from "./directive/movable/index";
 import {JigsawDraggableModule, JigsawDroppableModule} from './directive/dragdrop/index';
 import {JigsawRootModule} from "./component/root/root";
+import {JigsawFishBoneModule} from "./component/fish-bone/fish-bone";
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
@@ -58,7 +59,8 @@ const JIGSAW_MODULE = [
     JigsawTimeModule,
     JigsawTooltipModule,
     JigsawTreeExtModule,
-    JigsawRootModule
+    JigsawRootModule,
+    JigsawFishBoneModule
 ];
 
 @NgModule({

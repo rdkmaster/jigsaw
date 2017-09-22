@@ -12,7 +12,7 @@ import {
 
 
 @Component({
-    selector: 'jigsaw-root',
+    selector: 'jigsaw-root, j-root',
     template: '<ng-content></ng-content>'
 })
 export class JigsawRoot {

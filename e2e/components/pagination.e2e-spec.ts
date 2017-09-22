@@ -1,4 +1,4 @@
-import {browser, element, by} from "protractor";
+import {browser, element, by, protractor, ExpectedConditions} from "protractor";
 // import {beforeEach} from "selenium-webdriver/testing";
 
 describe('pagination', () => {
@@ -28,12 +28,19 @@ describe('pagination', () => {
             pageItemEl.get(4).element(by.tagName('SPAN')).click();
             expect(jigsawPagingEl.element(by.css('.jigsaw-page-current')).getText()).toBe('5');
         });
-        it('should go to page 6 when click button', () => {
+        xit('should go to specified page when click button or send keys to "Goto" input', async () => {
             const jigsawPagingEl = element(by.css('.jigsaw-paging')),
                 pageItemEl = jigsawPagingEl.all(by.tagName('jigsaw-paging-item')),
-                buttonEl = element(by.tagName('BUTTON'));
+                buttonEl = element(by.tagName('BUTTON')),
+                gotoEl = element(by.css('.jigsaw-paging-goto .ng-valid'));
             buttonEl.click();
             expect(jigsawPagingEl.element(by.css('.jigsaw-page-current')).getText()).toBe('6');
+            gotoEl.click();
+            gotoEl.sendKeys(1);
+            browser.sleep(300);
+            gotoEl.sendKeys(protractor.Key.ENTER);
+            browser.sleep(300);
+            expect(jigsawPagingEl.element(by.css('.jigsaw-page-current')).getText()).toBe('1');
         });
         it('should change the number of pieces per page', () => {
             const jigsawPagingEl = element(by.css('.jigsaw-paging')),
@@ -45,6 +52,12 @@ describe('pagination', () => {
             expect(pageItemEl.count()).toBe(55);
             selectOptionEl.get(0).click();
             expect(pageItemEl.count()).toBe(110);
-        })
+        });
+        xit('"..." change to ">>" when move the mouse to jigsaw page nexts', () => {
+            const nextsiconEl = element(by.css('.jigsaw-page-nexts'));
+            expect(nextsiconEl.getText()).toBe('. . .');
+            browser.actions().mouseMove(element(by.css('.jigsaw-page-nexts')));
+            expect(nextsiconEl.getText()).toBe('>>');
+        });
     })
 });

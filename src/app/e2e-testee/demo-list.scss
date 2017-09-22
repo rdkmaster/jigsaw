@@ -1,6 +1,9 @@
-jigsaw-collapse.nav-list .jigsaw-collapse-content li {display: inline-block; margin-right: 12px;}
+jigsaw-collapse.nav-list .jigsaw-collapse-content li {
+    display: inline-block;
+    margin-right: 12px;
+}
 
-.demo-wrap{
+.demo-wrap {
     *zoom: 1;
     &:after {
         clear: both;
@@ -13,7 +16,7 @@ jigsaw-collapse.nav-list .jigsaw-collapse-content li {display: inline-block; mar
         height: 600px;
         margin-right: 1%;
     }
-    .right-box{
+    .right-box {
         width: 80%;
         float: left;
     }
@@ -34,10 +37,10 @@ jigsaw-collapse.nav-list .jigsaw-collapse-content li {display: inline-block; mar
 }
 
 /* demo容器 block */
-.live-demo-wrap .live-demo-block{
+.live-demo-wrap .live-demo-block {
     float: left;
     width: 48%;
-    min-width: 300px;
+    min-width: 400px;
     border: 1px solid #dcdcdc;
     border-radius: 4px;
     padding: 8px;
@@ -49,19 +52,27 @@ jigsaw-collapse.nav-list .jigsaw-collapse-content li {display: inline-block; mar
     margin-bottom: 30px;
     padding-left: 10px;
 }
-.live-demo.live-demo-block{margin-bottom: 20px}
+
+.live-demo.live-demo-block {
+    margin-bottom: 20px;
+    padding: 10px 20px;
+}
 
 /* demo标题 */
 .live-demo h3 {
     margin: 0 0 10px -10px;
     color: #333;
-    font-size: 18px;
+    font-size: 16px;
     padding: 2px 14px;
     position: relative;
     border-left: 1px solid #c7254e;
 }
-.live-demo.live-demo-block h3{margin: 0 0 10px 0;}
-.live-demo h3:before{
+
+.live-demo.live-demo-block h3 {
+    margin: 0 0 10px -10px;
+}
+
+.live-demo h3:before {
     position: absolute;
     left: -1px;
     top: 0;
@@ -81,9 +92,12 @@ jigsaw-collapse.nav-list .jigsaw-collapse-content li {display: inline-block; mar
 /* demo消息文字 */
 .live-demo p.message {
     margin-top: 10px;
-    margin-bottom: 0;
     color: #999;
     font-size: 14px;
+}
+
+.live-demo p.message.up {
+    margin: 0 0 10px;
 }
 
 /* demo消息高亮字 */
@@ -95,11 +109,27 @@ jigsaw-collapse.nav-list .jigsaw-collapse-content li {display: inline-block; mar
 /* toggle */
 .live-demo .toggle {
     padding-top: 10px;
+}
+
+.live-demo .toggle label {
+    margin: 0 10px 0 0;
+    font-weight: normal;
+    display: inline-block;
+    vertical-align: middle;
     color: #999;
 }
-.live-demo .toggle label{
-    margin-right: 10px;
-    font-weight: normal;
+
+.live-demo .toggle.up {
+    padding: 0 0 10px;
+}
+
+/* margin-top margin-bottom */
+.live-demo .mgt {
+    margin-top: 10px;
+}
+
+.live-demo .mgb {
+    margin-bottom: 10px;
 }
 
 /* demo code */
@@ -110,6 +140,15 @@ jigsaw-collapse.nav-list .jigsaw-collapse-content li {display: inline-block; mar
     background-color: rgba(27, 31, 35, 0.05);
     border-radius: 3px;
 }
+
+/* clearfix */
+.live-demo-wrap .clearfix:before, .live-demo-wrap .clearfix:after {
+    display: table;
+    content: '';
+}
+
 /* live demo common end */
+
+
 
 

@@ -1,5 +1,6 @@
 .dropdown {
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
     width: 570px;
     max-height: 400px;
 }

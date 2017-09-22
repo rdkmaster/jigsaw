@@ -3,7 +3,7 @@
 $select-prefix-cls: #{$jigsaw-prefix}-select;
 $select-option-prefix-cls: #{$jigsaw-prefix}-select-option;
 
-#{$select-prefix-cls} {
+.#{$select-prefix-cls}-host {
     @include inline-block();
     width: 120px;
     height: $height-base;

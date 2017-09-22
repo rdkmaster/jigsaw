@@ -41,7 +41,7 @@ $paging-prefix-cls: #{$jigsaw-prefix}-paging;
         height: 28px;
         line-height: 28px;
         vertical-align: top;
-        span{
+        > span{
             margin-right: 8px;
         }
     }
