@@ -583,10 +583,6 @@ export const navInfo = [
                 url: '/combo-select/disable'
             },
             {
-                label: 'auto-complete',
-                url: '/combo-select/auto-complete'
-            },
-            {
                 label: 'collapse',
                 url: '/combo-select/collapse'
             },
@@ -739,8 +735,12 @@ navInfo.unshift({
                 url: '/fish-bone/fish-bone-full'
             },
             {
-                label: 'auto-complete',
-                url: '/combo-select/auto-complete'
+                label: 'combo-searchable',
+                url: '/combo-select/combo-select-searchable'
+            },
+            {
+                label: 'combo-full',
+                url: '/combo-select/combo-select-full'
             },
             {
                 label: 'table-renderer',
@@ -749,10 +749,6 @@ navInfo.unshift({
             {
                 label: 'collapse',
                 url: '/collapse/collapse-full'
-            },
-            {
-                label: 'combo-select',
-                url: '/combo-select/combo-select-full'
             },
             {
                 label: 'time',

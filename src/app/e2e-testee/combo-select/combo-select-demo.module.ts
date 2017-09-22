@@ -14,7 +14,7 @@ import {ComboSelectWidthDemo} from "./dropdownWidth/app.component";
 import {ComboSelectChangeDemo} from "./change/app.component";
 import {OpenComboSelectDemo} from "./open/app.component";
 import {DisabledComboSelectDemo} from "./disable/app.component";
-import {ComboSelectAutoCompleteDemo} from "../../live-demo/combo-select/auto-complete/app.component";
+import {ComboSelectAutoCompleteDemo} from "../../live-demo/combo-select/combo-select-searchable/app.component";
 import {CollapseBasicDemo} from "./collapse/app.component";
 import {ComboSelectSetWidthDemo} from "./setWidth/app.component";
 import {ComboSelectAutoWidthDemoModule} from "./autoWidth/app.module";
@@ -27,7 +27,7 @@ import {ComboSelectLabelFieldDemoModule} from "./labelField/app.module";
 import {ComboSelectMultipleDemoModule} from "./multiple/app.module";
 import {OpenComboSelectDemoModule} from "./open/app.module";
 import {ComboSelectSetWidthDemoModule} from "./setWidth/app.module";
-import {ComboSelectAutoCompleteDemoModule} from "../../live-demo/combo-select/auto-complete/app.module";
+import {ComboSelectAutoCompleteDemoModule} from "../../live-demo/combo-select/combo-select-searchable/app.module";
 import {ComboSelectFullComponent} from "../../live-demo/combo-select/combo-select-full/app.component";
 import {ComboSelectFullModule} from "../../live-demo/combo-select/combo-select-full/app.module";
 
@@ -57,7 +57,7 @@ const routes = [
         path: 'disable', component: DisabledComboSelectDemo
     },
     {
-        path: 'auto-complete', component: ComboSelectAutoCompleteDemo
+        path: 'combo-select-searchable', component: ComboSelectAutoCompleteDemo
     },
     {
         path : 'collapse', component: CollapseBasicDemo
