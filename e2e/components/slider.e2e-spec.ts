@@ -16,16 +16,16 @@ describe('slider', () => {
                 sliderSwitch = element(by.css('.jigsaw-switch-small')),
             sliderTrack=element.all(by.tagName('jigsaw-slider')).get(3).element(by.css('.jigsaw-slider-track'));
             expect(spanEl.get(0).getText()).toBe('取值: 30');
-            browser.actions().dragAndDrop(sliderHandle.get(0), {x: 500, y: 0}).perform();
+            browser.actions().dragAndDrop(sliderHandle.get(0), {x: 20000, y: 0}).perform();
             expect(spanEl.get(0).getText()).toBe('取值: 100');
-            browser.actions().dragAndDrop(sliderHandle.get(0), {x: -200, y: 0}).perform();
-            expect(spanEl.get(0).getText()).toBe('取值: 70');
+            browser.actions().dragAndDrop(sliderHandle.get(0), {x: -20000, y: 0}).perform();
+            expect(spanEl.get(0).getText()).toBe('取值: 10');
             sliderSwitch.click();
-            browser.actions().dragAndDrop(sliderHandle.get(0), {x: -200, y: 0}).perform();
-            expect(spanEl.get(0).getText()).toBe('取值: 70');
-            browser.actions().dragAndDrop(sliderHandle.get(1), {x: -2000, y: 0}).perform();
+            browser.actions().dragAndDrop(sliderHandle.get(0), {x: 20000, y: 0}).perform();
+            expect(spanEl.get(0).getText()).toBe('取值: 10');
+            browser.actions().dragAndDrop(sliderHandle.get(1), {x: -20000, y: 0}).perform();browser.sleep(400);
             expect(spanEl.get(1).getText()).toBe('取值: 1');
-            browser.actions().dragAndDrop(sliderHandle.get(1), {x: 2000, y: 0}).perform();
+            browser.actions().dragAndDrop(sliderHandle.get(1), {x: 20000, y: 0}).perform();browser.sleep(400);
             expect(spanEl.get(1).getText()).toBe('取值: 20');
             expect(element.all(by.tagName('jigsaw-slider')).get(2).getAttribute('step')).toBe('0.01');
             // browser.actions().dragAndDrop(sliderHandle.get(3), {x: -200, y: 0}).perform();browser.sleep(500);

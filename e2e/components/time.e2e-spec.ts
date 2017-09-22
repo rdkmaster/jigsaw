@@ -2,7 +2,7 @@ import {browser, element, by, ExpectedConditions} from "protractor";
 import {until} from "selenium-webdriver";
 import elementLocated = until.elementLocated;
 
-describe('time', () => {
+xdescribe('time', () => {
     beforeEach(() => {
         browser.waitForAngularEnabled(false);
     });
@@ -83,6 +83,13 @@ describe('time', () => {
             expect(activeWeekEl.get(6).getCssValue('background-color')).toBe('rgba(65, 173, 220, 1)');
             granularityOp.get(2).click();
             expect(activeMonth.getCssValue('background-color')).toBe('rgba(65, 173, 220, 1)');
+        })
+    });
+    describe('test grItems', () => {
+        beforeEach(() => {
+            browser.get('/#/time/refreshInterval');
+        });
+        it('test refreshInterval',()=>{
         })
     });
 });
