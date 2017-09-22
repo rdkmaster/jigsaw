@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {Injectable, NgModule} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {RouterModule} from "@angular/router";
@@ -10,9 +10,6 @@ import {JigsawButtonModule} from "jigsaw/component/button/button";
 
 import {AppComponent} from './app.component';
 import {JigsawRootModule} from "../jigsaw/component/root/root";
-import {HttpClientModule, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
-import {HTTP_INTERCEPTORS} from "@angular/common/http";
-import {HttpResponse} from "@angular/common/http";
 
 const appRoutes = [
     {
@@ -37,18 +34,6 @@ export class JigsawI18nLoader extends TranslateLoader {
     }
 }
 
-
-
-@Injectable()
-export class TestInterceptor implements HttpInterceptor {
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        console.log('ddddddddddddd');
-        // return next.handle(req);
-        // return Observable.of(new HttpResponse<any>({body: {a: 1, b: 2}}));
-        return next.handle(new HttpRequest('get', '/rdk/service/app/example/server/version', null))
-    }
-}
-
 @NgModule({
     declarations: [
         AppComponent
@@ -57,7 +42,6 @@ export class TestInterceptor implements HttpInterceptor {
         BrowserModule,
         FormsModule,
         HttpModule,
-        HttpClientModule,
         RouterModule.forRoot(appRoutes, {useHash: true}),
         BrowserAnimationsModule,
         TranslateModule.forRoot({
@@ -68,12 +52,7 @@ export class TestInterceptor implements HttpInterceptor {
         ),
         JigsawRootModule, JigsawButtonModule
     ],
-    providers: [TranslateService,
-    {
-        provide: HTTP_INTERCEPTORS,
-        useClass: TestInterceptor,
-        multi: true,
-    }],
+    providers: [TranslateService],
     bootstrap: [AppComponent]
 })
 export class AppModule {
