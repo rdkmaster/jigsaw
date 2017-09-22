@@ -39,7 +39,7 @@ describe('slider', () => {
             expect(element.all(by.tagName('jigsaw-slider')).get(2).getAttribute('step')).toBe('0.01');
             browser.actions().dragAndDrop(sliderHandle.get(3), {x: -5000, y: 0}).perform();browser.sleep(5000);
             expect(handleTag.get(3).getAttribute('ng-reflect-value')).toBe('0');
-            browser.actions().dragAndDrop(sliderHandle.get(5), {x: 5000, y: 0}).perform();browser.sleep(5000);
+            browser.actions().dragAndDrop(sliderHandle.get(5), {x: 5000, y: 0}).perform();browser.sleep(7000);
             expect(handleTag.get(5).getAttribute('ng-reflect-value')).toBe('100');
             browser.actions().dragAndDrop(sliderHandle.get(7), {x: 0, y: 5000}).perform();browser.sleep(5000);
             expect(handleTag.get(7).getAttribute('ng-reflect-value')).toBe('0');
