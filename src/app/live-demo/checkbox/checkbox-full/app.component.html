@@ -1,31 +1,35 @@
 <div class="live-demo-wrap">
     <h2>Checkbox</h2>
-    <div class="demo-1 live-demo">
-        <h3>状态</h3>
-        <p class="comment">三种状态：<code>unchecked</code> <code>checked</code> <code>indeterminate</code></p>
-        <j-checkbox [(checked)]="demo1Checked" [(enableIndeterminate)]="enableIndeterminate">click me</j-checkbox>
-        <div class="toggle">
-            <label>启用中间状态:</label>
-            <j-switch [(checked)]="enableIndeterminate"></j-switch>
+
+    <div class="clearfix">
+        <div class="demo-1 live-demo live-demo-block">
+            <h3>状态</h3>
+            <p class="comment">三种状态：<code>unchecked</code> <code>checked</code> <code>indeterminate</code></p>
+            <j-checkbox [(checked)]="demo1Checked" [(enableIndeterminate)]="enableIndeterminate">click me</j-checkbox>
+            <div class="toggle">
+                <label>启用中间状态:</label>
+                <j-switch [(checked)]="enableIndeterminate"></j-switch>
+            </div>
+            <p class="message">The checkbox value is <span>{{demo1Checked}}</span>!</p>
         </div>
-        <p class="message">The checkbox value is <span>{{demo1Checked}}</span>!</p>
-    </div>
 
-    <div class="demo-2 live-demo">
-        <h3>默认中间状态</h3>
-        <p class="comment">默认中间状态，点击切换其他两个状态</p>
-        <j-checkbox [(checked)]="demo2Checked" [enableIndeterminate]="false">click me</j-checkbox>
-    </div>
-
-    <div class="demo-3 live-demo">
-        <h3>不可点击状态</h3>
-        <j-checkbox [(checked)]="demo3Checked" [(disabled)]="!enabled">a great checkbox!</j-checkbox>
-        <div class="toggle">
-            <label>启用点击状态:</label>
-            <j-switch [(checked)]="enabled"></j-switch>
+        <div class="demo-2 live-demo live-demo-block">
+            <h3>默认中间状态</h3>
+            <p class="comment">默认中间状态，点击切换其他两个状态</p>
+            <j-checkbox [(checked)]="demo2Checked" [enableIndeterminate]="false">click me</j-checkbox>
         </div>
-        <p class="message">The checkbox value is <span>{{demo3Checked}}</span>!</p>
     </div>
 
+    <div class="clearfix">
+        <div class="demo-3 live-demo live-demo-block">
+            <h3>不可点击状态</h3>
+            <j-checkbox [(checked)]="demo3Checked" [(disabled)]="!enabled">a great checkbox!</j-checkbox>
+            <div class="toggle">
+                <label>启用点击状态:</label>
+                <j-switch [(checked)]="enabled"></j-switch>
+            </div>
+            <p class="message">The checkbox value is <span>{{demo3Checked}}</span>!</p>
+        </div>
+    </div>
 </div>
 
