@@ -14,50 +14,30 @@ export class TableHeadIcon extends TableCellRendererBase {
 
 @Component({
     template: `
-        <jigsaw-select [value]="cellData" (valueChange)="dispatchChangeEvent($event)"
-                       [data]="officeList" width="70" height="20">
+        <jigsaw-select [value]="selected" (valueChange)="onChange($event)"
+                       [data]="officeList" width="170" height="25">
         </jigsaw-select>
     `
 })
 export class OfficeEditor extends TableCellRendererBase {
+    selected: any;
     officeList = [
         {label: 'Online I'}, {label: 'Online II'},
         {label: 'Offline I'}, {label: 'Offline II'},
         {label: 'Platform I'}, {label: 'Platform II'}, {label: 'Platform III'}
-    ]
+    ];
+
+    onChange(selected) {
+        if (selected === this.selected) {
+            return;
+        }
+        this.dispatchChangeEvent(selected.label);
+    }
+
+    onDataRefresh() {
+        this.selected = {label: this.cellData};
+    }
 }
-
-
-
-
-//
-// /*
-//  * 编辑单元格渲染器
-//  * */
-// @Component({
-//     template: `
-//         <jigsaw-input #input [(value)]="cellData" width="100%" [blurOnClear]="false"
-//                       (blur)="dispatchChangeEvent(cellData)">
-//         </jigsaw-input>
-//     `
-// })
-// export class TableCellTextEditorRenderer extends TableCellRendererBase implements AfterViewInit {
-//
-//     @ViewChild(JigsawInput)
-//     protected input: JigsawInput;
-//
-//     ngAfterViewInit() {
-//         this.input.focus();
-//     }
-// }
-
-
-
-
-
-
-
-
 
 @Component({
     template: `
