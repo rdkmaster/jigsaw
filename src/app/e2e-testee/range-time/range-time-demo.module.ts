@@ -17,6 +17,8 @@ import {RangeTimeRefreshIntervalModule} from "./refreshInterval/app.module";
 import {RangeTimeWeekStartModule} from "./weekStart/app.module";
 import {RangeTimeLimitStartModule} from "./limitStart/app.module";
 import {RangeTimeGrItemsModule} from "./grItems/app.module";
+import {RangeTimeFullComponent} from "../../live-demo/range-time/range-time-full/app.component";
+import {RangeTimeFullModule} from "../../live-demo/range-time/range-time-full/app.module";
 
 
 const rangeTimeDemoRoutes = [
@@ -50,6 +52,9 @@ const rangeTimeDemoRoutes = [
         path: 'weekStart', component: RangeTimeWeekStartComponent
     },
     {
+        path: 'range-time-full', component: RangeTimeFullComponent
+    },
+    {
         path: '**', //fallback router must in the last
         component: RangeTimeBasicDemoComponent
     }
@@ -65,7 +70,8 @@ const rangeTimeDemoRoutes = [
         RangeTimeLimitStartModule,
         RangeTimeRecommendedModule,
         RangeTimeRefreshIntervalModule,
-        RangeTimeWeekStartModule
+        RangeTimeWeekStartModule,
+        RangeTimeFullModule
     ]
 })
 export class RangeTimeDemoModule {

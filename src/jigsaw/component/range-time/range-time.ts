@@ -9,7 +9,7 @@ import {WeekTime} from "../../service/time.types";
     selector: 'jigsaw-range-time, j-range-time',
     templateUrl: 'range-time.html',
     providers: [
-        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRangeTime), multi: true },
+        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRangeTime), multi: true},
     ],
     host: {
         '[class.jigsaw-range-time-host]': 'true'
@@ -25,7 +25,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     public _$gr: TimeGr;
 
     public get gr(): TimeGr | string {
-        return this._$gr ? this._$gr : TimeGr.date;
+        return (this._$gr || this._$gr === 0) ? this._$gr : TimeGr.date;
     }
 
     @Input("gr")
@@ -40,7 +40,8 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
      * @internal
      */
     public _$dateChange(key: string, value: WeekTime) {
-        const val = {};
+        // 标记beginDate,endDate从time控件来
+        const val = {fromTimeComponent: true};
         val[key] = value;
         this.writeValue(val);
         this._propagateChange({"beginDate": this._beginDate, "endDate": this._endDate});
@@ -80,7 +81,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     }
 
     @Input("limitStart")
-    public set limitStart(value:WeekTime) {
+    public set limitStart(value: WeekTime) {
         if (value) {
             this._$limitStart = value;
         }
@@ -96,7 +97,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     }
 
     @Input("limitEnd")
-    public set limitEnd(value:WeekTime) {
+    public set limitEnd(value: WeekTime) {
         if (value) {
             this._$limitEnd = value;
             this._$endTimeLimitEnd = this._calculateLimitEnd();
@@ -150,7 +151,9 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     private _startTimeLimitStart: WeekTime;
 
     ngOnInit() {
-        this._init();
+        setTimeout(() => {
+            this._init();
+        });
     }
 
     private _init() {
@@ -176,7 +179,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
         return endTime;
     }
 
-    private static  _calculateLimitEnd(startDate: string, span:string, gr:TimeGr): Date {
+    private static _calculateLimitEnd(startDate: string, span: string, gr: TimeGr): Date {
         let endTime: Date = new Date(TimeService.format(TimeService.getDate(startDate, gr), 'YYYY-MM-DD'));
         endTime.setHours(23);
         endTime.setMinutes(59);
@@ -240,7 +243,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
         this._init();
     }
 
-    private _changeShortcut(selectedShortcut : Shortcut) {
+    private _changeShortcut(selectedShortcut: Shortcut) {
         if (selectedShortcut.dateRange) {
             let [beginDate, endDate] = typeof  selectedShortcut.dateRange === "function" ? selectedShortcut.dateRange.call(this) : selectedShortcut.dateRange;
 
@@ -262,7 +265,14 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
         }
     }
 
-    private _propagateChange:any = () => {};
+    private _handleWeekSelect(date: string) {
+        let weekNum = TimeService.getWeekOfYear(date);
+        let year = TimeService.getYear(date);
+        return {year: year, week: weekNum};
+    }
+
+    private _propagateChange: any = () => {
+    };
 
     public writeValue(value: any): void {
         if (!value) {
@@ -270,7 +280,13 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
         }
         if (value.hasOwnProperty('beginDate') && this._beginDate != value.beginDate) {
             setTimeout(() => {
-                this._beginDate = TimeService.convertValue(value.beginDate, <TimeGr>this.gr);
+                if (value.fromTimeComponent) {
+                    // 从time控件来时，直接使用
+                    this._beginDate = value.beginDate;
+                } else {
+                    // 从外部来需要转换
+                    this._beginDate = this.gr == TimeGr.week ? this._handleWeekSelect(value) : TimeService.convertValue(value.beginDate, <TimeGr>this.gr);
+                }
                 this._$endTimeLimitEnd = this._calculateLimitEnd();
                 this._startTimeLimitEnd = this._beginDate;
                 this.beginDateChange.emit(this._beginDate);
@@ -279,7 +295,13 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
         }
         if (value.hasOwnProperty('endDate') && this._endDate != value.endDate) {
             setTimeout(() => {
-                this._endDate = TimeService.convertValue(value.endDate, <TimeGr>this.gr);
+                if (value.fromTimeComponent) {
+                    // 从time控件来时，直接使用
+                    this._endDate = value.endDate;
+                } else {
+                    // 从外部来需要转换
+                    this._endDate = this.gr == TimeGr.week ? this._handleWeekSelect(value) : TimeService.convertValue(value.endDate, <TimeGr>this.gr);
+                }
                 this.endDateChange.emit(this._endDate);
                 this.change.emit({"beginDate": this._beginDate, "endDate": this._endDate});
             }, 0);
