@@ -3,7 +3,7 @@ import {LocalPageableTableData, TableData} from "jigsaw/core/data/table-data";
 import {DefaultCellRenderer} from "jigsaw/component/table/table-renderer";
 import {AdditionalColumnDefine, ColumnDefine, rowIndexGenerator} from "jigsaw/component/table/table-typings";
 import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/component/table/table-renderer";
-import {TableCellOperation, TableHeadSelect} from "./table-renderer";
+import {OfficeEditor, OfficeRenderer, TableCellOperation, TableHeadSelect} from "./table-renderer";
 import {Http} from "@angular/http";
 
 
@@ -22,13 +22,13 @@ export class TableRendererDemoComponent {
         this.tableData.pagingInfo.pageSize = 10;
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/table/data.json');
-        this.tableData.dataReviser = rawData => {
-            const td = TableData.of(rawData);
-            const colData = [];
-            td.data.forEach(row => colData.push(row[2]));
-            td.insertColumn(3, colData, 'salary1', 'xinzi');
-            return td;
-        }
+        // this.tableData.dataReviser = rawData => {
+        //     const td = TableData.of(rawData);
+        //     const colData = [];
+        //     td.data.forEach(row => colData.push(row[2]));
+        //     td.insertColumn(3, colData, 'salary1', 'xinzi');
+        //     return td;
+        // }
     }
 
     columnDefines: ColumnDefine[] = [
@@ -40,28 +40,27 @@ export class TableRendererDemoComponent {
                 sortable: true
             },
             cell: {
-                renderer: DefaultCellRenderer,
-                editable: true,
                 clazz: 'green-text'
             },
             group: true
         },
         {
-            target: 'other', visible: false
-        },
-        {
-            target: 'salary1',
+            target: 'office',
             cell: {
-                renderer: TableCellCheckboxRenderer,
-                data: (td, row, col) => td.data[row][col] % 2
+                renderer: OfficeRenderer,
+                editorRenderer: OfficeEditor,
+                editable: true
             },
             header: {
-                renderer: TableHeadCheckboxRenderer
+                // renderer: TableHeadCheckboxRenderer
             }
         },
         {
             target: (f, i) => f == 'name',
             header: {sortable: true}
+        },
+        {
+            target: 'other', visible: false
         },
     ];
 
@@ -85,7 +84,7 @@ export class TableRendererDemoComponent {
             },
             cell: {
                 renderer: TableCellCheckboxRenderer,
-                data: (td, row, col) => td.data[row][1] == 'Coder',
+                data: (td, row, col) => td.data[row][1] == 'Developer',
             }
         },
         {

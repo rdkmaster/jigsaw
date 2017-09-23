@@ -12,15 +12,71 @@ import {TableData} from "../../../../jigsaw/core/data/table-data";
 export class TableHeadIcon extends TableCellRendererBase {
 }
 
+@Component({
+    template: `
+        <jigsaw-select [value]="cellData" (valueChange)="dispatchChangeEvent($event)"
+                       [data]="officeList" width="70" height="20">
+        </jigsaw-select>
+    `
+})
+export class OfficeEditor extends TableCellRendererBase {
+    officeList = [
+        {label: 'Online I'}, {label: 'Online II'},
+        {label: 'Offline I'}, {label: 'Offline II'},
+        {label: 'Platform I'}, {label: 'Platform II'}, {label: 'Platform III'}
+    ]
+}
+
+
+
+
+//
+// /*
+//  * 编辑单元格渲染器
+//  * */
+// @Component({
+//     template: `
+//         <jigsaw-input #input [(value)]="cellData" width="100%" [blurOnClear]="false"
+//                       (blur)="dispatchChangeEvent(cellData)">
+//         </jigsaw-input>
+//     `
+// })
+// export class TableCellTextEditorRenderer extends TableCellRendererBase implements AfterViewInit {
+//
+//     @ViewChild(JigsawInput)
+//     protected input: JigsawInput;
+//
+//     ngAfterViewInit() {
+//         this.input.focus();
+//     }
+// }
+
+
+
+
+
+
+
+
+
+@Component({
+    template: `
+        <span class="fa fa-edit"></span> {{cellData}}
+    `
+})
+export class OfficeRenderer extends TableCellRendererBase {
+}
+
 /*
  * 自定义表头渲染组件
  * */
 @Component({
     template: `
         <jigsaw-select [value]="selected"
-                       placeholder="{{this.cellData}}" (valueChange)="dispatchChangeEvent($event)"
+                       placeholder="{{cellData}}" (valueChange)="dispatchChangeEvent($event)"
                        [data]="listItems" width="70" height="20">
-        </jigsaw-select>`
+        </jigsaw-select>
+    `
 })
 export class TableHeadSelect extends TableCellRendererBase {
     selected: any;

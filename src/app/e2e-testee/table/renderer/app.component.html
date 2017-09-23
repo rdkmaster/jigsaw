@@ -2,7 +2,7 @@
 <p>{{message}}</p>
 <jigsaw-table [data]="tableData" [columnDefines]="columnDefines" [floatingHeader]="true"
               [additionalColumnDefines]="additionalColumnDefines" [lineEllipsis]="false"
-              [(additionalData)]="additionalData"
+              [(additionalData)]="additionalData" trackRowBy="name"
               (dataChange)="onCellChange($event)">
 </jigsaw-table>
 <br><br>

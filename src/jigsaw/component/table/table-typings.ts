@@ -107,46 +107,50 @@ export function _getColumnIndex(data: TableData, additionalData: TableData, fiel
 
 export class AdditionalTableData extends TableData {
     public originData: TableData;
-    private _trackRowByFields: string[];
-    private _cachedValues: {[field: string]: {[key: string]: any}} = {};
+    public trackRowBy: string;
 
-    private _trackRowBy: string;
+    private _cachedValues: { [field: string]: { [key: string]: any } } = {};
+    private _trackRowByFields: number[];
 
-    public get trackRowBy(): string {
-        return this._trackRowBy;
-    }
-
-    public set trackRowBy(value: string) {
-        this._trackRowBy = value;
-        if (value) {
-            this._trackRowByFields = value.split(/\s*,\s*/g);
+    private _fixTrackRowFields() {
+        if (this._trackRowByFields) {
+            return;
         }
+        this._trackRowByFields = [];
+        const fields = this.trackRowBy ? this.trackRowBy.split(/\s*,\s*/g) : this.originData.field;
+        fields.forEach(field => {
+            const col = this.originData.field.findIndex(f => f === field);
+            if (col == -1) {
+                return;
+            }
+            this._trackRowByFields.push(col);
+        });
     }
 
-    public clearCachedValues():void {
+    public clearCachedValues(): void {
         this._cachedValues = {};
     }
 
-    private _getValueKey(row:number):string {
+    private _getValueKey(field: string, row: number): string {
         let valueKey = '';
         if (!this.originData) {
             console.warn('set originData and trackRowBy property of table before caching a value');
             return valueKey;
         }
-        if (!this._trackRowByFields) {
-            this._trackRowByFields = this.originData.field;
-        }
-        this._trackRowByFields.forEach(field => {
-            const col = this.originData.field.findIndex(f => f == field);
-            if (col != -1) {
-                valueKey += this.originData.data[row][col] + '$$';
+        this._fixTrackRowFields();
+
+        const excludedColumn = this.originData.field.findIndex(f => f === field);
+        this._trackRowByFields.forEach(col => {
+            if (col == excludedColumn) {
+                return;
             }
+            valueKey += this.originData.data[row][col] + ' $$ ';
         });
         return valueKey;
     }
 
-    public cacheValue(field:string, row:number, value:any):void {
-        const valueKey = this._getValueKey(row);
+    public cacheValue(field: string, row: number, value: any): void {
+        const valueKey = this._getValueKey(field, row);
         if (!valueKey) {
             console.warn(`invalid value key by row[${row}]`);
             return;
@@ -157,8 +161,8 @@ export class AdditionalTableData extends TableData {
         this._cachedValues[field][valueKey] = value;
     }
 
-    public getCachedValue(field:string, row:number):any {
-        const valueKey = this._getValueKey(row);
+    public getCachedValue(field: string, row: number): any {
+        const valueKey = this._getValueKey(field, row);
         if (!valueKey) {
             console.warn(`invalid value key by row[${row}]`);
             return;

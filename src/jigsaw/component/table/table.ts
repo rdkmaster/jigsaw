@@ -21,7 +21,6 @@ import {
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer} from "./table-renderer";
-import {PopupService} from "../../service/popup.service";
 import {JigsawScrollBarModule} from "../../directive/scrollbar/scrollbar";
 import {AffixUtils} from "../../core/utils/internal-utils";
 
