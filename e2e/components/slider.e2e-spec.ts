@@ -1,6 +1,6 @@
 import {browser, element, by, ExpectedConditions} from 'protractor';
 import {ILocation, until} from "selenium-webdriver";
-import elementLocated = until.elementLocated;
+
 
 describe('slider', () => {
     beforeEach(() => {
