@@ -41,7 +41,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
      */
     public _$dateChange(key: string, value: WeekTime) {
         // 标记beginDate,endDate从time控件来
-        const val = {fromTimeCmp: true};
+        const val = {fromTimeComponent: true};
         val[key] = value;
         this.writeValue(val);
         this._propagateChange({"beginDate": this._beginDate, "endDate": this._endDate});
@@ -280,7 +280,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
         }
         if (value.hasOwnProperty('beginDate') && this._beginDate != value.beginDate) {
             setTimeout(() => {
-                if (value.fromTimeCmp) {
+                if (value.fromTimeComponent) {
                     // 从time控件来时，直接使用
                     this._beginDate = value.beginDate;
                 } else {
@@ -295,7 +295,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
         }
         if (value.hasOwnProperty('endDate') && this._endDate != value.endDate) {
             setTimeout(() => {
-                if (value.fromTimeCmp) {
+                if (value.fromTimeComponent) {
                     // 从time控件来时，直接使用
                     this._endDate = value.endDate;
                 } else {
