@@ -1,4 +1,4 @@
-import {Http, RequestOptionsArgs, Response, ResponseOptions, URLSearchParams} from "@angular/http";
+import {Http, RequestOptionsArgs, URLSearchParams} from "@angular/http";
 import {Subject} from "rxjs/Subject";
 import "rxjs/add/operator/map";
 import 'rxjs/add/operator/debounceTime';
@@ -8,12 +8,12 @@ import {
     DataFilterInfo,
     DataSortInfo,
     IFilterable,
+    IPageable,
     IServerSidePageable,
     ISortable,
     PagingInfo,
     SortAs,
-    SortOrder,
-    IPageable
+    SortOrder
 } from "./component-data";
 import {CommonUtils} from "../utils/common-utils";
 

@@ -134,7 +134,7 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
         this._checked = value;
         this.targetData.data.forEach((row, index) => {
             row[this.column] = value;
-            this._additionalData.cacheValue(index, value);
+            this._additionalData.cacheValue(this.field, index, value);
         });
         this.targetData.refresh();
     }
@@ -142,7 +142,7 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     protected onDataRefresh(): void {
         let type = 0;
         this.targetData.data.forEach((row, index) => {
-            let value = this._additionalData.getCachedValue(index);
+            let value = this._additionalData.getCachedValue(this.field, index);
             value = CommonUtils.isDefined(value) ? value : !!row[this.column];
             type |= value ? 2 : 1;
         });
@@ -187,17 +187,21 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
     public set cellData(value: any) {
         this._cellData = value;
         this._updateChecked();
+        if (this.field == 'salary1') {
+
+            console.log(this.field);
+        }
     }
 
     private _updateChecked(): void {
-        this.checked = this._additionalData.getCachedValue(this.row);
+        this.checked = this._additionalData.getCachedValue(this.field, this.row);
         this.checked = CommonUtils.isDefined(this.checked) ? this.checked : this.checked;
         this.checked = CommonUtils.isDefined(this.checked) ? this.checked : this.cellData;
     }
 
     onChange(value) {
         this.checked = value;
-        this._additionalData.cacheValue(this.row, value);
+        this._additionalData.cacheValue(this.field, this.row, value);
         this.targetData.data[this.row][this.column] = value;
         this.dispatchChangeEvent(value);
     }

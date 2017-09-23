@@ -108,7 +108,7 @@ export function _getColumnIndex(data: TableData, additionalData: TableData, fiel
 export class AdditionalTableData extends TableData {
     public originData: TableData;
     private _trackRowByFields: string[];
-    private _cachedValues: {[key: string]: any} = {};
+    private _cachedValues: {[field: string]: {[key: string]: any}} = {};
 
     private _trackRowBy: string;
 
@@ -145,26 +145,28 @@ export class AdditionalTableData extends TableData {
         return valueKey;
     }
 
-    // private _fixRow(row:number):number {
-    //     return rowIndexGenerator(this.originData, row) - 1;
-    // }
-
-    public cacheValue(row:number, value:any):void {
+    public cacheValue(field:string, row:number, value:any):void {
         const valueKey = this._getValueKey(row);
         if (!valueKey) {
             console.warn(`invalid value key by row[${row}]`);
             return;
         }
-        this._cachedValues[valueKey] = value;
+        if (!this._cachedValues[field]) {
+            this._cachedValues[field] = {};
+        }
+        this._cachedValues[field][valueKey] = value;
     }
 
-    public getCachedValue(row:number):any {
+    public getCachedValue(field:string, row:number):any {
         const valueKey = this._getValueKey(row);
         if (!valueKey) {
             console.warn(`invalid value key by row[${row}]`);
             return;
         }
-        return this._cachedValues[valueKey];
+        if (!this._cachedValues[field]) {
+            return;
+        }
+        return this._cachedValues[field][valueKey];
     }
 }
 

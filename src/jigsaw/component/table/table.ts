@@ -6,7 +6,6 @@ import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule} from "../common";
 import {
     JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent,
-    TableInternalCellBase
 } from "./table-inner.components";
 import {TableData} from "../../core/data/table-data";
 
