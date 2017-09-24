@@ -302,6 +302,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         const mixedFields = this._getMixedFields();
         this._updateHeaderSettings(mixedFields);
         this._updateCellSettings(mixedFields);
+        this.additionalDataChange.emit(this.additionalData);
         setTimeout(() => this._setCellLineEllipsis(), 0);
         setTimeout(() => this._setFloatingHeadWidth(), 0);
     }

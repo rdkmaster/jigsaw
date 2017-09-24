@@ -46,6 +46,7 @@ export interface ISortable extends IAjaxComponentData {
 
 export interface IFilterable extends IAjaxComponentData {
     filterInfo: DataFilterInfo;
+    filter(compareFn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
     filter(term: string, fields?: (string | number)[]): void;
     filter(term: DataFilterInfo): void;
 }

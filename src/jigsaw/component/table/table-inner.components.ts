@@ -266,8 +266,11 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
                 this._emitDataChange(cellData);
             }
             this.rendererHost.viewContainerRef.clear();
-            this.insertRenderer();
-            this._setGoEditListener();
+
+            setTimeout(() => {
+                this.insertRenderer();
+                this._setGoEditListener();
+            });
             //todo 重新对齐表头
             // this._jigsawTable._asyncSetFixedHeadWidth();
             //todo 重新绑定td的tooltip

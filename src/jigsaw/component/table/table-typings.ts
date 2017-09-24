@@ -2,6 +2,7 @@ import {TemplateRef, Type} from "@angular/core";
 import {LocalPageableTableData, PageableTableData, TableData} from "../../core/data/table-data";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 import {TableCellRendererBase} from "./table-renderer";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 export type TableColumnTargetFinder = (field: string, index: number) => boolean;
 export type TableColumnTarget = number | string | (number | string)[] | TableColumnTargetFinder;
@@ -109,6 +110,8 @@ export class AdditionalTableData extends TableData {
     public originData: TableData;
     public trackRowBy: string;
 
+    private _splitString = '_%%_';
+    private _splitRegExp = new RegExp(this._splitString, 'g');
     private _cachedValues: { [field: string]: { [key: string]: any } } = {};
     private _trackRowByFields: number[];
 
@@ -131,7 +134,7 @@ export class AdditionalTableData extends TableData {
         this._cachedValues = {};
     }
 
-    private _getValueKey(field: string, row: number): string {
+    private _getValueKey(field: string | number, row: number): string {
         let valueKey = '';
         if (!this.originData) {
             console.warn('set originData and trackRowBy property of table before caching a value');
@@ -139,20 +142,21 @@ export class AdditionalTableData extends TableData {
         }
         this._fixTrackRowFields();
 
+        field = typeof field === 'string' ? field : this.field[field];
         const excludedColumn = this.originData.field.findIndex(f => f === field);
         this._trackRowByFields.forEach(col => {
-            if (col == excludedColumn) {
+            if (col == excludedColumn || CommonUtils.isUndefined(this.originData.data[row])) {
                 return;
             }
-            valueKey += this.originData.data[row][col] + ' $$ ';
+            //即使单元格的值是空字符串，但是 `valueKey` 的值仍然至少包含了 `this._splitString`，因此它的字面值不是false
+            valueKey += this.originData.data[row][col] + this._splitString;
         });
         return valueKey;
     }
 
-    public cacheValue(field: string, row: number, value: any): void {
+    public cacheValue(field: string | number, row: number, value: any): void {
         const valueKey = this._getValueKey(field, row);
         if (!valueKey) {
-            console.warn(`invalid value key by row[${row}]`);
             return;
         }
         if (!this._cachedValues[field]) {
@@ -161,16 +165,34 @@ export class AdditionalTableData extends TableData {
         this._cachedValues[field][valueKey] = value;
     }
 
-    public getCachedValue(field: string, row: number): any {
+    public getCachedValue(field: string | number, row: number): any {
         const valueKey = this._getValueKey(field, row);
         if (!valueKey) {
-            console.warn(`invalid value key by row[${row}]`);
             return;
         }
         if (!this._cachedValues[field]) {
             return;
         }
         return this._cachedValues[field][valueKey];
+    }
+
+    public getCachedValues(field: string | number): { key: string | string[], value: any }[] {
+        const values: any[] = [];
+        const fieldString = typeof field === 'string' ? field : this.field[field];
+        if (!fieldString) {
+            return values;
+        }
+
+        const cached = this._cachedValues[fieldString];
+        for (let p in cached) {
+            const value = cached[p];
+            const key = p.split(this._splitRegExp);
+            //去掉前面特地留下来的最后一个无效值
+            key.pop();
+            values.push({value: value, key: key.length == 1 ? key[0] : key})
+        }
+
+        return values;
     }
 }
 

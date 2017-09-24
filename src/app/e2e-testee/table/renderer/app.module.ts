@@ -6,19 +6,29 @@ import {
     TableHeadCheckboxRenderer
 } from "jigsaw/component/table/table-renderer";
 import {JigsawPaginationModule} from "jigsaw/component/pagination/pagination";
+import {JigsawComboSelectModule} from "jigsaw/component/combo-select/index";
+import {JigsawListModule} from "jigsaw/component/list-and-tile/list";
+import {JigsawCheckBoxModule} from "jigsaw/component/checkbox/index";
+import {JigsawButtonModule} from "jigsaw/component/button/button";
 import {TableRendererDemoComponent} from './app.component';
-import {OfficeEditor, OfficeRenderer, TableCellOperation, TableHeadIcon, TableHeadSelect} from "./table-renderer";
+import {
+    OfficeEditor, OfficeHeader, OfficeRenderer, TableCellOperation,
+    PositionHeaderSelect
+} from "./renderers";
 
 @NgModule({
-    imports: [JigsawTableModule, JigsawSelectModule, JigsawTableRendererModule, JigsawPaginationModule],
+    imports: [
+        JigsawTableModule, JigsawSelectModule, JigsawTableRendererModule, JigsawPaginationModule,
+        JigsawComboSelectModule, JigsawListModule, JigsawCheckBoxModule, JigsawButtonModule
+    ],
     declarations: [
-        TableRendererDemoComponent, TableHeadSelect, TableHeadIcon, TableCellOperation,
-        OfficeRenderer, OfficeEditor
+        TableRendererDemoComponent, PositionHeaderSelect, TableCellOperation,
+        OfficeRenderer, OfficeEditor, OfficeHeader
     ],
     bootstrap: [TableRendererDemoComponent], // 这个是给plunker用的，不能去掉。
     entryComponents: [
-        TableHeadSelect, TableCellOperation, TableCellCheckboxRenderer, TableHeadCheckboxRenderer,
-        OfficeRenderer, OfficeEditor
+        PositionHeaderSelect, TableCellOperation, TableCellCheckboxRenderer, TableHeadCheckboxRenderer,
+        OfficeRenderer, OfficeEditor, OfficeHeader
     ]
 })
 export class TableRendererDemoModule {

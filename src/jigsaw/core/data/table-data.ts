@@ -171,6 +171,7 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
 
     public filterInfo: DataFilterInfo;
 
+    public filter(compareFn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
     public filter(term: string, fields?: (string | number)[]): void;
     public filter(term: DataFilterInfo): void;
     public filter(term, fields?: (string | number)[]): void {
@@ -307,9 +308,13 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this.pagingInfo.totalRecord = paging.hasOwnProperty('totalRecord') ? paging.totalRecord : this.pagingInfo.totalRecord;
     }
 
+    public filter(compareFn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
     public filter(term: string, fields?: string[] | number[]): void;
     public filter(term: DataFilterInfo): void;
     public filter(term, fields?: string[] | number[]): void {
+        if (term instanceof Function) {
+            throw new Error('compare function is not supported by PageableTableData which filters data in the server side');
+        }
         const pfi = term instanceof DataFilterInfo ? term : new DataFilterInfo(term, fields);
         this._filterSubject.next(pfi);
     }
@@ -318,6 +323,9 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     public sort(as: SortAs, order: SortOrder, field: string | number): void;
     public sort(sort: DataSortInfo): void;
     public sort(as, order?: SortOrder, field?: string | number): void {
+        if (as instanceof Function) {
+            throw new Error('compare function is not supported by PageableTableData which sorts data in the server side');
+        }
         const psi = as instanceof DataSortInfo ? as : new DataSortInfo(as, order, field);
         this._sortSubject.next(psi);
     }
@@ -387,16 +395,10 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
 
     public fromObject(data: any): LocalPageableTableData {
         super.fromObject(data);
-        this.originalData = <TableDataMatrix>CommonUtils.deepCopy(this.data);
+        this.originalData = this.data.concat();
         this.filteredData = this.originalData;
-        this._updatePagingInfo();
-        return this;
-    }
-
-    private _updatePagingInfo() {
-        this.pagingInfo.totalRecord = this.filteredData.length;
-        this.pagingInfo.totalPage = Math.ceil(this.pagingInfo.totalRecord / this.pagingInfo.pageSize);
         this.firstPage();
+        return this;
     }
 
     public filter(callbackfn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
@@ -416,6 +418,7 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
             if (fields && fields.length != 0) {
                 let numberFields: number[];
                 if (typeof fields[0] === 'string') {
+                    numberFields = [];
                     (<string[]>fields).forEach(field => {
                             numberFields.push(this.field.findIndex(item => item == field))
                         }
@@ -425,9 +428,9 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
                 }
                 this.filteredData = this.originalData.filter(
                     row => row.filter(
-                        (index, item) => numberFields.find(num => num == index)
+                        (item, index) => numberFields.find(num => num == index)
                     ).filter(
-                        item => (<string>item).indexOf(key) != -1
+                        item => (item + '').indexOf(key) != -1
                     ).length != 0
                 );
             } else {
@@ -438,7 +441,7 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
                 );
             }
         }
-        this._updatePagingInfo();
+        this.firstPage();
     }
 
     public sort(compareFn?: (a: any, b: any) => number): any;
@@ -447,6 +450,11 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
     public sort(as, order?: SortOrder, field?: string | number): void {
         super.sortData(this.filteredData, as, order, field);
         this.changePage(this.pagingInfo.currentPage, undefined);
+    }
+
+    private _updatePagingInfo() {
+        this.pagingInfo.totalRecord = this.filteredData.length;
+        this.pagingInfo.totalPage = Math.ceil(this.pagingInfo.totalRecord / this.pagingInfo.pageSize);
     }
 
     public changePage(currentPage: number, pageSize?: number): void;
@@ -462,19 +470,17 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
             return;
         }
         this.pagingInfo.pageSize = pi.pageSize;
-        this.pagingInfo.totalPage = Math.ceil(this.pagingInfo.totalRecord / this.pagingInfo.pageSize);
+        // this.pagingInfo.totalPage = Math.ceil(this.pagingInfo.totalRecord / this.pagingInfo.pageSize);
+        this._updatePagingInfo();
 
         if (pi.currentPage >= 1 && pi.currentPage <= this.pagingInfo.totalPage) {
             this.pagingInfo.currentPage = pi.currentPage;
+            const begin = (this.pagingInfo.currentPage - 1) * this.pagingInfo.pageSize;
+            const end = this.pagingInfo.currentPage * this.pagingInfo.pageSize < this.pagingInfo.totalRecord ? this.pagingInfo.currentPage * this.pagingInfo.pageSize : this.pagingInfo.totalRecord;
+            this.data = this.filteredData.slice(begin, end);
         } else {
-            console.error(`invalid currentPage[${pi.currentPage}], it should be between in [1, ${this.pagingInfo.totalPage}]`);
-            return;
+            this.data.length = 0;
         }
-
-        const begin = (this.pagingInfo.currentPage - 1) * this.pagingInfo.pageSize;
-        const end = this.pagingInfo.currentPage * this.pagingInfo.pageSize < this.pagingInfo.totalRecord ? this.pagingInfo.currentPage * this.pagingInfo.pageSize : this.pagingInfo.totalRecord;
-        this.data = this.filteredData.slice(begin, end);
-
         this.refresh();
     }
 

@@ -30,7 +30,6 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     private _firstPage: JigsawPagingItem;
     private _lastPage: JigsawPagingItem;
     private _pageSizeOptions: any[];
-    private _hostInit: boolean = false;
     private _pageNumberInit: boolean = false;
 
     // TODO 国际化
@@ -64,7 +63,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         if (this.current != newValue) {
             this._current = newValue;
             this.currentChange.emit(newValue);
-            if (this._hostInit && this._pageNumberInit) {
+            if (this.initialized && this._pageNumberInit) {
                 this._setCurrentShow();
             }
         }
@@ -82,7 +81,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     set total(value: number) {
         if (this._total != value) {
             this._total = value;
-            if (this._hostInit) {
+            if (this.initialized) {
                 this._renderPages();
             }
         }
@@ -103,7 +102,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
             this._$pageSize.value = newValue;
             this._$pageSize.label = newValue + '/Page';
             this.pageSizeChange.emit(newValue);
-            if (this._hostInit) {
+            if (this.initialized) {
                 this._renderPages();
             }
         }
@@ -124,6 +123,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     };
 
     @Input() public searchable: boolean = false; // 搜索功能开关
+    @Output() public search = new EventEmitter<string>();
 
     @Input() public showQuickJumper: boolean = false; // 是否可以快速跳转至某页
 
@@ -143,7 +143,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         this._showPrevAndNextBtn();
 
         //prevPage nextPage 不可点
-        this._canablePrevAndNext();
+        this._updatePrevAndNextStatus();
 
         //设置当前页
         this._setCurrentPage();
@@ -247,20 +247,20 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * */
     private _showPrevAndNextBtn(): void {
         if (this._totalPage <= 10) {
-            this._firstPage.showPrev = false;
-            this._lastPage.showNext = false;
+            if (this._firstPage) this._firstPage.showPrev = false;
+            if (this._lastPage) this._lastPage.showNext = false;
         }
         else if (this.current <= 4) {
-            this._firstPage.showPrev = false;
-            this._lastPage.showNext = true;
+            if (this._firstPage) this._firstPage.showPrev = false;
+            if (this._lastPage) this._lastPage.showNext = true;
         }
         else if (this.current >= this._totalPage - 3) {
-            this._firstPage.showPrev = true;
-            this._lastPage.showNext = false;
+            if (this._firstPage) this._firstPage.showPrev = true;
+            if (this._lastPage) this._lastPage.showNext = false;
         }
         else {
-            this._firstPage.showPrev = true;
-            this._lastPage.showNext = true;
+            if (this._firstPage) this._firstPage.showPrev = true;
+            if (this._lastPage) this._lastPage.showNext = true;
         }
     }
 
@@ -275,8 +275,8 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     /*
      * 上一页、下一页按钮设置
      * */
-    private _canablePrevAndNext(): void {
-        if (this._totalPage == 1) {
+    private _updatePrevAndNextStatus(): void {
+        if (this._totalPage <= 1) {
             this._$prevDisabled = true;
             this._$nextDisabled = true;
         } else if (this.current == 1) {
@@ -319,19 +319,21 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * */
     private _renderPages(): void {
         //计算总页数
-        let pageNumbers = [];
         this._totalPage = Math.ceil(this.total / this.pageSize);
+        if (isNaN(this._totalPage) || this._totalPage < 0) {
+            this._totalPage = 0;
+        }
 
-        //验证总页数合法性
-        if (isNaN(this._totalPage) || this._totalPage <= 0) return;
-
+        let pageNumbers = [];
         for (let i = 0; i < this._totalPage; i++) {
             pageNumbers.push(i + 1);
         }
         this._$pageNumbers = pageNumbers;
 
         //验证current合法性
-        if (this.current <= 0 || this.current > this._totalPage) this.current = 1;
+        if (this.current <= 0 || this.current > this._totalPage) {
+            this.current = 1;
+        }
 
         setTimeout(() => {
             this._getFirstAndLastPage();
@@ -342,8 +344,8 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     }
 
     ngOnInit() {
+        super.ngOnInit();
         this._renderPages();
-        this._hostInit = true;
     }
 
     ngAfterViewInit() {

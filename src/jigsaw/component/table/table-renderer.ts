@@ -173,7 +173,9 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
 export class TableCellCheckboxRenderer extends TableCellRendererBase {
     protected onDataRefresh() {
         this._updateChecked();
-        this.targetData.data[this.row][this.column] = this.checked;
+        if (CommonUtils.isDefined(this.targetData.data[this.row])) {
+            this.targetData.data[this.row][this.column] = this.checked;
+        }
     }
 
     public checked: boolean;
