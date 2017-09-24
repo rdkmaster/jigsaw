@@ -123,7 +123,7 @@ export class PositionHeaderSelect extends TableCellRendererBase {
  * 操作列
  * */
 @Component({
-    template: '<a href="javascript:;">加薪</a> <a (click)="fire()">辞退</a>',
+    template: '<a (click)="payRaise()">加薪</a> <a (click)="fire()">辞退</a>',
     styles: [`a{color: #ffaa00} a:hover{text-decoration: underline}`]
 })
 export class TableCellOperation extends TableCellRendererBase {
@@ -131,8 +131,13 @@ export class TableCellOperation extends TableCellRendererBase {
         super();
     }
 
+    payRaise() {
+        this.tableData.data[this.row][2] = Number(this.tableData.data[this.row][2]) + 2000;
+        // 这一步非常重要，我们直接修改了tableData的值，Jigsaw无法知道发生了啥变化，需要通过调用`refresh()`来通知Jigsaw
+        this.tableData.refresh();
+    }
+
     fire() {
-        this.tableData.data.splice(this.row, 1);
         const lptd = <LocalPageableTableData>this.tableData;
         lptd.originalData.splice(this.row, 1);
         lptd.data.splice(this.row, 1);
