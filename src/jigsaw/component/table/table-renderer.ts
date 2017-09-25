@@ -142,7 +142,7 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     protected onDataRefresh(): void {
         let type = 0;
         this.targetData.data.forEach((row, index) => {
-            let value = this._additionalData.getCachedValue(this.field, index);
+            let value = this._additionalData.getTouchedValue(this.field, index);
             value = CommonUtils.isDefined(value) ? value : !!row[this.column];
             type |= value ? 2 : 1;
         });
@@ -192,7 +192,7 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
     }
 
     private _updateChecked(): void {
-        let checked = this._additionalData.getCachedValue(this.field, this.row);
+        let checked = this._additionalData.getTouchedValue(this.field, this.row);
         checked = CommonUtils.isDefined(checked) ? checked : this.cellData;
         this.checked = checked;
     }

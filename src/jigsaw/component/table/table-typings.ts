@@ -165,7 +165,7 @@ export class AdditionalTableData extends TableData {
         this._cachedValues[field][valueKey] = value;
     }
 
-    public getCachedValue(field: string | number, row: number): any {
+    public getTouchedValue(field: string | number, row: number): any {
         const valueKey = this._getValueKey(field, row);
         if (!valueKey) {
             return;
@@ -176,7 +176,7 @@ export class AdditionalTableData extends TableData {
         return this._cachedValues[field][valueKey];
     }
 
-    public getCachedValues(field: string | number): { key: string | string[], value: any }[] {
+    public getTouchedValues(field: string | number): { key: string | string[], value: any }[] {
         const values: any[] = [];
         const fieldString = typeof field === 'string' ? field : this.field[field];
         if (!fieldString) {
