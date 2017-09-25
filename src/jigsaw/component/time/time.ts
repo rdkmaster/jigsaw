@@ -627,7 +627,6 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
             if (newValueYear == valueYear && newValueWeek == valueWeek) return;
         }
         let [value,] = this._handleValue(newValue);
-        // this._value = value;
         this._setDate(value);
     }
 
