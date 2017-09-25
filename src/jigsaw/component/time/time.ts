@@ -610,11 +610,13 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     private _propagateChange:any = () => {};
 
     public writeValue(newValue: any): void {
-        if (!newValue) {
+        if (!newValue || newValue == this._value) {
+            // 此处也会过滤掉newValue是格式化过的，并且与_value相等的情况
             return;
         }
         newValue = TimeService.convertValue(newValue, <TimeGr>this.gr);
         if (newValue == this._value) {
+            // 此处把newValue格式化后，与_value比较，过滤掉相等的情况
             return;
         }
         if (this._value && this.gr == TimeGr.week) {
