@@ -26,14 +26,14 @@ export class TableRendererDemoComponent {
 
     constructor(public http: Http) {
         this.tableData = new LocalPageableTableData();
-        this.tableData.pagingInfo.pageSize = 10;
+        this.tableData.pagingInfo.pageSize = 200;
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/table/data.json');
     }
 
     columnDefines: ColumnDefine[] = [
         {
-            target: ['position', 'f7'],
+            target: ['position', 'a-not-exist-field'],
             width: '20%',
             header: {
                 renderer: PositionHeaderSelect,
@@ -60,7 +60,7 @@ export class TableRendererDemoComponent {
             header: {sortable: true}
         },
         {
-            target: 'other', visible: false
+            target: ['gender', 'desc'], visible: false
         },
     ];
 
@@ -84,7 +84,7 @@ export class TableRendererDemoComponent {
             },
             cell: {
                 renderer: TableCellCheckboxRenderer,
-                data: (td, row, col) => td.data[row][1] == 'Developer',
+                data: (td, row, col) => td.data[row][2] == 'Developer',
             }
         },
         {
@@ -117,7 +117,7 @@ export class TableRendererDemoComponent {
         // 先处理默认勾上的人
         this.additionalData.data.forEach((row, index) => {
             if (row[1]) {
-                this.tableData.data[index][2] = Number(this.tableData.data[index][2]) + 2000;
+                this.tableData.data[index][3] = Number(this.tableData.data[index][3]) + 2000;
             }
         });
 
@@ -132,7 +132,7 @@ export class TableRendererDemoComponent {
                 // 表示用户在界面是勾掉了这个人
                 return;
             }
-            this.tableData.data[index][2] = Number(this.tableData.data[index][2]) + 2000;
+            this.tableData.data[index][3] = Number(this.tableData.data[index][3]) + 2000;
         });
 
         // 这一步非常重要，我们直接修改了tableData的值，Jigsaw无法知道发生了啥变化，需要通过调用`refresh()`来通知Jigsaw

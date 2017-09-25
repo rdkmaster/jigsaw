@@ -18,10 +18,10 @@ export function filterData(tableData: TableData, filters: any) {
 
     tableData.filter(positionFilter, ['position']);
     tableData.filter(row => {
-        const officeString = row[4];
+        const officeString = row[5];
         const officeMatch = officeFilter.length > 0 ? officeFilter.find(office => office.label === officeString) : true;
 
-        const positionString = row[1] + '';
+        const positionString = row[2] + '';
         const positionMatch = positionString.indexOf(positionFilter) != -1;
 
         const allFieldMatch = row.join('_%%_').indexOf(allFieldFilter) != -1;
@@ -132,7 +132,7 @@ export class TableCellOperation extends TableCellRendererBase {
     }
 
     payRaise() {
-        this.tableData.data[this.row][2] = Number(this.tableData.data[this.row][2]) + 2000;
+        this.tableData.data[this.row][3] = Number(this.tableData.data[this.row][3]) + 2000;
         // 这一步非常重要，我们直接修改了tableData的值，Jigsaw无法知道发生了啥变化，需要通过调用`refresh()`来通知Jigsaw
         this.tableData.refresh();
     }

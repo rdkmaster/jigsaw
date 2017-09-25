@@ -187,26 +187,17 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
     }
 
     public set cellData(value: any) {
-        if (this.field == 'salary1') {
-            console.log(this.targetData.data);
-        }
         this._cellData = value;
         this._updateChecked();
     }
 
     private _updateChecked(): void {
-        if (this.field == 'salary1') {
-            console.log(this.field);
-        }
         let checked = this._additionalData.getCachedValue(this.field, this.row);
         checked = CommonUtils.isDefined(checked) ? checked : this.cellData;
         this.checked = checked;
     }
 
     onChange(value) {
-        if (this.field == 'salary1') {
-            console.log(111111);
-        }
         this.checked = value;
         this._additionalData.cacheValue(this.field, this.row, value);
         this.targetData.data[this.row][this.column] = value;

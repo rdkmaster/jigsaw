@@ -65,11 +65,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @Output()
     public selectChange: EventEmitter<number> = new EventEmitter<number>();
 
-    private _getColumnIndex(field:string): [number, TableData] {
+    private _getColumnIndex(field: string): [number, TableData] {
         return _getColumnIndex(this.data, this._additionalData, field);
     }
 
-    private _getHeaderValueByField(field):string {
+    private _getHeaderValueByField(field): string {
         let [index, tableData] = this._getColumnIndex(field);
         if (index == -1) {
             console.error('no header value found, unknown field: ' + field);
@@ -108,7 +108,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         });
     }
 
-    private _getCellDataByField(field:string, row:number):any {
+    private _getCellDataByField(field: string, row: number): any {
         let [index, tableData] = this._getColumnIndex(field);
         if (index == -1) {
             console.error('no cell data found, unknown field: ' + field);
@@ -120,7 +120,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         return tableData.data[row][index];
     }
 
-    private _setCellDataByField(field: string, row: number, data:any):void {
+    private _setCellDataByField(field: string, row: number, data: any): void {
         let [index, tableData] = this._getColumnIndex(field);
         if (index == -1) {
             console.error('no cell data found, unable to set, field: ' + field);
@@ -271,7 +271,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         return result;
     }
 
-    private _fixColumnDefineTarget(colDef:ColumnDefine):ColumnDefine {
+    private _fixColumnDefineTarget(colDef: ColumnDefine): ColumnDefine {
         let targets;
         if (typeof colDef.target == 'number' || typeof colDef.target == 'string') {
             targets = [colDef.target];
@@ -379,7 +379,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
         if (this._columnDefines.length > 0) {
             console.warn('do not support updating the columnDefines yet! ' +
-                'you can give the table every possible column defines when you init the table.');
+                'you can give the table every possible column defines when you init it.');
             return;
         }
         this._columnDefines = value;
@@ -412,7 +412,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
         if (this._additionalColumnDefines.length > 0) {
             console.warn('do not support updating the additionalColumnDefine yet! ' +
-                'you can give the table every possible additional column defines when you init the table.');
+                'you can give the table every possible additional column defines when you init it.');
             return;
         }
         this._additionalColumnDefines = value;
@@ -615,7 +615,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
     }
 
-    private _initAdditionalData():void {
+    private _initAdditionalData(): void {
         if (!this.additionalColumnDefines) {
             return;
         }
