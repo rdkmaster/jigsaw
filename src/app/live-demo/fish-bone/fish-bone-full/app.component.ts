@@ -72,16 +72,21 @@ export class FishBoneFullComponent implements AfterViewInit {
                                         },
                                         {
                                             label: `
-                                            <div class="jigsaw-table-host">
-                                            <table>
-                                                <thead><tr><td>ID</td><td>name</td><td>gender</td><td>city</td></tr></thead>
-                                                <tbody>
-                                                    <tr><td>1</td><td>tom</td><td>1</td><td>nj</td></tr>
-                                                    <tr><td>2</td><td>jerry</td><td>0</td><td>shz</td></tr>
-                                                    <tr><td>3</td><td>json</td><td>1</td><td>sh</td></tr>
-                                                </tbody>
-                                            </table>
-                                            </div>`
+                                                <div class="jigsaw-table-host">
+                                                <table>
+                                                    <thead><tr><td>ID</td><td>name</td><td>gender</td><td>city</td></tr></thead>
+                                                    <tbody>
+                                                        <tr><td>1</td><td><a onclick="hello('tom')">tom</a></td><td>male</td><td>nj</td></tr>
+                                                        <tr><td>2</td><td><a onclick="hello('jerry')">jerry</a></td><td>male</td><td>shz</td></tr>
+                                                        <tr><td>3</td><td><a onclick="hello('marry')">marry</a></td><td>female</td><td>sh</td></tr>
+                                                    </tbody>
+                                                </table>
+                                                </div>
+                                            `,
+                                            // 这里需要特别注意，由于我们给了一段html片段并且包含了回调函数`hello()`，
+                                            // 因此这里必须设置 `innerHtmlContext` 属性作为`hello()`函数的上下文
+                                            // 如果html片段中不包含回调函数，则无需设置 `innerHtmlContext` 属性
+                                            innerHtmlContext: this
                                         }
                                     ]
                                 },
@@ -214,56 +219,6 @@ export class FishBoneFullComponent implements AfterViewInit {
                             }
                         ]
                     },
-                    /*{
-                        label: '技术',
-                        nodes: [
-                            {
-                                label: '1、技术手段、技术路径'
-                            },
-                            {
-                                label: '2、人：干部、队伍、人才、编制'
-                            },
-                            {
-                                label: '3、财：财政、贷款、民间成本'
-                            },
-                            {
-                                label: '4、物：设备、设施（基础设施和配套设施）'
-                            }
-                        ]
-                    },
-                    {
-                        label: '制度',
-                        nodes: [
-                            {
-                                label: '非正式制度：风俗、习惯'
-                            },
-                            {
-                                label: '正式制度',
-                                nodes: [
-                                    {
-                                        label: '规则：静态制度'
-                                    },
-                                    {
-                                        label: '机制：系统制度的应用'
-                                    },
-                                    {
-                                        label: '体制（政策）：规则与机制的统称'
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        label: '环境',
-                        nodes: [
-                            {
-                                label: '自然地理环境'
-                            },
-                            {
-                                label: '社会人文环境'
-                            }
-                        ]
-                    }*/
                 ]
             },
             {
@@ -333,6 +288,10 @@ export class FishBoneFullComponent implements AfterViewInit {
 
     data2: TreeData;
 
+    hello(toWhom) {
+        alert('hello ' + toWhom);
+    }
+
     ngAfterViewInit() {
         ChartIconFactory.create(".bar-colours-1", ChartType.bar, {
             fill: ["red", "green", "blue"],
@@ -342,7 +301,7 @@ export class FishBoneFullComponent implements AfterViewInit {
 
         ChartIconFactory.create(".pie-colours-2", ChartType.pie, {
             fill: function (_, i, all) {
-                var g = (i / all.length) * 255;
+                let g = (i / all.length) * 255;
                 return "rgb(255, " + g + ", 0)"
             },
             radius: 48,

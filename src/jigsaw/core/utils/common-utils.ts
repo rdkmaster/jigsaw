@@ -198,6 +198,10 @@ export class CommonUtils {
     public static isDefined(source: any) {
         return source !== undefined && source !== null;
     }
+
+    public static isUndefined(source: any) {
+        return !this.isDefined(source);
+    }
 }
 
 export type CallbackRemoval = () => void;
