@@ -1,12 +1,12 @@
-import {Directive, ElementRef, HostBinding, Input, NgModule, OnDestroy, OnInit, Renderer2} from "@angular/core";
-import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
+import {Directive, HostBinding, Input, NgModule, OnDestroy, OnInit} from "@angular/core";
+import {DomSanitizer} from "@angular/platform-browser";
 import {CommonUtils} from "../../core/utils/common-utils";
 
 export type HtmlCallback = (...args) => any;
 type CallbackValues = { [callbackName: string]: HtmlCallback };
 
 @Directive({
-    selector: '[trustedHtml], [jigsawTrustedHtml], [jTrustedHtml]',
+    selector: '[trustedHtml]',
 })
 export class JigsawTrustedHtml implements OnInit, OnDestroy {
     private static _callbacks = new Map<any, CallbackValues>();
@@ -94,49 +94,54 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
         this._contextMagicNumber = JigsawTrustedHtml._getContextMagicNumber(value);
     }
 
-    @Input()
-    public trustedHtml: string;
-    @Input()
-    public jTrustedHtml: string;
-    @Input()
-    public jigsawTrustedHtml: string;
+    private _safeHtml: any;
+    private _trustedHtml: string;
 
-    private _html: string;
+    @Input()
+    public get trustedHtml(): string {
+        return this._trustedHtml;
+    }
+
+    public set trustedHtml(value: string) {
+        this._trustedHtml = CommonUtils.isDefined(value) ? value.trim() : '';
+        this._safeHtml = null;
+    }
 
     @HostBinding('innerHtml')
     public get innerHtml(): any {
-        return this._sanitizer.bypassSecurityTrustHtml(this._html);
+        if (CommonUtils.isUndefined(this._safeHtml)) {
+            this._safeHtml = this._sanitizer.bypassSecurityTrustHtml(this.trustedHtml);
+        }
+        return this._safeHtml;
     }
 
     ngOnInit() {
-        this._html = this.trustedHtml ? this.trustedHtml : '';
-        this._html = this.jTrustedHtml ? this.jTrustedHtml : this._html;
-        this._html = this.jigsawTrustedHtml ? this.jigsawTrustedHtml : this._html;
-        this._html = this._html.trim();
-        if (!this._html || !this.trustedHtmlContext || this._contextMagicNumber == -1) {
+        if (!this.trustedHtml || !this.trustedHtmlContext || this._contextMagicNumber == -1) {
             return;
         }
 
-        this._html = this._html
-            .replace(/on(\w+)\s*=(['"])\s*([_$a-z][_$a-z0-9]*)\s*\(/ig,
-                (found, event, quot, func) => {
+        this.trustedHtml = this.trustedHtml
+            .replace(/on(\w+)\s*=(['"])\s*([_$a-z][_$a-z0-9]*)\s*\((.*?)\)/ig,
+                (found, event, quot, func, args) => {
                     JigsawTrustedHtml._declareCallback(this.trustedHtmlContext, func, this.trustedHtmlContext[func]);
-                    return `on${event}=${quot}_jigsawInternalCallbackWrapper(&quot;${func}&quot;,${this._contextMagicNumber},`;
+                    const modified = `on${event}=${quot}_jigsawInternalCallbackWrapper(&quot;${func}&quot;,${this._contextMagicNumber}`;
+                    args = CommonUtils.isDefined(args) ? args.trim() : '';
+                    return modified + (!!args ? ',' + args + ')' : ')');
                 })
-            .replace(/(javascript\s*:)\s*([_$a-z][_$a-z0-9]*)\s*\(/ig,
-                (found, jsPrefix, func) => {
+            .replace(/(javascript\s*:)\s*([_$a-z][_$a-z0-9]*)\s*\((.*?)\)/ig,
+                (found, jsPrefix, func, args) => {
                     JigsawTrustedHtml._declareCallback(this.trustedHtmlContext, func, this.trustedHtmlContext[func]);
-                    return `${jsPrefix}_jigsawInternalCallbackWrapper(&quot;${func}&quot;,${this._contextMagicNumber},`;
+                    const modified = `${jsPrefix}_jigsawInternalCallbackWrapper(&quot;${func}&quot;,${this._contextMagicNumber}`;
+                    args = CommonUtils.isDefined(args) ? args.trim() : '';
+                    return modified + (!!args ? ',' + args + ')' : ')');
                 });
     }
 
     ngOnDestroy() {
         JigsawTrustedHtml._clearCallbacks(this.trustedHtmlContext);
         this._trustedHtmlContext = null;
-        this.trustedHtml = null;
-        this.jigsawTrustedHtml = null;
-        this.jTrustedHtml = null;
-        this._html = null;
+        this._trustedHtml = null;
+        this._safeHtml = null;
     }
 }
 
