@@ -187,6 +187,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                     matchedColumnDef.cell.data : null;
                 const originVal = this._getCellDataByField(field, rowIndex);
                 if (generator) {
+                    // 根据cell的data函数，生成新的cellData，并更新tableData
                     settings.cellData = generator(this.data, rowIndex, realColIndex, this._additionalData);
                     this._setCellDataByField(field, rowIndex, settings.cellData);
                 } else {
@@ -194,6 +195,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 }
                 settings.cellData = CommonUtils.isDefined(settings.cellData) ? settings.cellData : '';
 
+                // 修改settings的group属性
                 if (matchedColumnDef && matchedColumnDef.group) {
                     if (groupSetting && groupSetting.cellData == settings.cellData) {
                         groupSetting.rowSpan++;
@@ -257,6 +259,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         return settings;
     }
 
+    /**
+     * 根据tableDate的field和additionalColumn的field生成最终要显示出来的列位置
+     * 比如['additional-field-0', 'name', 'gender', 'position', 'additional-field-1']
+     * @returns {string[]}
+     * @private
+     */
     private _getMixedFields(): string[] {
         if (!this._additionalColumnDefines || !this.data) {
             return [];
@@ -271,6 +279,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         return result;
     }
 
+    /**
+     * ColumnDefine所有的target转化为函数的形式
+     * @param {ColumnDefine} colDef
+     * @returns {ColumnDefine}
+     * @private
+     */
     private _fixColumnDefineTarget(colDef: ColumnDefine): ColumnDefine {
         let targets;
         if (typeof colDef.target == 'number' || typeof colDef.target == 'string') {
@@ -610,8 +624,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 width: acd.width,
                 visible: acd.visible
             });
-            const pos = CommonUtils.isDefined(acd.pos) ? acd.pos : this._data.field.length;
-            this.columnDefines.splice(pos, 0, cd);
+            this.columnDefines.push(cd);
         }
     }
 
