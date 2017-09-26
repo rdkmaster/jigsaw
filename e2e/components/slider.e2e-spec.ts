@@ -19,14 +19,14 @@ describe('slider', () => {
                 sliderTrack = element.all(by.tagName('jigsaw-slider')).get(3).element(by.css('.jigsaw-slider-track'));
             await expect(handleTag.get(0).getAttribute('ng-reflect-value')).toBe('30');
             await browser.actions().mouseMove(sliderHandle.get(0)).mouseDown().mouseMove({x: 1000, y: 0}).mouseUp().perform();
-            await  expect(handleTag.get(0).getAttribute('ng-reflect-value')).toBe('100');
+            await  expect(sliderHandle.get(0).getCssValue('LEFT')).toBe('188px');
 
             await browser.actions().mouseMove(sliderHandle.get(0)).mouseDown().mouseMove({x: -5000, y: 0}).mouseUp().perform();
 
             await    sliderSwitch.click();
-            await  browser.actions().mouseMove(sliderHandle.get(1)).mouseDown().mouseMove({x: 5000, y: 0}).mouseUp().perform();
+            await  browser.actions().mouseMove(sliderHandle.get(0)).mouseDown().mouseMove({x: 5000, y: 0}).mouseUp().perform();
 
-            await   expect(handleTag.get(0).getAttribute('ng-reflect-value')).toBe('10');
+            await   expect(sliderHandle.get(0).getCssValue('LEFT')).toBe('0px');
 
             await browser.actions().mouseMove(sliderHandle.get(1)).mouseDown().mouseMove({x: -5000, y: 0}).mouseUp().perform();
 
