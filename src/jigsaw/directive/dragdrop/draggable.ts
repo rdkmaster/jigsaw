@@ -3,7 +3,7 @@ import {DragDropInfo} from "./types";
 import {CallbackRemoval} from "../../core/utils/common-utils";
 
 @Directive({
-    selector: '[jigsaw-draggable], [jigsawDraggable]',
+    selector: '[jigsaw-draggable], [jigsawDraggable], [j-draggable]',
     host: {
         '[attr.draggable]': 'true',
         '(selectstart)': '_selectStartHandle($event)',

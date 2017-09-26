@@ -3,7 +3,7 @@ import {DragDropInfo} from "./types";
 import {CallbackRemoval} from "../../core/utils/common-utils";
 
 @Directive({
-    selector: '[jigsaw-droppable], [jigsawDroppable]',
+    selector: '[jigsaw-droppable], [jigsawDroppable], [j-droppable]',
     host: {
         '(dragenter)': '_dragEnterHandle($event)',
         '(dragleave)': '_dragLeaveHandle($event)',

@@ -12,7 +12,7 @@ export class JigsawPrefixIcon {
 }
 
 @Component({
-    selector: 'jigsaw-input',
+    selector: 'jigsaw-input, j-input',
     templateUrl: 'input.html',
     host: {
         '[style.width]': 'width',

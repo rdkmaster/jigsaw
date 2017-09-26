@@ -1,5 +1,5 @@
 @import "../../assets/scss/core/base";
 
-jigsaw-info-alert, jigsaw-warning-alert, jigsaw-error-alert, jigsaw-confirm-alert {
+.#{$jigsaw-prefix}-common-alert{
     @include inline-block
 }

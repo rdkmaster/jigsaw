@@ -27,10 +27,11 @@ export class GrItem {
 }
 
 @Component({
-    selector: 'jigsaw-time',
+    selector: 'jigsaw-time, j-time',
     templateUrl: 'time.html',
     host: {
-        '[style.width]': 'width'
+        '[style.width]': 'width',
+        '[class.jigsaw-time-host]': 'true'
     },
     providers: [
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTime), multi: true },
@@ -609,11 +610,13 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     private _propagateChange:any = () => {};
 
     public writeValue(newValue: any): void {
-        if (!newValue) {
+        if (!newValue || newValue == this._value) {
+            // 此处也会过滤掉newValue是格式化过的，并且与_value相等的情况
             return;
         }
         newValue = TimeService.convertValue(newValue, <TimeGr>this.gr);
         if (newValue == this._value) {
+            // 此处把newValue格式化后，与_value比较，过滤掉相等的情况
             return;
         }
         if (this._value && this.gr == TimeGr.week) {
@@ -624,7 +627,6 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
             if (newValueYear == valueYear && newValueWeek == valueWeek) return;
         }
         let [value,] = this._handleValue(newValue);
-        // this._value = value;
         this._setDate(value);
     }
 

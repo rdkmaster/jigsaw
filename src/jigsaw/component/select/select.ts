@@ -23,7 +23,7 @@ export class OptionList extends AbstractJigsawComponent{
 }
 
 @Component({
-    selector: 'jigsaw-select',
+    selector: 'jigsaw-select, j-select',
     templateUrl: 'select.html',
     host: {
         "(click)": "_toggleClick($event)",
@@ -95,7 +95,8 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     private _options: QueryList<JigsawOption> = null;
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
-        super()
+        super();
+        this._renderer.addClass(this._elementRef.nativeElement, 'jigsaw-select-host');
     }
 
     //点击组件，显示\隐藏option列表
@@ -164,7 +165,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 }
 
 @Component({
-    selector: 'jigsaw-select-option',
+    selector: 'jigsaw-select-option, j-select-option',
     templateUrl: 'option.html',
     host: {
         "(click)": "_onClick()",
@@ -186,8 +187,12 @@ export class JigsawOption implements OnInit {
 
     public selected: boolean = false;//选中状态
 
-    constructor(@Optional() selectCmp: JigsawSelect, public cdRef: ChangeDetectorRef) {
+    constructor(@Optional() selectCmp: JigsawSelect,
+                public cdRef: ChangeDetectorRef,
+                private _renderer: Renderer2,
+                private _elementRef: ElementRef) {
         this._selectCmp = selectCmp;
+        this._renderer.addClass(this._elementRef.nativeElement, 'jigsaw-select-option-host');
     }
 
     private _onClick(): void {

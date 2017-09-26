@@ -53,7 +53,7 @@ $amount: 10px;
     }
 }
 
-#{$ball-loading-prefix-cls} {
+.#{$ball-loading-prefix-cls}-host {
     @include inline-block;
     position: relative;
     height: 15px;

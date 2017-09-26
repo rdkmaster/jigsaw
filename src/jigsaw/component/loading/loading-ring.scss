@@ -1,6 +1,6 @@
 $default-loading-prefix-cls: #{$jigsaw-prefix}-loading;
 
-#{$default-loading-prefix-cls}{
+.#{$default-loading-prefix-cls}-host{
     @include inline-block;
     position: relative;
     width: 80px;

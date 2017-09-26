@@ -20,7 +20,7 @@ export enum CollapseMode {
 }
 
 @Component({
-    selector: 'jigsaw-collapse-pane',
+    selector: 'jigsaw-collapse-pane, j-collapse-pane',
     templateUrl: './collapse-pane.html'
 })
 export class JigsawCollapsePane{
@@ -60,7 +60,7 @@ export class JigsawCollapsePane{
  * 手风琴 是一种特殊的折叠面板，只允许单个内容区域展开。
  */
 @Component({
-    selector: 'jigsaw-collapse',
+    selector: 'jigsaw-collapse, j-collapse',
     templateUrl: 'collapse.html',
     host: {
         '[style.width]': 'width',

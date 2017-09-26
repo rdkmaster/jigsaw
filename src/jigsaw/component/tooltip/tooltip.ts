@@ -31,7 +31,7 @@ export abstract class TooltipBase implements ITooltip {
 }
 
 @Component({
-    selector: 'jigsaw-tooltip-dialog',
+    selector: 'jigsaw-tooltip-dialog, j-tooltip-dialog',
     templateUrl: 'tooltip.html',
     animations: [
         bubbleIn
@@ -44,7 +44,8 @@ export class JigsawTooltipDialog implements IPopupable, AfterContentInit {
 
     protected popupElement: HTMLElement;
 
-    constructor(private _elementRef: ElementRef) {
+    constructor(private _elementRef: ElementRef, private _renderer: Renderer2) {
+        this._renderer.addClass(this._elementRef.nativeElement, 'jigsaw-tooltip-dialog');
     }
 
     ngAfterContentInit() {
@@ -83,7 +84,7 @@ export class SimpleTooltipComponent extends TooltipBase {
 }
 
 @Directive({
-    selector: '[jigsaw-tooltip], [jigsawTooltip]'
+    selector: '[jigsaw-tooltip], [jigsawTooltip], [j-tooltip]'
 })
 export class JigsawTooltip implements OnDestroy {
     @Input() public jigsawTooltip:string;
