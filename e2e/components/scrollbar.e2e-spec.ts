@@ -11,12 +11,11 @@ describe('scrollbar', () => {
         beforeEach(() => {
             browser.get('/#/scrollbar/basic')
         });
-        it('drag and drop scollbar', () => {
+        it('drag and drop scollbar', async() => {
             const draggerEl = element(by.tagName('ng-component')).element(by.css('.mCSB_dragger'));
-            expect(draggerEl.getCssValue('TOP')).toBe('0px');
-            browser.actions().dragAndDrop(draggerEl,{x:0,y:200}).perform();
-            browser.sleep(5000);
-            expect(draggerEl.getCssValue('TOP')).toBe('70px');
+           await expect(draggerEl.getCssValue('TOP')).toBe('0px');
+           await browser.actions().dragAndDrop(draggerEl,{x:0,y:200}).perform();
+           await expect(draggerEl.getCssValue('TOP')).toBe('70px');
         })
     });
 });
