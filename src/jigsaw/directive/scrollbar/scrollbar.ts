@@ -3,16 +3,17 @@
  */
 
 import {Directive, Input, ElementRef, OnInit, Output, EventEmitter, NgModule} from '@angular/core';
+import {AbstractJigsawComponent} from "../../component/common";
 
 @Directive({
     selector: '[jigsaw-scroll-bar], [jigsawScrollBar], [j-scroll-bar]'
 })
-export class JigsawScrollBar implements OnInit {
+export class JigsawScrollBar extends AbstractJigsawComponent implements OnInit {
     private _scrollBarJq: any;
     private _scrollBarOptions: Object;
-    private _inited: boolean;
 
     constructor(private _elf: ElementRef) {
+        super();
     }
 
     @Input()
@@ -50,7 +51,7 @@ export class JigsawScrollBar implements OnInit {
     public set scrollBarOptions(value) {
         if (value && this.scrollBarOptions != value) {
             this._scrollBarOptions = value;
-            if(this._inited){
+            if(this.initialized){
                 this._initScrollBar(this._generateOptions());
             }
         }
@@ -113,8 +114,8 @@ export class JigsawScrollBar implements OnInit {
     }
 
     public ngOnInit() {
+        super.ngOnInit();
         this._initScrollBar(this._generateOptions());
-        this._inited = true;
     }
 
     private _generateEventObject(event): ScrollEvent {

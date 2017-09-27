@@ -7,6 +7,7 @@ import {fadeIn} from "../animations/fade-in";
 import {CallbackRemoval} from "../../core/utils/common-utils";
 import {JigsawScrollBarModule} from "../../directive/scrollbar/scrollbar";
 import {TreeData} from "../../core/data/tree-data";
+import {JigsawTrustedHtmlModule} from "../../directive/trusted-html/trusted-html";
 
 @Component({
     selector: 'j-fish-bone, jigsaw-fish-bone',
@@ -376,7 +377,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
 }
 
 @NgModule({
-    imports: [CommonModule, JigsawScrollBarModule],
+    imports: [CommonModule, JigsawScrollBarModule, JigsawTrustedHtmlModule],
     declarations: [JigsawFishBone, JigsawFishBoneItem],
     exports: [JigsawFishBone]
 })
