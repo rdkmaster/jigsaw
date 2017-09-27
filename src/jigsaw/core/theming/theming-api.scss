@@ -94,12 +94,24 @@
             tr td {
                 @if ($bgColor != default) {
                     background: $bgColor;
+                    &:last-child{
+                        border-right-color: $bgColor;
+                    }
+                    @at-root .jigsaw-table-header:after{
+                        background: $bgColor;
+                    }
                 }
                 @if ($borderBottomWidth != default) {
                     border-bottom-width: $borderBottomWidth;
+                    @at-root .jigsaw-table-header:after{
+                        border-bottom-width: $borderBottomWidth;
+                    }
                 }
                 @if ($borderBottomColor != default) {
                     border-bottom-color: $borderBottomColor;
+                    @at-root .jigsaw-table-header:after{
+                        border-bottom-color: $borderBottomColor;
+                    }
                 }
             }
         }

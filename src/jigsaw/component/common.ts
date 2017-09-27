@@ -1,5 +1,4 @@
-
-import {Directive, OnInit, ViewContainerRef, Input, NgModule} from "@angular/core";
+import {Directive, OnInit, ViewContainerRef, Input, NgModule, AfterViewInit} from "@angular/core";
 import {CommonUtils} from "../core/utils/common-utils";
 import {PopupService} from "../service/popup.service";
 
@@ -7,7 +6,8 @@ import {PopupService} from "../service/popup.service";
     selector: '[jigsaw-renderer-host]',
 })
 export class JigsawRendererHost {
-    constructor(public viewContainerRef: ViewContainerRef) { }
+    constructor(public viewContainerRef: ViewContainerRef) {
+    }
 }
 
 @NgModule({
@@ -28,7 +28,7 @@ export interface IJigsawComponent {
     maxHeight: string;
 }
 
-export abstract class AbstractJigsawComponent implements IJigsawComponent, OnInit {
+export abstract class AbstractJigsawComponent implements IJigsawComponent, OnInit, AfterViewInit {
 
     @Input()
     public basicClass: string;
@@ -43,7 +43,7 @@ export abstract class AbstractJigsawComponent implements IJigsawComponent, OnIni
     }
 
     public set width(value: string) {
-        this._width =  CommonUtils.getCssValue(value);
+        this._width = CommonUtils.getCssValue(value);
     }
 
     @Input()
@@ -52,7 +52,7 @@ export abstract class AbstractJigsawComponent implements IJigsawComponent, OnIni
     }
 
     public set height(value: string) {
-        this._height =  CommonUtils.getCssValue(value);
+        this._height = CommonUtils.getCssValue(value);
     }
 
     @Input()
@@ -61,13 +61,21 @@ export abstract class AbstractJigsawComponent implements IJigsawComponent, OnIni
     }
 
     public set maxHeight(value: string) {
-        this._maxHeight =  CommonUtils.getCssValue(value);
+        this._maxHeight = CommonUtils.getCssValue(value);
     }
 
     //TODO 所有组件都使用这个属性判断是否初始化好
-    protected initialized:boolean = false;
+    protected initialized: boolean = false;
+    protected childInitialized: boolean = false;
+
     ngOnInit() {
         this.initialized = true;
+    }
+
+    ngAfterViewInit() {
+        setTimeout(() => {
+            this.childInitialized = true;
+        });
     }
 }
 

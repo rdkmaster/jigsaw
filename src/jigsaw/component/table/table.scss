@@ -6,11 +6,16 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     @include inline-block;
     position: relative;
     width: 100%;
-    overflow: hidden;
     vertical-align: top;
+    overflow-x: auto;
+    padding-top: 40px;
+    &.#{$table-prefix-cls}-hide-head{
+        padding-top: 0;
+    }
     table {
         width: 100%;
         text-align: center;
+        table-layout:fixed;
         td {
             border: 1px solid $border-color-base;
         }
@@ -20,6 +25,9 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
                 height: 40px;
                 td {
                     background: $background-color-base;
+                    &:last-child{
+                        border-right-color: $background-color-base;
+                    }
                 }
             }
         }
@@ -52,26 +60,6 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
                 }
             }
         }
-        &.#{$table-prefix-cls}-floating-header {
-            position: absolute;
-            z-index: $zindex-affix;
-        }
-    }
-}
-
-.#{$table-prefix-cls}-box {
-    width: 100%;
-    height: 100%;
-    > .mCSB_vertical_horizontal > .mCSB_scrollTools_vertical {
-        margin: 40px 0 0 !important;
-    }
-    &.#{$table-prefix-cls}-hide-head {
-        table{
-            margin-top: -40px;
-        }
-        > .mCSB_vertical_horizontal > .mCSB_scrollTools_vertical {
-            margin: 0 0 !important;
-        }
     }
 }
 
@@ -79,5 +67,29 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     display: none !important;
 }
 
+.#{$table-prefix-cls}-range{
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
 
-
+.#{$table-prefix-cls}-header {
+    position: absolute;
+    top: 0;
+    z-index: $zindex-affix;
+    padding-right: 17px;
+    box-sizing: border-box;
+    &:after{
+        position: absolute;
+        top: 0;
+        right: 0;
+        content: '';
+        height: 100%;
+        width: 18px;
+        border: 1px solid $border-color-base;
+        border-left: none;
+        background: $background-color-base;
+    }
+}

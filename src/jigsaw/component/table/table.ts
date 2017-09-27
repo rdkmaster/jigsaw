@@ -30,7 +30,8 @@ import {AffixUtils} from "../../core/utils/internal-utils";
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[class.jigsaw-table-host]': 'true'
+        '[class.jigsaw-table-host]': 'true',
+        '[class.jigsaw-table-hide-head]': "hideHeader"
     },
 })
 export class JigsawTable extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -40,6 +41,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     @Output()
     public sort = new EventEmitter<SortChangeEvent>();
+
+    @Input()
+    public rangeWidth: string;
 
     //todo fix this
     @Input()
@@ -318,7 +322,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._updateCellSettings(mixedFields);
         this.additionalDataChange.emit(this.additionalData);
         setTimeout(() => this._setCellLineEllipsis(), 0);
-        setTimeout(() => this._setFloatingHeadWidth(), 0);
     }
 
     private _additionalData = new AdditionalTableData();
@@ -488,32 +491,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @ViewChildren('fixedHeader', {read: ElementRef})
     private _fixedHeaders: QueryList<ElementRef>;
 
-    private _setFloatingHeadWidth(): void {
-        if (!this.floatingHeader || !this._fixedHeaders || !this._floatingHeaders || !this._floatingHeadElement) {
-            return;
-        }
-
-        const ne = this._elementRef.nativeElement;
-        const hostWidth = ne.offsetWidth + 'px';
-
-        //消除table非必要的横向滚动条(可能会有的小数点像素的四舍五入产生的滚动条)，这里手动让.jigsaw-table和.jigsaw-table-box宽度相同
-        this._renderer.setStyle(ne.querySelector('.jigsaw-table'), 'width', hostWidth);
-        this._renderer.setStyle(ne.querySelector('.jigsaw-table-box'), 'width', hostWidth);
-
-        //获取表格的实际宽度
-        const tableWidth = ne.querySelector('.jigsaw-table').offsetWidth + 'px';
-
-        //设置浮动表头的宽度
-        this._renderer.setStyle(ne.querySelector('.jigsaw-table-floating-header'), 'width', tableWidth);
-
-        const fixedHeaderArray = this._fixedHeaders.toArray();
-        //设置浮动表头单元格宽度
-        this._floatingHeaders.forEach((floatingHeader, index) => {
-            this._renderer.setStyle(floatingHeader.nativeElement, 'width',
-                fixedHeaderArray[index].nativeElement.offsetWidth + 'px');
-        });
-    }
-
     /**
      * 设置单元格内容的宽度，如果内容超过宽度，并且设置了行省略，则使用'...'+tooltip的形式显示
      * @private
@@ -559,7 +536,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
         this._removeWindowResizeListener = this._renderer.listen('window', 'resize', () => {
             this._setCellLineEllipsis();
-            this._setFloatingHeadWidth();
             this._floatHead();
             // this._scrollBar.scrollTo([null, 'left']);
             // this._renderer.setStyle(this._floatingHeadElement, 'left', 0);
@@ -589,6 +565,16 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         } else if (top >= maxTop) {
             this._renderer.setStyle(this._floatingHeadElement, 'top', maxTop);
         }
+        /*if (top > 0 && top < maxTop) {
+            this._renderer.setStyle(this._floatingHeadElement, 'position', 'fixed');
+            this._renderer.setStyle(this._floatingHeadElement, 'top', '0');
+        } else if (top <= 0) {
+            this._renderer.setStyle(this._floatingHeadElement, 'position', 'absolute');
+            this._renderer.setStyle(this._floatingHeadElement, 'top', '0px');
+        } else if (top >= maxTop) {
+            this._renderer.setStyle(this._floatingHeadElement, 'position', 'absolute');
+            this._renderer.setStyle(this._floatingHeadElement, 'top', maxTop + 'px');
+        }*/
     }
 
     private _removeWindowListener() {
@@ -639,9 +625,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     ngAfterViewInit() {
+        super.ngAfterViewInit()
         this._$selectRow(this.selectedRow, true);
         this._setCellLineEllipsis();
-        this._setFloatingHeadWidth();
     }
 
     ngOnInit() {
@@ -653,12 +639,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
         this._addWindowListener();
 
-        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.jigsaw-table-box'),
+        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.jigsaw-table-body'),
             'max-height', this._maxHeight);
-        this._floatingHeadElement = this._elementRef.nativeElement.querySelector(".jigsaw-table-floating-header");
+        this._floatingHeadElement = this._elementRef.nativeElement.querySelector(".jigsaw-table-header");
 
         if (this.lineEllipsis) {
-            this._renderer.addClass(this._elementRef.nativeElement.querySelector('table.jigsaw-table tbody'),
+            this._renderer.addClass(this._elementRef.nativeElement.querySelector('.jigsaw-table-body table tbody'),
                 'jigsaw-table-line-ellipsis');
         }
     }

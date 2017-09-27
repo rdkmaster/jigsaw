@@ -1,74 +1,68 @@
-<table [style.display]="hideHeader || !initialized ? 'none' : 'table'" class="jigsaw-table-floating-header">
-    <thead>
-    <tr>
-        <td #floatingHeader *ngFor="let head of _$headerSettings;"
-            width="{{head.width}}" class="{{head.clazz}}">
-            <jigsaw-table-header [tableData]="data"
-                                 [additionalData]="additionalData"
-                                 [cellData]="head.cellData"
-                                 [field]="head.field"
-                                 [row]="0"
-                                 [renderer]="head.renderer"
-                                 [sortable]="head.sortable"
-                                 [sortAs]="head.sortAs"
-                                 [defaultSortOrder]="head.defaultSortOrder"
-                                 (sort)="_$onSort($event)">
-            </jigsaw-table-header>
-        </td>
-    </tr>
-    </thead>
-</table>
+<div class="jigsaw-table-range" [style.width]="rangeWidth">
+    <div class="jigsaw-table-header"
+         [style.padding-right]="height ? '17px' : '0'"
+         [style.width]="rangeWidth"
+         [hidden]="hideHeader || !childInitialized">
+        <table>
+            <colgroup>
+                <col *ngFor="let head of _$headerSettings;" width="{{head.width}}">
+            </colgroup>
+            <thead>
+            <tr>
+                <td #floatingHeader *ngFor="let head of _$headerSettings;"
+                    width="{{head.width}}" class="{{head.clazz}}">
+                    <jigsaw-table-header [tableData]="data"
+                                         [additionalData]="additionalData"
+                                         [cellData]="head.cellData"
+                                         [field]="head.field"
+                                         [row]="0"
+                                         [renderer]="head.renderer"
+                                         [sortable]="head.sortable"
+                                         [sortAs]="head.sortAs"
+                                         [defaultSortOrder]="head.defaultSortOrder"
+                                         (sort)="_$onSort($event)">
+                    </jigsaw-table-header>
+                </td>
+            </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="jigsaw-table-body">
+        <table>
+            <colgroup>
+                <col *ngFor="let head of _$headerSettings;" width="{{head.width}}">
+            </colgroup>
+            <tbody>
+            <tr #tableRow *ngFor="let row of _$cellSettings; index as rowIndex"
+                (click)="_$selectRow(rowIndex)" (dblclick)="_$handleRowDoubleClick(rowIndex)">
+                <td *ngFor="let cell of row;"
+                    [attr.rowspan]="cell.rowSpan > 1 ? cell.rowSpan : null"
+                    [style.display]="cell.rowSpan ? 'table-cell' : 'none'"
+                    class="{{cell.clazz}}">
 
-<div class="jigsaw-table-box" [class.jigsaw-table-hide-head]="hideHeader">
-    <table class="jigsaw-table">
-        <thead>
-        <tr>
-            <td #fixedHeader *ngFor="let head of _$headerSettings;"
-                width="{{head.width}}" class="{{head.clazz}}">
-                <jigsaw-table-header [tableData]="data"
-                                     [additionalData]="additionalData"
-                                     [cellData]="head.cellData"
-                                     [field]="head.field"
-                                     [row]="0"
-                                     [renderer]="head.renderer"
-                                     [sortable]="head.sortable"
-                                     [sortAs]="head.sortAs"
-                                     [defaultSortOrder]="head.defaultSortOrder"
-                                     (sort)="_$onSort($event)">
-                </jigsaw-table-header>
-            </td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr #tableRow *ngFor="let row of _$cellSettings; index as rowIndex"
-            (click)="_$selectRow(rowIndex)" (dblclick)="_$handleRowDoubleClick(rowIndex)">
-            <td *ngFor="let cell of row;"
-                [attr.rowspan]="cell.rowSpan > 1 ? cell.rowSpan : null"
-                [style.display]="cell.rowSpan ? 'table-cell' : 'none'"
-                class="{{cell.clazz}}">
-
-                <div class="jigsaw-table-cell-content"
-                     *ngIf="!cell.renderer; else rendererCell">
-                    <span class="jigsaw-table-cell-text">{{cell.cellData}}</span>
-                </div>
-                <ng-template #rendererCell>
-                    <jigsaw-table-cell
-                        class="jigsaw-table-cell-text"
-                        [tableData]="data"
-                        [additionalData]="additionalData"
-                        [cellData]="cell.cellData"
-                        [row]="rowIndex"
-                        [field]="cell.field"
-                        [renderer]="cell.renderer"
-                        [editable]="cell.editable"
-                        [editorRenderer]="cell.editorRenderer"
-                        [group]="cell.group"
-                        [rowSpan]="cell.rowSpan"
-                        (edit)="dataChange.emit($event)">
-                    </jigsaw-table-cell>
-                </ng-template>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                    <div class="jigsaw-table-cell-content"
+                         *ngIf="!cell.renderer; else rendererCell">
+                        <span class="jigsaw-table-cell-text">{{cell.cellData}}</span>
+                    </div>
+                    <ng-template #rendererCell>
+                        <jigsaw-table-cell
+                            class="jigsaw-table-cell-text"
+                            [tableData]="data"
+                            [additionalData]="additionalData"
+                            [cellData]="cell.cellData"
+                            [row]="rowIndex"
+                            [field]="cell.field"
+                            [renderer]="cell.renderer"
+                            [editable]="cell.editable"
+                            [editorRenderer]="cell.editorRenderer"
+                            [group]="cell.group"
+                            [rowSpan]="cell.rowSpan"
+                            (edit)="dataChange.emit($event)">
+                        </jigsaw-table-cell>
+                    </ng-template>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

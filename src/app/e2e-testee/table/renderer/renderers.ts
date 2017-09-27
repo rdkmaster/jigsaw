@@ -41,7 +41,7 @@ export class OfficeRendererBase extends TableCellRendererBase {
 @Component({
     template: `
         <jigsaw-select [value]="selected" (valueChange)="dispatchChangeEvent($event.label)"
-                       [data]="officeList" width="180" height="25">
+                       [data]="officeList" width="100%" height="25">
         </jigsaw-select>
     `
 })
@@ -55,7 +55,7 @@ export class OfficeEditor extends OfficeRendererBase {
 
 @Component({
     template: `
-        <j-combo-select [placeholder]="cellData" width="180" height="30" (openChange)="onChange($event)">
+        <j-combo-select [placeholder]="cellData" width="100%" height="30" (openChange)="onChange($event)">
             <ng-template>
                 <div style="width: 120px; background-color: #fff;">
                     <div style="padding: 7px; border: 1px solid #ddd; border-radius: 2px">
@@ -106,7 +106,7 @@ export class OfficeRenderer extends TableCellRendererBase {
 @Component({
     template: `
         <jigsaw-select placeholder="{{cellData}}" (valueChange)="onChange($event)"
-                       [data]="listItems" width="120" height="25">
+                       [data]="listItems" width="80%" height="25">
         </jigsaw-select>
     `
 })
