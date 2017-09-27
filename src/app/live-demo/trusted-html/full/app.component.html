@@ -1,0 +1,36 @@
+<div class="live-demo-wrap">
+    <h2>trustedHtml</h2>
+    <div class="clearfix">
+        <div class="live-demo live-demo-block">
+            <h3>trustedHtml directive</h3>
+            <p><strong>说明</strong></p>
+            <p>
+                这是一个指令，用于将一段html文本插入到某个DOM元素中，是 Angular 内置指令 <code>[innerHtml]</code> 的火力增强版。
+                <a (click)="showDetail=true" *ngIf="!showDetail">[展开所有描述]</a>
+            </p>
+            <p *ngIf="showDetail">
+                一般用于可复用复杂组件的内部，将组件外部输入的富文本展示到页面上。与 <code>[innerHtml]</code> 不同的是，
+                <code>[trustedHtml]</code> 指令不对html文本的安全性做校验，保留了所有可能有安全隐患的属性和功能，
+                得益于此，就可以将输入的html中的事件的回调函数保留下来，从而让组件具备更多用户自定义的能力。
+                这是一个高级功能，如果你需要定义一个可复用的组件，那么你可能会需要用到这个指令，否则，一般不需要使用到它。
+            </p>
+            <p *ngIf="showDetail">
+                需要注意的是，由于绕过了安全检查就将html直接插入页面里，这给黑客对我们发起XSS攻击制造了便利，
+                因此，请务必确认输入的html文本的来源是可信的之后再使用此指令。这也就是这个指令名字中trusted单词的本意所在了。
+            </p>
+            <p *ngIf="showDetail">
+                下面这个demo演示了一段带有回调函数的html文本（即这就是组件的输入），并且如何将回调函数与当前组件的内部逻辑绑定的过程。
+                你可以直接编辑html文本以及对应的回调函数，测试一下效果。注意html中的 <code>hello()</code> 函数是
+                <code>[trustedHtmlContext]</code> 的对象实例里的函数属性。建议你打开这个demo的源码看看，应该对你理解这些话会有所裨益。
+                你可以在下方js文本框中多定义几个函数，然后在html框中试着去调用他们。
+            </p>
+            <div class="host" [trustedHtml]="html" [trustedHtmlContext]="context">
+            </div>
+            <p><strong>HTML 源码</strong></p>
+            <textarea class="html-code" [(ngModel)]="html"></textarea>
+            <p><strong>回调函数定义</strong></p>
+            <textarea class="js-code" [(ngModel)]="jsCode" (ngModelChange)="onCodeChange($event)"></textarea>
+        </div>
+    </div>
+</div>
+

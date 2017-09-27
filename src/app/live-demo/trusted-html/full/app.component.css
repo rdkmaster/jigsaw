@@ -1,0 +1,23 @@
+.host {
+    border: solid 1px #cdcdcd;
+    border-radius: 2px;
+    padding: 12px;
+    margin: 12px 0 12px 0;
+}
+
+p {
+    margin-top: 6px;
+}
+
+textarea {
+    padding: 6px;
+    width: 465px;
+}
+
+.html-code {
+    height: 110px;
+}
+
+.js-code {
+    height: 130px;
+}

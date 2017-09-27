@@ -52,7 +52,7 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
             return;
         }
         if (!(callback instanceof Function)) {
-            console.error('invalid context');
+            console.error('invalid callback, it is not a function.');
             return;
         }
 
@@ -105,42 +105,50 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
     }
 
     public set trustedHtml(value: string) {
+        console.log(value);
         this._trustedHtml = CommonUtils.isDefined(value) ? value.trim() : '';
-        this._safeHtml = null;
+        this._updateHtml();
     }
 
-    @HostBinding('innerHtml')
-    public get innerHtml(): any {
-        if (CommonUtils.isUndefined(this._safeHtml)) {
-            this._safeHtml = this._sanitizer.bypassSecurityTrustHtml(this.trustedHtml);
-        }
-        return this._safeHtml;
-    }
+    private _modifiedHtml:string;
 
-    ngOnInit() {
-        if (!this.trustedHtml || !this.trustedHtmlContext || this._contextMagicNumber == -1) {
+    private _updateHtml():void {
+        if (!this._trustedHtml || !this._trustedHtmlContext || this._contextMagicNumber == -1) {
             return;
         }
-
-        this.trustedHtml = this.trustedHtml
+        const modifiedHtml = this._trustedHtml
             .replace(/on(\w+)\s*=(['"])\s*([_$a-z][_$a-z0-9]*)\s*\((.*?)\)/ig,
                 (found, event, quot, func, args) => {
-                    JigsawTrustedHtml._declareCallback(this.trustedHtmlContext, func, this.trustedHtmlContext[func]);
+                    JigsawTrustedHtml._declareCallback(this._trustedHtmlContext, func, this._trustedHtmlContext[func]);
                     const modified = `on${event}=${quot}_jigsawInternalCallbackWrapper(&quot;${func}&quot;,${this._contextMagicNumber}`;
                     args = CommonUtils.isDefined(args) ? args.trim() : '';
                     return modified + (!!args ? ',' + args + ')' : ')');
                 })
             .replace(/(javascript\s*:)\s*([_$a-z][_$a-z0-9]*)\s*\((.*?)\)/ig,
                 (found, jsPrefix, func, args) => {
-                    JigsawTrustedHtml._declareCallback(this.trustedHtmlContext, func, this.trustedHtmlContext[func]);
+                    JigsawTrustedHtml._declareCallback(this._trustedHtmlContext, func, this._trustedHtmlContext[func]);
                     const modified = `${jsPrefix}_jigsawInternalCallbackWrapper(&quot;${func}&quot;,${this._contextMagicNumber}`;
                     args = CommonUtils.isDefined(args) ? args.trim() : '';
                     return modified + (!!args ? ',' + args + ')' : ')');
                 });
+        if (modifiedHtml != this._modifiedHtml) {
+            console.log('dddddddddd');
+            this._modifiedHtml = modifiedHtml;
+            this._safeHtml = this._sanitizer.bypassSecurityTrustHtml(modifiedHtml);
+        }
+    }
+
+    @HostBinding('innerHtml')
+    public get innerHtml(): any {
+        return this._safeHtml;
+    }
+
+    ngOnInit() {
+        this._updateHtml();
     }
 
     ngOnDestroy() {
-        JigsawTrustedHtml._clearCallbacks(this.trustedHtmlContext);
+        JigsawTrustedHtml._clearCallbacks(this._trustedHtmlContext);
         this._trustedHtmlContext = null;
         this._trustedHtml = null;
         this._safeHtml = null;

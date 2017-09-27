@@ -757,6 +757,10 @@ navInfo.unshift({
             {
                 label: 'range-time',
                 url: '/range-time/range-time-full'
+            },
+            {
+                label: 'trustedHtml',
+                url: '/trusted-html/full'
             }
         ]
     });

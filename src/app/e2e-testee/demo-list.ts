@@ -125,6 +125,9 @@ const demoListRoutes = [
             }, {
                 path: "tree",
                 loadChildren: "./tree/demo.module#ZtreeDemoModule"
+            }, {
+                path: "trusted-html",
+                loadChildren: "./trusted-html/demo.module#TrustedHtmlDemoModule"
             }
         ]
     },
