@@ -158,7 +158,7 @@ export abstract class JigsawCommonAlert extends DialogBase {
         const popupInfo = PopupService.instance.popup(what, po,
             {message: message, title: caption, buttons: buttons});
         popupInfo.answer.subscribe(answer => {
-            CommonUtils.safeInvokeCallback(null, callback, answer);
+            CommonUtils.safeInvokeCallback(null, callback, [answer]);
             popupInfo.answer.unsubscribe();
             popupInfo.dispose();
         });

@@ -320,11 +320,37 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
             if (this.date != changeValue) {
                 this._handleValueChange(changeValue, <TimeGr>this.gr);
             }
+            this._bindActiveDayClickHandler(picker);
         });
+
+        picker.on("dp.update", (e) => {
+            // Fired (in most cases) when the viewDate changes. E.g. Next and Previous buttons, selecting a year.
+            this._handleRecommended(this._el.nativeElement, this._popService);
+        });
+
+        // 点击day.active会重新渲染day table，但不会触发dp.change，此函数用于填补日期插件的坑
+        this._bindActiveDayClickHandler(picker);
+
         this._timePicker = $(insert).data("DateTimePicker");
         this._timePicker.locale(CommonUtils.getBrowserLang());
 
         this._handleValueChange(<Time>this.date, <TimeGr>this.gr, true);
+    }
+
+    private _bindActiveDayClickHandler(picker){
+        // 等待day.active刷新出来
+        setTimeout(() => {
+            picker.find('.datepicker-days table tbody tr td.day.active').on('click', () => {
+                // 等待点击后的day-btn刷新出来
+                setTimeout(() => {
+                    // week select
+                    this._weekHandle();
+                    // recommend select
+                    this._handleRecommended(this._el.nativeElement, this._popService);
+                    this._bindActiveDayClickHandler(picker);
+                })
+            })
+        });
     }
 
     //设置插件选中时间值
@@ -610,11 +636,13 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     private _propagateChange:any = () => {};
 
     public writeValue(newValue: any): void {
-        if (!newValue) {
+        if (!newValue || newValue == this._value) {
+            // 此处也会过滤掉newValue是格式化过的，并且与_value相等的情况
             return;
         }
         newValue = TimeService.convertValue(newValue, <TimeGr>this.gr);
         if (newValue == this._value) {
+            // 此处把newValue格式化后，与_value比较，过滤掉相等的情况
             return;
         }
         if (this._value && this.gr == TimeGr.week) {
@@ -625,7 +653,6 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
             if (newValueYear == valueYear && newValueWeek == valueWeek) return;
         }
         let [value,] = this._handleValue(newValue);
-        // this._value = value;
         this._setDate(value);
     }
 

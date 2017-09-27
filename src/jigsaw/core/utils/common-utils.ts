@@ -195,9 +195,9 @@ export class CommonUtils {
         return browserCultureLang;
     }
 
-    public static safeInvokeCallback(context: any, callback: Function, ...args): any {
+    public static safeInvokeCallback(context: any, callback: Function, args?: any[]): any {
         if (CommonUtils.isUndefined(callback)) {
-            return undefined;
+            return;
         }
         try {
             return callback.apply(context, args);
