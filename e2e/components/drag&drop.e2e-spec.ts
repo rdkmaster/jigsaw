@@ -2,7 +2,7 @@ import {browser, element, by, ExpectedConditions} from 'protractor';
 import {ILocation, until} from "selenium-webdriver";
 
 
-describe('scrollbar', () => {
+xdescribe('scrollbar', () => {
     beforeEach(() => {
         browser.waitForAngularEnabled(false);
     });
