@@ -214,10 +214,6 @@ export class CommonUtils {
     public static isUndefined(value):boolean {
         return !this.isDefined(value);
     }
-
-    public static isUndefined(source: any) {
-        return !this.isDefined(source);
-    }
 }
 
 export type CallbackRemoval = () => void;
