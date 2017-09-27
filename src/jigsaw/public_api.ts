@@ -62,4 +62,5 @@ export * from './directive/scrollbar/scrollbar';
 export * from "./directive/dragdrop/types";
 export * from './directive/dragdrop/index';
 export * from './directive/movable/index';
+export * from './directive/trusted-html/trusted-html';
 

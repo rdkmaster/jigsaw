@@ -139,11 +139,11 @@ export class ComponentDataHelper {
     }
 
     public invokeAjaxSuccessCallback(data: any): void {
-        this._ajaxSuccessCallbacks.forEach(callback => CommonUtils.safeInvokeCallback(callback.context, callback.fn, data));
+        this._ajaxSuccessCallbacks.forEach(callback => CommonUtils.safeInvokeCallback(callback.context, callback.fn, [data]));
     }
 
     public invokeAjaxErrorCallback(error: Response): void {
-        this._ajaxErrorCallbacks.forEach(callback => CommonUtils.safeInvokeCallback(callback.context, callback.fn, error));
+        this._ajaxErrorCallbacks.forEach(callback => CommonUtils.safeInvokeCallback(callback.context, callback.fn, [error]));
     }
 
     public invokeAjaxCompleteCallback(): void {
