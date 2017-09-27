@@ -9,7 +9,7 @@ import {
     EventEmitter,
     Input,
     OnDestroy,
-    OnInit,
+    OnInit, Optional,
     Output,
     Renderer2,
     TemplateRef,
@@ -22,6 +22,7 @@ import {DefaultCellRenderer, TableCellRendererBase} from "./table-renderer";
 import {TableData} from "../../core/data/table-data";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 import {CommonUtils} from "../../core/utils/common-utils";
+import {JigsawTable} from "./table";
 
 export class TableInternalCellBase implements AfterViewInit {
     constructor(protected componentFactoryResolver: ComponentFactoryResolver,
@@ -41,6 +42,9 @@ export class TableInternalCellBase implements AfterViewInit {
     public field: string;
     @Input()
     public renderer: Type<TableCellRendererBase> | TemplateRef<any>;
+
+    @Input()
+    protected _jigsawTable: any;
 
     private _column: number = -1;
 
@@ -243,7 +247,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         };
         this.edit.emit(change);
 
-        // this.cellData = cellData;
+        this.cellData = cellData;
     }
 
     private _rendererSubscribe(renderer: TableCellRendererBase): void {
@@ -271,10 +275,8 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
                 this.insertRenderer();
                 this._setGoEditListener();
             });
-            //todo 重新对齐表头
-            // this._jigsawTable._asyncSetFixedHeadWidth();
             //todo 重新绑定td的tooltip
-            // this._jigsawTable._rebindTooltipForCell(this._elementRef.nativeElement, this.cellData, this.row, this.column);
+            this._jigsawTable._rebindTooltipForCell(this._elementRef.nativeElement, this.cellData, this.row, this.column);
         });
     }
 
@@ -312,8 +314,6 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
             this._elementRef.nativeElement.parentElement, 'click', () => {
                 this.rendererHost.viewContainerRef.clear();
                 this.insertEditorRenderer();
-                //todo 重新对齐表头
-                // this._jigsawTable._asyncSetFixedHeadWidth();
             }) : null;
     }
 

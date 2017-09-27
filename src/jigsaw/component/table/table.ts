@@ -12,7 +12,7 @@ import {TableData} from "../../core/data/table-data";
 import {
     _getColumnIndex,
     AdditionalColumnDefine, AdditionalTableData,
-    ColumnDefine, SortChangeEvent,
+    ColumnDefine, RemoveTdListener, SortChangeEvent,
     TableCellSetting,
     TableColumnTargetFinder,
     TableDataChangeEvent,
@@ -21,8 +21,9 @@ import {
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer} from "./table-renderer";
-import {JigsawScrollBarModule} from "../../directive/scrollbar/scrollbar";
 import {AffixUtils} from "../../core/utils/internal-utils";
+import {PopupEffect, PopupInfo, PopupPositionType, PopupService} from "jigsaw/service/popup.service";
+import {JigsawTooltipModule, SimpleTooltipComponent} from "../tooltip/tooltip";
 
 @Component({
     selector: 'jigsaw-table, j-table',
@@ -35,7 +36,8 @@ import {AffixUtils} from "../../core/utils/internal-utils";
     },
 })
 export class JigsawTable extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, private _zone: NgZone) {
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef,
+                private _zone: NgZone, private _popupService: PopupService) {
         super();
     }
 
@@ -486,11 +488,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @Input()
     public floatingHeader: boolean = false;
 
-    @ViewChildren('floatingHeader', {read: ElementRef})
-    private _floatingHeaders: QueryList<ElementRef>;
-    @ViewChildren('fixedHeader', {read: ElementRef})
-    private _fixedHeaders: QueryList<ElementRef>;
-
     /**
      * 设置单元格内容的宽度，如果内容超过宽度，并且设置了行省略，则使用'...'+tooltip的形式显示
      * @private
@@ -499,33 +496,91 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         //不设置省略功能，就不需要设置单元格宽度
         if (!this.lineEllipsis || !this._rowElementRefs) return;
 
-        const hostWidth = this._elementRef.nativeElement.offsetWidth;
+        //清空之前的td-tooltip事件
+        this._removeAllTdListeners();
+        this._removeTdListeners = [];
+
         this._rowElementRefs.forEach((row, rowIndex) => {
-            const elements: NodeListOf<Element> = row.nativeElement.querySelectorAll('.jigsaw-table-cell-content');
-            for (let colIndex = 0; colIndex < elements.length; ++colIndex) {
-                const element: Element = elements[colIndex];
+            const cellContentEls: NodeListOf<Element> = row.nativeElement.querySelectorAll('.jigsaw-table-cell-content');
+            for (let colIndex = 0; colIndex < cellContentEls.length; ++colIndex) {
                 const cellSetting: TableCellSetting = this._$cellSettings[rowIndex][colIndex];
                 if (cellSetting.renderer && cellSetting.renderer != DefaultCellRenderer) {
-                    //没有渲染器或者用DefaultCellRenderer的单元格才能用省略
+                    // 没有渲染器或者用DefaultCellRenderer的单元格才能用省略
                     continue;
                 }
                 if (!cellSetting.width) {
+                    // 没有限制宽度的单元格不需要省略内容
                     continue;
                 }
-                let width = CommonUtils.getCssValue(cellSetting.width);
-                if (width.match(/^\s*\d+%\s*$/)) {
-                    width = hostWidth * Number(width.replace(/%/, '')) / 100 + '';
-                } else {
-                    width = width.replace(/px/, '');
-                }
-                this._renderer.setStyle(element, 'width', width + 'px');
-
-                const cellText: HTMLElement = <HTMLElement>element.querySelector('span.jigsaw-table-cell-text');
-                if (cellText && cellText.offsetWidth > +width) {
-                    cellText.setAttribute('title', cellSetting.cellData.toString());
+                const cellContentEl = <HTMLElement>cellContentEls[colIndex];
+                const cellText = <HTMLElement>cellContentEl.querySelector('.jigsaw-table-cell-text');
+                if (cellText && cellText.offsetWidth > cellContentEl.offsetWidth) {
+                    this._addTdTooltipListener(cellContentEl.parentElement, cellSetting.cellData, rowIndex, colIndex)
                 }
             }
         })
+    }
+
+    private _tooltipInfo: PopupInfo;
+    private _removeTdListeners: Array<RemoveTdListener> = [];
+
+    private _addTdTooltipListener(tdElement: HTMLElement, message: string | number, rowIndex: number, colIndex: number) {
+        const removeTdMouseEnterListener = this._renderer.listen(tdElement, "mouseenter", () => {
+            if (!this._tooltipInfo) {
+                this._tooltipInfo = this._popupService.popup(SimpleTooltipComponent, {
+                    modal: false, //是否模态
+                    showEffect: PopupEffect.bubbleIn,
+                    hideEffect: PopupEffect.bubbleOut,
+                    pos: tdElement,
+                    posOffset: { //偏移位置
+                        bottom: -8,
+                        left: 0
+                    },
+                    posType: PopupPositionType.absolute, //定位类型
+                }, {
+                    message: message
+                });
+            }
+        });
+
+        const removeTdMouseLeaveListener = this._renderer.listen(tdElement, "mouseleave", () => {
+            this._removeTooltip();
+        });
+
+        this._removeTdListeners.push({removeTdListener: removeTdMouseEnterListener, row: rowIndex, column: colIndex});
+        this._removeTdListeners.push({removeTdListener: removeTdMouseLeaveListener, row: rowIndex, column: colIndex});
+    }
+
+    private _removeTooltip() {
+        if (this._tooltipInfo) {
+            this._tooltipInfo.dispose();
+            this._tooltipInfo = null;
+        }
+    }
+
+    public _rebindTooltipForCell(element: HTMLElement, message: any, rowIndex: number, colIndex: number) {
+        //删除对应td的tooltip的事件
+        this._removeTdListenersByIndex(rowIndex, colIndex);
+        //重新绑定td的tooltip
+        const cellText: HTMLElement = <HTMLElement>element.querySelector('span.jigsaw-table-cell-text');
+        if (cellText && cellText.offsetWidth > element.offsetWidth) {
+            this._addTdTooltipListener(element.parentElement, message, rowIndex, colIndex);
+        }
+    }
+
+    private _removeAllTdListeners() {
+        if (this._removeTdListeners.length) {
+            this._removeTdListeners.forEach(removeTdListener => removeTdListener.removeTdListener())
+        }
+    }
+
+    private _removeTdListenersByIndex(row: number, column: number) {
+        if (this._removeTdListeners.length) {
+            this._removeTdListeners
+                .filter(removeTdListener => removeTdListener.row == row
+                    && removeTdListener.column == column)
+                .forEach(removeTdListener => removeTdListener.removeTdListener())
+        }
     }
 
     private _removeWindowScrollListener: Function;
@@ -625,9 +680,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     ngAfterViewInit() {
-        super.ngAfterViewInit()
+        super.ngAfterViewInit();
         this._$selectRow(this.selectedRow, true);
-        this._setCellLineEllipsis();
     }
 
     ngOnInit() {
@@ -635,7 +689,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
         this._mixInColumns();
         this._initAdditionalData();
-        this._update();
+        if (this._data.field && this._data.field.length != 0) {
+            this._update();
+        }
 
         this._addWindowListener();
 
@@ -668,8 +724,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._$cellSettings = null;
         this._$headerSettings = null;
         this._floatingHeadElement = null;
-        this._floatingHeaders = null;
-        this._fixedHeaders = null;
         this._rowElementRefs = null;
         this._headerComponents = null;
     }
@@ -685,7 +739,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
 @NgModule({
     declarations: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
-    imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, JigsawScrollBarModule],
+    imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, JigsawTooltipModule],
     exports: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
     entryComponents: [TableCellTextEditorRenderer, DefaultCellRenderer]
 })

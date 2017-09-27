@@ -37,10 +37,8 @@ export class TableColumnSetWidthDemoComponent {
             target: [4,5],
             width: '200px',
         },{
-            target : (field, index) => {
-                 return index > 5
-            },
-            width: '0px',
+            target : 6,
+            width: '200px',
         }];
 }
 

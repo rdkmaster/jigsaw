@@ -9,7 +9,7 @@
             </colgroup>
             <thead>
             <tr>
-                <td #floatingHeader *ngFor="let head of _$headerSettings;"
+                <td *ngFor="let head of _$headerSettings;"
                     width="{{head.width}}" class="{{head.clazz}}">
                     <jigsaw-table-header [tableData]="data"
                                          [additionalData]="additionalData"
@@ -46,7 +46,7 @@
                     </div>
                     <ng-template #rendererCell>
                         <jigsaw-table-cell
-                            class="jigsaw-table-cell-text"
+                            class="jigsaw-table-cell-content"
                             [tableData]="data"
                             [additionalData]="additionalData"
                             [cellData]="cell.cellData"
@@ -57,7 +57,8 @@
                             [editorRenderer]="cell.editorRenderer"
                             [group]="cell.group"
                             [rowSpan]="cell.rowSpan"
-                            (edit)="dataChange.emit($event)">
+                            (edit)="dataChange.emit($event)"
+                            [_jigsawTable]="this">
                         </jigsaw-table-cell>
                     </ng-template>
                 </td>

@@ -2,20 +2,20 @@
 
 $table-prefix-cls: #{$jigsaw-prefix}-table;
 
-.#{$table-prefix-cls}-host{
+.#{$table-prefix-cls}-host {
     @include inline-block;
     position: relative;
     width: 100%;
     vertical-align: top;
     overflow-x: auto;
     padding-top: 40px;
-    &.#{$table-prefix-cls}-hide-head{
+    &.#{$table-prefix-cls}-hide-head {
         padding-top: 0;
     }
     table {
         width: 100%;
         text-align: center;
-        table-layout:fixed;
+        table-layout: fixed;
         td {
             border: 1px solid $border-color-base;
         }
@@ -25,7 +25,7 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
                 height: 40px;
                 td {
                     background: $background-color-base;
-                    &:last-child{
+                    &:last-child {
                         border-right-color: $background-color-base;
                     }
                 }
@@ -34,6 +34,8 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
         tbody {
             &.#{$table-prefix-cls}-line-ellipsis {
                 td .#{$table-prefix-cls}-cell-content {
+                    width: 100%;
+                    @include inline-block();
                     @include line-ellipsis-style();
                 }
             }
@@ -67,7 +69,7 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     display: none !important;
 }
 
-.#{$table-prefix-cls}-range{
+.#{$table-prefix-cls}-range {
     width: 100%;
     height: 100%;
     overflow-y: auto;
@@ -81,7 +83,7 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     z-index: $zindex-affix;
     padding-right: 17px;
     box-sizing: border-box;
-    &:after{
+    &:after {
         position: absolute;
         top: 0;
         right: 0;

@@ -91,6 +91,12 @@ export class SortChangeEvent {
     field: string;
 }
 
+export class RemoveTdListener {
+    removeTdListener: Function;
+    row: number;
+    column: number;
+}
+
 /**
  * @internal
  */
