@@ -88,7 +88,9 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
         if (CommonUtils.isUndefined(value)) {
             return;
         }
-
+        if (CommonUtils.isDefined(this._trustedHtmlContext)) {
+            JigsawTrustedHtml._clearCallbacks(this._trustedHtmlContext);
+        }
         this._trustedHtmlContext = value;
         JigsawTrustedHtml._registerContext(value);
         this._contextMagicNumber = JigsawTrustedHtml._getContextMagicNumber(value);
