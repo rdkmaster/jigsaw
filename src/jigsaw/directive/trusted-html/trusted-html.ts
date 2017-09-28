@@ -29,18 +29,18 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
     private static _jigsawInternalCallbackWrapper(callbackName: string, contextMagicNumber: number, ...args) {
         const context = JigsawTrustedHtml._getContext(contextMagicNumber);
         if (CommonUtils.isUndefined(context)) {
-            console.error('no context found by magic number: ' + contextMagicNumber);
+            console.error('no context found by magic number, callbackName = ' + callbackName);
             return;
         }
         const callbacks = JigsawTrustedHtml._callbacks.get(context);
         if (CommonUtils.isUndefined(callbacks)) {
-            console.error('no callback cache info found by magic number: ' + contextMagicNumber);
+            console.error('no callback cache info found by magic number, callbackName = ' + callbackName);
             return;
         }
         const callback = callbacks[callbackName];
         if (!(callback instanceof Function)) {
-            console.error('no callback function found by callback name: ' + callbackName);
-            console.log(`Hint: add a member method named ${callbackName} to your component's class.`);
+            console.error(`no callback function named "${callbackName}" found`);
+            console.log(`Hint: add a member method named ${callbackName} to the context object.`);
             return;
         }
         CommonUtils.safeInvokeCallback(context, callback, args);
@@ -48,11 +48,15 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
 
     private static _declareCallback(context: any, name: string, callback: HtmlCallback) {
         if (CommonUtils.isUndefined(context)) {
-            console.error('invalid context');
+            console.error(`invalid context for callback "{$name}"`);
+            return;
+        }
+        if (CommonUtils.isUndefined(callback)) {
+            console.error(`invalid callback "${name}", it is undefined.`);
             return;
         }
         if (!(callback instanceof Function)) {
-            console.error('invalid context');
+            console.error(`invalid callback "${name}", it is not a function.`);
             return;
         }
 
@@ -94,6 +98,7 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
         this._trustedHtmlContext = value;
         JigsawTrustedHtml._registerContext(value);
         this._contextMagicNumber = JigsawTrustedHtml._getContextMagicNumber(value);
+        this._updateHtml();
     }
 
     private _safeHtml: any;
@@ -106,41 +111,47 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
 
     public set trustedHtml(value: string) {
         this._trustedHtml = CommonUtils.isDefined(value) ? value.trim() : '';
-        this._safeHtml = null;
+        this._updateHtml();
     }
 
-    @HostBinding('innerHtml')
-    public get innerHtml(): any {
-        if (CommonUtils.isUndefined(this._safeHtml)) {
-            this._safeHtml = this._sanitizer.bypassSecurityTrustHtml(this.trustedHtml);
-        }
-        return this._safeHtml;
-    }
+    private _modifiedHtml:string;
 
-    ngOnInit() {
-        if (!this.trustedHtml || !this.trustedHtmlContext || this._contextMagicNumber == -1) {
+    private _updateHtml():void {
+        if (!this._trustedHtml) {
             return;
         }
-
-        this.trustedHtml = this.trustedHtml
+        const modifiedHtml = !this._trustedHtmlContext ? this._trustedHtml : this._trustedHtml
             .replace(/on(\w+)\s*=(['"])\s*([_$a-z][_$a-z0-9]*)\s*\((.*?)\)/ig,
                 (found, event, quot, func, args) => {
-                    JigsawTrustedHtml._declareCallback(this.trustedHtmlContext, func, this.trustedHtmlContext[func]);
+                    JigsawTrustedHtml._declareCallback(this._trustedHtmlContext, func, this._trustedHtmlContext[func]);
                     const modified = `on${event}=${quot}_jigsawInternalCallbackWrapper(&quot;${func}&quot;,${this._contextMagicNumber}`;
                     args = CommonUtils.isDefined(args) ? args.trim() : '';
                     return modified + (!!args ? ',' + args + ')' : ')');
                 })
             .replace(/(javascript\s*:)\s*([_$a-z][_$a-z0-9]*)\s*\((.*?)\)/ig,
                 (found, jsPrefix, func, args) => {
-                    JigsawTrustedHtml._declareCallback(this.trustedHtmlContext, func, this.trustedHtmlContext[func]);
+                    JigsawTrustedHtml._declareCallback(this._trustedHtmlContext, func, this._trustedHtmlContext[func]);
                     const modified = `${jsPrefix}_jigsawInternalCallbackWrapper(&quot;${func}&quot;,${this._contextMagicNumber}`;
                     args = CommonUtils.isDefined(args) ? args.trim() : '';
                     return modified + (!!args ? ',' + args + ')' : ')');
                 });
+        if (modifiedHtml != this._modifiedHtml || !this._safeHtml) {
+            this._modifiedHtml = modifiedHtml;
+            this._safeHtml = this._sanitizer.bypassSecurityTrustHtml(modifiedHtml);
+        }
+    }
+
+    @HostBinding('innerHtml')
+    public get innerHtml(): any {
+        return this._safeHtml;
+    }
+
+    ngOnInit() {
+        this._updateHtml();
     }
 
     ngOnDestroy() {
-        JigsawTrustedHtml._clearCallbacks(this.trustedHtmlContext);
+        JigsawTrustedHtml._clearCallbacks(this._trustedHtmlContext);
         this._trustedHtmlContext = null;
         this._trustedHtml = null;
         this._safeHtml = null;
