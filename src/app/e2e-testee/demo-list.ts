@@ -26,7 +26,9 @@ export class DemoListComponent implements OnInit {
     ngOnInit() {
         this.navHeight = (document.body.clientHeight -
             AffixUtils.offset(this._elementRef.nativeElement.querySelector('.left-box')).top) - 10;
-        this._router.navigateByUrl('/button/button-full');
+        if (location.hash == '#/') {
+            this._router.navigateByUrl('/button/button-full');
+        }
     }
 }
 
