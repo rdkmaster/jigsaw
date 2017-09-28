@@ -9,17 +9,14 @@ export class TrustedHtmlFullComponent {
     html = this.stripPrefixSpaces(`
         <a onclick="hello('trustedHtml directive')">
             <i class="fa fa-question"></i> say hello to trustedHtml
-        </a><br>
-        <!-- 需要去掉下面js代码框中onBlur()函数的注释才能看到效果 -->
+        </a><br><br>
         <input onblur="onBlur()" value="onblur....">
     `);
     jsCode = this.stripPrefixSpaces(`
-        function hello(who) {
-            alert('hello ' + who);
+        this.context = {
+            hello: who => alert('hello ' + who),
+            onBlur: () => alert('the input has lost focus!')
         }
-        // function onBlur() {
-        //     alert('the input has lost focus!');
-        // }
      `);
 
     /**
@@ -29,7 +26,7 @@ export class TrustedHtmlFullComponent {
      * 例如 <div [trustedHtml]="html" [trustedHtmlContext]="this"></div>
      * 我们直接在html模板中使用this作为 [trustedHtmlContext] 的值，在html模板中的this就是组件对应的class的实例。
      * 这样的话，我们在定义html字符串中的回调函数的时候，就可以像定义普通的angular事件的回调函数一样了，是不是非常方便？
-     * 为了说明这一点，你可以将JS源码文本框的值改为字符串this，随后点击“say hello to trustedHtml”链接试试看。
+     * 为了说明这一点，你可以将JS源码文本框的值改为字符串"this.context = this"，随后点击“say hello to trustedHtml”链接试试看。
      */
     context:any;
 
@@ -38,23 +35,11 @@ export class TrustedHtmlFullComponent {
     }
 
     onCodeChange(code) {
-        if (code == 'this') {
-            this.context = this;
-            return;
+        try {
+            eval(code);
+        } catch (e) {
+            console.error('syntax error: ' + e);
         }
-
-        this.context = {};
-        const functions = code.match(/^\s*function\s+[_$a-z][_$a-z0-9]*\s*\(.*?\)\s*{[\s\S]*?}/igm);
-        functions.forEach(func => {
-            const funcName = func.match(/function\s+([_$a-z][_$a-z0-9]*)/i)[1];
-            try {
-                this.context[funcName] = eval(`(function() { return ${func} })()`);
-                console.log(`function "${funcName}" is added to the context`);
-            } catch(e) {
-                console.log('syntax error:');
-                console.log(func.replace(/\n/g, ''));
-            }
-        });
     }
 
     stripPrefixSpaces(source: string): string {
@@ -66,10 +51,18 @@ export class TrustedHtmlFullComponent {
 
     jigsaw = 'jigsaw';
 
+    /**
+     * 将JS源码文本框的值改为字符串"this.context = this"，则会将这个类的实例作为trustedHtml的上下文，那么html文本中的hello()函数
+     * 相应的也就指向了下面这个方法了。注意到我们在方法内部还同时引用到了this是的其他属性，这也是没有问题的。
+     */
     hello() {
         // notice that we are referencing a member property of this class!
         alert('great! you are using trustedHtml directive with the best way ' +
             'recommended by the ' + this.jigsaw + ' team.');
+    }
+
+    onBlur() {
+        this.hello();
     }
 }
 

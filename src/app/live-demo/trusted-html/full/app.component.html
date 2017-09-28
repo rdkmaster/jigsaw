@@ -27,9 +27,9 @@
             <div class="host" [trustedHtml]="html" [trustedHtmlContext]="context">
             </div>
             <p><strong>HTML 源码</strong></p>
-            <textarea class="html-code" [(ngModel)]="html"></textarea>
+            <textarea [(ngModel)]="html"></textarea>
             <p><strong>JS 源码</strong></p>
-            <textarea class="js-code" [(ngModel)]="jsCode" (ngModelChange)="onCodeChange($event)"></textarea>
+            <textarea [(ngModel)]="jsCode" (ngModelChange)="onCodeChange($event)"></textarea>
         </div>
     </div>
 </div>
