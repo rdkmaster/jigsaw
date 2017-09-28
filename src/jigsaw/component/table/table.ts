@@ -22,7 +22,7 @@ import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer} from "./table-renderer";
 import {AffixUtils} from "../../core/utils/internal-utils";
-import {PopupEffect, PopupInfo, PopupPositionType, PopupService} from "jigsaw/service/popup.service";
+import {PopupEffect, PopupInfo, PopupPositionType, PopupService} from "../../service/popup.service";
 import {JigsawTooltipModule, SimpleTooltipComponent} from "../tooltip/tooltip";
 
 @Component({
