@@ -1,8 +1,3 @@
-jigsaw-collapse.nav-list .jigsaw-collapse-content li {
-    display: inline-block;
-    margin-right: 12px;
-}
-
 .demo-wrap {
     *zoom: 1;
     &:after {
@@ -20,6 +15,20 @@ jigsaw-collapse.nav-list .jigsaw-collapse-content li {
         width: 80%;
         float: left;
     }
+}
+
+.nav-list li {
+    display: inline-block;
+    margin-right: 12px;
+}
+
+.nav-list h3 {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.nav-list .group {
+    margin-bottom: 8px;
 }
 
 /* live demo common start */

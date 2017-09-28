@@ -9,7 +9,7 @@ xdescribe('scrollbar', () => {
 
     describe('test drag-to-replace ', () => {
         beforeEach(() => {
-            browser.get('/#/dragdrop/drag-to-replace')
+            browser.get('/#/drag-drop/drag-to-replace')
         });
 
         it('should exchange position', async () => {
