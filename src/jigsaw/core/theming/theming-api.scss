@@ -160,9 +160,9 @@
                 text-align: $textAlign;
             }
             @if ($textAlign == left) {
-                padding-left: $sidePadding;
+                padding: 0 $sidePadding;
             } @else if ($textAlign == right) {
-                padding-right: $sidePadding;
+                padding: 0 $sidePadding;
             }
         }
     }

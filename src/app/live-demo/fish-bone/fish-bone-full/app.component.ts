@@ -72,7 +72,7 @@ export class FishBoneFullComponent implements AfterViewInit {
                                         },
                                         {
                                             label: `
-                                                <div class="jigsaw-table-host">
+                                                <div class="jigsaw-table-host" style="width: 300px">
                                                 <table>
                                                     <thead><tr><td>ID</td><td>name</td><td>gender</td><td>city</td></tr></thead>
                                                     <tbody>
