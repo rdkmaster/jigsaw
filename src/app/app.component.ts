@@ -7,8 +7,6 @@ import {Component} from "@angular/core";
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    jigsawTitle: string = 'jigsaw-title';
-
     gotoPlunker(): void {
         //这是给临时演示网站准备的，后续ued正式上线了，还要再改一下
         let match = location.href.match(/\/#\/(.*?)(#|$)/);

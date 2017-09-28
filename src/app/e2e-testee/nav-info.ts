@@ -1,6 +1,8 @@
 export const navInfo = [
     {
         title: 'Alert',
+        path: "alert",
+        loadChildren: "./alert/demo.module#AlertDemoModule",
         navList: [
             {
                 label: 'in-dom',
@@ -18,6 +20,8 @@ export const navInfo = [
     },
     {
         title: 'ArrayCollection',
+        path: "array-collection",
+        loadChildren: "./array-collection/demo.module#ArrayCollectionDemoModule",
         navList: [
             {
                 label: 'ajax',
@@ -35,6 +39,8 @@ export const navInfo = [
     },
     {
         title: 'Button',
+        path: "button",
+        loadChildren: "./button/demo.module#ButtonDemoModule",
         navList: [
             {
                 label: 'basic',
@@ -64,6 +70,8 @@ export const navInfo = [
     },
     {
         title: 'CheckBox',
+        path: "checkbox",
+        loadChildren: "./checkbox/demo.module#CheckBoxDemoModule",
         navList: [
             {
                 label: 'basic',
@@ -77,6 +85,8 @@ export const navInfo = [
     },
     {
         title: 'Loading',
+        path: "loading",
+        loadChildren: "./loading/demo.module#LoadingDemoModule",
         navList: [
             {
                 label: 'loading-full',
@@ -114,6 +124,8 @@ export const navInfo = [
     },
     {
         title: 'Switch',
+        path: "switch",
+        loadChildren: "./switch/switch-demo.module#SwitchDemoModule",
         navList: [
             {
                 label: 'basic',
@@ -123,6 +135,8 @@ export const navInfo = [
     },
     {
         title: 'Table',
+        path: "table",
+        loadChildren: "./table/demo.module#TableDemoModule",
         navList: [
             {
                 label: 'basic',
@@ -244,6 +258,8 @@ export const navInfo = [
     },
     {
         title: 'Dialog',
+        path: "dialog",
+        loadChildren: "./dialog/demo.module#DialogDemoModule",
         navList: [
             {
                 label: 'title',
@@ -273,6 +289,8 @@ export const navInfo = [
     },
     {
         title: 'Popup',
+        path: "popup",
+        loadChildren: "./popup/demo.module#PopupDemoModule",
         navList: [
             {
                 label: 'alert-popup',
@@ -294,6 +312,8 @@ export const navInfo = [
     },
     {
         title: 'Input',
+        path: "input",
+        loadChildren: "./input/demo.module#InputDemoModule",
         navList: [
             {
                 label: 'basic',
@@ -315,6 +335,8 @@ export const navInfo = [
     },
     {
         title: 'Scrollbar',
+        path: "scrollbar",
+        loadChildren: "./scrollbar/demo.module#ScrollbarDemoModule",
         navList: [
             {
                 label: 'basic',
@@ -332,6 +354,8 @@ export const navInfo = [
     },
     {
         title: 'Select',
+        path: "select",
+        loadChildren: "./select/demo.module#SelectDemoModule",
         navList: [
             {
                 label: 'basic',
@@ -349,6 +373,8 @@ export const navInfo = [
     },
     {
         title: 'Radio',
+        path: "radio",
+        loadChildren: "./radio/radio-demo.module#RadioDemoModule",
         navList: [
             {
                 label: 'basic',
@@ -362,6 +388,8 @@ export const navInfo = [
     },
     {
         title: 'Graph',
+        path: "graph",
+        loadChildren: "./graph/graph-demo.module#GraphDemoModule",
         navList: [
             {
                 label: 'basic',
@@ -391,6 +419,8 @@ export const navInfo = [
     },
     {
         title: 'Tile',
+        path: "tile",
+        loadChildren: "./tile/tile-demo.module#TileSelectDemoModule",
         navList: [
             {
                 label: 'SelectedItems',
@@ -420,6 +450,8 @@ export const navInfo = [
     },
     {
         title: 'Time',
+        path: "time",
+        loadChildren: "./time/time-demo.module#TimeDemoModule",
         navList: [
             {
                 label: 'basic',
@@ -461,6 +493,8 @@ export const navInfo = [
     },
     {
         title: 'RangeTime',
+        path: "range-time",
+        loadChildren: "./range-time/range-time-demo.module#RangeTimeDemoModule",
         navList: [
             {
                 label: 'basic',
@@ -498,6 +532,8 @@ export const navInfo = [
     },
     {
         title: 'Pagination',
+        path: "pagination",
+        loadChildren: "./pagination/pagination-demo.module#PaginationDemoModule",
         navList: [
             {
                 label: 'basic',
@@ -511,6 +547,8 @@ export const navInfo = [
     },
     {
         title: 'Tag',
+        path: "tag",
+        loadChildren: "./tag/tag-demo.module#TagDemoModule",
         navList: [
             {
                 label: 'basic',
@@ -520,6 +558,8 @@ export const navInfo = [
     },
     {
         title: 'Tabs',
+        path: "tabs",
+        loadChildren: "./tabs/tabs-demo.module#TabsDemoModule",
         navList: [
             {
                 label: 'basic',
@@ -553,6 +593,8 @@ export const navInfo = [
     },
     {
         title: 'ComboSelect',
+        path: "combo-select",
+        loadChildren: "./combo-select/combo-select-demo.module#ComboSelectDemoModule",
         navList: [
             {
                 label: 'basic',
@@ -594,6 +636,8 @@ export const navInfo = [
     },
     {
         title: 'Slider',
+        path: "slider",
+        loadChildren: "./slider/slider-demo.module#SliderDemoModule",
         navList: [
             {
                 label: 'slider-full',
@@ -607,6 +651,8 @@ export const navInfo = [
     },
     {
         title: 'Tree',
+        path: "tree",
+        loadChildren: "./tree/demo.module#ZtreeDemoModule",
         navList: [
             {
                 label: 'tree',
@@ -627,7 +673,20 @@ export const navInfo = [
         ]
     },
     {
+        title: 'trusted-html',
+        path: "trusted-html",
+        loadChildren: "./trusted-html/demo.module#TrustedHtmlDemoModule",
+        navList: [
+            {
+                label: 'trustedHtml',
+                url: '/trusted-html/full'
+            },
+        ]
+    },
+    {
         title: 'Collapse',
+        path: "collapse",
+        loadChildren: "./collapse/collapse-module#CollapseDemoModule",
         navList: [
             {
                 label: 'collapse 全家桶',
@@ -641,6 +700,8 @@ export const navInfo = [
     },
     {
         title: 'Tooltip',
+        path: "tooltip",
+        loadChildren: "./tooltip/demo.module#TooltipDemoModule",
         navList: [
             {
                 label: 'in-dom',
@@ -658,6 +719,8 @@ export const navInfo = [
     },
     {
         title: 'Internationally',
+        path: "i18n",
+        loadChildren: "./i18n/demo.module#I18nDemoModule",
         navList: [
             {
                 label: 'i18n-full',
@@ -667,6 +730,8 @@ export const navInfo = [
     },
     {
         title: 'Drag&Drop',
+        path: "dragdrop",
+        loadChildren: "./dragdrop/demo.module#DragDropDemoModule",
         navList: [
             {
                 label: 'drag-to-replace',
@@ -680,6 +745,8 @@ export const navInfo = [
     },
     {
         title: 'Form',
+        path: "form",
+        loadChildren: "./form/demo.module#FormDemoModule",
         navList: [
             {
                 label: 'template driven',
@@ -689,78 +756,137 @@ export const navInfo = [
     },
     {
         title: 'Misc',
+        path: "misc",
+        loadChildren: "./misc/demo.module#MiscDemoModule",
         navList: [
             {
                 label: 'zone-for-performance',
                 url: '/misc/zone-for-performance'
             }
         ]
+    },
+    {
+        title: 'FishBone',
+        path: "fish-bone",
+        loadChildren: "./fish-bone/demo.module#FishBoneDemoModule",
+        navList: [
+            {
+                label: 'fish-bone',
+                url: '/fish-bone/fish-bone-full'
+            }
+        ]
+    },
+    {
+        title: 'List',
+        path: "list",
+        loadChildren: "./list/demo.module#ListDemoModule",
+        navList: [
+            {
+                label: 'fish-bone',
+                url: '/fish-bone/fish-bone-full'
+            }
+        ]
     }
 ].sort((a, b) => a.title.localeCompare(b.title));
 
-navInfo.unshift({
-        title: 'Live Demo',
-        navList: [
-            {
-                label: 'button',
-                url: '/button/button-full'
-            },
-            {
-                label: 'checkbox',
-                url: '/checkbox/checkbox-full'
-            },
-            {
-                label: 'input',
-                url: '/input/input-full'
-            },
-            {
-                label: 'list',
-                url: '/list/list-full'
-            },
-            {
-                label: 'radio',
-                url: '/radio/radio-full'
-            },
-            {
-                label: 'tile',
-                url: '/tile/tile-full'
-            },
-            {
-                label: 'select',
-                url: '/select/select-full'
-            },
-            {
-
-                label: 'fish-bone',
-                url: '/fish-bone/fish-bone-full'
-            },
-            {
-                label: 'combo-searchable',
-                url: '/combo-select/combo-select-searchable'
-            },
-            {
-                label: 'combo-full',
-                url: '/combo-select/combo-select-full'
-            },
-            {
-                label: 'table-renderer',
-                url: '/table/table-renderer'
-            },
-            {
-                label: 'collapse',
-                url: '/collapse/collapse-full'
-            },
-            {
-                label: 'time',
-                url: '/time/time-full'
-            },
-            {
-                label: 'range-time',
-                url: '/range-time/range-time-full'
-            },
-            {
-                label: 'trustedHtml',
-                url: '/trusted-html/full'
-            }
-        ]
-    });
+export const liveDemoNavInfo = {
+    title: 'Live Demo',
+    navList: [
+        {
+            group: 'Basic Controls',
+            demos: [
+                {
+                    label: 'button',
+                    url: '/button/button-full'
+                },
+                {
+                    label: 'checkbox',
+                    url: '/checkbox/checkbox-full'
+                },
+                {
+                    label: 'input',
+                    url: '/input/input-full'
+                },
+                {
+                    label: 'select',
+                    url: '/select/select-full'
+                },
+                {
+                    label: 'list',
+                    url: '/list/list-full'
+                },
+                {
+                    label: 'radio',
+                    url: '/radio/radio-full'
+                },
+                {
+                    label: 'tile',
+                    url: '/tile/tile-full'
+                },
+            ]
+        },
+        {
+            group: 'Combo Select',
+            demos: [
+                {
+                    label: 'combo-full',
+                    url: '/combo-select/combo-select-full'
+                },
+                {
+                    label: 'searchable',
+                    url: '/combo-select/combo-select-searchable'
+                },
+            ]
+        },
+        {
+            group: 'Date and Time',
+            demos: [
+                {
+                    label: 'time',
+                    url: '/time/time-full'
+                },
+                {
+                    label: 'range-time',
+                    url: '/range-time/range-time-full'
+                },
+            ]
+        },
+        {
+            group: 'Graph',
+            demos: [
+                {
+                    label: 'fish-bone',
+                    url: '/fish-bone/fish-bone-full'
+                },
+            ]
+        },
+        {
+            group: 'Table',
+            demos: [
+                {
+                    label: 'renderer',
+                    url: '/table/table-renderer'
+                },
+            ]
+        },
+        {
+            group: 'Collapse',
+            demos: [
+                {
+                    label: 'collapse',
+                    url: '/collapse/collapse-full'
+                },
+            ]
+        },
+        {
+            group: 'Directives',
+            demos: [
+                {
+                    label: 'trustedHtml',
+                    url: '/trusted-html/full'
+                },
+            ]
+        },
+    ]
+};
+liveDemoNavInfo.navList = liveDemoNavInfo.navList.sort((a, b) => a.group.localeCompare(b.group));
