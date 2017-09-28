@@ -729,17 +729,17 @@ export const navInfo = [
         ]
     },
     {
-        title: 'Drag&Drop',
-        path: "dragdrop",
-        loadChildren: "./dragdrop/demo.module#DragDropDemoModule",
+        title: 'Drag and Drop',
+        path: "drag-drop",
+        loadChildren: "./drag-drop/demo.module#DragDropDemoModule",
         navList: [
             {
                 label: 'drag-to-replace',
-                url: '/dragdrop/drag-to-replace'
+                url: '/drag-drop/drag-to-replace'
             },
             {
                 label: 'table-drag',
-                url: '/dragdrop/table-drag'
+                url: '/drag-drop/table-drag'
             }
         ]
     },
