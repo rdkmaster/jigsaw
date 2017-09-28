@@ -13,12 +13,15 @@ import {liveDemoNavInfo, navInfo} from './nav-info'
     encapsulation: ViewEncapsulation.None
 })
 export class DemoListComponent implements OnInit {
-    constructor(private _elementRef: ElementRef, private _router: Router) {
-    }
-
     navHeight: number;
-    navData = navInfo;
-    liveDemoNavData = liveDemoNavInfo;
+    navData: any[];
+    liveDemoNavData: any;
+
+    constructor(private _elementRef: ElementRef, private _router: Router) {
+        this.navData = navInfo.sort((a, b) => a.title.localeCompare(b.title));
+        this.liveDemoNavData = liveDemoNavInfo;
+        this.liveDemoNavData.navList = liveDemoNavInfo.navList.sort((a, b) => a.group.localeCompare(b.group));
+    }
 
     ngOnInit() {
         this.navHeight = (document.body.clientHeight -
