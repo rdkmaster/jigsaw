@@ -29,18 +29,18 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
     private static _jigsawInternalCallbackWrapper(callbackName: string, contextMagicNumber: number, ...args) {
         const context = JigsawTrustedHtml._getContext(contextMagicNumber);
         if (CommonUtils.isUndefined(context)) {
-            console.error('no context found by magic number: ' + contextMagicNumber);
+            console.error('no context found by magic number, callbackName = ' + callbackName);
             return;
         }
         const callbacks = JigsawTrustedHtml._callbacks.get(context);
         if (CommonUtils.isUndefined(callbacks)) {
-            console.error('no callback cache info found by magic number: ' + contextMagicNumber);
+            console.error('no callback cache info found by magic number, callbackName = ' + callbackName);
             return;
         }
         const callback = callbacks[callbackName];
         if (!(callback instanceof Function)) {
-            console.error('no callback function found by callback name: ' + callbackName);
-            console.log(`Hint: add a member method named ${callbackName} to your component's class.`);
+            console.error(`no callback function named "${callbackName}" found`);
+            console.log(`Hint: add a member method named ${callbackName} to the context object.`);
             return;
         }
         CommonUtils.safeInvokeCallback(context, callback, args);
@@ -48,11 +48,15 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
 
     private static _declareCallback(context: any, name: string, callback: HtmlCallback) {
         if (CommonUtils.isUndefined(context)) {
-            console.error('invalid context');
+            console.error(`invalid context for callback "{$name}"`);
+            return;
+        }
+        if (CommonUtils.isUndefined(callback)) {
+            console.error(`invalid callback "${name}", it is undefined.`);
             return;
         }
         if (!(callback instanceof Function)) {
-            console.error('invalid callback, it is not a function.');
+            console.error(`invalid callback "${name}", it is not a function.`);
             return;
         }
 
@@ -94,6 +98,7 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
         this._trustedHtmlContext = value;
         JigsawTrustedHtml._registerContext(value);
         this._contextMagicNumber = JigsawTrustedHtml._getContextMagicNumber(value);
+        this._updateHtml();
     }
 
     private _safeHtml: any;
@@ -105,7 +110,6 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
     }
 
     public set trustedHtml(value: string) {
-        console.log(value);
         this._trustedHtml = CommonUtils.isDefined(value) ? value.trim() : '';
         this._updateHtml();
     }
@@ -113,10 +117,10 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
     private _modifiedHtml:string;
 
     private _updateHtml():void {
-        if (!this._trustedHtml || !this._trustedHtmlContext || this._contextMagicNumber == -1) {
+        if (!this._trustedHtml) {
             return;
         }
-        const modifiedHtml = this._trustedHtml
+        const modifiedHtml = !this._trustedHtmlContext ? this._trustedHtml : this._trustedHtml
             .replace(/on(\w+)\s*=(['"])\s*([_$a-z][_$a-z0-9]*)\s*\((.*?)\)/ig,
                 (found, event, quot, func, args) => {
                     JigsawTrustedHtml._declareCallback(this._trustedHtmlContext, func, this._trustedHtmlContext[func]);
@@ -131,8 +135,7 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
                     args = CommonUtils.isDefined(args) ? args.trim() : '';
                     return modified + (!!args ? ',' + args + ')' : ')');
                 });
-        if (modifiedHtml != this._modifiedHtml) {
-            console.log('dddddddddd');
+        if (modifiedHtml != this._modifiedHtml || !this._safeHtml) {
             this._modifiedHtml = modifiedHtml;
             this._safeHtml = this._sanitizer.bypassSecurityTrustHtml(modifiedHtml);
         }
