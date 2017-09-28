@@ -22,18 +22,6 @@ const appRoutes = [
     }
 ];
 
-export class JigsawI18nLoader extends TranslateLoader {
-    getTranslation(lang: string): Observable<any> {
-        const zh = {
-            'jigsaw-title': '<a href="https://github.com/rdkmaster/jigsaw">Jigsaw</a> 临时演示环境'
-        };
-        const en = {
-            'jigsaw-title': '<a href="https://github.com/rdkmaster/jigsaw">Jigsaw</a>\'s temporary site'
-        };
-        return Observable.of(lang == 'en' ? en : zh);
-    }
-}
-
 @NgModule({
     declarations: [
         AppComponent
@@ -44,21 +32,10 @@ export class JigsawI18nLoader extends TranslateLoader {
         HttpModule,
         RouterModule.forRoot(appRoutes, {useHash: true}),
         BrowserAnimationsModule,
-        TranslateModule.forRoot({
-                loader: {
-                    provide: TranslateLoader, useClass: JigsawI18nLoader
-                }, isolate: true
-            }
-        ),
         JigsawRootModule, JigsawButtonModule
     ],
     providers: [TranslateService],
     bootstrap: [AppComponent]
 })
 export class AppModule {
-    constructor(translateService: TranslateService) {
-        const lang: string = translateService.getBrowserLang();
-        translateService.setDefaultLang(lang);
-        translateService.use(lang);
-    }
 }
