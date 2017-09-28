@@ -9,7 +9,7 @@ import {
     EventEmitter,
     Input,
     OnDestroy,
-    OnInit, Optional,
+    OnInit,
     Output,
     Renderer2,
     TemplateRef,
@@ -22,7 +22,6 @@ import {DefaultCellRenderer, TableCellRendererBase} from "./table-renderer";
 import {TableData} from "../../core/data/table-data";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 import {CommonUtils} from "../../core/utils/common-utils";
-import {JigsawTable} from "./table";
 
 export class TableInternalCellBase implements AfterViewInit {
     constructor(protected componentFactoryResolver: ComponentFactoryResolver,
@@ -275,7 +274,6 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
                 this.insertRenderer();
                 this._setGoEditListener();
             });
-            //todo 重新绑定td的tooltip
             this._jigsawTable._rebindTooltipForCell(this._elementRef.nativeElement, this.cellData, this.row, this.column);
         });
     }

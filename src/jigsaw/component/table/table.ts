@@ -36,6 +36,7 @@ import {JigsawTooltipModule, SimpleTooltipComponent} from "../tooltip/tooltip";
     },
 })
 export class JigsawTable extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
+
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef,
                 private _zone: NgZone, private _popupService: PopupService) {
         super();
@@ -44,10 +45,17 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @Output()
     public sort = new EventEmitter<SortChangeEvent>();
 
-    @Input()
-    public rangeWidth: string;
+    private _rangeWidth: string;
 
-    //todo fix this
+    @Input()
+    get rangeWidth(): string {
+        return this._rangeWidth;
+    }
+
+    set rangeWidth(value: string) {
+        this._rangeWidth = CommonUtils.getCssValue(value);
+    }
+
     @Input()
     public lineEllipsis: boolean = false;
 
