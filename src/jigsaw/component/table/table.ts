@@ -592,8 +592,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._removeWindowResizeListener = this._renderer.listen('window', 'resize', () => {
             this._setCellLineEllipsis();
             this._floatHead();
-            // this._scrollBar.scrollTo([null, 'left']);
-            // this._renderer.setStyle(this._floatingHeadElement, 'left', 0);
+            if (this._elementRef.nativeElement.querySelector('.jigsaw-table-range').offsetWidth
+                == this._elementRef.nativeElement.offsetWidth) {
+                // 没有滚动条,更新表头的定位宽度
+                this._renderer.setStyle(this._floatingHeadElement, 'width',
+                    this._elementRef.nativeElement.offsetWidth + 'px');
+            }
         });
 
         if (this.floatingHeader && !this.hideHeader) {
@@ -608,28 +612,44 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _floatingHeadElement: HTMLElement;
 
     private _floatHead() {
-        // todo 改用绝对定位+display是否none来实现表头浮动
         const maxTop = this._elementRef.nativeElement.offsetHeight - this._floatingHeadElement.offsetHeight;
         let tableDocumentTop = AffixUtils.offset(this._elementRef.nativeElement).top;
         let scrollTop = AffixUtils.getScrollTop();
         let top = scrollTop - tableDocumentTop;
         if (top > 0 && top < maxTop) {
-            this._renderer.setStyle(this._floatingHeadElement, 'top', top + 'px');
+            if (this._floatingHeadElement.offsetWidth > this._elementRef.nativeElement.offsetWidth) {
+                // 有水平滚动条，相对table定位
+                if (this._floatingHeadElement.style.position !== 'absolute') {
+                    this._renderer.setStyle(this._floatingHeadElement, 'position', 'absolute');
+                }
+                this._renderer.setStyle(this._floatingHeadElement, 'top', top + 'px');
+            } else {
+                // 没有水平滚动条，相对body定位
+                if (!this._floatingHeadElement.style.width) {
+                    // 设置表头的定位宽度
+                    this._renderer.setStyle(this._floatingHeadElement, 'width',
+                        this._elementRef.nativeElement.offsetWidth + 'px');
+                }
+                if (this._floatingHeadElement.style.position !== 'fixed') {
+                    this._renderer.setStyle(this._floatingHeadElement, 'position', 'fixed');
+                }
+                if (this._floatingHeadElement.style.top !== '0' && this._floatingHeadElement.style.top !== '0px') {
+                    this._renderer.setStyle(this._floatingHeadElement, 'top', '0');
+                }
+            }
         } else if (top <= 0) {
-            this._renderer.setStyle(this._floatingHeadElement, 'top', '0px');
+            if (this._floatingHeadElement.style.position !== 'absolute') {
+                this._renderer.setStyle(this._floatingHeadElement, 'position', 'absolute');
+            }
+            if (this._floatingHeadElement.style.top !== '0' && this._floatingHeadElement.style.top !== '0px') {
+                this._renderer.setStyle(this._floatingHeadElement, 'top', '0');
+            }
         } else if (top >= maxTop) {
-            this._renderer.setStyle(this._floatingHeadElement, 'top', maxTop);
+            // table超出屏幕显示位置
+            if (this._floatingHeadElement.style.position !== 'absolute') {
+                this._renderer.setStyle(this._floatingHeadElement, 'position', 'absolute');
+            }
         }
-        /*if (top > 0 && top < maxTop) {
-            this._renderer.setStyle(this._floatingHeadElement, 'position', 'fixed');
-            this._renderer.setStyle(this._floatingHeadElement, 'top', '0');
-        } else if (top <= 0) {
-            this._renderer.setStyle(this._floatingHeadElement, 'position', 'absolute');
-            this._renderer.setStyle(this._floatingHeadElement, 'top', '0px');
-        } else if (top >= maxTop) {
-            this._renderer.setStyle(this._floatingHeadElement, 'position', 'absolute');
-            this._renderer.setStyle(this._floatingHeadElement, 'top', maxTop + 'px');
-        }*/
     }
 
     private _removeWindowListener() {
