@@ -339,7 +339,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._updateHeaderSettings(mixedFields);
         this._updateCellSettings(mixedFields);
         this.additionalDataChange.emit(this.additionalData);
-        setTimeout(() => this._calculateContentWidth(), 0);
+        setTimeout(() => this._handleScroll(), 0);
     }
 
     private _additionalData = new AdditionalTableData();
@@ -605,10 +605,38 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
     }
 
+    /**
+     * 判断是否有垂直滚动条
+     * @returns {boolean} true: 有滚动条；false：没有滚动条
+     * @private
+     */
+    private _hasVerticalScroll() {
+        const contentRange = this._elementRef.nativeElement.querySelector('.jigsaw-table-range');
+        const contentWidth = contentRange.querySelector('.jigsaw-table-body').offsetWidth;
+        return contentRange.offsetWidth != contentWidth;
+    }
+
+    private _fixVerticalScroll() {
+        if (this._hasVerticalScroll()) {
+            this._renderer.setStyle(this._floatingHeadElement, 'padding-right', '17px');
+        } else {
+            this._renderer.setStyle(this._floatingHeadElement, 'padding-right', '0');
+        }
+    }
+
+    /**
+     * 处理滚动条
+     * @private
+     */
+    private _handleScroll() {
+        this._calculateContentWidth();
+        this._fixVerticalScroll();
+    }
+
     ngAfterViewInit() {
         super.ngAfterViewInit();
         this._$selectRow(this.selectedRow, true);
-        this._calculateContentWidth();
+        this._handleScroll();
     }
 
     ngOnInit() {
