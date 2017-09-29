@@ -12,7 +12,7 @@ import {TableData} from "../../core/data/table-data";
 import {
     _getColumnIndex,
     AdditionalColumnDefine, AdditionalTableData,
-    ColumnDefine, RemoveTdListener, SortChangeEvent,
+    ColumnDefine, SortChangeEvent,
     TableCellSetting,
     TableColumnTargetFinder,
     TableDataChangeEvent,
@@ -22,8 +22,6 @@ import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer} from "./table-renderer";
 import {AffixUtils} from "../../core/utils/internal-utils";
-import {PopupEffect, PopupInfo, PopupPositionType, PopupService} from "../../service/popup.service";
-import {JigsawTooltipModule, SimpleTooltipComponent} from "../tooltip/tooltip";
 
 @Component({
     selector: 'jigsaw-table, j-table',
@@ -38,7 +36,7 @@ import {JigsawTooltipModule, SimpleTooltipComponent} from "../tooltip/tooltip";
 export class JigsawTable extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef,
-                private _zone: NgZone, private _popupService: PopupService) {
+                private _zone: NgZone) {
         super();
     }
 
@@ -687,19 +685,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._rowElementRefs = null;
         this._headerComponents = null;
     }
-
-    /**
-     * @internal
-     */
-    public _$scrollBarOptions: any = {
-        snapAmount: 30,
-        mouseWheel: {enable: true, scrollAmount: 90},
-    };
 }
 
 @NgModule({
     declarations: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
-    imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, JigsawTooltipModule],
+    imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule],
     exports: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
     entryComponents: [TableCellTextEditorRenderer, DefaultCellRenderer]
 })
