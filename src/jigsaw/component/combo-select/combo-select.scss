@@ -15,7 +15,6 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
     cursor: pointer;
 
     &-selection {
-        background-color: $default-color;
         border-radius: $border-radius-base;
         border: $border-width-base $border-style-base $border-color-base;
         transition: all .3s $ease-in-out;
