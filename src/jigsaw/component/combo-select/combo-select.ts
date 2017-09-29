@@ -258,7 +258,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
                 return pos;
             },
             size: {
-                minWidth: this.width ? this.width : 240
+                minWidth: this._elementRef.nativeElement.offsetWidth
             },
             showBorder: this.showBorder
         };

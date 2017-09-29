@@ -32,8 +32,8 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
             }
         }
         tbody {
-            &.#{$table-prefix-cls}-line-ellipsis {
-                td .#{$table-prefix-cls}-cell-content {
+            .#{$table-prefix-cls}-line-ellipsis {
+                .#{$table-prefix-cls}-cell-content {
                     width: 100%;
                     @include inline-block();
                     @include line-ellipsis-style();

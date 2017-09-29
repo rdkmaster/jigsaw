@@ -31,21 +31,22 @@
             <colgroup>
                 <col *ngFor="let head of _$headerSettings;" width="{{head.width}}">
             </colgroup>
-            <tbody class="jigsaw-table-line-ellipsis">
+            <tbody>
             <tr #tableRow *ngFor="let row of _$cellSettings; index as rowIndex"
                 (click)="_$selectRow(rowIndex)" (dblclick)="_$handleRowDoubleClick(rowIndex)">
                 <td *ngFor="let cell of row;"
                     [attr.rowspan]="cell.rowSpan > 1 ? cell.rowSpan : null"
                     [style.display]="cell.rowSpan ? 'table-cell' : 'none'"
-                    class="{{cell.clazz}}">
+                    class="{{cell.clazz}} {{cell.lineEllipsis ? 'jigsaw-table-line-ellipsis': ''}}">
 
                     <div class="jigsaw-table-cell-content"
                          *ngIf="!cell.renderer; else rendererCell">
-                        <span class="jigsaw-table-cell-text" title="{{cell.cellData}}">{{cell.cellData}}</span>
+                        <span class="jigsaw-table-cell-text" title="{{cell.lineEllipsis ? cell.cellData : ''}}">{{cell.cellData}}</span>
                     </div>
                     <ng-template #rendererCell>
                         <jigsaw-table-cell
                             class="jigsaw-table-cell-content"
+                            title="{{cell.lineEllipsis ? cell.cellData : ''}}"
                             [tableData]="data"
                             [additionalData]="additionalData"
                             [cellData]="cell.cellData"

@@ -60,7 +60,14 @@ export class TableRendererDemoComponent {
             header: {sortable: true}
         },
         {
-            target: ['gender', 'desc'], visible: false
+            target: 'desc',
+            cell: {
+                lineEllipsis: true,
+                clazz: 'green-text'
+            }
+        },
+        {
+            target: 'gender', visible: false
         },
     ];
 

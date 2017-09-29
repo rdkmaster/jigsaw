@@ -239,7 +239,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             editorRenderer: null,
             group: false,
             field: field,
-            rowSpan: 1
+            rowSpan: 1,
+            lineEllipsis: false
         };
         settings.width = columnDefine && columnDefine.width;
         settings.group = columnDefine && columnDefine.group;
@@ -249,6 +250,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             settings.clazz = cellDef.clazz;
             settings.editable = cellDef.editable;
             settings.editorRenderer = cellDef.editorRenderer;
+            settings.lineEllipsis = cellDef.lineEllipsis;
         }
         return settings;
     }

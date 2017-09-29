@@ -58,6 +58,7 @@ export class TableCell {
     editable?: boolean;
     editorRenderer?: Type<TableCellRendererBase>;
     data?: any | TableCellDataGenerator;
+    lineEllipsis?: boolean;
 }
 
 export class TableHeadSetting {
@@ -83,6 +84,7 @@ export class TableCellSetting {
     group: boolean;
     field: string;
     rowSpan: number;
+    lineEllipsis: boolean;
 }
 
 export class SortChangeEvent {

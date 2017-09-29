@@ -57,7 +57,7 @@ export class OfficeEditor extends OfficeRendererBase {
     template: `
         <j-combo-select [placeholder]="cellData" width="100%" height="30" (openChange)="onChange($event)">
             <ng-template>
-                <div style="width: 120px; background-color: #fff;">
+                <div style="width: 182px; background-color: #fff;">
                     <div style="padding: 7px; border: 1px solid #ddd; border-radius: 2px">
                         <j-button width="30" preSize="small" (click)="selectAll()">全选</j-button>
                         <j-button width="30" preSize="small" (click)="selectReverse()">反选</j-button>
