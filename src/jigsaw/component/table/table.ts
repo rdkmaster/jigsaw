@@ -45,15 +45,15 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @Output()
     public sort = new EventEmitter<SortChangeEvent>();
 
-    private _rangeWidth: string;
+    private _contentWidth: string;
 
     @Input()
-    get rangeWidth(): string {
-        return this._rangeWidth;
+    get contentWidth(): string {
+        return this._contentWidth;
     }
 
-    set rangeWidth(value: string) {
-        this._rangeWidth = CommonUtils.getCssValue(value);
+    set contentWidth(value: string) {
+        this._contentWidth = CommonUtils.getCssValue(value);
     }
 
     @Input()
@@ -332,6 +332,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._updateCellSettings(mixedFields);
         this.additionalDataChange.emit(this.additionalData);
         setTimeout(() => this._setCellLineEllipsis(), 0);
+        setTimeout(() => this._calculateContentWidth(), 0);
     }
 
     private _additionalData = new AdditionalTableData();
@@ -676,9 +677,27 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         });
     }
 
+    private _calculateContentWidth() {
+        if (this.contentWidth == 'auto') {
+            this._elementRef.nativeElement.querySelectorAll('table').forEach(table => {
+                this._renderer.setStyle(table, 'table-layout', 'auto');
+            });
+            const contentRange = this._elementRef.nativeElement.querySelector('.jigsaw-table-range');
+            const contentWidth = contentRange.querySelector('.jigsaw-table-body table').offsetWidth;
+            this._renderer.addClass(contentRange, 'jigsaw-table-auto-width');
+            this._renderer.setStyle(contentRange, 'width', contentWidth + 'px');
+            this._renderer.setStyle(this._floatingHeadElement, 'width', contentWidth + 'px');
+
+            this._elementRef.nativeElement.querySelectorAll('table').forEach(table => {
+                this._renderer.setStyle(table, 'table-layout', 'fixed');
+            });
+        }
+    }
+
     ngAfterViewInit() {
         super.ngAfterViewInit();
         this._$selectRow(this.selectedRow, true);
+        this._calculateContentWidth();
     }
 
     ngOnInit() {

@@ -95,3 +95,11 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
         background: $background-color-base;
     }
 }
+
+.#{$table-prefix-cls}-auto-width {
+    .#{$table-prefix-cls}-cell-content, jigsaw-table-header {
+        white-space: nowrap;
+    }
+}
+
+

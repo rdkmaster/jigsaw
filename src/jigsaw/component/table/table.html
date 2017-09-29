@@ -1,7 +1,7 @@
-<div class="jigsaw-table-range" [style.width]="rangeWidth">
+<div class="jigsaw-table-range" [style.width]="contentWidth">
     <div class="jigsaw-table-header"
          [style.padding-right]="height ? '17px' : '0'"
-         [style.width]="rangeWidth"
+         [style.width]="contentWidth"
          [hidden]="hideHeader || !childInitialized">
         <table>
             <colgroup>
@@ -9,8 +9,7 @@
             </colgroup>
             <thead>
             <tr>
-                <td *ngFor="let head of _$headerSettings;"
-                    width="{{head.width}}" class="{{head.clazz}}">
+                <td *ngFor="let head of _$headerSettings;" class="{{head.clazz}}">
                     <jigsaw-table-header [tableData]="data"
                                          [additionalData]="additionalData"
                                          [cellData]="head.cellData"
