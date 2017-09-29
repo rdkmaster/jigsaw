@@ -5,9 +5,10 @@ import {JigsawTableModule} from "jigsaw/component/table/table";
 import {JigsawScrollBarModule} from "jigsaw/directive/scrollbar/scrollbar";
 import {JigsawTagModule} from "jigsaw/component/tag/tag";
 import {TableDragDeleteRow, TableDragReplaceRow} from "./table-renderer";
+import {CommonModule} from "@angular/common";
 
 @NgModule({
-    imports: [JigsawDraggableModule, JigsawDroppableModule, JigsawTableModule, JigsawScrollBarModule, JigsawTagModule],
+    imports: [JigsawDraggableModule, JigsawDroppableModule, JigsawTableModule, JigsawScrollBarModule, JigsawTagModule, CommonModule],
     declarations: [TableDragDemoComponent, TableDragReplaceRow, TableDragDeleteRow],
     bootstrap: [TableDragDemoComponent],
     entryComponents: [TableDragReplaceRow, TableDragDeleteRow]

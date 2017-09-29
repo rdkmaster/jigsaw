@@ -66,7 +66,7 @@ export abstract class AbstractJigsawComponent implements IJigsawComponent, OnIni
 
     //TODO 所有组件都使用这个属性判断是否初始化好
     protected initialized: boolean = false;
-    protected childInitialized: boolean = false;
+    public childInitialized: boolean = false;
 
     ngOnInit() {
         this.initialized = true;

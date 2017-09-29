@@ -64,7 +64,7 @@
         <jigsaw-combo-select [(ngModel)]="favoriteFruit" (valueChange)="onFavoriteFruitRemoved($event)" name="favoriteFruit" width="250px">
             <ng-template>
                 <div style="padding: 6px; width: 700px;">
-                    <jigsaw-table [data]="fruitList" [columnDefines]="columnDef" [selectedIndex]="selectedIndex"
+                    <jigsaw-table [data]="fruitList" [columnDefines]="columnDef" [selectedRow]="selectedIndex"
                                   (selectChange)="onFavoriteFruitChange($event)"></jigsaw-table>
                 </div>
             </ng-template>
