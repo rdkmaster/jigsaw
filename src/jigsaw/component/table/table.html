@@ -37,16 +37,16 @@
                 <td *ngFor="let cell of row;"
                     [attr.rowspan]="cell.rowSpan > 1 ? cell.rowSpan : null"
                     [style.display]="cell.rowSpan ? 'table-cell' : 'none'"
-                    class="{{cell.clazz}} {{cell.lineEllipsis ? 'jigsaw-table-line-ellipsis': ''}}">
+                    class="{{cell.clazz}} {{cell.tooltip ? 'jigsaw-table-line-ellipsis': ''}}">
 
                     <div class="jigsaw-table-cell-content"
                          *ngIf="!cell.renderer; else rendererCell">
-                        <span class="jigsaw-table-cell-text" title="{{cell.lineEllipsis ? cell.cellData : ''}}">{{cell.cellData}}</span>
+                        <span class="jigsaw-table-cell-text" title="{{cell.tooltip ? cell.tooltip : ''}}">{{cell.cellData}}</span>
                     </div>
                     <ng-template #rendererCell>
                         <jigsaw-table-cell
                             class="jigsaw-table-cell-content"
-                            title="{{cell.lineEllipsis ? cell.cellData : ''}}"
+                            title="{{cell.tooltip ? cell.tooltip : ''}}"
                             [tableData]="data"
                             [additionalData]="additionalData"
                             [cellData]="cell.cellData"

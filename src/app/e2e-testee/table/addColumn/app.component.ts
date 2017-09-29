@@ -1,8 +1,8 @@
 import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 import {TableData} from "jigsaw/core/data/table-data";
 import {AdditionalColumnDefine} from "jigsaw/component/table/table-typings";
+import {TableCellRendererBase} from "jigsaw/component/table/table-renderer";
 import {Http} from "@angular/http";
-import {TableCellRendererBase} from "../../../../jigsaw/component/table/table-renderer";
 
 /*
  * 操作列头

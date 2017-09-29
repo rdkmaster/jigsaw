@@ -75,7 +75,7 @@ export const liveDemoNavInfo = {
             demos: [
                 {
                     label: 'renderer',
-                    url: '/table/table-renderer'
+                    url: '/table/renderer'
                 },
             ]
         },

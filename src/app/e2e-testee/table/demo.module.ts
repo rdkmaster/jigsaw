@@ -40,8 +40,8 @@ import {TablePageableDemoModule} from "./pageable/app.module";
 import {TablePerformsDemoComponent} from "./performs/app.component";
 import {TablePerformsDemoModule} from "./performs/app.module";
 
-import {TableRendererDemoComponent} from "./renderer/app.component";
-import {TableRendererDemoModule} from "./renderer/app.module";
+import {TableRendererDemoComponent} from "../../live-demo/table/renderer/app.component";
+import {TableRendererDemoModule} from "../../live-demo/table/renderer/app.module";
 
 import {TableRendererOfTemplateRefDemoComponent} from "./rendererOfTemplateRef/app.component";
 import {TableRendererOfTemplateRefDemoModule} from "./rendererOfTemplateRef/app.module";
