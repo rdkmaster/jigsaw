@@ -97,19 +97,19 @@
                     &:last-child {
                         border-right-color: $bgColor;
                     }
-                    @at-root .jigsaw-table-header:after {
+                    @at-root .jigsaw-table-header {
                         background: $bgColor;
                     }
                 }
                 @if ($borderBottomWidth != default) {
                     border-bottom-width: $borderBottomWidth;
-                    @at-root .jigsaw-table-header:after {
+                    @at-root .jigsaw-table-header {
                         border-bottom-width: $borderBottomWidth;
                     }
                 }
                 @if ($borderBottomColor != default) {
                     border-bottom-color: $borderBottomColor;
-                    @at-root .jigsaw-table-header:after {
+                    @at-root .jigsaw-table-header {
                         border-bottom-color: $borderBottomColor;
                     }
                 }
