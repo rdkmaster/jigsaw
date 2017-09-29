@@ -203,17 +203,20 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                     settings.editorRenderer = settings.editorRenderer ? settings.editorRenderer : TableCellTextEditorRenderer;
                 }
 
-                const generator = matchedColumnDef && matchedColumnDef.cell && matchedColumnDef.cell.data instanceof Function ?
-                    matchedColumnDef.cell.data : null;
+                const cellDataGenerator = this._getGenerator(matchedColumnDef, 'data');
                 const originVal = this._getCellDataByField(field, rowIndex);
-                if (generator) {
+                if (cellDataGenerator) {
                     // 根据cell的data函数，生成新的cellData，并更新tableData
-                    settings.cellData = generator(this.data, rowIndex, realColIndex, this._additionalData);
+                    settings.cellData = cellDataGenerator(this.data, rowIndex, realColIndex, this._additionalData);
                     this._setCellDataByField(field, rowIndex, settings.cellData);
                 } else {
                     settings.cellData = originVal;
                 }
                 settings.cellData = CommonUtils.isDefined(settings.cellData) ? settings.cellData : '';
+
+                // generate a tooltip if necessary
+                const tooltipGenerator = this._getGenerator(matchedColumnDef, 'tooltip');
+                settings.tooltip = tooltipGenerator ? tooltipGenerator(this.data, rowIndex, realColIndex, this._additionalData) : '';
 
                 // 修改settings的group属性
                 if (matchedColumnDef && matchedColumnDef.group) {
@@ -228,6 +231,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         });
     }
 
+    private _getGenerator(columnDefine: ColumnDefine, property: string): Function {
+        return columnDefine && columnDefine.cell && columnDefine.cell[property] instanceof Function ? columnDefine.cell[property] : null;
+    }
+
     private _createCellSettings(columnDefine: ColumnDefine, field: string): TableCellSetting {
         let settings: TableCellSetting = {
             cellData: '',
@@ -240,7 +247,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             group: false,
             field: field,
             rowSpan: 1,
-            lineEllipsis: false
+            tooltip: null
         };
         settings.width = columnDefine && columnDefine.width;
         settings.group = columnDefine && columnDefine.group;
@@ -250,7 +257,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             settings.clazz = cellDef.clazz;
             settings.editable = cellDef.editable;
             settings.editorRenderer = cellDef.editorRenderer;
-            settings.lineEllipsis = cellDef.lineEllipsis;
+            settings.tooltip = cellDef.tooltip;
         }
         return settings;
     }

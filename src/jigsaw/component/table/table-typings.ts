@@ -17,6 +17,10 @@ export function rowIndexGenerator(tableData: TableData, row: number): any {
     return index;
 }
 
+export function columnTooltipGenerator(tableData: TableData, row:number, column: number):any {
+    return tableData && tableData.data && tableData.data[row] ? tableData.data[row][column] : '';
+}
+
 export class ColumnDefine {
     target: TableColumnTarget;
     visible?: boolean;
@@ -58,7 +62,7 @@ export class TableCell {
     editable?: boolean;
     editorRenderer?: Type<TableCellRendererBase>;
     data?: any | TableCellDataGenerator;
-    lineEllipsis?: boolean;
+    tooltip?: any;
 }
 
 export class TableHeadSetting {
@@ -84,7 +88,7 @@ export class TableCellSetting {
     group: boolean;
     field: string;
     rowSpan: number;
-    lineEllipsis: boolean;
+    tooltip: any;
 }
 
 export class SortChangeEvent {

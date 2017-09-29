@@ -2,11 +2,11 @@ import {
     Component, AfterViewInit, ViewChild, ViewEncapsulation,
     Renderer2, ViewContainerRef
 } from "@angular/core";
-import {TableData} from "jigsaw/core/data/table-data";
 import {Http} from "@angular/http";
+import {TableData} from "jigsaw/core/data/table-data";
 import {ColumnDefine} from "jigsaw/component/table/table-typings";
 import {JigsawInput} from "jigsaw/component/input/input";
-import {TableCellRendererBase} from "../../../../jigsaw/component/table/table-renderer";
+import {TableCellRendererBase} from "jigsaw/component/table/table-renderer";
 
 
 /*

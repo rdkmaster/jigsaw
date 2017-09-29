@@ -1,9 +1,10 @@
 import {Component, ViewEncapsulation} from "@angular/core";
+import {Http} from "@angular/http";
 import {LocalPageableTableData} from "jigsaw/core/data/table-data";
 import {
     AdditionalColumnDefine,
     AdditionalTableData,
-    ColumnDefine,
+    ColumnDefine, columnTooltipGenerator,
     rowIndexGenerator
 } from "jigsaw/component/table/table-typings";
 import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/component/table/table-renderer";
@@ -11,7 +12,6 @@ import {
     filterData, OfficeEditor, OfficeHeader, OfficeRenderer, PositionHeaderSelect,
     TableCellOperation
 } from "./renderers";
-import {Http} from "@angular/http";
 
 
 @Component({
@@ -34,7 +34,7 @@ export class TableRendererDemoComponent {
     columnDefines: ColumnDefine[] = [
         {
             target: ['position', 'a-not-exist-field'],
-            width: '20%',
+            width: '15%',
             header: {
                 renderer: PositionHeaderSelect,
                 sortable: true
@@ -45,7 +45,7 @@ export class TableRendererDemoComponent {
             group: true
         },
         {
-            target: 'office',
+            target: 'office', width: '180',
             cell: {
                 renderer: OfficeRenderer,
                 editorRenderer: OfficeEditor,
@@ -56,13 +56,13 @@ export class TableRendererDemoComponent {
             }
         },
         {
-            target: (f, i) => f == 'name',
-            header: {sortable: true}
+            target: ['name', 'salary', 'enrollDate'],
+            width: '150', header: {sortable: true}
         },
         {
             target: 'desc',
             cell: {
-                lineEllipsis: true,
+                tooltip: columnTooltipGenerator,
                 clazz: 'green-text'
             }
         },
@@ -102,7 +102,8 @@ export class TableRendererDemoComponent {
                 clazz: 'green-text'
             },
             cell: {
-                renderer: TableCellOperation
+                renderer: TableCellOperation,
+                tooltip: () => '加薪：当前员工一次加2000\n辞退：立即辞退当前员工'
             }
         },
     ];
@@ -156,5 +157,7 @@ export class TableRendererDemoComponent {
         // 注意对于LocalPageableTableData，Jigsaw没有做debounce
         filterData(this.tableData, {allFields: key});
     }
+
+    showDetail: boolean = false;
 }
 
