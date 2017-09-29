@@ -56,8 +56,7 @@
                             [editorRenderer]="cell.editorRenderer"
                             [group]="cell.group"
                             [rowSpan]="cell.rowSpan"
-                            (edit)="dataChange.emit($event)"
-                            [_jigsawTable]="this">
+                            (edit)="dataChange.emit($event)">
                         </jigsaw-table-cell>
                     </ng-template>
                 </td>

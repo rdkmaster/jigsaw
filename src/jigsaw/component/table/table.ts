@@ -505,10 +505,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         //不设置省略功能，就不需要设置单元格宽度
         if (!this.lineEllipsis || !this._rowElementRefs) return;
 
-        //清空之前的td-tooltip事件
-        this._removeAllTdListeners();
-        this._removeTdListeners = [];
-
         this._rowElementRefs.forEach((row, rowIndex) => {
             const cellContentEls: NodeListOf<Element> = row.nativeElement.querySelectorAll('.jigsaw-table-cell-content');
             for (let colIndex = 0; colIndex < cellContentEls.length; ++colIndex) {
@@ -521,74 +517,22 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                     // 没有限制宽度的单元格不需要省略内容
                     continue;
                 }
-                const cellContentEl = <HTMLElement>cellContentEls[colIndex];
-                const cellText = <HTMLElement>cellContentEl.querySelector('.jigsaw-table-cell-text');
-                if (cellText && cellText.offsetWidth > cellContentEl.offsetWidth) {
-                    this._addTdTooltipListener(cellContentEl.parentElement, cellSetting.cellData, rowIndex, colIndex)
-                }
+                this._bindTooltipForCell(<HTMLElement>cellContentEls[colIndex]);
             }
         })
     }
 
-    private _tooltipInfo: PopupInfo;
-    private _removeTdListeners: Array<RemoveTdListener> = [];
-
-    private _addTdTooltipListener(tdElement: HTMLElement, message: string | number, rowIndex: number, colIndex: number) {
-        const removeTdMouseEnterListener = this._renderer.listen(tdElement, "mouseenter", () => {
-            if (!this._tooltipInfo) {
-                this._tooltipInfo = this._popupService.popup(SimpleTooltipComponent, {
-                    modal: false, //是否模态
-                    showEffect: PopupEffect.bubbleIn,
-                    hideEffect: PopupEffect.bubbleOut,
-                    pos: tdElement,
-                    posOffset: { //偏移位置
-                        bottom: -8,
-                        left: 0
-                    },
-                    posType: PopupPositionType.absolute, //定位类型
-                }, {
-                    message: message
-                });
-            }
-        });
-
-        const removeTdMouseLeaveListener = this._renderer.listen(tdElement, "mouseleave", () => {
-            this._removeTooltip();
-        });
-
-        this._removeTdListeners.push({removeTdListener: removeTdMouseEnterListener, row: rowIndex, column: colIndex});
-        this._removeTdListeners.push({removeTdListener: removeTdMouseLeaveListener, row: rowIndex, column: colIndex});
-    }
-
-    private _removeTooltip() {
-        if (this._tooltipInfo) {
-            this._tooltipInfo.dispose();
-            this._tooltipInfo = null;
-        }
-    }
-
-    public _rebindTooltipForCell(element: HTMLElement, message: any, rowIndex: number, colIndex: number) {
-        //删除对应td的tooltip的事件
-        this._removeTdListenersByIndex(rowIndex, colIndex);
-        //重新绑定td的tooltip
-        const cellText: HTMLElement = <HTMLElement>element.querySelector('span.jigsaw-table-cell-text');
+    /**
+     * 绑定单元格的tooltip
+     * @param {HTMLElement} element
+     * @private
+     */
+    private _bindTooltipForCell(element: HTMLElement) {
+        const cellText: HTMLElement = <HTMLElement>element.querySelector('.jigsaw-table-cell-text');
         if (cellText && cellText.offsetWidth > element.offsetWidth) {
-            this._addTdTooltipListener(element.parentElement, message, rowIndex, colIndex);
-        }
-    }
-
-    private _removeAllTdListeners() {
-        if (this._removeTdListeners.length) {
-            this._removeTdListeners.forEach(removeTdListener => removeTdListener.removeTdListener())
-        }
-    }
-
-    private _removeTdListenersByIndex(row: number, column: number) {
-        if (this._removeTdListeners.length) {
-            this._removeTdListeners
-                .filter(removeTdListener => removeTdListener.row == row
-                    && removeTdListener.column == column)
-                .forEach(removeTdListener => removeTdListener.removeTdListener())
+            this._renderer.setAttribute(element, 'title', cellText.innerText);
+        }else{
+            this._renderer.removeAttribute(element, 'title');
         }
     }
 

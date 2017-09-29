@@ -42,9 +42,6 @@ export class TableInternalCellBase implements AfterViewInit {
     @Input()
     public renderer: Type<TableCellRendererBase> | TemplateRef<any>;
 
-    @Input()
-    protected _jigsawTable: any;
-
     private _column: number = -1;
 
     public get column(): number {
@@ -274,8 +271,17 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
                 this.insertRenderer();
                 this._setGoEditListener();
             });
-            this._jigsawTable._rebindTooltipForCell(this._elementRef.nativeElement, this.cellData, this.row, this.column);
+            this._bindTooltipForCell(this._elementRef.nativeElement);
         });
+    }
+
+    private _bindTooltipForCell(element: HTMLElement) {
+        const cellText: HTMLElement = <HTMLElement>element.querySelector('.jigsaw-table-cell-text');
+        if (cellText && cellText.offsetWidth > element.offsetWidth) {
+            this._renderer.setAttribute(element, 'title', cellText.innerText);
+        }else{
+            this._renderer.removeAttribute(element, 'title');
+        }
     }
 
     /*
