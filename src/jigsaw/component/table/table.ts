@@ -1,18 +1,29 @@
-import {
-    Component, EventEmitter, Input, NgModule, OnDestroy, OnInit, Output, ViewChildren, ElementRef, QueryList,
-    Renderer2, AfterViewInit, NgZone
+﻿import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    NgModule,
+    NgZone,
+    OnDestroy,
+    OnInit,
+    Output,
+    QueryList,
+    Renderer2,
+    ViewChildren
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule} from "../common";
-import {
-    JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent,
-} from "./table-inner.components";
+import {JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent} from "./table-inner.components";
 import {TableData} from "../../core/data/table-data";
 
 import {
     _getColumnIndex,
-    AdditionalColumnDefine, AdditionalTableData,
-    ColumnDefine, SortChangeEvent,
+    AdditionalColumnDefine,
+    AdditionalTableData,
+    ColumnDefine,
+    SortChangeEvent,
     TableCellSetting,
     TableColumnTargetFinder,
     TableDataChangeEvent,
@@ -46,16 +57,13 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _contentWidth: string;
 
     @Input()
-    get contentWidth(): string {
+    public get contentWidth(): string {
         return this._contentWidth;
     }
 
-    set contentWidth(value: string) {
+    public set contentWidth(value: string) {
         this._contentWidth = CommonUtils.getCssValue(value);
     }
-
-    @Input()
-    public lineEllipsis: boolean = false;
 
     @Input()
     public hideHeader: boolean = false;
@@ -329,7 +337,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._updateHeaderSettings(mixedFields);
         this._updateCellSettings(mixedFields);
         this.additionalDataChange.emit(this.additionalData);
-        setTimeout(() => this._setCellLineEllipsis(), 0);
         setTimeout(() => this._calculateContentWidth(), 0);
     }
 
@@ -495,45 +502,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @Input()
     public floatingHeader: boolean = false;
 
-    /**
-     * 设置单元格内容的宽度，如果内容超过宽度，并且设置了行省略，则使用'...'+tooltip的形式显示
-     * @private
-     */
-    private _setCellLineEllipsis() {
-        //不设置省略功能，就不需要设置单元格宽度
-        if (!this.lineEllipsis || !this._rowElementRefs) return;
-
-        this._rowElementRefs.forEach((row, rowIndex) => {
-            const cellContentEls: NodeListOf<Element> = row.nativeElement.querySelectorAll('.jigsaw-table-cell-content');
-            for (let colIndex = 0; colIndex < cellContentEls.length; ++colIndex) {
-                const cellSetting: TableCellSetting = this._$cellSettings[rowIndex][colIndex];
-                if (cellSetting.renderer && cellSetting.renderer != DefaultCellRenderer) {
-                    // 没有渲染器或者用DefaultCellRenderer的单元格才能用省略
-                    continue;
-                }
-                if (!cellSetting.width) {
-                    // 没有限制宽度的单元格不需要省略内容
-                    continue;
-                }
-                this._bindTooltipForCell(<HTMLElement>cellContentEls[colIndex]);
-            }
-        })
-    }
-
-    /**
-     * 绑定单元格的tooltip
-     * @param {HTMLElement} element
-     * @private
-     */
-    private _bindTooltipForCell(element: HTMLElement) {
-        const cellText: HTMLElement = <HTMLElement>element.querySelector('.jigsaw-table-cell-text');
-        if (cellText && cellText.offsetWidth > element.offsetWidth) {
-            this._renderer.setAttribute(element, 'title', cellText.innerText);
-        }else{
-            this._renderer.removeAttribute(element, 'title');
-        }
-    }
-
     private _removeWindowScrollListener: Function;
     private _removeWindowResizeListener: Function;
 
@@ -541,7 +509,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._removeWindowListener();
 
         this._removeWindowResizeListener = this._renderer.listen('window', 'resize', () => {
-            this._setCellLineEllipsis();
             this._floatHead();
         });
 
@@ -656,11 +623,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.jigsaw-table-body'),
             'max-height', this._maxHeight);
         this._floatingHeadElement = this._elementRef.nativeElement.querySelector(".jigsaw-table-header");
-
-        if (this.lineEllipsis) {
-            this._renderer.addClass(this._elementRef.nativeElement.querySelector('.jigsaw-table-body table tbody'),
-                'jigsaw-table-line-ellipsis');
-        }
     }
 
     ngOnDestroy() {

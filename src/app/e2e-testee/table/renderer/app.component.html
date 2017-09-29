@@ -6,7 +6,7 @@
     <jigsaw-button (click)="fire()" colorType="danger">辞退</jigsaw-button>
 </div>
 <jigsaw-table [data]="tableData" [columnDefines]="columnDefines" [floatingHeader]="true"
-              [additionalColumnDefines]="additionalColumnDefines" [lineEllipsis]="false"
+              [additionalColumnDefines]="additionalColumnDefines"
               [(additionalData)]="additionalData" trackRowBy="name"
               (dataChange)="onCellChange($event)" height="400">
 </jigsaw-table>

@@ -271,17 +271,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
                 this.insertRenderer();
                 this._setGoEditListener();
             });
-            this._bindTooltipForCell(this._elementRef.nativeElement);
         });
-    }
-
-    private _bindTooltipForCell(element: HTMLElement) {
-        const cellText: HTMLElement = <HTMLElement>element.querySelector('.jigsaw-table-cell-text');
-        if (cellText && cellText.offsetWidth > element.offsetWidth) {
-            this._renderer.setAttribute(element, 'title', cellText.innerText);
-        }else{
-            this._renderer.removeAttribute(element, 'title');
-        }
     }
 
     /*
