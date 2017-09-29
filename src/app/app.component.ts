@@ -1,4 +1,5 @@
 import {Component} from "@angular/core";
+import * as marked from 'marked'
 
 
 @Component({
@@ -7,6 +8,23 @@ import {Component} from "@angular/core";
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
+    constructor() {
+        console.log(marked(`
+## hello world
+
+\`\`\`
+var a = b;
+var c = 3;
+\`\`\`
+
+
+- li
+    - lili
+    - lili
+        `));
+    }
+
     gotoPlunker(): void {
         //这是给临时演示网站准备的，后续ued正式上线了，还要再改一下
         let match = location.href.match(/\/#\/(.*?)(#|$)/);
