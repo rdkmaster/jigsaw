@@ -1,10 +1,16 @@
 <div class="demo-wrap">
-    <div class="left-box demo-nav"
-         jigsaw-scroll-bar
-         scrollBarAxis="y"
-         [style.height.px]="navHeight">
+    <div class="left-box demo-nav" jigsaw-scroll-bar scrollBarAxis="y" [style.height.px]="navHeight">
         <jigsaw-collapse class="nav-list" mode="accordion">
-            <jigsaw-collapse-pane *ngFor="let data of navData; index as i" [header]="data.title" [isActive]="i == 0">
+            <jigsaw-collapse-pane header="Live Demo" [isActive]="true">
+                <div class="group" *ngFor="let nav of liveDemoNavData.navList">
+                    <h3>{{nav.group}}</h3>
+                    <ul>
+                        <li *ngFor="let demoInfo of nav.demos"><a [routerLink]="demoInfo.url">{{demoInfo.label}}</a></li>
+                    </ul>
+                </div>
+            </jigsaw-collapse-pane>
+
+            <jigsaw-collapse-pane *ngFor="let data of navData;" [header]="data.title" [isActive]="false">
                 <ul>
                     <li *ngFor="let nav of data.navList"><a [routerLink]="nav.url">{{nav.label}}</a></li>
                 </ul>
