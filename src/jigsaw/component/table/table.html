@@ -2,7 +2,7 @@
     <div class="jigsaw-table-header"
          [style.padding-right]="height ? '17px' : '0'"
          [style.width]="contentWidth"
-         [hidden]="hideHeader || !childInitialized">
+         [hidden]="hideHeader || !childInitialized || !(data&& data.field.length) || !data">
         <table>
             <colgroup>
                 <col *ngFor="let head of _$headerSettings;" width="{{head.width}}">
