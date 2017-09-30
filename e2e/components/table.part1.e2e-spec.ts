@@ -18,7 +18,8 @@ describe('table', () => {
             browser.get('/#/table/setCellClass');
         });
         it('should set cell class', () => {
-            expect(element.all(by.css('.red-text')).getCssValue('COLOR')).toBe('rgb(255, 170, 0)');
+            expect(element.all(by.css('.red-text')).get(0).getCssValue('COLOR')).toBe('rgb(255, 170, 0)');
+            expect(element.all(by.css('.red-text')).get(10).getCssValue('COLOR')).toBe('rgb(255, 170, 0)');
         })
     });
 });
