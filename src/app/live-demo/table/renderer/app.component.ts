@@ -64,7 +64,8 @@ export class TableRendererDemoComponent {
             cell: {
                 tooltip: columnTooltipGenerator,
                 clazz: 'green-text'
-            }
+            },
+            width: '100'
         },
         {
             target: 'gender', visible: false
