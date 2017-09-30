@@ -49,4 +49,21 @@ describe('table', () => {
             expect(columnlastEl.getText()).toBe('Aaron');
         })
     });
+    describe('test setCellRender', () => {
+        beforeEach(() => {
+            browser.get('/#/table/setCellRender');
+        });
+        it('should set cell render', () => {
+            expect(element(by.css('.fa-universal-access')).isPresent()).toBe(true);
+        })
+    });
+    describe('test setColumnGroup', () => {
+        beforeEach(() => {
+            browser.get('/#/table/setColumnGroup');
+        });
+        it('should set column group', () => {
+            const canBeGroupEl=element(by.css('.jigsaw-table-body')).all(by.tagName('TR')).get(4).all(by.tagName('TD')).get(2);
+            expect(canBeGroupEl.getAttribute('rowspan')).toBe('3');
+        })
+    });
 });
