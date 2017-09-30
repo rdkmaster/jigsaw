@@ -115,7 +115,6 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
             option.selected = CommonUtils.compareWithKeyProperty(this.value, option.optionItem, <string[]>this.trackItemBy);
             option.cdRef.detectChanges();
         });
-        this.valueChange.emit(this.value);
     };
 
     private _setOptionListHeight(){
@@ -153,6 +152,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
         this._$selectedLabel = value[this.labelField];
         if (this.initialized) {
             this._updateSelectedOption();
+            this.valueChange.emit(this.value);
         }
     }
 

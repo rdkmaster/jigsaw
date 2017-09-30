@@ -1,6 +1,7 @@
 import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 import {TableData} from "jigsaw/core/data/table-data";
-import {AdditionalColumnDefine, TableCellRenderer} from "jigsaw/component/table/table-api";
+import {AdditionalColumnDefine} from "jigsaw/component/table/table-typings";
+import {TableCellRendererBase} from "jigsaw/component/table/table-renderer";
 import {Http} from "@angular/http";
 
 /*
@@ -9,7 +10,7 @@ import {Http} from "@angular/http";
 @Component({
     template: '<span>操作</span>'
 })
-export class MyTableHeadOption extends TableCellRenderer {
+export class MyTableHeadOption extends TableCellRendererBase {
 }
 
 /*
@@ -27,7 +28,7 @@ export class MyTableHeadOption extends TableCellRenderer {
         text-decoration: underline
     }`]
 })
-export class MyTableCellOption extends TableCellRenderer {
+export class MyTableCellOption extends TableCellRendererBase {
     clickHandler(actioin) {
         alert(`正在${actioin}第 ${this.row + 1} 行的数据！`)
     }

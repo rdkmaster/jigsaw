@@ -40,8 +40,8 @@ import {TablePageableDemoModule} from "./pageable/app.module";
 import {TablePerformsDemoComponent} from "./performs/app.component";
 import {TablePerformsDemoModule} from "./performs/app.module";
 
-import {TableRendererDemoComponent} from "./renderer/app.component";
-import {TableRendererDemoModule} from "./renderer/app.module";
+import {TableRendererDemoComponent} from "../../live-demo/table/renderer/app.component";
+import {TableRendererDemoModule} from "../../live-demo/table/renderer/app.module";
 
 import {TableRendererOfTemplateRefDemoComponent} from "./rendererOfTemplateRef/app.component";
 import {TableRendererOfTemplateRefDemoModule} from "./rendererOfTemplateRef/app.module";
@@ -84,8 +84,6 @@ import {TableHideHeadDemoModule} from "./hideHead/app.module";
 import {TableHideHeadDemoComponent} from "./hideHead/app.component";
 import {TableSelectRowDemoComponent} from "./selectRow/app.component";
 import {TableSelectRowDemoModule} from "./selectRow/app.module";
-import {TableRendererLiveDemo} from "../../live-demo/table/table-renderer/app.component";
-import {TableRendererLiveDemoModule} from "../../live-demo/table/table-renderer/app.module";
 
 const tableDemoRoutes = [
     {
@@ -179,9 +177,6 @@ const tableDemoRoutes = [
         path: 'selectRow', component: TableSelectRowDemoComponent
     },
     {
-        path: 'table-renderer', component: TableRendererLiveDemo
-    },
-    {
         path: '**', //fallback router must in the last
         component: TableBasicDemoComponent
     }
@@ -197,7 +192,6 @@ const tableDemoRoutes = [
         TableSetCellClassDemoModule, TableSetCellEditableDemoModule, TableSetCellRenderDemoModule, TableColumnGroupDemoModule,
         TableColumnSetVisibleDemoModule, TableColumnSetWidthDemoModule, TableSetHeaderClassDemoModule, TableSetHeaderRenderDemoModule,
         TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, swimLaneDiagramDemoModule, TableHideHeadDemoModule, TableSelectRowDemoModule,
-        TableRendererLiveDemoModule
     ]
 })
 export class TableDemoModule {

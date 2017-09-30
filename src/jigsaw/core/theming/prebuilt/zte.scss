@@ -10,7 +10,7 @@
 
 @include setTableHead(#f4f6f8, #294e79, 14px, #008fd4, 2px);
 @include setTableBody(#333, default, default, #f8f8f8);
-@include setTableTextAlign(left, 20px);
+@include setTableTextAlign(left, 8px);
 
 @include setTag(#fff, 25px);
 @include setCollapse(#f4f6f8);

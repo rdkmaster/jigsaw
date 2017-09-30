@@ -1,4 +1,19 @@
-<p>表格浮动表头</p>
+<div class="live-demo-wrap">
+    <h2>Table scrollbar</h2>
+    <div class="clearfix">
+        <div class="demo-1 live-demo">
+            <h3>滚动条</h3>
+            <p class="comment">
+                用<code>height</code>控制垂直滚动条<br>
+                用<code>contentWidth</code>控制水平滚动条
+            </p>
+            <jigsaw-table height="400px" width="400px" [contentWidth]="600" [data]="tableData"></jigsaw-table>
+        </div>
+        <div class="demo-2 live-demo">
+            <h3>全局浮动表头</h3>
+            <p class="comment">用<code>floatingHeader</code>设置全局浮动表头</p>
+            <jigsaw-table width="600px" [data]="tableData" [floatingHeader]="true"></jigsaw-table>
+        </div>
+    </div>
+</div>
 
-<jigsaw-table height="400px" width="200px" [data]="tableData"></jigsaw-table>
-<jigsaw-table width="600px" [data]="tableData"></jigsaw-table>

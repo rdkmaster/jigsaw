@@ -2,82 +2,115 @@
 
 $table-prefix-cls: #{$jigsaw-prefix}-table;
 
-.#{$table-prefix-cls}-host{
+.#{$table-prefix-cls}-host {
     @include inline-block;
     position: relative;
     width: 100%;
-    overflow: hidden;
     vertical-align: top;
-    table{
+    /* host的横向滚动 */
+    overflow-x: auto;
+    padding-top: 40px;
+    &.#{$table-prefix-cls}-hide-head {
+        padding-top: 0;
+    }
+    table {
         width: 100%;
         text-align: center;
-        td{
-            border: 1px solid $border-color-base;
-        }
-        thead{
+        table-layout: fixed;
+
+        thead {
             color: $heading-color;
-            tr{
-                height: 40px;
-                td{
+            tr {
+                td {
+                    height: 40px;
                     background: $background-color-base;
+                    border-left: 1px solid $border-color-base;
+                    border-right: 1px solid $border-color-base;
+                    &:last-child {
+                        border-right-color: $background-color-base;
+                    }
                 }
             }
         }
-        tbody{
-            &.#{$table-prefix-cls}-line-ellipsis{
-                td .#{$table-prefix-cls}-cell-content{
+        tbody {
+            .#{$table-prefix-cls}-line-ellipsis {
+                .#{$table-prefix-cls}-cell-content {
+                    width: 100%;
+                    @include inline-block();
                     @include line-ellipsis-style();
                 }
             }
-            tr{
+            tr {
                 height: 30px;
-                &:nth-child(2n){
+                &:nth-child(2n) {
                     background: $default-color;
                 }
-                &:nth-child(2n-1){
+                &:nth-child(2n-1) {
                     background: $default-color;
                 }
-                &:hover{
-                    td:not([rowspan]){
+                &:hover {
+                    td:not([rowspan]) {
                         background: $item-hover-bg;
                     }
                 }
-                &.#{$table-prefix-cls}-row-selected{
-                    td:not([rowspan]){
+                &.#{$table-prefix-cls}-row-selected {
+                    td:not([rowspan]) {
                         background: $item-active-bg;
                     }
                 }
-                td[rowspan]{
+                td {
+                    border: 1px solid $border-color-base;
+                }
+                td[rowspan] {
                     background: $default-color;
                 }
             }
         }
-        &.#{$table-prefix-cls}-fixed-head{
-            position: absolute;
-            z-index: $zindex-affix;
-        }
     }
 }
 
-.#{$table-prefix-cls}-box{
-    width: 100%;
-    height: 100%;
-    > .mCSB_vertical_horizontal > .mCSB_scrollTools_vertical{
-        margin: 40px 0 0 !important;
-    }
-    &.#{$table-prefix-cls}-hide-head{
-        table{
-            margin-top: -40px;
-        }
-        > .mCSB_vertical_horizontal > .mCSB_scrollTools_vertical{
-            margin: 0 0 !important;
-        }
-    }
-}
-
-.#{$table-prefix-cls}-hide{
+.#{$table-prefix-cls}-hide {
     display: none !important;
 }
 
+.#{$table-prefix-cls}-range {
+    width: 100%;
+    height: 100%;
+    /* range上的纵向滚动 */
+    overflow-y: auto;
+    /* range没有横向滚动 */
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+.#{$table-prefix-cls}-header {
+    position: absolute;
+    top: 0;
+    /* header宽度恒等于host宽度 */
+    width: 100%;
+    /* 保证header子元素不溢出 */
+    overflow: hidden;
+    z-index: $zindex-affix;
+    padding-right: 17px;
+    box-sizing: border-box;
+    border-top: 1px solid $border-color-base;
+    border-bottom: 1px solid $border-color-base;
+    background: $background-color-base;
+    &:after {
+        position: absolute;
+        width: 0;
+        height: 100%;
+        top: 0;
+        right: 0;
+        border-left: 1px solid $border-color-base;
+        content: '';
+    }
+}
+
+.#{$table-prefix-cls}-auto-width {
+    .#{$table-prefix-cls}-cell-content, jigsaw-table-header {
+        white-space: nowrap;
+    }
+}
 
 

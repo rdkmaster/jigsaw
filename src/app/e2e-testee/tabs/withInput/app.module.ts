@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+﻿import { NgModule } from '@angular/core';
+import {CommonModule} from "@angular/common";
 import { JigsawButtonModule } from "jigsaw/component/button/button";
 import { JigsawInputModule } from "jigsaw/component/input/input";
 import { JigsawTabsModule } from "jigsaw/component/tabs/index";
@@ -7,7 +8,7 @@ import { JigsawTabsWithInputComponent }  from './app.component';
 
 @NgModule({
     imports: [
-        JigsawTabsModule, JigsawInputModule, JigsawButtonModule, JigsawTableModule
+        CommonModule, JigsawTabsModule, JigsawInputModule, JigsawButtonModule, JigsawTableModule
     ],
     declarations: [ JigsawTabsWithInputComponent ],
     bootstrap: [ JigsawTabsWithInputComponent ]

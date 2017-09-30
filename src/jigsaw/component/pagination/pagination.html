@@ -1,4 +1,4 @@
-<jigsaw-input class="jigsaw-paging-search" *ngIf="searchable" width="80">
+<jigsaw-input class="jigsaw-paging-search" *ngIf="searchable" width="160" (valueChange)="search.emit($event)">
     <span jigsaw-prefix-icon class="fa fa-search"></span>
 </jigsaw-input>
 

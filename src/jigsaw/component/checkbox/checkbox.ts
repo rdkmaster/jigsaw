@@ -9,6 +9,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 import {AbstractJigsawComponent} from '../common';
 import {CheckBoxStatus} from "./typings";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 export type CheckBoxValue = boolean | CheckBoxStatus;
 
@@ -135,7 +136,7 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
 
     private _fixCheckValue(value: CheckBoxValue): CheckBoxStatus {
         let v: CheckBoxStatus;
-        if (value === undefined || value == null) {
+        if (CommonUtils.isUndefined(value)) {
             v = CheckBoxStatus.unchecked;
         } else if (typeof value === 'number') {
             v = value > CheckBoxStatus.indeterminate ? CheckBoxStatus.checked : value;

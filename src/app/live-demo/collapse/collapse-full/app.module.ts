@@ -1,4 +1,5 @@
-import {NgModule} from "@angular/core";
+﻿import {NgModule} from "@angular/core";
+import {CommonModule} from "@angular/common";
 import {CollapseFullComponent} from "./app.component";
 import {JigsawCollapseModule} from "jigsaw/component/collapse/collapse";
 import {JigsawButtonModule} from "jigsaw/component/button/button";
@@ -9,7 +10,7 @@ import {JigsawGraphModule} from "jigsaw/component/graph/index";
 @NgModule({
     declarations: [CollapseFullComponent],
     bootstrap: [CollapseFullComponent],
-    imports: [JigsawCollapseModule, JigsawButtonModule, JigsawInputModule, JigsawTableModule, JigsawGraphModule]
+    imports: [CommonModule, JigsawCollapseModule, JigsawButtonModule, JigsawInputModule, JigsawTableModule, JigsawGraphModule]
 })
 export class CollapseFullModule {
 

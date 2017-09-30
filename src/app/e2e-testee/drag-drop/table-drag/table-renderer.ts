@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, Renderer2} from "@angular/core";
-import {TableCellRenderer} from "jigsaw/component/table/table-api";
+import {TableCellRendererBase} from "jigsaw/component/table/table-renderer";
 import {DragDropInfo} from "jigsaw/directive/dragdrop/types";
 import {CommonUtils} from "jigsaw/core/utils/common-utils";
 
@@ -23,7 +23,7 @@ import {CommonUtils} from "jigsaw/core/utils/common-utils";
         cursor: move
     }`]
 })
-export class TableDragReplaceRow extends TableCellRenderer implements AfterViewInit {
+export class TableDragReplaceRow extends TableCellRendererBase implements AfterViewInit {
 
     private allRows: any;
 
@@ -106,7 +106,7 @@ export class TableDragReplaceRow extends TableCellRenderer implements AfterViewI
         cursor: move
     }`]
 })
-export class TableDragDeleteRow extends TableCellRenderer {
+export class TableDragDeleteRow extends TableCellRendererBase {
     dragStartHandle(dragInfo: DragDropInfo) {
         console.log('drag start');
         dragInfo.dragDropData = this.row;

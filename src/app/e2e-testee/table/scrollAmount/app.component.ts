@@ -1,8 +1,7 @@
 import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 import {Http} from "@angular/http";
 import {TableData} from "jigsaw/core/data/table-data";
-import {AdditionalColumnDefine} from "jigsaw/component/table/table-api";
-import {TableCellNum} from "jigsaw/component/table/table-renderer";
+import {AdditionalColumnDefine, TableValueGenerators} from "jigsaw/component/table/table-typings";
 
 @Component({
     templateUrl: './app.component.html'
@@ -25,7 +24,7 @@ export class TableScrollAmountDemoComponent {
                 text: '#'
             },
             cell: {
-                renderer: TableCellNum
+                data: TableValueGenerators.rowIndexGenerator
             }
         }
     ];

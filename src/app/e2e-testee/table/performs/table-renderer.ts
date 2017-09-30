@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {TableCellRenderer} from "jigsaw/component/table/table-api";
+import {TableCellRendererBase} from "jigsaw/component/table/table-renderer";
 
 /*
  * 自定义表头渲染组件
@@ -7,6 +7,6 @@ import {TableCellRenderer} from "jigsaw/component/table/table-api";
 @Component({
     template: '<span class="fa fa-bus"></span>{{cellData}}'
 })
-export class TableHeadIcon extends TableCellRenderer {
+export class TableHeadIcon extends TableCellRendererBase {
 }
 

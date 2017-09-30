@@ -4,7 +4,7 @@
                   [data]="tableData"
                   [columnDefines]="_columns"
                   [additionalColumnDefines]="_additionalColumns"
-                  (dataChange)="onCellChange($event)"
-                  [lineEllipsis]="true"></jigsaw-table>
+                  (dataChange)="onCellChange($event)">
+    </jigsaw-table>
     <p class="message">table change answer is: <span>{{_changeMsg}}</span></p>
 </div>

@@ -1,9 +1,0 @@
-<p>带渲染器的表格单元格</p>
-<div style="height: 2000px">
-    <jigsaw-table height="400px"
-               [data]="tableData"
-               [columnDefines]="_columns"
-               [additionalColumnDefines]="_additionalColumns"
-               (dataChange)="onCellChange($event)"></jigsaw-table>
-    <p class="message">table change answer is: <span>{{_changeMsg}}</span></p>
-</div>

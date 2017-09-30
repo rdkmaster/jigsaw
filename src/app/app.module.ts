@@ -4,8 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {RouterModule} from "@angular/router";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
-import {Observable} from "rxjs/Observable";
+import {TranslateService} from '@ngx-translate/core';
 import {JigsawButtonModule} from "jigsaw/component/button/button";
 
 import {AppComponent} from './app.component';

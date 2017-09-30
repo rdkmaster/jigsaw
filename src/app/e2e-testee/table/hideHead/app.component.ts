@@ -7,7 +7,7 @@ import {TableData} from "jigsaw/core/data/table-data";
 })
 export class TableHideHeadDemoComponent {
     tableData: TableData;
-    hideHead: boolean;
+    hideHeader: boolean;
 	constructor(public viewContainerRef: ViewContainerRef,
                 public renderer: Renderer2, http: Http) {
         this.tableData = new TableData();

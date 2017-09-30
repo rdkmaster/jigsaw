@@ -1,6 +1,6 @@
 import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 import {TableData} from "jigsaw/core/data/table-data";
-import {ColumnDefine} from "jigsaw/component/table/table-api";
+import {ColumnDefine} from "jigsaw/component/table/table-typings";
 import {Http} from "@angular/http";
 
 @Component({
@@ -37,10 +37,8 @@ export class TableColumnSetWidthDemoComponent {
             target: [4,5],
             width: '200px',
         },{
-            target : (field, index) => {
-                 return index > 5
-            },
-            width: '0px',
+            target : 6,
+            width: '200px',
         }];
 }
 

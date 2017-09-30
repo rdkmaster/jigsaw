@@ -1,4 +1,4 @@
-import {Http, RequestOptionsArgs, Response, ResponseOptions, URLSearchParams} from "@angular/http";
+import {Http, RequestOptionsArgs, URLSearchParams} from "@angular/http";
 import {Subject} from "rxjs/Subject";
 import "rxjs/add/operator/map";
 import 'rxjs/add/operator/debounceTime';
@@ -8,16 +8,16 @@ import {
     DataFilterInfo,
     DataSortInfo,
     IFilterable,
+    IPageable,
     IServerSidePageable,
     ISortable,
     PagingInfo,
     SortAs,
-    SortOrder,
-    IPageable
+    SortOrder
 } from "./component-data";
 import {CommonUtils} from "../utils/common-utils";
 
-export type TableMatrixRow = Array<string | number>;
+export type TableMatrixRow = any[];
 export type TableDataHeader = string[];
 export type TableDataField = string[];
 export type TableDataMatrix = TableMatrixRow[];
@@ -53,7 +53,7 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
             this.fromObject(data);
         } else {
             console.log('invalid raw TableData received from server...');
-            this.clearData();
+            this.clear();
             this.refresh();
         }
         this.componentDataHelper.invokeAjaxSuccessCallback(data);
@@ -64,7 +64,7 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
             throw new Error('invalid raw TableData object!');
         }
 
-        this.clearData();
+        this.clear();
 
         TableDataBase.arrayAppend(this.data, data.data);
         TableDataBase.arrayAppend(this.field, data.field);
@@ -103,7 +103,7 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
         return result;
     }
 
-    protected clearData(): void {
+    public clear(): void {
         this.data.splice(0, this.data.length);
         this.header.splice(0, this.header.length);
         this.field.splice(0, this.field.length);
@@ -111,42 +111,80 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
 
     public destroy(): void {
         super.destroy();
-        this.clearData();
+        this.clear();
         console.log('destroying TableDataBase....');
+    }
+
+    public insertColumn(column: number, data: any | any[], field: string, header: string): void {
+        column = isNaN(column) ? this.data.length : column;
+        this.data.forEach((row, index) => row.splice(column, 0, data instanceof Array ? data[index] : data));
+        this.field.splice(column, 0, field);
+        this.header.splice(column, 0, header);
+    }
+
+    public removeColumn(column: number): TableData {
+        if (isNaN(column) || column < 0 || column >= this.field.length) {
+            return new TableData();
+        }
+        const matrix = [];
+        this.data.forEach(row => matrix.push(row.splice(column, 1)));
+        const field = this.field.splice(column, 1);
+        const header = this.header.splice(column, 1);
+        return new TableData(matrix, field, header);
     }
 }
 
-export class TableData extends TableDataBase implements ISortable {
+export class TableData extends TableDataBase implements ISortable, IFilterable {
+    public static of(rawData: any): TableData {
+        return TableData.isTableData(rawData) ? new TableData(rawData.data, rawData.field, rawData.header) : new TableData();
+    }
+
+    public static toArray(rawData: any): any[] {
+        return TableData.of(rawData).toArray();
+    }
+
     public sortInfo: DataSortInfo;
 
+    public sort(compareFn?: (a: any[], b: any[]) => number): void;
     public sort(as: SortAs, order: SortOrder, field: string | number): void;
     public sort(sort: DataSortInfo): void;
-    public sort(as: SortAs | DataSortInfo, order?: SortOrder, field?: string | number): void {
+    public sort(as: SortAs | DataSortInfo | Function, order?: SortOrder, field?: string | number): void {
         this.sortData(this.data, as, order, field);
     }
 
-    protected sortData(data: TableDataMatrix, as: SortAs | DataSortInfo, order?: SortOrder, field?: string | number) {
+    protected sortData(data: TableDataMatrix, as: SortAs | DataSortInfo | Function, order?: SortOrder, field?: string | number) {
         field = typeof field === 'string' ? this.field.indexOf(field) : field;
-        this.sortInfo = as instanceof DataSortInfo ? as : new DataSortInfo(as, order, field);
-        const orderFlag = this.sortInfo.order == SortOrder.asc ? 1 : -1;
-        if (this.sortInfo.as == SortAs.number) {
-            data.sort((a, b) => orderFlag * (Number(a[field]) - Number(b[field])));
+        if (as instanceof Function) {
+            // cast to any to peace the compiler.
+            data.sort(<any>as);
         } else {
-            data.sort((a, b) => orderFlag * String(a[field]).localeCompare(String(b[field])));
+            this.sortInfo = as instanceof DataSortInfo ? as : new DataSortInfo(as, order, field);
+            const orderFlag = this.sortInfo.order == SortOrder.asc ? 1 : -1;
+            if (this.sortInfo.as == SortAs.number) {
+                data.sort((a, b) => orderFlag * (Number(a[field]) - Number(b[field])));
+            } else {
+                data.sort((a, b) => orderFlag * String(a[field]).localeCompare(String(b[field])));
+            }
         }
         this.refresh();
     }
 
-    public static toArray(tableData: any): any[] {
-        if (!TableData.isTableData(tableData)) {
-            return [];
-        }
-        return new TableData(tableData.data, tableData.field, tableData.header).toArray();
+    public filterInfo: DataFilterInfo;
+
+    public filter(compareFn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
+    public filter(term: string, fields?: (string | number)[]): void;
+    public filter(term: DataFilterInfo): void;
+    public filter(term, fields?: (string | number)[]): void {
+        throw new Error("Method not implemented.");
+    }
+
+    public destroy() {
+        this.sortInfo = null;
+        this.filterInfo = null;
     }
 }
 
-export class PageableTableData extends TableData implements IServerSidePageable, IFilterable {
-    public filterInfo: DataFilterInfo;
+export class PageableTableData extends TableData implements IServerSidePageable, IFilterable, ISortable {
     public pagingInfo: PagingInfo;
 
     private _filterSubject = new Subject<DataFilterInfo>();
@@ -270,16 +308,24 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this.pagingInfo.totalRecord = paging.hasOwnProperty('totalRecord') ? paging.totalRecord : this.pagingInfo.totalRecord;
     }
 
+    public filter(compareFn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
     public filter(term: string, fields?: string[] | number[]): void;
     public filter(term: DataFilterInfo): void;
     public filter(term, fields?: string[] | number[]): void {
+        if (term instanceof Function) {
+            throw new Error('compare function is not supported by PageableTableData which filters data in the server side');
+        }
         const pfi = term instanceof DataFilterInfo ? term : new DataFilterInfo(term, fields);
         this._filterSubject.next(pfi);
     }
 
+    public sort(compareFn?: (a: any[], b: any[]) => number): void;
     public sort(as: SortAs, order: SortOrder, field: string | number): void;
     public sort(sort: DataSortInfo): void;
     public sort(as, order?: SortOrder, field?: string | number): void {
+        if (as instanceof Function) {
+            throw new Error('compare function is not supported by PageableTableData which sorts data in the server side');
+        }
         const psi = as instanceof DataSortInfo ? as : new DataSortInfo(as, order, field);
         this._sortSubject.next(psi);
     }
@@ -329,8 +375,6 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this.http = null;
         this.sourceRequestOptions = null;
         this.pagingInfo = null;
-        this.filterInfo = null;
-        this.sortInfo = null;
         this._requestOptions = null;
         this._filterSubject.unsubscribe();
         this._filterSubject = null;
@@ -339,10 +383,10 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     }
 }
 
-export class LocalPageableTableData extends TableData implements IPageable {
+export class LocalPageableTableData extends TableData implements IPageable, IFilterable, ISortable {
     public pagingInfo: PagingInfo;
-    public currentFilterData: TableDataMatrix;
-    public bakData: TableDataMatrix;
+    public filteredData: TableDataMatrix;
+    public originalData: TableDataMatrix;
 
     constructor() {
         super();
@@ -351,71 +395,72 @@ export class LocalPageableTableData extends TableData implements IPageable {
 
     public fromObject(data: any): LocalPageableTableData {
         super.fromObject(data);
-        this.currentFilterData = <TableDataMatrix>CommonUtils.shallowCopy(this.data);
-        this.bakData = <TableDataMatrix>CommonUtils.shallowCopy(this.data);
-        this._updatePagingInfo();
-        return this;
-    }
-
-    private _updatePagingInfo() {
-        this.pagingInfo.totalRecord = this.currentFilterData.length;
-        this.pagingInfo.totalPage = Math.ceil(this.pagingInfo.totalRecord / this.pagingInfo.pageSize);
+        this.originalData = this.data.concat();
+        this.filteredData = this.originalData;
         this.firstPage();
+        return this;
     }
 
     public filter(callbackfn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
     public filter(term: string, fields?: string[] | number[]): void;
     public filter(term: DataFilterInfo): void;
-    public filter(term, fields?: string[] | number[]): void {
+    public filter(term, fields?: (string | number)[]): void {
         if (term instanceof Function) {
-            this.currentFilterData = this.bakData.filter(term);
-        }
-        let key: string;
-        if (term instanceof DataFilterInfo) {
-            key = term.key;
-            fields = term.field
+            this.filteredData = this.originalData.filter(term);
         } else {
-            key = term;
-        }
-        if (fields && fields.length != 0) {
-            let numberFields: number[];
-            if (typeof fields[0] === 'string') {
-                (<string[]>fields).forEach(field => {
-                        numberFields.push(this.field.findIndex(item => item == field))
-                    }
-                )
+            let key: string;
+            if (term instanceof DataFilterInfo) {
+                key = term.key;
+                fields = term.field
             } else {
-                numberFields = <number[]>fields;
+                key = term;
             }
-            this.currentFilterData = this.bakData.filter(
-                row => row.filter(
-                    (index, item) => numberFields.find(num => num == index)
-                ).filter(
-                    item => (<string>item).indexOf(key) != -1
-                ).length != 0
-            );
-        } else {
-            this.currentFilterData = this.bakData.filter(
-                row => row.filter(
-                    item => (<string>item).indexOf(key) != -1
-                ).length != 0
-            );
+            if (fields && fields.length != 0) {
+                let numberFields: number[];
+                if (typeof fields[0] === 'string') {
+                    numberFields = [];
+                    (<string[]>fields).forEach(field => {
+                            numberFields.push(this.field.findIndex(item => item == field))
+                        }
+                    )
+                } else {
+                    numberFields = <number[]>fields;
+                }
+                this.filteredData = this.originalData.filter(
+                    row => row.filter(
+                        (item, index) => numberFields.find(num => num == index)
+                    ).filter(
+                        item => (item + '').indexOf(key) != -1
+                    ).length != 0
+                );
+            } else {
+                this.filteredData = this.originalData.filter(
+                    row => row.filter(
+                        item => (<string>item).indexOf(key) != -1
+                    ).length != 0
+                );
+            }
         }
-        this._updatePagingInfo();
+        this.firstPage();
     }
 
     public sort(compareFn?: (a: any, b: any) => number): any;
     public sort(as: SortAs, order: SortOrder, field: string | number): void;
     public sort(sort: DataSortInfo): void;
     public sort(as, order?: SortOrder, field?: string | number): void {
-        super.sortData(this.currentFilterData, as, order, field);
+        super.sortData(this.filteredData, as, order, field);
         this.changePage(this.pagingInfo.currentPage, undefined);
+    }
+
+    private _updatePagingInfo() {
+        this.pagingInfo.totalRecord = this.filteredData.length;
+        this.pagingInfo.totalPage = Math.ceil(this.pagingInfo.totalRecord / this.pagingInfo.pageSize);
     }
 
     public changePage(currentPage: number, pageSize?: number): void;
     public changePage(info: PagingInfo): void;
     public changePage(currentPage, pageSize?: number): void {
-        if (!this.currentFilterData) {
+        if (!this.filteredData) {
             return;
         }
 
@@ -425,19 +470,17 @@ export class LocalPageableTableData extends TableData implements IPageable {
             return;
         }
         this.pagingInfo.pageSize = pi.pageSize;
-        this.pagingInfo.totalPage = Math.ceil(this.pagingInfo.totalRecord / this.pagingInfo.pageSize);
+        // this.pagingInfo.totalPage = Math.ceil(this.pagingInfo.totalRecord / this.pagingInfo.pageSize);
+        this._updatePagingInfo();
 
         if (pi.currentPage >= 1 && pi.currentPage <= this.pagingInfo.totalPage) {
             this.pagingInfo.currentPage = pi.currentPage;
+            const begin = (this.pagingInfo.currentPage - 1) * this.pagingInfo.pageSize;
+            const end = this.pagingInfo.currentPage * this.pagingInfo.pageSize < this.pagingInfo.totalRecord ? this.pagingInfo.currentPage * this.pagingInfo.pageSize : this.pagingInfo.totalRecord;
+            this.data = this.filteredData.slice(begin, end);
         } else {
-            console.error(`invalid currentPage[${pi.currentPage}], it should be between in [1, ${this.pagingInfo.totalPage}]`);
-            return;
+            this.data.length = 0;
         }
-
-        const begin = (this.pagingInfo.currentPage - 1) * this.pagingInfo.pageSize;
-        const end = this.pagingInfo.currentPage * this.pagingInfo.pageSize < this.pagingInfo.totalRecord ? this.pagingInfo.currentPage * this.pagingInfo.pageSize : this.pagingInfo.totalRecord;
-        this.data = this.currentFilterData.slice(begin, end);
-
         this.refresh();
     }
 
@@ -459,10 +502,9 @@ export class LocalPageableTableData extends TableData implements IPageable {
 
     public destroy(): void {
         super.destroy();
-        this.http = null;
         this.pagingInfo = null;
         this.sortInfo = null;
-        this.currentFilterData = null;
-        this.bakData = null;
+        this.filteredData = null;
+        this.originalData = null;
     }
 }

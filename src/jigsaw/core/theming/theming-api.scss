@@ -94,12 +94,24 @@
             tr td {
                 @if ($bgColor != default) {
                     background: $bgColor;
+                    &:last-child {
+                        border-right-color: $bgColor;
+                    }
+                    @at-root .jigsaw-table-header {
+                        background: $bgColor;
+                    }
                 }
                 @if ($borderBottomWidth != default) {
                     border-bottom-width: $borderBottomWidth;
+                    @at-root .jigsaw-table-header {
+                        border-bottom-width: $borderBottomWidth;
+                    }
                 }
                 @if ($borderBottomColor != default) {
                     border-bottom-color: $borderBottomColor;
+                    @at-root .jigsaw-table-header {
+                        border-bottom-color: $borderBottomColor;
+                    }
                 }
             }
         }
@@ -144,13 +156,13 @@
 @mixin setTableTextAlign($textAlign: center, $sidePadding: 0) {
     .jigsaw-table-host table {
         td {
-            @if($textAlign != default){
+            @if ($textAlign != default) {
                 text-align: $textAlign;
             }
             @if ($textAlign == left) {
-                padding-left: $sidePadding;
+                padding: 0 $sidePadding;
             } @else if ($textAlign == right) {
-                padding-right: $sidePadding;
+                padding: 0 $sidePadding;
             }
         }
     }
@@ -164,10 +176,10 @@
  */
 @mixin setTag($defaultBgColor, $height) {
     .jigsaw-tag-host {
-        @if($defaultBgColor != default){
+        @if ($defaultBgColor != default) {
             background: $defaultBgColor;
         }
-        @if($height != dafault){
+        @if ($height != dafault) {
             height: $height;
             line-height: $height - 2;
             .#{$tag-prefix-cls}-close-bar {

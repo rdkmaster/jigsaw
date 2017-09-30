@@ -2,6 +2,7 @@ import {Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Output, Re
 import {CommonModule} from "@angular/common";
 import {AnimationDestroy} from "../animations/destroy";
 import {AbstractJigsawComponent} from "../common";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 @Component({
     selector: 'jigsaw-tag, j-tag',
@@ -33,7 +34,7 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     };
 
     public set closable(value: boolean) {
-        this._closable = value === undefined ? true : value;
+        this._closable = CommonUtils.isDefined(value) ? value : true;
     }
 
     private _state: string;

@@ -38,13 +38,16 @@ export interface IServerSidePageable extends IPageable {
 
 export interface ISortable extends IAjaxComponentData {
     sortInfo: DataSortInfo;
+
+    sort(compareFn?: (a: any[], b: any[]) => number): void;
     sort(as: SortAs, order: SortOrder, field: string | number): void;
     sort(sort: DataSortInfo): void;
 }
 
 export interface IFilterable extends IAjaxComponentData {
     filterInfo: DataFilterInfo;
-    filter(term: string, fields?: string[] | number[]): void;
+    filter(compareFn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
+    filter(term: string, fields?: (string | number)[]): void;
     filter(term: DataFilterInfo): void;
 }
 

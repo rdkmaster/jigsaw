@@ -1,20 +1,32 @@
 export class CommonUtils {
 
-    /**
-     * 浅拷贝一个对象
-     * @param source
-     */
-    public static shallowCopy(source: Object): Object {
-        if (source === null || source === undefined || typeof source !== 'object') {
+    private static copy(source: Object, isDeep:boolean): Object {
+        if (this.isUndefined(source) || typeof source !== 'object') {
             return source;
         }
 
         let copy = (source instanceof Array) ? [] : {};
         for (let attr in source) {
             if (!source.hasOwnProperty(attr)) continue;
-            copy[attr] = CommonUtils.shallowCopy(source[attr]);
+            copy[attr] = isDeep ? CommonUtils.copy(source[attr], true) : source[attr];
         }
         return copy;
+    }
+
+    /**
+     * 浅拷贝一个对象
+     * @param source
+     */
+    public static shallowCopy(source: Object): Object {
+        return CommonUtils.copy(source, false);
+    }
+
+    /**
+     * 浅拷贝一个对象
+     * @param source
+     */
+    public static deepCopy(source: Object): Object {
+        return CommonUtils.copy(source, true);
     }
 
     /**
@@ -63,7 +75,7 @@ export class CommonUtils {
         }
 
         // 目标对象为空，则直接将对象复制给obj
-        if (targetObject === null || targetObject === undefined) {
+        if (this.isUndefined(targetObject)) {
             targetObject = {};
         }
 
@@ -184,8 +196,8 @@ export class CommonUtils {
     }
 
     public static safeInvokeCallback(context: any, callback: Function, args?: any[]): any {
-        if (callback === null || callback === undefined) {
-            return undefined;
+        if (CommonUtils.isUndefined(callback)) {
+            return;
         }
         try {
             return callback.apply(context, args);
@@ -195,12 +207,12 @@ export class CommonUtils {
         }
     }
 
-    public static isDefined(source: any) {
-        return source !== undefined && source !== null;
+    public static isDefined(value):boolean {
+        return value !== undefined && value !== null;
     }
 
-    public static isUndefined(source: any) {
-        return !this.isDefined(source);
+    public static isUndefined(value):boolean {
+        return !this.isDefined(value);
     }
 }
 

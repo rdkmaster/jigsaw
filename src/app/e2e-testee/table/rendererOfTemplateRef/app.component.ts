@@ -4,7 +4,7 @@ import {
 } from "@angular/core";
 import {Http} from "@angular/http";
 import {TableData} from "jigsaw/core/data/table-data";
-import {AdditionalColumnDefine, ColumnDefine} from "jigsaw/component/table/table-api";
+import {AdditionalColumnDefine, ColumnDefine} from "jigsaw/component/table/table-typings";
 
 @Component({
     templateUrl: './app.component.html',

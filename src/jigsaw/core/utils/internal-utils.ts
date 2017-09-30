@@ -23,7 +23,7 @@ export class InternalUtils {
      * */
     public static createUniqueId(prefix?: string) {
         this._uniqueIdIndex++;
-        if (prefix == null || prefix == undefined) {
+        if (CommonUtils.isUndefined(prefix)) {
             prefix = this._defaultPrefix;
         }
         return prefix + this._uniqueIdIndex;

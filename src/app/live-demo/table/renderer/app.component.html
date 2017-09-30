@@ -1,0 +1,30 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [content]="description" [sourceFiles]="sourceFiles" [summary]="summary">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<p>{{message}}</p>
+
+<div class="tool-bar">
+    <jigsaw-button (click)="payRaise()" colorType="primary">加薪</jigsaw-button>
+    <jigsaw-button (click)="fire()" colorType="danger">辞退</jigsaw-button>
+</div>
+<jigsaw-table [data]="tableData" [columnDefines]="columnDefines" [floatingHeader]="true"
+              [additionalColumnDefines]="additionalColumnDefines"
+              [(additionalData)]="additionalData" trackRowBy="name"
+              (dataChange)="onCellChange($event)" height="400">
+</jigsaw-table>
+<br><br>
+<jigsaw-pagination
+    [total]="tableData.pagingInfo.totalRecord"
+    [(pageSize)]="tableData.pagingInfo.pageSize"
+    [(current)]="tableData.pagingInfo.currentPage"
+    [pageSizeOptions]="[5, 10, 50, 100, 200]"
+    [searchable]="true"
+    [showQuickJumper]="true"
+    (search)="onSearch($event)"
+    (currentChange)="tableData.changePage(tableData.pagingInfo)"
+    (pageSizeChange)="tableData.changePage(tableData.pagingInfo)"
+></jigsaw-pagination>
+
