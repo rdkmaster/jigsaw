@@ -160,14 +160,14 @@ export class TableRendererDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    description: string = require('!!raw-loader!./readme.md');
-    sourceFiles: string[] = [
-        'live-demo/table/renderer/app.component.html',
-        'live-demo/table/renderer/app.component.scss',
-        'live-demo/table/renderer/app.component.ts',
-        'live-demo/table/renderer/app.module.ts',
-        'live-demo/table/renderer/renderers.ts'
-    ];
     summary: string = '这个demo展示了表格的列定义模式的多个用法，包括列渲染器、列宽调整、列的宽文本控制，列tooltip等。';
+    description: string = require('!!raw-loader!./readme.md');
+    sources: string[] = [
+        require('!!raw-loader!./app.component.html'),
+        require('!!raw-loader!./app.component.scss'),
+        require('!!raw-loader!./app.component.ts'),
+        require('!!raw-loader!./app.module.ts'),
+        require('!!raw-loader!./renderers.ts')
+    ];
 }
 
