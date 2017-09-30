@@ -6,10 +6,6 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     @include inline-block;
     position: relative;
     width: 100%;
-    vertical-align: top;
-    /* host的横向滚动 */
-    overflow-x: auto;
-    padding-top: 40px;
     &.#{$table-prefix-cls}-hide-head {
         padding-top: 0;
     }
@@ -17,18 +13,15 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
         width: 100%;
         text-align: center;
         table-layout: fixed;
-
+        td {
+            border: 1px solid $border-color-base;
+        }
         thead {
             color: $heading-color;
             tr {
                 td {
                     height: 40px;
                     background: $background-color-base;
-                    border-left: 1px solid $border-color-base;
-                    border-right: 1px solid $border-color-base;
-                    &:last-child {
-                        border-right-color: $background-color-base;
-                    }
                 }
             }
         }
@@ -58,9 +51,6 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
                         background: $item-active-bg;
                     }
                 }
-                td {
-                    border: 1px solid $border-color-base;
-                }
                 td[rowspan] {
                     background: $default-color;
                 }
@@ -73,38 +63,20 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     display: none !important;
 }
 
-.#{$table-prefix-cls}-range {
-    width: 100%;
-    height: 100%;
-    /* range上的纵向滚动 */
-    overflow-y: auto;
-    /* range没有横向滚动 */
-    overflow-x: hidden;
-    box-sizing: border-box;
-}
-
 .#{$table-prefix-cls}-header {
     position: absolute;
     top: 0;
-    /* header宽度恒等于host宽度 */
-    width: 100%;
-    /* 保证header子元素不溢出 */
-    overflow: hidden;
+    overflow-y: hidden;
     z-index: $zindex-affix;
-    padding-right: 17px;
-    box-sizing: border-box;
-    border-top: 1px solid $border-color-base;
-    border-bottom: 1px solid $border-color-base;
-    background: $background-color-base;
-    &:after {
-        position: absolute;
-        width: 0;
-        height: 100%;
-        top: 0;
-        right: 0;
-        border-left: 1px solid $border-color-base;
-        content: '';
-    }
+}
+
+.#{$table-prefix-cls}-range{
+    height: 100%;
+    padding-top: 40px;
+}
+
+.#{$table-prefix-cls}-body{
+    height: 100%;
 }
 
 .#{$table-prefix-cls}-auto-width {

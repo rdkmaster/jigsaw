@@ -33,6 +33,7 @@ import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer} from "./table-renderer";
 import {AffixUtils} from "../../core/utils/internal-utils";
+import {PerfectScrollbarModule, PerfectScrollbarConfigInterface} from "ngx-perfect-scrollbar";
 
 @Component({
     selector: 'jigsaw-table, j-table',
@@ -605,10 +606,13 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 this._renderer.setStyle(table, 'table-layout', 'auto');
             });
             const contentRange = this._elementRef.nativeElement.querySelector('.jigsaw-table-range');
-            const contentWidth = contentRange.querySelector('.jigsaw-table-body table').offsetWidth;
+            const tableHeader = contentRange.querySelector('.jigsaw-table-header');
+            const tableBody = contentRange.querySelector('.jigsaw-table-body table');
+            const contentWidth = tableBody.offsetWidth;
             this._renderer.addClass(contentRange, 'jigsaw-table-auto-width');
-            this._renderer.setStyle(contentRange, 'width', contentWidth + 'px');
-            this._renderer.setStyle(this._floatingHeadElement, 'width', contentWidth + 'px');
+            this._renderer.setStyle(contentRange.querySelector('.jigsaw-table-body'), 'width', contentWidth + 'px');
+            this._renderer.setStyle(tableBody, 'width', contentWidth + 'px');
+            this._renderer.setStyle(tableHeader, 'width', contentWidth + 'px');
 
             this._elementRef.nativeElement.querySelectorAll('table').forEach(table => {
                 this._renderer.setStyle(table, 'table-layout', 'fixed');
@@ -645,7 +649,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      */
     private _handleScrollBar() {
         this._calculateContentWidth();
-        this._fixHeaderScrollBar();
+        //this._fixHeaderScrollBar();
+        const tableHeader = this._elementRef.nativeElement.querySelector('.jigsaw-table-header');
+        const tableBody = this._elementRef.nativeElement.querySelector('.jigsaw-table-body table');
+        if(tableHeader.offsetWidth != tableBody.offsetWidth){
+            this._renderer.setStyle(tableHeader, 'width', tableBody.offsetWidth + 'px');
+        }
     }
 
     ngAfterViewInit() {
@@ -692,11 +701,22 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._rowElementRefs = null;
         this._headerComponents = null;
     }
+
+    windowConfig: PerfectScrollbarConfigInterface = {
+        suppressScrollY: true,
+        maxScrollbarLength: 100,
+        wheelSpeed: 2
+    };
+    rangeConfig: PerfectScrollbarConfigInterface = {
+        suppressScrollX: true,
+        maxScrollbarLength: 100,
+        wheelSpeed: 2
+    };
 }
 
 @NgModule({
     declarations: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
-    imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule],
+    imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, PerfectScrollbarModule.forRoot()],
     exports: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
     entryComponents: [TableCellTextEditorRenderer, DefaultCellRenderer]
 })

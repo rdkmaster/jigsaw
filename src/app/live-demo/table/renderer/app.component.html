@@ -37,7 +37,7 @@
     </ul>
 </div>
 <div class="doc-content" *ngIf="showDetail">
-    
+
 </div>
 
 <hr>
@@ -51,7 +51,7 @@
 <jigsaw-table [data]="tableData" [columnDefines]="columnDefines" [floatingHeader]="true"
               [additionalColumnDefines]="additionalColumnDefines"
               [(additionalData)]="additionalData" trackRowBy="name"
-              (dataChange)="onCellChange($event)" height="400">
+              (dataChange)="onCellChange($event)" height="400" contentWidth="2000">
 </jigsaw-table>
 <br><br>
 <jigsaw-pagination
