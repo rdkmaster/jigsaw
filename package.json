@@ -43,7 +43,6 @@
         "@angular/language-service": "5.0.0-rc.0",
         "@angular/tsc-wrapped": "5.0.0-beta.7",
         "@rdkmaster/icon-font": "^1.0.2",
-        "@rdkmaster/jigsaw": "^1.0.0-beta.18",
         "@types/chalk": "^0.4.31",
         "@types/fs-extra": "^3.0.1",
         "@types/glob": "^5.0.30",
