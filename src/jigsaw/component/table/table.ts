@@ -346,7 +346,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._updateHeaderSettings(mixedFields);
         this._updateCellSettings(mixedFields);
         this.additionalDataChange.emit(this.additionalData);
-        setTimeout(() => this._handleScroll(), 0);
+        setTimeout(() => this._handleScrollBar(), 0);
     }
 
     private _additionalData = new AdditionalTableData();
@@ -595,6 +595,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         });
     }
 
+    /**
+     * 计算内容宽度，产生横向滚动条
+     * @private
+     */
     private _calculateContentWidth() {
         if (this.contentWidth == 'auto') {
             this._elementRef.nativeElement.querySelectorAll('table').forEach(table => {
@@ -623,7 +627,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         return contentRange.offsetWidth != contentWidth;
     }
 
-    private _fixVerticalScroll() {
+    /**
+     * 处理表头的横向滚动条
+     * @private
+     */
+    private _fixHeaderScrollBar() {
         if (this._hasVerticalScroll()) {
             this._renderer.setStyle(this._floatingHeadElement, 'padding-right', '17px');
         } else {
@@ -635,15 +643,15 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * 处理滚动条
      * @private
      */
-    private _handleScroll() {
+    private _handleScrollBar() {
         this._calculateContentWidth();
-        this._fixVerticalScroll();
+        this._fixHeaderScrollBar();
     }
 
     ngAfterViewInit() {
         super.ngAfterViewInit();
         this._$selectRow(this.selectedRow, true);
-        this._handleScroll();
+        this._handleScrollBar();
     }
 
     ngOnInit() {
