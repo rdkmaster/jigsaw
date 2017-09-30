@@ -2,6 +2,7 @@ declare var module: NodeModule;
 interface NodeModule {
     id: string;
 }
+declare let require: any;
 declare let $: any;
 declare let moment: any;
 

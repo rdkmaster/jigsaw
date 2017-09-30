@@ -14,7 +14,17 @@ export class JigsawMarkdown implements OnInit {
     constructor(private _elementRef: ElementRef) {
     }
 
-    public markdown:string;
+    private _markdown:string;
+
+    @Input()
+    public get markdown(): string {
+        return this._markdown;
+    }
+
+    public set markdown(value: string) {
+        this._markdown = value;
+        this._parseMarkdown(value);
+    }
 
     @Input()
     public prefixWhiteSpaceLength:number = NaN;
@@ -71,12 +81,11 @@ export class JigsawMarkdown implements OnInit {
             }
         });
         this._elementRef.nativeElement.innerHTML = markdown;
-        console.log(markdown);
     }
 
     ngOnInit() {
-        this.markdown = this._elementRef.nativeElement.innerHTML;
-        this._parseMarkdown(this.markdown);
+        this._markdown = this._elementRef.nativeElement.innerHTML;
+        this._parseMarkdown(this._markdown);
     }
 }
 

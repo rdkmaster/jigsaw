@@ -4,8 +4,7 @@ import {LocalPageableTableData} from "jigsaw/core/data/table-data";
 import {
     AdditionalColumnDefine,
     AdditionalTableData,
-    ColumnDefine, columnTooltipGenerator,
-    rowIndexGenerator
+    ColumnDefine, TableValueGenerators,
 } from "jigsaw/component/table/table-typings";
 import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/component/table/table-renderer";
 import {
@@ -13,13 +12,13 @@ import {
     TableCellOperation
 } from "./renderers";
 
-
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class TableRendererDemoComponent {
+    description: string = require('!!raw-loader!./readme.md');
     message: string = 'change message goes here ...';
     tableData: LocalPageableTableData;
     additionalData: AdditionalTableData;
@@ -62,7 +61,7 @@ export class TableRendererDemoComponent {
         {
             target: 'desc',
             cell: {
-                tooltip: columnTooltipGenerator,
+                tooltip: TableValueGenerators.originCellDataGenerator,
                 clazz: 'green-text'
             },
             width: '100'
@@ -80,7 +79,7 @@ export class TableRendererDemoComponent {
                 text: '#',
             },
             cell: {
-                data: rowIndexGenerator,
+                data: TableValueGenerators.rowIndexGenerator,
                 clazz: 'green-text'
             }
         },

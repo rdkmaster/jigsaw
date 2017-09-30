@@ -1,7 +1,7 @@
 import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 import {Http} from "@angular/http";
 import {PageableTableData} from "jigsaw/core/data/table-data";
-import {AdditionalColumnDefine, ColumnDefine, rowIndexGenerator} from "jigsaw/component/table/table-typings";
+import {AdditionalColumnDefine, ColumnDefine, TableValueGenerators} from "jigsaw/component/table/table-typings";
 import {SortAs, SortOrder} from "jigsaw/core/data/component-data";
 
 @Component({
@@ -45,7 +45,7 @@ export class TableAddIDWithPagingComponent {
             text: '#'
         },
         cell: {
-            data: rowIndexGenerator
+            data: TableValueGenerators.rowIndexGenerator
         }
     }]
 }

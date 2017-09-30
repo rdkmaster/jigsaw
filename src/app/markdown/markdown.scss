@@ -19,7 +19,12 @@
         -webkit-font-smoothing: antialiased;
     }
 
-    h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+    h1.md-h1 tt, h1.md-h1 code,
+    h2.md-h2 tt, h2.md-h2 code,
+    h3.md-h3 tt, h3.md-h3 code,
+    h4.md-h4 tt, h4.md-h4 code,
+    h5.md-h5 tt, h5.md-h5 code,
+    h6.md-h6 tt, h6.md-h6 code {
         font-size: inherit;
     }
 
@@ -56,12 +61,17 @@
         padding-top: 0;
     }
 
-    a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+    a:first-child h1.md-h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
         margin-top: 0;
         padding-top: 0;
     }
 
-    h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+    h1.md-h1+p.md-p,
+    h2.md-h2+p.md-p,
+    h3.md-h3+p.md-p,
+    h4.md-h4+p.md-p,
+    h5.md-h5+p.md-p,
+    h6.md-h6+p.md-p {
         margin-top: 10px;
     }
 
@@ -73,16 +83,19 @@
         list-style: circle;
     }
 
-    ul li > :first-child,
-    ol li > :first-child,
-    ul li ul:first-of-type,
-    ol li ol:first-of-type,
-    ul li ol:first-of-type,
-    ol li ul:first-of-type {
+    ul.md-ul li > :first-child,
+    ol.md-ol li > :first-child,
+    ul.md-ul li ul:first-of-type,
+    ol.md-ol li ol:first-of-type,
+    ul.md-ul li ol:first-of-type,
+    ol.md-ol li ul:first-of-type {
         margin-top: 0px;
     }
 
-    ul ul, ul ol, ol ol, ol ul {
+    ul.md-ul ul.md-ul,
+    ul.md-ul ol.md-ol,
+    ol.md-ol ol.md-ol,
+    ol.md-ol ul.md-ul {
         margin-bottom: 0;
     }
 
@@ -90,7 +103,7 @@
         padding: 0;
     }
 
-    dl dt {
+    dl.md-dl dt {
         font-size: 14px;
         font-weight: bold;
         font-style: italic;
@@ -98,28 +111,28 @@
         margin: 15px 0 5px;
     }
 
-    dl dt:first-child {
+    dl.md-dl dt:first-child {
         padding: 0;
     }
 
-    dl dt>:first-child {
+    dl.md-dl dt>:first-child {
         margin-top: 0px;
     }
 
-    dl dt>:last-child {
+    dl.md-dl dt>:last-child {
         margin-bottom: 0px;
     }
 
-    dl dd {
+    dl.md-dl dd {
         margin: 0 0 15px;
         padding: 0 15px;
     }
 
-    dl dd>:first-child {
+    dl.md-dl dd>:first-child {
         margin-top: 0px;
     }
 
-    dl dd>:last-child {
+    dl.md-dl dd>:last-child {
         margin-bottom: 0px;
     }
 
@@ -140,7 +153,9 @@
         border-radius: 3px;
     }
 
-    pre>code {
+
+
+    pre.md-pre>code.md-code {
         margin: 0;
         padding: 0;
         white-space: pre;
@@ -158,7 +173,7 @@
         border-radius: 3px;
     }
 
-    pre code, pre tt {
+    pre.md-pre code, pre.md-pre tt {
         background-color: transparent;
         border: none;
     }
@@ -215,21 +230,21 @@
     /* TABLES
     =============================================================================*/
 
-    table th {
+    table.md-table th {
         font-weight: bold;
     }
 
-    table th, table td {
+    table.md-table th, table.md-table td {
         border: 1px solid #ccc;
         padding: 6px 13px;
     }
 
-    table tr {
+    table.md-table tr {
         border-top: 1px solid #ccc;
         background-color: #fff;
     }
 
-    table tr:nth-child(2n) {
+    table.md-table tr:nth-child(2n) {
         background-color: #f8f8f8;
     }
 
