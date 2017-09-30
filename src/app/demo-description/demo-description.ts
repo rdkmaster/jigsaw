@@ -21,7 +21,7 @@ export class JigsawDemoDescription {
     showDetail:boolean = false;
 
     @Input() content: string = '';
-    @Input() sourceFiles: string[] = [];
+    @Input() sources: string[] = [];
 
     private _summary:string;
 
