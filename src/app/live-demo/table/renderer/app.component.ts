@@ -18,7 +18,6 @@ import {
     encapsulation: ViewEncapsulation.None
 })
 export class TableRendererDemoComponent {
-    description: string = require('!!raw-loader!./readme.md');
     message: string = 'change message goes here ...';
     tableData: LocalPageableTableData;
     additionalData: AdditionalTableData;
@@ -158,6 +157,17 @@ export class TableRendererDemoComponent {
         filterData(this.tableData, {allFields: key});
     }
 
-    showDetail: boolean = false;
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    description: string = require('!!raw-loader!./readme.md');
+    sourceFiles: string[] = [
+        'live-demo/table/renderer/app.component.html',
+        'live-demo/table/renderer/app.component.scss',
+        'live-demo/table/renderer/app.component.ts',
+        'live-demo/table/renderer/app.module.ts',
+        'live-demo/table/renderer/renderers.ts'
+    ];
+    summary: string = '这个demo展示了表格的列定义模式的多个用法，包括列渲染器、列宽调整、列的宽文本控制，列tooltip等。';
 }
 
