@@ -97,7 +97,7 @@ export class TableRendererDemoComponent {
         },
         {
             //pos: -1, //不写pos表示插入到最后
-            width: '10%',
+            width: '100',
             header: {
                 text: '操作',
                 clazz: 'green-text'

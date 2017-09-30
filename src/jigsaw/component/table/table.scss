@@ -7,6 +7,7 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     position: relative;
     width: 100%;
     vertical-align: top;
+    /* host的横向滚动 */
     overflow-x: auto;
     padding-top: 40px;
     &.#{$table-prefix-cls}-hide-head {
@@ -75,7 +76,9 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
 .#{$table-prefix-cls}-range {
     width: 100%;
     height: 100%;
+    /* range上的纵向滚动 */
     overflow-y: auto;
+    /* range没有横向滚动 */
     overflow-x: hidden;
     box-sizing: border-box;
 }
@@ -83,6 +86,10 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
 .#{$table-prefix-cls}-header {
     position: absolute;
     top: 0;
+    /* header宽度恒等于host宽度 */
+    width: 100%;
+    /* 保证header子元素不溢出 */
+    overflow: hidden;
     z-index: $zindex-affix;
     padding-right: 17px;
     box-sizing: border-box;
