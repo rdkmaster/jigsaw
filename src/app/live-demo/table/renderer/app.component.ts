@@ -162,12 +162,5 @@ export class TableRendererDemoComponent {
     // ====================================================================
     summary: string = '这个demo展示了表格的列定义模式的多个用法，包括列渲染器、列宽调整、列的宽文本控制，列tooltip等。';
     description: string = require('!!raw-loader!./readme.md');
-    sources: string[] = [
-        require('!!raw-loader!./app.component.html'),
-        require('!!raw-loader!./app.component.scss'),
-        require('!!raw-loader!./app.component.ts'),
-        require('!!raw-loader!./app.module.ts'),
-        require('!!raw-loader!./renderers.ts')
-    ];
 }
 

@@ -8,6 +8,9 @@ import {JigsawMarkdownModule} from "../markdown/markdown";
         hr {
             margin: 12px 0 12px 0;
         }
+        span {
+            font-size: 14px;
+        }
     `],
     template: `
         <span [innerHtml]="summary"></span>
@@ -31,6 +34,7 @@ export class JigsawDemoDescription {
     }
 
     set summary(value: string) {
+        value = value ? value : '这里啥都没有...';
         value = value.replace(/`(.*?)`/g, '<code>$1</code>');
         this._summary = `<strong>${value}</strong>`;
     }
