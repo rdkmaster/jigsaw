@@ -1,15 +1,15 @@
 import {Component, ViewEncapsulation} from "@angular/core";
-import {Http} from "@angular/http";
+import {HttpClient} from "@angular/common/http";
 import {LocalPageableTableData} from "jigsaw/core/data/table-data";
 import {
-    AdditionalColumnDefine,
-    AdditionalTableData,
-    ColumnDefine, TableValueGenerators,
+AdditionalColumnDefine,
+AdditionalTableData,
+ColumnDefine, TableValueGenerators,
 } from "jigsaw/component/table/table-typings";
 import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/component/table/table-renderer";
 import {
-    filterData, OfficeEditor, OfficeHeader, OfficeRenderer, PositionHeaderSelect,
-    TableCellOperation
+filterData, OfficeEditor, OfficeHeader, OfficeRenderer, PositionHeaderSelect,
+TableCellOperation
 } from "./renderers";
 
 @Component({
@@ -22,7 +22,7 @@ export class TableRendererDemoComponent {
     tableData: LocalPageableTableData;
     additionalData: AdditionalTableData;
 
-    constructor(public http: Http) {
+    constructor(public http: HttpClient) {
         this.tableData = new LocalPageableTableData();
         this.tableData.pagingInfo.pageSize = 200;
         this.tableData.http = http;

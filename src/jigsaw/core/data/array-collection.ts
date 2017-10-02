@@ -1,7 +1,8 @@
-import {Http, RequestOptionsArgs, Response, ResponseOptions, URLSearchParams} from "@angular/http";
 import {EventEmitter} from "@angular/core";
+import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Subject} from "rxjs/Subject";
 import "rxjs/add/operator/map";
+import 'rxjs/add/operator/debounceTime';
 
 import {
     ComponentDataHelper,
@@ -12,7 +13,7 @@ import {
     DataFilterInfo,
     DataSortInfo,
     SortAs,
-    SortOrder, IServerSidePageable
+    SortOrder, IServerSidePageable, HttpClientOptions, JigsawHttpParams
 } from "./component-data";
 
 import {TableData} from "./table-data";
@@ -174,7 +175,7 @@ export class JigsawArray<T> implements Array<T> {
 }
 
 export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponentData {
-    public http: Http;
+    public http: HttpClient;
     public dataReviser: DataReviser;
 
     public concat(...items: any[]): ArrayCollection<T> {
@@ -227,13 +228,13 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
     protected ajaxErrorHandler(error: Response): void {
         if (!error) {
             console.error('get data from paging server error!! detail: the array collection is busy now!');
-            const options = new ResponseOptions({ body: 'ERROR: the array collection is busy now!' });
-            error = new Response(options.merge({ url: '' }));
-            error.ok = false;
-            error.status = 409;
-            error.statusText = 'ERROR: the array collection is busy now!';
+            const options = new HttpResponse({body: 'ERROR: the data collection is busy now!'});
+            options.clone({url: ''});
+            error = new Response(options.clone({url: ''}), {
+                status: 409, statusText: 'ERROR: the array collection is busy now!'
+            });
         } else {
-            console.error('get data from paging server error!! detail: ' + error);
+            console.error('get data from paging server error!! detail: ' + error['message']);
             this._busy = false;
             this.fromArray([]);
         }
@@ -248,29 +249,36 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
         this.componentDataHelper.invokeAjaxCompleteCallback();
     }
 
-    protected reviseData(response: Response): any {
-        const json = response.json();
+    protected reviseData(originData: any): any {
         if (!this.dataReviser) {
-            return json;
+            return originData;
         }
         try {
-            return this.dataReviser(json);
+            const revisedData = this.dataReviser(originData);
+            if (revisedData == undefined) {
+                console.error('a dataReviser function should NOT return undefined,' +
+                    'use null is you do not have any valid value!' +
+                    'Jigsaw is ignoring this result and using the original value.');
+                return originData;
+            } else {
+                return revisedData;
+            }
         } catch (e) {
             console.error('revise data error: ' + e);
             console.error(e.stack);
-            return json;
+            return originData;
         }
     }
 
-    public fromAjax(options: RequestOptionsArgs | string): void {
+    public fromAjax(options: HttpClientOptions | string): void {
         if (!this.http) {
             console.error('set a valid Http instance to ArrayCollection.http before invoking ArrayCollection.fromAjax()!');
             return;
         }
 
-        const op = ComponentDataHelper.castToRequestOptionsArgs(options);
+        const op = HttpClientOptions.realOptionsOf(options);
         this._busy = true;
-        this.http.request(op.url, op)
+        this.http.request(op.method, op.url, op)
             .map(res => this.reviseData(res) as T[])
             .subscribe(
                 data => this.ajaxSuccessHandler(data),
@@ -357,9 +365,9 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
 
     private _filterSubject = new Subject<DataFilterInfo>();
     private _sortSubject = new Subject<DataSortInfo>();
-    private _requestOptions: RequestOptionsArgs;
+    private _requestOptions: HttpClientOptions;
 
-    constructor(public http: Http, public sourceRequestOptions: RequestOptionsArgs) {
+    constructor(public http: HttpClient, public sourceRequestOptions: HttpClientOptions) {
         super();
 
         if (!http) {
@@ -375,30 +383,23 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         if (!this.sourceRequestOptions || !this.sourceRequestOptions.url) {
             throw new Error('invalid data source request options or invalid url!');
         }
+        const params: JigsawHttpParams = {};
         this._requestOptions = {
+            url: this.sourceRequestOptions.url,
             method: this.sourceRequestOptions.method,
-            params: new URLSearchParams(),
-            headers: this.sourceRequestOptions.headers,
             body: this.sourceRequestOptions.body,
-            withCredentials: this.sourceRequestOptions.withCredentials,
-            responseType: this.sourceRequestOptions.responseType
+            headers: this.sourceRequestOptions.headers,
+            observe: this.sourceRequestOptions.observe,
+            params: params,
+            reportProgress: this.sourceRequestOptions.reportProgress,
+            responseType: this.sourceRequestOptions.responseType,
+            withCredentials: this.sourceRequestOptions.withCredentials
         };
 
-        let params = {};
-        const rawParams = this.sourceRequestOptions.params;
-        if (rawParams) {
-            if (rawParams instanceof URLSearchParams || typeof rawParams === 'string') {
-                const p = rawParams instanceof URLSearchParams ? rawParams : new URLSearchParams(rawParams);
-                for (let key in p) {
-                    params[key] = p.get(key);
-                }
-            } else {
-                params = rawParams;
-            }
-
-            (<URLSearchParams>this._requestOptions.params).set('peerParam', JSON.stringify(params));
-        }
-        (<URLSearchParams>this._requestOptions.params).set('service', this.sourceRequestOptions.url);
+        const originParams = this.sourceRequestOptions.params;
+        const peerParams = CommonUtils.isDefined(originParams) ? CommonUtils.shallowCopy(originParams) : {};
+        params.peerParam = JSON.stringify(peerParams);
+        params.service = this.sourceRequestOptions.url;
     }
 
     private _initSubjects(): void {
@@ -412,7 +413,7 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         });
     }
 
-    public updateDataSource(options: RequestOptionsArgs): void {
+    public updateDataSource(options: HttpClientOptions): void {
         this.sourceRequestOptions = options;
         this.pagingInfo.currentPage = 1;
         this.pagingInfo.totalPage = 1;
@@ -422,7 +423,7 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this._initRequestOptions();
     }
 
-    public fromAjax(options?: RequestOptionsArgs): void {
+    public fromAjax(options?: HttpClientOptions): void {
         if (!!options) {
             this.updateDataSource(options);
         }
@@ -438,16 +439,17 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this._busy = true;
         this.ajaxStartHandler();
 
-        const params: URLSearchParams = this._requestOptions.params as URLSearchParams;
-        params.set('paging', JSON.stringify(this.pagingInfo));
+        const params: JigsawHttpParams = this._requestOptions.params;
+        params.paging = JSON.stringify(this.pagingInfo);
         if (this.filterInfo) {
-            params.set('filter', JSON.stringify(this.filterInfo));
+            params.filter = JSON.stringify(this.filterInfo);
         }
         if (this.sortInfo) {
-            params.set('sort', JSON.stringify(this.sortInfo));
+            params.sort = JSON.stringify(this.sortInfo);
         }
 
-        this.http.request(PagingInfo.pagingServerUrl, this._requestOptions)
+        const options = HttpClientOptions.realOptionsOf(this._requestOptions);
+        this.http.request(options.method, PagingInfo.pagingServerUrl, options)
             .map(res => this.reviseData(res))
             .map(data => {
                 this._updatePagingInfo(data);
@@ -508,6 +510,7 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
     public changePage(currentPage: number, pageSize?: number): void;
     public changePage(info: PagingInfo): void;
     public changePage(currentPage, pageSize?: number): void {
+        pageSize = isNaN(+pageSize) ? this.pagingInfo.pageSize : pageSize;
         const pi: PagingInfo = currentPage instanceof PagingInfo ? currentPage : new PagingInfo(currentPage, +pageSize);
         let needRefresh: boolean = false;
 
@@ -561,8 +564,8 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
 }
 
 export class DirectPageableArray extends PageableArray {
-    constructor(private _http$: Http, private _sourceRequestOptions$: RequestOptionsArgs) {
-        super(_http$, _sourceRequestOptions$);
+    constructor(public http: HttpClient, public sourceRequestOptions: HttpClientOptions) {
+        super(http, sourceRequestOptions);
         console.error("unsupported yet!");
     }
 }

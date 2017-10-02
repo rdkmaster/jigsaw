@@ -1,6 +1,7 @@
 import {Component, Renderer2, ViewContainerRef} from "@angular/core";
-import {Http, RequestOptionsArgs} from "@angular/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {PageableTableData} from "jigsaw/core/data/table-data";
+import {HttpClientOptions} from "jigsaw/core/data/component-data";
 
 @Component({
   templateUrl: './app.component.html'
@@ -9,10 +10,10 @@ export class ServerSidePagingDemoComponent {
     public pageable:PageableTableData;
 
     constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2, http:Http) {
-        const arg:RequestOptionsArgs = {
+                public renderer: Renderer2, http:HttpClient) {
+        const arg:HttpClientOptions = {
             url: 'http://localhost:4200/mock-data/array-collection/paging-data.json',
-            params: {aa: 11, bb: 22}
+            method: 'get', params: {aa: 11, bb: 22}
         };
         this.pageable = new PageableTableData(http, arg);
         this.pageable.fromAjax();

@@ -1,6 +1,6 @@
 import {Component, Renderer2, ViewContainerRef} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/core/data/table-data";
-import {Http} from "@angular/http";
 import {PopupService, PopupDisposer, PopupInfo} from "jigsaw/service/popup.service";
 
 
@@ -17,7 +17,8 @@ export class TableDataWithPopupDemoComponent {
     tableData: TableData;
     constructor(public viewContainerRef: ViewContainerRef,
                 public renderer: Renderer2,
-                http: Http, private _popupService: PopupService) {
+                private _popupService: PopupService,
+                http: HttpClient) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/table/data.json');

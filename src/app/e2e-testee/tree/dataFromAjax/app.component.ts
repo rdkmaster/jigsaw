@@ -1,5 +1,5 @@
 import {Component, Renderer2, ViewContainerRef} from "@angular/core";
-import {Http} from "@angular/http";
+import {HttpClient} from "@angular/common/http";
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 import {ZTreeSettingSetting} from "jigsaw/component/tree/ztree-types"
@@ -20,7 +20,7 @@ export class ZtreeDemoDataFromAjaxComponent {
     };
 
     constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2, public http: Http) {
+                public renderer: Renderer2, public http: HttpClient) {
         this.data = new TreeData();
         this.data.http = http;
         this.data.fromAjax("mock-data/tree/data.json");
