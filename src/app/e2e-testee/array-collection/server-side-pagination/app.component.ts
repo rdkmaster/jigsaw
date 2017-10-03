@@ -15,7 +15,7 @@ export class ServerSidePaginationDemoComponent {
                 public renderer: Renderer2, http: HttpClient) {
         this.pageable = new PageableArray(http,
             {
-                url: 'http://localhost:4200/mock-data/array-collection/paging-data.json',
+                url: 'http://localhost:4200/mock-data/countries',
                 params: {aa: 11, bb: 22}
             });
         this.pageable.onAjaxSuccess(this.onAjaxSuccess, this);

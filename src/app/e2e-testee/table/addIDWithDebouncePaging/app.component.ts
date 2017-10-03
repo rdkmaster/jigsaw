@@ -17,7 +17,7 @@ export class TableAddIDWithDebouncePagingComponent implements AfterViewInit{
     constructor(public viewContainerRef: ViewContainerRef,
                 public renderer: Renderer2, http: HttpClient) {
         this.pageable = new PageableTableData(http, {
-            url: 'http://localhost:4200/mock-data/array-collection/paging-data.json',
+            url: 'http://localhost:4200/mock-data/countries',
             params: {aa: 11, bb: 22}
         });
         this.pageable.onAjaxComplete(() => {

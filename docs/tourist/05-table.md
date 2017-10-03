@@ -33,7 +33,7 @@ tableData: TableData;
 
 ```
 doSearch() {
-  this.tableData.fromAjax('mock-data/table/data.json');
+  this.tableData.fromAjax('mock-data/hr-list');
 }
 ```
 
@@ -228,7 +228,7 @@ export class AppComponent {
   }
 
   doSearch() {
-    this.tableData.fromAjax('mock-data/table/data.json');
+    this.tableData.fromAjax('mock-data/hr-list');
   }
 }
 ```

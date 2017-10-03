@@ -13,8 +13,7 @@ export class TableAddIDWithPagingComponent {
     constructor(public viewContainerRef: ViewContainerRef,
                 public renderer: Renderer2, http: HttpClient) {
         this.pageable = new PageableTableData(http, {
-            url: 'http://localhost:4200/mock-data/array-collection/paging-data.json',
-            params: {aa: 11, bb: 22}
+            url: 'http://localhost:4200/mock-data/countries',
         });
         this.pageable.onAjaxComplete(() => {
             console.log(this.pageable);

@@ -26,6 +26,6 @@ export class AjaxLineGraphComponent {
 
         this.data = new LineBarGraphData();
         this.data.http = http;
-        this.data.fromAjax('mock-data/graph/marketing.json');
+        this.data.fromAjax('mock-data/marketing');
     }
 }

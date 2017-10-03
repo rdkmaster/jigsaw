@@ -38,10 +38,10 @@ export class PieGraphDemoComponent {
 
         this.pieGraphDataByCol = new PieGraphDataByColumn();
         this.pieGraphDataByCol.http = http;
-        this.pieGraphDataByCol.fromAjax('mock-data/graph/marketing.json');
+        this.pieGraphDataByCol.fromAjax('mock-data/graph/marketing');
 
         this.pieGraphDataByRow = new PieGraphDataByRow();
         this.pieGraphDataByRow.http = http;
-        this.pieGraphDataByRow.fromAjax('mock-data/graph/marketing.json');
+        this.pieGraphDataByRow.fromAjax('mock-data/graph/marketing');
     }
 }

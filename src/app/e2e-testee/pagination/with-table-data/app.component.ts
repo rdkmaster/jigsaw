@@ -12,7 +12,7 @@ export class ServerSidePagingDemoComponent {
     constructor(public viewContainerRef: ViewContainerRef,
                 public renderer: Renderer2, http:HttpClient) {
         const arg:HttpClientOptions = {
-            url: 'http://localhost:4200/mock-data/array-collection/paging-data.json',
+            url: 'http://localhost:4200/mock-data/countries',
             method: 'get', params: {aa: 11, bb: 22}
         };
         this.pageable = new PageableTableData(http, arg);

@@ -19,8 +19,8 @@ _**app.component.ts**_ 中添加代码片段
 
 ```
   tabDatas;
-  this.tabDatas = [{label: 'HTTP_XDR', id: 'HttpData', url: 'mock-data/table/data.json'},
-        {label: 'DNS_XDR', id: 'DnsData', url: 'mock-data/table/data.json'}];
+  this.tabDatas = [{label: 'HTTP_XDR', id: 'HttpData', url: 'mock-data/hr-list'},
+        {label: 'DNS_XDR', id: 'DnsData', url: 'mock-data/hr-list'}];
 ```
 
 jigsaw-tab-pane用来表示每个页签，jigsaw-title 用来配置该页签的标题，jigsaw-body用来配置该页签的内容。这里我们的场景是内容为一个简单的表格。当点击分表选项并且点击查询按钮时，该多页签展示，默认展示第一页签
@@ -225,10 +225,10 @@ export class AppComponent {
       })
     }
     if (this.displayType.id === '1') {
-      this.tableData.fromAjax('mock-data/table/data.json');
+      this.tableData.fromAjax('mock-data/hr-list');
     } else {
-      this.tabDatas = [{label: 'HTTP_XDR', id: 'HttpData', url: 'mock-data/table/data.json'},
-        {label: 'DNS_XDR', id: 'DnsData', url: 'mock-data/table/data.json'}];
+      this.tabDatas = [{label: 'HTTP_XDR', id: 'HttpData', url: 'mock-data/hr-list'},
+        {label: 'DNS_XDR', id: 'DnsData', url: 'mock-data/hr-list'}];
       this.tabDatas.forEach(tabData => {
         this[tabData.id] = new TableData();
         this[tabData.id].http = this.http;
