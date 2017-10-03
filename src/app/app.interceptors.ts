@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from "@angular/common/http";
+import {HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {CommonUtils} from "../jigsaw/core/utils/common-utils";
 
@@ -26,10 +26,15 @@ export class AjaxInterceptor implements HttpInterceptor {
                     subscriber.next(resp);
                     subscriber.complete();
                 } else {
-                    subscriber.error(new Response({
-                        body: 'no match data for url: ' + req.url, url: req.url, status: 404,
-                        statusText: 'no match data for url: ' + req.url
-                    }));
+                    subscriber.error({
+                        error: '<!DOCTYPE html>\n' +
+                        '<html lang="en">\n<head>\n<meta charset="utf-8">\n' +
+                        '<title>Error</title>\n</head>\n<body>\n' +
+                        '<pre>Cannot GET ' + req.url + '</pre>\n</body>\n</html>\n',
+                        headers: new HttpHeaders(), name: "HttpErrorResponse",
+                        message: "ajax interceptor can not find data for " + req.url,
+                        ok: false, status: 404, statusText: "Not Found", url: req.url
+                    });
                 }
             }, Math.random() * 2000);
         });
@@ -37,7 +42,7 @@ export class AjaxInterceptor implements HttpInterceptor {
 
     static dataSet: any;
 
-    static getData(url):any {
+    static getData(url): any {
         const match = url.match(/\bmock-data\/(.*)$/);
         return match ? this.dataSet[match[1]] : null;
     }
