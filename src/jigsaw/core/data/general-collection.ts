@@ -96,12 +96,12 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
 
     protected ajaxErrorHandler(error: Response): void {
         if (!error) {
-            console.error('get data from paging server error!! detail: the data collection is busy now!');
-            const options = new HttpResponse({body: 'ERROR: the data collection is busy now!'});
-            options.clone({url: ''});
-            error = new Response(options.clone({url: ''}), {
-                    status: 409, statusText: 'ERROR: the data collection is busy now!'
-                });
+            const reason = 'the data collection is busy now!';
+            console.error('get data from paging server error!! detail: ' + reason);
+            const options = new HttpResponse({
+                body: reason, url: '', status: 409, statusText: reason
+            });
+            error = new Response(options);
         } else {
             console.error('get data from paging server error!! detail: ' + error['message']);
             this._busy = false;
