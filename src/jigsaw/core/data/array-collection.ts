@@ -243,6 +243,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
 
     protected ajaxCompleteHandler(): void {
         console.log('get data from paging server complete!!');
+        this._busy = false;
         this.componentDataHelper.invokeAjaxCompleteCallback();
     }
 

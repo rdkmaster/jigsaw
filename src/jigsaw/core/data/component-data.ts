@@ -21,7 +21,7 @@ export class HttpClientOptions {
         if (typeof options === 'string') {
             options = {url: options, method: 'get'};
         }
-        if (options.hasOwnProperty('url')) {
+        if (!options.hasOwnProperty('url')) {
             console.error('invalid http options, need a url property!');
             return;
         }

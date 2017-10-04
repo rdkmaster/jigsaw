@@ -108,6 +108,7 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
 
     protected ajaxCompleteHandler(): void {
         console.log('get data from paging server complete!!');
+        this._busy = false;
         this.componentDataHelper.invokeAjaxCompleteCallback();
     }
 
