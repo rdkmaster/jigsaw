@@ -1,5 +1,5 @@
 import {browser, element, by, ElementFinder} from 'protractor';
-import {expectToExist} from "../utils/asserts";
+import {expectToExist, waitForNotPresence, waitForPresence} from "../utils/asserts";
 
 describe('graph', () => {
     beforeEach(() => {
@@ -19,15 +19,19 @@ describe('graph', () => {
             expectToExist(getGraphCanvas('test-graph2'));
         });
 
-        it('should show the line bar graph witch data from ajax', () => {
+        it('should show the line bar graph witch data from ajax', async () => {
             browser.get('/#/graph/line-bar-graph-ajax');
+            await waitForNotPresence('#test-graph2 img.no-data');
             expectToExist(getGraphCanvas('test-graph'));
         });
 
-        it('should show the pie graph', () => {
+        it('should show the pie graph', async () => {
             browser.get('/#/graph/pie');
+            await waitForNotPresence('#test-graph1 img.no-data');
             expectToExist(getGraphCanvas('test-graph1'));
+            await waitForNotPresence('#test-graph2 img.no-data');
             expectToExist(getGraphCanvas('test-graph2'));
+            await waitForNotPresence('#test-graph3 img.no-data');
             expectToExist(getGraphCanvas('test-graph3'));
         });
 

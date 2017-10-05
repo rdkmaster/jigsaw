@@ -29,23 +29,11 @@ export abstract class AbstractGraphData extends TableDataBase {
         return true;
     }
 
-    constructor(public data?: GraphDataMatrix,
-                public header?: GraphDataHeader,
-                public rowDescriptor?: GraphDataRowDescriptor,
-                public field?: GraphDataField) {
+    constructor(public data: GraphDataMatrix = [],
+                public header: GraphDataHeader = [],
+                public rowDescriptor: GraphDataRowDescriptor = [],
+                public field: GraphDataField = []) {
         super(data, field, header);
-        if (!data) {
-            this.data = [];
-        }
-        if (!field) {
-            this.field = [];
-        }
-        if (!header) {
-            this.header = [];
-        }
-        if (!rowDescriptor) {
-            this.rowDescriptor = [];
-        }
         this._makeFields();
     }
 

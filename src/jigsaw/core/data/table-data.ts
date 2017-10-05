@@ -29,19 +29,10 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
             data.hasOwnProperty('field') && data.field instanceof Array;
     }
 
-    constructor(public data?: TableDataMatrix,
-                public field?: TableDataField,
-                public header?: TableDataHeader) {
+    constructor(public data: TableDataMatrix = [],
+                public field: TableDataField = [],
+                public header: TableDataHeader = []) {
         super();
-        if (!data) {
-            this.data = [];
-        }
-        if (!field) {
-            this.field = [];
-        }
-        if (!header) {
-            this.header = [];
-        }
     }
 
     protected isDataValid(data): boolean {
