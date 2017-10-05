@@ -40,7 +40,9 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
         }
     }
 
-    public fromAjax(options: HttpClientOptions | string): void {
+    public fromAjax(url?: string): void;
+    public fromAjax(options?: HttpClientOptions): void;
+    public fromAjax(optionsOrUrl?: HttpClientOptions | string): void {
         if (!this.http) {
             console.error('set a valid HttpClient instance to the http attribute before invoking fromAjax()!');
             return;
@@ -52,7 +54,7 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
 
         this.ajaxStartHandler();
 
-        const op = HttpClientOptions.of(options);
+        const op = HttpClientOptions.prepare(optionsOrUrl);
         this.http.request(op.method, op.url, op)
             .map(res => this.reviseData(res))
             .subscribe(

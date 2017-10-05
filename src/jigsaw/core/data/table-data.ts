@@ -187,18 +187,20 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
 
 export class PageableTableData extends TableData implements IServerSidePageable, IFilterable, ISortable {
     public pagingInfo: PagingInfo;
+    public sourceRequestOptions: HttpClientOptions;
 
     private _filterSubject = new Subject<DataFilterInfo>();
     private _sortSubject = new Subject<DataSortInfo>();
     private _requestOptions: HttpClientOptions;
 
-    constructor(public http: HttpClient, public sourceRequestOptions: HttpClientOptions) {
+    constructor(public http: HttpClient, requestOptionsOrUrl: HttpClientOptions | string) {
         super();
 
         if (!http) {
             throw new Error('invalid http!');
         }
         this.pagingInfo = new PagingInfo();
+        this.sourceRequestOptions = typeof requestOptionsOrUrl === 'string' ? {url: requestOptionsOrUrl} : requestOptionsOrUrl;
 
         this._initRequestOptions();
         this._initSubjects();
@@ -208,7 +210,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         if (!this.sourceRequestOptions || !this.sourceRequestOptions.url) {
             throw new Error('invalid data source request options or invalid url!');
         }
-        this._requestOptions = HttpClientOptions.of(this.sourceRequestOptions);
+        this._requestOptions = HttpClientOptions.prepare(this.sourceRequestOptions);
 
         const originParams = this.sourceRequestOptions.params;
         const peerParams = CommonUtils.isDefined(originParams) ? CommonUtils.shallowCopy(originParams) : {};
@@ -228,8 +230,8 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         });
     }
 
-    public updateDataSource(options: HttpClientOptions): void {
-        this.sourceRequestOptions = options;
+    public updateDataSource(optionsOrUrl: HttpClientOptions | string): void {
+        this.sourceRequestOptions = typeof optionsOrUrl === 'string' ? {url: optionsOrUrl} : optionsOrUrl;
         this.pagingInfo.currentPage = 1;
         this.pagingInfo.totalPage = 1;
         this.pagingInfo.totalRecord = 0;
@@ -238,9 +240,11 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this._initRequestOptions();
     }
 
-    public fromAjax(options?: HttpClientOptions): void {
-        if (!!options) {
-            this.updateDataSource(options);
+    public fromAjax(url?: string): void;
+    public fromAjax(options?: HttpClientOptions): void;
+    public fromAjax(optionsOrUrl?: HttpClientOptions | string): void {
+        if (!!optionsOrUrl) {
+            this.updateDataSource(optionsOrUrl);
         }
         this._ajax();
     }

@@ -9,12 +9,12 @@ export class HttpClientOptions {
     public body?: any;
     public headers?: HttpHeaders;
     public observe?: 'body' | 'events' | 'response';
-    public params?: {[key: string]: any | any []};
+    public params?: { [key: string]: any | any [] };
     public reportProgress?: boolean;
     public responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
     public withCredentials?: boolean;
 
-    public static of(options: string|Object): HttpClientOptions {
+    public static prepare(options: string | Object): PreparedHttpClientOptions {
         if (!options) {
             return;
         }
@@ -26,17 +26,32 @@ export class HttpClientOptions {
             return;
         }
         const op = <any>options;
-        const hco = new HttpClientOptions();
+        const hco = new PreparedHttpClientOptions();
         hco.url = op.url;
         hco.method = options.hasOwnProperty('method') ? op.method : 'get';
         hco.body = op.body;
         hco.headers = op.headers;
         hco.observe = op.observe;
-        hco.params = op.params;
+        hco.params = PreparedHttpClientOptions.prepareParams(op.params);
         hco.reportProgress = op.reportProgress;
         hco.responseType = op.responseType;
         hco.withCredentials = op.withCredentials;
         return hco;
+    }
+}
+
+export class PreparedHttpClientOptions extends HttpClientOptions {
+    public params?: { [key: string]: string | string[] };
+
+    public static prepareParams(params): { [key: string]: string | string[] } {
+        const result: { [key: string]: string | string[] } = {};
+        for (let p in params) {
+            if (!params.hasOwnProperty(p)) {
+                continue;
+            }
+            result[p] = typeof params[p] === 'object' ? JSON.stringify(params[p]) : params[p];
+        }
+        return result;
     }
 }
 
@@ -53,7 +68,9 @@ export interface IComponentData {
 export interface IAjaxComponentData extends IComponentData {
     busy: boolean;
 
-    fromAjax(options: HttpClientOptions | string): void;
+    fromAjax(options?: HttpClientOptions): void;
+
+    fromAjax(url?: string): void;
 
     onAjaxStart   (callback: () => void, context?: any): CallbackRemoval;
 
