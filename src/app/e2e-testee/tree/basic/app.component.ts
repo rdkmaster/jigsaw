@@ -1,5 +1,4 @@
 import {Component, Renderer2, ViewContainerRef} from "@angular/core";
-import {Http} from "@angular/http";
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 import {TreeData} from "jigsaw/core/data/tree-data";
@@ -11,7 +10,7 @@ export class ZtreeDemoComponent {
     public data: TreeData;
 
     constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2, public http: Http) {
+                public renderer: Renderer2) {
         this.data = new TreeData();
         this.data.fromObject([
             {
