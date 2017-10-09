@@ -32,23 +32,23 @@ export class TimeService {
         return <Time>newValue;
     }
 
-    private static timeFormattersConvert(formatter : TimeFormatters):string{
+    private static timeFormatterConvert(formatter : TimeFormatters):string{
         switch (formatter){
-            case TimeFormatters.yyyy_mm_dd_hh_mm_ss : return "YYYY-MM-DD, HH:mm:ss";
-            case TimeFormatters.yyyy_mm_dd_hh_mm : return "YYYY-MM-DD, HH:mm";
-            case TimeFormatters.yyyy_mm_dd_hh : return "YYYY-MM-DD, HH";
+            case TimeFormatters.yyyy_mm_dd_hh_mm_ss : return "YYYY-MM-DD HH:mm:ss";
+            case TimeFormatters.yyyy_mm_dd_hh_mm : return "YYYY-MM-DD HH:mm";
+            case TimeFormatters.yyyy_mm_dd_hh : return "YYYY-MM-DD HH";
             case TimeFormatters.yyyy_mm_dd : return "YYYY-MM-DD";
             case TimeFormatters.yyyy_mm : return "YYYY-MM";
         }
     }
 
     private static timeFormatMap = new Map([
-        [TimeGr.second, TimeService.timeFormattersConvert(TimeFormatters.yyyy_mm_dd_hh_mm_ss)],
-        [TimeGr.minute, TimeService.timeFormattersConvert(TimeFormatters.yyyy_mm_dd_hh_mm)],
-        [TimeGr.hour, TimeService.timeFormattersConvert(TimeFormatters.yyyy_mm_dd_hh)],
-        [TimeGr.date, TimeService.timeFormattersConvert(TimeFormatters.yyyy_mm_dd)],
-        [TimeGr.week, TimeService.timeFormattersConvert(TimeFormatters.yyyy_mm_dd)],
-        [TimeGr.month, TimeService.timeFormattersConvert(TimeFormatters.yyyy_mm)]
+        [TimeGr.second, TimeService.timeFormatterConvert(TimeFormatters.yyyy_mm_dd_hh_mm_ss)],
+        [TimeGr.minute, TimeService.timeFormatterConvert(TimeFormatters.yyyy_mm_dd_hh_mm)],
+        [TimeGr.hour, TimeService.timeFormatterConvert(TimeFormatters.yyyy_mm_dd_hh)],
+        [TimeGr.date, TimeService.timeFormatterConvert(TimeFormatters.yyyy_mm_dd)],
+        [TimeGr.week, TimeService.timeFormatterConvert(TimeFormatters.yyyy_mm_dd)],
+        [TimeGr.month, TimeService.timeFormatterConvert(TimeFormatters.yyyy_mm)]
     ]);
 
     public static timeUnitConvert(unit : TimeUnit):string{
@@ -133,7 +133,7 @@ export class TimeService {
      * @param formatter
      */
     public static format(date:Time, formatter:string|TimeFormatters): string {
-        if(typeof formatter === "number") formatter = TimeService.timeFormattersConvert(formatter);
+        if(typeof formatter === "number") formatter = TimeService.timeFormatterConvert(formatter);
         return moment(date).format(formatter);
     }
 
