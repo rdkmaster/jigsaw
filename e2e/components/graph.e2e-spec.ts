@@ -29,9 +29,9 @@ describe('graph', () => {
             await browser.get('/#/graph/pie');
             browser.sleep(300);
             await expectToExist(getGraphCanvas('test-graph1'));
-            browser.sleep(300);
+            browser.sleep(600);
             await expectToExist(getGraphCanvas('test-graph2'));
-            browser.sleep(300);
+            browser.sleep(600);
             await expectToExist(getGraphCanvas('test-graph3'));
         });
 
