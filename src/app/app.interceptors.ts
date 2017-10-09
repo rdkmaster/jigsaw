@@ -7295,19 +7295,13 @@ class MockData {
     }
 
     static getShortenHrList(fullList): any[] {
-        const indexes = [];
+        const indexes = [
+            570, 601, 346, 755, 119, 415, 491, 389, 342, 586, 308, 434, 424, 445, 305, 136, 292, 164, 548, 152,
+            352, 537, 428, 599, 78, 372, 412, 726, 48, 630, 361, 334, 184, 263, 252, 468, 142, 575, 758, 76, 221,
+            81, 242, 607, 651, 211, 276, 472, 128, 170
+        ];
         const list = [];
-        for (let i = 0; i < 50; i++) {
-            let index;
-            while (true) {
-                index = Number(Math.random() * fullList.length).toFixed(0);
-                if (indexes.indexOf(index) == -1) {
-                    break;
-                }
-            }
-            indexes.push(index);
-            list.push(fullList[index]);
-        }
+        indexes.forEach(index => list.push(fullList[index]));
         return list;
     }
 }
