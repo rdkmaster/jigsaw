@@ -21,17 +21,17 @@ describe('graph', () => {
 
         it('should show the line bar graph witch data from ajax', async () => {
             browser.get('/#/graph/line-bar-graph-ajax');
-            await ExpectedConditions.presenceOf(element(by.id('#test-graph')).element(by.css('.jigsaw-graph')));
+            await ExpectedConditions.presenceOf(element(by.id('#test-graph')).element(by.tagName('CANVAS')));
             expectToExist(getGraphCanvas('test-graph'));
         });
 
         it('should show the pie graph', async () => {
             browser.get('/#/graph/pie');
-            await ExpectedConditions.presenceOf(element(by.id('#test-graph1')).element(by.css('.jigsaw-graph')));
+            await ExpectedConditions.presenceOf(element(by.id('#test-graph1')).element(by.tagName('CANVAS')));
             expectToExist(getGraphCanvas('test-graph1'));
-            await ExpectedConditions.presenceOf(element(by.id('#test-graph2')).element(by.css('.jigsaw-graph')));
+            await ExpectedConditions.presenceOf(element(by.id('#test-graph2')).element(by.tagName('CANVAS')));
             expectToExist(getGraphCanvas('test-graph2'));
-            await ExpectedConditions.presenceOf(element(by.id('#test-graph3')).element(by.css('.jigsaw-graph')));
+            await ExpectedConditions.presenceOf(element(by.id('#test-graph3')).element(by.tagName('CANVAS')));
             expectToExist(getGraphCanvas('test-graph3'));
         });
 
