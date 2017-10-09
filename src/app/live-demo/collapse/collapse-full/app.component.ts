@@ -19,11 +19,11 @@ export class CollapseFullComponent {
 
         this.pieGraphDataByCol = new PieGraphDataByColumn();
         this.pieGraphDataByCol.http = http;
-        this.pieGraphDataByCol.fromAjax('mock-data/graph/marketing');
+        this.pieGraphDataByCol.fromAjax('mock-data/marketing');
 
         this.lineBarGraphData = new LineBarGraphData();
         this.lineBarGraphData.http = http;
-        this.lineBarGraphData.fromAjax('mock-data/graph/marketing');
+        this.lineBarGraphData.fromAjax('mock-data/marketing');
     }
 
     goodsList = [

@@ -44,14 +44,14 @@ describe('table', () => {
                 tableSortDown = element(by.css('.jigsaw-table-sort-down')),
                 columnFirstEl = element(by.css('.jigsaw-table-body')).all(by.tagName('TR')).first().all(by.tagName('TD')).get(0),
                 columnlastEl = element(by.css('.jigsaw-table-body')).all(by.tagName('TR')).last().all(by.tagName('TD')).get(0);
-            expect(columnFirstEl.getText()).toBe('Miriam');
-            expect(columnlastEl.getText()).toBe('Edwiin');
+            expect(columnFirstEl.getText()).toBe('Michelle');
+            expect(columnlastEl.getText()).toBe('Dave');
             tableSortUp.click();
-            expect(columnFirstEl.getText()).toBe('Adair');
-            expect(columnlastEl.getText()).toBe('Zora');
+            expect(columnFirstEl.getText()).toBe('Abner');
+            expect(columnlastEl.getText()).toBe('Wanda');
             tableSortDown.click();
-            expect(columnFirstEl.getText()).toBe('Zora');
-            expect(columnlastEl.getText()).toBe('Adair');
+            expect(columnFirstEl.getText()).toBe('Wanda');
+            expect(columnlastEl.getText()).toBe('Abner');
         })
     });
     describe('test setCellRender', () => {
@@ -68,9 +68,9 @@ describe('table', () => {
             browser.get('/#/table/setColumnGroup');
         });
         it('should set column group', async () => {
-            await waitForPresence('.jigsaw-table-body');
-            const canBeGroupEl=element(by.css('.jigsaw-table-body')).all(by.tagName('TR')).get(6).all(by.tagName('TD')).get(2);
-            expect(canBeGroupEl.getAttribute('rowspan')).toBe('3');
+            await waitForPresence('.jigsaw-table-cell-content');
+            const canBeGroupEl=element(by.css('.jigsaw-table-body')).all(by.tagName('TR')).get(3).all(by.tagName('TD')).get(2);
+            expect(canBeGroupEl.getAttribute('rowspan')).toBe('2');
         })
     });
 });

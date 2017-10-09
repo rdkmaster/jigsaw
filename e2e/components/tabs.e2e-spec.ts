@@ -53,7 +53,7 @@ describe('tabs', () => {
                 tableEl=element(by.tagName('TABLE'));
             expect(tableEl.getText()).toBe('');
             getTableDate.click();
-            await waitForPresence('TABLE');
+            await waitForPresence('.jigsaw-table-cell-content');
             expect(tableEl.getText()).not.toBe('');
         })
     });

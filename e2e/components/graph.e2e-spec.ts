@@ -1,4 +1,4 @@
-import {browser, element, by, ElementFinder} from 'protractor';
+import {browser, element, by, ElementFinder,ExpectedConditions} from 'protractor';
 import {expectToExist, waitForNotPresence, waitForPresence} from "../utils/asserts";
 
 describe('graph', () => {
@@ -21,17 +21,17 @@ describe('graph', () => {
 
         it('should show the line bar graph witch data from ajax', async () => {
             browser.get('/#/graph/line-bar-graph-ajax');
-            await waitForNotPresence('#test-graph2 img.no-data');
+            await ExpectedConditions.presenceOf(element(by.id('#test-graph')).element(by.css('.jigsaw-graph')));
             expectToExist(getGraphCanvas('test-graph'));
         });
 
         it('should show the pie graph', async () => {
             browser.get('/#/graph/pie');
-            await waitForNotPresence('#test-graph1 img.no-data');
+            await ExpectedConditions.presenceOf(element(by.id('#test-graph1')).element(by.css('.jigsaw-graph')));
             expectToExist(getGraphCanvas('test-graph1'));
-            await waitForNotPresence('#test-graph2 img.no-data');
+            await ExpectedConditions.presenceOf(element(by.id('#test-graph2')).element(by.css('.jigsaw-graph')));
             expectToExist(getGraphCanvas('test-graph2'));
-            await waitForNotPresence('#test-graph3 img.no-data');
+            await ExpectedConditions.presenceOf(element(by.id('#test-graph3')).element(by.css('.jigsaw-graph')));
             expectToExist(getGraphCanvas('test-graph3'));
         });
 
