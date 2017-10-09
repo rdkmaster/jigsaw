@@ -52,7 +52,7 @@ export class AjaxInterceptor implements HttpInterceptor {
                         ok: false, status: 404, statusText: "Not Found", url: url
                     });
                 }
-            }, Math.random() * 2000);
+            }, Math.random() * 1000);
         });
     }
 }
