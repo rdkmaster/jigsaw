@@ -23,6 +23,7 @@ describe('graph', () => {
             browser.get('/#/graph/line-bar-graph-ajax');
             await waitForNotPresence('#test-graph2 img.no-data');
             expectToExist(getGraphCanvas('test-graph'));
+            
         });
 
         it('should show the pie graph', async () => {
