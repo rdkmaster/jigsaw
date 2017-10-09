@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Http} from "@angular/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "jigsaw/core/data/array-collection";
 import {ComboSelectValue} from "jigsaw/component/combo-select/combo-select";
 import {TableData} from "jigsaw/core/data/table-data";
@@ -14,7 +14,7 @@ export class ComboSelectAutoCompleteDemo {
     selectedCountries: any;
     selectedCountries2: ArrayCollection<ComboSelectValue> = new ArrayCollection();
 
-    constructor(public http: Http) {
+    constructor(public http: HttpClient) {
         this.lpaCountries = new LocalPageableArray<ComboSelectValue>();
         this.lpaCountries.http = http;
         this.lpaCountries.fromAjax('mock-data/array-collection/countries.json');
@@ -32,7 +32,6 @@ export class ComboSelectAutoCompleteDemo {
             // 在这个例子中不需要带参数，但是为了演示如何带参数给服务端，
             // 这里还是随便给了一些参数，可以在浏览器的network页中看效果
             params: {someData: 'this param is not necessary in this example.'},
-            method: 'get'
         });
         // 我们这里不演示服务端分页功能，因此只给一页数据就好
         this.spaCountries.pagingInfo.pageSize = 1000;

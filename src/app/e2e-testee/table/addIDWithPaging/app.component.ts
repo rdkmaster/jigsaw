@@ -1,5 +1,5 @@
 import {Component, Renderer2, ViewContainerRef} from "@angular/core";
-import {Http} from "@angular/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {PageableTableData} from "jigsaw/core/data/table-data";
 import {AdditionalColumnDefine, ColumnDefine, TableValueGenerators} from "jigsaw/component/table/table-typings";
 import {SortAs, SortOrder} from "jigsaw/core/data/component-data";
@@ -11,10 +11,10 @@ export class TableAddIDWithPagingComponent {
     pageable: PageableTableData;
 
     constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2, http: Http) {
+                public renderer: Renderer2, http: HttpClient) {
         this.pageable = new PageableTableData(http, {
             url: 'http://localhost:4200/mock-data/array-collection/paging-data.json',
-            params: {aa: 11, bb: 22}, method: 'get'
+            params: {aa: 11, bb: 22}
         });
         this.pageable.onAjaxComplete(() => {
             console.log(this.pageable);

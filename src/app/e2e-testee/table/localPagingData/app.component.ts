@@ -1,18 +1,17 @@
 import {Component, Renderer2, ViewContainerRef} from "@angular/core";
-import {Http} from "@angular/http";
 import {LocalPageableTableData} from "jigsaw/core/data/table-data";
 import {ColumnDefine} from "jigsaw/component/table/table-typings";
 import {SortAs, SortOrder} from "jigsaw/core/data/component-data";
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   templateUrl: './app.component.html'
 })
-
 export class LocalPagingDataDemoComponent {
 
     pageable: LocalPageableTableData;
     constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2, http: Http) {
+                public renderer: Renderer2, http: HttpClient) {
         this.pageable = new LocalPageableTableData();
         this.pageable.http = http;
         this.pageable.pagingInfo.pageSize = 10;

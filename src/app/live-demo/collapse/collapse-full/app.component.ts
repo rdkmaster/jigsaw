@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/core/data/table-data";
-import {Http} from "@angular/http";
 import {LineBarGraphData, PieGraphDataByColumn} from "jigsaw/core/data/graph-data";
 
 @Component({
@@ -12,7 +12,7 @@ export class CollapseFullComponent {
     public pieGraphDataByCol: PieGraphDataByColumn;
     public lineBarGraphData: LineBarGraphData;
 
-    constructor(http: Http) {
+    constructor(http: HttpClient) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/table/data.json');

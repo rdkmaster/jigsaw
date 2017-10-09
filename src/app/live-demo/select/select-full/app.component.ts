@@ -1,13 +1,13 @@
-import {Component, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
-import {Http} from "@angular/http";
 
 @Component({
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class SelectFullComponent {
-    constructor(public http: Http) {
+    constructor(public http: HttpClient) {
         this.citys2 = new ArrayCollection();
         this.citys2.http = http;
         this.citys2.fromAjax('mock-data/array-collection/citys.json');

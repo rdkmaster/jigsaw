@@ -1,8 +1,8 @@
-import {Http, RequestOptionsArgs, Response, ResponseOptions} from "@angular/http";
 import {EventEmitter} from "@angular/core";
+import {HttpClient, HttpResponse} from "@angular/common/http";
 import "rxjs/add/operator/map";
 import {
-    IAjaxComponentData, DataReviser, ComponentDataHelper
+    IAjaxComponentData, DataReviser, ComponentDataHelper, HttpClientOptions
 } from "./component-data";
 import {CallbackRemoval} from "../utils/common-utils";
 
@@ -11,7 +11,7 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
 
     protected abstract ajaxSuccessHandler(data): void;
 
-    public http: Http;
+    public http: HttpClient;
     public dataReviser: DataReviser;
     protected _busy: boolean;
 
@@ -19,23 +19,30 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
         return this._busy;
     }
 
-    protected reviseData(response: Response): any {
-        const json = response.json();
+    protected reviseData(originData: any): any {
         if (!this.dataReviser) {
-            return json;
+            return originData;
         }
         try {
-            return this.dataReviser(json);
+            const revisedData = this.dataReviser(originData);
+            if (revisedData == undefined) {
+                console.error('a dataReviser function should NOT return undefined,' +
+                    'use null is you do not have any valid value!' +
+                    'Jigsaw is ignoring this result and using the original value.');
+                return originData;
+            } else {
+                return revisedData;
+            }
         } catch (e) {
             console.error('revise data error: ' + e);
             console.error(e.stack);
-            return json;
+            return originData;
         }
     }
 
-    public fromAjax(options: RequestOptionsArgs | string): void {
+    public fromAjax(options: HttpClientOptions | string): void {
         if (!this.http) {
-            console.error('set a valid Http instance to the http attribute before invoking fromAjax()!');
+            console.error('set a valid HttpClient instance to the http attribute before invoking fromAjax()!');
             return;
         }
 
@@ -47,8 +54,8 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
         this._busy = true;
         this.ajaxStartHandler();
 
-        const op = ComponentDataHelper.castToRequestOptionsArgs(options);
-        this.http.request(op.url, op)
+        const op = HttpClientOptions.realOptionsOf(options);
+        this.http.request(op.method, op.url, op)
             .map(res => this.reviseData(res))
             .subscribe(
                 data => this.ajaxSuccessHandler(data),
@@ -83,20 +90,20 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
         return this.componentDataHelper.getAjaxCompleteRemoval({fn: callback, context: context});
     }
 
-    protected ajaxStartHandler():void {
+    protected ajaxStartHandler(): void {
         this.componentDataHelper.invokeAjaxStartCallback();
     }
 
     protected ajaxErrorHandler(error: Response): void {
         if (!error) {
-            console.error('get data from paging server error!! detail: the data collection is busy now!');
-            const options = new ResponseOptions({ body: 'ERROR: the data collection is busy now!' });
-            error = new Response(options.merge({ url: '' }));
-            error.ok = false;
-            error.status = 409;
-            error.statusText = 'ERROR: the data collection is busy now!';
+            const reason = 'the data collection is busy now!';
+            console.error('get data from paging server error!! detail: ' + reason);
+            const options = new HttpResponse({
+                body: reason, url: '', status: 409, statusText: reason
+            });
+            error = new Response(options);
         } else {
-            console.error('get data from paging server error!! detail: ' + error);
+            console.error('get data from paging server error!! detail: ' + error['message']);
             this._busy = false;
         }
 

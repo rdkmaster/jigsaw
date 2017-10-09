@@ -4,7 +4,7 @@
 import {
     Component, OnInit, Renderer2, ViewContainerRef
 } from '@angular/core';
-import {Http} from "@angular/http";
+import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/core/data/table-data";
 
 @Component({
@@ -19,7 +19,7 @@ export class JigsawTabsWithInputComponent implements OnInit {
     tabDatas = [{title:"111",key:"XXX",content:"content 111"},{title:"222",key:"YYY",content:"content 222"}];
 
     constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2, http: Http) {
+                public renderer: Renderer2, http: HttpClient) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/table/data.json');
