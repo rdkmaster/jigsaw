@@ -27,11 +27,11 @@ describe('graph', () => {
 
         it('should show the pie graph', async () => {
             await browser.get('/#/graph/pie');
-            browser.sleep(300);
+            browser.sleep(1000);
             await expectToExist(getGraphCanvas('test-graph1'));
-            browser.sleep(700);
+            browser.sleep(1000);
             await expectToExist(getGraphCanvas('test-graph2'));
-            browser.sleep(700);
+            browser.sleep(1000);
             await expectToExist(getGraphCanvas('test-graph3'));
         });
 
