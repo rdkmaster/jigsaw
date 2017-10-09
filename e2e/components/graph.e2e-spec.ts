@@ -21,7 +21,7 @@ describe('graph', () => {
 
         it('should show the line bar graph witch data from ajax', async () => {
             await browser.get('/#/graph/line-bar-graph-ajax');
-            browser.sleep(700);
+            browser.sleep(1000);
             await expectToExist(getGraphCanvas('test-graph'));
         });
 
@@ -29,9 +29,9 @@ describe('graph', () => {
             await browser.get('/#/graph/pie');
             browser.sleep(300);
             await expectToExist(getGraphCanvas('test-graph1'));
-            browser.sleep(600);
+            browser.sleep(700);
             await expectToExist(getGraphCanvas('test-graph2'));
-            browser.sleep(600);
+            browser.sleep(700);
             await expectToExist(getGraphCanvas('test-graph3'));
         });
 
