@@ -363,6 +363,82 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     }
 }
 
+export class BigTableData extends PageableTableData {
+
+    private _originData: TableData;
+
+    get originData(): TableData {
+        return this._originData;
+    }
+
+    private _viewPortRows = 25;
+    private _viewPortColumns = 15;
+    private _viewPortFromRows = 0;
+    private _viewPortFromColumns = 0;
+
+    public readonly viewPort: any = {
+        set rows(value: number) {
+            if (value <= 0) {
+                return;
+            }
+            this._viewPortRows = value;
+        },
+        get rows(): number {
+            return this._viewPortRows;
+        },
+
+        set columns(value: number) {
+            if (value <= 0) {
+                return;
+            }
+            this._viewPortColumns = value;
+        },
+        get columns(): number {
+            return this._viewPortColumns;
+        },
+
+        set fromRow(value: number) {
+            if (value <= 0) {
+                return;
+            }
+            this._viewPortFromRows = value;
+        },
+        get fromRow(): number {
+            return this._viewPortFromRows;
+        },
+
+        set fromColumn(value: number) {
+            if (value <= 0) {
+                return;
+            }
+            this._viewPortFromColumns = value;
+
+        },
+        get fromColumn(): number {
+            return this._viewPortFromColumns;
+        }
+    };
+
+    protected sliceData(): void {
+        
+    }
+
+    public scroll(delta: number): void {
+    }
+
+    public vScroll(delta: number): void {
+        this.scroll(delta);
+    }
+
+    public hScroll(delta: number): void {
+    }
+
+    protected ajaxSuccessHandler(data): void {
+        super.ajaxSuccessHandler(data);
+        this._originData = data;
+    }
+}
+
 export class LocalPageableTableData extends TableData implements IPageable, IFilterable, ISortable {
     public pagingInfo: PagingInfo;
     public filteredData: TableDataMatrix;
