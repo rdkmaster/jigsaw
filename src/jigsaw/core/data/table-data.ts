@@ -21,6 +21,7 @@ export type TableMatrixRow = any[];
 export type TableDataHeader = string[];
 export type TableDataField = string[];
 export type TableDataMatrix = TableMatrixRow[];
+export type RawTableData = { field: TableDataField, header: TableDataHeader, data: TableDataMatrix };
 
 export class TableDataBase extends AbstractGeneralCollection<any> {
     public static isTableData(data: any): boolean {
@@ -363,67 +364,118 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     }
 }
 
+class ViewPort {
+    private _rows = 25;
+
+    set rows(value: number) {
+        if (value <= 0 || this._rows == value) {
+            return;
+        }
+        this._rows = value;
+        this.sliceData();
+    }
+
+    get rows(): number {
+        return this._rows;
+    }
+
+    private _columns = 15;
+
+    set columns(value: number) {
+        if (value <= 0 || this._columns == value) {
+            return;
+        }
+        this._columns = value;
+        this.sliceData();
+    }
+
+    get columns(): number {
+        return this._columns;
+    }
+
+    private _fromRow = 0;
+
+    set fromRow(value: number) {
+        if (value <= 0 || this._fromRow == value) {
+            return;
+        }
+        this._fromRow = value;
+        this.sliceData();
+    }
+
+    get fromRow(): number {
+        return this._fromRow;
+    }
+
+    private _fromColumn = 0;
+
+    set fromColumn(value: number) {
+        if (value <= 0 || this._fromColumn == value) {
+            return;
+        }
+        this._fromColumn = value;
+        this.sliceData();
+    }
+
+    get fromColumn(): number {
+        return this._fromColumn;
+    }
+}
+
 export class BigTableData extends PageableTableData {
 
-    private _originData: TableData;
+    private _originData: RawTableData;
 
-    get originData(): TableData {
+    get originData(): RawTableData {
         return this._originData;
     }
 
-    private _viewPortRows = 25;
-    private _viewPortColumns = 15;
-    private _viewPortFromRows = 0;
-    private _viewPortFromColumns = 0;
+    public readonly viewPort: ViewPort = new ViewPort();
 
-    public readonly viewPort: any = {
-        set rows(value: number) {
-            if (value <= 0) {
-                return;
-            }
-            this._viewPortRows = value;
-        },
-        get rows(): number {
-            return this._viewPortRows;
-        },
-
-        set columns(value: number) {
-            if (value <= 0) {
-                return;
-            }
-            this._viewPortColumns = value;
-        },
-        get columns(): number {
-            return this._viewPortColumns;
-        },
-
-        set fromRow(value: number) {
-            if (value <= 0) {
-                return;
-            }
-            this._viewPortFromRows = value;
-        },
-        get fromRow(): number {
-            return this._viewPortFromRows;
-        },
-
-        set fromColumn(value: number) {
-            if (value <= 0) {
-                return;
-            }
-            this._viewPortFromColumns = value;
-
-        },
-        get fromColumn(): number {
-            return this._viewPortFromColumns;
+    private _takeSnapshot(): void {
+        if (this._originData) {
+            return;
         }
-    };
-
-    protected sliceData(): void {
-        
+        this._originData = {
+            field: this.field, header: this.header, data: this.data
+        }
     }
 
-    public scroll(delta: number): void {
+    protected sliceData(): void {
+        this._takeSnapshot();
+        if (this._originData.field.length == 0 || this._originData.header.length == 0 || this._originData.data.length == 0) {
+            return;
+        }
+
+        const toColumn = this.viewPort.columns + this.viewPort.fromColumn;
+        this.field = this._originData.field.slice(this.viewPort.fromColumn, toColumn);
+        this.header = this._originData.header.slice(this.viewPort.fromColumn, toColumn);
+
+        const toRow = this.viewPort.rows + this.viewPort.fromRow;
+        const data = this._originData.data.slice(this.viewPort.fromRow, toRow);
+        this.data = data.map(item => item.slice(this.viewPort.fromColumn, toColumn));
+
+        this.refresh();
+    }
+
+    public scroll(vDelta: number, hDelta: number = 0): void {
+        this._takeSnapshot();
+
+        let fromRow = this.viewPort.fromRow + vDelta;
+        fromRow = fromRow + this.viewPort.rows > this._originData.data.length ?
+            this._originData.data.length - this.viewPort.rows : fromRow;
+        fromRow = fromRow >= 0 ? fromRow : 0;
+
+        let fromColumn = this.viewPort.fromColumn + hDelta;
+        fromColumn = fromColumn + this.viewPort.columns > this._originData.field.length ?
+            this._originData.field.length - this.viewPort.columns : fromColumn;
+        fromColumn = fromColumn >= 0 ? fromColumn : 0;
+
+        if (fromRow != this.viewPort.fromRow || fromColumn != this.viewPort.fromColumn) {
+            this.viewPort.fromRow = fromRow;
+            this.viewPort.fromColumn = fromColumn;
+            this.sliceData();
+        }
     }
 
     public vScroll(delta: number): void {
@@ -431,11 +483,19 @@ export class BigTableData extends PageableTableData {
     }
 
     public hScroll(delta: number): void {
+        this.scroll(this.viewPort.fromRow, delta);
     }
 
-    protected ajaxSuccessHandler(data): void {
-        super.ajaxSuccessHandler(data);
-        this._originData = data;
+    protected ajaxSuccessHandler(rawTableData): void {
+        super.ajaxSuccessHandler(rawTableData);
+        this._originData = {field: rawTableData.field, header: rawTableData.header, data: rawTableData.data};
+        this.sliceData();
+    }
+
+    protected ajaxErrorHandler(error): void {
+        super.ajaxErrorHandler(error);
+        this._originData = {field: [], header: [], data: []};
+        this._originData = new TableData();
     }
 }
 
