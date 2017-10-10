@@ -1,11 +1,7 @@
 import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
-import {HttpHeaders, HttpParameterCodec, HttpParams} from "@angular/common/http";
-import {HttpParamsOptions} from "@angular/common/http/src/params";
+import {HttpHeaders} from "@angular/common/http";
 
 export type DataReviser = (data: any) => any;
-
-// the Angular `HttpParams` is not friendly, use this for better experience
-export type JigsawHttpParams = {[key: string]: any | any []};
 
 export class HttpClientOptions {
     public url: string;
@@ -13,42 +9,49 @@ export class HttpClientOptions {
     public body?: any;
     public headers?: HttpHeaders;
     public observe?: 'body' | 'events' | 'response';
-    // it is not using the angular `HttpParams`
-    public params?: JigsawHttpParams;
-    public paramsEncoder?: HttpParameterCodec;
+    public params?: { [key: string]: any | any [] };
     public reportProgress?: boolean;
     public responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
     public withCredentials?: boolean;
 
-    public static realOptionsOf(options:HttpClientOptions|string): HttpClientOptions {
-        if (CommonUtils.isUndefined(options)) {
+    public static prepare(options: string | Object): PreparedHttpClientOptions {
+        if (!options) {
             return;
         }
         if (typeof options === 'string') {
-            const url = options;
-            options = new HttpClientOptions();
-            options.url = url;
-            options.method = 'get';
+            options = {url: options, method: 'get'};
         }
-        const op:any = {};
-        op.url = options.url;
-        op.method = options.method ? options.method : "get";
-        op.body = options.body;
-        op.headers = options.headers;
-        op.observe = options.observe;
-        op.reportProgress = options.reportProgress;
-        op.responseType = options.responseType;
-        op.withCredentials = options.withCredentials;
-
-        const params: HttpParamsOptions = {encoder: options.paramsEncoder};
-        if (typeof options.params === 'string') {
-            params.fromString = options.params;
-        } else {
-            params.fromObject = options.params;
+        if (!options.hasOwnProperty('url')) {
+            console.error('invalid http options, need a url property!');
+            return;
         }
-        op.params = new HttpParams(params);
+        const op = <any>options;
+        const hco = new PreparedHttpClientOptions();
+        hco.url = op.url;
+        hco.method = options.hasOwnProperty('method') ? op.method : 'get';
+        hco.body = op.body;
+        hco.headers = op.headers;
+        hco.observe = op.observe;
+        hco.params = PreparedHttpClientOptions.prepareParams(op.params);
+        hco.reportProgress = op.reportProgress;
+        hco.responseType = op.responseType;
+        hco.withCredentials = op.withCredentials;
+        return hco;
+    }
+}
 
-        return op;
+export class PreparedHttpClientOptions extends HttpClientOptions {
+    public params?: { [key: string]: string | string[] };
+
+    public static prepareParams(params): { [key: string]: string | string[] } {
+        const result: { [key: string]: string | string[] } = {};
+        for (let p in params) {
+            if (!params.hasOwnProperty(p)) {
+                continue;
+            }
+            result[p] = typeof params[p] === 'object' ? JSON.stringify(params[p]) : params[p];
+        }
+        return result;
     }
 }
 
@@ -65,7 +68,9 @@ export interface IComponentData {
 export interface IAjaxComponentData extends IComponentData {
     busy: boolean;
 
-    fromAjax(options: HttpClientOptions | string): void;
+    fromAjax(options?: HttpClientOptions): void;
+
+    fromAjax(url?: string): void;
 
     onAjaxStart   (callback: () => void, context?: any): CallbackRemoval;
 

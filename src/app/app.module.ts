@@ -9,7 +9,7 @@ import {JigsawButtonModule} from "jigsaw/component/button/button";
 
 import {AppComponent} from './app.component';
 import {JigsawRootModule} from "../jigsaw/component/root/root";
-import {ServerSidePagingInterceptor} from 'app/app.interceptors';
+import {AjaxInterceptor} from 'app/app.interceptors';
 
 const appRoutes = [
     {
@@ -35,7 +35,7 @@ const appRoutes = [
         TranslateService,
         {
             provide: HTTP_INTERCEPTORS,
-            useClass: ServerSidePagingInterceptor,
+            useClass: AjaxInterceptor,
             multi: true,
         },
     ],

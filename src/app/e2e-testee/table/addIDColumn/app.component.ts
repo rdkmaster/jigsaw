@@ -13,7 +13,7 @@ export class TableAddIDColumnDemoComponent {
                 public renderer: Renderer2, http: HttpClient) {
         this.tableData = new TableData();
         this.tableData.http = http;
-        this.tableData.fromAjax('mock-data/table/data.json');
+        this.tableData.fromAjax('mock-data/hr-list');
     }
 
     additionalColumns: AdditionalColumnDefine[] = [{

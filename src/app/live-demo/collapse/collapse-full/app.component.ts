@@ -15,15 +15,15 @@ export class CollapseFullComponent {
     constructor(http: HttpClient) {
         this.tableData = new TableData();
         this.tableData.http = http;
-        this.tableData.fromAjax('mock-data/table/data.json');
+        this.tableData.fromAjax('mock-data/hr-list');
 
         this.pieGraphDataByCol = new PieGraphDataByColumn();
         this.pieGraphDataByCol.http = http;
-        this.pieGraphDataByCol.fromAjax('mock-data/graph/marketing.json');
+        this.pieGraphDataByCol.fromAjax('mock-data/marketing');
 
         this.lineBarGraphData = new LineBarGraphData();
         this.lineBarGraphData.http = http;
-        this.lineBarGraphData.fromAjax('mock-data/graph/marketing.json');
+        this.lineBarGraphData.fromAjax('mock-data/marketing');
     }
 
     goodsList = [

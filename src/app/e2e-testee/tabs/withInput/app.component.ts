@@ -22,7 +22,7 @@ export class JigsawTabsWithInputComponent implements OnInit {
                 public renderer: Renderer2, http: HttpClient) {
         this.tableData = new TableData();
         this.tableData.http = http;
-        this.tableData.fromAjax('mock-data/table/data.json');
+        this.tableData.fromAjax('mock-data/hr-list');
         this.tableData.onAjaxComplete(() => {
             console.log(this.tableData);
         });
@@ -36,7 +36,7 @@ export class JigsawTabsWithInputComponent implements OnInit {
     getTableData(){
         this.tabDatas.forEach(tabData =>{
             console.log(this[tabData.key]);
-            this[tabData.key].fromAjax('mock-data/table/data.json');
+            this[tabData.key].fromAjax('mock-data/hr-list');
         });
     }
 

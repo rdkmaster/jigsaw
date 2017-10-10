@@ -10,7 +10,7 @@ import {
     IFilterable,
     IPageable,
     IServerSidePageable,
-    ISortable, JigsawHttpParams,
+    ISortable,
     PagingInfo,
     SortAs,
     SortOrder
@@ -29,19 +29,10 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
             data.hasOwnProperty('field') && data.field instanceof Array;
     }
 
-    constructor(public data?: TableDataMatrix,
-                public field?: TableDataField,
-                public header?: TableDataHeader) {
+    constructor(public data: TableDataMatrix = [],
+                public field: TableDataField = [],
+                public header: TableDataHeader = []) {
         super();
-        if (!data) {
-            this.data = [];
-        }
-        if (!field) {
-            this.field = [];
-        }
-        if (!header) {
-            this.header = [];
-        }
     }
 
     protected isDataValid(data): boolean {
@@ -56,6 +47,7 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
             this.clear();
             this.refresh();
         }
+        this._busy = false;
         this.componentDataHelper.invokeAjaxSuccessCallback(data);
     }
 
@@ -186,18 +178,20 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
 
 export class PageableTableData extends TableData implements IServerSidePageable, IFilterable, ISortable {
     public pagingInfo: PagingInfo;
+    public sourceRequestOptions: HttpClientOptions;
 
     private _filterSubject = new Subject<DataFilterInfo>();
     private _sortSubject = new Subject<DataSortInfo>();
     private _requestOptions: HttpClientOptions;
 
-    constructor(public http: HttpClient, public sourceRequestOptions: HttpClientOptions) {
+    constructor(public http: HttpClient, requestOptionsOrUrl: HttpClientOptions | string) {
         super();
 
         if (!http) {
             throw new Error('invalid http!');
         }
         this.pagingInfo = new PagingInfo();
+        this.sourceRequestOptions = typeof requestOptionsOrUrl === 'string' ? {url: requestOptionsOrUrl} : requestOptionsOrUrl;
 
         this._initRequestOptions();
         this._initSubjects();
@@ -207,23 +201,13 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         if (!this.sourceRequestOptions || !this.sourceRequestOptions.url) {
             throw new Error('invalid data source request options or invalid url!');
         }
-        const params: JigsawHttpParams = {};
-        this._requestOptions = {
-            url: this.sourceRequestOptions.url,
-            method: this.sourceRequestOptions.method,
-            body: this.sourceRequestOptions.body,
-            headers: this.sourceRequestOptions.headers,
-            observe: this.sourceRequestOptions.observe,
-            params: params,
-            reportProgress: this.sourceRequestOptions.reportProgress,
-            responseType: this.sourceRequestOptions.responseType,
-            withCredentials: this.sourceRequestOptions.withCredentials
-        };
+        this._requestOptions = HttpClientOptions.prepare(this.sourceRequestOptions);
 
         const originParams = this.sourceRequestOptions.params;
         const peerParams = CommonUtils.isDefined(originParams) ? CommonUtils.shallowCopy(originParams) : {};
-        params.peerParam = JSON.stringify(peerParams);
-        params.service = this.sourceRequestOptions.url;
+        this._requestOptions.params = {};
+        this._requestOptions.params.peerParam = JSON.stringify(peerParams);
+        this._requestOptions.params.service = this.sourceRequestOptions.url;
     }
 
     private _initSubjects(): void {
@@ -237,8 +221,8 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         });
     }
 
-    public updateDataSource(options: HttpClientOptions): void {
-        this.sourceRequestOptions = options;
+    public updateDataSource(optionsOrUrl: HttpClientOptions | string): void {
+        this.sourceRequestOptions = typeof optionsOrUrl === 'string' ? {url: optionsOrUrl} : optionsOrUrl;
         this.pagingInfo.currentPage = 1;
         this.pagingInfo.totalPage = 1;
         this.pagingInfo.totalRecord = 0;
@@ -247,9 +231,11 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this._initRequestOptions();
     }
 
-    public fromAjax(options?: HttpClientOptions): void {
-        if (!!options) {
-            this.updateDataSource(options);
+    public fromAjax(url?: string): void;
+    public fromAjax(options?: HttpClientOptions): void;
+    public fromAjax(optionsOrUrl?: HttpClientOptions | string): void {
+        if (!!optionsOrUrl) {
+            this.updateDataSource(optionsOrUrl);
         }
         this._ajax();
     }
@@ -263,7 +249,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this._busy = true;
         this.ajaxStartHandler();
 
-        const params: JigsawHttpParams = this._requestOptions.params;
+        const params: any = this._requestOptions.params;
         params.paging = JSON.stringify(this.pagingInfo);
         if (this.filterInfo) {
             params.filter = JSON.stringify(this.filterInfo);
@@ -272,8 +258,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
             params.sort = JSON.stringify(this.sortInfo);
         }
 
-        const options = HttpClientOptions.realOptionsOf(this._requestOptions);
-        this.http.request(options.method, PagingInfo.pagingServerUrl, options)
+        this.http.request(this._requestOptions.method, PagingInfo.pagingServerUrl, this._requestOptions)
             .map(res => this.reviseData(res))
             .map(data => {
                 this._updatePagingInfo(data);

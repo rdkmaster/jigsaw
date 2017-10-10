@@ -12,7 +12,7 @@ export class ArrayCollectionAjaxDemoComponent {
                 public renderer: Renderer2, http: HttpClient) {
         const ac = new ArrayCollection();
         ac.http = http;
-        ac.fromAjax('mock-data/array-collection/core-members.json');
+        ac.fromAjax('mock-data/core-members');
 
         this.consoleAppend("list of our first core members:");
         ac.onAjaxComplete(() => {

@@ -1,8 +1,8 @@
 import {Component, Renderer2, ViewContainerRef} from "@angular/core";
+import {HttpClient} from '@angular/common/http';
 import {LocalPageableTableData} from "jigsaw/core/data/table-data";
 import {ColumnDefine} from "jigsaw/component/table/table-typings";
 import {SortAs, SortOrder} from "jigsaw/core/data/component-data";
-import {HttpClient} from '@angular/common/http';
 
 @Component({
   templateUrl: './app.component.html'
@@ -15,7 +15,7 @@ export class LocalPagingDataDemoComponent {
         this.pageable = new LocalPageableTableData();
         this.pageable.http = http;
         this.pageable.pagingInfo.pageSize = 10;
-        this.pageable.fromAjax('mock-data/table/data.json');
+        this.pageable.fromAjax('mock-data/hr-list');
     }
 
     getCurrentPage() {

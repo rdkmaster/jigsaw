@@ -1,4 +1,5 @@
 import {browser, element, by, ExpectedConditions} from "protractor";
+import {waitForPresence} from "../utils/asserts";
 
 describe('tabs', () => {
     beforeEach(() => {
@@ -52,6 +53,7 @@ describe('tabs', () => {
                 tableEl=element(by.tagName('TABLE'));
             expect(tableEl.getText()).toBe('');
             getTableDate.click();
+            await waitForPresence('.jigsaw-table-cell-content');
             expect(tableEl.getText()).not.toBe('');
         })
     });

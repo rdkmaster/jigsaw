@@ -1,5 +1,5 @@
 import {EventEmitter} from "@angular/core";
-import {HttpClient, HttpResponse} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import "rxjs/add/operator/map";
 import {
     IAjaxComponentData, DataReviser, ComponentDataHelper, HttpClientOptions
@@ -40,21 +40,21 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
         }
     }
 
-    public fromAjax(options: HttpClientOptions | string): void {
+    public fromAjax(url?: string): void;
+    public fromAjax(options?: HttpClientOptions): void;
+    public fromAjax(optionsOrUrl?: HttpClientOptions | string): void {
         if (!this.http) {
             console.error('set a valid HttpClient instance to the http attribute before invoking fromAjax()!');
             return;
         }
-
         if (this._busy) {
             this.ajaxErrorHandler(null);
             return;
         }
 
-        this._busy = true;
         this.ajaxStartHandler();
 
-        const op = HttpClientOptions.realOptionsOf(options);
+        const op = HttpClientOptions.prepare(optionsOrUrl);
         this.http.request(op.method, op.url, op)
             .map(res => this.reviseData(res))
             .subscribe(
@@ -91,6 +91,7 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
     }
 
     protected ajaxStartHandler(): void {
+        this._busy = true;
         this.componentDataHelper.invokeAjaxStartCallback();
     }
 
@@ -98,10 +99,7 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
         if (!error) {
             const reason = 'the data collection is busy now!';
             console.error('get data from paging server error!! detail: ' + reason);
-            const options = new HttpResponse({
-                body: reason, url: '', status: 409, statusText: reason
-            });
-            error = new Response(options);
+            error = new Response(reason, { status: 409, statusText: reason });
         } else {
             console.error('get data from paging server error!! detail: ' + error['message']);
             this._busy = false;
@@ -112,8 +110,8 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
 
     protected ajaxCompleteHandler(): void {
         console.log('get data from paging server complete!!');
-        this.componentDataHelper.invokeAjaxCompleteCallback();
         this._busy = false;
+        this.componentDataHelper.invokeAjaxCompleteCallback();
     }
 
     public destroy(): void {
@@ -142,6 +140,7 @@ export class GeneralCollection<T> extends AbstractGeneralCollection<T> {
 
     protected ajaxSuccessHandler(data: T): void {
         this.fromObject(data);
+        this._busy = false;
         this.componentDataHelper.invokeAjaxSuccessCallback(data);
     }
 

@@ -1,5 +1,5 @@
-import {browser, element, by, ElementFinder} from 'protractor';
-import {expectToExist} from "../utils/asserts";
+import {browser, element, by, ElementFinder, ExpectedConditions} from 'protractor';
+import {expectToExist, waitForNotPresence, waitForPresence} from "../utils/asserts";
 
 describe('graph', () => {
     beforeEach(() => {
@@ -19,16 +19,20 @@ describe('graph', () => {
             expectToExist(getGraphCanvas('test-graph2'));
         });
 
-        it('should show the line bar graph witch data from ajax', () => {
-            browser.get('/#/graph/line-bar-graph-ajax');
-            expectToExist(getGraphCanvas('test-graph'));
+        it('should show the line bar graph witch data from ajax', async () => {
+            await browser.get('/#/graph/line-bar-graph-ajax');
+            browser.sleep(1000);
+            await expectToExist(getGraphCanvas('test-graph'));
         });
 
-        it('should show the pie graph', () => {
-            browser.get('/#/graph/pie');
-            expectToExist(getGraphCanvas('test-graph1'));
-            expectToExist(getGraphCanvas('test-graph2'));
-            expectToExist(getGraphCanvas('test-graph3'));
+        it('should show the pie graph', async () => {
+            await browser.get('/#/graph/pie');
+            browser.sleep(1000);
+            await expectToExist(getGraphCanvas('test-graph1'));
+            browser.sleep(1000);
+            await expectToExist(getGraphCanvas('test-graph2'));
+            browser.sleep(1000);
+            await expectToExist(getGraphCanvas('test-graph3'));
         });
 
         it('should change size', async () => {

@@ -26,7 +26,7 @@ export class TableRendererDemoComponent {
         this.tableData = new LocalPageableTableData();
         this.tableData.pagingInfo.pageSize = 200;
         this.tableData.http = http;
-        this.tableData.fromAjax('mock-data/table/data.json');
+        this.tableData.fromAjax('mock-data/hr-list-full');
     }
 
     columnDefines: ColumnDefine[] = [
