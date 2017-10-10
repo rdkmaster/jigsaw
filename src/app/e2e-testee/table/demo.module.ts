@@ -78,10 +78,13 @@ import {TableSetHeaderSortDemoModule} from "./setHeaderSort/app.module";
 
 import {TableDataWithPopupDemoComponent} from "./withPopup/app.component";
 import {TableDataWithPopupDemoModule} from "./withPopup/app.module";
+
 import {SwimLaneDiagramDemoComponent} from "./swimLaneDiagram/app.component";
 import {swimLaneDiagramDemoModule} from "./swimLaneDiagram/app.module";
-import {TableHideHeadDemoModule} from "./hideHead/app.module";
+
 import {TableHideHeadDemoComponent} from "./hideHead/app.component";
+import {TableHideHeadDemoModule} from "./hideHead/app.module";
+
 import {TableSelectRowDemoComponent} from "./selectRow/app.component";
 import {TableSelectRowDemoModule} from "./selectRow/app.module";
 

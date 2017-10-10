@@ -1,5 +1,5 @@
 import {Component, Renderer2, ViewContainerRef} from "@angular/core";
-import {Http} from "@angular/http";
+import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/core/data/table-data";
 import {ColumnDefine} from "jigsaw/component/table/table-typings";
 import {DefaultCellRenderer} from "jigsaw/component/table/table-renderer";
@@ -11,10 +11,10 @@ export class TableDataChangeDemoComponent {
     tableData: TableData;
 
     constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2, http: Http) {
+                public renderer: Renderer2, http: HttpClient) {
         this.tableData = new TableData();
         this.tableData.http = http;
-        this.tableData.fromAjax('mock-data/table/data.json');
+        this.tableData.fromAjax('mock-data/hr-list');
     }
 
     columns: ColumnDefine[] = [

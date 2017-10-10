@@ -2,7 +2,7 @@ import {
     AfterContentInit, Component, TemplateRef, ViewChild, ViewEncapsulation,
     Renderer2, ViewContainerRef
 } from "@angular/core";
-import {Http} from "@angular/http";
+import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/core/data/table-data";
 import {AdditionalColumnDefine, ColumnDefine} from "jigsaw/component/table/table-typings";
 
@@ -23,10 +23,10 @@ export class TableRendererOfTemplateRefDemoComponent implements AfterContentInit
      _additionalColumns: AdditionalColumnDefine[];
 
     constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2, http: Http) {
+                public renderer: Renderer2, http: HttpClient) {
         this.tableData = new TableData();
         this.tableData.http = http;
-        this.tableData.fromAjax('mock-data/table/data.json');
+        this.tableData.fromAjax('mock-data/hr-list');
     }
 
     handleClick(context){

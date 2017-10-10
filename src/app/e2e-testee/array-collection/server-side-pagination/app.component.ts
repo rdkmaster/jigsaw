@@ -1,6 +1,6 @@
 import {Component, Renderer2, ViewContainerRef} from "@angular/core";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {PageableArray} from "jigsaw/core/data/array-collection";
-import {Http} from "@angular/http";
 
 @Component({
     templateUrl: './app.component.html', styles: ['.alert {color: red;}']
@@ -12,9 +12,12 @@ export class ServerSidePaginationDemoComponent {
     tipClass = {'alert': !!this.errorInfo};
 
     constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2, http: Http) {
+                public renderer: Renderer2, http: HttpClient) {
         this.pageable = new PageableArray(http,
-            {url: 'http://localhost:4200/mock-data/array-collection/paging-data.json', params: {aa: 11, bb: 22}});
+            {
+                url: 'mock-data/countries',
+                params: {aa: 11, bb: 22}
+            });
         this.pageable.onAjaxSuccess(this.onAjaxSuccess, this);
         this.pageable.onAjaxError(this.onAjaxError, this);
     }

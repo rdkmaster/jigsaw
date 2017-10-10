@@ -1,5 +1,4 @@
 import {NgModule} from "@angular/core";
-import {HttpModule} from '@angular/http';
 import {RouterModule} from "@angular/router";
 import {TrustedHtmlFullComponent} from "../../live-demo/trusted-html/full/app.component";
 import {TrustedHtmlFullModule} from "../../live-demo/trusted-html/full/app.module";
@@ -16,7 +15,7 @@ const routes=[
 
 @NgModule({
     imports: [
-        RouterModule.forChild(routes), HttpModule, TrustedHtmlFullModule,
+        RouterModule.forChild(routes), TrustedHtmlFullModule,
     ],
     exports: [
     ],

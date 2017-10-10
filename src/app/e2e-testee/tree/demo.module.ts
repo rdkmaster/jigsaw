@@ -1,5 +1,4 @@
 import {NgModule} from "@angular/core";
-import {HttpModule} from '@angular/http';
 import {RouterModule} from "@angular/router";
 
 import {ZtreeDemoComponent} from "./basic/app.component";
@@ -37,7 +36,7 @@ const ztreeDemoRoutes=[
 
 @NgModule({
     imports: [
-        RouterModule.forChild(ztreeDemoRoutes), HttpModule, TreeAsyncDemoModule,
+        RouterModule.forChild(ztreeDemoRoutes), TreeAsyncDemoModule,
         TreeBasicDemoModule, TreeAjaxDataDemoModule, TreeEditableDemoModule
     ],
     exports: [
