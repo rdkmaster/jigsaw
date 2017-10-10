@@ -28,7 +28,7 @@ export class ComboSelectAutoCompleteDemo {
         // });
 
         this.spaCountries = new PageableArray(http, {
-            url: 'http://localhost:4200/mock-data/countries',
+            url: 'mock-data/countries',
             // 在这个例子中不需要带参数，但是为了演示如何带参数给服务端，
             // 这里还是随便给了一些参数，可以在浏览器的network页中看效果
             params: {someData: 'this param is not necessary in this example.'},

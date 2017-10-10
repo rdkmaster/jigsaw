@@ -7284,12 +7284,8 @@ class MockData {
             ]
         };
         this.dataSet['hr-list'] = {
-            "field": [
-                "name", "gender", "position", "salary", "enrollDate", "office", "desc"
-            ],
-            "header": [
-                "姓名", "性别", "职位", "薪资", "入职日期", "部门", "描述"
-            ],
+            "field": this.dataSet['hr-list-full'].field,
+            "header": this.dataSet['hr-list-full'].header,
             "data": this.getShortenHrList(this.dataSet['hr-list-full'].data)
         };
     }

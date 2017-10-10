@@ -9,7 +9,7 @@ import {JigsawPagination} from "jigsaw/component/pagination/pagination";
 @Component({
     templateUrl: './app.component.html'
 })
-export class TableAddIDWithDebouncePagingComponent implements AfterViewInit{
+export class TableAddIDWithDebouncePagingComponent implements AfterViewInit {
     pageable: PageableTableData;
 
     @ViewChild('paging') paging: JigsawPagination;
@@ -17,7 +17,7 @@ export class TableAddIDWithDebouncePagingComponent implements AfterViewInit{
     constructor(public viewContainerRef: ViewContainerRef,
                 public renderer: Renderer2, http: HttpClient) {
         this.pageable = new PageableTableData(http, {
-            url: 'http://localhost:4200/mock-data/countries',
+            url: 'mock-data/countries',
             params: {aa: 11, bb: 22}
         });
         this.pageable.onAjaxComplete(() => {
@@ -26,7 +26,7 @@ export class TableAddIDWithDebouncePagingComponent implements AfterViewInit{
         this.pageable.fromAjax();
     }
 
-    ngAfterViewInit(){
+    ngAfterViewInit() {
         this.paging.currentChange.debounceTime(300).subscribe(() => {
             console.log('pageable now query from ajax!');
             this.pageable.fromAjax();
@@ -34,15 +34,18 @@ export class TableAddIDWithDebouncePagingComponent implements AfterViewInit{
     }
 
     getPageSize() {
+        if (this.pageable.busy) {
+            return;
+        }
         this.pageable.fromAjax();
     }
 
-     _columns: ColumnDefine[] = [{
+    columns: ColumnDefine[] = [{
         target: 'id',
         visible: false
     }];
 
-     _additionalColumns: AdditionalColumnDefine[] = [{
+    additionalColumns: AdditionalColumnDefine[] = [{
         pos: 0,
         header: {
             text: '#'
