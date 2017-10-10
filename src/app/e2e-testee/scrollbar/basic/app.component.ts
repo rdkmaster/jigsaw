@@ -5,6 +5,6 @@ import {Component, Renderer2, ViewContainerRef} from "@angular/core";
   styleUrls: ['./app.component.css']
 })
 export class ScrollbarBasicDemoComponent {
-
+    config: any;
 }
 
