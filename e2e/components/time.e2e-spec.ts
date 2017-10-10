@@ -64,7 +64,7 @@ xdescribe('time', () => {
         beforeEach(() => {
             browser.get('/#/time/recommended');
         });
-        it('should check recommed days', () => {
+        it('should check recommend days', () => {
             expect(element.all(by.css('.expect-day')).get(0).getCssValue('border-radius')).toBe('4px 0px 0px 4px');
             expect(element.all(by.css('.expect-day')).get(5).getCssValue('border-radius')).toBe('0px 4px 4px 0px');
         })
