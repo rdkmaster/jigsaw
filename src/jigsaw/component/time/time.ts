@@ -654,6 +654,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         }
         let [value,] = this._handleValue(newValue);
         this._setDate(value);
+        this._value = newValue;
     }
 
     public registerOnChange(fn: any): void {
