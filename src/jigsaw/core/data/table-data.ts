@@ -23,6 +23,10 @@ export type TableDataField = string[];
 export type TableDataMatrix = TableMatrixRow[];
 export type RawTableData = { field: TableDataField, header: TableDataHeader, data: TableDataMatrix };
 
+export interface ISlicedTableData {
+    originData: RawTableData;
+}
+
 export class TableDataBase extends AbstractGeneralCollection<any> {
     public static isTableData(data: any): boolean {
         return data && data.hasOwnProperty('data') && data.data instanceof Array &&
@@ -364,7 +368,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     }
 }
 
-class ViewPort {
+export class DataViewPort {
     constructor(private _bigTableData: BigTableData) {
     }
 
@@ -448,7 +452,7 @@ class ViewPort {
     }
 }
 
-export class BigTableData extends PageableTableData {
+export class BigTableData extends PageableTableData implements ISlicedTableData {
 
     constructor(public http: HttpClient, requestOptionsOrUrl: HttpClientOptions | string) {
         super(http, requestOptionsOrUrl);
@@ -461,7 +465,7 @@ export class BigTableData extends PageableTableData {
         return this._originData;
     }
 
-    public readonly viewPort: ViewPort = new ViewPort(this);
+    public readonly viewPort: DataViewPort = new DataViewPort(this);
 
     private _takeSnapshot(): void {
         if (this._originData) {
