@@ -49,6 +49,8 @@ const ROLLUP_GLOBALS = {
   'rxjs/add/operator/switchMap': 'Rx.Observable.prototype',
   'rxjs/add/operator/takeUntil': 'Rx.Observable.prototype',
   'rxjs/add/operator/toPromise': 'Rx.Observable.prototype',
+  'rxjs/add/operator/throttleTime': 'Rx.Observable.prototype',
+  'rxjs/add/operator/distinctUntilChanged': 'Rx.Observable.prototype',
 
     'rxjs/observable/combineLatest': 'Rx.Observable',
     'rxjs/observable/forkJoin': 'Rx.Observable',
@@ -77,7 +79,10 @@ const ROLLUP_GLOBALS = {
     '@ngx-translate/http-loader/index': 'ngx.http-loader',
 
     //echarts
-    'echarts': 'echarts'
+    'echarts': 'echarts',
+
+    'resize-observer-polyfill/index': 'resize-observer-polyfill',
+    'perfect-scrollbar': 'perfect-scrollbar',
 };
 
 export type BundleConfig = {
