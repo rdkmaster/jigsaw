@@ -365,6 +365,14 @@ export class PageableTableData extends TableData implements IServerSidePageable,
 }
 
 class ViewPort {
+    constructor(private _bigTableData: BigTableData) {
+    }
+
+    private _sliceData() {
+        // ts 没有 friend 关键字，只好出此下策了
+        this._bigTableData['sliceData']();
+    }
+
     private _rows = 25;
 
     set rows(value: number) {
@@ -372,7 +380,7 @@ class ViewPort {
             return;
         }
         this._rows = value;
-        this.sliceData();
+        this._sliceData();
     }
 
     get rows(): number {
@@ -386,7 +394,7 @@ class ViewPort {
             return;
         }
         this._columns = value;
-        this.sliceData();
+        this._sliceData();
     }
 
     get columns(): number {
@@ -400,11 +408,15 @@ class ViewPort {
             return;
         }
         this._fromRow = value;
-        this.sliceData();
+        this._sliceData();
     }
 
     get fromRow(): number {
         return this._fromRow;
+    }
+
+    setFromRowSilence(value:number) {
+        this._fromRow = value <= 0 ? this._fromRow : value;
     }
 
     private _fromColumn = 0;
@@ -414,15 +426,24 @@ class ViewPort {
             return;
         }
         this._fromColumn = value;
-        this.sliceData();
+        this._sliceData();
     }
 
     get fromColumn(): number {
         return this._fromColumn;
     }
+
+    setFromColumnSilence(value:number) {
+        this._fromColumn = value <= 0 ? this._fromColumn : value;
+    }
 }
 
 export class BigTableData extends PageableTableData {
+
+    constructor(public http: HttpClient, requestOptionsOrUrl: HttpClientOptions | string) {
+        super(http, requestOptionsOrUrl);
+        this.pagingInfo.pageSize = 500;
+    }
 
     private _originData: RawTableData;
 
@@ -430,7 +451,7 @@ export class BigTableData extends PageableTableData {
         return this._originData;
     }
 
-    public readonly viewPort: ViewPort = new ViewPort();
+    public readonly viewPort: ViewPort = new ViewPort(this);
 
     private _takeSnapshot(): void {
         if (this._originData) {
@@ -458,22 +479,17 @@ export class BigTableData extends PageableTableData {
         this.refresh();
     }
 
-    public scroll(vDelta: number, hDelta: number = 0): void {
+    public scroll(verticalTo: number, horizontalTo: number = 0): void {
         this._takeSnapshot();
 
-        let fromRow = this.viewPort.fromRow + vDelta;
-        fromRow = fromRow + this.viewPort.rows > this._originData.data.length ?
-            this._originData.data.length - this.viewPort.rows : fromRow;
-        fromRow = fromRow >= 0 ? fromRow : 0;
+        verticalTo = verticalTo + this.viewPort.rows > this._originData.data.length ?
+            this._originData.data.length - this.viewPort.rows : verticalTo;
+        horizontalTo = horizontalTo + this.viewPort.columns > this._originData.field.length ?
+            this._originData.field.length - this.viewPort.columns : horizontalTo;
 
-        let fromColumn = this.viewPort.fromColumn + hDelta;
-        fromColumn = fromColumn + this.viewPort.columns > this._originData.field.length ?
-            this._originData.field.length - this.viewPort.columns : fromColumn;
-        fromColumn = fromColumn >= 0 ? fromColumn : 0;
-
-        if (fromRow != this.viewPort.fromRow || fromColumn != this.viewPort.fromColumn) {
-            this.viewPort.fromRow = fromRow;
-            this.viewPort.fromColumn = fromColumn;
+        if (verticalTo != this.viewPort.fromRow || horizontalTo != this.viewPort.fromColumn) {
+            this.viewPort.setFromRowSilence(verticalTo);
+            this.viewPort.setFromColumnSilence(horizontalTo);
             this.sliceData();
         }
     }

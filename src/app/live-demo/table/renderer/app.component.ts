@@ -102,7 +102,7 @@ export class TableRendererDemoComponent {
             },
             cell: {
                 renderer: TableCellOperation,
-                tooltip: () => '加薪：当前员工一次加2000\n辞退：立即辞退当前员工'
+                tooltip: '加薪：当前员工一次加2000\n辞退：立即辞退当前员工'
             }
         },
     ];

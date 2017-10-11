@@ -40,9 +40,6 @@ import {TablePageableDemoModule} from "./pageable/app.module";
 import {TablePerformsDemoComponent} from "./performs/app.component";
 import {TablePerformsDemoModule} from "./performs/app.module";
 
-import {TableRendererDemoComponent} from "../../live-demo/table/renderer/app.component";
-import {TableRendererDemoModule} from "../../live-demo/table/renderer/app.module";
-
 import {TableRendererOfTemplateRefDemoComponent} from "./rendererOfTemplateRef/app.component";
 import {TableRendererOfTemplateRefDemoModule} from "./rendererOfTemplateRef/app.module";
 
@@ -87,6 +84,12 @@ import {TableHideHeadDemoModule} from "./hideHead/app.module";
 
 import {TableSelectRowDemoComponent} from "./selectRow/app.component";
 import {TableSelectRowDemoModule} from "./selectRow/app.module";
+
+import {TableRendererDemoComponent} from "../../live-demo/table/renderer/app.component";
+import {TableRendererDemoModule} from "../../live-demo/table/renderer/app.module";
+
+import {BigTableDataDemoComponent} from "../../live-demo/table/big-table/app.component";
+import {BigTableDataDemoModule} from "../../live-demo/table/big-table/app.module";
 
 const tableDemoRoutes = [
     {
@@ -180,6 +183,9 @@ const tableDemoRoutes = [
         path: 'selectRow', component: TableSelectRowDemoComponent
     },
     {
+        path: 'big-table', component: BigTableDataDemoComponent
+    },
+    {
         path: '**', //fallback router must in the last
         component: TableBasicDemoComponent
     }
@@ -194,7 +200,8 @@ const tableDemoRoutes = [
         TablePerformsDemoModule, TableRendererDemoModule, TableRendererOfTemplateRefDemoModule, TableScrollAmountDemoModule,
         TableSetCellClassDemoModule, TableSetCellEditableDemoModule, TableSetCellRenderDemoModule, TableColumnGroupDemoModule,
         TableColumnSetVisibleDemoModule, TableColumnSetWidthDemoModule, TableSetHeaderClassDemoModule, TableSetHeaderRenderDemoModule,
-        TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, swimLaneDiagramDemoModule, TableHideHeadDemoModule, TableSelectRowDemoModule,
+        TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, swimLaneDiagramDemoModule, TableHideHeadDemoModule,
+        TableSelectRowDemoModule, BigTableDataDemoModule
     ]
 })
 export class TableDemoModule {
