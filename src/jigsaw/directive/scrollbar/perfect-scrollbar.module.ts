@@ -2,8 +2,7 @@ import { CommonModule } from '@angular/common';
 
 import { NgModule, ModuleWithProviders, InjectionToken, Optional, SkipSelf, Inject } from '@angular/core';
 
-import { PerfectScrollbarComponent } from './perfect-scrollbar.component';
-import { PerfectScrollbarDirective } from './perfect-scrollbar.directive';
+import { JigsawPerfectScrollbarDirective } from './perfect-scrollbar.directive';
 
 import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
 
@@ -12,15 +11,15 @@ export const PERFECT_SCROLLBAR_CONFIG = new InjectionToken('PERFECT_SCROLLBAR_CO
 
 @NgModule({
     imports: [CommonModule],
-    declarations: [PerfectScrollbarComponent, PerfectScrollbarDirective],
-    exports: [CommonModule, PerfectScrollbarComponent, PerfectScrollbarDirective]
+    declarations: [ JigsawPerfectScrollbarDirective],
+    exports: [CommonModule, JigsawPerfectScrollbarDirective]
 })
-export class PerfectScrollbarModule {
+export class JigsawPerfectScrollbarModule {
   constructor (@Optional() @Inject(PERFECT_SCROLLBAR_GUARD) guard: any) {}
 
   static forRoot(config?: PerfectScrollbarConfigInterface): ModuleWithProviders {
     return {
-      ngModule: PerfectScrollbarModule,
+      ngModule: JigsawPerfectScrollbarModule,
       providers: [
         {
           provide: PERFECT_SCROLLBAR_GUARD,
@@ -50,7 +49,7 @@ export class PerfectScrollbarModule {
 
   static forChild(): ModuleWithProviders {
     return {
-      ngModule: PerfectScrollbarModule
+      ngModule: JigsawPerfectScrollbarModule
     };
   }
 }
@@ -69,3 +68,5 @@ export function provideForRootGuard(config: PerfectScrollbarConfig): any {
 export function provideDefaultConfig(config: PerfectScrollbarConfigInterface): PerfectScrollbarConfig {
   return new PerfectScrollbarConfig(config);
 }
+
+// this code reference from https://github.com/zefoy/ngx-perfect-scrollbar.git which is a MIT project.

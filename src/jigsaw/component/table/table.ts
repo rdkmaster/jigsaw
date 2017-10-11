@@ -33,7 +33,7 @@ import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer} from "./table-renderer";
 import {AffixUtils} from "../../core/utils/internal-utils";
-import {PerfectScrollbarModule, PerfectScrollbarConfigInterface} from "../../directive/scrollbar/index";
+import {JigsawPerfectScrollbarModule, PerfectScrollbarConfigInterface} from "../../directive/scrollbar/index";
 
 @Component({
     selector: 'jigsaw-table, j-table',
@@ -759,7 +759,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
 @NgModule({
     declarations: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
-    imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, PerfectScrollbarModule],
+    imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, JigsawPerfectScrollbarModule],
     exports: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
     entryComponents: [TableCellTextEditorRenderer, DefaultCellRenderer]
 })

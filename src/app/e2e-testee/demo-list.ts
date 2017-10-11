@@ -4,7 +4,7 @@ import {CommonModule} from "@angular/common";
 import {JigsawCollapseModule} from "jigsaw/component/collapse/collapse";
 import {AffixUtils} from "jigsaw/core/utils/internal-utils";
 import {liveDemoNavInfo, navInfo} from './nav-info'
-import {PerfectScrollbarConfigInterface, PerfectScrollbarModule} from "../../jigsaw/directive/scrollbar/index";
+import {PerfectScrollbarConfigInterface, JigsawPerfectScrollbarModule} from "../../jigsaw/directive/scrollbar/index";
 
 @Component({
     selector: 'jigsaw-demo-list',
@@ -52,7 +52,7 @@ const demoListRoutes = [
         RouterModule.forChild(demoListRoutes),
         CommonModule,
         JigsawCollapseModule,
-        PerfectScrollbarModule
+        JigsawPerfectScrollbarModule
     ],
     exports: [],
     declarations: [

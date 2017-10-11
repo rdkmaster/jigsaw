@@ -9,7 +9,7 @@ import {AbstractJigsawComponent} from "../common";
 import {CommonUtils} from '../../core/utils/common-utils';
 import {InternalUtils} from '../../core/utils/internal-utils';
 import {ArrayCollection} from "../../core/data/array-collection";
-import {PerfectScrollbarModule, PerfectScrollbarConfigInterface} from "../../directive/scrollbar/index";
+import {JigsawPerfectScrollbarModule, PerfectScrollbarConfigInterface} from "../../directive/scrollbar/index";
 
 @Directive({
     selector: '.jigsaw-select-option-list',
@@ -223,7 +223,7 @@ export class JigsawOption implements OnInit {
 }
 
 @NgModule({
-    imports: [CommonModule, FormsModule, PerfectScrollbarModule],
+    imports: [CommonModule, FormsModule, JigsawPerfectScrollbarModule],
     declarations: [JigsawSelect, JigsawOption, OptionList],
     exports: [JigsawSelect, JigsawOption]
 })

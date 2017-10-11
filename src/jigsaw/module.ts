@@ -28,7 +28,7 @@ import {JigsawMovableModule} from "./directive/movable/index";
 import {JigsawDraggableModule, JigsawDroppableModule} from './directive/dragdrop/index';
 import {JigsawRootModule} from "./component/root/root";
 import {JigsawFishBoneModule} from "./component/fish-bone/fish-bone";
-import {PerfectScrollbarModule} from "./directive/scrollbar/perfect-scrollbar.module";
+import {JigsawPerfectScrollbarModule} from "./directive/scrollbar/perfect-scrollbar.module";
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
@@ -60,7 +60,7 @@ const JIGSAW_MODULE = [
     JigsawTreeExtModule,
     JigsawRootModule,
     JigsawFishBoneModule,
-    PerfectScrollbarModule
+    JigsawPerfectScrollbarModule
 ];
 
 @NgModule({

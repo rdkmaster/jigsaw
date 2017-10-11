@@ -1,6 +1,4 @@
-export { PerfectScrollbarComponent } from './perfect-scrollbar.component';
-
-export { PerfectScrollbarDirective } from './perfect-scrollbar.directive';
+export { JigsawPerfectScrollbarDirective } from './perfect-scrollbar.directive';
 
 export {
   PerfectScrollbarConfig, PerfectScrollbarConfigInterface
@@ -9,5 +7,5 @@ export {
 export {
   provideDefaultConfig, provideForRootGuard,
   PERFECT_SCROLLBAR_GUARD, PERFECT_SCROLLBAR_CONFIG,
-  PerfectScrollbarModule
+  JigsawPerfectScrollbarModule
 } from './perfect-scrollbar.module';

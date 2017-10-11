@@ -5,15 +5,29 @@ import ResizeObserver from 'resize-observer-polyfill';
 import { NgZone, Directive, Optional, OnDestroy, DoCheck, OnChanges, AfterViewInit,
   SimpleChanges, KeyValueDiffers, Input, HostBinding, HostListener, ElementRef } from '@angular/core';
 
-import { PerfectScrollbarConfig, PerfectScrollbarConfigInterface } from './perfect-scrollbar.interfaces';
+import { PerfectScrollbarConfig } from './perfect-scrollbar.interfaces';
 
 import { Geometry } from './perfect-scrollbar.classes';
 
+export interface PerfectScrollbarConfigInterface {
+    wheelSpeed?: number;
+    wheelPropagation?: boolean;
+    swipePropagation?: boolean;
+    minScrollbarLength?: number;
+    maxScrollbarLength?: number;
+    useBothWheelAxes?: boolean;
+    suppressScrollX?: boolean;
+    suppressScrollY?: boolean;
+    scrollXMarginOffset?: number;
+    scrollYMarginOffset?: number;
+    stopPropagationOnClick?: boolean;
+}
+
 @Directive({
-  selector: '[perfectScrollbar]',
-  exportAs: 'ngxPerfectScrollbar'
+  selector: '[jigsawPerfectScrollbar]',
+  exportAs: 'jigsawPerfectScrollbar'
 })
-export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges, AfterViewInit {
+export class JigsawPerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges, AfterViewInit {
   private ro: any;
 
   private timeout: number;
@@ -33,7 +47,7 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
   @HostBinding('style.position')
   @Input() psPosStyle: string = 'relative';
 
-  @Input('perfectScrollbar') config: PerfectScrollbarConfigInterface;
+  @Input('jigsawPerfectScrollbar') config: PerfectScrollbarConfigInterface;
 
   constructor(@Optional() private defaults: PerfectScrollbarConfig, private zone: NgZone,
     public elementRef: ElementRef, private differs: KeyValueDiffers) {}
@@ -248,3 +262,6 @@ export class PerfectScrollbarDirective implements OnDestroy, DoCheck, OnChanges,
     }
   }
 }
+
+
+// this code reference from https://github.com/zefoy/ngx-perfect-scrollbar.git which is a MIT project.
