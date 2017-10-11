@@ -380,6 +380,11 @@ class ViewPort {
             return;
         }
         this._rows = value;
+        const originLength = this._bigTableData.originData ? this._bigTableData.originData.data.length : -1;
+        if (originLength > 0 && this._fromRow + value > originLength) {
+            this._fromRow = this._bigTableData.originData.data.length - value;
+            this._fromRow = this._fromRow >= 0 ? this._fromRow : 0;
+        }
         this._sliceData();
     }
 
@@ -394,6 +399,11 @@ class ViewPort {
             return;
         }
         this._columns = value;
+        const originLength = this._bigTableData.originData ? this._bigTableData.originData.field.length : -1;
+        if (originLength > 0 && this._fromColumn + value > originLength) {
+            this._fromColumn = this._bigTableData.originData.field.length - value;
+            this._fromColumn = this._fromColumn >= 0 ? this._fromColumn : 0;
+        }
         this._sliceData();
     }
 
@@ -404,11 +414,11 @@ class ViewPort {
     private _fromRow = 0;
 
     set fromRow(value: number) {
-        if (value <= 0 || this._fromRow == value) {
+        if (value < 0 || this._fromRow == value) {
             return;
         }
-        this._fromRow = value;
         this._bigTableData.vScroll(value);
+        this._fromRow = value;
     }
 
     get fromRow(): number {
@@ -416,17 +426,17 @@ class ViewPort {
     }
 
     setFromRowSilence(value:number) {
-        this._fromRow = value <= 0 ? this._fromRow : value;
+        this._fromRow = value < 0 ? this._fromRow : value;
     }
 
     private _fromColumn = 0;
 
     set fromColumn(value: number) {
-        if (value <= 0 || this._fromColumn == value) {
+        if (value < 0 || this._fromColumn == value) {
             return;
         }
-        this._fromColumn = value;
         this._bigTableData.hScroll(value);
+        this._fromColumn = value;
     }
 
     get fromColumn(): number {
@@ -434,7 +444,7 @@ class ViewPort {
     }
 
     setFromColumnSilence(value:number) {
-        this._fromColumn = value <= 0 ? this._fromColumn : value;
+        this._fromColumn = value < 0 ? this._fromColumn : value;
     }
 }
 
@@ -479,11 +489,14 @@ export class BigTableData extends PageableTableData {
         this.refresh();
     }
 
-    public scroll(verticalTo: number, horizontalTo: number = 0): void {
+    public scroll(verticalTo: number, horizontalTo: number = NaN): void {
         this._takeSnapshot();
 
+        verticalTo = isNaN(verticalTo) ? this.viewPort.fromRow : verticalTo;
         verticalTo = verticalTo + this.viewPort.rows > this._originData.data.length ?
             this._originData.data.length - this.viewPort.rows : verticalTo;
+
+        horizontalTo = isNaN(horizontalTo) ? this.viewPort.fromColumn : horizontalTo;
         horizontalTo = horizontalTo + this.viewPort.columns > this._originData.field.length ?
             this._originData.field.length - this.viewPort.columns : horizontalTo;
 
@@ -512,6 +525,12 @@ export class BigTableData extends PageableTableData {
         super.ajaxErrorHandler(error);
         this._originData = {field: [], header: [], data: []};
         this._originData = new TableData();
+    }
+
+    public fromObject(data: any): TableDataBase {
+        const result = super.fromObject(data);
+        this._takeSnapshot();
+        return result;
     }
 }
 

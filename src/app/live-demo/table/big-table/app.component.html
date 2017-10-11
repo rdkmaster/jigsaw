@@ -4,10 +4,22 @@
 
 
 <!-- start to learn the demo from here -->
-<jigsaw-table [data]="tableData"[columnDefines]="columnDefines"
-              [additionalColumnDefines]="additionalColumnDefines"
-              height="345px">
-</jigsaw-table>
 
-<jigsaw-slider [value]="0" (change)="vScroll($event)" min="0" max="200">
+行数（{{tableData.viewPort.rows}}）：
+<jigsaw-slider width="300px" [value]="10" (change)="tableData.viewPort.rows = $event" min="5" max="30">
 </jigsaw-slider>
+
+列数（{{tableData.viewPort.columns}}）：
+<jigsaw-slider width="300px" [value]="5" (change)="tableData.viewPort.columns = $event" min="2" max="7">
+</jigsaw-slider>
+
+
+<jigsaw-slider [value]="0" (change)="this.tableData.viewPort.fromRow = $event" min="0" max="200">
+</jigsaw-slider>
+
+<jigsaw-slider [value]="0" (change)="hScroll($event)" min="0" max="4">
+</jigsaw-slider>
+
+<jigsaw-table [data]="tableData"[columnDefines]="columnDefines"
+              [additionalColumnDefines]="additionalColumnDefines">
+</jigsaw-table>

@@ -18,8 +18,16 @@ export class BigTableDataDemoComponent {
         this.tableData.fromAjax('mock-data/hr-list-full');
     }
 
+    changeRowCount(value) {
+        this.tableData.viewPort.rows = value;
+    }
+
     vScroll(value) {
         this.tableData.viewPort.fromRow = value;
+    }
+
+    hScroll(value) {
+        this.tableData.viewPort.fromColumn = value;
     }
 
     columnDefines: ColumnDefine[] = [
