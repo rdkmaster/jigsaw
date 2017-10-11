@@ -1,17 +1,12 @@
 import {NgModule} from "@angular/core";
 import {ScrollbarBasicDemoComponent} from "./app.component";
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-
-const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-    suppressScrollX: true
-};
+import {PerfectScrollbarModule} from "jigsaw/directive/scrollbar/index";
 
 @NgModule({
     declarations: [ScrollbarBasicDemoComponent],
     bootstrap: [ScrollbarBasicDemoComponent],
-    imports: [PerfectScrollbarModule.forRoot(PERFECT_SCROLLBAR_CONFIG)]
+    imports: [PerfectScrollbarModule]
 })
-export class ScrollbarBasicDemoModule{
+export class ScrollbarBasicDemoModule {
 
 }

@@ -1,21 +1,23 @@
-.box-1{
+.box-1 {
     border: 1px solid #ddd;
     height: 500px;
     width: 50%;
     padding: 20px;
 }
 
-.box-2{
+.box-2 {
     height: 100px;
     overflow: hidden;
     border: 1px solid #ddd;
     margin-bottom: 10px;
 }
-.box-2 li{
+
+.box-2 li {
     padding-left: 10px;
     height: 30px;
 }
-.box-3{
+
+.box-3 {
     height: 2000px;
     border: 1px solid #ddd;
 }

@@ -2,9 +2,9 @@ import {Component, ElementRef, NgModule, OnInit, ViewEncapsulation} from '@angul
 import {Router, RouterModule} from '@angular/router';
 import {CommonModule} from "@angular/common";
 import {JigsawCollapseModule} from "jigsaw/component/collapse/collapse";
-import {JigsawScrollBarModule} from "jigsaw/directive/scrollbar/scrollbar";
 import {AffixUtils} from "jigsaw/core/utils/internal-utils";
 import {liveDemoNavInfo, navInfo} from './nav-info'
+import {PerfectScrollbarConfigInterface, PerfectScrollbarModule} from "../../jigsaw/directive/scrollbar/index";
 
 @Component({
     selector: 'jigsaw-demo-list',
@@ -31,6 +31,12 @@ export class DemoListComponent implements OnInit {
             this._router.navigateByUrl('/button/button-full');
         }
     }
+
+    public _$perfectScrollbarConfig: PerfectScrollbarConfigInterface = {
+        suppressScrollX: true,
+        maxScrollbarLength: 100,
+        wheelSpeed: 2
+    };
 }
 
 // 请按照组件的字符序排列
@@ -46,7 +52,7 @@ const demoListRoutes = [
         RouterModule.forChild(demoListRoutes),
         CommonModule,
         JigsawCollapseModule,
-        JigsawScrollBarModule
+        PerfectScrollbarModule
     ],
     exports: [],
     declarations: [

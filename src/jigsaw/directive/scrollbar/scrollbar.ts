@@ -67,12 +67,12 @@ export class JigsawScrollBar extends AbstractJigsawComponent implements OnInit {
      */
     private _initScrollBar(option): void {
         if (!this._scrollBarJq) {
-            this._scrollBarJq = $(this._elf.nativeElement);
+            //this._scrollBarJq = $(this._elf.nativeElement);
         } else {
             // 销毁当前滚动条
             this._scrollBarJq.mCustomScrollbar("destroy");
         }
-        this._scrollBarJq.mCustomScrollbar(option);
+        //this._scrollBarJq.mCustomScrollbar(option);
     }
 
     /*
