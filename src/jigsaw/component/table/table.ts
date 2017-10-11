@@ -627,6 +627,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _handleScrollBar() {
         this._calculateContentWidth();
         this._calibrateTableWidth();
+        this._initVerticalScroll();
         this._listenHorizontalScroll();
     }
 
@@ -649,8 +650,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @private
      */
     private _listenHorizontalScroll() {
-        let xScrollbar;
-        let yScrollbar;
+        let xScrollbar,
+            yScrollbar;
         this._zone.runOutsideAngular(() => {
             this._removeHorizontalScrollListener = this._renderer.listen(
                 this._elementRef.nativeElement.querySelector('.jigsaw-table-range.ps'),
@@ -668,6 +669,22 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                     })
                 });
         });
+    }
+
+    /**
+     * 找到纵向滚动条，并设置初始位置
+     * @private
+     */
+    private _initVerticalScroll(){
+        setTimeout(() => {
+            const yScrollbar = this._elementRef.nativeElement.querySelector('.jigsaw-table-body > .ps__scrollbar-y-rail');
+            if(yScrollbar){
+                this._renderer.setStyle(yScrollbar, 'left',
+                    this._elementRef.nativeElement.offsetWidth - 15 + 'px');
+            }else{
+                this._initVerticalScroll();
+            }
+        }, 0);
     }
 
     /**
@@ -694,13 +711,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         super.ngAfterViewInit();
         this._$selectRow(this.selectedRow, true);
         this._handleScrollBar();
-
-        /*setTimeout(() => {
-            const yScrollbar = this._elementRef.nativeElement.querySelector('.jigsaw-table-body > .ps__scrollbar-y-rail');
-            this._renderer.setStyle(yScrollbar, 'left',
-                this._elementRef.nativeElement.offsetWidth - 15 + 'px');
-        }, 0);*/
-
     }
 
     ngOnInit() {
