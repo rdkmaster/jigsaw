@@ -2,6 +2,7 @@ import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {BigTableData} from "jigsaw/core/data/table-data";
 import {AdditionalColumnDefine, ColumnDefine, TableValueGenerators} from "jigsaw/component/table/table-typings";
+import {TableCellCheckboxRenderer} from "jigsaw/component/table/table-renderer";
 
 @Component({
     templateUrl: './app.component.html'
@@ -13,16 +14,27 @@ export class BigTableDataDemoComponent {
         this.tableData = new BigTableData(http, 'mock-data/hr-list-full');
         this.tableData.pagingInfo.pageSize = 200;
         this.tableData.viewPort.rows = 10;
+        this.tableData.viewPort.columns = 4;
         this.tableData.fromAjax('mock-data/hr-list-full');
     }
 
-    scroll(value) {
+    vScroll(value) {
         this.tableData.viewPort.fromRow = value;
     }
 
     columnDefines: ColumnDefine[] = [
         {
-            target: 'desc', cell: {tooltip: '123'}
+            target: 'desc',
+            cell: {
+                tooltip: TableValueGenerators.originCellDataGenerator
+            }
+        },
+        {
+            target: 'salary',
+            cell: {
+                renderer: TableCellCheckboxRenderer,
+                data: (td, row, col) => td.data[row][col] % 2
+            }
         }
     ];
 

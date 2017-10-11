@@ -408,7 +408,7 @@ class ViewPort {
             return;
         }
         this._fromRow = value;
-        this._sliceData();
+        this._bigTableData.vScroll(value);
     }
 
     get fromRow(): number {
@@ -426,7 +426,7 @@ class ViewPort {
             return;
         }
         this._fromColumn = value;
-        this._sliceData();
+        this._bigTableData.hScroll(value);
     }
 
     get fromColumn(): number {
@@ -494,12 +494,12 @@ export class BigTableData extends PageableTableData {
         }
     }
 
-    public vScroll(delta: number): void {
-        this.scroll(delta);
+    public vScroll(scrollTo: number): void {
+        this.scroll(scrollTo);
     }
 
-    public hScroll(delta: number): void {
-        this.scroll(this.viewPort.fromRow, delta);
+    public hScroll(scrollTo: number): void {
+        this.scroll(this.viewPort.fromRow, scrollTo);
     }
 
     protected ajaxSuccessHandler(rawTableData): void {
