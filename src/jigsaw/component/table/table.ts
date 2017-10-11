@@ -216,7 +216,13 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
                 // generate a tooltip if necessary
                 const tooltipGenerator = this._getGenerator(matchedColumnDef, 'tooltip');
-                settings.tooltip = tooltipGenerator ? tooltipGenerator(this.data, rowIndex, realColIndex, this._additionalData) : '';
+                if (tooltipGenerator) {
+                    settings.tooltip = tooltipGenerator(this.data, rowIndex, realColIndex, this._additionalData);
+                } else if (matchedColumnDef && matchedColumnDef.cell && CommonUtils.isDefined(matchedColumnDef.cell.tooltip)) {
+                    settings.tooltip = matchedColumnDef.cell.tooltip;
+                } else {
+                    settings.tooltip = '';
+                }
 
                 // 修改settings的group属性
                 if (matchedColumnDef && matchedColumnDef.group) {
