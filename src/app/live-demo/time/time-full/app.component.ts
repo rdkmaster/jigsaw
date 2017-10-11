@@ -36,5 +36,8 @@ export class TimeFullComponent {
 
     // demo-6
     date6 = 'now';
+
+    // demo-7
+    date7 = 'now-30m';
 }
 

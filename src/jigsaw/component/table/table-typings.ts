@@ -8,17 +8,19 @@ export type TableColumnTargetFinder = (field: string, index: number) => boolean;
 export type TableColumnTarget = number | string | (number | string)[] | TableColumnTargetFinder;
 export type TableCellDataGenerator = (tableData: TableData, row: number, column: number) => any;
 
-export function rowIndexGenerator(tableData: TableData, row: number): any {
-    let index = 1;
-    if (tableData instanceof PageableTableData || tableData instanceof LocalPageableTableData) {
-        index += (tableData.pagingInfo.currentPage - 1) * tableData.pagingInfo.pageSize;
+export class TableValueGenerators {
+    public static rowIndexGenerator(tableData: TableData, row: number): any {
+        let index = 1;
+        if (tableData instanceof PageableTableData || tableData instanceof LocalPageableTableData) {
+            index += (tableData.pagingInfo.currentPage - 1) * tableData.pagingInfo.pageSize;
+        }
+        index += row;
+        return index;
     }
-    index += row;
-    return index;
-}
 
-export function columnTooltipGenerator(tableData: TableData, row:number, column: number):any {
-    return tableData && tableData.data && tableData.data[row] ? tableData.data[row][column] : '';
+    public static originCellDataGenerator(tableData: TableData, row:number, column: number):any {
+        return tableData && tableData.data && tableData.data[row] ? tableData.data[row][column] : '';
+    }
 }
 
 export class ColumnDefine {

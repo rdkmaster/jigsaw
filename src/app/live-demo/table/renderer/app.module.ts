@@ -10,6 +10,7 @@ import {JigsawComboSelectModule} from "jigsaw/component/combo-select/index";
 import {JigsawListModule} from "jigsaw/component/list-and-tile/list";
 import {JigsawCheckBoxModule} from "jigsaw/component/checkbox/index";
 import {JigsawButtonModule} from "jigsaw/component/button/button";
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {TableRendererDemoComponent} from './app.component';
 import {
     OfficeEditor, OfficeHeader, OfficeRenderer, TableCellOperation,
@@ -19,7 +20,8 @@ import {
 @NgModule({
     imports: [
         JigsawTableModule, JigsawSelectModule, JigsawTableRendererModule, JigsawPaginationModule,
-        JigsawComboSelectModule, JigsawListModule, JigsawCheckBoxModule, JigsawButtonModule
+        JigsawComboSelectModule, JigsawListModule, JigsawCheckBoxModule, JigsawButtonModule,
+        JigsawDemoDescriptionModule
     ],
     declarations: [
         TableRendererDemoComponent, PositionHeaderSelect, TableCellOperation,

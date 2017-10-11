@@ -1,15 +1,15 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
-import {Observable} from "rxjs/Observable";
+import {TranslateService} from '@ngx-translate/core';
 import {JigsawButtonModule} from "jigsaw/component/button/button";
 
 import {AppComponent} from './app.component';
 import {JigsawRootModule} from "../jigsaw/component/root/root";
+import {AjaxInterceptor} from 'app/app.interceptors';
 
 const appRoutes = [
     {
@@ -27,14 +27,18 @@ const appRoutes = [
         AppComponent
     ],
     imports: [
-        BrowserModule,
-        FormsModule,
-        HttpModule,
+        BrowserModule, BrowserAnimationsModule, FormsModule, HttpClientModule,
         RouterModule.forRoot(appRoutes, {useHash: true}),
-        BrowserAnimationsModule,
         JigsawRootModule, JigsawButtonModule
     ],
-    providers: [TranslateService],
+    providers: [
+        TranslateService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AjaxInterceptor,
+            multi: true,
+        },
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

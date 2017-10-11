@@ -1,18 +1,16 @@
 import {Component, ViewEncapsulation} from "@angular/core";
-import {Http} from "@angular/http";
+import {HttpClient} from "@angular/common/http";
 import {LocalPageableTableData} from "jigsaw/core/data/table-data";
 import {
-    AdditionalColumnDefine,
-    AdditionalTableData,
-    ColumnDefine, columnTooltipGenerator,
-    rowIndexGenerator
+AdditionalColumnDefine,
+AdditionalTableData,
+ColumnDefine, TableValueGenerators,
 } from "jigsaw/component/table/table-typings";
 import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/component/table/table-renderer";
 import {
-    filterData, OfficeEditor, OfficeHeader, OfficeRenderer, PositionHeaderSelect,
-    TableCellOperation
+filterData, OfficeEditor, OfficeHeader, OfficeRenderer, PositionHeaderSelect,
+TableCellOperation
 } from "./renderers";
-
 
 @Component({
     templateUrl: './app.component.html',
@@ -24,11 +22,11 @@ export class TableRendererDemoComponent {
     tableData: LocalPageableTableData;
     additionalData: AdditionalTableData;
 
-    constructor(public http: Http) {
+    constructor(public http: HttpClient) {
         this.tableData = new LocalPageableTableData();
         this.tableData.pagingInfo.pageSize = 200;
         this.tableData.http = http;
-        this.tableData.fromAjax('mock-data/table/data.json');
+        this.tableData.fromAjax('mock-data/hr-list-full');
     }
 
     columnDefines: ColumnDefine[] = [
@@ -62,7 +60,7 @@ export class TableRendererDemoComponent {
         {
             target: 'desc',
             cell: {
-                tooltip: columnTooltipGenerator,
+                tooltip: TableValueGenerators.originCellDataGenerator,
                 clazz: 'green-text'
             },
             width: '100'
@@ -80,7 +78,7 @@ export class TableRendererDemoComponent {
                 text: '#',
             },
             cell: {
-                data: rowIndexGenerator,
+                data: TableValueGenerators.rowIndexGenerator,
                 clazz: 'green-text'
             }
         },
@@ -159,6 +157,10 @@ export class TableRendererDemoComponent {
         filterData(this.tableData, {allFields: key});
     }
 
-    showDetail: boolean = false;
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '这个demo展示了表格的列定义模式的多个用法，包括列渲染器、列宽调整、列的宽文本控制，列tooltip等。';
+    description: string = require('!!raw-loader!./readme.md');
 }
 

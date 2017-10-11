@@ -1,7 +1,7 @@
 import {Component, Renderer2, ViewContainerRef} from "@angular/core";
-import {Http} from "@angular/http";
+import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/core/data/table-data";
-import {AdditionalColumnDefine, rowIndexGenerator} from "jigsaw/component/table/table-typings";
+import {AdditionalColumnDefine, TableValueGenerators} from "jigsaw/component/table/table-typings";
 
 @Component({
     templateUrl: './app.component.html'
@@ -10,10 +10,10 @@ export class TableScrollAmountDemoComponent {
     tableData: TableData;
 
     constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2, http: Http) {
+                public renderer: Renderer2, http: HttpClient) {
         this.tableData = new TableData();
         this.tableData.http = http;
-        this.tableData.fromAjax('mock-data/table/data.json');
+        this.tableData.fromAjax('mock-data/hr-list');
     }
 
     additionalColumns: AdditionalColumnDefine[] = [
@@ -24,7 +24,7 @@ export class TableScrollAmountDemoComponent {
                 text: '#'
             },
             cell: {
-                data: rowIndexGenerator
+                data: TableValueGenerators.rowIndexGenerator
             }
         }
     ];

@@ -8,7 +8,7 @@ import {
     TableCellCheckboxRenderer, TableCellRendererBase, TableCellTextEditorRenderer, TableHeadCheckboxRenderer
 } from "jigsaw/component/table/table-renderer";
 import {
-    ColumnDefine, AdditionalColumnDefine, rowIndexGenerator
+    ColumnDefine, AdditionalColumnDefine, TableValueGenerators
 } from "jigsaw/component/table/table-typings";
 
 @Component({
@@ -84,7 +84,7 @@ export class TableLineEllipsisDemoComponent {
                 text: '#',
             },
             cell: {
-                data: rowIndexGenerator
+                data: TableValueGenerators.rowIndexGenerator
             }
         },
         {

@@ -1,17 +1,17 @@
 import {Component, Renderer2, ViewContainerRef} from "@angular/core";
-import {Http} from "@angular/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {PageableTableData} from "jigsaw/core/data/table-data";
 
 @Component({
-  templateUrl: './app.component.html'
+    templateUrl: './app.component.html'
 })
 export class TablePageableDemoComponent {
-    pageable:PageableTableData;
+    pageable: PageableTableData;
+
     constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2, http:Http) {
+                public renderer: Renderer2, http: HttpClient) {
         this.pageable = new PageableTableData(http, {
-            url: 'http://localhost:4200/mock-data/array-collection/paging-data.json',
-            params: {aa: 11, bb: 22}, method:'get'
+            url: 'mock-data/countries', params: {aa: 11, bb: 22}
         });
         this.pageable.onAjaxComplete(() => {
             console.log(this.pageable);
@@ -19,10 +19,17 @@ export class TablePageableDemoComponent {
         this.pageable.fromAjax();
     }
 
-    getCurrentPage(){
+    getCurrentPage() {
+        if (this.pageable.busy) {
+            return;
+        }
         this.pageable.changePage(this.pageable.pagingInfo);
     }
-    getPageSize(){
+
+    getPageSize() {
+        if (this.pageable.busy) {
+            return;
+        }
         this.pageable.changePage(this.pageable.pagingInfo);
     }
 }
