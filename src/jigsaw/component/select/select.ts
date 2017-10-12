@@ -132,8 +132,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
      */
     public _$perfectScrollbarConfig: PerfectScrollbarConfigInterface = {
         suppressScrollX: true,
-        maxScrollbarLength: 100,
-        wheelSpeed: 2
+        wheelSpeed: 0.5
     };
 
     ngOnInit() {

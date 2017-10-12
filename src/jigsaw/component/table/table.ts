@@ -530,9 +530,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
         if (this.floatingHeader && !this.hideHeader) {
             this._zone.runOutsideAngular(() => {
-                this._removeWindowScrollListener = this._renderer.listen('window', 'scroll', () => {
-                    this._floatingHead();
-                });
+                this._removeWindowScrollListener = this._renderer.listen('window', 'scroll',
+                    () => this._floatingHead());
             });
         }
     }
@@ -712,23 +711,19 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     /**
-     *
      * @internal
      */
     public _$rangeScrollbarConfig: PerfectScrollbarConfigInterface = {
         suppressScrollY: true,
-        maxScrollbarLength: 100,
-        wheelSpeed: 2
+        wheelSpeed: 0.5
     };
 
     /**
-     *
      * @internal
      */
     public _$contentScrollbarConfig: PerfectScrollbarConfigInterface = {
         suppressScrollX: true,
-        maxScrollbarLength: 100,
-        wheelSpeed: 2
+        wheelSpeed: 0.5
     };
 
     ngAfterViewInit() {
