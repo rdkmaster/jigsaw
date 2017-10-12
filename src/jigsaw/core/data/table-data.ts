@@ -23,10 +23,6 @@ export type TableDataField = string[];
 export type TableDataMatrix = TableMatrixRow[];
 export type RawTableData = { field: TableDataField, header: TableDataHeader, data: TableDataMatrix };
 
-export interface ISlicedTableData {
-    originData: RawTableData;
-}
-
 export class TableDataBase extends AbstractGeneralCollection<any> {
     public static isTableData(data: any): boolean {
         return data && data.hasOwnProperty('data') && data.data instanceof Array &&
@@ -384,9 +380,9 @@ export class DataViewPort {
             return;
         }
         this._rows = value;
-        const originLength = this._bigTableData.originData ? this._bigTableData.originData.data.length : -1;
+        const originLength = this._bigTableData.origin ? this._bigTableData.origin.data.length : -1;
         if (originLength > 0 && this._fromRow + value > originLength) {
-            this._fromRow = this._bigTableData.originData.data.length - value;
+            this._fromRow = this._bigTableData.origin.data.length - value;
             this._fromRow = this._fromRow >= 0 ? this._fromRow : 0;
         }
         this._sliceData();
@@ -403,9 +399,9 @@ export class DataViewPort {
             return;
         }
         this._columns = value;
-        const originLength = this._bigTableData.originData ? this._bigTableData.originData.field.length : -1;
+        const originLength = this._bigTableData.origin ? this._bigTableData.origin.field.length : -1;
         if (originLength > 0 && this._fromColumn + value > originLength) {
-            this._fromColumn = this._bigTableData.originData.field.length - value;
+            this._fromColumn = this._bigTableData.origin.field.length - value;
             this._fromColumn = this._fromColumn >= 0 ? this._fromColumn : 0;
         }
         this._sliceData();
@@ -421,8 +417,8 @@ export class DataViewPort {
         if (value < 0 || this._fromRow == value) {
             return;
         }
+        // `vScroll` will update `_fromRow` to a proper value
         this._bigTableData.vScroll(value);
-        this._fromRow = value;
     }
 
     get fromRow(): number {
@@ -439,8 +435,8 @@ export class DataViewPort {
         if (value < 0 || this._fromColumn == value) {
             return;
         }
+        // `hScroll` will update `_fromColumn` to a proper value
         this._bigTableData.hScroll(value);
-        this._fromColumn = value;
     }
 
     get fromColumn(): number {
@@ -452,42 +448,42 @@ export class DataViewPort {
     }
 }
 
-export class BigTableData extends PageableTableData implements ISlicedTableData {
+export class BigTableData extends PageableTableData {
 
     constructor(public http: HttpClient, requestOptionsOrUrl: HttpClientOptions | string) {
         super(http, requestOptionsOrUrl);
         this.pagingInfo.pageSize = 500;
     }
 
-    private _originData: RawTableData;
+    private _origin: RawTableData;
 
-    get originData(): RawTableData {
-        return this._originData;
+    get origin(): RawTableData {
+        return this._origin;
     }
 
     public readonly viewPort: DataViewPort = new DataViewPort(this);
 
     private _takeSnapshot(): void {
-        if (this._originData) {
+        if (this._origin) {
             return;
         }
-        this._originData = {
+        this._origin = {
             field: this.field, header: this.header, data: this.data
         }
     }
 
     protected sliceData(): void {
         this._takeSnapshot();
-        if (this._originData.field.length == 0 || this._originData.header.length == 0 || this._originData.data.length == 0) {
+        if (this._origin.field.length == 0 || this._origin.header.length == 0 || this._origin.data.length == 0) {
             return;
         }
 
         const toColumn = this.viewPort.columns + this.viewPort.fromColumn;
-        this.field = this._originData.field.slice(this.viewPort.fromColumn, toColumn);
-        this.header = this._originData.header.slice(this.viewPort.fromColumn, toColumn);
+        this.field = this._origin.field.slice(this.viewPort.fromColumn, toColumn);
+        this.header = this._origin.header.slice(this.viewPort.fromColumn, toColumn);
 
         const toRow = this.viewPort.rows + this.viewPort.fromRow;
-        const data = this._originData.data.slice(this.viewPort.fromRow, toRow);
+        const data = this._origin.data.slice(this.viewPort.fromRow, toRow);
         this.data = data.map(item => item.slice(this.viewPort.fromColumn, toColumn));
 
         this.refresh();
@@ -497,12 +493,12 @@ export class BigTableData extends PageableTableData implements ISlicedTableData 
         this._takeSnapshot();
 
         verticalTo = isNaN(verticalTo) ? this.viewPort.fromRow : verticalTo;
-        verticalTo = verticalTo + this.viewPort.rows > this._originData.data.length ?
-            this._originData.data.length - this.viewPort.rows : verticalTo;
+        verticalTo = verticalTo + this.viewPort.rows > this._origin.data.length ?
+            this._origin.data.length - this.viewPort.rows : verticalTo;
 
         horizontalTo = isNaN(horizontalTo) ? this.viewPort.fromColumn : horizontalTo;
-        horizontalTo = horizontalTo + this.viewPort.columns > this._originData.field.length ?
-            this._originData.field.length - this.viewPort.columns : horizontalTo;
+        horizontalTo = horizontalTo + this.viewPort.columns > this._origin.field.length ?
+            this._origin.field.length - this.viewPort.columns : horizontalTo;
 
         if (verticalTo != this.viewPort.fromRow || horizontalTo != this.viewPort.fromColumn) {
             this.viewPort.setFromRowSilence(verticalTo);
@@ -521,14 +517,14 @@ export class BigTableData extends PageableTableData implements ISlicedTableData 
 
     protected ajaxSuccessHandler(rawTableData): void {
         super.ajaxSuccessHandler(rawTableData);
-        this._originData = {field: rawTableData.field, header: rawTableData.header, data: rawTableData.data};
+        this._origin = {field: rawTableData.field, header: rawTableData.header, data: rawTableData.data};
         this.sliceData();
     }
 
     protected ajaxErrorHandler(error): void {
         super.ajaxErrorHandler(error);
-        this._originData = {field: [], header: [], data: []};
-        this._originData = new TableData();
+        this._origin = {field: [], header: [], data: []};
+        this._origin = new TableData();
     }
 
     public fromObject(data: any): TableDataBase {

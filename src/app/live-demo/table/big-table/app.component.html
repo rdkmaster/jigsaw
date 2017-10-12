@@ -5,21 +5,30 @@
 
 <!-- start to learn the demo from here -->
 
-行数（{{tableData.viewPort.rows}}）：
+行数：
 <jigsaw-slider width="300px" [value]="10" (change)="tableData.viewPort.rows = $event" min="5" max="30">
 </jigsaw-slider>
+（{{tableData.viewPort.rows}}）
 
-列数（{{tableData.viewPort.columns}}）：
+列数：
 <jigsaw-slider width="300px" [value]="5" (change)="tableData.viewPort.columns = $event" min="2" max="7">
 </jigsaw-slider>
+（{{tableData.viewPort.columns}}）
 
+<br>
 
-<jigsaw-slider [value]="0" (change)="this.tableData.viewPort.fromRow = $event" min="0" max="200">
+当前行：
+<jigsaw-slider width="300px" [value]="0" (change)="this.tableData.viewPort.fromRow = $event" min="0" max="200">
 </jigsaw-slider>
+（{{tableData.viewPort.fromRow}}）
 
-<jigsaw-slider [value]="0" (change)="hScroll($event)" min="0" max="4">
+当前列：
+<jigsaw-slider width="300px" [value]="0" (change)="tableData.viewPort.fromColumn = $event" min="0" max="4">
 </jigsaw-slider>
+（{{tableData.viewPort.fromColumn}}）
 
-<jigsaw-table [data]="tableData"[columnDefines]="columnDefines"
+<br>
+
+<jigsaw-table [data]="tableData"[columnDefines]="columnDefines" trackRowBy="name"
               [additionalColumnDefines]="additionalColumnDefines">
 </jigsaw-table>
