@@ -44,7 +44,7 @@
     "@types/chalk": "~0.4.31",
     "@types/fs-extra": "~3.0.1",
     "@types/glob": "~5.0.32",
-    "@types/gulp": "~4.0.3",
+    "@types/gulp": "4.0.3",
     "@types/jasmine": "~2.5.45",
     "@types/minimist": "~1.2.0",
     "@types/node": "~7.0.43",
