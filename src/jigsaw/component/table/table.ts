@@ -10,7 +10,7 @@
     OnInit,
     Output,
     QueryList,
-    Renderer2,
+    Renderer2, ViewChild,
     ViewChildren
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
@@ -33,7 +33,9 @@ import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer} from "./table-renderer";
 import {AffixUtils} from "../../core/utils/internal-utils";
-import {PerfectScrollbarConfigInterface, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
+import {
+    PerfectScrollbarConfigInterface, PerfectScrollbarDirective, PerfectScrollbarModule
+} from "ngx-perfect-scrollbar";
 
 @Component({
     selector: 'jigsaw-table, j-table',
@@ -518,18 +520,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _addWindowListener() {
         this._removeWindowListener();
 
-        let xScrollbar,
-            yScrollbar;
         this._zone.runOutsideAngular(() => {
             this._removeWindowResizeListener = this._renderer.listen('window', 'resize', () => {
                 this._floatingHead();
                 this._calibrateTableWidth();
-
-                xScrollbar = xScrollbar ? xScrollbar :
-                    this._elementRef.nativeElement.querySelector('.jigsaw-table-range > .ps__scrollbar-x-rail');
-                yScrollbar = yScrollbar ? yScrollbar :
-                    this._elementRef.nativeElement.querySelector('.jigsaw-table-body-range > .ps__scrollbar-y-rail');
-                this._setVerticalScrollbarOffset(xScrollbar, yScrollbar);
+                this._setVerticalScrollbarOffset();
             });
         });
 
@@ -607,6 +602,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         });
     }
 
+    @ViewChild('contentScrollbar', {read: PerfectScrollbarDirective})
+    public contentScrollbar: PerfectScrollbarDirective;
+
+    @ViewChild('bodyScrollbar', {read: PerfectScrollbarDirective})
+    public bodyScrollbar: PerfectScrollbarDirective;
+
     /**
      * 计算内容宽度，产生横向滚动条
      * @private
@@ -653,7 +654,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         const tableBodyRange = this._elementRef.nativeElement.querySelector('.jigsaw-table-body-range');
 
         // table body range's width is always not less than table body's
-        console.log(this._elementRef.nativeElement.offsetWidth, tableBody.offsetWidth);
         this._renderer.setStyle(tableBodyRange, 'width',
             (this._elementRef.nativeElement.offsetWidth > tableBody.offsetWidth ?
                 this._elementRef.nativeElement.offsetWidth : tableBody.offsetWidth) + 'px');
@@ -671,51 +671,40 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @private
      */
     private _listenHorizontalScroll() {
-        let xScrollbar,
-            yScrollbar;
         this._zone.runOutsideAngular(() => {
             this._removeHorizontalScrollListener = this._renderer.listen(
-                this._elementRef.nativeElement.querySelector('.jigsaw-table-range.ps'),
+                //this._elementRef.nativeElement.querySelector('.jigsaw-table-range.ps'),
+                this.contentScrollbar.elementRef.nativeElement,
                 'ps-scroll-x', () => {
-                    // selector使用>选择直接子元素，避免选择到其他滚动条
-                    xScrollbar = xScrollbar ? xScrollbar :
-                        this._elementRef.nativeElement.querySelector('.jigsaw-table-range > .ps__scrollbar-x-rail');
-                    yScrollbar = yScrollbar ? yScrollbar :
-                        this._elementRef.nativeElement.querySelector('.jigsaw-table-body-range > .ps__scrollbar-y-rail');
-                    this._setVerticalScrollbarOffset(xScrollbar, yScrollbar);
+                    this._setVerticalScrollbarOffset();
                 });
         });
     }
 
     /**
      * 设置纵向滚动条位置
-     * @param {HTMLElement} xScrollbar
-     * @param {HTMLElement} yScrollbar
      * @private
      */
-    private _setVerticalScrollbarOffset(xScrollbar: HTMLElement, yScrollbar: HTMLElement){
-        // 等待xScrollbar的left值更新
-        setTimeout(() => {
-            if (yScrollbar) {
-                const yScrollbarLeft = xScrollbar ?
-                    this._elementRef.nativeElement.offsetWidth
-                    + parseInt(xScrollbar.style.left.replace('px', '')) - 15 + 'px' :
-                    this._elementRef.nativeElement.offsetWidth - 15 + 'px';
-                this._renderer.setStyle(yScrollbar, 'left', yScrollbarLeft);
-            }
-        }, 0)
+    private _setVerticalScrollbarOffset(){
+        if (this._yScrollbarElement) {
+            this._renderer.setStyle(this._yScrollbarElement, 'left',
+                this._elementRef.nativeElement.offsetWidth + this.contentScrollbar.geometry().x - 15 + 'px');
+        }
     }
 
+    private _yScrollbarElement: HTMLElement;
     /**
      * 找到纵向滚动条，并设置初始位置
      * @private
      */
     private _initVerticalScroll() {
         setTimeout(() => {
+            // selector使用>选择直接子元素，避免选择到其他滚动条
             const yScrollbar = this._elementRef.nativeElement.querySelector('.jigsaw-table-body-range > .ps__scrollbar-y-rail');
             if (yScrollbar) {
                 this._renderer.setStyle(yScrollbar, 'left',
                     this._elementRef.nativeElement.offsetWidth - 15 + 'px');
+                this._yScrollbarElement = yScrollbar;
             } else {
                 this._initVerticalScroll();
             }
