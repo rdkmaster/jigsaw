@@ -1,6 +1,5 @@
-import {Component, OnDestroy, OnInit} from "@angular/core";
+import {Component} from "@angular/core";
 import {TableCellRendererBase} from "jigsaw/component/table/table-renderer";
-import {LocalPageableTableData, TableData} from "../../../../jigsaw/core/data/table-data";
 
 @Component({
     template: `
@@ -23,9 +22,9 @@ import {LocalPageableTableData, TableData} from "../../../../jigsaw/core/data/ta
 })
 export class OfficeHeaderRenderer extends TableCellRendererBase {
     officeList = [
-        {label: 'Online Prod I'}, {label: 'Online Prod II'},
-        {label: 'Offline Prod I'}, {label: 'Offline Prod II'},
-        {label: 'Platform I'}, {label: 'Platform II'}, {label: 'Platform III'}
+        {label: 'data-1'}, {label: 'data-2'},
+        {label: 'data-3'}, {label: 'data-4'},
+        {label: 'data-5'}, {label: 'data-6'},
     ];
     selectedOffices = this.officeList.concat();
 

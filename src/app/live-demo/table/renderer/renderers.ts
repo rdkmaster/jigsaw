@@ -127,10 +127,6 @@ export class PositionHeaderRenderer extends TableCellRendererBase {
     styles: [`a{color: #ffaa00} a:hover{text-decoration: underline}`]
 })
 export class CellOperationRenderer extends TableCellRendererBase {
-    constructor() {
-        super();
-    }
-
     payRaise() {
         this.tableData.data[this.row][3] = Number(this.tableData.data[this.row][3]) + 2000;
         // 这一步非常重要，我们直接修改了tableData的值，Jigsaw无法知道发生了啥变化，需要通过调用`refresh()`来通知Jigsaw

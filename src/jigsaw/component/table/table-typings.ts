@@ -34,7 +34,7 @@ export class TableValueGenerators {
 export class ColumnDefine {
     target: TableColumnTarget;
     visible?: boolean;
-    width?: string;
+    width?: string | number;
     header?: TableHeader;
     cell?: TableCell;
     group?: boolean;
@@ -43,7 +43,7 @@ export class ColumnDefine {
 export class AdditionalColumnDefine {
     pos?: number;
     visible?: boolean;
-    width?: string;
+    width?: string | number;
     header?: TableHeader;
     cell?: TableCell;
     group?: boolean;

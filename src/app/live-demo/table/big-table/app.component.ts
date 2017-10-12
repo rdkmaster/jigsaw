@@ -11,11 +11,11 @@ export class BigTableDataDemoComponent {
     tableData: BigTableData;
 
     constructor(public http: HttpClient) {
-        this.tableData = new BigTableData(http, 'mock-data/hr-list-full');
-        this.tableData.pagingInfo.pageSize = 200;
+        this.tableData = new BigTableData(http, 'mock-data/big-table-data');
+        this.tableData.pagingInfo.pageSize = 1500;
         this.tableData.viewPort.rows = 10;
-        this.tableData.viewPort.columns = 4;
-        this.tableData.fromAjax('mock-data/hr-list-full');
+        this.tableData.viewPort.columns = 10;
+        this.tableData.fromAjax();
     }
 
     changeRowCount(value) {
@@ -32,26 +32,22 @@ export class BigTableDataDemoComponent {
 
     columnDefines: ColumnDefine[] = [
         {
-            target: 'desc',
-            cell: {
-                tooltip: TableValueGenerators.originCellDataGenerator
-            }
-        },
-        {
-            target: 'position',
+            target: 'field-2',
+            width: 120,
             header: {
                 renderer: PositionHeaderRenderer
             }
         },
         {
-            target: 'office',
+            target: 'field-5',
+            width: 200,
             header: {
                 renderer: OfficeHeaderRenderer
             },
             cell: {
                 renderer: OfficeCellRenderer
             }
-        }
+        },
     ];
 
     additionalColumnDefines: AdditionalColumnDefine[] = [
@@ -63,7 +59,6 @@ export class BigTableDataDemoComponent {
             },
             cell: {
                 data: TableValueGenerators.rowIndexGenerator,
-                clazz: 'green-text'
             }
         }
     ];
@@ -71,7 +66,7 @@ export class BigTableDataDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '这个demo展示了表格的列定义模式的多个用法，包括列渲染器、列宽调整、列的宽文本控制，列tooltip等。';
+    summary: string = '这个demo展示了表格呈现海量数据时的一个解决方案，它能够以常数时间处理任何量级的数据。';
     description: string = require('!!raw-loader!./readme.md');
 }
 

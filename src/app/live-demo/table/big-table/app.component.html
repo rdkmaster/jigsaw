@@ -6,24 +6,26 @@
 <!-- start to learn the demo from here -->
 
 行数：
-<jigsaw-slider width="300px" [value]="10" (change)="tableData.viewPort.rows = $event" min="5" max="30">
+<jigsaw-slider width="300px" min="5" max="30" [(value)]="tableData.viewPort.rows">
 </jigsaw-slider>
 （{{tableData.viewPort.rows}}）
 
 列数：
-<jigsaw-slider width="300px" [value]="5" (change)="tableData.viewPort.columns = $event" min="2" max="7">
+<jigsaw-slider width="300px" min="2" max="15" [(value)]="tableData.viewPort.columns">
 </jigsaw-slider>
 （{{tableData.viewPort.columns}}）
 
 <br>
 
 当前行：
-<jigsaw-slider width="300px" [value]="0" (change)="this.tableData.viewPort.fromRow = $event" min="0" max="200">
+<jigsaw-slider [value]="0" (change)="this.tableData.viewPort.fromRow = $event"
+               width="300px" min="0" [max]="tableData.origin.data.length">
 </jigsaw-slider>
 （{{tableData.viewPort.fromRow}}）
 
 当前列：
-<jigsaw-slider width="300px" [value]="0" (change)="tableData.viewPort.fromColumn = $event" min="0" max="4">
+<jigsaw-slider [value]="0" (change)="tableData.viewPort.fromColumn = $event"
+               width="300px" min="0" [max]="tableData.origin.field.length">
 </jigsaw-slider>
 （{{tableData.viewPort.fromColumn}}）
 
