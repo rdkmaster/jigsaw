@@ -1,5 +1,5 @@
 <div class="demo-wrap">
-    <div class="left-box demo-nav" [jigsawPerfectScrollbar]="_$perfectScrollbarConfig" [style.height.px]="navHeight">
+    <div class="left-box demo-nav" [perfectScrollbar]="_$perfectScrollbarConfig" [style.height.px]="navHeight">
         <jigsaw-collapse class="nav-list" mode="accordion">
             <jigsaw-collapse-pane header="Live Demo" [isActive]="true">
                 <div class="group" *ngFor="let nav of liveDemoNavData.navList">

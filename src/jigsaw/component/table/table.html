@@ -1,4 +1,4 @@
-<div class="jigsaw-table-range" [jigsawPerfectScrollbar]="_$rangeScrollbarConfig">
+<div class="jigsaw-table-range" [perfectScrollbar]="_$rangeScrollbarConfig">
     <table class="jigsaw-table-header">
         <colgroup>
             <col *ngFor="let head of _$headerSettings;" width="{{head.width}}">
@@ -21,7 +21,7 @@
         </tr>
         </thead>
     </table>
-    <div  class="jigsaw-table-body" [style.width]="contentWidth" [jigsawPerfectScrollbar]="_$contentScrollbarConfig">
+    <div  class="jigsaw-table-body" [style.width]="contentWidth" [perfectScrollbar]="_$contentScrollbarConfig">
         <table>
             <colgroup>
                 <col *ngFor="let head of _$headerSettings;" width="{{head.width}}">

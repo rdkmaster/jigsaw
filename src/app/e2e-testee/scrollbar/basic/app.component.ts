@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {PerfectScrollbarConfigInterface} from "jigsaw/directive/scrollbar/index";
+import {PerfectScrollbarConfigInterface} from "ngx-perfect-scrollbar";
 
 @Component({
     templateUrl: './app.component.html',

@@ -30,7 +30,8 @@
         "jquery-mousewheel": "^3.1.13",
         "malihu-custom-scrollbar-plugin": "^3.1.5",
         "ztree": "^3.5.24",
-        "font-awesome": "^4.7.0"
+        "font-awesome": "^4.7.0",
+        "ngx-perfect-scrollbar": "^5.0.0-7"
     },
     "dependencies": {
         "@rdkmaster/icon-font": "^1.0.4",

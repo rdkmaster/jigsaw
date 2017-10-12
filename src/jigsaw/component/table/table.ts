@@ -33,7 +33,7 @@ import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer} from "./table-renderer";
 import {AffixUtils} from "../../core/utils/internal-utils";
-import {JigsawPerfectScrollbarModule, PerfectScrollbarConfigInterface} from "../../directive/scrollbar/index";
+import {PerfectScrollbarConfigInterface, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 
 @Component({
     selector: 'jigsaw-table, j-table',
@@ -520,6 +520,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
         this._removeWindowResizeListener = this._renderer.listen('window', 'resize', () => {
             this._floatingHead();
+            this._calibrateTableWidth();
         });
 
         if (this.floatingHeader && !this.hideHeader) {
@@ -759,7 +760,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
 @NgModule({
     declarations: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
-    imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, JigsawPerfectScrollbarModule],
+    imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, PerfectScrollbarModule],
     exports: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
     entryComponents: [TableCellTextEditorRenderer, DefaultCellRenderer]
 })
