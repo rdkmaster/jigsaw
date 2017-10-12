@@ -35,7 +35,7 @@ import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRende
 import {AffixUtils} from "../../core/utils/internal-utils";
 import {
     PerfectScrollbarConfigInterface, PerfectScrollbarDirective, PerfectScrollbarModule
-} from "ngx-perfect-scrollbar";
+} from "ngx-perfect-scrollbar/dist";
 
 @Component({
     selector: 'jigsaw-table, j-table',
@@ -672,7 +672,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _listenHorizontalScroll() {
         this._zone.runOutsideAngular(() => {
             this._removeHorizontalScrollListener = this._renderer.listen(
-                //this._elementRef.nativeElement.querySelector('.jigsaw-table-range.ps'),
                 this.contentScrollbar.elementRef.nativeElement,
                 'ps-scroll-x', () => {
                     this._setVerticalScrollbarOffset();
@@ -684,7 +683,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * 设置纵向滚动条位置
      * @private
      */
-    private _setVerticalScrollbarOffset(){
+    private _setVerticalScrollbarOffset() {
         if (this._yScrollbarElement) {
             this._renderer.setStyle(this._yScrollbarElement, 'left',
                 this._elementRef.nativeElement.offsetWidth + this.contentScrollbar.geometry().x - 15 + 'px');
@@ -692,6 +691,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     private _yScrollbarElement: HTMLElement;
+
     /**
      * 找到纵向滚动条，并设置初始位置
      * @private
