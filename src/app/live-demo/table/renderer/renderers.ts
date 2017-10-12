@@ -40,21 +40,6 @@ export class OfficeRendererBase extends TableCellRendererBase {
 
 @Component({
     template: `
-        <jigsaw-select [value]="selected" (valueChange)="dispatchChangeEvent($event.label)"
-                       [data]="officeList" width="100%" height="25">
-        </jigsaw-select>
-    `
-})
-export class OfficeEditor extends OfficeRendererBase {
-    selected: any;
-
-    onDataRefresh() {
-        this.selected = {label: this.cellData};
-    }
-}
-
-@Component({
-    template: `
         <j-combo-select [placeholder]="cellData" width="100%" height="30" (openChange)="onChange($event)">
             <ng-template>
                 <div style="width: 182px; background-color: #fff;">
@@ -73,7 +58,7 @@ export class OfficeEditor extends OfficeRendererBase {
         </j-combo-select>
     `
 })
-export class OfficeHeader extends OfficeRendererBase {
+export class OfficeHeaderRenderer extends OfficeRendererBase {
     selectedOffices = this.officeList.concat();
 
     selectAll() {
@@ -97,10 +82,25 @@ export class OfficeHeader extends OfficeRendererBase {
 
 @Component({
     template: `
+        <jigsaw-select [value]="selected" (valueChange)="dispatchChangeEvent($event.label)"
+                       [data]="officeList" width="100%" height="25">
+        </jigsaw-select>
+    `
+})
+export class OfficeCellEditorRenderer extends OfficeRendererBase {
+    selected: any;
+
+    onDataRefresh() {
+        this.selected = {label: this.cellData};
+    }
+}
+
+@Component({
+    template: `
         <span class="fa fa-edit"></span> {{cellData}}
     `
 })
-export class OfficeRenderer extends TableCellRendererBase {
+export class OfficeCellRenderer extends TableCellRendererBase {
 }
 
 @Component({
@@ -110,7 +110,7 @@ export class OfficeRenderer extends TableCellRendererBase {
         </jigsaw-select>
     `
 })
-export class PositionHeaderSelect extends TableCellRendererBase {
+export class PositionHeaderRenderer extends TableCellRendererBase {
     listItems = [{label: 'All Positions'}, {label: 'Developer'}, {label: 'System Architect'}, {label: 'Test Engineer'}];
 
     onChange(selected) {
@@ -126,7 +126,7 @@ export class PositionHeaderSelect extends TableCellRendererBase {
     template: '<a (click)="payRaise()">加薪</a> <a (click)="fire()">辞退</a>',
     styles: [`a{color: #ffaa00} a:hover{text-decoration: underline}`]
 })
-export class TableCellOperation extends TableCellRendererBase {
+export class CellOperationRenderer extends TableCellRendererBase {
     constructor() {
         super();
     }

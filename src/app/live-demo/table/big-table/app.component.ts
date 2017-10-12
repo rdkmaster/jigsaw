@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {BigTableData} from "jigsaw/core/data/table-data";
 import {AdditionalColumnDefine, ColumnDefine, TableValueGenerators} from "jigsaw/component/table/table-typings";
-import {TableCellCheckboxRenderer} from "jigsaw/component/table/table-renderer";
+import {OfficeCellRenderer, OfficeHeaderRenderer, PositionHeaderRenderer} from "./renderers";
 
 @Component({
     templateUrl: './app.component.html'
@@ -38,10 +38,18 @@ export class BigTableDataDemoComponent {
             }
         },
         {
-            target: 'salary',
+            target: 'position',
+            header: {
+                renderer: PositionHeaderRenderer
+            }
+        },
+        {
+            target: 'office',
+            header: {
+                renderer: OfficeHeaderRenderer
+            },
             cell: {
-                renderer: TableCellCheckboxRenderer,
-                data: (td, row, col) => td.data[row][col] % 2
+                renderer: OfficeCellRenderer
             }
         }
     ];
