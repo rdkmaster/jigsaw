@@ -1,5 +1,10 @@
 import {TemplateRef, Type} from "@angular/core";
-import {LocalPageableTableData, PageableTableData, TableData} from "../../core/data/table-data";
+import {
+    BigTableData,
+    LocalPageableTableData,
+    PageableTableData, RawTableData,
+    TableData
+} from "../../core/data/table-data";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 import {TableCellRendererBase} from "./table-renderer";
 import {CommonUtils} from "../../core/utils/common-utils";
@@ -13,6 +18,9 @@ export class TableValueGenerators {
         let index = 1;
         if (tableData instanceof PageableTableData || tableData instanceof LocalPageableTableData) {
             index += (tableData.pagingInfo.currentPage - 1) * tableData.pagingInfo.pageSize;
+        }
+        if (tableData instanceof BigTableData) {
+            index += tableData.viewPort.fromRow;
         }
         index += row;
         return index;
@@ -115,13 +123,22 @@ export function _getColumnIndex(data: TableData, additionalData: TableData, fiel
 }
 
 export class AdditionalTableData extends TableData {
-    public originData: TableData;
     public trackRowBy: string;
 
     private _splitString = '_%%_';
     private _splitRegExp = new RegExp(this._splitString, 'g');
     private _cachedValues: { [field: string]: { [key: string]: any } } = {};
     private _trackRowByFields: number[];
+
+    private _originData: RawTableData;
+
+    get originData(): RawTableData {
+        return this._originData;
+    }
+
+    set originData(value: RawTableData) {
+        this._originData = value// instanceof BigTableData ? value.origin : value;
+    }
 
     private _fixTrackRowFields() {
         if (this._trackRowByFields) {
