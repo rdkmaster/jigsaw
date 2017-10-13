@@ -1,0 +1,36 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+
+行数：
+<jigsaw-slider width="300px" min="5" max="30" [(value)]="tableData.viewPort.rows">
+</jigsaw-slider>
+（{{tableData.viewPort.rows}}）
+
+列数：
+<jigsaw-slider width="300px" min="2" max="15" [(value)]="tableData.viewPort.columns">
+</jigsaw-slider>
+（{{tableData.viewPort.columns}}）
+
+<br>
+
+当前行：
+<jigsaw-slider [value]="0" (change)="this.tableData.viewPort.verticalTo = $event"
+               width="300px" min="0" [max]="tableData.origin.data.length">
+</jigsaw-slider>
+（{{tableData.viewPort.verticalTo}}）
+
+当前列：
+<jigsaw-slider [value]="0" (change)="tableData.viewPort.horizontalTo = $event"
+               width="300px" min="0" [max]="tableData.origin.field.length">
+</jigsaw-slider>
+（{{tableData.viewPort.horizontalTo}}）
+
+<br>
+
+<jigsaw-table [data]="tableData" [columnDefines]="columnDefines" trackRowBy="name"
+              [additionalColumnDefines]="additionalColumnDefines">
+</jigsaw-table>

@@ -121,6 +121,25 @@ export interface IFilterable extends IAjaxComponentData {
     filter(term: DataFilterInfo): void;
 }
 
+export interface IDataViewPort {
+    width: number;
+    height: number;
+
+    maxWidth: number;
+    maxHeight: number;
+
+    horizontalTo: number;
+    verticalTo: number;
+}
+
+export interface ISlicedData {
+    viewPort: IDataViewPort;
+
+    scroll(verticalTo: number, horizontalTo: number): void;
+    vScroll(scrollTo: number): void;
+    hScroll(scrollTo: number): void;
+}
+
 export class DataRefreshCallback {
     constructor(public fn: (thisData: IComponentData) => void,
                 public context?: any) {

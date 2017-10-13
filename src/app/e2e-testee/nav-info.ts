@@ -77,6 +77,10 @@ export const liveDemoNavInfo = {
                     label: 'renderer',
                     url: '/table/renderer'
                 },
+                {
+                    label: 'big-table',
+                    url: '/table/big-table'
+                },
             ]
         },
         {

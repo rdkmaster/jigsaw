@@ -203,6 +203,14 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
         this.targetData.data[this.row][this.column] = value;
         this.dispatchChangeEvent(value);
     }
+
+    ngOnInit() {
+        super.ngOnInit();
+        if (!this._additionalData.trackRowBy && this.row == 0) { // this.row == 0 ensures print once
+            console.warn('You may need to add a [trackRowBy="field-name"] attribute to ' +
+                'the table if using a renderer which has status.');
+        }
+    }
 }
 
 @NgModule({

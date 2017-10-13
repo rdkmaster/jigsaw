@@ -6,10 +6,10 @@ import 'rxjs/add/operator/debounceTime';
 import {AbstractGeneralCollection} from "./general-collection";
 import {
     DataFilterInfo,
-    DataSortInfo, HttpClientOptions,
+    DataSortInfo, HttpClientOptions, IDataViewPort,
     IFilterable,
     IPageable,
-    IServerSidePageable,
+    IServerSidePageable, ISlicedData,
     ISortable,
     PagingInfo,
     SortAs,
@@ -21,6 +21,7 @@ export type TableMatrixRow = any[];
 export type TableDataHeader = string[];
 export type TableDataField = string[];
 export type TableDataMatrix = TableMatrixRow[];
+export type RawTableData = { field: TableDataField, header: TableDataHeader, data: TableDataMatrix };
 
 export class TableDataBase extends AbstractGeneralCollection<any> {
     public static isTableData(data: any): boolean {
@@ -360,6 +361,200 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this._filterSubject = null;
         this._sortSubject.unsubscribe();
         this._sortSubject = null;
+    }
+}
+
+export class TableDataViewPort implements IDataViewPort {
+    public maxWidth: number = 0;
+    public maxHeight: number = 0;
+
+    constructor(private _bigTableData: BigTableData) {
+    }
+
+    private _rows = 25;
+
+    public set rows(value: number) {
+        if (value <= 0 || this._rows == value) {
+            return;
+        }
+        this._rows = value;
+        if (this.maxHeight > 0 && this._verticalTo + value > this.maxHeight) {
+            this._verticalTo = this.maxHeight - value;
+            this._verticalTo = this._verticalTo >= 0 ? this._verticalTo : 0;
+        }
+        this._sliceData();
+    }
+
+    public get rows(): number {
+        return this._rows;
+    }
+
+    private _columns = 15;
+
+    public set columns(value: number) {
+        if (value <= 0 || this._columns == value) {
+            return;
+        }
+        this._columns = value;
+        if (this.maxWidth > 0 && this._horizontalTo + value > this.maxWidth) {
+            this._horizontalTo = this.maxWidth - value;
+            this._horizontalTo = this._horizontalTo >= 0 ? this._horizontalTo : 0;
+        }
+        this._sliceData();
+    }
+
+    public get columns(): number {
+        return this._columns;
+    }
+
+    private _verticalTo = 0;
+
+    public set verticalTo(value: number) {
+        if (value < 0 || this._verticalTo == value) {
+            return;
+        }
+        // `vScroll` will update `_fromRow` to a proper value
+        this._bigTableData.vScroll(value);
+    }
+
+    public get verticalTo(): number {
+        return this._verticalTo;
+    }
+
+    public setFromRowSilence(value: number) {
+        this._verticalTo = value < 0 ? this._verticalTo : value;
+    }
+
+    private _horizontalTo = 0;
+
+    public set horizontalTo(value: number) {
+        if (value < 0 || this._horizontalTo == value) {
+            return;
+        }
+        // `hScroll` will update `_horizontalTo` to a proper value
+        this._bigTableData.hScroll(value);
+    }
+
+    public get horizontalTo(): number {
+        return this._horizontalTo;
+    }
+
+    public setFromColumnSilence(value: number) {
+        this._horizontalTo = value < 0 ? this._horizontalTo : value;
+    }
+
+    private _sliceData() {
+        // ts 没有 friend 关键字，只好出此下策了
+        this._bigTableData['sliceData']();
+    }
+
+    public set width(value: number) {
+        this.rows = value;
+    }
+
+    public get width(): number {
+        return this.rows;
+    }
+
+    public set height(value: number) {
+        this.columns = value;
+    }
+
+    public get height(): number {
+        return this.columns;
+    }
+}
+
+export class BigTableData extends PageableTableData implements ISlicedData {
+
+    public readonly viewPort: TableDataViewPort = new TableDataViewPort(this);
+
+    constructor(public http: HttpClient, requestOptionsOrUrl: HttpClientOptions | string) {
+        super(http, requestOptionsOrUrl);
+        this.pagingInfo.pageSize = 500;
+    }
+
+    private _origin: RawTableData;
+
+    get origin(): RawTableData {
+        return this._origin;
+    }
+
+    private _takeSnapshot(): void {
+        if (this._origin) {
+            return;
+        }
+        this._origin = {
+            field: this.field, header: this.header, data: this.data
+        };
+        this._updateViewPortSize();
+    }
+
+    private _updateViewPortSize():void {
+        this.viewPort.maxWidth = this.origin.field.length;
+        this.viewPort.maxHeight = this.origin.data.length;
+    }
+
+    protected sliceData(): void {
+        this._takeSnapshot();
+        if (this._origin.field.length == 0 || this._origin.header.length == 0 || this._origin.data.length == 0) {
+            return;
+        }
+
+        const toColumn = this.viewPort.columns + this.viewPort.horizontalTo;
+        this.field = this._origin.field.slice(this.viewPort.horizontalTo, toColumn);
+        this.header = this._origin.header.slice(this.viewPort.horizontalTo, toColumn);
+
+        const toRow = this.viewPort.rows + this.viewPort.verticalTo;
+        const data = this._origin.data.slice(this.viewPort.verticalTo, toRow);
+        this.data = data.map(item => item.slice(this.viewPort.horizontalTo, toColumn));
+
+        this.refresh();
+    }
+
+    public scroll(verticalTo: number, horizontalTo: number = NaN): void {
+        this._takeSnapshot();
+
+        verticalTo = isNaN(verticalTo) ? this.viewPort.verticalTo : verticalTo;
+        verticalTo = verticalTo + this.viewPort.rows > this._origin.data.length ?
+            this._origin.data.length - this.viewPort.rows : verticalTo;
+
+        horizontalTo = isNaN(horizontalTo) ? this.viewPort.horizontalTo : horizontalTo;
+        horizontalTo = horizontalTo + this.viewPort.columns > this._origin.field.length ?
+            this._origin.field.length - this.viewPort.columns : horizontalTo;
+
+        if (verticalTo != this.viewPort.verticalTo || horizontalTo != this.viewPort.horizontalTo) {
+            this.viewPort.setFromRowSilence(verticalTo);
+            this.viewPort.setFromColumnSilence(horizontalTo);
+            this.sliceData();
+        }
+    }
+
+    public vScroll(scrollTo: number): void {
+        this.scroll(scrollTo);
+    }
+
+    public hScroll(scrollTo: number): void {
+        this.scroll(this.viewPort.verticalTo, scrollTo);
+    }
+
+    protected ajaxSuccessHandler(rawTableData): void {
+        super.ajaxSuccessHandler(rawTableData);
+        this._origin = {field: rawTableData.field, header: rawTableData.header, data: rawTableData.data};
+        this._updateViewPortSize();
+        this.sliceData();
+    }
+
+    protected ajaxErrorHandler(error): void {
+        super.ajaxErrorHandler(error);
+        this._origin = {field: [], header: [], data: []};
+        this._updateViewPortSize();
+    }
+
+    public fromObject(data: any): TableDataBase {
+        const result = super.fromObject(data);
+        this._takeSnapshot();
+        return result;
     }
 }
 

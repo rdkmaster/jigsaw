@@ -227,5 +227,4 @@ export class JigsawOption implements OnInit {
     exports: [JigsawSelect, JigsawOption]
 })
 export class JigsawSelectModule {
-
 }

@@ -2,14 +2,19 @@ import {Component, ViewEncapsulation} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {LocalPageableTableData} from "jigsaw/core/data/table-data";
 import {
-AdditionalColumnDefine,
-AdditionalTableData,
-ColumnDefine, TableValueGenerators,
+    AdditionalColumnDefine,
+    AdditionalTableData,
+    ColumnDefine,
+    TableValueGenerators,
 } from "jigsaw/component/table/table-typings";
 import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/component/table/table-renderer";
 import {
-filterData, OfficeEditor, OfficeHeader, OfficeRenderer, PositionHeaderSelect,
-TableCellOperation
+    filterData,
+    OfficeCellEditorRenderer,
+    OfficeCellRenderer,
+    OfficeHeaderRenderer,
+    PositionHeaderRenderer,
+    CellOperationRenderer
 } from "./renderers";
 
 @Component({
@@ -34,7 +39,7 @@ export class TableRendererDemoComponent {
             target: ['position', 'a-not-exist-field'],
             width: '15%',
             header: {
-                renderer: PositionHeaderSelect,
+                renderer: PositionHeaderRenderer,
                 sortable: true
             },
             cell: {
@@ -45,12 +50,12 @@ export class TableRendererDemoComponent {
         {
             target: 'office', width: '180',
             cell: {
-                renderer: OfficeRenderer,
-                editorRenderer: OfficeEditor,
+                renderer: OfficeCellRenderer,
+                editorRenderer: OfficeCellEditorRenderer,
                 editable: true
             },
             header: {
-                renderer: OfficeHeader
+                renderer: OfficeHeaderRenderer
             }
         },
         {
@@ -101,8 +106,8 @@ export class TableRendererDemoComponent {
                 clazz: 'green-text'
             },
             cell: {
-                renderer: TableCellOperation,
-                tooltip: () => '加薪：当前员工一次加2000\n辞退：立即辞退当前员工'
+                renderer: CellOperationRenderer,
+                tooltip: '加薪：当前员工一次加2000\n辞退：立即辞退当前员工'
             }
         },
     ];

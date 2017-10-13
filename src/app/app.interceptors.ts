@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {CommonUtils} from "../jigsaw/core/utils/common-utils";
-import {TableData} from "../jigsaw/core/data/table-data";
+import {RawTableData, TableData} from "../jigsaw/core/data/table-data";
 import {PagingInfo} from "../jigsaw/core/data/component-data";
 
 @Injectable()
@@ -32,7 +32,7 @@ export class AjaxInterceptor implements HttpInterceptor {
         return this.createResult(body, req.url);
     }
 
-    createResult(body:any, url:string): Observable<HttpEvent<any>> {
+    createResult(body: any, url: string): Observable<HttpEvent<any>> {
         console.log(body);
         return new Observable<HttpEvent<any>>(subscriber => {
             // simulate network latency
@@ -59,7 +59,7 @@ export class AjaxInterceptor implements HttpInterceptor {
 
 class PageableData {
     static get(req) {
-        const result:any = new TableData([], [], []);
+        const result: any = new TableData([], [], []);
         if (!req.service) {
             console.error('bad argument, need a "service" property!');
             return result;
@@ -88,7 +88,7 @@ class PageableData {
             }
         }
 
-        const pagingInfo:PagingInfo = new PagingInfo();
+        const pagingInfo: PagingInfo = new PagingInfo();
         pagingInfo.pageSize = this._fixPageSize(req.paging.pageSize);
         pagingInfo.totalRecord = data.length;
         pagingInfo.totalPage = Math.ceil(pagingInfo.totalRecord / pagingInfo.pageSize);
@@ -7288,6 +7288,7 @@ class MockData {
             "header": this.dataSet['hr-list-full'].header,
             "data": this.getShortenHrList(this.dataSet['hr-list-full'].data)
         };
+        this.dataSet['big-table-data'] = this.createBigTableData();
     }
 
     static getShortenHrList(fullList): any[] {
@@ -7299,5 +7300,21 @@ class MockData {
         const list = [];
         indexes.forEach(index => list.push(fullList[index]));
         return list;
+    }
+
+    static createBigTableData(): RawTableData {
+        const rtd: RawTableData = {field: [], header: [], data: []};
+        for (let i = 0; i < 200; i++) {
+            rtd.field.push('field-' + i);
+            rtd.header.push('header-' + i);
+        }
+        for (let i = 0; i < 5000; i++) {
+            const row = [];
+            rtd.data.push(row);
+            for (let j = 0; j < 200; j++) {
+                row.push(`data-${i}-${j}`);
+            }
+        }
+        return rtd;
     }
 }
