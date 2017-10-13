@@ -13,7 +13,7 @@
 </ul>
 
 <jigsaw-table [data]="tableData"
-              [columnDefines]="columnDefines"
+              [columnDefines]="columnDefineGenerator"
               (selectChange)="handleRowSelect($event)"
               (doubleClick)="handleDbRowSelect($event)"
               [hideHeader]="true">

@@ -161,34 +161,55 @@ export class SwimLaneDiagramDemoComponent {
         console.log(this.tableData.data);
     }
 
-    ngAfterViewInit() {
-        console.log(this.elementRef.nativeElement.parentElement.clientWidth);
-        this.columnDefines = [
-            {
-                target: 0,
-                width: '50px'
-            },
-            {
-                target: 1,
-                width: '150px'
-            },
-            {
-                target: (field, index) => {
-                    return index > 1
-                },
-                width: '200px',
-                cell: {
-                    renderer: TableSwimLaneCell
-                }
-            }, {
-                target: this.neList.length + 1,
-                width: this.elementRef.nativeElement.parentElement.clientWidth - 200 - (this.neList.length - 1) * 200 + 'px'
-            }
-        ];
-        this.changeDetector.detectChanges();
-    }
+    // ngAfterViewInit() {
+    //     console.log(this.elementRef.nativeElement.parentElement.clientWidth);
+        // this.columnDefines = [
+        //     {
+        //         target: 0,
+        //         width: '50px'
+        //     },
+        //     {
+        //         target: 1,
+        //         width: '150px'
+        //     },
+        //     {
+        //         target: (field, index) => {
+        //             return index > 1
+        //         },
+        //         width: '200px',
+        //         cell: {
+        //             renderer: TableSwimLaneCell
+        //         }
+        //     }, {
+        //         target: this.neList.length + 1,
+        //         width: this.elementRef.nativeElement.parentElement.clientWidth - 200 - (this.neList.length - 1) * 200 + 'px'
+        //     }
+        // ];
+        // this.changeDetector.detectChanges();
+    // }
 
-    columnDefines: ColumnDefine[];
+    columnDefineGenerator(field, index): ColumnDefine {
+        switch (index) {
+            case 0:
+                return {width: '50px'};
+            case 1:
+                return {width: '150px'};
+            case this.neList.length + 1:
+                return {
+                    width: this.elementRef.nativeElement.parentElement.clientWidth - 200 - (this.neList.length - 1) * 200 + 'px',
+                    cell: {
+                        renderer: TableSwimLaneCell
+                    }
+                };
+            default:
+                return {
+                    width: '200px',
+                    cell: {
+                        renderer: TableSwimLaneCell
+                    }
+                }
+        }
+    }
 
     handleRowSelect(rowIndex: number) {
         console.log(rowIndex);
