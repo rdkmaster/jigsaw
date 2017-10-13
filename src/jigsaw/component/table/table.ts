@@ -115,7 +115,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         columnDefines.forEach(columnDefine => {
             // let matchedColumnDef = this.columnDefines.find(
             //     colDef => (<TableColumnTargetFinder>colDef.target)(field, index));
-            if (!columnDefine.visible) {
+            if (columnDefine.visible === false) {
                 return;
             }
 
@@ -177,7 +177,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         columnDefines.forEach((columnDefine, colIndex) => {
             // let matchedColumnDef = this.columnDefines.find(
             //     colDef => (<TableColumnTargetFinder>colDef.target)(field, colIndex));
-            if (!columnDefine.visible) {
+            if (columnDefine.visible === false) {
                 return;
             }
 
@@ -312,7 +312,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 cd = <ColumnDefine>CommonUtils.shallowCopy(cd);
                 cd.target = field;
             }
-            columnDefines.push(cd ? cd : {target: field, visible: true});
+            columnDefines.push(cd ? cd : {target: field});
         });
 
         if (this.additionalColumnDefines) {
