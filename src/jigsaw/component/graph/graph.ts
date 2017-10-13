@@ -7,7 +7,6 @@ import {
 } from "@angular/core";
 import {AbstractGraphData} from "../../core/data/graph-data";
 
-import * as echarts from "echarts";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {AbstractJigsawComponent} from "../common";
 import {EchartOptions} from "../../core/data/echart-types";
@@ -23,9 +22,6 @@ import {CallbackRemoval} from "../../core/utils/common-utils";
     templateUrl: 'graph.html'
 })
 export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDestroy {
-    // 全局 echarts 对象
-    public static echarts: any = echarts;
-
     // TODO 当前属性判断不正确, 当前判断是是否option为空
     public dataValid: boolean = false;
 
@@ -171,15 +167,15 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     /* ********************** echarts api 封装区 start  ******************************** */
     public registerMap(mapName: string, geoJson: Object, specialAreas?: Object): void {
-        JigsawGraph.echarts.registerMap(mapName, geoJson, specialAreas);
+        echarts.registerMap(mapName, geoJson, specialAreas);
     }
 
     public getMapMap(mapName: string): Object {
-        return JigsawGraph.echarts.getMap(mapName);
+        return echarts.getMap(mapName);
     }
 
     public registerTheme(themeName: string, theme: Object): void {
-        JigsawGraph.echarts.registerTheme(themeName, theme);
+        echarts.registerTheme(themeName, theme);
     }
 
     public setOption(option: EchartOptions, lazyUpdate?: boolean) {

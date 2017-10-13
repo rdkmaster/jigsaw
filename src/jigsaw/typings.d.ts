@@ -17,6 +17,7 @@ declare var module: NodeModule;
 declare var require: NodeRequire;
 declare let $: any;
 declare let moment: any;
+declare let echarts: any;
 
 /** Extends the interface for jasmine matchers to allow for custom matchers. */
 declare namespace jasmine {
