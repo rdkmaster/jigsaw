@@ -21,7 +21,8 @@
         </tr>
         </thead>
     </table>
-    <div class="jigsaw-table-body-range" #bodyScrollbar [style.width]="contentWidth" [perfectScrollbar]="_$contentScrollbarConfig">
+    <div #bodyScrollbar class="jigsaw-table-body-range" [style.width]="contentWidth"
+         [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5}">
         <table class="jigsaw-table-body">
             <colgroup>
                 <col *ngFor="let head of _$headerSettings;" width="{{head.width}}">
@@ -39,20 +40,19 @@
                         <span class="jigsaw-table-cell-text" title="{{cell.tooltip ? cell.tooltip : ''}}">{{cell.cellData}}</span>
                     </div>
                     <ng-template #rendererCell>
-                        <jigsaw-table-cell
-                            class="jigsaw-table-cell-content"
-                            title="{{cell.tooltip ? cell.tooltip : ''}}"
-                            [tableData]="data"
-                            [additionalData]="additionalData"
-                            [cellData]="cell.cellData"
-                            [row]="rowIndex"
-                            [field]="cell.field"
-                            [renderer]="cell.renderer"
-                            [editable]="cell.editable"
-                            [editorRenderer]="cell.editorRenderer"
-                            [group]="cell.group"
-                            [rowSpan]="cell.rowSpan"
-                            (edit)="dataChange.emit($event)">
+                        <jigsaw-table-cell class="jigsaw-table-cell-content"
+                                           title="{{cell.tooltip ? cell.tooltip : ''}}"
+                                           [tableData]="data"
+                                           [additionalData]="additionalData"
+                                           [cellData]="cell.cellData"
+                                           [row]="rowIndex"
+                                           [field]="cell.field"
+                                           [renderer]="cell.renderer"
+                                           [editable]="cell.editable"
+                                           [editorRenderer]="cell.editorRenderer"
+                                           [group]="cell.group"
+                                           [rowSpan]="cell.rowSpan"
+                                           (edit)="dataChange.emit($event)">
                         </jigsaw-table-cell>
                     </ng-template>
                 </td>

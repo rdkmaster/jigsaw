@@ -163,7 +163,7 @@ export class TableBasicDemoComponent {
                     "5421"
                 ]
             ],
-            ["name", "position", "salary", "start_date", "office", "extn"],
+            ["name", "position", "salary", "enroll-date", "office", "extn"],
             ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
     }
 }

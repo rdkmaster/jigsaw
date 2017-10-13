@@ -28,7 +28,7 @@ export class TableDragDemoComponent {
                 ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 316],
                 ["Shirley", "Accountant", "$11845", "2017/4/25", "R&D Dept II", 711],
                 ["Eason", "Coder", "$17636", "2017/4/24", "Marketing I", 796]],
-            ["name", "position", "salary", "start_date", "office", "extn"],
+            ["name", "position", "salary", "enroll-date", "office", "extn"],
             ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
     }
 
