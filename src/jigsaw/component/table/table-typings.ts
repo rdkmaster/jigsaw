@@ -20,7 +20,7 @@ export class TableValueGenerators {
             index += (tableData.pagingInfo.currentPage - 1) * tableData.pagingInfo.pageSize;
         }
 
-        // pity, unable to `tableData instanceof ISlicedData`
+        // pity, unable to check by interface: `tableData instanceof ISlicedData`
         if (tableData instanceof BigTableData) {
             index += tableData.viewPort.verticalTo;
         }
