@@ -76,9 +76,6 @@ import {TableSetHeaderSortDemoModule} from "./setHeaderSort/app.module";
 import {TableDataWithPopupDemoComponent} from "./withPopup/app.component";
 import {TableDataWithPopupDemoModule} from "./withPopup/app.module";
 
-import {SwimLaneDiagramDemoComponent} from "./swimLaneDiagram/app.component";
-import {swimLaneDiagramDemoModule} from "./swimLaneDiagram/app.module";
-
 import {TableHideHeadDemoComponent} from "./hideHead/app.component";
 import {TableHideHeadDemoModule} from "./hideHead/app.module";
 
@@ -90,6 +87,9 @@ import {TableRendererDemoModule} from "../../live-demo/table/renderer/app.module
 
 import {BigTableDataDemoComponent} from "../../live-demo/table/big-table/app.component";
 import {BigTableDataDemoModule} from "../../live-demo/table/big-table/app.module";
+
+import {SwimLaneDiagramDemoComponent} from "../../live-demo/table/swim-lane-diagram/app.component";
+import {swimLaneDiagramDemoModule} from "../../live-demo/table/swim-lane-diagram/app.module";
 
 const tableDemoRoutes = [
     {
@@ -174,7 +174,7 @@ const tableDemoRoutes = [
         path: 'localPagingData', component: LocalPagingDataDemoComponent
     },
     {
-        path: 'swimLaneDiagram', component: SwimLaneDiagramDemoComponent
+        path: 'swim-lane-diagram', component: SwimLaneDiagramDemoComponent
     },
     {
         path: 'hideHead', component: TableHideHeadDemoComponent

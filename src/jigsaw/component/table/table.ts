@@ -10,7 +10,8 @@
     OnInit,
     Output,
     QueryList,
-    Renderer2, ViewChild,
+    Renderer2,
+    ViewChild,
     ViewChildren
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
@@ -22,10 +23,10 @@ import {
     _getColumnIndex,
     AdditionalColumnDefine,
     AdditionalTableData,
-    ColumnDefine, ColumnDefineGenerator,
+    ColumnDefine,
+    ColumnDefineGenerator,
     SortChangeEvent,
     TableCellSetting,
-    TableColumnTargetFinder,
     TableDataChangeEvent,
     TableHeadSetting
 } from "./table-typings";
@@ -34,7 +35,9 @@ import {SortAs, SortOrder} from "../../core/data/component-data";
 import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer} from "./table-renderer";
 import {AffixUtils} from "../../core/utils/internal-utils";
 import {
-    PerfectScrollbarConfigInterface, PerfectScrollbarDirective, PerfectScrollbarModule
+    PerfectScrollbarConfigInterface,
+    PerfectScrollbarDirective,
+    PerfectScrollbarModule
 } from "ngx-perfect-scrollbar/dist";
 
 @Component({
@@ -435,6 +438,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     @Input()
     public columnDefines: ColumnDefine[] | ColumnDefineGenerator;
+
+    @Input()
+    public columnDefineGeneratorContext: any;
+
     @Input()
     public additionalColumnDefines: AdditionalColumnDefine[] = [];
 
@@ -451,7 +458,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return undefined;
         }
         if (this.columnDefines instanceof Function) {
-            return CommonUtils.safeInvokeCallback(null, this.columnDefines, [field, index]);
+            return CommonUtils.safeInvokeCallback(this.columnDefineGeneratorContext, this.columnDefines, [field, index]);
         } else {
             return this.columnDefines.find(colDef => {
                 const targets: (number | string)[] = colDef.target instanceof Array ? colDef.target : [colDef.target];
