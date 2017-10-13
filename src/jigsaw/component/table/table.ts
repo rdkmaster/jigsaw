@@ -10,7 +10,7 @@
     OnInit,
     Output,
     QueryList,
-    Renderer2,
+    Renderer2, ViewChild,
     ViewChildren
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
@@ -33,6 +33,9 @@ import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer} from "./table-renderer";
 import {AffixUtils} from "../../core/utils/internal-utils";
+import {
+    PerfectScrollbarConfigInterface, PerfectScrollbarDirective, PerfectScrollbarModule
+} from "ngx-perfect-scrollbar/dist";
 
 @Component({
     selector: 'jigsaw-table, j-table',
@@ -523,31 +526,34 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _addWindowListener() {
         this._removeWindowListener();
 
-        this._removeWindowResizeListener = this._renderer.listen('window', 'resize', () => {
-            this._floatHead();
+        this._zone.runOutsideAngular(() => {
+            this._removeWindowResizeListener = this._renderer.listen('window', 'resize', () => {
+                this._floatingHead();
+                this._calibrateTableWidth();
+                this._setVerticalScrollbarOffset();
+            });
         });
 
         if (this.floatingHeader && !this.hideHeader) {
             this._zone.runOutsideAngular(() => {
-                this._removeWindowScrollListener = this._renderer.listen('window', 'scroll', () => {
-                    this._floatHead();
-                });
+                this._removeWindowScrollListener = this._renderer.listen('window', 'scroll',
+                    () => this._floatingHead());
             });
         }
     }
 
-    private _floatingHeadElement: HTMLElement;
+    private _tableHeaderElement: HTMLElement;
 
-    private _floatHead() {
-        const maxTop = this._elementRef.nativeElement.offsetHeight - this._floatingHeadElement.offsetHeight;
+    private _floatingHead() {
+        const maxTop = this._elementRef.nativeElement.offsetHeight - this._tableHeaderElement.offsetHeight;
         let tableDocumentTop = AffixUtils.offset(this._elementRef.nativeElement).top;
         let scrollTop = AffixUtils.getScrollTop();
         let top = scrollTop - tableDocumentTop;
         if (top > 0 && top < maxTop) {
-            this._renderer.setStyle(this._floatingHeadElement, 'top', top + 'px');
+            this._renderer.setStyle(this._tableHeaderElement, 'top', top + 'px');
         } else if (top <= 0) {
-            if (this._floatingHeadElement.style.top !== '0' && this._floatingHeadElement.style.top !== '0px') {
-                this._renderer.setStyle(this._floatingHeadElement, 'top', '0');
+            if (this._tableHeaderElement.style.top !== '0' && this._tableHeaderElement.style.top !== '0px') {
+                this._renderer.setStyle(this._tableHeaderElement, 'top', '0');
             }
         } else if (top >= maxTop) {
             // table超出屏幕显示位置
@@ -601,6 +607,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         });
     }
 
+    @ViewChild('contentScrollbar', {read: PerfectScrollbarDirective})
+    public contentScrollbar: PerfectScrollbarDirective;
+
+    @ViewChild('bodyScrollbar', {read: PerfectScrollbarDirective})
+    public bodyScrollbar: PerfectScrollbarDirective;
+
     /**
      * 计算内容宽度，产生横向滚动条
      * @private
@@ -611,37 +623,18 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 this._renderer.setStyle(table, 'table-layout', 'auto');
             });
             const contentRange = this._elementRef.nativeElement.querySelector('.jigsaw-table-range');
-            const contentWidth = contentRange.querySelector('.jigsaw-table-body table').offsetWidth;
+            const tableHeader = contentRange.querySelector('table.jigsaw-table-header');
+            const tableBody = contentRange.querySelector('table.jigsaw-table-body');
+            const tableBodyRange = contentRange.querySelector('.jigsaw-table-body-range');
+            const contentWidth = tableBody.offsetWidth;
             this._renderer.addClass(contentRange, 'jigsaw-table-auto-width');
-            this._renderer.setStyle(contentRange, 'width', contentWidth + 'px');
-            this._renderer.setStyle(this._floatingHeadElement, 'width', contentWidth + 'px');
+            this._renderer.setStyle(tableBodyRange, 'width', contentWidth + 'px');
+            this._renderer.setStyle(tableBody, 'width', contentWidth + 'px');
+            this._renderer.setStyle(tableHeader, 'width', contentWidth + 'px');
 
             this._elementRef.nativeElement.querySelectorAll('table').forEach(table => {
                 this._renderer.setStyle(table, 'table-layout', 'fixed');
             });
-        }
-    }
-
-    /**
-     * 判断是否有垂直滚动条
-     * @returns {boolean} true: 有滚动条；false：没有滚动条
-     * @private
-     */
-    private _hasVerticalScroll() {
-        const contentRange = this._elementRef.nativeElement.querySelector('.jigsaw-table-range');
-        const contentWidth = contentRange.querySelector('.jigsaw-table-body').offsetWidth;
-        return contentRange.offsetWidth != contentWidth;
-    }
-
-    /**
-     * 处理表头的横向滚动条
-     * @private
-     */
-    private _fixHeaderScrollBar() {
-        if (this._hasVerticalScroll()) {
-            this._renderer.setStyle(this._floatingHeadElement, 'padding-right', '17px');
-        } else {
-            this._renderer.setStyle(this._floatingHeadElement, 'padding-right', '0');
         }
     }
 
@@ -651,8 +644,93 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      */
     private _handleScrollBar() {
         this._calculateContentWidth();
-        this._fixHeaderScrollBar();
+        this._calibrateTableWidth();
+        this._initVerticalScroll();
+        this._listenHorizontalScroll();
     }
+
+    /**
+     * 校正表头表体的宽度
+     * @private
+     */
+    private _calibrateTableWidth() {
+        const tableHeader = this._elementRef.nativeElement.querySelector('table.jigsaw-table-header');
+        const tableBody = this._elementRef.nativeElement.querySelector('table.jigsaw-table-body');
+        const tableBodyRange = this._elementRef.nativeElement.querySelector('.jigsaw-table-body-range');
+
+        // table body range's width is always not less than table body's
+        this._renderer.setStyle(tableBodyRange, 'width',
+            (this._elementRef.nativeElement.offsetWidth > tableBody.offsetWidth ?
+                this._elementRef.nativeElement.offsetWidth : tableBody.offsetWidth) + 'px');
+
+        // table header's width is always equal to table body's
+        if (tableHeader.offsetWidth != tableBody.offsetWidth) {
+            this._renderer.setStyle(tableHeader, 'width', tableBody.offsetWidth + 'px');
+        }
+    }
+
+    private _removeHorizontalScrollListener: Function;
+
+    /**
+     * 监听横向滚动事件，更新纵向滚动条的位置
+     * @private
+     */
+    private _listenHorizontalScroll() {
+        this._zone.runOutsideAngular(() => {
+            this._removeHorizontalScrollListener = this._renderer.listen(
+                this.contentScrollbar.elementRef.nativeElement,
+                'ps-scroll-x', () => {
+                    this._setVerticalScrollbarOffset();
+                });
+        });
+    }
+
+    /**
+     * 设置纵向滚动条位置
+     * @private
+     */
+    private _setVerticalScrollbarOffset() {
+        if (this._yScrollbarElement) {
+            this._renderer.setStyle(this._yScrollbarElement, 'left',
+                this._elementRef.nativeElement.offsetWidth + this.contentScrollbar.geometry().x - 15 + 'px');
+        }
+    }
+
+    private _yScrollbarElement: HTMLElement;
+
+    /**
+     * 找到纵向滚动条，并设置初始位置
+     * @private
+     */
+    private _initVerticalScroll() {
+        setTimeout(() => {
+            // selector使用>选择直接子元素，避免选择到其他滚动条
+            const yScrollbar = this._elementRef.nativeElement.querySelector('.jigsaw-table-body-range > .ps__scrollbar-y-rail');
+            if (yScrollbar) {
+                this._renderer.setStyle(yScrollbar, 'left',
+                    this._elementRef.nativeElement.offsetWidth - 15 + 'px');
+                this._yScrollbarElement = yScrollbar;
+            } else {
+                this._initVerticalScroll();
+            }
+        }, 0);
+    }
+
+    /**
+     * @internal
+     */
+    public _$rangeScrollbarConfig: PerfectScrollbarConfigInterface = {
+        suppressScrollY: true,
+        wheelSpeed: 0.5
+    };
+
+    /**
+     * @internal
+     */
+    public _$contentScrollbarConfig: PerfectScrollbarConfigInterface = {
+        suppressScrollX: true,
+        wheelSpeed: 0.5
+    };
 
     ngAfterViewInit() {
         super.ngAfterViewInit();
@@ -671,9 +749,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
         this._addWindowListener();
 
-        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.jigsaw-table-body'),
+        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.jigsaw-table-body-range'),
             'max-height', this._maxHeight);
-        this._floatingHeadElement = this._elementRef.nativeElement.querySelector(".jigsaw-table-header");
+        this._tableHeaderElement = this._elementRef.nativeElement.querySelector(".jigsaw-table-header");
     }
 
     ngOnDestroy() {
@@ -685,6 +763,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             this._removeAdditionalDataRefresh();
             this._removeAdditionalDataRefresh = null;
         }
+        if (this._removeHorizontalScrollListener) {
+            this._removeHorizontalScrollListener();
+            this._removeHorizontalScrollListener = null;
+        }
         this._removeWindowListener();
 
         this._data = null;
@@ -694,7 +776,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._additionalColumnDefines = null;
         this._$cellSettings = null;
         this._$headerSettings = null;
-        this._floatingHeadElement = null;
+        this._tableHeaderElement = null;
         this._rowElementRefs = null;
         this._headerComponents = null;
     }
@@ -702,7 +784,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
 @NgModule({
     declarations: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
-    imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule],
+    imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, PerfectScrollbarModule],
     exports: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
     entryComponents: [TableCellTextEditorRenderer, DefaultCellRenderer]
 })

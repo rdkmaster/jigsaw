@@ -1,12 +1,13 @@
-import {Component, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component} from "@angular/core";
+import {PerfectScrollbarConfigInterface} from "ngx-perfect-scrollbar";
 
 @Component({
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css']
 })
 export class ScrollbarBasicDemoComponent {
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
-    }
+    config: PerfectScrollbarConfigInterface = {
+        suppressScrollX: true
+    };
 }
 

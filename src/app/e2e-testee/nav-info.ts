@@ -448,14 +448,6 @@ export const navInfo = [
                 label: 'basic',
                 url: '/scrollbar/basic'
             },
-            {
-                label: 'user-define',
-                url: '/scrollbar/user-define'
-            },
-            {
-                label: 'setOptions',
-                url: '/scrollbar/setOptions'
-            },
         ]
     },
     {
