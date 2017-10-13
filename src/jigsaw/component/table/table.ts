@@ -177,9 +177,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         let oldBackup = CommonUtils.shallowCopy(this._cellSettingsBackup);
         this._cellSettingsBackup = {};
 
-        columnDefines.forEach((columnDefine, colIndex) => {
-            // let matchedColumnDef = this.columnDefines.find(
-            //     colDef => (<TableColumnTargetFinder>colDef.target)(field, colIndex));
+        columnDefines.forEach(columnDefine => {
             if (columnDefine.visible === false) {
                 return;
             }
@@ -336,31 +334,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         return columnDefines;
     }
 
-    /**
-     * ColumnDefine所有的target转化为函数的形式
-     * @param {ColumnDefine} colDef
-     * @returns {ColumnDefine}
-     * @private
-     */
-    // private _fixColumnDefineTarget(colDef: ColumnDefine): ColumnDefine {
-    //     let targets;
-    //     if (typeof colDef.target == 'number' || typeof colDef.target == 'string') {
-    //         targets = [colDef.target];
-    //     } else if (colDef.target instanceof Array) {
-    //         targets = colDef.target
-    //     } else if (colDef.target instanceof Function) {
-    //         return;
-    //     } else {
-    //         colDef.target = () => false;
-    //         return;
-    //     }
-    //     if (CommonUtils.isDefined(targets) && targets.length > 0) {
-    //         colDef.target = (field, index) => !!targets.find(
-    //             f => (typeof f === 'string' && f === field) || (typeof f === 'number' && f === index));
-    //     }
-    //     return colDef;
-    // }
-
     private _update(): void {
         if (!this.initialized || !this._data) {
             return;
@@ -445,14 +418,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @Input()
     public additionalColumnDefines: AdditionalColumnDefine[] = [];
 
-    // public get columnDefines(): ColumnDefine[] | ColumnDefineGenerator {
-    //     return this._columnDefines;
-    // }
-    //
-    // public set columnDefines(value: ColumnDefine[] | ColumnDefineGenerator) {
-    //     this._columnDefines = value;
-    // }
-
     private _columnDefineGenerator(field: string, index: number): ColumnDefine {
         if (!this.columnDefines) {
             return undefined;
@@ -468,36 +433,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             });
         }
     }
-
-    // private _normalizeColumnTarget() {
-    //     // normalize the target to `TableColumnTargetFinder`
-    //     this.columnDefines.forEach((colDef, index) => {
-    //         const cd = <ColumnDefine>CommonUtils.shallowCopy(colDef);
-    //         this.columnDefines[index] = cd;
-    //         if (!cd.hasOwnProperty('target')) {
-    //             console.error('invalid column target, need a "target" property!');
-    //             return;
-    //         }
-    //         this._fixColumnDefineTarget(cd);
-    //     });
-    // }
-
-    //
-    // public get additionalColumnDefines(): AdditionalColumnDefine[] {
-    //     return this._additionalColumnDefines;
-    // }
-    //
-    // public set additionalColumnDefines(value: AdditionalColumnDefine[]) {
-    //     if (!value || value == this._additionalColumnDefines) {
-    //         return;
-    //     }
-    //     if (this._additionalColumnDefines.length > 0) {
-    //         console.warn('do not support updating the additionalColumnDefine yet! ' +
-    //             'you can give the table every possible additional column defines when you init it.');
-    //         return;
-    //     }
-    //     this._additionalColumnDefines = value;
-    // }
 
     @Output()
     public doubleClick: EventEmitter<number> = new EventEmitter<number>();
@@ -608,24 +543,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._headerComponents.forEach(comp => sortInfo.field != comp.field && comp.updateSortOrderClass(SortOrder.default));
         this.sort.emit(sortInfo);
     }
-
-    // private _mixInColumns(columnDefines: ColumnDefine[]): void {
-    //     if (!this.additionalColumnDefines) {
-    //         return;
-    //     }
-    //     for (let i = this._additionalColumnDefines.length - 1; i >= 0; i--) {
-    //         const acd = this._additionalColumnDefines[i];
-    //         const cd: ColumnDefine = this._fixColumnDefineTarget({
-    //             target: 'additional-field-' + i,
-    //             header: acd.header,
-    //             group: acd.group,
-    //             cell: acd.cell,
-    //             width: acd.width,
-    //             visible: acd.visible
-    //         });
-    //         this.columnDefines.push(cd);
-    //     }
-    // }
 
     private _initAdditionalData(): void {
         if (!this.additionalColumnDefines) {
