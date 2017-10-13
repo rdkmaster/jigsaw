@@ -18,18 +18,6 @@ export class BigTableDataDemoComponent {
         this.tableData.fromAjax();
     }
 
-    changeRowCount(value) {
-        this.tableData.viewPort.rows = value;
-    }
-
-    vScroll(value) {
-        this.tableData.viewPort.fromRow = value;
-    }
-
-    hScroll(value) {
-        this.tableData.viewPort.fromColumn = value;
-    }
-
     columnDefines: ColumnDefine[] = [
         {
             target: 'field-2',

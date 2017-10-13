@@ -6,10 +6,10 @@ import 'rxjs/add/operator/debounceTime';
 import {AbstractGeneralCollection} from "./general-collection";
 import {
     DataFilterInfo,
-    DataSortInfo, HttpClientOptions,
+    DataSortInfo, HttpClientOptions, IDataViewPort,
     IFilterable,
     IPageable,
-    IServerSidePageable,
+    IServerSidePageable, ISlicedData,
     ISortable,
     PagingInfo,
     SortAs,
@@ -364,8 +364,83 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     }
 }
 
-export class DataViewPort {
+export class TableDataViewPort implements IDataViewPort {
+    public maxWidth: number = 0;
+    public maxHeight: number = 0;
+
     constructor(private _bigTableData: BigTableData) {
+    }
+
+    private _rows = 25;
+
+    public set rows(value: number) {
+        if (value <= 0 || this._rows == value) {
+            return;
+        }
+        this._rows = value;
+        if (this.maxHeight > 0 && this._verticalTo + value > this.maxHeight) {
+            this._verticalTo = this.maxHeight - value;
+            this._verticalTo = this._verticalTo >= 0 ? this._verticalTo : 0;
+        }
+        this._sliceData();
+    }
+
+    public get rows(): number {
+        return this._rows;
+    }
+
+    private _columns = 15;
+
+    public set columns(value: number) {
+        if (value <= 0 || this._columns == value) {
+            return;
+        }
+        this._columns = value;
+        if (this.maxWidth > 0 && this._horizontalTo + value > this.maxWidth) {
+            this._horizontalTo = this.maxWidth - value;
+            this._horizontalTo = this._horizontalTo >= 0 ? this._horizontalTo : 0;
+        }
+        this._sliceData();
+    }
+
+    public get columns(): number {
+        return this._columns;
+    }
+
+    private _verticalTo = 0;
+
+    public set verticalTo(value: number) {
+        if (value < 0 || this._verticalTo == value) {
+            return;
+        }
+        // `vScroll` will update `_fromRow` to a proper value
+        this._bigTableData.vScroll(value);
+    }
+
+    public get verticalTo(): number {
+        return this._verticalTo;
+    }
+
+    public setFromRowSilence(value: number) {
+        this._verticalTo = value < 0 ? this._verticalTo : value;
+    }
+
+    private _horizontalTo = 0;
+
+    public set horizontalTo(value: number) {
+        if (value < 0 || this._horizontalTo == value) {
+            return;
+        }
+        // `hScroll` will update `_horizontalTo` to a proper value
+        this._bigTableData.hScroll(value);
+    }
+
+    public get horizontalTo(): number {
+        return this._horizontalTo;
+    }
+
+    public setFromColumnSilence(value: number) {
+        this._horizontalTo = value < 0 ? this._horizontalTo : value;
     }
 
     private _sliceData() {
@@ -373,82 +448,26 @@ export class DataViewPort {
         this._bigTableData['sliceData']();
     }
 
-    private _rows = 25;
-
-    set rows(value: number) {
-        if (value <= 0 || this._rows == value) {
-            return;
-        }
-        this._rows = value;
-        const originLength = this._bigTableData.origin ? this._bigTableData.origin.data.length : -1;
-        if (originLength > 0 && this._fromRow + value > originLength) {
-            this._fromRow = this._bigTableData.origin.data.length - value;
-            this._fromRow = this._fromRow >= 0 ? this._fromRow : 0;
-        }
-        this._sliceData();
+    public set width(value: number) {
+        this.rows = value;
     }
 
-    get rows(): number {
-        return this._rows;
+    public get width(): number {
+        return this.rows;
     }
 
-    private _columns = 15;
-
-    set columns(value: number) {
-        if (value <= 0 || this._columns == value) {
-            return;
-        }
-        this._columns = value;
-        const originLength = this._bigTableData.origin ? this._bigTableData.origin.field.length : -1;
-        if (originLength > 0 && this._fromColumn + value > originLength) {
-            this._fromColumn = this._bigTableData.origin.field.length - value;
-            this._fromColumn = this._fromColumn >= 0 ? this._fromColumn : 0;
-        }
-        this._sliceData();
+    public set height(value: number) {
+        this.columns = value;
     }
 
-    get columns(): number {
-        return this._columns;
-    }
-
-    private _fromRow = 0;
-
-    set fromRow(value: number) {
-        if (value < 0 || this._fromRow == value) {
-            return;
-        }
-        // `vScroll` will update `_fromRow` to a proper value
-        this._bigTableData.vScroll(value);
-    }
-
-    get fromRow(): number {
-        return this._fromRow;
-    }
-
-    setFromRowSilence(value:number) {
-        this._fromRow = value < 0 ? this._fromRow : value;
-    }
-
-    private _fromColumn = 0;
-
-    set fromColumn(value: number) {
-        if (value < 0 || this._fromColumn == value) {
-            return;
-        }
-        // `hScroll` will update `_fromColumn` to a proper value
-        this._bigTableData.hScroll(value);
-    }
-
-    get fromColumn(): number {
-        return this._fromColumn;
-    }
-
-    setFromColumnSilence(value:number) {
-        this._fromColumn = value < 0 ? this._fromColumn : value;
+    public get height(): number {
+        return this.columns;
     }
 }
 
-export class BigTableData extends PageableTableData {
+export class BigTableData extends PageableTableData implements ISlicedData {
+
+    public readonly viewPort: TableDataViewPort = new TableDataViewPort(this);
 
     constructor(public http: HttpClient, requestOptionsOrUrl: HttpClientOptions | string) {
         super(http, requestOptionsOrUrl);
@@ -461,15 +480,19 @@ export class BigTableData extends PageableTableData {
         return this._origin;
     }
 
-    public readonly viewPort: DataViewPort = new DataViewPort(this);
-
     private _takeSnapshot(): void {
         if (this._origin) {
             return;
         }
         this._origin = {
             field: this.field, header: this.header, data: this.data
-        }
+        };
+        this._updateViewPortSize();
+    }
+
+    private _updateViewPortSize():void {
+        this.viewPort.maxWidth = this.origin.field.length;
+        this.viewPort.maxHeight = this.origin.data.length;
     }
 
     protected sliceData(): void {
@@ -478,13 +501,13 @@ export class BigTableData extends PageableTableData {
             return;
         }
 
-        const toColumn = this.viewPort.columns + this.viewPort.fromColumn;
-        this.field = this._origin.field.slice(this.viewPort.fromColumn, toColumn);
-        this.header = this._origin.header.slice(this.viewPort.fromColumn, toColumn);
+        const toColumn = this.viewPort.columns + this.viewPort.horizontalTo;
+        this.field = this._origin.field.slice(this.viewPort.horizontalTo, toColumn);
+        this.header = this._origin.header.slice(this.viewPort.horizontalTo, toColumn);
 
-        const toRow = this.viewPort.rows + this.viewPort.fromRow;
-        const data = this._origin.data.slice(this.viewPort.fromRow, toRow);
-        this.data = data.map(item => item.slice(this.viewPort.fromColumn, toColumn));
+        const toRow = this.viewPort.rows + this.viewPort.verticalTo;
+        const data = this._origin.data.slice(this.viewPort.verticalTo, toRow);
+        this.data = data.map(item => item.slice(this.viewPort.horizontalTo, toColumn));
 
         this.refresh();
     }
@@ -492,15 +515,15 @@ export class BigTableData extends PageableTableData {
     public scroll(verticalTo: number, horizontalTo: number = NaN): void {
         this._takeSnapshot();
 
-        verticalTo = isNaN(verticalTo) ? this.viewPort.fromRow : verticalTo;
+        verticalTo = isNaN(verticalTo) ? this.viewPort.verticalTo : verticalTo;
         verticalTo = verticalTo + this.viewPort.rows > this._origin.data.length ?
             this._origin.data.length - this.viewPort.rows : verticalTo;
 
-        horizontalTo = isNaN(horizontalTo) ? this.viewPort.fromColumn : horizontalTo;
+        horizontalTo = isNaN(horizontalTo) ? this.viewPort.horizontalTo : horizontalTo;
         horizontalTo = horizontalTo + this.viewPort.columns > this._origin.field.length ?
             this._origin.field.length - this.viewPort.columns : horizontalTo;
 
-        if (verticalTo != this.viewPort.fromRow || horizontalTo != this.viewPort.fromColumn) {
+        if (verticalTo != this.viewPort.verticalTo || horizontalTo != this.viewPort.horizontalTo) {
             this.viewPort.setFromRowSilence(verticalTo);
             this.viewPort.setFromColumnSilence(horizontalTo);
             this.sliceData();
@@ -512,19 +535,20 @@ export class BigTableData extends PageableTableData {
     }
 
     public hScroll(scrollTo: number): void {
-        this.scroll(this.viewPort.fromRow, scrollTo);
+        this.scroll(this.viewPort.verticalTo, scrollTo);
     }
 
     protected ajaxSuccessHandler(rawTableData): void {
         super.ajaxSuccessHandler(rawTableData);
         this._origin = {field: rawTableData.field, header: rawTableData.header, data: rawTableData.data};
+        this._updateViewPortSize();
         this.sliceData();
     }
 
     protected ajaxErrorHandler(error): void {
         super.ajaxErrorHandler(error);
         this._origin = {field: [], header: [], data: []};
-        this._origin = new TableData();
+        this._updateViewPortSize();
     }
 
     public fromObject(data: any): TableDataBase {

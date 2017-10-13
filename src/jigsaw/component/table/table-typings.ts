@@ -19,8 +19,10 @@ export class TableValueGenerators {
         if (tableData instanceof PageableTableData || tableData instanceof LocalPageableTableData) {
             index += (tableData.pagingInfo.currentPage - 1) * tableData.pagingInfo.pageSize;
         }
+
+        // pity, unable to `tableData instanceof ISlicedData`
         if (tableData instanceof BigTableData) {
-            index += tableData.viewPort.fromRow;
+            index += tableData.viewPort.verticalTo;
         }
         index += row;
         return index;

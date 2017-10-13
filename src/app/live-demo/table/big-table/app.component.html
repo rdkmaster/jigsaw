@@ -18,16 +18,16 @@
 <br>
 
 当前行：
-<jigsaw-slider [value]="0" (change)="this.tableData.viewPort.fromRow = $event"
+<jigsaw-slider [value]="0" (change)="this.tableData.viewPort.verticalTo = $event"
                width="300px" min="0" [max]="tableData.origin.data.length">
 </jigsaw-slider>
-（{{tableData.viewPort.fromRow}}）
+（{{tableData.viewPort.verticalTo}}）
 
 当前列：
-<jigsaw-slider [value]="0" (change)="tableData.viewPort.fromColumn = $event"
+<jigsaw-slider [value]="0" (change)="tableData.viewPort.horizontalTo = $event"
                width="300px" min="0" [max]="tableData.origin.field.length">
 </jigsaw-slider>
-（{{tableData.viewPort.fromColumn}}）
+（{{tableData.viewPort.horizontalTo}}）
 
 <br>
 
