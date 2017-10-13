@@ -8,8 +8,8 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
 import {AbstractJigsawComponent} from "../common";
 import {CommonUtils} from '../../core/utils/common-utils';
 import {InternalUtils} from '../../core/utils/internal-utils';
-import {JigsawScrollBarModule} from '../../directive/scrollbar/scrollbar';
 import {ArrayCollection} from "../../core/data/array-collection";
+import {PerfectScrollbarConfigInterface, PerfectScrollbarModule} from "ngx-perfect-scrollbar/dist";
 
 @Directive({
     selector: '.jigsaw-select-option-list',
@@ -126,6 +126,15 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
         }
     }
 
+    /**
+     *
+     * @internal
+     */
+    public _$perfectScrollbarConfig: PerfectScrollbarConfigInterface = {
+        suppressScrollX: true,
+        wheelSpeed: 0.5
+    };
+
     ngOnInit() {
         super.ngOnInit();
         this.trackItemBy = InternalUtils.initTrackItemBy(<string>this.trackItemBy, this.labelField);
@@ -213,7 +222,7 @@ export class JigsawOption implements OnInit {
 }
 
 @NgModule({
-    imports: [CommonModule, FormsModule, JigsawScrollBarModule],
+    imports: [CommonModule, FormsModule, PerfectScrollbarModule],
     declarations: [JigsawSelect, JigsawOption, OptionList],
     exports: [JigsawSelect, JigsawOption]
 })

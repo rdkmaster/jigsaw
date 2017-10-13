@@ -5,7 +5,6 @@ import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent} from "../common";
 import {fadeIn} from "../animations/fade-in";
 import {CallbackRemoval} from "../../core/utils/common-utils";
-import {JigsawScrollBarModule} from "../../directive/scrollbar/scrollbar";
 import {TreeData} from "../../core/data/tree-data";
 import {JigsawTrustedHtmlModule} from "../../directive/trusted-html/trusted-html";
 
@@ -377,7 +376,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
 }
 
 @NgModule({
-    imports: [CommonModule, JigsawScrollBarModule, JigsawTrustedHtmlModule],
+    imports: [CommonModule, JigsawTrustedHtmlModule],
     declarations: [JigsawFishBone, JigsawFishBoneItem],
     exports: [JigsawFishBone]
 })

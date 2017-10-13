@@ -1,9 +1,7 @@
 <h2>scroll bar </h2>
-<div jigsawScrollBar class="bar"
-     scrollBarAxis="yx"
-     [scrollBarSnapAmount]="30"
-     [scrollBarScrollAmount]="30">
-    <ul >
+
+<div class="box-1" [perfectScrollbar]="config">
+    <ul class="box-2" [perfectScrollbar]="config">
         <li class="i1">1</li>
         <li class="i2">2</li>
         <li class="i3">3</li>
@@ -30,4 +28,5 @@
         <li class="i24">24</li>
         <li class="i25">25</li>
     </ul>
+    <div class="box-3"></div>
 </div>
