@@ -4,7 +4,7 @@
         <span class="jigsaw-select-icon-down fa fa-angle-down"></span>
     </div>
     <div class="jigsaw-select-option-list jigsaw-select-option-hidden"
-         [perfectScrollbar]="_$perfectScrollbarConfig"
+         [perfectScrollbar]="{ suppressScrollX: true, wheelSpeed: 0.5 }"
          [width]="optionWidth"
          [height]="optionHeight"
          [class.jigsaw-select-option-hidden]="_$optionListHidden">

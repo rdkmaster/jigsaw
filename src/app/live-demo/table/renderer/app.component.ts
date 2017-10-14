@@ -29,7 +29,7 @@ export class TableRendererDemoComponent {
 
     constructor(public http: HttpClient) {
         this.tableData = new LocalPageableTableData();
-        this.tableData.pagingInfo.pageSize = 200;
+        this.tableData.pagingInfo.pageSize = 100;
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list-full');
     }
@@ -59,7 +59,7 @@ export class TableRendererDemoComponent {
             }
         },
         {
-            target: ['name', 'salary', 'enrollDate'],
+            target: ['name', 'salary', 'enroll-date'],
             width: '150', header: {sortable: true}
         },
         {

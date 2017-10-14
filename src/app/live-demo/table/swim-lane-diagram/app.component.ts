@@ -2,7 +2,7 @@ import {
     Component, Renderer2, ElementRef, ViewContainerRef, ViewEncapsulation, ChangeDetectorRef
 } from "@angular/core";
 import {TableData} from "jigsaw/core/data/table-data";
-import {ColumnDefine} from "../../../../jigsaw/component/table/table-typings";
+import {ColumnDefine} from "jigsaw/component/table/table-typings";
 import {TableSwimLaneCell} from "./table-renderer";
 
 @Component({
@@ -12,7 +12,6 @@ import {TableSwimLaneCell} from "./table-renderer";
 })
 export class SwimLaneDiagramDemoComponent {
     tableData: TableData;
-    elementRef: ElementRef;
     neHover: boolean = true;
     currentIndex: any;
 
@@ -21,6 +20,80 @@ export class SwimLaneDiagramDemoComponent {
         {name: 'eMSC', desc: 'XNMME03', ip: '221.177.187.1'},
         {name: 'PCRF', desc: 'XNSAEGW02', ip: '221.177.187.112'},
     ];
+
+    constructor(public elementRef: ElementRef) {
+        this.tableData = new TableData([], ['id', 'date'], ['id', 'date']);
+        for (let i = 0; i < this.neList.length; i++) {
+            this.tableData.field.push('swimLang' + i);
+            this.tableData.header.push('swimLang' + i);
+        }
+        this.swimLaneData.forEach((swimLane, index) => {
+            const fromNeIndex = this.neList.findIndex(ne => ne.desc === swimLane.fromnedesc);
+            const toNeIndex = this.neList.findIndex(ne => ne.desc === swimLane.tonedesc);
+            const swimLaneIndex = fromNeIndex < toNeIndex ? fromNeIndex : toNeIndex;
+
+            const data: any[] = [];
+            for (let j = 0; j < this.tableData.field.length; j++) {
+                data[j] = {haveSignal: false, isDashed: true};
+            }
+
+            data[0] = swimLane.signalid;
+            data[1] = new Date(swimLane.timestamp / 1000).toLocaleString();
+            let usetime: number | string;
+            if (index == 0) {
+                usetime = null;
+            } else {
+                usetime = swimLane.timestamp - this.swimLaneData[index - 1].timestamp;
+            }
+            data[swimLaneIndex + 2] = {
+                usetime: usetime,
+                signaldesc: swimLane.signaldesc,
+                fromnedesc: swimLane.fromnedesc,
+                fromneip: swimLane.fromneip,
+                tonedesc: swimLane.tonedesc,
+                toneip: swimLane.toneip,
+                neList: this.neList,
+                haveSignal: true,
+                isDashed: false
+            };
+            for (let j = swimLaneIndex + 3; j < this.tableData.field.length; j++) {
+                data[j] = {haveSignal: false, isDashed: false};
+            }
+            this.tableData.data.push(data)
+        });
+        const nullData: any[] = ['', '', {}];
+        for (let j = 0; j < this.tableData.field.length; j++) {
+            nullData[j] = null;
+            if (j >= 2) nullData[j] = {haveSignal: false, isDashed: false};
+        }
+        for (let j = 0; j < 2; j++) {
+            this.tableData.data.push(nullData);
+        }
+        console.log(this.tableData.data);
+    }
+
+    columnDefineGenerator(field, index): ColumnDefine {
+        switch (index) {
+            case 0:
+                return {width: '50px'};
+            case 1:
+                return {width: '150px'};
+            case this.neList.length + 1:
+                return {
+                    width: (this.elementRef.nativeElement.parentElement.clientWidth - this.neList.length * 200) + 'px',
+                    cell: {
+                        renderer: TableSwimLaneCell
+                    }
+                };
+            default:
+                return {
+                    width: '200px',
+                    cell: {
+                        renderer: TableSwimLaneCell
+                    }
+                }
+        }
+    }
 
     swimLaneData = [
         {
@@ -105,90 +178,6 @@ export class SwimLaneDiagramDemoComponent {
             toneip: '100.89.254.145'
         }
     ];
-
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2, elementRef: ElementRef, public changeDetector: ChangeDetectorRef) {
-        this.elementRef = elementRef;
-        this.tableData = new TableData([], ['id', 'date'], ['id', 'date']);
-        for (let i = 0; i < this.neList.length; i++) {
-            this.tableData.field.push('swimLang' + i);
-            this.tableData.header.push('swimLang' + i);
-        }
-        for (let i = 0; i < this.swimLaneData.length; i++) {
-            const swimLane = this.swimLaneData[i];
-
-            const fromNeIndex = this.neList.findIndex(ne => ne.desc === swimLane.fromnedesc);
-            const toNeIndex = this.neList.findIndex(ne => ne.desc === swimLane.tonedesc);
-            const swimLaneIndex = fromNeIndex < toNeIndex ? fromNeIndex : toNeIndex;
-
-            const data: any[] = [];
-            for (let j = 0; j < this.tableData.field.length; j++) {
-                data[j] = {haveSignal: false, isDashed: true};
-            }
-
-            data[0] = swimLane.signalid;
-            data[1] = new Date(swimLane.timestamp / 1000).toLocaleString();
-            let usetime: number | string;
-            if (i == 0) {
-                usetime = null;
-            } else {
-                usetime = swimLane.timestamp - this.swimLaneData[i - 1].timestamp;
-            }
-            data[swimLaneIndex + 2] = {
-                usetime: usetime,
-                signaldesc: swimLane.signaldesc,
-                fromnedesc: swimLane.fromnedesc,
-                fromneip: swimLane.fromneip,
-                tonedesc: swimLane.tonedesc,
-                toneip: swimLane.toneip,
-                neList: this.neList,
-                haveSignal: true,
-                isDashed: false
-            };
-            for (let j = swimLaneIndex + 3; j < this.tableData.field.length; j++) {
-                data[j] = {haveSignal: false, isDashed: false};
-            }
-            this.tableData.data.push(data)
-        }
-        const nullData: any[] = ['', '', {}];
-        for (let j = 0; j < this.tableData.field.length; j++) {
-            nullData[j] = null;
-            if (j >= 2) nullData[j] = {haveSignal: false, isDashed: false};
-        }
-        for (let j = 0; j < 2; j++) {
-            this.tableData.data.push(nullData);
-        }
-        console.log(this.tableData.data);
-    }
-
-    ngAfterViewInit() {
-        console.log(this.elementRef.nativeElement.parentElement.clientWidth);
-        this.columnDefines = [
-            {
-                target: 0,
-                width: '50px'
-            },
-            {
-                target: 1,
-                width: '150px'
-            },
-            {
-                target: (field, index) => {
-                    return index > 1
-                },
-                width: '200px',
-                cell: {
-                    renderer: TableSwimLaneCell
-                }
-            }, {
-                target: this.neList.length + 1,
-                width: this.elementRef.nativeElement.parentElement.clientWidth - 200 - (this.neList.length - 1) * 200 + 'px'
-            }
-        ];
-        this.changeDetector.detectChanges();
-    }
-
-    columnDefines: ColumnDefine[];
 
     handleRowSelect(rowIndex: number) {
         console.log(rowIndex);

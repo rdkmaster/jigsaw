@@ -1,3 +1,10 @@
-<jigsaw-button (click)="click()" width="200">设置第一列宽度为40%</jigsaw-button>
+更新姓名列列宽：
+<jigsaw-slider (valueChange)="changeWidth($event)"
+               [value]="100" min="50" max="250" width="300">
+</jigsaw-slider>
 
-<jigsaw-table [data]="tableData" [columnDefines]="_columns" ></jigsaw-table>
+职位列是否可编辑：
+<jigsaw-switch [checked]="false" (change)="changeEditable($event)"></jigsaw-switch>
+
+<jigsaw-table #table [data]="tableData" [columnDefines]="_columns">
+</jigsaw-table>
