@@ -80,7 +80,7 @@ export class SwimLaneDiagramDemoComponent {
                 return {width: '150px'};
             case this.neList.length + 1:
                 return {
-                    width: (this.elementRef.nativeElement.parentElement.clientWidth - this.neList.length * 200) + 'px',
+                    width: this.elementRef.nativeElement.parentElement.clientWidth - this.neList.length * 200,
                     cell: {
                         renderer: TableSwimLaneCell
                     }
@@ -186,5 +186,11 @@ export class SwimLaneDiagramDemoComponent {
     handleDbRowSelect(rowIndex: number) {
         console.log(rowIndex);
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '这个demo展示了表格动态';
+    description: string = require('!!raw-loader!./readme.md');
 }
 

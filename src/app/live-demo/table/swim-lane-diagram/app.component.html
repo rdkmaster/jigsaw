@@ -1,3 +1,9 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
 <ul class="ne-list">
     <li *ngFor="let ne of neList; index as liIndex" class="li-{{liIndex}}"
         (mouseover)="neHover=true;currentIndex=liIndex" (mouseleave)="neHover=false;currentIndex=liIndex">
