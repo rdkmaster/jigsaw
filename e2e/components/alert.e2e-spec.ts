@@ -9,8 +9,9 @@ describe('alert', () => {
         browser.waitForAngularEnabled(false);
     });
     describe('test popup', () => {
-        beforeEach(() => {
-            browser.get('/#/alert/popup');
+        beforeEach(async() => {
+          await  browser.get('/#/alert/popup');
+          await browser.sleep(300);
         });
         it('should be alert when click button popup and display ok when click definite ', async () => {
             const componentEl = element(by.tagName('ng-component')),
