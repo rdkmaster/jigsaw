@@ -1,5 +1,7 @@
-<div class="jigsaw-table-range" #contentScrollbar [perfectScrollbar]="_$rangeScrollbarConfig">
-    <table class="jigsaw-table-header">
+<div class="jigsaw-table-range" #contentScrollbar
+     [perfectScrollbar]="_$rangeScrollbarConfig"
+     [class.jigsaw-table-hide-head]="hideHeader">
+    <table class="jigsaw-table-header" [hidden]="hideHeader">
         <colgroup>
             <col *ngFor="let head of _$headerSettings;" width="{{head.width}}">
         </colgroup>

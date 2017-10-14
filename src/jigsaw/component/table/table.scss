@@ -6,9 +6,6 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     @include inline-block;
     position: relative;
     width: 100%;
-    &.#{$table-prefix-cls}-hide-head {
-        padding-top: 0;
-    }
     table {
         width: 100%;
         text-align: center;
@@ -73,6 +70,9 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
 .#{$table-prefix-cls}-range{
     height: 100%;
     padding-top: 40px;
+    &.#{$table-prefix-cls}-hide-head {
+        padding-top: 0;
+    }
 }
 
 .#{$table-prefix-cls}-body-range{

@@ -47,8 +47,7 @@ import {TableUtils} from "./table-utils";
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[class.jigsaw-table-host]': 'true',
-        '[class.jigsaw-table-hide-head]': "hideHeader"
+        '[class.jigsaw-table-host]': 'true'
     },
 })
 export class JigsawTable extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
