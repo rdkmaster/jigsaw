@@ -19,24 +19,24 @@ describe('alert', () => {
                 jigsawAlertEl = element(by.tagName('jigsaw-alert')),
                 definiteEl = jigsawAlertEl.element(by.css('.jigsaw-button')),
                 alertStateEl = componentEl.element(by.tagName('p'));
-            alertButtonEl.get(0).click();
-            await browser.wait(ExpectedConditions.presenceOf(element(by.tagName('jigsaw-alert'))));
-            expect(alertStateEl.getText()).toBe('waiting for an answer');
-            definiteEl.click();
-            await browser.wait(ExpectedConditions.not(ExpectedConditions.presenceOf(element(by.tagName('jigsaw-alert')))));
-            expect(alertStateEl.getText()).toBe('great! your answer is: alert.button.ok');
-            alertButtonEl.get(1).click();
-            await browser.wait(ExpectedConditions.presenceOf(element(by.tagName('jigsaw-alert'))));
-            expect(alertStateEl.getText()).toBe('waiting for an answer');
-            definiteEl.click();
-            await browser.wait(ExpectedConditions.not(ExpectedConditions.presenceOf(element(by.tagName('jigsaw-alert')))));
-            expect(alertStateEl.getText()).toBe('great! your answer is: alert.button.ok');
-            alertButtonEl.get(2).click();
-            await browser.wait(ExpectedConditions.presenceOf(element(by.tagName('jigsaw-alert'))));
-            expect(alertStateEl.getText()).toBe('waiting for an answer');
-            definiteEl.click();
-            await browser.wait(ExpectedConditions.not(ExpectedConditions.presenceOf(element(by.tagName('jigsaw-alert')))));
-            expect(alertStateEl.getText()).toBe('great! your answer is: alert.button.ok');
+            await alertButtonEl.get(0).click();
+            await ExpectedConditions.presenceOf(element(by.tagName('jigsaw-alert')));
+            await expect(alertStateEl.getText()).toBe('waiting for an answer');
+            await definiteEl.click();
+            await ExpectedConditions.not(ExpectedConditions.presenceOf(element(by.tagName('jigsaw-alert'))));
+            await expect(alertStateEl.getText()).toBe('great! your answer is: alert.button.ok');
+            await alertButtonEl.get(1).click();
+            await ExpectedConditions.presenceOf(element(by.tagName('jigsaw-alert')));
+            await expect(alertStateEl.getText()).toBe('waiting for an answer');
+            await definiteEl.click();
+            await ExpectedConditions.not(ExpectedConditions.presenceOf(element(by.tagName('jigsaw-alert'))));
+            await expect(alertStateEl.getText()).toBe('great! your answer is: alert.button.ok');
+            await alertButtonEl.get(2).click();
+            await ExpectedConditions.presenceOf(element(by.tagName('jigsaw-alert')));
+            await expect(alertStateEl.getText()).toBe('waiting for an answer');
+            await definiteEl.click();
+            await ExpectedConditions.not(ExpectedConditions.presenceOf(element(by.tagName('jigsaw-alert'))));
+            await expect(alertStateEl.getText()).toBe('great! your answer is: alert.button.ok');
         });
         it('should close alert when click "x"', async () => {
             const componentEl = element(by.tagName('ng-component')),
@@ -44,16 +44,16 @@ describe('alert', () => {
                 jigsawAlertEl = element(by.tagName('jigsaw-alert')),
                 alertCloseEl = jigsawAlertEl.element(by.css('.jigsaw-alert-close')),
                 alertStateEl = componentEl.element(by.tagName('p'));
-            alertButtonEl.get(0).click();
-            await browser.wait(ExpectedConditions.presenceOf(element(by.tagName('jigsaw-alert'))));
-            alertCloseEl.click();
-            await browser.wait(ExpectedConditions.not(ExpectedConditions.presenceOf(element(by.tagName('jigsaw-alert')))));
-            expect(alertStateEl.getText()).toBe('you closed the alert with the close button');
-            alertButtonEl.get(1).click();
-            await browser.wait(ExpectedConditions.presenceOf(element(by.tagName('jigsaw-alert'))));
-            alertCloseEl.click();
-            await browser.wait(ExpectedConditions.not(ExpectedConditions.presenceOf(element(by.tagName('jigsaw-alert')))));
-            expect(alertStateEl.getText()).toBe('you closed the alert with the close button');
+            await alertButtonEl.get(0).click();
+            await ExpectedConditions.presenceOf(element(by.tagName('jigsaw-alert')));
+            await alertCloseEl.click();
+            await ExpectedConditions.not(ExpectedConditions.presenceOf(element(by.tagName('jigsaw-alert'))));
+            await expect(alertStateEl.getText()).toBe('you closed the alert with the close button');
+            await alertButtonEl.get(1).click();
+            await ExpectedConditions.presenceOf(element(by.tagName('jigsaw-alert')));
+            await alertCloseEl.click();
+            await ExpectedConditions.not(ExpectedConditions.presenceOf(element(by.tagName('jigsaw-alert'))));
+            await expect(alertStateEl.getText()).toBe('you closed the alert with the close button');
         });
         it('should check color of warning and error alert', () => {
             const componentEl = element(by.tagName('ng-component')),
