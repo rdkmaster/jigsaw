@@ -51,6 +51,9 @@ export class BigTableDataDemoComponent {
         }
     ];
 
+    steps = [1, 3, 5, 7, 9];
+    selectedStep = 1;
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

@@ -9,11 +9,13 @@ import {JigsawCheckBoxModule} from "jigsaw/component/checkbox/index";
 import {JigsawDemoDescriptionModule} from "../../../demo-description/demo-description";
 import {BigTableDataDemoComponent} from './app.component';
 import {OfficeCellRenderer, OfficeHeaderRenderer, PositionHeaderRenderer} from "./renderers";
+import {JigsawBigDataViewportModule} from "jigsaw/component/viewport/viewport";
+import {JigsawRadioModule} from "../../../../jigsaw/component/radio/radio";
 
 @NgModule({
     imports: [
         JigsawTableModule, JigsawSliderModule, JigsawDemoDescriptionModule, JigsawSelectModule, JigsawComboSelectModule,
-        JigsawListModule, JigsawButtonModule, JigsawCheckBoxModule
+        JigsawListModule, JigsawButtonModule, JigsawCheckBoxModule, JigsawBigDataViewportModule, JigsawRadioModule
     ],
     declarations: [
         BigTableDataDemoComponent, PositionHeaderRenderer, OfficeHeaderRenderer, OfficeCellRenderer

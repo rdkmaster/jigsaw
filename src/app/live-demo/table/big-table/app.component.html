@@ -5,6 +5,7 @@
 
 <!-- start to learn the demo from here -->
 
+<!--
 行数：
 <jigsaw-slider width="300px" min="5" max="30" [(value)]="tableData.viewPort.rows">
 </jigsaw-slider>
@@ -30,7 +31,17 @@
 （{{tableData.viewPort.horizontalTo}}）
 
 <br>
+-->
+<label>请选择每次滚动的行数：</label>
+<j-radios [(value)]="selectedStep">
+    <j-radio-option *ngFor="let item of steps" [value]="item">
+        {{item}}
+    </j-radio-option>
+</j-radios>
 
-<jigsaw-table [data]="tableData" [columnDefines]="columnDefines" trackRowBy="name"
-              [additionalColumnDefines]="additionalColumnDefines">
-</jigsaw-table>
+<j-viewport [data]="tableData" [step]="selectedStep">
+    <j-table [data]="tableData" [columnDefines]="columnDefines" trackRowBy="name"
+                  [additionalColumnDefines]="additionalColumnDefines" rows="10" columns="5">
+    </j-table>
+</j-viewport>
+<div style="height: 2000px"></div>

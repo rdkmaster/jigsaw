@@ -1,0 +1,20 @@
+@import "../../assets/scss/core/base";
+
+$viewport-prefix-cls: #{$jigsaw-prefix}-viewport;
+
+.#{$viewport-prefix-cls} {
+    @include inline-block;
+    position: relative;
+    &-vertical-slider, &-horizontal-slider{
+        position: absolute;
+        z-index: $zindex-affix;
+    }
+    &-vertical-slider{
+        top: 0;
+        right: 0;
+    }
+    &-horizontal-slider{
+        left: 0;
+        bottom: 0;
+    }
+}

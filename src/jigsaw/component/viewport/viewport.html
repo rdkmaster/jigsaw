@@ -1,0 +1,28 @@
+行数：
+<jigsaw-slider width="300px" min="5" max="30" [(value)]="data.viewPort.rows">
+</jigsaw-slider>
+（{{data.viewPort.rows}}）
+
+列数：
+<jigsaw-slider width="300px" min="2" max="15" [(value)]="data.viewPort.columns">
+</jigsaw-slider>
+（{{data.viewPort.columns}}）
+
+<br>
+
+当前行：
+<jigsaw-slider *ngIf="_$showSlider" class="jigsaw-viewport-vertical-slider" [(value)]="data.viewPort.verticalTo"
+               width="12px" min="0" [max]="data.origin.data.length" [vertical]="true">
+</jigsaw-slider>
+（{{data.viewPort.verticalTo}}）
+
+当前列：
+<jigsaw-slider *ngIf="_$showSlider" class="jigsaw-viewport-horizontal-slider" [(value)]="data.viewPort.horizontalTo"
+               height="12px" min="0" [max]="data.origin.field.length">
+</jigsaw-slider>
+（{{data.viewPort.horizontalTo}}）
+
+<br>
+鼠标滚动方向：{{wheelDelta}}
+<ng-content></ng-content>
+
