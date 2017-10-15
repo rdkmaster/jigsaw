@@ -12,16 +12,11 @@ import {JigsawMarkdownModule} from "../markdown/markdown";
         span {
             font-size: 14px;
         }
-        
-        p {
-            padding-bottom: 0;
-        }
     `],
     template: `
-        <p>
-            <span [innerHtml]="summary"></span>
-            <a (click)="showDetail = !showDetail">[{{showDetail ? '隐藏' : '展开'}}详情]</a>
-        </p>
+        <span [innerHtml]="summary"></span>
+        <a (click)="showDetail = !showDetail">[{{showDetail ? '隐藏' : '展开'}}详情]</a>
+        <br *ngIf="showDetail">
         <jigsaw-markdown *ngIf="showDetail" [markdown]="content"></jigsaw-markdown><br>
         <a *ngIf="showDetail" (click)="showDetail = !showDetail">[{{showDetail ? '隐藏' : '展开'}}详情]</a>
         <hr>
