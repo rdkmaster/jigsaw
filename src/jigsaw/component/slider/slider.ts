@@ -235,8 +235,17 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
     }
 
     public set value(value: number | ArrayCollection<number>) {
-        this.writeValue(value);
-        this._propagateChange(this.value);
+        if (!this.initialized) {
+            if (value instanceof ArrayCollection) {
+                this._$value = value;
+            } else {
+                this._$value.set(0, value);
+            }
+            return;
+        } else {
+            this.writeValue(value);
+            this._propagateChange(this.value);
+        }
     }
 
     /**
@@ -441,6 +450,9 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
         this._calcMarks();
         // 注册resize事件;
         this.resize();
+
+        // 强制使外部给的值生效
+        this.value = this._$value;
     }
 
     private _removeResizeEvent: Function;

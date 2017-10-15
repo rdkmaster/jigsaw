@@ -1,8 +1,7 @@
-import {
-    Component, Renderer2, ElementRef, ViewContainerRef, ViewEncapsulation, ChangeDetectorRef
-} from "@angular/core";
+import {Component, ElementRef, ViewChild, ViewEncapsulation} from "@angular/core";
 import {TableData} from "jigsaw/core/data/table-data";
 import {ColumnDefine} from "jigsaw/component/table/table-typings";
+import {JigsawTable} from "jigsaw/component/table/table";
 import {TableSwimLaneCell} from "./table-renderer";
 
 @Component({
@@ -14,7 +13,10 @@ export class SwimLaneDiagramDemoComponent {
     tableData: TableData;
     neHover: boolean = true;
     currentIndex: any;
+    colWidth = 200;
+    @ViewChild(JigsawTable) table: JigsawTable;
 
+    // 下面这个数组的个数决定了表格的列数，本demo假设它事先未知。
     neList = [
         {name: 'eNB', desc: '100.89.140.69', ip: '100.89.140.69'},
         {name: 'eMSC', desc: 'XNMME03', ip: '221.177.187.1'},
@@ -80,19 +82,24 @@ export class SwimLaneDiagramDemoComponent {
                 return {width: '150px'};
             case this.neList.length + 1:
                 return {
-                    width: (this.elementRef.nativeElement.parentElement.clientWidth - this.neList.length * 200) + 'px',
+                    width: this.elementRef.nativeElement.parentElement.clientWidth - this.neList.length * 200,
                     cell: {
                         renderer: TableSwimLaneCell
                     }
                 };
             default:
                 return {
-                    width: '200px',
+                    width: this.colWidth,
                     cell: {
                         renderer: TableSwimLaneCell
                     }
                 }
         }
+    }
+
+    changeWidth(width) {
+        this.colWidth = width;
+        this.table.update();
     }
 
     swimLaneData = [
@@ -186,5 +193,11 @@ export class SwimLaneDiagramDemoComponent {
     handleDbRowSelect(rowIndex: number) {
         console.log(rowIndex);
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '这个demo展示了表格应对事先未知多少列，并且需要动态调整这些列定义的方法。';
+    description: string = require('!!raw-loader!./readme.md');
 }
 

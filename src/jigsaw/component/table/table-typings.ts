@@ -9,7 +9,6 @@ import {SortAs, SortOrder} from "../../core/data/component-data";
 import {TableCellRendererBase} from "./table-renderer";
 import {CommonUtils} from "../../core/utils/common-utils";
 
-export type TableColumnTargetFinder = (field: string, index: number) => boolean;
 export type TableColumnTarget = number | string | (number | string)[];
 export type ColumnDefineGenerator = (field: string, index: number) => ColumnDefine;
 export type TableCellDataGenerator = (tableData: TableData,
