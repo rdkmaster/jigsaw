@@ -71,10 +71,6 @@ export class SwimLaneDiagramDemoComponent {
             this.tableData.data.push(nullData);
         }
         console.log(this.tableData.data);
-
-        setTimeout(() => {
-            console.log(this.colWidth);
-        }, 200);
     }
 
     columnDefineGenerator(field, index): ColumnDefine {
