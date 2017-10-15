@@ -16,6 +16,7 @@ export class SwimLaneDiagramDemoComponent {
     colWidth = 200;
     @ViewChild(JigsawTable) table: JigsawTable;
 
+    // 下面这个数组的个数决定了表格的列数，本demo假设它事先未知。
     neList = [
         {name: 'eNB', desc: '100.89.140.69', ip: '100.89.140.69'},
         {name: 'eMSC', desc: 'XNMME03', ip: '221.177.187.1'},

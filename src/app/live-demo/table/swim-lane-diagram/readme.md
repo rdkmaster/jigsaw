@@ -16,6 +16,13 @@ columnDefineGenerator(field, index): ColumnDefine {
 
 表格提供了当前列的字段名和索引值，你需要根据这2个值返回对应的列定义。通过这个产生器，就可以应对表格的列事先未知的情况了。
 
+#### 列产生器的上下文
+表格有一个属性`columnDefineGeneratorContext`用于设置列产生器的上下文。列产生器的上下文的作用是确定了列产生器中的`this`所指向的对象。
+在本demo中，`columnDefineGenerator`方法体内内用到了this了，因此，这里就必须设置 `columnDefineGeneratorContext`
+的值。简单的将其设置为this即可：`[columnDefineGeneratorContext]="this"`
+
+反过来，如果`columnDefineGenerator`方法体内内没有用到this，那这个上下文可以忽略不设置。
+
 #### 需要注意的地方
 
 假设你已经熟悉了表格的列定义，这个demo对你来说，唯一需要注意的地方就是ts代码中的这句话：
