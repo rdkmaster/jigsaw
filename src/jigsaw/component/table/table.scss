@@ -85,4 +85,11 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     }
 }
 
+@-moz-document url-prefix() {
+    .jigsaw-table-range colgroup {
+        display: block;
+        width: 100%;
+    }
+}
+
 

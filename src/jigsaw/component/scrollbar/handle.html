@@ -1,0 +1,5 @@
+<div class="jigsaw-slider-handle"
+     [ngStyle]="_$handleStyle"
+     (mousedown)="_$updateCanDragged(true)"
+     (mousemove)="_$updateValuePosition($event)"
+     (mouseup)="_$updateCanDragged(false)"></div>

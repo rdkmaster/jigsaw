@@ -1,7 +1,8 @@
-import {Component, Input, NgModule, OnInit, Renderer2} from "@angular/core";
+import {Component, Input, NgModule} from "@angular/core";
 import {BigTableData} from "../../core/data/table-data";
-import {JigsawSliderModule} from "../slider/index";
 import {CommonModule} from "@angular/common";
+import {JigsawScrollbarModule} from "../scrollbar/index";
+import {JigsawSliderModule} from "../slider/index";
 
 @Component({
     selector: 'jigsaw-viewport, j-viewport',
@@ -14,7 +15,7 @@ import {CommonModule} from "@angular/common";
         '(DOMMouseScroll)': '_$handleMouseWheel($event)' // firefox
     }
 })
-export class JigsawBigDataViewport {
+export class JigsawViewport {
 
     private _data: BigTableData;
 
@@ -76,23 +77,31 @@ export class JigsawBigDataViewport {
 
     private _scrollDown() {
         if (this.data.viewPort.verticalTo < this.data.origin.data.length) {
-            this.data.viewPort.verticalTo = this.data.viewPort.verticalTo + this.step;
+            if (this.data.viewPort.verticalTo + this.step < this.data.origin.data.length) {
+                this.data.viewPort.verticalTo = this.data.viewPort.verticalTo + this.step;
+            } else {
+                this.data.viewPort.verticalTo = this.data.origin.data.length;
+            }
         }
     }
 
     private _scrollUp() {
         if (this.data.viewPort.verticalTo > 0) {
-            this.data.viewPort.verticalTo = this.data.viewPort.verticalTo - this.step;
+            if (this.data.viewPort.verticalTo - this.step > 0) {
+                this.data.viewPort.verticalTo = this.data.viewPort.verticalTo - this.step;
+            } else {
+                this.data.viewPort.verticalTo = 0;
+            }
         }
     }
 
 }
 
 @NgModule({
-    imports: [JigsawSliderModule, CommonModule],
-    declarations: [JigsawBigDataViewport],
-    exports: [JigsawBigDataViewport]
+    imports: [JigsawScrollbarModule, CommonModule, JigsawSliderModule],
+    declarations: [JigsawViewport],
+    exports: [JigsawViewport]
 })
-export class JigsawBigDataViewportModule {
+export class JigsawViewportModule {
 
 }
