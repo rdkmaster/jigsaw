@@ -11,14 +11,14 @@
 <br>
 
 当前行：
-<j-scrollbar *ngIf="_$showSlider" class="jigsaw-viewport-vertical-slider" [(value)]="data.viewPort.verticalTo"
-               width="12px" min="0" [max]="data.origin.data.length" [vertical]="true">
+<j-scrollbar class="jigsaw-viewport-vertical-scrollbar" [(value)]="data.viewPort.verticalTo"
+             [height]="_$tableBodyHeight" [max]="data.origin.data.length" [vertical]="true">
 </j-scrollbar>
 （{{data.viewPort.verticalTo}}）
 
 当前列：
-<j-scrollbar *ngIf="_$showSlider" class="jigsaw-viewport-horizontal-slider" [(value)]="data.viewPort.horizontalTo"
-               height="12px" min="0" [max]="data.origin.field.length">
+<j-scrollbar class="jigsaw-viewport-horizontal-scrollbar" [(value)]="data.viewPort.horizontalTo"
+             [max]="data.origin.field.length">
 </j-scrollbar>
 （{{data.viewPort.horizontalTo}}）
 

@@ -1,8 +1,9 @@
-import {Component, Input, NgModule} from "@angular/core";
+import {AfterContentInit, Component, ContentChild, ElementRef, Input, NgModule, OnInit} from "@angular/core";
 import {BigTableData} from "../../core/data/table-data";
 import {CommonModule} from "@angular/common";
 import {JigsawScrollbarModule} from "../scrollbar/index";
 import {JigsawSliderModule} from "../slider/index";
+import {JigsawTable} from "../table/table";
 
 @Component({
     selector: 'jigsaw-viewport, j-viewport',
@@ -17,6 +18,11 @@ import {JigsawSliderModule} from "../slider/index";
 })
 export class JigsawViewport {
 
+    public _$tableBodyHeight: number;
+
+    constructor(private _elementRef: ElementRef) {
+    }
+
     private _data: BigTableData;
 
     @Input()
@@ -27,6 +33,13 @@ export class JigsawViewport {
     set data(value: BigTableData) {
         if (value instanceof BigTableData) {
             this._data = value;
+            value.onRefresh(() => {
+                // 等待table渲染
+                setTimeout(() => {
+                    console.log(this._elementRef.nativeElement.querySelector('table.jigsaw-table-body tbody').offsetHeight);
+                    this._$tableBodyHeight = this._elementRef.nativeElement.querySelector('table.jigsaw-table-body tbody').offsetHeight;
+                })
+            })
         } else if (value) {
             console.warn('this data is not BigTableData')
         }

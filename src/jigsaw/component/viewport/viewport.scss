@@ -5,15 +5,15 @@ $viewport-prefix-cls: #{$jigsaw-prefix}-viewport;
 .#{$viewport-prefix-cls} {
     @include inline-block;
     position: relative;
-    &-vertical-slider, &-horizontal-slider{
+    &-vertical-scrollbar, &-horizontal-scrollbar {
         position: absolute;
-        z-index: $zindex-affix;
+        z-index: $zindex-scrollbar;
     }
-    &-vertical-slider{
-        top: 0;
+    &-vertical-scrollbar {
+        bottom: 0;
         right: 0;
     }
-    &-horizontal-slider{
+    &-horizontal-scrollbar {
         left: 0;
         bottom: 0;
     }

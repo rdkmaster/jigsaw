@@ -1,194 +1,70 @@
 @import "../../assets/scss/core/base";
 @import "../../assets/scss/reset";
 
-$jigsaw-slider: #{$jigsaw-prefix}-slider;
+$jigsaw-scrollbar: #{$jigsaw-prefix}-scrollbar;
 
-.#{$jigsaw-slider}-host {
-    height: 100%;
-    width: 100%;
+.#{$jigsaw-scrollbar} {
     @include inline-block;
     user-select: none;
-    ::selection {
-        background-color: #fff;
-        color: #666;
-    }
-}
-
-.#{$jigsaw-slider} {
-    display: block;
-    position: relative;
-    height: 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    background-color: $border-color-split;
-    border-top: 4px solid #fff;
-    border-bottom: 4px solid #fff;
-    user-select: none;
-
-    transition: background-color 0.3s ease;
-
-    &-with-marks {
-        margin-bottom: 28px;
-    }
-
-    .#{$jigsaw-slider}-track {
-        position: absolute;
-        left: 0px;
-        height: 4px;
-        border-radius: $border-radius-base;
-        background-color: mix($primary-color, #fff, 40%);
-        z-index: 1;
-        transition: background-color 0.3s ease;
-    }
-
+    transition: background-color .2s linear, opacity .2s linear;
     &:hover {
-        background-color: #e1e1e1;
-        .#{$jigsaw-slider}-handle {
-            border-color: $primary-color;
+        background-color: #eee;
+        opacity: .9;
+        .#{$jigsaw-scrollbar}-handle {
+            background-color: #999;
+            opacity: .9;
         }
     }
 
-    &:hover {
-        .#{$jigsaw-slider}-track {
-            background-color: mix($primary-color, #fff, 80%);
-        }
+    &-track {
+        position: relative;
+        cursor: pointer;
+        height: 100%;
     }
 
-    .#{$jigsaw-slider}-handle {
+    .#{$jigsaw-scrollbar}-handle {
         position: absolute;
-        margin-left: -7px;
-        margin-top: -5px;
-        width:14px;
-        height: 14px;
-        border-radius: 50%;
-        border: 2px solid mix($primary-color, #fff, 50%);
-        background-color: $default-color;
-        z-index: 2;
+        border-radius: 6px;
+        background-color: #aaa;
+        opacity: .6;
+        transition: background-color .2s linear, height .2s linear, width .2s ease-in-out, border-radius .2s ease-in-out
+    }
 
-        transition: border-color 0.3s ease, transform .3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    &-horizontal {
+        width: 100%;
+        height: 15px;
+
+        .#{$jigsaw-scrollbar}-handle {
+            left: 0;
+            bottom: 2px;
+            width: 140px;
+            height: 6px;
+        }
 
         &:hover {
-            border-color: $primary-color;
-            transform: scale(1.2);
-            transform-origin: center center;
-        }
-
-        &:active {
-            box-shadow: 0 0 0 2px rgba($primary-color, .2);
-        }
-    }
-
-    .#{$jigsaw-slider}-mark {
-        position: absolute;
-        top: 10px;
-        left:0;
-        width:100%;
-        height: 100%;
-        font-size: $font-size-base;
-        z-index: 3;
-
-        .#{$jigsaw-slider}-mark-text {
-            position: absolute;
-            display: inline-block;
-            vertical-align: middle;
-            text-align: center;
-            cursor: pointer;
-            color: $text-color-secondary;
-
-            &-active {
-                color: $text-color;
+            .#{$jigsaw-scrollbar}-handle {
+                height: 11px;
+                background-color: #999;
+                opacity: .9;
             }
-        }
-    }
-
-    .#{$jigsaw-slider}-step {
-        position: absolute;
-        width:100%;
-        height: 4px;
-        background: transparent;
-        z-index: 1;
-
-        > .#{$jigsaw-slider}-dot {
-            position: absolute;
-            margin-left: -4px;
-            width: 8px;
-            height: 8px;
-            border: 2px solid $border-color-split;
-            background-color: $default-color;
-            cursor: pointer;
-            border-radius: 50%;
-            vertical-align: middle;
-            &:first-child {
-                margin-left: -4px;
-            }
-            &:last-child {
-                margin-left: -4px;
-            }
-            &-active {
-                border-color: mix($primary-color, #fff, 50%);
-            }
-        }
-    }
-
-    &-disabled {
-        background-color: $border-color-split !important;
-
-        .#{$jigsaw-slider}-track {
-            background-color: $disabled-color !important;
-        }
-
-        .#{$jigsaw-slider}-handle,
-        .#{$jigsaw-slider}-dot {
-            border-color: $disabled-color!important;
-            background-color: $default-color;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-
-        .#{$jigsaw-slider}-handle:active {
-            box-shadow: none;
-        }
-
-        .#{$jigsaw-slider}-masr-text,
-        .#{$jigsaw-slider}-dot {
-            cursor: not-allowed!important;
         }
     }
 
     &-vertical {
-        width: 12px;
+        width: 15px;
         height: 100%;
-        margin: 6px 10px;
-        border: 4px;
-        border-left: 4px solid #fff;
-        border-right: 4px solid #fff;
 
-        .#{$jigsaw-slider}-track {
-            width: 4px;
+        .#{$jigsaw-scrollbar}-handle {
+            top: 0;
+            right: 2px;
+            width: 6px;
+            height: 140px;
         }
 
-        .#{$jigsaw-slider}-handle {
-            margin-left: -5px;
-            margin-bottom: -7px;
-        }
-
-        .#{$jigsaw-slider}-mark {
-            top: 10px;
-            left: 10px;
-        }
-        .#{$jigsaw-slider}-mark-text {
-            white-space: nowrap;
-        }
-
-        .#{$jigsaw-slider}-step {
-            width: 4px;
-            height: 100%;
-        }
-
-        .#{$jigsaw-slider}-dot {
-            top: auto;
-            left: 2px;
-            margin-bottom: -4px;
+        &:hover {
+            .#{$jigsaw-scrollbar}-handle {
+                width: 11px;
+            }
         }
     }
 }

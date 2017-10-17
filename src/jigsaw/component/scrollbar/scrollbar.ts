@@ -1,4 +1,5 @@
 import {
+    AfterViewInit,
     Component,
     ElementRef,
     EventEmitter, forwardRef, Host, Inject,
@@ -6,34 +7,17 @@ import {
     OnDestroy,
     OnInit,
     Output,
-    QueryList,
-    Renderer2,
-    ViewChildren,
-    ViewEncapsulation
+    Renderer2, ViewChild
 } from "@angular/core";
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {CommonUtils} from "../../core/utils/common-utils";
-import {ArrayCollection} from "../../core/data/array-collection";
-import {CallbackRemoval} from "../../core/utils/common-utils";
 import {AbstractJigsawComponent} from "../common";
 
-export class SliderMark {
-    value: number;
-    label: string;
-    style?: any;
-}
-
 @Component({
-    selector: 'slider-handle',
-    templateUrl: './handle.html',
-    encapsulation: ViewEncapsulation.None
+    selector: 'jigsaw-scrollbar-handle',
+    templateUrl: './handle.html'
 })
 export class JigsawScrollHandle implements OnInit {
 
     private _value: number;
-
-    @Input()
-    public key: number;
 
     @Input()
     public get value() {
@@ -42,13 +26,13 @@ export class JigsawScrollHandle implements OnInit {
 
     public set value(value) {
         if (this._value === value) return;
-
         this._value = this._slider._verifyValue(value);
+        this.valueChange.emit(this._value);
         this._valueToPos();
     }
 
     @Output()
-    public change = new EventEmitter<number>();
+    public valueChange = new EventEmitter<number>();
 
     private _valueToPos() {
         this._offset = this._slider._transformValueToPos(this.value);
@@ -86,7 +70,7 @@ export class JigsawScrollHandle implements OnInit {
         // bottom 在dom中的位置.
         let offset = this._slider.vertical ? dimensions.top : dimensions.left;
         let size = this._slider.vertical ? dimensions.height : dimensions.width;
-        let posValue = this._slider.vertical ? pos.y - 6 : pos.x;
+        let posValue = this._slider.vertical ? pos.y : pos.x;
 
         posValue = posValue > offset ? posValue : offset;
 
@@ -139,7 +123,6 @@ export class JigsawScrollHandle implements OnInit {
             this._dragged = false;
             this._destroyGlobalEvent();
         });
-
     }
 
     _destroyGlobalEvent() {
@@ -154,7 +137,7 @@ export class JigsawScrollHandle implements OnInit {
 
     private _slider: JigsawScrollbar; // 父组件;
 
-    constructor(private _render: Renderer2, @Host() @Inject(forwardRef(() => JigsawScrollbar)) slider: JigsawScrollbar) {
+    constructor(private _render: Renderer2, public _elementRef: ElementRef, @Host() @Inject(forwardRef(() => JigsawScrollbar)) slider: JigsawScrollbar) {
         this._slider = slider;
     }
 
@@ -163,7 +146,7 @@ export class JigsawScrollHandle implements OnInit {
      * @internal
      */
     public _$updateValuePosition(event?) {
-        if (!this._dragged || this._slider.disabled) return;
+        if (!this._dragged) return;
 
         // 防止产生选中其他文本，造成鼠标放开后还可以拖拽的奇怪现象;
         event.stopPropagation();
@@ -174,13 +157,7 @@ export class JigsawScrollHandle implements OnInit {
             y: event["clientY"]
         };
 
-        let newValue = this.transformPosToValue(pos);
-
-        if (this.value === newValue) return;
-
-        this.value = newValue;
-
-        this._slider._updateValue(this.key, newValue);
+        this.value = this.transformPosToValue(pos);
     }
 
     ngOnInit() {
@@ -188,89 +165,49 @@ export class JigsawScrollHandle implements OnInit {
     }
 }
 
-/**
- * @description 滑动条组件.
- *
- * 何时使用
- * 当用户需要在数值区间/自定义区间内进行选择时
- */
 @Component({
     selector: 'jigsaw-scrollbar, j-scrollbar',
     templateUrl: './scrollbar.html',
     host: {
-        'class': 'jigsaw-slider-host',
+        'class': 'jigsaw-scrollbar',
         '[style.width]': 'width',
-        '[style.height]': 'height'
-    },
-    encapsulation: ViewEncapsulation.None,
-    providers: [
-        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawScrollbar), multi: true},
-    ]
+        '[style.height]': 'height',
+        '[class.jigsaw-scrollbar-vertical]': 'vertical',
+        '[class.jigsaw-scrollbar-horizontal]': '!vertical',
+    }
 })
-export class JigsawScrollbar extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
+export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, OnDestroy, AfterViewInit {
 
-    constructor(private _element: ElementRef, private _render: Renderer2) {
+    constructor(private _elementRef: ElementRef, private _renderer: Renderer2) {
         super();
     }
 
-    // Todo 支持滑动条点击.
-    @ViewChildren(JigsawScrollHandle) private _sliderHandle: QueryList<JigsawScrollHandle>;
+    @ViewChild(JigsawScrollHandle) private _sliderHandle: JigsawScrollHandle;
 
-    /**
-     * @internal
-     */
-    public _$value: ArrayCollection<number> = new ArrayCollection<number>();
-    private _removeRefreshCallback: CallbackRemoval;
+    private _value: number;
 
-    /**
-     * slider的当前值, 类型 number | ArrayCollection<number> 支持多触点.
-     * @returns {any}
-     */
     @Input()
-    public get value(): number | ArrayCollection<number> {
-        // 兼容返回单个值， 和多触点的数组;
-        if (this._$value.length == 1) {
-            return this._$value[0];
-        } else {
-            return this._$value;
+    public get value(): number {
+        return this._value;
+    }
+
+    public set value(value: number) {
+        if (this._value != value) {
+            this._value = this._verifyValue(value);
+            this.valueChange.emit(this._value);
         }
     }
 
-    public set value(value: number | ArrayCollection<number>) {
-        this.writeValue(value);
-        this._propagateChange(this.value);
-    }
-
-    /**
-     * 设置单个的值。内部使用
-     *
-     * @param index
-     * @param value
-     * @internal
-     */
-    public _updateValue(index: number, value: number) {
-        this._$value.set(index, value);
-        this._$value.refresh();
-    }
+    @Output()
+    public valueChange = new EventEmitter<number>();
 
     /**
      * 最后重新计算一下，垂直滚动条的位置
      * @internal
      */
     public _refresh() {
-        this._dimensions = this._element.nativeElement.getBoundingClientRect();
+        this._dimensions = this._elementRef.nativeElement.getBoundingClientRect();
     }
-
-    /**
-     * 使 value 支持双向绑定
-     * @type {EventEmitter<number|ArrayCollection<number>>}
-     */
-    @Output()
-    public valueChange = new EventEmitter<number | ArrayCollection<number>>();
-
-    // 当滑动条的组件值变化时，对外发出的事件
-    @Output()
-    public change = this.valueChange;
 
     private _min: number = 0;
 
@@ -333,124 +270,34 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements ControlV
     @Input()
     public vertical: boolean = false;
 
-    /**
-     * 是否禁用. 数据类型 boolean, 默认false;
-     * @type {boolean}
-     */
-    @Input()
-    public disabled: boolean = false;
-
-    /**
-     * @internal
-     */
-    public _$trackStyle = {};
-
-    private _setTrackStyle(value?) {
-        // 兼容双触点.
-        let startPos: number = 0;
-        let trackSize: number = CommonUtils.isDefined(value) ? this._transformValueToPos(value) : this._transformValueToPos(this.value); // 默认单触点位置
-
-        if (this._$value.length > 1) {
-            let max: number = this._$value[0];
-            let min: number = this._$value[0];
-
-            this._$value.map(item => {
-                if (max - item < 0) max = item;
-                else if (item - min < 0) min = item;
-            });
-
-            startPos = this._transformValueToPos(min);
-            trackSize = Math.abs(this._transformValueToPos(max) - this._transformValueToPos(min));
-        }
-
-        if (this.vertical) { // 垂直和水平两种
-            this._$trackStyle = {
-                top: startPos + "%",
-                height: trackSize + "%"
-            }
-        } else {
-            this._$trackStyle = {
-                left: startPos + "%",
-                width: trackSize + "%"
-            }
-        }
-    }
-
-    /**
-     * @internal
-     */
-    public _$marks: any[] = [];
-    private _marks: SliderMark[];
-
-    /**
-     * marks 标签 使用格式为  [Object] 其中 Object 必须包含value 及label 可以有style 属性 例如:  marks = [{value: 20, label: '20 ℃'},
-     */
-    @Input()
-    public get marks(): SliderMark[] {
-        return this._marks;
-    }
-
-    public set marks(value: SliderMark[]) {
-        this._marks = value;
-        this._calcMarks();
-    }
-
-    private _calcMarks() {
-        if (!this._marks || !this.initialized) return;
-
-        this._$marks.splice(0, this._$marks.length);
-        let size = Math.round(100 / this._marks.length);
-        let margin = -Math.floor(size / 2);
-        let vertical = this.vertical;
-
-        this._marks.forEach(mark => {
-            const richMark: any = {};
-            if (vertical) {
-                richMark.dotStyle = {
-                    bottom: this._transformValueToPos(mark.value) + "%"
-                };
-                richMark.labelStyle = {
-                    bottom: this._transformValueToPos(mark.value) + "%",
-                    "margin-bottom": margin + "%"
-                };
-            } else {
-                richMark.dotStyle = {
-                    top: "-2px",
-                    left: this._transformValueToPos(mark.value) + "%"
-                };
-                richMark.labelStyle = {
-                    left: this._transformValueToPos(mark.value) + "%",
-                    width: size + "%", "margin-left": margin + "%"
-                };
-            }
-            // 如果用户自定义了样式, 要进行样式的合并;
-            CommonUtils.extendObject(richMark.labelStyle, mark.style);
-            richMark.label = mark.label;
-            this._$marks.push(richMark);
-        });
-    }
-
     ngOnInit() {
         super.ngOnInit();
 
         // 计算slider 的尺寸.
-        this._dimensions = this._element.nativeElement.getBoundingClientRect();
+        this._dimensions = this._elementRef.nativeElement.getBoundingClientRect();
 
-        // 设置选中的轨道.
-        this._setTrackStyle(this.value);
-
-        // 设置标记.
-        this._calcMarks();
         // 注册resize事件;
         this.resize();
+    }
+
+    ngAfterViewInit() {
+        setTimeout(() => {
+            if (this.vertical) {
+                this._renderer.setStyle(this._elementRef.nativeElement, 'padding-bottom',
+                    this._sliderHandle._elementRef.nativeElement.querySelector('.jigsaw-scrollbar-handle').offsetHeight + 'px');
+            } else {
+                this._renderer.setStyle(this._elementRef.nativeElement, 'padding-right',
+                    this._sliderHandle._elementRef.nativeElement.querySelector('.jigsaw-scrollbar-handle').offsetWidth + 'px');
+            }
+        })
     }
 
     private _removeResizeEvent: Function;
 
     private resize() {
-        this._removeResizeEvent = this._render.listen("window", "resize", () => {
+        this._removeResizeEvent = this._renderer.listen("window", "resize", () => {
             // 计算slider 的尺寸.
-            this._dimensions = this._element.nativeElement.getBoundingClientRect();
+            this._dimensions = this._elementRef.nativeElement.getBoundingClientRect();
         })
     }
 
@@ -460,10 +307,6 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements ControlV
     public ngOnDestroy() {
         if (this._removeResizeEvent) {
             this._removeResizeEvent();
-        }
-
-        if (this._removeRefreshCallback) {
-            this._removeRefreshCallback()
         }
     }
 
@@ -482,31 +325,4 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements ControlV
         }
     }
 
-    private _propagateChange: any = () => {
-    };
-
-    public writeValue(value: any): void {
-        if (value instanceof ArrayCollection) {
-            this._$value = value;
-        } else {
-            this._$value.splice(0, this._$value.length);
-            this._$value.push(this._verifyValue(+value));
-        }
-
-        if (this._removeRefreshCallback) {
-            this._removeRefreshCallback()
-        }
-        this._removeRefreshCallback = this._$value.onRefresh(() => {
-            this._setTrackStyle(this.value);
-            this.valueChange.emit(this.value);
-            this._propagateChange(this.value);
-        });
-    }
-
-    public registerOnChange(fn: any): void {
-        this._propagateChange = fn;
-    }
-
-    public registerOnTouched(fn: any): void {
-    }
 }
