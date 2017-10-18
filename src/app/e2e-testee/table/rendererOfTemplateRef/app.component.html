@@ -3,12 +3,16 @@
            [data]="tableData"
            [columnDefines]="_columns"
            [additionalColumnDefines]="_additionalColumns"></jigsaw-table>
-
+<button (click)="changeData()">change data</button>
 <!--
     let-context="context" 声明了context，context的结构是 {cellData: string|number, row:number, column:number}
 -->
 <ng-template #headIcon let-context="context">
     <span class="fa fa-bicycle"></span><span>{{context.cellData}}</span><span>{{this.nativeValue}}</span>
+</ng-template>
+
+<ng-template #cellName let-context="context">
+    <span class="fa fa-bicycle"></span><span>{{context.cellData}}</span>
 </ng-template>
 
 <ng-template #checkboxRenderer let-context="context">

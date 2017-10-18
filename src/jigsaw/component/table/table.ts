@@ -427,7 +427,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
         this._zone.runOutsideAngular(() => {
             this._removeWindowResizeListener = this._renderer.listen('window', 'resize', () => {
-                this._floatingHead();
+                if (this.floatingHeader && !this.hideHeader) {
+                    this._fixHeaderTop();
+                }
                 this._calibrateTableWidth();
                 this._setVerticalScrollbarOffset();
             });
@@ -436,14 +438,14 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (this.floatingHeader && !this.hideHeader) {
             this._zone.runOutsideAngular(() => {
                 this._removeWindowScrollListener = this._renderer.listen('window', 'scroll',
-                    () => this._floatingHead());
+                    () => this._fixHeaderTop());
             });
         }
     }
 
     private _tableHeaderElement: HTMLElement;
 
-    private _floatingHead() {
+    private _fixHeaderTop() {
         const maxTop = this._elementRef.nativeElement.offsetHeight - this._tableHeaderElement.offsetHeight;
         let tableDocumentTop = AffixUtils.offset(this._elementRef.nativeElement).top;
         let scrollTop = AffixUtils.getScrollTop();

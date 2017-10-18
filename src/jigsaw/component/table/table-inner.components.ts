@@ -317,6 +317,8 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         this._cellData = value;
         if (this.rendererRef instanceof ComponentRef) {
             this.rendererRef.instance.cellData = value;
+        } else if (this.rendererRef && this.rendererRef.context && this.rendererRef.context.context) {
+            this.rendererRef.context.context.cellData = value;
         }
     }
 
