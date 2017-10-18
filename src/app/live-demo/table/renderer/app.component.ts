@@ -71,7 +71,7 @@ export class TableRendererDemoComponent {
             width: '100'
         },
         {
-            target: 'gender', visible: false
+            target: 'gender', visible: true
         },
     ];
 

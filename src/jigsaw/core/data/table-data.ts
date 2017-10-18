@@ -21,7 +21,12 @@ export type TableMatrixRow = any[];
 export type TableDataHeader = string[];
 export type TableDataField = string[];
 export type TableDataMatrix = TableMatrixRow[];
-export type RawTableData = { field: TableDataField, header: TableDataHeader, data: TableDataMatrix };
+export type RawTableData = {
+    field: TableDataField,
+    header: TableDataHeader,
+    data: TableDataMatrix,
+    [property: string]: any
+};
 
 export class TableDataBase extends AbstractGeneralCollection<any> {
     public static isTableData(data: any): boolean {
@@ -350,6 +355,10 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this.changePage(this.pagingInfo.pageSize);
     }
 
+    public fromObject(data: any): TableDataBase {
+        throw new Error('not supported yet!');
+    }
+
     public destroy(): void {
         super.destroy();
 
@@ -421,7 +430,7 @@ export class TableDataViewPort implements IDataViewPort {
         return this._verticalTo;
     }
 
-    public setFromRowSilence(value: number) {
+    public setVerticalPositionSilently(value: number) {
         this._verticalTo = value < 0 ? this._verticalTo : value;
     }
 
@@ -439,7 +448,7 @@ export class TableDataViewPort implements IDataViewPort {
         return this._horizontalTo;
     }
 
-    public setFromColumnSilence(value: number) {
+    public setHorizontalPositionSilently(value: number) {
         this._horizontalTo = value < 0 ? this._horizontalTo : value;
     }
 
@@ -468,64 +477,76 @@ export class TableDataViewPort implements IDataViewPort {
 export class BigTableData extends PageableTableData implements ISlicedData {
 
     public readonly viewPort: TableDataViewPort = new TableDataViewPort(this);
+    public reservedPages = 3;
+    public fetchDataThreshold = .5;
+
+    protected ongoingPage = -1;
+    protected reallyBusy = false;
 
     constructor(public http: HttpClient, requestOptionsOrUrl: HttpClientOptions | string) {
         super(http, requestOptionsOrUrl);
         this.pagingInfo.pageSize = 500;
     }
 
-    private _origin: RawTableData;
+    private _cache: RawTableData = {field: [], header: [], data: [], startIndex: 1, endIndex: 1};
 
-    get origin(): RawTableData {
-        return this._origin;
+    get cache(): RawTableData {
+        return this._cache;
     }
 
-    private _takeSnapshot(): void {
-        if (this._origin) {
-            return;
-        }
-        this._origin = {
-            field: this.field, header: this.header, data: this.data
-        };
-        this._updateViewPortSize();
+    // private _takeSnapshot(): void {
+    //     if (this._cache) {
+    //         return;
+    //     }
+    //     this._cache = {
+    //         field: this.field, header: this.header, data: this.data
+    //     };
+    //     this._updateViewPortSize();
+    // }
+
+    private _updateViewPortSize(): void {
+        this.viewPort.maxWidth = this._cache.field.length;
+        this.viewPort.maxHeight = this._cache.data.length;
     }
 
-    private _updateViewPortSize():void {
-        this.viewPort.maxWidth = this.origin.field.length;
-        this.viewPort.maxHeight = this.origin.data.length;
+    private _isCacheAvailable():boolean {
+        return this._cache && !!this._cache.field.length && !!this._cache.header.length && !!this._cache.data.length;
     }
 
     protected sliceData(): void {
-        this._takeSnapshot();
-        if (this._origin.field.length == 0 || this._origin.header.length == 0 || this._origin.data.length == 0) {
+        // this._takeSnapshot();
+        if (!this._isCacheAvailable()) {
             return;
         }
 
         const toColumn = this.viewPort.columns + this.viewPort.horizontalTo;
-        this.field = this._origin.field.slice(this.viewPort.horizontalTo, toColumn);
-        this.header = this._origin.header.slice(this.viewPort.horizontalTo, toColumn);
+        this.field = this._cache.field.slice(this.viewPort.horizontalTo, toColumn);
+        this.header = this._cache.header.slice(this.viewPort.horizontalTo, toColumn);
 
         const toRow = this.viewPort.rows + this.viewPort.verticalTo;
-        const data = this._origin.data.slice(this.viewPort.verticalTo, toRow);
+        const data = this._cache.data.slice(this.viewPort.verticalTo, toRow);
         this.data = data.map(item => item.slice(this.viewPort.horizontalTo, toColumn));
 
         this.refresh();
     }
 
     public scroll(verticalTo: number, horizontalTo: number = NaN): void {
-        this._takeSnapshot();
+        // this._takeSnapshot();
+        if (!this._isCacheAvailable()) {
+            return;
+        }
 
         verticalTo = isNaN(verticalTo) ? this.viewPort.verticalTo : verticalTo;
-        verticalTo = verticalTo + this.viewPort.rows > this._origin.data.length ?
-            this._origin.data.length - this.viewPort.rows : verticalTo;
+        verticalTo = verticalTo + this.viewPort.rows > this._cache.data.length ?
+            this._cache.data.length - this.viewPort.rows : verticalTo;
 
         horizontalTo = isNaN(horizontalTo) ? this.viewPort.horizontalTo : horizontalTo;
-        horizontalTo = horizontalTo + this.viewPort.columns > this._origin.field.length ?
-            this._origin.field.length - this.viewPort.columns : horizontalTo;
+        horizontalTo = horizontalTo + this.viewPort.columns > this._cache.field.length ?
+            this._cache.field.length - this.viewPort.columns : horizontalTo;
 
         if (verticalTo != this.viewPort.verticalTo || horizontalTo != this.viewPort.horizontalTo) {
-            this.viewPort.setFromRowSilence(verticalTo);
-            this.viewPort.setFromColumnSilence(horizontalTo);
+            this.viewPort.setVerticalPositionSilently(verticalTo);
+            this.viewPort.setHorizontalPositionSilently(horizontalTo);
             this.sliceData();
         }
     }
@@ -538,23 +559,62 @@ export class BigTableData extends PageableTableData implements ISlicedData {
         this.scroll(this.viewPort.verticalTo, scrollTo);
     }
 
+    protected checkDataStorage(verticalTo: number): void {
+        const reservedPages = this.reservedPages >= 1 ? this.reservedPages : 2;
+        const threshold = this.fetchDataThreshold > 0 && this.fetchDataThreshold < 1 ? this.fetchDataThreshold : .5;
+        const delta = this.pagingInfo.pageSize * reservedPages * threshold;
+        if (this.viewPort.verticalTo < delta && this.pagingInfo.currentPage > 0) {
+            // fetch last page...
+        } else if (this._cache.data.length - this.viewPort.verticalTo < delta
+            && this.pagingInfo.currentPage < this.pagingInfo.totalPage) {
+            // fetch next page...
+        } else {
+            console.error('internal error: this message should not be printed');
+        }
+    }
+
+    protected fetchData(targetPage): void {
+        if (this._busy) {
+            // it's really busy if the last fetching job has not been finished.
+            this.reallyBusy = targetPage !== this.ongoingPage;
+            return;
+        }
+    }
+
     protected ajaxSuccessHandler(rawTableData): void {
         super.ajaxSuccessHandler(rawTableData);
-        this._origin = {field: rawTableData.field, header: rawTableData.header, data: rawTableData.data};
+
+        this._cache.field = this.field;
+        this._cache.header = this.header;
+        this._cache.data.concat(this.data);
+        this._cache.endIndex = this.pagingInfo.currentPage;
+
+        let reservedPages;
+        if (this.reservedPages <= 0 || isNaN(this.reservedPages)) {
+            reservedPages = Infinity;
+        } else {
+            reservedPages = this.reservedPages >= 3 ? this.reservedPages : 3;
+        }
+
+        if (this._cache.endIndex - this._cache.startIndex >= reservedPages) {
+            this._cache.startIndex = this._cache.endIndex - reservedPages + 1;
+            const deleteCount = this._cache.data.length - this.pagingInfo.pageSize * reservedPages;
+            this.viewPort.verticalTo -= deleteCount;
+            this._cache.data.splice(0, deleteCount);
+        }
+
         this._updateViewPortSize();
         this.sliceData();
     }
 
     protected ajaxErrorHandler(error): void {
         super.ajaxErrorHandler(error);
-        this._origin = {field: [], header: [], data: []};
+        this._cache = {field: [], header: [], data: [], startIndex: 1, endIndex: 1};
         this._updateViewPortSize();
     }
 
-    public fromObject(data: any): TableDataBase {
-        const result = super.fromObject(data);
-        this._takeSnapshot();
-        return result;
+    public get busy(): boolean {
+        return this.reallyBusy;
     }
 }
 
