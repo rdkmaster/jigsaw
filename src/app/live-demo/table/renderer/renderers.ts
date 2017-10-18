@@ -118,27 +118,27 @@ export class PositionHeaderRenderer extends TableCellRendererBase {
         filterData(this.tableData, {position: positionFilter});
     }
 }
-
-/*
- * 操作列
- * */
-@Component({
-    template: '<a (click)="payRaise()">加薪</a> <a (click)="fire()">辞退</a>',
-    styles: [`a{color: #ffaa00} a:hover{text-decoration: underline}`]
-})
-export class CellOperationRenderer extends TableCellRendererBase {
-    payRaise() {
-        this.tableData.data[this.row][3] = Number(this.tableData.data[this.row][3]) + 2000;
-        // 这一步非常重要，我们直接修改了tableData的值，Jigsaw无法知道发生了啥变化，需要通过调用`refresh()`来通知Jigsaw
-        this.tableData.refresh();
-    }
-
-    fire() {
-        const lptd = <LocalPageableTableData>this.tableData;
-        lptd.originalData.splice(this.row, 1);
-        lptd.data.splice(this.row, 1);
-        // 记住，但凡手工对Jigsaw的各种data做修改，都需要调用refresh()方法
-        // 但是这里 changePage() 会自动调用 refresh() 方法，因此这里不需要再调用了
-        lptd.changePage(lptd.pagingInfo.currentPage);
-    }
-}
+//
+// /*
+//  * 操作列
+//  * */
+// @Component({
+//     template: '<a (click)="payRaise()">加薪</a> <a (click)="fire()">辞退</a>',
+//     styles: [`a{color: #ffaa00} a:hover{text-decoration: underline}`]
+// })
+// export class CellOperationRenderer extends TableCellRendererBase {
+//     payRaise() {
+//         this.tableData.data[this.row][3] = Number(this.tableData.data[this.row][3]) + 2000;
+//         // 这一步非常重要，我们直接修改了tableData的值，Jigsaw无法知道发生了啥变化，需要通过调用`refresh()`来通知Jigsaw
+//         this.tableData.refresh();
+//     }
+//
+//     fire() {
+//         const lptd = <LocalPageableTableData>this.tableData;
+//         lptd.originalData.splice(this.row, 1);
+//         lptd.data.splice(this.row, 1);
+//         // 记住，但凡手工对Jigsaw的各种data做修改，都需要调用refresh()方法
+//         // 但是这里 changePage() 会自动调用 refresh() 方法，因此这里不需要再调用了
+//         lptd.changePage(lptd.pagingInfo.currentPage);
+//     }
+// }

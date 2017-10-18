@@ -13,8 +13,7 @@ import {JigsawButtonModule} from "jigsaw/component/button/button";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {TableRendererDemoComponent} from './app.component';
 import {
-    OfficeCellEditorRenderer, OfficeHeaderRenderer, OfficeCellRenderer, CellOperationRenderer,
-    PositionHeaderRenderer
+    OfficeCellEditorRenderer, OfficeHeaderRenderer, OfficeCellRenderer, PositionHeaderRenderer
 } from "./renderers";
 
 @NgModule({
@@ -24,12 +23,12 @@ import {
         JigsawDemoDescriptionModule
     ],
     declarations: [
-        TableRendererDemoComponent, PositionHeaderRenderer, CellOperationRenderer,
-        OfficeCellRenderer, OfficeCellEditorRenderer, OfficeHeaderRenderer
+        TableRendererDemoComponent, PositionHeaderRenderer, OfficeCellRenderer,
+        OfficeCellEditorRenderer, OfficeHeaderRenderer
     ],
     bootstrap: [TableRendererDemoComponent], // 这个是给plunker用的，不能去掉。
     entryComponents: [
-        PositionHeaderRenderer, CellOperationRenderer, TableCellCheckboxRenderer, TableHeadCheckboxRenderer,
+        PositionHeaderRenderer, TableCellCheckboxRenderer, TableHeadCheckboxRenderer,
         OfficeCellRenderer, OfficeCellEditorRenderer, OfficeHeaderRenderer
     ]
 })
