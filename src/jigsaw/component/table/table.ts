@@ -427,7 +427,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
         this._zone.runOutsideAngular(() => {
             this._removeWindowResizeListener = this._renderer.listen('window', 'resize', () => {
-                this._floatingHead();
+                if (this.floatingHeader && !this.hideHeader) {
+                    this._floatingHead();
+                }
                 this._calibrateTableWidth();
                 this._setVerticalScrollbarOffset();
             });
