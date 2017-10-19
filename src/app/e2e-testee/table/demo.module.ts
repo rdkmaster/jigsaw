@@ -90,8 +90,8 @@ import {BigTableDataDemoModule} from "../../live-demo/table/big-table/app.module
 
 import {SwimLaneDiagramDemoComponent} from "../../live-demo/table/swim-lane-diagram/app.component";
 import {swimLaneDiagramDemoModule} from "../../live-demo/table/swim-lane-diagram/app.module";
-import {TableContentWidthDemoComponent} from "./contentWidth/app.component";
-import {TableContentWidthDemoModule} from "./contentWidth/app.module";
+import {TableContentWidthDemoComponent} from "../../live-demo/table/contentWidth/app.component";
+import {TableContentWidthDemoModule} from "../../live-demo/table/contentWidth/app.module";
 
 const tableDemoRoutes = [
     {
