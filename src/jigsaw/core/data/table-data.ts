@@ -488,25 +488,10 @@ export class BigTableData extends PageableTableData implements ISlicedData {
         this.pagingInfo.pageSize = 500;
     }
 
-    private _cache: RawTableData = {field: [], header: [], data: [], startIndex: 1, endIndex: 1};
+    private _cache: RawTableData = {field: [], header: [], data: [], startPage: 1, endPage: 1};
 
     get cache(): RawTableData {
         return this._cache;
-    }
-
-    // private _takeSnapshot(): void {
-    //     if (this._cache) {
-    //         return;
-    //     }
-    //     this._cache = {
-    //         field: this.field, header: this.header, data: this.data
-    //     };
-    //     this._updateViewPortSize();
-    // }
-
-    private _updateViewPortSize(): void {
-        this.viewPort.maxWidth = this._cache.field.length;
-        this.viewPort.maxHeight = this._cache.data.length;
     }
 
     private _isCacheAvailable():boolean {
@@ -537,8 +522,8 @@ export class BigTableData extends PageableTableData implements ISlicedData {
         }
 
         verticalTo = isNaN(verticalTo) ? this.viewPort.verticalTo : verticalTo;
-        verticalTo = verticalTo + this.viewPort.rows > this._cache.data.length ?
-            this._cache.data.length - this.viewPort.rows : verticalTo;
+        verticalTo = verticalTo + this.viewPort.rows > this.pagingInfo.totalRecord ?
+            this.pagingInfo.totalRecord - this.viewPort.rows : verticalTo;
 
         horizontalTo = isNaN(horizontalTo) ? this.viewPort.horizontalTo : horizontalTo;
         horizontalTo = horizontalTo + this.viewPort.columns > this._cache.field.length ?
@@ -559,26 +544,33 @@ export class BigTableData extends PageableTableData implements ISlicedData {
         this.scroll(this.viewPort.verticalTo, scrollTo);
     }
 
-    protected checkDataStorage(verticalTo: number): void {
-        const reservedPages = this.reservedPages >= 1 ? this.reservedPages : 2;
+    protected checkCache(verticalTo: number): void {
+        // verticalTo -= this.pagingInfo.pageSize * (this._cache.startPage - 1);
         const threshold = this.fetchDataThreshold > 0 && this.fetchDataThreshold < 1 ? this.fetchDataThreshold : .5;
-        const delta = this.pagingInfo.pageSize * reservedPages * threshold;
-        if (this.viewPort.verticalTo < delta && this.pagingInfo.currentPage > 0) {
+        const reservedPages = this.reservedPages >= 3 ? this.reservedPages : 3;
+        if (verticalTo < this.pagingInfo.pageSize * threshold) {
             // fetch last page...
-        } else if (this._cache.data.length - this.viewPort.verticalTo < delta
-            && this.pagingInfo.currentPage < this.pagingInfo.totalPage) {
+            this.fetchData(this._cache.startPage - 1);
+        } else if (verticalTo > this._cache.data.length - this.pagingInfo.pageSize * threshold) {
             // fetch next page...
+            this.fetchData(this._cache.endPage + 1);
         } else {
-            console.error('internal error: this message should not be printed');
+            // do not need to fetch any data.
         }
     }
 
     protected fetchData(targetPage): void {
-        if (this._busy) {
-            // it's really busy if the last fetching job has not been finished.
-            this.reallyBusy = targetPage !== this.ongoingPage;
+        if (targetPage < 1 || targetPage > this.pagingInfo.totalPage) {
             return;
         }
+
+        // if (this._busy) {
+        //     // it's really busy if the last fetching job has not been finished.
+        //     this.reallyBusy = targetPage !== this.ongoingPage;
+        //     return;
+        // }
+
+        super.changePage(targetPage);
     }
 
     protected ajaxSuccessHandler(rawTableData): void {
@@ -586,8 +578,17 @@ export class BigTableData extends PageableTableData implements ISlicedData {
 
         this._cache.field = this.field;
         this._cache.header = this.header;
-        this._cache.data.concat(this.data);
-        this._cache.endIndex = this.pagingInfo.currentPage;
+
+        if (this.pagingInfo.currentPage > this._cache.endPage) {
+            this._cache.data = this._cache.data.concat(this.data);
+            this._cache.endPage = this.pagingInfo.currentPage;
+        } else if (this.pagingInfo.currentPage < this._cache.startPage) {
+            this._cache.data = this.data.concat(this._cache.data);
+            this._cache.endPage = this.pagingInfo.currentPage;
+        } else {
+            this._printPageError();
+            return;
+        }
 
         let reservedPages;
         if (this.reservedPages <= 0 || isNaN(this.reservedPages)) {
@@ -596,25 +597,48 @@ export class BigTableData extends PageableTableData implements ISlicedData {
             reservedPages = this.reservedPages >= 3 ? this.reservedPages : 3;
         }
 
-        if (this._cache.endIndex - this._cache.startIndex >= reservedPages) {
-            this._cache.startIndex = this._cache.endIndex - reservedPages + 1;
+        if (this._cache.endPage - this._cache.startPage >= reservedPages) {
+            this._cache.startPage = this._cache.endPage - reservedPages + 1;
             const deleteCount = this._cache.data.length - this.pagingInfo.pageSize * reservedPages;
-            this.viewPort.verticalTo -= deleteCount;
-            this._cache.data.splice(0, deleteCount);
+            if (deleteCount > 0) {
+                if (this.pagingInfo.currentPage > this._cache.endPage) {
+                    this.viewPort.verticalTo -= deleteCount;
+                    this._cache.data.splice(0, deleteCount);
+                } else if (this.pagingInfo.currentPage < this._cache.startPage) {
+                    this._cache.data.splice(this.pagingInfo.pageSize * reservedPages, deleteCount);
+                } else {
+                    this._printPageError();
+                }
+            }
         }
 
         this._updateViewPortSize();
         this.sliceData();
     }
 
+    private _printPageError():void {
+        console.error(`unknown error, currentPage=${this.pagingInfo.currentPage}, startPage=${this._cache.startPage}, endPage=${this._cache.endPage}`);
+    }
+
     protected ajaxErrorHandler(error): void {
         super.ajaxErrorHandler(error);
-        this._cache = {field: [], header: [], data: [], startIndex: 1, endIndex: 1};
+        this._cache = {field: [], header: [], data: [], startPage: 1, endPage: 1};
         this._updateViewPortSize();
+    }
+
+    private _updateViewPortSize(): void {
+        this.viewPort.maxWidth = this._cache.field.length;
+        this.viewPort.maxHeight = this._cache.data.length;
     }
 
     public get busy(): boolean {
         return this.reallyBusy;
+    }
+
+    public changePage(currentPage: number, pageSize?: number): void;
+    public changePage(info: PagingInfo): void;
+    public changePage(currentPage, pageSize?: number): void {
+        throw new Error('BigTableData do not support changePage action.');
     }
 }
 
