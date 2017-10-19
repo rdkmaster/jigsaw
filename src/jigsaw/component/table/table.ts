@@ -578,7 +578,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
 
         // 根据表头的高度，设置表体的padding-top
-        this._renderer.setStyle(tableRange, 'padding-top', tableHeader.offsetHeight + 'px');
+        if (this.hideHeader) {
+            this._renderer.setStyle(tableRange, 'padding-top', 0);
+        } else {
+            this._renderer.setStyle(tableRange, 'padding-top', tableHeader.offsetHeight + 'px');
+        }
     }
 
     private _removeHorizontalScrollListener: Function;
