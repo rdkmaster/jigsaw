@@ -499,8 +499,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     /**
      * 根据内容计算自适应列宽
      *
-     * auto: 根据表头内容和表体内容，综合计算列框，可能会产生不必要的横向滚动条
-     * semiAuto: 只根据表体内容计算列框，列头内容如果不希望换行，需要通过ColumnDefine设置，
+     * auto: 根据表头内容和表体内容，综合计算列宽，可能会产生不必要的横向滚动条
+     * semiAuto: 只根据表体内容计算列宽，列头内容如果不希望换行，需要通过ColumnDefine设置，
      *           这种计算列框的好处是，可以不用产生不必要的滚动条
      * @private
      */

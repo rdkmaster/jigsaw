@@ -2,14 +2,14 @@
     <h2>ContentWidth</h2>
     <div class="demo-1 live-demo">
         <h3>auto</h3>
-        <p class="comment">根据表头内容和表体内容，综合计算列框，可能会产生不必要的横向滚动条</p>
+        <p class="comment">根据表头内容和表体内容，综合计算列宽，可能会产生不必要的横向滚动条</p>
         <jigsaw-table [data]="tableData" width="1000" height="400" contentWidth="auto"></jigsaw-table>
     </div>
 
     <div class="demo-2 live-demo">
         <h3>semiAuto</h3>
         <p class="comment">
-            只根据表体内容计算列框，列头内容如果不希望换行，需要通过ColumnDefine设置<br>
+            只根据表体内容计算列宽，列头内容如果不希望换行，需要通过ColumnDefine设置<br>
             这种计算列框的好处是，可以不用产生不必要的滚动条
         </p>
         <jigsaw-table [data]="tableData" width="1000" height="400" contentWidth="semiAuto" [columnDefines]="columnDefines"></jigsaw-table>
