@@ -497,7 +497,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     public bodyScrollbar: PerfectScrollbarDirective;
 
     /**
-     * 根据内容计算自适应列框
+     * 根据内容计算自适应列宽
+     *
+     * auto: 根据表头内容和表体内容，综合计算列框，可能会产生不必要的横向滚动条
+     * semiAuto: 只根据表体内容计算列框，列头内容如果不希望换行，需要通过ColumnDefine设置，
+     *           这种计算列框的好处是，可以不用产生不必要的滚动条
      * @private
      */
     private _calculateContentWidth() {
@@ -506,38 +510,28 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 this._renderer.setStyle(table, 'table-layout', 'auto');
             });
 
+            const tHeadColGroup = this._elementRef.nativeElement.querySelectorAll('.jigsaw-table-header colgroup col');
+            const tBodyColGroup = this._elementRef.nativeElement.querySelectorAll('.jigsaw-table-body colgroup col');
+            const widthStorage = [];
+
+            this._elementRef.nativeElement.querySelectorAll('.jigsaw-table-body tbody tr:first-child td')
+                .forEach(td => {
+                    widthStorage.push(td.offsetWidth);
+                });
+
             if (this.contentWidth == 'auto') {
-                // 根据表头内容和表体内容，综合计算列框，可能会产生不必要的横向滚动条
-                const widthStorage = [];
-                this._elementRef.nativeElement.querySelectorAll('.jigsaw-table-body tbody tr:first-child td')
-                    .forEach(td => {
-                        widthStorage.push(td.offsetWidth);
-                    });
                 this._elementRef.nativeElement.querySelectorAll('.jigsaw-table-header thead tr:first-child td')
                     .forEach((td, index) => {
                         if (td.offsetWidth > widthStorage[index]) {
                             widthStorage[index] = td.offsetWidth;
                         }
                     });
+            }
 
-                const tHeadColGroup = this._elementRef.nativeElement.querySelectorAll('.jigsaw-table-header colgroup col')
-                const tBodyColGroup = this._elementRef.nativeElement.querySelectorAll('.jigsaw-table-body colgroup col');
-                widthStorage.forEach((width, index) => {
-                    this._renderer.setAttribute(tHeadColGroup[index], 'width', width);
-                    this._renderer.setAttribute(tBodyColGroup[index], 'width', width);
-                });
-            }
-            else if (this.contentWidth == 'semiAuto') {
-                // 只根据表体内容计算列框，列头内容如果不希望换行，需要通过ColumnDefine设置，
-                // 这种计算列框的好处是，可以不用产生不必要的滚动条
-                const tHeadColGroup = this._elementRef.nativeElement.querySelectorAll('.jigsaw-table-header colgroup col')
-                const tBodyColGroup = this._elementRef.nativeElement.querySelectorAll('.jigsaw-table-body colgroup col');
-                this._elementRef.nativeElement.querySelectorAll('.jigsaw-table-body tbody tr:first-child td')
-                    .forEach((td, index) => {
-                        this._renderer.setAttribute(tHeadColGroup[index], 'width', td.offsetWidth);
-                        this._renderer.setAttribute(tBodyColGroup[index], 'width', td.offsetWidth);
-                    });
-            }
+            widthStorage.forEach((width, index) => {
+                this._renderer.setAttribute(tHeadColGroup[index], 'width', width);
+                this._renderer.setAttribute(tBodyColGroup[index], 'width', width);
+            });
 
             this._elementRef.nativeElement.querySelectorAll('table').forEach(table => {
                 this._renderer.setStyle(table, 'table-layout', 'fixed');
