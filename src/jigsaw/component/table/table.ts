@@ -59,7 +59,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @Output()
     public sort = new EventEmitter<SortChangeEvent>();
 
-    private _contentWidth: string;
+    private _contentWidth: string = 'auto';
 
     @Input()
     public get contentWidth(): string {
