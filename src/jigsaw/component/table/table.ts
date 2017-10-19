@@ -430,7 +430,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 if (this.floatingHeader && !this.hideHeader) {
                     this._fixHeaderTop();
                 }
-                this._calibrateTableWidth();
+                this._calibrateTable();
                 this._setVerticalScrollbarOffset();
             });
         });
@@ -497,23 +497,47 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     public bodyScrollbar: PerfectScrollbarDirective;
 
     /**
-     * 计算内容宽度，产生横向滚动条
+     * 根据内容计算自适应列框
      * @private
      */
     private _calculateContentWidth() {
-        if (this.contentWidth == 'auto') {
+        if (this.contentWidth == 'auto' || this.contentWidth == 'semiAuto') {
             this._elementRef.nativeElement.querySelectorAll('table').forEach(table => {
                 this._renderer.setStyle(table, 'table-layout', 'auto');
             });
-            const contentRange = this._elementRef.nativeElement.querySelector('.jigsaw-table-range');
-            const tableHeader = contentRange.querySelector('table.jigsaw-table-header');
-            const tableBody = contentRange.querySelector('table.jigsaw-table-body');
-            const tableBodyRange = contentRange.querySelector('.jigsaw-table-body-range');
-            const contentWidth = tableBody.offsetWidth;
-            this._renderer.addClass(contentRange, 'jigsaw-table-auto-width');
-            this._renderer.setStyle(tableBodyRange, 'width', contentWidth + 'px');
-            this._renderer.setStyle(tableBody, 'width', contentWidth + 'px');
-            this._renderer.setStyle(tableHeader, 'width', contentWidth + 'px');
+
+            if (this.contentWidth == 'auto') {
+                // 根据表头内容和表体内容，综合计算列框，可能会产生不必要的横向滚动条
+                const widthStorage = [];
+                this._elementRef.nativeElement.querySelectorAll('.jigsaw-table-body tbody tr:first-child td')
+                    .forEach(td => {
+                        widthStorage.push(td.offsetWidth);
+                    });
+                this._elementRef.nativeElement.querySelectorAll('.jigsaw-table-header thead tr:first-child td')
+                    .forEach((td, index) => {
+                        if (td.offsetWidth > widthStorage[index]) {
+                            widthStorage[index] = td.offsetWidth;
+                        }
+                    });
+
+                const tHeadColGroup = this._elementRef.nativeElement.querySelectorAll('.jigsaw-table-header colgroup col')
+                const tBodyColGroup = this._elementRef.nativeElement.querySelectorAll('.jigsaw-table-body colgroup col');
+                widthStorage.forEach((width, index) => {
+                    this._renderer.setAttribute(tHeadColGroup[index], 'width', width);
+                    this._renderer.setAttribute(tBodyColGroup[index], 'width', width);
+                });
+            }
+            else if (this.contentWidth == 'semiAuto') {
+                // 只根据表体内容计算列框，列头内容如果不希望换行，需要通过ColumnDefine设置，
+                // 这种计算列框的好处是，可以不用产生不必要的滚动条
+                const tHeadColGroup = this._elementRef.nativeElement.querySelectorAll('.jigsaw-table-header colgroup col')
+                const tBodyColGroup = this._elementRef.nativeElement.querySelectorAll('.jigsaw-table-body colgroup col');
+                this._elementRef.nativeElement.querySelectorAll('.jigsaw-table-body tbody tr:first-child td')
+                    .forEach((td, index) => {
+                        this._renderer.setAttribute(tHeadColGroup[index], 'width', td.offsetWidth);
+                        this._renderer.setAttribute(tBodyColGroup[index], 'width', td.offsetWidth);
+                    });
+            }
 
             this._elementRef.nativeElement.querySelectorAll('table').forEach(table => {
                 this._renderer.setStyle(table, 'table-layout', 'fixed');
@@ -527,7 +551,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      */
     private _handleScrollBar() {
         this._calculateContentWidth();
-        this._calibrateTableWidth();
+        this._calibrateTable();
         this._initVerticalScroll();
         this._listenHorizontalScroll();
     }
@@ -536,20 +560,30 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * 校正表头表体的宽度
      * @private
      */
-    private _calibrateTableWidth() {
-        const tableHeader = this._elementRef.nativeElement.querySelector('table.jigsaw-table-header');
-        const tableBody = this._elementRef.nativeElement.querySelector('table.jigsaw-table-body');
-        const tableBodyRange = this._elementRef.nativeElement.querySelector('.jigsaw-table-body-range');
+    private _calibrateTable() {
+        const host = this._elementRef.nativeElement;
+        const tableHeader = host.querySelector('table.jigsaw-table-header');
+        const tableBody = host.querySelector('table.jigsaw-table-body');
+        const tableBodyRange = host.querySelector('.jigsaw-table-body-range');
+        const tableRange = host.querySelector('.jigsaw-table-range');
 
-        // table body range's width is always not less than table body's
-        this._renderer.setStyle(tableBodyRange, 'width',
-            (this._elementRef.nativeElement.offsetWidth > tableBody.offsetWidth ?
-                this._elementRef.nativeElement.offsetWidth : tableBody.offsetWidth) + 'px');
+        // table body's width is always not less than the host component
+        if (host.offsetWidth > tableBody.offsetWidth) {
+            this._renderer.setStyle(tableBody, 'width', host.offsetWidth + 'px');
+        }
+
+        // table body range's width is always equal to table body's
+        if (tableBodyRange.offsetWidth != tableBody.offsetWidth) {
+            this._renderer.setStyle(tableBodyRange, 'width', tableBody.offsetWidth + 'px');
+        }
 
         // table header's width is always equal to table body's
         if (tableHeader.offsetWidth != tableBody.offsetWidth) {
             this._renderer.setStyle(tableHeader, 'width', tableBody.offsetWidth + 'px');
         }
+
+        // 根据表头的高度，设置表体的padding-top
+        this._renderer.setStyle(tableRange, 'padding-top', tableHeader.offsetHeight + 'px');
     }
 
     private _removeHorizontalScrollListener: Function;

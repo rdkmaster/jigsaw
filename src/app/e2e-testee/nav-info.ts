@@ -364,6 +364,10 @@ export const navInfo = [
                 label: 'selectRow',
                 url: '/table/selectRow'
             },
+            {
+                label: 'contentWidth',
+                url: '/table/contentWidth'
+            },
         ]
     },
     {
