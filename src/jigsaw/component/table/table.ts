@@ -498,18 +498,17 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     /**
      * 根据内容计算自适应列宽
-     *
-     * auto: 根据表头内容和表体内容，综合计算列宽，可能会产生不必要的横向滚动条
-     * semiAuto: 只根据表体内容计算列宽，列头内容如果不希望换行，需要通过ColumnDefine设置，
-     *           这种计算列框的好处是，可以不用产生不必要的滚动条
      * @private
      */
     private _calculateContentWidth() {
-        if (this.contentWidth == 'auto' || this.contentWidth == 'semiAuto') {
+        if (this.contentWidth == 'auto') {
             const host = this._elementRef.nativeElement;
             host.querySelectorAll('table').forEach(table => {
                 this._renderer.setStyle(table, 'table-layout', 'auto');
             });
+
+            // 设置表头随内容撑开
+            this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', 'auto');
 
             const tHeadColGroup = host.querySelectorAll('.jigsaw-table-header colgroup col');
             const tBodyColGroup = host.querySelectorAll('.jigsaw-table-body colgroup col');
@@ -520,18 +519,19 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                     widthStorage.push(td.offsetWidth);
                 });
 
-            if (this.contentWidth == 'auto') {
-                host.querySelectorAll('.jigsaw-table-header thead tr:first-child td')
-                    .forEach((td, index) => {
-                        if (td.offsetWidth > widthStorage[index]) {
-                            widthStorage[index] = td.offsetWidth;
-                        }
-                    });
-            }
+            host.querySelectorAll('.jigsaw-table-header thead tr:first-child td')
+                .forEach((td, index) => {
+                    if (td.offsetWidth > widthStorage[index]) {
+                        widthStorage[index] = td.offsetWidth;
+                    }
+                });
 
             widthStorage.forEach((width, index) => {
-                this._renderer.setAttribute(tHeadColGroup[index], 'width', width);
-                this._renderer.setAttribute(tBodyColGroup[index], 'width', width);
+                // columnDefine定义过的列宽不会被覆盖
+                if(!tHeadColGroup[index].getAttribute('width')){
+                    this._renderer.setAttribute(tHeadColGroup[index], 'width', width);
+                    this._renderer.setAttribute(tBodyColGroup[index], 'width', width);
+                }
             });
 
             host.querySelectorAll('table').forEach(table => {
@@ -639,7 +639,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     ngAfterViewInit() {
         super.ngAfterViewInit();
         this._$selectRow(this.selectedRow, true);
-        this._handleScrollBar();
     }
 
     ngOnInit() {

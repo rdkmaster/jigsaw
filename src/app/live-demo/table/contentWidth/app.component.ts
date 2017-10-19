@@ -74,12 +74,12 @@ export class TableContentWidthDemoComponent {
 
     columnDefines: ColumnDefine[] = [
         {
-            target: 'net',
-            width: 65
+            target: 'time',
+            width: 150
         },
         {
-            target: 'duration',
-            width: 108
+            target: 'apn',
+            width: 230
         }
     ]
 }
