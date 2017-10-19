@@ -506,21 +506,22 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      */
     private _calculateContentWidth() {
         if (this.contentWidth == 'auto' || this.contentWidth == 'semiAuto') {
-            this._elementRef.nativeElement.querySelectorAll('table').forEach(table => {
+            const host = this._elementRef.nativeElement;
+            host.querySelectorAll('table').forEach(table => {
                 this._renderer.setStyle(table, 'table-layout', 'auto');
             });
 
-            const tHeadColGroup = this._elementRef.nativeElement.querySelectorAll('.jigsaw-table-header colgroup col');
-            const tBodyColGroup = this._elementRef.nativeElement.querySelectorAll('.jigsaw-table-body colgroup col');
+            const tHeadColGroup = host.querySelectorAll('.jigsaw-table-header colgroup col');
+            const tBodyColGroup = host.querySelectorAll('.jigsaw-table-body colgroup col');
             const widthStorage = [];
 
-            this._elementRef.nativeElement.querySelectorAll('.jigsaw-table-body tbody tr:first-child td')
+            host.querySelectorAll('.jigsaw-table-body tbody tr:first-child td')
                 .forEach(td => {
                     widthStorage.push(td.offsetWidth);
                 });
 
             if (this.contentWidth == 'auto') {
-                this._elementRef.nativeElement.querySelectorAll('.jigsaw-table-header thead tr:first-child td')
+                host.querySelectorAll('.jigsaw-table-header thead tr:first-child td')
                     .forEach((td, index) => {
                         if (td.offsetWidth > widthStorage[index]) {
                             widthStorage[index] = td.offsetWidth;
@@ -533,7 +534,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 this._renderer.setAttribute(tBodyColGroup[index], 'width', width);
             });
 
-            this._elementRef.nativeElement.querySelectorAll('table').forEach(table => {
+            host.querySelectorAll('table').forEach(table => {
                 this._renderer.setStyle(table, 'table-layout', 'fixed');
             });
         }
