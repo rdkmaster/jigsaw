@@ -355,10 +355,6 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this.changePage(this.pagingInfo.pageSize);
     }
 
-    public fromObject(data: any): TableDataBase {
-        throw new Error('not supported yet!');
-    }
-
     public destroy(): void {
         super.destroy();
 
@@ -494,12 +490,11 @@ export class BigTableData extends PageableTableData implements ISlicedData {
         return this._cache;
     }
 
-    private _isCacheAvailable():boolean {
+    private _isCacheAvailable(): boolean {
         return this._cache && !!this._cache.field.length && !!this._cache.header.length && !!this._cache.data.length;
     }
 
     protected sliceData(): void {
-        // this._takeSnapshot();
         if (!this._isCacheAvailable()) {
             return;
         }
@@ -516,15 +511,18 @@ export class BigTableData extends PageableTableData implements ISlicedData {
     }
 
     public scroll(verticalTo: number, horizontalTo: number = NaN): void {
-        // this._takeSnapshot();
         if (!this._isCacheAvailable()) {
             return;
         }
 
+        //从html模板中传过来的，仍然有可能是一个字符串，这也算是ts的一个坑了
+        verticalTo = parseInt(verticalTo + "");
         verticalTo = isNaN(verticalTo) ? this.viewPort.verticalTo : verticalTo;
-        verticalTo = verticalTo + this.viewPort.rows > this.pagingInfo.totalRecord ?
-            this.pagingInfo.totalRecord - this.viewPort.rows : verticalTo;
+        this.checkCache(verticalTo);
+        verticalTo = verticalTo + this.viewPort.rows > this._cache.data.length ?
+            this._cache.data.length - this.viewPort.rows : verticalTo;
 
+        horizontalTo = parseInt(horizontalTo + "");
         horizontalTo = isNaN(horizontalTo) ? this.viewPort.horizontalTo : horizontalTo;
         horizontalTo = horizontalTo + this.viewPort.columns > this._cache.field.length ?
             this._cache.field.length - this.viewPort.columns : horizontalTo;
@@ -545,13 +543,12 @@ export class BigTableData extends PageableTableData implements ISlicedData {
     }
 
     protected checkCache(verticalTo: number): void {
-        // verticalTo -= this.pagingInfo.pageSize * (this._cache.startPage - 1);
+        const pages = this._cache.endPage - this._cache.startPage + 1;
         const threshold = this.fetchDataThreshold > 0 && this.fetchDataThreshold < 1 ? this.fetchDataThreshold : .5;
-        const reservedPages = this.reservedPages >= 3 ? this.reservedPages : 3;
         if (verticalTo < this.pagingInfo.pageSize * threshold) {
             // fetch last page...
             this.fetchData(this._cache.startPage - 1);
-        } else if (verticalTo > this._cache.data.length - this.pagingInfo.pageSize * threshold) {
+        } else if (verticalTo > pages * this.pagingInfo.pageSize - this.pagingInfo.pageSize * threshold) {
             // fetch next page...
             this.fetchData(this._cache.endPage + 1);
         } else {
@@ -579,12 +576,12 @@ export class BigTableData extends PageableTableData implements ISlicedData {
         this._cache.field = this.field;
         this._cache.header = this.header;
 
-        if (this.pagingInfo.currentPage > this._cache.endPage) {
+        if (this.pagingInfo.currentPage >= this._cache.endPage) {
             this._cache.data = this._cache.data.concat(this.data);
             this._cache.endPage = this.pagingInfo.currentPage;
-        } else if (this.pagingInfo.currentPage < this._cache.startPage) {
+        } else if (this.pagingInfo.currentPage <= this._cache.startPage) {
             this._cache.data = this.data.concat(this._cache.data);
-            this._cache.endPage = this.pagingInfo.currentPage;
+            this._cache.startPage = this.pagingInfo.currentPage;
         } else {
             this._printPageError();
             return;
@@ -597,18 +594,25 @@ export class BigTableData extends PageableTableData implements ISlicedData {
             reservedPages = this.reservedPages >= 3 ? this.reservedPages : 3;
         }
 
-        if (this._cache.endPage - this._cache.startPage >= reservedPages) {
-            this._cache.startPage = this._cache.endPage - reservedPages + 1;
-            const deleteCount = this._cache.data.length - this.pagingInfo.pageSize * reservedPages;
-            if (deleteCount > 0) {
-                if (this.pagingInfo.currentPage > this._cache.endPage) {
-                    this.viewPort.verticalTo -= deleteCount;
-                    this._cache.data.splice(0, deleteCount);
-                } else if (this.pagingInfo.currentPage < this._cache.startPage) {
-                    this._cache.data.splice(this.pagingInfo.pageSize * reservedPages, deleteCount);
-                } else {
-                    this._printPageError();
-                }
+        const pages = this._cache.endPage - this._cache.startPage + 1;
+        if (pages > reservedPages) {
+            // the cached data exceeded the configured reserved data, need to clear.
+            // because we don't know the scroll direction, we need to calculate the `verticalTo` value
+            // to find out which one is closer to the `startPage` or the `endPage`,
+            // and truncate from the further point.
+            const deltaStart = this.viewPort.verticalTo;
+            const deltaEnd = pages * this.pagingInfo.pageSize - this.viewPort.verticalTo;
+            if (deltaStart > deltaEnd) {
+                this._cache.startPage++;
+                // truncate from top
+                console.log(`truncated data from top, startPage=${this._cache.startPage}, endPage=${this._cache.endPage}`);
+                this.viewPort.setVerticalPositionSilently(this.viewPort.verticalTo - this.pagingInfo.pageSize);
+                this._cache.data.splice(0, this.pagingInfo.pageSize);
+            } else {
+                // truncate from bottom
+                this._cache.endPage--;
+                console.log(`truncated data from bottom, startPage=${this._cache.startPage}, endPage=${this._cache.endPage}`);
+                this._cache.data.splice(this.pagingInfo.pageSize * reservedPages, this.pagingInfo.pageSize);
             }
         }
 
@@ -616,8 +620,9 @@ export class BigTableData extends PageableTableData implements ISlicedData {
         this.sliceData();
     }
 
-    private _printPageError():void {
+    private _printPageError(): void {
         console.error(`unknown error, currentPage=${this.pagingInfo.currentPage}, startPage=${this._cache.startPage}, endPage=${this._cache.endPage}`);
+        throw new Error('_printPageError')
     }
 
     protected ajaxErrorHandler(error): void {
