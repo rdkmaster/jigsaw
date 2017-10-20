@@ -476,12 +476,11 @@ export class BigTableData extends PageableTableData implements ISlicedData {
     public reservedPages = 3;
     public fetchDataThreshold = .5;
 
-    protected ongoingPage = -1;
     protected reallyBusy = false;
 
     constructor(public http: HttpClient, requestOptionsOrUrl: HttpClientOptions | string) {
         super(http, requestOptionsOrUrl);
-        this.pagingInfo.pageSize = 500;
+        this.pagingInfo.pageSize = 1000;
     }
 
     private _cache: RawTableData = {field: [], header: [], data: [], startPage: 1, endPage: 1};
@@ -547,32 +546,42 @@ export class BigTableData extends PageableTableData implements ISlicedData {
         const threshold = this.fetchDataThreshold > 0 && this.fetchDataThreshold < 1 ? this.fetchDataThreshold : .5;
         if (verticalTo < this.pagingInfo.pageSize * threshold) {
             // fetch last page...
-            this.fetchData(this._cache.startPage - 1);
+            this.fetchData(this._cache.startPage - 1, verticalTo);
         } else if (verticalTo > pages * this.pagingInfo.pageSize - this.pagingInfo.pageSize * threshold) {
             // fetch next page...
-            this.fetchData(this._cache.endPage + 1);
+            this.fetchData(this._cache.endPage + 1, verticalTo);
         } else {
             // do not need to fetch any data.
         }
     }
 
-    protected fetchData(targetPage): void {
+    protected fetchData(targetPage, verticalTo): void {
         if (targetPage < 1 || targetPage > this.pagingInfo.totalPage) {
             return;
         }
 
-        // if (this._busy) {
-        //     // it's really busy if the last fetching job has not been finished.
-        //     this.reallyBusy = targetPage !== this.ongoingPage;
-        //     return;
-        // }
+        if (this._busy) {
+            console.log('the data fetching session is busy now...');
+        } else {
+            super.changePage(targetPage);
+        }
 
-        super.changePage(targetPage);
+        const requestedPage = Math.ceil((verticalTo + this.viewPort.rows) / this.pagingInfo.pageSize);
+        // it is really busy if the request page is out of the cached page range.
+        this.reallyBusy = this._busy && requestedPage > this._cache.endPage - this._cache.startPage + 1;
+        if (this.reallyBusy) {
+            console.error('it is really busy now, please wait for a moment...');
+        }
     }
 
     protected ajaxSuccessHandler(rawTableData): void {
         super.ajaxSuccessHandler(rawTableData);
 
+        this.updateCache();
+        console.log(`data fetched, startPage=${this._cache.startPage}, endPage=${this._cache.endPage}`);
+    }
+
+    protected updateCache():void {
         this._cache.field = this.field;
         this._cache.header = this.header;
 
@@ -605,13 +614,14 @@ export class BigTableData extends PageableTableData implements ISlicedData {
             if (deltaStart > deltaEnd) {
                 this._cache.startPage++;
                 // truncate from top
-                console.log(`truncated data from top, startPage=${this._cache.startPage}, endPage=${this._cache.endPage}`);
+                console.log('truncating data from top');
                 this.viewPort.setVerticalPositionSilently(this.viewPort.verticalTo - this.pagingInfo.pageSize);
                 this._cache.data.splice(0, this.pagingInfo.pageSize);
             } else {
                 // truncate from bottom
                 this._cache.endPage--;
-                console.log(`truncated data from bottom, startPage=${this._cache.startPage}, endPage=${this._cache.endPage}`);
+                this.viewPort.setVerticalPositionSilently(this.viewPort.verticalTo + this.pagingInfo.pageSize);
+                console.log('truncating data from bottom');
                 this._cache.data.splice(this.pagingInfo.pageSize * reservedPages, this.pagingInfo.pageSize);
             }
         }
