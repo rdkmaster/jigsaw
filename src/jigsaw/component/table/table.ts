@@ -534,9 +534,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 }
             });
 
+            // 还原
             host.querySelectorAll('table').forEach(table => {
                 this._renderer.setStyle(table, 'table-layout', 'fixed');
             });
+            this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', '100%');
         }
     }
 
