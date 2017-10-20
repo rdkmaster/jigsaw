@@ -69,7 +69,7 @@ export class TableContentWidthDemoComponent {
                 "小区ID",
                 "小区名称",
                 "APN",
-                "持续时长(ms)"
+                "持续时长(ms)  "
             ]);
     }
 
