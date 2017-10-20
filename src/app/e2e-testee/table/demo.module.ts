@@ -90,8 +90,8 @@ import {BigTableDataDemoModule} from "../../live-demo/table/big-table/app.module
 
 import {SwimLaneDiagramDemoComponent} from "../../live-demo/table/swim-lane-diagram/app.component";
 import {swimLaneDiagramDemoModule} from "../../live-demo/table/swim-lane-diagram/app.module";
-import {TableContentWidthDemoComponent} from "../../live-demo/table/contentWidth/app.component";
-import {TableContentWidthDemoModule} from "../../live-demo/table/contentWidth/app.module";
+import {TableContentWidthDemoComponent} from "../../live-demo/table/content-width/app.component";
+import {TableContentWidthDemoModule} from "../../live-demo/table/content-width/app.module";
 
 const tableDemoRoutes = [
     {
@@ -188,7 +188,7 @@ const tableDemoRoutes = [
         path: 'big-table', component: BigTableDataDemoComponent
     },
     {
-        path: 'contentWidth', component: TableContentWidthDemoComponent
+        path: 'content-width', component: TableContentWidthDemoComponent
     },
     {
         path: '**', //fallback router must in the last

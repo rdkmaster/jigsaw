@@ -86,8 +86,8 @@ export const liveDemoNavInfo = {
                     url: '/table/swim-lane-diagram'
                 },
                 {
-                    label: 'contentWidth',
-                    url: '/table/contentWidth'
+                    label: 'content-width',
+                    url: '/table/content-width'
                 },
             ]
         },
