@@ -82,6 +82,12 @@ export class TableContentWidthDemoComponent {
             target: 'apn',
             width: 230
         }
-    ]
+    ];
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '这个demo展示了如何使用contentWidth控制表格的列宽。';
+    description: string = require('!!raw-loader!./readme.md');
 }
 

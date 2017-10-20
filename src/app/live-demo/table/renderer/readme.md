@@ -71,6 +71,8 @@
 - 固定像素，例如 `width="120"` 或者 `width="120px"`；
 - 固定百分比，例如 `width="20%"`，表格将算出当前容器的宽度后乘以这个百分比取得像素值；
 
+具体设置列宽请看<http://localhost:4200/#/table/content-width>
+
 
 #### 宽文本控制 和 tooltip
 
