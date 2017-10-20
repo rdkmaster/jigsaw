@@ -90,6 +90,8 @@ import {BigTableDataDemoModule} from "../../live-demo/table/big-table/app.module
 
 import {SwimLaneDiagramDemoComponent} from "../../live-demo/table/swim-lane-diagram/app.component";
 import {swimLaneDiagramDemoModule} from "../../live-demo/table/swim-lane-diagram/app.module";
+import {TableContentWidthDemoComponent} from "../../live-demo/table/content-width/app.component";
+import {TableContentWidthDemoModule} from "../../live-demo/table/content-width/app.module";
 
 const tableDemoRoutes = [
     {
@@ -186,6 +188,9 @@ const tableDemoRoutes = [
         path: 'big-table', component: BigTableDataDemoComponent
     },
     {
+        path: 'content-width', component: TableContentWidthDemoComponent
+    },
+    {
         path: '**', //fallback router must in the last
         component: TableBasicDemoComponent
     }
@@ -201,7 +206,7 @@ const tableDemoRoutes = [
         TableSetCellClassDemoModule, TableSetCellEditableDemoModule, TableSetCellRenderDemoModule, TableColumnGroupDemoModule,
         TableColumnSetVisibleDemoModule, TableColumnSetWidthDemoModule, TableSetHeaderClassDemoModule, TableSetHeaderRenderDemoModule,
         TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, swimLaneDiagramDemoModule, TableHideHeadDemoModule,
-        TableSelectRowDemoModule, BigTableDataDemoModule
+        TableSelectRowDemoModule, BigTableDataDemoModule, TableContentWidthDemoModule
     ]
 })
 export class TableDemoModule {

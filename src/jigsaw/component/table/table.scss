@@ -71,7 +71,7 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     height: 100%;
     padding-top: 40px;
     &.#{$table-prefix-cls}-hide-head {
-        padding-top: 0;
+        padding-top: 0 !important;
     }
 }
 
