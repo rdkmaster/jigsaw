@@ -21,7 +21,7 @@ export class TableColumnGroupDemoComponent {
             target: "position",
             group: true
         },{
-            target: "start_date",
+            target: "enroll-date",
             group: true
         }];
 }

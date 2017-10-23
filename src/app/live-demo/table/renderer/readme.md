@@ -1,3 +1,41 @@
+#### 提供给列定义的值
+表格的列定义接受两种类型值：
+- `ColumnDefine[]`，在你的表格的列事先已知的场合，推荐使用这个方式提供列定义的方式，多数表格的列都是可以事先可以知道的；
+- `ColumnDefineGenerator`，一个产生列定义的函数，可以编写任何复杂的逻辑，因此这个方式往往用于你的表格列事先不知道的场合。
+这个函数的定义为：`(field: string, index: number) => ColumnDefine`，这个来自实际应用场景的 [demo](/#/table/swim-lane-diagram)
+就用到了列定义产生器。
+
+#### `ColumnDefine`的结构
+
+`ColumnDefine`的结构如下：
+
+```
+{
+    target?: number | string | (number | string)[];
+    visible?: boolean;
+    width?: string | number;
+    header?: {
+        text?: string;
+        renderer?: Type<TableCellRendererBase> | TemplateRef<any>;
+        clazz?: string;
+        sortable?: boolean;
+        sortAs?: SortAs;
+        defaultSortOrder?: SortOrder;
+    };
+    cell?: {
+        renderer?: Type<TableCellRendererBase> | TemplateRef<any>;
+        clazz?: string;
+        editable?: boolean;
+        editorRenderer?: Type<TableCellRendererBase>;
+        data?: any | TableCellDataGenerator;
+        tooltip?: any;
+    };
+    group?: boolean;
+}
+```
+
+注意到`ColumnDefine`的所有字段都是可选的，你只要提供所需的定义字段即可。这些字段的功能与它的属性名含义一致，因此无需每个都解释一番。
+实在有不清楚的，可以动手试一试。
 
 #### 列渲染器
 
@@ -32,6 +70,8 @@
 表格有如下两种指定列宽的方式：
 - 固定像素，例如 `width="120"` 或者 `width="120px"`；
 - 固定百分比，例如 `width="20%"`，表格将算出当前容器的宽度后乘以这个百分比取得像素值；
+
+具体设置列宽请看<http://localhost:4200/#/table/content-width>
 
 
 #### 宽文本控制 和 tooltip

@@ -12,7 +12,7 @@ export class BigTableDataDemoComponent {
 
     constructor(public http: HttpClient) {
         this.tableData = new BigTableData(http, 'mock-data/big-table-data');
-        this.tableData.pagingInfo.pageSize = 1500;
+        this.tableData.pagingInfo.pageSize = 900;
         this.tableData.viewPort.rows = 10;
         this.tableData.viewPort.columns = 10;
         this.tableData.fromAjax();

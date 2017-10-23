@@ -81,6 +81,14 @@ export const liveDemoNavInfo = {
                     label: 'big-table',
                     url: '/table/big-table'
                 },
+                {
+                    label: 'swim-lane',
+                    url: '/table/swim-lane-diagram'
+                },
+                {
+                    label: 'content-width',
+                    url: '/table/content-width'
+                },
             ]
         },
         {
@@ -349,8 +357,8 @@ export const navInfo = [
                 url: '/table/localPagingData'
             },
             {
-                label: 'swimLaneDiagram',
-                url: '/table/swimLaneDiagram'
+                label: 'swim-lane-diagram',
+                url: '/table/swim-lane-diagram'
             },
             {
                 label: 'hideHead',

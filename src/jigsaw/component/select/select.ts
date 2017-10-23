@@ -126,15 +126,6 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
         }
     }
 
-    /**
-     *
-     * @internal
-     */
-    public _$perfectScrollbarConfig: PerfectScrollbarConfigInterface = {
-        suppressScrollX: true,
-        wheelSpeed: 0.5
-    };
-
     ngOnInit() {
         super.ngOnInit();
         this.trackItemBy = InternalUtils.initTrackItemBy(<string>this.trackItemBy, this.labelField);

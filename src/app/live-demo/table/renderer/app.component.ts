@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation} from "@angular/core";
+import {AfterContentInit, Component, TemplateRef, ViewChild, ViewEncapsulation} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {LocalPageableTableData} from "jigsaw/core/data/table-data";
 import {
@@ -14,7 +14,6 @@ import {
     OfficeCellRenderer,
     OfficeHeaderRenderer,
     PositionHeaderRenderer,
-    CellOperationRenderer
 } from "./renderers";
 
 @Component({
@@ -22,17 +21,20 @@ import {
     styleUrls: ['./app.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TableRendererDemoComponent {
+export class TableRendererDemoComponent implements AfterContentInit {
+    @ViewChild('operation') operationTemplate: TemplateRef<any>;
+
     message: string = 'change message goes here ...';
     tableData: LocalPageableTableData;
     additionalData: AdditionalTableData;
 
     constructor(public http: HttpClient) {
         this.tableData = new LocalPageableTableData();
-        this.tableData.pagingInfo.pageSize = 200;
+        this.tableData.pagingInfo.pageSize = 100;
         this.tableData.http = http;
-        this.tableData.fromAjax('mock-data/hr-list-full');
     }
+
+    additionalColumnDefines: AdditionalColumnDefine[];
 
     columnDefines: ColumnDefine[] = [
         {
@@ -59,7 +61,7 @@ export class TableRendererDemoComponent {
             }
         },
         {
-            target: ['name', 'salary', 'enrollDate'],
+            target: ['name', 'salary', 'enroll-date'],
             width: '150', header: {sortable: true}
         },
         {
@@ -75,42 +77,47 @@ export class TableRendererDemoComponent {
         },
     ];
 
-    additionalColumnDefines: AdditionalColumnDefine[] = [
-        {
-            pos: 0,
-            width: '50px',
-            header: {
-                text: '#',
+    ngAfterContentInit() {
+        this.tableData.fromAjax('mock-data/hr-list-full');
+
+        this.additionalColumnDefines = [
+            {
+                pos: 0,
+                width: '50px',
+                header: {
+                    text: '#',
+                },
+                cell: {
+                    data: TableValueGenerators.rowIndexGenerator,
+                    clazz: 'green-text'
+                }
             },
-            cell: {
-                data: TableValueGenerators.rowIndexGenerator,
-                clazz: 'green-text'
-            }
-        },
-        {
-            pos: 0,
-            width: '60px',
-            header: {
-                renderer: TableHeadCheckboxRenderer
+            {
+                pos: 0,
+                width: '60px',
+                header: {
+                    renderer: TableHeadCheckboxRenderer
+                },
+                cell: {
+                    renderer: TableCellCheckboxRenderer,
+                    data: (td, row, col) => td.data[row][2] == 'Developer',
+                }
             },
-            cell: {
-                renderer: TableCellCheckboxRenderer,
-                data: (td, row, col) => td.data[row][2] == 'Developer',
-            }
-        },
-        {
-            //pos: -1, //不写pos表示插入到最后
-            width: '100',
-            header: {
-                text: '操作',
-                clazz: 'green-text'
+            {
+                //pos: -1, //不写pos表示插入到最后
+                width: '100',
+                header: {
+                    text: '操作',
+                    clazz: 'green-text'
+                },
+                cell: {
+                    // 注意，必须在ngAfterContentInit钩子里设置才有效
+                    renderer: this.operationTemplate,
+                    tooltip: '加薪：当前员工一次加2000\n辞退：立即辞退当前员工'
+                }
             },
-            cell: {
-                renderer: CellOperationRenderer,
-                tooltip: '加薪：当前员工一次加2000\n辞退：立即辞退当前员工'
-            }
-        },
-    ];
+        ];
+    }
 
     public onCellChange(value) {
         this.message = `field: '${value.field}', row: ${value.row}, column: ${value.column}, cellData: ${value.cellData}, oldCellData: ${value.oldCellData}`;
@@ -120,7 +127,7 @@ export class TableRendererDemoComponent {
         }
     }
 
-    public payRaise() {
+    public payRaiseSelected() {
         // 我们这里来给勾选上的人加薪，注意勾选是的人有两部分，一部分是我们默认勾选上的，从前面代码看出，默认勾选上的都是Developer
         // 另外一部分是用户在界面上手工勾选的。因此这里需要将这两部分的人分开处理。
         // 考虑到这个demo用的是分页数据，因此如果要拿到所有的Developer，则必须专门去查询，我们不考虑这个情况
@@ -151,8 +158,22 @@ export class TableRendererDemoComponent {
         this.tableData.refresh();
     }
 
-    public fire() {
+    public fireSelected() {
         alert('未实现。。。')
+    }
+
+    public payRaise(employee) {
+        this.tableData.data[employee][3] = Number(this.tableData.data[employee][3]) + 2000;
+        // 这一步非常重要，我们直接修改了tableData的值，Jigsaw无法知道发生了啥变化，需要通过调用`refresh()`来通知Jigsaw
+        this.tableData.refresh();
+    }
+
+    public fire(employee) {
+        this.tableData.originalData.splice(employee, 1);
+        this.tableData.data.splice(employee, 1);
+        // 记住，但凡手工对Jigsaw的各种data做修改，都需要调用refresh()方法
+        // 但是这里 changePage() 会自动调用 refresh() 方法，因此这里不需要再调用了
+        this.tableData.changePage(this.tableData.pagingInfo.currentPage);
     }
 
     public onSearch(key: string) {

@@ -345,7 +345,7 @@ class MockData {
         };
         this.dataSet['hr-list-full'] = {
             "field": [
-                "name", "gender", "position", "salary", "enrollDate", "office", "desc"
+                "name", "gender", "position", "salary", "enroll-date", "office", "desc"
             ],
             "header": [
                 "姓名", "性别", "职位", "薪资", "入职日期", "部门", "描述"

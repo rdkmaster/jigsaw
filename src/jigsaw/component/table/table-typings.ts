@@ -9,9 +9,12 @@ import {SortAs, SortOrder} from "../../core/data/component-data";
 import {TableCellRendererBase} from "./table-renderer";
 import {CommonUtils} from "../../core/utils/common-utils";
 
-export type TableColumnTargetFinder = (field: string, index: number) => boolean;
-export type TableColumnTarget = number | string | (number | string)[] | TableColumnTargetFinder;
-export type TableCellDataGenerator = (tableData: TableData, row: number, column: number) => any;
+export type TableColumnTarget = number | string | (number | string)[];
+export type ColumnDefineGenerator = (field: string, index: number) => ColumnDefine;
+export type TableCellDataGenerator = (tableData: TableData,
+                                      row: number,
+                                      column: number,
+                                      additionalData: AdditionalTableData) => any;
 
 export class TableValueGenerators {
     public static rowIndexGenerator(tableData: TableData, row: number): any {
@@ -28,13 +31,13 @@ export class TableValueGenerators {
         return index;
     }
 
-    public static originCellDataGenerator(tableData: TableData, row:number, column: number):any {
+    public static originCellDataGenerator(tableData: TableData, row: number, column: number): any {
         return tableData && tableData.data && tableData.data[row] ? tableData.data[row][column] : '';
     }
 }
 
 export class ColumnDefine {
-    target: TableColumnTarget;
+    target?: TableColumnTarget;
     visible?: boolean;
     width?: string | number;
     header?: TableHeader;

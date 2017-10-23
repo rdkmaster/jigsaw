@@ -31,11 +31,6 @@ export class DemoListComponent implements OnInit {
             this._router.navigateByUrl('/button/button-full');
         }
     }
-
-    public _$perfectScrollbarConfig: PerfectScrollbarConfigInterface = {
-        suppressScrollX: true,
-        wheelSpeed: 0.5
-    };
 }
 
 // 请按照组件的字符序排列

@@ -76,9 +76,6 @@ import {TableSetHeaderSortDemoModule} from "./setHeaderSort/app.module";
 import {TableDataWithPopupDemoComponent} from "./withPopup/app.component";
 import {TableDataWithPopupDemoModule} from "./withPopup/app.module";
 
-import {SwimLaneDiagramDemoComponent} from "./swimLaneDiagram/app.component";
-import {swimLaneDiagramDemoModule} from "./swimLaneDiagram/app.module";
-
 import {TableHideHeadDemoComponent} from "./hideHead/app.component";
 import {TableHideHeadDemoModule} from "./hideHead/app.module";
 
@@ -90,6 +87,11 @@ import {TableRendererDemoModule} from "../../live-demo/table/renderer/app.module
 
 import {BigTableDataDemoComponent} from "../../live-demo/table/big-table/app.component";
 import {BigTableDataDemoModule} from "../../live-demo/table/big-table/app.module";
+
+import {SwimLaneDiagramDemoComponent} from "../../live-demo/table/swim-lane-diagram/app.component";
+import {swimLaneDiagramDemoModule} from "../../live-demo/table/swim-lane-diagram/app.module";
+import {TableContentWidthDemoComponent} from "../../live-demo/table/content-width/app.component";
+import {TableContentWidthDemoModule} from "../../live-demo/table/content-width/app.module";
 
 const tableDemoRoutes = [
     {
@@ -174,7 +176,7 @@ const tableDemoRoutes = [
         path: 'localPagingData', component: LocalPagingDataDemoComponent
     },
     {
-        path: 'swimLaneDiagram', component: SwimLaneDiagramDemoComponent
+        path: 'swim-lane-diagram', component: SwimLaneDiagramDemoComponent
     },
     {
         path: 'hideHead', component: TableHideHeadDemoComponent
@@ -184,6 +186,9 @@ const tableDemoRoutes = [
     },
     {
         path: 'big-table', component: BigTableDataDemoComponent
+    },
+    {
+        path: 'content-width', component: TableContentWidthDemoComponent
     },
     {
         path: '**', //fallback router must in the last
@@ -201,7 +206,7 @@ const tableDemoRoutes = [
         TableSetCellClassDemoModule, TableSetCellEditableDemoModule, TableSetCellRenderDemoModule, TableColumnGroupDemoModule,
         TableColumnSetVisibleDemoModule, TableColumnSetWidthDemoModule, TableSetHeaderClassDemoModule, TableSetHeaderRenderDemoModule,
         TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, swimLaneDiagramDemoModule, TableHideHeadDemoModule,
-        TableSelectRowDemoModule, BigTableDataDemoModule
+        TableSelectRowDemoModule, BigTableDataDemoModule, TableContentWidthDemoModule
     ]
 })
 export class TableDemoModule {

@@ -20,13 +20,13 @@
 
 当前行：
 <jigsaw-slider [value]="0" (change)="this.tableData.viewPort.verticalTo = $event"
-               width="300px" min="0" [max]="tableData.origin.data.length">
+               width="300px" min="0" [max]="tableData.cache.data.length">
 </jigsaw-slider>
 （{{tableData.viewPort.verticalTo}}）
 
 当前列：
 <jigsaw-slider [value]="0" (change)="tableData.viewPort.horizontalTo = $event"
-               width="300px" min="0" [max]="tableData.origin.field.length">
+               width="300px" min="0" [max]="tableData.cache.field.length">
 </jigsaw-slider>
 （{{tableData.viewPort.horizontalTo}}）
 

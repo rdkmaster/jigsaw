@@ -1,3 +1,13 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+设置宽度
+<jigsaw-slider min="150" max="300" [(value)]="colWidth" (valueChange)="changeWidth($event)" width="400">
+</jigsaw-slider>
+
 <ul class="ne-list">
     <li *ngFor="let ne of neList; index as liIndex" class="li-{{liIndex}}"
         (mouseover)="neHover=true;currentIndex=liIndex" (mouseleave)="neHover=false;currentIndex=liIndex">
@@ -13,7 +23,8 @@
 </ul>
 
 <jigsaw-table [data]="tableData"
-              [columnDefines]="columnDefines"
+              [columnDefines]="columnDefineGenerator"
+              [columnDefineGeneratorContext]="this"
               (selectChange)="handleRowSelect($event)"
               (doubleClick)="handleDbRowSelect($event)"
               [hideHeader]="true">

@@ -10,7 +10,8 @@
     OnInit,
     Output,
     QueryList,
-    Renderer2, ViewChild,
+    Renderer2,
+    ViewChild,
     ViewChildren
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
@@ -23,19 +24,22 @@ import {
     AdditionalColumnDefine,
     AdditionalTableData,
     ColumnDefine,
+    ColumnDefineGenerator,
     SortChangeEvent,
     TableCellSetting,
-    TableColumnTargetFinder,
     TableDataChangeEvent,
     TableHeadSetting
 } from "./table-typings";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
-import {SortAs, SortOrder} from "../../core/data/component-data";
+import {SortOrder} from "../../core/data/component-data";
 import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer} from "./table-renderer";
 import {AffixUtils} from "../../core/utils/internal-utils";
 import {
-    PerfectScrollbarConfigInterface, PerfectScrollbarDirective, PerfectScrollbarModule
+    PerfectScrollbarConfigInterface,
+    PerfectScrollbarDirective,
+    PerfectScrollbarModule
 } from "ngx-perfect-scrollbar/dist";
+import {TableUtils} from "./table-utils";
 
 @Component({
     selector: 'jigsaw-table, j-table',
@@ -43,21 +47,19 @@ import {
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[class.jigsaw-table-host]': 'true',
-        '[class.jigsaw-table-hide-head]': "hideHeader"
+        '[class.jigsaw-table-host]': 'true'
     },
 })
 export class JigsawTable extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
 
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef,
-                private _zone: NgZone) {
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, private _zone: NgZone) {
         super();
     }
 
     @Output()
     public sort = new EventEmitter<SortChangeEvent>();
 
-    private _contentWidth: string;
+    private _contentWidth: string = 'auto';
 
     @Input()
     public get contentWidth(): string {
@@ -107,22 +109,19 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     public _$headerSettings: TableHeadSetting[] = [];
     private _headerSettingsBackup: { [field: string]: TableHeadSetting } = {};
 
-    private _updateHeaderSettings(mixedFields: string[]): void {
+    private _updateHeaderSettings(columnDefines: ColumnDefine[]): void {
         const oldBackup = CommonUtils.shallowCopy(this._headerSettingsBackup);
         this._headerSettingsBackup = {};
         this._$headerSettings.splice(0, this._$headerSettings.length);
 
-        mixedFields.forEach((field, index) => {
-            let matchedColumnDef = this.columnDefines.find(
-                colDef => (<TableColumnTargetFinder>colDef.target)(field, index));
-            if (matchedColumnDef && matchedColumnDef.visible === false) {
+        columnDefines.forEach(columnDefine => {
+            if (columnDefine.visible === false) {
                 return;
             }
 
+            const field: string = <string>columnDefine.target;
             let settings = oldBackup[field];
-            if (!settings) {
-                settings = this._createHeaderSettings(matchedColumnDef, field);
-            }
+            settings = TableUtils.updateHeaderSettings(columnDefine, settings);
             if (settings.cellData === null) {
                 settings.cellData = this._getHeaderValueByField(field);
             }
@@ -161,9 +160,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     public _$cellSettings: TableCellSetting[][] = [];
     private _cellSettingsBackup: { [field: string]: TableCellSetting[] } = {};
 
-    private _updateCellSettings(mixedFields: string[]): void {
+    private _updateCellSettings(columnDefines: ColumnDefine[]): void {
         // clear origin settings, but keep the origin row array ref,
-        // which will avoid ngFor from rerendering the dom
+        // which will avoid ngFor from re-rendering the dom
         this._$cellSettings.forEach(row => row.splice(0, row.length));
         const dataLen = this.data.data.length;
         // remove extra lines if necessary
@@ -173,28 +172,24 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         let oldBackup = CommonUtils.shallowCopy(this._cellSettingsBackup);
         this._cellSettingsBackup = {};
 
-        mixedFields.forEach((field, colIndex) => {
-            let matchedColumnDef = this.columnDefines.find(
-                colDef => (<TableColumnTargetFinder>colDef.target)(field, colIndex));
-            if (matchedColumnDef && matchedColumnDef.visible === false) {
+        columnDefines.forEach(columnDefine => {
+            if (columnDefine.visible === false) {
                 return;
             }
 
+            const field = <string>columnDefine.target;
             // prepare for backing up the new settings
             this._cellSettingsBackup[field] = [];
 
-            let sTemplate: TableCellSetting = this._createCellSettings(matchedColumnDef, field);
             const [realColIndex,] = this._getColumnIndex(field);
             let groupSetting: TableCellSetting;
             let settings: TableCellSetting;
             for (let rowIndex = 0; rowIndex < dataLen; rowIndex++) {
                 settings = oldBackup[field] ? oldBackup[field][rowIndex] : undefined;
-                if (!settings) {
-                    settings = <TableCellSetting>CommonUtils.shallowCopy(sTemplate);
-                }
-                this._cellSettingsBackup[field].push(settings);
+                settings = TableUtils.updateCellSettings(columnDefine, settings);
                 // reset the rowSpan value, it will be recomputed later.
                 settings.rowSpan = 1;
+                this._cellSettingsBackup[field].push(settings);
 
                 if (!this._$cellSettings[rowIndex]) {
                     this._$cellSettings.push([]);
@@ -206,7 +201,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                     settings.editorRenderer = settings.editorRenderer ? settings.editorRenderer : TableCellTextEditorRenderer;
                 }
 
-                const cellDataGenerator = this._getGenerator(matchedColumnDef, 'data');
+                const cellDataGenerator = TableUtils.getGenerator(columnDefine, 'data');
                 const originVal = this._getCellDataByField(field, rowIndex);
                 if (cellDataGenerator) {
                     // 根据cell的data函数，生成新的cellData，并更新tableData
@@ -218,17 +213,17 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 settings.cellData = CommonUtils.isDefined(settings.cellData) ? settings.cellData : '';
 
                 // generate a tooltip if necessary
-                const tooltipGenerator = this._getGenerator(matchedColumnDef, 'tooltip');
+                const tooltipGenerator = TableUtils.getGenerator(columnDefine, 'tooltip');
                 if (tooltipGenerator) {
                     settings.tooltip = tooltipGenerator(this.data, rowIndex, realColIndex, this._additionalData);
-                } else if (matchedColumnDef && matchedColumnDef.cell && CommonUtils.isDefined(matchedColumnDef.cell.tooltip)) {
-                    settings.tooltip = matchedColumnDef.cell.tooltip;
+                } else if (columnDefine.cell && CommonUtils.isDefined(columnDefine.cell.tooltip)) {
+                    settings.tooltip = columnDefine.cell.tooltip;
                 } else {
                     settings.tooltip = '';
                 }
 
                 // 修改settings的group属性
-                if (matchedColumnDef && matchedColumnDef.group) {
+                if (columnDefine.group) {
                     if (groupSetting && groupSetting.cellData == settings.cellData) {
                         groupSetting.rowSpan++;
                         settings.rowSpan = 0;
@@ -240,109 +235,40 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         });
     }
 
-    private _getGenerator(columnDefine: ColumnDefine, property: string): Function {
-        return columnDefine && columnDefine.cell && columnDefine.cell[property] instanceof Function ? columnDefine.cell[property] : null;
-    }
-
-    private _createCellSettings(columnDefine: ColumnDefine, field: string): TableCellSetting {
-        let settings: TableCellSetting = {
-            cellData: '',
-            width: undefined,
-            visible: true,
-            renderer: null,
-            clazz: '',
-            editable: false,
-            editorRenderer: null,
-            group: false,
-            field: field,
-            rowSpan: 1,
-            tooltip: null
-        };
-        settings.width = columnDefine && columnDefine.width;
-        settings.group = columnDefine && columnDefine.group;
-        let cellDef = columnDefine && columnDefine.cell;
-        if (cellDef) {
-            settings.renderer = cellDef.renderer;
-            settings.clazz = cellDef.clazz;
-            settings.editable = cellDef.editable;
-            settings.editorRenderer = cellDef.editorRenderer;
-            settings.tooltip = cellDef.tooltip;
-        }
-        return settings;
-    }
-
-    private _createHeaderSettings(columnDefine: ColumnDefine, field: string): TableHeadSetting {
-        let settings: TableHeadSetting = {
-            cellData: null,
-            width: null,
-            visible: true,
-            renderer: null,
-            clazz: '',
-            sortable: false,
-            sortAs: SortAs.string,
-            defaultSortOrder: SortOrder.default,
-            field: field
-        };
-        settings.width = columnDefine && columnDefine.width;
-        let headerDef = columnDefine && columnDefine.header;
-        if (headerDef) {
-            settings.cellData = CommonUtils.isDefined(headerDef.text) ? headerDef.text : settings.cellData;
-            settings.renderer = headerDef.renderer;
-            settings.clazz = headerDef.clazz;
-            settings.sortable = headerDef.sortable;
-            settings.sortAs = CommonUtils.isDefined(headerDef.sortAs) ? headerDef.sortAs : settings.sortAs;
-            settings.defaultSortOrder = CommonUtils.isDefined(headerDef.sortAs) ?
-                headerDef.defaultSortOrder : settings.defaultSortOrder;
-        }
-        return settings;
-    }
-
     /**
-     * 根据tableDate的field和additionalColumn的field生成最终要显示出来的列位置
-     * 比如['additional-field-0', 'name', 'gender', 'position', 'additional-field-1']
-     * @returns {string[]}
+     * 生成混合后的列定义序列
+     * @returns {ColumnDefine[]}
      * @private
      */
-    private _getMixedFields(): string[] {
-        if (!this._additionalColumnDefines || !this.data) {
+    private _getMixedColumnDefines(): ColumnDefine[] {
+        if (!this.data) {
             return [];
         }
-        const result = this.data.field.concat();
-        for (let i = this._additionalColumnDefines.length - 1; i >= 0; i--) {
-            const field = 'additional-field-' + i;
-            const acd = this._additionalColumnDefines[i];
-            const pos = CommonUtils.isDefined(acd.pos) ? acd.pos : this._data.field.length;
-            result.splice(pos, 0, field);
+        const columnDefines: ColumnDefine[] = [];
+        this.data.field.forEach((field, index) => {
+            let cd = this._columnDefineGenerator(field, index);
+            if (cd) {
+                cd = <ColumnDefine>CommonUtils.shallowCopy(cd);
+                cd.target = field;
+            }
+            columnDefines.push(cd ? cd : {target: field});
+        });
+
+        if (this.additionalColumnDefines) {
+            for (let i = this.additionalColumnDefines.length - 1; i >= 0; i--) {
+                const acd = this.additionalColumnDefines[i];
+                const cd: ColumnDefine = {
+                    target: 'additional-field-' + i, header: acd.header, group: acd.group,
+                    cell: acd.cell, width: acd.width, visible: acd.visible
+                };
+                const pos = CommonUtils.isDefined(acd.pos) ? acd.pos : this._data.field.length;
+                columnDefines.splice(pos, 0, cd);
+            }
         }
-        return result;
+        return columnDefines;
     }
 
-    /**
-     * ColumnDefine所有的target转化为函数的形式
-     * @param {ColumnDefine} colDef
-     * @returns {ColumnDefine}
-     * @private
-     */
-    private _fixColumnDefineTarget(colDef: ColumnDefine): ColumnDefine {
-        let targets;
-        if (typeof colDef.target == 'number' || typeof colDef.target == 'string') {
-            targets = [colDef.target];
-        } else if (colDef.target instanceof Array) {
-            targets = colDef.target
-        } else if (colDef.target instanceof Function) {
-            return;
-        } else {
-            colDef.target = () => false;
-            return;
-        }
-        if (CommonUtils.isDefined(targets) && targets.length > 0) {
-            colDef.target = (field, index) => !!targets.find(
-                f => (typeof f === 'string' && f === field) || (typeof f === 'number' && f === index));
-        }
-        return colDef;
-    }
-
-    private _update(): void {
+    public update(): void {
         if (!this.initialized || !this._data) {
             return;
         }
@@ -351,9 +277,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return;
         }
 
-        const mixedFields = this._getMixedFields();
-        this._updateHeaderSettings(mixedFields);
-        this._updateCellSettings(mixedFields);
+        const columnDefines = this._getMixedColumnDefines();
+        this._updateHeaderSettings(columnDefines);
+        this._updateCellSettings(columnDefines);
         this.additionalDataChange.emit(this.additionalData);
         setTimeout(() => this._handleScrollBar(), 0);
     }
@@ -402,71 +328,44 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._additionalData.clearCachedValues();
         this._additionalData.originData = value;
 
-        this._update();
+        this.update();
 
         if (this._removeTableDataRefresh) {
             this._removeTableDataRefresh();
         }
-        this._removeTableDataRefresh = value.onRefresh(this._update, this);
+        this._removeTableDataRefresh = value.onRefresh(this.update, this);
 
         if (!this._removeAdditionalDataRefresh) {
-            this._removeAdditionalDataRefresh = this._additionalData.onRefresh(this._update, this);
+            this._removeAdditionalDataRefresh = this._additionalData.onRefresh(this.update, this);
         }
     }
 
     @Output()
     public dataChange = new EventEmitter<TableDataChangeEvent>();
 
-    private _columnDefines: ColumnDefine[] = [];
+    @Input()
+    public columnDefines: ColumnDefine[] | ColumnDefineGenerator;
 
     @Input()
-    public get columnDefines(): ColumnDefine[] {
-        return this._columnDefines;
-    }
-
-    public set columnDefines(value: ColumnDefine[]) {
-        if (!value || value == this._columnDefines) {
-            return;
-        }
-        if (this._columnDefines.length > 0) {
-            console.warn('do not support updating the columnDefines yet! ' +
-                'you can give the table every possible column defines when you init it.');
-            return;
-        }
-        this._columnDefines = value;
-        this._normalizeColumnTarget();
-    }
-
-    private _normalizeColumnTarget() {
-        // normalize the target to `TableColumnTargetFinder`
-        this.columnDefines.forEach((colDef, index) => {
-            const cd = <ColumnDefine>CommonUtils.shallowCopy(colDef);
-            this.columnDefines[index] = cd;
-            if (!cd.hasOwnProperty('target')) {
-                console.error('invalid column target, need a "target" property!');
-                return;
-            }
-            this._fixColumnDefineTarget(cd);
-        });
-    }
-
-    private _additionalColumnDefines: AdditionalColumnDefine[] = [];
+    public columnDefineGeneratorContext: any;
 
     @Input()
-    public get additionalColumnDefines(): AdditionalColumnDefine[] {
-        return this._additionalColumnDefines;
-    }
+    public additionalColumnDefines: AdditionalColumnDefine[] = [];
 
-    public set additionalColumnDefines(value: AdditionalColumnDefine[]) {
-        if (!value || value == this._additionalColumnDefines) {
-            return;
+    private _columnDefineGenerator(field: string, index: number): ColumnDefine {
+        if (!this.columnDefines) {
+            return undefined;
         }
-        if (this._additionalColumnDefines.length > 0) {
-            console.warn('do not support updating the additionalColumnDefine yet! ' +
-                'you can give the table every possible additional column defines when you init it.');
-            return;
+        if (this.columnDefines instanceof Function) {
+            return CommonUtils.safeInvokeCallback(this.columnDefineGeneratorContext, this.columnDefines, [field, index]);
+        } else {
+            return this.columnDefines.find(colDef => {
+                const targets: (number | string)[] = colDef.target instanceof Array ? colDef.target : [colDef.target];
+                const idx = targets.findIndex(target =>
+                    (typeof target === 'number' && target === index) || (typeof target === 'string' && target === field));
+                return idx != -1;
+            });
         }
-        this._additionalColumnDefines = value;
     }
 
     @Output()
@@ -528,8 +427,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
         this._zone.runOutsideAngular(() => {
             this._removeWindowResizeListener = this._renderer.listen('window', 'resize', () => {
-                this._floatingHead();
-                this._calibrateTableWidth();
+                if (this.floatingHeader && !this.hideHeader) {
+                    this._fixHeaderTop();
+                }
+                this._calibrateTable();
                 this._setVerticalScrollbarOffset();
             });
         });
@@ -537,14 +438,14 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (this.floatingHeader && !this.hideHeader) {
             this._zone.runOutsideAngular(() => {
                 this._removeWindowScrollListener = this._renderer.listen('window', 'scroll',
-                    () => this._floatingHead());
+                    () => this._fixHeaderTop());
             });
         }
     }
 
     private _tableHeaderElement: HTMLElement;
 
-    private _floatingHead() {
+    private _fixHeaderTop() {
         const maxTop = this._elementRef.nativeElement.offsetHeight - this._tableHeaderElement.offsetHeight;
         let tableDocumentTop = AffixUtils.offset(this._elementRef.nativeElement).top;
         let scrollTop = AffixUtils.getScrollTop();
@@ -579,24 +480,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this.sort.emit(sortInfo);
     }
 
-    private _mixInColumns(): void {
-        if (!this._additionalColumnDefines) {
-            return;
-        }
-        for (let i = this._additionalColumnDefines.length - 1; i >= 0; i--) {
-            const acd = this._additionalColumnDefines[i];
-            const cd: ColumnDefine = this._fixColumnDefineTarget({
-                target: 'additional-field-' + i,
-                header: acd.header,
-                group: acd.group,
-                cell: acd.cell,
-                width: acd.width,
-                visible: acd.visible
-            });
-            this.columnDefines.push(cd);
-        }
-    }
-
     private _initAdditionalData(): void {
         if (!this.additionalColumnDefines) {
             return;
@@ -614,27 +497,48 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     public bodyScrollbar: PerfectScrollbarDirective;
 
     /**
-     * 计算内容宽度，产生横向滚动条
+     * 根据内容计算自适应列宽
      * @private
      */
     private _calculateContentWidth() {
         if (this.contentWidth == 'auto') {
-            this._elementRef.nativeElement.querySelectorAll('table').forEach(table => {
+            const host = this._elementRef.nativeElement;
+            host.querySelectorAll('table').forEach(table => {
                 this._renderer.setStyle(table, 'table-layout', 'auto');
             });
-            const contentRange = this._elementRef.nativeElement.querySelector('.jigsaw-table-range');
-            const tableHeader = contentRange.querySelector('table.jigsaw-table-header');
-            const tableBody = contentRange.querySelector('table.jigsaw-table-body');
-            const tableBodyRange = contentRange.querySelector('.jigsaw-table-body-range');
-            const contentWidth = tableBody.offsetWidth;
-            this._renderer.addClass(contentRange, 'jigsaw-table-auto-width');
-            this._renderer.setStyle(tableBodyRange, 'width', contentWidth + 'px');
-            this._renderer.setStyle(tableBody, 'width', contentWidth + 'px');
-            this._renderer.setStyle(tableHeader, 'width', contentWidth + 'px');
 
-            this._elementRef.nativeElement.querySelectorAll('table').forEach(table => {
+            // 设置表头随内容撑开
+            this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', 'auto');
+
+            const tHeadColGroup = host.querySelectorAll('.jigsaw-table-header colgroup col');
+            const tBodyColGroup = host.querySelectorAll('.jigsaw-table-body colgroup col');
+            const widthStorage = [];
+
+            host.querySelectorAll('.jigsaw-table-body tbody tr:first-child td')
+                .forEach(td => {
+                    widthStorage.push(td.offsetWidth);
+                });
+
+            host.querySelectorAll('.jigsaw-table-header thead tr:first-child td')
+                .forEach((td, index) => {
+                    if (td.offsetWidth > widthStorage[index]) {
+                        widthStorage[index] = td.offsetWidth;
+                    }
+                });
+
+            widthStorage.forEach((width, index) => {
+                // columnDefine定义过的列宽不会被覆盖
+                if (!tHeadColGroup[index].getAttribute('width')) {
+                    this._renderer.setAttribute(tHeadColGroup[index], 'width', width);
+                    this._renderer.setAttribute(tBodyColGroup[index], 'width', width);
+                }
+            });
+
+            // 还原
+            host.querySelectorAll('table').forEach(table => {
                 this._renderer.setStyle(table, 'table-layout', 'fixed');
             });
+            this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', '100%');
         }
     }
 
@@ -644,7 +548,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      */
     private _handleScrollBar() {
         this._calculateContentWidth();
-        this._calibrateTableWidth();
+        this._calibrateTable();
         this._initVerticalScroll();
         this._listenHorizontalScroll();
     }
@@ -653,19 +557,33 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * 校正表头表体的宽度
      * @private
      */
-    private _calibrateTableWidth() {
-        const tableHeader = this._elementRef.nativeElement.querySelector('table.jigsaw-table-header');
-        const tableBody = this._elementRef.nativeElement.querySelector('table.jigsaw-table-body');
-        const tableBodyRange = this._elementRef.nativeElement.querySelector('.jigsaw-table-body-range');
+    private _calibrateTable() {
+        const host = this._elementRef.nativeElement;
+        const tableHeader = host.querySelector('table.jigsaw-table-header');
+        const tableBody = host.querySelector('table.jigsaw-table-body');
+        const tableBodyRange = host.querySelector('.jigsaw-table-body-range');
+        const tableRange = host.querySelector('.jigsaw-table-range');
 
-        // table body range's width is always not less than table body's
-        this._renderer.setStyle(tableBodyRange, 'width',
-            (this._elementRef.nativeElement.offsetWidth > tableBody.offsetWidth ?
-                this._elementRef.nativeElement.offsetWidth : tableBody.offsetWidth) + 'px');
+        // table body's width is always not less than the host component
+        if (host.offsetWidth > tableBody.offsetWidth) {
+            this._renderer.setStyle(tableBody, 'width', host.offsetWidth + 'px');
+        }
+
+        // table body range's width is always equal to table body's
+        if (tableBodyRange.offsetWidth != tableBody.offsetWidth) {
+            this._renderer.setStyle(tableBodyRange, 'width', tableBody.offsetWidth + 'px');
+        }
 
         // table header's width is always equal to table body's
         if (tableHeader.offsetWidth != tableBody.offsetWidth) {
             this._renderer.setStyle(tableHeader, 'width', tableBody.offsetWidth + 'px');
+        }
+
+        // 根据表头的高度，设置表体的padding-top
+        if (this.hideHeader) {
+            this._renderer.setStyle(tableRange, 'padding-top', 0);
+        } else {
+            this._renderer.setStyle(tableRange, 'padding-top', tableHeader.offsetHeight + 'px');
         }
     }
 
@@ -724,27 +642,17 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         wheelSpeed: 0.5
     };
 
-    /**
-     * @internal
-     */
-    public _$contentScrollbarConfig: PerfectScrollbarConfigInterface = {
-        suppressScrollX: true,
-        wheelSpeed: 0.5
-    };
-
     ngAfterViewInit() {
         super.ngAfterViewInit();
         this._$selectRow(this.selectedRow, true);
-        this._handleScrollBar();
     }
 
     ngOnInit() {
         super.ngOnInit();
 
-        this._mixInColumns();
         this._initAdditionalData();
         if (this._data.field && this._data.field.length != 0) {
-            this._update();
+            this.update();
         }
 
         this._addWindowListener();
@@ -769,11 +677,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
         this._removeWindowListener();
 
+        this.columnDefines = null;
+        this.additionalColumnDefines = null;
         this._data = null;
         this._headerSettingsBackup = null;
         this._cellSettingsBackup = null;
-        this._columnDefines = null;
-        this._additionalColumnDefines = null;
         this._$cellSettings = null;
         this._$headerSettings = null;
         this._tableHeaderElement = null;
