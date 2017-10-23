@@ -528,7 +528,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
             widthStorage.forEach((width, index) => {
                 // columnDefine定义过的列宽不会被覆盖
-                if (!tHeadColGroup[index].getAttribute('width')) {
+                if (!tHeadColGroup[index].getAttribute('width') ||
+                    tHeadColGroup[index].getAttribute('width') == '0') {
                     this._renderer.setAttribute(tHeadColGroup[index], 'width', width);
                     this._renderer.setAttribute(tBodyColGroup[index], 'width', width);
                 }
