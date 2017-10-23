@@ -89,11 +89,11 @@ export class JigsawViewport {
     }
 
     private _scrollDown() {
-        if (this.data.viewPort.verticalTo < this.data.origin.data.length) {
-            if (this.data.viewPort.verticalTo + this.step < this.data.origin.data.length) {
+        if (this.data.viewPort.verticalTo < this.data.cache.data.length) {
+            if (this.data.viewPort.verticalTo + this.step < this.data.cache.data.length) {
                 this.data.viewPort.verticalTo = this.data.viewPort.verticalTo + this.step;
             } else {
-                this.data.viewPort.verticalTo = this.data.origin.data.length;
+                this.data.viewPort.verticalTo = this.data.cache.data.length;
             }
         }
     }

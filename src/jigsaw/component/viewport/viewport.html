@@ -12,13 +12,13 @@
 
 当前行：
 <j-scrollbar class="jigsaw-viewport-vertical-scrollbar" [(value)]="data.viewPort.verticalTo"
-             [height]="_$tableBodyHeight" [max]="data.origin.data.length" [vertical]="true">
+             [height]="_$tableBodyHeight" [max]="data.cache.data.length" [vertical]="true">
 </j-scrollbar>
 （{{data.viewPort.verticalTo}}）
 
 当前列：
 <j-scrollbar class="jigsaw-viewport-horizontal-scrollbar" [(value)]="data.viewPort.horizontalTo"
-             [max]="data.origin.field.length">
+             [max]="data.cache.field.length">
 </j-scrollbar>
 （{{data.viewPort.horizontalTo}}）
 
