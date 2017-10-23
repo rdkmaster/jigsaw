@@ -12,7 +12,7 @@ export class BigTableDataDemoComponent {
 
     constructor(public http: HttpClient) {
         this.tableData = new BigTableData(http, 'mock-data/big-table-data');
-        this.tableData.pagingInfo.pageSize = 900;
+        this.tableData.pagingInfo.pageSize = 1000;
         this.tableData.viewPort.rows = 10;
         this.tableData.viewPort.columns = 10;
         this.tableData.fromAjax();
@@ -39,7 +39,7 @@ export class BigTableDataDemoComponent {
     ];
 
     additionalColumnDefines: AdditionalColumnDefine[] = [
-        {
+        /*{
             pos: 0,
             width: '50px',
             header: {
@@ -48,7 +48,7 @@ export class BigTableDataDemoComponent {
             cell: {
                 data: TableValueGenerators.rowIndexGenerator,
             }
-        }
+        }*/
     ];
 
     steps = [1, 3, 5, 7, 9];
