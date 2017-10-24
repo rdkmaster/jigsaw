@@ -509,8 +509,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
             // 设置表头随内容撑开
             this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', 'auto');
-            this._renderer.setStyle(host.querySelector('.jigsaw-table-body'), 'width', 'auto');
+            this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'white-space', 'nowrap');
 
+            this._renderer.setStyle(host.querySelector('.jigsaw-table-body'), 'width', '100%');
             this._renderer.setStyle(host.querySelector('.jigsaw-table-body-range'), 'width', '100%');
 
             const tHeadColGroup = host.querySelectorAll('.jigsaw-table-header colgroup col');
@@ -549,7 +550,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 this._renderer.setStyle(table, 'table-layout', 'fixed');
             });
             this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', '100%');
-            this._renderer.setStyle(host.querySelector('.jigsaw-table-body'), 'width', '100%');
+            this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'white-space', 'normal');
         }
     }
 
