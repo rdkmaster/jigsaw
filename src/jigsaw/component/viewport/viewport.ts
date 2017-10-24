@@ -1,9 +1,8 @@
-import {AfterContentInit, Component, ContentChild, ElementRef, Input, NgModule, OnInit} from "@angular/core";
+import {Component, ElementRef, Input, NgModule} from "@angular/core";
 import {BigTableData} from "../../core/data/table-data";
 import {CommonModule} from "@angular/common";
 import {JigsawScrollbarModule} from "../scrollbar/index";
 import {JigsawSliderModule} from "../slider/index";
-import {JigsawTable} from "../table/table";
 
 @Component({
     selector: 'jigsaw-viewport, j-viewport',
@@ -59,28 +58,22 @@ export class JigsawViewport {
         this._$showSlider = false;
     }
 
-    wheelDelta: string;
-
     public _$handleMouseWheel(e) {
         console.log('mouse wheel trigger');
         e.preventDefault();
         e.stopPropagation();
         if (e.wheelDelta) {  // IE，chrome滑轮事件
             if (e.wheelDelta > 0) { // 当滑轮向上滚动时
-                this.wheelDelta = "滑轮向上滚动";
                 this._scrollUp();
             }
             if (e.wheelDelta < 0) { // 当滑轮向下滚动时
-                this.wheelDelta = "滑轮向下滚动";
                 this._scrollDown();
             }
         } else if (e.detail) {  // Firefox滑轮事件
             if (e.detail < 0) { // 当滑轮向下滚动时
-                this.wheelDelta = "滑轮向下滚动";
                 this._scrollUp();
             }
             if (e.detail > 0) { // 当滑轮向上滚动时
-                this.wheelDelta = "滑轮向上滚动";
                 this._scrollDown();
             }
         }

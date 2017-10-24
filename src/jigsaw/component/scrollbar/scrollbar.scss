@@ -7,7 +7,7 @@ $jigsaw-scrollbar: #{$jigsaw-prefix}-scrollbar;
     @include inline-block;
     user-select: none;
     transition: background-color .2s linear, opacity .2s linear;
-    &:hover, &-dragging {
+    &:hover, &.#{$jigsaw-scrollbar}-dragging {
         background-color: #eee;
         opacity: .9;
         .#{$jigsaw-scrollbar}-handle {
@@ -44,8 +44,6 @@ $jigsaw-scrollbar: #{$jigsaw-prefix}-scrollbar;
         &:hover, &.#{$jigsaw-scrollbar}-dragging {
             .#{$jigsaw-scrollbar}-handle {
                 height: 11px;
-                background-color: #999;
-                opacity: .9;
             }
         }
     }
