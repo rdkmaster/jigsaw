@@ -29,7 +29,7 @@ export class JigsawScrollHandle implements OnInit {
         if (this._value === value) return;
         this._value = this._slider._verifyValue(value);
         this._valueToPos();
-        if(this.globalEventMouseMove){
+        if (this.globalEventMouseMove) {
             this.globalEventMouseMove()
         }
     }
@@ -63,8 +63,6 @@ export class JigsawScrollHandle implements OnInit {
         }
     }
 
-    private _dragged: boolean = false;
-
     public transformPosToValue(pos, startPos, startValue) {
         // 更新取得的滑动条尺寸.
         this._slider._refresh();
@@ -79,12 +77,10 @@ export class JigsawScrollHandle implements OnInit {
         posValue = posValue > offset ? posValue : offset;
 
         let newValue = (posValue - startPosValue) / size * (this._slider.max - this._slider.min) + (this._slider.min - 0); // 保留两位小数
-
         let m = this._calFloat(this._slider.step);
 
         // 解决出现的有时小数点多了N多位.
         newValue = Math.round(Math.round(newValue / this._slider.step) * this._slider.step * Math.pow(10, m)) / Math.pow(10, m);
-
         return this._slider._verifyValue(startValue + newValue);
     }
 
@@ -106,18 +102,14 @@ export class JigsawScrollHandle implements OnInit {
     /**
      * @internal
      */
-    public _$updateCanDragged(event, flag: boolean) {
-        this._dragged = flag;
+    public _$dragToScroll(event) {
+        this._slider.dragging = true;
+
         let startPos = {
             x: event["clientX"],
             y: event["clientY"]
         };
-
-        if (flag) {
-            this._registerGlobalEvent(startPos, this.value);
-        } else {
-            this._destroyGlobalEvent();
-        }
+        this._registerGlobalEvent(startPos, this.value);
     }
 
     globalEventMouseMove: Function;
@@ -128,7 +120,7 @@ export class JigsawScrollHandle implements OnInit {
             this._$updateValuePosition(e, startPos, startValue);
         });
         this.globalEventMouseUp = this._render.listen("document", "mouseup", () => {
-            this._dragged = false;
+            this._slider.dragging = false;
             this._destroyGlobalEvent();
         });
     }
@@ -154,7 +146,7 @@ export class JigsawScrollHandle implements OnInit {
      * @internal
      */
     public _$updateValuePosition(event, startPos, startValue) {
-        if (!this._dragged || !startPos) return;
+        if (!this._slider.dragging) return;
         // 防止产生选中其他文本，造成鼠标放开后还可以拖拽的奇怪现象;
         event.stopPropagation();
         event.preventDefault();
@@ -181,7 +173,8 @@ export class JigsawScrollHandle implements OnInit {
     selector: 'jigsaw-scrollbar, j-scrollbar',
     templateUrl: './scrollbar.html',
     host: {
-        'class': 'jigsaw-scrollbar',
+        '[class.jigsaw-scrollbar]': 'true',
+        '[class.jigsaw-scrollbar-dragging]': 'dragging',
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[class.jigsaw-scrollbar-vertical]': 'vertical',
@@ -273,7 +266,9 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, 
         return (value - this.min) / (this.max - this.min) * 100;
     }
 
-    public _dimensions;
+    public _dimensions: ClientRect;
+
+    public dragging: boolean;
 
     /**
      * 垂直滑动条 默认 false

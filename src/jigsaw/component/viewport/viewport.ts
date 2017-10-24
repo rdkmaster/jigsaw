@@ -36,7 +36,6 @@ export class JigsawViewport {
             value.onRefresh(() => {
                 // 等待table渲染
                 setTimeout(() => {
-                    console.log(this._elementRef.nativeElement.querySelector('table.jigsaw-table-body tbody').offsetHeight);
                     this._$tableBodyHeight = this._elementRef.nativeElement.querySelector('table.jigsaw-table-body tbody').offsetHeight;
                 })
             })
@@ -52,7 +51,6 @@ export class JigsawViewport {
 
     public _$handleMouseEnter() {
         console.log('mouse enter trigger');
-        console.log(this._data);
         this._$showSlider = true;
     }
 

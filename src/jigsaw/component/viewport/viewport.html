@@ -11,7 +11,7 @@
 <br>
 
 当前行：
-<j-scrollbar [style.visibility]="_$showSlider ? 'visible' : 'hidden'"
+<j-scrollbar #vScrollbar [style.visibility]="_$showSlider || vScrollbar.dragging ? 'visible' : 'hidden'"
              class="jigsaw-viewport-vertical-scrollbar"
              [(value)]="data.viewPort.verticalTo"
              [height]="_$tableBodyHeight"
@@ -23,7 +23,7 @@
 ({{data.cache.data.length}})
 
 当前列：
-<j-scrollbar [style.visibility]="_$showSlider ? 'visible' : 'hidden'"
+<j-scrollbar #hScrollbar [style.visibility]="_$showSlider || hScrollbar.dragging ? 'visible' : 'hidden'"
              class="jigsaw-viewport-horizontal-scrollbar"
              [(value)]="data.viewPort.horizontalTo"
              [max]="data.cache.field.length">
