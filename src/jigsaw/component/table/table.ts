@@ -509,10 +509,21 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
             // 设置表头随内容撑开
             this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', 'auto');
+            this._renderer.setStyle(host.querySelector('.jigsaw-table-body'), 'width', 'auto');
+
+            this._renderer.setStyle(host.querySelector('.jigsaw-table-body-range'), 'width', '100%');
 
             const tHeadColGroup = host.querySelectorAll('.jigsaw-table-header colgroup col');
             const tBodyColGroup = host.querySelectorAll('.jigsaw-table-body colgroup col');
             const widthStorage = [];
+
+            // 清空col的width
+            tHeadColGroup.forEach(col => {
+                col.setAttribute('width', '')
+            });
+            tBodyColGroup.forEach(col => {
+                col.setAttribute('width', '')
+            });
 
             host.querySelectorAll('.jigsaw-table-body tbody tr:first-child td')
                 .forEach(td => {
@@ -528,11 +539,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
             widthStorage.forEach((width, index) => {
                 // columnDefine定义过的列宽不会被覆盖
-                if (!tHeadColGroup[index].getAttribute('width') ||
-                    tHeadColGroup[index].getAttribute('width') == '0') {
-                    this._renderer.setAttribute(tHeadColGroup[index], 'width', width);
-                    this._renderer.setAttribute(tBodyColGroup[index], 'width', width);
-                }
+                const colWidth = this._$headerSettings[index].width ? this._$headerSettings[index].width : width;
+                tHeadColGroup[index].setAttribute('width', colWidth);
+                tBodyColGroup[index].setAttribute('width', colWidth);
             });
 
             // 还原
@@ -540,6 +549,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 this._renderer.setStyle(table, 'table-layout', 'fixed');
             });
             this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', '100%');
+            this._renderer.setStyle(host.querySelector('.jigsaw-table-body'), 'width', '100%');
         }
     }
 
