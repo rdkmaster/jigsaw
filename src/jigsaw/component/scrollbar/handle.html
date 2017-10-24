@@ -1,5 +1,5 @@
 <div class="jigsaw-scrollbar-handle"
      [ngStyle]="_$handleStyle"
-     (mousedown)="_$updateCanDragged(true)"
+     (mousedown)="_$updateCanDragged($event, true)"
      (mousemove)="_$updateValuePosition($event)"
      (mouseup)="_$updateCanDragged(false)"></div>

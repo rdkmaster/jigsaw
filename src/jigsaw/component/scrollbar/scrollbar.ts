@@ -25,10 +25,13 @@ export class JigsawScrollHandle implements OnInit {
     }
 
     public set value(value) {
+        // this setting is only from outside.
         if (this._value === value) return;
         this._value = this._slider._verifyValue(value);
-        this.valueChange.emit(this._value);
         this._valueToPos();
+        if(this.globalEventMouseMove){
+            this.globalEventMouseMove()
+        }
     }
 
     @Output()
@@ -62,7 +65,7 @@ export class JigsawScrollHandle implements OnInit {
 
     private _dragged: boolean = false;
 
-    public transformPosToValue(pos) {
+    public transformPosToValue(pos, startPos, startValue) {
         // 更新取得的滑动条尺寸.
         this._slider._refresh();
         let dimensions = this._slider._dimensions;
@@ -71,17 +74,18 @@ export class JigsawScrollHandle implements OnInit {
         let offset = this._slider.vertical ? dimensions.top : dimensions.left;
         let size = this._slider.vertical ? dimensions.height : dimensions.width;
         let posValue = this._slider.vertical ? pos.y : pos.x;
+        let startPosValue = this._slider.vertical ? startPos.y : startPos.x;
 
         posValue = posValue > offset ? posValue : offset;
 
-        let newValue = Math.abs(posValue - offset) / size * (this._slider.max - this._slider.min) + (this._slider.min - 0); // 保留两位小数
+        let newValue = (posValue - startPosValue) / size * (this._slider.max - this._slider.min) + (this._slider.min - 0); // 保留两位小数
 
         let m = this._calFloat(this._slider.step);
 
         // 解决出现的有时小数点多了N多位.
         newValue = Math.round(Math.round(newValue / this._slider.step) * this._slider.step * Math.pow(10, m)) / Math.pow(10, m);
 
-        return this._slider._verifyValue(newValue);
+        return this._slider._verifyValue(startValue + newValue);
     }
 
     /**
@@ -102,11 +106,15 @@ export class JigsawScrollHandle implements OnInit {
     /**
      * @internal
      */
-    public _$updateCanDragged(flag: boolean) {
+    public _$updateCanDragged(event, flag: boolean) {
         this._dragged = flag;
+        let startPos = {
+            x: event["clientX"],
+            y: event["clientY"]
+        };
 
         if (flag) {
-            this._registerGlobalEvent();
+            this._registerGlobalEvent(startPos, this.value);
         } else {
             this._destroyGlobalEvent();
         }
@@ -115,9 +123,9 @@ export class JigsawScrollHandle implements OnInit {
     globalEventMouseMove: Function;
     globalEventMouseUp: Function;
 
-    _registerGlobalEvent() {
+    _registerGlobalEvent(startPos, startValue) {
         this.globalEventMouseMove = this._render.listen("document", "mousemove", (e) => {
-            this._$updateValuePosition(e);
+            this._$updateValuePosition(e, startPos, startValue);
         });
         this.globalEventMouseUp = this._render.listen("document", "mouseup", () => {
             this._dragged = false;
@@ -145,9 +153,8 @@ export class JigsawScrollHandle implements OnInit {
      * 改变value的值
      * @internal
      */
-    public _$updateValuePosition(event?) {
-        if (!this._dragged) return;
-
+    public _$updateValuePosition(event, startPos, startValue) {
+        if (!this._dragged || !startPos) return;
         // 防止产生选中其他文本，造成鼠标放开后还可以拖拽的奇怪现象;
         event.stopPropagation();
         event.preventDefault();
@@ -157,7 +164,12 @@ export class JigsawScrollHandle implements OnInit {
             y: event["clientY"]
         };
 
-        this.value = this.transformPosToValue(pos);
+        let value = this.transformPosToValue(pos, startPos, startValue);
+
+        if (this._value === value) return;
+        this._value = this._slider._verifyValue(value);
+        this.valueChange.emit(this._value);
+        this._valueToPos();
     }
 
     ngOnInit() {
