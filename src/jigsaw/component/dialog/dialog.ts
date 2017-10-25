@@ -25,6 +25,16 @@ export interface IDialog extends IPopupable {
     dispose: (answer?: ButtonInfo) => void;
 }
 
+export type DialogCallback = (button: ButtonInfo) => void;
+
+/**
+ * 这个类用于应用在需要根据已有的对话框组件派生出该对话框组件的更具体的对话框的时候使用。
+ * 对话框组件是具备一定抽象性的，因此他们的API一般会较多较复杂，应用在使用时需要做较多的配置。
+ * 已知的对话框组件有 JigsawDialog、JigsawAlert、JigsawNotification
+ * 其中，Jigsaw已经基于JigsawAlert这类对话框派生出了4个内置的具体Alert组件，分别是
+ * JigsawInfoAlert、JigsawWarningAlert、JigsawErrorAlert、JigsawConfirmAlert
+ * 可以看到JigsawAlert使用起来比较麻烦，但是它具体化后的这些组件使用起来就非常简单了。
+ */
 export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
 
     @Input()
@@ -75,14 +85,17 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
 
     public ngAfterViewInit() {
         if (this.dialog) {
-            this.dialog.answer.subscribe(answer => {
-                this.answer.emit(answer);
-            })
+            this.dialog.answer.subscribe(answer => this.answer.emit(answer));
         }
     }
 }
 
-export abstract class AbstractDialogComponentBase extends AbstractJigsawComponent
+/**
+ * 这是所有对话框组件的基类，是一个内部，应用一般不应该直接使用这个类。
+ * 当需要实现一种新的对话框的时候，则需要继承这个类，已知的对话框组件有JigsawDialog、JigsawAlert、JigsawNotification
+ */
+export abstract class AbstractDialogComponentBase
+    extends AbstractJigsawComponent
     implements IPopupable, AfterContentInit, OnDestroy {
 
     @Input()

@@ -9,7 +9,10 @@ import {
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
-import {AbstractDialogComponentBase, DialogBase, JigsawDialog, JigsawDialogModule} from "../dialog/dialog";
+import {
+    AbstractDialogComponentBase, DialogBase, DialogCallback, JigsawDialog,
+    JigsawDialogModule
+} from "../dialog/dialog";
 import {JigsawButtonModule} from "../button/button";
 import {InternalUtils} from "../../core/utils/internal-utils";
 import {TranslateHelper} from "../../core/utils/translate-helper";
@@ -21,8 +24,6 @@ import {JigsawBlock} from "../block/block";
 export enum AlertLevel {
     info, warning, error, confirm
 }
-
-export type AlertCallback = (button: ButtonInfo) => void;
 
 @Component({
     selector: 'jigsaw-alert, j-alert',
@@ -49,6 +50,7 @@ export class JigsawAlert extends AbstractDialogComponentBase {
     };
 
     private _level: AlertLevel = AlertLevel.info;
+
     @Input()
     public get level(): AlertLevel | string {
         return this._level;
@@ -145,7 +147,7 @@ export abstract class JigsawCommonAlert extends DialogBase {
 
     public static showAlert(what: Type<JigsawCommonAlert>,
                             message: string,
-                            callback?: AlertCallback,
+                            callback?: DialogCallback,
                             buttons?: ButtonInfo[],
                             caption?: string,
                             modal: boolean = true,
@@ -204,7 +206,7 @@ export class JigsawInfoAlert extends JigsawCommonAlert {
     @Input() public buttons = [{label: 'alert.button.ok', 'type': 'primary'}];
 
     public static show(message: string,
-                       callback?: AlertCallback,
+                       callback?: DialogCallback,
                        buttons?: ButtonInfo[],
                        caption?: string,
                        modal: boolean = true,
@@ -229,7 +231,7 @@ export class JigsawWarningAlert extends JigsawCommonAlert {
     @Input() public buttons = [{label: 'alert.button.ok', 'type': 'warning'}];
 
     public static show(message: string,
-                       callback?: AlertCallback,
+                       callback?: DialogCallback,
                        buttons?: ButtonInfo[],
                        caption?: string,
                        modal: boolean = true,
@@ -254,7 +256,7 @@ export class JigsawErrorAlert extends JigsawCommonAlert {
     @Input() public buttons = [{label: 'alert.button.ok', 'type': 'error'}];
 
     public static show(message: string,
-                       callback?: AlertCallback,
+                       callback?: DialogCallback,
                        buttons?: ButtonInfo[],
                        caption?: string,
                        modal: boolean = true,
@@ -279,7 +281,7 @@ export class JigsawConfirmAlert extends JigsawCommonAlert {
     @Input() public buttons = [{label: 'alert.button.yes', 'type': 'primary'}, {label: 'alert.button.no'}];
 
     public static show(message: string,
-                       callback?: AlertCallback,
+                       callback?: DialogCallback,
                        buttons?: ButtonInfo[],
                        caption?: string,
                        modal: boolean = true,
