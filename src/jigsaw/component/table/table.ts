@@ -562,6 +562,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _handleScrollBar() {
         this._calculateContentWidth();
         this._calibrateTable();
+        this._updateScrollbar();
         this._initVerticalScroll();
         this._listenHorizontalScroll();
     }
@@ -607,13 +608,15 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @private
      */
     private _listenHorizontalScroll() {
-        this._zone.runOutsideAngular(() => {
-            this._removeHorizontalScrollListener = this._renderer.listen(
-                this.contentScrollbar.elementRef.nativeElement,
-                'ps-scroll-x', () => {
-                    this._setVerticalScrollbarOffset();
-                });
-        });
+        if(this.contentScrollbar){
+            this._zone.runOutsideAngular(() => {
+                this._removeHorizontalScrollListener = this._renderer.listen(
+                    this.contentScrollbar.elementRef.nativeElement,
+                    'ps-scroll-x', () => {
+                        this._setVerticalScrollbarOffset();
+                    });
+            });
+        }
     }
 
     /**
@@ -645,6 +648,19 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 this._initVerticalScroll();
             }
         }, 0);
+    }
+
+    /**
+     * 当内容数据变化时，刷新一下滚动条
+     * @private
+     */
+    private _updateScrollbar() {
+        if (this.contentScrollbar) {
+            this.contentScrollbar.update();
+        }
+        if (this.bodyScrollbar) {
+            this.bodyScrollbar.update();
+        }
     }
 
     /**
