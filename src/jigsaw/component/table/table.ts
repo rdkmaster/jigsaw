@@ -519,17 +519,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             const widthStorage = [];
 
             // 清空col的width
-            tHeadColGroup.forEach(col => {
-                col.setAttribute('width', '')
-            });
-            tBodyColGroup.forEach(col => {
-                col.setAttribute('width', '')
-            });
+            tHeadColGroup.forEach(col => col.setAttribute('width', ''));
+            tBodyColGroup.forEach(col => col.setAttribute('width', ''));
 
             host.querySelectorAll('.jigsaw-table-body tbody tr:first-child td')
-                .forEach(td => {
-                    widthStorage.push(td.offsetWidth);
-                });
+                .forEach(td => widthStorage.push(td.offsetWidth));
 
             host.querySelectorAll('.jigsaw-table-header thead tr:first-child td')
                 .forEach((td, index) => {
@@ -599,24 +593,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
     }
 
-    private _removeHorizontalScrollListener: Function;
-
-    /**
-     * 监听横向滚动事件，更新纵向滚动条的位置
-     * @private
-     */
-    private _listenHorizontalScroll() {
-        if (this._contentScrollbar) {
-            this._zone.runOutsideAngular(() => {
-                this._removeHorizontalScrollListener = this._renderer.listen(
-                    this._contentScrollbar.elementRef.nativeElement,
-                    'ps-scroll-x', () => {
-                        this._setVerticalScrollbarOffset();
-                    });
-            });
-        }
-    }
-
     /**
      * 设置纵向滚动条位置
      * @private
@@ -661,13 +637,22 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
     }
 
+    private _removeHorizontalScrollListener: Function;
+
     /**
-     * @internal
+     * 监听横向滚动事件，更新纵向滚动条的位置
+     * @private
      */
-    public _$rangeScrollbarConfig: PerfectScrollbarConfigInterface = {
-        suppressScrollY: true,
-        wheelSpeed: 0.5
-    };
+    private _listenHorizontalScroll() {
+        if (!this._contentScrollbar) {
+            return;
+        }
+        this._zone.runOutsideAngular(() => {
+            const el = this._contentScrollbar.elementRef.nativeElement;
+            this._removeHorizontalScrollListener = this._renderer.listen(
+                el, 'ps-scroll-x', () => this._setVerticalScrollbarOffset());
+        });
+    }
 
     ngAfterViewInit() {
         super.ngAfterViewInit();
