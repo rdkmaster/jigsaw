@@ -491,10 +491,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     @ViewChild('contentScrollbar', {read: PerfectScrollbarDirective})
-    public contentScrollbar: PerfectScrollbarDirective;
+    private _contentScrollbar: PerfectScrollbarDirective;
 
     @ViewChild('bodyScrollbar', {read: PerfectScrollbarDirective})
-    public bodyScrollbar: PerfectScrollbarDirective;
+    private _bodyScrollbar: PerfectScrollbarDirective;
 
     /**
      * 根据内容计算自适应列宽
@@ -563,8 +563,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._calculateContentWidth();
         this._calibrateTable();
         this._updateScrollbar();
-        this._initVerticalScroll();
-        this._listenHorizontalScroll();
     }
 
     /**
@@ -608,10 +606,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @private
      */
     private _listenHorizontalScroll() {
-        if(this.contentScrollbar){
+        if (this._contentScrollbar) {
             this._zone.runOutsideAngular(() => {
                 this._removeHorizontalScrollListener = this._renderer.listen(
-                    this.contentScrollbar.elementRef.nativeElement,
+                    this._contentScrollbar.elementRef.nativeElement,
                     'ps-scroll-x', () => {
                         this._setVerticalScrollbarOffset();
                     });
@@ -626,7 +624,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _setVerticalScrollbarOffset() {
         if (this._yScrollbarElement) {
             this._renderer.setStyle(this._yScrollbarElement, 'left',
-                this._elementRef.nativeElement.offsetWidth + this.contentScrollbar.geometry().x - 15 + 'px');
+                this._elementRef.nativeElement.offsetWidth + this._contentScrollbar.geometry().x - 15 + 'px');
         }
     }
 
@@ -655,11 +653,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @private
      */
     private _updateScrollbar() {
-        if (this.contentScrollbar) {
-            this.contentScrollbar.update();
+        if (this._contentScrollbar) {
+            this._contentScrollbar.update();
         }
-        if (this.bodyScrollbar) {
-            this.bodyScrollbar.update();
+        if (this._bodyScrollbar) {
+            this._bodyScrollbar.update();
         }
     }
 
@@ -674,6 +672,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     ngAfterViewInit() {
         super.ngAfterViewInit();
         this._$selectRow(this.selectedRow, true);
+
+        // 初始化滚动条
+        this._initVerticalScroll();
+        this._listenHorizontalScroll();
     }
 
     ngOnInit() {
