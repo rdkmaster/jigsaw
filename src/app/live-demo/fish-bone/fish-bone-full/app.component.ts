@@ -303,16 +303,16 @@ export class FishBoneFullComponent implements AfterViewInit {
                     "data": [["S1-MME InternalCause", "附着超时[11,0]", "11", "0", "830"], ["S1-MME InternalCause", "11,186[11,186]", "11", "186", "470"], ["S1-MME InternalCause", "11,32[11,32]", "11", "32", "21"], ["S1-MME InternalCause", "11,101[11,101]", "11", "101", "8"], ["ESM Cause", "13,0[13,0]", "13", "0", "8"]],
                     "other": {"name": "其它", "value": 576}
                 },
-                "label": "联合附着",
+                "label": `<span class="orange">联合附着</span>`,
                 nodes: [
                     {
                         label: `<span class="pie-colours-3">5,3,9,6,5</span>`,
                         desc: `<p class="call-loss-data"> count: 2668 <br> ratio: 33.81(%) <br> delay: 8.40ms</p>`,
                     },
-                    {
+                    /*{
                         label: `<span class="pie-colours-3">5,3,9,6,5</span>`,
                         desc: `<p class="call-loss-data"> count: 2668 <br> ratio: 33.81(%) <br> delay: 8.40ms</p>`,
-                    }
+                    }*/
                 ]
             },
             {
@@ -332,16 +332,16 @@ export class FishBoneFullComponent implements AfterViewInit {
                     "field": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
                     "data": [["S1-MME InternalCause", "Tau超时[11,3]", "11", "3", "952"]]
                 },
-                "label": "PDN连接建立",
+                "label": `<span class="orange">PDN连接建立</span>`,
                 nodes: [
                     {
                         label: `<span class="pie-colours-3">5,3,9,6,5</span>`,
                         desc: `<p class="call-loss-data"> count: 2668 <br> ratio: 33.81(%) <br> delay: 8.40ms</p>`,
                     },
-                    {
+                    /*{
                         label: `<span class="pie-colours-3">5,3,9,6,5</span>`,
                         desc: `<p class="call-loss-data"> count: 2668 <br> ratio: 33.81(%) <br> delay: 8.40ms</p>`,
-                    }
+                    }*/
                 ]
             },
             {
@@ -361,7 +361,7 @@ export class FishBoneFullComponent implements AfterViewInit {
                     "field": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
                     "data": [["SIP Cause", "Request Terminated[30,487]", "30", "487", "1572"]]
                 },
-                "label": "Gm注册",
+                "label": `<span class="orange">Gm注册</span>`,
                 nodes: [
                     {
                         label: `<span class="pie-colours-3">5,3,9,6,5</span>`,
@@ -387,7 +387,7 @@ export class FishBoneFullComponent implements AfterViewInit {
                     "data": [],
                     "other": {"name": "其它", "value": 4716}
                 },
-                "label": "Mw注册",
+                "label": `<span class="orange">Mw注册</span>`,
                 nodes: [
                     {
                         label: `<span class="pie-colours-3">5,3,9,6,5</span>`,
@@ -412,7 +412,7 @@ export class FishBoneFullComponent implements AfterViewInit {
                     "field": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
                     "data": [["SIP Cause", "Forbidden[30,403]", "30", "403", "1572"]]
                 },
-                "label": "ISC注册",
+                "label": `<span class="orange">ISC注册</span>`,
                 nodes: [
                     {
                         label: `<span class="pie-colours-3">5,3,9,6,5</span>`,
@@ -421,7 +421,7 @@ export class FishBoneFullComponent implements AfterViewInit {
                 ]
             }
         ]);
-        this.data3.label = 'VoLTE呼损分析';
+        this.data3.label = `<span class="orange">VoLTE呼损分析</span>`;
     }
 
     data: TreeData;
@@ -435,6 +435,8 @@ export class FishBoneFullComponent implements AfterViewInit {
     }
 
     ngAfterViewInit() {
+        ChartIconFactory.registerCustomPie();
+
         ChartIconFactory.create(".bar-colours-1", ChartType.bar, {
             fill: ["red", "green", "blue"],
             height: 50,
@@ -449,12 +451,16 @@ export class FishBoneFullComponent implements AfterViewInit {
             radius: 48,
         });
 
-        ChartIconFactory.create(".pie-colours-3", ChartType.pie, {
+        ChartIconFactory.create(".pie-colours-3", ChartType.customPie, {
             fill: function (_, i, all) {
                 let g = (i / all.length) * 255;
                 return "rgb(100, " + g + ", 222)"
             },
             radius: 60,
+            legend: {
+                pos: 'right', // 如果是'top'，图例的高度是自动算出来的，所以height属性不需要配置
+                width: 100
+            }
         });
 
         ChartIconFactory.create(".line", ChartType.line, {
