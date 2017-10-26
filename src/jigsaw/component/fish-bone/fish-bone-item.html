@@ -1,4 +1,5 @@
 <div class="jigsaw-fish-bone-item-content" [trustedHtml]="data.label" [trustedHtmlContext]="data.innerHtmlContext"></div>
+<div class="jigsaw-fish-bone-item-description" [trustedHtml]="data.desc" [trustedHtmlContext]="data.innerHtmlContext"></div>
 <j-fish-bone-item *ngFor="let itemData of data.nodes; index as i; first as isFirst"
                   class="jigsaw-fish-bone-item-rotate-{{childRotate}} jigsaw-fish-bone-level-{{level + 1}}"
                   [childRotate]="childRotate == 'up' ? 'down' : 'up'"

@@ -306,8 +306,12 @@ export class FishBoneFullComponent implements AfterViewInit {
                 "label": "联合附着",
                 nodes: [
                     {
-                        label: `<span class="pie-colours-3">5,3,9,6,5</span>
-                        <p class="call-loss-data"> count: 2668 <br> ratio: 33.81(%) <br> delay: 8.40ms</p>`
+                        label: `<span class="pie-colours-3">5,3,9,6,5</span>`,
+                        desc: `<p class="call-loss-data"> count: 2668 <br> ratio: 33.81(%) <br> delay: 8.40ms</p>`,
+                    },
+                    {
+                        label: `<span class="pie-colours-3">5,3,9,6,5</span>`,
+                        desc: `<p class="call-loss-data"> count: 2668 <br> ratio: 33.81(%) <br> delay: 8.40ms</p>`,
                     }
                 ]
             },
@@ -331,8 +335,12 @@ export class FishBoneFullComponent implements AfterViewInit {
                 "label": "PDN连接建立",
                 nodes: [
                     {
-                        label: `<span class="pie-colours-3">5,3,9,6,5</span>
-                        <p class="call-loss-data"> count: 2451 <br> ratio: 64.26(%) <br> delay: 5759.25ms</p>`
+                        label: `<span class="pie-colours-3">5,3,9,6,5</span>`,
+                        desc: `<p class="call-loss-data"> count: 2668 <br> ratio: 33.81(%) <br> delay: 8.40ms</p>`,
+                    },
+                    {
+                        label: `<span class="pie-colours-3">5,3,9,6,5</span>`,
+                        desc: `<p class="call-loss-data"> count: 2668 <br> ratio: 33.81(%) <br> delay: 8.40ms</p>`,
                     }
                 ]
             },
@@ -356,8 +364,8 @@ export class FishBoneFullComponent implements AfterViewInit {
                 "label": "Gm注册",
                 nodes: [
                     {
-                        label: `<span class="pie-colours-3">5,3,9,6,5</span>
-                        <p class="call-loss-data"> count: 1841 <br> ratio: 14.61(%) <br> delay: 5.84ms</p>`
+                        label: `<span class="pie-colours-3">5,3,9,6,5</span>`,
+                        desc: `<p class="call-loss-data"> count: 2668 <br> ratio: 33.81(%) <br> delay: 8.40ms</p>`,
                     }
                 ]
             },
@@ -382,8 +390,8 @@ export class FishBoneFullComponent implements AfterViewInit {
                 "label": "Mw注册",
                 nodes: [
                     {
-                        label: `<span class="pie-colours-3">5,3,9,6,5</span>
-                        <p class="call-loss-data"> count: 4741 <br> ratio: 0.53(%) <br> delay: 188.64ms</p>`
+                        label: `<span class="pie-colours-3">5,3,9,6,5</span>`,
+                        desc: `<p class="call-loss-data"> count: 2668 <br> ratio: 33.81(%) <br> delay: 8.40ms</p>`,
                     }
                 ]
             },
@@ -407,8 +415,8 @@ export class FishBoneFullComponent implements AfterViewInit {
                 "label": "ISC注册",
                 nodes: [
                     {
-                        label: `<span class="pie-colours-3">5,3,9,6,5</span>
-                        <p class="call-loss-data"> count: 1800 <br> ratio: 12.67(%) <br> delay: 1.00ms</p>`
+                        label: `<span class="pie-colours-3">5,3,9,6,5</span>`,
+                        desc: `<p class="call-loss-data"> count: 2668 <br> ratio: 33.81(%) <br> delay: 8.40ms</p>`,
                     }
                 ]
             }
