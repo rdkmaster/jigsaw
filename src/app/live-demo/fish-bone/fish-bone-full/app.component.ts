@@ -9,69 +9,69 @@ import {TreeData} from "../../../../jigsaw/core/data/tree-data";
 })
 export class FishBoneFullComponent implements AfterViewInit {
 
-    constructor(){
+    constructor() {
         this.data = new TreeData();
         this.data.label = '<span class="orange">目标标题</span>';
         this.data.fromObject([
-                {
-                    label: '<span class="orange"><span class="fa fa-group"></span>父节点1</span>',
-                    nodes: [
-                        {
-                            label: '<span class="fa fa-line-chart"></span>父节点11',
-                            nodes: [
-                                {
-                                    label: '子节点111',
-                                    nodes: [
-                                        {
-                                            label: '子节点1111',
-                                            nodes: [
-                                                {
-                                                    label: "子节点11111",
-                                                    nodes: [
-                                                        {
-                                                            label: '<span class="line">5,3,9,6,5,9,7,3,5,2</span>'
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    label: 'end'
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                },
-                                {
-                                    label: '子节点112',
-                                    nodes: [
-                                        {
-                                            label: '<span class="bar-colours-1">5,3,9,6,5,9,7,3,5,2</span>'
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            label: '父节点12'
-                        }
-                    ]
-                },
-                {
-                    label: '<span class="orange"><span class="fa fa-folder"></span>父节点2</span>',
-                    nodes: [
-                        {
-                            label: '<span class="fa fa-line-chart"></span>父节点21',
-                            nodes: [
-                                {
-                                    label: '子节点211',
-                                    nodes: [
-                                        {
-                                            label: '<span class="fa fa-bar-chart"></span>end'
-                                        },
-                                        {
-                                            label: '<span class="line">5,3,9,6,5,9,7,3,5,2</span>'
-                                        },
-                                        {
-                                            label: `
+            {
+                label: '<span class="orange"><span class="fa fa-group"></span>父节点1</span>',
+                nodes: [
+                    {
+                        label: '<span class="fa fa-line-chart"></span>父节点11',
+                        nodes: [
+                            {
+                                label: '子节点111',
+                                nodes: [
+                                    {
+                                        label: '子节点1111',
+                                        nodes: [
+                                            {
+                                                label: "子节点11111",
+                                                nodes: [
+                                                    {
+                                                        label: '<span class="line">5,3,9,6,5,9,7,3,5,2</span>'
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                label: 'end'
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                label: '子节点112',
+                                nodes: [
+                                    {
+                                        label: '<span class="bar-colours-1">5,3,9,6,5,9,7,3,5,2</span>'
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        label: '父节点12'
+                    }
+                ]
+            },
+            {
+                label: '<span class="orange"><span class="fa fa-folder"></span>父节点2</span>',
+                nodes: [
+                    {
+                        label: '<span class="fa fa-line-chart"></span>父节点21',
+                        nodes: [
+                            {
+                                label: '子节点211',
+                                nodes: [
+                                    {
+                                        label: '<span class="fa fa-bar-chart"></span>end'
+                                    },
+                                    {
+                                        label: '<span class="line">5,3,9,6,5,9,7,3,5,2</span>'
+                                    },
+                                    {
+                                        label: `
                                                 <div class="jigsaw-table-host" style="width: 300px">
                                                 <table>
                                                     <thead><tr><td>ID</td><td>name</td><td>gender</td><td>city</td></tr></thead>
@@ -83,61 +83,61 @@ export class FishBoneFullComponent implements AfterViewInit {
                                                 </table>
                                                 </div>
                                             `,
-                                            // 这里需要特别注意，由于我们给了一段html片段并且包含了回调函数`hello()`，
-                                            // 因此这里必须设置 `innerHtmlContext` 属性作为`hello()`函数的上下文
-                                            // 如果html片段中不包含回调函数，则无需设置 `innerHtmlContext` 属性
-                                            innerHtmlContext: this
-                                        }
-                                    ]
-                                },
-                                {
-                                    label: '子节点212'
-                                }
-                            ]
-                        },
-                        {
-                            label: '父节点22',
-                            nodes: [
-                                {
-                                    label: '子节点221'
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    label: '<span class="orange"><span class="fa fa-line-chart"></span>父节点3</span>',
-                    nodes: [
-                        {
-                            label: '父节点31',
-                            nodes: [
-                                {
-                                    label: '<span class="fa fa-bar-chart"></span>end'
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    label: '<span class="orange">父节点4</span>',
-                    nodes: [
-                        {
-                            label: '<span class="bar-colours-1">5,3,9,6,5,9,7,3,5,2</span>'
-                        },
-                        {
-                            label: 'end'
-                        }
-                    ]
-                },
-                {
-                    label: '<span class="orange">父节点5</span>',
-                    nodes: [
-                        {
-                            label: '<span class="pie-colours-2">5,3,9,6,5</span>'
-                        }
-                    ]
-                }
-            ]);
+                                        // 这里需要特别注意，由于我们给了一段html片段并且包含了回调函数`hello()`，
+                                        // 因此这里必须设置 `innerHtmlContext` 属性作为`hello()`函数的上下文
+                                        // 如果html片段中不包含回调函数，则无需设置 `innerHtmlContext` 属性
+                                        innerHtmlContext: this
+                                    }
+                                ]
+                            },
+                            {
+                                label: '子节点212'
+                            }
+                        ]
+                    },
+                    {
+                        label: '父节点22',
+                        nodes: [
+                            {
+                                label: '子节点221'
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                label: '<span class="orange"><span class="fa fa-line-chart"></span>父节点3</span>',
+                nodes: [
+                    {
+                        label: '父节点31',
+                        nodes: [
+                            {
+                                label: '<span class="fa fa-bar-chart"></span>end'
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                label: '<span class="orange">父节点4</span>',
+                nodes: [
+                    {
+                        label: '<span class="bar-colours-1">5,3,9,6,5,9,7,3,5,2</span>'
+                    },
+                    {
+                        label: 'end'
+                    }
+                ]
+            },
+            {
+                label: '<span class="orange">父节点5</span>',
+                nodes: [
+                    {
+                        label: '<span class="pie-colours-2">5,3,9,6,5</span>'
+                    }
+                ]
+            }
+        ]);
         this.data2 = new TreeData();
         this.data2.label = '<span class="orange">申论万能思维体系</span>';
         this.data2.fromObject([
@@ -282,11 +282,145 @@ export class FishBoneFullComponent implements AfterViewInit {
                 ]
             }
         ]);
+
+        this.data3 = new TreeData();
+        this.data3.fromObject([
+            {
+                "id": 0,
+                "name": "联合附着",
+                "count": "2668",
+                "ratio": "33.81(%)",
+                "delay": "8.40ms",
+                "drill": {
+                    "kpi": "fail_combined_attach_ims",
+                    "table": "aggr_volte_attach_ci_fail",
+                    "serviceType": 22,
+                    "condition": "Interface=5 and Procedure_Type=1 and Procedure_Status!=1 and Keyword_1=2 and Z_Reserve1=0"
+                },
+                "pie": {
+                    "header": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
+                    "field": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
+                    "data": [["S1-MME InternalCause", "附着超时[11,0]", "11", "0", "830"], ["S1-MME InternalCause", "11,186[11,186]", "11", "186", "470"], ["S1-MME InternalCause", "11,32[11,32]", "11", "32", "21"], ["S1-MME InternalCause", "11,101[11,101]", "11", "101", "8"], ["ESM Cause", "13,0[13,0]", "13", "0", "8"]],
+                    "other": {"name": "其它", "value": 576}
+                },
+                "label": "联合附着",
+                nodes: [
+                    {
+                        label: `<span class="pie-colours-3">5,3,9,6,5</span>
+                        <p class="call-loss-data"> count: 2668 <br> ratio: 33.81(%) <br> delay: 8.40ms</p>`
+                    }
+                ]
+            },
+            {
+                "id": 1,
+                "name": "PDN连接建立",
+                "count": "2451",
+                "ratio": "64.26(%)",
+                "delay": "5759.25ms",
+                "drill": {
+                    "kpi": "fail_uepdn",
+                    "table": "aggr_volte_attach_ci_fail",
+                    "serviceType": 22,
+                    "condition": "Interface=5 and Procedure_Type=1 and Keyword_1=2 and Z_Reserve1=0 and (apn like '%ims%' or apn like '%IMS%')"
+                },
+                "pie": {
+                    "header": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
+                    "field": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
+                    "data": [["S1-MME InternalCause", "Tau超时[11,3]", "11", "3", "952"]]
+                },
+                "label": "PDN连接建立",
+                nodes: [
+                    {
+                        label: `<span class="pie-colours-3">5,3,9,6,5</span>
+                        <p class="call-loss-data"> count: 2451 <br> ratio: 64.26(%) <br> delay: 5759.25ms</p>`
+                    }
+                ]
+            },
+            {
+                "id": 2,
+                "name": "Gm注册",
+                "count": "1841",
+                "ratio": "14.61(%)",
+                "delay": "5.84ms",
+                "drill": {
+                    "kpi": "(fail_register1_gm + fail_register2_gm)",
+                    "table": "aggr_volte_register_ci_fail",
+                    "serviceType": 23,
+                    "condition": "Interface=13 and PROCEDURETYPE=1 and Z_KEYWORD1 in (1,2) and PROCEDURESTATUS!=1"
+                },
+                "pie": {
+                    "header": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
+                    "field": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
+                    "data": [["SIP Cause", "Request Terminated[30,487]", "30", "487", "1572"]]
+                },
+                "label": "Gm注册",
+                nodes: [
+                    {
+                        label: `<span class="pie-colours-3">5,3,9,6,5</span>
+                        <p class="call-loss-data"> count: 1841 <br> ratio: 14.61(%) <br> delay: 5.84ms</p>`
+                    }
+                ]
+            },
+            {
+                "id": 3,
+                "name": "Mw注册",
+                "count": "4741",
+                "ratio": "0.53(%)",
+                "delay": "188.64ms",
+                "drill": {
+                    "kpi": "(fail_register1_mw + fail_register2_mw)",
+                    "table": "aggr_volte_register_ci_fail",
+                    "serviceType": 23,
+                    "condition": "Interface=14 and PROCEDURETYPE=1 and Z_KEYWORD1 in (1,2) and PROCEDURESTATUS!=1 and SOURCE_NE_TYPE=15"
+                },
+                "pie": {
+                    "header": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
+                    "field": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
+                    "data": [],
+                    "other": {"name": "其它", "value": 4716}
+                },
+                "label": "Mw注册",
+                nodes: [
+                    {
+                        label: `<span class="pie-colours-3">5,3,9,6,5</span>
+                        <p class="call-loss-data"> count: 4741 <br> ratio: 0.53(%) <br> delay: 188.64ms</p>`
+                    }
+                ]
+            },
+            {
+                "id": 4,
+                "name": "ISC注册",
+                "count": "1800",
+                "ratio": "12.67(%)",
+                "delay": "1.00ms",
+                "drill": {
+                    "kpi": "fail_register3_isc",
+                    "table": "aggr_volte_register_ci_fail",
+                    "serviceType": 23,
+                    "condition": "Interface=18 and PROCEDURETYPE=3 and PROCEDURESTATUS!=1"
+                },
+                "pie": {
+                    "header": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
+                    "field": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
+                    "data": [["SIP Cause", "Forbidden[30,403]", "30", "403", "1572"]]
+                },
+                "label": "ISC注册",
+                nodes: [
+                    {
+                        label: `<span class="pie-colours-3">5,3,9,6,5</span>
+                        <p class="call-loss-data"> count: 1800 <br> ratio: 12.67(%) <br> delay: 1.00ms</p>`
+                    }
+                ]
+            }
+        ]);
+        this.data3.label = 'VoLTE呼损分析';
     }
 
     data: TreeData;
 
     data2: TreeData;
+
+    data3: TreeData;
 
     hello(toWhom) {
         alert('hello ' + toWhom);
@@ -305,6 +439,14 @@ export class FishBoneFullComponent implements AfterViewInit {
                 return "rgb(255, " + g + ", 0)"
             },
             radius: 48,
+        });
+
+        ChartIconFactory.create(".pie-colours-3", ChartType.pie, {
+            fill: function (_, i, all) {
+                let g = (i / all.length) * 255;
+                return "rgb(100, " + g + ", 222)"
+            },
+            radius: 60,
         });
 
         ChartIconFactory.create(".line", ChartType.line, {

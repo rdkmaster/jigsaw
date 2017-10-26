@@ -255,7 +255,13 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
                 if (lastChild && lastChild.rangeHeight > 30) {
                     childRange = lastChild.rangeHeight + lastChild.left;
                 } else {
-                    childRange = fishBoneItem.itemEl.offsetWidth;
+                    if (this.firstLevelRotate == 'down') {
+                        // 主骨在下面，需要考虑内容的伸展
+                        childRange = fishBoneItem.itemEl.offsetWidth + fishBoneItem._itemContent.offsetHeight / Math.tan(60 * 0.017453293);
+                    } else {
+                        //  主骨在上面
+                        childRange = fishBoneItem.itemEl.offsetWidth;
+                    }
                 }
                 arr.push(childRange);
                 return arr;
