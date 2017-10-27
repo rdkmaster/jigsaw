@@ -302,18 +302,7 @@ export class FishBoneFullComponent implements AfterViewInit {
                     "field": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
                     "data": [["S1-MME InternalCause", "附着超时[11,0]", "11", "0", "830"], ["S1-MME InternalCause", "11,186[11,186]", "11", "186", "470"], ["S1-MME InternalCause", "11,32[11,32]", "11", "32", "21"], ["S1-MME InternalCause", "11,101[11,101]", "11", "101", "8"], ["ESM Cause", "13,0[13,0]", "13", "0", "8"]],
                     "other": {"name": "其它", "value": 576}
-                },
-                "label": `<span class="orange">联合附着</span>`,
-                nodes: [
-                    {
-                        label: `<span class="pie-colours-3">5,3,9,6,5</span>`,
-                        desc: `<p class="call-loss-data"> count: 2668 <br> ratio: 33.81(%) <br> delay: 8.40ms</p>`,
-                    },
-                    /*{
-                        label: `<span class="pie-colours-3">5,3,9,6,5</span>`,
-                        desc: `<p class="call-loss-data"> count: 2668 <br> ratio: 33.81(%) <br> delay: 8.40ms</p>`,
-                    }*/
-                ]
+                }
             },
             {
                 "id": 1,
@@ -331,18 +320,7 @@ export class FishBoneFullComponent implements AfterViewInit {
                     "header": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
                     "field": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
                     "data": [["S1-MME InternalCause", "Tau超时[11,3]", "11", "3", "952"]]
-                },
-                "label": `<span class="orange">PDN连接建立</span>`,
-                nodes: [
-                    {
-                        label: `<span class="pie-colours-3">5,3,9,6,5</span>`,
-                        desc: `<p class="call-loss-data"> count: 2668 <br> ratio: 33.81(%) <br> delay: 8.40ms</p>`,
-                    },
-                    /*{
-                        label: `<span class="pie-colours-3">5,3,9,6,5</span>`,
-                        desc: `<p class="call-loss-data"> count: 2668 <br> ratio: 33.81(%) <br> delay: 8.40ms</p>`,
-                    }*/
-                ]
+                }
             },
             {
                 "id": 2,
@@ -360,14 +338,7 @@ export class FishBoneFullComponent implements AfterViewInit {
                     "header": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
                     "field": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
                     "data": [["SIP Cause", "Request Terminated[30,487]", "30", "487", "1572"]]
-                },
-                "label": `<span class="orange">Gm注册</span>`,
-                nodes: [
-                    {
-                        label: `<span class="pie-colours-3">5,3,9,6,5</span>`,
-                        desc: `<p class="call-loss-data"> count: 2668 <br> ratio: 33.81(%) <br> delay: 8.40ms</p>`,
-                    }
-                ]
+                }
             },
             {
                 "id": 3,
@@ -386,14 +357,7 @@ export class FishBoneFullComponent implements AfterViewInit {
                     "field": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
                     "data": [],
                     "other": {"name": "其它", "value": 4716}
-                },
-                "label": `<span class="orange">Mw注册</span>`,
-                nodes: [
-                    {
-                        label: `<span class="pie-colours-3">5,3,9,6,5</span>`,
-                        desc: `<p class="call-loss-data"> count: 2668 <br> ratio: 33.81(%) <br> delay: 8.40ms</p>`,
-                    }
-                ]
+                }
             },
             {
                 "id": 4,
@@ -411,17 +375,25 @@ export class FishBoneFullComponent implements AfterViewInit {
                     "header": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
                     "field": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
                     "data": [["SIP Cause", "Forbidden[30,403]", "30", "403", "1572"]]
-                },
-                "label": `<span class="orange">ISC注册</span>`,
-                nodes: [
-                    {
-                        label: `<span class="pie-colours-3">5,3,9,6,5</span>`,
-                        desc: `<p class="call-loss-data"> count: 2668 <br> ratio: 33.81(%) <br> delay: 8.40ms</p>`,
-                    }
-                ]
+                }
             }
         ]);
         this.data3.label = `<span class="orange">VoLTE呼损分析</span>`;
+        this.data3.nodes.forEach((node, index) => {
+            node.label = `<span class="orange">${node.name}</span>`;
+            let pieData = node.pie.data.reduce((arr, item) => {
+                arr.push(item[item.length - 1]);
+                return arr;
+            }, []);
+            if (node.pie.other) {
+                pieData.push(node.pie.other.value);
+            }
+            pieData.join(",");
+            let nodesItem = new TreeData();
+            nodesItem.label = `<span class="pie-call-loss-${index}">${pieData}</span>`;
+            nodesItem.desc = `<p class="call-loss-data"> count: ${node.count} <br> ratio: ${node.ratio} <br> delay: ${node.delay}</p>`;
+            node.nodes = [nodesItem];
+        });
     }
 
     data: TreeData;
@@ -451,22 +423,33 @@ export class FishBoneFullComponent implements AfterViewInit {
             radius: 48,
         });
 
-        ChartIconFactory.create(".pie-colours-3", ChartType.customPie, {
-            fill: function (_, i, all) {
-                let g = (i / all.length) * 255;
-                return "rgb(100, " + g + ", 222)"
-            },
-            radius: 60,
-            legend: {
-                pos: 'right', // 如果是'top'，图例的高度是自动算出来的，所以height属性不需要配置
-                width: 100
+        this.data3.nodes.forEach((node, index) => {
+            node.label = `<span class="orange">${node.name}</span>`;
+            let labelArr = node.pie.data.reduce((arr, item) => {
+                arr.push(item[0] + item[1]);
+                return arr;
+            }, []);
+            if (node.pie.other) {
+                labelArr.push(node.pie.other.name);
             }
+
+            ChartIconFactory.create(".pie-call-loss-" + index, ChartType.customPie, {
+                fill: function (_, i, all) {
+                    let g = Math.round((i / all.length) * 255);
+                    return "rgb(100, " + g + ", 222)"
+                },
+                radius: 60,
+                legend: {
+                    pos: 'right', // 如果是'top'，图例的高度是自动算出来的，所以height属性不需要配置
+                    width: 100,
+                    labels: labelArr
+                }
+            });
         });
 
         ChartIconFactory.create(".line", ChartType.line, {
             height: 80,
             width: 100
         });
-
     }
 }

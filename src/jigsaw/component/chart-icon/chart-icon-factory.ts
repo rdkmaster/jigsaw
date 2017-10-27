@@ -48,7 +48,8 @@ export class ChartIconCustomPie {
         // 如果是'top'，图例的高度是自动算出来的，所以height属性不需要配置，width也不用配置
         width: number,
         heigth: number,
-        pos: string
+        pos: string,
+        lables: string[]
     };
 }
 
@@ -117,7 +118,7 @@ export class ChartIconFactory {
                     pieOffsetY = 0;
 
                 if (opts.legend.pos == 'top') {
-                    legendHeight = 10 * length + 5;
+                    legendHeight = 14 * length + 5;
                     pieOffsetY = legendHeight / 2;
                 } else if (opts.legend.pos == 'right') {
                     legendWidth = opts.legend.width + 20;
@@ -129,13 +130,13 @@ export class ChartIconFactory {
                     (opts.height || diameter) + legendHeight
                 );
 
-                let width = $svg.width()
-                    , height = $svg.height()
-                    , cx = width / 2
-                    , cy = height / 2;
+                let width = $svg.width(),
+                    height = $svg.height(),
+                    cx = width / 2 - pieOffsetX,
+                    cy = height / 2 + pieOffsetY;
 
-                let radius = Math.min(cx, cy)
-                    , innerRadius = opts.innerRadius;
+                let radius = Math.min(cx, cy),
+                    innerRadius = opts.innerRadius;
 
                 if (this.type == 'donut' && !innerRadius) {
                     innerRadius = radius * 0.5
@@ -148,8 +149,8 @@ export class ChartIconFactory {
                     let radians = value / sum * pi * 2 - pi / 2;
 
                     return [
-                        radius * Math.cos(radians) + cx - pieOffsetX + '',
-                        radius * Math.sin(radians) + cy + pieOffsetY + ''
+                        radius * Math.cos(radians) + cx + '',
+                        radius * Math.sin(radians) + cy + ''
                     ]
                 };
 
@@ -200,7 +201,7 @@ export class ChartIconFactory {
                                 scale(cumulative, innerRadius)
                             )
                         } else {
-                            d.push(cx - pieOffsetX + '', cy + pieOffsetY + '')
+                            d.push(cx + '', cy + '')
                         }
 
                         cumulative += value;
@@ -212,11 +213,12 @@ export class ChartIconFactory {
 
                     $node.attr('fill', fill.call(this, value, i, values));
 
-                    let $title = this.svgElement('title', {}).text('this is a description11111111111111');
+                    let $title = this.svgElement('title', {})
+                        .text(opts.legend.labels[i]);
 
-                    let $link = this.svgElement('a', {'href': 'http://www.baidu.com', 'target': '_blank'});
-                    $link.append($title);
-                    $link.append($node);
+                    let $link = this.svgElement('a', {'href': 'http://www.baidu.com', 'target': '_blank'})
+                        .append($title)
+                        .append($node);
 
                     let $desc = this.svgElement('g', {x: '0', y: i * 10});
                     $desc.append($title.clone());
@@ -232,10 +234,9 @@ export class ChartIconFactory {
                         x: 12 + (opts.legend.pos == 'right' ? diameter + 20 : 0),
                         y: 9 + i * 14,
                         'font-size': 12
-                    });
-                    $text.text('this is a description11111111111111');
-                    $desc.append($rect);
-                    $desc.append($text);
+                    }).text(opts.legend.labels[i]);
+                    $desc.append($rect)
+                        .append($text);
 
                     $svg.append($link);
                     $svg.append($desc);
