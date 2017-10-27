@@ -43,14 +43,18 @@ export class ChartIconCustomPie {
     radius?: number = 8;
     width?: number = null;
     legend?: {
-        // pos只有'top'和'right'两个值
+        // orient只有'top'和'right'两个值
         // 如果是'right'，图例的默认宽度是100，用户也可以自定义
         // 如果是'top'，图例的高度是自动算出来的，所以height属性不需要配置，width也不用配置
+        orient: string,
+        data: string[],
         width: number,
         heigth: number,
-        pos: string,
-        lables: string[]
     };
+    series?: any;
+    after?: Function;
+    link?: Function | string;
+    context?: object;
 }
 
 export enum ChartType {
@@ -75,9 +79,10 @@ export class ChartIconFactory {
                 fill: ['#ff9900', '#fff4dd', '#ffc66e'],
                 radius: 8,
                 legend: {
-                    pos: 'top',
+                    orient: 'top',
                     width: 100,
-                    height: 100
+                    height: 100,
+                    data: []
                 }
             },
             function (opts) {
@@ -117,10 +122,10 @@ export class ChartIconFactory {
                     pieOffsetX = 0,
                     pieOffsetY = 0;
 
-                if (opts.legend.pos == 'top') {
+                if (opts.legend.orient == 'top') {
                     legendHeight = 14 * length + 5;
                     pieOffsetY = legendHeight / 2;
-                } else if (opts.legend.pos == 'right') {
+                } else if (opts.legend.orient == 'right') {
                     legendWidth = opts.legend.width + 20;
                     pieOffsetX = legendWidth / 2;
                 }
@@ -156,7 +161,7 @@ export class ChartIconFactory {
 
                 let cumulative = 0;
 
-                for (i = 0; i < length; i++) {
+                for (let i = 0; i < length; i++) {
                     let value = values[i]
                         , portion = value / sum
                         , $node;
@@ -214,27 +219,40 @@ export class ChartIconFactory {
                     $node.attr('fill', fill.call(this, value, i, values));
 
                     let $title = this.svgElement('title', {})
-                        .text(opts.legend.labels[i]);
+                        .text(opts.legend.data[i]);
 
-                    let $link = this.svgElement('a', {'href': 'http://www.baidu.com', 'target': '_blank'})
+                    let $link = this.svgElement('a', {'href': 'javascript:;'})
                         .append($title)
                         .append($node);
+                    if (opts.link instanceof Function) {
+                        if (opts.context) {
+                            $link.bind('click', () => {
+                                opts.link.call(opts.context, opts.series, i);
+                            });
+                        } else {
+                            $link.bind('click', () => {
+                                opts.link(opts.series, i);
+                            });
+                        }
+                    } else if (typeof opts.link === 'string') {
+                        $link.attr('href', opts.link);
+                    }
 
                     let $desc = this.svgElement('g', {x: '0', y: i * 10});
                     $desc.append($title.clone());
 
                     let $rect = this.svgElement('rect', {
-                        x: 0 + (opts.legend.pos == 'right' ? diameter + 20 : 0),
+                        x: 0 + (opts.legend.orient == 'right' ? diameter + 20 : 0),
                         y: i * 14,
                         'width': '10',
                         'height': '10',
                         'fill': fill.call(this, value, i, values)
                     });
                     let $text = this.svgElement('text', {
-                        x: 12 + (opts.legend.pos == 'right' ? diameter + 20 : 0),
+                        x: 12 + (opts.legend.orient == 'right' ? diameter + 20 : 0),
                         y: 9 + i * 14,
                         'font-size': 12
-                    }).text(opts.legend.labels[i]);
+                    }).text(opts.legend.data[i]);
                     $desc.append($rect)
                         .append($text);
 

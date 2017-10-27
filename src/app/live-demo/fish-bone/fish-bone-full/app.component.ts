@@ -423,6 +423,11 @@ export class FishBoneFullComponent implements AfterViewInit {
             radius: 48,
         });
 
+        ChartIconFactory.create(".line", ChartType.line, {
+            height: 80,
+            width: 100
+        });
+
         this.data3.nodes.forEach((node, index) => {
             node.label = `<span class="orange">${node.name}</span>`;
             let labelArr = node.pie.data.reduce((arr, item) => {
@@ -440,16 +445,22 @@ export class FishBoneFullComponent implements AfterViewInit {
                 },
                 radius: 60,
                 legend: {
-                    pos: 'right', // 如果是'top'，图例的高度是自动算出来的，所以height属性不需要配置
+                    orient: 'right', // 如果是'top'，图例的高度是自动算出来的，所以height属性不需要配置
                     width: 100,
-                    labels: labelArr
-                }
+                    data: labelArr
+                },
+                series: node,
+                link: this.handleLink,
+                context: this,
+                after: () => {
+                    console.log('a pie has been draw')
+                },
             });
         });
+    }
 
-        ChartIconFactory.create(".line", ChartType.line, {
-            height: 80,
-            width: 100
-        });
+    handleLink(data, index){
+        console.log(this);
+        console.log(index, data);
     }
 }
