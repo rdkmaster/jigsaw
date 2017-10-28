@@ -14,7 +14,7 @@ export class BigTableDataDemoComponent {
         this.tableData = new BigTableData(http, 'mock-data/big-table-data');
         this.tableData.pagingInfo.pageSize = 1000;
         this.tableData.viewport.rows = 10;
-        this.tableData.viewport.columns = 7;
+        this.tableData.viewport.columns = 10;
         this.tableData.fromAjax();
     }
 
@@ -51,8 +51,7 @@ export class BigTableDataDemoComponent {
         }
     ];
 
-    steps = [1, 3, 5, 15];
-    selectedStep = 1;
+    selectedStep = 10;
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
