@@ -19,14 +19,13 @@ export type TableCellDataGenerator = (tableData: TableData,
 export class TableValueGenerators {
     public static rowIndexGenerator(tableData: TableData, row: number): any {
         let index = 1;
-        if (tableData instanceof PageableTableData || tableData instanceof LocalPageableTableData) {
+
+        if (tableData instanceof BigTableData) {
+            index += (tableData.cache.startPage - 1) * tableData.pagingInfo.pageSize + tableData.viewport.verticalTo;
+        } else if (tableData instanceof PageableTableData || tableData instanceof LocalPageableTableData) {
             index += (tableData.pagingInfo.currentPage - 1) * tableData.pagingInfo.pageSize;
         }
 
-        // pity, unable to check by interface: `tableData instanceof ISlicedData`
-        if (tableData instanceof BigTableData) {
-            index += tableData.viewPort.verticalTo;
-        }
         index += row;
         return index;
     }

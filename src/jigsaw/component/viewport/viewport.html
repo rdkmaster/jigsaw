@@ -1,38 +1,16 @@
-行数：
-<j-slider width="300px" min="5" max="30" [(value)]="data.viewPort.rows">
-</j-slider>
-（{{data.viewPort.rows}}）
-
-列数：
-<j-slider width="300px" min="2" max="15" [(value)]="data.viewPort.columns">
-</j-slider>
-（{{data.viewPort.columns}}）
-
-<br>
-
-当前行：
 <j-scrollbar #vScrollbar [style.visibility]="_$showSlider || vScrollbar.dragging ? 'visible' : 'hidden'"
              class="jigsaw-viewport-vertical-scrollbar"
-             [(value)]="data.viewPort.verticalTo"
-             [height]="_$tableBodyHeight"
-             [max]="data.cache.data.length"
+             [(value)]="viewport.verticalTo"
+             [height]="height"
+             [max]="viewport.maxHeight"
              [vertical]="true">
 </j-scrollbar>
-({{data.viewPort.verticalTo}})
-（{{data.viewPort.verticalTo + (data.cache.startPage - 1) * data.pagingInfo.pageSize}} / {{data.pagingInfo.totalRecord - data.viewPort.rows}}）
-({{data.cache.data.length}})
 
-当前列：
 <j-scrollbar #hScrollbar [style.visibility]="_$showSlider || hScrollbar.dragging ? 'visible' : 'hidden'"
              class="jigsaw-viewport-horizontal-scrollbar"
-             [(value)]="data.viewPort.horizontalTo"
-             [max]="data.cache.field.length">
+             [(value)]="viewport.horizontalTo"
+             [max]="viewport.maxWidth">
 </j-scrollbar>
-（{{data.viewPort.horizontalTo}}）
-
-<br>
-
-当前页：{{data.pagingInfo.currentPage}} / {{data.pagingInfo.totalPage}}
 
 <ng-content></ng-content>
 

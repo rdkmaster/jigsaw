@@ -17,6 +17,16 @@ import {AbstractJigsawComponent} from "../common";
 })
 export class JigsawScrollHandle implements OnInit {
 
+    globalEventMouseMove: Function;
+    globalEventMouseUp: Function;
+
+    private _scrollbar: JigsawScrollbar; // 父组件;
+
+    constructor(private _render: Renderer2, public _elementRef: ElementRef,
+                @Host() @Inject(forwardRef(() => JigsawScrollbar)) slider: JigsawScrollbar) {
+        this._scrollbar = slider;
+    }
+
     private _value: number;
 
     @Input()
@@ -27,7 +37,7 @@ export class JigsawScrollHandle implements OnInit {
     public set value(value) {
         // this setting is only from outside.
         if (this._value === value) return;
-        this._value = this._slider._verifyValue(value);
+        this._value = this._scrollbar._verifyValue(value);
         this._valueToPos();
         if (this.globalEventMouseMove) {
             this.globalEventMouseMove()
@@ -38,7 +48,7 @@ export class JigsawScrollHandle implements OnInit {
     public valueChange = new EventEmitter<number>();
 
     private _valueToPos() {
-        this._offset = this._slider._transformValueToPos(this.value);
+        this._offset = this._scrollbar._transformValueToPos(this.value);
         this.setHandleStyle();
     }
 
@@ -52,7 +62,7 @@ export class JigsawScrollHandle implements OnInit {
     private setHandleStyle() {
         if (isNaN(this._offset)) return;
 
-        if (this._slider.vertical) { // 兼容垂直滑动条;
+        if (this._scrollbar.vertical) { // 兼容垂直滑动条;
             this._$handleStyle = {
                 top: this._offset + "%"
             }
@@ -63,25 +73,25 @@ export class JigsawScrollHandle implements OnInit {
         }
     }
 
-    public transformPosToValue(pos, startPos, startValue) {
+    private _transformPosToValue(pos, startPos, startValue) {
         // 更新取得的滑动条尺寸.
-        this._slider._refresh();
-        let dimensions = this._slider._dimensions;
+        this._scrollbar._refresh();
+        let dimensions = this._scrollbar._dimensions;
 
         // bottom 在dom中的位置.
-        let offset = this._slider.vertical ? dimensions.top : dimensions.left;
-        let size = this._slider.vertical ? dimensions.height : dimensions.width;
-        let posValue = this._slider.vertical ? pos.y : pos.x;
-        let startPosValue = this._slider.vertical ? startPos.y : startPos.x;
+        let offset = this._scrollbar.vertical ? dimensions.top : dimensions.left;
+        let size = this._scrollbar.vertical ? dimensions.height : dimensions.width;
+        let posValue = this._scrollbar.vertical ? pos.y : pos.x;
+        let startPosValue = this._scrollbar.vertical ? startPos.y : startPos.x;
 
         posValue = posValue > offset ? posValue : offset;
 
-        let newValue = (posValue - startPosValue) / size * (this._slider.max - this._slider.min) + (this._slider.min - 0); // 保留两位小数
-        let m = this._calFloat(this._slider.step);
+        let newValue = (posValue - startPosValue) / size * (this._scrollbar.max - this._scrollbar.min) + (this._scrollbar.min - 0); // 保留两位小数
+        let m = this._calFloat(this._scrollbar.step);
 
         // 解决出现的有时小数点多了N多位.
-        newValue = Math.round(Math.round(newValue / this._slider.step) * this._slider.step * Math.pow(10, m)) / Math.pow(10, m);
-        return this._slider._verifyValue(startValue + newValue);
+        newValue = Math.round(Math.round(newValue / this._scrollbar.step) * this._scrollbar.step * Math.pow(10, m)) / Math.pow(10, m);
+        return this._scrollbar._verifyValue(startValue + newValue);
     }
 
     /**
@@ -93,7 +103,7 @@ export class JigsawScrollHandle implements OnInit {
         // 增加步长的计算;
         let m = 0;
         try {
-            m = this._slider.step.toString().split(".")[1].length;
+            m = this._scrollbar.step.toString().split(".")[1].length;
         } catch (e) {
         }
         return m;
@@ -103,7 +113,7 @@ export class JigsawScrollHandle implements OnInit {
      * @internal
      */
     public _$dragToScroll(event) {
-        this._slider.dragging = true;
+        this._scrollbar.dragging = true;
 
         let startPos = {
             x: event["clientX"],
@@ -112,15 +122,35 @@ export class JigsawScrollHandle implements OnInit {
         this._registerGlobalEvent(startPos, this.value);
     }
 
-    globalEventMouseMove: Function;
-    globalEventMouseUp: Function;
+    /**
+     * 改变value的值
+     * @internal
+     */
+    public _$updateValuePosition(event, startPos, startValue) {
+        if (!this._scrollbar.dragging) return;
+        // 防止产生选中其他文本，造成鼠标放开后还可以拖拽的奇怪现象;
+        event.stopPropagation();
+        event.preventDefault();
+
+        let pos = {
+            x: event["clientX"],
+            y: event["clientY"]
+        };
+
+        let value = this._transformPosToValue(pos, startPos, startValue);
+
+        if (this._value === value) return;
+        this._value = this._scrollbar._verifyValue(value);
+        this.valueChange.emit(this._value);
+        this._valueToPos();
+    }
 
     _registerGlobalEvent(startPos, startValue) {
         this.globalEventMouseMove = this._render.listen("document", "mousemove", (e) => {
             this._$updateValuePosition(e, startPos, startValue);
         });
         this.globalEventMouseUp = this._render.listen("document", "mouseup", () => {
-            this._slider.dragging = false;
+            this._scrollbar.dragging = false;
             this._destroyGlobalEvent();
         });
     }
@@ -133,35 +163,6 @@ export class JigsawScrollHandle implements OnInit {
         if (this.globalEventMouseUp) {
             this.globalEventMouseUp();
         }
-    }
-
-    private _slider: JigsawScrollbar; // 父组件;
-
-    constructor(private _render: Renderer2, public _elementRef: ElementRef, @Host() @Inject(forwardRef(() => JigsawScrollbar)) slider: JigsawScrollbar) {
-        this._slider = slider;
-    }
-
-    /**
-     * 改变value的值
-     * @internal
-     */
-    public _$updateValuePosition(event, startPos, startValue) {
-        if (!this._slider.dragging) return;
-        // 防止产生选中其他文本，造成鼠标放开后还可以拖拽的奇怪现象;
-        event.stopPropagation();
-        event.preventDefault();
-
-        let pos = {
-            x: event["clientX"],
-            y: event["clientY"]
-        };
-
-        let value = this.transformPosToValue(pos, startPos, startValue);
-
-        if (this._value === value) return;
-        this._value = this._slider._verifyValue(value);
-        this.valueChange.emit(this._value);
-        this._valueToPos();
     }
 
     ngOnInit() {

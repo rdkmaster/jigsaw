@@ -7,28 +7,28 @@
 
 <!--
 行数：
-<jigsaw-slider width="300px" min="5" max="30" [(value)]="tableData.viewPort.rows">
+<jigsaw-slider width="300px" min="5" max="30" [(value)]="tableData.viewport.rows">
 </jigsaw-slider>
-（{{tableData.viewPort.rows}}）
+（{{tableData.viewport.rows}}）
 
 列数：
-<jigsaw-slider width="300px" min="2" max="15" [(value)]="tableData.viewPort.columns">
+<jigsaw-slider width="300px" min="2" max="15" [(value)]="tableData.viewport.columns">
 </jigsaw-slider>
-（{{tableData.viewPort.columns}}）
+（{{tableData.viewport.columns}}）
 
 <br>
 
 当前行：
-<jigsaw-slider [value]="0" (change)="this.tableData.viewPort.verticalTo = $event"
+<jigsaw-slider [value]="0" (change)="this.tableData.viewport.verticalTo = $event"
                width="300px" min="0" [max]="tableData.cache.data.length">
 </jigsaw-slider>
-（{{tableData.viewPort.verticalTo}}）
+（{{tableData.viewport.verticalTo}}）
 
 当前列：
-<jigsaw-slider [value]="0" (change)="tableData.viewPort.horizontalTo = $event"
+<jigsaw-slider [value]="0" (change)="tableData.viewport.horizontalTo = $event"
                width="300px" min="0" [max]="tableData.cache.field.length">
 </jigsaw-slider>
-（{{tableData.viewPort.horizontalTo}}）
+（{{tableData.viewport.horizontalTo}}）
 
 <br>
 -->
@@ -39,7 +39,7 @@
     </j-radio-option>
 </j-radios>
 
-<j-viewport [data]="tableData" [step]="selectedStep">
+<j-viewport [viewport]="tableData?.viewport" [step]="selectedStep" [verticalOffset]="42">
     <j-table [data]="tableData" [columnDefines]="columnDefines" trackRowBy="name"
                   [additionalColumnDefines]="additionalColumnDefines">
     </j-table>

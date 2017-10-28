@@ -121,7 +121,7 @@ export interface IFilterable extends IAjaxComponentData {
     filter(term: DataFilterInfo): void;
 }
 
-export interface IDataViewPort {
+export class ViewportData {
     width: number;
     height: number;
 
@@ -132,8 +132,8 @@ export interface IDataViewPort {
     verticalTo: number;
 }
 
-export interface ISlicedData {
-    viewPort: IDataViewPort;
+export interface ISlicedData extends IComponentData {
+    viewport: ViewportData;
 
     scroll(verticalTo: number, horizontalTo: number): void;
     vScroll(scrollTo: number): void;

@@ -6,7 +6,7 @@ import 'rxjs/add/operator/debounceTime';
 import {AbstractGeneralCollection} from "./general-collection";
 import {
     DataFilterInfo,
-    DataSortInfo, HttpClientOptions, IDataViewPort,
+    DataSortInfo, HttpClientOptions, ViewportData,
     IFilterable,
     IPageable,
     IServerSidePageable, ISlicedData,
@@ -369,11 +369,12 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     }
 }
 
-export class TableDataViewPort implements IDataViewPort {
+export class TableViewportData extends ViewportData {
     public maxWidth: number = 0;
     public maxHeight: number = 0;
 
     constructor(private _bigTableData: BigTableData) {
+        super();
     }
 
     private _rows = 25;
@@ -415,7 +416,8 @@ export class TableDataViewPort implements IDataViewPort {
     private _verticalTo = 0;
 
     public set verticalTo(value: number) {
-        if (value < 0 || this._verticalTo == value) {
+        value = value < 0 ? 0 : value;
+        if (this._verticalTo == value) {
             return;
         }
         // `vScroll` will update `_fromRow` to a proper value
@@ -433,7 +435,8 @@ export class TableDataViewPort implements IDataViewPort {
     private _horizontalTo = 0;
 
     public set horizontalTo(value: number) {
-        if (value < 0 || this._horizontalTo == value) {
+        value = value < 0 ? 0 : value;
+        if (this._horizontalTo == value) {
             return;
         }
         // `hScroll` will update `_horizontalTo` to a proper value
@@ -454,25 +457,25 @@ export class TableDataViewPort implements IDataViewPort {
     }
 
     public set width(value: number) {
-        this.rows = value;
-    }
-
-    public get width(): number {
-        return this.rows;
-    }
-
-    public set height(value: number) {
         this.columns = value;
     }
 
-    public get height(): number {
+    public get width(): number {
         return this.columns;
+    }
+
+    public set height(value: number) {
+        this.rows = value;
+    }
+
+    public get height(): number {
+        return this.rows;
     }
 }
 
 export class BigTableData extends PageableTableData implements ISlicedData {
 
-    public readonly viewPort: TableDataViewPort = new TableDataViewPort(this);
+    public readonly viewport: TableViewportData = new TableViewportData(this);
     public reservedPages = 3;
     public fetchDataThreshold = .5;
 
@@ -498,13 +501,13 @@ export class BigTableData extends PageableTableData implements ISlicedData {
             return;
         }
 
-        const toColumn = this.viewPort.columns + this.viewPort.horizontalTo;
-        this.field = this._cache.field.slice(this.viewPort.horizontalTo, toColumn);
-        this.header = this._cache.header.slice(this.viewPort.horizontalTo, toColumn);
+        const toColumn = this.viewport.columns + this.viewport.horizontalTo;
+        this.field = this._cache.field.slice(this.viewport.horizontalTo, toColumn);
+        this.header = this._cache.header.slice(this.viewport.horizontalTo, toColumn);
 
-        const toRow = this.viewPort.rows + this.viewPort.verticalTo;
-        const data = this._cache.data.slice(this.viewPort.verticalTo, toRow);
-        this.data = data.map(item => item.slice(this.viewPort.horizontalTo, toColumn));
+        const toRow = this.viewport.rows + this.viewport.verticalTo;
+        const data = this._cache.data.slice(this.viewport.verticalTo, toRow);
+        this.data = data.map(item => item.slice(this.viewport.horizontalTo, toColumn));
 
         this.refresh();
     }
@@ -516,19 +519,19 @@ export class BigTableData extends PageableTableData implements ISlicedData {
 
         //从html模板中传过来的，仍然有可能是一个字符串，这也算是ts的一个坑了
         verticalTo = parseInt(verticalTo + "");
-        verticalTo = isNaN(verticalTo) ? this.viewPort.verticalTo : verticalTo;
+        verticalTo = isNaN(verticalTo) ? this.viewport.verticalTo : verticalTo;
         this.checkCache(verticalTo);
-        verticalTo = verticalTo + this.viewPort.rows > this._cache.data.length ?
-            this._cache.data.length - this.viewPort.rows : verticalTo;
+        verticalTo = verticalTo + this.viewport.rows > this._cache.data.length ?
+            this._cache.data.length - this.viewport.rows : verticalTo;
 
         horizontalTo = parseInt(horizontalTo + "");
-        horizontalTo = isNaN(horizontalTo) ? this.viewPort.horizontalTo : horizontalTo;
-        horizontalTo = horizontalTo + this.viewPort.columns > this._cache.field.length ?
-            this._cache.field.length - this.viewPort.columns : horizontalTo;
+        horizontalTo = isNaN(horizontalTo) ? this.viewport.horizontalTo : horizontalTo;
+        horizontalTo = horizontalTo + this.viewport.columns > this._cache.field.length ?
+            this._cache.field.length - this.viewport.columns : horizontalTo;
 
-        if (verticalTo != this.viewPort.verticalTo || horizontalTo != this.viewPort.horizontalTo) {
-            this.viewPort.setVerticalPositionSilently(verticalTo);
-            this.viewPort.setHorizontalPositionSilently(horizontalTo);
+        if (verticalTo != this.viewport.verticalTo || horizontalTo != this.viewport.horizontalTo) {
+            this.viewport.setVerticalPositionSilently(verticalTo);
+            this.viewport.setHorizontalPositionSilently(horizontalTo);
             this.sliceData();
         }
     }
@@ -538,7 +541,7 @@ export class BigTableData extends PageableTableData implements ISlicedData {
     }
 
     public hScroll(scrollTo: number): void {
-        this.scroll(this.viewPort.verticalTo, scrollTo);
+        this.scroll(this.viewport.verticalTo, scrollTo);
     }
 
     protected checkCache(verticalTo: number): void {
@@ -566,7 +569,7 @@ export class BigTableData extends PageableTableData implements ISlicedData {
             super.changePage(targetPage);
         }
 
-        const requestedPage = Math.ceil((verticalTo + this.viewPort.rows) / this.pagingInfo.pageSize);
+        const requestedPage = Math.ceil((verticalTo + this.viewport.rows) / this.pagingInfo.pageSize);
         // it is really busy if the request page is out of the cached page range.
         this.reallyBusy = this._busy && requestedPage > this._cache.endPage - this._cache.startPage + 1;
         if (this.reallyBusy) {
@@ -609,18 +612,16 @@ export class BigTableData extends PageableTableData implements ISlicedData {
             // because we don't know the scroll direction, we need to calculate the `verticalTo` value
             // to find out which one is closer to the `startPage` or the `endPage`,
             // and truncate from the further point.
-            const deltaStart = this.viewPort.verticalTo;
-            const deltaEnd = pages * this.pagingInfo.pageSize - this.viewPort.verticalTo;
+            const deltaStart = this.viewport.verticalTo;
+            const deltaEnd = pages * this.pagingInfo.pageSize - this.viewport.verticalTo;
             if (deltaStart > deltaEnd) {
                 this._cache.startPage++;
-                // truncate from top
                 console.log('truncating data from top');
-                this.viewPort.setVerticalPositionSilently(this.viewPort.verticalTo - this.pagingInfo.pageSize);
+                this.viewport.setVerticalPositionSilently(this.viewport.verticalTo - this.pagingInfo.pageSize);
                 this._cache.data.splice(0, this.pagingInfo.pageSize);
             } else {
-                // truncate from bottom
                 this._cache.endPage--;
-                this.viewPort.setVerticalPositionSilently(this.viewPort.verticalTo + this.pagingInfo.pageSize);
+                this.viewport.setVerticalPositionSilently(this.viewport.verticalTo + this.pagingInfo.pageSize);
                 console.log('truncating data from bottom');
                 this._cache.data.splice(this.pagingInfo.pageSize * reservedPages, this.pagingInfo.pageSize);
             }
@@ -642,8 +643,8 @@ export class BigTableData extends PageableTableData implements ISlicedData {
     }
 
     private _updateViewPortSize(): void {
-        this.viewPort.maxWidth = this._cache.field.length;
-        this.viewPort.maxHeight = this._cache.data.length;
+        this.viewport.maxWidth = this._cache.field.length;
+        this.viewport.maxHeight = this._cache.data.length;
     }
 
     public get busy(): boolean {
