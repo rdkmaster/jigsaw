@@ -19,6 +19,7 @@ $select-option-prefix-cls: #{$jigsaw-prefix}-select-option;
     .#{$select-prefix-cls} {
         border: 1px solid $border-color-base;
         border-radius: $border-radius-base;
+        background: $component-background;
         cursor: pointer;
         @include line-ellipsis(100%);
         height: 100%;

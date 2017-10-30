@@ -1,5 +1,5 @@
 <div class="jigsaw-table-range" #contentScrollbar
-     [perfectScrollbar]="_$rangeScrollbarConfig"
+     [perfectScrollbar]="{ suppressScrollY: true, wheelSpeed: 0.5 }"
      [class.jigsaw-table-hide-head]="hideHeader">
     <table class="jigsaw-table-header" [hidden]="hideHeader">
         <colgroup>
