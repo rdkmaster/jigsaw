@@ -476,7 +476,7 @@ export class TableViewportData extends ViewportData {
 export class BigTableData extends PageableTableData implements ISlicedData {
 
     public readonly viewport: TableViewportData = new TableViewportData(this);
-    public reservedPages = 3;
+    public numCachedPages = 3;
     public fetchDataThreshold = .5;
 
     protected reallyBusy = false;
@@ -599,15 +599,15 @@ export class BigTableData extends PageableTableData implements ISlicedData {
             return;
         }
 
-        let reservedPages;
-        if (this.reservedPages <= 0 || isNaN(this.reservedPages)) {
-            reservedPages = Infinity;
+        let numCachedPages;
+        if (this.numCachedPages <= 0 || isNaN(this.numCachedPages)) {
+            numCachedPages = Infinity;
         } else {
-            reservedPages = this.reservedPages >= 3 ? this.reservedPages : 3;
+            numCachedPages = this.numCachedPages >= 3 ? this.numCachedPages : 3;
         }
 
         const pages = this._cache.endPage - this._cache.startPage + 1;
-        if (pages > reservedPages) {
+        if (pages > numCachedPages) {
             // the cached data exceeded the configured reserved data, need to clear.
             // because we don't know the scroll direction, we need to calculate the `verticalTo` value
             // to find out which one is closer to the `startPage` or the `endPage`,
@@ -623,7 +623,7 @@ export class BigTableData extends PageableTableData implements ISlicedData {
                 this._cache.endPage--;
                 this.viewport.setVerticalPositionSilently(this.viewport.verticalTo + this.pagingInfo.pageSize);
                 console.log('truncating data from bottom');
-                this._cache.data.splice(this.pagingInfo.pageSize * reservedPages, this.pagingInfo.pageSize);
+                this._cache.data.splice(this.pagingInfo.pageSize * numCachedPages, this.pagingInfo.pageSize);
             }
         }
 
