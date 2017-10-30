@@ -197,6 +197,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
 
     public itemEl: HTMLElement;
     private _itemContent: HTMLElement;
+    private _itemDescription: HTMLElement;
 
     constructor(private _renderer: Renderer2, elementRef: ElementRef) {
         super();
@@ -255,7 +256,13 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
                 if (lastChild && lastChild.rangeHeight > 30) {
                     childRange = lastChild.rangeHeight + lastChild.left;
                 } else {
-                    childRange = fishBoneItem.itemEl.offsetWidth;
+                    if (this.firstLevelRotate == 'down') {
+                        // 主骨在下面，需要考虑内容的伸展
+                        childRange = fishBoneItem.itemEl.offsetWidth + fishBoneItem._itemContent.offsetHeight / Math.tan(60 * 0.017453293);
+                    } else {
+                        //  主骨在上面
+                        childRange = fishBoneItem.itemEl.offsetWidth;
+                    }
                 }
                 arr.push(childRange);
                 return arr;
@@ -267,9 +274,8 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
                 this.rangeHeight = this._itemContent.offsetHeight / Math.sin(60 * 0.017453293);
             } else if (this.firstLevelRotate == 'down') {
                 // 主骨在下面
-                this.rangeHeight = 0;
+                this.rangeHeight = this._itemDescription.offsetHeight;
             }
-
         }
     }
 
@@ -289,12 +295,15 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
                 } else {
                     // 后面的也要加上自身内容
                     const preBone = this.parentBone.childBones.toArray()[this.index - 1];
-                    //const rangeHeight = preBone.rangeHeight > 30 ? preBone.rangeHeight : 30;
                     this.left = preBone.left + preBone.rangeHeight + 30 + this._itemContent.offsetHeight / Math.sin(60 * 0.017453293);
                 }
-            } else if (this.index !== 0) {
-                // 第一个节点是默认偏移50px，写在css里面
-                this.calculateOffsetLeft(this.parentBone.childBones.toArray()[this.index - 1]);
+            } else {
+                if (this.index === 0) {
+                    // 第一个节点是默认偏移50px，写在css里面
+                    this.left = this._itemDescription.offsetHeight + 30 > 50 ? this._itemDescription.offsetHeight + 30 : 50;
+                } else {
+                    this.calculateOffsetLeft(this.parentBone.childBones.toArray()[this.index - 1]);
+                }
             }
         }
     }
@@ -306,7 +315,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
     public calculateOffsetLeft(fishBoneItem) {
         // fishBoneItem.rangeHeight 为0时，取30
         const rangeHeight = fishBoneItem.rangeHeight > 30 ? fishBoneItem.rangeHeight : 30;
-        this.left = fishBoneItem.left + rangeHeight + 30;
+        this.left = fishBoneItem.left + rangeHeight + this._itemDescription.offsetHeight + 30;
     }
 
     /**
@@ -351,6 +360,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
         super.ngOnInit();
         this._$state = 'in';
         this._itemContent = <HTMLElement>this.itemEl.querySelector('.jigsaw-fish-bone-item-content');
+        this._itemDescription = <HTMLElement>this.itemEl.querySelector('.jigsaw-fish-bone-item-description');
     }
 
     ngAfterViewInit() {

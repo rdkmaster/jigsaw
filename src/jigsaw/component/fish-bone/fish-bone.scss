@@ -85,8 +85,8 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
     }
 
     &-right {
-        .#{$fish-bone-prefix-cls}-head{
-            p{
+        .#{$fish-bone-prefix-cls}-head {
+            p {
                 transform: translate(-50%, -50%) rotateY(0deg);
             }
         }
@@ -94,6 +94,9 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
             transform: rotateY(180deg);
             .#{$fish-bone-prefix-cls}-item-content {
                 transform: rotateY(180deg);
+            }
+            .#{$fish-bone-prefix-cls}-item-description {
+                transform: translateX(-50%) rotateY(180deg);
             }
         }
     }

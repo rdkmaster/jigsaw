@@ -21,12 +21,17 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
         /* 最外面的父节点的偏移默认是0 */
         left: 0;
     }
-    > .#{$fish-bone-prefix-cls}-item-content {
+    > .#{$fish-bone-prefix-cls}-item-content, > .#{$fish-bone-prefix-cls}-item-description {
         position: absolute;
         min-width: 100px;
         text-align: center;
-        font-size: 12px;
+        font-size: $font-size-base;
         line-height: 1.2;
+    }
+    > .#{$fish-bone-prefix-cls}-item-description {
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: $font-size-sm;
     }
 
     /* jigsaw-fish-bone-item-rotate-up jigsaw-fish-bone-item-rotate-down 一个鱼骨向上向下旋转,放在各自鱼骨上 */
