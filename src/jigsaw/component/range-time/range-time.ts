@@ -22,7 +22,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     /**
      * @internal
      */
-    public _$gr: TimeGr;
+    public _$gr: TimeGr = TimeGr.date;
 
     public get gr(): TimeGr | string {
         return (this._$gr || this._$gr === 0) ? this._$gr : TimeGr.date;
@@ -33,8 +33,13 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
         if (typeof value === 'string') {
             value = TimeGr[value];
         }
-        this._$gr = <TimeGr>value;
+        if (<TimeGr>value != this._$gr) {
+            this._$gr = <TimeGr>value;
+            this.grChange.emit(this._$gr);
+        }
     }
+
+    @Output() public grChange = new EventEmitter<TimeGr>();
 
     /**
      * @internal
@@ -241,6 +246,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
      */
     public _$grChange(value: TimeGr) {
         this._init();
+        this.grChange.emit(value);
     }
 
     private _changeShortcut(selectedShortcut: Shortcut) {

@@ -22,6 +22,7 @@ export class TimeFullComponent {
     date3 = 'now';
     grItems = [
         {label: "Day", value: TimeGr.date},
+        {label: "Hour", value: TimeGr.hour},
         {label: "Week", value: TimeGr.week},
         {label: "Month", value: TimeGr.month}
     ];

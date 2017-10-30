@@ -209,6 +209,7 @@ export class TimeService {
             }
         }
         if (typeof result === 'string') {
+            result = TimeService.format(result, TimeService.timeFormatterConvert(TimeFormatters.yyyy_mm_dd_hh_mm_ss));
             result = new Date(result);
             result = isNaN(result.valueOf()) ? new Date() : result;
         }
