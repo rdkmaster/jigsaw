@@ -43,6 +43,10 @@ export class RangeTimeFullComponent{
             shortcuts: this.shortcuts, span: "15d"
         },
         {
+            label: "Hour",
+            value: TimeGr.hour
+        },
+        {
             label: "Week",
             value: TimeGr.week
         },
