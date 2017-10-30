@@ -50,7 +50,6 @@ function makePlunker(demoFolder, dirName) {
             item.code = fixTemplateUrl(item.code);
             item.code = fixStyleUrls(item.code);
             item.code = fixCodeForDemoOnly(item.code);
-            findMockDatas(item.code).forEach(mockData => mockDatas.push(mockData));
         }
         if (item.path == 'app/app.component.ts') {
             compContentIndex = idx;
@@ -170,23 +169,6 @@ function fixImport(code) {
 
 function fixCodeForDemoOnly(code) {
     return code.replace(/\/\* #for-live-demo-only#([\s\S]*?)\*\//g, (found, codeForDemo) => codeForDemo.trim());
-}
-
-function findMockDatas(code) {
-    var ret = [];
-    var match = code.match(/mock-data\/.*?['"]/g);
-    if (!match) {
-        return ret;
-    }
-    var map = {};
-    match.forEach(path => {
-        path = path.substring(0, path.length-1);
-        map[path] = readCode(`${demoHome}/../../${path}`);
-    });
-    for (var path in map) {
-        ret.push({path: path, code: map[path]})
-    }
-    return ret;
 }
 
 function fixAppComponentTs(compCode, moduleCode) {
