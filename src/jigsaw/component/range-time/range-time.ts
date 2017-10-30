@@ -22,7 +22,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     /**
      * @internal
      */
-    public _$gr: TimeGr;
+    public _$gr: TimeGr = TimeGr.date;
 
     public get gr(): TimeGr | string {
         return (this._$gr || this._$gr === 0) ? this._$gr : TimeGr.date;
