@@ -199,6 +199,7 @@ export class JigsawSliderHandle implements OnInit{
     host: {
         'class': 'jigsaw-slider-host',
         '[style.width]': 'width',
+        '[style.height]': 'height'
     },
     encapsulation: ViewEncapsulation.None,
     providers: [

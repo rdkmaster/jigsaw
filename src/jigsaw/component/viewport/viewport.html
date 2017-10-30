@@ -1,0 +1,16 @@
+<j-scrollbar #vScrollbar [style.visibility]="_$showSlider || vScrollbar.dragging ? 'visible' : 'hidden'"
+             class="jigsaw-viewport-vertical-scrollbar"
+             [(value)]="viewport.verticalTo"
+             [height]="height"
+             [max]="viewport.maxHeight"
+             [vertical]="true">
+</j-scrollbar>
+
+<j-scrollbar #hScrollbar [style.visibility]="_$showSlider || hScrollbar.dragging ? 'visible' : 'hidden'"
+             class="jigsaw-viewport-horizontal-scrollbar"
+             [(value)]="viewport.horizontalTo"
+             [max]="viewport.maxWidth">
+</j-scrollbar>
+
+<ng-content></ng-content>
+

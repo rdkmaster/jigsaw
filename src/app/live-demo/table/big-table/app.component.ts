@@ -12,9 +12,9 @@ export class BigTableDataDemoComponent {
 
     constructor(public http: HttpClient) {
         this.tableData = new BigTableData(http, 'mock-data/big-table-data');
-        this.tableData.pagingInfo.pageSize = 900;
-        this.tableData.viewPort.rows = 10;
-        this.tableData.viewPort.columns = 10;
+        this.tableData.pagingInfo.pageSize = 1000;
+        this.tableData.viewport.rows = 10;
+        this.tableData.viewport.columns = 10;
         this.tableData.fromAjax();
     }
 
@@ -50,6 +50,8 @@ export class BigTableDataDemoComponent {
             }
         }
     ];
+
+    selectedStep = 10;
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

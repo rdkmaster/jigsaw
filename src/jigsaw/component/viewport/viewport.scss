@@ -1,0 +1,20 @@
+@import "../../assets/scss/core/base";
+
+$viewport-prefix-cls: #{$jigsaw-prefix}-viewport;
+
+.#{$viewport-prefix-cls} {
+    @include inline-block;
+    position: relative;
+    &-vertical-scrollbar, &-horizontal-scrollbar {
+        position: absolute;
+        z-index: $zindex-scrollbar;
+    }
+    &-vertical-scrollbar {
+        bottom: 0;
+        right: 0;
+    }
+    &-horizontal-scrollbar {
+        left: 0;
+        bottom: 0;
+    }
+}
