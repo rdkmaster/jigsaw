@@ -88,7 +88,7 @@ export class ZtreeDemoComponent implements AfterViewInit{
             console.log(this.treeExt.treeObj);
             let nodes = this.treeExt.treeObj.getNodes();
             if (nodes.length>0) {
-                this.treeExt.treeObj.selectNode(nodes[1]);
+                this.treeExt.treeObj.selectNode(nodes[0]);
             }
         }
     }
