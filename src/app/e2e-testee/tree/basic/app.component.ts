@@ -84,11 +84,11 @@ export class ZtreeDemoComponent implements AfterViewInit{
     }
 
     ngAfterViewInit(){
-        if(this.treeExt && this.treeExt.treeObj){
-            console.log(this.treeExt.treeObj);
-            let nodes = this.treeExt.treeObj.getNodes();
+        if(this.treeExt && this.treeExt.ztree){
+            console.log(this.treeExt.ztree);
+            let nodes = this.treeExt.ztree.getNodes();
             if (nodes.length>0) {
-                this.treeExt.treeObj.selectNode(nodes[0]);
+                this.treeExt.ztree.selectNode(nodes[0]);
             }
         }
     }
