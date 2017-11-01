@@ -88,6 +88,7 @@ export class JigsawInput extends AbstractJigsawComponent implements ControlValue
         return this._placeholder;
     }
 
+    
     @ViewChild('input')
     private _inputElement: ElementRef;
 
