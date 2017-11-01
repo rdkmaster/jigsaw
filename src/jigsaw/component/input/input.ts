@@ -88,9 +88,6 @@ export class JigsawInput extends AbstractJigsawComponent implements ControlValue
         return this._placeholder;
     }
 
-    @ContentChildren(JigsawPrefixIcon)
-    private _iconFront: QueryList<JigsawPrefixIcon> = null;
-
     @ViewChild('input')
     private _inputElement: ElementRef;
 
