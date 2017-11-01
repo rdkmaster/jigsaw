@@ -1,6 +1,7 @@
 Run the following script
 
 ```
+git config --global http.proxy proxy.zte.com.cn:80                       # do this if neccessary
 git clone https://github.com/rdkmaster/jigsaw.git
 cd jigsaw
 npm config set proxy=http://proxy.zte.com.cn:80                          # do this if neccessary
@@ -16,4 +17,4 @@ Open your browser and navigate to `http://localhost:4200`, the page should open 
 Tips:
 - Try nodejs 6.x instead if you are encounting some strange error while installing dependencies with nodejs 8.x;
 - Do **NOT** use `cnpm` to install dependencies;
-- Get your own http proxy url and port from the Internet Options, do not copy `http://proxy.zte.com.cn:80` directly. Ignore this command if your PC is connecting to the network directly.
+- Get your own http proxy url and port from the Internet Options, do not copy `http://proxy.zte.com.cn:80` directly. Ignore this step if your PC is connecting to the network directly.
