@@ -19,7 +19,11 @@ import {CallbackRemoval} from "../../core/utils/common-utils";
  */
 @Component({
     selector: 'jigsaw-graph, j-graph',
-    templateUrl: 'graph.html'
+    templateUrl: 'graph.html',
+    host: {
+        '[style.width]': 'width',
+        '[style.height]': 'height'
+    }
 })
 export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDestroy {
     // TODO 当前属性判断不正确, 当前判断是是否option为空
