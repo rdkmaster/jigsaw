@@ -4,7 +4,7 @@ import {CommonModule} from "@angular/common";
 import {JigsawCollapseModule} from "jigsaw/component/collapse/collapse";
 import {AffixUtils} from "jigsaw/core/utils/internal-utils";
 import {liveDemoNavInfo, navInfo} from './nav-info'
-import {PerfectScrollbarConfigInterface, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
+import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 
 @Component({
     selector: 'jigsaw-demo-list',

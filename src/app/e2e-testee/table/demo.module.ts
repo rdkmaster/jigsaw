@@ -90,6 +90,7 @@ import {BigTableDataDemoModule} from "../../live-demo/table/big-table/app.module
 
 import {SwimLaneDiagramDemoComponent} from "../../live-demo/table/swim-lane-diagram/app.component";
 import {swimLaneDiagramDemoModule} from "../../live-demo/table/swim-lane-diagram/app.module";
+
 import {TableContentWidthDemoComponent} from "../../live-demo/table/content-width/app.component";
 import {TableContentWidthDemoModule} from "../../live-demo/table/content-width/app.module";
 
