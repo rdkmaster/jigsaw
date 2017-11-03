@@ -6,14 +6,38 @@ import {ButtonPresetDemoModule} from "app/demo/button/preset/app.module";
 import {ButtonWidthHeightDemoModule} from "app/demo/button/width-height/app.module";
 import {ButtonWithLoadingModule} from "app/demo/button/with-loading/app.module";
 import {ButtonFullModule} from "./full/app.module";
-import {routes} from "../../demo-urls";
 
-// 模块懒加载导致需要在编译阶段运行下面代码，请勿随意修改这行代码
-const config = routes.childRoutes('button');
+import {ButtonFullComponent} from "./full/app.component";
+import {ButtonBasicDemoComponent} from "./basic/app.component";
+import {ButtonDisableDemoComponent} from "./disabled/app.component";
+import {ButtonWidthHeightDemoComponent} from "./width-height/app.component";
+import {ButtonPresetDemoComponent} from "./preset/app.component";
+import {ButtonWithLoadingComponent} from "./with-loading/app.component";
+
+export const routerConfig = [
+    {
+        path: 'full', component: ButtonFullComponent, recommended: true
+    },
+    {
+        path: 'basic', component: ButtonBasicDemoComponent
+    },
+    {
+        path: 'disabled', component: ButtonDisableDemoComponent
+    },
+    {
+        path: 'width-height', component: ButtonWidthHeightDemoComponent
+    },
+    {
+        path: 'preset', component: ButtonPresetDemoComponent
+    },
+    {
+        path: 'with-loading', component: ButtonWithLoadingComponent
+    },
+];
 
 @NgModule({
     imports: [
-        RouterModule.forChild(config),
+        RouterModule.forChild(routerConfig),
         ButtonBasicDemoModule,
         ButtonDisableDemoModule,
         ButtonPresetDemoModule,

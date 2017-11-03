@@ -6,14 +6,38 @@ import {DialogMiscDemoModule} from "./misc/app.module";
 import {DialogPopOptionDemoModule} from "./popup-option/app.module";
 import {DialogTitleDemoModule} from "./title/app.module";
 import {DialogTopDemoModule} from "./top/app.module";
-import {routes} from "../../demo-urls";
 
-// 模块懒加载导致需要在编译阶段运行下面代码，请勿随意修改这行代码
-const config = routes.childRoutes('dialog');
+import {DialogTitleDemo} from "./title/app.component";
+import {DialogButtonsDemo} from "./buttons/app.component";
+import {DialogTopDemo} from "./top/app.component";
+import {DialogPopOptionDemo} from "./popup-option/app.component";
+import {DialogInDomDemoComponent} from "./in-dom/app.component";
+import {DialogMiscDemoComponent} from "./misc/app.component";
+
+export const routerConfig = [
+    {
+        path: 'title', component: DialogTitleDemo
+    },
+    {
+        path: 'buttons', component: DialogButtonsDemo
+    },
+    {
+        path: 'top', component: DialogTopDemo
+    },
+    {
+        path: 'popup-option', component: DialogPopOptionDemo
+    },
+    {
+        path: 'in-dom', component: DialogInDomDemoComponent
+    },
+    {
+        path: 'misc', component: DialogMiscDemoComponent
+    }
+];
 
 @NgModule({
     imports: [
-        RouterModule.forChild(config),
+        RouterModule.forChild(routerConfig),
         DialogButtonsDemoModule,
         DialogInDomDemoModule,
         DialogMiscDemoModule,

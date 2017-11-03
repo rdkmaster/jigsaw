@@ -3,14 +3,26 @@ import {RouterModule} from "@angular/router";
 import {ArrayCollectionAjaxDemoModule} from "./ajax/app.module";
 import {ArrayCollectionBasicDemoModule} from "./basic/app.module";
 import {ServerSidePaginationDemoModule} from "./server-side-pagination/app.module";
-import {routes} from "../../demo-urls";
 
-// 模块懒加载导致需要在编译阶段运行下面代码，请勿随意修改这行代码
-const config = routes.childRoutes('array-collection');
+import {ArrayCollectionBasicDemoComponent} from "./basic/app.component";
+import {ArrayCollectionAjaxDemoComponent} from "./ajax/app.component";
+import {ServerSidePaginationDemoComponent} from "./server-side-pagination/app.component";
+
+export const routerConfig = [
+    {
+        path: 'basic', component: ArrayCollectionBasicDemoComponent
+    },
+    {
+        path: 'ajax', component: ArrayCollectionAjaxDemoComponent
+    },
+    {
+        path: 'server-side-pagination', component: ServerSidePaginationDemoComponent
+    },
+];
 
 @NgModule({
     imports: [
-        RouterModule.forChild(config),
+        RouterModule.forChild(routerConfig),
         ArrayCollectionAjaxDemoModule,
         ArrayCollectionBasicDemoModule,
         ServerSidePaginationDemoModule

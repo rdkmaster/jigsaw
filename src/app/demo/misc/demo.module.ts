@@ -1,14 +1,18 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {ZoneForBetterPerformanceDemoModule} from "./zone-for-performance/app.module";
-import {routes} from "../../demo-urls";
 
-// 模块懒加载导致需要在编译阶段运行下面代码，请勿随意修改这行代码
-const config = routes.childRoutes('misc');
+import {ZoneForBetterPerformanceDemoComponent} from "./zone-for-performance/app.component";
+
+export const routerConfig = [
+    {
+        path: 'zone-for-performance', component: ZoneForBetterPerformanceDemoComponent
+    },
+];
 
 @NgModule({
     imports: [
-        RouterModule.forChild(config),
+        RouterModule.forChild(routerConfig),
         ZoneForBetterPerformanceDemoModule,
     ]
 })

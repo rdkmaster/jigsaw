@@ -1,14 +1,18 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {I18nFullDemoModule} from "./i18n-full/app.module";
-import {routes} from "../../demo-urls";
 
-// 模块懒加载导致需要在编译阶段运行下面代码，请勿随意修改这行代码
-const config = routes.childRoutes('i18n');
+import {I18nFullDemoComponent} from "./i18n-full/app.component";
+
+export const routerConfig = [
+    {
+        path: 'i18n-full', component: I18nFullDemoComponent
+    },
+];
 
 @NgModule({
     imports: [
-        RouterModule.forChild(config),
+        RouterModule.forChild(routerConfig),
         I18nFullDemoModule
     ]
 })

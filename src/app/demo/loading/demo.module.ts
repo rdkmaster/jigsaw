@@ -7,14 +7,42 @@ import {ColorfulLoadingDemoModule} from "./color/app.module";
 import {LoadingFullDemoModule} from "./full/app.module";
 import {BubbleLoadingDemoModule} from "./bubble/app.module";
 import {FontLoadingDemoModule} from "./font-icon/app.module";
-import {routes} from "../../demo-urls";
 
-// 模块懒加载导致需要在编译阶段运行下面代码，请勿随意修改这行代码
-const config = routes.childRoutes('loading');
+import {LoadingFullDemoComponent} from "./full/app.component";
+import {BallLoadingDemoComponent} from "./ball/app.component";
+import {BubbleLoadingDemoComponent} from "./bubble/app.component";
+import {FontLoadingDemoComponent} from "./font-icon/app.component";
+import {DefinedLoadingDemoComponent} from "./user-defined/app.component";
+import {DomInnerDemoComponent} from "./dom-inner/app.component";
+import {ColorfulLoadingDemoComponent} from "./color/app.component";
+
+export const routerConfig = [
+    {
+        path: 'full', component: LoadingFullDemoComponent
+    },
+    {
+        path: 'ball', component: BallLoadingDemoComponent
+    },
+    {
+        path: 'bubble', component: BubbleLoadingDemoComponent
+    },
+    {
+        path: 'font-icon', component: FontLoadingDemoComponent
+    },
+    {
+        path: 'user-defined', component: DefinedLoadingDemoComponent
+    },
+    {
+        path: 'dom-inner', component: DomInnerDemoComponent
+    },
+    {
+        path: 'color', component: ColorfulLoadingDemoComponent
+    },
+];
 
 @NgModule({
     imports: [
-        RouterModule.forChild(config),
+        RouterModule.forChild(routerConfig),
         LoadingFullDemoModule,
         BallLoadingDemoModule,
         BubbleLoadingDemoModule,

@@ -9,17 +9,7 @@ import {JigsawRootModule} from "jigsaw/component/root/root";
 import {AppComponent} from './app.component';
 import {AjaxInterceptor} from './app.interceptors';
 import {DemoListComponent} from "./demo-list.component";
-import {routes} from "./demo-urls";
 
-(<any>routes.config).push(
-    {
-        path: '', component: DemoListComponent
-    },
-    {
-        path: '**', //fallback router must in the last
-        component: DemoListComponent
-    }
-);
 
 @NgModule({
     declarations: [
@@ -27,7 +17,7 @@ import {routes} from "./demo-urls";
     ],
     imports: [
         BrowserModule, BrowserAnimationsModule, HttpClientModule,
-        RouterModule.forRoot(routes.config),
+        RouterModule.forRoot(DemoListComponent.routerConfig),
         JigsawRootModule
     ],
     providers: [

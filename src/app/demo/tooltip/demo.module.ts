@@ -4,14 +4,26 @@ import {PopupService} from "jigsaw/service/popup.service";
 import {TooltipDialogDemoModule} from "./dialog/app.module";
 import {TooltipInDomDemoModule} from "./in-dom/app.module";
 import {SimpleTooltipDemoModule} from "./inline/app.module";
-import {routes} from "../../demo-urls";
 
-// 模块懒加载导致需要在编译阶段运行下面代码，请勿随意修改这行代码
-const config = routes.childRoutes('tooltip');
+import {TooltipInDomDemoComponent} from "./in-dom/app.component";
+import {TooltipDialogDemoComponent} from "./dialog/app.component";
+import {SimpleTooltipDemoComponent} from "./inline/app.component";
+
+export const routerConfig = [
+    {
+        path: 'in-dom', component: TooltipInDomDemoComponent
+    },
+    {
+        path: 'dialog', component: TooltipDialogDemoComponent
+    },
+    {
+        path: 'inline', component: SimpleTooltipDemoComponent
+    },
+];
 
 @NgModule({
     imports: [
-        RouterModule.forChild(config),
+        RouterModule.forChild(routerConfig),
         TooltipDialogDemoModule, TooltipInDomDemoModule, SimpleTooltipDemoModule
     ],
     providers: [PopupService]

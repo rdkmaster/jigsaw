@@ -2,14 +2,22 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {DragToReplaceDemoModule} from "./drag-to-replace/app.module";
 import {TableDragDemoModule} from "./table-drag/app.module";
-import {routes} from "../../demo-urls";
 
-// 模块懒加载导致需要在编译阶段运行下面代码，请勿随意修改这行代码
-const config = routes.childRoutes('drag-drop');
+import {DragToReplaceDemoComponent} from "./drag-to-replace/app.component";
+import {TableDragDemoComponent} from "./table-drag/app.component";
+
+export const routerConfig = [
+    {
+        path: 'drag-to-replace', component: DragToReplaceDemoComponent
+    },
+    {
+        path: 'table-drag', component: TableDragDemoComponent
+    },
+];
 
 @NgModule({
     imports: [
-        RouterModule.forChild(config),
+        RouterModule.forChild(routerConfig),
         DragToReplaceDemoModule,
         TableDragDemoModule
     ]

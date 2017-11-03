@@ -4,14 +4,30 @@ import {TreeBasicDemoModule} from "./basic/app.module";
 import {TreeAsyncDemoModule} from "./async/app.module";
 import {TreeAjaxDataDemoModule} from "./data-from-ajax/app.module";
 import {TreeEditableDemoModule} from "./editable/app.module";
-import {routes} from "../../demo-urls";
 
-// 模块懒加载导致需要在编译阶段运行下面代码，请勿随意修改这行代码
-const config = routes.childRoutes('tree');
+import {ZtreeDemoComponent} from "./basic/app.component";
+import {ZtreeDemoDataFromAjaxComponent} from "./data-from-ajax/app.component";
+import {ZtreeDemoEditableComponent} from "./editable/app.component";
+import {ZtreeAsynDemoComponent} from "./async/app.component";
+
+export const routerConfig = [
+    {
+        path: 'basic', component: ZtreeDemoComponent
+    },
+    {
+        path: 'data-from-ajax', component: ZtreeDemoDataFromAjaxComponent
+    },
+    {
+        path: 'editable', component: ZtreeDemoEditableComponent
+    },
+    {
+        path: 'async', component: ZtreeAsynDemoComponent
+    },
+];
 
 @NgModule({
     imports: [
-        RouterModule.forChild(config),
+        RouterModule.forChild(routerConfig),
         TreeAsyncDemoModule, TreeBasicDemoModule, TreeAjaxDataDemoModule, TreeEditableDemoModule
     ],
     exports: [
