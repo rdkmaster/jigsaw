@@ -40,7 +40,12 @@ import {routerConfig as trustedHtmlConfig} from "./demo/trusted-html/demo.module
                 <li><a routerLink="{{route.path}}/{{child.path}}">{{child.path}}</a></li>
             </ul>
         </div>
-    `
+    `,
+    styles: [`
+        ul li {
+            display: inline;
+        }
+    `]
 })
 export class DemoListComponent {
     public static routerConfig = [
