@@ -15,9 +15,9 @@ describe('table', () => {
             expect(element.all(by.css('.jigsaw-table-header-cell')).get(0).getCssValue('COLOR')).toBe('rgb(255, 170, 0)');
         })
     });
-    describe('test setCellClass', () => {
+    describe('test set-cell-class', () => {
         beforeEach(() => {
-            browser.get('/#/table/setCellClass');
+            browser.get('/#/table/set-cell-class');
         });
         it('should set cell class', async () => {
             await waitForPresence('.red-text');
@@ -54,18 +54,18 @@ describe('table', () => {
             expect(columnlastEl.getText()).toBe('Abner');
         })
     });
-    describe('test setCellRender', () => {
+    describe('test cell-render', () => {
         beforeEach(() => {
-            browser.get('/#/table/setCellRender');
+            browser.get('/#/table/cell-render');
         });
         it('should set cell render', async () => {
             await waitForPresence('.fa-universal-access');
             expect(element(by.css('.fa-universal-access')).isPresent()).toBe(true);
         })
     });
-    describe('test setColumnGroup', () => {
+    describe('test column-group', () => {
         beforeEach(() => {
-            browser.get('/#/table/setColumnGroup');
+            browser.get('/#/table/column-group');
         });
         it('should set column group', async () => {
             await waitForPresence('.jigsaw-table-cell-content');

@@ -34,7 +34,7 @@ describe('button', () => {
 
     describe('test width and height', () => {
         beforeEach(() => {
-            browser.get('/#/button/width_height');
+            browser.get('/#/button/width-height');
         });
 
         it('should change size when set width and height', async () => {

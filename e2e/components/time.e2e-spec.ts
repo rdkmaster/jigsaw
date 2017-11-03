@@ -9,7 +9,7 @@ xdescribe('time', () => {
 
     xdescribe('test time', () => {
         beforeEach(() => {
-            browser.get('/#/time/limitEnd');
+            browser.get('/#/time/limit-end');
         });
         it('should not be selected when choose time beyond the limit end ', async () => {
             const limitEndOp = element.all(by.tagName('jigsaw-tile-option')),
@@ -29,7 +29,7 @@ xdescribe('time', () => {
 
     describe('test time', () => {
         beforeEach(() => {
-            browser.get('/#/time/weekStart');
+            browser.get('/#/time/week-start');
         });
         it('should be set', () => {
             const weekStartOp = element.all(by.tagName('jigsaw-tile-option')),
@@ -69,9 +69,9 @@ xdescribe('time', () => {
             expect(element.all(by.css('.expect-day')).get(5).getCssValue('border-radius')).toBe('0px 4px 4px 0px');
         })
     });
-    describe('test grItems', () => {
+    describe('test gr-items', () => {
         beforeEach(() => {
-            browser.get('/#/time/grItems');
+            browser.get('/#/time/gr-items');
         });
         it('test time granularity', () => {
             const granularityOp = element(by.css('.jigsaw-time-granularity')).all(by.tagName('SPAN')),
@@ -85,11 +85,11 @@ xdescribe('time', () => {
             expect(activeMonth.getCssValue('background-color')).toBe('rgba(65, 173, 220, 1)');
         })
     });
-    describe('test grItems', () => {
+    describe('test gr-items', () => {
         beforeEach(() => {
-            browser.get('/#/time/refreshInterval');
+            browser.get('/#/time/refresh-interval');
         });
-        it('test refreshInterval',()=>{
+        it('test refresh-interval',()=>{
         })
     });
 });
