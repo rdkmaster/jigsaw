@@ -3,8 +3,8 @@ import {HttpClient} from "@angular/common/http";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 @Component({
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css']
 })
 export class SelectFullComponent {
     constructor(public http: HttpClient) {
@@ -14,16 +14,17 @@ export class SelectFullComponent {
         this.citys2.onAjaxComplete(() => {
             console.log(this.citys2);
         });
+
     }
 
     citys2: ArrayCollection<any>;
     selectedCity2: any;
     selectedCityName2: string;
-    public selectChange2(message:any){
+
+    public selectChange2(message: any) {
         this.selectedCityName2 = message.name;
     }
 
-    selectedCity: any;
     selectedCityName: string;
     citys = new ArrayCollection([
         {label: "北京"},
@@ -33,7 +34,9 @@ export class SelectFullComponent {
         {label: "长沙"},
         {label: "西安"}
     ]);
-    public selectChange(message:any){
+    selectedCity = this.citys[1];
+
+    public selectChange(message: any) {
         this.selectedCityName = message.label;
     }
 }
