@@ -128,7 +128,9 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 
     ngOnInit() {
         super.ngOnInit();
-        this._$selectedLabel = this.value[this.labelField];
+        if(this.value){
+            this._$selectedLabel = this.value[this.labelField];
+        }
         this.trackItemBy = InternalUtils.initTrackItemBy(<string>this.trackItemBy, this.labelField);
         this._setOptionListHeight();
     }
