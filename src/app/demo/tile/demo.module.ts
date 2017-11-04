@@ -25,19 +25,19 @@ export const routerConfig = [
         path: 'track-item-by', component: TileselectTrackItemByDemoComponent
     },
     {
-        path: 'selectedItems', component: TileselectSelectedItemsComponent
+        path: 'selected-items', component: TileselectSelectedItemsComponent
     },
     {
-        path: 'multipleSelect', component: TileselectMultipleSelectDemoComponent
+        path: 'multiple-select', component: TileselectMultipleSelectDemoComponent
     },
     {
         path: 'tile-option-width', component: TileselectOptionWidthComponent
     },
     {
-        path: 'labelField', component: TileselectLabelFieldComponent
+        path: 'label-field', component: TileselectLabelFieldComponent
     },
     {
-        path: 'selectedItemsChange', component: TileselecItemsChangeComponent
+        path: 'selected-items-change', component: TileselecItemsChangeComponent
     },
 ];
 

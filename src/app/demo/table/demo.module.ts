@@ -118,7 +118,7 @@ export const routerConfig = [
         path: 'pageable', component: TablePageableDemoComponent
     },
     {
-        path: 'dataChange', component: TableDataChangeDemoComponent
+        path: 'data-change', component: TableDataChangeDemoComponent
     },
     {
         path: 'index-column-with-paging', component: TableAddIDWithPagingComponent

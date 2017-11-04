@@ -28,22 +28,22 @@ export const routerConfig = [
         path: 'gr', component: RangeTimeGrComponent
     },
     {
-        path: 'grItems', component: RangeTimeGrItemsComponent
+        path: 'gr-items', component: RangeTimeGrItemsComponent
     },
     {
-        path: 'limitEnd', component: RangeTimeLimitEndComponent
+        path: 'limit-end', component: RangeTimeLimitEndComponent
     },
     {
-        path: 'limitStart', component: RangeTimeLimitStartComponent
+        path: 'limit-start', component: RangeTimeLimitStartComponent
     },
     {
         path: 'recommended', component: RangeTimeRecommendedComponent
     },
     {
-        path: 'refreshInterval', component: RangeTimeRefreshIntervalComponent
+        path: 'refresh-interval', component: RangeTimeRefreshIntervalComponent
     },
     {
-        path: 'weekStart', component: RangeTimeWeekStartComponent
+        path: 'week-start', component: RangeTimeWeekStartComponent
     },
     {
         path: 'full', component: RangeTimeFullComponent, recommended: true

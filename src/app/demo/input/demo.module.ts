@@ -22,7 +22,7 @@ export const routerConfig = [
         path: 'basic', component: InputBasicDemoComponent
     },
     {
-        path: 'valueChange', component: InputValueChangeDemoComponent
+        path: 'value-change', component: InputValueChangeDemoComponent
     },
     {
         path: 'clearable', component: InputClearableDemoComponent

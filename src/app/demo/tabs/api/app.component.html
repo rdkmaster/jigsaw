@@ -23,8 +23,8 @@
             </ng-template>
         </jigsaw-tab-pane>
         <jigsaw-tab-pane [async]="true">
-            <div jigsaw-title><span routerLink="tabPage" [skipLocationChange]="true">router link tab</span></div>
-            <ng-template><router-outlet name="tabPage"></router-outlet></ng-template>
+            <div jigsaw-title><span routerLink="tab-page" [skipLocationChange]="true">router link tab</span></div>
+            <ng-template><router-outlet name="tab-page"></router-outlet></ng-template>
         </jigsaw-tab-pane>
     </jigsaw-tab>
 </div>
@@ -52,7 +52,7 @@
 </ng-template>
 
 <!--<ng-template #routerTabTitle>
-    <span routerLink="tabPage" [skipLocationChange]="true">router link tab</span>
+    <span routerLink="tab-page" [skipLocationChange]="true">router link tab</span>
 </ng-template>
 <ng-template #routerTabContent>
     <router-outlet></router-outlet>

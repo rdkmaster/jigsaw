@@ -27,13 +27,13 @@ export const routerConfig = [
         path: 'basic', component: TimeBasicDemoComponent
     },
     {
-        path: 'limitEnd', component: TimeLimitEndComponent
+        path: 'limit-end', component: TimeLimitEndComponent
     },
     {
-        path: 'limitStart', component: TimeLimitStartComponent
+        path: 'limit-start', component: TimeLimitStartComponent
     },
     {
-        path: 'weekStart', component: TimeWeekStartComponent
+        path: 'week-start', component: TimeWeekStartComponent
     },
     {
         path: 'gr', component: TimeGrComponent
@@ -42,13 +42,13 @@ export const routerConfig = [
         path: 'recommended', component: TimeRecommendedComponent
     },
     {
-        path: 'grItems', component: TimeGrItemsComponent
+        path: 'gr-items', component: TimeGrItemsComponent
     },
     {
-        path: 'refreshInterval', component: TimeRefreshIntervalComponent
+        path: 'refresh-interval', component: TimeRefreshIntervalComponent
     },
     {
-        path: 'comboSelect', component: ComboSelectDemoComponent
+        path: 'with-combo-select', component: ComboSelectDemoComponent
     },
     {
         path: 'full', component: TimeFullComponent, recommended: true

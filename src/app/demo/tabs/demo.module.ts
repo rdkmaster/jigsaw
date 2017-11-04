@@ -34,7 +34,7 @@ export const routerConfig = [
         path: 'hideTab', component: JigsawHideTabComponent
     },
     {
-        path: 'showTab', component: JigsawShowTabComponent
+        path: 'show-tab', component: JigsawShowTabComponent
     },
     {
         path: 'destroy-tab', component: JigsawDestoryTabComponent
@@ -43,7 +43,7 @@ export const routerConfig = [
         path: 'api', component: DynamicTabDemoComponent,
         children: [
             {
-                path: 'tabPage', loadChildren: './api/tabContent/tab-content.module#TabContentModule'
+                path: 'tab-page', loadChildren: './api/tabContent/tab-content.module#TabContentModule'
             }
         ]
     }

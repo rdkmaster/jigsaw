@@ -16,7 +16,7 @@ export const routerConfig = [
         path: 'basic', component: RadioBasicDemoComponent
     },
     {
-        path: 'trackItemBy', component: RadioTrackItemByDemoComponent
+        path: 'track-item-by', component: RadioTrackItemByDemoComponent
     },
 ];
 

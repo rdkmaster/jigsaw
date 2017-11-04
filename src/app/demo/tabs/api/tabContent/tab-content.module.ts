@@ -6,7 +6,7 @@ import { TabContentComponent, TabContentDefine } from "./tabContent";
 
 const routes=[
     {
-        path:'', component: TabContentComponent, outlet: 'tabPage'
+        path:'', component: TabContentComponent, outlet: 'tab-page'
     }
 ];
 
