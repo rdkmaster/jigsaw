@@ -892,5 +892,16 @@ export const navInfo = [
                 url: '/fish-bone/fish-bone-full'
             }
         ]
+    },
+    {
+        title: 'Rate',
+        path: "rate",
+        loadChildren: "./rate/demo.module#RateDemoModule",
+        navList: [
+            {
+                label: 'rate',
+                url: '/rate/rate-full'
+            }
+        ]
     }
 ];
