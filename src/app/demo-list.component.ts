@@ -34,16 +34,19 @@ import {routerConfig as trustedHtmlConfig} from "./demo/trusted-html/demo.module
 @Component({
     template: `
         <div *ngFor="let route of routes">
-            <h2>{{route.path}}</h2>
+            <h3>{{route.path}}</h3>
             <hr>
-            <ul *ngFor="let child of route.childRoutes">
-                <li><a routerLink="{{route.path}}/{{child.path}}">{{child.path}}</a></li>
-            </ul>
+            <a *ngFor="let child of route.childRoutes" routerLink="/{{route.path}}/{{child.path}}">
+                {{child.path}}
+            </a>
         </div>
     `,
     styles: [`
-        ul li {
-            display: inline;
+        a {
+            margin-right: 12px;
+        }
+        div {
+            margin-bottom: 12px;
         }
     `]
 })
