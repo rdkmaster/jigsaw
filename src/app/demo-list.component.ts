@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {routerConfig as alertConfig} from "./demo/alert/demo.module";
 import {routerConfig as arrayCollectionConfig} from "./demo/array-collection/demo.module";
 import {routerConfig as buttonConfig} from "./demo/button/demo.module";
@@ -36,8 +36,8 @@ import {routerConfig as trustedHtmlConfig} from "./demo/trusted-html/demo.module
         <div *ngFor="let route of routes">
             <h3>{{route.path}}</h3>
             <hr>
-            <a *ngFor="let child of route.childRoutes" routerLink="/{{route.path}}/{{child.path}}">
-                {{child.path}}
+            <a *ngFor="let path of route.childPaths" routerLink="/{{route.path}}/{{path}}">
+                {{path}}
             </a>
         </div>
     `,
@@ -45,12 +45,17 @@ import {routerConfig as trustedHtmlConfig} from "./demo/trusted-html/demo.module
         a {
             margin-right: 12px;
         }
+
         div {
             margin-bottom: 12px;
         }
     `]
 })
 export class DemoListComponent {
+    routes: any[] = DemoListManager.fullRouterConfig;
+}
+
+export class DemoListManager {
     public static routerConfig = [
         {
             path: "alert",
@@ -122,9 +127,6 @@ export class DemoListComponent {
         },
         // {
         //     path: "popup",
-        //     childRoutes: [
-        //         "/alert/popup", "/dialog/popup-option", "/dialog/misc"
-        //     ]
         // },
         {
             path: "radio",
@@ -190,48 +192,53 @@ export class DemoListComponent {
         },
     ];
 
-    routes: any[] = DemoListComponent.routerConfig.concat();
-
-    constructor() {
-        this._addRouterConfig('alert', alertConfig);
-        this._addRouterConfig('array-collection', arrayCollectionConfig);
-        this._addRouterConfig('button', buttonConfig);
-        this._addRouterConfig('checkbox', checkboxConfig);
-        this._addRouterConfig('collapse', collapseConfig);
-        this._addRouterConfig('combo-select', comboSelectConfig);
-        this._addRouterConfig('dialog', dialogConfig);
-        this._addRouterConfig('drag-drop', dragDropConfig);
-        this._addRouterConfig('fish-bone', fishBoneConfig);
-        this._addRouterConfig('form', formConfig);
-        this._addRouterConfig('graph', graphConfig);
-        this._addRouterConfig('i18n', i18nConfig);
-        this._addRouterConfig('input', inputConfig);
-        this._addRouterConfig('list', listConfig);
-        this._addRouterConfig('loading', loadingConfig);
-        this._addRouterConfig('misc', miscConfig);
-        this._addRouterConfig('pagination', paginationConfig);
-        this._addRouterConfig('radio', radioConfig);
-        this._addRouterConfig('range-time', rangeTimeConfig);
-        this._addRouterConfig('scrollbar', scrollbarConfig);
-        this._addRouterConfig('select', selectConfig);
-        this._addRouterConfig('slider', sliderConfig);
-        this._addRouterConfig('switch', switchConfig);
-        this._addRouterConfig('table', tableConfig);
-        this._addRouterConfig('tabs', tabsConfig);
-        this._addRouterConfig('tag', tagConfig);
-        this._addRouterConfig('tile', tileConfig);
-        this._addRouterConfig('time', timeConfig);
-        this._addRouterConfig('tooltip', tooltipConfig);
-        this._addRouterConfig('tree', treeConfig);
-        this._addRouterConfig('trusted-html', trustedHtmlConfig);
+    public static get fullRouterConfig() {
+        const rc = this.routerConfig.concat();
+        this._mergeRoutes(rc);
+        return rc;
     }
 
-    private _addRouterConfig(path: string, config: any[]) {
-        const cfg: any = this.routes.find(item => item.path === path);
+    private static _mergeRoutes(routerConfig: any[]) {
+        this._addRouterConfig(routerConfig, 'alert', alertConfig);
+        this._addRouterConfig(routerConfig, 'array-collection', arrayCollectionConfig);
+        this._addRouterConfig(routerConfig, 'button', buttonConfig);
+        this._addRouterConfig(routerConfig, 'checkbox', checkboxConfig);
+        this._addRouterConfig(routerConfig, 'collapse', collapseConfig);
+        this._addRouterConfig(routerConfig, 'combo-select', comboSelectConfig);
+        this._addRouterConfig(routerConfig, 'dialog', dialogConfig);
+        this._addRouterConfig(routerConfig, 'drag-drop', dragDropConfig);
+        this._addRouterConfig(routerConfig, 'fish-bone', fishBoneConfig);
+        this._addRouterConfig(routerConfig, 'form', formConfig);
+        this._addRouterConfig(routerConfig, 'graph', graphConfig);
+        this._addRouterConfig(routerConfig, 'i18n', i18nConfig);
+        this._addRouterConfig(routerConfig, 'input', inputConfig);
+        this._addRouterConfig(routerConfig, 'list', listConfig);
+        this._addRouterConfig(routerConfig, 'loading', loadingConfig);
+        this._addRouterConfig(routerConfig, 'misc', miscConfig);
+        this._addRouterConfig(routerConfig, 'pagination', paginationConfig);
+        this._addRouterConfig(routerConfig, 'radio', radioConfig);
+        this._addRouterConfig(routerConfig, 'range-time', rangeTimeConfig);
+        this._addRouterConfig(routerConfig, 'scrollbar', scrollbarConfig);
+        this._addRouterConfig(routerConfig, 'select', selectConfig);
+        this._addRouterConfig(routerConfig, 'slider', sliderConfig);
+        this._addRouterConfig(routerConfig, 'switch', switchConfig);
+        this._addRouterConfig(routerConfig, 'table', tableConfig);
+        this._addRouterConfig(routerConfig, 'tabs', tabsConfig);
+        this._addRouterConfig(routerConfig, 'tag', tagConfig);
+        this._addRouterConfig(routerConfig, 'tile', tileConfig);
+        this._addRouterConfig(routerConfig, 'time', timeConfig);
+        this._addRouterConfig(routerConfig, 'tooltip', tooltipConfig);
+        this._addRouterConfig(routerConfig, 'tree', treeConfig);
+        this._addRouterConfig(routerConfig, 'trusted-html', trustedHtmlConfig);
+    }
+
+    private static _addRouterConfig(routerConfig: any[], path: string, childConfig: any[]) {
+        const cfg: any = routerConfig.find(item => item.path === path);
         if (!cfg) {
             console.error('ERROR: invalid router path: ' + path);
             return;
         }
-        cfg.childRoutes = config;
+        cfg.childPaths = [];
+        childConfig.forEach(config => cfg.childPaths.push(config.path));
     }
 }

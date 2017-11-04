@@ -8,7 +8,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {JigsawRootModule} from "jigsaw/component/root/root";
 import {AppComponent} from './app.component';
 import {AjaxInterceptor} from './app.interceptors';
-import {DemoListComponent} from "./demo-list.component";
+import {DemoListComponent, DemoListManager} from "./demo-list.component";
 
 
 @NgModule({
@@ -17,7 +17,7 @@ import {DemoListComponent} from "./demo-list.component";
     ],
     imports: [
         BrowserModule, BrowserAnimationsModule, HttpClientModule,
-        RouterModule.forRoot(DemoListComponent.routerConfig),
+        RouterModule.forRoot(DemoListManager.routerConfig),
         JigsawRootModule
     ],
     providers: [
