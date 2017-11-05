@@ -3,9 +3,9 @@
         [ngClass]="setClasses(i)"
         (mouseover)="_hoverRate($event, i, true)"
         (click)="_clickRate($event, i, true)">
-        <div class="ant-rate-star-first" (mouseover)="_hoverRate($event, i)" (click)="_clickRate($event, i)">
-            <i class="anticon anticon-star"></i></div>
-        <div class="ant-rate-star-second" (mouseover)="_hoverRate($event, i, true)" (click)="_clickRate($event, i, true)">
-            <i class="anticon anticon-star"></i></div>
+        <div class="rate-star-first" (mouseover)="_hoverRate($event, i)" (click)="_clickRate($event, i)">
+            <i class="fa fa-star"></i></div>
+        <div class="rate-star-second" (mouseover)="_hoverRate($event, i, true)" (click)="_clickRate($event, i, true)">
+            <i class="fa fa-star"></i></div>
     </li>
 </ul>
