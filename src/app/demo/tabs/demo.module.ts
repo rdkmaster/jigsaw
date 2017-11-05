@@ -31,7 +31,7 @@ export const routerConfig = [
         path: 'with-ngfor', component: JigsawTabsWithNgForComponent
     },
     {
-        path: 'hideTab', component: JigsawHideTabComponent
+        path: 'hide-tab', component: JigsawHideTabComponent
     },
     {
         path: 'show-tab', component: JigsawShowTabComponent

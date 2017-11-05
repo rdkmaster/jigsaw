@@ -10,8 +10,7 @@ if (fs.existsSync(outputHome)) {
 outputHome = outputHome ? outputHome.trim() : './live-demo/';
 outputHome = outputHome.match(/[\/\\]$/) ? outputHome : outputHome + '/';
 
-makeAllPlunkers('e2e-testee');
-makeAllPlunkers('live-demo');
+makeAllPlunkers('demo');
 
 function makeAllPlunkers(dirName) {
     demoHome = getDemoHome(dirName);
