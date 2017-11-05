@@ -1,0 +1,11 @@
+<ul [ngClass]="_classMap" (mouseleave)="_leaveRate($event)">
+    <li *ngFor="let star of _starArray; let i = index"
+        [ngClass]="setClasses(i)"
+        (mouseover)="_hoverRate($event, i, true)"
+        (click)="_clickRate($event, i, true)">
+        <div class="ant-rate-star-first" (mouseover)="_hoverRate($event, i)" (click)="_clickRate($event, i)">
+            <i class="anticon anticon-star"></i></div>
+        <div class="ant-rate-star-second" (mouseover)="_hoverRate($event, i, true)" (click)="_clickRate($event, i, true)">
+            <i class="anticon anticon-star"></i></div>
+    </li>
+</ul>
