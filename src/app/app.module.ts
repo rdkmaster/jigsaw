@@ -8,7 +8,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {JigsawRootModule} from "jigsaw/component/root/root";
 import {AppComponent} from './app.component';
 import {AjaxInterceptor} from './app.interceptors';
-import {DemoListComponent, DemoListManager} from "./demo-list.component";
+import {DemoListComponent} from "./demo-list.component";
 import {routerConfig} from "./router-config";
 
 {

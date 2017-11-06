@@ -24,11 +24,11 @@ task('generate-demo-info', () => {
 
     routerConfig.forEach((router: any) => {
         const childDemos: any[] = [];
-        demos.push({path: router.path, demos: childDemos});
+        demos.push({name: router.path, demos: childDemos});
         const childRouters = getRouterConfig(join(demoHome, router.path, 'demo.module.ts'));
         childRouters.forEach((child: any) => {
             const demoInfo = {
-                path: child.path,
+                url: `http://rdk.zte.com.cn:8800/${router.path}/${child.path}`,
                 desc: child.desc ? child.desc : child.path,
                 recommended: !!child.recommended
             };

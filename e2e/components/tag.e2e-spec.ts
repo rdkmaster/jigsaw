@@ -6,7 +6,7 @@ describe('tile', () => {
     });
     describe('test selectedItems', () => {
         beforeEach(() => {
-            browser.get('/#/tag/basic');
+            browser.get('/tag/basic');
         });
         it('delete tag and check the color of tag', async () => {
             const jigsawTag = element.all(by.tagName('jigsaw-tag'));

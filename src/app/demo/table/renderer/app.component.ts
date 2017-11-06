@@ -78,7 +78,7 @@ export class TableRendererDemoComponent implements AfterContentInit {
     ];
 
     ngAfterContentInit() {
-        this.tableData.fromAjax('mock-data/hr-full');
+        this.tableData.fromAjax('mock-data/hr-list-full');
 
         this.additionalColumnDefines = [
             {

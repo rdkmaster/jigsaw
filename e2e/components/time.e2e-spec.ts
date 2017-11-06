@@ -9,7 +9,7 @@ xdescribe('time', () => {
 
     xdescribe('test time', () => {
         beforeEach(() => {
-            browser.get('/#/time/limit-end');
+            browser.get('/time/limit-end');
         });
         it('should not be selected when choose time beyond the limit end ', async () => {
             const limitEndOp = element.all(by.tagName('jigsaw-tile-option')),
@@ -29,7 +29,7 @@ xdescribe('time', () => {
 
     describe('test time', () => {
         beforeEach(() => {
-            browser.get('/#/time/week-start');
+            browser.get('/time/week-start');
         });
         it('should be set', () => {
             const weekStartOp = element.all(by.tagName('jigsaw-tile-option')),
@@ -41,7 +41,7 @@ xdescribe('time', () => {
     });
     describe('test gr', () => {
         beforeEach(() => {
-            browser.get('/#/time/gr');
+            browser.get('/time/gr');
         });
         it('test second hour week gr', async () => {
             const grEl = element.all(by.tagName('jigsaw-tile-option')),
@@ -62,7 +62,7 @@ xdescribe('time', () => {
     });
     describe('test gr', () => {
         beforeEach(() => {
-            browser.get('/#/time/recommended');
+            browser.get('/time/recommended');
         });
         it('should check recommend days', () => {
             expect(element.all(by.css('.expect-day')).get(0).getCssValue('border-radius')).toBe('4px 0px 0px 4px');
@@ -71,7 +71,7 @@ xdescribe('time', () => {
     });
     describe('test gr-items', () => {
         beforeEach(() => {
-            browser.get('/#/time/gr-items');
+            browser.get('/time/gr-items');
         });
         it('test time granularity', () => {
             const granularityOp = element(by.css('.jigsaw-time-granularity')).all(by.tagName('SPAN')),
@@ -87,7 +87,7 @@ xdescribe('time', () => {
     });
     describe('test gr-items', () => {
         beforeEach(() => {
-            browser.get('/#/time/refresh-interval');
+            browser.get('/time/refresh-interval');
         });
         it('test refresh-interval',()=>{
         })

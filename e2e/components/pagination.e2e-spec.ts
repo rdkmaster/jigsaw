@@ -7,7 +7,7 @@ describe('pagination', () => {
     });
     describe('test basic', () => {
         beforeEach(() => {
-            browser.get('/#/pagination/basic');
+            browser.get('/pagination/basic');
         });
         it('should flip page when click jigsaw page item', () => {
             const jigsawPagingEl = element(by.css('.jigsaw-paging')),

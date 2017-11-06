@@ -7,7 +7,7 @@ describe('table', () => {
     });
     describe('test setHeaderClass', () => {
         beforeEach(() => {
-            browser.get('/#/table/setHeaderClass');
+            browser.get('/table/setHeaderClass');
         });
         it('should set header class', async () => {
             await waitForPresence('.jigsaw-table-header-cell');
@@ -17,7 +17,7 @@ describe('table', () => {
     });
     describe('test set-cell-class', () => {
         beforeEach(() => {
-            browser.get('/#/table/set-cell-class');
+            browser.get('/table/set-cell-class');
         });
         it('should set cell class', async () => {
             await waitForPresence('.red-text');
@@ -27,7 +27,7 @@ describe('table', () => {
     });
     describe('test setHeaderRender', () => {
         beforeEach(() => {
-            browser.get('/#/table/setHeaderRender');
+            browser.get('/table/setHeaderRender');
         });
         it('should set header render', async () => {
             await waitForPresence('.fa-map-signs');
@@ -36,7 +36,7 @@ describe('table', () => {
     });
     describe('test setHeaderSort', () => {
         beforeEach(() => {
-            browser.get('/#/table/setHeaderSort');
+            browser.get('/table/setHeaderSort');
         });
         it('should set header sort', async () => {
             await waitForPresence('.jigsaw-table-sort-up');
@@ -56,7 +56,7 @@ describe('table', () => {
     });
     describe('test cell-render', () => {
         beforeEach(() => {
-            browser.get('/#/table/cell-render');
+            browser.get('/table/cell-render');
         });
         it('should set cell render', async () => {
             await waitForPresence('.fa-universal-access');
@@ -65,7 +65,7 @@ describe('table', () => {
     });
     describe('test column-group', () => {
         beforeEach(() => {
-            browser.get('/#/table/column-group');
+            browser.get('/table/column-group');
         });
         it('should set column group', async () => {
             await waitForPresence('.jigsaw-table-cell-content');

@@ -7,7 +7,7 @@ describe('checkbox', () => {
 
     describe('test change state', () => {
         beforeEach(() => {
-            browser.get('/#/checkbox/basic');
+            browser.get('/checkbox/basic');
         });
 
         it('should  change state when click the checkbox', () => {
@@ -36,7 +36,7 @@ describe('checkbox', () => {
 
     describe('test disabled', () => {
         beforeEach(() => {
-            browser.get('/#/checkbox/disabled');
+            browser.get('/checkbox/disabled');
         });
 
         it('should disabled when set disabled', () => {
