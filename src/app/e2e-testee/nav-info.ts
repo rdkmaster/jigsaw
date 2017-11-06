@@ -33,6 +33,10 @@ export const liveDemoNavInfo = {
                     label: 'tile',
                     url: '/tile/tile-full'
                 },
+                {
+                    label: 'rate',
+                    url: '/rate/rate-full'
+                }
             ]
         },
         {
