@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RateFullComponent } from './rate-full.component';
+import { RateFullComponent } from './app.component';
 
 @NgModule({
   imports: [

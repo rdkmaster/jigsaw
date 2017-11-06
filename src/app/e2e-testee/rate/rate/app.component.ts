@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-rate-full-demo',
-  templateUrl: './rate-full-demo.component.html',
-  styleUrls: ['./rate-full-demo.component.scss']
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
 export class RateDemoComponent implements OnInit {
 

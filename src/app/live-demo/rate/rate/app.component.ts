@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-rate-full',
-  templateUrl: './rate-full.component.html',
-  styleUrls: ['./rate-full.component.scss']
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
 export class RateFullComponent implements OnInit {
 
