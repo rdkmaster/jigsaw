@@ -1,5 +1,6 @@
 import {Component, ViewEncapsulation, EventEmitter, Input, OnInit, Output, forwardRef} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {AbstractJigsawComponent} from "../common";
 
 @Component({
     selector: 'jigsaw-rate',
@@ -14,7 +15,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
         }
     ],
 })
-export class JigsawRateComponent implements OnInit,  ControlValueAccessor{
+export class JigsawRateComponent extends AbstractJigsawComponent implements OnInit,  ControlValueAccessor{
     _prefixCls = 'ant-rate';
     _innerPrefixCls = `${this._prefixCls}-star`;
     _classMap;
