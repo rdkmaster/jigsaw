@@ -6,7 +6,7 @@ import {
 import {CommonModule} from '@angular/common';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {AbstractJigsawComponent} from "../common";
-import {CommonUtils} from '../../core/utils/common-utils';
+import {CallbackRemoval, CommonUtils} from '../../core/utils/common-utils';
 import {InternalUtils} from '../../core/utils/internal-utils';
 import {ArrayCollection} from "../../core/data/array-collection";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar/dist";
@@ -78,6 +78,8 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 
     @Input() public optionCount: number;
 
+    private dataCallbackRemoval: CallbackRemoval;
+
     private _data: ArrayCollection<object>;
 
     @Input()
@@ -87,7 +89,10 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 
     public set data(value: ArrayCollection<object> | object[]) {
         this._data = value instanceof ArrayCollection ? value : new ArrayCollection(value);
-        this._data.onRefresh(this._setOptionListHeight, this);
+        if (this.dataCallbackRemoval) {
+            this.dataCallbackRemoval()
+        }
+        this.dataCallbackRemoval = this._data.onRefresh(this._setOptionListHeight, this);
         if (this.initialized) {
             // 初始化之后赋值，要计算下拉的高度
             this._setOptionListHeight();
@@ -146,7 +151,13 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     }
 
     ngOnDestroy() {
-        this._documentListen && this._documentListen();//解绑document上的点击事件
+        if (this._documentListen) {
+            // 解绑document上的点击事件
+            this._documentListen();
+        }
+        if (this.dataCallbackRemoval) {
+            this.dataCallbackRemoval()
+        }
     }
 
     private _propagateChange: any = () => {
