@@ -10,7 +10,7 @@ cd jigsaw
 
 # Install dependencies
 
-We provide 2 options to install the dependencies, and we strongly recommend the Chinese mainland developers to use option 1 decause of the unstableness of `npm`, it could save you a lot of time and trouble comparing with installing with `npm`. Option 2 is a standard npm script, use this option if you have a good network access.
+We provide 2 options to install the dependencies, and we strongly recommend the Chinese mainland developers to use option 1 decause of the unstableness of `npm`, it could save you a lot of time and trouble comparing with installing with option 2. Option 2 is a standard npm script, use this option if you have a good network access.
 
 ## Option 1
 
