@@ -140,7 +140,7 @@ export class JigsawScrollHandle implements OnInit {
         let value = this._transformPosToValue(pos, startPos, startValue);
 
         if (this._value === value) return;
-        this._value = this._scrollbar._verifyValue(value);
+        this._value = value;
         this.valueChange.emit(this._value);
         this._valueToPos();
     }
@@ -212,7 +212,7 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, 
      * @internal
      */
     public _refresh() {
-        this._dimensions = this._elementRef.nativeElement.getBoundingClientRect();
+        this._dimensions = this._elementRef.nativeElement.querySelector('.jigsaw-scrollbar-track').getBoundingClientRect();
     }
 
     private _min: number = 0;
@@ -282,7 +282,7 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, 
         super.ngOnInit();
 
         // 计算slider 的尺寸.
-        this._dimensions = this._elementRef.nativeElement.getBoundingClientRect();
+        this._dimensions = this._elementRef.nativeElement.querySelector('.jigsaw-scrollbar-track').getBoundingClientRect();
 
         // 注册resize事件;
         this.resize();
@@ -305,7 +305,7 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, 
     private resize() {
         this._removeResizeEvent = this._renderer.listen("window", "resize", () => {
             // 计算slider 的尺寸.
-            this._dimensions = this._elementRef.nativeElement.getBoundingClientRect();
+            this._dimensions = this._elementRef.nativeElement.querySelector('.jigsaw-scrollbar-track').getBoundingClientRect();
         })
     }
 
