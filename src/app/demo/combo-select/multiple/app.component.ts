@@ -1,27 +1,25 @@
-import {Component, Renderer2, ViewContainerRef} from '@angular/core';
+import {Component} from '@angular/core';
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
+import {DemoBase} from "app/demo-description/demo-base";
+
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
 })
-export class ComboSelectMultipleDemo {
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
-    }
-    
-    public multiple: boolean = true;
+export class ComboSelectMultipleDemo extends DemoBase {
+    multiple: boolean = true;
 
     toggleMultiple() {
         this.multiple = !this.multiple;
         this.selectedCity = new ArrayCollection();
     }
 
-    valueChange(value){
+    valueChange(value) {
         console.log(value);
     }
 
-    public selectedCity: ArrayCollection<any> = new ArrayCollection([{label: "北京", closable: false}]);
-     citys = [
+    selectedCity: ArrayCollection<any> = new ArrayCollection([{label: "北京", closable: false}]);
+    cities = [
         {label: "北京", closable: false},
         {label: "上海", closable: false},
         {label: "南京"},

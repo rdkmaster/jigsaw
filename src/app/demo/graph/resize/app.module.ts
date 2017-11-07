@@ -3,11 +3,13 @@ import {JigsawGraphModule} from "jigsaw/component/graph/index";
 import {JigsawInputModule} from "jigsaw/component/input/input";
 import {JigsawSwitchModule} from "jigsaw/component/switch/index";
 import {GraphResizeComponent} from "./app.component";
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
+
 @NgModule({
     declarations: [GraphResizeComponent],
-    bootstrap: [ GraphResizeComponent ],
-    imports: [JigsawGraphModule,JigsawInputModule,JigsawSwitchModule]
+    bootstrap: [GraphResizeComponent],
+    imports: [JigsawGraphModule, JigsawInputModule, JigsawSwitchModule, JigsawDemoDescriptionModule]
 })
-export class GraphResizeModule{
+export class GraphResizeModule {
 
 }

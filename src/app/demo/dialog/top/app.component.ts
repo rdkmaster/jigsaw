@@ -2,29 +2,29 @@
  * Created by 10177553 on 2017/4/13.
  */
 
-import {Component, TemplateRef, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component, TemplateRef} from "@angular/core";
 import {PopupInfo, PopupService} from "jigsaw/service/popup.service";
+import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class DialogTopDemo  {
+export class DialogTopDemo extends DemoBase {
     message: string;
-     _dialogInfo: PopupInfo;
+    dialogInfo: PopupInfo;
 
-     top = "20%";
+    top = "20%";
 
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2,
-                private popupService : PopupService){
+    constructor(private popupService: PopupService) {
+        super();
     }
 
     close() {
-        this._dialogInfo.dispose();
+        this.dialogInfo.dispose();
     }
 
-    popupDialog1(ele:TemplateRef<any>){
-        this._dialogInfo = this.popupService.popup(ele);
+    popupDialog1(ele: TemplateRef<any>) {
+        this.dialogInfo = this.popupService.popup(ele);
     }
 }

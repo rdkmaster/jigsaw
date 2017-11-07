@@ -1,13 +1,16 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {DragToReplaceDemoComponent} from "./app.component";
 import {JigsawDraggableModule, JigsawDroppableModule} from "jigsaw/directive/dragdrop/index";
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
+import {DragToReplaceDemoComponent} from "./app.component";
 
 @NgModule({
-    imports: [JigsawDraggableModule, JigsawDroppableModule, CommonModule],
+    imports: [
+        JigsawDraggableModule, JigsawDroppableModule, CommonModule, JigsawDemoDescriptionModule
+    ],
     declarations: [DragToReplaceDemoComponent],
     bootstrap: [DragToReplaceDemoComponent]
 })
-export class DragToReplaceDemoModule{
+export class DragToReplaceDemoModule {
 
 }

@@ -1,14 +1,10 @@
-import {Component, ViewEncapsulation, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component, ViewEncapsulation} from "@angular/core";
+import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
-    template: `
-        <div style="width: 400px"><my-alert></my-alert></div>
-    `,
+    templateUrl: './app.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class CustomizeAlertDemoComponent {
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
-    }
+export class CustomizeAlertDemoComponent extends DemoBase {
 }
 

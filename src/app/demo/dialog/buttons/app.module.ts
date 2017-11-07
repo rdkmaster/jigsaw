@@ -1,14 +1,16 @@
 import {NgModule} from "@angular/core";
-import {DialogButtonsDemo} from "./app.component";
 import {JigsawButtonModule} from "jigsaw/component/button/button";
 import {JigsawDialogModule} from "jigsaw/component/dialog/dialog";
 import {PopupService} from "jigsaw/service/popup.service";
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
+import {DialogButtonsDemo} from "./app.component";
+
 @NgModule({
     declarations: [DialogButtonsDemo],
-    bootstrap: [ DialogButtonsDemo ],
-    imports: [JigsawDialogModule,JigsawButtonModule],
+    bootstrap: [DialogButtonsDemo],
+    imports: [JigsawDialogModule, JigsawButtonModule, JigsawDemoDescriptionModule],
     providers: [PopupService]
 })
-export class DialogButtonsDemoModule{
+export class DialogButtonsDemoModule {
 
 }

@@ -1,3 +1,9 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
 <jigsaw-combo-select
     placeholder="请输入姓名~"
     autoWidth="true"
@@ -8,7 +14,7 @@
         <jigsaw-tile
             [(selectedItems)]="selectedCity"
             trackItemBy="label">
-            <jigsaw-tile-option *ngFor="let city of citys" [value]="city" width="21.4%">
+            <jigsaw-tile-option *ngFor="let city of cities" [value]="city" width="21.4%">
                 {{city.label}}
             </jigsaw-tile-option>
         </jigsaw-tile>

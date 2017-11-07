@@ -20,12 +20,13 @@ import {JigsawMarkdownModule} from "../markdown/markdown";
     template: `
         <span class="summary" [innerHtml]="summary"></span>
         <span class="links">
-            <a (click)="showDetail = !showDetail">{{showDetail ? '隐藏' : '展开'}}详情</a> |
+            <a *ngIf="!!content" (click)="showDetail = !showDetail">{{showDetail ? '隐藏' : '展开'}}详情</a>
+            <span *ngIf="!!content">|</span>
             <a (click)="gotoPlunker()">查看&编辑源码</a>
         </span>
         <br *ngIf="showDetail">
         <jigsaw-markdown *ngIf="showDetail" [markdown]="content"></jigsaw-markdown><br>
-        <span class="links" *ngIf="showDetail">
+        <span class="links" *ngIf="showDetail && !!content">
             <a (click)="showDetail = !showDetail">{{showDetail ? '隐藏' : '展开'}}详情</a> |
             <a (click)="gotoPlunker()">查看&编辑源码</a>
         </span>

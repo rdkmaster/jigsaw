@@ -1,41 +1,42 @@
+import {Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {
-    Component, ElementRef, OnInit, TemplateRef, ViewChild,
-    Renderer2, ViewContainerRef
-} from '@angular/core';
-import {
-    PopupInfo, PopupOptions, PopupPoint, PopupPositionOffset, PopupPositionType,
+    PopupInfo,
+    PopupOptions,
+    PopupPoint,
+    PopupPositionOffset,
+    PopupPositionType,
     PopupService
 } from "jigsaw/service/popup.service";
+import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class DialogPopOptionDemo implements OnInit {
+export class DialogPopOptionDemo extends DemoBase implements OnInit {
 
-     _dialogInfo: PopupInfo;
+    dialogInfo: PopupInfo;
 
-     option: PopupOptions;
+    option: PopupOptions;
 
-     popPositionTypes: object[];
+    popPositionTypes: object[];
 
-     selectedPositionType: object;
+    selectedPositionType: object;
 
-     poses: object[];
+    poses: object[];
 
-     selectedPos: any;
+    selectedPos: any;
 
-     detailPos: PopupPoint;
+    detailPos: PopupPoint;
 
-     offset: PopupPositionOffset;
+    offset: PopupPositionOffset;
 
     @ViewChild("left") left: ElementRef;
     @ViewChild("middle") middle: ElementRef;
     @ViewChild("right") right: ElementRef;
 
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2,
-                private popupService: PopupService) {
+    constructor(private popupService: PopupService) {
+        super();
     }
 
     ngOnInit() {
@@ -50,7 +51,7 @@ export class DialogPopOptionDemo implements OnInit {
     }
 
     close() {
-        this._dialogInfo.dispose();
+        this.dialogInfo.dispose();
     }
 
     generatePopPos() {
@@ -89,11 +90,11 @@ export class DialogPopOptionDemo implements OnInit {
             };
         }
 
-        if(this._dialogInfo){
-            this._dialogInfo.dispose();
+        if (this.dialogInfo) {
+            this.dialogInfo.dispose();
         }
 
-        this._dialogInfo = this.popupService.popup(ele, this.option);
+        this.dialogInfo = this.popupService.popup(ele, this.option);
     }
 
 }

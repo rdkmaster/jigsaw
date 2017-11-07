@@ -2,22 +2,18 @@
  * Created by 10177553 on 2017/4/13.
  */
 
-import {Component, ViewChild, AfterViewInit, Renderer2, ViewContainerRef} from '@angular/core';
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {JigsawComboSelect} from "jigsaw/component/combo-select/combo-select";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
+import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html',
 })
-export class ComboSelectWidthDemo implements AfterViewInit {
-    public dropDownWidth="120%";
-    public selectedCity = new ArrayCollection([{label: "北京"}]);
+export class ComboSelectWidthDemo extends DemoBase implements AfterViewInit {
+    selectedCity = new ArrayCollection([{label: "北京"}]);
 
-    @ViewChild(JigsawComboSelect) comboSelect:JigsawComboSelect;
-
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
-    }
+    @ViewChild(JigsawComboSelect) comboSelect: JigsawComboSelect;
 
     ngAfterViewInit() {
         this.comboSelect.select.subscribe(data => {
@@ -25,7 +21,7 @@ export class ComboSelectWidthDemo implements AfterViewInit {
         })
     }
 
-     citys = [
+    cities = [
         {label: "北京"},
         {label: "上海"},
         {label: "南京"},

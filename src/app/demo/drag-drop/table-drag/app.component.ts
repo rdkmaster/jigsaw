@@ -2,7 +2,8 @@ import {Component, ElementRef, Renderer2, ViewEncapsulation} from "@angular/core
 import {TableData} from "jigsaw/core/data/table-data";
 import {AdditionalColumnDefine} from "jigsaw/component/table/table-typings";
 import {TableDragDeleteRow, TableDragReplaceRow} from "./table-renderer";
-import {DragDropInfo} from "../../../../jigsaw/directive/dragdrop/types";
+import {DragDropInfo} from "jigsaw/directive/dragdrop/types";
+import {DemoBase} from "app/demo-description/demo-base";
 
 
 @Component({
@@ -10,7 +11,7 @@ import {DragDropInfo} from "../../../../jigsaw/directive/dragdrop/types";
     styleUrls: ['app.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TableDragDemoComponent {
+export class TableDragDemoComponent extends DemoBase {
     tableData: TableData;
 
     employees: any[] = [
@@ -24,6 +25,8 @@ export class TableDragDemoComponent {
     ];
 
     constructor(public renderer: Renderer2, public elementRef: ElementRef) {
+        super();
+
         this.tableData = new TableData([
                 ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 316],
                 ["Shirley", "Accountant", "$11845", "2017/4/25", "R&D Dept II", 711],

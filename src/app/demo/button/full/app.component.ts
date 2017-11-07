@@ -1,10 +1,11 @@
-import {Component, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component} from "@angular/core";
+import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class ButtonFullComponent {
+export class ButtonFullComponent extends DemoBase {
 
     // demo-5
     canClick() {

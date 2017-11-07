@@ -1,0 +1,10 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-button (click)="onClick()" colorType="primary" height="32px">
+    <jigsaw-font-loading *ngIf="isLoading" width="16px" height="16px" color="white"></jigsaw-font-loading>
+    <span style="padding-left: 5px">{{label}}</span>
+</jigsaw-button>

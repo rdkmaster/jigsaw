@@ -1,26 +1,23 @@
 /**
  * Created by 10177553 on 2017/3/28.
  */
-import {Component, Renderer2, ViewContainerRef} from '@angular/core';
+import {Component} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {LineBarGraphData} from "jigsaw/core/data/graph-data";
+import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
-    template: `
-        <jigsaw-graph id="test-graph" [data]="data"
-                   [(width)]="graphWidth"
-                   [(height)]="graphHeight">
-        </jigsaw-graph>
-    `
+    templateUrl: './app.component.html'
 })
-export class AjaxLineGraphComponent {
-    data: LineBarGraphData;
+export class AjaxLineGraphComponent extends DemoBase {
+    public data: LineBarGraphData;
 
     public graphWidth;
     public graphHeight;
 
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2, http: HttpClient) {
+    constructor(http: HttpClient) {
+        super();
+
         this.graphWidth = "600";
         this.graphHeight = "250";
 

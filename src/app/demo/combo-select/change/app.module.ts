@@ -1,13 +1,17 @@
 import {NgModule} from "@angular/core";
-import {ComboSelectChangeDemo} from "./app.component";
+import {CommonModule} from "@angular/common";
 import {JigsawTileSelectModule} from "jigsaw/component/list-and-tile/tile";
 import {JigsawComboSelectModule} from "jigsaw/component/combo-select";
-import {CommonModule} from "@angular/common";
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
+import {ComboSelectChangeDemo} from "./app.component";
+
 @NgModule({
     declarations: [ComboSelectChangeDemo],
-    bootstrap: [ ComboSelectChangeDemo ],
-    imports: [JigsawComboSelectModule,JigsawTileSelectModule, CommonModule]
+    bootstrap: [ComboSelectChangeDemo],
+    imports: [
+        JigsawComboSelectModule, JigsawTileSelectModule, CommonModule, JigsawDemoDescriptionModule
+    ]
 })
-export class ComboSelectChangeDemoModule{
+export class ComboSelectChangeDemoModule {
 
 }

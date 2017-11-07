@@ -1,11 +1,12 @@
-import {Component, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component} from "@angular/core";
 import {CheckBoxStatus} from "jigsaw/component/checkbox/typings";
+import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class CheckBoxFullComponent {
+export class CheckBoxFullComponent extends DemoBase {
     //demo-1
     demo1Checked = CheckBoxStatus.unchecked;
     enableIndeterminate: boolean = false;

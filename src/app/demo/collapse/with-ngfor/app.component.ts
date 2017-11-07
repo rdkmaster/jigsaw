@@ -1,17 +1,17 @@
 /**
  * Created by 10177553 on 2017/4/26.
  */
-import {Component, ViewChild, Renderer2, ViewContainerRef} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {JigsawCollapse, JigsawCollapsePane} from "jigsaw/component/collapse/collapse";
+import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html',
-    styles: [`.collapse-content{font-size: 14px}`]
+    styles: [`.collapse-content {
+        font-size: 14px
+    }`]
 })
-export class CollapseWithNGForDemoComponent {
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
-    }
+export class CollapseWithNGForDemoComponent extends DemoBase {
 
     nes = [
         {id: 1, name: "NE1", content: "content of ne1"},
@@ -25,7 +25,7 @@ export class CollapseWithNGForDemoComponent {
     activePane: JigsawCollapsePane;
 
     add() {
-        this.nes.push({id: 4, name: "NE" + (this.nes.length+1), content: "content of ne"+ (this.nes.length+1)})
+        this.nes.push({id: 4, name: "NE" + (this.nes.length + 1), content: "content of ne" + (this.nes.length + 1)})
     }
 
     click() {

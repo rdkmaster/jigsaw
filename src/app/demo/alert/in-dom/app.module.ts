@@ -1,12 +1,13 @@
 import {NgModule} from "@angular/core";
 import {JigsawAlertModule} from "jigsaw/component/alert/alert";
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {AlertInDomDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [AlertInDomDemoComponent],
     bootstrap: [ AlertInDomDemoComponent ],
     imports: [
-        JigsawAlertModule
+        JigsawAlertModule, JigsawDemoDescriptionModule
     ]
 })
 export class AlertInDomDemoModule {

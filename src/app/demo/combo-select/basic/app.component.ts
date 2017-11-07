@@ -1,19 +1,17 @@
 /**
  * Created by 10177553 on 2017/4/10.
  */
-import {Component, Renderer2, ViewContainerRef} from '@angular/core';
+import {Component} from '@angular/core';
 import {DropDownTrigger} from "jigsaw/component/combo-select/combo-select";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
+import {DemoBase} from "app/demo-description/demo-base";
+
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
 })
-export class ComboSelectBasicDemo{
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
-    }
-
-    public selectedCity = new ArrayCollection();
+export class ComboSelectBasicDemo extends DemoBase {
+    selectedCity = new ArrayCollection();
     cities = [
         {label: '北京', type: '', closable: false},
         {label: '上海', type: '', closable: false},

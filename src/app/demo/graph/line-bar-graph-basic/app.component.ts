@@ -4,22 +4,18 @@
 
 import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 import {LineBarGraphData, LineBarGraphDataByRow} from "jigsaw/core/data/graph-data";
+import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
-    template: `
-        <p>数据的一列为一个系列情形，请使用 LineBarGraphData 作为数据。这个和一般的数据库表的结构非常契合，推荐优先使用。</p>
-        <jigsaw-graph id="test-graph1" [data]="dataByCol"></jigsaw-graph>
-        <br>
-        <p>数据的一行为一个系列情形，请使用 LineBarGraphDataByRow 作为数据。</p>
-        <jigsaw-graph id="test-graph2" [data]="dataByRow"></jigsaw-graph>
-    `
+    templateUrl: './app.component.html'
 })
 
-export class BasicLineGraphComponent {
+export class BasicLineGraphComponent extends DemoBase {
     dataByRow: LineBarGraphDataByRow;
     dataByCol: LineBarGraphData;
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
+    constructor() {
+        super();
+
         this.dataByRow = new LineBarGraphDataByRow();
         this.dataByRow.data = [
             [120, 132, 101, 134, 90, 230, 210],

@@ -2,18 +2,16 @@
  * Created by 10177553 on 2017/4/13.
  */
 
-import {Component, Renderer2, ViewContainerRef} from '@angular/core';
+import {Component} from '@angular/core';
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
+import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html',
 })
-export class ComboSelectLabelFieldDemo {
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
-    }
-    public selectedCity = new ArrayCollection([{name: "北京", closable: false}]);
-    citys = [
+export class ComboSelectLabelFieldDemo extends DemoBase {
+    selectedCity = new ArrayCollection([{name: "北京", closable: false}]);
+    cities = [
         {name: "北京", closable: false},
         {name: "上海", closable: false},
         {name: "南京"},

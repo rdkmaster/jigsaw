@@ -1,15 +1,18 @@
 import {AfterViewInit, Component, ViewEncapsulation} from "@angular/core";
-import {ChartIconFactory, ChartType} from "../../../../jigsaw/component/chart-icon/chart-icon-factory";
-import {TreeData} from "../../../../jigsaw/core/data/tree-data";
+import {ChartIconFactory, ChartType} from "jigsaw/component/chart-icon/chart-icon-factory";
+import {TreeData} from "jigsaw/core/data/tree-data";
+import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
     encapsulation: ViewEncapsulation.None
 })
-export class FishBoneFullComponent implements AfterViewInit {
+export class FishBoneFullComponent extends DemoBase implements AfterViewInit {
 
     constructor() {
+        super();
+
         this.data = new TreeData();
         this.data.label = '<span class="orange">目标标题</span>';
         this.data.fromObject([

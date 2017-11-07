@@ -3,29 +3,12 @@ import {
     JigsawConfirmAlert, JigsawErrorAlert, JigsawInfoAlert,
     JigsawWarningAlert
 } from "jigsaw/component/alert/alert";
+import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
-    template: `
-        <jigsaw-button width="175" (click)="commonInfoAlert()">
-            通用信息提示框
-        </jigsaw-button>
-    
-        <jigsaw-button width="175" (click)="commonWarningAlert()">
-            通用警告提示框
-        </jigsaw-button>
-    
-        <jigsaw-button width="175" (click)="commonErrorAlert()">
-            通用错误提示框
-        </jigsaw-button>
-    
-        <jigsaw-button width="175" (click)="commonConfirmAlert()">
-            通用确认提示框
-        </jigsaw-button>
-    
-        <p style="margin-top: 20px; font-size: 16px">{{answer}}</p>
-    `
+    templateUrl: './app.component.html'
 })
-export class AlertPopupDemoComponent {
+export class AlertPopupDemoComponent extends DemoBase {
 
     answer = '';
 

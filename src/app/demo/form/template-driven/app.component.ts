@@ -1,15 +1,21 @@
-import {Component, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component} from "@angular/core";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 import {TimeGr, TimeService} from "jigsaw/service/time.service";
 import {TableData} from "jigsaw/core/data/table-data";
 import {ColumnDefine} from "jigsaw/component/table/table-typings";
+import {DemoBase} from "app/demo-description/demo-base";
 
 
 @Component({
     templateUrl: 'app.component.html',
     styleUrls: ['app.component.css']
 })
-export class TemplateDrivenDemoComponent {
+export class TemplateDrivenDemoComponent extends DemoBase {
+    constructor() {
+        super();
+        this.favoriteFruit = new ArrayCollection<any>([{label: this.fruitList.data[0][0]}]);
+    }
+
     firstName: string = 'jigsaw';
     remember: boolean = true;
     rangeTime = {beginDate: 'now-7d', endDate: 'now'};
@@ -62,10 +68,5 @@ export class TemplateDrivenDemoComponent {
         if (value.length == 0) {
             this.selectedIndex = -1;
         }
-    }
-
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
-        this.favoriteFruit = new ArrayCollection<any>([{label: this.fruitList.data[0][0]}]);
     }
 }

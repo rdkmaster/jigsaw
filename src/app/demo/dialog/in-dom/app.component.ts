@@ -1,27 +1,14 @@
-import {Component, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component} from "@angular/core";
 import {ButtonInfo} from "jigsaw/service/popup.service";
+import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
-    template: `
-        <jigsaw-dialog width="300px" [buttons]="buttons">
-            <div jigsaw-title>
-                <span class="fa fa-thumbs-up"></span>Title of the dialog
-            </div>
-            <div jigsaw-body>
-                <ul class="dialog-content">
-                    <li>Dialog content...</li>
-                    <li>Dialog content...</li>
-                    <li>Dialog content...</li>
-                </ul>
-            </div>
-        </jigsaw-dialog>
-    `,
-    styles: [`.fa{margin-right: 5px}`]
+    templateUrl: './app.component.html',
+    styles: [`.fa {
+        margin-right: 5px
+    }`]
 })
-export class DialogInDomDemoComponent {
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
-    }
+export class DialogInDomDemoComponent extends DemoBase {
     public buttons: Array<ButtonInfo> = [
         {
             role: 'confirm',

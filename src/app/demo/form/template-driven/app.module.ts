@@ -15,6 +15,7 @@ import {JigsawSliderModule} from "jigsaw/component/slider/index";
 import {JigsawSwitchModule} from "jigsaw/component/switch/index";
 import {JigsawTileSelectModule} from "jigsaw/component/list-and-tile/tile";
 
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {TemplateDrivenDemoComponent} from "./app.component";
 
 @NgModule({
@@ -23,7 +24,7 @@ import {TemplateDrivenDemoComponent} from "./app.component";
         JigsawInputModule, JigsawCheckBoxModule, JigsawButtonModule,
         JigsawRadioModule, JigsawComboSelectModule, JigsawRangeTimeModule,
         JigsawTimeModule, JigsawSelectModule, JigsawTableModule, JigsawSliderModule,
-        JigsawSwitchModule, JigsawTileSelectModule
+        JigsawSwitchModule, JigsawTileSelectModule, JigsawDemoDescriptionModule
     ],
     declarations: [TemplateDrivenDemoComponent],
     bootstrap: [TemplateDrivenDemoComponent],

@@ -2,21 +2,18 @@
  * Created by 10177553 on 2017/4/13.
  */
 
-import {Component, OnInit, Renderer2, ViewContainerRef} from '@angular/core';
+import {Component} from '@angular/core';
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
+import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html',
 })
-export class ComboSelectChangeDemo {
+export class ComboSelectChangeDemo extends DemoBase {
 
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
-    }
+    selectedCity = new ArrayCollection([{label: "北京"}]);
 
-    public selectedCity = new ArrayCollection([{label: "北京"}]);
-
-    citys = [
+    cities = [
         {label: "北京"},
         {label: "上海"},
         {label: "南京"},
@@ -29,17 +26,19 @@ export class ComboSelectChangeDemo {
         {label: "哈尔滨"}
     ];
 
-    public selected:string = '';
-    select(data){
+    selected: string = '';
+
+    select(data) {
         this.selected = data.label;
     }
 
-    public removed:string = '';
-    remove(data){
+    removed: string = '';
+
+    remove(data) {
         this.removed = data.label;
     }
 
-    valueChange(value){
+    valueChange(value) {
         console.log(value);
     }
 }

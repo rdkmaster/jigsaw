@@ -6,25 +6,27 @@ import {PopupService} from "jigsaw/service/popup.service";
 import {JigsawTimeModule} from "jigsaw/component/time/index";
 import {JigsawRangeTimeModule} from "jigsaw/component/range-time/index";
 import {TranslateHelper} from "jigsaw/core/utils/translate-helper";
+import {JigsawDialogModule} from "jigsaw/component/dialog/dialog";
 
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {I18nFullDemoComponent} from "./app.component";
-import {JigsawDialogModule} from "../../../../jigsaw/component/dialog/dialog";
 
 /**
  * 覆盖控件内部的国际化词条
  */
 TranslateHelper.alert.zh = {
-    button: { ok: '知道了'}
+    button: {ok: '知道了'}
 };
 TranslateHelper.alert.en = {
-    button: { ok: 'Gotcha'}
+    button: {ok: 'Gotcha'}
 };
 
 @NgModule({
     declarations: [I18nFullDemoComponent],
-    bootstrap: [ I18nFullDemoComponent ],
+    bootstrap: [I18nFullDemoComponent],
     imports: [
-        JigsawAlertModule, JigsawButtonModule, JigsawTimeModule, JigsawRangeTimeModule, JigsawDialogModule,
+        JigsawAlertModule, JigsawButtonModule, JigsawTimeModule, JigsawRangeTimeModule,
+        JigsawDialogModule, JigsawDemoDescriptionModule,
         TranslateModule/* #for-live-demo-only# .forRoot() */
     ],
     providers: [PopupService, TranslateService]

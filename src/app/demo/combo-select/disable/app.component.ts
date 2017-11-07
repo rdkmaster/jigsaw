@@ -1,22 +1,20 @@
-import {Component, Renderer2, ViewContainerRef} from '@angular/core';
+import {Component} from '@angular/core';
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
+import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
 })
-export class DisabledComboSelectDemo {
-    constructor(public viewContainerRef: ViewContainerRef, public renderer: Renderer2) {
-    }
-
+export class DisabledComboSelectDemo extends DemoBase {
     disabled = false;
 
-    public changeDisabled() {
+    changeDisabled() {
         this.disabled = !this.disabled;
     }
 
-    public selectedCity = new ArrayCollection([{label: "北京", closable: false}]);
-    citys = [
+    selectedCity = new ArrayCollection([{label: "北京", closable: false}]);
+    cities = [
         {label: "北京", closable: false},
         {label: "上海", closable: false},
         {label: "南京"},

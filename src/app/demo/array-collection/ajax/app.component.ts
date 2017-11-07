@@ -1,15 +1,17 @@
-import {Component, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component} from "@angular/core";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 import {HttpClient} from "@angular/common/http";
+import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html'
 })
-export class ArrayCollectionAjaxDemoComponent {
+export class ArrayCollectionAjaxDemoComponent extends DemoBase {
     consoleTexts = new ArrayCollection<string>();
 
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2, http: HttpClient) {
+    constructor(http: HttpClient) {
+        super();
+
         const ac = new ArrayCollection();
         ac.http = http;
         ac.fromAjax('mock-data/core-members');

@@ -2,30 +2,20 @@
  * Created by 10177553 on 2017/3/28.
  */
 
-import {
-    Component, OnInit, ViewChild, Renderer2, ViewContainerRef
-} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import "rxjs/add/observable/combineLatest";
+import {Observable} from "rxjs/Observable";
 import {AbstractGraphData} from "jigsaw/core/data/graph-data";
 import {EchartOptions} from "jigsaw/core/data/echart-types";
 import {JigsawGraph} from "jigsaw/component/graph/graph";
 import {JigsawInput} from "jigsaw/component/input/input";
-import {Observable} from "rxjs/Observable";
-import "rxjs/add/observable/combineLatest";
+import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
-    template: `
-        autoResize:
-        <jigsaw-switch [(checked)]="autoResize" (change)="resizeGraph()"></jigsaw-switch>
-        width:
-        <jigsaw-input id="graph-width" [value]="graphWidth" #widthInput></jigsaw-input>
-        height:
-        <jigsaw-input id="graph-height" [value]="graphHeight" #heightInput></jigsaw-input><br><br>
-        <jigsaw-graph id="test-graph" #graph [data]="data" [width]="graphWidth" [height]="graphHeight"
-                   [autoResize]="autoResize"></jigsaw-graph>
-    `
+    templateUrl: './app.component.html'
 })
 
-export class GraphResizeComponent implements OnInit {
+export class GraphResizeComponent extends DemoBase implements OnInit {
     data: AbstractGraphData;
     autoResize: boolean = true;
     graphWidth: string = '100%';
@@ -37,23 +27,19 @@ export class GraphResizeComponent implements OnInit {
 
     @ViewChild("heightInput") heightInput: JigsawInput;
 
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
-    }
-
     resizeGraph() {
         this.graph.resize();
     }
 
     ngOnInit() {
         this.data = new GraphDataDemo();
-        Observable.combineLatest(this.widthInput.valueChange,this.heightInput.valueChange).debounceTime(500)
+        Observable.combineLatest(this.widthInput.valueChange, this.heightInput.valueChange).debounceTime(500)
             .subscribe(
-            () => {
-                this.graphWidth = <string>this.widthInput.value;
-                this.graphHeight =<string>this.heightInput.value;
-            }
-        )
+                () => {
+                    this.graphWidth = <string>this.widthInput.value;
+                    this.graphHeight = <string>this.heightInput.value;
+                }
+            )
     }
 
 }

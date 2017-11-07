@@ -2,20 +2,16 @@
  * Created by 10177553 on 2017/4/13.
  */
 
-import {
-    Component, OnInit, Renderer2, ViewContainerRef
-} from '@angular/core';
+import {Component} from '@angular/core';
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
+import {DemoBase} from "app/demo-description/demo-base";
+
 @Component({
     templateUrl: './app.component.html'
 })
-export class ComboSelectAutoWidthDemo implements OnInit {
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
-    }
-    
-    public selectedCity = new ArrayCollection([{label: "北京", closable: false}]);
-     citys = [
+export class ComboSelectAutoWidthDemo extends DemoBase {
+    selectedCity = new ArrayCollection([{label: "北京", closable: false}]);
+    cities = [
         {label: "北京", closable: false},
         {label: "上海", closable: false},
         {label: "南京"},
@@ -30,9 +26,5 @@ export class ComboSelectAutoWidthDemo implements OnInit {
         {label: "连云港3"},
         {label: "哈尔滨"}
     ];
-
-    ngOnInit() {
-
-    }
 
 }

@@ -1,21 +1,26 @@
-import {Component, ComponentRef, Renderer2, ViewContainerRef, ViewEncapsulation} from "@angular/core";
+import {Component, ViewEncapsulation} from "@angular/core";
 import {UserDialogComponent} from "./user-dialog/user-dialog";
 import {UserDialog2Component} from "./user-dialog2/user-dialog";
 import {
-    ButtonInfo, PopupEffect, PopupInfo, PopupOptions, PopupPositionType,
+    ButtonInfo,
+    PopupEffect,
+    PopupInfo,
+    PopupOptions,
+    PopupPositionType,
     PopupService
 } from "jigsaw/service/popup.service";
+import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class DialogMiscDemoComponent {
+export class DialogMiscDemoComponent extends DemoBase {
 
-     _templateRef: PopupInfo;
-     _modalDialogInfo: PopupInfo;
-     _dialogInfo: PopupInfo;
+    _templateRef: PopupInfo;
+    _modalDialogInfo: PopupInfo;
+    _dialogInfo: PopupInfo;
 
     public title: string = 'Title of the dialog';
     public buttons: Array<ButtonInfo> = [
@@ -45,9 +50,8 @@ export class DialogMiscDemoComponent {
         },
     ];
 
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2,
-                private _popupService: PopupService) {
+    constructor(private _popupService: PopupService) {
+        super();
     }
 
     /*
@@ -73,14 +77,14 @@ export class DialogMiscDemoComponent {
     /*
     * popup template
     * */
-    popupModalDialogTemplate(tp){
-        if(this._modalDialogInfo){
+    popupModalDialogTemplate(tp) {
+        if (this._modalDialogInfo) {
             this.closeModalDialogTemplate()
         }
         this._modalDialogInfo = this._popupService.popup(tp, this._getModalOptions());
     }
 
-    closeModalDialogTemplate(){
+    closeModalDialogTemplate() {
         this._modalDialogInfo.dispose();
         this._modalDialogInfo = null
     }
@@ -88,34 +92,34 @@ export class DialogMiscDemoComponent {
     /*
     * popup template at point
     * */
-    popupDialogTemplate(tp, event){
-        if(this._dialogInfo){
+    popupDialogTemplate(tp, event) {
+        if (this._dialogInfo) {
             this.closeDialogTemplate()
         }
         this._dialogInfo = this._popupService.popup(tp, this._getUnModalOptions(event));
     }
 
-    closeDialogTemplate(){
+    closeDialogTemplate() {
         this._dialogInfo.dispose();
         this._dialogInfo = null
     }
 
-    disposeAnswer(answer: ButtonInfo, cb){
-        if(answer){
-            if(answer.role == 'confirm'){
+    disposeAnswer(answer: ButtonInfo, cb) {
+        if (answer) {
+            if (answer.role == 'confirm') {
                 console.log('confirm callback success!')
-            }else if(answer.role == 'cancel'){
+            } else if (answer.role == 'cancel') {
                 console.log('cancel callback success!');
-                if(typeof cb == 'function'){
+                if (typeof cb == 'function') {
                     cb.call(this)
-                }else{
+                } else {
                     cb.dispose()
                 }
             }
-        }else{
-            if(typeof cb == 'function'){
+        } else {
+            if (typeof cb == 'function') {
                 cb.call(this)
-            }else{
+            } else {
                 cb.dispose()
             }
         }
@@ -124,15 +128,15 @@ export class DialogMiscDemoComponent {
     /*
     * popup user defined template
     * */
-    popupTemplate(tp){
+    popupTemplate(tp) {
         this._templateRef = this._popupService.popup(tp);
     }
 
-    closeTemplate(){
+    closeTemplate() {
         this._templateRef.dispose();
     }
 
-     _getModalOptions(): PopupOptions {
+    _getModalOptions(): PopupOptions {
         return {
             modal: true, //是否模态
             showEffect: PopupEffect.bubbleIn,
@@ -140,7 +144,7 @@ export class DialogMiscDemoComponent {
         };
     }
 
-     _getUnModalOptions(event): PopupOptions {
+    _getUnModalOptions(event): PopupOptions {
         return {
             modal: false, //是否模态
             showEffect: PopupEffect.bubbleIn,
