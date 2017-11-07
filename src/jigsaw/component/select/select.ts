@@ -78,7 +78,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 
     @Input() public optionCount: number;
 
-    private dataCallbackRemoval: CallbackRemoval;
+    private _dataCallbackRemoval: CallbackRemoval;
 
     private _data: ArrayCollection<object>;
 
@@ -89,10 +89,10 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 
     public set data(value: ArrayCollection<object> | object[]) {
         this._data = value instanceof ArrayCollection ? value : new ArrayCollection(value);
-        if (this.dataCallbackRemoval) {
-            this.dataCallbackRemoval()
+        if (this._dataCallbackRemoval) {
+            this._dataCallbackRemoval()
         }
-        this.dataCallbackRemoval = this._data.onRefresh(this._setOptionListHeight, this);
+        this._dataCallbackRemoval = this._data.onRefresh(this._setOptionListHeight, this);
         if (this.initialized) {
             // 初始化之后赋值，要计算下拉的高度
             this._setOptionListHeight();
@@ -155,8 +155,8 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
             // 解绑document上的点击事件
             this._documentListen();
         }
-        if (this.dataCallbackRemoval) {
-            this.dataCallbackRemoval()
+        if (this._dataCallbackRemoval) {
+            this._dataCallbackRemoval()
         }
     }
 
