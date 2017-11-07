@@ -15,7 +15,7 @@ import {AbstractJigsawComponent} from "../common";
         }
     ],
 })
-export class JigsawRateComponent extends AbstractJigsawComponent implements OnInit,  ControlValueAccessor{
+export class JigsawRateComponent extends AbstractJigsawComponent implements OnInit, ControlValueAccessor{
     _prefixCls = 'rate';
     _innerPrefixCls = `${this._prefixCls}-star`;
     _classMap;
@@ -27,18 +27,26 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
     _allowHalf = false;
     _disabled = false;
     _floatReg: any = /^\d+(\.\d+)?$/;
+    _icon = 'fa fa-star';
 
     // ngModel Access
     onChange: any = Function.prototype;
     onTouched: any = Function.prototype;
 
+    @Output() public valueChange: EventEmitter<number> = new EventEmitter<number>();
+
     @Input()
-    set nzCount(value: number) {
+    public set icon (icon: string){
+        this._icon = icon;
+    }
+
+    @Input()
+    public set max(value: number) {
         this._count = value;
     }
 
     @Input()
-    set nzAllowHalf(value: boolean | string) {
+    public set allowHalf(value: boolean | string) {
         if (value === '') {
             this._allowHalf = true;
         } else {
@@ -47,20 +55,11 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
     }
 
     @Input()
-    set nzDefaultValue(value: number) {
-        this._value = value;
-        if (this._floatReg.test(value)) {
-            value += 0.5;
-            this._hasHalf = true;
-        }
-        this._hoverValue = value;
-    }
-
-    get nzValue(): number {
+    public get value(): number {
         return this._value;
     };
 
-    set nzValue(value: number) {
+    public set value(value: number) {
         if (this._value === value) {
             return;
         }
@@ -73,7 +72,7 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
     }
 
     @Input()
-    set nzDisabled(value: boolean) {
+    public set disabled(value: boolean) {
         this._disabled = value;
         this.setClassMap();
     }
@@ -141,7 +140,10 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
     }
 
     writeValue(value: any): void {
-        this.nzValue = value;
+        this.value = value;
+        if (this.initialized) {
+            this.valueChange.emit(this.value);
+        }
     }
 
     registerOnChange(fn: (_: any) => {}): void {
@@ -153,7 +155,7 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
     }
 
     setDisabledState(isDisabled: boolean): void {
-        this.nzDisabled = isDisabled;
+        this.disabled = isDisabled;
     }
 
     ngOnInit() {

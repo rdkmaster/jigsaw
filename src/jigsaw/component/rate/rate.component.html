@@ -4,8 +4,10 @@
         (mouseover)="_hoverRate($event, i, true)"
         (click)="_clickRate($event, i, true)">
         <div class="rate-star-first" (mouseover)="_hoverRate($event, i)" (click)="_clickRate($event, i)">
-            <i class="fa fa-star"></i></div>
+            <i [ngClass]="_icon"></i>
+        </div>
         <div class="rate-star-second" (mouseover)="_hoverRate($event, i, true)" (click)="_clickRate($event, i, true)">
-            <i class="fa fa-star"></i></div>
+            <i [ngClass]="_icon"></i>
+        </div>
     </li>
 </ul>
