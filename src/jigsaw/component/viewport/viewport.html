@@ -2,14 +2,14 @@
              class="jigsaw-viewport-vertical-scrollbar"
              [(value)]="viewport.verticalTo"
              [height]="height"
-             [max]="viewport.maxHeight"
+             [max]="viewport.maxHeight - viewport.height"
              [vertical]="true">
 </j-scrollbar>
 
 <j-scrollbar #hScrollbar [style.visibility]="_$showSlider || hScrollbar.dragging ? 'visible' : 'hidden'"
              class="jigsaw-viewport-horizontal-scrollbar"
              [(value)]="viewport.horizontalTo"
-             [max]="viewport.maxWidth">
+             [max]="viewport.maxWidth - viewport.width">
 </j-scrollbar>
 
 <ng-content></ng-content>
