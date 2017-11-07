@@ -10,7 +10,7 @@ describe('alert', () => {
     });
     describe('test popup', () => {
         beforeEach(async() => {
-          await  browser.get('/#/alert/popup');
+          await  browser.get('/alert/popup');
           await browser.sleep(300);
         });
         it('should be alert when click button popup and display ok when click definite ', async () => {
@@ -71,7 +71,7 @@ describe('alert', () => {
     });
     describe('test customized', async() => {
         it('should change color when selected ', () => {
-            browser.get('/#/alert/customized');
+            browser.get('/alert/customized');
             const jigsawAlertEl = element(by.tagName('jigsaw-alert')),
                 labelCheckboxEl = jigsawAlertEl.element(by.css('.jigsaw-checkbox'));
             labelCheckboxEl.click();

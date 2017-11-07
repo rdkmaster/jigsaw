@@ -9,7 +9,7 @@ describe('slider', () => {
 
     xdescribe('test basic ', () => {
         beforeEach(() => {
-            browser.get('/#/slider/basic')
+            browser.get('/slider/basic')
         });
         it('shoud drag and drop slider', async () => {
             const sliderHandle = element.all(by.css('.jigsaw-slider-handle')),

@@ -7,7 +7,7 @@ describe('collapse', () => {
 
     describe('test basic function', () => {
         beforeEach(() => {
-            browser.get('/#/collapse/basic')
+            browser.get('/collapse/basic')
         });
 
         it('should map the head and content into collapse', () => {

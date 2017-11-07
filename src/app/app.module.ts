@@ -1,35 +1,31 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateService} from '@ngx-translate/core';
-import {JigsawButtonModule} from "jigsaw/component/button/button";
 
+import {JigsawRootModule} from "jigsaw/component/root/root";
 import {AppComponent} from './app.component';
-import {JigsawRootModule} from "../jigsaw/component/root/root";
-import {AjaxInterceptor} from 'app/app.interceptors';
+import {AjaxInterceptor} from './app.interceptors';
+import {DemoListComponent} from "./demo-list.component";
+import {routerConfig} from "./router-config";
 
-const appRoutes = [
-    {
-        path: '',
-        loadChildren: 'app/e2e-testee/demo-list#DemoListModule'
-    },
-    {
-        path: '**',//fallback router must in the last
-        loadChildren: 'app/e2e-testee/demo-list#DemoListModule'
-    }
-];
+{
+    (<any[]>routerConfig).push(
+        {path: '', component: DemoListComponent},
+        {path: '**', redirectTo: ''}
+    );
+}
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent, DemoListComponent
     ],
     imports: [
-        BrowserModule, BrowserAnimationsModule, FormsModule, HttpClientModule,
-        RouterModule.forRoot(appRoutes, {useHash: true}),
-        JigsawRootModule, JigsawButtonModule
+        BrowserModule, BrowserAnimationsModule, HttpClientModule,
+        RouterModule.forRoot(routerConfig),
+        JigsawRootModule
     ],
     providers: [
         TranslateService,

@@ -6,7 +6,7 @@ describe('tile', () => {
     });
     describe('test selectedItems', () => {
         beforeEach(() => {
-            browser.get('/#/tile/selectedItems');
+            browser.get('/tile/selectedItems');
         });
         it('should be active when clicked', () => {
             const jigsawTitleEl = element(by.tagName('jigsaw-tile')),
@@ -18,7 +18,7 @@ describe('tile', () => {
     });
     describe('test selectedItems', () => {
         beforeEach(() => {
-            browser.get('/#/tile/multipleSelect');
+            browser.get('/tile/multipleSelect');
         });
         it('should be active when clicked', () => {
             const jigsawTitleEl = element(by.tagName('jigsaw-tile')),

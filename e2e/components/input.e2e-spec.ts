@@ -7,7 +7,7 @@ describe('input', () => {
 
     describe('test bidirectional bindings and clearable', () => {
         beforeEach(() => {
-            browser.get('/#/input/basic');
+            browser.get('/input/basic');
         });
 
         it('should update bind property when input value', () => {
@@ -37,7 +37,7 @@ describe('input', () => {
 
     describe('test prefix icon', () => {
         beforeEach(() => {
-            browser.get('/#/input/prefixIcon');
+            browser.get('/input/prefixIcon');
         });
 
         it('should be mapped into component and display prefix icon', () => {
@@ -49,7 +49,7 @@ describe('input', () => {
 
     describe('test focus', () => {
         beforeEach(() => {
-            browser.get('/#/input/focus')
+            browser.get('/input/focus')
         });
 
         it('should be focused when call focus function', () => {

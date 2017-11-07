@@ -13,3 +13,4 @@ import './tasks/jigsaw-labs-release';
 import './tasks/validate-release';
 
 import './tasks/ensure-url-matches-path'
+import './tasks/generate-demo-info'
