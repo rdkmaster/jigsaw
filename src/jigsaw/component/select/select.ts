@@ -6,10 +6,10 @@ import {
 import {CommonModule} from '@angular/common';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {AbstractJigsawComponent} from "../common";
-import {CommonUtils} from '../../core/utils/common-utils';
+import {CallbackRemoval, CommonUtils} from '../../core/utils/common-utils';
 import {InternalUtils} from '../../core/utils/internal-utils';
 import {ArrayCollection} from "../../core/data/array-collection";
-import {PerfectScrollbarConfigInterface, PerfectScrollbarModule} from "ngx-perfect-scrollbar/dist";
+import {PerfectScrollbarModule} from "ngx-perfect-scrollbar/dist";
 
 @Directive({
     selector: '.jigsaw-select-option-list',
@@ -18,7 +18,7 @@ import {PerfectScrollbarConfigInterface, PerfectScrollbarModule} from "ngx-perfe
         '[style.height]': 'height'
     }
 })
-export class OptionList extends AbstractJigsawComponent{
+export class OptionList extends AbstractJigsawComponent {
 
 }
 
@@ -32,7 +32,7 @@ export class OptionList extends AbstractJigsawComponent{
         '[style.line-height]': 'height'
     },
     providers: [
-        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSelect), multi: true },
+        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSelect), multi: true},
     ]
 })
 export class JigsawSelect extends AbstractJigsawComponent implements ControlValueAccessor, AfterViewInit, OnDestroy, OnInit {
@@ -65,7 +65,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     @Output() public valueChange: EventEmitter<any> = new EventEmitter<any>();
 
     //设置对象的标识
-    @Input() public trackItemBy: string|string[];
+    @Input() public trackItemBy: string | string[];
 
     //显示在界面上的属性名
     @Input() public labelField: string = 'label';
@@ -78,16 +78,25 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 
     @Input() public optionCount: number;
 
+    private _dataCallbackRemoval: CallbackRemoval;
+
     private _data: ArrayCollection<object>;
 
     @Input()
-    public get data(): ArrayCollection<object>|object[] {
+    public get data(): ArrayCollection<object> | object[] {
         return this._data;
     }
 
-    public set data(value: ArrayCollection<object>|object[]) {
+    public set data(value: ArrayCollection<object> | object[]) {
         this._data = value instanceof ArrayCollection ? value : new ArrayCollection(value);
-        this._data.onRefresh(this._setOptionListHeight, this);
+        if (this._dataCallbackRemoval) {
+            this._dataCallbackRemoval()
+        }
+        this._dataCallbackRemoval = this._data.onRefresh(this._setOptionListHeight, this);
+        if (this.initialized) {
+            // 初始化之后赋值，要计算下拉的高度
+            this._setOptionListHeight();
+        }
     }
 
     //获取映射的子组件option
@@ -109,6 +118,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
             this._documentListen = this._renderer.listen('document', 'click', () => this._$optionListHidden = true);
         }
     }
+
     //更改option选中状态
     private _updateSelectedOption(): void {
         this._options.length && this._options.forEach((option) => {
@@ -117,17 +127,19 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
         });
     };
 
-    private _setOptionListHeight(){
-        if(this.optionCount){
-            if ( this._data && this._data.length > this.optionCount) {
+    private _setOptionListHeight() {
+        if (this.optionCount) {
+            if (this._data && this._data.length > this.optionCount) {
                 this.optionHeight = this._elementRef.nativeElement.offsetHeight * this.optionCount + 'px';
             }
-
         }
     }
 
     ngOnInit() {
         super.ngOnInit();
+        if (this.value) {
+            this._$selectedLabel = this.value[this.labelField];
+        }
         this.trackItemBy = InternalUtils.initTrackItemBy(<string>this.trackItemBy, this.labelField);
         this._setOptionListHeight();
     }
@@ -139,18 +151,25 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     }
 
     ngOnDestroy() {
-        this._documentListen && this._documentListen();//解绑document上的点击事件
+        if (this._documentListen) {
+            // 解绑document上的点击事件
+            this._documentListen();
+        }
+        if (this._dataCallbackRemoval) {
+            this._dataCallbackRemoval()
+        }
     }
 
-    private _propagateChange:any = () => {};
+    private _propagateChange: any = () => {
+    };
 
     public writeValue(value: any): void {
         if (!value || this._value == value) {
             return;
         }
         this._value = value;
-        this._$selectedLabel = value[this.labelField];
         if (this.initialized) {
+            this._$selectedLabel = value[this.labelField];
             this._updateSelectedOption();
             this.valueChange.emit(this.value);
         }
