@@ -34,11 +34,13 @@ import {routerConfig} from "./router-config";
 
 @Component({
     template: `
-        <div *ngFor="let route of routes">
-            <h3>{{route.path}}</h3>
+        <div *ngFor="let router of routes">
+            <h3>{{router.path}}</h3>
             <hr>
-            <a *ngFor="let path of route.childPaths" routerLink="/{{route.path}}/{{path}}">
-                {{path}}
+            <a *ngFor="let childRouter of router.childRouters"
+               [ngStyle]="{'font-weight': (childRouter.recommended ? 'bold' : '')}"
+               routerLink="/{{router.path}}/{{childRouter.path}}">
+                {{childRouter.path}}
             </a>
         </div>
     `,
@@ -104,7 +106,7 @@ export class DemoListManager {
             console.error('ERROR: invalid router path: ' + path);
             return;
         }
-        cfg.childPaths = [];
-        childConfig.forEach(config => cfg.childPaths.push(config.path));
+        cfg.childRouters = [];
+        childConfig.forEach(config => cfg.childRouters.push(config));
     }
 }
