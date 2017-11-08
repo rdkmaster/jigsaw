@@ -19,19 +19,18 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
     _prefixCls = 'rate';
     _innerPrefixCls = `${this._prefixCls}-star`;
     _classMap;
-    _starArray: Array<any> = new Array();
+    _starArray: Array<any> = [];
     _count = 5;
     _value = 0;
     _hoverValue = 0; // 鼠标悬浮时的星数，为正整数，和_hasHalf配合使用
     _hasHalf = false;
     _allowHalf = false;
     _disabled = false;
-    _floatReg: any = /^\d+(\.\d+)?$/;
+    _floatReg: any = /^\d+(\.\d+)?$/;   // 小数判断
     _icon = 'fa fa-star';
 
-    // ngModel Access
-    onChange: any = Function.prototype;
-    onTouched: any = Function.prototype;
+    onChange = (_) => {};
+    onTouched = () => {};
 
     @Output() public valueChange: EventEmitter<number> = new EventEmitter<number>();
 
@@ -77,6 +76,10 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
         this.setClassMap();
     }
 
+    constructor(){
+        super();
+    }
+
     setClassMap(): void {
         this._classMap = {
             [this._prefixCls]              : true,
@@ -102,6 +105,7 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
             this._value -= 0.5;
         }
         this.onChange(this._value);
+        this.valueChange.emit(this.value);
     }
 
     _hoverRate(e, index, isFull): void {
@@ -141,9 +145,6 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
 
     writeValue(value: any): void {
         this.value = value;
-        if (this.initialized) {
-            this.valueChange.emit(this.value);
-        }
     }
 
     registerOnChange(fn: (_: any) => {}): void {
