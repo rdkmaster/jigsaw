@@ -4,13 +4,12 @@
 import {Component} from '@angular/core';
 import {DropDownTrigger} from "jigsaw/component/combo-select/combo-select";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
 })
-export class ComboSelectBasicDemo extends DemoBase {
+export class ComboSelectBasicDemo {
     selectedCity = new ArrayCollection();
     cities = [
         {label: '北京', type: '', closable: false},
@@ -58,5 +57,9 @@ export class ComboSelectBasicDemo extends DemoBase {
         }
     }
 
-
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }

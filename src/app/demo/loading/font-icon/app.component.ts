@@ -7,7 +7,7 @@ import {JigsawFontLoading} from "jigsaw/component/loading/loading";
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class FontLoadingDemoComponent{
+export class FontLoadingDemoComponent {
     @ViewChild('block') block: ElementRef;
 
     blockLoading: PopupInfo;
@@ -38,15 +38,16 @@ export class FontLoadingDemoComponent{
         }
     }
 
-    closeGlobalLoading(){
-        if(this.globalLoading){
+    closeGlobalLoading() {
+        if (this.globalLoading) {
             this.globalLoading.dispose();
             this.globalLoading = null;
         }
     }
 
     public isLoading: boolean = false;
-    public label:string = 'submit';
+    public label: string = 'submit';
+
     startToLoad() {
         this.isLoading = true;
         this.label = 'loading...';
@@ -55,4 +56,10 @@ export class FontLoadingDemoComponent{
             this.label = 'submit';
         }, 3000)
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }

@@ -1,10 +1,10 @@
-import {Component, Renderer2, ViewContainerRef} from "@angular/core";
-import { ArrayCollection } from "jigsaw/core/data/array-collection";
+import {Component} from "@angular/core";
+import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 @Component({
-  templateUrl: './app.component.html'
+    templateUrl: './app.component.html'
 })
-export class TileselectFullDemoComponent{
+export class TileSelectFullDemoComponent {
 
     citys = new ArrayCollection([
         {label: "北京"},
@@ -19,11 +19,11 @@ export class TileselectFullDemoComponent{
     selectedItems1 = new ArrayCollection();
     selectedItemsStr1: string;
 
-    handleSelect(selectedItems){
+    handleSelect(selectedItems) {
         this.selectedItemsStr1 = selectedItems.map(item => item.label).toString()
     }
 
-    clearSelectedItems(){
+    clearSelectedItems() {
         this.selectedItems1 = new ArrayCollection();
         this.selectedItemsStr1 = '';
     }
@@ -33,7 +33,8 @@ export class TileselectFullDemoComponent{
         {label: "深圳"},
     ];
     selectedItemsStr2: string;
-    handleSelect2(selectedItems){
+
+    handleSelect2(selectedItems) {
         this.selectedItemsStr2 = selectedItems.map(item => item.label).toString()
     }
 
@@ -42,8 +43,15 @@ export class TileselectFullDemoComponent{
         {label: "深圳"},
     ];
     selectedItemsStr3: string;
-    handleSelect3(selectedItems){
+
+    handleSelect3(selectedItems) {
         this.selectedItemsStr3 = selectedItems.map(item => item.label).toString()
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

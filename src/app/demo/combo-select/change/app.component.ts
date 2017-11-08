@@ -4,12 +4,11 @@
 
 import {Component} from '@angular/core';
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html',
 })
-export class ComboSelectChangeDemo extends DemoBase {
+export class ComboSelectChangeDemo {
 
     selectedCity = new ArrayCollection([{label: "北京"}]);
 
@@ -41,4 +40,10 @@ export class ComboSelectChangeDemo extends DemoBase {
     valueChange(value) {
         console.log(value);
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }

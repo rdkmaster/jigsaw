@@ -1,4 +1,4 @@
-import {Component, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component} from "@angular/core";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 @Component({
@@ -15,11 +15,15 @@ export class SelectCheckboxDemoComponent {
         {label: "长沙"},
         {label: "西安"}
     ]);
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
+
+    selectChange(message: any) {
+        console.log("select city is:" + message.label);
     }
-    public selectChange(message:any){
-        console.log("select city is:"+ message.label);
-    }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

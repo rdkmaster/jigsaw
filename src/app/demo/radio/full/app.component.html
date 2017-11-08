@@ -1,3 +1,9 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
     <h2>Radio</h2>
     <div class="demo-1 live-demo live-demo-block">
@@ -5,7 +11,7 @@
         <p class="comment">数据是对象数组时必须输入<code>trackItemBy</code></p>
         <j-radios [(value)]="selectedCity" trackItemBy="name"
                        (valueChange)="radioChange($event)">
-            <j-radio-option *ngFor="let item of citys" [value]="item">
+            <j-radio-option *ngFor="let item of cities" [value]="item">
                 {{item.name}}
             </j-radio-option>
         </j-radios>

@@ -1,4 +1,4 @@
-import {Component, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component} from "@angular/core";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 @Component({
@@ -15,13 +15,18 @@ export class RadioBasicDemoComponent {
         {label: "西安", id: 6}
     ]);
 
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
+    constructor() {
         this.selectedCity = {id: 6};
     }
 
     public radioChange(message: any) {
         console.log(`switch message is: ${message.label}`);
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

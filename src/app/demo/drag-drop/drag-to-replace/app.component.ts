@@ -1,12 +1,11 @@
 import {Component} from "@angular/core";
 import {DragDropInfo} from "jigsaw/directive/dragdrop/types";
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: 'app.component.html',
     styleUrls: ['app.component.scss']
 })
-export class DragToReplaceDemoComponent extends DemoBase {
+export class DragToReplaceDemoComponent {
 
     private _replacedEl: string;
 
@@ -44,4 +43,10 @@ export class DragToReplaceDemoComponent extends DemoBase {
         this._replacedEl = dragInfo.element.innerHTML;
         dragInfo.element.innerHTML = dragInfo.dragDropData;
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }

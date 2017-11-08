@@ -1,10 +1,10 @@
-import {Component, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component} from "@angular/core";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 @Component({
-  templateUrl: './app.component.html'
+    templateUrl: './app.component.html'
 })
-export class TileselectLabelFieldComponent {
+export class TileSelectLabelFieldComponent {
     citys = new ArrayCollection([
         {name: "北京"},
         {name: "上海"},
@@ -13,8 +13,11 @@ export class TileselectLabelFieldComponent {
         {name: "长沙"},
         {name: "西安"}
     ]);
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
-    }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

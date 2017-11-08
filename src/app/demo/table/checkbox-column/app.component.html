@@ -1,4 +1,13 @@
-<jigsaw-table #myTable height="600" [data]="tableData" [additionalColumnDefines]="_additionalColumns" (dataChange)="onCellChange($event)"></jigsaw-table>
-<p class="message">table change answer is: <span>{{_changeMsg}}</span></p>
-<p class="message">selectedRowsIndex: <span>{{_selectedRows}}</span></p>
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-table #myTable height="600"
+              [data]="tableData" [additionalColumnDefines]="additionalColumns"
+              (dataChange)="onCellChange($event)">
+</jigsaw-table>
+<p class="message">table change answer is: <span>{{changeMsg}}</span></p>
+<p class="message">selectedRowsIndex: <span>{{selectedRows}}</span></p>
 

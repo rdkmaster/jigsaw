@@ -1,10 +1,12 @@
-import { NgModule } from '@angular/core';
-import { JigsawTimeModule } from "jigsaw/component/time/index";
-import { TimeGrItemsComponent }  from './app.component';
+import {NgModule} from '@angular/core';
+import {JigsawTimeModule} from "jigsaw/component/time/index";
+import {TimeGrItemsComponent} from './app.component';
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 
 @NgModule({
-    imports: [ JigsawTimeModule ],
-    declarations: [ TimeGrItemsComponent ],
-    bootstrap: [ TimeGrItemsComponent ]
+    imports: [JigsawTimeModule, JigsawDemoDescriptionModule],
+    declarations: [TimeGrItemsComponent],
+    bootstrap: [TimeGrItemsComponent]
 })
-export class TimeGrItemsDemoModule {}
+export class TimeGrItemsDemoModule {
+}

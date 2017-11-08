@@ -1,10 +1,12 @@
-import { NgModule } from '@angular/core';
-import { JigsawSelectModule } from "jigsaw/component/select/select";
-import { SelectBasicDemoComponent }  from './app.component';
+import {NgModule} from '@angular/core';
+import {JigsawSelectModule} from "jigsaw/component/select/select";
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
+import {SelectBasicDemoComponent} from './app.component';
 
 @NgModule({
-    imports: [ JigsawSelectModule ],
-    declarations: [ SelectBasicDemoComponent ],
-    bootstrap: [ SelectBasicDemoComponent ]
+    imports: [JigsawSelectModule, JigsawDemoDescriptionModule],
+    declarations: [SelectBasicDemoComponent],
+    bootstrap: [SelectBasicDemoComponent]
 })
-export class SelectBasicDemoModule {}
+export class SelectBasicDemoModule {
+}

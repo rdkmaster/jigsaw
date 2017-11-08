@@ -1,4 +1,4 @@
-import {Component, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component} from "@angular/core";
 import {TableData} from "jigsaw/core/data/table-data";
 import {ColumnDefine} from "jigsaw/component/table/table-typings";
 import {DefaultCellRenderer} from "jigsaw/component/table/table-renderer";
@@ -11,8 +11,7 @@ import {TableHeadIcon} from "./table-renderer";
 export class TablePerformsDemoComponent {
     tableData: TableData;
 
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
+    constructor() {
         let start = new Date().getTime();
         this.generatorTableData();
         setTimeout(() => {
@@ -65,4 +64,10 @@ export class TablePerformsDemoComponent {
                 }
             }
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }

@@ -1,13 +1,13 @@
-import {Component, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component} from "@angular/core";
 import {TableData} from "jigsaw/core/data/table-data";
 
 @Component({
-  templateUrl: './app.component.html'
+    templateUrl: './app.component.html'
 })
 export class TableBasicDemoComponent {
     tableData: TableData;
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
+
+    constructor() {
         this.tableData = new TableData(
             [
                 [
@@ -166,5 +166,11 @@ export class TableBasicDemoComponent {
             ["name", "position", "salary", "enroll-date", "office", "extn"],
             ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

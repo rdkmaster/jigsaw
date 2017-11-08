@@ -1,5 +1,5 @@
-import {Component, Renderer2, ViewContainerRef} from "@angular/core";
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {Component} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import {PageableTableData} from "jigsaw/core/data/table-data";
 import {HttpClientOptions} from "jigsaw/core/data/component-data";
 
@@ -9,8 +9,7 @@ import {HttpClientOptions} from "jigsaw/core/data/component-data";
 export class ServerSidePagingDemoComponent {
     public pageable: PageableTableData;
 
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2, http: HttpClient) {
+    constructor(http: HttpClient) {
         const arg: HttpClientOptions = {
             url: 'mock-data/countries',
             method: 'get', params: {aa: 11, bb: 22}
@@ -26,5 +25,11 @@ export class ServerSidePagingDemoComponent {
     getPageSize(message: any) {
         console.log("page size is: " + message);
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

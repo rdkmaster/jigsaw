@@ -9,13 +9,12 @@ import {AbstractGraphData} from "jigsaw/core/data/graph-data";
 import {EchartOptions} from "jigsaw/core/data/echart-types";
 import {JigsawGraph} from "jigsaw/component/graph/graph";
 import {JigsawInput} from "jigsaw/component/input/input";
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html'
 })
 
-export class GraphResizeComponent extends DemoBase implements OnInit {
+export class GraphResizeComponent implements OnInit {
     data: AbstractGraphData;
     autoResize: boolean = true;
     graphWidth: string = '100%';
@@ -42,6 +41,11 @@ export class GraphResizeComponent extends DemoBase implements OnInit {
             )
     }
 
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 
 export class GraphDataDemo extends AbstractGraphData {

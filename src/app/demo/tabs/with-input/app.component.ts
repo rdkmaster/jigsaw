@@ -1,14 +1,12 @@
 /**
  * Created by 10177553 on 2017/3/29.
  */
-import {
-    Component, OnInit, Renderer2, ViewContainerRef
-} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/core/data/table-data";
 
 @Component({
-    templateUrl:"./app.component.html"
+    templateUrl: "./app.component.html"
 })
 export class JigsawTabsWithInputComponent implements OnInit {
 
@@ -16,10 +14,9 @@ export class JigsawTabsWithInputComponent implements OnInit {
 
     tableData: TableData;
 
-    tabDatas = [{title:"111",key:"XXX",content:"content 111"},{title:"222",key:"YYY",content:"content 222"}];
+    tabDatas = [{title: "111", key: "XXX", content: "content 111"}, {title: "222", key: "YYY", content: "content 222"}];
 
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2, http: HttpClient) {
+    constructor(http: HttpClient) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');
@@ -27,19 +24,25 @@ export class JigsawTabsWithInputComponent implements OnInit {
             console.log(this.tableData);
         });
 
-        this.tabDatas.forEach(tabData =>{
+        this.tabDatas.forEach(tabData => {
             this[tabData.key] = new TableData();
             this[tabData.key].http = http;
         })
     }
 
-    getTableData(){
-        this.tabDatas.forEach(tabData =>{
+    getTableData() {
+        this.tabDatas.forEach(tabData => {
             console.log(this[tabData.key]);
             this[tabData.key].fromAjax('mock-data/hr-list');
         });
     }
 
-    ngOnInit() { }
+    ngOnInit() {
+    }
 
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }

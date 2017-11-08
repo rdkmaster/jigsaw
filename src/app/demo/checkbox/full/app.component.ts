@@ -1,12 +1,11 @@
 import {Component} from "@angular/core";
 import {CheckBoxStatus} from "jigsaw/component/checkbox/typings";
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class CheckBoxFullComponent extends DemoBase {
+export class CheckBoxFullComponent {
     //demo-1
     demo1Checked = CheckBoxStatus.unchecked;
     enableIndeterminate: boolean = false;
@@ -17,5 +16,11 @@ export class CheckBoxFullComponent extends DemoBase {
     //demo-3
     demo3Checked = CheckBoxStatus.unchecked;
     enabled: boolean;
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

@@ -1,23 +1,27 @@
-import { Component, Renderer2, ViewContainerRef } from "@angular/core";
+import {Component} from "@angular/core";
 
 @Component({
-  templateUrl: './app.component.html'
+    templateUrl: './app.component.html'
 })
 export class PaginationBasicDemoComponent {
     currentPage: number = 1;
 
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
+    getCurrentPage(message: any) {
+        console.log("current page is: " + message);
     }
 
-    getCurrentPage(message:any){
-        console.log("current page is: "+message);
+    getPageSize(message: any) {
+        console.log("page size is: " + message);
     }
-    getPageSize(message:any){
-        console.log("page size is: "+message);
-    }
-    changeCurrentPage(number){
+
+    changeCurrentPage(number) {
         this.currentPage = number;
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

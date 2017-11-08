@@ -1,29 +1,20 @@
-import {
-    Component, ElementRef, ViewChild, Renderer2, ViewContainerRef
-} from "@angular/core";
+import {Component, ElementRef, ViewChild} from "@angular/core";
 import {PopupEffect, PopupInfo, PopupPositionType, PopupService} from "jigsaw/service/popup.service";
 import {UserTooltipDialogComponent} from "./user-defined-tooltip-dialog";
 
 @Component({
-    template: `
-        <div style="padding-top: 40px">
-            <jigsaw-button #insertPlace (mouseenter)="popup()" (mouseleave)="close()">
-                <span class="fa fa-thumbs-up"></span>tooltip dialog!
-            </jigsaw-button>
-        </div>
-    `
+    templateUrl: './app.component.html'
 })
 export class TooltipDialogDemoComponent {
-     _tooltipInfo: PopupInfo;
+    tooltipInfo: PopupInfo;
+
     @ViewChild("insertPlace", {read: ElementRef}) insertPlaceEl: ElementRef;
 
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2,
-                private _popupService: PopupService) {
+    constructor(private _popupService: PopupService) {
     }
 
     popup() {
-        this._tooltipInfo = this._popupService.popup(UserTooltipDialogComponent, {
+        this.tooltipInfo = this._popupService.popup(UserTooltipDialogComponent, {
             modal: false, //是否模态
             showEffect: PopupEffect.bubbleIn,
             hideEffect: PopupEffect.bubbleOut,
@@ -37,7 +28,13 @@ export class TooltipDialogDemoComponent {
     }
 
     close() {
-        this._tooltipInfo.dispose();
+        this.tooltipInfo.dispose();
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

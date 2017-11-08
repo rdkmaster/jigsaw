@@ -1,4 +1,4 @@
-import {Component, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component} from "@angular/core";
 
 @Component({
     templateUrl: './app.component.html',
@@ -7,7 +7,7 @@ import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 export class RadioFullComponent {
     // demo1
     selectedCity = {name: "北京"};
-    citys = [
+    cities = [
         {name: "北京", id: "1"},
         {name: "上海", id: "2"},
         {name: "南京", id: "3"},
@@ -60,5 +60,10 @@ export class RadioFullComponent {
         },
     ];
 
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

@@ -1,26 +1,27 @@
-import {Component, ViewChild, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component, ViewChild} from "@angular/core";
 import {JigsawInput} from "jigsaw/component/input/input";
 
 @Component({
-  templateUrl: './app.component.html'
+    templateUrl: './app.component.html'
 })
 export class InputFocusDemoComponent {
     inputValue: any;
     focusMessage: string;
-    @ViewChild('myInput') myInput:JigsawInput;
+    @ViewChild('myInput') myInput: JigsawInput;
 
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
-    }
-    
     click() {
         this.myInput.focus();
     }
 
-    focusHandler(event){
+    focusHandler(event) {
         console.log(event);
         this.focusMessage = 'input component focused'
     }
 
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

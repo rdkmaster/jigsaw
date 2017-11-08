@@ -1,10 +1,12 @@
-import { NgModule } from '@angular/core';
-import { JigsawTableModule } from "jigsaw/component/table/table";
-import { TableSetHeaderSortDemoComponent }  from './app.component';
+import {NgModule} from '@angular/core';
+import {JigsawTableModule} from "jigsaw/component/table/table";
+import {TableSetHeaderSortDemoComponent} from './app.component';
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 
 @NgModule({
-    imports: [ JigsawTableModule ],
-    declarations: [ TableSetHeaderSortDemoComponent ],
-    bootstrap: [ TableSetHeaderSortDemoComponent ]
+    imports: [JigsawTableModule, JigsawDemoDescriptionModule],
+    declarations: [TableSetHeaderSortDemoComponent],
+    bootstrap: [TableSetHeaderSortDemoComponent]
 })
-export class TableSetHeaderSortDemoModule {}
+export class TableSetHeaderSortDemoModule {
+}

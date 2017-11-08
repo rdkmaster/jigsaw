@@ -9,7 +9,6 @@ import {TableBasicDemoModule} from "./basic/app.module";
 import {TableDataChangeDemoModule} from "./data-change/app.module";
 import {TableDataFromAjaxDemoModule} from "./data-from-ajax/app.module";
 import {TableFixedHeadDemoModule} from "./fixed-header/app.module";
-import {TableLineEllipsisDemoModule} from "./line-ellipsis/app.module";
 import {LocalPagingDataDemoModule} from "./local-paging-data/app.module";
 import {TablePageableDemoModule} from "./pageable/app.module";
 import {TablePerformsDemoModule} from "./performance/app.module";
@@ -57,7 +56,6 @@ import {TableAddIDWithPagingComponent} from "./index-column-with-paging/app.comp
 import {TableAddIDWithDebouncePagingComponent} from "./debounce-while-changing-page/app.component";
 import {TableDataWithPopupDemoComponent} from "./with-popup/app.component";
 import {TableRendererOfTemplateRefDemoComponent} from "./template-ref-renderer/app.component";
-import {TableLineEllipsisDemoComponent} from "./line-ellipsis/app.component";
 import {LocalPagingDataDemoComponent} from "./local-paging-data/app.component";
 import {TableHideHeadDemoComponent} from "./hide-header/app.component";
 import {TableSelectRowDemoComponent} from "./select-row/app.component";
@@ -133,9 +131,6 @@ export const routerConfig = [
         path: 'template-ref-renderer', component: TableRendererOfTemplateRefDemoComponent
     },
     {
-        path: 'line-ellipsis', component: TableLineEllipsisDemoComponent
-    },
-    {
         path: 'local-paging-data', component: LocalPagingDataDemoComponent
     },
     {
@@ -160,12 +155,12 @@ export const routerConfig = [
         RouterModule.forChild(routerConfig),
         TableAddCheckboxColumnDemoModule, TableAddColumnDemoModule, TableAddIDColumnDemoModule, TableAddIDWithDebouncePagingModule,
         TableAddIDWithPagingModule, TableBasicDemoModule, TableDataChangeDemoModule, TableDataFromAjaxDemoModule,
-        TableFixedHeadDemoModule, TableLineEllipsisDemoModule, LocalPagingDataDemoModule, TablePageableDemoModule,
+        TableFixedHeadDemoModule, BigTableDataDemoModule, LocalPagingDataDemoModule, TablePageableDemoModule,
         TablePerformsDemoModule, TableRendererDemoModule, TableRendererOfTemplateRefDemoModule, TableContentWidthDemoModule,
         TableSetCellClassDemoModule, TableSetCellEditableDemoModule, TableSetCellRenderDemoModule, TableColumnGroupDemoModule,
         TableColumnSetVisibleDemoModule, TableColumnSetWidthDemoModule, TableSetHeaderClassDemoModule, TableSetHeaderRenderDemoModule,
         TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, swimLaneDiagramDemoModule, TableHideHeadDemoModule,
-        TableSelectRowDemoModule, BigTableDataDemoModule
+        TableSelectRowDemoModule
     ]
 })
 export class TableDemoModule {

@@ -1,14 +1,12 @@
 /**
  * Created by 10177553 on 2017/3/29.
  */
-import {
-	Component, Renderer2, ViewContainerRef
-} from '@angular/core';
+import {Component} from '@angular/core';
 import {TableData} from "jigsaw/core/data/table-data";
 
 @Component({
     templateUrl: './app.component.html',
-    styleUrls:['./app.component.scss']
+    styleUrls: ['./app.component.scss']
 })
 export class JigsawTabsDemoComponent {
     fruitList: TableData = new TableData(
@@ -27,7 +25,9 @@ export class JigsawTabsDemoComponent {
         console.info(value);
     }
 
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
-    }
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }

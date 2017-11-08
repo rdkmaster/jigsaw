@@ -1,16 +1,18 @@
-import {Component, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component} from "@angular/core";
 
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
 export class TagBasicDemoComponent {
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
-    }
-
-    handleClose(tag){
+    handleClose(tag) {
         console.log(tag)
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

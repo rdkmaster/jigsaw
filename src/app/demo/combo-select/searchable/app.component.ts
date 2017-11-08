@@ -3,21 +3,18 @@ import {HttpClient} from "@angular/common/http";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "jigsaw/core/data/array-collection";
 import {ComboSelectValue} from "jigsaw/component/combo-select/combo-select";
 import {TableData} from "jigsaw/core/data/table-data";
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
 })
-export class ComboSelectAutoCompleteDemo extends DemoBase {
+export class ComboSelectAutoCompleteDemo {
     lpaCountries: LocalPageableArray<ComboSelectValue>;
     spaCountries: PageableArray;
     selectedCountries: any;
     selectedCountries2: ArrayCollection<ComboSelectValue> = new ArrayCollection();
 
     constructor(public http: HttpClient) {
-        super();
-
         this.lpaCountries = new LocalPageableArray<ComboSelectValue>();
         this.lpaCountries.http = http;
         this.lpaCountries.fromAjax('mock-data/countries');
@@ -83,4 +80,10 @@ export class ComboSelectAutoCompleteDemo extends DemoBase {
         }
         data.filter(filterKey, ['enName', 'zhName']);
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }

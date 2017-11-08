@@ -1,4 +1,4 @@
-import {Component, Renderer2, ViewContainerRef} from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
     templateUrl: './app.component.html'
@@ -6,11 +6,13 @@ import {Component, Renderer2, ViewContainerRef} from '@angular/core';
 export class DomInnerDemoComponent {
     isLoading: boolean;
 
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
-    }
-
-    load(){
+    load() {
         this.isLoading = !this.isLoading;
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }

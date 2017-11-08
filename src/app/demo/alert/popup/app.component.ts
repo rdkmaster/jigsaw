@@ -3,12 +3,11 @@ import {
     JigsawConfirmAlert, JigsawErrorAlert, JigsawInfoAlert,
     JigsawWarningAlert
 } from "jigsaw/component/alert/alert";
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html'
 })
-export class AlertPopupDemoComponent extends DemoBase {
+export class AlertPopupDemoComponent {
 
     answer = '';
 
@@ -41,5 +40,11 @@ export class AlertPopupDemoComponent extends DemoBase {
             /* custom your own buttons*/
             [{label: 'alert.button.yes'}, {label: 'alert.button.no'}, {label: "不知道"}]);
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

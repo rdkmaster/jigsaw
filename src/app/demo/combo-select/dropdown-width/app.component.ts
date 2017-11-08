@@ -5,12 +5,11 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {JigsawComboSelect} from "jigsaw/component/combo-select/combo-select";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html',
 })
-export class ComboSelectWidthDemo extends DemoBase implements AfterViewInit {
+export class ComboSelectWidthDemo implements AfterViewInit {
     selectedCity = new ArrayCollection([{label: "北京"}]);
 
     @ViewChild(JigsawComboSelect) comboSelect: JigsawComboSelect;
@@ -34,4 +33,10 @@ export class ComboSelectWidthDemo extends DemoBase implements AfterViewInit {
         {label: "哈尔滨"}
     ];
 
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }

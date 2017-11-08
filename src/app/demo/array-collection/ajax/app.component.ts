@@ -1,17 +1,14 @@
 import {Component} from "@angular/core";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 import {HttpClient} from "@angular/common/http";
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html'
 })
-export class ArrayCollectionAjaxDemoComponent extends DemoBase {
+export class ArrayCollectionAjaxDemoComponent {
     consoleTexts = new ArrayCollection<string>();
 
     constructor(http: HttpClient) {
-        super();
-
         const ac = new ArrayCollection();
         ac.http = http;
         ac.fromAjax('mock-data/core-members');
@@ -27,4 +24,10 @@ export class ArrayCollectionAjaxDemoComponent extends DemoBase {
      consoleAppend(msg: string): void {
         this.consoleTexts.push((this.consoleTexts.length + 1) + ': ' + msg);
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }

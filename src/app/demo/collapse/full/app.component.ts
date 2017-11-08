@@ -2,20 +2,17 @@ import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/core/data/table-data";
 import {LineBarGraphData, PieGraphDataByColumn} from "jigsaw/core/data/graph-data";
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class CollapseFullComponent extends DemoBase {
+export class CollapseFullComponent {
     tableData: TableData;
     public pieGraphDataByCol: PieGraphDataByColumn;
     public lineBarGraphData: LineBarGraphData;
 
     constructor(http: HttpClient) {
-        super();
-
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');
@@ -57,5 +54,10 @@ export class CollapseFullComponent extends DemoBase {
         },
     ];
 
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

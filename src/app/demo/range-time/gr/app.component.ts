@@ -1,14 +1,23 @@
-import {
-    AfterContentInit, ChangeDetectorRef, Component, Renderer2, ViewContainerRef
-} from "@angular/core";
+import {AfterContentInit, ChangeDetectorRef, Component} from "@angular/core";
 
 
 @Component({
-  templateUrl: './app.component.html',
+    templateUrl: './app.component.html',
     styles: [`
-        h4{font-size: 20px;margin-bottom: 20px;}
-        h5{font-size: 16px;margin-bottom: 10px}
-        p{font-size: 14px;margin: 10px 0 20px 0}
+        h4 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        h5 {
+            font-size: 16px;
+            margin-bottom: 10px
+        }
+
+        p {
+            font-size: 14px;
+            margin: 10px 0 20px 0
+        }
     `]
 })
 export class RangeTimeGrComponent implements AfterContentInit {
@@ -16,19 +25,23 @@ export class RangeTimeGrComponent implements AfterContentInit {
 
     endDate = "now";
 
-    datas = [{label:"second"},{label:"minute"},{label:"hour"},
-        {label:"date"},{label:"week"},{label:"month"}];
+    datas = [{label: "second"}, {label: "minute"}, {label: "hour"},
+        {label: "date"}, {label: "week"}, {label: "month"}];
 
-    gr
+    gr:any;
 
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2, public changeDetectorRef: ChangeDetectorRef) {
+    constructor(public changeDetectorRef: ChangeDetectorRef) {
     }
 
     ngAfterContentInit() {
-        this.gr= [this.datas[3]];
+        this.gr = [this.datas[3]];
         this.changeDetectorRef.detectChanges();
     }
 
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

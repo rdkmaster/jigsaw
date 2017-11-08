@@ -4,12 +4,11 @@
 
 import {Component} from '@angular/core';
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html',
 })
-export class ComboSelectLabelFieldDemo extends DemoBase {
+export class ComboSelectLabelFieldDemo {
     selectedCity = new ArrayCollection([{name: "北京", closable: false}]);
     cities = [
         {name: "北京", closable: false},
@@ -27,4 +26,9 @@ export class ComboSelectLabelFieldDemo extends DemoBase {
         {name: "哈尔滨"}
     ];
 
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }

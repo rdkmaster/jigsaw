@@ -1,6 +1,5 @@
 import {Component} from "@angular/core";
 import {ButtonInfo} from "jigsaw/service/popup.service";
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html',
@@ -8,7 +7,7 @@ import {DemoBase} from "app/demo-description/demo-base";
         margin-right: 5px
     }`]
 })
-export class DialogInDomDemoComponent extends DemoBase {
+export class DialogInDomDemoComponent {
     public buttons: Array<ButtonInfo> = [
         {
             role: 'confirm',
@@ -21,5 +20,11 @@ export class DialogInDomDemoComponent extends DemoBase {
             clazz: ""
         }
     ];
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

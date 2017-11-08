@@ -4,12 +4,11 @@
 
 import {Component, OnInit} from '@angular/core';
 import {AbstractGraphData} from "jigsaw/core/data/graph-data";
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: "./app.component.html"
 })
-export class GraphSetSizeComponent extends DemoBase implements OnInit {
+export class GraphSetSizeComponent implements OnInit {
     data: AbstractGraphData;
     graphWidth: string;
     graphHeight: string;
@@ -24,6 +23,12 @@ export class GraphSetSizeComponent extends DemoBase implements OnInit {
         this.graphWidth = "50%";
         this.graphHeight = "80%";
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 
 export class GraphDataSetSize extends AbstractGraphData {

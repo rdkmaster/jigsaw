@@ -1,13 +1,14 @@
 import {NgModule} from "@angular/core";
-import {JigsawRangeTimeModule} from "jigsaw/component/range-time/index";
-import {RangeTimeFullComponent} from "./app.component";
 import {CommonModule} from "@angular/common";
-import {JigsawRadioModule} from "../../../../jigsaw/component/radio/radio";
+import {JigsawRangeTimeModule} from "jigsaw/component/range-time/index";
+import {JigsawRadioModule} from "jigsaw/component/radio/radio";
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
+import {RangeTimeFullComponent} from "./app.component";
 
 @NgModule({
     declarations: [RangeTimeFullComponent],
     bootstrap: [RangeTimeFullComponent],
-    imports: [JigsawRangeTimeModule, JigsawRadioModule, CommonModule]
+    imports: [JigsawRangeTimeModule, JigsawRadioModule, CommonModule, JigsawDemoDescriptionModule]
 })
 export class RangeTimeFullModule {
 

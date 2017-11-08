@@ -1,0 +1,11 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div style="padding-top: 40px">
+    <jigsaw-button #insertPlace (mouseenter)="popup()" (mouseleave)="close()">
+        <span class="fa fa-thumbs-up"></span>tooltip dialog!
+    </jigsaw-button>
+</div>

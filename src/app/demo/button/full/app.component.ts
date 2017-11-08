@@ -1,11 +1,10 @@
 import {Component} from "@angular/core";
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class ButtonFullComponent extends DemoBase {
+export class ButtonFullComponent {
 
     // demo-5
     canClick() {
@@ -26,5 +25,11 @@ export class ButtonFullComponent extends DemoBase {
         this.isLoading = !this.isLoading;
         this.label = this.isLoading ? 'loading...' : 'click to load';
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

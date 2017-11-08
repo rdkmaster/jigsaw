@@ -2,20 +2,17 @@
  * Created by 10177553 on 2017/3/28.
  */
 
-import {Component, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component} from "@angular/core";
 import {LineBarGraphData, LineBarGraphDataByRow} from "jigsaw/core/data/graph-data";
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html'
 })
 
-export class BasicLineGraphComponent extends DemoBase {
+export class BasicLineGraphComponent {
     dataByRow: LineBarGraphDataByRow;
     dataByCol: LineBarGraphData;
     constructor() {
-        super();
-
         this.dataByRow = new LineBarGraphDataByRow();
         this.dataByRow.data = [
             [120, 132, 101, 134, 90, 230, 210],
@@ -40,5 +37,11 @@ export class BasicLineGraphComponent extends DemoBase {
         this.dataByCol.rowDescriptor = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
         this.dataByCol.header = ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎'];
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

@@ -1,4 +1,4 @@
-import {AfterContentInit, Component} from "@angular/core";
+import {Component} from "@angular/core";
 import {Shortcut} from "jigsaw/component/time";
 import {RangeTimeDataRanges} from "jigsaw/component/range-time";
 import {GrItem} from "jigsaw/component/time/time";
@@ -8,7 +8,7 @@ import {TimeGr} from "jigsaw/service/time.service";
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class RangeTimeFullComponent{
+export class RangeTimeFullComponent {
     // demo-1
     beginDate1 = "now-1d";
     endDate1 = "now";
@@ -69,5 +69,11 @@ export class RangeTimeFullComponent{
     // demo-6
     beginDate6 = "now-1d";
     endDate6 = "now";
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

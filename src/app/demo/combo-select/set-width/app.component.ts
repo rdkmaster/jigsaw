@@ -1,11 +1,16 @@
 import {Component} from '@angular/core';
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
 })
-export class ComboSelectSetWidthDemo extends DemoBase {
+export class ComboSelectSetWidthDemo {
     width: string = '200';
     width2: string = '400';
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }

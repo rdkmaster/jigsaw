@@ -8,36 +8,36 @@ import {TileSelectItemsChangeDemoModule} from "./selected-items-change/app.modul
 import {TileSelectOptionWidthDemoModule} from "./tile-option-width/app.module";
 import {TileSelectTrackItemByDemoModule} from "./track-item-by/app.module";
 
-import {TileselectFullDemoComponent} from "./full/app.component";
-import {TileselectTrackItemByDemoComponent} from "./track-item-by/app.component";
-import {TileselectSelectedItemsComponent} from "./selected-items/app.component";
-import {TileselectMultipleSelectDemoComponent} from "./multiple-select/app.component";
-import {TileselectOptionWidthComponent} from "./tile-option-width/app.component";
-import {TileselectLabelFieldComponent} from "./label-field/app.component";
-import {TileselecItemsChangeComponent} from "./selected-items-change/app.component";
+import {TileSelectFullDemoComponent} from "./full/app.component";
+import {TileSelectTrackItemByDemoComponent} from "./track-item-by/app.component";
+import {TileSelectSelectedItemsComponent} from "./selected-items/app.component";
+import {TileSelectMultipleSelectDemoComponent} from "./multiple-select/app.component";
+import {TileSelectOptionWidthComponent} from "./tile-option-width/app.component";
+import {TileSelectLabelFieldComponent} from "./label-field/app.component";
+import {TileSelecItemsChangeComponent} from "./selected-items-change/app.component";
 
 
 export const routerConfig = [
     {
-        path: 'full', component: TileselectFullDemoComponent, recommended: true
+        path: 'full', component: TileSelectFullDemoComponent, recommended: true
     },
     {
-        path: 'track-item-by', component: TileselectTrackItemByDemoComponent
+        path: 'track-item-by', component: TileSelectTrackItemByDemoComponent
     },
     {
-        path: 'selected-items', component: TileselectSelectedItemsComponent
+        path: 'selected-items', component: TileSelectSelectedItemsComponent
     },
     {
-        path: 'multiple-select', component: TileselectMultipleSelectDemoComponent
+        path: 'multiple-select', component: TileSelectMultipleSelectDemoComponent
     },
     {
-        path: 'tile-option-width', component: TileselectOptionWidthComponent
+        path: 'tile-option-width', component: TileSelectOptionWidthComponent
     },
     {
-        path: 'label-field', component: TileselectLabelFieldComponent
+        path: 'label-field', component: TileSelectLabelFieldComponent
     },
     {
-        path: 'selected-items-change', component: TileselecItemsChangeComponent
+        path: 'selected-items-change', component: TileSelecItemsChangeComponent
     },
 ];
 

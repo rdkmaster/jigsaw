@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {ArrayCollection} from "../../../../jigsaw/core/data/array-collection";
+import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 @Component({
     templateUrl: './app.component.html',
@@ -98,5 +98,11 @@ export class ListFullDemoComponent {
             name: 'book',
             desc: 'A book is a set of sheets of paper, parchment, or similar materials that are fastened together to hinge at one side.'
         },
-    ])
+    ]);
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }

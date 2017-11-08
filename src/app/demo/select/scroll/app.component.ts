@@ -18,8 +18,14 @@ export class SelectScrollDemoComponent {
     constructor(public viewContainerRef: ViewContainerRef,
                 public renderer: Renderer2) {
     }
-    public selectChange(message:any){
+    selectChange(message:any){
         console.log("select city is:"+ message.label);
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

@@ -1,20 +1,17 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {PageableArray} from "jigsaw/core/data/array-collection";
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html', styles: ['.alert {color: red;}']
 })
-export class ServerSidePaginationDemoComponent extends DemoBase {
+export class ServerSidePaginationDemoComponent {
     pageable: PageableArray;
     ready = false;
     errorInfo = "";
     tipClass = {'alert': !!this.errorInfo};
 
     constructor(http: HttpClient) {
-        super();
-
         this.pageable = new PageableArray(http,
             {
                 url: 'mock-data/countries',
@@ -45,4 +42,10 @@ export class ServerSidePaginationDemoComponent extends DemoBase {
     nextPage() {
         this.pageable.nextPage();
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }

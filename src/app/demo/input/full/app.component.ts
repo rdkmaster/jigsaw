@@ -6,8 +6,6 @@ import {JigsawInput} from "../../../../jigsaw/component/input/input";
     styleUrls: ['./app.component.css']
 })
 export class InputFullComponent {
-
-
     constructor(public elementRef: ElementRef) {
     }
 
@@ -39,5 +37,11 @@ export class InputFullComponent {
     iconClickHandler() {
         alert('你输入的值是 ' + this.demo5InputValue)
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

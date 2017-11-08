@@ -1,7 +1,5 @@
-import {
-    AfterViewInit, Component, ViewChild, Renderer2, ViewContainerRef
-} from "@angular/core";
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {AfterViewInit, Component, ViewChild} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import {PageableTableData} from "jigsaw/core/data/table-data";
 import {AdditionalColumnDefine, ColumnDefine, TableValueGenerators} from "jigsaw/component/table/table-typings";
 import {JigsawPagination} from "jigsaw/component/pagination/pagination";
@@ -14,8 +12,7 @@ export class TableAddIDWithDebouncePagingComponent implements AfterViewInit {
 
     @ViewChild('paging') paging: JigsawPagination;
 
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2, http: HttpClient) {
+    constructor(http: HttpClient) {
         this.pageable = new PageableTableData(http, {
             url: 'mock-data/countries',
             params: {aa: 11, bb: 22}
@@ -53,6 +50,12 @@ export class TableAddIDWithDebouncePagingComponent implements AfterViewInit {
         cell: {
             data: TableValueGenerators.rowIndexGenerator
         }
-    }]
+    }];
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

@@ -1,0 +1,12 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+编辑tooltip <jigsaw-input width="370" [(value)]="tooltipMessage"></jigsaw-input>
+
+<p style="padding-top: 10px">
+<jigsaw-button width="180px" [jigsawTooltip]="tooltipMessage">
+    鼠标挪到这里显示tooltip
+</jigsaw-button>

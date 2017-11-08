@@ -4,12 +4,11 @@
 
 import {Component} from '@angular/core';
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html'
 })
-export class ComboSelectAutoWidthDemo extends DemoBase {
+export class ComboSelectAutoWidthDemo {
     selectedCity = new ArrayCollection([{label: "北京", closable: false}]);
     cities = [
         {label: "北京", closable: false},
@@ -27,4 +26,9 @@ export class ComboSelectAutoWidthDemo extends DemoBase {
         {label: "哈尔滨"}
     ];
 
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }

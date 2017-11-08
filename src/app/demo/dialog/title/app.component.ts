@@ -4,19 +4,17 @@
 
 import {Component, TemplateRef} from '@angular/core';
 import {PopupInfo, PopupService} from "jigsaw/service/popup.service";
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class DialogTitleDemo extends DemoBase {
+export class DialogTitleDemo {
 
     dialogInfo1: PopupInfo;
     dialogInfo2: PopupInfo;
 
     constructor(private popupService: PopupService) {
-        super();
     }
 
     close(info: PopupInfo) {
@@ -31,4 +29,9 @@ export class DialogTitleDemo extends DemoBase {
         this.dialogInfo2 = this.popupService.popup(ele);
     }
 
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }

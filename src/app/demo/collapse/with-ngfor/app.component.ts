@@ -3,15 +3,16 @@
  */
 import {Component, ViewChild} from '@angular/core';
 import {JigsawCollapse, JigsawCollapsePane} from "jigsaw/component/collapse/collapse";
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html',
-    styles: [`.collapse-content {
-        font-size: 14px
-    }`]
+    styles: [`
+        .collapse-content {
+            font-size: 14px
+        }
+    `]
 })
-export class CollapseWithNGForDemoComponent extends DemoBase {
+export class CollapseWithNGForDemoComponent {
 
     nes = [
         {id: 1, name: "NE1", content: "content of ne1"},
@@ -20,7 +21,6 @@ export class CollapseWithNGForDemoComponent extends DemoBase {
     ];
 
     @ViewChild("coll_ne") collapse: JigsawCollapse;
-
 
     activePane: JigsawCollapsePane;
 
@@ -34,4 +34,10 @@ export class CollapseWithNGForDemoComponent extends DemoBase {
         found = this.activePane ? this.activePane.title : 'no pane';
         alert(found + ' is activated!');
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }

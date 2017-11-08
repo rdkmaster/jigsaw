@@ -1,5 +1,5 @@
-import {Component, Renderer2, ViewContainerRef} from "@angular/core";
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {Component} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import {PageableTableData} from "jigsaw/core/data/table-data";
 
 @Component({
@@ -8,8 +8,7 @@ import {PageableTableData} from "jigsaw/core/data/table-data";
 export class TablePageableDemoComponent {
     pageable: PageableTableData;
 
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2, http: HttpClient) {
+    constructor(http: HttpClient) {
         this.pageable = new PageableTableData(http, {
             url: 'mock-data/countries', params: {aa: 11, bb: 22}
         });
@@ -32,5 +31,11 @@ export class TablePageableDemoComponent {
         }
         this.pageable.changePage(this.pageable.pagingInfo);
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

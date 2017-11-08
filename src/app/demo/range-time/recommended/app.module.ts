@@ -1,12 +1,13 @@
-
 import {NgModule} from "@angular/core";
 import {JigsawRangeTimeModule} from "jigsaw/component/range-time/index";
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {RangeTimeRecommendedComponent} from "./app.component";
+
 @NgModule({
     declarations: [RangeTimeRecommendedComponent],
     bootstrap: [RangeTimeRecommendedComponent],
-    imports: [JigsawRangeTimeModule]
+    imports: [JigsawRangeTimeModule, JigsawDemoDescriptionModule]
 })
-export class RangeTimeRecommendedModule{
+export class RangeTimeRecommendedModule {
 
 }

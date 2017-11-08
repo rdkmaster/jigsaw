@@ -6,41 +6,11 @@ function getRandomInt(min, max) {
 
 
 @Component({
-    template: `
-        <div style="display: inline-block;">
-        <h3>inside zone</h3>
-        <svg width="340" height="340"
-             (mousedown)="mouseDown($event)"
-             (mousemove)="mouseMove($event)"
-             (mouseup)="mouseUp($event)"
-        >
-            <svg:g
-                box
-                *ngFor="let box of boxes"
-                [box]="box"
-                [selected]="box.id == currentId"
-            ></svg:g>
-        </svg>
-        </div>
-
-        <div style="display: inline-block;">
-        <h3>outside zone</h3>
-        <svg width="340" height="340"
-             (mousedown)="mouseDown($event)"
-             (mouseup)="mouseUp($event)"
-        >
-            <svg:g
-                box
-                *ngFor="let box of boxes"
-                [box]="box"
-                [selected]="box.id == currentId"
-            ></svg:g>
-        </svg>
-        </div>
-    `
+    templateUrl: './app.component.html'
 })
 export class ZoneForBetterPerformanceDemoComponent {
-    constructor(private zone: NgZone) {}
+    constructor(private zone: NgZone) {
+    }
 
     currentId = null;
     boxes = [];
@@ -49,7 +19,7 @@ export class ZoneForBetterPerformanceDemoComponent {
     element;
 
     ngOnInit() {
-        for (let i=0; i < 5000; i++) {
+        for (let i = 0; i < 5000; i++) {
             const id = i;
             const x = getRandomInt(0, 300);
             const y = getRandomInt(0, 300);
@@ -93,7 +63,7 @@ export class ZoneForBetterPerformanceDemoComponent {
     mouseUp($event) {
         this.zone.run(() => {
             this.updateBox(this.currentId, $event.clientX + this.offsetX, $event.clientY + this.offsetY)
-            this.currentId  = null;
+            this.currentId = null;
         });
         window.document.removeEventListener("mousemove", this.bindMouse);
     }
@@ -103,4 +73,10 @@ export class ZoneForBetterPerformanceDemoComponent {
         box.x = x;
         box.y = y;
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }

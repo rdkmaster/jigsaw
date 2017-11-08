@@ -4,13 +4,18 @@
 
 import {Component} from '@angular/core';
 import {AbstractGraphData} from "jigsaw/core/data/graph-data";
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html'
 })
 
-export class GraphWithNoDataComponent extends DemoBase {
+export class GraphWithNoDataComponent {
     data: AbstractGraphData;
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

@@ -7,13 +7,12 @@ import {
     PopupPositionType,
     PopupService
 } from "jigsaw/service/popup.service";
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class DialogPopOptionDemo extends DemoBase implements OnInit {
+export class DialogPopOptionDemo implements OnInit {
 
     dialogInfo: PopupInfo;
 
@@ -36,7 +35,6 @@ export class DialogPopOptionDemo extends DemoBase implements OnInit {
     @ViewChild("right") right: ElementRef;
 
     constructor(private popupService: PopupService) {
-        super();
     }
 
     ngOnInit() {
@@ -97,4 +95,9 @@ export class DialogPopOptionDemo extends DemoBase implements OnInit {
         this.dialogInfo = this.popupService.popup(ele, this.option);
     }
 
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }

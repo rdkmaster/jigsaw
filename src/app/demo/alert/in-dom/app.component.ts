@@ -1,9 +1,14 @@
 import {Component} from "@angular/core";
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html'
 })
-export class AlertInDomDemoComponent extends DemoBase {
+export class AlertInDomDemoComponent {
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

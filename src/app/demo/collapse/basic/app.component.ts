@@ -2,10 +2,14 @@
  * Created by 10177553 on 2017/4/26.
  */
 import {Component} from '@angular/core';
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html'
 })
-export class CollapseBasicDemoComponent extends DemoBase {
+export class CollapseBasicDemoComponent {
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }

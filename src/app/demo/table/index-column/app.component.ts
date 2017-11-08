@@ -1,4 +1,4 @@
-import {Component, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/core/data/table-data";
 import {AdditionalColumnDefine, TableValueGenerators} from "jigsaw/component/table/table-typings";
@@ -9,8 +9,7 @@ import {AdditionalColumnDefine, TableValueGenerators} from "jigsaw/component/tab
 export class TableAddIDColumnDemoComponent {
     tableData: TableData;
 
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2, http: HttpClient) {
+    constructor(http: HttpClient) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');
@@ -24,7 +23,13 @@ export class TableAddIDColumnDemoComponent {
         cell: {
             data: TableValueGenerators.rowIndexGenerator
         }
-    }]
+    }];
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 
 

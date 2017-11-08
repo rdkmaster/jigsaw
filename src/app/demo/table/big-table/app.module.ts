@@ -7,7 +7,7 @@ import {JigsawListModule} from "jigsaw/component/list-and-tile/list";
 import {JigsawButtonModule} from "jigsaw/component/button/button";
 import {JigsawCheckBoxModule} from "jigsaw/component/checkbox/index";
 import {JigsawViewportModule} from "jigsaw/component/viewport/viewport";
-import {JigsawDemoDescriptionModule} from "../../../demo-description/demo-description";
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {BigTableDataDemoComponent} from './app.component';
 import {OfficeCellRenderer, OfficeHeaderRenderer, PositionHeaderRenderer} from "./renderers";
 

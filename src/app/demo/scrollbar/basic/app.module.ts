@@ -1,11 +1,12 @@
 import {NgModule} from "@angular/core";
-import {ScrollbarBasicDemoComponent} from "./app.component";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
+import {ScrollbarBasicDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [ScrollbarBasicDemoComponent],
     bootstrap: [ScrollbarBasicDemoComponent],
-    imports: [PerfectScrollbarModule]
+    imports: [PerfectScrollbarModule, JigsawDemoDescriptionModule]
 })
 export class ScrollbarBasicDemoModule {
 

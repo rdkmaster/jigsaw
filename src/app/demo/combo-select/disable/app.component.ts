@@ -1,12 +1,11 @@
 import {Component} from '@angular/core';
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
 })
-export class DisabledComboSelectDemo extends DemoBase {
+export class DisabledComboSelectDemo {
     disabled = false;
 
     changeDisabled() {
@@ -30,4 +29,10 @@ export class DisabledComboSelectDemo extends DemoBase {
         {label: "哈尔滨"}
     ];
 
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }

@@ -1,10 +1,12 @@
-import { NgModule } from '@angular/core';
-import { JigsawTooltipModule } from "jigsaw/component/tooltip/tooltip";
-import { TooltipInDomDemoComponent }  from './app.component';
+import {NgModule} from '@angular/core';
+import {JigsawTooltipModule} from "jigsaw/component/tooltip/tooltip";
+import {TooltipInDomDemoComponent} from './app.component';
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 
 @NgModule({
-    imports: [ JigsawTooltipModule ],
-    declarations: [ TooltipInDomDemoComponent ],
-    bootstrap: [ TooltipInDomDemoComponent ]
+    imports: [JigsawTooltipModule, JigsawDemoDescriptionModule],
+    declarations: [TooltipInDomDemoComponent],
+    bootstrap: [TooltipInDomDemoComponent]
 })
-export class TooltipInDomDemoModule {}
+export class TooltipInDomDemoModule {
+}

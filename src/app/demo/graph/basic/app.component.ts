@@ -6,12 +6,11 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {AbstractGraphData} from "jigsaw/core/data/graph-data";
 import {EchartOptions} from "jigsaw/core/data/echart-types";
 import {JigsawGraph} from "jigsaw/component/graph/graph";
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html'
 })
-export class BasicGraphComponent extends DemoBase implements OnInit {
+export class BasicGraphComponent implements OnInit {
     data: AbstractGraphData;
 
     @ViewChild("graph") graph: JigsawGraph;
@@ -27,6 +26,12 @@ export class BasicGraphComponent extends DemoBase implements OnInit {
         this.data = graphData;
         graphData.optionsPatch = this.patchOption;
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 
 export class GraphDataDemo extends AbstractGraphData {

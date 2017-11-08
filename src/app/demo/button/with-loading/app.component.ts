@@ -1,10 +1,9 @@
 import {Component} from "@angular/core";
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html'
 })
-export class ButtonWithLoadingComponent extends DemoBase {
+export class ButtonWithLoadingComponent {
     isLoading = false;
     label: string = 'click to load';
 
@@ -12,5 +11,11 @@ export class ButtonWithLoadingComponent extends DemoBase {
         this.isLoading = !this.isLoading;
         this.label = this.isLoading ? 'loading...' : 'click to load';
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

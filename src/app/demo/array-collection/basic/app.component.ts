@@ -1,6 +1,5 @@
 import {Component, ElementRef, OnInit, Renderer2, ViewContainerRef, ViewEncapsulation} from "@angular/core";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
-import {DemoBase} from "app/demo-description/demo-base";
 
 type TestMsg = {
     test: boolean,
@@ -12,12 +11,10 @@ type TestMsg = {
     styles: ['.error{color: red}'],
     encapsulation: ViewEncapsulation.None
 })
-export class ArrayCollectionBasicDemoComponent extends DemoBase implements OnInit {
+export class ArrayCollectionBasicDemoComponent implements OnInit {
     consoleTexts = new ArrayCollection<TestMsg>();
 
     constructor(private elementRef: ElementRef) {
-        super();
-
         const arr: number[] = [1, 2, 3, 4, 5, 6, 7, 8];
         const ac: ArrayCollection<number> = new ArrayCollection([1, 2, 3, 4, 5, 6, 7, 8]);
         this.consoleAppend(ac, arr, 'new');
@@ -109,4 +106,10 @@ export class ArrayCollectionBasicDemoComponent extends DemoBase implements OnIni
         });
         this.elementRef.nativeElement.querySelector('.ac-test-result').innerHTML = consoleElStr;
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }

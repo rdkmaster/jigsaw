@@ -1,19 +1,18 @@
-import {AfterViewInit, Component, Renderer2, ViewChild, ViewContainerRef} from "@angular/core";
+import {AfterViewInit, Component, ViewChild} from "@angular/core";
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 import {TreeData} from "jigsaw/core/data/tree-data";
-import {JigsawTreeExt} from "../../../../jigsaw/component/tree/tree-ext";
+import {JigsawTreeExt} from "jigsaw/component/tree/tree-ext";
 
 @Component({
     templateUrl: './app.component.html'
 })
-export class ZtreeDemoComponent implements AfterViewInit{
+export class ZtreeDemoComponent implements AfterViewInit {
     @ViewChild(JigsawTreeExt) treeExt: JigsawTreeExt;
 
     public data: TreeData;
 
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
+    constructor() {
         this.data = new TreeData();
         this.data.fromObject([
             {
@@ -83,13 +82,19 @@ export class ZtreeDemoComponent implements AfterViewInit{
         console.log(msg);
     }
 
-    ngAfterViewInit(){
-        if(this.treeExt && this.treeExt.ztree){
+    ngAfterViewInit() {
+        if (this.treeExt && this.treeExt.ztree) {
             console.log(this.treeExt.ztree);
             let nodes = this.treeExt.ztree.getNodes();
-            if (nodes.length>0) {
+            if (nodes.length > 0) {
                 this.treeExt.ztree.selectNode(nodes[0]);
             }
         }
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }

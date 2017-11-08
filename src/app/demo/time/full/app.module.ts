@@ -1,11 +1,12 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {JigsawTimeModule} from "jigsaw/component/time/index";
-import {TimeFullComponent} from './app.component';
 import {JigsawRadioModule} from "jigsaw/component/radio/radio";
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
+import {TimeFullComponent} from './app.component';
 
 @NgModule({
-    imports: [CommonModule, JigsawTimeModule, JigsawRadioModule],
+    imports: [CommonModule, JigsawTimeModule, JigsawRadioModule, JigsawDemoDescriptionModule],
     declarations: [TimeFullComponent],
     bootstrap: [TimeFullComponent]
 })

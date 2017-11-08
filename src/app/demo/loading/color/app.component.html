@@ -1,4 +1,12 @@
-<jigsaw-button colorType="primary" (click)="pauseLoading()">{{paused == 'paused' ? 'Run' : 'Pause'}}</jigsaw-button>
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-button colorType="primary" (click)="pauseLoading()">
+    {{paused == 'paused' ? 'Run' : 'Pause'}}
+</jigsaw-button>
 <div class="wrap" style="padding: 20px 0;">
     <div *ngFor="let color of colors" style="margin: 0 40px 40px 0;float:left">
         <jigsaw-bubble-loading style="margin-right: 20px" [color]="color"></jigsaw-bubble-loading>

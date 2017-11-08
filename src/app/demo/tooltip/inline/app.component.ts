@@ -1,19 +1,15 @@
-import {Component, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component} from "@angular/core";
 
 @Component({
-    template: `
-        编辑tooltip <jigsaw-input width="370" [(value)]="tooltipMessage"></jigsaw-input>
-
-        <p style="padding-top: 10px">
-        <jigsaw-button width="180px" [jigsawTooltip]="tooltipMessage">
-            鼠标挪到这里显示tooltip
-        </jigsaw-button>
-    `
+    templateUrl: './app.component.html'
 })
 export class SimpleTooltipDemoComponent {
-    tooltipMessage:string = '这是一个内联tooltip  <span class="fa fa-thumbs-up"></span>';
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
-    }
+    tooltipMessage: string = '这是一个内联tooltip  <span class="fa fa-thumbs-up"></span>';
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

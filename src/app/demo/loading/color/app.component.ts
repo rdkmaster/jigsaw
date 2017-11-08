@@ -36,4 +36,10 @@ export class ColorfulLoadingDemoComponent {
             this.setElementsStyle('.jigsaw-font-loading','animationPlayState','paused');
         }
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }

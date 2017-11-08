@@ -1,11 +1,13 @@
-import { NgModule } from '@angular/core';
-import { JigsawTileSelectModule } from "jigsaw/component/list-and-tile/tile";
-import { TileselectOptionWidthComponent }  from './app.component';
+import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
+import {JigsawTileSelectModule} from "jigsaw/component/list-and-tile/tile";
+import {TileSelectOptionWidthComponent} from './app.component';
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 
 @NgModule({
-    imports: [ JigsawTileSelectModule, CommonModule ],
-    declarations: [ TileselectOptionWidthComponent ],
-    bootstrap: [ TileselectOptionWidthComponent ]
+    imports: [JigsawTileSelectModule, CommonModule, JigsawDemoDescriptionModule],
+    declarations: [TileSelectOptionWidthComponent],
+    bootstrap: [TileSelectOptionWidthComponent]
 })
-export class TileSelectOptionWidthDemoModule {}
+export class TileSelectOptionWidthDemoModule {
+}

@@ -1,10 +1,12 @@
-import { NgModule } from '@angular/core';
-import { JigsawSliderModule } from "jigsaw/component/slider/index";
-import { SliderVerticalDemoComponent }  from './app.component';
+import {NgModule} from '@angular/core';
+import {JigsawSliderModule} from "jigsaw/component/slider/index";
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
+import {SliderVerticalDemoComponent} from './app.component';
 
 @NgModule({
-    imports: [ JigsawSliderModule ],
-    declarations: [ SliderVerticalDemoComponent ],
-    bootstrap: [ SliderVerticalDemoComponent ]
+    imports: [JigsawSliderModule, JigsawDemoDescriptionModule],
+    declarations: [SliderVerticalDemoComponent],
+    bootstrap: [SliderVerticalDemoComponent]
 })
-export class SliderVerticalDemoModule {}
+export class SliderVerticalDemoModule {
+}

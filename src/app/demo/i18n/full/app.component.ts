@@ -2,7 +2,6 @@ import {Component} from "@angular/core";
 import {TranslateService} from "@ngx-translate/core";
 import {TranslateHelper} from "jigsaw/core/utils/translate-helper";
 import {ButtonInfo} from "jigsaw/service/popup.service";
-import {DemoBase} from "../../../demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html',
@@ -26,9 +25,8 @@ import {DemoBase} from "../../../demo-description/demo-base";
             padding: 20px 0 10px
         }`]
 })
-export class I18nFullDemoComponent extends DemoBase {
+export class I18nFullDemoComponent {
     constructor(public translateService: TranslateService) {
-        super();
         translateService.use(translateService.getBrowserLang());
     }
 
@@ -69,5 +67,11 @@ export class I18nFullDemoComponent extends DemoBase {
             },
         ];
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

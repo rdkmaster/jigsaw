@@ -1,8 +1,14 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
 <p>带渲染器的表格单元格</p>
 <jigsaw-table height="400px"
            [data]="tableData"
-           [columnDefines]="_columns"
-           [additionalColumnDefines]="_additionalColumns"></jigsaw-table>
+           [columnDefines]="columns"
+           [additionalColumnDefines]="additionalColumns"></jigsaw-table>
 <button (click)="changeData()">change data</button>
 <!--
     let-context="context" 声明了context，context的结构是 {cellData: string|number, row:number, column:number}

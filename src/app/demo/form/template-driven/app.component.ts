@@ -3,16 +3,14 @@ import {ArrayCollection} from "jigsaw/core/data/array-collection";
 import {TimeGr, TimeService} from "jigsaw/service/time.service";
 import {TableData} from "jigsaw/core/data/table-data";
 import {ColumnDefine} from "jigsaw/component/table/table-typings";
-import {DemoBase} from "app/demo-description/demo-base";
 
 
 @Component({
     templateUrl: 'app.component.html',
     styleUrls: ['app.component.css']
 })
-export class TemplateDrivenDemoComponent extends DemoBase {
+export class TemplateDrivenDemoComponent {
     constructor() {
-        super();
         this.favoriteFruit = new ArrayCollection<any>([{label: this.fruitList.data[0][0]}]);
     }
 
@@ -69,4 +67,10 @@ export class TemplateDrivenDemoComponent extends DemoBase {
             this.selectedIndex = -1;
         }
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }

@@ -9,14 +9,13 @@ import {
     PopupPositionType,
     PopupService
 } from "jigsaw/service/popup.service";
-import {DemoBase} from "app/demo-description/demo-base";
 
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class DialogMiscDemoComponent extends DemoBase {
+export class DialogMiscDemoComponent {
 
     _templateRef: PopupInfo;
     _modalDialogInfo: PopupInfo;
@@ -51,7 +50,6 @@ export class DialogMiscDemoComponent extends DemoBase {
     ];
 
     constructor(private _popupService: PopupService) {
-        super();
     }
 
     /*
@@ -157,5 +155,11 @@ export class DialogMiscDemoComponent extends DemoBase {
             posType: PopupPositionType.absolute, //定位类型
         };
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

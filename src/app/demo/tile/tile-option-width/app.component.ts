@@ -1,10 +1,10 @@
-import {Component, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component} from "@angular/core";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 @Component({
-  templateUrl: './app.component.html'
+    templateUrl: './app.component.html'
 })
-export class TileselectOptionWidthComponent {
+export class TileSelectOptionWidthComponent {
     citys = new ArrayCollection([
         {label: "北京"},
         {label: "上海"},
@@ -13,8 +13,12 @@ export class TileselectOptionWidthComponent {
         {label: "长沙"},
         {label: "西安"}
     ]);
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
-    }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
+
 }
 

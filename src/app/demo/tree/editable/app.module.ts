@@ -1,10 +1,12 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import {JigsawTreeExtModule} from "jigsaw/component/tree/tree-ext";
-import { ZtreeDemoEditableComponent }  from './app.component';
+import {ZtreeDemoEditableComponent} from './app.component';
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 
 @NgModule({
-    imports: [ JigsawTreeExtModule ],
-    declarations: [ ZtreeDemoEditableComponent ],
-    bootstrap: [ ZtreeDemoEditableComponent ]
+    imports: [JigsawTreeExtModule, JigsawDemoDescriptionModule],
+    declarations: [ZtreeDemoEditableComponent],
+    bootstrap: [ZtreeDemoEditableComponent]
 })
-export class TreeEditableDemoModule {}
+export class TreeEditableDemoModule {
+}

@@ -56,4 +56,10 @@ export class BubbleLoadingDemoComponent {
             this.label = 'submit';
         }, 3000)
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }

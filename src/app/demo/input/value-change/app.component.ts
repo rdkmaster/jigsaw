@@ -1,4 +1,4 @@
-import {Component, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component} from "@angular/core";
 
 @Component({
   templateUrl: './app.component.html'
@@ -6,12 +6,14 @@ import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 export class InputValueChangeDemoComponent {
     inputValue: any;
 
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
-    }
-    
     valueChanged(message: string) {
         console.log(`input value is: ${message}`);
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
 

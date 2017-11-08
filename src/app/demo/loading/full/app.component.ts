@@ -37,4 +37,10 @@ export class LoadingFullDemoComponent {
             globalLoading.dispose();
         }, 3000)
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
