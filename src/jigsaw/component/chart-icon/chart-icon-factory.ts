@@ -220,11 +220,11 @@ export class ChartIconFactory {
                     $node.attr('fill', fill.call(this, value, i, values));
 
                     if (opts.title && !(opts.title instanceof Array)) {
-                        throw('options title must be Array type');
+                        throw('customPie\'s title must be type of array');
                     }
 
                     if (opts.legend && !(opts.legend.data instanceof Array)) {
-                        throw('options legend data must be Array type');
+                        throw('customPie\'s legend data must be type of array');
                     }
 
                     // 饼图链接
