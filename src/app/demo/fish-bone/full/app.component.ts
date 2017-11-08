@@ -384,14 +384,7 @@ export class FishBoneFullComponent extends DemoBase implements AfterViewInit {
         this.data3.label = `<span class="orange">VoLTE呼损分析</span>`;
         this.data3.nodes.forEach((node, index) => {
             node.label = `<span class="orange">${node.name}</span>`;
-            let pieData = node.pie.data.reduce((arr, item) => {
-                arr.push(item[item.length - 1]);
-                return arr;
-            }, []);
-            if (node.pie.other) {
-                pieData.push(node.pie.other.value);
-            }
-            pieData.join(",");
+            let pieData = this.getPieData(node).join(",");
             let nodesItem = new TreeData();
             nodesItem.label = `<span class="pie-call-loss-${index}">${pieData}</span>`;
             nodesItem.desc = `<p class="call-loss-data"> count: ${node.count} <br> ratio: ${node.ratio} <br> delay: ${node.delay}</p>`;
@@ -407,6 +400,38 @@ export class FishBoneFullComponent extends DemoBase implements AfterViewInit {
 
     hello(toWhom) {
         alert('hello ' + toWhom);
+    }
+
+    getPieData(node){
+        let pieData = [];
+        if(node && node.pie){
+            if(node.pie.data instanceof Array){
+                pieData = node.pie.data.reduce((arr, item) => {
+                    arr.push(item[item.length - 1]);
+                    return arr;
+                }, []);
+            }
+            if (node.pie.other) {
+                pieData.push(node.pie.other.value);
+            }
+        }
+        return pieData;
+    }
+
+    getLegendData(node){
+        let legendData = [];
+        if(node && node.pie){
+            if(node.pie.data instanceof Array){
+                legendData = node.pie.data.reduce((arr, item) => {
+                    arr.push(item[0] + item[1]);
+                    return arr;
+                }, []);
+            }
+            if (node.pie.other) {
+                legendData.push(node.pie.other.name);
+            }
+        }
+        return legendData;
     }
 
     ngAfterViewInit() {
@@ -433,13 +458,15 @@ export class FishBoneFullComponent extends DemoBase implements AfterViewInit {
 
         this.data3.nodes.forEach((node, index) => {
             node.label = `<span class="orange">${node.name}</span>`;
-            let labelArr = node.pie.data.reduce((arr, item) => {
-                arr.push(item[0] + item[1]);
-                return arr;
+            const legendData = this.getLegendData(node);
+            const pieData = this.getPieData(node).map(item => parseInt(item))
+            const pieDataTotal = pieData.reduce((total, item) => {
+                return total + item;
+            }, 0);
+            const pieTitle =legendData.reduce((pieLabel, item, index) => {
+                pieLabel.push(item + ': value ('+(pieData[index] / pieDataTotal * 100).toFixed(2) + '%)');
+                return pieLabel;
             }, []);
-            if (node.pie.other) {
-                labelArr.push(node.pie.other.name);
-            }
 
             ChartIconFactory.create(".pie-call-loss-" + index, ChartType.customPie, {
                 fill: function (_, i, all) {
@@ -450,10 +477,11 @@ export class FishBoneFullComponent extends DemoBase implements AfterViewInit {
                 legend: {
                     orient: 'right', // 如果是'top'，图例的高度是自动算出来的，所以height属性不需要配置
                     width: 100,
-                    data: labelArr
+                    data: legendData
                 },
                 series: node,
                 link: this.handleLink,
+                title: pieTitle,
                 context: this,
                 after: () => {
                     console.log('a pie has been draw')
