@@ -54,6 +54,7 @@ export class ChartIconCustomPie {
     series?: any;
     after?: Function;
     link?: Function | string;
+    title: string[]; // 当没有title，默认使用legend.data
     context?: object;
 }
 
@@ -218,8 +219,16 @@ export class ChartIconFactory {
 
                     $node.attr('fill', fill.call(this, value, i, values));
 
+                    if(opts.title && !(opts.title instanceof Array)){
+                        throw('options title must be Array type');
+                    }
+
+                    if(opts.legend && !(opts.legend.data instanceof Array)){
+                        throw('options legend data must be Array type');
+                    }
+
                     let $title = this.svgElement('title', {})
-                        .text(opts.legend.data[i]);
+                        .text(opts.title ? opts.title[i] : opts.legend.data[i]);
 
                     let $link = this.svgElement('a', {'href': 'javascript:;'})
                         .append($title)
@@ -238,8 +247,11 @@ export class ChartIconFactory {
                         $link.attr('href', opts.link);
                     }
 
-                    let $desc = this.svgElement('g', {x: '0', y: i * 10});
-                    $desc.append($title.clone());
+                    let $legendTitle = this.svgElement('title', {})
+                        .text(opts.legend.data[i]);
+
+                    let $legend = this.svgElement('g', {x: '0', y: i * 10});
+                    $legend.append($legendTitle);
 
                     let $rect = this.svgElement('rect', {
                         x: 0 + (opts.legend.orient == 'right' ? diameter + 20 : 0),
@@ -253,11 +265,11 @@ export class ChartIconFactory {
                         y: 9 + i * 14,
                         'font-size': 12
                     }).text(opts.legend.data[i]);
-                    $desc.append($rect)
+                    $legend.append($rect)
                         .append($text);
 
                     $svg.append($link);
-                    $svg.append($desc);
+                    $svg.append($legend);
                 }
             }
         )
