@@ -54,6 +54,7 @@ export class ChartIconCustomPie {
     series?: any;
     after?: Function;
     link?: Function | string;
+    title: string[]; // 当没有title，默认使用legend.data
     context?: object;
 }
 
@@ -218,8 +219,18 @@ export class ChartIconFactory {
 
                     $node.attr('fill', fill.call(this, value, i, values));
 
+                    if (opts.title && !(opts.title instanceof Array)) {
+                        throw('customPie\'s title must be type of array');
+                    }
+
+                    if (opts.legend && !(opts.legend.data instanceof Array)) {
+                        throw('customPie\'s legend data must be type of array');
+                    }
+
+                    // 饼图链接
+                    // 图形的title如果没有，使用图例的data
                     let $title = this.svgElement('title', {})
-                        .text(opts.legend.data[i]);
+                        .text(opts.title ? opts.title[i] : opts.legend.data[i]);
 
                     let $link = this.svgElement('a', {'href': 'javascript:;'})
                         .append($title)
@@ -238,14 +249,18 @@ export class ChartIconFactory {
                         $link.attr('href', opts.link);
                     }
 
-                    let $desc = this.svgElement('g', {x: '0', y: i * 10});
-                    $desc.append($title.clone());
+                    // 绘制图例
+                    let $legendTitle = this.svgElement('title', {})
+                        .text(opts.legend.data[i]);
+
+                    let $legend = this.svgElement('g', {x: '0', y: i * 10});
+                    $legend.append($legendTitle);
 
                     let $rect = this.svgElement('rect', {
                         x: 0 + (opts.legend.orient == 'right' ? diameter + 20 : 0),
                         y: i * 14,
-                        'width': '10',
-                        'height': '10',
+                        width: 10,
+                        height: 10,
                         'fill': fill.call(this, value, i, values)
                     });
                     let $text = this.svgElement('text', {
@@ -253,11 +268,32 @@ export class ChartIconFactory {
                         y: 9 + i * 14,
                         'font-size': 12
                     }).text(opts.legend.data[i]);
-                    $desc.append($rect)
-                        .append($text);
+
+                    $legend.append($rect).append($text);
+
+                    // 等待text渲染
+                    setTimeout(() => {
+                        const rangeWidth = (opts.legend.orient == 'right' ? opts.legend.width : width) - 12;
+                        if ($text.width() > rangeWidth) {
+                            // 加入省略号
+                            let $ellipsis = this.svgElement('text', {
+                                x: width - 9,
+                                y: 9 + i * 14,
+                                'font-size': 12
+                            }).text('...');
+                            let $ellipsisBg = this.svgElement('rect', {
+                                x: width - 10,
+                                y: i * 14,
+                                width: 10,
+                                height: 16,
+                                fill: '#fff'
+                            });
+                            $legend.append($ellipsisBg).append($ellipsis);
+                        }
+                    }, 0);
 
                     $svg.append($link);
-                    $svg.append($desc);
+                    $svg.append($legend);
                 }
             }
         )
