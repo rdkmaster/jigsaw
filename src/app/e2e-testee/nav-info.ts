@@ -36,6 +36,10 @@ export const liveDemoNavInfo = {
                 {
                     label: 'rate',
                     url: '/rate/rate-full'
+                },
+                {
+                    label: 'menu',
+                    url: '/menu/menu-full'
                 }
             ]
         },
@@ -905,6 +909,17 @@ export const navInfo = [
             {
                 label: 'rate',
                 url: '/rate/rate-full'
+            }
+        ]
+    },
+    {
+        title: 'Menu',
+        path: "menu",
+        loadChildren: "./menu/demo.module#MenuDemoModule",
+        navList: [
+            {
+                label: 'menu',
+                url: '/menu/menu-full'
             }
         ]
     }
