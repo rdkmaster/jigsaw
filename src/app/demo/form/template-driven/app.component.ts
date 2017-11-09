@@ -16,11 +16,14 @@ export class TemplateDrivenDemoComponent {
 
     firstName: string = 'jigsaw';
     remember: boolean = true;
-    rangeTime = {beginDate: 'now-7d', endDate: 'now'};
+    rangeTime = {
+        beginDate: TimeService.getFormatDate('now-7d', TimeGr.date),
+        endDate: TimeService.getFormatDate('now', TimeGr.date)
+    };
     birthday: string = 'now-30y';
     rangeTimeComboValue = new ArrayCollection([
-        {label: TimeService.getFormatDate(this.rangeTime.beginDate, TimeGr.date), closable: false},
-        {label: TimeService.getFormatDate(this.rangeTime.endDate, TimeGr.date), closable: false}
+        {label: this.rangeTime.beginDate, closable: false},
+        {label: this.rangeTime.endDate, closable: false}
     ]);
     comeFrom: any = {label: 'Nan Jing'};
     favoriteFruit: ArrayCollection<any>;
