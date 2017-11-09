@@ -11,14 +11,14 @@ export class NotificationDemo {
     }
 
     popNotification1() {
-        JigsawNotification.show('21<b>31</b>21<i>sss</i>111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111113','Hello','question',NotificationPosition.leftBottom)
+        JigsawNotification.show('21<b>31</b>21<i>sss</i>111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111113','Hello','question')
     }
 
     popNotification2() {
-        JigsawNotification.show('21<b>31</b>21<i>sss</i>111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111113','我很长我很长我很长我很长我很长我很长我很长我很长我很长','question',NotificationPosition.leftBottom)
+        JigsawNotification.show('21<b>31</b>21<i>sss</i>111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111113','我很长我很长我很长我很长我很长我很长我很长我很长我很长','question')
     }
 
     popNotification3() {
-        JigsawNotification.show('21<b>31</b>21<i>sss</i>1111','我不会自动关闭','question',NotificationPosition.leftBottom,0)
+        JigsawNotification.show('21<b>31</b>21<i>sss</i>1111','我不会自动关闭','question', NotificationPosition.rightTop,0)
     }
 }

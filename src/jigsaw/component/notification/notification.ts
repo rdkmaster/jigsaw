@@ -56,7 +56,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
     public static show(message: string,
                        caption?: string,
                        icon?: string,
-                       position?: NotificationPosition,
+                       position: NotificationPosition = NotificationPosition.rightTop,
                        timeout: number = 8000,
                        buttons?: ButtonInfo[],
                        callback?: Function,
