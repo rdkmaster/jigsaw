@@ -1,13 +1,13 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {DataFullDemoComponent} from "./app.component";
+import {DataIntroduceComponent} from "./app.component";
 
 @NgModule({
-    declarations: [DataFullDemoComponent],
-    bootstrap: [DataFullDemoComponent],
+    declarations: [DataIntroduceComponent],
+    bootstrap: [DataIntroduceComponent],
     imports: [CommonModule, JigsawDemoDescriptionModule]
 })
-export class DataFullDemoModule {
+export class DataIntroduceModule {
 
 }

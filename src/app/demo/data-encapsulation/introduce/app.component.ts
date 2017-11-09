@@ -5,7 +5,7 @@ import {HttpClient} from "@angular/common/http";
 @Component({
     templateUrl: './app.component.html'
 })
-export class DataFullDemoComponent {
+export class DataIntroduceComponent {
 
     constructor(http: HttpClient) {
     }

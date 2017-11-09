@@ -174,8 +174,14 @@ export class JigsawArray<T> implements Array<T> {
     }
 }
 
+/**
+ * 这是Jigsaw数据体系中两大分支之一：数组类型的基类。
+ */
 export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponentData {
     public http: HttpClient;
+    /**
+     * [参考这里](http://rdk.zte.com.cn/components/interfaces/api?apiItem=IAjaxComponentData#dataReviser)
+     */
     public dataReviser: DataReviser;
 
     public concat(...items: any[]): ArrayCollection<T> {
@@ -205,6 +211,11 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
 
     protected _busy: boolean = false;
 
+    /**
+     * [参考这里](http://rdk.zte.com.cn/components/interfaces/api?apiItem=IAjaxComponentData#busy)
+     *
+     * @returns {boolean}
+     */
     get busy(): boolean {
         return this._busy;
     }
@@ -268,6 +279,11 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
         }
     }
 
+    /**
+     * [参考这里](http://rdk.zte.com.cn/components/interfaces/api?apiItem=IAjaxComponentData#fromAjax)
+     *
+     * @returns {boolean}
+     */
     public fromAjax(url?: string): void;
     public fromAjax(options?: HttpClientOptions): void;
     public fromAjax(optionsOrUrl?: HttpClientOptions | string): void {
@@ -292,6 +308,12 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
             );
     }
 
+    /**
+     * 将一个普通数组对象`source`的所有元素浅拷贝到当前数据对象中。
+     *
+     * @param {T[]} source 源数据
+     * @returns {ArrayCollection<T>} 当前数据对象的引用
+     */
     public fromArray(source: T[]): ArrayCollection<T> {
         if (this._fromArray(source)) {
             this.refresh();
@@ -314,6 +336,9 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
 
     protected componentDataHelper: ComponentDataHelper = new ComponentDataHelper();
 
+    /**
+     * [参考这里](http://rdk.zte.com.cn/components/interfaces/api?apiItem=IComponentData#refresh)
+     */
     public refresh(): void {
         this.componentDataHelper.invokeRefreshCallback();
     }
@@ -322,22 +347,37 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
         return this.componentDataHelper.getRefreshRemoval({fn: callback, context: context});
     }
 
+    /**
+     * [参考这里](http://rdk.zte.com.cn/components/interfaces/api?apiItem=IAjaxComponentData#onAjaxStart)
+     */
     public onAjaxStart(callback: () => void, context?: any): CallbackRemoval {
         return this.componentDataHelper.getAjaxStartRemoval({fn: callback, context: context});
     }
 
+    /**
+     * [参考这里](http://rdk.zte.com.cn/components/interfaces/api?apiItem=IAjaxComponentData#onAjaxSuccess)
+     */
     public onAjaxSuccess(callback: (data: any) => void, context?: any): CallbackRemoval {
         return this.componentDataHelper.getAjaxSuccessRemoval({fn: callback, context: context});
     }
 
+    /**
+     * [参考这里](http://rdk.zte.com.cn/components/interfaces/api?apiItem=IAjaxComponentData#onAjaxError)
+     */
     public onAjaxError(callback: (error: Response) => void, context?: any): CallbackRemoval {
         return this.componentDataHelper.getAjaxErrorRemoval({fn: callback, context: context});
     }
 
+    /**
+     * [参考这里](http://rdk.zte.com.cn/components/interfaces/api?apiItem=IAjaxComponentData#onAjaxComplete)
+     */
     public onAjaxComplete(callback: () => void, context?: any): CallbackRemoval {
         return this.componentDataHelper.getAjaxCompleteRemoval({fn: callback, context: context});
     }
 
+    /**
+     * [参考这里](http://rdk.zte.com.cn/components/interfaces/api?apiItem=IComponentData#destroy)
+     */
     public destroy(): void {
         console.log('destroying ArrayCollection....');
         this.splice(0, this.length);
@@ -350,19 +390,37 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
 
     private _emitter = new EventEmitter<any>();
 
+    /**
+     * 发出一个事件，所有事先调用了[`subscribe()`](#subscribe)方法注册了的回调函数都可以处理这个事件。
+     *
+     * @param value 事件中携带的数据，任意类型
+     */
     public emit(value?: any): void {
         this._emitter.emit(value);
     }
 
-    public subscribe(generatorOrNext?: any, error?: any, complete?: any): any {
-        return this._emitter.subscribe(generatorOrNext, error, complete);
+    /**
+     * 注册回调函数，注册之后，所有在这个数据对象上[`emit()`](#emit)出来的事件，`callback`函数都会被调用。
+     *
+     * @param callback 事件的回调函数
+     * @returns {Function} 取消本次订阅的函数，执行之后，后续即使有事件发出，本次订阅的回调函数也不会再被执行
+     */
+    public subscribe(callback?: any): Function {
+        return this._emitter.subscribe(callback);
     }
 
+    /**
+     * 取消本数据对象上的所有回调函数。
+     */
     public unsubscribe() {
         this._emitter.unsubscribe();
     }
 }
 
+/**
+ * 具备服务端分页、服务端排序、服务端过滤能力的数组。需要有一个统一的具备服务端分页、服务端排序、服务端过滤能力的REST服务配合使用，
+ * 更多信息请[参考这里](http://10.9.233.35:52580/components/classes/api?apiItem=PagingInfo#pagingServerUrl)
+ */
 export class PageableArray extends ArrayCollection<any> implements IServerSidePageable, ISortable, IFilterable {
     public pagingInfo: PagingInfo;
     public filterInfo: DataFilterInfo;
@@ -412,6 +470,9 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         });
     }
 
+    /**
+     * [参考这里](http://rdk.zte.com.cn/components/interfaces/api?apiItem=IServerSidePageable#updateDataSource)
+     */
     public updateDataSource(optionsOrUrl: HttpClientOptions | string): void {
         this.sourceRequestOptions = typeof optionsOrUrl === 'string' ? {url: optionsOrUrl} : optionsOrUrl;
         this.pagingInfo.currentPage = 1;
@@ -422,6 +483,11 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this._initRequestOptions();
     }
 
+    /**
+     * [参考这里](http://rdk.zte.com.cn/components/interfaces/api?apiItem=IAjaxComponentData#fromAjax)
+     *
+     * @returns {boolean}
+     */
     public fromAjax(url?: string): void;
     public fromAjax(options?: HttpClientOptions): void;
     public fromAjax(optionsOrUrl?: HttpClientOptions | string): void {
@@ -562,6 +628,11 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
     }
 }
 
+/**
+ * 如果你没有统一的服务端分页、过滤、排序服务，则需要使用这个数据对象，并且请求的提供数据的服务需要自行处理分页、过滤、排序等。
+ *
+ * Jigsaw暂未实现此功能，如有需要，请给我们[提issue](https://github.com/rdkmaster/jigsaw/issues/new)。
+ */
 export class DirectPageableArray extends PageableArray {
     constructor(public http: HttpClient, public sourceRequestOptions: HttpClientOptions) {
         super(http, sourceRequestOptions);
@@ -569,6 +640,11 @@ export class DirectPageableArray extends PageableArray {
     }
 }
 
+/**
+ * 在本地分页、排序、过滤的数组。
+ *
+ * 部分功能未实现，如有需要，请给我们[提issue](https://github.com/rdkmaster/jigsaw/issues/new)。
+ */
 export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageable {
     public pagingInfo: PagingInfo;
 
