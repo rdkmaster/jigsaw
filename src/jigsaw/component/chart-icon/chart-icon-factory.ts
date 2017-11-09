@@ -155,7 +155,6 @@ export class ChartIconFactory {
                     if (this.$box) {
                         this.$box.remove();
                         this.$box = null;
-                        console.log(this.$box);
                     }
                 }
 
