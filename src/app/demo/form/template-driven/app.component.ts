@@ -27,6 +27,7 @@ export class TemplateDrivenDemoComponent {
     ]);
     comeFrom: any = {label: 'Nan Jing'};
     favoriteFruit: ArrayCollection<any>;
+    favoriteCities: ArrayCollection<any>;
     score: number = 30;
     isGreat: boolean = true;
 
