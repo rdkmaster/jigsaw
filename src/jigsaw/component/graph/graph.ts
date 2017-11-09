@@ -35,7 +35,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     /**
      * internal
      */
-    public _$noDataSrc = CommonUtils.noDataSrc;
+    public _$noDataSrc = CommonUtils.NoDataSrc;
 
     // 由数据服务提供的数据.
     private _data: AbstractGraphData;
