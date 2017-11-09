@@ -362,9 +362,9 @@ export class FishBoneFullComponent implements AfterViewInit {
             {
                 "id": 4,
                 "name": "ISC注册",
-                "count": "1800",
-                "ratio": "12.67(%)",
-                "delay": "1.00ms",
+                "count": "",
+                "ratio": "",
+                "delay": "",
                 "drill": {
                     "kpi": "fail_register3_isc",
                     "table": "aggr_volte_register_ci_fail",
@@ -374,7 +374,7 @@ export class FishBoneFullComponent implements AfterViewInit {
                 "pie": {
                     "header": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
                     "field": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
-                    "data": [["SIP Cause", "Forbidden[30,403]", "30", "403", "1572"]]
+                    "data": []
                 }
             }
         ]);

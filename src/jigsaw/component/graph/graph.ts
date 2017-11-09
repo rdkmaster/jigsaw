@@ -32,6 +32,11 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     // 通过 echarts.init 创建的实例
     private _graph: any;
 
+    /**
+     * internal
+     */
+    public _$noDataSrc = CommonUtils.NoDataSrc;
+
     // 由数据服务提供的数据.
     private _data: AbstractGraphData;
 
@@ -83,8 +88,8 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         this._handleResize();
     }
 
-    private _handleResize(){
-        if(this._graph){
+    private _handleResize() {
+        if (this._graph) {
             this._renderer.setStyle(this._graphContainer, 'width', this.width);
             this._renderer.setStyle(this._graphContainer, 'height', this.height);
             this.resize();
@@ -107,7 +112,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     }
 
     private _needSetupResizeEvent(): boolean {
-        if(this.width&& this.height) { // 防止没有数据时页面报错；
+        if (this.width && this.height) { // 防止没有数据时页面报错；
             return this.autoResize && (this.width[this.width.length - 1] == '%' || this.height[this.height.length - 1] == '%')
         } else {
             return this.autoResize;
@@ -127,6 +132,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     private _isOptionsValid(obj): boolean {
         return !CommonUtils.isEmptyObject(obj);
     }
+
     private _graphContainer;
 
     ngOnInit() {
