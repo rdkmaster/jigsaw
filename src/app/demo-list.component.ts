@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {routerConfig as alertConfig} from "./demo/alert/demo.module";
-import {routerConfig as arrayCollectionConfig} from "./demo/array-collection/demo.module";
+import {routerConfig as arrayCollectionConfig} from "./demo/data-encapsulation/demo.module";
 import {routerConfig as buttonConfig} from "./demo/button/demo.module";
 import {routerConfig as checkboxConfig} from "./demo/checkbox/demo.module";
 import {routerConfig as collapseConfig} from "./demo/collapse/demo.module";
@@ -61,14 +61,15 @@ export class DemoListComponent {
 export class DemoListManager {
 
     public static get fullRouterConfig() {
-        const rc = routerConfig.concat();
+        const rc = routerConfig.concat().sort((item1, item2) => item1.path.localeCompare(item2.path));
+        rc.splice(0, 2);
         this._mergeRoutes(rc);
         return rc;
     }
 
     private static _mergeRoutes(routerConfig: any[]) {
         this._addRouterConfig(routerConfig, 'alert', alertConfig);
-        this._addRouterConfig(routerConfig, 'array-collection', arrayCollectionConfig);
+        this._addRouterConfig(routerConfig, 'data-encapsulation', arrayCollectionConfig);
         this._addRouterConfig(routerConfig, 'button', buttonConfig);
         this._addRouterConfig(routerConfig, 'checkbox', checkboxConfig);
         this._addRouterConfig(routerConfig, 'collapse', collapseConfig);
@@ -107,6 +108,8 @@ export class DemoListManager {
             return;
         }
         cfg.childRouters = [];
-        childConfig.forEach(config => cfg.childRouters.push(config));
+        childConfig.concat()
+            .sort((item1, item2) => item1.path.localeCompare(item2.path))
+            .forEach(config => cfg.childRouters.push(config));
     }
 }

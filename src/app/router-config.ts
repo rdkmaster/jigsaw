@@ -5,8 +5,8 @@ export const routerConfig = [
         loadChildren: "./demo/alert/demo.module#AlertDemoModule",
     },
     {
-        path: "array-collection",
-        loadChildren: "./demo/array-collection/demo.module#ArrayCollectionDemoModule",
+        path: "data-encapsulation",
+        loadChildren: "./demo/data-encapsulation/demo.module#DataEncapsulationDemoModule",
     },
     {
         path: "button",

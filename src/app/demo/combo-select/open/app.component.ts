@@ -7,14 +7,9 @@ import {ArrayCollection} from "jigsaw/core/data/array-collection";
 })
 export class OpenComboSelectDemo {
     public open: boolean = true;
-    public autoClose: boolean = true;
 
     public toggleOpen() {
         this.open = !this.open
-    }
-
-    public toggleAutoClose() {
-        this.autoClose = !this.autoClose
     }
 
     public selectedCity = new ArrayCollection([{label: "北京", closable: false}]);
@@ -38,6 +33,6 @@ export class OpenComboSelectDemo {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
+    summary: string = '编程方式打开下拉部分';
     description: string = '';
 }

@@ -9,7 +9,7 @@ import {ArrayCollection} from "jigsaw/core/data/array-collection";
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
 })
-export class ComboSelectBasicDemo {
+export class ComboSelectChangeTriggerDemo {
     selectedCity = new ArrayCollection();
     cities = [
         {label: '北京', type: '', closable: false},
@@ -60,6 +60,6 @@ export class ComboSelectBasicDemo {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
-    description: string = '';
+    summary: string = '这个demo展示了如何修改触发下拉的方式，以及如何通过`select`等事件实现下拉部分与combo组件的良好交互。';
+    description: string = require('!!raw-loader!./readme.md');
 }

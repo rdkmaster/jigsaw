@@ -2,12 +2,13 @@ import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {JigsawButtonModule} from "jigsaw/component/button/button";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {ServerSidePaginationDemoComponent} from "./app.component";
+import {ArrayServerSidePaginationDemoComponent} from "./app.component";
+
 @NgModule({
-    declarations: [ServerSidePaginationDemoComponent],
-    bootstrap: [ ServerSidePaginationDemoComponent ],
+    declarations: [ArrayServerSidePaginationDemoComponent],
+    bootstrap: [ArrayServerSidePaginationDemoComponent],
     imports: [JigsawButtonModule, CommonModule, JigsawDemoDescriptionModule]
 })
-export class ServerSidePaginationDemoModule{
+export class ArrayServerSidePaginationDemoModule {
 
 }

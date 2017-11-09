@@ -5,7 +5,7 @@ import {PageableArray} from "jigsaw/core/data/array-collection";
 @Component({
     templateUrl: './app.component.html', styles: ['.alert {color: red;}']
 })
-export class ServerSidePaginationDemoComponent {
+export class ArrayServerSidePaginationDemoComponent {
     pageable: PageableArray;
     ready = false;
     errorInfo = "";

@@ -28,12 +28,13 @@ task('generate-demo-info', () => {
         const childRouters = getRouterConfig(join(demoHome, router.path, 'demo.module.ts'));
         childRouters.forEach((child: any) => {
             const demoInfo = {
-                url: `http://rdk.zte.com.cn:8800/${router.path}/${child.path}`,
+                url: `http://rdk.zte.com.cn/jigsaw/${router.path}/${child.path}`,
                 desc: child.desc ? child.desc : child.path,
                 recommended: !!child.recommended
             };
             childDemos.push(demoInfo);
         });
+        childDemos.sort((item1, item2) => item2.recommended - item1.recommended);
     });
 
     console.log('the demo info file is saved to: ' + saveTo);

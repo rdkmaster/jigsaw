@@ -5,17 +5,16 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
-    <h2>Auto Complete</h2>
     <div class="demo-1 live-demo">
         <h3>本地数据过滤</h3>
         <j-combo-select maxWidth="500"
-                             [(value)]="selectedCountries"
-                             [clearable]="true"
-                             labelField="enName"
-                             [searchable]="true"
-                             placeholder="search a country..."
-                             (openChange)="onLocalSearchOpen($event)"
-                             (searchKeywordChange)="handleSearching($event, lpaCountries)">
+                        [(value)]="selectedCountries"
+                        [clearable]="true"
+                        labelField="enName"
+                        [searchable]="true"
+                        placeholder="search a country..."
+                        (openChange)="onLocalSearchOpen($event)"
+                        (searchKeywordChange)="handleSearching($event, lpaCountries)">
             <ng-template>
                 <div class="dropdown">
                     <j-tile [(selectedItems)]="selectedCountries" trackItemBy="enName" width="550px">
@@ -32,14 +31,14 @@
     <div class="demo-2 live-demo">
         <h3>服务端数据过滤</h3>
         <j-combo-select maxWidth="500"
-                             [(value)]="selectedCountries2"
-                             [clearable]="true"
-                             labelField="enName"
-                             [searchable]="true"
-                             [searching]="spaCountries.busy"
-                             placeholder="输入中文也行"
-                             (openChange)="onServerSearchOpen($event)"
-                             (searchKeywordChange)="handleSearching($event, spaCountries)">
+                        [(value)]="selectedCountries2"
+                        [clearable]="true"
+                        labelField="enName"
+                        [searchable]="true"
+                        [searching]="spaCountries.busy"
+                        placeholder="输入中文也行"
+                        (openChange)="onServerSearchOpen($event)"
+                        (searchKeywordChange)="handleSearching($event, spaCountries)">
             <ng-template>
                 <div class="dropdown">
                     <j-tile [(selectedItems)]="selectedCountries2" trackItemBy="enName" width="550px">

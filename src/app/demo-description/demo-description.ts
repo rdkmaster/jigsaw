@@ -47,8 +47,8 @@ export class JigsawDemoDescription {
     }
 
     set summary(value: string) {
-        value = value ? value : '我们还没来得及编写这个demo的说明，' +
-            '你可以给我们<a href="https://github.com/rdkmaster/jigsaw" target="_blank">推送PR</a>来改进这个demo，' +
+        value = value ? value : '这个demo还没有使用说明，你可以将它的功能或者任何需要注意的地方通过PR' +
+            '<a href="https://github.com/rdkmaster/jigsaw" target="_blank">推送给我们</a>，' +
             '从而帮助到其他正在使用这个demo的人。';
         value = value.replace(/`(.*?)`/g, '<code>$1</code>');
         this._summary = `<strong>${value}</strong>`;

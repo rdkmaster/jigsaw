@@ -5,22 +5,19 @@
 
 <!-- start to learn the demo from here -->
 <div class="combo-select-demo cmn-box">
-    <h3>multiple demo</h3>
     <div class="test-btn">
-        <jigsaw-button (click)="toggleMultiple()">toggle multiple</jigsaw-button>
+        <jigsaw-button (click)="toggleMultiple()">toggle multiple & auto close on select</jigsaw-button>
     </div>
-    <jigsaw-combo-select
-        [(value)]="selectedCity"
-        (valueChange)="valueChange($event)"
-        [autoClose]="!multiple"
-        [clearable]="true"
-        maxWidth="500">
+    <jigsaw-combo-select [(value)]="selectedCity"
+                         (valueChange)="valueChange($event)"
+                         [autoClose]="!multiple"
+                         [clearable]="true"
+                         maxWidth="500">
         <ng-template>
-            <jigsaw-tile
-                [(selectedItems)]="selectedCity"
-                trackItemBy="label"
-                [multipleSelect]="multiple"
-                width="400px">
+            <jigsaw-tile [(selectedItems)]="selectedCity"
+                         trackItemBy="label"
+                         [multipleSelect]="multiple"
+                         width="400px">
                 <jigsaw-tile-option *ngFor="let city of cities" [value]="city" width="22.8%">
                     {{city.label}}
                 </jigsaw-tile-option>

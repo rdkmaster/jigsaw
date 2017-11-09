@@ -84,6 +84,6 @@ export class ComboSelectAutoCompleteDemo {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
-    description: string = '';
+    summary: string = '演示了如何使用关键字过滤的功能，包括浏览器内部数据过滤，和服务端数据过滤';
+    description: string = require('!!raw-loader!./readme.md');
 }

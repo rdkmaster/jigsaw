@@ -4,16 +4,16 @@ import {JigsawTileSelectModule} from "jigsaw/component/list-and-tile/tile";
 import {JigsawButtonModule} from "jigsaw/component/button/button";
 import {JigsawComboSelectModule} from "jigsaw/component/combo-select/index";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {ComboSelectBasicDemo} from "./app.component";
+import {ComboSelectChangeTriggerDemo} from "./app.component";
 
 @NgModule({
-    declarations: [ComboSelectBasicDemo],
-    bootstrap: [ComboSelectBasicDemo],
+    declarations: [ComboSelectChangeTriggerDemo],
+    bootstrap: [ComboSelectChangeTriggerDemo],
     imports: [
         JigsawComboSelectModule, JigsawTileSelectModule, JigsawButtonModule, CommonModule,
         JigsawDemoDescriptionModule
     ]
 })
-export class ComboSelectBasicDemoModule {
+export class ComboSelectChangeTriggerDemoModule {
 
 }
