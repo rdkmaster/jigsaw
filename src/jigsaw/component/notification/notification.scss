@@ -1,0 +1,41 @@
+@import "../../assets/scss/core/base";
+
+.jigsaw-notification-host {
+    position: unset !important;
+    box-shadow: none !important;
+    pointer-events: auto;
+}
+
+.jigsaw-notification {
+    width: 350px;
+    height: auto;
+    overflow: hidden;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 3px;
+    background: white;
+    box-shadow: rgba(0, 0, 0, 0.3) 1px 1px 6px;
+    .jigsaw-notification-title {
+        //标题控制在一行，超长加省略号
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: $font-size-lg;
+        color: $heading-color-dark;
+        i {
+            font-size: $font-size-lg+2px;
+            padding-right: 3px;
+        }
+    }
+    .jigsaw-notification-content {
+        word-wrap: break-word;
+        font-size: $font-size-base;
+        color: $text-color;
+    }
+    .jigsaw-notification-close {
+        float: right;
+        cursor: pointer;
+        padding: 0 5px;
+        font-size: $font-size-lg;
+    }
+}

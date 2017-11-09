@@ -892,5 +892,16 @@ export const navInfo = [
                 url: '/fish-bone/fish-bone-full'
             }
         ]
+    },
+    {
+        title: 'Notification',
+        path: "notification",
+        loadChildren: "./notification/demo.module#NotificationDemoModule",
+        navList: [
+            {
+                label: 'notification',
+                url: '/notification/notification'
+            }
+        ]
     }
 ];
