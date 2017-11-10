@@ -37,5 +37,4 @@ export class TableAddIDWithPagingComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-
 }

@@ -50,7 +50,7 @@ Jigsaw的数据总体分成两大分支：
 
 下面这个图描述了Jigsaw的数据对象之间的关系，有点复杂，但是它对理解Jigsaw的数据之间的关系非常有帮助。
 
-![](/jigsaw-source/docs/image/comp-data-map.png)
+![](/source/docs/image/comp-data-map.png)
 
 
 
