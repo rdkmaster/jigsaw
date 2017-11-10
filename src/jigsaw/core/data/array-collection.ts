@@ -421,7 +421,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
  * 具备服务端分页、服务端排序、服务端过滤能力的数组。需要有一个统一的具备服务端分页、服务端排序、服务端过滤能力的REST服务配合使用，
  * 更多信息请[参考这里](http://10.9.233.35:52580/components/classes/api?apiItem=PagingInfo#pagingServerUrl)
  *
- * 实际用法请参考[这个demo]()
+ * 实际用法请参考[这个demo](http://10.9.233.35:52580/jigsaw/data-encapsulation/array-ssp)
  */
 export class PageableArray extends ArrayCollection<any> implements IServerSidePageable, ISortable, IFilterable {
     public pagingInfo: PagingInfo;

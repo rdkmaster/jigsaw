@@ -151,7 +151,7 @@ export class ChartIconFactory {
                         this.$box = $('<div class="peity-no-data"></div>');
                     }
                     this.$el.hide().after(this.$box);
-                    this.$box.empty().append(`<image width="${width}" height="${height}" src="${CommonUtils.NoDataSrc}">`);
+                    this.$box.empty().append(`<image width="${width}" height="${height}" src="${CommonUtils.noDataImageSrc}">`);
                     return;
                 } else {
                     if (this.$box) {
