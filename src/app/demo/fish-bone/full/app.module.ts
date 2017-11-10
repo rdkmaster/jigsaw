@@ -2,9 +2,10 @@ import {NgModule} from "@angular/core";
 import {JigsawFishBoneModule} from "jigsaw/component/fish-bone/fish-bone";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {FishBoneFullComponent} from "./app.component";
+import {JigsawSelectModule} from "jigsaw/component/select/select";
 
 @NgModule({
-    imports: [JigsawFishBoneModule, JigsawDemoDescriptionModule],
+    imports: [JigsawFishBoneModule, JigsawDemoDescriptionModule, JigsawSelectModule],
     declarations: [FishBoneFullComponent],
     bootstrap: [FishBoneFullComponent]
 })

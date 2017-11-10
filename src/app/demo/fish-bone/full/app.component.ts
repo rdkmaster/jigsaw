@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, ViewEncapsulation} from "@angular/core";
 import {ChartIconFactory, ChartType} from "jigsaw/component/chart-icon/chart-icon-factory";
 import {TreeData} from "jigsaw/core/data/tree-data";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
     templateUrl: './app.component.html',
@@ -9,7 +10,7 @@ import {TreeData} from "jigsaw/core/data/tree-data";
 })
 export class FishBoneFullComponent implements AfterViewInit {
 
-    constructor() {
+    constructor(public http: HttpClient) {
         this.data = new TreeData();
         this.data.label = '<span class="orange">目标标题</span>';
         this.data.fromObject([
@@ -284,109 +285,35 @@ export class FishBoneFullComponent implements AfterViewInit {
         ]);
 
         this.data3 = new TreeData();
-        this.data3.fromObject([
-            {
-                "id": 0,
-                "name": "联合附着",
-                "count": "2668",
-                "ratio": "33.81(%)",
-                "delay": "8.40ms",
-                "drill": {
-                    "kpi": "fail_combined_attach_ims",
-                    "table": "aggr_volte_attach_ci_fail",
-                    "serviceType": 22,
-                    "condition": "Interface=5 and Procedure_Type=1 and Procedure_Status!=1 and Keyword_1=2 and Z_Reserve1=0"
-                },
-                "pie": {
-                    "header": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
-                    "field": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
-                    "data": [["S1-MME InternalCause", "附着超时[11,0]", "11", "0", "830"], ["S1-MME InternalCause", "11,186[11,186]", "11", "186", "470"], ["S1-MME InternalCause", "11,32[11,32]", "11", "32", "21"], ["S1-MME InternalCause", "11,101[11,101]", "11", "101", "8"], ["ESM Cause", "13,0[13,0]", "13", "0", "8"]],
-                    "other": {"name": "其它", "value": 576}
-                }
-            },
-            {
-                "id": 1,
-                "name": "PDN连接建立",
-                "count": "2451",
-                "ratio": "64.26(%)",
-                "delay": "5759.25ms",
-                "drill": {
-                    "kpi": "fail_uepdn",
-                    "table": "aggr_volte_attach_ci_fail",
-                    "serviceType": 22,
-                    "condition": "Interface=5 and Procedure_Type=1 and Keyword_1=2 and Z_Reserve1=0 and (apn like '%ims%' or apn like '%IMS%')"
-                },
-                "pie": {
-                    "header": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
-                    "field": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
-                    "data": [["S1-MME InternalCause", "Tau超时[11,3]", "11", "3", "952"]]
-                }
-            },
-            {
-                "id": 2,
-                "name": "Gm注册",
-                "count": "1841",
-                "ratio": "14.61(%)",
-                "delay": "5.84ms",
-                "drill": {
-                    "kpi": "(fail_register1_gm + fail_register2_gm)",
-                    "table": "aggr_volte_register_ci_fail",
-                    "serviceType": 23,
-                    "condition": "Interface=13 and PROCEDURETYPE=1 and Z_KEYWORD1 in (1,2) and PROCEDURESTATUS!=1"
-                },
-                "pie": {
-                    "header": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
-                    "field": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
-                    "data": [["SIP Cause", "Request Terminated[30,487]", "30", "487", "1572"]]
-                }
-            },
-            {
-                "id": 3,
-                "name": "Mw注册",
-                "count": "4741",
-                "ratio": "0.53(%)",
-                "delay": "188.64ms",
-                "drill": {
-                    "kpi": "(fail_register1_mw + fail_register2_mw)",
-                    "table": "aggr_volte_register_ci_fail",
-                    "serviceType": 23,
-                    "condition": "Interface=14 and PROCEDURETYPE=1 and Z_KEYWORD1 in (1,2) and PROCEDURESTATUS!=1 and SOURCE_NE_TYPE=15"
-                },
-                "pie": {
-                    "header": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
-                    "field": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
-                    "data": [],
-                    "other": {"name": "其它", "value": 4716}
-                }
-            },
-            {
-                "id": 4,
-                "name": "ISC注册",
-                "count": "",
-                "ratio": "",
-                "delay": "",
-                "drill": {
-                    "kpi": "fail_register3_isc",
-                    "table": "aggr_volte_register_ci_fail",
-                    "serviceType": 23,
-                    "condition": "Interface=18 and PROCEDURETYPE=3 and PROCEDURESTATUS!=1"
-                },
-                "pie": {
-                    "header": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
-                    "field": ["causetype", "cause", "causetype_val", "cause_val", "failNum"],
-                    "data": []
-                }
-            }
-        ]);
-        this.data3.label = `<span class="orange">VoLTE呼损分析</span>`;
-        this.data3.nodes.forEach((node, index) => {
-            node.label = `<span class="orange">${node.name}</span>`;
-            let pieData = this.getPieData(node).join(",");
-            let nodesItem = new TreeData();
-            nodesItem.label = `<span class="pie-call-loss-${index}">${pieData}</span>`;
-            nodesItem.desc = `<p class="call-loss-data"> count: ${node.count} <br> ratio: ${node.ratio} <br> delay: ${node.delay}</p>`;
-            node.nodes = [nodesItem];
+        this.data3.http = http;
+        this.data3.fromAjax('mock-data/fish-bone-data1');
+        this.data3.onAjaxSuccess(data => {
+            console.log(data);
+            // 内部先执行fromObject,给data3的nodes赋值
+            // 然后调用refresh，refresh方法是异步的, 会在onAjaxComplete之后执行，所以把数据放到onAjaxComplete里面处理也是没问题的
+            console.log(this.data3);
+            this.data3.label = `<span class="orange">VoLTE呼损分析</span>`;
+            this.data3.nodes.forEach((node, index) => {
+                node.label = `<span class="orange">${node.name}</span>`;
+                let pieData = this.getPieData(node).join(",");
+                let nodesItem = new TreeData();
+                nodesItem.label = `<span class="pie-call-loss-${index}">${pieData}</span>`;
+                nodesItem.desc = `<p class="call-loss-data"> count: ${node.count} <br> ratio: ${node.ratio} <br> delay: ${node.delay}</p>`;
+                node.nodes = [nodesItem];
+            });
         });
+        // 在ChartIcon注册Custom Pie
+        ChartIconFactory.registerCustomPie();
+        this.data3.onAjaxComplete(() => {
+            console.log(this.data3);
+            setTimeout(() => {
+                this.data3.nodes.forEach((node, index) => {
+                    const legendData = this.getLegendData(node);
+                    const pieData = this.getPieData(node);
+                    this.drawPie(index, legendData, this.getPieTitle(pieData, legendData), node);
+                });
+            });
+        })
     }
 
     data: TreeData;
@@ -395,14 +322,28 @@ export class FishBoneFullComponent implements AfterViewInit {
 
     data3: TreeData;
 
+    sceneData = [
+        {id: 1, label: "场景一",},
+        {id: 2, label: "场景二",}
+    ];
+    selectedScene = this.sceneData[0];
+
     hello(toWhom) {
         alert('hello ' + toWhom);
     }
 
-    getPieData(node){
+    changeData(scene) {
+        if (scene.id == 1) {
+            this.data3.fromAjax('mock-data/fish-bone-data1');
+        } else if (scene.id = 2) {
+            this.data3.fromAjax('mock-data/fish-bone-data2');
+        }
+    }
+
+    getPieData(node) {
         let pieData = [];
-        if(node && node.pie){
-            if(node.pie.data instanceof Array){
+        if (node && node.pie) {
+            if (node.pie.data instanceof Array) {
                 pieData = node.pie.data.reduce((arr, item) => {
                     arr.push(item[item.length - 1]);
                     return arr;
@@ -415,10 +356,21 @@ export class FishBoneFullComponent implements AfterViewInit {
         return pieData;
     }
 
-    getLegendData(node){
+    getPieTitle(pieData, legendData) {
+        pieData = pieData.map(item => parseInt(item));
+        const pieDataTotal = pieData.reduce((total, item) => {
+            return total + item;
+        }, 0);
+        return legendData.reduce((pieLabel, item, index) => {
+            pieLabel.push(`${item}: ${pieData[index]}(${(pieData[index] / pieDataTotal * 100).toFixed(2)}%)`);
+            return pieLabel;
+        }, []);
+    }
+
+    getLegendData(node) {
         let legendData = [];
-        if(node && node.pie){
-            if(node.pie.data instanceof Array){
+        if (node && node.pie) {
+            if (node.pie.data instanceof Array) {
                 legendData = node.pie.data.reduce((arr, item) => {
                     arr.push(item[0] + item[1]);
                     return arr;
@@ -431,9 +383,29 @@ export class FishBoneFullComponent implements AfterViewInit {
         return legendData;
     }
 
-    ngAfterViewInit() {
-        ChartIconFactory.registerCustomPie();
+    drawPie(index, legendData, pieTitle, node) {
+        ChartIconFactory.create(".pie-call-loss-" + index, ChartType.customPie, {
+            fill: function (_, i, all) {
+                let g = Math.round((i / all.length) * 255);
+                return "rgb(100, " + g + ", 222)"
+            },
+            radius: 60,
+            legend: {
+                orient: 'right', // 如果是'top'，图例的高度是自动算出来的，所以height属性不需要配置
+                width: 100,
+                data: legendData
+            },
+            series: node,
+            link: this.handleLink,
+            title: pieTitle,
+            context: this,
+            after: () => {
+                console.log('a pie has been draw')
+            },
+        });
+    }
 
+    ngAfterViewInit() {
         ChartIconFactory.create(".bar-colours-1", ChartType.bar, {
             fill: ["red", "green", "blue"],
             height: 50,
@@ -452,42 +424,9 @@ export class FishBoneFullComponent implements AfterViewInit {
             height: 80,
             width: 100
         });
-
-        this.data3.nodes.forEach((node, index) => {
-            node.label = `<span class="orange">${node.name}</span>`;
-            const legendData = this.getLegendData(node);
-            const pieData = this.getPieData(node).map(item => parseInt(item))
-            const pieDataTotal = pieData.reduce((total, item) => {
-                return total + item;
-            }, 0);
-            const pieTitle =legendData.reduce((pieLabel, item, index) => {
-                pieLabel.push(item + ': value ('+(pieData[index] / pieDataTotal * 100).toFixed(2) + '%)');
-                return pieLabel;
-            }, []);
-
-            ChartIconFactory.create(".pie-call-loss-" + index, ChartType.customPie, {
-                fill: function (_, i, all) {
-                    let g = Math.round((i / all.length) * 255);
-                    return "rgb(100, " + g + ", 222)"
-                },
-                radius: 60,
-                legend: {
-                    orient: 'right', // 如果是'top'，图例的高度是自动算出来的，所以height属性不需要配置
-                    width: 100,
-                    data: legendData
-                },
-                series: node,
-                link: this.handleLink,
-                title: pieTitle,
-                context: this,
-                after: () => {
-                    console.log('a pie has been draw')
-                },
-            });
-        });
     }
 
-    handleLink(data, index){
+    handleLink(data, index) {
         console.log(this);
         console.log(index, data);
     }

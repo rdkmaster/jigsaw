@@ -26,6 +26,8 @@ export class TreeData extends GeneralCollection<any> {
             }
             this.propList.push(key);
         }
+
+        this.refresh();
         return this;
     }
 
