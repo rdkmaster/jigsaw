@@ -57,6 +57,13 @@
     </div>
     <div class="field">
         <label>Favorite Fruit</label>
+        <!--
+            TIPS:
+            jigsaw-combo-select it self is form-friendly, so you can compose any form-unfriendly components
+            with jigsaw-combo-select to make it form-friendly.
+            for example, jigsaw-table is not form-friendly, you can still use jigsaw-table in the form, just simply
+            compose it with jigsaw-combo-select.
+         -->
         <jigsaw-combo-select [(ngModel)]="favoriteFruit" (valueChange)="onFavoriteFruitRemoved($event)"
                              name="favoriteFruit" width="250px">
             <ng-template>
