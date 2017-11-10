@@ -16,6 +16,11 @@
     </div>
     <div class="demo-3 live-demo">
         <h3>实用场景</h3>
+        <jigsaw-select labelField="label"
+                       [(value)]="selectedScene"
+                       [data]="sceneData"
+                       (valueChange)="changeData($event)">
+        </jigsaw-select>
         <j-fish-bone [data]="data3" direction="right"></j-fish-bone>
     </div>
 </div>
