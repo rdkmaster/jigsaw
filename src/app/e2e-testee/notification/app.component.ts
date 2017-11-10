@@ -21,4 +21,8 @@ export class NotificationDemo {
     popNotification3() {
         JigsawNotification.show('21<b>31</b>21<i>sss</i>1111','我不会自动关闭','question', NotificationPosition.rightTop,0)
     }
+
+    popNotification4() {
+        JigsawNotification.show('21<b>31</b>21<i>sss</i>111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111113','我不会自动关闭','question', NotificationPosition.rightTop,5000,null,null,null,100,100)
+    }
 }

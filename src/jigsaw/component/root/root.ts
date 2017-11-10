@@ -29,7 +29,6 @@ export class JigsawRoot {
     popupContainer: ViewContainerRef;
 
     ngAfterViewInit() {
-        console.dir(this.popupContainer);
         PopupService._viewContainerRef = this.popupContainer;
     }
 }

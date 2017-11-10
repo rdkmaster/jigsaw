@@ -5,7 +5,7 @@
 
 ## show
 
-//TODO 按钮 宽度目前是指定的（修改宽高的入口？show函数？）
+//TODO 按钮
 
 | 参数      | 说明             | 类型      | 默认值  |
 |----------|------------------|----------|--------|
@@ -17,3 +17,5 @@
 | buttons | 提示框的按钮 | ButtonInfo[] |  |
 | callback | 回调函数 | DialogCallback |  |
 | callbackContext | 回调函数上下文 | any |  |
+| width |  | number or string |  |
+| height |  | number or string |  |

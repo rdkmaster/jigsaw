@@ -24,7 +24,11 @@ export enum NotificationPosition {
 
 @Component({
     selector: 'jigsaw-notification,j-notification',
-    templateUrl: 'notification.html'
+    templateUrl: 'notification.html',
+    host: {
+        '[style.width]': 'width',
+        '[style.height]': 'height'
+    }
 })
 export class JigsawNotification extends AbstractDialogComponentBase {
 
@@ -47,11 +51,15 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         this.title = value.title;
         this.icon = value.icon;
         this.buttons = value.buttons ? value.buttons : this.buttons;
+        this.width = value.width;
+        this.height = value.height
     }
 
     @Input() public message: string;
     @Input() public title: string;
     @Input() public icon: string;
+    @Input() public width: string;
+    @Input() public height: string;
 
     public static show(message: string,
                        caption?: string,
@@ -60,7 +68,9 @@ export class JigsawNotification extends AbstractDialogComponentBase {
                        timeout: number = 8000,
                        buttons?: ButtonInfo[],
                        callback?: Function,
-                       callbackContext?: any): PopupInfo {
+                       callbackContext?: any,
+                       height?: string | number,
+                       width?: string | number): PopupInfo {
         //TODO 按钮
 
         const popupOptions = {
@@ -75,7 +85,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         Object.assign(popEle.style, position);
 
         const popupInfo = PopupService.instance.popup(JigsawNotification, popupOptions,
-            {message: message, title: caption, icon: 'fa fa-' + icon, buttons: buttons});
+            {message: message, title: caption, icon: 'fa fa-' + icon, buttons: buttons, height: height, width: width});
 
         popupInfo.answer.subscribe(answer => {
             CommonUtils.safeInvokeCallback(null, callback, [answer]);

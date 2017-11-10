@@ -1,17 +1,17 @@
 @import "../../assets/scss/core/base";
 
 .jigsaw-notification-host {
+    width: 350px;
+    margin: 5px;
     position: unset !important;
     box-shadow: none !important;
     pointer-events: auto;
 }
 
 .jigsaw-notification {
-    width: 350px;
-    height: auto;
-    overflow: hidden;
+    height: inherit;
+    overflow: auto;
     padding: 10px;
-    margin: 5px;
     border-radius: 3px;
     background: white;
     box-shadow: rgba(0, 0, 0, 0.3) 1px 1px 6px;
