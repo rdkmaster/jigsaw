@@ -25,8 +25,22 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
         super();
     }
 
+    private _dataCallbackRemoval: CallbackRemoval;
+
+    private _data: TreeData;
+
     @Input()
-    public data: TreeData;
+    get data(): TreeData {
+        return this._data;
+    }
+
+    set data(value: TreeData) {
+        this._data = value;
+        if (this._dataCallbackRemoval) {
+            this._dataCallbackRemoval();
+        }
+        this._dataCallbackRemoval = this._data.onRefresh(this.ngAfterViewInit, this);
+    }
 
     @Input()
     public direction: string = 'left';
@@ -179,6 +193,9 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
     ngOnDestroy() {
         if (this._removeWindowListener) {
             this._removeWindowListener();
+        }
+        if (this._dataCallbackRemoval) {
+            this._dataCallbackRemoval();
         }
     }
 }

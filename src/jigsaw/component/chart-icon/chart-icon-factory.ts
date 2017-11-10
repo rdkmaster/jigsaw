@@ -1,3 +1,5 @@
+import {CommonUtils} from "../../core/utils/common-utils";
+
 export class ChartIconPie {
     delimiter?: string = null;
     fill?: string[] | ((...any) => string) = ["#ff9900", "#fff4dd", "#ffd592"];
@@ -140,6 +142,23 @@ export class ChartIconFactory {
                     height = $svg.height(),
                     cx = width / 2 - pieOffsetX,
                     cy = height / 2 + pieOffsetY;
+
+                if (this.$el.text().replace(/\s+/g, '') === '') {
+                    // 没有数据
+                    $svg.remove();
+                    this.$svg = null;
+                    if (!this.$box) {
+                        this.$box = $('<div class="peity-no-data"></div>');
+                    }
+                    this.$el.hide().after(this.$box);
+                    this.$box.empty().append(`<image width="${width}" height="${height}" src="${CommonUtils.noDataImageSrc}">`);
+                    return;
+                } else {
+                    if (this.$box) {
+                        this.$box.remove();
+                        this.$box = null;
+                    }
+                }
 
                 let radius = Math.min(cx, cy),
                     innerRadius = opts.innerRadius;

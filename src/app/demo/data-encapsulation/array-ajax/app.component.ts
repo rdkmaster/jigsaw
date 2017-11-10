@@ -12,6 +12,9 @@ export class ArrayCollectionAjaxDemoComponent {
         const ac = new ArrayCollection();
         ac.http = http;
         ac.fromAjax('mock-data/core-members');
+        ac.dataReviser = data => {
+            data.push({id: 6, name: '朱明鹏'});
+        };
 
         this.consoleAppend("list of our first core members:");
         ac.onAjaxComplete(() => {

@@ -3,16 +3,16 @@ import {RouterModule} from "@angular/router";
 import {ArrayCollectionAjaxDemoModule} from "./array-ajax/app.module";
 import {ArrayCollectionBasicDemoModule} from "./array-basic/app.module";
 import {ArrayServerSidePaginationDemoModule} from "./array-ssp/app.module";
-import {DataFullDemoModule} from "./full/app.module";
+import {DataIntroduceModule} from "./introduce/app.module";
 
 import {ArrayCollectionBasicDemoComponent} from "./array-basic/app.component";
 import {ArrayCollectionAjaxDemoComponent} from "./array-ajax/app.component";
 import {ArrayServerSidePaginationDemoComponent} from "./array-ssp/app.component";
-import {DataFullDemoComponent} from "./full/app.component";
+import {DataIntroduceComponent} from "./introduce/app.component";
 
 export const routerConfig = [
     {
-        path: 'full', component: DataFullDemoComponent
+        path: 'introduce', component: DataIntroduceComponent
     },
     {
         path: 'array-basic', component: ArrayCollectionBasicDemoComponent
@@ -28,7 +28,7 @@ export const routerConfig = [
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig),
-        DataFullDemoModule,
+        DataIntroduceModule,
         ArrayCollectionAjaxDemoModule,
         ArrayCollectionBasicDemoModule,
         ArrayServerSidePaginationDemoModule
