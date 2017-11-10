@@ -23,8 +23,7 @@ export class ZtreeDemoDataFromAjaxComponent {
     constructor(public http: HttpClient) {
         this.data = new TreeData();
         this.data.http = http;
-        this.data.fromAjax("mock-data/tree/data.json");
-        this.data.refresh();
+        this.data.fromAjax("mock-data/tree-data");
     }
 
     // ====================================================================
