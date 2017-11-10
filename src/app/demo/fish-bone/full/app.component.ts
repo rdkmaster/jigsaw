@@ -284,14 +284,13 @@ export class FishBoneFullComponent implements AfterViewInit {
             }
         ]);
 
+        // 在ChartIcon注册Custom Pie
+        ChartIconFactory.registerCustomPie();
+
         this.data3 = new TreeData();
         this.data3.http = http;
         this.data3.fromAjax('mock-data/fish-bone-data1');
-        this.data3.onAjaxSuccess(data => {
-            console.log(data);
-            // 内部先执行fromObject,给data3的nodes赋值
-            // 然后调用refresh，refresh方法是异步的, 会在onAjaxComplete之后执行，所以把数据放到onAjaxComplete里面处理也是没问题的
-            console.log(this.data3);
+        this.data3.onAjaxComplete(() => {
             this.data3.label = `<span class="orange">VoLTE呼损分析</span>`;
             this.data3.nodes.forEach((node, index) => {
                 node.label = `<span class="orange">${node.name}</span>`;
@@ -301,11 +300,7 @@ export class FishBoneFullComponent implements AfterViewInit {
                 nodesItem.desc = `<p class="call-loss-data"> count: ${node.count} <br> ratio: ${node.ratio} <br> delay: ${node.delay}</p>`;
                 node.nodes = [nodesItem];
             });
-        });
-        // 在ChartIcon注册Custom Pie
-        ChartIconFactory.registerCustomPie();
-        this.data3.onAjaxComplete(() => {
-            console.log(this.data3);
+            // 等待TreeData里的html字符串在鱼骨图中渲染
             setTimeout(() => {
                 this.data3.nodes.forEach((node, index) => {
                     const legendData = this.getLegendData(node);
