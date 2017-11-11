@@ -180,7 +180,7 @@ export class JigsawArray<T> implements Array<T> {
 export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponentData {
     public http: HttpClient;
     /**
-     * [参考这里](http://rdk.zte.com.cn/components/interfaces/api?apiItem=IAjaxComponentData#dataReviser)
+     * 请参考[IAjaxComponentData.dataReviser]{@link IAjaxComponentData#dataReviser}
      */
     public dataReviser: DataReviser;
 
@@ -212,7 +212,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
     protected _busy: boolean = false;
 
     /**
-     * [参考这里](http://rdk.zte.com.cn/components/interfaces/api?apiItem=IAjaxComponentData#busy)
+     * 请参考[IAjaxComponentData.busy]{@link IAjaxComponentData#busy}
      *
      * @returns {boolean}
      */
@@ -280,9 +280,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
     }
 
     /**
-     * [参考这里](http://rdk.zte.com.cn/components/interfaces/api?apiItem=IAjaxComponentData#fromAjax)
-     *
-     * @returns {boolean}
+     * 请参考[IAjaxComponentData.fromAjax]{@link IAjaxComponentData#fromAjax}
      */
     public fromAjax(url?: string): void;
     public fromAjax(options?: HttpClientOptions): void;
@@ -337,7 +335,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
     protected componentDataHelper: ComponentDataHelper = new ComponentDataHelper();
 
     /**
-     * [参考这里](http://rdk.zte.com.cn/components/interfaces/api?apiItem=IComponentData#refresh)
+     * 请参考[IComponentData.refresh]{@link IComponentData#refresh}
      */
     public refresh(): void {
         this.componentDataHelper.invokeRefreshCallback();
@@ -348,35 +346,35 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
     }
 
     /**
-     * [参考这里](http://rdk.zte.com.cn/components/interfaces/api?apiItem=IAjaxComponentData#onAjaxStart)
+     * 请参考[IAjaxComponentData.onAjaxStart]{@link IAjaxComponentData#onAjaxStart}
      */
     public onAjaxStart(callback: () => void, context?: any): CallbackRemoval {
         return this.componentDataHelper.getAjaxStartRemoval({fn: callback, context: context});
     }
 
     /**
-     * [参考这里](http://rdk.zte.com.cn/components/interfaces/api?apiItem=IAjaxComponentData#onAjaxSuccess)
+     * 请参考[IAjaxComponentData.onAjaxSuccess]{@link IAjaxComponentData#onAjaxSuccess}
      */
     public onAjaxSuccess(callback: (data: any) => void, context?: any): CallbackRemoval {
         return this.componentDataHelper.getAjaxSuccessRemoval({fn: callback, context: context});
     }
 
     /**
-     * [参考这里](http://rdk.zte.com.cn/components/interfaces/api?apiItem=IAjaxComponentData#onAjaxError)
+     * 请参考[IAjaxComponentData.onAjaxError]{@link IAjaxComponentData#onAjaxError}
      */
     public onAjaxError(callback: (error: Response) => void, context?: any): CallbackRemoval {
         return this.componentDataHelper.getAjaxErrorRemoval({fn: callback, context: context});
     }
 
     /**
-     * [参考这里](http://rdk.zte.com.cn/components/interfaces/api?apiItem=IAjaxComponentData#onAjaxComplete)
+     * 请参考[IAjaxComponentData.onAjaxComplete]{@link IAjaxComponentData#onAjaxComplete}
      */
     public onAjaxComplete(callback: () => void, context?: any): CallbackRemoval {
         return this.componentDataHelper.getAjaxCompleteRemoval({fn: callback, context: context});
     }
 
     /**
-     * [参考这里](http://rdk.zte.com.cn/components/interfaces/api?apiItem=IComponentData#destroy)
+     * 请参考[IComponentData.destroy]{@link IComponentData#destroy}
      */
     public destroy(): void {
         console.log('destroying ArrayCollection....');
@@ -391,7 +389,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
     private _emitter = new EventEmitter<any>();
 
     /**
-     * 发出一个事件，所有事先调用了[`subscribe()`](#subscribe)方法注册了的回调函数都可以处理这个事件。
+     * 发出一个事件，所有事先调用了`subscribe`方法注册了的回调函数都可以处理这个事件。
      *
      * @param value 事件中携带的数据，任意类型
      */
@@ -400,7 +398,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
     }
 
     /**
-     * 注册回调函数，注册之后，所有在这个数据对象上[`emit()`](#emit)出来的事件，`callback`函数都会被调用。
+     * 注册回调函数，注册之后，所有在这个数据对象上`emit`出来的事件，`callback`函数都会被调用。
      *
      * @param callback 事件的回调函数
      * @returns {Function} 取消本次订阅的函数，执行之后，后续即使有事件发出，本次订阅的回调函数也不会再被执行
@@ -418,10 +416,11 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
 }
 
 /**
- * 具备服务端分页、服务端排序、服务端过滤能力的数组。需要有一个统一的具备服务端分页、服务端排序、服务端过滤能力的REST服务配合使用，
- * 更多信息请[参考这里](http://10.9.233.35:52580/components/classes/api?apiItem=PagingInfo#pagingServerUrl)
+ * 这是实际使用时最常用的数组对象，具备服务端分页、服务端排序、服务端过滤能力。
+ * 注意：需要有一个统一的具备服务端分页、服务端排序、服务端过滤能力的REST服务配合使用，
+ * 更多信息请参考[pagingServerUrl]{@link PagingInfo#pagingServerUrl}
  *
- * 实际用法请参考[这个demo](http://10.9.233.35:52580/jigsaw/data-encapsulation/array-ssp)
+ * 实际用法请参考[这个demo](/jigsaw/data-encapsulation/array-ssp)
  */
 export class PageableArray extends ArrayCollection<any> implements IServerSidePageable, ISortable, IFilterable {
     public pagingInfo: PagingInfo;
@@ -473,7 +472,7 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
     }
 
     /**
-     * [参考这里](http://rdk.zte.com.cn/components/interfaces/api?apiItem=IServerSidePageable#updateDataSource)
+     * 请参考[IServerSidePageable.updateDataSource]{@link IServerSidePageable#updateDataSource}
      */
     public updateDataSource(optionsOrUrl: HttpClientOptions | string): void {
         this.sourceRequestOptions = typeof optionsOrUrl === 'string' ? {url: optionsOrUrl} : optionsOrUrl;
@@ -486,7 +485,7 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
     }
 
     /**
-     * [参考这里](http://rdk.zte.com.cn/components/interfaces/api?apiItem=IAjaxComponentData#fromAjax)
+     * 请参考[IAjaxComponentData.fromAjax]{@link IAjaxComponentData#fromAjax}
      *
      * @returns {boolean}
      */

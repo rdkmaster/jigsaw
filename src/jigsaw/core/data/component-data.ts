@@ -81,7 +81,7 @@ export interface IAjaxComponentData extends IComponentData {
     /**
      * 这个属性用于标志当前数据的忙闲状态，为`true`时表示请求正在进行中，为`false`表示数据请求已经结束；
      * 常常用于界面上的loading状态是否显示或者组件的disabled状态是否激活。
-     * 可参考[这个demo](http://rdk.zte.com.cn/jigsaw/data-encapsulation/array-ssp)。
+     * 可参考[这个demo](/jigsaw/data-encapsulation/array-ssp)。
      *
      * @type boolean
      */
@@ -91,7 +91,7 @@ export interface IAjaxComponentData extends IComponentData {
      * 这是一个函数，作用是在数据从服务端请求回来之后，对服务端返回的数据做修正，并返回修正后的数据。
      * 一般用于数据结构的转换或者数据的微调。
      *
-     * 可参考[这个demo](http://rdk.zte.com.cn/jigsaw/data-encapsulation/array-ajax)。
+     * 可参考[这个demo](/jigsaw/data-encapsulation/array-ajax)。
      *
      * @type (data: any) => any
      */
@@ -176,7 +176,7 @@ export interface IPageable extends IAjaxComponentData {
     changePage(info: PagingInfo): void;
 
     /**
-     * 直接跳转到第1页
+     * 直接跳转到第一页
      */
     firstPage(): void;
 
