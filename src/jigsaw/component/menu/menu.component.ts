@@ -7,7 +7,7 @@ import {MenuData} from "./menu.typings";
 
 @Component({
     selector: 'jigsaw-menu, j-menu',
-    template: `<ng-content></ng-content>`,
+    templateUrl: './menu.component.html',
     styleUrls: ['./menu.component.scss'],
     encapsulation: ViewEncapsulation.None,
     providers: [
@@ -18,17 +18,28 @@ import {MenuData} from "./menu.typings";
         }
     ],
 })
-export class JigsawMenuComponent extends AbstractJigsawComponent implements OnInit {
-    @Input()
-    set data(data: MenuData){
 
-    }
+export class JigsawMenuComponent extends AbstractJigsawComponent implements OnInit {
+    _width = '150';
+    _height = 'auto';
+    _selectedItems1: string;
+
+    @Input() data: MenuData[];
 
     constructor(public popupService: PopupService) {
         super();
     }
 
     ngOnInit() {
+        this._width = this.width;
+        this._height = this.height;
     }
 
+    _handleSelect(selectedItems) {
+        this._selectedItems1 = selectedItems.map(item => item.title).toString()
+    }
+
+    setSubMenu() {
+
+    }
 }

@@ -8,22 +8,26 @@ export class MenuFullComponent implements OnInit {
     titles = [
         {
             title: 'Settings',
-            subTitle: 'Ctrl+Alt+A',
+            extraLabel: 'Ctrl+Alt+A',
+            icon: 'fa fa-address-book',
             subMenu: false
         },
         {
             title: 'Print',
-            subTitle: '',
+            extraLabel: '',
+            icon: 'fa fa-address-book',
             subMenu: true
         },
         {
             title: 'Save All',
-            subTitle: 'Ctrl+S',
+            extraLabel: 'Ctrl+S',
+            icon: 'fa fa-address-book',
             subMenu: false
         },
         {
             title: 'Exit',
-            subTitle: '',
+            extraLabel: '',
+            icon: 'fa fa-address-book',
             subMenu: true
         }
     ];

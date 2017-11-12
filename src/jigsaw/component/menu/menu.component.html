@@ -1,1 +1,16 @@
+<j-list [width]="_width" [height]="_height" trackItemBy="title" (selectedItemsChange)="_handleSelect($event)">
+    <j-list-option *ngFor="let title of _titles" [value]="title">
+        <div class="jigsaw-menu-icon" j-title>
+            <i [class]="title.icon"></i>
+        </div>
+        <span j-title>{{title.title}}</span>
+        <div j-sub-title>{{title.extraLabel}} <span *ngIf="title.subMenu" class="fa fa-angle-right"></span></div>
+    </j-list-option>
+</j-list>
+
+
+<div [ngClass]="{'ui-tieredmenu ui-menu ui-widget ui-widget-content ui-corner-all ui-helper-clearfix':true,'ui-menu-dynamic ui-shadow':popup}"
+     [class]="styleClass" [ngStyle]="style">
+    <j-menu-sub [item]="data" root></j-menu-sub>
+</div>
 
