@@ -66,7 +66,7 @@ export class JigsawMenuSubComponent extends AbstractJigsawComponent implements O
         this.activeItem = null;
     }
 
-    itemClick(event: Event, item: MenuItem) {
+    itemClick(event: Event, item: MenuData[]) {
         if (item.disabled) {
             event.preventDefault();
             return true;
