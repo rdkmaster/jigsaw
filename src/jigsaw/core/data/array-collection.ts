@@ -389,7 +389,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
     private _emitter = new EventEmitter<any>();
 
     /**
-     * 发出一个事件，所有事先调用了`subscribe`方法注册了的回调函数都可以处理这个事件。
+     * 发出一个事件，所有事先调用了[`subscribe`](#subscribe)方法注册了的回调函数都可以处理这个事件。
      *
      * @param value 事件中携带的数据，任意类型
      */
@@ -398,7 +398,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
     }
 
     /**
-     * 注册回调函数，注册之后，所有在这个数据对象上`emit`出来的事件，`callback`函数都会被调用。
+     * 注册回调函数，注册之后，所有在这个数据对象上[`emit`](#emit)出来的事件，[`subscribe`](#subscribe)方法都会被调用。
      *
      * @param callback 事件的回调函数
      * @returns {Function} 取消本次订阅的函数，执行之后，后续即使有事件发出，本次订阅的回调函数也不会再被执行
