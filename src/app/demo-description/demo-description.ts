@@ -56,13 +56,13 @@ export class JigsawDemoDescription {
 
     gotoPlunker() {
         const pathName = location.pathname;
-        let match = pathName.match(/(\/.*?\/.*?)$/);
+        let match = pathName.match(/\/jigsaw\/(.*?\/.*?)$/);
         if (!match) {
             alert('unexpected demo url[' + pathName + '], please send us an issue here:\n' +
                 'https://github.com/rdkmaster/jigsaw/issues/new');
             return;
         }
-        const url = '/jigsaw/live-demo' + match[1] + '/index.html';
+        const url = '/jigsaw/live-demo/' + match[1] + '/index.html';
         console.log(url);
         window.open(url, '_blank');
     }
