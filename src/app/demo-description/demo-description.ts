@@ -56,7 +56,7 @@ export class JigsawDemoDescription {
 
     gotoPlunker() {
         const pathName = location.pathname;
-        let match = pathName.match(/(\/.*?\/.*?)(\/|$)/);
+        let match = pathName.match(/(\/.*?\/.*?)$/);
         if (!match) {
             alert('unexpected demo url[' + pathName + '], please send us an issue here:\n' +
                 'https://github.com/rdkmaster/jigsaw/issues/new');
