@@ -62,7 +62,7 @@ export class JigsawDemoDescription {
                 'https://github.com/rdkmaster/jigsaw/issues/new');
             return;
         }
-        const url = '/live-demo' + match[1] + '/index.html';
+        const url = '/jigsaw/live-demo' + match[1] + '/index.html';
         console.log(url);
         window.open(url, '_blank');
     }
