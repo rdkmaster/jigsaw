@@ -55,11 +55,11 @@ export class JigsawMenuSubComponent extends AbstractJigsawComponent implements O
     }
 
     _onListMouseEnter(event: Event, menuItem: MenuData[]) {
-        let item = <HTMLElement>event.currentTarget;
+        const item = <HTMLElement>event.currentTarget;
         this._activeItem = item;
-        let nextElement: HTMLElement = <HTMLElement> item.children[0].nextElementSibling;
+        const nextElement: HTMLElement = <HTMLElement> item.children[0].nextElementSibling;
         if (nextElement) {
-            let sublist: HTMLElement = <HTMLElement> nextElement.children[0];
+            const sublist: HTMLElement = <HTMLElement> nextElement.children[0];
             sublist.style.display = 'block';
             sublist.style.zIndex = String(++ JigsawMenuSubComponent.zIndex);
             sublist.style.top = '0px';
@@ -69,10 +69,10 @@ export class JigsawMenuSubComponent extends AbstractJigsawComponent implements O
 
     _onListMouseLeave(event: Event) {
         this._activeItem = null;
-        let item = <HTMLElement>event.currentTarget;
-        let nextElement: HTMLElement = <HTMLElement> item.children[0].nextElementSibling;
+        const item = <HTMLElement>event.currentTarget;
+        const nextElement: HTMLElement = <HTMLElement> item.children[0].nextElementSibling;
         if (nextElement) {
-            let sublist: HTMLElement = <HTMLElement> nextElement.children[0];
+            const sublist: HTMLElement = <HTMLElement> nextElement.children[0];
             setTimeout(() => {
                 sublist.style.display = 'none';
             }, 150);

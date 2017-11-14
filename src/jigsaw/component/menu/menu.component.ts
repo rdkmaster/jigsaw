@@ -2,8 +2,8 @@ import {Component, forwardRef, Input, OnInit, ViewEncapsulation} from '@angular/
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
 
 import {AbstractJigsawComponent} from "../common";
-import {PopupService} from "../../service/popup.service";
-import {MenuData} from "./menu.typings";
+import {PopupOptions, PopupService} from "../../service/popup.service";
+import {MenuData, MenuCallback} from "./menu.typings";
 
 @Component({
     selector: 'jigsaw-menu, j-menu',
@@ -36,5 +36,9 @@ export class JigsawMenuComponent extends AbstractJigsawComponent implements OnIn
     ngOnInit() {
         this._width = this.width;
         this._height = this.height;
+    }
+
+    public show(menu: MenuData[], callback?: MenuCallback, popupOptions?: PopupOptions) {
+
     }
 }

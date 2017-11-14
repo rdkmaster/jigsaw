@@ -1,4 +1,4 @@
-export interface MenuData {
+export class MenuData {
     title: string;
     extraLabel?: string;
     icon?: string;
@@ -6,3 +6,4 @@ export interface MenuData {
     [prop: string]: any;
 }
 
+export type MenuCallback = (menuItem: MenuData) => void;
