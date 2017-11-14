@@ -7,28 +7,68 @@ import {Component, OnInit} from '@angular/core';
 export class MenuFullComponent implements OnInit {
     titles = [
         {
-            title: 'Settings',
+            label: 'Settings',
             extraLabel: 'Ctrl+Alt+A',
             icon: 'fa fa-address-book',
-            subMenu: false
         },
         {
-            title: 'Print',
+            label: 'Print',
             extraLabel: '',
             icon: 'fa fa-address-book',
-            subMenu: true
+            items: [
+                {
+                    label: 'Settings',
+                    extraLabel: 'Ctrl+Alt+A',
+                    icon: 'fa fa-address-book'
+                },
+                {
+                    label: 'Print',
+                    extraLabel: '',
+                    icon: 'fa fa-address-book'
+                },
+                {
+                    label: 'Save All',
+                    extraLabel: 'Ctrl+S',
+                    icon: 'fa fa-address-book'
+                },
+                {
+                    label: 'Exit',
+                    extraLabel: '',
+                    icon: 'fa fa-address-book',
+                    items: [
+                        {
+                            label: 'Settings',
+                            extraLabel: 'Ctrl+Alt+A',
+                            icon: 'fa fa-address-book'
+                        },
+                        {
+                            label: 'Print',
+                            extraLabel: '',
+                            icon: 'fa fa-address-book'
+                        },
+                        {
+                            label: 'Save All',
+                            extraLabel: 'Ctrl+S',
+                            icon: 'fa fa-address-book'
+                        },
+                        {
+                            label: 'Exit',
+                            extraLabel: '',
+                            icon: 'fa fa-address-book'
+                        }
+                    ]
+                }
+            ]
         },
         {
-            title: 'Save All',
+            label: 'Save All',
             extraLabel: 'Ctrl+S',
-            icon: 'fa fa-address-book',
-            subMenu: false
+            icon: 'fa fa-address-book'
         },
         {
-            title: 'Exit',
+            label: 'Exit',
             extraLabel: '',
-            icon: 'fa fa-address-book',
-            subMenu: true
+            icon: 'fa fa-address-book'
         }
     ];
 

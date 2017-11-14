@@ -22,9 +22,12 @@ import {MenuData} from "./menu.typings";
 export class JigsawMenuComponent extends AbstractJigsawComponent implements OnInit {
     _width = '150';
     _height = 'auto';
-    _selectedItems1: string;
+    _titles: MenuData[];
 
-    @Input() data: MenuData[];
+    @Input()
+    set data (data: MenuData[]){
+        this._titles = data;
+    }
 
     constructor(public popupService: PopupService) {
         super();
@@ -33,13 +36,5 @@ export class JigsawMenuComponent extends AbstractJigsawComponent implements OnIn
     ngOnInit() {
         this._width = this.width;
         this._height = this.height;
-    }
-
-    _handleSelect(selectedItems) {
-        this._selectedItems1 = selectedItems.map(item => item.title).toString()
-    }
-
-    setSubMenu() {
-
     }
 }

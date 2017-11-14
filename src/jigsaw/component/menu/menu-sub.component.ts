@@ -20,9 +20,13 @@ import {MenuData} from "./menu.typings";
 })
 
 export class JigsawMenuSubComponent extends AbstractJigsawComponent implements OnInit {
+    _prefixCls = 'jigsaw';
+    _innerPrefixCls = `${this._prefixCls}-menu`;
+    static zIndex = 1000;
     _root = false;
     _item: MenuData[];
-    activeItem: HTMLLIElement;
+    _activeItem: HTMLElement;
+    _selectedItems1: string;
 
     @Input()
     public set item(item: MenuData[]) {
@@ -46,47 +50,37 @@ export class JigsawMenuSubComponent extends AbstractJigsawComponent implements O
 
     }
 
-    onItemMouseEnter(event: Event, item: HTMLLIElement, menuitem: MenuData[]) {
-        if (menuitem.disabled) {
-            return;
-        }
+    _handleSelect(selectedItems) {
+        this._selectedItems1 = selectedItems.map(item => item.label).toString()
+    }
 
-        this.activeItem = item;
+    _onListMouseEnter(event: Event, menuItem: MenuData[]) {
+        let item = <HTMLElement>event.currentTarget;
+        this._activeItem = item;
         let nextElement: HTMLElement = <HTMLElement> item.children[0].nextElementSibling;
         if (nextElement) {
             let sublist: HTMLElement = <HTMLElement> nextElement.children[0];
-            sublist.style.zIndex = String(++DomHandler.zindex);
-
+            sublist.style.display = 'block';
+            sublist.style.zIndex = String(++ JigsawMenuSubComponent.zIndex);
             sublist.style.top = '0px';
-            sublist.style.left = this.domHandler.getOuterWidth(item.children[0]) + 'px';
+            sublist.style.left = (item.offsetWidth) + 'px';
+            sublist.style.marginLeft = '5px'
         }
     }
 
-    onItemMouseLeave(event: Event) {
-        this.activeItem = null;
-    }
-
-    itemClick(event: Event, item: MenuData[]) {
-        if (item.disabled) {
-            event.preventDefault();
-            return true;
+    _onListMouseLeave(event: Event) {
+        this._activeItem = null;
+        let item = <HTMLElement>event.currentTarget;
+        let nextElement: HTMLElement = <HTMLElement> item.children[0].nextElementSibling;
+        if (nextElement) {
+            let sublist: HTMLElement = <HTMLElement> nextElement.children[0];
+            setTimeout(() => {
+                sublist.style.display = 'none';
+            }, 150);
         }
 
-        if (!item.url) {
-            event.preventDefault();
-        }
-
-        if (item.command) {
-            item.command({
-                originalEvent: event,
-                item: item
-            });
-        }
     }
 
-    listClick(event: Event) {
-        this.activeItem = null;
-    }
 }
 
 
