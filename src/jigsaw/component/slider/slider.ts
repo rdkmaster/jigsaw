@@ -79,7 +79,7 @@ export class JigsawSliderHandle implements OnInit {
         }
     }
 
-    private _dragged: boolean = false;
+    private _dragging: boolean = false;
 
     public transformPosToValue(pos) {
         // 更新取得的滑动条尺寸.
@@ -125,14 +125,9 @@ export class JigsawSliderHandle implements OnInit {
     /**
      * @internal
      */
-    public _$updateCanDragged(flag: boolean) {
-        this._dragged = flag;
-
-        if (flag) {
-            this._registerGlobalEvent();
-        } else {
-            this._destroyGlobalEvent();
-        }
+    public _$startToDrag() {
+        this._dragging = true;
+        this._registerGlobalEvent();
     }
 
     globalEventMouseMove: Function;
@@ -143,10 +138,9 @@ export class JigsawSliderHandle implements OnInit {
             this._$updateValuePosition(e);
         });
         this.globalEventMouseUp = this._render.listen("document", "mouseup", () => {
-            this._dragged = false;
+            this._dragging = false;
             this._destroyGlobalEvent();
         });
-
     }
 
     _destroyGlobalEvent() {
@@ -170,7 +164,7 @@ export class JigsawSliderHandle implements OnInit {
      * @internal
      */
     public _$updateValuePosition(event?) {
-        if (!this._dragged || this._slider.disabled) return;
+        if (!this._dragging || this._slider.disabled) return;
 
         // 防止产生选中其他文本，造成鼠标放开后还可以拖拽的奇怪现象;
         event.stopPropagation();

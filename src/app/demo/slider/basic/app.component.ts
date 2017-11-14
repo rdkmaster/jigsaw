@@ -1,7 +1,4 @@
-/**
- * Created by 10177553 on 2017/4/13.
- */
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {SliderMark} from "jigsaw/component/slider/slider";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
