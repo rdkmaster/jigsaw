@@ -5,10 +5,7 @@ import {Component} from '@angular/core';
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 @Component({
-    template: `
-        <jigsaw-slider min="10" max="100" [value]="value" [vertical]="vertical"
-                       style="height: 360px; width: 120px;"></jigsaw-slider>
-    `
+    templateUrl: 'app.component.html'
 })
 export class SliderVerticalDemoComponent {
     vertical: boolean = true;
