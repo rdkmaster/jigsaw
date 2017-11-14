@@ -31,7 +31,7 @@ export class SliderMark {
     templateUrl: './handle.html',
     encapsulation: ViewEncapsulation.None
 })
-export class JigsawSliderHandle implements OnInit{
+export class JigsawSliderHandle implements OnInit {
 
     private _value: number;
 
@@ -39,16 +39,19 @@ export class JigsawSliderHandle implements OnInit{
     public key: number;
 
     @Input()
-    public get value() { return this._value; }
+    public get value() {
+        return this._value;
+    }
+
     public set value(value) {
-        if(this._value === value) return;
+        if (this._value === value) return;
 
         this._value = this._slider._verifyValue(value);
         this._valueToPos();
     }
 
     @Output()
-    public change = new  EventEmitter<number>();
+    public change = new EventEmitter<number>();
 
     private _valueToPos() {
         this._offset = this._slider._transformValueToPos(this.value);
@@ -63,9 +66,9 @@ export class JigsawSliderHandle implements OnInit{
     public _$handleStyle = {};
 
     private setHandleStyle() {
-        if(isNaN(this._offset)) return;
+        if (isNaN(this._offset)) return;
 
-        if(this._slider.vertical) { // 兼容垂直滑动条;
+        if (this._slider.vertical) { // 兼容垂直滑动条;
             this._$handleStyle = {
                 bottom: this._offset + "%"
             }
@@ -76,7 +79,7 @@ export class JigsawSliderHandle implements OnInit{
         }
     }
 
-    private _dragged: boolean = false;
+    private _dragging: boolean = false;
 
     public transformPosToValue(pos) {
         // 更新取得的滑动条尺寸.
@@ -84,17 +87,17 @@ export class JigsawSliderHandle implements OnInit{
         let dimensions = this._slider._dimensions;
 
         // bottom 在dom中的位置.
-        let offset = this._slider.vertical?dimensions.bottom: dimensions.left;
-        let size = this._slider.vertical?dimensions.height: dimensions.width;
-        let posValue = this._slider.vertical? pos.y - 6: pos.x;
+        let offset = this._slider.vertical ? dimensions.bottom : dimensions.left;
+        let size = this._slider.vertical ? dimensions.height : dimensions.width;
+        let posValue = this._slider.vertical ? pos.y - 6 : pos.x;
 
-        if(this._slider.vertical) {
-            posValue = posValue > offset? offset:posValue;
+        if (this._slider.vertical) {
+            posValue = posValue > offset ? offset : posValue;
         } else {
-            posValue = posValue < offset? offset:posValue;
+            posValue = posValue < offset ? offset : posValue;
         }
 
-        let newValue = Math.abs(posValue - offset) / size * (this._slider.max - this._slider.min) + (this._slider.min-0); // 保留两位小数
+        let newValue = Math.abs(posValue - offset) / size * (this._slider.max - this._slider.min) + (this._slider.min - 0); // 保留两位小数
 
         let m = this._calFloat(this._slider.step);
 
@@ -114,21 +117,17 @@ export class JigsawSliderHandle implements OnInit{
         let m = 0;
         try {
             m = this._slider.step.toString().split(".")[1].length;
-        } catch(e) { }
+        } catch (e) {
+        }
         return m;
     }
 
     /**
      * @internal
      */
-    public _$updateCanDragged(flag: boolean) {
-        this._dragged = flag;
-
-        if(flag) {
-            this._registerGlobalEvent();
-        } else {
-            this._destroyGlobalEvent();
-        }
+    public _$startToDrag() {
+        this._dragging = true;
+        this._registerGlobalEvent();
     }
 
     globalEventMouseMove: Function;
@@ -139,21 +138,24 @@ export class JigsawSliderHandle implements OnInit{
             this._$updateValuePosition(e);
         });
         this.globalEventMouseUp = this._render.listen("document", "mouseup", () => {
-            this._dragged = false;
+            this._dragging = false;
             this._destroyGlobalEvent();
         });
-
     }
 
     _destroyGlobalEvent() {
-        if(this.globalEventMouseMove) { this.globalEventMouseMove(); }
+        if (this.globalEventMouseMove) {
+            this.globalEventMouseMove();
+        }
 
-        if(this.globalEventMouseUp)  { this.globalEventMouseUp(); }
+        if (this.globalEventMouseUp) {
+            this.globalEventMouseUp();
+        }
     }
 
-    private _slider:JigsawSlider; // 父组件;
+    private _slider: JigsawSlider; // 父组件;
 
-    constructor(private _render: Renderer2,@Host() @Inject(forwardRef(() => JigsawSlider)) slider: JigsawSlider) {
+    constructor(private _render: Renderer2, @Host() @Inject(forwardRef(() => JigsawSlider)) slider: JigsawSlider) {
         this._slider = slider;
     }
 
@@ -162,7 +164,7 @@ export class JigsawSliderHandle implements OnInit{
      * @internal
      */
     public _$updateValuePosition(event?) {
-        if(!this._dragged|| this._slider.disabled) return;
+        if (!this._dragging || this._slider.disabled) return;
 
         // 防止产生选中其他文本，造成鼠标放开后还可以拖拽的奇怪现象;
         event.stopPropagation();
@@ -175,7 +177,7 @@ export class JigsawSliderHandle implements OnInit{
 
         let newValue = this.transformPosToValue(pos);
 
-        if(this.value === newValue) return;
+        if (this.value === newValue) return;
 
         this.value = newValue;
 
@@ -197,7 +199,8 @@ export class JigsawSliderHandle implements OnInit{
     selector: 'jigsaw-slider, j-slider',
     templateUrl: './slider.html',
     host: {
-        'class': 'jigsaw-slider-host',
+        '[class.jigsaw-slider-host]': 'true',
+        '[class.jigsaw-slider-vertical]': 'vertical',
         '[style.width]': 'width',
         '[style.height]': 'height'
     },
@@ -412,7 +415,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
         let vertical = this.vertical;
 
         this._marks.forEach(mark => {
-            const richMark:any = {};
+            const richMark: any = {};
             if (vertical) {
                 richMark.dotStyle = {
                     bottom: this._transformValueToPos(mark.value) + "%"
@@ -493,8 +496,10 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
         }
     }
 
-    private _propagateChange: any = () => {};
+    private _propagateChange: any = () => {
+    };
 
+    // ngModel触发的writeValue方法，只会在ngOnInit,ngAfterContentInit,ngAfterViewInit这些生命周期之后才调用
     public writeValue(value: any): void {
         if (value instanceof ArrayCollection) {
             this._$value = value;
@@ -511,6 +516,12 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
             this.valueChange.emit(this.value);
             this._propagateChange(this.value);
         });
+
+        if (this.initialized) {
+            this._setTrackStyle(this.value);
+            this.valueChange.emit(this.value);
+            this._propagateChange(this.value);
+        }
     }
 
     public registerOnChange(fn: any): void {
