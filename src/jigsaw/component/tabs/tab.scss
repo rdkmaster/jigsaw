@@ -130,6 +130,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
             &-inactive {
                 opacity: 0;
                 height: 0;
+                overflow: hidden;
             }
 
             &-hidden {
