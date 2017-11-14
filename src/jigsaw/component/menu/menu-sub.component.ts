@@ -63,8 +63,7 @@ export class JigsawMenuSubComponent extends AbstractJigsawComponent implements O
             sublist.style.display = 'block';
             sublist.style.zIndex = String(++ JigsawMenuSubComponent.zIndex);
             sublist.style.top = '0px';
-            sublist.style.left = (item.offsetWidth) + 'px';
-            sublist.style.marginLeft = '5px'
+            sublist.style.left = (item.offsetWidth + 2) + 'px';
         }
     }
 
