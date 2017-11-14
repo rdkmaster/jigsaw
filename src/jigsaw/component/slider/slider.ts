@@ -5,7 +5,7 @@ import {
     Component,
     ElementRef,
     EventEmitter, forwardRef, Host, Inject,
-    Input,
+    Input, NgZone,
     OnDestroy,
     OnInit,
     Output,
@@ -67,16 +67,17 @@ export class JigsawSliderHandle implements OnInit {
 
     private setHandleStyle() {
         if (isNaN(this._offset)) return;
-
-        if (this._slider.vertical) { // 兼容垂直滑动条;
-            this._$handleStyle = {
-                bottom: this._offset + "%"
+        this._zone.runOutsideAngular(() => {
+            if (this._slider.vertical) { // 兼容垂直滑动条;
+                this._$handleStyle = {
+                    bottom: this._offset + "%"
+                }
+            } else {
+                this._$handleStyle = {
+                    left: this._offset + "%"
+                }
             }
-        } else {
-            this._$handleStyle = {
-                left: this._offset + "%"
-            }
-        }
+        })
     }
 
     private _dragging: boolean = false;
@@ -155,7 +156,7 @@ export class JigsawSliderHandle implements OnInit {
 
     private _slider: JigsawSlider; // 父组件;
 
-    constructor(private _render: Renderer2, @Host() @Inject(forwardRef(() => JigsawSlider)) slider: JigsawSlider) {
+    constructor(private _render: Renderer2, @Host() @Inject(forwardRef(() => JigsawSlider)) slider: JigsawSlider, private _zone: NgZone) {
         this._slider = slider;
     }
 
@@ -211,7 +212,7 @@ export class JigsawSliderHandle implements OnInit {
 })
 export class JigsawSlider extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
-    constructor(private _element: ElementRef, private _render: Renderer2) {
+    constructor(private _element: ElementRef, private _render: Renderer2, private _zone: NgZone) {
         super();
     }
 
@@ -222,7 +223,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
      * @internal
      */
     public _$value: ArrayCollection<number> = new ArrayCollection<number>();
-    private _removeRefreshCallback: CallbackRemoval;
+    private _removeRefreshCallback: CallbackRemoval = this._getRemoveRefreshCallback();
 
     /**
      * slider的当前值, 类型 number | ArrayCollection<number> 支持多触点.
@@ -239,17 +240,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
     }
 
     public set value(value: number | ArrayCollection<number>) {
-        if (!this.initialized) {
-            if (value instanceof ArrayCollection) {
-                this._$value = value;
-            } else {
-                this._$value.set(0, value);
-            }
-            return;
-        } else {
-            this.writeValue(value);
-            this._propagateChange(this.value);
-        }
+        this.writeValue(value);
     }
 
     /**
@@ -447,24 +438,20 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
         // 计算slider 的尺寸.
         this._dimensions = this._element.nativeElement.getBoundingClientRect();
 
-        // 设置选中的轨道.
-        this._setTrackStyle(this.value);
-
         // 设置标记.
         this._calcMarks();
         // 注册resize事件;
         this.resize();
-
-        // 强制使外部给的值生效
-        this.value = this._$value;
     }
 
     private _removeResizeEvent: Function;
 
     private resize() {
-        this._removeResizeEvent = this._render.listen("window", "resize", () => {
-            // 计算slider 的尺寸.
-            this._dimensions = this._element.nativeElement.getBoundingClientRect();
+        this._zone.runOutsideAngular(() => {
+            this._removeResizeEvent = this._render.listen("window", "resize", () => {
+                // 计算slider 的尺寸.
+                this._dimensions = this._element.nativeElement.getBoundingClientRect();
+            })
         })
     }
 
@@ -496,6 +483,14 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
         }
     }
 
+    private _getRemoveRefreshCallback() {
+        return this._$value.onRefresh(() => {
+            this._zone.runOutsideAngular(() => this._setTrackStyle(this.value));
+            this.valueChange.emit(this.value);
+            this._propagateChange(this.value);
+        });
+    }
+
     private _propagateChange: any = () => {
     };
 
@@ -503,25 +498,17 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
     public writeValue(value: any): void {
         if (value instanceof ArrayCollection) {
             this._$value = value;
+            if (this._removeRefreshCallback) {
+                this._removeRefreshCallback();
+            }
+            this._removeRefreshCallback = this._getRemoveRefreshCallback();
         } else {
             this._$value.splice(0, this._$value.length);
             this._$value.push(this._verifyValue(+value));
         }
 
-        if (this._removeRefreshCallback) {
-            this._removeRefreshCallback()
-        }
-        this._removeRefreshCallback = this._$value.onRefresh(() => {
-            this._setTrackStyle(this.value);
-            this.valueChange.emit(this.value);
-            this._propagateChange(this.value);
-        });
-
-        if (this.initialized) {
-            this._setTrackStyle(this.value);
-            this.valueChange.emit(this.value);
-            this._propagateChange(this.value);
-        }
+        // refresh的回调是异步的
+        this._$value.refresh();
     }
 
     public registerOnChange(fn: any): void {
