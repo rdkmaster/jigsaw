@@ -15,7 +15,7 @@ export class MenuFullComponent implements OnInit {
             label: 'Print',
             extraLabel: '',
             icon: 'fa fa-address-book',
-            items: [
+            children: [
                 {
                     label: 'Settings',
                     extraLabel: 'Ctrl+Alt+A',
@@ -35,7 +35,7 @@ export class MenuFullComponent implements OnInit {
                     label: 'Exit',
                     extraLabel: '',
                     icon: 'fa fa-address-book',
-                    items: [
+                    children: [
                         {
                             label: 'Settings',
                             extraLabel: 'Ctrl+Alt+A',
