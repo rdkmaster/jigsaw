@@ -1,1 +1,3 @@
-<j-menu [data]="titles" [width]="'160'"></j-menu>
+<j-menu [data]="titles" [width]="'160'" (select)="selectChange($event)"></j-menu>
+
+<j-menu #jMenu [width]="'300'"></j-menu>

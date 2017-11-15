@@ -1,4 +1,4 @@
-import {Component, forwardRef, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, forwardRef, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
 
 import {AbstractJigsawComponent} from "../common";
@@ -23,6 +23,9 @@ export class JigsawMenuComponent extends AbstractJigsawComponent implements OnIn
     _width = '150';
     _height = 'auto';
     _titles: MenuData[];
+    _selectedItems1: any;
+
+    @Output() public select: EventEmitter<MenuData> = new EventEmitter<MenuData>();
 
     @Input()
     set data (data: MenuData[]){
@@ -39,6 +42,11 @@ export class JigsawMenuComponent extends AbstractJigsawComponent implements OnIn
     }
 
     public show(menu: MenuData[], callback?: MenuCallback, popupOptions?: PopupOptions) {
+        this._titles = menu;
+    }
 
+    _handleSelect(selectedItems) {
+        console.log(selectedItems);
+        this._selectedItems1 = selectedItems.map(item => item.label).toString();
     }
 }

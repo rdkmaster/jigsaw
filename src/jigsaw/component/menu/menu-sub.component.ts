@@ -1,4 +1,4 @@
-import {Component, forwardRef, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, forwardRef, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
 
 import {AbstractJigsawComponent} from "../common";
@@ -28,6 +28,8 @@ export class JigsawMenuSubComponent extends AbstractJigsawComponent implements O
     _activeItem: HTMLElement;
     _selectedItems1: string;
 
+    @Output() public selectedItem: EventEmitter<MenuData> = new EventEmitter<MenuData>();
+
     @Input()
     public set item(item: MenuData[]) {
         this._item = item;
@@ -52,7 +54,8 @@ export class JigsawMenuSubComponent extends AbstractJigsawComponent implements O
     }
 
     _handleSelect(selectedItems) {
-        this._selectedItems1 = selectedItems.map(item => item.label).toString()
+        // this.selectedItem.emit();
+        this._selectedItems1 = selectedItems.map(item => item.label).toString();
     }
 
     _onListMouseEnter(event: Event, menuItem: MenuData[]) {
