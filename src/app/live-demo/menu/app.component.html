@@ -1,3 +1,21 @@
-<j-menu [data]="titles" [width]="'160'" (select)="selectChange($event)"></j-menu>
+<div class="live-demo-wrap">
+    <h2>Rate</h2>
+    <div class="clearfix">
+        <div class="demo-1 live-demo live-demo-block live-demo-menu">
+            <h3>基本</h3>
+            <p class="comment">基本用法</p>
+            <j-menu [data]="titles" [width]="'160'" (select)="selectChange($event)"></j-menu>
+        </div>
 
-<j-menu #jMenu [width]="'300'"></j-menu>
+        <div class="demo-2 live-demo live-demo-block live-demo-menu">
+            <h3></h3>
+            <p class="comment"></p>
+            <j-menu #jMenu [width]="'300'"></j-menu>
+        </div>
+
+        <div class="demo-2 live-demo live-demo-block live-demo-menu">
+            <h3></h3>
+            <p class="comment"></p>
+        </div>
+    </div>
+</div>
