@@ -103,7 +103,7 @@ export class MenuFullComponent implements OnInit {
         this.jMenu.show(this.titles);
     }
 
-    selectChange(e:any){
+    selectChange(e: any) {
         console.log(e);
     }
 }

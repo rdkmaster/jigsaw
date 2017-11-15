@@ -49,12 +49,11 @@ export class JigsawMenuSubComponent extends AbstractJigsawComponent implements O
     }
 
     ngOnInit() {
-        this._width = this.width;
-        this._height = this.height;
+
     }
 
     _handleSelect(selectedItems) {
-        // this.selectedItem.emit();
+        this.selectedItem.emit(selectedItems);
         this._selectedItems1 = selectedItems.map(item => item.label).toString();
     }
 

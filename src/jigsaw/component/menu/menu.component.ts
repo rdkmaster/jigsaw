@@ -20,10 +20,7 @@ import {MenuData, MenuCallback} from "./menu.typings";
 })
 
 export class JigsawMenuComponent extends AbstractJigsawComponent implements OnInit {
-    _width = '150';
-    _height = 'auto';
     _titles: MenuData[];
-    _selectedItems1: any;
 
     @Output() public select: EventEmitter<MenuData> = new EventEmitter<MenuData>();
 
@@ -45,8 +42,4 @@ export class JigsawMenuComponent extends AbstractJigsawComponent implements OnIn
         this._titles = menu;
     }
 
-    _handleSelect(selectedItems) {
-        console.log(selectedItems);
-        this._selectedItems1 = selectedItems.map(item => item.label).toString();
-    }
 }
