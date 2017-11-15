@@ -135,6 +135,9 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
     }
 }
 
+/**
+ * 这是Jigsaw数据体系中两大分支之一：通用的key-value（即JSON对象）的集合类型的基类。
+ */
 export class GeneralCollection<T> extends AbstractGeneralCollection<T> {
     [index: string]: any;
 
