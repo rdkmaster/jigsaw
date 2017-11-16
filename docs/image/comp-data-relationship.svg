@@ -918,7 +918,9 @@
 <stop offset="1" style="stop-color:rgb(93.72549%,93.72549%,93.72549%);stop-opacity:1;"/>
 </linearGradient>
 </defs>
-<g id="surface1">
+<g id="surface6">
+<path style="fill:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:0.0784314;stroke-dasharray:11,5,2.5,5;stroke-miterlimit:10;" d="M 1142.779967 209.997793 L 1142.779967 18.000441 L 919.593242 18.000441 L 919.593242 209.997793 Z M 1142.779967 209.997793 " transform="matrix(0.70875,0,0,0.70875,0,0)"/>
+<path style="fill:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(42.745098%,42.745098%,42.745098%);stroke-opacity:1;stroke-dasharray:11,5,2.5,5;stroke-miterlimit:10;" d="M 223.185864 192.002643 L 223.185864 -0.000220674 L -0.000861166 -0.000220674 L -0.000861166 192.002643 Z M 223.185864 192.002643 " transform="matrix(0.70875,0,0,0.70875,650.34436,11.34)"/>
 <path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:0.0784314;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:0.0784314;stroke-miterlimit:10;" d="M 498.467806 47.999338 L 650.468466 47.999338 L 665.47067 18.000441 L 513.470011 18.000441 Z M 498.467806 47.999338 " transform="matrix(0.70875,0,0,0.70875,0,0)"/>
 <path style="fill-rule:evenodd;fill:url(#linear0);stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(21.960784%,36.470588%,54.117647%);stroke-opacity:1;stroke-miterlimit:10;" d="M -7.497313 29.998677 L 144.497835 29.998677 L 159.500039 -0.000220674 L 7.49938 -0.000220674 Z M -7.497313 29.998677 " transform="matrix(0.70875,0,0,0.70875,357.188721,11.34)"/>
 <g style="fill:rgb(100%,100%,100%);fill-opacity:1;">
