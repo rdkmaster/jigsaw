@@ -1,4 +1,4 @@
-<j-list [width]="width" [height]="height" trackItemBy="label" [ngClass]="{'jigsaw-menu-child jigsaw-menu-hide': !_root}" (selectedItemsChange)="_handleSelect($event)">
+<j-list [width]="width" [height]="height" trackItemBy="label" [ngClass]="{'jigsaw-menu-child jigsaw-menu-hide': !_root}" (selectedItemsChange)="_handleSelect($event)" (click)="_emitSelectedIem($event)">
     <ng-template ngFor let-child [ngForOf]="_items">
         <j-list-option [value]="child" [ngClass]="{'jigsaw-menu-parent':child.children}" (mouseenter)="_onListMouseEnter($event, child)" (mouseleave)="_onListMouseLeave($event)">
             <div class="jigsaw-menu-icon" j-title>
