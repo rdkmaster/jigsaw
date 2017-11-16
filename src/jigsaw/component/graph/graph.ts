@@ -20,10 +20,6 @@ import {CallbackRemoval} from "../../core/utils/common-utils";
 @Component({
     selector: 'jigsaw-graph, j-graph',
     templateUrl: 'graph.html',
-    host: {
-        '[style.width]': 'width',
-        '[style.height]': 'height'
-    }
 })
 export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDestroy {
     // TODO 当前属性判断不正确, 当前判断是是否option为空
@@ -85,13 +81,14 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     public set width(value: string) {
         this._width = CommonUtils.getCssValue(value);
-        this._handleResize();
+        this._renderer.setStyle(this._host, 'width', this._width);
+        if(this.initialized){
+            this._handleResize();
+        }
     }
 
     private _handleResize() {
         if (this._graph) {
-            this._renderer.setStyle(this._graphContainer, 'width', this.width);
-            this._renderer.setStyle(this._graphContainer, 'height', this.height);
             this.resize();
         }
         if (this._needSetupResizeEvent()) {
@@ -108,7 +105,10 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     public set height(value: string) {
         this._height = CommonUtils.getCssValue(value);
-        this._handleResize();
+        this._renderer.setStyle(this._host, 'height', this._height);
+        if(this.initialized){
+            this._handleResize();
+        }
     }
 
     private _needSetupResizeEvent(): boolean {
@@ -117,12 +117,11 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         } else {
             return this.autoResize;
         }
-
-
     }
 
-    constructor(private _elf: ElementRef, private _renderer: Renderer2) {
+    constructor(private _elementRef: ElementRef, private _renderer: Renderer2) {
         super();
+        this._host = this._elementRef.nativeElement;
     }
 
     /**
@@ -133,13 +132,12 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         return !CommonUtils.isEmptyObject(obj);
     }
 
-    private _graphContainer;
+    private _host: HTMLElement;
+    private _graphContainer: HTMLElement;
 
     ngOnInit() {
-        this._renderer.addClass(this._elf.nativeElement, 'jigsaw-graph-host');
-        this._graphContainer = this._elf.nativeElement.querySelector(".jigsaw-graph");
-        this._renderer.setStyle(this._graphContainer, 'width', this.width);
-        this._renderer.setStyle(this._graphContainer, 'height', this.height);
+        this._renderer.addClass(this._host, 'jigsaw-graph-host');
+        this._graphContainer = <HTMLElement>this._host.querySelector(".jigsaw-graph");
 
         this._graph = echarts.init(this._graphContainer);
 
@@ -203,14 +201,9 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         this._registerEvent();
     }
 
-    public resize(opts?: {
-        width?: number | string,
-        height?: number | string,
-        silent?: boolean
-    }): void {
+    public resize(): void {
         if (this._graph) {
-            this._graph.resize();
-            // this._graph.resize(opts ? opts : {width: this.width, height: this.height, silence: true});
+            this._graph.resize({width: this._host.offsetWidth + 'px', height: this._host.offsetHeight + 'px', silence: true});
         }
     }
 
@@ -218,12 +211,10 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     // 自动注册windows 事件;
     private _setupResizeEvent(): void {
-        // 如果已经注册了事件,则不重复注册；
-        if (!this._resizeEventRemoval) {
-            this._resizeEventRemoval = this._renderer.listen("window", "resize", (opts) => {
-                this.resize(opts);
-            });
-        }
+        this._clearResizeEvent();
+        this._resizeEventRemoval = this._renderer.listen("window", "resize", () => {
+            this.resize();
+        });
     }
 
     private _clearResizeEvent(): void {
