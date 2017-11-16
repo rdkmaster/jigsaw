@@ -16,10 +16,7 @@
     background: white;
     box-shadow: rgba(0, 0, 0, 0.3) 1px 1px 6px;
     .jigsaw-notification-title {
-        //标题控制在一行，超长加省略号
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        @include line-ellipsis-style;
         font-size: $font-size-lg;
         color: $heading-color-dark;
         i {
