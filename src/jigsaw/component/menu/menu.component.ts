@@ -2,7 +2,7 @@ import {Component, EventEmitter, forwardRef, Input, OnInit, Output, ViewEncapsul
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
 
 import {AbstractJigsawComponent} from "../common";
-import {PopupOptions, PopupService} from "../../service/popup.service";
+import {PopupOptions} from "../../service/popup.service";
 import {MenuData, MenuCallback} from "./menu.typings";
 
 @Component({
@@ -20,26 +20,63 @@ import {MenuData, MenuCallback} from "./menu.typings";
 })
 
 export class JigsawMenuComponent extends AbstractJigsawComponent implements OnInit {
-    _titles: MenuData[];
+    _items: MenuData[];
+    _activeItem: HTMLElement;
+    _selectedItems1: string;
+    _root: boolean;
 
     @Output() public select: EventEmitter<MenuData> = new EventEmitter<MenuData>();
 
     @Input()
-    set data (data: MenuData[]){
-        this._titles = data;
+    public set data(items: MenuData[]) {
+        this._items = items;
     }
 
-    constructor(public popupService: PopupService) {
+    @Input()
+    public set root(value: boolean | string) {
+        if (value === '') {
+            this._root = true;
+        } else {
+            this._root = value as boolean;
+        }
+    }
+
+    constructor() {
         super();
     }
 
     ngOnInit() {
-        this._width = this.width;
-        this._height = this.height;
     }
 
     public show(menu: MenuData[], callback?: MenuCallback, popupOptions?: PopupOptions) {
-        this._titles = menu;
+        this._items = menu;
+    }
+
+    _onListMouseEnter(event: Event, menuItem: MenuData[]) {
+        const item = <HTMLElement>event.currentTarget;
+        this._activeItem = item;
+        const nextElement: HTMLElement = <HTMLElement> item.children[0].nextElementSibling;
+        if (nextElement) {
+            const sublist: HTMLElement = <HTMLElement> nextElement.children[0];
+            sublist.style.display = 'block';
+            sublist.style.top = '0px';
+            sublist.style.left = (item.offsetWidth + 2) + 'px';
+        }
+    }
+
+    _onListMouseLeave(event: Event) {
+        this._activeItem = null;
+        const item = <HTMLElement>event.currentTarget;
+        const nextElement: HTMLElement = <HTMLElement> item.children[0].nextElementSibling;
+        if (nextElement) {
+            const sublist: HTMLElement = <HTMLElement> nextElement.children[0];
+            sublist.style.display = 'none';
+        }
+
+    }
+
+    _handleSelect(selectedItems) {
+        this._selectedItems1 = selectedItems.map(item => item.label).toString();
     }
 
 }

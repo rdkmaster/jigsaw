@@ -1,1 +1,17 @@
+.jigsaw{
+    &-menu-parent{
+        position: relative;
+    }
+    &-menu-child{
+        position: absolute;
+    }
+    &-menu-hide{
+        display: none;
+    }
+    &-menu-icon{
+        display: inline-block;
+        font-size: inherit;
+        margin-right: 1em;
+    }
+}
 

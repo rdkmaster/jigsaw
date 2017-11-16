@@ -4,7 +4,6 @@ import {RouterModule} from '@angular/router';
 
 import {JigsawMenuComponent} from './menu.component';
 import {JigsawListModule} from "../list-and-tile/list";
-import {JigsawMenuSubComponent} from "./menu-sub.component";
 
 @NgModule({
     imports: [
@@ -12,8 +11,8 @@ import {JigsawMenuSubComponent} from "./menu-sub.component";
         JigsawListModule,
         RouterModule
     ],
-    declarations: [JigsawMenuComponent, JigsawMenuSubComponent],
-    exports: [JigsawMenuComponent, JigsawMenuSubComponent]
+    declarations: [JigsawMenuComponent],
+    exports: [JigsawMenuComponent]
 })
 export class JigsawMenuModule {
 }
