@@ -35,15 +35,10 @@
     </div>
     <div class="field">
         <label>A Range Time</label>
-        <!--
-            notice: jigsaw-combo-select it self is form-friendly too! but we recommend to use ngModel
-            in the inner component of jigsaw-combo-select if it is a form-friendly component, this is will make
-            your form more user-friendly.
-        -->
-        <jigsaw-combo-select [(value)]="rangeTimeComboValue" width="250px">
+        <!-- ngModel加在ng-template里的组件上会无效 -->
+        <jigsaw-combo-select [(ngModel)]="rangeTimeComboValue" name="lastJobDuring" width="250px">
             <ng-template>
-                <jigsaw-range-time [(ngModel)]="rangeTime" name="lastJobDuring"
-                                   [(beginDate)]="rangeTime.beginDate"
+                <jigsaw-range-time [(beginDate)]="rangeTime.beginDate"
                                    [(endDate)]="rangeTime.endDate"
                                    (change)="onDateChange()"></jigsaw-range-time>
             </ng-template>
@@ -63,13 +58,16 @@
     <div class="field">
         <label>Favorite Fruit</label>
         <!--
-            you can compose any form-unfriendly components with jigsaw-combo-select to make it form-friendly
+            TIPS:
+            jigsaw-combo-select it self is form-friendly, so you can compose any form-unfriendly components
+            with jigsaw-combo-select to make it form-friendly.
             for example, jigsaw-table is not form-friendly, you can still use jigsaw-table in the form, just simply
             compose it with jigsaw-combo-select.
-        -->
-        <jigsaw-combo-select [(ngModel)]="favoriteFruit" (valueChange)="onFavoriteFruitRemoved($event)" name="favoriteFruit" width="250px">
+         -->
+        <jigsaw-combo-select [(ngModel)]="favoriteFruit" (valueChange)="onFavoriteFruitRemoved($event)"
+                             name="favoriteFruit" width="250px">
             <ng-template>
-                <div style="padding: 6px; width: 700px;">
+                <div style="padding: 6px; width: 700px; background: #fff">
                     <jigsaw-table [data]="fruitList" [columnDefines]="columnDef" [selectedRow]="selectedIndex"
                                   (selectChange)="onFavoriteFruitChange($event)"></jigsaw-table>
                 </div>
@@ -78,17 +76,17 @@
     </div>
     <div class="field">
         <label>Favorite Cities</label>
-        <jigsaw-tile ngModel name="favoriteCities" width="250px" trackItemBy="label">
+        <jigsaw-tile [(ngModel)]="favoriteCities" name="favoriteCities" width="250px" trackItemBy="label">
             <jigsaw-tile-option *ngFor="let item of [
                     {label: 'Bei Jing'}, {label: 'Shang Hai'}, {label: 'Nan Jing'},
-                    {label: 'Chang Sha'}, {label: 'Cheng Du'}, {label: 'Chong Qing'}]" [value]="item" width="72">{{item.label}}</jigsaw-tile-option>
+                    {label: 'Chang Sha'}, {label: 'Cheng Du'}, {label: 'Chong Qing'}]" [value]="item" width="72">
+                {{item.label}}
+            </jigsaw-tile-option>
         </jigsaw-tile>
     </div>
     <div class="field">
         <label>Score</label>
-
-            <jigsaw-slider [ngModel]="score" name="score" width="250px"></jigsaw-slider>
-
+        <jigsaw-slider [ngModel]="score" name="score" width="250px"></jigsaw-slider>
     </div>
     <div class="field">
         <label>Jigsaw is Great?</label>

@@ -7,17 +7,17 @@ import {ArrayCollection} from "jigsaw/core/data/array-collection";
     templateUrl: './app.component.html'
 })
 export class ComboSelectDemoComponent {
-    date: string = 'now';
+    date = TimeService.getFormatDate('now', TimeGr.date);
     singleTimeComboValue = new ArrayCollection([{
-        label: TimeService.getFormatDate(this.date, TimeGr.date),
+        label: this.date,
         closable: false
     }]);
 
-    beginDate: string = 'now-7d';
-    endDate: string = 'now';
+    beginDate = TimeService.getFormatDate('now-7d', TimeGr.date);
+    endDate = TimeService.getFormatDate('now', TimeGr.date);
     rangeTimeComboValue = new ArrayCollection([
-        {label: TimeService.getFormatDate(this.beginDate, TimeGr.date), closable: false},
-        {label: TimeService.getFormatDate(this.endDate, TimeGr.date), closable: false}
+        {label: this.beginDate, closable: false},
+        {label: this.endDate, closable: false}
     ]);
 
     handleDateChange(value) {
@@ -34,7 +34,7 @@ export class ComboSelectDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
-    description: string = '';
+    summary: string = 'ComboSelect和Time、RangeTime组合使用说明';
+    description: string = require('!!raw-loader!./readme.md');
 }
 
