@@ -58,22 +58,6 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         });
     }
 
-    private _autoResize: boolean = true;
-
-    @Input()
-    public get autoResize(): boolean {
-        return this._autoResize;
-    }
-
-    public set autoResize(value: boolean) {
-        this._autoResize = value;
-        if (this._needSetupResizeEvent()) {
-            this._setupResizeEvent()
-        } else {
-            this._clearResizeEvent();
-        }
-    }
-
     @Input()
     public get width(): string {
         return this._width;
@@ -82,19 +66,9 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     public set width(value: string) {
         this._width = CommonUtils.getCssValue(value);
         this._renderer.setStyle(this._host, 'width', this._width);
-        if(this.initialized){
-            this._handleResize();
-        }
-    }
-
-    private _handleResize() {
-        if (this._graph) {
+        if (this.initialized) {
             this.resize();
-        }
-        if (this._needSetupResizeEvent()) {
-            this._setupResizeEvent();
-        } else {
-            this._clearResizeEvent();
+            this._listenWindowResize();
         }
     }
 
@@ -106,16 +80,19 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     public set height(value: string) {
         this._height = CommonUtils.getCssValue(value);
         this._renderer.setStyle(this._host, 'height', this._height);
-        if(this.initialized){
-            this._handleResize();
+        if (this.initialized) {
+            this.resize();
+            this._listenWindowResize();
         }
     }
 
-    private _needSetupResizeEvent(): boolean {
-        if (this.width && this.height) { // 防止没有数据时页面报错；
-            return this.autoResize && (this.width[this.width.length - 1] == '%' || this.height[this.height.length - 1] == '%')
+    private _needListenWindowResize(): boolean {
+        if ((this.width && this.width[this.width.length - 1] == '%') ||
+            (this.height && this.height[this.height.length - 1] == '%')) {
+            // 组件宽度或高度是百分比时，监听窗口缩放
+            return true
         } else {
-            return this.autoResize;
+            return false;
         }
     }
 
@@ -136,6 +113,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     private _graphContainer: HTMLElement;
 
     ngOnInit() {
+        super.ngOnInit();
         this._renderer.addClass(this._host, 'jigsaw-graph-host');
         this._graphContainer = <HTMLElement>this._host.querySelector(".jigsaw-graph");
 
@@ -143,16 +121,15 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
         if (this.data) this.setOption(this.data.options);
 
-        if (this.autoResize) {
-            // 默认跟随窗口变化自动变化
-            this._setupResizeEvent();
-        }
+        this._listenWindowResize();
     }
 
-    // 组件销毁, 注销实例
     ngOnDestroy() {
-        // 销毁注册的全局事件;
-        this._clearResizeEvent();
+        if (this._resizeEventRemoval) {
+            this._resizeEventRemoval();
+            this._resizeEventRemoval = null;
+        }
+
         if (this._graph) {
             this._graph.dispose();
             this._graph = null;
@@ -210,19 +187,22 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     private _resizeEventRemoval: Function;
 
     // 自动注册windows 事件;
-    private _setupResizeEvent(): void {
-        this._clearResizeEvent();
-        this._resizeEventRemoval = this._renderer.listen("window", "resize", () => {
-            this.resize();
-        });
+    private _listenWindowResize(): void {
+        if (this._needListenWindowResize()) {
+            if (!this._resizeEventRemoval) {
+                this._resizeEventRemoval = this._renderer.listen("window", "resize", () => {
+                    this.resize();
+                });
+            }
+        }
     }
 
-    private _clearResizeEvent(): void {
+    /*private _clearResizeEvent(): void {
         if (this._resizeEventRemoval) {
             this._resizeEventRemoval();
             this._resizeEventRemoval = null;
         }
-    }
+    }*/
 
     public dispatchAction(payload: Object): void {
         this._graph.dispatchAction(payload);
