@@ -157,6 +157,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         this._clearResizeEvent();
         if (this._graph) {
             this._graph.dispose();
+            this._graph = null;
         }
     }
 
@@ -219,7 +220,6 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     private _setupResizeEvent(): void {
         // 如果已经注册了事件,则不重复注册；
         if (!this._resizeEventRemoval) {
-            console.log("_setupResizeEvent");
             this._resizeEventRemoval = this._renderer.listen("window", "resize", (opts) => {
                 this.resize(opts);
             });
@@ -228,7 +228,6 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     private _clearResizeEvent(): void {
         if (this._resizeEventRemoval) {
-            console.log("_clearResizeEvent");
             this._resizeEventRemoval();
             this._resizeEventRemoval = null;
         }
