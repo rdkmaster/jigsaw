@@ -86,16 +86,6 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         }
     }
 
-    private _needListenWindowResize(): boolean {
-        if ((this.width && this.width[this.width.length - 1] == '%') ||
-            (this.height && this.height[this.height.length - 1] == '%')) {
-            // 组件宽度或高度是百分比时，监听窗口缩放
-            return true
-        } else {
-            return false;
-        }
-    }
-
     constructor(private _elementRef: ElementRef, private _renderer: Renderer2) {
         super();
         this._host = this._elementRef.nativeElement;
@@ -107,6 +97,48 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
      */
     private _isOptionsValid(obj): boolean {
         return !CommonUtils.isEmptyObject(obj);
+    }
+
+    public setOption(option: EchartOptions, lazyUpdate?: boolean) {
+        if (!this._graph) {
+            return;
+        }
+        if (!this._isOptionsValid(option)) {
+            this.dataValid = false;
+            return;
+        }
+        this.dataValid = true;
+
+        this._graph.setOption(option, true, lazyUpdate);
+        this._registerEvent();
+    }
+
+    public resize(): void {
+        if (this._graph) {
+            this._graph.resize({width: this._host.offsetWidth + 'px', height: this._host.offsetHeight + 'px', silence: true});
+        }
+    }
+
+    private _resizeEventRemoval: Function;
+
+    private _listenWindowResize(): void {
+        if (this._needListenWindowResize()) {
+            if (!this._resizeEventRemoval) {
+                this._resizeEventRemoval = this._renderer.listen("window", "resize", () => {
+                    this.resize();
+                });
+            }
+        }
+    }
+
+    private _needListenWindowResize(): boolean {
+        if ((this.width && this.width[this.width.length - 1] == '%') ||
+            (this.height && this.height[this.height.length - 1] == '%') || !this.width) {
+            // 组件宽度或高度是百分比时，监听窗口缩放
+            return true
+        } else {
+            return false;
+        }
     }
 
     private _host: HTMLElement;
@@ -163,46 +195,6 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     public registerTheme(themeName: string, theme: Object): void {
         echarts.registerTheme(themeName, theme);
     }
-
-    public setOption(option: EchartOptions, lazyUpdate?: boolean) {
-        if (!this._graph) {
-            return;
-        }
-        if (!this._isOptionsValid(option)) {
-            this.dataValid = false;
-            return;
-        }
-        this.dataValid = true;
-
-        this._graph.setOption(option, true, lazyUpdate);
-        this._registerEvent();
-    }
-
-    public resize(): void {
-        if (this._graph) {
-            this._graph.resize({width: this._host.offsetWidth + 'px', height: this._host.offsetHeight + 'px', silence: true});
-        }
-    }
-
-    private _resizeEventRemoval: Function;
-
-    // 自动注册windows 事件;
-    private _listenWindowResize(): void {
-        if (this._needListenWindowResize()) {
-            if (!this._resizeEventRemoval) {
-                this._resizeEventRemoval = this._renderer.listen("window", "resize", () => {
-                    this.resize();
-                });
-            }
-        }
-    }
-
-    /*private _clearResizeEvent(): void {
-        if (this._resizeEventRemoval) {
-            this._resizeEventRemoval();
-            this._resizeEventRemoval = null;
-        }
-    }*/
 
     public dispatchAction(payload: Object): void {
         this._graph.dispatchAction(payload);
