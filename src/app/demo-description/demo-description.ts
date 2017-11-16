@@ -1,5 +1,6 @@
-import {Component, Input, NgModule} from "@angular/core";
+import {Component, Input, NgModule, OnInit} from "@angular/core";
 import {CommonModule} from "@angular/common";
+import {CommonUtils} from "../../jigsaw/core/utils/common-utils";
 import {JigsawMarkdownModule} from "../markdown/markdown";
 
 @Component({
@@ -33,11 +34,10 @@ import {JigsawMarkdownModule} from "../markdown/markdown";
         <hr>
     `
 })
-export class JigsawDemoDescription {
-    showDetail: boolean = false;
+export class JigsawDemoDescription implements OnInit {
+    @Input() showDetail: boolean = undefined;
 
     @Input() content: string = '';
-    @Input() sources: string[] = [];
 
     private _summary: string;
 
@@ -65,6 +65,13 @@ export class JigsawDemoDescription {
         const url = '/jigsaw/live-demo/' + match[1] + '/index.html';
         console.log(url);
         window.open(url, '_blank');
+    }
+
+    ngOnInit() {
+        if (this.showDetail === undefined) {
+            const p = CommonUtils.parseUrlParam(location.search.substring(1));
+            this.showDetail = !!p['open-desc'];
+        }
     }
 }
 

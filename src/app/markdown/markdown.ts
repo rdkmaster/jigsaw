@@ -1,5 +1,6 @@
 import {Component, ElementRef, Input, NgModule, OnInit, ViewEncapsulation} from "@angular/core";
 import * as marked from 'marked';
+import {InternalUtils} from "../../jigsaw/core/utils/internal-utils";
 
 @Component({
     selector: 'jigsaw-markdown, j-markdown',
@@ -53,6 +54,12 @@ export class JigsawMarkdown implements OnInit {
         });
 
         markdown = marked(markdown.trim());
+
+        // redirect internal doc link to the ued site
+        markdown = markdown.replace(/<a href="\/(components\/\w+?\/api\?apiItem=.*?)">/g,
+            `<a href="${InternalUtils.uedSiteHost}/$1" target="_blank">`);
+        markdown = markdown.replace(/\$uedHost/g, InternalUtils.uedSiteHost);
+
         // add class to raise the css priority
         markdown = markdown.replace(/<(\w+)(\s|>)/g, (found, tag, border) => {
             tag = tag.toLowerCase();

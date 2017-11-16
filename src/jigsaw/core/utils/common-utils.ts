@@ -219,6 +219,31 @@ export class CommonUtils {
     public static isUndefined(value): boolean {
         return !this.isDefined(value);
     }
+
+    public static parseUrlParam(rawParam: string): Object {
+        const result = {};
+        if (!!rawParam) {
+            rawParam.split(/&/g).forEach(param => {
+                const parts = param.split(/=/);
+                result[this.superDecodeURI(parts[0])] = this.superDecodeURI(parts[1]);
+            });
+        }
+        return result;
+    }
+
+    /**
+     * 是浏览器内置uri解码`decodeURI()`函数的火力增强版，可以解码任何uri
+     *
+     * @param {string} uri
+     * @returns {string}
+     */
+    public static superDecodeURI(uri: string): string {
+        if (!uri) {
+            return uri;
+        }
+        return decodeURI(uri).replace(/%([0-9a-f]{2})/gi,
+            (found, charCode) => String.fromCharCode(parseInt(charCode, 16)));
+    }
 }
 
 export type CallbackRemoval = () => void;

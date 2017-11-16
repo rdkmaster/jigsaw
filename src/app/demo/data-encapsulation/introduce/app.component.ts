@@ -1,14 +1,9 @@
 import {Component} from "@angular/core";
-import {ArrayCollection} from "jigsaw/core/data/array-collection";
-import {HttpClient} from "@angular/common/http";
 
 @Component({
     templateUrl: './app.component.html'
 })
 export class DataIntroduceComponent {
-
-    constructor(http: HttpClient) {
-    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

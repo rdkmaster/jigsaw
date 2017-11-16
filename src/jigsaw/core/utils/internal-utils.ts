@@ -2,7 +2,12 @@ import {TranslateService} from "@ngx-translate/core";
 import {CommonUtils} from "./common-utils";
 import {TranslateHelper} from "./translate-helper";
 
+/**
+ * @internal
+ */
 export class InternalUtils {
+    public static uedSiteHost = 'http://10.9.233.35:52580';
+
     public static _uniqueIdIndex = 0;
     public static _defaultPrefix = '__unique_id__';
 
