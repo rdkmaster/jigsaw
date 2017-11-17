@@ -29,6 +29,10 @@
         font-size: $font-size-base;
         color: $text-color;
     }
+    .jigsaw-notification-button{
+        text-align: right;
+        padding: 5px 0;
+    }
     .jigsaw-notification-close {
         float: right;
         cursor: pointer;

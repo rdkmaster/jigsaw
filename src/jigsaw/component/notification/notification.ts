@@ -1,7 +1,7 @@
 import {
     NgModule, Component, Renderer2, Input, ElementRef
 } from "@angular/core";
-import {AbstractDialogComponentBase} from "../dialog/dialog";
+import {AbstractDialogComponentBase, DialogCallback} from "../dialog/dialog";
 import {
     ButtonInfo,
     PopupService,
@@ -47,10 +47,10 @@ export class JigsawNotification extends AbstractDialogComponentBase {
     @Input()
     public set initData(value: any) {
         if (!value) return;
-        this.message = value.message ? value.message : 'the "message" property in the initData goes here.';
+        this.message = value.message || 'the "message" property in the initData goes here.';
         this.title = value.title;
         this.icon = value.icon;
-        this.buttons = value.buttons ? value.buttons : this.buttons;
+        this.button = value.button;
         this.width = value.width;
         this.height = value.height
     }
@@ -58,6 +58,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
     @Input() public message: string;
     @Input() public title: string;
     @Input() public icon: string;
+    @Input() public button: ButtonInfo;
     @Input() public width: string;
     @Input() public height: string;
 
@@ -66,13 +67,11 @@ export class JigsawNotification extends AbstractDialogComponentBase {
                        icon?: string,
                        position: NotificationPosition = NotificationPosition.rightTop,
                        timeout: number = 8000,
-                       buttons?: ButtonInfo[],
-                       callback?: Function,
+                       button?: ButtonInfo,
+                       callback?: DialogCallback,
                        callbackContext?: any,
                        height?: string | number,
                        width?: string | number): PopupInfo {
-        //TODO 按钮
-
         const popupOptions = {
             modal: false,
             showEffect: PopupEffect.bubbleIn,
@@ -85,10 +84,18 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         Object.assign(popEle.style, position);
 
         const popupInfo = PopupService.instance.popup(JigsawNotification, popupOptions,
-            {message: message, title: caption, icon: 'fa fa-' + icon, buttons: buttons, height: height, width: width});
+            {
+                message: message,
+                title: caption,
+                icon: 'fa fa-' + icon,
+                button: button,
+                callbackContext: callbackContext,
+                height: height,
+                width: width
+            });
 
         popupInfo.answer.subscribe(answer => {
-            CommonUtils.safeInvokeCallback(null, callback, [answer]);
+            CommonUtils.safeInvokeCallback(callbackContext, callback, [answer]);
             popupInfo.answer.unsubscribe();
             popupInfo.dispose();
         });
