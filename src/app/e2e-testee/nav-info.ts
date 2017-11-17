@@ -903,5 +903,16 @@ export const navInfo = [
                 url: '/notification/notification'
             }
         ]
+    },
+    {
+        title: 'Menu',
+        path: "menu",
+        loadChildren: "./menu/demo.module#MenuDemoModule",
+        navList: [
+            {
+                label: 'menu',
+                url: '/menu/menu'
+            }
+        ]
     }
 ];
