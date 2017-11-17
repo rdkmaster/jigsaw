@@ -22,7 +22,7 @@ import {MenuData, MenuCallback} from "./menu.typings";
 export class JigsawMenuComponent extends AbstractJigsawComponent implements OnInit {
     _items: MenuData[];
     _activeItem: HTMLElement;
-    _selectedItems = [];
+    _selectedItems: MenuData;
     _root: boolean;
 
     @Output() public select: EventEmitter<MenuData> = new EventEmitter<MenuData>();
@@ -52,7 +52,7 @@ export class JigsawMenuComponent extends AbstractJigsawComponent implements OnIn
         this._items = menu;
     }
 
-    _onListMouseEnter(event: Event, menuItem: MenuData[]) {
+    _onListMouseEnter(event: Event) {
         const item = <HTMLElement>event.currentTarget;
         this._activeItem = item;
         const nextElement: HTMLElement = <HTMLElement> item.children[0].nextElementSibling;
@@ -76,11 +76,7 @@ export class JigsawMenuComponent extends AbstractJigsawComponent implements OnIn
     }
 
     _handleSelect(selectedItems) {
-        this._selectedItems.push(selectedItems.map(item => item));
-    }
-
-    _emitSelectedIem(e: Event) {
-        // e.stopPropagation();
-        this.select.emit(this._selectedItems[0]);
+        this._selectedItems = selectedItems.map(item => item);
+        this.select.emit(this._selectedItems);
     }
 }
