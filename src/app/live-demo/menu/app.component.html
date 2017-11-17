@@ -5,6 +5,10 @@
             <h3>基本</h3>
             <p class="comment">基本用法</p>
             <j-menu [data]="titles" [width]="'160'" (select)="selectChange($event)" root></j-menu>
+            <p class="message">
+                选中的菜单是:
+                <span *ngFor="let item of selectedItem">{{item}} </span>
+            </p>
         </div>
 
         <div class="demo-2 live-demo live-demo-block live-demo-menu">

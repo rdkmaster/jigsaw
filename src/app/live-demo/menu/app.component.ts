@@ -1,4 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
+import {MenuData} from "../../../jigsaw/component/menu/menu.typings";
 
 @Component({
     templateUrl: './app.component.html',
@@ -6,6 +7,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 })
 export class MenuFullComponent implements OnInit {
     @ViewChild('jMenu')jMenu:any;
+    selectedItem = [];
 
     titles = [
         {
@@ -103,7 +105,7 @@ export class MenuFullComponent implements OnInit {
         this.jMenu.show(this.titles);
     }
 
-    selectChange(e: any) {
-        console.log(e);
+    selectChange(selected: MenuData) {
+        this.selectedItem.push(selected.map(selected => selected.label).toString());
     }
 }
