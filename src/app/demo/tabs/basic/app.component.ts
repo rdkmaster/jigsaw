@@ -3,6 +3,8 @@
  */
 import {Component} from '@angular/core';
 import {TableData} from "jigsaw/core/data/table-data";
+import {LineBarGraphData} from "../../../../jigsaw/core/data/graph-data";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
     templateUrl: './app.component.html',
@@ -19,10 +21,19 @@ export class JigsawTabsDemoComponent {
             ["pear", "$11.0", "The pear is any of several tree and shrub species of genus Pyrus, in the family Rosaceae. It is also the name of the pomaceous fruit of the trees. ", "Southeast Asia"],
         ],
         ["name", "price", "desc", "origin"],
-        ["Name", "Price", "Description", "Origin"]);
+        ["Name", "Price", "Description", "Origin"]
+    );
 
     testEvent(value) {
         console.info(value);
+    }
+
+    public lineBarGraphData: LineBarGraphData;
+
+    constructor(http: HttpClient) {
+        this.lineBarGraphData = new LineBarGraphData();
+        this.lineBarGraphData.http = http;
+        this.lineBarGraphData.fromAjax('mock-data/marketing');
     }
 
     // ====================================================================

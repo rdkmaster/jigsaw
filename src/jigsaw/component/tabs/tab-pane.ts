@@ -8,7 +8,6 @@ import {IDynamicInstantiatable} from "../common";
             {{title}}
             <ng-content select="[jigsaw-title]"></ng-content>
         </ng-template>
-        <ng-content></ng-content>
     `
 })
 export class JigsawTabPane {

@@ -2,7 +2,7 @@
  * Created by 10177553 on 2017/3/23.
  */
 import {
-    Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output,
+    Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output,
     Renderer2
 } from "@angular/core";
 import {AbstractGraphData} from "../../core/data/graph-data";
@@ -86,7 +86,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         }
     }
 
-    constructor(private _elementRef: ElementRef, private _renderer: Renderer2) {
+    constructor(private _elementRef: ElementRef, private _renderer: Renderer2, private _zone: NgZone) {
         super();
         this._host = this._elementRef.nativeElement;
     }
@@ -124,8 +124,11 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     private _listenWindowResize(): void {
         if (this._needListenWindowResize()) {
             if (!this._resizeEventRemoval) {
-                this._resizeEventRemoval = this._renderer.listen("window", "resize", () => {
-                    this.resize();
+                this._zone.runOutsideAngular(() => {
+                    // 所有的全局事件应该放到zone外面，不一致可能导致removeEvent失效
+                    this._resizeEventRemoval = this._renderer.listen("window", "resize", () => {
+                        this.resize();
+                    });
                 });
             }
         }
@@ -149,7 +152,10 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         this._renderer.addClass(this._host, 'jigsaw-graph-host');
         this._graphContainer = <HTMLElement>this._host.querySelector(".jigsaw-graph");
 
-        this._graph = echarts.init(this._graphContainer);
+        this._zone.runOutsideAngular(() => {
+            // echarts的Animation对象里的_startLoop方法有个递归调用requestAnimationFrame,会触发变更检查，见#289
+            this._graph = echarts.init(this._graphContainer);
+        });
 
         if (this.data) this.setOption(this.data.options);
 
