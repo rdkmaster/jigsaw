@@ -125,7 +125,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         if (this._needListenWindowResize()) {
             if (!this._resizeEventRemoval) {
                 this._zone.runOutsideAngular(() => {
-                    // 所有的全局事件应该放到zone外面，不一致可能导致removeEvent失效
+                    // 所有的全局事件应该放到zone外面，不一致会导致removeEvent失效，见#286
                     this._resizeEventRemoval = this._renderer.listen("window", "resize", () => {
                         this.resize();
                     });

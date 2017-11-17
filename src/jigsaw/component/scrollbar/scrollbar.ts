@@ -3,7 +3,7 @@ import {
     Component,
     ElementRef,
     EventEmitter, forwardRef, Host, Inject,
-    Input,
+    Input, NgZone,
     OnDestroy,
     OnInit,
     Output,
@@ -184,7 +184,7 @@ export class JigsawScrollHandle implements OnInit {
 })
 export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, OnDestroy, AfterViewInit {
 
-    constructor(private _elementRef: ElementRef, private _renderer: Renderer2) {
+    constructor(private _elementRef: ElementRef, private _renderer: Renderer2, private _zone: NgZone) {
         super();
     }
 
@@ -303,10 +303,12 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, 
     private _removeResizeEvent: Function;
 
     private resize() {
-        this._removeResizeEvent = this._renderer.listen("window", "resize", () => {
-            // 计算slider 的尺寸.
-            this._dimensions = this._elementRef.nativeElement.querySelector('.jigsaw-scrollbar-track').getBoundingClientRect();
-        })
+        this._zone.runOutsideAngular(() => {
+            this._removeResizeEvent = this._renderer.listen("window", "resize", () => {
+                // 计算slider 的尺寸.
+                this._dimensions = this._elementRef.nativeElement.querySelector('.jigsaw-scrollbar-track').getBoundingClientRect();
+            })
+        });
     }
 
     /**
