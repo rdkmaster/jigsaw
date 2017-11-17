@@ -1,12 +1,10 @@
 <j-list [width]="width" [height]="height" trackItemBy="label" [ngClass]="{'jigsaw-menu-child jigsaw-menu-hide': !_root}" (selectedItemsChange)="_handleSelect($event)">
-    <ng-template ngFor let-child [ngForOf]="_items">
-        <j-list-option [value]="child" [ngClass]="{'jigsaw-menu-parent':child.children}" (mouseenter)="_onListMouseEnter($event)" (mouseleave)="_onListMouseLeave($event)">
-            <div class="jigsaw-menu-icon" j-title>
-                <i [class]="child.icon"></i>
-            </div>
-            <span j-title>{{child.label}}</span>
-            <div j-sub-title>{{child.extraLabel}} <span *ngIf="child.children" class="fa fa-angle-right"></span></div>
-            <j-menu [width]="width" [height]="height" [data]="child.children" *ngIf="child.children" (select)="_handleSelect($event)"></j-menu>
-        </j-list-option>
-    </ng-template>
+    <j-list-option *ngFor="let child of _items" [value]="child" [ngClass]="{'jigsaw-menu-parent':child.children}" (mouseenter)="_onListMouseEnter($event)" (mouseleave)="_onListMouseLeave($event)">
+        <div class="jigsaw-menu-icon" j-title>
+            <i [class]="child.icon"></i>
+        </div>
+        <span j-title>{{child.label}}</span>
+        <div j-sub-title>{{child.extraLabel}} <span *ngIf="child.children" class="fa fa-angle-right"></span></div>
+        <j-menu [width]="width" [height]="height" [data]="child.children" *ngIf="child.children" (select)="_handleSelect($event)"></j-menu>
+    </j-list-option>
 </j-list>

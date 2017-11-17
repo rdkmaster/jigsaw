@@ -8,6 +8,7 @@ import {MenuData} from "../../../jigsaw/component/menu/menu.typings";
 export class MenuFullComponent implements OnInit {
     @ViewChild('jMenu')jMenu:any;
     selectedItem = [];
+    selectedItem1 = [];
 
     titles = [
         {
@@ -107,5 +108,9 @@ export class MenuFullComponent implements OnInit {
 
     selectChange(selected: MenuData) {
         this.selectedItem.push(selected.map(selected => selected.label).toString());
+    }
+
+    selectChange1(selected: MenuData) {
+        this.selectedItem1.push(selected.map(selected => selected.label).toString());
     }
 }

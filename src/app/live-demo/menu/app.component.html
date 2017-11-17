@@ -14,7 +14,11 @@
         <div class="demo-2 live-demo live-demo-block live-demo-menu">
             <h3></h3>
             <p class="comment"></p>
-            <j-menu #jMenu [width]="'300'" root></j-menu>
+            <j-menu #jMenu [width]="'300'" (select)="selectChange1($event)" root></j-menu>
+            <p class="message">
+                选中的菜单是:
+                <span *ngFor="let item of selectedItem1">{{item}} </span>
+            </p>
         </div>
 
         <div class="demo-2 live-demo live-demo-block live-demo-menu">
