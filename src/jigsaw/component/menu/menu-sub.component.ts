@@ -2,57 +2,58 @@ import {Component, EventEmitter, forwardRef, Input, OnInit, Output, ViewEncapsul
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
 
 import {AbstractJigsawComponent} from "../common";
-import {PopupOptions} from "../../service/popup.service";
-import {MenuData, MenuCallback} from "./menu.typings";
+import {MenuData} from "./menu.typings";
 
 @Component({
-    selector: 'jigsaw-menu, j-menu',
-    templateUrl: './menu.component.html',
-    styleUrls: ['./menu.component.scss'],
+    selector: 'jigsaw-menu-sub, j-menu-sub',
+    templateUrl: './menu-sub.component.html',
+    styleUrls: ['./menu-sub.component.scss'],
     encapsulation: ViewEncapsulation.None,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => JigsawMenuComponent),
+            useExisting: forwardRef(() => JigsawMenuSubComponent),
             multi: true
         }
     ],
 })
 
-export class JigsawMenuComponent extends AbstractJigsawComponent implements OnInit {
+export class JigsawMenuSubComponent extends AbstractJigsawComponent implements OnInit {
+    _root: boolean;
     _items: MenuData[];
     _activeItem: HTMLElement;
     _selectedItems: MenuData;
-    _root: boolean;
 
-    @Output() public select: EventEmitter<MenuData> = new EventEmitter<MenuData>();
+    @Output() public selectedItem: EventEmitter<MenuData> = new EventEmitter<MenuData>();
 
     @Input()
-    public set data(items: MenuData[]) {
+    public set items(items: MenuData[]) {
         this._items = items;
     }
 
-    /*@Input()
+    @Input()
     public set root(value: boolean | string) {
         if (value === '') {
             this._root = true;
         } else {
             this._root = value as boolean;
         }
-    }*/
+    }
 
     constructor() {
         super();
     }
 
     ngOnInit() {
+
     }
 
-    public show(menu: MenuData[], callback?: MenuCallback, popupOptions?: PopupOptions) {
-        this._items = menu;
+    _handleSelect(selectedItems) {
+        this._selectedItems = selectedItems.map(item => item);
+        this.selectedItem.emit(this._selectedItems);
     }
 
-    /*_onListMouseEnter(event: Event) {
+    _onListMouseEnter(event: Event) {
         const item = <HTMLElement>event.currentTarget;
         this._activeItem = item;
         const nextElement: HTMLElement = <HTMLElement> item.children[0].nextElementSibling;
@@ -74,9 +75,7 @@ export class JigsawMenuComponent extends AbstractJigsawComponent implements OnIn
         }
 
     }
-
-    _handleSelect(selectedItems) {
-        this._selectedItems = selectedItems.map(item => item);
-        this.select.emit(this._selectedItems);
-    }*/
 }
+
+
+
