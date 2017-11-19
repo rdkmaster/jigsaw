@@ -52,6 +52,11 @@ export class JigsawMenuComponent extends AbstractJigsawComponent implements OnIn
         this._items = menu;
     }
 
+    _handleSelect(selectedItems) {
+        this._selectedItems = selectedItems.map(item => item);
+        this.select.emit(this._selectedItems);
+    }
+
     /*_onListMouseEnter(event: Event) {
         const item = <HTMLElement>event.currentTarget;
         this._activeItem = item;

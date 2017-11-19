@@ -8,4 +8,4 @@
         <j-menu [width]="width" [height]="height" [data]="child.children" *ngIf="child.children" (select)="_handleSelect($event)"></j-menu>
     </j-list-option>
 </j-list>-->
-<j-menu-sub root [width]="width" [height]="height" [items]="_items"></j-menu-sub>
+<j-menu-sub root [width]="width" [height]="height" [items]="_items" (selectedItem)="_handleSelect($event)"></j-menu-sub>
