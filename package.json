@@ -23,7 +23,7 @@
     "@ngx-translate/core": "^v8.0.0",
     "@types/marked": "~0.3.0",
     "core-js": "~2.5.1",
-    "echarts": "^3.5.4",
+    "echarts": "~3.5.4",
     "eonasdan-bootstrap-datetimepicker": "~4.17.47",
     "font-awesome": "~4.7.0",
     "jquery": "~3.1.1",
