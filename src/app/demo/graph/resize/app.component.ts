@@ -16,7 +16,6 @@ import {JigsawInput} from "jigsaw/component/input/input";
 
 export class GraphResizeComponent implements OnInit {
     data: AbstractGraphData;
-    autoResize: boolean = true;
     graphWidth: string = '100%';
     graphHeight: string = '300';
 

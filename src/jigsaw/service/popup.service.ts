@@ -7,7 +7,7 @@ import {
     TemplateRef,
     Type,
     ViewContainerRef,
-    EventEmitter, Optional,
+    EventEmitter, Optional, NgZone,
 } from "@angular/core";
 import {CommonUtils, ElementEventHelper} from "../core/utils/common-utils";
 import {JigsawBlock} from "../component/block/block";
@@ -140,6 +140,7 @@ export type PopupDisposer = () => void;
 
 export interface IPopupable extends IDynamicInstantiatable {
     answer: EventEmitter<ButtonInfo>;
+
     [index: string]: any;
 }
 
@@ -154,7 +155,7 @@ export class PopupInfo {
 export class PopupService {
     private static _instance: PopupService;
 
-    public static get instance():PopupService {
+    public static get instance(): PopupService {
         return PopupService._instance;
     }
 
@@ -171,6 +172,7 @@ export class PopupService {
     private _eventHelper: ElementEventHelper = new ElementEventHelper();
 
     constructor(private _cfr: ComponentFactoryResolver,
+                private _zone: NgZone,
                 @Optional() private _router: Router,
                 @Optional() private _activatedRoute: ActivatedRoute) {
         PopupService._instance = this;
@@ -315,7 +317,7 @@ export class PopupService {
         PopupService._renderer.setStyle(element, 'position', 'fixed');
         PopupService._renderer.setStyle(element, 'top', 0);
         const disposer: PopupDisposer = this._getDisposer(options, ref, element, PopupService._renderer);
-        return [{ element: element, dispose: disposer, answer: null, instance: null }, ref];
+        return [{element: element, dispose: disposer, answer: null, instance: null}, ref];
     }
 
     private _createPopup(what: Type<IPopupable> | TemplateRef<any>) {
@@ -382,12 +384,15 @@ export class PopupService {
     private _setWindowListener(options: PopupOptions, element: HTMLElement, renderer: Renderer2): PopupDisposer[] {
         let removeWindowListens: PopupDisposer[] = [];
         if (this._isGlobalPopup(options)) {
-            removeWindowListens.push(renderer.listen('window', 'resize', () => {
-                renderer.setStyle(element, 'top',
-                    (document.body.clientHeight / 2 - element.offsetHeight / 2) + 'px');
-                renderer.setStyle(element, 'left',
-                    (document.body.clientWidth / 2 - element.offsetWidth / 2) + 'px');
-            }));
+            this._zone.runOutsideAngular(() => {
+                // 所有的全局事件应该放到zone外面，不一致会导致removeEvent失效，见#286
+                removeWindowListens.push(renderer.listen('window', 'resize', () => {
+                    renderer.setStyle(element, 'top',
+                        (document.body.clientHeight / 2 - element.offsetHeight / 2) + 'px');
+                    renderer.setStyle(element, 'left',
+                        (document.body.clientWidth / 2 - element.offsetWidth / 2) + 'px');
+                }));
+            });
         }
         return removeWindowListens;
     }
@@ -414,7 +419,7 @@ export class PopupService {
      * 设置边框、阴影、动画
      * */
     private _setBackground(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
-        if(!this._isModal(options)){
+        if (!this._isModal(options)) {
             renderer.setStyle(element, 'box-shadow', '1px 1px 6px rgba(0, 0, 0, .2)');
         }
         if (options && options.showBorder) {

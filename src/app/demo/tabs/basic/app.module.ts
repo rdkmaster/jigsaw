@@ -5,10 +5,11 @@ import {JigsawInputModule} from "jigsaw/component/input/input";
 import {JigsawTableModule} from "jigsaw/component/table/table";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {JigsawTabsDemoComponent} from './app.component';
+import {JigsawGraphModule} from "../../../../jigsaw/component/graph/index";
 
 @NgModule({
     imports: [
-        JigsawTabsModule, JigsawButtonModule, JigsawInputModule, JigsawTableModule, JigsawDemoDescriptionModule
+        JigsawTabsModule, JigsawButtonModule, JigsawInputModule, JigsawTableModule, JigsawDemoDescriptionModule, JigsawGraphModule
     ],
     declarations: [JigsawTabsDemoComponent],
     bootstrap: [JigsawTabsDemoComponent]
