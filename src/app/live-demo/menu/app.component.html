@@ -4,10 +4,10 @@
         <div class="demo-1 live-demo live-demo-block live-demo-menu">
             <h3>基本</h3>
             <p class="comment">基本用法</p>
-            <j-menu [data]="titles" [width]="'160'" (select)="selectChange($event)"></j-menu>
+            <j-menu [data]="titles" [width]="'160'" (select)="selectChange($event)" (click)="clearArray()"></j-menu>
             <p class="message">
                 选中的菜单是:
-                <span>{{selectedItem}} </span>
+                <span>{{displayItem}} </span>
             </p>
         </div>
 
@@ -17,7 +17,7 @@
             <j-menu #jMenu [width]="'300'" (select)="selectChange1($event)"></j-menu>
             <p class="message">
                 选中的菜单是:
-                <span>{{selectedItem1}} </span>
+                <span>{{displayItem1}} </span>
             </p>
         </div>
 

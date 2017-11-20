@@ -7,8 +7,10 @@ import {MenuData} from "../../../jigsaw/component/menu/menu.typings";
 })
 export class MenuFullComponent implements OnInit {
     @ViewChild('jMenu')jMenu:any;
-    selectedItem;
-    selectedItem1;
+    _selectedItem = [];
+    displayItem = [];
+    _selectedItem1 = [];
+    displayItem1 = [];
 
     titles = [
         {
@@ -107,10 +109,18 @@ export class MenuFullComponent implements OnInit {
     }
 
     selectChange(selected) {
-        this.selectedItem = selected.map(selected => selected.label).toString();
+        this._selectedItem.push(selected.map(selected => selected.label).toString());
     }
 
     selectChange1(selected) {
-        this.selectedItem1 = selected.map(selected => selected.label).toString();
+        this._selectedItem1.push(selected.map(selected => selected.label).toString());
+    }
+
+    clearArray(){
+        this.displayItem = this._selectedItem[0];
+        this.displayItem1 = this._selectedItem1[0];
+
+        this._selectedItem = [];
+        this._selectedItem1 = [];
     }
 }

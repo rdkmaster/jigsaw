@@ -53,10 +53,6 @@ export class JigsawMenuSubComponent extends AbstractJigsawComponent implements O
         this.selectedItem.emit(this._selectedItems);
     }
 
-    _onListMouseClick(){
-
-    }
-
     _onListMouseEnter(event: Event) {
         const item = <HTMLElement>event.currentTarget;
         this._activeItem = item;
