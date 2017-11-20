@@ -6,7 +6,7 @@ import {MenuData} from "../../../jigsaw/component/menu/menu.typings";
     styleUrls: ['./app.component.scss']
 })
 export class MenuFullComponent implements OnInit {
-    @ViewChild('jMenu')jMenu:any;
+    @ViewChild('jMenu')jMenu: any;
     _selectedItem = [];
     displayItem = [];
     _selectedItem1 = [];
@@ -101,6 +101,21 @@ export class MenuFullComponent implements OnInit {
         }
     ];
 
+    popUpMenuData = [
+        {
+            label: 'Exit',
+            extraLabel: '',
+            icon: 'fa fa-address-book',
+            children: [
+                {
+                    label: 'Settings',
+                    extraLabel: 'Ctrl+Alt+A',
+                    icon: 'fa fa-address-book'
+                }
+            ]
+        }
+    ];
+
     constructor() {
     }
 
@@ -108,8 +123,8 @@ export class MenuFullComponent implements OnInit {
 
     }
 
-    onClick(){
-        this.jMenu.show(this.titles);
+    showSelectedMenu() {
+        this.jMenu.show(this.popUpMenuData);
     }
 
     selectChange(selected) {
