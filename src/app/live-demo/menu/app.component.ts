@@ -118,9 +118,11 @@ export class MenuFullComponent implements OnInit {
 
     clearArray(){
         this.displayItem = this._selectedItem[0];
-        this.displayItem1 = this._selectedItem1[0];
-
         this._selectedItem = [];
+    }
+
+    clearArray1(){
+        this.displayItem1 = this._selectedItem1[0];
         this._selectedItem1 = [];
     }
 }

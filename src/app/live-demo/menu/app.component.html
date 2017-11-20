@@ -14,7 +14,7 @@
         <div class="demo-2 live-demo live-demo-block live-demo-menu">
             <h3></h3>
             <p class="comment"></p>
-            <j-menu #jMenu [width]="'300'" (select)="selectChange1($event)"></j-menu>
+            <j-menu #jMenu [width]="'300'" (select)="selectChange1($event)" (click)="clearArray1()"></j-menu>
             <p class="message">
                 选中的菜单是:
                 <span>{{displayItem1}} </span>
