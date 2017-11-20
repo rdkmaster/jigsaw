@@ -12,18 +12,14 @@
         </div>
 
         <div class="demo-2 live-demo live-demo-block live-demo-menu">
-            <h3></h3>
-            <p class="comment"></p>
-            <j-menu #jMenu [width]="'300'" (select)="selectChange1($event)" (click)="clearArray1()"></j-menu>
+            <h3>手动弹出菜单</h3>
+            <p class="comment">手动弹出菜单</p>
+            <j-menu #jMenu [data]="titles" [width]="'200'" (select)="selectChange1($event)" (click)="clearArray1()"></j-menu>
             <p class="message">
                 选中的菜单是:
                 <span>{{displayItem1}} </span>
             </p>
-        </div>
-
-        <div class="demo-2 live-demo live-demo-block live-demo-menu">
-            <h3></h3>
-            <p class="comment"></p>
+            <jigsaw-button class="popup-button" (click)="onClick()" colorType="primary">点击弹出菜单</jigsaw-button>
         </div>
     </div>
 </div>

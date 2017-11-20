@@ -105,6 +105,10 @@ export class MenuFullComponent implements OnInit {
     }
 
     ngOnInit() {
+
+    }
+
+    onClick(){
         this.jMenu.show(this.titles);
     }
 
