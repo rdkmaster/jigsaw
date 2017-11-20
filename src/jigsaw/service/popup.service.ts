@@ -172,8 +172,9 @@ export class PopupService {
     private _eventHelper: ElementEventHelper = new ElementEventHelper();
 
     constructor(private _cfr: ComponentFactoryResolver,
+                private _zone: NgZone,
                 @Optional() private _router: Router,
-                @Optional() private _activatedRoute: ActivatedRoute, private _zone: NgZone) {
+                @Optional() private _activatedRoute: ActivatedRoute) {
         PopupService._instance = this;
     }
 

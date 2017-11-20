@@ -2,9 +2,9 @@
  * Created by 10177553 on 2017/3/29.
  */
 import {Component} from '@angular/core';
-import {TableData} from "jigsaw/core/data/table-data";
-import {LineBarGraphData} from "../../../../jigsaw/core/data/graph-data";
 import {HttpClient} from "@angular/common/http";
+import {TableData} from "jigsaw/core/data/table-data";
+import {LineBarGraphData} from "jigsaw/core/data/graph-data";
 
 @Component({
     templateUrl: './app.component.html',

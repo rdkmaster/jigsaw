@@ -115,33 +115,31 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     public resize(): void {
         if (this._graph) {
-            this._graph.resize({width: this._host.offsetWidth + 'px', height: this._host.offsetHeight + 'px', silence: true});
+            this._graph.resize({
+                width: this._host.offsetWidth + 'px',
+                height: this._host.offsetHeight + 'px',
+                silence: true
+            });
         }
     }
 
     private _resizeEventRemoval: Function;
 
     private _listenWindowResize(): void {
-        if (this._needListenWindowResize()) {
-            if (!this._resizeEventRemoval) {
-                this._zone.runOutsideAngular(() => {
-                    // 所有的全局事件应该放到zone外面，不一致会导致removeEvent失效，见#286
-                    this._resizeEventRemoval = this._renderer.listen("window", "resize", () => {
-                        this.resize();
-                    });
-                });
-            }
+        if (!this._needListenWindowResize() || this._resizeEventRemoval) {
+            return;
         }
+        this._zone.runOutsideAngular(() => {
+            // 所有的全局事件应该放到zone外面，不一致会导致removeEvent失效，见#286
+            this._resizeEventRemoval = this._renderer.listen("window", "resize", () => {
+                this.resize();
+            });
+        });
     }
 
     private _needListenWindowResize(): boolean {
-        if ((this.width && this.width[this.width.length - 1] == '%') ||
-            (this.height && this.height[this.height.length - 1] == '%') || !this.width) {
-            // 组件宽度或高度是百分比时，监听窗口缩放
-            return true
-        } else {
-            return false;
-        }
+        return !!((this.width && this.width[this.width.length - 1] == '%') ||
+        (this.height && this.height[this.height.length - 1] == '%') || !this.width);
     }
 
     private _host: HTMLElement;
