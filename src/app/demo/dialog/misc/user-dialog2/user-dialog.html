@@ -1,8 +1,15 @@
-<jigsaw-dialog [buttons]="buttons" width="300px">
-    <ul>
-        <li>Dialog content...</li>
-        <li>Dialog content...</li>
-        <li>Dialog content...</li>
-    </ul>
+<jigsaw-dialog width="300px" caption="跟随鼠标的对话框">
+    <div class="dialog-body">
+        <h4>提示</h4>
+        <p>
+            弹出此对话框的时候设置了偏移量，因此弹出的位置总是举例鼠标单击的位置偏移相同的位置。通过偏移量可以修正弹出框的位置。
+        </p>
+    </div>
+    <div jigsaw-button-bar>
+        <jigsaw-button colorType="danger" (click)="emitMessage('The confirm button is clicked!')">
+            Confirm
+        </jigsaw-button>
+        <a (click)="gotoGithub()">给Jigsaw点个星星</a>
+    </div>
 </jigsaw-dialog>
 

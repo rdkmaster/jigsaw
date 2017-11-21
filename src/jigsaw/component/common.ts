@@ -28,7 +28,7 @@ export interface IJigsawComponent {
     maxHeight: string;
 }
 
-export abstract class AbstractJigsawComponent implements IJigsawComponent, OnInit, AfterViewInit {
+export abstract class AbstractJigsawComponent implements IJigsawComponent, OnInit {
 
     @Input()
     public basicClass: string;
@@ -66,16 +66,9 @@ export abstract class AbstractJigsawComponent implements IJigsawComponent, OnIni
 
     //TODO 所有组件都使用这个属性判断是否初始化好
     protected initialized: boolean = false;
-    public childInitialized: boolean = false;
 
     ngOnInit() {
         this.initialized = true;
-    }
-
-    ngAfterViewInit() {
-        setTimeout(() => {
-            this.childInitialized = true;
-        });
     }
 }
 

@@ -1,10 +1,18 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
+import {PopupServiceIntroduceComponent} from "./introduce/app.component";
+import {PopupServiceIntroduceModule} from "./introduce/app.module";
+
+export const routerConfig = [
+    {
+        path: 'introduce', component: PopupServiceIntroduceComponent
+    },
+];
 
 @NgModule({
     imports: [
-        // RouterModule.forChild(getChildRoutesConfig('popup')),
-    ]
+        RouterModule.forChild(routerConfig), PopupServiceIntroduceModule
+    ],
 })
-export class PopupDemoModule {
+export class PopupServiceModule {
 }

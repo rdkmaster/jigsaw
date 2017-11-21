@@ -655,7 +655,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     ngAfterViewInit() {
-        super.ngAfterViewInit();
         this._$selectRow(this.selectedRow, true);
 
         // 初始化滚动条

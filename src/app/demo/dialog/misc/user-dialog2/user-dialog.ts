@@ -1,29 +1,27 @@
-import {Component, ViewChild} from "@angular/core";
+import {AfterViewInit, Component, ViewChild} from "@angular/core";
 import {DialogBase, JigsawDialog} from "jigsaw/component/dialog/dialog";
-import {ButtonInfo} from "jigsaw/service/popup.service";
 
 
 @Component({
     templateUrl: 'user-dialog.html',
     styleUrls: ['user-dialog.scss']
 })
-export class UserDialog2Component extends DialogBase {
+export class UserDialog2Component extends DialogBase implements AfterViewInit {
+    // 这个变量是父类所需，就照着这么写就行啦
     @ViewChild(JigsawDialog) dialog: JigsawDialog;
 
-    public caption: string = `Title of the dialog`;
-    public buttons: Array<ButtonInfo> = [
-        {
-            role: 'cancel',
-            label: 'cancel',
-            clazz: ''
-        },
-        {
-            role: 'edit',
-            label: 'edit',
-            clazz: '',
-            type: 'warning'
-        },
-    ];
+    // 将数据传给对话框外部
+    emitMessage(msg) {
+        this.answer.emit({message: msg});
+        this.dispose();
+    }
 
+    gotoGithub() {
+        window.open('https://github.com/rdkmaster/jigsaw', '_blank');
+    }
+
+    ngAfterViewInit() {
+        console.log(`input data is: ${this.initData.inputData}`);
+    }
 }
 

@@ -1,6 +1,7 @@
 import {Component, ElementRef, Input, NgModule, OnInit, ViewEncapsulation} from "@angular/core";
 import * as marked from 'marked';
 import {InternalUtils} from "../../jigsaw/core/utils/internal-utils";
+import {AbstractJigsawComponent} from "../../jigsaw/component/common";
 
 @Component({
     selector: 'jigsaw-markdown, j-markdown',
@@ -11,11 +12,12 @@ import {InternalUtils} from "../../jigsaw/core/utils/internal-utils";
     styleUrls: ['./markdown.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class JigsawMarkdown implements OnInit {
+export class JigsawMarkdown extends AbstractJigsawComponent implements OnInit {
     constructor(private _elementRef: ElementRef) {
+        super()
     }
 
-    private _markdown:string;
+    private _markdown: string;
 
     @Input()
     public get markdown(): string {
@@ -28,9 +30,9 @@ export class JigsawMarkdown implements OnInit {
     }
 
     @Input()
-    public prefixWhiteSpaceLength:number = NaN;
+    public prefixWhiteSpaceLength: number = NaN;
 
-    private _calculateWhiteSpaceLength(markdown:string):number {
+    private _calculateWhiteSpaceLength(markdown: string): number {
         if (!markdown) {
             return 0;
         }
@@ -38,9 +40,9 @@ export class JigsawMarkdown implements OnInit {
         return match ? match[1].length : 0;
     }
 
-    private _parseMarkdown(markdown):string {
-        if (!markdown) {
-            return '';
+    private _parseMarkdown(markdown): void {
+        if (!markdown || !this.initialized) {
+            return;
         }
         if (isNaN(this.prefixWhiteSpaceLength)) {
             this.prefixWhiteSpaceLength = this._calculateWhiteSpaceLength(markdown);
@@ -91,7 +93,10 @@ export class JigsawMarkdown implements OnInit {
     }
 
     ngOnInit() {
-        this._markdown = this._elementRef.nativeElement.innerHTML;
+        super.ngOnInit();
+        if (!this._markdown) {
+            this._markdown = this._elementRef.nativeElement.innerHTML;
+        }
         this._parseMarkdown(this._markdown);
     }
 }

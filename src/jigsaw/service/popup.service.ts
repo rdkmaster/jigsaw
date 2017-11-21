@@ -22,9 +22,16 @@ export enum PopupEffect {
     fadeIn, fadeOut, bubbleIn, bubbleOut
 }
 
+/**
+ * 用于控制弹出视图的各种参数，包括是否模态、弹出位置、视图尺寸、弹出动画等等，`PopupService`能够覆盖所有弹出场景，
+ * 很大程度上得益于这个参数的强大扩展性，熟悉这个参数的各个属性对是否能够用好`PopupService`有着决定性的影响。
+ *
+ * [这个demo](/components/dialog/demo#popup-option)详细的说明了如何使用这个对象。
+ */
 export class PopupOptions {
     /**
-     * 是否模态
+     * 控制弹出的视图是否模态。
+     *
      * @type {boolean} 默认值是false
      */
     modal?: boolean;
@@ -38,24 +45,40 @@ export class PopupOptions {
 
     /**
      * 隐藏的动效，fadeIn/fadeOut，wipeIn/wipeOut
+     *
      * @type {PopupEffect}
      */
     hideEffect?: PopupEffect = PopupEffect.fadeOut;
 
     /**
-     * 控制弹出对象的相对位置，可以是相对一个点({@link PopupPoint})，也可以相对一个组件或者dom元素。
+     * 控制弹出对象的相对位置，可以是相对一个点({@link PopupPoint})，也可以相对一个组件或者dom元素，支持如下类型：
+     * - {@link PopupPoint}类型：控制弹出视图的左上角位置，一般常常用于弹出上下文菜单，通过鼠标的事件（click/hover）等得到鼠标事件，
+     * 从事件对象中提取出位置信息传过来，从而让视图出现在鼠标的附近，配合`posOffset`属性可以进一步修正位置，避免遮挡到其他重要视图。
+     * - `ElementRef`和`HTMLElement`类型：相对某个已知UI元素的位置，不配置偏移的话，弹出视图的左上角会和给定的UI元素的左上角位置重合。
+     * [Jigsaw](https://github.com/rdkmaster/jigsaw)会自动计算出给定元素的位置，并将弹出视图移动到该位置上。
+     * 一般需要配合`posOffset`属性一起调整弹出位置，避免遮挡到给定的UI元素。这个方式在实现一些下拉功能的时候会非常有用。
+     *
+     * 请参考[这个demo](/components/dialog/demo#popup-option)。
+     *
      * @type {PopupPosition}
      */
     pos?: PopupPosition;
 
     /**
-     * 弹出位置的偏移量，注意left属性是以弹出组件的左侧为基准，top属性是以弹出组件的上方为基准，right属性是以弹出组件的右侧为基准，bottom是以弹出组件的下方为基准点。
+     * 弹出位置的偏移量，注意left属性是以弹出组件的左侧为基准，top属性是以弹出组件的上方为基准，
+     * right属性是以弹出组件的右侧为基准，bottom是以弹出组件的下方为基准点。
+     *
+     * 请参考[这个demo](/components/dialog/demo#popup-option)。
+     *
      * @type {PopupPositionOffset}
      */
     posOffset?: PopupPositionOffset;
 
     /**
-     * 弹出的组件的定位方式，和css的 absolute/fixed 含义类似
+     * 弹出的组件的定位方式，和css的 absolute/fixed 含义类似。
+     *
+     * 请参考[这个demo](/components/dialog/demo#popup-option)。
+     *
      * @type {PopupPositionType}
      */
     posType?: PopupPositionType;
@@ -70,19 +93,30 @@ export class PopupOptions {
     posReviser?: (pos: PopupPositionValue, popupElement: HTMLElement) => PopupPositionValue;
 
     /**
-     * 弹出组件的尺寸，某些组件在定义的时候没有设置尺寸，这样在弹出的时候位置不可控，通过这个属性可以精确控制弹出组件的尺寸。
+     * 弹出组件的尺寸，多数组件在定义的时候，认为其尺寸是来自于父级元素，特别是组件的宽度更是如此，
+     * 这个组件在弹出来的时候，父级元素的宽度和高度都是100%，这会让自己占满整个屏幕，非常难看。
+     * 在这个场景下就可以通过这个属性设置组件在弹出状态下的尺寸。
+     * 如果你的组件在实现的时候就给定了尺寸或者最大尺寸，则无需设置这个属性。
+     *
      * @type {PopupSize}
      */
     size?: PopupSize;
 
     /**
-     * 当应用页面的路由改变了的时候，自动将弹出的组件销毁。
-     * @type {boolean} 默认值是true
+     * 当应用页面的路由改变了的时候，自动销毁弹出的组件。当弹出的视图只归属于某个路由状态的时候，
+     * 这个功能会很有用，在路由变化之后，你无需手工销毁这些弹出的视图。
+     *
+     * 但凡事都有两面性，当你弹出的视图在全局下都有意义时，请注意务必关闭这个功能。
+     * 这样的场景比如通知类的对话框（alert或者notification），他们弹出后，就需要等待用户关闭，不应该自动关闭。
+     *
+     * @type {boolean}
      */
     disposeOnRouterChanged?: boolean = true;
 
     /**
-     * 弹框是否要加边框
+     * 是否要自动给弹出视图加上边框。默认`PopupService`会检测弹出的视图是否有边框，如果有则不加，如果没有则自动加上边框和阴影。
+     * 设置了true/false之后，则`PopupService`不再自动检测，而是根据这个属性的值决定是否要还是不加边框&阴影。
+     *
      * @type {boolean}
      */
     showBorder?: boolean;
@@ -129,7 +163,7 @@ export type PopupRef = ComponentRef<IPopupable> | EmbeddedViewRef<any>;
 
 export class ButtonInfo {
     [index: string]: any;
-    public label: string;
+    public label?: string;
     public clazz?: string = '';
     public type?: string;
     public disabled?: boolean;

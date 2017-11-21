@@ -68,9 +68,10 @@ export const routerConfig = [
         path: "pagination",
         loadChildren: "./demo/pagination/demo.module#PaginationDemoModule",
     },
-    // {
-    //     path: "popup",
-    // },
+    {
+        path: "popup",
+        loadChildren: "./demo/popup/demo.module#PopupServiceModule",
+    },
     {
         path: "radio",
         loadChildren: "./demo/radio/demo.module#RadioDemoModule",

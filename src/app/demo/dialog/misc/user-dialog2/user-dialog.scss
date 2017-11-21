@@ -1,7 +1,11 @@
-ul{
-    padding: 20px;
-    li{
-        font-size: 12px;
-        color: #999;
+.dialog-body {
+    margin: 12px;
+
+    h4 {
+        margin-bottom: 6px;
     }
+}
+
+[jigsaw-button-bar] a {
+    margin-right: 12px;
 }
