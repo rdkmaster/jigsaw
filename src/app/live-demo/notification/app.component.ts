@@ -15,7 +15,7 @@ export class NotificationFullComponent implements OnInit {
 
     }
 
-    commonNotification(){
+    commonNotification() {
         this.answer = 'waiting for an answer';
         JigsawNotification.show('this is a great info alert!');
     }
