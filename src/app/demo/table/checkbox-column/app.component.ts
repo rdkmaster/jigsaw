@@ -33,23 +33,16 @@ export class TableAddCheckboxColumnDemoComponent {
 
     // demo1
     tableData: TableData;
-    changeMsg: string;
     selectedRows: string;
     additionalData: AdditionalTableData;
 
-    onCellChange(value) {
-        this.changeMsg = `field: '${value.field}', row: ${value.row}, column: ${value.column}, cellData: ${value.cellData}, oldCellData: ${value.oldCellData}`;
-        let rows = value.row instanceof Array ? value.row : [value.row];
-        for (let row of rows) {
-            console.log(this.tableData.data[row][value.column]);
-        }
-
+    additionalDataChange(value) {
+        console.log(value);
         this.selectedRows = this.getSelectedRows(this.additionalData);
     }
 
     // demo2
     tableData2: TableData;
-    changeMsg2: string;
     selectedRows2: string;
     additionalData2: AdditionalTableData;
 
@@ -61,13 +54,8 @@ export class TableAddCheckboxColumnDemoComponent {
         }
     }
 
-    onCellChange2(value) {
-        this.changeMsg2 = `field: '${value.field}', row: ${value.row}, column: ${value.column}, cellData: ${value.cellData}, oldCellData: ${value.oldCellData}`;
-        let rows = value.row instanceof Array ? value.row : [value.row];
-        for (let row of rows) {
-            console.log(this.tableData2.data[row][value.column]);
-        }
-
+    additionalDataChange2(value) {
+        console.log(value);
         this.selectedRows2 = this.getSelectedRows(this.additionalData2);
     }
 
@@ -77,7 +65,7 @@ export class TableAddCheckboxColumnDemoComponent {
      * @returns {any}
      */
     addToString(data) {
-        if(data && data.data instanceof Array){
+        if (data && data.data instanceof Array) {
             data.data.forEach(item => {
                 item.forEach((value, j) => {
                     item[j].toString = () => {

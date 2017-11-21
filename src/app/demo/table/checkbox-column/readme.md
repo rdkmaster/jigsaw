@@ -35,3 +35,8 @@ addToString(){
 }
 ```
 
+#### 监听数据变化
+
+配置在`additionalColumns`里的渲染器都是插入的列，这些渲染器的数据是保存在`additionalData`里面的，与table的`data`是完全隔离的。
+所以这边要监听checkbox的数据变化，只能用`additionalDataChange`，请不要使用`dataChange`。
+

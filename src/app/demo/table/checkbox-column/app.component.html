@@ -2,28 +2,30 @@
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
 
-
 <!-- start to learn the demo from here -->
-
 <div class="live-demo-wrap">
     <h2>Table checkbox renderer</h2>
     <div class="demo-1 live-demo">
         <h3>基本用法</h3>
         <jigsaw-table height="300"
-                      [data]="tableData" [additionalColumnDefines]="additionalColumns"
-                      (dataChange)="onCellChange($event)" [(additionalData)]="additionalData">
+                      [data]="tableData"
+                      [additionalColumnDefines]="additionalColumns"
+                      [(additionalData)]="additionalData"
+                      (additionalDataChange)="additionalDataChange($event)">
         </jigsaw-table>
-        <p class="message">table change answer is: <span>{{changeMsg}}</span></p>
-        <p class="message mgt0">selectedRowsIndex: <span>{{selectedRows}}</span></p>
+        <p class="message">selectedRowsIndex: <span>{{selectedRows}}</span></p>
     </div>
     <div class="demo-1 live-demo">
         <h3>单元格数据类型是<code>Json Object</code></h3>
         <jigsaw-table height="300"
-                      [data]="tableData2" [columnDefines]="columnDefineGenerator2" [additionalColumnDefines]="additionalColumns"
-                      (dataChange)="onCellChange2($event)" [(additionalData)]="additionalData2" trackRowBy="name">
+                      [data]="tableData2"
+                      [columnDefines]="columnDefineGenerator2"
+                      [additionalColumnDefines]="additionalColumns"
+                      [(additionalData)]="additionalData2"
+                      (additionalDataChange)="additionalDataChange2($event)"
+                      trackRowBy="name">
         </jigsaw-table>
-        <p class="message">table change answer is: <span>{{changeMsg2}}</span></p>
-        <p class="message mgt0">selectedRowsIndex: <span>{{selectedRows2}}</span></p>
+        <p class="message">selectedRowsIndex: <span>{{selectedRows2}}</span></p>
     </div>
 </div>
 
