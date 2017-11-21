@@ -40,6 +40,10 @@ export const liveDemoNavInfo = {
                 {
                     label: 'menu',
                     url: '/menu/menu-full'
+                },
+                {
+                    label: 'notification',
+                    url: '/notification/notification-full'
                 }
             ]
         },
@@ -920,6 +924,17 @@ export const navInfo = [
             {
                 label: 'menu',
                 url: '/menu/menu-full'
+            }
+        ]
+    },
+    {
+        title: 'Notification',
+        path: "notification",
+        loadChildren: "./notification/demo.module#NotificationDemoModule",
+        navList: [
+            {
+                label: 'notification',
+                url: '/notification/notification-full'
             }
         ]
     }
