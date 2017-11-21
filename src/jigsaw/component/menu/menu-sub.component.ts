@@ -23,6 +23,7 @@ export class JigsawMenuSubComponent extends AbstractJigsawComponent implements O
     _items: MenuData[];
     _activeItem: HTMLElement;
     _selectedItems: MenuData;
+    _item: HTMLElement;
 
     @Output() public selectedItem: EventEmitter<MenuData> = new EventEmitter<MenuData>();
 
@@ -54,7 +55,16 @@ export class JigsawMenuSubComponent extends AbstractJigsawComponent implements O
     }
 
     _onListMouseEnter(event: Event) {
-        const item = <HTMLElement>event.currentTarget;
+        this._item = <HTMLElement>event.currentTarget;
+        this._show(this._item);
+    }
+
+    _onListMouseLeave(event: Event) {
+        this._item = <HTMLElement>event.currentTarget;
+        this._hide(this._item);
+    }
+
+    _show(item: HTMLElement){
         this._activeItem = item;
         const nextElement: HTMLElement = <HTMLElement> item.children[0].nextElementSibling;
         if (nextElement) {
@@ -65,15 +75,13 @@ export class JigsawMenuSubComponent extends AbstractJigsawComponent implements O
         }
     }
 
-    _onListMouseLeave(event: Event) {
+    _hide(item: HTMLElement){
         this._activeItem = null;
-        const item = <HTMLElement>event.currentTarget;
         const nextElement: HTMLElement = <HTMLElement> item.children[0].nextElementSibling;
         if (nextElement) {
             const sublist: HTMLElement = <HTMLElement> nextElement.children[0];
             sublist.style.display = 'none';
         }
-
     }
 }
 

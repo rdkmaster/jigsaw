@@ -1,1 +1,3 @@
-<j-menu-sub root [width]="width" [height]="height" [items]="_items" (selectedItem)="_handleSelect($event)"></j-menu-sub>
+<nav #menuContainer *ngIf="_items">
+    <j-menu-sub root [width]="width" [height]="height" [items]="_items" (selectedItem)="_handleSelect($event)"></j-menu-sub>
+</nav>

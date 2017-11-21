@@ -1,4 +1,4 @@
-import {Component, EventEmitter, forwardRef, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
 
 import {AbstractJigsawComponent} from "../common";
@@ -20,6 +20,7 @@ import {MenuData, MenuCallback} from "./menu.typings";
 })
 
 export class JigsawMenuComponent extends AbstractJigsawComponent implements OnInit {
+    @ViewChild('menuContainer')menuContainer: HTMLElement;
     _items: MenuData[];
     _selectedItems: MenuData;
 

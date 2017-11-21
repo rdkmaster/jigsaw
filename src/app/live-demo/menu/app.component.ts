@@ -11,6 +11,7 @@ export class MenuFullComponent implements OnInit {
     displayItem = [];
     _selectedItem1 = [];
     displayItem1 = [];
+    popUpTip = '点击后弹出菜单';
 
     titles = [
         {
@@ -101,21 +102,6 @@ export class MenuFullComponent implements OnInit {
         }
     ];
 
-    popUpMenuData = [
-        {
-            label: 'Exit',
-            extraLabel: '',
-            icon: 'fa fa-address-book',
-            children: [
-                {
-                    label: 'Settings',
-                    extraLabel: 'Ctrl+Alt+A',
-                    icon: 'fa fa-address-book'
-                }
-            ]
-        }
-    ];
-
     constructor() {
     }
 
@@ -124,7 +110,11 @@ export class MenuFullComponent implements OnInit {
     }
 
     showSelectedMenu() {
-        this.jMenu.show(this.popUpMenuData);
+        this.jMenu.show(this.titles);
+    }
+
+    hideSelectedMenu() {
+        this.jMenu.show();
     }
 
     selectChange(selected) {
