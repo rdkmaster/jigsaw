@@ -4,10 +4,16 @@
 
 
 <!-- start to learn the demo from here -->
-<jigsaw-table #myTable height="600"
+<jigsaw-table #myTable height="300"
               [data]="tableData" [additionalColumnDefines]="additionalColumns"
               (dataChange)="onCellChange($event)">
 </jigsaw-table>
 <p class="message">table change answer is: <span>{{changeMsg}}</span></p>
 <p class="message">selectedRowsIndex: <span>{{selectedRows}}</span></p>
 
+<jigsaw-table height="300"
+              [data]="tableData2" [columnDefines]="columnDefineGenerator2" [additionalColumnDefines]="additionalColumns"
+              (dataChange)="onCellChange2($event)" [(additionalData)]="additionalData2" trackRowBy="name">
+</jigsaw-table>
+<p class="message">table change answer is: <span>{{changeMsg2}}</span></p>
+<p class="message">selectedRowsIndex: <span>{{selectedRows2}}</span></p>
