@@ -238,6 +238,11 @@ class MockData {
             "header": this.dataSet['hr-list-full'].header,
             "data": this.getShortenHrList(this.dataSet['hr-list-full'].data)
         };
+        this.dataSet['hr-list-with-object-cell-data'] = {
+            "field": this.dataSet['hr-list-full'].field,
+            "header": this.dataSet['hr-list-full'].header,
+            "data": this.getHrListWithObjectCellData(this.getShortenHrList(this.dataSet['hr-list-full'].data))
+        };
         this.dataSet['big-table-data'] = this.createBigTableData();
         this.dataSet['fish-bone-data1'] = require('../mock-data/fish-bone-full.json').slice(0, 5);
         this.dataSet['fish-bone-data2'] = require('../mock-data/fish-bone-full.json').slice(5);
@@ -252,6 +257,44 @@ class MockData {
         ];
         const list = [];
         indexes.forEach(index => list.push(fullList[index]));
+        return list;
+    }
+
+    static getHrListWithObjectCellData(list){
+        // require的同一个对象，所以拷贝一份，防止其他数据受到影响
+        list = CommonUtils.deepCopy(list);
+
+        list.forEach(item => {
+            item.forEach((value, j) => {
+                let key;
+                switch (j) {
+                    case 0:
+                        key = 'name';
+                        break;
+                    case 1:
+                        key = 'gender';
+                        break;
+                    case 2:
+                        key = 'position';
+                        break;
+                    case 3:
+                        key = 'salary';
+                        break;
+                    case 4:
+                        key = 'enroll-date';
+                        break;
+                    case 5:
+                        key = 'office';
+                        break;
+                    case 6:
+                        key = 'desc';
+                        break;
+                }
+                item[j] = {};
+                item[j][key] = value;
+            });
+        });
+
         return list;
     }
 

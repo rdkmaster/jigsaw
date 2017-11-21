@@ -1,11 +1,12 @@
 import {Component, OnInit} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/core/data/table-data";
-import {AdditionalColumnDefine, ColumnDefine} from "jigsaw/component/table/table-typings";
+import {AdditionalColumnDefine, AdditionalTableData, ColumnDefine} from "jigsaw/component/table/table-typings";
 import {TableCellCheckboxRenderer, TableCellRendererBase, TableHeadCheckboxRenderer} from "jigsaw/component/table/table-renderer";
 
 @Component({
-    templateUrl: './app.component.html'
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css']
 })
 export class TableAddCheckboxColumnDemoComponent {
     constructor(http: HttpClient) {
@@ -15,43 +16,9 @@ export class TableAddCheckboxColumnDemoComponent {
 
         this.tableData2 = new TableData();
         this.tableData2.http = http;
-        this.tableData2.fromAjax('mock-data/hr-list');
-        this.tableData2.onAjaxSuccess(data => {
-            data.data.forEach((item, i) => {
-                item.forEach((value, j) => {
-                    let key;
-                    switch (j) {
-                        case 0:
-                            key = 'name';
-                            break;
-                        case 1:
-                            key = 'gender';
-                            break;
-                        case 2:
-                            key = 'position';
-                            break;
-                        case 3:
-                            key = 'salary';
-                            break;
-                        case 4:
-                            key = 'enroll-date';
-                            break;
-                        case 5:
-                            key = 'office';
-                            break;
-                        case 6:
-                            key = 'desc';
-                            break;
-                    }
-                    item[j] = {};
-                    item[j][key] = value;
-                    item[j].toString = function () {
-                        return `${key}: ${value}`
-                    }
-                })
-            });
-            console.log(data);
-        })
+        // 对ajax返回过来的数据进行预处理
+        this.tableData2.dataReviser = this.addToString;
+        this.tableData2.fromAjax('mock-data/hr-list-with-object-cell-data');
     }
 
     additionalColumns: AdditionalColumnDefine[] = [{
@@ -68,7 +35,7 @@ export class TableAddCheckboxColumnDemoComponent {
     tableData: TableData;
     changeMsg: string;
     selectedRows: string;
-    additionalData;
+    additionalData: AdditionalTableData;
 
     onCellChange(value) {
         this.changeMsg = `field: '${value.field}', row: ${value.row}, column: ${value.column}, cellData: ${value.cellData}, oldCellData: ${value.oldCellData}`;
@@ -77,16 +44,14 @@ export class TableAddCheckboxColumnDemoComponent {
             console.log(this.tableData.data[row][value.column]);
         }
 
-        console.log(this.additionalData.getTouchedValues(0));
-
-        this.selectedRows = "";
+        this.selectedRows = this.getSelectedRows(this.additionalData);
     }
 
     // demo2
     tableData2: TableData;
     changeMsg2: string;
     selectedRows2: string;
-    additionalData2;
+    additionalData2: AdditionalTableData;
 
     columnDefineGenerator2(field, index): ColumnDefine {
         return {
@@ -103,16 +68,45 @@ export class TableAddCheckboxColumnDemoComponent {
             console.log(this.tableData2.data[row][value.column]);
         }
 
-        console.log(this.additionalData2.getTouchedValues(0));
+        this.selectedRows2 = this.getSelectedRows(this.additionalData2);
+    }
 
-        this.selectedRows2 = "";
+    /**
+     * 在Json Object对象中添加toString方法
+     * @param data
+     * @returns {any}
+     */
+    addToString(data) {
+        if(data && data.data instanceof Array){
+            data.data.forEach(item => {
+                item.forEach((value, j) => {
+                    item[j].toString = () => {
+                        return JSON.stringify(item);
+                    }
+                });
+            });
+        }
+        return data;
+    }
+
+    /**
+     * 获取选中的行
+     * @param additionalData
+     */
+    getSelectedRows(additionalData) {
+        return additionalData.data.reduce((selectedRows, item, index) => {
+            if (item[0]) {
+                selectedRows.push(index);
+            }
+            return selectedRows;
+        }, []).join(',');
     }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
-    description: string = '';
+    summary: string = '这demo介绍table中使用内置checkbox渲染器';
+    description: string = require('!!raw-loader!./readme.md');
 }
 
 @Component({
