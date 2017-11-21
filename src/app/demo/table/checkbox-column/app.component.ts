@@ -5,8 +5,7 @@ import {AdditionalColumnDefine, AdditionalTableData, ColumnDefine} from "jigsaw/
 import {TableCellCheckboxRenderer, TableCellRendererBase, TableHeadCheckboxRenderer} from "jigsaw/component/table/table-renderer";
 
 @Component({
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+    templateUrl: './app.component.html'
 })
 export class TableAddCheckboxColumnDemoComponent {
     constructor(http: HttpClient) {
