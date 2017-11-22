@@ -392,9 +392,14 @@ export enum SortOrder {
     asc, des, default
 }
 
+export const SortMapForRdk = new Map([
+    [SortOrder.asc, 'asc'],
+    [SortOrder.des, 'desc']
+]);
+
 export class DataSortInfo {
     constructor(public as: SortAs = SortAs.string,
-                public order: SortOrder = SortOrder.asc,
+                public order: SortOrder | string = SortOrder.asc,
                 public field: string | number) {
     }
 }
