@@ -394,7 +394,7 @@ export enum SortOrder {
 
 export class DataSortInfo {
     constructor(public as: SortAs = SortAs.string,
-                public order: SortOrder | string = SortOrder.asc,
+                public order: SortOrder = SortOrder.asc,
                 public field: string | number) {
     }
 }
