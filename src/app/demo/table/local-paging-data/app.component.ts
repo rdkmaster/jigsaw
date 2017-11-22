@@ -39,7 +39,7 @@ export class LocalPagingDataDemoComponent {
             header: {
                 sortable: true,
                 sortAs: SortAs.string,
-                defaultSortOrder: SortOrder.des,
+                defaultSortOrder: SortOrder.desc,
             }
         }
     ];

@@ -403,6 +403,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
             throw new Error('compare function is not supported by PageableTableData which sorts data in the server side');
         }
         const psi = as instanceof DataSortInfo ? as : new DataSortInfo(as, order, field);
+        psi.order = SortOrder[psi.order];
         this._sortSubject.next(psi);
     }
 

@@ -146,7 +146,7 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
         this._$sortOrderClass = {
             'jigsaw-table-sort-box': true,
             'jigsaw-table-asc': sortOrder == SortOrder.asc,
-            'jigsaw-table-des': sortOrder == SortOrder.des
+            'jigsaw-table-des': sortOrder == SortOrder.desc
         }
     }
 
@@ -171,7 +171,7 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
         if (this._$sortOrderClass['jigsaw-table-des']) {
             return;
         }
-        this._sort(SortOrder.des);
+        this._sort(SortOrder.desc);
     }
 
     private _sort(order: SortOrder): void {

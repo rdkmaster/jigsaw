@@ -389,7 +389,7 @@ export enum SortAs {
 }
 
 export enum SortOrder {
-    asc, des, default
+    asc, desc, default
 }
 
 export class DataSortInfo {
