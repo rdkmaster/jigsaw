@@ -1,0 +1,32 @@
+@import "../../assets/scss/core/base";
+
+$notification-prefix-cls: #{$jigsaw-prefix}-notification;
+
+.#{$notification-prefix-cls}{
+    position: relative;
+    background: #fff;
+    padding: 16px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.2);
+    line-height: 1.5;
+    margin-bottom: 10px;
+    overflow: hidden;
+    .#{$notification-prefix-cls}-title{
+        font-size: $font-size-lg;
+        color: $heading-color-dark;
+    }
+    .#{$notification-prefix-cls}-content{
+        font-size: $font-size-base;
+        color: $text-color;
+    }
+    .#{$notification-prefix-cls}-head{
+        margin: 0;
+        padding-top: 0;
+    }
+    .#{$jigsaw-prefix}-alert-close{
+        margin-right: 0;
+    }
+    .#{$jigsaw-prefix}-alert-button-group{
+        text-align: right;
+    }
+}

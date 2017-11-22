@@ -6,7 +6,10 @@ import {AbstractJigsawComponent} from "../common";
     selector: 'jigsaw-rate',
     encapsulation: ViewEncapsulation.None,
     templateUrl: './rate.component.html',
-    styleUrls: ['./rate.component.scss'],
+    host: {
+        '[style.width]': 'width',
+        '[style.height]': 'height'
+    },
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
@@ -15,7 +18,7 @@ import {AbstractJigsawComponent} from "../common";
         }
     ],
 })
-export class JigsawRateComponent extends AbstractJigsawComponent implements OnInit, ControlValueAccessor{
+export class JigsawRateComponent extends AbstractJigsawComponent implements OnInit, ControlValueAccessor {
     _prefixCls = 'rate';
     _innerPrefixCls = `${this._prefixCls}-star`;
     _classMap;
@@ -29,13 +32,15 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
     _floatReg: any = /^\d+(\.\d+)?$/;   // 小数判断
     _icon = 'fa fa-star';
 
-    onChange = (_) => {};
-    onTouched = () => {};
+    onChange = (_) => {
+    };
+    onTouched = () => {
+    };
 
     @Output() public valueChange: EventEmitter<number> = new EventEmitter<number>();
 
     @Input()
-    public set icon (icon: string){
+    public set icon(icon: string) {
         this._icon = icon;
     }
 
@@ -76,13 +81,13 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
         this.setClassMap();
     }
 
-    constructor(){
+    constructor() {
         super();
     }
 
     setClassMap(): void {
         this._classMap = {
-            [this._prefixCls]              : true,
+            [this._prefixCls]: true,
             [`${this._prefixCls}-disabled`]: this._disabled
         };
     }
@@ -135,11 +140,11 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
 
     setClasses(i): any {
         return {
-            [this._innerPrefixCls]            : true,
-            [`${this._innerPrefixCls}-full`]  : (i + 1 < this._hoverValue) || (!this._hasHalf) && (i + 1 === this._hoverValue),
-            [`${this._innerPrefixCls}-half`]  : (this._hasHalf) && (i + 1 === this._hoverValue),
+            [this._innerPrefixCls]: true,
+            [`${this._innerPrefixCls}-full`]: (i + 1 < this._hoverValue) || (!this._hasHalf) && (i + 1 === this._hoverValue),
+            [`${this._innerPrefixCls}-half`]: (this._hasHalf) && (i + 1 === this._hoverValue),
             [`${this._innerPrefixCls}-active`]: (this._hasHalf) && (i + 1 === this._hoverValue),
-            [`${this._innerPrefixCls}-zero`]  : (i + 1 > this._hoverValue)
+            [`${this._innerPrefixCls}-zero`]: (i + 1 > this._hoverValue)
         };
     }
 

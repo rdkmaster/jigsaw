@@ -1,6 +1,7 @@
 import {Component, ElementRef, Input, OnInit, Renderer2} from '@angular/core';
 import {AbstractDialogComponentBase, DialogCallback} from "../dialog/dialog";
-import {ButtonInfo} from "../../service/popup.service";
+import {ButtonInfo, PopupEffect, PopupService} from "../../service/popup.service";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 export enum NotificationPosition {
     leftTop, leftBottom, rightTop, rightBottom
@@ -9,7 +10,10 @@ export enum NotificationPosition {
 @Component({
     selector: 'jigsaw-notification, j-notification',
     templateUrl: './notification.component.html',
-    styleUrls: ['./notification.component.scss']
+    host: {
+        '[style.width]': 'width',
+        '[style.height]': 'height'
+    }
 })
 export class JigsawNotification extends AbstractDialogComponentBase implements OnInit {
     _icon: string;
@@ -21,7 +25,7 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
         return this._message;
     }
 
-    public set message(value: string){
+    public set message(value: string) {
         this._message = value;
     }
 
@@ -43,6 +47,7 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
         this._icon = value;
     }
 
+
     constructor(renderer: Renderer2, elementRef: ElementRef) {
         super();
         this.renderer = renderer;
@@ -59,11 +64,32 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
     public static show(message: string,
                        caption?: string,
                        icon?: string,
-                       position?: NotificationPosition,
-                       timeout?: number,
+                       position: NotificationPosition = NotificationPosition.rightTop,
+                       timeout: number = 8000,
                        buttons?: ButtonInfo[],
                        callback?: DialogCallback,
-                       callbackContext?: any):void{
+                       callbackContext?: any): void {
+        const po = {
+            modal: false,
+            showEffect: PopupEffect.bubbleIn,
+            hideEffect: PopupEffect.bubbleOut
+        };
+        const popupInfo = PopupService.instance.popup(JigsawNotification, po, {
+            message: message,
+            title: caption,
+            icon: icon,
+            buttons: buttons,
+            callbackContext: callbackContext
+        });
 
+        if (timeout){
+            setTimeout(popupInfo.dispose, timeout);
+        }
+
+        popupInfo.answer.subscribe(answer => {
+            CommonUtils.safeInvokeCallback(callbackContext, callback, [answer]);
+            popupInfo.answer.unsubscribe();
+            popupInfo.dispose();
+        });
     }
 }

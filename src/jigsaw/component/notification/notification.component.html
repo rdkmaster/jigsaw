@@ -1,3 +1,19 @@
-<p>
-  notification works!
-</p>
+<div class="jigsaw-notification">
+    <div class="jigsaw-alert-head jigsaw-dialog-base-head jigsaw-notification-head">
+        <i [class]="_icon"></i>
+        <span class="jigsaw-notification-title">{{caption | translate}}</span>
+        <span class="jigsaw-alert-close jigsaw-popup-close" (click)='dispose()'>&times;</span>
+    </div>
+
+    <div class="jigsaw-notification-content" [trustedHtml]="_message"></div>
+
+    <div class="jigsaw-alert-button-group" *ngIf="buttons && buttons.length > 0">
+        <jigsaw-button
+            *ngFor="let bi of buttons"
+            [colorType]="bi.type"
+            (click)="dispose(bi)"
+            class="{{bi.clazz}}">
+            {{bi.label | translate}}
+        </jigsaw-button>
+    </div>
+</div>
