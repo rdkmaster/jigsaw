@@ -290,8 +290,7 @@ class MockData {
                         key = 'desc';
                         break;
                 }
-                item[j] = {};
-                item[j][key] = value;
+                item[j] = {key: key, value: value};
             });
         });
 

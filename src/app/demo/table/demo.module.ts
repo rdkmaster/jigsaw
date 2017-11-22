@@ -59,6 +59,8 @@ import {TableRendererOfTemplateRefDemoComponent} from "./template-ref-renderer/a
 import {LocalPagingDataDemoComponent} from "./local-paging-data/app.component";
 import {TableHideHeadDemoComponent} from "./hide-header/app.component";
 import {TableSelectRowDemoComponent} from "./select-row/app.component";
+import {TableCheckboxColumnObjectCellDemoComponent} from "./checkbox-column-object-cell/app.component";
+import {TableCheckboxColumnObjectCellDemoModule} from "./checkbox-column-object-cell/app.module";
 
 export const routerConfig = [
     {
@@ -108,6 +110,9 @@ export const routerConfig = [
     },
     {
         path: 'checkbox-column', component: TableAddCheckboxColumnDemoComponent
+    },
+    {
+        path: 'checkbox-column-object-cell', component: TableCheckboxColumnObjectCellDemoComponent
     },
     {
         path: 'fixed-header', component: TableFixedHeadDemoComponent
@@ -160,7 +165,7 @@ export const routerConfig = [
         TableSetCellClassDemoModule, TableSetCellEditableDemoModule, TableSetCellRenderDemoModule, TableColumnGroupDemoModule,
         TableColumnSetVisibleDemoModule, TableColumnSetWidthDemoModule, TableSetHeaderClassDemoModule, TableSetHeaderRenderDemoModule,
         TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, swimLaneDiagramDemoModule, TableHideHeadDemoModule,
-        TableSelectRowDemoModule
+        TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule
     ]
 })
 export class TableDemoModule {
