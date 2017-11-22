@@ -15,7 +15,7 @@ import {PopupService} from "../../../jigsaw/service/popup.service";
     ],
     declarations: [NotificationFullComponent],
     bootstrap: [NotificationFullComponent],
-    providers: [PopupService,JigsawNotification],
+    providers: [PopupService, JigsawNotification],
 })
 export class NotificationFullModule {
 }

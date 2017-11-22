@@ -14,7 +14,7 @@ export class RateFullComponent implements OnInit {
     ngOnInit() {
     }
 
-    selectChange(value:any){
+    selectChange(value: any) {
         console.log(value);
     }
 }
