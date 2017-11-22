@@ -1,40 +1,42 @@
 
-h3.title{
+h3.title {
     font-size: 20px;
     margin-bottom: 10px;
 }
 
-.dom-dialog{
+.dom-dialog {
     margin-bottom: 30px;
 }
 
-ul.dialog-content{
+.dialog-content {
     padding: 20px;
-    li{
+    li {
         font-size: 12px;
         color: #999;
     }
 }
 
-.fa{margin-right: 5px}
+.fa {
+    margin-right: 5px
+}
 
 /*弹框template样式*/
-.pop-win{
+.pop-win {
     width: 400px;
     height: 300px;
     background: #FFF;
     border: 1px solid #ddd;
-    h3{
+    h5 {
         height: 100px;
         text-align: center;
         margin-top: 56px;
-        line-height: 100px;
+        line-height: 24px;
         font-weight: normal !important;
         margin-bottom: 0 !important;
     }
-    .btn-group-box{
+    .btn-group-box {
         text-align: center;
-        btn-demo{
+        btn-demo {
             display: inline-block;
             *zoom: 1;
             *display: inline;
@@ -42,7 +44,7 @@ ul.dialog-content{
             margin-right: 8px;
         }
     }
-    .close-btn{
+    .close-btn {
         position: absolute;
         top: 10px;
         right: 10px;

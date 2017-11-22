@@ -1,13 +1,19 @@
-<jigsaw-dialog top="20%" width="80%">
+<jigsaw-dialog top="20%" width="40%" (close)="dispose()">
     <div jigsaw-title>
-        <span class="fa fa-thumbs-up"></span>A customized title
+        <span class="fa fa-thumbs-up"></span>将对话框的内容封装成一个组件
     </div>
     <div jigsaw-body>
-        <ul>
-            <li>Dialog content...</li>
-            <li>Dialog content...</li>
-            <li>Dialog content...</li>
-        </ul>
+        <p>
+            将对话框封装成一个组件比直接使用<code>ng-template</code>要稍微繁琐一些，但是带来的收益是代码隔离，
+            从而让你的对话框的逻辑与弹出对话框的组件的逻辑解耦，
+            因此一般在对话框交互逻辑多且复杂的情况使用这个方式，以求代码具备高可维护性。
+        </p>
+    </div>
+    <div jigsaw-button-bar>
+        <jigsaw-button colorType="primary" (click)="dispose()">
+            Confirm
+        </jigsaw-button>
+        <a (click)="gotoGithub()">给Jigsaw点个星星</a>
     </div>
 </jigsaw-dialog>
 

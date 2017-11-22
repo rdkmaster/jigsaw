@@ -4,7 +4,7 @@
 
 
 <!-- start to learn the demo from here -->
-<jigsaw-dialog width="300px" [buttons]="buttons">
+<jigsaw-dialog width="800px" (close)="onAnswer()">
     <div jigsaw-title>
         <span class="fa fa-thumbs-up"></span>Title of the dialog
     </div>
@@ -14,5 +14,9 @@
             <li>Dialog content...</li>
             <li>Dialog content...</li>
         </ul>
+    </div>
+    <div jigsaw-button-bar>
+        <jigsaw-button colorType="primary" (click)="onAnswer('OK')">OK</jigsaw-button>
+        <jigsaw-button (click)="onAnswer('Cancel')">Cancel</jigsaw-button>
     </div>
 </jigsaw-dialog>

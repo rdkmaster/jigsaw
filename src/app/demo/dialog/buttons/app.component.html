@@ -8,12 +8,18 @@
 
 {{message}}
 <ng-template #dialog1>
-    <jigsaw-dialog width="40%" caption="dialog title"  [buttons]="buttons" (answer)="showInfo($event)" >
+    <jigsaw-dialog width="40%" caption="dialog title" (close)="showInfo()" >
         <ul class="dialog-content">
             <li>Dialog content...</li>
             <li>Dialog content...</li>
             <li>Dialog content...</li>
         </ul>
+
+        <div jigsaw-button-bar>
+            <jigsaw-button colorType="primary" (click)="showInfo('OK')">OK</jigsaw-button>
+            <jigsaw-button (click)="showInfo('Cancel')">Cancel</jigsaw-button>
+            <a class="button-bar-link" (click)="showInfo('Help')">需要帮助？</a>
+        </div>
     </jigsaw-dialog>
 </ng-template>
 

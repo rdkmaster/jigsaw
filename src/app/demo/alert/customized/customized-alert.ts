@@ -1,7 +1,6 @@
 import {Component, ViewChild, ViewEncapsulation} from "@angular/core";
 import {DialogBase, JigsawDialog} from "jigsaw/component/dialog/dialog";
 import {JigsawAlert} from "jigsaw/component/alert/alert";
-import {ButtonInfo} from "jigsaw/service/popup.service";
 
 @Component({
     selector: 'my-alert',
@@ -13,20 +12,8 @@ import {ButtonInfo} from "jigsaw/service/popup.service";
 export class CustomizedAlert extends DialogBase {
     @ViewChild(JigsawAlert) dialog: JigsawDialog;
 
-    caption:string = "高度定制化的对话框";
-
-    public buttons: ButtonInfo[] = [
-        {
-            label: '很好',
-            clazz: 'button-ok'
-        },
-        {
-            label: '很棒'
-        }
-    ];
-
-    afterClose(answer: ButtonInfo) {
-        console.log("after close..." + (answer ? answer.label : ''));
+    afterClose(message) {
+        console.log("after close..." + (message ? message : ''));
     }
 
 }

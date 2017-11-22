@@ -16,6 +16,7 @@ import {routerConfig as listConfig} from "./demo/list/demo.module";
 import {routerConfig as loadingConfig} from "./demo/loading/demo.module";
 import {routerConfig as miscConfig} from "./demo/misc/demo.module";
 import {routerConfig as paginationConfig} from "./demo/pagination/demo.module";
+import {routerConfig as popupConfig} from "./demo/popup/demo.module";
 import {routerConfig as radioConfig} from "./demo/radio/demo.module";
 import {routerConfig as rangeTimeConfig} from "./demo/range-time/demo.module";
 import {routerConfig as scrollbarConfig} from "./demo/scrollbar/demo.module";
@@ -85,6 +86,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'loading', loadingConfig);
         this._addRouterConfig(routerConfig, 'misc', miscConfig);
         this._addRouterConfig(routerConfig, 'pagination', paginationConfig);
+        this._addRouterConfig(routerConfig, 'popup', popupConfig);
         this._addRouterConfig(routerConfig, 'radio', radioConfig);
         this._addRouterConfig(routerConfig, 'range-time', rangeTimeConfig);
         this._addRouterConfig(routerConfig, 'scrollbar', scrollbarConfig);

@@ -11,7 +11,8 @@
         <div #right class="right box">right</div>
     </div>
 
-    <div class="line-box"><label>是否模态：</label>
+    <h4>Basic params</h4><br>
+    <div class="line-box"><label>Is modal:</label>
         <jigsaw-switch [(checked)]="option.modal"></jigsaw-switch>
     </div>
     <div class="line-box">
@@ -21,17 +22,17 @@
         </jigsaw-radios>
     </div>
     <div class="line-box">
-        <label>参照物:</label>
+        <label>Relate to:</label>
         <jigsaw-radios [(value)]="selectedPos" trackItemBy="label">
             <jigsaw-radio-option *ngFor="let pose of poses" [value]="pose">{{pose.label}}</jigsaw-radio-option>
         </jigsaw-radios>
-        <div class="point-set" *ngIf="selectedPos.label=='point'">
-            <jigsaw-input [(value)]="detailPos.x" placeholder="X" width="200px"></jigsaw-input>
-            <jigsaw-input [(value)]="detailPos.y" placeholder="Y" width="200px"></jigsaw-input>
-        </div>
+        <span *ngIf="selectedPos.label=='point'">
+            <jigsaw-input [(value)]="detailPos.x" placeholder="X" width="60px" height="23px"></jigsaw-input>
+            <jigsaw-input [(value)]="detailPos.y" placeholder="Y" width="60px" height="23px"></jigsaw-input>
+        </span>
     </div>
 
-    <label>Offset</label><br>
+    <h4>Position offset</h4><br>
     <div class="line-box">
         <label>top: </label>
         <jigsaw-input [(value)]="offset.top" placeholder="Top" width="200px"></jigsaw-input>
@@ -48,10 +49,13 @@
         <label>right: </label>
         <jigsaw-input [(value)]="offset.right" placeholder="Right" width="200px"></jigsaw-input>
     </div>
-    <jigsaw-button width="200px" (click)="popupDialog1(dialog1)">Popup</jigsaw-button>
+    <jigsaw-button colorType="primary" width="200px" (click)="popupDialog1(dialog1)">Popup</jigsaw-button>
+
+    <!--用于撑出滚动条，用于体现positionType属性的作用-->
+    <div class="padding"></div>
 
     <ng-template #dialog1>
-        <jigsaw-dialog width="400px" header="dialog title" (answer)="close()">
+        <jigsaw-dialog width="400px" header="dialog title" (close)="close()">
             <ul class="dialog-content">
                 <li>Dialog content...</li>
                 <li>Dialog content...</li>

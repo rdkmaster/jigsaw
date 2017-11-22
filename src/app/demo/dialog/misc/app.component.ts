@@ -16,38 +16,11 @@ import {
     encapsulation: ViewEncapsulation.None
 })
 export class DialogMiscDemoComponent {
-
-    _templateRef: PopupInfo;
-    _modalDialogInfo: PopupInfo;
-    _dialogInfo: PopupInfo;
+    dialogInfo1: PopupInfo;
+    dialogInfo2: PopupInfo;
+    dialogInfo3: PopupInfo;
 
     public title: string = 'Title of the dialog';
-    public buttons: Array<ButtonInfo> = [
-        {
-            role: 'cancel',
-            label: 'cancel',
-            clazz: ''
-        },
-        {
-            role: 'confirm',
-            label: 'confirm',
-            clazz: '',
-            type: 'primary'
-        },
-    ];
-    public buttons2: Array<ButtonInfo> = [
-        {
-            role: 'cancel',
-            label: 'cancel',
-            clazz: ''
-        },
-        {
-            role: 'delete',
-            label: 'delete',
-            clazz: '',
-            type: 'danger'
-        },
-    ];
 
     constructor(private _popupService: PopupService) {
     }
@@ -55,86 +28,64 @@ export class DialogMiscDemoComponent {
     /*
     * popup component
     * */
-    popup() {
-        const popupInfo = this._popupService.popup(UserDialogComponent, this._getModalOptions());
-        popupInfo.answer.subscribe(answer => {
-            this.disposeAnswer(answer, popupInfo)
-        })
+    popupComponentDialog() {
+        const initData = {inputData: 'some data...'};
+        this._popupService.popup(UserDialogComponent, this.getModalOptions(), initData);
     }
 
     /*
      * popup component at point
      * */
-    popupAtPoint(event) {
-        const popupInfo = this._popupService.popup(UserDialog2Component, this._getUnModalOptions(event));
+    popupComponentDialogAtPoint(event) {
+        const initData = {inputData: 'some data...'};
+        const popupInfo = this._popupService.popup(UserDialog2Component, this.getUnModalOptions(event), initData);
         popupInfo.answer.subscribe(answer => {
-            this.disposeAnswer(answer, popupInfo)
-        })
+            alert(answer.message ? answer.message : 'the dialog leave no message')
+        });
     }
 
     /*
     * popup template
     * */
-    popupModalDialogTemplate(tp) {
-        if (this._modalDialogInfo) {
-            this.closeModalDialogTemplate()
-        }
-        this._modalDialogInfo = this._popupService.popup(tp, this._getModalOptions());
-    }
-
-    closeModalDialogTemplate() {
-        this._modalDialogInfo.dispose();
-        this._modalDialogInfo = null
+    popupTemplateDialog(tp) {
+        this.dialogInfo1 = this._popupService.popup(tp, this.getModalOptions());
     }
 
     /*
     * popup template at point
     * */
     popupDialogTemplate(tp, event) {
-        if (this._dialogInfo) {
-            this.closeDialogTemplate()
+        if (this.dialogInfo2) {
+            this.dialogInfo2.dispose();
         }
-        this._dialogInfo = this._popupService.popup(tp, this._getUnModalOptions(event));
-    }
-
-    closeDialogTemplate() {
-        this._dialogInfo.dispose();
-        this._dialogInfo = null
-    }
-
-    disposeAnswer(answer: ButtonInfo, cb) {
-        if (answer) {
-            if (answer.role == 'confirm') {
-                console.log('confirm callback success!')
-            } else if (answer.role == 'cancel') {
-                console.log('cancel callback success!');
-                if (typeof cb == 'function') {
-                    cb.call(this)
-                } else {
-                    cb.dispose()
-                }
-            }
-        } else {
-            if (typeof cb == 'function') {
-                cb.call(this)
-            } else {
-                cb.dispose()
-            }
-        }
+        this.dialogInfo2 = this._popupService.popup(tp, this.getUnModalOptions(event));
     }
 
     /*
     * popup user defined template
     * */
     popupTemplate(tp) {
-        this._templateRef = this._popupService.popup(tp);
+        this.dialogInfo3 = this._popupService.popup(tp);
     }
 
-    closeTemplate() {
-        this._templateRef.dispose();
+    onAnswer(message: string) {
+        if (message) {
+            alert(`The message is "${message}".`);
+        } else {
+            alert('The dialog leave no message!');
+        }
+        if (this.dialogInfo1) {
+            this.dialogInfo1.dispose();
+        }
+        if (this.dialogInfo2) {
+            this.dialogInfo2.dispose();
+        }
+        if (this.dialogInfo3) {
+            this.dialogInfo3.dispose();
+        }
     }
 
-    _getModalOptions(): PopupOptions {
+    getModalOptions(): PopupOptions {
         return {
             modal: true, //是否模态
             showEffect: PopupEffect.bubbleIn,
@@ -142,7 +93,7 @@ export class DialogMiscDemoComponent {
         };
     }
 
-    _getUnModalOptions(event): PopupOptions {
+    getUnModalOptions(event): PopupOptions {
         return {
             modal: false, //是否模态
             showEffect: PopupEffect.bubbleIn,
@@ -159,7 +110,7 @@ export class DialogMiscDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
-    description: string = '';
+    summary: string = '这个demo介绍了弹出对话框的3种主要方式：组件、模板、自定义';
+    description: string = '[这里](/popup/introduce)详细介绍了`PopupService`，请仔细阅读。';
 }
 
