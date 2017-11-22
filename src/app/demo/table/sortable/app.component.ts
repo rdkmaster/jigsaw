@@ -30,7 +30,7 @@ export class TableSetHeaderSortDemoComponent {
             header: {
                 sortable: true,
                 sortAs: SortAs.string,
-                defaultSortOrder: SortOrder.des,
+                defaultSortOrder: SortOrder.desc,
             }
         }
     ];
