@@ -13,7 +13,7 @@ export class TableCheckboxColumnObjectCellDemoComponent {
         this.tableData.http = http;
         // 对ajax返回过来的数据进行预处理
         this.tableData.dataReviser = this.addToString;
-        this.tableData.fromAjax('mock-data/hr-list-with-object-cell-data');
+        this.tableData.fromAjax('mock-data/hr-list-complex');
     }
 
     tableData: TableData;
@@ -44,7 +44,7 @@ export class TableCheckboxColumnObjectCellDemoComponent {
     }
 
     /**
-     * 在Json Object对象中添加toString方法
+     * 在Json Object对象中添加valueOf方法
      * @param data
      * @returns {any}
      */
@@ -52,10 +52,10 @@ export class TableCheckboxColumnObjectCellDemoComponent {
         if (!data || !TableData.isTableData(data)) {
             return data;
         }
-        // 这边把`'name'`字段作为一行的标识，所以只需要实现`'name'`字段单元格的`toString`
+        // 这边把`'name'`字段作为一行的标识，所以只需要实现`'name'`字段单元格的`valueOf`
         const index = data.field.findIndex(item => item == 'name');
-        // 为什么要给Json Object实现toString，见demo上方的文档 #单元格数据是`Json Object`类型
-        data.data.forEach(row => row[index].toString = () => row[index].key + '_' + row[index].value);
+        // 以每个单元格的value属性作为这个单元格的值，这样做的原因，请参考此demo的描述信息。
+        data.data.forEach(row => row[index].valueOf = () => row[index].value);
         return data;
     }
 

@@ -1,22 +1,48 @@
-#### 配置`trackRowBy`
+#### 关于`trackRowBy`属性
 
-- 不配置`trackRowBy`，table会把一行的数据拼成字符串，作为这一行的标识；
-- 配置了`trackRowBy`，table会把`trackRowBy`指定的列`field`对应的单元格数据，拼成字符串，作为当前行的标识，这里单元格数据
-一般是`string`或者`number`类型的；
-- `trackRowBy`可以设置多个列`field`。
+**啥时候需要使用这个属性？**
+
+表格在某些特定的场景下需要区分每一行，比如这个demo描述的就是一个典型的场景：给表格的每一行设置了checkbox用于选择多行。
+表格要能够区分每一行才能够在切换了分页之后，依然能够找出哪些行是已经选中，哪些未选中。
+
+业务上，一个表格的数据往往有一些关键字段（比如id、name等字段）可以用于区分每一行，这些字段往往随着业务的不同而不同，
+表格事先无法获知这些信息，因此需要应用通过`trackRowBy`属性来指定，例如：
+
+```
+<jigsaw-table trackRowBy="name">
+</jigsaw-table>
+```
+
+这样就告诉表格控件，可以通过name这一列的数据来区分每一行。
+
+如果未指定`trackRowBy`属性，由于表格事先不知道应该通过哪一列来区分每一行，它只好把每一列的数据拼装在一起得到的字符串来尝试区分每一行。
+这样的做法在列数很多的时候，则需要更多的计算时间，以及占用跟多的内存。因此，在类似场景下，请尽量设置`trackRowBy`属性，以提升性能。
+
+如果业务上需要同时使用多个字段才能区分每一行，则请把这些字段名以英文逗号隔开，例如：`trackRowBy="name, roomId"`。
+
+**特别注意**
+
+如果你的checkbox列不是通过`additionalColumnDefine`属性插入的，而是通过`columnDefine`将表格数据的某一列渲染出来的，这个情况下，
+你就**必须**设置`trackRowBy`属性。原因是渲染出来的checkbox会直接修改表格的数据，而未设置`trackRowBy`属性的时候，
+表格是把每一列的数据都拼在一起尝试区分每一行，表格数据改变了后，所有列拼出来的那个字符串必然和原来不一样了，
+这个时候，表格区分行的算法必然会失败。
 
 #### 监听数据变化
 
-配置在`additionalColumns`里的渲染器都是插入的列，这些渲染器的数据是保存在`additionalData`里面的，与table的`data`是完全隔离的。
-所以这边要监听checkbox的数据变化，只能用`additionalDataChange`，请不要使用`dataChange`。
+配置在`additionalColumnDefine`属性里的列都是额外插入到表格中的，这些列的数据被保存在绑定给`additionalData`属性的对象里面，
+这些数据与绑定给`data`属性的对象是完全隔离的。所以这个demo监听checkbox的数据变化，只能用`additionalDataChange`，
+而不能用`dataChange`。
 
-#### 单元格数据是`Json Object`类型
+#### 单元格数据是Json对象的时候
 
-按照上面说的，我们要把单元格数据拼成字符串，如果单元格数据是`Json Object`类型，默认拼出来是`[object object]`，这样看上去每个对象都一样了。
-
-补救的方法是: 在`Json Object`上实现一个`toString`方法，让其能够转换成字符串。下面是给一个`Json Object`实现`toString`的例子：
+首先表格不可以通过对象的引用去区分每一行，原因很简单，表格数据基本上都是来自于服务端，数据从服务端传输到浏览器之后，对象的引用信息必然丢失。
+因此，**表格只能通过值来区分每一行**。这就导致在单元格的值是对象的时候，表格需要知道这个对象的值是什么。因此，在这个情况下，
+应用就必须给这个对象添加一个`valueOf()`方法，用于告诉表格此对象的值，例如：
 
 ```
-let obj = {a:'Angular', b:'Jigsaw'};
-obj.toString = () => obj['a'] + '%%' + obj['b'];
+let obj = {id:'1', label:'Jigsaw'};
+// 这里假设id属性可以代表这个对象的值。
+obj.valueOf = () => obj.id;
 ```
+
+表格的单元格值是JSON对象的场景并不多，而且往往出现在非常复杂的数据结构情况下。

@@ -238,10 +238,11 @@ class MockData {
             "header": this.dataSet['hr-list-full'].header,
             "data": this.getShortenHrList(this.dataSet['hr-list-full'].data)
         };
-        this.dataSet['hr-list-with-object-cell-data'] = {
+        this.dataSet['hr-list-complex'] = {
             "field": this.dataSet['hr-list-full'].field,
             "header": this.dataSet['hr-list-full'].header,
-            "data": this.getHrListWithObjectCellData(this.getShortenHrList(this.dataSet['hr-list-full'].data))
+            "data": this.getComplexHrList(
+                this.getShortenHrList(this.dataSet['hr-list-full'].data), this.dataSet['hr-list-full'].field)
         };
         this.dataSet['big-table-data'] = this.createBigTableData();
         this.dataSet['fish-bone-data1'] = require('../mock-data/fish-bone-full.json').slice(0, 5);
@@ -250,6 +251,7 @@ class MockData {
     }
 
     static getShortenHrList(fullList): any[] {
+        // 随机挑选一些，而且要保持固定
         const indexes = [
             570, 601, 346, 755, 119, 415, 491, 389, 342, 586, 308, 434, 424, 445, 305, 136, 292, 164, 548, 152,
             352, 537, 428, 599, 78, 372, 412, 726, 48, 630, 361, 334, 184, 263, 252, 468, 142, 575, 758, 76, 221,
@@ -260,38 +262,12 @@ class MockData {
         return list;
     }
 
-    static getHrListWithObjectCellData(list){
+    static getComplexHrList(list, field) {
         // require的同一个对象，所以拷贝一份，防止其他数据受到影响
         list = CommonUtils.deepCopy(list);
 
         list.forEach(item => {
-            item.forEach((value, j) => {
-                let key;
-                switch (j) {
-                    case 0:
-                        key = 'name';
-                        break;
-                    case 1:
-                        key = 'gender';
-                        break;
-                    case 2:
-                        key = 'position';
-                        break;
-                    case 3:
-                        key = 'salary';
-                        break;
-                    case 4:
-                        key = 'enroll-date';
-                        break;
-                    case 5:
-                        key = 'office';
-                        break;
-                    case 6:
-                        key = 'desc';
-                        break;
-                }
-                item[j] = {key: key, value: value};
-            });
+            item.forEach((value, colIndex) => item[colIndex] = {key: field[colIndex], value: value});
         });
 
         return list;
