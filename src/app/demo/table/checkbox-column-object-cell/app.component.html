@@ -5,12 +5,14 @@
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
     <div class="demo-1 live-demo">
-        <h3>基本用法</h3>
+        <h3>单元格数据类型是JSON对象</h3>
         <jigsaw-table height="400"
                       [data]="tableData"
+                      [columnDefines]="columnDefineGenerator"
                       [additionalColumnDefines]="additionalColumns"
                       [(additionalData)]="additionalData"
-                      (additionalDataChange)="additionalDataChange($event)">
+                      (additionalDataChange)="additionalDataChange($event)"
+                      trackRowBy="name">
         </jigsaw-table>
         <p class="message">selectedRowsIndex: <span>{{selectedRows}}</span></p>
     </div>

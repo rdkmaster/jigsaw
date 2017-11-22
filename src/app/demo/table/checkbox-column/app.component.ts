@@ -1,28 +1,22 @@
-import {Component, ViewChild} from "@angular/core";
+import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/core/data/table-data";
-import {AdditionalColumnDefine} from "jigsaw/component/table/table-typings";
+import {AdditionalColumnDefine, AdditionalTableData} from "jigsaw/component/table/table-typings";
 import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/component/table/table-renderer";
-import {JigsawTable} from "jigsaw/component/table/table";
-
 
 @Component({
     templateUrl: './app.component.html'
 })
 export class TableAddCheckboxColumnDemoComponent {
-    tableData: TableData;
-
-    changeMsg: string;
-
-    selectedRows: string;
-
-    @ViewChild('myTable') myTable: JigsawTable;
-
     constructor(http: HttpClient) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');
     }
+
+    tableData: TableData;
+    selectedRows: string;
+    additionalData: AdditionalTableData;
 
     additionalColumns: AdditionalColumnDefine[] = [{
         pos: 0,
@@ -34,22 +28,28 @@ export class TableAddCheckboxColumnDemoComponent {
         }
     }];
 
-    onCellChange(value) {
-        this.changeMsg = `field: '${value.field}', row: ${value.row}, column: ${value.column}, cellData: ${value.cellData}, oldCellData: ${value.oldCellData}`;
-        let rows = value.row instanceof Array ? value.row : [value.row];
-        for (let row of rows) {
-            console.log(this.tableData.data[row][value.column]);
-        }
+    additionalDataChange(value) {
+        console.log(value);
+        this.selectedRows = this.getSelectedRows(this.additionalData);
+    }
 
-        this.selectedRows = "";
+    /**
+     * 获取选中的行
+     * @param additionalData
+     */
+    getSelectedRows(additionalData) {
+        return additionalData.data.reduce((selectedRows, item, index) => {
+            if (item[0]) {
+                selectedRows.push(index);
+            }
+            return selectedRows;
+        }, []).join(',');
     }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
-    description: string = '';
+    summary: string = '这demo介绍table中使用内置checkbox渲染器';
+    description: string = require('!!raw-loader!./readme.md');
 }
-
-
 
