@@ -612,7 +612,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _initVerticalScroll() {
         setTimeout(() => {
             // selector使用>选择直接子元素，避免选择到其他滚动条
-            const yScrollbar = this._elementRef.nativeElement.querySelector('.jigsaw-table-body-range > .ps__scrollbar-y-rail');
+            const yScrollbar = this._elementRef.nativeElement.querySelector('.jigsaw-table-body-range > .ps__rail-y');
             if (yScrollbar) {
                 this._renderer.setStyle(yScrollbar, 'left',
                     this._elementRef.nativeElement.offsetWidth - 15 + 'px');
