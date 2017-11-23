@@ -12,7 +12,7 @@ import {JigsawAlert} from "jigsaw/component/alert/alert";
 export class CustomizedAlert extends DialogBase {
     @ViewChild(JigsawAlert) dialog: JigsawDialog;
 
-    afterClose(message) {
+    afterClose(message?) {
         console.log("after close..." + (message ? message : ''));
     }
 
