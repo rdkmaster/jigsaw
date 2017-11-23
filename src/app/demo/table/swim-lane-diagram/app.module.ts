@@ -17,7 +17,7 @@ import {TableSwimLaneCell} from "./table-renderer";
     bootstrap: [SwimLaneDiagramDemoComponent],
     entryComponents: [TableSwimLaneCell]
 })
-export class swimLaneDiagramDemoModule {
+export class SwimLaneDiagramDemoModule {
     constructor(translateService: TranslateService) {
         //增加自定义词条，最后一个参数必须是true
         translateService.setTranslation('zh', {
