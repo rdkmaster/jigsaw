@@ -74,3 +74,9 @@ $zindex-tooltip         : 1060;
 $label-required-color        : $highlight-color;
 $label-color                 : $text-color;
 $form-item-margin-bottom     : 24px;
+
+// perfect scrollbar
+// see issue https://github.com/zefoy/ngx-perfect-scrollbar/issues/121 
+.ps{
+    position: relative;
+}

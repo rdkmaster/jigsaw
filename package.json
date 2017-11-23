@@ -28,9 +28,9 @@
     "font-awesome": "~4.7.0",
     "jquery": "~3.1.1",
     "marked": "~0.3.6",
-    "ngx-perfect-scrollbar": "~5.0.0-7",
+    "ngx-perfect-scrollbar": "~5.0.2",
     "peity": "~3.2.1",
-    "rxjs": "~5.4.0",
+    "rxjs": "~5.5.0",
     "web-animations-js": "~2.3.1",
     "zone.js": "~0.8.18",
     "ztree": "~3.5.24"

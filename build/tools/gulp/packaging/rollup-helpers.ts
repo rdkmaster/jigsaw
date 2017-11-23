@@ -79,7 +79,7 @@ const ROLLUP_GLOBALS = {
     'echarts': 'echarts',
 
     //ngx-perfect-scrollbar
-    'ngx-perfect-scrollbar/dist/index': 'ngx.perfect-scrollbar'
+    'ngx-perfect-scrollbar': 'ngx.perfect-scrollbar'
 };
 
 export type BundleConfig = {

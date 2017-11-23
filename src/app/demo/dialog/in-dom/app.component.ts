@@ -9,7 +9,7 @@ import {Component} from "@angular/core";
     `]
 })
 export class DialogInDomDemoComponent {
-    public onAnswer(label) {
+    public onAnswer(label?) {
         if (label) {
             alert(`Button "${label}" clicked!`);
         } else {

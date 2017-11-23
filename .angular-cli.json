@@ -25,7 +25,7 @@
                 "../node_modules/font-awesome/css/font-awesome.min.css",
                 "../node_modules/@rdkmaster/icon-font/css/iconfont.css",
                 "../node_modules/ztree/css/zTreeStyle/zTreeStyle.css",
-                "../node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min.css",
+                "../node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
                 "styles.scss"
             ],
             "scripts": [

@@ -6,8 +6,12 @@ import {PerfectScrollbarConfigInterface} from "ngx-perfect-scrollbar";
     styleUrls: ['./app.component.css']
 })
 export class ScrollbarBasicDemoComponent {
-    config: PerfectScrollbarConfigInterface = {
+    config1: PerfectScrollbarConfigInterface = {
         suppressScrollX: true
+    };
+
+    config2: PerfectScrollbarConfigInterface = {
+        suppressScrollY: true
     };
 
     // ====================================================================

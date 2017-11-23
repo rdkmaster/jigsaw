@@ -20,4 +20,16 @@
 .box-3 {
     height: 2000px;
     border: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.box-4 {
+    width: 400px;
+    height: 200px;
+}
+
+.box-5 {
+    width: 401px;
+    height: 100%;
+    border: 1px solid #ddd;
 }

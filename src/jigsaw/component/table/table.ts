@@ -35,10 +35,9 @@ import {SortOrder} from "../../core/data/component-data";
 import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer} from "./table-renderer";
 import {AffixUtils} from "../../core/utils/internal-utils";
 import {
-    PerfectScrollbarConfigInterface,
     PerfectScrollbarDirective,
     PerfectScrollbarModule
-} from "ngx-perfect-scrollbar/dist";
+} from "ngx-perfect-scrollbar";
 import {TableUtils} from "./table-utils";
 
 @Component({
