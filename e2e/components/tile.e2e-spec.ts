@@ -4,9 +4,9 @@ describe('tile', () => {
     beforeEach(() => {
         browser.waitForAngularEnabled(false);
     });
-    describe('test selectedItems', () => {
+    describe('test selected-items', () => {
         beforeEach(() => {
-            browser.get('/tile/selectedItems');
+            browser.get('/tile/selected-items');
         });
         it('should be active when clicked', () => {
             const jigsawTitleEl = element(by.tagName('jigsaw-tile')),
@@ -16,9 +16,9 @@ describe('tile', () => {
             expect(jigsawTitleEl.element(by.css('.jigsaw-tile-option-active')).getText()).toBe('上海');
         })
     });
-    describe('test selectedItems', () => {
+    describe('test multiple-select', () => {
         beforeEach(() => {
-            browser.get('/tile/multipleSelect');
+            browser.get('/tile/multiple-select');
         });
         it('should be active when clicked', () => {
             const jigsawTitleEl = element(by.tagName('jigsaw-tile')),

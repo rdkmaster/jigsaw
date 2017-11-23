@@ -7,7 +7,7 @@ describe('table', () => {
     });
     describe('test setHeaderClass', () => {
         beforeEach(() => {
-            browser.get('/table/setHeaderClass');
+            browser.get('/table/header-class');
         });
         it('should set header class', async () => {
             await waitForPresence('.jigsaw-table-header-cell');
@@ -27,7 +27,7 @@ describe('table', () => {
     });
     describe('test setHeaderRender', () => {
         beforeEach(() => {
-            browser.get('/table/setHeaderRender');
+            browser.get('/table/header-render');
         });
         it('should set header render', async () => {
             await waitForPresence('.fa-map-signs');
@@ -36,7 +36,7 @@ describe('table', () => {
     });
     describe('test setHeaderSort', () => {
         beforeEach(() => {
-            browser.get('/table/setHeaderSort');
+            browser.get('/table/sortable');
         });
         it('should set header sort', async () => {
             await waitForPresence('.jigsaw-table-sort-up');
