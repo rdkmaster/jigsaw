@@ -9,7 +9,7 @@ import {AbstractJigsawComponent} from "../common";
 import {CallbackRemoval, CommonUtils} from '../../core/utils/common-utils';
 import {InternalUtils} from '../../core/utils/internal-utils';
 import {ArrayCollection} from "../../core/data/array-collection";
-import {PerfectScrollbarModule} from "ngx-perfect-scrollbar/dist";
+import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 
 @Directive({
     selector: '.jigsaw-select-option-list',
