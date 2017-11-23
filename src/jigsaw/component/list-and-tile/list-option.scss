@@ -1,5 +1,4 @@
 $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
-
 .#{$list-option-prefix-cls} {
     display: block;
     padding: 5px 8px;
@@ -27,5 +26,6 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
     &-sub-title {
         float: right;
         color: #999;
+        position: relative;
     }
 }

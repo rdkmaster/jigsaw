@@ -1,0 +1,39 @@
+<div class="live-demo-wrap">
+    <div class="clearfix">
+        <div class="demo-1 live-demo">
+            <p class="message">选中的菜单是: <span>{{selectedItems1}}</span></p>
+            <j-button colorType="primary" (click)="showVerticalMenu()">显示横式菜单</j-button>
+        </div>
+        <div class="context">
+            <j-list width="1000" height="32" trackItemBy="label" (selectedItemsChange)="handleSelect($event,1)" *ngIf="visible[0][0]">
+                <j-list-option *ngFor="let label of labels" [value]="label">
+                    <span j-title>
+                        <span *ngIf="label.icon" class="fa fa-{{label.icon}}"></span>{{label.label}}</span>
+                    <div j-sub-title>
+                        <span *ngIf="label.children" class="fa fa-angle-down"></span>
+                    </div>
+                    <div *ngIf="label.children && visible[1][label.label]">
+                        <ng-container *ngTemplateOutlet="greet; context: {children:label.children,count:1,main:label.label}"></ng-container>
+                    </div>
+                </j-list-option>
+            </j-list>
+        </div>
+
+    </div>
+</div>
+
+<ng-template #greet let-labels="children" let-counts="count" let-main="main">
+    <j-list width="200" class="horizon" trackItemBy="label" (selectedItemsChange)="handleSelect($event,counts+1,main)">
+        <j-list-option *ngFor="let label of labels" [value]="label">
+            <span j-title>
+                <span *ngIf="label.icon" class="fa fa-{{label.icon}}"></span> {{label.label}}
+            </span>
+            <div j-sub-title>
+                <span *ngIf="label.children" class="fa fa-angle-down"></span>
+            </div>
+            <div *ngIf="label.children && visible[counts+1][label.label]">
+                <ng-container *ngTemplateOutlet="greet; context: {children:label.children,count:count,main:label.label}"></ng-container>
+            </div>
+        </j-list-option>
+    </j-list>
+</ng-template>

@@ -109,6 +109,15 @@ export const liveDemoNavInfo = {
                 },
             ]
         },
+        {
+            group: 'Menu',
+            demos: [
+                {
+                    label: 'menu',
+                    url: '/menu/menu-full'
+                },
+            ]
+        },
     ]
 };
 
@@ -888,8 +897,19 @@ export const navInfo = [
         loadChildren: "./list/demo.module#ListDemoModule",
         navList: [
             {
-                label: 'fish-bone',
-                url: '/fish-bone/fish-bone-full'
+                label: 'list',
+                url: '/list/list-full'
+            }
+        ]
+    },
+    {
+        title: 'Menu',
+        path: "menu",
+        loadChildren: "./menu/demo.module#MenuDemoModule",
+        navList: [
+            {
+                label: 'Menu',
+                url: '/menu/menu-full'
             }
         ]
     }

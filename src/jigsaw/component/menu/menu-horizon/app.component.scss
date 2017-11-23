@@ -1,0 +1,45 @@
+.goods-box {
+    height: 40px;
+}
+
+.goods-box .logo {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+    margin: 0 4px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 26px;
+}
+
+.goods-box p {
+    display: inline-block;
+    vertical-align: middle;
+    width: 210px;
+    height: 40px;
+    overflow: hidden;
+    line-height: 1.5;
+    padding: 3px 0 4px;
+}
+
+.jigsaw-list {
+    background: #c6d6e8;
+}
+
+.jigsaw-list-option {
+    width: 200px;
+    float: left;
+}
+
+.horizon {
+    position: relative;
+    left: -8px;
+    border-radius: 0;
+    border: 0;
+    top: 8px;
+}
+
+.fa {
+    padding-right: 10px;
+}
