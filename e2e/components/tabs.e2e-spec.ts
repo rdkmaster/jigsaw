@@ -24,7 +24,7 @@ describe('tabs', () => {
     });
     describe('test tabApi', () => {
         beforeEach(() => {
-            browser.get('/tabs/tabApi');
+            browser.get('/tabs/api');
         });
         it('should operate tabs when click jigsaw button', async () => {
             const jigsawButton = element(by.css('.container')).all(by.css('.jigsaw-button')),
@@ -46,11 +46,11 @@ describe('tabs', () => {
     });
     describe('test tabApi', () => {
         beforeEach(() => {
-            browser.get('/tabs/withInput');
+            browser.get('/tabs/with-input');
         });
         it('should display table when click "GetTableData"',async()=>{
             const getTableDate=element(by.css('.container')).element(by.tagName('jigsaw-button')),
-                tableEl=element(by.tagName('TABLE'));
+                tableEl=element(by.css('.jigsaw-tabs-content')).element(by.tagName('jigsaw-table')).element(by.tagName('table'));
             expect(tableEl.getText()).toBe('');
             getTableDate.click();
             await waitForPresence('.jigsaw-table-cell-content');

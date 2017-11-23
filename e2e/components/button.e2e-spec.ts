@@ -22,14 +22,12 @@ describe('button', () => {
 
             expect(element(by.css('.demo-content .jigsaw-button-disabled')).isPresent()).toBeFalsy();
             toggleDisabledEl.click();
-            expect(element(by.css('.demo-content .jigsaw-button-disabled')).isPresent()).toBeTruthy();
-            expect(testButtonEl.getCssValue('pointer-events')).toBe('none');
+            expect(testButtonEl.getCssValue('pointer-events')).toBe('none');//属性为none，则不会成为鼠标时间的target
 
             toggleDisabledEl.click();
             testButtonEl.click();
             expect(clickCounterEl.getText()).toBe('2');
         })
-
     });
 
     describe('test width and height', () => {

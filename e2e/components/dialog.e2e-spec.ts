@@ -4,7 +4,7 @@ import {
 } from "../utils/popup";
 import {expectToExist, waitForPresence} from "../utils/asserts";
 
-describe('dialog', () => {
+xdescribe('dialog', () => {
     beforeEach(() => {
         browser.waitForAngularEnabled(false);
     });
