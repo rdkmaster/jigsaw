@@ -3,10 +3,10 @@
         [ngClass]="setClasses(i)"
         (mouseover)="_hoverRate($event, i, true)"
         (click)="_clickRate($event, i, true)">
-        <div class="rate-star-first" (mouseover)="_hoverRate($event, i)" (click)="_clickRate($event, i)">
+        <div class="jigsaw-rate-star-first" (mouseover)="_hoverRate($event, i)" (click)="_clickRate($event, i)">
             <i [ngClass]="_icon"></i>
         </div>
-        <div class="rate-star-second" (mouseover)="_hoverRate($event, i, true)" (click)="_clickRate($event, i, true)">
+        <div class="jigsaw-rate-star-second" (mouseover)="_hoverRate($event, i, true)" (click)="_clickRate($event, i, true)">
             <i [ngClass]="_icon"></i>
         </div>
     </li>

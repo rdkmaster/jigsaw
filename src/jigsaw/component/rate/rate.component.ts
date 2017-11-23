@@ -19,7 +19,7 @@ import {AbstractJigsawComponent} from "../common";
     ],
 })
 export class JigsawRateComponent extends AbstractJigsawComponent implements OnInit, ControlValueAccessor {
-    _prefixCls = 'rate';
+    _prefixCls = 'jigsaw-rate';
     _innerPrefixCls = `${this._prefixCls}-star`;
     _classMap;
     _starArray: Array<any> = [];
