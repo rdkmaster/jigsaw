@@ -4,9 +4,9 @@ node_js:
   - "6"
 
 branches:
-  only:
+  #only:
   - master
-
+  - simplify-demo-app
 env:
   global:
   - SAUCE_USERNAME=pkozlowski
