@@ -1,5 +1,6 @@
 <div class="demo-wrap">
-    <div class="left-box demo-nav" [style.height.px]="navHeight" [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5}">
+    <div class="left-box demo-nav" [style.height.px]="navHeight"
+         [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5}">
         <jigsaw-collapse class="nav-list" mode="accordion">
             <jigsaw-collapse-pane header="Live Demo" [isActive]="true">
                 <div class="group" *ngFor="let nav of liveDemoNavData.navList">
@@ -22,3 +23,4 @@
         <router-outlet></router-outlet>
     </div>
 </div>
+
