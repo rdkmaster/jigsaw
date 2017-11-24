@@ -1,0 +1,35 @@
+<div class="jigsaw-input-number-handler-wrap"
+     (mouseover)="_mouseInside = true"
+     (mouseout)="_mouseInside = false">
+    <a class="jigsaw-input-number-handler jigsaw-input-number-handler-up"
+       [ngClass]="{'jigsaw-input-number-handler-up-disabled':_disabledUp}"
+       (click)="_numberUp($event)">
+        <a
+            class="jigsaw-input-number-handler-up-inner fa fa-angle-up" aria-hidden="true"
+            (click)="$event.preventDefault();"></a>
+    </a>
+    <a
+        class="jigsaw-input-number-handler jigsaw-input-number-handler-down"
+        [ngClass]="{'jigsaw-input-number-handler-down-disabled':_disabledDown}"
+        (click)="_numberDown($event)">
+        <a
+            class="jigsaw-input-number-handler-down-inner fa fa-angle-down" aria-hidden="true"
+            (click)="$event.preventDefault();">
+        </a>
+    </a>
+</div>
+<div class="jigsaw-input-number-input-wrap">
+    <input class="jigsaw-input-number-input"
+           #inputNumber
+           [placeholder]="PlaceHolder"
+           [disabled]="disabled"
+           [(ngModel)]="_displayValue"
+           (blur)="_emitBlur($event)"
+           (focus)="_emitFocus($event)"
+           (keydown)="_emitKeydown($event)"
+           (ngModelChange)="_userInputChange()"
+           [min]="min"
+           [max]="max"
+           [step]="_step"
+           autocomplete="off">
+</div>

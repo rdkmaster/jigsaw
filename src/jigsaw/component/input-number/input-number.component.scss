@@ -1,0 +1,223 @@
+@mixin handler-disabled()
+{
+    opacity: 0.72;
+    color: #ccc !important;
+    cursor: not-allowed;
+}
+
+@mixin input() {
+    position: relative;
+    display: inline-block;
+    padding: 4px 7px;
+    width: 100%;
+    //height: 28px;
+    cursor: text;
+    font-size: 12px;
+    line-height: 1.5;
+    color: fade(#000, 65%);
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+//.placeholder(); // Reset placeholder
+//    transition: all .3s;
+//
+&:hover {
+    border-color: #49a9ee;
+}
+//
+//&:focus {
+//    .active();
+//}
+//
+//&-disabled {
+//    .disabled();
+//}
+//
+//// Reset height for `textarea`s
+//textarea& {
+//    max-width: 100%; // prevent textearea resize from coming out of its container
+//    height: auto;
+//    vertical-align: bottom;
+//}
+//
+//// Size
+//&-lg {
+//    .input-lg();
+//}
+//
+//&-sm {
+//    .input-sm();
+//}
+}
+
+.jigsaw-input-number{
+    @include input();
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+    //height: 28px;
+    display: inline-block;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    width: 80px;
+
+    &-handler {
+        text-align: center;
+        line-height: 0;
+        height: 50%;
+        overflow: hidden;
+        color: fade(#000, 43%);
+        position: relative;
+        transition: all 0.1s linear;
+        display: block;
+        width: 100%;
+        font-weight: bold;
+        &:active {
+            background: #f4f4f4;
+        }
+        &:hover &-up-inner,
+        &:hover &-down-inner {
+            color: fade(#000, 43%);
+        }
+    }
+
+    &-handler-up-inner,
+    &-handler-down-inner {
+        //.iconfont-mixin();
+        line-height: 12px;
+        user-select: none;
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        transition: all 0.1s linear;
+        //.iconfont-size-under-12px(7px);
+        right: 4px;
+        color: fade(#000, 43%);
+    }
+
+    //&:hover {
+    //    .hover();
+    //}
+    //
+    //&-focused {
+    //    .active();
+    //}
+    //
+    //&-disabled {
+    //    .disabled();
+    //}
+
+    &-input {
+        width: 100%;
+        text-align: left;
+        outline: 0;
+        -moz-appearance: textfield;
+        height: 28px - 2px;
+        transition: all 0.3s linear;
+        color: fade(#000, 65%);
+        background-color: #fff;
+        border: 0;
+        border-radius: 4px;
+        padding: 0 7px;
+        display: block;
+        //.placeholder();
+
+        //&[disabled] {
+        //    .disabled();
+        //}
+    }
+
+    &-lg {
+        padding: 0;
+
+        input {
+            height: 32px - 2px;
+        }
+    }
+
+    &-sm {
+        padding: 0;
+
+        input {
+            height: 22px - 2px;
+        }
+    }
+
+    &-handler-wrap {
+        border-left: 1px solid #d9d9d9;
+        width: 22px;
+        height: 100%;
+        background: #fff;
+        position: absolute;
+        top: 0;
+        right: 0;
+        opacity: 0;
+        border-radius: 0 4px 4px 0;
+        transition: opacity 0.24s linear 0.1s;
+        z-index: 2; // https://github.com/jigsaw-design/jigsaw-design/issues/6289
+    }
+
+    &-handler-wrap:hover &-handler {
+        height: 50%;
+    }
+
+    &:hover &-handler-wrap {
+        opacity: 1;
+    }
+
+    &-handler-up {
+        cursor: pointer;
+        &-inner {
+            top: 50%;
+            margin-top: -6px;
+            //&:before {
+            //    text-align: center;
+            //    content: "\e61e";
+            //}
+        }
+        &:hover {
+            height: 50% !important;
+        }
+    }
+
+    &-handler-down {
+        border-top: 1px solid #d9d9d9;
+        top: -1px;
+        cursor: pointer;
+        &-inner {
+            top: 50%;
+            margin-top: -6px;
+            //&:before {
+            //    text-align: center;
+            //    content: "\e61d";
+            //}
+        }
+        &:hover {
+            height: 50% !important;
+        }
+    }
+
+    &-handler-down-disabled,
+    &-handler-up-disabled,
+    &-disabled {
+        .jigsaw-input-number-handler-down-inner,
+        .jigsaw-input-number-handler-up-inner {
+            @include handler-disabled();
+        }
+    }
+
+    &-disabled {
+        .jigsaw-input-number-input {
+            opacity: 0.72;
+            cursor: not-allowed;
+            background-color: #f7f7f7;
+        }
+        .jigsaw-input-number-handler-wrap {
+            display: none;
+        }
+        .jigsaw-input-number-handler {
+            @include handler-disabled();
+        }
+    }
+}

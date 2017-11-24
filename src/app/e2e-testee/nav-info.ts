@@ -10,6 +10,10 @@ export const liveDemoNavInfo = {
                     url: '/button/button-full'
                 },
                 {
+                    label: 'InputNumber',
+                    url: '/input-number/input-number-full'
+                },
+                {
                     label: 'checkbox',
                     url: '/checkbox/checkbox-full'
                 },
@@ -191,6 +195,28 @@ export const navInfo = [
             {
                 label: 'with-loading-outside',
                 url: '/loading/domInner'
+            }
+        ]
+    },
+    {
+        title: 'InputNumber',
+        path: "input-number",
+        loadChildren: "./input-number/demo.module#InputNumberDemoModule",
+        navList: [
+            {
+                label: 'basic',
+                url: '/input-number/input-number-full'
+            }
+        ]
+    },
+    {
+        title: 'Steps',
+        path: "steps",
+        loadChildren: "./steps/demo.module#StepsDemoModule",
+        navList: [
+            {
+                label: 'basic',
+                url: '/steps/steps-full'
             }
         ]
     },

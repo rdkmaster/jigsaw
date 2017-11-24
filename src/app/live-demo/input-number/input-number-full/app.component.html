@@ -1,0 +1,26 @@
+<div class="live-demo-wrap">
+    <h2>Input Number</h2>
+    <div class="clearfix">
+        <div class="demo-1 live-demo live-demo-block">
+            <h3>基本</h3>
+            <p class="comment">基本用法</p>
+            <!--<jigsaw-numeric-input [(ngModel)]="_displayValue" min="1" max="10" [nzStep]="1"></jigsaw-numeric-input>-->
+            <jigsaw-numeric-input [(jigsawValue)]="Value" [min]="1" max="99" [step]="1" [PlaceHolder]="'请输入数字'" [preSize]="'small'" [width]="'150px'" [height]="'50px'"></jigsaw-numeric-input>
+            <jigsaw-numeric-input [min]="1" [max]="10" [step]="1" [PlaceHolder]="'请输入数字'" [preSize]="'default'"></jigsaw-numeric-input>
+            <jigsaw-numeric-input [min]="1" [max]="10" [step]="1" [PlaceHolder]="'请输入数字'" [preSize]="'large'"></jigsaw-numeric-input>
+        </div>
+
+        <div class="demo-2 live-demo live-demo-block">
+            <h3>控件禁止交互</h3>
+            <p class="comment">禁止交互</p>
+            <jigsaw-numeric-input [min]="1" [max]="10" [step]="1" disabled="true"></jigsaw-numeric-input>
+        </div>
+
+        <!--<div class="demo-2 live-demo live-demo-block">-->
+            <!--<h3>只读</h3>-->
+            <!--<p class="comment">支持标签和属性两种写法</p>-->
+            <!--<jigsaw-numeric-input class="rate-font-size" max="5" [disabled]="true" [(value)]="selectedValue"></jigsaw-numeric-input>-->
+        <!--</div>-->
+    </div>
+</div>
+
