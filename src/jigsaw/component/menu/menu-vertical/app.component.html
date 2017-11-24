@@ -3,7 +3,7 @@
         <p class="message">选中的菜单是: <span>{{selectedItems1}}</span></p>
         <j-button colorType="primary" (click)="showVerticalMenu()">显示竖式菜单</j-button>
         <j-list width="200" trackItemBy="label" (selectedItemsChange)="handleSelect($event,1)" *ngIf="visible[0][0]">
-            <j-list-option *ngFor="let label of labels" [value]="label">
+            <j-list-option *ngFor="let label of labels" [value]="label" [routerLink]="label.link">
                 <span j-title>
                         <span *ngIf="label.icon" class="fa fa-{{label.icon}}"></span>{{label.label}}</span>
                 <div j-sub-title>
@@ -19,7 +19,7 @@
 
 <ng-template #greet let-labels="children" let-counts="count" let-main="main">
     <j-list width="200" class="vertical" trackItemBy="label" (selectedItemsChange)="handleSelect($event,counts+1,main)">
-        <j-list-option *ngFor="let label of labels" [value]="label">
+        <j-list-option *ngFor="let label of labels" [value]="label" [routerLink]="label.link">
             <span j-title>
                 <span *ngIf="label.icon" class="fa fa-{{label.icon}}"></span> {{label.label}}
             </span>

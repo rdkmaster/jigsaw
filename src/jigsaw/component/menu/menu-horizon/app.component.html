@@ -6,7 +6,7 @@
         </div>
         <div class="context">
             <j-list width="1000" height="32" trackItemBy="label" (selectedItemsChange)="handleSelect($event,1)" *ngIf="visible[0][0]">
-                <j-list-option *ngFor="let label of labels" [value]="label">
+                <j-list-option *ngFor="let label of labels" [value]="label" [routerLink]="label.link">
                     <span j-title>
                         <span *ngIf="label.icon" class="fa fa-{{label.icon}}"></span>{{label.label}}</span>
                     <div j-sub-title>
@@ -24,7 +24,7 @@
 
 <ng-template #greet let-labels="children" let-counts="count" let-main="main">
     <j-list width="200" class="horizon" trackItemBy="label" (selectedItemsChange)="handleSelect($event,counts+1,main)">
-        <j-list-option *ngFor="let label of labels" [value]="label">
+        <j-list-option *ngFor="let label of labels" [value]="label" routerLink="label.link">
             <span j-title>
                 <span *ngIf="label.icon" class="fa fa-{{label.icon}}"></span> {{label.label}}
             </span>

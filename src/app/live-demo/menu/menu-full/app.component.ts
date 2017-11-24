@@ -1,5 +1,6 @@
 import {Component, Renderer2, ViewContainerRef} from "@angular/core";
 import { NgTemplateOutlet } from '@angular/common';
+import {Router, RouterModule} from '@angular/router';
 
 @Component({
     templateUrl: './app.component.html',
@@ -13,16 +14,19 @@ export class MenuFullDemoComponent {
             children: [{
                 label: 'Option1',
                 children: [{
-                    label: 'Third'
+                    label: 'Third',
+                    link: '/button/button-full'
                 }]
             }, {
                 label: 'Option2'
             }, {
-                label: 'Option3'
+                label: 'Option3',
+                link: '#'
             }, {
                 label: 'Option4',
                 children: [{
-                    label: 'Third'
+                    label: 'Third',
+                    link: '#'
                 }]
             }]
         },
@@ -48,11 +52,12 @@ export class MenuFullDemoComponent {
         {
             label: 'Navigation3',
             icon: 'user',
-            children: false
+            link: '#'
         },
         {
             label: 'Navigation4',
-            icon: 'user'
+            icon: 'user',
+            link: '#'
         }
     ];
 }

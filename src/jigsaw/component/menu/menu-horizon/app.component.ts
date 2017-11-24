@@ -2,6 +2,7 @@ import {
     NgModule, Component, EventEmitter, Input, Output, ContentChildren, Directive, QueryList,
     ElementRef, ViewChild, AfterContentInit, Renderer2, AfterViewChecked, ChangeDetectorRef, forwardRef
 } from "@angular/core";
+import {Router, RouterModule} from '@angular/router';
 import { NgTemplateOutlet } from '@angular/common';
 import {JigsawListModule} from "jigsaw/component/list-and-tile/list";
 import {JigsawButtonModule} from "jigsaw/component/button/button";
@@ -57,7 +58,7 @@ export class MenuHorizon extends AbstractJigsawComponent {
 }
 
 @NgModule({
-    imports: [JigsawListModule, CommonModule, JigsawCheckBoxModule, JigsawComboSelectModule, JigsawButtonModule],
+    imports: [RouterModule, JigsawListModule, CommonModule, JigsawCheckBoxModule, JigsawComboSelectModule, JigsawButtonModule],
     declarations: [MenuHorizon],
     exports: [MenuHorizon]
 })
