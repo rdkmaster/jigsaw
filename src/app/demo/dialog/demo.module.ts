@@ -14,7 +14,7 @@ import {DialogPopOptionDemo} from "./popup-option/app.component";
 import {DialogInDomDemoComponent} from "./in-dom/app.component";
 import {DialogMiscDemoComponent} from "./misc/app.component";
 
-export const routerConfig = [
+export const routerConfig:any = [
     {
         path: 'title', component: DialogTitleDemo
     },

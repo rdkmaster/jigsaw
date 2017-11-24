@@ -26,11 +26,11 @@ export class TableDateSheetDemoComponent {
     constructor() {
         this.tableData = new DateSheetTableData(
             [
-                [11, 22, 33, 44, 55, 66, 77],
-                [11, 22, 33, 44, 55, 66, 77],
-                [11, 22, 33, 44, 55, 66, 77],
-                [11, 22, 33, 44, 55, 66, 77],
-                [11, 22, 33, 44, 55, 66, 77],
+                [69, 16, 4, 47, 27, 54, 100],
+                [47, 64, 74, 71, 87, 76, 88],
+                [31, 50, 69, 66, 45, 87, 84],
+                [62, 17, 100, 51, 52, 45, 25],
+                [29, 63, 42, 46, 71, 72, 3],
             ],
             ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
             ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六',]
@@ -40,7 +40,7 @@ export class TableDateSheetDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
+    summary: string = '基于Table实现的日历功能';
     description: string = '';
 }
 
@@ -48,7 +48,10 @@ export class TableDateSheetDemoComponent {
     template: `
         <div class="date-cell" [ngClass]="{weekEnd: weekEnd}">
             <p class="date-text">{{date}}</p>
-            <p class="kpi-text" *ngIf="date">{{cellData}}%</p>
+            <p class="status" [ngClass]="status" *ngIf="date">
+                <span *ngIf="cellData < 100">{{cellData}}%</span>
+                <span *ngIf="cellData >= 100" class="fa fa-check status-done"></span>
+            </p>
         </div>
     `,
     styles: [`
@@ -63,11 +66,23 @@ export class TableDateSheetDemoComponent {
             float: left;
         }
 
-        .kpi-text {
-            padding-top: 18px;
-            padding-left: 20px;
-            font-size: 25px;
+        .status {
+            padding-top: 22px;
+            padding-left: 24px;
+            font-size: 20px;
             color: #c7220f;
+        }
+
+        .status-good {
+            color: #1bc713;
+        }
+
+        .status-less-well {
+            color: #c7220f;
+        }
+        
+        .status-done {
+            margin-left: 12px;
         }
 
         .weekEnd {
@@ -92,5 +107,11 @@ export class DateSheetRenderer extends TableCellRendererBase {
             this._date = String(date <= daysOfMonth && date > 0 ? date : '');
         }
         return this._date;
+    }
+
+    get status() {
+        return {
+            'status-less-well': this.cellData <= 50, 'status-good': this.cellData > 50
+        }
     }
 }

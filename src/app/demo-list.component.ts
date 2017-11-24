@@ -40,8 +40,8 @@ import {routerConfig} from "./router-config";
             <hr>
             <a *ngFor="let childRouter of router.childRouters"
                [ngStyle]="{'font-weight': (childRouter.recommended ? 'bold' : '')}"
-               routerLink="/{{router.path}}/{{childRouter.path}}">
-                {{childRouter.path}}
+               routerLink="{{getUrl(router, childRouter)}}">
+                {{getDesc(childRouter)}}
             </a>
         </div>
     `,
@@ -57,6 +57,14 @@ import {routerConfig} from "./router-config";
 })
 export class DemoListComponent {
     routes: any[] = DemoListManager.fullRouterConfig;
+
+    getUrl(router, childRouter): string {
+        return childRouter.hasOwnProperty('url') ? childRouter.url : `/${router.path}/${childRouter.path}`;
+    }
+
+    getDesc(childRouter): string {
+        return childRouter.hasOwnProperty('desc') ? childRouter.desc : childRouter.path;
+    }
 }
 
 export class DemoListManager {
@@ -111,7 +119,11 @@ export class DemoListManager {
         }
         cfg.childRouters = [];
         childConfig.concat()
-            .sort((item1, item2) => item1.path.localeCompare(item2.path))
+            .sort((item1, item2) => {
+                const desc1 = item1.hasOwnProperty('desc') ? item1.desc : item1.path;
+                const desc2 = item1.hasOwnProperty('desc') ? item2.desc : item2.path;
+                return desc1.localeCompare(desc2);
+            })
             .forEach(config => cfg.childRouters.push(config));
     }
 }

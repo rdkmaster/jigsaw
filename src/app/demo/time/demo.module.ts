@@ -22,7 +22,7 @@ import {TimeRefreshIntervalComponent} from "./refresh-interval/app.component";
 import {ComboSelectDemoComponent} from "./with-combo-select/app.component";
 import {TimeFullComponent} from "./full/app.component";
 
-export const routerConfig = [
+export const routerConfig:any = [
     {
         path: 'basic', component: TimeBasicDemoComponent
     },
@@ -52,6 +52,9 @@ export const routerConfig = [
     },
     {
         path: 'full', component: TimeFullComponent, recommended: true
+    },
+    {
+        url: '/table/date-sheet', desc: 'date-sheet', recommended: true
     },
 ];
 

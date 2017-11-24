@@ -2,11 +2,11 @@ import {readFileSync} from "fs";
 
 export function getRouterConfig(path:string): any[] {
     const src = readFileSync(path).toString();
-    const match = src.match(/routerConfig\s*=\s*(\[[\s\S]*?\])\s*;/);
+    const match = src.match(/routerConfig\s*:?.*?=\s*(\[[\s\S]*?\])\s*;/);
     if (!match) {
         console.log('ERROR: can not find routerConfig source, check the following rules:');
         console.log('1. use "routerConfig" as the router config var name.');
-        console.log('2. terminate the var defination with ";".');
+        console.log('2. terminate the var definition with ";".');
         return;
     }
 
