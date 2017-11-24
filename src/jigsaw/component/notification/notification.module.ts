@@ -5,7 +5,6 @@ import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {TranslateHelper} from "../../core/utils/translate-helper";
 import {InternalUtils} from "../../core/utils/internal-utils";
 import {JigsawButtonModule} from "../button/button";
-import {JigsawAlertModule} from "../alert/alert";
 import {JigsawTrustedHtmlModule} from "../../directive/trusted-html/trusted-html"
 
 @NgModule({
@@ -13,7 +12,6 @@ import {JigsawTrustedHtmlModule} from "../../directive/trusted-html/trusted-html
         CommonModule,
         TranslateModule.forRoot(),
         JigsawButtonModule,
-        JigsawAlertModule,
         JigsawTrustedHtmlModule
     ],
     declarations: [JigsawNotification],

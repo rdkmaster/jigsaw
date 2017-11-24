@@ -4,7 +4,7 @@ import {ButtonInfo, PopupEffect, PopupService} from "../../service/popup.service
 import {CommonUtils} from "../../core/utils/common-utils";
 
 export enum NotificationPosition {
-    leftTop, leftBottom, rightTop, rightBottom
+    leftTop, leftBottom, rightTop = <any>{'right': '0', 'top': '0'}, rightBottom = <any>{'right': '0', 'bttom': 'flex-end'}
 }
 
 @Component({

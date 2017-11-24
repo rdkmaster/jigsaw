@@ -1,12 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {JigsawNotification} from "../../../jigsaw/component/notification/notification.component";
+import {JigsawNotification, NotificationPosition} from "jigsaw/component/notification/notification.component";
 
 @Component({
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
 export class NotificationFullComponent implements OnInit {
-    answer = '';
 
     constructor() {
     }
@@ -16,7 +15,6 @@ export class NotificationFullComponent implements OnInit {
     }
 
     commonNotification() {
-        this.answer = 'waiting for an answer';
-        JigsawNotification.show('this is a great info alert!','rrrrrrrrrrrrrrrrrrrrr', 'question');
+        JigsawNotification.show('this is a great info alert!','rrrrrrrrrrrrrrrrrrrrr','question', NotificationPosition.rightTop, 0);
     }
 }

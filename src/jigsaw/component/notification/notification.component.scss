@@ -11,6 +11,12 @@ $notification-prefix-cls: #{$jigsaw-prefix}-notification;
     line-height: 1.5;
     margin-bottom: 10px;
     overflow: hidden;
+    .#{$notification-prefix-cls}-container{
+        position: fixed;
+        z-index: 1010;
+        width: 335px;
+        margin-right: 24px;
+    }
     .#{$notification-prefix-cls}-title{
         font-size: $font-size-lg;
         color: $heading-color-dark;

@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {RouterModule} from "@angular/router";
 
 import {MenuFullDemoModule} from "./menu/app.module";
@@ -7,7 +7,8 @@ import {MenuFullModule} from "../../live-demo/menu/app.module";
 import {MenuFullComponent} from "../../live-demo/menu/app.component";
 
 const menuDemoRoutes = [
-    {   path: 'menu-full',
+    {
+        path: 'menu-full',
         component: MenuFullComponent
     },
     {
@@ -17,12 +18,13 @@ const menuDemoRoutes = [
 ];
 
 @NgModule({
-  imports: [
-      CommonModule,
-      MenuFullModule,
-      MenuFullDemoModule,
-      RouterModule.forChild(menuDemoRoutes),
-  ],
-  declarations: []
+    imports: [
+        CommonModule,
+        MenuFullModule,
+        MenuFullDemoModule,
+        RouterModule.forChild(menuDemoRoutes),
+    ],
+    declarations: [],
 })
-export class MenuDemoModule { }
+export class MenuDemoModule {
+}
