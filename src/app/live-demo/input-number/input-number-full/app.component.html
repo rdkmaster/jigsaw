@@ -5,7 +5,7 @@
             <h3>基本</h3>
             <p class="comment">基本用法</p>
             <!--<jigsaw-numeric-input [(ngModel)]="_displayValue" min="1" max="10" [nzStep]="1"></jigsaw-numeric-input>-->
-            <jigsaw-numeric-input [(jigsawValue)]="Value" [min]="1" max="99" [step]="1" [PlaceHolder]="'请输入数字'" [preSize]="'small'" [width]="'150px'" [height]="'50px'"></jigsaw-numeric-input>
+            <jigsaw-numeric-input [(value)]="Value" min="1" max="99" step="1" PlaceHolder="'请输入数字'" preSize="'small'" [width]="'150px'" [height]="'50px'"></jigsaw-numeric-input>
             <jigsaw-numeric-input [min]="1" [max]="10" [step]="1" [PlaceHolder]="'请输入数字'" [preSize]="'default'"></jigsaw-numeric-input>
             <jigsaw-numeric-input [min]="1" [max]="10" [step]="1" [PlaceHolder]="'请输入数字'" [preSize]="'large'"></jigsaw-numeric-input>
         </div>
@@ -13,7 +13,7 @@
         <div class="demo-2 live-demo live-demo-block">
             <h3>控件禁止交互</h3>
             <p class="comment">禁止交互</p>
-            <jigsaw-numeric-input [min]="1" [max]="10" [step]="1" disabled="true"></jigsaw-numeric-input>
+            <jigsaw-numeric-input [(value)]="Value" [min]="1" [max]="10" [step]="1" disabled="true"></jigsaw-numeric-input>
         </div>
 
         <!--<div class="demo-2 live-demo live-demo-block">-->

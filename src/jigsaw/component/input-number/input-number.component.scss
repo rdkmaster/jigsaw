@@ -1,8 +1,39 @@
-@mixin handler-disabled()
-{
+@import "../../core/theming/prebuilt/settings/antd";
+
+@mixin handler-disabled() {
     opacity: 0.72;
     color: #ccc !important;
     cursor: not-allowed;
+}
+
+@mixin hover($color) {
+    border-color: $color;
+}
+
+@mixin disabled() {
+    background-color: #f7f7f7;
+    opacity: 1;
+    cursor: not-allowed;
+    color: fade(#000, 25%);
+    &:hover {
+        @include hover(#d9d9d9);
+    }
+}
+
+@mixin placeholder($color: $text-color-secondary) {
+    // Firefox
+    &::-moz-placeholder {
+        color: $color;
+        opacity: 1; // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526
+    }
+    // Internet Explorer 10+
+    &:-ms-input-placeholder {
+        color: $color;
+    }
+    // Safari and Chrome
+    &::-webkit-input-placeholder {
+        color: $color;
+    }
 }
 
 @mixin input() {
@@ -19,22 +50,22 @@
     background-image: none;
     border: 1px solid #d9d9d9;
     border-radius: 4px;
-//.placeholder(); // Reset placeholder
-//    transition: all .3s;
+    @include placeholder(); // Reset placeholder
+    transition: all .3s;
 //
 &:hover {
     border-color: #49a9ee;
 }
-//
+
 //&:focus {
 //    .active();
 //}
 //
-//&-disabled {
-//    .disabled();
-//}
+&-disabled {
+    @include disabled();
+}
 //
-//// Reset height for `textarea`s
+// Reset height for `textarea`s
 //textarea& {
 //    max-width: 100%; // prevent textearea resize from coming out of its container
 //    height: auto;
@@ -104,9 +135,9 @@
     //    .active();
     //}
     //
-    //&-disabled {
-    //    .disabled();
-    //}
+    &-disabled {
+        @include disabled();
+    }
 
     &-input {
         width: 100%;
@@ -121,7 +152,7 @@
         border-radius: 4px;
         padding: 0 7px;
         display: block;
-        //.placeholder();
+        @include placeholder();
 
         //&[disabled] {
         //    .disabled();

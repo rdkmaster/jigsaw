@@ -95,11 +95,11 @@ export class JigsawInputNumberComponent extends AbstractJigsawComponent implemen
         $event.preventDefault();
         $event.stopPropagation();
         this._inputNumber.nativeElement.focus();
-        if (this.jigsawValue === undefined) {
-            this.jigsawValue = this.min || 0;
+        if (this.value === undefined) {
+            this.value = this.min || 0;
         }
         if (!this._disabledUp) {
-            this.jigsawValue = this.toPrecisionAsStep((this._precisionFactor * this.jigsawValue + this._precisionFactor * this.step) / this._precisionFactor);
+            this.value = this.toPrecisionAsStep((this._precisionFactor * this.value + this._precisionFactor * this.step) / this._precisionFactor);
         }
     }
 
@@ -107,19 +107,20 @@ export class JigsawInputNumberComponent extends AbstractJigsawComponent implemen
         $event.preventDefault();
         $event.stopPropagation();
         this._inputNumber.nativeElement.focus();
-        if (this.jigsawValue === undefined) {
-            this.jigsawValue = this.min || 0;
+        if (this.value === undefined) {
+            this.value = this.min || 0;
         }
         if (!this._disabledDown) {
-            this.jigsawValue = this.toPrecisionAsStep((this._precisionFactor * this.jigsawValue - this._precisionFactor * this.step) / this._precisionFactor);
+            this.value = this.toPrecisionAsStep((this._precisionFactor * this.value - this._precisionFactor * this.step) / this._precisionFactor);
         }
     }
 
-    get jigsawValue(): number {
+    @Input()
+    get value(): number {
         return this._value;
     };
 
-    set jigsawValue(value: number) {
+    set value(value: number) {
         this._updateValue(value);
     }
 
@@ -158,12 +159,12 @@ export class JigsawInputNumberComponent extends AbstractJigsawComponent implemen
     _userInputChange() {
         const numberValue = +this._displayValue;
         if (this._isNumber(numberValue) && (numberValue <= this.max) && (numberValue >= this.min)) {
-            this.jigsawValue = numberValue;
+            this.value = numberValue;
         }
     }
 
     _checkValue() {
-        this._displayValue = this.jigsawValue;
+        this._displayValue = this.value;
     }
 
     _getBoundValue(value) {
@@ -194,7 +195,7 @@ export class JigsawInputNumberComponent extends AbstractJigsawComponent implemen
     }
 
     writeValue(value: any): void {
-        // this.jigsawValue = value;
+        // this.value = value;
         this._updateValue(value, false);
     }
 
@@ -220,7 +221,7 @@ export class JigsawInputNumberComponent extends AbstractJigsawComponent implemen
         if (emitChange) {
             this.onChange(this._value);
         }
-        this._disabledUp = (this.jigsawValue !== undefined) && !((this.jigsawValue + this.step) <= this.max);
-        this._disabledDown = (this.jigsawValue !== undefined) && !((this.jigsawValue - this.step) >= this.min);
+        this._disabledUp = (this.value !== undefined) && !((this.value + this.step) <= this.max);
+        this._disabledDown = (this.value !== undefined) && !((this.value - this.step) >= this.min);
     }
 }
