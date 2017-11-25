@@ -56,12 +56,12 @@ export class JigsawStepComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('stepsTail') _stepsTail: ElementRef;
 
   @Input()
-  set nzStatus(status) {
+  set status(status) {
     this._status = status;
     this._ifCustomStatus = true;
   }
 
-  get nzStatus() {
+  get status() {
     return this._status;
   }
 

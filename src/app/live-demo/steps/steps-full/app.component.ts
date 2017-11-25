@@ -5,10 +5,8 @@ import {Component, OnInit} from '@angular/core';
     styleUrls: ['./app.component.scss']
 })
 export class StepsFullComponent implements OnInit {
-    nzCurrent:any;
 
     constructor() {
-        this.nzCurrent = 2;
     }
 
     ngOnInit() {
