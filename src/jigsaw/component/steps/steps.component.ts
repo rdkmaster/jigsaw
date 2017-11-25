@@ -1,97 +1,59 @@
 import { Component, OnInit, Input, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { JigsawStepConnectService } from './step-connect.service';
+import { AbstractJigsawComponent } from "../common";
 
-export type NzDirection = 'horizontal' | 'vertical';
+export type direction = 'horizontal' | 'vertical';
 
 @Component({
   selector     : 'jigsaw-steps',
   encapsulation: ViewEncapsulation.None,
   providers    : [ JigsawStepConnectService ],
   template     : `
-    <div class="ant-steps" [ngClass]="_stepsClassMap">
+    <div class="jigsaw-steps" [ngClass]="_stepsClassMap">
       <ng-content></ng-content>
     </div>
   `,
-  styleUrls    : [
-    './index.less'
-  ]
+  styleUrls    : ['./steps.scss']
 })
-export class JigsawStepsComponent implements OnInit, OnDestroy {
+export class JigsawStepsComponent extends AbstractJigsawComponent implements OnInit, OnDestroy {
   _status: string;
-  _current: number;
   _stepsClassMap: Object;
-  _progressDot = false;
-  _direction: NzDirection = 'horizontal';
+  _direction: direction = 'horizontal';
 
   @Input()
-  set nzDirection(value: NzDirection) {
+  set direction(value: direction) {
     this._direction = value;
-    this.nzStepConnectService.direction = value;
-    this.nzStepConnectService.directionEvent.next(value);
+    this.stepConnectService.direction = value;
+    this.stepConnectService.directionEvent.next(value);
   }
 
-  get nzDirection(): NzDirection {
+  get direction(): direction {
     return this._direction;
   }
 
-  @Input() nzSize: 'default' | 'small';
-
-  @Input()
-  set nzProgressDot(value: boolean | string) {
-    if (value === '') {
-      this._progressDot = true;
-    } else {
-      this._progressDot = value as boolean;
-    }
-    this.nzStepConnectService.processDot = true;
-    this.nzStepConnectService.processDotEvent.next(true);
-    this.setDirectionClass();
-  }
-
-  get nzProgressDot() {
-    return this._progressDot;
-  }
-
-  @Input()
-  set nzStatus(status: string) {
-    this._status = status;
-    this.nzStepConnectService.errorIndex = this._status;
-    this.nzStepConnectService.errorIndexObject.next(this._status);
-  }
-
-  @Input()
-  set nzCurrent(current: number) {
-    this._current = current;
-    this.nzStepConnectService.current = current;
-    this.nzStepConnectService.currentEvent.next(current);
-  }
-
-  get nzCurrent(): number {
-    return this._current;
-  }
-
+  @Input() preSize: 'default' | 'small' | 'large';
 
   setDirectionClass() {
     this._stepsClassMap = {
-      [`ant-steps-${this.nzDirection}`]      : true,
-      [`ant-steps-label-${this.nzDirection}`]: true,
-      [`ant-steps-dot`]                      : this.nzProgressDot,
-      ['ant-steps-small']                    : this.nzSize === 'small'
+      [`jigsaw-steps-${this.direction}`]      : true,
+      [`jigsaw-steps-label-${this.direction}`]: true,
+      ['jigsaw-steps-small']                    : this.preSize === 'small',
+      ['jigsaw-steps-large']                    : this.preSize === 'large'
     };
   }
 
-  constructor(private nzStepConnectService: JigsawStepConnectService) {
+  constructor(private stepConnectService: JigsawStepConnectService) {
   }
 
   ngOnInit() {
     this.setDirectionClass();
     if (this._status) {
-      this.nzStepConnectService.errorIndex = this._status;
-      this.nzStepConnectService.errorIndexObject.next(this._status);
+      this.stepConnectService.errorIndex = this._status;
+      this.stepConnectService.errorIndexObject.next(this._status);
     }
   }
 
   ngOnDestroy() {
-    this.nzStepConnectService.itemIndex = 0;
+    this.stepConnectService.itemIndex = 0;
   }
 }

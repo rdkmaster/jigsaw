@@ -1,15 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  ViewEncapsulation,
-  ElementRef,
-  AfterViewInit,
-  Renderer2,
-  ContentChild,
-  ViewChild,
-  TemplateRef, OnDestroy
-} from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation, ElementRef, AfterViewInit, Renderer2, ContentChild, ViewChild, TemplateRef, OnDestroy } from '@angular/core';
 import { JigsawStepConnectService } from './step-connect.service';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -17,39 +6,40 @@ import { Subscription } from 'rxjs/Subscription';
   selector     : 'jigsaw-step-item',
   encapsulation: ViewEncapsulation.None,
   template     : `
-    <div class="ant-steps-tail" #stepsTail *ngIf="_last !== true">
+    <div class="jigsaw-steps-tail" #stepsTail *ngIf="_last !== true">
       <i></i>
     </div>
-    <div class="ant-steps-step">
-      <div class="ant-steps-head">
-        <div class="ant-steps-head-inner">
+    <div class="jigsaw-steps-step">
+      <div class="jigsaw-steps-head">
+        <div class="jigsaw-steps-head-inner">
           <ng-template [ngIf]="!_processDot">
-            <span class="ant-steps-icon anticon anticon-check" *ngIf="_status === 'finish' && !nzIcon"></span>
-            <span class="ant-steps-icon anticon anticon-cross" *ngIf="_status === 'error'"></span>
-            <span class="ant-steps-icon" *ngIf="(_status === 'process' || _status === 'wait') && !nzIcon">{{index + 1}}</span>
-            <span class="ant-steps-icon" *ngIf="nzIcon">
-            <ng-template [ngTemplateOutlet]="nzIcon"></ng-template>
+            <span class="jigsaw-steps-icon anticon anticon-check" *ngIf="_status === 'done' && !jigsawIcon"><a class="fa fa-check"></a></span>
+            <span class="jigsaw-steps-icon anticon anticon-cross" *ngIf="_status === 'error'"><a class="fa fa-times"></a></span>
+            <span class="jigsaw-steps-icon" *ngIf="(_status === 'processing') && !jigsawIcon"><a class="fa fa-fa-cog fa-1x fa-fw">{{index + 1}}</a></span>
+            <span class="jigsaw-steps-icon" *ngIf="(_status === 'waiting') && !jigsawIcon"><a class="fa fa-fa-cog fa-1x fa-fw">{{index + 1}}</a></span>
+            <span class="jigsaw-steps-icon" *ngIf="(_status === 'warning') && !jigsawIcon"><a class="fa fa-exclamation-triangle"></a></span>
+            <span class="jigsaw-steps-icon" *ngIf="(_status === 'skipped') && !jigsawIcon"><a class="fa fa-ban"></a></span>
+            <span class="jigsaw-steps-icon" *ngIf="jigsawIcon">
+            <ng-template [ngTemplateOutlet]="jigsawIcon"></ng-template>
           </span>
           </ng-template>
           <ng-template [ngIf]="_processDot">
-            <span class="ant-steps-icon">
-              <span class="ant-steps-icon-dot"></span>
+            <span class="jigsaw-steps-icon">
+              <span class="jigsaw-steps-icon-dot"></span>
             </span>
           </ng-template>
         </div>
       </div>
-      <div class="ant-steps-main">
-        <div class="ant-steps-title">{{nzTitle}}</div>
-        <div class="ant-steps-description">{{nzDescription}}</div>
+      <div class="jigsaw-steps-main">
+        <div class="jigsaw-steps-title">{{jigsawTitle}}</div>
+        <div class="jigsaw-steps-description">{{jigsawDescription}}</div>
       </div>
     </div>
   `,
-  styleUrls    : [
-    './index.less'
-  ]
+  styleUrls: ['./steps.scss']
 })
 export class JigsawStepComponent implements OnInit, AfterViewInit, OnDestroy {
-  _status = 'wait';
+  _status = 'waiting';
   _ifCustomStatus = false;
   _currentIndex;
   _el;
@@ -62,7 +52,7 @@ export class JigsawStepComponent implements OnInit, AfterViewInit, OnDestroy {
   _errorIndexObjectSubscription: Subscription;
   index: number;
   stepStatusClass;
-  @ContentChild('nzIcon') nzIcon: TemplateRef<any>;
+  @ContentChild('jigsawIcon') jigsawIcon: TemplateRef<any>;
   @ViewChild('stepsTail') _stepsTail: ElementRef;
 
   @Input()
@@ -75,9 +65,9 @@ export class JigsawStepComponent implements OnInit, AfterViewInit, OnDestroy {
     return this._status;
   }
 
-  @Input() nzTitle: string;
+  @Input() jigsawTitle: string;
 
-  @Input() nzDescription: string;
+  @Input() jigsawDescription: string;
 
   get _current() {
     return this._currentIndex;
@@ -87,15 +77,15 @@ export class JigsawStepComponent implements OnInit, AfterViewInit, OnDestroy {
     this._currentIndex = current;
     if (!this._ifCustomStatus) {
       if (current > this.index) {
-        this._status = 'finish';
+        this._status = 'done';
       } else if (current === this.index) {
         if (this.nzStepConnectService.errorIndex) {
           this._status = 'error';
         } else {
-          this._status = 'process';
+          this._status = 'processing';
         }
       } else {
-        this._status = 'wait';
+        this._status = 'waiting';
       }
     }
     this.initClassMap();
@@ -103,14 +93,16 @@ export class JigsawStepComponent implements OnInit, AfterViewInit, OnDestroy {
 
   initClassMap() {
     this.stepStatusClass = {
-      ['ant-steps-item']          : true,
-      [`ant-steps-status-wait`]   : this._status === 'wait',
-      [`ant-steps-status-process`]: this._status === 'process',
-      [`ant-steps-status-finish`] : this._status === 'finish',
-      [`ant-steps-status-error`]  : this._status === 'error',
-      ['ant-steps-item-last']     : this._last,
-      ['ant-steps-custom']        : !!this.nzIcon,
-      ['ant-steps-next-error']    : (this.nzStepConnectService.errorIndex === 'error' && this._current === this.index - 1)
+      ['jigsaw-steps-item']          : true,
+      [`jigsaw-steps-status-waiting`]   : this._status === 'waiting',
+      [`jigsaw-steps-status-processing`]: this._status === 'processing',
+      [`jigsaw-steps-status-done`] : this._status === 'done',
+      [`jigsaw-steps-status-error`]  : this._status === 'error',
+      [`jigsaw-steps-status-warning`]  : this._status === 'warning',
+      [`jigsaw-steps-status-skipped`]  : this._status === 'skipped',
+      ['jigsaw-steps-item-last']     : this._last,
+      ['jigsaw-steps-custom']        : !!this.jigsawIcon,
+      ['jigsaw-steps-next-error']    : (this.nzStepConnectService.errorIndex === 'error' && this._current === this.index - 1)
     };
     for (const i in this.stepStatusClass) {
       if (this.stepStatusClass[ i ]) {

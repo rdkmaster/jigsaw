@@ -1,0 +1,635 @@
+$process-icon-color: #108ee9;
+$process-title-color: fade(#000, 65%);
+$process-description-color: fade(#000, 65%);
+$process-tail-color: #e9e9e9;
+$process-icon-text-color: #fff;
+$wait-icon-color: fade(#000, 25%);
+$wait-title-color: fade(#000, 43%);
+$wait-description-color: fade(#000, 43%);
+$wait-tail-color: #e9e9e9;
+$finish-icon-color: $process-icon-color;
+$finish-title-color: $wait-title-color;
+$finish-description-color: $finish-title-color;
+$finish-tail-color: $process-icon-color;
+$error-icon-color: #f04134;
+$error-title-color: #f04134;
+$error-description-color: #f04134;
+$error-tail-color: #f04134;
+$steps-background: #fff;
+$jigsaw-steps-icon-color: white;
+
+$steps-icon-size: 26px;
+$steps-small-icon-size: 18px;
+$steps-dot-size: 5px;
+$steps-current-dot-size: 7px;
+$steps-desciption-max-width: 120px;
+
+.jigsaw-steps {
+  font-size: 0;
+  line-height: 1.428571429;
+  .jigsaw-steps-item {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+
+    &.jigsaw-steps-status-waiting {
+      .jigsaw-steps-head-inner {
+        border-color: #cccccc;
+        background-color: #cccccc;
+        > .jigsaw-steps-icon {
+          color: $wait-icon-color;
+          .jigsaw-steps-icon-dot {
+            background: $wait-icon-color;
+          }
+          a{
+              color:$jigsaw-steps-icon-color;
+              font-weight: 600;
+          }
+        }
+      }
+      .jigsaw-steps-tail > i:after {
+            height: 2px;
+            width: 100%;
+            background: #cccccc;
+            transition: all .6s;
+            opacity: 1;
+            box-shadow: 0 0 0 0 #108ee9;
+            animation: tailEffect .4s;
+      }
+      .jigsaw-steps-title {
+        color: $wait-title-color;
+      }
+      .jigsaw-steps-description {
+        color: $wait-description-color;
+      }
+      .jigsaw-steps-tail > i {
+        background-color: $wait-tail-color;
+      }
+    }
+    &.jigsaw-steps-status-warning {
+      .jigsaw-steps-head-inner {
+          border-color: #ffcc33;
+          background-color: #ffcc33;
+          > .jigsaw-steps-icon {
+              color: $wait-icon-color;
+              .jigsaw-steps-icon-dot {
+                  background: $wait-icon-color;
+              }
+              a{color:$jigsaw-steps-icon-color}
+          }
+      }
+      .jigsaw-steps-tail > i:after {
+        height: 2px;
+        width: 100%;
+        background: #ffcc33;
+        transition: all .6s;
+        opacity: 1;
+        box-shadow: 0 0 0 0 #108ee9;
+        animation: tailEffect .4s;
+      }
+      .jigsaw-steps-title {
+          color: $wait-title-color;
+      }
+      .jigsaw-steps-description {
+          color: $wait-description-color;
+      }
+      .jigsaw-steps-tail > i {
+          background-color: $wait-tail-color;
+      }
+    }
+    &.jigsaw-steps-status-skipped {
+      .jigsaw-steps-head-inner {
+          border-color: #666633;
+          background-color: #666633;
+          > .jigsaw-steps-icon {
+              color: $wait-icon-color;
+              .jigsaw-steps-icon-dot {
+                  background: $wait-icon-color;
+              }
+              a{color:$jigsaw-steps-icon-color}
+          }
+      }
+      .jigsaw-steps-tail > i:after {
+        height: 2px;
+        width: 100%;
+        background: #666633;
+        transition: all .6s;
+        opacity: 1;
+        box-shadow: 0 0 0 0 #108ee9;
+        animation: tailEffect .4s;
+      }
+      .jigsaw-steps-title {
+          color: $wait-title-color;
+      }
+      .jigsaw-steps-description {
+          color: $wait-description-color;
+      }
+      .jigsaw-steps-tail > i {
+          background-color: $wait-tail-color;
+      }
+    }
+    &.jigsaw-steps-status-processing {
+      .jigsaw-steps-head-inner {
+        border-color: $process-icon-color;
+        background-color: $process-icon-color;
+        > .jigsaw-steps-icon {
+          color: $process-icon-text-color;
+          .jigsaw-steps-icon-dot {
+            background: $process-icon-color;
+          }
+          a{
+              color:$jigsaw-steps-icon-color;
+              font-weight: 600;
+          }
+        }
+      }
+      .jigsaw-steps-tail > i:after {
+        height: 2px;
+        width: 100%;
+        background: $process-icon-color;
+        transition: all .6s;
+        opacity: 1;
+        box-shadow: 0 0 0 0 #108ee9;
+        animation: tailEffect .4s;
+       }
+      .jigsaw-steps-title {
+        color: $process-title-color;
+      }
+      .jigsaw-steps-description {
+        color: $process-description-color;
+      }
+      .jigsaw-steps-tail > i {
+        background-color: $process-tail-color;
+      }
+    }
+    &.jigsaw-steps-status-done {
+      .jigsaw-steps-head-inner {
+        border-color: #66cc00;
+        //background-color: $steps-background;
+          background-color: #66cc00;
+        > .jigsaw-steps-icon {
+          color: $finish-icon-color;
+          .jigsaw-steps-icon-dot {
+            background: $finish-icon-color;
+          }
+          a{color:$jigsaw-steps-icon-color}
+        }
+      }
+      .jigsaw-steps-tail > i:after {
+        height: 2px;
+        width: 100%;
+        background: #66cc00;
+        transition: all .6s;
+        opacity: 1;
+        box-shadow: 0 0 0 0 #108ee9;
+        animation: tailEffect .4s;
+      }
+      .jigsaw-steps-title {
+        color: $finish-title-color;
+      }
+      .jigsaw-steps-description {
+        color: $finish-description-color;
+      }
+    }
+
+    &.jigsaw-steps-status-error {
+      .jigsaw-steps-head-inner {
+        border-color: $error-icon-color;
+        background-color: $error-icon-color;;
+        > .jigsaw-steps-icon {
+          color: $error-icon-color;
+          .jigsaw-steps-icon-dot {
+            background: $error-icon-color;
+          }
+          a{color:$jigsaw-steps-icon-color}
+        }
+      }
+      .jigsaw-steps-tail > i:after {
+        height: 2px;
+        width: 100%;
+        background: $error-icon-color;
+        transition: all .6s;
+        opacity: 1;
+        box-shadow: 0 0 0 0 #108ee9;
+        animation: tailEffect .4s;
+      }
+      .jigsaw-steps-title {
+        color: $error-title-color;
+      }
+      .jigsaw-steps-description {
+        color: $error-description-color;
+      }
+      .jigsaw-steps-tail > i {
+        background-color: $process-tail-color;
+      }
+    }
+
+    &.jigsaw-steps-next-error {
+      .jigsaw-steps-tail > i,
+      .jigsaw-steps-tail > i:after {
+        background-color: $error-tail-color;
+      }
+    }
+
+    &.jigsaw-steps-custom {
+      .jigsaw-steps-head-inner {
+        background: none;
+        border: 0;
+        width: auto;
+        height: auto;
+        > .jigsaw-steps-icon {
+          font-size: $steps-icon-size;
+          width: $steps-icon-size;
+          height: $steps-icon-size;
+        }
+      }
+      &.jigsaw-steps-status-processing {
+        .jigsaw-steps-head-inner > .jigsaw-steps-icon {
+          color: $process-icon-color;
+        }
+      }
+    }
+  }
+
+  .jigsaw-steps-head,
+  .jigsaw-steps-main {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+  }
+  .jigsaw-steps-head {
+    background: $steps-background;
+  }
+
+  .jigsaw-steps-head-inner {
+    display: block;
+    border: 1px solid $wait-icon-color;
+    width: $steps-icon-size;
+    height: $steps-icon-size;
+    line-height: 23px;
+    text-align: center;
+    border-radius: $steps-icon-size;
+    font-size: 14px;
+    margin-right: 8px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+
+    > .jigsaw-steps-icon {
+      line-height: 1;
+      color: #108ee9;
+      position: relative;
+      &.anticon{
+        font-size: 12px;
+        &-cross,
+        &-check {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+  .jigsaw-steps-title {
+    font-size: 14px;
+    line-height: $steps-icon-size;
+    color: fade(#000, 65%);
+    font-weight: bold;
+    background-color: $steps-background;
+    display: inline-block;
+    padding-right: 10px;
+    > a:first-child:last-child {
+      color: fade(#000, 65%);
+    }
+  }
+  .jigsaw-steps-item:last-child {
+    .jigsaw-steps-title {
+      padding-right: 0;
+      width: 100%;
+    }
+    .jigsaw-steps-tail {
+      display: none;
+    }
+  }
+  .jigsaw-steps-description {
+    font-size: 12px;
+    color: fade(#000, 65%)-secondary;
+  }
+  .jigsaw-steps-tail {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 13px;
+    padding: 0 10px;
+    > i {
+      display: inline-block;
+      vertical-align: top;
+      background: $wait-tail-color;
+      height: 1px;
+      border-radius: 1px;
+      width: 100%;
+      position: relative;
+      &:after {
+        position: absolute;
+        content: '';
+        top: 0;
+        width: 0;
+        background: #e9e9e9;
+        height: 100%;
+        opacity: 0;
+      }
+    }
+  }
+
+  &.jigsaw-steps-small {
+    .jigsaw-steps-head-inner {
+      border: 1px solid $wait-icon-color;
+      width: $steps-small-icon-size;
+      height: $steps-small-icon-size;
+      line-height: 17px;
+      text-align: center;
+      border-radius: $steps-small-icon-size;
+      font-size: 12px;
+      margin-right: 10px;
+      //> .jigsaw-steps-icon.anticon {
+      //  .iconfont-size-under-12px(9px);
+      //  top: 0;
+      //}
+    }
+    .jigsaw-steps-main {
+      margin-top: 0;
+    }
+    .jigsaw-steps-title {
+      font-size: 12px;
+      line-height: $steps-small-icon-size;
+      color: fade(#000, 65%);
+      font-weight: bold;
+    }
+    .jigsaw-steps-description {
+      font-size: 12px;
+      color: fade(#000, 65%)-secondary;
+    }
+    .jigsaw-steps-tail {
+      top: 8px;
+      padding: 0 8px;
+      > i {
+        height: 1px;
+        border-radius: 1px;
+        width: 100%;
+      }
+    }
+    .jigsaw-steps-custom .jigsaw-steps-head-inner > .jigsaw-steps-icon {
+      font-size: $steps-small-icon-size;
+      width: $steps-small-icon-size;
+      height: $steps-small-icon-size;
+    }
+  }
+
+  &.jigsaw-steps-large {
+        .jigsaw-steps-head-inner {
+            border: 1px solid $wait-icon-color;
+            width: 28px;
+            height: 28px;
+            line-height: 25px;
+            text-align: center;
+            border-radius: $steps-small-icon-size;
+            font-size: 18px;
+            margin-right: 10px;
+            //> .jigsaw-steps-icon.anticon {
+            //  .iconfont-size-under-12px(9px);
+            //  top: 0;
+            //}
+        }
+        .jigsaw-steps-main {
+            margin-top: 0;
+        }
+        .jigsaw-steps-title {
+            font-size: 18px;
+            line-height: $steps-small-icon-size;
+            color: fade(#000, 65%);
+            font-weight: bold;
+        }
+        .jigsaw-steps-description {
+            font-size: 12px;
+            color: fade(#000, 65%)-secondary;
+        }
+        .jigsaw-steps-tail {
+            top: 8px;
+            padding: 0 8px;
+            > i {
+                height: 1px;
+                border-radius: 1px;
+                width: 100%;
+            }
+        }
+        .jigsaw-steps-custom .jigsaw-steps-head-inner > .jigsaw-steps-icon {
+            font-size: $steps-small-icon-size;
+            width: $steps-small-icon-size;
+            height: $steps-small-icon-size;
+        }
+  }
+}
+
+.jigsaw-steps-vertical {
+  > .jigsaw-steps-item {
+    display: block;
+  }
+
+  > .jigsaw-steps-item > .jigsaw-steps-tail {
+    position: absolute;
+    left: 13px;
+    top: 0;
+    height: 100%;
+    width: 1px;
+    padding: 30px 0 4px;
+    > i {
+      height: 100%;
+      width: 1px;
+      &:after {
+        height: 0;
+        width: 100%;
+      }
+    }
+  }
+
+  .jigsaw-steps-status-done {
+    .jigsaw-steps-tail > i:after {
+      height: 100%;
+    }
+  }
+
+  .jigsaw-steps-head {
+    float: left;
+    &-inner {
+      margin-right: 16px;
+    }
+  }
+
+  .jigsaw-steps-main {
+    min-height: 47px;
+    overflow: hidden;
+    display: block;
+    .jigsaw-steps-title {
+      line-height: $steps-icon-size;
+    }
+    .jigsaw-steps-description {
+      padding-bottom: 12px;
+    }
+  }
+}
+
+.jigsaw-steps-vertical.jigsaw-steps-small {
+  .jigsaw-steps-tail {
+    position: absolute;
+    left: 9px;
+    top: 0;
+    padding: 22px 0 4px;
+    > i {
+      height: 100%;
+    }
+  }
+
+  .jigsaw-steps-title {
+    line-height: $steps-small-icon-size;
+  }
+}
+
+.jigsaw-steps-horizontal {
+  &.jigsaw-steps-hidden {
+    visibility: hidden;
+  }
+  .jigsaw-steps-description {
+    max-width: $steps-desciption-max-width;
+  }
+  .jigsaw-steps-item:not(:first-child) .jigsaw-steps-head {
+    padding-left: 10px;
+    margin-left: -10px;
+  }
+}
+
+.jigsaw-steps-dot {
+  .jigsaw-steps-item {
+    .jigsaw-steps-step {
+      display: inline-block;
+      text-align: center;
+      width: $steps-desciption-max-width;
+    }
+    &:not(:first-child) .jigsaw-steps-head {
+      margin-left: 0;
+      padding-left: 0;
+    }
+  }
+  .jigsaw-steps-tail {
+    margin: 0 0 0 $steps-desciption-max-width / 2;
+    padding: 0;
+    width: 100%;
+    top: 1px;
+
+    & > i {
+      height: 3px;
+    }
+  }
+  .jigsaw-steps-head {
+    display: inline-block;
+    padding-right: 0;
+    &-inner {
+      margin: 0 auto;
+      width: $steps-dot-size;
+      height: $steps-dot-size;
+      line-height: $steps-dot-size;
+      border: 0;
+
+      .jigsaw-steps-icon-dot {
+        float: left;
+        width: 100%;
+        height: 100%;
+        border-radius: $steps-dot-size / 2;
+        position: relative;
+        &:after {
+          content: '';
+          background: rgba(255, 255, 255, 0.001);
+          width: 40px;
+          height: 24px;
+          position: absolute;
+          top: -8px;
+          left: -16px;
+        }
+        &:hover {
+          transform: scale(1.3);
+        }
+      }
+    }
+  }
+  .jigsaw-steps-main {
+    display: block;
+    margin-top: 10px;
+    .jigsaw-steps-title {
+      padding-right: 0;
+      background-color: transparent;
+    }
+  }
+  .jigsaw-steps-status-processing {
+    .jigsaw-steps-head {
+      top: -1px;
+      &-inner {
+        width: $steps-current-dot-size;
+        height: $steps-current-dot-size;
+        line-height: $steps-current-dot-size;
+
+        .jigsaw-steps-icon-dot {
+          border-radius: $steps-current-dot-size / 2;
+        }
+      }
+    }
+  }
+  &.jigsaw-steps-vertical {
+    .jigsaw-steps-tail {
+      left: 2px;
+      height: 100%;
+      padding: 0;
+      top: 15px;
+      > i {
+        height: 100%;
+        width: 3px;
+      }
+    }
+    .jigsaw-steps-head {
+      top: 12px;
+      left: 1px;
+    }
+    .jigsaw-steps-status-processing {
+      .jigsaw-steps-head {
+        left: 0;
+      }
+    }
+  }
+}
+
+//$keyframes tailEffect {
+//  to {
+//    box-shadow: 0 0 3px 3px transparent;
+//  }
+//}
+
+
+.jigsaw-steps-horizontal nz-step:not(:first-child) .jigsaw-steps-head{
+  padding-left: 10px;
+  margin-left: -10px;
+}
+nz-step{
+  display: block;
+}
+
+.jigsaw-steps-dot {
+  &.jigsaw-steps-vertical {
+    .jigsaw-steps-tail {
+      margin-left: 0;
+    }
+    .jigsaw-steps-step {
+      text-align: left;
+      width: auto;
+    }
+    .jigsaw-steps-head-inner {
+      margin-right: 16px;
+    }
+    .jigsaw-steps-main {
+      margin-top: 0;
+    }
+  }
+}
