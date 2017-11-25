@@ -79,7 +79,7 @@ export class JigsawStepComponent implements OnInit, AfterViewInit, OnDestroy {
       if (current > this.index) {
         this._status = 'done';
       } else if (current === this.index) {
-        if (this.nzStepConnectService.errorIndex) {
+        if (this.jigsawStepConnectService.errorIndex) {
           this._status = 'error';
         } else {
           this._status = 'processing';
@@ -102,7 +102,7 @@ export class JigsawStepComponent implements OnInit, AfterViewInit, OnDestroy {
       [`jigsaw-steps-status-skipped`]  : this._status === 'skipped',
       ['jigsaw-steps-item-last']     : this._last,
       ['jigsaw-steps-custom']        : !!this.jigsawIcon,
-      ['jigsaw-steps-next-error']    : (this.nzStepConnectService.errorIndex === 'error' && this._current === this.index - 1)
+      ['jigsaw-steps-next-error']    : (this.jigsawStepConnectService.errorIndex === 'error' && this._current === this.index - 1)
     };
     for (const i in this.stepStatusClass) {
       if (this.stepStatusClass[ i ]) {
@@ -115,31 +115,31 @@ export class JigsawStepComponent implements OnInit, AfterViewInit, OnDestroy {
 
   init() {
     // 记录个数
-    this.index = this.nzStepConnectService.itemIndex;
-    this._processDot = this.nzStepConnectService.processDot;
-    this._direction = this.nzStepConnectService.direction;
-    this._current = this.nzStepConnectService.current;
-    this._processDotEventSubscription = this.nzStepConnectService.processDotEvent.subscribe(data => {
+    this.index = this.jigsawStepConnectService.itemIndex;
+    this._processDot = this.jigsawStepConnectService.processDot;
+    this._direction = this.jigsawStepConnectService.direction;
+    this._current = this.jigsawStepConnectService.current;
+    this._processDotEventSubscription = this.jigsawStepConnectService.processDotEvent.subscribe(data => {
       this._processDot = data;
     });
-    this._directionEventSubscription = this.nzStepConnectService.directionEvent.subscribe(data => {
+    this._directionEventSubscription = this.jigsawStepConnectService.directionEvent.subscribe(data => {
       this._direction = data;
     });
-    this._currentEventSubscription = this.nzStepConnectService.currentEvent.subscribe(data => {
+    this._currentEventSubscription = this.jigsawStepConnectService.currentEvent.subscribe(data => {
       this._current = data;
     });
-    this._errorIndexObjectSubscription = this.nzStepConnectService.errorIndexObject.subscribe(data => {
+    this._errorIndexObjectSubscription = this.jigsawStepConnectService.errorIndexObject.subscribe(data => {
       if (this._current === this.index) {
         this._status = data;
       }
     });
     this.initClassMap();
-    this.nzStepConnectService.itemIndex += 1;
+    this.jigsawStepConnectService.itemIndex += 1;
     /** judge if last step */
     if (!this.erf.nativeElement.nextElementSibling) {
       this._last = true;
     } else {
-      this.nzStepConnectService.lastElementSizeEvent.subscribe(data => {
+      this.jigsawStepConnectService.lastElementSizeEvent.subscribe(data => {
         const { count, width } = data;
         this._renderer.setStyle(this.erf.nativeElement, 'width', (100 / (count - 1)) + '%');
         this._renderer.setStyle(this.erf.nativeElement, 'margin-right', (-(width / (count - 1) + 5)) + 'px');
@@ -151,7 +151,7 @@ export class JigsawStepComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   constructor(private erf: ElementRef,
-              private nzStepConnectService: JigsawStepConnectService, private _renderer: Renderer2) {
+              private jigsawStepConnectService: JigsawStepConnectService, private _renderer: Renderer2) {
     this._el = erf.nativeElement;
   }
 
@@ -162,7 +162,7 @@ export class JigsawStepComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     if (this._last) {
       setTimeout(_ => {
-        this.nzStepConnectService.lastElementSizeEvent.next({
+        this.jigsawStepConnectService.lastElementSizeEvent.next({
           count: this.erf.nativeElement.parentElement.childElementCount,
           width: this.erf.nativeElement.firstElementChild.offsetWidth
         });

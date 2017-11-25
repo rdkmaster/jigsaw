@@ -43,6 +43,7 @@ export class JigsawStepsComponent extends AbstractJigsawComponent implements OnI
   }
 
   constructor(private stepConnectService: JigsawStepConnectService) {
+      super();
   }
 
   ngOnInit() {
