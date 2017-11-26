@@ -30,7 +30,6 @@ import {JigsawRootModule} from "./component/root/root";
 import {JigsawFishBoneModule} from "./component/fish-bone/fish-bone";
 import {JigsawRateModule} from "./component/rate/rate.module";
 import {JigsawMenuModule} from "./component/menu/menu.module";
-import {JigsawNotificationModule} from "./component/notification/notification.module";
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
@@ -63,8 +62,7 @@ const JIGSAW_MODULE = [
     JigsawRootModule,
     JigsawFishBoneModule,
     JigsawRateModule,
-    JigsawMenuModule,
-    JigsawNotificationModule
+    JigsawMenuModule
 ];
 
 @NgModule({

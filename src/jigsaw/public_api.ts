@@ -39,7 +39,6 @@ export * from './component/pagination/pagination';
 export * from './component/radio/radio';
 export * from './component/rate/rate.component';
 export * from './component/menu/menu.component';
-export * from './component/notification/notification.component';
 export * from './component/range-time/index';
 export * from './component/root/root';
 export * from './component/select/select';
