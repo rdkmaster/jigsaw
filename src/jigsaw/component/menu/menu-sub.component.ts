@@ -64,7 +64,7 @@ export class JigsawMenuSubComponent extends AbstractJigsawComponent implements O
         this._hide(this._item);
     }
 
-    _show(item: HTMLElement){
+    _show(item: HTMLElement) {
         this._activeItem = item;
         const nextElement: HTMLElement = <HTMLElement> item.children[0].nextElementSibling;
         if (nextElement) {
@@ -75,7 +75,7 @@ export class JigsawMenuSubComponent extends AbstractJigsawComponent implements O
         }
     }
 
-    _hide(item: HTMLElement){
+    _hide(item: HTMLElement) {
         this._activeItem = null;
         const nextElement: HTMLElement = <HTMLElement> item.children[0].nextElementSibling;
         if (nextElement) {
