@@ -6,12 +6,11 @@ import {MenuData} from "../../../jigsaw/component/menu/menu.typings";
     styleUrls: ['./app.component.scss']
 })
 export class MenuFullComponent implements OnInit {
-    @ViewChild('jMenu')jMenu: any;
+    @ViewChild('jMenu') jMenu: any;
     _selectedItem = [];
     displayItem = [];
     _selectedItem1 = [];
     displayItem1 = [];
-    popUpTip = '点击后弹出菜单';
 
     titles = [
         {
@@ -110,7 +109,14 @@ export class MenuFullComponent implements OnInit {
     }
 
     showSelectedMenu() {
-        this.jMenu.show(this.titles);
+        this.jMenu.show(this.titles, {
+                posType: 'absolute',
+                posOffset: {
+                    right: '150px',
+                    top: '180px',
+                }
+            }
+        );
     }
 
     hideSelectedMenu() {
@@ -125,12 +131,12 @@ export class MenuFullComponent implements OnInit {
         this._selectedItem1.push(selected.map(selected => selected.label).toString());
     }
 
-    clearArray(){
+    clearArray() {
         this.displayItem = this._selectedItem[0];
         this._selectedItem = [];
     }
 
-    clearArray1(){
+    clearArray1() {
         this.displayItem1 = this._selectedItem1[0];
         this._selectedItem1 = [];
     }

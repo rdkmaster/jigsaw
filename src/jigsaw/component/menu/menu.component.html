@@ -1,3 +1,3 @@
-<nav #menuContainer *ngIf="_items">
+<nav #menuContainer *ngIf="_items" [ngStyle]="_getPositionStyle(_popupOptions)">
     <j-menu-sub root [width]="width" [height]="height" [items]="_items" (selectedItem)="_handleSelect($event)"></j-menu-sub>
 </nav>

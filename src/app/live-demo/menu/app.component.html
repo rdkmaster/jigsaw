@@ -16,7 +16,6 @@
             <p class="comment">弹出菜单</p>
             <jigsaw-button class="popup-button" (click)="showSelectedMenu()" colorType="primary">点击弹出菜单</jigsaw-button>
             <jigsaw-button class="popup-button" (click)="hideSelectedMenu()" colorType="primary">点击隐藏菜单</jigsaw-button>
-            <p class="message">{{popUpTip}}</p>
             <j-menu #jMenu [width]="'200'" (select)="selectChange1($event)" (click)="clearArray1()"></j-menu>
         </div>
     </div>

@@ -23,6 +23,7 @@ export class JigsawMenuComponent extends AbstractJigsawComponent implements OnIn
     @ViewChild('menuContainer')menuContainer: HTMLElement;
     _items: MenuData[];
     _selectedItems: MenuData;
+    _popupOptions: PopupOptions;
 
     @Output() public select: EventEmitter<MenuData> = new EventEmitter<MenuData>();
 
@@ -38,12 +39,27 @@ export class JigsawMenuComponent extends AbstractJigsawComponent implements OnIn
     ngOnInit() {
     }
 
-    public show(menu: MenuData[], callback?: MenuCallback, popupOptions?: PopupOptions) {
+    public show(menu: MenuData[], popupOptions?: PopupOptions) {
         this._items = menu;
+        if (popupOptions) {
+            this._popupOptions = popupOptions;
+        }
     }
 
     _handleSelect(selectedItems) {
         this._selectedItems = selectedItems.map(item => item);
         this.select.emit(this._selectedItems);
+    }
+
+    _getPositionStyle(popupOptions: PopupOptions) {
+        if (popupOptions) {
+            return {
+                'position': popupOptions.posType ? popupOptions.posType : 'absolute',
+                'left': popupOptions.posOffset.left,
+                'right': popupOptions.posOffset.right,
+                'top': popupOptions.posOffset.top,
+                'bottom': popupOptions.posOffset.bottom
+            }
+        }
     }
 }
