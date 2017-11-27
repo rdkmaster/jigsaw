@@ -240,7 +240,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @returns {ColumnDefine[]}
      * @private
      */
-    
     private _getMixedColumnDefines(): ColumnDefine[] {
         if (!this.data) {
             return [];
