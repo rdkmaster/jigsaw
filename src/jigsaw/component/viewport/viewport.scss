@@ -5,7 +5,7 @@ $viewport-prefix-cls: #{$jigsaw-prefix}-viewport;
 .#{$viewport-prefix-cls} {
     @include inline-block;
     position: relative;
-    &-vertical-scrollbar, &-horizontal-scrollbar {
+    &-vertical-scrollbar, &-horizontal-scrollbar-box {
         position: absolute;
         z-index: $zindex-scrollbar;
     }
@@ -13,8 +13,19 @@ $viewport-prefix-cls: #{$jigsaw-prefix}-viewport;
         bottom: 0;
         right: 0;
     }
-    &-horizontal-scrollbar {
+    &-horizontal-scrollbar-box {
         left: 0;
         bottom: 0;
+        padding-right: 8px;
+        width: 100%;
+        height: 15px;
+        opacity: .9;
+        &:hover {
+            background: #eee !important;
+        }
+        .#{$viewport-prefix-cls}-horizontal-scrollbar {
+            vertical-align: top;
+        }
     }
+
 }

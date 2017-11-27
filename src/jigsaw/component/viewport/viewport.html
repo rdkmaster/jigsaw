@@ -6,11 +6,14 @@
              [vertical]="true">
 </j-scrollbar>
 
-<j-scrollbar #hScrollbar [style.visibility]="_$showSlider || hScrollbar.dragging ? 'visible' : 'hidden'"
-             class="jigsaw-viewport-horizontal-scrollbar"
-             [(value)]="viewport.horizontalTo"
-             [max]="viewport.maxWidth - viewport.width">
-</j-scrollbar>
+<div class="jigsaw-viewport-horizontal-scrollbar-box"
+     [style.background]="hScrollbar.dragging ? '#eee' : 'none'">
+    <j-scrollbar #hScrollbar [style.visibility]="_$showSlider || hScrollbar.dragging ? 'visible' : 'hidden'"
+                 class="jigsaw-viewport-horizontal-scrollbar"
+                 [(value)]="viewport.horizontalTo"
+                 [max]="viewport.maxWidth - viewport.width">
+    </j-scrollbar>
+</div>
 
 <ng-content></ng-content>
 
