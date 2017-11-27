@@ -18,9 +18,9 @@ export class DialogPopOptionDemo implements OnInit {
 
     option: PopupOptions;
 
-    popPositionTypes: object[];
+    popPositionTypes: any[];
 
-    selectedPositionType: object;
+    selectedPositionType: any;
 
     poses: object[];
 
@@ -88,10 +88,12 @@ export class DialogPopOptionDemo implements OnInit {
             };
         }
 
+        this.option.posType = this.selectedPositionType.id;
+
         if (this.dialogInfo) {
             this.dialogInfo.dispose();
         }
-
+        console.log(this.option);
         this.dialogInfo = this.popupService.popup(ele, this.option);
     }
 
