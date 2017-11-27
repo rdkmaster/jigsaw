@@ -152,9 +152,7 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
 
     @Input()
     public set defaultSortOrder(newValue) {
-        if (newValue != null) {
             this.updateSortOrderClass(newValue);
-        }
     };
 
     @Output()
