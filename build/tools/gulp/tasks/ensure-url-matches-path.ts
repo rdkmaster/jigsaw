@@ -13,14 +13,13 @@ task('ensure-url-matches-path', () => {
 
     routerConfig.forEach((router: any) => {
         const childRouters = getRouterConfig(join(demoHome, router.path, 'demo.module.ts'));
-        childRouters.forEach((child: any) => {
-            if (child.path) {
+        childRouters.filter(child => !!child.path)
+            .forEach((child: any) => {
                 const modulePath = join(demoHome, router.path, child.path);
                 if (!existsSync(join(modulePath, 'app.module.ts'))) {
                     unmatchedUrls.push(modulePath);
                 }
-            }
-        });
+            });
     });
     if (unmatchedUrls.length > 0) {
         console.log('these urls do NOT match there file path:');
