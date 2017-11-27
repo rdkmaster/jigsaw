@@ -338,6 +338,12 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
     }
 
     ngOnDestroy() {
+        if(this.editable) {
+            this._renderer.setStyle(this._elementRef.nativeElement.parentElement, 'cursor', 'default');
+        }
+        if(this.editable) {
+            this._renderer.setStyle(this._elementRef.nativeElement.parentElement, 'cursor', 'default');
+        }
         if (this._goEditCallback) {
             this._goEditCallback();
         }
