@@ -163,7 +163,7 @@ export const routerConfig = [
         path: 'date-sheet', component: TableDateSheetDemoComponent, recommended: true
     },
     {
-        path: 'big-Row', component: BigRowDemoComponent, recommended: true
+        path: 'big-row', component: BigRowDemoComponent, recommended: true
     },
     {
         path: 'big-column', component: BigColumnDemoComponent, recommended: true
