@@ -4,13 +4,22 @@
 
 
 <!-- start to learn the demo from here -->
-<h4>单选按钮</h4>
-<jigsaw-radios id="test-radio" [(value)]="selectedCity"
-               (valueChange)="radioChange($event)"
-               trackItemBy="id">
-    <jigsaw-radio-option *ngFor="let item of cities" [value]="item">
-        {{item.label}}
-    </jigsaw-radio-option>
-</jigsaw-radios>
+<div class="live-demo-wrap">
+    <h2>Radio</h2>
+    <div class="demo-1 live-demo">
+        <h3>单选与取消单选</h3>
+        <p class="comment">
+            通过点击无法取消单选，通过设置<code>value</code>可以<a (click)="clearSelectedCity()">取消单选</a>。
+        </p>
 
-<p id="select-message">{{selectedCity.label}}</p>
+        <jigsaw-radios id="test-radio" [(value)]="selectedCity"
+                       (valueChange)="radioChange($event)"
+                       trackItemBy="id">
+            <jigsaw-radio-option *ngFor="let item of cities" [value]="item">
+                {{item.label}}
+            </jigsaw-radio-option>
+        </jigsaw-radios>
+        <p id="select-message" class="message">{{selectedCity?.label}}</p>
+    </div>
+</div>
+

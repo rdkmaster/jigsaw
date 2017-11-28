@@ -16,11 +16,15 @@ export class RadioBasicDemoComponent {
     ]);
 
     constructor() {
-        this.selectedCity = {id: 6};
+        this.selectedCity = {id: 6, label: "西安"};
     }
 
     public radioChange(message: any) {
         console.log(`switch message is: ${message.label}`);
+    }
+
+    clearSelectedCity(){
+        this.selectedCity = null;
     }
 
     // ====================================================================
