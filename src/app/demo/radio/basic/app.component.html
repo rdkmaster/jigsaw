@@ -9,8 +9,7 @@
     <div class="demo-1 live-demo">
         <h3>单选与取消单选</h3>
         <p class="comment">
-            通过点击无法取消单选，通过设置<code>value</code>可以取消单选
-            <j-button preSize="small" (click)="clearSelectedCity()">取消选中</j-button>
+            通过点击无法取消单选，通过设置<code>value</code>可以<a (click)="clearSelectedCity()">取消单选</a>。
         </p>
 
         <jigsaw-radios id="test-radio" [(value)]="selectedCity"
