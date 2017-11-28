@@ -244,9 +244,7 @@ class MockData {
             "data": this.getComplexHrList(
                 this.getShortenHrList(this.dataSet['hr-list-full'].data), this.dataSet['hr-list-full'].field)
         };
-        this.dataSet['big-table-data'] = this.createBigTableData(5000, 200);
-        this.dataSet['big-row-data'] = this.createBigTableData(5000, 10);
-        this.dataSet['big-column-data'] = this.createBigTableData(15, 200);
+        this.dataSet['big-table-data'] = this.createBigTableData();
         this.dataSet['fish-bone-data1'] = require('../mock-data/fish-bone-full.json').slice(0, 5);
         this.dataSet['fish-bone-data2'] = require('../mock-data/fish-bone-full.json').slice(5);
         this.dataSet['tree-data'] = require('../mock-data/tree-data.json');
@@ -275,16 +273,16 @@ class MockData {
         return list;
     }
 
-    static createBigTableData(row, column): RawTableData {
+    static createBigTableData(): RawTableData {
         const rtd: RawTableData = {field: [], header: [], data: []};
-        for (let i = 0; i < column; i++) {
+        for (let i = 0; i < 200; i++) {
             rtd.field.push('field-' + i);
             rtd.header.push('header-' + i);
         }
-        for (let i = 0; i < row; i++) {
+        for (let i = 0; i < 5000; i++) {
             const row = [];
             rtd.data.push(row);
-            for (let j = 0; j < column; j++) {
+            for (let j = 0; j < 200; j++) {
                 row.push(`data-${i}-${j}`);
             }
         }

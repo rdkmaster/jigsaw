@@ -22,7 +22,6 @@
 <br>
 
 <j-viewport [viewport]="tableData?.viewport" [step]="selectedStep" [verticalOffset]="42">
-    <j-table [data]="tableData" [columnDefines]="columnDefines" trackRowBy="name"
-                  [additionalColumnDefines]="additionalColumnDefines">
+    <j-table [data]="tableData" trackRowBy="name" [additionalColumnDefines]="additionalColumnDefines">
     </j-table>
 </j-viewport>

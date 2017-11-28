@@ -1,8 +1,7 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {BigTableData} from "jigsaw/core/data/table-data";
-import {AdditionalColumnDefine, ColumnDefine, TableValueGenerators} from "jigsaw/component/table/table-typings";
-import {OfficeCellRenderer, OfficeHeaderRenderer, PositionHeaderRenderer} from "./renderers";
+import {AdditionalColumnDefine, TableValueGenerators} from "jigsaw/component/table/table-typings";
 
 @Component({
     templateUrl: './app.component.html'
@@ -11,32 +10,20 @@ export class BigRowDemoComponent {
     tableData: BigTableData;
 
     constructor(public http: HttpClient) {
-        this.tableData = new BigTableData(http, 'mock-data/big-row-data');
+        this.tableData = new BigTableData(http, 'mock-data/big-table-data');
         this.tableData.pagingInfo.pageSize = 1000;
         this.tableData.viewport.rows = 10;
         this.tableData.viewport.columns = 10;
         this.tableData.fromAjax();
+        this.tableData.dataReviser = data => {
+            data.data.forEach((row, index) => {
+                data.data[index] = row.slice(0, 12);
+            });
+            data.field = data.field.slice(0, 10);
+            data.header = data.header.slice(0, 10);
+            return data;
+        }
     }
-
-    columnDefines: ColumnDefine[] = [
-        {
-            target: 'field-2',
-            width: 120,
-            header: {
-                renderer: PositionHeaderRenderer
-            }
-        },
-        {
-            target: 'field-5',
-            width: 200,
-            header: {
-                renderer: OfficeHeaderRenderer
-            },
-            cell: {
-                renderer: OfficeCellRenderer
-            }
-        },
-    ];
 
     additionalColumnDefines: AdditionalColumnDefine[] = [
         {
