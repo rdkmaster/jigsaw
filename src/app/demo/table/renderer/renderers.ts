@@ -1,12 +1,14 @@
-import {Component} from "@angular/core";
+import {Component, Input} from "@angular/core";
 import {TableCellRendererBase} from "jigsaw/component/table/table-renderer";
 import {TableData} from "jigsaw/core/data/table-data";
+import {DropDownTrigger} from "../../../../jigsaw/component/combo-select/combo-select";
 
 /**
  * 这些过滤的代码写的非常不优雅，但是我们不用过于关注他们，因为实际开发中，这些逻辑往往都是在服务端进行的
  * 这些逻辑在这里仅仅是为了协助我们完成这个demo而已
  */
 let filtersInfo = {position: '', office: [], allFields: ''};
+
 export function filterData(tableData: TableData, filters: any) {
     if (filters.hasOwnProperty('position')) filtersInfo.position = filters.position;
     if (filters.hasOwnProperty('office')) filtersInfo.office = filters.office;
@@ -40,7 +42,8 @@ export class OfficeRendererBase extends TableCellRendererBase {
 
 @Component({
     template: `
-        <j-combo-select [placeholder]="cellData" width="100%" height="30" (openChange)="onChange($event)">
+        <j-combo-select [placeholder]="cellData" width="100%" height="30"
+                        [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" (openChange)="onChange($event)">
             <ng-template>
                 <div style="width: 182px; background-color: #fff;">
                     <div style="padding: 7px; border: 1px solid #ddd; border-radius: 2px">
@@ -59,6 +62,9 @@ export class OfficeRendererBase extends TableCellRendererBase {
     `
 })
 export class OfficeHeaderRenderer extends OfficeRendererBase {
+    openTrigger = DropDownTrigger.click;
+    closeTrigger = DropDownTrigger.click;
+
     selectedOffices = this.officeList.concat();
 
     selectAll() {
@@ -88,9 +94,18 @@ export class OfficeHeaderRenderer extends OfficeRendererBase {
     `
 })
 export class OfficeCellEditorRenderer extends OfficeRendererBase {
+
     selected: any;
 
-    onDataRefresh() {
+    private _cellData: any;
+
+    @Input()
+    get cellData(): any {
+        return this._cellData;
+    }
+
+    set cellData(value: any) {
+        this._cellData = value;
         this.selected = {label: this.cellData};
     }
 }
