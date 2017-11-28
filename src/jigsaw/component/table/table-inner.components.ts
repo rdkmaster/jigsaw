@@ -204,26 +204,24 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
     private _editable: boolean = false;
 
     @Input()
-    get editable(): boolean {
+    public get editable(): boolean {
         return this._editable;
     }
 
-    set editable(value: boolean) {
-        if(this._editable === value){
+    public set editable(value: boolean) {
+        if (this._editable === value) {
             return;
         }
         this._editable = value;
-        if(this._initialized){
-            if (this._editable) {
-                this._renderer.setStyle(this._elementRef.nativeElement.parentElement, 'cursor', 'pointer');
-                //绑定点击事件
-                if (this._goEditCallback) {
-                    this._goEditCallback();
-                }
-                this._setGoEditListener();
-            }else{
-                this._renderer.setStyle(this._elementRef.nativeElement.parentElement, 'cursor', 'default');
-            }
+
+        if (!this._initialized) {
+            return;
+        }
+
+        const cursor = this._editable ? 'pointer' : 'default';
+        this._renderer.setStyle(this._elementRef.nativeElement.parentElement, 'cursor', cursor);
+        if (this._editable) {
+            this._setGoEditListener();
         }
     }
 
@@ -327,6 +325,9 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
      * 如果可编辑，单元格绑定点击事件
      * */
     private _setGoEditListener() {
+        if (this._goEditCallback) {
+            this._goEditCallback();
+        }
         this._goEditCallback = this._editable ? this._renderer.listen(
             this._elementRef.nativeElement.parentElement, 'click', () => {
                 this.rendererHost.viewContainerRef.clear();
