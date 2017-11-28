@@ -12,6 +12,7 @@ import {CommonModule} from '@angular/common';
 import {FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "../list-and-tile/group-common";
 import {ArrayCollection} from "../../core/data/array-collection";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 @Component({
     selector: 'jigsaw-radios, j-radios',
@@ -28,6 +29,9 @@ export class JigsawRadioGroup extends AbstractJigsawGroupComponent {
     }
 
     public set value(newValue: any) {
+        if(CommonUtils.isUndefined(newValue)){
+            newValue={};
+        }
         this.writeValue(newValue);
     }
 
