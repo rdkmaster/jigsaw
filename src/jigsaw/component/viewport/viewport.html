@@ -1,5 +1,5 @@
 <j-scrollbar #vScrollbar [style.visibility]="_$showSlider || vScrollbar?.dragging ? 'visible' : 'hidden'"
-             *ngIf="!!(viewport.maxHeight - viewport.height > 0)"
+             *ngIf="viewport.maxHeight - viewport.height > 0"
              class="jigsaw-viewport-vertical-scrollbar"
              [(value)]="viewport.verticalTo"
              [height]="height"
@@ -8,9 +8,9 @@
 </j-scrollbar>
 
 <div class="jigsaw-viewport-horizontal-scrollbar-box"
-     [class.jigsaw-viewport-horizontal-scrollbar-padding]="!!(viewport.maxHeight - viewport.height > 0)">
+     [class.jigsaw-viewport-horizontal-scrollbar-padding]="viewport.maxHeight - viewport.height > 0">
     <j-scrollbar #hScrollbar [style.visibility]="_$showSlider || hScrollbar?.dragging ? 'visible' : 'hidden'"
-                 *ngIf="!!(viewport.maxWidth - viewport.width > 0)"
+                 *ngIf="viewport.maxWidth - viewport.width > 0"
                  class="jigsaw-viewport-horizontal-scrollbar"
                  [(value)]="viewport.horizontalTo"
                  [max]="viewport.maxWidth - viewport.width">
