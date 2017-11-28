@@ -12,7 +12,7 @@ export class BigColumnDemoComponent {
     constructor(public http: HttpClient) {
         this.tableData = new BigTableData(http, 'mock-data/big-table-data');
         this.tableData.pagingInfo.pageSize = 1000;
-        this.tableData.viewport.rows = 10;
+        this.tableData.viewport.rows = 15;
         this.tableData.viewport.columns = 10;
         this.tableData.fromAjax();
         this.tableData.dataReviser = data => {
