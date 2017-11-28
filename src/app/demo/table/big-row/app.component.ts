@@ -17,7 +17,7 @@ export class BigRowDemoComponent {
         this.tableData.fromAjax();
         this.tableData.dataReviser = data => {
             data.data.forEach((row, index) => {
-                data.data[index] = row.slice(0, 12);
+                data.data[index] = row.slice(0, 10);
             });
             data.field = data.field.slice(0, 10);
             data.header = data.header.slice(0, 10);
