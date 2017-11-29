@@ -370,6 +370,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @Output()
     public doubleClick: EventEmitter<number> = new EventEmitter<number>();
 
+    /**
+     * @internal
+     */
     public _$handleRowDoubleClick(rowIndex: number) {
         this.doubleClick.emit(rowIndex);
     }
@@ -377,6 +380,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @ViewChildren('tableRow', {read: ElementRef})
     private _rowElementRefs: QueryList<ElementRef>;
 
+    /**
+     * @internal
+     */
     public _$selectRow(rowIndex: number, suppressEvent: boolean = false) {
         this._rowElementRefs.forEach((row, index) => {
             if (index === rowIndex) {
@@ -474,6 +480,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @ViewChildren(JigsawTableHeaderInternalComponent)
     private _headerComponents: QueryList<JigsawTableHeaderInternalComponent>;
 
+    /**
+     * @internal
+     */
     public _$onSort(sortInfo): void {
         this._headerComponents.forEach(comp => sortInfo.field != comp.field && comp.updateSortOrderClass(SortOrder.default));
         this.sort.emit(sortInfo);

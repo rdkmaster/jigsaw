@@ -140,6 +140,9 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
 
     @Input() public sortAs: SortAs;
 
+    /**
+     * @internal
+     */
     public _$sortOrderClass: Object;
 
     public updateSortOrderClass(sortOrder: SortOrder): void {
@@ -158,6 +161,9 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
     @Output()
     public sort: EventEmitter<SortChangeEvent> = new EventEmitter<SortChangeEvent>();
 
+    /**
+     * @internal
+     */
     public _$sortAsc(): void {
         if (this._$sortOrderClass['jigsaw-table-asc']) {
             return;
@@ -165,6 +171,9 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
         this._sort(SortOrder.asc);
     }
 
+    /**
+     * @internal
+     */
     public _$sortDes(): void {
         if (this._$sortOrderClass['jigsaw-table-des']) {
             return;

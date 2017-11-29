@@ -149,7 +149,7 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
     /**
      * checkbox点击调用的事件
      * @param event
-     * @private
+     * @internal
      */
     public _$onCheckboxClick(event: Event) {
         event.stopPropagation();

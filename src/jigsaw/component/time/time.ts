@@ -370,7 +370,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     }
 
     /**
-     * @private
+     * @internal
      */
     public _$changeGranularity(select: GrItem) {
         this.gr = select.value;

@@ -260,6 +260,9 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
         this._renderer.setStyle(this.itemEl, 'left', value + 'px');
     }
 
+    /**
+     * @internal
+     */
     public _$state;
 
     /**

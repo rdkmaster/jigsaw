@@ -109,11 +109,11 @@ export class JigsawSliderHandle implements OnInit {
     }
 
     /**
-     * 计算需要保留小数的位数.
-     * @param value
-     * @private
+     * 计算需要保留小数的位数
+     * 子级组件需要用到
+     * @internal
      */
-    _calFloat(value: number): number {
+    public _calFloat(value: number): number {
         // 增加步长的计算;
         let m = 0;
         try {
@@ -245,9 +245,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
 
     /**
      * 设置单个的值。内部使用
-     *
-     * @param index
-     * @param value
+     * 子级组件需要用到
      * @internal
      */
     public _updateValue(index: number, value: number) {
@@ -257,6 +255,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
 
     /**
      * 最后重新计算一下，垂直滚动条的位置
+     * 子级组件需要用到
      * @internal
      */
     public _refresh() {
@@ -319,6 +318,10 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
         this._step = value;
     }
 
+    /**
+     * 子级组件需要用到
+     * @internal
+     */
     public _transformValueToPos(value?) {
         // 检验值的合法性, 不合法转换成默认可接受的合法值;
         value = this._verifyValue(value);
@@ -326,7 +329,11 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
         return (value - this.min) / (this.max - this.min) * 100;
     }
 
-    public _dimensions;
+    /**
+     * 子级组件需要用到
+     * @internal
+     */
+    public _dimensions: ClientRect;
 
     /**
      * 垂直滑动条 默认 false
@@ -469,9 +476,9 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
     }
 
     /**
-     * 校验value的合法性. 大于最大值，取最大值, 小于最小值取最小值.
-     * @param value
-     * @private
+     * 校验value的合法性. 大于最大值，取最大值, 小于最小值取最小值
+     * 子级组件需要用到
+     * @internal
      */
     public _verifyValue(value: number) {
         if (value - this.min < 0) {

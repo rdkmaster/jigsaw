@@ -22,7 +22,12 @@ export class JigsawScrollHandle implements OnInit {
 
     private _scrollbar: JigsawScrollbar; // 父组件;
 
-    constructor(private _render: Renderer2, public _elementRef: ElementRef,
+    constructor(private _render: Renderer2,
+                /**
+                 * 子级组件需要用到
+                 * @internal
+                 */
+                public _elementRef: ElementRef,
                 @Host() @Inject(forwardRef(() => JigsawScrollbar)) slider: JigsawScrollbar) {
         this._scrollbar = slider;
     }
@@ -95,11 +100,11 @@ export class JigsawScrollHandle implements OnInit {
     }
 
     /**
-     * 计算需要保留小数的位数.
-     * @param value
-     * @private
+     * 计算需要保留小数的位数
+     * 子级组件需要用到
+     * @internal
      */
-    _calFloat(value: number): number {
+    public _calFloat(value: number): number {
         // 增加步长的计算;
         let m = 0;
         try {
@@ -209,6 +214,7 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, 
 
     /**
      * 最后重新计算一下，垂直滚动条的位置
+     * 子级组件需要用到
      * @internal
      */
     public _refresh() {
@@ -260,6 +266,10 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, 
         this._step = value;
     }
 
+    /**
+     * 子级组件需要用到
+     * @internal
+     */
     public _transformValueToPos(value?) {
         // 检验值的合法性, 不合法转换成默认可接受的合法值;
         value = this._verifyValue(value);
@@ -267,6 +277,10 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, 
         return (value - this.min) / (this.max - this.min) * 100;
     }
 
+    /**
+     * 子级组件需要用到
+     * @internal
+     */
     public _dimensions: ClientRect;
 
     public dragging: boolean;
@@ -322,8 +336,8 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, 
 
     /**
      * 校验value的合法性. 大于最大值，取最大值, 小于最小值取最小值.
-     * @param value
-     * @private
+     * 子级组件需要用到
+     * @internal
      */
     public _verifyValue(value: number) {
         if (value - this.min < 0) {

@@ -29,7 +29,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     private _graph: any;
 
     /**
-     * internal
+     * @internal
      */
     public _$noDataSrc = CommonUtils.noDataImageSrc;
 
