@@ -331,6 +331,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
 
         picker.on("dp.update", (e) => {
             // Fired (in most cases) when the viewDate changes. E.g. Next and Previous buttons, selecting a year.
+            this._weekHandle();
             this._handleRecommended(this._el.nativeElement, this._popService);
         });
 
@@ -428,8 +429,10 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     private _handleWeekSelect() {
         let weekNum = TimeService.getWeekOfYear(<string>this.date);
         let year = TimeService.getYear(<string>this.date);
-        let trNode = this._el.nativeElement.querySelector(".jigsaw-time-box .datepicker .datepicker-days>table>tbody>tr>td.active").parentNode;
-        trNode.classList.add("active");
+        const tdActive = this._el.nativeElement.querySelector(".jigsaw-time-box .datepicker .datepicker-days>table>tbody>tr>td.active");
+        if(tdActive){
+            tdActive.parentNode.classList.add("active");
+        }
         return {year: year, week: weekNum};
     }
 
