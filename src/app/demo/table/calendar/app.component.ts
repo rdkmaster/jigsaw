@@ -3,7 +3,7 @@ import {TableData} from "jigsaw/core/data/table-data";
 import {TableCellRendererBase} from "jigsaw/component/table/table-renderer";
 import {CommonUtils} from "jigsaw/core/utils/common-utils";
 
-export class DateSheetTableData extends TableData {
+export class CalendarTableData extends TableData {
     year: number = new Date().getFullYear();
     month: number = new Date().getMonth();
 }
@@ -11,20 +11,20 @@ export class DateSheetTableData extends TableData {
 @Component({
     templateUrl: './app.component.html'
 })
-export class TableDateSheetDemoComponent {
-    tableData: DateSheetTableData;
+export class TableCalendarDemoComponent {
+    tableData: CalendarTableData;
 
     colDef = [
         {
             target: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
             cell: {
-                renderer: DateSheetRenderer
+                renderer: CalendarDateRenderer
             }
         }
     ];
 
     constructor() {
-        this.tableData = new DateSheetTableData(
+        this.tableData = new CalendarTableData(
             [
                 [69, 16, 4, 47, 27, 54, 100],
                 [47, 64, 74, 71, 87, 76, 88],
@@ -90,7 +90,7 @@ export class TableDateSheetDemoComponent {
         }
     `]
 })
-export class DateSheetRenderer extends TableCellRendererBase {
+export class CalendarDateRenderer extends TableCellRendererBase {
     get weekEnd(): boolean {
         return this.column == 0 || this.column == 6;
     }
@@ -99,7 +99,7 @@ export class DateSheetRenderer extends TableCellRendererBase {
 
     get date(): string {
         if (CommonUtils.isUndefined(this._date)) {
-            const td: DateSheetTableData = <DateSheetTableData>this.tableData;
+            const td: CalendarTableData = <CalendarTableData>this.tableData;
             const dateObject = new Date(`${td.year}-${td.month + 1}-1 00:00:00`);
             const daysOfMonth = new Date(dateObject.getFullYear(), (dateObject.getMonth() + 1), 0).getDate();
             const weekDay = dateObject.getDay();

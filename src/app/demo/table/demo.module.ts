@@ -35,8 +35,8 @@ import {TableDataFromAjaxDemoComponent} from "./data-from-ajax/app.component";
 import {TableDataFromAjaxDemoModule} from "./data-from-ajax/app.module";
 import {TableDataWithPopupDemoComponent} from "./with-popup/app.component";
 import {TableDataWithPopupDemoModule} from "./with-popup/app.module";
-import {TableDateSheetDemoComponent} from "./date-sheet/app.component";
-import {TableDateSheetDemoModule} from "./date-sheet/app.module";
+import {TableCalendarDemoComponent} from "./calendar/app.component";
+import {TableCalendarDemoModule} from "./calendar/app.module";
 import {TableFixedHeadDemoComponent} from "./fixed-header/app.component";
 import {TableFixedHeadDemoModule} from "./fixed-header/app.module";
 import {TableHideHeadDemoComponent} from "./hide-header/app.component";
@@ -156,7 +156,7 @@ export const routerConfig = [
         path: 'content-width', component: TableContentWidthDemoComponent, recommended: true
     },
     {
-        path: 'date-sheet', component: TableDateSheetDemoComponent, recommended: true
+        path: 'calendar', component: TableCalendarDemoComponent, recommended: true
     },
 ];
 
@@ -170,7 +170,7 @@ export const routerConfig = [
         TableSetCellClassDemoModule, TableSetCellEditableDemoModule, TableSetCellRenderDemoModule, TableColumnGroupDemoModule,
         TableColumnSetVisibleDemoModule, TableColumnSetWidthDemoModule, TableSetHeaderClassDemoModule, TableSetHeaderRenderDemoModule,
         TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, SwimLaneDiagramDemoModule, TableHideHeadDemoModule,
-        TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule, TableDateSheetDemoModule
+        TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule, TableCalendarDemoModule
     ]
 })
 export class TableDemoModule {

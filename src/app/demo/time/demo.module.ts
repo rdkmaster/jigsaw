@@ -54,7 +54,7 @@ export const routerConfig:any = [
         path: 'full', component: TimeFullComponent, recommended: true
     },
     {
-        url: '/table/date-sheet', desc: 'date-sheet', recommended: true
+        url: '/table/calendar', desc: 'calendar', recommended: true
     },
 ];
 
