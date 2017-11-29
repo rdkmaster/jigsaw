@@ -106,8 +106,12 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
             item.selectedChange.observers.length = 0;
             item.selectedChange.subscribe(() => {
                 if (this.multipleSelect) { //多选
-                    item.selected = !item.selected;//切换组件选中状态
-                    this._updateSelectItemsForForm(item.value, item.selected);
+                    if(item.innerSelected){
+                        item.selected = !item.selected;
+                        item.innerSelected = false;
+                    }
+                        item.selected = !item.selected;//切换组件选中状态
+                        this._updateSelectItemsForForm(item.value, item.selected);
                 } else { //单选
                     if (!item.selected||item.innerSelected) {
                         item.selected = true;
