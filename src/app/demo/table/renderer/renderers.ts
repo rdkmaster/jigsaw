@@ -3,35 +3,6 @@ import {TableCellRendererBase} from "jigsaw/component/table/table-renderer";
 import {TableData} from "jigsaw/core/data/table-data";
 import {DropDownTrigger} from "../../../../jigsaw/component/combo-select/combo-select";
 
-/**
- * 这些过滤的代码写的非常不优雅，但是我们不用过于关注他们，因为实际开发中，这些逻辑往往都是在服务端进行的
- * 这些逻辑在这里仅仅是为了协助我们完成这个demo而已
- */
-let filtersInfo = {position: '', office: [], allFields: ''};
-
-export function filterData(tableData: TableData, filters: any) {
-    if (filters.hasOwnProperty('position')) filtersInfo.position = filters.position;
-    if (filters.hasOwnProperty('office')) filtersInfo.office = filters.office;
-    if (filters.hasOwnProperty('allFields')) filtersInfo.allFields = filters.allFields;
-
-    const positionFilter = filtersInfo.position;
-    const officeFilter = filtersInfo.office;
-    const allFieldFilter = filtersInfo.allFields;
-
-    tableData.filter(positionFilter, ['position']);
-    tableData.filter(row => {
-        const officeString = row[5];
-        const officeMatch = officeFilter.length > 0 ? officeFilter.find(office => office.label === officeString) : true;
-
-        const positionString = row[2] + '';
-        const positionMatch = positionString.indexOf(positionFilter) != -1;
-
-        const allFieldMatch = row.join('_%%_').indexOf(allFieldFilter) != -1;
-
-        return positionMatch && officeMatch && allFieldMatch;
-    });
-}
-
 export class OfficeRendererBase extends TableCellRendererBase {
     officeList = [
         {label: 'Online Prod I'}, {label: 'Online Prod II'},
@@ -132,4 +103,32 @@ export class PositionHeaderRenderer extends TableCellRendererBase {
         const positionFilter = selected.label == 'All Positions' ? '' : selected.label;
         filterData(this.tableData, {position: positionFilter});
     }
+}
+
+/**
+ * 这些过滤的代码写的非常不优雅，但是我们不用过于关注他们，因为实际开发中，这些逻辑往往都是在服务端进行的
+ * 这些逻辑在这里仅仅是为了协助我们完成这个demo而已
+ */
+let filtersInfo = {position: '', office: [], allFields: ''};
+export function filterData(tableData: TableData, filters: any) {
+    if (filters.hasOwnProperty('position')) filtersInfo.position = filters.position;
+    if (filters.hasOwnProperty('office')) filtersInfo.office = filters.office;
+    if (filters.hasOwnProperty('allFields')) filtersInfo.allFields = filters.allFields;
+
+    const positionFilter = filtersInfo.position;
+    const officeFilter = filtersInfo.office;
+    const allFieldFilter = filtersInfo.allFields;
+
+    tableData.filter(positionFilter, ['position']);
+    tableData.filter(row => {
+        const officeString = row[5];
+        const officeMatch = officeFilter.length > 0 ? officeFilter.find(office => office.label === officeString) : true;
+
+        const positionString = row[2] + '';
+        const positionMatch = positionString.indexOf(positionFilter) != -1;
+
+        const allFieldMatch = row.join('_%%_').indexOf(allFieldFilter) != -1;
+
+        return positionMatch && officeMatch && allFieldMatch;
+    });
 }
