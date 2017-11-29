@@ -249,7 +249,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
                 lastWeek: '[上]ddddLT',
                 sameElse: 'L'
             },
-            dayOfMonthOrdinalParse: /\d{1,2}(日|月|周)/,
+            dayOfMonthOrdinalParse: /\d{1,2}([日月周])/,
             ordinal: function (number, period) {
                 switch (period) {
                     case 'd':
@@ -329,7 +329,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
             }
         });
 
-        picker.on("dp.update", (e) => {
+        picker.on("dp.update", () => {
             // Fired (in most cases) when the viewDate changes. E.g. Next and Previous buttons, selecting a year.
             this._handleRecommended(this._el.nativeElement, this._popService);
         });
