@@ -99,7 +99,7 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
         if (!error) {
             const reason = 'the data collection is busy now!';
             console.error('get data from paging server error!! detail: ' + reason);
-            error = new Response(reason, { status: 409, statusText: reason });
+            error = new Response(reason, {status: 409, statusText: reason});
         } else {
             console.error('get data from paging server error!! detail: ' + error['message']);
             this._busy = false;
