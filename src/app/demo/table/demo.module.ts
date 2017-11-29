@@ -63,6 +63,10 @@ import {TableSetHeaderRenderDemoComponent} from "./header-render/app.component";
 import {TableSetHeaderRenderDemoModule} from "./header-render/app.module";
 import {TableSetHeaderSortDemoComponent} from "./sortable/app.component";
 import {TableSetHeaderSortDemoModule} from "./sortable/app.module";
+import {BigRowDemoComponent} from "./big-row/app.component";
+import {BigColumnDemoComponent} from "./big-column/app.component";
+import {BigRowDemoModule} from "./big-row/app.module";
+import {BigColumnDemoModule} from "./big-column/app.module";
 
 export const routerConfig = [
     {
@@ -158,6 +162,12 @@ export const routerConfig = [
     {
         path: 'calendar', component: TableCalendarDemoComponent, recommended: true
     },
+    {
+        path: 'big-row', component: BigRowDemoComponent
+    },
+    {
+        path: 'big-column', component: BigColumnDemoComponent
+    },
 ];
 
 @NgModule({
@@ -170,7 +180,7 @@ export const routerConfig = [
         TableSetCellClassDemoModule, TableSetCellEditableDemoModule, TableSetCellRenderDemoModule, TableColumnGroupDemoModule,
         TableColumnSetVisibleDemoModule, TableColumnSetWidthDemoModule, TableSetHeaderClassDemoModule, TableSetHeaderRenderDemoModule,
         TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, SwimLaneDiagramDemoModule, TableHideHeadDemoModule,
-        TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule, TableCalendarDemoModule
+        TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule, TableCalendarDemoModule, BigRowDemoModule, BigColumnDemoModule
     ]
 })
 export class TableDemoModule {

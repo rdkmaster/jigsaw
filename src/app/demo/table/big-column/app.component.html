@@ -4,11 +4,6 @@
 
 
 <!-- start to learn the demo from here -->
-<label>视口行数：</label>
-<j-slider width="200px" min="5" max="30" [(value)]="tableData.viewport.rows">
-</j-slider>
-（{{tableData.viewport.rows}}）
-
 <label>视口列数：</label>
 <j-slider width="200px" min="2" max="15" [(value)]="tableData.viewport.columns">
 </j-slider>
@@ -22,7 +17,6 @@
 <br>
 
 <j-viewport [viewport]="tableData?.viewport" [step]="selectedStep" [verticalOffset]="42">
-    <j-table [data]="tableData" [columnDefines]="columnDefines" trackRowBy="name"
-                  [additionalColumnDefines]="additionalColumnDefines">
+    <j-table [data]="tableData" trackRowBy="name" [additionalColumnDefines]="additionalColumnDefines">
     </j-table>
 </j-viewport>

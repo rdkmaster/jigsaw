@@ -9,11 +9,6 @@
 </j-slider>
 （{{tableData.viewport.rows}}）
 
-<label>视口列数：</label>
-<j-slider width="200px" min="2" max="15" [(value)]="tableData.viewport.columns">
-</j-slider>
-（{{tableData.viewport.columns}}）
-
 <label>每次滚动行数：</label>
 <j-slider width="200px" min="1" max="20" [(value)]="selectedStep">
 </j-slider>
@@ -22,7 +17,6 @@
 <br>
 
 <j-viewport [viewport]="tableData?.viewport" [step]="selectedStep" [verticalOffset]="42">
-    <j-table [data]="tableData" [columnDefines]="columnDefines" trackRowBy="name"
-                  [additionalColumnDefines]="additionalColumnDefines">
+    <j-table [data]="tableData" trackRowBy="name" [additionalColumnDefines]="additionalColumnDefines">
     </j-table>
 </j-viewport>
