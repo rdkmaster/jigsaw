@@ -6,6 +6,7 @@ import {CommonModule} from "@angular/common";
 import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawOptionComponent} from "./group-common";
 import {AbstractJigsawGroupComponent} from "./group-common";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 @Component({
     selector: 'jigsaw-list, j-list',
@@ -47,9 +48,19 @@ export class JigsawListOption extends AbstractJigsawOptionComponent {
      * 点击组件触发
      * @internal
      */
-    public _$handleClick(): void {
+    public _$handleClick(event): void {
         if (!this.disabled) {
-            this.selectedChange.emit(this);
+            if (CommonUtils.isUndefined(event)) {
+                this.selectedChange.emit(this);
+            } else {
+                if (this.innerSelected) {
+                    this.innerSelected = false;
+                }
+                else {
+                    this.innerSelected = true;
+                    this.selectedChange.emit(this);
+                }
+            }
         }
     }
 }
