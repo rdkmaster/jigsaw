@@ -1,20 +1,15 @@
-import {Component, Input} from "@angular/core";
-import {TableCellRendererBase, TableCellEditRendererBase} from "jigsaw/component/table/table-renderer";
+import {Component, Input, OnDestroy, OnInit} from "@angular/core";
+import {TableCellRendererBase} from "jigsaw/component/table/table-renderer";
 import {TableData} from "jigsaw/core/data/table-data";
 import {DropDownTrigger} from "../../../../jigsaw/component/combo-select/combo-select";
-
-export const officeList = [
-    {label: 'Online Prod I'}, {label: 'Online Prod II'},
-    {label: 'Offline Prod I'}, {label: 'Offline Prod II'},
-    {label: 'Platform I'}, {label: 'Platform II'}, {label: 'Platform III'}
-];
+import {Subscriber} from "rxjs/Subscriber";
 
 export class OfficeRendererBase extends TableCellRendererBase {
-    officeList = officeList;
-}
-
-export class OfficeEditRendererBase extends TableCellEditRendererBase {
-    officeList = officeList
+    officeList = [
+        {label: 'Online Prod I'}, {label: 'Online Prod II'},
+        {label: 'Offline Prod I'}, {label: 'Offline Prod II'},
+        {label: 'Platform I'}, {label: 'Platform II'}, {label: 'Platform III'}
+    ];
 }
 
 @Component({
@@ -70,7 +65,7 @@ export class OfficeHeaderRenderer extends OfficeRendererBase {
         </jigsaw-select>
     `
 })
-export class OfficeCellEditorRenderer extends OfficeEditRendererBase {
+export class OfficeCellEditorRenderer extends OfficeRendererBase implements OnInit, OnDestroy {
     selected: any;
 
     private _cellData: any;
@@ -83,6 +78,27 @@ export class OfficeCellEditorRenderer extends OfficeEditRendererBase {
     set cellData(value: any) {
         this._cellData = value;
         this.selected = {label: this.cellData};
+    }
+
+    subscriber: Subscriber<any>;
+
+    ngOnInit() {
+        super.ngOnInit();
+        // ***使用此方法使其他单元格退出编辑状态***
+        this.tableData.emit(this);
+        this.subscriber = this.tableData.subscribe(renderer => {
+            if (this != renderer) {
+                this.dispatchChangeEvent(this.cellData);
+            }
+        })
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        if (this.subscriber) {
+            this.subscriber.unsubscribe();
+            this.subscriber = null;
+        }
     }
 }
 

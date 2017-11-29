@@ -87,35 +87,6 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
     }
 }
 
-export class TableCellEditRendererBase extends TableCellRendererBase implements OnDestroy {
-    @Input()
-    public get tableData(): TableData {
-        return this._tableData;
-    }
-
-    public set tableData(value: TableData) {
-        this._tableData = value;
-        this._initTargetData();
-        if (this._removeTableDataRefresh) {
-            this._removeTableDataRefresh();
-        }
-        this._removeTableDataRefresh = this._tableData.onRefresh(this.onDataRefresh, this);
-
-        this.tableData.emit(this);
-        this.tableData.unsubscribe(this);
-        this.tableData.subscribe(this, renderer => {
-            if (this != renderer) {
-                this.dispatchChangeEvent(this.cellData)
-            }
-        });
-    }
-
-    ngOnDestroy() {
-        super.ngOnDestroy();
-        this.tableData.unsubscribe(this);
-    }
-}
-
 /*
  * 默认表格渲染组件
  * */
