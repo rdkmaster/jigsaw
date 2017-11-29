@@ -1,8 +1,8 @@
 import {Component, Input, OnDestroy, OnInit} from "@angular/core";
+import {Subscriber} from "rxjs/Subscriber";
 import {TableCellRendererBase} from "jigsaw/component/table/table-renderer";
 import {TableData} from "jigsaw/core/data/table-data";
-import {DropDownTrigger} from "../../../../jigsaw/component/combo-select/combo-select";
-import {Subscriber} from "rxjs/Subscriber";
+import {DropDownTrigger} from "jigsaw/component/combo-select/combo-select";
 
 export class OfficeRendererBase extends TableCellRendererBase {
     officeList = [
@@ -84,17 +84,20 @@ export class OfficeCellEditorRenderer extends OfficeRendererBase implements OnIn
 
     ngOnInit() {
         super.ngOnInit();
-        // ***使用此方法使其他单元格退出编辑状态***
+
+        // 使用此方法使其他单元格退出编辑状态
         this.tableData.emit(this);
         this.subscriber = this.tableData.subscribe(renderer => {
             if (this != renderer) {
                 this.dispatchChangeEvent(this.cellData);
             }
-        })
+        });
     }
 
     ngOnDestroy() {
         super.ngOnDestroy();
+
+        // 随手清理垃圾是一个好习惯
         if (this.subscriber) {
             this.subscriber.unsubscribe();
             this.subscriber = null;
