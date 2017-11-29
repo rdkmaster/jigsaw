@@ -321,6 +321,12 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
                 this._handleValueChange(changeValue, <TimeGr>this.gr);
             }
             this._bindActiveDayClickHandler(picker);
+
+            // 选择了日期，让recommend的tooltip的销毁
+            if (this._tooltipInfo) {
+                this._tooltipInfo.dispose();
+                this._tooltipInfo = null;
+            }
         });
 
         picker.on("dp.update", (e) => {
@@ -504,7 +510,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
                 if (startMonth != endMonth) {
                     if (!node.classList.contains("old") && !node.classList.contains("new")) {
                         if ((startMonth == headObj.month && text >= startDate) ||
-                            (endMonth == headObj.month && text >= endDate)) {
+                            (endMonth == headObj.month && text <= endDate)) {
                             node.classList.add("expect-day");
                         }
                         if (text == startDate) {

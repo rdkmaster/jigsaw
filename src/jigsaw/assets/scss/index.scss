@@ -26,6 +26,7 @@
     .bootstrap-datetimepicker-widget table td.active:hover,
     .jigsaw-time-box .bootstrap-datetimepicker-widget table tr.active td{
         background-color: $primary-color;
+        color: $text-color-of-bg;
     }
 
     .bootstrap-datetimepicker-widget table th.picker-switch{
