@@ -18,7 +18,7 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
     @Output() public cellDataChange = new EventEmitter<any>();
 
     protected targetData: TableData;
-    protected _removeTableDataRefresh: Function;
+    private _removeTableDataRefresh: Function;
     private _removeAdditionalDataRefresh: Function;
 
     private _column: number = -1;
@@ -34,7 +34,7 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
         this.cellDataChange.emit(value)
     }
 
-    protected _tableData: TableData;
+    private _tableData: TableData;
 
     @Input()
     public get tableData(): TableData {
@@ -66,7 +66,7 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
         this._initTargetData();
     }
 
-    protected _initTargetData(): void {
+    private _initTargetData(): void {
         if (!this.tableData || !this.additionalData) {
             return;
         }
