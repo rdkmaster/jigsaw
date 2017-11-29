@@ -1,14 +1,20 @@
 import {Component, Input} from "@angular/core";
-import {TableCellRendererBase} from "jigsaw/component/table/table-renderer";
+import {TableCellRendererBase, TableCellEditRendererBase} from "jigsaw/component/table/table-renderer";
 import {TableData} from "jigsaw/core/data/table-data";
 import {DropDownTrigger} from "../../../../jigsaw/component/combo-select/combo-select";
 
+export const officeList = [
+    {label: 'Online Prod I'}, {label: 'Online Prod II'},
+    {label: 'Offline Prod I'}, {label: 'Offline Prod II'},
+    {label: 'Platform I'}, {label: 'Platform II'}, {label: 'Platform III'}
+];
+
 export class OfficeRendererBase extends TableCellRendererBase {
-    officeList = [
-        {label: 'Online Prod I'}, {label: 'Online Prod II'},
-        {label: 'Offline Prod I'}, {label: 'Offline Prod II'},
-        {label: 'Platform I'}, {label: 'Platform II'}, {label: 'Platform III'}
-    ];
+    officeList = officeList;
+}
+
+export class OfficeEditRendererBase extends TableCellEditRendererBase {
+    officeList = officeList
 }
 
 @Component({
@@ -64,8 +70,7 @@ export class OfficeHeaderRenderer extends OfficeRendererBase {
         </jigsaw-select>
     `
 })
-export class OfficeCellEditorRenderer extends OfficeRendererBase {
-
+export class OfficeCellEditorRenderer extends OfficeEditRendererBase {
     selected: any;
 
     private _cellData: any;
@@ -110,6 +115,7 @@ export class PositionHeaderRenderer extends TableCellRendererBase {
  * 这些逻辑在这里仅仅是为了协助我们完成这个demo而已
  */
 let filtersInfo = {position: '', office: [], allFields: ''};
+
 export function filterData(tableData: TableData, filters: any) {
     if (filters.hasOwnProperty('position')) filtersInfo.position = filters.position;
     if (filters.hasOwnProperty('office')) filtersInfo.office = filters.office;

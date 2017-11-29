@@ -18,7 +18,7 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
     @Output() public cellDataChange = new EventEmitter<any>();
 
     protected targetData: TableData;
-    private _removeTableDataRefresh: Function;
+    protected _removeTableDataRefresh: Function;
     private _removeAdditionalDataRefresh: Function;
 
     private _column: number = -1;
@@ -34,7 +34,7 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
         this.cellDataChange.emit(value)
     }
 
-    private _tableData: TableData;
+    protected _tableData: TableData;
 
     @Input()
     public get tableData(): TableData {
@@ -66,7 +66,7 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
         this._initTargetData();
     }
 
-    private _initTargetData(): void {
+    protected _initTargetData(): void {
         if (!this.tableData || !this.additionalData) {
             return;
         }
@@ -84,6 +84,35 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.onDataRefresh();
+    }
+}
+
+export class TableCellEditRendererBase extends TableCellRendererBase implements OnDestroy {
+    @Input()
+    public get tableData(): TableData {
+        return this._tableData;
+    }
+
+    public set tableData(value: TableData) {
+        this._tableData = value;
+        this._initTargetData();
+        if (this._removeTableDataRefresh) {
+            this._removeTableDataRefresh();
+        }
+        this._removeTableDataRefresh = this._tableData.onRefresh(this.onDataRefresh, this);
+
+        this.tableData.emit(this);
+        this.tableData.unsubscribe(this);
+        this.tableData.subscribe(this, renderer => {
+            if (this != renderer) {
+                this.dispatchChangeEvent(this.cellData)
+            }
+        });
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        this.tableData.unsubscribe(this);
     }
 }
 

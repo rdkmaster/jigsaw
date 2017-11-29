@@ -5,6 +5,7 @@ import {
     IAjaxComponentData, DataReviser, ComponentDataHelper, HttpClientOptions
 } from "./component-data";
 import {CallbackRemoval} from "../utils/common-utils";
+import {Subscriber} from "rxjs/Subscriber";
 
 export abstract class AbstractGeneralCollection<T = any> implements IAjaxComponentData {
     public abstract fromObject(data: T): AbstractGeneralCollection<T>;
@@ -99,7 +100,7 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
         if (!error) {
             const reason = 'the data collection is busy now!';
             console.error('get data from paging server error!! detail: ' + reason);
-            error = new Response(reason, { status: 409, statusText: reason });
+            error = new Response(reason, {status: 409, statusText: reason});
         } else {
             console.error('get data from paging server error!! detail: ' + error['message']);
             this._busy = false;
@@ -121,17 +122,23 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
     }
 
     private _emitter = new EventEmitter<any>();
+    private subscribersCache: Array<{ renderer: any, subscriber: Subscriber<any> }> = [];
 
     public emit(value?: any): void {
         this._emitter.emit(value);
     }
 
-    public subscribe(generatorOrNext?: any, error?: any, complete?: any): any {
-        return this._emitter.subscribe(generatorOrNext, error, complete);
+    public subscribe(renderer: any, generatorOrNext?: any, error?: any, complete?: any): any {
+        const subscriber = this._emitter.subscribe(generatorOrNext, error, complete);
+        this.subscribersCache.push({renderer: renderer, subscriber: subscriber});
+        return subscriber;
     }
 
-    public unsubscribe() {
-        this._emitter.unsubscribe();
+    public unsubscribe(renderer: any) {
+        const subscriberCache = this.subscribersCache.find(cache => cache.renderer == renderer);
+        if (subscriberCache && subscriberCache.subscriber) {
+            subscriberCache.subscriber.unsubscribe();
+        }
     }
 }
 
