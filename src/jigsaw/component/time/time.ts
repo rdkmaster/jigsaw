@@ -369,7 +369,10 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         }
     }
 
-    private _changeGranularity(select: GrItem) {
+    /**
+     * @private
+     */
+    public _$changeGranularity(select: GrItem) {
         this.gr = select.value;
         this.grChange.emit(this.gr);
     }
@@ -451,22 +454,22 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
             nativeElement.querySelectorAll(".jigsaw-time-box .datepicker .expect-day").forEach(node => {
 
                 // #239 移除已经注册的事件. 点击事件会触发此操作, 造成重复注册事件. 引起tooltips 不能销毁.
-                const removeMouseenterListeners = this._eventHelper.get(node, 'mouseenter');
-                if (removeMouseenterListeners instanceof Array) {
-                    removeMouseenterListeners.forEach(removeMouseenterListener => {
+                const removeMouseEnterListeners = this._eventHelper.get(node, 'mouseenter');
+                if (removeMouseEnterListeners instanceof Array) {
+                    removeMouseEnterListeners.forEach(removeMouseenterListener => {
                         removeMouseenterListener();
                         this._eventHelper.del(node, 'mouseenter', removeMouseenterListener);
                     })
                 }
-                const removeMouseleaveListeners = this._eventHelper.get(node, 'mouseleave');
-                if (removeMouseleaveListeners instanceof Array) {
-                    removeMouseleaveListeners.forEach(removeMouseleaveListener => {
+                const removeMouseLeaveListeners = this._eventHelper.get(node, 'mouseleave');
+                if (removeMouseLeaveListeners instanceof Array) {
+                    removeMouseLeaveListeners.forEach(removeMouseleaveListener => {
                         removeMouseleaveListener();
                         this._eventHelper.del(node, 'mouseleave', removeMouseleaveListener);
                     })
                 }
 
-                const removeMouseenterListener = this._renderer.listen(node, "mouseenter", (event) => {
+                const removeMouseEnterListener = this._renderer.listen(node, "mouseenter", (event) => {
                     if (this._tooltipInfo) {
                         this._tooltipInfo.dispose();
                         this._tooltipInfo = null;
@@ -483,7 +486,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
                         message: "Recommended"
                     });
                 });
-                this._eventHelper.put(node, "mouseenter", removeMouseenterListener);
+                this._eventHelper.put(node, "mouseenter", removeMouseEnterListener);
 
                 const removeMouseleaveListener = this._renderer.listen(node, "mouseleave", () => {
                     if (this._tooltipInfo) {
