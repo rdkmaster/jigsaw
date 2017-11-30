@@ -29,7 +29,7 @@ task('generate-demo-info', () => {
         childRouters.forEach((child: any) => {
             const url = child.hasOwnProperty('url') ? child.url : `/${router.path}/${child.path}`;
             const demoInfo = {
-                url: `http://rdk.zte.com.cn:8800/jigsaw${url}`,
+                url: `/jigsaw${url}`,
                 desc: child.desc ? child.desc : child.path,
                 recommended: !!child.recommended
             };
