@@ -95,7 +95,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'misc', miscConfig);
         this._addRouterConfig(routerConfig, 'pagination', paginationConfig);
         this._addRouterConfig(routerConfig, 'popup', popupConfig);
-        this._addRouterConfig(routerConfig, 'radio', radioConfig);
+        this._addRouterConfig(routerConfig, 'radio-group', radioConfig);
         this._addRouterConfig(routerConfig, 'range-time', rangeTimeConfig);
         this._addRouterConfig(routerConfig, 'scrollbar', scrollbarConfig);
         this._addRouterConfig(routerConfig, 'select', selectConfig);
