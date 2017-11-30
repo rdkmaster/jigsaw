@@ -65,8 +65,11 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
                     this._selectedItems.splice(this.selectedItems.indexOf(item.value), 1);
                 }
             });
-            //添加选中数据
+            if(this.selectedItems.length!=0){
+                this.selectedItems=[];
+            }
             this.selectedItems.push(itemValue);
+            //添加选中数据
         }
         this._selectedItems.refresh();
         this.selectedItemsChange.emit(this.selectedItems);
@@ -103,11 +106,16 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
             item.selectedChange.observers.length = 0;
             item.selectedChange.subscribe(() => {
                 if (this.multipleSelect) { //多选
-                    item.selected = !item.selected;//切换组件选中状态
-                    this._updateSelectItemsForForm(item.value, item.selected);
+                    if(item.innerSelected){
+                        item.selected = !item.selected;
+                        item.innerSelected = false;
+                    }
+                        item.selected = !item.selected;//切换组件选中状态
+                        this._updateSelectItemsForForm(item.value, item.selected);
                 } else { //单选
-                    if (!item.selected) {
+                    if (!item.selected||item.innerSelected) {
                         item.selected = true;
+                        item.innerSelected = false;
                         this._updateSelectItemsForForm(item.value, item.selected);
                     }
                 }
@@ -170,6 +178,9 @@ export class AbstractJigsawOptionComponent extends AbstractJigsawComponent {
 
     @Input()
     public selected: boolean = false; // 选中状态
+
+    @Input()
+    public innerSelected: boolean = false;
 
     @Output()
     public selectedChange = new EventEmitter<AbstractJigsawOptionComponent>();
