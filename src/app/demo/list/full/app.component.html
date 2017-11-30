@@ -47,15 +47,9 @@
         </div>
         <div class="demo-4 live-demo live-demo-block">
             <h3>与combo-select组合使用</h3>
-            <j-combo-select
-                [(value)]="selectedItems4"
-                [clearable]="true"
-                maxWidth="500"
-                labelField="name">
+            <j-combo-select [(value)]="selectedItems4" [clearable]="true" maxWidth="500" labelField="name">
                 <ng-template>
-                    <j-list [multipleSelect]="true"
-                            trackItemBy="name"
-                            [(selectedItems)]="selectedItems4">
+                    <j-list [multipleSelect]="true" trackItemBy="name" [(selectedItems)]="selectedItems4">
                         <j-list-option *ngFor="let goods of goodsList" #listItem [value]="goods"
                                        [disabled]="goods.disabled">
                             <div class="goods-box">
