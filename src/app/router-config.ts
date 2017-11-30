@@ -74,7 +74,7 @@ export const routerConfig = [
     },
     {
         path: "radio",
-        loadChildren: "./demo/radio/demo.module#RadioDemoModule",
+        loadChildren: "./demo/radio-group/demo.module#RadioDemoModule",
     },
     {
         path: "range-time",
@@ -101,8 +101,8 @@ export const routerConfig = [
         loadChildren: "./demo/table/demo.module#TableDemoModule",
     },
     {
-        path: "tabs",
-        loadChildren: "./demo/tabs/demo.module#TabsDemoModule",
+        path: "tab",
+        loadChildren: "./demo/tab/demo.module#TabsDemoModule",
     },
     {
         path: "tag",
