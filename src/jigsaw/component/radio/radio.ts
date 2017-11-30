@@ -87,7 +87,7 @@ export class JigsawRadioOption extends AbstractJigsawOptionComponent {
      */
     public _$handleClick(): void {
         if (!this.disabled) {
-            this.selectedChange.emit(this);
+            this.dispatchChangeEvent.emit(this);
         }
     }
 

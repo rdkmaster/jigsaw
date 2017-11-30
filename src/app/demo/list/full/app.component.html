@@ -21,9 +21,9 @@
         <div class="demo-2 live-demo live-demo-block">
             <h3>带checkbox的选项</h3>
             <j-list width="350" trackItemBy="title" (selectedItemsChange)="handleSelect2($event)">
-                <j-list-option *ngFor="let title of titles" #listItem [value]="title">
+                <j-list-option *ngFor="let title of titles" #listItem [(selected)]="title.selected" [value]="title">
                     <div j-title>
-                        <j-checkbox [(checked)]="listItem.selected">{{title.title}}</j-checkbox>
+                        <j-checkbox [(checked)]="title.selected">{{title.title}}</j-checkbox>
                     </div>
                     <div j-sub-title>{{title.subTitle}} <span *ngIf="title.subMenu" class="fa fa-angle-right"></span></div>
                 </j-list-option>
