@@ -73,7 +73,7 @@ export const routerConfig = [
         loadChildren: "./demo/popup/demo.module#PopupServiceModule",
     },
     {
-        path: "radio",
+        path: "radio-group",
         loadChildren: "./demo/radio-group/demo.module#RadioDemoModule",
     },
     {
