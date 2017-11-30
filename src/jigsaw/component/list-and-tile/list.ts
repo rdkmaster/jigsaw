@@ -46,11 +46,11 @@ export class JigsawListOption extends AbstractJigsawOptionComponent {
     private _selected: boolean = false; // 选中状态
 
     @Input()
-    get selected(): boolean {
+    public get selected(): boolean {
         return this._selected;
     }
 
-    set selected(value: boolean) {
+    public set selected(value: boolean) {
         if (this._selected === value || this.disabled) {
             return;
         }
@@ -64,7 +64,7 @@ export class JigsawListOption extends AbstractJigsawOptionComponent {
      */
     public _$handleClick(): void {
         if (!this.disabled) {
-            this.dispatchChangeEvent.emit(this);
+            this.change.emit(this);
         }
     }
 }

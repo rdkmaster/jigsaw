@@ -36,7 +36,7 @@ export class ListFullDemoComponent {
 
     selectedItems2: string;
     handleSelect2(selectedItems) {
-        this.selectedItems2 = selectedItems.map(item => item.title).toString()
+        this.selectedItems2 = selectedItems.map(item => item.name).toString()
     }
 
     goodsList = [

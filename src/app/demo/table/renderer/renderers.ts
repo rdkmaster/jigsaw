@@ -60,7 +60,7 @@ export class OfficeHeaderRenderer extends OfficeRendererBase {
 
 @Component({
     template: `
-        <jigsaw-select [value]="selected" (valueChange)="dispatchChangeEvent($event.label)"
+        <jigsaw-select [value]="selected" (valueChange)="change($event.label)"
                        [data]="officeList" width="100%" height="25">
         </jigsaw-select>
     `

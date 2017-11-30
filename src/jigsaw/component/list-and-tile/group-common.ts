@@ -92,7 +92,6 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
                     }
                 });
                 item.selected = hasSelected;
-                // item.changeDetector.detectChanges();
             });
         })
     }
@@ -100,8 +99,8 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     private _subscribeItemSelectedChange(items: QueryList<AbstractJigsawOptionComponent>){
         items.forEach(item => {
             // 取消可能重复的订阅事件
-            item.dispatchChangeEvent.observers.length = 0;
-            item.dispatchChangeEvent.subscribe(() => {
+            item.change.observers.length = 0;
+            item.change.subscribe(() => {
                 if (this.multipleSelect) { //多选
                     item.selected = !item.selected;//切换组件选中状态
                     this._updateSelectItemsForForm(item.value, item.selected);
@@ -128,7 +127,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback()
         }
-        this._items.forEach(item => item.dispatchChangeEvent.unsubscribe());
+        this._items.forEach(item => item.change.unsubscribe());
     }
 
     protected _propagateChange: any = () => {
@@ -175,7 +174,7 @@ export class AbstractJigsawOptionComponent extends AbstractJigsawComponent {
     public selected: boolean = false; // 选中状态
 
     @Output()
-    public dispatchChangeEvent = new EventEmitter<AbstractJigsawOptionComponent>();
+    public change = new EventEmitter<AbstractJigsawOptionComponent>();
 
     public changeDetector: ChangeDetectorRef
 

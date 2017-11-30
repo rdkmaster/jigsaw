@@ -102,7 +102,7 @@ export class DefaultCellRenderer extends TableCellRendererBase {
 @Component({
     template: `
         <jigsaw-input #input [(value)]="cellData" width="100%" [blurOnClear]="false"
-                      (blur)="dispatchChangeEvent(cellData)">
+                      (blur)="change(cellData)">
         </jigsaw-input>
     `
 })
