@@ -26,7 +26,7 @@ export class ZtreeDemoEditableComponent {
     constructor(http: HttpClient) {
         this.data = new TreeData();
         this.data.http = http;
-        this.data.fromAjax("mock-data/tree/data.json");
+        this.data.fromAjax("mock-data/tree-data");
         this.data.refresh();
     }
 
