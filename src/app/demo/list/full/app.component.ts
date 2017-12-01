@@ -29,14 +29,14 @@ export class ListFullDemoComponent {
         }
     ];
 
-    selectedItems1: string;
-    handleSelect(selectedItems) {
-        this.selectedItems1 = selectedItems.map(item => item.title).toString()
-    }
-
     selectedItems2: string;
     handleSelect2(selectedItems) {
         this.selectedItems2 = selectedItems.map(item => item.title).toString()
+    }
+
+    selectedItems1: string;
+    handleSelect(selectedItems) {
+        this.selectedItems1 = selectedItems.map(item => item.name).toString()
     }
 
     goodsList = [

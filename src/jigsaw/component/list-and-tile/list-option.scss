@@ -6,6 +6,7 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
     min-height: $height-base;
     cursor: pointer;
     box-sizing: border-box;
+    position: relative;
     &:hover {
         background: $item-hover-bg;
     }
@@ -27,5 +28,13 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
     &-sub-title {
         float: right;
         color: #999;
+    }
+    &-block {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: $zindex-back-top;
     }
 }
