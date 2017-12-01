@@ -1,0 +1,13 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-button (click)="changeTableWidth()">change table width</jigsaw-button>
+<jigsaw-button (click)="changeBoxWidth()">change box width</jigsaw-button>
+<div class="box">
+    <jigsaw-table #tableCmp [data]="tableData" [width]="tableWidth" height="400"></jigsaw-table>
+</div>
+
+
