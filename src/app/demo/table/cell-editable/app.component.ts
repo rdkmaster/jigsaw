@@ -21,7 +21,7 @@ export class MyTableCell extends TableCellRendererBase {
 @Component({
     template: `
         <jigsaw-input #input [(value)]="cellData" [clearable]="false"
-                      (blur)="change(cellData)"></jigsaw-input>`
+                      (blur)="dispatchChangeEvent(cellData)"></jigsaw-input>`
 })
 export class MyTableCellEditor extends TableCellRendererBase implements AfterViewInit {
 
