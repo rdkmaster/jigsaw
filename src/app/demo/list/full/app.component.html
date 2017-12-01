@@ -9,21 +9,21 @@
 
     <div class="clearfix">
         <div class="demo-1 live-demo live-demo-block">
-            <h3>菜单</h3>
-            <j-list width="200" trackItemBy="title" (selectedItemsChange)="handleSelect($event)">
+            <h3>基础用法</h3>
+            <j-list width="200" trackItemBy="name" (selectedItemsChange)="handleSelect($event)">
+                <j-list-option *ngFor="let goods of goodsList" [value]="goods">
+                    {{goods.name}}
+                </j-list-option>
+            </j-list>
+            <p class="message">选中的条目是: <span>{{selectedItems1}}</span></p>
+        </div>
+        <div class="demo-2 live-demo live-demo-block">
+            <h3>伪装成菜单</h3>
+            <j-list width="200" trackItemBy="title" (selectedItemsChange)="handleSelect2($event)">
                 <j-list-option *ngFor="let title of titles" [value]="title">
                     <span j-title>{{title.title}}</span>
                     <div j-sub-title>{{title.subTitle}} <span *ngIf="title.subMenu" class="fa fa-angle-right"></span>
                     </div>
-                </j-list-option>
-            </j-list>
-            <p class="message">选中的菜单是: <span>{{selectedItems1}}</span></p>
-        </div>
-        <div class="demo-2 live-demo live-demo-block">
-            <h3>带checkbox的选项</h3>
-            <j-list width="350" trackItemBy="name" (selectedItemsChange)="handleSelect2($event)">
-                <j-list-option *ngFor="let goods of goodsList" [(selected)]="goods.selected" [value]="goods">
-                    <j-checkbox [(checked)]="goods.selected">{{goods.name}}</j-checkbox>
                 </j-list-option>
             </j-list>
             <p class="message">选中的菜单是: <span>{{selectedItems2}}</span></p>
@@ -32,7 +32,7 @@
 
     <div class="clearfix">
         <div class="demo-3 live-demo live-demo-block">
-            <h3>有初始选中值</h3>
+            <h3>多组件复合用法</h3>
             <j-list [multipleSelect]="true" trackItemBy="name" [selectedItems]="selectedItems3"
                     (selectedItemsChange)="handleSelect3($event)">
                 <j-list-option *ngFor="let goods of goodsList" #listItem [value]="goods" [disabled]="goods.disabled">
