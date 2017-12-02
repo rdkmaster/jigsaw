@@ -28,8 +28,7 @@ describe('tabs', () => {
             browser.get('/tab/api');
         });
         it('should operate tab when click jigsaw button', async () => {
-            browser.switchTo().defaultContent();
-            const jigsawButton = element(by.css('.container')).all(by.css('.jigsaw-button')),
+            const jigsawButton = element(by.css('.option-button-group')).all(by.css('.jigsaw-button')),
                 tabsLabelEl = element.all(by.tagName('jigsaw-tab-label')),
                 tabContentEl = element.all(by.tagName('jigsaw-tab-content'));
             await browser.sleep(300);

@@ -41,7 +41,7 @@ describe('alert', () => {
             await expect(alertStateEl.getText()).toBe('great! your answer is: alert.button.ok');
             await browser.navigate().refresh();
             await alertButtonEl.get(0).click();
-            await waitForPresence('.jigsaw-alert-close');
+            await browser.sleep(1000);
             await alertCloseEl.click();
             await waitForNotPresence('jigsaw-alert');
             await expect(alertStateEl.getText()).toBe('you closed the alert with the close button');
