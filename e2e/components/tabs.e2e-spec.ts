@@ -26,6 +26,7 @@ describe('tabs', () => {
     describe('test tabApi', async () => {
         beforeEach(() => {
             browser.get('/tab/api');
+            browser.sleep(300);
         });
         it('should operate tab when click jigsaw button', async () => {
             const jigsawButton = element.all(by.tagName('jigsaw-button')),
