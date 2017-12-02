@@ -7,7 +7,7 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 @NgModule({
     imports: [JigsawTabModule, JigsawButtonModule, JigsawDemoDescriptionModule],
     declarations: [JigsawHideTabComponent],
-    bootstrap: [JigsawHideTabComponent]
+    exports: [JigsawHideTabComponent]
 })
 export class TabsHideTabDemoModule {
 }

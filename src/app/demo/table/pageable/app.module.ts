@@ -7,7 +7,7 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 @NgModule({
     imports: [JigsawTableModule, JigsawPaginationModule, JigsawDemoDescriptionModule],
     declarations: [TablePageableDemoComponent],
-    bootstrap: [TablePageableDemoComponent]
+    exports: [TablePageableDemoComponent]
 })
 export class TablePageableDemoModule {
 }

@@ -10,7 +10,7 @@ import {LoadingFullDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [LoadingFullDemoComponent],
-    bootstrap: [LoadingFullDemoComponent],
+    exports: [LoadingFullDemoComponent],
     imports: [
         JigsawLoadingModule, JigsawInputModule, JigsawButtonModule, CommonModule,
         JigsawDemoDescriptionModule

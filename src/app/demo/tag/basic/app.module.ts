@@ -6,7 +6,7 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 @NgModule({
     imports: [JigsawTagModule, JigsawDemoDescriptionModule],
     declarations: [TagBasicDemoComponent],
-    bootstrap: [TagBasicDemoComponent]
+    exports: [TagBasicDemoComponent]
 })
 export class TagBasicDemoModule {
 }

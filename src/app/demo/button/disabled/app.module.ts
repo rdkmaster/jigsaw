@@ -6,7 +6,7 @@ import {ButtonDisableDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [ButtonDisableDemoComponent],
-    bootstrap: [ButtonDisableDemoComponent],
+    exports: [ButtonDisableDemoComponent],
     imports: [JigsawButtonModule, JigsawCheckBoxModule, JigsawDemoDescriptionModule]
 })
 export class ButtonDisableDemoModule {

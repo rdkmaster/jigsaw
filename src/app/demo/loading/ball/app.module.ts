@@ -5,7 +5,7 @@ import {BallLoadingDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [BallLoadingDemoComponent],
-    bootstrap: [BallLoadingDemoComponent],
+    exports: [BallLoadingDemoComponent],
     imports: [JigsawLoadingModule, JigsawDemoDescriptionModule]
 })
 export class BallLoadingDemoModule {

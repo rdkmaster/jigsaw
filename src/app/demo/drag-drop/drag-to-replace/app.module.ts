@@ -9,7 +9,7 @@ import {DragToReplaceDemoComponent} from "./app.component";
         JigsawDraggableModule, JigsawDroppableModule, CommonModule, JigsawDemoDescriptionModule
     ],
     declarations: [DragToReplaceDemoComponent],
-    bootstrap: [DragToReplaceDemoComponent]
+    exports: [DragToReplaceDemoComponent]
 })
 export class DragToReplaceDemoModule {
 

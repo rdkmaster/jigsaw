@@ -7,7 +7,7 @@ import {ComboDropDownStatusDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [ComboDropDownStatusDemoComponent],
-    bootstrap: [ComboDropDownStatusDemoComponent],
+    exports: [ComboDropDownStatusDemoComponent],
     imports: [JigsawComboSelectModule, JigsawCollapseModule, JigsawDemoDescriptionModule, FormsModule]
 })
 export class ComboDropDownStatusDemoModule {

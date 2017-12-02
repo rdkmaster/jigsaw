@@ -7,7 +7,7 @@ import {SelectCheckboxDemoComponent} from './app.component';
 @NgModule({
     imports: [JigsawSelectModule, JigsawCheckBoxModule, JigsawDemoDescriptionModule],
     declarations: [SelectCheckboxDemoComponent],
-    bootstrap: [SelectCheckboxDemoComponent]
+    exports: [SelectCheckboxDemoComponent]
 })
 export class SelectCheckboxDemoModule {
 }

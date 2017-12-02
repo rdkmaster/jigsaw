@@ -5,7 +5,7 @@ import {GraphWithNoDataComponent} from "./app.component";
 
 @NgModule({
     declarations: [GraphWithNoDataComponent],
-    bootstrap: [GraphWithNoDataComponent],
+    exports: [GraphWithNoDataComponent],
     imports: [JigsawGraphModule, JigsawDemoDescriptionModule]
 })
 export class GraphWithNoDataModule {

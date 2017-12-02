@@ -7,7 +7,7 @@ import {DialogButtonsDemo} from "./app.component";
 
 @NgModule({
     declarations: [DialogButtonsDemo],
-    bootstrap: [DialogButtonsDemo],
+    exports: [DialogButtonsDemo],
     imports: [JigsawDialogModule, JigsawButtonModule, JigsawDemoDescriptionModule],
     providers: [PopupService]
 })

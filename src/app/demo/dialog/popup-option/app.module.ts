@@ -11,7 +11,7 @@ import {DialogPopOptionDemo} from "./app.component";
 
 @NgModule({
     declarations: [DialogPopOptionDemo],
-    bootstrap: [DialogPopOptionDemo],
+    exports: [DialogPopOptionDemo],
     imports: [
         JigsawDialogModule,
         JigsawButtonModule,

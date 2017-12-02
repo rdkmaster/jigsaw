@@ -7,7 +7,7 @@ import {ButtonFullComponent} from "./app.component";
 
 @NgModule({
     declarations: [ButtonFullComponent],
-    bootstrap: [ButtonFullComponent],
+    exports: [ButtonFullComponent],
     imports: [JigsawButtonModule, JigsawCheckBoxModule, JigsawLoadingModule, JigsawDemoDescriptionModule]
 })
 export class ButtonFullModule {

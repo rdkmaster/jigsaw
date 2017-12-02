@@ -7,7 +7,7 @@ import {JigsawShowTabComponent} from './app.component';
 @NgModule({
     imports: [JigsawTabModule, JigsawButtonModule, JigsawDemoDescriptionModule],
     declarations: [JigsawShowTabComponent],
-    bootstrap: [JigsawShowTabComponent]
+    exports: [JigsawShowTabComponent]
 })
 export class TabsShowTabDemoModule {
 }

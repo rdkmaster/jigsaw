@@ -19,7 +19,7 @@ const routes = [{
         JigsawInputModule, RouterModule/* #for-live-demo-only# .forRoot(routes) */
     ],
     declarations: [DynamicTabDemoComponent],
-    bootstrap: [DynamicTabDemoComponent]
+    exports: [DynamicTabDemoComponent]
 })
 export class DynamicTabDemoModule {
 }

@@ -7,7 +7,7 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 @NgModule({
     imports: [ JigsawTableModule, JigsawInputModule, JigsawDemoDescriptionModule ],
     declarations: [ TableSetCellEditableDemoComponent, MyTableCell, MyTableCellEditor ],
-    bootstrap: [ TableSetCellEditableDemoComponent ],
+    exports: [ TableSetCellEditableDemoComponent ],
     entryComponents: [
         MyTableCell, MyTableCellEditor
     ],

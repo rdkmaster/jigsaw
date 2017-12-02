@@ -9,7 +9,7 @@ import {FontLoadingDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [FontLoadingDemoComponent],
-    bootstrap: [FontLoadingDemoComponent],
+    exports: [FontLoadingDemoComponent],
     imports: [JigsawLoadingModule, JigsawButtonModule, CommonModule, JigsawDemoDescriptionModule],
     providers: [PopupService, LoadingService]
 })

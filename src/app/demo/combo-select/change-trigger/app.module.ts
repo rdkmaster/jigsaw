@@ -8,7 +8,7 @@ import {ComboSelectChangeTriggerDemo} from "./app.component";
 
 @NgModule({
     declarations: [ComboSelectChangeTriggerDemo],
-    bootstrap: [ComboSelectChangeTriggerDemo],
+    exports: [ComboSelectChangeTriggerDemo],
     imports: [
         JigsawComboSelectModule, JigsawTileSelectModule, JigsawButtonModule, CommonModule,
         JigsawDemoDescriptionModule

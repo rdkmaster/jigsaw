@@ -12,7 +12,7 @@ import {JigsawGraphModule} from "../../../../jigsaw/component/graph/index";
         JigsawTabModule, JigsawButtonModule, JigsawInputModule, JigsawTableModule, JigsawDemoDescriptionModule, JigsawGraphModule
     ],
     declarations: [JigsawTabsDemoComponent],
-    bootstrap: [JigsawTabsDemoComponent]
+    exports: [JigsawTabsDemoComponent]
 })
 export class TabsBasicDemoModule {
 }

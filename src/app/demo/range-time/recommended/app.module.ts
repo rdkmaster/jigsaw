@@ -5,7 +5,7 @@ import {RangeTimeRecommendedComponent} from "./app.component";
 
 @NgModule({
     declarations: [RangeTimeRecommendedComponent],
-    bootstrap: [RangeTimeRecommendedComponent],
+    exports: [RangeTimeRecommendedComponent],
     imports: [JigsawRangeTimeModule, JigsawDemoDescriptionModule]
 })
 export class RangeTimeRecommendedModule {

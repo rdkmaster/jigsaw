@@ -1,42 +1,4 @@
 
-.app-wrap {
-    padding: 10px;
-}
-
-.demo-wrap {
-    *zoom: 1;
-    &:after {
-        clear: both;
-        content: "";
-        display: block;
-    }
-    .left-box {
-        width: 19%;
-        float: left;
-        height: 600px;
-        margin-right: 1%;
-    }
-    .right-box {
-        width: 80%;
-        float: left;
-    }
-}
-
-.nav-list li {
-    display: inline-block;
-    margin-right: 12px;
-}
-
-.nav-list h3 {
-    font-size: 12px;
-    font-weight: bold;
-}
-
-.nav-list .group {
-    margin-bottom: 8px;
-}
-
-/* live demo common start */
 /* 容器 */
 .live-demo-wrap {
     padding: 10px;
@@ -160,9 +122,3 @@
     display: table;
     content: '';
 }
-
-/* live demo common end */
-
-
-
-

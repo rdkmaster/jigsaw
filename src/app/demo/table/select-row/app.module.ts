@@ -7,7 +7,7 @@ import {TableSelectRowDemoComponent} from './app.component';
 @NgModule({
     imports: [JigsawTableModule, JigsawButtonModule, JigsawDemoDescriptionModule],
     declarations: [TableSelectRowDemoComponent],
-    bootstrap: [TableSelectRowDemoComponent]
+    exports: [TableSelectRowDemoComponent]
 })
 export class TableSelectRowDemoModule {
 }

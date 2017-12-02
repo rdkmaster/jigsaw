@@ -7,7 +7,7 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 
 @NgModule({
     declarations: [GraphResizeComponent],
-    bootstrap: [GraphResizeComponent],
+    exports: [GraphResizeComponent],
     imports: [JigsawGraphModule, JigsawInputModule, JigsawSwitchModule, JigsawDemoDescriptionModule]
 })
 export class GraphResizeModule {

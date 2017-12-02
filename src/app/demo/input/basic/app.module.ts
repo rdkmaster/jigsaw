@@ -5,7 +5,7 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 
 @NgModule({
     declarations: [InputBasicDemoComponent],
-    bootstrap: [InputBasicDemoComponent],
+    exports: [InputBasicDemoComponent],
     imports: [JigsawInputModule, JigsawDemoDescriptionModule]
 })
 export class InputBasicDemoModule {

@@ -7,7 +7,7 @@ import {ComboSelectLabelFieldDemo} from "./app.component";
 
 @NgModule({
     declarations: [ComboSelectLabelFieldDemo],
-    bootstrap: [ComboSelectLabelFieldDemo],
+    exports: [ComboSelectLabelFieldDemo],
     imports: [
         JigsawComboSelectModule, JigsawTileSelectModule, CommonModule, JigsawDemoDescriptionModule
     ]

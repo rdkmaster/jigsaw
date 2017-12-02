@@ -7,7 +7,7 @@ import {ComboSelectWidthDemo} from "./app.component";
 
 @NgModule({
     declarations: [ComboSelectWidthDemo],
-    bootstrap: [ComboSelectWidthDemo],
+    exports: [ComboSelectWidthDemo],
     imports: [
         JigsawComboSelectModule, JigsawTileSelectModule, CommonModule, JigsawDemoDescriptionModule
     ]

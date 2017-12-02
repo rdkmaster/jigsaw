@@ -13,6 +13,6 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
         JigsawDemoDescriptionModule
     ],
     declarations: [ JigsawTabsWithInputComponent ],
-    bootstrap: [ JigsawTabsWithInputComponent ]
+    exports: [ JigsawTabsWithInputComponent ]
 })
 export class TabsWithInputDemoModule {}

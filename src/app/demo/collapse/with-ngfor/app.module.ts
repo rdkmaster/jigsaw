@@ -7,7 +7,7 @@ import {CollapseWithNGForDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [CollapseWithNGForDemoComponent],
-    bootstrap: [CollapseWithNGForDemoComponent],
+    exports: [CollapseWithNGForDemoComponent],
     imports: [CommonModule, JigsawCollapseModule, JigsawButtonModule, JigsawDemoDescriptionModule]
 })
 export class ngForDemoModule {

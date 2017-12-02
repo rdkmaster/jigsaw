@@ -7,7 +7,7 @@ import {DomInnerDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [DomInnerDemoComponent],
-    bootstrap: [DomInnerDemoComponent],
+    exports: [DomInnerDemoComponent],
     imports: [JigsawLoadingModule, JigsawButtonModule, CommonModule, JigsawDemoDescriptionModule]
 })
 export class DomInnerDemoModule {

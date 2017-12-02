@@ -6,7 +6,7 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 @NgModule({
     imports: [JigsawTooltipModule, JigsawDemoDescriptionModule],
     declarations: [TooltipInDomDemoComponent],
-    bootstrap: [TooltipInDomDemoComponent]
+    exports: [TooltipInDomDemoComponent]
 })
 export class TooltipInDomDemoModule {
 }
