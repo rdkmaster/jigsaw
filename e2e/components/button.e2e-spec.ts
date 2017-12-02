@@ -37,7 +37,6 @@ describe('button', () => {
         });
 
         it('should change size when set width and height', async () => {
-            await browser.switchTo().defaultContent();
             const ButtonEl = element(by.tagName('jigsaw-button'));
             await browser.sleep(300);
             const size = await ButtonEl.getSize();
