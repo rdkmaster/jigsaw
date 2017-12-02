@@ -37,12 +37,12 @@ describe('graph', () => {
 
         it('should change size', async () => {
             browser.get('/graph/resize');
-            expectToExist(getGraphCanvas('test-graph'));
             const graphCanvas = element(by.id('test-graph')).element(by.tagName('canvas'));
             const graphWidthInput = element(by.id('graph-width')).element(by.tagName('input'));
             const graphHeightInput = element(by.id('graph-height')).element(by.tagName('input'));
             let graphSize;
-
+            await waitForPresence('.jigsaw-input');
+            await waitForPresence('.jigsaw-graph');
             await graphWidthInput.clear();
             await graphHeightInput.clear();
             await graphWidthInput.sendKeys('500');

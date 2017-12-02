@@ -13,17 +13,17 @@ describe('tabs', () => {
             const tabsLabelEl = element.all(by.tagName('jigsaw-tab-label')),
                 tabContentEl = element.all(by.tagName('jigsaw-tab-content'));
             await  browser.wait(ExpectedConditions.textToBePresentInElement(tabContentEl.get(2), 'tab content 3'));
-            expect(tabContentEl.get(2).getText()).toBe('tab content 3');
+           await expect(tabContentEl.get(2).getText()).toBe('tab content 3');
             tabsLabelEl.get(1).click();
             await  browser.wait(ExpectedConditions.textToBePresentInElement(tabContentEl.get(1).element(by.tagName('H3')), 'user register center'), 1000);
-            expect(tabContentEl.get(1).element(by.tagName('H3')).getText()).toBe('user register center');//this expect do not need wait maybe;
+           await expect(tabContentEl.get(1).element(by.tagName('H3')).getText()).toBe('user register center');//this expect do not need wait maybe;
             tabsLabelEl.get(0).click();
             await  browser.wait(ExpectedConditions.textToBePresentInElement(tabContentEl.get(0), 'tab content 1'));
-            expect(tabContentEl.get(0).getText()).toBe('tab content 1');
-            expect(tabsLabelEl.get(3).getCssValue('pointer-events')).toBe('none');
+           await expect(tabContentEl.get(0).getText()).toBe('tab content 1');
+           await expect(tabsLabelEl.get(3).getCssValue('pointer-events')).toBe('none');
         })
     });
-    describe('test tabApi', () => {
+    describe('test tabApi', async() => {
         beforeEach(() => {
             browser.get('/tab/api');
         });
@@ -47,7 +47,7 @@ describe('tabs', () => {
             await expect(tabsLabelEl.get(0).getText()).toBe('Tab 2');
         })
     });
-    describe('test tabApi', () => {
+    describe('test tabApi', async() => {
         beforeEach(() => {
             browser.get('/tab/with-input');
         });
@@ -56,7 +56,7 @@ describe('tabs', () => {
                 tableEl = element(by.css('.jigsaw-tabs-content')).element(by.tagName('jigsaw-table')).element(by.tagName('table'));
             getTableDate.click();
             await waitForPresence('.jigsaw-table-cell-content');
-            expect(tableEl.getText()).not.toBe('');
+           await expect(tableEl.getText()).not.toBe('');
         })
     });
 });

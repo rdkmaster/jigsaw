@@ -76,6 +76,7 @@ describe('button', () => {
         });
 
         it('should display different background when set type', async () => {
+            browser.switchTo().defaultContent();
             const typeList = element(by.id('type-list')).all(by.tagName('jigsaw-button'));
             await waitForPresence('.jigsaw-button');
             await expect(typeList.get(0).getCssValue('background-color')).toBe('rgba(255, 255, 255, 1)');
