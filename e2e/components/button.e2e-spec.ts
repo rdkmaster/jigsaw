@@ -56,7 +56,7 @@ describe('button', () => {
             let size;
             const testButton = element(by.id('test-button'));
             const presizeList = element(by.id('presize-list')).all(by.tagName('jigsaw-button'));
-            browser.switchTo().defaultContent();
+            await browser.switchTo().defaultContent();
             await browser.sleep(300);
             presizeList.get(0).click();
             await waitForPresence('.jigsaw-button-size-small');
@@ -80,14 +80,13 @@ describe('button', () => {
             await expect(size.height).toBe(38);
         });
 
-        it('should display different background when set type', async () => {
-            browser.switchTo().defaultContent();
+        it('should display different background when set type', () => {
             const typeList = element(by.id('type-list')).all(by.tagName('jigsaw-button'));
-            await waitForPresence('.jigsaw-button');
-            await expect(typeList.get(0).getCssValue('background-color')).toBe('rgba(255, 255, 255, 1)');
-            await expect(typeList.get(1).getCssValue('background-color')).toBe('rgba(65, 173, 220, 1)');
-            await expect(typeList.get(2).getCssValue('background-color')).toBe('rgba(231, 143, 78, 1)');
-            await  expect(typeList.get(3).getCssValue('background-color')).toBe('rgba(236, 109, 109, 1)');
+            browser.sleep(300);
+            expect(typeList.get(0).getCssValue('background-color')).toBe('rgba(255, 255, 255, 1)');
+            expect(typeList.get(1).getCssValue('background-color')).toBe('rgba(65, 173, 220, 1)');
+            expect(typeList.get(2).getCssValue('background-color')).toBe('rgba(231, 143, 78, 1)');
+            expect(typeList.get(3).getCssValue('background-color')).toBe('rgba(236, 109, 109, 1)');
         })
     })
 });
