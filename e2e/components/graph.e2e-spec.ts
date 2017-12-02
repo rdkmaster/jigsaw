@@ -1,5 +1,5 @@
 import {browser, element, by, ElementFinder, ExpectedConditions} from 'protractor';
-import {expectToExist, waitForNotPresence, waitForPresence} from "../utils/asserts";
+import {expectToExist, waitForNotPresence, waitForPresence} from "../utils/index";
 
 describe('graph', () => {
     beforeEach(() => {
@@ -47,10 +47,10 @@ describe('graph', () => {
             await graphHeightInput.clear();
             await graphWidthInput.sendKeys('500');
             await graphHeightInput.sendKeys('200');
-            browser.sleep(600);
+            await browser.sleep(1000);
             graphSize = await graphCanvas.getSize();
-            expect(graphSize.width).toBe(500);
-            expect(graphSize.height).toBe(200);
+            await expect(graphSize.width).toBe(500);
+            await  expect(graphSize.height).toBe(200);
         });
 
         function getGraphCanvas(id: string): ElementFinder {

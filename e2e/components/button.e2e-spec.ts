@@ -1,4 +1,5 @@
 import {browser, by, element, ExpectedConditions} from 'protractor';
+import {waitForNotPresence, waitForPresence} from "../utils/await";
 
 describe('button', () => {
     beforeEach(() => {
@@ -53,35 +54,34 @@ describe('button', () => {
             const presizeList = element(by.id('presize-list')).all(by.tagName('jigsaw-button'));
 
             presizeList.get(0).click();
-            await browser.wait(ExpectedConditions.not(
-                ExpectedConditions.presenceOf(element(by.css('.jigsaw-button-clicked')))));
-
+            await waitForPresence('.jigsaw-button-size-small');
+            await waitForNotPresence('.jigsaw-button-clicked');
             size = await testButton.getSize();
-            expect(size.width).toBe(80);
-            expect(size.height).toBe(22);
+            await expect(size.width).toBe(80);
+            await expect(size.height).toBe(22);
 
             presizeList.get(1).click();
-            await browser.wait(ExpectedConditions.not(
-                ExpectedConditions.presenceOf(element(by.css('.jigsaw-button-clicked')))));
+            await waitForNotPresence('.jigsaw-button-size-small');
+            await waitForNotPresence('.jigsaw-button-clicked');
             size = await testButton.getSize();
-            expect(size.width).toBe(80);
-            expect(size.height).toBe(30);
+            await expect(size.width).toBe(80);
+            await expect(size.height).toBe(30);
 
             presizeList.get(2).click();
-            await browser.wait(ExpectedConditions.not(
-                ExpectedConditions.presenceOf(element(by.css('.jigsaw-button-clicked')))));
+            await waitForPresence('.jigsaw-button-size-large');
+            await waitForNotPresence('.jigsaw-button-clicked');
             size = await testButton.getSize();
-            expect(size.width).toBe(80);
-            expect(size.height).toBe(38);
+            await expect(size.width).toBe(80);
+            await expect(size.height).toBe(38);
         });
 
-        it('should display different background when set type', () => {
+        it('should display different background when set type', async () => {
             const typeList = element(by.id('type-list')).all(by.tagName('jigsaw-button'));
-            browser.sleep(300);
-            expect(typeList.get(0).getCssValue('background-color')).toBe('rgba(255, 255, 255, 1)');
-            expect(typeList.get(1).getCssValue('background-color')).toBe('rgba(65, 173, 220, 1)');
-            expect(typeList.get(2).getCssValue('background-color')).toBe('rgba(231, 143, 78, 1)');
-            expect(typeList.get(3).getCssValue('background-color')).toBe('rgba(236, 109, 109, 1)');
+            await waitForPresence('.jigsaw-button');
+            await expect(typeList.get(0).getCssValue('background-color')).toBe('rgba(255, 255, 255, 1)');
+            await expect(typeList.get(1).getCssValue('background-color')).toBe('rgba(65, 173, 220, 1)');
+            await expect(typeList.get(2).getCssValue('background-color')).toBe('rgba(231, 143, 78, 1)');
+            await  expect(typeList.get(3).getCssValue('background-color')).toBe('rgba(236, 109, 109, 1)');
         })
     })
 });

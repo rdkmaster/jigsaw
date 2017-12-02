@@ -1,5 +1,5 @@
 import {browser, element, by} from "protractor";
-import {waitForPresence} from "../utils/asserts";
+import {waitForPresence} from "../utils/index";
 
 describe('table', () => {
     beforeEach(() => {
@@ -10,7 +10,7 @@ describe('table', () => {
             browser.get('/table/header-class');
         });
         it('should set header class', async () => {
-            await waitForPresence('.jigsaw-table-header-cell');
+            await waitForPresence('.red-text');
             expect(element.all(by.css('.jigsaw-table-header-cell')).get(1).getCssValue('COLOR')).toBe('rgb(41, 78, 121)');
             expect(element.all(by.css('.jigsaw-table-header-cell')).get(0).getCssValue('COLOR')).toBe('rgb(255, 170, 0)');
         })

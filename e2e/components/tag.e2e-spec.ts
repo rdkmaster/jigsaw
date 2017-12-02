@@ -1,6 +1,6 @@
 import {browser, element, by, ExpectedConditions} from "protractor";
 
-describe('tile', () => {
+describe('tag', () => {
     beforeEach(() => {
         browser.waitForAngularEnabled(false);
     });
