@@ -16,7 +16,6 @@ describe('button', () => {
                 toggleDisabledEl = element(by.id('toggle-disabled')),
                 clickCounterEl = element(by.id('click-counter'));
             browser.switchTo().defaultContent();
-
             expect(clickCounterEl.getText()).toBe('0');
 
             testButtonEl.click();
@@ -38,11 +37,12 @@ describe('button', () => {
         });
 
         it('should change size when set width and height', async () => {
-            browser.switchTo().defaultContent();
-
-            const size = await element(by.tagName('jigsaw-button')).getSize();
-            expect(size.width).toBe(300);
-            expect(size.height).toBe(40);
+            await browser.switchTo().defaultContent();
+            const ButtonEl = element(by.tagName('jigsaw-button'));
+            await browser.sleep(300);
+            const size = await ButtonEl.getSize();
+            await expect(size.width).toBe(300);
+            await expect(size.height).toBe(40);
         })
     });
 
@@ -57,6 +57,7 @@ describe('button', () => {
             const testButton = element(by.id('test-button'));
             const presizeList = element(by.id('presize-list')).all(by.tagName('jigsaw-button'));
             browser.switchTo().defaultContent();
+            await browser.sleep(300);
             presizeList.get(0).click();
             await waitForPresence('.jigsaw-button-size-small');
             await waitForNotPresence('.jigsaw-button-clicked');
