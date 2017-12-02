@@ -2,7 +2,7 @@ import {browser, element, by} from 'protractor';
 import {
     expectClosePopup, expectPopupAtPoint, expectPopupBlock, expectPopupByModal
 } from "../utils/popup";
-import {expectToExist, waitForPresence} from "../utils/asserts";
+import {expectToExist, waitForPresence} from "../utils/index";
 
 xdescribe('dialog', () => {
     beforeEach(() => {
