@@ -2,7 +2,7 @@
 表格的列定义接受两种类型值：
 - `ColumnDefine[]`，在你的表格的列事先已知的场合，推荐使用这个方式提供列定义的方式，多数表格的列都是可以事先可以知道的；
 - `ColumnDefineGenerator`，一个产生列定义的函数，可以编写任何复杂的逻辑，因此这个方式往往用于你的表格列事先不知道的场合。
-这个函数的定义为：`(field: string, index: number) => ColumnDefine`，这个来自实际应用场景的 [demo](/table/swim-lane-diagram)
+这个函数的定义为：`(field: string, index: number) => ColumnDefine`，这个来自实际应用场景的 [demo](/jigsaw/table/swim-lane-diagram)
 就用到了列定义产生器。
 
 #### `ColumnDefine`的结构
@@ -71,7 +71,7 @@
 - 固定像素，例如 `width="120"` 或者 `width="120px"`；
 - 固定百分比，例如 `width="20%"`，表格将算出当前容器的宽度后乘以这个百分比取得像素值；
 
-具体设置列宽请看[这个demo](/table/content-width)
+具体设置列宽请看[这个demo](/jigsaw/table/content-width)
 
 
 #### 宽文本控制 和 tooltip
