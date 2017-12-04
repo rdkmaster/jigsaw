@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule} from "@angular/router";
 import {JigsawButtonModule} from "jigsaw/component/button/button";
 import {JigsawInputModule} from "jigsaw/component/input/input";
-import {JigsawTabModule} from "jigsaw/component/tabs/index";
+import {JigsawTabsModule} from "jigsaw/component/tabs/index";
 
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {DynamicTabDemoComponent} from './app.component';
@@ -15,7 +15,7 @@ const routes = [{
 */
 @NgModule({
     imports: [
-        TabContentModule, JigsawTabModule, JigsawButtonModule, JigsawDemoDescriptionModule,
+        TabContentModule, JigsawTabsModule, JigsawButtonModule, JigsawDemoDescriptionModule,
         JigsawInputModule, RouterModule/* #for-live-demo-only# .forRoot(routes) */
     ],
     declarations: [DynamicTabDemoComponent],

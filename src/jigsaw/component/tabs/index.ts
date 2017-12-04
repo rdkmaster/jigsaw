@@ -16,7 +16,7 @@ import {JigsawTabContent, JigsawTabLabel} from "./tab-item";
     providers: [],
     entryComponents: [JigsawTabPane]
 })
-export class JigsawTabModule { }
+export class JigsawTabsModule { }
 
 export * from './tab';
 export * from './tab-pane';

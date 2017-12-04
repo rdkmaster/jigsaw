@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {JigsawTabModule} from "jigsaw/component/tabs/index";
+import {JigsawTabsModule} from "jigsaw/component/tabs/index";
 import {JigsawTabsWithNgForComponent} from './app.component';
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 
 @NgModule({
-    imports: [CommonModule, JigsawTabModule, JigsawDemoDescriptionModule],
+    imports: [CommonModule, JigsawTabsModule, JigsawDemoDescriptionModule],
     declarations: [JigsawTabsWithNgForComponent],
     exports: [JigsawTabsWithNgForComponent]
 })
