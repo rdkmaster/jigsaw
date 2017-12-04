@@ -21,10 +21,10 @@ describe('table', () => {
             browser.get('/table/set-cell-class');
         });
         it('should set cell class', async () => {
-            const redEl= element.all(by.css('.red-text'));
-           await browser.wait(ExpectedConditions.visibilityOf(redEl.get(10)));
-           await expect(redEl.get(0).getCssValue('COLOR')).toBe('rgb(255, 170, 0)');
-           await expect(redEl.get(10).getCssValue('COLOR')).toBe('rgb(255, 170, 0)');
+            const redEl = element.all(by.css('.red-text'));
+            await browser.wait(ExpectedConditions.visibilityOf(redEl.get(10)));
+            await expect(redEl.get(0).getCssValue('COLOR')).toBe('rgb(255, 170, 0)');
+            await expect(redEl.get(10).getCssValue('COLOR')).toBe('rgb(255, 170, 0)');
         })
     });
     describe('test setHeaderRender', () => {
@@ -73,8 +73,6 @@ describe('table', () => {
             browser.get('/table/column-group');
         });
         it('should set column group', async () => {
-            browser.switchTo().defaultContent();
-            await waitForPresence('.jigsaw-table-cell-content');
             const canBeGroupEl = element(by.css('.jigsaw-table-body')).all(by.tagName('TR')).get(3).all(by.tagName('TD')).get(2);
             expect(canBeGroupEl.getAttribute('rowspan')).toBe('2');
         })

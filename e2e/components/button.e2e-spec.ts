@@ -37,8 +37,8 @@ describe('button', () => {
         });
 
         it('should change size when set width and height', async () => {
-            const ButtonEl = element(by.tagName('jigsaw-button'));
-            await browser.sleep(300);
+            const ButtonEl = element(by.id('big-button'));
+            await browser.wait(ExpectedConditions.presenceOf(ButtonEl),2000);
             const size = await ButtonEl.getSize();
             await expect(size.width).toBe(300);
             await expect(size.height).toBe(40);
