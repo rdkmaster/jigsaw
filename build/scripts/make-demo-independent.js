@@ -48,6 +48,7 @@ function makePlunker(demoFolder, dirName) {
             item.code = fixImport(item.code);
             item.code = fixTemplateUrl(item.code);
             item.code = fixStyleUrls(item.code);
+            item.code = fixCodeForDemoOnly(item.code);
         }
         if (item.path.match(/.+\.html$/i)) {
             fixAppComponentHtml(item, demoFolder);
@@ -168,6 +169,10 @@ function fixImport(code) {
     return jigsawImportString + '\n' + rawImports.join(';\n') + code;
 }
 
+function fixCodeForDemoOnly(code) {
+    return code.replace(/\/\* #for-live-demo-only#([\s\S]*?)\*\//g, (found, codeForDemo) => codeForDemo.trim());
+}
+
 // 删除 jigsaw-demo-description 相关内容
 function fixAppComponentHtml(component, folder) {
     var re = /<!-- ignore the following lines[\s\S]*<!-- start to learn the demo from here -->\r?\n/;
@@ -204,7 +209,7 @@ function fixAppComponentTs(component, moduleCode) {
         });
 
     // 处理description变量
-    component.code = component.code.replace(/require\s*\(\s*'!!raw-loader!\s*.\/readme.md'\s*\)/,
+    component.code = component.code.replace(/require\s*\(\s*["']!!raw-loader!\s*.*\/readme.md["']\s*\)/,
                                             '"## 本DEMO的详细描述在readme.md中 ##"');
 }
 
