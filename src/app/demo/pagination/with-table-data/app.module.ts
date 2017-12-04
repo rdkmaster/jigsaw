@@ -5,7 +5,7 @@ import {ServerSidePagingDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [ServerSidePagingDemoComponent],
-    bootstrap: [ServerSidePagingDemoComponent],
+    exports: [ServerSidePagingDemoComponent],
     imports: [JigsawPaginationModule, JigsawDemoDescriptionModule]
 })
 export class ServerSidePagingDemoModule {

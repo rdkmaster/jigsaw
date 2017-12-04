@@ -10,7 +10,7 @@ import {CollapseFullComponent} from "./app.component";
 
 @NgModule({
     declarations: [CollapseFullComponent],
-    bootstrap: [CollapseFullComponent],
+    exports: [CollapseFullComponent],
     imports: [
         CommonModule, JigsawCollapseModule, JigsawButtonModule, JigsawInputModule,
         JigsawTableModule, JigsawGraphModule, JigsawDemoDescriptionModule]

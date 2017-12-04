@@ -6,7 +6,7 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 
 @NgModule({
     declarations: [CheckBoxBasicDemoComponent],
-    bootstrap: [CheckBoxBasicDemoComponent],
+    exports: [CheckBoxBasicDemoComponent],
     imports: [JigsawCheckBoxModule, JigsawSwitchModule, JigsawDemoDescriptionModule]
 })
 export class CheckBoxBasicDemoModule {

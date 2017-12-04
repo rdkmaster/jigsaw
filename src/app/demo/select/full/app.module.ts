@@ -6,7 +6,7 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 @NgModule({
     imports: [JigsawSelectModule, JigsawDemoDescriptionModule],
     declarations: [SelectFullComponent],
-    bootstrap: [SelectFullComponent]
+    exports: [SelectFullComponent]
 })
 export class SelectFullModule {
 }

@@ -6,7 +6,7 @@ import {RadioBasicDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [RadioBasicDemoComponent],
-    bootstrap: [RadioBasicDemoComponent],
+    exports: [RadioBasicDemoComponent],
     imports: [JigsawRadioModule, CommonModule, JigsawDemoDescriptionModule]
 })
 export class RadioBasicDemoModule {

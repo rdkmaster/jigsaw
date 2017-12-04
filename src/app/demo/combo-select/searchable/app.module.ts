@@ -7,7 +7,7 @@ import {ComboSelectAutoCompleteDemo} from "./app.component";
 
 @NgModule({
     declarations: [ComboSelectAutoCompleteDemo],
-    bootstrap: [ComboSelectAutoCompleteDemo],
+    exports: [ComboSelectAutoCompleteDemo],
     imports: [
         JigsawComboSelectModule, JigsawTileSelectModule, CommonModule, JigsawDemoDescriptionModule
     ],

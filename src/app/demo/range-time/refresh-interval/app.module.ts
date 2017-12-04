@@ -5,7 +5,7 @@ import {RangeTimeRefreshIntervalComponent} from "./app.component";
 
 @NgModule({
     declarations: [RangeTimeRefreshIntervalComponent],
-    bootstrap: [RangeTimeRefreshIntervalComponent],
+    exports: [RangeTimeRefreshIntervalComponent],
     imports: [JigsawRangeTimeModule, JigsawDemoDescriptionModule]
 })
 export class RangeTimeRefreshIntervalModule {

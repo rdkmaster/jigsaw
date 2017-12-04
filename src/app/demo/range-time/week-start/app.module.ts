@@ -7,7 +7,7 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 
 @NgModule({
     declarations: [RangeTimeWeekStartComponent],
-    bootstrap: [RangeTimeWeekStartComponent],
+    exports: [RangeTimeWeekStartComponent],
     imports: [JigsawRangeTimeModule, JigsawTileSelectModule, CommonModule, JigsawDemoDescriptionModule]
 })
 export class RangeTimeWeekStartModule {

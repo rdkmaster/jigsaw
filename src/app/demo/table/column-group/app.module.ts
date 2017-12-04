@@ -6,7 +6,7 @@ import {TableColumnGroupDemoComponent} from './app.component';
 @NgModule({
     imports: [JigsawTableModule, JigsawDemoDescriptionModule],
     declarations: [TableColumnGroupDemoComponent],
-    bootstrap: [TableColumnGroupDemoComponent]
+    exports: [TableColumnGroupDemoComponent]
 })
 export class TableColumnGroupDemoModule {
 }

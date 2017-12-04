@@ -5,7 +5,7 @@ import {AlertInDomDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [AlertInDomDemoComponent],
-    bootstrap: [ AlertInDomDemoComponent ],
+    exports: [ AlertInDomDemoComponent ],
     imports: [
         JigsawAlertModule, JigsawDemoDescriptionModule
     ]

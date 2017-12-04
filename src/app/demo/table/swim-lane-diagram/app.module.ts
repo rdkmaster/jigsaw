@@ -14,7 +14,7 @@ import {TableSwimLaneCell} from "./table-renderer";
         JigsawDemoDescriptionModule, JigsawSliderModule
     ],
     declarations: [SwimLaneDiagramDemoComponent, TableSwimLaneCell],
-    bootstrap: [SwimLaneDiagramDemoComponent],
+    exports: [SwimLaneDiagramDemoComponent],
     entryComponents: [TableSwimLaneCell]
 })
 export class SwimLaneDiagramDemoModule {

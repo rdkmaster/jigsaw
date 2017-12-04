@@ -19,7 +19,7 @@ import {OfficeCellRenderer, OfficeHeaderRenderer, PositionHeaderRenderer} from "
     declarations: [
         BigTableDataDemoComponent, PositionHeaderRenderer, OfficeHeaderRenderer, OfficeCellRenderer
     ],
-    bootstrap: [BigTableDataDemoComponent], // 这个是给plunker用的，不能去掉。
+    exports: [BigTableDataDemoComponent], // 这个是给plunker用的，不能去掉。
     entryComponents: [PositionHeaderRenderer, OfficeHeaderRenderer, OfficeCellRenderer]
 })
 export class BigTableDataDemoModule {

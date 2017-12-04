@@ -3,7 +3,6 @@ import {NgModule} from '@angular/core';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {TranslateService} from '@ngx-translate/core';
 
 import {JigsawRootModule} from "jigsaw/component/root/root";
 import {AppComponent} from './app.component';
@@ -28,7 +27,6 @@ import {routerConfig} from "./router-config";
         JigsawRootModule
     ],
     providers: [
-        TranslateService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AjaxInterceptor,

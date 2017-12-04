@@ -8,7 +8,7 @@ import {OpenComboSelectDemo} from "./app.component";
 
 @NgModule({
     declarations: [OpenComboSelectDemo],
-    bootstrap: [OpenComboSelectDemo],
+    exports: [OpenComboSelectDemo],
     imports: [
         JigsawComboSelectModule, JigsawTileSelectModule, JigsawButtonModule, CommonModule,
         JigsawDemoDescriptionModule

@@ -5,7 +5,7 @@ import {GraphSetSizeComponent} from "./app.component";
 
 @NgModule({
     declarations: [GraphSetSizeComponent],
-    bootstrap: [GraphSetSizeComponent],
+    exports: [GraphSetSizeComponent],
     imports: [JigsawGraphModule, JigsawDemoDescriptionModule]
 })
 export class GraphSetSizeModule {

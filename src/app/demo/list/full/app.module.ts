@@ -12,7 +12,7 @@ import {ListFullDemoComponent} from "./app.component";
         JigsawDemoDescriptionModule
     ],
     declarations: [ListFullDemoComponent],
-    bootstrap: [ListFullDemoComponent]
+    exports: [ListFullDemoComponent]
 })
 export class ListFullDemoModule {
 }

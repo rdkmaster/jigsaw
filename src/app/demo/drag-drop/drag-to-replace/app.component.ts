@@ -3,7 +3,7 @@ import {DragDropInfo} from "jigsaw/directive/dragdrop/types";
 
 @Component({
     templateUrl: 'app.component.html',
-    styleUrls: ['app.component.scss']
+    styleUrls: ['./app.component.css']
 })
 export class DragToReplaceDemoComponent {
 

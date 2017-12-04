@@ -6,7 +6,7 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 @NgModule({
     imports: [JigsawTimeModule, JigsawDemoDescriptionModule],
     declarations: [TimeRefreshIntervalComponent],
-    bootstrap: [TimeRefreshIntervalComponent]
+    exports: [TimeRefreshIntervalComponent]
 })
 export class TimeRrefreshIntervalDemoModule {
 }

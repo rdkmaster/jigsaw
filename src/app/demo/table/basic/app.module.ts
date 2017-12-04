@@ -6,7 +6,7 @@ import {TableBasicDemoComponent} from './app.component';
 @NgModule({
     imports: [JigsawTableModule, JigsawDemoDescriptionModule],
     declarations: [TableBasicDemoComponent],
-    bootstrap: [TableBasicDemoComponent]
+    exports: [TableBasicDemoComponent]
 })
 export class TableBasicDemoModule {
 }

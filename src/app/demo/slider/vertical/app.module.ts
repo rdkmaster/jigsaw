@@ -6,7 +6,7 @@ import {SliderVerticalDemoComponent} from './app.component';
 @NgModule({
     imports: [JigsawSliderModule, JigsawDemoDescriptionModule],
     declarations: [SliderVerticalDemoComponent],
-    bootstrap: [SliderVerticalDemoComponent]
+    exports: [SliderVerticalDemoComponent]
 })
 export class SliderVerticalDemoModule {
 }

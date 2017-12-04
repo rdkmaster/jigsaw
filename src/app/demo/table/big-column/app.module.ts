@@ -12,7 +12,7 @@ import {BigColumnDemoComponent} from './app.component';
     declarations: [
         BigColumnDemoComponent,
     ],
-    bootstrap: [BigColumnDemoComponent], // 这个是给plunker用的，不能去掉。
+    exports: [BigColumnDemoComponent], // 这个是给plunker用的，不能去掉。
 })
 export class BigColumnDemoModule {
 }

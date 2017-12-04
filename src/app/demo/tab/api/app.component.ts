@@ -5,7 +5,7 @@ import {TabContentDefine} from "./tabContent/tabContent";
 
 @Component({
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    styleUrls: ['./app.component.css']
 })
 export class DynamicTabDemoComponent {
     @ViewChild(JigsawTab) tabs: JigsawTab;

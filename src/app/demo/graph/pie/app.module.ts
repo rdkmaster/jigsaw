@@ -5,7 +5,7 @@ import {PieGraphDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [PieGraphDemoComponent],
-    bootstrap: [PieGraphDemoComponent],
+    exports: [PieGraphDemoComponent],
     imports: [JigsawGraphModule, JigsawDemoDescriptionModule]
 })
 export class PieGraphDemoModule {

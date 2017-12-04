@@ -7,7 +7,7 @@ import {RangeTimeLimitEndComponent} from "./app.component";
 
 @NgModule({
     declarations: [RangeTimeLimitEndComponent],
-    bootstrap: [RangeTimeLimitEndComponent],
+    exports: [RangeTimeLimitEndComponent],
     imports: [JigsawRangeTimeModule, JigsawTileSelectModule, CommonModule, JigsawDemoDescriptionModule]
 })
 export class RangeTimeLimitEndModule {

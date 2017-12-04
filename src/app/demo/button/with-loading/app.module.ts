@@ -7,7 +7,7 @@ import {ButtonWithLoadingComponent} from "./app.component";
 
 @NgModule({
     declarations: [ButtonWithLoadingComponent],
-    bootstrap: [ButtonWithLoadingComponent],
+    exports: [ButtonWithLoadingComponent],
     imports: [CommonModule, JigsawButtonModule, JigsawLoadingModule, JigsawDemoDescriptionModule]
 })
 export class ButtonWithLoadingModule {

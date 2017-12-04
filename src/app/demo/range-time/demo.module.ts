@@ -20,7 +20,7 @@ import {RangeTimeRefreshIntervalComponent} from "./refresh-interval/app.componen
 import {RangeTimeWeekStartComponent} from "./week-start/app.component";
 import {RangeTimeFullComponent} from "./full/app.component";
 
-export const routerConfig = [
+export const routerConfig:any = [
     {
         path: 'basic', component: RangeTimeBasicDemoComponent
     },
@@ -47,6 +47,12 @@ export const routerConfig = [
     },
     {
         path: 'full', component: RangeTimeFullComponent, recommended: true
+    },
+    {
+        url: '/table/calendar', desc: 'calendar', recommended: true
+    },
+    {
+        url: '/time/with-combo-select', desc: 'with-combo-select'
     },
 ];
 

@@ -6,7 +6,7 @@ import {BoxComponent} from "./box.component";
 
 @NgModule({
     declarations: [ZoneForBetterPerformanceDemoComponent, BoxComponent],
-    bootstrap: [ZoneForBetterPerformanceDemoComponent],
+    exports: [ZoneForBetterPerformanceDemoComponent],
     imports: [CommonModule, JigsawDemoDescriptionModule]
 })
 export class ZoneForBetterPerformanceDemoModule {

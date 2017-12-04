@@ -6,7 +6,7 @@ import {CollapseBasicDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [CollapseBasicDemoComponent],
-    bootstrap: [CollapseBasicDemoComponent],
+    exports: [CollapseBasicDemoComponent],
     imports: [JigsawCollapseModule, JigsawInputModule, JigsawDemoDescriptionModule]
 })
 export class CollapseBasicDemoModule {

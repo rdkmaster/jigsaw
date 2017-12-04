@@ -7,7 +7,7 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 @NgModule({
     imports: [JigsawTableModule, JigsawButtonModule, JigsawDemoDescriptionModule],
     declarations: [TableDataFromAjaxDemoComponent],
-    bootstrap: [TableDataFromAjaxDemoComponent]
+    exports: [TableDataFromAjaxDemoComponent]
 })
 export class TableDataFromAjaxDemoModule {
 }

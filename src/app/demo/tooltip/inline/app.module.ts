@@ -9,7 +9,7 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 @NgModule({
     imports: [JigsawInputModule, JigsawTooltipModule, JigsawButtonModule, JigsawDemoDescriptionModule],
     declarations: [SimpleTooltipDemoComponent],
-    bootstrap: [SimpleTooltipDemoComponent],
+    exports: [SimpleTooltipDemoComponent],
     providers: [PopupService]
 })
 export class SimpleTooltipDemoModule {

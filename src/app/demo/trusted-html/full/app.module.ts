@@ -8,7 +8,7 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 @NgModule({
     imports: [CommonModule, FormsModule, JigsawTrustedHtmlModule, JigsawDemoDescriptionModule],
     declarations: [TrustedHtmlFullComponent],
-    bootstrap: [TrustedHtmlFullComponent]
+    exports: [TrustedHtmlFullComponent]
 })
 export class TrustedHtmlFullModule {
 }

@@ -8,7 +8,7 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 @NgModule({
     imports: [CommonModule, JigsawTimeModule, JigsawTileSelectModule, JigsawDemoDescriptionModule],
     declarations: [TimeLimitStartComponent],
-    bootstrap: [TimeLimitStartComponent]
+    exports: [TimeLimitStartComponent]
 })
 export class TimeLimitStartDemoModule {
 }

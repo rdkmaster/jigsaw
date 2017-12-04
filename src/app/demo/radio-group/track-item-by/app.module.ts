@@ -6,7 +6,7 @@ import {RadioTrackItemByDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [RadioTrackItemByDemoComponent],
-    bootstrap: [RadioTrackItemByDemoComponent],
+    exports: [RadioTrackItemByDemoComponent],
     imports: [JigsawRadioModule, CommonModule, JigsawDemoDescriptionModule]
 })
 export class RadioTrackItemByDemoModule {

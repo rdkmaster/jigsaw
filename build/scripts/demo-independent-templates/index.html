@@ -6,127 +6,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css">
-    <link rel="stylesheet" href="https://unpkg.com/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/eonasdan-bootstrap-datetimepicker@4.17.47/build/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/ztree@3.5.24/css/zTreeStyle/zTreeStyle.css">
+    <link rel="stylesheet" href="https://unpkg.com/perfect-scrollbar@1.2.0/css/perfect-scrollbar.css">
     <link rel="stylesheet" href="https://unpkg.com/@rdkmaster/icon-font/css/iconfont.css">
-    <link rel="stylesheet" href="https://unpkg.com/ztree/css/zTreeStyle/zTreeStyle.css">
     <link rel="stylesheet" href="https://unpkg.com/@rdkmaster/jigsaw/prebuilt-themes/zte.css">
-
-    <style>
-      html, body {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      /* live demo common start */
-      /* 容器 */
-      .live-demo-wrap {
-          padding: 10px;
-      }
-
-      /* 大标题 */
-      .live-demo-wrap h2 {
-          margin-bottom: 40px;
-          color: #333;
-          font-size: 24px;
-          font-weight: 700;
-      }
-
-      /* demo容器 block */
-      .live-demo-wrap .live-demo-block{
-          float: left;
-          width: 48%;
-          min-width: 300px;
-          border: 1px solid #dcdcdc;
-          border-radius: 4px;
-          padding: 8px;
-          margin-right: 2%;
-      }
-
-      /* demo容器 */
-      .live-demo-wrap .live-demo {
-          margin-bottom: 30px;
-          padding-left: 10px;
-      }
-      .live-demo.live-demo-block{margin-bottom: 20px}
-
-      /* demo标题 */
-      .live-demo h3 {
-          margin: 0 0 10px -10px;
-          color: #333;
-          font-size: 16px;
-          padding: 2px 14px;
-          position: relative;
-          border-left: 1px solid #c7254e;
-      }
-      .live-demo.live-demo-block h3{margin: 0 0 10px 0;}
-      .live-demo h3:before{
-          position: absolute;
-          left: -1px;
-          top: 0;
-          content: '';
-          border-style: solid;
-          border-width: 6px 10px;
-          border-color: transparent transparent transparent #c7254e;
-      }
-
-      /* demo文字描述 */
-      .live-demo p.comment {
-          margin-bottom: 10px;
-          color: #666;
-          font-size: 14px;
-      }
-
-      /* demo消息文字 */
-      .live-demo p.message {
-          margin-top: 10px;
-          margin-bottom: 0;
-          color: #999;
-          font-size: 14px;
-      }
-
-      /* demo消息高亮字 */
-      .live-demo p.message span {
-          margin: 0 4px;
-          color: #666;
-      }
-
-      /* toggle */
-      .live-demo .toggle {
-          padding-top: 10px;
-          color: #999;
-      }
-      .live-demo .toggle label{
-          margin-right: 10px;
-          font-weight: normal;
-      }
-
-      /* demo code */
-      .live-demo code {
-          padding: 2px 4px;
-          margin: 0;
-          font-size: 85%;
-          background-color: rgba(27, 31, 35, 0.05);
-          border-radius: 3px;
-      }
-      /* live demo common end */
-    </style>
+    <link rel="stylesheet" href="live-demo-wrapper.css">
 
     <!-- 引入Jigsaw需要的依赖，这些依赖没有出umd包，只能配置在这里 -->
-    <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
-    <script src="https://unpkg.com/jquery-mousewheel/jquery.mousewheel.js"></script>
-    <script src="https://unpkg.com/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script src="https://unpkg.com/moment/min/moment.min.js"></script>
-    <script src="https://unpkg.com/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="https://unpkg.com/ztree/js/jquery.ztree.all.min.js"></script>
-    <script src="https://unpkg.com/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://unpkg.com/echarts@3.5.4/dist/echarts.min.js"></script>
+    <script src="https://unpkg.com/jquery@3.1.1/dist/jquery.min.js"></script>
+    <script src="https://unpkg.com/moment@2.18.1/min/moment.min.js"></script>
+    <script src="https://unpkg.com/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/ztree@3.5.24/js/jquery.ztree.all.min.js"></script>
+    <script src="https://unpkg.com/eonasdan-bootstrap-datetimepicker@4.17.47/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://unpkg.com/peity@3.2.1/jquery.peity.min.js"></script>
 
     <!-- Polyfills -->
     <script src="https://unpkg.com/core-js/client/shim.min.js"></script>
-    <script src="https://unpkg.com/zone.js@0.8.5?main=browser"></script>
+    <script src="https://unpkg.com/zone.js@0.8.18?main=browser"></script>
     <script src="https://unpkg.com/systemjs@0.19.39/dist/system.src.js"></script>
     <script src="systemjs.config.js"></script>
     <script>
@@ -135,10 +35,10 @@
   </head>
 
   <body>
-    <jigsaw-live-demo>
+    <demo-root>
       <h3 style="padding: 6px">Jigsaw live demo is being loaded...</h3>
       <h4 style="padding: 6px">Visit <a href="http://rdk.zte.com.cn" target="_blank">http://rdk.zte.com.cn</a> for more detail.</h4>
       <p>We are suffering some error if this message remains for minutes, will you please send us a report by <a href="https://github.com/rdkmaster/jigsaw/issues/new">submitting an issue</a> with the error message. By the way, you can copy the error message in the console of your browser.</p>
-    </jigsaw-live-demo>
+    </demo-root>
   </body>
 </html>
