@@ -1,7 +1,7 @@
 import {browser, by, element, ExpectedConditions} from 'protractor';
 import {waitForNotPresence, waitForPresence} from "../utils/await";
 
-describe('button', () => {
+describe('button', async() => {
     beforeEach(() => {
         browser.waitForAngularEnabled(false);
     });
