@@ -11,12 +11,11 @@ describe('alert', () => {
           await  browser.get('/alert/popup');
           await browser.sleep(300);
         });
-        it('should be alert when click button popup and display ok when click definite and "x" ', async () => {
+        it('should be alert when click button popup and display ok when click definite', async () => {
             const componentEl = element(by.tagName('ng-component')),
                 alertButtonEl = element(by.css('.app-wrap')).all(by.tagName('jigsaw-button')),
                 jigsawAlertEl = element(by.tagName('jigsaw-alert')),
                 definiteEl = jigsawAlertEl.element(by.css('.jigsaw-button')),
-                alertCloseEl = jigsawAlertEl.element(by.css('.jigsaw-alert-head')).all(by.tagName('SPAN')).get(1),
                 alertStateEl = componentEl.element(by.tagName('p'));
             await expect(alertButtonEl.get(0).getText()).toBe('通用信息提示框');
                   alertButtonEl.get(0).click();
@@ -32,10 +31,17 @@ describe('alert', () => {
                   definiteEl.click();
             await waitForNotPresence('jigsaw-alert');
             await expect(alertStateEl.getText()).toBe('great! your answer is: alert.button.ok');
-            await browser.navigate().refresh();
-            await alertButtonEl.get(0).click();
-            await browser.sleep(1000);
-            await alertCloseEl.click();
+        });
+
+        it('should close alert when click "x"', async () => {
+            const componentEl = element(by.tagName('ng-component')),
+                alertButtonEl = componentEl.all(by.css('.jigsaw-button')),
+                jigsawAlertEl = element(by.tagName('jigsaw-alert')),
+                alertCloseEl = jigsawAlertEl.element(by.css('.jigsaw-alert-head')).all(by.tagName('SPAN')).get(1),
+                alertStateEl = componentEl.element(by.tagName('p'));
+                  alertButtonEl.get(0).click();
+            await waitForPresence('jigsaw-alert');
+                  alertCloseEl.click();
             await waitForNotPresence('jigsaw-alert');
             await expect(alertStateEl.getText()).toBe('you closed the alert with the close button');
         });
