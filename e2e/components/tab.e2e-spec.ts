@@ -22,7 +22,7 @@ describe('tabs', () => {
             expect(tabsLabelEl.get(3).getCssValue('pointer-events')).toBe('none');
         })
     });
-    describe('test tabApi', () => {
+    xdescribe('test tabApi', () => {
         beforeEach(() => {
             browser.get('/tab/api');
         });
@@ -44,7 +44,7 @@ describe('tabs', () => {
             expect(tabsLabelEl.get(0).getText()).toBe('Tab 2');
         })
     });
-    describe('test tabApi', () => {
+    describe('test tab with input', () => {
         beforeEach(() => {
             browser.get('/tab/with-input');
         });
