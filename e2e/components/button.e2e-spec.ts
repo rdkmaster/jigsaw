@@ -25,8 +25,8 @@ describe('button', async() => {
 
         it('should click invalid when set disabled', () => {
             const testButtonEl = element(by.id('test-button')),
-                toggleDisabledEl = element(by.id('toggle-disabled')),
-                clickCounterEl = element(by.id('click-counter'));
+                  toggleDisabledEl = element(by.id('toggle-disabled')),
+                  clickCounterEl = element(by.id('click-counter'));
             browser.switchTo().defaultContent();
             expect(clickCounterEl.getText()).toBe('0');
 
