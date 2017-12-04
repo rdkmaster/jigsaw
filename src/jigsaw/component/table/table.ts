@@ -55,6 +55,18 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         super();
     }
 
+    @Input()
+    public get width(): string {
+        return this._width;
+    }
+
+    public set width(value: string) {
+        this._width = CommonUtils.getCssValue(value);
+        setTimeout(() => {
+            this.resize();
+        });
+    }
+
     @Output()
     public sort = new EventEmitter<SortChangeEvent>();
 

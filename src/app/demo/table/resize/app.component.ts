@@ -22,9 +22,6 @@ export class TableResizeDemoComponent implements OnInit {
 
     changeTableWidth() {
         this.tableWidth = this.tableWidth == '50%' ? '100%' : '50%';
-        setTimeout(() => {
-            this.tableCmp.resize();
-        });
     }
 
     changeBoxWidth() {
