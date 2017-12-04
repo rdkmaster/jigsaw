@@ -14,6 +14,7 @@ export class ArrayCollectionAjaxDemoComponent {
         ac.fromAjax('mock-data/core-members');
         ac.dataReviser = data => {
             data.push({id: 6, name: '朱明鹏'});
+            return data;
         };
 
         this.consoleAppend("list of our first core members:");

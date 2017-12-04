@@ -205,7 +205,7 @@ function fixAppComponentTs(component, moduleCode) {
 
     // 处理description变量
     component.code = component.code.replace(/require\s*\(\s*'!!raw-loader!\s*.\/readme.md'\s*\)/,
-                                            '"==这里的内容在readme.md文件中=="');
+                                            '"## 本DEMO的详细描述在readme.md中 ##"');
 }
 
 // 转变app.module.ts文件

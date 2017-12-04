@@ -50,8 +50,8 @@
       'typescript':                 'npm:typescript@2.4.2/lib/typescript.js',
       'tslib':                      'npm:tslib@1.7.1/tslib.es6.js',
       'ngx-perfect-scrollbar':      'npm:ngx-perfect-scrollbar@5.0.5/dist/ngx-perfect-scrollbar.js',
-      'perfect-scrollbar':          'npm:perfect-scrollbar@1.2.0/dist/perfect-scrollbar.min.js',
-      'resize-observer-polyfill':   'npm:resize-observer-polyfill@1.5.0/dist/ResizeObserver.js',
+      'perfect-scrollbar':          'npm:perfect-scrollbar@1.2.0/dist/perfect-scrollbar.esm.js',
+      'resize-observer-polyfill':   'npm:resize-observer-polyfill@1.5.0/dist/ResizeObserver.es.js',
       "@ngx-translate/core":        'npm:@ngx-translate/core@8.0.0',
       "echarts":                    'npm:echarts@3.5.2/dist/echarts.js',
       '@rdkmaster/jigsaw':          'npm:@rdkmaster/jigsaw'
