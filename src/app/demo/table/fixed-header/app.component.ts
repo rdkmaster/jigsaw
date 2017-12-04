@@ -4,7 +4,7 @@ import {TableData} from "jigsaw/core/data/table-data";
 
 @Component({
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    styleUrls: ['./app.component.css']
 })
 export class TableFixedHeadDemoComponent {
     tableData: TableData;

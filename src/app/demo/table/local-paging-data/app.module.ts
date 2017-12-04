@@ -7,7 +7,7 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 @NgModule({
     imports: [JigsawTableModule, JigsawPaginationModule, JigsawDemoDescriptionModule],
     declarations: [LocalPagingDataDemoComponent],
-    bootstrap: [LocalPagingDataDemoComponent]
+    exports: [LocalPagingDataDemoComponent]
 })
 export class LocalPagingDataDemoModule {
 }

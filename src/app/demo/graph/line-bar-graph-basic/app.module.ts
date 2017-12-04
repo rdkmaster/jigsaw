@@ -5,7 +5,7 @@ import {BasicLineGraphComponent} from "./app.component";
 
 @NgModule({
     declarations: [BasicLineGraphComponent],
-    bootstrap: [BasicLineGraphComponent],
+    exports: [BasicLineGraphComponent],
     imports: [JigsawGraphModule, JigsawDemoDescriptionModule]
 })
 export class BasicLineGraphModule {

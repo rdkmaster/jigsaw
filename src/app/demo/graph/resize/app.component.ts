@@ -3,8 +3,7 @@
  */
 
 import {Component, OnInit, ViewChild} from '@angular/core';
-import "rxjs/add/observable/combineLatest";
-import {Observable} from "rxjs/Observable";
+import {combineLatest} from "rxjs/observable/combineLatest";
 import {AbstractGraphData} from "jigsaw/core/data/graph-data";
 import {EchartOptions} from "jigsaw/core/data/echart-types";
 import {JigsawGraph} from "jigsaw/component/graph/graph";
@@ -31,7 +30,7 @@ export class GraphResizeComponent implements OnInit {
 
     ngOnInit() {
         this.data = new GraphDataDemo();
-        Observable.combineLatest(this.widthInput.valueChange, this.heightInput.valueChange).debounceTime(500)
+        combineLatest(this.widthInput.valueChange, this.heightInput.valueChange).debounceTime(500)
             .subscribe(
                 () => {
                     this.graphWidth = <string>this.widthInput.value;

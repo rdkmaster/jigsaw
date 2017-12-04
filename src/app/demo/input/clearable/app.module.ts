@@ -5,7 +5,7 @@ import {InputClearableDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [InputClearableDemoComponent],
-    bootstrap: [InputClearableDemoComponent],
+    exports: [InputClearableDemoComponent],
     imports: [JigsawInputModule, JigsawDemoDescriptionModule]
 })
 export class InputClearableDemoModule {

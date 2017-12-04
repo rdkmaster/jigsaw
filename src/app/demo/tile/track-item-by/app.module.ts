@@ -7,7 +7,7 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 @NgModule({
     imports: [JigsawTileSelectModule, CommonModule, JigsawDemoDescriptionModule],
     declarations: [TileSelectTrackItemByDemoComponent],
-    bootstrap: [TileSelectTrackItemByDemoComponent]
+    exports: [TileSelectTrackItemByDemoComponent]
 })
 export class TileSelectTrackItemByDemoModule {
 }

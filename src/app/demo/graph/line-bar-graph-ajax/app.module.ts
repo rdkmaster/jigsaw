@@ -5,7 +5,7 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 
 @NgModule({
     declarations: [AjaxLineGraphComponent],
-    bootstrap: [AjaxLineGraphComponent],
+    exports: [AjaxLineGraphComponent],
     imports: [JigsawGraphModule, JigsawDemoDescriptionModule]
 })
 export class AjaxLineGraphModule {

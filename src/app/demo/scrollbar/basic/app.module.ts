@@ -5,7 +5,7 @@ import {ScrollbarBasicDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [ScrollbarBasicDemoComponent],
-    bootstrap: [ScrollbarBasicDemoComponent],
+    exports: [ScrollbarBasicDemoComponent],
     imports: [PerfectScrollbarModule, JigsawDemoDescriptionModule]
 })
 export class ScrollbarBasicDemoModule {

@@ -6,7 +6,7 @@ import {InputFullComponent} from "./app.component";
 
 @NgModule({
     declarations: [InputFullComponent],
-    bootstrap: [InputFullComponent],
+    exports: [InputFullComponent],
     imports: [JigsawInputModule, JigsawButtonModule, JigsawDemoDescriptionModule]
 })
 export class InputFullModule {

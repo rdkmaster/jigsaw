@@ -7,7 +7,7 @@ import {RangeTimeGrComponent} from "./app.component";
 
 @NgModule({
     declarations: [RangeTimeGrComponent],
-    bootstrap: [RangeTimeGrComponent],
+    exports: [RangeTimeGrComponent],
     imports: [JigsawRangeTimeModule, JigsawTileSelectModule, CommonModule, JigsawDemoDescriptionModule]
 })
 export class RangeTimeGrModule {

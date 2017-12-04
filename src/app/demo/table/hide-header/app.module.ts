@@ -7,7 +7,7 @@ import {TableHideHeadDemoComponent} from './app.component';
 @NgModule({
     imports: [JigsawTableModule, JigsawButtonModule, JigsawDemoDescriptionModule],
     declarations: [TableHideHeadDemoComponent],
-    bootstrap: [TableHideHeadDemoComponent]
+    exports: [TableHideHeadDemoComponent]
 })
 export class TableHideHeadDemoModule {
 }

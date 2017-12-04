@@ -27,7 +27,7 @@ import {TemplateDrivenDemoComponent} from "./app.component";
         JigsawSwitchModule, JigsawTileSelectModule, JigsawDemoDescriptionModule
     ],
     declarations: [TemplateDrivenDemoComponent],
-    bootstrap: [TemplateDrivenDemoComponent],
+    exports: [TemplateDrivenDemoComponent],
     entryComponents: []
 })
 export class TemplateDrivenDemoModule {

@@ -7,7 +7,7 @@ import {SliderBasicDemoComponent} from './app.component';
 @NgModule({
     imports: [JigsawSwitchModule, JigsawSliderModule, JigsawDemoDescriptionModule],
     declarations: [SliderBasicDemoComponent],
-    bootstrap: [SliderBasicDemoComponent]
+    exports: [SliderBasicDemoComponent]
 })
 export class SliderBasicDemoModule {
 }

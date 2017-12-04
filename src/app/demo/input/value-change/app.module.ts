@@ -5,7 +5,7 @@ import {InputValueChangeDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [InputValueChangeDemoComponent],
-    bootstrap: [InputValueChangeDemoComponent],
+    exports: [InputValueChangeDemoComponent],
     imports: [JigsawInputModule, JigsawDemoDescriptionModule]
 })
 export class InputValueChangeDemoModule {

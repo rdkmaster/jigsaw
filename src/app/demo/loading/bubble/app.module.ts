@@ -9,7 +9,7 @@ import {BubbleLoadingDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [BubbleLoadingDemoComponent],
-    bootstrap: [BubbleLoadingDemoComponent],
+    exports: [BubbleLoadingDemoComponent],
     imports: [JigsawLoadingModule, JigsawButtonModule, CommonModule, JigsawDemoDescriptionModule],
     providers: [PopupService, LoadingService]
 })

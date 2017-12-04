@@ -4,7 +4,7 @@ import {ArrayCollectionBasicDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [ArrayCollectionBasicDemoComponent],
-    bootstrap: [ArrayCollectionBasicDemoComponent],
+    exports: [ArrayCollectionBasicDemoComponent],
     imports: [JigsawDemoDescriptionModule]
 })
 export class ArrayCollectionBasicDemoModule {

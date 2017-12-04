@@ -4,7 +4,7 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 import {PaginationBasicDemoComponent} from "./app.component";
 @NgModule({
     declarations: [PaginationBasicDemoComponent],
-    bootstrap: [PaginationBasicDemoComponent],
+    exports: [PaginationBasicDemoComponent],
     imports: [JigsawPaginationModule, JigsawDemoDescriptionModule]
 })
 export class PaginationBasicDemoModule{

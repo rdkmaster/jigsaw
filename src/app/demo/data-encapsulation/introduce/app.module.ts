@@ -5,7 +5,7 @@ import {DataIntroduceComponent} from "./app.component";
 
 @NgModule({
     declarations: [DataIntroduceComponent],
-    bootstrap: [DataIntroduceComponent],
+    exports: [DataIntroduceComponent],
     imports: [CommonModule, JigsawDemoDescriptionModule]
 })
 export class DataIntroduceModule {

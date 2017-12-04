@@ -6,7 +6,7 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 @NgModule({
     imports: [JigsawTreeExtModule, JigsawDemoDescriptionModule],
     declarations: [ZtreeDemoComponent],
-    bootstrap: [ZtreeDemoComponent]
+    exports: [ZtreeDemoComponent]
 })
 export class TreeBasicDemoModule {
 }

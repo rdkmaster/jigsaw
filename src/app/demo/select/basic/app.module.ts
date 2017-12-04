@@ -6,7 +6,7 @@ import {SelectBasicDemoComponent} from './app.component';
 @NgModule({
     imports: [JigsawSelectModule, JigsawDemoDescriptionModule],
     declarations: [SelectBasicDemoComponent],
-    bootstrap: [SelectBasicDemoComponent]
+    exports: [SelectBasicDemoComponent]
 })
 export class SelectBasicDemoModule {
 }

@@ -3,7 +3,7 @@ import {DialogBase, JigsawDialog} from "jigsaw/component/dialog/dialog";
 
 @Component({
     templateUrl: 'user-dialog.html',
-    styleUrls: ['user-dialog.scss']
+    styleUrls: ['./user-dialog.css']
 })
 export class UserDialogComponent extends DialogBase implements AfterViewInit {
     // 这个变量是父类所需，就照着这么写就行啦
