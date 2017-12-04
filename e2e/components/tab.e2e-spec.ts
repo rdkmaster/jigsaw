@@ -1,21 +1,21 @@
 import {browser, element, by, ExpectedConditions} from "protractor";
 import {waitForPresence} from "../utils/index";
 
-describe('tabs', async() => {
+describe('tabs', async () => {
     beforeEach(() => {
         browser.waitForAngularEnabled(false);
     });
-    describe('test tab', async() => {
+    describe('test tab', async () => {
         beforeEach(() => {
             browser.get('/tab/basic');
         });
         it('should present different content when click tab label ', async () => {
             const tabsLabelEl = element.all(by.tagName('jigsaw-tab-label')),
                 tabContentEl = element.all(by.tagName('jigsaw-tab-content'));
-            tabsLabelEl.get(1).click();
+            await tabsLabelEl.get(1).click();
             await browser.wait(ExpectedConditions.textToBePresentInElement(tabContentEl.get(1).element(by.tagName('H3')), 'user register center'));
             await expect(tabContentEl.get(1).element(by.tagName('H3')).getText()).toBe('user register center');//this expect do not need wait maybe;
-            tabsLabelEl.get(0).click();
+            await tabsLabelEl.get(0).click();
             await browser.wait(ExpectedConditions.textToBePresentInElement(tabContentEl.get(0), 'tab content 1'));
             await expect(tabContentEl.get(0).getText()).toBe('tab content 1');
             await expect(tabsLabelEl.get(3).getCssValue('pointer-events')).toBe('none');
@@ -42,15 +42,16 @@ describe('tabs', async() => {
             await expect(tabsLabelEl.get(0).getText()).toBe('Tab 2');
         })
     });
-    describe('test tab with input', async() => {
+    describe('test tab with input', async () => {
         beforeEach(() => {
             browser.get('/tab/with-input');
         });
         it('should display table when click "GetTableData"', async () => {
             const getTableDate = element(by.css('.container')).element(by.tagName('jigsaw-button')),
                 tableEl = element(by.css('.jigsaw-tabs-content')).element(by.tagName('jigsaw-table')).element(by.tagName('table'));
-            getTableDate.click();
+            await getTableDate.click();
             await browser.wait(ExpectedConditions.visibilityOf(tableEl));
+            await browser.sleep(3000);
             await expect(tableEl.getText()).not.toBe('');
         })
     });
