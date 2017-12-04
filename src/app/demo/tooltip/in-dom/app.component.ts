@@ -24,6 +24,10 @@ import {Component} from "@angular/core";
 })
 export class TooltipInDomDemoComponent {
 
+    show() {
+        alert('I got it!')
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

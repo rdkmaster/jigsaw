@@ -149,7 +149,9 @@ function fixImport(code) {
         if (match[2].match(/jigsaw\/.+?/)) {
             var importString = match[1];
             var imports = importString.split(/,/g).map(item => item.trim());
-            imports.forEach(item => jigsawImports.push(item));
+            imports.forEach(item => {
+                if (!!item) jigsawImports.push(item)
+            });
         } else {
             rawImports.push(match[0]);
         }
