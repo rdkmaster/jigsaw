@@ -6,7 +6,7 @@ const {SpecReporter} = require('jasmine-spec-reporter');
 let config = {
     allScriptsTimeout: 11000,
     specs: [
-        './e2e/**/*.e2e-spec.ts'
+        './e2e/**/tab.e2e-spec.ts'
     ],
     baseUrl: 'http://localhost:4200/',
     framework: 'jasmine',
@@ -16,8 +16,6 @@ let config = {
         print: function () {
         }
     },
-
-    SELENIUM_PROMISE_MANAGER: false,
     /*
     //beforeLaunch在protractor里面执行一次，如果使用multiCapabilities，
     //tsconfig.json就不能放在beforeLaunch里面

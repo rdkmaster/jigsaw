@@ -5,6 +5,18 @@ describe('button', async() => {
     beforeEach(() => {
         browser.waitForAngularEnabled(false);
     });
+    describe('test width and height', async() => {
+
+        it('should change size when set width and height', async () => {
+            await browser.get('/button/width-height');
+            await browser.switchTo().defaultContent();
+            const ButtonEl = element(by.id('big-button'));
+            await browser.wait(ExpectedConditions.presenceOf(ButtonEl));
+            const size = await ButtonEl.getSize();
+            await expect(size.width).toBe(300);
+            await expect(size.height).toBe(40);
+        })
+    });
 
     describe('test disabled', async() => {
         beforeEach(() => {
@@ -30,22 +42,6 @@ describe('button', async() => {
             expect(clickCounterEl.getText()).toBe('2');
         })
     });
-
-    describe('test width and height', async() => {
-        beforeEach(() => {
-            browser.get('/button/width-height');
-        });
-
-        it('should change size when set width and height', async () => {
-            await browser.switchTo().defaultContent();
-            const ButtonEl = element(by.id('big-button'));
-            await browser.wait(ExpectedConditions.presenceOf(ButtonEl));
-            const size = await ButtonEl.getSize();
-            await expect(size.width).toBe(300);
-            await expect(size.height).toBe(40);
-        })
-    });
-
 
     describe('test preset size and type', async() => {
         beforeEach(() => {
