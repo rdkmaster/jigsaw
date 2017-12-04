@@ -38,7 +38,7 @@ describe('button', () => {
 
         it('should change size when set width and height', async () => {
             const ButtonEl = element(by.id('big-button'));
-            await browser.wait(ExpectedConditions.presenceOf(ButtonEl),2000);
+            await browser.wait(ExpectedConditions.presenceOf(ButtonEl));
             const size = await ButtonEl.getSize();
             await expect(size.width).toBe(300);
             await expect(size.height).toBe(40);
