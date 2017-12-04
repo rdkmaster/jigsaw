@@ -5,7 +5,7 @@ import {ColumnDefine} from "jigsaw/component/table/table-typings";
 
 @Component({
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
+    styleUrls: ['./app.component.css'],
     //TO NOTE
     encapsulation: ViewEncapsulation.None
 })

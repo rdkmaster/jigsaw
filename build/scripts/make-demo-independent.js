@@ -53,6 +53,11 @@ function makePlunker(demoFolder, dirName) {
         if (item.path.match(/.+\.html$/i)) {
             fixAppComponentHtml(item, demoFolder);
         }
+        if (item.path.match(/.+\.scss$/i)) {
+            console.error('ERROR: do not use scss file in demo! we can not pass them in plunker.');
+            console.error(`       path=${demoFolder}`);
+            process.exit(1);
+        }
         if (item.path == 'app/app.component.ts') {
             compContentIndex = idx;
         } else if (item.path == 'app/app.module.ts') {

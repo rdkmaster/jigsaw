@@ -5,7 +5,7 @@ import {AdditionalColumnDefine, ColumnDefine} from "jigsaw/component/table/table
 
 @Component({
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
+    styleUrls: ['./app.component.css'],
     encapsulation: ViewEncapsulation.None
 })
 export class TableRendererOfTemplateRefDemoComponent implements AfterContentInit {

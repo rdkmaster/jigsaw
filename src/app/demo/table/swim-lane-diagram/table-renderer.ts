@@ -26,7 +26,7 @@ import {TableCellRendererBase} from "jigsaw/component/table/table-renderer";
         </div>
         <div *ngIf="!cellData.haveSignal&&cellData.isDashed" class="dashed-line"></div>
     `,
-    styleUrls: ['./table-renderer.scss']
+    styleUrls: ['./table-renderer.css']
 })
 export class TableSwimLaneCell extends TableCellRendererBase {
     hover: boolean;

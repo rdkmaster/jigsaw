@@ -8,7 +8,7 @@ import {LineBarGraphData} from "jigsaw/core/data/graph-data";
 
 @Component({
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    styleUrls: ['./app.component.css']
 })
 export class JigsawTabsDemoComponent {
     fruitList: TableData = new TableData(
