@@ -46,7 +46,6 @@
 
       'rxjs':                       'npm:rxjs@5.5.0',
       'rxjs/operators':             'npm:rxjs@5.5.0/operators/index.js',
-      'rxjs/Observable':            'npm:rxjs@5.5.0/Observable.js',
       'ts':                         'npm:plugin-typescript@5.2.7/lib/plugin.js',
       'typescript':                 'npm:typescript@2.4.2/lib/typescript.js',
       'tslib':                      'npm:tslib@1.7.1/tslib.es6.js',
