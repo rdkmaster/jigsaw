@@ -74,6 +74,7 @@ describe('table', () => {
         });
         it('should set column group', async () => {
             const canBeGroupEl = element(by.css('.jigsaw-table-body')).all(by.tagName('TR')).get(3).all(by.tagName('TD')).get(2);
+            await waitForPresence('.jigsaw-table-cell-content');
             expect(canBeGroupEl.getAttribute('rowspan')).toBe('2');
         })
     });
