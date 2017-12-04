@@ -6,7 +6,7 @@ describe('button', () => {
         browser.waitForAngularEnabled(false);
     });
 
-    describe('test disabled', () => {
+    describe('test disabled', async() => {
         beforeEach(() => {
             browser.get('/button/disabled');
         });
@@ -31,7 +31,7 @@ describe('button', () => {
         })
     });
 
-    describe('test width and height', () => {
+    describe('test width and height', async() => {
         beforeEach(() => {
             browser.get('/button/width-height');
         });
@@ -46,7 +46,7 @@ describe('button', () => {
     });
 
 
-    describe('test preset size and type', () => {
+    describe('test preset size and type', async() => {
         beforeEach(() => {
             browser.get('/button/preset');
         });

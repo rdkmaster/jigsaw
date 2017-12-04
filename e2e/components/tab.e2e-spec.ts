@@ -5,7 +5,7 @@ describe('tabs', () => {
     beforeEach(() => {
         browser.waitForAngularEnabled(false);
     });
-    describe('test tab', () => {
+    describe('test tab', async() => {
         beforeEach(() => {
             browser.get('/tab/basic');
         });
@@ -21,7 +21,7 @@ describe('tabs', () => {
             await expect(tabsLabelEl.get(3).getCssValue('pointer-events')).toBe('none');
         })
     });
-    xdescribe('test tabApi', () => {
+    xdescribe('test tabApi', async() => {
         beforeEach(() => {
             browser.get('/tab/api');
         });
@@ -42,7 +42,7 @@ describe('tabs', () => {
             await expect(tabsLabelEl.get(0).getText()).toBe('Tab 2');
         })
     });
-    describe('test tab with input', () => {
+    describe('test tab with input', async() => {
         beforeEach(() => {
             browser.get('/tab/with-input');
         });
@@ -50,7 +50,6 @@ describe('tabs', () => {
             const getTableDate = element(by.css('.container')).element(by.tagName('jigsaw-button')),
                 tableEl = element(by.css('.jigsaw-tabs-content')).element(by.tagName('jigsaw-table')).element(by.tagName('table'));
             getTableDate.click();
-            await waitForPresence('.jigsaw-table-cell-content');
             await expect(tableEl.getText()).not.toBe('');
         })
     });
