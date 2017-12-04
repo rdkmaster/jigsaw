@@ -10,4 +10,4 @@ Jigsaw提供了很多数据封装对象用于处理各种场景下的数据，�
 但是所有的操作都是在服务端进行，由于[PageableArray](/components/classes/api?apiItem=PageableArray)对象不受浏览器内存的约束，
 因此它非常适合用于对海量数据的分页、过滤、排序等操作，是最常用的数据对象之一。
 
-扩展：[了解Jigsaw的数据体系的详情](/data-encapsulation/introduce)。
+扩展：[了解Jigsaw的数据体系的详情](/jigsaw/data-encapsulation/introduce)。
