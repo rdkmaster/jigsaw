@@ -29,7 +29,6 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         border: 1px solid $border-color-base;
         border-radius: 3px;
         outline: none;
-        @include prefixer(transition, all 0.3s $ease-in-out);
         &:hover {
             border: 1px solid $primary-color;
         }
