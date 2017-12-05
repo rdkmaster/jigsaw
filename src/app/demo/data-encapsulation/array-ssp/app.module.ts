@@ -6,7 +6,7 @@ import {ArrayServerSidePaginationDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [ArrayServerSidePaginationDemoComponent],
-    bootstrap: [ArrayServerSidePaginationDemoComponent],
+    exports: [ArrayServerSidePaginationDemoComponent],
     imports: [JigsawButtonModule, CommonModule, JigsawDemoDescriptionModule]
 })
 export class ArrayServerSidePaginationDemoModule {

@@ -18,7 +18,7 @@ import {JigsawSliderModule} from './component/slider/index';
 import {JigsawSwitchModule} from './component/switch/index';
 import {JigsawTableModule} from './component/table/table';
 import {JigsawTableRendererModule} from "./component/table/table-renderer";
-import {JigsawTabModule} from './component/tabs/index';
+import {JigsawTabsModule} from './component/tabs/index';
 import {JigsawTagModule} from './component/tag/tag';
 import {JigsawTileSelectModule} from './component/list-and-tile/tile';
 import {JigsawTimeModule} from './component/time/index';
@@ -51,7 +51,7 @@ const JIGSAW_MODULE = [
     JigsawSwitchModule,
     JigsawTableModule,
     JigsawTableRendererModule,
-    JigsawTabModule,
+    JigsawTabsModule,
     JigsawTagModule,
     JigsawTileSelectModule,
     JigsawTimeModule,

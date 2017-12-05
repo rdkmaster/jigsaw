@@ -7,7 +7,7 @@ import {ColorfulLoadingDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [ColorfulLoadingDemoComponent],
-    bootstrap: [ColorfulLoadingDemoComponent],
+    exports: [ColorfulLoadingDemoComponent],
     imports: [JigsawLoadingModule, JigsawButtonModule, CommonModule, JigsawDemoDescriptionModule]
 })
 export class ColorfulLoadingDemoModule {

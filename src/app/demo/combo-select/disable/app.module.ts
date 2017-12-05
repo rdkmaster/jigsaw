@@ -8,7 +8,7 @@ import {DisabledComboSelectDemo} from "./app.component";
 
 @NgModule({
     declarations: [DisabledComboSelectDemo],
-    bootstrap: [DisabledComboSelectDemo],
+    exports: [DisabledComboSelectDemo],
     imports: [
         JigsawComboSelectModule, JigsawTileSelectModule, JigsawButtonModule, CommonModule,
         JigsawDemoDescriptionModule

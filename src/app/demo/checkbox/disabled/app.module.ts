@@ -6,7 +6,7 @@ import {CheckBoxDisableDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [CheckBoxDisableDemoComponent],
-    bootstrap: [ CheckBoxDisableDemoComponent ],
+    exports: [ CheckBoxDisableDemoComponent ],
     imports: [JigsawCheckBoxModule, JigsawSwitchModule, JigsawDemoDescriptionModule]
 })
 export class CheckBoxDisableDemoModule{

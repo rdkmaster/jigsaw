@@ -7,7 +7,7 @@ import {JigsawSelectModule} from "jigsaw/component/select/select";
 @NgModule({
     imports: [JigsawFishBoneModule, JigsawDemoDescriptionModule, JigsawSelectModule],
     declarations: [FishBoneFullComponent],
-    bootstrap: [FishBoneFullComponent]
+    exports: [FishBoneFullComponent]
 })
 export class FishBoneFullModule {
 

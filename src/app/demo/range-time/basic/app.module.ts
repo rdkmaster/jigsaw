@@ -6,7 +6,7 @@ import {RangeTimeBasicDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [RangeTimeBasicDemoComponent],
-    bootstrap: [RangeTimeBasicDemoComponent],
+    exports: [RangeTimeBasicDemoComponent],
     imports: [JigsawRangeTimeModule, CommonModule, JigsawDemoDescriptionModule]
 })
 export class RangeTimeBasicDemoModule{

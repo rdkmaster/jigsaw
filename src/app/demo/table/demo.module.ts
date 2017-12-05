@@ -43,8 +43,6 @@ import {TableHideHeadDemoComponent} from "./hide-header/app.component";
 import {TableHideHeadDemoModule} from "./hide-header/app.module";
 import {TablePageableDemoComponent} from "./pageable/app.component";
 import {TablePageableDemoModule} from "./pageable/app.module";
-import {TablePerformsDemoComponent} from "./performance/app.component";
-import {TablePerformsDemoModule} from "./performance/app.module";
 import {TableRendererDemoComponent} from "./renderer/app.component";
 import {TableRendererDemoModule} from "./renderer/app.module";
 import {TableRendererOfTemplateRefDemoComponent} from "./template-ref-renderer/app.component";
@@ -79,9 +77,6 @@ export const routerConfig = [
     },
     {
         path: 'renderer', component: TableRendererDemoComponent, recommended: true
-    },
-    {
-        path: 'performance', component: TablePerformsDemoComponent
     },
     {
         path: 'update-column-width', component: TableColumnSetWidthDemoComponent
@@ -181,12 +176,11 @@ export const routerConfig = [
         TableAddCheckboxColumnDemoModule, TableAddColumnDemoModule, TableAddIDColumnDemoModule, TableAddIDWithDebouncePagingModule,
         TableAddIDWithPagingModule, TableBasicDemoModule, TableDataChangeDemoModule, TableDataFromAjaxDemoModule,
         TableFixedHeadDemoModule, BigTableDataDemoModule, LocalPagingDataDemoModule, TablePageableDemoModule,
-        TablePerformsDemoModule, TableRendererDemoModule, TableRendererOfTemplateRefDemoModule, TableContentWidthDemoModule,
+        TableRendererDemoModule, TableRendererOfTemplateRefDemoModule, TableContentWidthDemoModule, BigColumnDemoModule,
         TableSetCellClassDemoModule, TableSetCellEditableDemoModule, TableSetCellRenderDemoModule, TableColumnGroupDemoModule,
         TableColumnSetVisibleDemoModule, TableColumnSetWidthDemoModule, TableSetHeaderClassDemoModule, TableSetHeaderRenderDemoModule,
         TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, SwimLaneDiagramDemoModule, TableHideHeadDemoModule,
-        TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule, TableCalendarDemoModule, BigRowDemoModule, BigColumnDemoModule,
-        TableResizeDemoModule
+        TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule, TableCalendarDemoModule, BigRowDemoModule, TableResizeDemoModule
     ]
 })
 export class TableDemoModule {

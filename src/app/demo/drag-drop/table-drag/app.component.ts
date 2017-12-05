@@ -7,7 +7,7 @@ import {TableDragDeleteRow, TableDragReplaceRow} from "./table-renderer";
 
 @Component({
     templateUrl: 'app.component.html',
-    styleUrls: ['app.component.scss'],
+    styleUrls: ['./app.component.css'],
     encapsulation: ViewEncapsulation.None
 })
 export class TableDragDemoComponent {

@@ -5,7 +5,7 @@ import {ButtonWidthHeightDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [ButtonWidthHeightDemoComponent],
-    bootstrap: [ButtonWidthHeightDemoComponent],
+    exports: [ButtonWidthHeightDemoComponent],
     imports: [JigsawButtonModule, JigsawDemoDescriptionModule]
 })
 export class ButtonWidthHeightDemoModule {

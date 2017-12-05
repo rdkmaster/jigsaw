@@ -5,7 +5,7 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 
 @NgModule({
     declarations: [BasicGraphComponent],
-    bootstrap: [BasicGraphComponent],
+    exports: [BasicGraphComponent],
     imports: [JigsawGraphModule, JigsawDemoDescriptionModule]
 })
 export class BasicGraphModule {

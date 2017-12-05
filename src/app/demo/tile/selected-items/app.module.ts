@@ -7,7 +7,7 @@ import {TileSelectSelectedItemsComponent} from './app.component';
 @NgModule({
     imports: [JigsawTileSelectModule, CommonModule, JigsawDemoDescriptionModule],
     declarations: [TileSelectSelectedItemsComponent],
-    bootstrap: [TileSelectSelectedItemsComponent]
+    exports: [TileSelectSelectedItemsComponent]
 })
 export class TileSelectSelectedItemsDemoModule {
 }

@@ -3,7 +3,7 @@ import {LoadingService} from "jigsaw/service/loading.service";
 
 @Component({
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    styleUrls: ['./app.component.css']
 })
 export class LoadingFullDemoComponent {
     @ViewChild('block')

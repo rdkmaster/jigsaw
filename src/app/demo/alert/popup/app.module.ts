@@ -6,7 +6,7 @@ import {AlertPopupDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [AlertPopupDemoComponent],
-    bootstrap: [ AlertPopupDemoComponent ],
+    exports: [ AlertPopupDemoComponent ],
     imports: [JigsawAlertModule, JigsawButtonModule, JigsawDemoDescriptionModule]
 })
 export class AlertPopupDemoModule {

@@ -8,7 +8,7 @@ import {ComboSelectFullComponent} from "./app.component";
 
 @NgModule({
     declarations: [ComboSelectFullComponent],
-    bootstrap: [ComboSelectFullComponent],
+    exports: [ComboSelectFullComponent],
     imports: [
         JigsawComboSelectModule, JigsawTileSelectModule, JigsawButtonModule, CommonModule,
         JigsawDemoDescriptionModule

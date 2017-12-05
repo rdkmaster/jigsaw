@@ -33,6 +33,7 @@ export class AjaxInterceptor implements HttpInterceptor {
     }
 
     createResult(body: any, url: string): Observable<HttpEvent<any>> {
+        console.log('and here is the simulated response data:');
         console.log(body);
         return new Observable<HttpEvent<any>>(subscriber => {
             // simulate network latency
@@ -245,8 +246,9 @@ class MockData {
                 this.getShortenHrList(this.dataSet['hr-list-full'].data), this.dataSet['hr-list-full'].field)
         };
         this.dataSet['big-table-data'] = this.createBigTableData();
-        this.dataSet['fish-bone-data1'] = require('../mock-data/fish-bone-full.json').slice(0, 5);
-        this.dataSet['fish-bone-data2'] = require('../mock-data/fish-bone-full.json').slice(5);
+        const fishBoldData = require('../mock-data/fish-bone-full.json');
+        this.dataSet['fish-bone-data1'] = fishBoldData.slice(0, 5);
+        this.dataSet['fish-bone-data2'] = fishBoldData.slice(5);
         this.dataSet['tree-data'] = require('../mock-data/tree-data.json');
     }
 

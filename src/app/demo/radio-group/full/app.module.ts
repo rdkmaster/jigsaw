@@ -6,7 +6,7 @@ import {RadioFullComponent} from "./app.component";
 
 @NgModule({
     declarations: [RadioFullComponent],
-    bootstrap: [RadioFullComponent],
+    exports: [RadioFullComponent],
     imports: [JigsawRadioModule, CommonModule, JigsawDemoDescriptionModule]
 })
 export class RadioFullModule {

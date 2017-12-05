@@ -7,7 +7,7 @@ import {ButtonInfo, PopupInfo, PopupService} from "jigsaw/service/popup.service"
 
 @Component({
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
+    styleUrls: ['./app.component.css'],
     encapsulation: ViewEncapsulation.None
 })
 export class DialogButtonsDemo {
@@ -35,5 +35,5 @@ export class DialogButtonsDemo {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '这demo演示了如何利用PopupService弹出一个对话框';
-    description: string = '[这里详细介绍了`PopupService`，请仔细阅读](/popup/introduce)。';
+    description: string = '[这里详细介绍了`PopupService`，请仔细阅读](/jigsaw/popup/introduce)。';
 }

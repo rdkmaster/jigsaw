@@ -4,10 +4,12 @@ import {Component, ViewEncapsulation} from "@angular/core";
     selector: 'app-root',
     template: `
         <jigsaw-root>
-            <div class="app-wrap"><router-outlet></router-outlet></div>
+            <div class="app-wrap">
+                <router-outlet></router-outlet>
+            </div>
         </jigsaw-root>
     `,
-    styleUrls: ['./app.component.scss'],
+    styleUrls: ['./live-demo-wrapper.css'],
     encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {

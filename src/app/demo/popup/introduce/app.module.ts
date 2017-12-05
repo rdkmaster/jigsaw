@@ -5,7 +5,7 @@ import {PopupServiceIntroduceComponent} from "./app.component";
 
 @NgModule({
     declarations: [PopupServiceIntroduceComponent],
-    bootstrap: [PopupServiceIntroduceComponent],
+    exports: [PopupServiceIntroduceComponent],
     imports: [CommonModule, JigsawDemoDescriptionModule]
 })
 export class PopupServiceIntroduceModule {

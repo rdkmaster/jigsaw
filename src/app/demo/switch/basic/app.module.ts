@@ -6,7 +6,7 @@ import {SwitchBasicDemoComponent} from './app.component';
 @NgModule({
     imports: [JigsawSwitchModule, JigsawDemoDescriptionModule],
     declarations: [SwitchBasicDemoComponent],
-    bootstrap: [SwitchBasicDemoComponent]
+    exports: [SwitchBasicDemoComponent]
 })
 export class SwitchBasicDemoModule {
 }

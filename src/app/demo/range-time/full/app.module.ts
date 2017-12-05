@@ -7,7 +7,7 @@ import {RangeTimeFullComponent} from "./app.component";
 
 @NgModule({
     declarations: [RangeTimeFullComponent],
-    bootstrap: [RangeTimeFullComponent],
+    exports: [RangeTimeFullComponent],
     imports: [JigsawRangeTimeModule, JigsawRadioModule, CommonModule, JigsawDemoDescriptionModule]
 })
 export class RangeTimeFullModule {

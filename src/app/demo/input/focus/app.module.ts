@@ -6,7 +6,7 @@ import {InputFocusDemoComponent} from "./app.component";
 
 @NgModule({
     declarations: [InputFocusDemoComponent],
-    bootstrap: [InputFocusDemoComponent],
+    exports: [InputFocusDemoComponent],
     imports: [JigsawInputModule, JigsawButtonModule, JigsawDemoDescriptionModule]
 })
 export class InputFocusDemoModule {

@@ -4,7 +4,7 @@ import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 @Component({
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    styleUrls: ['./app.component.css']
 })
 export class SliderBasicDemoComponent {
     // demo1

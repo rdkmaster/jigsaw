@@ -12,7 +12,7 @@ import {
 
 @Component({
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
+    styleUrls: ['./app.component.css'],
     encapsulation: ViewEncapsulation.None
 })
 export class DialogMiscDemoComponent {
@@ -111,6 +111,6 @@ export class DialogMiscDemoComponent {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '这个demo介绍了弹出对话框的3种主要方式：组件、模板、自定义';
-    description: string = '[这里详细介绍了`PopupService`，请仔细阅读](/popup/introduce)。';
+    description: string = '[这里详细介绍了`PopupService`，请仔细阅读](/jigsaw/popup/introduce)。';
 }
 

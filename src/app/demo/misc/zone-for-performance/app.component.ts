@@ -53,8 +53,10 @@ export class ZoneForBetterPerformanceDemoComponent {
 
     mouseMove(event) {
         event.preventDefault();
-        this.element.setAttribute("x", event.clientX + this.offsetX + "px");
-        this.element.setAttribute("y", event.clientY + this.offsetY + "px");
+        if (this.element) {
+            this.element.setAttribute("x", event.clientX + this.offsetX + "px");
+            this.element.setAttribute("y", event.clientY + this.offsetY + "px");
+        }
         // Another options is to change styles using transformations
         //this.element.style = `transform: translate3d(${event.clientX - this.off.mouseX}px,
         //${event.clientY - this.off.mouseY}px, 0)`;
