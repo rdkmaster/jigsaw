@@ -7,7 +7,9 @@
     <div class="jigsaw-dialog-content">
         <ng-content></ng-content>
     </div>
-    <div class="jigsaw-dialog-button-group" *ngIf="buttons && buttons.length > 0">
+    <div class="jigsaw-dialog-button-group"
+         *ngIf="(_$inlineButtons && _$inlineButtons.length > 0) || (buttons && buttons.length > 0)">
+        <ng-content select="[jigsaw-button], [jigsaw-button-bar]"></ng-content>
         <jigsaw-button
             *ngFor="let bi of buttons"
             [colorType]="bi.type"

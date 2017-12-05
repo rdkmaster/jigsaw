@@ -1,0 +1,20 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<h4>pagination</h4>
+<button style="margin: 10px 0" (click)="changeCurrentPage(6)">第6页</button><br>
+<jigsaw-pagination [total]="550"
+                [pageSize]="10"
+                [(current)]="currentPage"
+                [pageSizeOptions]="[5, 10, 20]"
+                [searchable]="true"
+                [showQuickJumper]="true"
+                (currentChange)="getCurrentPage($event)"
+                (pageSizeChange)="getPageSize($event)"
+                width="700px">
+</jigsaw-pagination>
+<p>当前第{{currentPage}}页</p>
+

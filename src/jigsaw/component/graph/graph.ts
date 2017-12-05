@@ -2,7 +2,7 @@
  * Created by 10177553 on 2017/3/23.
  */
 import {
-    Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output,
+    Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output,
     Renderer2
 } from "@angular/core";
 import {AbstractGraphData} from "../../core/data/graph-data";
@@ -19,7 +19,7 @@ import {CallbackRemoval} from "../../core/utils/common-utils";
  */
 @Component({
     selector: 'jigsaw-graph, j-graph',
-    templateUrl: 'graph.html'
+    templateUrl: 'graph.html',
 })
 export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDestroy {
     // TODO 当前属性判断不正确, 当前判断是是否option为空
@@ -27,6 +27,11 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     // 通过 echarts.init 创建的实例
     private _graph: any;
+
+    /**
+     * @internal
+     */
+    public _$noDataSrc = CommonUtils.noDataImageSrc;
 
     // 由数据服务提供的数据.
     private _data: AbstractGraphData;
@@ -53,22 +58,6 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         });
     }
 
-    private _autoResize: boolean = true;
-
-    @Input()
-    public get autoResize(): boolean {
-        return this._autoResize;
-    }
-
-    public set autoResize(value: boolean) {
-        this._autoResize = value;
-        if (this._needSetupResizeEvent()) {
-            this._setupResizeEvent()
-        } else {
-            this._clearResizeEvent();
-        }
-    }
-
     @Input()
     public get width(): string {
         return this._width;
@@ -76,19 +65,10 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     public set width(value: string) {
         this._width = CommonUtils.getCssValue(value);
-        this._handleResize();
-    }
-
-    private _handleResize(){
-        if(this._graph){
-            this._renderer.setStyle(this._graphContainer, 'width', this.width);
-            this._renderer.setStyle(this._graphContainer, 'height', this.height);
+        this._renderer.setStyle(this._host, 'width', this._width);
+        if (this.initialized) {
             this.resize();
-        }
-        if (this._needSetupResizeEvent()) {
-            this._setupResizeEvent();
-        } else {
-            this._clearResizeEvent();
+            this._listenWindowResize();
         }
     }
 
@@ -99,21 +79,16 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     public set height(value: string) {
         this._height = CommonUtils.getCssValue(value);
-        this._handleResize();
-    }
-
-    private _needSetupResizeEvent(): boolean {
-        if(this.width&& this.height) { // 防止没有数据时页面报错；
-            return this.autoResize && (this.width[this.width.length - 1] == '%' || this.height[this.height.length - 1] == '%')
-        } else {
-            return this.autoResize;
+        this._renderer.setStyle(this._host, 'height', this._height);
+        if (this.initialized) {
+            this.resize();
+            this._listenWindowResize();
         }
-
-
     }
 
-    constructor(private _elf: ElementRef, private _renderer: Renderer2) {
+    constructor(private _elementRef: ElementRef, private _renderer: Renderer2, private _zone: NgZone) {
         super();
+        this._host = this._elementRef.nativeElement;
     }
 
     /**
@@ -123,30 +98,77 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     private _isOptionsValid(obj): boolean {
         return !CommonUtils.isEmptyObject(obj);
     }
-    private _graphContainer;
 
-    ngOnInit() {
-        this._renderer.addClass(this._elf.nativeElement, 'jigsaw-graph-host');
-        this._graphContainer = this._elf.nativeElement.querySelector(".jigsaw-graph");
-        this._renderer.setStyle(this._graphContainer, 'width', this.width);
-        this._renderer.setStyle(this._graphContainer, 'height', this.height);
+    public setOption(option: EchartOptions, lazyUpdate?: boolean) {
+        if (!this._graph) {
+            return;
+        }
+        if (!this._isOptionsValid(option)) {
+            this.dataValid = false;
+            return;
+        }
+        this.dataValid = true;
 
-        this._graph = echarts.init(this._graphContainer);
+        this._graph.setOption(option, true, lazyUpdate);
+        this._registerEvent();
+    }
 
-        if (this.data) this.setOption(this.data.options);
-
-        if (this.autoResize) {
-            // 默认跟随窗口变化自动变化
-            this._setupResizeEvent();
+    public resize(): void {
+        if (this._graph) {
+            this._graph.resize({
+                width: this._host.offsetWidth + 'px',
+                height: this._host.offsetHeight + 'px',
+                silence: true
+            });
         }
     }
 
-    // 组件销毁, 注销实例
+    private _resizeEventRemoval: Function;
+
+    private _listenWindowResize(): void {
+        if (!this._needListenWindowResize() || this._resizeEventRemoval) {
+            return;
+        }
+        this._zone.runOutsideAngular(() => {
+            // 所有的全局事件应该放到zone外面，不一致会导致removeEvent失效，见#286
+            this._resizeEventRemoval = this._renderer.listen("window", "resize", () => {
+                this.resize();
+            });
+        });
+    }
+
+    private _needListenWindowResize(): boolean {
+        return !!((this.width && this.width[this.width.length - 1] == '%') ||
+        (this.height && this.height[this.height.length - 1] == '%') || !this.width);
+    }
+
+    private _host: HTMLElement;
+    private _graphContainer: HTMLElement;
+
+    ngOnInit() {
+        super.ngOnInit();
+        this._renderer.addClass(this._host, 'jigsaw-graph-host');
+        this._graphContainer = <HTMLElement>this._host.querySelector(".jigsaw-graph");
+
+        this._zone.runOutsideAngular(() => {
+            // echarts的Animation对象里的_startLoop方法有个递归调用requestAnimationFrame,会触发变更检查，见#289
+            this._graph = echarts.init(this._graphContainer);
+        });
+
+        if (this.data) this.setOption(this.data.options);
+
+        this._listenWindowResize();
+    }
+
     ngOnDestroy() {
-        // 销毁注册的全局事件;
-        this._clearResizeEvent();
+        if (this._resizeEventRemoval) {
+            this._resizeEventRemoval();
+            this._resizeEventRemoval = null;
+        }
+
         if (this._graph) {
             this._graph.dispose();
+            this._graph = null;
         }
     }
 
@@ -176,52 +198,6 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     public registerTheme(themeName: string, theme: Object): void {
         echarts.registerTheme(themeName, theme);
-    }
-
-    public setOption(option: EchartOptions, lazyUpdate?: boolean) {
-        if (!this._graph) {
-            return;
-        }
-        if (!this._isOptionsValid(option)) {
-            this.dataValid = false;
-            return;
-        }
-        this.dataValid = true;
-
-        this._graph.setOption(option, true, lazyUpdate);
-        this._registerEvent();
-    }
-
-    public resize(opts?: {
-        width?: number | string,
-        height?: number | string,
-        silent?: boolean
-    }): void {
-        if (this._graph) {
-            this._graph.resize();
-            // this._graph.resize(opts ? opts : {width: this.width, height: this.height, silence: true});
-        }
-    }
-
-    private _resizeEventRemoval: Function;
-
-    // 自动注册windows 事件;
-    private _setupResizeEvent(): void {
-        // 如果已经注册了事件,则不重复注册；
-        if (!this._resizeEventRemoval) {
-            console.log("_setupResizeEvent");
-            this._resizeEventRemoval = this._renderer.listen("window", "resize", (opts) => {
-                this.resize(opts);
-            });
-        }
-    }
-
-    private _clearResizeEvent(): void {
-        if (this._resizeEventRemoval) {
-            console.log("_clearResizeEvent");
-            this._resizeEventRemoval();
-            this._resizeEventRemoval = null;
-        }
     }
 
     public dispatchAction(payload: Object): void {

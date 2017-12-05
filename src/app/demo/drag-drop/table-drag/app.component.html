@@ -1,0 +1,35 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<h3>Drag a tag and drop it to the table</h3>
+<br>
+<span class="tag-wrapper" *ngFor="let employee of employees"
+     jigsaw-draggable (jigsawDragStart)="dragStartHandle($event, employee)">
+    <jigsaw-tag>{{employee[0]}}</jigsaw-tag>
+</span>
+<br>
+<br>
+
+<div class="drop-wrap">
+    <jigsaw-table
+        jigsaw-droppable
+        #tableDrop
+        [data]="tableData"
+        [additionalColumnDefines]="additionalColumns"
+        (jigsawDragEnter)="tableDragEnterHandle($event)"
+        (jigsawDragOver)="tableDragOverHandle($event)"
+        (jigsawDragLeave)="tableDragLeaveHandle($event)"
+        (jigsawDrop)="tableDropHandle($event)"></jigsaw-table>
+
+    <div class="trash-box"
+         jigsaw-droppable
+         #trashDrop
+         (jigsawDragEnter)="trashDragEnterHandle($event)"
+         (jigsawDragOver)="trashDragOverHandle($event)"
+         (jigsawDragLeave)="trashDragLeaveHandle($event)"
+         (jigsawDrop)="trashDropHandle($event)">trash box - drag and drop an item here to remove it from the table
+    </div>
+</div>

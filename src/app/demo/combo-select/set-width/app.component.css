@@ -1,0 +1,24 @@
+.cmn-box {
+    margin-bottom: 30px;
+}
+
+.cmn-box h1 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.cmn-box h3 {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 14px;
+}
+
+.cmn-box p {
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.cmn-box jigsaw-input {
+    display: block;
+    margin-bottom: 10px;
+}

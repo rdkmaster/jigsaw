@@ -99,7 +99,7 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
         if (!error) {
             const reason = 'the data collection is busy now!';
             console.error('get data from paging server error!! detail: ' + reason);
-            error = new Response(reason, { status: 409, statusText: reason });
+            error = new Response(reason, {status: 409, statusText: reason});
         } else {
             console.error('get data from paging server error!! detail: ' + error['message']);
             this._busy = false;
@@ -135,6 +135,9 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
     }
 }
 
+/**
+ * 这是Jigsaw数据体系中两大分支之一：通用的key-value（即JSON对象）的集合类型的基类。
+ */
 export class GeneralCollection<T> extends AbstractGeneralCollection<T> {
     [index: string]: any;
 

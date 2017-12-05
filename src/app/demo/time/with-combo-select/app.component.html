@@ -1,0 +1,24 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-combo-select [(value)]="singleTimeComboValue" width="150px">
+    <ng-template>
+        <jigsaw-time [(date)]="date" (dateChange)="handleDateChange($event)">
+        </jigsaw-time>
+    </ng-template>
+</jigsaw-combo-select>
+Selected Time : {{date}}<br><br>
+
+
+<jigsaw-combo-select [(value)]="rangeTimeComboValue">
+    <ng-template>
+        <jigsaw-range-time [(beginDate)]="beginDate"
+                           [(endDate)]="endDate"
+                           (change)="handleRangeDateChange()">
+        </jigsaw-range-time>
+    </ng-template>
+</jigsaw-combo-select>
+Selected Time : {{beginDate}} - {{endDate}}

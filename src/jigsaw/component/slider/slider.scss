@@ -4,9 +4,9 @@
 $jigsaw-slider: #{$jigsaw-prefix}-slider;
 
 .#{$jigsaw-slider}-host {
-    height: 100%;
     width: 100%;
     @include inline-block;
+    padding: 0 6px;
     user-select: none;
     ::selection {
         background-color: #fff;
@@ -58,7 +58,7 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
         position: absolute;
         margin-left: -7px;
         margin-top: -5px;
-        width:14px;
+        width: 14px;
         height: 14px;
         border-radius: 50%;
         border: 2px solid mix($primary-color, #fff, 50%);
@@ -81,8 +81,8 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
     .#{$jigsaw-slider}-mark {
         position: absolute;
         top: 10px;
-        left:0;
-        width:100%;
+        left: 0;
+        width: 100%;
         height: 100%;
         font-size: $font-size-base;
         z-index: 3;
@@ -103,7 +103,7 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
 
     .#{$jigsaw-slider}-step {
         position: absolute;
-        width:100%;
+        width: 100%;
         height: 4px;
         background: transparent;
         z-index: 1;
@@ -139,7 +139,7 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
 
         .#{$jigsaw-slider}-handle,
         .#{$jigsaw-slider}-dot {
-            border-color: $disabled-color!important;
+            border-color: $disabled-color !important;
             background-color: $default-color;
             cursor: not-allowed;
             box-shadow: none;
@@ -151,46 +151,52 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
 
         .#{$jigsaw-slider}-masr-text,
         .#{$jigsaw-slider}-dot {
-            cursor: not-allowed!important;
+            cursor: not-allowed !important;
         }
     }
 
     &-vertical {
-        width: 12px;
-        height: 100%;
-        margin: 6px 10px;
-        border: 4px;
-        border-left: 4px solid #fff;
-        border-right: 4px solid #fff;
-
-        .#{$jigsaw-slider}-track {
-            width: 4px;
-        }
-
-        .#{$jigsaw-slider}-handle {
-            margin-left: -5px;
-            margin-bottom: -7px;
-        }
-
-        .#{$jigsaw-slider}-mark {
-            top: 10px;
-            left: 10px;
-        }
-        .#{$jigsaw-slider}-mark-text {
-            white-space: nowrap;
-        }
-
-        .#{$jigsaw-slider}-step {
-            width: 4px;
+        height: 240px;
+        width: auto;
+        padding: 6px 0;
+        .#{$jigsaw-slider} {
+            width: 12px;
             height: 100%;
-        }
+            //margin: 6px 10px;
+            border: 4px;
+            border-left: 4px solid #fff;
+            border-right: 4px solid #fff;
 
-        .#{$jigsaw-slider}-dot {
-            top: auto;
-            left: 2px;
-            margin-bottom: -4px;
+            .#{$jigsaw-slider}-track {
+                width: 4px;
+            }
+
+            .#{$jigsaw-slider}-handle {
+                margin-left: -5px;
+                margin-bottom: -7px;
+            }
+
+            .#{$jigsaw-slider}-mark {
+                top: 10px;
+                left: 10px;
+            }
+            .#{$jigsaw-slider}-mark-text {
+                white-space: nowrap;
+            }
+
+            .#{$jigsaw-slider}-step {
+                width: 4px;
+                height: 100%;
+            }
+
+            .#{$jigsaw-slider}-dot {
+                top: auto;
+                left: 2px;
+                margin-bottom: -4px;
+            }
         }
     }
+
 }
 
 

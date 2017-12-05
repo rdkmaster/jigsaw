@@ -1,16 +1,21 @@
-<j-scrollbar #vScrollbar [style.visibility]="_$showSlider || vScrollbar.dragging ? 'visible' : 'hidden'"
+<j-scrollbar #vScrollbar [style.visibility]="_$showSlider || vScrollbar?.dragging ? 'visible' : 'hidden'"
+             *ngIf="viewport.maxHeight - viewport.height > 0"
              class="jigsaw-viewport-vertical-scrollbar"
              [(value)]="viewport.verticalTo"
              [height]="height"
-             [max]="viewport.maxHeight"
+             [max]="viewport.maxHeight - viewport.height"
              [vertical]="true">
 </j-scrollbar>
 
-<j-scrollbar #hScrollbar [style.visibility]="_$showSlider || hScrollbar.dragging ? 'visible' : 'hidden'"
-             class="jigsaw-viewport-horizontal-scrollbar"
-             [(value)]="viewport.horizontalTo"
-             [max]="viewport.maxWidth">
-</j-scrollbar>
+<div class="jigsaw-viewport-horizontal-scrollbar-box"
+     [class.jigsaw-viewport-horizontal-scrollbar-padding]="viewport.maxHeight - viewport.height > 0">
+    <j-scrollbar #hScrollbar [style.visibility]="_$showSlider || hScrollbar?.dragging ? 'visible' : 'hidden'"
+                 *ngIf="viewport.maxWidth - viewport.width > 0"
+                 class="jigsaw-viewport-horizontal-scrollbar"
+                 [(value)]="viewport.horizontalTo"
+                 [max]="viewport.maxWidth - viewport.width">
+    </j-scrollbar>
+</div>
 
 <ng-content></ng-content>
 

@@ -1,0 +1,54 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="container">
+    <jigsaw-tab (selectChange)="testEvent($event)" [selectedIndex]="2">
+        <jigsaw-tab-pane>
+            <div jigsaw-title><span class="fa fa-gift"></span>tab 1</div>
+            <ng-template>tab content 1</ng-template>
+        </jigsaw-tab-pane>
+        <jigsaw-tab-pane [async]="true">
+            <div jigsaw-title>
+                <span>tab <jigsaw-button [preSize]="'small'">ok</jigsaw-button></span>
+            </div>
+            <ng-template>
+                <div class="content-box">
+                    <h3 class="content-title">user register center</h3>
+                    <div class="content-line">
+                        <label>Username: </label>
+                        <jigsaw-input></jigsaw-input>
+                    </div>
+                    <div class="content-line">
+                        <label>Email: </label>
+                        <jigsaw-input></jigsaw-input>
+                    </div>
+                    <div class="content-line">
+                        <label>Password: </label>
+                        <jigsaw-input></jigsaw-input>
+                    </div>
+                    <jigsaw-button>submit</jigsaw-button>
+                </div>
+            </ng-template>
+        </jigsaw-tab-pane>
+        <jigsaw-tab-pane title="tab 3">
+            <ng-template>tab content 3</ng-template>
+        </jigsaw-tab-pane>
+        <jigsaw-tab-pane title="tab 4" [disabled]="true">
+            <ng-template>tab content 4</ng-template>
+        </jigsaw-tab-pane>
+        <jigsaw-tab-pane [async]="true">
+            <div jigsaw-title><span class="fa fa-bicycle"></span>tab 5</div>
+            <ng-template>
+                <jigsaw-table [data]="fruitList"></jigsaw-table>
+            </ng-template>
+        </jigsaw-tab-pane>
+        <jigsaw-tab-pane title="tab 6" [async]="true">
+            <ng-template>
+                <jigsaw-graph [data]="lineBarGraphData"></jigsaw-graph>
+            </ng-template>
+        </jigsaw-tab-pane>
+    </jigsaw-tab>
+</div>

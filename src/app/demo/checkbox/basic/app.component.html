@@ -1,0 +1,22 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-checkbox id="test-checkbox"
+                 [(checked)]="checked"
+                 [(enableIndeterminate)]="enableIndeterminate">
+    click me
+</jigsaw-checkbox>
+<span id="state-message">The checkbox value is {{checked}}!</span>
+
+<br>
+<span>启用中间状态</span>
+<jigsaw-switch id="set-middle-state" [(checked)]="enableIndeterminate"></jigsaw-switch>
+<br>
+<hr>
+<br>
+<h4>初始值设置为中间状态</h4>
+<jigsaw-checkbox enableIndeterminate="true" [(checked)]="status">click me</jigsaw-checkbox>
+<span>The checkbox value is {{status}}!</span>

@@ -1,0 +1,49 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>Slider</h2>
+    <div class="demo-1 live-demo">
+        <h3>基本滑动条,滑动事件变化</h3>
+        <jigsaw-switch [(checked)]="disabled" size="small"></jigsaw-switch>
+        <jigsaw-slider [(value)]="value1" [disabled]="disabled" (change)="sliderChange($event)" min="10"
+                       width="200"></jigsaw-slider>
+        <p class="message"> 取值: {{value1}}</p>
+    </div>
+
+    <div class="demo-2 live-demo">
+        <h3>设置了min和max的滑动条</h3>
+        <jigsaw-slider [value]="value2" [min]="min" [max]="max"
+                       (change)="sliderChange2($event)"></jigsaw-slider>
+        <p class="message">取值: {{value2}}</p>
+    </div>
+
+    <div class="demo-3 live-demo">
+        <h3>改变step</h3>
+        <jigsaw-slider [value]="valueStep" min="0" max="2" step="0.01" (change)="sliderChange3($event)"></jigsaw-slider>
+        <p class="message">取值: {{value3}}</p>
+    </div>
+
+    <div class="demo-4 live-demo">
+        <h3>双触点滑动条</h3>
+        <jigsaw-slider [(value)]="rangeValue" (change)="handleValueChange($event)"></jigsaw-slider>
+    </div>
+
+    <div class="demo-5 live-demo">
+        <h3>mark节点</h3>
+        <jigsaw-slider [marks]="marks" value="50"></jigsaw-slider>
+    </div>
+
+    <div class="demo-6 live-demo">
+        <h3>垂直滑动条</h3>
+        <p class="comment">垂直滑动条有默认高度`240px`</p>
+        <div class="inline mgr50">
+            <jigsaw-slider [(value)]="value6" vertical="true"></jigsaw-slider>
+            <p class="message">{{value6}}</p>
+        </div>
+        <jigsaw-slider class="mgr50" [(value)]="rangeValue2" vertical="true"></jigsaw-slider>
+        <jigsaw-slider value="80" [marks]="marks2" min="20" vertical="true" height="400"></jigsaw-slider>
+    </div>
+</div>

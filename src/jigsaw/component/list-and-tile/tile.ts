@@ -50,7 +50,7 @@ export class JigsawTileOption extends AbstractJigsawOptionComponent {
      */
     public _$handleClick(): void {
         if (!this.disabled) {
-            this.selectedChange.emit(this);
+            this.change.emit(this);
         }
     }
 

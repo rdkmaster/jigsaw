@@ -41,16 +41,28 @@ export class JigsawViewport extends AbstractJigsawComponent implements AfterView
         }
     }
 
+    /**
+     * @internal
+     */
     public _$showSlider: boolean;
 
+    /**
+     * @internal
+     */
     public _$handleMouseEnter() {
         this._$showSlider = true;
     }
 
+    /**
+     * @internal
+     */
     public _$handleMouseLeave() {
         this._$showSlider = false;
     }
 
+    /**
+     * @internal
+     */
     public _$handleMouseWheel(e) {
         e.preventDefault();
         e.stopPropagation();

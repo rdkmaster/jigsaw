@@ -7,7 +7,7 @@ describe('button', () => {
 
     describe('test disabled', () => {
         beforeEach(() => {
-            browser.get('/#/button/disabled');
+            browser.get('/button/disabled');
         });
 
         it('should click invalid when set disabled', () => {
@@ -22,19 +22,17 @@ describe('button', () => {
 
             expect(element(by.css('.demo-content .jigsaw-button-disabled')).isPresent()).toBeFalsy();
             toggleDisabledEl.click();
-            expect(element(by.css('.demo-content .jigsaw-button-disabled')).isPresent()).toBeTruthy();
-            expect(testButtonEl.getCssValue('pointer-events')).toBe('none');
+            expect(testButtonEl.getCssValue('pointer-events')).toBe('none');//属性为none，则不会成为鼠标时间的target
 
             toggleDisabledEl.click();
             testButtonEl.click();
             expect(clickCounterEl.getText()).toBe('2');
         })
-
     });
 
     describe('test width and height', () => {
         beforeEach(() => {
-            browser.get('/#/button/width_height');
+            browser.get('/button/width-height');
         });
 
         it('should change size when set width and height', async () => {
@@ -46,7 +44,7 @@ describe('button', () => {
 
     describe('test preset size and type', () => {
         beforeEach(() => {
-            browser.get('/#/button/preset');
+            browser.get('/button/preset');
         });
 
         it('should display different size when set presize', async () => {

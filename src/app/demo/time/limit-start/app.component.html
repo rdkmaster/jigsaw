@@ -1,0 +1,15 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<h4>LimitStart Time</h4>
+
+LimitStart : <jigsaw-tile trackItemBy="label" [(selectedItems)]="limitStart" [multipleSelect]="false">
+    <jigsaw-tile-option *ngFor="let item of datas" [value]="item" width="80">{{item.label}}</jigsaw-tile-option>
+</jigsaw-tile>
+<br>
+<jigsaw-time [(date)]="date" gr="date" [limitStart]="limitStart[0].label"></jigsaw-time><br>
+
+<p>Selected Time : {{date}}</p>

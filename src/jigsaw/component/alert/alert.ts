@@ -1,23 +1,30 @@
 import {
     Component,
+    ContentChildren,
     ElementRef,
+    EventEmitter,
     Input,
     NgModule,
+    Output,
+    QueryList,
     Renderer2,
-    ViewChild,
     Type,
+    ViewChild,
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {
-    AbstractDialogComponentBase, DialogBase, DialogCallback, JigsawDialog,
+    AbstractDialogComponentBase,
+    DialogBase,
+    DialogCallback,
+    JigsawDialog,
     JigsawDialogModule
 } from "../dialog/dialog";
-import {JigsawButtonModule} from "../button/button";
+import {JigsawButton, JigsawButtonModule} from "../button/button";
 import {InternalUtils} from "../../core/utils/internal-utils";
 import {TranslateHelper} from "../../core/utils/translate-helper";
 import {JigsawMovableModule} from "../../directive/movable/index";
-import {PopupService, ButtonInfo, PopupEffect, PopupInfo, PopupOptions} from "../../service/popup.service";
+import {ButtonInfo, PopupEffect, PopupInfo, PopupOptions, PopupService} from "../../service/popup.service";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {JigsawBlock} from "../block/block";
 
@@ -38,6 +45,15 @@ export class JigsawAlert extends AbstractDialogComponentBase {
         this.renderer = renderer;
         this.elementRef = elementRef;
     }
+
+    @Output()
+    public close: EventEmitter<any> = new EventEmitter<any>();
+
+    /**
+     * @internal
+     */
+    @ContentChildren(JigsawButton)
+    public _$inlineButtons: QueryList<JigsawButton>;
 
     /**
      * @internal
@@ -184,7 +200,7 @@ export abstract class JigsawCommonAlert extends DialogBase {
         }
     }
 
-    constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef){
+    constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef) {
         super();
         this._renderer.addClass(this._elementRef.nativeElement, 'jigsaw-common-alert');
     }
@@ -195,13 +211,13 @@ export abstract class JigsawCommonAlert extends DialogBase {
     selector: 'jigsaw-info-alert, j-info-alert'
 })
 export class JigsawInfoAlert extends JigsawCommonAlert {
-    constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef){
+    constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef) {
         super(_renderer, _elementRef);
     }
 
     @ViewChild(JigsawAlert) dialog: JigsawDialog;
     @Input() public message: string;
-    @Input() public caption:string;
+    @Input() public caption: string;
     @Input() public level: AlertLevel = AlertLevel.info;
     @Input() public buttons = [{label: 'alert.button.ok', 'type': 'primary'}];
 
@@ -220,13 +236,13 @@ export class JigsawInfoAlert extends JigsawCommonAlert {
     selector: 'jigsaw-warning-alert, j-warning-alert'
 })
 export class JigsawWarningAlert extends JigsawCommonAlert {
-    constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef){
+    constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef) {
         super(_renderer, _elementRef);
     }
 
     @ViewChild(JigsawAlert) dialog: JigsawDialog;
     @Input() public message: string;
-    @Input() public caption:string;
+    @Input() public caption: string;
     @Input() public level: AlertLevel = AlertLevel.warning;
     @Input() public buttons = [{label: 'alert.button.ok', 'type': 'warning'}];
 
@@ -245,13 +261,13 @@ export class JigsawWarningAlert extends JigsawCommonAlert {
     selector: 'jigsaw-error-alert, j-error-alert',
 })
 export class JigsawErrorAlert extends JigsawCommonAlert {
-    constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef){
+    constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef) {
         super(_renderer, _elementRef);
     }
 
     @ViewChild(JigsawAlert) dialog: JigsawDialog;
     @Input() public message: string;
-    @Input() public caption:string;
+    @Input() public caption: string;
     @Input() public level: AlertLevel = AlertLevel.error;
     @Input() public buttons = [{label: 'alert.button.ok', 'type': 'error'}];
 
@@ -270,13 +286,13 @@ export class JigsawErrorAlert extends JigsawCommonAlert {
     selector: 'jigsaw-confirm-alert, j-confirm-alert'
 })
 export class JigsawConfirmAlert extends JigsawCommonAlert {
-    constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef){
+    constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef) {
         super(_renderer, _elementRef);
     }
 
     @ViewChild(JigsawAlert) dialog: JigsawDialog;
     @Input() public message: string;
-    @Input() public caption:string;
+    @Input() public caption: string;
     @Input() public level: AlertLevel = AlertLevel.confirm;
     @Input() public buttons = [{label: 'alert.button.yes', 'type': 'primary'}, {label: 'alert.button.no'}];
 

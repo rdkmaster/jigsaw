@@ -1,5 +1,5 @@
 import {
-    AfterContentInit, ChangeDetectorRef, Component, ContentChildren, forwardRef, NgModule,
+    AfterContentInit, ChangeDetectorRef, Component, ContentChildren, forwardRef, Input, NgModule,
     QueryList
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
@@ -43,13 +43,28 @@ export class JigsawListOption extends AbstractJigsawOptionComponent {
         super();
     }
 
+    private _selected: boolean = false; // 选中状态
+
+    @Input()
+    public get selected(): boolean {
+        return this._selected;
+    }
+
+    public set selected(value: boolean) {
+        if (this._selected === value || this.disabled) {
+            return;
+        }
+        this._selected = value;
+        this.selectedChange.emit(value);
+    }
+
     /**
      * 点击组件触发
      * @internal
      */
     public _$handleClick(): void {
         if (!this.disabled) {
-            this.selectedChange.emit(this);
+            this.change.emit(this);
         }
     }
 }

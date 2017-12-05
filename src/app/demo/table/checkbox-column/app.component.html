@@ -1,0 +1,18 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <div class="demo-1 live-demo">
+        <h3>基本用法</h3>
+        <jigsaw-table height="400"
+                      [data]="tableData"
+                      [additionalColumnDefines]="additionalColumns"
+                      [(additionalData)]="additionalData"
+                      (additionalDataChange)="additionalDataChange($event)">
+        </jigsaw-table>
+        <p class="message">selectedRowsIndex: <span>{{selectedRows}}</span></p>
+    </div>
+</div>
+

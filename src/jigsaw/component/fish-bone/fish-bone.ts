@@ -1,5 +1,6 @@
 import {
     Component, NgModule, Input, ViewChildren, QueryList, forwardRef, AfterViewInit, Renderer2, ElementRef, EventEmitter, OnDestroy, OnInit,
+    NgZone,
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent} from "../common";
@@ -21,12 +22,26 @@ import {JigsawTrustedHtmlModule} from "../../directive/trusted-html/trusted-html
     }
 })
 export class JigsawFishBone extends AbstractJigsawComponent implements AfterViewInit, OnDestroy, OnInit {
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, private _zone: NgZone) {
         super();
     }
 
+    private _dataCallbackRemoval: CallbackRemoval;
+
+    private _data: TreeData;
+
     @Input()
-    public data: TreeData;
+    get data(): TreeData {
+        return this._data;
+    }
+
+    set data(value: TreeData) {
+        this._data = value;
+        if (this._dataCallbackRemoval) {
+            this._dataCallbackRemoval();
+        }
+        this._dataCallbackRemoval = this._data.onRefresh(this.ngAfterViewInit, this);
+    }
 
     @Input()
     public direction: string = 'left';
@@ -172,13 +187,18 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
             this._setRangeWidth();
         }, 0);
 
-        this._removeWindowListener = this._renderer.listen('window',
-            'resize', () => this._setRangeWidth());
+        this._zone.runOutsideAngular(() => {
+            this._removeWindowListener = this._renderer.listen('window',
+                'resize', () => this._setRangeWidth());
+        });
     }
 
     ngOnDestroy() {
         if (this._removeWindowListener) {
             this._removeWindowListener();
+        }
+        if (this._dataCallbackRemoval) {
+            this._dataCallbackRemoval();
         }
     }
 }
@@ -240,6 +260,9 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
         this._renderer.setStyle(this.itemEl, 'left', value + 'px');
     }
 
+    /**
+     * @internal
+     */
     public _$state;
 
     /**
