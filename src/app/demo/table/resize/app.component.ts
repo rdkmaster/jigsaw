@@ -1,7 +1,7 @@
-import {Component, ElementRef, OnInit, Renderer2, ViewChild, ViewEncapsulation} from "@angular/core";
+import {Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/core/data/table-data";
-import {JigsawTable} from "../../../../jigsaw/component/table/table";
+import {JigsawTable} from "jigsaw/component/table/table";
 
 @Component({
     templateUrl: './app.component.html',
@@ -41,8 +41,8 @@ export class TableResizeDemoComponent implements OnInit {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
-    description: string = '';
+    summary: string = '这是一个如何动态改变table宽高的demo';
+    description: string = require('!!raw-loader!./readme.md');
 }
 
 
