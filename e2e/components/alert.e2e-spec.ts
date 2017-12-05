@@ -64,7 +64,7 @@ describe('alert', () => {
         it('should change color when selected ', () => {
             browser.get('/alert/customized');
             const jigsawAlertEl = element(by.tagName('jigsaw-alert')),
-                labelCheckboxEl = jigsawAlertEl.element(by.css('.jigsaw-checkbox'));
+                  labelCheckboxEl = jigsawAlertEl.element(by.css('.jigsaw-checkbox'));
             labelCheckboxEl.click();
             expect(jigsawAlertEl.element(by.css('.jigsaw-checkbox-checked')).isPresent()).toBe(true);
         })
