@@ -31,10 +31,12 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         outline: none;
         &:hover {
             border: 1px solid $primary-color;
+            @include prefixer(transition, all 0.3s $ease-in-out);
         }
         &:focus {
             border: 1px solid $primary-color;
             box-shadow: $box-focus-shadow;
+            @include prefixer(transition, all 0.3s $ease-in-out);
         }
     }
     input::-webkit-input-placeholder {
