@@ -13,6 +13,7 @@ import {JigsawLoadingModule} from './component/loading/loading';
 import {JigsawPaginationModule} from './component/pagination/pagination';
 import {JigsawRadioModule} from './component/radio/radio';
 import {JigsawRangeTimeModule} from './component/range-time/index';
+import {JigsawScrollbarModule} from './component/scrollbar';
 import {JigsawSelectModule} from './component/select/select';
 import {JigsawSliderModule} from './component/slider/index';
 import {JigsawSwitchModule} from './component/switch/index';
@@ -28,6 +29,7 @@ import {JigsawMovableModule} from "./directive/movable/index";
 import {JigsawDraggableModule, JigsawDroppableModule} from './directive/dragdrop/index';
 import {JigsawRootModule} from "./component/root/root";
 import {JigsawFishBoneModule} from "./component/fish-bone/fish-bone";
+import {JigsawViewportModule} from './component/viewport/viewport'
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
@@ -46,6 +48,7 @@ const JIGSAW_MODULE = [
     JigsawPaginationModule,
     JigsawRadioModule,
     JigsawRangeTimeModule,
+    JigsawScrollbarModule,
     JigsawSelectModule,
     JigsawSliderModule,
     JigsawSwitchModule,
@@ -59,6 +62,7 @@ const JIGSAW_MODULE = [
     JigsawTreeExtModule,
     JigsawRootModule,
     JigsawFishBoneModule,
+    JigsawViewportModule
 ];
 
 @NgModule({

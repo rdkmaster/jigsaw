@@ -13,7 +13,7 @@ import {AbstractJigsawComponent} from "../common";
 
 @Component({
     selector: 'jigsaw-scrollbar-handle',
-    templateUrl: './handle.html'
+    templateUrl: './scrollbar-handle.html'
 })
 export class JigsawScrollHandle implements OnInit {
 
