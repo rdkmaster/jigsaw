@@ -13,7 +13,7 @@ import {JigsawLoadingModule} from './component/loading/loading';
 import {JigsawPaginationModule} from './component/pagination/pagination';
 import {JigsawRadioModule} from './component/radio/radio';
 import {JigsawRangeTimeModule} from './component/range-time/index';
-import {JigsawScrollbarModule} from './component/scrollbar';
+import {JigsawScrollbarModule} from './component/scrollbar/index'; // from index.ts 不可省略index
 import {JigsawSelectModule} from './component/select/select';
 import {JigsawSliderModule} from './component/slider/index';
 import {JigsawSwitchModule} from './component/switch/index';
