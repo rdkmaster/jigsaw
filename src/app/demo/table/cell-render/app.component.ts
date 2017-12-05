@@ -1,17 +1,12 @@
-import {AfterContentInit, Component, TemplateRef, ViewChild} from "@angular/core";
+import {AfterViewInit, Component, TemplateRef, ViewChild} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/core/data/table-data";
 import {ColumnDefine} from "jigsaw/component/table/table-typings";
 
-/*
- * 自定义表头渲染组件
- * */
-
-
 @Component({
     templateUrl: './app.component.html'
 })
-export class TableSetCellRenderDemoComponent implements AfterContentInit {
+export class TableSetCellRenderDemoComponent implements AfterViewInit {
 
     @ViewChild("jobCellRender") jobCellRender: TemplateRef<any>;
 
@@ -25,16 +20,19 @@ export class TableSetCellRenderDemoComponent implements AfterContentInit {
 
     columns: ColumnDefine[];
 
-    ngAfterContentInit() {
-        //请不要在ngAfterViewInit里面赋值，会报变更检查错误
-        this.columns = [
-            {
-                target: 'position',
-                cell: {
-                    renderer: this.jobCellRender //通过ViewChild获取的TemplateRef,必须在AfterViewInit之后才能拿到
+    ngAfterViewInit() {
+        // 如果报变更检查错误，需要加个异步处理，这样会触发angular的变更检查
+        // 通过ViewChild获取的TemplateRef,必须在AfterViewInit之后才能拿到
+        setTimeout(() => {
+            this.columns = [
+                {
+                    target: 'position',
+                    cell: {
+                        renderer: this.jobCellRender
+                    }
                 }
-            }
-        ];
+            ];
+        })
     }
 
     // ====================================================================

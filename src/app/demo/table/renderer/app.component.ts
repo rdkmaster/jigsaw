@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, TemplateRef, ViewChild, ViewEncapsulation} from "@angular/core";
+import {AfterViewInit, Component, TemplateRef, ViewChild, ViewEncapsulation} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {LocalPageableTableData} from "jigsaw/core/data/table-data";
 import {
@@ -21,7 +21,7 @@ import {
     styleUrls: ['./app.component.css'],
     encapsulation: ViewEncapsulation.None
 })
-export class TableRendererDemoComponent implements AfterContentInit {
+export class TableRendererDemoComponent implements AfterViewInit {
     @ViewChild('operation') operationTemplate: TemplateRef<any>;
 
     message: string = 'change message goes here ...';
@@ -77,46 +77,51 @@ export class TableRendererDemoComponent implements AfterContentInit {
         },
     ];
 
-    ngAfterContentInit() {
+    ngAfterViewInit() {
         this.tableData.fromAjax('mock-data/hr-list-full');
+        this.tableData.onAjaxComplete(() => {
+            // 此处additionalColumnDefines里面需要用到tableData，所以必须在tableData的onAjaxComplete里面设置
+            this.additionalColumnDefines = [
+                {
+                    pos: 0,
+                    width: '50px',
+                    header: {
+                        text: '#',
+                    },
+                    cell: {
+                        // cell data需要用到tableData需要在onAjaxComplete里面进行设置
+                        data: TableValueGenerators.rowIndexGenerator,
+                        clazz: 'green-text'
+                    }
+                },
+                {
+                    pos: 0,
+                    width: '60px',
+                    header: {
+                        renderer: TableHeadCheckboxRenderer
+                    },
+                    cell: {
+                        renderer: TableCellCheckboxRenderer,
+                        // cell data需要用到tableData需要在onAjaxComplete里面进行设置
+                        data: (td, row, col) => td.data[row][2] == 'Developer',
+                    }
+                },
+                {
+                    //pos: -1, //不写pos表示插入到最后
+                    width: '100',
+                    header: {
+                        text: '操作',
+                        clazz: 'green-text'
+                    },
+                    cell: {
+                        // 通过ViewChild获取的TemplateRef,必须在AfterViewInit之后才能拿到
+                        renderer: this.operationTemplate,
+                        tooltip: '加薪：当前员工一次加2000\n辞退：立即辞退当前员工'
+                    }
+                },
+            ];
 
-        this.additionalColumnDefines = [
-            {
-                pos: 0,
-                width: '50px',
-                header: {
-                    text: '#',
-                },
-                cell: {
-                    data: TableValueGenerators.rowIndexGenerator,
-                    clazz: 'green-text'
-                }
-            },
-            {
-                pos: 0,
-                width: '60px',
-                header: {
-                    renderer: TableHeadCheckboxRenderer
-                },
-                cell: {
-                    renderer: TableCellCheckboxRenderer,
-                    data: (td, row, col) => td.data[row][2] == 'Developer',
-                }
-            },
-            {
-                //pos: -1, //不写pos表示插入到最后
-                width: '100',
-                header: {
-                    text: '操作',
-                    clazz: 'green-text'
-                },
-                cell: {
-                    // 注意，必须在ngAfterContentInit钩子里设置才有效
-                    renderer: this.operationTemplate,
-                    tooltip: '加薪：当前员工一次加2000\n辞退：立即辞退当前员工'
-                }
-            },
-        ];
+        })
     }
 
     public onCellChange(value) {

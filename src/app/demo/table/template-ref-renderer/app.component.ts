@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, TemplateRef, ViewChild, ViewEncapsulation} from "@angular/core";
+import {Component, TemplateRef, ViewChild, ViewEncapsulation, AfterViewInit} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/core/data/table-data";
 import {AdditionalColumnDefine, ColumnDefine} from "jigsaw/component/table/table-typings";
@@ -8,7 +8,7 @@ import {AdditionalColumnDefine, ColumnDefine} from "jigsaw/component/table/table
     styleUrls: ['./app.component.css'],
     encapsulation: ViewEncapsulation.None
 })
-export class TableRendererOfTemplateRefDemoComponent implements AfterContentInit {
+export class TableRendererOfTemplateRefDemoComponent implements AfterViewInit {
     @ViewChild('headIcon') headIcon: TemplateRef<any>;
     @ViewChild('checkboxRenderer') checkboxRenderer: TemplateRef<any>;
     @ViewChild('cellOption') cellOption: TemplateRef<any>;
@@ -37,35 +37,38 @@ export class TableRendererOfTemplateRefDemoComponent implements AfterContentInit
         alert(`row: ${context.row}, column: ${context.column}, cellData: ${context.cellData}`)
     }
 
-    ngAfterContentInit() {
-        //请不要在ngAfterViewInit里面赋值，会报变更检查错误
-        this.columns = [
-            {
-                target: ['salary', 'office'],
-                width: '15%',
-                header: {
-                    renderer: this.headIcon
-                }
-            },
-            {
-                target: 'name',
-                width: '15%',
-                cell: {
-                    renderer: this.cellName
-                }
-            }
-        ];
-        this.additionalColumns = [
-            {
-                width: '15%',
-                header: {
-                    text: '操作'
+    ngAfterViewInit() {
+        //如果报变更检查错误，需要加个异步处理，这样会触发angular的变更检查
+        //通过ViewChild获取的TemplateRef,必须在AfterViewInit之后才能拿到
+        setTimeout(() => {
+            this.columns = [
+                {
+                    target: ['salary', 'office'],
+                    width: '15%',
+                    header: {
+                        renderer: this.headIcon
+                    }
                 },
-                cell: {
-                    renderer: this.cellOption
+                {
+                    target: 'name',
+                    width: '15%',
+                    cell: {
+                        renderer: this.cellName
+                    }
                 }
-            }
-        ]
+            ];
+            this.additionalColumns = [
+                {
+                    width: '15%',
+                    header: {
+                        text: '操作'
+                    },
+                    cell: {
+                        renderer: this.cellOption
+                    }
+                }
+            ]
+        })
     }
 
     // ====================================================================

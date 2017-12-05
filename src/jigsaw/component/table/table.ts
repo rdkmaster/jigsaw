@@ -253,9 +253,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             columnDefines.push(cd ? cd : {target: field});
         });
 
-        if (this.additionalColumnDefines) {
-            for (let i = this.additionalColumnDefines.length - 1; i >= 0; i--) {
-                const acd = this.additionalColumnDefines[i];
+        if (this._additionalColumnDefines) {
+            for (let i = this._additionalColumnDefines.length - 1; i >= 0; i--) {
+                const acd = this._additionalColumnDefines[i];
                 const cd: ColumnDefine = {
                     target: 'additional-field-' + i, header: acd.header, group: acd.group,
                     cell: acd.cell, width: acd.width, visible: acd.visible
@@ -348,8 +348,17 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @Input()
     public columnDefineGeneratorContext: any;
 
+    private _additionalColumnDefines: AdditionalColumnDefine[] = [];
+
     @Input()
-    public additionalColumnDefines: AdditionalColumnDefine[] = [];
+    public get additionalColumnDefines(): AdditionalColumnDefine[] {
+        return this._additionalColumnDefines;
+    }
+
+    public set additionalColumnDefines(value: AdditionalColumnDefine[]) {
+        this._additionalColumnDefines = value;
+        this._initAdditionalData();
+    }
 
     private _columnDefineGenerator(field: string, index: number): ColumnDefine {
         if (!this.columnDefines) {
@@ -489,10 +498,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     private _initAdditionalData(): void {
-        if (!this.additionalColumnDefines) {
+        if (!this._additionalColumnDefines) {
             return;
         }
-        this.additionalColumnDefines.forEach((acd, i) => {
+        this._additionalData.field = [];
+        this._additionalData.header = [];
+        this._additionalColumnDefines.forEach((acd, i) => {
             this._additionalData.field.push('additional-field-' + i);
             this._additionalData.header.push(acd.header.text);
         });
@@ -673,7 +684,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     ngOnInit() {
         super.ngOnInit();
 
-        this._initAdditionalData();
         if (this._data.field && this._data.field.length != 0) {
             this.update();
         }
@@ -701,7 +711,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._removeWindowListener();
 
         this.columnDefines = null;
-        this.additionalColumnDefines = null;
+        this._additionalColumnDefines = null;
         this._data = null;
         this._headerSettingsBackup = null;
         this._cellSettingsBackup = null;
