@@ -46,7 +46,7 @@ EndIf
 
 _appendConsole('Downloading dependency package...')
 If FileExists($installDir & '\install_tmp') Then DirRemove($installDir & '\install_tmp', True)
-_downloadPackage('http://rdk.zte.com.cn:8800/misc/node_modules.zip')
+_downloadPackage('http://rdk.zte.com.cn/jigsaw/misc/node_modules.zip')
 If Not FileExists($installDir & '\install_tmp\node_modules.zip') Then
 	_error('Unable to download node_modules.zip, please check your network configuration.')
 EndIf

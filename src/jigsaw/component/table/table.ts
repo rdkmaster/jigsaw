@@ -35,10 +35,9 @@ import {SortOrder} from "../../core/data/component-data";
 import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer} from "./table-renderer";
 import {AffixUtils} from "../../core/utils/internal-utils";
 import {
-    PerfectScrollbarConfigInterface,
     PerfectScrollbarDirective,
     PerfectScrollbarModule
-} from "ngx-perfect-scrollbar/dist";
+} from "ngx-perfect-scrollbar";
 import {TableUtils} from "./table-utils";
 
 @Component({
@@ -371,6 +370,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @Output()
     public doubleClick: EventEmitter<number> = new EventEmitter<number>();
 
+    /**
+     * @internal
+     */
     public _$handleRowDoubleClick(rowIndex: number) {
         this.doubleClick.emit(rowIndex);
     }
@@ -378,6 +380,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @ViewChildren('tableRow', {read: ElementRef})
     private _rowElementRefs: QueryList<ElementRef>;
 
+    /**
+     * @internal
+     */
     public _$selectRow(rowIndex: number, suppressEvent: boolean = false) {
         this._rowElementRefs.forEach((row, index) => {
             if (index === rowIndex) {
@@ -475,6 +480,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @ViewChildren(JigsawTableHeaderInternalComponent)
     private _headerComponents: QueryList<JigsawTableHeaderInternalComponent>;
 
+    /**
+     * @internal
+     */
     public _$onSort(sortInfo): void {
         this._headerComponents.forEach(comp => sortInfo.field != comp.field && comp.updateSortOrderClass(SortOrder.default));
         this.sort.emit(sortInfo);
@@ -613,7 +621,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _initVerticalScroll() {
         setTimeout(() => {
             // selector使用>选择直接子元素，避免选择到其他滚动条
-            const yScrollbar = this._elementRef.nativeElement.querySelector('.jigsaw-table-body-range > .ps__scrollbar-y-rail');
+            const yScrollbar = this._elementRef.nativeElement.querySelector('.jigsaw-table-body-range > .ps__rail-y');
             if (yScrollbar) {
                 this._renderer.setStyle(yScrollbar, 'left',
                     this._elementRef.nativeElement.offsetWidth - 15 + 'px');
@@ -655,7 +663,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     ngAfterViewInit() {
-        super.ngAfterViewInit();
         this._$selectRow(this.selectedRow, true);
 
         // 初始化滚动条

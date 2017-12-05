@@ -2,7 +2,12 @@ import {TranslateService} from "@ngx-translate/core";
 import {CommonUtils} from "./common-utils";
 import {TranslateHelper} from "./translate-helper";
 
+/**
+ * @internal
+ */
 export class InternalUtils {
+    public static uedSiteHost = 'http://rdk.zte.com.cn';
+
     public static _uniqueIdIndex = 0;
     public static _defaultPrefix = '__unique_id__';
 

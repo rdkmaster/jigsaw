@@ -4,14 +4,14 @@ import {
 } from "../utils/popup";
 import {expectToExist, waitForPresence} from "../utils/asserts";
 
-describe('dialog', () => {
+xdescribe('dialog', () => {
     beforeEach(() => {
         browser.waitForAngularEnabled(false);
     });
 
     describe('test dialog popup', () => {
         beforeEach(() => {
-            browser.get('/#/dialog/misc');
+            browser.get('/dialog/misc');
         });
 
         xit('should popup a custom dialog as modal when click the button', async () => {

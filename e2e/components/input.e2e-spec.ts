@@ -1,4 +1,4 @@
-import {browser, element, by} from "protractor";
+import {browser, element, by, protractor} from "protractor";
 
 describe('input', () => {
     beforeEach(() => {
@@ -7,7 +7,7 @@ describe('input', () => {
 
     describe('test bidirectional bindings and clearable', () => {
         beforeEach(() => {
-            browser.get('/#/input/basic');
+            browser.get('/input/basic');
         });
 
         it('should update bind property when input value', () => {
@@ -36,20 +36,30 @@ describe('input', () => {
     });
 
     describe('test prefix icon', () => {
+
         beforeEach(() => {
-            browser.get('/#/input/prefixIcon');
+            browser.get('/input/prefix-icon');
         });
 
         it('should be mapped into component and display prefix icon', () => {
-            const inputEl = element(by.id('test-input'));
-            expect(inputEl.element(by.css('.jigsaw-input-icon-front .fa-search')).isPresent()).toBe(true);
-            expect(inputEl.element(by.css('.jigsaw-input-icon-front .fa-save')).isPresent()).toBe(true);
+            const prefixIcons = element(by.id('test-input')).all(by.tagName('a')),
+           input = element(by.id('test-input')).element(by.tagName('input'));
+            input.sendKeys('asf');
+            prefixIcons.get(0).click();
+            browser.wait(protractor.ExpectedConditions.alertIsPresent(), 1000);
+            let alertDialog = browser.switchTo().alert();
+            expect(alertDialog.getText()).toEqual("你输入的值是 asf");
+            alertDialog.accept();
+            prefixIcons.get(1).click();
+            browser.wait(protractor.ExpectedConditions.alertIsPresent(), 1000);
+            expect(alertDialog.getText()).toEqual("你输入的值是 asf");
+            alertDialog.accept();
         })
     });
 
     describe('test focus', () => {
         beforeEach(() => {
-            browser.get('/#/input/focus')
+            browser.get('/input/focus')
         });
 
         it('should be focused when call focus function', () => {

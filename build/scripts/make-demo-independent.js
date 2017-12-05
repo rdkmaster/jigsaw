@@ -10,8 +10,7 @@ if (fs.existsSync(outputHome)) {
 outputHome = outputHome ? outputHome.trim() : './live-demo/';
 outputHome = outputHome.match(/[\/\\]$/) ? outputHome : outputHome + '/';
 
-makeAllPlunkers('e2e-testee');
-makeAllPlunkers('live-demo');
+makeAllPlunkers('demo');
 
 function makeAllPlunkers(dirName) {
     demoHome = getDemoHome(dirName);
@@ -39,8 +38,8 @@ function processDemoSet(demoSetFolder) {
 
 function makePlunker(demoFolder, dirName) {
     var content = [];
-    var mockDatas = [];
-    readDemoContent(content, demoFolder);
+    readFolderFiles(content, demoFolder);
+
     var compContentIndex = -1;
     var moduleContentIndex = -1;
     content.forEach((item, idx) => {
@@ -51,6 +50,14 @@ function makePlunker(demoFolder, dirName) {
             item.code = fixStyleUrls(item.code);
             item.code = fixCodeForDemoOnly(item.code);
         }
+        if (item.path.match(/.+\.html$/i)) {
+            fixAppComponentHtml(item, demoFolder);
+        }
+        if (item.path.match(/.+\.scss$/i)) {
+            console.error('ERROR: do not use scss file in demo! we can not pass them in plunker.');
+            console.error(`       path=${demoFolder}`);
+            process.exit(1);
+        }
         if (item.path == 'app/app.component.ts') {
             compContentIndex = idx;
         } else if (item.path == 'app/app.module.ts') {
@@ -58,25 +65,25 @@ function makePlunker(demoFolder, dirName) {
         }
     });
     if (compContentIndex == -1) {
-        console.error('ERROR: need this file: ' + demoFolder + 'app.module.ts');
-        process.exit(100);
+        console.error('ERROR: need this file: ' + demoFolder + 'app.module.ts, but i can not find it.');
+        process.exit(1);
     }
     if (moduleContentIndex == -1) {
-        console.error('ERROR: need this file: ' + demoFolder + 'app.component.ts');
-        process.exit(100);
+        console.error('ERROR: need this file: ' + demoFolder + 'app.component.ts, but i can not find it.');
+        process.exit(1);
     }
 
     var moduleItem = content[moduleContentIndex];
-    moduleItem.code = fixAppModuleTs(moduleItem.code);
+    fixAppModuleTs(moduleItem, demoFolder);
     var compItem = content[compContentIndex];
-    compItem.code = fixAppComponentTs(compItem.code, moduleItem.code);
-
-    mockDatas.forEach(mockData => content.push(mockData));
+    fixAppComponentTs(compItem, moduleItem.code);
 
     content.push(getIndexHtml());
-    content.push(getMainTs());
+    content.push(getMainTs(findModuleClassName(moduleItem.code)));
     content.push(getSystemJsConfig());
     content.push(getSystemJsAngularLoader());
+    content.push(getAjaxInterceptor());
+    content.push(getLiveDemoWrapperCSS());
 
     var html = '';
     content.forEach(item => {
@@ -101,13 +108,13 @@ function makePlunker(demoFolder, dirName) {
     }
 }
 
-function readDemoContent(content, demoFolder) {
-    var demoFiles = fs.readdirSync(demoFolder);
-    demoFiles.forEach(demoFile => {
-        var pathname = demoFolder + demoFile;
+function readFolderFiles(content, fileFolder) {
+    var demoFiles = fs.readdirSync(fileFolder);
+    demoFiles.forEach(file => {
+        var pathname = fileFolder + file;
         var stat = fs.lstatSync(pathname);
         if (stat.isDirectory()) {
-            readDemoContent(content, pathname + '/');
+            readFolderFiles(content, pathname + '/');
         } else {
             content.push({path: pathname, code: readCode(pathname)});
         }
@@ -147,7 +154,9 @@ function fixImport(code) {
         if (match[2].match(/jigsaw\/.+?/)) {
             var importString = match[1];
             var imports = importString.split(/,/g).map(item => item.trim());
-            imports.forEach(item => jigsawImports.push(item));
+            imports.forEach(item => {
+                if (!!item) jigsawImports.push(item)
+            });
         } else {
             rawImports.push(match[0]);
         }
@@ -171,47 +180,70 @@ function fixCodeForDemoOnly(code) {
     return code.replace(/\/\* #for-live-demo-only#([\s\S]*?)\*\//g, (found, codeForDemo) => codeForDemo.trim());
 }
 
-function fixAppComponentTs(compCode, moduleCode) {
-    var match = moduleCode.match(/bootstrap\s*:\s*\[\s*(\w+?)\s*\]/);
-    if (!match) {
-        console.error('ERROR: need bootstrap property in the app.module.ts, the code is:\n' + moduleCode);
-        process.exit(200);
+// 删除 jigsaw-demo-description 相关内容
+function fixAppComponentHtml(component, folder) {
+    var re = /<!-- ignore the following lines[\s\S]*<!-- start to learn the demo from here -->\r?\n/;
+    component.code = component.code.replace(re, '');
+
+    if (component.code.indexOf('jigsaw-demo-description') != -1) {
+        console.error('ERROR: can not strip "jigsaw-demo-description" from html!');
+        console.error(`       path=${folder}`);
+        process.exit(1);
+    }
+}
+
+function fixAppComponentTs(component, moduleCode) {
+    var mainComp = findExportsComponent(moduleCode);
+    if (!mainComp) {
+        console.error('ERROR: need a "exports" property in the module code, ' +
+                    'and the value of which should contains only one component!');
+        process.exit(1);
     }
 
-    var mainComp = match[1];
-    return compCode.replace(/@Component\s*\(\s*\{([\s\S]*?)\}\s*\)[\s\S]*?export\s+class\s+(\w+?)\b/g,
+    // 给组件加上jigsaw-live-demo的selector，这个在index.html里会用到
+    component.code = component.code.replace(/@Component\s*\(\s*\{([\s\S]*?)\}\s*\)[\s\S]*?export\s+class\s+(\w+?)\b/g,
         (found, props, className) => {
             if (className != mainComp) {
+                // 在app.component.ts文件中可能被定义了多个组件
                 return found;
             }
             if (found.match(/selector\s*:/)) {
-                console.error('ERROR: more than one "selector" appears, remove the "selector" property, ' +
-                    'the code is:\n' + found);
-                process.exit(201);
+                console.error('ERROR: do NOT set "selector" property for the main component, ' +
+                    'remove it and try again, path=' + component.path);
+                process.exit(1);
             }
             return found.replace(/@Component\s*\(\s*\{/, '@Component({\n    selector: "jigsaw-live-demo",');
         });
+
+    // 处理description变量
+    component.code = component.code.replace(/require\s*\(\s*["']!!raw-loader!\s*.*\/readme.md["']\s*\)/,
+                                            '"## 本DEMO的详细描述在readme.md中 ##"');
 }
 
-function fixAppModuleTs(appModuleCode) {
-    appModuleCode = "import {BrowserModule} from '@angular/platform-browser';\n" +
-        "import {BrowserAnimationsModule} from '@angular/platform-browser/animations';\n" +
-        "import {HttpModule} from '@angular/http';\n" +
-        appModuleCode.replace(/export\s+class\s+(.+?)\s*{/, 'export class AppModule {');
-
-    var re = /\bimports\s*:\s*\[([\s\S]*?)\]/;
-    var match = appModuleCode.match(/\bimports\s*:\s*\[([\s\S]*?)\]/);
-    if (match) {
-        return appModuleCode.replace(re, (found, importString) => 'imports: [\n' +
-            '        BrowserModule, BrowserAnimationsModule, HttpModule,\n' +
-            '        ' + importString.trim() + '\n' +
-            '    ]'
-        );
-    } else {
-        return appModuleCode.replace('@NgModule({',
-            '@NgModule({\nimports: [BrowserModule, BrowserAnimationsModule, HttpModule],');
+// 转变app.module.ts文件
+function fixAppModuleTs(module, demoFolder) {
+    // @NgModule()里必须包含一个exports，用于将组件暴露给上级组件
+    var comp = findExportsComponent(module.code);
+    if (!comp) {
+        console.error('ERROR: need a "exports" property in the module code, ' +
+                    'and the value of which should contains only one component!');
+        console.error(`       module path=${demoFolder}`);
+        process.exit(1);
     }
 
+    // 删除 JigsawDemoDescriptionModule 相关的东西
+    module.code = module.code.replace(/import\s*{\s*JigsawDemoDescriptionModule\s*}\s*from.*\r?\n/, '');
+    module.code = module.code.replace(/\bJigsawDemoDescriptionModule\b\s*,?/g, '');
+}
+
+function findExportsComponent(moduleCode) {
+    var match = moduleCode.match(/@NgModule\s*\(\s*{[\s\S]*\bexports\s*:\s*\[\s*(\w+)\s*\]/);
+    return match && match[1] ? match[1] : '';
+}
+
+function findModuleClassName(moduleCode) {
+    var match = moduleCode.match(/@NgModule\s*\(\s*\{[\s\S]*?\}\s*\)[\s\S]*?export\s+class\s+(\w+?)\b/);
+    return match[1];
 }
 
 function escapeCode(code) {
@@ -255,10 +287,11 @@ function getIndexHtml() {
     }
 }
 
-function getMainTs() {
+function getMainTs(moduleClassName) {
     return {
         path: 'main.ts',
         code: readCode(__dirname + '/demo-independent-templates/main.ts')
+                .replace(/\$DemoModuleClassName/g, moduleClassName)
     }
 }
 
@@ -275,3 +308,44 @@ function getSystemJsConfig() {
         code: readCode(__dirname + '/demo-independent-templates/systemjs.config.js')
     }
 }
+
+function getAjaxInterceptor() {
+    var code = readCode(__dirname + '/../../src/app/app.interceptors.ts');
+    code = fixImport(code);
+
+    // merge all mock data json file into this class
+    var mockData;
+    code = code.replace(/\brequire\s*\(['"]\.\.\/mock-data\/(.+)\.json['"]\s*\)/g, function(found, file) {
+        if (!mockData) {
+            mockData = {};
+        }
+        if (!mockData[file]) {
+            mockData[file] = readCode(__dirname + '/../../src/mock-data/' + file + '.json');
+        }
+        return `mockData["${file}"]`;
+    });
+    if (!mockData) {
+        console.error('ERROR: can not find any required mock data in app.interceptors.ts!');
+        process.exit(1);
+    }
+
+    code += '\nconst mockData = {\n';
+    for (var p in mockData) {
+        // compress mock data to shrink the size of the demo file
+        code += `    "${p}": ${JSON.stringify(JSON.parse(mockData[p]))},\n`;
+    }
+    code += '};';
+
+    return {
+        path: 'ajax-interceptor.ts',
+        code: code
+    }
+}
+
+function getLiveDemoWrapperCSS() {
+    return {
+        path: 'live-demo-wrapper.css',
+        code: readCode(__dirname + '/../../src/app/live-demo-wrapper.css')
+    }
+}
+

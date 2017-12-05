@@ -1,4 +1,4 @@
-import {HttpClient} from "@angular/common/http";
+﻿import {HttpClient} from "@angular/common/http";
 import {Subject} from "rxjs/Subject";
 import "rxjs/add/operator/map";
 import 'rxjs/add/operator/debounceTime';
@@ -93,9 +93,7 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
 
         this.data.forEach(row => {
             let item = {};
-            this.field.forEach((field, index) => {
-                item[field] = row[index];
-            });
+            this.field.forEach((field, index) => item[field] = row[index]);
             result.push(item);
         });
         return result;
@@ -132,11 +130,68 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
     }
 }
 
+/**
+ * 这是最基础的表格数据对象，只具备最基本的表格数据展示能力，无法分页,实际使用的场景并不多。
+ *
+ * 相关的表格数据对象：
+ * - {@link PageableTableData} 适用于需要在服务端进行分页、过滤、排序的场景，这是最常用的一个数据对象；
+ * - {@link LocalPageableTableData} 适用于需要在浏览器本地进行分页、过滤、排序的场景，受限于数据量，不是很常用；
+ * - {@link BigTableData} 适用于海量数据的展示场景，它可以做到在常数时间内展示**任意量级**的数据。
+ */
 export class TableData extends TableDataBase implements ISortable, IFilterable {
+    /**
+     * 将如下结构的json对象转为{@link TableData}对象：
+     *
+     * ```
+     * { data: [], field: [], header: [], ... }
+     * ```
+     *
+     * 注意：源对象的 `data` / `field` / `header` 属性会被**浅拷贝**到目标{@link TableData}对象中。
+     *
+     * 这是一个静态方法。
+     *
+     * @param rawData 结构为 `{ data: [], field: [], header: [] }` 的json对象
+     * @returns {TableData}
+     */
     public static of(rawData: any): TableData {
         return TableData.isTableData(rawData) ? new TableData(rawData.data, rawData.field, rawData.header) : new TableData();
     }
 
+    /**
+     * 将一个`{ data: [], field: [], header: []}`对象转为一个json对象数组。
+     *
+     * 虽然`{ data: [], field: [], header: []}`这样的数据结构有很多好处，比如利于网络传输，利于表格展示，在占用更小的内存等，
+     * 但是由于这不是一个典型的json对象结构，因此如果需要将它使用到表格以外的场合，则会产生一些麻烦。你可以通过这个方法将它转换为一个典型的json对象。
+     *
+     * 原始原始数据：
+     *
+     * ```
+     * {
+     *     data: [
+     *         [11, 12, 13],
+     *         [21, 22, 23],
+     *         [31, 32, 33]
+     *     ],
+     *     field: ['field1', 'field2', 'field3'],
+     *     header: ['header1', 'header2', 'header3']
+     * }
+     * ```
+     *
+     * 将被转换为：
+     *
+     * ```
+     * [
+     *     {field1: 11, field2: 12, field3: 13},
+     *     {field1: 21, field2: 22, field3: 23},
+     *     {field1: 31, field2: 32, field3: 33},
+     * ]
+     * ```
+     *
+     * 这是一个静态方法。
+     *
+     * @param rawData
+     * @returns {any[]}
+     */
     public static toArray(rawData: any): any[] {
         return TableData.of(rawData).toArray();
     }
@@ -182,9 +237,32 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
     }
 }
 
+/**
+ * 这是实际使用时做常用的表格数据对象，它具备服务端分页、服务端排序、服务端过滤能力。
+ * 详细用法请参考[这个demo](/components/table/demo#pageable)。
+ *
+ * 注意：需要有一个统一的具备服务端分页、服务端排序、服务端过滤能力的REST服务配合使用，
+ * 更多信息请参考[PagingInfo.pagingServerUrl]{@link PagingInfo#pagingServerUrl}
+ *
+ * 相关的表格数据对象：
+ * - {@link PageableTableData} 适用于需要在服务端进行分页、过滤、排序的场景，这是最常用的一个数据对象；
+ * - {@link LocalPageableTableData} 适用于需要在浏览器本地进行分页、过滤、排序的场景，受限于数据量，不是很常用；
+ * - {@link BigTableData} 适用于海量数据的展示场景，它可以做到在常数时间内展示**任意量级**的数据。
+ */
 export class PageableTableData extends TableData implements IServerSidePageable, IFilterable, ISortable {
-    public pagingInfo: PagingInfo;
+    /**
+     * 当前数据对象的查询参数，注意这个参数在进行分页、排序、过滤的时候，都会带给服务端。
+     * 提示：可将这个对象对应属性通过双向绑定的方式提供给查询条件的视图，这样在视图上数据更新了后，这里的值就可立即得到更新，例如：
+     *
+     * ```
+     * <j-input [(value)]="tableData?.sourceRequestOptions?.params?.value">
+     * </j-input>
+     * ```
+     *
+     * 或者在需要获取数据之前，一次性通过{@link updateDataSource}来更新这个对象。
+     */
     public sourceRequestOptions: HttpClientOptions;
+    public pagingInfo: PagingInfo;
 
     private _filterSubject = new Subject<DataFilterInfo>();
     private _sortSubject = new Subject<DataSortInfo>();
@@ -227,6 +305,15 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         });
     }
 
+    /**
+     * 在使用此方法之前，请先阅读一下{@link sourceRequestOptions}的说明，你需要先了解它的作用之后，
+     * 才能够知道如何恰当的使用这个方法来更新{@link sourceRequestOptions}。
+     *
+     * 这个方法除了更新{@link sourceRequestOptions}以外，还会自动重置{@link pagingInfo}的各个参数，
+     * 清空{@link filterInfo}和{@link sortInfo}。
+     *
+     * @param {HttpClientOptions | string} optionsOrUrl
+     */
     public updateDataSource(optionsOrUrl: HttpClientOptions | string): void {
         this.sourceRequestOptions = typeof optionsOrUrl === 'string' ? {url: optionsOrUrl} : optionsOrUrl;
         this.pagingInfo.currentPage = 1;
@@ -237,6 +324,10 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this._initRequestOptions();
     }
 
+    /**
+     * 请参考[IAjaxComponentData.fromAjax]{@link IAjaxComponentData#fromAjax}
+     * @param {string} url
+     */
     public fromAjax(url?: string): void;
     public fromAjax(options?: HttpClientOptions): void;
     public fromAjax(optionsOrUrl?: HttpClientOptions | string): void {
@@ -312,9 +403,15 @@ export class PageableTableData extends TableData implements IServerSidePageable,
             throw new Error('compare function is not supported by PageableTableData which sorts data in the server side');
         }
         const psi = as instanceof DataSortInfo ? as : new DataSortInfo(as, order, field);
+        psi.order = SortOrder[psi.order];
         this._sortSubject.next(psi);
     }
 
+    /**
+     * 请参考[IPageable.changePage]{@link IPageable#changePage}
+     * @param {number} currentPage
+     * @param {number} pageSize
+     */
     public changePage(currentPage: number, pageSize?: number): void;
     public changePage(info: PagingInfo): void;
     public changePage(currentPage, pageSize?: number): void {
@@ -339,22 +436,37 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         }
     }
 
+    /**
+     * 请参考[IPageable.firstPage]{@link IPageable#firstPage}
+     */
     public firstPage(): void {
         this.changePage(1);
     }
 
+    /**
+     * 请参考[IPageable.previousPage]{@link IPageable#previousPage}
+     */
     public previousPage(): void {
         this.changePage(this.pagingInfo.currentPage - 1);
     }
 
+    /**
+     * 请参考[IPageable.nextPage]{@link IPageable#nextPage}
+     */
     public nextPage(): void {
         this.changePage(this.pagingInfo.currentPage + 1);
     }
 
+    /**
+     * 请参考[IPageable.lastPage]{@link IPageable#lastPage}
+     */
     public lastPage(): void {
         this.changePage(this.pagingInfo.pageSize);
     }
 
+    /**
+     * 请参考[IComponentData.destroy]{@link IComponentData#destroy}
+     */
     public destroy(): void {
         super.destroy();
 
@@ -473,6 +585,17 @@ export class TableViewportData extends ViewportData {
     }
 }
 
+/**
+ * 详细用法和相关说明，请参考[这个demo](/components/table/demo#big-table)。
+ *
+ * 注意：需要有一个统一的具备服务端分页、服务端排序、服务端过滤能力的REST服务配合使用，
+ * 更多信息请参考[PagingInfo.pagingServerUrl]{@link PagingInfo#pagingServerUrl}
+ *
+ * 相关的表格数据对象：
+ * - {@link PageableTableData} 适用于需要在服务端进行分页、过滤、排序的场景，这是最常用的一个数据对象；
+ * - {@link LocalPageableTableData} 适用于需要在浏览器本地进行分页、过滤、排序的场景，受限于数据量，不是很常用；
+ * - {@link BigTableData} 适用于海量数据的展示场景，它可以做到在常数时间内展示**任意量级**的数据。
+ */
 export class BigTableData extends PageableTableData implements ISlicedData {
 
     public readonly viewport: TableViewportData = new TableViewportData(this);
@@ -584,7 +707,7 @@ export class BigTableData extends PageableTableData implements ISlicedData {
         console.log(`data fetched, startPage=${this._cache.startPage}, endPage=${this._cache.endPage}`);
     }
 
-    protected updateCache():void {
+    protected updateCache(): void {
         this._cache.field = this.field;
         this._cache.header = this.header;
 
@@ -658,6 +781,19 @@ export class BigTableData extends PageableTableData implements ISlicedData {
     }
 }
 
+
+/**
+ * 它具备浏览器本地内存中进行分页、服务端排序、服务端过滤能力，受限于浏览器内存的限制，无法操作大量的数据，因此使用场景并不多。
+ * 详细用法请参考[这个demo](/components/table/demo#local-paging-data)。
+ *
+ * 注意：需要有一个统一的具备服务端分页、服务端排序、服务端过滤能力的REST服务配合使用，
+ * 更多信息请参考[PagingInfo.pagingServerUrl]{@link PagingInfo#pagingServerUrl}
+ *
+ * 相关的表格数据对象：
+ * - {@link PageableTableData} 适用于需要在服务端进行分页、过滤、排序的场景，这是最常用的一个数据对象；
+ * - {@link LocalPageableTableData} 适用于需要在浏览器本地进行分页、过滤、排序的场景，受限于数据量，不是很常用；
+ * - {@link BigTableData} 适用于海量数据的展示场景，它可以做到在常数时间内展示**任意量级**的数据。
+ */
 export class LocalPageableTableData extends TableData implements IPageable, IFilterable, ISortable {
     public pagingInfo: PagingInfo;
     public filteredData: TableDataMatrix;
@@ -732,6 +868,11 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
         this.pagingInfo.totalPage = Math.ceil(this.pagingInfo.totalRecord / this.pagingInfo.pageSize);
     }
 
+    /**
+     * 请参考[IPageable.changePage]{@link IPageable#changePage}
+     * @param {number} currentPage
+     * @param {number} pageSize
+     */
     public changePage(currentPage: number, pageSize?: number): void;
     public changePage(info: PagingInfo): void;
     public changePage(currentPage, pageSize?: number): void {
@@ -759,22 +900,37 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
         this.refresh();
     }
 
+    /**
+     * 请参考[IPageable.firstPage]{@link IPageable#firstPage}
+     */
     public firstPage(): void {
         this.changePage(1);
     }
 
+    /**
+     * 请参考[IPageable.previousPage]{@link IPageable#previousPage}
+     */
     public previousPage(): void {
         this.changePage(this.pagingInfo.currentPage - 1);
     }
 
+    /**
+     * 请参考[IPageable.nextPage]{@link IPageable#nextPage}
+     */
     public nextPage(): void {
         this.changePage(this.pagingInfo.currentPage + 1);
     }
 
+    /**
+     * 请参考[IPageable.lastPage]{@link IPageable#lastPage}
+     */
     public lastPage(): void {
         this.changePage(this.pagingInfo.pageSize);
     }
 
+    /**
+     * 请参考[IComponentData.destroy]{@link IComponentData#destroy}
+     */
     public destroy(): void {
         super.destroy();
         this.pagingInfo = null;

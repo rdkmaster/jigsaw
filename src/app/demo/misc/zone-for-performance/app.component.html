@@ -1,0 +1,36 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div style="display: inline-block;">
+    <h3>inside zone</h3>
+    <svg width="340" height="340"
+         (mousedown)="mouseDown($event)"
+         (mousemove)="mouseMove($event)"
+         (mouseup)="mouseUp($event)"
+    >
+        <svg:g
+            box
+            *ngFor="let box of boxes"
+            [box]="box"
+            [selected]="box.id == currentId"
+        ></svg:g>
+    </svg>
+</div>
+
+<div style="display: inline-block;">
+    <h3>outside zone</h3>
+    <svg width="340" height="340"
+         (mousedown)="mouseDown($event)"
+         (mouseup)="mouseUp($event)"
+    >
+        <svg:g
+            box
+            *ngFor="let box of boxes"
+            [box]="box"
+            [selected]="box.id == currentId"
+        ></svg:g>
+    </svg>
+</div>

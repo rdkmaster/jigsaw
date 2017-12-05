@@ -8,9 +8,21 @@ export type GraphDataField = string[];
 export type GraphDataRowDescriptor = string[];
 export type GraphDataMatrix = GraphMatrixRow[];
 
+/**
+ * 这是所有的图形数据的基类，正如类名所提示的，这个类是抽象的。
+ *
+ * Jigsaw的图形是基于[echarts]()实现的，因此在使用这个类来描述一个图之前，请确保你已经具备了echarts的相关知识了。
+ * 其中最主要的是需要熟悉[echarts的配置项](http://echarts.baidu.com/option.html#title)。
+ */
 export abstract class AbstractGraphData extends TableDataBase {
     protected abstract createChartOptions(): EchartOptions;
 
+    /**
+     * 从数据的特征上判断当前对象是否是一个图形数据
+     *
+     * @param data
+     * @returns {boolean}
+     */
     public static isGraphData(data: any): boolean {
         if (!data) {
             return false;
@@ -29,7 +41,12 @@ export abstract class AbstractGraphData extends TableDataBase {
         return true;
     }
 
-    constructor(public data: GraphDataMatrix = [],
+    constructor(/**
+                 * 图形的数据，二维数组。
+                 *
+                 * @type {Array}
+                 */
+                public data: GraphDataMatrix = [],
                 public header: GraphDataHeader = [],
                 public rowDescriptor: GraphDataRowDescriptor = [],
                 public field: GraphDataField = []) {
@@ -243,7 +260,7 @@ export class PieGraphDataByColumn extends AbstractNormalGraphData {
         this.refresh();
     }
 
-    protected optionsTemplate:EchartOptions = {
+    protected optionsTemplate: EchartOptions = {
         tooltip: {
             trigger: 'item',
             formatter: "{a}<br>{b} : {c} ({d}%)"

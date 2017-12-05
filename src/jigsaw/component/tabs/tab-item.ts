@@ -44,7 +44,7 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements O
                          initData: Object): EmbeddedViewRef<any> | ComponentRef<IDynamicInstantiatable> {
         if (what instanceof TemplateRef) {
             return this._body.createEmbeddedView(what, initData);
-        } else {
+        } else if (what) {
             const factory = this._componentFactory.resolveComponentFactory(what);
             const componentRef = this._body.createComponent(factory);
             componentRef.instance.initData = initData;

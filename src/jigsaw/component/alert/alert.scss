@@ -72,6 +72,9 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
                 margin-right: 0;
             }
         }
+        div {
+            display: inline-block;
+        }
     }
 }
 

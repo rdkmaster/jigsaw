@@ -1,9 +1,0 @@
-<h4>Gr</h4>
-
-Gr : <jigsaw-tile trackItemBy="label" [(selectedItems)]="gr" [multipleSelect]="false">
-    <jigsaw-tile-option *ngFor="let item of datas" [value]="item">{{item.label}}</jigsaw-tile-option>
-</jigsaw-tile><br>
-
-<jigsaw-time [(date)]="date" [gr]="gr[0].label" (dateChange)="dateChange($event)"></jigsaw-time><br>
-
-<p>{{date | json}}</p>

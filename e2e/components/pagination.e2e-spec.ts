@@ -7,12 +7,12 @@ describe('pagination', () => {
     });
     describe('test basic', () => {
         beforeEach(() => {
-            browser.get('/#/pagination/basic');
+            browser.get('/pagination/basic');
         });
         it('should flip page when click jigsaw page item', () => {
             const jigsawPagingEl = element(by.css('.jigsaw-paging')),
                 pageItemEl = jigsawPagingEl.all(by.tagName('jigsaw-paging-item')),
-                pEl = element.all(by.tagName('P')).get(1);
+                pEl = element.all(by.tagName('P')).get(0);
             expect(jigsawPagingEl.element(by.css('.jigsaw-paging-disabled')).isPresent()).toBe(true);
 
             pageItemEl.get(2).element(by.tagName('SPAN')).click();

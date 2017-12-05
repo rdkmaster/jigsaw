@@ -7,7 +7,7 @@ describe('switch', () => {
 
     describe('test basic function', () => {
         beforeEach(() => {
-            browser.get('/#/switch/basic');
+            browser.get('/switch/basic');
         });
 
         it('should change the binding property when change the checked state', async () => {

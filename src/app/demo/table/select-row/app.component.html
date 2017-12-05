@@ -1,0 +1,11 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-button (click)="selectedRow = 2">选择第三行</jigsaw-button>
+
+<jigsaw-table height="400px" [data]="tableData" [(selectedRow)]="selectedRow"></jigsaw-table>
+
+<p>row index {{selectedRow}} was selected</p>

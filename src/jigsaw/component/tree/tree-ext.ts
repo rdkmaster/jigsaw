@@ -17,17 +17,23 @@ export class TreeEventData {
 @Component({
     selector: 'jigsaw-tree-ext, j-tree-ext',
     template: `
-        <div [id]="uniqueId" class="ztree"></div>`
+        <div [id]="_$uniqueId" class="ztree"></div>`
 })
 export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewInit, OnDestroy {
     constructor() {
         super();
-        this.uniqueId = InternalUtils.createUniqueId();
     }
 
-    public uniqueId: string = '__unique_id__';
+    /**
+     * @internal
+     */
+    public _$uniqueId: string = InternalUtils.createUniqueId();
 
-    public _setting: ZTreeSettingSetting = this._defaultSetting();
+    /**
+     * @internal
+     */
+    private _setting: ZTreeSettingSetting = this._defaultSetting();
+
     @Input()
     public get setting(): ZTreeSettingSetting {
         return this._setting;
@@ -39,7 +45,9 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
     }
 
     private _removeRefreshCallback: CallbackRemoval;
-    public _data: TreeData;
+
+    private _data: TreeData;
+
     @Input()
     public get data(): TreeData {
         return this._data;
@@ -89,7 +97,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
 
     private _updateTree() {
         if (!this._setting || !this._data) return;
-        this.ztree = $.fn.zTree.init($('#' + this.uniqueId), this._setting, this._data.nodes);
+        this.ztree = $.fn.zTree.init($('#' + this._$uniqueId), this._setting, this._data.nodes);
     }
 
     private _defaultSetting() {

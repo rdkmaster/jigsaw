@@ -2,18 +2,21 @@ import {
     AfterContentInit,
     AfterViewInit,
     Component,
+    ContentChildren,
     ElementRef,
     EventEmitter,
     Input,
-    NgModule, OnDestroy,
+    NgModule,
+    OnDestroy,
     OnInit,
     Output,
+    QueryList,
     Renderer2
 } from "@angular/core";
-import {ButtonInfo, IPopupable, PopupService} from "../../service/popup.service";
+import {ButtonInfo, IPopupable} from "../../service/popup.service";
 import {AbstractJigsawComponent} from "../common";
 import {CommonModule} from "@angular/common";
-import {JigsawButtonModule} from "../button/button";
+import {JigsawButton, JigsawButtonModule} from "../button/button";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {JigsawBlock, JigsawBlockModule} from "../block/block";
 import {JigsawMovableModule} from "../../directive/movable/index";
@@ -125,12 +128,18 @@ export abstract class AbstractDialogComponentBase
     @Output()
     public answer: EventEmitter<ButtonInfo> = new EventEmitter<ButtonInfo>();
 
+    public close: EventEmitter<any>;
+
     public ngAfterContentInit() {
         this.init();
     }
 
     public dispose(answer?: ButtonInfo) {
         this.answer.emit(answer);
+        if (!answer && this.close) {
+            // 单击了叉叉按钮，额外发送close事件
+            this.close.emit();
+        }
     }
 
     protected abstract getPopupElement(): HTMLElement;
@@ -164,6 +173,17 @@ export abstract class AbstractDialogComponentBase
     templateUrl: 'dialog.html',
 })
 export class JigsawDialog extends AbstractDialogComponentBase {
+    @Output()
+    public close: EventEmitter<any> = new EventEmitter<any>();
+    @Input()
+    public caption: string;
+
+    /**
+     * @internal
+     */
+    @ContentChildren(JigsawButton)
+    public _$inlineButtons:QueryList<JigsawButton>;
+
     constructor(renderer: Renderer2, elementRef: ElementRef) {
         super();
         this.renderer = renderer;

@@ -1,0 +1,31 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="combo-select-demo cmn-box">
+    <h1>set width demo</h1>
+    <h3>combo-select自定义宽度</h3>
+    <p>drop down的宽度总是不小于combo-select的宽度</p>
+    <jigsaw-input [(value)]="width"></jigsaw-input>
+
+    <jigsaw-combo-select [width]="width">
+        <ng-template>
+            <div>This is a small drop down</div>
+        </ng-template>
+    </jigsaw-combo-select>
+</div>
+
+<div class="combo-select-demo cmn-box">
+    <h3>drop down自定义宽度</h3>
+    <p>drop down自定义宽度,在drop down内容中设置</p>
+    <jigsaw-input [(value)]="width2"></jigsaw-input>
+
+    <jigsaw-combo-select>
+        <ng-template>
+            <jigsaw-input [width]="width2" value="drop down input"></jigsaw-input>
+        </ng-template>
+    </jigsaw-combo-select>
+</div>
+

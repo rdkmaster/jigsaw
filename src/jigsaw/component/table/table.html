@@ -1,5 +1,5 @@
 <div class="jigsaw-table-range" #contentScrollbar
-     [perfectScrollbar]="{ suppressScrollY: true, wheelSpeed: 0.5 }"
+     [perfectScrollbar]="{suppressScrollY: true, wheelSpeed: 0.5, wheelPropagation: true}"
      [class.jigsaw-table-hide-head]="hideHeader">
     <table class="jigsaw-table-header" [hidden]="hideHeader">
         <colgroup>
@@ -24,7 +24,7 @@
         </thead>
     </table>
     <div #bodyScrollbar class="jigsaw-table-body-range" [style.width]="contentWidth"
-         [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5}">
+         [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, wheelPropagation: true}">
         <table class="jigsaw-table-body">
             <colgroup>
                 <col *ngFor="let head of _$headerSettings;" width="{{head.width}}">

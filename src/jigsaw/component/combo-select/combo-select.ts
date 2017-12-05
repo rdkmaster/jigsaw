@@ -385,6 +385,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         }
     }
 
+    /**
+     * @internal
+     */
     public _$handleEditorChange() {
         if (this.searchKeyword) this.open = true;
         this.searchKeywordChange.emit(this.searchKeyword);

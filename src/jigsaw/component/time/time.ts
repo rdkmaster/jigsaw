@@ -249,7 +249,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
                 lastWeek: '[上]ddddLT',
                 sameElse: 'L'
             },
-            dayOfMonthOrdinalParse: /\d{1,2}(日|月|周)/,
+            dayOfMonthOrdinalParse: /\d{1,2}([日月周])/,
             ordinal: function (number, period) {
                 switch (period) {
                     case 'd':
@@ -321,10 +321,17 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
                 this._handleValueChange(changeValue, <TimeGr>this.gr);
             }
             this._bindActiveDayClickHandler(picker);
+
+            // 选择了日期，让recommend的tooltip的销毁
+            if (this._tooltipInfo) {
+                this._tooltipInfo.dispose();
+                this._tooltipInfo = null;
+            }
         });
 
-        picker.on("dp.update", (e) => {
+        picker.on("dp.update", () => {
             // Fired (in most cases) when the viewDate changes. E.g. Next and Previous buttons, selecting a year.
+            this._weekHandle();
             this._handleRecommended(this._el.nativeElement, this._popService);
         });
 
@@ -363,7 +370,10 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         }
     }
 
-    private _changeGranularity(select: GrItem) {
+    /**
+     * @internal
+     */
+    public _$changeGranularity(select: GrItem) {
         this.gr = select.value;
         this.grChange.emit(this.gr);
     }
@@ -419,8 +429,10 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     private _handleWeekSelect() {
         let weekNum = TimeService.getWeekOfYear(<string>this.date);
         let year = TimeService.getYear(<string>this.date);
-        let trNode = this._el.nativeElement.querySelector(".jigsaw-time-box .datepicker .datepicker-days>table>tbody>tr>td.active").parentNode;
-        trNode.classList.add("active");
+        const tdActive = this._el.nativeElement.querySelector(".jigsaw-time-box .datepicker .datepicker-days>table>tbody>tr>td.active");
+        if(tdActive){
+            tdActive.parentNode.classList.add("active");
+        }
         return {year: year, week: weekNum};
     }
 
@@ -445,22 +457,22 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
             nativeElement.querySelectorAll(".jigsaw-time-box .datepicker .expect-day").forEach(node => {
 
                 // #239 移除已经注册的事件. 点击事件会触发此操作, 造成重复注册事件. 引起tooltips 不能销毁.
-                const removeMouseenterListeners = this._eventHelper.get(node, 'mouseenter');
-                if (removeMouseenterListeners instanceof Array) {
-                    removeMouseenterListeners.forEach(removeMouseenterListener => {
+                const removeMouseEnterListeners = this._eventHelper.get(node, 'mouseenter');
+                if (removeMouseEnterListeners instanceof Array) {
+                    removeMouseEnterListeners.forEach(removeMouseenterListener => {
                         removeMouseenterListener();
                         this._eventHelper.del(node, 'mouseenter', removeMouseenterListener);
                     })
                 }
-                const removeMouseleaveListeners = this._eventHelper.get(node, 'mouseleave');
-                if (removeMouseleaveListeners instanceof Array) {
-                    removeMouseleaveListeners.forEach(removeMouseleaveListener => {
+                const removeMouseLeaveListeners = this._eventHelper.get(node, 'mouseleave');
+                if (removeMouseLeaveListeners instanceof Array) {
+                    removeMouseLeaveListeners.forEach(removeMouseleaveListener => {
                         removeMouseleaveListener();
                         this._eventHelper.del(node, 'mouseleave', removeMouseleaveListener);
                     })
                 }
 
-                const removeMouseenterListener = this._renderer.listen(node, "mouseenter", (event) => {
+                const removeMouseEnterListener = this._renderer.listen(node, "mouseenter", (event) => {
                     if (this._tooltipInfo) {
                         this._tooltipInfo.dispose();
                         this._tooltipInfo = null;
@@ -477,7 +489,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
                         message: "Recommended"
                     });
                 });
-                this._eventHelper.put(node, "mouseenter", removeMouseenterListener);
+                this._eventHelper.put(node, "mouseenter", removeMouseEnterListener);
 
                 const removeMouseleaveListener = this._renderer.listen(node, "mouseleave", () => {
                     if (this._tooltipInfo) {
@@ -504,7 +516,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
                 if (startMonth != endMonth) {
                     if (!node.classList.contains("old") && !node.classList.contains("new")) {
                         if ((startMonth == headObj.month && text >= startDate) ||
-                            (endMonth == headObj.month && text >= endDate)) {
+                            (endMonth == headObj.month && text <= endDate)) {
                             node.classList.add("expect-day");
                         }
                         if (text == startDate) {

@@ -1,0 +1,14 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<h6>图标放在左侧，并有交互</h6>
+<jigsaw-input id="test-input" #myInput width="30%" placeholder="请输入姓名~">
+    <a jigsaw-prefix-icon (click)="click()"><span class="fa fa-search"></span></a>
+    <a jigsaw-prefix-icon (click)="click()"><span class="fa fa-save" style="margin-left: 10px;"></span></a>
+</jigsaw-input>
+
+
+

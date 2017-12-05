@@ -1,0 +1,37 @@
+.red-text {
+    color: red;
+}
+
+.tag-wrapper {
+    padding: 12px 12px 12px 0;
+}
+
+.drop-wrap {
+    float: left;
+    width: 84%;
+}
+
+.drop-wrap jigsaw-table {
+    transition: all .3s ease-in-out;
+    border: 2px solid #d9d9d9;
+}
+
+.drop-wrap jigsaw-table.over {
+    border-color: #108ee9;
+    box-shadow: 4px 4px 6px #d9d9d9;
+}
+
+.drop-wrap .trash-box {
+    margin-top: 10px;
+    border: 2px solid #d9d9d9;
+    height: 100px;
+    line-height: 92px;
+    text-align: center;
+    font-size: 16px;
+    transition: all .3s ease-in-out;
+}
+
+.drop-wrap .trash-box.over {
+    border-color: #108ee9;
+    box-shadow: 4px 4px 6px #d9d9d9;
+}

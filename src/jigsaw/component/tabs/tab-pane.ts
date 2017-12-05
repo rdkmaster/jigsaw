@@ -2,13 +2,12 @@ import {Component, ContentChild, Input, TemplateRef, Type, ViewChild} from '@ang
 import {IDynamicInstantiatable} from "../common";
 
 @Component({
-    selector: 'jigsaw-tab-pane',
+    selector: 'jigsaw-tab-pane, j-tab-pane',
     template: `
         <ng-template #label>
             {{title}}
             <ng-content select="[jigsaw-title]"></ng-content>
         </ng-template>
-        <ng-content></ng-content>
     `
 })
 export class JigsawTabPane {

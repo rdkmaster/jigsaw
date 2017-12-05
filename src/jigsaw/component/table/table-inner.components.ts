@@ -140,26 +140,30 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
 
     @Input() public sortAs: SortAs;
 
+    /**
+     * @internal
+     */
     public _$sortOrderClass: Object;
 
     public updateSortOrderClass(sortOrder: SortOrder): void {
         this._$sortOrderClass = {
             'jigsaw-table-sort-box': true,
             'jigsaw-table-asc': sortOrder == SortOrder.asc,
-            'jigsaw-table-des': sortOrder == SortOrder.des
+            'jigsaw-table-des': sortOrder == SortOrder.desc
         }
     }
 
     @Input()
     public set defaultSortOrder(newValue) {
-        if (newValue != null) {
             this.updateSortOrderClass(newValue);
-        }
     };
 
     @Output()
     public sort: EventEmitter<SortChangeEvent> = new EventEmitter<SortChangeEvent>();
 
+    /**
+     * @internal
+     */
     public _$sortAsc(): void {
         if (this._$sortOrderClass['jigsaw-table-asc']) {
             return;
@@ -167,11 +171,14 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
         this._sort(SortOrder.asc);
     }
 
+    /**
+     * @internal
+     */
     public _$sortDes(): void {
         if (this._$sortOrderClass['jigsaw-table-des']) {
             return;
         }
-        this._sort(SortOrder.des);
+        this._sort(SortOrder.desc);
     }
 
     private _sort(order: SortOrder): void {
@@ -201,8 +208,29 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
  */
 export class JigsawTableCellInternalComponent extends TableInternalCellBase implements OnInit, OnDestroy {
 
+    private _editable: boolean = false;
+
     @Input()
-    public editable: boolean = false;
+    public get editable(): boolean {
+        return this._editable;
+    }
+
+    public set editable(value: boolean) {
+        if (this._editable === value) {
+            return;
+        }
+        this._editable = value;
+
+        if (!this._initialized) {
+            return;
+        }
+
+        const cursor = this._editable ? 'pointer' : 'default';
+        this._renderer.setStyle(this._elementRef.nativeElement.parentElement, 'cursor', cursor);
+        if (this._editable) {
+            this._setGoEditListener();
+        }
+    }
 
     @Input()
     public editorRenderer: Type<TableCellRendererBase>;
@@ -304,7 +332,10 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
      * 如果可编辑，单元格绑定点击事件
      * */
     private _setGoEditListener() {
-        this._goEditCallback = this.editable ? this._renderer.listen(
+        if (this._goEditCallback) {
+            this._goEditCallback();
+        }
+        this._goEditCallback = this._editable ? this._renderer.listen(
             this._elementRef.nativeElement.parentElement, 'click', () => {
                 this.rendererHost.viewContainerRef.clear();
                 this.insertEditorRenderer();
@@ -326,11 +357,15 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         return this._cellData;
     }
 
+    private _initialized: boolean;
+
     ngOnInit() {
+        this._initialized = true;
+
         //设置默认渲染器
         this.renderer = this.renderer ? this.renderer : DefaultCellRenderer;
 
-        if (this.editable) {
+        if (this._editable) {
             this._renderer.setStyle(this._elementRef.nativeElement.parentElement, 'cursor', 'pointer');
             //绑定点击事件
             this._setGoEditListener();
@@ -338,6 +373,10 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
     }
 
     ngOnDestroy() {
+        if (this._editable) {
+            this._renderer.setStyle(this._elementRef.nativeElement.parentElement, 'cursor', 'default');
+        }
+
         if (this._goEditCallback) {
             this._goEditCallback();
         }

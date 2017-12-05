@@ -1,16 +1,11 @@
 import {
-    NgModule, Component, EventEmitter, Input, Output, ContentChildren, Directive, QueryList,
+    NgModule, Component, EventEmitter, Input, Output, Directive,
     ElementRef, ViewChild, AfterContentInit, Renderer2, AfterViewChecked, ChangeDetectorRef, forwardRef
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../common";
-import {Observable} from "rxjs/Observable";
 import {CommonUtils} from "../../core/utils/common-utils";
-
-@Directive({selector: '[jigsaw-prefix-icon]'})
-export class JigsawPrefixIcon {
-}
 
 @Component({
     selector: 'jigsaw-input, j-input',
@@ -67,11 +62,12 @@ export class JigsawInput extends AbstractJigsawComponent implements ControlValue
     }
 
     public set value(newValue: string) {
-        if (this._value != newValue) {
-            this._value = CommonUtils.isDefined(newValue) ? newValue : '';
-            this.valueChange.emit(this._value);
-            this._propagateChange(this._value)
+        if(CommonUtils.isUndefined(newValue) || this._value === newValue){
+            return;
         }
+        this._value = newValue;
+        this.valueChange.emit(this._value);
+        this._propagateChange(this._value);
     }
 
     @Output()
@@ -193,8 +189,8 @@ export class JigsawInput extends AbstractJigsawComponent implements ControlValue
 
 @NgModule({
     imports: [CommonModule, FormsModule],
-    declarations: [JigsawInput, JigsawPrefixIcon],
-    exports: [JigsawInput, JigsawPrefixIcon],
+    declarations: [JigsawInput],
+    exports: [JigsawInput],
 })
 export class JigsawInputModule {
 

@@ -1,0 +1,12 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<h2> select </h2>
+<jigsaw-select id="test-select" [(value)]="selectedCityForSelect"
+               (valueChange)="selectChange($event)"
+               placeholder="请选择城市"
+               [data]="cityListForSelect">
+</jigsaw-select>

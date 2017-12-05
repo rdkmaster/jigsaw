@@ -6,7 +6,7 @@ describe('select', () => {
     });
     describe('test basic functions', () => {
         beforeEach(() => {
-            browser.get('/#/select/basic');
+            browser.get('/select/basic');
         });
 
         it('should drop down or drop up option list when click the component or option list or body', () => {

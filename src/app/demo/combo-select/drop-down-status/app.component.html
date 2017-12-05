@@ -1,0 +1,30 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="combo-select-demo cmn-box">
+    <jigsaw-combo-select placeholder="鼠标移过来...">
+        <ng-template>
+            <jigsaw-collapse mode="accordion">
+                <jigsaw-collapse-pane [isActive]="true">
+                    <div jigsaw-title>
+                        <i class="fa fa-arrow-circle-right"></i>
+                        <span style="color: blue;">姓名</span>
+                        <i class="fa fa-arrow-circle-left"></i>
+                    </div>
+                    <div jigsaw-body>
+                        <input [(ngModel)]="name" type="text" placeholder="请输入姓名~">
+                    </div>
+                </jigsaw-collapse-pane>
+
+                <jigsaw-collapse-pane header="密码">
+                    密码: <input type="text" placeholder="请输入密码~">
+                </jigsaw-collapse-pane>
+            </jigsaw-collapse>
+        </ng-template>
+    </jigsaw-combo-select>
+</div>
+
+

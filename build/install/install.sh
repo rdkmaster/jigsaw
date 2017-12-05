@@ -10,7 +10,7 @@ fi
 
 echo "Downloading dependency package..."
 rm -f node_modules.zip
-wget http://rdk.zte.com.cn:8800/misc/node_modules.zip
+wget http://rdk.zte.com.cn/jigsaw/misc/node_modules.zip
 
 if [ ! -e node_modules.zip ]; then
 	echo "Unable to download node_modules.zip, please check your network configuration."

@@ -1,0 +1,22 @@
+.cmn-box {
+    margin-bottom: 30px;
+}
+
+.cmn-box h3 {
+    font-size: 20px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.combo-select-demo .test-btn {
+    margin-bottom: 20px;
+}
+
+.drop-down-container {
+    padding: 12px;
+    width: 310px;
+}
+
+jigsaw-button {
+    margin: 6px;
+}

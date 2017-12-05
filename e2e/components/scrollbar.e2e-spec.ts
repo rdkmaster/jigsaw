@@ -9,7 +9,7 @@ describe('scrollbar', () => {
 
     describe('test basic ', () => {
         beforeEach(() => {
-            browser.get('/#/scrollbar/basic')
+            browser.get('/scrollbar/basic')
         });
         xit('drag and drop scollbar', async() => {
             const draggerEl = element(by.tagName('ng-component')).element(by.css('.mCSB_dragger'));

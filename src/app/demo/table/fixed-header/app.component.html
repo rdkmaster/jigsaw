@@ -1,0 +1,25 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>Table scrollbar</h2>
+    <div class="clearfix">
+        <div class="demo-1 live-demo">
+            <h3>滚动条</h3>
+            <p class="comment">
+                用<code>height</code>控制垂直滚动条<br>
+                用<code>contentWidth</code>控制水平滚动条
+            </p>
+            <jigsaw-table height="400px" width="400px" [contentWidth]="600" [data]="tableData"></jigsaw-table>
+        </div>
+        <div class="demo-2 live-demo">
+            <h3>全局浮动表头</h3>
+            <p class="comment">用<code>floatingHeader</code>设置全局浮动表头</p>
+            <jigsaw-table width="600px" [data]="tableData" [floatingHeader]="true"></jigsaw-table>
+        </div>
+    </div>
+</div>
+
