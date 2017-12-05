@@ -7,7 +7,8 @@ import {PerfectScrollbarConfigInterface} from "ngx-perfect-scrollbar";
 })
 export class ScrollbarBasicDemoComponent {
     config1: PerfectScrollbarConfigInterface = {
-        suppressScrollX: true
+        suppressScrollX: true,
+        wheelPropagation: true
     };
 
     config2: PerfectScrollbarConfigInterface = {
