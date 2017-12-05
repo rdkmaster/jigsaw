@@ -29,14 +29,13 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         border: 1px solid $border-color-base;
         border-radius: 3px;
         outline: none;
+        @include prefixer(transition, (padding 0s $ease-in-out,border 0.3s $ease-in-out,box-shadow 0.3s $ease-in-out));
         &:hover {
             border: 1px solid $primary-color;
-            @include prefixer(transition, all 0.3s $ease-in-out);
         }
         &:focus {
             border: 1px solid $primary-color;
             box-shadow: $box-focus-shadow;
-            @include prefixer(transition, all 0.3s $ease-in-out);
         }
     }
     input::-webkit-input-placeholder {
