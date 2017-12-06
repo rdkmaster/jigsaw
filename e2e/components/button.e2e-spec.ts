@@ -1,20 +1,33 @@
 import {browser, by, element, ExpectedConditions} from 'protractor';
+import {waitForNotPresence, waitForPresence} from "../utils/await";
 
-describe('button', () => {
+describe('button', async() => {
     beforeEach(() => {
         browser.waitForAngularEnabled(false);
     });
+    describe('test width and height', async() => {
 
-    describe('test disabled', () => {
+        it('should change size when set width and height', async () => {
+            await browser.get('/button/width-height');
+            await browser.switchTo().defaultContent();
+            const ButtonEl = element(by.id('big-button'));
+            await browser.wait(ExpectedConditions.presenceOf(ButtonEl));
+            const size = await ButtonEl.getSize();
+            await expect(size.width).toBe(300);
+            await expect(size.height).toBe(40);
+        })
+    });
+
+    describe('test disabled', async() => {
         beforeEach(() => {
             browser.get('/button/disabled');
         });
 
         it('should click invalid when set disabled', () => {
             const testButtonEl = element(by.id('test-button')),
-                toggleDisabledEl = element(by.id('toggle-disabled')),
-                clickCounterEl = element(by.id('click-counter'));
-
+                  toggleDisabledEl = element(by.id('toggle-disabled')),
+                  clickCounterEl = element(by.id('click-counter'));
+            browser.switchTo().defaultContent();
             expect(clickCounterEl.getText()).toBe('0');
 
             testButtonEl.click();
@@ -30,19 +43,7 @@ describe('button', () => {
         })
     });
 
-    describe('test width and height', () => {
-        beforeEach(() => {
-            browser.get('/button/width-height');
-        });
-
-        it('should change size when set width and height', async () => {
-            const size = await element(by.id('test-button')).getSize();
-            expect(size.width).toBe(300);
-            expect(size.height).toBe(40);
-        })
-    });
-
-    describe('test preset size and type', () => {
+    describe('test preset size and type', async() => {
         beforeEach(() => {
             browser.get('/button/preset');
         });
@@ -51,28 +52,28 @@ describe('button', () => {
             let size;
             const testButton = element(by.id('test-button'));
             const presizeList = element(by.id('presize-list')).all(by.tagName('jigsaw-button'));
-
+            await browser.switchTo().defaultContent();
+            await browser.sleep(300);
             presizeList.get(0).click();
-            await browser.wait(ExpectedConditions.not(
-                ExpectedConditions.presenceOf(element(by.css('.jigsaw-button-clicked')))));
-
+            await waitForPresence('.jigsaw-button-size-small');
+            await waitForNotPresence('.jigsaw-button-clicked');
             size = await testButton.getSize();
-            expect(size.width).toBe(80);
-            expect(size.height).toBe(22);
+            await expect(size.width).toBe(80);
+            await expect(size.height).toBe(22);
 
             presizeList.get(1).click();
-            await browser.wait(ExpectedConditions.not(
-                ExpectedConditions.presenceOf(element(by.css('.jigsaw-button-clicked')))));
+            await waitForNotPresence('.jigsaw-button-size-small');
+            await waitForNotPresence('.jigsaw-button-clicked');
             size = await testButton.getSize();
-            expect(size.width).toBe(80);
-            expect(size.height).toBe(30);
+            await expect(size.width).toBe(80);
+            await expect(size.height).toBe(30);
 
             presizeList.get(2).click();
-            await browser.wait(ExpectedConditions.not(
-                ExpectedConditions.presenceOf(element(by.css('.jigsaw-button-clicked')))));
+            await waitForPresence('.jigsaw-button-size-large');
+            await waitForNotPresence('.jigsaw-button-clicked');
             size = await testButton.getSize();
-            expect(size.width).toBe(80);
-            expect(size.height).toBe(38);
+            await expect(size.width).toBe(80);
+            await expect(size.height).toBe(38);
         });
 
         it('should display different background when set type', () => {

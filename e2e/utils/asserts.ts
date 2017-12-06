@@ -8,10 +8,3 @@ export function expectToExist(selector: string | ElementFinder, expected: boolea
     }
 }
 
-export async function waitForPresence(selector: string){
-    return await browser.wait(ExpectedConditions.presenceOf(element(by.css(selector))))
-}
-
-export async function waitForNotPresence(selector: string){
-    return await browser.wait(ExpectedConditions.not(ExpectedConditions.presenceOf(element(by.css(selector)))));
-}

@@ -1,5 +1,5 @@
 import {browser, element, by, ElementFinder, ExpectedConditions} from 'protractor';
-import {expectToExist, waitForNotPresence, waitForPresence} from "../utils/asserts";
+import {expectToExist, waitForNotPresence, waitForPresence} from "../utils/index";
 
 describe('graph', () => {
     beforeEach(() => {
@@ -37,20 +37,20 @@ describe('graph', () => {
 
         it('should change size', async () => {
             browser.get('/graph/resize');
-            expectToExist(getGraphCanvas('test-graph'));
             const graphCanvas = element(by.id('test-graph')).element(by.tagName('canvas'));
             const graphWidthInput = element(by.id('graph-width')).element(by.tagName('input'));
             const graphHeightInput = element(by.id('graph-height')).element(by.tagName('input'));
             let graphSize;
-
+            await waitForPresence('.jigsaw-input');
+            await waitForPresence('.jigsaw-graph');
             await graphWidthInput.clear();
             await graphHeightInput.clear();
             await graphWidthInput.sendKeys('500');
             await graphHeightInput.sendKeys('200');
-            browser.sleep(600);
+            await browser.sleep(1000);
             graphSize = await graphCanvas.getSize();
-            expect(graphSize.width).toBe(500);
-            expect(graphSize.height).toBe(200);
+            await expect(graphSize.width).toBe(500);
+            await  expect(graphSize.height).toBe(200);
         });
 
         function getGraphCanvas(id: string): ElementFinder {

@@ -1,5 +1,5 @@
 import {browser, by, element, ElementFinder, ExpectedConditions} from "protractor";
-import {waitForNotPresence} from "./asserts";
+import {waitForNotPresence} from "./index";
 
 export type Position = { top: number, left: number };
 export type Size = { width: number, height: number };
