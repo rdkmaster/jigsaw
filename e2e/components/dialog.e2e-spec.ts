@@ -3,8 +3,10 @@ import {
     expectClosePopup, expectPopupAtPoint, expectPopupBlock, expectPopupByModal
 } from "../utils/popup";
 import {expectToExist, waitForPresence} from "../utils/index";
+import {expectStringFromAlert} from "../utils/asserts";
+import {waitForNotPresence} from "../utils/await";
 
-xdescribe('dialog', () => {
+describe('dialog', () => {
     beforeEach(() => {
         browser.waitForAngularEnabled(false);
     });
@@ -75,9 +77,27 @@ xdescribe('dialog', () => {
 
             await expectPopupAtPoint(trigger4, 'jigsaw-dialog', {x: 100, y: 10}, {x: 10, y: -10});
 
-            await expectClosePopup('jigsaw-dialog', 'jigsaw-block');
+            element(by.css('.jigsaw-dialog')).element(by.css('.jigsaw-popup-close')).click();
+
+            await expectStringFromAlert('The dialog leave no message!');
+
+            await waitForNotPresence('.jigsaw-dialog');
+
+            await expect(element(by.css('.jigsaw-dialog')).isPresent()).toBe(false);
         });
 
+    });
+
+    describe('test dialog in dom', () => {
+        it('should test basic functions of dialog', async () => {
+            await browser.get('/dialog/in-dom');
+            const okButton = element.all(by.tagName('jigsaw-button')).get(0),
+                cancelButton = element.all(by.tagName('jigsaw-button')).get(1);
+            okButton.click();
+            await expectStringFromAlert('Button "OK" clicked!');
+            cancelButton.click();
+            await expectStringFromAlert('Button "Cancel" clicked!');
+        })
     })
 });
 

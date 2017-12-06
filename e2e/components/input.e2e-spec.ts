@@ -47,7 +47,7 @@ describe('input', () => {
             input.sendKeys('asf');
             prefixIcons.get(0).click();
             browser.wait(protractor.ExpectedConditions.alertIsPresent(), 1000);
-            let alertDialog = browser.switchTo().alert();
+            const alertDialog = browser.switchTo().alert();
             expect(alertDialog.getText()).toEqual("你输入的值是 asf");
             alertDialog.accept();
             prefixIcons.get(1).click();

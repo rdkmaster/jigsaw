@@ -20,6 +20,10 @@ export class UserDialog2Component extends DialogBase implements AfterViewInit {
         window.open('https://github.com/rdkmaster/jigsaw', '_blank');
     }
 
+    onAnswer() {
+            alert('The dialog closed!');
+    }
+
     ngAfterViewInit() {
         console.log(`input data is: ${this.initData.inputData}`);
     }
