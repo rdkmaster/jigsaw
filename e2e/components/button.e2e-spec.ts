@@ -9,8 +9,7 @@ describe('button', async() => {
 
         it('should change size when set width and height', async () => {
             await browser.get('/button/width-height');
-            await browser.switchTo().defaultContent();
-            const ButtonEl = element(by.id('big-button'));
+            const ButtonEl = element(by.id('test-button'));
             await browser.wait(ExpectedConditions.presenceOf(ButtonEl));
             const size = await ButtonEl.getSize();
             await expect(size.width).toBe(300);
