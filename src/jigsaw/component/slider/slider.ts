@@ -28,7 +28,7 @@ export class SliderMark {
 
 @Component({
     selector: 'slider-handle',
-    templateUrl: './handle.html',
+    templateUrl: './slider-handle.html',
     encapsulation: ViewEncapsulation.None
 })
 export class JigsawSliderHandle implements OnInit {

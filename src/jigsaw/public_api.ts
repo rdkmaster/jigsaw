@@ -24,6 +24,7 @@ export * from "./component/pagination/pagination";
 export * from "./component/radio/radio";
 export * from "./component/range-time/index";
 export * from "./component/root/root";
+export * from "./component/scrollbar/index";
 export * from "./component/select/select";
 export * from "./component/slider/index";
 export * from "./component/switch/index";
