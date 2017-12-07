@@ -80,7 +80,7 @@ export class TableCell {
     renderer?: TableRenderer;
     clazz?: string;
     editable?: boolean;
-    editorRenderer?: Type<TableCellRendererBase>;
+    editorRenderer?: TableRenderer;
     data?: any | TableCellDataGenerator;
     tooltip?: any;
 }
