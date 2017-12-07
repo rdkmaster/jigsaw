@@ -443,15 +443,14 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._removeWindowListener();
 
         this._zone.runOutsideAngular(() => {
-            this._removeWindowResizeListener = this._renderer.listen('window', 'resize', () => {
-                this.resize();
-            });
+            this._removeWindowResizeListener = this._renderer.listen(
+                'window', 'resize', () => this.resize());
         });
 
         if (this.floatingHeader && !this.hideHeader) {
             this._zone.runOutsideAngular(() => {
-                this._removeWindowScrollListener = this._renderer.listen('window', 'scroll',
-                    () => this._fixHeaderTop());
+                this._removeWindowScrollListener = this._renderer.listen(
+                    'window', 'scroll', () => this._fixHeaderTop());
             });
         }
     }
@@ -618,6 +617,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
     }
 
+    private _yScrollbarElement: HTMLElement;
+
     /**
      * 设置纵向滚动条位置
      * @private
@@ -628,8 +629,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 this._elementRef.nativeElement.offsetWidth + this._contentScrollbar.geometry().x - 15 + 'px');
         }
     }
-
-    private _yScrollbarElement: HTMLElement;
 
     /**
      * 找到纵向滚动条，并设置初始位置
