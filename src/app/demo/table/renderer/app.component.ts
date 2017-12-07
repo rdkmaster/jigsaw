@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, TemplateRef, ViewChild, ViewEncapsulation} from "@angular/core";
+import {Component, TemplateRef, ViewChild, ViewEncapsulation} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {LocalPageableTableData} from "jigsaw/core/data/table-data";
 import {
@@ -21,7 +21,7 @@ import {
     styleUrls: ['./app.component.css'],
     encapsulation: ViewEncapsulation.None
 })
-export class TableRendererDemoComponent implements AfterViewInit {
+export class TableRendererDemoComponent {
     @ViewChild('operation') operationTemplate: TemplateRef<any>;
 
     message: string = 'change message goes here ...';
@@ -35,7 +35,46 @@ export class TableRendererDemoComponent implements AfterViewInit {
         this.tableData.fromAjax('mock-data/hr-list-full');
     }
 
-    additionalColumnDefines: AdditionalColumnDefine[];
+    additionalColumnDefines: AdditionalColumnDefine[] = [
+        {
+            pos: 0,
+            width: '50px',
+            header: {
+                text: '#',
+            },
+            cell: {
+                data: TableValueGenerators.rowIndexGenerator,
+                clazz: 'green-text'
+            }
+        },
+        {
+            pos: 0,
+            width: '60px',
+            header: {
+                renderer: TableHeadCheckboxRenderer
+            },
+            cell: {
+                renderer: TableCellCheckboxRenderer,
+                data: (td, row, col) => td.data[row][2] == 'Developer',
+            }
+        },
+        {
+            //pos: -1, //不写pos表示插入到最后
+            width: '100',
+            header: {
+                text: '操作',
+                clazz: 'green-text'
+            },
+            cell: {
+                // 通过ViewChild获取的TemplateRef,必须在AfterViewInit之后才能拿到
+                // 可以通过如下方式异步获取
+                renderer: () => {
+                    return this.operationTemplate
+                },
+                tooltip: '加薪：当前员工一次加2000\n辞退：立即辞退当前员工'
+            }
+        },
+    ];
 
     columnDefines: ColumnDefine[] = [
         {
@@ -77,50 +116,6 @@ export class TableRendererDemoComponent implements AfterViewInit {
             target: 'gender', visible: false
         },
     ];
-
-    ngAfterViewInit() {
-        //如果报变更检查错误，需要加个异步处理，这样会触发angular的变更检查
-        //通过ViewChild获取的TemplateRef,必须在AfterViewInit之后才能拿到
-        setTimeout(()=> {
-            this.additionalColumnDefines = [
-                {
-                    pos: 0,
-                    width: '50px',
-                    header: {
-                        text: '#',
-                    },
-                    cell: {
-                        data: TableValueGenerators.rowIndexGenerator,
-                        clazz: 'green-text'
-                    }
-                },
-                {
-                    pos: 0,
-                    width: '60px',
-                    header: {
-                        renderer: TableHeadCheckboxRenderer
-                    },
-                    cell: {
-                        renderer: TableCellCheckboxRenderer,
-                        data: (td, row, col) => td.data[row][2] == 'Developer',
-                    }
-                },
-                {
-                    //pos: -1, //不写pos表示插入到最后
-                    width: '100',
-                    header: {
-                        text: '操作',
-                        clazz: 'green-text'
-                    },
-                    cell: {
-                        // 通过ViewChild获取的TemplateRef,必须在AfterViewInit之后才能拿到
-                        renderer: this.operationTemplate,
-                        tooltip: '加薪：当前员工一次加2000\n辞退：立即辞退当前员工'
-                    }
-                },
-            ];
-        })
-    }
 
     public onCellChange(value) {
         this.message = `field: '${value.field}', row: ${value.row}, column: ${value.column}, cellData: ${value.cellData}, oldCellData: ${value.oldCellData}`;

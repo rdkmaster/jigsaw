@@ -61,9 +61,15 @@ export class TableDataChangeEvent {
     oldCellData: string | number;
 }
 
+export type TableAsyncRenderer = () => TemplateRef<any>;
+
+export type TableSyncRenderer = Type<TableCellRendererBase> | TemplateRef<any>;
+
+export type TableRendererDefine = TableSyncRenderer | TableAsyncRenderer;
+
 export class TableHeader {
     text?: string;
-    renderer?: Type<TableCellRendererBase> | TemplateRef<any>;
+    renderer?: TableRendererDefine;
     clazz?: string;
     sortable?: boolean;
     sortAs?: SortAs;
@@ -71,7 +77,7 @@ export class TableHeader {
 }
 
 export class TableCell {
-    renderer?: Type<TableCellRendererBase> | TemplateRef<any>;
+    renderer?: TableRendererDefine;
     clazz?: string;
     editable?: boolean;
     editorRenderer?: Type<TableCellRendererBase>;

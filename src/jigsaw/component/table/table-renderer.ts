@@ -11,6 +11,8 @@ import {_getColumnIndex, AdditionalTableData} from "./table-typings";
 import {CommonUtils} from "../../core/utils/common-utils";
 
 export class TableCellRendererBase implements OnInit, OnDestroy {
+    public static isTableCellRenderer = true;
+
     @Input() public cellData: any;
     @Input() public row: number;
     @Input() public field: string;

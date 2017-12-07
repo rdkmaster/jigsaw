@@ -1,4 +1,6 @@
-import {ColumnDefine, TableCellSetting, TableHeadSetting} from "./table-typings";
+import {
+    ColumnDefine, TableCellSetting, TableHeadSetting, TableSyncRenderer
+} from "./table-typings";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 import {CommonUtils} from "../../core/utils/common-utils";
 
@@ -15,7 +17,7 @@ export class TableUtils {
         let headerDef = columnDefine.header;
         if (headerDef) {
             settings.cellData = CommonUtils.isDefined(headerDef.text) ? headerDef.text : settings.cellData;
-            settings.renderer = headerDef.renderer;
+            settings.renderer = TableUtils.getRenderer(headerDef.renderer);
             settings.clazz = headerDef.clazz;
             settings.sortable = headerDef.sortable;
             settings.sortAs = CommonUtils.isDefined(headerDef.sortAs) ? headerDef.sortAs : settings.sortAs;
@@ -37,13 +39,20 @@ export class TableUtils {
         settings.field = <string>columnDefine.target;
         let cellDef = columnDefine.cell;
         if (cellDef) {
-            settings.renderer = cellDef.renderer;
+            settings.renderer = TableUtils.getRenderer(cellDef.renderer);
             settings.clazz = cellDef.clazz;
             settings.editable = cellDef.editable;
             settings.editorRenderer = cellDef.editorRenderer;
             settings.tooltip = cellDef.tooltip;
         }
         return settings;
+    }
+
+    public static getRenderer(renderer): TableSyncRenderer {
+        if (renderer instanceof Function && !renderer.isTableCellRenderer) {
+            return renderer();
+        }
+        return renderer;
     }
 
     public static getGenerator(columnDefine: ColumnDefine, property: string): Function {
