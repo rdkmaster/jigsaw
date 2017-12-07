@@ -41,8 +41,8 @@ npm install
 npm start
 ```
 
-**Attensions to the Chinese developers**, do **NOT** use `cnpm` to install the dependencies, we are still looking for the reason.
-**Attensions to all ZTErs**, you can use the npm mirror inside of ZTE for faster speed of installing, [check this link for more details](docs/how-to-use-npm-mirror-inside-of-zte/index.md).
+- **Attensions to the Chinese developers**, do **NOT** use `cnpm` to install the dependencies, we are still looking for the reason.
+- **Attensions to all ZTErs**, you can use the npm mirror inside of ZTE for faster speed of installing, [check this link for more details](docs/how-to-use-npm-mirror-inside-of-zte/index.md).
 
 4. Open `http://localhost:4200` in your browser, your development environment is completed set up if you can see the welcome page;
 5. Afterwards you can directly run `npm start` in the `d:\jigsaw-seed` directory to start the development environment;
