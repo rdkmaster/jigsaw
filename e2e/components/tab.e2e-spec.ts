@@ -1,7 +1,7 @@
 import {browser, element, by, ExpectedConditions} from "protractor";
 import {waitForPresence} from "../utils/index";
 
-describe('tabs',  () => {
+describe('tabs', () => {
     beforeEach(() => {
         browser.waitForAngularEnabled(false);
     });

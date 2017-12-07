@@ -43,7 +43,7 @@ describe('input', () => {
 
         it('should be mapped into component and display prefix icon', () => {
             const prefixIcons = element(by.id('test-input')).all(by.tagName('a')),
-           input = element(by.id('test-input')).element(by.tagName('input'));
+                input = element(by.id('test-input')).element(by.tagName('input'));
             input.sendKeys('asf');
             prefixIcons.get(0).click();
             browser.wait(protractor.ExpectedConditions.alertIsPresent(), 1000);

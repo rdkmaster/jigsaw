@@ -14,10 +14,10 @@ describe('radio', () => {
             const radioEl = element(by.id('test-radio'));
             const radioButtons = radioEl.all(by.tagName('jigsaw-radio-option'));
 
-            function getCheckedIndexes(){
+            function getCheckedIndexes() {
                 return radioButtons.reduce((arr, elem, index) => {
                     return elem.element(by.css('.jigsaw-radio-option-checked')).isPresent().then(isChecked => {
-                        if(isChecked){
+                        if (isChecked) {
                             arr.push(index);
                         }
                         return arr;

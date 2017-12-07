@@ -1,11 +1,11 @@
 import {browser, by, element, ExpectedConditions} from 'protractor';
 import {waitForNotPresence, waitForPresence} from "../utils/await";
 
-describe('button', async() => {
+describe('button', async () => {
     beforeEach(() => {
         browser.waitForAngularEnabled(false);
     });
-    describe('test width and height', async() => {
+    describe('test width and height', async () => {
 
         it('should change size when set width and height', async () => {
             await browser.get('/button/width-height');
@@ -17,15 +17,15 @@ describe('button', async() => {
         })
     });
 
-    describe('test disabled', async() => {
+    describe('test disabled', async () => {
         beforeEach(() => {
             browser.get('/button/disabled');
         });
 
         it('should click invalid when set disabled', () => {
             const testButtonEl = element(by.id('test-button')),
-                  toggleDisabledEl = element(by.id('toggle-disabled')),
-                  clickCounterEl = element(by.id('click-counter'));
+                toggleDisabledEl = element(by.id('toggle-disabled')),
+                clickCounterEl = element(by.id('click-counter'));
             browser.switchTo().defaultContent();
             expect(clickCounterEl.getText()).toBe('0');
 
@@ -42,7 +42,7 @@ describe('button', async() => {
         })
     });
 
-    describe('test preset size and type', async() => {
+    describe('test preset size and type', async () => {
         beforeEach(() => {
             browser.get('/button/preset');
         });

@@ -76,7 +76,7 @@ xdescribe('time', () => {
         it('test time granularity', () => {
             const granularityOp = element(by.css('.jigsaw-time-granularity')).all(by.tagName('SPAN')),
                 activeWeekEl = element(by.css('.jigsaw-time-box .datepicker-days .active')).all(by.tagName('TD')),
-            activeMonth=element(by.css('.datepicker-months .active'));
+                activeMonth = element(by.css('.datepicker-months .active'));
             expect(element(by.css('.datepicker-days .active')).getCssValue('background-color')).toBe('rgba(65, 173, 220, 1)');
             granularityOp.get(1).click();
             expect(activeWeekEl.get(0).getCssValue('background-color')).toBe('rgba(65, 173, 220, 1)');
@@ -89,7 +89,7 @@ xdescribe('time', () => {
         beforeEach(() => {
             browser.get('/time/refresh-interval');
         });
-        it('test refresh-interval',()=>{
+        it('test refresh-interval', () => {
         })
     });
 });
