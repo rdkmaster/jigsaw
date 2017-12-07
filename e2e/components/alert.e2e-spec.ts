@@ -12,7 +12,6 @@ describe('alert', () => {
             await browser.sleep(300);
         });
         it('should be alert when click button popup and display ok when click definite', async () => {
-            browser.debugger();
             const componentEl = element(by.tagName('ng-component')),
                 alertButtonEl = element(by.css('.app-wrap')).all(by.tagName('jigsaw-button')),
                 jigsawAlertEl = element(by.tagName('jigsaw-alert')),

@@ -7,13 +7,6 @@ export function expectToExist(selector: string | ElementFinder, expected: boolea
         expect(selector.isPresent()).toBe(expected);
     }
 }
-export function expectToNotExist(selector: string | ElementFinder, expected: boolean = false) {
-    if (typeof selector === 'string') {
-        expect(element(by.css(selector)).isPresent()).toBe(expected);
-    } else if (selector instanceof ElementFinder) {
-        expect(selector.isPresent()).toBe(expected);
-    }
-}
 
 export async function expectStringFromAlert(expectString: string) {
     await browser.wait(ExpectedConditions.alertIsPresent());
