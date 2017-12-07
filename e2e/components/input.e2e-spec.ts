@@ -43,11 +43,11 @@ describe('input', () => {
 
         it('should be mapped into component and display prefix icon', () => {
             const prefixIcons = element(by.id('test-input')).all(by.tagName('a')),
-           input = element(by.id('test-input')).element(by.tagName('input'));
+                input = element(by.id('test-input')).element(by.tagName('input'));
             input.sendKeys('asf');
             prefixIcons.get(0).click();
             browser.wait(protractor.ExpectedConditions.alertIsPresent(), 1000);
-            let alertDialog = browser.switchTo().alert();
+            const alertDialog = browser.switchTo().alert();
             expect(alertDialog.getText()).toEqual("你输入的值是 asf");
             alertDialog.accept();
             prefixIcons.get(1).click();

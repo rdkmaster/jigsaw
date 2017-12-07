@@ -46,7 +46,7 @@
 </ng-template>
 
 <ng-template #tpDialog2>
-    <jigsaw-dialog width="40%">
+    <jigsaw-dialog width="40%" (close)="onAnswer()">
         <div jigsaw-title>
             <span class="fa fa-thumbs-up"></span>Title of the dialog
         </div>

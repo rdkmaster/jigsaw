@@ -20,7 +20,7 @@ xdescribe('scrollbar', () => {
             expect(dragwarpEl.get(0).getText()).toBe('111');
             expect(dragwarpEl.get(1).getText()).toBe('222');
             browser.sleep(2000);
-            browser.actions().dragAndDrop(dragwarpEl.get(0),dragwarpEl.get(1) ).perform();
+            browser.actions().dragAndDrop(dragwarpEl.get(0), dragwarpEl.get(1)).perform();
             browser.sleep(2000);
             // await  browser.wait(ExpectedConditions.textToBePresentInElement(element.all(by.css('.drag-wrap')).get(0), '222'));
             expect(dragwarpEl.get(1).getText()).toBe('111');

@@ -1,5 +1,5 @@
-import {browser, element, by} from "protractor";
-import {waitForPresence} from "../utils/asserts";
+import {browser, element, by, ExpectedConditions} from "protractor";
+import {waitForPresence} from "../utils/index";
 
 describe('table', () => {
     beforeEach(() => {
@@ -10,7 +10,8 @@ describe('table', () => {
             browser.get('/table/header-class');
         });
         it('should set header class', async () => {
-            await waitForPresence('.jigsaw-table-header-cell');
+            browser.switchTo().defaultContent();
+            await waitForPresence('.red-text');
             expect(element.all(by.css('.jigsaw-table-header-cell')).get(1).getCssValue('COLOR')).toBe('rgb(41, 78, 121)');
             expect(element.all(by.css('.jigsaw-table-header-cell')).get(0).getCssValue('COLOR')).toBe('rgb(255, 170, 0)');
         })
@@ -20,9 +21,10 @@ describe('table', () => {
             browser.get('/table/set-cell-class');
         });
         it('should set cell class', async () => {
-            await waitForPresence('.red-text');
-            expect(element.all(by.css('.red-text')).get(0).getCssValue('COLOR')).toBe('rgb(255, 170, 0)');
-            expect(element.all(by.css('.red-text')).get(10).getCssValue('COLOR')).toBe('rgb(255, 170, 0)');
+            const redEl = element.all(by.css('.red-text'));
+            await browser.wait(ExpectedConditions.visibilityOf(redEl.get(10)));
+            await expect(redEl.get(0).getCssValue('COLOR')).toBe('rgb(255, 170, 0)');
+            await expect(redEl.get(10).getCssValue('COLOR')).toBe('rgb(255, 170, 0)');
         })
     });
     describe('test setHeaderRender', () => {
@@ -30,6 +32,7 @@ describe('table', () => {
             browser.get('/table/header-render');
         });
         it('should set header render', async () => {
+            browser.switchTo().defaultContent();
             await waitForPresence('.fa-map-signs');
             expect(element(by.css('.fa-map-signs')).isPresent()).toBe(true);
         })
@@ -39,6 +42,7 @@ describe('table', () => {
             browser.get('/table/sortable');
         });
         it('should set header sort', async () => {
+            browser.switchTo().defaultContent();
             await waitForPresence('.jigsaw-table-sort-up');
             const tableSortUp = element(by.css('.jigsaw-table-sort-up')),
                 tableSortDown = element(by.css('.jigsaw-table-sort-down')),
@@ -59,6 +63,7 @@ describe('table', () => {
             browser.get('/table/cell-render');
         });
         it('should set cell render', async () => {
+            browser.switchTo().defaultContent();
             await waitForPresence('.fa-universal-access');
             expect(element(by.css('.fa-universal-access')).isPresent()).toBe(true);
         })
@@ -68,8 +73,8 @@ describe('table', () => {
             browser.get('/table/column-group');
         });
         it('should set column group', async () => {
+            const canBeGroupEl = element(by.css('.jigsaw-table-body')).all(by.tagName('TR')).get(3).all(by.tagName('TD')).get(2);
             await waitForPresence('.jigsaw-table-cell-content');
-            const canBeGroupEl=element(by.css('.jigsaw-table-body')).all(by.tagName('TR')).get(3).all(by.tagName('TD')).get(2);
             expect(canBeGroupEl.getAttribute('rowspan')).toBe('2');
         })
     });
