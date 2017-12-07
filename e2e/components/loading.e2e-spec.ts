@@ -15,7 +15,7 @@ describe('loading', () => {
                 loadingBlock = element(by.tagName('jigsaw-block')),
                 ballsEl = element(by.css('.jigsaw-ball-loading-host .jigsaw-loading-content')).all(by.tagName('DIV'));
             buttons.get(0).click();
-            await waitForPresence('.jigsaw-ball-loading-host');
+            await waitForPresence('.jigsaw-loading-content');
             expect(loadingBlock.getCssValue('position')).toBe('absolute');
             expect(loadingBlock.getCssValue('z-index')).toBe('1030');
             expect(ballsEl.get(0).getCssValue('animation')).toBe('scale 0.75s cubic-bezier(0.2, 0.68, 0.18, 1.08) -0.24s infinite normal none running');
@@ -27,8 +27,8 @@ describe('loading', () => {
             expectToExist('jigsaw-block',false);
             expectToExist('.jigsaw-ball-loading-host',false);
             buttons.get(2).click();
-            await waitForPresence('.jigsaw-ball-loading-host');
-            await expectPopupBlock('jigsaw-block');
+            await waitForPresence('.jigsaw-loading-content');
+            await expectPopupBlock('.jigsaw-block-host');
             expect(ballsEl.get(0).getCssValue('animation')).toBe('scale 0.75s cubic-bezier(0.2, 0.68, 0.18, 1.08) -0.24s infinite normal none running');
             expect(ballsEl.get(1).getCssValue('animation')).toBe('scale 0.75s cubic-bezier(0.2, 0.68, 0.18, 1.08) -0.12s infinite normal none running');
             expect(ballsEl.get(2).getCssValue('animation')).toBe('scale 0.75s cubic-bezier(0.2, 0.68, 0.18, 1.08) 0s infinite normal none running');
@@ -41,7 +41,7 @@ describe('loading', () => {
             const buttons = element.all(by.css('.jigsaw-button')),
                 bubbles = element(by.css('.jigsaw-bubble-loading-host .container1')).all(by.tagName('DIV'));
             buttons.get(0).click();
-            await waitForPresence('.jigsaw-bubble-loading-host');
+            await waitForPresence('.circle1');
             expect(bubbles.get(0).getCssValue('animation')).toBe('bouncedelay 1.2s ease-in-out 0s infinite normal both running');
             expect(bubbles.get(1).getCssValue('animation')).toBe('bouncedelay 1.2s ease-in-out -0.9s infinite normal both running');
             expect(bubbles.get(2).getCssValue('animation')).toBe('bouncedelay 1.2s ease-in-out -0.6s infinite normal both running');
