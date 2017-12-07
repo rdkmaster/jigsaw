@@ -276,6 +276,14 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return;
         }
 
+        // 兼容ie
+        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.jigsaw-table-header'),
+            'visibility', 'hidden');
+        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.jigsaw-table-body-range'),
+            'visibility', 'hidden');
+        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.jigsaw-table-body-range'),
+            '-ms-overflow-style', 'auto');
+
         const columnDefines = this._getMixedColumnDefines();
         this._updateHeaderSettings(columnDefines);
         this._updateCellSettings(columnDefines);
@@ -565,6 +573,14 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._calculateContentWidth();
         this._calibrateTable();
         this._updateScrollbar();
+
+        // 兼容ie
+        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.jigsaw-table-header'),
+            'visibility', 'visible');
+        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.jigsaw-table-body-range'),
+            '-ms-overflow-style', 'none');
+        this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.jigsaw-table-body-range'),
+            'visibility', 'visible');
     }
 
     /**
