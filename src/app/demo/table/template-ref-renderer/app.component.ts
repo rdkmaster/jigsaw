@@ -1,4 +1,4 @@
-import {Component, TemplateRef, ViewChild, ViewEncapsulation, AfterViewInit} from "@angular/core";
+import {Component, TemplateRef, ViewChild, ViewEncapsulation} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/core/data/table-data";
 import {AdditionalColumnDefine, ColumnDefine} from "jigsaw/component/table/table-typings";
@@ -8,7 +8,7 @@ import {AdditionalColumnDefine, ColumnDefine} from "jigsaw/component/table/table
     styleUrls: ['./app.component.css'],
     encapsulation: ViewEncapsulation.None
 })
-export class TableRendererOfTemplateRefDemoComponent implements AfterViewInit {
+export class TableRendererOfTemplateRefDemoComponent {
     @ViewChild('headIcon') headIcon: TemplateRef<any>;
     @ViewChild('checkboxRenderer') checkboxRenderer: TemplateRef<any>;
     @ViewChild('cellOption') cellOption: TemplateRef<any>;
@@ -17,8 +17,46 @@ export class TableRendererOfTemplateRefDemoComponent implements AfterViewInit {
     tableData: TableData;
     nativeValue: string = ' - native';
 
-    columns: ColumnDefine[];
-    additionalColumns: AdditionalColumnDefine[];
+    columns: ColumnDefine[] = [
+        {
+            target: ['salary', 'office'],
+            width: '15%',
+            header: {
+                // 通过ViewChild获取的TemplateRef,必须在AfterViewInit之后才能拿到
+                // 可以通过如下方式异步获取
+                renderer: () => {
+                    return this.headIcon
+                }
+            }
+        },
+        {
+            target: 'name',
+            width: '15%',
+            cell: {
+                // 通过ViewChild获取的TemplateRef,必须在AfterViewInit之后才能拿到
+                // 可以通过如下方式异步获取
+                renderer: () => {
+                    return this.cellName
+                }
+            }
+        }
+    ];
+
+    additionalColumns: AdditionalColumnDefine[] = [
+        {
+            width: '15%',
+            header: {
+                text: '操作'
+            },
+            cell: {
+                // 通过ViewChild获取的TemplateRef,必须在AfterViewInit之后才能拿到
+                // 可以通过如下方式异步获取
+                renderer: () => {
+                    return this.cellOption
+                }
+            }
+        }
+    ];
 
     constructor(http: HttpClient) {
         this.tableData = new TableData();
@@ -35,40 +73,6 @@ export class TableRendererOfTemplateRefDemoComponent implements AfterViewInit {
 
     handleClick(context) {
         alert(`row: ${context.row}, column: ${context.column}, cellData: ${context.cellData}`)
-    }
-
-    ngAfterViewInit() {
-        //如果报变更检查错误，需要加个异步处理，这样会触发angular的变更检查
-        //通过ViewChild获取的TemplateRef,必须在AfterViewInit之后才能拿到
-        setTimeout(() => {
-            this.columns = [
-                {
-                    target: ['salary', 'office'],
-                    width: '15%',
-                    header: {
-                        renderer: this.headIcon
-                    }
-                },
-                {
-                    target: 'name',
-                    width: '15%',
-                    cell: {
-                        renderer: this.cellName
-                    }
-                }
-            ];
-            this.additionalColumns = [
-                {
-                    width: '15%',
-                    header: {
-                        text: '操作'
-                    },
-                    cell: {
-                        renderer: this.cellOption
-                    }
-                }
-            ]
-        })
     }
 
     // ====================================================================
