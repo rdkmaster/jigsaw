@@ -65,6 +65,8 @@ import {BigRowDemoComponent} from "./big-row/app.component";
 import {BigColumnDemoComponent} from "./big-column/app.component";
 import {BigRowDemoModule} from "./big-row/app.module";
 import {BigColumnDemoModule} from "./big-column/app.module";
+import {TableResizeDemoComponent} from "./resize/app.component";
+import {TableResizeDemoModule} from "./resize/app.module";
 
 export const routerConfig = [
     {
@@ -163,6 +165,9 @@ export const routerConfig = [
     {
         path: 'big-column', component: BigColumnDemoComponent
     },
+    {
+        path: 'resize', component: TableResizeDemoComponent
+    },
 ];
 
 @NgModule({
@@ -175,7 +180,7 @@ export const routerConfig = [
         TableSetCellClassDemoModule, TableSetCellEditableDemoModule, TableSetCellRenderDemoModule, TableColumnGroupDemoModule,
         TableColumnSetVisibleDemoModule, TableColumnSetWidthDemoModule, TableSetHeaderClassDemoModule, TableSetHeaderRenderDemoModule,
         TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, SwimLaneDiagramDemoModule, TableHideHeadDemoModule,
-        TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule, TableCalendarDemoModule, BigRowDemoModule
+        TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule, TableCalendarDemoModule, BigRowDemoModule, TableResizeDemoModule
     ]
 })
 export class TableDemoModule {

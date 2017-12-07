@@ -55,6 +55,18 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         super();
     }
 
+    @Input()
+    public get width(): string {
+        return this._width;
+    }
+
+    public set width(value: string) {
+        this._width = CommonUtils.getCssValue(value);
+        setTimeout(() => {
+            this.resize();
+        });
+    }
+
     @Output()
     public sort = new EventEmitter<SortChangeEvent>();
 
@@ -431,26 +443,30 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._removeWindowListener();
 
         this._zone.runOutsideAngular(() => {
-            this._removeWindowResizeListener = this._renderer.listen('window', 'resize', () => {
-                if (this.floatingHeader && !this.hideHeader) {
-                    this._fixHeaderTop();
-                }
-                this._calibrateTable();
-                this._setVerticalScrollbarOffset();
-            });
+            this._removeWindowResizeListener = this._renderer.listen(
+                'window', 'resize', () => this.resize());
         });
 
         if (this.floatingHeader && !this.hideHeader) {
             this._zone.runOutsideAngular(() => {
-                this._removeWindowScrollListener = this._renderer.listen('window', 'scroll',
-                    () => this._fixHeaderTop());
+                this._removeWindowScrollListener = this._renderer.listen(
+                    'window', 'scroll', () => this._fixHeaderTop());
             });
         }
+    }
+
+    public resize() {
+        this._fixHeaderTop();
+        this._handleScrollBar();
+        this._setVerticalScrollbarOffset();
     }
 
     private _tableHeaderElement: HTMLElement;
 
     private _fixHeaderTop() {
+        if (!this.floatingHeader || this.hideHeader) {
+            return;
+        }
         const maxTop = this._elementRef.nativeElement.offsetHeight - this._tableHeaderElement.offsetHeight;
         let tableDocumentTop = AffixUtils.offset(this._elementRef.nativeElement).top;
         let scrollTop = AffixUtils.getScrollTop();
@@ -601,6 +617,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
     }
 
+    private _yScrollbarElement: HTMLElement;
+
     /**
      * 设置纵向滚动条位置
      * @private
@@ -611,8 +629,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 this._elementRef.nativeElement.offsetWidth + this._contentScrollbar.geometry().x - 15 + 'px');
         }
     }
-
-    private _yScrollbarElement: HTMLElement;
 
     /**
      * 找到纵向滚动条，并设置初始位置
