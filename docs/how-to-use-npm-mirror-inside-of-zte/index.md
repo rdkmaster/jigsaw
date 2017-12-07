@@ -22,7 +22,7 @@ npm config set sass_binary_site http://rdk.zte.com.cn/mirrors/node-sass
 
 1. 在任意目录下执行这个命令
 ```
-curl -u10045812:"your-password" https://artnj.zte.com.cn/artifactory/api/npm/authartnj.zte.com.cn
+curl -u100458xx:"your-password" https://artnj.zte.com.cn/artifactory/api/npm/authartnj.zte.com.cn
 ```
 
 你可以在git-bash中运行`curl`命令，也可以在服务器跑一下生成你的认证信息。
