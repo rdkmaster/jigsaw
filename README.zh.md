@@ -32,13 +32,16 @@ Jigsaw的组件不再是原子，它对组件的功能进行了二次抽象，�
 
 ```
 cd d:\jigsaw-seed
-npm config set proxy=http://proxy.zte.com.cn:80
 npm config set registry=https://registry.npm.taobao.org/                 # for Chinese developers only
 npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass # for Chinese developers only
 npm install -g @angular/cli                                              # 强烈推荐，可选
 npm install
 npm start
 ```
+
+- **中国大陆的开发者请注意***：不要使用cnpm安装，会有问题，暂时未找到原因；
+- **中兴内网用户请注意**：你可以使用中兴内网npm镜像来提升安装依赖包的速度，[详情点击这里](docs/how-to-use-npm-mirror-inside-of-zte/index.md)；
+
 4. 浏览器里打开 http://localhost:4200 如果看到欢迎页，表示你的开发环境搭建完毕。
 5. 后续直接在 `d:\jigsaw-seed` 目录下运行 `npm start` 命令就可以启动开发环境了。Jigsaw专门针对现代的IDE做了代码优化，让这些IDE可以精确提示更多的信息，节约你翻阅api文档的时间。我们推荐使用[WebStorm](https://www.jetbrains.com/webstorm/)作为IDE。
 
