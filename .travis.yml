@@ -24,10 +24,10 @@ install:
 
 before_script:
   - mkdir -p $LOGS_DIR
-  - chmod a+x ./build/scripts/sauce_connect_setup.sh
-  - ./build/scripts/sauce_connect_setup.sh
+  - sh build/scripts/sauce_connect_setup.sh
 
 script:
+  - node build/scripts/make-demo-independent.js
   - gulp ensure-url-matches-path
   - gulp jigsaw:build-release:clean
   - # ng test --code-coverage --watch false

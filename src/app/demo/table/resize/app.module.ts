@@ -7,7 +7,6 @@ import {JigsawButtonModule} from "jigsaw/component/button/button";
 @NgModule({
     imports: [JigsawTableModule, JigsawDemoDescriptionModule, JigsawButtonModule],
     declarations: [TableResizeDemoComponent],
-    exports: [TableResizeDemoComponent],
 })
 export class TableResizeDemoModule {
 }
