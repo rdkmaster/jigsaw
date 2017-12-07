@@ -43,7 +43,7 @@ export class TableUtils {
             settings.renderer = TableUtils.getRenderer(cellDef.renderer);
             settings.clazz = cellDef.clazz;
             settings.editable = cellDef.editable;
-            settings.editorRenderer = cellDef.editorRenderer;
+            settings.editorRenderer = TableUtils.getRenderer(cellDef.editorRenderer);
             settings.tooltip = cellDef.tooltip;
         }
         return settings;
@@ -51,7 +51,11 @@ export class TableUtils {
 
     public static getRenderer(renderer): TableSyncRenderer {
         if (renderer instanceof Function && !(renderer.prototype instanceof TableCellRendererBase)) {
-            return renderer();
+            try {
+                return renderer();
+            } catch (e) {
+                return undefined;
+            }
         }
         return renderer;
     }
