@@ -8,7 +8,7 @@ describe('combo-select', () => {
     xdescribe('test basic function', () => {
          it('should display options when mouse enter into combo',async()=>{
              await browser.get('/combo-select/auto-width');
-             const script = `document.getElementsByTagName("jigsaw-combo-select").mouseenter`;
+             const script = `document.getElementsByTagName("jigsaw-combo-select").onmouseenter()`;
              await browser.executeScript(script);
              await browser.sleep(3000);
          })

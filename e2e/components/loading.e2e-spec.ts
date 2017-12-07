@@ -13,24 +13,25 @@ describe('loading', () => {
             await browser.get('/loading/ball');
             const buttons = element.all(by.css('.jigsaw-button')),
                 loadingBlock = element(by.tagName('jigsaw-block')),
-                ballLoading = element(by.css('.jigsaw-ball-loading-host')),
-                ballsEl = ballLoading.element(by.css('.jigsaw-loading-content')).all(by.tagName('DIV'));
+                ballsEl = element(by.css('.jigsaw-ball-loading-host .jigsaw-loading-content')).all(by.tagName('DIV'));
             buttons.get(0).click();
-            await expect(loadingBlock.getCssValue('position')).toBe('absolute');
-            await expect(loadingBlock.getCssValue('z-index')).toBe('1030');
-            await expect(ballsEl.get(0).getCssValue('animation')).toBe('scale 0.75s cubic-bezier(0.2, 0.68, 0.18, 1.08) -0.24s infinite normal none running');
-            await expect(ballsEl.get(1).getCssValue('animation')).toBe('scale 0.75s cubic-bezier(0.2, 0.68, 0.18, 1.08) -0.12s infinite normal none running');
-            await expect(ballsEl.get(2).getCssValue('animation')).toBe('scale 0.75s cubic-bezier(0.2, 0.68, 0.18, 1.08) 0s infinite normal none running');
+            await waitForPresence('.jigsaw-ball-loading-host');
+            expect(loadingBlock.getCssValue('position')).toBe('absolute');
+            expect(loadingBlock.getCssValue('z-index')).toBe('1030');
+            expect(ballsEl.get(0).getCssValue('animation')).toBe('scale 0.75s cubic-bezier(0.2, 0.68, 0.18, 1.08) -0.24s infinite normal none running');
+            expect(ballsEl.get(1).getCssValue('animation')).toBe('scale 0.75s cubic-bezier(0.2, 0.68, 0.18, 1.08) -0.12s infinite normal none running');
+            expect(ballsEl.get(2).getCssValue('animation')).toBe('scale 0.75s cubic-bezier(0.2, 0.68, 0.18, 1.08) 0s infinite normal none running');
             buttons.get(1).click();
             await waitForNotPresence('.jigsaw-block-host');
             await waitForNotPresence('.jigsaw-ball-loading-host');
-            await expectToExist('jigsaw-block',false);
-            await expectToExist('.jigsaw-ball-loading-host',false);
+            expectToExist('jigsaw-block',false);
+            expectToExist('.jigsaw-ball-loading-host',false);
             buttons.get(2).click();
+            await waitForPresence('.jigsaw-ball-loading-host');
             await expectPopupBlock('jigsaw-block');
-            await expect(ballsEl.get(0).getCssValue('animation')).toBe('scale 0.75s cubic-bezier(0.2, 0.68, 0.18, 1.08) -0.24s infinite normal none running');
-            await expect(ballsEl.get(1).getCssValue('animation')).toBe('scale 0.75s cubic-bezier(0.2, 0.68, 0.18, 1.08) -0.12s infinite normal none running');
-            await expect(ballsEl.get(2).getCssValue('animation')).toBe('scale 0.75s cubic-bezier(0.2, 0.68, 0.18, 1.08) 0s infinite normal none running');
+            expect(ballsEl.get(0).getCssValue('animation')).toBe('scale 0.75s cubic-bezier(0.2, 0.68, 0.18, 1.08) -0.24s infinite normal none running');
+            expect(ballsEl.get(1).getCssValue('animation')).toBe('scale 0.75s cubic-bezier(0.2, 0.68, 0.18, 1.08) -0.12s infinite normal none running');
+            expect(ballsEl.get(2).getCssValue('animation')).toBe('scale 0.75s cubic-bezier(0.2, 0.68, 0.18, 1.08) 0s infinite normal none running');
         })
     });
 
@@ -38,19 +39,19 @@ describe('loading', () => {
         it('should display correctly', async () => {
             await browser.get('/loading/bubble');
             const buttons = element.all(by.css('.jigsaw-button')),
-                bubbleLoading = element(by.css('.jigsaw-bubble-loading-host')),
-                bubbles = bubbleLoading.element(by.css('.container1')).all(by.tagName('DIV'));
+                bubbles = element(by.css('.jigsaw-bubble-loading-host .container1')).all(by.tagName('DIV'));
             buttons.get(0).click();
-            await expect(bubbles.get(0).getCssValue('animation')).toBe('bouncedelay 1.2s ease-in-out 0s infinite normal both running');
-            await expect(bubbles.get(1).getCssValue('animation')).toBe('bouncedelay 1.2s ease-in-out -0.9s infinite normal both running');
-            await expect(bubbles.get(2).getCssValue('animation')).toBe('bouncedelay 1.2s ease-in-out -0.6s infinite normal both running');
-            await expect(bubbles.get(3).getCssValue('animation')).toBe('bouncedelay 1.2s ease-in-out -0.3s infinite normal both running');
+            await waitForPresence('.jigsaw-bubble-loading-host');
+            expect(bubbles.get(0).getCssValue('animation')).toBe('bouncedelay 1.2s ease-in-out 0s infinite normal both running');
+            expect(bubbles.get(1).getCssValue('animation')).toBe('bouncedelay 1.2s ease-in-out -0.9s infinite normal both running');
+            expect(bubbles.get(2).getCssValue('animation')).toBe('bouncedelay 1.2s ease-in-out -0.6s infinite normal both running');
+            expect(bubbles.get(3).getCssValue('animation')).toBe('bouncedelay 1.2s ease-in-out -0.3s infinite normal both running');
             buttons.get(1).click();
             await waitForNotPresence('.jigsaw-bubble-loading-host');
-            await expectToExist('.jigsaw-bubble-loading-host',false);
+            expectToExist('.jigsaw-bubble-loading-host',false);
             buttons.get(3).click();
             await waitForPresence('.jigsaw-button .jigsaw-bubble-loading-host');
-            await expectToExist('.jigsaw-button .jigsaw-bubble-loading-host',true);
+            expectToExist('.jigsaw-button .jigsaw-bubble-loading-host',true);
         })
     });
 
