@@ -32,6 +32,7 @@ export class TableRendererDemoComponent implements AfterViewInit {
         this.tableData = new LocalPageableTableData();
         this.tableData.pagingInfo.pageSize = 100;
         this.tableData.http = http;
+        this.tableData.fromAjax('mock-data/hr-list-full');
     }
 
     additionalColumnDefines: AdditionalColumnDefine[];
@@ -78,9 +79,9 @@ export class TableRendererDemoComponent implements AfterViewInit {
     ];
 
     ngAfterViewInit() {
-        this.tableData.fromAjax('mock-data/hr-list-full');
-        this.tableData.onAjaxComplete(() => {
-            // 此处additionalColumnDefines里面需要用到tableData，所以必须在tableData的onAjaxComplete里面设置
+        //如果报变更检查错误，需要加个异步处理，这样会触发angular的变更检查
+        //通过ViewChild获取的TemplateRef,必须在AfterViewInit之后才能拿到
+        setTimeout(()=> {
             this.additionalColumnDefines = [
                 {
                     pos: 0,
@@ -89,7 +90,6 @@ export class TableRendererDemoComponent implements AfterViewInit {
                         text: '#',
                     },
                     cell: {
-                        // cell data需要用到tableData需要在onAjaxComplete里面进行设置
                         data: TableValueGenerators.rowIndexGenerator,
                         clazz: 'green-text'
                     }
@@ -102,7 +102,6 @@ export class TableRendererDemoComponent implements AfterViewInit {
                     },
                     cell: {
                         renderer: TableCellCheckboxRenderer,
-                        // cell data需要用到tableData需要在onAjaxComplete里面进行设置
                         data: (td, row, col) => td.data[row][2] == 'Developer',
                     }
                 },
@@ -120,7 +119,6 @@ export class TableRendererDemoComponent implements AfterViewInit {
                     }
                 },
             ];
-
         })
     }
 
