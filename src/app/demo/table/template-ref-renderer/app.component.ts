@@ -22,22 +22,16 @@ export class TableRendererOfTemplateRefDemoComponent {
             target: ['salary', 'office'],
             width: '15%',
             header: {
-                // 通过ViewChild获取的TemplateRef,必须在AfterViewInit之后才能拿到
-                // 可以通过如下方式异步获取
-                renderer: () => {
-                    return this.headIcon
-                }
+                // 通过ViewChild获取的TemplateRef,在AfterViewInit之后才能拿到,这边必须采用异步获取。
+                renderer: () => this.headIcon
             }
         },
         {
             target: 'name',
             width: '15%',
             cell: {
-                // 通过ViewChild获取的TemplateRef,必须在AfterViewInit之后才能拿到
-                // 可以通过如下方式异步获取
-                renderer: () => {
-                    return this.cellName
-                }
+                // 通过ViewChild获取的TemplateRef,在AfterViewInit之后才能拿到,这边必须采用异步获取。
+                renderer: () => this.cellName
             }
         }
     ];
@@ -49,11 +43,8 @@ export class TableRendererOfTemplateRefDemoComponent {
                 text: '操作'
             },
             cell: {
-                // 通过ViewChild获取的TemplateRef,必须在AfterViewInit之后才能拿到
-                // 可以通过如下方式异步获取
-                renderer: () => {
-                    return this.cellOption
-                }
+                // 通过ViewChild获取的TemplateRef,在AfterViewInit之后才能拿到,这边必须采用异步获取。
+                renderer: () => this.cellOption
             }
         }
     ];

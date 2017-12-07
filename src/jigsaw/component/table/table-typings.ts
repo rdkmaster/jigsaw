@@ -65,11 +65,11 @@ export type TableAsyncRenderer = () => TemplateRef<any>;
 
 export type TableSyncRenderer = Type<TableCellRendererBase> | TemplateRef<any>;
 
-export type TableRendererDefine = TableSyncRenderer | TableAsyncRenderer;
+export type TableRenderer = TableSyncRenderer | TableAsyncRenderer;
 
 export class TableHeader {
     text?: string;
-    renderer?: TableRendererDefine;
+    renderer?: TableRenderer;
     clazz?: string;
     sortable?: boolean;
     sortAs?: SortAs;
@@ -77,7 +77,7 @@ export class TableHeader {
 }
 
 export class TableCell {
-    renderer?: TableRendererDefine;
+    renderer?: TableRenderer;
     clazz?: string;
     editable?: boolean;
     editorRenderer?: Type<TableCellRendererBase>;

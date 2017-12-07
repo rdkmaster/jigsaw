@@ -23,11 +23,8 @@ export class TableSetHeaderRenderDemoComponent {
         {
             target: ['name', 'position'],
             header: {
-                // 通过ViewChild获取的TemplateRef,必须在AfterViewInit之后才能拿到
-                // 可以通过如下方式异步获取
-                renderer: () => {
-                    return this.headerRender
-                }
+                // 通过ViewChild获取的TemplateRef,在AfterViewInit之后才能拿到,这边必须采用异步获取。
+                renderer: () => this.headerRender
             }
         }
     ];

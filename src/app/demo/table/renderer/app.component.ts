@@ -66,11 +66,8 @@ export class TableRendererDemoComponent {
                 clazz: 'green-text'
             },
             cell: {
-                // 通过ViewChild获取的TemplateRef,必须在AfterViewInit之后才能拿到
-                // 可以通过如下方式异步获取
-                renderer: () => {
-                    return this.operationTemplate
-                },
+                // 通过ViewChild获取的TemplateRef,在AfterViewInit之后才能拿到,这边必须采用异步获取。
+                renderer: () => this.operationTemplate,
                 tooltip: '加薪：当前员工一次加2000\n辞退：立即辞退当前员工'
             }
         },
