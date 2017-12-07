@@ -5,6 +5,7 @@ $viewport-prefix-cls: #{$jigsaw-prefix}-viewport;
 .#{$viewport-prefix-cls} {
     @include inline-block;
     position: relative;
+    width: 100%;
     &-vertical-scrollbar, &-horizontal-scrollbar-box {
         position: absolute;
         z-index: $zindex-scrollbar;
