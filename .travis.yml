@@ -24,20 +24,24 @@ install:
 
 before_script:
   - mkdir -p $LOGS_DIR
-  - chmod a+x ./build/scripts/sauce_connect_setup.sh
-  - ./build/scripts/sauce_connect_setup.sh
+  - sh build/scripts/sauce_connect_setup.sh
 
 script:
-  - gulp ensure-url-matches-path
-  - gulp jigsaw:build-release:clean
-  - # ng test --code-coverage --watch false
-  - # cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
-  - sh build/scripts/build-tourist.sh
-  - sh build/scripts/integrate-with-seed.sh
-  - sh build/scripts/sauce_connect_block.sh
-  - cd $SEED_DIR # run e2e in seed directory
-  - ng build -prod -aot
-  - ng e2e
+  - if [ "$SEED_DIR" != "" ]; then
+  -     echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+  - else
+  -     node build/scripts/make-demo-independent.js
+  -     gulp ensure-url-matches-path
+  -     gulp jigsaw:build-release:clean
+  -     # ng test --code-coverage --watch false
+  -     # cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
+  -     sh build/scripts/build-tourist.sh
+  -     sh build/scripts/integrate-with-seed.sh
+  -     sh build/scripts/sauce_connect_block.sh
+  -     cd $SEED_DIR # run e2e in seed directory
+  -     ng build -prod -aot
+  -     ng e2e
+  - fi
 
 after_script:
   - sh ./build/scripts/sauce_connect_teardown.sh
