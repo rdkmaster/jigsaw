@@ -3,6 +3,7 @@ import {
 } from "./table-typings";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 import {CommonUtils} from "../../core/utils/common-utils";
+import {TableCellRendererBase} from "./table-renderer";
 
 export class TableUtils {
     public static updateHeaderSettings(columnDefine: ColumnDefine, settings: TableHeadSetting): TableHeadSetting {
@@ -49,7 +50,7 @@ export class TableUtils {
     }
 
     public static getRenderer(renderer): TableSyncRenderer {
-        if (renderer instanceof Function && !renderer.isTableCellRenderer) {
+        if (renderer instanceof Function && !(renderer.prototype instanceof TableCellRendererBase)) {
             return renderer();
         }
         return renderer;
