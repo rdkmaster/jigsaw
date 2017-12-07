@@ -51,7 +51,11 @@ export class TableUtils {
 
     public static getRenderer(renderer): TableSyncRenderer {
         if (renderer instanceof Function && !(renderer.prototype instanceof TableCellRendererBase)) {
-            return renderer();
+            try {
+                return renderer();
+            } catch (e) {
+                return undefined;
+            }
         }
         return renderer;
     }
