@@ -11,6 +11,9 @@ import {InternalUtils} from '../../core/utils/internal-utils';
 import {ArrayCollection} from "../../core/data/array-collection";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 
+/**
+ * @internal
+ */
 @Directive({
     selector: '.jigsaw-select-option-list',
     host: {
@@ -18,8 +21,7 @@ import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
         '[style.height]': 'height'
     }
 })
-export class OptionList extends AbstractJigsawComponent {
-
+export class JigsawSelectOptionList extends AbstractJigsawComponent {
 }
 
 @Component({
@@ -100,8 +102,8 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     }
 
     //获取映射的子组件option
-    @ViewChildren(forwardRef(() => JigsawOption))
-    private _options: QueryList<JigsawOption> = null;
+    @ViewChildren(forwardRef(() => JigsawSelectOption))
+    private _options: QueryList<JigsawSelectOption> = null;
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
         super();
@@ -183,6 +185,9 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     }
 }
 
+/**
+ * @internal
+ */
 @Component({
     selector: 'jigsaw-select-option, j-select-option',
     templateUrl: 'option.html',
@@ -192,7 +197,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
         '[style.line-height]': '_height'
     }
 })
-export class JigsawOption implements OnInit {
+export class JigsawSelectOption implements OnInit {
     @Input() public optionItem: any;
 
     /**
@@ -233,8 +238,8 @@ export class JigsawOption implements OnInit {
 
 @NgModule({
     imports: [CommonModule, FormsModule, PerfectScrollbarModule],
-    declarations: [JigsawSelect, JigsawOption, OptionList],
-    exports: [JigsawSelect, JigsawOption]
+    declarations: [JigsawSelect, JigsawSelectOption, JigsawSelectOptionList],
+    exports: [JigsawSelect]
 })
 export class JigsawSelectModule {
 }

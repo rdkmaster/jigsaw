@@ -26,8 +26,11 @@ export class SliderMark {
     style?: any;
 }
 
+/**
+ * @internal
+ */
 @Component({
-    selector: 'slider-handle',
+    selector: 'jigsaw-slider-handle',
     templateUrl: './slider-handle.html',
     encapsulation: ViewEncapsulation.None
 })

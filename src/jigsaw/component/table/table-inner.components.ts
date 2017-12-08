@@ -115,6 +115,11 @@ export class TableInternalCellBase implements AfterViewInit {
     }
 }
 
+/**
+ * 表头单元格
+ *
+ * @internal
+ */
 @Component({
     selector: 'jigsaw-table-header',
     template: `
@@ -126,11 +131,6 @@ export class TableInternalCellBase implements AfterViewInit {
             </div>
         </div>`
 })
-/**
- * 表头单元格
- *
- * @internal
- */
 export class JigsawTableHeaderInternalComponent extends TableInternalCellBase implements OnInit, OnDestroy {
     constructor(resolver: ComponentFactoryResolver, changeDetector: ChangeDetectorRef) {
         super(resolver, changeDetector);
@@ -199,13 +199,14 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
     }
 }
 
+/**
+ * 单元格渲染器
+ * @internal
+ */
 @Component({
     selector: 'jigsaw-table-cell',
     template: '<ng-template jigsaw-renderer-host></ng-template>'
 })
-/**
- * 单元格渲染器
- */
 export class JigsawTableCellInternalComponent extends TableInternalCellBase implements OnInit, OnDestroy {
 
     private _editable: boolean = false;

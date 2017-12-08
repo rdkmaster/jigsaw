@@ -366,6 +366,9 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
 
 }
 
+/**
+ * @internal
+ */
 @Component({
     selector: 'jigsaw-paging-item, j-paging-item',
     templateUrl: 'page.html',

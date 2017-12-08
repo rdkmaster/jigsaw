@@ -10,7 +10,7 @@
               [ngStyle]="mark.dotStyle"></span>
     </div>
 
-    <slider-handle *ngFor="let item of _$value;let i = index" value="{{item}}" [key]="i"></slider-handle>
+    <jigsaw-slider-handle *ngFor="let item of _$value;let i = index" value="{{item}}" [key]="i"></jigsaw-slider-handle>
 
     <div *ngIf="_$marks.length > 0" class="jigsaw-slider-mark">
         <span *ngFor="let mark of _$marks" class="jigsaw-slider-mark-text"

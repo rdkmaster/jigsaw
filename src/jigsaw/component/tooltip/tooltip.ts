@@ -61,10 +61,13 @@ export class JigsawTooltipDialog implements IPopupable, AfterContentInit {
     }
 }
 
+/**
+ * @internal
+ */
 @Component({
     template: '<jigsaw-tooltip-dialog><span [innerHtml]="tooltipMessage"></span></jigsaw-tooltip-dialog>'
 })
-export class SimpleTooltipComponent extends TooltipBase {
+export class JigsawSimpleTooltipComponent extends TooltipBase {
     @ViewChild(JigsawTooltipDialog) public tooltip: JigsawTooltipDialog;
 
     public tooltipMessage:string = '';
@@ -114,7 +117,7 @@ export class JigsawTooltip implements OnDestroy {
         if (!this.jigsawTooltip) {
             return;
         }
-        this._tooltipInfo = this._popupService.popup(SimpleTooltipComponent, {
+        this._tooltipInfo = this._popupService.popup(JigsawSimpleTooltipComponent, {
             modal: false, //是否模态
             showEffect: PopupEffect.bubbleIn,
             hideEffect: PopupEffect.bubbleOut,
@@ -148,9 +151,9 @@ export class JigsawTooltip implements OnDestroy {
 
 @NgModule({
     imports: [CommonModule],
-    declarations: [JigsawTooltipDialog, JigsawTooltip, SimpleTooltipComponent],
+    declarations: [JigsawTooltipDialog, JigsawTooltip, JigsawSimpleTooltipComponent],
     exports: [JigsawTooltipDialog, JigsawTooltip],
-    entryComponents: [SimpleTooltipComponent]
+    entryComponents: [JigsawSimpleTooltipComponent]
 })
 export class JigsawTooltipModule {
 }

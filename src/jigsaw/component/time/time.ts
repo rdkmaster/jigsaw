@@ -6,7 +6,7 @@ import {Subscriber} from "rxjs/Subscriber";
 import {AbstractJigsawComponent} from "../common";
 import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../service/time.service";
 import {PopupInfo, PopupPositionType, PopupService} from "../../service/popup.service";
-import {SimpleTooltipComponent} from "../tooltip/tooltip";
+import {JigsawSimpleTooltipComponent} from "../tooltip/tooltip";
 import {Time, WeekTime} from "../../service/time.types";
 import {TranslateHelper} from "../../core/utils/translate-helper";
 import {ElementEventHelper, CommonUtils} from "../../core/utils/common-utils";
@@ -477,7 +477,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
                         this._tooltipInfo.dispose();
                         this._tooltipInfo = null;
                     }
-                    this._tooltipInfo = popService.popup(SimpleTooltipComponent, {
+                    this._tooltipInfo = popService.popup(JigsawSimpleTooltipComponent, {
                         modal: false, //是否模态
                         pos: {x: $(event.currentTarget).offset().left, y: $(event.currentTarget).offset().top},
                         posOffset: { //偏移位置

@@ -57,6 +57,9 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements O
     }
 }
 
+/**
+ * @internal
+ */
 @Component({
     selector: 'jigsaw-tab-label',
     template: `
@@ -91,6 +94,9 @@ export class JigsawTabLabel extends JigsawTabBase implements AfterViewInit {
 
 }
 
+/**
+ * @internal
+ */
 @Component({
     selector: 'jigsaw-tab-content',
     host: {
