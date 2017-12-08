@@ -203,6 +203,9 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
     }
 }
 
+/**
+ * @internal
+ */
 @Component({
     selector: 'j-fish-bone-item, jigsaw-fish-bone-item',
     templateUrl: './fish-bone-item.html',

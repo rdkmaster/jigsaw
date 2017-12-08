@@ -11,6 +11,9 @@ import {
 } from "@angular/core";
 import {AbstractJigsawComponent} from "../common";
 
+/**
+ * @internal
+ */
 @Component({
     selector: 'jigsaw-scrollbar-handle',
     templateUrl: './scrollbar-handle.html'
