@@ -27,10 +27,9 @@ describe('loading', () => {
             expectToExist('jigsaw-block', false);
             expectToExist('.jigsaw-ball-loading-host', false);
             buttons.get(2).click();
-            expectToExist(ballsEl.get(0));
             await browser.wait(ExpectedConditions.presenceOf(element(by.css('.jigsaw-block-host'))));
-            expectToExist('.jigsaw-block-host');
             await browser.wait(ExpectedConditions.presenceOf(element(by.css('.jigsaw-loading-content'))));
+            expectToExist('.jigsaw-block-host');
             expectToExist('.jigsaw-loading-content');
         })
     });
@@ -69,7 +68,6 @@ describe('loading', () => {
             const submitEls = $$('.jigsaw-button-color-primary'),
                 testInput = $$('.content-box').get(1).$$('.content-line').get(0).$('input');
             submitEls.get(1).click();
-            await waitForPresence('.jigsaw-button-clicked');
             await waitForNotPresence('.jigsaw-button-clicked');
             expect(testInput.getAttribute('ng-reflect-is-disabled')).toBe('true');
         })
