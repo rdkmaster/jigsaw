@@ -16,16 +16,12 @@ describe('loading', () => {
                 ballsEl = element(by.css('.jigsaw-loading-content')).all(by.tagName('div'));
             buttons.get(0).click();
             await browser.wait(ExpectedConditions.presenceOf(element(by.css('.jigsaw-block-host'))));
-            await expect(loadingBlock.getCssValue('position')).toBe('absolute');
-            await expect(loadingBlock.getCssValue('z-index')).toBe('1030');
+            expect(loadingBlock.getCssValue('position')).toBe('absolute');
+            expect(loadingBlock.getCssValue('z-index')).toBe('1030');
             await browser.wait(ExpectedConditions.presenceOf(element(by.css('.jigsaw-loading-content'))));
-            await expectToExist(ballsEl.get(0));
-            await expect(ballsEl.get(0).getCssValue('margin')).toBe('2px');
-            await expect(element(by.css('.jigsaw-loading-content')).getCssValue('width')).toBe('70px');
-            await expect(element(by.css('.jigsaw-loading-content')).getCssValue('margin-left')).toBe('-35px');
-            // await expect(ballsEl.get(0).getCssValue('animation')).toBe('scale 0.75s cubic-bezier(0.2, 0.68, 0.18, 1.08) -0.24s infinite normal none running');
-            // await expect(ballsEl.get(1).getCssValue('animation')).toBe('scale 0.75s cubic-bezier(0.2, 0.68, 0.18, 1.08) -0.12s infinite normal none running');
-            // await expect(ballsEl.get(2).getCssValue('animation')).toBe('scale 0.75s cubic-bezier(0.2, 0.68, 0.18, 1.08) 0s infinite normal none running');
+            expect(ballsEl.get(0).getCssValue('margin')).toBe('2px');
+            expect(element(by.css('.jigsaw-loading-content')).getCssValue('width')).toBe('70px');
+            expect(element(by.css('.jigsaw-loading-content')).getCssValue('margin-left')).toBe('-35px');
             buttons.get(1).click();
             await waitForNotPresence('.jigsaw-block-host');
             await waitForNotPresence('.jigsaw-loading-content');
@@ -33,13 +29,9 @@ describe('loading', () => {
             expectToExist('.jigsaw-ball-loading-host', false);
             buttons.get(2).click();
             await browser.wait(ExpectedConditions.presenceOf(element(by.css('.jigsaw-block-host'))));
-            await expectToExist('.jigsaw-block-host');
-            // await expectPopupBlock('jigsaw-block');
+            expectToExist('.jigsaw-block-host');
             await browser.wait(ExpectedConditions.presenceOf(element(by.css('.jigsaw-loading-content'))));
-            await expectToExist(ballsEl.get(0));
-            // await expect(ballsEl.get(0).getCssValue('animation')).toBe('scale 0.75s cubic-bezier(0.2, 0.68, 0.18, 1.08) -0.24s infinite normal none running');
-            // await expect(ballsEl.get(1).getCssValue('animation')).toBe('scale 0.75s cubic-bezier(0.2, 0.68, 0.18, 1.08) -0.12s infinite normal none running');
-            // await expect(ballsEl.get(2).getCssValue('animation')).toBe('scale 0.75s cubic-bezier(0.2, 0.68, 0.18, 1.08) 0s infinite normal none running');
+            expectToExist('.jigsaw-loading-content');
         })
     });
 
@@ -51,11 +43,6 @@ describe('loading', () => {
             buttons.get(0).click();
             await browser.wait(ExpectedConditions.presenceOf(element(by.css('.jigsaw-block-host'))));
             await browser.wait(ExpectedConditions.presenceOf(element(by.css('.container1'))));
-            await expectToExist(bubbles.get(0));
-            // await expect(bubbles.get(0).getCssValue('animation')).toBe('bouncedelay 1.2s ease-in-out 0s infinite normal both running');
-            // await expect(bubbles.get(1).getCssValue('animation')).toBe('bouncedelay 1.2s ease-in-out -0.9s infinite normal both running');
-            // await expect(bubbles.get(2).getCssValue('animation')).toBe('bouncedelay 1.2s ease-in-out -0.6s infinite normal both running');
-            // await expect(bubbles.get(3).getCssValue('animation')).toBe('bouncedelay 1.2s ease-in-out -0.3s infinite normal both running');
             buttons.get(1).click();
             await waitForNotPresence('.container1');
             expectToExist('.jigsaw-bubble-loading-host', false);
