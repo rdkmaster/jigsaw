@@ -19,7 +19,6 @@ describe('loading', () => {
             expect(loadingBlock.getCssValue('position')).toBe('absolute');
             expect(loadingBlock.getCssValue('z-index')).toBe('1030');
             await browser.wait(ExpectedConditions.presenceOf(element(by.css('.jigsaw-loading-content'))));
-            expect(ballsEl.get(0).getCssValue('margin')).toBe('2px');
             expect(element(by.css('.jigsaw-loading-content')).getCssValue('width')).toBe('70px');
             expect(element(by.css('.jigsaw-loading-content')).getCssValue('margin-left')).toBe('-35px');
             buttons.get(1).click();
@@ -28,6 +27,7 @@ describe('loading', () => {
             expectToExist('jigsaw-block', false);
             expectToExist('.jigsaw-ball-loading-host', false);
             buttons.get(2).click();
+            expectToExist(ballsEl.get(0));
             await browser.wait(ExpectedConditions.presenceOf(element(by.css('.jigsaw-block-host'))));
             expectToExist('.jigsaw-block-host');
             await browser.wait(ExpectedConditions.presenceOf(element(by.css('.jigsaw-loading-content'))));
@@ -64,12 +64,13 @@ describe('loading', () => {
     });
 
     describe('test loading full', () => {
-        it('input should be disabled after click submit', () => {
+        it('input should be disabled after click submit', async() => {
             browser.get('/loading/full');
             const submitEls = $$('.jigsaw-button-color-primary'),
                 testInput = $$('.content-box').get(1).$$('.content-line').get(0).$('input');
             submitEls.get(1).click();
-            browser.sleep(300);
+            await waitForPresence('.jigsaw-button-clicked');
+            await waitForNotPresence('.jigsaw-button-clicked');
             expect(testInput.getAttribute('ng-reflect-is-disabled')).toBe('true');
         })
     })
