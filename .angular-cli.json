@@ -46,7 +46,12 @@
     ],
     "e2e": {
         "protractor": {
-            "config": "./protractor.conf.js"
+            "config": "./protractor-for-components.conf.js"
+        }
+    },
+    "plnkr-e2e": {
+        "protractor": {
+            "config": "./protractor-for-live-demo.conf.js"
         }
     },
     "lint": [
