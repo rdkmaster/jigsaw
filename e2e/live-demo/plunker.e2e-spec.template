@@ -1,0 +1,21 @@
+import {browser, by, element, ExpectedConditions} from 'protractor';
+import {expectToExist} from "../utils/asserts";
+
+describe('plunker live demo', () => {
+    beforeEach(() => {
+        browser.waitForAngularEnabled(false);
+    });
+    describe('just test plunker live demo can open', () => {
+        [repeat start]
+        it('the demo "/jigsaw/$url" should be opened correctly', async () => {
+            await browser.get('http://rdk.zte.com.cn/jigsaw/live-demo/$url/index.html');
+            await browser.switchTo().frame(0);
+            await browser.switchTo().frame(0);
+            const previewDiv = element(by.tagName('demo-root')).element(by.tagName('DIV'));
+            await browser.wait(ExpectedConditions.presenceOf(element(by.tagName('jigsaw-live-demo'))));
+            expectToExist(previewDiv,false);
+            expectToExist(element(by.tagName('jigsaw-live-demo')),true);
+        });
+        [repeat end]
+    })
+});

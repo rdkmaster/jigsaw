@@ -8,7 +8,8 @@
     "build": "ng build -prod -aot --delete-output-path",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "plnkr-e2e": "ng plnkr-e2e"
   },
   "private": true,
   "dependencies": {
