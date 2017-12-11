@@ -104,22 +104,23 @@ describe('combo-select', () => {
         });
         xit('shoud set combo select width', async () => {
             await browser.get('/combo-select/set-width');
-            const buttons = $$('jigsaw-input'),
-                comboSelect = $$('jigsaw-combo-select');
+            const inputs = $$('jigsaw-input'),
+                comboSelect = $$('jigsaw-combo-select'),
+            innerInput =element(by.id('input3'));
             let combo1Size = await comboSelect.get(0).getSize(),
                 combo2Size = await comboSelect.get(1).getSize(),
-                input3Size = await buttons.get(2).getSize();
-            buttons.get(0).sendKeys(100);
+                input3Size = await innerInput.getSize();
+            inputs.get(0).sendKeys(100);
             expect(combo1Size.width).toBe(100+'px');
             mouseMove(comboSelect.get(1));
-            await waitForPresence('#input3');
+            await waitForPresence('input3');
             browser.sleep(1000);
-            expect(input3Size.width).toBe(400+'px');
-            buttons.get(1).sendKeys(100);
+            expect(combo1Size.width).toBe(400+'px');
+            inputs.get(1).sendKeys(100);
             mouseMove(comboSelect.get(1));
-            await waitForPresence('#input3');
+            await waitForPresence('input3');
             browser.sleep(1000);
-            expect(input3Size.width).toBe(combo2Size.width);
+            expect(combo1Size.width).toBe(combo2Size.width);
         })
     })
 });
