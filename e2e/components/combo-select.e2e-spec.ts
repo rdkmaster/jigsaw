@@ -10,7 +10,7 @@ describe('combo-select', () => {
     });
 
     describe('test basic function', () => {
-        xit('should display options  and auto width when mouse enter into combo', async () => {
+        it('should display options  and auto width when mouse enter into combo', async () => {
             await browser.get('/combo-select/auto-width');
             const selectEl = element(by.tagName('jigsaw-combo-select')),
                 buttons = $$('jigsaw-tile-option');
@@ -23,7 +23,7 @@ describe('combo-select', () => {
             expect(selectEl.getText()).toBe('上海');
             expect(selectEl.getCssValue('width')).toBe(element(by.tagName('jigsaw-tile')).getCssValue('width'));
         });
-        xit('should change trigger when click button', async () => {
+        it('should change trigger when click button', async () => {
             await browser.get('/combo-select/change-trigger');
             const selectEl = $('jigsaw-combo-select'),
                 buttons = $$('jigsaw-button');
@@ -39,7 +39,7 @@ describe('combo-select', () => {
             await waitForPresence('.drop-down-container');
             expectToExist('.drop-down-container');
         });
-        xit('should be disabled when toggle disable', async () => {
+        it('should be disabled when toggle disable', async () => {
             await browser.get('/combo-select/disable');
             const selectEl = $('jigsaw-combo-select'),
                 button = $$('jigsaw-button');
@@ -51,7 +51,7 @@ describe('combo-select', () => {
             await waitForNotPresence('jigsaw-tile');
             expectToExist('jigsaw-tile', false);
         });
-        xit('should display collapse when mouse enter combo-select', async () => {
+        it('should display collapse when mouse enter combo-select', async () => {
             await browser.get('/combo-select/drop-down-status');
             const selectEl = $('jigsaw-combo-select'),
                 collapse = $('jigsaw-collapse');
@@ -59,7 +59,7 @@ describe('combo-select', () => {
             await waitForPresence('jigsaw-collapse');
             expectToExist('jigsaw-collapse');
         });
-        xit('drop down width should be set', async () => {
+        it('drop down width should be set', async () => {
             await browser.get('/combo-select/drop-down-width');
             const selectEls = $$('jigsaw-combo-select'),
                 tile = $('jigsaw-tile'),
@@ -75,7 +75,7 @@ describe('combo-select', () => {
             bodySize = await body.getSize();
             expect(tile.getCssValue('width')).toBe(bodySize.width * 0.5 + 'px');
         });
-        xit('should toggle multiple & auto close on select', async () => {
+        it('should toggle multiple & auto close on select', async () => {
             await browser.get('/combo-select/multiple');
             const selectEl = $('jigsaw-combo-select'),
                 button = $('jigsaw-button'),
@@ -89,7 +89,7 @@ describe('combo-select', () => {
             await waitForNotPresence('jigsaw-tile');
             expectToExist('jigsaw-tile', false);
         });
-        xit('should open combo select through two ways', async () => {
+        it('should open combo select through two ways', async () => {
             await browser.get('/combo-select/open');
             const buttons = $$('jigsaw-button');
             buttons.get(0).click();
