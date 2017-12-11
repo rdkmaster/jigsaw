@@ -6,7 +6,7 @@ import {ArrayCollection} from "jigsaw/core/data/array-collection";
     styleUrls: ['./app.component.css'],
 })
 export class OpenComboSelectDemo {
-    public open: boolean = true;
+    public open: boolean = false;
 
     public toggleOpen() {
         this.open = !this.open

@@ -6,11 +6,11 @@
 <!-- start to learn the demo from here -->
 <p>绝对值宽度</p>
 <jigsaw-combo-select placeholder="请输入城市~"
-                     dropDownWidth="400px"
                      maxWidth="500"
                      [clearable]="true">
     <ng-template>
         <jigsaw-tile class="drop-down-child"
+                     width="400px"
                      trackItemBy="label">
             <jigsaw-tile-option *ngFor="let city of cities" [value]="city" width="22.8%">
                 {{city.label}}
@@ -19,10 +19,10 @@
     </ng-template>
 </jigsaw-combo-select>
 <p>百分比宽度</p>
-<jigsaw-combo-select placeholder="请输入城市~"
-                     dropDownWidth="120%">
+<jigsaw-combo-select placeholder="请输入城市~">
     <ng-template>
         <jigsaw-tile class="drop-down-child"
+                     width="50%"
                      trackItemBy="label">
             <jigsaw-tile-option *ngFor="let city of cities" [value]="city" width="22.8%">
                 {{city.label}}
