@@ -3,7 +3,7 @@ import {JigsawLoadingModule} from "jigsaw/component/loading/loading";
 import {LoadingService} from "jigsaw/service/loading.service";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {BallLoadingDemoComponent} from "./app.component";
-import {JigsawButtonModule} from "../../../../jigsaw/component/button/button";
+import {JigsawButtonModule} from "jigsaw/component/button/button";
 
 @NgModule({
     declarations: [BallLoadingDemoComponent],
