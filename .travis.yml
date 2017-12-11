@@ -4,8 +4,8 @@ node_js:
   - "6"
 
 branches:
-  only:
   - master
+  - plunker-live-demo-test
 env:
   global:
   - SAUCE_USERNAME=pkozlowski
