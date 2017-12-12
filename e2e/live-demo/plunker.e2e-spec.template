@@ -8,7 +8,7 @@ describe('plunker live demo', () => {
     describe('just test plunker live demo can open', () => {
         [repeat start]
         it('the demo "/jigsaw/$url" should be opened correctly', async () => {
-            await browser.get('http://rdk.zte.com.cn/jigsaw/live-demo/$url/index.html');
+            await browser.get('http://rdk.zte.com.cn/jigsaw/live-demo-temp/$url/index.html');
             await browser.switchTo().frame(0);
             await browser.switchTo().frame(0);
             const previewDiv = element(by.tagName('demo-root')).element(by.tagName('DIV'));
