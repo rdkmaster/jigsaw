@@ -289,7 +289,7 @@ export class FishBoneFullComponent implements AfterViewInit {
 
         this.data3 = new TreeData();
         this.data3.http = http;
-        this.data3.fromAjax('mock-data/fish-bone-data1');
+        this.data3.fromAjax('mock-data/fish-bone-1');
         this.data3.onAjaxComplete(() => {
             this.data3.label = `<span class="orange">VoLTE呼损分析</span>`;
             this.data3.nodes.forEach((node, index) => {
@@ -329,9 +329,9 @@ export class FishBoneFullComponent implements AfterViewInit {
 
     changeData(scene) {
         if (scene.id == 1) {
-            this.data3.fromAjax('mock-data/fish-bone-data1');
+            this.data3.fromAjax('mock-data/fish-bone-1');
         } else if (scene.id = 2) {
-            this.data3.fromAjax('mock-data/fish-bone-data2');
+            this.data3.fromAjax('mock-data/fish-bone-2');
         }
     }
 

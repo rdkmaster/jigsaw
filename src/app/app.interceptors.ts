@@ -234,45 +234,12 @@ class MockData {
         this.dataSet['countries'] = require('../mock-data/countries.json');
         this.dataSet['marketing'] = require('../mock-data/marketing.json');
         this.dataSet['hr-list-full'] = require('../mock-data/hr-list-full.json');
-        this.dataSet['hr-list'] = {
-            "field": this.dataSet['hr-list-full'].field,
-            "header": this.dataSet['hr-list-full'].header,
-            "data": this.getShortenHrList(this.dataSet['hr-list-full'].data)
-        };
-        this.dataSet['hr-list-complex'] = {
-            "field": this.dataSet['hr-list-full'].field,
-            "header": this.dataSet['hr-list-full'].header,
-            "data": this.getComplexHrList(
-                this.getShortenHrList(this.dataSet['hr-list-full'].data), this.dataSet['hr-list-full'].field)
-        };
-        this.dataSet['big-table-data'] = this.createBigTableData();
-        const fishBoldData = require('../mock-data/fish-bone-full.json');
-        this.dataSet['fish-bone-data1'] = fishBoldData.slice(0, 5);
-        this.dataSet['fish-bone-data2'] = fishBoldData.slice(5);
+        this.dataSet['hr-list'] = require('../mock-data/hr-list.json');
+        this.dataSet['hr-list-complex'] = require('../mock-data/hr-list-complex.json');
+        this.dataSet['fish-bone-1'] = require('../mock-data/fish-bone-1.json');
+        this.dataSet['fish-bone-2'] = require('../mock-data/fish-bone-2.json');
         this.dataSet['tree-data'] = require('../mock-data/tree-data.json');
-    }
-
-    static getShortenHrList(fullList): any[] {
-        // 随机挑选一些，而且要保持固定
-        const indexes = [
-            570, 601, 346, 755, 119, 415, 491, 389, 342, 586, 308, 434, 424, 445, 305, 136, 292, 164, 548, 152,
-            352, 537, 428, 599, 78, 372, 412, 726, 48, 630, 361, 334, 184, 263, 252, 468, 142, 575, 758, 76, 221,
-            81, 242, 607, 651, 211, 276, 472, 128, 170
-        ];
-        const list = [];
-        indexes.forEach(index => list.push(fullList[index]));
-        return list;
-    }
-
-    static getComplexHrList(list, field) {
-        // require的同一个对象，所以拷贝一份，防止其他数据受到影响
-        list = CommonUtils.deepCopy(list);
-
-        list.forEach(item => {
-            item.forEach((value, colIndex) => item[colIndex] = {key: field[colIndex], value: value});
-        });
-
-        return list;
+        this.dataSet['big-table-data'] = this.createBigTableData();
     }
 
     static createBigTableData(): RawTableData {

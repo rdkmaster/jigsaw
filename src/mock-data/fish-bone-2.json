@@ -1,0 +1,304 @@
+[
+    {
+        "id": 5,
+        "name": "Gm呼叫接通",
+        "count": "15916",
+        "ratio": "52.91(%)",
+        "delay": "294.05ms",
+        "drill": {
+            "kpi": "fail_mo_180_voice_gm",
+            "table": "aggr_volte_call_ci_fail",
+            "serviceType": 23,
+            "condition": "Interface=13 and PROCEDURETYPE=5 and Z_KEYWORD1=1 and CALL_SIDE=1 and ServiceType=1"
+        },
+        "pie": {
+            "header": [
+                "ci",
+                "ci_val",
+                "failNum"
+            ],
+            "field": [
+                "ci",
+                "ci_val",
+                "failNum"
+            ],
+            "data": [
+                [
+                    "wyj-test13",
+                    "446011005666987",
+                    "3910"
+                ],
+                [
+                    "446011018980001",
+                    "446011018980001",
+                    "3142"
+                ],
+                [
+                    "446011056669870",
+                    "446011056669870",
+                    "3142"
+                ]
+            ]
+        }
+    },
+    {
+        "id": 6,
+        "name": "Mw呼叫接通",
+        "count": "14252",
+        "ratio": "66.75(%)",
+        "delay": "1863.32ms",
+        "drill": {
+            "kpi": "fail_mo_180_voice_mw",
+            "table": "aggr_volte_call_ci_fail",
+            "serviceType": 23,
+            "condition": "Interface=14 and PROCEDURETYPE=5 and Z_KEYWORD1=1 and CALL_SIDE=1 and ServiceType=1 and SOURCE_NE_TYPE=15"
+        },
+        "pie": {
+            "header": [
+                "ci",
+                "ci_val",
+                "failNum"
+            ],
+            "field": [
+                "ci",
+                "ci_val",
+                "failNum"
+            ],
+            "data": [
+                [
+                    "wyj-test13",
+                    "446011005666987",
+                    "3142"
+                ],
+                [
+                    "446011019890006",
+                    "446011019890006",
+                    "1571"
+                ],
+                [
+                    "446011056669870",
+                    "446011056669870",
+                    "1571"
+                ],
+                [
+                    "446011876033333",
+                    "446011876033333",
+                    "3"
+                ],
+                [
+                    "446011942815286",
+                    "446011942815286",
+                    "1"
+                ]
+            ],
+            "other": {
+                "name": "其它",
+                "value": 3
+            }
+        }
+    },
+    {
+        "id": 7,
+        "name": "ISC呼叫接通",
+        "count": "901",
+        "ratio": "49.94(%)",
+        "delay": "182.55ms",
+        "drill": {
+            "kpi": "fail_mo_180_voice_isc",
+            "table": "aggr_volte_call_ci_fail",
+            "serviceType": 23,
+            "condition": "Interface=18 and PROCEDURETYPE=5 and Z_KEYWORD1=1 and CALL_SIDE=1 and ServiceType=1 and Z_ACTIVETYPE in (1,3)"
+        },
+        "pie": {
+            "header": [
+                "ci",
+                "ci_val",
+                "failNum"
+            ],
+            "field": [
+                "ci",
+                "ci_val",
+                "failNum"
+            ],
+            "data": [
+                [
+                    "wyj-test13",
+                    "446011005666987",
+                    "225"
+                ],
+                [
+                    "446011018980230",
+                    "446011018980230",
+                    "225"
+                ],
+                [
+                    "446011825569588",
+                    "446011825569588",
+                    "1"
+                ]
+            ]
+        }
+    },
+    {
+        "id": 8,
+        "name": "ISC呼叫应答",
+        "count": "450",
+        "ratio": "100.00(%)",
+        "delay": "365.00ms",
+        "drill": {
+            "kpi": "fail_mo_200_voice_isc",
+            "table": "aggr_volte_call_ci_fail",
+            "serviceType": 23,
+            "condition": "Interface=18 and PROCEDURETYPE=5 and Z_KEYWORD1=1 and CALL_SIDE=1 and ServiceType=1 and Z_ACTIVETYPE in (1,3)"
+        },
+        "pie": {
+            "header": [
+                "ci",
+                "ci_val",
+                "failNum"
+            ],
+            "field": [
+                "ci",
+                "ci_val",
+                "failNum"
+            ],
+            "data": [
+                [
+                    "wyj-test13",
+                    "446011005666987",
+                    "225"
+                ],
+                [
+                    "446011018980230",
+                    "446011018980230",
+                    "225"
+                ],
+                [
+                    "446011825569588",
+                    "446011825569588",
+                    "1"
+                ]
+            ]
+        }
+    },
+    {
+        "id": 9,
+        "name": "Mw呼叫应答",
+        "count": "9513",
+        "ratio": "87.55(%)",
+        "delay": "186.54ms",
+        "drill": {
+            "kpi": "fail_mo_200_voice_mw",
+            "table": "aggr_volte_call_ci_fail",
+            "serviceType": 23,
+            "condition": "Interface=14 and PROCEDURETYPE=5 and Z_KEYWORD1=1 and CALL_SIDE=1 and ServiceType=1 and SOURCE_NE_TYPE=15"
+        },
+        "pie": {
+            "header": [
+                "ci",
+                "ci_val",
+                "failNum"
+            ],
+            "field": [
+                "ci",
+                "ci_val",
+                "failNum"
+            ],
+            "data": [
+                [
+                    "wyj-test13",
+                    "446011005666987",
+                    "4713"
+                ],
+                [
+                    "446011019890006",
+                    "446011019890006",
+                    "1571"
+                ],
+                [
+                    "446011056669870",
+                    "446011056669870",
+                    "1571"
+                ],
+                [
+                    "446011876033333",
+                    "446011876033333",
+                    "3"
+                ],
+                [
+                    "446011942815286",
+                    "446011942815286",
+                    "1"
+                ]
+            ],
+            "other": {
+                "name": "其它",
+                "value": 3
+            }
+        }
+    },
+    {
+        "id": 10,
+        "name": "Gm呼叫应答",
+        "count": "8421",
+        "ratio": "62.50(%)",
+        "delay": "299.16ms",
+        "drill": {
+            "kpi": "fail_mo_200_voice_gm",
+            "table": "aggr_volte_call_ci_fail",
+            "serviceType": 23,
+            "condition": "Interface=13 and PROCEDURETYPE=5 and Z_KEYWORD1=1 and CALL_SIDE=1 and ServiceType=1"
+        },
+        "pie": {
+            "header": [
+                "ci",
+                "ci_val",
+                "failNum"
+            ],
+            "field": [
+                "ci",
+                "ci_val",
+                "failNum"
+            ],
+            "data": [
+                [
+                    "wyj-test13",
+                    "446011005666987",
+                    "8588"
+                ],
+                [
+                    "446011056669870",
+                    "446011056669870",
+                    "3142"
+                ],
+                [
+                    "446011018980001",
+                    "446011018980001",
+                    "3142"
+                ],
+                [
+                    "446011909719605",
+                    "446011909719605",
+                    "3"
+                ],
+                [
+                    "446011875575607",
+                    "446011875575607",
+                    "3"
+                ]
+            ],
+            "other": {
+                "name": "其它",
+                "value": 13
+            }
+        }
+    },
+    {
+        "id": 11,
+        "name": "MOS",
+        "count": "",
+        "ratio": "",
+        "delay": "",
+        "pie": {}
+    }
+]

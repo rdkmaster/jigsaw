@@ -82,7 +82,7 @@ function makePlunker(demoFolder, dirName) {
     content.push(getMainTs(findModuleClassName(moduleItem.code)));
     content.push(getSystemJsConfig());
     content.push(getSystemJsAngularLoader());
-    content.push(getAjaxInterceptor());
+    content.push(getAjaxInterceptor(content));
     content.push(getLiveDemoWrapperCSS());
 
     var html = '';
@@ -237,6 +237,7 @@ function fixAppModuleTs(module, demoFolder) {
 }
 
 function findExportsComponent(moduleCode) {
+    // 如果demo代码中，把exports这行给注释掉了，则会有bug，仅靠静态分析如何解决这个问题？
     var match = moduleCode.match(/@NgModule\s*\(\s*{[\s\S]*\bexports\s*:\s*\[\s*(\w+)\s*\]/);
     return match && match[1] ? match[1] : '';
 }
@@ -309,9 +310,12 @@ function getSystemJsConfig() {
     }
 }
 
-function getAjaxInterceptor() {
+function getAjaxInterceptor(content) {
     var code = readCode(__dirname + '/../../src/app/app.interceptors.ts');
     code = fixImport(code);
+
+    // 不能位于在replace之后
+    var urls = findMockDataUrls(code, content);
 
     // merge all mock data json file into this class
     var mockData;
@@ -329,10 +333,16 @@ function getAjaxInterceptor() {
         process.exit(1);
     }
 
+
     code += '\nconst mockData = {\n';
     for (var p in mockData) {
+        var value = {};
+        // 只有demo用到的数据才需要加进来
+        if (urls.indexOf('mock-data/' + p) != -1) {
+            value = JSON.parse(mockData[p]);
+        }
         // compress mock data to shrink the size of the demo file
-        code += `    "${p}": ${JSON.stringify(JSON.parse(mockData[p]))},\n`;
+        code += `    "${p}": ${JSON.stringify(value)},\n`;
     }
     code += '};';
 
@@ -340,6 +350,35 @@ function getAjaxInterceptor() {
         path: 'ajax-interceptor.ts',
         code: code
     }
+}
+
+function findMockDataUrls(interceptorCode, content) {
+    var match = interceptorCode.match(/this\.dataSet\s*\[\s*['"].*?['"]\s*\]\s*=\s*require\b/g);
+    if (!match) {
+        console.error('ERROR: parse app.interceptors.ts failed, no mock-data url found!');
+        process.exit(1);
+    }
+    var allUrls = [];
+    match.forEach(item => allUrls.push('mock-data/' + item.match(/['"]\s*(.*?)\s*['"]/)[1]));
+    if (allUrls.length == 0) {
+        console.error('ERROR: parse app.interceptors.ts failed, no mock-data url found! allUrls.length == 0');
+        process.exit(1);
+    }
+    var urls = allUrls.filter(url => {
+        var found = false;
+        content.forEach(item => {
+            if (!item.path.match(/^app\//)) {
+                return;
+            }
+            // 如果demo的代码的注释部分有这个url，则会有bug，仅靠静态分析如何解决？
+            var re = new RegExp('[\'"`/]' + url + '[\'"`]');
+            if (item.code.match(re)) {
+                found = true;
+            }
+        });
+        return found;
+    });
+    return urls;
 }
 
 function getLiveDemoWrapperCSS() {
