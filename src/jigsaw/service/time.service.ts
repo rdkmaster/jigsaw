@@ -26,7 +26,7 @@ export class TimeService {
     }
 
     private static handleWeekValue(newValue:WeekTime) : Time{
-        if (typeof newValue["week"] === 'number') {
+        if (newValue && typeof newValue["week"] === 'number') {
             return TimeService.getDateFromYearAndWeek(newValue["year"], newValue["week"])
         }
         return <Time>newValue;
@@ -210,7 +210,7 @@ export class TimeService {
         }
         if (typeof result === 'string') {
             result = TimeService.format(result, TimeService.timeFormatterConvert(TimeFormatters.yyyy_mm_dd_hh_mm_ss));
-            result = new Date(result);
+            result = new Date(moment(result, TimeService.timeFormatterConvert(TimeFormatters.yyyy_mm_dd_hh_mm_ss)));
             result = isNaN(result.valueOf()) ? new Date() : result;
         }
         if (result && (gr || (!gr && gr == 0)) || result instanceof Date || result instanceof moment) {
