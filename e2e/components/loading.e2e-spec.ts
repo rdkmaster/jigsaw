@@ -66,8 +66,7 @@ describe('loading', () => {
             const submitEls = $$('.jigsaw-button-color-primary'),
                 testInput = $$('.content-box').get(1).$$('.content-line').get(0).$('input');
             submitEls.get(1).click();
-            await waitForPresence('.jigsaw-button-clicked');
-            await waitForNotPresence('.jigsaw-button-clicked');
+            await browser.sleep(300);
             expect(testInput.getAttribute('ng-reflect-is-disabled')).toBe('true');
         })
     })

@@ -1,5 +1,5 @@
 import {browser, element, by, $, $$} from 'protractor';
-import {waitForNotPresence, waitForPresence} from "../utils/await";
+import {waitForNotPresence, waitForPresence, waitForTextPresence} from "../utils/await";
 import {expectToExist} from "../utils/asserts";
 import {mouseMove} from "../utils/actions";
 import {getWindowSize} from "../utils/popup";
@@ -102,25 +102,26 @@ describe('combo-select', () => {
             await waitForPresence('jigsaw-tile');
             expectToExist('jigsaw-tile');
         });
-        xit('shoud set combo select width', async () => {
+        xit('should be searchable', async () => {
+            browser.get('/combo-select/searchable');
+            const input = $$('jigsaw-input').get(0),
+                tile = $('jigsaw-tile');
+            mouseMove(input);
+            browser.sleep(1000);
+            input.sendKeys('ando');
+            expect(tile.getText()).toBe('andorrda');
+        });
+        it('shoud set combo select width', async () => {
             await browser.get('/combo-select/set-width');
-            const inputs = $$('jigsaw-input'),
-                comboSelect = $$('jigsaw-combo-select'),
-            innerInput =element(by.id('input3'));
-            let combo1Size = await comboSelect.get(0).getSize(),
-                combo2Size = await comboSelect.get(1).getSize(),
-                input3Size = await innerInput.getSize();
-            inputs.get(0).sendKeys(100);
-            expect(combo1Size.width).toBe(100+'px');
+            const comboSelect = $$('jigsaw-combo-select');
+            let combo1Size, input3Size;
+            combo1Size = await comboSelect.get(0).getSize();
+            expect(combo1Size.width).toBe(200);
             mouseMove(comboSelect.get(1));
-            await waitForPresence('input3');
-            browser.sleep(1000);
-            expect(combo1Size.width).toBe(400+'px');
-            inputs.get(1).sendKeys(100);
-            mouseMove(comboSelect.get(1));
-            await waitForPresence('input3');
-            browser.sleep(1000);
-            expect(combo1Size.width).toBe(combo2Size.width);
-        })
+            await waitForPresence('#input3');
+            const innerInput = element(by.id('input3'));
+            input3Size = await innerInput.getSize();
+            expect(input3Size.width).toBe(400);
+        });
     })
 });
