@@ -364,7 +364,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     private _setDate(value: Time) {
         if (this._timePicker) {
             this._handleValueChange(value, <TimeGr>this.gr);
-            this._timePicker.date(TimeService.getFormatDate(value));
+            this._timePicker.date(TimeService.getFormatDate(value, <TimeGr>this.gr));
             this._weekHandle();
             this._handleRecommended(this._el.nativeElement, this._popService);
         }
