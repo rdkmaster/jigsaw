@@ -6,13 +6,13 @@ const {SpecReporter} = require('jasmine-spec-reporter');
 let config = {
     allScriptsTimeout: 11000,
     specs: [
-        './e2e/**/*.e2e-spec.ts'
+        './e2e/live-demo/*.e2e-spec.ts'
     ],
     baseUrl: 'http://localhost:4200/',
     framework: 'jasmine',
     jasmineNodeOpts: {
         showColors: true,
-        defaultTimeoutInterval: 30000,
+        defaultTimeoutInterval: 300000,
         print: function () {
         }
     },
@@ -40,14 +40,6 @@ if (process.env['TRAVIS']) {
             browserName: 'chrome',
             version: 'latest',
             platform: 'Windows 7',
-            shardTestFiles: true,
-            'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
-            'build': process.env['TRAVIS_BUILD_NUMBER']
-        },
-        {
-            browserName: 'firefox',
-            version: 'latest',
-            platform: 'OS X 10.10',
             shardTestFiles: true,
             'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
             'build': process.env['TRAVIS_BUILD_NUMBER']
