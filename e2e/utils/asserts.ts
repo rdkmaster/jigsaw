@@ -14,3 +14,9 @@ export async function expectStringFromAlert(expectString: string) {
     await expect(alertDialog.getText()).toEqual(expectString);
     await alertDialog.accept();
 }
+
+export async function expectGlobalBlock(blockElement:ElementFinder){
+    await expect(blockElement.getCssValue('position')).toBe('fixed');
+    await expect(blockElement.getCssValue('z-index')).toBe('1000');
+    await expect(blockElement.getCssValue('background-color')).toBe('rgba(0, 0, 0, 0)');
+}

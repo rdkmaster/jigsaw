@@ -22,6 +22,8 @@ export async function expectPopupBlock(selector: string) {
     expect(element(by.css(selector)).getCssValue('position')).toBe('fixed');
     expect(element(by.css(selector)).getCssValue('top')).toBe('0px');
     expect(element(by.css(selector)).getCssValue('left')).toBe('0px');
+    expect(element(by.css(selector)).getCssValue('z-index')).toBe('1000');
+    expect(element(by.css(selector)).getCssValue('background-color')).toBe('rgba(0, 0, 0, 0)');
 
     const blockSize = await element(by.css(selector)).getSize();
     const windowSize = await getWindowSize();
