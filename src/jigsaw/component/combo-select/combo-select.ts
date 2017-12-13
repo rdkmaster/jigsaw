@@ -144,14 +144,14 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     public set open(value: boolean) {
-        if (value === this._$opened || !this.initialized || (this.disabled && value)) {
+        if (value === this._$opened || (this.disabled && value)) {
             // 设置值等于当前值
-            // 没有初始化完成
             // 控件disabled，并且想打开下拉
             return;
         }
         setTimeout(() => {
             // toggle open 外部控制时，用setTimeout变更检查
+            // 初始化open，等待组件初始化后执行
             if (value) {
                 this._openDropDown();
                 if(this.editor) this.editor.focus();

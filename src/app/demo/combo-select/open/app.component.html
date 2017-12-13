@@ -7,12 +7,9 @@
 <div class="combo-select-demo cmn-box">
     <h3>open drop down</h3>
     <div class="test-btn">
-        <jigsaw-button *ngIf="!combo.open" (click)="toggleOpen()">option 1</jigsaw-button>
-        <jigsaw-button *ngIf="!combo.open" (click)="combo.open = true">option 2</jigsaw-button>
-        <jigsaw-button *ngIf="combo.open">close drop down</jigsaw-button>
+        <jigsaw-button (click)="toggleOpen()">toggle open drop down</jigsaw-button>
     </div>
-    <jigsaw-combo-select #combo
-                         [(value)]="selectedCity"
+    <jigsaw-combo-select [(value)]="selectedCity"
                          [(open)]="open"
                          maxWidth="500"
                          [clearable]="true">
