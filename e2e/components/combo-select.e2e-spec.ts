@@ -89,7 +89,7 @@ describe('combo-select', () => {
             await waitForNotPresence('jigsaw-tile');
             expectToExist('jigsaw-tile', false);
         });
-        it('should open combo select through two ways', async () => {
+        xit('should open combo select through two ways', async () => {
             await browser.get('/combo-select/open');
             const buttons = $$('jigsaw-button');
             buttons.get(0).click();
