@@ -1,17 +1,5 @@
 var fs = require('fs');
 
-// if (process.argv.length <= 2) {
-//     console.error("ERROR: need live-demo home dir, usage: \n" +
-//         "node generate-live-demo-testcases.js live-demo-dir");
-//     process.exit(1);
-// }
-
-// var demoHome = process.argv[2];
-// if (!fs.existsSync(demoHome)) {
-//     console.error("ERROR: invalid live-demo home dir, dir not exists.");
-//     process.exit(1);
-// }
-// demoHome = demoHome.match(/[\/\\]$/) ? demoHome : demoHome + '/';
 var demoHome = __dirname + '/../../src/app/demo/';
 var outputFile = __dirname + '/../../e2e/live-demo/plunker.e2e-spec.ts';
 
