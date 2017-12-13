@@ -21,7 +21,7 @@ export class JigsawTabPane {
     public hidden: boolean = false;
 
     @Input()
-    public async: boolean;
+    public async: boolean = true; // 默认异步加载
 
     @Input()
     public initData: Object;
