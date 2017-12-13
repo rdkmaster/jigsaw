@@ -59,22 +59,6 @@ describe('combo-select', () => {
             await waitForPresence('jigsaw-collapse');
             expectToExist('jigsaw-collapse');
         });
-        it('drop down width should be set', async () => {
-            await browser.get('/combo-select/drop-down-width');
-            const selectEls = $$('jigsaw-combo-select'),
-                tile = $('jigsaw-tile'),
-                body = $('body');
-            let bodySize;
-            mouseMove(selectEls.get(0));
-            await waitForPresence('jigsaw-tile');
-            expect(tile.getCssValue('width')).toBe('400px');
-            mouseMove({x: 1000, y: 1000});
-            await waitForNotPresence('jigsaw-tile');
-            mouseMove(selectEls.get(1));
-            await waitForPresence('jigsaw-tile');
-            bodySize = await body.getSize();
-            expect(tile.getCssValue('width')).toBe(bodySize.width * 0.5 + 'px');
-        });
         it('should toggle multiple & auto close on select', async () => {
             await browser.get('/combo-select/multiple');
             const selectEl = $('jigsaw-combo-select'),
