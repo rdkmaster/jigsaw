@@ -1,8 +1,8 @@
 #!/bin/bash
 seedDir=`pwd`/../jigsaw-seed
 
-chmod a+x ./sauce_connect_setup.sh
-./sauce_connect_setup.sh
+chmod a+x buid/scripts/sauce_connect_setup.sh
+buid/scripts/sauce_connect_setup.sh
 
 node buid/scripts/make-demo-independent.js
 gulp ensure-url-matches-path
