@@ -13,11 +13,12 @@ export class TrustedHtmlFullComponent {
         <input onblur="onBlur()" value="onblur....">
     `);
     jsCode = this.stripPrefixSpaces(`
+        // 这边不要使用箭头函数，因为很多浏览器还不支持原生es6
         this.context = {
-            hello: who => alert('hello ' + who),
-            onBlur: () => alert('the input has lost focus!')
+            hello: function(who) { alert('hello ' + who) },
+            onBlur: function() { alert('the input has lost focus!') }
         }
-     `);
+    `);
 
     /**
      * 这个context变量是整个demo最需要关注的一部分，我们将它作为 [trustedHtmlContext] 的输入传递给了 trustedHtml 指令
