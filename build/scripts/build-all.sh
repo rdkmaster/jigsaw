@@ -14,4 +14,4 @@ cd $seedDir # run e2e in seed directory
 ng build -prod -aot
 ng e2e
 
-sh ./sauce_connect_teardown.sh
+sh buid/scripts/sauce_connect_teardown.sh
