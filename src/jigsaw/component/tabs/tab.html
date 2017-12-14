@@ -25,7 +25,7 @@
             [key]="i"
             [tabItem]="tab.content"
             [isActive]="selectedIndex === i"
-            [async]="tab.async"
+            [lazy]="tab.lazy"
             [initData]="tab.initData"
             [ngStyle]="{transform: 'translate3d('+(i-_$selectedIndex)*100+'%, 0px, 0px)'}">
         </jigsaw-tab-content>

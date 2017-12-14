@@ -20,8 +20,16 @@ export class JigsawTabPane {
     @Input()
     public hidden: boolean = false;
 
+    /**
+     * @deprecated use `lazy` instead
+     *
+     * @internal
+     */
     @Input()
-    public async: boolean;
+    public async: boolean = true; // 默认异步加载
+
+    @Input()
+    public lazy: boolean = true; // 默认异步加载
 
     @Input()
     public initData: Object;
