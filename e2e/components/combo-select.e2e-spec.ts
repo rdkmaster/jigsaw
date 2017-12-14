@@ -73,18 +73,13 @@ describe('combo-select', () => {
             await waitForNotPresence('jigsaw-tile');
             expectToExist('jigsaw-tile', false);
         });
-        xit('should open combo select through two ways', async () => {
+        it('should open combo select through two ways', async () => {
             await browser.get('/combo-select/open');
-            const buttons = $$('jigsaw-button');
-            buttons.get(0).click();
-            await waitForPresence('jigsaw-tile');
+            const button = $('jigsaw-button');
             expectToExist('jigsaw-tile');
-            buttons.get(0).click();
+            button.click();
             await waitForNotPresence('jigsaw-tile');
             expectToExist('jigsaw-tile', false);
-            buttons.get(1).click();
-            await waitForPresence('jigsaw-tile');
-            expectToExist('jigsaw-tile');
         });
         xit('should be searchable', async () => {
             browser.get('/combo-select/searchable');
@@ -97,7 +92,8 @@ describe('combo-select', () => {
         });
         it('shoud set combo select width', async () => {
             await browser.get('/combo-select/set-width');
-            const comboSelect = $$('jigsaw-combo-select');
+            const comboSelect = $$('jigsaw-combo-select'),
+                buttons = $$('input');
             let combo1Size, input3Size;
             combo1Size = await comboSelect.get(0).getSize();
             expect(combo1Size.width).toBe(200);
@@ -106,6 +102,16 @@ describe('combo-select', () => {
             const innerInput = element(by.id('input3'));
             input3Size = await innerInput.getSize();
             expect(input3Size.width).toBe(400);
+            buttons.get(0).clear();
+            buttons.get(1).clear();
+            buttons.get(0).sendKeys(100);
+            buttons.get(1).sendKeys(100);
+            combo1Size = await comboSelect.get(0).getSize();
+            expect(combo1Size.width).toBe(100);
+            mouseMove(comboSelect.get(1));
+            await waitForPresence('#input3');
+            input3Size = await innerInput.getSize();
+            expect(input3Size.width).toBe(240);
         });
     })
 });
