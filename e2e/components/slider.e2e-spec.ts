@@ -1,4 +1,4 @@
-import {browser, element, by, ExpectedConditions} from 'protractor';
+import {browser, element, by, $, $$} from 'protractor';
 import {ILocation, until} from "selenium-webdriver";
 
 
@@ -7,50 +7,38 @@ describe('slider', () => {
         browser.waitForAngularEnabled(false);
     });
 
-    xdescribe('test basic ', () => {
-        beforeEach(() => {
-            browser.get('/slider/basic')
-        });
+    describe('test basic ', () => {
+
+
         it('shoud drag and drop slider', async () => {
-            const sliderHandle = element.all(by.css('.jigsaw-slider-handle')),
+            await browser.get('/slider/basic');
+
+            const messages = $$('.message'),
+                sliderHandle = element.all(by.css('.jigsaw-slider-handle')),
                 handleTag = element.all(by.tagName('slider-handle')),
                 spanEl = element.all(by.tagName('ng-component span')),
                 sliderSwitch = element(by.css('.jigsaw-switch-small')),
                 sliderTrack = element.all(by.tagName('jigsaw-slider')).get(3).element(by.css('.jigsaw-slider-track'));
-            await expect(handleTag.get(0).getAttribute('ng-reflect-value')).toBe('30');
-            await browser.actions().mouseMove(sliderHandle.get(0)).mouseDown().mouseMove({x: 1000, y: 0}).mouseUp().perform();
-            await expect(sliderHandle.get(0).getCssValue('LEFT')).toBe('188px');
+            expect(messages.get(0).getText()).toBe('取值: 30');
+            browser.actions().dragAndDrop($('.demo-1 .jigsaw-slider-handle'), {x: 1000, y: 0}).perform();
+            expect(messages.get(0).getText()).toBe('取值: 100');
 
-            await browser.actions().mouseMove(sliderHandle.get(0)).mouseDown().mouseMove({x: -5000, y: 0}).mouseUp().perform();
+            browser.actions().dragAndDrop($('.demo-2 .jigsaw-slider-handle'), {x: -2000, y: 0}).perform();
+            expect(messages.get(1).getText()).toBe('取值: 1');
+            browser.actions().dragAndDrop($('.demo-2 .jigsaw-slider-handle'), {x: 2000, y: 0}).perform();
+            expect(messages.get(1).getText()).toBe('取值: 20');
 
-            await sliderSwitch.click();
-            await browser.actions().mouseMove(sliderHandle.get(0)).mouseDown().mouseMove({x: 5000, y: 0}).mouseUp().perform();
+            browser.actions().dragAndDrop($('.demo-3 .jigsaw-slider-handle'), {x: 2000, y: 0}).perform();
+            expect(messages.get(2).getText()).toBe('取值: 2');
 
-            await expect(sliderHandle.get(0).getCssValue('LEFT')).toBe('0px');
+            expect($('.demo-4').$$('.jigsaw-slider-handle').count()).toBe(3);
 
-            await browser.actions().mouseMove(sliderHandle.get(1)).mouseDown().mouseMove({x: -5000, y: 0}).mouseUp().perform();
+            browser.actions().dragAndDrop($('.demo-5 .jigsaw-slider-handle'), {x: 2000, y: 0}).perform();
+            expect($('.demo-5 .jigsaw-slider .jigsaw-slider-track').getCssValue('width')).toBe($('.demo-5 .jigsaw-slider').getCssValue('width'));
 
-            await expect(handleTag.get(1).getAttribute('ng-reflect-value')).toBe('1');
-            await browser.actions().mouseMove(sliderHandle.get(1)).mouseDown().mouseMove({x: 5000, y: 0}).mouseUp().perform();
+            browser.actions().dragAndDrop($('.demo-6 .jigsaw-slider-handle'), {x:0, y: -1000}).perform();
+            expect(messages.get(3).getText()).toBe('100');
 
-            await expect(handleTag.get(1).getAttribute('ng-reflect-value')).toBe('20');
-
-            await expect(element.all(by.tagName('jigsaw-slider')).get(2).getAttribute('step')).toBe('0.01');
-
-            await browser.actions().mouseMove(sliderHandle.get(3)).mouseDown().mouseMove({x: -5000, y: 0}).mouseUp().perform();
-
-            await expect(handleTag.get(3).getAttribute('ng-reflect-value')).toBe('0');
-            await browser.actions().mouseMove(sliderHandle.get(5)).mouseDown().mouseMove({x: 5000, y: 0}).mouseUp().perform();
-            await expect(handleTag.get(5).getAttribute('ng-reflect-value')).toBe('100');
-
-            await browser.actions().mouseMove(sliderHandle.get(7)).mouseDown().mouseMove({x: 0, y: 5000}).mouseUp().perform();
-            await expect(handleTag.get(7).getAttribute('ng-reflect-value')).toBe('0');
-            await browser.actions().mouseMove(sliderHandle.get(8)).mouseDown().mouseMove({x: 0, y: -5000}).mouseUp().perform();
-
-            await expect(handleTag.get(8).getAttribute('ng-reflect-value')).toBe('100');
-
-            await browser.actions().mouseMove(sliderHandle.get(9)).mouseDown().mouseMove({x: 0, y: 5000}).mouseUp().perform();
-            await expect(handleTag.get(9).getAttribute('ng-reflect-value')).toBe('20');
         });
     });
 });
