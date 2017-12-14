@@ -15,8 +15,8 @@ export class TrustedHtmlFullComponent {
     jsCode = this.stripPrefixSpaces(`
         // 这边不要使用箭头函数，因为很多浏览器还不支持原生es6
         this.context = {
-            hello: function(who){alert('hello ' + who)},
-            onBlur: function(){alert('the input has lost focus!')}
+            hello: function(who) { alert('hello ' + who) },
+            onBlur: function() { alert('the input has lost focus!') }
         }
     `);
 
