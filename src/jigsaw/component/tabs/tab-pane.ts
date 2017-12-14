@@ -21,14 +21,13 @@ export class JigsawTabPane {
     public hidden: boolean = false;
 
     /**
-     * @deprecated
+     * @deprecated use `lazy` instead
+     *
+     * @internal
      */
     @Input()
     public async: boolean = true; // 默认异步加载
 
-    /**
-     * @Internal
-     */
     @Input()
     public lazy: boolean = true; // 默认异步加载
 
