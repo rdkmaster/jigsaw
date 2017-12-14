@@ -26,9 +26,6 @@ describe('loading', () => {
             await waitForNotPresence('.jigsaw-loading-content');
             expectToExist('jigsaw-block', false);
             expectToExist('.jigsaw-ball-loading-host', false);
-            buttons.get(2).click();
-            await browser.wait(ExpectedConditions.presenceOf(element(by.css('.jigsaw-loading-content'))));
-            expectToExist('.jigsaw-ball-loading-host');
         })
     });
 
