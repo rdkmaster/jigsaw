@@ -143,7 +143,7 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
 
     @HostBinding('innerHtml')
     public get innerHtml(): any {
-        return this._safeHtml;
+        return this._safeHtml ? this._safeHtml : '';
     }
 
     ngOnInit() {
