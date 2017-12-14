@@ -1,6 +1,4 @@
-import {browser, element, by, ExpectedConditions} from 'protractor';
-import {ILocation, until} from "selenium-webdriver";
-
+import {browser, $} from 'protractor';
 
 describe('scrollbar', () => {
     beforeEach(() => {
@@ -8,14 +6,19 @@ describe('scrollbar', () => {
     });
 
     describe('test basic ', () => {
-        beforeEach(() => {
-            browser.get('/scrollbar/basic')
-        });
-        xit('drag and drop scollbar', async () => {
-            const draggerEl = element(by.tagName('ng-component')).element(by.css('.mCSB_dragger'));
-            await expect(draggerEl.getCssValue('TOP')).toBe('0px');
-            await browser.actions().dragAndDrop(draggerEl, {x: 0, y: 200}).perform();
-            await expect(draggerEl.getCssValue('TOP')).toBe('70px');
+        it('should be scroll', async () => {
+            await browser.get('/scrollbar/basic');
+            let outSideScrollbarTop,insideScrollbarTop;
+            outSideScrollbarTop = await $('.box-1 > .ps__rail-y').getCssValue('top');
+            expect(outSideScrollbarTop).toBe('0px');
+            browser.executeScript('$(".box-1").scrollTop(1000);');
+            outSideScrollbarTop = await $('.box-1 > .ps__rail-y').getCssValue('top');
+            expect(outSideScrollbarTop).toBe('1000px');
+            insideScrollbarTop = await $('.box-2 > .ps__rail-y').getCssValue('top');
+            expect(insideScrollbarTop).toBe('0px');
+            browser.executeScript('$(".box-2").scrollTop(200);');
+            insideScrollbarTop = await $('.box-2 > .ps__rail-y').getCssValue('top');
+            expect(insideScrollbarTop).toBe('200px');
         })
     });
 });
