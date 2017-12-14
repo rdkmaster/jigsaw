@@ -20,8 +20,17 @@ export class JigsawTabPane {
     @Input()
     public hidden: boolean = false;
 
+    /**
+     * @deprecated
+     */
     @Input()
     public async: boolean = true; // 默认异步加载
+
+    /**
+     * @Internal
+     */
+    @Input()
+    public lazy: boolean = true; // 默认异步加载
 
     @Input()
     public initData: Object;

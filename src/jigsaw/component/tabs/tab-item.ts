@@ -115,7 +115,7 @@ export class JigsawTabContent extends JigsawTabBase implements AfterViewInit {
     }
 
     @Input()
-    public async: boolean;
+    public lazy: boolean;
 
     private _isActive: boolean;
 
@@ -132,7 +132,7 @@ export class JigsawTabContent extends JigsawTabBase implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        if (!this.async || this._isActive) {
+        if (!this.lazy || this._isActive) {
             // 同步加载，或者处于激活状态
             this._insert();
         }
