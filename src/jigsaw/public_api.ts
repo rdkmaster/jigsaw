@@ -35,6 +35,7 @@ export * from './component/dialog/dialog';
 export * from './component/graph/index';
 export * from './component/input/input';
 export * from './component/loading/loading';
+export * from './component/notification/notification';
 export * from './component/pagination/pagination';
 export * from './component/radio/radio';
 export * from './component/range-time/index';

@@ -1,0 +1,14 @@
+<div class="jigsaw-notification">
+    <span class="jigsaw-notification-close" (click)='dispose()'>&times;</span>
+    <div class="jigsaw-notification-title"><i class="jigsaw-notification-icon {{icon}}"></i>{{title}}</div>
+    <div class="jigsaw-notification-content" [trustedHtml]="message"></div>
+    <div class="jigsaw-notification-button" *ngIf="button">
+        <jigsaw-button
+            [colorType]="button.type"
+            [disabled]="button.disabled"
+            [preSize]="button.preSize ? button.preSize : 'default'"
+            (click)="answer.emit(button)"
+            class="{{button.clazz}}">{{button.label}}
+        </jigsaw-button>
+    </div>
+</div>
