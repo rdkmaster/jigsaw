@@ -45,8 +45,8 @@ export class JigsawMovable implements OnInit, OnDestroy {
 
     private _dragMove = (event) => {
         if (this._moving) {
-            const ox = event.clientX - this._position[0];
-            const oy = event.clientY - this._position[1];
+            const ox = event.clientX - this._position[0] - window.pageXOffset;
+            const oy = event.clientY - this._position[1] - window.pageYOffset;
             this._renderer.setStyle(this._movableTarget, 'left', ox + 'px');
             this._renderer.setStyle(this._movableTarget, 'top', oy + 'px');
         }
