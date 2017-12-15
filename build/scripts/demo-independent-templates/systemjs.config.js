@@ -54,7 +54,7 @@
       'resize-observer-polyfill':   'npm:resize-observer-polyfill@1.5.0/dist/ResizeObserver.es.js',
       "@ngx-translate/core":        'npm:@ngx-translate/core@8.0.0',
       "echarts":                    'npm:echarts@3.5.2/dist/echarts.js',
-      '@rdkmaster/jigsaw':          'npm:@rdkmaster/jigsaw'
+      '@rdkmaster/jigsaw':          'npm:@rdkmaster/jigsaw@next'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
