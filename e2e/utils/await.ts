@@ -20,3 +20,11 @@ export async function waitForTextPresence(selector: string|ElementFinder, text: 
 export async function waitForNotTextPresence(selector: string, text: any) {
     await browser.wait(ExpectedConditions.not(ExpectedConditions.textToBePresentInElement(element(by.css(selector)), text)));
 }
+
+export async function waitForVisibility(selector: string) {
+    return await browser.wait(ExpectedConditions.visibilityOf(element(by.css(selector))))
+}
+
+export async function waitForInvisibility(selector: string) {
+    return await browser.wait(ExpectedConditions.invisibilityOf(element(by.css(selector))))
+}

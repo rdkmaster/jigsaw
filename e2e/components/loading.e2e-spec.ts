@@ -58,13 +58,13 @@ describe('loading', () => {
     });
 
     describe('test loading full', () => {
-        it('input should be disabled after click submit', async() => {
+        it('input should be disabled after click submit', async () => {
             browser.get('/loading/full');
             const submitEls = $$('.jigsaw-button-color-primary'),
                 testInput = $$('.content-box').get(1).$$('.content-line').get(0).$('input');
             submitEls.get(1).click();
-            await browser.sleep(300);
-            expect(testInput.getAttribute('ng-reflect-is-disabled')).toBe('true');
+            await waitForPresence('jigsaw-loading');
+            expectToExist('jigsaw-loading');
         })
     })
 });
