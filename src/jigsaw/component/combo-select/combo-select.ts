@@ -1,5 +1,4 @@
 import {
-    AfterViewInit,
     Component,
     ContentChild,
     ElementRef,
@@ -154,7 +153,6 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             // 初始化open，等待组件初始化后执行
             if (value) {
                 this._openDropDown();
-                if(this.editor) this.editor.focus();
             } else {
                 this._closeDropDown();
                 this.searchKeyword = '';
