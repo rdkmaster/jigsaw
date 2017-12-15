@@ -10,10 +10,8 @@ describe('tree', () => {
         browser.waitForAngularEnabled(false);
     });
     describe('test tree basic', () => {
-        beforeEach(() => {
-            browser.get('/tree/basic');
-        });
-        it('should be switch either click or double click', async () => {
+        it('should be switch either click or double click and father node should be selected when all childern was selected and in turn the same', async () => {
+            await browser.get('/tree/basic');
             expect($('#__unique_id__1_1_ul').getCssValue('display')).toBe('block');
             browser.actions().doubleClick($('#__unique_id__1_1_span')).perform();
             await waitForInvisibility('#__unique_id__1_1_ul');
@@ -25,10 +23,9 @@ describe('tree', () => {
             await waitForVisibility('#__unique_id__1_2_ul');
             browser.actions().doubleClick($('#__unique_id__1_2_span')).perform();
             await waitForInvisibility('#__unique_id__1_2_ul');
-        });
-        it('father node should be selected when all childern was selected and in turn the same', () => {
             $('#__unique_id__1_1_check').click();
-            expectToExist($('#__unique_id__1_1 > .checkbox_true_full'));
+            await waitForPresence('#__unique_id__1_1 > .checkbox_true_full_focus');
+            expectToExist($('#__unique_id__1_1 > .checkbox_true_full_focus'));
         });
     });
     describe('test tree editable', () => {
