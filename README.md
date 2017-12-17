@@ -75,6 +75,5 @@ We believe that the following acts are doing contributions:
 - Write or translate the api documentation, or any articals about Jigsaw.
 - The more effective way to contribute is to push us PRs, all PRs are welcome and will be dealt with seriously;
     - Give priority to the [issues](https://github.com/rdkmaster/jigsaw/issues) without a `suspend` tag;
-    - This is a simple [code specification](docs/coding-spec.md), please try to follow it;
 
 
