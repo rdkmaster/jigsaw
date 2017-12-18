@@ -13,6 +13,7 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
     background-color: $disabled-color;
     cursor: pointer;
     transition: all $animation-duration-slow;
+    -ms-transition: none;
     user-select: none;
 
     .#{$switch-prefix}-inner {
