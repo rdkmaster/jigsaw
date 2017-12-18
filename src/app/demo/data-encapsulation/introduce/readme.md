@@ -28,9 +28,20 @@ Jigsaw的数据总体分成两大分支：
     - `LocalPageableArray` 一个支持本地分页、排序、过滤的数组对象，详情请访问[这个页面](/components/classes/api?apiItem=LocalPageableArray)。
 - 表格数据对象
     - `TableData` 一个基础的表格数据对象，详情请访问[这个页面](/components/classes/api?apiItem=TableData)。
-    - `PageableTableData<T>` 一个支持服务端分页、排序、过滤的表格数据对象，详情请访问[这个页面](/components/classes/api?apiItem=PageableTableData)。
-    - `LocalPageableTableData<T>` 一个支持本地分页、排序、过滤的表格数据对象，详情请访问[这个页面](/components/classes/api?apiItem=LocalPageableTableData)。
-    - `BigTableData<T>` 一个支持海量数据常数级呈现的表格数据对象，详情请访问[这个页面](/components/classes/api?apiItem=BigTableData)。
+    - `PageableTableData` 一个支持服务端分页、排序、过滤的表格数据对象，详情请访问[这个页面](/components/classes/api?apiItem=PageableTableData)。
+    - `LocalPageableTableData` 一个支持本地分页、排序、过滤的表格数据对象，详情请访问[这个页面](/components/classes/api?apiItem=LocalPageableTableData)。
+    - `BigTableData` 一个支持海量数据常数级呈现的表格数据对象，详情请访问[这个页面](/components/classes/api?apiItem=BigTableData)。
+- 图形数据对象
+    - `PieGraphData` 通用的饼图数据，详情请访问[这个页面](/components/classes/api?apiItem=PieGraphData)。
+    - `PieGraphDataByRow` 基于数据库表的行关系生成的饼图，详情请访问[这个页面](/components/classes/api?apiItem=PieGraphDataByRow)。
+    - `PieGraphDataByColumn` 基于数据库表的列关系生成的饼图，详情请访问[这个页面](/components/classes/api?apiItem=PieGraphDataByColumn)。
+    - `LineBarGraphData` 通用的折线柱状图数据，详情请访问[这个页面](/components/classes/api?apiItem=LineBarGraphData)。
+- 层次关系数据
+    - `TreeData` 用于任何有层次关系的组件，包括树、鱼骨图等，包括未来的级联选择器、多级菜单等，都需要用到层次关系数据，因此后续这个类会进一步抽象和扩展，
+详情请访问[这个页面](/components/classes/api?apiItem=TreeData)。
+
+目前而言，Jigsaw在书组件对象和表格数据对象方面的抽象程度较高，已经能够满足绝大部分场景，因此较为稳定。
+相对而言，图形数据、层次关系数据这2个方面还比较欠缺，后续需要进一步的抽象和扩展，也难免会引入一些破坏性修改。
 
 <a name="relationship"></a>
 #### 数据关系图
