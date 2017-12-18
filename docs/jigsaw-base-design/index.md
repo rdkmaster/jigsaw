@@ -58,7 +58,7 @@
     	</ng-template>
     </jigsaw-combo-select>
 
-可以从视图代码里看到，tile像一个模块一样放到combo内部，并且他们之间有一些连接线(`selectedCity`)，这就好比组装一个遥控汽车，把电池，马达用线路连接起来差不多。
+可以从视图代码里看到，tile像一个模块一样放到combo内部，并且他们之间有一些‘连接线’(`selectedCity`)，这就好比组装一个遥控汽车，把电池，马达用线路连接起来差不多。
 
 Jigsaw有很多组合的例子，比如把table和pagination组合起来就能实现分页([demo地址](http://rdk.zte.com.cn/components/table/demo#local-paging-data))，把combo和time组合起来就能实现时间选择器（[demo地址](http://rdk.zte.com.cn/components/time/demo#with-combo-select)）。
 
@@ -98,7 +98,7 @@ table内部还自带了几个重要的渲染器：
  - [checkbox渲染器](http://rdk.zte.com.cn/components/table/demo#checkbox-column)
  - [编辑单元格渲染器](http://rdk.zte.com.cn/components/table/demo#cell-editable)
 
-## 全局的pop服务
+## 全局的popup服务
 
 前面说的dialog自身是不具备弹出的功能的，我们通过注册在全局的PopupService来进行弹出。
 
@@ -129,6 +129,20 @@ PopupService还有一些弹出配置，可以看下[demo](http://rdk.zte.com.cn/
 
 PopupService弹出[alert]()，[tooltips](http://rdk.zte.com.cn/components/tooltip/demo#dialog)；
 
-通过PopupService衍生出了[LoadingService](http://rdk.zte.com.cn/components/loading/demo)，其内部也是通过Popupservice弹出的。
+通过PopupService衍生出了[LoadingService](http://rdk.zte.com.cn/components/loading/demo)，其内部也是通过PopupService弹出的。
 
 > 前面说的combo-select的下拉弹框也是PopupService提供的
+
+## 数据模型
+
+还记得最前面说的combo和tile组合的时候有一个‘连接线’(`selectedCity`)，为什么通过这个‘连接线’，就能让combo和tile的视图自动发生变化呢？主要这边的‘连接线’是我们自己封装的数据模型`ArrayCollection`，里面可以注册一个叫`onRefresh`的回调钩子，也可以通过`refresh`方法触发这个回调。在`ArrayCollection`中，当数据发生变化时，`ArrayCollection`会自动触发`refresh`调用钩子。就是这样的钩子，使得combo和tile，在每次`selectedCity`发生变化时，能及时更新视图。
+
+我们基于这样的机制，封装了
+
+ - [TableData](http://rdk.zte.com.cn/components/table/demo#data-from-ajax)
+ - [PageableTableData](http://rdk.zte.com.cn/components/table/demo#pageable)
+ - [LocalPageableTableData](http://rdk.zte.com.cn/components/table/demo#local-paging-data)
+ - [BigTableData](http://rdk.zte.com.cn/components/table/demo#big-table)
+ - [PieGraphData](http://rdk.zte.com.cn/components/graph/demo#pie)
+ - [LineBarGraphData](http://rdk.zte.com.cn/components/graph/demo#line-bar-graph-ajax)
+ - [TreeData](http://rdk.zte.com.cn/components/tree/demo#data-from-ajax)
