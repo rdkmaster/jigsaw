@@ -9,8 +9,10 @@ describe('list', () => {
     });
 
     describe('test list full', () => {
+        beforeEach(() => {
+            browser.get('/list/full');
+        });
         it('menu should be select correctly', async () => {
-            await browser.get('/list/full');
             const list1options = $('.demo-1').$$('j-list-option'),
                 list2options = $('.demo-2').$$('j-list-option'),
                 list3options = $('.demo-3').$$('j-list-option'),

@@ -8,11 +8,10 @@ describe('slider', () => {
     });
 
     describe('test basic ', () => {
-
-
+        beforeEach(() => {
+            browser.get('/slider/basic');
+        });
         it('shoud drag and drop slider', async () => {
-            await browser.get('/slider/basic');
-
             const messages = $$('.message'),
                 sliderHandle = element.all(by.css('.jigsaw-slider-handle')),
                 handleTag = element.all(by.tagName('slider-handle')),
