@@ -146,3 +146,14 @@ PopupService弹出[alert]()，[tooltips](http://rdk.zte.com.cn/components/toolti
  - [PieGraphData](http://rdk.zte.com.cn/components/graph/demo#pie)
  - [LineBarGraphData](http://rdk.zte.com.cn/components/graph/demo#line-bar-graph-ajax)
  - [TreeData](http://rdk.zte.com.cn/components/tree/demo#data-from-ajax)
+
+这是我们的数据关系图
+![data](data.png 'data')
+
+ > Jigsaw在组件数据的封装这方面，也是下足了功夫的。
+
+ > 图上可以看到组件数据的继承关系网，这么复杂的关系网就足以知道我们在这方面的抽象程度有多高。
+
+ > 虽然关系网非常复杂，但是，应用仅需要知道关系网的最端点上的数据就可以溜溜的用起来了。
+
+数据模型[详情](http://rdk.zte.com.cn/jigsaw/data-encapsulation/introduce)
