@@ -100,7 +100,7 @@ export class CalendarDateRenderer extends TableCellRendererBase {
     get date(): string {
         if (CommonUtils.isUndefined(this._date)) {
             const td: CalendarTableData = <CalendarTableData>this.tableData;
-            const dateObject = new Date(`${td.year}-${td.month + 1}-1 00:00:00`);
+            const dateObject = new Date(`${td.year}/${td.month + 1}/1 00:00:00`);
             const daysOfMonth = new Date(dateObject.getFullYear(), (dateObject.getMonth() + 1), 0).getDate();
             const weekDay = dateObject.getDay();
             const date = this.row == 0 && this.column < weekDay ? 0 : this.row * 7 + this.column - weekDay + 1;

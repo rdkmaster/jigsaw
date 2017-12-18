@@ -9,8 +9,10 @@ describe('loading', () => {
     });
 
     describe('test ball loading', () => {
+        beforeEach(() => {
+            browser.get('/loading/ball');
+        });
         it('should display correctly', async () => {
-            await browser.get('/loading/ball');
             const buttons = element.all(by.css('.jigsaw-button')),
                 loadingBlock = element(by.tagName('jigsaw-block')),
                 ballsEl = element(by.css('.jigsaw-loading-content')).all(by.tagName('div'));
@@ -30,8 +32,10 @@ describe('loading', () => {
     });
 
     describe('test bubble loading', () => {
+        beforeEach(() => {
+            browser.get('/loading/bubble');
+        });
         it('should display correctly', async () => {
-            await browser.get('/loading/bubble');
             const buttons = element.all(by.css('.jigsaw-button')),
                 bubbles = element(by.css('.container1')).all(by.tagName('div'));
             buttons.get(0).click();

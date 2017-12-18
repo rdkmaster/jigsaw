@@ -10,8 +10,10 @@ describe('tree', () => {
         browser.waitForAngularEnabled(false);
     });
     describe('test tree basic', () => {
+        beforeEach(() => {
+            browser.get('/tree/basic');
+        });
         it('should be switch either click or double click and father node should be selected when all childern was selected and in turn the same', async () => {
-            await browser.get('/tree/basic');
             expect($('#__unique_id__1_1_ul').getCssValue('display')).toBe('block');
             browser.actions().doubleClick($('#__unique_id__1_1_span')).perform();
             await waitForInvisibility('#__unique_id__1_1_ul');
@@ -29,8 +31,10 @@ describe('tree', () => {
         });
     });
     describe('test tree editable', () => {
+        beforeEach(() => {
+            browser.get('/tree/editable');
+        });
         it('should be editable and deleted', async () => {
-            await browser.get('/tree/editable');
             await waitForPresence('#__unique_id__1_1_a');
             mouseMove($('#__unique_id__1_1_a'));
             $('#__unique_id__1_1_edit').click();

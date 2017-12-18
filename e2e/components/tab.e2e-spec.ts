@@ -20,11 +20,13 @@ describe('tabs', () => {
         })
     });
     describe('test tabApi', () => {
+        beforeEach(()=>{
+            browser.get('/tab/api');
+        });
         it('should operate tab when click jigsaw button', async () => {
             const jigsawButton = element(by.css('.container')).all(by.css('.jigsaw-button')),
                 tabsLabelEl = element.all(by.tagName('jigsaw-tab-label')),
                 tabContentEl = element.all(by.tagName('jigsaw-tab-content'));
-            await browser.get('/tab/api');
             jigsawButton.get(0).click();
             await browser.wait(ExpectedConditions.presenceOf(tabsLabelEl.get(4)));
             await expect(tabContentEl.get(4).element(by.tagName('H3')).getText()).toBe('Hi Jerry, please input your information');

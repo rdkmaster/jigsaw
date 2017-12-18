@@ -63,7 +63,6 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
 .#{$table-prefix-cls}-header {
     position: absolute;
     top: 0;
-    overflow-y: hidden;
     z-index: $zindex-affix;
 }
 
