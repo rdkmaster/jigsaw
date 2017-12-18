@@ -6,8 +6,10 @@ describe('i18n', () => {
     });
 
     describe('test i18n full', () => {
+        beforeEach(() => {
+            browser.get('/i18n/full');
+        });
         it('should be International', async () => {
-            await browser.get('/i18n/full');
             const buttons = $$('jigsaw-button'),
                 alertContent = $('jigsaw-alert').$('.jigsaw-alert-content'),
                 dialogContent = $('jigsaw-dialog').$('.dialog-content'),
