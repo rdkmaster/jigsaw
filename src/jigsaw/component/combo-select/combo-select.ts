@@ -156,7 +156,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             // 初始化open，等待组件初始化后执行
             if (value) {
                 this._openDropDown();
-                if(this.editor) this.editor.focus();
+                if (this.editor) this.editor.focus();
             } else {
                 this._closeDropDown();
                 this.searchKeyword = '';
@@ -231,6 +231,21 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         setTimeout(() => {
             this._renderer.setStyle(this._popupElement, 'width', this._elementRef.nativeElement.offsetWidth + 'px');
         }, 0);
+    }
+
+    private _autoEditorWidth(){
+        if (!this.searchable || !this.editorEl) return;
+
+        if (this.tags.last) {
+            const host = this._elementRef.nativeElement;
+            const lastTag = this.tags.last._elementRef.nativeElement;
+            let editorWidth: any = host.offsetWidth -
+                (AffixUtils.offset(lastTag).left - AffixUtils.offset(host).left + lastTag.offsetWidth + 6 + 30);
+            editorWidth = editorWidth > 40 ? editorWidth + 'px' : '100%';
+            this._renderer.setStyle(this.editorEl.nativeElement, 'width', editorWidth);
+        } else {
+            this._renderer.setStyle(this.editorEl.nativeElement, 'width', '100%');
+        }
     }
 
     private _autoPosition() {
@@ -411,13 +426,12 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     public ngAfterViewInit() {
         this.tags.changes.subscribe(() => {
-            const host = this._elementRef.nativeElement;
-            const lastTag = this.tags.last._elementRef.nativeElement;
-            let editorWidth: any = host.offsetWidth -
-                (AffixUtils.offset(lastTag).left - AffixUtils.offset(host).left + lastTag.offsetWidth + 6 + 30);
-            editorWidth = editorWidth > 40 ? editorWidth + 'px' : '100%';
-            this._renderer.setStyle(this.editorEl.nativeElement, 'width', editorWidth);
-            this._autoPosition();
+            this._autoEditorWidth();
+
+            setTimeout(() => {
+                // 等待combo高度变化
+                this._autoPosition();
+            });
         })
     }
 
