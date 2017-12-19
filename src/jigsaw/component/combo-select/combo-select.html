@@ -13,7 +13,7 @@
                 {{tagItem[labelField]}}
             </jigsaw-tag>
             <jigsaw-input #editor *ngIf="searchable && !disabled" [(value)]="searchKeyword" [disabled]="searching"
-                          width="100%" height="80%" (valueChange)="_$handleEditorChange()"
+                          width="100%" height="24" (valueChange)="_$handleEditorChange()"
                           [clearable]="false" [placeholder]="value.length == 0 ? placeholder : ''">
             </jigsaw-input>
             <div class="jigsaw-combo-select-placeholder" *ngIf="placeholder && value.length == 0 && !searchable">
