@@ -13,6 +13,7 @@ export class ComboSelectAutoCompleteDemo {
     spaCountries: PageableArray;
     selectedCountries: any;
     selectedCountries2: ArrayCollection<ComboSelectValue> = new ArrayCollection();
+    selectedCountries3: any;
 
     constructor(public http: HttpClient) {
         this.lpaCountries = new LocalPageableArray<ComboSelectValue>();
