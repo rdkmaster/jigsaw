@@ -135,6 +135,8 @@ PopupService弹出[alert]()，[tooltips](http://rdk.zte.com.cn/components/toolti
 
 ## 数据模型
 
+### 变化检测
+
 还记得最前面说的combo和tile组合的时候有一个‘连接线’(`selectedCity`)，为什么通过这个‘连接线’，就能让combo和tile的视图自动发生变化呢？主要这边的‘连接线’是我们自己封装的数据模型`ArrayCollection`，里面可以注册一个叫`onRefresh`的回调钩子，也可以通过`refresh`方法触发这个回调。在`ArrayCollection`中，当数据发生变化时，`ArrayCollection`会自动触发`refresh`调用钩子。就是这样的钩子，使得combo和tile，在每次`selectedCity`发生变化时，能及时更新视图。
 
 我们基于这样的机制，封装了
@@ -157,3 +159,16 @@ PopupService弹出[alert]()，[tooltips](http://rdk.zte.com.cn/components/toolti
  > 虽然关系网非常复杂，但是，应用仅需要知道关系网的最端点上的数据就可以溜溜的用起来了。
 
 数据模型[详情](http://rdk.zte.com.cn/jigsaw/data-encapsulation/introduce)
+
+### 数据源
+
+我们的数据模型支持一些获取数据源的API
+
+ - fromAjax 通过url发送ajax请求
+ - onAjaxStart 
+ - onAjaxSuccess
+ - onAjaxComplete 在ajax执行完成，数据会自动执行`异步`的`refresh`，调用所有的`onRefresh`钩子
+ - onAjaxError
+ - dataReviser 定义一个处理data的函数，返回data，见[demo](http://rdk.zte.com.cn/components/table/demo#checkbox-column-object-cell)，这个预处理是在ajax返回了数据时，onAjaxSuccess之前执行的
+
+
