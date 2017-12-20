@@ -32,23 +32,19 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
         padding: 3px 0 0;
         overflow: hidden;
         font-size: 0;
-        &:before {
-            @include inline-block();
-            content: '';
-            height: 100%;
-            vertical-align: middle;
-        }
         .jigsaw-tag-host {
             vertical-align: middle;
             margin-right: 4px;
             margin-bottom: 2px;
         }
         .jigsaw-input {
-            min-width: 40px;
+            height: $height-base - 6;
+            line-height: $height-base - 6;
             input {
                 padding: 0 !important;
                 font-size: $font-size-base;
                 border: none;
+                vertical-align: top;
                 &:focus, &:hover {
                     box-shadow: none;
                     border: none;
@@ -61,6 +57,9 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
         @include inline-block();
         font-size: $font-size-base;
         color: $text-color-secondary;
+        padding-bottom: 3px;
+        height: $height-base - 3;
+        line-height: $height-base - 6;
     }
 
     &-disabled {

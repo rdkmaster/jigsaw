@@ -233,7 +233,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         }, 0);
     }
 
-    private _autoEditorWidth(){
+    private _autoEditorWidth() {
         if (!this.searchable || !this.editorEl) return;
 
         if (this.tags.last) {
@@ -427,7 +427,6 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public ngAfterViewInit() {
         this.tags.changes.subscribe(() => {
             this._autoEditorWidth();
-
             setTimeout(() => {
                 // 等待combo高度变化
                 this._autoPosition();
