@@ -156,7 +156,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             // 初始化open，等待组件初始化后执行
             if (value) {
                 this._openDropDown();
-                if (this.editor) this.editor.focus();
+                if (this._editor) this._editor.focus();
             } else {
                 this._closeDropDown();
                 this.searchKeyword = '';
@@ -185,13 +185,13 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public searchable: boolean = false;
 
     @ViewChild('editor')
-    public editor: JigsawInput;
+    private _editor: JigsawInput;
 
     @ViewChild('editor', {read: ElementRef})
-    public editorEl: ElementRef;
+    private _editorElementRef: ElementRef;
 
     @ViewChildren(JigsawTag)
-    public tags: QueryList<JigsawTag>;
+    private _tags: QueryList<JigsawTag>;
 
     @Input()
     public searching: boolean = false;
@@ -233,23 +233,22 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         }, 0);
     }
 
+    private _minEditorWidth = 40; //输入框最小宽度
+    private _hostGap = 36; // 组件的空白长度
+
     private _autoEditorWidth() {
-        if (!this.searchable || !this.editorEl) return;
+        if (!this.searchable || !this._editorElementRef) return;
 
-        if (this.tags.last) {
+        if (this._tags.last) {
             const host = this._elementRef.nativeElement;
-            const lastTag = this.tags.last._elementRef.nativeElement;
+            const lastTag = this._tags.last._elementRef.nativeElement;
             let editorWidth: any = host.offsetWidth -
-                (AffixUtils.offset(lastTag).left - AffixUtils.offset(host).left + lastTag.offsetWidth + 6 + 30);
-            editorWidth = editorWidth > 40 ? editorWidth + 'px' : '100%';
-            this._renderer.setStyle(this.editorEl.nativeElement, 'width', editorWidth);
+                (AffixUtils.offset(lastTag).left - AffixUtils.offset(host).left + lastTag.offsetWidth + this._hostGap);
+            editorWidth = editorWidth > this._minEditorWidth ? editorWidth + 'px' : '100%';
+            this._renderer.setStyle(this._editorElementRef.nativeElement, 'width', editorWidth);
         } else {
-            this._renderer.setStyle(this.editorEl.nativeElement, 'width', '100%');
+            this._renderer.setStyle(this._editorElementRef.nativeElement, 'width', '100%');
         }
-    }
-
-    private _autoPosition() {
-        this._popupService.setPosition(this._getPopupOption(), this._popupElement, this._renderer);
     }
 
     private _getPopupOption(): PopupOptions {
@@ -286,6 +285,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     private _openDropDown(): void {
         if (this._$opened) {
             return;
+        }
+
+        if (this._removeWindowClickHandler) {
+            this._removeWindowClickHandler();
         }
 
         this._removeWindowClickHandler = this._renderer.listen('window', 'click', () => {
@@ -389,7 +392,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             this._rollOutDenouncesTimer = null;
         }
         this.open = true;
-        if (this.editor) this.editor.select();
+        if (this._editor) this._editor.select();
     }
 
     /**
@@ -425,11 +428,11 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     public ngAfterViewInit() {
-        this.tags.changes.subscribe(() => {
+        this._tags.changes.subscribe(() => {
             this._autoEditorWidth();
             setTimeout(() => {
-                // 等待combo高度变化
-                this._autoPosition();
+                // 等待combo高度变化，调整下拉位置
+                this._popupService.setPosition(this._getPopupOption(), this._popupElement, this._renderer);
             });
         })
     }

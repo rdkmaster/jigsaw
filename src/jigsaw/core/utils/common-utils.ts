@@ -157,16 +157,6 @@ export class CommonUtils {
     }
 
     /**
-     * 获取dom的class里的style
-     * @param {Element} obj
-     * @param {string} attr
-     * @returns {string}
-     */
-    public static getClassStyle(obj: Element, attr: string): string{
-        return document.defaultView.getComputedStyle(obj,null)[attr];
-    }
-
-    /**
      * Returns the language code name from the browser, e.g. "zh"
      *
      * @returns string
