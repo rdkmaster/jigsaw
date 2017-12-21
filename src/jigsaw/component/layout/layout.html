@@ -1,7 +1,7 @@
 <ng-template jigsaw-renderer-host></ng-template>
 <div *ngIf="!_$children.length" class="jigsaw-layout-option-box">
-    <span  class="fa fa fa-align-justify jigsaw-layout-row jigsaw-layout-option-bar" (click)="_$layoutRow()"></span>
-    <span class="fa fa-th-large jigsaw-layout-column jigsaw-layout-option-bar" (click)="_$layoutColumn()"></span>
-    <span class="fa fa-trash-o jigsaw-layout-remove jigsaw-layout-option-bar" (click)="_$removeChildren()"></span>
+    <span  class="fa fa fa-align-justify jigsaw-layout-row jigsaw-layout-option-bar" (click)="_$layout(0)"></span>
+    <span class="fa fa-th-large jigsaw-layout-column jigsaw-layout-option-bar" (click)="_$layout(1)"></span>
+    <span class="fa fa-trash-o jigsaw-layout-remove jigsaw-layout-option-bar" (click)="_$remove()"></span>
 </div>
 
