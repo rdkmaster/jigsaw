@@ -181,9 +181,6 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     @Input()
     public clearable: boolean = false;
 
-    @Input()
-    public searchable: boolean = false;
-
     @ViewChild('editor')
     private _editor: JigsawInput;
 
@@ -194,10 +191,16 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     private _tags: QueryList<JigsawTag>;
 
     @Input()
+    public searchable: boolean = false;
+
+    @Input()
     public searching: boolean = false;
 
     @Input()
     public searchKeyword: string = '';
+
+    @Input()
+    public searchBoxMinWidth: number = 40;
 
     @Output()
     public searchKeywordChange = new EventEmitter<any>();
@@ -233,18 +236,18 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         }, 0);
     }
 
-    private _minEditorWidth = 40; //输入框最小宽度
-    private _hostGap = 36; // 组件的空白长度
-
     private _autoEditorWidth() {
         if (!this.searchable || !this._editorElementRef) return;
+
+        // 组件的空白长度 + 图标宽度
+        const hostPaddingGap = 36;
 
         if (this._tags.last) {
             const host = this._elementRef.nativeElement;
             const lastTag = this._tags.last._elementRef.nativeElement;
-            let editorWidth: any = host.offsetWidth -
-                (AffixUtils.offset(lastTag).left - AffixUtils.offset(host).left + lastTag.offsetWidth + this._hostGap);
-            editorWidth = editorWidth > this._minEditorWidth ? editorWidth + 'px' : '100%';
+            let editorWidth: any = host.offsetWidth - (AffixUtils.offset(lastTag).left - AffixUtils.offset(host).left +
+                lastTag.offsetWidth + hostPaddingGap);
+            editorWidth = editorWidth > this.searchBoxMinWidth ? editorWidth + 'px' : '100%';
             this._renderer.setStyle(this._editorElementRef.nativeElement, 'width', editorWidth);
         } else {
             this._renderer.setStyle(this._editorElementRef.nativeElement, 'width', '100%');
@@ -292,6 +295,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         }
 
         this._removeWindowClickHandler = this._renderer.listen('window', 'click', () => {
+            if (this._removeWindowClickHandler) {
+                this._removeWindowClickHandler();
+            }
             this.open = false
         });
 
@@ -412,7 +418,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     /**
      * @internal
      */
-    public _$handleEditorChange() {
+    public _$handleSearchBoxChange() {
         if (this.searchKeyword) this.open = true;
         this.searchKeywordChange.emit(this.searchKeyword);
     }
