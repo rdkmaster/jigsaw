@@ -10,7 +10,7 @@
 npm config set registry https://artnj.zte.com.cn/artifactory/api/npm/public-npm-remote/
 ```
 
-此外还有其他几个镜像可用，常驻西安的同学请将`artnj`改为`artxa`，常驻深圳的同学请将`artnj`改为`artsz`，常驻其他位置的，请酌情选用离你最近的镜像以求达到最快的速度。这个步骤可选。
+注意，此镜像位于南京，推荐常驻南京的同学采用这个镜像，此外还有其他几个镜像可用，常驻西安的同学请将`artnj`改为`artxa`，常驻深圳的同学请将`artnj`改为`artsz`，常驻其他位置的，请酌情选用离你最近的镜像以求达到最快的速度。这个步骤可选。
 
 ## 配置node-sass镜像
 
