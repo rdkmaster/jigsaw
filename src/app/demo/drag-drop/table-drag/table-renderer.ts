@@ -20,7 +20,8 @@ import {CommonUtils} from "jigsaw/core/utils/common-utils";
         </div>`,
     styles: [`.option-box {
         color: #108ee9;
-        cursor: move
+        cursor: move;
+        width:100%;
     }`]
 })
 export class TableDragReplaceRow extends TableCellRendererBase implements AfterViewInit {
@@ -41,9 +42,11 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
         console.log('drag start');
         dragInfo.dragDropData = this.row;
         dragInfo.event.dataTransfer.effectAllowed = 'link';
-        dragInfo.event.dataTransfer.setDragImage(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'), 50, 10);
+        // 给非IE浏览器设置拖拽图片
+        if (!(window.navigator.userAgent.indexOf("MSIE ") > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))) {
+            dragInfo.event.dataTransfer.setDragImage(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'), 50, 10);
+        }
     }
-
     dragEndHandle(dragInfo: DragDropInfo) {
         console.log('drag end');
         this.resetSelectedRow();
@@ -111,6 +114,9 @@ export class TableDragDeleteRow extends TableCellRendererBase {
         console.log('drag start');
         dragInfo.dragDropData = this.row;
         dragInfo.event.dataTransfer.effectAllowed = 'copy';
-        dragInfo.event.dataTransfer.setDragImage(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'), 600, 10);
+        // 给非IE浏览器设置拖拽图片
+        if (!(window.navigator.userAgent.indexOf("MSIE ") > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))) {
+            dragInfo.event.dataTransfer.setDragImage(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'), 600, 10);
+        }
     }
 }

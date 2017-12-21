@@ -47,7 +47,10 @@ export class JigsawDraggable implements OnInit, OnDestroy {
         //拖拽效果
         event.stopPropagation();
         event.dataTransfer.effectAllowed = 'move';
-        event.dataTransfer.setDragImage(event.target, this._offsetX, this._offsetY);
+        // 给非IE浏览器设置拖拽图片
+        if (!(window.navigator.userAgent.indexOf("MSIE ") > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))) {
+            event.dataTransfer.setDragImage(event.target, this._offsetX, this._offsetY);
+        }
         this.jigsawDragStart.emit(new DragDropInfo(event, this._elementRef.nativeElement));
         return true;
     }
