@@ -53,6 +53,10 @@ export const routerConfig = [
         loadChildren: "./demo/input/demo.module#InputDemoModule",
     },
     {
+        path: "layout",
+        loadChildren: "./demo/layout/demo.module#LayoutDemoModule",
+    },
+    {
         path: "list",
         loadChildren: "./demo/list/demo.module#ListDemoModule",
     },

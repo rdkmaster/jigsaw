@@ -1,0 +1,31 @@
+@import "../../assets/scss/core/base";
+
+$layout-prefix-cls: #{$jigsaw-prefix}-layout;
+
+.#{$layout-prefix-cls} {
+    @include inline-block();
+    border: 1px solid $border-color-base;
+    position: relative;
+    background: $component-background;
+    &-optioned{
+        border: none;
+    }
+    &-option-box{
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        font-size: 12px;
+    }
+    &-option-bar{
+        cursor: pointer;
+        margin-right: 4px;
+    }
+}
+
+
+
+
+
+
+
+
