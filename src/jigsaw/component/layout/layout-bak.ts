@@ -1,34 +1,15 @@
 import {
     Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, ElementRef, NgModule,
-    ViewChild, Input, Output, EventEmitter, ContentChildren, QueryList, AfterContentInit, ViewChildren, AfterViewInit, Directive, Optional,
-    forwardRef, Host, Inject
+    ViewChild, Input, Output, EventEmitter, ContentChildren, QueryList, AfterContentInit, ViewChildren, AfterViewInit,
 } from "@angular/core";
 import {AbstractJigsawComponent, JigsawCommonModule, JigsawRendererHost} from "../common";
 import {CommonModule} from "@angular/common";
 
 export enum LayoutType {row, column}
 
-@Directive({
-    selector: '[jigsaw-layout-box], [j-layout-box]'
-})
-export class JigsawLayoutBox implements AfterContentInit{
-    @ContentChildren(forwardRef(() => JigsawLayout))
-    public layouts: QueryList<JigsawLayout>;
-
-    ngAfterContentInit(){
-        setTimeout(() => {
-            // 等待子组件视图渲染
-            console.log(this.layouts);
-            this.layouts.forEach(layout => {
-                layout.layout();
-            })
-        })
-    }
-}
-
-@Directive({
-    selector: '[jigsaw-layout], [j-layout]',
-    //templateUrl: './layout.html',
+@Component({
+    selector: 'jigsaw-layout, j-layout',
+    templateUrl: './layout.html',
     host: {
         '[class.jigsaw-layout]': 'true',
         '[class.jigsaw-layout-optioned]': '_$children.length',
@@ -38,9 +19,8 @@ export class JigsawLayoutBox implements AfterContentInit{
         '[style.margin-right]': 'marginRight'
     }
 })
-export class JigsawLayout extends AbstractJigsawComponent implements AfterContentInit {
-    constructor(private _resolver: ComponentFactoryResolver,
-                private _elementRef: ElementRef) {
+export class JigsawLayout extends AbstractJigsawComponent implements AfterContentInit{
+    constructor(private _resolver: ComponentFactoryResolver, private _elementRef: ElementRef) {
         super();
     }
 
@@ -56,13 +36,13 @@ export class JigsawLayout extends AbstractJigsawComponent implements AfterConten
     public _$children: ComponentRef<JigsawLayout>[] = [];
 
     @Input()
-    public childMarginBottom: number = 0;
+    public childMarginBottom: number = 4;
 
     @Input()
-    public childMarginRight: number = 0;
+    public childMarginRight: number = 4;
 
     @Input()
-    public layoutType: LayoutType = LayoutType.row;
+    public layoutType: LayoutType;
 
     public marginBottom: string;
 
@@ -147,7 +127,7 @@ export class JigsawLayout extends AbstractJigsawComponent implements AfterConten
         if (layoutNum <= 0) return 0;
 
         const childMarginSetting = layoutType === LayoutType.row ? this.childMarginBottom : this.childMarginRight;
-        const hostSize = this._getHostSize(layoutType);
+        const hostSize = this._getHostSize(this.layoutType);
         return Math.floor((hostSize - (layoutNum - 1) * childMarginSetting) / layoutNum);
     }
 
@@ -166,31 +146,20 @@ export class JigsawLayout extends AbstractJigsawComponent implements AfterConten
         })
     }
 
-    public layout(){
-        debugger
-        const layoutNum = this.children.length - 1;
-        const layoutSizeName = this.layoutType === LayoutType.row ? 'height' : 'width';
-        const layoutOtherSizeName = layoutSizeName == 'height' ? 'width' : 'height';
-        const layoutSize = this._getChildSize(this.layoutType, layoutNum);
-        console.log(layoutSize);
-        this.children.filter(layout => layout != this)
-            .forEach(layout => {
-                layout[layoutSizeName] = layoutSize + '';
-                layout[layoutOtherSizeName] = '100%';
-            })
-    }
+    ngAfterContentInit(){
+        setTimeout(() => {
+            console.log(this.children.filter(item => item != this));
 
-    ngAfterContentInit() {
-
-
+        })
     }
 
 }
 
 @NgModule({
     imports: [CommonModule, JigsawCommonModule],
-    declarations: [JigsawLayout, JigsawLayoutBox],
-    exports: [JigsawLayout, JigsawLayoutBox]
+    declarations: [JigsawLayout,],
+    exports: [JigsawLayout],
+    entryComponents: [JigsawLayout]
 })
 export class JigsawLayoutModule {
 

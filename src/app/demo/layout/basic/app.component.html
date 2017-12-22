@@ -4,5 +4,18 @@
 
 
 <!-- start to learn the demo from here -->
-<j-layout width="50%" height="400"></j-layout>
+<div j-layout-box>
+    <div j-layout width="50%" height="400">
+        <div j-layout>
+            <div j-layout></div>
+            <div j-layout></div>
+        </div>
+        <div j-layout [layoutType]="1">
+            <div j-layout></div>
+            <div j-layout></div>
+        </div>
+    </div>
+</div>
+
+
 
