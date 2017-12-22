@@ -29,8 +29,8 @@ export class JigsawDraggable implements OnInit, OnDestroy {
         return false;
     }
 
-    private _offsetX:number = 0;
-    private _offsetY:number = 0;
+    private _offsetX: number = 0;
+    private _offsetY: number = 0;
 
     /**
      * dragstart给的事件的offsetX和offsetY不准确，通过mousedown事件来弥补
@@ -48,7 +48,7 @@ export class JigsawDraggable implements OnInit, OnDestroy {
         event.stopPropagation();
         event.dataTransfer.effectAllowed = 'move';
         // 给非IE浏览器设置拖拽图片
-        if (!(window.navigator.userAgent.indexOf("MSIE ") > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))) {
+        if (window.navigator.userAgent.indexOf("MSIE ") > 0 && !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
             event.dataTransfer.setDragImage(event.target, this._offsetX, this._offsetY);
         }
         this.jigsawDragStart.emit(new DragDropInfo(event, this._elementRef.nativeElement));
@@ -69,7 +69,7 @@ export class JigsawDraggable implements OnInit, OnDestroy {
         this.jigsawDrag.emit(new DragDropInfo(event, this._elementRef.nativeElement));
     };
 
-    private _removeDragHandler:CallbackRemoval;
+    private _removeDragHandler: CallbackRemoval;
 
     ngOnInit() {
         this._zone.runOutsideAngular(() => {
