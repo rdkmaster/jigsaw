@@ -4,16 +4,17 @@
 
 
 <!-- start to learn the demo from here -->
-<div j-layout-box>
-    <div j-layout width="50%" height="400">
-        <div j-layout>
-            <div j-layout></div>
-            <div j-layout></div>
+<div jigsawLayout="root" width="50%" height="400">
+    <div jigsawLayout>
+        <div jigsawLayout [layoutType]="1">
+            <div jigsawLayout></div>
+            <div jigsawLayout></div>
         </div>
-        <div j-layout [layoutType]="1">
-            <div j-layout></div>
-            <div j-layout></div>
-        </div>
+        <div jigsawLayout></div>
+    </div>
+    <div jigsawLayout [layoutType]="1">
+        <div jigsawLayout></div>
+        <div jigsawLayout></div>
     </div>
 </div>
 

@@ -5,33 +5,15 @@ import {
 } from "@angular/core";
 import {AbstractJigsawComponent, JigsawCommonModule, JigsawRendererHost} from "../common";
 import {CommonModule} from "@angular/common";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 export enum LayoutType {row, column}
 
 @Directive({
-    selector: '[jigsaw-layout-box], [j-layout-box]'
-})
-export class JigsawLayoutBox implements AfterContentInit{
-    @ContentChildren(forwardRef(() => JigsawLayout))
-    public layouts: QueryList<JigsawLayout>;
-
-    ngAfterContentInit(){
-        setTimeout(() => {
-            // 等待子组件视图渲染
-            console.log(this.layouts);
-            this.layouts.forEach(layout => {
-                layout.layout();
-            })
-        })
-    }
-}
-
-@Directive({
-    selector: '[jigsaw-layout], [j-layout]',
-    //templateUrl: './layout.html',
+    selector: '[jigsawLayout], [jLayout]',
     host: {
         '[class.jigsaw-layout]': 'true',
-        '[class.jigsaw-layout-optioned]': '_$children.length',
+        '[class.jigsaw-layout-has-layout]': 'children.length > 1',
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[style.margin-bottom]': 'marginBottom',
@@ -39,8 +21,7 @@ export class JigsawLayoutBox implements AfterContentInit{
     }
 })
 export class JigsawLayout extends AbstractJigsawComponent implements AfterContentInit {
-    constructor(private _resolver: ComponentFactoryResolver,
-                private _elementRef: ElementRef) {
+    constructor(private _elementRef: ElementRef) {
         super();
     }
 
@@ -49,11 +30,6 @@ export class JigsawLayout extends AbstractJigsawComponent implements AfterConten
 
     @ContentChildren(JigsawLayout)
     public children: QueryList<JigsawLayout>;
-
-    /**
-     * internal
-     */
-    public _$children: ComponentRef<JigsawLayout>[] = [];
 
     @Input()
     public childMarginBottom: number = 0;
@@ -64,6 +40,12 @@ export class JigsawLayout extends AbstractJigsawComponent implements AfterConten
     @Input()
     public layoutType: LayoutType = LayoutType.row;
 
+    @Input()
+    jigsawLayout: string;
+
+    @Input()
+    jLayout: string;
+
     public marginBottom: string;
 
     public marginRight: string;
@@ -72,76 +54,6 @@ export class JigsawLayout extends AbstractJigsawComponent implements AfterConten
 
     private _maxChildWidth = 60;
     private _maxChildHeight = 30;
-
-    @Output()
-    public remove = new EventEmitter<ComponentRef<JigsawLayout>>();
-
-    /**
-     * internal
-     */
-    public _$layout(layoutType: LayoutType, layoutNum: number = 2) {
-        if (layoutNum <= 0) return;
-
-        let childMarginSetting,
-            childMaxSizeSetting,
-            childSize,
-            childWidth,
-            childHeight,
-            childMargin;
-
-        childSize = this._getChildSize(layoutType, layoutNum);
-        if (layoutType === LayoutType.row) {
-            childMarginSetting = this.childMarginBottom;
-            childMaxSizeSetting = this._maxChildHeight;
-            childWidth = '100%';
-            childHeight = childSize + '';
-            childMargin = 'marginBottom';
-        } else if (layoutType === LayoutType.column) {
-            childMarginSetting = this.childMarginRight;
-            childMaxSizeSetting = this._maxChildWidth;
-            childWidth = childSize + '';
-            childHeight = '100%';
-            childMargin = 'marginRight';
-        }
-
-        if (childSize < childMaxSizeSetting) {
-            console.warn(`Can not layout less ${childMaxSizeSetting}px ${layoutType === LayoutType.row ? 'height' : 'width'} box.`);
-            return;
-        }
-
-        for (let i = 0; i < layoutNum; i++) {
-            const layoutRef = this._childBoxFactory();
-            const layout = layoutRef.instance;
-            layout.selfRef = layoutRef;
-            layout.width = childWidth;
-            layout.height = childHeight;
-            if (i < layoutNum - 1) {
-                layout[childMargin] = childMarginSetting + 'px';
-            }
-            layout.remove.subscribe(layoutRef => {
-                const viewContainerRef = this.rendererHost.viewContainerRef;
-                viewContainerRef.remove(viewContainerRef.indexOf(layoutRef));
-                this._$children.splice(this._$children.indexOf(layoutRef), 1);
-                this._resizeChild();
-            });
-
-            this._$children.push(layoutRef);
-        }
-
-        this.layoutType = layoutType;
-    }
-
-    /**
-     * internal
-     */
-    public _$remove() {
-        this.remove.emit(this.selfRef);
-    }
-
-    private _childBoxFactory(): ComponentRef<JigsawLayout> {
-        const layoutFactory: ComponentFactory<JigsawLayout> = this._resolver.resolveComponentFactory(JigsawLayout);
-        return this.rendererHost.viewContainerRef.createComponent(layoutFactory);
-    }
 
     private _getChildSize(layoutType: LayoutType, layoutNum: number): number {
         if (layoutNum <= 0) return 0;
@@ -156,41 +68,48 @@ export class JigsawLayout extends AbstractJigsawComponent implements AfterConten
         return this._elementRef.nativeElement[hostOffset];
     }
 
-    private _resizeChild() {
-        if (!this._$children.length) return;
-
-        const childSize = this._getChildSize(this.layoutType, this._$children.length);
-        const resizeProp = this.layoutType == LayoutType.row ? 'height' : 'width';
-        this._$children.forEach(layoutRef => {
-            layoutRef.instance[resizeProp] = childSize + '';
+    public triggerChildrenLayout() {
+        if (this.children.length <= 1) return;
+        setTimeout(() => {
+            // 等待当前组件渲染尺寸
+            this.children.filter(layout => layout != this)
+                .forEach(layout => {
+                    layout.layout();
+                })
         })
     }
 
-    public layout(){
-        debugger
-        const layoutNum = this.children.length - 1;
-        const layoutSizeName = this.layoutType === LayoutType.row ? 'height' : 'width';
-        const layoutOtherSizeName = layoutSizeName == 'height' ? 'width' : 'height';
-        const layoutSize = this._getChildSize(this.layoutType, layoutNum);
-        console.log(layoutSize);
-        this.children.filter(layout => layout != this)
-            .forEach(layout => {
-                layout[layoutSizeName] = layoutSize + '';
-                layout[layoutOtherSizeName] = '100%';
-            })
+    public layout() {
+        setTimeout(() => {
+            // 等待当前组件渲染尺寸
+            if (this.children.length <= 1) return;
+            const layoutNum = this.children.length - 1;
+            const layoutSizeName = this.layoutType === LayoutType.row ? 'height' : 'width';
+            const layoutOtherSizeName = layoutSizeName == 'height' ? 'width' : 'height';
+            const layoutSize = this._getChildSize(this.layoutType, layoutNum);
+            this.children.filter(layout => layout != this)
+                .forEach(layout => {
+                    layout[layoutSizeName] = layoutSize + '';
+                    layout[layoutOtherSizeName] = '100%';
+                    layout.layout();
+                    layout.triggerChildrenLayout();
+                })
+        })
     }
 
     ngAfterContentInit() {
-
-
+        // 判断是否为根布局组件
+        if (this.jigsawLayout == 'root' || this.jLayout == 'root') {
+            this.layout();
+        }
     }
 
 }
 
 @NgModule({
     imports: [CommonModule, JigsawCommonModule],
-    declarations: [JigsawLayout, JigsawLayoutBox],
-    exports: [JigsawLayout, JigsawLayoutBox]
+    declarations: [JigsawLayout],
+    exports: [JigsawLayout]
 })
 export class JigsawLayoutModule {
 

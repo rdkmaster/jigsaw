@@ -7,18 +7,9 @@ $layout-prefix-cls: #{$jigsaw-prefix}-layout;
     border: 1px solid $border-color-base;
     position: relative;
     background: $component-background;
-    &-optioned{
+    font-size: 0;
+    &-has-layout{
         border: none;
-    }
-    &-option-box{
-        position: absolute;
-        left: 10px;
-        top: 10px;
-        font-size: 12px;
-    }
-    &-option-bar{
-        cursor: pointer;
-        margin-right: 4px;
     }
 }
 
