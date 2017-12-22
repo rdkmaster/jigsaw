@@ -43,7 +43,8 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
         dragInfo.dragDropData = this.row;
         dragInfo.event.dataTransfer.effectAllowed = 'link';
         // 给非IE浏览器设置拖拽图片
-        if (window.navigator.userAgent.indexOf("MSIE ") > 0 && !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+        if (!CommonUtils.isIE()) {
+            console.log(CommonUtils.isIE());
             dragInfo.event.dataTransfer.setDragImage(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'), 50, 10);
         }
     }
@@ -116,7 +117,7 @@ export class TableDragDeleteRow extends TableCellRendererBase {
         dragInfo.dragDropData = this.row;
         dragInfo.event.dataTransfer.effectAllowed = 'copy';
         // 给非IE浏览器设置拖拽图片
-        if (window.navigator.userAgent.indexOf("MSIE ") > 0 && !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+        if (!CommonUtils.isIE()) {
             dragInfo.event.dataTransfer.setDragImage(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'), 600, 10);
         }
     }

@@ -1,6 +1,6 @@
 import {Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output, Renderer2} from "@angular/core";
 import {DragDropInfo} from "./types";
-import {CallbackRemoval} from "../../core/utils/common-utils";
+import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 
 @Directive({
     selector: '[jigsaw-draggable], [jigsawDraggable], [j-draggable]',
@@ -48,7 +48,9 @@ export class JigsawDraggable implements OnInit, OnDestroy {
         event.stopPropagation();
         event.dataTransfer.effectAllowed = 'move';
         // 给非IE浏览器设置拖拽图片
-        if (window.navigator.userAgent.indexOf("MSIE ") > 0 && !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+        console.log(window.navigator.userAgent);
+        console.log(navigator.userAgent);
+        if (!CommonUtils.isIE()) {
             event.dataTransfer.setDragImage(event.target, this._offsetX, this._offsetY);
         }
         this.jigsawDragStart.emit(new DragDropInfo(event, this._elementRef.nativeElement));
