@@ -49,7 +49,6 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
     }
     dragEndHandle(dragInfo: DragDropInfo) {
         console.log('drag end');
-        this.resetSelectedRow();
     }
 
     dragEnterHandle(dragInfo: DragDropInfo) {
@@ -85,6 +84,7 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
             this.tableData.data.splice(thisRowIndex, 0, insertRow);
             this.tableData.refresh();
         }
+        this.resetSelectedRow();
     }
 
     ngAfterViewInit() {
