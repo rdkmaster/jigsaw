@@ -48,8 +48,6 @@ export class JigsawDraggable implements OnInit, OnDestroy {
         event.stopPropagation();
         event.dataTransfer.effectAllowed = 'move';
         // 给非IE浏览器设置拖拽图片
-        console.log(window.navigator.userAgent);
-        console.log(navigator.userAgent);
         if (!CommonUtils.isIE()) {
             event.dataTransfer.setDragImage(event.target, this._offsetX, this._offsetY);
         }
