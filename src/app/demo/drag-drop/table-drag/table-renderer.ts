@@ -42,7 +42,6 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
         console.log('drag start');
         dragInfo.dragDropData = this.row;
         dragInfo.event.dataTransfer.effectAllowed = 'link';
-        // 给非IE浏览器设置拖拽图片
         if (!CommonUtils.isIE()) {
             console.log(CommonUtils.isIE());
             dragInfo.event.dataTransfer.setDragImage(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'), 50, 10);
@@ -116,7 +115,6 @@ export class TableDragDeleteRow extends TableCellRendererBase {
         console.log('drag start');
         dragInfo.dragDropData = this.row;
         dragInfo.event.dataTransfer.effectAllowed = 'copy';
-        // 给非IE浏览器设置拖拽图片
         if (!CommonUtils.isIE()) {
             dragInfo.event.dataTransfer.setDragImage(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'), 600, 10);
         }
