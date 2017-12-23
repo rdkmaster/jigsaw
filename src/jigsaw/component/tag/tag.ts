@@ -40,7 +40,7 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     private _state: string;
 
     constructor(private _renderer: Renderer2,
-                private _elementRef: ElementRef) {
+                public _elementRef: ElementRef) {
         super();
     }
 

@@ -67,8 +67,8 @@ describe('loading', () => {
             const submitEls = $$('.jigsaw-button-color-primary'),
                 testInput = $$('.content-box').get(1).$$('.content-line').get(0).$('input');
             submitEls.get(1).click();
-            await waitForPresence('jigsaw-loading');
-            expectToExist('jigsaw-loading');
+            await waitForNotPresence('jigsaw-loading');
+            expectToExist('jigsaw-loading',false);
         })
     })
 });

@@ -244,6 +244,13 @@ export class CommonUtils {
         return decodeURI(uri).replace(/%([0-9a-f]{2})/gi,
             (found, charCode) => String.fromCharCode(parseInt(charCode, 16)));
     }
+
+    /**
+     * 判断浏览器是否为IE
+     */
+    public static isIE(): boolean {
+        return !!navigator.userAgent.match(/MSIE|Trident/g);
+    }
 }
 
 export type CallbackRemoval = () => void;

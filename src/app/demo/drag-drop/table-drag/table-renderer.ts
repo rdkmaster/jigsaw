@@ -20,7 +20,8 @@ import {CommonUtils} from "jigsaw/core/utils/common-utils";
         </div>`,
     styles: [`.option-box {
         color: #108ee9;
-        cursor: move
+        cursor: move;
+        width: 100%;
     }`]
 })
 export class TableDragReplaceRow extends TableCellRendererBase implements AfterViewInit {
@@ -41,12 +42,14 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
         console.log('drag start');
         dragInfo.dragDropData = this.row;
         dragInfo.event.dataTransfer.effectAllowed = 'link';
-        dragInfo.event.dataTransfer.setDragImage(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'), 50, 10);
+        if (!CommonUtils.isIE()) {
+            const img = CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr');
+            dragInfo.event.dataTransfer.setDragImage(img, 50, 10);
+        }
     }
 
     dragEndHandle(dragInfo: DragDropInfo) {
         console.log('drag end');
-        this.resetSelectedRow();
     }
 
     dragEnterHandle(dragInfo: DragDropInfo) {
@@ -82,6 +85,7 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
             this.tableData.data.splice(thisRowIndex, 0, insertRow);
             this.tableData.refresh();
         }
+        this.resetSelectedRow();
     }
 
     ngAfterViewInit() {
@@ -111,6 +115,8 @@ export class TableDragDeleteRow extends TableCellRendererBase {
         console.log('drag start');
         dragInfo.dragDropData = this.row;
         dragInfo.event.dataTransfer.effectAllowed = 'copy';
-        dragInfo.event.dataTransfer.setDragImage(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'), 600, 10);
+        if (!CommonUtils.isIE()) {
+            dragInfo.event.dataTransfer.setDragImage(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'), 600, 10);
+        }
     }
 }

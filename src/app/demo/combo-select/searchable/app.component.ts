@@ -13,6 +13,7 @@ export class ComboSelectAutoCompleteDemo {
     spaCountries: PageableArray;
     selectedCountries: any;
     selectedCountries2: ArrayCollection<ComboSelectValue> = new ArrayCollection();
+    selectedCountries3: any;
 
     constructor(public http: HttpClient) {
         this.lpaCountries = new LocalPageableArray<ComboSelectValue>();
@@ -74,10 +75,6 @@ export class ComboSelectAutoCompleteDemo {
 
     handleSearching(filterKey, data) {
         filterKey = filterKey ? filterKey.trim() : '';
-        if (!filterKey) {
-            // 初始化完成之后，angular会发出这个事件。无效的过滤请求跳过
-            return;
-        }
         data.filter(filterKey, ['enName', 'zhName']);
     }
 
