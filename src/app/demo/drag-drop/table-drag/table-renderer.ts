@@ -43,8 +43,8 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
         dragInfo.dragDropData = this.row;
         dragInfo.event.dataTransfer.effectAllowed = 'link';
         if (!CommonUtils.isIE()) {
-            console.log(CommonUtils.isIE());
-            dragInfo.event.dataTransfer.setDragImage(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'), 50, 10);
+            const img = CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr');
+            dragInfo.event.dataTransfer.setDragImage(img, 50, 10);
         }
     }
 
