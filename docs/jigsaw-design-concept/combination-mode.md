@@ -1,5 +1,18 @@
 # Jigsaw设计理念之组合模式
 
+## 目录
+
+- Jigsaw组合模式简介
+- 组合模式实战
+    - `jigsaw-combo-select`组件
+    - `PopupService`服务
+    - 各种渲染器
+    - 组件与数据的组合
+    - 其他
+- 组合模式的短板
+    - 想象力
+    - 上手难度
+
 ## Jigsaw组合模式简介
 
 Jigsaw将组件组合能力，从弱到强，分为3个Level，概要介绍如下：
@@ -142,15 +155,19 @@ Jigsaw核心团队一直以来都非常重视这方面的取舍，我们的取�
 
 - **强大的 live demo**
 
-我们始终认为，demo是最好的学习途径，它比详实的API文档来的更加能够解决实际问题。因此我们不仅编写了大量的demo，而且将他们全部搬到线上（感谢[plunker](http://www.plnkr.co)），这是一个专门给懒人准备的demo学习环境，你不仅可以看到代码，还可以直接编辑他们，并且立即生效。你无需部署本地的开发环境就可以编辑并重新运行这些demo——真实懒人必备！你甚至可以利用线上的demo环境做为你的调试环境：把代码调试好了后，直接拷贝到你的生产环境中。我个人超喜欢这个方式，我早期学习angular的时候，几乎全部利用[angular.io](angular.io)上的live demo来完成的，边看文档，边在线验证。
+我们始终认为，demo是最好的学习途径，它比详实的API文档来的更加能够解决实际问题。因此我们不仅编写了大量的demo，而且将他们全部搬到线上（感谢[plunker](http://www.plnkr.co)），这是一个专门给懒人准备的demo学习环境，你不仅可以看到代码，还可以直接编辑他们，并且立即生效。你无需部署本地的开发环境就可以编辑并重新运行这些demo——真是懒人必备！
+
+你甚至可以利用线上的demo环境做为你的调试环境：把代码调试好了后，直接拷贝到你的生产环境中。我个人超喜欢这个方式，我早期学习angular的时候，几乎全部利用[angular.io](angular.io)上的live demo来完成的，边看文档，边在线验证。
 
 Jigsaw线上的live demo的代码是自动生成出来的，并且我们的CI每天会检查新合入的修改是否会导致这些demo无法运行，从而确保这些live demo的可靠性。
 
 - **详实的API文档**
 
-虽然我们认为API文档的作用没有demo高，但是我们依然仔细给每个组件的各个输入输出属性编写API文档。这些文档的线上地址是<http://rdk.zte.com.cn/components/jigsaw/api-list>，不过，我们并不推荐你在线上阅读他们，而是推荐你直接在你的IDE上直接跳转到声明的方式来阅读这些文档。因为有需要翻阅API的需求，往往是在你编码的时候，这个时候，直接在IDE上跳转到Jigsaw的组件声明上阅读文档，对你的思路的打断最小，而且你可以非常方便的回到上一次编辑点继续你的编码过程。我们推荐使用[VS Code](http://vscode.visualstudio.com/)或者是[WebStorm](https://www.jetbrains.com/webstorm)来开发Jigsaw应用。
+虽然我们认为API文档的作用没有demo高，但是我们依然仔细给每个组件的各个输入输出属性编写API文档。这些文档的线上地址是<http://rdk.zte.com.cn/components/jigsaw/api-list>，不过，我们并不推荐你在线上阅读他们，而是推荐你直接在你的IDE上直接跳转到声明的方式来阅读这些文档。因为有需要翻阅API的需求，往往是在你编码的时候，这个时候，直接在IDE上跳转到Jigsaw的组件声明上阅读文档，对你的思路的打断最小，而且你可以非常方便的回到上一次编辑点继续你的编码过程。
 
 ![](goto-defination.gif)
+
+我们推荐使用[VS Code](http://vscode.visualstudio.com/)或者是[WebStorm](https://www.jetbrains.com/webstorm)来开发Jigsaw应用。
 
 - **组件的二次封装**
 
