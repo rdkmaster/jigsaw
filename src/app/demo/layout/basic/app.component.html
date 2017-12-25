@@ -4,33 +4,35 @@
 
 
 <!-- start to learn the demo from here -->
-<div jigsawLayout="root" width="50%" height="400">
+<div jigsawLayout="root" span="24" height="400">
     <div jigsawLayout>
         <div jigsawLayout></div>
         <div jigsawLayout [layoutType]="1">
-            <div jigsawLayout></div>
-            <div jigsawLayout></div>
-            <div jigsawLayout></div>
+            <div jigsawLayout span="6"></div>
+            <div jigsawLayout span="12"></div>
+            <div jigsawLayout span="6"></div>
         </div>
     </div>
     <div jigsawLayout [layoutType]="1">
-        <div jigsawLayout></div>
-        <div jigsawLayout></div>
-        <div jigsawLayout></div>
-        <div jigsawLayout></div>
+        <div jigsawLayout span="2"></div>
+        <div jigsawLayout span="3"></div>
+        <div jigsawLayout span="9"></div>
+        <div jigsawLayout span="10"></div>
     </div>
     <div jigsawLayout [layoutType]="1">
-        <div jigsawLayout></div>
-        <div jigsawLayout></div>
+        <div jigsawLayout span="15">
+            <one-layout></one-layout>
+        </div>
+        <div jigsawLayout span="9"></div>
     </div>
 </div>
 <br>
 <br>
 <div jigsawLayout="root" [layoutType]="1" width="80%" height="400">
-    <div jigsawLayout>
+    <div jigsawLayout span="6">
         <div jigsawLayout></div>
-        <div jigsawLayout [layoutType]="1"></div>
+        <div jigsawLayout></div>
     </div>
-    <div jigsawLayout></div>
+    <div jigsawLayout span="18"></div>
 </div>
 

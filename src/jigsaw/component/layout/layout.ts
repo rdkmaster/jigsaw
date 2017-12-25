@@ -1,5 +1,5 @@
 import {
-    ElementRef, NgModule, Input, ContentChildren, QueryList, AfterContentInit, Directive
+    ElementRef, NgModule, Input, ContentChildren, QueryList, AfterContentInit, Directive, Renderer2
 } from "@angular/core";
 import {AbstractJigsawComponent, JigsawCommonModule} from "../common";
 import {CommonModule} from "@angular/common";
@@ -17,7 +17,7 @@ export enum LayoutType {row, column}
 })
 export class JigsawLayout extends AbstractJigsawComponent implements AfterContentInit {
 
-    constructor(private _elementRef: ElementRef) {
+    constructor(public elementRef: ElementRef, private _renderer: Renderer2) {
         super();
     }
 
@@ -33,6 +33,19 @@ export class JigsawLayout extends AbstractJigsawComponent implements AfterConten
     @Input()
     jLayout: string;
 
+    private _span: number;
+
+    @Input()
+    public get span(): number {
+        return this._span;
+    }
+
+    public set span(value: number) {
+        console.log(value);
+        this._span = value;
+        this._renderer.addClass(this.elementRef.nativeElement, 'jigsaw-layout-col-' + value);
+    }
+
     private _isAverage(layoutType: LayoutType, children: JigsawLayout[]) {
         const sizeName = layoutType === LayoutType.row ? 'height' : 'width';
         return !children.reduce((arr, layout) => {
@@ -45,12 +58,12 @@ export class JigsawLayout extends AbstractJigsawComponent implements AfterConten
     private _getAverageChildSize(layoutType: LayoutType, layoutNum: number): string {
         if (layoutNum <= 0) return '';
         const hostSize = this._getHostSize(layoutType);
-        return layoutType === LayoutType.row ? Math.floor(hostSize / layoutNum) + '' : (100 / layoutNum) + '%';
+        return layoutType === LayoutType.row ? (hostSize / layoutNum).toPrecision(10) + '' : (100 / layoutNum).toPrecision(10) + '%';
     }
 
     private _getHostSize(layoutType: LayoutType) {
         const hostOffset = layoutType === LayoutType.row ? 'offsetHeight' : 'offsetWidth';
-        return this._elementRef.nativeElement[hostOffset];
+        return this.elementRef.nativeElement[hostOffset];
     }
 
     public triggerChildrenLayout() {
@@ -75,7 +88,12 @@ export class JigsawLayout extends AbstractJigsawComponent implements AfterConten
                 this._getAverageChildSize(this.layoutType, layoutNum) : null;
             this.children.filter(layout => layout != this)
                 .forEach(layout => {
-                    layout[layoutSizeName] = layoutSize;
+                    if (this.layoutType === LayoutType.column) {
+                        if (!layout.span) console.warn('please set layout span');
+                        //this._renderer.addClass(layout.elementRef.nativeElement, 'jigsaw-layout-col-' + layout._span);
+                    } else if (this.layoutType === LayoutType.row) {
+                        layout[layoutSizeName] = layoutSize;
+                    }
                     layout[layoutOtherSizeName] = '100%';
                     layout.layout();
                     layout.triggerChildrenLayout();

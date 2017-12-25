@@ -14,3 +14,17 @@ export class LayoutBasicDemoComponent {
     description: string = '';
 }
 
+@Component({
+    selector: 'one-layout',
+    template: `<div jigsawLayout="root" [layoutType]="1" width="100%" height="100%">
+        <div jigsawLayout span="6">
+            <div jigsawLayout></div>
+            <div jigsawLayout [layoutType]="1"></div>
+        </div>
+        <div jigsawLayout span="18"></div>
+    </div>`
+})
+export class OneLayoutComponent {
+
+}
+
