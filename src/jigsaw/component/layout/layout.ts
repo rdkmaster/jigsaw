@@ -1,11 +1,8 @@
 import {
-    Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, ElementRef, NgModule,
-    ViewChild, Input, Output, EventEmitter, ContentChildren, QueryList, AfterContentInit, ViewChildren, AfterViewInit, Directive, Optional,
-    forwardRef, Host, Inject
+    ElementRef, NgModule, Input, ContentChildren, QueryList, AfterContentInit, Directive
 } from "@angular/core";
-import {AbstractJigsawComponent, JigsawCommonModule, JigsawRendererHost} from "../common";
+import {AbstractJigsawComponent, JigsawCommonModule} from "../common";
 import {CommonModule} from "@angular/common";
-import {CommonUtils} from "../../core/utils/common-utils";
 
 export enum LayoutType {row, column}
 
@@ -16,26 +13,16 @@ export enum LayoutType {row, column}
         '[class.jigsaw-layout-has-layout]': 'children.length > 1',
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[style.margin-bottom]': 'marginBottom',
-        '[style.margin-right]': 'marginRight'
     }
 })
 export class JigsawLayout extends AbstractJigsawComponent implements AfterContentInit {
+
     constructor(private _elementRef: ElementRef) {
         super();
     }
 
-    @ViewChild(JigsawRendererHost)
-    public rendererHost: JigsawRendererHost;
-
     @ContentChildren(JigsawLayout)
     public children: QueryList<JigsawLayout>;
-
-    @Input()
-    public childMarginBottom: number = 0;
-
-    @Input()
-    public childMarginRight: number = 0;
 
     @Input()
     public layoutType: LayoutType = LayoutType.row;
@@ -46,21 +33,19 @@ export class JigsawLayout extends AbstractJigsawComponent implements AfterConten
     @Input()
     jLayout: string;
 
-    public marginBottom: string;
+    private _isAverage(layoutType: LayoutType, children: JigsawLayout[]) {
+        const sizeName = layoutType === LayoutType.row ? 'height' : 'width';
+        return !children.reduce((arr, layout) => {
+            const size = layout[sizeName];
+            if (size) arr.push(size);
+            return arr
+        }, []).length;
+    }
 
-    public marginRight: string;
-
-    public selfRef: ComponentRef<JigsawLayout>;
-
-    private _maxChildWidth = 60;
-    private _maxChildHeight = 30;
-
-    private _getChildSize(layoutType: LayoutType, layoutNum: number): number {
-        if (layoutNum <= 0) return 0;
-
-        const childMarginSetting = layoutType === LayoutType.row ? this.childMarginBottom : this.childMarginRight;
+    private _getAverageChildSize(layoutType: LayoutType, layoutNum: number): string {
+        if (layoutNum <= 0) return '';
         const hostSize = this._getHostSize(layoutType);
-        return Math.floor((hostSize - (layoutNum - 1) * childMarginSetting) / layoutNum);
+        return layoutType === LayoutType.row ? Math.floor(hostSize / layoutNum) + '' : (100 / layoutNum) + '%';
     }
 
     private _getHostSize(layoutType: LayoutType) {
@@ -86,10 +71,11 @@ export class JigsawLayout extends AbstractJigsawComponent implements AfterConten
             const layoutNum = this.children.length - 1;
             const layoutSizeName = this.layoutType === LayoutType.row ? 'height' : 'width';
             const layoutOtherSizeName = layoutSizeName == 'height' ? 'width' : 'height';
-            const layoutSize = this._getChildSize(this.layoutType, layoutNum);
+            const layoutSize = this._isAverage(this.layoutType, this.children.filter(layout => layout != this)) ?
+                this._getAverageChildSize(this.layoutType, layoutNum) : null;
             this.children.filter(layout => layout != this)
                 .forEach(layout => {
-                    layout[layoutSizeName] = layoutSize + '';
+                    layout[layoutSizeName] = layoutSize;
                     layout[layoutOtherSizeName] = '100%';
                     layout.layout();
                     layout.triggerChildrenLayout();

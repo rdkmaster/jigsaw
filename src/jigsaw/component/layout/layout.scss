@@ -8,6 +8,8 @@ $layout-prefix-cls: #{$jigsaw-prefix}-layout;
     position: relative;
     background: $component-background;
     font-size: 0;
+    box-sizing: border-box;
+    overflow: hidden;
     &-has-layout{
         border: none;
     }
