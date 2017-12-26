@@ -54,7 +54,7 @@ export const routerConfig = [
     },
     {
         path: "layout",
-        loadChildren: "./demo/layout/demo.module#LayoutDemoModule",
+        loadChildren: "./demo/grid/demo.module#GridDemoModule",
     },
     {
         path: "list",

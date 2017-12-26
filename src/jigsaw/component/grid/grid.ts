@@ -1,5 +1,5 @@
 import {
-    ElementRef, NgModule, Input, ContentChildren, QueryList, AfterContentInit, Directive, Renderer2
+    ElementRef, NgModule, Input, ContentChildren, QueryList, AfterContentInit, Directive, Renderer2, Component
 } from "@angular/core";
 import {AbstractJigsawComponent, JigsawCommonModule} from "../common";
 import {CommonModule} from "@angular/common";
@@ -143,11 +143,89 @@ export class JigsawLayout extends AbstractJigsawComponent implements AfterConten
 
 }
 
+@Component({
+    selector: 'jigsaw-column, j-column',
+    template: '<ng-content></ng-content>',
+    host: {
+        '[class.jigsaw-col]': 'true'
+    }
+})
+export class JigsawColumn extends AbstractJigsawComponent {
+    private _element: HTMLElement;
+
+    constructor(private _elementRef: ElementRef, private _renderer: Renderer2) {
+        super();
+        this._element = this._elementRef.nativeElement;
+    }
+
+    @ContentChildren(JigsawLayout)
+    public children: QueryList<JigsawLayout>;
+
+    private _span: number;
+
+    @Input()
+    public get span(): number {
+        return this._span;
+    }
+
+    public set span(value: number) {
+        this._span = value;
+        this._renderer.addClass(this._element, 'jigsaw-col-' + value);
+    }
+
+    private _offset: number;
+
+    @Input()
+    public get offset(): number {
+        return this._offset;
+    }
+
+    public set offset(value: number) {
+        this._offset = value;
+        this._renderer.addClass(this._element, 'jigsaw-col-offset-' + value);
+    }
+
+    private _pull: number;
+
+    @Input()
+    public get pull(): number {
+        return this._pull;
+    }
+
+    public set pull(value: number) {
+        this._pull = value;
+        this._renderer.addClass(this._element, 'jigsaw-col-pull-' + value);
+    }
+
+    private _push: number;
+
+    @Input()
+    public get push(): number {
+        return this._push;
+    }
+
+    public set push(value: number) {
+        this._push = value;
+        this._renderer.addClass(this._element, 'jigsaw-col-push-' + value);
+    }
+}
+
+@Component({
+    selector: 'jigsaw-row, j-row',
+    template: '<ng-content></ng-content>',
+    host: {
+        '[class.jigsaw-row]': 'true'
+    }
+})
+export class JigsawRow {
+
+}
+
 @NgModule({
     imports: [CommonModule, JigsawCommonModule],
-    declarations: [JigsawLayout],
-    exports: [JigsawLayout]
+    declarations: [JigsawLayout, JigsawColumn, JigsawRow],
+    exports: [JigsawLayout, JigsawColumn, JigsawRow]
 })
-export class JigsawLayoutModule {
+export class JigsawGridModule {
 
 }

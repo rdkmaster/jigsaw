@@ -4,8 +4,8 @@ import {Component} from "@angular/core";
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class LayoutBasicDemoComponent {
-
+export class GridFullDemoComponent {
+    arr = new Array(24);
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

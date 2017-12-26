@@ -1,0 +1,8 @@
+@import "../../assets/scss/core/base";
+
+$row-prefix-cls: #{$jigsaw-prefix}-row;
+
+.#{$row-prefix-cls} {
+    display: block;
+    @include clearfix();
+}
