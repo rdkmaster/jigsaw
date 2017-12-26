@@ -63,6 +63,7 @@ $box-focus-shadow       : 0 0 0 2px fade-out($primary-color, .8);
 
 // Disabled
 $disabled-color         : rgba(#000, .25);
+$disabled-color         : #222;
 $disabled-bg            : $background-color-base;
 $disabled-bg-dark       : #f4f4f4; // switch组件disabled bg
 
