@@ -16,10 +16,10 @@ export class LayoutBasicDemoComponent {
 
 @Component({
     selector: 'one-layout',
-    template: `<div jigsawLayout="root" [layoutType]="1" width="100%" height="100%">
-        <div jigsawLayout span="6">
+    template: `<div jigsawLayout="root" width="100%" height="100%">
+        <div jigsawLayout span="6" layoutType="row">
             <div jigsawLayout></div>
-            <div jigsawLayout [layoutType]="1"></div>
+            <div jigsawLayout></div>
         </div>
         <div jigsawLayout span="18"></div>
     </div>`

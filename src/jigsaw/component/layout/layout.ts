@@ -4,8 +4,6 @@ import {
 import {AbstractJigsawComponent, JigsawCommonModule} from "../common";
 import {CommonModule} from "@angular/common";
 
-export enum LayoutType {row, column}
-
 @Directive({
     selector: '[jigsawLayout], [jLayout]',
     host: {
@@ -25,7 +23,7 @@ export class JigsawLayout extends AbstractJigsawComponent implements AfterConten
     public children: QueryList<JigsawLayout>;
 
     @Input()
-    public layoutType: LayoutType = LayoutType.row;
+    public layoutType: string = 'column';
 
     @Input()
     jigsawLayout: string;
@@ -41,13 +39,48 @@ export class JigsawLayout extends AbstractJigsawComponent implements AfterConten
     }
 
     public set span(value: number) {
-        console.log(value);
         this._span = value;
-        this._renderer.addClass(this.elementRef.nativeElement, 'jigsaw-layout-col-' + value);
+        this._renderer.addClass(this.elementRef.nativeElement, 'jigsaw-col-' + value);
     }
 
-    private _isAverage(layoutType: LayoutType, children: JigsawLayout[]) {
-        const sizeName = layoutType === LayoutType.row ? 'height' : 'width';
+    private _offset: number;
+
+    @Input()
+    public get offset(): number {
+        return this._offset;
+    }
+
+    public set offset(value: number) {
+        this._offset = value;
+        this._renderer.addClass(this.elementRef.nativeElement, 'jigsaw-col-offset-' + value);
+    }
+
+    private _pull: number;
+
+    @Input()
+    public get pull(): number {
+        return this._pull;
+    }
+
+    public set pull(value: number) {
+        this._pull = value;
+        this._renderer.addClass(this.elementRef.nativeElement, 'jigsaw-col-pull-' + value);
+    }
+
+    private _push: number;
+
+    @Input()
+    public get push(): number {
+        return this._push;
+    }
+
+    public set push(value: number) {
+        this._push = value;
+        this._renderer.addClass(this.elementRef.nativeElement, 'jigsaw-col-push-' + value);
+    }
+
+    private _isAverage(layoutType: string, children: JigsawLayout[]) {
+        const sizeName = layoutType == 'row' ? 'height' : 'width';
         return !children.reduce((arr, layout) => {
             const size = layout[sizeName];
             if (size) arr.push(size);
@@ -55,14 +88,14 @@ export class JigsawLayout extends AbstractJigsawComponent implements AfterConten
         }, []).length;
     }
 
-    private _getAverageChildSize(layoutType: LayoutType, layoutNum: number): string {
+    private _getAverageChildSize(layoutType: string, layoutNum: number): string {
         if (layoutNum <= 0) return '';
         const hostSize = this._getHostSize(layoutType);
-        return layoutType === LayoutType.row ? (hostSize / layoutNum).toPrecision(10) + '' : (100 / layoutNum).toPrecision(10) + '%';
+        return layoutType == 'row' ? (hostSize / layoutNum).toPrecision(10) + '' : (100 / layoutNum).toPrecision(10) + '%';
     }
 
-    private _getHostSize(layoutType: LayoutType) {
-        const hostOffset = layoutType === LayoutType.row ? 'offsetHeight' : 'offsetWidth';
+    private _getHostSize(layoutType: string) {
+        const hostOffset = layoutType == 'row' ? 'offsetHeight' : 'offsetWidth';
         return this.elementRef.nativeElement[hostOffset];
     }
 
@@ -82,16 +115,16 @@ export class JigsawLayout extends AbstractJigsawComponent implements AfterConten
             // 等待当前组件渲染尺寸
             if (this.children.length <= 1) return;
             const layoutNum = this.children.length - 1;
-            const layoutSizeName = this.layoutType === LayoutType.row ? 'height' : 'width';
+            const layoutSizeName = this.layoutType == 'row' ? 'height' : 'width';
             const layoutOtherSizeName = layoutSizeName == 'height' ? 'width' : 'height';
             const layoutSize = this._isAverage(this.layoutType, this.children.filter(layout => layout != this)) ?
                 this._getAverageChildSize(this.layoutType, layoutNum) : null;
             this.children.filter(layout => layout != this)
                 .forEach(layout => {
-                    if (this.layoutType === LayoutType.column) {
+                    if (this.layoutType == 'column') {
                         if (!layout.span) console.warn('please set layout span');
                         //this._renderer.addClass(layout.elementRef.nativeElement, 'jigsaw-layout-col-' + layout._span);
-                    } else if (this.layoutType === LayoutType.row) {
+                    } else if (this.layoutType == 'row') {
                         layout[layoutSizeName] = layoutSize;
                     }
                     layout[layoutOtherSizeName] = '100%';

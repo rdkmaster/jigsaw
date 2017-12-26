@@ -4,22 +4,22 @@
 
 
 <!-- start to learn the demo from here -->
-<div jigsawLayout="root" span="24" height="400">
-    <div jigsawLayout>
+<div jigsawLayout="root" layoutType="row" span="24" height="400">
+    <div jigsawLayout layoutType="row">
         <div jigsawLayout></div>
-        <div jigsawLayout [layoutType]="1">
+        <div jigsawLayout>
             <div jigsawLayout span="6"></div>
             <div jigsawLayout span="12"></div>
             <div jigsawLayout span="6"></div>
         </div>
     </div>
-    <div jigsawLayout [layoutType]="1">
+    <div jigsawLayout>
         <div jigsawLayout span="2"></div>
         <div jigsawLayout span="3"></div>
         <div jigsawLayout span="9"></div>
         <div jigsawLayout span="10"></div>
     </div>
-    <div jigsawLayout [layoutType]="1">
+    <div jigsawLayout>
         <div jigsawLayout span="15">
             <one-layout></one-layout>
         </div>
@@ -28,11 +28,15 @@
 </div>
 <br>
 <br>
-<div jigsawLayout="root" [layoutType]="1" width="80%" height="400">
-    <div jigsawLayout span="6">
-        <div jigsawLayout></div>
-        <div jigsawLayout></div>
-    </div>
-    <div jigsawLayout span="18"></div>
+<div jigsawLayout="root" span="24" height="40">
+    <div jigsawLayout span="6">6</div>
+    <div jigsawLayout span="6" offset="12">6</div>
 </div>
+<br>
+<br>
+<div jigsawLayout="root" span="24" height="40">
+    <div jigsawLayout span="3" push="21">3</div>
+    <div jigsawLayout span="5" pull="3">5</div>
+</div>
+
 

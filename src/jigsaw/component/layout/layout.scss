@@ -1,6 +1,7 @@
 @import "../../assets/scss/core/base";
 
 $layout-prefix-cls: #{$jigsaw-prefix}-layout;
+$col-prefix-cls: #{$jigsaw-prefix}-col;
 
 .#{$layout-prefix-cls} {
     float: left;
@@ -8,473 +9,473 @@ $layout-prefix-cls: #{$jigsaw-prefix}-layout;
     border: 1px solid $border-color-base;
     background: $component-background;
     box-sizing: border-box;
+    position: relative;
     &-has-layout{
         border: none;
     }
+}
 
-    &-col-24 {
+.#{$col-prefix-cls} {
+    &-24 {
         width: 100%;
     }
-    &-col-push-24 {
+    &-push-24 {
         left: 100%;
     }
-    &-col-pull-24 {
+    &-pull-24 {
         right: 100%;
     }
-    &-col-offset-24 {
+    &-offset-24 {
         margin-left: 100%;
     }
-    &-col-order-24 {
+    &-order-24 {
         -webkit-box-ordinal-group: 25;
         -webkit-order: 24;
         -ms-flex-order: 24;
         order: 24;
     }
-    &-col-23 {
+    &-23 {
         width: 95.83333333%;
     }
-    &-col-push-23 {
+    &-push-23 {
         left: 95.83333333%;
     }
-    &-col-pull-23 {
+    &-pull-23 {
         right: 95.83333333%;
     }
-    &-col-offset-23 {
+    &-offset-23 {
         margin-left: 95.83333333%;
     }
-    &-col-order-23 {
+    &-order-23 {
         -webkit-box-ordinal-group: 24;
         -webkit-order: 23;
         -ms-flex-order: 23;
         order: 23;
     }
-    &-col-22 {
+    &-22 {
         width: 91.66666667%;
     }
-    &-col-push-22 {
+    &-push-22 {
         left: 91.66666667%;
     }
-    &-col-pull-22 {
+    &-pull-22 {
         right: 91.66666667%;
     }
-    &-col-offset-22 {
+    &-offset-22 {
         margin-left: 91.66666667%;
     }
-    &-col-order-22 {
+    &-order-22 {
         -webkit-box-ordinal-group: 23;
         -webkit-order: 22;
         -ms-flex-order: 22;
         order: 22;
     }
-    &-col-21 {
+    &-21 {
         width: 87.5%;
     }
-    &-col-push-21 {
+    &-push-21 {
         left: 87.5%;
     }
-    &-col-pull-21 {
+    &-pull-21 {
         right: 87.5%;
     }
-    &-col-offset-21 {
+    &-offset-21 {
         margin-left: 87.5%;
     }
-    &-col-order-21 {
+    &-order-21 {
         -webkit-box-ordinal-group: 22;
         -webkit-order: 21;
         -ms-flex-order: 21;
         order: 21;
     }
-    &-col-20 {
+    &-20 {
         width: 83.33333333%;
     }
-    &-col-push-20 {
+    &-push-20 {
         left: 83.33333333%;
     }
-    &-col-pull-20 {
+    &-pull-20 {
         right: 83.33333333%;
     }
-    &-col-offset-20 {
+    &-offset-20 {
         margin-left: 83.33333333%;
     }
-    &-col-order-20 {
+    &-order-20 {
         -webkit-box-ordinal-group: 21;
         -webkit-order: 20;
         -ms-flex-order: 20;
         order: 20;
     }
-    &-col-19 {
+    &-19 {
         width: 79.16666667%;
     }
-    &-col-push-19 {
+    &-push-19 {
         left: 79.16666667%;
     }
-    &-col-pull-19 {
+    &-pull-19 {
         right: 79.16666667%;
     }
-    &-col-offset-19 {
+    &-offset-19 {
         margin-left: 79.16666667%;
     }
-    &-col-order-19 {
+    &-order-19 {
         -webkit-box-ordinal-group: 20;
         -webkit-order: 19;
         -ms-flex-order: 19;
         order: 19;
     }
-    &-col-18 {
+    &-18 {
         width: 75%;
     }
-    &-col-push-18 {
+    &-push-18 {
         left: 75%;
     }
-    &-col-pull-18 {
+    &-pull-18 {
         right: 75%;
     }
-    &-col-offset-18 {
+    &-offset-18 {
         margin-left: 75%;
     }
-    &-col-order-18 {
+    &-order-18 {
         -webkit-box-ordinal-group: 19;
         -webkit-order: 18;
         -ms-flex-order: 18;
         order: 18;
     }
-    &-col-17 {
+    &-17 {
         width: 70.83333333%;
     }
-    &-col-push-17 {
+    &-push-17 {
         left: 70.83333333%;
     }
-    &-col-pull-17 {
+    &-pull-17 {
         right: 70.83333333%;
     }
-    &-col-offset-17 {
+    &-offset-17 {
         margin-left: 70.83333333%;
     }
-    &-col-order-17 {
+    &-order-17 {
         -webkit-box-ordinal-group: 18;
         -webkit-order: 17;
         -ms-flex-order: 17;
         order: 17;
     }
-    &-col-16 {
+    &-16 {
         width: 66.66666667%;
     }
-    &-col-push-16 {
+    &-push-16 {
         left: 66.66666667%;
     }
-    &-col-pull-16 {
+    &-pull-16 {
         right: 66.66666667%;
     }
-    &-col-offset-16 {
+    &-offset-16 {
         margin-left: 66.66666667%;
     }
-    &-col-order-16 {
+    &-order-16 {
         -webkit-box-ordinal-group: 17;
         -webkit-order: 16;
         -ms-flex-order: 16;
         order: 16;
     }
-    &-col-15 {
+    &-15 {
         width: 62.5%;
     }
-    &-col-push-15 {
+    &-push-15 {
         left: 62.5%;
     }
-    &-col-pull-15 {
+    &-pull-15 {
         right: 62.5%;
     }
-    &-col-offset-15 {
+    &-offset-15 {
         margin-left: 62.5%;
     }
-    &-col-order-15 {
+    &-order-15 {
         -webkit-box-ordinal-group: 16;
         -webkit-order: 15;
         -ms-flex-order: 15;
         order: 15;
     }
-    &-col-14 {
+    &-14 {
         width: 58.33333333%;
     }
-    &-col-push-14 {
+    &-push-14 {
         left: 58.33333333%;
     }
-    &-col-pull-14 {
+    &-pull-14 {
         right: 58.33333333%;
     }
-    &-col-offset-14 {
+    &-offset-14 {
         margin-left: 58.33333333%;
     }
-    &-col-order-14 {
+    &-order-14 {
         -webkit-box-ordinal-group: 15;
         -webkit-order: 14;
         -ms-flex-order: 14;
         order: 14;
     }
-    &-col-13 {
+    &-13 {
         width: 54.16666667%;
     }
-    &-col-push-13 {
+    &-push-13 {
         left: 54.16666667%;
     }
-    &-col-pull-13 {
+    &-pull-13 {
         right: 54.16666667%;
     }
-    &-col-offset-13 {
+    &-offset-13 {
         margin-left: 54.16666667%;
     }
-    &-col-order-13 {
+    &-order-13 {
         -webkit-box-ordinal-group: 14;
         -webkit-order: 13;
         -ms-flex-order: 13;
         order: 13;
     }
-    &-col-12 {
+    &-12 {
         width: 50%;
     }
-    &-col-push-12 {
+    &-push-12 {
         left: 50%;
     }
-    &-col-pull-12 {
+    &-pull-12 {
         right: 50%;
     }
-    &-col-offset-12 {
+    &-offset-12 {
         margin-left: 50%;
     }
-    &-col-order-12 {
+    &-order-12 {
         -webkit-box-ordinal-group: 13;
         -webkit-order: 12;
         -ms-flex-order: 12;
         order: 12;
     }
-    &-col-11 {
+    &-11 {
         width: 45.83333333%;
     }
-    &-col-push-11 {
+    &-push-11 {
         left: 45.83333333%;
     }
-    &-col-pull-11 {
+    &-pull-11 {
         right: 45.83333333%;
     }
-    &-col-offset-11 {
+    &-offset-11 {
         margin-left: 45.83333333%;
     }
-    &-col-order-11 {
+    &-order-11 {
         -webkit-box-ordinal-group: 12;
         -webkit-order: 11;
         -ms-flex-order: 11;
         order: 11;
     }
-    &-col-10 {
+    &-10 {
         width: 41.66666667%;
     }
-    &-col-push-10 {
+    &-push-10 {
         left: 41.66666667%;
     }
-    &-col-pull-10 {
+    &-pull-10 {
         right: 41.66666667%;
     }
-    &-col-offset-10 {
+    &-offset-10 {
         margin-left: 41.66666667%;
     }
-    &-col-order-10 {
+    &-order-10 {
         -webkit-box-ordinal-group: 11;
         -webkit-order: 10;
         -ms-flex-order: 10;
         order: 10;
     }
-    &-col-9 {
+    &-9 {
         width: 37.5%;
     }
-    &-col-push-9 {
+    &-push-9 {
         left: 37.5%;
     }
-    &-col-pull-9 {
+    &-pull-9 {
         right: 37.5%;
     }
-    &-col-offset-9 {
+    &-offset-9 {
         margin-left: 37.5%;
     }
-    &-col-order-9 {
+    &-order-9 {
         -webkit-box-ordinal-group: 10;
         -webkit-order: 9;
         -ms-flex-order: 9;
         order: 9;
     }
-    &-col-8 {
+    &-8 {
         width: 33.33333333%;
     }
-    &-col-push-8 {
+    &-push-8 {
         left: 33.33333333%;
     }
-    &-col-pull-8 {
+    &-pull-8 {
         right: 33.33333333%;
     }
-    &-col-offset-8 {
+    &-offset-8 {
         margin-left: 33.33333333%;
     }
-    &-col-order-8 {
+    &-order-8 {
         -webkit-box-ordinal-group: 9;
         -webkit-order: 8;
         -ms-flex-order: 8;
         order: 8;
     }
-    &-col-7 {
+    &-7 {
         width: 29.16666667%;
     }
-    &-col-push-7 {
+    &-push-7 {
         left: 29.16666667%;
     }
-    &-col-pull-7 {
+    &-pull-7 {
         right: 29.16666667%;
     }
-    &-col-offset-7 {
+    &-offset-7 {
         margin-left: 29.16666667%;
     }
-    &-col-order-7 {
+    &-order-7 {
         -webkit-box-ordinal-group: 8;
         -webkit-order: 7;
         -ms-flex-order: 7;
         order: 7;
     }
-    &-col-6 {
+    &-6 {
         width: 25%;
     }
-    &-col-push-6 {
+    &-push-6 {
         left: 25%;
     }
-    &-col-pull-6 {
+    &-pull-6 {
         right: 25%;
     }
-    &-col-offset-6 {
+    &-offset-6 {
         margin-left: 25%;
     }
-    &-col-order-6 {
+    &-order-6 {
         -webkit-box-ordinal-group: 7;
         -webkit-order: 6;
         -ms-flex-order: 6;
         order: 6;
     }
-    &-col-5 {
+    &-5 {
         width: 20.83333333%;
     }
-    &-col-push-5 {
+    &-push-5 {
         left: 20.83333333%;
     }
-    &-col-pull-5 {
+    &-pull-5 {
         right: 20.83333333%;
     }
-    &-col-offset-5 {
+    &-offset-5 {
         margin-left: 20.83333333%;
     }
-    &-col-order-5 {
+    &-order-5 {
         -webkit-box-ordinal-group: 6;
         -webkit-order: 5;
         -ms-flex-order: 5;
         order: 5;
     }
-    &-col-4 {
+    &-4 {
         width: 16.66666667%;
     }
-    &-col-push-4 {
+    &-push-4 {
         left: 16.66666667%;
     }
-    &-col-pull-4 {
+    &-pull-4 {
         right: 16.66666667%;
     }
-    &-col-offset-4 {
+    &-offset-4 {
         margin-left: 16.66666667%;
     }
-    &-col-order-4 {
+    &-order-4 {
         -webkit-box-ordinal-group: 5;
         -webkit-order: 4;
         -ms-flex-order: 4;
         order: 4;
     }
-    &-col-3 {
+    &-3 {
         width: 12.5%;
     }
-    &-col-push-3 {
+    &-push-3 {
         left: 12.5%;
     }
-    &-col-pull-3 {
+    &-pull-3 {
         right: 12.5%;
     }
-    &-col-offset-3 {
+    &-offset-3 {
         margin-left: 12.5%;
     }
-    &-col-order-3 {
+    &-order-3 {
         -webkit-box-ordinal-group: 4;
         -webkit-order: 3;
         -ms-flex-order: 3;
         order: 3;
     }
-    &-col-2 {
+    &-2 {
         width: 8.33333333%;
     }
-    &-col-push-2 {
+    &-push-2 {
         left: 8.33333333%;
     }
-    &-col-pull-2 {
+    &-pull-2 {
         right: 8.33333333%;
     }
-    &-col-offset-2 {
+    &-offset-2 {
         margin-left: 8.33333333%;
     }
-    &-col-order-2 {
+    &-order-2 {
         -webkit-box-ordinal-group: 3;
         -webkit-order: 2;
         -ms-flex-order: 2;
         order: 2;
     }
-    &-col-1 {
+    &-1 {
         width: 4.16666667%;
     }
-    &-col-push-1 {
+    &-push-1 {
         left: 4.16666667%;
     }
-    &-col-pull-1 {
+    &-pull-1 {
         right: 4.16666667%;
     }
-    &-col-offset-1 {
+    &-offset-1 {
         margin-left: 4.16666667%;
     }
-    &-col-order-1 {
+    &-order-1 {
         -webkit-box-ordinal-group: 2;
         -webkit-order: 1;
         -ms-flex-order: 1;
         order: 1;
     }
-    &-col-0 {
+    &-0 {
         display: none;
     }
-    &-col-push-0 {
+    &-push-0 {
         left: auto;
     }
-    &-col-pull-0 {
+    &-pull-0 {
         right: auto;
     }
-    &-col-push-0 {
+    &-push-0 {
         left: auto;
     }
-    &-col-pull-0 {
+    &-pull-0 {
         right: auto;
     }
-    &-col-offset-0 {
+    &-offset-0 {
         margin-left: 0;
     }
-    &-col-order-0 {
+    &-order-0 {
         -webkit-box-ordinal-group: 1;
         -webkit-order: 0;
         -ms-flex-order: 0;
         order: 0;
     }
-
 }
 
 
-
-
-/*&-col-1, &-col-2, &-col-3, &-col-4, &-col-5, &-col-6, &-col-7, &-col-8, &-col-9, &-col-10, &-col-11, &-col-12, &-col-13, &-col-14, &-col-15, &-col-16, &-col-17, &-col-18, &-col-19, &-col-20, &-col-21, &-col-22, &-col-23, &-col-24 {
+/*&-1, &-2, &-3, &-4, &-5, &-6, &-7, &-8, &-9, &-10, &-11, &-12, &-13, &-14, &-15, &-16, &-17, &-18, &-19, &-20, &-21, &-22, &-23, &-24 {
     float: left;
     -webkit-box-flex: 0;
     -webkit-flex: 0 0 auto;
