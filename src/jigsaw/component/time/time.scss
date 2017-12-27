@@ -4,7 +4,7 @@ $time-prefix-cls: #{$jigsaw-prefix}-time;
 
 .#{$time-prefix-cls}-host {
     @include inline-block();
-    width: 250px;
+    width: 253px;
     border: 1px solid $border-color-base ;
     border-radius: $border-radius-base;
     padding: 5px;
