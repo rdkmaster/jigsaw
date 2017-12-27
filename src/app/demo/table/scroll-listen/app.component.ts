@@ -1,8 +1,8 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, Renderer2, ViewChild} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/core/data/table-data";
-import {JigsawTable} from "../../../../jigsaw/component/table/table";
-import {CallbackRemoval} from "../../../../jigsaw/core/utils/common-utils";
+import {JigsawTable} from "jigsaw/component/table/table";
+import {CallbackRemoval} from "jigsaw/core/utils/common-utils";
 
 @Component({
     templateUrl: './app.component.html',
