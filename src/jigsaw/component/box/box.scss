@@ -1,11 +1,12 @@
 @import "../../assets/scss/core/base";
 
-$row-prefix-cls: #{$jigsaw-prefix}-row;
+$box-prefix-cls: #{$jigsaw-prefix}-box;
 $flex-prefix-cls: #{$jigsaw-prefix}-flex;
 
-.#{$row-prefix-cls} {
-    display: block;
+.#{$box-prefix-cls} {
     @include clearfix();
+    display: block;
+    flex-grow: 1;
 }
 
 .#{$flex-prefix-cls} {

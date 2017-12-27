@@ -1,0 +1,80 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>Box</h2>
+    <div class="demo-1 live-demo">
+        <h3>水平和垂直对齐</h3>
+        <div class="line-box">
+            <label>direction: </label>
+            <j-radios [(value)]="direction">
+                <j-radio-option *ngFor="let item of directionArr" [value]="item">
+                    {{item}}
+                </j-radio-option>
+            </j-radios>
+        </div>
+        <div  class="line-box">
+            <label>justify: </label>
+            <j-radios [(value)]="justify">
+                <j-radio-option *ngFor="let item of justifyArr" [value]="item">
+                    {{item}}
+                </j-radio-option>
+            </j-radios>
+        </div>
+        <div  class="line-box">
+            <label>align: </label>
+            <j-radios [(value)]="align">
+                <j-radio-option *ngFor="let item of alignArr" [value]="item">
+                    {{item}}
+                </j-radio-option>
+            </j-radios>
+        </div>
+
+        <j-box type="flex" [direction]="direction" [justify]="justify" [align]="align" height="400">
+            <j-column span="3">
+                <p class="inner-content h50">span=3</p>
+            </j-column>
+            <j-column span="3">
+                <p class="inner-content h30">span=3</p>
+            </j-column>
+            <j-column span="3">
+                <p class="inner-content h80">span=3</p>
+            </j-column>
+            <j-column span="3">
+                <p class="inner-content h40">span=3</p>
+            </j-column>
+        </j-box>
+    </div>
+
+    <div class="demo-2 live-demo">
+        <h3>放大缩小</h3>
+        <j-box type="flex" justify="flex-start" height="400">
+            <j-box type="flex" direction="column" grow="1">
+                <j-box type="flex" grow="1">
+                    <j-box></j-box>
+                    <j-box type="flex" direction="column">
+                        <j-box>
+                            <div class="fl">12345</div>
+                            <div class="fl">12345</div>
+                            <div class="fl">12345</div>
+                        </j-box>
+                        <j-box></j-box>
+                    </j-box>
+                </j-box>
+                <j-box type="flex" grow="2">
+                    <j-box></j-box>
+                    <j-box></j-box>
+                    <j-box></j-box>
+                </j-box>
+            </j-box>
+            <j-box grow="3">
+                <p class="inner-content h30">span=3</p>
+            </j-box>
+        </j-box>
+    </div>
+</div>
+
+

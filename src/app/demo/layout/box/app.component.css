@@ -1,0 +1,36 @@
+.inner-content {
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: #666;
+}
+
+.line-box{
+    margin-bottom: 8px;
+}
+
+j-box {
+    border: 1px solid #bbb;
+}
+
+j-column {
+    border: 1px solid #bbb;
+    background: #b3def1;
+}
+
+.h50{
+    height: 50px;
+}
+.h30{
+    height: 30px;
+}
+.h80{
+    height: 80px;
+}
+.h40{
+    height: 40px;
+}
+
+.fl{
+    float: left;
+}
