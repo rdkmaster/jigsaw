@@ -30,6 +30,7 @@ import {JigsawDraggableModule, JigsawDroppableModule} from './directive/dragdrop
 import {JigsawRootModule} from "./component/root/root";
 import {JigsawFishBoneModule} from "./component/fish-bone/fish-bone";
 import {JigsawViewportModule} from './component/viewport/viewport'
+import {JigsawBoxModule} from "./component/box/box";
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
@@ -62,7 +63,8 @@ const JIGSAW_MODULE = [
     JigsawTreeExtModule,
     JigsawRootModule,
     JigsawFishBoneModule,
-    JigsawViewportModule
+    JigsawViewportModule,
+    JigsawBoxModule,
 ];
 
 @NgModule({
