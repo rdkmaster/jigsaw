@@ -34,7 +34,7 @@ export class GrItem {
         '[class.jigsaw-time-host]': 'true'
     },
     providers: [
-        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTime), multi: true },
+        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTime), multi: true},
     ]
 })
 export class JigsawTime extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
@@ -344,7 +344,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         this._handleValueChange(<Time>this.date, <TimeGr>this.gr, true);
     }
 
-    private _bindActiveDayClickHandler(picker){
+    private _bindActiveDayClickHandler(picker) {
         // 等待day.active刷新出来
         setTimeout(() => {
             picker.find('.datepicker-days table tbody tr td.day.active').on('click', () => {
@@ -430,8 +430,12 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         let weekNum = TimeService.getWeekOfYear(<string>this.date);
         let year = TimeService.getYear(<string>this.date);
         const tdActive = this._el.nativeElement.querySelector(".jigsaw-time-box .datepicker .datepicker-days>table>tbody>tr>td.active");
-        if(tdActive){
+        if (tdActive) {
             tdActive.parentNode.classList.add("active");
+        }
+        if (CommonUtils.isIE()) {
+            window.resizeBy(-20);
+            window.resizeBy(20);
         }
         return {year: year, week: weekNum};
     }
@@ -645,7 +649,8 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     }
 
 
-    private _propagateChange:any = () => {};
+    private _propagateChange: any = () => {
+    };
 
     public writeValue(newValue: any): void {
         if (!newValue || newValue == this._value) {

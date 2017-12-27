@@ -51,7 +51,8 @@ $collapse-prefix: #{$jigsaw-prefix}-collapse;
     &-item &-content {
         overflow: hidden;
         padding: 16px 16px;
-        color: #555;
+        color: #000;
+        opacity:0.65;
         background-color: $default-color;
 
         @include prefixer(transition, all .3s ease);
