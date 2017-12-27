@@ -4,7 +4,7 @@ import {Component} from "@angular/core";
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class FlexDemoComponent {
+export class BoxDemoComponent {
     direction = 'row';
     directionArr = ['row', 'row-reverse', 'column', 'column-reverse'];
 

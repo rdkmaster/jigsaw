@@ -2,15 +2,15 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {GridFullDemoModule} from "./grid/app.module";
 import {GridFullDemoComponent} from "./grid/app.component";
-import {FlexDemoComponent} from "./box/app.component";
-import {FlexDemoModule} from "./box/app.module";
+import {BoxDemoComponent} from "./box/app.component";
+import {BoxDemoModule} from "./box/app.module";
 
 export const routerConfig = [
     {
-        path: 'full', component: GridFullDemoComponent
+        path: 'grid', component: GridFullDemoComponent
     },
     {
-        path: 'flex', component: FlexDemoComponent
+        path: 'box', component: BoxDemoComponent
     },
 ];
 
@@ -18,7 +18,7 @@ export const routerConfig = [
     imports: [
         RouterModule.forChild(routerConfig),
         GridFullDemoModule,
-        FlexDemoModule,
+        BoxDemoModule,
     ]
 })
 export class LayoutDemoModule {

@@ -12,9 +12,10 @@ j-box {
     border: 1px solid #bbb;
 }
 
-j-column {
+.item {
     border: 1px solid #bbb;
     background: #b3def1;
+    width: 12.5%;
 }
 
 .h50 {
