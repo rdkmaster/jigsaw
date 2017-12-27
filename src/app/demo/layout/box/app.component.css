@@ -1,5 +1,4 @@
 .inner-content {
-    height: 30px;
     line-height: 30px;
     text-align: center;
     color: #666;
@@ -20,15 +19,19 @@ j-column {
 
 .h50{
     height: 50px;
+    line-height: 50px;
 }
 .h30{
     height: 30px;
+    line-height: 30px;
 }
 .h80{
     height: 80px;
+    line-height: 80px;
 }
 .h40{
     height: 40px;
+    line-height: 40px;
 }
 
 .fl{

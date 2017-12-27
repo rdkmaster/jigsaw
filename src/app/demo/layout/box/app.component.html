@@ -7,7 +7,7 @@
 <div class="live-demo-wrap">
     <h2>Box</h2>
     <div class="demo-1 live-demo">
-        <h3>水平和垂直对齐</h3>
+        <h3>对齐</h3>
         <div class="line-box">
             <label>direction: </label>
             <j-radios [(value)]="direction">
@@ -50,28 +50,41 @@
     </div>
 
     <div class="demo-2 live-demo">
-        <h3>放大缩小</h3>
-        <j-box type="flex" justify="flex-start" height="400">
+        <h3>布局</h3>
+        <j-box type="flex" height="400">
             <j-box type="flex" direction="column" grow="1">
                 <j-box type="flex" grow="1">
                     <j-box></j-box>
                     <j-box type="flex" direction="column">
                         <j-box>
-                            <div class="fl">12345</div>
-                            <div class="fl">12345</div>
-                            <div class="fl">12345</div>
+                            <p class="inner-content">
+                                content...<br>
+                                content...<br>
+                            </p>
                         </j-box>
                         <j-box></j-box>
                     </j-box>
                 </j-box>
                 <j-box type="flex" grow="2">
-                    <j-box></j-box>
+                    <j-box>
+                        <p class="inner-content">
+                            content...<br>
+                            content...<br>
+                            content...<br>
+                            content...<br>
+                        </p>
+                    </j-box>
                     <j-box></j-box>
                     <j-box></j-box>
                 </j-box>
             </j-box>
             <j-box grow="3">
-                <p class="inner-content h30">span=3</p>
+                <p class="inner-content">
+                    content...<br>
+                    content...<br>
+                    content...<br>
+                    content...<br>
+                </p>
             </j-box>
         </j-box>
     </div>

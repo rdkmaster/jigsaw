@@ -1,8 +1,8 @@
-import {Component, ElementRef, Input, NgModule, OnInit, Renderer2} from "@angular/core";
+import {Component, ElementRef, Input, NgModule, Renderer2} from "@angular/core";
 import {AbstractJigsawComponent} from "../common";
 
 @Component({
-    selector: 'j-box',
+    selector: 'jigsaw-box, j-box',
     template: '<ng-content></ng-content>',
     host: {
         '[class.jigsaw-box]': 'true',
@@ -11,7 +11,7 @@ import {AbstractJigsawComponent} from "../common";
         '[style.height]': 'height',
     }
 })
-export class JigsawBox extends AbstractJigsawComponent{
+export class JigsawBox extends AbstractJigsawComponent {
     private _element: HTMLElement;
 
     constructor(private _elementRef: ElementRef, private _renderer: Renderer2) {
@@ -22,10 +22,9 @@ export class JigsawBox extends AbstractJigsawComponent{
     @Input()
     type: string;
 
+    /* flex box property */
     private _direction: string;
-
     private _justify: string;
-
     private _align: string;
 
     @Input()
@@ -58,7 +57,7 @@ export class JigsawBox extends AbstractJigsawComponent{
         this._renderer.setStyle(this._element, 'align-items', value);
     }
 
-    /* flex property */
+    /* flex item property */
     private _order: number;
     private _grow: number;
     private _shrink: number;
@@ -94,42 +93,10 @@ export class JigsawBox extends AbstractJigsawComponent{
     }
 }
 
-/*@Component({
-    selector: 'j-h-box',
-    template: '<no-content></no-content>',
-    host: {
-        '[class.jigsaw-box]': 'true',
-        '[class.jigsaw-flex]': 'type == "flex"',
-        '[style.width]': 'width',
-        '[style.height]': 'height',
-    }
-})
-export class JigsawHBox extends JigsawBoxBase implements OnInit{
-    ngOnInit(){
-        this.direction = 'row';
-    }
-}
-
-@Component({
-    selector: 'j-v-box',
-    template: '<no-content></no-content>',
-    host: {
-        '[class.jigsaw-box]': 'true',
-        '[class.jigsaw-flex]': 'type == "flex"',
-        '[style.width]': 'width',
-        '[style.height]': 'height',
-    }
-})
-export class JigsawVBox extends JigsawBoxBase implements OnInit{
-    ngOnInit(){
-        this.direction = 'column';
-    }
-}*/
-
 @NgModule({
     declarations: [JigsawBox],
     exports: [JigsawBox]
 })
-export class JigsawBoxModule{
+export class JigsawBoxModule {
 
 }
