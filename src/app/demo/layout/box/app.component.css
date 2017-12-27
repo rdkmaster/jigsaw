@@ -4,7 +4,7 @@
     color: #666;
 }
 
-.line-box{
+.line-box {
     margin-bottom: 8px;
 }
 
@@ -17,23 +17,26 @@ j-column {
     background: #b3def1;
 }
 
-.h50{
+.h50 {
     height: 50px;
     line-height: 50px;
 }
-.h30{
+
+.h30 {
     height: 30px;
     line-height: 30px;
 }
-.h80{
+
+.h80 {
     height: 80px;
     line-height: 80px;
 }
-.h40{
+
+.h40 {
     height: 40px;
     line-height: 40px;
 }
 
-.fl{
+.fl {
     float: left;
 }
