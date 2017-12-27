@@ -25,7 +25,7 @@ export class TableScrollListenDemoComponent implements AfterViewInit, OnDestroy 
 
     @ViewChild(JigsawTable) table: JigsawTable;
     @ViewChild('content') content: ElementRef;
-    _removeHorizontalScrollListener: CallbackRemoval;
+    private _removeHorizontalScrollListener: CallbackRemoval;
 
     ngAfterViewInit() {
         this._removeHorizontalScrollListener = this._renderer.listen(
