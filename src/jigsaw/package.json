@@ -1,6 +1,6 @@
 {
     "name": "@rdkmaster/jigsaw",
-    "version": "1.1.0-rc.2",
+    "version": "1.1.0-rc.3",
     "description": "Jigsaw, the next generation component set for RDK",
     "main": "./bundles/jigsaw.umd.js",
     "module": "./@rdkmaster/jigsaw.es5.js",
@@ -21,7 +21,7 @@
     "bugs": {
         "url": "https://github.com/rdkmaster/jigsaw/issues"
     },
-    "homepage": "http://rdk.zte.com.cn/jigsaw",
+    "homepage": "http://rdk.zte.com.cn/components",
     "peerDependencies": {
         "@ngx-translate/core": "^v8.0.0",
         "eonasdan-bootstrap-datetimepicker": "^4.17.47",

@@ -13,7 +13,7 @@ import {JigsawLoadingModule} from './component/loading/loading';
 import {JigsawPaginationModule} from './component/pagination/pagination';
 import {JigsawRadioModule} from './component/radio/radio';
 import {JigsawRangeTimeModule} from './component/range-time/index';
-import {JigsawScrollbarModule} from './component/scrollbar/index'; // from index.ts 不可省略index
+import {JigsawScrollbarModule} from './component/scrollbar/index';
 import {JigsawSelectModule} from './component/select/select';
 import {JigsawSliderModule} from './component/slider/index';
 import {JigsawSwitchModule} from './component/switch/index';
@@ -30,6 +30,9 @@ import {JigsawDraggableModule, JigsawDroppableModule} from './directive/dragdrop
 import {JigsawRootModule} from "./component/root/root";
 import {JigsawFishBoneModule} from "./component/fish-bone/fish-bone";
 import {JigsawViewportModule} from './component/viewport/viewport'
+import {JigsawCommonModule} from "./component/common";
+import {JigsawListModule} from "./component/list-and-tile/list";
+import {JigsawTrustedHtmlModule} from "./directive/trusted-html/trusted-html";
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
@@ -38,16 +41,20 @@ const JIGSAW_MODULE = [
     JigsawCheckBoxModule,
     JigsawCollapseModule,
     JigsawComboSelectModule,
+    JigsawCommonModule,
     JigsawDialogModule,
-    JigsawMovableModule,
     JigsawDraggableModule,
     JigsawDroppableModule,
+    JigsawFishBoneModule,
     JigsawGraphModule,
     JigsawInputModule,
+    JigsawListModule,
     JigsawLoadingModule,
+    JigsawMovableModule,
     JigsawPaginationModule,
     JigsawRadioModule,
     JigsawRangeTimeModule,
+    JigsawRootModule,
     JigsawScrollbarModule,
     JigsawSelectModule,
     JigsawSliderModule,
@@ -60,9 +67,8 @@ const JIGSAW_MODULE = [
     JigsawTimeModule,
     JigsawTooltipModule,
     JigsawTreeExtModule,
-    JigsawRootModule,
-    JigsawFishBoneModule,
-    JigsawViewportModule
+    JigsawTrustedHtmlModule,
+    JigsawViewportModule,
 ];
 
 @NgModule({

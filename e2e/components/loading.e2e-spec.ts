@@ -45,8 +45,8 @@ describe('loading', () => {
             await waitForNotPresence('.container1');
             expectToExist('.jigsaw-bubble-loading-host', false);
             buttons.get(3).click();
-            await waitForPresence('.jigsaw-button .jigsaw-bubble-loading-host');
-            expectToExist('.jigsaw-button .jigsaw-bubble-loading-host', true);
+            await waitForNotPresence('.jigsaw-button .jigsaw-bubble-loading-host');
+            expectToExist('.jigsaw-button .jigsaw-bubble-loading-host', false);
         })
     });
 

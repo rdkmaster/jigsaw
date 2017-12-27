@@ -117,7 +117,11 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
         if (this._$optionListHidden) {
             this._documentListen();
         } else {
-            this._documentListen = this._renderer.listen('document', 'click', () => this._$optionListHidden = true);
+            this._documentListen = this._renderer.listen('document', 'click', () => {
+                this._$optionListHidden = true;
+                this._documentListen();
+                this._documentListen = null;
+            });
         }
     }
 
