@@ -6,25 +6,27 @@
 
 组件支持可定制，可以满足不同页面的定制化需求。比如一个dialog分为header、content和footer，我们分别给这三个部分实现了定制功能：
 
-    <jigsaw-dialog width="800px" (close)="onAnswer()">
-    	<!-- header -->
-    	<div jigsaw-title>
-    		<span class="fa fa-thumbs-up"></span>Title of the dialog
-    	</div>
-    	<!-- content -->
-    	<div jigsaw-body>
-    		<ul class="dialog-content">
-    			<li>Dialog content...</li>
-    			<li>Dialog content...</li>
-    			<li>Dialog content...</li>
-    		</ul>
-   		 </div>
-    	<!-- footer -->
-    	<div jigsaw-button-bar>
-    		<jigsaw-button colorType="primary" (click)="onAnswer('OK')">OK</jigsaw-button>
-    		<jigsaw-button (click)="onAnswer('Cancel')">Cancel</jigsaw-button>
-    	</div>
-    </jigsaw-dialog>
+```
+<jigsaw-dialog width="800px" (close)="onAnswer()">
+    <!-- header -->
+    <div jigsaw-title>
+        <span class="fa fa-thumbs-up"></span>Title of the dialog
+    </div>
+    <!-- content -->
+    <div jigsaw-body>
+        <ul class="dialog-content">
+            <li>Dialog content...</li>
+            <li>Dialog content...</li>
+            <li>Dialog content...</li>
+        </ul>
+     </div>
+    <!-- footer -->
+    <div jigsaw-button-bar>
+        <jigsaw-button colorType="primary" (click)="onAnswer('OK')">OK</jigsaw-button>
+        <jigsaw-button (click)="onAnswer('Cancel')">Cancel</jigsaw-button>
+    </div>
+</jigsaw-dialog>
+```
 
 转变成视图([demo地址](http://rdk.zte.com.cn/components/combo-select/demo#auto-width))：
 
@@ -41,22 +43,24 @@
 
 实现起来很简单，[demo地址](http://rdk.zte.com.cn/components/combo-select/demo#auto-width)
 
-    <jigsaw-combo-select
-    	placeholder="请输入姓名~"
-    	autoWidth="true"
-    	[(value)]="selectedCity"
-    	[clearable]="true"
-    	maxWidth="500">
-    	<ng-template>
-    		<jigsaw-tile
-    			[(selectedItems)]="selectedCity"
-    			trackItemBy="label">
-    			<jigsaw-tile-option *ngFor="let city of cities" [value]="city" width="21.4%">
-    				{{city.label}}
-    			</jigsaw-tile-option>
-    		</jigsaw-tile>
-    	</ng-template>
-    </jigsaw-combo-select>
+```
+<jigsaw-combo-select
+    placeholder="请输入姓名~"
+    autoWidth="true"
+    [(value)]="selectedCity"
+    [clearable]="true"
+    maxWidth="500">
+    <ng-template>
+        <jigsaw-tile
+            [(selectedItems)]="selectedCity"
+            trackItemBy="label">
+            <jigsaw-tile-option *ngFor="let city of cities" [value]="city" width="21.4%">
+                {{city.label}}
+            </jigsaw-tile-option>
+        </jigsaw-tile>
+    </ng-template>
+</jigsaw-combo-select>
+```
 
 可以从视图代码里看到，tile像一个模块一样放到combo内部，并且他们之间有一些‘连接线’(`selectedCity`)，这就好比组装一个遥控汽车，把电池，马达用线路连接起来差不多。
 
@@ -75,19 +79,23 @@ Jigsaw有很多组合的例子，比如把table和pagination组合起来就能�
 
 #### 组件渲染器
 
-    @Component({
-    template: '<span class="fa fa-bicycle"></span><span>{{context.cellData}}</span>'
-    })
-    export class BicycleCellRenderer extends TableCellRendererBase {
-    }
+```
+@Component({
+template: '<span class="fa fa-bicycle"></span><span>{{context.cellData}}</span>'
+})
+export class BicycleCellRenderer extends TableCellRendererBase {
+}
+```
 
 [demo地址](http://rdk.zte.com.cn/components/table/demo#renderer)
 
 #### 模板渲染器
 
-    <ng-template #cellName let-context="context">
-    <span class="fa fa-bicycle"></span><span>{{context.cellData}}</span>
-    </ng-template>
+```
+<ng-template #cellName let-context="context">
+<span class="fa fa-bicycle"></span><span>{{context.cellData}}</span>
+</ng-template>
+```
 
 [demo地址](http://rdk.zte.com.cn/components/table/demo#template-ref-renderer)
 
@@ -106,22 +114,30 @@ step1：在根模块导入`JigsawRootModule`模块
 
 step2：在根组件视图里加入
 
-    <j-root>
-    	<!-- 所以其他内容写这里 -->
-    </j-root>
+```
+<j-root>
+    <!-- 所以其他内容写这里 -->
+</j-root>
+```
 
 step3：在需要弹框的组件里面注入`PopupService`
 
-    constructor(private popupService: PopupService) {
-    }
+```
+constructor(private popupService: PopupService) {
+}
+```
 
 step4：调用popup方法
 
-    this.dialogInfo = this.popupService.popup(ele);
+```
+this.dialogInfo = this.popupService.popup(ele);
+```
 
 step5：销毁弹框
 
-    this.dialogInfo.dispose();
+```
+this.dialogInfo.dispose();
+```
 
 PopupService支持弹出组件和模板，可以看下[demo](http://rdk.zte.com.cn/components/dialog/demo#misc)；
 

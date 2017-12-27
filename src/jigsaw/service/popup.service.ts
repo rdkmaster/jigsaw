@@ -409,7 +409,7 @@ export class PopupService {
     private _setPopup(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
         if (element && renderer) {
             this._setSize(options, element, renderer);
-            this._setPosition(options, element, renderer);
+            this.setPosition(options, element, renderer);
             this._setBackground(options, element, renderer);
             this._setShowAnimate(options, element, renderer);
         }
@@ -513,7 +513,7 @@ export class PopupService {
     /*
      * 设置弹出的位置
      * */
-    private _setPosition(options: PopupOptions, element: HTMLElement, renderer: Renderer2): void {
+    public setPosition(options: PopupOptions, element: HTMLElement, renderer: Renderer2): void {
         let posType: string = this._isGlobalPopup(options) ? 'fixed' : this._getPositionType(options.posType);
         let position = this._getPositionValue(options, element);
         renderer.setStyle(element, 'position', posType);

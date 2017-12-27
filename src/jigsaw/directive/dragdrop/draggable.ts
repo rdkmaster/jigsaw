@@ -1,6 +1,6 @@
 import {Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output, Renderer2} from "@angular/core";
 import {DragDropInfo} from "./types";
-import {CallbackRemoval} from "../../core/utils/common-utils";
+import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 
 @Directive({
     selector: '[jigsaw-draggable], [jigsawDraggable], [j-draggable]',
@@ -29,8 +29,8 @@ export class JigsawDraggable implements OnInit, OnDestroy {
         return false;
     }
 
-    private _offsetX:number = 0;
-    private _offsetY:number = 0;
+    private _offsetX: number = 0;
+    private _offsetY: number = 0;
 
     /**
      * dragstart给的事件的offsetX和offsetY不准确，通过mousedown事件来弥补
@@ -47,7 +47,9 @@ export class JigsawDraggable implements OnInit, OnDestroy {
         //拖拽效果
         event.stopPropagation();
         event.dataTransfer.effectAllowed = 'move';
-        event.dataTransfer.setDragImage(event.target, this._offsetX, this._offsetY);
+        if (!CommonUtils.isIE()) {
+            event.dataTransfer.setDragImage(event.target, this._offsetX, this._offsetY);
+        }
         this.jigsawDragStart.emit(new DragDropInfo(event, this._elementRef.nativeElement));
         return true;
     }
@@ -66,7 +68,7 @@ export class JigsawDraggable implements OnInit, OnDestroy {
         this.jigsawDrag.emit(new DragDropInfo(event, this._elementRef.nativeElement));
     };
 
-    private _removeDragHandler:CallbackRemoval;
+    private _removeDragHandler: CallbackRemoval;
 
     ngOnInit() {
         this._zone.runOutsideAngular(() => {

@@ -38,9 +38,9 @@ Jigsaw的数据总体分成两大分支：
     - `LineBarGraphData` 通用的折线柱状图数据，详情请访问[这个页面](/components/classes/api?apiItem=LineBarGraphData)。
 - 层次关系数据
     - `TreeData` 用于任何有层次关系的组件，包括树、鱼骨图等，包括未来的级联选择器、多级菜单等，都需要用到层次关系数据，因此后续这个类会进一步抽象和扩展，
-详情请访问[这个页面](/components/classes/api?apiItem=TreeData)。
+详情请访问[这个页面](/components/jigsaw/api?apiItem=TreeData&parentName=classes)。
 
-目前而言，Jigsaw在书组件对象和表格数据对象方面的抽象程度较高，已经能够满足绝大部分场景，因此较为稳定。
+目前而言，Jigsaw在数组数据对象和表格数据对象方面的抽象程度较高，已经能够满足绝大部分场景，因此较为稳定。
 相对而言，图形数据、层次关系数据这2个方面还比较欠缺，后续需要进一步的抽象和扩展，也难免会引入一些破坏性修改。
 
 <a name="relationship"></a>

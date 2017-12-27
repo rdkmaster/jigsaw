@@ -51,5 +51,31 @@
         </j-combo-select>
         <p>selected countries: {{toCountriesString(selectedCountries2)}}</p>
     </div>
+
+    <div class="demo-3 live-demo">
+        <h3>自定义过滤器</h3>
+        <j-combo-select maxWidth="500"
+                        [(value)]="selectedCountries3"
+                        [clearable]="true"
+                        labelField="enName"
+                        placeholder="search a country..."
+                        (openChange)="onLocalSearchOpen($event)">
+            <ng-template>
+                <div class="dropdown-wrap">
+                    <j-input width="100%" (valueChange)="handleSearching($event, lpaCountries)">
+                        <span jigsaw-prefix-icon class="fa fa-search"></span>
+                    </j-input>
+                    <div class="dropdown">
+                        <j-tile [(selectedItems)]="selectedCountries3" trackItemBy="enName" width="550px">
+                            <j-tile-option *ngFor="let country of lpaCountries" [value]="country" width="100px">
+                                {{country.enName}}
+                            </j-tile-option>
+                        </j-tile>
+                    </div>
+                </div>
+            </ng-template>
+        </j-combo-select>
+        <p>selected countries: {{toCountriesString(selectedCountries3)}}</p>
+    </div>
 </div>
 
