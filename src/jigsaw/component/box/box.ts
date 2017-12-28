@@ -55,11 +55,11 @@ export class JigsawBox extends AbstractJigsawComponent implements AfterContentIn
     private _align: string;
 
     @Input()
-    protected get direction(): string {
+    public get direction(): string {
         return this._direction;
     }
 
-    protected set direction(value: string) {
+    public set direction(value: string) {
         value = this._directionMap.get(value);
         if (!value) return;
         this._direction = value;
