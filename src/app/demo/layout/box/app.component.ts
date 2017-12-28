@@ -5,14 +5,14 @@ import {Component} from "@angular/core";
     styleUrls: ['./app.component.css']
 })
 export class BoxDemoComponent {
-    direction = 'row';
-    directionArr = ['row', 'row-reverse', 'column', 'column-reverse'];
+    direction = 'h';
+    directionArr = ['h', 'hr', 'v', 'vr'];
 
-    justify = 'space-around';
-    justifyArr = ['flex-start', 'flex-end', 'center', 'space-between', 'space-around'];
+    justify = 'around';
+    justifyArr = ['start', 'end', 'center', 'between', 'around'];
 
     align = 'center';
-    alignArr = ['flex-start', 'flex-end', 'center', 'baseline', 'stretch'];
+    alignArr = ['start', 'end', 'center', 'baseline', 'stretch'];
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

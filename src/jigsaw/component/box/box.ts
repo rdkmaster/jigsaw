@@ -19,6 +19,33 @@ export class JigsawBox extends AbstractJigsawComponent implements AfterContentIn
         this._element = this._elementRef.nativeElement;
     }
 
+    private _directionMap = new Map([
+        ['horizontal', 'row'],
+        ['horizontal-reverse', 'row-reverse'],
+        ['vertical', 'column'],
+        ['vertical-reverse', 'column-reverse'],
+        ['h', 'row'],
+        ['hr', 'row-reverse'],
+        ['v', 'column'],
+        ['vr', 'column-reverse'],
+    ]);
+
+    private _justifyMap = new Map([
+        ['start', 'flex-start'],
+        ['end', 'flex-end'],
+        ['center', 'center'],
+        ['between', 'space-between'],
+        ['around', 'space-around'],
+    ]);
+
+    private _alignMap = new Map([
+        ['start', 'flex-start'],
+        ['end', 'flex-end'],
+        ['center', 'center'],
+        ['baseline', 'baseline'],
+        ['stretch', 'stretch'],
+    ]);
+
     @Input()
     type: string;
 
@@ -33,6 +60,8 @@ export class JigsawBox extends AbstractJigsawComponent implements AfterContentIn
     }
 
     protected set direction(value: string) {
+        value = this._directionMap.get(value);
+        if (!value) return;
         this._direction = value;
         this._renderer.setStyle(this._element, 'flex-direction', value);
         this._checkFlexByOwnProperty(value);
@@ -44,6 +73,8 @@ export class JigsawBox extends AbstractJigsawComponent implements AfterContentIn
     }
 
     public set justify(value: string) {
+        value = this._justifyMap.get(value);
+        if (!value) return;
         this._justify = value;
         this._renderer.setStyle(this._element, 'justify-content', value);
         this._checkFlexByOwnProperty(value);
@@ -55,6 +86,8 @@ export class JigsawBox extends AbstractJigsawComponent implements AfterContentIn
     }
 
     public set align(value: string) {
+        value = this._alignMap.get(value);
+        if (!value) return;
         this._align = value;
         this._renderer.setStyle(this._element, 'align-items', value);
         this._checkFlexByOwnProperty(value);
@@ -111,7 +144,6 @@ export class JigsawBox extends AbstractJigsawComponent implements AfterContentIn
     }
 
     ngAfterContentInit() {
-        console.log(this.childrenBox.length);
         this._checkFlexByChildren();
         this.childrenBox.changes.subscribe(() => {
             this._checkFlexByChildren();
