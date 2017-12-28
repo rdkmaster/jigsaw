@@ -9,7 +9,7 @@
     <div class="demo-1 live-demo">
         <h3>对齐</h3>
         <div class="line-box">
-            <label>direction: </label>
+            <label>direction(布局方向): </label>
             <j-radios [(value)]="direction">
                 <j-radio-option *ngFor="let item of directionArr" [value]="item">
                     {{item}}
@@ -17,7 +17,7 @@
             </j-radios>
         </div>
         <div class="line-box">
-            <label>justify: </label>
+            <label>justify(主轴对齐): </label>
             <j-radios [(value)]="justify">
                 <j-radio-option *ngFor="let item of justifyArr" [value]="item">
                     {{item}}
@@ -25,7 +25,7 @@
             </j-radios>
         </div>
         <div class="line-box">
-            <label>align: </label>
+            <label>align(垂直主轴对齐): </label>
             <j-radios [(value)]="align">
                 <j-radio-option *ngFor="let item of alignArr" [value]="item">
                     {{item}}
@@ -51,6 +51,11 @@
 
     <div class="demo-2 live-demo">
         <h3>布局</h3>
+        <p class="comment">
+            1、<code>direction</code>是设置在父元素上的，比如设置了<code>direction="v"</code>，则它的子元素垂直排列；<br>
+            2、j-box默认<code>grow</code>都是1，即会随父box伸展，如有多个子box，默认会平均分，如需按比例伸展，比如1:2，
+            需要在比例2的box上加<code>grow="2"</code>即可。
+        </p>
         <j-box height="400">
             <j-box direction="v">
                 <j-box>

@@ -8,6 +8,11 @@
     margin-bottom: 8px;
 }
 
+.line-box label {
+    vertical-align: middle;
+    margin: 0 8px 0 0;
+}
+
 j-box {
     border: 1px solid #bbb;
 }
