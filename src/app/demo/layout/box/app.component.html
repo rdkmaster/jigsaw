@@ -33,7 +33,7 @@
             </j-radios>
         </div>
 
-        <j-box type="flex" [direction]="direction" [justify]="justify" [align]="align" height="400">
+        <j-box [direction]="direction" [justify]="justify" [align]="align" height="400">
             <div class="item">
                 <p class="inner-content h50">span=3</p>
             </div>
@@ -51,11 +51,11 @@
 
     <div class="demo-2 live-demo">
         <h3>布局</h3>
-        <j-box type="flex" height="400">
-            <j-box type="flex" direction="column" grow="1">
-                <j-box type="flex" grow="1">
+        <j-box height="400">
+            <j-box direction="column">
+                <j-box>
                     <j-box></j-box>
-                    <j-box type="flex" direction="column">
+                    <j-box direction="column">
                         <j-box>
                             <p class="inner-content">
                                 content...<br>
@@ -65,7 +65,7 @@
                         <j-box></j-box>
                     </j-box>
                 </j-box>
-                <j-box type="flex" grow="2">
+                <j-box grow="2">
                     <j-box>
                         <p class="inner-content">
                             content...<br>

@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, NgModule, Renderer2} from "@angular/core";
+import {AfterContentInit, Component, ContentChildren, ElementRef, Input, NgModule, OnInit, QueryList, Renderer2} from "@angular/core";
 import {AbstractJigsawComponent} from "../common";
 
 @Component({
@@ -11,7 +11,7 @@ import {AbstractJigsawComponent} from "../common";
         '[style.height]': 'height',
     }
 })
-export class JigsawBox extends AbstractJigsawComponent {
+export class JigsawBox extends AbstractJigsawComponent implements AfterContentInit {
     private _element: HTMLElement;
 
     constructor(private _elementRef: ElementRef, private _renderer: Renderer2) {
@@ -35,6 +35,7 @@ export class JigsawBox extends AbstractJigsawComponent {
     protected set direction(value: string) {
         this._direction = value;
         this._renderer.setStyle(this._element, 'flex-direction', value);
+        this._checkFlexByOwnProperty(value);
     }
 
     @Input()
@@ -45,6 +46,7 @@ export class JigsawBox extends AbstractJigsawComponent {
     public set justify(value: string) {
         this._justify = value;
         this._renderer.setStyle(this._element, 'justify-content', value);
+        this._checkFlexByOwnProperty(value);
     }
 
     @Input()
@@ -55,6 +57,7 @@ export class JigsawBox extends AbstractJigsawComponent {
     public set align(value: string) {
         this._align = value;
         this._renderer.setStyle(this._element, 'align-items', value);
+        this._checkFlexByOwnProperty(value);
     }
 
     /* flex item property */
@@ -90,6 +93,29 @@ export class JigsawBox extends AbstractJigsawComponent {
     public set shrink(value: number) {
         this._shrink = value;
         this._renderer.setStyle(this._element, 'flex-shrink', Number(value));
+    }
+
+    @ContentChildren(JigsawBox) childrenBox: QueryList<JigsawBox>;
+
+    private _checkFlexByOwnProperty(property: string) {
+        if (property && this.type != 'flex') {
+            this.type = 'flex';
+        }
+    }
+
+    private _checkFlexByChildren() {
+        // 映射同一组件实例，ContentChildren会包含自己，https://github.com/angular/angular/issues/21148
+        if (this.childrenBox.length > 1 && this.type != 'flex') {
+            this.type = 'flex';
+        }
+    }
+
+    ngAfterContentInit() {
+        console.log(this.childrenBox.length);
+        this._checkFlexByChildren();
+        this.childrenBox.changes.subscribe(() => {
+            this._checkFlexByChildren();
+        })
     }
 }
 
