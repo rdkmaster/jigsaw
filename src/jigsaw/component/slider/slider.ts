@@ -227,7 +227,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
      */
     public _$value: ArrayCollection<number> = new ArrayCollection<number>();
     private _removeRefreshCallback: CallbackRemoval = this._getRemoveRefreshCallback();
-
+    private valueInit:boolean = false;
     /**
      * slider的当前值, 类型 number | ArrayCollection<number> 支持多触点.
      * @returns {any}
@@ -496,7 +496,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
     private _getRemoveRefreshCallback() {
         return this._$value.onRefresh(() => {
             this._zone.runOutsideAngular(() => this._setTrackStyle(this.value));
-            this.valueChange.emit(this.value);
+            this.valueInit?this.valueChange.emit(this.value):this.valueInit = true;
             this._propagateChange(this.value);
         });
     }
