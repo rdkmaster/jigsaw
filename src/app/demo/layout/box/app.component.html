@@ -58,9 +58,12 @@
     <div class="demo-2 live-demo">
         <h3>布局</h3>
         <p class="comment">
-            1、<code>direction</code>是设置在父元素上的，比如设置了<code>direction="v"</code>，则它的子元素垂直排列；<br>
-            2、j-box默认<code>grow</code>都是1，即会随父box伸展，如有多个子box，默认会平均分，如需按比例伸展，比如1:2，
-            需要在比例2的box上加<code>grow="2"</code>即可。
+            1、关于j-box的<code>direction</code>属性：它用于设置其子级j-box是按照水平排列还是垂直排列，默认值是水平排列，
+            如果需要子级垂直排列，则可以设置<code>direction="vertical"</code>。
+            注意<code>vertical</code>可以简写为<code>v</code>；<br>
+            2、关于j-box的<code>grow</code>属性：它用于设置其子级j-box的宽/高（取决于<code>direction</code>属性的值）占比，
+            默认<code>grow</code>是1，即默认每个子级j-box会1:1均分宽/高，如需控制子级j-box的宽/高比例，比如1:2，
+            需要将第一个子j-box的grow设置为1，第二个设置为2。
         </p>
         <j-box height="400">
             <j-box direction="v">
