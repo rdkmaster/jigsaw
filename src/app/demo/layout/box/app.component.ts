@@ -5,8 +5,8 @@ import {Component} from "@angular/core";
     styleUrls: ['./app.component.css']
 })
 export class BoxDemoComponent {
-    direction = 'h';
-    directionArr = ['h', 'hr', 'v', 'vr'];
+    direction = 'horizontal';
+    directionArr = ['horizontal', 'horizontal-reverse', 'vertical', 'vertical-reverse'];
 
     justify = 'around';
     justifyArr = ['start', 'end', 'center', 'between', 'around'];
