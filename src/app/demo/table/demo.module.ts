@@ -67,6 +67,8 @@ import {BigRowDemoModule} from "./big-row/app.module";
 import {BigColumnDemoModule} from "./big-column/app.module";
 import {TableResizeDemoComponent} from "./resize/app.component";
 import {TableResizeDemoModule} from "./resize/app.module";
+import {TableScrollListenDemoComponent} from "./scroll-listen/app.component";
+import {TableScrollListenDemoModule} from "./scroll-listen/app.module";
 
 export const routerConfig = [
     {
@@ -168,6 +170,9 @@ export const routerConfig = [
     {
         path: 'resize', component: TableResizeDemoComponent
     },
+    {
+        path: 'scroll-listen', component: TableScrollListenDemoComponent
+    },
 ];
 
 @NgModule({
@@ -180,7 +185,8 @@ export const routerConfig = [
         TableSetCellClassDemoModule, TableSetCellEditableDemoModule, TableSetCellRenderDemoModule, TableColumnGroupDemoModule,
         TableColumnSetVisibleDemoModule, TableColumnSetWidthDemoModule, TableSetHeaderClassDemoModule, TableSetHeaderRenderDemoModule,
         TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, SwimLaneDiagramDemoModule, TableHideHeadDemoModule,
-        TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule, TableCalendarDemoModule, BigRowDemoModule, TableResizeDemoModule
+        TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule, TableCalendarDemoModule, BigRowDemoModule, TableResizeDemoModule,
+        TableScrollListenDemoModule
     ]
 })
 export class TableDemoModule {

@@ -1,0 +1,22 @@
+.box {
+    position: relative;
+    height: 50px;
+    border: 1px solid #ddd;
+    margin-bottom: 8px;
+    overflow: hidden;
+}
+
+.content {
+    position: absolute;
+    width: 18111px;
+    overflow: hidden;
+    clear: both;
+}
+
+.content li {
+    float: left;
+    width: 90.56px;
+    line-height: 50px;
+    text-align: center;
+    box-sizing: border-box;
+}

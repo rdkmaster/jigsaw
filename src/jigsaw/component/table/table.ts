@@ -526,7 +526,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     @ViewChild('contentScrollbar', {read: PerfectScrollbarDirective})
-    private _contentScrollbar: PerfectScrollbarDirective;
+    public contentScrollbar: PerfectScrollbarDirective;
 
     @ViewChild('bodyScrollbar', {read: PerfectScrollbarDirective})
     private _bodyScrollbar: PerfectScrollbarDirective;
@@ -637,7 +637,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _setVerticalScrollbarOffset() {
         if (this._yScrollbarElement) {
             this._renderer.setStyle(this._yScrollbarElement, 'left',
-                this._elementRef.nativeElement.offsetWidth + this._contentScrollbar.geometry().x - 15 + 'px');
+                this._elementRef.nativeElement.offsetWidth + this.contentScrollbar.geometry().x - 15 + 'px');
         }
     }
 
@@ -664,8 +664,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @private
      */
     private _updateScrollbar() {
-        if (this._contentScrollbar) {
-            this._contentScrollbar.update();
+        if (this.contentScrollbar) {
+            this.contentScrollbar.update();
         }
         if (this._bodyScrollbar) {
             this._bodyScrollbar.update();
@@ -679,11 +679,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @private
      */
     private _listenHorizontalScroll() {
-        if (!this._contentScrollbar) {
+        if (!this.contentScrollbar) {
             return;
         }
         this._zone.runOutsideAngular(() => {
-            const el = this._contentScrollbar.elementRef.nativeElement;
+            const el = this.contentScrollbar.elementRef.nativeElement;
             this._removeHorizontalScrollListener = this._renderer.listen(
                 el, 'ps-scroll-x', () => this._setVerticalScrollbarOffset());
         });
