@@ -1,4 +1,4 @@
-`direction`可以使用简写：
+ `direction`可以使用简写：
  - `horizontal` --> `h`;
  - `horizontal-reverse` --> `hr`;
  - `vertical` --> `v`;
