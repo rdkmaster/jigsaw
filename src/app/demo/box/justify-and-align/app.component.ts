@@ -4,7 +4,7 @@ import {Component} from "@angular/core";
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class BoxDemoComponent {
+export class JustifyAndAlignDemoComponent {
     direction = 'horizontal';
     directionArr = ['horizontal', 'horizontal-reverse', 'vertical', 'vertical-reverse'];
 
@@ -17,8 +17,8 @@ export class BoxDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
-    description: string = '';
+    summary: string = '这个demo展示了box的对齐方式';
+    description: string = require('!!raw-loader!./readme.md');
 }
 
 
