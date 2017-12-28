@@ -284,7 +284,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return;
         }
         if (!this._data.field || this._data.field.length == 0) {
-            console.error('invalid table data, need a "field" property.');
+            console.warn('invalid table data, need a "field" property.');
             return;
         }
 
