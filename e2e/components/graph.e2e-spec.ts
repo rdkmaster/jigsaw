@@ -43,14 +43,14 @@ describe('graph', () => {
             let graphSize;
             await waitForPresence('.jigsaw-input');
             await waitForPresence('.jigsaw-graph');
-            await graphWidthInput.clear();
-            await graphHeightInput.clear();
-            await graphWidthInput.sendKeys('500');
-            await graphHeightInput.sendKeys('200');
-            await browser.sleep(1000);
+            graphWidthInput.clear();
+            graphHeightInput.clear();
+            graphWidthInput.sendKeys('500');
+            graphHeightInput.sendKeys('200');
+            browser.sleep(1000);
             graphSize = await graphCanvas.getSize();
-            await expect(graphSize.width).toBe(500);
-            await  expect(graphSize.height).toBe(200);
+            expect(graphSize.width).toBe(500);
+            expect(graphSize.height).toBe(200);
         });
 
         function getGraphCanvas(id: string): ElementFinder {
