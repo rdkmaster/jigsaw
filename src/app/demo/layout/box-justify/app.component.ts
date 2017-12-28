@@ -4,7 +4,7 @@ import {Component} from "@angular/core";
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class JustifyAndAlignDemoComponent {
+export class BoxJustifyDemoComponent {
     direction = 'horizontal';
     directionArr = ['horizontal', 'horizontal-reverse', 'vertical', 'vertical-reverse'];
 

@@ -4,7 +4,7 @@ import {Component} from "@angular/core";
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class LayoutDemoComponent {
+export class BoxLayoutDemoComponent {
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
