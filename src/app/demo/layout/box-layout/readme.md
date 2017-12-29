@@ -18,9 +18,9 @@ j-box还能够在垂直方向上布局，这是bootstrap的栅格功能所不支
 每个子级j-box会1:1均分宽/高，如需控制子级j-box的宽/高比例，比如1:2，需要将第一个子j-box的`grow`设置为1，第二个设置为2。
 grow的值可以有小数点，使比例更精确。
 
-#### overflow
+#### fixable
 j-box的内容超出了j-box的适应高度，不同的浏览器的表现不一样，chrome和FF会把j-box撑开，IE11的j-box不会撑开，但内容会溢出。
-这种情况下可以给j-box加个`class='jigsaw-box-fixed'`，设置溢出隐藏，也可加个滚动条。
+这种情况下可以把j-box的`fixable`设为`true`，j-box就能隐藏溢出内容。当然也可加个滚动条。
 
 ### 使用建议
 
