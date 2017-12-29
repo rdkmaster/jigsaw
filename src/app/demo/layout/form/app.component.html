@@ -7,43 +7,124 @@
 <div class="live-demo-wrap">
     <h2>Box</h2>
     <div class="demo-1 live-demo">
-        <h3>布局</h3>
-        <j-box height="400">
-            <j-box direction="v">
-                <j-box grow="1">
-                    <j-box></j-box>
-                    <j-box direction="v">
-                        <j-box>
-                            <p class="inner-content">
-                                content...<br>
-                                content...<br>
-                            </p>
-                        </j-box>
-                        <j-box></j-box>
+        <h3>表单布局</h3>
+        <form #form="ngForm" (ngSubmit)="submit(form.value)">
+            <j-box direction="v" height="660" width="50%">
+                <j-box>
+                    <j-box grow="1" class="box">
+                        <label>First Name: </label>
+                    </j-box>
+                    <j-box grow="2">
+                        <jigsaw-input [ngModel]="firstName" width="250px" name="firstname"></jigsaw-input>
                     </j-box>
                 </j-box>
-                <j-box grow="2">
-                    <j-box>
-                        <p class="inner-content">
-                            content...<br>
-                            content...<br>
-                            content...<br>
-                            content...<br>
-                        </p>
+                <j-box>
+                    <j-box grow="1" class="box">
+                        <label>Last Name *: </label>
                     </j-box>
-                    <j-box></j-box>
-                    <j-box></j-box>
+                    <j-box grow="2">
+                        <jigsaw-input width="250px" name="lastname" ngModel required minlength="5"
+                                      [pattern]="lastNamePattern" #lastname="ngModel">
+                        </jigsaw-input>
+                    </j-box>
+                </j-box>
+                <j-box>
+                    <j-box grow="1" class="box">
+                        <label>Gender *: </label>
+                    </j-box>
+                    <j-box grow="2">
+                        <jigsaw-radios ngModel name="gender" trackItemBy="id" required>
+                            <jigsaw-radio-option *ngFor="let item of [{label: 'Male', id: 0},{label: 'Female', id: 1}]"
+                                                 [value]="item">
+                                {{item.label}}
+                            </jigsaw-radio-option>
+                        </jigsaw-radios>
+                    </j-box>
+                </j-box>
+                <j-box grow="6">
+                    <j-box grow="1" class="box">
+                        <label>Birthday: </label>
+                    </j-box>
+                    <j-box grow="2">
+                        <jigsaw-time name="birthday" [(ngModel)]="birthday" width="250px"></jigsaw-time>
+                    </j-box>
+                </j-box>
+                <j-box>
+                    <j-box grow="1" class="box">
+                        <label>A Range Time: </label>
+                    </j-box>
+                    <j-box grow="2">
+                        <jigsaw-combo-select [(ngModel)]="rangeTimeComboValue" name="lastJobDuring" width="250px">
+                            <ng-template>
+                                <jigsaw-range-time [(beginDate)]="rangeTime.beginDate"
+                                                   [(endDate)]="rangeTime.endDate"
+                                                   (change)="onDateChange()"></jigsaw-range-time>
+                            </ng-template>
+                        </jigsaw-combo-select>
+                    </j-box>
+                </j-box>
+                <j-box>
+                    <j-box grow="1" class="box">
+                        <label>Come From: </label>
+                    </j-box>
+                    <j-box grow="2" style="overflow: visible">
+                        <jigsaw-select [(ngModel)]="comeFrom" name="comeFrom" placeholder="Where are you come from"
+                                       width="250px" [optionCount]="5"
+                                       [data]="[
+                            {label: 'Bei Jing'}, {label: 'Shang Hai'}, {label: 'Nan Jing'}, {label: 'Shen Zhen'},
+                            {label: 'Chang Sha'}, {label: 'Cheng Du'}, {label: 'Chong Qing'}, {label: 'Hong Kong'},
+                            {label: 'Tai Wan'}, {label: 'Xi An'}
+                       ]">
+                        </jigsaw-select>
+                    </j-box>
+                </j-box>
+                <j-box grow="2.5">
+                    <j-box grow="1" class="box">
+                        <label>Favorite Cities: </label>
+                    </j-box>
+                    <j-box grow="2">
+                        <jigsaw-tile [(ngModel)]="favoriteCities" name="favoriteCities" width="250px"
+                                     trackItemBy="label">
+                            <jigsaw-tile-option *ngFor="let item of [
+                    {label: 'Bei Jing'}, {label: 'Shang Hai'}, {label: 'Nan Jing'},
+                    {label: 'Chang Sha'}, {label: 'Cheng Du'}, {label: 'Chong Qing'}]" [value]="item" width="72">
+                                {{item.label}}
+                            </jigsaw-tile-option>
+                        </jigsaw-tile>
+                    </j-box>
+                </j-box>
+                <j-box>
+                    <j-box grow="1" class="box">
+                        <label>Score: </label>
+                    </j-box>
+                    <j-box grow="2">
+                        <jigsaw-slider [ngModel]="score" name="score" width="250px"></jigsaw-slider>
+                    </j-box>
+                </j-box>
+                <j-box>
+                    <j-box grow="1" class="box">
+                        <label>Jigsaw is Great?</label>
+                    </j-box>
+                    <j-box grow="2">
+                        <jigsaw-switch [ngModel]="isGreat" name="isGreat"></jigsaw-switch>
+                    </j-box>
+                </j-box>
+                <j-box>
+                    <j-box grow="1"></j-box>
+                    <j-box grow="2">
+                        <jigsaw-checkbox [ngModel]="remember" name="remember">Remember me</jigsaw-checkbox>
+                    </j-box>
+                </j-box>
+
+
+                <j-box>
+                    <j-box grow="1"></j-box>
+                    <j-box grow="2">
+                        <button jigsaw-button type="submit" colorType="primary" [disabled]="!form.valid">Submit</button>
+                    </j-box>
                 </j-box>
             </j-box>
-            <j-box grow="3">
-                <p class="inner-content">
-                    content...<br>
-                    content...<br>
-                    content...<br>
-                    content...<br>
-                </p>
-            </j-box>
-        </j-box>
+        </form>
     </div>
 </div>
 

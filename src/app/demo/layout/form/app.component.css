@@ -1,48 +1,9 @@
-.inner-content {
-    line-height: 30px;
-    text-align: center;
-    color: #666;
+.box{
+    text-align: right;
 }
 
-.line-box {
-    margin-bottom: 8px;
+.box label {
+    margin-right: 12px;
 }
 
-.line-box label {
-    vertical-align: middle;
-    margin: 0 8px 0 0;
-}
 
-j-box {
-    border: 1px solid #bbb;
-}
-
-.item {
-    border: 1px solid #bbb;
-    background: #b3def1;
-    width: 12.5%;
-}
-
-.h50 {
-    height: 50px;
-    line-height: 50px;
-}
-
-.h30 {
-    height: 30px;
-    line-height: 30px;
-}
-
-.h80 {
-    height: 80px;
-    line-height: 80px;
-}
-
-.h40 {
-    height: 40px;
-    line-height: 40px;
-}
-
-.fl {
-    float: left;
-}
