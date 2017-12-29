@@ -26,7 +26,7 @@ import {JigsawMarkdownModule} from "../markdown/markdown";
         <div>
             <span class="summary" [innerHtml]="summary"></span>
             <span class="links">
-                <a *ngIf="!!content" (click)="showDetail = !showDetail">{{showDetail ? '隐藏' : '展开'}}详情</a>
+                <a *ngIf="!!content" (click)="toggleDesc()">{{showDetail ? '隐藏' : '展开'}}详情</a>
                 <span *ngIf="!!content">|</span>
                 <a (click)="gotoPlunker()">查看&编辑源码</a>
             </span>
@@ -75,10 +75,15 @@ export class JigsawDemoDescription implements OnInit {
         window.open(url, '_blank');
     }
 
+    toggleDesc() {
+        this.showDetail = !this.showDetail;
+        location.hash = 'open-desc=' + this.showDetail;
+    }
+
     ngOnInit() {
         if (this.showDetail === undefined) {
-            const p = CommonUtils.parseUrlParam(location.search.substring(1));
-            this.showDetail = !!p['open-desc'];
+            const p = CommonUtils.parseUrlParam(location.hash.substring(1));
+            this.showDetail = p['open-desc'] == 'true';
         }
     }
 }
