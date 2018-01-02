@@ -1,5 +1,5 @@
-import {Component, ElementRef, Renderer2, ViewChild, ViewContainerRef} from "@angular/core";
-import {JigsawInput} from "../../../../jigsaw/component/input/input";
+import {Component, ElementRef, ViewChild} from "@angular/core";
+import {JigsawInput} from "jigsaw/component/input/input";
 
 @Component({
     templateUrl: './app.component.html',
