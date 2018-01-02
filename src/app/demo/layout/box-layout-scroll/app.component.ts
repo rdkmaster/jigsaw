@@ -6,6 +6,9 @@ import {Component} from "@angular/core";
 })
 export class BoxLayoutScrollDemoComponent {
 
+    arr1 = new Array(20);
+    arr2 = new Array(5);
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

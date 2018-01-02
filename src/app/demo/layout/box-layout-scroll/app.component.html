@@ -10,97 +10,28 @@
         <h3>滚动条</h3>
         <j-box height="400">
             <j-box direction="v">
-                <j-box grow="1">
-                    <j-box></j-box>
-                    <j-box direction="v">
-                        <j-box>
-                            <p class="inner-content self-line-height">
-                                content1...<br>
-                                content2...<br>
-                                content3...<br>
-                                content4...<br>
-                                content5...<br>
-                                content6...<br>
-                                content7...<br>
-                            </p>
-                        </j-box>
-                        <j-box></j-box>
-                    </j-box>
+                <j-box>
+                    <p class="inner-content">
+                        <span *ngFor="let i of arr1">content...<br></span>
+                    </p>
                 </j-box>
-                <j-box grow="2">
-                    <j-box>
-                        <p class="inner-content not-break-line">
-                            content1...content2...content3...content4...content5...<br>
-                            content1...content2...content3...content4...content5...<br>
-                            content1...content2...content3...content4...content5...<br>
-                            content1...content2...content3...content4...content5...<br>
-                        </p>
-                    </j-box>
-                    <j-box [perfectScrollbar]="{suppressScrollY: true, wheelSpeed: 0.5, wheelPropagation: true}">
-                        <p class="inner-content not-break-line">
-                            content1...content2...content3...content4...content5...<br>
-                            content1...content2...content3...content4...content5...<br>
-                            content1...content2...content3...content4...content5...<br>
-                            content1...content2...content3...content4...content5...<br>
-                        </p>
-                    </j-box>
-                    <j-box [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, wheelPropagation: true}">
-                        <p class="inner-content">
-                            content...<br>
-                            content...<br>
-                            content...<br>
-                            content...<br>
-                            content...<br>
-                            content...<br>
-                            content...<br>
-                            content...<br>
-                            content...<br>
-                            content...<br>
-                            content...<br>
-                            content...<br>
-                            content...<br>
-                            content...<br>
-                            content...<br>
-                            content...<br>
-                            content...<br>
-                            content...<br>
-                            content...<br>
-                            content...<br>
-                            content...<br>
-                            content...<br>
-                            content...<br>
-                            content...<br>
-                        </p>
-                    </j-box>
+                <j-box [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true}">
+                    <p class="inner-content not-break-line">
+                        <span *ngFor="let i of arr1">content1...content2...content3...content4...content5...content6...content7...content8...content9...content10...content11...content12...content13...content14...<br></span>
+                    </p>
                 </j-box>
             </j-box>
-            <j-box grow="3" [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, wheelPropagation: true}">
-                <p class="inner-content">
-                    content...<br>
-                    content...<br>
-                    content...<br>
-                    content...<br>
-                    content...<br>
-                    content...<br>
-                    content...<br>
-                    content...<br>
-                    content...<br>
-                    content...<br>
-                    content...<br>
-                    content...<br>
-                    content...<br>
-                    content...<br>
-                    content...<br>
-                    content...<br>
-                    content...<br>
-                    content...<br>
-                    content...<br>
-                    content...<br>
-                    content...<br>
-                    content...<br>
-                    content...<br>
-                    content...<br>
-                </p>
+            <j-box direction="v" >
+                <j-box [perfectScrollbar]="{suppressScrollY: true, wheelSpeed: 0.5, wheelPropagation: true}">
+                    <p class="inner-content not-break-line">
+                        <span *ngFor="let i of arr2">content1...content2...content3...content4...content5...content6...content7...content8...content9...content10...content11...content12...content13...content14...<br></span>
+                    </p>
+                </j-box>
+                <j-box [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, wheelPropagation: true}">
+                    <p class="inner-content">
+                        <span *ngFor="let i of arr1">content...<br></span>
+                    </p>
+                </j-box>
             </j-box>
         </j-box>
     </div>
