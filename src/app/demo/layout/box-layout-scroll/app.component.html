@@ -12,24 +12,28 @@
             <j-box direction="v">
                 <j-box>
                     <p class="inner-content">
-                        <span *ngFor="let i of arr1">content...<br></span>
+                        <span *ngFor="let i of arr1; index as j">content{{j}}...<br></span>
                     </p>
                 </j-box>
                 <j-box [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true}">
                     <p class="inner-content not-break-line">
-                        <span *ngFor="let i of arr1">content1...content2...content3...content4...content5...content6...content7...content8...content9...content10...content11...content12...content13...content14...<br></span>
+                        <span *ngFor="let i of arr1">
+                            <i *ngFor="let j of arr1; index as k">content{{k}}... <br *ngIf='k==19'></i>
+                        </span>
                     </p>
                 </j-box>
             </j-box>
             <j-box direction="v" >
                 <j-box [perfectScrollbar]="{suppressScrollY: true, wheelSpeed: 0.5, wheelPropagation: true}">
                     <p class="inner-content not-break-line">
-                        <span *ngFor="let i of arr2">content1...content2...content3...content4...content5...content6...content7...content8...content9...content10...content11...content12...content13...content14...<br></span>
+                        <span *ngFor="let i of arr2">
+                            <i *ngFor="let j of arr1; index as k">content{{k}}... <br *ngIf='k==19'></i>
+                        </span>
                     </p>
                 </j-box>
                 <j-box [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, wheelPropagation: true}">
                     <p class="inner-content">
-                        <span *ngFor="let i of arr1">content...<br></span>
+                        <span *ngFor="let i of arr1; index as j">content{{j}}...<br></span>
                     </p>
                 </j-box>
             </j-box>
