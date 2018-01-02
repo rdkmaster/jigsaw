@@ -20,6 +20,6 @@
   - 下载seed工程，执行`npm install`
   - 把前面打包好的jigsaw包替换放入node_modules下
   - 把jigsaw的所有e2e demo拷贝到工程，相应的angular-cli.json、protractor.conf.js、mock-data等需要替换的文件进行拷贝替换
-  - 把原来的e2e demo的组件路径指向node_modules下的jigsaw包，
-  - 执行`ng build -prod aot`，看build有没有报错，
+  - 把原来的e2e demo的组件路径指向node_modules下的jigsaw包
+  - 执行`ng build -prod -aot`，看build有没有报错
   - 执行`ng e2e`，进行e2e测试
