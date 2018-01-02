@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
-import {ArrayCollection} from "../../../../jigsaw/core/data/array-collection";
-import {TimeGr, TimeService} from "../../../../jigsaw/service/time.service";
+import {ArrayCollection} from "jigsaw/core/data/array-collection";
+import {TimeGr, TimeService} from "jigsaw/service/time.service";
 
 @Component({
     templateUrl: './app.component.html',
