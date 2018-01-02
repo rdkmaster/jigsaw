@@ -20,7 +20,7 @@ export const routerConfig = [
         path: 'form', component: FormDemoComponent
     },
     {
-        path: 'with-perfect-scrollbar', component: BoxLayoutScrollDemoComponent
+        path: 'box-layout-scroll', component: BoxLayoutScrollDemoComponent
     },
 ];
 
