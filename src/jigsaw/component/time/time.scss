@@ -60,12 +60,12 @@ $time-prefix-cls: #{$jigsaw-prefix}-time;
                         border-radius: 0 !important;
                         color: #fff;
                         &:first-child {
-                            -webkit-border-radius: 4px 0 0 4px !important;;
-                            -moz-border-radius:4px 0 0 4px !important;;
+                            -webkit-border-radius: 4px 0 0 4px !important;
+                            -moz-border-radius:4px 0 0 4px !important;
                         }
                         &:last-child {
-                            -webkit-border-radius: 0 4px 4px 0 !important;;
-                            -moz-border-radius:0 4px 4px 0 !important;;
+                            -webkit-border-radius: 0 4px 4px 0 !important;
+                            -moz-border-radius:0 4px 4px 0 !important;
                         }
                         &.today:before{
                             display: none;
