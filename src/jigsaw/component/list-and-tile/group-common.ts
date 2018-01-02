@@ -46,19 +46,19 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     protected _items: QueryList<AbstractJigsawOptionComponent>;
 
     protected _updateSelectItems(itemValue, selected): void {
+        this.selectedItems.forEach((selectedItem) => {
+            let _isIncluded = false;
+            this._items.forEach((item) => {
+                if (item.value.label === selectedItem.label) {
+                    _isIncluded = true;
+                }
+            });
+            if (!_isIncluded) {
+                this._selectedItems.splice(this.selectedItems.indexOf(selectedItem), 1);
+            }
+        });
         if (this.multipleSelect) { //多选
             if (selected) {
-                this.selectedItems.forEach((selectedItem) => {
-                    let _isIncluded = false;
-                    this._items.forEach((item) => {
-                        if (item.value.label === selectedItem.label) {
-                            _isIncluded = true;
-                        }
-                    });
-                    if (!_isIncluded) {
-                        this._selectedItems.splice(this.selectedItems.indexOf(selectedItem), 1);
-                    }
-                });
                 this.selectedItems.push(itemValue);
             } else {
                 this._selectedItems.forEach(selectedItemValue => {
@@ -77,7 +77,6 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
                 }
             });
             //添加选中数据
-            this.selectedItems = [];
             this.selectedItems.push(itemValue);
         }
         this._selectedItems.refresh();
