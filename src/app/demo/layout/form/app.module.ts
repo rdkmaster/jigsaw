@@ -23,7 +23,7 @@ import {JigsawSelectModule} from "../../../../jigsaw/component/select/select";
         JigsawBoxModule, FormsModule, ReactiveFormsModule, CommonModule,
         JigsawInputModule, JigsawCheckBoxModule, JigsawButtonModule,
         JigsawRadioModule, JigsawComboSelectModule, JigsawRangeTimeModule,
-        JigsawTimeModule, JigsawSliderModule, JigsawSwitchModule, JigsawSelectModule,
+        JigsawTimeModule, JigsawSliderModule, JigsawSwitchModule,
         JigsawTileSelectModule, JigsawDemoDescriptionModule
     ]
 })

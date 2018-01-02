@@ -18,7 +18,6 @@ export class FormDemoComponent {
         {label: this.rangeTime.beginDate, closable: false},
         {label: this.rangeTime.endDate, closable: false}
     ]);
-    comeFrom: any = {label: 'Nan Jing'};
     favoriteCities: ArrayCollection<any>;
     score: number = 30;
     isGreat: boolean = true;

@@ -7,9 +7,7 @@ $flex-prefix-cls: #{$jigsaw-prefix}-flex;
     @include clearfix();
     display: block;
     flex: 1 0 0;
-    &-fixed {
-        overflow: hidden;
-    }
+    overflow: auto;
 }
 
 .#{$flex-prefix-cls} {

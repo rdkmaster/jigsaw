@@ -9,7 +9,7 @@
     <div class="demo-1 live-demo">
         <h3>表单布局</h3>
         <form #form="ngForm" (ngSubmit)="submit(form.value)">
-            <j-box direction="v" height="660" width="50%">
+            <j-box direction="v" height="640" width="50%">
                 <j-box>
                     <j-box grow="1" class="box">
                         <label>First Name: </label>
@@ -61,21 +61,6 @@
                                                    (change)="onDateChange()"></jigsaw-range-time>
                             </ng-template>
                         </jigsaw-combo-select>
-                    </j-box>
-                </j-box>
-                <j-box>
-                    <j-box grow="1" class="box">
-                        <label>Come From: </label>
-                    </j-box>
-                    <j-box grow="2" style="overflow: visible">
-                        <jigsaw-select [(ngModel)]="comeFrom" name="comeFrom" placeholder="Where are you come from"
-                                       width="250px" [optionCount]="5"
-                                       [data]="[
-                            {label: 'Bei Jing'}, {label: 'Shang Hai'}, {label: 'Nan Jing'}, {label: 'Shen Zhen'},
-                            {label: 'Chang Sha'}, {label: 'Cheng Du'}, {label: 'Chong Qing'}, {label: 'Hong Kong'},
-                            {label: 'Tai Wan'}, {label: 'Xi An'}
-                       ]">
-                        </jigsaw-select>
                     </j-box>
                 </j-box>
                 <j-box grow="2.5">

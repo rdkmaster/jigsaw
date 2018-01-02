@@ -3,8 +3,11 @@
     text-align: center;
     color: #666;
 }
-.inner-content.line1{
+.inner-content.self-line-height{
     line-height: 1;
+}
+.inner-content.not-break-line{
+    white-space: nowrap;
 }
 
 j-box {

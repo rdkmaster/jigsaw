@@ -7,7 +7,6 @@ import {AbstractJigsawComponent} from "../common";
     host: {
         '[class.jigsaw-box]': 'true',
         '[class.jigsaw-flex]': 'type == "flex"',
-        '[class.jigsaw-box-fixed]': 'fixable',
         '[style.width]': 'width',
         '[style.height]': 'height',
     }
@@ -49,9 +48,6 @@ export class JigsawBox extends AbstractJigsawComponent implements AfterContentIn
 
     @Input()
     public type: string;
-
-    @Input()
-    public fixable: boolean;
 
     /* flex box property */
     private _direction: string;
