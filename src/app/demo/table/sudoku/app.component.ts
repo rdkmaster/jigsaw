@@ -1,14 +1,26 @@
 import {Component} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/core/data/table-data";
 import {NumberRenderer} from "./number-renderer";
-import {CHECK_BOARD_STATUS, isTargetConflicted, PUZZLE_SOLVED} from "./utils";
+import {CHECK_BOARD_STATUS, isTargetConflicted, PUZZLE_RESET, PUZZLE_SOLVED} from "./utils";
 import {JigsawInfoAlert} from "../../../../jigsaw/component/alert/alert";
+
 
 @Component({
     templateUrl: './app.component.html'
 })
 export class SudokuGameComponent {
+    puzzles: string[][];
     tableData: TableData;
+
+    constructor(http: HttpClient) {
+        this.tableData = new TableData([], '123456789'.split('').map(n => 'c' + n));
+        this.tableData.subscribe((event) => this.checkBoardStatus(event));
+        http.get('mock-data/soduku-puzzles').subscribe((data: string[][]) => {
+            this.puzzles = data;
+            this.newPuzzle();
+        });
+    }
 
     columnDefineGenerator() {
         return {
@@ -18,44 +30,34 @@ export class SudokuGameComponent {
         }
     }
 
-    constructor() {
-        this.tableData = new TableData(
-            [
-                '715392468'.split(''),
-                '328647915'.split(''),
-                '9468153 7'.split(''),
-                '187463259'.split(''),
-                '65312 784'.split(''),
-                '492758136'.split(''),
-                '834571692'.split(''),
-                '579236841'.split(''),
-                '261984573'.split(''),
-            ],
-            '123456789'.split('').map(n => 'col' + n)
-        );
-        this.tableData.subscribe((event) => this.checkBoardStatus(event));
+    newPuzzle() {
+        const rawData = this.puzzles[(Math.random() * this.puzzles.length).toFixed(0)];
+        this.tableData.data = rawData.concat();
+        this.tableData.refresh();
+        this.tableData.emit(PUZZLE_RESET);
     }
 
     checkBoardStatus(event) {
-        if (event === CHECK_BOARD_STATUS) {
-            let hasError = false;
-            console.log('checking board status...');
-            this.tableData.data.forEach((row, rowIdx) => {
+        if (event !== CHECK_BOARD_STATUS) {
+            return;
+        }
+        let hasError = false;
+        console.log('checking board status...');
+        this.tableData.data.forEach((row, rowIdx) => {
+            if (hasError) {
+                return;
+            }
+            row.forEach((cellData, colIdx) => {
                 if (hasError) {
                     return;
                 }
-                row.forEach((cellData, colIdx) => {
-                    if (hasError) {
-                        return;
-                    }
-                    const target = {row: rowIdx, column: colIdx};
-                    hasError = cellData.match(/^\d$/) ? isTargetConflicted(this.tableData, cellData, target) : true;
-                })
-            });
-            if (!hasError) {
-                JigsawInfoAlert.show("It's great! You've solved the puzzle!");
-                this.tableData.emit(PUZZLE_SOLVED);
-            }
+                const target = {row: rowIdx, column: colIdx};
+                hasError = cellData.match(/^\d$/) ? isTargetConflicted(this.tableData, cellData, target) : true;
+            })
+        });
+        if (!hasError) {
+            JigsawInfoAlert.show("It's great! You've solved the puzzle!");
+            this.tableData.emit(PUZZLE_SOLVED);
         }
     }
 
@@ -65,4 +67,3 @@ export class SudokuGameComponent {
     summary: string = '';
     description: string = '';
 }
-

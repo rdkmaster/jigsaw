@@ -2,11 +2,11 @@ import {Component, OnDestroy, OnInit} from "@angular/core";
 import {TableCellRendererBase} from "jigsaw/component/table/table-renderer";
 import {PopupService} from "jigsaw/service/popup.service";
 import {NumberSelectPad} from "./number-select-pad";
-import {isTargetConflicted, CHECK_BOARD_STATUS, CLOSE_ALL_PAD, PUZZLE_SOLVED} from "./utils";
+import {isTargetConflicted, CHECK_BOARD_STATUS, CLOSE_ALL_PAD, PUZZLE_SOLVED, PUZZLE_RESET} from "./utils";
 
 @Component({
     template: `
-        <div (click)="onClick($event)" [style.background]="bgColor"
+        <div (click)="onClick($event)" [style.background]="bgColor" [style.color]="fontColor"
              (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
             {{cellData}}
         </div>
@@ -28,12 +28,13 @@ export class NumberRenderer extends TableCellRendererBase implements OnInit, OnD
     }
 
     bgColor = '#ddd';
+    fontColor = '#33a5dd';
     popupInfo = null;
     conflicted = false;
-    puzzleSolved = false;
+    frozen = false;
 
     onClick(event: MouseEvent) {
-        if (this.puzzleSolved) {
+        if (this.frozen) {
             return;
         }
         if (this.popupInfo) {
@@ -107,7 +108,16 @@ export class NumberRenderer extends TableCellRendererBase implements OnInit, OnD
                     this.closeNumberSelectPad();
                     break;
                 case PUZZLE_SOLVED:
-                    this.puzzleSolved = true;
+                    this.frozen = true;
+                    break;
+                case PUZZLE_RESET:
+                    this.closeNumberSelectPad();
+                    setTimeout(() => {
+                        this.conflicted = false;
+                        this.bgColor = this.getBgColor();
+                        this.frozen = this.cellData.match(/^\d$/);
+                        this.fontColor = this.frozen ? '#33a5dd' : '';
+                    });
                     break;
             }
         });

@@ -2,6 +2,7 @@
 export const CLOSE_ALL_PAD = 'CLOSE_ALL_PAD';
 export const CHECK_BOARD_STATUS = 'CHECK_BOARD_STATUS';
 export const PUZZLE_SOLVED = 'PUZZLE_SOLVED';
+export const PUZZLE_RESET = 'PUZZLE_RESET';
 
 
 export function isTargetConflicted(tableData, value, target: {column: number, row: number}):boolean {

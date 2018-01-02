@@ -4,5 +4,9 @@
 
 
 <!-- start to learn the demo from here -->
+<j-button (click)="newPuzzle()">
+    <span class="fa fa-refresh"> New Puzzle</span>
+</j-button>
+<br><br>
 <jigsaw-table [data]="tableData" [columnDefines]="columnDefineGenerator" [hideHeader]="true" width="528px">
 </jigsaw-table>
