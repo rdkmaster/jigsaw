@@ -1,0 +1,12 @@
+.inner-content {
+    line-height: 30px;
+    text-align: center;
+    color: #666;
+}
+.inner-content.self-line-height{
+    line-height: 1;
+}
+
+j-box {
+    border: 1px solid #bbb;
+}

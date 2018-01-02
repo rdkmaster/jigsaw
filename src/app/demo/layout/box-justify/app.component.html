@@ -1,0 +1,53 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>Box</h2>
+    <div class="demo-1 live-demo">
+        <h3>对齐</h3>
+        <div class="line-box">
+            <label>direction(布局方向): </label>
+            <j-radios [(value)]="direction">
+                <j-radio-option *ngFor="let item of directionArr" [value]="item">
+                    {{item}}
+                </j-radio-option>
+            </j-radios>
+        </div>
+        <div class="line-box">
+            <label>justify(主轴对齐): </label>
+            <j-radios [(value)]="justify">
+                <j-radio-option *ngFor="let item of justifyArr" [value]="item">
+                    {{item}}
+                </j-radio-option>
+            </j-radios>
+        </div>
+        <div class="line-box">
+            <label>align(垂直主轴对齐): </label>
+            <j-radios [(value)]="align">
+                <j-radio-option *ngFor="let item of alignArr" [value]="item">
+                    {{item}}
+                </j-radio-option>
+            </j-radios>
+        </div>
+
+        <j-box [direction]="direction" [justify]="justify" [align]="align" height="400">
+            <div class="item">
+                <p class="inner-content h50">box1</p>
+            </div>
+            <div class="item">
+                <p class="inner-content h30">box2</p>
+            </div>
+            <div class="item">
+                <p class="inner-content h80">box3</p>
+            </div>
+            <div class="item">
+                <p class="inner-content h40">box4</p>
+            </div>
+        </j-box>
+    </div>
+</div>
+
+

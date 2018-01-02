@@ -1,0 +1,30 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>Box</h2>
+    <div class="demo-1 live-demo">
+        <h3>滚动条</h3>
+        <j-box height="400">
+            <j-box>
+                <p class="inner-content not-break-line">
+                    <span *ngFor="let i of arr1; index as ii;">
+                        <i *ngFor="let j of arr1; index as jj">原生滚动条 ({{ii}}, {{jj}}) ... <br *ngIf='jj==19'></i>
+                    </span>
+                </p>
+            </j-box>
+            <j-box [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true}">
+                <p class="inner-content not-break-line">
+                    <span *ngFor="let i of arr1; index as ii;">
+                        <i *ngFor="let j of arr1; index as jj">自定义滚动条 ({{ii}}, {{jj}}) ... <br *ngIf='jj==19'></i>
+                    </span>
+                </p>
+            </j-box>
+        </j-box>
+    </div>
+</div>
+
+
