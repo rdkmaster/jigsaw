@@ -9,33 +9,19 @@
     <div class="demo-1 live-demo">
         <h3>滚动条</h3>
         <j-box height="400">
-            <j-box direction="v">
-                <j-box>
-                    <p class="inner-content">
-                        <span *ngFor="let i of arr1; index as j">content{{j}}...<br></span>
-                    </p>
-                </j-box>
-                <j-box [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true}">
-                    <p class="inner-content not-break-line">
-                        <span *ngFor="let i of arr1">
-                            <i *ngFor="let j of arr1; index as k">content{{k}}... <br *ngIf='k==19'></i>
-                        </span>
-                    </p>
-                </j-box>
+            <j-box>
+                <p class="inner-content not-break-line">
+                    <span *ngFor="let i of arr1; index as ii;">
+                        <i *ngFor="let j of arr1; index as jj">原生滚动条 ({{ii}}, {{jj}}) ... <br *ngIf='jj==19'></i>
+                    </span>
+                </p>
             </j-box>
-            <j-box direction="v">
-                <j-box [perfectScrollbar]="{suppressScrollY: true, wheelSpeed: 0.5, wheelPropagation: true}">
-                    <p class="inner-content not-break-line">
-                        <span *ngFor="let i of arr2">
-                            <i *ngFor="let j of arr1; index as k">content{{k}}... <br *ngIf='k==19'></i>
-                        </span>
-                    </p>
-                </j-box>
-                <j-box [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, wheelPropagation: true}">
-                    <p class="inner-content">
-                        <span *ngFor="let i of arr1; index as j">content{{j}}...<br></span>
-                    </p>
-                </j-box>
+            <j-box [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true}">
+                <p class="inner-content not-break-line">
+                    <span *ngFor="let i of arr1; index as ii;">
+                        <i *ngFor="let j of arr1; index as jj">自定义滚动条 ({{ii}}, {{jj}}) ... <br *ngIf='jj==19'></i>
+                    </span>
+                </p>
             </j-box>
         </j-box>
     </div>
