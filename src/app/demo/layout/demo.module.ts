@@ -6,6 +6,8 @@ import {BoxJustifyDemoModule} from "./box-justify/app.module";
 import {BoxLayoutDemoModule} from "./box-layout/app.module";
 import {FormDemoComponent} from "./form/app.component";
 import {FormDemoModule} from "./form/app.module";
+import {BoxLayoutScrollDemoComponent} from "./box-layout-scroll/app.component";
+import {BoxLayoutScrollDemoModule} from "./box-layout-scroll/app.module";
 
 export const routerConfig = [
     {
@@ -17,6 +19,9 @@ export const routerConfig = [
     {
         path: 'form', component: FormDemoComponent
     },
+    {
+        path: 'with-perfect-scrollbar', component: BoxLayoutScrollDemoComponent
+    },
 ];
 
 @NgModule({
@@ -24,7 +29,8 @@ export const routerConfig = [
         RouterModule.forChild(routerConfig),
         BoxJustifyDemoModule,
         BoxLayoutDemoModule,
-        FormDemoModule
+        FormDemoModule,
+        BoxLayoutScrollDemoModule,
     ]
 })
 export class LayoutDemoModule {
