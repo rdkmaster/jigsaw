@@ -4,7 +4,7 @@ $time-prefix-cls: #{$jigsaw-prefix}-time;
 
 .#{$time-prefix-cls}-host {
     @include inline-block();
-    width: 253px;
+    width: 250px;
     border: 1px solid $border-color-base ;
     border-radius: $border-radius-base;
     padding: 5px;
@@ -28,8 +28,8 @@ $time-prefix-cls: #{$jigsaw-prefix}-time;
                     &.expect-day{
                         border-radius: 0;
                         &.border-left{
-                            border-top-left-radius: 4px;
-                            border-bottom-left-radius: 4px;
+                            -webkit-border-radius: 4px 0 0 4px;
+                            -moz-border-radius:0 4px 4px 0;
                         }
                         &.border-right{
                             border-top-right-radius: 4px;
