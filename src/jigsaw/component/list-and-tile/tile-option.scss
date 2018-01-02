@@ -17,7 +17,6 @@ $option-prefix-cls: #{$jigsaw-prefix}-tile-option;
     cursor: pointer;
     border: 1px solid $border-color-base;
     border-radius: 4px;
-    //@include prefixer(transition, (border-color .3s $ease-in-out,color .3s $ease-in-out));
     @include prefixer(-ms-transition, all .3s);
     &:hover, &.#{$option-prefix-cls}-active {
         color: $primary-color;
