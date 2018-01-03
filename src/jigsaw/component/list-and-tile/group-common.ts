@@ -51,8 +51,8 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
 
     protected _updateSelectItems(itemValue, selected): void {
         if(!this._selectedItemsChecked){
-            this.selectedItems.forEach((selectedItem) => {
-                if (!this._items.find(item => CommonUtils.compareWithKeyProperty(item, selectedItem, this._trackItemBy))) {
+            this._selectedItems.forEach((selectedItem) => {
+                if (!this._items.find(item => CommonUtils.compareWithKeyProperty(selectedItem, item, ['']))) {
                     this._selectedItems.splice(this.selectedItems.indexOf(selectedItem), 1);
                 }
             });
