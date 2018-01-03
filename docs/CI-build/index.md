@@ -1,35 +1,55 @@
-#Jigsaw构建CI的流程
+#让CI成为jigsaw日常开发不可或缺的部分
 
-##构建CI的目的
-自动检测产品质量，及时发现问题
+一般大型的开源项目都会有自动化测试，开源的平台项目，自动化测试尤为重要。自动化测试可以提高开发效率，保证工程质量，帮助用户降低产品风险，让用户对开源产品更有信心，也会给开发人员带来很好的开发体验。比如jigsaw的table，我开发了一个小的功能，自测的时候，需要测试此功能是否可用，还要测试此功能有没有影响到其他功能的使用，好了，table大大小小的功能demo有三四十个，一个一个点吧，有时开发就会不是很用心的点几下，如果换成自动化测试就很可靠了。
 
-##如何检查
-高度模拟用户使用环境
+##痛点分析
+###问题痛点
+ - 测试效率底
+ - 人工测试质量不稳定
+ - 人力紧张
+ - 多OS多浏览器组合情况太多，人工难以全部遍历 
+ - 代码迭代速度快，开发自测不足
+ - 用户的环境和开发者的开发环境不一致，导致的功能有问题
+ - 开源平台项目，没有保证产品质量的系统，用户对产品没信心
 
-##检查工具
-###Travis CI 
-Travis CI是一个基于云的持续集成环境。主要用来构建和打包。
+###怎么解决
+ - 脚本自动化
+ - 模拟用户搭建项目，检查包的可用性
+ - 细分功能的demo
+ - 高覆盖率、高可靠的e2e测试
+ - 开源社区的资源有效利用
+   -  [Travis CI](https://travis-ci.com/) 一个基于云的持续集成环境，主要用来构建和打包。配置运行脚本简单易用。会在主分支和PR更新时，自动运行CI脚本。
+   -  [Sauce Labs](https://saucelabs.com/) 自动化功能测试的云平台，写一个测试可以测试N个平台的M个浏览器的Z个版本。
 
- - [官网](https://travis-ci.com/) 
- - [如何搭建javascript项目在线CI环境](https://docs.travis-ci.com/user/languages/javascript-with-nodejs/)
-
-###saucelabs
-saucelabs是自动化功能测试的云平台，写一个测试可以测试N个平台的M个浏览器的Z个版本。
-
- - [官网](https://saucelabs.com/)
- - [如何构建在线e2e测试](https://wiki.saucelabs.com/display/DOCS/Instant+Selenium+Node.js+Tests)
-
-##检测流程
+##Jigsaw的检测流程
 ###打包测试
+在集成环境中运行脚本，自动下载依赖包，运行打包程序，此环节可以测试新的修改是否可以发布版本
+
+脚本流程：
+
  - 在jigsaw工程里面`npm install`
- - 自动打包，看jigsaw在打包的过程中会不会有错
+ - 自动打包，打包过程中会对代码优化
 
 ###模拟真实项目
+tourist工程是我们构建的一个真实的angualr app项目，里面用到了jigsaw的几个重要的组件。我们会在CI中，把tourist克隆下来，下载依赖包，用新代码打包好的jigsaw包替换旧版本，然后运行angular-cli的生产环境的build，angular-cli会对代码进行严格的检查。如有语法错误、包依赖等问题，在这里都能直接体现出来。
+
+这样做的好处是：
+
+ - 实时下载的依赖包版本是最新的兼容版本，可以及时发现依赖包版本所带来的问题
+ - 这种自动的构建过程，其实就是用户升级jigsaw的过程，可以及时发现用户升级版本所带来的麻烦
+ - 生产环境的build，可以帮助发现新的jigsaw包存在的隐藏问题
+
+脚本流程：
+
  - 下载tourist工程，执行`npm install`
  - 把打包好的jigsaw包替换放入node_modules下
- - 执行`ng build -prod aot`，看会不会报错
+ - 执行`ng build -prod -aot`，augular-cli的build流程对代码会有一定的检查作用
 
 ###端到端测试
+我们的端到端测试也不是简单的对现有代码的测试，而是在基于seed工程，实时构建的app上的。我们在jigsaw工程中的e2e demo，会被拷贝到seed工程中；在seed中使用新的jigsaw包，把所有组件的引用换成包的引用。这样jigsaw的端到端测试就变成了用户工程的端到端测试，而其测试的是用户使用所有组件，所有功能。这样的测试方法，会对用户使用有个实质性的反馈，即CI上的状况就是用户的状况。现在我们已经有了53个测试用例，会分别放在win7的chrome，OSX的FF上跑。
+
+脚本流程：
+
   - 下载seed工程，执行`npm install`
   - 把前面打包好的jigsaw包替换放入node_modules下
   - 把jigsaw的所有e2e demo拷贝到工程，相应的angular-cli.json、protractor.conf.js、mock-data等需要替换的文件进行拷贝替换
@@ -38,15 +58,26 @@ saucelabs是自动化功能测试的云平台，写一个测试可以测试N个�
   - 执行`ng e2e`，进行e2e测试
 
 ###live demo检查
-我们的live demo采用的是angular plunker，一种基于systemjs的在线demo，能实时查看和编辑demo。我们把demo按照格式提交给plunker server，plunker server会响应一个systemjs的angular app给我们，这个系统我们把他作为用户学习jigsaw的重要途径，所以很重要。因此，我们需要定时对master上的live demo进行有效验证。
+我们的live demo采用的是angular plunker，能实时查看和编辑demo。我们把demo按照格式提交给plunker server，plunker server会响应一个基于systemjs的angular app给我们，这个系统我们把他作为用户学习jigsaw的重要途径，所以很重要。
+目前我们有149个demo，我们会根据这些demo实时生成一个plunker e2e测试用例，用于测试所有demo的plunker是否能正常展示页面。
 
- - 根据demo动态生成e2e测试用例代码
+脚本流程：
+
+ - 根据demo动态生成plunker e2e测试用例代码
  - 动态生成form表单提交plunker server的index.html
  - 检查文件路径是否规范
  - 用新代码打包替换jigsaw包
  - 执行plunker的e2e test流程，主要验证plunker demo能不能正常打开
 
+##效果
+###可靠
+自动化测试对开发自测起到极大的补充作用，保证通过自动化测试的产品，到用户手中，就是没有编译错误、功能无法使用等重大低级错误的产品。
 
+###彻底
+ - 运行打包发布流程，发布问题提前知
+ - 模拟用户的开发环境，对包的可用性进行测试
+ - 模拟用户使用所有组件，并对demo进行端到端测试
+ - 测试用例覆盖组件功能的方方面面，有bug能及时发现
 
-
-
+###自动化程度高
+只要master或PR中有更新，环境就会跑一遍脚本，进行一次检查。Jigsaw的CI目前执行了1161次自动化构建，累计超过3万次e2e测试用例执行数。
