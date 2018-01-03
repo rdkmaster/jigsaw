@@ -11,6 +11,9 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     //设置对象的标识
     private _trackItemBy: string[] = [];
 
+    //预设的selectedItems检查标识
+    private _selectedItemsChecked = false;
+
     @Input()
     public get trackItemBy(): string | string[] {
         return this._trackItemBy;
@@ -46,17 +49,18 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     protected _items: QueryList<AbstractJigsawOptionComponent>;
 
     protected _updateSelectItems(itemValue, selected): void {
-        this.selectedItems.forEach((selectedItem) => {
-            let _isIncluded = false;
-            this._items.forEach((item) => {
-                if (item.value.label === selectedItem.label) {
-                    _isIncluded = true;
+        if(!this._selectedItemsChecked){
+            this.selectedItems.forEach((selectedItem) => {
+                let itemIncluded = (item)=>{
+                    return item.value.label === selectedItem.label;
+                };
+                if (!this._items.find(itemIncluded)) {
+                    this._selectedItems.splice(this.selectedItems.indexOf(selectedItem), 1);
                 }
             });
-            if (!_isIncluded) {
-                this._selectedItems.splice(this.selectedItems.indexOf(selectedItem), 1);
-            }
-        });
+            this._selectedItemsChecked = true;
+        }
+
         if (this.multipleSelect) { //多选
             if (selected) {
                 this.selectedItems.push(itemValue);
