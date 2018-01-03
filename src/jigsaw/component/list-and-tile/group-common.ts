@@ -51,16 +51,12 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     protected _updateSelectItems(itemValue, selected): void {
         if(!this._selectedItemsChecked){
             this.selectedItems.forEach((selectedItem) => {
-                let itemIncluded = (item)=>{
-                    return item.value.label === selectedItem.label;
-                };
-                if (!this._items.find(itemIncluded)) {
+                if (!this._items.find(item => item.value.label === selectedItem.label)) {
                     this._selectedItems.splice(this.selectedItems.indexOf(selectedItem), 1);
                 }
             });
             this._selectedItemsChecked = true;
         }
-
         if (this.multipleSelect) { //多选
             if (selected) {
                 this.selectedItems.push(itemValue);
