@@ -43,7 +43,7 @@ export class NumberRenderer extends TableCellRendererBase implements OnInit, OnD
         // 通知其他渲染器实例关掉已经打开的pad
         this.tableData.emit(CLOSE_ALL_PAD);
         const options = {
-            pos: {x: event.clientX, y: event.clientY}, posOffset: {left: -93, top: -65}, modal: false,
+            pos: {x: event.clientX, y: event.clientY}, posOffset: {left: -93, top: -95}, modal: false,
             posReviser: (pos) => {
                 // 单击右上角的时候，出现数字盘超出屏幕之外的问题，通过这个函数来修正
                 // `pos`是自动计算出来的值，有可能存在错误
@@ -57,15 +57,17 @@ export class NumberRenderer extends TableCellRendererBase implements OnInit, OnD
     }
 
     onSelect(value) {
-        // 更新已选中的值
-        this.tableData.data[this.row][this.column] = value.selected;
-        this.tableData.refresh();
-        this.tableData.emit(CHECK_BOARD_STATUS);
+        if (value.selected != 'close') {
+            // 更新已选中的值
+            this.tableData.data[this.row][this.column] = value.selected;
+            this.tableData.refresh();
+            this.tableData.emit(CHECK_BOARD_STATUS);
+
+            this.checkStatus(value.selected);
+        }
 
         // 及时清理掉不必要的回掉函数是一个好习惯
         this.closeNumberSelectPad();
-
-        this.checkStatus(value.selected);
     }
 
     onMouseEnter() {
@@ -86,7 +88,7 @@ export class NumberRenderer extends TableCellRendererBase implements OnInit, OnD
     }
 
     checkStatus(value) {
-        this.conflicted = isTargetConflicted(this.tableData, value, this);
+        this.conflicted = value ? isTargetConflicted(this.tableData, value, this) : false;
         this.bgColor = this.getBgColor();
     }
 
@@ -101,7 +103,11 @@ export class NumberRenderer extends TableCellRendererBase implements OnInit, OnD
 
     ngOnInit() {
         super.ngOnInit();
+
         this.bgColor = this.getBgColor();
+        this.frozen = this.cellData.match(/^\d$/);
+        this.fontColor = this.frozen ? '#33a5dd' : '';
+
         this.tableData.subscribe(event => {
             switch (event) {
                 case CLOSE_ALL_PAD:
