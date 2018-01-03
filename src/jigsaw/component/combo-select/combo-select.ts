@@ -438,7 +438,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             this._autoEditorWidth();
             setTimeout(() => {
                 // 等待combo高度变化，调整下拉位置
-                this._popupService.setPosition(this._getPopupOption(), this._popupElement, this._renderer);
+                if (this._popupElement) {
+                    this._popupService.setPosition(this._getPopupOption(), this._popupElement, this._renderer);
+                }
             });
         })
     }
