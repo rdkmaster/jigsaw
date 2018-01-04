@@ -69,6 +69,8 @@ import {TableResizeDemoComponent} from "./resize/app.component";
 import {TableResizeDemoModule} from "./resize/app.module";
 import {TableScrollListenDemoComponent} from "./scroll-listen/app.component";
 import {TableScrollListenDemoModule} from "./scroll-listen/app.module";
+import {SudokuGameComponent} from "./sudoku/app.component";
+import {SodokuGameModule} from "./sudoku/app.module";
 
 export const routerConfig = [
     {
@@ -173,6 +175,9 @@ export const routerConfig = [
     {
         path: 'scroll-listen', component: TableScrollListenDemoComponent
     },
+    {
+        path: 'sudoku', component: SudokuGameComponent
+    },
 ];
 
 @NgModule({
@@ -186,7 +191,7 @@ export const routerConfig = [
         TableColumnSetVisibleDemoModule, TableColumnSetWidthDemoModule, TableSetHeaderClassDemoModule, TableSetHeaderRenderDemoModule,
         TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, SwimLaneDiagramDemoModule, TableHideHeadDemoModule,
         TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule, TableCalendarDemoModule, BigRowDemoModule, TableResizeDemoModule,
-        TableScrollListenDemoModule
+        TableScrollListenDemoModule, SodokuGameModule
     ]
 })
 export class TableDemoModule {
