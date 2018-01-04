@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/core/data/table-data";
 import {NumberRenderer} from "./number-renderer";
-import {CHECK_BOARD_STATUS, isTargetConflicted, PUZZLE_RESET, PUZZLE_SOLVED} from "./utils";
+import {CHECK_PUZZLE_STATUS, isTargetConflicted, PUZZLE_RESET, PUZZLE_SOLVED} from "./utils";
 import {JigsawInfoAlert} from "../../../../jigsaw/component/alert/alert";
 
 
@@ -38,7 +38,7 @@ export class SudokuGameComponent {
     }
 
     checkBoardStatus(event) {
-        if (event !== CHECK_BOARD_STATUS) {
+        if (event !== CHECK_PUZZLE_STATUS) {
             return;
         }
         let hasError = false;
@@ -64,6 +64,6 @@ export class SudokuGameComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
+    summary: string = '通过数独游戏的实现过程来学习如何在表格的渲染器之间进行复杂的交互逻辑';
     description: string = '';
 }

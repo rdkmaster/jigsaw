@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from "@angular/core";
 import {TableCellRendererBase} from "jigsaw/component/table/table-renderer";
 import {PopupService} from "jigsaw/service/popup.service";
 import {NumberSelectPad} from "./number-select-pad";
-import {isTargetConflicted, CHECK_BOARD_STATUS, CLOSE_ALL_PAD, PUZZLE_SOLVED, PUZZLE_RESET} from "./utils";
+import {isTargetConflicted, CHECK_PUZZLE_STATUS, CLOSE_ALL_PAD, PUZZLE_SOLVED, PUZZLE_RESET} from "./utils";
 
 @Component({
     template: `
@@ -38,6 +38,7 @@ export class NumberRenderer extends TableCellRendererBase implements OnInit, OnD
             return;
         }
         if (this.popupInfo) {
+            this.popupInfo.answer.unsubscribe();
             this.popupInfo.dispose();
         }
         // 通知其他渲染器实例关掉已经打开的pad
@@ -61,7 +62,7 @@ export class NumberRenderer extends TableCellRendererBase implements OnInit, OnD
             // 更新已选中的值
             this.tableData.data[this.row][this.column] = value.selected;
             this.tableData.refresh();
-            this.tableData.emit(CHECK_BOARD_STATUS);
+            this.tableData.emit(CHECK_PUZZLE_STATUS);
 
             this.checkStatus(value.selected);
         }
