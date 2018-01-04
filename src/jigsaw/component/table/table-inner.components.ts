@@ -182,7 +182,6 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
     }
 
     private _sort(order: SortOrder): void {
-        console.log(this._$sortOrderClass['jigsaw-table-des']);
         this.updateSortOrderClass(order);
         this.sort.emit({sortAs: this.sortAs, order: order, field: this.field});
         this.tableData.sort(this.sortAs, order, this.field);
