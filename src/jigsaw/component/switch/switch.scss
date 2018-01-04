@@ -39,7 +39,7 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
     }
 
     &:active:after {
-        width:24px;
+        width: 24px;
     }
 
     &:focus {
@@ -81,6 +81,9 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
 
         .#{$switch-prefix}-inner {
             color: $disabled-color;
+            @include ie11Hack() {
+                color: $disabled-color-ie11;
+            }
         }
     }
 

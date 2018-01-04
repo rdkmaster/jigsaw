@@ -52,7 +52,8 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
                             width: 4px 4px;
                             style: solid;
                             color: $primary-color transparent transparent transparent;
-                        };
+                        }
+                    ;
                         content: '';
                         display: none;
                     }
@@ -62,10 +63,13 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
                     pointer-events: none;
                     cursor: default;
                     color: $disabled-color;
+                    @include ie11Hack() {
+                        color: $disabled-color-ie11;
+                    }
                 }
 
                 jigsaw-tab-label {
-                    a:hover{
+                    a:hover {
                         text-decoration: none;
                         color: $primary-color;
                     }
@@ -97,11 +101,11 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
                         display: none;
                     }
 
-                    span.fa{
+                    span.fa {
                         margin-right: 6px;
                     }
 
-                    a:hover{
+                    a:hover {
                         text-decoration: none;
                         color: $primary-color;
                     }

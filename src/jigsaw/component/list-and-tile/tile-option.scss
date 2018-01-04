@@ -27,6 +27,9 @@ $option-prefix-cls: #{$jigsaw-prefix}-tile-option;
     &.#{$option-prefix-cls}-disabled {
         background: $disabled-bg;
         color: $disabled-color;
+        @include ie11Hack() {
+            color: $disabled-color-ie11;
+        }
         cursor: not-allowed;
     }
 }

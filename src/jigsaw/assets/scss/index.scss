@@ -100,6 +100,16 @@
     .bootstrap-datetimepicker-widget .timepicker-second{
         font-weight: 400;
     }
+
+    @include ie11Hack(){
+        .bootstrap-datetimepicker-widget table td.active,
+        .bootstrap-datetimepicker-widget table td.active:hover {
+            text-shadow: none;
+        }
+        .bootstrap-datetimepicker-widget table td span.active {
+            text-shadow: none;
+        }
+    }
 }
 /*时间组件样式end*/
 

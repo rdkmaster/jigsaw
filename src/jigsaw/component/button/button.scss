@@ -112,6 +112,9 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
         pointer-events: none;
         cursor: default;
         color: $disabled-color;
+        @include ie11Hack(){
+            color: $disabled-color-ie11;
+        }
         background-color: $disabled-bg;
         border-color: $border-color-base;
     }
