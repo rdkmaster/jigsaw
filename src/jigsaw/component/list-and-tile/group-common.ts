@@ -40,8 +40,8 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         this.writeValue(newValue);
         if (this._selectedItems !== newValue) {
             this._propagateChange(newValue);
+            this._selectedItemsChecked = false;
         }
-        this._selectedItemsChecked = false;
     }
 
     @Output() public selectedItemsChange = new EventEmitter<any[]>();
