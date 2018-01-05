@@ -4,7 +4,7 @@
 
 ##痛点分析
 ###问题痛点
- - 测试效率底
+ - 测试效率低
  - 人工测试质量不稳定
  - 人力紧张
  - 多OS多浏览器组合情况太多，人工难以全部遍历 
@@ -13,7 +13,7 @@
  - 开源平台项目，没有保证产品质量的系统，用户对产品没信心
 
 ###怎么解决
- - 脚本自动化
+ - 自动化测试环境全部通过脚本自动化部署到云CI
  - 模拟用户搭建项目，检查包的可用性
  - 细分功能的demo
  - 高覆盖率、高可靠的e2e测试
@@ -31,7 +31,7 @@
  - 自动打包，打包过程中会对代码优化
 
 ###模拟真实项目
-tourist工程是我们构建的一个真实的angualr app项目，里面用到了jigsaw的几个重要的组件。我们会在CI中，把tourist克隆下来，下载依赖包，用新代码打包好的jigsaw包替换旧版本，然后运行angular-cli的生产环境的build，angular-cli会对代码进行严格的检查。如有语法错误、包依赖等问题，在这里都能直接体现出来。
+tourist工程是我们构建的一个真实的angualr app项目，里面用到了jigsaw的几个重要的组件。我们会在CI中，把tourist克隆下来，下载依赖包，用新代码打包好的jigsaw包替换旧版本，然后运行angular-cli的生产环境的build，angular-cli会对代码进行严格的检查。如有语法错误、包依赖等问题，在这里都能直接检测出来。
 
 这样做的好处是：
 
@@ -46,7 +46,7 @@ tourist工程是我们构建的一个真实的angualr app项目，里面用到�
  - 执行`ng build -prod -aot`，augular-cli的build流程对代码会有一定的检查作用
 
 ###端到端测试
-我们的端到端测试也不是简单的对现有代码的测试，而是在基于seed工程，实时构建的app上的。我们在jigsaw工程中的e2e demo，会被拷贝到seed工程中；在seed中使用新的jigsaw包，把所有组件的引用换成包的引用。这样jigsaw的端到端测试就变成了用户工程的端到端测试，而其测试的是用户使用所有组件，所有功能。这样的测试方法，会对用户使用有个实质性的反馈，即CI上的状况就是用户的状况。现在我们已经有了53个测试用例，会分别放在win7的chrome，OSX的FF上跑。
+我们的端到端测试也不是简单的对现有代码的测试，而是在基于seed工程，实时构建的app上的。我们在jigsaw工程中的e2e demo，会被拷贝到seed工程中；在seed中使用新的jigsaw包，把所有组件的引用换成包的引用。这样jigsaw的端到端测试就变成了用户工程的端到端测试，而其测试的是用户使用所有组件，所有功能。这样的测试方法，会对用户使用有个实质性的反馈，即CI上的状况就是用户的状况。现在我们已经有了接近100个测试用例，会同时在win7和mac os上测试chrome和FF，一共四种组合。
 
 脚本流程：
 
@@ -58,8 +58,11 @@ tourist工程是我们构建的一个真实的angualr app项目，里面用到�
   - 执行`ng e2e`，进行e2e测试
 
 ###live demo检查
-我们的live demo采用的是angular plunker，能实时查看和编辑demo。我们把demo按照格式提交给plunker server，plunker server会响应一个基于systemjs的angular app给我们，这个系统我们把他作为用户学习jigsaw的重要途径，所以很重要。
-目前我们有149个demo，我们会根据这些demo实时生成一个plunker e2e测试用例，用于测试所有demo的plunker是否能正常展示页面。
+我们的live demo是基于Jigsaw工程的demo app，里面有各个组件按功能分的小demo，app通过路由连接这些小的demo。我们会把demo app分成一个个只有小dmeo的app搬到plunker上显示，用户可以在上面查看和编辑组件某个功能demo。这种及时编译查看的方式，对用户学习和使用组件会有很大的帮助。
+
+我们会运行脚本，把demo转化成规定的格式，提交给plunker server，plunker server会响应一个基于systemjs的angular app给用户。
+
+目前我们有近150个demo，我们会根据这些demo实时生成一个plunker e2e测试用例，用于测试所有demo的plunker是否能正常展示页面。
 
 脚本流程：
 
