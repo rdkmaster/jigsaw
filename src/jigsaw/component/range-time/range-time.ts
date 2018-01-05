@@ -268,6 +268,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
 
             setTimeout(() => {
                 //先设置好limit，再设置date
+                this.beginDateChange.emit(this._beginDate);
                 this._endDate = endDate;
             }, 0)
         }
