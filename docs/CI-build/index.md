@@ -58,9 +58,7 @@ tourist工程是我们构建的一个真实的angualr app项目，里面用到�
   - 执行`ng e2e`，进行e2e测试
 
 ###live demo检查
-我们的live demo是基于Jigsaw工程的demo app，里面有各个组件按功能分的小demo，app通过路由连接这些小的demo。我们会把demo app分成一个个只有小dmeo的app搬到plunker上显示，用户可以在上面查看和编辑组件某个功能demo。这种及时编译查看的方式，对用户学习和使用组件会有很大的帮助。
-
-我们会运行脚本，把demo转化成规定的格式，提交给plunker server，plunker server会响应一个基于systemjs的angular app给用户。
+我们的live demo是基于Jigsaw工程的demo app，里面有各个组件按功能分的小demo，app通过路由连接它们。我们会运行脚本，把app分成只包含单个dmeo的app，并搬到plunker上显示，用户可以在上面查看和编辑组件某个功能demo。这种即时编译查看的方式，对用户学习和使用组件会有很大的帮助。
 
 目前我们有近150个demo，我们会根据这些demo实时生成一个plunker e2e测试用例，用于测试所有demo的plunker是否能正常展示页面。
 
