@@ -62,18 +62,12 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
     }
 
     &-disabled {
-        color: $disabled-color;
-        @include ie11Hack() {
-            color: $disabled-color-ie11;
-        }
+        @include compatible(color, $disabled-color, $disabled-color-ie11);
         pointer-events: none;
     }
 
     &-disabled &-placeholder {
-        color: $disabled-color;
-        @include ie11Hack() {
-            color: $disabled-color-ie11;
-        }
+        @include compatible(color, $disabled-color, $disabled-color-ie11);
     }
 
     &-disabled &-selection {

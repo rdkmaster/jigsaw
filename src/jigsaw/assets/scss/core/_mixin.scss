@@ -54,6 +54,17 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+@mixin compatible($property, $value, $compatibleValue) {
+    #{$property}: $value;
+    @include compatibleIE($property, $compatibleValue);
+}
+
+@mixin compatibleIE($property, $value) {
+    @include ie11Hack {
+        #{$property}: $value;
+    }
+}
+
 @mixin ie11Hack() {
     @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
         @content;

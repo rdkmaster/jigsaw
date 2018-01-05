@@ -111,10 +111,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     &#{&}-disabled {
         pointer-events: none;
         cursor: default;
-        color: $disabled-color;
-        @include ie11Hack() {
-            color: $disabled-color-ie11;
-        }
+        @include compatible(color, $disabled-color, $disabled-color-ie11);
         background-color: $disabled-bg;
         border-color: $border-color-base;
     }

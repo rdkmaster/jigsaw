@@ -61,10 +61,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
                 .#{$tab-prefix}-tab-disabled {
                     pointer-events: none;
                     cursor: default;
-                    color: $disabled-color;
-                    @include ie11Hack() {
-                        color: $disabled-color-ie11;
-                    }
+                    @include compatible(color, $disabled-color, $disabled-color-ie11);
                 }
 
                 jigsaw-tab-label {

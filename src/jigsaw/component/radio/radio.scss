@@ -8,10 +8,7 @@ $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
     margin-right: 10px;
     cursor: pointer;
     &.#{$radio-option-prefix-cls}-disabled {
-        color: $disabled-color;
-        @include ie11Hack() {
-            color: $disabled-color-ie11;
-        }
+        @include compatible(color, $disabled-color, $disabled-color-ie11);
         cursor: not-allowed;
         .#{$radio-option-prefix-cls}-inner {
             background: $disabled-bg;

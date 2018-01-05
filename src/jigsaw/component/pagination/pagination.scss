@@ -22,15 +22,10 @@ $paging-prefix-cls: #{$jigsaw-prefix}-paging;
         &.#{$paging-prefix-cls}-disabled {
             cursor: not-allowed;
             border: 1px solid $border-color-base;
-            color: $disabled-color;
+            @include compatible(color, $disabled-color, $disabled-color-ie11);
             &:hover {
                 border: 1px solid $border-color-base;
-                color: $disabled-color;
-            }
-            @include ie11Hack() {
-                &, &:hover {
-                    color: $disabled-color-ie11;
-                }
+                @include compatible(color, $disabled-color, $disabled-color-ie11);
             }
         }
         &:hover {
