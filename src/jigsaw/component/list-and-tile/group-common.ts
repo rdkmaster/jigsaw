@@ -39,6 +39,13 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
             return;
         }
         this._propagateChange(newValue);
+        this._removeInvalidSelectedItems();
+    }
+
+    private _removeInvalidSelectedItems():void {
+        if (!this._items || !this._selectedItems) {
+            return;
+        }
         this._selectedItems.forEach(selectedItem => {
             if (this._items.find(item => CommonUtils.compareWithKeyProperty(item.value, selectedItem, this._trackItemBy))) {
                 return;
@@ -128,6 +135,8 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
             this._setItemState(items);
             this._subscribeItemSelectedChange(items);
         });
+
+        this._removeInvalidSelectedItems();
     }
 
     ngOnDestroy() {
