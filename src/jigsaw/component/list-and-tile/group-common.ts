@@ -35,9 +35,16 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
 
     public set selectedItems(newValue: ArrayCollection<any> | any[]) {
         this.writeValue(newValue);
-        if (this._selectedItems !== newValue) {
-            this._propagateChange(newValue);
+        if (this._selectedItems === newValue) {
+            return;
         }
+        this._propagateChange(newValue);
+        this._selectedItems.forEach(selectedItem => {
+            if (this._items.find(item => CommonUtils.compareWithKeyProperty(item.value, selectedItem, this._trackItemBy))) {
+                return;
+            }
+            this._selectedItems.splice(this.selectedItems.indexOf(selectedItem), 1);
+        });
     }
 
     @Output() public selectedItemsChange = new EventEmitter<any[]>();
@@ -96,7 +103,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         })
     }
 
-    private _subscribeItemSelectedChange(items: QueryList<AbstractJigsawOptionComponent>){
+    private _subscribeItemSelectedChange(items: QueryList<AbstractJigsawOptionComponent>) {
         items.forEach(item => {
             // 取消可能重复的订阅事件
             item.change.observers.length = 0;
