@@ -11,9 +11,6 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     //设置对象的标识
     private _trackItemBy: string[] = [];
 
-    //预设的selectedItems检查标识
-    private _selectedItemsChecked = false;
-
     @Input()
     public get trackItemBy(): string | string[] {
         return this._trackItemBy;
@@ -38,10 +35,16 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
 
     public set selectedItems(newValue: ArrayCollection<any> | any[]) {
         this.writeValue(newValue);
-        if (this._selectedItems !== newValue) {
-            this._propagateChange(newValue);
-            this._selectedItemsChecked = false;
+        if (this._selectedItems === newValue) {
+            return;
         }
+        this._propagateChange(newValue);
+        this._selectedItems.forEach(selectedItem => {
+            if (this._items.find(item => CommonUtils.compareWithKeyProperty(item.value, selectedItem, this._trackItemBy))) {
+                return;
+            }
+            this._selectedItems.splice(this.selectedItems.indexOf(selectedItem), 1);
+        });
     }
 
     @Output() public selectedItemsChange = new EventEmitter<any[]>();
@@ -50,14 +53,6 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     protected _items: QueryList<AbstractJigsawOptionComponent>;
 
     protected _updateSelectItems(itemValue, selected): void {
-        if(!this._selectedItemsChecked){
-            this._selectedItems.forEach((selectedItem) => {
-                if (!this._items.find(item => CommonUtils.compareWithKeyProperty(item.value, selectedItem, this._trackItemBy))) {
-                    this._selectedItems.splice(this.selectedItems.indexOf(selectedItem), 1);
-                }
-            });
-            this._selectedItemsChecked = true;
-        }
         if (this.multipleSelect) { //多选
             if (selected) {
                 this.selectedItems.push(itemValue);
