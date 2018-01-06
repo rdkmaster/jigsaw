@@ -111,7 +111,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     &#{&}-disabled {
         pointer-events: none;
         cursor: default;
-        color: $disabled-color;
+        color: #d9d9d9;
         background-color: $disabled-bg;
         border-color: $border-color-base;
     }
