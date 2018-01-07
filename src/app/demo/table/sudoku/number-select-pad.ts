@@ -55,8 +55,6 @@ export class NumberSelectPad implements IPopupable, OnInit {
     }
 
     onSelect(selected) {
-        // 由于这个bug https://github.com/rdkmaster/jigsaw/issues/439
-        // 导致这里需要通过`selected.length-1`来获取正确是索引，等这个bug修复了之后，可以直接替换为0
-        this.answer.emit({selected: selected[selected.length - 1].label});
+        this.answer.emit({selected: selected[0].label});
     }
 }
