@@ -1,22 +1,12 @@
-import {AfterContentInit, Component, ContentChildren, ElementRef, Input, NgModule, OnInit, QueryList, Renderer2} from "@angular/core";
+import {AfterContentInit, Component, ContentChildren, ElementRef, Input, NgModule, QueryList, Renderer2} from "@angular/core";
 import {AbstractJigsawComponent} from "../common";
 
-@Component({
-    selector: 'jigsaw-box, j-box',
-    template: '<ng-content></ng-content>',
-    host: {
-        '[class.jigsaw-box]': 'true',
-        '[class.jigsaw-flex]': 'type == "flex"',
-        '[style.width]': 'width',
-        '[style.height]': 'height',
-    }
-})
-export class JigsawBox extends AbstractJigsawComponent implements AfterContentInit {
+export class JigsawBoxBase extends AbstractJigsawComponent {
     private _element: HTMLElement;
 
     constructor(private _elementRef: ElementRef, private _renderer: Renderer2) {
         super();
-        this._element = this._elementRef.nativeElement;
+        this._element = _elementRef.nativeElement;
     }
 
     private _directionMap = new Map([
@@ -128,26 +118,49 @@ export class JigsawBox extends AbstractJigsawComponent implements AfterContentIn
         this._renderer.setStyle(this._element, 'flex-shrink', Number(value));
     }
 
-    @ContentChildren(JigsawBox) childrenBox: QueryList<JigsawBox>;
+    protected childrenBox: QueryList<JigsawBoxBase>;
 
-    private _checkFlexByOwnProperty(property: string) {
+    protected _checkFlexByOwnProperty(property: string) {
         if (property && this.type != 'flex') {
             this.type = 'flex';
         }
     }
 
-    private _checkFlexByChildren() {
+    protected _checkFlexByChildren() {
         // 映射同一组件实例，ContentChildren会包含自己，https://github.com/angular/angular/issues/21148
         if (this.childrenBox.length > 1 && this.type != 'flex') {
             this.type = 'flex';
         }
     }
 
-    ngAfterContentInit() {
+    protected checkFlex() {
         this._checkFlexByChildren();
         this.childrenBox.changes.subscribe(() => {
             this._checkFlexByChildren();
         })
+    }
+}
+
+@Component({
+    selector: 'jigsaw-box, j-box',
+    template: '<ng-content></ng-content>',
+    host: {
+        '[class.jigsaw-box]': 'true',
+        '[class.jigsaw-flex]': 'type == "flex"',
+        '[style.width]': 'width',
+        '[style.height]': 'height',
+    }
+})
+export class JigsawBox extends JigsawBoxBase implements AfterContentInit {
+    constructor(elementRef: ElementRef, renderer: Renderer2) {
+        super(elementRef, renderer);
+    }
+
+    @ContentChildren(JigsawBox)
+    protected childrenBox: QueryList<JigsawBox>;
+
+    ngAfterContentInit() {
+        this.checkFlex();
     }
 }
 

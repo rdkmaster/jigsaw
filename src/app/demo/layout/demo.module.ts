@@ -8,6 +8,8 @@ import {FormDemoComponent} from "./form/app.component";
 import {FormDemoModule} from "./form/app.module";
 import {BoxLayoutScrollDemoComponent} from "./box-layout-scroll/app.component";
 import {BoxLayoutScrollDemoModule} from "./box-layout-scroll/app.module";
+import {customSceneLayoutDemoComponent} from "app/demo/layout/custom-scene-layout/app.component";
+import {customSceneLayoutDemoModule} from "./custom-scene-layout/app.module";
 
 export const routerConfig = [
     {
@@ -22,6 +24,9 @@ export const routerConfig = [
     {
         path: 'box-layout-scroll', component: BoxLayoutScrollDemoComponent
     },
+    {
+        path: 'custom-scene-layout', component: customSceneLayoutDemoComponent
+    },
 ];
 
 @NgModule({
@@ -31,6 +36,7 @@ export const routerConfig = [
         BoxLayoutDemoModule,
         FormDemoModule,
         BoxLayoutScrollDemoModule,
+        customSceneLayoutDemoModule,
     ]
 })
 export class LayoutDemoModule {

@@ -1,0 +1,10 @@
+<j-layout
+    *ngFor="let itemData of data.nodes"
+    [data]="itemData"
+    [direction]="itemData.direction"
+    [justify]="itemData.justify"
+    [align]="itemData.align"
+    [order]="itemData.order"
+    [grow]="itemData.grow"
+    [shrink]="itemData.shrink">
+</j-layout>

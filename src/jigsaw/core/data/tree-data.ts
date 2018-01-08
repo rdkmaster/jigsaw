@@ -1,12 +1,11 @@
-
 import {GeneralCollection} from "./general-collection";
 
 export class TreeData extends GeneralCollection<any> {
     [index: string]: any;
-    label: string;
+    label?: string;
     nodes?: TreeData[];
 
-    public fromObject(data: any):TreeData {
+    public fromObject(data: any): TreeData {
         if (!data) {
             return this;
         }
@@ -32,12 +31,12 @@ export class TreeData extends GeneralCollection<any> {
     }
 
     public static fromArray(nodes: any[]): TreeData[] {
-        const result:TreeData[] = [];
+        const result: TreeData[] = [];
         if (!nodes) {
             return result;
         }
         nodes.forEach(node => {
-            const td:TreeData = new TreeData();
+            const td: TreeData = new TreeData();
             td.fromObject(node);
             result.push(td);
         });
