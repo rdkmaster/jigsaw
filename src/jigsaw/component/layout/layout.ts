@@ -82,7 +82,7 @@ export class JigsawLayout extends JigsawBoxBase implements AfterViewInit {
             const node = this.data.nodes[0];
             if (node.nodes instanceof Array && node.nodes.length > 0) {
                 this.data.nodes = node.nodes;
-                this.direction = node.direction;
+                this.direction = node.direction ? node.direction : 'h'; // 默认是'h'
             } else {
                 this.data.nodes = [];
                 this.direction = null;
