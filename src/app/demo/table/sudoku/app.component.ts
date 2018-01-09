@@ -47,7 +47,7 @@ export class SudokuGameComponent {
             if (hasError) {
                 return;
             }
-            row.forEach((cellData, colIdx) => {
+            row.forEach((cellData:string, colIdx:number) => {
                 if (hasError) {
                     return;
                 }
