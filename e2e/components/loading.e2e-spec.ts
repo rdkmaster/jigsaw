@@ -51,8 +51,8 @@ describe('loading', () => {
     });
 
     describe('test loading color', () => {
-        it('should display color correctly', () => {
-            browser.get('/loading/color');
+        it('should display color correctly', async () => {
+            await browser.get('/loading/color');
             const bubbleEls = $$('jigsaw-bubble-loading');
             expect(bubbleEls.get(0).$('.spinner .circle1').getCssValue('background-color')).toBe('rgba(255, 0, 0, 1)');
             expect(bubbleEls.get(1).$('.spinner .circle1').getCssValue('background-color')).toBe('rgba(255, 165, 0, 1)');
@@ -63,12 +63,12 @@ describe('loading', () => {
 
     describe('test loading full', () => {
         it('input should be disabled after click submit', async () => {
-            browser.get('/loading/full');
+            await browser.get('/loading/full');
             const submitEls = $$('.jigsaw-button-color-primary'),
                 testInput = $$('.content-box').get(1).$$('.content-line').get(0).$('input');
             submitEls.get(1).click();
             await waitForNotPresence('jigsaw-loading');
-            expectToExist('jigsaw-loading',false);
+            expectToExist('jigsaw-loading', false);
         })
     })
 });
