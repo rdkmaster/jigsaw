@@ -9,4 +9,8 @@
                (valueChange)="changeData($event)">
 </jigsaw-select>
 
-<j-layout [data]="data" [direction]="data.data" [grow]="data.grow" height="400"></j-layout>
+<j-layout [data]="data" [(direction)]="data.direction" [grow]="data.grow" height="400"></j-layout>
+<br>
+<br>
+<button (click)="consoleData()">console data</button>
+<j-layout [(data)]="data2" height="200"></j-layout>

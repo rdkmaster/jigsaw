@@ -1,8 +1,7 @@
 import {
-    AfterViewInit, Component, ElementRef, Input, NgModule, QueryList, Renderer2, ViewChildren
+    AfterViewInit, Component, ElementRef, EventEmitter, Input, NgModule, Output, QueryList, Renderer2, ViewChildren
 } from "@angular/core";
 import {JigsawBoxBase} from "../box/box";
-import {CallbackRemoval} from "../../core/utils/common-utils";
 import {TreeData} from "../../core/data/tree-data";
 import {CommonModule} from "@angular/common";
 
@@ -22,30 +21,65 @@ export class JigsawLayout extends JigsawBoxBase implements AfterViewInit {
         super(elementRef, renderer);
     }
 
-    private _dataCallbackRemoval: CallbackRemoval;
-
-    private _data: TreeData;
-
     @Input()
-    get data(): TreeData {
-        return this._data;
-    }
+    public data: TreeData;
 
-    set data(value: TreeData) {
-        this._data = value;
-        if (this._dataCallbackRemoval) {
-            this._dataCallbackRemoval();
-        }
-        this._dataCallbackRemoval = this._data.onRefresh(()=>{}, this);
-    }
+    @Output()
+    public dataChange = new EventEmitter<TreeData>();
 
     @ViewChildren(JigsawLayout)
     protected childrenBox: QueryList<JigsawLayout>;
+
+    @Output()
+    public directionChange = new EventEmitter<string>();
+
+    @Output()
+    public remove = new EventEmitter<TreeData>();
+
+    /**
+     * @internal
+     */
+    public _$showOptions: boolean;
 
     ngAfterViewInit() {
         setTimeout(() => {
             this.checkFlex();
         });
+    }
+
+    /**
+     * internal
+     */
+    public _$addItems(direction: string) {
+        if (!this.data) {
+            this.data = new TreeData;
+            this.dataChange.emit(this.data);
+        }
+        this.direction = direction;
+        this.directionChange.emit(this.direction);
+        if (this.data.nodes && this.data.nodes instanceof Array) {
+            this.data.nodes.push(new TreeData, new TreeData);
+        } else {
+            this.data.nodes = [new TreeData, new TreeData];
+        }
+    }
+
+    /**
+     * internal
+     */
+    public _$remove() {
+        this.remove.emit(this.data);
+    }
+
+    /**
+     * internal
+     */
+    public _$removeItem(item: TreeData) {
+        const index = this.data.nodes.findIndex(node => node === item);
+        this.data.nodes.splice(index, 1);
+        if (this.data.nodes.length <= 1) {
+            this.data.nodes = [];
+        }
     }
 }
 

@@ -8,6 +8,7 @@ import {TreeData} from "jigsaw/core/data/tree-data";
 })
 export class customSceneLayoutDemoComponent {
     data: TreeData;
+    data2: TreeData;
 
     constructor() {
         this.data = new TreeData();
@@ -52,6 +53,7 @@ export class customSceneLayoutDemoComponent {
 
     changeData(scene) {
         if (scene.id == 1) {
+            this.data.direction = 'h';
             this.data.fromObject([
                 {
                     direction: 'v',
@@ -83,36 +85,25 @@ export class customSceneLayoutDemoComponent {
                 },
             ]);
         } else if (scene.id = 2) {
+            this.data.direction = 'v';
             this.data.fromObject([
+                {},
                 {
-                    direction: 'v',
+                    grow: 4,
                     nodes: [
+                        {},
                         {
-                            nodes: [
-                                {},
-                                {
-                                    direction: 'v',
-                                    nodes: [
-                                        {},
-                                        {},
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            grow: 2,
-                            nodes: [
-                                {},
-                                {},
-                                {},
-                            ]
+                            grow: 4
                         }
                     ]
                 },
-                {
-                    grow: '3'
-                },
+                {},
             ]);
         }
+        console.log(this.data);
+    }
+
+    consoleData(){
+        console.log(this.data2);
     }
 }
