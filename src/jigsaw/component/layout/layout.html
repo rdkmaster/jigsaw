@@ -11,7 +11,7 @@
 </j-layout>
 
 <div *ngIf="!data || !data.nodes || !data.nodes.length" class="jigsaw-layout-btn">
-    <i class="fa fa-plus-square-o" (click)="_$showOptions=!_$showOptions"></i>
+    <i class="fa fa-plus-square-o"></i>
     <div *ngIf="_$showOptions" class="jigsaw-layout-options">
         <span class="fa fa-minus-square-o" (click)="_$addItems('v')"></span>
         <span class="fa fa-columns" (click)="_$addItems('h')"></span>

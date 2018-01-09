@@ -14,6 +14,8 @@ import {CommonModule} from "@angular/common";
         '[class.jigsaw-flex]': 'type == "flex"',
         '[style.width]': 'width',
         '[style.height]': 'height',
+        '(mouseenter)': '_$showOptions = true',
+        '(mouseleave)': '_$showOptions = false',
     }
 })
 export class JigsawLayout extends JigsawBoxBase implements AfterViewInit {
@@ -34,6 +36,9 @@ export class JigsawLayout extends JigsawBoxBase implements AfterViewInit {
     public directionChange = new EventEmitter<string>();
 
     @Output()
+    public growChange = new EventEmitter<string>();
+
+    @Output()
     public remove = new EventEmitter<TreeData>();
 
     /**
@@ -41,14 +46,8 @@ export class JigsawLayout extends JigsawBoxBase implements AfterViewInit {
      */
     public _$showOptions: boolean;
 
-    ngAfterViewInit() {
-        setTimeout(() => {
-            this.checkFlex();
-        });
-    }
-
     /**
-     * internal
+     * @internal
      */
     public _$addItems(direction: string) {
         if (!this.data) {
@@ -65,21 +64,37 @@ export class JigsawLayout extends JigsawBoxBase implements AfterViewInit {
     }
 
     /**
-     * internal
+     * @internal
      */
     public _$remove() {
         this.remove.emit(this.data);
     }
 
     /**
-     * internal
+     * @internal
      */
     public _$removeItem(item: TreeData) {
+        if (!this.data || !(this.data.nodes instanceof Array)) return;
         const index = this.data.nodes.findIndex(node => node === item);
         this.data.nodes.splice(index, 1);
-        if (this.data.nodes.length <= 1) {
-            this.data.nodes = [];
+        if (this.data.nodes.length == 1) {
+            // 处理多余的box
+            const node = this.data.nodes[0];
+            if (node.nodes instanceof Array && node.nodes.length > 0) {
+                this.data.nodes = node.nodes;
+                this.direction = node.direction;
+            } else {
+                this.data.nodes = [];
+                this.direction = null;
+            }
+            this.directionChange.emit(this.direction);
         }
+    }
+
+    ngAfterViewInit() {
+        setTimeout(() => {
+            this.checkFlex();
+        });
     }
 }
 

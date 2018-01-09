@@ -1,8 +1,3 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
-
-<!-- start to learn the demo from here -->
 <jigsaw-select labelField="label"
                [(value)]="selectedScene"
                [data]="sceneData"
@@ -13,4 +8,4 @@
 <br>
 <br>
 <button (click)="consoleData()">console data</button>
-<j-layout [(data)]="data2" height="200"></j-layout>
+<j-layout [(data)]="data2" [(direction)]="data.direction" height="200"></j-layout>
