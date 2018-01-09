@@ -8,6 +8,8 @@
 
 ## 运行效果
 
+线上地址 <http://rdk.zte.com.cn/jigsaw/table/sudoku>
+
 先看看最终的效果吧：
 
 ![overview](overview.gif)
