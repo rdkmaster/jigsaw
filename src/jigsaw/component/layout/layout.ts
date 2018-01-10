@@ -19,6 +19,31 @@ import {CommonModule} from "@angular/common";
     }
 })
 export class JigsawLayout extends JigsawBoxBase implements AfterViewInit {
+
+    private static _parseNodesToString(nodes: TreeData[], domStr: string){
+        if(nodes instanceof Array){
+            nodes.forEach(node => {
+                domStr += `<j-box direction="${node.direction}" grow="${node.grow}"> \n`;
+                domStr = this._parseNodesToString(node.nodes, domStr) + `</j-box> \n`;
+            })
+        }
+        return domStr;
+    }
+
+    private static _parseNodeToString(node: TreeData, domStr: string){
+        domStr += `<j-box direction="${node.direction}" grow="${node.grow}"> \n`;
+        domStr = this._parseNodesToString(node.nodes, domStr) + `</j-box> \n`;
+        return domStr;
+    }
+
+    public static parseToString(data: TreeData): string {
+        if(!data || !(data instanceof TreeData)) return null;
+        let domStr = '';
+        domStr += `<j-box direction="${data.direction}" grow="${data.grow}"> \n`;
+        domStr = this._parseNodesToString(data.nodes, domStr) + `</j-box> \n`;
+        return domStr;
+    }
+
     constructor(elementRef: ElementRef, renderer: Renderer2) {
         super(elementRef, renderer);
     }

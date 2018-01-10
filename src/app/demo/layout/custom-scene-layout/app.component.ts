@@ -1,5 +1,6 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 import {TreeData} from "jigsaw/core/data/tree-data";
+import {JigsawLayout} from "../../../../jigsaw/component/layout/layout";
 
 @Component({
     templateUrl: './app.component.html',
@@ -105,5 +106,9 @@ export class customSceneLayoutDemoComponent {
 
     consoleData(){
         console.log(this.data2);
+    }
+
+    parseData(){
+        console.log(JigsawLayout.parseToString(this.data2));
     }
 }

@@ -18,6 +18,10 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
         ['hr', 'row-reverse'],
         ['v', 'column'],
         ['vr', 'column-reverse'],
+        ['row', 'row'],
+        ['row-reverse', 'row-reverse'],
+        ['column', 'column'],
+        ['column-reverse', 'column-reverse'],
     ]);
 
     private _justifyMap = new Map([
