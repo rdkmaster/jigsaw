@@ -55,6 +55,32 @@ export class LayoutData extends GeneralCollection<any> {
     shrink?: number;
     nodes?: LayoutData[];
 
+    public static toData(domStr: string): LayoutData {
+        let layout = document.createElement('div');
+        layout.innerHTML = domStr;
+        let json;
+        if (layout.children) {
+            json = this._parseElementToJson(layout.children[0]);
+        }
+        return json ? new LayoutData().fromObject(json) : null;
+    }
+
+    private static _parseElementToJson(element: Element): Object {
+        let node = {
+            direction: null,
+            grow: null,
+            nodes: []
+        };
+        node.direction = element.getAttribute('direction');
+        node.grow = element.getAttribute('grow');
+        if (element.children) {
+            for (let i = 0; i < element.children.length; i++) {
+                node.nodes.push(this._parseElementToJson(element.children[i]));
+            }
+        }
+        return node;
+    }
+
     public toString(): string {
         return this._parseNodeToString(this, '');
     }

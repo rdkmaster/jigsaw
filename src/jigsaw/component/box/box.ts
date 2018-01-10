@@ -1,5 +1,6 @@
 import {AfterContentInit, Component, ContentChildren, ElementRef, Input, NgModule, QueryList, Renderer2} from "@angular/core";
 import {AbstractJigsawComponent} from "../common";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 export class JigsawBoxBase extends AbstractJigsawComponent {
     private _element: HTMLElement;
@@ -108,6 +109,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
     }
 
     public set grow(value: number) {
+        if (CommonUtils.isUndefined(value)) return;
         this._grow = value;
         this._renderer.setStyle(this._element, 'flex-grow', Number(value));
     }
@@ -126,14 +128,18 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
 
     protected _checkFlexByOwnProperty(property: string) {
         if (property && this.type != 'flex') {
-            this.type = 'flex';
+            setTimeout(() => {
+                this.type = 'flex';
+            })
         }
     }
 
     protected _checkFlexByChildren() {
         // 映射同一组件实例，ContentChildren会包含自己，https://github.com/angular/angular/issues/21148
         if (this.childrenBox.length > 1 && this.type != 'flex') {
-            this.type = 'flex';
+            setTimeout(() => {
+                this.type = 'flex';
+            })
         }
     }
 

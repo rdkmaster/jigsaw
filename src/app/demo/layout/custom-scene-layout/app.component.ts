@@ -9,6 +9,7 @@ import {LayoutData} from "jigsaw/core/data/tree-data";
 export class customSceneLayoutDemoComponent {
     data: LayoutData;
     data2: LayoutData;
+    data3: LayoutData;
 
     constructor() {
         this.data = new LayoutData();
@@ -44,6 +45,7 @@ export class customSceneLayoutDemoComponent {
         ]);
         console.log(this.data);
         this.data2 = new LayoutData();
+        this.data3 = new LayoutData();
     }
 
     sceneData = [
@@ -109,6 +111,10 @@ export class customSceneLayoutDemoComponent {
     }
 
     parseData(data) {
+        console.log(data);
         console.log(data.toString());
+        this.data3 = LayoutData.toData(data.toString());
+        console.log(this.data3);
+        console.log(this.data3.direction);
     }
 }
