@@ -4,6 +4,7 @@ import {
 import {JigsawBoxBase} from "../box/box";
 import {TreeData} from "../../core/data/tree-data";
 import {CommonModule} from "@angular/common";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 @Component({
     selector: 'jigsaw-layout, j-layout',
@@ -19,6 +20,7 @@ import {CommonModule} from "@angular/common";
     }
 })
 export class JigsawLayout extends JigsawBoxBase implements AfterViewInit {
+
     public static parseToString(data: TreeData): string {
         if (!data || !(data instanceof TreeData)) return null;
         return this._parseNodeToString(data, '');
@@ -34,7 +36,7 @@ export class JigsawLayout extends JigsawBoxBase implements AfterViewInit {
     }
 
     private static _parseNodeToString(node: TreeData, domStr: string): string {
-        domStr += `<j-box direction="${node.direction}" grow="${node.grow}"> \n`;
+        domStr += `<j-box${CommonUtils.isDefined(node.direction) ? ` direction="${node.direction}"` : ''}${CommonUtils.isDefined(node.grow) ? ` grow="${node.grow}"` : ''}> \n`;
         domStr = this._parseNodesToString(node.nodes, domStr) + `</j-box> \n`;
         return domStr;
     }
