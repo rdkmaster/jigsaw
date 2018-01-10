@@ -43,7 +43,6 @@ export class customSceneLayoutDemoComponent {
                 grow: '3'
             },
         ]);
-        console.log(this.data);
         this.data2 = new LayoutData();
         this.data3 = new LayoutData();
     }
@@ -115,6 +114,5 @@ export class customSceneLayoutDemoComponent {
         console.log(data.toString());
         this.data3 = LayoutData.toData(data.toString());
         console.log(this.data3);
-        console.log(this.data3.direction);
     }
 }
