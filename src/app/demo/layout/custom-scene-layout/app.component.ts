@@ -108,7 +108,7 @@ export class customSceneLayoutDemoComponent {
         console.log(this.data2);
     }
 
-    parseData(){
-        console.log(JigsawLayout.parseToString(this.data2));
+    parseData(data){
+        console.log(JigsawLayout.parseToString(data));
     }
 }
