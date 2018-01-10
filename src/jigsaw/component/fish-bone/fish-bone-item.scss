@@ -27,12 +27,12 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
         text-align: center;
         font-size: $font-size-base;
         line-height: 1.2;
-        -webkit-font-smoothing: subpixel-antialiased;
     }
     > .#{$fish-bone-prefix-cls}-item-description {
         left: 50%;
         transform: translateX(-50%) translate3d(0, 0, 0);
-        font-size: $font-size-sm;
+        color: $heading-color;
+        -webkit-font-smoothing: subpixel-antialiased;
     }
 
     /* jigsaw-fish-bone-item-rotate-up jigsaw-fish-bone-item-rotate-down 一个鱼骨向上向下旋转,放在各自鱼骨上 */
