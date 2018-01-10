@@ -2,9 +2,8 @@ import {
     AfterViewInit, Component, ElementRef, EventEmitter, Input, NgModule, Output, QueryList, Renderer2, ViewChildren
 } from "@angular/core";
 import {JigsawBoxBase} from "../box/box";
-import {TreeData} from "../../core/data/tree-data";
+import {LayoutData} from "../../core/data/tree-data";
 import {CommonModule} from "@angular/common";
-import {CommonUtils} from "../../core/utils/common-utils";
 
 @Component({
     selector: 'jigsaw-layout, j-layout',
@@ -21,35 +20,15 @@ import {CommonUtils} from "../../core/utils/common-utils";
 })
 export class JigsawLayout extends JigsawBoxBase implements AfterViewInit {
 
-    public static parseToString(data: TreeData): string {
-        if (!data || !(data instanceof TreeData)) return null;
-        return this._parseNodeToString(data, '');
-    }
-
-    private static _parseNodesToString(nodes: TreeData[], domStr: string): string {
-        if (nodes instanceof Array) {
-            nodes.forEach(node => {
-                domStr = this._parseNodeToString(node, domStr);
-            })
-        }
-        return domStr;
-    }
-
-    private static _parseNodeToString(node: TreeData, domStr: string): string {
-        domStr += `<j-box${CommonUtils.isDefined(node.direction) ? ` direction="${node.direction}"` : ''}${CommonUtils.isDefined(node.grow) ? ` grow="${node.grow}"` : ''}> \n`;
-        domStr = this._parseNodesToString(node.nodes, domStr) + `</j-box> \n`;
-        return domStr;
-    }
-
     constructor(elementRef: ElementRef, renderer: Renderer2) {
         super(elementRef, renderer);
     }
 
     @Input()
-    public data: TreeData;
+    public data: LayoutData;
 
     @Output()
-    public dataChange = new EventEmitter<TreeData>();
+    public dataChange = new EventEmitter<LayoutData>();
 
     @ViewChildren(JigsawLayout)
     protected childrenBox: QueryList<JigsawLayout>;
@@ -61,7 +40,7 @@ export class JigsawLayout extends JigsawBoxBase implements AfterViewInit {
     public growChange = new EventEmitter<string>();
 
     @Output()
-    public remove = new EventEmitter<TreeData>();
+    public remove = new EventEmitter<LayoutData>();
 
     /**
      * @internal
@@ -73,15 +52,15 @@ export class JigsawLayout extends JigsawBoxBase implements AfterViewInit {
      */
     public _$addItems(direction: string) {
         if (!this.data) {
-            this.data = new TreeData;
+            this.data = new LayoutData;
             this.dataChange.emit(this.data);
         }
         this.direction = direction;
         this.directionChange.emit(this.direction);
         if (this.data.nodes && this.data.nodes instanceof Array) {
-            this.data.nodes.push(new TreeData, new TreeData);
+            this.data.nodes.push(new LayoutData, new LayoutData);
         } else {
-            this.data.nodes = [new TreeData, new TreeData];
+            this.data.nodes = [new LayoutData, new LayoutData];
         }
     }
 
@@ -95,7 +74,7 @@ export class JigsawLayout extends JigsawBoxBase implements AfterViewInit {
     /**
      * @internal
      */
-    public _$removeItem(item: TreeData) {
+    public _$removeItem(item: LayoutData) {
         if (!this.data || !(this.data.nodes instanceof Array)) return;
         const index = this.data.nodes.findIndex(node => node === item);
         this.data.nodes.splice(index, 1);

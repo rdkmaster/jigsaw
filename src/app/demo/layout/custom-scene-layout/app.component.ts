@@ -1,6 +1,5 @@
 import {Component, ViewEncapsulation} from '@angular/core';
-import {TreeData} from "jigsaw/core/data/tree-data";
-import {JigsawLayout} from "../../../../jigsaw/component/layout/layout";
+import {LayoutData} from "jigsaw/core/data/tree-data";
 
 @Component({
     templateUrl: './app.component.html',
@@ -8,11 +7,11 @@ import {JigsawLayout} from "../../../../jigsaw/component/layout/layout";
     encapsulation: ViewEncapsulation.None
 })
 export class customSceneLayoutDemoComponent {
-    data: TreeData;
-    data2: TreeData;
+    data: LayoutData;
+    data2: LayoutData;
 
     constructor() {
-        this.data = new TreeData();
+        this.data = new LayoutData();
         this.data.fromObject([
             {
                 direction: 'v',
@@ -44,6 +43,7 @@ export class customSceneLayoutDemoComponent {
             },
         ]);
         console.log(this.data);
+        this.data2 = new LayoutData();
     }
 
     sceneData = [
@@ -104,11 +104,11 @@ export class customSceneLayoutDemoComponent {
         console.log(this.data);
     }
 
-    consoleData(){
+    consoleData() {
         console.log(this.data2);
     }
 
-    parseData(data){
-        console.log(JigsawLayout.parseToString(data));
+    parseData(data) {
+        console.log(data.toString());
     }
 }
