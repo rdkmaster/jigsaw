@@ -1,5 +1,9 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 import {LayoutData} from "jigsaw/core/data/tree-data";
+import {JigsawViewLayout} from "../../../../jigsaw/component/layout/layout";
+import {CustomTableComponent} from "app/demo/layout/custom-scene-layout/custom-component";
+import {BasicGraphComponent} from "../../graph/basic/app.component";
+import {TableBasicDemoComponent} from "../../table/basic/app.component";
 
 @Component({
     templateUrl: './app.component.html',
@@ -116,7 +120,22 @@ export class customSceneLayoutDemoComponent {
         console.log(this.data3);
     }
 
-    handleFill($event) {
-        console.log($event);
+    fillFlag: boolean;
+    handleFill(layout: JigsawViewLayout) {
+        console.log(layout);
+        layout.addContent([
+            {
+                component: this.fillFlag ? TableBasicDemoComponent : BasicGraphComponent,
+                selector: 'custom-table',
+                inputs: [
+                    {
+                        property: '',
+                        type: '',
+                        default: ''
+                    }
+                ]
+            }
+        ]);
+        this.fillFlag = !this.fillFlag;
     }
 }

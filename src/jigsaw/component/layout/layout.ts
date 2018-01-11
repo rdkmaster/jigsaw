@@ -1,11 +1,25 @@
 import {
     AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, NgModule, Optional,
-    Output, QueryList, Renderer2, ViewChildren, Inject
+    Output, QueryList, Renderer2, ViewChildren, Inject, ComponentFactoryResolver, TemplateRef, Type, ComponentRef, EmbeddedViewRef,
+    ViewChild
 } from "@angular/core";
 import {JigsawBoxBase} from "../box/box";
 import {LayoutData} from "../../core/data/tree-data";
 import {CommonModule} from "@angular/common";
-import {AbstractJigsawComponent} from "../common";
+import {AbstractJigsawComponent, JigsawCommonModule, JigsawRendererHost} from "../common";
+
+export type LayoutContentInput = {
+    property: string,
+    type: string,
+    default: any
+}
+
+export type LayoutContent = {
+    component: any,
+    selector: string,
+    inputs?: LayoutContentInput[],
+    output?: any
+}
 
 @Component({
     selector: 'jigsaw-view-layout, j-view-layout',
@@ -23,7 +37,10 @@ import {AbstractJigsawComponent} from "../common";
 export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit {
     private _parentViewEditor: JigsawViewEditor;
 
-    constructor(elementRef: ElementRef, renderer: Renderer2, @Optional() @Inject(forwardRef(() => JigsawViewEditor))parentViewEditor: JigsawViewEditor,) {
+    constructor(elementRef: ElementRef,
+                renderer: Renderer2,
+                @Optional() @Inject(forwardRef(() => JigsawViewEditor))parentViewEditor: JigsawViewEditor,
+                private _componentFactoryResolver: ComponentFactoryResolver) {
         super(elementRef, renderer);
         this._parentViewEditor = parentViewEditor;
     }
@@ -45,6 +62,9 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit {
 
     @Output()
     public remove = new EventEmitter<LayoutData>();
+
+    @ViewChild(JigsawRendererHost)
+    private _rendererHost: JigsawRendererHost;
 
     /**
      * @internal
@@ -103,6 +123,32 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit {
         this._parentViewEditor.fill.emit(this);
     }
 
+    public addContent(contents: LayoutContent[]){
+        this._rendererHost.viewContainerRef.clear();
+        contents.forEach(content => {
+            const contentRef = this._rendererFactory(content.component, content.inputs);
+        })
+    }
+
+    private _rendererFactory(renderer: Type<any> | TemplateRef<any>, inputs: LayoutContentInput[]): ComponentRef<any> | EmbeddedViewRef<any> {
+        if (renderer instanceof TemplateRef) {
+            const context = {};
+            inputs.forEach(input => {
+                context[input['property']] = input['default']
+            });
+            return this._rendererHost.viewContainerRef.createEmbeddedView(renderer, {
+                context: context
+            });
+        } else {
+            let componentFactory = this._componentFactoryResolver.resolveComponentFactory(renderer);
+            let componentRef = this._rendererHost.viewContainerRef.createComponent(componentFactory);
+            inputs.forEach(input => {
+                componentRef.instance[input['property']] = input['default']
+            });
+            return componentRef;
+        }
+    }
+
     ngAfterViewInit() {
         setTimeout(() => {
             this.checkFlex();
@@ -133,7 +179,7 @@ export class JigsawViewEditor extends AbstractJigsawComponent {
 }
 
 @NgModule({
-    imports: [CommonModule],
+    imports: [CommonModule, JigsawCommonModule],
     declarations: [JigsawViewLayout, JigsawViewEditor],
     exports: [JigsawViewLayout, JigsawViewEditor]
 })

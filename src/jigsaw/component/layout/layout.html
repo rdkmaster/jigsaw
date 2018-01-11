@@ -19,3 +19,6 @@
     </div>
 </div>
 
+<div *ngIf="!data || !data.nodes || !data.nodes.length" class="jigsaw-view-layout-block"></div>
+
+<ng-template jigsaw-renderer-host></ng-template>
