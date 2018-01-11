@@ -3,9 +3,9 @@ import {AbstractJigsawComponent} from "../common";
 import {CommonUtils} from "../../core/utils/common-utils";
 
 export class JigsawBoxBase extends AbstractJigsawComponent {
-    private _element: HTMLElement;
+    protected _element: HTMLElement;
 
-    constructor(private _elementRef: ElementRef, private _renderer: Renderer2) {
+    constructor(private _elementRef: ElementRef, protected _renderer: Renderer2) {
         super();
         this._element = _elementRef.nativeElement;
     }

@@ -1,12 +1,13 @@
 import {
     AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, NgModule, Optional,
-    Output, QueryList, Renderer2, ViewChildren, Inject, ComponentFactoryResolver, TemplateRef, Type, ComponentRef, EmbeddedViewRef,
-    ViewChild
+    Output, QueryList, Renderer2, ViewChildren, Inject, ComponentFactoryResolver, TemplateRef,
+    Type, ComponentRef, EmbeddedViewRef, ViewChild, OnDestroy
 } from "@angular/core";
 import {JigsawBoxBase} from "../box/box";
 import {LayoutData} from "../../core/data/tree-data";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule, JigsawRendererHost} from "../common";
+import {CallbackRemoval} from "../../core/utils/common-utils";
 
 export type LayoutContentInput = {
     property: string,
@@ -34,8 +35,9 @@ export type LayoutContent = {
         '(mouseleave)': '_$showOptions = false',
     }
 })
-export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit {
+export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, OnDestroy {
     private _parentViewEditor: JigsawViewEditor;
+    private _removeElementScrollEvent: CallbackRemoval;
 
     constructor(elementRef: ElementRef,
                 renderer: Renderer2,
@@ -75,6 +77,10 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit {
      * @internal
      */
     public _$addItems(direction: string) {
+        this._rendererHost.viewContainerRef.clear();
+        if (this._removeElementScrollEvent) {
+            this._removeElementScrollEvent();
+        }
         if (!this.data) {
             this.data = new LayoutData;
             this.dataChange.emit(this.data);
@@ -111,6 +117,10 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit {
             } else {
                 this.data.nodes = [];
                 this.direction = null;
+                setTimeout(() => {
+                    // 等待视图渲染
+                    this._bindScrollEvent();
+                })
             }
             this.directionChange.emit(this.direction);
         }
@@ -123,7 +133,7 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit {
         this._parentViewEditor.fill.emit(this);
     }
 
-    public addContent(contents: LayoutContent[]){
+    public addContent(contents: LayoutContent[]) {
         this._rendererHost.viewContainerRef.clear();
         contents.forEach(content => {
             const contentRef = this._rendererFactory(content.component, content.inputs);
@@ -149,10 +159,33 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit {
         }
     }
 
+    private _bindScrollEvent() {
+        if (!this.childrenBox.length) {
+            const block = this._element.querySelector('.jigsaw-view-layout-block');
+            const optionBtn = this._element.querySelector('.jigsaw-view-layout-btn');
+            if (this._removeElementScrollEvent) {
+                this._removeElementScrollEvent();
+            }
+            this._removeElementScrollEvent = this._renderer.listen(this._element, 'scroll', () => {
+                this._renderer.setStyle(block, 'top', this._element.scrollTop + 'px');
+                this._renderer.setStyle(block, 'left', this._element.scrollLeft + 'px');
+                this._renderer.setStyle(optionBtn, 'top', this._element.offsetHeight / 2 + this._element.scrollTop + 'px');
+                this._renderer.setStyle(optionBtn, 'left', this._element.offsetWidth / 2 + this._element.scrollLeft + 'px');
+            })
+        }
+    }
+
     ngAfterViewInit() {
         setTimeout(() => {
             this.checkFlex();
         });
+        this._bindScrollEvent();
+    }
+
+    ngOnDestroy() {
+        if (this._removeElementScrollEvent) {
+            this._removeElementScrollEvent();
+        }
     }
 }
 
