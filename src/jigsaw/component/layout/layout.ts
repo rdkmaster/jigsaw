@@ -38,6 +38,7 @@ export type LayoutContent = {
 export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, OnDestroy, OnInit {
     private _parentViewEditor: JigsawViewEditor;
     private _removeElementScrollEvent: CallbackRemoval;
+    private _removeDataRefreshListener: CallbackRemoval;
 
     constructor(elementRef: ElementRef,
                 renderer: Renderer2,
@@ -47,8 +48,25 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
         this._parentViewEditor = parentViewEditor;
     }
 
+    private _data: LayoutData;
+
     @Input()
-    public data: LayoutData;
+    public get data() {
+        return this._data;
+    }
+
+    public set data(value: LayoutData) {
+        if (!(value instanceof LayoutData)) return;
+        this._rendererHost.viewContainerRef.clear();
+        this._data = value;
+        if (this._removeDataRefreshListener) {
+            this._removeDataRefreshListener();
+        }
+        this._removeDataRefreshListener = this._data.onRefresh(() => {
+            this._addViewContent(this.data.contents);
+            this._bindScrollEvent();
+        })
+    }
 
     @Output()
     public dataChange = new EventEmitter<LayoutData>();
@@ -134,12 +152,12 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
     }
 
     public addContent(contents: LayoutContent[]) {
-        if (!(contents instanceof Array) || contents.length == 0) return;
         this._addViewContent(contents);
         this._addDataContent(contents);
     }
 
     private _addViewContent(contents: LayoutContent[]) {
+        if (!(contents instanceof Array) || contents.length == 0) return;
         this._rendererHost.viewContainerRef.clear();
         contents.forEach(content => {
             this._rendererFactory(content.component, content.inputs);
@@ -147,6 +165,7 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
     }
 
     private _addDataContent(contents: LayoutContent[]) {
+        if (!(contents instanceof Array) || contents.length == 0) return;
         this.data.contents = contents;
         this.data.contentStr = '';
         contents.forEach(content => {
@@ -169,7 +188,7 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
             return this._rendererHost.viewContainerRef.createEmbeddedView(renderer, {
                 context: context
             });
-        } else {
+        } else if (renderer) {
             let componentFactory = this._componentFactoryResolver.resolveComponentFactory(renderer);
             let componentRef = this._rendererHost.viewContainerRef.createComponent(componentFactory);
             inputs.forEach(input => {
@@ -177,6 +196,7 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
             });
             return componentRef;
         }
+        return null;
     }
 
     private _bindScrollEvent() {
@@ -196,21 +216,21 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
     }
 
     ngOnInit() {
-        if (this.data.contents instanceof Array && this.data.contents.length > 0) {
-            this._addViewContent(this.data.contents);
-        }
+        this._addViewContent(this.data.contents);
     }
 
     ngAfterViewInit() {
-        setTimeout(() => {
-            this.checkFlex();
-        });
+        this.checkFlex();
         this._bindScrollEvent();
     }
 
     ngOnDestroy() {
+        this._rendererHost.viewContainerRef.clear();
         if (this._removeElementScrollEvent) {
             this._removeElementScrollEvent();
+        }
+        if (this._removeDataRefreshListener) {
+            this._removeDataRefreshListener();
         }
     }
 }

@@ -50,6 +50,9 @@ export class customSceneLayoutDemoComponent {
         ]);
         this.data2 = new LayoutData();
         this.data3 = new LayoutData();
+
+        LayoutData.componentMap.set('custom-table', TableBasicDemoComponent);
+        LayoutData.componentMap.set('custom-graph', BasicGraphComponent);
     }
 
     sceneData = [
@@ -128,7 +131,6 @@ export class customSceneLayoutDemoComponent {
         console.log(layout);
         this.layout = layout;
         this.popupTemplateDialog(this.dialog);
-
     }
 
     selectedComponent;

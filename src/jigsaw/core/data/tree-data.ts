@@ -58,6 +58,8 @@ export class LayoutData extends GeneralCollection<any> {
     contents?: LayoutContent[];
     contentStr?: string;
 
+    public static componentMap = new Map();
+
     public static toData(domStr: string): LayoutData {
         let layout = document.createElement('div');
         layout.innerHTML = domStr;
@@ -84,24 +86,27 @@ export class LayoutData extends GeneralCollection<any> {
                     node.nodes.push(this._parseElementToJson(element.children[i]));
                 }
             } else {
-                node.contentStr = element.innerHTML;
-                for (let i = 0; i < element.children.length; i++) {
-                    const inputs = [];
-                    console.log(element.children[i].attributes);
-                    for (let j = 0; j < element.children[i].attributes.length; j++) {
-                        inputs.push({
-                            property: element.children[i].attributes[j].name,
-                            value: element.children[i].attributes[j].value
-                        })
-                    }
-                    node.contents.push({
-                        component: null,
-                        selector: element.children[i].tagName.toLocaleLowerCase(),
-                        inputs: inputs
-                    })
-                }
+                node = LayoutData._parseElementToContentData(node, element);
             }
+        }
+        return node;
+    }
 
+    private static _parseElementToContentData(node: any, element: Element): any {
+        node.contentStr = element.innerHTML;
+        for (let i = 0; i < element.children.length; i++) {
+            const inputs = [];
+            for (let j = 0; j < element.children[i].attributes.length; j++) {
+                inputs.push({
+                    property: element.children[i].attributes[j].name,
+                    value: element.children[i].attributes[j].value
+                })
+            }
+            node.contents.push({
+                component: LayoutData.componentMap.get(element.children[i].tagName.toLocaleLowerCase()),
+                selector: element.children[i].tagName.toLocaleLowerCase(),
+                inputs: inputs
+            })
         }
         return node;
     }
