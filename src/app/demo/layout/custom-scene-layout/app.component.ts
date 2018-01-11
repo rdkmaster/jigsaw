@@ -133,8 +133,40 @@ export class customSceneLayoutDemoComponent {
 
     selectedComponent;
     components = new ArrayCollection([
-        {label: "表格", component: TableBasicDemoComponent},
-        {label: "图形", component: BasicGraphComponent},
+        {
+            label: "表格",
+            component: TableBasicDemoComponent,
+            selector: 'custom-table',
+            inputs: [
+                {
+                    property: '[data]',
+                    value: 'tableData',
+                },
+                {
+                    property: '[additionalColumnDefine]',
+                    value: 'additionalColumnDefine',
+                },
+                {
+                    property: '[(additionalData)]',
+                    value: 'additionalData',
+                }
+            ]
+        },
+        {
+            label: "图形",
+            component: BasicGraphComponent,
+            selector: 'custom-graph',
+            inputs: [
+                {
+                    property: '[data]',
+                    value: 'graphData',
+                },
+                {
+                    property: 'width',
+                    value: '200'
+                }
+            ]
+        },
     ]);
 
     dialogInfo: PopupInfo;
@@ -156,14 +188,8 @@ export class customSceneLayoutDemoComponent {
         this.layout.addContent([
             {
                 component: this.selectedComponent.component,
-                selector: 'custom-table',
-                inputs: [
-                    {
-                        property: '',
-                        type: '',
-                        default: ''
-                    }
-                ]
+                selector: this.selectedComponent.selector,
+                inputs: this.selectedComponent.inputs
             }
         ]);
     }

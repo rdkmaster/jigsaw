@@ -1,5 +1,6 @@
 import {GeneralCollection} from "./general-collection";
 import {CommonUtils} from "../utils/common-utils";
+import {LayoutContent} from "../../component/layout/layout";
 
 export class TreeData extends GeneralCollection<any> {
     [index: string]: any;
@@ -54,6 +55,8 @@ export class LayoutData extends GeneralCollection<any> {
     grow?: number;
     shrink?: number;
     nodes?: LayoutData[];
+    contents?: LayoutContent[];
+    contentStr?: string;
 
     public static toData(domStr: string): LayoutData {
         let layout = document.createElement('div');
@@ -69,14 +72,36 @@ export class LayoutData extends GeneralCollection<any> {
         let node = {
             direction: null,
             grow: null,
-            nodes: []
+            nodes: [],
+            contents: [],
+            contentStr: ''
         };
         node.direction = element.getAttribute('direction');
         node.grow = element.getAttribute('grow');
-        if (element.children) {
-            for (let i = 0; i < element.children.length; i++) {
-                node.nodes.push(this._parseElementToJson(element.children[i]));
+        if (element.children && element.children.length != 0) {
+            if (element.children[0].tagName.toLocaleLowerCase() == 'j-box') {
+                for (let i = 0; i < element.children.length; i++) {
+                    node.nodes.push(this._parseElementToJson(element.children[i]));
+                }
+            } else {
+                node.contentStr = element.innerHTML;
+                for (let i = 0; i < element.children.length; i++) {
+                    const inputs = [];
+                    console.log(element.children[i].attributes);
+                    for (let j = 0; j < element.children[i].attributes.length; j++) {
+                        inputs.push({
+                            property: element.children[i].attributes[j].name,
+                            value: element.children[i].attributes[j].value
+                        })
+                    }
+                    node.contents.push({
+                        component: null,
+                        selector: element.children[i].tagName.toLocaleLowerCase(),
+                        inputs: inputs
+                    })
+                }
             }
+
         }
         return node;
     }
@@ -96,7 +121,11 @@ export class LayoutData extends GeneralCollection<any> {
 
     private _parseNodeToString(node: LayoutData, domStr: string): string {
         domStr += `<j-box${CommonUtils.isDefined(node.direction) ? ` direction="${node.direction}"` : ''}${CommonUtils.isDefined(node.grow) ? ` grow="${node.grow}"` : ''}> \n`;
-        domStr = this._parseNodesToString(node.nodes, domStr) + `</j-box> \n`;
+        if (node.nodes instanceof Array && node.nodes.length > 0) {
+            domStr = this._parseNodesToString(node.nodes, domStr) + `</j-box> \n`;
+        } else {
+            domStr += (node.contentStr ? node.contentStr : '') + '</j-box> \n';
+        }
         return domStr;
     }
 

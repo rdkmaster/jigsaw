@@ -1,18 +1,18 @@
 import {
     AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, NgModule, Optional,
     Output, QueryList, Renderer2, ViewChildren, Inject, ComponentFactoryResolver, TemplateRef,
-    Type, ComponentRef, EmbeddedViewRef, ViewChild, OnDestroy
+    Type, ComponentRef, EmbeddedViewRef, ViewChild, OnDestroy, OnInit
 } from "@angular/core";
 import {JigsawBoxBase} from "../box/box";
 import {LayoutData} from "../../core/data/tree-data";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule, JigsawRendererHost} from "../common";
-import {CallbackRemoval} from "../../core/utils/common-utils";
+import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 
 export type LayoutContentInput = {
     property: string,
     type: string,
-    default: any
+    value: any
 }
 
 export type LayoutContent = {
@@ -35,7 +35,7 @@ export type LayoutContent = {
         '(mouseleave)': '_$showOptions = false',
     }
 })
-export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, OnDestroy {
+export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, OnDestroy, OnInit {
     private _parentViewEditor: JigsawViewEditor;
     private _removeElementScrollEvent: CallbackRemoval;
 
@@ -134,17 +134,37 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
     }
 
     public addContent(contents: LayoutContent[]) {
+        if (!(contents instanceof Array) || contents.length == 0) return;
+        this._addViewContent(contents);
+        this._addDataContent(contents);
+    }
+
+    private _addViewContent(contents: LayoutContent[]) {
         this._rendererHost.viewContainerRef.clear();
         contents.forEach(content => {
-            const contentRef = this._rendererFactory(content.component, content.inputs);
-        })
+            this._rendererFactory(content.component, content.inputs);
+        });
+    }
+
+    private _addDataContent(contents: LayoutContent[]) {
+        this.data.contents = contents;
+        this.data.contentStr = '';
+        contents.forEach(content => {
+            this.data.contentStr += `<${content.selector} `;
+            content.inputs.forEach(input => {
+                if (CommonUtils.isDefined(input.value) && input.value != '') {
+                    this.data.contentStr += `${input.property}='${input.value}' `;
+                }
+            });
+            this.data.contentStr += '>' + `</${content.selector}> \n`;
+        });
     }
 
     private _rendererFactory(renderer: Type<any> | TemplateRef<any>, inputs: LayoutContentInput[]): ComponentRef<any> | EmbeddedViewRef<any> {
         if (renderer instanceof TemplateRef) {
             const context = {};
             inputs.forEach(input => {
-                context[input['property']] = input['default']
+                context[input.property] = input.value
             });
             return this._rendererHost.viewContainerRef.createEmbeddedView(renderer, {
                 context: context
@@ -153,7 +173,7 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
             let componentFactory = this._componentFactoryResolver.resolveComponentFactory(renderer);
             let componentRef = this._rendererHost.viewContainerRef.createComponent(componentFactory);
             inputs.forEach(input => {
-                componentRef.instance[input['property']] = input['default']
+                componentRef.instance[input.property] = input.value
             });
             return componentRef;
         }
@@ -172,6 +192,12 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
                 this._renderer.setStyle(optionBtn, 'top', this._element.offsetHeight / 2 + this._element.scrollTop + 'px');
                 this._renderer.setStyle(optionBtn, 'left', this._element.offsetWidth / 2 + this._element.scrollLeft + 'px');
             })
+        }
+    }
+
+    ngOnInit() {
+        if (this.data.contents instanceof Array && this.data.contents.length > 0) {
+            this._addViewContent(this.data.contents);
         }
     }
 
