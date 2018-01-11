@@ -1,4 +1,4 @@
-<j-layout
+<j-view-layout
     *ngFor="let itemData of data?.nodes"
     [data]="itemData"
     [(direction)]="itemData.direction"
@@ -8,11 +8,11 @@
     [grow]="itemData.grow"
     [shrink]="itemData.shrink"
     (remove)="_$removeItem($event)">
-</j-layout>
+</j-view-layout>
 
-<div *ngIf="!data || !data.nodes || !data.nodes.length" class="jigsaw-layout-btn">
-    <i class="fa fa-plus-square-o"></i>
-    <div *ngIf="_$showOptions" class="jigsaw-layout-options">
+<div *ngIf="!data || !data.nodes || !data.nodes.length" class="jigsaw-view-layout-btn">
+    <i class="fa fa-plus-square-o" (click)="_$addContent()"></i>
+    <div *ngIf="_$showOptions" class="jigsaw-view-layout-options">
         <span class="fa fa-minus-square-o" (click)="_$addItems('v')"></span>
         <span class="fa fa-columns" (click)="_$addItems('h')"></span>
         <span class="fa fa-trash-o" (click)="_$remove()"></span>

@@ -1,6 +1,7 @@
 @import "../../assets/scss/core/base";
 
-$layout-prefix-cls: #{$jigsaw-prefix}-layout;
+$layout-prefix-cls: #{$jigsaw-prefix}-view-layout;
+$editor-prefix-cls: #{$jigsaw-prefix}-view-editor;
 
 .#{$layout-prefix-cls} {
     position: relative;
@@ -9,7 +10,7 @@ $layout-prefix-cls: #{$jigsaw-prefix}-layout;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        i{
+        i {
             font-size: 30px;
             cursor: pointer;
         }
@@ -29,4 +30,6 @@ $layout-prefix-cls: #{$jigsaw-prefix}-layout;
     }
 }
 
-
+.#{$editor-prefix-cls} {
+    display: block;
+}

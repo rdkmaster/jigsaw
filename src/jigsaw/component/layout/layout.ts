@@ -1,15 +1,17 @@
 import {
-    AfterViewInit, Component, ElementRef, EventEmitter, Input, NgModule, Output, QueryList, Renderer2, ViewChildren
+    AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, NgModule, Optional,
+    Output, QueryList, Renderer2, ViewChildren, Inject
 } from "@angular/core";
 import {JigsawBoxBase} from "../box/box";
 import {LayoutData} from "../../core/data/tree-data";
 import {CommonModule} from "@angular/common";
+import {AbstractJigsawComponent} from "../common";
 
 @Component({
-    selector: 'jigsaw-layout, j-layout',
+    selector: 'jigsaw-view-layout, j-view-layout',
     templateUrl: './layout.html',
     host: {
-        '[class.jigsaw-layout]': 'true',
+        '[class.jigsaw-view-layout]': 'true',
         '[class.jigsaw-box]': 'true',
         '[class.jigsaw-flex]': 'type == "flex"',
         '[style.width]': 'width',
@@ -18,10 +20,12 @@ import {CommonModule} from "@angular/common";
         '(mouseleave)': '_$showOptions = false',
     }
 })
-export class JigsawLayout extends JigsawBoxBase implements AfterViewInit {
+export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit {
+    private _parentViewEditor: JigsawViewEditor;
 
-    constructor(elementRef: ElementRef, renderer: Renderer2) {
+    constructor(elementRef: ElementRef, renderer: Renderer2, @Optional() @Inject(forwardRef(() => JigsawViewEditor))parentViewEditor: JigsawViewEditor,) {
         super(elementRef, renderer);
+        this._parentViewEditor = parentViewEditor;
     }
 
     @Input()
@@ -30,8 +34,8 @@ export class JigsawLayout extends JigsawBoxBase implements AfterViewInit {
     @Output()
     public dataChange = new EventEmitter<LayoutData>();
 
-    @ViewChildren(JigsawLayout)
-    protected childrenBox: QueryList<JigsawLayout>;
+    @ViewChildren(JigsawViewLayout)
+    protected childrenBox: QueryList<JigsawViewLayout>;
 
     @Output()
     public directionChange = new EventEmitter<string>();
@@ -92,6 +96,13 @@ export class JigsawLayout extends JigsawBoxBase implements AfterViewInit {
         }
     }
 
+    /**
+     * @internal
+     */
+    public _$addContent() {
+        this._parentViewEditor.fill.emit(this);
+    }
+
     ngAfterViewInit() {
         setTimeout(() => {
             this.checkFlex();
@@ -99,10 +110,32 @@ export class JigsawLayout extends JigsawBoxBase implements AfterViewInit {
     }
 }
 
+@Component({
+    selector: 'jigsaw-view-editor, j-view-editor',
+    template: `
+        <j-view-layout [data]="data" [(direction)]="data.direction" [grow]="data.grow" height="100%"></j-view-layout>
+    `,
+    host: {
+        '[class.jigsaw-view-editor]': 'true',
+        '[style.width]': 'width',
+        '[style.height]': 'height',
+    }
+})
+export class JigsawViewEditor extends AbstractJigsawComponent {
+    @Input()
+    public data: LayoutData;
+
+    @Output()
+    public dataChange = new EventEmitter<LayoutData>();
+
+    @Output()
+    public fill = new EventEmitter<JigsawViewLayout>();
+}
+
 @NgModule({
     imports: [CommonModule],
-    declarations: [JigsawLayout],
-    exports: [JigsawLayout]
+    declarations: [JigsawViewLayout, JigsawViewEditor],
+    exports: [JigsawViewLayout, JigsawViewEditor]
 })
 export class JigsawLayoutModule {
 
