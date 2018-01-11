@@ -1,3 +1,6 @@
 j-view-layout, j-box{
     border: 1px solid #ddd;
 }
+.dialog-body{
+    padding: 20px 8px;
+}

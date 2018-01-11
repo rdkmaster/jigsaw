@@ -14,3 +14,19 @@
 <br>
 <j-view-editor [data]="data3" height="400" (fill)="handleFill($event)"></j-view-editor>
 
+<ng-template #dialog>
+    <jigsaw-dialog width="40%" (close)="onAnswer()">
+        <div jigsaw-title>
+            <span class="fa fa-thumbs-up"></span>Please choose scene
+        </div>
+        <div jigsaw-body class="dialog-body">
+            <jigsaw-radios [(value)]="selectedComponent"
+                           (valueChange)="radioChange($event)"
+                           trackItemBy="label">
+                <jigsaw-radio-option *ngFor="let item of components" [value]="item">
+                    {{item.label}}
+                </jigsaw-radio-option>
+            </jigsaw-radios>
+        </div>
+    </jigsaw-dialog>
+</ng-template>

@@ -1,9 +1,10 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import {Component, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
 import {LayoutData} from "jigsaw/core/data/tree-data";
 import {JigsawViewLayout} from "../../../../jigsaw/component/layout/layout";
-import {CustomTableComponent} from "app/demo/layout/custom-scene-layout/custom-component";
 import {BasicGraphComponent} from "../../graph/basic/app.component";
 import {TableBasicDemoComponent} from "../../table/basic/app.component";
+import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "../../../../jigsaw/service/popup.service";
+import {ArrayCollection} from "../../../../jigsaw/core/data/array-collection";
 
 @Component({
     templateUrl: './app.component.html',
@@ -15,7 +16,7 @@ export class customSceneLayoutDemoComponent {
     data2: LayoutData;
     data3: LayoutData;
 
-    constructor() {
+    constructor(private _popupService: PopupService) {
         this.data = new LayoutData();
         this.data.fromObject([
             {
@@ -120,12 +121,41 @@ export class customSceneLayoutDemoComponent {
         console.log(this.data3);
     }
 
-    fillFlag: boolean;
+    @ViewChild('dialog') dialog: TemplateRef<any>;
+    layout: JigsawViewLayout;
+
     handleFill(layout: JigsawViewLayout) {
         console.log(layout);
-        layout.addContent([
+        this.layout = layout;
+        this.popupTemplateDialog(this.dialog);
+
+    }
+
+    selectedComponent;
+    components = new ArrayCollection([
+        {label: "表格", component: TableBasicDemoComponent},
+        {label: "图形", component: BasicGraphComponent},
+    ]);
+
+    dialogInfo: PopupInfo;
+
+    popupTemplateDialog(tp) {
+        this.dialogInfo = this._popupService.popup(tp, this.getModalOptions());
+    }
+
+    onAnswer(message: string) {
+        if (this.dialogInfo) {
+            this.dialogInfo.dispose();
+        }
+    }
+
+    radioChange($event) {
+        if (this.dialogInfo) {
+            this.dialogInfo.dispose();
+        }
+        this.layout.addContent([
             {
-                component: this.fillFlag ? TableBasicDemoComponent : BasicGraphComponent,
+                component: this.selectedComponent.component,
                 selector: 'custom-table',
                 inputs: [
                     {
@@ -136,6 +166,13 @@ export class customSceneLayoutDemoComponent {
                 ]
             }
         ]);
-        this.fillFlag = !this.fillFlag;
+    }
+
+    getModalOptions(): PopupOptions {
+        return {
+            modal: true, //是否模态
+            showEffect: PopupEffect.bubbleIn,
+            hideEffect: PopupEffect.bubbleOut
+        };
     }
 }

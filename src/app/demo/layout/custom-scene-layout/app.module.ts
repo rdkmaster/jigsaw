@@ -3,24 +3,27 @@ import {JigsawLayoutModule} from "jigsaw/component/layout/layout";
 import {customSceneLayoutDemoComponent} from "./app.component";
 import {JigsawSelectModule} from "jigsaw/component/select/select";
 import {JigsawBoxModule} from "../../../../jigsaw/component/box/box";
-import {CustomTableComponent} from "./custom-component";
-import {JigsawTableModule} from "../../../../jigsaw/component/table/table";
 import {BasicGraphComponent} from "../../graph/basic/app.component";
-import {JigsawGraphModule} from "../../../../jigsaw/component/graph/index";
-import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {TableBasicDemoComponent} from "../../table/basic/app.component";
+import {JigsawDialogModule} from "../../../../jigsaw/component/dialog/dialog";
+import {JigsawRadioModule} from "../../../../jigsaw/component/radio/radio";
+import {CommonModule} from "@angular/common";
+import {TableBasicDemoModule} from "../../table/basic/app.module";
+import {BasicGraphModule} from "../../graph/basic/app.module";
 
 @NgModule({
     declarations: [
-        customSceneLayoutDemoComponent, TableBasicDemoComponent, BasicGraphComponent
+        customSceneLayoutDemoComponent
     ],
     imports: [
         JigsawLayoutModule,
         JigsawSelectModule,
         JigsawBoxModule,
-        JigsawTableModule,
-        JigsawGraphModule,
-        JigsawDemoDescriptionModule
+        TableBasicDemoModule,
+        BasicGraphModule,
+        JigsawDialogModule,
+        JigsawRadioModule,
+        CommonModule
     ],
     exports: [customSceneLayoutDemoComponent],
     entryComponents: [TableBasicDemoComponent, BasicGraphComponent]
