@@ -67,7 +67,7 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
             this._removeDataRefreshListener();
         }
         this._removeDataRefreshListener = this._data.onRefresh(() => {
-            this._addViewContent(this.data.componentMetaDataList);
+            this._renderComponents(this.data.componentMetaDataList);
             this._bindScrollEvent();
         })
     }
@@ -107,11 +107,14 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
         }
         this.direction = direction;
         this.directionChange.emit(this.direction);
-        if (this.data.nodes && this.data.nodes instanceof Array) {
-            this.data.nodes.push(new LayoutData, new LayoutData);
-        } else {
-            this.data.nodes = [new LayoutData, new LayoutData];
-        }
+        // 目前先平分创建两个node
+        this.data.nodes = [new LayoutData, new LayoutData];
+        // 内容信息搬到第一个子节点
+        this.data.nodes[0].componentMetaDataList = this.data.componentMetaDataList;
+        this.data.nodes[0].contentStr = this.data.contentStr;
+        // 重置当前内容信息
+        this.data.componentMetaDataList = [];
+        this.data.contentStr = ''
     }
 
     /**
@@ -132,13 +135,18 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
             // 处理多余的box
             const node = this.data.nodes[0];
             if (node.nodes instanceof Array && node.nodes.length > 0) {
+                // 拿取nodes
                 this.data.nodes = node.nodes;
                 this.direction = node.direction ? node.direction : 'h'; // 默认是'h'
             } else {
+                // 拿取内容
+                this.data.componentMetaDataList = node.componentMetaDataList;
+                this.data.contentStr = node.contentStr;
                 this.data.nodes = [];
                 this.direction = null;
+                this._renderComponents(this.data.componentMetaDataList);
                 setTimeout(() => {
-                    // 等待视图渲染
+                    // 等待 option bar & block 渲染
                     this._bindScrollEvent();
                 })
             }
@@ -154,11 +162,17 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
     }
 
     public addContent(componentMetaDataList: ComponentMetaData[]) {
-        this._addViewContent(componentMetaDataList);
-        this._addDataContent(componentMetaDataList);
+        this._renderComponents(componentMetaDataList);
+        this._setContentInfo(componentMetaDataList);
+        this._bindScrollEvent();
     }
 
-    private _addViewContent(componentMetaDataList: ComponentMetaData[]) {
+    /**
+     * 根据componentMetaDataList信息在box里面渲染需要的组件
+     * @param {ComponentMetaData[]} componentMetaDataList
+     * @private
+     */
+    private _renderComponents(componentMetaDataList: ComponentMetaData[]) {
         if (!(componentMetaDataList instanceof Array) || componentMetaDataList.length == 0) return;
         this._rendererHost.viewContainerRef.clear();
         this.data.components = []; // 初始化
@@ -167,7 +181,7 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
         });
     }
 
-    private _addDataContent(componentMetaDataList: ComponentMetaData[]) {
+    private _setContentInfo(componentMetaDataList: ComponentMetaData[]) {
         if (!(componentMetaDataList instanceof Array) || componentMetaDataList.length == 0) return;
         this.data.componentMetaDataList = componentMetaDataList;
         this.data.contentStr = '';
@@ -202,32 +216,38 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
         return null;
     }
 
+    /**
+     * 绑定box的滚动监听，处理option bar & block的位置问题
+     * @private
+     */
     private _bindScrollEvent() {
-        if (!this.childrenBox.length) {
-            const block = this._element.querySelector('.jigsaw-view-layout-block');
-            const optionBox = this._element.querySelector('.jigsaw-view-layout-option-box');
-            if (this._removeElementScrollEvent) {
-                this._removeElementScrollEvent();
-            }
-            if (block && optionBox) {
-                this._removeElementScrollEvent = this._renderer.listen(this._element, 'scroll', () => {
-                    this._renderer.setStyle(block, 'top', this._element.scrollTop + 'px');
-                    this._renderer.setStyle(block, 'left', this._element.scrollLeft + 'px');
-                    this._renderer.setStyle(optionBox, 'top', this._element.offsetHeight / 2 + this._element.scrollTop + 'px');
-                    this._renderer.setStyle(optionBox, 'left', this._element.offsetWidth / 2 + this._element.scrollLeft + 'px');
-                })
-            }
+        // 有node不绑定scroll
+        if (this.data && this.data.nodes instanceof Array && this.data.nodes.length > 0) return;
+
+        const block = this._element.querySelector('.jigsaw-view-layout-block');
+        const optionBox = this._element.querySelector('.jigsaw-view-layout-option-box');
+        if (this._removeElementScrollEvent) {
+            this._removeElementScrollEvent();
+        }
+        if (block && optionBox) {
+            this._removeElementScrollEvent = this._renderer.listen(this._element, 'scroll', () => {
+                this._renderer.setStyle(block, 'top', this._element.scrollTop + 'px');
+                this._renderer.setStyle(block, 'left', this._element.scrollLeft + 'px');
+                this._renderer.setStyle(optionBox, 'top', this._element.offsetHeight / 2 + this._element.scrollTop + 'px');
+                this._renderer.setStyle(optionBox, 'left', this._element.offsetWidth / 2 + this._element.scrollLeft + 'px');
+            })
         }
     }
 
     ngOnInit() {
         super.ngOnInit();
-        this._addViewContent(this.data.componentMetaDataList);
+        this._renderComponents(this.data.componentMetaDataList);
         this.data.layout = this;
     }
 
     ngAfterViewInit() {
         this.checkFlex();
+        // 等待 option bar & block 渲染
         this._bindScrollEvent();
     }
 
