@@ -1,12 +1,13 @@
 import {
-    AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, NgModule, Optional,
-    Output, QueryList, Renderer2, ViewChildren, Inject, ComponentFactoryResolver, TemplateRef,
-    Type, ComponentRef, EmbeddedViewRef, ViewChild, OnDestroy, OnInit
+    AfterViewInit, Component, ComponentFactoryResolver,
+    ComponentRef, ElementRef, EmbeddedViewRef, EventEmitter,
+    forwardRef, Inject, Input, NgModule, OnDestroy, OnInit, Optional,
+    Output, QueryList, Renderer2, TemplateRef, Type, ViewChild, ViewChildren
 } from "@angular/core";
-import {JigsawBoxBase} from "../box/box";
 import {LayoutData} from "../../core/data/tree-data";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule, JigsawRendererHost} from "../common";
+import {JigsawBoxBase} from "../box/box";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 
 export type ComponentInput = {
@@ -27,7 +28,7 @@ export type ComponentMetaData = {
 
 @Component({
     selector: 'jigsaw-view-layout, j-view-layout',
-    templateUrl: './layout.html',
+    templateUrl: './view-layout.html',
     host: {
         '[class.jigsaw-view-layout]': 'true',
         '[class.jigsaw-box]': 'true',

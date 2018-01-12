@@ -34,6 +34,7 @@ import {JigsawCommonModule} from "./component/common";
 import {JigsawListModule} from "./component/list-and-tile/list";
 import {JigsawTrustedHtmlModule} from "./directive/trusted-html/trusted-html";
 import {JigsawBoxModule} from "./component/box/box";
+import {JigsawViewEditorModule} from "./component/view-editor/view-editor";
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
@@ -70,6 +71,7 @@ const JIGSAW_MODULE = [
     JigsawTooltipModule,
     JigsawTreeExtModule,
     JigsawTrustedHtmlModule,
+    JigsawViewEditorModule,
     JigsawViewportModule,
 ];
 

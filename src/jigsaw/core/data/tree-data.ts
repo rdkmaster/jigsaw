@@ -1,6 +1,6 @@
 import {GeneralCollection} from "./general-collection";
 import {CommonUtils} from "../utils/common-utils";
-import {ComponentMetaData} from "../../component/layout/layout";
+import {ComponentMetaData} from "../../component/view-editor/view-editor";
 
 export class TreeData extends GeneralCollection<any> {
     [index: string]: any;
@@ -58,6 +58,20 @@ export class LayoutData extends GeneralCollection<any> {
     contents?: ComponentMetaData[];
     contentStr?: string;
 
+    /**
+     * 把LayoutData转化为dom字符串
+     * @returns {string}
+     */
+    public toString(): string {
+        return this._parseNodeToString(this, '');
+    }
+
+    /**
+     * 解析dom字符串，生成 LayoutData
+     * @param {string} domStr
+     * @param {ComponentMetaData[]} metaDataList
+     * @returns {LayoutData}
+     */
     public static of(domStr: string, metaDataList: ComponentMetaData[]): LayoutData {
         let layout = document.createElement('div');
         layout.innerHTML = domStr;
@@ -108,10 +122,6 @@ export class LayoutData extends GeneralCollection<any> {
             })
         }
         return node;
-    }
-
-    public toString(): string {
-        return this._parseNodeToString(this, '');
     }
 
     private _parseNodesToString(nodes: LayoutData[], domStr: string): string {
