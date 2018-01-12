@@ -35,8 +35,8 @@ export type ComponentMetaData = {
         '[class.jigsaw-flex]': 'type == "flex"',
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '(mouseenter)': '_$showOptions = true',
-        '(mouseleave)': '_$showOptions = false',
+        /*'(mouseenter)': '_$showOptions = true',
+        '(mouseleave)': '_$showOptions = false',*/
     }
 })
 export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, OnDestroy, OnInit {
@@ -209,16 +209,16 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
     private _bindScrollEvent() {
         if (!this.childrenBox.length) {
             const block = this._element.querySelector('.jigsaw-view-layout-block');
-            const optionBtn = this._element.querySelector('.jigsaw-view-layout-btn');
+            const optionBox = this._element.querySelector('.jigsaw-view-layout-option-box');
             if (this._removeElementScrollEvent) {
                 this._removeElementScrollEvent();
             }
-            if (block && optionBtn) {
+            if (block && optionBox) {
                 this._removeElementScrollEvent = this._renderer.listen(this._element, 'scroll', () => {
                     this._renderer.setStyle(block, 'top', this._element.scrollTop + 'px');
                     this._renderer.setStyle(block, 'left', this._element.scrollLeft + 'px');
-                    this._renderer.setStyle(optionBtn, 'top', this._element.offsetHeight / 2 + this._element.scrollTop + 'px');
-                    this._renderer.setStyle(optionBtn, 'left', this._element.offsetWidth / 2 + this._element.scrollLeft + 'px');
+                    this._renderer.setStyle(optionBox, 'top', this._element.offsetHeight / 2 + this._element.scrollTop + 'px');
+                    this._renderer.setStyle(optionBox, 'left', this._element.offsetWidth / 2 + this._element.scrollLeft + 'px');
                 })
             }
         }

@@ -17,7 +17,7 @@ $editor-prefix-cls: #{$jigsaw-prefix}-view-editor;
         opacity: 0.4;
         z-index: 100;
     }
-    &-btn {
+    &-option-box {
         position: absolute;
         left: 50%;
         top: 50%;
@@ -29,7 +29,8 @@ $editor-prefix-cls: #{$jigsaw-prefix}-view-editor;
             cursor: pointer;
         }
     }
-    &-options {
+    &-option-bar {
+        display: none;
         position: absolute;
         font-size: 0;
         width: 50px;
@@ -40,6 +41,9 @@ $editor-prefix-cls: #{$jigsaw-prefix}-view-editor;
             font-size: 14px;
             margin-right: 4px;
             cursor: pointer;
+        }
+        .#{$layout-prefix-cls}:hover > .#{$layout-prefix-cls}-option-box > & {
+            display: block;
         }
     }
 }
