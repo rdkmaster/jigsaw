@@ -58,9 +58,7 @@ export class LayoutData extends GeneralCollection<any> {
     contents?: ComponentMetaData[];
     contentStr?: string;
 
-    public static componentMap = new Map();
-
-    public static toData(domStr: string, metaDataList: ComponentMetaData[]): LayoutData {
+    public static of(domStr: string, metaDataList: ComponentMetaData[]): LayoutData {
         let layout = document.createElement('div');
         layout.innerHTML = domStr;
         let json;

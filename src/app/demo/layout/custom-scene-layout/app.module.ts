@@ -18,15 +18,15 @@ import {BasicGraphModule} from "../../graph/basic/app.module";
     imports: [
         JigsawViewEditorModule,
         JigsawSelectModule,
-        JigsawBoxModule,
-        TableBasicDemoModule,
-        BasicGraphModule,
         JigsawDialogModule,
         JigsawRadioModule,
-        CommonModule
+        CommonModule,
+        // 可选的内容模块
+        TableBasicDemoModule,
+        BasicGraphModule,
     ],
     exports: [customSceneLayoutDemoComponent],
-    entryComponents: [TableBasicDemoComponent, BasicGraphComponent]
+    entryComponents: [TableBasicDemoComponent, BasicGraphComponent] // 可选的内容组件
 })
 export class customSceneLayoutDemoModule {
 

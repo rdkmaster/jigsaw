@@ -20,7 +20,8 @@ export type ComponentMetaData = {
     component: any,
     selector: string,
     inputs?: ComponentInput[],
-    output?: any
+    output?: any,
+    import?: string
 }
 
 @Component({

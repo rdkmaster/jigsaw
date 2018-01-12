@@ -4,7 +4,6 @@ import {ComponentMetaData, JigsawViewLayout} from "../../../../jigsaw/component/
 import {BasicGraphComponent} from "../../graph/basic/app.component";
 import {TableBasicDemoComponent} from "../../table/basic/app.component";
 import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "../../../../jigsaw/service/popup.service";
-import {ArrayCollection} from "../../../../jigsaw/core/data/array-collection";
 
 @Component({
     templateUrl: './app.component.html',
@@ -50,9 +49,6 @@ export class customSceneLayoutDemoComponent {
         ]);
         this.data2 = new LayoutData();
         this.data3 = new LayoutData();
-
-        LayoutData.componentMap.set('custom-table', TableBasicDemoComponent);
-        LayoutData.componentMap.set('custom-graph', BasicGraphComponent);
     }
 
     sceneData = [
@@ -120,8 +116,7 @@ export class customSceneLayoutDemoComponent {
     parseData(data) {
         console.log(data);
         console.log(data.toString());
-        // add metadata  改of
-        this.data3 = LayoutData.toData(data.toString(), this.componentMetaDataList);
+        this.data3 = LayoutData.of(data.toString(), this.componentMetaDataList);
         console.log(this.data3);
     }
 
@@ -138,13 +133,12 @@ export class customSceneLayoutDemoComponent {
     componentMetaDataList: ComponentMetaData[] = [
         {
             label: "表格",
-            // componentMap
             component: TableBasicDemoComponent,
             selector: 'custom-table',
-            // module
+            import: 'TableBasicDemoModule,',
             inputs: [
                 {
-                    property: '[data]', //不用判断双绑
+                    property: 'data', //不用判断双绑
                     value: 'tableData',
                 },
                 {
@@ -161,6 +155,7 @@ export class customSceneLayoutDemoComponent {
             label: "图形",
             component: BasicGraphComponent,
             selector: 'custom-graph',
+            import: 'BasicGraphModule,',
             inputs: [
                 {
                     property: '[data]',
