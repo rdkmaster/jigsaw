@@ -9,11 +9,11 @@
 <br>
 <button (click)="consoleData()">console data</button>
 <button (click)="parseData(data2)">parse data</button>
-<j-view-editor [data]="data2" height="200" (fill)="handleFill($event)"></j-view-editor>
+<j-view-editor [data]="data2" (fill)="handleFill($event)" height="200"></j-view-editor>
 <br>
 <br>
 Parse Area:
-<j-view-editor [data]="data3" height="400" (fill)="handleFill($event)"></j-view-editor>
+<j-view-editor [data]="data3" frozen="true" (fill)="handleFill($event)" height="400"></j-view-editor>
 
 <ng-template #dialog>
     <jigsaw-dialog width="40%" (close)="onAnswer()">

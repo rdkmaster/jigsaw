@@ -7,10 +7,11 @@
     [order]="itemData.order"
     [grow]="itemData.grow"
     [shrink]="itemData.shrink"
+    [frozen]="frozen"
     (remove)="_$removeItem($event)">
 </j-view-layout>
 
-<div *ngIf="!data || !data.nodes || !data.nodes.length" class="jigsaw-view-layout-btn">
+<div *ngIf="(!data || !data.nodes || !data.nodes.length) && !frozen" class="jigsaw-view-layout-btn">
     <i class="fa fa-plus-square-o" (click)="_$addContent()"></i>
     <div *ngIf="_$showOptions" class="jigsaw-view-layout-options">
         <span class="fa fa-minus-square-o" (click)="_$addItems('v')"></span>
@@ -19,6 +20,6 @@
     </div>
 </div>
 
-<div *ngIf="!data || !data.nodes || !data.nodes.length" class="jigsaw-view-layout-block"></div>
+<div *ngIf="(!data || !data.nodes || !data.nodes.length) && !frozen" class="jigsaw-view-layout-block"></div>
 
 <ng-template jigsaw-renderer-host></ng-template>

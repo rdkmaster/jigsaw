@@ -90,6 +90,9 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
     @ViewChild(JigsawRendererHost)
     private _rendererHost: JigsawRendererHost;
 
+    @Input()
+    public frozen: boolean;
+
     /**
      * @internal
      */
@@ -210,16 +213,19 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
             if (this._removeElementScrollEvent) {
                 this._removeElementScrollEvent();
             }
-            this._removeElementScrollEvent = this._renderer.listen(this._element, 'scroll', () => {
-                this._renderer.setStyle(block, 'top', this._element.scrollTop + 'px');
-                this._renderer.setStyle(block, 'left', this._element.scrollLeft + 'px');
-                this._renderer.setStyle(optionBtn, 'top', this._element.offsetHeight / 2 + this._element.scrollTop + 'px');
-                this._renderer.setStyle(optionBtn, 'left', this._element.offsetWidth / 2 + this._element.scrollLeft + 'px');
-            })
+            if (block && optionBtn) {
+                this._removeElementScrollEvent = this._renderer.listen(this._element, 'scroll', () => {
+                    this._renderer.setStyle(block, 'top', this._element.scrollTop + 'px');
+                    this._renderer.setStyle(block, 'left', this._element.scrollLeft + 'px');
+                    this._renderer.setStyle(optionBtn, 'top', this._element.offsetHeight / 2 + this._element.scrollTop + 'px');
+                    this._renderer.setStyle(optionBtn, 'left', this._element.offsetWidth / 2 + this._element.scrollLeft + 'px');
+                })
+            }
         }
     }
 
     ngOnInit() {
+        super.ngOnInit();
         this._addViewContent(this.data.contents);
     }
 
@@ -242,7 +248,9 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
 @Component({
     selector: 'jigsaw-view-editor, j-view-editor',
     template: `
-        <j-view-layout [data]="data" [(direction)]="data.direction" [grow]="data.grow" height="100%"></j-view-layout>
+        <j-view-layout [data]="data" [(direction)]="data.direction"
+                       [grow]="data.grow" [frozen]="frozen" height="100%">
+        </j-view-layout>
     `,
     host: {
         '[class.jigsaw-view-editor]': 'true',
@@ -259,6 +267,9 @@ export class JigsawViewEditor extends AbstractJigsawComponent {
 
     @Output()
     public fill = new EventEmitter<JigsawViewLayout>();
+
+    @Input()
+    public frozen: boolean;
 }
 
 @NgModule({
