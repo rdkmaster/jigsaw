@@ -1,6 +1,8 @@
 import {GeneralCollection} from "./general-collection";
 import {CommonUtils} from "../utils/common-utils";
-import {ComponentMetaData} from "../../component/view-editor/view-editor";
+import {JigsawViewLayout} from "../../component/view-editor/view-editor";
+import {ComponentRef, EmbeddedViewRef} from "@angular/core";
+import {ComponentMetaData, LayoutComponentInfo} from "../../component/view-editor/view-editor.type";
 
 export class TreeData extends GeneralCollection<any> {
     [index: string]: any;
@@ -55,8 +57,10 @@ export class LayoutData extends GeneralCollection<any> {
     grow?: number;
     shrink?: number;
     nodes?: LayoutData[];
-    contents?: ComponentMetaData[];
+    componentMetaDataList?: ComponentMetaData[];
     contentStr?: string;
+    components?: (ComponentRef<any> | EmbeddedViewRef<any>)[];
+    layout: JigsawViewLayout;
 
     /**
      * 把LayoutData转化为dom字符串
@@ -82,12 +86,37 @@ export class LayoutData extends GeneralCollection<any> {
         return json ? new LayoutData().fromObject(json) : null;
     }
 
+    /**
+     * 获取所有layout box里面的内容组件，
+     * @returns {LayoutComponentInfo[]}
+     */
+    public getComponents(): LayoutComponentInfo[] {
+        return this._getComponent(this, []);
+    }
+
+    private _getComponent(node: LayoutData, arr: LayoutComponentInfo[]): LayoutComponentInfo[] {
+        if (node.components instanceof Array) {
+            node.components.forEach(component => {
+                arr.push({
+                    layout: node.layout,
+                    component: component
+                })
+            });
+        }
+        if (node.nodes instanceof Array) {
+            node.nodes.forEach(node => {
+                arr = this._getComponent(node, arr)
+            });
+        }
+        return arr;
+    }
+
     private static _parseElementToJson(element: Element, metaDataList: ComponentMetaData[]): Object {
         let node = {
             direction: null,
             grow: null,
             nodes: [],
-            contents: [],
+            componentMetaDataList: [],
             contentStr: ''
         };
         node.direction = element.getAttribute('direction');
@@ -114,7 +143,7 @@ export class LayoutData extends GeneralCollection<any> {
                     value: element.children[i].attributes[j].value
                 })
             }
-            node.contents.push({
+            node.componentMetaDataList.push({
                 component: metaDataList.find(metaData => metaData.selector ==
                     element.children[i].tagName.toLocaleLowerCase()).component,
                 selector: element.children[i].tagName.toLocaleLowerCase(),

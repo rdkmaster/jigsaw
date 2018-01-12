@@ -1,6 +1,6 @@
 import {Component, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
 import {LayoutData} from "jigsaw/core/data/tree-data";
-import {ComponentMetaData} from "jigsaw/component/view-editor/view-editor";
+import {ComponentMetaData} from "jigsaw/component/view-editor/view-editor.type";
 import {BasicGraphComponent} from "../../graph/basic/app.component";
 import {TableBasicDemoComponent} from "../../table/basic/app.component";
 import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "../../../../jigsaw/service/popup.service";
@@ -119,6 +119,9 @@ export class customSceneLayoutDemoComponent {
         console.log(data.toString());
         this.data3 = LayoutData.of(data.toString(), this.componentMetaDataList);
         console.log(this.data3);
+        setTimeout(() => {
+            console.log(this.data3.getComponents());
+        }, 2000)
     }
 
     @ViewChild('dialog') dialog: TemplateRef<any>;

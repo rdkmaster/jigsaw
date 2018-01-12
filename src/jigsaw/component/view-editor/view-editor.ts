@@ -1,30 +1,32 @@
 import {
-    AfterViewInit, Component, ComponentFactoryResolver,
-    ComponentRef, ElementRef, EmbeddedViewRef, EventEmitter,
-    forwardRef, Inject, Input, NgModule, OnDestroy, OnInit, Optional,
-    Output, QueryList, Renderer2, TemplateRef, Type, ViewChild, ViewChildren
+    AfterViewInit,
+    Component,
+    ComponentFactoryResolver,
+    ComponentRef,
+    ElementRef,
+    EmbeddedViewRef,
+    EventEmitter,
+    forwardRef,
+    Inject,
+    Input,
+    NgModule,
+    OnDestroy,
+    OnInit,
+    Optional,
+    Output,
+    QueryList,
+    Renderer2,
+    TemplateRef,
+    Type,
+    ViewChild,
+    ViewChildren
 } from "@angular/core";
 import {LayoutData} from "../../core/data/tree-data";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule, JigsawRendererHost} from "../common";
 import {JigsawBoxBase} from "../box/box";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
-
-export type ComponentInput = {
-    property: string,
-    type?: string,
-    default?: any,
-    binding?: string
-}
-
-export type ComponentMetaData = {
-    [index: string]: any,
-    component: any,
-    selector: string,
-    inputs?: ComponentInput[],
-    outputs?: any,
-    import?: string
-}
+import {ComponentInput, ComponentMetaData} from "./view-editor.type";
 
 @Component({
     selector: 'jigsaw-view-layout, j-view-layout',
@@ -65,7 +67,7 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
             this._removeDataRefreshListener();
         }
         this._removeDataRefreshListener = this._data.onRefresh(() => {
-            this._addViewContent(this.data.contents);
+            this._addViewContent(this.data.componentMetaDataList);
             this._bindScrollEvent();
         })
     }
@@ -151,31 +153,32 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
         this._parentViewEditor.fill.emit(this);
     }
 
-    public addContent(contents: ComponentMetaData[]) {
-        this._addViewContent(contents);
-        this._addDataContent(contents);
+    public addContent(componentMetaDataList: ComponentMetaData[]) {
+        this._addViewContent(componentMetaDataList);
+        this._addDataContent(componentMetaDataList);
     }
 
-    private _addViewContent(contents: ComponentMetaData[]) {
-        if (!(contents instanceof Array) || contents.length == 0) return;
+    private _addViewContent(componentMetaDataList: ComponentMetaData[]) {
+        if (!(componentMetaDataList instanceof Array) || componentMetaDataList.length == 0) return;
         this._rendererHost.viewContainerRef.clear();
-        contents.forEach(content => {
-            this._rendererFactory(content.component, content.inputs);
+        this.data.components = []; // 初始化
+        componentMetaDataList.forEach(componentMetaData => {
+            this.data.components.push(this._rendererFactory(componentMetaData.component, componentMetaData.inputs));
         });
     }
 
-    private _addDataContent(contents: ComponentMetaData[]) {
-        if (!(contents instanceof Array) || contents.length == 0) return;
-        this.data.contents = contents;
+    private _addDataContent(componentMetaDataList: ComponentMetaData[]) {
+        if (!(componentMetaDataList instanceof Array) || componentMetaDataList.length == 0) return;
+        this.data.componentMetaDataList = componentMetaDataList;
         this.data.contentStr = '';
-        contents.forEach(content => {
-            this.data.contentStr += `<${content.selector} `;
-            content.inputs.forEach(input => {
+        componentMetaDataList.forEach(componentMetaData => {
+            this.data.contentStr += `<${componentMetaData.selector} `;
+            componentMetaData.inputs.forEach(input => {
                 if (CommonUtils.isDefined(input.binding) && input.binding != '') {
                     this.data.contentStr += `[${input.property}]='${input.binding}' `;
                 }
             });
-            this.data.contentStr += '>' + `</${content.selector}> \n`;
+            this.data.contentStr += '>' + `</${componentMetaData.selector}> \n`;
         });
     }
 
@@ -219,7 +222,8 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
 
     ngOnInit() {
         super.ngOnInit();
-        this._addViewContent(this.data.contents);
+        this._addViewContent(this.data.componentMetaDataList);
+        this.data.layout = this;
     }
 
     ngAfterViewInit() {
