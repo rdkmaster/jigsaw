@@ -35,8 +35,6 @@ export type ComponentMetaData = {
         '[class.jigsaw-flex]': 'type == "flex"',
         '[style.width]': 'width',
         '[style.height]': 'height',
-        /*'(mouseenter)': '_$showOptions = true',
-        '(mouseleave)': '_$showOptions = false',*/
     }
 })
 export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, OnDestroy, OnInit {
@@ -92,11 +90,6 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
 
     @Input()
     public frozen: boolean;
-
-    /**
-     * @internal
-     */
-    public _$showOptions: boolean;
 
     /**
      * @internal
