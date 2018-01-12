@@ -12,7 +12,8 @@ import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 export type ComponentInput = {
     property: string,
     type?: string,
-    value: any
+    default?: any,
+    binding?: string
 }
 
 export type ComponentMetaData = {
@@ -20,7 +21,7 @@ export type ComponentMetaData = {
     component: any,
     selector: string,
     inputs?: ComponentInput[],
-    output?: any,
+    outputs?: any,
     import?: string
 }
 
@@ -173,8 +174,8 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
         contents.forEach(content => {
             this.data.contentStr += `<${content.selector} `;
             content.inputs.forEach(input => {
-                if (CommonUtils.isDefined(input.value) && input.value != '') {
-                    this.data.contentStr += `${input.property}='${input.value}' `;
+                if (CommonUtils.isDefined(input.binding) && input.binding != '') {
+                    this.data.contentStr += `[${input.property}]='${input.binding}' `;
                 }
             });
             this.data.contentStr += '>' + `</${content.selector}> \n`;
@@ -185,7 +186,7 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
         if (renderer instanceof TemplateRef) {
             const context = {};
             inputs.forEach(input => {
-                context[input.property] = input.value
+                context[input.property] = input.binding
             });
             return this._rendererHost.viewContainerRef.createEmbeddedView(renderer, {
                 context: context
@@ -194,7 +195,7 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
             let componentFactory = this._componentFactoryResolver.resolveComponentFactory(renderer);
             let componentRef = this._rendererHost.viewContainerRef.createComponent(componentFactory);
             inputs.forEach(input => {
-                componentRef.instance[input.property] = input.value
+                componentRef.instance[input.property] = input.default
             });
             return componentRef;
         }

@@ -138,16 +138,16 @@ export class customSceneLayoutDemoComponent {
             import: 'TableBasicDemoModule,',
             inputs: [
                 {
-                    property: 'data', //不用判断双绑
-                    value: 'tableData',
+                    property: 'data',
+                    binding: 'tableData',
                 },
                 {
-                    property: '[additionalColumnDefine]',
-                    value: 'additionalColumnDefine',
+                    property: 'additionalColumnDefine',
+                    binding: 'additionalColumnDefine',
                 },
                 {
-                    property: '[(additionalData)]',
-                    value: 'additionalData',
+                    property: 'additionalData',
+                    binding: 'additionalData',
                 }
             ]
         },
@@ -158,12 +158,13 @@ export class customSceneLayoutDemoComponent {
             import: 'BasicGraphModule,',
             inputs: [
                 {
-                    property: '[data]',
-                    value: 'graphData',
+                    property: 'data',
+                    binding: 'graphData',
                 },
                 {
                     property: 'width',
-                    value: '200'
+                    binding: 'graphWidth',
+                    default: 200
                 }
             ]
         },
