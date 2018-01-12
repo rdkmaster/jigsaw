@@ -9,16 +9,17 @@ import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule, JigsawRendererHost} from "../common";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 
-export type LayoutContentInput = {
+export type ComponentInput = {
     property: string,
-    type: string,
+    type?: string,
     value: any
 }
 
-export type LayoutContent = {
+export type ComponentMetaData = {
+    [index: string]: any,
     component: any,
     selector: string,
-    inputs?: LayoutContentInput[],
+    inputs?: ComponentInput[],
     output?: any
 }
 
@@ -151,12 +152,12 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
         this._parentViewEditor.fill.emit(this);
     }
 
-    public addContent(contents: LayoutContent[]) {
+    public addContent(contents: ComponentMetaData[]) {
         this._addViewContent(contents);
         this._addDataContent(contents);
     }
 
-    private _addViewContent(contents: LayoutContent[]) {
+    private _addViewContent(contents: ComponentMetaData[]) {
         if (!(contents instanceof Array) || contents.length == 0) return;
         this._rendererHost.viewContainerRef.clear();
         contents.forEach(content => {
@@ -164,7 +165,7 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
         });
     }
 
-    private _addDataContent(contents: LayoutContent[]) {
+    private _addDataContent(contents: ComponentMetaData[]) {
         if (!(contents instanceof Array) || contents.length == 0) return;
         this.data.contents = contents;
         this.data.contentStr = '';
@@ -179,7 +180,7 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
         });
     }
 
-    private _rendererFactory(renderer: Type<any> | TemplateRef<any>, inputs: LayoutContentInput[]): ComponentRef<any> | EmbeddedViewRef<any> {
+    private _rendererFactory(renderer: Type<any> | TemplateRef<any>, inputs: ComponentInput[]): ComponentRef<any> | EmbeddedViewRef<any> {
         if (renderer instanceof TemplateRef) {
             const context = {};
             inputs.forEach(input => {
@@ -262,6 +263,6 @@ export class JigsawViewEditor extends AbstractJigsawComponent {
     declarations: [JigsawViewLayout, JigsawViewEditor],
     exports: [JigsawViewLayout, JigsawViewEditor]
 })
-export class JigsawLayoutModule {
+export class JigsawViewEditorModule {
 
 }

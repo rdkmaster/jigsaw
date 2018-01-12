@@ -1,6 +1,6 @@
 import {Component, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
 import {LayoutData} from "jigsaw/core/data/tree-data";
-import {JigsawViewLayout} from "../../../../jigsaw/component/layout/layout";
+import {ComponentMetaData, JigsawViewLayout} from "../../../../jigsaw/component/layout/layout";
 import {BasicGraphComponent} from "../../graph/basic/app.component";
 import {TableBasicDemoComponent} from "../../table/basic/app.component";
 import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "../../../../jigsaw/service/popup.service";
@@ -120,7 +120,8 @@ export class customSceneLayoutDemoComponent {
     parseData(data) {
         console.log(data);
         console.log(data.toString());
-        this.data3 = LayoutData.toData(data.toString());
+        // add metadata  改of
+        this.data3 = LayoutData.toData(data.toString(), this.componentMetaDataList);
         console.log(this.data3);
     }
 
@@ -134,14 +135,16 @@ export class customSceneLayoutDemoComponent {
     }
 
     selectedComponent;
-    components = new ArrayCollection([
+    componentMetaDataList: ComponentMetaData[] = [
         {
             label: "表格",
+            // componentMap
             component: TableBasicDemoComponent,
             selector: 'custom-table',
+            // module
             inputs: [
                 {
-                    property: '[data]',
+                    property: '[data]', //不用判断双绑
                     value: 'tableData',
                 },
                 {
@@ -169,7 +172,7 @@ export class customSceneLayoutDemoComponent {
                 }
             ]
         },
-    ]);
+    ];
 
     dialogInfo: PopupInfo;
 

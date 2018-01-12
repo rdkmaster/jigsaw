@@ -1,6 +1,6 @@
 import {GeneralCollection} from "./general-collection";
 import {CommonUtils} from "../utils/common-utils";
-import {LayoutContent} from "../../component/layout/layout";
+import {ComponentMetaData} from "../../component/layout/layout";
 
 export class TreeData extends GeneralCollection<any> {
     [index: string]: any;
@@ -55,22 +55,22 @@ export class LayoutData extends GeneralCollection<any> {
     grow?: number;
     shrink?: number;
     nodes?: LayoutData[];
-    contents?: LayoutContent[];
+    contents?: ComponentMetaData[];
     contentStr?: string;
 
     public static componentMap = new Map();
 
-    public static toData(domStr: string): LayoutData {
+    public static toData(domStr: string, metaDataList: ComponentMetaData[]): LayoutData {
         let layout = document.createElement('div');
         layout.innerHTML = domStr;
         let json;
         if (layout.children) {
-            json = this._parseElementToJson(layout.children[0]);
+            json = this._parseElementToJson(layout.children[0], metaDataList);
         }
         return json ? new LayoutData().fromObject(json) : null;
     }
 
-    private static _parseElementToJson(element: Element): Object {
+    private static _parseElementToJson(element: Element, metaDataList: ComponentMetaData[]): Object {
         let node = {
             direction: null,
             grow: null,
@@ -83,16 +83,16 @@ export class LayoutData extends GeneralCollection<any> {
         if (element.children && element.children.length != 0) {
             if (element.children[0].tagName.toLocaleLowerCase() == 'j-box') {
                 for (let i = 0; i < element.children.length; i++) {
-                    node.nodes.push(this._parseElementToJson(element.children[i]));
+                    node.nodes.push(this._parseElementToJson(element.children[i], metaDataList));
                 }
             } else {
-                node = LayoutData._parseElementToContentData(node, element);
+                node = this._parseElementToContentData(node, element, metaDataList);
             }
         }
         return node;
     }
 
-    private static _parseElementToContentData(node: any, element: Element): any {
+    private static _parseElementToContentData(node: any, element: Element, metaDataList: ComponentMetaData[]): any {
         node.contentStr = element.innerHTML;
         for (let i = 0; i < element.children.length; i++) {
             const inputs = [];
@@ -103,7 +103,8 @@ export class LayoutData extends GeneralCollection<any> {
                 })
             }
             node.contents.push({
-                component: LayoutData.componentMap.get(element.children[i].tagName.toLocaleLowerCase()),
+                component: metaDataList.find(metaData => metaData.selector ==
+                    element.children[i].tagName.toLocaleLowerCase()).component,
                 selector: element.children[i].tagName.toLocaleLowerCase(),
                 inputs: inputs
             })

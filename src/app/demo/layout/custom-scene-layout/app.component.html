@@ -24,7 +24,7 @@ Parse Area:
             <jigsaw-radios [(value)]="selectedComponent"
                            (valueChange)="radioChange($event)"
                            trackItemBy="label">
-                <jigsaw-radio-option *ngFor="let item of components" [value]="item">
+                <jigsaw-radio-option *ngFor="let item of componentMetaDataList" [value]="item">
                     {{item.label}}
                 </jigsaw-radio-option>
             </jigsaw-radios>
