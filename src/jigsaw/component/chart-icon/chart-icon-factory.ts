@@ -311,7 +311,7 @@ export class ChartIconFactory {
                             }).text('...');
                             let $ellipsisBg = this.svgElement('rect', {
                                 x: width - 10,
-                                y: i * 14,
+                                y: i * 14 - 1,
                                 width: 10,
                                 height: 16,
                                 fill: '#fff'
