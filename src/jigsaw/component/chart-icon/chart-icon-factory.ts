@@ -52,6 +52,7 @@ export class ChartIconCustomPie {
         data: string[],
         width: number,
         heigth: number,
+        marginLeft: number,
     };
     series?: any;
     after?: Function;
@@ -275,15 +276,23 @@ export class ChartIconFactory {
                     let $legend = this.svgElement('g', {x: '0', y: i * 10});
                     $legend.append($legendTitle);
 
+                    let legendPositionX = 0;
+                    if(opts.legend.orient == 'right'){
+                        if(Number.isNaN(Number(opts.legend.marginLeft))){
+                            opts.legend.marginLeft = 20;
+                        }
+                        legendPositionX = diameter + Number(opts.legend.marginLeft);
+                    }
+
                     let $rect = this.svgElement('rect', {
-                        x: 0 + (opts.legend.orient == 'right' ? diameter + 20 : 0),
+                        x: 0 + legendPositionX,
                         y: i * 14,
                         width: 10,
                         height: 10,
                         'fill': fill.call(this, value, i, values)
                     });
                     let $text = this.svgElement('text', {
-                        x: 12 + (opts.legend.orient == 'right' ? diameter + 20 : 0),
+                        x: 12 + legendPositionX,
                         y: 9 + i * 14,
                         'font-size': 12
                     }).text(opts.legend.data[i]);
