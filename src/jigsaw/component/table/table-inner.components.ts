@@ -190,6 +190,12 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
     ngOnInit() {
         //设置默认渲染器
         this.renderer = this.renderer ? this.renderer : DefaultCellRenderer;
+        if (this._$sortOrderClass['jigsaw-table-asc']) {
+            this._sort(SortOrder.asc);
+        }
+        if (this._$sortOrderClass['jigsaw-table-des']) {
+            this._sort(SortOrder.desc);
+        }
     }
 
     ngOnDestroy() {

@@ -48,8 +48,8 @@ describe('table', () => {
                 tableSortDown = element(by.css('.jigsaw-table-sort-down')),
                 columnFirstEl = element(by.css('.jigsaw-table-body')).all(by.tagName('TR')).first().all(by.tagName('TD')).get(0),
                 columnlastEl = element(by.css('.jigsaw-table-body')).all(by.tagName('TR')).last().all(by.tagName('TD')).get(0);
-            expect(columnFirstEl.getText()).toBe('Michelle');
-            expect(columnlastEl.getText()).toBe('Dave');
+            expect(columnFirstEl.getText()).toBe('Channing');
+            expect(columnlastEl.getText()).toBe('Elvis');
             tableSortUp.click();
             expect(columnFirstEl.getText()).toBe('Abner');
             expect(columnlastEl.getText()).toBe('Wanda');
