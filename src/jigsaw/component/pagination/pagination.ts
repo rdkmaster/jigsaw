@@ -8,6 +8,9 @@ import {FormsModule} from '@angular/forms';
 import {JigsawSelectModule} from '../select/select';
 import {JigsawInputModule} from '../input/input';
 import {AbstractJigsawComponent} from "../common";
+import {TranslateService} from "@ngx-translate/core";
+import {InternalUtils} from "../../core/utils/internal-utils";
+import {TranslateHelper} from "../../core/utils/translate-helper";
 
 export type PageSizeData = {
     value: number,
@@ -432,6 +435,23 @@ export class JigsawPagingItem {
     exports: [JigsawPagination]
 })
 export class JigsawPaginationModule {
+
+    constructor(translateService: TranslateService) {
+        InternalUtils.initI18n(translateService, 'pagination', {
+            zh: {
+                page: "页",
+                goto: ''
+            },
+            en: {
+                page: 'page',
+                goto: 'goto'
+            }
+        });
+        translateService.setDefaultLang(translateService.getBrowserLang());
+        TranslateHelper.languageChangEvent.subscribe(langInfo => {
+            translateService.use(langInfo.curLang);
+        });
+    }
 
 }
 
