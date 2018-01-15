@@ -30,17 +30,18 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
     }
     > .#{$fish-bone-prefix-cls}-item-description {
         left: 50%;
-        transform: translateX(-50%);
+        transform: translateX(-50%) translate3d(0, 0, 0);
         color: $heading-color;
+        -webkit-font-smoothing: subpixel-antialiased;
     }
 
     /* jigsaw-fish-bone-item-rotate-up jigsaw-fish-bone-item-rotate-down 一个鱼骨向上向下旋转,放在各自鱼骨上 */
     /* jigsaw-fish-bone-up jigsaw-fish-bone-down 一个鱼骨树在上面还是在下面，放在最外层的节点上 */
     &-rotate-up {
-        transform: rotate(-60deg);
+        transform: rotate(-60deg) translate3d(0, 0, 0);
     }
     &-rotate-down {
-        transform: rotate(60deg);
+        transform: rotate(60deg) translate3d(0, 0, 0);
     }
     .#{$fish-bone-prefix-cls}-up &-rotate-up > .#{$fish-bone-prefix-cls}-item-content {
         bottom: 4px;

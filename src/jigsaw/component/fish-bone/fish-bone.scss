@@ -53,13 +53,13 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
     }
     &-head {
         left: 0;
-        transform: translate(-104%, -50%) rotateY(180deg);
+        transform: translate(-104%, -50%) rotateY(180deg) translate3d(0, 0, 0);
         p {
             position: absolute;
             width: 75%;
             left: 50%;
             top: 50%;
-            transform: translate(-50%, -50%) rotateY(180deg);
+            transform: translate(-50%, -50%) rotateY(180deg) translate3d(0, 0, 0);
             max-height: 44px;
             line-height: 1.2;
             text-align: center;
@@ -76,7 +76,7 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
     }
     &-foot {
         right: 0;
-        transform: translate(104%, -46%) rotateY(180deg);
+        transform: translate(104%, -46%) rotateY(180deg) translate3d(0, 0, 0);
     }
 
     /* jigsaw-fish-bone-left jigsaw-fish-bone-left 鱼骨方向标识，放在host上*/
@@ -87,16 +87,16 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
     &-right {
         .#{$fish-bone-prefix-cls}-head {
             p {
-                transform: translate(-50%, -50%) rotateY(0deg);
+                transform: translate(-50%, -50%) rotateY(0deg) translate3d(0, 0, 0);
             }
         }
         .#{$fish-bone-prefix-cls}-range {
-            transform: rotateY(180deg);
+            transform: rotateY(180deg) translate3d(0, 0, 0);
             .#{$fish-bone-prefix-cls}-item-content {
-                transform: rotateY(180deg);
+                transform: rotateY(180deg) translate3d(0, 0, 0);
             }
             .#{$fish-bone-prefix-cls}-item-description {
-                transform: translateX(-50%) rotateY(180deg);
+                transform: translateX(-50%) rotateY(180deg) translate3d(0, 0, 0);
             }
         }
     }
