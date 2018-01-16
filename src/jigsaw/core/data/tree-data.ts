@@ -81,7 +81,7 @@ export class LayoutData extends GeneralCollection<any> {
         layout.innerHTML = domStr;
         let json;
         if (layout.children) {
-            json = this._parseElementToJson(layout.children[0], metaDataList);
+            json = this._parseElementToData(layout.children[0], metaDataList);
         }
         return json ? new LayoutData().fromObject(json) : null;
     }
@@ -111,7 +111,7 @@ export class LayoutData extends GeneralCollection<any> {
         return arr;
     }
 
-    private static _parseElementToJson(element: Element, metaDataList: ComponentMetaData[]): Object {
+    private static _parseElementToData(element: Element, metaDataList: ComponentMetaData[]): Object {
         let node = {
             direction: null,
             grow: null,
@@ -124,23 +124,23 @@ export class LayoutData extends GeneralCollection<any> {
         if (element.children && element.children.length != 0) {
             if (element.children[0].tagName.toLocaleLowerCase() == 'j-box') {
                 for (let i = 0; i < element.children.length; i++) {
-                    node.nodes.push(this._parseElementToJson(element.children[i], metaDataList));
+                    node.nodes.push(this._parseElementToData(element.children[i], metaDataList));
                 }
             } else {
-                node = this._parseElementToContentData(node, element, metaDataList);
+                node = this._parseElementToCompomentMetaData(node, element, metaDataList);
             }
         }
         return node;
     }
 
-    private static _parseElementToContentData(node: any, element: Element, metaDataList: ComponentMetaData[]): any {
+    private static _parseElementToCompomentMetaData(node: any, element: Element, metaDataList: ComponentMetaData[]): any {
         node.contentStr = element.innerHTML;
         for (let i = 0; i < element.children.length; i++) {
             const inputs = [];
             for (let j = 0; j < element.children[i].attributes.length; j++) {
                 inputs.push({
                     property: element.children[i].attributes[j].name,
-                    value: element.children[i].attributes[j].value
+                    value: JSON.parse(element.children[i].attributes[j].value)
                 })
             }
             node.componentMetaDataList.push({

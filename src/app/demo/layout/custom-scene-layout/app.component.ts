@@ -148,10 +148,20 @@ export class customSceneLayoutDemoComponent {
                 {
                     property: 'additionalColumnDefine',
                     binding: 'additionalColumnDefine',
+                    default: {
+                        a: 1,
+                        b: [1,2,3],
+                        c: 'ww'
+                    }
                 },
                 {
                     property: 'additionalData',
                     binding: 'additionalData',
+                    default: {
+                        a: 1,
+                        b: [1,2,3],
+                        c: 'ww'
+                    }
                 }
             ]
         },

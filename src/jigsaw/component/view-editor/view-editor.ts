@@ -188,8 +188,8 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
         componentMetaDataList.forEach(componentMetaData => {
             this.data.contentStr += `<${componentMetaData.selector} `;
             componentMetaData.inputs.forEach(input => {
-                if (CommonUtils.isDefined(input.binding) && input.binding != '') {
-                    this.data.contentStr += `[${input.property}]='${input.binding}' `;
+                if (CommonUtils.isDefined(input.default) && input.default != '') {
+                    this.data.contentStr += `${input.property}='${JSON.stringify(input.default)}' `;
                 }
             });
             this.data.contentStr += '>' + `</${componentMetaData.selector}> \n`;
