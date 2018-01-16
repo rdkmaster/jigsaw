@@ -84,6 +84,8 @@ export class I18nFullDemoComponent {
         },
     ];
 
+    currentPage: number = 1;
+
     changeLang(lang: string) {
         TranslateHelper.changeLanguage(this.translateService, lang);
         this.infoInitData = {

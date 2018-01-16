@@ -27,7 +27,7 @@ export type PageSizeData = {
     }
 })
 export class JigsawPagination extends AbstractJigsawComponent implements OnInit, AfterViewInit {
-    constructor(private _translateService: TranslateService){
+    constructor(private _translateService: TranslateService) {
         super()
     }
 
@@ -352,6 +352,22 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     ngOnInit() {
         super.ngOnInit();
         this._renderPages();
+        // 国际化
+        TranslateHelper.languageChangEvent.subscribe(langInfo => {
+            this._translateService.use(langInfo.curLang);
+            if (this._pageSizeOptions instanceof Array && this._pageSizeOptions.length) {
+                this.pageSizeOptions = this._pageSizeOptions.reduce((arr, option) => {
+                    arr.push(option.value);
+                    return arr;
+                }, []);
+            }
+            if (this._$pageSize) {
+                this._$pageSize = {
+                    value: this._$pageSize.value,
+                    label: this._$pageSize.value + '/' + this._translateService.instant('pagination.page')
+                }
+            }
+        });
     }
 
     ngAfterViewInit() {
@@ -452,9 +468,6 @@ export class JigsawPaginationModule {
             }
         });
         translateService.setDefaultLang(translateService.getBrowserLang());
-        TranslateHelper.languageChangEvent.subscribe(langInfo => {
-            translateService.use(langInfo.curLang);
-        });
     }
 
 }
