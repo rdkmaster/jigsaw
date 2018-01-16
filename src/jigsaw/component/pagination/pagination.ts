@@ -8,7 +8,7 @@ import {FormsModule} from '@angular/forms';
 import {JigsawSelectModule} from '../select/select';
 import {JigsawInputModule} from '../input/input';
 import {AbstractJigsawComponent} from "../common";
-import {TranslateService} from "@ngx-translate/core";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {InternalUtils} from "../../core/utils/internal-utils";
 import {TranslateHelper} from "../../core/utils/translate-helper";
 
@@ -27,6 +27,10 @@ export type PageSizeData = {
     }
 })
 export class JigsawPagination extends AbstractJigsawComponent implements OnInit, AfterViewInit {
+    constructor(private _translateService: TranslateService){
+        super()
+    }
+
     private _totalPage: number;
     private _current: number;
     private _showPages: number[] = [];
@@ -35,11 +39,10 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     private _pageSizeOptions: any[];
     private _pageNumberInit: boolean = false;
 
-    // TODO 国际化
     /**
      * @internal
      */
-    public _$pageSize: PageSizeData = {value: null, label: 'null/Page'};
+    public _$pageSize: PageSizeData = {value: null, label: 'null/' + this._translateService.instant('pagination.page')};
     /**
      * @internal
      */
@@ -103,7 +106,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         newValue = newValue ? newValue : 10;
         if (this.pageSize != newValue) {
             this._$pageSize.value = newValue;
-            this._$pageSize.label = newValue + '/Page';
+            this._$pageSize.label = newValue + '/' + this._translateService.instant('pagination.page');
             this.pageSizeChange.emit(newValue);
             if (this.initialized) {
                 this._renderPages();
@@ -120,7 +123,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     public set pageSizeOptions(newValue: number[]) {
         this._pageSizeOptions = [];
         newValue.forEach(num => {
-            let option = {value: num, label: num + '/Page'};
+            let option = {value: num, label: num + '/' + this._translateService.instant('pagination.page')};
             this._pageSizeOptions.push(option);
         });
     };
@@ -430,9 +433,10 @@ export class JigsawPagingItem {
 }
 
 @NgModule({
-    imports: [CommonModule, FormsModule, JigsawSelectModule, JigsawInputModule],
+    imports: [CommonModule, FormsModule, JigsawSelectModule, JigsawInputModule, TranslateModule.forRoot()],
     declarations: [JigsawPagination, JigsawPagingItem],
-    exports: [JigsawPagination]
+    exports: [JigsawPagination],
+    providers: [TranslateService],
 })
 export class JigsawPaginationModule {
 
@@ -440,11 +444,11 @@ export class JigsawPaginationModule {
         InternalUtils.initI18n(translateService, 'pagination', {
             zh: {
                 page: "页",
-                goto: ''
+                goto: '跳转'
             },
             en: {
-                page: 'page',
-                goto: 'goto'
+                page: 'Page',
+                goto: 'Goto'
             }
         });
         translateService.setDefaultLang(translateService.getBrowserLang());
