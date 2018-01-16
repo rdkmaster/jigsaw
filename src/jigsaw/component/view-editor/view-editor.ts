@@ -21,7 +21,7 @@ import {
     ViewChild,
     ViewChildren
 } from "@angular/core";
-import {LayoutData} from "../../core/data/tree-data";
+import {LayoutData} from "../../core/data/layout-data";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule, JigsawRendererHost} from "../common";
 import {JigsawBoxBase} from "../box/box";
@@ -111,10 +111,10 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
         this.data.nodes = [new LayoutData, new LayoutData];
         // 内容信息搬到第一个子节点
         this.data.nodes[0].componentMetaDataList = this.data.componentMetaDataList;
-        this.data.nodes[0].contentStr = this.data.contentStr;
+        this.data.nodes[0].innerHtml = this.data.innerHtml;
         // 重置当前内容信息
         this.data.componentMetaDataList = [];
-        this.data.contentStr = ''
+        this.data.innerHtml = ''
     }
 
     /**
@@ -141,7 +141,7 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
             } else {
                 // 拿取内容
                 this.data.componentMetaDataList = node.componentMetaDataList;
-                this.data.contentStr = node.contentStr;
+                this.data.innerHtml = node.innerHtml;
                 this.data.nodes = [];
                 this.direction = null;
                 this._renderComponents(this.data.componentMetaDataList);
@@ -163,7 +163,7 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
 
     public addContent(componentMetaDataList: ComponentMetaData[]) {
         this._renderComponents(componentMetaDataList);
-        this._setContentInfo(componentMetaDataList);
+        this.data.setComponentMetaData(componentMetaDataList);
         this._bindScrollEvent();
     }
 
@@ -178,21 +178,6 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
         this.data.components = []; // 初始化
         componentMetaDataList.forEach(componentMetaData => {
             this.data.components.push(this._rendererFactory(componentMetaData.component, componentMetaData.inputs));
-        });
-    }
-
-    private _setContentInfo(componentMetaDataList: ComponentMetaData[]) {
-        if (!(componentMetaDataList instanceof Array) || componentMetaDataList.length == 0) return;
-        this.data.componentMetaDataList = componentMetaDataList;
-        this.data.contentStr = '';
-        componentMetaDataList.forEach(componentMetaData => {
-            this.data.contentStr += `<${componentMetaData.selector} `;
-            componentMetaData.inputs.forEach(input => {
-                if (CommonUtils.isDefined(input.default) && input.default != '') {
-                    this.data.contentStr += `${input.property}='${JSON.stringify(input.default)}' `;
-                }
-            });
-            this.data.contentStr += '>' + `</${componentMetaData.selector}> \n`;
         });
     }
 

@@ -1,5 +1,5 @@
 import {Component, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
-import {LayoutData} from "jigsaw/core/data/tree-data";
+import {LayoutData} from "jigsaw/core/data/layout-data";
 import {ComponentMetaData} from "jigsaw/component/view-editor/view-editor.type";
 import {BasicGraphComponent} from "../../graph/basic/app.component";
 import {TableBasicDemoComponent} from "../../table/basic/app.component";

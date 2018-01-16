@@ -126,7 +126,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
 
     protected childrenBox: QueryList<JigsawBoxBase>;
 
-    protected _checkFlexByOwnProperty(property: string) {
+    private _checkFlexByOwnProperty(property: string) {
         if (property && this.type != 'flex') {
             setTimeout(() => {
                 this.type = 'flex';
@@ -134,7 +134,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
         }
     }
 
-    protected _checkFlexByChildren() {
+    private _checkFlexByChildren() {
         // 映射同一组件实例，ContentChildren会包含自己，https://github.com/angular/angular/issues/21148
         if (this.childrenBox.length > 1 && this.type != 'flex') {
             setTimeout(() => {
