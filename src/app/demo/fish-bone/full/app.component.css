@@ -6,3 +6,18 @@
     color: green
 }
 
+.custom-pie-bone .jigsaw-fish-bone-item-rotate-up.jigsaw-fish-bone-level-1 .jigsaw-fish-bone-item-content{
+    padding-left: 20px;
+}
+
+.custom-pie-bone .jigsaw-fish-bone-item-rotate-up.jigsaw-fish-bone-level-1 .jigsaw-fish-bone-item-description{
+    left: 28%;
+}
+
+.custom-pie-bone .jigsaw-fish-bone-item-rotate-down.jigsaw-fish-bone-level-1 .jigsaw-fish-bone-item-content{
+    padding-right: 20px;
+}
+
+.custom-pie-bone .jigsaw-fish-bone-item-rotate-down.jigsaw-fish-bone-level-1 .jigsaw-fish-bone-item-description{
+    left: 37%;
+}
