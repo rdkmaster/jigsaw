@@ -387,8 +387,9 @@ export class FishBoneFullComponent implements AfterViewInit {
             radius: 60,
             legend: {
                 orient: 'right', // 如果是'top'，图例的高度是自动算出来的，所以height属性不需要配置
-                width: 100,
-                data: legendData
+                width: 125,
+                data: legendData,
+                marginLeft: 5
             },
             series: node,
             link: this.handleLink,

@@ -28,35 +28,35 @@
             ],
             "data": [
                 [
-                    "S1-MME InternalCause",
+                    "[303,30]",
                     "附着超时[11,0]",
                     "11",
                     "0",
                     "830"
                 ],
                 [
-                    "S1-MME InternalCause",
+                    "[SIP InternalCause] 重注册超时[1,31]",
                     "11,186[11,186]",
                     "11",
                     "186",
                     "470"
                 ],
                 [
-                    "S1-MME InternalCause",
+                    "[SIP Cause] Multiple Choices[300,30]",
                     "11,32[11,32]",
                     "11",
                     "32",
                     "21"
                 ],
                 [
-                    "S1-MME InternalCause",
+                    "[SIP Cause] Moved Permanently[301,30]",
                     "11,101[11,101]",
                     "11",
                     "101",
                     "8"
                 ],
                 [
-                    "ESM Cause",
+                    "[SIP InternalCause] 等待180消息超时[4,31]",
                     "13,0[13,0]",
                     "13",
                     "0",
