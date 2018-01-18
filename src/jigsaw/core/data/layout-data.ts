@@ -98,8 +98,8 @@ export class LayoutData extends GeneralCollection<any> {
         node.direction = element.getAttribute('direction');
         node.grow = element.getAttribute('grow');
         if (element.children && element.children.length != 0) {
-            if (element.children[0].tagName.toLocaleLowerCase() == 'j-box' ||
-                element.children[0].tagName.toLocaleLowerCase() == 'jigsaw-box') {
+            if (element.children[0].tagName.toLowerCase() == 'j-box' ||
+                element.children[0].tagName.toLowerCase() == 'jigsaw-box') {
                 for (let i = 0; i < element.children.length; i++) {
                     node.nodes.push(this._parseElementToData(element.children[i], metaDataList));
                 }
@@ -122,8 +122,8 @@ export class LayoutData extends GeneralCollection<any> {
             }
             node.componentMetaDataList.push({
                 component: metaDataList.find(metaData => metaData.selector ==
-                    element.children[i].tagName.toLocaleLowerCase()).component,
-                selector: element.children[i].tagName.toLocaleLowerCase(),
+                    element.children[i].tagName.toLowerCase()).component,
+                selector: element.children[i].tagName.toLowerCase(),
                 inputs: inputs
             })
         }

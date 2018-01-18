@@ -70,7 +70,7 @@ export class InternalUtils {
      * @param {string} prop
      * @returns {string}
      */
-    public static kebabToCamelCase(prop: string) {
+    public static kebabToCamelCase(prop: string): string {
         if (!prop.match(/[\-]/g)) return prop;
         return prop.split('-').map((item, index) => {
             if (index == 0) {
