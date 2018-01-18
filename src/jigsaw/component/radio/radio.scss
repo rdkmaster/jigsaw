@@ -8,17 +8,17 @@ $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
     margin-right: 10px;
     cursor: pointer;
     &.#{$radio-option-prefix-cls}-disabled {
-        color: $disabled-color;
+        @include compatible(color, $disabled-color, $disabled-color-ie11);
         cursor: not-allowed;
         .#{$radio-option-prefix-cls}-inner {
             background: $disabled-bg;
             &:after {
                 background-color: $disabled-color;
             }
-            &.#{$radio-option-prefix-cls}-checked{
+            &.#{$radio-option-prefix-cls}-checked {
                 border-color: $border-color-base;
             }
-            &:hover{
+            &:hover {
                 border-color: $border-color-base;
             }
         }
@@ -51,7 +51,7 @@ $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
             @include prefixer(transfrom, scale(0));
             @include prefixer(transition, all 0.3s $ease-in-out-circ);
         }
-        &.#{$radio-option-prefix-cls}-checked{
+        &.#{$radio-option-prefix-cls}-checked {
             border-color: $primary-color;
             &:after {
                 @include prefixer(transform, scale(1));
@@ -59,11 +59,11 @@ $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
                 opacity: 1;
             }
         }
-        &:hover{
+        &:hover {
             border-color: $primary-color;
         }
     }
-    .#{$radio-option-prefix-cls}-content{
+    .#{$radio-option-prefix-cls}-content {
         @include inline-block();
     }
 }

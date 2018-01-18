@@ -33,9 +33,9 @@
     text-overflow: ellipsis;
 }
 
-@mixin word-break(){
-    word-wrap:break-word;
-    word-break:break-all;
+@mixin word-break() {
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 @mixin prefixer($property, $value) {
@@ -46,12 +46,29 @@
     #{$property}: $value;
 }
 
-@mixin font-awesome(){
+@mixin font-awesome() {
     font: normal normal normal 14px/1 FontAwesome;
     font-size: inherit;
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+@mixin compatible($property, $value, $compatibleValue) {
+    #{$property}: $value;
+    @include compatibleIE($property, $compatibleValue);
+}
+
+@mixin compatibleIE($property, $value) {
+    @include ie11Hack {
+        #{$property}: $value;
+    }
+}
+
+@mixin ie11Hack() {
+    @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+        @content;
+    }
 }
 
 @mixin keyframes($name) {
