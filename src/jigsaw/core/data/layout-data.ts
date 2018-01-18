@@ -3,6 +3,7 @@ import {ComponentMetaData, LayoutComponentInfo} from "../../component/view-edito
 import {ComponentRef, EmbeddedViewRef} from "@angular/core";
 import {JigsawViewLayout} from "../../component/view-editor/view-editor";
 import {CommonUtils} from "../utils/common-utils";
+import {InternalUtils} from "../utils/internal-utils";
 
 export class LayoutData extends GeneralCollection<any> {
     [index: string]: any;
@@ -62,7 +63,7 @@ export class LayoutData extends GeneralCollection<any> {
             this.innerHtml += `<${componentMetaData.selector} `;
             componentMetaData.inputs.forEach(input => {
                 if (CommonUtils.isDefined(input.default) && input.default != '') {
-                    this.innerHtml += `${input.property}='${JSON.stringify(input.default)}' `;
+                    this.innerHtml += `${InternalUtils.camelToKebabCase(input.property)}='${JSON.stringify(input.default)}' `;
                 }
             });
             this.innerHtml += '>' + `</${componentMetaData.selector}> \n`;
@@ -115,7 +116,7 @@ export class LayoutData extends GeneralCollection<any> {
             const inputs = [];
             for (let j = 0; j < element.children[i].attributes.length; j++) {
                 inputs.push({
-                    property: element.children[i].attributes[j].name,
+                    property: InternalUtils.kebabToCamelCase(element.children[i].attributes[j].name),
                     value: JSON.parse(element.children[i].attributes[j].value)
                 })
             }
