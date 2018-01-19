@@ -46,6 +46,25 @@ $editor-prefix-cls: #{$jigsaw-prefix}-view-editor;
             display: block;
         }
     }
+    &-resize {
+        position: absolute;
+        height: 100%;
+        width: 2px;
+        border: 1px solid blue;
+        left: 0;
+        top: 0;
+        z-index: 101;
+        &-column {
+            width: 100%;
+            height: 2px;
+            &:hover{
+                cursor: n-resize !important;
+            }
+        }
+        &:hover{
+            cursor: e-resize;
+        }
+    }
 }
 
 .#{$editor-prefix-cls} {

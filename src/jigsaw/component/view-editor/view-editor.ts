@@ -93,6 +93,12 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
     @Input()
     public frozen: boolean;
 
+    @Input()
+    public isFirst: boolean;
+
+    @Input()
+    public parent: JigsawViewLayout;
+
     /**
      * @internal
      */
@@ -211,17 +217,24 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
 
         const block = this._element.querySelector('.jigsaw-view-layout-block');
         const optionBox = this._element.querySelector('.jigsaw-view-layout-option-box');
+        const resizeBar = this._element.querySelector('.jigsaw-view-layout-resize');
         if (this._removeElementScrollEvent) {
             this._removeElementScrollEvent();
         }
-        if (block && optionBox) {
-            this._removeElementScrollEvent = this._renderer.listen(this._element, 'scroll', () => {
+        this._removeElementScrollEvent = this._renderer.listen(this._element, 'scroll', () => {
+            if (block) {
                 this._renderer.setStyle(block, 'top', this._element.scrollTop + 'px');
                 this._renderer.setStyle(block, 'left', this._element.scrollLeft + 'px');
+            }
+            if (optionBox) {
                 this._renderer.setStyle(optionBox, 'top', this._element.offsetHeight / 2 + this._element.scrollTop + 'px');
                 this._renderer.setStyle(optionBox, 'left', this._element.offsetWidth / 2 + this._element.scrollLeft + 'px');
-            })
-        }
+            }
+            if (resizeBar) {
+                this._renderer.setStyle(resizeBar, 'top', this._element.scrollTop + 'px');
+                this._renderer.setStyle(resizeBar, 'left', this._element.scrollLeft + 'px');
+            }
+        })
     }
 
     ngOnInit() {
@@ -251,7 +264,7 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
     selector: 'jigsaw-view-editor, j-view-editor',
     template: `
         <j-view-layout [data]="data" [(direction)]="data.direction"
-                       [grow]="data.grow" [frozen]="frozen" height="100%">
+                       [grow]="data.grow" [frozen]="frozen" [isFirst]="true" height="100%">
         </j-view-layout>
     `,
     host: {

@@ -100,7 +100,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
 
     public set order(value: number) {
         this._order = value;
-        this._renderer.addClass(this._element, 'jigsaw-col-order-' + value);
+        this._renderer.setStyle(this._element, 'order', Number(value));
     }
 
     @Input()
