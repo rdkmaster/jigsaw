@@ -10,9 +10,9 @@ if (fs.existsSync(outputHome)) {
 outputHome = outputHome ? outputHome.trim() : './live-demo/';
 outputHome = outputHome.match(/[\/\\]$/) ? outputHome : outputHome + '/';
 
-makeAllPlunkers('demo');
+makeAllJlunkers('demo');
 
-function makeAllPlunkers(dirName) {
+function makeAllJlunkers(dirName) {
     demoHome = getDemoHome(dirName);
 
     var demoSetFolders = fs.readdirSync(demoHome);
@@ -31,19 +31,19 @@ function processDemoSet(demoSetFolder) {
         var pathname = demoSetFolder + demoFolder;
         var stat = fs.lstatSync(pathname);
         if (stat.isDirectory()) {
-            makePlunker(pathname + '/');
+            makeJlunker(pathname + '/');
         }
     });
 }
 
-function makePlunker(demoFolder, dirName) {
+function makeJlunker(demoFolder, dirName) {
     var content = [];
     readFolderFiles(content, demoFolder);
 
     var compContentIndex = -1;
     var moduleContentIndex = -1;
     content.forEach((item, idx) => {
-        item.path = 'app/' + item.path.substring(demoFolder.length);
+        item.path = 'app/demo/' + item.path.substring(demoFolder.length);
         if (item.path.match(/.+\.ts$/i)) {
             item.code = fixImport(item.code);
             item.code = fixTemplateUrl(item.code);
@@ -51,39 +51,42 @@ function makePlunker(demoFolder, dirName) {
             item.code = fixCodeForDemoOnly(item.code);
         }
         if (item.path.match(/.+\.html$/i)) {
-            fixAppComponentHtml(item, demoFolder);
+            fixDemoComponentHtml(item, demoFolder);
         }
         if (item.path.match(/.+\.scss$/i)) {
-            console.error('ERROR: do not use scss file in demo! we can not pass them in plunker.');
+            console.error('ERROR: do not use scss file in demo! we can not pass them in jlunker.');
             console.error(`       path=${demoFolder}`);
             process.exit(1);
         }
-        if (item.path == 'app/app.component.ts') {
+        if (item.path == 'app/demo/demo.component.ts') {
             compContentIndex = idx;
-        } else if (item.path == 'app/app.module.ts') {
+        } else if (item.path == 'app/demo/demo.module.ts') {
             moduleContentIndex = idx;
         }
     });
     if (compContentIndex == -1) {
-        console.error('ERROR: need this file: ' + demoFolder + 'app.module.ts, but i can not find it.');
+        console.error('ERROR: need this file: ' + demoFolder + 'demo.module.ts, but i can not find it.');
         process.exit(1);
     }
     if (moduleContentIndex == -1) {
-        console.error('ERROR: need this file: ' + demoFolder + 'app.component.ts, but i can not find it.');
+        console.error('ERROR: need this file: ' + demoFolder + 'demo.component.ts, but i can not find it.');
         process.exit(1);
     }
 
     var moduleItem = content[moduleContentIndex];
-    fixAppModuleTs(moduleItem, demoFolder);
+    fixDemoModuleTs(moduleItem, demoFolder);
     var compItem = content[compContentIndex];
-    fixAppComponentTs(compItem, moduleItem.code);
+    fixDemoComponentTs(compItem, moduleItem.code);
 
     content.push(getIndexHtml());
-    content.push(getMainTs(findModuleClassName(moduleItem.code)));
+    content.push(getMainTs());
     content.push(getSystemJsConfig());
     content.push(getSystemJsAngularLoader());
     content.push(getAjaxInterceptor(content));
     content.push(getLiveDemoWrapperCSS());
+    content.push(getAppComponentTs());
+    content.push(getAppComponentHtml());
+    content.push(getAppModuleTs(findModuleClassName(moduleItem.code)));
 
     var html = '';
     content.forEach(item => {
@@ -93,7 +96,7 @@ function makePlunker(demoFolder, dirName) {
         html += `<input type="hidden" name="entries[${path}][content]" value="${item.code}" />\n`;
     });
 
-    var plunker = template
+    var jlunker = template
         .replace('<!-- replace-by-content -->', html)
         .replace('<!-- replace-by-title -->', demoFolder.substring(demoHome.length, demoFolder.length-1));
 
@@ -103,8 +106,8 @@ function makePlunker(demoFolder, dirName) {
     if (fs.existsSync(saveTo)) {
         console.error('file name conflict: ' + saveTo);
     } else {
-        fs.writeFileSync(saveTo, plunker);
-        console.log('made plunker to ' + saveTo);
+        fs.writeFileSync(saveTo, jlunker);
+        console.log('made jlunker to ' + saveTo);
     }
 }
 
@@ -181,7 +184,7 @@ function fixCodeForDemoOnly(code) {
 }
 
 // 删除 jigsaw-demo-description 相关内容
-function fixAppComponentHtml(component, folder) {
+function fixDemoComponentHtml(component, folder) {
     var re = /<!-- ignore the following lines[\s\S]*<!-- start to learn the demo from here -->\r?\n/;
     component.code = component.code.replace(re, '');
 
@@ -192,7 +195,7 @@ function fixAppComponentHtml(component, folder) {
     }
 }
 
-function fixAppComponentTs(component, moduleCode) {
+function fixDemoComponentTs(component, moduleCode) {
     var mainComp = findExportsComponent(moduleCode);
     if (!mainComp) {
         console.error('ERROR: need a "exports" property in the module code, ' +
@@ -204,7 +207,7 @@ function fixAppComponentTs(component, moduleCode) {
     component.code = component.code.replace(/@Component\s*\(\s*\{([\s\S]*?)\}\s*\)[\s\S]*?export\s+class\s+(\w+?)\b/g,
         (found, props, className) => {
             if (className != mainComp) {
-                // 在app.component.ts文件中可能被定义了多个组件
+                // 在demo.component.ts文件中可能被定义了多个组件
                 return found;
             }
             if (found.match(/selector\s*:/)) {
@@ -220,8 +223,8 @@ function fixAppComponentTs(component, moduleCode) {
                                             '"## 本DEMO的详细描述在readme.md中 ##"');
 }
 
-// 转变app.module.ts文件
-function fixAppModuleTs(module, demoFolder) {
+// 转变demo.module.ts文件
+function fixDemoModuleTs(module, demoFolder) {
     // @NgModule()里必须包含一个exports，用于将组件暴露给上级组件
     var comp = findExportsComponent(module.code);
     if (!comp) {
@@ -288,11 +291,10 @@ function getIndexHtml() {
     }
 }
 
-function getMainTs(moduleClassName) {
+function getMainTs() {
     return {
         path: 'main.ts',
         code: readCode(__dirname + '/demo-independent-templates/main.ts')
-                .replace(/\$DemoModuleClassName/g, moduleClassName)
     }
 }
 
@@ -347,7 +349,7 @@ function getAjaxInterceptor(content) {
     code += '};';
 
     return {
-        path: 'ajax-interceptor.ts',
+        path: 'app/ajax-interceptor.ts',
         code: code
     }
 }
@@ -388,3 +390,24 @@ function getLiveDemoWrapperCSS() {
     }
 }
 
+function getAppComponentTs() {
+    return {
+        path: 'app/app.component.ts',
+        code: readCode(__dirname + '/demo-independent-templates/app.component.ts')
+    }
+}
+
+function getAppComponentHtml() {
+    return {
+        path: 'app/app.component.html',
+        code: readCode(__dirname + '/demo-independent-templates/app.component.html')
+    }
+}
+
+function getAppModuleTs(moduleClassName) {
+    return {
+        path: 'app/app.module.ts',
+        code: readCode(__dirname + '/demo-independent-templates/app.module.ts')
+                .replace(/\$DemoModuleClassName/g, moduleClassName)
+    }
+}
