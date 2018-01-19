@@ -117,7 +117,7 @@ export class LayoutData extends GeneralCollection<any> {
             for (let j = 0; j < element.children[i].attributes.length; j++) {
                 inputs.push({
                     property: InternalUtils.kebabToCamelCase(element.children[i].attributes[j].name),
-                    value: JSON.parse(element.children[i].attributes[j].value)
+                    default: JSON.parse(element.children[i].attributes[j].value)
                 })
             }
             node.componentMetaDataList.push({
