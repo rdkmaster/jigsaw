@@ -16,7 +16,7 @@ task('ensure-url-matches-path', () => {
         childRouters.filter(child => !!child.path)
             .forEach((child: any) => {
                 const modulePath = join(demoHome, router.path, child.path);
-                if (!existsSync(join(modulePath, 'app.module.ts'))) {
+                if (!existsSync(join(modulePath, 'demo.module.ts'))) {
                     unmatchedUrls.push(modulePath);
                 }
             });
