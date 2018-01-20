@@ -90,7 +90,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
     }
 
     ngOnDestroy() {
-        $.fn.zTree.destroy();
+        this.ztree.destroy();
     }
 
     public ztree: any;
