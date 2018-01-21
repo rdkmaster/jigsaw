@@ -21,7 +21,7 @@
     },
     paths: {
       // paths serve as alias
-      'npm:': 'http://localhost:8080/node_modules/'
+      'npm:': '/node_modules/'
     },
     // map tells the System loader where to look for things
     map: {
@@ -52,7 +52,7 @@
       'ngx-perfect-scrollbar':      'npm:ngx-perfect-scrollbar/dist/ngx-perfect-scrollbar.js',
       'perfect-scrollbar':          'npm:perfect-scrollbar/dist/js/perfect-scrollbar.min.js',
       'resize-observer-polyfill':   'npm:resize-observer-polyfill/dist/ResizeObserver.es.js',
-      "@ngx-translate/core":        'http://unpkg.com/@ngx-translate/core@8.0.0',
+      "@ngx-translate/core":        'npm:@ngx-translate/core',
       "echarts":                    'npm:echarts/dist/echarts.js',
       '@rdkmaster/jigsaw':          'npm:@rdkmaster/jigsaw/bundles/jigsaw.umd.js'
     },
