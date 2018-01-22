@@ -244,19 +244,16 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
 
     private _computeSizeRatios(offsetProp: string, sizeProp: string, updateOffset: number): number[] {
         const offsets = this._getOffsets(offsetProp, sizeProp);
-        console.log(offsets);
         const sizes = this.parent.childrenBox.reduce((arr, box) => {
             arr.push(box.element[sizeProp]);
             return arr;
         }, []);
         const curIndex = this._getCurrentIndex();
         offsets.splice(curIndex, 1, updateOffset);
-        console.log(offsets);
         if (curIndex < 1) return;
         const prevBoxSize = offsets[curIndex] - offsets[curIndex - 1];
         const curBoxSize = offsets[curIndex + 1] - offsets[curIndex];
         sizes.splice(curIndex - 1, 2, prevBoxSize, curBoxSize);
-        console.log(sizes);
         return sizes.map(size => {
             return size / this.parent.element[sizeProp] * 100
         });
@@ -305,7 +302,6 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
 
         const [offsetProp, sizeProp] = this._getPropertyByDirection();
         this._$resizeRange = this._getResizeRange(offsetProp, sizeProp);
-        console.log(100000, this._$resizeRange);
     };
 
     ngOnInit() {
