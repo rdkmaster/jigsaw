@@ -25,10 +25,11 @@ import {LayoutData} from "../../core/data/layout-data";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule, JigsawRendererHost} from "../common";
 import {JigsawBoxBase} from "../box/box";
-import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
+import {CallbackRemoval} from "../../core/utils/common-utils";
 import {ComponentInput, ComponentMetaData} from "./view-editor.type";
-import {AffixUtils} from "../../core/utils/internal-utils";
 import {JigsawResizableModule} from "./resizable.directive";
+import {AffixUtils} from "../../core/utils/internal-utils";
+import {current} from "codelyzer/util/syntaxKind";
 
 @Component({
     selector: 'jigsaw-view-layout, j-view-layout',
@@ -49,8 +50,7 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
     constructor(elementRef: ElementRef,
                 renderer: Renderer2,
                 @Optional() @Inject(forwardRef(() => JigsawViewEditor))parentViewEditor: JigsawViewEditor,
-                private _componentFactoryResolver: ComponentFactoryResolver,
-                private _zone: NgZone) {
+                private _componentFactoryResolver: ComponentFactoryResolver) {
         super(elementRef, renderer);
         this._parentViewEditor = parentViewEditor;
     }
@@ -85,7 +85,7 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
     public directionChange = new EventEmitter<string>();
 
     @Output()
-    public growChange = new EventEmitter<string>();
+    public growChange = new EventEmitter<number>();
 
     @Output()
     public remove = new EventEmitter<LayoutData>();
@@ -240,101 +240,52 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
         })
     }
 
-    public isResizing: boolean = false;
-
     @ViewChild('resizeLine')
     public resizeLine: ElementRef;
 
     @ViewChild('resizingLine')
     public resizingLine: ElementRef;
 
-    /*private _listenResize() {
-        if (!this.parent || !this.resizeLine) return;
-        this._renderer.listen(this.resizeLine.nativeElement, 'mousedown', this._dragStart)
-    }*/
-
-    private _movableTarget: HTMLElement;
-    private _moving: boolean = false;
-    private _position: number[];
-
-    private _removeHostMouseDownListener: CallbackRemoval;
-    private _removeWindowMouseMoveListener: CallbackRemoval;
-    private _removeWindowMouseUpListener: CallbackRemoval;
-
-    /*private _dragStart = (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-
-        if (!this.parent || !this.resizeLine) return;
-
-        const resizeLineEl = this.resizeLine.nativeElement;
-        this._movableTarget = this.parent.resizingLine.nativeElement;
-        const startOffsetX = AffixUtils.offset(resizeLineEl).left - AffixUtils.offset(this.parent.element).left;
-        const startOffsetY = AffixUtils.offset(resizeLineEl).top - AffixUtils.offset(this.parent.element).top;
+    /**
+     * @internal
+     */
+    public _$handleResize(offset: number) {
+        console.log(offset);
+        if (!this.parent) return;
         if (this.parent.direction == 'column') {
-            this._renderer.setStyle(this._movableTarget, 'top', startOffsetY + 'px');
+
         } else {
-            this._renderer.setStyle(this._movableTarget, 'left', startOffsetX + 'px');
-        }
-        this._renderer.setStyle(this._movableTarget, 'display', 'block');
-        this.parent.isResizing = true;
-
-        this._position = [event.clientX - startOffsetX, event.clientY - startOffsetY];
-        this._moving = true;
-
-        if (this._removeWindowMouseMoveListener) {
-            this._removeWindowMouseMoveListener();
-        }
-        this._zone.runOutsideAngular(() => {
-            this._removeWindowMouseMoveListener = this._renderer.listen(document, 'mousemove', this._dragMove);
-        });
-
-        if (this._removeWindowMouseUpListener) {
-            this._removeWindowMouseUpListener();
-        }
-        this._removeWindowMouseUpListener = this._renderer.listen(document, 'mouseup', this._dragEnd);
-    };
-
-    private _dragMove = (event) => {
-        if (this._moving) {
-            /!*const isFixed = this._movableTarget.style.position == 'fixed';
-            const ox = event.clientX - this._position[0] - (isFixed ? window.pageXOffset : 0);
-            const oy = event.clientY - this._position[1] - (isFixed ? window.pageYOffset : 0);*!/
-            if (this.parent.direction == 'column') {
-                let oy = event.clientY - this._position[1];
-                if (oy < 0) {
-                    oy = 0
-                } else if (oy > this.parent.element.offsetHeight) {
-                    oy = this.parent.element.offsetHeight - 5
+            const offsets = this.parent.childrenBox.reduce((arr, box, index) => {
+                if (index == 0) {
+                    arr.push(0);
+                } else {
+                    arr.push(AffixUtils.offset(box.resizeLine.nativeElement).left - AffixUtils.offset(this.parent.element).left);
                 }
-                this._renderer.setStyle(this._movableTarget, 'top', oy + 'px');
-            } else {
-                let ox = event.clientX - this._position[0];
-                if (ox < 0) {
-                    ox = 0
-                } else if (ox > this.parent.element.offsetWidth) {
-                    ox = this.parent.element.offsetWidth - 5
-                }
-                this._renderer.setStyle(this._movableTarget, 'left', ox + 'px');
-            }
-        }
-    };
+                return arr;
+            }, []);
+            const sizes = this.parent.childrenBox.reduce((arr, box) => {
+                arr.push(box.element.offsetWidth);
+                return arr;
+            }, []);
+            const index = this.parent.childrenBox.toArray().findIndex(box => box == this);
+            offsets.splice(index, 1, offset);
+            console.log(offsets);
+            if (index < 1) return;
+            const previousBoxSize = offsets[index] - offsets[index - 1];
+            const currentBoxSize = (offsets[index + 1] ? offsets[index + 1] : this.parent.element.offsetWidth) - offsets[index];
+            sizes.splice(index - 1, 2, previousBoxSize, currentBoxSize);
+            console.log(sizes);
+            const sizeRatios = sizes.map(size => {
+                return size / this.parent.element.offsetWidth *100
+            });
+            console.log(sizeRatios);
 
-    private _dragEnd = () => {
-        this._moving = false;
-        this._position = null;
-        this._removeWindowListener();
-        this._renderer.setStyle(this._movableTarget, 'display', 'none');
-    };
-
-    private _removeWindowListener() {
-        if (this._removeWindowMouseMoveListener) {
-            this._removeWindowMouseMoveListener();
+            this.parent.childrenBox.forEach((box, index) => {
+                box.grow = sizeRatios[index];
+                box.growChange.emit(sizeRatios[index]);
+            })
         }
-        if (this._removeWindowMouseUpListener) {
-            this._removeWindowMouseUpListener();
-        }
-    }*/
+    }
 
     ngOnInit() {
         super.ngOnInit();
@@ -346,8 +297,6 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
         this.checkFlex();
         // 等待 option bar & block 渲染
         this._bindScrollEvent();
-
-        //this._listenResize();
     }
 
     ngOnDestroy() {

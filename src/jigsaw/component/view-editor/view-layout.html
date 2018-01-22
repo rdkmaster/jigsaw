@@ -5,7 +5,7 @@
     [justify]="itemData.justify"
     [align]="itemData.align"
     [order]="itemData.order"
-    [grow]="itemData.grow"
+    [(grow)]="itemData.grow"
     [shrink]="itemData.shrink"
     [frozen]="frozen"
     [isFirst]="isFirst"
@@ -25,11 +25,13 @@
 <div *ngIf="(!data || !data.nodes || !data.nodes.length) && !frozen" class="jigsaw-view-layout-block"></div>
 
 <b #resizeLine
-   *ngIf="!isFirst" class="jigsaw-view-layout-resize"
+   *ngIf="!isFirst"
    j-resizable
    [movableTarget]="parent?.resizingLine?.nativeElement"
    [effectBox]="parent?.element"
    [effectDirection]="parent?.direction"
+   (resize)="_$handleResize($event)"
+   class="jigsaw-view-layout-resize"
    [class.jigsaw-view-layout-resize-column]="parent?.direction == 'column'"></b>
 
 <b #resizingLine class="jigsaw-view-layout-resizing" [class.jigsaw-view-layout-resizing-column]="direction == 'column'"></b>

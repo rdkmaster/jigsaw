@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Input, NgModule, NgZone, Renderer2} from "@angular/core";
+import {Directive, ElementRef, EventEmitter, Input, NgModule, NgZone, Output, Renderer2} from "@angular/core";
 import {CallbackRemoval} from "../../core/utils/common-utils";
 import {AffixUtils} from "../../core/utils/internal-utils";
 
@@ -22,6 +22,11 @@ export class JigsawResizable{
     @Input()
     public effectDirection: string;
 
+    @Output()
+    public resize = new EventEmitter<number>();
+
+    private _effectOffset: number;
+
     private _host: HTMLElement;
     private _moving: boolean = false;
     private _position: number[];
@@ -33,7 +38,7 @@ export class JigsawResizable{
         event.preventDefault();
         event.stopPropagation();
 
-        if (!this.movableTarget) return;
+        if (!this.movableTarget || !this.effectBox) return;
 
         const startOffsetX = AffixUtils.offset(this._host).left - AffixUtils.offset(this.effectBox).left;
         const startOffsetY = AffixUtils.offset(this._host).top - AffixUtils.offset(this.effectBox).top;
@@ -65,6 +70,7 @@ export class JigsawResizable{
                 } else if (oy > this.effectBox.offsetHeight) {
                     oy = this.effectBox.offsetHeight - 5
                 }
+                this._effectOffset = oy;
                 this._renderer.setStyle(this.movableTarget, 'top', oy + 'px');
             } else {
                 let ox = event.clientX - this._position[0];
@@ -73,6 +79,7 @@ export class JigsawResizable{
                 } else if (ox > this.effectBox.offsetWidth) {
                     ox = this.effectBox.offsetWidth - 5
                 }
+                this._effectOffset = ox;
                 this._renderer.setStyle(this.movableTarget, 'left', ox + 'px');
             }
         }
@@ -83,6 +90,7 @@ export class JigsawResizable{
         this._position = null;
         this._removeWindowListener();
         this._renderer.setStyle(this.movableTarget, 'display', 'none');
+        this.resize.emit(this._effectOffset);
     };
 
     private _removeWindowListener() {
