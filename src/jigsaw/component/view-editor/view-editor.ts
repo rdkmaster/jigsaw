@@ -1,25 +1,8 @@
 import {
-    AfterViewInit,
-    Component,
-    ComponentFactoryResolver,
-    ComponentRef,
-    ElementRef,
-    EmbeddedViewRef,
-    EventEmitter,
-    forwardRef,
-    Inject,
-    Input,
-    NgModule, NgZone,
-    OnDestroy,
-    OnInit,
-    Optional,
-    Output,
-    QueryList,
-    Renderer2,
-    TemplateRef,
-    Type,
-    ViewChild,
-    ViewChildren
+    AfterViewInit, Component, ComponentFactoryResolver, ComponentRef,
+    ElementRef, EmbeddedViewRef, EventEmitter, forwardRef, Inject,
+    Input, NgModule, OnDestroy, OnInit, Optional, Output, QueryList,
+    Renderer2, TemplateRef, Type, ViewChild, ViewChildren
 } from "@angular/core";
 import {LayoutData} from "../../core/data/layout-data";
 import {CommonModule} from "@angular/common";
@@ -29,7 +12,6 @@ import {CallbackRemoval} from "../../core/utils/common-utils";
 import {ComponentInput, ComponentMetaData} from "./view-editor.type";
 import {JigsawResizableModule} from "./resizable.directive";
 import {AffixUtils} from "../../core/utils/internal-utils";
-import {current} from "codelyzer/util/syntaxKind";
 
 @Component({
     selector: 'jigsaw-view-layout, j-view-layout',
@@ -252,8 +234,7 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
     public _$handleResize(offset: number) {
         if (!this.parent) return;
 
-        let offsetProp = this.parent.direction == 'column' ? 'top' : 'left';
-        let sizeProp = this.parent.direction == 'column' ? 'offsetHeight' : 'offsetWidth';
+        const [offsetProp, sizeProp] = this._getPropertyByDirection();
         const sizeRatios = this._computeSizeRatios(offsetProp, sizeProp, offset);
         this.parent.childrenBox.forEach((box, index) => {
             box.grow = sizeRatios[index];
@@ -262,6 +243,26 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
     }
 
     private _computeSizeRatios(offsetProp: string, sizeProp: string, updateOffset: number): number[] {
+        const offsets = this._getOffsets(offsetProp, sizeProp);
+        console.log(offsets);
+        const sizes = this.parent.childrenBox.reduce((arr, box) => {
+            arr.push(box.element[sizeProp]);
+            return arr;
+        }, []);
+        const curIndex = this._getCurrentIndex();
+        offsets.splice(curIndex, 1, updateOffset);
+        console.log(offsets);
+        if (curIndex < 1) return;
+        const prevBoxSize = offsets[curIndex] - offsets[curIndex - 1];
+        const curBoxSize = offsets[curIndex + 1] - offsets[curIndex];
+        sizes.splice(curIndex - 1, 2, prevBoxSize, curBoxSize);
+        console.log(sizes);
+        return sizes.map(size => {
+            return size / this.parent.element[sizeProp] * 100
+        });
+    }
+
+    private _getOffsets(offsetProp: string, sizeProp: string): number[] {
         const offsets = this.parent.childrenBox.reduce((arr, box, index) => {
             if (index == 0) {
                 arr.push(0);
@@ -271,22 +272,41 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
             }
             return arr;
         }, []);
-        const sizes = this.parent.childrenBox.reduce((arr, box) => {
-            arr.push(box.element[sizeProp]);
-            return arr;
-        }, []);
-        const curIndex = this.parent.childrenBox.toArray().findIndex(box => box == this);
-        offsets.splice(curIndex, 1, updateOffset);
-        console.log(offsets);
-        if (curIndex < 1) return;
-        const prevBoxSize = offsets[curIndex] - offsets[curIndex - 1];
-        const curBoxSize = (offsets[curIndex + 1] ? offsets[curIndex + 1] : this.parent.element[sizeProp]) - offsets[curIndex];
-        sizes.splice(curIndex - 1, 2, prevBoxSize, curBoxSize);
-        console.log(sizes);
-        return sizes.map(size => {
-            return size / this.parent.element[sizeProp] * 100
-        });
+        offsets.push(this.parent.element[sizeProp]);
+        return offsets;
     }
+
+    private _getCurrentIndex(): number {
+        return this.parent.childrenBox.toArray().findIndex(box => box == this);
+    }
+
+    private _getPropertyByDirection(): string[] {
+        return [this.parent.direction == 'column' ? 'top' : 'left',
+            this.parent.direction == 'column' ? 'offsetHeight' : 'offsetWidth']
+    }
+
+    private _getResizeRange(offsetProp: string, sizeProp: string): number[] {
+        const offsets = this._getOffsets(offsetProp, sizeProp);
+        const curIndex = this._getCurrentIndex();
+        return [offsets[curIndex - 1], offsets[curIndex + 1]];
+    }
+
+    /**
+     * @internal
+     */
+    public _$resizeRange: number[];
+
+    /**
+     * @internal
+     */
+    public _$updateResizeRange(event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const [offsetProp, sizeProp] = this._getPropertyByDirection();
+        this._$resizeRange = this._getResizeRange(offsetProp, sizeProp);
+        console.log(100000, this._$resizeRange);
+    };
 
     ngOnInit() {
         super.ngOnInit();

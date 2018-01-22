@@ -22,6 +22,9 @@ export class JigsawResizable{
     @Input()
     public effectDirection: string;
 
+    @Input()
+    public range: number[];
+
     @Output()
     public resize = new EventEmitter<number>();
 
@@ -62,22 +65,23 @@ export class JigsawResizable{
     };
 
     private _dragMove = (event) => {
+        console.log(11111, this.range);
         if (this._moving) {
             if (this.effectDirection == 'column') {
                 let oy = event.clientY - this._position[1];
-                if (oy < 0) {
-                    oy = 0
-                } else if (oy > this.effectBox.offsetHeight) {
-                    oy = this.effectBox.offsetHeight - 5
+                if (oy < this.range[0]) {
+                    oy = this.range[0] + 5
+                } else if (oy > this.range[1]) {
+                    oy = this.range[1] - 5
                 }
                 this._effectOffset = oy;
                 this._renderer.setStyle(this.movableTarget, 'top', oy + 'px');
             } else {
                 let ox = event.clientX - this._position[0];
-                if (ox < 0) {
-                    ox = 0
-                } else if (ox > this.effectBox.offsetWidth) {
-                    ox = this.effectBox.offsetWidth - 5
+                if (ox < this.range[0]) {
+                    ox = this.range[0] + 5
+                } else if (ox > this.range[1]) {
+                    ox = this.range[1] - 5
                 }
                 this._effectOffset = ox;
                 this._renderer.setStyle(this.movableTarget, 'left', ox + 'px');

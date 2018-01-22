@@ -30,7 +30,9 @@
    [movableTarget]="parent?.resizingLine?.nativeElement"
    [effectBox]="parent?.element"
    [effectDirection]="parent?.direction"
+   [range]="_$resizeRange"
    (resize)="_$handleResize($event)"
+   (mousedown)="_$updateResizeRange($event)"
    class="jigsaw-view-layout-resize"
    [class.jigsaw-view-layout-resize-column]="parent?.direction == 'column'"></b>
 
