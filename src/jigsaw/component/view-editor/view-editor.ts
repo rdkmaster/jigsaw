@@ -250,41 +250,42 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
      * @internal
      */
     public _$handleResize(offset: number) {
-        console.log(offset);
         if (!this.parent) return;
-        if (this.parent.direction == 'column') {
 
-        } else {
-            const offsets = this.parent.childrenBox.reduce((arr, box, index) => {
-                if (index == 0) {
-                    arr.push(0);
-                } else {
-                    arr.push(AffixUtils.offset(box.resizeLine.nativeElement).left - AffixUtils.offset(this.parent.element).left);
-                }
-                return arr;
-            }, []);
-            const sizes = this.parent.childrenBox.reduce((arr, box) => {
-                arr.push(box.element.offsetWidth);
-                return arr;
-            }, []);
-            const index = this.parent.childrenBox.toArray().findIndex(box => box == this);
-            offsets.splice(index, 1, offset);
-            console.log(offsets);
-            if (index < 1) return;
-            const previousBoxSize = offsets[index] - offsets[index - 1];
-            const currentBoxSize = (offsets[index + 1] ? offsets[index + 1] : this.parent.element.offsetWidth) - offsets[index];
-            sizes.splice(index - 1, 2, previousBoxSize, currentBoxSize);
-            console.log(sizes);
-            const sizeRatios = sizes.map(size => {
-                return size / this.parent.element.offsetWidth *100
-            });
-            console.log(sizeRatios);
+        let offsetProp = this.parent.direction == 'column' ? 'top' : 'left';
+        let sizeProp = this.parent.direction == 'column' ? 'offsetHeight' : 'offsetWidth';
+        const sizeRatios = this._computeSizeRatios(offsetProp, sizeProp, offset);
+        this.parent.childrenBox.forEach((box, index) => {
+            box.grow = sizeRatios[index];
+            box.growChange.emit(sizeRatios[index]);
+        })
+    }
 
-            this.parent.childrenBox.forEach((box, index) => {
-                box.grow = sizeRatios[index];
-                box.growChange.emit(sizeRatios[index]);
-            })
-        }
+    private _computeSizeRatios(offsetProp: string, sizeProp: string, updateOffset: number): number[] {
+        const offsets = this.parent.childrenBox.reduce((arr, box, index) => {
+            if (index == 0) {
+                arr.push(0);
+            } else {
+                arr.push(AffixUtils.offset(box.resizeLine.nativeElement)[offsetProp] -
+                    AffixUtils.offset(this.parent.element)[offsetProp]);
+            }
+            return arr;
+        }, []);
+        const sizes = this.parent.childrenBox.reduce((arr, box) => {
+            arr.push(box.element[sizeProp]);
+            return arr;
+        }, []);
+        const curIndex = this.parent.childrenBox.toArray().findIndex(box => box == this);
+        offsets.splice(curIndex, 1, updateOffset);
+        console.log(offsets);
+        if (curIndex < 1) return;
+        const prevBoxSize = offsets[curIndex] - offsets[curIndex - 1];
+        const curBoxSize = (offsets[curIndex + 1] ? offsets[curIndex + 1] : this.parent.element[sizeProp]) - offsets[curIndex];
+        sizes.splice(curIndex - 1, 2, prevBoxSize, curBoxSize);
+        console.log(sizes);
+        return sizes.map(size => {
+            return size / this.parent.element[sizeProp] * 100
+        });
     }
 
     ngOnInit() {
