@@ -65,6 +65,20 @@ $editor-prefix-cls: #{$jigsaw-prefix}-view-editor;
             cursor: e-resize;
         }
     }
+    &-resizing {
+        position: absolute;
+        height: 100%;
+        width: 2px;
+        border: 1px solid red;
+        left: 0;
+        top: 0;
+        z-index: 101;
+        display: none;
+        &-column {
+            width: 100%;
+            height: 2px;
+        }
+    }
 }
 
 .#{$editor-prefix-cls} {

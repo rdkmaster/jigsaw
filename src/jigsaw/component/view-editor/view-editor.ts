@@ -9,7 +9,7 @@ import {
     forwardRef,
     Inject,
     Input,
-    NgModule,
+    NgModule, NgZone,
     OnDestroy,
     OnInit,
     Optional,
@@ -27,6 +27,7 @@ import {AbstractJigsawComponent, JigsawCommonModule, JigsawRendererHost} from ".
 import {JigsawBoxBase} from "../box/box";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {ComponentInput, ComponentMetaData} from "./view-editor.type";
+import {AffixUtils} from "../../core/utils/internal-utils";
 
 @Component({
     selector: 'jigsaw-view-layout, j-view-layout',
@@ -47,7 +48,8 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
     constructor(elementRef: ElementRef,
                 renderer: Renderer2,
                 @Optional() @Inject(forwardRef(() => JigsawViewEditor))parentViewEditor: JigsawViewEditor,
-                private _componentFactoryResolver: ComponentFactoryResolver) {
+                private _componentFactoryResolver: ComponentFactoryResolver,
+                private _zone: NgZone) {
         super(elementRef, renderer);
         this._parentViewEditor = parentViewEditor;
     }
@@ -237,6 +239,102 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
         })
     }
 
+    public isResizing: boolean = false;
+
+    @ViewChild('resizeLine')
+    public resizeLine: ElementRef;
+
+    @ViewChild('resizingLine')
+    public resizingLine: ElementRef;
+
+    private _listenResize() {
+        if (!this.parent || !this.resizeLine) return;
+        this._renderer.listen(this.resizeLine.nativeElement, 'mousedown', this._dragStart)
+    }
+
+    private _movableTarget: HTMLElement;
+    private _moving: boolean = false;
+    private _position: number[];
+
+    private _removeHostMouseDownListener: CallbackRemoval;
+    private _removeWindowMouseMoveListener: CallbackRemoval;
+    private _removeWindowMouseUpListener: CallbackRemoval;
+
+    private _dragStart = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (!this.parent || !this.resizeLine) return;
+
+        const resizeLineEl = this.resizeLine.nativeElement;
+        this._movableTarget = this.parent.resizingLine.nativeElement;
+        const startOffsetX = AffixUtils.offset(resizeLineEl).left - AffixUtils.offset(this.parent._element).left;
+        const startOffsetY = AffixUtils.offset(resizeLineEl).top - AffixUtils.offset(this.parent._element).top;
+        if (this.parent.direction == 'column') {
+            this._renderer.setStyle(this._movableTarget, 'top', startOffsetY + 'px');
+        } else {
+            this._renderer.setStyle(this._movableTarget, 'left', startOffsetX + 'px');
+        }
+        this._renderer.setStyle(this._movableTarget, 'display', 'block');
+        this.parent.isResizing = true;
+
+        this._position = [event.clientX - startOffsetX, event.clientY - startOffsetY];
+        this._moving = true;
+
+        if (this._removeWindowMouseMoveListener) {
+            this._removeWindowMouseMoveListener();
+        }
+        this._zone.runOutsideAngular(() => {
+            this._removeWindowMouseMoveListener = this._renderer.listen(document, 'mousemove', this._dragMove);
+        });
+
+        if (this._removeWindowMouseUpListener) {
+            this._removeWindowMouseUpListener();
+        }
+        this._removeWindowMouseUpListener = this._renderer.listen(document, 'mouseup', this._dragEnd);
+    };
+
+    private _dragMove = (event) => {
+        if (this._moving) {
+            /*const isFixed = this._movableTarget.style.position == 'fixed';
+            const ox = event.clientX - this._position[0] - (isFixed ? window.pageXOffset : 0);
+            const oy = event.clientY - this._position[1] - (isFixed ? window.pageYOffset : 0);*/
+            if (this.parent.direction == 'column') {
+                let oy = event.clientY - this._position[1];
+                if (oy < 0) {
+                    oy = 0
+                } else if (oy > this.parent._element.offsetHeight) {
+                    oy = this.parent._element.offsetHeight - 5
+                }
+                this._renderer.setStyle(this._movableTarget, 'top', oy + 'px');
+            } else {
+                let ox = event.clientX - this._position[0];
+                if (ox < 0) {
+                    ox = 0
+                } else if (ox > this.parent._element.offsetWidth) {
+                    ox = this.parent._element.offsetWidth - 5
+                }
+                this._renderer.setStyle(this._movableTarget, 'left', ox + 'px');
+            }
+        }
+    };
+
+    private _dragEnd = () => {
+        this._moving = false;
+        this._position = null;
+        this._removeWindowListener();
+        this._renderer.setStyle(this._movableTarget, 'display', 'none');
+    };
+
+    private _removeWindowListener() {
+        if (this._removeWindowMouseMoveListener) {
+            this._removeWindowMouseMoveListener();
+        }
+        if (this._removeWindowMouseUpListener) {
+            this._removeWindowMouseUpListener();
+        }
+    }
+
     ngOnInit() {
         super.ngOnInit();
         this._renderComponents(this.data.componentMetaDataList);
@@ -247,6 +345,9 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
         this.checkFlex();
         // 等待 option bar & block 渲染
         this._bindScrollEvent();
+
+        this._listenResize();
+        //this.resizingLine = this._element.querySelector('.jigsaw-view-layout-resizing');
     }
 
     ngOnDestroy() {
