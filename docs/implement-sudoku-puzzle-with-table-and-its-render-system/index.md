@@ -8,6 +8,8 @@
 
 ## 运行效果
 
+线上地址 <http://rdk.zte.com.cn/jigsaw/table/sudoku>
+
 先看看最终的效果吧：
 
 ![overview](overview.gif)
@@ -17,6 +19,10 @@
 基本思路非常简单，利用Jigsaw的表格来展示9x9宫格，然后做一个渲染器用于数字的填写，最后将这个渲染器应用到表格的每一个单元格中即可。
 
 显然，最难的部分是填写数字的渲染器的实现。
+
+整体事件流
+
+![event-graph](event-graph.png)
 
 ## 页面基本元素
 
@@ -63,6 +69,54 @@ this.tableData = new TableData([
 
 下面一步步来实现这个渲染器。
 
+### 数字渲染器的视图
+
+渲染器的视图超级简单，就一个大大的数字，水平和垂直居中：
+
+![](num-renderer.png)
+
+这样的效果谁都可以做到，但是还是有必要将代码贴出来，因为下面的过程就是围绕这这小段代码来的
+
+```
+<div (click)="onClick($event)" [style.background]="bgColor" [style.color]="fontColor"
+     (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
+    {{cellData}}
+</div>
+```
+
+css部分的代码就省略了。
+
+几处关键配置项：
+- `onClick()`：单击了数字之后，需要将`NumberSelectPad`组件弹出供玩家挑选一个数字；
+- `bgColor`：我们通过背景色来提示玩家当前是否有错误以降低游戏难度；
+- `fontColor`：题目已有的数字显示为蓝色，玩家挑选的数字显示为黑色，同样也是为了降低游戏难度；
+- `onMouseEnter`/`onMouseLeave`没啥作用，只是增加鼠标滑过的效果；
+
+最后，将渲染器应用到表格上，只要将渲染器设置给表格的`columnDefines`属性就好了。这里由于由于每一列都使用相同的渲染器，因此我们采用列定义产生器的方式来定义渲染器，这样可以让代码变得更简约：
+
+```
+columnDefineGenerator() {
+    return {
+        cell: {
+            renderer: NumberRenderer
+        }
+    }
+}
+```
+
+然后修改主页面模板，增加对应的配置项
+
+```
+<jigsaw-table ... [columnDefines]="columnDefineGenerator">
+</jigsaw-table>
+```
+
+此时，表格看起来是这样的：
+
+![renderer](renderer.png)
+
+接下来要实现单击数字之后，弹出数字选择面板给玩家挑选一个数字的功能。
+
 ### 实现数字选择面板
 
 这个面板的最终效果如下
@@ -85,6 +139,7 @@ this.tableData = new TableData([
     </j-tile>
 </div>
 ```
+
 下面实现这个面板的ts部分的代码，先看类的定义：
 
 ```
@@ -115,34 +170,9 @@ onSelect(selected) {
 
 我们直接通过`answer`将当前选中的数字，emit出去。这就是事件交互的好处，源头治理只管发送事件，而完全不需要关心是谁在关注这个事件，事件的关注着和监听者彻底解耦。
 
-至此，数字选择面板就搞定了。
+至此，数字选择面板组件就搞定了。
 
-### 数字渲染器的视图
-
-渲染器的视图超级简单，就一个大大的数字，水平和垂直居中：
-
-![](num-renderer.png)
-
-这样的效果谁都可以做到，但是还是有必要将代码贴出来，因为下面的过程就是围绕这这小段代码来的
-
-```
-<div (click)="onClick($event)" [style.background]="bgColor" [style.color]="fontColor"
-     (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
-    {{cellData}}
-</div>
-```
-
-css部分的代码就省略了。
-
-几处关键配置项：
-- `onClick()`：单击了数字之后，需要将`NumberSelectPad`组件弹出供玩家挑选一个数字；
-- `bgColor`：我们通过背景色来提示玩家当前是否有错误以降低游戏难度；
-- `fontColor`：题目已有的数字显示为蓝色，玩家挑选的数字显示为黑色，同样也是为了降低游戏难度；
-- `onMouseEnter`/`onMouseLeave`没啥作用，只是增加鼠标滑过的效果；
-
-下面来看看`onClick()`的逻辑
-
-### `onClick()`的逻辑
+### 渲染器`onClick()`的逻辑
 
 按照我们之前预设的，渲染器单击了之后，是会弹出数字选择面板供玩家挑选一个数字，效果如下
 

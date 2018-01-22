@@ -6,7 +6,7 @@ $paging-prefix-cls: #{$jigsaw-prefix}-paging;
     @include inline-block();
     font-size: $font-size-base;
     user-select: none;
-    &-page{
+    &-page {
         position: relative;
         @include inline-block;
         width: 28px;
@@ -19,33 +19,33 @@ $paging-prefix-cls: #{$jigsaw-prefix}-paging;
         cursor: pointer;
         vertical-align: top;
         @include prefixer(transition, all .3s ease);
-        &.#{$paging-prefix-cls}-disabled{
+        &.#{$paging-prefix-cls}-disabled {
             cursor: not-allowed;
             border: 1px solid $border-color-base;
-            color: $disabled-color;
-            &:hover{
+            @include compatible(color, $disabled-color, $disabled-color-ie11);
+            &:hover {
                 border: 1px solid $border-color-base;
-                color: $disabled-color;
+                @include compatible(color, $disabled-color, $disabled-color-ie11);
             }
         }
-        &:hover{
+        &:hover {
             border: 1px solid $primary-color;
             color: $primary-color;
         }
     }
-    jigsaw-select{
+    jigsaw-select {
         margin-right: 8px;
     }
-    &-goto{
+    &-goto {
         @include inline-block;
         height: 28px;
         line-height: 28px;
         vertical-align: top;
-        > span{
+        > span {
             margin-right: 8px;
         }
     }
-    jigsaw-input{
+    jigsaw-input {
         vertical-align: top;
         margin-right: 8px;
     }

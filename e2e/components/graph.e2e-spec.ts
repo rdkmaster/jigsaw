@@ -8,13 +8,13 @@ describe('graph', () => {
 
     describe('test graph display', () => {
 
-        it('should show the graph view', () => {
-            browser.get('/graph/basic');
+        it('should show the graph view', async () => {
+            await browser.get('/graph/basic');
             expectToExist(getGraphCanvas('test-graph'));
         });
 
-        it('should show the line bar graph basic', () => {
-            browser.get('/graph/line-bar-graph-basic');
+        it('should show the line bar graph basic', async () => {
+            await browser.get('/graph/line-bar-graph-basic');
             expectToExist(getGraphCanvas('test-graph1'));
             expectToExist(getGraphCanvas('test-graph2'));
         });
@@ -36,7 +36,7 @@ describe('graph', () => {
         });
 
         it('should change size', async () => {
-            browser.get('/graph/resize');
+            await browser.get('/graph/resize');
             const graphCanvas = element(by.id('test-graph')).element(by.tagName('canvas'));
             const graphWidthInput = element(by.id('graph-width')).element(by.tagName('input'));
             const graphHeightInput = element(by.id('graph-height')).element(by.tagName('input'));
