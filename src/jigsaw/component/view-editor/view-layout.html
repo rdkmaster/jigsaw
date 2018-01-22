@@ -24,7 +24,12 @@
 
 <div *ngIf="(!data || !data.nodes || !data.nodes.length) && !frozen" class="jigsaw-view-layout-block"></div>
 
-<b #resizeLine *ngIf="!isFirst" class="jigsaw-view-layout-resize" j-resizable [parent]="parent"
+<b #resizeLine
+   *ngIf="!isFirst" class="jigsaw-view-layout-resize"
+   j-resizable
+   [movableTarget]="parent?.resizingLine?.nativeElement"
+   [effectBox]="parent?.element"
+   [effectDirection]="parent?.direction"
    [class.jigsaw-view-layout-resize-column]="parent?.direction == 'column'"></b>
 
 <b #resizingLine class="jigsaw-view-layout-resizing" [class.jigsaw-view-layout-resizing-column]="direction == 'column'"></b>
