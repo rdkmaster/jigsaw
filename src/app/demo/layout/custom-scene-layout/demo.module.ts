@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {JigsawViewEditorModule} from "jigsaw/component/view-editor/view-editor";
-import {customSceneLayoutDemoComponent} from "./app.component";
+import {customSceneLayoutDemoComponent} from "./demo.component";
 import {JigsawSelectModule} from "jigsaw/component/select/select";
 import {BasicGraphComponent} from "../../graph/basic/demo.component";
 import {TableBasicDemoComponent} from "../../table/basic/demo.component";

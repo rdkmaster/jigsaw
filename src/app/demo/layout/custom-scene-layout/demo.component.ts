@@ -7,8 +7,8 @@ import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/service
 import {JigsawViewLayout} from "jigsaw/component/view-editor/view-editor";
 
 @Component({
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css'],
+    templateUrl: './demo.component.html',
+    styleUrls: ['./demo.component.css'],
     encapsulation: ViewEncapsulation.None
 })
 export class customSceneLayoutDemoComponent {

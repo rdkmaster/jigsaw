@@ -8,8 +8,8 @@ import {FormDemoComponent} from "./form/demo.component";
 import {FormDemoModule} from "./form/demo.module";
 import {BoxLayoutScrollDemoComponent} from "./box-layout-scroll/demo.component";
 import {BoxLayoutScrollDemoModule} from "./box-layout-scroll/demo.module";
-import {customSceneLayoutDemoComponent} from "app/demo/layout/custom-scene-layout/app.component";
-import {customSceneLayoutDemoModule} from "./custom-scene-layout/app.module";
+import {customSceneLayoutDemoComponent} from "app/demo/layout/custom-scene-layout/demo.component";
+import {customSceneLayoutDemoModule} from "./custom-scene-layout/demo.module";
 
 export const routerConfig = [
     {
