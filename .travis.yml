@@ -30,6 +30,7 @@ before_script:
 script:
   - node build/scripts/make-demo-independent.js
   - gulp ensure-url-matches-path
+  - gulp generate-demo-info
   - gulp jigsaw:build-release:clean
   - # ng test --code-coverage --watch false
   - # cat ./coverage/lcov.info | ./node_modules/.bin/coveralls

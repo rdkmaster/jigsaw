@@ -25,7 +25,7 @@ task('generate-demo-info', () => {
     routerConfig.forEach((router: any) => {
         const childDemos: any[] = [];
         demos.push({name: router.path, demos: childDemos});
-        const childRouters = getRouterConfig(join(demoHome, router.path, 'demo.module.ts'));
+        const childRouters = getRouterConfig(join(demoHome, router.path, 'demo-set.module.ts'));
         childRouters.forEach((child: any) => {
             const url = child.hasOwnProperty('url') ? child.url : `/${router.path}/${child.path}`;
             const demoInfo = {
