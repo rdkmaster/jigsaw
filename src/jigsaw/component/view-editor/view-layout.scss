@@ -50,7 +50,7 @@ $editor-prefix-cls: #{$jigsaw-prefix}-view-editor;
         position: absolute;
         height: 100%;
         width: 2px;
-        border: 1px solid blue;
+        border: 1px solid $border-color-base;
         left: 0;
         top: 0;
         z-index: 101;
@@ -69,7 +69,7 @@ $editor-prefix-cls: #{$jigsaw-prefix}-view-editor;
         position: absolute;
         height: 100%;
         width: 2px;
-        border: 1px solid red;
+        border: 1px solid $text-color;
         left: 0;
         top: 0;
         z-index: 101;
@@ -83,4 +83,5 @@ $editor-prefix-cls: #{$jigsaw-prefix}-view-editor;
 
 .#{$editor-prefix-cls} {
     display: block;
+    border: 1px solid $border-color-base;
 }
