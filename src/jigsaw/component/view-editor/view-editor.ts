@@ -28,6 +28,7 @@ import {JigsawBoxBase} from "../box/box";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {ComponentInput, ComponentMetaData} from "./view-editor.type";
 import {AffixUtils} from "../../core/utils/internal-utils";
+import {JigsawResizableModule} from "./resizable.directive";
 
 @Component({
     selector: 'jigsaw-view-layout, j-view-layout',
@@ -217,24 +218,24 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
         // 有node不绑定scroll
         if (this.data && this.data.nodes instanceof Array && this.data.nodes.length > 0) return;
 
-        const block = this._element.querySelector('.jigsaw-view-layout-block');
-        const optionBox = this._element.querySelector('.jigsaw-view-layout-option-box');
-        const resizeBar = this._element.querySelector('.jigsaw-view-layout-resize');
+        const block = this.element.querySelector('.jigsaw-view-layout-block');
+        const optionBox = this.element.querySelector('.jigsaw-view-layout-option-box');
+        const resizeBar = this.element.querySelector('.jigsaw-view-layout-resize');
         if (this._removeElementScrollEvent) {
             this._removeElementScrollEvent();
         }
-        this._removeElementScrollEvent = this._renderer.listen(this._element, 'scroll', () => {
+        this._removeElementScrollEvent = this._renderer.listen(this.element, 'scroll', () => {
             if (block) {
-                this._renderer.setStyle(block, 'top', this._element.scrollTop + 'px');
-                this._renderer.setStyle(block, 'left', this._element.scrollLeft + 'px');
+                this._renderer.setStyle(block, 'top', this.element.scrollTop + 'px');
+                this._renderer.setStyle(block, 'left', this.element.scrollLeft + 'px');
             }
             if (optionBox) {
-                this._renderer.setStyle(optionBox, 'top', this._element.offsetHeight / 2 + this._element.scrollTop + 'px');
-                this._renderer.setStyle(optionBox, 'left', this._element.offsetWidth / 2 + this._element.scrollLeft + 'px');
+                this._renderer.setStyle(optionBox, 'top', this.element.offsetHeight / 2 + this.element.scrollTop + 'px');
+                this._renderer.setStyle(optionBox, 'left', this.element.offsetWidth / 2 + this.element.scrollLeft + 'px');
             }
             if (resizeBar) {
-                this._renderer.setStyle(resizeBar, 'top', this._element.scrollTop + 'px');
-                this._renderer.setStyle(resizeBar, 'left', this._element.scrollLeft + 'px');
+                this._renderer.setStyle(resizeBar, 'top', this.element.scrollTop + 'px');
+                this._renderer.setStyle(resizeBar, 'left', this.element.scrollLeft + 'px');
             }
         })
     }
@@ -247,10 +248,10 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
     @ViewChild('resizingLine')
     public resizingLine: ElementRef;
 
-    private _listenResize() {
+    /*private _listenResize() {
         if (!this.parent || !this.resizeLine) return;
         this._renderer.listen(this.resizeLine.nativeElement, 'mousedown', this._dragStart)
-    }
+    }*/
 
     private _movableTarget: HTMLElement;
     private _moving: boolean = false;
@@ -260,7 +261,7 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
     private _removeWindowMouseMoveListener: CallbackRemoval;
     private _removeWindowMouseUpListener: CallbackRemoval;
 
-    private _dragStart = (event) => {
+    /*private _dragStart = (event) => {
         event.preventDefault();
         event.stopPropagation();
 
@@ -268,8 +269,8 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
 
         const resizeLineEl = this.resizeLine.nativeElement;
         this._movableTarget = this.parent.resizingLine.nativeElement;
-        const startOffsetX = AffixUtils.offset(resizeLineEl).left - AffixUtils.offset(this.parent._element).left;
-        const startOffsetY = AffixUtils.offset(resizeLineEl).top - AffixUtils.offset(this.parent._element).top;
+        const startOffsetX = AffixUtils.offset(resizeLineEl).left - AffixUtils.offset(this.parent.element).left;
+        const startOffsetY = AffixUtils.offset(resizeLineEl).top - AffixUtils.offset(this.parent.element).top;
         if (this.parent.direction == 'column') {
             this._renderer.setStyle(this._movableTarget, 'top', startOffsetY + 'px');
         } else {
@@ -296,23 +297,23 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
 
     private _dragMove = (event) => {
         if (this._moving) {
-            /*const isFixed = this._movableTarget.style.position == 'fixed';
+            /!*const isFixed = this._movableTarget.style.position == 'fixed';
             const ox = event.clientX - this._position[0] - (isFixed ? window.pageXOffset : 0);
-            const oy = event.clientY - this._position[1] - (isFixed ? window.pageYOffset : 0);*/
+            const oy = event.clientY - this._position[1] - (isFixed ? window.pageYOffset : 0);*!/
             if (this.parent.direction == 'column') {
                 let oy = event.clientY - this._position[1];
                 if (oy < 0) {
                     oy = 0
-                } else if (oy > this.parent._element.offsetHeight) {
-                    oy = this.parent._element.offsetHeight - 5
+                } else if (oy > this.parent.element.offsetHeight) {
+                    oy = this.parent.element.offsetHeight - 5
                 }
                 this._renderer.setStyle(this._movableTarget, 'top', oy + 'px');
             } else {
                 let ox = event.clientX - this._position[0];
                 if (ox < 0) {
                     ox = 0
-                } else if (ox > this.parent._element.offsetWidth) {
-                    ox = this.parent._element.offsetWidth - 5
+                } else if (ox > this.parent.element.offsetWidth) {
+                    ox = this.parent.element.offsetWidth - 5
                 }
                 this._renderer.setStyle(this._movableTarget, 'left', ox + 'px');
             }
@@ -333,7 +334,7 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
         if (this._removeWindowMouseUpListener) {
             this._removeWindowMouseUpListener();
         }
-    }
+    }*/
 
     ngOnInit() {
         super.ngOnInit();
@@ -346,8 +347,7 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
         // 等待 option bar & block 渲染
         this._bindScrollEvent();
 
-        this._listenResize();
-        //this.resizingLine = this._element.querySelector('.jigsaw-view-layout-resizing');
+        //this._listenResize();
     }
 
     ngOnDestroy() {
@@ -389,7 +389,7 @@ export class JigsawViewEditor extends AbstractJigsawComponent {
 }
 
 @NgModule({
-    imports: [CommonModule, JigsawCommonModule],
+    imports: [CommonModule, JigsawCommonModule, JigsawResizableModule],
     declarations: [JigsawViewLayout, JigsawViewEditor],
     exports: [JigsawViewLayout, JigsawViewEditor]
 })
