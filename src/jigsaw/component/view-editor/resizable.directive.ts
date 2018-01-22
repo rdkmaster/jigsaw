@@ -8,8 +8,8 @@ import {AffixUtils} from "../../core/utils/internal-utils";
         '(mousedown)': '_dragStart($event)'
     }
 })
-export class JigsawResizable{
-    constructor(elementRef: ElementRef, private _renderer: Renderer2, private _zone: NgZone){
+export class JigsawResizable {
+    constructor(elementRef: ElementRef, private _renderer: Renderer2, private _zone: NgZone) {
         this._host = elementRef.nativeElement;
     }
 
@@ -45,12 +45,10 @@ export class JigsawResizable{
 
         const startOffsetX = AffixUtils.offset(this._host).left - AffixUtils.offset(this.effectBox).left;
         const startOffsetY = AffixUtils.offset(this._host).top - AffixUtils.offset(this.effectBox).top;
-        if (this.effectDirection == 'column') {
-            this._renderer.setStyle(this.movableTarget, 'top', startOffsetY + 'px');
-        } else {
-            this._renderer.setStyle(this.movableTarget, 'left', startOffsetX + 'px');
-        }
-        this._renderer.setStyle(this.movableTarget, 'display', 'block');
+
+        const startOffset = this.effectDirection == 'column' ? startOffsetY : startOffsetX;
+        const offsetProp = this.effectDirection == 'column' ? 'top' : 'left';
+        this._initTargetPosition(offsetProp, startOffset);
 
         this._position = [event.clientX - startOffsetX, event.clientY - startOffsetY];
         this._moving = true;
@@ -65,28 +63,12 @@ export class JigsawResizable{
     };
 
     private _dragMove = (event) => {
-        console.log(11111, this.range);
-        if (this._moving) {
-            if (this.effectDirection == 'column') {
-                let oy = event.clientY - this._position[1];
-                if (oy < this.range[0]) {
-                    oy = this.range[0] + 5
-                } else if (oy > this.range[1]) {
-                    oy = this.range[1] - 5
-                }
-                this._effectOffset = oy;
-                this._renderer.setStyle(this.movableTarget, 'top', oy + 'px');
-            } else {
-                let ox = event.clientX - this._position[0];
-                if (ox < this.range[0]) {
-                    ox = this.range[0] + 5
-                } else if (ox > this.range[1]) {
-                    ox = this.range[1] - 5
-                }
-                this._effectOffset = ox;
-                this._renderer.setStyle(this.movableTarget, 'left', ox + 'px');
-            }
-        }
+        if (!this._moving || !this.range || !this.movableTarget) return;
+
+        let eventProp = this.effectDirection == 'column' ? 'clientY' : 'clientX',
+            rawPosition = this.effectDirection == 'column' ? this._position[1] : this._position[0],
+            offsetProp = this.effectDirection == 'column' ? 'top' : 'left';
+        this._moveTarget(event, eventProp, rawPosition, offsetProp);
     };
 
     private _dragEnd = () => {
@@ -96,6 +78,22 @@ export class JigsawResizable{
         this._renderer.setStyle(this.movableTarget, 'display', 'none');
         this.resize.emit(this._effectOffset);
     };
+
+    private _initTargetPosition(offsetProp: string, startOffset: number) {
+        this._renderer.setStyle(this.movableTarget, offsetProp, startOffset + 'px');
+        this._renderer.setStyle(this.movableTarget, 'display', 'block');
+    }
+
+    private _moveTarget(event: MouseEvent, eventProp: string, rawPosition: number, offsetProp: string) {
+        let offset = event[eventProp] - rawPosition;
+        if (offset < this.range[0]) {
+            offset = this.range[0] + 5
+        } else if (offset > this.range[1]) {
+            offset = this.range[1] - 5
+        }
+        this._effectOffset = offset;
+        this._renderer.setStyle(this.movableTarget, offsetProp, offset + 'px');
+    }
 
     private _removeWindowListener() {
         if (this._removeWindowMouseMoveListener) {
@@ -115,6 +113,6 @@ export class JigsawResizable{
     declarations: [JigsawResizable],
     exports: [JigsawResizable]
 })
-export class JigsawResizableModule{
+export class JigsawResizableModule {
 
 }
