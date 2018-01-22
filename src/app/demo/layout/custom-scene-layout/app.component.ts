@@ -1,9 +1,9 @@
 import {Component, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
 import {LayoutData} from "jigsaw/core/data/layout-data";
 import {ComponentMetaData} from "jigsaw/component/view-editor/view-editor.type";
-import {BasicGraphComponent} from "../../graph/basic/app.component";
-import {TableBasicDemoComponent} from "../../table/basic/app.component";
-import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "../../../../jigsaw/service/popup.service";
+import {BasicGraphComponent} from "../../graph/basic/demo.component";
+import {TableBasicDemoComponent} from "../../table/basic/demo.component";
+import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/service/popup.service";
 import {JigsawViewLayout} from "jigsaw/component/view-editor/view-editor";
 
 @Component({

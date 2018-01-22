@@ -2,13 +2,13 @@ import {NgModule} from '@angular/core';
 import {JigsawViewEditorModule} from "jigsaw/component/view-editor/view-editor";
 import {customSceneLayoutDemoComponent} from "./app.component";
 import {JigsawSelectModule} from "jigsaw/component/select/select";
-import {BasicGraphComponent} from "../../graph/basic/app.component";
-import {TableBasicDemoComponent} from "../../table/basic/app.component";
-import {JigsawDialogModule} from "../../../../jigsaw/component/dialog/dialog";
-import {JigsawRadioModule} from "../../../../jigsaw/component/radio/radio";
+import {BasicGraphComponent} from "../../graph/basic/demo.component";
+import {TableBasicDemoComponent} from "../../table/basic/demo.component";
+import {JigsawDialogModule} from "jigsaw/component/dialog/dialog";
+import {JigsawRadioModule} from "jigsaw/component/radio/radio";
 import {CommonModule} from "@angular/common";
-import {TableBasicDemoModule} from "../../table/basic/app.module";
-import {BasicGraphModule} from "../../graph/basic/app.module";
+import {TableBasicDemoModule} from "../../table/basic/demo.module";
+import {BasicGraphModule} from "../../graph/basic/demo.module";
 
 @NgModule({
     declarations: [
