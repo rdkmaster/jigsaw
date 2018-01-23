@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {JigsawViewEditorModule} from "jigsaw/component/view-editor/view-editor";
-import {customSceneLayoutDemoComponent} from "./demo.component";
+import {CustomSceneLayoutDemoComponent} from "./demo.component";
 import {JigsawSelectModule} from "jigsaw/component/select/select";
 import {BasicGraphComponent} from "../../graph/basic/demo.component";
 import {TableBasicDemoComponent} from "../../table/basic/demo.component";
@@ -12,7 +12,7 @@ import {BasicGraphModule} from "../../graph/basic/demo.module";
 
 @NgModule({
     declarations: [
-        customSceneLayoutDemoComponent
+        CustomSceneLayoutDemoComponent
     ],
     imports: [
         JigsawViewEditorModule,
@@ -24,9 +24,9 @@ import {BasicGraphModule} from "../../graph/basic/demo.module";
         TableBasicDemoModule,
         BasicGraphModule,
     ],
-    exports: [customSceneLayoutDemoComponent],
+    exports: [CustomSceneLayoutDemoComponent],
     entryComponents: [TableBasicDemoComponent, BasicGraphComponent] // 可选的内容组件
 })
-export class customSceneLayoutDemoModule {
+export class CustomSceneLayoutDemoModule {
 
 }

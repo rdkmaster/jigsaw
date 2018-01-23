@@ -8,8 +8,8 @@ import {FormDemoComponent} from "./form/demo.component";
 import {FormDemoModule} from "./form/demo.module";
 import {BoxLayoutScrollDemoComponent} from "./box-layout-scroll/demo.component";
 import {BoxLayoutScrollDemoModule} from "./box-layout-scroll/demo.module";
-import {customSceneLayoutDemoComponent} from "app/demo/layout/custom-scene-layout/demo.component";
-import {customSceneLayoutDemoModule} from "./custom-scene-layout/demo.module";
+import {CustomSceneLayoutDemoComponent} from "app/demo/layout/custom-scene-layout/demo.component";
+import {CustomSceneLayoutDemoModule} from "./custom-scene-layout/demo.module";
 
 export const routerConfig = [
     {
@@ -25,7 +25,7 @@ export const routerConfig = [
         path: 'box-layout-scroll', component: BoxLayoutScrollDemoComponent
     },
     {
-        path: 'custom-scene-layout', component: customSceneLayoutDemoComponent
+        path: 'custom-scene-layout', component: CustomSceneLayoutDemoComponent
     },
 ];
 
@@ -36,7 +36,7 @@ export const routerConfig = [
         BoxLayoutDemoModule,
         FormDemoModule,
         BoxLayoutScrollDemoModule,
-        customSceneLayoutDemoModule,
+        CustomSceneLayoutDemoModule,
     ]
 })
 export class LayoutDemoModule {

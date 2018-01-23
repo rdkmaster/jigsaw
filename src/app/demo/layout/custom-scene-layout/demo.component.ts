@@ -11,7 +11,7 @@ import {JigsawViewLayout} from "jigsaw/component/view-editor/view-editor";
     styleUrls: ['./demo.component.css'],
     encapsulation: ViewEncapsulation.None
 })
-export class customSceneLayoutDemoComponent {
+export class CustomSceneLayoutDemoComponent {
     data: LayoutData;
     data2: LayoutData;
     data3: LayoutData;
