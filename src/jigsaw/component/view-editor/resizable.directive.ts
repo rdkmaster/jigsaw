@@ -75,7 +75,11 @@ export class JigsawResizable {
         this._moving = false;
         this._position = null;
         this._removeWindowListener();
+        // reset movable target style
         this._renderer.setStyle(this.movableTarget, 'display', 'none');
+        this._renderer.setStyle(this.movableTarget, 'left', 0);
+        this._renderer.setStyle(this.movableTarget, 'top', 0);
+
         this.resize.emit(this._effectOffset);
     };
 
