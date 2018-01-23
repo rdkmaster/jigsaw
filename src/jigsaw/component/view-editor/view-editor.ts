@@ -365,7 +365,17 @@ export class JigsawViewEditor extends AbstractJigsawComponent {
     }
 
     public set resizeLineWidth(value: string) {
-        this._resizeLineWidth = CommonUtils.getCssValue(value);
+        if (typeof value == 'string') {
+            value = value.replace('px', '');
+        }
+        let valueNum = Number(value);
+        if (Number.isNaN(valueNum)) return;
+        if (valueNum < 2) {
+            valueNum = 2
+        } else if (valueNum > 8) {
+            valueNum = 8
+        }
+        this._resizeLineWidth = valueNum + 'px';
     }
 }
 
