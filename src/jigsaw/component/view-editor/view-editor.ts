@@ -8,7 +8,7 @@ import {LayoutData} from "../../core/data/layout-data";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule, JigsawRendererHost} from "../common";
 import {JigsawBoxBase} from "../box/box";
-import {CallbackRemoval} from "../../core/utils/common-utils";
+import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {ComponentInput, ComponentMetaData} from "./view-editor.type";
 import {JigsawResizableModule} from "./resizable.directive";
 import {AffixUtils} from "../../core/utils/internal-utils";
@@ -83,6 +83,9 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
 
     @Input()
     public parent: JigsawViewLayout;
+
+    @Input()
+    public resizeLineWidth: string;
 
     /**
      * @internal
@@ -331,7 +334,8 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
     selector: 'jigsaw-view-editor, j-view-editor',
     template: `
         <j-view-layout [data]="data" [(direction)]="data.direction"
-                       [grow]="data.grow" [frozen]="frozen" [isFirst]="true" height="100%">
+                       [grow]="data.grow" [frozen]="frozen" [isFirst]="true" height="100%"
+                       [resizeLineWidth]="resizeLineWidth">
         </j-view-layout>
     `,
     host: {
@@ -352,6 +356,17 @@ export class JigsawViewEditor extends AbstractJigsawComponent {
 
     @Input()
     public frozen: boolean;
+
+    private _resizeLineWidth: string;
+
+    @Input()
+    public get resizeLineWidth(): string {
+        return this._resizeLineWidth;
+    }
+
+    public set resizeLineWidth(value: string) {
+        this._resizeLineWidth = CommonUtils.getCssValue(value);
+    }
 }
 
 @NgModule({

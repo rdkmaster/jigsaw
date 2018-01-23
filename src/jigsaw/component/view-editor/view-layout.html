@@ -9,6 +9,7 @@
     [shrink]="itemData.shrink"
     [frozen]="frozen"
     [isFirst]="isFirst"
+    [resizeLineWidth]="resizeLineWidth"
     [parent]="this"
     (remove)="_$removeItem($event)">
 </j-view-layout>
@@ -34,8 +35,13 @@
    (resize)="_$handleResize($event)"
    (mousedown)="_$updateResizeRange($event)"
    class="jigsaw-view-layout-resize"
-   [class.jigsaw-view-layout-resize-column]="parent?.direction == 'column'"></b>
+   [class.jigsaw-view-layout-resize-column]="parent?.direction == 'column'"
+   [style.width]="parent?.direction == 'column' ? '100%' : resizeLineWidth"
+   [style.height]="parent?.direction == 'column' ? resizeLineWidth : '100%'"></b>
 
-<b #resizingLine class="jigsaw-view-layout-resizing" [class.jigsaw-view-layout-resizing-column]="direction == 'column'"></b>
+<b #resizingLine class="jigsaw-view-layout-resizing"
+   [class.jigsaw-view-layout-resizing-column]="direction == 'column'"
+   [style.width]="direction == 'column' ? '100%' : resizeLineWidth"
+   [style.height]="direction == 'column' ? resizeLineWidth : '100%'"></b>
 
 <ng-template jigsaw-renderer-host></ng-template>
