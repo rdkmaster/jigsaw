@@ -1,0 +1,15 @@
+<div class="live-demo-wrap">
+    <h2>View Editor</h2>
+    <div class="demo-1 live-demo">
+        <h3>设置resize line宽度</h3>
+        <p class="comment">resizeLineWidth的宽度范围在[2, 8]之间</p>
+        <div class="mgb">
+            <span>设置resize line宽度： 0</span>
+            <jigsaw-slider [(value)]="resizeLineWidth" max="10" width="200"></jigsaw-slider>
+            <span>10</span>
+        </div>
+        <j-view-editor [data]="data" [resizeLineWidth]="resizeLineWidth" height="400"></j-view-editor>
+    </div>
+</div>
+
+
