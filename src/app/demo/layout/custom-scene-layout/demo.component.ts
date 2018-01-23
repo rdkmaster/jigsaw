@@ -1,10 +1,10 @@
 import {Component, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
 import {LayoutData} from "jigsaw/core/data/layout-data";
 import {ComponentMetaData} from "jigsaw/component/view-editor/view-editor.type";
-import {BasicGraphComponent} from "../../graph/basic/demo.component";
-import {TableBasicDemoComponent} from "../../table/basic/demo.component";
 import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/service/popup.service";
 import {JigsawViewLayout} from "jigsaw/component/view-editor/view-editor";
+import {CustomTableComponent} from "./custom-table/demo.component";
+import {CustomGraphComponent} from "./custom-graph/demo.component";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -121,7 +121,7 @@ export class CustomSceneLayoutDemoComponent {
         console.log(this.data3);
         setTimeout(() => {
             console.log(this.data3.getComponents());
-        }, 2000)
+        })
     }
 
     @ViewChild('dialog') dialog: TemplateRef<any>;
@@ -137,9 +137,9 @@ export class CustomSceneLayoutDemoComponent {
     componentMetaDataList: ComponentMetaData[] = [
         {
             label: "表格",
-            component: TableBasicDemoComponent,
+            component: CustomTableComponent,
             selector: 'custom-table',
-            import: 'TableBasicDemoModule,',
+            import: 'CustomTableModule,',
             inputs: [
                 {
                     property: 'data',
@@ -167,9 +167,9 @@ export class CustomSceneLayoutDemoComponent {
         },
         {
             label: "图形",
-            component: BasicGraphComponent,
+            component: CustomGraphComponent,
             selector: 'custom-graph',
-            import: 'BasicGraphModule,',
+            import: 'CustomGraphModule,',
             inputs: [
                 {
                     property: 'data',

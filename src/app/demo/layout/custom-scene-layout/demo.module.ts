@@ -2,13 +2,13 @@ import {NgModule} from '@angular/core';
 import {JigsawViewEditorModule} from "jigsaw/component/view-editor/view-editor";
 import {CustomSceneLayoutDemoComponent} from "./demo.component";
 import {JigsawSelectModule} from "jigsaw/component/select/select";
-import {BasicGraphComponent} from "../../graph/basic/demo.component";
-import {TableBasicDemoComponent} from "../../table/basic/demo.component";
 import {JigsawDialogModule} from "jigsaw/component/dialog/dialog";
 import {JigsawRadioModule} from "jigsaw/component/radio/radio";
 import {CommonModule} from "@angular/common";
-import {TableBasicDemoModule} from "../../table/basic/demo.module";
-import {BasicGraphModule} from "../../graph/basic/demo.module";
+import {CustomTableComponent} from "./custom-table/demo.component";
+import {CustomTableModule} from "./custom-table/demo.module";
+import {CustomGraphComponent} from "./custom-graph/demo.component";
+import {CustomGraphModule} from "./custom-graph/demo.module";
 
 @NgModule({
     declarations: [
@@ -21,11 +21,11 @@ import {BasicGraphModule} from "../../graph/basic/demo.module";
         JigsawRadioModule,
         CommonModule,
         // 可选的内容模块
-        TableBasicDemoModule,
-        BasicGraphModule,
+        CustomTableModule,
+        CustomGraphModule,
     ],
     exports: [CustomSceneLayoutDemoComponent],
-    entryComponents: [TableBasicDemoComponent, BasicGraphComponent] // 可选的内容组件
+    entryComponents: [CustomTableComponent, CustomGraphComponent] // 可选的内容组件
 })
 export class CustomSceneLayoutDemoModule {
 
