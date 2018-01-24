@@ -12,6 +12,8 @@ import {CustomSceneLayoutDemoComponent} from "app/demo/layout/custom-scene-layou
 import {CustomSceneLayoutDemoModule} from "./custom-scene-layout/demo.module";
 import {SetResizeLineWidthDemoComponent} from "./set-resize-line-width/demo.component";
 import {SetResizeLineWidthDemoModule} from "./set-resize-line-width/demo.module";
+import {EditableAndBlockedDemoComponent} from "./editable-and-blocked/demo.component";
+import {EditableAndBlockedDemoModule} from "./editable-and-blocked/demo.module";
 
 export const routerConfig = [
     {
@@ -32,6 +34,9 @@ export const routerConfig = [
     {
         path: 'set-resize-line-width', component: SetResizeLineWidthDemoComponent
     },
+    {
+        path: 'editable-and-blocked', component: EditableAndBlockedDemoComponent
+    },
 ];
 
 @NgModule({
@@ -42,7 +47,8 @@ export const routerConfig = [
         FormDemoModule,
         BoxLayoutScrollDemoModule,
         CustomSceneLayoutDemoModule,
-        SetResizeLineWidthDemoModule
+        SetResizeLineWidthDemoModule,
+        EditableAndBlockedDemoModule
     ]
 })
 export class LayoutDemoModule {

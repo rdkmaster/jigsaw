@@ -4,21 +4,24 @@ import {LayoutData} from "jigsaw/core/data/layout-data";
 @Component({
     templateUrl: './demo.component.html',
 })
-export class SetResizeLineWidthDemoComponent {
+export class EditableAndBlockedDemoComponent {
     data: LayoutData;
-    resizeLineWidth: number;
+    editable: boolean = true;
+    blocked: boolean = true;
 
     constructor() {
         this.data = new LayoutData();
-        this.data.direction = 'v';
         this.data.fromObject([
-            {},
             {
                 grow: 2,
+                direction: 'v',
                 nodes: [
                     {},
                     {
-                        grow: 2
+                        nodes:[
+                            {},
+                            {}
+                        ]
                     }
                 ]
             },
