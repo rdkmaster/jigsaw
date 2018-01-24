@@ -20,33 +20,19 @@ export class CustomSceneLayoutDemoComponent {
         this.data = new LayoutData();
         this.data.fromObject([
             {
+                grow: 2,
                 direction: 'v',
                 nodes: [
+                    {},
                     {
-                        nodes: [
+                        nodes:[
                             {},
-                            {
-                                direction: 'v',
-                                nodes: [
-                                    {},
-                                    {},
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        grow: 2,
-                        nodes: [
-                            {},
-                            {},
-                            {},
+                            {}
                         ]
                     }
                 ]
             },
-            {
-                grow: '3'
-            },
+            {},
         ]);
         this.data2 = new LayoutData();
         this.data3 = new LayoutData();
@@ -63,44 +49,30 @@ export class CustomSceneLayoutDemoComponent {
             this.data.direction = 'h';
             this.data.fromObject([
                 {
+                    grow: 2,
                     direction: 'v',
                     nodes: [
+                        {},
                         {
-                            nodes: [
+                            nodes:[
                                 {},
-                                {
-                                    direction: 'v',
-                                    nodes: [
-                                        {},
-                                        {},
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            grow: 2,
-                            nodes: [
-                                {},
-                                {},
-                                {},
+                                {}
                             ]
                         }
                     ]
                 },
-                {
-                    grow: '3'
-                },
+                {},
             ]);
         } else if (scene.id = 2) {
             this.data.direction = 'v';
             this.data.fromObject([
                 {},
                 {
-                    grow: 4,
+                    grow: 2,
                     nodes: [
                         {},
                         {
-                            grow: 4
+                            grow: 2
                         }
                     ]
                 },
