@@ -79,6 +79,9 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
     public editable: boolean;
 
     @Input()
+    public blocked: boolean;
+
+    @Input()
     public isFirst: boolean;
 
     @Input()
@@ -339,8 +342,8 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
     selector: 'jigsaw-view-editor, j-view-editor',
     template: `
         <j-view-layout [data]="data" [(direction)]="data.direction"
-                       [grow]="data.grow" [editable]="editable" [isFirst]="true" height="100%"
-                       [resizeLineWidth]="resizeLineWidth">
+                       [grow]="data.grow" [editable]="editable" [blocked]="blocked"
+                       [resizeLineWidth]="resizeLineWidth" [isFirst]="true" height="100%">
         </j-view-layout>
     `,
     host: {
@@ -360,7 +363,10 @@ export class JigsawViewEditor extends AbstractJigsawComponent {
     public fill = new EventEmitter<JigsawViewLayout>();
 
     @Input()
-    public editable: boolean;
+    public editable: boolean = true;
+
+    @Input()
+    public blocked: boolean = true;
 
     private _resizeLineWidth: string;
 
