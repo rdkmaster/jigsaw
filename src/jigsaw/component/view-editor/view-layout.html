@@ -14,13 +14,15 @@
     (remove)="_$removeItem($event)">
 </j-view-layout>
 
-<div *ngIf="(!data || !data.nodes || !data.nodes.length) && !frozen" class="jigsaw-view-layout-option-box">
-    <i class="fa fa-plus-square-o" (click)="_$addContent()"></i>
-    <div class="jigsaw-view-layout-option-bar">
-        <span class="fa fa-minus-square-o" (click)="_$addItems('v')"></span>
-        <span class="fa fa-columns" (click)="_$addItems('h')"></span>
-        <span class="fa fa-trash-o" (click)="_$remove()"></span>
-    </div>
+<div *ngIf="(!data || !data.nodes || !data.nodes.length) && !frozen"
+     class="jigsaw-view-layout-option-box" (click)="_$addContent()">
+    <i class="fa fa-plus" ></i>
+</div>
+
+<div *ngIf="(!data || !data.nodes || !data.nodes.length) && !frozen" class="jigsaw-view-layout-option-bar">
+    <span class="fa fa-minus-square-o" (click)="_$addItems('v')"></span>
+    <span class="fa fa-columns" (click)="_$addItems('h')"></span>
+    <span class="fa fa-trash-o" (click)="_$remove()"></span>
 </div>
 
 <div *ngIf="(!data || !data.nodes || !data.nodes.length) && !frozen" class="jigsaw-view-layout-block"></div>

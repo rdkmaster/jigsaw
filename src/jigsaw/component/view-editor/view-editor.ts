@@ -8,7 +8,7 @@ import {LayoutData} from "../../core/data/layout-data";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule, JigsawRendererHost} from "../common";
 import {JigsawBoxBase} from "../box/box";
-import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
+import {CallbackRemoval} from "../../core/utils/common-utils";
 import {ComponentInput, ComponentMetaData} from "./view-editor.type";
 import {JigsawResizableModule} from "./resizable.directive";
 import {AffixUtils} from "../../core/utils/internal-utils";
@@ -205,6 +205,7 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
 
         const block = this.element.querySelector('.jigsaw-view-layout-block');
         const optionBox = this.element.querySelector('.jigsaw-view-layout-option-box');
+        const optionBar = this.element.querySelector('.jigsaw-view-layout-option-bar');
         const resizeBar = this.element.querySelector('.jigsaw-view-layout-resize');
         if (this._removeElementScrollEvent) {
             this._removeElementScrollEvent();
@@ -217,6 +218,10 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
             if (optionBox) {
                 this._renderer.setStyle(optionBox, 'top', this.element.offsetHeight / 2 + this.element.scrollTop + 'px');
                 this._renderer.setStyle(optionBox, 'left', this.element.offsetWidth / 2 + this.element.scrollLeft + 'px');
+            }
+            if (optionBar) {
+                this._renderer.setStyle(optionBar, 'top', this.element.offsetHeight / 2 + this.element.scrollTop + 'px');
+                this._renderer.setStyle(optionBar, 'left', this.element.offsetWidth / 2 + this.element.scrollLeft + 'px');
             }
             if (resizeBar) {
                 this._renderer.setStyle(resizeBar, 'top', this.element.scrollTop + 'px');
