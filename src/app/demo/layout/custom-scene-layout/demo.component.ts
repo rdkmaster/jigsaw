@@ -88,8 +88,8 @@ export class CustomSceneLayoutDemoComponent {
 
     parseData(data) {
         console.log(data);
-        console.log(data.toString());
-        this.data3 = LayoutData.of(data.toString(), this.componentMetaDataList);
+        console.log(data.toHtml());
+        this.data3 = LayoutData.of(data.toHtml(), this.componentMetaDataList);
         console.log(this.data3);
         setTimeout(() => {
             console.log(this.data3.getComponents());

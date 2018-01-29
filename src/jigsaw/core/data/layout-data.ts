@@ -23,8 +23,8 @@ export class LayoutData extends GeneralCollection<any> {
      * 把LayoutData转化为dom字符串
      * @returns {string}
      */
-    public toString(): string {
-        return this._parseNodeToString(this, '');
+    public toHtml(): string {
+        return this._parseNodeToHtml(this, '');
     }
 
     /**
@@ -130,19 +130,19 @@ export class LayoutData extends GeneralCollection<any> {
         return node;
     }
 
-    private _parseNodesToString(nodes: LayoutData[], domStr: string): string {
+    private _parseNodesToHtml(nodes: LayoutData[], domStr: string): string {
         if (nodes instanceof Array) {
             nodes.forEach(node => {
-                domStr = this._parseNodeToString(node, domStr);
+                domStr = this._parseNodeToHtml(node, domStr);
             })
         }
         return domStr;
     }
 
-    private _parseNodeToString(node: LayoutData, domStr: string): string {
+    private _parseNodeToHtml(node: LayoutData, domStr: string): string {
         domStr += `<j-box${CommonUtils.isDefined(node.direction) ? ` direction="${node.direction}"` : ''}${CommonUtils.isDefined(node.grow) ? ` grow="${node.grow}"` : ''}> \n`;
         if (node.nodes instanceof Array && node.nodes.length > 0) {
-            domStr = this._parseNodesToString(node.nodes, domStr) + `</j-box> \n`;
+            domStr = this._parseNodesToHtml(node.nodes, domStr) + `</j-box> \n`;
         } else {
             domStr += (node.innerHtml ? node.innerHtml : '') + '</j-box> \n';
         }
