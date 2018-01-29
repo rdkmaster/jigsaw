@@ -1,5 +1,5 @@
 import {JigsawViewLayout} from "./view-editor";
-import {ComponentRef, EmbeddedViewRef} from "@angular/core";
+import {ComponentRef, EmbeddedViewRef, Type} from "@angular/core";
 
 export type ComponentInput = {
     property: string,
@@ -10,7 +10,7 @@ export type ComponentInput = {
 
 export type ComponentMetaData = {
     [index: string]: any,
-    component: any,
+    component: Type<any>,
     selector: string,
     inputs?: ComponentInput[],
     outputs?: any,
