@@ -6,12 +6,13 @@ import {ColumnDefine} from "jigsaw/component/table/table-typings";
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
-        jigsaw-pagination .jigsaw-select-option-list{
+        /*用于选择页数的下拉在上面弹出*/
+        .pagination-select-up .jigsaw-select-option-list {
             top: 0;
             transform: translateY(-100%);
         }
     `],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None // 解除样式封装
 })
 export class TablePageableDemoComponent {
     pageable: PageableTableData;
