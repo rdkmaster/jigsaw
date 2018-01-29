@@ -16,7 +16,8 @@
 </j-view-layout>
 
 <div *ngIf="(!data || !data.nodes || !data.nodes.length) && editable"
-     class="jigsaw-view-layout-option-box" (click)="_$addContent()">
+     class="jigsaw-view-layout-option-box" (click)="_$addContent()"
+     [class.jigsaw-view-layout-has-content]="data?.components?.length">
     <i class="fa fa-plus" ></i>
 </div>
 
@@ -26,7 +27,9 @@
     <span class="fa fa-trash-o" (click)="_$remove()"></span>
 </div>
 
-<div *ngIf="(!data || !data.nodes || !data.nodes.length) && editable && blocked" class="jigsaw-view-layout-block"></div>
+<div *ngIf="(!data || !data.nodes || !data.nodes.length) && editable && blocked"
+     class="jigsaw-view-layout-block"
+     [class.jigsaw-view-layout-has-content]="data?.components?.length"></div>
 
 <b #resizeLine
    *ngIf="!isFirst"
@@ -36,7 +39,7 @@
    [effectDirection]="parent?.direction"
    [range]="_$resizeRange"
    (resize)="_$handleResize($event)"
-   (mousedown)="_$updateResizeRange($event)"
+   (mousedown)="_$handleResizeMouseDown($event)"
    class="jigsaw-view-layout-resize"
    [class.jigsaw-view-layout-resize-column]="parent?.direction == 'column'"
    [style.width]="parent?.direction == 'column' ? '100%' : resizeLineWidth"

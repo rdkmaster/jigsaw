@@ -219,12 +219,12 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
                 this._renderer.setStyle(block, 'left', this.element.scrollLeft + 'px');
             }
             if (optionBox) {
-                this._renderer.setStyle(optionBox, 'top', this.element.offsetHeight / 2 + this.element.scrollTop + 'px');
-                this._renderer.setStyle(optionBox, 'left', this.element.offsetWidth / 2 + this.element.scrollLeft + 'px');
+                this._renderer.setStyle(optionBox, 'top', this.element.scrollTop ? (this.element.offsetHeight / 2 + this.element.scrollTop + 'px') : '50%');
+                this._renderer.setStyle(optionBox, 'left', this.element.scrollLeft ? (this.element.offsetWidth / 2 + this.element.scrollLeft + 'px') : '50%');
             }
             if (optionBar) {
-                this._renderer.setStyle(optionBar, 'top', this.element.offsetHeight / 2 + this.element.scrollTop + 'px');
-                this._renderer.setStyle(optionBar, 'left', this.element.offsetWidth / 2 + this.element.scrollLeft + 'px');
+                this._renderer.setStyle(optionBar, 'top', this.element.scrollTop ? (this.element.offsetHeight / 2 + this.element.scrollTop + 'px') : '50%');
+                this._renderer.setStyle(optionBar, 'left', this.element.scrollLeft ? (this.element.offsetWidth / 2 + this.element.scrollLeft + 'px') : '50%');
             }
             if (resizeBar) {
                 this._renderer.setStyle(resizeBar, 'top', this.element.scrollTop + 'px');
@@ -250,7 +250,9 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
         this.parent.childrenBox.forEach((box, index) => {
             box.grow = sizeRatios[index];
             box.growChange.emit(sizeRatios[index]);
-        })
+        });
+
+        this._handleResizeMouseUp();
     }
 
     private _computeSizeRatios(offsetProp: string, sizeProp: string, updateOffset: number): number[] {
@@ -304,16 +306,25 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
      */
     public _$resizeRange: number[];
 
-    /**
-     * @internal
-     */
-    public _$updateResizeRange(event) {
-        event.preventDefault();
-        event.stopPropagation();
-
+    private _updateResizeRange() {
         const [offsetProp, sizeProp] = this._getPropertyByDirection();
         this._$resizeRange = this._getResizeRange(offsetProp, sizeProp);
     };
+
+    /**
+     * @internal
+     */
+    public _$handleResizeMouseDown(event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        this._updateResizeRange();
+        this._renderer.addClass(this._parentViewEditor.element, 'jigsaw-view-editor-resizing');
+    }
+
+    private _handleResizeMouseUp() {
+        this._renderer.removeClass(this._parentViewEditor.element, 'jigsaw-view-editor-resizing');
+    }
 
     ngOnInit() {
         super.ngOnInit();
@@ -353,6 +364,12 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
     }
 })
 export class JigsawViewEditor extends AbstractJigsawComponent {
+    public element: HTMLElement;
+    constructor(elementRef: ElementRef) {
+        super();
+        this.element = elementRef.nativeElement;
+    }
+
     @Input()
     public data: LayoutData;
 
@@ -366,7 +383,7 @@ export class JigsawViewEditor extends AbstractJigsawComponent {
     public editable: boolean = true;
 
     @Input()
-    public blocked: boolean = true;
+    public blocked: boolean = false;
 
     private _resizeLineWidth: string;
 

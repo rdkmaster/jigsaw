@@ -75,7 +75,13 @@ $editor-prefix-cls: #{$jigsaw-prefix}-view-editor;
                 color: $primary-9;
             }
         }
-        .#{$layout-prefix-cls}:hover > & {
+        .#{$editor-prefix-cls}:not(.#{$editor-prefix-cls}-resizing) .#{$layout-prefix-cls}:hover > & {
+            display: block;
+        }
+    }
+    &-has-content{
+        display: none;
+        .#{$editor-prefix-cls}:not(.#{$editor-prefix-cls}-resizing) .#{$layout-prefix-cls}:hover > & {
             display: block;
         }
     }
