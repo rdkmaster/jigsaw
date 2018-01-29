@@ -1,10 +1,17 @@
-import {Component} from "@angular/core";
+import {Component, ViewEncapsulation} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {PageableTableData} from "jigsaw/core/data/table-data";
 import {ColumnDefine} from "jigsaw/component/table/table-typings";
 
 @Component({
-    templateUrl: './demo.component.html'
+    templateUrl: './demo.component.html',
+    styles: [`
+        jigsaw-pagination .jigsaw-select-option-list{
+            top: 0;
+            transform: translateY(-100%);
+        }
+    `],
+    encapsulation: ViewEncapsulation.None
 })
 export class TablePageableDemoComponent {
     pageable: PageableTableData;
