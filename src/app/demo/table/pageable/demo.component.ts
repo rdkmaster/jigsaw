@@ -4,7 +4,7 @@ import {PageableTableData} from "jigsaw/core/data/table-data";
 import {ColumnDefine} from "jigsaw/component/table/table-typings";
 
 @Component({
-    templateUrl: './demo.component.html',
+    templateUrl: './demo.component.html'
 })
 export class TablePageableDemoComponent {
     pageable: PageableTableData;
