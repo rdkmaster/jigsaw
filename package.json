@@ -87,6 +87,8 @@
     "tslib": "~1.7.1",
     "tslint": "~5.3.2",
     "typescript": "2.4.2",
-    "uglify-js": "~2.8.14"
+    "uglify-js": "~2.8.14",
+    "systemjs": "~0.19.39",
+    "plugin-typescript": "~5.2.7"
   }
 }
