@@ -52,8 +52,6 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
             this._removeDataRefreshListener();
         }
         this._removeDataRefreshListener = this._data.onRefresh(() => {
-            this._renderComponents(this.data.componentMetaDataList);
-            this._bindScrollEvent();
         })
     }
 
