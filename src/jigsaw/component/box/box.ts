@@ -1,6 +1,10 @@
-import {AfterContentInit, Component, ContentChildren, ElementRef, Input, NgModule, QueryList, Renderer2} from "@angular/core";
+import {
+    AfterContentInit, AfterViewInit, Component, ContentChildren, DoCheck, ElementRef, Input, NgModule, QueryList, Renderer2,
+    ViewChild
+} from "@angular/core";
 import {AbstractJigsawComponent} from "../common";
 import {CommonUtils} from "../../core/utils/common-utils";
+import {CommonModule} from "@angular/common";
 
 export class JigsawBoxBase extends AbstractJigsawComponent {
     public element: HTMLElement;
@@ -153,7 +157,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
 
 @Component({
     selector: 'jigsaw-box, j-box',
-    template: '<ng-content></ng-content>',
+    templateUrl: './box.html',
     host: {
         '[class.jigsaw-box]': 'true',
         '[class.jigsaw-flex]': 'type == "flex"',
@@ -161,20 +165,59 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
         '[style.height]': 'height',
     }
 })
-export class JigsawBox extends JigsawBoxBase implements AfterContentInit {
+export class JigsawBox extends JigsawBoxBase implements AfterContentInit, DoCheck, AfterViewInit {
     constructor(elementRef: ElementRef, renderer: Renderer2) {
         super(elementRef, renderer);
     }
+
+    @Input()
+    public resizable: boolean = true;
+
+    public showResizeLine: boolean;
+
+    public isColumnLine: boolean;
 
     @ContentChildren(JigsawBox)
     protected childrenBox: QueryList<JigsawBox>;
 
     ngAfterContentInit() {
         this.checkFlex();
+
+        if(this.resizable){
+            this.childrenBox.forEach((box, index) => {
+                if (index <= 1) return; // 过滤掉自己和第一个child box
+                box.showResizeLine = true;
+                if (this.direction == 'column') {
+                    box.isColumnLine = true;
+                }
+            });
+        }
+    }
+
+    @ViewChild('resizeLine') private resizeLine: ElementRef;
+
+    ngAfterViewInit() {
+        // 等待box视图渲染
+        setTimeout(() => {
+            if (this.isColumnLine || !this.resizeLine) return;
+            this._renderer.setStyle(this.resizeLine.nativeElement, 'height', this.element.offsetHeight - 2 + 'px');
+        })
+    }
+
+    ngDoCheck() {
+        /*console.log('aaaa')
+        if(this.isColumnLine || !this.resizeLine) return;
+        console.log('bbbb')
+        this._renderer.setStyle(this.resizeLine.nativeElement, 'height', this.element.offsetHeight-2 + 'px');*/
+    }
+
+    public _$handleMouseDown(event){
+
     }
 }
 
 @NgModule({
+    imports: [CommonModule],
     declarations: [JigsawBox],
     exports: [JigsawBox]
 })

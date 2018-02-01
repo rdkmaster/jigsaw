@@ -1,0 +1,9 @@
+<i class="jigsaw-box-relative" *ngIf="childrenBox.length <= 1 && showResizeLine">
+    <b #resizeLine
+       class="jigsaw-box-resize-line"
+       [class.jigsaw-box-resize-line-column]="isColumnLine"
+       (mousedown)="_$handleMouseDown($event)"></b>
+</i>
+<ng-content></ng-content>
+
+
