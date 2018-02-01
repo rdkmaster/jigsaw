@@ -2,7 +2,12 @@
     <b #resizeLine
        class="jigsaw-box-resize-line"
        [class.jigsaw-box-resize-line-column]="isColumnLine"
-       (mousedown)="_$handleMouseDown($event)"></b>
+       j-box-resizable
+       [effectBox]="parent?.element"
+       [effectDirection]="parent?.direction"
+       [range]="_$resizeRange"
+       (resize)="_$handleResize($event)"
+       (mousedown)="_$handleResizeMouseDown($event)"></b>
 </i>
 <ng-content></ng-content>
 

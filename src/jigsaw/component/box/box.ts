@@ -1,10 +1,12 @@
 import {
-    AfterContentInit, AfterViewInit, Component, ContentChildren, DoCheck, ElementRef, Input, NgModule, QueryList, Renderer2,
-    ViewChild
+    AfterContentInit, AfterViewInit, Component, ContentChildren, DoCheck,
+    ElementRef, Input, NgModule, QueryList, Renderer2, ViewChild
 } from "@angular/core";
 import {AbstractJigsawComponent} from "../common";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {CommonModule} from "@angular/common";
+import {JigsawBoxResizableModule} from "./resizable.directive";
+import {AffixUtils} from "../../core/utils/internal-utils";
 
 export class JigsawBoxBase extends AbstractJigsawComponent {
     public element: HTMLElement;
@@ -128,7 +130,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
         this._renderer.setStyle(this.element, 'flex-shrink', Number(value));
     }
 
-    protected childrenBox: QueryList<JigsawBoxBase>;
+    protected childrenBox: QueryList<JigsawBoxBase> | JigsawBox[];
 
     private _checkFlexByOwnProperty(property: string) {
         if (property && this.type != 'flex') {
@@ -138,9 +140,8 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
         }
     }
 
-    private _checkFlexByChildren() {
-        // 映射同一组件实例，ContentChildren会包含自己，https://github.com/angular/angular/issues/21148
-        if (this.childrenBox.length > 1 && this.type != 'flex') {
+    protected _checkFlexByChildren() {
+        if (this.childrenBox.length > 0 && this.type != 'flex') {
             setTimeout(() => {
                 this.type = 'flex';
             })
@@ -149,9 +150,11 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
 
     protected checkFlex() {
         this._checkFlexByChildren();
-        this.childrenBox.changes.subscribe(() => {
-            this._checkFlexByChildren();
-        })
+        if (this.childrenBox instanceof QueryList) {
+            this.childrenBox.changes.subscribe(() => {
+                this._checkFlexByChildren();
+            })
+        }
     }
 }
 
@@ -177,24 +180,38 @@ export class JigsawBox extends JigsawBoxBase implements AfterContentInit, DoChec
 
     public isColumnLine: boolean;
 
+    public parent: JigsawBox;
+
     @ContentChildren(JigsawBox)
-    protected childrenBox: QueryList<JigsawBox>;
+    public childrenBoxRaw: QueryList<JigsawBox>;
+
+    protected childrenBox: JigsawBox[];
 
     ngAfterContentInit() {
+        // 映射同一组件实例，ContentChildren会包含自己，https://github.com/angular/angular/issues/21148
+        this.childrenBox = this.childrenBoxRaw.filter(box => box != this);
         this.checkFlex();
+        this.childrenBoxRaw.changes.subscribe(() => {
+            this.childrenBox = this.childrenBoxRaw.filter(box => box != this);
+            this._checkFlexByChildren();
+        });
 
-        if(this.resizable){
+        if (this.resizable) {
             this.childrenBox.forEach((box, index) => {
-                if (index <= 1) return; // 过滤掉自己和第一个child box
+                box.parent = this;
+                if (index == 0) return; // 过滤掉第一个child box
+
                 box.showResizeLine = true;
                 if (this.direction == 'column') {
                     box.isColumnLine = true;
                 }
+
             });
         }
     }
 
-    @ViewChild('resizeLine') private resizeLine: ElementRef;
+    @ViewChild('resizeLine')
+    public resizeLine: ElementRef;
 
     ngAfterViewInit() {
         // 等待box视图渲染
@@ -211,13 +228,109 @@ export class JigsawBox extends JigsawBoxBase implements AfterContentInit, DoChec
         this._renderer.setStyle(this.resizeLine.nativeElement, 'height', this.element.offsetHeight-2 + 'px');*/
     }
 
-    public _$handleMouseDown(event){
 
+    /**
+     * @internal
+     */
+    public _$handleResize(offset: number) {
+        if (!this.parent) return;
+
+        const [offsetProp, sizeProp] = this._getPropertyByDirection();
+        const sizeRatios = this._computeSizeRatios(offsetProp, sizeProp, offset);
+        this.parent.childrenBox.forEach((box, index) => {
+            box.grow = sizeRatios[index];
+        });
+
+        this._handleResizeMouseUp();
+    }
+
+    private _computeSizeRatios(offsetProp: string, sizeProp: string, updateOffset: number): number[] {
+        const offsets = this._getOffsets(offsetProp, sizeProp);
+        const sizes = this.parent.childrenBox.reduce((arr, box) => {
+            arr.push(box.element[sizeProp]);
+            return arr;
+        }, []);
+        const curIndex = this._getCurrentIndex();
+        offsets.splice(curIndex, 1, updateOffset);
+        if (curIndex < 1) return;
+        const prevBoxSize = offsets[curIndex] - offsets[curIndex - 1];
+        const curBoxSize = offsets[curIndex + 1] - offsets[curIndex];
+        sizes.splice(curIndex - 1, 2, prevBoxSize, curBoxSize);
+        return sizes.map(size => {
+            return size / this.parent.element[sizeProp] * 100
+        });
+    }
+
+    /**
+     * 子box相对于父box的偏移
+     * @param {string} offsetProp
+     * @param {string} sizeProp
+     * @returns {number[]}
+     * @private
+     */
+    private _getOffsets(offsetProp: string, sizeProp: string): number[] {
+        const offsets = this.parent.childrenBox.reduce((arr, box, index) => {
+            if (index == 0) {
+                arr.push(0);
+            } else {
+                arr.push(AffixUtils.offset(box.resizeLine.nativeElement)[offsetProp] -
+                    AffixUtils.offset(this.parent.element)[offsetProp]);
+            }
+            return arr;
+        }, []);
+        offsets.push(this.parent.element[sizeProp]);
+        return offsets;
+    }
+
+    private _getCurrentIndex(): number {
+        let index: number;
+        if (this.parent.childrenBox instanceof QueryList) {
+            index = this.parent.childrenBox.toArray().findIndex(box => box == this);
+        } else {
+            index = this.parent.childrenBox.findIndex(box => box == this);
+        }
+        return index;
+    }
+
+    private _getPropertyByDirection(): string[] {
+        return [this.parent.direction == 'column' ? 'top' : 'left',
+            this.parent.direction == 'column' ? 'offsetHeight' : 'offsetWidth']
+    }
+
+    private _getResizeRange(offsetProp: string, sizeProp: string): number[] {
+        const offsets = this._getOffsets(offsetProp, sizeProp);
+        const curIndex = this._getCurrentIndex();
+        return [offsets[curIndex - 1], offsets[curIndex + 1]];
+    }
+
+    /**
+     * @internal
+     */
+    public _$resizeRange: number[];
+
+    private _updateResizeRange() {
+        const [offsetProp, sizeProp] = this._getPropertyByDirection();
+        this._$resizeRange = this._getResizeRange(offsetProp, sizeProp);
+    };
+
+    /**
+     * @internal
+     */
+    public _$handleResizeMouseDown(event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        this._updateResizeRange();
+        //this._renderer.addClass(this._parentViewEditor.element, 'jigsaw-view-editor-resizing');
+    }
+
+    private _handleResizeMouseUp() {
+        //this._renderer.removeClass(this._parentViewEditor.element, 'jigsaw-view-editor-resizing');
     }
 }
 
 @NgModule({
-    imports: [CommonModule],
+    imports: [CommonModule, JigsawBoxResizableModule],
     declarations: [JigsawBox],
     exports: [JigsawBox]
 })

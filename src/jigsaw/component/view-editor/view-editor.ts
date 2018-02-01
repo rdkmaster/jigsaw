@@ -270,6 +270,13 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
         });
     }
 
+    /**
+     * 子box相对于父box的偏移
+     * @param {string} offsetProp
+     * @param {string} sizeProp
+     * @returns {number[]}
+     * @private
+     */
     private _getOffsets(offsetProp: string, sizeProp: string): number[] {
         const offsets = this.parent.childrenBox.reduce((arr, box, index) => {
             if (index == 0) {
