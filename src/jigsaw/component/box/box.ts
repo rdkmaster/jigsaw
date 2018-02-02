@@ -32,7 +32,7 @@ export class JigsawBox extends JigsawResizableBox implements AfterContentInit, D
     }
 
     @Input()
-    public resizable: boolean = true;
+    public resizable: boolean;
 
     public showResizeLine: boolean;
 
