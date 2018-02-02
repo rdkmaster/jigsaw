@@ -124,6 +124,7 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
      */
     public _$removeItem(item: LayoutData) {
         if (!this.data || !(this.data.nodes instanceof Array)) return;
+
         const index = this.data.nodes.findIndex(node => node === item);
         this.data.nodes.splice(index, 1);
         if (this.data.nodes.length == 1) {
@@ -157,6 +158,9 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
     }
 
     public addContent(componentMetaDataList: ComponentMetaData[]) {
+        if (!this.data) {
+            return;
+        }
         this._renderComponents(componentMetaDataList);
         this.data.setComponentMetaData(componentMetaDataList);
         this._bindScrollEvent();
@@ -326,8 +330,10 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
 
     ngOnInit() {
         super.ngOnInit();
-        this._renderComponents(this.data.componentMetaDataList);
-        this.data.layout = this;
+        if (this.data) {
+            this._renderComponents(this.data.componentMetaDataList);
+            this.data.layout = this;
+        }
     }
 
     ngAfterViewInit() {
@@ -350,8 +356,8 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
 @Component({
     selector: 'jigsaw-view-editor, j-view-editor',
     template: `
-        <j-view-layout [data]="data" [(direction)]="data.direction"
-                       [grow]="data.grow" [editable]="editable" [blocked]="blocked"
+        <j-view-layout [data]="data" [direction]="data?.direction" (directionChange)="data ? data.direction = $event: null"
+                       [grow]="data?.grow" [editable]="editable" [blocked]="blocked"
                        [resizeLineWidth]="resizeLineWidth" [isFirst]="true" height="100%">
         </j-view-layout>
     `,
