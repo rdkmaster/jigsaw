@@ -3,6 +3,7 @@
        class="jigsaw-box-resize-line"
        [class.jigsaw-box-resize-line-column]="parent?.direction == 'column'"
        j-box-resizable
+       [parentBox]="element"
        [effectBox]="parent?.element"
        [effectDirection]="parent?.direction"
        [range]="_$resizeRange"

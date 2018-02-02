@@ -157,33 +157,39 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
 export class JigsawResizableBox extends JigsawBoxBase {
     public parent: any;
 
+    private _rawOffsets: number[];
+
+    /**
+     * @internal
+     */
+    public _$resizeRange: number[];
+
     /**
      * @internal
      */
     public _$handleResize(offset: number, emitEvent: boolean = false) {
         if (!this.parent) return;
 
-        const [offsetProp, sizeProp] = this._getPropertyByDirection();
-        const sizeRatios = this._computeSizeRatios(offsetProp, sizeProp, offset);
+        const sizeProp = this._getPropertyByDirection()[1];
+        const sizeRatios = this._computeSizeRatios(sizeProp, offset);
         this.parent.childrenBox.forEach((box, index) => {
             box.grow = sizeRatios[index];
-            if(emitEvent){
+            if (emitEvent) {
                 box.growChange.emit(sizeRatios[index]);
             }
         });
     }
 
-    private _computeSizeRatios(offsetProp: string, sizeProp: string, updateOffset: number): number[] {
-        const offsets = this._getOffsets(offsetProp, sizeProp);
+    private _computeSizeRatios(sizeProp: string, updateOffset: number): number[] {
         const sizes = this.parent.childrenBox.reduce((arr, box) => {
             arr.push(box.element[sizeProp]);
             return arr;
         }, []);
         const curIndex = this._getCurrentIndex();
-        offsets.splice(curIndex, 1, updateOffset);
+        this._rawOffsets.splice(curIndex, 1, updateOffset);
         if (curIndex < 1) return;
-        const prevBoxSize = offsets[curIndex] - offsets[curIndex - 1];
-        const curBoxSize = offsets[curIndex + 1] - offsets[curIndex];
+        const prevBoxSize = this._rawOffsets[curIndex] - this._rawOffsets[curIndex - 1];
+        const curBoxSize = this._rawOffsets[curIndex + 1] - this._rawOffsets[curIndex];
         sizes.splice(curIndex - 1, 2, prevBoxSize, curBoxSize);
         return sizes.map(size => {
             return size / this.parent.element[sizeProp] * 100
@@ -202,7 +208,7 @@ export class JigsawResizableBox extends JigsawBoxBase {
             if (index == 0) {
                 arr.push(0);
             } else {
-                arr.push(AffixUtils.offset(box.resizeLine.nativeElement)[offsetProp] -
+                arr.push(AffixUtils.offset(box.element)[offsetProp] -
                     AffixUtils.offset(this.parent.element)[offsetProp]);
             }
             return arr;
@@ -227,15 +233,10 @@ export class JigsawResizableBox extends JigsawBoxBase {
     }
 
     private _getResizeRange(offsetProp: string, sizeProp: string): number[] {
-        const offsets = this._getOffsets(offsetProp, sizeProp);
+        this._rawOffsets = this._getOffsets(offsetProp, sizeProp);
         const curIndex = this._getCurrentIndex();
-        return [offsets[curIndex - 1], offsets[curIndex + 1]];
+        return [this._rawOffsets[curIndex - 1], this._rawOffsets[curIndex + 1]];
     }
-
-    /**
-     * @internal
-     */
-    public _$resizeRange: number[];
 
     private _updateResizeRange() {
         const [offsetProp, sizeProp] = this._getPropertyByDirection();

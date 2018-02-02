@@ -1,4 +1,4 @@
-import {Directive, ElementRef, EventEmitter, Input, NgModule, NgZone, Output, Renderer2} from "@angular/core";
+import {Directive, EventEmitter, Input, NgModule, NgZone, Output, Renderer2} from "@angular/core";
 import {CallbackRemoval} from "../../core/utils/common-utils";
 import {AffixUtils} from "../../core/utils/internal-utils";
 
@@ -10,12 +10,14 @@ import {AffixUtils} from "../../core/utils/internal-utils";
     }
 })
 export class JigsawBoxResizable {
-    constructor(elementRef: ElementRef, private _renderer: Renderer2, private _zone: NgZone) {
-        this._host = elementRef.nativeElement;
+    constructor(private _renderer: Renderer2, private _zone: NgZone) {
     }
 
     /*@Input()
     public movableTarget: HTMLElement;*/
+
+    @Input()
+    public parentBox: HTMLElement;
 
     @Input()
     public effectBox: HTMLElement;
@@ -31,7 +33,6 @@ export class JigsawBoxResizable {
 
     private _effectOffset: number;
 
-    private _host: HTMLElement;
     private _moving: boolean = false;
     private _position: number[];
 
@@ -44,8 +45,8 @@ export class JigsawBoxResizable {
 
         // if (!this.movableTarget || !this.effectBox) return;
 
-        const startOffsetX = AffixUtils.offset(this._host).left - AffixUtils.offset(this.effectBox).left;
-        const startOffsetY = AffixUtils.offset(this._host).top - AffixUtils.offset(this.effectBox).top;
+        const startOffsetX = AffixUtils.offset(this.parentBox).left - AffixUtils.offset(this.effectBox).left;
+        const startOffsetY = AffixUtils.offset(this.parentBox).top - AffixUtils.offset(this.effectBox).top;
 
         const startOffset = this.effectDirection == 'column' ? startOffsetY : startOffsetX;
         const offsetProp = this.effectDirection == 'column' ? 'top' : 'left';

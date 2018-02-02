@@ -35,6 +35,7 @@
    *ngIf="!isFirst"
    j-resizable
    [movableTarget]="parent?.resizingLine?.nativeElement"
+   [parentBox]="element"
    [effectBox]="parent?.element"
    [effectDirection]="parent?.direction"
    [range]="_$resizeRange"
