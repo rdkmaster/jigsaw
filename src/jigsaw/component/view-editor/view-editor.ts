@@ -183,18 +183,18 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
     private _rendererFactory(renderer: Type<any> | TemplateRef<any>, inputs: ComponentInput[]): ComponentRef<any> | EmbeddedViewRef<any> {
         if (renderer instanceof TemplateRef) {
             const context = {};
-            inputs.forEach(input => {
-                context[input.property] = input.binding
-            });
+            if (inputs) {
+                inputs.forEach(input => context[input.property] = input.binding);
+            }
             return this._rendererHost.viewContainerRef.createEmbeddedView(renderer, {
                 context: context
             });
         } else if (renderer) {
             let componentFactory = this._componentFactoryResolver.resolveComponentFactory(renderer);
             let componentRef = this._rendererHost.viewContainerRef.createComponent(componentFactory);
-            inputs.forEach(input => {
-                componentRef.instance[input.property] = input.default
-            });
+            if (inputs) {
+                inputs.forEach(input => componentRef.instance[input.property] = input.default);
+            }
             return componentRef;
         }
         return null;
