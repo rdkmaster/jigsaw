@@ -21,6 +21,7 @@ import {JigsawResizableBox} from "./box.common";
     host: {
         '[class.jigsaw-box]': 'true',
         '[class.jigsaw-flex]': 'type == "flex"',
+        '[class.jigsaw-box-no-child]': '!childrenBox || !childrenBox?.length',
         '[style.width]': 'width',
         '[style.height]': 'height',
     }

@@ -5,6 +5,7 @@ import {AffixUtils} from "../../core/utils/internal-utils";
 @Directive({
     selector: '[jigsaw-box-resizable], [j-box-resizable]',
     host: {
+        '[class.jigsaw-box-resizing]': '_moving',
         '(mousedown)': '_dragStart($event)'
     }
 })
