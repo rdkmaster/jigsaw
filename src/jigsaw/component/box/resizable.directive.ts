@@ -3,17 +3,18 @@ import {CallbackRemoval} from "../../core/utils/common-utils";
 import {AffixUtils} from "../../core/utils/internal-utils";
 
 @Directive({
-    selector: '[jigsaw-resizable], [j-resizable]',
+    selector: '[jigsaw-box-resizable], [j-box-resizable]',
     host: {
+        '[class.jigsaw-box-resizing]': '_moving',
         '(mousedown)': '_dragStart($event)'
     }
 })
-export class JigsawResizable {
+export class JigsawBoxResizable {
     constructor(private _renderer: Renderer2, private _zone: NgZone) {
     }
 
-    @Input()
-    public movableTarget: HTMLElement;
+    /*@Input()
+    public movableTarget: HTMLElement;*/
 
     @Input()
     public parentBox: HTMLElement;
@@ -42,14 +43,14 @@ export class JigsawResizable {
         event.preventDefault();
         event.stopPropagation();
 
-        if (!this.movableTarget || !this.effectBox) return;
+        // if (!this.movableTarget || !this.effectBox) return;
 
         const startOffsetX = AffixUtils.offset(this.parentBox).left - AffixUtils.offset(this.effectBox).left;
         const startOffsetY = AffixUtils.offset(this.parentBox).top - AffixUtils.offset(this.effectBox).top;
 
         const startOffset = this.effectDirection == 'column' ? startOffsetY : startOffsetX;
         const offsetProp = this.effectDirection == 'column' ? 'top' : 'left';
-        this._initTargetPosition(offsetProp, startOffset);
+        //this._initTargetPosition(offsetProp, startOffset);
 
         this._position = [event.clientX - startOffsetX, event.clientY - startOffsetY];
         this._moving = true;
@@ -64,8 +65,7 @@ export class JigsawResizable {
     };
 
     private _dragMove = (event) => {
-        if (!this._moving || !this.range || !this.movableTarget) return;
-
+        if (!this._moving || !this.range) return;
         let eventProp = this.effectDirection == 'column' ? 'clientY' : 'clientX',
             rawPosition = this.effectDirection == 'column' ? this._position[1] : this._position[0],
             offsetProp = this.effectDirection == 'column' ? 'top' : 'left';
@@ -77,17 +77,17 @@ export class JigsawResizable {
         this._position = null;
         this._removeWindowListener();
         // reset movable target style
-        this._renderer.setStyle(this.movableTarget, 'display', 'none');
+        /*this._renderer.setStyle(this.movableTarget, 'display', 'none');
         this._renderer.setStyle(this.movableTarget, 'left', 0);
         this._renderer.setStyle(this.movableTarget, 'top', 0);
 
-        this.resize.emit(this._effectOffset);
+        this.resizeMove.emit(this._effectOffset);*/
     };
 
-    private _initTargetPosition(offsetProp: string, startOffset: number) {
+    /*private _initTargetPosition(offsetProp: string, startOffset: number) {
         this._renderer.setStyle(this.movableTarget, offsetProp, startOffset + 'px');
         this._renderer.setStyle(this.movableTarget, 'display', 'block');
-    }
+    }*/
 
     private _moveTarget(event: MouseEvent, eventProp: string, rawPosition: number, offsetProp: string) {
         let offset = event[eventProp] - rawPosition;
@@ -97,7 +97,8 @@ export class JigsawResizable {
             offset = this.range[1] - 5
         }
         this._effectOffset = offset;
-        this._renderer.setStyle(this.movableTarget, offsetProp, offset + 'px');
+        this.resize.emit(offset);
+        //this._renderer.setStyle(this.movableTarget, offsetProp, offset + 'px');
     }
 
     private _removeWindowListener() {
@@ -115,9 +116,9 @@ export class JigsawResizable {
 }
 
 @NgModule({
-    declarations: [JigsawResizable],
-    exports: [JigsawResizable]
+    declarations: [JigsawBoxResizable],
+    exports: [JigsawBoxResizable]
 })
-export class JigsawResizableModule {
+export class JigsawBoxResizableModule {
 
 }

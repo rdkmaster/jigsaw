@@ -7,11 +7,10 @@ import {
 import {LayoutData} from "../../core/data/layout-data";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule, JigsawRendererHost} from "../common";
-import {JigsawBoxBase} from "../box/box";
+import {JigsawResizableBox} from "../box/box.common";
 import {CallbackRemoval} from "../../core/utils/common-utils";
 import {ComponentInput, ComponentMetaData} from "./view-editor.type";
 import {JigsawResizableModule} from "./resizable.directive";
-import {AffixUtils} from "../../core/utils/internal-utils";
 
 @Component({
     selector: 'jigsaw-view-layout, j-view-layout',
@@ -24,7 +23,7 @@ import {AffixUtils} from "../../core/utils/internal-utils";
         '[style.height]': 'height',
     }
 })
-export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, OnDestroy, OnInit {
+export class JigsawViewLayout extends JigsawResizableBox implements AfterViewInit, OnDestroy, OnInit {
     private _parentViewEditor: JigsawViewEditor;
     private _removeElementScrollEvent: CallbackRemoval;
     private _removeDataRefreshListener: CallbackRemoval;
@@ -244,88 +243,17 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
     /**
      * @internal
      */
-    public _$handleResize(offset: number) {
-        if (!this.parent) return;
-
-        const [offsetProp, sizeProp] = this._getPropertyByDirection();
-        const sizeRatios = this._computeSizeRatios(offsetProp, sizeProp, offset);
-        this.parent.childrenBox.forEach((box, index) => {
-            box.grow = sizeRatios[index];
-            box.growChange.emit(sizeRatios[index]);
-        });
-
-        this._handleResizeMouseUp();
+    public _$handleResize(offset: number, emitEvent: boolean) {
+        super._$handleResize(offset, emitEvent);
+        this._renderer.removeClass(this._parentViewEditor.element, 'jigsaw-view-editor-resizing');
     }
-
-    private _computeSizeRatios(offsetProp: string, sizeProp: string, updateOffset: number): number[] {
-        const offsets = this._getOffsets(offsetProp, sizeProp);
-        const sizes = this.parent.childrenBox.reduce((arr, box) => {
-            arr.push(box.element[sizeProp]);
-            return arr;
-        }, []);
-        const curIndex = this._getCurrentIndex();
-        offsets.splice(curIndex, 1, updateOffset);
-        if (curIndex < 1) return;
-        const prevBoxSize = offsets[curIndex] - offsets[curIndex - 1];
-        const curBoxSize = offsets[curIndex + 1] - offsets[curIndex];
-        sizes.splice(curIndex - 1, 2, prevBoxSize, curBoxSize);
-        return sizes.map(size => {
-            return size / this.parent.element[sizeProp] * 100
-        });
-    }
-
-    private _getOffsets(offsetProp: string, sizeProp: string): number[] {
-        const offsets = this.parent.childrenBox.reduce((arr, box, index) => {
-            if (index == 0) {
-                arr.push(0);
-            } else {
-                arr.push(AffixUtils.offset(box.resizeLine.nativeElement)[offsetProp] -
-                    AffixUtils.offset(this.parent.element)[offsetProp]);
-            }
-            return arr;
-        }, []);
-        offsets.push(this.parent.element[sizeProp]);
-        return offsets;
-    }
-
-    private _getCurrentIndex(): number {
-        return this.parent.childrenBox.toArray().findIndex(box => box == this);
-    }
-
-    private _getPropertyByDirection(): string[] {
-        return [this.parent.direction == 'column' ? 'top' : 'left',
-            this.parent.direction == 'column' ? 'offsetHeight' : 'offsetWidth']
-    }
-
-    private _getResizeRange(offsetProp: string, sizeProp: string): number[] {
-        const offsets = this._getOffsets(offsetProp, sizeProp);
-        const curIndex = this._getCurrentIndex();
-        return [offsets[curIndex - 1], offsets[curIndex + 1]];
-    }
-
-    /**
-     * @internal
-     */
-    public _$resizeRange: number[];
-
-    private _updateResizeRange() {
-        const [offsetProp, sizeProp] = this._getPropertyByDirection();
-        this._$resizeRange = this._getResizeRange(offsetProp, sizeProp);
-    };
 
     /**
      * @internal
      */
     public _$handleResizeMouseDown(event) {
-        event.preventDefault();
-        event.stopPropagation();
-
-        this._updateResizeRange();
+        super._$handleResizeMouseDown(event);
         this._renderer.addClass(this._parentViewEditor.element, 'jigsaw-view-editor-resizing');
-    }
-
-    private _handleResizeMouseUp() {
-        this._renderer.removeClass(this._parentViewEditor.element, 'jigsaw-view-editor-resizing');
     }
 
     ngOnInit() {
@@ -369,6 +297,7 @@ export class JigsawViewLayout extends JigsawBoxBase implements AfterViewInit, On
 })
 export class JigsawViewEditor extends AbstractJigsawComponent {
     public element: HTMLElement;
+
     constructor(elementRef: ElementRef) {
         super();
         this.element = elementRef.nativeElement;

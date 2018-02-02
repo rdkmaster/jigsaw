@@ -1,0 +1,15 @@
+<i class="jigsaw-box-relative" *ngIf="showResizeLine">
+    <b #resizeLine
+       class="jigsaw-box-resize-line"
+       [class.jigsaw-box-resize-line-column]="parent?.direction == 'column'"
+       j-box-resizable
+       [parentBox]="element"
+       [effectBox]="parent?.element"
+       [effectDirection]="parent?.direction"
+       [range]="_$resizeRange"
+       (resize)="_$handleResize($event)"
+       (mousedown)="_$handleResizeMouseDown($event)"></b>
+</i>
+<ng-content></ng-content>
+
+
