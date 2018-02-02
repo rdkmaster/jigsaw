@@ -38,7 +38,7 @@
    [effectBox]="parent?.element"
    [effectDirection]="parent?.direction"
    [range]="_$resizeRange"
-   (resize)="_$handleResize($event)"
+   (resize)="_$handleResize($event, true)"
    (mousedown)="_$handleResizeMouseDown($event)"
    class="jigsaw-view-layout-resize"
    [class.jigsaw-view-layout-resize-column]="parent?.direction == 'column'"
