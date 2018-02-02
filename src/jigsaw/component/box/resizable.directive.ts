@@ -64,7 +64,6 @@ export class JigsawBoxResizable {
 
     private _dragMove = (event) => {
         if (!this._moving || !this.range) return;
-        console.log(this.range);
         let eventProp = this.effectDirection == 'column' ? 'clientY' : 'clientX',
             rawPosition = this.effectDirection == 'column' ? this._position[1] : this._position[0],
             offsetProp = this.effectDirection == 'column' ? 'top' : 'left';
@@ -96,7 +95,6 @@ export class JigsawBoxResizable {
             offset = this.range[1] - 5
         }
         this._effectOffset = offset;
-        console.log(offset);
         this.resize.emit(offset);
         //this._renderer.setStyle(this.movableTarget, offsetProp, offset + 'px');
     }

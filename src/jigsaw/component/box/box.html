@@ -1,7 +1,7 @@
-<i class="jigsaw-box-relative" *ngIf="childrenBox.length <= 1 && showResizeLine">
+<i class="jigsaw-box-relative" *ngIf="showResizeLine">
     <b #resizeLine
        class="jigsaw-box-resize-line"
-       [class.jigsaw-box-resize-line-column]="isColumnLine"
+       [class.jigsaw-box-resize-line-column]="parent?.direction == 'column'"
        j-box-resizable
        [effectBox]="parent?.element"
        [effectDirection]="parent?.direction"

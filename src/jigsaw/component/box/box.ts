@@ -178,8 +178,6 @@ export class JigsawBox extends JigsawBoxBase implements AfterContentInit, DoChec
 
     public showResizeLine: boolean;
 
-    public isColumnLine: boolean;
-
     public parent: JigsawBox;
 
     @ContentChildren(JigsawBox)
@@ -200,12 +198,7 @@ export class JigsawBox extends JigsawBoxBase implements AfterContentInit, DoChec
             this.childrenBox.forEach((box, index) => {
                 box.parent = this;
                 if (index == 0) return; // 过滤掉第一个child box
-
                 box.showResizeLine = true;
-                if (this.direction == 'column') {
-                    box.isColumnLine = true;
-                }
-
             });
         }
     }
@@ -216,16 +209,23 @@ export class JigsawBox extends JigsawBoxBase implements AfterContentInit, DoChec
     ngAfterViewInit() {
         // 等待box视图渲染
         setTimeout(() => {
-            if (this.isColumnLine || !this.resizeLine) return;
-            this._renderer.setStyle(this.resizeLine.nativeElement, 'height', this.element.offsetHeight - 2 + 'px');
+            if(!this.resizeLine) return;
+            if (this.parent.direction == 'column') {
+                this._renderer.setStyle(this.resizeLine.nativeElement, 'width', this.element.offsetWidth - 2 + 'px');
+            } else {
+                this._renderer.setStyle(this.resizeLine.nativeElement, 'height', this.element.offsetHeight - 2 + 'px');
+            }
         })
     }
 
     ngDoCheck() {
-        /*console.log('aaaa')
-        if(this.isColumnLine || !this.resizeLine) return;
-        console.log('bbbb')
-        this._renderer.setStyle(this.resizeLine.nativeElement, 'height', this.element.offsetHeight-2 + 'px');*/
+        console.log('aaaa');
+        if(!this.resizeLine) return;
+        if (this.parent.direction == 'column') {
+            this._renderer.setStyle(this.resizeLine.nativeElement, 'width', this.element.offsetWidth - 2 + 'px');
+        } else {
+            this._renderer.setStyle(this.resizeLine.nativeElement, 'height', this.element.offsetHeight - 2 + 'px');
+        }
     }
 
 

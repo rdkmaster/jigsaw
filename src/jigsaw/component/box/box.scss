@@ -11,7 +11,7 @@ $flex-prefix-cls: #{$jigsaw-prefix}-flex;
     &-relative {
         position: relative;
         display: block;
-        width: 100%;
+        width: 0;
         height: 0;
     }
     &-resize-line {
