@@ -1,10 +1,9 @@
 import {Component, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
-import {LayoutData} from "jigsaw/core/data/layout-data";
-import {ComponentMetaData} from "jigsaw/component/view-editor/view-editor.type";
+import {ComponentMetaData, LayoutData} from "jigsaw/core/data/layout-data";
 import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/service/popup.service";
-import {JigsawEditableBox} from "jigsaw/component/view-editor/view-editor";
 import {CustomTableComponent} from "./custom-table/demo.component";
 import {CustomGraphComponent} from "./custom-graph/demo.component";
+import {JigsawEditableBox} from "../../../../jigsaw/component/box/editable-box";
 
 @Component({
     templateUrl: './demo.component.html',

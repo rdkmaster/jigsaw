@@ -41,7 +41,6 @@ export * from "./component/tooltip/tooltip";
 export * from "./component/tree/tree-ext";
 export * from "./component/tree/ztree-types";
 export * from "./component/view-editor/view-editor";
-export * from "./component/view-editor/view-editor.type";
 export * from "./component/viewport/viewport";
 export * from "./core/data/array-collection";
 export * from "./core/data/component-data";

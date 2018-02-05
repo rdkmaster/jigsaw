@@ -1,9 +1,29 @@
 import {GeneralCollection} from "./general-collection";
-import {ComponentMetaData, LayoutComponentInfo} from "../../component/view-editor/view-editor.type";
-import {ComponentRef, EmbeddedViewRef} from "@angular/core";
-import {JigsawEditableBox} from "../../component/view-editor/view-editor";
+import {ComponentRef, EmbeddedViewRef, Type} from "@angular/core";
 import {CommonUtils} from "../utils/common-utils";
 import {InternalUtils} from "../utils/internal-utils";
+import {JigsawEditableBox} from "../../component/box/editable-box";
+
+export type ComponentInput = {
+    property: string,
+    type?: string,
+    default?: any,
+    binding?: string
+}
+
+export type ComponentMetaData = {
+    [index: string]: any,
+    component: Type<any>,
+    selector: string,
+    inputs?: ComponentInput[],
+    outputs?: any,
+    import?: string
+}
+
+export type LayoutComponentInfo = {
+    box: JigsawEditableBox,
+    component: ComponentRef<any> | EmbeddedViewRef<any>
+}
 
 export class LayoutData extends GeneralCollection<any> {
     [index: string]: any;
