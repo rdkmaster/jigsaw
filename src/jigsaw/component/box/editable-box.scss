@@ -79,7 +79,7 @@ $editor-prefix-cls: #{$jigsaw-prefix}-view-editor;
             display: block;
         }
     }
-    &-has-content{
+    &-has-content {
         display: none;
         .#{$editor-prefix-cls}:not(.#{$editor-prefix-cls}-resizing) .#{$layout-prefix-cls}:hover > & {
             display: block;

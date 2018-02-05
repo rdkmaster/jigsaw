@@ -1,5 +1,5 @@
 import {AbstractJigsawComponent} from "../common";
-import {ElementRef, Input, QueryList, Renderer2, Type} from "@angular/core";
+import {ElementRef, Input, QueryList, Renderer2} from "@angular/core";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {JigsawBox} from "./box";
 import {AffixUtils} from "../../core/utils/internal-utils";

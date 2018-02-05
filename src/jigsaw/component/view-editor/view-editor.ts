@@ -1,10 +1,7 @@
 import {Component, ElementRef, EventEmitter, Input, NgModule, Output} from "@angular/core";
 import {LayoutData} from "../../core/data/layout-data";
-import {CommonModule} from "@angular/common";
-import {AbstractJigsawComponent, JigsawCommonModule} from "../common";
-import {JigsawResizableModule} from "../../directive/resizable/resizable";
-import {JigsawEditableBoxShell} from "../box/box.type";
-import {JigsawEditableBox} from "../box/editable-box";
+import {AbstractJigsawComponent} from "../common";
+import {JigsawEditableBox, JigsawEditableBoxModule, IEditableBoxParent} from "../box/editable-box";
 
 @Component({
     selector: 'jigsaw-view-editor, j-view-editor',
@@ -20,7 +17,7 @@ import {JigsawEditableBox} from "../box/editable-box";
         '[style.height]': 'height',
     }
 })
-export class JigsawViewEditor extends AbstractJigsawComponent implements JigsawEditableBoxShell {
+export class JigsawViewEditor extends AbstractJigsawComponent implements IEditableBoxParent {
     public element: HTMLElement;
 
     constructor(elementRef: ElementRef) {
@@ -66,9 +63,9 @@ export class JigsawViewEditor extends AbstractJigsawComponent implements JigsawE
 }
 
 @NgModule({
-    imports: [CommonModule, JigsawCommonModule, JigsawResizableModule],
-    declarations: [JigsawEditableBox, JigsawViewEditor],
-    exports: [JigsawEditableBox, JigsawViewEditor]
+    imports: [JigsawEditableBoxModule],
+    declarations: [JigsawViewEditor],
+    exports: [JigsawViewEditor]
 })
 export class JigsawViewEditorModule {
 

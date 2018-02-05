@@ -12,7 +12,7 @@ import {
     ViewChild
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {JigsawBoxResizableBase} from "./box.common";
+import {JigsawBoxResizableBase} from "./common-box";
 import {JigsawResizableModule} from "../../directive/resizable/resizable";
 
 @Component({

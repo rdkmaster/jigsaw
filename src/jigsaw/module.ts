@@ -36,6 +36,7 @@ import {JigsawTrustedHtmlModule} from "./directive/trusted-html/trusted-html";
 import {JigsawBoxModule} from "./component/box/box";
 import {JigsawViewEditorModule} from "./component/view-editor/view-editor";
 import {JigsawResizableModule} from "./directive/resizable/resizable";
+import {JigsawEditableBoxModule} from "./component/box/editable-box";
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
@@ -49,6 +50,7 @@ const JIGSAW_MODULE = [
     JigsawDialogModule,
     JigsawDraggableModule,
     JigsawDroppableModule,
+    JigsawEditableBoxModule,
     JigsawFishBoneModule,
     JigsawGraphModule,
     JigsawInputModule,

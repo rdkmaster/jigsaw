@@ -3,7 +3,7 @@ import {
     ComponentFactoryResolver,
     ComponentRef,
     ElementRef,
-    EmbeddedViewRef, EventEmitter, Input,
+    EmbeddedViewRef, EventEmitter, Input, NgModule,
     OnDestroy,
     OnInit, Output,
     QueryList,
@@ -13,9 +13,15 @@ import {
 } from "@angular/core";
 import {CallbackRemoval} from "../../core/utils/common-utils";
 import {ComponentInput, ComponentMetaData, LayoutData} from "../../core/data/layout-data";
-import {JigsawRendererHost} from "../common";
-import {JigsawBoxResizableBase} from "../box/box.common";
-import {JigsawEditableBoxShell} from "./box.type";
+import {JigsawCommonModule, JigsawRendererHost} from "../common";
+import {JigsawBoxResizableBase} from "./common-box";
+import {CommonModule} from "@angular/common";
+import {JigsawResizableModule} from "../../directive/resizable/resizable";
+
+export interface IEditableBoxParent {
+    element: HTMLElement;
+    fill: EventEmitter<JigsawEditableBox>;
+}
 
 @Component({
     selector: 'jigsaw-editable-box, j-editable-box',
@@ -90,7 +96,7 @@ export class JigsawEditableBox extends JigsawBoxResizableBase implements AfterVi
     public resizeLineWidth: string;
 
     @Input()
-    public parentViewEditor: JigsawEditableBoxShell;
+    public parentViewEditor: IEditableBoxParent;
 
     /**
      * @internal
@@ -283,4 +289,13 @@ export class JigsawEditableBox extends JigsawBoxResizableBase implements AfterVi
             this._removeDataRefreshListener();
         }
     }
+}
+
+@NgModule({
+    imports: [CommonModule, JigsawCommonModule, JigsawResizableModule],
+    declarations: [JigsawEditableBox],
+    exports: [JigsawEditableBox]
+})
+export class JigsawEditableBoxModule {
+
 }
