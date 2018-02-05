@@ -7,23 +7,23 @@ import {
 import {LayoutData} from "../../core/data/layout-data";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule, JigsawRendererHost} from "../common";
-import {JigsawResizableBox} from "../box/box.common";
+import {JigsawBoxResizableBase} from "../box/box.common";
 import {CallbackRemoval} from "../../core/utils/common-utils";
 import {ComponentInput, ComponentMetaData} from "./view-editor.type";
 import {JigsawResizableModule} from "../../directive/resizable/resizable";
 
 @Component({
-    selector: 'jigsaw-view-layout, j-view-layout',
+    selector: 'jigsaw-editable-box, j-editable-box',
     templateUrl: './editable-box.html',
     host: {
-        '[class.jigsaw-view-layout]': 'true',
+        '[class.jigsaw-editable-box]': 'true',
         '[class.jigsaw-box]': 'true',
         '[class.jigsaw-flex]': 'type == "flex"',
         '[style.width]': 'width',
         '[style.height]': 'height',
     }
 })
-export class JigsawEditableBox extends JigsawResizableBox implements AfterViewInit, OnDestroy, OnInit {
+export class JigsawEditableBox extends JigsawBoxResizableBase implements AfterViewInit, OnDestroy, OnInit {
     private _removeElementScrollEvent: CallbackRemoval;
     private _removeDataRefreshListener: CallbackRemoval;
 
@@ -207,10 +207,10 @@ export class JigsawEditableBox extends JigsawResizableBox implements AfterViewIn
         // 有node不绑定scroll
         if (this.data && this.data.nodes instanceof Array && this.data.nodes.length > 0) return;
 
-        const block = this.element.querySelector('.jigsaw-view-layout-block');
-        const optionBox = this.element.querySelector('.jigsaw-view-layout-option-box');
-        const optionBar = this.element.querySelector('.jigsaw-view-layout-option-bar');
-        const resizeBar = this.element.querySelector('.jigsaw-view-layout-resize');
+        const block = this.element.querySelector('.jigsaw-editable-box-block');
+        const optionBox = this.element.querySelector('.jigsaw-editable-box-option-box');
+        const optionBar = this.element.querySelector('.jigsaw-editable-box-option-bar');
+        const resizeBar = this.element.querySelector('.jigsaw-editable-box-resize');
         if (this._removeElementScrollEvent) {
             this._removeElementScrollEvent();
         }
@@ -284,10 +284,10 @@ export class JigsawEditableBox extends JigsawResizableBox implements AfterViewIn
 @Component({
     selector: 'jigsaw-view-editor, j-view-editor',
     template: `
-        <j-view-layout [data]="data" [direction]="data?.direction" (directionChange)="data ? data.direction = $event: null"
+        <j-editable-box [data]="data" [direction]="data?.direction" (directionChange)="data ? data.direction = $event: null"
                        [grow]="data?.grow" [editable]="editable" [blocked]="blocked" [parentViewEditor]="this"
                        [resizeLineWidth]="resizeLineWidth" [isFirst]="true" height="100%">
-        </j-view-layout>
+        </j-editable-box>
     `,
     host: {
         '[class.jigsaw-view-editor]': 'true',

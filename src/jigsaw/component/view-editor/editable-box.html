@@ -1,4 +1,4 @@
-<j-view-layout
+<j-editable-box
     *ngFor="let itemData of data?.nodes; first as isFirst"
     [data]="itemData"
     [(direction)]="itemData.direction"
@@ -14,23 +14,23 @@
     [parent]="this"
     [parentViewEditor]="parentViewEditor"
     (remove)="_$removeItem($event)">
-</j-view-layout>
+</j-editable-box>
 
 <div *ngIf="(!data || !data.nodes || !data.nodes.length) && editable"
-     class="jigsaw-view-layout-option-box" (click)="_$addContent()"
-     [class.jigsaw-view-layout-has-content]="data?.components?.length">
+     class="jigsaw-editable-box-option-box" (click)="_$addContent()"
+     [class.jigsaw-editable-box-has-content]="data?.components?.length">
     <i class="fa fa-plus"></i>
 </div>
 
-<div *ngIf="(!data || !data.nodes || !data.nodes.length) && editable" class="jigsaw-view-layout-option-bar">
+<div *ngIf="(!data || !data.nodes || !data.nodes.length) && editable" class="jigsaw-editable-box-option-bar">
     <span class="fa fa-minus-square-o" (click)="_$addItems('v')"></span>
     <span class="fa fa-columns" (click)="_$addItems('h')"></span>
     <span class="fa fa-trash-o" (click)="_$remove()"></span>
 </div>
 
 <div *ngIf="(!data || !data.nodes || !data.nodes.length) && editable && blocked"
-     class="jigsaw-view-layout-block"
-     [class.jigsaw-view-layout-has-content]="data?.components?.length"></div>
+     class="jigsaw-editable-box-block"
+     [class.jigsaw-editable-box-has-content]="data?.components?.length"></div>
 
 <b #resizeLine
    *ngIf="!isFirst"
@@ -41,8 +41,8 @@
    [range]="_$resizeRange"
    (resize)="_$handleResize($event, true)"
    (mousedown)="_$handleResizeMouseDown($event)"
-   class="jigsaw-view-layout-resize"
-   [class.jigsaw-view-layout-resize-column]="parent?.direction == 'column'"
+   class="jigsaw-editable-box-resize"
+   [class.jigsaw-editable-box-resize-column]="parent?.direction == 'column'"
    [style.width]="parent?.direction == 'column' ? '100%' : resizeLineWidth"
    [style.height]="parent?.direction == 'column' ? resizeLineWidth : '100%'"></b>
 

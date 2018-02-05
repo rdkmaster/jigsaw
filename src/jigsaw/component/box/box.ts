@@ -12,7 +12,7 @@ import {
     ViewChild
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {JigsawResizableBox} from "./box.common";
+import {JigsawBoxResizableBase} from "./box.common";
 import {JigsawResizableModule} from "../../directive/resizable/resizable";
 
 @Component({
@@ -26,7 +26,7 @@ import {JigsawResizableModule} from "../../directive/resizable/resizable";
         '[style.height]': 'height',
     }
 })
-export class JigsawBox extends JigsawResizableBox implements AfterContentInit, DoCheck, AfterViewInit {
+export class JigsawBox extends JigsawBoxResizableBase implements AfterContentInit, DoCheck, AfterViewInit {
     constructor(elementRef: ElementRef, renderer: Renderer2) {
         super(elementRef, renderer);
     }

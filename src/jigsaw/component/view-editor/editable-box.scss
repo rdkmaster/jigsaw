@@ -1,6 +1,6 @@
 @import "../../assets/scss/core/base";
 
-$layout-prefix-cls: #{$jigsaw-prefix}-view-layout;
+$layout-prefix-cls: #{$jigsaw-prefix}-editable-box;
 $editor-prefix-cls: #{$jigsaw-prefix}-view-editor;
 
 .#{$layout-prefix-cls} {

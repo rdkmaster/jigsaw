@@ -154,7 +154,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
     }
 }
 
-export class JigsawResizableBox extends JigsawBoxBase {
+export class JigsawBoxResizableBase extends JigsawBoxBase {
     public parent: any;
 
     private _rawOffsets: number[];
