@@ -57,6 +57,7 @@ export * from "./core/utils/translate-helper";
 export * from "./directive/dragdrop/index";
 export * from "./directive/dragdrop/types";
 export * from "./directive/movable/index";
+export * from "./directive/resizable/resizable";
 export * from "./directive/trusted-html/trusted-html";
 export * from "./module";
 export * from "./service/loading.service";

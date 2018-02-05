@@ -8,7 +8,7 @@ import {AffixUtils} from "../../core/utils/internal-utils";
         '(mousedown)': '_dragStart($event)'
     }
 })
-export class JigsawResizable {
+export class JigsawDiscardedResizable {
     constructor(private _renderer: Renderer2, private _zone: NgZone) {
     }
 
@@ -115,9 +115,9 @@ export class JigsawResizable {
 }
 
 @NgModule({
-    declarations: [JigsawResizable],
-    exports: [JigsawResizable]
+    declarations: [JigsawDiscardedResizable],
+    exports: [JigsawDiscardedResizable]
 })
-export class JigsawResizableModule {
+export class JigsawDiscardedResizableModule {
 
 }

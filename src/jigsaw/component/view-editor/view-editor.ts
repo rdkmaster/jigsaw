@@ -1,7 +1,7 @@
 import {
     AfterViewInit, Component, ComponentFactoryResolver, ComponentRef,
-    ElementRef, EmbeddedViewRef, EventEmitter, forwardRef, Inject,
-    Input, NgModule, OnDestroy, OnInit, Optional, Output, QueryList,
+    ElementRef, EmbeddedViewRef, EventEmitter,
+    Input, NgModule, OnDestroy, OnInit, Output, QueryList,
     Renderer2, TemplateRef, Type, ViewChild, ViewChildren
 } from "@angular/core";
 import {LayoutData} from "../../core/data/layout-data";
@@ -10,11 +10,11 @@ import {AbstractJigsawComponent, JigsawCommonModule, JigsawRendererHost} from ".
 import {JigsawResizableBox} from "../box/box.common";
 import {CallbackRemoval} from "../../core/utils/common-utils";
 import {ComponentInput, ComponentMetaData} from "./view-editor.type";
-import {JigsawBoxResizableModule} from "../box/resizable.directive";
+import {JigsawResizableModule} from "../../directive/resizable/resizable";
 
 @Component({
     selector: 'jigsaw-view-layout, j-view-layout',
-    templateUrl: './view-layout.html',
+    templateUrl: './editable-box.html',
     host: {
         '[class.jigsaw-view-layout]': 'true',
         '[class.jigsaw-box]': 'true',
@@ -23,17 +23,14 @@ import {JigsawBoxResizableModule} from "../box/resizable.directive";
         '[style.height]': 'height',
     }
 })
-export class JigsawViewLayout extends JigsawResizableBox implements AfterViewInit, OnDestroy, OnInit {
-    private _parentViewEditor: JigsawViewEditor;
+export class JigsawEditableBox extends JigsawResizableBox implements AfterViewInit, OnDestroy, OnInit {
     private _removeElementScrollEvent: CallbackRemoval;
     private _removeDataRefreshListener: CallbackRemoval;
 
     constructor(elementRef: ElementRef,
                 renderer: Renderer2,
-                @Optional() @Inject(forwardRef(() => JigsawViewEditor))parentViewEditor: JigsawViewEditor,
                 private _componentFactoryResolver: ComponentFactoryResolver) {
         super(elementRef, renderer);
-        this._parentViewEditor = parentViewEditor;
     }
 
     private _data: LayoutData;
@@ -57,8 +54,8 @@ export class JigsawViewLayout extends JigsawResizableBox implements AfterViewIni
     @Output()
     public dataChange = new EventEmitter<LayoutData>();
 
-    @ViewChildren(JigsawViewLayout)
-    protected childrenBox: QueryList<JigsawViewLayout>;
+    @ViewChildren(JigsawEditableBox)
+    protected childrenBox: QueryList<JigsawEditableBox>;
 
     @Output()
     public directionChange = new EventEmitter<string>();
@@ -82,10 +79,13 @@ export class JigsawViewLayout extends JigsawResizableBox implements AfterViewIni
     public isFirst: boolean;
 
     @Input()
-    public parent: JigsawViewLayout;
+    public parent: JigsawEditableBox;
 
     @Input()
     public resizeLineWidth: string;
+
+    @Input()
+    public parentViewEditor: JigsawViewEditor;
 
     /**
      * @internal
@@ -153,7 +153,7 @@ export class JigsawViewLayout extends JigsawResizableBox implements AfterViewIni
      * @internal
      */
     public _$addContent() {
-        this._parentViewEditor.fill.emit(this);
+        this.parentViewEditor.fill.emit(this);
     }
 
     public addContent(componentMetaDataList: ComponentMetaData[]) {
@@ -245,7 +245,7 @@ export class JigsawViewLayout extends JigsawResizableBox implements AfterViewIni
      */
     public _$handleResize(offset: number, emitEvent: boolean) {
         super._$handleResize(offset, emitEvent);
-        this._renderer.removeClass(this._parentViewEditor.element, 'jigsaw-view-editor-resizing');
+        this._renderer.removeClass(this.parentViewEditor.element, 'jigsaw-view-editor-resizing');
     }
 
     /**
@@ -253,7 +253,7 @@ export class JigsawViewLayout extends JigsawResizableBox implements AfterViewIni
      */
     public _$handleResizeMouseDown(event) {
         super._$handleResizeMouseDown(event);
-        this._renderer.addClass(this._parentViewEditor.element, 'jigsaw-view-editor-resizing');
+        this._renderer.addClass(this.parentViewEditor.element, 'jigsaw-view-editor-resizing');
     }
 
     ngOnInit() {
@@ -285,7 +285,7 @@ export class JigsawViewLayout extends JigsawResizableBox implements AfterViewIni
     selector: 'jigsaw-view-editor, j-view-editor',
     template: `
         <j-view-layout [data]="data" [direction]="data?.direction" (directionChange)="data ? data.direction = $event: null"
-                       [grow]="data?.grow" [editable]="editable" [blocked]="blocked"
+                       [grow]="data?.grow" [editable]="editable" [blocked]="blocked" [parentViewEditor]="this"
                        [resizeLineWidth]="resizeLineWidth" [isFirst]="true" height="100%">
         </j-view-layout>
     `,
@@ -310,7 +310,7 @@ export class JigsawViewEditor extends AbstractJigsawComponent {
     public dataChange = new EventEmitter<LayoutData>();
 
     @Output()
-    public fill = new EventEmitter<JigsawViewLayout>();
+    public fill = new EventEmitter<JigsawEditableBox>();
 
     @Input()
     public editable: boolean = true;
@@ -341,9 +341,9 @@ export class JigsawViewEditor extends AbstractJigsawComponent {
 }
 
 @NgModule({
-    imports: [CommonModule, JigsawCommonModule, JigsawBoxResizableModule],
-    declarations: [JigsawViewLayout, JigsawViewEditor],
-    exports: [JigsawViewLayout, JigsawViewEditor]
+    imports: [CommonModule, JigsawCommonModule, JigsawResizableModule],
+    declarations: [JigsawEditableBox, JigsawViewEditor],
+    exports: [JigsawEditableBox, JigsawViewEditor]
 })
 export class JigsawViewEditorModule {
 

@@ -2,7 +2,7 @@ import {Component, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/cor
 import {LayoutData} from "jigsaw/core/data/layout-data";
 import {ComponentMetaData} from "jigsaw/component/view-editor/view-editor.type";
 import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/service/popup.service";
-import {JigsawViewLayout} from "jigsaw/component/view-editor/view-editor";
+import {JigsawEditableBox} from "jigsaw/component/view-editor/view-editor";
 import {CustomTableComponent} from "./custom-table/demo.component";
 import {CustomGraphComponent} from "./custom-graph/demo.component";
 
@@ -97,9 +97,9 @@ export class CustomSceneLayoutDemoComponent {
     }
 
     @ViewChild('dialog') dialog: TemplateRef<any>;
-    layout: JigsawViewLayout;
+    layout: JigsawEditableBox;
 
-    handleFill(layout: JigsawViewLayout) {
+    handleFill(layout: JigsawEditableBox) {
         console.log(layout);
         this.layout = layout;
         this.popupTemplateDialog(this.dialog);

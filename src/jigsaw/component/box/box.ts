@@ -12,8 +12,8 @@ import {
     ViewChild
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {JigsawBoxResizableModule} from "./resizable.directive";
 import {JigsawResizableBox} from "./box.common";
+import {JigsawResizableModule} from "../../directive/resizable/resizable";
 
 @Component({
     selector: 'jigsaw-box, j-box',
@@ -88,7 +88,7 @@ export class JigsawBox extends JigsawResizableBox implements AfterContentInit, D
 }
 
 @NgModule({
-    imports: [CommonModule, JigsawBoxResizableModule],
+    imports: [CommonModule, JigsawResizableModule],
     declarations: [JigsawBox],
     exports: [JigsawBox]
 })

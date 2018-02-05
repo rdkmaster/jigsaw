@@ -12,13 +12,14 @@
     [isFirst]="isFirst"
     [resizeLineWidth]="resizeLineWidth"
     [parent]="this"
+    [parentViewEditor]="parentViewEditor"
     (remove)="_$removeItem($event)">
 </j-view-layout>
 
 <div *ngIf="(!data || !data.nodes || !data.nodes.length) && editable"
      class="jigsaw-view-layout-option-box" (click)="_$addContent()"
      [class.jigsaw-view-layout-has-content]="data?.components?.length">
-    <i class="fa fa-plus" ></i>
+    <i class="fa fa-plus"></i>
 </div>
 
 <div *ngIf="(!data || !data.nodes || !data.nodes.length) && editable" class="jigsaw-view-layout-option-bar">
@@ -33,7 +34,7 @@
 
 <b #resizeLine
    *ngIf="!isFirst"
-   j-box-resizable
+   j-resizable
    [parentBox]="element"
    [effectBox]="parent?.element"
    [effectDirection]="parent?.direction"

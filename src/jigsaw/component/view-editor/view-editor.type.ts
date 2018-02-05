@@ -1,4 +1,4 @@
-import {JigsawViewLayout} from "./view-editor";
+import {JigsawEditableBox} from "./view-editor";
 import {ComponentRef, EmbeddedViewRef, Type} from "@angular/core";
 
 export type ComponentInput = {
@@ -18,7 +18,7 @@ export type ComponentMetaData = {
 }
 
 export type LayoutComponentInfo = {
-    layout: JigsawViewLayout,
+    layout: JigsawEditableBox,
     component: ComponentRef<any> | EmbeddedViewRef<any>
 }
 

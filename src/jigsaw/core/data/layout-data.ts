@@ -1,7 +1,7 @@
 import {GeneralCollection} from "./general-collection";
 import {ComponentMetaData, LayoutComponentInfo} from "../../component/view-editor/view-editor.type";
 import {ComponentRef, EmbeddedViewRef} from "@angular/core";
-import {JigsawViewLayout} from "../../component/view-editor/view-editor";
+import {JigsawEditableBox} from "../../component/view-editor/view-editor";
 import {CommonUtils} from "../utils/common-utils";
 import {InternalUtils} from "../utils/internal-utils";
 
@@ -17,7 +17,7 @@ export class LayoutData extends GeneralCollection<any> {
     componentMetaDataList?: ComponentMetaData[];
     innerHtml?: string;
     components?: (ComponentRef<any> | EmbeddedViewRef<any>)[];
-    layout: JigsawViewLayout;
+    layout: JigsawEditableBox;
 
     /**
      * 把LayoutData转化为dom字符串
