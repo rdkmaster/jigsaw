@@ -3,10 +3,9 @@ import {
     AfterViewInit,
     Component,
     ContentChildren,
-    DoCheck,
-    ElementRef,
+    ElementRef, EventEmitter,
     Input,
-    NgModule,
+    NgModule, OnDestroy, OnInit,
     QueryList,
     Renderer2,
     ViewChild
@@ -14,6 +13,7 @@ import {
 import {CommonModule} from "@angular/common";
 import {JigsawBoxResizableBase} from "./common-box";
 import {JigsawResizableModule} from "../../directive/resizable/resizable";
+import {CallbackRemoval} from "../../core/utils/common-utils";
 
 @Component({
     selector: 'jigsaw-box, j-box',
@@ -26,10 +26,12 @@ import {JigsawResizableModule} from "../../directive/resizable/resizable";
         '[style.height]': 'height',
     }
 })
-export class JigsawBox extends JigsawBoxResizableBase implements AfterContentInit, DoCheck, AfterViewInit {
+export class JigsawBox extends JigsawBoxResizableBase implements AfterContentInit, AfterViewInit, OnDestroy {
     constructor(elementRef: ElementRef, renderer: Renderer2) {
         super(elementRef, renderer);
     }
+
+    public static resizeEnd = new EventEmitter();
 
     @Input()
     public resizable: boolean;
@@ -41,7 +43,45 @@ export class JigsawBox extends JigsawBoxResizableBase implements AfterContentIni
     @ContentChildren(JigsawBox)
     public childrenBoxRaw: QueryList<JigsawBox>;
 
+    @ViewChild('resizeLine')
+    public resizeLine: ElementRef;
+
     protected childrenBox: JigsawBox[];
+
+    private _removeResizeEndListener: CallbackRemoval;
+
+    private _computeResizeLineWidth() {
+        if (!this.resizeLine) return;
+        if (this.parent.direction == 'column') {
+            this._renderer.setStyle(this.resizeLine.nativeElement, 'width', this.element.offsetWidth - 2 + 'px');
+        } else {
+            this._renderer.setStyle(this.resizeLine.nativeElement, 'height', this.element.offsetHeight - 2 + 'px');
+        }
+    }
+
+    /**
+     * @internal
+     */
+    public _$handleResizeEnd() {
+        JigsawBox.resizeEnd.emit();
+    }
+
+    ngAfterViewInit() {
+        // resize line 视图渲染完成
+        if (!this.resizeLine) return;
+
+        setTimeout(() => {
+            // 等待box视图渲染
+            this._computeResizeLineWidth();
+        });
+
+        if (this._removeResizeEndListener) {
+            this._removeResizeEndListener();
+        }
+        this._removeResizeEndListener = JigsawBox.resizeEnd.subscribe(() => {
+            this._computeResizeLineWidth();
+        })
+    }
 
     ngAfterContentInit() {
         // 映射同一组件实例，ContentChildren会包含自己，https://github.com/angular/angular/issues/21148
@@ -61,28 +101,9 @@ export class JigsawBox extends JigsawBoxResizableBase implements AfterContentIni
         }
     }
 
-    @ViewChild('resizeLine')
-    public resizeLine: ElementRef;
-
-    ngAfterViewInit() {
-        // 等待box视图渲染
-        setTimeout(() => {
-            if (!this.resizeLine) return;
-            if (this.parent.direction == 'column') {
-                this._renderer.setStyle(this.resizeLine.nativeElement, 'width', this.element.offsetWidth - 2 + 'px');
-            } else {
-                this._renderer.setStyle(this.resizeLine.nativeElement, 'height', this.element.offsetHeight - 2 + 'px');
-            }
-        })
-    }
-
-    ngDoCheck() {
-        console.log('aaaa');
-        if (!this.resizeLine) return;
-        if (this.parent.direction == 'column') {
-            this._renderer.setStyle(this.resizeLine.nativeElement, 'width', this.element.offsetWidth - 2 + 'px');
-        } else {
-            this._renderer.setStyle(this.resizeLine.nativeElement, 'height', this.element.offsetHeight - 2 + 'px');
+    ngOnDestroy() {
+        if (this._removeResizeEndListener) {
+            this._removeResizeEndListener();
         }
     }
 }

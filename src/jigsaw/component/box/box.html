@@ -8,6 +8,7 @@
        [effectDirection]="parent?.direction"
        [range]="_$resizeRange"
        (resize)="_$handleResize($event)"
+       (resizeEnd)="_$handleResizeEnd()"
        (mousedown)="_$handleResizeStart($event)"></b>
 </i>
 <ng-content></ng-content>
