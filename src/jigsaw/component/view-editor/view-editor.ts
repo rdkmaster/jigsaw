@@ -10,7 +10,7 @@ import {AbstractJigsawComponent, JigsawCommonModule, JigsawRendererHost} from ".
 import {JigsawResizableBox} from "../box/box.common";
 import {CallbackRemoval} from "../../core/utils/common-utils";
 import {ComponentInput, ComponentMetaData} from "./view-editor.type";
-import {JigsawResizableModule} from "./resizable.directive";
+import {JigsawBoxResizableModule} from "../box/resizable.directive";
 
 @Component({
     selector: 'jigsaw-view-layout, j-view-layout',
@@ -341,7 +341,7 @@ export class JigsawViewEditor extends AbstractJigsawComponent {
 }
 
 @NgModule({
-    imports: [CommonModule, JigsawCommonModule, JigsawResizableModule],
+    imports: [CommonModule, JigsawCommonModule, JigsawBoxResizableModule],
     declarations: [JigsawViewLayout, JigsawViewEditor],
     exports: [JigsawViewLayout, JigsawViewEditor]
 })

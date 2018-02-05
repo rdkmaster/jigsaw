@@ -33,8 +33,7 @@
 
 <b #resizeLine
    *ngIf="!isFirst"
-   j-resizable
-   [movableTarget]="parent?.resizingLine?.nativeElement"
+   j-box-resizable
    [parentBox]="element"
    [effectBox]="parent?.element"
    [effectDirection]="parent?.direction"
