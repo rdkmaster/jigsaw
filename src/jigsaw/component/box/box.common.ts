@@ -246,7 +246,7 @@ export class JigsawBoxResizableBase extends JigsawBoxBase {
     /**
      * @internal
      */
-    public _$handleResizeMouseDown(event) {
+    public _$handleResizeStart(event) {
         event.preventDefault();
         event.stopPropagation();
 

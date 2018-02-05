@@ -243,17 +243,16 @@ export class JigsawEditableBox extends JigsawBoxResizableBase implements AfterVi
     /**
      * @internal
      */
-    public _$handleResize(offset: number, emitEvent: boolean) {
-        super._$handleResize(offset, emitEvent);
-        this._renderer.removeClass(this.parentViewEditor.element, 'jigsaw-view-editor-resizing');
+    public _$handleResizeStart(event) {
+        super._$handleResizeStart(event);
+        this._renderer.addClass(this.parentViewEditor.element, 'jigsaw-view-editor-resizing');
     }
 
     /**
      * @internal
      */
-    public _$handleResizeMouseDown(event) {
-        super._$handleResizeMouseDown(event);
-        this._renderer.addClass(this.parentViewEditor.element, 'jigsaw-view-editor-resizing');
+    public _$handleResizeEnd() {
+        this._renderer.removeClass(this.parentViewEditor.element, 'jigsaw-view-editor-resizing');
     }
 
     ngOnInit() {
@@ -285,8 +284,8 @@ export class JigsawEditableBox extends JigsawBoxResizableBase implements AfterVi
     selector: 'jigsaw-view-editor, j-view-editor',
     template: `
         <j-editable-box [data]="data" [direction]="data?.direction" (directionChange)="data ? data.direction = $event: null"
-                       [grow]="data?.grow" [editable]="editable" [blocked]="blocked" [parentViewEditor]="this"
-                       [resizeLineWidth]="resizeLineWidth" [isFirst]="true" height="100%">
+                        [grow]="data?.grow" [editable]="editable" [blocked]="blocked" [parentViewEditor]="this"
+                        [resizeLineWidth]="resizeLineWidth" [isFirst]="true" height="100%">
         </j-editable-box>
     `,
     host: {

@@ -28,6 +28,9 @@ export class JigsawResizable {
     @Output()
     public resize = new EventEmitter<number>();
 
+    @Output()
+    public resizeEnd = new EventEmitter<number>();
+
     private _effectOffset: number;
 
     private _moving: boolean = false;
@@ -60,18 +63,7 @@ export class JigsawResizable {
     private _dragMove = (event) => {
         if (!this._moving || !this.range) return;
         let eventProp = this.effectDirection == 'column' ? 'clientY' : 'clientX',
-            rawPosition = this.effectDirection == 'column' ? this._position[1] : this._position[0],
-            offsetProp = this.effectDirection == 'column' ? 'top' : 'left';
-        this._moveTarget(event, eventProp, rawPosition, offsetProp);
-    };
-
-    private _dragEnd = () => {
-        this._moving = false;
-        this._position = null;
-        this._removeWindowListener();
-    };
-
-    private _moveTarget(event: MouseEvent, eventProp: string, rawPosition: number, offsetProp: string) {
+            rawPosition = this.effectDirection == 'column' ? this._position[1] : this._position[0];
         let offset = event[eventProp] - rawPosition;
         if (offset < this.range[0]) {
             offset = this.range[0] + 5
@@ -80,7 +72,14 @@ export class JigsawResizable {
         }
         this._effectOffset = offset;
         this.resize.emit(offset);
-    }
+    };
+
+    private _dragEnd = () => {
+        this._moving = false;
+        this._position = null;
+        this._removeWindowListener();
+        this.resizeEnd.emit();
+    };
 
     private _removeWindowListener() {
         if (this._removeWindowMouseMoveListener) {
