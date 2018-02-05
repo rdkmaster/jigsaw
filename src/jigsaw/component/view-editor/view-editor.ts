@@ -259,7 +259,7 @@ export class JigsawEditableBox extends JigsawBoxResizableBase implements AfterVi
         super.ngOnInit();
         if (this.data) {
             this._renderComponents(this.data.componentMetaDataList);
-            this.data.layout = this;
+            this.data.box = this;
         }
     }
 

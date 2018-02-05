@@ -25,7 +25,7 @@ export class CustomSceneLayoutDemoComponent {
                 nodes: [
                     {},
                     {
-                        nodes:[
+                        nodes: [
                             {},
                             {}
                         ]
@@ -54,7 +54,7 @@ export class CustomSceneLayoutDemoComponent {
                     nodes: [
                         {},
                         {
-                            nodes:[
+                            nodes: [
                                 {},
                                 {}
                             ]
@@ -97,11 +97,11 @@ export class CustomSceneLayoutDemoComponent {
     }
 
     @ViewChild('dialog') dialog: TemplateRef<any>;
-    layout: JigsawEditableBox;
+    currentEditableBox: JigsawEditableBox;
 
-    handleFill(layout: JigsawEditableBox) {
-        console.log(layout);
-        this.layout = layout;
+    handleFill(box: JigsawEditableBox) {
+        console.log(box);
+        this.currentEditableBox = box;
         this.popupTemplateDialog(this.dialog);
     }
 
@@ -122,7 +122,7 @@ export class CustomSceneLayoutDemoComponent {
                     binding: 'additionalColumnDefine',
                     default: {
                         a: 1,
-                        b: [1,2,3],
+                        b: [1, 2, 3],
                         c: 'ww'
                     }
                 },
@@ -131,7 +131,7 @@ export class CustomSceneLayoutDemoComponent {
                     binding: 'additionalData',
                     default: {
                         a: 1,
-                        b: [1,2,3],
+                        b: [1, 2, 3],
                         c: 'ww'
                     }
                 }
@@ -172,7 +172,7 @@ export class CustomSceneLayoutDemoComponent {
         if (this.dialogInfo) {
             this.dialogInfo.dispose();
         }
-        this.layout.addContent([
+        this.currentEditableBox.addContent([
             {
                 component: this.selectedComponent.component,
                 selector: this.selectedComponent.selector,

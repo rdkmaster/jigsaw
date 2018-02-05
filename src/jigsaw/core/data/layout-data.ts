@@ -17,7 +17,7 @@ export class LayoutData extends GeneralCollection<any> {
     componentMetaDataList?: ComponentMetaData[];
     innerHtml?: string;
     components?: (ComponentRef<any> | EmbeddedViewRef<any>)[];
-    layout: JigsawEditableBox;
+    box: JigsawEditableBox;
 
     /**
      * 把LayoutData转化为dom字符串
@@ -74,7 +74,7 @@ export class LayoutData extends GeneralCollection<any> {
         if (node.components instanceof Array) {
             node.components.forEach(component => {
                 arr.push({
-                    layout: node.layout,
+                    box: node.box,
                     component: component
                 })
             });

@@ -18,7 +18,7 @@ export type ComponentMetaData = {
 }
 
 export type LayoutComponentInfo = {
-    layout: JigsawEditableBox,
+    box: JigsawEditableBox,
     component: ComponentRef<any> | EmbeddedViewRef<any>
 }
 
