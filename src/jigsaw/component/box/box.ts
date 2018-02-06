@@ -5,7 +5,7 @@ import {
     ContentChildren,
     ElementRef, EventEmitter,
     Input,
-    NgModule, OnDestroy, OnInit,
+    NgModule, NgZone, OnDestroy,
     QueryList,
     Renderer2,
     ViewChild
@@ -27,8 +27,8 @@ import {CallbackRemoval} from "../../core/utils/common-utils";
     }
 })
 export class JigsawBox extends JigsawBoxResizableBase implements AfterContentInit, AfterViewInit, OnDestroy {
-    constructor(elementRef: ElementRef, renderer: Renderer2) {
-        super(elementRef, renderer);
+    constructor(elementRef: ElementRef, renderer: Renderer2, zone: NgZone) {
+        super(elementRef, renderer, zone);
     }
 
     public static resizeEnd = new EventEmitter();
@@ -49,14 +49,17 @@ export class JigsawBox extends JigsawBoxResizableBase implements AfterContentIni
     protected childrenBox: JigsawBox[];
 
     private _removeResizeEndListener: CallbackRemoval;
+    private _removeWindowResizeListener: CallbackRemoval;
 
     private _computeResizeLineWidth() {
         if (!this.resizeLine) return;
-        if (this.parent.direction == 'column') {
-            this._renderer.setStyle(this.resizeLine.nativeElement, 'width', this.element.offsetWidth - 2 + 'px');
-        } else {
-            this._renderer.setStyle(this.resizeLine.nativeElement, 'height', this.element.offsetHeight - 2 + 'px');
-        }
+        this.zone.runOutsideAngular(() => {
+            if (this.parent.direction == 'column') {
+                this.renderer.setStyle(this.resizeLine.nativeElement, 'width', this.element.offsetWidth - 2 + 'px');
+            } else {
+                this.renderer.setStyle(this.resizeLine.nativeElement, 'height', this.element.offsetHeight - 2 + 'px');
+            }
+        });
     }
 
     /**
@@ -79,6 +82,13 @@ export class JigsawBox extends JigsawBoxResizableBase implements AfterContentIni
             this._removeResizeEndListener();
         }
         this._removeResizeEndListener = JigsawBox.resizeEnd.subscribe(() => {
+            this._computeResizeLineWidth();
+        });
+
+        if(this._removeWindowResizeListener) {
+            this._removeWindowResizeListener();
+        }
+        this._removeWindowResizeListener = this.renderer.listen('window', 'resize', () => {
             this._computeResizeLineWidth();
         })
     }
@@ -104,6 +114,9 @@ export class JigsawBox extends JigsawBoxResizableBase implements AfterContentIni
     ngOnDestroy() {
         if (this._removeResizeEndListener) {
             this._removeResizeEndListener();
+        }
+        if(this._removeWindowResizeListener) {
+            this._removeWindowResizeListener();
         }
     }
 }

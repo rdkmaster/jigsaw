@@ -1,5 +1,5 @@
 import {AbstractJigsawComponent} from "../common";
-import {ElementRef, Input, QueryList, Renderer2} from "@angular/core";
+import {ElementRef, Input, NgZone, QueryList, Renderer2} from "@angular/core";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {JigsawBox} from "./box";
 import {AffixUtils} from "../../core/utils/internal-utils";
@@ -7,7 +7,7 @@ import {AffixUtils} from "../../core/utils/internal-utils";
 export class JigsawBoxBase extends AbstractJigsawComponent {
     public element: HTMLElement;
 
-    constructor(private _elementRef: ElementRef, protected _renderer: Renderer2) {
+    constructor(private _elementRef: ElementRef, protected renderer: Renderer2, protected zone: NgZone) {
         super();
         this.element = _elementRef.nativeElement;
     }
@@ -60,7 +60,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
         value = this._directionMap.get(value);
         if (!value) return;
         this._direction = value;
-        this._renderer.setStyle(this.element, 'flex-direction', value);
+        this.renderer.setStyle(this.element, 'flex-direction', value);
         this._checkFlexByOwnProperty(value);
     }
 
@@ -73,7 +73,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
         value = this._justifyMap.get(value);
         if (!value) return;
         this._justify = value;
-        this._renderer.setStyle(this.element, 'justify-content', value);
+        this.renderer.setStyle(this.element, 'justify-content', value);
         this._checkFlexByOwnProperty(value);
     }
 
@@ -86,7 +86,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
         value = this._alignMap.get(value);
         if (!value) return;
         this._align = value;
-        this._renderer.setStyle(this.element, 'align-items', value);
+        this.renderer.setStyle(this.element, 'align-items', value);
         this._checkFlexByOwnProperty(value);
     }
 
@@ -102,7 +102,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
 
     public set order(value: number) {
         this._order = value;
-        this._renderer.setStyle(this.element, 'order', Number(value));
+        this.renderer.setStyle(this.element, 'order', Number(value));
     }
 
     @Input()
@@ -113,7 +113,9 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
     public set grow(value: number) {
         if (CommonUtils.isUndefined(value)) return;
         this._grow = value;
-        this._renderer.setStyle(this.element, 'flex-grow', Number(value));
+        this.zone.runOutsideAngular(() => {
+            this.renderer.setStyle(this.element, 'flex-grow', Number(value));
+        });
     }
 
     @Input()
@@ -123,7 +125,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
 
     public set shrink(value: number) {
         this._shrink = value;
-        this._renderer.setStyle(this.element, 'flex-shrink', Number(value));
+        this.renderer.setStyle(this.element, 'flex-shrink', Number(value));
     }
 
     protected childrenBox: QueryList<JigsawBoxBase> | JigsawBox[];

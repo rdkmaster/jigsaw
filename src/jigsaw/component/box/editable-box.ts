@@ -3,7 +3,7 @@ import {
     ComponentFactoryResolver,
     ComponentRef,
     ElementRef,
-    EmbeddedViewRef, EventEmitter, Input, NgModule,
+    EmbeddedViewRef, EventEmitter, Input, NgModule, NgZone,
     OnDestroy,
     OnInit, Output,
     QueryList,
@@ -40,8 +40,9 @@ export class JigsawEditableBox extends JigsawBoxResizableBase implements AfterVi
 
     constructor(elementRef: ElementRef,
                 renderer: Renderer2,
+                zone: NgZone,
                 private _componentFactoryResolver: ComponentFactoryResolver) {
-        super(elementRef, renderer);
+        super(elementRef, renderer, zone);
     }
 
     private _data: LayoutData;
@@ -225,22 +226,22 @@ export class JigsawEditableBox extends JigsawBoxResizableBase implements AfterVi
         if (this._removeElementScrollEvent) {
             this._removeElementScrollEvent();
         }
-        this._removeElementScrollEvent = this._renderer.listen(this.element, 'scroll', () => {
+        this._removeElementScrollEvent = this.renderer.listen(this.element, 'scroll', () => {
             if (block) {
-                this._renderer.setStyle(block, 'top', this.element.scrollTop + 'px');
-                this._renderer.setStyle(block, 'left', this.element.scrollLeft + 'px');
+                this.renderer.setStyle(block, 'top', this.element.scrollTop + 'px');
+                this.renderer.setStyle(block, 'left', this.element.scrollLeft + 'px');
             }
             if (optionBox) {
-                this._renderer.setStyle(optionBox, 'top', this.element.scrollTop ? (this.element.offsetHeight / 2 + this.element.scrollTop + 'px') : '50%');
-                this._renderer.setStyle(optionBox, 'left', this.element.scrollLeft ? (this.element.offsetWidth / 2 + this.element.scrollLeft + 'px') : '50%');
+                this.renderer.setStyle(optionBox, 'top', this.element.scrollTop ? (this.element.offsetHeight / 2 + this.element.scrollTop + 'px') : '50%');
+                this.renderer.setStyle(optionBox, 'left', this.element.scrollLeft ? (this.element.offsetWidth / 2 + this.element.scrollLeft + 'px') : '50%');
             }
             if (optionBar) {
-                this._renderer.setStyle(optionBar, 'top', this.element.scrollTop ? (this.element.offsetHeight / 2 + this.element.scrollTop + 'px') : '50%');
-                this._renderer.setStyle(optionBar, 'left', this.element.scrollLeft ? (this.element.offsetWidth / 2 + this.element.scrollLeft + 'px') : '50%');
+                this.renderer.setStyle(optionBar, 'top', this.element.scrollTop ? (this.element.offsetHeight / 2 + this.element.scrollTop + 'px') : '50%');
+                this.renderer.setStyle(optionBar, 'left', this.element.scrollLeft ? (this.element.offsetWidth / 2 + this.element.scrollLeft + 'px') : '50%');
             }
             if (resizeBar) {
-                this._renderer.setStyle(resizeBar, 'top', this.element.scrollTop + 'px');
-                this._renderer.setStyle(resizeBar, 'left', this.element.scrollLeft + 'px');
+                this.renderer.setStyle(resizeBar, 'top', this.element.scrollTop + 'px');
+                this.renderer.setStyle(resizeBar, 'left', this.element.scrollLeft + 'px');
             }
         })
     }
@@ -256,14 +257,14 @@ export class JigsawEditableBox extends JigsawBoxResizableBase implements AfterVi
      */
     public _$handleResizeStart(event) {
         super._$handleResizeStart(event);
-        this._renderer.addClass(this.parentViewEditor.element, 'jigsaw-view-editor-resizing');
+        this.renderer.addClass(this.parentViewEditor.element, 'jigsaw-view-editor-resizing');
     }
 
     /**
      * @internal
      */
     public _$handleResizeEnd() {
-        this._renderer.removeClass(this.parentViewEditor.element, 'jigsaw-view-editor-resizing');
+        this.renderer.removeClass(this.parentViewEditor.element, 'jigsaw-view-editor-resizing');
     }
 
     ngOnInit() {
