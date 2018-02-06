@@ -50,6 +50,8 @@ export class JigsawResizable {
 
         this._position = [event.clientX - startOffsetX, event.clientY - startOffsetY];
         this._moving = true;
+        this._renderer.setStyle(document.body, 'cursor',
+            this.effectDirection == 'column' ? 'n-resize' : 'e-resize');
 
         this._removeWindowListener();
 
@@ -78,6 +80,7 @@ export class JigsawResizable {
         this._moving = false;
         this._position = null;
         this._removeWindowListener();
+        this._renderer.setStyle(document.body, 'cursor', 'auto');
         this.resizeEnd.emit();
     };
 
