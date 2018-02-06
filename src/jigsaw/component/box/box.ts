@@ -90,16 +90,22 @@ export class JigsawBox extends JigsawBoxResizableBase implements AfterContentIni
         this._removeAllListener();
 
         this._removeResizeStartListener = JigsawBox.resizeStart.subscribe(() => {
-            // 兼容IE,去掉resize过程中产生的滚动条
             if (this._isResizing || !this.resizeLineParent) return;
+            // 兼容IE,去掉resize过程中产生的莫名滚动条
             this.renderer.setStyle(this.resizeLineParent.nativeElement, 'display', 'none');
         });
 
         this._removeResizeEndListener = JigsawBox.resizeEnd.subscribe(() => {
             this._computeResizeLineWidth();
-            // 兼容IE,去掉resize过程中产生的滚动条
-            if (this._isResizing || !this.resizeLineParent) return;
-            this.renderer.setStyle(this.resizeLineParent.nativeElement, 'display', 'block');
+
+            if (!this.resizeLineParent) return;
+            // 兼容IE,去掉resize过程中产生的莫名滚动条
+            if(this._isResizing){
+                this.renderer.setStyle(this.resizeLineParent.nativeElement, 'display', 'none');
+            }
+            setTimeout(() => {
+                this.renderer.setStyle(this.resizeLineParent.nativeElement, 'display', 'block');
+            });
         });
 
         this._removeWindowResizeListener = this.renderer.listen('window', 'resize', () => {
