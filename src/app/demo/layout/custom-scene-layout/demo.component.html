@@ -4,7 +4,7 @@
                (valueChange)="changeData($event)">
 </jigsaw-select>
 <button (click)="parseData(data)">parse data</button>
-<j-view-editor [data]="data" (fill)="handleFill($event)" resizeLineWidth="4" height="400"></j-view-editor>
+<j-view-editor [data]="data" (fill)="handleFill($event)" (move)="handleMoveComponent($event)" resizeLineWidth="4" height="400"></j-view-editor>
 <br>
 <br>
 <button (click)="consoleData()">console data</button>

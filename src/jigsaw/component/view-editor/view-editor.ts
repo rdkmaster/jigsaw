@@ -34,6 +34,9 @@ export class JigsawViewEditor extends AbstractJigsawComponent implements IEditab
     @Output()
     public fill = new EventEmitter<JigsawEditableBox>();
 
+    @Output()
+    public move = new EventEmitter<LayoutData>();
+
     @Input()
     public editable: boolean = true;
 

@@ -104,6 +104,10 @@ export class CustomSceneLayoutDemoComponent {
         this.popupTemplateDialog(this.dialog);
     }
 
+    handleMoveComponent(data: LayoutData){
+        console.log(data.box, data.components);
+    }
+
     selectedComponent;
     componentMetaDataList: ComponentMetaData[] = [
         {

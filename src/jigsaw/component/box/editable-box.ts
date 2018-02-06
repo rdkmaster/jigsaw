@@ -13,6 +13,7 @@ import {JigsawResizableModule} from "../../directive/resizable/resizable";
 export interface IEditableBoxParent {
     element: HTMLElement;
     fill: EventEmitter<JigsawEditableBox>;
+    move: EventEmitter<LayoutData>;
 }
 
 @Component({
@@ -109,6 +110,10 @@ export class JigsawEditableBox extends JigsawBoxResizableBase implements AfterVi
         // 内容信息搬到第一个子节点
         this.data.nodes[0].componentMetaDataList = this.data.componentMetaDataList;
         this.data.nodes[0].innerHtml = this.data.innerHtml;
+        setTimeout(() => {
+            // 等待搬家组件渲染， 发送组件搬家信息
+            this.parentViewEditor.move.emit(this.data.nodes[0]);
+        });
         // 重置当前内容信息
         this.data.componentMetaDataList = [];
         this.data.innerHtml = ''
@@ -146,6 +151,9 @@ export class JigsawEditableBox extends JigsawBoxResizableBase implements AfterVi
                 setTimeout(() => {
                     // 等待 option bar & block 渲染
                     this._bindScrollEvent();
+
+                    // 等待搬家组件渲染， 发送组件搬家信息
+                    this.parentViewEditor.move.emit(this.data);
                 })
             }
             this.directionChange.emit(this.direction);
