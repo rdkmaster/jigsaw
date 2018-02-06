@@ -16,7 +16,7 @@ $flex-prefix-cls: #{$jigsaw-prefix}-flex;
     }
     &-resize-line {
         position: absolute;
-        width: 0;
+        width: 2px;
         height: 100%;
         left: 0;
         top: 0;
@@ -24,13 +24,14 @@ $flex-prefix-cls: #{$jigsaw-prefix}-flex;
             left: 2px dashed transparent;
             top: none;
         }
+        z-index: 101;
         &:hover, &.#{$box-prefix-cls}-resizing {
             cursor: e-resize;
             border-left-color: $text-color;
         }
         &-column {
             width: 100%;
-            height: 0;
+            height: 2px;
             border: {
                 left: none;
                 top: 2px dashed transparent;

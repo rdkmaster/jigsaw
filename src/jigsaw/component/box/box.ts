@@ -24,6 +24,7 @@ export class JigsawBox extends JigsawBoxResizableBase implements AfterContentIni
     }
 
     public static resizeEnd = new EventEmitter();
+    public static resizeStart = new EventEmitter();
 
     @Input()
     public resizable: boolean;
@@ -38,10 +39,16 @@ export class JigsawBox extends JigsawBoxResizableBase implements AfterContentIni
     @ViewChild('resizeLine')
     public resizeLine: ElementRef;
 
+    @ViewChild('resizeLineParent')
+    public resizeLineParent: ElementRef;
+
     protected childrenBox: JigsawBox[];
 
+    private _removeResizeStartListener: CallbackRemoval;
     private _removeResizeEndListener: CallbackRemoval;
     private _removeWindowResizeListener: CallbackRemoval;
+
+    private _isResizing: boolean;
 
     private _computeResizeLineWidth() {
         if (!this.resizeLine) return;
@@ -57,8 +64,18 @@ export class JigsawBox extends JigsawBoxResizableBase implements AfterContentIni
     /**
      * @internal
      */
+    public _$handleResizeStart(event) {
+        super._$handleResizeStart(event);
+        this._isResizing = true;
+        JigsawBox.resizeStart.emit();
+    }
+
+    /**
+     * @internal
+     */
     public _$handleResizeEnd() {
         JigsawBox.resizeEnd.emit();
+        this._isResizing = false;
     }
 
     ngAfterViewInit() {
@@ -70,23 +87,25 @@ export class JigsawBox extends JigsawBoxResizableBase implements AfterContentIni
             this._computeResizeLineWidth();
         });
 
-        if (this._removeResizeEndListener) {
-            this._removeResizeEndListener();
-        }
-        this._removeResizeEndListener = JigsawBox.resizeEnd.subscribe(() => {
-            this._computeResizeLineWidth();
+        this._removeAllListener();
+
+        this._removeResizeStartListener = JigsawBox.resizeStart.subscribe(() => {
+            // 兼容IE,去掉resize过程中产生的滚动条
+            if (this._isResizing || !this.resizeLineParent) return;
+            this.renderer.setStyle(this.resizeLineParent.nativeElement, 'display', 'none');
         });
 
-        if (this._removeWindowResizeListener) {
-            this._removeWindowResizeListener();
-        }
+        this._removeResizeEndListener = JigsawBox.resizeEnd.subscribe(() => {
+            this._computeResizeLineWidth();
+            // 兼容IE,去掉resize过程中产生的滚动条
+            if (this._isResizing || !this.resizeLineParent) return;
+            this.renderer.setStyle(this.resizeLineParent.nativeElement, 'display', 'block');
+        });
+
         this._removeWindowResizeListener = this.renderer.listen('window', 'resize', () => {
             this._computeResizeLineWidth();
         });
 
-        if (this.removeElementScrollEvent) {
-            this.removeElementScrollEvent();
-        }
         this.removeElementScrollEvent = this.renderer.listen(this.element, 'scroll', () => {
             this.renderer.setStyle(this.resizeLine.nativeElement, 'top', this.element.scrollTop + 'px');
             this.renderer.setStyle(this.resizeLine.nativeElement, 'left', this.element.scrollLeft + 'px');
@@ -111,7 +130,10 @@ export class JigsawBox extends JigsawBoxResizableBase implements AfterContentIni
         }
     }
 
-    ngOnDestroy() {
+    private _removeAllListener() {
+        if (this._removeResizeStartListener) {
+            this._removeResizeStartListener();
+        }
         if (this._removeResizeEndListener) {
             this._removeResizeEndListener();
         }
@@ -121,6 +143,10 @@ export class JigsawBox extends JigsawBoxResizableBase implements AfterContentIni
         if (this.removeElementScrollEvent) {
             this.removeElementScrollEvent();
         }
+    }
+
+    ngOnDestroy() {
+        this._removeAllListener();
     }
 }
 
