@@ -85,11 +85,19 @@ export class JigsawBox extends JigsawBoxResizableBase implements AfterContentIni
             this._computeResizeLineWidth();
         });
 
-        if(this._removeWindowResizeListener) {
+        if (this._removeWindowResizeListener) {
             this._removeWindowResizeListener();
         }
         this._removeWindowResizeListener = this.renderer.listen('window', 'resize', () => {
             this._computeResizeLineWidth();
+        });
+
+        if (this.removeElementScrollEvent) {
+            this.removeElementScrollEvent();
+        }
+        this.removeElementScrollEvent = this.renderer.listen(this.element, 'scroll', () => {
+            this.renderer.setStyle(this.resizeLine.nativeElement, 'top', this.element.scrollTop + 'px');
+            this.renderer.setStyle(this.resizeLine.nativeElement, 'left', this.element.scrollLeft + 'px');
         })
     }
 
@@ -115,8 +123,11 @@ export class JigsawBox extends JigsawBoxResizableBase implements AfterContentIni
         if (this._removeResizeEndListener) {
             this._removeResizeEndListener();
         }
-        if(this._removeWindowResizeListener) {
+        if (this._removeWindowResizeListener) {
             this._removeWindowResizeListener();
+        }
+        if (this.removeElementScrollEvent) {
+            this.removeElementScrollEvent();
         }
     }
 }

@@ -1,6 +1,6 @@
 import {AbstractJigsawComponent} from "../common";
 import {ElementRef, Input, NgZone, QueryList, Renderer2} from "@angular/core";
-import {CommonUtils} from "../../core/utils/common-utils";
+import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {JigsawBox} from "./box";
 import {AffixUtils} from "../../core/utils/internal-utils";
 
@@ -161,10 +161,22 @@ export class JigsawBoxResizableBase extends JigsawBoxBase {
 
     private _rawOffsets: number[];
 
+    protected removeElementScrollEvent: CallbackRemoval;
+
     /**
      * @internal
      */
     public _$resizeRange: number[];
+
+    /**
+     * @internal
+     */
+    public _$handleResizeStart(event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        this._updateResizeRange();
+    }
 
     /**
      * @internal
@@ -244,14 +256,4 @@ export class JigsawBoxResizableBase extends JigsawBoxBase {
         const [offsetProp, sizeProp] = this._getPropertyByDirection();
         this._$resizeRange = this._getResizeRange(offsetProp, sizeProp);
     };
-
-    /**
-     * @internal
-     */
-    public _$handleResizeStart(event) {
-        event.preventDefault();
-        event.stopPropagation();
-
-        this._updateResizeRange();
-    }
 }

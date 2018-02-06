@@ -35,7 +35,6 @@ export interface IEditableBoxParent {
     }
 })
 export class JigsawEditableBox extends JigsawBoxResizableBase implements AfterViewInit, OnDestroy, OnInit {
-    private _removeElementScrollEvent: CallbackRemoval;
     private _removeDataRefreshListener: CallbackRemoval;
 
     constructor(elementRef: ElementRef,
@@ -104,8 +103,8 @@ export class JigsawEditableBox extends JigsawBoxResizableBase implements AfterVi
      */
     public _$addItems(direction: string) {
         this._rendererHost.viewContainerRef.clear();
-        if (this._removeElementScrollEvent) {
-            this._removeElementScrollEvent();
+        if (this.removeElementScrollEvent) {
+            this.removeElementScrollEvent();
         }
         if (!this.data) {
             this.data = new LayoutData;
@@ -223,10 +222,10 @@ export class JigsawEditableBox extends JigsawBoxResizableBase implements AfterVi
         const optionBox = this.element.querySelector('.jigsaw-editable-box-option-box');
         const optionBar = this.element.querySelector('.jigsaw-editable-box-option-bar');
         const resizeBar = this.element.querySelector('.jigsaw-editable-box-resize');
-        if (this._removeElementScrollEvent) {
-            this._removeElementScrollEvent();
+        if (this.removeElementScrollEvent) {
+            this.removeElementScrollEvent();
         }
-        this._removeElementScrollEvent = this.renderer.listen(this.element, 'scroll', () => {
+        this.removeElementScrollEvent = this.renderer.listen(this.element, 'scroll', () => {
             if (block) {
                 this.renderer.setStyle(block, 'top', this.element.scrollTop + 'px');
                 this.renderer.setStyle(block, 'left', this.element.scrollLeft + 'px');
@@ -283,8 +282,8 @@ export class JigsawEditableBox extends JigsawBoxResizableBase implements AfterVi
 
     ngOnDestroy() {
         this._rendererHost.viewContainerRef.clear();
-        if (this._removeElementScrollEvent) {
-            this._removeElementScrollEvent();
+        if (this.removeElementScrollEvent) {
+            this.removeElementScrollEvent();
         }
         if (this._removeDataRefreshListener) {
             this._removeDataRefreshListener();
