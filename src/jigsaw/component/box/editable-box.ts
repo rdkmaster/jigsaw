@@ -1,15 +1,7 @@
 import {
-    AfterViewInit, Component,
-    ComponentFactoryResolver,
-    ComponentRef,
-    ElementRef,
-    EmbeddedViewRef, EventEmitter, Input, NgModule, NgZone,
-    OnDestroy,
-    OnInit, Output,
-    QueryList,
-    Renderer2,
-    TemplateRef,
-    Type, ViewChild, ViewChildren
+    AfterViewInit, Component, ComponentFactoryResolver, ComponentRef, ElementRef,
+    EmbeddedViewRef, EventEmitter, Input, NgModule, NgZone, OnDestroy, OnInit, Output,
+    QueryList, Renderer2, TemplateRef, Type, ViewChild, ViewChildren
 } from "@angular/core";
 import {CallbackRemoval} from "../../core/utils/common-utils";
 import {ComponentInput, ComponentMetaData, LayoutData} from "../../core/data/layout-data";

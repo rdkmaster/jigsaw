@@ -1,14 +1,6 @@
 import {
-    AfterContentInit,
-    AfterViewInit,
-    Component,
-    ContentChildren,
-    ElementRef, EventEmitter,
-    Input,
-    NgModule, NgZone, OnDestroy,
-    QueryList,
-    Renderer2,
-    ViewChild
+    AfterContentInit, AfterViewInit, Component, ContentChildren, ElementRef, EventEmitter,
+    Input, NgModule, NgZone, OnDestroy, QueryList, Renderer2, ViewChild
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {JigsawBoxResizableBase} from "./common-box";
