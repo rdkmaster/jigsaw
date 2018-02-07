@@ -122,7 +122,7 @@ export class JigsawBox extends JigsawBoxResizableBase implements AfterContentIni
         // 映射同一组件实例，ContentChildren会包含自己，https://github.com/angular/angular/issues/21148
         this.childrenBox = this._childrenBoxRaw.filter(box => box != this);
         this.checkFlex();
-        this._childrenBoxRaw.changes.subscribe(() => {
+        this.removeBoxChangeListener = this._childrenBoxRaw.changes.subscribe(() => {
             this.childrenBox = this._childrenBoxRaw.filter(box => box != this);
             this.checkFlexByChildren();
         });
@@ -152,6 +152,7 @@ export class JigsawBox extends JigsawBoxResizableBase implements AfterContentIni
     }
 
     ngOnDestroy() {
+        super.ngOnDestroy();
         this._removeAllListener();
     }
 }

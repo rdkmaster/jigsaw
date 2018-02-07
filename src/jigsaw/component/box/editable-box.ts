@@ -281,6 +281,7 @@ export class JigsawEditableBox extends JigsawBoxResizableBase implements AfterVi
     }
 
     ngOnDestroy() {
+        super.ngOnDestroy();
         this._rendererHost.viewContainerRef.clear();
         if (this.removeElementScrollEvent) {
             this.removeElementScrollEvent();

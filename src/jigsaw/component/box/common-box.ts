@@ -1,10 +1,11 @@
 import {AbstractJigsawComponent} from "../common";
-import {ElementRef, Input, NgZone, QueryList, Renderer2} from "@angular/core";
+import {ElementRef, Input, NgZone, OnDestroy, QueryList, Renderer2} from "@angular/core";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {JigsawBox} from "./box";
 import {AffixUtils} from "../../core/utils/internal-utils";
+import {Subscription} from "rxjs/Subscription";
 
-export class JigsawBoxBase extends AbstractJigsawComponent {
+export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy {
     public element: HTMLElement;
 
     constructor(private _elementRef: ElementRef, protected renderer: Renderer2, protected zone: NgZone) {
@@ -128,6 +129,8 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
         this.renderer.setStyle(this.element, 'flex-shrink', Number(value));
     }
 
+    protected removeBoxChangeListener: Subscription;
+
     protected childrenBox: QueryList<JigsawBoxBase> | JigsawBox[];
 
     private _checkFlexByOwnProperty(property: string) {
@@ -149,9 +152,15 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
     protected checkFlex() {
         this.checkFlexByChildren();
         if (this.childrenBox instanceof QueryList) {
-            this.childrenBox.changes.subscribe(() => {
+            this.removeBoxChangeListener = this.childrenBox.changes.subscribe(() => {
                 this.checkFlexByChildren();
             })
+        }
+    }
+
+    ngOnDestroy() {
+        if (this.removeBoxChangeListener) {
+            this.removeBoxChangeListener.unsubscribe();
         }
     }
 }
