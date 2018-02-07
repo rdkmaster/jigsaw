@@ -6,7 +6,7 @@ import {
 import {CallbackRemoval} from "../../core/utils/common-utils";
 import {ComponentInput, ComponentMetaData, LayoutData} from "../../core/data/layout-data";
 import {JigsawCommonModule, JigsawRendererHost} from "../common";
-import {JigsawBoxResizableBase} from "./common-box";
+import {JigsawResizableBoxBase} from "./common-box";
 import {CommonModule} from "@angular/common";
 import {JigsawResizableModule} from "../../directive/resizable/resizable";
 
@@ -27,7 +27,7 @@ export interface IEditableBoxParent {
         '[style.height]': 'height',
     }
 })
-export class JigsawEditableBox extends JigsawBoxResizableBase implements AfterViewInit, OnDestroy, OnInit {
+export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterViewInit, OnDestroy, OnInit {
     private _removeDataRefreshListener: CallbackRemoval;
 
     constructor(elementRef: ElementRef,

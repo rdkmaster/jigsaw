@@ -3,7 +3,7 @@ import {
     Input, NgModule, NgZone, OnDestroy, QueryList, Renderer2, ViewChild
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {JigsawBoxResizableBase} from "./common-box";
+import {JigsawResizableBoxBase} from "./common-box";
 import {JigsawResizableModule} from "../../directive/resizable/resizable";
 import {CallbackRemoval} from "../../core/utils/common-utils";
 
@@ -18,7 +18,7 @@ import {CallbackRemoval} from "../../core/utils/common-utils";
         '[style.height]': 'height',
     }
 })
-export class JigsawBox extends JigsawBoxResizableBase implements AfterContentInit, AfterViewInit, OnDestroy {
+export class JigsawBox extends JigsawResizableBoxBase implements AfterContentInit, AfterViewInit, OnDestroy {
     constructor(elementRef: ElementRef, renderer: Renderer2, zone: NgZone) {
         super(elementRef, renderer, zone);
     }

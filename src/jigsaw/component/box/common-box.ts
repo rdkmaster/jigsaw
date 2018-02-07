@@ -165,7 +165,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
     }
 }
 
-export class JigsawBoxResizableBase extends JigsawBoxBase {
+export class JigsawResizableBoxBase extends JigsawBoxBase {
     public parent: any;
 
     private _rawOffsets: number[];
