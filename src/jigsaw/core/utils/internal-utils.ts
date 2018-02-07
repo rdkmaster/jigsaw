@@ -48,7 +48,7 @@ export class InternalUtils {
         CommonUtils.extendObject(curLangTrans, curLangTransByApp);
         let resultTrans = {};
         resultTrans[compName] = curLangTrans;
-        translateService.setTranslation(lang, resultTrans);
+        translateService.setTranslation(lang, resultTrans, true);
     }
 
     public static initI18n(translateService: TranslateService, compName: string, translations: Object): void {

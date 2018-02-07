@@ -1,18 +1,18 @@
 @import "core/base";
 
 /*时间组件样式start*/
-.jigsaw-time-host{
+.jigsaw-time-host {
     color: $text-color;
     .bootstrap-datetimepicker-widget table td.old, .bootstrap-datetimepicker-widget table td.new {
         color: $text-color-secondary;
     }
 
-    .bootstrap-datetimepicker-widget table td.day{
+    .bootstrap-datetimepicker-widget table td.day {
         height: 14px;
         line-height: 14px;
     }
 
-    .bootstrap-datetimepicker-widget .datepicker-decades tbody td span{
+    .bootstrap-datetimepicker-widget .datepicker-decades tbody td span {
         display: none;
         &.decade {
             display: inline-block;
@@ -24,72 +24,72 @@
     .bootstrap-datetimepicker-widget table td span.active,
     .bootstrap-datetimepicker-widget table td.active,
     .bootstrap-datetimepicker-widget table td.active:hover,
-    .jigsaw-time-box .bootstrap-datetimepicker-widget table tr.active td{
+    .jigsaw-time-box .bootstrap-datetimepicker-widget table tr.active td {
         background-color: $primary-color;
         color: $text-color-of-bg;
     }
 
-    .bootstrap-datetimepicker-widget table th.picker-switch{
+    .bootstrap-datetimepicker-widget table th.picker-switch {
         font-weight: 700 !important;
     }
-    .bootstrap-datetimepicker-widget table thead tr:first-child th{
-        &:hover{
+    .bootstrap-datetimepicker-widget table thead tr:first-child th {
+        &:hover {
             background: none;
             color: $primary-color;
         }
-        span.glyphicon{
+        span.glyphicon {
             @include font-awesome();
             font-size: 16px;
-            &.glyphicon-chevron-left:before{
+            &.glyphicon-chevron-left:before {
                 content: "\f104";
             }
-            &.glyphicon-chevron-right:before{
+            &.glyphicon-chevron-right:before {
                 content: "\f105";
             }
         }
 
     }
 
-    .bootstrap-datetimepicker-widget .picker-switch a[data-action]{
+    .bootstrap-datetimepicker-widget .picker-switch a[data-action] {
         color: $primary-color;
     }
-    .bootstrap-datetimepicker-widget a[data-action]{
+    .bootstrap-datetimepicker-widget a[data-action] {
         color: $text-color;
-        &:hover{
+        &:hover {
             color: $primary-color;
         }
     }
 
-    .bootstrap-datetimepicker-widget .picker-switch td span{
+    .bootstrap-datetimepicker-widget .picker-switch td span {
         height: 24px;
         line-height: 24px;
-        &.glyphicon{
+        &.glyphicon {
             @include font-awesome();
             font-size: 14px;
             line-height: 24px;
-            &.glyphicon-time:before{
+            &.glyphicon-time:before {
                 content: "\f017";
             }
-            &.glyphicon-calendar:before{
+            &.glyphicon-calendar:before {
                 content: "\f073";
             }
         }
     }
 
-    .bootstrap-datetimepicker-widget table td span{
+    .bootstrap-datetimepicker-widget table td span {
         height: 24px;
         line-height: 24px;
     }
 
-    .bootstrap-datetimepicker-widget table td a.btn span{
-        &.glyphicon{
+    .bootstrap-datetimepicker-widget table td a.btn span {
+        &.glyphicon {
             @include font-awesome();
             font-size: 16px;
             line-height: 24px;
-            &.glyphicon-chevron-up:before{
+            &.glyphicon-chevron-up:before {
                 content: "\f106";
             }
-            &.glyphicon-chevron-down:before{
+            &.glyphicon-chevron-down:before {
                 content: "\f107";
             }
         }
@@ -97,82 +97,94 @@
 
     .bootstrap-datetimepicker-widget .timepicker-hour,
     .bootstrap-datetimepicker-widget .timepicker-minute,
-    .bootstrap-datetimepicker-widget .timepicker-second{
+    .bootstrap-datetimepicker-widget .timepicker-second {
         font-weight: 400;
     }
+
+    @include ie11Hack() {
+        .bootstrap-datetimepicker-widget table td.active,
+        .bootstrap-datetimepicker-widget table td.active:hover {
+            text-shadow: none;
+        }
+        .bootstrap-datetimepicker-widget table td span.active {
+            text-shadow: none;
+        }
+    }
 }
+
 /*时间组件样式end*/
 
 /*zTree组件样式start*/
-.ztree li span.button{
+.ztree li span.button {
     @include font-awesome();
     background: none;
     font-size: 14px;
     color: $primary-color;
-    &.ico_open{
-        &:before{
+    &.ico_open {
+        &:before {
             content: "\f07c";
         }
     }
-    &.ico_close{
-        &:before{
+    &.ico_close {
+        &:before {
             content: "\f07b";
         }
     }
-    &.ico_docu{
-        &:before{
+    &.ico_docu {
+        &:before {
             content: "\f15c";
         }
     }
-    &.chk{
+    &.chk {
         border: 1px solid $text-color-secondary;
         border-radius: 2px;
         font-size: 12px;
         cursor: pointer;
-        &:hover{
+        &:hover {
             border: 1px solid $primary-color;
         }
-        &.checkbox_true_full, &.checkbox_true_full_focus{
+        &.checkbox_true_full, &.checkbox_true_full_focus {
             border: 1px solid $primary-color;
-            &:before{
+            &:before {
                 content: "\f00c";
             }
         }
     }
-    &.edit{
+    &.edit {
         margin-left: 5px;
         vertical-align: middle;
         color: $text-color-secondary;
-        &:before{
+        &:before {
             content: "\f044";
         }
-        &:hover{
+        &:hover {
             color: $primary-color;
         }
     }
-    &.remove{
+    &.remove {
         vertical-align: middle;
         color: $text-color-secondary;
-        &:before{
+        &:before {
             content: "\f014";
         }
-        &:hover{
+        &:hover {
             color: $primary-color;
         }
     }
-    &.noline_open, &.center_open, &.bottom_open, &.roots_open{
+    &.noline_open, &.center_open, &.bottom_open, &.roots_open {
         color: $text-color-secondary;
-        &:before{
+        &:before {
             content: "\f106";
         }
     }
-    &.noline_close, &.center_close, &.bottom_close, &.roots_close{
+    &.noline_close, &.center_close, &.bottom_close, &.roots_close {
         color: $text-color-secondary;
-        &:before{
+        &:before {
             content: "\f107";
         }
     }
 }
+
 /*zTree组件样式end*/
 
 

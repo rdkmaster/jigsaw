@@ -12,11 +12,11 @@ task('ensure-url-matches-path', () => {
     let unmatchedUrls: string[] = [];
 
     routerConfig.forEach((router: any) => {
-        const childRouters = getRouterConfig(join(demoHome, router.path, 'demo.module.ts'));
+        const childRouters = getRouterConfig(join(demoHome, router.path, 'demo-set.module.ts'));
         childRouters.filter(child => !!child.path)
             .forEach((child: any) => {
                 const modulePath = join(demoHome, router.path, child.path);
-                if (!existsSync(join(modulePath, 'app.module.ts'))) {
+                if (!existsSync(join(modulePath, 'demo.module.ts'))) {
                     unmatchedUrls.push(modulePath);
                 }
             });

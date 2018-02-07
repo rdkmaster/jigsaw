@@ -15,7 +15,7 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
     }
     &.#{$list-option-prefix-cls}-disabled {
         background: $disabled-bg;
-        color: $disabled-color;
+        @include compatible(color, $disabled-color, $disabled-color-ie11);
         cursor: not-allowed;
     }
     &-title-box {
