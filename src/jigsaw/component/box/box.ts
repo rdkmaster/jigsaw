@@ -34,7 +34,7 @@ export class JigsawBox extends JigsawBoxResizableBase implements AfterContentIni
     public parent: JigsawBox;
 
     @ContentChildren(JigsawBox)
-    public childrenBoxRaw: QueryList<JigsawBox>;
+    private _childrenBoxRaw: QueryList<JigsawBox>;
 
     @ViewChild('resizeLine')
     public resizeLine: ElementRef;
@@ -120,10 +120,10 @@ export class JigsawBox extends JigsawBoxResizableBase implements AfterContentIni
 
     ngAfterContentInit() {
         // 映射同一组件实例，ContentChildren会包含自己，https://github.com/angular/angular/issues/21148
-        this.childrenBox = this.childrenBoxRaw.filter(box => box != this);
+        this.childrenBox = this._childrenBoxRaw.filter(box => box != this);
         this.checkFlex();
-        this.childrenBoxRaw.changes.subscribe(() => {
-            this.childrenBox = this.childrenBoxRaw.filter(box => box != this);
+        this._childrenBoxRaw.changes.subscribe(() => {
+            this.childrenBox = this._childrenBoxRaw.filter(box => box != this);
             this._checkFlexByChildren();
         });
 
