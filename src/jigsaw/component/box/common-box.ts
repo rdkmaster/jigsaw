@@ -12,7 +12,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
         this.element = _elementRef.nativeElement;
     }
 
-    private _directionMap = new Map([
+    public static directionMap = new Map([
         ['horizontal', 'row'],
         ['horizontal-reverse', 'row-reverse'],
         ['vertical', 'column'],
@@ -27,7 +27,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
         ['column-reverse', 'column-reverse'],
     ]);
 
-    private _justifyMap = new Map([
+    public static justifyMap = new Map([
         ['start', 'flex-start'],
         ['end', 'flex-end'],
         ['center', 'center'],
@@ -35,7 +35,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
         ['around', 'space-around'],
     ]);
 
-    private _alignMap = new Map([
+    public static alignMap = new Map([
         ['start', 'flex-start'],
         ['end', 'flex-end'],
         ['center', 'center'],
@@ -57,7 +57,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
     }
 
     public set direction(value: string) {
-        value = this._directionMap.get(value);
+        value = JigsawBoxBase.directionMap.get(value);
         if (!value) return;
         this._direction = value;
         this.renderer.setStyle(this.element, 'flex-direction', value);
@@ -70,7 +70,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
     }
 
     public set justify(value: string) {
-        value = this._justifyMap.get(value);
+        value = JigsawBoxBase.justifyMap.get(value);
         if (!value) return;
         this._justify = value;
         this.renderer.setStyle(this.element, 'justify-content', value);
@@ -83,7 +83,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
     }
 
     public set align(value: string) {
-        value = this._alignMap.get(value);
+        value = JigsawBoxBase.alignMap.get(value);
         if (!value) return;
         this._align = value;
         this.renderer.setStyle(this.element, 'align-items', value);
