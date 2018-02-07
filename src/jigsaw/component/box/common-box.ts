@@ -138,7 +138,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
         }
     }
 
-    protected _checkFlexByChildren() {
+    protected checkFlexByChildren() {
         if (this.childrenBox.length > 0 && this.type != 'flex') {
             setTimeout(() => {
                 this.type = 'flex';
@@ -147,10 +147,10 @@ export class JigsawBoxBase extends AbstractJigsawComponent {
     }
 
     protected checkFlex() {
-        this._checkFlexByChildren();
+        this.checkFlexByChildren();
         if (this.childrenBox instanceof QueryList) {
             this.childrenBox.changes.subscribe(() => {
-                this._checkFlexByChildren();
+                this.checkFlexByChildren();
             })
         }
     }

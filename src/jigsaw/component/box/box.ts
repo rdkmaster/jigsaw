@@ -124,7 +124,7 @@ export class JigsawBox extends JigsawBoxResizableBase implements AfterContentIni
         this.checkFlex();
         this._childrenBoxRaw.changes.subscribe(() => {
             this.childrenBox = this._childrenBoxRaw.filter(box => box != this);
-            this._checkFlexByChildren();
+            this.checkFlexByChildren();
         });
 
         if (this.resizable) {
