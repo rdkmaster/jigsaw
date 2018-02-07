@@ -8,12 +8,6 @@ import {ComponentInput, ComponentMetaData, LayoutData} from "../../core/data/lay
 import {JigsawRendererHost} from "../common";
 import {JigsawResizableBoxBase} from "./common-box";
 
-export interface IEditableBoxParent {
-    element: HTMLElement;
-    fill: EventEmitter<JigsawEditableBox>;
-    move: EventEmitter<LayoutData>;
-}
-
 @Component({
     selector: 'jigsaw-editable-box, j-editable-box',
     templateUrl: './editable-box.html',
@@ -59,11 +53,10 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
     @Input()
     public editable: boolean = true;
 
-    @Input()
     public blocked: boolean;
 
     @Input()
-    public isFirst: boolean = true;
+    public _isFirst: boolean = true;
 
     @Input()
     public parent: JigsawEditableBox;

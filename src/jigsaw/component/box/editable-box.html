@@ -9,7 +9,7 @@
     [shrink]="itemData.shrink"
     [editable]="editable"
     [blocked]="blocked"
-    [isFirst]="isFirst"
+    [_isFirst]="isFirst"
     [resizeLineWidth]="resizeLineWidth"
     [parent]="this"
     (remove)="_$removeItem($event)">
@@ -32,7 +32,7 @@
      [class.jigsaw-editable-box-has-content]="data?.components?.length"></div>
 
 <b #resizeLine
-   *ngIf="!isFirst"
+   *ngIf="!_isFirst"
    j-resizable
    [parentBox]="element"
    [effectBox]="parent?.element"
