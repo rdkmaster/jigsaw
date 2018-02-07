@@ -34,7 +34,7 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
 
     resetSelectedRow() {
         for (let i = 0; i < this.allRows.length; ++i) {
-            this._renderer.setStyle(this.allRows[i], 'border-top', '1px solid #d9d9d9')
+            this._renderer.setStyle(this.allRows[i], 'background-color', i % 2 == 0 ? '#fff': '#f8f8f8')
         }
     }
 
@@ -58,7 +58,7 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
         this.resetSelectedRow();
         if (dragInfo.event.dataTransfer.effectAllowed == 'link') {
             this._renderer.setStyle(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'),
-                'border-top', '2px solid #108ee9')
+                'background-color', '#ffd54b')
         }
     }
 
@@ -66,7 +66,7 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
         dragInfo.event.dataTransfer.dropEffect = 'link';
         if (dragInfo.event.dataTransfer.effectAllowed == 'link') {
             this._renderer.setStyle(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'),
-                'border-top', '2px solid #108ee9')
+                'background-color', 'ffbf13')
         }
     }
 
@@ -77,14 +77,22 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
 
     dropHandle(dragInfo: DragDropInfo) {
         console.log('drop');
-        const insertRowIndex = dragInfo.dragDropData;
-        if (insertRowIndex >= 0 && this.row != insertRowIndex) {
-            const thisRow = this.tableData.data[this.row];
-            const insertRow = this.tableData.data.splice(insertRowIndex, 1)[0];
-            const thisRowIndex = this.tableData.data.indexOf(thisRow);
-            this.tableData.data.splice(thisRowIndex, 0, insertRow);
-            this.tableData.refresh();
+        const draggingRowIndex = +dragInfo.dragDropData;
+        if (this.row == draggingRowIndex) {
+            return;
         }
+
+        const draggingRow = this.tableData.data[draggingRowIndex];
+        if (!draggingRow) {
+            return;
+        }
+        // exchange position...
+        const thisRow = this.tableData.data[this.row];
+        this.tableData.data[this.row] = draggingRow;
+        this.tableData.data[draggingRowIndex] = thisRow;
+        // inform jigsaw-table to update view
+        this.tableData.refresh();
+
         this.resetSelectedRow();
     }
 
