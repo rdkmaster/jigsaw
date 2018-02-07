@@ -4,16 +4,16 @@
                (valueChange)="changeData($event)">
 </jigsaw-select>
 <button (click)="parseData(data)">parse data</button>
-<j-view-editor [data]="data" (fill)="handleFill($event)" (move)="handleMoveComponent($event)" resizeLineWidth="4" height="400"></j-view-editor>
+<j-editable-box [(data)]="data" (fill)="handleFill($event)" (move)="handleMoveComponent($event)" resizeLineWidth="4" height="400"></j-editable-box>
 <br>
 <br>
 <button (click)="consoleData()">console data</button>
 <button (click)="parseData(data2)">parse data</button>
-<j-view-editor [data]="data2" (fill)="handleFill($event)" height="200"></j-view-editor>
+<j-editable-box [(data)]="data2" (fill)="handleFill($event)" height="200"></j-editable-box>
 <br>
 <br>
 Parse Area:
-<j-view-editor [data]="data3" [editable]="false" (fill)="handleFill($event)" height="400"></j-view-editor>
+<j-editable-box [(data)]="data3" [editable]="false" (fill)="handleFill($event)" height="400"></j-editable-box>
 
 <ng-template #dialog>
     <jigsaw-dialog width="40%" (close)="onAnswer()">

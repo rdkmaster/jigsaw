@@ -1,10 +1,12 @@
 @import "../../assets/scss/core/base";
 
 $layout-prefix-cls: #{$jigsaw-prefix}-editable-box;
-$editor-prefix-cls: #{$jigsaw-prefix}-view-editor;
 
 .#{$layout-prefix-cls} {
     position: relative;
+    &-root{
+        border: 1px solid $border-color-base;
+    }
     &-block {
         position: absolute;
         left: 0;
@@ -75,14 +77,20 @@ $editor-prefix-cls: #{$jigsaw-prefix}-view-editor;
                 color: $primary-9;
             }
         }
-        .#{$editor-prefix-cls}:not(.#{$editor-prefix-cls}-resizing) .#{$layout-prefix-cls}:hover > & {
+        .#{$layout-prefix-cls}:hover > & {
             display: block;
+        }
+        .#{$layout-prefix-cls}.#{$layout-prefix-cls}-resizing .#{$layout-prefix-cls}:hover > & {
+            display: none;
         }
     }
     &-has-content {
         display: none;
-        .#{$editor-prefix-cls}:not(.#{$editor-prefix-cls}-resizing) .#{$layout-prefix-cls}:hover > & {
+        .#{$layout-prefix-cls}:hover > & {
             display: block;
+        }
+        .#{$layout-prefix-cls}.#{$layout-prefix-cls}-resizing .#{$layout-prefix-cls}:hover > & {
+            display: none;
         }
     }
     &-resize {
@@ -104,23 +112,4 @@ $editor-prefix-cls: #{$jigsaw-prefix}-view-editor;
             cursor: e-resize;
         }
     }
-    &-resizing {
-        position: absolute;
-        height: 100%;
-        width: 2px;
-        background: $text-color;
-        left: 0;
-        top: 0;
-        z-index: 101;
-        display: none;
-        &-column {
-            width: 100%;
-            height: 2px;
-        }
-    }
-}
-
-.#{$editor-prefix-cls} {
-    display: block;
-    border: 1px solid $border-color-base;
 }

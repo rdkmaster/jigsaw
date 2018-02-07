@@ -58,6 +58,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
     }
 
     public set direction(value: string) {
+        value = CommonUtils.isUndefined(value) ? 'h' : value;
         value = JigsawBoxBase.directionMap.get(value);
         if (!value) return;
         this._direction = value;

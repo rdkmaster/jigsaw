@@ -1,14 +1,14 @@
 import {NgModule} from '@angular/core';
-import {JigsawViewEditorModule} from "jigsaw/component/view-editor/view-editor";
 import {SetResizeLineWidthDemoComponent} from "./demo.component";
 import {JigsawSliderModule} from "jigsaw/component/slider/index";
+import {JigsawBoxModule} from "../../../../jigsaw/component/box/index";
 
 @NgModule({
     declarations: [
         SetResizeLineWidthDemoComponent
     ],
     imports: [
-        JigsawViewEditorModule,
+        JigsawBoxModule,
         JigsawSliderModule
     ],
     exports: [SetResizeLineWidthDemoComponent],

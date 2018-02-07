@@ -21,6 +21,7 @@ export interface IEditableBoxParent {
         '[class.jigsaw-editable-box]': 'true',
         '[class.jigsaw-box]': 'true',
         '[class.jigsaw-flex]': 'type == "flex"',
+        '[class.jigsaw-editable-box-root]': '!parent',
         '[style.width]': 'width',
         '[style.height]': 'height',
     }
@@ -46,18 +47,50 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         if (!(value instanceof LayoutData)) return;
         this._rendererHost.viewContainerRef.clear();
         this._data = value;
+        this._setRootProperty();
         if (this._removeDataRefreshListener) {
             this._removeDataRefreshListener();
         }
         this._removeDataRefreshListener = this._data.onRefresh(() => {
+            this._setRootProperty();
         })
+    }
+
+    @Input()
+    public editable: boolean = true;
+
+    @Input()
+    public blocked: boolean;
+
+    @Input()
+    public isFirst: boolean = true;
+
+    @Input()
+    public parent: JigsawEditableBox;
+
+    private _resizeLineWidth: string;
+
+    @Input()
+    public get resizeLineWidth(): string {
+        return this._resizeLineWidth;
+    }
+
+    public set resizeLineWidth(value: string) {
+        if (typeof value == 'string') {
+            value = value.replace('px', '');
+        }
+        let valueNum = Number(value);
+        if (Number.isNaN(valueNum)) return;
+        if (valueNum < 2) {
+            valueNum = 2
+        } else if (valueNum > 8) {
+            valueNum = 8
+        }
+        this._resizeLineWidth = valueNum + 'px';
     }
 
     @Output()
     public dataChange = new EventEmitter<LayoutData>();
-
-    @ViewChildren(JigsawEditableBox)
-    protected childrenBox: QueryList<JigsawEditableBox>;
 
     @Output()
     public directionChange = new EventEmitter<string>();
@@ -68,26 +101,20 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
     @Output()
     public remove = new EventEmitter<LayoutData>();
 
+    @Output()
+    public fill = new EventEmitter<JigsawEditableBox>();
+
+    @Output()
+    public move = new EventEmitter<LayoutData>();
+
+    @ViewChildren(JigsawEditableBox)
+    protected childrenBox: QueryList<JigsawEditableBox>;
+
     @ViewChild(JigsawRendererHost)
     private _rendererHost: JigsawRendererHost;
 
-    @Input()
-    public editable: boolean;
-
-    @Input()
-    public blocked: boolean;
-
-    @Input()
-    public isFirst: boolean;
-
-    @Input()
-    public parent: JigsawEditableBox;
-
-    @Input()
-    public resizeLineWidth: string;
-
-    @Input()
-    public parentViewEditor: IEditableBoxParent;
+    @ViewChild('resizeLine')
+    public resizeLine: ElementRef;
 
     /**
      * @internal
@@ -102,7 +129,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
             this.dataChange.emit(this.data);
         }
         this.direction = direction;
-        this.directionChange.emit(this.direction);
+        this._updateDirection();
         // 目前先平分创建两个node
         this.data.nodes = [new LayoutData, new LayoutData];
         // 内容信息搬到第一个子节点
@@ -110,7 +137,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         this.data.nodes[0].innerHtml = this.data.innerHtml;
         setTimeout(() => {
             // 等待搬家组件渲染， 发送组件搬家信息
-            this.parentViewEditor.move.emit(this.data.nodes[0]);
+            this._getRootEditableBox().move.emit(this.data.nodes[0]);
         });
         // 重置当前内容信息
         this.data.componentMetaDataList = [];
@@ -151,18 +178,32 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
                     this._bindScrollEvent();
 
                     // 等待搬家组件渲染， 发送组件搬家信息
-                    this.parentViewEditor.move.emit(this.data);
+                    this._getRootEditableBox().move.emit(this.data);
                 })
             }
-            this.directionChange.emit(this.direction);
+            this._updateDirection();
         }
+    }
+
+    private _updateDirection() {
+        if (this.parent) {
+            this.directionChange.emit(this.direction);
+        } else {
+            this.data.direction = this.direction;
+        }
+    }
+
+    private _setRootProperty() {
+        if (this.parent) return;
+        this.direction = this._data.direction;
+        this.grow = this._data.grow;
     }
 
     /**
      * @internal
      */
     public _$addContent() {
-        this.parentViewEditor.fill.emit(this);
+        this._getRootEditableBox().fill.emit(this);
     }
 
     public addContent(componentMetaDataList: ComponentMetaData[]) {
@@ -243,25 +284,28 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         })
     }
 
-    @ViewChild('resizeLine')
-    public resizeLine: ElementRef;
-
-    @ViewChild('resizingLine')
-    public resizingLine: ElementRef;
+    private _getRootEditableBox(): JigsawEditableBox {
+        let p = this.parent;
+        if (!p) return this;
+        while (true) {
+            if (!p.parent) return p;
+            p = p.parent;
+        }
+    }
 
     /**
      * @internal
      */
     public _$handleResizeStart(event) {
         super._$handleResizeStart(event);
-        this.renderer.addClass(this.parentViewEditor.element, 'jigsaw-view-editor-resizing');
+        this.renderer.addClass(this._getRootEditableBox().element, 'jigsaw-editable-box-resizing');
     }
 
     /**
      * @internal
      */
     public _$handleResizeEnd() {
-        this.renderer.removeClass(this.parentViewEditor.element, 'jigsaw-view-editor-resizing');
+        this.renderer.removeClass(this._getRootEditableBox().element, 'jigsaw-editable-box-resizing');
     }
 
     ngOnInit() {
