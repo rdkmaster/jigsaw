@@ -16,7 +16,7 @@
 </jigsaw-select>
 
 <div class="jigsaw-paging-goto" *ngIf="showQuickJumper">
-    <span>Goto</span>
+    <span>{{'pagination.goto' | translate}}</span>
     <jigsaw-input #input (keyup.enter)="_goto(input.value)" width="60"></jigsaw-input>
 </div>
 

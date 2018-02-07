@@ -8,6 +8,9 @@ import {FormsModule} from '@angular/forms';
 import {JigsawSelectModule} from '../select/select';
 import {JigsawInputModule} from '../input/input';
 import {AbstractJigsawComponent} from "../common";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {InternalUtils} from "../../core/utils/internal-utils";
+import {TranslateHelper} from "../../core/utils/translate-helper";
 
 export type PageSizeData = {
     value: number,
@@ -24,6 +27,10 @@ export type PageSizeData = {
     }
 })
 export class JigsawPagination extends AbstractJigsawComponent implements OnInit, AfterViewInit {
+    constructor(private _translateService: TranslateService) {
+        super()
+    }
+
     private _totalPage: number;
     private _current: number;
     private _showPages: number[] = [];
@@ -32,11 +39,10 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     private _pageSizeOptions: any[];
     private _pageNumberInit: boolean = false;
 
-    // TODO 国际化
     /**
      * @internal
      */
-    public _$pageSize: PageSizeData = {value: null, label: 'null/Page'};
+    public _$pageSize: PageSizeData = {value: null, label: 'null/' + this._translateService.instant('pagination.page')};
     /**
      * @internal
      */
@@ -100,7 +106,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         newValue = newValue ? newValue : 10;
         if (this.pageSize != newValue) {
             this._$pageSize.value = newValue;
-            this._$pageSize.label = newValue + '/Page';
+            this._$pageSize.label = newValue + '/' + this._translateService.instant('pagination.page');
             this.pageSizeChange.emit(newValue);
             if (this.initialized) {
                 this._renderPages();
@@ -117,7 +123,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     public set pageSizeOptions(newValue: number[]) {
         this._pageSizeOptions = [];
         newValue.forEach(num => {
-            let option = {value: num, label: num + '/Page'};
+            let option = {value: num, label: num + '/' + this._translateService.instant('pagination.page')};
             this._pageSizeOptions.push(option);
         });
     };
@@ -346,6 +352,22 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     ngOnInit() {
         super.ngOnInit();
         this._renderPages();
+        // 国际化
+        TranslateHelper.languageChangEvent.subscribe(langInfo => {
+            this._translateService.use(langInfo.curLang);
+            if (this._pageSizeOptions instanceof Array && this._pageSizeOptions.length) {
+                this.pageSizeOptions = this._pageSizeOptions.reduce((arr, option) => {
+                    arr.push(option.value);
+                    return arr;
+                }, []);
+            }
+            if (this._$pageSize) {
+                this._$pageSize = {
+                    value: this._$pageSize.value,
+                    label: this._$pageSize.value + '/' + this._translateService.instant('pagination.page')
+                }
+            }
+        });
     }
 
     ngAfterViewInit() {
@@ -427,11 +449,26 @@ export class JigsawPagingItem {
 }
 
 @NgModule({
-    imports: [CommonModule, FormsModule, JigsawSelectModule, JigsawInputModule],
+    imports: [CommonModule, FormsModule, JigsawSelectModule, JigsawInputModule, TranslateModule.forRoot()],
     declarations: [JigsawPagination, JigsawPagingItem],
-    exports: [JigsawPagination]
+    exports: [JigsawPagination],
+    providers: [TranslateService],
 })
 export class JigsawPaginationModule {
+
+    constructor(translateService: TranslateService) {
+        InternalUtils.initI18n(translateService, 'pagination', {
+            zh: {
+                page: "页",
+                goto: '跳转'
+            },
+            en: {
+                page: 'Page',
+                goto: 'Goto'
+            }
+        });
+        translateService.setDefaultLang(translateService.getBrowserLang());
+    }
 
 }
 

@@ -6,6 +6,7 @@ import {PopupService} from "jigsaw/service/popup.service";
 import {JigsawTimeModule} from "jigsaw/component/time/index";
 import {JigsawRangeTimeModule} from "jigsaw/component/range-time/index";
 import {JigsawDialogModule} from "jigsaw/component/dialog/dialog";
+import {JigsawPaginationModule} from "jigsaw/component/pagination/pagination";
 
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {I18nFullDemoComponent} from "./demo.component";
@@ -16,7 +17,7 @@ import {I18nFullDemoComponent} from "./demo.component";
     exports: [I18nFullDemoComponent],
     imports: [
         JigsawAlertModule, JigsawButtonModule, JigsawTimeModule, JigsawRangeTimeModule,
-        JigsawDialogModule, JigsawDemoDescriptionModule,
+        JigsawDialogModule, JigsawDemoDescriptionModule, JigsawPaginationModule,
         TranslateModule/* #for-live-demo-only# .forRoot() */
     ],
     providers: [PopupService, TranslateService]
