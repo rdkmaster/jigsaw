@@ -112,7 +112,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
     /**
      * @internal
      */
-    public _$addItems(direction: string) {
+    public _$addBox(direction: string) {
         this._rendererHost.viewContainerRef.clear();
         if (this.removeElementScrollEvent) {
             this.removeElementScrollEvent();
@@ -147,7 +147,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
     /**
      * @internal
      */
-    public _$removeItem(item: LayoutData) {
+    public _$removeBox(item: LayoutData) {
         if (!this.data || !(this.data.nodes instanceof Array)) return;
 
         const index = this.data.nodes.findIndex(node => node === item);
