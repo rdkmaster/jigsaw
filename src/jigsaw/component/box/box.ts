@@ -1,10 +1,8 @@
 import {
     AfterContentInit, AfterViewInit, Component, ContentChildren, ElementRef, EventEmitter,
-    Input, NgModule, NgZone, OnDestroy, QueryList, Renderer2, ViewChild
+    Input, NgZone, OnDestroy, QueryList, Renderer2, ViewChild
 } from "@angular/core";
-import {CommonModule} from "@angular/common";
 import {JigsawResizableBoxBase} from "./common-box";
-import {JigsawResizableModule} from "../../directive/resizable/resizable";
 import {CallbackRemoval} from "../../core/utils/common-utils";
 
 @Component({
@@ -100,7 +98,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
 
             if (!this._resizeLineParent) return;
             // 兼容IE,去掉resize过程中产生的莫名滚动条
-            if(this._isResizing){
+            if (this._isResizing) {
                 this.renderer.setStyle(this._resizeLineParent.nativeElement, 'display', 'none');
             }
             setTimeout(() => {
@@ -155,13 +153,4 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         super.ngOnDestroy();
         this._removeAllListener();
     }
-}
-
-@NgModule({
-    imports: [CommonModule, JigsawResizableModule],
-    declarations: [JigsawBox],
-    exports: [JigsawBox]
-})
-export class JigsawBoxModule {
-
 }

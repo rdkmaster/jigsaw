@@ -1,14 +1,12 @@
 import {
     AfterViewInit, Component, ComponentFactoryResolver, ComponentRef, ElementRef,
-    EmbeddedViewRef, EventEmitter, Input, NgModule, NgZone, OnDestroy, OnInit, Output,
+    EmbeddedViewRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output,
     QueryList, Renderer2, TemplateRef, Type, ViewChild, ViewChildren
 } from "@angular/core";
 import {CallbackRemoval} from "../../core/utils/common-utils";
 import {ComponentInput, ComponentMetaData, LayoutData} from "../../core/data/layout-data";
-import {JigsawCommonModule, JigsawRendererHost} from "../common";
+import {JigsawRendererHost} from "../common";
 import {JigsawResizableBoxBase} from "./common-box";
-import {CommonModule} from "@angular/common";
-import {JigsawResizableModule} from "../../directive/resizable/resizable";
 
 export interface IEditableBoxParent {
     element: HTMLElement;
@@ -290,13 +288,4 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
             this._removeDataRefreshListener();
         }
     }
-}
-
-@NgModule({
-    imports: [CommonModule, JigsawCommonModule, JigsawResizableModule],
-    declarations: [JigsawEditableBox],
-    exports: [JigsawEditableBox]
-})
-export class JigsawEditableBoxModule {
-
 }

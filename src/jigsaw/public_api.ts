@@ -5,9 +5,7 @@
  */
 export * from "./component/alert/alert";
 export * from "./component/block/block";
-export * from "./component/box/box";
-export * from "./component/box/common-box";
-export * from "./component/box/editable-box";
+export * from "./component/box/index";
 export * from "./component/button/button";
 export * from "./component/chart-icon/chart-icon-factory";
 export * from "./component/checkbox/index";
@@ -57,7 +55,6 @@ export * from "./core/utils/translate-helper";
 export * from "./directive/dragdrop/index";
 export * from "./directive/dragdrop/types";
 export * from "./directive/movable/index";
-export * from "./directive/resizable/resizable";
 export * from "./directive/trusted-html/trusted-html";
 export * from "./module";
 export * from "./service/loading.service";
