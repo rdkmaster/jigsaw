@@ -4,10 +4,9 @@ import {LayoutData} from "jigsaw/core/data/layout-data";
 @Component({
     templateUrl: './demo.component.html',
 })
-export class EditableAndBlockedDemoComponent {
+export class EditableDemoComponent {
     data: LayoutData;
     editable: boolean = true;
-    blocked: boolean = true;
 
     constructor() {
         this.data = new LayoutData();

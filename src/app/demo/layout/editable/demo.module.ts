@@ -1,18 +1,18 @@
 import {NgModule} from '@angular/core';
-import {EditableAndBlockedDemoComponent} from "./demo.component";
+import {EditableDemoComponent} from "./demo.component";
 import {JigsawButtonModule} from "../../../../jigsaw/component/button/button";
 import {JigsawBoxModule} from "../../../../jigsaw/component/box/index";
 
 @NgModule({
     declarations: [
-        EditableAndBlockedDemoComponent
+        EditableDemoComponent
     ],
     imports: [
         JigsawBoxModule,
         JigsawButtonModule
     ],
-    exports: [EditableAndBlockedDemoComponent],
+    exports: [EditableDemoComponent],
 })
-export class EditableAndBlockedDemoModule {
+export class EditableDemoModule {
 
 }

@@ -12,8 +12,8 @@ import {CustomSceneLayoutDemoComponent} from "app/demo/layout/custom-scene-layou
 import {CustomSceneLayoutDemoModule} from "./custom-scene-layout/demo.module";
 import {SetResizeLineWidthDemoComponent} from "./set-resize-line-width/demo.component";
 import {SetResizeLineWidthDemoModule} from "./set-resize-line-width/demo.module";
-import {EditableAndBlockedDemoComponent} from "./editable-and-blocked/demo.component";
-import {EditableAndBlockedDemoModule} from "./editable-and-blocked/demo.module";
+import {EditableDemoComponent} from "./editable/demo.component";
+import {EditableDemoModule} from "./editable/demo.module";
 
 export const routerConfig = [
     {
@@ -35,7 +35,7 @@ export const routerConfig = [
         path: 'set-resize-line-width', component: SetResizeLineWidthDemoComponent
     },
     {
-        path: 'editable-and-blocked', component: EditableAndBlockedDemoComponent
+        path: 'editable', component: EditableDemoComponent
     },
 ];
 
@@ -48,7 +48,7 @@ export const routerConfig = [
         BoxLayoutScrollDemoModule,
         CustomSceneLayoutDemoModule,
         SetResizeLineWidthDemoModule,
-        EditableAndBlockedDemoModule
+        EditableDemoModule
     ]
 })
 export class LayoutDemoModule {

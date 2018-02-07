@@ -5,9 +5,8 @@
         <p class="comment">editable、blocked默认为true，即默认可编辑且有蒙层</p>
         <div class="mgb">
             <j-button (click)="editable = !editable">toggle editable</j-button>
-            <j-button (click)="blocked = !blocked">toggle blocked</j-button>
         </div>
-        <j-editable-box [data]="data" [editable]="editable" [blocked]="blocked" height="400"></j-editable-box>
+        <j-editable-box [data]="data" [editable]="editable" height="400"></j-editable-box>
     </div>
 </div>
 
