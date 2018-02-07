@@ -158,7 +158,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
             if (node.nodes instanceof Array && node.nodes.length > 0) {
                 // 拿取nodes
                 this.data.nodes = node.nodes;
-                this.direction = node.direction ? node.direction : 'h'; // 默认是'h'
+                this.direction = node.direction ? node.direction : 'horizontal'; // 默认是'horizontal'
             } else {
                 // 拿取内容
                 this.data.componentMetaDataList = node.componentMetaDataList;
