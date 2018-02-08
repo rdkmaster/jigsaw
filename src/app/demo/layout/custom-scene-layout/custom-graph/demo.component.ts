@@ -18,6 +18,10 @@ export class CustomGraphComponent implements OnInit {
 
     @ViewChild("graph") graph: JigsawGraph;
 
+    resize() {
+        this.graph.resize();
+    }
+
     patchOption = {
         title: {
             text: '补丁 - 堆叠区域图'

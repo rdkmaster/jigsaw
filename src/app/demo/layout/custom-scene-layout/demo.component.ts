@@ -1,4 +1,4 @@
-import {Component, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, ComponentRef, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ComponentMetaData, LayoutData} from "jigsaw/core/data/layout-data";
 import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/service/popup.service";
 import {CustomTableComponent} from "./custom-table/demo.component";
@@ -108,12 +108,22 @@ export class CustomSceneLayoutDemoComponent {
         console.log(data.box, data.components);
     }
 
-    handleResizeStart(boxes){
-        console.log(boxes[0].element, boxes[1].element);
+    handleResizeStart(boxes: JigsawEditableBox[]){
+        boxes.forEach(box => {
+            console.log(box.element);
+        });
     }
 
-    handleResize(){
-        console.log(222);
+    handleResize(boxes: JigsawEditableBox[]){
+        boxes.forEach(box => {
+            if(box.data.components instanceof Array){
+                box.data.components.forEach((component: ComponentRef<any>) => {
+                    if(component.instance instanceof CustomGraphComponent){
+                        component.instance.resize();
+                    }
+                })
+            }
+        })
     }
 
     selectedComponent;

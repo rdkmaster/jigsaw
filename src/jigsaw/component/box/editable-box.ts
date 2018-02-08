@@ -295,12 +295,25 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
     }
 
     private _emitResizeEvent(eventType: string) {
-        let previousBox;
+        let previousBox: JigsawEditableBox;
         if (this.parent && this.parent.childrenBox.length) {
             const index = this.parent.childrenBox.toArray().findIndex(box => box == this);
             previousBox = this.parent.childrenBox.toArray()[index - 1];
         }
-        this.getRootBox()[eventType].emit([previousBox, this]);
+        this.getRootBox()[eventType].emit([...this._getAffectedBoxes(previousBox, []),
+            ...this._getAffectedBoxes(this, [])]);
+    }
+
+    private _getAffectedBoxes(box: JigsawEditableBox, arr: JigsawEditableBox[]): JigsawEditableBox[] {
+        if (box.childrenBox.length == 0) return [box];
+        box.childrenBox.forEach(box => {
+            if (box.childrenBox.length == 0) {
+                arr.push(box);
+            } else {
+                arr.push(...this._getAffectedBoxes(box, []));
+            }
+        });
+        return arr;
     }
 
     ngOnInit() {

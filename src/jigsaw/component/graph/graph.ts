@@ -139,7 +139,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     private _needListenWindowResize(): boolean {
         return !!((this.width && this.width[this.width.length - 1] == '%') ||
-        (this.height && this.height[this.height.length - 1] == '%') || !this.width);
+            (this.height && this.height[this.height.length - 1] == '%') || !this.width);
     }
 
     private _host: HTMLElement;
@@ -156,6 +156,10 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         });
 
         if (this.data) this.setOption(this.data.options);
+
+        setTimeout(() => {
+            this.resize();
+        });
 
         this._listenWindowResize();
     }
