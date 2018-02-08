@@ -21,7 +21,7 @@
     },
     paths: {
       // paths serve as alias
-      'npm:': '/node_modules/'
+      'npm:': '/j-lunker/node_modules/'
     },
     // map tells the System loader where to look for things
     map: {
@@ -50,7 +50,7 @@
       'typescript':                 'npm:typescript/lib/typescript.js',
       'tslib':                      'npm:tslib/tslib.es6.js',
       'ngx-perfect-scrollbar':      'npm:ngx-perfect-scrollbar/dist/ngx-perfect-scrollbar.js',
-      'perfect-scrollbar':          'npm:perfect-scrollbar/dist/js/perfect-scrollbar.min.js',
+      'perfect-scrollbar':          'npm:perfect-scrollbar/dist/perfect-scrollbar.min.js',
       'resize-observer-polyfill':   'npm:resize-observer-polyfill/dist/ResizeObserver.es.js',
       "@ngx-translate/core":        'npm:@ngx-translate/core',
       "echarts":                    'npm:echarts/dist/echarts.js',
