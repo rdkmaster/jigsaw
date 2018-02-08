@@ -130,15 +130,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
             const firstChildBox = this.childrenBox.toArray()[0];
             firstChildBox._viewInit.subscribe(() => {
                 firstChildBox._viewInit.unsubscribe();
-                const contents: ViewRef[] = [];
-                for (let i = 0; i < this._rendererHost.viewContainerRef.length; i++) {
-                    contents.push(this._rendererHost.viewContainerRef.get(i));
-                    this._rendererHost.viewContainerRef.detach(i);
-                }
-                this._rendererHost.viewContainerRef.clear();
-                contents.forEach(content => {
-                    firstChildBox._rendererHost.viewContainerRef.insert(content);
-                })
+                this._moveComponents(this, firstChildBox);
             });
             // 内容信息搬到第一个子节点
             this.data.nodes[0].components = this.data.components;
@@ -172,25 +164,44 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
             const node = this.data.nodes[0];
             if (node.nodes instanceof Array && node.nodes.length > 0) {
                 // 拿取nodes
-                this.data.nodes = node.nodes;
-                this.direction = node.direction ? node.direction : 'horizontal'; // 默认是'horizontal'
+                // TODO 拿取nodes的时候，组件数据搬家
+                //this.data.nodes = node.nodes;
+                //this.direction = node.direction ? node.direction : 'horizontal'; // 默认是'horizontal'
             } else {
-                // 拿取内容
-                this.data.componentMetaDataList = node.componentMetaDataList;
-                this.data.innerHtml = node.innerHtml;
-                this.data.nodes = [];
-                this.direction = null;
-                this._renderComponents(this.data.componentMetaDataList);
                 setTimeout(() => {
-                    // 等待 option bar & block 渲染
-                    this._bindScrollEvent();
+                    // 等待删除操作后，box渲染完成
+                    const firstChildBox = this.childrenBox.toArray()[0];
+                    this._moveComponents(firstChildBox, this);
 
-                    // 等待搬家组件渲染， 发送组件搬家信息
-                    this.getRootBox().move.emit(this.data);
+                    // 拿取内容
+                    this.data.componentMetaDataList = node.componentMetaDataList;
+                    this.data.innerHtml = node.innerHtml;
+                    this.data.components = node.components;
+                    this.data.nodes = [];
+                    this.direction = null;
+                    setTimeout(() => {
+                        // 等待 option bar & block 渲染
+                        this._bindScrollEvent();
+                    });
                 })
             }
             this._updateDirection();
+        } else if (this.data.nodes.length == 0) {
+            this._$remove();
         }
+    }
+
+    private _moveComponents(moveOut: JigsawEditableBox, moveIn: JigsawEditableBox) {
+        if (!moveOut || !moveIn) return;
+        const components: ViewRef[] = [];
+        for (let i = 0; i < moveOut._rendererHost.viewContainerRef.length; i++) {
+            components.push(moveOut._rendererHost.viewContainerRef.get(i));
+            moveOut._rendererHost.viewContainerRef.detach(i);
+        }
+        moveOut._rendererHost.viewContainerRef.clear();
+        components.forEach(content => {
+            moveIn._rendererHost.viewContainerRef.insert(content);
+        })
     }
 
     private _updateDirection() {
