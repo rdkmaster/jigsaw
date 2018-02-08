@@ -1,7 +1,7 @@
 import {
     AfterViewInit, Component, ComponentFactoryResolver, ComponentRef, ElementRef,
     EmbeddedViewRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output,
-    QueryList, Renderer2, TemplateRef, Type, ViewChild, ViewChildren
+    QueryList, Renderer2, TemplateRef, Type, ViewChild, ViewChildren, ViewRef
 } from "@angular/core";
 import {CallbackRemoval} from "../../core/utils/common-utils";
 import {ComponentInput, ComponentMetaData, LayoutData} from "../../core/data/layout-data";
@@ -21,8 +21,6 @@ import {JigsawResizableBoxBase} from "./common-box";
     }
 })
 export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterViewInit, OnDestroy, OnInit {
-    private _removeDataRefreshListener: CallbackRemoval;
-
     constructor(elementRef: ElementRef,
                 renderer: Renderer2,
                 zone: NgZone,
@@ -104,16 +102,18 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
     protected childrenBox: QueryList<JigsawEditableBox>;
 
     @ViewChild(JigsawRendererHost)
-    private _rendererHost: JigsawRendererHost;
+    public _rendererHost: JigsawRendererHost;
 
     @ViewChild('resizeLine')
     public resizeLine: ElementRef;
+
+    private _removeDataRefreshListener: CallbackRemoval;
+    public _viewInit = new EventEmitter();
 
     /**
      * @internal
      */
     public _$addBox(direction: string) {
-        this._rendererHost.viewContainerRef.clear();
         if (this.removeElementScrollEvent) {
             this.removeElementScrollEvent();
         }
@@ -125,16 +125,31 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         this._updateDirection();
         // 目前先平分创建两个node
         this.data.nodes = [new LayoutData, new LayoutData];
-        // 内容信息搬到第一个子节点
-        this.data.nodes[0].componentMetaDataList = this.data.componentMetaDataList;
-        this.data.nodes[0].innerHtml = this.data.innerHtml;
         setTimeout(() => {
-            // 等待搬家组件渲染， 发送组件搬家信息
-            this.getRootBox().move.emit(this.data.nodes[0]);
+            // 等待子box渲染，填充搬家组件
+            const firstChildBox = this.childrenBox.toArray()[0];
+            firstChildBox._viewInit.subscribe(() => {
+                firstChildBox._viewInit.unsubscribe();
+                const contents: ViewRef[] = [];
+                for (let i = 0; i < this._rendererHost.viewContainerRef.length; i++) {
+                    contents.push(this._rendererHost.viewContainerRef.get(i));
+                    this._rendererHost.viewContainerRef.detach(i);
+                }
+                this._rendererHost.viewContainerRef.clear();
+                contents.forEach(content => {
+                    firstChildBox._rendererHost.viewContainerRef.insert(content);
+                })
+            });
+            // 内容信息搬到第一个子节点
+            this.data.nodes[0].components = this.data.components;
+            this.data.nodes[0].componentMetaDataList = this.data.componentMetaDataList;
+            this.data.nodes[0].innerHtml = this.data.innerHtml;
+
+            // 重置当前内容信息
+            this.data.componentMetaDataList = [];
+            this.data.innerHtml = '';
+            this.data.components = null;
         });
-        // 重置当前内容信息
-        this.data.componentMetaDataList = [];
-        this.data.innerHtml = ''
     }
 
     /**
@@ -328,6 +343,10 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         this.checkFlex();
         // 等待 option bar & block 渲染
         this._bindScrollEvent();
+        setTimeout(() => {
+            // 异步发送事件，让父box能监听到
+            this._viewInit.emit();
+        });
     }
 
     ngOnDestroy() {
