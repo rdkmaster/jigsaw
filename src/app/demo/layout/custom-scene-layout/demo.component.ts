@@ -108,6 +108,14 @@ export class CustomSceneLayoutDemoComponent {
         console.log(data.box, data.components);
     }
 
+    handleResizeStart(boxes){
+        console.log(boxes[0].element, boxes[1].element);
+    }
+
+    handleResize(){
+        console.log(222);
+    }
+
     selectedComponent;
     componentMetaDataList: ComponentMetaData[] = [
         {

@@ -130,7 +130,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         this.data.nodes[0].innerHtml = this.data.innerHtml;
         setTimeout(() => {
             // 等待搬家组件渲染， 发送组件搬家信息
-            this._getRootEditableBox().move.emit(this.data.nodes[0]);
+            this.getRootBox().move.emit(this.data.nodes[0]);
         });
         // 重置当前内容信息
         this.data.componentMetaDataList = [];
@@ -171,7 +171,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
                     this._bindScrollEvent();
 
                     // 等待搬家组件渲染， 发送组件搬家信息
-                    this._getRootEditableBox().move.emit(this.data);
+                    this.getRootBox().move.emit(this.data);
                 })
             }
             this._updateDirection();
@@ -196,7 +196,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
      * @internal
      */
     public _$addContent() {
-        this._getRootEditableBox().fill.emit(this);
+        this.getRootBox().fill.emit(this);
     }
 
     public addContent(componentMetaDataList: ComponentMetaData[]) {
@@ -277,28 +277,30 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         })
     }
 
-    private _getRootEditableBox(): JigsawEditableBox {
-        let p = this.parent;
-        if (!p) return this;
-        while (true) {
-            if (!p.parent) return p;
-            p = p.parent;
-        }
-    }
-
     /**
      * @internal
      */
     public _$handleResizeStart(event) {
         super._$handleResizeStart(event);
-        this.renderer.addClass(this._getRootEditableBox().element, 'jigsaw-editable-box-resizing');
+        this.renderer.addClass(this.getRootBox().element, 'jigsaw-editable-box-resizing');
+        this._emitResizeEvent('resizeStart');
     }
 
     /**
      * @internal
      */
     public _$handleResizeEnd() {
-        this.renderer.removeClass(this._getRootEditableBox().element, 'jigsaw-editable-box-resizing');
+        this.renderer.removeClass(this.getRootBox().element, 'jigsaw-editable-box-resizing');
+        this._emitResizeEvent('resize');
+    }
+
+    private _emitResizeEvent(eventType: string) {
+        let previousBox;
+        if (this.parent && this.parent.childrenBox.length) {
+            const index = this.parent.childrenBox.toArray().findIndex(box => box == this);
+            previousBox = this.parent.childrenBox.toArray()[index - 1];
+        }
+        this.getRootBox()[eventType].emit([previousBox, this]);
     }
 
     ngOnInit() {

@@ -40,13 +40,15 @@
                     <j-box></j-box>
                 </j-box>
             </j-box>
-            <j-box grow="3">
+            <j-box grow="3" (resizeStart)="handleResizeStart($event)" (resize)="handleResize($event)">
                 <p class="inner-content">
                     <span *ngFor="let i of arr">content...<br></span>
                 </p>
             </j-box>
         </j-box>
+        <p class="message">{{resizeInfo}}</p>
     </div>
 </div>
+
 
 

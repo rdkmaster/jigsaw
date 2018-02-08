@@ -4,7 +4,13 @@
                (valueChange)="changeData($event)">
 </jigsaw-select>
 <button (click)="parseData(data)">parse data</button>
-<j-editable-box [(data)]="data" (fill)="handleFill($event)" (move)="handleMoveComponent($event)" resizeLineWidth="4" height="400"></j-editable-box>
+<j-editable-box [(data)]="data"
+                (fill)="handleFill($event)"
+                (move)="handleMoveComponent($event)"
+                (resizeStart)="handleResizeStart($event)"
+                (resize)="handleResize($event)"
+                resizeLineWidth="4"
+                height="400"></j-editable-box>
 <br>
 <br>
 <button (click)="consoleData()">console data</button>

@@ -1,5 +1,5 @@
 import {AbstractJigsawComponent} from "../common";
-import {ElementRef, Input, NgZone, OnDestroy, QueryList, Renderer2} from "@angular/core";
+import {ElementRef, EventEmitter, Input, NgZone, OnDestroy, Output, QueryList, Renderer2} from "@angular/core";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {JigsawBox} from "./box";
 import {AffixUtils} from "../../core/utils/internal-utils";
@@ -178,6 +178,12 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
      */
     public _$resizeRange: number[];
 
+    @Output()
+    public resizeStart = new EventEmitter();
+
+    @Output()
+    public resize = new EventEmitter();
+
     /**
      * @internal
      */
@@ -202,6 +208,15 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
                 box.growChange.emit(sizeRatios[index]);
             }
         });
+    }
+
+    protected getRootBox(): any {
+        let p = this.parent;
+        if (!p) return this;
+        while (true) {
+            if (!p.parent) return p;
+            p = p.parent;
+        }
     }
 
     private _computeSizeRatios(sizeProp: string, updateOffset: number): number[] {
