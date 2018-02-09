@@ -1,12 +1,12 @@
-import {Directive, EventEmitter, Input, NgModule, NgZone, Output, Renderer2} from "@angular/core";
+import {Directive, EventEmitter, Input, NgZone, Output, Renderer2} from "@angular/core";
 import {CallbackRemoval} from "../../core/utils/common-utils";
 import {AffixUtils} from "../../core/utils/internal-utils";
 
 @Directive({
     selector: '[jigsaw-resizable], [j-resizable]',
     host: {
-        '[class.jigsaw-box-resizing]': '_moving',
-        '(mousedown)': '_dragStart($event)'
+        '[class.jigsaw-box-resizing]': '_$moving',
+        '(mousedown)': '_$dragStart($event)'
     }
 })
 export class JigsawBoxResizable {
@@ -33,13 +33,13 @@ export class JigsawBoxResizable {
 
     private _effectOffset: number;
 
-    private _moving: boolean = false;
+    public _$moving: boolean = false;
     private _position: number[];
 
     private _removeWindowMouseMoveListener: CallbackRemoval;
     private _removeWindowMouseUpListener: CallbackRemoval;
 
-    private _dragStart = (event) => {
+    public _$dragStart = (event) => {
         event.preventDefault();
         event.stopPropagation();
 
@@ -49,7 +49,7 @@ export class JigsawBoxResizable {
         const startOffsetY = AffixUtils.offset(this.parentBox).top - AffixUtils.offset(this.effectBox).top;
 
         this._position = [event.clientX - startOffsetX, event.clientY - startOffsetY];
-        this._moving = true;
+        this._$moving = true;
         this._renderer.setStyle(document.body, 'cursor',
             this.effectDirection == 'column' ? 'n-resize' : 'e-resize');
 
@@ -63,7 +63,7 @@ export class JigsawBoxResizable {
     };
 
     private _dragMove = (event) => {
-        if (!this._moving || !this.range) return;
+        if (!this._$moving || !this.range) return;
         let eventProp = this.effectDirection == 'column' ? 'clientY' : 'clientX',
             rawPosition = this.effectDirection == 'column' ? this._position[1] : this._position[0];
         let offset = event[eventProp] - rawPosition;
@@ -77,7 +77,7 @@ export class JigsawBoxResizable {
     };
 
     private _dragEnd = () => {
-        this._moving = false;
+        this._$moving = false;
         this._position = null;
         this._removeWindowListener();
         this._renderer.setStyle(document.body, 'cursor', 'auto');
