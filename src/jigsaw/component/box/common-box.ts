@@ -13,7 +13,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
         this.element = _elementRef.nativeElement;
     }
 
-    public static directionMap = new Map([
+    private static DIRECTION_MAP = new Map([
         ['horizontal', 'row'],
         ['horizontal-reverse', 'row-reverse'],
         ['vertical', 'column'],
@@ -28,7 +28,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
         ['column-reverse', 'column-reverse'],
     ]);
 
-    public static justifyMap = new Map([
+    private static JUSTIFY_MAP = new Map([
         ['start', 'flex-start'],
         ['end', 'flex-end'],
         ['center', 'center'],
@@ -36,7 +36,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
         ['around', 'space-around'],
     ]);
 
-    public static alignMap = new Map([
+    private static ALIGN_MAP = new Map([
         ['start', 'flex-start'],
         ['end', 'flex-end'],
         ['center', 'center'],
@@ -59,7 +59,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
 
     public set direction(value: string) {
         value = CommonUtils.isUndefined(value) ? 'horizontal' : value;
-        value = JigsawBoxBase.directionMap.get(value);
+        value = JigsawBoxBase.DIRECTION_MAP.get(value);
         if (!value) return;
         this._direction = value;
         this.renderer.setStyle(this.element, 'flex-direction', value);
@@ -72,7 +72,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
     }
 
     public set justify(value: string) {
-        value = JigsawBoxBase.justifyMap.get(value);
+        value = JigsawBoxBase.JUSTIFY_MAP.get(value);
         if (!value) return;
         this._justify = value;
         this.renderer.setStyle(this.element, 'justify-content', value);
@@ -85,7 +85,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
     }
 
     public set align(value: string) {
-        value = JigsawBoxBase.alignMap.get(value);
+        value = JigsawBoxBase.ALIGN_MAP.get(value);
         if (!value) return;
         this._align = value;
         this.renderer.setStyle(this.element, 'align-items', value);
@@ -153,6 +153,9 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
     protected checkFlex() {
         this.checkFlexByChildren();
         if (this.childrenBox instanceof QueryList) {
+            if (this.removeBoxChangeListener) {
+                this.removeBoxChangeListener.unsubscribe();
+            }
             this.removeBoxChangeListener = this.childrenBox.changes.subscribe(() => {
                 this.checkFlexByChildren();
             })
@@ -230,9 +233,7 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
         const prevBoxSize = this._rawOffsets[curIndex] - this._rawOffsets[curIndex - 1];
         const curBoxSize = this._rawOffsets[curIndex + 1] - this._rawOffsets[curIndex];
         sizes.splice(curIndex - 1, 2, prevBoxSize, curBoxSize);
-        return sizes.map(size => {
-            return size / this.parent.element[sizeProp] * 100
-        });
+        return sizes.map(size => size / this.parent.element[sizeProp] * 100);
     }
 
     /**

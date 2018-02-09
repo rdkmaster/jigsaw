@@ -27,7 +27,10 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
     @Input()
     public resizable: boolean;
 
-    public showResizeLine: boolean;
+    /**
+     * @internal
+     */
+    public _$showResizeLine: boolean;
 
     public parent: JigsawBox;
 
@@ -135,7 +138,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         this.removeElementScrollEvent = this.renderer.listen(this.element, 'scroll', () => {
             this.renderer.setStyle(this._resizeLine.nativeElement, 'top', this.element.scrollTop + 'px');
             this.renderer.setStyle(this._resizeLine.nativeElement, 'left', this.element.scrollLeft + 'px');
-        })
+        });
     }
 
     ngAfterContentInit() {
@@ -151,7 +154,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
             box.parent = this;
             if (this.resizable && index != 0) {
                 // 第一个child box没有resize line
-                box.showResizeLine = true;
+                box._$showResizeLine = true;
             }
         });
     }
