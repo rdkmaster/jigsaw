@@ -54,8 +54,8 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         this.childrenBox = v;
     }
 
-    private _removeResizeStartListener: CallbackRemoval;
-    private _removeResizeEndListener: CallbackRemoval;
+    private _removeResizeStartListener: EventEmitter<any>;
+    private _removeResizeEndListener: EventEmitter<any>;
     private _removeWindowResizeListener: CallbackRemoval;
 
     private _isCurrentResizingBox: boolean;
@@ -161,11 +161,11 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
 
     private _removeAllListener() {
         if (this._removeResizeStartListener) {
-            this._removeResizeStartListener();
+            this._removeResizeStartListener.unsubscribe();
             this._removeResizeStartListener = null;
         }
         if (this._removeResizeEndListener) {
-            this._removeResizeEndListener();
+            this._removeResizeEndListener.unsubscribe();
             this._removeResizeEndListener = null;
         }
         if (this._removeWindowResizeListener) {
