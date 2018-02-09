@@ -11,7 +11,7 @@ import {CallbackRemoval} from "../../core/utils/common-utils";
     host: {
         '[class.jigsaw-box]': 'true',
         '[class.jigsaw-flex]': 'type == "flex"',
-        '[class.jigsaw-box-no-child]': '!childrenBox || !childrenBox?.length',
+        '[class.jigsaw-box-no-child]': '!_$childrenBox || !_$childrenBox?.length',
         '[style.width]': 'width',
         '[style.height]': 'height',
     }
@@ -40,7 +40,16 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
     @ViewChild('resizeLineParent')
     private _resizeLineParent: ElementRef;
 
-    protected childrenBox: JigsawBox[];
+    /**
+     * @internal
+     */
+    public get _$childrenBox(): JigsawBox[] {
+        return <JigsawBox[]>this.childrenBox;
+    }
+
+    public set _$childrenBox(v: JigsawBox[]) {
+        this.childrenBox = v;
+    }
 
     private _removeResizeStartListener: CallbackRemoval;
     private _removeResizeEndListener: CallbackRemoval;
@@ -80,9 +89,9 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
 
     private _emitResizeEvent(eventType: string) {
         this[eventType].emit(this);
-        if (this.parent && this.parent.resizable && this.parent.childrenBox.length) {
-            const index = this.parent.childrenBox.findIndex(box => box == this);
-            const previousBox = this.parent.childrenBox[index - 1];
+        if (this.parent && this.parent.resizable && this.parent._$childrenBox.length) {
+            const index = this.parent._$childrenBox.findIndex(box => box == this);
+            const previousBox = this.parent._$childrenBox[index - 1];
             if (previousBox) {
                 previousBox[eventType].emit(previousBox);
             }
@@ -131,14 +140,14 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
 
     ngAfterContentInit() {
         // 映射同一组件实例，ContentChildren会包含自己，https://github.com/angular/angular/issues/21148
-        this.childrenBox = this._childrenBoxRaw.filter(box => box != this);
+        this._$childrenBox = this._childrenBoxRaw.filter(box => box != this);
         this.checkFlex();
         this.removeBoxChangeListener = this._childrenBoxRaw.changes.subscribe(() => {
-            this.childrenBox = this._childrenBoxRaw.filter(box => box != this);
+            this._$childrenBox = this._childrenBoxRaw.filter(box => box != this);
             this.checkFlexByChildren();
         });
 
-        this.childrenBox.forEach((box, index) => {
+        this._$childrenBox.forEach((box, index) => {
             box.parent = this;
             if (this.resizable && index != 0) {
                 // 第一个child box没有resize line
