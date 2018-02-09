@@ -9,7 +9,7 @@ export class BoxLayoutDemoComponent {
 
     resizeInfo: string;
 
-    handleResizeStart() {
+    handleResizeStart(box) {
         this.resizeInfo = 'Box is resizing';
     }
 
