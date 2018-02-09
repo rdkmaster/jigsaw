@@ -11,8 +11,11 @@ export class TablePageableDemoComponent {
 
     constructor(http: HttpClient) {
         this.pageable = new PageableTableData(http, {
-            url: 'mock-data/countries', params: {aa: 11, bb: 22}
+            url: 'mock-data/countries', body: {aa: 11, bb: 22}, method: 'post'
         });
+        /*this.pageable = new PageableTableData(http, {
+            url: 'mock-data/countries', params: {aa: 11, bb: 22}
+        });*/
         this.pageable.onAjaxComplete(() => {
             console.log(this.pageable);
         });

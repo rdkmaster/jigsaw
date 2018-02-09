@@ -19,10 +19,12 @@ export class AjaxInterceptor implements HttpInterceptor {
     }
 
     dealServerSidePagingRequest(req: HttpRequest<any>): Observable<HttpEvent<any>> {
-        const service = req.params.get('service');
-        const paging = JSON.parse(req.params.get('paging'));
-        const filter = JSON.parse(req.params.get('filter'));
-        const sort = JSON.parse(req.params.get('sort'));
+        const params = req.method.toLowerCase() == 'post' ? 'body' : 'params';
+
+        const service = this.getParamValue(req, params, 'service');
+        const paging = this.getParamValue(req, params, 'paging') ? JSON.parse(this.getParamValue(req, params, 'paging')) : null;
+        const filter = this.getParamValue(req, params, 'filter') ? JSON.parse(this.getParamValue(req, params, 'filter')) : null;
+        const sort = this.getParamValue(req, params, 'sort') ? JSON.parse(this.getParamValue(req, params, 'sort')) : null;
         const body = PageableData.get({service, paging, filter, sort});
         return this.createResult(body, req.url);
     }
@@ -30,6 +32,10 @@ export class AjaxInterceptor implements HttpInterceptor {
     dealNormalDataRequest(req: HttpRequest<any>): Observable<HttpEvent<any>> {
         const body = MockData.get(req.url);
         return this.createResult(body, req.url);
+    }
+
+    getParamValue(req: HttpRequest<any>, params: string, key: string): any {
+        return req.method.toLowerCase() == 'post' ? req[params][key] : req[params].get(key);
     }
 
     createResult(body: any, url: string): Observable<HttpEvent<any>> {
