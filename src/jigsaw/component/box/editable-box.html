@@ -11,7 +11,7 @@
     [_isFirst]="isFirst"
     [resizeLineWidth]="resizeLineWidth"
     [parent]="this"
-    (remove)="_$removeBox($event)">
+    (_remove)="_$removeBox($event)">
 </j-editable-box>
 
 <div *ngIf="(!data || !data.nodes || !data.nodes.length) && editable"

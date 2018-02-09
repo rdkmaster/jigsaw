@@ -90,13 +90,16 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
     public growChange = new EventEmitter<number>();
 
     @Output()
-    public remove = new EventEmitter<LayoutData>();
+    public _remove = new EventEmitter<LayoutData>();
 
     @Output()
     public fill = new EventEmitter<JigsawEditableBox>();
 
     @Output()
-    public move = new EventEmitter<LayoutData>();
+    public remove = new EventEmitter();
+
+    @Output()
+    public add = new EventEmitter();
 
     @ViewChildren(JigsawEditableBox)
     protected childrenBox: QueryList<JigsawEditableBox>;
@@ -141,6 +144,8 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
             this.data.componentMetaDataList = [];
             this.data.innerHtml = '';
             this.data.components = null;
+
+            this.getRootBox().add.emit();
         });
     }
 
@@ -148,7 +153,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
      * @internal
      */
     public _$remove() {
-        this.remove.emit(this.data);
+        this._remove.emit(this.data);
     }
 
     /**
@@ -189,6 +194,8 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         } else if (this.data.nodes.length == 0) {
             this._$remove();
         }
+
+        this.getRootBox().remove.emit();
     }
 
     private _moveComponents(moveOut: JigsawEditableBox, moveIn: JigsawEditableBox) {

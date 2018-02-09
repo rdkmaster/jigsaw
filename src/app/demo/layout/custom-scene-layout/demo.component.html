@@ -6,9 +6,10 @@
 <button (click)="parseData(data)">parse data</button>
 <j-editable-box [(data)]="data"
                 (fill)="handleFill($event)"
-                (move)="handleMoveComponent($event)"
                 (resizeStart)="handleResizeStart($event)"
                 (resize)="handleResize($event)"
+                (add)="handleAddAndRemove($event)"
+                (remove)="handleAddAndRemove($event)"
                 resizeLineWidth="4"
                 height="400"></j-editable-box>
 <br>

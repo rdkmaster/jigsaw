@@ -104,25 +104,29 @@ export class CustomSceneLayoutDemoComponent {
         this.popupTemplateDialog(this.dialog);
     }
 
-    handleMoveComponent(data: LayoutData){
-        console.log(data.box, data.components);
-    }
-
-    handleResizeStart(boxes: JigsawEditableBox[]){
+    handleResizeStart(boxes: JigsawEditableBox[]) {
         boxes.forEach(box => {
             console.log(box.element);
         });
     }
 
-    handleResize(boxes: JigsawEditableBox[]){
+    handleResize(boxes: JigsawEditableBox[]) {
         boxes.forEach(box => {
-            if(box.data.components instanceof Array){
+            if (box.data.components instanceof Array) {
                 box.data.components.forEach((component: ComponentRef<any>) => {
-                    if(component.instance instanceof CustomGraphComponent){
+                    if (component.instance instanceof CustomGraphComponent) {
                         component.instance.resize();
                     }
                 })
             }
+        })
+    }
+
+    handleAddAndRemove() {
+        setTimeout(() => {
+            let e = document.createEvent("Event");
+            e.initEvent("resize", true, true);
+            window.dispatchEvent(e);
         })
     }
 
