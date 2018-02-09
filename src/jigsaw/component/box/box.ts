@@ -162,15 +162,19 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
     private _removeAllListener() {
         if (this._removeResizeStartListener) {
             this._removeResizeStartListener();
+            this._removeResizeStartListener = null;
         }
         if (this._removeResizeEndListener) {
             this._removeResizeEndListener();
+            this._removeResizeEndListener = null;
         }
         if (this._removeWindowResizeListener) {
             this._removeWindowResizeListener();
+            this._removeWindowResizeListener = null;
         }
         if (this.removeElementScrollEvent) {
             this.removeElementScrollEvent();
+            this.removeElementScrollEvent = null;
         }
     }
 

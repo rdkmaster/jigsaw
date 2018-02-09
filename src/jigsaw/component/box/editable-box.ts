@@ -43,6 +43,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         this._setRootProperty();
         if (this._removeDataRefreshListener) {
             this._removeDataRefreshListener();
+            this._removeDataRefreshListener = null;
         }
         this._removeDataRefreshListener = this._data.onRefresh(() => {
             this._setRootProperty();
@@ -128,6 +129,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
     public _$addBox(direction: string) {
         if (this.removeElementScrollEvent) {
             this.removeElementScrollEvent();
+            this.removeElementScrollEvent = null;
         }
         if (!this.data) {
             this.data = new LayoutData;
@@ -298,6 +300,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         const resizeBar = this.element.querySelector('.jigsaw-editable-box-resize');
         if (this.removeElementScrollEvent) {
             this.removeElementScrollEvent();
+            this.removeElementScrollEvent = null;
         }
         this.removeElementScrollEvent = this.renderer.listen(this.element, 'scroll', () => {
             if (block) {
@@ -381,9 +384,11 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         this._rendererHost.viewContainerRef.clear();
         if (this.removeElementScrollEvent) {
             this.removeElementScrollEvent();
+            this.removeElementScrollEvent = null;
         }
         if (this._removeDataRefreshListener) {
             this._removeDataRefreshListener();
+            this._removeDataRefreshListener = null;
         }
     }
 }
