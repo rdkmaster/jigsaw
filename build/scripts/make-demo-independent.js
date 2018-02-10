@@ -281,7 +281,7 @@ function getDemoHome(dirName) {
 }
 
 function getTemplate() {
-    return fs.readFileSync(__dirname + '/demo-independent-templates/plunker.embed.template.html').toString();
+    return fs.readFileSync(__dirname + '/demo-independent-templates/j-lunker.embed.template.html').toString();
 }
 
 function getIndexHtml() {
