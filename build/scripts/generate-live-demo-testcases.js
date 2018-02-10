@@ -1,7 +1,7 @@
 var fs = require('fs');
 
 var demoHome = __dirname + '/../../src/app/demo/';
-var outputFile = __dirname + '/../../e2e/live-demo/plunker.e2e-spec.ts';
+var outputFile = __dirname + '/../../e2e/live-demo/j-lunker.e2e-spec.ts';
 
 var template = getTemplate();
 var demoIndex = 1;
