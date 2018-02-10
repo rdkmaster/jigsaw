@@ -42,7 +42,7 @@ function genComponentTestcases(demoHome, componentName) {
 }
 
 function getTemplate() {
-    var template = fs.readFileSync(__dirname + '/../../e2e/live-demo/plunker.e2e-spec.template').toString();
+    var template = fs.readFileSync(__dirname + '/../../e2e/live-demo/j-lunker.e2e-spec.template').toString();
     var repeatStartTag = '[repeat start]';
     var repeatEndTag = '[repeat end]';
     var idx1 = template.indexOf(repeatStartTag);
