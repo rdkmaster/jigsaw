@@ -155,7 +155,20 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
                 // 第一个child box没有resize line
                 box._$showResizeLine = true;
             }
+            this._supportSetSize(box, this);
         });
+    }
+
+    private _supportSetSize(box: JigsawBox, parent: JigsawBox) {
+        if (!parent) return;
+        if (box.width && parent.direction != 'column') {
+            box.renderer.setStyle(box.element, 'flex-grow', '0');
+            box.renderer.setStyle(box.element, 'flex-basis', box.width);
+        }
+        if (box.height && parent.direction == 'column') {
+            box.renderer.setStyle(box.element, 'flex-grow', '0');
+            box.renderer.setStyle(box.element, 'flex-basis', box.height);
+        }
     }
 
     private _removeAllListener() {
