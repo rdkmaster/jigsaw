@@ -48,7 +48,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
             this._removeDataRefreshListener = null;
         }
         this._removeDataRefreshListener = this._data.onRefresh(() => {
-            //this._setRootProperty();
+            this._setRootProperty();
         });
     }
 
