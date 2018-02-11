@@ -40,13 +40,15 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
 
         this._rendererHost.viewContainerRef.clear();
         this._data = value;
-        this._setRootProperty();
+        if (this.initialized && !this.parent) {
+            this._setRootProperty();
+        }
         if (this._removeDataRefreshListener) {
             this._removeDataRefreshListener();
             this._removeDataRefreshListener = null;
         }
         this._removeDataRefreshListener = this._data.onRefresh(() => {
-            this._setRootProperty();
+            //this._setRootProperty();
         });
     }
 
@@ -366,6 +368,9 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         if (this.data) {
             this._renderComponents(this.data.componentMetaDataList);
             this.data.box = this;
+            if (!this.parent) {
+                this._setRootProperty();
+            }
         }
     }
 

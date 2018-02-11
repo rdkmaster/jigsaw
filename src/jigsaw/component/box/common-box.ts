@@ -58,9 +58,13 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
     }
 
     public set direction(value: string) {
-        value = CommonUtils.isUndefined(value) ? 'horizontal' : value;
         value = JigsawBoxBase.DIRECTION_MAP.get(value);
-        if (!value) return;
+        if (!value) {
+            this._direction = value;
+            //设置默认值，如果box不是flex，该样式不会生效
+            this.renderer.setStyle(this.element, 'flex-direction', 'row');
+            return;
+        }
         this._direction = value;
         this.renderer.setStyle(this.element, 'flex-direction', value);
         this._checkFlexByOwnProperty(value);

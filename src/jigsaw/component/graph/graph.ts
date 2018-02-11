@@ -157,10 +157,6 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
         if (this.data) this.setOption(this.data.options);
 
-        setTimeout(() => {
-            this.resize();
-        });
-
         this._listenWindowResize();
     }
 
