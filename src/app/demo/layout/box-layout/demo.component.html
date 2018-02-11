@@ -8,42 +8,16 @@
     <h2>Box</h2>
     <div class="demo-1 live-demo">
         <h3>布局</h3>
-        <j-box height="400" [resizable]="true">
-            <j-box direction="v" [resizable]="true">
-                <j-box grow="1">
-                    <j-box></j-box>
-                    <j-box direction="v">
-                        <j-box style="border: 1px solid #bbb">
-                            <p class="inner-content self-line-height">
-                                content1...<br>
-                                content2...<br>
-                                content3...<br>
-                                content4...<br>
-                                content5...<br>
-                                content6...<br>
-                                content7...<br>
-                            </p>
-                        </j-box>
-                        <j-box></j-box>
-                    </j-box>
+        <j-box height="400">
+            <j-box width="50px" class="border-box"></j-box>
+            <j-box direction="v">
+                <j-box height="50px" class="border-box"></j-box>
+                <j-box [resizable]="true">
+                    <j-box class="border-box"
+                           (resizeStart)="handleResizeStart($event)"
+                           (resize)="handleResize($event)"></j-box>
+                    <j-box class="border-box" grow="2"></j-box>
                 </j-box>
-                <j-box grow="2">
-                    <j-box>
-                        <p class="inner-content not-break-line">
-                            content1...content2...content3...content4...content5...<br>
-                            content1...content2...content3...content4...content5...<br>
-                            content1...content2...content3...content4...content5...<br>
-                            content1...content2...content3...content4...content5...<br>
-                        </p>
-                    </j-box>
-                    <j-box></j-box>
-                    <j-box></j-box>
-                </j-box>
-            </j-box>
-            <j-box grow="3" (resizeStart)="handleResizeStart($event)" (resize)="handleResize($event)">
-                <p class="inner-content">
-                    <span *ngFor="let i of arr">content...<br></span>
-                </p>
             </j-box>
         </j-box>
         <p class="message">{{resizeInfo}}</p>
