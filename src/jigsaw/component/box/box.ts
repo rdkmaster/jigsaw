@@ -11,7 +11,6 @@ import {CallbackRemoval} from "../../core/utils/common-utils";
     host: {
         '[class.jigsaw-box]': 'true',
         '[class.jigsaw-flex]': 'type == "flex"',
-        '[class.jigsaw-box-no-child]': '!_$childrenBox || !_$childrenBox?.length',
         '[style.width]': 'width',
         '[style.height]': 'height',
     }
