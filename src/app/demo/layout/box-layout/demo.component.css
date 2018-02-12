@@ -7,6 +7,30 @@
     line-height: 1;
 }
 
-j-box {
+.border-box {
     border: 1px solid #bbb;
+}
+
+.nav {
+    margin-top: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.nav p {
+    font-size: 30px;
+}
+
+.nav-2 {
+    margin: 12px 0 0 6px;
+}
+
+.nav-2 p {
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.nav-2 span {
+    color: #aaa;
 }

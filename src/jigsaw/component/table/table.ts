@@ -700,7 +700,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     ngOnInit() {
         super.ngOnInit();
 
-        if (this._data.field && this._data.field.length != 0) {
+        if (this._data && this._data.field && this._data.field.length != 0) {
             this.update();
         }
 

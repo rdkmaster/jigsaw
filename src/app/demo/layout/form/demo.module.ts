@@ -1,7 +1,6 @@
 import {NgModule} from "@angular/core";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
-import {JigsawBoxModule} from "jigsaw/component/box/box";
 import {JigsawButtonModule} from "jigsaw/component/button/button";
 import {JigsawInputModule} from "jigsaw/component/input/input";
 import {JigsawRadioModule} from "jigsaw/component/radio/radio";
@@ -14,6 +13,7 @@ import {JigsawSliderModule} from "jigsaw/component/slider/index";
 import {JigsawSwitchModule} from "jigsaw/component/switch/index";
 import {FormDemoComponent} from "./demo.component";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
+import {JigsawBoxModule} from "../../../../jigsaw/component/box/index";
 
 @NgModule({
     declarations: [FormDemoComponent],

@@ -8,6 +8,12 @@ import {FormDemoComponent} from "./form/demo.component";
 import {FormDemoModule} from "./form/demo.module";
 import {BoxLayoutScrollDemoComponent} from "./box-layout-scroll/demo.component";
 import {BoxLayoutScrollDemoModule} from "./box-layout-scroll/demo.module";
+import {CustomSceneLayoutDemoComponent} from "app/demo/layout/custom-scene-layout/demo.component";
+import {CustomSceneLayoutDemoModule} from "./custom-scene-layout/demo.module";
+import {SetResizeLineWidthDemoComponent} from "./set-resize-line-width/demo.component";
+import {SetResizeLineWidthDemoModule} from "./set-resize-line-width/demo.module";
+import {EditableDemoComponent} from "./editable/demo.component";
+import {EditableDemoModule} from "./editable/demo.module";
 
 export const routerConfig = [
     {
@@ -22,6 +28,15 @@ export const routerConfig = [
     {
         path: 'box-layout-scroll', component: BoxLayoutScrollDemoComponent
     },
+    {
+        path: 'custom-scene-layout', component: CustomSceneLayoutDemoComponent
+    },
+    {
+        path: 'set-resize-line-width', component: SetResizeLineWidthDemoComponent
+    },
+    {
+        path: 'editable', component: EditableDemoComponent
+    },
 ];
 
 @NgModule({
@@ -31,6 +46,9 @@ export const routerConfig = [
         BoxLayoutDemoModule,
         FormDemoModule,
         BoxLayoutScrollDemoModule,
+        CustomSceneLayoutDemoModule,
+        SetResizeLineWidthDemoModule,
+        EditableDemoModule
     ]
 })
 export class LayoutDemoModule {

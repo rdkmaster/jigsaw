@@ -55,6 +55,31 @@ export class InternalUtils {
         InternalUtils._initI18nWithLang(translateService, compName, translations, 'en');
         InternalUtils._initI18nWithLang(translateService, compName, translations, 'zh');
     }
+
+    /**
+     * 驼峰转短横线分隔命名
+     * @param {string} prop
+     * @returns {string}
+     */
+    public static camelToKebabCase(prop: string): string {
+        return prop.match(/[A-Z]/g) ? prop.replace(/([A-Z])/g, '-$1') : prop;
+    }
+
+    /**
+     * 短横线分隔转驼峰命名
+     * @param {string} prop
+     * @returns {string}
+     */
+    public static kebabToCamelCase(prop: string): string {
+        if (!prop.match(/[\-]/g)) return prop;
+        return prop.split('-').map((item, index) => {
+            if (index == 0) {
+                return item;
+            } else {
+                return item[0].toUpperCase() + item.slice(1);
+            }
+        }).join('');
+    }
 }
 
 /*

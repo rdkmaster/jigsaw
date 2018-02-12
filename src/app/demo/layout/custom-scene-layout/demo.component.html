@@ -1,0 +1,40 @@
+<jigsaw-select labelField="label"
+               [(value)]="selectedScene"
+               [data]="sceneData"
+               (valueChange)="changeData($event)">
+</jigsaw-select>
+<button (click)="parseData(data)">parse data</button>
+<j-editable-box [(data)]="data"
+                (fill)="handleFill($event)"
+                (resizeStart)="handleResizeStart($event)"
+                (resize)="handleResize($event)"
+                (add)="handleAddAndRemove()"
+                (remove)="handleAddAndRemove()"
+                resizeLineWidth="4"
+                height="400"></j-editable-box>
+<br>
+<br>
+<button (click)="consoleData()">console data</button>
+<button (click)="parseData(data2)">parse data</button>
+<j-editable-box [(data)]="data2" (fill)="handleFill($event)" height="200"></j-editable-box>
+<br>
+<br>
+Parse Area:
+<j-editable-box [(data)]="data3" [editable]="false" (fill)="handleFill($event)" height="400"></j-editable-box>
+
+<ng-template #dialog>
+    <jigsaw-dialog width="40%" (close)="onAnswer()">
+        <div jigsaw-title>
+            <span class="fa fa-thumbs-up"></span>Please choose scene
+        </div>
+        <div jigsaw-body class="dialog-body">
+            <jigsaw-radios [(value)]="selectedComponent"
+                           (valueChange)="radioChange($event)"
+                           trackItemBy="label">
+                <jigsaw-radio-option *ngFor="let item of componentMetaDataList" [value]="item">
+                    {{item.label}}
+                </jigsaw-radio-option>
+            </jigsaw-radios>
+        </div>
+    </jigsaw-dialog>
+</ng-template>

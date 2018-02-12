@@ -5,7 +5,7 @@
  */
 export * from "./component/alert/alert";
 export * from "./component/block/block";
-export * from "./component/box/box";
+export * from "./component/box/index";
 export * from "./component/button/button";
 export * from "./component/chart-icon/chart-icon-factory";
 export * from "./component/checkbox/index";
@@ -47,6 +47,7 @@ export * from "./core/data/general-collection";
 export * from "./core/data/graph-data";
 export * from "./core/data/table-data";
 export * from "./core/data/tree-data";
+export * from "./core/data/layout-data";
 export * from "./core/utils/common-utils";
 export * from "./core/utils/internal-utils";
 export * from "./core/utils/translate-helper";
@@ -59,6 +60,3 @@ export * from "./service/loading.service";
 export * from "./service/popup.service";
 export * from "./service/time.service";
 export * from "./service/time.types";
-
-
-

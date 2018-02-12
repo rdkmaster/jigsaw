@@ -1,8 +1,8 @@
 import {NgModule} from "@angular/core";
 import {BoxLayoutScrollDemoComponent} from "./demo.component";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {JigsawBoxModule} from "jigsaw/component/box/box";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
+import {JigsawBoxModule} from "../../../../jigsaw/component/box/index";
 
 @NgModule({
     declarations: [BoxLayoutScrollDemoComponent],
