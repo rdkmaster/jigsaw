@@ -63,9 +63,13 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         if (!this._resizeLine) return;
         this.zone.runOutsideAngular(() => {
             if (this.parent.direction == 'column') {
-                this.renderer.setStyle(this._resizeLine.nativeElement, 'width', this.element.offsetWidth - 2 + 'px');
+                if (this.element.offsetWidth - 2 != this._resizeLine.nativeElement.offsetWidth) {
+                    this.renderer.setStyle(this._resizeLine.nativeElement, 'width', this.element.offsetWidth - 2 + 'px');
+                }
             } else {
-                this.renderer.setStyle(this._resizeLine.nativeElement, 'height', this.element.offsetHeight - 2 + 'px');
+                if (this.element.offsetHeight - 2 != this._resizeLine.nativeElement.offsetHeight) {
+                    this.renderer.setStyle(this._resizeLine.nativeElement, 'height', this.element.offsetHeight - 2 + 'px');
+                }
             }
         });
     }
@@ -135,8 +139,12 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         });
 
         this.removeElementScrollEvent = this.renderer.listen(this.element, 'scroll', () => {
-            this.renderer.setStyle(this._resizeLine.nativeElement, 'top', this.element.scrollTop + 'px');
-            this.renderer.setStyle(this._resizeLine.nativeElement, 'left', this.element.scrollLeft + 'px');
+            if (this._resizeLine.nativeElement.scrollTop != this.element.scrollTop) {
+                this.renderer.setStyle(this._resizeLine.nativeElement, 'top', this.element.scrollTop + 'px');
+            }
+            if (this._resizeLine.nativeElement.scrollLeft != this.element.scrollLeft) {
+                this.renderer.setStyle(this._resizeLine.nativeElement, 'left', this.element.scrollLeft + 'px');
+            }
         });
     }
 
