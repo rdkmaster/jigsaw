@@ -16,7 +16,7 @@ export class AjaxInterceptor implements HttpInterceptor {
 
     constructor() {
         AjaxInterceptor.registerProcessor('/rdk/service/app/common/paging', this.dealServerSidePagingRequest, this);
-        AjaxInterceptor.registerProcessor(/\bmock-data\/(.*)$/, req => MockData.get(req.url));
+        AjaxInterceptor.registerProcessor(/\bmock-data\/.+$/, req => MockData.get(req.url));
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

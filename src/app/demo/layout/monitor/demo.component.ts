@@ -36,10 +36,10 @@ export class MonitorComponent {
     }
 
     pullData() {
-        const graphUrl = `metadatamanage/statistics/dashboard/all?timeUnit=${this.period}`;
+        const graphUrl = `/monitor/statistics/dashboard/all?timeUnit=${this.period}`;
         this.http.get(graphUrl).subscribe((data: any[]) => this.updateViewGraphData(data));
 
-        const tableUrl = 'metadatamanage/statistics/datatable';
+        const tableUrl = '/monitor/statistics/datatable';
         this.http.get(tableUrl).subscribe((data: TableCellData[][]) => this.updateTableData(data));
     }
 

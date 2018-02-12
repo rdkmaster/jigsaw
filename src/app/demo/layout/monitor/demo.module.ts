@@ -12,6 +12,7 @@ import {GraphMonitorComponent} from "./monitors/graph.comp";
 import {NewMonitorComponent} from "./monitors/new-monitor.comp";
 import {MonitorsModule} from "./monitors/monitors.module";
 import {MonitorService} from "./monitors/monitor-service";
+import {AjaxInterceptor} from "app/app.interceptors";
 
 
 @NgModule({
@@ -27,4 +28,26 @@ import {MonitorService} from "./monitors/monitor-service";
     entryComponents: [TableMonitorComponent, GraphMonitorComponent, NewMonitorComponent]
 })
 export class MonitorModule {
+    constructor() {
+        // register mock data simulator
+        AjaxInterceptor.registerProcessor('/monitor/statistics/indicators', req => {
+            if (req.method == 'get') {
+
+            } else {
+
+            }
+        });
+
+        AjaxInterceptor.registerProcessor(/^\/monitor\/statistics\/dashboard.*/, req => {
+
+        });
+
+        AjaxInterceptor.registerProcessor(/^\/monitor\/statistics\/dashboard\/all.*/, req => {
+
+        });
+
+        AjaxInterceptor.registerProcessor('/monitor/statistics/datatable', req => {
+
+        });
+    }
 }

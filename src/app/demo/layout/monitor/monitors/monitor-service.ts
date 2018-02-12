@@ -19,7 +19,7 @@ export class MonitorService {
         }
 
         this._indicatorsQueryOnGoing = true;
-        const url = '/metadatamanage/statistics/indicators';
+        const url = '/monitor/statistics/indicators';
         return this._indicators ? this._indicators :
             this._http.get<any[]>(url).pipe(tap(data => this._indicators = data));
     }
@@ -35,7 +35,7 @@ export class MonitorService {
     }
 
     public createIndicator(name, type, indicators) {
-        const url = '/metadatamanage/statistics/indicators';
+        const url = '/monitor/statistics/indicators';
         name = name ? name : 'New Monitor';
         const body = {name, type, series: []};
         indicators.forEach(i => body.series.push({regionid: i.regionid, indicatorid: i.indicatorid}));
@@ -51,7 +51,7 @@ export class MonitorService {
             console.error("invalid chartId[0]");
             return;
         }
-        const url = `/metadatamanage/statistics/dashboard?chartID=${chartId}`;
+        const url = `/monitor/statistics/dashboard?chartID=${chartId}`;
         this._http.delete(url).subscribe(result => {
             console.log("remove indicator result:");
             console.log(result);
