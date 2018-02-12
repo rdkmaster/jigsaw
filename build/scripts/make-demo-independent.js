@@ -313,7 +313,7 @@ function getSystemJsConfig() {
 }
 
 function getAjaxInterceptor(content) {
-    var code = readCode(__dirname + '/../../src/app/app.interceptors.ts');
+    var code = readCode(__dirname + '/../../src/app/app.interceptor.ts');
     code = fixImport(code);
 
     // 不能位于在replace之后
@@ -331,7 +331,7 @@ function getAjaxInterceptor(content) {
         return `mockData["${file}"]`;
     });
     if (!mockData) {
-        console.error('ERROR: can not find any required mock data in app.interceptors.ts!');
+        console.error('ERROR: can not find any required mock data in app.interceptor.ts!');
         process.exit(1);
     }
 
@@ -357,13 +357,13 @@ function getAjaxInterceptor(content) {
 function findMockDataUrls(interceptorCode, content) {
     var match = interceptorCode.match(/this\.dataSet\s*\[\s*['"].*?['"]\s*\]\s*=\s*require\b/g);
     if (!match) {
-        console.error('ERROR: parse app.interceptors.ts failed, no mock-data url found!');
+        console.error('ERROR: parse app.interceptor.ts failed, no mock-data url found!');
         process.exit(1);
     }
     var allUrls = [];
     match.forEach(item => allUrls.push('mock-data/' + item.match(/['"]\s*(.*?)\s*['"]/)[1]));
     if (allUrls.length == 0) {
-        console.error('ERROR: parse app.interceptors.ts failed, no mock-data url found! allUrls.length == 0');
+        console.error('ERROR: parse app.interceptor.ts failed, no mock-data url found! allUrls.length == 0');
         process.exit(1);
     }
     var urls = allUrls.filter(url => {

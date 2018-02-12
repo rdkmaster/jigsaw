@@ -12,7 +12,7 @@ import {GraphMonitorComponent} from "./monitors/graph.comp";
 import {NewMonitorComponent} from "./monitors/new-monitor.comp";
 import {MonitorsModule} from "./monitors/monitors.module";
 import {MonitorService} from "./monitors/monitor-service";
-import {AjaxInterceptor} from "app/app.interceptors";
+import {AjaxInterceptor} from "app/app.interceptor";
 
 
 @NgModule({
