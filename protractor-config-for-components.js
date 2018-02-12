@@ -16,6 +16,13 @@ let config = {
         print: function () {
         }
     },
+    plugins: [{
+        package: 'protractor-console-plugin',
+        failOnWarning: false,
+        failOnError: true,
+        logWarnings: true,
+        exclude: []
+    }],
     /*
     //beforeLaunch在protractor里面执行一次，如果使用multiCapabilities，
     //tsconfig.json就不能放在beforeLaunch里面
