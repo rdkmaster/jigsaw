@@ -36,7 +36,7 @@ export class AjaxInterceptor implements HttpInterceptor {
 
     getParamValue(req: HttpRequest<any>, params: string, key: string): any {
         const p = req[params];
-        return p instanceof Map ? p.get(key) : p[key];
+        return req.method.toLowerCase() == 'post' ? p[key] : p.get(key);
     }
 
     createResult(body: any, url: string): Observable<HttpEvent<any>> {
