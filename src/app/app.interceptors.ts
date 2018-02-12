@@ -8,30 +8,41 @@ import {PagingInfo} from "../jigsaw/core/data/component-data";
 @Injectable()
 export class AjaxInterceptor implements HttpInterceptor {
 
+    private static _processors: any[] = [];
+
+    public static registerProcessor(urlPattern: RegExp | string, processor: (req: HttpRequest<any>) => any, context?: any) {
+        this._processors.push({urlPattern, processor, context});
+    }
+
+    constructor() {
+        AjaxInterceptor.registerProcessor('/rdk/service/app/common/paging', this.dealServerSidePagingRequest, this);
+        AjaxInterceptor.registerProcessor(/\bmock-data\/(.*)$/, req => MockData.get(req.url));
+    }
+
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         console.log('the ajax request is intercepted, here is the original request:');
         console.log(req);
-        if (req.url == '/rdk/service/app/common/paging') {
-            return this.dealServerSidePagingRequest(req);
+
+        const processor = AjaxInterceptor._processors.find(p => {
+            const url = p.urlPattern;
+            return url instanceof RegExp ? url.test(req.url) : url === req.url;
+        });
+        let body;
+        if (processor) {
+            body = CommonUtils.safeInvokeCallback(processor.context, processor.processor, [req]);
         } else {
-            return this.dealNormalDataRequest(req);
+            console.error('no mock data processor found!');
         }
+        return this.createResult(body, req.url);
     }
 
     dealServerSidePagingRequest(req: HttpRequest<any>): Observable<HttpEvent<any>> {
         const params = req.method.toLowerCase() == 'post' ? 'body' : 'params';
-
         const service = this.getParamValue(req, params, 'service');
         const paging = this.getParamValue(req, params, 'paging') ? JSON.parse(this.getParamValue(req, params, 'paging')) : null;
         const filter = this.getParamValue(req, params, 'filter') ? JSON.parse(this.getParamValue(req, params, 'filter')) : null;
         const sort = this.getParamValue(req, params, 'sort') ? JSON.parse(this.getParamValue(req, params, 'sort')) : null;
-        const body = PageableData.get({service, paging, filter, sort});
-        return this.createResult(body, req.url);
-    }
-
-    dealNormalDataRequest(req: HttpRequest<any>): Observable<HttpEvent<any>> {
-        const body = MockData.get(req.url);
-        return this.createResult(body, req.url);
+        return PageableData.get({service, paging, filter, sort});
     }
 
     getParamValue(req: HttpRequest<any>, params: string, key: string): any {
