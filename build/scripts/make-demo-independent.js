@@ -349,7 +349,7 @@ function getAjaxInterceptor(content) {
     code += '};';
 
     return {
-        path: 'app/ajax-interceptor.ts',
+        path: 'app/app.interceptor.ts',
         code: code
     }
 }
