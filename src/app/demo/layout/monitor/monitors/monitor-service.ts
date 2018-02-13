@@ -39,7 +39,7 @@ export class MonitorService {
         name = name ? name : 'New Monitor';
         const body = {name, type, series: []};
         indicators.forEach(i => body.series.push({regionid: i.regionid, indicatorid: i.indicatorid}));
-        this._http.post(url, {body}).subscribe(result => {
+        this._http.post(url, body).subscribe(result => {
             console.log("create indicator result:");
             console.log(result);
             this.events.emit({type: 'pull-data'});
@@ -51,8 +51,8 @@ export class MonitorService {
             console.error("invalid chartId[0]");
             return;
         }
-        const url = `/monitor/statistics/dashboard?chartID=${chartId}`;
-        this._http.delete(url).subscribe(result => {
+        const url = `/monitor/statistics/dashboard`;
+        this._http.delete(url, {params: {chartID: chartId}}).subscribe(result => {
             console.log("remove indicator result:");
             console.log(result);
             this.events.emit({type: 'pull-data'});

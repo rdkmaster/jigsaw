@@ -125,7 +125,7 @@ export class NewChartPanel extends DialogBase {
     createNewChart() {
         if (this.checkKPI()) {
             this.dispose();
-            this._ms.createIndicator(this.name, this.type, this.selectedKPIs);
+            this._ms.createIndicator(this.name, this.type.value, this.selectedKPIs);
         }
     }
 

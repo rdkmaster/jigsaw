@@ -26,7 +26,7 @@ export class GraphData extends AbstractGraphData {
             <jx-toolbar (remove)="removeKPI()" [component]="getComponent" [data]="data"
                         [visible]="_showToolbar" [chartId]="chartId">
             </jx-toolbar>
-            <jigsaw-graph [data]="_graphData" width="100%" height="100%"></jigsaw-graph>
+            <jigsaw-graph [data]="_graphData" width="99%" height="99%"></jigsaw-graph>
         </div>
     `,
     styles: [`

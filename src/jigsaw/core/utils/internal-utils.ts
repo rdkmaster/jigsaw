@@ -80,6 +80,18 @@ export class InternalUtils {
             }
         }).join('');
     }
+
+    public static randomNumber(min, max, isFloat = false) {
+        let r = Math.random() * (max - min + 1);
+        if (isFloat) {
+            r = r % (max - min);
+        } else {
+            r = Math.round(r);
+            r = r % (max - min + 1);
+        }
+        r += min;
+        return r;
+    }
 }
 
 /*

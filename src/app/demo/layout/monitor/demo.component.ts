@@ -7,7 +7,6 @@ import {NewMonitorComponent} from "./monitors/new-monitor.comp";
 import {MonitorService} from "./monitors/monitor-service";
 
 @Component({
-    selector: 'jigsaw-app',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
@@ -21,7 +20,7 @@ export class MonitorComponent {
     graphData: any[];
 
     constructor(public http: HttpClient, ms: MonitorService) {
-        setInterval(() => this.pullData(), 30000);
+        setInterval(() => this.pullData(), 15000);
         this.pullData();
         ms.events.subscribe(event => {
             switch (event.type) {
