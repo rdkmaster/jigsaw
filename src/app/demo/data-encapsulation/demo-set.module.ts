@@ -18,10 +18,10 @@ export const routerConfig = [
         path: 'array-basic', component: ArrayCollectionBasicDemoComponent
     },
     {
-        path: 'array-ajax', component: ArrayCollectionAjaxDemoComponent, recommended: true
+        path: 'array-ajax', component: ArrayCollectionAjaxDemoComponent
     },
     {
-        path: 'array-ssp', component: ArrayServerSidePaginationDemoComponent, recommended: true
+        path: 'array-ssp', component: ArrayServerSidePaginationDemoComponent
     },
 ];
 

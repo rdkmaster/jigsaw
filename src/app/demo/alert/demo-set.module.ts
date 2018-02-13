@@ -10,10 +10,10 @@ import {CustomizeAlertDemoComponent} from "./customized/demo.component";
 
 export const routerConfig = [
     {
-        path: 'in-dom', component: AlertInDomDemoComponent
+        path: 'popup', component: AlertPopupDemoComponent
     },
     {
-        path: 'popup', component: AlertPopupDemoComponent
+        path: 'in-dom', component: AlertInDomDemoComponent
     },
     {
         path: 'customized', component: CustomizeAlertDemoComponent

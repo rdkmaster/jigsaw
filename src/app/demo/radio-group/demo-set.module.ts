@@ -10,7 +10,7 @@ import {RadioTrackItemByDemoComponent} from "./track-item-by/demo.component";
 
 export const routerConfig = [
     {
-        path: 'full', component: RadioFullComponent, recommended: true
+        path: 'full', component: RadioFullComponent
     },
     {
         path: 'basic', component: RadioBasicDemoComponent

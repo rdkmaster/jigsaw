@@ -6,7 +6,7 @@ import {TrustedHtmlFullComponent} from "./full/demo.component";
 
 export const routerConfig = [
     {
-        path: 'full', component: TrustedHtmlFullComponent, recommended: true
+        path: 'full', component: TrustedHtmlFullComponent
     },
 ];
 

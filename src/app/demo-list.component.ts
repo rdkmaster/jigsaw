@@ -40,7 +40,6 @@ import {routerConfig} from "./router-config";
             <h3>{{router.path}}</h3>
             <hr>
             <a *ngFor="let childRouter of router.childRouters"
-               [ngStyle]="{'font-weight': (childRouter.recommended ? 'bold' : '')}"
                routerLink="{{getUrl(router, childRouter)}}">
                 {{getDesc(childRouter)}}
             </a>
