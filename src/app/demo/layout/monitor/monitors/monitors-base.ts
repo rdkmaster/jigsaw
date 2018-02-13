@@ -6,8 +6,8 @@ export abstract class AbstractMonitorsBase {
     public abstract getComponent(): Type<AbstractMonitorsBase>;
 
     public data: any;
+    public chartId = 0;
 
     // protected frozen: boolean;
     protected toolbar: ToolbarComp;
-    protected chartId = 0;
 }
