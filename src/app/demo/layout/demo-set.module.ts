@@ -19,13 +19,13 @@ import {MonitorModule} from "./monitor/demo.module";
 
 export const routerConfig = [
     {
+        path: 'box-layout', component: BoxLayoutDemoComponent
+    },
+    {
         path: 'monitor', component: MonitorComponent
     },
     {
         path: 'box-justify', component: BoxJustifyDemoComponent
-    },
-    {
-        path: 'box-layout', component: BoxLayoutDemoComponent
     },
     {
         path: 'form', component: FormDemoComponent
