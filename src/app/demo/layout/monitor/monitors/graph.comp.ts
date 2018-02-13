@@ -76,7 +76,7 @@ export class GraphMonitorComponent extends AbstractMonitorsBase {
         this._ms.removeIndicator(this.chartId);
     }
 
-    protected getComponent(): Type<AbstractMonitorsBase> {
+    public getComponent(): Type<AbstractMonitorsBase> {
         return GraphMonitorComponent;
     }
 }

@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild} from "@angular/core";
+import {Component, Input, Type, ViewChild} from "@angular/core";
 import {TableCellRendererBase} from "jigsaw/component/table/table-renderer";
 import {ColumnDefine} from "jigsaw/component/table/table-typings";
 import {TableData} from "jigsaw/core/data/table-data";
@@ -92,7 +92,7 @@ export class TableMonitorComponent extends AbstractMonitorsBase {
         }
     }
 
-    protected getComponent() {
+    public getComponent(): Type<AbstractMonitorsBase> {
         return TableMonitorComponent;
     }
 }
