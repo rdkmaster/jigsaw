@@ -16,6 +16,9 @@ import {DialogMiscDemoComponent} from "./misc/demo.component";
 
 export const routerConfig:any = [
     {
+        path: 'misc', component: DialogMiscDemoComponent
+    },
+    {
         path: 'title', component: DialogTitleDemo
     },
     {
@@ -30,9 +33,6 @@ export const routerConfig:any = [
     {
         path: 'in-dom', component: DialogInDomDemoComponent
     },
-    {
-        path: 'misc', component: DialogMiscDemoComponent
-    }
 ];
 
 @NgModule({
