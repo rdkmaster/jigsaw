@@ -3,7 +3,7 @@ import {Type} from "@angular/core";
 import {ToolbarComp} from "../comp/toolbar.comp";
 
 export abstract class AbstractMonitorsBase {
-    protected abstract getComponent(): Type<AbstractMonitorsBase>;
+    public abstract getComponent(): Type<AbstractMonitorsBase>;
 
     public data: any;
 
