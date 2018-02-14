@@ -10,8 +10,9 @@ export class NotificationFullDemoComponent {
     }
 
     showCaption() {
-        JigsawNotification.show('带有标题的方式：<code>JigsawNotification.show("message", "caption")</code>',
-            '我是一个很长很长很长很长很长很长很长很长很长很长很长的标题');
+        JigsawNotification.show(
+            '带有标题的使用方式：<code>JigsawNotification.show("message", "caption")</code>',
+            '我是一个很长的标题，真的很长很长很长很长很长很长很长很长很长很长');
     }
 
     showWithoutTimeout() {

@@ -92,7 +92,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         const popEle = PopupService._viewContainerRef.element.nativeElement.parentElement;
         Object.assign(popEle.style, opt.position);
 
-        const popupInfo = PopupService.instance.popup(JigsawNotification, popupOptions,
+        let popupInfo = PopupService.instance.popup(JigsawNotification, popupOptions,
             {
                 message: message,
                 caption: opt.caption,
@@ -103,15 +103,23 @@ export class JigsawNotification extends AbstractDialogComponentBase {
                 width: opt.width
             });
 
+        let timeout;
         const onClose = answer => {
-            CommonUtils.safeInvokeCallback(opt.callbackContext, opt.callback, [answer]);
             popupInfo.answer.unsubscribe();
             popupInfo.dispose();
+            popupInfo = null;
+
+            if (timeout) {
+                clearTimeout(timeout);
+                timeout = null;
+            }
+
+            CommonUtils.safeInvokeCallback(opt.callbackContext, opt.callback, [answer]);
         };
 
         popupInfo.answer.subscribe(onClose);
 
-        if (opt.timeout > 0) setTimeout(onClose, opt.timeout);
+        if (opt.timeout > 0) timeout = setTimeout(onClose, opt.timeout);
 
         return popupInfo;
     };
