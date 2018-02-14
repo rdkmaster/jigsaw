@@ -19,7 +19,7 @@ import {TileSelecItemsChangeComponent} from "./selected-items-change/demo.compon
 
 export const routerConfig = [
     {
-        path: 'full', component: TileSelectFullDemoComponent, recommended: true
+        path: 'full', component: TileSelectFullDemoComponent
     },
     {
         path: 'track-item-by', component: TileSelectTrackItemByDemoComponent

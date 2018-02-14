@@ -74,13 +74,28 @@ import {SodokuGameModule} from "./sudoku/demo.module";
 
 export const routerConfig = [
     {
+        path: 'renderer', component: TableRendererDemoComponent
+    },
+    {
+        path: 'swim-lane-diagram', component: SwimLaneDiagramDemoComponent
+    },
+    {
+        path: 'big-table', component: BigTableDataDemoComponent
+    },
+    {
+        path: 'content-width', component: TableContentWidthDemoComponent
+    },
+    {
+        path: 'calendar', component: TableCalendarDemoComponent
+    },
+    {
+        path: 'sudoku', component: SudokuGameComponent
+    },
+    {
         path: 'basic', component: TableBasicDemoComponent
     },
     {
         path: 'data-from-ajax', component: TableDataFromAjaxDemoComponent
-    },
-    {
-        path: 'renderer', component: TableRendererDemoComponent, recommended: true
     },
     {
         path: 'update-column-width', component: TableColumnSetWidthDemoComponent
@@ -146,22 +161,10 @@ export const routerConfig = [
         path: 'local-paging-data', component: LocalPagingDataDemoComponent
     },
     {
-        path: 'swim-lane-diagram', component: SwimLaneDiagramDemoComponent, recommended: true
-    },
-    {
         path: 'hide-header', component: TableHideHeadDemoComponent
     },
     {
         path: 'select-row', component: TableSelectRowDemoComponent
-    },
-    {
-        path: 'big-table', component: BigTableDataDemoComponent, recommended: true
-    },
-    {
-        path: 'content-width', component: TableContentWidthDemoComponent, recommended: true
-    },
-    {
-        path: 'calendar', component: TableCalendarDemoComponent, recommended: true
     },
     {
         path: 'big-row', component: BigRowDemoComponent
@@ -174,9 +177,6 @@ export const routerConfig = [
     },
     {
         path: 'scroll-listen', component: TableScrollListenDemoComponent
-    },
-    {
-        path: 'sudoku', component: SudokuGameComponent
     },
 ];
 

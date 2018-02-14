@@ -5,7 +5,7 @@ import {PopupServiceIntroduceModule} from "./introduce/demo.module";
 
 export const routerConfig:any = [
     {
-        path: 'introduce', component: PopupServiceIntroduceComponent, recommended: true
+        path: 'introduce', component: PopupServiceIntroduceComponent
     },
     {
         desc: 'alert', url: '/alert/popup'

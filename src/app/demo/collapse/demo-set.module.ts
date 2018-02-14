@@ -18,7 +18,7 @@ export const routerConfig = [
         path: 'with-ngfor', component: CollapseWithNGForDemoComponent
     },
     {
-        path: 'full', component: CollapseFullComponent, recommended: true
+        path: 'full', component: CollapseFullComponent
     }
 ];
 

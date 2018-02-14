@@ -22,6 +22,14 @@ import {DynamicTabDemoComponent} from "./api/demo.component";
 
 export const routerConfig = [
     {
+        path: 'api', component: DynamicTabDemoComponent,
+        children: [
+            {
+                path: 'tab-page', loadChildren: './api/tabContent/tab-content.module#TabContentModule'
+            }
+        ]
+    },
+    {
         path: 'basic', component: JigsawTabsDemoComponent
     },
     {
@@ -39,14 +47,6 @@ export const routerConfig = [
     {
         path: 'destroy-tab', component: JigsawDestoryTabComponent
     },
-    {
-        path: 'api', component: DynamicTabDemoComponent,
-        children: [
-            {
-                path: 'tab-page', loadChildren: './api/tabContent/tab-content.module#TabContentModule'
-            }
-        ]
-    }
 ];
 
 @NgModule({

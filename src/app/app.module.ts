@@ -6,7 +6,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {JigsawRootModule} from "jigsaw/component/root/root";
 import {AppComponent} from './app.component';
-import {AjaxInterceptor} from './app.interceptors';
+import {AjaxInterceptor} from './app.interceptor';
 import {DemoListComponent} from "./demo-list.component";
 import {routerConfig} from "./router-config";
 

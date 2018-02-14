@@ -16,7 +16,7 @@ import {InputPrefixIconDemoComponent} from "./prefix-icon/demo.component";
 
 export const routerConfig = [
     {
-        path: 'full', component: InputFullComponent, recommended: true
+        path: 'full', component: InputFullComponent
     },
     {
         path: 'basic', component: InputBasicDemoComponent
