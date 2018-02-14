@@ -1,4 +1,4 @@
-<div class="jigsaw-notification">
+<div class="jigsaw-notification" (mouseenter)="_$onEnter()" (mouseleave)="_$onLeave()">
     <span class="jigsaw-notification-close" (click)='dispose()'>&times;</span>
     <div class="jigsaw-notification-caption" *ngIf="!!caption">
         <i class="jigsaw-notification-icon {{icon}}"></i>{{caption}}

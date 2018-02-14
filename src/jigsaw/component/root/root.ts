@@ -1,4 +1,4 @@
-import {Component, NgModule, Renderer2, ViewContainerRef, ViewChild} from "@angular/core";
+import {Component, NgModule, Renderer2, ViewContainerRef} from "@angular/core";
 import {PopupService} from "../../service/popup.service";
 import {JigsawBlock, JigsawBlockModule} from "../block/block";
 import {
@@ -14,23 +14,13 @@ import {JigsawNotification, JigsawNotificationModule} from "../notification/noti
 
 @Component({
     selector: 'jigsaw-root, j-root',
-    template: `
-        <ng-content></ng-content>
-        <div class="jigsaw-popup-container">
-            <ng-container #popupContainer></ng-container>
-        </div>`
+    template: '<ng-content></ng-content>'
 })
 export class JigsawRoot {
     constructor(viewContainerRef: ViewContainerRef, renderer: Renderer2,
-                ps: PopupService /* do not remove this line, need for global PopupService instantiate! */) {
+                ps:PopupService /* do not remove this line, need for global PopupService instantiate! */) {
+        PopupService._viewContainerRef = viewContainerRef;
         PopupService._renderer = renderer;
-    }
-
-    @ViewChild('popupContainer', {read: ViewContainerRef})
-    popupContainer: ViewContainerRef;
-
-    ngAfterViewInit() {
-        PopupService._viewContainerRef = this.popupContainer;
     }
 }
 

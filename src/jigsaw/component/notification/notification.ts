@@ -38,7 +38,6 @@ export type NotificationMessage = {
     }
 })
 export class JigsawNotification extends AbstractDialogComponentBase {
-
     constructor(renderer: Renderer2, elementRef: ElementRef) {
         super();
 
@@ -60,7 +59,11 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         this.icon = value.icon;
         this.buttons = value.buttons;
         this.width = value.width;
-        this.height = value.height
+        this.height = value.height;
+
+        this._callback = value.callback;
+        this._callbackContext = value.callbackContext;
+        this._timeout = value.timeout;
     }
 
     @Input() public message: string;
@@ -70,6 +73,70 @@ export class JigsawNotification extends AbstractDialogComponentBase {
     @Input() public width: string;
     @Input() public height: string;
 
+
+    private _callback: (button: ButtonInfo) => void;
+    private _callbackContext: any;
+    private _timeout;
+    private _timer;
+    private _popupInfoValue: PopupInfo;
+
+    /**
+     * @internal
+     */
+    get _popupInfo(): PopupInfo {
+        return this._popupInfoValue;
+    }
+
+    set _popupInfo(value: PopupInfo) {
+        this._popupInfoValue = value;
+        if (!this._popupInfoValue) {
+            return;
+        }
+
+        this._popupInfoValue.answer.subscribe(answer => this._close(answer));
+        this._$onLeave();
+    }
+
+    private _close(answer?: ButtonInfo) {
+        if (!this._popupInfoValue) {
+            return;
+        }
+
+        this._popupInfoValue.answer.unsubscribe();
+        this._popupInfoValue.dispose();
+        this._popupInfoValue = null;
+
+        if (this._timeout) {
+            clearTimeout(this._timeout);
+            this._timeout = null;
+        }
+
+        CommonUtils.safeInvokeCallback(this._callbackContext, this._callback, [answer]);
+        this._callbackContext = null;
+        this._callback = null;
+    }
+
+    /**
+     * @internal
+     */
+    _$onEnter() {
+        if (this._timer) {
+            clearTimeout(this._timer);
+            this._timer = null;
+        }
+    }
+
+    /**
+     * @internal
+     */
+    _$onLeave() {
+        if (this._timeout > 0) {
+            this._timer = setTimeout(() => this._close(), this._timeout);
+        }
+    }
+
+    // ===================================================================================
+
     public static show(message: string): PopupInfo;
     public static show(message: string, caption: string): PopupInfo;
     public static show(message: string, options?: NotificationMessage): PopupInfo;
@@ -77,7 +144,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         if (CommonUtils.isUndefined(message)) {
             return;
         }
-        const opt = <NotificationMessage>(typeof options == 'string' ? {caption: options.toString()} : options ? options : {});
+        const opt = <NotificationMessage>(typeof options == 'string' ? {caption: options} : options ? options : {});
         opt.position = opt.hasOwnProperty('position') ? opt.position : NotificationPosition.rightTop;
         opt.timeout = opt.timeout >= 0 ? opt.position : 8000;
 
@@ -99,28 +166,12 @@ export class JigsawNotification extends AbstractDialogComponentBase {
                 icon: opt.icon,
                 buttons: opt.buttons instanceof ButtonInfo ? [opt.buttons] : opt.buttons,
                 callbackContext: opt.callbackContext,
+                callback: opt.callback,
                 height: opt.height,
-                width: opt.width
+                width: opt.width,
+                timeout: opt.timeout
             });
-
-        let timeout;
-        const onClose = answer => {
-            popupInfo.answer.unsubscribe();
-            popupInfo.dispose();
-            popupInfo = null;
-
-            if (timeout) {
-                clearTimeout(timeout);
-                timeout = null;
-            }
-
-            CommonUtils.safeInvokeCallback(opt.callbackContext, opt.callback, [answer]);
-        };
-
-        popupInfo.answer.subscribe(onClose);
-
-        if (opt.timeout > 0) timeout = setTimeout(onClose, opt.timeout);
-
+        popupInfo.instance._popupInfo = popupInfo;
         return popupInfo;
     };
 }

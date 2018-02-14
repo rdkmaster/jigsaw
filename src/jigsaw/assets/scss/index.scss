@@ -1,21 +1,5 @@
 @import "core/base";
 
-.jigsaw-popup-container{
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; //上下
-    align-items: flex-end;  //左右
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    div{
-        pointer-events: auto;
-    }
-}
-
 /*时间组件样式start*/
 .jigsaw-time-host {
     color: $text-color;
