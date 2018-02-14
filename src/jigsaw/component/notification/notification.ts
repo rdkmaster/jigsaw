@@ -1,6 +1,7 @@
 import {
     NgModule, Component, Renderer2, Input, ElementRef
 } from "@angular/core";
+import {CommonModule} from "@angular/common";
 import {AbstractDialogComponentBase, DialogCallback} from "../dialog/dialog";
 import {
     ButtonInfo,
@@ -11,8 +12,6 @@ import {
 } from "../../service/popup.service";
 import {JigsawTrustedHtmlModule} from "../../directive/trusted-html/trusted-html"
 import {CommonUtils} from "../../core/utils/common-utils";
-
-import {CommonModule} from "@angular/common";
 import {JigsawButtonModule} from "../button/button";
 
 export enum NotificationPosition {
@@ -20,6 +19,14 @@ export enum NotificationPosition {
     leftBottom = <any>{'justifyContent': 'flex-end', 'alignItems': 'flex-start'},
     rightTop = <any>{'justifyContent': 'flex-start', 'alignItems': 'flex-end'},
     rightBottom = <any>{'justifyContent': 'flex-end', 'alignItems': 'flex-end'}
+}
+
+export type NotificationMessage = {
+    caption?: string, icon?: string,
+    position?: NotificationPosition, timeout?: number,
+    buttons?: ButtonInfo | ButtonInfo[],
+    callback?: DialogCallback, callbackContext?: any,
+    height?: string | number, width?: string | number
 }
 
 @Component({
@@ -47,31 +54,33 @@ export class JigsawNotification extends AbstractDialogComponentBase {
     @Input()
     public set initData(value: any) {
         if (!value) return;
+
         this.message = value.message || 'the "message" property in the initData goes here.';
-        this.title = value.title;
+        this.caption = value.caption;
         this.icon = value.icon;
-        this.button = value.button;
+        this.buttons = value.buttons;
         this.width = value.width;
         this.height = value.height
     }
 
     @Input() public message: string;
-    @Input() public title: string;
+    @Input() public caption: string;
     @Input() public icon: string;
-    @Input() public button: ButtonInfo;
+    @Input() public buttons: ButtonInfo[];
     @Input() public width: string;
     @Input() public height: string;
 
-    public static show(message: string,
-                       caption?: string,
-                       icon?: string,
-                       position: NotificationPosition = NotificationPosition.rightTop,
-                       timeout: number = 8000,
-                       button?: ButtonInfo,
-                       callback?: DialogCallback,
-                       callbackContext?: any,
-                       height?: string | number,
-                       width?: string | number): PopupInfo {
+    public static show(message: string): PopupInfo;
+    public static show(message: string, caption: string): PopupInfo;
+    public static show(message: string, options?: NotificationMessage): PopupInfo;
+    public static show(message: string, options?: string | NotificationMessage): PopupInfo {
+        if (CommonUtils.isUndefined(message)) {
+            return;
+        }
+        const opt = <NotificationMessage>(typeof options == 'string' ? {caption: options.toString()} : options ? options : {});
+        opt.position = opt.hasOwnProperty('position') ? opt.position : NotificationPosition.rightTop;
+        opt.timeout = opt.timeout >= 0 ? opt.position : 8000;
+
         const popupOptions = {
             modal: false,
             showEffect: PopupEffect.bubbleIn,
@@ -81,26 +90,28 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         };
 
         const popEle = PopupService._viewContainerRef.element.nativeElement.parentElement;
-        Object.assign(popEle.style, position);
+        Object.assign(popEle.style, opt.position);
 
         const popupInfo = PopupService.instance.popup(JigsawNotification, popupOptions,
             {
                 message: message,
-                title: caption,
-                icon: 'fa fa-' + icon,
-                button: button,
-                callbackContext: callbackContext,
-                height: height,
-                width: width
+                caption: opt.caption,
+                icon: opt.icon,
+                buttons: opt.buttons instanceof ButtonInfo ? [opt.buttons] : opt.buttons,
+                callbackContext: opt.callbackContext,
+                height: opt.height,
+                width: opt.width
             });
 
-        popupInfo.answer.subscribe(answer => {
-            CommonUtils.safeInvokeCallback(callbackContext, callback, [answer]);
+        const onClose = answer => {
+            CommonUtils.safeInvokeCallback(opt.callbackContext, opt.callback, [answer]);
             popupInfo.answer.unsubscribe();
             popupInfo.dispose();
-        });
+        };
 
-        if (timeout) setTimeout(popupInfo.dispose, timeout);
+        popupInfo.answer.subscribe(onClose);
+
+        if (opt.timeout > 0) setTimeout(onClose, opt.timeout);
 
         return popupInfo;
     };

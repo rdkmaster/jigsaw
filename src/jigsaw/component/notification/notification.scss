@@ -15,7 +15,8 @@
     border-radius: 3px;
     background: white;
     box-shadow: rgba(0, 0, 0, 0.3) 1px 1px 6px;
-    .jigsaw-notification-title {
+
+    .jigsaw-notification-caption {
         @include line-ellipsis-style;
         font-size: $font-size-lg;
         color: $heading-color-dark;
@@ -38,5 +39,9 @@
         cursor: pointer;
         padding: 0 5px;
         font-size: $font-size-lg;
+    }
+
+    jigsaw-button {
+        margin-left: 6px;
     }
 }

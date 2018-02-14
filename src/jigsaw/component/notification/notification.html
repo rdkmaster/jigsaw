@@ -1,9 +1,11 @@
 <div class="jigsaw-notification">
     <span class="jigsaw-notification-close" (click)='dispose()'>&times;</span>
-    <div class="jigsaw-notification-title"><i class="jigsaw-notification-icon {{icon}}"></i>{{title}}</div>
-    <div class="jigsaw-notification-content" [trustedHtml]="message"></div>
-    <div class="jigsaw-notification-button" *ngIf="button">
-        <jigsaw-button
+    <div class="jigsaw-notification-caption" *ngIf="!!caption">
+        <i class="jigsaw-notification-icon {{icon}}"></i>{{caption}}
+    </div>
+    <div class="jigsaw-notification-content" [trustedHtml]="message" [trustedHtmlContext]="innerHtmlContext"></div>
+    <div class="jigsaw-notification-button" *ngIf="buttons && buttons.length > 0">
+        <jigsaw-button *ngFor="let button of buttons"
             [colorType]="button.type"
             [disabled]="button.disabled"
             [preSize]="button.preSize ? button.preSize : 'default'"

@@ -35,6 +35,7 @@ import {JigsawCommonModule} from "./component/common";
 import {JigsawListModule} from "./component/list-and-tile/list";
 import {JigsawTrustedHtmlModule} from "./directive/trusted-html/trusted-html";
 import {JigsawBoxModule} from "./component/box/index";
+import {JigsawMenuModule} from "./component/menu/menu";
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,

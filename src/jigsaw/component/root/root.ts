@@ -10,6 +10,7 @@ import {
     JigsawLoadingModule
 } from "../loading/loading";
 import {JigsawMenuModule, JigsawMenu} from "../menu/menu";
+import {JigsawNotification, JigsawNotificationModule} from "../notification/notification";
 
 @Component({
     selector: 'jigsaw-root, j-root',
@@ -36,11 +37,14 @@ export class JigsawRoot {
 @NgModule({
     declarations: [JigsawRoot],
     exports: [JigsawRoot],
-    imports: [JigsawBlockModule, JigsawAlertModule, JigsawLoadingModule, JigsawMenuModule],
+    imports: [
+        JigsawBlockModule, JigsawAlertModule, JigsawLoadingModule, JigsawMenuModule, JigsawNotificationModule
+    ],
     providers: [PopupService],
     entryComponents: [
         JigsawBlock, JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert, JigsawConfirmAlert,
-        JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading, JigsawLoading, JigsawMenu
+        JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading, JigsawLoading, JigsawMenu,
+        JigsawNotification
     ]
 })
 export class JigsawRootModule {
