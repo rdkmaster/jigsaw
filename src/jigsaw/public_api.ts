@@ -21,7 +21,6 @@ export * from "./component/list-and-tile/group-common";
 export * from "./component/list-and-tile/list";
 export * from "./component/list-and-tile/tile";
 export * from "./component/loading/loading";
-export * from "./component/menu/menu";
 export * from "./component/notification/notification";
 export * from "./component/pagination/pagination";
 export * from "./component/radio/radio";
