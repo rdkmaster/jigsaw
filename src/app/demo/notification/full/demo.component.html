@@ -1,6 +1,61 @@
 
-<jigsaw-button width="200px" (click)="showNormal()">简洁方式弹出</jigsaw-button>
-<jigsaw-button width="200px" (click)="showCaption()">长标题</jigsaw-button>
-<jigsaw-button width="200px" (click)="showWithoutTimeout()">不会自动关闭</jigsaw-button>
-<jigsaw-button width="200px" (click)="showOptionDescription()">所有可用选项</jigsaw-button>
-<jigsaw-button width="200px" (click)="showButtons()">带交互功能</jigsaw-button>
+<div class="wrapper">
+    <h4>所有可用选项：</h4>
+
+    <div class="row">
+        <label>消息</label>
+        <jigsaw-input [(value)]="message"></jigsaw-input>
+    </div>
+
+    <div class="row">
+        <label>标题</label>
+        <jigsaw-input [(value)]="caption" placeholder="输入标题（可选）"></jigsaw-input>
+    </div>
+
+    <div class="row">
+        <label>位置</label>
+        <jigsaw-radios [(value)]="position">
+            <jigsaw-radio-option value="leftTop">左上</jigsaw-radio-option>
+            <jigsaw-radio-option value="leftBottom">左下</jigsaw-radio-option>
+            <jigsaw-radio-option value="rightTop">右上（默认）</jigsaw-radio-option>
+            <jigsaw-radio-option value="rightBottom">右下</jigsaw-radio-option>
+        </jigsaw-radios>
+    </div>
+
+    <div class="row">
+        <label>图标</label>
+        <jigsaw-input [(value)]="icon" width="195px" placeholder="输入图标（可选）"
+                      jigsawTooltip="图标的class字符串，支持font-awesome和iconfont">
+        </jigsaw-input>
+        <span>例如：fa fa-info</span>
+    </div>
+
+    <div class="row">
+        <label>超时</label>
+        <jigsaw-slider min="0" max="20" [(value)]="timeout"></jigsaw-slider>
+        <span>{{timeout}} 秒</span>
+    </div>
+
+    <div class="row">
+        <label>宽度</label>
+        <jigsaw-slider min="60" max="600" [(value)]="width"></jigsaw-slider>
+        <span>{{width}} px</span>
+    </div>
+
+    <div class="row">
+        <label>高度</label>
+        <jigsaw-slider min="0" max="200" [(value)]="height"></jigsaw-slider>
+        <span>{{height}} px</span>
+    </div>
+
+    <jigsaw-button width="340" (click)="showWithOptions()">弹出消息</jigsaw-button>
+
+    <hr><br>
+
+    <h4>常见用法：</h4>
+    <jigsaw-button (click)="showNormal()">最简洁的用法</jigsaw-button>
+    <jigsaw-button (click)="showCaption()">带标题的简洁用法</jigsaw-button>
+    <jigsaw-button (click)="showButtons()">带交互按钮用法</jigsaw-button>
+    <br>
+    <jigsaw-button width="350px" (click)="customizeInteractive()">自定义交互用法</jigsaw-button>
+</div>

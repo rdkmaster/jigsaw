@@ -1,16 +1,31 @@
 <div class="jigsaw-notification" (mouseenter)="_$onEnter()" (mouseleave)="_$onLeave()">
-    <span class="jigsaw-notification-close" (click)='dispose()'>&times;</span>
-    <div class="jigsaw-notification-caption" *ngIf="!!caption">
-        <i class="jigsaw-notification-icon {{icon}}"></i>{{caption}}
+
+    <div class="jigsaw-notification-content">
+        <div class="jigsaw-notification-icon" *ngIf="!!icon">
+            <i class="jigsaw-notification-icon {{icon}}"></i>
+        </div>
+
+        <div class="jigsaw-notification-text">
+            <div class="jigsaw-notification-caption" title="{{caption}}" *ngIf="!!caption">
+                {{caption}}
+            </div>
+            <div class="jigsaw-notification-message" [trustedHtml]="message" [trustedHtmlContext]="innerHtmlContext"></div>
+        </div>
     </div>
-    <div class="jigsaw-notification-content" [trustedHtml]="message" [trustedHtmlContext]="innerHtmlContext"></div>
-    <div class="jigsaw-notification-button" *ngIf="buttons && buttons.length > 0">
+
+    <div class="jigsaw-notification-button-bar" *ngIf="buttons && buttons.length > 0">
         <jigsaw-button *ngFor="let button of buttons"
-            [colorType]="button.type"
-            [disabled]="button.disabled"
-            [preSize]="button.preSize ? button.preSize : 'default'"
-            (click)="answer.emit(button)"
-            class="{{button.clazz}}">{{button.label}}
+                       [colorType]="button.type"
+                       [disabled]="button.disabled"
+                       [preSize]="button.preSize ? button.preSize : 'small'"
+                       (click)="answer.emit(button)"
+                       class="{{button.clazz}}">{{button.label}}
         </jigsaw-button>
     </div>
+
+    <div class="jigsaw-notification-close">
+        <span (click)='_$close()'>&times;</span>
+    </div>
 </div>
+
+

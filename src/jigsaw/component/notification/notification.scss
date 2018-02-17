@@ -1,47 +1,56 @@
 @import "../../assets/scss/core/base";
 
-.jigsaw-notification-host {
-    width: 350px;
-    margin: 5px;
-    position: unset !important;
-    box-shadow: none !important;
-    pointer-events: auto;
-}
-
 .jigsaw-notification {
-    height: inherit;
-    overflow: auto;
-    padding: 10px;
-    border-radius: 3px;
+    border-radius: 4px;
     background: white;
     box-shadow: rgba(0, 0, 0, 0.3) 1px 1px 6px;
+    padding: 18px 22px 18px 18px;
 
-    .jigsaw-notification-caption {
-        @include line-ellipsis-style;
-        font-size: $font-size-lg;
-        color: $heading-color-dark;
-        i {
-            font-size: $font-size-lg+2px;
-            padding-right: 3px;
+    .jigsaw-notification-content {
+        display: flex;
+
+        .jigsaw-notification-icon {
+            flex-grow: 0;
+            font-size: 44px;
+            margin-right: 11px;
+        }
+
+        .jigsaw-notification-text {
+            flex-grow: 1;
+            width: calc(100% - 94px);
+
+            .jigsaw-notification-caption {
+                @include line-ellipsis-style;
+                font-size: $font-size-lg+1px;
+                color: $heading-color-dark;
+                margin-bottom: 6px;
+            }
+
+            .jigsaw-notification-message {
+                word-wrap: break-word;
+                font-size: $font-size-base;
+                color: $text-color;
+            }
         }
     }
-    .jigsaw-notification-content {
-        word-wrap: break-word;
-        font-size: $font-size-base;
-        color: $text-color;
-    }
-    .jigsaw-notification-button{
-        text-align: right;
-        padding: 5px 0;
-    }
+
     .jigsaw-notification-close {
-        float: right;
-        cursor: pointer;
-        padding: 0 5px;
-        font-size: $font-size-lg;
+        position: absolute;
+        left: calc(100% - 20px);
+        top: 0;
+        span {
+            cursor: pointer;
+            font-size: 18px;
+        }
     }
 
-    jigsaw-button {
-        margin-left: 6px;
+    .jigsaw-notification-button-bar {
+        text-align: right;
+        flex: none;
+        margin: 18px -8px -6px 0;
+
+        jigsaw-button {
+            margin-left: 6px;
+        }
     }
 }

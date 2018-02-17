@@ -1,4 +1,4 @@
-import {Component, NgModule, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component, NgModule, NgZone, Renderer2, ViewContainerRef} from "@angular/core";
 import {PopupService} from "../../service/popup.service";
 import {JigsawBlock, JigsawBlockModule} from "../block/block";
 import {
@@ -17,10 +17,12 @@ import {JigsawNotification, JigsawNotificationModule} from "../notification/noti
     template: '<ng-content></ng-content>'
 })
 export class JigsawRoot {
-    constructor(viewContainerRef: ViewContainerRef, renderer: Renderer2,
+    constructor(viewContainerRef: ViewContainerRef, renderer: Renderer2, zone: NgZone,
                 ps:PopupService /* do not remove this line, need for global PopupService instantiate! */) {
         PopupService._viewContainerRef = viewContainerRef;
         PopupService._renderer = renderer;
+        JigsawNotification._zone = zone;
+        JigsawNotification._renderer = renderer;
     }
 }
 

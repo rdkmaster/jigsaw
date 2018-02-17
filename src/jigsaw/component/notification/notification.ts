@@ -1,5 +1,5 @@
 import {
-    NgModule, Component, Renderer2, Input, ElementRef
+    NgModule, Component, Renderer2, Input, ElementRef, NgZone
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractDialogComponentBase, DialogCallback} from "../dialog/dialog";
@@ -8,17 +8,15 @@ import {
     PopupService,
     PopupEffect,
     PopupInfo,
-    PopupPositionType
+    PopupPositionType,
+    PopupPositionValue
 } from "../../service/popup.service";
 import {JigsawTrustedHtmlModule} from "../../directive/trusted-html/trusted-html"
 import {CommonUtils} from "../../core/utils/common-utils";
 import {JigsawButtonModule} from "../button/button";
 
 export enum NotificationPosition {
-    leftTop = <any>{'justifyContent': 'flex-start', 'alignItems': 'flex-start'},
-    leftBottom = <any>{'justifyContent': 'flex-end', 'alignItems': 'flex-start'},
-    rightTop = <any>{'justifyContent': 'flex-start', 'alignItems': 'flex-end'},
-    rightBottom = <any>{'justifyContent': 'flex-end', 'alignItems': 'flex-end'}
+    leftTop = 'leftTop', leftBottom = 'leftBottom', rightTop = 'rightTop', rightBottom = 'rightBottom'
 }
 
 export type NotificationMessage = {
@@ -26,8 +24,14 @@ export type NotificationMessage = {
     position?: NotificationPosition, timeout?: number,
     buttons?: ButtonInfo | ButtonInfo[],
     callback?: DialogCallback, callbackContext?: any,
-    height?: string | number, width?: string | number
+    height?: string | number, width?: string | number,
+    innerHtmlContext?: any
 }
+
+// all notification instances, put the list here to make it private
+const notificationInstances = {
+    leftTop: [], leftBottom: [], rightTop: [], rightBottom: []
+};
 
 @Component({
     selector: 'jigsaw-notification,j-notification',
@@ -43,14 +47,12 @@ export class JigsawNotification extends AbstractDialogComponentBase {
 
         this.renderer = renderer;
         this.elementRef = elementRef;
-        this.renderer.addClass(this.elementRef.nativeElement, 'jigsaw-notification-host');
     }
 
     protected getPopupElement(): HTMLElement {
         return this.elementRef.nativeElement;
     }
 
-    @Input()
     public set initData(value: any) {
         if (!value) return;
 
@@ -58,26 +60,25 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         this.caption = value.caption;
         this.icon = value.icon;
         this.buttons = value.buttons;
-        this.width = value.width;
-        this.height = value.height;
+        this.position = value.position;
+        this.innerHtmlContext = value.innerHtmlContext;
 
         this._callback = value.callback;
-        this._callbackContext = value.callbackContext;
+        this._callbackContext = value._callbackContext;
         this._timeout = value.timeout;
     }
 
     @Input() public message: string;
     @Input() public caption: string;
+    @Input() public position: NotificationPosition;
     @Input() public icon: string;
     @Input() public buttons: ButtonInfo[];
-    @Input() public width: string;
-    @Input() public height: string;
+    @Input() public innerHtmlContext: any;
 
-
-    private _callback: (button: ButtonInfo) => void;
-    private _callbackContext: any;
     private _timeout;
     private _timer;
+    private _callback: (button: ButtonInfo) => void;
+    private _callbackContext: any;
     private _popupInfoValue: PopupInfo;
 
     /**
@@ -93,27 +94,56 @@ export class JigsawNotification extends AbstractDialogComponentBase {
             return;
         }
 
-        this._popupInfoValue.answer.subscribe(answer => this._close(answer));
+        this._popupInfoValue.answer.subscribe(answer => this._$close(answer));
         this._$onLeave();
     }
 
-    private _close(answer?: ButtonInfo) {
-        if (!this._popupInfoValue) {
-            return;
+    /**
+     * @internal
+     */
+    public _$close(answer?: ButtonInfo) {
+        if (this._popupInfoValue) {
+            this._popupInfoValue.answer.unsubscribe();
+            this._popupInfoValue.dispose();
         }
-
-        this._popupInfoValue.answer.unsubscribe();
-        this._popupInfoValue.dispose();
-        this._popupInfoValue = null;
 
         if (this._timeout) {
             clearTimeout(this._timeout);
-            this._timeout = null;
         }
 
         CommonUtils.safeInvokeCallback(this._callbackContext, this._callback, [answer]);
-        this._callbackContext = null;
-        this._callback = null;
+
+        const removeListener = this.renderer.listen(this.elementRef.nativeElement, 'animationend',
+            () => {
+                removeListener();
+
+                JigsawNotification.reposition(this.position);
+
+                const instances = notificationInstances[NotificationPosition[this.position]];
+                const idx = instances.indexOf(this._popupInfoValue);
+                if (idx != -1) {
+                    instances.splice(idx, 1);
+                } else {
+                    console.error('can find popupInfo in the notification list, this should not happen!');
+                }
+
+                if (notificationInstances[NotificationPosition.leftTop].length == 0 &&
+                    notificationInstances[NotificationPosition.leftBottom].length == 0 &&
+                    notificationInstances[NotificationPosition.rightTop].length == 0 &&
+                    notificationInstances[NotificationPosition.rightBottom].length == 0) {
+                    JigsawNotification._removeResizeListener();
+                    JigsawNotification._removeResizeListener = null;
+                }
+
+                this._popupInfoValue = null;
+                this._timeout = null;
+                this._callbackContext = null;
+                this._callback = null;
+                this.buttons = null;
+                this.renderer = null;
+                this.elementRef = null;
+                this.innerHtmlContext = null;
+            });
     }
 
     /**
@@ -131,11 +161,71 @@ export class JigsawNotification extends AbstractDialogComponentBase {
      */
     _$onLeave() {
         if (this._timeout > 0) {
-            this._timer = setTimeout(() => this._close(), this._timeout);
+            this._timer = setTimeout(() => this._$close(), this._timeout);
         }
     }
 
     // ===================================================================================
+    //  static code section
+    // ===================================================================================
+
+    /**
+     * @internal
+     */
+    public static _zone: NgZone;
+    /**
+     * @internal
+     */
+    public static _renderer: Renderer2;
+    /**
+     * @internal
+     */
+    public static _removeResizeListener;
+
+    private static _positionReviser(position: NotificationPosition, element: HTMLElement): PopupPositionValue {
+        let left = 0;
+        if (position == NotificationPosition.rightTop || position == NotificationPosition.rightBottom) {
+            left += document.body.clientWidth - element.offsetWidth - 24;
+        } else {
+            left = 24;
+        }
+
+        const instances = notificationInstances[NotificationPosition[position]];
+        let initTop = 0, flag = 0;
+        if (position == NotificationPosition.leftBottom || position == NotificationPosition.rightBottom) {
+            initTop = document.body.clientHeight - element.offsetHeight - 24;
+            flag = -1;
+        } else {
+            initTop = 24;
+            flag = 1;
+        }
+        let top = instances.reduce(
+            (y, popupInfo) => popupInfo.element === element || popupInfo.element.offsetHeight == 0 ? y :
+                y + flag * (popupInfo.element.offsetHeight + 12), initTop);
+
+        return {left, top};
+    }
+
+    public static reposition(position?: NotificationPosition) {
+        if (CommonUtils.isUndefined(position)) {
+            this.reposition(NotificationPosition.leftTop);
+            this.reposition(NotificationPosition.rightTop);
+            this.reposition(NotificationPosition.leftBottom);
+            this.reposition(NotificationPosition.rightBottom);
+            return;
+        }
+
+        const instances = notificationInstances[NotificationPosition[position]];
+        const instancesCopy = instances.concat();
+        instances.splice(0, instances.length);
+        instancesCopy.forEach(popupInfo => {
+            // console.log(popupInfo.element.offsetHeight, popupInfo.element.innerText);
+            const p = this._positionReviser(position, popupInfo.element);
+            const options = {posType: PopupPositionType.fixed, pos: {x: p.left, y: p.top}};
+            PopupService.instance.setPosition(options, popupInfo.element);
+            instances.push(popupInfo);
+        });
+    }
 
     public static show(message: string): PopupInfo;
     public static show(message: string, caption: string): PopupInfo;
@@ -145,33 +235,34 @@ export class JigsawNotification extends AbstractDialogComponentBase {
             return;
         }
         const opt = <NotificationMessage>(typeof options == 'string' ? {caption: options} : options ? options : {});
-        opt.position = opt.hasOwnProperty('position') ? opt.position : NotificationPosition.rightTop;
-        opt.timeout = opt.timeout >= 0 ? opt.position : 8000;
+        opt.width = opt.hasOwnProperty('width') ? opt.width : 350;
+        opt.timeout = +opt.timeout >= 0 ? +opt.timeout : 8000;
+        if (!NotificationPosition[opt.position]) {
+            opt.position = NotificationPosition.rightTop;
+        }
 
         const popupOptions = {
-            modal: false,
-            showEffect: PopupEffect.bubbleIn,
-            hideEffect: PopupEffect.bubbleOut,
-            posType: PopupPositionType.absolute,
-            showBorder: false
+            size: {width: opt.width, height: opt.height}, disposeOnRouterChanged: false,
+            showEffect: PopupEffect.bubbleIn, hideEffect: PopupEffect.bubbleOut, modal: false,
+            posReviser: (pos, element) => this._positionReviser(opt.position, element),
+            pos: {x: 0, y: 0} // `pos` not null to tell PopupService don't add resize event listener
         };
-
-        const popEle = PopupService._viewContainerRef.element.nativeElement.parentElement;
-        Object.assign(popEle.style, opt.position);
-
-        let popupInfo = PopupService.instance.popup(JigsawNotification, popupOptions,
-            {
-                message: message,
-                caption: opt.caption,
-                icon: opt.icon,
-                buttons: opt.buttons instanceof ButtonInfo ? [opt.buttons] : opt.buttons,
-                callbackContext: opt.callbackContext,
-                callback: opt.callback,
-                height: opt.height,
-                width: opt.width,
-                timeout: opt.timeout
-            });
+        const initData = {
+            message: message, caption: opt.caption, icon: opt.icon, timeout: opt.timeout,
+            buttons: opt.buttons instanceof ButtonInfo ? [opt.buttons] : opt.buttons,
+            callbackContext: opt.callbackContext, callback: opt.callback, position: opt.position,
+            innerHtmlContext: opt.innerHtmlContext
+        };
+        const popupInfo = PopupService.instance.popup(JigsawNotification, popupOptions, initData);
         popupInfo.instance._popupInfo = popupInfo;
+        notificationInstances[NotificationPosition[opt.position]].push(popupInfo);
+
+        if (!this._removeResizeListener) {
+            this._zone.runOutsideAngular(() => {
+                this._removeResizeListener = this._renderer.listen(window, 'resize', () => this.reposition());
+            });
+        }
+
         return popupInfo;
     };
 }
