@@ -70,7 +70,6 @@ export class JigsawNotification extends AbstractDialogComponentBase {
 
     @Input() public message: string;
     @Input() public caption: string;
-    @Input() public position: NotificationPosition;
     @Input() public icon: string;
     @Input() public buttons: ButtonInfo[];
     @Input() public innerHtmlContext: any;
@@ -79,6 +78,22 @@ export class JigsawNotification extends AbstractDialogComponentBase {
     private _timer;
     private _callback: (button: ButtonInfo) => void;
     private _callbackContext: any;
+    private _position: NotificationPosition;
+
+    @Input()
+    public get position(): NotificationPosition | string {
+        return this._position;
+    }
+
+    public set position(value: NotificationPosition | string) {
+        const v: string = NotificationPosition[value];
+        if (CommonUtils.isUndefined(v)) {
+            console.error('invalid NotificationPosition value: ' + value);
+            return;
+        }
+        this._position = NotificationPosition[v];
+    }
+
     private _popupInfoValue: PopupInfo;
 
     /**
@@ -109,6 +124,8 @@ export class JigsawNotification extends AbstractDialogComponentBase {
 
         if (this._timeout) {
             clearTimeout(this._timeout);
+            // set `_timeout` to 0 to make sure `_$onLeave()` do not trigger `_$close` twice!
+            this._timeout = 0;
         }
 
         CommonUtils.safeInvokeCallback(this._callbackContext, this._callback, [answer]);
@@ -117,9 +134,9 @@ export class JigsawNotification extends AbstractDialogComponentBase {
             () => {
                 removeListener();
 
-                JigsawNotification.reposition(this.position);
+                JigsawNotification.reposition(this._position);
 
-                const instances = notificationInstances[NotificationPosition[this.position]];
+                const instances = notificationInstances[NotificationPosition[this._position]];
                 const idx = instances.indexOf(this._popupInfoValue);
                 if (idx != -1) {
                     instances.splice(idx, 1);
@@ -163,6 +180,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
      */
     _$onLeave() {
         if (this._timeout > 0) {
+            clearTimeout(this._timer);
             this._timer = setTimeout(() => this._$close(), this._timeout);
         }
     }
@@ -239,7 +257,8 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         const opt = <NotificationMessage>(typeof options == 'string' ? {caption: options} : options ? options : {});
         opt.width = opt.hasOwnProperty('width') ? opt.width : 350;
         opt.timeout = +opt.timeout >= 0 ? +opt.timeout : 8000;
-        if (!NotificationPosition[opt.position]) {
+        opt.position = typeof opt.position === 'string' ? NotificationPosition[<string>opt.position] : opt.position;
+        if (CommonUtils.isUndefined(NotificationPosition[opt.position])) {
             opt.position = NotificationPosition.rightTop;
         }
 
