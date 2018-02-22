@@ -1,10 +1,12 @@
 @import "../../assets/scss/core/base";
 
 .jigsaw-notification {
-    border-radius: 4px;
-    background: white;
-    box-shadow: rgba(0, 0, 0, 0.3) 1px 1px 6px;
+    border-radius: $border-radius-base;
+    background: $component-background;
+    box-shadow: $box-shadow-base;
     padding: 18px 22px 18px 18px;
+    height: 100%;
+    overflow: hidden;
 
     .jigsaw-notification-content {
         display: flex;
