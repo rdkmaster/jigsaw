@@ -16,7 +16,7 @@ import {CommonUtils} from "../../core/utils/common-utils";
 import {JigsawButtonModule} from "../button/button";
 
 export enum NotificationPosition {
-    leftTop = 'leftTop', leftBottom = 'leftBottom', rightTop = 'rightTop', rightBottom = 'rightBottom'
+    leftTop, leftBottom, rightTop, rightBottom
 }
 
 export type NotificationMessage = {
@@ -127,10 +127,12 @@ export class JigsawNotification extends AbstractDialogComponentBase {
                     console.error('can find popupInfo in the notification list, this should not happen!');
                 }
 
-                if (notificationInstances[NotificationPosition.leftTop].length == 0 &&
-                    notificationInstances[NotificationPosition.leftBottom].length == 0 &&
-                    notificationInstances[NotificationPosition.rightTop].length == 0 &&
-                    notificationInstances[NotificationPosition.rightBottom].length == 0) {
+                const leftTop = notificationInstances[NotificationPosition[NotificationPosition.leftTop]];
+                const leftBottom = notificationInstances[NotificationPosition[NotificationPosition.leftBottom]];
+                const rightTop = notificationInstances[NotificationPosition[NotificationPosition.rightTop]];
+                const rightBottom = notificationInstances[NotificationPosition[NotificationPosition.rightBottom]];
+
+                if (leftTop.length == 0 && leftBottom.length == 0 && rightTop.length == 0 && rightBottom.length == 0) {
                     JigsawNotification._removeResizeListener();
                     JigsawNotification._removeResizeListener = null;
                 }
