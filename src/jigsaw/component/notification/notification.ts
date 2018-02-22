@@ -149,7 +149,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
                 const rightTop = notificationInstances[NotificationPosition[NotificationPosition.rightTop]];
                 const rightBottom = notificationInstances[NotificationPosition[NotificationPosition.rightBottom]];
 
-                if (leftTop.length == 0 && leftBottom.length == 0 && rightTop.length == 0 && rightBottom.length == 0) {
+                if (leftTop.length + leftBottom.length + rightTop.length + rightBottom.length == 0) {
                     JigsawNotification._removeResizeListener();
                     JigsawNotification._removeResizeListener = null;
                 }
@@ -266,7 +266,8 @@ export class JigsawNotification extends AbstractDialogComponentBase {
             size: {width: opt.width, height: opt.height}, disposeOnRouterChanged: false,
             showEffect: PopupEffect.bubbleIn, hideEffect: PopupEffect.bubbleOut, modal: false,
             posReviser: (pos, element) => this._positionReviser(opt.position, element),
-            pos: {x: 0, y: 0} // `pos` not null to tell PopupService don't add resize event listener
+            pos: {x: 0, y: 0}, // `pos` not null to tell PopupService don't add resize event listener
+            posType: PopupPositionType.fixed
         };
         const initData = {
             message: message, caption: opt.caption, icon: opt.icon, timeout: opt.timeout,
