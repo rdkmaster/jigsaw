@@ -6,7 +6,7 @@ import {FishBoneFullComponent} from "./full/demo.component";
 
 export const routerConfig =  [
     {
-        path: 'full', component: FishBoneFullComponent, recommended: true
+        path: 'full', component: FishBoneFullComponent
     }
 ];
 

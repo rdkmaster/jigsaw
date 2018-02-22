@@ -10,7 +10,7 @@ import {CheckBoxDisableDemoComponent} from "./disabled/demo.component";
 
 export const routerConfig = [
     {
-        path: 'full', component: CheckBoxFullComponent, recommended: true
+        path: 'full', component: CheckBoxFullComponent
     },
     {
         path: 'basic', component: CheckBoxBasicDemoComponent

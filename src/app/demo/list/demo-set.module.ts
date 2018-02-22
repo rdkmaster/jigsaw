@@ -6,7 +6,7 @@ import {ListFullDemoComponent} from "./full/demo.component";
 
 export const routerConfig = [
     {
-        path: 'full', component: ListFullDemoComponent, recommended: true
+        path: 'full', component: ListFullDemoComponent
     },
 ];
 

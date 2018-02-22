@@ -24,6 +24,12 @@ import {TimeFullComponent} from "./full/demo.component";
 
 export const routerConfig:any = [
     {
+        path: 'full', component: TimeFullComponent
+    },
+    {
+        url: '/table/calendar', desc: 'calendar'
+    },
+    {
         path: 'basic', component: TimeBasicDemoComponent
     },
     {
@@ -49,12 +55,6 @@ export const routerConfig:any = [
     },
     {
         path: 'with-combo-select', component: ComboSelectDemoComponent
-    },
-    {
-        path: 'full', component: TimeFullComponent, recommended: true
-    },
-    {
-        url: '/table/calendar', desc: 'calendar', recommended: true
     },
 ];
 

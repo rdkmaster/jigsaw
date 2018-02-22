@@ -22,6 +22,15 @@ import {RangeTimeFullComponent} from "./full/demo.component";
 
 export const routerConfig:any = [
     {
+        path: 'full', component: RangeTimeFullComponent
+    },
+    {
+        url: '/table/calendar', desc: 'calendar'
+    },
+    {
+        url: '/time/with-combo-select', desc: 'with-combo-select'
+    },
+    {
         path: 'basic', component: RangeTimeBasicDemoComponent
     },
     {
@@ -44,15 +53,6 @@ export const routerConfig:any = [
     },
     {
         path: 'week-start', component: RangeTimeWeekStartComponent
-    },
-    {
-        path: 'full', component: RangeTimeFullComponent, recommended: true
-    },
-    {
-        url: '/table/calendar', desc: 'calendar', recommended: true
-    },
-    {
-        url: '/time/with-combo-select', desc: 'with-combo-select'
     },
 ];
 

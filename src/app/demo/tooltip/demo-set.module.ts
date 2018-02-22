@@ -11,13 +11,13 @@ import {SimpleTooltipDemoComponent} from "./inline/demo.component";
 
 export const routerConfig = [
     {
+        path: 'inline', component: SimpleTooltipDemoComponent
+    },
+    {
         path: 'in-dom', component: TooltipInDomDemoComponent
     },
     {
         path: 'dialog', component: TooltipDialogDemoComponent
-    },
-    {
-        path: 'inline', component: SimpleTooltipDemoComponent
     },
 ];
 
