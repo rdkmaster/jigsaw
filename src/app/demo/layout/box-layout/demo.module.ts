@@ -1,8 +1,8 @@
 import {NgModule} from "@angular/core";
-import {BoxLayoutDemoComponent} from "./demo.component";
-import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {CommonModule} from "@angular/common";
-import {JigsawBoxModule} from "../../../../jigsaw/component/box/index";
+import {JigsawBoxModule} from "jigsaw/component/box/index";
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
+import {BoxLayoutDemoComponent} from "./demo.component";
 
 @NgModule({
     declarations: [BoxLayoutDemoComponent],
