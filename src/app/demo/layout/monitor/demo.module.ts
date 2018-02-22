@@ -4,22 +4,23 @@ import {TranslateModule} from "@ngx-translate/core";
 import {JigsawRadioModule} from "jigsaw/component/radio/radio";
 import {JigsawRootModule} from "jigsaw/component/root/root";
 import {JigsawBoxModule} from "jigsaw/component/box/index";
+import {InternalUtils} from "jigsaw/core/utils/internal-utils";
 
+import {AjaxInterceptor} from "app/app.interceptor";
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {MonitorComponent} from './demo.component';
 import {TableMonitorComponent} from "./monitors/table.comp";
 import {GraphMonitorComponent} from "./monitors/graph.comp";
 import {NewMonitorComponent} from "./monitors/new-monitor.comp";
 import {MonitorsModule} from "./monitors/monitors.module";
 import {MonitorService} from "./monitors/monitor-service";
-import {AjaxInterceptor} from "app/app.interceptor";
-import {InternalUtils} from "../../../../jigsaw/core/utils/internal-utils";
 
 @NgModule({
     declarations: [
         MonitorComponent
     ],
     imports: [
-        CommonModule, TranslateModule.forRoot(),
+        CommonModule, TranslateModule.forRoot(), JigsawDemoDescriptionModule,
         JigsawBoxModule, JigsawRadioModule, JigsawRootModule, MonitorsModule
     ],
     exports: [MonitorComponent],
@@ -108,12 +109,12 @@ function getBarChart() {
             }
         },
         legend: {
-            data:['蒸发量','降水量','平均温度']
+            data: ['蒸发量', '降水量', '平均温度']
         },
         xAxis: [
             {
                 type: 'category',
-                data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+                data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
                 axisPointer: {
                     type: 'shadow'
                 }
@@ -143,20 +144,20 @@ function getBarChart() {
         ],
         series: [
             {
-                name:'蒸发量',
-                type:'bar',
-                data:[InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250)]
+                name: '蒸发量',
+                type: 'bar',
+                data: [InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250)]
             },
             {
-                name:'降水量',
-                type:'bar',
-                data:[InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250)]
+                name: '降水量',
+                type: 'bar',
+                data: [InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250), InternalUtils.randomNumber(1, 250)]
             },
             {
-                name:'平均温度',
-                type:'line',
+                name: '平均温度',
+                type: 'line',
                 yAxisIndex: 1,
-                data:[InternalUtils.randomNumber(0, 25), InternalUtils.randomNumber(0, 25), InternalUtils.randomNumber(0, 25), InternalUtils.randomNumber(0, 25), InternalUtils.randomNumber(0, 25), InternalUtils.randomNumber(0, 25), InternalUtils.randomNumber(0, 25), InternalUtils.randomNumber(0, 25), InternalUtils.randomNumber(0, 25), InternalUtils.randomNumber(0, 25), InternalUtils.randomNumber(0, 25), InternalUtils.randomNumber(0, 25)]
+                data: [InternalUtils.randomNumber(0, 25), InternalUtils.randomNumber(0, 25), InternalUtils.randomNumber(0, 25), InternalUtils.randomNumber(0, 25), InternalUtils.randomNumber(0, 25), InternalUtils.randomNumber(0, 25), InternalUtils.randomNumber(0, 25), InternalUtils.randomNumber(0, 25), InternalUtils.randomNumber(0, 25), InternalUtils.randomNumber(0, 25), InternalUtils.randomNumber(0, 25), InternalUtils.randomNumber(0, 25)]
             }
         ]
     };
@@ -168,7 +169,7 @@ function getLineChart() {
         title: {
             text: '堆叠区域图', x: 100, y: 20
         },
-        tooltip : {
+        tooltip: {
             trigger: 'axis',
             axisPointer: {
                 type: 'cross',
@@ -178,7 +179,7 @@ function getLineChart() {
             }
         },
         legend: {
-            data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
+            data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
         },
         toolbox: {
             feature: {
@@ -191,50 +192,50 @@ function getLineChart() {
             bottom: '3%',
             containLabel: true
         },
-        xAxis : [
+        xAxis: [
             {
-                type : 'category',
-                boundaryGap : false,
-                data : ['周一','周二','周三','周四','周五','周六','周日']
+                type: 'category',
+                boundaryGap: false,
+                data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
             }
         ],
-        yAxis : [
+        yAxis: [
             {
-                type : 'value'
+                type: 'value'
             }
         ],
-        series : [
+        series: [
             {
-                name:'邮件营销',
-                type:'line',
+                name: '邮件营销',
+                type: 'line',
                 stack: '总量',
                 areaStyle: {normal: {}},
-                data:[InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200)]
+                data: [InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200)]
             },
             {
-                name:'联盟广告',
-                type:'line',
+                name: '联盟广告',
+                type: 'line',
                 stack: '总量',
                 areaStyle: {normal: {}},
-                data:[InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200)]
+                data: [InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200)]
             },
             {
-                name:'视频广告',
-                type:'line',
+                name: '视频广告',
+                type: 'line',
                 stack: '总量',
                 areaStyle: {normal: {}},
-                data:[InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200)]
+                data: [InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200)]
             },
             {
-                name:'直接访问',
-                type:'line',
+                name: '直接访问',
+                type: 'line',
                 stack: '总量',
                 areaStyle: {normal: {}},
-                data:[InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200)]
+                data: [InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200)]
             },
             {
-                name:'搜索引擎',
-                type:'line',
+                name: '搜索引擎',
+                type: 'line',
                 stack: '总量',
                 label: {
                     normal: {
@@ -243,7 +244,7 @@ function getLineChart() {
                     }
                 },
                 areaStyle: {normal: {}},
-                data:[InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200)]
+                data: [InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200), InternalUtils.randomNumber(100, 200)]
             }
         ]
     };
@@ -274,88 +275,88 @@ AjaxInterceptor.registerProcessor('/monitor/statistics/datatable', req => {
     for (let i = 0; i < rows; i++) {
         data.push([
             {
-                "name":"地区",
-                "trend":"null",
-                "dataOfToday":areas[InternalUtils.randomNumber(0, 4)],
-                "dateOfTheDayBefore":"",
-                "dateOfYesterday":""
+                "name": "地区",
+                "trend": "null",
+                "dataOfToday": areas[InternalUtils.randomNumber(0, 4)],
+                "dateOfTheDayBefore": "",
+                "dateOfYesterday": ""
             },
             {
-                "name":"等待任务数",
-                "trend":trends[InternalUtils.randomNumber(0, 3)],
-                "dataOfToday":InternalUtils.randomNumber(10, 100),
-                "dateOfTheDayBefore":InternalUtils.randomNumber(10, 100),
-                "dateOfYesterday":InternalUtils.randomNumber(10, 100)
-            },
-            {
-                "name":"就绪任务数",
-                "trend":trends[InternalUtils.randomNumber(0, 3)],
+                "name": "等待任务数",
+                "trend": trends[InternalUtils.randomNumber(0, 3)],
                 "dataOfToday": InternalUtils.randomNumber(10, 100),
                 "dateOfTheDayBefore": InternalUtils.randomNumber(10, 100),
                 "dateOfYesterday": InternalUtils.randomNumber(10, 100)
             },
             {
-                "name":"异常任务数",
-                "trend":trends[InternalUtils.randomNumber(0, 3)],
-                "dataOfToday":InternalUtils.randomNumber(10, 100),
-                "dateOfTheDayBefore":InternalUtils.randomNumber(10, 100),
-                "dateOfYesterday":InternalUtils.randomNumber(10, 100)
+                "name": "就绪任务数",
+                "trend": trends[InternalUtils.randomNumber(0, 3)],
+                "dataOfToday": InternalUtils.randomNumber(10, 100),
+                "dateOfTheDayBefore": InternalUtils.randomNumber(10, 100),
+                "dateOfYesterday": InternalUtils.randomNumber(10, 100)
             },
             {
-                "name":"已完成任务数",
-                "trend":trends[InternalUtils.randomNumber(0, 3)],
-                "dataOfToday":InternalUtils.randomNumber(10, 100),
-                "dateOfTheDayBefore":InternalUtils.randomNumber(10, 100),
-                "dateOfYesterday":InternalUtils.randomNumber(10, 100)
+                "name": "异常任务数",
+                "trend": trends[InternalUtils.randomNumber(0, 3)],
+                "dataOfToday": InternalUtils.randomNumber(10, 100),
+                "dateOfTheDayBefore": InternalUtils.randomNumber(10, 100),
+                "dateOfYesterday": InternalUtils.randomNumber(10, 100)
             },
             {
-                "name":"任务总数",
-                "trend":trends[InternalUtils.randomNumber(0, 3)],
-                "dataOfToday":InternalUtils.randomNumber(10, 100),
-                "dateOfTheDayBefore":InternalUtils.randomNumber(10, 100),
-                "dateOfYesterday":InternalUtils.randomNumber(10, 100)
+                "name": "已完成任务数",
+                "trend": trends[InternalUtils.randomNumber(0, 3)],
+                "dataOfToday": InternalUtils.randomNumber(10, 100),
+                "dateOfTheDayBefore": InternalUtils.randomNumber(10, 100),
+                "dateOfYesterday": InternalUtils.randomNumber(10, 100)
             },
             {
-                "name":"任务上牌数",
-                "trend":trends[InternalUtils.randomNumber(0, 3)],
-                "dataOfToday":InternalUtils.randomNumber(10, 100),
-                "dateOfTheDayBefore":InternalUtils.randomNumber(10, 100),
-                "dateOfYesterday":InternalUtils.randomNumber(10, 100)
+                "name": "任务总数",
+                "trend": trends[InternalUtils.randomNumber(0, 3)],
+                "dataOfToday": InternalUtils.randomNumber(10, 100),
+                "dateOfTheDayBefore": InternalUtils.randomNumber(10, 100),
+                "dateOfYesterday": InternalUtils.randomNumber(10, 100)
             },
             {
-                "name":"cpu总数",
-                "trend":"null",
-                "dataOfToday":InternalUtils.randomNumber(10, 100),
-                "dateOfTheDayBefore":InternalUtils.randomNumber(10, 100),
-                "dateOfYesterday":InternalUtils.randomNumber(10, 100)
+                "name": "任务上牌数",
+                "trend": trends[InternalUtils.randomNumber(0, 3)],
+                "dataOfToday": InternalUtils.randomNumber(10, 100),
+                "dateOfTheDayBefore": InternalUtils.randomNumber(10, 100),
+                "dateOfYesterday": InternalUtils.randomNumber(10, 100)
             },
             {
-                "name":"cpu使用率",
-                "trend":"null",
-                "dataOfToday":InternalUtils.randomNumber(10, 100),
-                "dateOfTheDayBefore":InternalUtils.randomNumber(10, 100),
-                "dateOfYesterday":InternalUtils.randomNumber(10, 100)
+                "name": "cpu总数",
+                "trend": "null",
+                "dataOfToday": InternalUtils.randomNumber(10, 100),
+                "dateOfTheDayBefore": InternalUtils.randomNumber(10, 100),
+                "dateOfYesterday": InternalUtils.randomNumber(10, 100)
             },
             {
-                "name":"内存使用率",
-                "trend":"null",
-                "dataOfToday":InternalUtils.randomNumber(10, 100),
-                "dateOfTheDayBefore":InternalUtils.randomNumber(10, 100),
-                "dateOfYesterday":InternalUtils.randomNumber(10, 100)
+                "name": "cpu使用率",
+                "trend": "null",
+                "dataOfToday": InternalUtils.randomNumber(10, 100),
+                "dateOfTheDayBefore": InternalUtils.randomNumber(10, 100),
+                "dateOfYesterday": InternalUtils.randomNumber(10, 100)
             },
             {
-                "name":"内纯使用率",
-                "trend":"null",
-                "dataOfToday":InternalUtils.randomNumber(10, 100),
-                "dateOfTheDayBefore":InternalUtils.randomNumber(10, 100),
-                "dateOfYesterday":InternalUtils.randomNumber(10, 100)
+                "name": "内存使用率",
+                "trend": "null",
+                "dataOfToday": InternalUtils.randomNumber(10, 100),
+                "dateOfTheDayBefore": InternalUtils.randomNumber(10, 100),
+                "dateOfYesterday": InternalUtils.randomNumber(10, 100)
             },
             {
-                "name":"清洗后数据量",
-                "trend":"null",
-                "dataOfToday":InternalUtils.randomNumber(10, 100),
-                "dateOfTheDayBefore":InternalUtils.randomNumber(10, 100),
-                "dateOfYesterday":InternalUtils.randomNumber(10, 100)
+                "name": "内纯使用率",
+                "trend": "null",
+                "dataOfToday": InternalUtils.randomNumber(10, 100),
+                "dateOfTheDayBefore": InternalUtils.randomNumber(10, 100),
+                "dateOfYesterday": InternalUtils.randomNumber(10, 100)
+            },
+            {
+                "name": "清洗后数据量",
+                "trend": "null",
+                "dataOfToday": InternalUtils.randomNumber(10, 100),
+                "dateOfTheDayBefore": InternalUtils.randomNumber(10, 100),
+                "dateOfYesterday": InternalUtils.randomNumber(10, 100)
             }
         ]);
     }

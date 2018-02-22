@@ -6,6 +6,7 @@ import {JigsawInputModule} from "jigsaw/component/input/input";
 import {JigsawRadioModule} from "jigsaw/component/radio/radio";
 import {JigsawSliderModule} from "jigsaw/component/slider/index";
 import {JigsawTooltipModule} from "jigsaw/component/tooltip/tooltip";
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 
 import {NotificationFullDemoComponent} from "./demo.component";
 
@@ -13,7 +14,7 @@ import {NotificationFullDemoComponent} from "./demo.component";
     declarations: [NotificationFullDemoComponent],
     imports: [
         JigsawButtonModule, JigsawNotificationModule, JigsawInputModule,
-        JigsawRadioModule, JigsawSliderModule, JigsawTooltipModule
+        JigsawRadioModule, JigsawSliderModule, JigsawTooltipModule, JigsawDemoDescriptionModule
     ],
     providers: [PopupService],
     exports: [NotificationFullDemoComponent]

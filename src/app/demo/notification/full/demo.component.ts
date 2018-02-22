@@ -96,4 +96,10 @@ export class NotificationFullDemoComponent {
                 innerHtmlContext: this
             });
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '这个DEMO详细演示了`j-notification`组件的各个参数的效果以及推荐的用法';
+    description: string = '';
 }
