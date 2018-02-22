@@ -131,4 +131,10 @@ export class MonitorComponent {
             });
         }
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '通过实现一个动态监控功能来演示如何使用`j-editable-box`在运行时动态编辑视图';
+    description: string = require('!!raw-loader!./readme.md');
 }

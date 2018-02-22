@@ -11,9 +11,9 @@ import {JigsawRangeTimeModule} from "jigsaw/component/range-time/index";
 import {JigsawCheckBoxModule} from "jigsaw/component/checkbox/index";
 import {JigsawSliderModule} from "jigsaw/component/slider/index";
 import {JigsawSwitchModule} from "jigsaw/component/switch/index";
-import {FormDemoComponent} from "./demo.component";
+import {JigsawBoxModule} from "jigsaw/component/box/index";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {JigsawBoxModule} from "../../../../jigsaw/component/box/index";
+import {FormDemoComponent} from "./demo.component";
 
 @NgModule({
     declarations: [FormDemoComponent],
@@ -27,5 +27,4 @@ import {JigsawBoxModule} from "../../../../jigsaw/component/box/index";
     ]
 })
 export class FormDemoModule {
-
 }
