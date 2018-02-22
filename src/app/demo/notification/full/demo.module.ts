@@ -16,6 +16,7 @@ import {NotificationFullDemoComponent} from "./demo.component";
         JigsawRadioModule, JigsawSliderModule, JigsawTooltipModule
     ],
     providers: [PopupService],
+    exports: [NotificationFullDemoComponent]
 })
 export class NotificationFullDemoModule {
 }
