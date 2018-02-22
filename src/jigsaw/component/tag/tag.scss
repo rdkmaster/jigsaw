@@ -4,11 +4,9 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
 
 .#{$tag-prefix-cls}-host{
     @include inline-block;
+    @include line-ellipsis-style;
     position: relative;
     max-width: 200px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     padding: 0 8px;
     height: 22px;
     line-height: 20px;
