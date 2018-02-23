@@ -2,6 +2,7 @@
 home=`pwd`
 
 seedDir=`pwd`/../jigsaw-seed
+rm -fr $seedDir
 mkdir -p $seedDir
 git clone https://github.com/rdkmaster/jigsaw-seed.git $seedDir
 cd $seedDir
