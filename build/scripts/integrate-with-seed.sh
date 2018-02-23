@@ -15,8 +15,8 @@ cp -r $home/dist/releases/jigsaw node_modules/@rdkmaster/
 rm -fr ./e2e
 cp -r $home/e2e ./
 
-rm -fr src/app src/assets src/styles.scss
-cp -r $home/src/app $home/src/styles.scss src/
+rm -fr src/app src/assets
+cp -r $home/src/app src/
 
 rm -fr ./protractor.conf.js
 cp -r $home/protractor-config-for-components.js ./protractor.conf.js
