@@ -19,7 +19,7 @@ rm -fr src/app src/assets src/styles.scss
 cp -r $home/src/app $home/src/styles.scss src/
 
 rm -fr ./protractor.conf.js
-cp -r $home/protractor-config-for-components.js ./
+cp -r $home/protractor-config-for-components.js ./protractor.conf.js
 
 mkdir -p src/mock-data
 cp -r $home/src/mock-data src/
