@@ -2,6 +2,7 @@
 home=`pwd`
 
 seedDir=`pwd`/../jigsaw-seed
+rm -fr $seedDir
 mkdir -p $seedDir
 git clone https://github.com/rdkmaster/jigsaw-seed.git $seedDir
 cd $seedDir
@@ -16,11 +17,11 @@ cp -r $home/dist/releases/jigsaw node_modules/@rdkmaster/
 rm -fr ./e2e
 cp -r $home/e2e ./
 
-rm -fr src/app src/assets src/styles.scss
-cp -r $home/src/app $home/src/styles.scss src/
+rm -fr src/app src/assets src/index.html src/typings.d.ts
+cp -r $home/src/app $home/src/index.html $home/src/jigsaw/typings.d.ts src/
 
 rm -fr ./protractor.conf.js
-cp -r $home/protractor.conf.js ./
+cp -r $home/protractor-config-for-components.js ./protractor.conf.js
 
 mkdir -p src/mock-data
 cp -r $home/src/mock-data src/

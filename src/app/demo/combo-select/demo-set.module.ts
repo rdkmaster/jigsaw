@@ -30,10 +30,13 @@ import {ComboSelectFullComponent} from "./full/demo.component";
 
 export const routerConfig = [
     {
-        path: 'change-trigger', component: ComboSelectChangeTriggerDemo, recommended: true
+        path: 'searchable', component: ComboSelectAutoCompleteDemo
     },
     {
-        path: 'multiple', component: ComboSelectMultipleDemo, recommended: true
+        path: 'change-trigger', component: ComboSelectChangeTriggerDemo
+    },
+    {
+        path: 'multiple', component: ComboSelectMultipleDemo
     },
     {
         path: 'auto-width', component: ComboSelectAutoWidthDemo
@@ -51,16 +54,13 @@ export const routerConfig = [
         path: 'disable', component: DisabledComboSelectDemo
     },
     {
-        path: 'searchable', component: ComboSelectAutoCompleteDemo, recommended: true
-    },
-    {
-        path: 'drop-down-status', component: ComboDropDownStatusDemoComponent, recommended: true
+        path: 'drop-down-status', component: ComboDropDownStatusDemoComponent
     },
     {
         path: 'set-width', component: ComboSelectSetWidthDemo
     },
     {
-        path: 'full', component: ComboSelectFullComponent, recommended: true
+        path: 'full', component: ComboSelectFullComponent
     }
 ];
 

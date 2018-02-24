@@ -1,9 +1,9 @@
 import {Component, ComponentRef, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ComponentMetaData, LayoutData} from "jigsaw/core/data/layout-data";
 import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/service/popup.service";
+import {JigsawEditableBox} from "jigsaw/component/box/editable-box";
 import {CustomTableComponent} from "./custom-table/demo.component";
 import {CustomGraphComponent} from "./custom-graph/demo.component";
-import {JigsawEditableBox} from "../../../../jigsaw/component/box/editable-box";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -213,4 +213,10 @@ export class CustomSceneLayoutDemoComponent {
             hideEffect: PopupEffect.bubbleOut
         };
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '这个DEMO稍乱了一些，但是它很好的演示了`j-editable-box`的各个功能';
+    description: string = '';
 }

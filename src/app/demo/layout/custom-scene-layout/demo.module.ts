@@ -1,14 +1,15 @@
 import {NgModule} from '@angular/core';
-import {CustomSceneLayoutDemoComponent} from "./demo.component";
+import {CommonModule} from "@angular/common";
 import {JigsawSelectModule} from "jigsaw/component/select/select";
 import {JigsawDialogModule} from "jigsaw/component/dialog/dialog";
 import {JigsawRadioModule} from "jigsaw/component/radio/radio";
-import {CommonModule} from "@angular/common";
+import {JigsawBoxModule} from "jigsaw/component/box/index";
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {CustomTableComponent} from "./custom-table/demo.component";
 import {CustomTableModule} from "./custom-table/demo.module";
 import {CustomGraphComponent} from "./custom-graph/demo.component";
 import {CustomGraphModule} from "./custom-graph/demo.module";
-import {JigsawBoxModule} from "../../../../jigsaw/component/box/index";
+import {CustomSceneLayoutDemoComponent} from "./demo.component";
 
 @NgModule({
     declarations: [
@@ -23,6 +24,7 @@ import {JigsawBoxModule} from "../../../../jigsaw/component/box/index";
         // 可选的内容模块
         CustomTableModule,
         CustomGraphModule,
+        JigsawDemoDescriptionModule
     ],
     exports: [CustomSceneLayoutDemoComponent],
     entryComponents: [CustomTableComponent, CustomGraphComponent] // 可选的内容组件

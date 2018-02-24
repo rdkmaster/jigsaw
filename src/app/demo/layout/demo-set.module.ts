@@ -14,13 +14,18 @@ import {SetResizeLineWidthDemoComponent} from "./set-resize-line-width/demo.comp
 import {SetResizeLineWidthDemoModule} from "./set-resize-line-width/demo.module";
 import {EditableDemoComponent} from "./editable/demo.component";
 import {EditableDemoModule} from "./editable/demo.module";
+import {MonitorComponent} from "./monitor/demo.component";
+import {MonitorModule} from "./monitor/demo.module";
 
 export const routerConfig = [
     {
-        path: 'box-justify', component: BoxJustifyDemoComponent
+        path: 'box-layout', component: BoxLayoutDemoComponent
     },
     {
-        path: 'box-layout', component: BoxLayoutDemoComponent
+        path: 'monitor', component: MonitorComponent
+    },
+    {
+        path: 'box-justify', component: BoxJustifyDemoComponent
     },
     {
         path: 'form', component: FormDemoComponent
@@ -42,6 +47,7 @@ export const routerConfig = [
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig),
+        MonitorModule,
         BoxJustifyDemoModule,
         BoxLayoutDemoModule,
         FormDemoModule,

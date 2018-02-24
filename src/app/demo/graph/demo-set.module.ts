@@ -21,10 +21,10 @@ import {GraphWithNoDataComponent} from "./no-data/demo.component";
 
 export const routerConfig = [
     {
-        path: 'basic', component: BasicGraphComponent
+        path: 'resize', component: GraphResizeComponent
     },
     {
-        path: 'resize', component: GraphResizeComponent
+        path: 'basic', component: BasicGraphComponent
     },
     {
         path: 'line-bar-graph-basic', component: BasicLineGraphComponent

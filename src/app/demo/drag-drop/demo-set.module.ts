@@ -8,10 +8,10 @@ import {TableDragDemoComponent} from "./table-drag/demo.component";
 
 export const routerConfig = [
     {
-        path: 'drag-to-replace', component: DragToReplaceDemoComponent
+        path: 'table-drag', component: TableDragDemoComponent
     },
     {
-        path: 'table-drag', component: TableDragDemoComponent
+        path: 'drag-to-replace', component: DragToReplaceDemoComponent
     },
 ];
 

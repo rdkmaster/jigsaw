@@ -1,7 +1,8 @@
 import {NgModule} from '@angular/core';
+import {JigsawButtonModule} from "jigsaw/component/button/button";
+import {JigsawBoxModule} from "jigsaw/component/box/index";
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {EditableDemoComponent} from "./demo.component";
-import {JigsawButtonModule} from "../../../../jigsaw/component/button/button";
-import {JigsawBoxModule} from "../../../../jigsaw/component/box/index";
 
 @NgModule({
     declarations: [
@@ -9,7 +10,8 @@ import {JigsawBoxModule} from "../../../../jigsaw/component/box/index";
     ],
     imports: [
         JigsawBoxModule,
-        JigsawButtonModule
+        JigsawButtonModule,
+        JigsawDemoDescriptionModule
     ],
     exports: [EditableDemoComponent],
 })

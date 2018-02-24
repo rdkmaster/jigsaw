@@ -10,13 +10,13 @@ import {SelectFullComponent} from "./full/demo.component";
 
 export const routerConfig = [
     {
+        path: 'full', component: SelectFullComponent
+    },
+    {
         path: 'basic', component: SelectBasicDemoComponent
     },
     {
         path: 'scroll', component: SelectScrollDemoComponent
-    },
-    {
-        path: 'full', component: SelectFullComponent, recommended: true
     },
 ];
 

@@ -484,9 +484,9 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
      * @internal
      */
     public _verifyValue(value: number) {
-        if (value - this.min < 0) {
+        if (value - this.min < 0 && this.initialized) {
             return this.min;
-        } else if (value - this.max > 0) {
+        } else if (value - this.max > 0 && this.initialized) {
             return this.max;
         } else {
             return value;

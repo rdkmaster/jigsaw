@@ -16,7 +16,7 @@ import {ButtonWithLoadingComponent} from "./with-loading/demo.component";
 
 export const routerConfig = [
     {
-        path: 'full', component: ButtonFullComponent, recommended: true
+        path: 'full', component: ButtonFullComponent
     },
     {
         path: 'basic', component: ButtonBasicDemoComponent

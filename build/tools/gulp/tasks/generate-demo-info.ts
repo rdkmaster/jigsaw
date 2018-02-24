@@ -31,11 +31,9 @@ task('generate-demo-info', () => {
             const demoInfo = {
                 url: `/jigsaw${url}`,
                 desc: child.desc ? child.desc : child.path,
-                recommended: !!child.recommended
             };
             childDemos.push(demoInfo);
         });
-        childDemos.sort((item1, item2) => item2.recommended - item1.recommended);
     });
 
     console.log('the demo info file is saved to: ' + saveTo);

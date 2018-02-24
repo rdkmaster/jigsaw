@@ -15,10 +15,11 @@ import {JigsawMarkdownModule} from "../markdown/markdown";
         }
 
         .summary {
-            font-size: 15px;
+            font-size: 16px;
         }
 
         .links {
+            margin-left: 12px;
             font-size: 12px;
         }
     `],
@@ -26,16 +27,17 @@ import {JigsawMarkdownModule} from "../markdown/markdown";
         <div>
             <span class="summary" [innerHtml]="summary"></span>
             <span class="links">
-                <a *ngIf="!!content" (click)="toggleDesc()">{{showDetail ? '隐藏' : '展开'}}详情</a>
                 <span *ngIf="!!content">|</span>
-                <a (click)="gotoPlunker()">查看&编辑源码</a>
+                <a *ngIf="!!content" (click)="toggleDesc()">{{showDetail ? '隐藏' : '展开'}}详情</a>
+                |
+                <a (click)="gotoPlunker()">查看&编辑DEMO源码</a>
             </span>
             <br *ngIf="showDetail">
             <jigsaw-markdown *ngIf="showDetail" [markdown]="content"></jigsaw-markdown>
             <br>
             <span class="links" *ngIf="showDetail && !!content">
                 <a (click)="showDetail = !showDetail">{{showDetail ? '隐藏' : '展开'}}详情</a> |
-                <a (click)="gotoPlunker()">查看&编辑源码</a>
+                <a (click)="gotoPlunker()">查看&编辑DEMO源码</a>
             </span>
             <hr>
         </div>
@@ -54,11 +56,10 @@ export class JigsawDemoDescription implements OnInit {
     }
 
     set summary(value: string) {
-        value = value ? value : '这个demo还没有使用说明，你可以将它的功能或者任何需要注意的地方通过PR' +
-            '<a href="https://github.com/rdkmaster/jigsaw" target="_blank">推送给我们</a>，' +
-            '从而帮助到其他正在使用这个demo的人。';
-        value = value.replace(/`(.*?)`/g, '<code>$1</code>');
-        this._summary = `<strong>${value}</strong>`;
+        value = value ? value : '这个demo暂无使用说明，有任何疑问的话，' +
+            '请将你的疑问<a href="https://github.com/rdkmaster/jigsaw" target="_blank">填写</a>在issue里，' +
+            '我们会尽快协助你解决问题';
+        this._summary = value.replace(/`(.*?)`/g, '<code>$1</code>');
     }
 
     gotoPlunker() {
