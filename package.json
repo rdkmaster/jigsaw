@@ -37,7 +37,7 @@
     "ztree": "~3.5.24"
   },
   "devDependencies": {
-    "@angular/cli": "^1.5.0",
+    "@angular/cli": "1.6.8",
     "@angular/compiler-cli": "^5.0.0",
     "@angular/language-service": "~5.0.2",
     "@angular/tsc-wrapped": "~4.3.3",
