@@ -7,7 +7,8 @@ mkdir -p $seedDir
 git clone https://github.com/rdkmaster/jigsaw-seed.git $seedDir
 cd $seedDir
 npm install
-npm install -g protractor-console-plugin
+# 这个插件，需要全局安装，这个问题，插件的作者也提到了angular/protractor#4090
+npm install -g protractor-console-plugin@0.1
 
 #update jigsaw npm package
 rm -fr node_modules/@rdkmaster/jigsaw
