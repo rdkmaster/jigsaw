@@ -1,4 +1,19 @@
 
+## v1.1.1 (2018-2-27)
+
+### 新特性 / New Features
+- 特性：trusted-html指令支持angular风格的函数调用语法
+
+### 破坏性修改 / Breaking Changes
+- 无 / none
+
+###  优化 / Modified
+- 修复：trustedHtml指令在某些情况下回调函数重复注册的问题
+
+### 修复 / Fixes
+- https://github.com/rdkmaster/jigsaw/issues/503 trustedHtml指令在某些时候回错误清理上下文对象导致回调函数失败
+
+
 ## v1.1.0 (2018-2-22)
 
 ### 新特性 / New Features
