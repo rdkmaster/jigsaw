@@ -1,21 +1,21 @@
 
-# v1.1.0 (2018-2-22)
+## v1.1.0 (2018-2-22)
 
-## 新特性 / New Features
+### 新特性 / New Features
 - **重磅功能**：增强`j-box`布局功能，支持用户在界面上拖拽调整布局尺寸，[详见这里](http://rdk.zte.com.cn/jigsaw/layout/box-layout)
 - **重磅功能**：增加`j-editable-box`组件，纯数据驱动的布局方式，更加灵活，轻松实现所见即所得的布局效果，[详见这里](http://rdk.zte.com.cn/jigsaw/layout/monitor)
 - **新组件**：增加`j-notification`组件，更加灵活&友好的消息提示功能，[详见这里](http://rdk.zte.com.cn/jigsaw/notification/full)
 - https://github.com/rdkmaster/jigsaw/issues/481 PageableTableData支持post请求
 
-## 破坏性修改 / Breaking Changes
+### 破坏性修改 / Breaking Changes
 - 无 / none
 
-##  优化 / Modified
+###  优化 / Modified
 - https://github.com/rdkmaster/jigsaw/issues/349 增加图例和饼图间距的配置，解决描述文字模糊的问题
 - https://github.com/rdkmaster/jigsaw/issues/467 table的滚动条加个最小长度
 - 简化`PopupService.setPosition()`的参数列表，提升易用性
 
-## 修复 / Fixes
+### 修复 / Fixes
 - https://github.com/rdkmaster/jigsaw/issues/434 Combo在tag变化时计算下拉的位置，没有判断有没有下拉
 - https://github.com/rdkmaster/jigsaw/issues/439 j-tile自动去除selectedItems里无效的条目
 - https://github.com/rdkmaster/jigsaw/issues/354 【ie 11】table有时会出现渲染不出来的情况，鼠标hover上去，才渲染出来
@@ -26,41 +26,41 @@
 - 修复`PopupService.show()`自动根据路由变化关闭所有对话框功能异常
 
 
-# v1.1.0-rc.4 (2018-1-2)
+## v1.1.0-rc.4 (2018-1-2)
 
-## 新特性 / New Features
+### 新特性 / New Features
 
 - **新增j-box组件**，同时支持垂直和水平方向上的布局，可完成任意复杂的布局要求
 
-## 破坏性修改 / Breaking Change
+### 破坏性修改 / Breaking Change
 
 - 无 / none
 
-##  优化 / Modified
+###  优化 / Modified
 
 - #432 表格在数据无效的时候，将error打印改为warn打印
 - #419 表格将其滚动条对象暴露出来，应用可以通过这个对象操作表格的滚动条，监听滚动条事件
 
-## 修复 / Fixes
+### 修复 / Fixes
 
 - #389，圆角兼容IE11的问题
 
 
-# v1.1.0-rc.3 (2017-12-24)
+## v1.1.0-rc.3 (2017-12-24)
 
-## 新特性 / New Features
+### 新特性 / New Features
 - combo组件在水平上自动扩展，达到最大宽度之后，垂直方向上自动换行
 
-## 破坏性修改 / Breaking Change
+### 破坏性修改 / Breaking Change
 - 无 / none
 
-##  优化 / Modified
+###  优化 / Modified
 - 删除seed工程里少量无用代码
 - https://github.com/rdkmaster/jigsaw/issues/368 tab页的内容初始化策略修改
 - https://github.com/rdkmaster/jigsaw/issues/413 select组件有全局click事件未及时销毁
 - 将遗漏的模块加入到JigsawModule中
 
-## 修复 / Fixes
+### 修复 / Fixes
 - https://github.com/rdkmaster/jigsaw/issues/359 [ie11]range-time的grItem功能报错
 - https://github.com/rdkmaster/jigsaw/issues/374 combo-select open属性为true时，下拉内容未按照预期打开
 - https://github.com/rdkmaster/jigsaw/issues/378  time在手动改变时间时，时分秒变化错误
@@ -68,11 +68,11 @@
 - https://github.com/rdkmaster/jigsaw/issues/389 【IE11】time组件周粒度高亮有间隙
 
 
-# v1.1.0-rc.1 (2017-12-8)
+## v1.1.0-rc.1 (2017-12-8)
 
 本版本提供的功能清单如下：
 
-## 组件
+### 组件
 一共提供45个各式组件，详情列出如下：
 
 - JigsawTable 表格组件，功能强大，性能强劲，碾压绝大多数开源或者收费的angular表格，[详情请参考这里](http://rdk.zte.com.cn/components/table/demo)
@@ -129,7 +129,7 @@
     - JigsawTabPane 配合 JigsawTab 页签组件使用
     - JigsawTileOption 配合 JigsawTile 平铺组件使用
 
-## 指令
+### 指令
 一共提供6个指令，详情列出如下：
 
 - JigsawDraggable / JigsawDroppable 快速在任何dom元素上实现拖拽功能，详情请参考[这里](http://rdk.zte.com.cn/jigsaw/drag-drop/table-drag)和[这里](http://rdk.zte.com.cn/jigsaw/drag-drop/drag-to-replace)
@@ -138,13 +138,13 @@
 - JigsawTrustedHtml 在组件内部的任意dom元素里增加可定制的高可交互html片段插入点，[详情请参考这里](http://rdk.zte.com.cn/jigsaw/trusted-html/full)
 - perfectScrollbar 在任意dom元素上提供定制滚动条功能，第三方提供，[详情请参考这里](http://rdk.zte.com.cn/jigsaw/scrollbar/basic)
 
-## 通用功能（Injectable）
+### 通用功能（Injectable）
 一共提供2个通用功能，详情列出如下：
 
 - PopupService 用于处理**任何**弹出场景的功能，[详情请参考这里](http://rdk.zte.com.cn/jigsaw/popup/introduce)
 - LoadingService 用于控制弹出式loading组件的显示和隐藏的功能，[详情请参考这里](http://rdk.zte.com.cn/components/loading/demo)
 
-## 多皮肤支持
+### 多皮肤支持
 Jigsaw在这个版本里已经支持了相对比较完善的多皮肤开发系统，可实现一键换肤。
 
 并且内置了两套完整皮肤：
