@@ -47,7 +47,8 @@ export class NotificationFullDemoComponent {
     showWithOptions() {
         JigsawNotification.show(this.message, {
             caption: this.caption, position: this.position, icon: this.icon,
-            timeout: this.timeout * 1000, width: this.width, height: this.height
+            timeout: this.timeout * 1000, width: this.width, height: this.height,
+            innerHtmlContext: this
         });
     }
 
