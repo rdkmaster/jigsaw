@@ -100,6 +100,7 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
 
     private _contextMagicNumber: number = -1;
     private _trustedHtmlContext: any;
+    private _initialized: boolean = false;
 
     @Input()
     public get trustedHtmlContext(): any {
@@ -132,12 +133,12 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
     private _modifiedHtml:string;
 
     private _updateHtml():void {
-        if (!this._trustedHtml) {
+        if (!this._trustedHtml || !this._initialized) {
             return;
         }
         const modifiedHtml = !this._trustedHtmlContext ? this._trustedHtml : this._trustedHtml
-            .replace(/on(\w+)\s*=(['"])\s*([_$a-z][_$a-z0-9]*)\s*\((.*?)\)/ig,
-                (found, event, quot, func, args) => {
+            .replace(/(on|\()(\w+)\)?\s*=(['"])\s*([_$a-z][_$a-z0-9]*)\s*\((.*?)\)/ig,
+                (found, prefix, event, quot, func, args) => {
                     JigsawTrustedHtml._declareCallback(this._trustedHtmlContext, func, this._trustedHtmlContext[func]);
                     const modified = `on${event}=${quot}_jigsawInternalCallbackWrapper(&quot;${func}&quot;,${this._contextMagicNumber}`;
                     args = CommonUtils.isDefined(args) ? args.trim() : '';
@@ -162,6 +163,7 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this._initialized = true;
         this._updateHtml();
     }
 
