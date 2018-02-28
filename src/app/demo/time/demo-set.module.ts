@@ -27,7 +27,7 @@ export const routerConfig:any = [
         path: 'full', component: TimeFullComponent
     },
     {
-        url: '/table/calendar', desc: 'calendar'
+        url: '/table/calendar', desc: 'calendar', path: ''
     },
     {
         path: 'basic', component: TimeBasicDemoComponent
