@@ -25,10 +25,10 @@ export const routerConfig:any = [
         path: 'full', component: RangeTimeFullComponent
     },
     {
-        url: '/table/calendar', desc: 'calendar'
+        url: '/table/calendar', desc: 'calendar', path: ''
     },
     {
-        url: '/time/with-combo-select', desc: 'with-combo-select'
+        url: '/time/with-combo-select', desc: 'with-combo-select', path: ''
     },
     {
         path: 'basic', component: RangeTimeBasicDemoComponent

@@ -8,22 +8,22 @@ export const routerConfig:any = [
         path: 'introduce', component: PopupServiceIntroduceComponent
     },
     {
-        desc: 'alert', url: '/alert/popup'
+        desc: 'alert', url: '/alert/popup', path: ''
     },
     {
-        desc: 'dialog', url: '/dialog/buttons'
+        desc: 'dialog', url: '/dialog/buttons', path: ''
     },
     {
-        desc: 'combo-select', url: '/combo-select/full'
+        desc: 'combo-select', url: '/combo-select/full', path: ''
     },
     {
-        desc: 'select', url: '/select/full'
+        desc: 'select', url: '/select/full', path: ''
     },
     {
-        desc: 'loading', url: '/loading/full'
+        desc: 'loading', url: '/loading/full', path: ''
     },
     {
-        desc: 'tooltip', url: '/tooltip/inline'
+        desc: 'tooltip', url: '/tooltip/inline', path: ''
     }
 ];
 
