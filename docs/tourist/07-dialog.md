@@ -8,7 +8,7 @@ _**app.module.ts**_ 中添加该服务作为服务提供商。
  providers: [PopupService],
 ```
 
-_**app.component.html  **_中添加 html 片段
+_**app.component.html**_ 中添加 html 片段
 
 ```
   <ng-template #dialog>
@@ -54,7 +54,7 @@ columnDefines =[{target: 0, visible: false}]
 
 完整代码如下：
 
-_**app.component.html  **_
+_**app.component.html**_
 
 ```
 <div class="condition">
@@ -249,8 +249,7 @@ export class AppComponent {
   }];
 
 
-  constructor(public viewContainerRef: ViewContainerRef, public renderer: Renderer2, private http: Http,
-              private popupService: PopupService) {
+  constructor(private http: Http, private popupService: PopupService) {
     this.tableData = new TableData();
     this.tableData.http = http;
   }

@@ -2,7 +2,7 @@
 
 从多项选择中选择一样的这种场景比比皆是，Jigsaw提供了radioGroup来实现类似的需求
 
-_**app.component.html  **_中添加 html 片段
+_**app.component.html**_ 中添加 html 片段
 
 ```
  <span>快速选择:</span>
@@ -54,7 +54,7 @@ quickChoiceChange(quickChoice) {
 
 完整代码如下
 
-_**app.component.html  **_
+_**app.component.html**_
 
 ```
 <div>
@@ -114,8 +114,6 @@ export class AppComponent {
 
   selectedChoice = this.quickChoices[0];
 
-  constructor(public viewContainerRef: ViewContainerRef, public renderer: Renderer2) {
-  }
   quickChoiceChange(quickChoice) {
     switch (quickChoice.id) {
       case '1':

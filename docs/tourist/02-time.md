@@ -22,7 +22,7 @@ _**app.component.ts**_ 中添加代码片段
 
 到目前为止，时间选择器已经显示出来了，但是一般而言，我们做应用时直接将时间这样显示的很少，一般都是配合input框，点击之后下拉出可供选择的时间。Jigsaw中的 _**jigsaw-combo-select**_ 组件正适合做这件事。
 
-_**app.component.html  **_中修改 html 片段为
+_**app.component.html**_ 中修改 html 片段为
 
 ```
 <jigsaw-combo-select  openTrigger="click">
@@ -71,9 +71,6 @@ export class AppComponent {
     {label: TimeService.getFormatDate(this.beginDate, TimeGr.date), closable: false},
     {label: TimeService.getFormatDate(this.endDate, TimeGr.date), closable: false}
   ]);
-
-  constructor(public viewContainerRef: ViewContainerRef, public renderer: Renderer2) {
-  }
 
   handleChange() {
     this.rangeTimeComboValue = new ArrayCollection([

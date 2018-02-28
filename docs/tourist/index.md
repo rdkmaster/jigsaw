@@ -8,4 +8,4 @@ Jigsaw 是基于Angular\(4+\)实现的组件集，是中兴通讯大数据应用
 
 ![](assets/overview.png)
 
-注意：阅读本文档之前，最好先看一遍angular官方的英雄指南 [https://angular.cn/docs/ts/latest/tutorial/](https://angular.cn/docs/ts/latest/tutorial/)
+注意：阅读本文档之前，最好先看一遍angular官方的英雄指南 [https://angular.cn/tutorial](https://angular.cn/tutorial)

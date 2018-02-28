@@ -2,7 +2,7 @@
 
 多页签切换对于组织比较多的网页内容并且内容又关联不太大的场景时不失为一个比较好的选择。Jigsaw提供了tab组件来实现该功能。这里我们配合内置的ngFor指令来构建应用场景。
 
-_**app.component.html  **_中添加 html 片段
+_**app.component.html**_ 中添加 html 片段
 
 ```
 <jigsaw-tab [(selectedIndex)]="tabSelectIndex">
@@ -33,7 +33,7 @@ tabSelectIndex = 0;
 
 完整代码如下：
 
-_**app.component.html  **_
+_**app.component.html**_
 
 ```
 <!--The whole content below can be removed with the new code.-->
@@ -183,8 +183,7 @@ export class AppComponent {
 
   tabSelectIndex = 0;
 
-
-  constructor(public viewContainerRef: ViewContainerRef, public renderer: Renderer2, private http: Http) {
+  constructor(private http: Http) {
     this.tableData = new TableData();
     this.tableData.http = http;
   }
