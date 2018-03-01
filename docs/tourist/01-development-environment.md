@@ -10,20 +10,25 @@ git clone https://github.com/rdkmaster/jigsaw-seed.git
 
 * 如果未安装nodejs，或者nodejs低于6.x.x，npm版本低于3.x.x，请先安装。
 
+* 中兴内网开发
+
+   配置npm镜像，[详情](https://github.com/rdkmaster/jigsaw/blob/master/docs/how-to-use-npm-mirror-inside-of-zte/index.md)
+
+* 外网开发
+ 
+```
+  # for Chinese developers only
+  npm config set registry=https://registry.npm.taobao.org/
+  # for Chinese developers only                 
+  npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass 
+```    
+
 * clone Jigsaw Seed 的源码。假设保存到了`d:\jigsaw-seed`。
 
 * 下载依赖包，执行以下脚本
 
 ```
-  cd d:\jigsaw-seed
-  # 直连网络下不可执行这个命令
-  npm config set proxy=http://proxy.zte.com.cn:80                              
-  # for Chinese developers only
-  npm config set registry=https://registry.npm.taobao.org/
-  # for Chinese developers only                 
-  npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass 
-  # 强烈推荐，可选。
-  npm install -g @angular/cli                                              
+  cd d:\jigsaw-seed                                           
   npm install
   npm start
 ```
