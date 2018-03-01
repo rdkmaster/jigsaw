@@ -154,7 +154,7 @@ _**app.component.ts**_
 
 ```
 import {Component, Renderer2, ViewContainerRef} from '@angular/core';
-import {ArrayCollection, TableData, TimeGr, TimeService} from '@rdkmaster/jigsaw';
+import {TableData, TimeGr, TimeService} from '@rdkmaster/jigsaw';
 import {Http} from "@angular/http";
 
 @Component({
@@ -166,10 +166,10 @@ export class AppComponent {
 
   beginDate = 'now-1d';
   endDate = 'now';
-  rangeTimeComboValue = new ArrayCollection([
+  rangeTimeComboValue = [
     {label: TimeService.getFormatDate(this.beginDate, TimeGr.date), closable: false},
     {label: TimeService.getFormatDate(this.endDate, TimeGr.date), closable: false}
-  ]);
+  ];
   periodTimes = [{label: '1', closable: false}, {label: '2', closable: false}, {label: '3', closable: false},
     {label: '4', closable: false}, {label: '5', closable: false}, {label: '6', closable: false},
     {label: '7', closable: false}, {label: '8', closable: false}, {label: '9', closable: false},
@@ -188,9 +188,8 @@ export class AppComponent {
   interfaces = [{label: 'S1-U', closable: false}, {label: 'S2-U', closable: false}];
 
   userTypes = [{label: 'IMSI', closable: false}, {label: 'MSISDN', closable: false}];
-  // TODO fix#77
-  // selectUserType = [this.userTypes[0]];
-  selectUserType = new ArrayCollection([{label: 'IMSI', closable: false}]);
+
+  selectUserType = [this.userTypes[0]];
 
   maxRecord = 1000;
 
@@ -217,10 +216,10 @@ export class AppComponent {
   }
 
   handleChange() {
-    this.rangeTimeComboValue = new ArrayCollection([
+    this.rangeTimeComboValue = [
       {label: TimeService.getFormatDate(this.beginDate, TimeGr.date), closable: false},
       {label: TimeService.getFormatDate(this.endDate, TimeGr.date), closable: false}
-    ]);
+    ];
   }
 
   displayTypeChange(displayType) {

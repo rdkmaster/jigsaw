@@ -56,7 +56,7 @@ _**app.component.ts**_
 
 ```
 import {Component, Renderer2, ViewContainerRef} from '@angular/core';
-import {ArrayCollection, TimeGr, TimeService} from '@rdkmaster/jigsaw';
+import {TimeGr, TimeService} from '@rdkmaster/jigsaw';
 
 @Component({
   selector: 'app-root',
@@ -67,16 +67,16 @@ export class AppComponent {
 
   beginDate = 'now-1d';
   endDate = 'now';
-  rangeTimeComboValue = new ArrayCollection([
+  rangeTimeComboValue = [
     {label: TimeService.getFormatDate(this.beginDate, TimeGr.date), closable: false},
     {label: TimeService.getFormatDate(this.endDate, TimeGr.date), closable: false}
-  ]);
+  ];
 
   handleChange() {
-    this.rangeTimeComboValue = new ArrayCollection([
+    this.rangeTimeComboValue = [
       {label: TimeService.getFormatDate(this.beginDate, TimeGr.date), closable: false},
       {label: TimeService.getFormatDate(this.endDate, TimeGr.date), closable: false}
-    ]);
+    ];
   }
 }
 ```
