@@ -1,6 +1,7 @@
 import {Component, ComponentRef} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {LayoutData} from "jigsaw/core/data/layout-data";
+import {LoadingService} from "jigsaw/service/loading.service";
 import {TableCellData, TableMonitorComponent} from "./monitors/table.comp";
 import {GraphMonitorComponent} from "./monitors/graph.comp";
 import {NewMonitorComponent} from "./monitors/new-monitor.comp";
@@ -18,13 +19,15 @@ export class MonitorComponent {
 
     tableData: TableCellData[][];
     graphData: any[];
+    loadingInfo: any;
 
-    constructor(public http: HttpClient, ms: MonitorService) {
+    constructor(public http: HttpClient, ms: MonitorService, ls: LoadingService) {
         setInterval(() => this.pullData(), 15000);
         this.pullData();
         ms.events.subscribe(event => {
             switch (event.type) {
                 case 'pull-data':
+                    this.loadingInfo = ls.show();
                     this.pullData();
                     break;
                 case 'toggle-full-screen':
@@ -43,6 +46,10 @@ export class MonitorComponent {
     }
 
     updateViewGraphData(data: any[]) {
+        if (this.loadingInfo) {
+            this.loadingInfo.dispose();
+            this.loadingInfo = null;
+        }
         this.graphData = data;
 
         // 固定第一行第一列给表格，最后一个框给+号，因此增加2
