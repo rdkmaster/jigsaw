@@ -6,7 +6,7 @@
 <!-- start to learn the demo from here -->
 <div class="container">
     <jigsaw-button (click)="getTableData()">GetTableData</jigsaw-button>
-    <jigsaw-tab [(selectedIndex)]="selectedIndex">
+    <jigsaw-tabs [(selectedIndex)]="selectedIndex">
         <jigsaw-tab-pane *ngFor="let tabData of tabDatas">
             <div jigsaw-title><span class="fa fa-gift"></span>{{tabData.title}}</div>
             <ng-template>
@@ -26,6 +26,6 @@
                 </jigsaw-input>
             </ng-template>
         </jigsaw-tab-pane>
-    </jigsaw-tab>
+    </jigsaw-tabs>
     {{selectedIndex}}
 </div>
