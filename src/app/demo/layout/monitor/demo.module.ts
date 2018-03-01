@@ -5,6 +5,7 @@ import {JigsawRadioModule} from "jigsaw/component/radio/radio";
 import {JigsawRootModule} from "jigsaw/component/root/root";
 import {JigsawBoxModule} from "jigsaw/component/box/index";
 import {InternalUtils} from "jigsaw/core/utils/internal-utils";
+import {LoadingService} from "jigsaw/service/loading.service";
 
 import {AjaxInterceptor} from "app/app.interceptor";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
@@ -24,7 +25,7 @@ import {MonitorService} from "./monitors/monitor-service";
         JigsawBoxModule, JigsawRadioModule, JigsawRootModule, MonitorsModule
     ],
     exports: [MonitorComponent],
-    providers: [MonitorService],
+    providers: [MonitorService, LoadingService],
     entryComponents: [TableMonitorComponent, GraphMonitorComponent, NewMonitorComponent]
 })
 export class MonitorModule {
