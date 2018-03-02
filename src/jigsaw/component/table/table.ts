@@ -272,7 +272,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                     target: 'additional-field-' + i, header: acd.header, group: acd.group,
                     cell: acd.cell, width: acd.width, visible: acd.visible
                 };
-                const pos = CommonUtils.isDefined(acd.pos) ? acd.pos : this._data.field.length;
+                const pos = CommonUtils.isDefined(acd.pos) ? acd.pos : columnDefines.length;
                 columnDefines.splice(pos, 0, cd);
             }
         }
