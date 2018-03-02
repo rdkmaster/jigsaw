@@ -5,14 +5,14 @@
 _**app.component.html**_ 中添加 html 片段
 
 ```
-<jigsaw-tab [(selectedIndex)]="tabSelectIndex">
+<jigsaw-tabs [(selectedIndex)]="tabSelectIndex">
     <jigsaw-tab-pane *ngFor="let tabData of tabDatas">
-      <div jigsaw-title><span class="fa fa-gift"></span>{{tabData.label}}</div>
-      <div jigsaw-body>
-         <jigsaw-table maxHeight="550px" [data]="this[tabData.id]"></jigsaw-table>
-      </div>
+        <div jigsaw-title><span class="fa fa-gift"></span>{{tabData.label}}</div>
+        <div jigsaw-body>
+            <jigsaw-table maxHeight="550px" [data]="this[tabData.id]"></jigsaw-table>
+        </div>
     </jigsaw-tab-pane>
-  </jigsaw-tab>
+</jigsaw-tabs>
 ```
 
 _**app.component.ts**_ 中添加代码片段
@@ -120,14 +120,14 @@ _**app.component.html**_
 <div class="result">
   <jigsaw-table style="margin-bottom: 10px;" maxHeight="550px" [data]="tableData" 
   *ngIf="displayType.id==1"></jigsaw-table>
-  <jigsaw-tab *ngIf="displayType.id!=1 && resultDisplay" [(selectedIndex)]="tabSelectIndex">
+  <jigsaw-tabs *ngIf="displayType.id!=1 && resultDisplay" [(selectedIndex)]="tabSelectIndex">
     <jigsaw-tab-pane *ngFor="let tabData of tabDatas">
       <div jigsaw-title><span class="fa fa-gift"></span>{{tabData.label}}</div>
       <div jigsaw-body>
         <jigsaw-table maxHeight="550px" [data]="this[tabData.id]"></jigsaw-table>
       </div>
     </jigsaw-tab-pane>
-  </jigsaw-tab>
+  </jigsaw-tabs>
 </div>
 ```
 

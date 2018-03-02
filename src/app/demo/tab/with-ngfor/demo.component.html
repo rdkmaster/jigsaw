@@ -5,10 +5,10 @@
 
 <!-- start to learn the demo from here -->
 <div class="container">
-    <jigsaw-tab (selectChange)="testEvent()">
+    <jigsaw-tabs (selectChange)="testEvent()">
         <jigsaw-tab-pane *ngFor="let tabData of tabDatas">
             <div jigsaw-title><span class="fa fa-gift"></span>{{tabData}}</div>
             <ng-template>{{tabData}} Content</ng-template>
         </jigsaw-tab-pane>
-    </jigsaw-tab>
+    </jigsaw-tabs>
 </div>

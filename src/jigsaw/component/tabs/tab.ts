@@ -7,7 +7,7 @@ import {JigsawTabContent, JigsawTabLabel} from "./tab-item";
 import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
 
 @Component({
-    selector: 'jigsaw-tab, j-tab',
+    selector: 'jigsaw-tab, j-tab, jigsaw-tabs, j-tabs',
     templateUrl: 'tab.html',
 })
 export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit {

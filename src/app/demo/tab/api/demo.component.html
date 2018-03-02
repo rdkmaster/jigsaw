@@ -14,7 +14,7 @@
         <jigsaw-button (click)="removeTab(0)">删除第一个Tab页</jigsaw-button>
     </div>
 
-    <jigsaw-tab>
+    <jigsaw-tabs>
         <jigsaw-tab-pane title="Tab 1">
             <ng-template>This is the body of the first tab</ng-template>
         </jigsaw-tab-pane>
@@ -32,7 +32,7 @@
             <div jigsaw-title><span routerLink="tab-page" [skipLocationChange]="true">router link tab</span></div>
             <ng-template><router-outlet name="tab-page"></router-outlet></ng-template>
         </jigsaw-tab-pane>
-    </jigsaw-tab>
+    </jigsaw-tabs>
 </div>
 
 <ng-template #tabTitle>

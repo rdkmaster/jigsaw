@@ -5,7 +5,7 @@
 
 <!-- start to learn the demo from here -->
 <div class="container">
-    <jigsaw-tab (selectChange)="testEvent($event)" [selectedIndex]="2">
+    <jigsaw-tabs (selectChange)="testEvent($event)" [selectedIndex]="2">
         <jigsaw-tab-pane [lazy]="false">
             <div jigsaw-title><span class="fa fa-gift"></span>tab 1</div>
             <ng-template>tab content 1</ng-template>
@@ -50,5 +50,5 @@
                 <jigsaw-graph [data]="lineBarGraphData"></jigsaw-graph>
             </ng-template>
         </jigsaw-tab-pane>
-    </jigsaw-tab>
+    </jigsaw-tabs>
 </div>
