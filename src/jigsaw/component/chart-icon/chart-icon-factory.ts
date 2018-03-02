@@ -286,14 +286,14 @@ export class ChartIconFactory {
 
                     let $rect = this.svgElement('rect', {
                         x: 0 + legendPositionX,
-                        y: i * 14,
+                        y: 1 + i * 14,
                         width: 10,
                         height: 10,
                         'fill': fill.call(this, value, i, values)
                     });
                     let $text = this.svgElement('text', {
                         x: 12 + legendPositionX,
-                        y: 9 + i * 14,
+                        y: 10 + i * 14,
                         'font-size': 12
                     }).text(opts.legend.data[i]);
 
