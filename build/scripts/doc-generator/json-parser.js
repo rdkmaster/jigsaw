@@ -2,36 +2,70 @@ var fs = require('fs');
 
 var input = process.argv[2];
 if (!fs.existsSync(input)) {
-    console.log('need a input json file!');
+    console.log('need an input json file!');
     process.exit(1);
 }
 var docInfo = require(input);
-if (!docInfo || !docInfo.components || !docInfo.components.length) {
+if (!docInfo) {
     console.log('input json file is invalid!');
     process.exit(1);
 }
-var components = docInfo.components;
 
 var output = process.argv[3];
-if (!fs.existsSync(output)) {
-    console.log('need a output dir!');
+if (!output) {
+    console.error("ERROR: need an output dir");
+    process.exit(1);
+}
+if (fs.existsSync(output)) {
+    console.error("ERROR: output dir already exists, remove it and try again: " + output);
     process.exit(1);
 }
 output = output[output.length - 1] == '/' ? output.substring(0, output.length - 1) : output;
+fs.mkdirSync(`${output}`, 755);
+fs.mkdirSync(`${output}/components`, 755);
+fs.mkdirSync(`${output}/classes`, 755);
+fs.mkdirSync(`${output}/directives`, 755);
+fs.mkdirSync(`${output}/injectables`, 755);
+fs.mkdirSync(`${output}/interfaces`, 755);
+fs.mkdirSync(`${output}/modules`, 755);
 
-components.forEach(ci => {
-    if (ci.name !== 'JigsawTable') {
-        // console.log(md);
-        return;
-    }
-
-
-
+docInfo.components.forEach(ci => {
     fixMetaInfo(ci);
-    ci.since = ci.since ? ci.since : 'v1.0.0';
-    var md = getMarkdownTemplate();
-    md = md.replace('$since', ci.since);
+    var html = getComponentTemplate();
+    html = processCommon(ci ,html);
+    html = processSelector(ci ,html)
+    html = processInputs(ci, html);
+    html = processOutputs(ci, html);
+    html = processProperties(ci, html);
+    html = processMethods(ci, html);
+    fs.writeFileSync(`${output}/components/${ci.name}.html`, html);
+});
 
+docInfo.classes.forEach(ci => {
+    fixMetaInfo(ci);
+    var html = getClassesTemplate();
+    html = processCommon(ci ,html);
+    html = processProperties(ci, html);
+    html = processMethods(ci, html);
+    fs.writeFileSync(`${output}/classes/${ci.name}.html`, html);
+});
+
+function processCommon(ci, html) {
+    html = html.replace('$since', ci.since);
+    html = html.replace('$name', ci.name);
+    html = html.replace('$description', ci.description);
+    html = html.replace('$extends', ci.extends ? ci.extends : '无');
+    html = html.replace('$implements', ci.implements && ci.implements.length > 0 ? ci.implements.join(' / ') : '无');
+    return html;
+}
+
+function processSelector(ci ,html) {
+    var matchSelector = ci.sourceCode.match(/selector\s*:\s*['"](.*?)['"]/);
+    var selectors = matchSelector ? matchSelector[1].split(/\s*,\s*/g) : ['unknown'];
+    return html.replace('$selectors', `<ul><li>${selectors.join('</li><li>')}</li></ul>`);
+}
+
+function processInputs(ci, html) {
     var inputs = [];
     ci.inputsClass.forEach(input => {
         fixMetaInfo(input);
@@ -43,8 +77,13 @@ components.forEach(ci => {
             <td>${dualBinding}</td><td>${input.description}</td><td>${input.since}</td></tr>
         `);
     });
-    md = md.replace('$inputs', inputs.join(''));
+    if (inputs.length == 0) {
+        inputs.push(getNoDataRowTemplate());
+    }
+    return html.replace('$inputs', inputs.join(''));
+}
 
+function processOutputs(ci, html) {
     var outputs = [];
     ci.outputsClass.forEach(output => {
         fixMetaInfo(output);
@@ -60,14 +99,19 @@ components.forEach(ci => {
             <td>${output.since}</td></tr>
         `);
     });
-    md = md.replace('$output', outputs.join(''));
+    if (outputs.length == 0) {
+        outputs.push(getNoDataRowTemplate());
+    }
+    return html.replace('$outputs', outputs.join(''));
+}
 
+function processProperties(ci ,html) {
     // 这块有点绕，当一个属性被拆开为getter/setter后，ci.propertiesClass就找不到他了
     // 但是会出现在ci.accessors里，而ci.accessors里还有一部分同时出现在inputsClass里的，需要剔除
     var propertiesClass = [].concat(ci.propertiesClass);
     if (ci.hasOwnProperty('accessors')) {
         for (var prop in ci.accessors) {
-            if (ci.inputsClass.find(i => i.name == prop)) {
+            if (ci.inputsClass && ci.inputsClass.find(i => i.name == prop)) {
                 // 同时出现在inputsClass里的，需要剔除
                 continue;
             }
@@ -86,6 +130,7 @@ components.forEach(ci => {
         }
     }
     var properties = [];
+    console.log(propertiesClass);
     propertiesClass.forEach(property => {
         fixMetaInfo(property);
         property.since = property.since ? property.since : ci.since;
@@ -96,10 +141,45 @@ components.forEach(ci => {
             <td>${property.description}</td><td>${property.defaultValue}</td><td>${property.since}</td></tr>
         `);
     });
-    md = md.replace('$properties', properties.join(''));
+    if (properties.length == 0) {
+        properties.push(getNoDataRowTemplate());
+    }
+    return html.replace('$properties', properties.join(''));
+}
 
-    console.log(md);
-});
+function processMethods(ci, html) {
+    var methods = [];
+    ci.methodsClass.forEach(method => {
+        fixMetaInfo(method);
+        method.since = method.since ? method.since : ci.since;
+
+        var returns = `<p>返回类型 <code>${method.returnType}</code></p>`;
+        var returnComment = method.jsdoctags ? method.jsdoctags.find(t => t.tagName.text == 'returns') : undefined;
+        returns += returnComment ? returnComment.comment : '';
+
+        var args = [];
+        var jsdoctags = method.jsdoctags ? method.jsdoctags : [];
+        jsdoctags.forEach(a => {
+            if (a.tagName.text !== 'param') {
+                return;
+            }
+            var arg = `<code>${a.name.text || a.name}${a.type ? ': ' + a.type : ''}</code>${a.comment ? a.comment : ''}`;
+            args.push(arg);
+        });
+        if (args.length == 0) {
+            args.push('无');
+        }
+        args = `<ul><li>${args.join('</li><li>')}</li></ul>`;
+        methods.push(`
+            <tr><td>${method.name}</td><td>${method.description}</td><td>${returns}</td>
+            <td>${args}</td><td>${method.since}</td></tr>
+        `);
+    });
+    if (methods.length == 0) {
+        methods.push(getNoDataRowTemplate());
+    }
+    return html.replace('$methods', methods.join(''));
+}
 
 function fixMetaInfo(metaInfo) {
     if (!metaInfo.hasOwnProperty('description')) {
@@ -113,22 +193,21 @@ function fixMetaInfo(metaInfo) {
             return suffix;
         });
     if (!metaInfo.since) {
-        metaInfo.since = '';
+        metaInfo.since = 'v1.0.0';
     }
 }
 
-function getMarkdownTemplate() {
+function getComponentTemplate() {
     return `
-# $componentName
+<h2>$name</h2>
 
-起始版本：$since
+<p>起始版本：$since</p>
+$description
 
-## 选择器 / Selectors
+<h3>选择器 / Selectors</h3>
+<p>$selectors</p>
 
-$selectors
-
-## 输入属性 / Inputs
-
+<h3>输入属性 / Inputs</h3>
 <table>
     <thead>
         <tr><th>名称</th><th>类型</th><th>默认值</th><th>双绑</th><th>说明</th><th>起始版本</th></tr>
@@ -136,17 +215,15 @@ $selectors
     <tbody>$inputs</tbody>
 </table>
 
-## 输出属性 / Outputs
-
+<h3>输出属性 / Outputs</h3>
 <table>
     <thead>
-        <tr><th>名称</th<th>数据类型</th>><th>说明</th><th>起始版本</th></tr>
+        <tr><th>名称</th><th>数据类型</th><th>说明</th><th>起始版本</th></tr>
     </thead>
     <tbody>$outputs</tbody>
 </table>
 
-## 普通属性 / Properties
-
+<h3>普通属性 / Properties</h3>
 <table>
     <thead>
         <tr><th>名称</th><th>类型</th><th>访问性</th><th>说明</th><th>默认值</th><th>起始版本</th></tr>
@@ -154,16 +231,47 @@ $selectors
     <tbody>$properties</tbody>
 </table>
 
-## 方法 / Methods
+<h3>方法 / Methods</h3>
+<table>
+    <thead>
+        <tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th><th>起始版本</th></tr>
+    </thead>
+    <tbody>$methods</tbody>
+</table>
 
-$methods
-
-## 已知问题 / Known Issues
-
-$knownIssues
-
-## 典型用法 / Typical Usages
-
-$typicalUsages
+<h3>面向对象 / Object Oriented</h3>
+<ul><li>继承自 $extends</li><li>实现接口 $implements</li></ul>
 `
+}
+
+function getClassesTemplate() {
+    return `
+<h2>$name</h2>
+
+<p>起始版本：$since</p>
+$description
+
+<h3>属性 / Properties</h3>
+<table>
+    <thead>
+        <tr><th>名称</th><th>类型</th><th>访问性</th><th>说明</th><th>默认值</th><th>起始版本</th></tr>
+    </thead>
+    <tbody>$properties</tbody>
+</table>
+
+<h3>方法 / Methods</h3>
+<table>
+    <thead>
+        <tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th><th>起始版本</th></tr>
+    </thead>
+    <tbody>$methods</tbody>
+</table>
+
+<h3>面向对象 / Object Oriented</h3>
+<ul><li>继承自 $extends</li><li>实现接口 $implements</li></ul>
+`
+}
+
+function getNoDataRowTemplate() {
+    return '<tr><td style="text-align: center;" colspan="1000">无</td></tr>';
 }

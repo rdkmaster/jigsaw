@@ -14,4 +14,4 @@ if [ "$?" != "0" ]; then
 fi
 
 cd $scriptDir
-node json-parser.js $home/documentation/documentation.json $output/fragments/components
+node json-parser.js $home/documentation/documentation.json $output/fragments
