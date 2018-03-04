@@ -1,3 +1,7 @@
+var PROTECTED = 113;
+var PUBLIC = 114;
+var STATIC = 115;
+
 var fs = require('fs');
 
 var input = process.argv[2];
@@ -135,9 +139,12 @@ function processProperties(ci ,html) {
         property.since = property.since ? property.since : ci.since;
         property.defaultValue = property.defaultValue ? property.defaultValue : '';
         property.accessibility = property.accessibility ? property.accessibility : '读写';
+        var modifier = getModifierInfo(property.modifierKind);
         properties.push(`
-            <tr><td>${property.name}</td><td>${property.type}</td><td>${property.accessibility}</td>
-            <td>${property.description}</td><td>${property.defaultValue}</td><td>${property.since}</td></tr>
+            <tr><td style="white-space: nowrap;">${modifier}${property.name}</td>
+            <td>${property.type}</td><td>${property.accessibility}</td>
+            <td>${property.description}</td><td>${property.defaultValue}</td>
+            <td>${property.since}</td></tr>
         `);
     });
     if (properties.length == 0) {
@@ -162,16 +169,19 @@ function processMethods(ci, html) {
             if (a.tagName.text !== 'param') {
                 return;
             }
-            var arg = `<code>${a.name.text || a.name}${a.type ? ': ' + a.type : ''}</code>${a.comment ? a.comment : ''}`;
+            var arg = `<span style="white-space: nowrap;">
+                ${a.name.text || a.name}${a.type ? ': <code>' + a.type : ''}</code>
+                </span>${a.comment ? a.comment : ''}`;
             args.push(arg);
         });
         if (args.length == 0) {
             args.push('无');
         }
         args = `<ul><li>${args.join('</li><li>')}</li></ul>`;
+        var modifier = getModifierInfo(method.modifierKind);
         methods.push(`
-            <tr><td>${method.name}</td><td>${method.description}</td><td>${returns}</td>
-            <td>${args}</td><td>${method.since}</td></tr>
+            <tr><td style="white-space: nowrap;">${modifier}${method.name}</td><td>${method.description}</td>
+            <td>${returns}</td><td>${args}</td><td>${method.since}</td></tr>
         `);
     });
     if (methods.length == 0) {
@@ -194,6 +204,24 @@ function fixMetaInfo(metaInfo) {
     if (!metaInfo.since) {
         metaInfo.since = 'v1.0.0';
     }
+}
+
+function getModifierInfo(modifier) {
+    var clazz, title, color;
+    if (modifier && modifier.indexOf(STATIC) !== -1) {
+        clazz = 'cube';
+        title = 'public static';
+        color = '#0575b9';
+    } else if (modifier && modifier.indexOf(PROTECTED) !== -1) {
+        clazz = 'lock';
+        title = 'protected';
+        color = 'orange';
+    } else {
+        clazz = 'unlock';
+        title = 'public';
+        color = 'green';
+    }
+    return `<span class="fa fa-${clazz}" style="color: ${color}; margin-right: 4px" title="${title}"></span>`;
 }
 
 function getComponentTemplate() {
