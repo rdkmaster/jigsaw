@@ -1,3 +1,18 @@
+## v1.1.2 (2018-3-4)
+
+### 新特性 / New Features
+- 无 / none
+
+### 破坏性修改 / Breaking Changes
+- 无 / none
+
+###  优化 / Modified
+- Tab组件启用新的selecotor `jigsaw-tabs` / `j-tabs`，原来的selector将会在v1.2版本里废弃
+
+### 修复 / Fixes
+- https://github.com/rdkmaster/jigsaw/issues/509 Table的additionalColumnDefine里先设置最后一行，再设置最前面的行时，最后一行的列会插入错误，变成倒数第二列
+- https://github.com/rdkmaster/jigsaw/issues/476 fishbone图例文字显示不全
+
 
 ## v1.1.1 (2018-2-27)
 
