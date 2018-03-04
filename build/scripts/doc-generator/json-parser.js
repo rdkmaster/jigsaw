@@ -108,7 +108,7 @@ function processOutputs(ci, html) {
 function processProperties(ci ,html) {
     // 这块有点绕，当一个属性被拆开为getter/setter后，ci.propertiesClass就找不到他了
     // 但是会出现在ci.accessors里，而ci.accessors里还有一部分同时出现在inputsClass里的，需要剔除
-    var propertiesClass = [].concat(ci.propertiesClass);
+    var propertiesClass = [].concat(ci.propertiesClass || ci.properties);
     if (ci.hasOwnProperty('accessors')) {
         for (var prop in ci.accessors) {
             if (ci.inputsClass && ci.inputsClass.find(i => i.name == prop)) {
@@ -130,7 +130,6 @@ function processProperties(ci ,html) {
         }
     }
     var properties = [];
-    console.log(propertiesClass);
     propertiesClass.forEach(property => {
         fixMetaInfo(property);
         property.since = property.since ? property.since : ci.since;
@@ -149,7 +148,7 @@ function processProperties(ci ,html) {
 
 function processMethods(ci, html) {
     var methods = [];
-    ci.methodsClass.forEach(method => {
+    (ci.methodsClass || ci.methods).forEach(method => {
         fixMetaInfo(method);
         method.since = method.since ? method.since : ci.since;
 
