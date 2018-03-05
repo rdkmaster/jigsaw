@@ -42,6 +42,9 @@ export class TableInternalCellBase implements AfterViewInit {
     @Input()
     public renderer: Type<TableCellRendererBase> | TemplateRef<any>;
 
+    @Output()
+    public cellDataChange = new EventEmitter<any>();
+
     private _column: number = -1;
 
     public get column(): number {
@@ -273,6 +276,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         this.edit.emit(change);
 
         this.cellData = cellData;
+        this.cellDataChange.emit(this.cellData);
     }
 
     private _rendererSubscribe(renderer: TableCellRendererBase): void {
