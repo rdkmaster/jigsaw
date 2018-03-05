@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {LocalPageableTableData, TableData} from "jigsaw/core/data/table-data";
+import {LocalPageableTableData} from "jigsaw/core/data/table-data";
 import {AdditionalColumnDefine, AdditionalTableData} from "jigsaw/component/table/table-typings";
 import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/component/table/table-renderer";
 
@@ -26,7 +26,8 @@ export class TableAddCheckboxColumnPageableDemoComponent {
             renderer: TableHeadCheckboxRenderer,
         },
         cell: {
-            renderer: TableCellCheckboxRenderer
+            renderer: TableCellCheckboxRenderer,
+            //data: (td, row, col) => td.data[row][2] == 'Developer', // 可以在这边设置默认值
         }
     }];
 
