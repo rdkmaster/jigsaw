@@ -150,9 +150,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (!tableData.data[row]) {
             tableData.data[row] = [];
         }
-        if(tableData instanceof AdditionalTableData){
-            // 如果是AdditionalTableData，cellData取空值，在renderer里面通过touchedValue取真实的值，见issue522
-            return '';
+        if (tableData instanceof AdditionalTableData) {
+            // 如果是AdditionalTableData，重新reset AdditionalTableData，cellData取空值，
+            // 在renderer里面通过touchedValue取真实的值，见issue522
+            tableData.data[row][index] = '';
         }
         return tableData.data[row][index];
     }
