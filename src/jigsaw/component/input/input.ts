@@ -15,7 +15,8 @@ import {CommonUtils} from "../../core/utils/common-utils";
         '[style.height]': 'height',
         '[style.line-height]': 'height',
         '(click)': '_$stopPropagation($event)',
-        '[class.jigsaw-input]': 'true'
+        '[class.jigsaw-input]': 'true',
+        '[class.jigsaw-input-error]': '!valid'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawInput), multi: true},
@@ -24,6 +25,7 @@ import {CommonUtils} from "../../core/utils/common-utils";
 export class JigsawInput extends AbstractJigsawComponent implements ControlValueAccessor, AfterContentInit, AfterViewChecked {
     @Input() public clearable: boolean = true;
     @Input() public disabled: boolean = false;
+    @Input() public valid: boolean = true;
 
     @Output('focus')
     private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
