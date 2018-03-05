@@ -141,6 +141,13 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         });
     }
 
+    /**
+     * 没有cellData generator获取数据的情况
+     * @param {string} field
+     * @param {number} row
+     * @returns {any}
+     * @private
+     */
     private _getCellDataByField(field: string, row: number): any {
         let [index, tableData] = this._getColumnIndex(field);
         if (index == -1) {
@@ -151,6 +158,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             tableData.data[row] = [];
         }
         if (tableData instanceof AdditionalTableData) {
+            // 没有cellData generator获取数据的情况
             // 如果是AdditionalTableData，重新reset AdditionalTableData，cellData取空值，
             // 在renderer里面通过touchedValue取真实的值，见issue522
             tableData.data[row][index] = '';
