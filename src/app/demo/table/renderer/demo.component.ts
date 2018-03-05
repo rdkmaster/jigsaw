@@ -30,7 +30,7 @@ export class TableRendererDemoComponent {
 
     constructor(public http: HttpClient) {
         this.tableData = new LocalPageableTableData();
-        this.tableData.pagingInfo.pageSize = 100;
+        this.tableData.pagingInfo.pageSize = 50;
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list-full');
     }
