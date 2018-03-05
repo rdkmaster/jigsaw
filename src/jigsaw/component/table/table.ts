@@ -141,6 +141,13 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         });
     }
 
+    /**
+     * 没有cellData generator获取数据的情况
+     * @param {string} field
+     * @param {number} row
+     * @returns {any}
+     * @private
+     */
     private _getCellDataByField(field: string, row: number): any {
         let [index, tableData] = this._getColumnIndex(field);
         if (index == -1) {
@@ -149,6 +156,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
         if (!tableData.data[row]) {
             tableData.data[row] = [];
+        }
+        if (tableData instanceof AdditionalTableData) {
+            // 没有cellData generator获取数据的情况
+            // 如果是AdditionalTableData，重新reset AdditionalTableData，cellData取空值，
+            // 在renderer里面通过touchedValue取真实的值，见issue522
+            tableData.data[row][index] = '';
         }
         return tableData.data[row][index];
     }
@@ -213,13 +226,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 }
 
                 const cellDataGenerator = TableUtils.getGenerator(columnDefine, 'data');
-                const originVal = this._getCellDataByField(field, rowIndex);
                 if (cellDataGenerator) {
                     // 根据cell的data函数，生成新的cellData，并更新tableData
                     settings.cellData = cellDataGenerator(this.data, rowIndex, realColIndex, this._additionalData);
                     this._setCellDataByField(field, rowIndex, settings.cellData);
                 } else {
-                    settings.cellData = originVal;
+                    settings.cellData = this._getCellDataByField(field, rowIndex);
                 }
                 settings.cellData = CommonUtils.isDefined(settings.cellData) ? settings.cellData : '';
 
