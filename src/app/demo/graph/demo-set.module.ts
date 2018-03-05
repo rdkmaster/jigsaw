@@ -18,6 +18,8 @@ import {BasicLineGraphComponent} from "./line-bar-graph-basic/demo.component";
 import {AjaxLineGraphComponent} from "./line-bar-graph-ajax/demo.component";
 import {PieGraphDemoComponent} from "./pie/demo.component";
 import {GraphWithNoDataComponent} from "./no-data/demo.component";
+import {MapGraphComponent} from "./map/demo.component";
+import {MapGraphModule} from "./map/demo.module";
 
 export const routerConfig = [
     {
@@ -37,6 +39,9 @@ export const routerConfig = [
     },
     {
         path: 'no-data', component: GraphWithNoDataComponent
+    },
+    {
+        path: 'map', component: MapGraphComponent
     }
 ];
 
@@ -49,7 +54,8 @@ export const routerConfig = [
         PieGraphDemoModule,
         GraphResizeModule,
         GraphWithNoDataModule,
-        GraphSetSizeModule
+        GraphSetSizeModule,
+        MapGraphModule
     ]
 })
 export class GraphDemoModule {

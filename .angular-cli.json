@@ -30,6 +30,7 @@
             ],
             "scripts": [
                 "../node_modules/echarts/dist/echarts.min.js",
+                "../node_modules/echarts/map/js/china.js",
                 "../node_modules/jquery/dist/jquery.min.js",
                 "../node_modules/moment/min/moment.min.js",
                 "../node_modules/bootstrap/dist/js/bootstrap.min.js",
