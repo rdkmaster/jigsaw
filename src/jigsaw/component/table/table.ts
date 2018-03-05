@@ -231,8 +231,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                     settings.cellData = cellDataGenerator(this.data, rowIndex, realColIndex, this._additionalData);
                     this._setCellDataByField(field, rowIndex, settings.cellData);
                 } else {
-                    const originVal = this._getCellDataByField(field, rowIndex);
-                    settings.cellData = originVal;
+                    settings.cellData = this._getCellDataByField(field, rowIndex);
                 }
                 settings.cellData = CommonUtils.isDefined(settings.cellData) ? settings.cellData : '';
 
