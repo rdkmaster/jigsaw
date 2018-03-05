@@ -75,3 +75,6 @@ export abstract class AbstractJigsawComponent implements IJigsawComponent, OnIni
     }
 }
 
+export interface IJigsawFormControl {
+    valid: boolean;
+}
