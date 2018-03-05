@@ -46,7 +46,7 @@
                                            title="{{cell.tooltip ? cell.tooltip : ''}}"
                                            [tableData]="data"
                                            [additionalData]="additionalData"
-                                           [cellData]="cell.cellData"
+                                           [(cellData)]="cell.cellData"
                                            [row]="rowIndex"
                                            [field]="cell.field"
                                            [renderer]="cell.renderer"
