@@ -173,9 +173,7 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
 export class TableCellCheckboxRenderer extends TableCellRendererBase {
     protected onDataRefresh() {
         this._updateChecked();
-        if (CommonUtils.isDefined(this.targetData.data[this.row])) {
-            this.targetData.data[this.row][this.column] = this.checked;
-        }
+        this._updateTargetData();
     }
 
     public checked: boolean;
@@ -189,12 +187,19 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
     public set cellData(value: any) {
         this._cellData = value;
         this._updateChecked();
+        this._updateTargetData();
     }
 
     private _updateChecked(): void {
         let checked = this._additionalData.getTouchedValue(this.field, this.row);
         checked = CommonUtils.isDefined(checked) ? checked : this.cellData;
         this.checked = checked;
+    }
+
+    private _updateTargetData(){
+        if (CommonUtils.isDefined(this.targetData.data[this.row])) {
+            this.targetData.data[this.row][this.column] = this.checked;
+        }
     }
 
     onChange(value) {
