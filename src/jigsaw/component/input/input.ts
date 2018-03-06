@@ -4,7 +4,7 @@ import {
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {AbstractJigsawComponent} from "../common";
+import {AbstractJigsawComponent, IJigsawFormControl} from "../common";
 import {CommonUtils} from "../../core/utils/common-utils";
 
 @Component({
@@ -15,15 +15,19 @@ import {CommonUtils} from "../../core/utils/common-utils";
         '[style.height]': 'height',
         '[style.line-height]': 'height',
         '(click)': '_$stopPropagation($event)',
-        '[class.jigsaw-input]': 'true'
+        '[class.jigsaw-input]': 'true',
+        '[class.jigsaw-input-error]': '!valid'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawInput), multi: true},
     ]
 })
-export class JigsawInput extends AbstractJigsawComponent implements ControlValueAccessor, AfterContentInit, AfterViewChecked {
+export class JigsawInput extends AbstractJigsawComponent
+    implements IJigsawFormControl, ControlValueAccessor, AfterContentInit, AfterViewChecked {
+
     @Input() public clearable: boolean = true;
     @Input() public disabled: boolean = false;
+    @Input() public valid: boolean = true;
 
     @Output('focus')
     private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
@@ -62,7 +66,7 @@ export class JigsawInput extends AbstractJigsawComponent implements ControlValue
     }
 
     public set value(newValue: string) {
-        if(CommonUtils.isUndefined(newValue) || this._value === newValue){
+        if (CommonUtils.isUndefined(newValue) || this._value === newValue) {
             return;
         }
         this._value = newValue;
@@ -120,7 +124,7 @@ export class JigsawInput extends AbstractJigsawComponent implements ControlValue
     }
 
     @Input()
-    public blurOnClear:boolean = true;
+    public blurOnClear: boolean = true;
 
     /**
      * @internal
