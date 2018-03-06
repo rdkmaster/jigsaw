@@ -8,9 +8,9 @@ _**app.component.html**_ 中添加 html 片段
 <jigsaw-tabs [(selectedIndex)]="tabSelectIndex">
     <jigsaw-tab-pane *ngFor="let tabData of tabDatas">
         <div jigsaw-title><span class="fa fa-gift"></span>{{tabData.label}}</div>
-        <div jigsaw-body>
+        <ng-template>
             <jigsaw-table maxHeight="550px" [data]="this[tabData.id]"></jigsaw-table>
-        </div>
+        </ng-template>
     </jigsaw-tab-pane>
 </jigsaw-tabs>
 ```
@@ -123,9 +123,9 @@ _**app.component.html**_
   <jigsaw-tabs *ngIf="displayType.id!=1 && resultDisplay" [(selectedIndex)]="tabSelectIndex">
     <jigsaw-tab-pane *ngFor="let tabData of tabDatas">
       <div jigsaw-title><span class="fa fa-gift"></span>{{tabData.label}}</div>
-      <div jigsaw-body>
+      <ng-template>
         <jigsaw-table maxHeight="550px" [data]="this[tabData.id]"></jigsaw-table>
-      </div>
+      </ng-template>
     </jigsaw-tab-pane>
   </jigsaw-tabs>
 </div>
