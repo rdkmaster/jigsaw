@@ -205,7 +205,7 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
     onChange(value) {
         this.checked = value;
         this._additionalData.cacheValue(this.field, this.row, value);
-        this.targetData.data[this.row][this.column] = value;
+        this._updateTargetData();
         this.dispatchChangeEvent(value);
     }
 
