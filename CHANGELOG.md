@@ -1,3 +1,19 @@
+## v1.1.3 (2018-3-6)
+
+### 新特性 / New Features
+- `jigsaw-input`支持`valid`输入属性，用于在form表单校验失败时边框变红色
+
+### 破坏性修改 / Breaking Changes
+- 无 / none
+
+###  优化 / Modified
+- 无 / none
+
+### 修复 / Fixes
+- https://github.com/rdkmaster/jigsaw/issues/522 table的checkbox在没有默认选中值得时候，分页存储有误
+- https://github.com/rdkmaster/jigsaw/issues/508 table的additionalTableData在存储分页信息时有问题
+
+
 ## v1.1.2 (2018-3-4)
 
 ### 新特性 / New Features
