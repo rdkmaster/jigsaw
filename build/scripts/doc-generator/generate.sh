@@ -9,6 +9,10 @@ if [ "$output" == "" ]; then
 fi
 mkdir -p $output
 
+# if output is not an absolute dir...
+cd $output
+output=`pwd`
+
 cd $home
 rm -f $output/documentation.json
 compodoc src/jigsaw -p tsconfig.json --silent --disableSourceCode --disableGraph \
