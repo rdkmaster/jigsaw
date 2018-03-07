@@ -9,27 +9,28 @@ if (!angularApis) {
     angularApis = [];
 }
 
-var input = process.argv[2];
-if (!fs.existsSync(input)) {
-    console.log('need an input json file!');
+var workDir = process.argv[2];
+if (!workDir) {
+    console.error("ERROR: need an workDir dir");
     process.exit(1);
 }
-var docInfo = require(input);
-if (!docInfo) {
-    console.log('input json file is invalid!');
-    process.exit(1);
-}
-
-var output = process.argv[3];
-if (!output) {
-    console.error("ERROR: need an output dir");
-    process.exit(1);
-}
+workDir = workDir[workDir.length - 1] == '/' ? workDir.substring(0, workDir.length - 1) : workDir;
+var output = `${workDir}/fragments`;
 if (fs.existsSync(output)) {
     console.error("ERROR: output dir already exists, remove it and try again: " + output);
     process.exit(1);
 }
-output = output[output.length - 1] == '/' ? output.substring(0, output.length - 1) : output;
+var input = `${workDir}/documentation.json`;
+if (!fs.existsSync(input)) {
+    console.log(`need an input json file located at ${input}`);
+    process.exit(1);
+}
+var docInfo = require(input);
+if (!docInfo) {
+    console.log(`input json file is invalid! path=${input}`);
+    process.exit(1);
+}
+
 fs.mkdirSync(`${output}`, 755);
 fs.mkdirSync(`${output}/components`, 755);
 fs.mkdirSync(`${output}/classes`, 755);
@@ -65,9 +66,9 @@ function processCommon(ci, html) {
     html = html.replace('$since', ci.since);
     html = html.replace('$name', ci.name);
     html = html.replace('$description', ci.description);
-    html = html.replace('$extends', ci.extends ? addTypeLink(ci.extends) : '无');
+    html = html.replace('$extends', ci.extends ? addTypeLink(ci.extends) : '--');
     html = html.replace('$implements', ci.implements && ci.implements.length > 0 ?
-                                        addTypeLink(ci.implements).join(' / ') : '无');
+                                        addTypeLink(ci.implements).join(' / ') : '--');
     return html;
 }
 
@@ -83,10 +84,11 @@ function processInputs(ci, html) {
         fixMetaInfo(input);
         input.since = input.since ? input.since : ci.since;
         input.defaultValue = input.defaultValue ? input.defaultValue : '';
-        var dualBinding = ci.outputsClass.find(i => i.name == input.name + 'Change') ? '是' : '否';
+        var dualBinding = ci.outputsClass.find(i => i.name == input.name + 'Change') ?
+            '<span class="fa fa-retweet" style="margin-left:4px" title="本属性支持双向绑定"></span>' : '';
         inputs.push(`
-            <tr><td>${input.name}</td><td>${addTypeLink(input.type)}</td><td>${input.defaultValue}</td>
-            <td>${dualBinding}</td><td>${input.description}</td><td>${input.since}</td></tr>
+            <tr><td>${input.name}${dualBinding}</td><td>${addTypeLink(input.type)}</td>
+            <td>${input.defaultValue}</td><td>${input.description}</td><td>${input.since}</td></tr>
         `);
     });
     if (inputs.length == 0) {
@@ -184,9 +186,10 @@ function processMethods(ci, html) {
             args.push(arg);
         });
         if (args.length == 0) {
-            args.push('无');
+            args = '<p>无参数</p>';
+        } else {
+            args = `<ul><li>${args.join('</li><li>')}</li></ul>`;
         }
-        args = `<ul><li>${args.join('</li><li>')}</li></ul>`;
         var modifier = getModifierInfo(method.modifierKind);
         methods.push(`
             <tr><td style="white-space: nowrap;">${modifier}${method.name}</td><td>${method.description}</td>
@@ -202,7 +205,6 @@ function processMethods(ci, html) {
 function fixMetaInfo(metaInfo) {
     if (!metaInfo.hasOwnProperty('description')) {
         metaInfo.description = '';
-        return;
     }
     metaInfo.description = metaInfo.description.replace(/\$(\w+)\s*=\s*(.*?)\s*(\n|<\/p>)/g,
         function(found, prop, value, suffix) {
@@ -238,7 +240,8 @@ function addTypeLink(type) {
         type = type == 'literal type' ? '' : type;
         return (type || '').replace(/\w+/g, subType => {
             var url = getTypeUrl(subType);
-            return url ? `<a href="${url}">${subType}</a>` : subType;
+            var target = url.match(/^https?:/) ? '_blank' : '_self';
+            return url ? `<a href="${url}" target="${target}">${subType}</a>` : subType;
         });
     } else if (type instanceof Array) {
         return type.map(i => addTypeLink(i));
@@ -317,15 +320,15 @@ $description
 <p>$selectors</p>
 
 <h3>输入属性 / Inputs</h3>
-<table>
+<table style="width:100%">
     <thead>
-        <tr><th>名称</th><th>类型</th><th>默认值</th><th>双绑</th><th>说明</th><th>起始版本</th></tr>
+        <tr><th>名称</th><th>类型</th><th>默认值</th><th>说明</th><th>起始版本</th></tr>
     </thead>
     <tbody>$inputs</tbody>
 </table>
 
 <h3>输出属性 / Outputs</h3>
-<table>
+<table style="width:100%">
     <thead>
         <tr><th>名称</th><th>数据类型</th><th>说明</th><th>起始版本</th></tr>
     </thead>
@@ -333,7 +336,7 @@ $description
 </table>
 
 <h3>普通属性 / Properties</h3>
-<table>
+<table style="width:100%">
     <thead>
         <tr><th>名称</th><th>类型</th><th>访问性</th><th>说明</th><th>默认值</th><th>起始版本</th></tr>
     </thead>
@@ -341,7 +344,7 @@ $description
 </table>
 
 <h3>方法 / Methods</h3>
-<table>
+<table style="width:100%">
     <thead>
         <tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th><th>起始版本</th></tr>
     </thead>
@@ -361,7 +364,7 @@ function getClassesTemplate() {
 $description
 
 <h3>属性 / Properties</h3>
-<table>
+<table style="width:100%">
     <thead>
         <tr><th>名称</th><th>类型</th><th>访问性</th><th>说明</th><th>默认值</th><th>起始版本</th></tr>
     </thead>
@@ -369,7 +372,7 @@ $description
 </table>
 
 <h3>方法 / Methods</h3>
-<table>
+<table style="width:100%">
     <thead>
         <tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th><th>起始版本</th></tr>
     </thead>
