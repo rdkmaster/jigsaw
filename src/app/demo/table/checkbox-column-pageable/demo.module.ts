@@ -4,9 +4,11 @@ import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/compo
 import {TableAddCheckboxColumnPageableDemoComponent} from './demo.component';
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {JigsawPaginationModule} from "jigsaw/component/pagination/pagination";
+import {JigsawTagModule} from "jigsaw/component/tag/tag";
+import {CommonModule} from "@angular/common";
 
 @NgModule({
-    imports: [JigsawTableModule, JigsawPaginationModule, JigsawDemoDescriptionModule],
+    imports: [JigsawTableModule, JigsawPaginationModule, JigsawTagModule, JigsawDemoDescriptionModule, CommonModule],
     declarations: [TableAddCheckboxColumnPageableDemoComponent],
     exports: [TableAddCheckboxColumnPageableDemoComponent],
     entryComponents: [TableCellCheckboxRenderer, TableHeadCheckboxRenderer]

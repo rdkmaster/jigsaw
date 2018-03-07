@@ -6,6 +6,7 @@
 <div class="live-demo-wrap">
     <div class="demo-1 live-demo">
         <h3>分页数据存储</h3>
+        选中的所有行： <j-tag *ngFor="let row of allSelectedRows" [closable]="true" (close)="removeRow(row)">{{row.name}}</j-tag>
         <jigsaw-table [data]="pageable"
                       [additionalColumnDefines]="additionalColumns"
                       [(additionalData)]="additionalData"
@@ -21,7 +22,7 @@
             (currentChange)="pageable.changePage(pageable.pagingInfo)"
             (pageSizeChange)="pageable.changePage(pageable.pagingInfo);"
         ></jigsaw-pagination>
-        <p class="message">selectedRowsIndex: <span>{{selectedRows}}</span></p>
+        <p class="message">当前选中的行: <span>{{selectedRows}}</span></p>
     </div>
 </div>
 

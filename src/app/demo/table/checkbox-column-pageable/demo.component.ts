@@ -18,6 +18,7 @@ export class TableAddCheckboxColumnPageableDemoComponent {
     }
 
     selectedRows: string;
+    allSelectedRows: any;
     additionalData: AdditionalTableData;
 
     additionalColumns: AdditionalColumnDefine[] = [{
@@ -33,11 +34,13 @@ export class TableAddCheckboxColumnPageableDemoComponent {
 
     additionalDataChange(value) {
         console.log(value);
-        this.selectedRows = this.getSelectedRows(this.additionalData);
+        this.selectedRows = this.getSelectedRows(value);
+        this.allSelectedRows = this.getAllSelectedRows(value);
+        console.log(this.allSelectedRows);
     }
 
     /**
-     * 获取选中的行
+     * 获取当前选中的行
      * @param additionalData
      */
     getSelectedRows(additionalData) {
@@ -47,6 +50,28 @@ export class TableAddCheckboxColumnPageableDemoComponent {
             }
             return selectedRows;
         }, []).join(',');
+    }
+
+    /**
+     * 获取所有选中的行
+     * @param additionalData
+     */
+    getAllSelectedRows(additionalData) {
+        return additionalData.getTouchedValues(0).reduce((selectedRows, item) => {
+            if (item.value) {
+                selectedRows.push({
+                    name: item.data[0],
+                    key: item.key
+                });
+            }
+            return selectedRows;
+        }, []);
+    }
+
+    removeRow(row){
+        console.log(row);
+        this.additionalData.cacheValueByKey(0, row.key, false);
+        this.additionalData.refresh();
     }
 
     // ====================================================================

@@ -134,7 +134,7 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
         this._checked = value;
         this.targetData.data.forEach((row, index) => {
             row[this.column] = value;
-            this._additionalData.cacheValue(this.field, index, value);
+            this._additionalData.cacheValueByRow(this.field, index, value);
         });
         this.targetData.refresh();
     }
@@ -204,7 +204,7 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
 
     onChange(value) {
         this.checked = value;
-        this._additionalData.cacheValue(this.field, this.row, value);
+        this._additionalData.cacheValueByRow(this.field, this.row, value);
         this._updateTargetData();
         this.dispatchChangeEvent(value);
     }

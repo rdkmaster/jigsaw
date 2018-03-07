@@ -137,7 +137,7 @@ export class AdditionalTableData extends TableData {
 
     private _splitString = '_%%_';
     private _splitRegExp = new RegExp(this._splitString, 'g');
-    private _cachedValues: { [field: string]: { [key: string]: any } } = {};
+    private _cachedValues: { [field: string]: { key: string, value: any, data: any[] }[] } = {};
     private _trackRowByFields: number[];
 
     private _originData: RawTableData;
@@ -165,11 +165,15 @@ export class AdditionalTableData extends TableData {
         });
     }
 
+    private _getFieldString(field: string | number) {
+        return typeof field === 'string' ? field : this.field[field];
+    }
+
     public clearCachedValues(): void {
         this._cachedValues = {};
     }
 
-    private _getValueKey(field: string | number, row: number): string {
+    public getKey(field: string | number, row: number): string {
         let valueKey = '';
         if (!this.originData) {
             console.warn('set originData and trackRowBy property of table before caching a value');
@@ -189,45 +193,55 @@ export class AdditionalTableData extends TableData {
         return valueKey;
     }
 
-    public cacheValue(field: string | number, row: number, value: any): void {
-        const valueKey = this._getValueKey(field, row);
-        if (!valueKey) {
+    public cacheValueByRow(field: string | number, row: number, value: any): void {
+        const valueKey = this.getKey(field, row);
+        this.cacheValueByKey(field, valueKey, value, this.originData.data[row]);
+    }
+
+    public cacheValueByKey(field: string | number, key: string, value: any, data?: any[]): void {
+        const fieldString = this._getFieldString(field);
+        if (!fieldString || !key) {
             return;
         }
-        if (!this._cachedValues[field]) {
-            this._cachedValues[field] = {};
+        if (!this._cachedValues[fieldString]) {
+            this._cachedValues[fieldString] = [];
         }
-        this._cachedValues[field][valueKey] = value;
+
+        const cachedValues = this._cachedValues[fieldString];
+
+        const cachedValue = cachedValues.find(item => item.key === key);
+
+        if (cachedValue) {
+            cachedValue.value = value;
+            cachedValue.data = data ? data : cachedValue.data;
+        } else {
+            cachedValues.push({
+                key: key,
+                value: value,
+                data: data
+            })
+        }
     }
 
     public getTouchedValue(field: string | number, row: number): any {
-        const valueKey = this._getValueKey(field, row);
-        if (!valueKey) {
+        const key = this.getKey(field, row);
+        const cachedValues = this._cachedValues[field];
+        if (!key || !cachedValues) {
             return;
         }
-        if (!this._cachedValues[field]) {
-            return;
-        }
-        return this._cachedValues[field][valueKey];
+        const cacheValue = cachedValues.find(item => item.key == key);
+        return cacheValue ? cacheValue.value : null;
     }
 
-    public getTouchedValues(field: string | number): { key: string | string[], value: any }[] {
-        const values: any[] = [];
-        const fieldString = typeof field === 'string' ? field : this.field[field];
+    public getTouchedValues(field: string | number): { key: string, value: any, data: any[] }[] {
+        const fieldString = this._getFieldString(field);
         if (!fieldString) {
-            return values;
+            return [];
         }
-
-        const cached = this._cachedValues[fieldString];
-        for (let p in cached) {
-            const value = cached[p];
-            const key = p.split(this._splitRegExp);
-            //去掉前面特地留下来的最后一个无效值
-            key.pop();
-            values.push({value: value, key: key.length == 1 ? key[0] : key})
+        if (!this._cachedValues[fieldString]) {
+            this._cachedValues[fieldString] = [];
         }
-
-        return values;
+        return this._cachedValues[fieldString];
     }
 }
 
