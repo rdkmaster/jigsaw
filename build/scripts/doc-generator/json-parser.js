@@ -3,6 +3,11 @@ var PUBLIC = 114;
 var STATIC = 115;
 
 var fs = require('fs');
+var angularApis = require(__dirname + '/angular-api-list.json');
+if (!angularApis) {
+    console.warn('angular api list not found!');
+    angularApis = [];
+}
 
 var input = process.argv[2];
 if (!fs.existsSync(input)) {
@@ -33,6 +38,7 @@ fs.mkdirSync(`${output}/injectables`, 755);
 fs.mkdirSync(`${output}/interfaces`, 755);
 fs.mkdirSync(`${output}/modules`, 755);
 
+console.log('processing components...');
 docInfo.components.forEach(ci => {
     fixMetaInfo(ci);
     var html = getComponentTemplate();
@@ -45,6 +51,7 @@ docInfo.components.forEach(ci => {
     fs.writeFileSync(`${output}/components/${ci.name}.html`, html);
 });
 
+console.log('processing classes...');
 docInfo.classes.forEach(ci => {
     fixMetaInfo(ci);
     var html = getClassesTemplate();
@@ -58,8 +65,9 @@ function processCommon(ci, html) {
     html = html.replace('$since', ci.since);
     html = html.replace('$name', ci.name);
     html = html.replace('$description', ci.description);
-    html = html.replace('$extends', ci.extends ? ci.extends : '无');
-    html = html.replace('$implements', ci.implements && ci.implements.length > 0 ? ci.implements.join(' / ') : '无');
+    html = html.replace('$extends', ci.extends ? addTypeLink(ci.extends) : '无');
+    html = html.replace('$implements', ci.implements && ci.implements.length > 0 ?
+                                        addTypeLink(ci.implements).join(' / ') : '无');
     return html;
 }
 
@@ -77,7 +85,7 @@ function processInputs(ci, html) {
         input.defaultValue = input.defaultValue ? input.defaultValue : '';
         var dualBinding = ci.outputsClass.find(i => i.name == input.name + 'Change') ? '是' : '否';
         inputs.push(`
-            <tr><td>${input.name}</td><td>${input.type}</td><td>${input.defaultValue}</td>
+            <tr><td>${input.name}</td><td>${addTypeLink(input.type)}</td><td>${input.defaultValue}</td>
             <td>${dualBinding}</td><td>${input.description}</td><td>${input.since}</td></tr>
         `);
     });
@@ -99,7 +107,7 @@ function processOutputs(ci, html) {
             type = match[1];
         }
         outputs.push(`
-            <tr><td>${output.name}</td><td>${type}</td><td>${output.description}</td>
+            <tr><td>${output.name}</td><td>${addTypeLink(type)}</td><td>${output.description}</td>
             <td>${output.since}</td></tr>
         `);
     });
@@ -142,7 +150,7 @@ function processProperties(ci ,html) {
         var modifier = getModifierInfo(property.modifierKind);
         properties.push(`
             <tr><td style="white-space: nowrap;">${modifier}${property.name}</td>
-            <td>${property.type}</td><td>${property.accessibility}</td>
+            <td>${addTypeLink(property.type)}</td><td>${property.accessibility}</td>
             <td>${property.description}</td><td>${property.defaultValue}</td>
             <td>${property.since}</td></tr>
         `);
@@ -159,7 +167,7 @@ function processMethods(ci, html) {
         fixMetaInfo(method);
         method.since = method.since ? method.since : ci.since;
 
-        var returns = `<p>返回类型 <code>${method.returnType}</code></p>`;
+        var returns = `<p>返回类型 ${addTypeLink(method.returnType)}</p>`;
         var returnComment = method.jsdoctags ? method.jsdoctags.find(t => t.tagName.text == 'returns') : undefined;
         returns += returnComment ? returnComment.comment : '';
 
@@ -169,8 +177,9 @@ function processMethods(ci, html) {
             if (a.tagName.text !== 'param') {
                 return;
             }
+            var type = a.type ? `: ${addTypeLink(a.type)}` : '';
             var arg = `<span style="white-space: nowrap;">
-                ${a.name.text || a.name}${a.type ? ': <code>' + a.type : ''}</code>
+                ${a.name.text || a.name}${type}</code>
                 </span>${a.comment ? a.comment : ''}`;
             args.push(arg);
         });
@@ -222,6 +231,79 @@ function getModifierInfo(modifier) {
         color = 'green';
     }
     return `<span class="fa fa-${clazz}" style="color: ${color}; margin-right: 4px" title="${title}"></span>`;
+}
+
+function addTypeLink(type) {
+    if (typeof type === 'string') {
+        type = type == 'literal type' ? '' : type;
+        return (type || '').replace(/\w+/g, subType => {
+            var url = getTypeUrl(subType);
+            return url ? `<a href="${url}">${subType}</a>` : subType;
+        });
+    } else if (type instanceof Array) {
+        return type.map(i => addTypeLink(i));
+    }
+}
+
+function getTypeUrl(type) {
+    if (!type) {
+        return '';
+    }
+    type = type.trim();
+    var lcType = type.toLowerCase();
+    if (!lcType) {
+        return '';
+    }
+
+    // try basic types
+    var tsTypes = ['any', 'void', 'array'];
+    var jsTypes = ["number", "boolean", "string", "object", "date", "function"];
+    lcType = lcType.toLowerCase();
+    if (tsTypes.indexOf(lcType) != -1) {
+        return 'https://www.typescriptlang.org/docs/handbook/basic-types.html'
+    } else if (jsTypes.indexOf(lcType) != -1) {
+        return `https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/${type}`;
+    }
+
+    // try more js types
+    if (type == 'Element') {
+        return `https://developer.mozilla.org/zh-CN/docs/Glossary/${type}`;
+    }
+    if (type == 'HTMLElement' || type == 'FocusEvent') {
+        return `https://developer.mozilla.org/zh-CN/docs/Web/API/${type}`;
+    }
+
+    // try third party apis
+    if (type == 'Moment') {
+        return `https://momentjs.com/docs/#/parsing/`;
+    }
+    if (type == 'TranslateService') {
+        return `https://github.com/ngx-translate/core#api`;
+    }
+    if (type == 'PerfectScrollbarDirective') {
+        return `https://github.com/utatti/perfect-scrollbar#options`;
+    }
+
+    // try native types
+    var info = docInfo.classes.find(i => i.name === type) ||
+               docInfo.components.find(i => i.name === type) ||
+               docInfo.directives.find(i => i.name === type) ||
+               docInfo.injectables.find(i => i.name === type) ||
+               docInfo.interfaces.find(i => i.name === type) ||
+               docInfo.modules.find(i => i.name === type);
+    if (info) {
+        var name = info.type == 'class' ? 'classes' : info.type + 's';
+        return `/components/jigsaw/api?apiItem=${type}&parentName=${name}`;
+    }
+
+    // try angular types
+    angularApis.find(set => info = set.items.find(i => i.title === type));
+    if (info) {
+        return `https://angular.io/${info.path}`;
+    }
+
+    console.warn('unknown type: ' + type);
+    return '';
 }
 
 function getComponentTemplate() {
