@@ -303,8 +303,13 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         const columnDefines = this._getMixedColumnDefines();
         this._updateHeaderSettings(columnDefines);
         this._updateCellSettings(columnDefines);
-        this.additionalDataChange.emit(this.additionalData);
-        setTimeout(() => this._handleScrollBar(), 0);
+
+        setTimeout(() => {
+            // 等待additionalTableData在renderer更新完成
+            this.additionalDataChange.emit(this.additionalData);
+            // 等待滚动条初始化
+            this._handleScrollBar();
+        }, 0);
     }
 
     private _additionalData = new AdditionalTableData();
