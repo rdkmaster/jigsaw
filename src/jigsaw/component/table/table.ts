@@ -729,6 +729,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     ngOnDestroy() {
+        super.ngOnDestroy();
+
         if (this._removeTableDataRefresh) {
             this._removeTableDataRefresh();
             this._removeTableDataRefresh = null;

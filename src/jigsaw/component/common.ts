@@ -1,4 +1,4 @@
-import {Directive, OnInit, ViewContainerRef, Input, NgModule, AfterViewInit} from "@angular/core";
+import {Directive, OnInit, ViewContainerRef, Input, NgModule, AfterViewInit, OnDestroy} from "@angular/core";
 import {CommonUtils} from "../core/utils/common-utils";
 import {PopupService} from "../service/popup.service";
 
@@ -31,8 +31,37 @@ export interface IJigsawComponent {
     maxHeight: string;
 }
 
-export abstract class AbstractJigsawComponent implements IJigsawComponent, OnInit {
+export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
+    protected initialized: boolean = false;
+    private _timeout = [];
 
+    protected callLater(handler: Function, timeout:number = 0): any {
+        const timer = setTimeout(() => {
+            if (!this._timeout) {
+                // maybe this object has been destroyed!
+                return;
+            }
+            const idx = this._timeout.indexOf(timer);
+            if (idx != -1) {
+                this._timeout.splice(idx, 1);
+            }
+            CommonUtils.safeInvokeCallback(null, handler);
+        }, timeout);
+        this._timeout.push(timer);
+        return timer;
+    }
+
+    ngOnInit() {
+        this.initialized = true;
+    }
+
+    ngOnDestroy() {
+        this._timeout.forEach(t => clearTimeout(t));
+        this._timeout = null;
+    }
+}
+
+export abstract class AbstractJigsawComponent extends AbstractJigsawViewBase implements IJigsawComponent {
     @Input()
     public basicClass: string;
 
@@ -65,13 +94,6 @@ export abstract class AbstractJigsawComponent implements IJigsawComponent, OnIni
 
     public set maxHeight(value: string) {
         this._maxHeight = CommonUtils.getCssValue(value);
-    }
-
-    //TODO 所有组件都使用这个属性判断是否初始化好
-    protected initialized: boolean = false;
-
-    ngOnInit() {
-        this.initialized = true;
     }
 }
 
