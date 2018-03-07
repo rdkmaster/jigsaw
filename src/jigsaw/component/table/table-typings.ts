@@ -173,7 +173,7 @@ export class AdditionalTableData extends TableData {
         this._cachedValues = {};
     }
 
-    public getKey(field: string | number, row: number): string {
+    private _getKey(field: string | number, row: number): string {
         let valueKey = '';
         if (!this.originData) {
             console.warn('set originData and trackRowBy property of table before caching a value');
@@ -194,8 +194,8 @@ export class AdditionalTableData extends TableData {
     }
 
     public cacheValueByRow(field: string | number, row: number, value: any): void {
-        const valueKey = this.getKey(field, row);
-        this.cacheValueByKey(field, valueKey, value, this.originData.data[row]);
+        const key = this._getKey(field, row);
+        this.cacheValueByKey(field, key, value, this.originData.data[row]);
     }
 
     public cacheValueByKey(field: string | number, key: string, value: any, data?: any[]): void {
@@ -224,7 +224,7 @@ export class AdditionalTableData extends TableData {
     }
 
     public getTouchedValue(field: string | number, row: number): any {
-        const key = this.getKey(field, row);
+        const key = this._getKey(field, row);
         const cachedValues = this._cachedValues[field];
         if (!key || !cachedValues) {
             return;
