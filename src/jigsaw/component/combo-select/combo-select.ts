@@ -446,6 +446,8 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     public ngOnDestroy() {
+        super.ngOnDestroy();
+        
         this.open = false;
 
         if (this._removeRefreshCallback) {
