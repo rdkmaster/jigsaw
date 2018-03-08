@@ -1,11 +1,12 @@
 import {Directive, ElementRef, Input, NgZone, OnDestroy, OnInit, Renderer2} from "@angular/core";
 import {AffixUtils} from "../../core/utils/internal-utils";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
+import {AbstractJigsawViewBase} from "../../component/common";
 
 @Directive({
     selector: '[jigsaw-movable], [jigsawMovable], [j-movable]'
 })
-export class JigsawMovable implements OnInit, OnDestroy {
+export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnDestroy {
     private _movableTarget: HTMLElement;
     private _host: HTMLElement;
     private _moving: boolean = false;
@@ -21,6 +22,7 @@ export class JigsawMovable implements OnInit, OnDestroy {
     constructor(private _renderer: Renderer2,
                 private _elementRef: ElementRef,
                 private _zone: NgZone) {
+        super();
     }
 
     private _dragStart = (event) => {
@@ -60,6 +62,7 @@ export class JigsawMovable implements OnInit, OnDestroy {
     };
 
     ngOnInit() {
+        super.ngOnInit();
         this._host = this._elementRef.nativeElement;
         this._movableTarget = this.movableAffected ?
             CommonUtils.getParentNodeBySelector(this._host, this.movableAffected) : this._host;
@@ -68,7 +71,7 @@ export class JigsawMovable implements OnInit, OnDestroy {
             if (this._removeHostMouseDownListener) {
                 this._removeHostMouseDownListener();
             }
-            setTimeout(() => {
+            this.callLater(() => {
                 this._removeHostMouseDownListener = this._renderer.listen(this._host, 'mousedown', this._dragStart);
             })
         }
@@ -90,6 +93,7 @@ export class JigsawMovable implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
+        super.ngOnDestroy();
         if (this._removeHostMouseDownListener) {
             this._removeHostMouseDownListener();
         }
