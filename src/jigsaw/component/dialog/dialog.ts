@@ -153,7 +153,7 @@ export abstract class AbstractDialogComponentBase
         }
 
         //设置弹出位置和尺寸
-        setTimeout(() => {
+        this.callLater(() => {
             if (this.top) {
                 this.renderer.setStyle(this.popupElement, 'top', this.top);
             }
@@ -164,6 +164,7 @@ export abstract class AbstractDialogComponentBase
     }
 
     ngOnDestroy() {
+        super.ngOnDestroy();
         this.answer.unsubscribe();
     }
 }
