@@ -5,13 +5,7 @@
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
     <div class="demo-1 live-demo">
-        <h3>分页数据存储</h3>
-        选中的所有行： <j-tag *ngFor="let row of allSelectedRows" [closable]="true" (close)="removeRow(row)">{{row.name}}</j-tag>
-        <jigsaw-table [data]="pageable"
-                      [additionalColumnDefines]="additionalColumns"
-                      [(additionalData)]="additionalData"
-                      (additionalDataChange)="additionalDataChange($event)">
-        </jigsaw-table>
+        <h3>分页数据缓存</h3>
         <jigsaw-pagination
             [total]="pageable.pagingInfo.totalRecord"
             [(pageSize)]="pageable.pagingInfo.pageSize"
@@ -21,8 +15,24 @@
             [showQuickJumper]="true"
             (currentChange)="pageable.changePage(pageable.pagingInfo)"
             (pageSizeChange)="pageable.changePage(pageable.pagingInfo);"
-        ></jigsaw-pagination>
-        <p class="message">当前选中的行: <span>{{selectedRows}}</span></p>
+        ></jigsaw-pagination><br><br>
+
+        <p>
+            当页前选中的行索引：{{selectedRows}}
+        </p>
+
+        <p>
+            所有选中的行信息：
+            <j-tag *ngFor="let row of allSelectedRows" [closable]="true" (close)="removeRow(row)">
+                {{row.name}}
+            </j-tag>
+        </p>
+
+        <jigsaw-table [data]="pageable"
+                      [additionalColumnDefines]="additionalColumns"
+                      [(additionalData)]="additionalData"
+                      (additionalDataChange)="additionalDataChange($event)">
+        </jigsaw-table>
     </div>
 </div>
 

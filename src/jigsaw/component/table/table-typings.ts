@@ -132,23 +132,14 @@ export function _getColumnIndex(data: TableData, additionalData: TableData, fiel
     return [-1, undefined];
 }
 
+export type TouchedValue = { key: string | string[], value: any, data: any[] };
+
 export class AdditionalTableData extends TableData {
     public trackRowBy: string;
+    public originData: RawTableData;
 
-    private _splitString = '_%%_';
-    private _splitRegExp = new RegExp(this._splitString, 'g');
-    private _cachedValues: { [field: string]: { key: string, value: any, data: any[] }[] } = {};
+    private _touchedValues: { [field: string]: TouchedValue[] } = {};
     private _trackRowByFields: number[];
-
-    private _originData: RawTableData;
-
-    get originData(): RawTableData {
-        return this._originData;
-    }
-
-    set originData(value: RawTableData) {
-        this._originData = value// instanceof BigTableData ? value.origin : value;
-    }
 
     private _fixTrackRowFields() {
         if (this._trackRowByFields) {
@@ -165,83 +156,184 @@ export class AdditionalTableData extends TableData {
         });
     }
 
-    private _getFieldString(field: string | number) {
+    private _toFieldString(field: string | number): string {
         return typeof field === 'string' ? field : this.field[field];
     }
 
+    /**
+     * $deprecatedFrom = v1.1.4
+     * $replacement = clearTouchedValues()
+     *
+     * @deprecated
+     */
     public clearCachedValues(): void {
-        this._cachedValues = {};
+        console.warn("`clearCachedValues()` is deprecated from v1.1.4, use `clearTouchedValues()` instead");
+        this.clearTouchedValues();
     }
 
-    private _getKey(field: string | number, row: number): string {
-        let valueKey = '';
+    public clearTouchedValues(): void {
+        this._touchedValues = {};
+    }
+
+    private _getKeysByRow(field: string, row: number): string[] {
+        const keys = [];
         if (!this.originData) {
             console.warn('set originData and trackRowBy property of table before caching a value');
-            return valueKey;
+            return keys;
         }
         this._fixTrackRowFields();
 
-        field = typeof field === 'string' ? field : this.field[field];
         const excludedColumn = this.originData.field.findIndex(f => f === field);
         this._trackRowByFields.forEach(col => {
             if (col == excludedColumn || CommonUtils.isUndefined(this.originData.data[row])) {
                 return;
             }
-            //即使单元格的值是空字符串，但是 `valueKey` 的值仍然至少包含了 `this._splitString`，因此它的字面值不是false
-            valueKey += this.originData.data[row][col] + this._splitString;
+            keys.push(this.originData.data[row][col]);
         });
-        return valueKey;
+        return keys;
     }
 
-    public cacheValueByRow(field: string | number, row: number, value: any): void {
-        const key = this._getKey(field, row);
-        this.cacheValueByKey(field, key, value, this.originData.data[row]);
+    /**
+     * $deprecatedFrom = v1.1.4
+     * $replacement = touchValueByRow()
+     *
+     * @deprecated
+     */
+    public cacheValue(field: string | number, row: number, value: any): void {
+        console.warn("`cacheValue()` is deprecated from v1.1.4, use `touchValueByRow()` instead");
+        this.touchValueByRow(field, row, value);
     }
 
-    public cacheValueByKey(field: string | number, key: string, value: any, data?: any[]): void {
-        const fieldString = this._getFieldString(field);
-        if (!fieldString || !key) {
+    public touchValueByRow(field: string | number, row: number, value: any): void {
+        const fieldString = this._toFieldString(field);
+        const keys = this._getKeysByRow(fieldString, row);
+        this.touchValue(field, keys, value, this.originData.data[row]);
+    }
+
+    public touchValue(field: string | number, key: string | string[], value: any, data?: any[]): void {
+        const fieldString = this._toFieldString(field);
+        if (!fieldString || CommonUtils.isUndefined(key)) {
             return;
         }
-        if (!this._cachedValues[fieldString]) {
-            this._cachedValues[fieldString] = [];
+        const keys = key instanceof Array ? key : [key];
+
+        if (!this._touchedValues[fieldString]) {
+            this._touchedValues[fieldString] = [];
         }
+        const touchedValues = this._touchedValues[fieldString];
 
-        const cachedValues = this._cachedValues[fieldString];
-
-        const cachedValue = cachedValues.find(item => item.key === key);
-
-        if (cachedValue) {
-            cachedValue.value = value;
-            cachedValue.data = data ? data : cachedValue.data;
+        const touchedValue = touchedValues.find(item => {
+            const splitter = "_%%_";
+            const keyString = item.key instanceof Array ? item.key.join(splitter) : item.key;
+            return keyString === keys.join(splitter);
+        });
+        if (touchedValue) {
+            touchedValue.value = value;
+            touchedValue.data = data ? data : touchedValue.data;
         } else {
-            cachedValues.push({
-                key: key,
-                value: value,
-                data: data
-            })
+            touchedValues.push({
+                // 长度只有1的时候，使用字符串简化应用对这个值的使用，毕竟单一key的情况应该是绝大多数
+                key: keys.length > 1 ? keys : keys[0],
+                value: value, data: data
+            });
         }
     }
 
-    public getTouchedValue(field: string | number, row: number): any {
-        const key = this._getKey(field, row);
-        const cachedValues = this._cachedValues[field];
-        if (!key || !cachedValues) {
+    public getTouchedValueByRow(field: string | number, row: number): any {
+        const v = this.getTouchedInfoByRow(field, row);
+        return v ? v.value : undefined;
+    }
+
+    public getTouchedInfoByRow(field: string | number, row: number): TouchedValue {
+        const fieldString = this._toFieldString(field);
+        const keys = this._getKeysByRow(fieldString, row);
+        return this.getTouchedInfo(field, keys);
+    }
+
+    /**
+     * 获取用户在表格上操作过的所有行的值
+     *
+     * @param {string | number} field
+     * @param {string | string[]} key
+     * @return {any}
+     */
+    public getTouchedValue(field: string | number, key: string | string[]): any;
+    /**
+     * $deprecatedFrom = v1.1.4
+     * $replacement = getTouchedValueByRow()
+     *
+     * 获取用户在表格上操作过的所有行的值
+     *
+     * @deprecated
+     *
+     * @param {string | number} field
+     * @param {number} key
+     * @return {any}
+     */
+    public getTouchedValue(field: string | number, key: number): any;
+    /**
+     * @internal
+     */
+    public getTouchedValue(field: string | number, key: number | string | string[]): any {
+        let v;
+        if (typeof key === 'number') {
+            console.warn("`getTouchedValue()` is deprecated from v1.1.4, use `getTouchedValueByRow()` instead");
+            v = this.getTouchedValueByRow(field, key);
+        } else {
+            v = this.getTouchedInfo(field, key);
+        }
+        return v ? v.value : undefined;
+    }
+
+    public getTouchedInfo(field: string | number, key: string | string[]): TouchedValue {
+        const fieldString = this._toFieldString(field);
+        if (!fieldString || CommonUtils.isUndefined(key)) {
             return;
         }
-        const cacheValue = cachedValues.find(item => item.key == key);
-        return cacheValue ? cacheValue.value : null;
+        if (!this._touchedValues[fieldString]) {
+            return;
+        }
+
+        const touchedValues = this._touchedValues[fieldString];
+        const keys = key instanceof Array ? key : [key];
+        return touchedValues.find(item => {
+            const splitter = "_%%_";
+            const keyString = item.key instanceof Array ? item.key.join(splitter) : item.key;
+            return keyString === keys.join(splitter);
+        });
     }
 
-    public getTouchedValues(field: string | number): { key: string, value: any, data: any[] }[] {
-        const fieldString = this._getFieldString(field);
+    /**
+     * $deprecatedFrom = v1.1.4
+     * $replacement = getAllTouched()
+     *
+     * 获取用户在表格上操作过的所有行的信息，对这些信息做修改后调用`table.update()`方法可以刷新界面
+     *
+     * @deprecated
+     *
+     * @param {string | number} field
+     * @return {TouchedValue[]}
+     */
+    public getTouchedValues(field: string | number): TouchedValue[] {
+        console.warn("`getTouchedValues()` is deprecated from v1.1.4, use `getAllTouched()` instead");
+        return this.getAllTouched(field);
+    }
+
+    /**
+     * 获取用户在表格上操作过的所有行的信息，对这些信息做修改后调用`table.update()`方法可以刷新界面
+     *
+     * @param {string | number} field
+     * @return {TouchedValue[]}
+     */
+    public getAllTouched(field: string | number): TouchedValue[] {
+        const fieldString = this._toFieldString(field);
         if (!fieldString) {
             return [];
         }
-        if (!this._cachedValues[fieldString]) {
-            this._cachedValues[fieldString] = [];
+        if (!this._touchedValues[fieldString]) {
+            this._touchedValues[fieldString] = [];
         }
-        return this._cachedValues[fieldString];
+        return this._touchedValues[fieldString];
     }
 }
 

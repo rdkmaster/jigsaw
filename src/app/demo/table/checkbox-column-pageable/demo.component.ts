@@ -5,7 +5,12 @@ import {AdditionalColumnDefine, AdditionalTableData} from "jigsaw/component/tabl
 import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/component/table/table-renderer";
 
 @Component({
-    templateUrl: './demo.component.html'
+    templateUrl: './demo.component.html',
+    styles: [`
+        j-tag {
+            margin: 6px;
+        }
+    `]
 })
 export class TableAddCheckboxColumnPageableDemoComponent {
     pageable: LocalPageableTableData;
@@ -57,12 +62,9 @@ export class TableAddCheckboxColumnPageableDemoComponent {
      * @param additionalData
      */
     getAllSelectedRows(additionalData) {
-        return additionalData.getTouchedValues(0).reduce((selectedRows, item) => {
+        return additionalData.getAllTouched(0).reduce((selectedRows, item) => {
             if (item.value) {
-                selectedRows.push({
-                    name: item.data[0],
-                    key: item.key
-                });
+                selectedRows.push({name: item.data[0], key: item.key});
             }
             return selectedRows;
         }, []);
@@ -70,7 +72,7 @@ export class TableAddCheckboxColumnPageableDemoComponent {
 
     removeRow(row){
         console.log(row);
-        this.additionalData.cacheValueByKey(0, row.key, false);
+        this.additionalData.touchValue(0, row.key, false);
         this.additionalData.refresh();
     }
 

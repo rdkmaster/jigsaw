@@ -27,7 +27,7 @@ export class CommonUtils {
     }
 
     /**
-     * 浅拷贝一个对象
+     * 深拷贝一个对象
      * @param source
      */
     public static deepCopy(source: Object): Object {
@@ -36,8 +36,8 @@ export class CommonUtils {
 
     /**
      * 比较两个对象是否相等
-     * #1 添加string及简单值 和对象中trackItemBy 属性对比的支持;
-     * #2 没有提供trackItemBy时,直接比较两个参数
+     * - 添加string及简单值 和对象中trackItemBy 属性对比的支持;
+     * - 没有提供trackItemBy时,直接比较两个参数
      * */
     public static compareWithKeyProperty(item1: any, item2: any, trackItemBy: string[]): boolean {
         if (trackItemBy && trackItemBy.length > 0) {
