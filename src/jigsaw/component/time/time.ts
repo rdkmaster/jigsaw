@@ -289,6 +289,8 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     }
 
     ngOnDestroy() {
+        window.clearInterval(this._intervalId);
+        super.ngOnDestroy();
         this._destroyPicker();
         this._langChangeSubscriber.unsubscribe();
     }
@@ -346,10 +348,10 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
 
     private _bindActiveDayClickHandler(picker){
         // 等待day.active刷新出来
-        setTimeout(() => {
+        this.callLater(() => {
             picker.find('.datepicker-days table tbody tr td.day.active').on('click', () => {
                 // 等待点击后的day-btn刷新出来
-                setTimeout(() => {
+                this.callLater(() => {
                     // week select
                     this._weekHandle();
                     // recommend select
@@ -407,7 +409,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     private _handleValueChange(changeValue: Time, gr: TimeGr, emit?: boolean) {
         if (this.date != changeValue || emit) {
             this._value = changeValue;
-            setTimeout(() => {
+            this.callLater(() => {
                 const val = gr == TimeGr.week ? this._handleWeekSelect() : this._value;
                 this.dateChange.emit(val);
                 this._propagateChange(val);
