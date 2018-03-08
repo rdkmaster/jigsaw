@@ -16,16 +16,17 @@ import {
     Type,
     ViewChild
 } from "@angular/core";
-import {JigsawRendererHost} from "../common";
+import {AbstractJigsawViewBase, JigsawRendererHost} from "../common";
 import {_getColumnIndex, SortChangeEvent, TableDataChangeEvent} from "./table-typings";
 import {DefaultCellRenderer, TableCellRendererBase} from "./table-renderer";
 import {TableData} from "../../core/data/table-data";
 import {SortAs, SortOrder} from "../../core/data/component-data";
 import {CommonUtils} from "../../core/utils/common-utils";
 
-export class TableInternalCellBase implements AfterViewInit {
+export class TableInternalCellBase extends AbstractJigsawViewBase implements AfterViewInit {
     constructor(protected componentFactoryResolver: ComponentFactoryResolver,
                 protected changeDetector: ChangeDetectorRef) {
+        super();
     }
 
     @ViewChild(JigsawRendererHost)
@@ -191,11 +192,13 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
     }
 
     ngOnInit() {
+        super.ngOnInit();
         //设置默认渲染器
         this.renderer = this.renderer ? this.renderer : DefaultCellRenderer;
     }
 
     ngOnDestroy() {
+        super.ngOnDestroy();
         if (this.rendererRef instanceof ComponentRef) {
             this.rendererRef.instance.cellDataChange.unsubscribe();
         }
@@ -225,7 +228,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         }
         this._editable = value;
 
-        if (!this._initialized) {
+        if (!this.initialized) {
             return;
         }
 
@@ -362,10 +365,8 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         return this._cellData;
     }
 
-    private _initialized: boolean;
-
     ngOnInit() {
-        this._initialized = true;
+        super.ngOnInit();
 
         //设置默认渲染器
         this.renderer = this.renderer ? this.renderer : DefaultCellRenderer;
@@ -378,6 +379,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
     }
 
     ngOnDestroy() {
+        super.ngOnDestroy();
         if (this._editable) {
             this._renderer.setStyle(this._elementRef.nativeElement.parentElement, 'cursor', 'default');
         }
