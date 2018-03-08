@@ -62,9 +62,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     public set width(value: string) {
         this._width = CommonUtils.getCssValue(value);
-        setTimeout(() => {
+        this.callLater(() => {
             this.resize();
-        });
+        })
     }
 
     @Output()
@@ -304,12 +304,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._updateHeaderSettings(columnDefines);
         this._updateCellSettings(columnDefines);
 
-        setTimeout(() => {
+        this.callLater(() => {
             // 等待additionalTableData在renderer更新完成
             this.additionalDataChange.emit(this.additionalData);
             // 等待滚动条初始化
             this._handleScrollBar();
-        }, 0);
+        })
     }
 
     private _additionalData = new AdditionalTableData();
@@ -663,7 +663,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @private
      */
     private _initVerticalScroll() {
-        setTimeout(() => {
+        this.callLater(() => {
             // selector使用>选择直接子元素，避免选择到其他滚动条
             const yScrollbar = this._elementRef.nativeElement.querySelector('.jigsaw-table-body-range > .ps__rail-y');
             if (yScrollbar) {
@@ -673,7 +673,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             } else {
                 this._initVerticalScroll();
             }
-        }, 0);
+        })
     }
 
     /**
