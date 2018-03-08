@@ -180,7 +180,7 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
 
     ngAfterViewInit() {
         this._cacheFishBoneItems(this._firstLevelBones);
-        setTimeout(() => {
+        this.callLater(() => {
             this._setAllBoneAttribute();
             this._setFirstLevelBoneOffset(this._firstLevelBones);
             this._setRangeHeight();
@@ -194,6 +194,7 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
     }
 
     ngOnDestroy() {
+        super.ngOnDestroy();
         if (this._removeWindowListener) {
             this._removeWindowListener();
         }
@@ -399,7 +400,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
 
         // 异步发送事件，为了最外面的父组件能够在ngAfterViewInit中订阅到子组件的事件
         // 如果立即发送事件，则父组件订阅不到事件
-        setTimeout(() => {
+        this.callLater(() => {
             this.rectifyEvent.emit();
         }, 0);
 
