@@ -255,7 +255,7 @@ export class AdditionalTableData extends TableData {
      *
      * @param {string | number} field
      * @param {string | string[]} key
-     * @return {any}
+     * @returns {any}
      */
     public getTouchedValue(field: string | number, key: string | string[]): any;
     /**
@@ -268,7 +268,7 @@ export class AdditionalTableData extends TableData {
      *
      * @param {string | number} field
      * @param {number} key
-     * @return {any}
+     * @returns {any}
      */
     public getTouchedValue(field: string | number, key: number): any;
     /**
@@ -312,7 +312,7 @@ export class AdditionalTableData extends TableData {
      * @deprecated
      *
      * @param {string | number} field
-     * @return {TouchedValue[]}
+     * @returns {TouchedValue[]}
      */
     public getTouchedValues(field: string | number): TouchedValue[] {
         console.warn("`getTouchedValues()` is deprecated from v1.1.4, use `getAllTouched()` instead");
@@ -323,7 +323,7 @@ export class AdditionalTableData extends TableData {
      * 获取用户在表格上操作过的所有行的信息，对这些信息做修改后调用`table.update()`方法可以刷新界面
      *
      * @param {string | number} field
-     * @return {TouchedValue[]}
+     * @returns {TouchedValue[]}
      */
     public getAllTouched(field: string | number): TouchedValue[] {
         const fieldString = this._toFieldString(field);
