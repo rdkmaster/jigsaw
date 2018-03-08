@@ -1,6 +1,5 @@
-import {Directive, OnInit, ViewContainerRef, Input, NgModule, AfterViewInit, OnDestroy} from "@angular/core";
+import {Directive, OnInit, ViewContainerRef, Input, NgModule, OnDestroy} from "@angular/core";
 import {CommonUtils} from "../core/utils/common-utils";
-import {PopupService} from "../service/popup.service";
 
 /**
  * @internal
@@ -33,21 +32,21 @@ export interface IJigsawComponent {
 
 export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
     protected initialized: boolean = false;
-    private _timeout = [];
+    protected timeoutBase = [];
 
     protected callLater(handler: Function, timeout:number = 0): any {
         const timer = setTimeout(() => {
-            if (!this._timeout) {
+            if (!this.timeoutBase) {
                 // maybe this object has been destroyed!
                 return;
             }
-            const idx = this._timeout.indexOf(timer);
+            const idx = this.timeoutBase.indexOf(timer);
             if (idx != -1) {
-                this._timeout.splice(idx, 1);
+                this.timeoutBase.splice(idx, 1);
             }
             CommonUtils.safeInvokeCallback(null, handler);
         }, timeout);
-        this._timeout.push(timer);
+        this.timeoutBase.push(timer);
         return timer;
     }
 
@@ -56,8 +55,8 @@ export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this._timeout.forEach(t => clearTimeout(t));
-        this._timeout = null;
+        this.timeoutBase.forEach(t => clearTimeout(t));
+        this.timeoutBase = null;
     }
 }
 
