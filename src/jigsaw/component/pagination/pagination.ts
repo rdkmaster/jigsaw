@@ -1,6 +1,6 @@
 import {
     NgModule, Component, Input, Output, EventEmitter, OnInit,
-    QueryList, ViewChildren, Optional, forwardRef, AfterViewInit, OnDestroy
+    QueryList, ViewChildren, Optional, forwardRef, AfterViewInit
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
@@ -26,7 +26,7 @@ export type PageSizeData = {
         '[class.jigsaw-paging]': 'true'
     }
 })
-export class JigsawPagination extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
+export class JigsawPagination extends AbstractJigsawComponent implements OnInit, AfterViewInit {
     constructor(private _translateService: TranslateService) {
         super()
     }
@@ -385,11 +385,6 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
             }, 0);
         });
     }
-
-    ngOnDestroy() {
-        super.ngOnDestroy();
-    }
-
 }
 
 /**

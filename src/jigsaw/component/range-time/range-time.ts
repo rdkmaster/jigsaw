@@ -1,4 +1,4 @@
-import {Component, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output, ViewChild} from "@angular/core";
+import {Component, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild} from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../common";
 import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../service/time.service";
@@ -15,7 +15,7 @@ import {WeekTime} from "../../service/time.types";
         '[class.jigsaw-range-time-host]': 'true'
     }
 })
-export class JigsawRangeTime extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
+export class JigsawRangeTime extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
 
     @ViewChild("timeStart") private _timeStart: JigsawTime;
 
@@ -321,9 +321,5 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     }
 
     public registerOnTouched(fn: any): void {
-    }
-
-    ngOnDestroy() {
-        super.ngOnDestroy();
     }
 }

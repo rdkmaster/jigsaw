@@ -1,6 +1,6 @@
 import {
-    NgModule, Component, EventEmitter, Input, Output, Directive,
-    ElementRef, ViewChild, AfterContentInit, Renderer2, AfterViewChecked, ChangeDetectorRef, forwardRef, OnDestroy
+    NgModule, Component, EventEmitter, Input, Output, ElementRef, ViewChild,
+    AfterContentInit, Renderer2, AfterViewChecked, ChangeDetectorRef, forwardRef
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -23,7 +23,7 @@ import {CommonUtils} from "../../core/utils/common-utils";
     ]
 })
 export class JigsawInput extends AbstractJigsawComponent
-    implements IJigsawFormControl, ControlValueAccessor, AfterContentInit, AfterViewChecked, OnDestroy {
+    implements IJigsawFormControl, ControlValueAccessor, AfterContentInit, AfterViewChecked {
 
     @Input() public clearable: boolean = true;
     @Input() public disabled: boolean = false;
@@ -187,10 +187,6 @@ export class JigsawInput extends AbstractJigsawComponent
 
     ngAfterViewChecked() {
         this._setInputPaddingStyle();
-    }
-
-    ngOnDestroy() {
-        super.ngOnDestroy();
     }
 }
 
