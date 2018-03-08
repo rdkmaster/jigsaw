@@ -97,7 +97,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         if (!(this.selectedItems instanceof ArrayCollection) || !items.length) {
             return;
         }
-        setTimeout(() => {
+        this.callLater(() => {
             items.forEach(item => {
                 let hasSelected = false;
                 this._selectedItems.forEach(selectedItem => {
@@ -140,6 +140,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     }
 
     ngOnDestroy() {
+        super.ngOnDestroy();
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback()
         }
