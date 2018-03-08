@@ -38,6 +38,7 @@ fs.mkdirSync(`${output}/directives`, 755);
 fs.mkdirSync(`${output}/injectables`, 755);
 fs.mkdirSync(`${output}/interfaces`, 755);
 fs.mkdirSync(`${output}/modules`, 755);
+fs.mkdirSync(`${output}/typealiases`, 755);
 
 console.log('processing components...');
 docInfo.components.forEach(ci => {
@@ -61,6 +62,16 @@ docInfo.classes.forEach(ci => {
     html = processMethods(ci, html);
     fs.writeFileSync(`${output}/classes/${ci.name}.html`, html);
 });
+
+// console.log('processing typealiases...');
+// docInfo.miscellaneous.typealiases.forEach(ci => {
+//     fixMetaInfo(ci);
+//     var html = getClassesTemplate();
+//     html = processCommon(ci ,html);
+//     html = processProperties(ci, html);
+//     html = processMethods(ci, html);
+//     fs.writeFileSync(`${output}/classes/${ci.name}.html`, html);
+// });
 
 function processCommon(ci, html) {
     html = html.replace('$since', ci.since);
