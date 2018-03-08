@@ -1,6 +1,6 @@
 import {
     Component, ContentChildren, QueryList, Input, ViewChildren, AfterViewInit, Output, EventEmitter, TemplateRef,
-    ViewContainerRef, ComponentFactoryResolver, Type, ChangeDetectorRef
+    ViewContainerRef, ComponentFactoryResolver, Type, ChangeDetectorRef, OnDestroy
 } from '@angular/core';
 import {JigsawTabPane} from "./tab-pane";
 import {JigsawTabContent, JigsawTabLabel} from "./tab-item";
@@ -10,7 +10,7 @@ import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
     selector: 'jigsaw-tab, j-tab, jigsaw-tabs, j-tabs',
     templateUrl: 'tab.html',
 })
-export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit {
+export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit, OnDestroy {
 
     constructor(private _cfr: ComponentFactoryResolver,
                 private _changeDetector: ChangeDetectorRef,
@@ -114,7 +114,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit 
     }
 
     private _asyncSetStyle(index: number): void {
-        setTimeout(() => {
+        this.callLater(() => {
             this._setInkBarStyle(index);
         }, 0)
     }
@@ -189,7 +189,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit 
         this.selectedIndex = this._$tabPanes.length - 1;
 
         //router link
-        setTimeout(() => {
+        this.callLater(() => {
             let link = this._tabLabel.find(item => item.key === this.selectedIndex)
                 .elementRef.nativeElement.querySelector('[routerLink]');
             if (link) {
@@ -239,5 +239,9 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit 
         } else {
             this._asyncSetStyle(this.selectedIndex);
         }
+    }
+    
+    ngOnDestroy() {
+        super.ngOnDestroy();
     }
 }
