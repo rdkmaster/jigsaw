@@ -1,4 +1,4 @@
-import {Component, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild} from "@angular/core";
+import {Component, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output, ViewChild} from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../common";
 import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../service/time.service";
@@ -15,7 +15,7 @@ import {WeekTime} from "../../service/time.types";
         '[class.jigsaw-range-time-host]': 'true'
     }
 })
-export class JigsawRangeTime extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
+export class JigsawRangeTime extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
     @ViewChild("timeStart") private _timeStart: JigsawTime;
 
@@ -156,7 +156,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     private _startTimeLimitStart: WeekTime;
 
     ngOnInit() {
-        setTimeout(() => {
+        this.callLater(() => {
             this._init();
         });
     }
@@ -266,7 +266,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
 
             this._$endTimeLimitEnd = this._calculateLimitEnd();
 
-            setTimeout(() => {
+            this.callLater(() => {
                 //先设置好limit，再设置date
                 this._endDate = endDate;
             }, 0)
@@ -287,7 +287,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
             return;
         }
         if (value.hasOwnProperty('beginDate') && this._beginDate != value.beginDate) {
-            setTimeout(() => {
+            this.callLater(() => {
                 if (value.fromTimeComponent) {
                     // 从time控件来时，直接使用
                     this._beginDate = value.beginDate;
@@ -302,7 +302,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
             }, 0);
         }
         if (value.hasOwnProperty('endDate') && this._endDate != value.endDate) {
-            setTimeout(() => {
+            this.callLater(() => {
                 if (value.fromTimeComponent) {
                     // 从time控件来时，直接使用
                     this._endDate = value.endDate;
@@ -323,4 +323,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     public registerOnTouched(fn: any): void {
     }
 
+    ngOnDestroy() {
+        super.ngOnDestroy();
+    }
 }
