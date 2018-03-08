@@ -303,7 +303,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
             }
             this.rendererHost.viewContainerRef.clear();
 
-            setTimeout(() => {
+            this.callLater(() => {
                 this.insertRenderer();
                 this._setGoEditListener();
             });
