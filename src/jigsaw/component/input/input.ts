@@ -1,6 +1,6 @@
 import {
     NgModule, Component, EventEmitter, Input, Output, Directive,
-    ElementRef, ViewChild, AfterContentInit, Renderer2, AfterViewChecked, ChangeDetectorRef, forwardRef
+    ElementRef, ViewChild, AfterContentInit, Renderer2, AfterViewChecked, ChangeDetectorRef, forwardRef, OnDestroy
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -23,7 +23,7 @@ import {CommonUtils} from "../../core/utils/common-utils";
     ]
 })
 export class JigsawInput extends AbstractJigsawComponent
-    implements IJigsawFormControl, ControlValueAccessor, AfterContentInit, AfterViewChecked {
+    implements IJigsawFormControl, ControlValueAccessor, AfterContentInit, AfterViewChecked, OnDestroy {
 
     @Input() public clearable: boolean = true;
     @Input() public disabled: boolean = false;
@@ -134,7 +134,7 @@ export class JigsawInput extends AbstractJigsawComponent
         if (this.blurOnClear) {
             this._blurEmitter.emit(event);
         } else {
-            setTimeout(() => {
+            this.callLater(() => {
                 if (!this._focused) {
                     this._blurEmitter.emit(event);
                 }
@@ -180,7 +180,7 @@ export class JigsawInput extends AbstractJigsawComponent
     }
 
     ngAfterContentInit() {
-        setTimeout(() => {
+        this.callLater(() => {
             this._render2.setStyle(this._elementRef.nativeElement, 'opacity', 1);
         }, 0);
     }
@@ -189,6 +189,9 @@ export class JigsawInput extends AbstractJigsawComponent
         this._setInputPaddingStyle();
     }
 
+    ngOnDestroy() {
+        super.ngOnDestroy();
+    }
 }
 
 @NgModule({
