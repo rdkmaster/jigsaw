@@ -141,7 +141,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         this._updateDirection();
         // 目前先平分创建两个node
         this.data.nodes = [new LayoutData, new LayoutData];
-        setTimeout(() => {
+        this.callLater(() => {
             // 等待子box渲染，填充搬家组件
             const firstChildBox = this.childrenBox.toArray()[0];
             firstChildBox._viewInit.subscribe(() => {
@@ -186,7 +186,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
                 //this.data.nodes = node.nodes;
                 //this.direction = node.direction ? node.direction : 'horizontal'; // 默认是'horizontal'
             } else {
-                setTimeout(() => {
+                this.callLater(() => {
                     // 等待删除操作后，box渲染完成
                     const firstChildBox = this.childrenBox.toArray()[0];
                     this._moveComponents(firstChildBox, this);
@@ -197,7 +197,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
                     this.data.components = node.components;
                     this.data.nodes = [];
                     this.direction = null;
-                    setTimeout(() => {
+                    this.callLater(() => {
                         // 等待 option bar & block 渲染
                         this._bindScrollEvent();
                     });
@@ -378,7 +378,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         this.checkFlex();
         // 等待 option bar & block 渲染
         this._bindScrollEvent();
-        setTimeout(() => {
+        this.callLater(() => {
             // 异步发送事件，让父box能监听到
             this._viewInit.emit();
         });

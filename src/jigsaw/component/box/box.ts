@@ -108,7 +108,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         // resize line 视图渲染完成
         if (!this._resizeLine) return;
 
-        setTimeout(() => {
+        this.callLater(() => {
             // 等待box视图渲染
             this._computeResizeLineWidth();
         });
@@ -129,7 +129,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
             if (this._isCurrentResizingBox) {
                 this.renderer.setStyle(this._resizeLineParent.nativeElement, 'display', 'none');
             }
-            setTimeout(() => {
+            this.callLater(() => {
                 this.renderer.setStyle(this._resizeLineParent.nativeElement, 'display', 'block');
             });
         });

@@ -140,7 +140,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
 
     private _checkFlexByOwnProperty(property: string) {
         if (property && this.type != 'flex') {
-            setTimeout(() => {
+            this.callLater(() => {
                 this.type = 'flex';
             })
         }
@@ -148,7 +148,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
 
     protected checkFlexByChildren() {
         if (this.childrenBox.length > 0 && this.type != 'flex') {
-            setTimeout(() => {
+            this.callLater(() => {
                 this.type = 'flex';
             })
         }
@@ -167,6 +167,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
     }
 
     ngOnDestroy() {
+        super.ngOnDestroy();
         if (this.removeBoxChangeListener) {
             this.removeBoxChangeListener.unsubscribe();
         }
