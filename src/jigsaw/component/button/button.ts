@@ -1,4 +1,4 @@
-import {NgModule, Component, Input} from '@angular/core';
+import {NgModule, Component, Input, OnDestroy} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from '../common';
 
@@ -20,7 +20,7 @@ import {AbstractJigsawComponent} from '../common';
         '[class.jigsaw-button-color-error]': "colorType === 'error' || colorType === 'danger'"
     }
 })
-export class JigsawButton extends AbstractJigsawComponent {
+export class JigsawButton extends AbstractJigsawComponent implements OnDestroy {
 
     /**
      * 按钮不可点击状态
@@ -43,12 +43,16 @@ export class JigsawButton extends AbstractJigsawComponent {
     private _onClick(): void {
         if (!this.disabled && !this._clicked) {
             this._clicked = true;
-            setTimeout(() => this._clicked = false, 360);
+            this.callLater(() => this._clicked = false, 360);
         }
     }
 
     private _calcLineHeight(): string {
         return parseInt(this.height) - 4 + 'px';
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
     }
 
 }
