@@ -1,6 +1,6 @@
 import {
     NgModule, Component, Input, Output, EventEmitter, OnInit,
-    QueryList, ViewChildren, Optional, forwardRef, AfterViewInit
+    QueryList, ViewChildren, Optional, forwardRef, AfterViewInit, OnDestroy
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
@@ -26,7 +26,7 @@ export type PageSizeData = {
         '[class.jigsaw-paging]': 'true'
     }
 })
-export class JigsawPagination extends AbstractJigsawComponent implements OnInit, AfterViewInit {
+export class JigsawPagination extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
     constructor(private _translateService: TranslateService) {
         super()
     }
@@ -341,7 +341,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
             this.current = 1;
         }
 
-        setTimeout(() => {
+        this.callLater(() => {
             this._getFirstAndLastPage();
             this._setCurrentShow();
         }, 0);
@@ -372,7 +372,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
 
     ngAfterViewInit() {
         this._pages.changes.subscribe(() => {
-            setTimeout(() => {
+            this.callLater(() => {
                 //之前的上五页和下五页按钮居然有残留
                 this._pages.forEach(page => {
                     page.showPrev = false;
@@ -384,6 +384,10 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
                 this._setCurrentShow();
             }, 0);
         });
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
     }
 
 }
