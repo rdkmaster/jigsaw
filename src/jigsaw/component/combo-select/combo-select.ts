@@ -152,7 +152,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             return;
         }
         this.callLater(() => {
-            // toggle open 外部控制时，用setTimeout变更检查
+            // toggle open 外部控制时，用异步触发变更检查
             // 初始化open，等待组件初始化后执行
             if (value) {
                 this._openDropDown();
@@ -447,7 +447,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     public ngOnDestroy() {
         super.ngOnDestroy();
-        
+
         this.open = false;
 
         if (this._removeRefreshCallback) {
