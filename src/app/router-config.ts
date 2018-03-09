@@ -69,6 +69,10 @@ export const routerConfig = [
         loadChildren: "./demo/misc/demo-set.module#MiscDemoModule",
     },
     {
+        path: "movable",
+        loadChildren: "./demo/movable/demo-set.module#MovableDemoModule",
+    },
+    {
         path: "notification",
         loadChildren: "./demo/notification/demo-set.module#NotificationDemoModule",
     },
