@@ -135,14 +135,14 @@ export function _getColumnIndex(data: TableData, additionalData: TableData, fiel
 /**
  * 用户在界面上，通过渲染器“摸”了表格的附加列之后，表格会将用户当时“摸过”列的相关信息，
  * 以此类型保存在内存中备用。这些数据是渲染器在判定哪些列被“摸过”时的关键数据，
- * 应用也可以通过[`AdditionalTableData`]($home/class/AdditionalTableData)的各个api更新这些数据。
+ * 应用也可以通过`AdditionalTableData`的各个api更新这些数据。
  */
 export type TouchedValue = { key: any | any[], value: any, data: any[] };
 
 export class AdditionalTableData extends TableData {
     /**
      * 这个属性的值与`JigsawTable.trackRowBy`的值是相等的，关于这个属性的作用，
-     * 请访问[这个链接]($home/table/checkbox-column#open-desc=true)。
+     * 请访问[这个链接]($demo/table/checkbox-column#open-desc=true)。
      */
     public trackRowBy: string;
     public originData: RawTableData;
