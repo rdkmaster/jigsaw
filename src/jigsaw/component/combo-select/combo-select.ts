@@ -294,11 +294,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         if (this._removeWindowClickHandler) {
             this._removeWindowClickHandler();
         }
-
         this._removeWindowClickHandler = this._renderer.listen('window', 'click', () => {
-            if (this._removeWindowClickHandler) {
-                this._removeWindowClickHandler();
-            }
+            this._removeWindowClickHandler();
+            this._removeWindowClickHandler = null;
             this.open = false
         });
 
@@ -309,15 +307,23 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         this._disposePopup = popupInfo.dispose;
 
         if (this._openTrigger === DropDownTrigger.mouseenter && this._popupElement) {
+            if (this._removeMouseOverHandler) {
+                this._removeMouseOverHandler();
+            }
             this._removeMouseOverHandler = this._renderer.listen(this._popupElement, 'mouseenter', () => {
+                this._removeMouseOverHandler();
+                this._removeMouseOverHandler = null;
                 clearTimeout(this._rollOutDenouncesTimer);
             });
         }
         if (this._closeTrigger === DropDownTrigger.mouseleave && this._popupElement) {
+            if (this._removeMouseOutHandler) {
+                this._removeMouseOutHandler();
+            }
             this._removeMouseOutHandler = this._renderer.listen(this._popupElement, 'mouseleave', () => {
-                this._rollOutDenouncesTimer = setTimeout(() => {
-                    this.open = false;
-                }, 200);
+                this._removeMouseOutHandler();
+                this._removeMouseOutHandler = null;
+                this._rollOutDenouncesTimer = setTimeout(() => this.open = false, 400);
             });
         }
 
@@ -338,6 +344,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             this._disposePopup();
             this._disposePopup = null;
         }
+        this._clearAllListeners();
+    }
+
+    private _clearAllListeners() {
         if (this._removeWindowClickHandler) {
             this._removeWindowClickHandler();
             this._removeWindowClickHandler = null;
@@ -393,7 +403,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         this._rollInDenouncesTimer = setTimeout(() => {
             this.open = true;
             if (this._editor) this._editor.select();
-        }, 200)
+        }, 100);
     }
 
     /**
@@ -404,9 +414,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         event.preventDefault();
         event.stopPropagation();
         clearTimeout(this._rollInDenouncesTimer);
-        this._rollOutDenouncesTimer = setTimeout(() => {
-            this.open = false;
-        }, 200)
+        this._rollOutDenouncesTimer = setTimeout(() => this.open = false, 400);
     }
 
     /**
@@ -441,10 +449,15 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     public ngOnDestroy() {
         this.open = false;
+        this._clearAllListeners();
 
         if (this._removeRefreshCallback) {
-            this._removeRefreshCallback()
+            this._removeRefreshCallback();
+            this._removeRefreshCallback = null;
         }
+
+        this._popupElement = null;
+        this._disposePopup = null;
     }
 
     private _propagateChange: any = () => {
