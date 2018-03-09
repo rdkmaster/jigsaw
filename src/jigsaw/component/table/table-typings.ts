@@ -140,6 +140,7 @@ export class AdditionalTableData extends TableData {
 
     private _touchedValues: { [field: string]: TouchedValue[] } = {};
     private _trackRowByFields: number[];
+    private _splitter: string = '_%%_';
 
     private _fixTrackRowFields() {
         if (this._trackRowByFields) {
@@ -215,7 +216,6 @@ export class AdditionalTableData extends TableData {
         if (!fieldString || CommonUtils.isUndefined(key)) {
             return;
         }
-        const keys = key instanceof Array ? key : [key];
 
         if (!this._touchedValues[fieldString]) {
             this._touchedValues[fieldString] = [];
@@ -223,9 +223,7 @@ export class AdditionalTableData extends TableData {
         const touchedValues = this._touchedValues[fieldString];
 
         const touchedValue = touchedValues.find(item => {
-            const splitter = "_%%_";
-            const keyString = item.key instanceof Array ? item.key.join(splitter) : item.key;
-            return keyString === keys.join(splitter);
+            return this._toKeyString(item.key) === this._toKeyString(key);
         });
         if (touchedValue) {
             touchedValue.value = value;
@@ -233,8 +231,9 @@ export class AdditionalTableData extends TableData {
         } else {
             touchedValues.push({
                 // 长度只有1的时候，使用字符串简化应用对这个值的使用，毕竟单一key的情况应该是绝大多数
-                key: keys.length > 1 ? keys : keys[0],
-                value: value, data: data
+                key: key,
+                value: value,
+                data: data
             });
         }
     }
@@ -295,12 +294,23 @@ export class AdditionalTableData extends TableData {
         }
 
         const touchedValues = this._touchedValues[fieldString];
-        const keys = key instanceof Array ? key : [key];
         return touchedValues.find(item => {
-            const splitter = "_%%_";
-            const keyString = item.key instanceof Array ? item.key.join(splitter) : item.key;
-            return keyString === keys.join(splitter);
+            return this._toKeyString(item.key) === this._toKeyString(key);
         });
+    }
+
+    /**
+     * 兼容object[]的toKeyString
+     * @param {string | string[]} key
+     * @param {string} splitter
+     * @returns {string}
+     * @private
+     */
+    private _toKeyString(key: string | string[]): string {
+        return key instanceof Array ? key.reduce((arr, item) => {
+            arr.push(item + '');
+            return arr;
+        }, []).join(this._splitter) : key + '';
     }
 
     /**
