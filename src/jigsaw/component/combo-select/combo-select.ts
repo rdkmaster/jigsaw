@@ -284,6 +284,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     private _rollOutDenouncesTimer: any = null;
+    private _rollInDenouncesTimer: any = null;
 
     private _openDropDown(): void {
         if (this._$opened) {
@@ -309,19 +310,14 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
         if (this._openTrigger === DropDownTrigger.mouseenter && this._popupElement) {
             this._removeMouseOverHandler = this._renderer.listen(this._popupElement, 'mouseenter', () => {
-                if (this._rollOutDenouncesTimer) {
-                    clearTimeout(this._rollOutDenouncesTimer);
-                    this._rollOutDenouncesTimer = null;
-                }
+                clearTimeout(this._rollOutDenouncesTimer);
             });
         }
         if (this._closeTrigger === DropDownTrigger.mouseleave && this._popupElement) {
             this._removeMouseOutHandler = this._renderer.listen(this._popupElement, 'mouseleave', () => {
-                if (!this._rollOutDenouncesTimer) {
-                    this._rollOutDenouncesTimer = setTimeout(() => {
-                        this.open = false;
-                    }, 200);
-                }
+                this._rollOutDenouncesTimer = setTimeout(() => {
+                    this.open = false;
+                }, 200);
             });
         }
 
@@ -393,12 +389,11 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         if (this._openTrigger !== DropDownTrigger.mouseenter) return;
         event.preventDefault();
         event.stopPropagation();
-        if (this._rollOutDenouncesTimer) {
-            clearTimeout(this._rollOutDenouncesTimer);
-            this._rollOutDenouncesTimer = null;
-        }
-        this.open = true;
-        if (this._editor) this._editor.select();
+        clearTimeout(this._rollOutDenouncesTimer);
+        this._rollInDenouncesTimer = setTimeout(() => {
+            this.open = true;
+            if (this._editor) this._editor.select();
+        }, 200)
     }
 
     /**
@@ -408,11 +403,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         if (this.closeTrigger !== DropDownTrigger.mouseleave) return;
         event.preventDefault();
         event.stopPropagation();
-        if (!this._rollOutDenouncesTimer) {
-            this._rollOutDenouncesTimer = setTimeout(() => {
-                this.open = false;
-            }, 200);
-        }
+        clearTimeout(this._rollInDenouncesTimer);
+        this._rollOutDenouncesTimer = setTimeout(() => {
+            this.open = false;
+        }, 200)
     }
 
     /**
@@ -451,7 +445,6 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback()
         }
-        this._rollOutDenouncesTimer = null;
     }
 
     private _propagateChange: any = () => {
