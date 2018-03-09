@@ -151,8 +151,8 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             // 控件disabled，并且想打开下拉
             return;
         }
-        setTimeout(() => {
-            // toggle open 外部控制时，用setTimeout变更检查
+        this.callLater(() => {
+            // toggle open 外部控制时，用异步触发变更检查
             // 初始化open，等待组件初始化后执行
             if (value) {
                 this._openDropDown();
@@ -163,7 +163,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             }
             this._$opened = value;
             this.openChange.emit(value);
-        }, 0);
+        });
     }
 
     @Output()
@@ -231,9 +231,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         if (!this.autoWidth || !this._popupElement) {
             return;
         }
-        setTimeout(() => {
+        this.callLater(() => {
             this._renderer.setStyle(this._popupElement, 'width', this._elementRef.nativeElement.offsetWidth + 'px');
-        }, 0);
+        });
     }
 
     private _autoEditorWidth() {
@@ -323,7 +323,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             this._removeMouseOutHandler = this._renderer.listen(this._popupElement, 'mouseleave', () => {
                 this._removeMouseOutHandler();
                 this._removeMouseOutHandler = null;
-                this._rollOutDenouncesTimer = setTimeout(() => this.open = false, 400);
+                this._rollOutDenouncesTimer = this.callLater(() => this.open = false, 400);
             });
         }
 
@@ -413,8 +413,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         if (this.closeTrigger !== DropDownTrigger.mouseleave) return;
         event.preventDefault();
         event.stopPropagation();
+
         clearTimeout(this._rollInDenouncesTimer);
-        this._rollOutDenouncesTimer = setTimeout(() => this.open = false, 400);
+        this._rollOutDenouncesTimer = this.callLater(() => this.open = false, 400);
     }
 
     /**
@@ -438,7 +439,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public ngAfterViewInit() {
         this._tags.changes.subscribe(() => {
             this._autoEditorWidth();
-            setTimeout(() => {
+            this.callLater(() => {
                 // 等待combo高度变化，调整下拉位置
                 if (this._popupElement) {
                     this._popupService.setPosition(this._getPopupOption(), this._popupElement);
@@ -448,6 +449,8 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     public ngOnDestroy() {
+        super.ngOnDestroy();
+
         this.open = false;
         this._clearAllListeners();
 
@@ -469,7 +472,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         }
 
         this._value = value instanceof ArrayCollection ? value : new ArrayCollection(value);
-        setTimeout(() => this.valueChange.emit(this._value));
+        this.callLater(() => this.valueChange.emit(this._value));
         this._autoWidth();
 
         if (this._removeRefreshCallback) {
