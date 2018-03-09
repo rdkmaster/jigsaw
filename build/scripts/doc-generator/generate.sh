@@ -14,7 +14,7 @@ cd $output
 output=`pwd`
 
 cd $home
-rm -f $output/documentation.json
+rm -fr $output/documentation.json $output/fragments
 compodoc src/jigsaw -p tsconfig.json --silent --disableSourceCode --disableGraph \
     --disableCoverage --disablePrivate --disableInternal --disableLifeCycleHooks \
     --disableRoutesGraph --exportFormat json --output $output

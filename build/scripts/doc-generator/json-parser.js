@@ -32,13 +32,6 @@ if (!docInfo) {
 }
 
 fs.mkdirSync(`${output}`, 755);
-fs.mkdirSync(`${output}/components`, 755);
-fs.mkdirSync(`${output}/classes`, 755);
-fs.mkdirSync(`${output}/directives`, 755);
-fs.mkdirSync(`${output}/injectables`, 755);
-fs.mkdirSync(`${output}/interfaces`, 755);
-fs.mkdirSync(`${output}/modules`, 755);
-fs.mkdirSync(`${output}/typealiases`, 755);
 
 console.log('processing components...');
 docInfo.components.forEach(ci => {
@@ -50,7 +43,7 @@ docInfo.components.forEach(ci => {
     html = processOutputs(ci, html);
     html = processProperties(ci, html);
     html = processMethods(ci, html);
-    fs.writeFileSync(`${output}/components/${ci.name}.html`, html);
+    saveFile(ci.type, ci.name, html);
 });
 
 console.log('processing classes...');
@@ -60,18 +53,34 @@ docInfo.classes.forEach(ci => {
     html = processCommon(ci ,html);
     html = processProperties(ci, html);
     html = processMethods(ci, html);
-    fs.writeFileSync(`${output}/classes/${ci.name}.html`, html);
+    saveFile(ci.type, ci.name, html);
 });
 
-// console.log('processing typealiases...');
-// docInfo.miscellaneous.typealiases.forEach(ci => {
-//     fixMetaInfo(ci);
-//     var html = getClassesTemplate();
-//     html = processCommon(ci ,html);
-//     html = processProperties(ci, html);
-//     html = processMethods(ci, html);
-//     fs.writeFileSync(`${output}/classes/${ci.name}.html`, html);
-// });
+console.log('processing typealiases...');
+docInfo.miscellaneous.typealiases.forEach(ci => {
+    fixMetaInfo(ci);
+    var html = getTypeAliasesTemplate();
+    html = html.replace('$title', ci.name);
+    html = html.replace('$name', '类型别名：' + ci.name);
+    html = html.replace('$rawtype', '原始类型：' + addTypeLink(ci.rawtype));
+    html = html.replace('$since', '起始版本：' + ci.since);
+    html = html.replace('$description', ci.description);
+    saveFile(ci.subtype, ci.name, html);
+});
+
+console.log('processing enumerations...');
+docInfo.miscellaneous.enumerations.forEach(ci => {
+    fixMetaInfo(ci);
+    var html = getTypeEnumTemplate();
+    html = html.replace('$name', ci.name);
+    html = html.replace('$since', ci.since);
+    var items = [];
+    ci.childs.forEach(i => items.push(`<li>${i.name}</li>`));
+    html = html.replace('$enumItems', items.join('\n'));
+    html = html.replace('$description', ci.description);
+    saveFile(ci.subtype, ci.name, html);
+});
+
 
 function processCommon(ci, html) {
     html = html.replace('$since', ci.since);
@@ -304,11 +313,13 @@ function getTypeUrl(type) {
                docInfo.directives.find(i => i.name === type) ||
                docInfo.injectables.find(i => i.name === type) ||
                docInfo.interfaces.find(i => i.name === type) ||
-               docInfo.modules.find(i => i.name === type);
+               docInfo.modules.find(i => i.name === type) ||
+               docInfo.miscellaneous.typealiases.find(i => i.name === type) ||
+               docInfo.miscellaneous.enumerations.find(i => i.name === type);
     if (info) {
-        var name = info.type == 'class' ? 'classes' : info.type + 's';
-        return `/components/jigsaw/api?apiItem=${type}&parentName=${name}`;
+        return `/components/jigsaw/api?apiItem=${type}&parentName=${info.subtype || info.type}`;
     }
+
 
     // try angular types
     angularApis.find(set => info = set.items.find(i => i.title === type));
@@ -318,6 +329,14 @@ function getTypeUrl(type) {
 
     console.warn('unknown type: ' + type);
     return '';
+}
+
+function saveFile(type, fileName, content) {
+    var path = `${output}/${type}`;
+    if (!fs.existsSync(path)) {
+        fs.mkdirSync(path, 755);
+    }
+    fs.writeFileSync(`${path}/${fileName}.html`, content);
 }
 
 function getComponentTemplate() {
@@ -392,6 +411,34 @@ $description
 
 <h3>面向对象 / Object Oriented</h3>
 <ul><li>继承自 $extends</li><li>实现接口 $implements</li></ul>
+`
+}
+
+function getTypeAliasesTemplate() {
+    return `
+<h2>$title</h2>
+<ul>
+    <li>$name</li>
+    <li>$rawtype</li>
+    <li>$since</li>
+</ul>
+$description
+`
+}
+
+function getTypeEnumTemplate() {
+    return `
+<h2>$name</h2>
+
+$description
+
+<h3>起始版本</h3>
+$since
+
+<h3>枚举项</h3>
+<ul>
+    $enumItems
+</ul>
 `
 }
 
