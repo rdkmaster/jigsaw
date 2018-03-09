@@ -31,10 +31,11 @@ if (!docInfo) {
     process.exit(1);
 }
 
+var apiList = [];
 fs.mkdirSync(`${output}`, 755);
 
-console.log('processing components...');
-docInfo.components.forEach(ci => {
+console.log('processing components and directives...');
+docInfo.components.concat(docInfo.directives).forEach(ci => {
     fixMetaInfo(ci);
     var html = getComponentTemplate();
     html = processCommon(ci ,html);
@@ -46,8 +47,8 @@ docInfo.components.forEach(ci => {
     saveFile(ci.type, ci.name, html);
 });
 
-console.log('processing classes...');
-docInfo.classes.forEach(ci => {
+console.log('processing classes and injectables...');
+docInfo.classes.concat(docInfo.injectables).forEach(ci => {
     fixMetaInfo(ci);
     var html = getClassesTemplate();
     html = processCommon(ci ,html);
@@ -81,6 +82,7 @@ docInfo.miscellaneous.enumerations.forEach(ci => {
     saveFile(ci.subtype, ci.name, html);
 });
 
+fs.writeFileSync(`${output}/list`, JSON.stringify(apiList));
 
 function processCommon(ci, html) {
     html = html.replace('$since', ci.since);
@@ -292,7 +294,7 @@ function getTypeUrl(type) {
     if (type == 'Element') {
         return `https://developer.mozilla.org/zh-CN/docs/Glossary/${type}`;
     }
-    if (type == 'HTMLElement' || type == 'FocusEvent') {
+    if (type == 'HTMLElement' || type == 'FocusEvent' || type == 'DragEvent') {
         return `https://developer.mozilla.org/zh-CN/docs/Web/API/${type}`;
     }
 
@@ -337,6 +339,8 @@ function saveFile(type, fileName, content) {
         fs.mkdirSync(path, 755);
     }
     fs.writeFileSync(`${path}/${fileName}.html`, content);
+
+    apiList.push({name: fileName, parentName: type});
 }
 
 function getComponentTemplate() {
