@@ -306,7 +306,7 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, 
     }
 
     ngAfterViewInit() {
-        setTimeout(() => {
+        this.callLater(() => {
             if (this.vertical) {
                 this._renderer.setStyle(this._elementRef.nativeElement, 'padding-bottom',
                     this._sliderHandle._elementRef.nativeElement.querySelector('.jigsaw-scrollbar-handle').offsetHeight + 'px');
@@ -314,7 +314,7 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, 
                 this._renderer.setStyle(this._elementRef.nativeElement, 'padding-right',
                     this._sliderHandle._elementRef.nativeElement.querySelector('.jigsaw-scrollbar-handle').offsetWidth + 'px');
             }
-        })
+        });
     }
 
     private _removeResizeEvent: Function;
@@ -332,6 +332,7 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, 
      * 暂没有使用场景.
      */
     public ngOnDestroy() {
+        super.ngOnDestroy();
         if (this._removeResizeEvent) {
             this._removeResizeEvent();
         }

@@ -114,9 +114,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit 
     }
 
     private _asyncSetStyle(index: number): void {
-        setTimeout(() => {
-            this._setInkBarStyle(index);
-        }, 0)
+        this.callLater(() => this._setInkBarStyle(index));
     }
 
     ngAfterViewInit() {
@@ -189,14 +187,13 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit 
         this.selectedIndex = this._$tabPanes.length - 1;
 
         //router link
-        setTimeout(() => {
+        this.callLater(() => {
             let link = this._tabLabel.find(item => item.key === this.selectedIndex)
                 .elementRef.nativeElement.querySelector('[routerLink]');
             if (link) {
                 link.click()
             }
-        }, 0)
-
+        });
     }
 
     /**

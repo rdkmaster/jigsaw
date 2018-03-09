@@ -62,9 +62,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     public set width(value: string) {
         this._width = CommonUtils.getCssValue(value);
-        setTimeout(() => {
-            this.resize();
-        });
+        this.callLater(this.resize, this);
     }
 
     @Output()
@@ -304,12 +302,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._updateHeaderSettings(columnDefines);
         this._updateCellSettings(columnDefines);
 
-        setTimeout(() => {
+        this.callLater(() => {
             // 等待additionalTableData在renderer更新完成
             this.additionalDataChange.emit(this.additionalData);
             // 等待滚动条初始化
             this._handleScrollBar();
-        }, 0);
+        })
     }
 
     private _additionalData = new AdditionalTableData();
@@ -586,7 +584,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
             widthStorage.forEach((width, index) => {
                 // columnDefine定义过的列宽不会被覆盖
-                const colWidth = this._$headerSettings[index].width ? this._$headerSettings[index].width : width;
+                const colWidth = this._$headerSettings && this._$headerSettings[index].width ? this._$headerSettings[index].width : width;
                 tHeadColGroup[index].setAttribute('width', colWidth);
                 tBodyColGroup[index].setAttribute('width', colWidth);
             });
@@ -663,7 +661,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @private
      */
     private _initVerticalScroll() {
-        setTimeout(() => {
+        this.callLater(() => {
             // selector使用>选择直接子元素，避免选择到其他滚动条
             const yScrollbar = this._elementRef.nativeElement.querySelector('.jigsaw-table-body-range > .ps__rail-y');
             if (yScrollbar) {
@@ -673,7 +671,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             } else {
                 this._initVerticalScroll();
             }
-        }, 0);
+        });
     }
 
     /**
@@ -729,6 +727,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     ngOnDestroy() {
+        super.ngOnDestroy();
+
         if (this._removeTableDataRefresh) {
             this._removeTableDataRefresh();
             this._removeTableDataRefresh = null;

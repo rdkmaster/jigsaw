@@ -1,6 +1,6 @@
 import {
-    NgModule, Component, EventEmitter, Input, Output, Directive,
-    ElementRef, ViewChild, AfterContentInit, Renderer2, AfterViewChecked, ChangeDetectorRef, forwardRef
+    NgModule, Component, EventEmitter, Input, Output, ElementRef, ViewChild,
+    AfterContentInit, Renderer2, AfterViewChecked, ChangeDetectorRef, forwardRef
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -134,7 +134,7 @@ export class JigsawInput extends AbstractJigsawComponent
         if (this.blurOnClear) {
             this._blurEmitter.emit(event);
         } else {
-            setTimeout(() => {
+            this.callLater(() => {
                 if (!this._focused) {
                     this._blurEmitter.emit(event);
                 }
@@ -180,15 +180,14 @@ export class JigsawInput extends AbstractJigsawComponent
     }
 
     ngAfterContentInit() {
-        setTimeout(() => {
+        this.callLater(() => {
             this._render2.setStyle(this._elementRef.nativeElement, 'opacity', 1);
-        }, 0);
+        });
     }
 
     ngAfterViewChecked() {
         this._setInputPaddingStyle();
     }
-
 }
 
 @NgModule({

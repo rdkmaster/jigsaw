@@ -153,17 +153,18 @@ export abstract class AbstractDialogComponentBase
         }
 
         //设置弹出位置和尺寸
-        setTimeout(() => {
+        this.callLater(() => {
             if (this.top) {
                 this.renderer.setStyle(this.popupElement, 'top', this.top);
             }
             if (this.popupElement.style.position != 'fixed' && this.popupElement.style.position != 'absolute') {
                 this.renderer.setStyle(this.popupElement.querySelector('.jigsaw-dialog-base-head'), 'cursor', 'inherit');
             }
-        }, 0);
+        });
     }
 
     ngOnDestroy() {
+        super.ngOnDestroy();
         this.answer.unsubscribe();
     }
 }
