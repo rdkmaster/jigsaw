@@ -32,21 +32,21 @@ export interface IJigsawComponent {
 
 export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
     protected initialized: boolean = false;
-    private _timeoutBase = [];
+    private _timerCache = [];
 
     protected callLater(handler: Function, timeout:number = 0): any {
         const timer = setTimeout(() => {
-            if (!this._timeoutBase) {
+            if (!this._timerCache) {
                 // maybe this object has been destroyed!
                 return;
             }
-            const idx = this._timeoutBase.indexOf(timer);
+            const idx = this._timerCache.indexOf(timer);
             if (idx != -1) {
-                this._timeoutBase.splice(idx, 1);
+                this._timerCache.splice(idx, 1);
             }
             CommonUtils.safeInvokeCallback(null, handler);
         }, timeout);
-        this._timeoutBase.push(timer);
+        this._timerCache.push(timer);
         return timer;
     }
 
@@ -55,8 +55,8 @@ export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this._timeoutBase.forEach(t => clearTimeout(t));
-        this._timeoutBase = null;
+        this._timerCache.forEach(t => clearTimeout(t));
+        this._timerCache = null;
     }
 }
 
