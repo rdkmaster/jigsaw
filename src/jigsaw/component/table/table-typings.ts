@@ -132,15 +132,23 @@ export function _getColumnIndex(data: TableData, additionalData: TableData, fiel
     return [-1, undefined];
 }
 
-export type TouchedValue = { key: string | string[], value: any, data: any[] };
+/**
+ * 用户在界面上，通过渲染器“摸”了表格的附加列之后，表格会将用户当时“摸过”列的相关信息，
+ * 以此类型保存在内存中备用。这些数据是渲染器在判定哪些列被“摸过”时的关键数据，
+ * 应用也可以通过[`AdditionalTableData`]($home/class/AdditionalTableData)的各个api更新这些数据。
+ */
+export type TouchedValue = { key: any | any[], value: any, data: any[] };
 
 export class AdditionalTableData extends TableData {
+    /**
+     * 这个属性的值与`JigsawTable.trackRowBy`的值是相等的，关于这个属性的作用，
+     * 请访问[这个链接]($home/table/checkbox-column#open-desc=true)。
+     */
     public trackRowBy: string;
     public originData: RawTableData;
 
     private _touchedValues: { [field: string]: TouchedValue[] } = {};
     private _trackRowByFields: number[];
-    private _splitter: string = '_%%_';
 
     private _fixTrackRowFields() {
         if (this._trackRowByFields) {
@@ -172,11 +180,14 @@ export class AdditionalTableData extends TableData {
         this.clearTouchedValues();
     }
 
+    /**
+     * 清空所有数据
+     */
     public clearTouchedValues(): void {
         this._touchedValues = {};
     }
 
-    private _getKeysByRow(field: string, row: number): string[] {
+    private _getKeysByRow(field: string, row: number): any[] {
         const keys = [];
         if (!this.originData) {
             console.warn('set originData and trackRowBy property of table before caching a value');
@@ -199,19 +210,40 @@ export class AdditionalTableData extends TableData {
      * $replacement = touchValueByRow()
      *
      * @deprecated
+     *
+     * @param {string | number} field
+     * @param {number} row
+     * @param value
      */
     public cacheValue(field: string | number, row: number, value: any): void {
         console.warn("`cacheValue()` is deprecated from v1.1.4, use `touchValueByRow()` instead");
         this.touchValueByRow(field, row, value);
     }
 
+    /**
+     * 更新用户“摸过”的单元格的值。
+     *
+     * @param {string | number} field 需要更新的列名或者列索引
+     * @param {number} row 当前页行索引，只支持更新表格的当前页数据，如果需要更新其他页的数据，请使用`touchValue()`方法
+     * @param value 将此变量替代缓存里的数据，如果缓存里不存在对应的数据，则会新建一个对应的数据
+     */
     public touchValueByRow(field: string | number, row: number, value: any): void {
         const fieldString = this._toFieldString(field);
         const keys = this._getKeysByRow(fieldString, row);
         this.touchValue(field, keys, value, this.originData.data[row]);
     }
 
-    public touchValue(field: string | number, key: string | string[], value: any, data?: any[]): void {
+    /**
+     * 更新用户“摸过”的单元格的值。如果需要更新的是当前页，则通过`touchValueByRow()`方法更新会更方便些。
+     *
+     * @param {string | number} field 需要更新的列名或者列索引
+     * @param {any | any[]} key 通过此值来确定更新缓存中的哪一行或者哪些行的数据，
+     * 一般需要配合[`trackRowBy`属性]($home/table/checkbox-column#open-desc=true)一起使用。
+     * @param value 将此变量替代缓存里的数据，如果缓存里不存在对应的数据，则会新建一个对应的数据
+     * @param {any[]} data 可选，表格内置渲染器会自动将该行对应的数据存放在这个属性上，
+     * 方便应用在需要时使用该行的其他数据。
+     */
+    public touchValue(field: string | number, key: any | any[], value: any, data?: any[]): void {
         const fieldString = this._toFieldString(field);
         if (!fieldString || CommonUtils.isUndefined(key)) {
             return;
@@ -222,9 +254,7 @@ export class AdditionalTableData extends TableData {
         }
         const touchedValues = this._touchedValues[fieldString];
 
-        const touchedValue = touchedValues.find(item => {
-            return this._toKeyString(item.key) === this._toKeyString(key);
-        });
+        const touchedValue = touchedValues.find(item => this._isKeyEquals(item.key, key));
         if (touchedValue) {
             touchedValue.value = value;
             touchedValue.data = data ? data : touchedValue.data;
@@ -238,11 +268,29 @@ export class AdditionalTableData extends TableData {
         }
     }
 
+    /**
+     * 获取用户“摸过”的单元格的数据
+     * - 如果需要获取缓存的详细信息，请使用`getTouchedInfoByRow()`
+     * - 如果需要获取其他页的信息，请使用`getTouchedValue()`或者`getTouchedInfo()`
+     *
+     * @param {string | number} field 需要获取的列名或者列索引
+     * @param {number} row 当前页行索引，支持获取表格的当前页数据，如果需要获取其他页的数据，请使用`getTouchedValue()`方法
+     * @return {any} 用户“摸过”之后改单元格的新值。
+     */
     public getTouchedValueByRow(field: string | number, row: number): any {
         const v = this.getTouchedInfoByRow(field, row);
         return v ? v.value : undefined;
     }
 
+    /**
+     * 获取用户“摸过”的单元格的详细信息，可以直接更新得到的值，调用`table.update()`方法可以刷新界面。
+     *
+     * 只能返回当前页的数据，如果需要获取其他页的数据，请使用`getTouchedInfo()`。
+     *
+     * @param {string | number} field 需要获取的列名或者列索引
+     * @param {number} row 当前页行索引，支持获取表格的当前页数据，如果需要获取其他页的数据，请使用`getTouchedValue()`方法
+     * @return {TouchedValue} 用户“摸过”之后该单元格对应缓存数据对象。
+     */
     public getTouchedInfoByRow(field: string | number, row: number): TouchedValue {
         const fieldString = this._toFieldString(field);
         const keys = this._getKeysByRow(fieldString, row);
@@ -250,30 +298,28 @@ export class AdditionalTableData extends TableData {
     }
 
     /**
-     * 获取用户在表格上操作过的所有行的值
+     * 获取用户“摸过”的单元格的值，可获取任意页的缓存数据。
      *
-     * @param {string | number} field
-     * @param {string | string[]} key
-     * @returns {any}
+     * @param {string | number} field 需要获取的列名或者列索引
+     * @param {any | any[]} key
+     * @return {any}
      */
-    public getTouchedValue(field: string | number, key: string | string[]): any;
+    public getTouchedValue(field: string | number, key: any | any[]): any;
     /**
      * $deprecatedFrom = v1.1.4
      * $replacement = getTouchedValueByRow()
      *
-     * 获取用户在表格上操作过的所有行的值
-     *
      * @deprecated
      *
      * @param {string | number} field
-     * @param {number} key
+     * @param {number} row
      * @returns {any}
      */
-    public getTouchedValue(field: string | number, key: number): any;
+    public getTouchedValue(field: string | number, row: number): any;
     /**
      * @internal
      */
-    public getTouchedValue(field: string | number, key: number | string | string[]): any {
+    public getTouchedValue(field: string | number, key: number | any | any[]): any {
         let v;
         if (typeof key === 'number') {
             console.warn("`getTouchedValue()` is deprecated from v1.1.4, use `getTouchedValueByRow()` instead");
@@ -284,7 +330,17 @@ export class AdditionalTableData extends TableData {
         return v ? v.value : undefined;
     }
 
-    public getTouchedInfo(field: string | number, key: string | string[]): TouchedValue {
+    /**
+     * 获取用户“摸过”的单元格的详细信息，可以直接更新得到的值，调用`table.update()`方法可以刷新界面。
+     *
+     * 通过此方法可获取任意页的缓存数据。
+     *
+     * @param {string | number} field 需要获取的列名或者列索引
+     * @param {any | any[]} key 通过此值来确定更新缓存中的哪一行或者哪些行的数据，
+     * 一般需要配合[`trackRowBy`属性]($home/table/checkbox-column#open-desc=true)一起使用。
+     * @return {TouchedValue}
+     */
+    public getTouchedInfo(field: string | number, key: any | any[]): TouchedValue {
         const fieldString = this._toFieldString(field);
         if (!fieldString || CommonUtils.isUndefined(key)) {
             return;
@@ -294,30 +350,49 @@ export class AdditionalTableData extends TableData {
         }
 
         const touchedValues = this._touchedValues[fieldString];
-        return touchedValues.find(item => {
-            return this._toKeyString(item.key) === this._toKeyString(key);
-        });
+        return touchedValues.find(item => this._isKeyEquals(item.key, key));
     }
 
     /**
-     * 兼容object[]的toKeyString
-     * @param {string | string[]} key
-     * @param {string} splitter
-     * @returns {string}
+     * 当表格单元格的值是对象而非简单类型的时候，对key的比较需要采用严格模式
+     *
+     * @param key1
+     * @param key2
+     * @return {boolean}
      * @private
      */
-    private _toKeyString(key: string | string[]): string {
-        return key instanceof Array ? key.reduce((arr, item) => {
-            arr.push(item + '');
-            return arr;
-        }, []).join(this._splitter) : key + '';
+    private _isKeyEquals(key1: any, key2: any): boolean {
+        let equals;
+        if (key1 instanceof Array && key2 instanceof Array) {
+            if (key1.length != key2.length || key1.length == 0) {
+                return false;
+            }
+            // 注意，对数组的元素的比较，不再区分类型，一律采用值比较
+            key1.forEach((item, index) => {
+                equals = this._getObjectValue(item) === this._getObjectValue(key2[index])
+            });
+        } else {
+            equals = this._getObjectValue(key1) === this._getObjectValue(key2);
+        }
+        return equals;
+    }
+
+    private _getObjectValue(obj: any): any {
+        if (typeof obj !== 'object') {
+            return obj;
+        }
+        if (obj && obj.hasOwnProperty('toString')) {
+            return obj.toString();
+        }
+        if (obj && obj.hasOwnProperty('valueOf')) {
+            return obj.valueOf();
+        }
+        return obj;
     }
 
     /**
      * $deprecatedFrom = v1.1.4
      * $replacement = getAllTouched()
-     *
-     * 获取用户在表格上操作过的所有行的信息，对这些信息做修改后调用`table.update()`方法可以刷新界面
      *
      * @deprecated
      *
@@ -330,10 +405,10 @@ export class AdditionalTableData extends TableData {
     }
 
     /**
-     * 获取用户在表格上操作过的所有行的信息，对这些信息做修改后调用`table.update()`方法可以刷新界面
+     * 获取用户在表格上“摸过”的所有行的详细信息，对这些信息做修改后调用`table.update()`方法可以刷新界面
      *
-     * @param {string | number} field
-     * @returns {TouchedValue[]}
+     * @param {string | number} field 需要获取的列名或者列索引
+     * @returns {TouchedValue[]} 所有行的详细信息
      */
     public getAllTouched(field: string | number): TouchedValue[] {
         const fieldString = this._toFieldString(field);
