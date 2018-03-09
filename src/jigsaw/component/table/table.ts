@@ -32,7 +32,10 @@ import {
 } from "./table-typings";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {SortOrder} from "../../core/data/component-data";
-import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer} from "./table-renderer";
+import {
+    DefaultCellRenderer, JigsawTableRendererModule, TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellTextEditorRenderer,
+    TableHeadCheckboxRenderer
+} from "./table-renderer";
 import {AffixUtils} from "../../core/utils/internal-utils";
 import {
     PerfectScrollbarDirective,
@@ -760,7 +763,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     declarations: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
     imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, PerfectScrollbarModule],
     exports: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
-    entryComponents: [TableCellTextEditorRenderer, DefaultCellRenderer]
+    entryComponents: [DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer,
+        TableCellCheckboxRenderer, TableCellSwitchRenderer]
 })
 export class JigsawTableModule {
 }

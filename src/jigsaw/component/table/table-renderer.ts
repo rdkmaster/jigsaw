@@ -9,6 +9,7 @@ import {CheckBoxStatus} from "../checkbox/typings";
 import {TableData} from "../../core/data/table-data";
 import {_getColumnIndex, AdditionalTableData} from "./table-typings";
 import {CommonUtils} from "../../core/utils/common-utils";
+import {JigsawSwitchModule} from "../switch/index";
 
 export class TableCellRendererBase implements OnInit, OnDestroy {
     @Input() public cellData: any;
@@ -196,7 +197,7 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
         this.checked = checked;
     }
 
-    private _updateTargetData(){
+    private _updateTargetData() {
         if (CommonUtils.isDefined(this.targetData.data[this.row])) {
             this.targetData.data[this.row][this.column] = this.checked;
         }
@@ -218,12 +219,20 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
     }
 }
 
+@Component({
+    template: '<j-switch [(checked)]="cellData" (checkedChange)="dispatchChangeEvent(cellData)"></j-switch>'
+})
+export class TableCellSwitchRenderer extends TableCellRendererBase {
+
+}
+
 @NgModule({
     declarations: [
-        DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer, TableCellCheckboxRenderer
+        DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer,
+        TableCellCheckboxRenderer, TableCellSwitchRenderer
     ],
     imports: [
-        CommonModule, JigsawCheckBoxModule, JigsawInputModule
+        CommonModule, JigsawCheckBoxModule, JigsawInputModule, JigsawSwitchModule
     ]
 })
 export class JigsawTableRendererModule {

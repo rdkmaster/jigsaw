@@ -4,6 +4,7 @@ import {Observable} from "rxjs/Observable";
 import {CommonUtils} from "../jigsaw/core/utils/common-utils";
 import {RawTableData, TableData} from "../jigsaw/core/data/table-data";
 import {PagingInfo} from "../jigsaw/core/data/component-data";
+import {InternalUtils} from "../jigsaw/core/utils/internal-utils";
 
 @Injectable()
 export class AjaxInterceptor implements HttpInterceptor {
@@ -259,6 +260,7 @@ class MockData {
         this.dataSet['tree-data'] = require('../mock-data/tree-data.json');
         this.dataSet['soduku-puzzles'] = require('../mock-data/soduku-puzzles.json');
         this.dataSet['big-table-data'] = this.createBigTableData();
+        this.dataSet['hr-list-for-switch'] = this.createTableDataForSwitchRenderer();
     }
 
     static createBigTableData(): RawTableData {
@@ -275,5 +277,16 @@ class MockData {
             }
         }
         return rtd;
+    }
+
+    static createTableDataForSwitchRenderer(): RawTableData {
+        let tableData = require('../mock-data/hr-list.json');
+        tableData.field.splice(-1, 0, 'marriage');
+        tableData.header.splice(-1, 0, '婚否');
+        tableData.data.splice(20);
+        tableData.data.forEach((row, index) => {
+            row.splice(-1, 0, InternalUtils.isPrime(index));
+        });
+        return tableData;
     }
 }
