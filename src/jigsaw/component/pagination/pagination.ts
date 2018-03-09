@@ -344,7 +344,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         this.callLater(() => {
             this._getFirstAndLastPage();
             this._setCurrentShow();
-        }, 0);
+        });
 
         this._pageNumberInit = true;
     }
@@ -382,7 +382,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
 
                 this._getFirstAndLastPage();
                 this._setCurrentShow();
-            }, 0);
+            });
         });
     }
 }

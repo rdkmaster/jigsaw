@@ -346,7 +346,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         this._handleValueChange(<Time>this.date, <TimeGr>this.gr, true);
     }
 
-    private _bindActiveDayClickHandler(picker){
+    private _bindActiveDayClickHandler(picker) {
         // 等待day.active刷新出来
         this.callLater(() => {
             picker.find('.datepicker-days table tbody tr td.day.active').on('click', () => {
@@ -357,8 +357,8 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
                     // recommend select
                     this._handleRecommended(this._el.nativeElement, this._popService);
                     this._bindActiveDayClickHandler(picker);
-                })
-            })
+                });
+            });
         });
     }
 
@@ -413,7 +413,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
                 const val = gr == TimeGr.week ? this._handleWeekSelect() : this._value;
                 this.dateChange.emit(val);
                 this._propagateChange(val);
-            }, 0);
+            });
             this._handleRecommended(this._el.nativeElement, this._popService);
         }
     }

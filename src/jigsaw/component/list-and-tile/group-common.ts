@@ -107,7 +107,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
                 });
                 item.selected = hasSelected;
             });
-        })
+        });
     }
 
     private _subscribeItemSelectedChange(items: QueryList<AbstractJigsawOptionComponent>) {

@@ -163,7 +163,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             }
             this._$opened = value;
             this.openChange.emit(value);
-        }, 0);
+        });
     }
 
     @Output()
@@ -233,7 +233,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         }
         this.callLater(() => {
             this._renderer.setStyle(this._popupElement, 'width', this._elementRef.nativeElement.offsetWidth + 'px');
-        }, 0);
+        });
     }
 
     private _autoEditorWidth() {
@@ -318,9 +318,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         if (this._closeTrigger === DropDownTrigger.mouseleave && this._popupElement) {
             this._removeMouseOutHandler = this._renderer.listen(this._popupElement, 'mouseleave', () => {
                 if (!this._rollOutDenouncesTimer) {
-                    this._rollOutDenouncesTimer = this.callLater(() => {
-                        this.open = false;
-                    }, 200);
+                    this._rollOutDenouncesTimer = this.callLater(() => this.open = false, 200);
                 }
             });
         }
@@ -409,9 +407,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         event.preventDefault();
         event.stopPropagation();
         if (!this._rollOutDenouncesTimer) {
-            this._rollOutDenouncesTimer = this.callLater(() => {
-                this.open = false;
-            }, 200);
+            this._rollOutDenouncesTimer = this.callLater(() => this.open = false, 200);
         }
     }
 
@@ -436,8 +432,8 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public ngAfterViewInit() {
         this._tags.changes.subscribe(() => {
             this._autoEditorWidth();
+            // 等待combo高度变化，调整下拉位置
             this.callLater(() => {
-                // 等待combo高度变化，调整下拉位置
                 if (this._popupElement) {
                     this._popupService.setPosition(this._getPopupOption(), this._popupElement);
                 }

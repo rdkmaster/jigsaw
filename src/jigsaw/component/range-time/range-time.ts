@@ -156,9 +156,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     private _startTimeLimitStart: WeekTime;
 
     ngOnInit() {
-        this.callLater(() => {
-            this._init();
-        });
+        this.callLater(this._init, this);
     }
 
     private _init() {
@@ -266,10 +264,8 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
 
             this._$endTimeLimitEnd = this._calculateLimitEnd();
 
-            this.callLater(() => {
-                //先设置好limit，再设置date
-                this._endDate = endDate;
-            }, 0)
+            //先设置好limit，再设置date
+            this.callLater(() => this._endDate = endDate);
         }
     }
 
@@ -299,7 +295,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
                 this._startTimeLimitEnd = this._beginDate;
                 this.beginDateChange.emit(this._beginDate);
                 this.change.emit({"beginDate": this._beginDate, "endDate": this._endDate});
-            }, 0);
+            });
         }
         if (value.hasOwnProperty('endDate') && this._endDate != value.endDate) {
             this.callLater(() => {
@@ -312,7 +308,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
                 }
                 this.endDateChange.emit(this._endDate);
                 this.change.emit({"beginDate": this._beginDate, "endDate": this._endDate});
-            }, 0);
+            });
         }
     }
 

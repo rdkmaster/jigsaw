@@ -160,7 +160,7 @@ export abstract class AbstractDialogComponentBase
             if (this.popupElement.style.position != 'fixed' && this.popupElement.style.position != 'absolute') {
                 this.renderer.setStyle(this.popupElement.querySelector('.jigsaw-dialog-base-head'), 'cursor', 'inherit');
             }
-        }, 0);
+        });
     }
 
     ngOnDestroy() {

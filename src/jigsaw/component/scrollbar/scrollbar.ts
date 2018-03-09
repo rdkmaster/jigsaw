@@ -314,7 +314,7 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, 
                 this._renderer.setStyle(this._elementRef.nativeElement, 'padding-right',
                     this._sliderHandle._elementRef.nativeElement.querySelector('.jigsaw-scrollbar-handle').offsetWidth + 'px');
             }
-        })
+        });
     }
 
     private _removeResizeEvent: Function;

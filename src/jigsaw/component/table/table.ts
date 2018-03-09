@@ -62,9 +62,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     public set width(value: string) {
         this._width = CommonUtils.getCssValue(value);
-        this.callLater(() => {
-            this.resize();
-        })
+        this.callLater(this.resize, this);
     }
 
     @Output()
@@ -673,7 +671,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             } else {
                 this._initVerticalScroll();
             }
-        })
+        });
     }
 
     /**

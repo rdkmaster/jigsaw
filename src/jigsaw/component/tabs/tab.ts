@@ -114,9 +114,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit 
     }
 
     private _asyncSetStyle(index: number): void {
-        this.callLater(() => {
-            this._setInkBarStyle(index);
-        }, 0)
+        this.callLater(() => this._setInkBarStyle(index));
     }
 
     ngAfterViewInit() {
@@ -195,8 +193,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit 
             if (link) {
                 link.click()
             }
-        }, 0)
-
+        });
     }
 
     /**

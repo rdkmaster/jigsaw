@@ -34,7 +34,43 @@ export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
     protected initialized: boolean = false;
     private _timerCache = [];
 
-    protected callLater(handler: Function, timeout:number = 0): any {
+    /**
+     * 延迟一会在执行一些逻辑，常常用于解决时间差的问题
+     *
+     * @param {Function} handler 需要延迟执行的函数
+     */
+    protected callLater(handler: Function);
+    /**
+     * 延迟一会在执行一些逻辑，常常用于解决时间差的问题
+     *
+     * @param {Function} handler 需要延迟执行的函数
+     * @param {number} timeout 延迟的毫秒数
+     */
+    protected callLater(handler: Function, timeout: number);
+    /**
+     * 延迟一会在执行一些逻辑，常常用于解决时间差的问题
+     *
+     * @param {Function} handler 需要延迟执行的函数
+     * @param {any} context `handler`函数执行的上下文
+     */
+    protected callLater(handler: Function, context: any);
+    /**
+     * 延迟一会在执行一些逻辑，常常用于解决时间差的问题
+     *
+     * @param {Function} handler 需要延迟执行的函数
+     * @param context `handler`函数执行的上下文
+     * @param {number} timeout 延迟的毫秒数
+     */
+    protected callLater(handler: Function, context: any, timeout: number);
+    /**
+     * @internal
+     */
+    protected callLater(handler: Function, contextOrTimeout: any | number = undefined, timeout: number = 0): any {
+        if (typeof contextOrTimeout === 'number') {
+            timeout = +contextOrTimeout;
+            contextOrTimeout = null;
+        }
+
         const timer = setTimeout(() => {
             if (!this._timerCache) {
                 // maybe this object has been destroyed!
@@ -44,7 +80,7 @@ export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
             if (idx != -1) {
                 this._timerCache.splice(idx, 1);
             }
-            CommonUtils.safeInvokeCallback(null, handler);
+            CommonUtils.safeInvokeCallback(contextOrTimeout, handler);
         }, timeout);
         this._timerCache.push(timer);
         return timer;

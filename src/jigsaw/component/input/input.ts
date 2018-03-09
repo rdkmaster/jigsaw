@@ -182,7 +182,7 @@ export class JigsawInput extends AbstractJigsawComponent
     ngAfterContentInit() {
         this.callLater(() => {
             this._render2.setStyle(this._elementRef.nativeElement, 'opacity', 1);
-        }, 0);
+        });
     }
 
     ngAfterViewChecked() {

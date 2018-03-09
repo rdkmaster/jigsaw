@@ -140,17 +140,13 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
 
     private _checkFlexByOwnProperty(property: string) {
         if (property && this.type != 'flex') {
-            this.callLater(() => {
-                this.type = 'flex';
-            })
+            this.callLater(() => this.type = 'flex');
         }
     }
 
     protected checkFlexByChildren() {
         if (this.childrenBox.length > 0 && this.type != 'flex') {
-            this.callLater(() => {
-                this.type = 'flex';
-            })
+            this.callLater(() => this.type = 'flex');
         }
     }
 

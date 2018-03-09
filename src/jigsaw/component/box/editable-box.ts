@@ -197,10 +197,8 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
                     this.data.components = node.components;
                     this.data.nodes = [];
                     this.direction = null;
-                    this.callLater(() => {
-                        // 等待 option bar & block 渲染
-                        this._bindScrollEvent();
-                    });
+                    // 等待 option bar & block 渲染
+                    this.callLater(this._bindScrollEvent, this);
                 })
             }
             this._updateDirection();
@@ -378,10 +376,8 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         this.checkFlex();
         // 等待 option bar & block 渲染
         this._bindScrollEvent();
-        this.callLater(() => {
-            // 异步发送事件，让父box能监听到
-            this._viewInit.emit();
-        });
+        // 异步发送事件，让父box能监听到
+        this.callLater(this._viewInit.emit, this._viewInit);
     }
 
     ngOnDestroy() {
