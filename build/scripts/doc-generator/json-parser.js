@@ -31,16 +31,18 @@ if (!docInfo) {
     process.exit(1);
 }
 
+var processingAPI;
 var unknownTypes = [];
 var apiList = [];
 fs.mkdirSync(`${output}`, 755);
 
-console.log('processing components and directives...');
+console.log('processing components / directives...');
 docInfo.components.concat(docInfo.directives).forEach(ci => {
+    processingAPI = ci;
     fixMetaInfo(ci);
     var html = getComponentTemplate();
-    html = processCommon(ci ,html);
-    html = processSelector(ci ,html)
+    html = processCommon(ci, html);
+    html = processSelector(ci, html)
     html = processInputs(ci, html);
     html = processOutputs(ci, html);
     html = processProperties(ci, html);
@@ -48,11 +50,12 @@ docInfo.components.concat(docInfo.directives).forEach(ci => {
     saveFile(ci.type, ci.name, html);
 });
 
-console.log('processing classes and injectables...');
-docInfo.classes.concat(docInfo.injectables).forEach(ci => {
+console.log('processing classes / injectables / interfaces...');
+docInfo.classes.concat(docInfo.injectables).concat(docInfo.interfaces).forEach(ci => {
+    processingAPI = ci;
     fixMetaInfo(ci);
     var html = getClassesTemplate();
-    html = processCommon(ci ,html);
+    html = processCommon(ci, html);
     html = processProperties(ci, html);
     html = processMethods(ci, html);
     saveFile(ci.type, ci.name, html);
@@ -60,6 +63,7 @@ docInfo.classes.concat(docInfo.injectables).forEach(ci => {
 
 console.log('processing typealiases...');
 docInfo.miscellaneous.typealiases.forEach(ci => {
+    processingAPI = ci;
     fixMetaInfo(ci);
     var html = getTypeAliasesTemplate();
     html = html.replace('$title', ci.name);
@@ -72,6 +76,7 @@ docInfo.miscellaneous.typealiases.forEach(ci => {
 
 console.log('processing enumerations...');
 docInfo.miscellaneous.enumerations.forEach(ci => {
+    processingAPI = ci;
     fixMetaInfo(ci);
     var html = getTypeEnumTemplate();
     html = html.replace('$name', ci.name);
@@ -98,7 +103,7 @@ function processCommon(ci, html) {
     return html;
 }
 
-function processSelector(ci ,html) {
+function processSelector(ci, html) {
     var matchSelector = ci.sourceCode.match(/selector\s*:\s*['"](.*?)['"]/);
     var selectors = matchSelector ? matchSelector[1].split(/\s*,\s*/g) : ['unknown'];
     return html.replace('$selectors', `<ul><li>${selectors.join('</li><li>')}</li></ul>`);
@@ -143,10 +148,10 @@ function processOutputs(ci, html) {
     return html.replace('$outputs', outputs.join(''));
 }
 
-function processProperties(ci ,html) {
-    // 这块有点绕，当一个属性被拆开为getter/setter后，ci.propertiesClass就找不到他了
-    // 但是会出现在ci.accessors里，而ci.accessors里还有一部分同时出现在inputsClass里的，需要剔除
-    var propertiesClass = [].concat(ci.propertiesClass || ci.properties);
+// 这块有点绕，当一个属性被拆开为getter/setter后，ci.propertiesClass就找不到他了
+// 但是会出现在ci.accessors里，而ci.accessors里还有一部分同时出现在inputsClass里的，需要剔除
+function mergeProperties(ci) {
+    var propertiesClass = [].concat(ci.propertiesClass || ci.properties || []);
     if (ci.hasOwnProperty('accessors')) {
         for (var prop in ci.accessors) {
             if (ci.inputsClass && ci.inputsClass.find(i => i.name == prop)) {
@@ -167,8 +172,12 @@ function processProperties(ci ,html) {
             });
         }
     }
+    return propertiesClass;
+}
+
+function processProperties(ci, html) {
     var properties = [];
-    propertiesClass.forEach(property => {
+    mergeProperties(ci).forEach(property => {
         fixMetaInfo(property);
         property.since = property.since ? property.since : ci.since;
         property.defaultValue = property.defaultValue ? property.defaultValue : '';
@@ -233,6 +242,7 @@ function fixMetaInfo(metaInfo) {
             // remove these messages
             return suffix;
         });
+    metaInfo.description = addDescLink(metaInfo.description);
     if (!metaInfo.since) {
         metaInfo.since = 'v1.0.0';
     }
@@ -269,6 +279,37 @@ function addTypeLink(type) {
     }
 }
 
+// 此规则详情参考这里  https://github.com/rdkmaster/jigsaw/issues/542
+function addDescLink(desc) {
+    if (desc == null || desc == undefined) {
+        return '';
+    }
+    return desc
+        .replace(/<code>\s*(\w+?)\.(\w+?)\s*<\/code>/g, (found, clazz, property) => {
+            console.log(`clazz=${clazz}, prop=${property}`)
+            if (!property || !clazz) {
+                console.warn('WARN: bad format found while adding description links: ' + found);
+                return found;
+            }
+            return found;
+        })
+        .replace(/<code>\s*(\w+?)\s*<\/code>/g, (found, source) => {
+            var type = processingAPI.type || processingAPI.subtype;
+            if (source === processingAPI.name) {
+                return `<a href="/components/jigsaw/api?apiItem=${source}&parentName=${type}">${found}</a>`;
+            }
+            var info = (processingAPI.inputsClass || []).find(i => i.name == source) ||
+                        (processingAPI.outputsClass || []).find(i => i.name == source) ||
+                        mergeProperties(processingAPI).find(i => i.name == source) ||
+                        (processingAPI.methodsClass || processingAPI.methods || []).find(i => i.name == source);
+            if (info) {
+                var name = processingAPI.name;
+                return `<a href="/components/jigsaw/api?apiItem=${name}&parentName=${type}#${info.name}">${found}</a>`;
+            }
+            return found;
+        });
+}
+
 function getTypeUrl(type) {
     if (!type) {
         return '';
@@ -284,7 +325,7 @@ function getTypeUrl(type) {
     var jsTypes = ["number", "boolean", "string", "object", "date", "function", "json"];
     lcType = lcType.toLowerCase();
     if (tsTypes.indexOf(lcType) != -1) {
-        return 'https://www.typescriptlang.org/docs/handbook/basic-types.html'
+        return 'https://www.tslang.cn/docs/handbook/basic-types.html'
     } else if (jsTypes.indexOf(lcType) != -1) {
         return `https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/${type}`;
     }
