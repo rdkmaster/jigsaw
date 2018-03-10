@@ -1,7 +1,7 @@
 ## v1.1.4 (2018-3-10)
 
 ### 新特性 / New Features
-- https://github.com/rdkmaster/jigsaw/issues/527 `AdditionalTableData`新增了一套API，用于通过编程的方式实现表格可编辑渲染的效果；
+- https://github.com/rdkmaster/jigsaw/issues/527 `AdditionalTableData`新增了一套API，用于通过编程的方式模拟表格可编辑渲染的行为；
 
 ### 破坏性修改 / Breaking Changes
 - 无 / none
