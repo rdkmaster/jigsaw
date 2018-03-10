@@ -168,7 +168,7 @@ function mergeProperties(ci) {
                 name: info.name,
                 type: info.getSignature.returnType || info.getSignature.type,
                 description: info.hasOwnProperty('description') ? info.description : '',
-                accessibility: info.hasOwnProperty('setSignature') ? '读写' : '只读'
+                readOnly: info.hasOwnProperty('setSignature') ? false : true
             });
         }
     }
@@ -181,11 +181,12 @@ function processProperties(ci, html) {
         fixMetaInfo(property);
         property.since = property.since ? property.since : ci.since;
         property.defaultValue = property.defaultValue ? property.defaultValue : '';
-        property.accessibility = property.accessibility ? property.accessibility : '读写';
+        var readOnly = property.readOnly ?
+            '<span style="margin-right:4px;color:#9a14a9;" title="Read Only" class="fa fa-adjust"></span>' : '';
         var modifier = getModifierInfo(property.modifierKind);
-        properties.push(`
-            <tr><td style="white-space: nowrap;">${anchor(property.name)}${modifier}${property.name}</td>
-            <td>${addTypeLink(property.type)}</td><td>${property.accessibility}</td><td>${property.description}</td>
+        properties.push(`<tr><td style="white-space: nowrap;">
+            ${anchor(property.name)}${modifier}${readOnly}${property.name}</td>
+            <td>${addTypeLink(property.type)}</td><td>${property.description}</td>
             <td>${property.defaultValue}</td><td>${property.since}</td></tr>`);
     });
     if (properties.length == 0) {
@@ -252,15 +253,15 @@ function getModifierInfo(modifier) {
     var clazz, title, color;
     if (modifier && modifier.indexOf(STATIC) !== -1) {
         clazz = 'cube';
-        title = 'public static';
+        title = 'Static';
         color = '#0575b9';
     } else if (modifier && modifier.indexOf(PROTECTED) !== -1) {
         clazz = 'lock';
-        title = 'protected';
+        title = 'Protected';
         color = 'orange';
     } else {
         clazz = 'unlock';
-        title = 'public';
+        title = 'Public';
         color = 'green';
     }
     return `<span class="fa fa-${clazz}" style="color: ${color}; margin-right: 4px" title="${title}"></span>`;
@@ -459,7 +460,7 @@ $description
 <h3>普通属性 / Properties</h3>
 <table style="width:100%">
     <thead>
-        <tr><th>名称</th><th>类型</th><th>访问性</th><th>说明</th><th>默认值</th><th>起始版本</th></tr>
+        <tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th><th>起始版本</th></tr>
     </thead>
     <tbody>$properties</tbody>
 </table>
@@ -490,7 +491,7 @@ $description
 <h3>属性 / Properties</h3>
 <table style="width:100%">
     <thead>
-        <tr><th>名称</th><th>类型</th><th>访问性</th><th>说明</th><th>默认值</th><th>起始版本</th></tr>
+        <tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th><th>起始版本</th></tr>
     </thead>
     <tbody>$properties</tbody>
 </table>
