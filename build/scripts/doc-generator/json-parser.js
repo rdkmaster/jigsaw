@@ -341,8 +341,8 @@ function getTypeUrl(type, property, context) {
         return `https://angular.io/${info.path}`;
     }
 
-    var lcType = type.toLowerCase();
     // try basic types
+    var lcType = type.toLowerCase();
     var tsTypes = ['any', 'void', 'array'];
     var jsTypes = ["number", "boolean", "string", "object", "date", "function", "json"];
     lcType = lcType.toLowerCase();
