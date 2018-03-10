@@ -25,4 +25,13 @@ fi
 
 cd $scriptDir
 node json-parser.js $output
+if [ "$?" != "0" ]; then
+    echo "ERROR: parse documentation error!"
+    exit 1
+fi
+
 node comp-data-relationship-svg-parser.js
+if [ "$?" != "0" ]; then
+    echo "ERROR: component data relationiship error!"
+    exit 1
+fi
