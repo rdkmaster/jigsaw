@@ -317,19 +317,20 @@ function getTypeUrl(type, property, context) {
             var name = context.name;
             var parentName = context.subtype || context.type;
             return `/components/jigsaw/api?apiItem=${name}&parentName=${parentName}#${info.name}`;
+        } else if (context.extends) {
+            // 尝试在其父类中寻找属性
+            var parentInfo = findMetaInfo(context.extends);
+            if (parentInfo) {
+                var url = getTypeUrl(type, property, parentInfo);
+                if (url) {
+                    return url;
+                }
+            }
         }
     }
 
     // try native types
-    var info = context && context.name === type ? context  : null ||
-               docInfo.classes.find(i => i.name === type) ||
-               docInfo.components.find(i => i.name === type) ||
-               docInfo.directives.find(i => i.name === type) ||
-               docInfo.injectables.find(i => i.name === type) ||
-               docInfo.interfaces.find(i => i.name === type) ||
-               docInfo.modules.find(i => i.name === type) ||
-               docInfo.miscellaneous.typealiases.find(i => i.name === type) ||
-               docInfo.miscellaneous.enumerations.find(i => i.name === type);
+    var info = context && context.name === type ? context : findMetaInfo(type);
     if (info) {
         return `/components/jigsaw/api?apiItem=${type}&parentName=${info.subtype || info.type}`;
     }
@@ -390,6 +391,17 @@ function getTypeUrl(type, property, context) {
         unknownTypes.push(type);
     }
     return '';
+}
+
+function findMetaInfo(type) {
+    return docInfo.classes.find(i => i.name === type) ||
+           docInfo.components.find(i => i.name === type) ||
+           docInfo.directives.find(i => i.name === type) ||
+           docInfo.injectables.find(i => i.name === type) ||
+           docInfo.interfaces.find(i => i.name === type) ||
+           docInfo.modules.find(i => i.name === type) ||
+           docInfo.miscellaneous.typealiases.find(i => i.name === type) ||
+           docInfo.miscellaneous.enumerations.find(i => i.name === type);
 }
 
 function isDefined(x) {
