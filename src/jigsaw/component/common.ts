@@ -1,9 +1,6 @@
 import {Directive, OnInit, ViewContainerRef, Input, NgModule, OnDestroy} from "@angular/core";
 import {CommonUtils} from "../core/utils/common-utils";
 
-/**
- * @internal
- */
 @Directive({
     selector: '[jigsaw-renderer-host]',
 })

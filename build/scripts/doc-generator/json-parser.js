@@ -31,6 +31,7 @@ if (!docInfo) {
     process.exit(1);
 }
 
+var unknownTypes = [];
 var apiList = [];
 fs.mkdirSync(`${output}`, 755);
 
@@ -83,6 +84,9 @@ docInfo.miscellaneous.enumerations.forEach(ci => {
 });
 
 fs.writeFileSync(`${output}/list`, JSON.stringify(apiList));
+if (!checkUnknownTypes()) {
+    process.exit(1);
+}
 
 function processCommon(ci, html) {
     html = html.replace('$since', ci.since);
@@ -109,9 +113,8 @@ function processInputs(ci, html) {
         var dualBinding = ci.outputsClass.find(i => i.name == input.name + 'Change') ?
             '<span class="fa fa-retweet" style="margin-left:4px" title="本属性支持双向绑定"></span>' : '';
         inputs.push(`
-            <tr><td>${input.name}${dualBinding}</td><td>${addTypeLink(input.type)}</td>
-            <td>${input.defaultValue}</td><td>${input.description}</td><td>${input.since}</td></tr>
-        `);
+            <tr><td>${anchor(input.name)}${input.name}${dualBinding}</td><td>${addTypeLink(input.type)}</td>
+            <td>${input.defaultValue}</td><td>${input.description}</td><td>${input.since}</td></tr>`);
     });
     if (inputs.length == 0) {
         inputs.push(getNoDataRowTemplate());
@@ -131,9 +134,8 @@ function processOutputs(ci, html) {
             type = match[1];
         }
         outputs.push(`
-            <tr><td>${output.name}</td><td>${addTypeLink(type)}</td><td>${output.description}</td>
-            <td>${output.since}</td></tr>
-        `);
+            <tr><td>${anchor(output.name)}${output.name}</td><td>${addTypeLink(type)}</td>
+            <td>${output.description}</td><td>${output.since}</td></tr>`);
     });
     if (outputs.length == 0) {
         outputs.push(getNoDataRowTemplate());
@@ -173,11 +175,9 @@ function processProperties(ci ,html) {
         property.accessibility = property.accessibility ? property.accessibility : '读写';
         var modifier = getModifierInfo(property.modifierKind);
         properties.push(`
-            <tr><td style="white-space: nowrap;">${modifier}${property.name}</td>
-            <td>${addTypeLink(property.type)}</td><td>${property.accessibility}</td>
-            <td>${property.description}</td><td>${property.defaultValue}</td>
-            <td>${property.since}</td></tr>
-        `);
+            <tr><td style="white-space: nowrap;">${anchor(property.name)}${modifier}${property.name}</td>
+            <td>${addTypeLink(property.type)}</td><td>${property.accessibility}</td><td>${property.description}</td>
+            <td>${property.defaultValue}</td><td>${property.since}</td></tr>`);
     });
     if (properties.length == 0) {
         properties.push(getNoDataRowTemplate());
@@ -214,9 +214,8 @@ function processMethods(ci, html) {
         }
         var modifier = getModifierInfo(method.modifierKind);
         methods.push(`
-            <tr><td style="white-space: nowrap;">${modifier}${method.name}</td><td>${method.description}</td>
-            <td>${returns}</td><td>${args}</td><td>${method.since}</td></tr>
-        `);
+            <tr><td style="white-space: nowrap;">${anchor(method.name)}${modifier}${method.name}</td>
+            <td>${method.description}</td><td>${returns}</td><td>${args}</td><td>${method.since}</td></tr>`);
     });
     if (methods.length == 0) {
         methods.push(getNoDataRowTemplate());
@@ -260,7 +259,7 @@ function getModifierInfo(modifier) {
 function addTypeLink(type) {
     if (typeof type === 'string') {
         type = type == 'literal type' ? '' : type;
-        return (type || '').replace(/\w+/g, subType => {
+        return (type || '').replace(/['"]?\w+['"]?/g, subType => {
             var url = getTypeUrl(subType);
             var target = url.match(/^https?:/) ? '_blank' : '_self';
             return url ? `<a href="${url}" target="${target}">${subType}</a>` : subType;
@@ -282,7 +281,7 @@ function getTypeUrl(type) {
 
     // try basic types
     var tsTypes = ['any', 'void', 'array'];
-    var jsTypes = ["number", "boolean", "string", "object", "date", "function"];
+    var jsTypes = ["number", "boolean", "string", "object", "date", "function", "json"];
     lcType = lcType.toLowerCase();
     if (tsTypes.indexOf(lcType) != -1) {
         return 'https://www.typescriptlang.org/docs/handbook/basic-types.html'
@@ -296,6 +295,17 @@ function getTypeUrl(type) {
     }
     if (type == 'HTMLElement' || type == 'FocusEvent' || type == 'DragEvent') {
         return `https://developer.mozilla.org/zh-CN/docs/Web/API/${type}`;
+    }
+    if (type == 'IterableIterator') {
+        return `https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols`;
+    }
+    if (type == 'NodeListOf') {
+        return `https://developer.mozilla.org/en-US/docs/Web/API/NodeList`;
+    }
+
+    // try rxjs types
+    if (type == 'Subscription') {
+        return `http://cn.rx.js.org/class/es6/Subscription.js~Subscription.html`;
     }
 
     // try third party apis
@@ -329,7 +339,13 @@ function getTypeUrl(type) {
         return `https://angular.io/${info.path}`;
     }
 
-    console.warn('unknown type: ' + type);
+    // 忽略这些已知非类型值：
+    // - 字符串常量类型
+    // - 纯数字常量类型
+    // - T 一般用于泛型类型定义
+    if (!type.match(/['"]/) && !type.match(/\d+/) && type != 'T') {
+        unknownTypes.push(type);
+    }
     return '';
 }
 
@@ -343,6 +359,15 @@ function saveFile(type, fileName, content) {
     apiList.push({name: fileName, parentName: type});
 }
 
+function checkUnknownTypes() {
+    if (unknownTypes.length == 0) {
+        return true;
+    }
+    console.log('Unknown types found:')
+    unknownTypes.forEach(t => console.log(t));
+    return false;
+}
+
 function getComponentTemplate() {
     return `
 <h2>$name</h2>
@@ -350,9 +375,11 @@ function getComponentTemplate() {
 <p>起始版本：$since</p>
 $description
 
+<a name="selectors"></a>
 <h3>选择器 / Selectors</h3>
 <p>$selectors</p>
 
+<a name="inputs"></a>
 <h3>输入属性 / Inputs</h3>
 <table style="width:100%">
     <thead>
@@ -361,6 +388,7 @@ $description
     <tbody>$inputs</tbody>
 </table>
 
+<a name="outputs"></a>
 <h3>输出属性 / Outputs</h3>
 <table style="width:100%">
     <thead>
@@ -369,6 +397,7 @@ $description
     <tbody>$outputs</tbody>
 </table>
 
+<a name="properties"></a>
 <h3>普通属性 / Properties</h3>
 <table style="width:100%">
     <thead>
@@ -377,6 +406,7 @@ $description
     <tbody>$properties</tbody>
 </table>
 
+<a name="methods"></a>
 <h3>方法 / Methods</h3>
 <table style="width:100%">
     <thead>
@@ -385,6 +415,7 @@ $description
     <tbody>$methods</tbody>
 </table>
 
+<a name="object-oriented"></a>
 <h3>面向对象 / Object Oriented</h3>
 <ul><li>继承自 $extends</li><li>实现接口 $implements</li></ul>
 `
@@ -397,6 +428,7 @@ function getClassesTemplate() {
 <p>起始版本：$since</p>
 $description
 
+<a name="properties"></a>
 <h3>属性 / Properties</h3>
 <table style="width:100%">
     <thead>
@@ -405,6 +437,7 @@ $description
     <tbody>$properties</tbody>
 </table>
 
+<a name="methods"></a>
 <h3>方法 / Methods</h3>
 <table style="width:100%">
     <thead>
@@ -413,6 +446,7 @@ $description
     <tbody>$methods</tbody>
 </table>
 
+<a name="object-oriented"></a>
 <h3>面向对象 / Object Oriented</h3>
 <ul><li>继承自 $extends</li><li>实现接口 $implements</li></ul>
 `
@@ -448,4 +482,9 @@ $since
 
 function getNoDataRowTemplate() {
     return '<tr><td style="text-align: center;" colspan="1000">无</td></tr>';
+}
+
+function anchor(name) {
+    // 给这些样式是为了让这个anchor往上顶一点
+    return `<a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="${name}">&nbsp;</a>`;
 }
