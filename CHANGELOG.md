@@ -1,3 +1,31 @@
+## v1.1.4 (2018-3-10)
+
+### 新特性 / New Features
+- https://github.com/rdkmaster/jigsaw/issues/527 `AdditionalTableData`新增了一套API，用于通过编程的方式实现表格可编辑渲染的效果；
+
+### 破坏性修改 / Breaking Changes
+- 无 / none
+
+###  优化 / Modified
+- https://github.com/rdkmaster/jigsaw/issues/372 combo的opentrigger为mouseover的时候，增加100ms左右的延迟，避免鼠标快速划过的时候触发下拉的打开
+- https://github.com/rdkmaster/jigsaw/issues/533 movable指令增加一个demo，在元素既能拖拽又能点击，如何做到拖拽和点击互不干扰
+- combo-select的诸多事件回调函数的清理更加及时和准确，避免这方面的泄露
+
+### 修复 / Fixes
+- https://github.com/rdkmaster/jigsaw/issues/524 additionalDataChange没有按照cacheValue发送additionalTableData
+- https://github.com/rdkmaster/jigsaw/issues/414 表格翻页后，checkbox渲染器疑似有问题
+- https://github.com/rdkmaster/jigsaw/issues/528 j-editable-box的LayoutData在频繁变更box tree时，会导致box内部的table报错
+
+### API废弃 / APIs Deprecated
+
+如下API被标记为废弃，基于向下兼容的目的他们在当前版本中会被保留，但是在后续的版本里将会被删除，请尽早采用新API替代他们。
+
+- 废弃`AdditionalTableData.clearCachedValues()`，使用`AdditionalTableData.clearTouchedValues()`替代
+- 废弃`AdditionalTableData.cacheValue()`，使用`AdditionalTableData.touchValueByRow()`替代
+- 废弃`AdditionalTableData.getTouchedValue()`参数`row`为数字的重载，使用`AdditionalTableData.getTouchedValueByRow()`替代
+- 废弃`AdditionalTableData.getTouchedValues()`，使用`AdditionalTableData.getAllTouched()`替代
+
+
 ## v1.1.3 (2018-3-6)
 
 ### 新特性 / New Features
