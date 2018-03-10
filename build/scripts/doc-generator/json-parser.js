@@ -281,45 +281,66 @@ function addTypeLink(type) {
 
 // 此规则详情参考这里  https://github.com/rdkmaster/jigsaw/issues/542
 function addDescLink(desc) {
-    if (desc == null || desc == undefined) {
+    if (!isDefined(desc)) {
         return '';
     }
     return desc
-        .replace(/<code>\s*(\w+?)\.(\w+?)\s*<\/code>/g, (found, clazz, property) => {
-            console.log(`clazz=${clazz}, prop=${property}`)
+        .replace(/<code>\s*(\w+?)\.(\w+?)\s*[()]*\s*<\/code>/g, (found, clazz, property) => {
             if (!property || !clazz) {
                 console.warn('WARN: bad format found while adding description links: ' + found);
                 return found;
             }
-            return found;
+            var url = getTypeUrl(clazz, property, processingAPI);
+            var target = url.match(/^https?:/) ? '_blank' : '_self';
+            return url ? `<a href="${url}" target="${target}">${found}</a>` : found;
         })
-        .replace(/<code>\s*(\w+?)\s*<\/code>/g, (found, source) => {
-            var type = processingAPI.type || processingAPI.subtype;
-            if (source === processingAPI.name) {
-                return `<a href="/components/jigsaw/api?apiItem=${source}&parentName=${type}">${found}</a>`;
-            }
-            var info = (processingAPI.inputsClass || []).find(i => i.name == source) ||
-                        (processingAPI.outputsClass || []).find(i => i.name == source) ||
-                        mergeProperties(processingAPI).find(i => i.name == source) ||
-                        (processingAPI.methodsClass || processingAPI.methods || []).find(i => i.name == source);
-            if (info) {
-                var name = processingAPI.name;
-                return `<a href="/components/jigsaw/api?apiItem=${name}&parentName=${type}#${info.name}">${found}</a>`;
-            }
-            return found;
+        .replace(/<code>\s*(\w+?)\s*[()]*\s*<\/code>/g, (found, type) => {
+            var url = getTypeUrl(type, type, processingAPI);
+            var target = url.match(/^https?:/) ? '_blank' : '_self';
+            return url ? `<a href="${url}" target="${target}">${found}</a>` : found;
         });
 }
 
-function getTypeUrl(type) {
-    if (!type) {
+function getTypeUrl(type, property, context) {
+    if (!isDefined(type) && !isDefined(property)) {
         return '';
     }
     type = type.trim();
-    var lcType = type.toLowerCase();
-    if (!lcType) {
-        return '';
+
+    // try native properties
+    if (context) {
+        var info = (context.inputsClass || []).find(i => i.name == property) ||
+                   (context.outputsClass || []).find(i => i.name == property) ||
+                   mergeProperties(context).find(i => i.name == property) ||
+                   (context.methodsClass || context.methods || []).find(i => i.name == property);
+        if (info) {
+            var name = context.name;
+            var parentName = context.subtype || context.type;
+            return `/components/jigsaw/api?apiItem=${name}&parentName=${parentName}#${info.name}`;
+        }
     }
 
+    // try native types
+    var info = context && context.name === type ? context  : null ||
+               docInfo.classes.find(i => i.name === type) ||
+               docInfo.components.find(i => i.name === type) ||
+               docInfo.directives.find(i => i.name === type) ||
+               docInfo.injectables.find(i => i.name === type) ||
+               docInfo.interfaces.find(i => i.name === type) ||
+               docInfo.modules.find(i => i.name === type) ||
+               docInfo.miscellaneous.typealiases.find(i => i.name === type) ||
+               docInfo.miscellaneous.enumerations.find(i => i.name === type);
+    if (info) {
+        return `/components/jigsaw/api?apiItem=${type}&parentName=${info.subtype || info.type}`;
+    }
+
+    // try angular types
+    angularApis.find(set => info = set.items.find(i => i.title === type));
+    if (info) {
+        return `https://angular.io/${info.path}`;
+    }
+
+    var lcType = type.toLowerCase();
     // try basic types
     var tsTypes = ['any', 'void', 'array'];
     var jsTypes = ["number", "boolean", "string", "object", "date", "function", "json"];
@@ -360,34 +381,19 @@ function getTypeUrl(type) {
         return `https://github.com/utatti/perfect-scrollbar#options`;
     }
 
-    // try native types
-    var info = docInfo.classes.find(i => i.name === type) ||
-               docInfo.components.find(i => i.name === type) ||
-               docInfo.directives.find(i => i.name === type) ||
-               docInfo.injectables.find(i => i.name === type) ||
-               docInfo.interfaces.find(i => i.name === type) ||
-               docInfo.modules.find(i => i.name === type) ||
-               docInfo.miscellaneous.typealiases.find(i => i.name === type) ||
-               docInfo.miscellaneous.enumerations.find(i => i.name === type);
-    if (info) {
-        return `/components/jigsaw/api?apiItem=${type}&parentName=${info.subtype || info.type}`;
-    }
-
-
-    // try angular types
-    angularApis.find(set => info = set.items.find(i => i.title === type));
-    if (info) {
-        return `https://angular.io/${info.path}`;
-    }
-
     // 忽略这些已知非类型值：
     // - 字符串常量类型
     // - 纯数字常量类型
     // - T 一般用于泛型类型定义
-    if (!type.match(/['"]/) && !type.match(/\d+/) && type != 'T') {
+    if (!type.match(/['"]/) && !type.match(/\d+/) && type != 'T' &&
+        !context && unknownTypes.indexOf(type) == -1) {
         unknownTypes.push(type);
     }
     return '';
+}
+
+function isDefined(x) {
+    return x !== null && x !== undefined;
 }
 
 function saveFile(type, fileName, content) {
@@ -404,8 +410,7 @@ function checkUnknownTypes() {
     if (unknownTypes.length == 0) {
         return true;
     }
-    console.log('Unknown types found:')
-    unknownTypes.forEach(t => console.log(t));
+    unknownTypes.forEach(t => console.log('Unknown types found:' + t));
     return false;
 }
 
