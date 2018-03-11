@@ -69,7 +69,7 @@ docInfo.miscellaneous.typealiases.forEach(ci => {
     html = html.replace('$title', ci.name);
     html = html.replace('$name', '类型别名：' + ci.name);
     html = html.replace('$rawtype', '原始类型：' + addTypeLink(ci.rawtype));
-    html = html.replace('$since', '起始版本：' + ci.since);
+    html = html.replace('$since', '起始版本：' + (ci.since ? ci.since : 'v1.0.0'));
     html = html.replace('$description', ci.description);
     saveFile(ci.subtype, ci.name, html);
 });
@@ -80,7 +80,7 @@ docInfo.miscellaneous.enumerations.forEach(ci => {
     fixMetaInfo(ci);
     var html = getTypeEnumTemplate();
     html = html.replace('$name', ci.name);
-    html = html.replace('$since', ci.since);
+    html = html.replace('$since', (ci.since ? ci.since : 'v1.0.0'));
     var items = [];
     ci.childs.forEach(i => items.push(`<li>${i.name}</li>`));
     html = html.replace('$enumItems', items.join('\n'));
@@ -94,7 +94,7 @@ if (!checkUnknownTypes()) {
 }
 
 function processCommon(ci, html) {
-    html = html.replace('$since', ci.since);
+    html = html.replace('$since', (ci.since ? ci.since : 'v1.0.0'));
     html = html.replace('$name', ci.name);
     html = html.replace('$description', ci.description);
     html = html.replace('$extends', ci.extends ? addTypeLink(ci.extends) : '--');
@@ -113,13 +113,12 @@ function processInputs(ci, html) {
     var inputs = [];
     ci.inputsClass.forEach(input => {
         fixMetaInfo(input);
-        input.since = input.since ? input.since : ci.since;
         input.defaultValue = input.defaultValue ? input.defaultValue : '';
         var dualBinding = ci.outputsClass.find(i => i.name == input.name + 'Change') ?
             '<span class="fa fa-retweet" style="margin-left:4px" title="本属性支持双向绑定"></span>' : '';
-        inputs.push(`
-            <tr><td>${anchor(input.name)}${input.name}${dualBinding}</td><td>${addTypeLink(input.type)}</td>
-            <td>${input.defaultValue}</td><td>${input.description}</td><td>${input.since}</td></tr>`);
+        var description = input.description + (input.since ? `<p>起始版本：${input.since}</p>` : '');
+        inputs.push(`<tr><td>${anchor(input.name)}${input.name}${dualBinding}</td>
+            <td>${addTypeLink(input.type)}</td><td>${input.defaultValue}</td><td>${description}</td></tr>`);
     });
     if (inputs.length == 0) {
         inputs.push(getNoDataRowTemplate());
@@ -131,16 +130,15 @@ function processOutputs(ci, html) {
     var outputs = [];
     ci.outputsClass.forEach(output => {
         fixMetaInfo(output);
-        output.since = output.since ? output.since : ci.since;
         output.defaultValue = output.defaultValue ? output.defaultValue : '';
         var match = output.defaultValue.match(/<(.*)>/);
         var type = 'any';
         if (match) {
             type = match[1];
         }
-        outputs.push(`
-            <tr><td>${anchor(output.name)}${output.name}</td><td>${addTypeLink(type)}</td>
-            <td>${output.description}</td><td>${output.since}</td></tr>`);
+        var description = output.description + (output.since ? `<p>起始版本：${output.since}</p>` : '');
+        outputs.push(`<tr><td>${anchor(output.name)}${output.name}</td>
+            <td>${addTypeLink(type)}</td><td>${description}</td></tr>`);
     });
     if (outputs.length == 0) {
         outputs.push(getNoDataRowTemplate());
@@ -179,15 +177,14 @@ function processProperties(ci, html) {
     var properties = [];
     mergeProperties(ci).forEach(property => {
         fixMetaInfo(property);
-        property.since = property.since ? property.since : ci.since;
         property.defaultValue = property.defaultValue ? property.defaultValue : '';
         var readOnly = property.readOnly ?
             '<span style="margin-right:4px;color:#9a14a9;" title="Read Only" class="fa fa-adjust"></span>' : '';
         var modifier = getModifierInfo(property.modifierKind);
+        var description = property.description + (property.since ? `<p>起始版本：${property.since}</p>` : '');
         properties.push(`<tr><td style="white-space: nowrap;">
-            ${anchor(property.name)}${modifier}${readOnly}${property.name}</td>
-            <td>${addTypeLink(property.type)}</td><td>${property.description}</td>
-            <td>${property.defaultValue}</td><td>${property.since}</td></tr>`);
+            ${anchor(property.name)}${modifier}${readOnly}${property.name}</td><td>${addTypeLink(property.type)}</td>
+            <td>${description}</td><td>${property.defaultValue}</td></tr>`);
     });
     if (properties.length == 0) {
         properties.push(getNoDataRowTemplate());
@@ -199,7 +196,6 @@ function processMethods(ci, html) {
     var methods = [];
     (ci.methodsClass || ci.methods).forEach(method => {
         fixMetaInfo(method);
-        method.since = method.since ? method.since : ci.since;
 
         var returns = `<p>返回类型 ${addTypeLink(method.returnType)}</p>`;
         var returnComment = method.jsdoctags ? method.jsdoctags.find(t => t.tagName.text == 'returns') : undefined;
@@ -223,9 +219,10 @@ function processMethods(ci, html) {
             args = `<ul><li>${args.join('</li><li>')}</li></ul>`;
         }
         var modifier = getModifierInfo(method.modifierKind);
+        var description = method.description + (method.since ? `<p>起始版本：${method.since}</p>` : '');
         methods.push(`
             <tr><td style="white-space: nowrap;">${anchor(method.name)}${modifier}${method.name}</td>
-            <td>${method.description}</td><td>${returns}</td><td>${args}</td><td>${method.since}</td></tr>`);
+            <td>${description}</td><td>${returns}</td><td>${args}</td></tr>`);
     });
     if (methods.length == 0) {
         methods.push(getNoDataRowTemplate());
@@ -244,9 +241,6 @@ function fixMetaInfo(metaInfo) {
             return suffix;
         });
     metaInfo.description = addDescLink(metaInfo.description);
-    if (!metaInfo.since) {
-        metaInfo.since = 'v1.0.0';
-    }
 }
 
 function getModifierInfo(modifier) {
@@ -291,47 +285,25 @@ function addDescLink(desc) {
                 console.warn('WARN: bad format found while adding description links: ' + found);
                 return found;
             }
-            var url = getTypeUrl(clazz, property, processingAPI);
+            var url = getPropertyUrl(clazz, property, processingAPI);
             var target = url.match(/^https?:/) ? '_blank' : '_self';
             return url ? `<a href="${url}" target="${target}">${found}</a>` : found;
         })
         .replace(/<code>\s*(\w+?)\s*[()]*\s*<\/code>/g, (found, type) => {
-            var url = getTypeUrl(type, type, processingAPI);
+            var url = getPropertyUrl(type, processingAPI);
             var target = url.match(/^https?:/) ? '_blank' : '_self';
             return url ? `<a href="${url}" target="${target}">${found}</a>` : found;
         });
 }
 
-function getTypeUrl(type, property, context) {
-    if (!isDefined(type) && !isDefined(property)) {
+function getTypeUrl(type, allowUnknown) {
+    if (!isDefined(type)) {
         return '';
     }
     type = type.trim();
 
-    // try native properties
-    if (context) {
-        var info = (context.inputsClass || []).find(i => i.name == property) ||
-                   (context.outputsClass || []).find(i => i.name == property) ||
-                   mergeProperties(context).find(i => i.name == property) ||
-                   (context.methodsClass || context.methods || []).find(i => i.name == property);
-        if (info) {
-            var name = context.name;
-            var parentName = context.subtype || context.type;
-            return `/components/jigsaw/api?apiItem=${name}&parentName=${parentName}#${info.name}`;
-        } else if (context.extends) {
-            // 尝试在其父类中寻找属性
-            var parentInfo = findMetaInfo(context.extends);
-            if (parentInfo) {
-                var url = getTypeUrl(type, property, parentInfo);
-                if (url) {
-                    return url;
-                }
-            }
-        }
-    }
-
     // try native types
-    var info = context && context.name === type ? context : findMetaInfo(type);
+    var info = findTypeMetaInfo(type);
     if (info) {
         return `/components/jigsaw/api?apiItem=${type}&parentName=${info.subtype || info.type}`;
     }
@@ -387,14 +359,44 @@ function getTypeUrl(type, property, context) {
     // - 字符串常量类型
     // - 纯数字常量类型
     // - T 一般用于泛型类型定义
-    if (!type.match(/['"]/) && !type.match(/\d+/) && type != 'T' &&
-        !context && unknownTypes.indexOf(type) == -1) {
+    if (!type.match(/['"]/) && !type.match(/\d+/) && type != 'T'
+        && !allowUnknown &&unknownTypes.indexOf(type) == -1) {
         unknownTypes.push(type);
     }
     return '';
 }
 
-function findMetaInfo(type) {
+function getPropertyUrl(type, property, context) {
+    if (arguments.length == 2) {
+        context = property;
+
+        var info = findPropertyMetaInfo(context, type);
+        if (info) {
+            // 此时的type是一个属性，这里的info里包含的可能是该属性在其父类里的信息
+            var name = info.type.name;
+            var subtype = info.type.subtype || info.type.type;
+            return `/components/jigsaw/api?apiItem=${name}&parentName=${subtype}#${type}`;
+        }
+        var info = findTypeMetaInfo(type);
+        if (info) {
+            // 此时的type是一个类
+            return `/components/jigsaw/api?apiItem=${info.name}&parentName=${info.subtype || info.type}`;
+        }
+        // 试一下是不是angular、ts等其他的类型
+        return getTypeUrl(type, true);
+    } else {
+        var info = findPropertyMetaInfo(type, property);
+        if (info) {
+            // 这里的info里包含的可能是该属性在其父类里的信息
+            var name = info.type.name;
+            var subtype = info.type.subtype || info.type.type;
+            return `/components/jigsaw/api?apiItem=${name}&parentName=${subtype}#${property}`;
+        }
+    }
+    return '';
+}
+
+function findTypeMetaInfo(type) {
     return docInfo.classes.find(i => i.name === type) ||
            docInfo.components.find(i => i.name === type) ||
            docInfo.directives.find(i => i.name === type) ||
@@ -403,6 +405,31 @@ function findMetaInfo(type) {
            docInfo.modules.find(i => i.name === type) ||
            docInfo.miscellaneous.typealiases.find(i => i.name === type) ||
            docInfo.miscellaneous.enumerations.find(i => i.name === type);
+}
+
+// 在一个类中寻找一个属性，这个方法支持追溯到父类里
+function findPropertyMetaInfo(type, property) {
+    if (!type) {
+        return;
+    }
+    if (typeof type === 'string') {
+        var context = findTypeMetaInfo(type);
+    } else {
+        var context = type;
+        type = type.name;
+    }
+    if (!context) {
+        return;
+    }
+
+    var info = (context.inputsClass || []).find(i => i.name == property) ||
+               (context.outputsClass || []).find(i => i.name == property) ||
+               mergeProperties(context).find(i => i.name == property) ||
+               (context.methodsClass || context.methods || []).find(i => i.name == property);
+    if (info) {
+        return {type: context, property: info};
+    }
+    return findPropertyMetaInfo(context.extends, property);
 }
 
 function isDefined(x) {
@@ -423,7 +450,7 @@ function checkUnknownTypes() {
     if (unknownTypes.length == 0) {
         return true;
     }
-    unknownTypes.forEach(t => console.log('Unknown types found:' + t));
+    unknownTypes.forEach(t => console.log('Unknown type found: ' + t));
     return false;
 }
 
@@ -442,7 +469,7 @@ $description
 <h3>输入属性 / Inputs</h3>
 <table style="width:100%">
     <thead>
-        <tr><th>名称</th><th>类型</th><th>默认值</th><th>说明</th><th>起始版本</th></tr>
+        <tr><th>名称</th><th>类型</th><th>默认值</th><th>说明</th></tr>
     </thead>
     <tbody>$inputs</tbody>
 </table>
@@ -451,7 +478,7 @@ $description
 <h3>输出属性 / Outputs</h3>
 <table style="width:100%">
     <thead>
-        <tr><th>名称</th><th>数据类型</th><th>说明</th><th>起始版本</th></tr>
+        <tr><th>名称</th><th>数据类型</th><th>说明</th></tr>
     </thead>
     <tbody>$outputs</tbody>
 </table>
@@ -460,7 +487,7 @@ $description
 <h3>普通属性 / Properties</h3>
 <table style="width:100%">
     <thead>
-        <tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th><th>起始版本</th></tr>
+        <tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th></tr>
     </thead>
     <tbody>$properties</tbody>
 </table>
@@ -469,7 +496,7 @@ $description
 <h3>方法 / Methods</h3>
 <table style="width:100%">
     <thead>
-        <tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th><th>起始版本</th></tr>
+        <tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th></tr>
     </thead>
     <tbody>$methods</tbody>
 </table>
@@ -491,7 +518,7 @@ $description
 <h3>属性 / Properties</h3>
 <table style="width:100%">
     <thead>
-        <tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th><th>起始版本</th></tr>
+        <tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th></tr>
     </thead>
     <tbody>$properties</tbody>
 </table>
@@ -500,7 +527,7 @@ $description
 <h3>方法 / Methods</h3>
 <table style="width:100%">
     <thead>
-        <tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th><th>起始版本</th></tr>
+        <tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th></tr>
     </thead>
     <tbody>$methods</tbody>
 </table>
