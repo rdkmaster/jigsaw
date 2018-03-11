@@ -136,6 +136,8 @@ export function _getColumnIndex(data: TableData, additionalData: TableData, fiel
  * 用户在界面上，通过渲染器“摸”了表格的附加列之后，表格会将用户当时“摸过”列的相关信息，
  * 以此类型保存在内存中备用。这些数据是渲染器在判定哪些列被“摸过”时的关键数据，
  * 应用也可以通过`AdditionalTableData`的各个api更新这些数据。
+ *
+ * $since = v1.1.4
  */
 export type TouchedValue = { key: any | any[], value: any, data: any[] };
 
@@ -182,6 +184,8 @@ export class AdditionalTableData extends TableData {
 
     /**
      * 清空所有数据
+     *
+     * $since = v1.1.4
      */
     public clearTouchedValues(): void {
         this._touchedValues = {};
@@ -223,6 +227,8 @@ export class AdditionalTableData extends TableData {
     /**
      * 更新用户“摸过”的单元格的值。
      *
+     * $since = v1.1.4
+     *
      * @param {string | number} field 需要更新的列名或者列索引
      * @param {number} row 当前页行索引，只支持更新表格的当前页数据，如果需要更新其他页的数据，请使用`touchValue()`方法
      * @param value 将此变量替代缓存里的数据，如果缓存里不存在对应的数据，则会新建一个对应的数据
@@ -235,6 +241,8 @@ export class AdditionalTableData extends TableData {
 
     /**
      * 更新用户“摸过”的单元格的值。如果需要更新的是当前页，则通过`touchValueByRow()`方法更新会更方便些。
+     *
+     * $since = v1.1.4
      *
      * @param {string | number} field 需要更新的列名或者列索引
      * @param {any | any[]} key 通过此值来确定更新缓存中的哪一行或者哪些行的数据，
@@ -273,6 +281,8 @@ export class AdditionalTableData extends TableData {
      * - 如果需要获取缓存的详细信息，请使用`getTouchedInfoByRow()`
      * - 如果需要获取其他页的信息，请使用`getTouchedValue()`或者`getTouchedInfo()`
      *
+     * $since = v1.1.4
+     *
      * @param {string | number} field 需要获取的列名或者列索引
      * @param {number} row 当前页行索引，支持获取表格的当前页数据，如果需要获取其他页的数据，请使用`getTouchedValue()`方法
      * @return {any} 用户“摸过”之后改单元格的新值。
@@ -287,6 +297,8 @@ export class AdditionalTableData extends TableData {
      *
      * 只能返回当前页的数据，如果需要获取其他页的数据，请使用`getTouchedInfo()`。
      *
+     * $since = v1.1.4
+     *
      * @param {string | number} field 需要获取的列名或者列索引
      * @param {number} row 当前页行索引，支持获取表格的当前页数据，如果需要获取其他页的数据，请使用`getTouchedValue()`方法
      * @return {TouchedValue} 用户“摸过”之后该单元格对应缓存数据对象。
@@ -299,6 +311,8 @@ export class AdditionalTableData extends TableData {
 
     /**
      * 获取用户“摸过”的单元格的值，可获取任意页的缓存数据。
+     *
+     * $since = v1.1.4
      *
      * @param {string | number} field 需要获取的列名或者列索引
      * @param {any | any[]} key
@@ -335,6 +349,8 @@ export class AdditionalTableData extends TableData {
      *
      * 通过此方法可获取任意页的缓存数据。
      *
+     * $since = v1.1.4
+     *
      * @param {string | number} field 需要获取的列名或者列索引
      * @param {any | any[]} key 通过此值来确定更新缓存中的哪一行或者哪些行的数据，
      * 一般需要配合[`trackRowBy`属性]($home/table/checkbox-column#open-desc=true)一起使用。
@@ -355,6 +371,8 @@ export class AdditionalTableData extends TableData {
 
     /**
      * 当表格单元格的值是对象而非简单类型的时候，对key的比较需要采用严格模式
+     *
+     * $since = v1.1.4
      *
      * @param key1
      * @param key2
@@ -406,6 +424,8 @@ export class AdditionalTableData extends TableData {
 
     /**
      * 获取用户在表格上“摸过”的所有行的详细信息，对这些信息做修改后调用`table.update()`方法可以刷新界面
+     *
+     * $since = v1.1.4
      *
      * @param {string | number} field 需要获取的列名或者列索引
      * @returns {TouchedValue[]} 所有行的详细信息
