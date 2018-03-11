@@ -199,7 +199,7 @@ function processMethods(ci, html) {
 
         var returns = `<p>返回类型 ${addTypeLink(method.returnType)}</p>`;
         var returnComment = method.jsdoctags ? method.jsdoctags.find(t => t.tagName.text == 'returns') : undefined;
-        returns += returnComment ? returnComment.comment : '';
+        returns += returnComment ? addDescLink(returnComment.comment) : '';
 
         var args = [];
         var jsdoctags = method.jsdoctags ? method.jsdoctags : [];
@@ -210,7 +210,7 @@ function processMethods(ci, html) {
             var type = a.type ? `: ${addTypeLink(a.type)}` : '';
             var arg = `<span style="white-space: nowrap;">
                 ${a.name.text || a.name}${type}</code>
-                </span>${a.comment ? a.comment : ''}`;
+                </span>${a.comment ? addDescLink(a.comment) : ''}`;
             args.push(arg);
         });
         if (args.length == 0) {
