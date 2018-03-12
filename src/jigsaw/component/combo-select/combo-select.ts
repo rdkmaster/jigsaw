@@ -236,6 +236,12 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         });
     }
 
+    private _autoClose() {
+        if (this.autoClose) {
+            this.open = false;
+        }
+    }
+
     private _autoEditorWidth() {
         if (!this.searchable || !this._editorElementRef) return;
 
@@ -327,13 +333,11 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             });
         }
 
-        //点击dropdown，自动关闭dropdown，主要用于单选的情况
-        if (!this.autoClose) {
-            this._removePopupClickHandler = this._renderer.listen(this._popupElement, 'click', event => {
-                event.stopPropagation();
-                event.preventDefault();
-            });
-        }
+        //阻止点击行为冒泡到window
+        this._removePopupClickHandler = this._renderer.listen(this._popupElement, 'click', event => {
+            event.stopPropagation();
+            event.preventDefault();
+        });
 
         //同步dropdown宽度
         this._autoWidth();
@@ -474,6 +478,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         this._value = value instanceof ArrayCollection ? value : new ArrayCollection(value);
         this.callLater(() => this.valueChange.emit(this._value));
         this._autoWidth();
+        this._autoClose();
 
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback()
@@ -482,6 +487,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             this.valueChange.emit(this._value);
             this._propagateChange(this._value);
             this._autoWidth();
+            this._autoClose();
         });
     }
 
