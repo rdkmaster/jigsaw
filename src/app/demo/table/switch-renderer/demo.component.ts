@@ -15,7 +15,6 @@ export class TableSwitchRendererDemoComponent {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list-for-switch');
-
     }
 
     columns: ColumnDefine[] = [

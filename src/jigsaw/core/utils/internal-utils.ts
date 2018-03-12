@@ -92,29 +92,6 @@ export class InternalUtils {
         r += min;
         return r;
     }
-
-    public static isPrime(num){
-        // 不是整数或者数字小于2
-        if(!Number.isInteger(num) || num < 2){　// Number.isInteger 判断是否为整数
-            return false;
-        }
-
-        //2是质数
-        if(num == 2){
-            return true;
-        }else if(num % 2 == 0){ // 排除偶数
-            return false;
-        }
-        // 依次判断是否能被奇数整除，最大循环为数值的开方
-        var squareRoot = Math.sqrt(num);
-        // 因为2已经验证过，所以从3开始；且已经排除偶数，所以每次加2
-        for(var i = 3; i <= squareRoot; i += 2) {
-            if (num % i === 0) {
-                return false;
-            }
-        }
-        return true;
-    }
 }
 
 /*
