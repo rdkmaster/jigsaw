@@ -1,8 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {TableData} from "jigsaw/core/data/table-data";
-import {LineBarGraphData} from "jigsaw/core/data/graph-data";
-import {JigsawTab} from "../../../../jigsaw/component/tabs/tab";
+import {JigsawTab} from "jigsaw/component/tabs/tab";
 
 @Component({
     templateUrl: './demo.component.html',
