@@ -275,9 +275,9 @@ export class PopupService {
             popupRef.instance.dispose = disposer;
             popupRef.instance.initData = initData;
         }
-        removeWindowListens = this._beforePopup(options, element, PopupService._renderer, disposer);
+        removeWindowListens = this._beforePopup(options, element, disposer);
         setTimeout(() => {
-            this._setPopup(options, element, PopupService._renderer);
+            this._setPopup(options, element);
         }, 0);
 
         return {
@@ -299,39 +299,39 @@ export class PopupService {
             const [blockInfo,] = this._popupFactory(JigsawBlock, blockOptions);
             disposer = blockInfo.dispose;
             element = blockInfo.element;
-            this._setStyle(options, element, PopupService._renderer);
-            this._setPopup(blockOptions, element, PopupService._renderer);
+            this._setStyle(options, element);
+            this._setPopup(blockOptions, element);
         }
         return disposer
     }
 
-    private _beforePopup(options: PopupOptions, element: HTMLElement, renderer: Renderer2, disposer: PopupDisposer): PopupDisposer[] {
-        this._removeAnimation(options, element, renderer);
-        this._setStyle(options, element, renderer);
-        if (!options || !options.disposeOnRouterChanged) {
+    private _beforePopup(options: PopupOptions, element: HTMLElement, disposer: PopupDisposer): PopupDisposer[] {
+        this._removeAnimation(options, element);
+        this._setStyle(options, element);
+        if (!options || !options.hasOwnProperty('disposeOnRouterChanged') || options.disposeOnRouterChanged) {
             this._listenRouterChange(disposer);
         }
-        return this._setWindowListener(options, element, renderer);
+        return this._setWindowListener(options, element);
     }
 
-    private _setStyle(options: PopupOptions, element: HTMLElement, renderer: Renderer2): void {
+    private _setStyle(options: PopupOptions, element: HTMLElement): void {
         if (this._isModal(options)) {
-            renderer.setStyle(element, 'z-index', PopupZIndex.modal);
+            PopupService._renderer.setStyle(element, 'z-index', PopupZIndex.modal);
         } else {
-            renderer.setStyle(element, 'z-index', PopupZIndex.popover);
+            PopupService._renderer.setStyle(element, 'z-index', PopupZIndex.popover);
         }
-        renderer.setStyle(element, 'visibility', 'hidden');
+        PopupService._renderer.setStyle(element, 'visibility', 'hidden');
     }
 
-    private _removeAnimation(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
+    private _removeAnimation(options: PopupOptions, element: HTMLElement) {
         const popupEffect = PopupService._getPopupEffect(options);
 
         //删除可能有的动画class，确保能触发动画的animationend事件
         if (element.classList.contains(popupEffect.showEffect)) {
-            renderer.removeClass(element, popupEffect.showEffect);
+            PopupService._renderer.removeClass(element, popupEffect.showEffect);
         }
         if (element.classList.contains(popupEffect.hideEffect)) {
-            renderer.removeClass(element, popupEffect.hideEffect);
+            PopupService._renderer.removeClass(element, popupEffect.hideEffect);
         }
 
         //弹出EmbeddedViewRef时，防止同一个HtmlElement被反复弹出和销毁，使的弹出时监听到上次销毁时的animationend事件
@@ -350,7 +350,7 @@ export class PopupService {
         //一出来就插入到文档流的最后，这给后续计算尺寸造成麻烦，这里给设置fixed，就可以避免影响滚动条位置
         PopupService._renderer.setStyle(element, 'position', 'fixed');
         PopupService._renderer.setStyle(element, 'top', 0);
-        const disposer: PopupDisposer = this._getDisposer(options, ref, element, PopupService._renderer);
+        const disposer: PopupDisposer = this._getDisposer(options, ref, element);
         return [{element: element, dispose: disposer, answer: null, instance: null}, ref];
     }
 
@@ -374,12 +374,8 @@ export class PopupService {
         return element
     }
 
-    private _getDisposer(options: PopupOptions, popupRef: PopupRef, element: HTMLElement, renderer: Renderer2): PopupDisposer {
-        return () => {
-            this._setHideAnimate(options, element, renderer, () => {
-                popupRef.destroy()
-            });
-        }
+    private _getDisposer(options: PopupOptions, popupRef: PopupRef, element: HTMLElement): PopupDisposer {
+        return () => this._setHideAnimate(options, element, () => popupRef.destroy())
     }
 
     /**
@@ -406,24 +402,24 @@ export class PopupService {
         return CommonUtils.isEmptyObject(options) || !options.pos;
     }
 
-    private _setPopup(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
-        if (element && renderer) {
-            this._setSize(options, element, renderer);
-            this.setPosition(options, element, renderer);
-            this._setBackground(options, element, renderer);
-            this._setShowAnimate(options, element, renderer);
+    private _setPopup(options: PopupOptions, element: HTMLElement) {
+        if (element) {
+            this._setSize(options, element);
+            this.setPosition(options, element);
+            this._setBackground(options, element);
+            this._setShowAnimate(options, element);
         }
     }
 
-    private _setWindowListener(options: PopupOptions, element: HTMLElement, renderer: Renderer2): PopupDisposer[] {
+    private _setWindowListener(options: PopupOptions, element: HTMLElement): PopupDisposer[] {
         let removeWindowListens: PopupDisposer[] = [];
         if (this._isGlobalPopup(options)) {
             this._zone.runOutsideAngular(() => {
                 // 所有的全局事件应该放到zone外面，不一致会导致removeEvent失效，见#286
-                removeWindowListens.push(renderer.listen('window', 'resize', () => {
-                    renderer.setStyle(element, 'top',
+                removeWindowListens.push(PopupService._renderer.listen('window', 'resize', () => {
+                    PopupService._renderer.setStyle(element, 'top',
                         (document.body.clientHeight / 2 - element.offsetHeight / 2) + 'px');
-                    renderer.setStyle(element, 'left',
+                    PopupService._renderer.setStyle(element, 'left',
                         (document.body.clientWidth / 2 - element.offsetWidth / 2) + 'px');
                 }));
             });
@@ -434,48 +430,48 @@ export class PopupService {
     /*
      * 设置弹框尺寸
      * */
-    private _setSize(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
+    private _setSize(options: PopupOptions, element: HTMLElement) {
         if (!options || !options.size) return;
         let size = options.size;
 
         if (size.width) {
-            renderer.setStyle(element, 'width', CommonUtils.getCssValue(size.width));
+            PopupService._renderer.setStyle(element, 'width', CommonUtils.getCssValue(size.width));
         }
         if (size.minWidth) {
-            renderer.setStyle(element, 'min-width', CommonUtils.getCssValue(size.minWidth));
+            PopupService._renderer.setStyle(element, 'min-width', CommonUtils.getCssValue(size.minWidth));
         }
         if (size.height) {
-            renderer.setStyle(element, 'height', CommonUtils.getCssValue(size.height));
+            PopupService._renderer.setStyle(element, 'height', CommonUtils.getCssValue(size.height));
         }
     }
 
     /*
      * 设置边框、阴影、动画
      * */
-    private _setBackground(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
+    private _setBackground(options: PopupOptions, element: HTMLElement) {
         if (!this._isModal(options)) {
-            renderer.setStyle(element, 'box-shadow', '1px 1px 6px rgba(0, 0, 0, .2)');
+            PopupService._renderer.setStyle(element, 'box-shadow', '1px 1px 6px rgba(0, 0, 0, .2)');
         }
         if (options && options.showBorder) {
-            renderer.setStyle(element, 'border', '1px solid #dcdcdc');
-            renderer.setStyle(element, 'border-radius', '4px');
+            PopupService._renderer.setStyle(element, 'border', '1px solid #dcdcdc');
+            PopupService._renderer.setStyle(element, 'border-radius', '4px');
         }
     }
 
-    private _setShowAnimate(options: PopupOptions, element: HTMLElement, renderer: Renderer2) {
-        renderer.setStyle(element, 'visibility', 'visible');
-        renderer.addClass(element, PopupService._getPopupEffect(options).showEffect);
+    private _setShowAnimate(options: PopupOptions, element: HTMLElement) {
+        PopupService._renderer.setStyle(element, 'visibility', 'visible');
+        PopupService._renderer.addClass(element, PopupService._getPopupEffect(options).showEffect);
 
-        const removeElementListen = renderer.listen(element, 'animationend', () => {
+        const removeElementListen = PopupService._renderer.listen(element, 'animationend', () => {
             removeElementListen();
             this._eventHelper.del(element, 'animationend', removeElementListen);
         });
         this._eventHelper.put(element, 'animationend', removeElementListen);
     }
 
-    private _setHideAnimate(options: PopupOptions, element: HTMLElement, renderer: Renderer2, cb: () => void) {
-        renderer.addClass(element, PopupService._getPopupEffect(options).hideEffect);
-        const removeElementListen = renderer.listen(element, 'animationend', () => {
+    private _setHideAnimate(options: PopupOptions, element: HTMLElement, cb: () => void) {
+        PopupService._renderer.addClass(element, PopupService._getPopupEffect(options).hideEffect);
+        const removeElementListen = PopupService._renderer.listen(element, 'animationend', () => {
             removeElementListen();
             this._eventHelper.del(element, 'animationend', removeElementListen);
             cb();
@@ -513,12 +509,12 @@ export class PopupService {
     /*
      * 设置弹出的位置
      * */
-    public setPosition(options: PopupOptions, element: HTMLElement, renderer: Renderer2): void {
+    public setPosition(options: PopupOptions, element: HTMLElement): void {
         let posType: string = this._isGlobalPopup(options) ? 'fixed' : this._getPositionType(options.posType);
         let position = this._getPositionValue(options, element);
-        renderer.setStyle(element, 'position', posType);
-        renderer.setStyle(element, 'top', position.top + 'px');
-        renderer.setStyle(element, 'left', position.left + 'px');
+        PopupService._renderer.setStyle(element, 'position', posType);
+        PopupService._renderer.setStyle(element, 'top', position.top + 'px');
+        PopupService._renderer.setStyle(element, 'left', position.left + 'px');
     }
 
     /*

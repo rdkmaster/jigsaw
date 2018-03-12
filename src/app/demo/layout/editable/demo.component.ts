@@ -27,4 +27,10 @@ export class EditableDemoComponent {
             {},
         ]);
     }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '这个DEMO演示了`j-editable-box`的是否可编辑的功能';
+    description: string = '';
 }

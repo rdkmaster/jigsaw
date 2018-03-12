@@ -16,6 +16,8 @@ import {routerConfig as layoutConfig} from "./demo/layout/demo-set.module";
 import {routerConfig as listConfig} from "./demo/list/demo-set.module";
 import {routerConfig as loadingConfig} from "./demo/loading/demo-set.module";
 import {routerConfig as miscConfig} from "./demo/misc/demo-set.module";
+import {routerConfig as movableConfig} from "./demo/movable/demo-set.module";
+import {routerConfig as notificationConfig} from "./demo/notification/demo-set.module";
 import {routerConfig as paginationConfig} from "./demo/pagination/demo-set.module";
 import {routerConfig as popupConfig} from "./demo/popup/demo-set.module";
 import {routerConfig as radioConfig} from "./demo/radio-group/demo-set.module";
@@ -94,6 +96,8 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'list', listConfig);
         this._addRouterConfig(routerConfig, 'loading', loadingConfig);
         this._addRouterConfig(routerConfig, 'misc', miscConfig);
+        this._addRouterConfig(routerConfig, 'movable', movableConfig);
+        this._addRouterConfig(routerConfig, 'notification', notificationConfig);
         this._addRouterConfig(routerConfig, 'pagination', paginationConfig);
         this._addRouterConfig(routerConfig, 'popup', popupConfig);
         this._addRouterConfig(routerConfig, 'radio-group', radioConfig);

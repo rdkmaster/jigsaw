@@ -341,10 +341,10 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
             this.current = 1;
         }
 
-        setTimeout(() => {
+        this.callLater(() => {
             this._getFirstAndLastPage();
             this._setCurrentShow();
-        }, 0);
+        });
 
         this._pageNumberInit = true;
     }
@@ -372,7 +372,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
 
     ngAfterViewInit() {
         this._pages.changes.subscribe(() => {
-            setTimeout(() => {
+            this.callLater(() => {
                 //之前的上五页和下五页按钮居然有残留
                 this._pages.forEach(page => {
                     page.showPrev = false;
@@ -382,10 +382,9 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
 
                 this._getFirstAndLastPage();
                 this._setCurrentShow();
-            }, 0);
+            });
         });
     }
-
 }
 
 /**

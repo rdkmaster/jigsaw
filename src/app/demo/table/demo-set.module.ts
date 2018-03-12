@@ -71,6 +71,8 @@ import {TableScrollListenDemoComponent} from "./scroll-listen/demo.component";
 import {TableScrollListenDemoModule} from "./scroll-listen/demo.module";
 import {SudokuGameComponent} from "./sudoku/demo.component";
 import {SodokuGameModule} from "./sudoku/demo.module";
+import {TableAddCheckboxColumnPageableDemoModule} from "./checkbox-column-pageable/demo.module";
+import {TableAddCheckboxColumnPageableDemoComponent} from "./checkbox-column-pageable/demo.component";
 
 export const routerConfig = [
     {
@@ -178,6 +180,9 @@ export const routerConfig = [
     {
         path: 'scroll-listen', component: TableScrollListenDemoComponent
     },
+    {
+        path: 'checkbox-column-pageable', component: TableAddCheckboxColumnPageableDemoComponent
+    },
 ];
 
 @NgModule({
@@ -191,7 +196,7 @@ export const routerConfig = [
         TableColumnSetVisibleDemoModule, TableColumnSetWidthDemoModule, TableSetHeaderClassDemoModule, TableSetHeaderRenderDemoModule,
         TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, SwimLaneDiagramDemoModule, TableHideHeadDemoModule,
         TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule, TableCalendarDemoModule, BigRowDemoModule, TableResizeDemoModule,
-        TableScrollListenDemoModule, SodokuGameModule
+        TableScrollListenDemoModule, SodokuGameModule, TableAddCheckboxColumnPageableDemoModule
     ]
 })
 export class TableDemoModule {

@@ -30,7 +30,7 @@ export class TableRendererDemoComponent {
 
     constructor(public http: HttpClient) {
         this.tableData = new LocalPageableTableData();
-        this.tableData.pagingInfo.pageSize = 100;
+        this.tableData.pagingInfo.pageSize = 50;
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list-full');
     }
@@ -136,7 +136,7 @@ export class TableRendererDemoComponent {
         });
 
         // 再处理单独勾上的人
-        this.additionalData.getTouchedValues(1).forEach(item => {
+        this.additionalData.getAllTouched(1).forEach(item => {
             const index = this.tableData.data.findIndex(row => row[0] === item.key);
             if (index == -1) {
                 // 表示这个人不在本页，为了简单，我们也不管他了

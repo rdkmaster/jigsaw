@@ -14,7 +14,8 @@
         <div class="field">
             <label>Last Name *</label>
             <jigsaw-input width="250px" name="lastname" ngModel required minlength="5"
-                          [pattern]="lastNamePattern" #lastname="ngModel">
+                          [pattern]="lastNamePattern" #lastname="ngModel"
+                          [valid]="lastname.valid || lastname.pristine || lastname.touched">
             </jigsaw-input>
             <span [hidden]="lastname.valid || lastname.pristine || lastname.touched" class="error">
                 Last name should be more than 5 alphabets.

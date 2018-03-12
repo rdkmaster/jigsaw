@@ -62,9 +62,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     public set width(value: string) {
         this._width = CommonUtils.getCssValue(value);
-        setTimeout(() => {
-            this.resize();
-        });
+        this.callLater(this.resize, this);
     }
 
     @Output()
@@ -141,6 +139,13 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         });
     }
 
+    /**
+     * 没有cellData generator获取数据的情况
+     * @param {string} field
+     * @param {number} row
+     * @returns {any}
+     * @private
+     */
     private _getCellDataByField(field: string, row: number): any {
         let [index, tableData] = this._getColumnIndex(field);
         if (index == -1) {
@@ -149,6 +154,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
         if (!tableData.data[row]) {
             tableData.data[row] = [];
+        }
+        if (tableData instanceof AdditionalTableData) {
+            // 没有cellData generator获取数据的情况
+            // 如果是AdditionalTableData，重新reset AdditionalTableData，cellData取空值，
+            // 在renderer里面通过touchedValue取真实的值，见issue522
+            tableData.data[row][index] = '';
         }
         return tableData.data[row][index];
     }
@@ -213,13 +224,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 }
 
                 const cellDataGenerator = TableUtils.getGenerator(columnDefine, 'data');
-                const originVal = this._getCellDataByField(field, rowIndex);
                 if (cellDataGenerator) {
                     // 根据cell的data函数，生成新的cellData，并更新tableData
                     settings.cellData = cellDataGenerator(this.data, rowIndex, realColIndex, this._additionalData);
                     this._setCellDataByField(field, rowIndex, settings.cellData);
                 } else {
-                    settings.cellData = originVal;
+                    settings.cellData = this._getCellDataByField(field, rowIndex);
                 }
                 settings.cellData = CommonUtils.isDefined(settings.cellData) ? settings.cellData : '';
 
@@ -272,7 +282,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                     target: 'additional-field-' + i, header: acd.header, group: acd.group,
                     cell: acd.cell, width: acd.width, visible: acd.visible
                 };
-                const pos = CommonUtils.isDefined(acd.pos) ? acd.pos : this._data.field.length;
+                const pos = CommonUtils.isDefined(acd.pos) ? acd.pos : columnDefines.length;
                 columnDefines.splice(pos, 0, cd);
             }
         }
@@ -291,8 +301,13 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         const columnDefines = this._getMixedColumnDefines();
         this._updateHeaderSettings(columnDefines);
         this._updateCellSettings(columnDefines);
-        this.additionalDataChange.emit(this.additionalData);
-        setTimeout(() => this._handleScrollBar(), 0);
+
+        this.callLater(() => {
+            // 等待additionalTableData在renderer更新完成
+            this.additionalDataChange.emit(this.additionalData);
+            // 等待滚动条初始化
+            this._handleScrollBar();
+        })
     }
 
     private _additionalData = new AdditionalTableData();
@@ -336,7 +351,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
         this._data = value;
         this._additionalData.data.splice(0, this._additionalData.data.length);
-        this._additionalData.clearCachedValues();
+        this._additionalData.clearTouchedValues();
         this._additionalData.originData = value;
 
         this.update();
@@ -569,7 +584,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
             widthStorage.forEach((width, index) => {
                 // columnDefine定义过的列宽不会被覆盖
-                const colWidth = this._$headerSettings[index].width ? this._$headerSettings[index].width : width;
+                const colWidth = this._$headerSettings && this._$headerSettings[index].width ? this._$headerSettings[index].width : width;
                 tHeadColGroup[index].setAttribute('width', colWidth);
                 tBodyColGroup[index].setAttribute('width', colWidth);
             });
@@ -646,7 +661,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @private
      */
     private _initVerticalScroll() {
-        setTimeout(() => {
+        this.callLater(() => {
             // selector使用>选择直接子元素，避免选择到其他滚动条
             const yScrollbar = this._elementRef.nativeElement.querySelector('.jigsaw-table-body-range > .ps__rail-y');
             if (yScrollbar) {
@@ -656,7 +671,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             } else {
                 this._initVerticalScroll();
             }
-        }, 0);
+        });
     }
 
     /**
@@ -712,6 +727,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     ngOnDestroy() {
+        super.ngOnDestroy();
+
         if (this._removeTableDataRefresh) {
             this._removeTableDataRefresh();
             this._removeTableDataRefresh = null;

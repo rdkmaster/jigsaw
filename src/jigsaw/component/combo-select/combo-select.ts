@@ -151,8 +151,8 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             // 控件disabled，并且想打开下拉
             return;
         }
-        setTimeout(() => {
-            // toggle open 外部控制时，用setTimeout变更检查
+        this.callLater(() => {
+            // toggle open 外部控制时，用异步触发变更检查
             // 初始化open，等待组件初始化后执行
             if (value) {
                 this._openDropDown();
@@ -163,7 +163,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             }
             this._$opened = value;
             this.openChange.emit(value);
-        }, 0);
+        });
     }
 
     @Output()
@@ -231,9 +231,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         if (!this.autoWidth || !this._popupElement) {
             return;
         }
-        setTimeout(() => {
+        this.callLater(() => {
             this._renderer.setStyle(this._popupElement, 'width', this._elementRef.nativeElement.offsetWidth + 'px');
-        }, 0);
+        });
     }
 
     private _autoEditorWidth() {
@@ -284,6 +284,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     private _rollOutDenouncesTimer: any = null;
+    private _rollInDenouncesTimer: any = null;
 
     private _openDropDown(): void {
         if (this._$opened) {
@@ -293,11 +294,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         if (this._removeWindowClickHandler) {
             this._removeWindowClickHandler();
         }
-
         this._removeWindowClickHandler = this._renderer.listen('window', 'click', () => {
-            if (this._removeWindowClickHandler) {
-                this._removeWindowClickHandler();
-            }
+            this._removeWindowClickHandler();
+            this._removeWindowClickHandler = null;
             this.open = false
         });
 
@@ -308,20 +307,23 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         this._disposePopup = popupInfo.dispose;
 
         if (this._openTrigger === DropDownTrigger.mouseenter && this._popupElement) {
+            if (this._removeMouseOverHandler) {
+                this._removeMouseOverHandler();
+            }
             this._removeMouseOverHandler = this._renderer.listen(this._popupElement, 'mouseenter', () => {
-                if (this._rollOutDenouncesTimer) {
-                    clearTimeout(this._rollOutDenouncesTimer);
-                    this._rollOutDenouncesTimer = null;
-                }
+                this._removeMouseOverHandler();
+                this._removeMouseOverHandler = null;
+                clearTimeout(this._rollOutDenouncesTimer);
             });
         }
         if (this._closeTrigger === DropDownTrigger.mouseleave && this._popupElement) {
+            if (this._removeMouseOutHandler) {
+                this._removeMouseOutHandler();
+            }
             this._removeMouseOutHandler = this._renderer.listen(this._popupElement, 'mouseleave', () => {
-                if (!this._rollOutDenouncesTimer) {
-                    this._rollOutDenouncesTimer = setTimeout(() => {
-                        this.open = false;
-                    }, 200);
-                }
+                this._removeMouseOutHandler();
+                this._removeMouseOutHandler = null;
+                this._rollOutDenouncesTimer = this.callLater(() => this.open = false, 400);
             });
         }
 
@@ -342,6 +344,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             this._disposePopup();
             this._disposePopup = null;
         }
+        this._clearAllListeners();
+    }
+
+    private _clearAllListeners() {
         if (this._removeWindowClickHandler) {
             this._removeWindowClickHandler();
             this._removeWindowClickHandler = null;
@@ -393,12 +399,11 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         if (this._openTrigger !== DropDownTrigger.mouseenter) return;
         event.preventDefault();
         event.stopPropagation();
-        if (this._rollOutDenouncesTimer) {
-            clearTimeout(this._rollOutDenouncesTimer);
-            this._rollOutDenouncesTimer = null;
-        }
-        this.open = true;
-        if (this._editor) this._editor.select();
+        clearTimeout(this._rollOutDenouncesTimer);
+        this._rollInDenouncesTimer = setTimeout(() => {
+            this.open = true;
+            if (this._editor) this._editor.select();
+        }, 100);
     }
 
     /**
@@ -408,11 +413,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         if (this.closeTrigger !== DropDownTrigger.mouseleave) return;
         event.preventDefault();
         event.stopPropagation();
-        if (!this._rollOutDenouncesTimer) {
-            this._rollOutDenouncesTimer = setTimeout(() => {
-                this.open = false;
-            }, 200);
-        }
+
+        clearTimeout(this._rollInDenouncesTimer);
+        this._rollOutDenouncesTimer = this.callLater(() => this.open = false, 400);
     }
 
     /**
@@ -436,22 +439,28 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public ngAfterViewInit() {
         this._tags.changes.subscribe(() => {
             this._autoEditorWidth();
-            setTimeout(() => {
+            this.callLater(() => {
                 // 等待combo高度变化，调整下拉位置
                 if (this._popupElement) {
-                    this._popupService.setPosition(this._getPopupOption(), this._popupElement, this._renderer);
+                    this._popupService.setPosition(this._getPopupOption(), this._popupElement);
                 }
             });
         })
     }
 
     public ngOnDestroy() {
+        super.ngOnDestroy();
+
         this.open = false;
+        this._clearAllListeners();
 
         if (this._removeRefreshCallback) {
-            this._removeRefreshCallback()
+            this._removeRefreshCallback();
+            this._removeRefreshCallback = null;
         }
-        this._rollOutDenouncesTimer = null;
+
+        this._popupElement = null;
+        this._disposePopup = null;
     }
 
     private _propagateChange: any = () => {
@@ -463,7 +472,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         }
 
         this._value = value instanceof ArrayCollection ? value : new ArrayCollection(value);
-        setTimeout(() => this.valueChange.emit(this._value));
+        this.callLater(() => this.valueChange.emit(this._value));
         this._autoWidth();
 
         if (this._removeRefreshCallback) {

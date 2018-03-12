@@ -10,6 +10,7 @@ import {JigsawDialogModule} from './component/dialog/dialog';
 import {JigsawGraphModule} from './component/graph/index';
 import {JigsawInputModule} from './component/input/input';
 import {JigsawLoadingModule} from './component/loading/loading';
+import {JigsawNotificationModule} from './component/notification/notification';
 import {JigsawPaginationModule} from './component/pagination/pagination';
 import {JigsawRadioModule} from './component/radio/radio';
 import {JigsawRangeTimeModule} from './component/range-time/index';
@@ -53,6 +54,7 @@ const JIGSAW_MODULE = [
     JigsawListModule,
     JigsawLoadingModule,
     JigsawMovableModule,
+    JigsawNotificationModule,
     JigsawPaginationModule,
     JigsawRadioModule,
     JigsawRangeTimeModule,

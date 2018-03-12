@@ -1,8 +1,8 @@
 # 表格
 
-终于到了万众瞩目的表格了，表格可以说是数据展示不可缺少的一部分，也是组件化的一大难点，它可以说是将组合发挥到了极致。这里我们仅介绍基本使用，具体高级功能请移步至[http://rdk.zte.com.cn/component/](http://rdk.zte.com.cn/component/)。
+终于到了万众瞩目的表格了，表格可以说是数据展示不可缺少的一部分，也是组件化的一大难点，它可以说是将组合发挥到了极致。这里我们仅介绍基本使用，具体高级功能请移步至[http://rdk.zte.com.cn/components/](http://rdk.zte.com.cn/components/)。
 
-_**app.component.html  **_中添加 html 片段
+_**app.component.html**_ 中添加 html 片段
 
 ```
 <jigsaw-table style="margin-bottom: 10px;" maxHeight="550px" [data]="tableData" *ngIf="displayType.id==1">
@@ -14,7 +14,7 @@ _**app.component.ts**_ 中添加代码片段
 * 首先构造器注入http服务
 
 ```
- constructor(public viewContainerRef: ViewContainerRef, public renderer: Renderer2, private http: Http) {
+ constructor(private http: Http) {
 
  }
 ```
@@ -22,8 +22,8 @@ _**app.component.ts**_ 中添加代码片段
 声明并实例化表格对象
 
 ```
-tableData: TableData;
- constructor(public viewContainerRef: ViewContainerRef, public renderer: Renderer2, private http: Http) {
+ tableData: TableData;
+ constructor(private http: Http) {
     this.tableData = new TableData();
     this.tableData.http = http;
   }
@@ -61,7 +61,7 @@ OK，一切就是如此简单，这样一个简单的表格就展示出来了。
 
 完整代码如下：
 
-_**app.component.html  **_
+_**app.component.html**_
 
 ```
 <!--The whole content below can be removed with the new code.-->
@@ -154,7 +154,7 @@ _**app.component.ts**_
 
 ```
 import {Component, Renderer2, ViewContainerRef} from '@angular/core';
-import {ArrayCollection, TableData, TimeGr, TimeService} from '@rdkmaster/jigsaw';
+import {TableData, TimeGr, TimeService} from '@rdkmaster/jigsaw';
 import {Http} from "@angular/http";
 
 @Component({
@@ -166,10 +166,10 @@ export class AppComponent {
 
   beginDate = 'now-1d';
   endDate = 'now';
-  rangeTimeComboValue = new ArrayCollection([
+  rangeTimeComboValue = [
     {label: TimeService.getFormatDate(this.beginDate, TimeGr.date), closable: false},
     {label: TimeService.getFormatDate(this.endDate, TimeGr.date), closable: false}
-  ]);
+  ];
   periodTimes = [{label: '1', closable: false}, {label: '2', closable: false}, {label: '3', closable: false},
     {label: '4', closable: false}, {label: '5', closable: false}, {label: '6', closable: false},
     {label: '7', closable: false}, {label: '8', closable: false}, {label: '9', closable: false},
@@ -188,15 +188,14 @@ export class AppComponent {
   interfaces = [{label: 'S1-U', closable: false}, {label: 'S2-U', closable: false}];
 
   userTypes = [{label: 'IMSI', closable: false}, {label: 'MSISDN', closable: false}];
-  // TODO fix#77
-  // selectUserType = [this.userTypes[0]];
-  selectUserType = new ArrayCollection([{label: 'IMSI', closable: false}]);
+
+  selectUserType = [this.userTypes[0]];
 
   maxRecord = 1000;
 
   tableData: TableData;
 
-  constructor(public viewContainerRef: ViewContainerRef, public renderer: Renderer2 ,private http: Http) {
+  constructor(private http: Http) {
     this.tableData = new TableData();
     this.tableData.http = http;
   }
@@ -217,10 +216,10 @@ export class AppComponent {
   }
 
   handleChange() {
-    this.rangeTimeComboValue = new ArrayCollection([
+    this.rangeTimeComboValue = [
       {label: TimeService.getFormatDate(this.beginDate, TimeGr.date), closable: false},
       {label: TimeService.getFormatDate(this.endDate, TimeGr.date), closable: false}
-    ]);
+    ];
   }
 
   displayTypeChange(displayType) {

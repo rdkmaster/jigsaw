@@ -134,7 +134,7 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
         this._checked = value;
         this.targetData.data.forEach((row, index) => {
             row[this.column] = value;
-            this._additionalData.cacheValue(this.field, index, value);
+            this._additionalData.touchValueByRow(this.field, index, value);
         });
         this.targetData.refresh();
     }
@@ -142,7 +142,7 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     protected onDataRefresh(): void {
         let type = 0;
         this.targetData.data.forEach((row, index) => {
-            let value = this._additionalData.getTouchedValue(this.field, index);
+            let value = this._additionalData.getTouchedValueByRow(this.field, index);
             value = CommonUtils.isDefined(value) ? value : !!row[this.column];
             type |= value ? 2 : 1;
         });
@@ -173,9 +173,7 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
 export class TableCellCheckboxRenderer extends TableCellRendererBase {
     protected onDataRefresh() {
         this._updateChecked();
-        if (CommonUtils.isDefined(this.targetData.data[this.row])) {
-            this.targetData.data[this.row][this.column] = this.checked;
-        }
+        this._updateTargetData();
     }
 
     public checked: boolean;
@@ -189,18 +187,25 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
     public set cellData(value: any) {
         this._cellData = value;
         this._updateChecked();
+        this._updateTargetData();
     }
 
     private _updateChecked(): void {
-        let checked = this._additionalData.getTouchedValue(this.field, this.row);
+        let checked = this._additionalData.getTouchedValueByRow(this.field, this.row);
         checked = CommonUtils.isDefined(checked) ? checked : this.cellData;
         this.checked = checked;
     }
 
+    private _updateTargetData(){
+        if (CommonUtils.isDefined(this.targetData.data[this.row])) {
+            this.targetData.data[this.row][this.column] = this.checked;
+        }
+    }
+
     onChange(value) {
         this.checked = value;
-        this._additionalData.cacheValue(this.field, this.row, value);
-        this.targetData.data[this.row][this.column] = value;
+        this._additionalData.touchValueByRow(this.field, this.row, value);
+        this._updateTargetData();
         this.dispatchChangeEvent(value);
     }
 

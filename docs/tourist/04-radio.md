@@ -2,7 +2,7 @@
 
 从多项选择中选择一样的这种场景比比皆是，Jigsaw提供了radioGroup来实现类似的需求
 
-_**app.component.html  **_中添加 html 片段
+_**app.component.html**_ 中添加 html 片段
 
 ```
  <span>快速选择:</span>
@@ -54,7 +54,7 @@ quickChoiceChange(quickChoice) {
 
 完整代码如下
 
-_**app.component.html  **_
+_**app.component.html**_
 
 ```
 <div>
@@ -90,7 +90,7 @@ _**app.component.ts**_
 
 ```
 import {Component, Renderer2, ViewContainerRef} from '@angular/core';
-import {ArrayCollection, TimeGr, TimeService} from '@rdkmaster/jigsaw';
+import {TimeGr, TimeService} from '@rdkmaster/jigsaw';
 
 @Component({
   selector: 'app-root',
@@ -101,10 +101,10 @@ export class AppComponent {
 
   beginDate = 'now-1d';
   endDate = 'now';
-  rangeTimeComboValue = new ArrayCollection([
+  rangeTimeComboValue = [
     {label: TimeService.getFormatDate(this.beginDate, TimeGr.date), closable: false},
     {label: TimeService.getFormatDate(this.endDate, TimeGr.date), closable: false}
-  ]);
+  ];
   periodTimes = [{label: '1', closable: false}, {label: '2', closable: false}, {label: '3', closable: false},
     {label: '4', closable: false}, {label: '5', closable: false}, {label: '6', closable: false},
     {label: '7', closable: false}, {label: '8', closable: false}, {label: '9', closable: false},
@@ -114,8 +114,6 @@ export class AppComponent {
 
   selectedChoice = this.quickChoices[0];
 
-  constructor(public viewContainerRef: ViewContainerRef, public renderer: Renderer2) {
-  }
   quickChoiceChange(quickChoice) {
     switch (quickChoice.id) {
       case '1':
@@ -133,10 +131,10 @@ export class AppComponent {
   }
 
   handleChange() {
-    this.rangeTimeComboValue = new ArrayCollection([
+    this.rangeTimeComboValue = [
       {label: TimeService.getFormatDate(this.beginDate, TimeGr.date), closable: false},
       {label: TimeService.getFormatDate(this.endDate, TimeGr.date), closable: false}
-    ]);
+    ];
   }
 }
 ```

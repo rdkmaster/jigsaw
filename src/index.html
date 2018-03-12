@@ -15,11 +15,10 @@
             padding: 0;
         }
         .loading {
-            position: relative;
-            top: 50%;
-            left: 50%;
-            margin-left: -240px;
-            margin-top: -100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
             font-size: 15px;
         }
 
@@ -40,8 +39,8 @@
     </script>
 </head>
 <body>
-<app-root><span class="loading">
-    Jigsaw的示例正在打开，请稍候...
-</span></app-root>
+<app-root>
+    <p class="loading">Jigsaw的示例正在打开，请稍候...</p>
+</app-root>
 </body>
 </html>
