@@ -8,16 +8,9 @@ import {JigsawTab} from "jigsaw/component/tabs/tab";
 export class TabsUpdateTitleDemoComponent {
     title1 = 'a short title';
 
-    @ViewChild('tabs') tabs: JigsawTab;
-
-    change2LongTitle(tabs: JigsawTab) {
-        this.title1 = 'a looooooooooooooooooooooong title';
+    changeTitle(tabs: JigsawTab) {
+        this.title1 = this.title1 == 'a short title' ? 'a looooooooooooooooooooooong title' : 'a short title';
         tabs.updateTitle();
-    }
-
-    change2ShortTitle(){
-        this.title1 = 'a short title';
-        this.tabs.updateTitle();
     }
 
     // ====================================================================
