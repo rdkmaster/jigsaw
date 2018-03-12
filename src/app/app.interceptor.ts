@@ -254,7 +254,6 @@ class MockData {
         this.dataSet['hr-list-full'] = require('../mock-data/hr-list-full.json');
         this.dataSet['hr-list'] = require('../mock-data/hr-list.json');
         this.dataSet['hr-list-complex'] = require('../mock-data/hr-list-complex.json');
-        this.dataSet['hr-list-for-switch'] = require('../mock-data/hr-list-for-switch.json');
         this.dataSet['fish-bone-1'] = require('../mock-data/fish-bone-1.json');
         this.dataSet['fish-bone-2'] = require('../mock-data/fish-bone-2.json');
         this.dataSet['tree-data'] = require('../mock-data/tree-data.json');
