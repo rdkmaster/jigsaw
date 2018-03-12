@@ -73,8 +73,8 @@ import {SudokuGameComponent} from "./sudoku/demo.component";
 import {SodokuGameModule} from "./sudoku/demo.module";
 import {TableAddCheckboxColumnPageableDemoModule} from "./checkbox-column-pageable/demo.module";
 import {TableAddCheckboxColumnPageableDemoComponent} from "./checkbox-column-pageable/demo.component";
-import {TableSwitchRendererDemoComponent} from "./switch-column/demo.component";
-import {TableSwitchRendererDemoModule} from "./switch-column/demo.module";
+import {TableSwitchRendererDemoComponent} from "./switch-renderer/demo.component";
+import {TableSwitchRendererDemoModule} from "./switch-renderer/demo.module";
 
 export const routerConfig = [
     {
