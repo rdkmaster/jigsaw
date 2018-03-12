@@ -75,10 +75,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit 
     }
 
     public updateTitle() {
-        // 等到title变化渲染
-        this.callLater(() => {
-            this._setInkBarStyle(this.selectedIndex);
-        });
+        this._asyncSetStyle(this.selectedIndex);
     }
 
     /**
