@@ -74,6 +74,13 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit 
         this._asyncSetStyle(index);
     }
 
+    public updateTitle() {
+        // 等到title变化渲染
+        this.callLater(() => {
+            this._setInkBarStyle(this.selectedIndex);
+        });
+    }
+
     /**
      * @internal
      */
@@ -172,9 +179,9 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit 
                   initData?: Object) {
         const factory = this._cfr.resolveComponentFactory(JigsawTabPane);
         let tabPane: JigsawTabPane = this._viewContainer.createComponent(factory).instance;
-        if(typeof title == 'string'){
+        if (typeof title == 'string') {
             tabPane.title = title
-        }else{
+        } else {
             tabPane.label = title;
         }
         tabPane.content = content;
@@ -212,10 +219,10 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit 
         // 重新修改queryList. 不确定这么做有没有什么隐患.
         this._$tabPanes.reset(tabTemp);
         this.length = this._$tabPanes.length;
-        if(this.selectedIndex == index){
+        if (this.selectedIndex == index) {
             this._handleSelect()
-        }else{
-            this.selectedIndex = this.selectedIndex -1
+        } else {
+            this.selectedIndex = this.selectedIndex - 1
         }
     }
 
