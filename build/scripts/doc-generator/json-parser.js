@@ -3,7 +3,6 @@ var PUBLIC = 114;
 var STATIC = 115;
 
 var fs = require('fs');
-var tags = getDemoTags();
 var angularApis = require(__dirname + '/angular-api-list.json');
 if (!angularApis) {
     console.warn('angular api list not found!');
@@ -32,6 +31,7 @@ if (!docInfo) {
     process.exit(1);
 }
 
+var tags = getDemoTags();
 var processingAPI;
 var unknownTypes = [];
 var apiList = [];
@@ -72,6 +72,7 @@ docInfo.miscellaneous.typealiases.forEach(ci => {
     html = html.replace('$rawtype', '原始类型：' + addTypeLink(ci.rawtype));
     html = html.replace('$since', '起始版本：' + (ci.since ? ci.since : 'v1.0.0'));
     html = html.replace('$description', ci.description);
+    html = html.replace('$demos', getDemoListWithHeader(ci.name));
     saveFile(ci.subtype, ci.name, html);
 });
 
@@ -81,11 +82,12 @@ docInfo.miscellaneous.enumerations.forEach(ci => {
     fixMetaInfo(ci);
     var html = getTypeEnumTemplate();
     html = html.replace('$name', ci.name);
-    html = html.replace('$since', (ci.since ? ci.since : 'v1.0.0'));
+    html = html.replace('$since', '起始版本：' + (ci.since ? ci.since : 'v1.0.0'));
     var items = [];
     ci.childs.forEach(i => items.push(`<li>${i.name}</li>`));
     html = html.replace('$enumItems', items.join('\n'));
     html = html.replace('$description', ci.description);
+    html = html.replace('$demos', getDemoListWithHeader(ci.name));
     saveFile(ci.subtype, ci.name, html);
 });
 
@@ -101,6 +103,7 @@ function processCommon(ci, html) {
     html = html.replace('$extends', ci.extends ? addTypeLink(ci.extends) : '--');
     html = html.replace('$implements', ci.implements && ci.implements.length > 0 ?
                                         addTypeLink(ci.implements).join(' / ') : '--');
+    html = html.replace('$demos', getDemoListWithHeader(ci.name));
     return html;
 }
 
@@ -488,7 +491,7 @@ function getDemoTags() {
             var code = fs.readFileSync(`${appPath}/demo/${r.path}/${cr.path}/demo.component.ts`).toString();
             var tagMatch = code.match(/tags\s*:?.*?=\s*(\[[\s\S]*?\])\s*;/);
             if (!tagMatch) {
-                // console.log(`ERROR: can not tags info for demo: ${appPath}/demo/${r.path}/${cr.path}`);
+                // console.log(`ERROR: can not find tags info for demo: ${appPath}/demo/${r.path}/${cr.path}`);
                 // process.exit(1);
             }
             var summaryMatch = code.match(/\bsummary\s*(:.*?)?\s*=\s*['"](.*)['"]/);
@@ -500,6 +503,7 @@ function getDemoTags() {
             
             tagMatch &&  // remove this line!!!!!!!!!!!
             eval(tagMatch[1]).forEach(t => {
+                verifyTag(t);
                 if (!tags.hasOwnProperty(t)) {
                     tags[t] = [];
                 }
@@ -511,6 +515,25 @@ function getDemoTags() {
         });
     });
     return tags;
+}
+
+function verifyTag(tag) {
+    var match = tag.match(/^(.*?)\.(.*?)$/);
+    if (match) {
+        var type = match[1];
+        var property = match[2];
+    } else {
+        var type = tag;
+    }
+    var info = findTypeMetaInfo(type);
+    if (!info) {
+        console.log(`ERROR: invalid tag, type not found: ${tag}`);
+        process.exit(1);
+    }
+    if (property && !findPropertyMetaInfo(info, property)) {
+        console.log(`ERROR: invalid tag, property not found: ${tag}`);
+        process.exit(1);
+    }
 }
 
 function getDemoList(type, property) {
@@ -526,12 +549,19 @@ function getDemoList(type, property) {
     return list.length > 0 ? `<ul>${list.join('')}</li></ul>` : '';
 }
 
+function getDemoListWithHeader(type) {
+    var demos = getDemoList(type);
+    return demos ? '<a name="demos"></a><h3>相关示例</h3>' + demos : '';
+}
+
 function getComponentTemplate() {
     return `
 <h2>$name</h2>
 
 <p>起始版本：$since</p>
 $description
+
+$demos
 
 <a name="selectors"></a>
 <h3>选择器 / Selectors</h3>
@@ -586,6 +616,8 @@ function getClassesTemplate() {
 <p>起始版本：$since</p>
 $description
 
+$demos
+
 <a name="properties"></a>
 <h3>属性 / Properties</h3>
 <table style="width:100%">
@@ -619,22 +651,25 @@ function getTypeAliasesTemplate() {
     <li>$since</li>
 </ul>
 $description
+
+$demos
 `
 }
 
 function getTypeEnumTemplate() {
     return `
 <h2>$name</h2>
+<p>$since</p>
 
 $description
 
-<h3>起始版本</h3>
-$since
-
+<a name="items"></a>
 <h3>枚举项</h3>
 <ul>
     $enumItems
 </ul>
+
+$demos
 `
 }
 
