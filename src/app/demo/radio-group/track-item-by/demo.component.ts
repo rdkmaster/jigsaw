@@ -21,5 +21,8 @@ export class RadioTrackItemByDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawRadioGroup.trackItemBy',
+    ];
 }
 

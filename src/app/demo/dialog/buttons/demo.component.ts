@@ -36,4 +36,7 @@ export class DialogButtonsDemo {
     // ====================================================================
     summary: string = '这demo演示了如何利用PopupService弹出一个对话框';
     description: string = '[这里详细介绍了`PopupService`，请仔细阅读](/jigsaw/popup/introduce)。';
+    tags: string[] = [
+        'JigsawDialog'
+    ];
 }

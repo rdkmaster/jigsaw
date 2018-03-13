@@ -77,4 +77,8 @@ export class TemplateDrivenDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'FormsModule',
+        'JigsawInput.valid',
+    ];
 }

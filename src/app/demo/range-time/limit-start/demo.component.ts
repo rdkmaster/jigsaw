@@ -42,5 +42,8 @@ export class RangeTimeLimitStartComponent implements AfterContentInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawRangeTime.limitStart',
+    ];
 }
 

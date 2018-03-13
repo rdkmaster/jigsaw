@@ -35,4 +35,7 @@ export class DialogTopDemo {
         - 不提供这个属性则对话框完全居中，这是多数情况下就够用了；
         - 有时候我们需要控制对话框垂直上的位置，则可以通过这个属性来控制，支持百分比或者像素值；
     `;
+    tags: string[] = [
+        'JigsawDialog.top',
+    ];
 }

@@ -111,5 +111,12 @@ export class I18nFullDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'TranslateService.use',
+        'TranslateService.getBrowserLang',
+        'TranslateService.setTranslation',
+        'TranslateService.instant',
+        'TranslateHelper.changeLanguage',
+    ];
 }
 

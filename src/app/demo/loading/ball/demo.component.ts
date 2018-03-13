@@ -50,4 +50,8 @@ export class BallLoadingDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'LoadingService.show',
+        'JigsawBallLoading'
+    ];
 }

@@ -41,4 +41,11 @@ export class JigsawTabsDemoComponent {
     // ====================================================================
     summary: string = '此demo主要描述tab的加载机制';
     description: string = require('!!raw-loader!./readme.md');
+    tags: string[] = [
+        'JigsawTab.selectedIndex',
+        'JigsawTab.selectChange',
+        'JigsawTabPane.lazy',
+        'JigsawTabPane.title',
+        'JigsawTabPane.disabled',
+    ];
 }
