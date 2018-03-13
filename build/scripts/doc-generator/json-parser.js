@@ -491,8 +491,8 @@ function getDemoTags() {
             var code = fs.readFileSync(`${appPath}/demo/${r.path}/${cr.path}/demo.component.ts`).toString();
             var tagMatch = code.match(/tags\s*:?.*?=\s*(\[[\s\S]*?\])\s*;/);
             if (!tagMatch) {
-                // console.log(`ERROR: can not find tags info for demo: ${appPath}/demo/${r.path}/${cr.path}`);
-                // process.exit(1);
+                console.log(`ERROR: can not find tags info for demo: ${appPath}/demo/${r.path}/${cr.path}`);
+                process.exit(1);
             }
             var summaryMatch = code.match(/\bsummary\s*(:.*?)?\s*=\s*['"](.*)['"]/);
             if (!summaryMatch) {
@@ -500,8 +500,7 @@ function getDemoTags() {
                 console.log('hint: the value of summary should write in a single line!');
                 process.exit(1);
             }
-            
-            tagMatch &&  // remove this line!!!!!!!!!!!
+
             eval(tagMatch[1]).forEach(t => {
                 verifyTag(t);
                 if (!tags.hasOwnProperty(t)) {
