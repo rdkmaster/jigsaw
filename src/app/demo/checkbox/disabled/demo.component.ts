@@ -11,7 +11,7 @@ export class CheckBoxDisableDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
+    summary: string = '演示了如何使用`JigsawCheckBox`的disabled属性';
     description: string = '';
     tags: string[] = [
         'JigsawCheckBox.disabled'

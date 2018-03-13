@@ -2,7 +2,6 @@
  * Created by 10177553 on 2017/4/10.
  */
 import {Component} from '@angular/core';
-import {DropDownTrigger} from "jigsaw/component/combo-select/combo-select";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 @Component({
@@ -44,27 +43,16 @@ export class ComboSelectChangeTriggerDemo {
         btn.type = '';
     }
 
-    openTrigger = DropDownTrigger.mouseenter;
-    closeTrigger = DropDownTrigger.mouseleave;
-
-    changeTrigger() {
-        if (this.openTrigger === DropDownTrigger.click) {
-            this.openTrigger = DropDownTrigger.mouseenter;
-            this.closeTrigger = DropDownTrigger.mouseleave;
-        } else {
-            this.openTrigger = DropDownTrigger.click;
-            this.closeTrigger = DropDownTrigger.click;
-        }
-    }
-
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '这个demo展示了如何修改触发下拉的方式，以及如何通过`select`等事件实现下拉部分与combo组件的良好交互。';
+    summary: string = '演示了如何利用事件将下拉视图与`JigsawComboSelect`组件实现无缝融合';
     description: string = require('!!raw-loader!./readme.md');
     tags: string[] = [
-        'JigsawComboSelect.openTrigger',
-        'JigsawComboSelect.closeTrigger',
+        'JigsawComboSelect.select',
+        'JigsawComboSelect.remove',
+        'JigsawComboSelect.value',
+        'JigsawComboSelect.valueChange',
         'JigsawComboSelect.showBorder'
     ];
 }

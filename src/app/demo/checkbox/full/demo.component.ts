@@ -20,7 +20,7 @@ export class CheckBoxFullComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
+    summary: string = '演示了`JigsawCheckBox`的效果';
     description: string = '';
     tags: string[] = [
         'JigsawCheckBox'

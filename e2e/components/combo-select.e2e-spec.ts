@@ -24,7 +24,7 @@ describe('combo-select', () => {
             expect(selectEl.getCssValue('width')).toBe(element(by.tagName('jigsaw-tile')).getCssValue('width'));
         });
         it('should change trigger when click button', async () => {
-            await browser.get('/combo-select/change-trigger');
+            await browser.get('/combo-select/events');
             const selectEl = $('jigsaw-combo-select'),
                 buttons = $$('jigsaw-button');
             browser.actions().mouseMove(selectEl).perform();

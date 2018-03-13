@@ -38,7 +38,7 @@ export class CollapseWithNGForDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
+    summary: string = '演示了如何通过`ngFor`指令动态创建多个折叠子页';
     description: string = '';
     tags: string[] = [
         'JigsawCollapse', 'JigsawCollapsePane',

@@ -15,11 +15,11 @@ export class ButtonWithLoadingComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
+    summary: string = '演示了按钮和Loading组件的无缝配合使用';
     description: string = '';
     tags: string[] = [
-        'JigsawButton',
-        'JigsawFontLoading'
+        'JigsawButton', 'JigsawBallLoading', 'JigsawBubbleLoading',
+        'JigsawFontLoading', 'JigsawLoading'
     ];
 }
 
