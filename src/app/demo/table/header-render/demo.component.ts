@@ -34,6 +34,11 @@ export class TableSetHeaderRenderDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawTable.columnDefines',
+        'ColumnDefine',
+        'TableHeader.renderer'
+    ];
 }
 
 

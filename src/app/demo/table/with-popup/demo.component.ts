@@ -33,5 +33,8 @@ export class TableDataWithPopupDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'PopupService.popup',
+    ];
 }
 

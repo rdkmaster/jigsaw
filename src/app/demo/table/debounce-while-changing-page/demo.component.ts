@@ -57,5 +57,11 @@ export class TableAddIDWithDebouncePagingComponent implements AfterViewInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawPagination',
+        'TableValueGenerators.rowIndexGenerator',
+        'PageableTableData.currentChange',
+        'PageableTableData.busy'
+    ];
 }
 

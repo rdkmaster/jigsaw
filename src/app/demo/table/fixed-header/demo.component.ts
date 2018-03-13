@@ -20,4 +20,7 @@ export class TableFixedHeadDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawTable.floatingHeader',
+    ];
 }
