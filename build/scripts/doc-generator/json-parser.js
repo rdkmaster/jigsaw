@@ -31,6 +31,7 @@ if (!docInfo) {
     process.exit(1);
 }
 
+var tags = getDemoTags();
 var processingAPI;
 var unknownTypes = [];
 var apiList = [];
@@ -71,6 +72,7 @@ docInfo.miscellaneous.typealiases.forEach(ci => {
     html = html.replace('$rawtype', '原始类型：' + addTypeLink(ci.rawtype));
     html = html.replace('$since', '起始版本：' + (ci.since ? ci.since : 'v1.0.0'));
     html = html.replace('$description', ci.description);
+    html = html.replace('$demos', getDemoListWithHeader(ci.name));
     saveFile(ci.subtype, ci.name, html);
 });
 
@@ -80,11 +82,12 @@ docInfo.miscellaneous.enumerations.forEach(ci => {
     fixMetaInfo(ci);
     var html = getTypeEnumTemplate();
     html = html.replace('$name', ci.name);
-    html = html.replace('$since', (ci.since ? ci.since : 'v1.0.0'));
+    html = html.replace('$since', '起始版本：' + (ci.since ? ci.since : 'v1.0.0'));
     var items = [];
     ci.childs.forEach(i => items.push(`<li>${i.name}</li>`));
     html = html.replace('$enumItems', items.join('\n'));
     html = html.replace('$description', ci.description);
+    html = html.replace('$demos', getDemoListWithHeader(ci.name));
     saveFile(ci.subtype, ci.name, html);
 });
 
@@ -100,6 +103,7 @@ function processCommon(ci, html) {
     html = html.replace('$extends', ci.extends ? addTypeLink(ci.extends) : '--');
     html = html.replace('$implements', ci.implements && ci.implements.length > 0 ?
                                         addTypeLink(ci.implements).join(' / ') : '--');
+    html = html.replace('$demos', getDemoListWithHeader(ci.name));
     return html;
 }
 
@@ -118,7 +122,8 @@ function processInputs(ci, html) {
             '<span class="fa fa-retweet" style="margin-left:4px" title="本属性支持双向绑定"></span>' : '';
         var description = input.description + (input.since ? `<p>起始版本：${input.since}</p>` : '');
         inputs.push(`<tr><td>${anchor(input.name)}${input.name}${dualBinding}</td>
-            <td>${addTypeLink(input.type)}</td><td>${input.defaultValue}</td><td>${description}</td></tr>`);
+            <td>${addTypeLink(input.type)}</td><td>${input.defaultValue}</td>
+            <td>${description}</td><td>${getDemoList(ci.name, input.name)}</td></tr>`);
     });
     if (inputs.length == 0) {
         inputs.push(getNoDataRowTemplate());
@@ -137,8 +142,8 @@ function processOutputs(ci, html) {
             type = match[1];
         }
         var description = output.description + (output.since ? `<p>起始版本：${output.since}</p>` : '');
-        outputs.push(`<tr><td>${anchor(output.name)}${output.name}</td>
-            <td>${addTypeLink(type)}</td><td>${description}</td></tr>`);
+        outputs.push(`<tr><td>${anchor(output.name)}${output.name}</td><td>${addTypeLink(type)}</td>
+            <td>${description}</td><td>${getDemoList(ci.name, output.name)}</td></tr>`);
     });
     if (outputs.length == 0) {
         outputs.push(getNoDataRowTemplate());
@@ -184,7 +189,7 @@ function processProperties(ci, html) {
         var description = property.description + (property.since ? `<p>起始版本：${property.since}</p>` : '');
         properties.push(`<tr><td style="white-space: nowrap;">
             ${anchor(property.name)}${modifier}${readOnly}${property.name}</td><td>${addTypeLink(property.type)}</td>
-            <td>${description}</td><td>${property.defaultValue}</td></tr>`);
+            <td>${description}</td><td>${property.defaultValue}</td><td>${getDemoList(ci.name, property.name)}</td></tr>`);
     });
     if (properties.length == 0) {
         properties.push(getNoDataRowTemplate());
@@ -222,7 +227,7 @@ function processMethods(ci, html) {
         var description = method.description + (method.since ? `<p>起始版本：${method.since}</p>` : '');
         methods.push(`
             <tr><td style="white-space: nowrap;">${anchor(method.name)}${modifier}${method.name}</td>
-            <td>${description}</td><td>${returns}</td><td>${args}</td></tr>`);
+            <td>${description}</td><td>${returns}</td><td>${args}</td><td>${getDemoList(ci.name, method.name)}</td></tr>`);
     });
     if (methods.length == 0) {
         methods.push(getNoDataRowTemplate());
@@ -454,12 +459,108 @@ function checkUnknownTypes() {
     return false;
 }
 
+function getDemoTags() {
+    var appPath = `${__dirname}/../../../src/app`;
+    var demoStr = fs.readFileSync(`${appPath}/router-config.ts`).toString();
+    var match = demoStr.match(/\[[\s\S]*\]/);
+    if (!match) {
+        console.error('ERROR: can not read demo info, invalid router-config.ts');
+        process.exit(1);
+    }
+    var demosRouters = eval(match[0]);
+    var tags = {};
+    demosRouters.filter(r => !!r.path).forEach(r => {
+        var code = fs.readFileSync(`${appPath}/demo/${r.path}/demo-set.module.ts`).toString();
+        var match = code.match(/routerConfig\s*:?.*?=\s*(\[[\s\S]*?\])\s*;/);
+        if (!match) {
+            console.log('ERROR: can not find routerConfig source, check the following rules:');
+            console.log('1. use "routerConfig" as the router config var name.');
+            console.log('2. terminate the var definition with ";".');
+            process.exit(1);
+        }
+        var childRouterSource = match[1].replace(/component\s*:\s*\w+,?/g, '');
+        var childRouters;
+        try {
+            childRouters = eval('(' + childRouterSource + ')');
+        } catch (e) {
+            console.log('ERROR: unable to compile the router config source: ' + e.message);
+            console.log(match[1]);
+            process.exit(1);
+        }
+        childRouters.filter(cr => !!cr.path).forEach(cr => {
+            var code = fs.readFileSync(`${appPath}/demo/${r.path}/${cr.path}/demo.component.ts`).toString();
+            var tagMatch = code.match(/tags\s*:?.*?=\s*(\[[\s\S]*?\])\s*;/);
+            if (!tagMatch) {
+                console.log(`ERROR: can not find tags info for demo: ${appPath}/demo/${r.path}/${cr.path}`);
+                process.exit(1);
+            }
+            var summaryMatch = code.match(/\bsummary\s*(:.*?)?\s*=\s*['"](.*)['"]/);
+            if (!summaryMatch) {
+                console.log(`ERROR: can not summary info for demo: ${appPath}/demo/${r.path}/${cr.path}`);
+                console.log('hint: the value of summary should write in a single line!');
+                process.exit(1);
+            }
+
+            eval(tagMatch[1]).forEach(t => {
+                verifyTag(t);
+                if (!tags.hasOwnProperty(t)) {
+                    tags[t] = [];
+                }
+                tags[t].push({
+                    summary: summaryMatch[2], label: cr.path,
+                    url: `/components/${r.path}/demo#${cr.path}`
+                });
+            });
+        });
+    });
+    return tags;
+}
+
+function verifyTag(tag) {
+    var match = tag.match(/^(.*?)\.(.*?)$/);
+    if (match) {
+        var type = match[1];
+        var property = match[2];
+    } else {
+        var type = tag;
+    }
+    var info = findTypeMetaInfo(type);
+    if (!info) {
+        console.log(`ERROR: invalid tag, type not found: ${tag}`);
+        process.exit(1);
+    }
+    if (property && !findPropertyMetaInfo(info, property)) {
+        console.log(`ERROR: invalid tag, property not found: ${tag}`);
+        process.exit(1);
+    }
+}
+
+function getDemoList(type, property) {
+    var key = property ? `${type}.${property}` : type;
+    var demos = tags[key];
+    if (!demos) {
+        return '';
+    }
+    var list = [];
+    demos.forEach(d => {
+        list.push(`<li title="${d.summary}"><a href="${d.url}">${d.label}</a></li>`);
+    });
+    return list.length > 0 ? `<ul>${list.join('')}</li></ul>` : '';
+}
+
+function getDemoListWithHeader(type) {
+    var demos = getDemoList(type);
+    return demos ? '<a name="demos"></a><h3>相关示例</h3>' + demos : '';
+}
+
 function getComponentTemplate() {
     return `
 <h2>$name</h2>
 
 <p>起始版本：$since</p>
 $description
+
+$demos
 
 <a name="selectors"></a>
 <h3>选择器 / Selectors</h3>
@@ -469,7 +570,7 @@ $description
 <h3>输入属性 / Inputs</h3>
 <table style="width:100%">
     <thead>
-        <tr><th>名称</th><th>类型</th><th>默认值</th><th>说明</th></tr>
+        <tr><th>名称</th><th>类型</th><th>默认值</th><th>说明</th><th>示例</th></tr>
     </thead>
     <tbody>$inputs</tbody>
 </table>
@@ -478,7 +579,7 @@ $description
 <h3>输出属性 / Outputs</h3>
 <table style="width:100%">
     <thead>
-        <tr><th>名称</th><th>数据类型</th><th>说明</th></tr>
+        <tr><th>名称</th><th>数据类型</th><th>说明</th><th>示例</th></tr>
     </thead>
     <tbody>$outputs</tbody>
 </table>
@@ -487,7 +588,7 @@ $description
 <h3>普通属性 / Properties</h3>
 <table style="width:100%">
     <thead>
-        <tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th></tr>
+        <tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th><th>示例</th></tr>
     </thead>
     <tbody>$properties</tbody>
 </table>
@@ -496,7 +597,7 @@ $description
 <h3>方法 / Methods</h3>
 <table style="width:100%">
     <thead>
-        <tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th></tr>
+        <tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th><th>示例</th></tr>
     </thead>
     <tbody>$methods</tbody>
 </table>
@@ -514,11 +615,13 @@ function getClassesTemplate() {
 <p>起始版本：$since</p>
 $description
 
+$demos
+
 <a name="properties"></a>
 <h3>属性 / Properties</h3>
 <table style="width:100%">
     <thead>
-        <tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th></tr>
+        <tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th><th>示例</th></tr>
     </thead>
     <tbody>$properties</tbody>
 </table>
@@ -527,7 +630,7 @@ $description
 <h3>方法 / Methods</h3>
 <table style="width:100%">
     <thead>
-        <tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th></tr>
+        <tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th><th>示例</th></tr>
     </thead>
     <tbody>$methods</tbody>
 </table>
@@ -547,22 +650,25 @@ function getTypeAliasesTemplate() {
     <li>$since</li>
 </ul>
 $description
+
+$demos
 `
 }
 
 function getTypeEnumTemplate() {
     return `
 <h2>$name</h2>
+<p>$since</p>
 
 $description
 
-<h3>起始版本</h3>
-$since
-
+<a name="items"></a>
 <h3>枚举项</h3>
 <ul>
     $enumItems
 </ul>
+
+$demos
 `
 }
 
