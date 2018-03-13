@@ -158,7 +158,7 @@ export abstract class JigsawCommonAlert extends DialogBase {
     public abstract set dialog(value: JigsawDialog);
 
     public message: string;
-    public buttons = [{label: 'alert.button.ok'}];
+    public buttons: ButtonInfo[] = [{label: 'alert.button.ok'}];
     public level: AlertLevel = AlertLevel.info;
 
     public static showAlert(what: Type<JigsawCommonAlert>,
@@ -219,7 +219,7 @@ export class JigsawInfoAlert extends JigsawCommonAlert {
     @Input() public message: string;
     @Input() public caption: string;
     @Input() public level: AlertLevel = AlertLevel.info;
-    @Input() public buttons = [{label: 'alert.button.ok', 'type': 'primary'}];
+    @Input() public buttons: ButtonInfo[] = [{label: 'alert.button.ok', 'type': 'primary'}];
 
     public static show(message: string,
                        callback?: DialogCallback,
@@ -244,7 +244,7 @@ export class JigsawWarningAlert extends JigsawCommonAlert {
     @Input() public message: string;
     @Input() public caption: string;
     @Input() public level: AlertLevel = AlertLevel.warning;
-    @Input() public buttons = [{label: 'alert.button.ok', 'type': 'warning'}];
+    @Input() public buttons: ButtonInfo[] = [{label: 'alert.button.ok', 'type': 'warning'}];
 
     public static show(message: string,
                        callback?: DialogCallback,
@@ -269,7 +269,7 @@ export class JigsawErrorAlert extends JigsawCommonAlert {
     @Input() public message: string;
     @Input() public caption: string;
     @Input() public level: AlertLevel = AlertLevel.error;
-    @Input() public buttons = [{label: 'alert.button.ok', 'type': 'error'}];
+    @Input() public buttons: ButtonInfo[] = [{label: 'alert.button.ok', 'type': 'error'}];
 
     public static show(message: string,
                        callback?: DialogCallback,
@@ -294,7 +294,7 @@ export class JigsawConfirmAlert extends JigsawCommonAlert {
     @Input() public message: string;
     @Input() public caption: string;
     @Input() public level: AlertLevel = AlertLevel.confirm;
-    @Input() public buttons = [{label: 'alert.button.yes', 'type': 'primary'}, {label: 'alert.button.no'}];
+    @Input() public buttons: ButtonInfo[] = [{label: 'alert.button.yes', 'type': 'primary'}, {label: 'alert.button.no'}];
 
     public static show(message: string,
                        callback?: DialogCallback,
