@@ -62,4 +62,9 @@ export class ComboSelectChangeTriggerDemo {
     // ====================================================================
     summary: string = '这个demo展示了如何修改触发下拉的方式，以及如何通过`select`等事件实现下拉部分与combo组件的良好交互。';
     description: string = require('!!raw-loader!./readme.md');
+    tags: string[] = [
+        'JigsawComboSelect.openTrigger',
+        'JigsawComboSelect.closeTrigger',
+        'JigsawComboSelect.showBorder'
+    ];
 }

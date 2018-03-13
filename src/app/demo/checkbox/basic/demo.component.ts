@@ -16,5 +16,8 @@ export class CheckBoxBasicDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawCheckBox.checked', 'JigsawCheckBox.enableIndeterminate',
+    ];
 }
 

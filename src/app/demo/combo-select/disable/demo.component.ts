@@ -35,4 +35,7 @@ export class DisabledComboSelectDemo {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawComboSelect.disabled'
+    ];
 }

@@ -31,4 +31,7 @@ export class ComboSelectAutoWidthDemo {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawComboSelect.autoWidth'
+    ];
 }

@@ -59,5 +59,8 @@ export class CollapseFullComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawCollapse', 'JigsawCollapsePane',
+    ];
 }
 

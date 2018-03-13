@@ -9,5 +9,9 @@ export class ButtonWidthHeightDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawButton.width',
+        'JigsawButton.height'
+    ];
 }
 

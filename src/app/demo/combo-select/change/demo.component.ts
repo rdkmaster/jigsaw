@@ -46,4 +46,13 @@ export class ComboSelectChangeDemo {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawComboSelect.select',
+        'JigsawComboSelect.remove',
+        'JigsawComboSelect.value',
+        'JigsawComboSelect.valueChange',
+        'JigsawComboSelect.clearable',
+        'JigsawComboSelect.placeholder',
+        'JigsawComboSelect.maxWidth',
+    ];
 }

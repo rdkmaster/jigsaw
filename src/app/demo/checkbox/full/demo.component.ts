@@ -22,5 +22,8 @@ export class CheckBoxFullComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawCheckBox'
+    ];
 }
 

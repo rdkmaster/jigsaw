@@ -31,5 +31,8 @@ export class ButtonFullComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawButton'
+    ];
 }
 

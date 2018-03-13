@@ -28,4 +28,8 @@ export class ButtonPresetDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawButton.colorType',
+        'JigsawButton.preSize'
+    ];
 }

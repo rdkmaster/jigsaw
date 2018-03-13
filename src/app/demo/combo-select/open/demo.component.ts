@@ -35,4 +35,7 @@ export class OpenComboSelectDemo {
     // ====================================================================
     summary: string = '编程方式打开下拉部分';
     description: string = '';
+    tags: string[] = [
+        'JigsawComboSelect.open'
+    ];
 }

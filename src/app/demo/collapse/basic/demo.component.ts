@@ -12,4 +12,8 @@ export class CollapseBasicDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawCollapse.width', 'JigsawCollapse.mode',
+        'JigsawCollapsePane.header', 'JigsawCollapsePane.isActive',
+    ];
 }

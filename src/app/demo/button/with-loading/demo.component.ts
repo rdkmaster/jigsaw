@@ -17,5 +17,9 @@ export class ButtonWithLoadingComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawButton',
+        'JigsawFontLoading'
+    ];
 }
 

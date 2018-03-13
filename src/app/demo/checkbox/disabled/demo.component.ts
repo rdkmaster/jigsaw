@@ -13,5 +13,8 @@ export class CheckBoxDisableDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawCheckBox.disabled'
+    ];
 }
 

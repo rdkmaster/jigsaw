@@ -10,5 +10,6 @@ export class CustomizeAlertDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = ['JigsawAlert'];
 }
 

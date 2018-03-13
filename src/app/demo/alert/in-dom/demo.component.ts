@@ -10,5 +10,8 @@ export class AlertInDomDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawInfoAlert', 'JigsawWarningAlert', 'JigsawErrorAlert', 'JigsawConfirmAlert'
+    ];
 }
 

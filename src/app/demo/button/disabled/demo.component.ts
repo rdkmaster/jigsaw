@@ -16,5 +16,8 @@ export class ButtonDisableDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawButton.disabled'
+    ];
 }
 

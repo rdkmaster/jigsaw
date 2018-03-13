@@ -46,5 +46,9 @@ export class AlertPopupDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawInfoAlert.show', 'JigsawWarningAlert.show',
+        'JigsawErrorAlert.show', 'JigsawConfirmAlert.show'
+    ];
 }
 

@@ -40,4 +40,7 @@ export class CollapseWithNGForDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawCollapse', 'JigsawCollapsePane',
+    ];
 }
