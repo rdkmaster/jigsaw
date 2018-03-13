@@ -36,5 +36,10 @@ export class ComboSelectDemoComponent {
     // ====================================================================
     summary: string = 'ComboSelect和Time、RangeTime组合使用说明';
     description: string = require('!!raw-loader!./readme.md');
+    tags: string[] = [
+        'JigsawTime.dateChange',
+        'JigsawRangeTime.change',
+        'JigsawComboSelect'
+    ];
 }
 

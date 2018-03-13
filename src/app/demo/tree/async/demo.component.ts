@@ -40,4 +40,7 @@ export class ZtreeAsynDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawTreeExt.setting'
+    ];
 }
