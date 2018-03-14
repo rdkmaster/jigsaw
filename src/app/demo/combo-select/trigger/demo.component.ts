@@ -3,7 +3,7 @@ import {Component} from '@angular/core';
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
-        div {
+        .drop-down {
             font-size: 16px;
             background-color: #ddd;
             height: 100px;

@@ -6,14 +6,14 @@
 <!-- start to learn the demo from here -->
 触发打开：
 <jigsaw-radios [(value)]="openTrigger">
-    <jigsaw-radio-option value="click">鼠标单击</jigsaw-radio-option>
-    <jigsaw-radio-option value="mouseenter">鼠标滑入</jigsaw-radio-option>
+    <jigsaw-radio-option id="openByClick" value="click">鼠标单击</jigsaw-radio-option>
+    <jigsaw-radio-option id="openByHover" value="mouseenter">鼠标滑入</jigsaw-radio-option>
 </jigsaw-radios>
 <br>
 触发关闭：
 <jigsaw-radios [(value)]="closeTrigger">
-    <jigsaw-radio-option value="click">鼠标单击</jigsaw-radio-option>
-    <jigsaw-radio-option value="mouseleave">鼠标滑出</jigsaw-radio-option>
+    <jigsaw-radio-option id="closeByClick" value="click">鼠标单击</jigsaw-radio-option>
+    <jigsaw-radio-option id="closeByLeave" value="mouseleave">鼠标滑出</jigsaw-radio-option>
 </jigsaw-radios>
 
 <br><br>
@@ -21,7 +21,7 @@
                      [closeTrigger]="closeTrigger"
                      placeholder="根据选择的触发器测试效果">
     <ng-template>
-        <div>
+        <div class="drop-down">
             这里是下拉视图的内容
         </div>
     </ng-template>
