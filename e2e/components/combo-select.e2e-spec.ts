@@ -1,8 +1,7 @@
-import {browser, element, by, $, $$} from 'protractor';
-import {waitForNotPresence, waitForPresence, waitForTextPresence} from "../utils/await";
+import {$, $$, browser, by, element} from 'protractor';
+import {waitForNotPresence, waitForPresence} from "../utils/await";
 import {expectToExist} from "../utils/asserts";
 import {mouseMove} from "../utils/actions";
-import {getWindowSize} from "../utils/popup";
 
 describe('combo-select', () => {
     beforeEach(() => {
@@ -61,6 +60,7 @@ describe('combo-select', () => {
             browser.sleep(200);
             expectToExist('.drop-down', false);
             selectEl.click();
+            browser.actions().mouseMove(selectEl).perform();
             await waitForPresence('.drop-down');
             expectToExist('.drop-down', true);
             // check close debounce
@@ -99,7 +99,7 @@ describe('combo-select', () => {
             browser.sleep(50);
             // check open debounce
             browser.actions().mouseMove(selectEl).perform();
-            browser.sleep(50);
+            browser.sleep(10);
             browser.actions().mouseMove(openByClick).perform();
             expectToExist('.drop-down', false);
             browser.actions().mouseMove(selectEl).perform();
