@@ -418,6 +418,9 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     public changePage(currentPage: number, pageSize?: number): void;
     public changePage(info: PagingInfo): void;
     public changePage(currentPage, pageSize?: number): void {
+        if (this.busy) {
+            return;
+        }
         pageSize = isNaN(+pageSize) ? this.pagingInfo.pageSize : pageSize;
         const pi: PagingInfo = currentPage instanceof PagingInfo ? currentPage : new PagingInfo(currentPage, +pageSize);
         let needRefresh: boolean = false;

@@ -32,16 +32,12 @@ export class TablePageableDemoComponent {
     ];
 
     getCurrentPage() {
-        if (this.pageable.busy) {
-            return;
-        }
         this.pageable.changePage(this.pageable.pagingInfo);
     }
 
     getPageSize() {
-        if (this.pageable.busy) {
-            return;
-        }
+        // 改变pageSize时，设置显示第一页
+        this.pageable.pagingInfo.currentPage = 1;
         this.pageable.changePage(this.pageable.pagingInfo);
     }
 
