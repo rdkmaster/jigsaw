@@ -316,6 +316,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         if (this.pageSize != pageSize.value) {
             this._pageNumberInit = false;
             this.pageSize = pageSize.value;
+            this.current = 1;
         }
     }
 

@@ -36,8 +36,6 @@ export class TablePageableDemoComponent {
     }
 
     getPageSize() {
-        // 改变pageSize时，设置显示第一页
-        this.pageable.pagingInfo.currentPage = 1;
         this.pageable.changePage(this.pageable.pagingInfo);
     }
 

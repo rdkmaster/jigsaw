@@ -15,7 +15,7 @@ import {
     SortAs,
     SortOrder
 } from "./component-data";
-import {CommonUtils} from "../utils/common-utils";
+import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
 
 export type TableMatrixRow = any[];
 export type TableDataHeader = string[];
@@ -419,6 +419,12 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     public changePage(info: PagingInfo): void;
     public changePage(currentPage, pageSize?: number): void {
         if (this.busy) {
+            const removeOnAjaxComplete = this.onAjaxComplete(() => {
+                if (removeOnAjaxComplete) {
+                    removeOnAjaxComplete();
+                }
+                this.changePage(currentPage, pageSize);
+            });
             return;
         }
         pageSize = isNaN(+pageSize) ? this.pagingInfo.pageSize : pageSize;
