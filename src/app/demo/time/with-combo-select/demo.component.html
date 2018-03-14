@@ -6,7 +6,7 @@
 <!-- start to learn the demo from here -->
 <jigsaw-combo-select [(value)]="singleTimeComboValue" width="150px">
     <ng-template>
-        <jigsaw-time [(date)]="date" (dateChange)="handleDateChange($event)">
+        <jigsaw-time [(date)]="date" (dateChange)="handleDateChange($event)" gr="second">
         </jigsaw-time>
     </ng-template>
 </jigsaw-combo-select>
