@@ -7,12 +7,10 @@
 - 无 / none
 
 ###  优化 / Modified
-- https://github.com/rdkmaster/jigsaw/pull/557 增加alert的ButtonInfo类型 
-- https://github.com/rdkmaster/jigsaw/pull/552 文档生成工具
-- https://github.com/rdkmaster/jigsaw/issues/543 在文档中增加demo链接
+- https://github.com/rdkmaster/jigsaw/pull/557 增加alert的ButtonInfo类型
+- https://github.com/rdkmaster/jigsaw/issues/539 comboselect的单选模式实现错误
 
 ### 修复 / Fixes
-- https://github.com/rdkmaster/jigsaw/issues/539 comboselect的单选模式实现错误
 - https://github.com/rdkmaster/jigsaw/pull/562 解决combo-select触发下拉的时延错误
 - https://github.com/rdkmaster/jigsaw/issues/500 异步new TreeData在tree组件中会报错
 - https://github.com/rdkmaster/jigsaw/issues/563 Time在Combo下拉时，点击切换到配置时分秒时，会自动关闭下拉
