@@ -72,7 +72,7 @@ docInfo.miscellaneous.typealiases.forEach(ci => {
     html = html.replace('$rawtype', '原始类型：' + addTypeLink(ci.rawtype));
     html = html.replace('$since', '起始版本：' + (ci.since ? ci.since : 'v1.0.0'));
     html = html.replace('$description', ci.description);
-    html = html.replace('$demos', getDemoListWithHeader(ci.name));
+    html = html.replace('$demos', getDemoListWithHeader(ci));
     saveFile(ci.subtype, ci.name, html);
 });
 
@@ -87,7 +87,7 @@ docInfo.miscellaneous.enumerations.forEach(ci => {
     ci.childs.forEach(i => items.push(`<li>${i.name}</li>`));
     html = html.replace('$enumItems', items.join('\n'));
     html = html.replace('$description', ci.description);
-    html = html.replace('$demos', getDemoListWithHeader(ci.name));
+    html = html.replace('$demos', getDemoListWithHeader(ci));
     saveFile(ci.subtype, ci.name, html);
 });
 
@@ -101,9 +101,12 @@ function processCommon(ci, html) {
     html = html.replace('$name', ci.name);
     html = html.replace('$description', ci.description);
     html = html.replace('$extends', ci.extends ? addTypeLink(ci.extends) : '--');
-    html = html.replace('$implements', ci.implements && ci.implements.length > 0 ?
-                                        addTypeLink(ci.implements).join(' / ') : '--');
-    html = html.replace('$demos', getDemoListWithHeader(ci.name));
+    var implements = stripAngularInterfaces(ci.implements);
+    if (implements.length == 0) {
+        implements.push('--');
+    }
+    html = html.replace('$implements', implements);
+    html = html.replace('$demos', getDemoListWithHeader(ci));
     return html;
 }
 
@@ -502,7 +505,7 @@ function getDemoTags() {
             }
 
             eval(tagMatch[1]).forEach(t => {
-                verifyTag(t);
+                // verifyTag(t);
                 if (!tags.hasOwnProperty(t)) {
                     tags[t] = [];
                 }
@@ -548,9 +551,20 @@ function getDemoList(type, property) {
     return list.length > 0 ? `<ul>${list.join('')}</li></ul>` : '';
 }
 
-function getDemoListWithHeader(type) {
-    var demos = getDemoList(type);
-    return demos ? '<a name="demos"></a><h3>相关示例</h3>' + demos : '';
+function stripAngularInterfaces(implements) {
+    implements = (implements || []);
+    var excludes = [
+        'OnChaes', 'OnInit', 'DoCheck', 'AfterContentInit', 'AfterContentChecked',
+        'AfterViewInit', 'AfterViewChecked', 'OnDestroy'
+    ];
+    return implements.filter(i => excludes.indexOf(i) == -1);
+}
+
+function getDemoListWithHeader(metaInfo) {
+    var type = metaInfo.subtype || metaInfo.type;
+    var title = type == 'typealias' || type == 'enum' ? '相关示例' : '其他示例';
+    var demos = getDemoList(metaInfo.name);
+    return demos ? '<a name="demos"></a><h3>' + title + '</h3>' + demos : '';
 }
 
 function getComponentTemplate() {
@@ -559,8 +573,6 @@ function getComponentTemplate() {
 
 <p>起始版本：$since</p>
 $description
-
-$demos
 
 <a name="selectors"></a>
 <h3>选择器 / Selectors</h3>
@@ -602,6 +614,8 @@ $demos
     <tbody>$methods</tbody>
 </table>
 
+$demos
+
 <a name="object-oriented"></a>
 <h3>面向对象 / Object Oriented</h3>
 <ul><li>继承自 $extends</li><li>实现接口 $implements</li></ul>
@@ -614,8 +628,6 @@ function getClassesTemplate() {
 
 <p>起始版本：$since</p>
 $description
-
-$demos
 
 <a name="properties"></a>
 <h3>属性 / Properties</h3>
@@ -634,6 +646,8 @@ $demos
     </thead>
     <tbody>$methods</tbody>
 </table>
+
+$demos
 
 <a name="object-oriented"></a>
 <h3>面向对象 / Object Oriented</h3>
