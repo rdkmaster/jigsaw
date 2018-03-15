@@ -20,7 +20,7 @@ import {ArrayCollection} from "../../core/data/array-collection";
 import {CallbackRemoval} from "../../core/utils/common-utils";
 import {AbstractJigsawComponent} from "../common";
 
-export class SliderMark {
+export interface SliderMark {
     value: number;
     label: string;
     style?: any;

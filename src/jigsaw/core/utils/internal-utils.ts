@@ -1,5 +1,5 @@
 import {TranslateService} from "@ngx-translate/core";
-import {CommonUtils} from "./common-utils";
+import {CallbackRemoval, CommonUtils} from "./common-utils";
 import {TranslateHelper} from "./translate-helper";
 
 /**
@@ -94,9 +94,10 @@ export class InternalUtils {
     }
 }
 
-/*
+/**
  * 用于获取dom元素的位置信息
- * */
+ * @internal
+ */
 export class AffixUtils {
     /*
      * 获取元素距离文档的top和left
@@ -167,4 +168,55 @@ export class AffixUtils {
             return document.body;
         }
     }
+}
+
+/**
+ * @internal
+ */
+export class ElementEventHelper {
+    private _eventCaches: ElementEventCache[] = [];
+
+    public put(element: HTMLElement, eventType: string, eventListener: CallbackRemoval) {
+        const eventCache = this._findEventCache(element, eventType);
+        if (eventCache && !eventCache.handles.find(handle => handle == eventListener)) {
+            eventCache.handles.push(eventListener)
+        } else {
+            this._eventCaches.push({element: element, type: eventType, handles: [eventListener]});
+        }
+    }
+
+    public get(element: HTMLElement, eventType: string) {
+        const eventCache = this._findEventCache(element, eventType);
+        return eventCache ? eventCache.handles : null;
+    }
+
+    public del(element: HTMLElement, eventType: string, eventListener?: CallbackRemoval) {
+        const eventCache = this._findEventCache(element, eventType);
+        if (!eventCache) {
+            return;
+        }
+        if (eventListener) {
+            const index = eventCache.handles.findIndex(handle => handle == eventListener);
+            if (index != -1) {
+                eventCache.handles.splice(index, 1);
+            }
+        } else {
+            eventCache.handles = [];
+        }
+    }
+
+    private _findEventCache(element: HTMLElement, type: string) {
+        return this._eventCaches.find(eventCache => eventCache.element === element
+            && eventCache.type === type);
+    }
+}
+
+/**
+ * 事件存储及事件服务
+ * @internal
+ */
+export interface ElementEventCache {
+    element: HTMLElement;
+    type: string;
+    handles: CallbackRemoval[];
 }

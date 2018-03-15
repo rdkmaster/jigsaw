@@ -35,7 +35,7 @@ export class TableValueGenerators {
     }
 }
 
-export class ColumnDefine {
+export interface ColumnDefine {
     target?: TableColumnTarget;
     visible?: boolean;
     width?: string | number;
@@ -44,7 +44,7 @@ export class ColumnDefine {
     group?: boolean;
 }
 
-export class AdditionalColumnDefine {
+export interface AdditionalColumnDefine {
     pos?: number;
     visible?: boolean;
     width?: string | number;
@@ -53,7 +53,7 @@ export class AdditionalColumnDefine {
     group?: boolean;
 }
 
-export class TableDataChangeEvent {
+export interface TableDataChangeEvent {
     field: string | number;
     row: number | number[];
     column: number;
@@ -67,7 +67,7 @@ export type TableSyncRenderer = Type<TableCellRendererBase> | TemplateRef<any>;
 
 export type TableRenderer = TableSyncRenderer | TableAsyncRenderer;
 
-export class TableHeader {
+export interface TableHeader {
     text?: string;
     renderer?: TableRenderer;
     clazz?: string;
@@ -76,7 +76,7 @@ export class TableHeader {
     defaultSortOrder?: SortOrder;
 }
 
-export class TableCell {
+export interface TableCell {
     renderer?: TableRenderer;
     clazz?: string;
     editable?: boolean;
@@ -85,7 +85,7 @@ export class TableCell {
     tooltip?: any;
 }
 
-export class TableHeadSetting {
+export interface TableHeadSetting {
     cellData: string | number;
     width: string | number;
     visible: boolean;
@@ -97,7 +97,7 @@ export class TableHeadSetting {
     field: string;
 }
 
-export class TableCellSetting {
+export interface TableCellSetting {
     cellData: any;
     width: string | number;
     visible: boolean;
@@ -111,7 +111,7 @@ export class TableCellSetting {
     tooltip: any;
 }
 
-export class SortChangeEvent {
+export interface SortChangeEvent {
     sortAs: SortAs;
     order: SortOrder;
     field: string;
@@ -139,8 +139,11 @@ export function _getColumnIndex(data: TableData, additionalData: TableData, fiel
  *
  * $since = v1.1.4
  */
-export type TouchedValue = { key: any | any[], value: any, data: any[] };
-
+export interface TouchedValue {
+    key: any | any[];
+    value: any;
+    data: any[];
+}
 export class AdditionalTableData extends TableData {
     /**
      * 这个属性的值与`JigsawTable.trackRowBy`的值是相等的，关于这个属性的作用，

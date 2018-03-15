@@ -9,7 +9,8 @@ import {
     ViewContainerRef,
     EventEmitter, Optional, NgZone,
 } from "@angular/core";
-import {CommonUtils, ElementEventHelper} from "../core/utils/common-utils";
+import {CommonUtils} from "../core/utils/common-utils";
+import {ElementEventHelper} from "../core/utils/internal-utils";
 import {JigsawBlock} from "../component/block/block";
 import {AffixUtils} from "../core/utils/internal-utils";
 import {IDynamicInstantiatable} from "../component/common";
@@ -28,7 +29,7 @@ export enum PopupEffect {
  *
  * [这个demo](/components/dialog/demo#popup-option)详细的说明了如何使用这个对象。
  */
-export class PopupOptions {
+export interface PopupOptions {
     /**
      * 控制弹出的视图是否模态。
      *
@@ -124,23 +125,23 @@ export class PopupOptions {
 
 export type PopupPosition = PopupPoint | ElementRef | HTMLElement;
 
-export class PopupPositionValue {
+export interface PopupPositionValue {
     left: number;
     top: number;
 }
 
-export class PopupSize {
+export interface PopupSize {
     width?: string | number;
     height?: string | number;
     minWidth?: string | number;
 }
 
-export class PopupPoint {
-    public x: number;
-    public y: number;
+export interface PopupPoint {
+    x: number;
+    y: number;
 }
 
-export class PopupPositionOffset {
+export interface PopupPositionOffset {
     top?: number;
     left?: number;
     right?: number;
@@ -161,13 +162,13 @@ export enum PopupZIndex {
 
 export type PopupRef = ComponentRef<IPopupable> | EmbeddedViewRef<any>;
 
-export class ButtonInfo {
+export interface ButtonInfo {
     [index: string]: any;
-    public label?: string;
-    public clazz?: string = '';
-    public type?: string;
-    public disabled?: boolean;
-    public preSize?: string;
+    label?: string;
+    clazz?: string = '';
+    type?: string;
+    disabled?: boolean;
+    preSize?: string;
 }
 
 export type PopupDisposer = () => void;
@@ -178,7 +179,7 @@ export interface IPopupable extends IDynamicInstantiatable {
     [index: string]: any;
 }
 
-export class PopupInfo {
+export interface PopupInfo {
     instance: IPopupable;
     element: HTMLElement;
     dispose: PopupDisposer;

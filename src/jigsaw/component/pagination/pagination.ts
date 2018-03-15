@@ -12,9 +12,9 @@ import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {InternalUtils} from "../../core/utils/internal-utils";
 import {TranslateHelper} from "../../core/utils/translate-helper";
 
-export type PageSizeData = {
-    value: number,
-    label: string
+export interface PageSizeData {
+    value: number;
+    label: string;
 }
 
 @Component({

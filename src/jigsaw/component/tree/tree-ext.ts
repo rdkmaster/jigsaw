@@ -6,13 +6,12 @@ import {ZTreeSettingSetting} from "./ztree-types";
 import {TreeData} from "../../core/data/tree-data";
 import {CallbackRemoval} from "../../core/utils/common-utils";
 
-export class TreeEventData {
+export interface TreeEventData {
     treeId: string;
     treeNode: object;
     event?: Event;
     extraInfo?: object;
 }
-
 
 @Component({
     selector: 'jigsaw-tree-ext, j-tree-ext',

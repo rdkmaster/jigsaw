@@ -21,12 +21,12 @@ export type TableMatrixRow = any[];
 export type TableDataHeader = string[];
 export type TableDataField = string[];
 export type TableDataMatrix = TableMatrixRow[];
-export type RawTableData = {
-    field: TableDataField,
-    header: TableDataHeader,
-    data: TableDataMatrix,
-    [property: string]: any
-};
+export interface RawTableData {
+    field: TableDataField;
+    header: TableDataHeader;
+    data: TableDataMatrix;
+    [property: string]: any;
+}
 
 export class TableDataBase extends AbstractGeneralCollection<any> {
     public static isTableData(data: any): boolean {

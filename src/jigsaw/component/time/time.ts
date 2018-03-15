@@ -9,17 +9,18 @@ import {PopupInfo, PopupPositionType, PopupService} from "../../service/popup.se
 import {JigsawSimpleTooltipComponent} from "../tooltip/tooltip";
 import {Time, WeekTime} from "../../service/time.types";
 import {TranslateHelper} from "../../core/utils/translate-helper";
-import {ElementEventHelper, CommonUtils} from "../../core/utils/common-utils";
+import {CommonUtils} from "../../core/utils/common-utils";
+import {ElementEventHelper} from "../../core/utils/internal-utils";
 
 
 export type TimeShortcutFunction = () => [WeekTime, WeekTime]
 
-export class Shortcut {
+export interface Shortcut {
     label: string;
     dateRange: [WeekTime, WeekTime] | TimeShortcutFunction;
 }
 
-export class GrItem {
+export interface GrItem {
     label: string;
     value: TimeGr;
     span?: string;

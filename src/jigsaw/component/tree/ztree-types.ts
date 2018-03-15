@@ -1,4 +1,4 @@
-export class ZTreeSettingAsync {
+export interface ZTreeSettingAsync {
     enable?: boolean;
     contentType?: string;
     type?: string;
@@ -13,7 +13,7 @@ export class ZTreeSettingAsync {
 export enum ZTreeSettingViewSpeedLevel{
     slow, normal, fast
 }
-export class ZTreeSettingView {
+export interface ZTreeSettingView {
     addDiyDom?: Function;
     autoCancelSelected?: boolean;
     dblClickExpand?: boolean;
@@ -28,24 +28,24 @@ export class ZTreeSettingView {
 }
 
 
-export class ZTreeSettingDataKey {
+export interface ZTreeSettingDataKey {
     children?: string;
     name?: string;
     title?: string;
     url?: string;
     icon?: string;
 }
-export class ZTreeSettingDataKeep {
+export interface ZTreeSettingDataKeep {
     parent?: boolean;
     leaf?: boolean;
 }
-export class ZTreeSettingDataSimpleData {
+export interface ZTreeSettingDataSimpleData {
     enable?: boolean;
     idKey?: string;
     pIdKey?: string;
     rootPId?: string | number;
 }
-export class ZTreeSettingData {
+export interface ZTreeSettingData {
     key?: ZTreeSettingDataKey;
     simpleData?: ZTreeSettingDataSimpleData;
     keep?: ZTreeSettingDataKeep;
@@ -58,7 +58,7 @@ export enum ZTreeSettingCheckStyle{
 export enum ZTreeSettingCheckRadioType{
     level, all
 }
-export class ZTreeSettingCheck {
+export interface ZTreeSettingCheck {
     autoCheckTrigger?: boolean;
     chkBoxType?: JSON;
     chkStyle?: ZTreeSettingCheckStyle;
@@ -66,11 +66,9 @@ export class ZTreeSettingCheck {
     nocheckInherit?: boolean;
     chkDisabledInherit?: boolean;
     radioType?: ZTreeSettingCheckRadioType;
-
 }
 
-
-export class ZTreeSettingCallback {
+export interface ZTreeSettingCallback {
     beforeAsync?: Function;
     beforeCheck?: Function;
     beforeClick?: Function;
@@ -103,11 +101,9 @@ export class ZTreeSettingCallback {
     onRemove?: Function;
     onRename?: Function;
     onRightClick?: Function;
-
-
 }
 
-export class ZTreeSettingEditDrag {
+export interface ZTreeSettingEditDrag {
     autoExpandTrigger?: boolean;
     isCopy?: boolean;
     isMove?: boolean;
@@ -120,7 +116,7 @@ export class ZTreeSettingEditDrag {
     maxShowNodeNum?: number;
     autoOpenTime?: number;
 }
-export class ZTreeSettingEdit {
+export interface ZTreeSettingEdit {
     drag?: ZTreeSettingEditDrag;
     editNameSelectAll?: boolean;
     enable?: boolean;
@@ -130,8 +126,7 @@ export class ZTreeSettingEdit {
     showRenameBtn?: boolean | Function;
 }
 
-
-export class ZTreeSettingSetting {
+export interface ZTreeSettingSetting {
     async ?: ZTreeSettingAsync;
     callback?: ZTreeSettingCallback;
     check?: ZTreeSettingCheck;
