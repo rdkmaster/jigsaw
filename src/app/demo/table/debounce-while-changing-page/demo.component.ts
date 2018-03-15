@@ -61,7 +61,6 @@ export class TableAddIDWithDebouncePagingComponent implements AfterViewInit {
         'JigsawPagination',
         'TableValueGenerators.rowIndexGenerator',
         'PageableTableData.currentChange',
-        'PageableTableData.busy'
     ];
 }
 

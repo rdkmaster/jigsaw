@@ -55,6 +55,9 @@ export class PreparedHttpClientOptions extends HttpClientOptions {
     }
 }
 
+/**
+ * Jigsaw数据封装对象的最基类
+ */
 export interface IComponentData {
     /**
      * Angular的变化检测机制无法检测到我们对一个对象的某个属性所做的修改，例如我们将一个数组通过输入属性的方式绑定给了一个组件之后，
@@ -64,13 +67,13 @@ export interface IComponentData {
      * **这是Jigsaw向性能妥协后的产物。**
      *
      * 我们都知道，Angular里没有了脏检查了，性能提升了没错，但是Angular开发团队却把问题留给了我们，组件内部只能感知到对象引用的变化，
-     * 而无法感知到对象内部结构的变化。第1行代码，我们直接修改了tableData的内部结构，这样的行为angular是难以感知到的，
-     * 他们也就无法采用最低廉的方式给Jigsaw发出通知，Jigsaw在这个情况下也就无法及时更新视图了。
+     * 而无法感知到对象内部结构的变化。换句话说，应用直接修改复杂对象的内部结构的行为是没有高效的方式可以感知到的。
+     * 因此他们也就无法采用最低廉的方式给Jigsaw发出通知，而Jigsaw在这个情况下也就无法及时更新视图了。
      *
      * 那为啥说这是向性能妥协的产物呢？前面我说了，angular是难以感知到对象的内部结构的变化，但是这不意味着angular做不到，
      * 实际上是能够做到的，通过`DoCheck`这个钩子，可以检测到任何变化，在这个钩子里，通过一些复杂的代码，是可以精确的筛选出这个变化的。
      * 但是这个事情的性能代价是非常昂贵，在IE11这个搓货上，体验会很差。经过相当长的纠结之后，我们决定放弃自动检测，
-     * 和Angular团队一样，把问题丢给应用，让应用手工通知Jigsaw更新视图。
+     * 和Angular团队一样，把问题丢给应用，**由应用在修改了对象内部结构后，通过`refresh()`方法来通知Jigsaw更新视图**。
      */
     refresh(): void;
 
@@ -90,47 +93,43 @@ export interface IComponentData {
  */
 export interface IAjaxComponentData extends IComponentData {
     /**
-     * 这个属性用于标志当前数据的忙闲状态，为`true`时表示请求正在进行中，为`false`表示数据请求已经结束；
-     * 常常用于界面上的loading状态是否显示或者组件的disabled状态是否激活。
-     * 可参考[这个demo](/jigsaw/data-encapsulation/array-ssp)。
+     * 当前数据对象是否正在进行网络请求，请求过程中值为true，否则为false。
+     * 通常可以使用这个值与组件的disabled属性绑定使用，这样可以方便的实现网络请求过程中组件不可交互的目的。
      *
-     * @type boolean
+     * **注意**：当它的值为true时，此数据对象无法再次发起网络查询，控制台将出现错误打印。
      */
     busy: boolean;
 
     /**
      * 这是一个函数，作用是在数据从服务端请求回来之后，对服务端返回的数据做修正，并返回修正后的数据。
      * 一般用于数据结构的转换或者数据的微调。
-     *
-     * 可参考[这个demo](/jigsaw/data-encapsulation/array-ajax)。
-     *
-     * @type (data: any) => any
      */
     dataReviser: DataReviser;
 
     /**
-     * 使用`options`对应的信息请求一笔数据。
-     *
-     * @param {HttpClientOptions} options
-     */
-    fromAjax(options?: HttpClientOptions): void;
-
-    /**
      * 通过GET的方法请求`url`对应的数据，如果需要通过POST/PUT等方法请求数据，则请提供一个`HttpClientOptions`对象作为入参。
      *
-     * @param {string} url 提供数据的url，提示：参数可以带在url的query域中
+     * @param {string} url 采用GET方法请求这个服务，如果省略，则请求上一次指定的服务。
+     * 提示：可以将参数放到url中带给服务端；如果需要采用POST等其他方法，请提供一个`HttpClientOptions`类型的参数。
      */
     fromAjax(url?: string): void;
 
     /**
+     * 使用`options`对应的信息请求一笔数据。
+     *
+     * @param {HttpClientOptions} options 指定了本次网络请求的各种参数，如果省略，则采用上一次请求所设置的参数。
+     */
+    fromAjax(options?: HttpClientOptions): void;
+
+    /**
      * Ajax请求开始的时候，执行`callback`函数，一般可以在这个函数里触发loading效果。
      *
-     * @param {() => void} callback 回调函数
-     * @param context 回调函数`callback`执行的上下文
+     * @param {() => void} callback 回调函数，必选
+     * @param context 回调函数`callback`执行的上下文，可选
      * @returns {CallbackRemoval} 这是一个函数，调用它后，`callback`则不会再次被触发。
      * 如果你注册了这个回调，则请在组件的`ngOnDestroy()`方法中调用一下这个函数，避免内存泄露。
      */
-    onAjaxStart   (callback: () => void, context?: any): CallbackRemoval;
+    onAjaxStart(callback: () => void, context?: any): CallbackRemoval;
 
     /**
      * Ajax请求成功的时候，执行`callback`函数。
@@ -150,7 +149,7 @@ export interface IAjaxComponentData extends IComponentData {
      * @returns {CallbackRemoval} 这是一个函数，调用它后，`callback`则不会再次被触发。
      * 如果你注册了这个回调，则请在组件的`ngOnDestroy()`方法中调用一下这个函数，避免内存泄露。
      */
-    onAjaxError   (callback: (error: Response) => void, context?: any): CallbackRemoval;
+    onAjaxError(callback: (error: Response) => void, context?: any): CallbackRemoval;
 
     /**
      * Ajax请求结束（无论成功还是失败）的时候，执行`callback`函数，一般可以在这个函数里停止loading效果。
@@ -184,6 +183,9 @@ export interface IPageable extends IAjaxComponentData {
      */
     changePage(currentPage: number, pageSize?: number): void;
 
+    /**
+     * @param {PagingInfo} info 当前页的结构化信息
+     */
     changePage(info: PagingInfo): void;
 
     /**
@@ -209,7 +211,6 @@ export interface IPageable extends IAjaxComponentData {
 
 /**
  * 描述了服务端分页的更具体的接口，实现了这个接口的类就具备服务端分页的能力。
- *
  */
 export interface IServerSidePageable extends IPageable {
     /**
