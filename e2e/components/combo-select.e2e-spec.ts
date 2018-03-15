@@ -34,22 +34,11 @@ describe('combo-select', () => {
             /**
              * open: hover, close: leave
              */
-            // check open debounce
             browser.actions().mouseMove(selectEl).perform();
-            browser.sleep(50);
-            browser.actions().mouseMove(openByClick).perform();
-            expectToExist('.drop-down', false);
-            browser.actions().mouseMove(selectEl).perform();
-            browser.sleep(500);
-            expectToExist('.drop-down', true);
-            // check close debounce
-            browser.actions().mouseMove(openByClick).perform();
-            browser.sleep(200);
-            browser.actions().mouseMove(selectEl).perform();
-            browser.sleep(500);
+            await waitForPresence('.drop-down');
             expectToExist('.drop-down', true);
             browser.actions().mouseMove(openByClick).perform();
-            browser.sleep(800);
+            await waitForNotPresence('.drop-down');
             expectToExist('.drop-down', false);
 
             /**
@@ -63,14 +52,8 @@ describe('combo-select', () => {
             selectEl.click();
             await waitForPresence('.drop-down');
             expectToExist('.drop-down', true);
-            // check close debounce
             browser.actions().mouseMove(openByClick).perform();
-            browser.sleep(200);
-            browser.actions().mouseMove(selectEl).perform();
-            browser.sleep(500);
-            expectToExist('.drop-down', true);
-            browser.actions().mouseMove(openByClick).perform();
-            browser.sleep(800);
+            await waitForNotPresence('.drop-down');
             expectToExist('.drop-down', false);
 
             /**
@@ -84,9 +67,9 @@ describe('combo-select', () => {
             selectEl.click();
             await waitForPresence('.drop-down');
             expectToExist('.drop-down', true);
-            // check close status
             browser.actions().mouseMove(openByClick).perform();
-            browser.sleep(800);
+            browser.sleep(450);
+            // should not disappear after debounce timeout
             expectToExist('.drop-down', true);
             closeByClick.click();
             await waitForNotPresence('.drop-down');
@@ -99,15 +82,11 @@ describe('combo-select', () => {
             browser.sleep(50);
             // check open debounce
             browser.actions().mouseMove(selectEl).perform();
-            browser.sleep(50);
-            browser.actions().mouseMove(openByClick).perform();
-            expectToExist('.drop-down', false);
-            browser.actions().mouseMove(selectEl).perform();
-            browser.sleep(500);
+            await waitForPresence('.drop-down');
             expectToExist('.drop-down', true);
-            // check close status
             browser.actions().mouseMove(openByClick).perform();
-            browser.sleep(800);
+            browser.sleep(450);
+            // should not disappear after debounce timeout
             expectToExist('.drop-down', true);
             openByHover.click();
             await waitForNotPresence('.drop-down');
