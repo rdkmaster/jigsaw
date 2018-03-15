@@ -66,9 +66,7 @@ export class ZTreeSettingCheck {
     nocheckInherit?: boolean;
     chkDisabledInherit?: boolean;
     radioType?: ZTreeSettingCheckRadioType;
-
 }
-
 
 export class ZTreeSettingCallback {
     beforeAsync?: Function;
@@ -103,8 +101,6 @@ export class ZTreeSettingCallback {
     onRemove?: Function;
     onRename?: Function;
     onRightClick?: Function;
-
-
 }
 
 export class ZTreeSettingEditDrag {
@@ -129,7 +125,6 @@ export class ZTreeSettingEdit {
     showRemoveBtn?: boolean | Function;
     showRenameBtn?: boolean | Function;
 }
-
 
 export class ZTreeSettingSetting {
     async ?: ZTreeSettingAsync;

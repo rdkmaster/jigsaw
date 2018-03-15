@@ -13,7 +13,6 @@ export class TreeEventData {
     extraInfo?: object;
 }
 
-
 @Component({
     selector: 'jigsaw-tree-ext, j-tree-ext',
     template: `
