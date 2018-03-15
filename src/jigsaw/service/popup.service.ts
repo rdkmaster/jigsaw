@@ -29,7 +29,7 @@ export enum PopupEffect {
  *
  * [这个demo](/components/dialog/demo#popup-option)详细的说明了如何使用这个对象。
  */
-export interface PopupOptions {
+export class PopupOptions {
     /**
      * 控制弹出的视图是否模态。
      *
@@ -125,23 +125,23 @@ export interface PopupOptions {
 
 export type PopupPosition = PopupPoint | ElementRef | HTMLElement;
 
-export interface PopupPositionValue {
+export class PopupPositionValue {
     left: number;
     top: number;
 }
 
-export interface PopupSize {
+export class PopupSize {
     width?: string | number;
     height?: string | number;
     minWidth?: string | number;
 }
 
-export interface PopupPoint {
+export class PopupPoint {
     x: number;
     y: number;
 }
 
-export interface PopupPositionOffset {
+export class PopupPositionOffset {
     top?: number;
     left?: number;
     right?: number;
@@ -162,7 +162,7 @@ export enum PopupZIndex {
 
 export type PopupRef = ComponentRef<IPopupable> | EmbeddedViewRef<any>;
 
-export interface ButtonInfo {
+export class ButtonInfo {
     [index: string]: any;
     label?: string;
     clazz?: string = '';
@@ -179,7 +179,7 @@ export interface IPopupable extends IDynamicInstantiatable {
     [index: string]: any;
 }
 
-export interface PopupInfo {
+export class PopupInfo {
     instance: IPopupable;
     element: HTMLElement;
     dispose: PopupDisposer;

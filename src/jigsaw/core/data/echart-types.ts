@@ -1,4 +1,4 @@
-export interface EchartOptions {
+export class EchartOptions {
     //TODO: 补充完整
     title?: EchartTitle;
     legend?: EchartLegend;
@@ -6,7 +6,7 @@ export interface EchartOptions {
     [prop:string]: any;
 }
 
-export interface EchartTitle {
+export class EchartTitle {
     //TODO: 补充完整
     text: string;
     subtext?: string;
@@ -18,13 +18,13 @@ export interface EchartTitle {
     [prop:string]: any;
 }
 
-export interface GraphLegendItem {
+export class GraphLegendItem {
     name?: string;
     icon?: string;
     [prop:string]: any;
 }
 
-export interface EchartLegend {
+export class EchartLegend {
     //TODO: 补充完整
     data: Array<GraphLegendItem|string>;
     left?: string;
@@ -35,14 +35,14 @@ export interface EchartLegend {
     [prop:string]: any;
 }
 
-export interface EchartTooltip {
+export class EchartTooltip {
     //TODO: 补充完整
     formatter?: string|Function;
     show?: boolean;
     [prop:string]: any;
 }
 
-export interface EchartSeriesItem {
+export class EchartSeriesItem {
     data: any[];
     [prop:string]: any;
 }

@@ -15,12 +15,12 @@ import {ElementEventHelper} from "../../core/utils/internal-utils";
 
 export type TimeShortcutFunction = () => [WeekTime, WeekTime]
 
-export interface Shortcut {
+export class Shortcut {
     label: string;
     dateRange: [WeekTime, WeekTime] | TimeShortcutFunction;
 }
 
-export interface GrItem {
+export class GrItem {
     label: string;
     value: TimeGr;
     span?: string;

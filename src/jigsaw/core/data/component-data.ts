@@ -236,7 +236,7 @@ export interface IFilterable extends IAjaxComponentData {
     filter(term: DataFilterInfo): void;
 }
 
-export interface ViewportData {
+export class ViewportData {
     width: number;
     height: number;
 

@@ -6,7 +6,7 @@ import {ZTreeSettingSetting} from "./ztree-types";
 import {TreeData} from "../../core/data/tree-data";
 import {CallbackRemoval} from "../../core/utils/common-utils";
 
-export interface TreeEventData {
+export class TreeEventData {
     treeId: string;
     treeNode: object;
     event?: Event;

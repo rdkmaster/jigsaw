@@ -4,14 +4,14 @@ import {CommonUtils} from "../utils/common-utils";
 import {InternalUtils} from "../utils/internal-utils";
 import {JigsawEditableBox} from "../../component/box/editable-box";
 
-export interface ComponentInput {
+export class ComponentInput {
     property: string;
     type?: string;
     default?: any;
     binding?: string;
 }
 
-export interface ComponentMetaData {
+export class ComponentMetaData {
     [index: string]: any;
     component: Type<any>;
     selector: string;
@@ -20,7 +20,7 @@ export interface ComponentMetaData {
     import?: string;
 }
 
-export interface LayoutComponentInfo {
+export class LayoutComponentInfo {
     box: JigsawEditableBox;
     component: ComponentRef<any> | EmbeddedViewRef<any>;
 }

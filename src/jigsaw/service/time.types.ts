@@ -1,4 +1,4 @@
-export interface Moment {
+export class Moment {
     _isAMomentObject: boolean;
     [prop: string]: any;
 }
@@ -6,7 +6,7 @@ export interface Moment {
 export type Time = Date | string | Moment;
 
 
-export interface TimeWeekDay {
+export class TimeWeekDay {
     week: number;
     year: number;
 }

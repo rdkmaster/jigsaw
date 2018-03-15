@@ -19,7 +19,7 @@ export enum NotificationPosition {
     leftTop, leftBottom, rightTop, rightBottom
 }
 
-export interface NotificationMessage {
+export class NotificationMessage {
     caption?: string;
     icon?: string;
     position?: NotificationPosition;

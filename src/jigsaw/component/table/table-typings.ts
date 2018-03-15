@@ -35,7 +35,7 @@ export class TableValueGenerators {
     }
 }
 
-export interface ColumnDefine {
+export class ColumnDefine {
     target?: TableColumnTarget;
     visible?: boolean;
     width?: string | number;
@@ -44,7 +44,7 @@ export interface ColumnDefine {
     group?: boolean;
 }
 
-export interface AdditionalColumnDefine {
+export class AdditionalColumnDefine {
     pos?: number;
     visible?: boolean;
     width?: string | number;
@@ -53,7 +53,7 @@ export interface AdditionalColumnDefine {
     group?: boolean;
 }
 
-export interface TableDataChangeEvent {
+export class TableDataChangeEvent {
     field: string | number;
     row: number | number[];
     column: number;
@@ -67,7 +67,7 @@ export type TableSyncRenderer = Type<TableCellRendererBase> | TemplateRef<any>;
 
 export type TableRenderer = TableSyncRenderer | TableAsyncRenderer;
 
-export interface TableHeader {
+export class TableHeader {
     text?: string;
     renderer?: TableRenderer;
     clazz?: string;
@@ -76,7 +76,7 @@ export interface TableHeader {
     defaultSortOrder?: SortOrder;
 }
 
-export interface TableCell {
+export class TableCell {
     renderer?: TableRenderer;
     clazz?: string;
     editable?: boolean;
@@ -85,7 +85,7 @@ export interface TableCell {
     tooltip?: any;
 }
 
-export interface TableHeadSetting {
+export class TableHeadSetting {
     cellData: string | number;
     width: string | number;
     visible: boolean;
@@ -97,7 +97,7 @@ export interface TableHeadSetting {
     field: string;
 }
 
-export interface TableCellSetting {
+export class TableCellSetting {
     cellData: any;
     width: string | number;
     visible: boolean;
@@ -111,7 +111,7 @@ export interface TableCellSetting {
     tooltip: any;
 }
 
-export interface SortChangeEvent {
+export class SortChangeEvent {
     sortAs: SortAs;
     order: SortOrder;
     field: string;
@@ -139,7 +139,7 @@ export function _getColumnIndex(data: TableData, additionalData: TableData, fiel
  *
  * $since = v1.1.4
  */
-export interface TouchedValue {
+export class TouchedValue {
     key: any | any[];
     value: any;
     data: any[];

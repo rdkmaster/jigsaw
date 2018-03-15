@@ -21,7 +21,8 @@ export type TableMatrixRow = any[];
 export type TableDataHeader = string[];
 export type TableDataField = string[];
 export type TableDataMatrix = TableMatrixRow[];
-export interface RawTableData {
+
+export class RawTableData {
     field: TableDataField;
     header: TableDataHeader;
     data: TableDataMatrix;

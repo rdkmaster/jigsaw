@@ -215,7 +215,7 @@ export class ElementEventHelper {
  * 事件存储及事件服务
  * @internal
  */
-export interface ElementEventCache {
+export class ElementEventCache {
     element: HTMLElement;
     type: string;
     handles: CallbackRemoval[];

@@ -33,7 +33,7 @@ export enum DropDownTrigger {
     mouseleave,
 }
 
-export interface ComboSelectValue {
+export class ComboSelectValue {
     [index: string]: any;
     closable?: boolean;
 }
