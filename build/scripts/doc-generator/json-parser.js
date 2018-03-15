@@ -101,7 +101,9 @@ function processCommon(ci, html) {
     html = html.replace('$name', ci.name);
     html = html.replace('$description', ci.description);
     html = html.replace('$extends', ci.extends ? addTypeLink(ci.extends) : '--');
-    var implements = stripAngularInterfaces(ci.implements);
+    var implements = (ci.implements || ['--'])
+        .filter(i => !isAngularLifeCircle(i))
+        .map(i => addTypeLink(i));
     if (implements.length == 0) {
         implements.push('--');
     }
@@ -203,6 +205,9 @@ function processProperties(ci, html) {
 function processMethods(ci, html) {
     var methods = [];
     (ci.methodsClass || ci.methods).forEach(method => {
+        if (isAngularLifeCircle(method.name)) {
+            return;
+        }
         fixMetaInfo(method);
 
         var returns = `<p>返回类型 ${addTypeLink(method.returnType)}</p>`;
@@ -270,16 +275,12 @@ function getModifierInfo(modifier) {
 }
 
 function addTypeLink(type) {
-    if (typeof type === 'string') {
-        type = type == 'literal type' ? '' : type;
-        return (type || '').replace(/['"]?\w+['"]?/g, subType => {
-            var url = getTypeUrl(subType);
-            var target = url.match(/^https?:/) ? '_blank' : '_self';
-            return url ? `<a href="${url}" target="${target}">${subType}</a>` : subType;
-        });
-    } else if (type instanceof Array) {
-        return type.map(i => addTypeLink(i));
-    }
+    type = type == 'literal type' ? '' : type;
+    return (type || '').replace(/['"]?\w+['"]?/g, subType => {
+        var url = getTypeUrl(subType);
+        var target = url.match(/^https?:/) ? '_blank' : '_self';
+        return url ? `<a href="${url}" target="${target}">${subType}</a>` : subType;
+    });
 }
 
 // 此规则详情参考这里  https://github.com/rdkmaster/jigsaw/issues/542
@@ -551,20 +552,18 @@ function getDemoList(type, property) {
     return list.length > 0 ? `<ul>${list.join('')}</li></ul>` : '';
 }
 
-function stripAngularInterfaces(implements) {
-    implements = (implements || []);
-    var excludes = [
-        'OnChaes', 'OnInit', 'DoCheck', 'AfterContentInit', 'AfterContentChecked',
-        'AfterViewInit', 'AfterViewChecked', 'OnDestroy'
-    ];
-    return implements.filter(i => excludes.indexOf(i) == -1);
-}
-
 function getDemoListWithHeader(metaInfo) {
     var type = metaInfo.subtype || metaInfo.type;
     var title = type == 'typealias' || type == 'enum' ? '相关示例' : '其他示例';
     var demos = getDemoList(metaInfo.name);
     return demos ? '<a name="demos"></a><h3>' + title + '</h3>' + demos : '';
+}
+
+function isAngularLifeCircle(type) {
+    return [
+        'OnChaes', 'OnInit', 'DoCheck', 'AfterContentInit', 'AfterContentChecked',
+        'AfterViewInit', 'AfterViewChecked', 'OnDestroy'
+    ].find(i => i === type || 'ng' + i == type);
 }
 
 function getComponentTemplate() {
