@@ -15,7 +15,7 @@ import {
     SortAs,
     SortOrder
 } from "./component-data";
-import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
+import {CommonUtils} from "../utils/common-utils";
 
 export type TableMatrixRow = any[];
 export type TableDataHeader = string[];
@@ -266,6 +266,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
 
     private _filterSubject = new Subject<DataFilterInfo>();
     private _sortSubject = new Subject<DataSortInfo>();
+    private _ajaxSubject = new Subject();
     private _requestOptions: HttpClientOptions;
 
     constructor(public http: HttpClient, requestOptionsOrUrl: HttpClientOptions | string) {
@@ -305,6 +306,9 @@ export class PageableTableData extends TableData implements IServerSidePageable,
             this.sortInfo = sort;
             this._ajax();
         });
+        this._ajaxSubject.debounceTime(300).subscribe(() => {
+            this._ajax();
+        })
     }
 
     /**
@@ -336,7 +340,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         if (!!optionsOrUrl) {
             this.updateDataSource(optionsOrUrl);
         }
-        this._ajax();
+        this._ajaxSubject.next();
     }
 
     private _ajax(): void {
@@ -419,19 +423,8 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     public changePage(info: PagingInfo): void;
     public changePage(): void;
     public changePage(currentPage?, pageSize?: number): void {
-        if (this._busy) {
-            let removeOnAjaxComplete = this.onAjaxComplete(() => {
-                if (removeOnAjaxComplete) {
-                    removeOnAjaxComplete();
-                    removeOnAjaxComplete = null;
-                }
-                this.changePage(currentPage, pageSize);
-            });
-            return;
-        }
-
-        if(CommonUtils.isUndefined(currentPage)) {
-            this.fromAjax();
+        if (CommonUtils.isUndefined(currentPage)) {
+            this._ajaxSubject.next();
             return;
         }
 
@@ -498,6 +491,8 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this._filterSubject = null;
         this._sortSubject.unsubscribe();
         this._sortSubject = null;
+        this._ajaxSubject.unsubscribe();
+        this._ajaxSubject = null;
     }
 }
 
@@ -902,7 +897,7 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
             return;
         }
 
-        if(CommonUtils.isUndefined(currentPage)) {
+        if (CommonUtils.isUndefined(currentPage)) {
             this._setDataByPageInfo();
             this.refresh();
             return;
