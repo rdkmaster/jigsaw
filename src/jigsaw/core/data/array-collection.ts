@@ -335,7 +335,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
     protected componentDataHelper: ComponentDataHelper = new ComponentDataHelper();
 
     /**
-     * 请参考[IComponentData.refresh]{@link IComponentData#refresh}
+     * 参考`IComponentData.refresh`的说明
      */
     public refresh(): void {
         this.componentDataHelper.invokeRefreshCallback();

@@ -36,6 +36,8 @@ export class ArrayCollectionAjaxDemoComponent {
     description: string = '';
     tags: string[] = [
         'ArrayCollection.http', 'ArrayCollection.fromAjax',
-        'ArrayCollection.dataReviser', 'ArrayCollection.onAjaxComplete'
+        'ArrayCollection.dataReviser', 'ArrayCollection.onAjaxComplete',
+        'GeneralCollection.http', 'AbstractGeneralCollection.http',
+        'GeneralCollection.dataReviser', 'AbstractGeneralCollection.dataReviser',
     ];
 }

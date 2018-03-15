@@ -172,10 +172,11 @@ function mergeProperties(ci) {
                 continue;
             }
 
+            var desc = info.getSignature.description ? info.getSignature.description : '';
+            desc += info.setSignature && info.setSignature.description ? info.setSignature.description : '';
             propertiesClass.push({
-                name: info.name,
+                name: info.name, description: desc,
                 type: info.getSignature.returnType || info.getSignature.type,
-                description: info.hasOwnProperty('description') ? info.description : '',
                 readOnly: info.hasOwnProperty('setSignature') ? false : true
             });
         }
@@ -342,10 +343,13 @@ function getTypeUrl(type, allowUnknown) {
         return `https://developer.mozilla.org/zh-CN/docs/Web/API/${type}`;
     }
     if (type == 'IterableIterator') {
-        return `https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols`;
+        return `https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Iteration_protocols`;
     }
     if (type == 'NodeListOf') {
-        return `https://developer.mozilla.org/en-US/docs/Web/API/NodeList`;
+        return `https://developer.mozilla.org/zh-CN/docs/Web/API/NodeList`;
+    }
+    if (type == 'setTimeout') {
+        return `https://developer.mozilla.org/zh-CN/docs/Web/API/WindowOrWorkerGlobalScope/${type}`;
     }
 
     // try rxjs types

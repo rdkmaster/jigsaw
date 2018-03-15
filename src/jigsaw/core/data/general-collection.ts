@@ -11,14 +11,42 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
 
     protected abstract ajaxSuccessHandler(data): void;
 
+    /**
+     * 用于发起网络请求，在调用`fromAjax()`之前必须设置好此值。
+     */
     public http: HttpClient;
+
+    /**
+     * 在服务端返回的数据需要修正时，Jigsaw会调用这个函数对数据进行修正。常见的场景是：
+     * - 服务端返回的数据结构不利于视图使用时；
+     * - 服务端返回的数据结构不完整，需要“清洗”一下；
+     * - 需要在服务端返回的数据上，增加一些额外的数据时；
+     */
     public dataReviser: DataReviser;
+
+    /**
+     * 与`busy`具有相同含义
+     */
     protected _busy: boolean;
 
+    /**
+     * 当前数据对象是否正在进行网络请求，请求过程中值为true，否则为false。
+     * 通常可以使用这个值与组件的disabled属性绑定使用，这样可以方便的实现网络请求过程中组件不可交互的目的。
+     *
+     * **注意**：当它的值为true时，此数据对象无法再次发起网络查询，控制台将出现错误打印。
+     *
+     * @return {boolean}
+     */
     get busy(): boolean {
         return this._busy;
     }
 
+    /**
+     * 安全地调用`dataReviser`函数。
+     *
+     * @param originData
+     * @return {any}
+     */
     protected reviseData(originData: any): any {
         if (!this.dataReviser) {
             return originData;
@@ -40,8 +68,20 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
         }
     }
 
+    /**
+     * 发起网络请求
+     *
+     * @param {string} url 采用GET方法请求这个服务，如果省略，则请求上一次指定的服务。
+     * 提示：可以将参数放到url中带给服务端；如果需要采用POST等其他方法，请提供一个`HttpClientOptions`类型的参数。
+     */
     public fromAjax(url?: string): void;
+    /**
+     * @param {HttpClientOptions} options 指定了本次网络请求的各种参数，如果省略，则采用上一次请求所设置的参数。
+     */
     public fromAjax(options?: HttpClientOptions): void;
+    /**
+     * @internal
+     */
     public fromAjax(optionsOrUrl?: HttpClientOptions | string): void {
         if (!this.http) {
             console.error('set a valid HttpClient instance to the http attribute before invoking fromAjax()!');
@@ -66,6 +106,9 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
 
     protected componentDataHelper: ComponentDataHelper = new ComponentDataHelper();
 
+    /**
+     * 参考`IComponentData.refresh`的说明
+     */
     public refresh(): void {
         this.componentDataHelper.invokeRefreshCallback();
     }

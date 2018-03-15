@@ -4,11 +4,13 @@ import {ArrayCollectionAjaxDemoModule} from "./array-ajax/demo.module";
 import {ArrayCollectionBasicDemoModule} from "./array-basic/demo.module";
 import {ArrayServerSidePaginationDemoModule} from "./array-ssp/demo.module";
 import {DataIntroduceModule} from "./introduce/demo.module";
+import {RefreshDemoModule} from "./refresh/demo.module";
 
 import {ArrayCollectionBasicDemoComponent} from "./array-basic/demo.component";
 import {ArrayCollectionAjaxDemoComponent} from "./array-ajax/demo.component";
 import {ArrayServerSidePaginationDemoComponent} from "./array-ssp/demo.component";
 import {DataIntroduceComponent} from "./introduce/demo.component";
+import {RefreshDemoComponent} from "./refresh/demo.component";
 
 export const routerConfig = [
     {
@@ -23,6 +25,9 @@ export const routerConfig = [
     {
         path: 'array-ssp', component: ArrayServerSidePaginationDemoComponent
     },
+    {
+        path: 'refresh', component: RefreshDemoComponent
+    },
 ];
 
 @NgModule({
@@ -31,7 +36,8 @@ export const routerConfig = [
         DataIntroduceModule,
         ArrayCollectionAjaxDemoModule,
         ArrayCollectionBasicDemoModule,
-        ArrayServerSidePaginationDemoModule
+        ArrayServerSidePaginationDemoModule,
+        RefreshDemoModule
     ]
 })
 export class DataEncapsulationDemoModule {
