@@ -341,7 +341,12 @@ export class PageableTableData extends TableData implements IServerSidePageable,
 
     private _ajax(): void {
         if (this._busy) {
-            this.ajaxErrorHandler(null);
+            const removeOnAjaxComplete = this.onAjaxComplete(() => {
+                if (removeOnAjaxComplete) {
+                    removeOnAjaxComplete();
+                }
+                this._ajax();
+            });
             return;
         }
 
@@ -418,15 +423,6 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     public changePage(currentPage: number, pageSize?: number): void;
     public changePage(info: PagingInfo): void;
     public changePage(currentPage, pageSize?: number): void {
-        if (this.busy) {
-            const removeOnAjaxComplete = this.onAjaxComplete(() => {
-                if (removeOnAjaxComplete) {
-                    removeOnAjaxComplete();
-                }
-                this.changePage(currentPage, pageSize);
-            });
-            return;
-        }
         pageSize = isNaN(+pageSize) ? this.pagingInfo.pageSize : pageSize;
         const pi: PagingInfo = currentPage instanceof PagingInfo ? currentPage : new PagingInfo(currentPage, +pageSize);
         let needRefresh: boolean = false;
@@ -473,7 +469,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
      * 请参考[IPageable.lastPage]{@link IPageable#lastPage}
      */
     public lastPage(): void {
-        this.changePage(this.pagingInfo.pageSize);
+        this.changePage(this.pagingInfo.totalPage);
     }
 
     /**
@@ -937,7 +933,7 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
      * 请参考[IPageable.lastPage]{@link IPageable#lastPage}
      */
     public lastPage(): void {
-        this.changePage(this.pagingInfo.pageSize);
+        this.changePage(this.pagingInfo.totalPage);
     }
 
     /**
