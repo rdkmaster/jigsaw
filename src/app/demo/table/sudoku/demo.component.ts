@@ -66,4 +66,7 @@ export class SudokuGameComponent {
     // ====================================================================
     summary: string = '通过数独游戏的实现过程来学习如何在表格的渲染器之间进行复杂的交互逻辑';
     description: string = '';
+    tags: string[] = [
+        'JigsawTable'
+    ];
 }

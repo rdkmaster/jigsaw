@@ -48,4 +48,5 @@ export class ArrayServerSidePaginationDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = ['PageableArray'];
 }

@@ -20,4 +20,7 @@ export class JigsawShowTabComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawTab.showTab',
+    ];
 }

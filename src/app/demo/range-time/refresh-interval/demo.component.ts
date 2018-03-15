@@ -36,5 +36,8 @@ export class RangeTimeRefreshIntervalComponent implements AfterViewInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawRangeTime.refreshInterval',
+    ];
 }
 

@@ -22,5 +22,8 @@ export class DialogInDomDemoComponent {
     // ====================================================================
     summary: string = '`jigsaw-dialog`也是一个普通的组件，可以直接用在dom中';
     description: string = '[这里详细介绍了`PopupService`，请仔细阅读](/jigsaw/popup/introduce)。';
+    tags: string[] = [
+        'JigsawDialog'
+    ];
 }
 

@@ -112,5 +112,12 @@ export class DialogMiscDemoComponent {
     // ====================================================================
     summary: string = '这个demo介绍了弹出对话框的3种主要方式：组件、模板、自定义';
     description: string = '[这里详细介绍了`PopupService`，请仔细阅读](/jigsaw/popup/introduce)。';
+    tags: string[] = [
+        'JigsawDialog',
+        'PopupService.popup',
+        'PopupInfo.answer',
+        'PopupInfo.dispose',
+        'PopupOptions'
+    ];
 }
 

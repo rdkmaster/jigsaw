@@ -13,4 +13,7 @@ export class ComboSelectSetWidthDemo {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawComboSelect.width',
+    ];
 }

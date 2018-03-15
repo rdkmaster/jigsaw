@@ -48,6 +48,9 @@ export class TableSwitchRendererDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'TableCellSwitchRenderer'
+    ];
 }
 
 

@@ -5,7 +5,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from "@angular/router";
 import {ComboSelectAutoWidthDemoModule} from "./auto-width/demo.module";
-import {ComboSelectChangeTriggerDemoModule} from "./change-trigger/demo.module";
+import {ComboSelectChangeTriggerDemoModule} from "./events/demo.module";
 import {ComboSelectChangeDemoModule} from "./change/demo.module";
 import {ComboDropDownStatusDemoModule} from "./drop-down-status/demo.module";
 import {DisabledComboSelectDemoModule} from "./disable/demo.module";
@@ -15,8 +15,9 @@ import {OpenComboSelectDemoModule} from "./open/demo.module";
 import {ComboSelectSetWidthDemoModule} from "./set-width/demo.module";
 import {ComboSelectAutoCompleteDemoModule} from "./searchable/demo.module";
 import {ComboSelectFullModule} from "./full/demo.module";
+import {ComboSelectTriggerDemoModule} from "./trigger/demo.module";
 
-import {ComboSelectChangeTriggerDemo} from "./change-trigger/demo.component";
+import {ComboSelectChangeTriggerDemo} from "./events/demo.component";
 import {ComboSelectMultipleDemo} from "./multiple/demo.component";
 import {ComboSelectAutoWidthDemo} from "./auto-width/demo.component";
 import {ComboSelectLabelFieldDemo} from "./label-field/demo.component";
@@ -27,13 +28,14 @@ import {ComboSelectAutoCompleteDemo} from "./searchable/demo.component";
 import {ComboDropDownStatusDemoComponent} from "./drop-down-status/demo.component";
 import {ComboSelectSetWidthDemo} from "./set-width/demo.component";
 import {ComboSelectFullComponent} from "./full/demo.component";
+import {ComboSelectTriggerDemo} from "./trigger/demo.component";
 
 export const routerConfig = [
     {
         path: 'searchable', component: ComboSelectAutoCompleteDemo
     },
     {
-        path: 'change-trigger', component: ComboSelectChangeTriggerDemo
+        path: 'events', component: ComboSelectChangeTriggerDemo
     },
     {
         path: 'multiple', component: ComboSelectMultipleDemo
@@ -61,6 +63,9 @@ export const routerConfig = [
     },
     {
         path: 'full', component: ComboSelectFullComponent
+    },
+    {
+        path: 'trigger', component: ComboSelectTriggerDemo
     }
 ];
 
@@ -77,7 +82,8 @@ export const routerConfig = [
         ComboSelectMultipleDemoModule,
         OpenComboSelectDemoModule,
         ComboSelectSetWidthDemoModule,
-        ComboSelectFullModule
+        ComboSelectFullModule,
+        ComboSelectTriggerDemoModule
     ]
 })
 export class ComboSelectDemoModule {

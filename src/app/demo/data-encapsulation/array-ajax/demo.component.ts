@@ -34,4 +34,8 @@ export class ArrayCollectionAjaxDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'ArrayCollection.http', 'ArrayCollection.fromAjax',
+        'ArrayCollection.dataReviser', 'ArrayCollection.onAjaxComplete'
+    ];
 }

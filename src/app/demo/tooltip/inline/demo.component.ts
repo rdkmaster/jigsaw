@@ -11,5 +11,8 @@ export class SimpleTooltipDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawTooltip'
+    ];
 }
 

@@ -53,5 +53,9 @@ export class TileSelectFullDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawTile',
+        'JigsawTileOption'
+    ];
 }
 

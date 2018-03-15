@@ -1,8 +1,7 @@
-import {browser, element, by, $, $$} from 'protractor';
-import {waitForNotPresence, waitForPresence, waitForTextPresence} from "../utils/await";
+import {$, $$, browser, by, element} from 'protractor';
+import {waitForNotPresence, waitForPresence} from "../utils/await";
 import {expectToExist} from "../utils/asserts";
 import {mouseMove} from "../utils/actions";
-import {getWindowSize} from "../utils/popup";
 
 describe('combo-select', () => {
     beforeEach(() => {
@@ -24,20 +23,74 @@ describe('combo-select', () => {
             expect(selectEl.getCssValue('width')).toBe(element(by.tagName('jigsaw-tile')).getCssValue('width'));
         });
         it('should change trigger when click button', async () => {
-            await browser.get('/combo-select/change-trigger');
-            const selectEl = $('jigsaw-combo-select'),
-                buttons = $$('jigsaw-button');
+            await browser.get('/combo-select/trigger');
+            const selectEl = $('jigsaw-combo-select');
+            const openByClick = element(by.id('openByClick'));
+            const openByHover = element(by.id('openByHover'));
+            const closeByClick = element(by.id('closeByClick'));
+            const closeByLeave = element(by.id('closeByLeave'));
+
+            /**
+             * open: hover, close: leave
+             */
             browser.actions().mouseMove(selectEl).perform();
-            await waitForPresence('.drop-down-container');
-            expect(buttons.count()).toBe(10);
-            expectToExist('.drop-down-container');
-            browser.actions().mouseMove({x: 1000, y: 135}).perform();
-            await waitForNotPresence('.drop-down-container');
-            expectToExist('.drop-down-container', false);
-            buttons.get(0).click();
+            await waitForPresence('.drop-down');
+            expectToExist('.drop-down', true);
+            browser.actions().mouseMove(openByClick).perform();
+            await waitForNotPresence('.drop-down');
+            expectToExist('.drop-down', false);
+
+            /**
+             * open: click, close: leave
+             */
+            openByClick.click();
+            browser.sleep(50);
+            browser.actions().mouseMove(selectEl).perform();
+            browser.sleep(200);
+            expectToExist('.drop-down', false);
             selectEl.click();
-            await waitForPresence('.drop-down-container');
-            expectToExist('.drop-down-container');
+            browser.actions().mouseMove(selectEl).perform();
+            await waitForPresence('.drop-down');
+            expectToExist('.drop-down', true);
+            browser.actions().mouseMove(openByClick).perform();
+            await waitForNotPresence('.drop-down');
+            expectToExist('.drop-down', false);
+
+            /**
+             * open: click, close: click
+             */
+            closeByClick.click();
+            browser.sleep(50);
+            browser.actions().mouseMove(selectEl).perform();
+            browser.sleep(200);
+            expectToExist('.drop-down', false);
+            selectEl.click();
+            await waitForPresence('.drop-down');
+            expectToExist('.drop-down', true);
+            browser.actions().mouseMove(openByClick).perform();
+            browser.sleep(450);
+            // should not disappear after debounce timeout
+            expectToExist('.drop-down', true);
+            closeByClick.click();
+            await waitForNotPresence('.drop-down');
+            expectToExist('.drop-down', false);
+
+            /**
+             * open: hover, close: click
+             */
+            openByHover.click();
+            browser.sleep(50);
+            // check open debounce
+            browser.actions().mouseMove(selectEl).perform();
+            await waitForPresence('.drop-down');
+            expectToExist('.drop-down', true);
+            browser.actions().mouseMove(openByClick).perform();
+            browser.sleep(450);
+            // should not disappear after debounce timeout
+            expectToExist('.drop-down', true);
+            openByHover.click();
+            await waitForNotPresence('.drop-down');
+            expectToExist('.drop-down', false);
         });
         it('should be disabled when toggle disable', async () => {
             await browser.get('/combo-select/disable');

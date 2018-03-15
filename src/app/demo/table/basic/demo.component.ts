@@ -172,5 +172,9 @@ export class TableBasicDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawTable',
+        'TableData'
+    ];
 }
 

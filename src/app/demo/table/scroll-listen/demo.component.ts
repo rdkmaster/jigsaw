@@ -47,6 +47,9 @@ export class TableScrollListenDemoComponent implements AfterViewInit, OnDestroy 
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawTable.contentScrollbar'
+    ];
 }
 
 

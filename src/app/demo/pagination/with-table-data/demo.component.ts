@@ -31,5 +31,9 @@ export class ServerSidePagingDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawPagination',
+        'PageableTableData'
+    ];
 }
 

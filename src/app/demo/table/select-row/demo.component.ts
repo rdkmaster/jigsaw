@@ -24,5 +24,8 @@ export class TableSelectRowDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawTable.selectedRow'
+    ];
 }
 

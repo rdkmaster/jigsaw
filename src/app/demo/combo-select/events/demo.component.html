@@ -4,13 +4,9 @@
 
 
 <!-- start to learn the demo from here -->
-<div class="combo-select-demo cmn-box">
-    <div class="test-btn">
-        <jigsaw-button (click)="changeTrigger()">change trigger</jigsaw-button>
-    </div>
+<div class="cmn-box">
+    单击已选中的城市试试 -->
     <jigsaw-combo-select [showBorder]="true"
-                         [openTrigger]="openTrigger"
-                         [closeTrigger]="closeTrigger"
                          [(value)]="selectedCity"
                          (select)="onTagSelect($event)"
                          (remove)="onTagRemove($event)"
