@@ -13,8 +13,6 @@ import {TableAddColumnDemoComponent} from "./add-column/demo.component";
 import {TableAddColumnDemoModule} from "./add-column/demo.module";
 import {TableAddIDColumnDemoComponent} from "./index-column/demo.component";
 import {TableAddIDColumnDemoModule} from "./index-column/demo.module";
-import {TableAddIDWithDebouncePagingComponent} from "./debounce-while-changing-page/demo.component";
-import {TableAddIDWithDebouncePagingModule} from "./debounce-while-changing-page/demo.module";
 import {TableAddIDWithPagingComponent} from "./index-column-with-paging/demo.component";
 import {TableAddIDWithPagingModule} from "./index-column-with-paging/demo.module";
 import {TableBasicDemoComponent} from "./basic/demo.component";
@@ -153,9 +151,6 @@ export const routerConfig = [
         path: 'index-column-with-paging', component: TableAddIDWithPagingComponent
     },
     {
-        path: 'debounce-while-changing-page', component: TableAddIDWithDebouncePagingComponent
-    },
-    {
         path: 'with-popup', component: TableDataWithPopupDemoComponent
     },
     {
@@ -193,7 +188,7 @@ export const routerConfig = [
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig),
-        TableAddCheckboxColumnDemoModule, TableAddColumnDemoModule, TableAddIDColumnDemoModule, TableAddIDWithDebouncePagingModule,
+        TableAddCheckboxColumnDemoModule, TableAddColumnDemoModule, TableAddIDColumnDemoModule,
         TableAddIDWithPagingModule, TableBasicDemoModule, TableDataChangeDemoModule, TableDataFromAjaxDemoModule,
         TableFixedHeadDemoModule, BigTableDataDemoModule, LocalPagingDataDemoModule, TablePageableDemoModule,
         TableRendererDemoModule, TableRendererOfTemplateRefDemoModule, TableContentWidthDemoModule, BigColumnDemoModule,
