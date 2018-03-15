@@ -26,15 +26,8 @@ export class TableAddIDWithDebouncePagingComponent implements AfterViewInit {
     ngAfterViewInit() {
         this.paging.currentChange.debounceTime(300).subscribe(() => {
             console.log('pageable now query from ajax!');
-            this.pageable.fromAjax();
+            this.pageable.changePage();
         })
-    }
-
-    getPageSize() {
-        if (this.pageable.busy) {
-            return;
-        }
-        this.pageable.fromAjax();
     }
 
     columns: ColumnDefine[] = [{

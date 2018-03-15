@@ -31,14 +31,6 @@ export class TablePageableDemoComponent {
         }
     ];
 
-    getCurrentPage() {
-        this.pageable.changePage(this.pageable.pagingInfo);
-    }
-
-    getPageSize() {
-        this.pageable.changePage(this.pageable.pagingInfo);
-    }
-
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

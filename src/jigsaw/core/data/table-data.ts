@@ -422,7 +422,11 @@ export class PageableTableData extends TableData implements IServerSidePageable,
      */
     public changePage(currentPage: number, pageSize?: number): void;
     public changePage(info: PagingInfo): void;
-    public changePage(currentPage, pageSize?: number): void {
+    public changePage(): void;
+    public changePage(currentPage?, pageSize?: number): void {
+        if(CommonUtils.isUndefined(currentPage)) {
+            this.fromAjax();
+        }
         pageSize = isNaN(+pageSize) ? this.pagingInfo.pageSize : pageSize;
         const pi: PagingInfo = currentPage instanceof PagingInfo ? currentPage : new PagingInfo(currentPage, +pageSize);
         let needRefresh: boolean = false;
@@ -784,7 +788,8 @@ export class BigTableData extends PageableTableData implements ISlicedData {
 
     public changePage(currentPage: number, pageSize?: number): void;
     public changePage(info: PagingInfo): void;
-    public changePage(currentPage, pageSize?: number): void {
+    public changePage(): void;
+    public changePage(currentPage?, pageSize?: number): void {
         throw new Error('BigTableData do not support changePage action.');
     }
 }
@@ -883,8 +888,15 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
      */
     public changePage(currentPage: number, pageSize?: number): void;
     public changePage(info: PagingInfo): void;
-    public changePage(currentPage, pageSize?: number): void {
+    public changePage(): void;
+    public changePage(currentPage?, pageSize?: number): void {
         if (!this.filteredData) {
+            return;
+        }
+
+        if(CommonUtils.isUndefined(currentPage)) {
+            this._setDataByPageInfo();
+            this.refresh();
             return;
         }
 
@@ -894,18 +906,21 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
             return;
         }
         this.pagingInfo.pageSize = pi.pageSize;
-        // this.pagingInfo.totalPage = Math.ceil(this.pagingInfo.totalRecord / this.pagingInfo.pageSize);
         this._updatePagingInfo();
 
         if (pi.currentPage >= 1 && pi.currentPage <= this.pagingInfo.totalPage) {
             this.pagingInfo.currentPage = pi.currentPage;
-            const begin = (this.pagingInfo.currentPage - 1) * this.pagingInfo.pageSize;
-            const end = this.pagingInfo.currentPage * this.pagingInfo.pageSize < this.pagingInfo.totalRecord ? this.pagingInfo.currentPage * this.pagingInfo.pageSize : this.pagingInfo.totalRecord;
-            this.data = this.filteredData.slice(begin, end);
+            this._setDataByPageInfo();
         } else {
             this.data.length = 0;
         }
         this.refresh();
+    }
+
+    private _setDataByPageInfo() {
+        const begin = (this.pagingInfo.currentPage - 1) * this.pagingInfo.pageSize;
+        const end = this.pagingInfo.currentPage * this.pagingInfo.pageSize < this.pagingInfo.totalRecord ? this.pagingInfo.currentPage * this.pagingInfo.pageSize : this.pagingInfo.totalRecord;
+        this.data = this.filteredData.slice(begin, end);
     }
 
     /**

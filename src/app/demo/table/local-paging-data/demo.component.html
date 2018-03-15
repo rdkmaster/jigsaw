@@ -12,7 +12,7 @@
     [pageSizeOptions]="[5, 10, 20]"
     [searchable]="true"
     [showQuickJumper]="true"
-    (currentChange)="getCurrentPage()"
-    (pageSizeChange)="getPageSize()"
+    (currentChange)="pageable.changePage()"
+    (pageSizeChange)="pageable.changePage()"
 ></jigsaw-pagination>
 <span>共{{pageable.pagingInfo.totalRecord}}条记录</span>

@@ -18,14 +18,6 @@ export class LocalPagingDataDemoComponent {
         this.pageable.fromAjax('mock-data/hr-list');
     }
 
-    getCurrentPage() {
-        this.pageable.changePage(this.pageable.pagingInfo);
-    }
-
-    getPageSize() {
-        this.pageable.changePage(this.pageable.pagingInfo);
-    }
-
     columns: ColumnDefine[] = [
         {
             target: 'salary',
