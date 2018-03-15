@@ -341,12 +341,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
 
     private _ajax(): void {
         if (this._busy) {
-            const removeOnAjaxComplete = this.onAjaxComplete(() => {
-                if (removeOnAjaxComplete) {
-                    removeOnAjaxComplete();
-                }
-                this._ajax();
-            });
+            this.ajaxErrorHandler(null);
             return;
         }
 
@@ -424,9 +419,22 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     public changePage(info: PagingInfo): void;
     public changePage(): void;
     public changePage(currentPage?, pageSize?: number): void {
+        if (this._busy) {
+            let removeOnAjaxComplete = this.onAjaxComplete(() => {
+                if (removeOnAjaxComplete) {
+                    removeOnAjaxComplete();
+                    removeOnAjaxComplete = null;
+                }
+                this.changePage(currentPage, pageSize);
+            });
+            return;
+        }
+
         if(CommonUtils.isUndefined(currentPage)) {
             this.fromAjax();
+            return;
         }
+
         pageSize = isNaN(+pageSize) ? this.pagingInfo.pageSize : pageSize;
         const pi: PagingInfo = currentPage instanceof PagingInfo ? currentPage : new PagingInfo(currentPage, +pageSize);
         let needRefresh: boolean = false;
