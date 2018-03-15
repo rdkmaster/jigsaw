@@ -102,7 +102,7 @@ function processCommon(ci, html) {
     html = html.replace('$description', ci.description);
     html = html.replace('$extends', ci.extends ? addTypeLink(ci.extends) : '--');
     html = html.replace('$implements', ci.implements && ci.implements.length > 0 ?
-                                        addTypeLink(ci.implements).join(' / ') : '--');
+                    addTypeLink(stripAngularInterfaces(ci.implements)).join(' / ') : '--');
     html = html.replace('$demos', getDemoListWithHeader(ci.name));
     return html;
 }
@@ -546,6 +546,15 @@ function getDemoList(type, property) {
         list.push(`<li title="${d.summary}"><a href="${d.url}">${d.label}</a></li>`);
     });
     return list.length > 0 ? `<ul>${list.join('')}</li></ul>` : '';
+}
+
+function stripAngularInterfaces(implements) {
+    implements = (implements || []);
+    var excludes = [
+        'OnChaes', 'OnInit', 'DoCheck', 'AfterContentInit', 'AfterContentChecked',
+        'AfterViewInit', 'AfterViewChecked', 'OnDestroy'
+    ];
+    return implements.filter(i => excludes.indexOf(i) == -1);
 }
 
 function getDemoListWithHeader(type) {
