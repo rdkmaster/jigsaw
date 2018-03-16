@@ -167,16 +167,12 @@ function mergeProperties(ci) {
                 continue;
             }
             var info = ci.accessors[prop];
-            if (!info.hasOwnProperty('getSignature')) {
-                // 不可读属性，不理他
-                continue;
-            }
-
-            var desc = info.getSignature.description ? info.getSignature.description : '';
+            var desc = info.getSignature && info.getSignature.description ? info.getSignature.description : '';
             desc += info.setSignature && info.setSignature.description ? info.setSignature.description : '';
+            var type = info.getSignature ? (info.getSignature.returnType || info.getSignature.type) :
+                                            info.setSignature ? info.setSignature.args[0].type : '';
             propertiesClass.push({
-                name: info.name, description: desc,
-                type: info.getSignature.returnType || info.getSignature.type,
+                name: info.name, description: desc, type: type,
                 readOnly: info.hasOwnProperty('setSignature') ? false : true
             });
         }
@@ -232,8 +228,24 @@ function processMethods(ci, html) {
         } else {
             args = `<ul><li>${args.join('</li><li>')}</li></ul>`;
         }
+
         var modifier = getModifierInfo(method.modifierKind);
-        var description = method.description + (method.since ? `<p>起始版本：${method.since}</p>` : '');
+
+        //如果当前方法没有描述，则往上找他的父类里要描述
+        var m = method;
+        var description = '';
+        while (true) {
+            if (isDefined(m.description)) {
+                description = m.description;
+                break;
+            }
+            m = findParentMethod(m.extends, m.name);
+            if (!m) {
+                break;
+            }
+        }
+        description += (method.since ? `<p>起始版本：${method.since}</p>` : '');
+
         methods.push(`
             <tr><td style="white-space: nowrap;">${anchor(method.name)}${modifier}${method.name}</td>
             <td>${description}</td><td>${returns}</td><td>${args}</td><td>${getDemoList(ci.name, method.name)}</td></tr>`);
@@ -242,6 +254,34 @@ function processMethods(ci, html) {
         methods.push(getNoDataRowTemplate());
     }
     return html.replace('$methods', methods.join(''));
+}
+
+// 往上寻找最近一个包含`methodName`方法的实现的接口类、父类的元信息
+// 因为编写文档的时候，是尽量将详细描述写在尽可能基础的接口、基类上的
+// 因此本方法优先寻找接口类，然后才是父类。
+function findParentMethod(type, methodName) {
+    if (!type) {
+        return;
+    }
+    var ci = findTypeMetaInfo(type);
+    if (!ci) {
+        return;
+    }
+    var m = (ci.methodsClass || ci.methods).filter(m => method.name === methodName);
+    if (m) {
+        return m;
+    }
+
+    var parents = ci.implements || [];
+    if (ci.extends) {
+        parents.push(ci.extends);
+    }
+    for (var i = 0; i < parents.length; i++) {
+        m = findParentMethod(parents[i], methodName);
+        if (m) {
+            return m;
+        }
+    }
 }
 
 function fixMetaInfo(metaInfo) {
