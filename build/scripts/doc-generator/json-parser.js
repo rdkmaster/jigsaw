@@ -218,9 +218,26 @@ function processMethods(ci, html) {
                 return;
             }
             var type = a.type ? `: ${addTypeLink(a.type)}` : '';
+            var parentMethod = findParentMethod(ci, method.name,
+                m => m.jsdoctags && m.jsdoctags.find(pa => {
+                    if (pa.tagName.text !== 'param') {
+                        return false;
+                    }
+                    var name = a.name.text || a.name.text;
+                    var paName = pa.name.text || pa.name;
+                    return paName === name && !!pa.comment;
+                }));
+            var comment = parentMethod ? parentMethod.jsdoctags.find(pa => {
+                    if (pa.tagName.text !== 'param') {
+                        return false;
+                    }
+                    var paName = pa.name.text || pa.name;
+                    var name = a.name.text || a.name.text;
+                    return paName === name;
+                }).comment : '';
             var arg = `<span style="white-space: nowrap;">
                 ${a.name.text || a.name}${type}</code>
-                </span>${a.comment ? addDescLink(a.comment) : ''}`;
+                </span>${comment ? addDescLink(comment) : ''}`;
             args.push(arg);
         });
         if (args.length == 0) {
@@ -232,18 +249,8 @@ function processMethods(ci, html) {
         var modifier = getModifierInfo(method.modifierKind);
 
         //如果当前方法没有描述，则往上找他的父类里要描述
-        var m = method;
-        var description = '';
-        while (true) {
-            if (isDefined(m.description)) {
-                description = m.description;
-                break;
-            }
-            m = findParentMethod(m.extends, m.name);
-            if (!m) {
-                break;
-            }
-        }
+        var parentMethod = findParentMethod(ci, method.name, m => !!m.description);
+        var description =  parentMethod ?  parentMethod.description : '';
         description += (method.since ? `<p>起始版本：${method.since}</p>` : '');
 
         methods.push(`
@@ -259,27 +266,25 @@ function processMethods(ci, html) {
 // 往上寻找最近一个包含`methodName`方法的实现的接口类、父类的元信息
 // 因为编写文档的时候，是尽量将详细描述写在尽可能基础的接口、基类上的
 // 因此本方法优先寻找接口类，然后才是父类。
-function findParentMethod(type, methodName) {
+function findParentMethod(type, methodName, condition) {
+    type = findTypeMetaInfo(type);
     if (!type) {
         return;
     }
-    var ci = findTypeMetaInfo(type);
-    if (!ci) {
-        return;
-    }
-    var m = (ci.methodsClass || ci.methods).filter(m => method.name === methodName);
-    if (m) {
-        return m;
+    var methods = type.methodsClass || type.methods || [];
+    var method = methods.find(m => m.name === methodName && condition(m));
+    if (method) {
+        return method;
     }
 
-    var parents = ci.implements || [];
-    if (ci.extends) {
-        parents.push(ci.extends);
+    var parents = (type.implements || []).concat();
+    if (type.extends) {
+        parents.push(type.extends);
     }
     for (var i = 0; i < parents.length; i++) {
-        m = findParentMethod(parents[i], methodName);
-        if (m) {
-            return m;
+        method = findParentMethod(parents[i], methodName, condition);
+        if (method) {
+            return method;
         }
     }
 }
@@ -450,14 +455,17 @@ function getPropertyUrl(type, property, context) {
 }
 
 function findTypeMetaInfo(type) {
-    return docInfo.classes.find(i => i.name === type) ||
-           docInfo.components.find(i => i.name === type) ||
-           docInfo.directives.find(i => i.name === type) ||
-           docInfo.injectables.find(i => i.name === type) ||
-           docInfo.interfaces.find(i => i.name === type) ||
-           docInfo.modules.find(i => i.name === type) ||
-           docInfo.miscellaneous.typealiases.find(i => i.name === type) ||
-           docInfo.miscellaneous.enumerations.find(i => i.name === type);
+    return typeof type === 'string' ?
+        docInfo.classes.find(i => i.name === type) ||
+        docInfo.components.find(i => i.name === type) ||
+        docInfo.directives.find(i => i.name === type) ||
+        docInfo.injectables.find(i => i.name === type) ||
+        docInfo.interfaces.find(i => i.name === type) ||
+        docInfo.modules.find(i => i.name === type) ||
+        docInfo.miscellaneous.typealiases.find(i => i.name === type) ||
+        docInfo.miscellaneous.enumerations.find(i => i.name === type)
+        :
+        type;
 }
 
 // 在一个类中寻找一个属性，这个方法支持追溯到父类里
