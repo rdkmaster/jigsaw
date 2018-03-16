@@ -259,6 +259,7 @@ class MockData {
         this.dataSet['tree-data'] = require('../mock-data/tree-data.json');
         this.dataSet['soduku-puzzles'] = require('../mock-data/soduku-puzzles.json');
         this.dataSet['big-table-data'] = this.createBigTableData();
+        this.dataSet['map/shanghai'] = require('echarts/map/json/province/shanghai.json');
     }
 
     static createBigTableData(): RawTableData {
