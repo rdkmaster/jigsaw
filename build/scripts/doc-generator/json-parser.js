@@ -107,7 +107,7 @@ function processCommon(ci, html) {
     if (implements.length == 0) {
         implements.push('--');
     }
-    html = html.replace('$implements', implements);
+    html = html.replace('$implements', implements.join(' / '));
     html = html.replace('$demos', getDemoListWithHeader(ci));
     return html;
 }
@@ -228,7 +228,7 @@ function processMethods(ci, html) {
             args.push(arg);
         });
         if (args.length == 0) {
-            args = '<p>无参数</p>';
+            args = '--';
         } else {
             args = `<ul><li>${args.join('</li><li>')}</li></ul>`;
         }
