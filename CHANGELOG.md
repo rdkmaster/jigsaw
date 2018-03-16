@@ -1,3 +1,20 @@
+## v1.1.5 (2018-3-14)
+
+### 新特性 / New Features
+- https://github.com/rdkmaster/jigsaw/issues/535 增加switch功能的table内置渲染器
+
+### 破坏性修改 / Breaking Changes
+- 无 / none
+
+###  优化 / Modified
+- https://github.com/rdkmaster/jigsaw/pull/557 增加alert的ButtonInfo类型
+- https://github.com/rdkmaster/jigsaw/issues/539 comboselect的单选模式实现错误
+
+### 修复 / Fixes
+- https://github.com/rdkmaster/jigsaw/pull/562 解决combo-select触发下拉的时延错误
+- https://github.com/rdkmaster/jigsaw/issues/500 异步new TreeData在tree组件中会报错
+- https://github.com/rdkmaster/jigsaw/issues/563 Time在Combo下拉时，点击切换到配置时分秒时，会自动关闭下拉
+ 
 ## v1.1.4 (2018-3-10)
 
 ### 新特性 / New Features

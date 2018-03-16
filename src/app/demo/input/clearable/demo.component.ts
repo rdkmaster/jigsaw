@@ -11,5 +11,8 @@ export class InputClearableDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawInput.clearable',
+    ];
 }
 

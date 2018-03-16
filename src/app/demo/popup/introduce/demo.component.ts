@@ -10,4 +10,7 @@ export class PopupServiceIntroduceComponent {
     // ====================================================================
     summary: string = '关于`PopupService`你所需要知道的一切都在这里';
     description: string = require('!!raw-loader!./readme.md');
+    tags: string[] = [
+        'PopupService',
+    ];
 }

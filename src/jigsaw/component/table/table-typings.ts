@@ -139,8 +139,11 @@ export function _getColumnIndex(data: TableData, additionalData: TableData, fiel
  *
  * $since = v1.1.4
  */
-export type TouchedValue = { key: any | any[], value: any, data: any[] };
-
+export class TouchedValue {
+    key: any | any[];
+    value: any;
+    data: any[];
+}
 export class AdditionalTableData extends TableData {
     /**
      * 这个属性的值与`JigsawTable.trackRowBy`的值是相等的，关于这个属性的作用，

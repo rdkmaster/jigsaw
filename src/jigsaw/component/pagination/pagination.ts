@@ -12,9 +12,9 @@ import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {InternalUtils} from "../../core/utils/internal-utils";
 import {TranslateHelper} from "../../core/utils/translate-helper";
 
-export type PageSizeData = {
-    value: number,
-    label: string
+export class PageSizeData {
+    value: number;
+    label: string;
 }
 
 @Component({
@@ -42,7 +42,9 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     /**
      * @internal
      */
-    public _$pageSize: PageSizeData = {value: null, label: 'null/' + this._translateService.instant('pagination.page')};
+    public _$pageSize: PageSizeData = {
+        value: null, label: 'null/' + this._translateService.instant('pagination.page')
+    };
     /**
      * @internal
      */

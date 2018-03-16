@@ -72,7 +72,7 @@ docInfo.miscellaneous.typealiases.forEach(ci => {
     html = html.replace('$rawtype', '原始类型：' + addTypeLink(ci.rawtype));
     html = html.replace('$since', '起始版本：' + (ci.since ? ci.since : 'v1.0.0'));
     html = html.replace('$description', ci.description);
-    html = html.replace('$demos', getDemoListWithHeader(ci.name));
+    html = html.replace('$demos', getDemoListWithHeader(ci));
     saveFile(ci.subtype, ci.name, html);
 });
 
@@ -87,7 +87,7 @@ docInfo.miscellaneous.enumerations.forEach(ci => {
     ci.childs.forEach(i => items.push(`<li>${i.name}</li>`));
     html = html.replace('$enumItems', items.join('\n'));
     html = html.replace('$description', ci.description);
-    html = html.replace('$demos', getDemoListWithHeader(ci.name));
+    html = html.replace('$demos', getDemoListWithHeader(ci));
     saveFile(ci.subtype, ci.name, html);
 });
 
@@ -101,9 +101,14 @@ function processCommon(ci, html) {
     html = html.replace('$name', ci.name);
     html = html.replace('$description', ci.description);
     html = html.replace('$extends', ci.extends ? addTypeLink(ci.extends) : '--');
-    html = html.replace('$implements', ci.implements && ci.implements.length > 0 ?
-                                        addTypeLink(ci.implements).join(' / ') : '--');
-    html = html.replace('$demos', getDemoListWithHeader(ci.name));
+    var implements = (ci.implements || ['--'])
+        .filter(i => !isAngularLifeCircle(i))
+        .map(i => addTypeLink(i));
+    if (implements.length == 0) {
+        implements.push('--');
+    }
+    html = html.replace('$implements', implements);
+    html = html.replace('$demos', getDemoListWithHeader(ci));
     return html;
 }
 
@@ -167,10 +172,11 @@ function mergeProperties(ci) {
                 continue;
             }
 
+            var desc = info.getSignature.description ? info.getSignature.description : '';
+            desc += info.setSignature && info.setSignature.description ? info.setSignature.description : '';
             propertiesClass.push({
-                name: info.name,
+                name: info.name, description: desc,
                 type: info.getSignature.returnType || info.getSignature.type,
-                description: info.hasOwnProperty('description') ? info.description : '',
                 readOnly: info.hasOwnProperty('setSignature') ? false : true
             });
         }
@@ -200,6 +206,9 @@ function processProperties(ci, html) {
 function processMethods(ci, html) {
     var methods = [];
     (ci.methodsClass || ci.methods).forEach(method => {
+        if (isAngularLifeCircle(method.name)) {
+            return;
+        }
         fixMetaInfo(method);
 
         var returns = `<p>返回类型 ${addTypeLink(method.returnType)}</p>`;
@@ -267,16 +276,12 @@ function getModifierInfo(modifier) {
 }
 
 function addTypeLink(type) {
-    if (typeof type === 'string') {
-        type = type == 'literal type' ? '' : type;
-        return (type || '').replace(/['"]?\w+['"]?/g, subType => {
-            var url = getTypeUrl(subType);
-            var target = url.match(/^https?:/) ? '_blank' : '_self';
-            return url ? `<a href="${url}" target="${target}">${subType}</a>` : subType;
-        });
-    } else if (type instanceof Array) {
-        return type.map(i => addTypeLink(i));
-    }
+    type = type == 'literal type' ? '' : type;
+    return (type || '').replace(/['"]?\w+['"]?/g, subType => {
+        var url = getTypeUrl(subType);
+        var target = url.match(/^https?:/) ? '_blank' : '_self';
+        return url ? `<a href="${url}" target="${target}">${subType}</a>` : subType;
+    });
 }
 
 // 此规则详情参考这里  https://github.com/rdkmaster/jigsaw/issues/542
@@ -338,10 +343,13 @@ function getTypeUrl(type, allowUnknown) {
         return `https://developer.mozilla.org/zh-CN/docs/Web/API/${type}`;
     }
     if (type == 'IterableIterator') {
-        return `https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols`;
+        return `https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Iteration_protocols`;
     }
     if (type == 'NodeListOf') {
-        return `https://developer.mozilla.org/en-US/docs/Web/API/NodeList`;
+        return `https://developer.mozilla.org/zh-CN/docs/Web/API/NodeList`;
+    }
+    if (type == 'setTimeout') {
+        return `https://developer.mozilla.org/zh-CN/docs/Web/API/WindowOrWorkerGlobalScope/${type}`;
     }
 
     // try rxjs types
@@ -502,7 +510,7 @@ function getDemoTags() {
             }
 
             eval(tagMatch[1]).forEach(t => {
-                verifyTag(t);
+                // verifyTag(t);
                 if (!tags.hasOwnProperty(t)) {
                     tags[t] = [];
                 }
@@ -548,9 +556,18 @@ function getDemoList(type, property) {
     return list.length > 0 ? `<ul>${list.join('')}</li></ul>` : '';
 }
 
-function getDemoListWithHeader(type) {
-    var demos = getDemoList(type);
-    return demos ? '<a name="demos"></a><h3>相关示例</h3>' + demos : '';
+function getDemoListWithHeader(metaInfo) {
+    var type = metaInfo.subtype || metaInfo.type;
+    var title = type == 'typealias' || type == 'enum' ? '相关示例' : '其他示例';
+    var demos = getDemoList(metaInfo.name);
+    return demos ? '<a name="demos"></a><h3>' + title + '</h3>' + demos : '';
+}
+
+function isAngularLifeCircle(type) {
+    return [
+        'OnChaes', 'OnInit', 'DoCheck', 'AfterContentInit', 'AfterContentChecked',
+        'AfterViewInit', 'AfterViewChecked', 'OnDestroy'
+    ].find(i => i === type || 'ng' + i == type);
 }
 
 function getComponentTemplate() {
@@ -559,8 +576,6 @@ function getComponentTemplate() {
 
 <p>起始版本：$since</p>
 $description
-
-$demos
 
 <a name="selectors"></a>
 <h3>选择器 / Selectors</h3>
@@ -602,6 +617,8 @@ $demos
     <tbody>$methods</tbody>
 </table>
 
+$demos
+
 <a name="object-oriented"></a>
 <h3>面向对象 / Object Oriented</h3>
 <ul><li>继承自 $extends</li><li>实现接口 $implements</li></ul>
@@ -614,8 +631,6 @@ function getClassesTemplate() {
 
 <p>起始版本：$since</p>
 $description
-
-$demos
 
 <a name="properties"></a>
 <h3>属性 / Properties</h3>
@@ -634,6 +649,8 @@ $demos
     </thead>
     <tbody>$methods</tbody>
 </table>
+
+$demos
 
 <a name="object-oriented"></a>
 <h3>面向对象 / Object Oriented</h3>

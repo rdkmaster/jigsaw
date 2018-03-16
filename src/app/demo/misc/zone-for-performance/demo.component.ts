@@ -81,4 +81,8 @@ export class ZoneForBetterPerformanceDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'NgZone.run',
+        'NgZone.runOutsideAngular',
+    ];
 }

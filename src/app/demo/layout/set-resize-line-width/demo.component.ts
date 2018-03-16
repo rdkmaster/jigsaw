@@ -31,4 +31,7 @@ export class SetResizeLineWidthDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawEditableBox.resizeLineWidth',
+    ];
 }

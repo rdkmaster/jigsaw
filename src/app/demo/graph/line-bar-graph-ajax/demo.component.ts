@@ -28,4 +28,7 @@ export class AjaxLineGraphComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'LineBarGraphData'
+    ];
 }

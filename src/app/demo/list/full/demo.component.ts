@@ -105,4 +105,7 @@ export class ListFullDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawList'
+    ];
 }

@@ -432,4 +432,9 @@ export class FishBoneFullComponent implements AfterViewInit {
     // ====================================================================
     summary: string = 'FishBone的使用说明';
     description: string = require('!!raw-loader!./readme.md');
+    tags: string[] = [
+        'JigsawFishBone',
+        'ChartIconFactory',
+        'ChartType'
+    ];
 }

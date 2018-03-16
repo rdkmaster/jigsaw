@@ -9,7 +9,8 @@ import {
     ViewContainerRef,
     EventEmitter, Optional, NgZone,
 } from "@angular/core";
-import {CommonUtils, ElementEventHelper} from "../core/utils/common-utils";
+import {CommonUtils} from "../core/utils/common-utils";
+import {ElementEventHelper} from "../core/utils/internal-utils";
 import {JigsawBlock} from "../component/block/block";
 import {AffixUtils} from "../core/utils/internal-utils";
 import {IDynamicInstantiatable} from "../component/common";
@@ -136,8 +137,8 @@ export class PopupSize {
 }
 
 export class PopupPoint {
-    public x: number;
-    public y: number;
+    x: number;
+    y: number;
 }
 
 export class PopupPositionOffset {
@@ -163,11 +164,11 @@ export type PopupRef = ComponentRef<IPopupable> | EmbeddedViewRef<any>;
 
 export class ButtonInfo {
     [index: string]: any;
-    public label?: string;
-    public clazz?: string = '';
-    public type?: string;
-    public disabled?: boolean;
-    public preSize?: string;
+    label?: string;
+    clazz?: string = '';
+    type?: string;
+    disabled?: boolean;
+    preSize?: string;
 }
 
 export type PopupDisposer = () => void;

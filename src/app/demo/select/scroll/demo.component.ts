@@ -27,5 +27,8 @@ export class SelectScrollDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawSelect.optionCount',
+    ];
 }
 

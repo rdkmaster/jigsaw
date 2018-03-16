@@ -112,4 +112,5 @@ export class ArrayCollectionBasicDemoComponent implements OnInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = ['ArrayCollection'];
 }

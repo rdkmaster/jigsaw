@@ -20,4 +20,7 @@ export class TableHideHeadDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawTable.hideHeader',
+    ];
 }

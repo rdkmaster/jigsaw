@@ -219,4 +219,8 @@ export class CustomSceneLayoutDemoComponent {
     // ====================================================================
     summary: string = '这个DEMO稍乱了一些，但是它很好的演示了`j-editable-box`的各个功能';
     description: string = '';
+    tags: string[] = [
+        'JigsawEditableBox',
+        'LayoutData'
+    ];
 }

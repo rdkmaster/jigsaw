@@ -42,6 +42,12 @@ export class TableCalendarDemoComponent {
     // ====================================================================
     summary: string = '基于Table实现的日历功能';
     description: string = '';
+    tags: string[] = [
+        'JigsawTable.columnDefines',
+        'ColumnDefine',
+        'TableCell.renderer',
+        'TableCellRendererBase'
+    ];
 }
 
 @Component({

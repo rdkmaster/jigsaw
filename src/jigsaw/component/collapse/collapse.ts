@@ -23,7 +23,7 @@ export enum CollapseMode {
     selector: 'jigsaw-collapse-pane, j-collapse-pane',
     templateUrl: './collapse-pane.html'
 })
-export class JigsawCollapsePane{
+export class JigsawCollapsePane {
 
     constructor(@Host() @Inject(forwardRef(() => JigsawCollapse)) private _collapse) {
     }

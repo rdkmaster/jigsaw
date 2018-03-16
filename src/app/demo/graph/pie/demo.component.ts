@@ -37,4 +37,9 @@ export class PieGraphDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'PieGraphData',
+        'PieGraphDataByColumn',
+        'PieGraphDataByRow',
+    ];
 }

@@ -34,4 +34,13 @@ export class ArrayCollectionAjaxDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'ArrayCollection.http', 'ArrayCollection.fromAjax',
+        'ArrayCollection.dataReviser', 'ArrayCollection.onAjaxComplete',
+        'AbstractGeneralCollection.http', 'AbstractGeneralCollection.fromAjax',
+        'AbstractGeneralCollection.dataReviser',
+        'GeneralCollection.http', 'GeneralCollection.dataReviser',
+        'PageableArray.fromAjax', 'PageableTableData.fromAjax',
+        'IAjaxComponentData.dataReviser', 'IAjaxComponentData.fromAjax'
+    ];
 }

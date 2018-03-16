@@ -2,7 +2,7 @@ import {EchartTitle, EchartLegend, EchartTooltip, EchartOptions} from "./echart-
 import {TableDataBase} from "./table-data";
 import {CommonUtils} from "../utils/common-utils";
 
-export type GraphMatrixRow = Array<string | number>;
+export type GraphMatrixRow = (string | number)[];
 export type GraphDataHeader = string[];
 export type GraphDataField = string[];
 export type GraphDataRowDescriptor = string[];

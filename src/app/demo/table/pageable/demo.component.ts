@@ -36,5 +36,12 @@ export class TablePageableDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'PageableTableData',
+        'JigsawPagination',
+        'JigsawTable.columnDefines',
+        'ColumnDefine',
+        'TableHeader.sortable'
+    ];
 }
 

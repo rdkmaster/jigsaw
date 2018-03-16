@@ -29,7 +29,10 @@ export class ButtonFullComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
+    summary: string = '演示了按钮的多种用法';
     description: string = '';
+    tags: string[] = [
+        'JigsawButton'
+    ];
 }
 

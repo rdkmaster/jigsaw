@@ -51,5 +51,11 @@ export class TableColumnSetWidthDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'TableCell.editable',
+        'ColumnDefine.width',
+        'JigsawTable.columnDefines',
+        'JigsawTable.update'
+    ];
 }
 

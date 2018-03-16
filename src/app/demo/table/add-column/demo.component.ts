@@ -60,6 +60,10 @@ export class TableAddColumnDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawTable.additionalColumnDefines',
+        'AdditionalColumnDefine'
+    ];
 }
 
 
