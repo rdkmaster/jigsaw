@@ -37,7 +37,10 @@ export class ArrayCollectionAjaxDemoComponent {
     tags: string[] = [
         'ArrayCollection.http', 'ArrayCollection.fromAjax',
         'ArrayCollection.dataReviser', 'ArrayCollection.onAjaxComplete',
-        'GeneralCollection.http', 'AbstractGeneralCollection.http',
-        'GeneralCollection.dataReviser', 'AbstractGeneralCollection.dataReviser',
+        'AbstractGeneralCollection.http', 'AbstractGeneralCollection.fromAjax',
+        'AbstractGeneralCollection.dataReviser',
+        'GeneralCollection.http', 'GeneralCollection.dataReviser',
+        'PageableArray.fromAjax', 'PageableTableData.fromAjax',
+        'IAjaxComponentData.dataReviser', 'IAjaxComponentData.fromAjax'
     ];
 }

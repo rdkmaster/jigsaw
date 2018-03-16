@@ -17,23 +17,18 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
     public http: HttpClient;
 
     /**
-     * 在服务端返回的数据需要修正时，Jigsaw会调用这个函数对数据进行修正。常见的场景是：
-     * - 服务端返回的数据结构不利于视图使用时；
-     * - 服务端返回的数据结构不完整，需要“清洗”一下；
-     * - 需要在服务端返回的数据上，增加一些额外的数据时；
+     * 对服务端返回的数据进行修正，详情请参考`IAjaxComponentData.dataReviser`
      */
     public dataReviser: DataReviser;
 
     /**
-     * 与`busy`具有相同含义
+     * 与`busy`具有相同功能
      */
     protected _busy: boolean;
 
     /**
      * 当前数据对象是否正在进行网络请求，请求过程中值为true，否则为false。
-     * 通常可以使用这个值与组件的disabled属性绑定使用，这样可以方便的实现网络请求过程中组件不可交互的目的。
-     *
-     * **注意**：当它的值为true时，此数据对象无法再次发起网络查询，控制台将出现错误打印。
+     * 详情请参考 `IAjaxComponentData.busy`
      *
      * @return {boolean}
      */
@@ -69,7 +64,7 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
     }
 
     /**
-     * 发起网络请求
+     * 发起网络请求，详情请参考`IAjaxComponentData.fromAjax`
      *
      * @param {string} url 采用GET方法请求这个服务，如果省略，则请求上一次指定的服务。
      * 提示：可以将参数放到url中带给服务端；如果需要采用POST等其他方法，请提供一个`HttpClientOptions`类型的参数。
@@ -113,22 +108,57 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
         this.componentDataHelper.invokeRefreshCallback();
     }
 
+    /**
+     * 数据销毁时要做的事情，详情请参考 `IComponentData.onRefresh`
+     */
     public onRefresh(callback: (thisData: AbstractGeneralCollection<T>) => void, context?: any): CallbackRemoval {
         return this.componentDataHelper.getRefreshRemoval({fn: callback, context: context});
     }
 
+    /**
+     * 详情请参考 `IAjaxComponentData.onAjaxStart`
+     *
+     * @param {() => void} callback 回调函数，必选
+     * @param context 回调函数`callback`执行的上下文，可选
+     * @returns {CallbackRemoval} 这是一个函数，调用它后，`callback`则不会再次被触发。
+     * 如果你注册了这个回调，则请在组件的`ngOnDestroy()`方法中调用一下这个函数，避免内存泄露。
+     */
     public onAjaxStart(callback: (data: T) => void, context?: any): CallbackRemoval {
         return this.componentDataHelper.getAjaxStartRemoval({fn: callback, context: context});
     }
 
+    /**
+     * 详情请参考 `IAjaxComponentData.onAjaxSuccess`
+     *
+     * @param {(data: any) => void} callback 回调函数
+     * @param context 回调函数`callback`执行的上下文
+     * @returns {CallbackRemoval} 这是一个函数，调用它后，`callback`则不会再次被触发。
+     * 如果你注册了这个回调，则请在组件的`ngOnDestroy()`方法中调用一下这个函数，避免内存泄露。
+     */
     public onAjaxSuccess(callback: (data: T) => void, context?: any): CallbackRemoval {
         return this.componentDataHelper.getAjaxSuccessRemoval({fn: callback, context: context});
     }
 
+    /**
+     * 详情请参考 `IAjaxComponentData.onAjaxError`
+     *
+     * @param {(data: any) => void} callback 回调函数
+     * @param context 回调函数`callback`执行的上下文
+     * @returns {CallbackRemoval} 这是一个函数，调用它后，`callback`则不会再次被触发。
+     * 如果你注册了这个回调，则请在组件的`ngOnDestroy()`方法中调用一下这个函数，避免内存泄露。
+     */
     public onAjaxError(callback: (error: Response) => void, context?: any): CallbackRemoval {
         return this.componentDataHelper.getAjaxErrorRemoval({fn: callback, context: context});
     }
 
+    /**
+     * 详情请参考 `IAjaxComponentData.onAjaxComplete`
+     *
+     * @param {(data: any) => void} callback 回调函数
+     * @param context 回调函数`callback`执行的上下文
+     * @returns {CallbackRemoval} 这是一个函数，调用它后，`callback`则不会再次被触发。
+     * 如果你注册了这个回调，则请在组件的`ngOnDestroy()`方法中调用一下这个函数，避免内存泄露。
+     */
     public onAjaxComplete(callback: () => void, context?: any): CallbackRemoval {
         return this.componentDataHelper.getAjaxCompleteRemoval({fn: callback, context: context});
     }
@@ -157,6 +187,9 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
         this.componentDataHelper.invokeAjaxCompleteCallback();
     }
 
+    /**
+     * 数据销毁时要做的事情，详情请参考 `IComponentData.destroy`
+     */
     public destroy(): void {
         this.componentDataHelper.clearCallbacks();
         this.componentDataHelper = null;
@@ -224,6 +257,9 @@ export class GeneralCollection<T> extends AbstractGeneralCollection<T> {
         return this;
     }
 
+    /**
+     * 数据销毁时要做的事情，详情请参考 `IComponentData.destroy`
+     */
     public destroy(): void {
         super.destroy();
         console.log('destroying GeneralCollection....');

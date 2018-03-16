@@ -106,6 +106,9 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
         this.field.splice(0, this.field.length);
     }
 
+    /**
+     * 数据销毁时要做的事情，详情请参考 `IComponentData.destroy`
+     */
     public destroy(): void {
         super.destroy();
         this.clear();
@@ -232,6 +235,9 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
         throw new Error("Method not implemented.");
     }
 
+    /**
+     * 数据销毁时要做的事情，详情请参考 `IComponentData.destroy`
+     */
     public destroy() {
         this.sortInfo = null;
         this.filterInfo = null;
@@ -263,6 +269,10 @@ export class PageableTableData extends TableData implements IServerSidePageable,
      * 或者在需要获取数据之前，一次性通过{@link updateDataSource}来更新这个对象。
      */
     public sourceRequestOptions: HttpClientOptions;
+
+    /**
+     * 分页信息，详情参考 `IPageable.pagingInfo`
+     */
     public pagingInfo: PagingInfo;
 
     private _filterSubject = new Subject<DataFilterInfo>();
@@ -309,13 +319,21 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     }
 
     /**
-     * 在使用此方法之前，请先阅读一下{@link sourceRequestOptions}的说明，你需要先了解它的作用之后，
-     * 才能够知道如何恰当的使用这个方法来更新{@link sourceRequestOptions}。
+     * 在使用此方法之前，请先阅读一下`sourceRequestOptions`的说明，你需要先了解它的作用之后，
+     * 才能够知道如何恰当的使用这个方法来更新`sourceRequestOptions`。
      *
-     * 这个方法除了更新{@link sourceRequestOptions}以外，还会自动重置{@link pagingInfo}的各个参数，
-     * 清空{@link filterInfo}和{@link sortInfo}。
+     * 这个方法除了更新`sourceRequestOptions`以外，还会自动重置`pagingInfo`的各个参数，
+     * 清空`filterInfo`和`sortInfo`。
      *
-     * @param {HttpClientOptions | string} optionsOrUrl
+     * @param {HttpClientOptions} options
+     */
+    public updateDataSource(options: HttpClientOptions): void;
+    /**
+     * @param {string} url
+     */
+    public updateDataSource(url: string): void;
+    /**
+     * @internal
      */
     public updateDataSource(optionsOrUrl: HttpClientOptions | string): void {
         this.sourceRequestOptions = typeof optionsOrUrl === 'string' ? {url: optionsOrUrl} : optionsOrUrl;
@@ -328,14 +346,24 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     }
 
     /**
-     * 请参考[IAjaxComponentData.fromAjax]{@link IAjaxComponentData#fromAjax}
-     * @param {string} url
+     * 发起网络请求，详情请参考`IAjaxComponentData.fromAjax`
+     *
+     * @param {string} url 采用GET方法请求这个服务，如果省略，则请求上一次指定的服务。
+     * 提示：可以将参数放到url中带给服务端；如果需要采用POST等其他方法，请提供一个`HttpClientOptions`类型的参数。
      */
     public fromAjax(url?: string): void;
+    /**
+     * @param {HttpClientOptions} options 指定了本次网络请求的各种参数，如果省略，则采用上一次请求所设置的参数。
+     */
     public fromAjax(options?: HttpClientOptions): void;
+    /**
+     * @internal
+     */
     public fromAjax(optionsOrUrl?: HttpClientOptions | string): void {
-        if (!!optionsOrUrl) {
-            this.updateDataSource(optionsOrUrl);
+        if (optionsOrUrl instanceof HttpClientOptions) {
+            this.updateDataSource(<HttpClientOptions>optionsOrUrl);
+        } else {
+            this.updateDataSource(<string>optionsOrUrl);
         }
         this._ajax();
     }
@@ -412,12 +440,19 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     }
 
     /**
-     * 请参考[IPageable.changePage]{@link IPageable#changePage}
-     * @param {number} currentPage
-     * @param {number} pageSize
+     * 设置数据对象的当前页为`currentPage`，详情请参考 `IPageable.changePage`
+     *
+     * @param {number} currentPage 新的当前页序号，从1开始
+     * @param {number} pageSize 新的单页记录数，可选，不提供则不改变单页记录数。
      */
     public changePage(currentPage: number, pageSize?: number): void;
+    /**
+     * @param {PagingInfo} info 当前页的结构化信息
+     */
     public changePage(info: PagingInfo): void;
+    /**
+     * @internal
+     */
     public changePage(currentPage, pageSize?: number): void {
         pageSize = isNaN(+pageSize) ? this.pagingInfo.pageSize : pageSize;
         const pi: PagingInfo = currentPage instanceof PagingInfo ? currentPage : new PagingInfo(currentPage, +pageSize);
@@ -441,35 +476,35 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     }
 
     /**
-     * 请参考[IPageable.firstPage]{@link IPageable#firstPage}
+     * 直接跳转到第一页，详情请参考 `IPageable.firstPage`
      */
     public firstPage(): void {
         this.changePage(1);
     }
 
     /**
-     * 请参考[IPageable.previousPage]{@link IPageable#previousPage}
+     * 直接跳转到第一页，详情请参考 `IPageable.previousPage`
      */
     public previousPage(): void {
         this.changePage(this.pagingInfo.currentPage - 1);
     }
 
     /**
-     * 请参考[IPageable.nextPage]{@link IPageable#nextPage}
+     * 跳转到下一页，详情请参考 `IPageable.nextPage`
      */
     public nextPage(): void {
         this.changePage(this.pagingInfo.currentPage + 1);
     }
 
     /**
-     * 请参考[IPageable.lastPage]{@link IPageable#lastPage}
+     * 跳转到最后一页，详情请参考 `IPageable.lastPage`
      */
     public lastPage(): void {
         this.changePage(this.pagingInfo.pageSize);
     }
 
     /**
-     * 请参考[IComponentData.destroy]{@link IComponentData#destroy}
+     * 数据销毁时要做的事情，详情请参考 `IComponentData.destroy`
      */
     public destroy(): void {
         super.destroy();
@@ -774,12 +809,27 @@ export class BigTableData extends PageableTableData implements ISlicedData {
         this.viewport.maxHeight = this._cache.data.length;
     }
 
+    /**
+     * 当前数据对象是否正在进行网络请求，请求过程中值为true，否则为false。
+     * 详情请参考 `IAjaxComponentData.busy`
+     *
+     * @returns {boolean}
+     */
     public get busy(): boolean {
         return this.reallyBusy;
     }
 
+    /**
+     * @internal
+     */
     public changePage(currentPage: number, pageSize?: number): void;
+    /**
+     * @internal
+     */
     public changePage(info: PagingInfo): void;
+    /**
+     * @internal
+     */
     public changePage(currentPage, pageSize?: number): void {
         throw new Error('BigTableData do not support changePage action.');
     }
@@ -799,6 +849,9 @@ export class BigTableData extends PageableTableData implements ISlicedData {
  * - {@link BigTableData} 适用于海量数据的展示场景，它可以做到在常数时间内展示**任意量级**的数据。
  */
 export class LocalPageableTableData extends TableData implements IPageable, IFilterable, ISortable {
+    /**
+     * 分页信息，详情参考 `IPageable.pagingInfo`
+     */
     public pagingInfo: PagingInfo;
     public filteredData: TableDataMatrix;
     public originalData: TableDataMatrix;
@@ -873,12 +926,19 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
     }
 
     /**
-     * 请参考[IPageable.changePage]{@link IPageable#changePage}
-     * @param {number} currentPage
-     * @param {number} pageSize
+     * 设置数据对象的当前页为`currentPage`，详情请参考 `IPageable.changePage`
+     *
+     * @param {number} currentPage 新的当前页序号，从1开始
+     * @param {number} pageSize 新的单页记录数，可选，不提供则不改变单页记录数。
      */
     public changePage(currentPage: number, pageSize?: number): void;
+    /**
+     * @param {PagingInfo} info 当前页的结构化信息
+     */
     public changePage(info: PagingInfo): void;
+    /**
+     * @internal
+     */
     public changePage(currentPage, pageSize?: number): void {
         if (!this.filteredData) {
             return;
@@ -905,35 +965,35 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
     }
 
     /**
-     * 请参考[IPageable.firstPage]{@link IPageable#firstPage}
+     * 直接跳转到第一页，详情请参考 `IPageable.firstPage`
      */
     public firstPage(): void {
         this.changePage(1);
     }
 
     /**
-     * 请参考[IPageable.previousPage]{@link IPageable#previousPage}
+     * 直接跳转到第一页，详情请参考 `IPageable.previousPage`
      */
     public previousPage(): void {
         this.changePage(this.pagingInfo.currentPage - 1);
     }
 
     /**
-     * 请参考[IPageable.nextPage]{@link IPageable#nextPage}
+     * 跳转到下一页，详情请参考 `IPageable.nextPage`
      */
     public nextPage(): void {
         this.changePage(this.pagingInfo.currentPage + 1);
     }
 
     /**
-     * 请参考[IPageable.lastPage]{@link IPageable#lastPage}
+     * 跳转到最后一页，详情请参考 `IPageable.lastPage`
      */
     public lastPage(): void {
         this.changePage(this.pagingInfo.pageSize);
     }
 
     /**
-     * 请参考[IComponentData.destroy]{@link IComponentData#destroy}
+     * 数据销毁时要做的事情，详情请参考 `IComponentData.destroy`
      */
     public destroy(): void {
         super.destroy();

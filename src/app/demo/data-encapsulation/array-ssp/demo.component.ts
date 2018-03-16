@@ -48,5 +48,8 @@ export class ArrayServerSidePaginationDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = ['PageableArray'];
+    tags: string[] = [
+        'PageableArray', 'IAjaxComponentData.busy', 'AbstractGeneralCollection.busy',
+        'ArrayCollection.busy', 'BigTableData.busy'
+    ];
 }
