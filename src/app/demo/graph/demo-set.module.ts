@@ -20,6 +20,8 @@ import {PieGraphDemoComponent} from "./pie/demo.component";
 import {GraphWithNoDataComponent} from "./no-data/demo.component";
 import {MapGraphComponent} from "./map/demo.component";
 import {MapGraphModule} from "./map/demo.module";
+import {ProvinceMapGraphComponent} from "./province-map/demo.component";
+import {ProvinceMapGraphModule} from "./province-map/demo.module";
 
 export const routerConfig = [
     {
@@ -42,6 +44,9 @@ export const routerConfig = [
     },
     {
         path: 'map', component: MapGraphComponent
+    },
+    {
+        path: 'province-map', component: ProvinceMapGraphComponent
     }
 ];
 
@@ -55,7 +60,8 @@ export const routerConfig = [
         GraphResizeModule,
         GraphWithNoDataModule,
         GraphSetSizeModule,
-        MapGraphModule
+        MapGraphModule,
+        ProvinceMapGraphModule
     ]
 })
 export class GraphDemoModule {
