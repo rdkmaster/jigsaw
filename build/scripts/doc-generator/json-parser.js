@@ -180,7 +180,7 @@ function mergeProperties(ci) {
     return propertiesClass;
 }
 
-// 往上寻找最近一个包含有效描述信息`propertyName`的描述信息
+// 在当前对象以及所有父类、实现的接口中，寻找最近一个包含有效描述信息`propertyName`的描述信息
 // 因为编写文档的时候，是尽量将详细描述写在尽可能基础的接口、基类上的
 // 因此本方法优先寻找接口类，然后才是父类。
 function findPropertyWithValidDescription(type, propertyName) {
@@ -291,7 +291,8 @@ function processMethods(ci, html) {
     return html.replace('$methods', methods.join(''));
 }
 
-// 往上寻找最近一个包含有效描述信息且名为`methodName`的方法的元信息，`condition`是额外的过滤条件
+// 在当前对象以及所有父类、实现的接口中，寻找最近一个包含有效描述信息且名为`methodName`的方法的元信息，
+// `condition`是额外的过滤条件
 // 因为编写文档的时候，是尽量将详细描述写在尽可能基础的接口、基类上的
 // 因此本方法优先寻找接口类，然后才是父类。
 function findMethodWithValidDescription(type, methodName, condition) {
