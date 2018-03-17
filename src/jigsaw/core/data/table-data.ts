@@ -299,7 +299,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
      * </j-input>
      * ```
      *
-     * 或者在需要获取数据之前，一次性通过{@link updateDataSource}来更新这个对象。
+     * 或者在需要获取数据之前，一次性通过`updateDataSource`来更新这个对象。
      */
     public sourceRequestOptions: HttpClientOptions;
 

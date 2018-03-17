@@ -19,18 +19,43 @@ import {
 import {TableData} from "./table-data";
 import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
 
-// we have to implement the Array<T> interface due to this breaking change:
-// https://github.com/Microsoft/TypeScript/wiki/FAQ#why-doesnt-extending-built-ins-like-error-array-and-map-work
-// https://github.com/Microsoft/TypeScript/issues/14869
+/**
+ * we have to implement the `Array<T>` interface due to this breaking change:
+ * https://github.com/Microsoft/TypeScript/wiki/FAQ#why-doesnt-extending-built-ins-like-error-array-and-map-work
+ * https://github.com/Microsoft/TypeScript/issues/14869
+ */
 export class JigsawArray<T> implements Array<T> {
     private _agent: T[] = [];
 
+    /**
+     * 将位置`index`处的数据更新为`value`。`JigsawArray`不支持采用方括号表达式设置一个值，因此必须通过这个方法来替代。
+     *
+     * ```
+     * const a = new ArrayCollection<any>();
+     * a[0] = 123;    // compile error!
+     * a.set(0, 123); // everything is fine.
+     * ```
+     *
+     * @param {number} index
+     * @param {T} value
+     */
     public set(index: number, value: T): void {
         this._length = this._length > index ? this._length : index + 1;
         const thiz: any = this;
         thiz[index] = value;
     }
 
+    /**
+     * 获取`index`位置处的数据，和数组的方括号表达式的作用一样。
+     *
+     * ```
+     * const a = new ArrayCollection<any>([{}]);
+     * a.get(0) === a[0] // true
+     * ```
+     *
+     * @param {number} index
+     * @returns {T}
+     */
     public get(index: number): T {
         return this[index];
     }
@@ -257,11 +282,17 @@ export class JigsawArray<T> implements Array<T> {
         return this._agent.reduceRight.apply(this, arguments);
     }
 
+    /**
+     * @internal
+     */
     [Symbol.unscopables](): { copyWithin: boolean; entries: boolean; fill: boolean; find: boolean; findIndex: boolean; keys: boolean; values: boolean; } {
         const iterator = this._agent[Symbol.unscopables];
         return iterator.apply(this);
     }
 
+    /**
+     * @internal
+     */
     [Symbol.iterator](): IterableIterator<T> {
         const iterator = this._agent[Symbol.iterator];
         return iterator.apply(this);
@@ -376,11 +407,17 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
         return this._busy;
     }
 
+    /**
+     * 调用在`onAjaxStart`里注册的所有回调函数。
+     */
     protected ajaxStartHandler(): void {
         this._busy = true;
         this.componentDataHelper.invokeAjaxStartCallback();
     }
 
+    /**
+     * 调用在`onAjaxSuccess`里注册的所有回调函数。
+     */
     protected ajaxSuccessHandler(data: T[]): void {
         console.log('get data from paging server success!!');
 
@@ -394,6 +431,9 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
         this.componentDataHelper.invokeAjaxSuccessCallback(data);
     }
 
+    /**
+     * 调用在`onAjaxError`里注册的所有回调函数。
+     */
     protected ajaxErrorHandler(error: Response): void {
         if (!error) {
             const reason = 'the array collection is busy now!';
@@ -408,12 +448,21 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
         this.componentDataHelper.invokeAjaxErrorCallback(error);
     }
 
+    /**
+     * 调用在`onAjaxComplete`里注册的所有回调函数。
+     */
     protected ajaxCompleteHandler(): void {
         console.log('get data from paging server complete!!');
         this._busy = false;
         this.componentDataHelper.invokeAjaxCompleteCallback();
     }
 
+    /**
+     * 安全地调用`dataReviser`函数。
+     *
+     * @param originData
+     * @return {any}
+     */
     protected reviseData(originData: any): any {
         if (!this.dataReviser) {
             return originData;
@@ -544,13 +593,16 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
  * 注意：需要有一个统一的具备服务端分页、服务端排序、服务端过滤能力的REST服务配合使用，
  * 更多信息请参考`PagingInfo.pagingServerUrl`
  *
- * 实际用法请参考[这个demo](/jigsaw/data-encapsulation/array-ssp)
+ * 实际用法请参考[这个demo]($demo/data-encapsulation/array-ssp)
  */
 export class PageableArray extends ArrayCollection<any> implements IServerSidePageable, ISortable, IFilterable {
     public pagingInfo: PagingInfo;
     public filterInfo: DataFilterInfo;
     public sortInfo: DataSortInfo;
 
+    /**
+     * 参考`PageableTableData.sourceRequestOptions`的说明
+     */
     public sourceRequestOptions: HttpClientOptions;
 
     private _filterSubject = new Subject<DataFilterInfo>();
