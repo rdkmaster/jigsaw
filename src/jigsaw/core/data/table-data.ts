@@ -273,11 +273,10 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     /**
      * 分页信息，详情参考 `IPageable.pagingInfo`
      */
-    public pagingInfo: PagingInfo;
+    public pagingInfo: PagingInfo = new PagingInfo();
 
     private _filterSubject = new Subject<DataFilterInfo>();
     private _sortSubject = new Subject<DataSortInfo>();
-    private _ajaxSubject = new Subject();
     private _requestOptions: HttpClientOptions;
 
     constructor(public http: HttpClient, requestOptionsOrUrl: HttpClientOptions | string) {
@@ -286,7 +285,6 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         if (!http) {
             throw new Error('invalid http!');
         }
-        this.pagingInfo = new PagingInfo();
         this.sourceRequestOptions = typeof requestOptionsOrUrl === 'string' ? {url: requestOptionsOrUrl} : requestOptionsOrUrl;
 
         this._initRequestOptions();
@@ -317,7 +315,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
             this.sortInfo = sort;
             this._ajax();
         });
-        this._ajaxSubject.debounceTime(300).subscribe(() => {
+        this.pagingInfo.change.debounceTime(300).subscribe(() => {
             this._ajax();
         })
     }
@@ -369,7 +367,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         } else if(!!optionsOrUrl) {
             this.updateDataSource(<string>optionsOrUrl);
         }
-        this._ajaxSubject.next();
+        this._ajax();
     }
 
     private _ajax(): void {
@@ -383,7 +381,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
 
         const params: any = this._requestOptions.method.toLowerCase() == 'post' ?
             this._requestOptions.body : this._requestOptions.params;
-        params.paging = JSON.stringify(this.pagingInfo);
+        params.paging = JSON.stringify(this.pagingInfo.toJson());
         if (this.filterInfo) {
             params.filter = JSON.stringify(this.filterInfo);
         }
@@ -444,10 +442,6 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     }
 
     /**
-     * 用于配合分页组件使用
-     */
-    public changePage(): void;
-    /**
      * 设置数据对象的当前页为`currentPage`，详情请参考 `IPageable.changePage`
      *
      * @param {number} currentPage 新的当前页序号，从1开始
@@ -461,12 +455,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     /**
      * @internal
      */
-    public changePage(currentPage?, pageSize?: number): void {
-        if (CommonUtils.isUndefined(currentPage)) {
-            this._ajaxSubject.next();
-            return;
-        }
-
+    public changePage(currentPage, pageSize?: number): void {
         pageSize = isNaN(+pageSize) ? this.pagingInfo.pageSize : pageSize;
         const pi: PagingInfo = currentPage instanceof PagingInfo ? currentPage : new PagingInfo(currentPage, +pageSize);
         let needRefresh: boolean = false;
@@ -524,14 +513,13 @@ export class PageableTableData extends TableData implements IServerSidePageable,
 
         this.http = null;
         this.sourceRequestOptions = null;
+        this.pagingInfo.change.unsubscribe();
         this.pagingInfo = null;
         this._requestOptions = null;
         this._filterSubject.unsubscribe();
         this._filterSubject = null;
         this._sortSubject.unsubscribe();
         this._sortSubject = null;
-        this._ajaxSubject.unsubscribe();
-        this._ajaxSubject = null;
     }
 }
 
@@ -837,10 +825,6 @@ export class BigTableData extends PageableTableData implements ISlicedData {
     /**
      * @internal
      */
-    public changePage(): void;
-    /**
-     * @internal
-     */
     public changePage(currentPage: number, pageSize?: number): void;
     /**
      * @internal
@@ -849,7 +833,7 @@ export class BigTableData extends PageableTableData implements ISlicedData {
     /**
      * @internal
      */
-    public changePage(currentPage?, pageSize?: number): void {
+    public changePage(currentPage, pageSize?: number): void {
         throw new Error('BigTableData do not support changePage action.');
     }
 }
@@ -878,6 +862,13 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
     constructor() {
         super();
         this.pagingInfo = new PagingInfo();
+        this.pagingInfo.change.debounceTime(300).subscribe(() => {
+            if (!this.filteredData) {
+                return;
+            }
+            this._setDataByPageInfo();
+            this.refresh();
+        })
     }
 
     public fromObject(data: any): LocalPageableTableData {
@@ -945,10 +936,6 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
     }
 
     /**
-     * 用于配合分页组件使用
-     */
-    public changePage(): void;
-    /**
      * 设置数据对象的当前页为`currentPage`，详情请参考 `IPageable.changePage`
      *
      * @param {number} currentPage 新的当前页序号，从1开始
@@ -962,14 +949,8 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
     /**
      * @internal
      */
-    public changePage(currentPage?, pageSize?: number): void {
+    public changePage(currentPage, pageSize?: number): void {
         if (!this.filteredData) {
-            return;
-        }
-
-        if (CommonUtils.isUndefined(currentPage)) {
-            this._setDataByPageInfo();
-            this.refresh();
             return;
         }
 

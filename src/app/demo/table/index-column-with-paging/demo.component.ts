@@ -39,20 +39,6 @@ export class TableAddIDWithPagingComponent {
         this.pageable.fromAjax();
     }
 
-    getCurrentPage() {
-        if (this.pageable.busy) {
-            return;
-        }
-        this.pageable.fromAjax();
-    }
-
-    getPageSize() {
-        if (this.pageable.busy) {
-            return;
-        }
-        this.pageable.fromAjax();
-    }
-
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

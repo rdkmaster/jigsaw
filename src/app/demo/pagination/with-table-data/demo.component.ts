@@ -18,14 +18,6 @@ export class ServerSidePagingDemoComponent {
         this.pageable.fromAjax();
     }
 
-    getCurrentPage(message: any) {
-        console.log("current page is: " + message);
-    }
-
-    getPageSize(message: any) {
-        console.log("page size is: " + message);
-    }
-
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

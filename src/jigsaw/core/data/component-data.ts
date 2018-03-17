@@ -1,5 +1,6 @@
 import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
 import {HttpHeaders} from "@angular/common/http";
+import {Subject} from "rxjs/Subject";
 
 export type DataReviser = (data: any) => any;
 
@@ -384,10 +385,49 @@ export class PagingInfo {
      */
     public static pagingServerUrl: string = '/rdk/service/app/common/paging';
 
-    constructor(public currentPage: number = 1,
-                public pageSize: number = 20,
-                public totalPage: number = 1,
-                public totalRecord: number = 0) {
+    constructor(currentPage: number = 1,
+                pageSize: number = 20,
+                totalPage: number = 1,
+                totalRecord: number = 0) {
+        this._currentPage = currentPage;
+        this._pageSize = pageSize;
+        this.totalPage = totalPage;
+        this.totalRecord = totalRecord;
+    }
+
+    private _currentPage: number = 1;
+    private _pageSize: number = 20;
+    public totalPage: number = 1;
+    public totalRecord: number = 0;
+    public change = new Subject();
+
+    public get pageSize(): number {
+        return this._pageSize;
+    }
+
+    public set pageSize(value: number) {
+        if(isNaN(value) || value == this._pageSize) return;
+        this._pageSize = value;
+        this.change.next();
+    }
+
+    public get currentPage(): number {
+        return this._currentPage;
+    }
+
+    public set currentPage(value: number) {
+        if(isNaN(value) || value == this._currentPage) return;
+        this._currentPage = value;
+        this.change.next();
+    }
+
+    public toJson() {
+        return {
+            currentPage: this.currentPage,
+            pageSize: this.pageSize,
+            totalPage: this.totalPage,
+            totalRecord: this.totalRecord
+        }
     }
 }
 
