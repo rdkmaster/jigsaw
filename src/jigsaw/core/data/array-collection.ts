@@ -515,7 +515,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
      * 将一个普通数组对象`source`的所有元素浅拷贝到当前数据对象中。
      *
      * @param {T[]} source 源数据
-     * @returns {ArrayCollection<T>} 当前数据对象的引用
+     * @returns {ArrayCollection<T>} 返回当前数据对象的引用
      */
     public fromArray(source: T[]): ArrayCollection<T> {
         if (this._fromArray(source)) {
@@ -571,6 +571,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
         this.componentDataHelper = null;
         this.dataReviser = null;
         this._emitter.unsubscribe();
+        this._emitter = null;
     }
 
     private _emitter = new EventEmitter<any>();

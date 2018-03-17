@@ -7,8 +7,17 @@ import {
 import {CallbackRemoval} from "../utils/common-utils";
 
 export abstract class AbstractGeneralCollection<T = any> implements IAjaxComponentData, IEmittable {
+    /**
+     * 将一个任意类型的数据转为一个当前类型的数据对象。
+     *
+     * @param {T} data 原始数据
+     * @returns {AbstractGeneralCollection<T>} 返回持有输入的原始数据的当前数据对象
+     */
     public abstract fromObject(data: T): AbstractGeneralCollection<T>;
 
+    /**
+     * 调用在`onAjaxSuccess`里注册的所有回调函数。
+     */
     protected abstract ajaxSuccessHandler(data): void;
 
     /**
@@ -107,11 +116,17 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
         return this.componentDataHelper.getAjaxCompleteRemoval({fn: callback, context: context});
     }
 
+    /**
+     * 调用在`onAjaxStart`里注册的所有回调函数。
+     */
     protected ajaxStartHandler(): void {
         this._busy = true;
         this.componentDataHelper.invokeAjaxStartCallback();
     }
 
+    /**
+     * 调用在`onAjaxError`里注册的所有回调函数。
+     */
     protected ajaxErrorHandler(error: Response): void {
         if (!error) {
             const reason = 'the data collection is busy now!';
@@ -125,6 +140,9 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
         this.componentDataHelper.invokeAjaxErrorCallback(error);
     }
 
+    /**
+     * 调用在`onAjaxComplete`里注册的所有回调函数。
+     */
     protected ajaxCompleteHandler(): void {
         console.log('get data from paging server complete!!');
         this._busy = false;
@@ -132,6 +150,8 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
     }
 
     public destroy(): void {
+        this._emitter.unsubscribe();
+        this._emitter = null;
         this.componentDataHelper.clearCallbacks();
         this.componentDataHelper = null;
         this.dataReviser = null;
@@ -198,9 +218,6 @@ export class GeneralCollection<T> extends AbstractGeneralCollection<T> {
         return this;
     }
 
-    /**
-     * 数据销毁时要做的事情，详情请参考 `IComponentData.destroy`
-     */
     public destroy(): void {
         super.destroy();
         console.log('destroying GeneralCollection....');

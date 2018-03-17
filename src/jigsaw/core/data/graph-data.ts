@@ -153,6 +153,19 @@ export abstract class AbstractGraphData extends TableDataBase {
     }
 }
 
+export class GraphData extends AbstractGraphData {
+    echartsOptions: EchartOptions;
+
+    constructor(options: EchartOptions) {
+        super();
+        this.echartsOptions = options;
+    }
+
+    protected createChartOptions(): EchartOptions {
+        return this.echartsOptions;
+    }
+}
+
 export abstract class AbstractNormalGraphData extends AbstractGraphData {
     public title: EchartTitle;
     public legend: EchartLegend;
@@ -164,7 +177,6 @@ export class OutlineMapData extends AbstractNormalGraphData {
         return undefined;
     }
 }
-
 
 export class PieGraphData extends AbstractGraphData {
     constructor(title: string | EchartTitle, series: any[], tooltip?: EchartTooltip) {

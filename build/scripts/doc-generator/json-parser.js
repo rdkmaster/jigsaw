@@ -244,8 +244,14 @@ function processMethods(ci, html) {
         fixMetaInfo(method);
 
         var returns = `<p>返回类型 ${addTypeLink(method.returnType)}</p>`;
-        var returnComment = method.jsdoctags ? method.jsdoctags.find(t => t.tagName.text == 'returns') : undefined;
-        returns += returnComment ? addDescLink(returnComment.comment) : '';
+        var parentMethod = findMethodWithValidDescription(ci, method.name,
+                m => m.jsdoctags && m.jsdoctags.find(t => t.tagName.text == 'returns' && !!t.comment));
+        var returnComment = '';
+        if (parentMethod) {
+            returnComment = parentMethod.jsdoctags
+                .find(t => t.tagName.text == 'returns' && !!t.comment).comment;
+        }
+        returns += addDescLink(returnComment);
 
         var args = [];
         var jsdoctags = method.jsdoctags ? method.jsdoctags : [];
@@ -366,6 +372,7 @@ function addDescLink(desc) {
         return '';
     }
     return desc
+        .replace(/{@link\s+(.*?)}/g, '<code>$1</code>')
         .replace(/<code>\s*(\w+?)\.(\w+?)\s*[()]*\s*<\/code>/g, (found, clazz, property) => {
             if (!property || !clazz) {
                 console.warn('WARN: bad format found while adding description links: ' + found);

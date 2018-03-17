@@ -126,7 +126,7 @@ export interface IAjaxComponentData extends IComponentData {
      *
      * @param {() => void} callback 回调函数，必选
      * @param context 回调函数`callback`执行的上下文，可选
-     * @returns {CallbackRemoval} 这是一个函数，调用它后，`callback`则不会再次被触发。
+     * @returns {CallbackRemoval} 返回一个函数，调用它后，`callback`则不会再次被触发。
      * 如果你注册了这个回调，则请在组件的`ngOnDestroy()`方法中调用一下这个函数，避免内存泄露。
      */
     onAjaxStart(callback: () => void, context?: any): CallbackRemoval;
@@ -136,7 +136,7 @@ export interface IAjaxComponentData extends IComponentData {
      *
      * @param {(data: any) => void} callback 回调函数
      * @param context 回调函数`callback`执行的上下文
-     * @returns {CallbackRemoval} 这是一个函数，调用它后，`callback`则不会再次被触发。
+     * @returns {CallbackRemoval} 返回一个函数，调用它后，`callback`则不会再次被触发。
      * 如果你注册了这个回调，则请在组件的`ngOnDestroy()`方法中调用一下这个函数，避免内存泄露。
      */
     onAjaxSuccess (callback: (data: any) => void, context?: any): CallbackRemoval;
@@ -146,7 +146,7 @@ export interface IAjaxComponentData extends IComponentData {
      *
      * @param {(data: any) => void} callback 回调函数
      * @param context 回调函数`callback`执行的上下文
-     * @returns {CallbackRemoval} 这是一个函数，调用它后，`callback`则不会再次被触发。
+     * @returns {CallbackRemoval} 返回一个函数，调用它后，`callback`则不会再次被触发。
      * 如果你注册了这个回调，则请在组件的`ngOnDestroy()`方法中调用一下这个函数，避免内存泄露。
      */
     onAjaxError(callback: (error: Response) => void, context?: any): CallbackRemoval;
@@ -156,7 +156,7 @@ export interface IAjaxComponentData extends IComponentData {
      *
      * @param {(data: any) => void} callback 回调函数
      * @param context 回调函数`callback`执行的上下文
-     * @returns {CallbackRemoval} 这是一个函数，调用它后，`callback`则不会再次被触发。
+     * @returns {CallbackRemoval} 返回一个函数，调用它后，`callback`则不会再次被触发。
      * 如果你注册了这个回调，则请在组件的`ngOnDestroy()`方法中调用一下这个函数，避免内存泄露。
      */
     onAjaxComplete(callback: () => void, context?: any): CallbackRemoval;
