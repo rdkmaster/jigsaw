@@ -687,8 +687,14 @@ export class TableViewportData extends ViewportData {
 /**
  * 详细用法和相关说明，请参考[这个demo]($demo/table/big-table)。
  *
- * 注意：需要有一个统一的具备服务端分页、服务端排序、服务端过滤能力的REST服务配合使用，
- * 更多信息请参考`PagingInfo.pagingServerUrl`
+ * 注意：{@link BigTableData}需要有一个统一的具备服务端分页、服务端排序、服务端过滤能力的REST服务配合使用，
+ * 更多信息请参考`PagingInfo.pagingServerUrl`。
+ *
+ * 如果你的服务端无法给提供一个统一的分页服务，
+ * 则可以通过[Angular的拦截器](https://angular.cn/guide/http#intercepting-requests-and-responses)来模拟。
+ * {@link BigTableData}在需要获取下一页数据时，会将请求做一层包装后发给统一分页服务，实际的数据请求是在统一分页服务里完成的。
+ * 你需要做的事情是实现一个拦截器，将{@link BigTableData}发给统一分页服务的请求拦截下来，解析被拦截的请求里的实际请求参数，
+ * 并将这些请求转发给实际提供数据的服务。
  *
  * 相关的表格数据对象：
  * - {@link PageableTableData} 适用于需要在服务端进行分页、过滤、排序的场景，这是最常用的一个数据对象；
