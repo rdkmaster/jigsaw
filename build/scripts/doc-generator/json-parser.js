@@ -220,6 +220,7 @@ function processProperties(ci, html) {
         var modifier = getModifierInfo(property.modifierKind);
         var description = findPropertyWithValidDescription(ci, property.name);
         description += (property.since ? `<p>起始版本：${property.since}</p>` : '');
+        description = addDescLink(description);
         properties.push(`<tr><td style="white-space: nowrap;">
             ${anchor(property.name)}${modifier}${readOnly}${property.name}</td><td>${addTypeLink(property.type)}</td>
             <td>${description}</td><td>${property.defaultValue}</td><td>${getDemoList(ci.name, property.name)}</td></tr>`);
@@ -264,8 +265,8 @@ function processMethods(ci, html) {
             var parentMethod = findMethodWithValidDescription(ci, method.name,
                 m => m.jsdoctags && m.jsdoctags.find(matchCondition));
             var comment = parentMethod ? parentMethod.jsdoctags.find(matchCondition).comment : '';
-            var arg = `<span style="white-space: nowrap;">${argument.name.text || argument.name}${type}</code>
-                </span>${comment ? addDescLink(comment) : ''}`;
+            comment = addDescLink(comment);
+            var arg = `<span style="white-space: nowrap;">${argument.name.text || argument.name}${type}</span>${comment}`;
             args.push(arg);
         });
         if (args.length == 0) {
@@ -280,6 +281,7 @@ function processMethods(ci, html) {
         var parentMethod = findMethodWithValidDescription(ci, method.name, m => !!m.description);
         var description =  parentMethod ?  parentMethod.description : '';
         description += (method.since ? `<p>起始版本：${method.since}</p>` : '');
+        description = addDescLink(description);
 
         methods.push(`
             <tr><td style="white-space: nowrap;">${anchor(method.name)}${modifier}${method.name}</td>

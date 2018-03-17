@@ -13,7 +13,7 @@ import {
     DataFilterInfo,
     DataSortInfo,
     SortAs,
-    SortOrder, IServerSidePageable, HttpClientOptions
+    SortOrder, IServerSidePageable, HttpClientOptions, IEmittable
 } from "./component-data";
 
 import {TableData} from "./table-data";
@@ -337,7 +337,7 @@ export class JigsawArray<T> implements Array<T> {
 /**
  * 这是Jigsaw数据体系中两大分支之一：数组类型的基类。
  */
-export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponentData {
+export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponentData, IEmittable {
     /**
      * 用于发起网络请求，在调用`fromAjax()`之前必须设置好此值。
      */
@@ -526,28 +526,14 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
 
     private _emitter = new EventEmitter<any>();
 
-    /**
-     * 发出一个事件，所有事先调用了`subscribe`方法注册了的回调函数都可以处理这个事件。
-     *
-     * @param value 事件中携带的数据，任意类型
-     */
     public emit(value?: any): void {
         this._emitter.emit(value);
     }
 
-    /**
-     * 注册回调函数，注册之后，所有在这个数据对象上`emit`出来的事件，`subscribe`方法都会被调用。
-     *
-     * @param callback 事件的回调函数
-     * @returns {Function} 取消本次订阅的函数，执行之后，后续即使有事件发出，本次订阅的回调函数也不会再被执行
-     */
-    public subscribe(callback?: any): Function {
+    public subscribe(callback?: Function): Function {
         return this._emitter.subscribe(callback);
     }
 
-    /**
-     * 取消本数据对象上的所有回调函数。
-     */
     public unsubscribe() {
         this._emitter.unsubscribe();
     }

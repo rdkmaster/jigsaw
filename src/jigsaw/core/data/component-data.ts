@@ -226,12 +226,28 @@ export interface IServerSidePageable extends IPageable {
  * 实现了这个接口的类就具备了数据排序的能力，数据排序能力分两种，分别是本地排序和服务端排序，含义和本地分页以及服务端分页类似。
  */
 export interface ISortable extends IAjaxComponentData {
+    /**
+     * 排序信息
+     */
     sortInfo: DataSortInfo;
 
+    /**
+     * 对数据进行排序。
+     *
+     * @param {(a: any[], b: any[]) => number} compareFn 对比函数，此函数需要返回 -1 / 0 / 1，分别表示小于等于和大于
+     */
     sort(compareFn?: (a: any[], b: any[]) => number): void;
 
+    /**
+     * @param {SortAs} as 作为数字/字符串类型来排序
+     * @param {SortOrder} order 排序顺序
+     * @param {string | number} field 对此字段进行排序
+     */
     sort(as: SortAs, order: SortOrder, field: string | number): void;
 
+    /**
+     * @param {DataSortInfo} sort 排序参数的结构化信息
+     */
     sort(sort: DataSortInfo): void;
 }
 
@@ -239,15 +255,37 @@ export interface ISortable extends IAjaxComponentData {
  * 实现了这个接口的类就具备了数据过滤的能力，数据过滤能力分两种，分别是本地过滤和服务端过滤，含义和本地分页以及服务端分页类似。
  */
 export interface IFilterable extends IAjaxComponentData {
+    /**
+     * 过滤信息
+     */
     filterInfo: DataFilterInfo;
 
+    /**
+     * 对数据进行过滤。
+     *
+     * @param {(value: any, index: number, array: any[]) => any} compareFn 实行过滤的函数。
+     * 返回有效值时，该值会被保留，否则该值被丢弃
+     * @param thisArg 执行过滤函数的上下文对象
+     * @returns {any} 返回一个过滤后的新对象，原对象不变
+     */
     filter(compareFn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
 
+    /**
+     * @param {string} term 过滤关键字
+     * @param {(string | number)[]} fields 对这些字段进行过滤
+     */
     filter(term: string, fields?: (string | number)[]): void;
 
+    /**
+     * 过滤参数的结构化信息
+     * @param {DataFilterInfo} term
+     */
     filter(term: DataFilterInfo): void;
 }
 
+/**
+ * 视口数据
+ */
 export class ViewportData {
     width: number;
     height: number;
@@ -263,12 +301,31 @@ export class ViewportData {
  * 具备切片能力的数据，这种数据对象往往数据量非常巨大，并且需要非常高的渲染性能，已知的实现类有`BigTableData`。
  */
 export interface ISlicedData extends IComponentData {
+    /**
+     * 视口数据
+     */
     viewport: ViewportData;
 
+    /**
+     * 将视口中的视图滚动到参数指定的位置
+     *
+     * @param {number} verticalTo 水平位置
+     * @param {number} horizontalTo 垂直位置
+     */
     scroll(verticalTo: number, horizontalTo: number): void;
 
+    /**
+     * 将视口中的视图在垂直方向上滚动到参数指定的位置
+     *
+     * @param {number} scrollTo 垂直位置
+     */
     vScroll(scrollTo: number): void;
 
+    /**
+     * 将视口中的视图在水平方向上滚动到参数指定的位置
+     *
+     * @param {number} scrollTo 水平位置
+     */
     hScroll(scrollTo: number): void;
 }
 
@@ -373,6 +430,9 @@ export class ComponentDataHelper {
     }
 }
 
+/**
+ * 分页信息，是分页参数的结构化信息类
+ */
 export class PagingInfo {
     /**
      * 这个属性指定了统一的在服务端进行分页、排序、过滤的服务的url。
@@ -391,22 +451,81 @@ export class PagingInfo {
     }
 }
 
+/**
+ * 数据过滤信息，是数据过滤参数的结构化信息类
+ */
 export class DataFilterInfo {
     constructor(public key: string = '', public field?: string[] | number[]) {
     }
 }
 
+/**
+ * 表示将数据以何种类型来排序。当被排序的对象是一串数字时，以何种类型对他们进行排序对排序的结果会有较大影响。
+ *
+ * 例如 `2` 和 `11` 这两个数据，在以数字方式降序排序时的顺序是 `2` -> `11`，
+ * 但是以字符串方式降序排序时的顺序是 `11` -> `2`，排序结果截然相反。
+ */
 export enum SortAs {
     string, number
 }
 
+/**
+ * 表示排序顺序，分别是升序、降序、默认序
+ */
 export enum SortOrder {
     asc, desc, default
 }
 
+/**
+ * 数据排序信息，是数据排序参数的结构化信息类
+ */
 export class DataSortInfo {
     constructor(public as: SortAs = SortAs.string,
                 public order: SortOrder | string = SortOrder.asc,
                 public field: string | number) {
     }
+}
+
+/**
+ * 实现了此接口的类都具备事件发送和监听的能力，Jigsaw有类型繁多的组件数据封装类，他们大多都实现了此接口。
+ * 可以利用这些数据类的事件交互能力传递事件，这样可以避免应用自己定义和维护事件发射器，
+ * 从而大大减少你的视图交互逻辑。
+ */
+export interface IEmittable {
+    /**
+     * 通过这个方法来发出一个事件。注意，你需要在此之前先调用`subscribe`方法注册监听器，
+     * 否则此事件可能无法被正确捕获和处理。示例：
+     *
+     * ```
+     * const td = new TableData();
+     * td.subscribe(data => console.log(data));
+     * ...
+     * td.emit('hello event emitter!');
+     * ```
+     *
+     * @param value 此事件所携带的数据
+     */
+    emit(value?: any): void;
+
+    /**
+     * 添加事件处理函数，在执行此函数之后，`emit`函数发出事件时，参数`callback`就会被调用。
+     * 注意请及时清理掉不必要的订阅以提升页面性能。示例：
+     *
+     * ```
+     * const td = new TableData();
+     * const removeSubscription = td.subscribe(data => console.log(data));
+     * ...
+     * // 注销本次订阅。注意其他的订阅不受影响
+     * removeSubscription();
+     * ```
+     *
+     * @param {Function} callback 事件回调函数
+     * @returns {Function} 返回当前订阅的回执，利用它可以取消本次订阅
+     */
+    subscribe(callback?: Function): Function;
+
+    /**
+     * 取消当前对象上的所有订阅，执行它之后，任何事件监听器都将会失效。
+     */
+    unsubscribe();
 }
