@@ -688,15 +688,60 @@ export class TableViewportData extends ViewportData {
 }
 
 /**
- * 详细用法和相关说明，请参考[这个demo]($demo/table/big-table)。
+ * `BigTableData`是Jigsaw的表格呈现海量数据时的一个解决方案，**它能够以常数时间处理任何量级的数据**。
  *
- * 注意：{@link BigTableData}需要有一个统一的具备服务端分页、服务端排序、服务端过滤能力的REST服务配合使用，
+ * ### 适用的场景
+ *
+ * 这个方法目前适用于海量对静态数据做展示的场景，暂时不支持对海量数据展示的同时提供交互能力，
+ * 如果你有这样的需求，那请给我们[提Issue](https://github.com/rdkmaster/jigsaw/issues/new)，我会考虑支持。
+ *
+ * 此外，这个解决方案也充分考虑到了用户在IE11等低性能浏览器上浏览海量数据的体验，针对性的做了优化，
+ * 你可以使用IE11打开这个demo看看它在低性能浏览器上的表现。
+ *
+ * ### 原理
+ *
+ * 原理非常简单，我们使用`BigTableData`这个数据对象将数据做切片处理后传递给表格呈现出来，
+ * 表格控件无需处理所有数据，它始终只需要处理当前用户可视部分的数据，用户不可视部分的数据被忽略，
+ * 这也就是`BigTableData`可以在常数时间处理任意量级的数据的原因了。
+ * `BigTableData`充分体现了表格彻底由数据驱动的优势。
+ *
+ * ### 无分页浏览数据
+ *
+ * 甚至，`BigTableData`还能够消除数据分页给浏览器数据带来的不便之处，进一步提升浏览数据的体验。
+ *
+ * 我们都知道，海量的数据是不可能一下子全部从服务端读取到客户端里的，传统的解决方案是对数据做分页处理，
+ * 页面上分批下载数据，用户分批查看数据，用户不得不等待两页数据切换带来的时延，这打断了用户浏览数据的过程，体验很差。
+ *
+ * `BigTableData`在第一页数据下载完毕之后，在两三百ms之内就能够将数据呈现出来，用户开始浏览数据，
+ * 随着用户将滚动条下移到接近本页数据尾部的时候，`BigTableData`自动在后台发起加载下一页数据的请求，
+ * 当用户浏览完毕当前页数据的时候，`BigTableData`早就将下一页数据准备好了。
+ * 这样，用户浏览数据的过程没有因为加载数据而中断。
+ *
+ * 考虑到内存的消耗，`BigTableData`默认只缓存3页数据：
+ *
+ * - 前一页；
+ * - 当前页；
+ * - 下一页；
+ *
+ * 超过部分将会从内存中清理掉，从而避免浏览器占用过高的内存导致用户电脑卡顿。缓存的页数越多体验越好，
+ * 你可以根据实际情况调整`BigTableData`的`numCachedPages`属性来调整缓存的页数，设置为`0`则缓存所有。
+ * `BigTableData`至少缓存3页数据。
+ *
+ * ### 不适用的场景
+ *
+ * 正如前文所说，`BigTableData`目前暂时不适用于展示有状态的交互需求的场景，例如使用有编辑功能的渲染器就是典型的有状态的交互场景。
+ * 如果你有这样的需求，那请给我们[提Issue](https://github.com/rdkmaster/jigsaw/issues/new)，
+ * 将你碰到的场景和需求详细描述给我们。
+ *
+ * ### 注意
+ *
+ * `BigTableData`需要有一个统一的具备服务端分页、服务端排序、服务端过滤能力的REST服务配合使用，
  * 更多信息请参考`PagingInfo.pagingServerUrl`。
  *
  * 如果你的服务端无法给提供一个统一的分页服务，
  * 则可以通过[Angular的拦截器](https://angular.cn/guide/http#intercepting-requests-and-responses)来模拟。
- * {@link BigTableData}在需要获取下一页数据时，会将请求做一层包装后发给统一分页服务，实际的数据请求是在统一分页服务里完成的。
- * 你需要做的事情是实现一个拦截器，将{@link BigTableData}发给统一分页服务的请求拦截下来，解析被拦截的请求里的实际请求参数，
+ * `BigTableData`在需要获取下一页数据时，会将请求做一层包装后发给统一分页服务，实际的数据请求是在统一分页服务里完成的。
+ * 你需要做的事情是实现一个拦截器，将`BigTableData`发给统一分页服务的请求拦截下来，解析被拦截的请求里的实际请求参数，
  * 并将这些请求转发给实际提供数据的服务。
  *
  * 相关的表格数据对象：
@@ -720,11 +765,18 @@ export class BigTableData extends PageableTableData implements ISlicedData {
     public numCachedPages = 3;
 
     /**
+     * 当预加载的一页数据剩下未展示出来的记录数小于这个比例时，{@link BigTableData}会在后台悄悄发起下一页数据的加载，
+     * 以确保用户将这一页数据浏览完时，可以在不被打断的前提下继续浏览下一页数据。这个参数的有效取值范围是0.01 ~ 0.99。
      *
      * @type {number}
      */
-    public fetchDataThreshold = .5;
+    public fetchDataThreshold = 0.5;
 
+    /**
+     * 和`busy`具有相同含义
+     *
+     * @type {boolean}
+     */
     protected reallyBusy = false;
 
     constructor(public http: HttpClient, requestOptionsOrUrl: HttpClientOptions | string) {
@@ -734,6 +786,11 @@ export class BigTableData extends PageableTableData implements ISlicedData {
 
     private _cache: RawTableData = {field: [], header: [], data: [], startPage: 1, endPage: 1};
 
+    /**
+     * 当前缓存的数据
+     *
+     * @returns {RawTableData}
+     */
     get cache(): RawTableData {
         return this._cache;
     }
@@ -742,6 +799,9 @@ export class BigTableData extends PageableTableData implements ISlicedData {
         return this._cache && !!this._cache.field.length && !!this._cache.header.length && !!this._cache.data.length;
     }
 
+    /**
+     * 根据界面上滚动条滑动对缓冲的数据进行切片
+     */
     protected sliceData(): void {
         if (!this._isCacheAvailable()) {
             return;
@@ -790,6 +850,11 @@ export class BigTableData extends PageableTableData implements ISlicedData {
         this.scroll(this.viewport.verticalTo, scrollTo);
     }
 
+    /**
+     * 检查缓冲区里的数据是否足够用，如果够用了，则会触发获取数据流程
+     *
+     * @param {number} verticalTo
+     */
     protected checkCache(verticalTo: number): void {
         const pages = this._cache.endPage - this._cache.startPage + 1;
         const threshold = this.fetchDataThreshold > 0 && this.fetchDataThreshold < 1 ? this.fetchDataThreshold : .5;
@@ -804,6 +869,12 @@ export class BigTableData extends PageableTableData implements ISlicedData {
         }
     }
 
+    /**
+     * 向服务端发起获取数据的请求
+     *
+     * @param targetPage
+     * @param verticalTo
+     */
     protected fetchData(targetPage, verticalTo): void {
         if (targetPage < 1 || targetPage > this.pagingInfo.totalPage) {
             return;
@@ -830,6 +901,9 @@ export class BigTableData extends PageableTableData implements ISlicedData {
         console.log(`data fetched, startPage=${this._cache.startPage}, endPage=${this._cache.endPage}`);
     }
 
+    /**
+     * 更新缓冲区
+     */
     protected updateCache(): void {
         this._cache.field = this.field;
         this._cache.header = this.header;
@@ -893,6 +967,12 @@ export class BigTableData extends PageableTableData implements ISlicedData {
         this.viewport.maxHeight = this._cache.data.length;
     }
 
+    /**
+     * 这个属性为true时，表示{@link BigTableData}的预加载数据已经被浏览完，并且下一页数据还未取到。否则此值为false。
+     * 即只有在{@link BigTableData}真的很忙的时候，此属性才是true。
+     *
+     * @returns {boolean}
+     */
     public get busy(): boolean {
         return this.reallyBusy;
     }
@@ -915,11 +995,9 @@ export class BigTableData extends PageableTableData implements ISlicedData {
 
 
 /**
- * 它具备浏览器本地内存中进行分页、服务端排序、服务端过滤能力，受限于浏览器内存的限制，无法操作大量的数据，因此使用场景并不多。
+ * `LocalPageableTableData`具备浏览器本地内存中进行分页、排序、过滤能力，
+ * 受限于浏览器内存的限制，无法操作大量的数据，建议尽量采用`PageableTableData`以服务端分页的形式展示数据。
  * 详细用法请参考[这个demo]($demo/table/local-paging-data)。
- *
- * 注意：需要有一个统一的具备服务端分页、服务端排序、服务端过滤能力的REST服务配合使用，
- * 更多信息请参考`PagingInfo.pagingServerUrl`
  *
  * 相关的表格数据对象：
  * - {@link PageableTableData} 适用于需要在服务端进行分页、过滤、排序的场景，这是最常用的一个数据对象；
@@ -928,7 +1006,13 @@ export class BigTableData extends PageableTableData implements ISlicedData {
  */
 export class LocalPageableTableData extends TableData implements IPageable, IFilterable, ISortable {
     public pagingInfo: PagingInfo;
+    /**
+     * 原始数据经过过滤后的数据，请勿直接操作这些数据，而是采用本类定义的各个api来操作他们。
+     */
     public filteredData: TableDataMatrix;
+    /**
+     * 原始数据，请勿直接操作这些数据，而是采用本类定义的各个api来操作他们。
+     */
     public originalData: TableDataMatrix;
 
     constructor() {
@@ -947,6 +1031,9 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
     public filter(callbackfn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
     public filter(term: string, fields?: string[] | number[]): void;
     public filter(term: DataFilterInfo): void;
+    /**
+     * @internal
+     */
     public filter(term, fields?: (string | number)[]): void {
         if (term instanceof Function) {
             this.filteredData = this.originalData.filter(term);
@@ -990,6 +1077,9 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
     public sort(compareFn?: (a: any, b: any) => number): any;
     public sort(as: SortAs, order: SortOrder, field: string | number): void;
     public sort(sort: DataSortInfo): void;
+    /**
+     * @internal
+     */
     public sort(as, order?: SortOrder, field?: string | number): void {
         super.sortData(this.filteredData, as, order, field);
         this.changePage(this.pagingInfo.currentPage, undefined);
