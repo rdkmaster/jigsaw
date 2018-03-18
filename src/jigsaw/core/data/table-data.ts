@@ -443,7 +443,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     public fromAjax(optionsOrUrl?: HttpClientOptions | string): void {
         if (optionsOrUrl instanceof HttpClientOptions) {
             this.updateDataSource(<HttpClientOptions>optionsOrUrl);
-        } else {
+        } else if (!!optionsOrUrl) {
             this.updateDataSource(<string>optionsOrUrl);
         }
         this._ajax();
