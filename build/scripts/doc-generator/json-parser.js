@@ -537,12 +537,19 @@ function isDefined(x) {
     return x !== null && x !== undefined;
 }
 
-function saveFile(type, fileName, content) {
+function attachScript(html) {
+    var match = actionTemplate.toString().match(/(window\.__doc[\s\S]*})[\s\S]*}/);
+    var script = match[1];
+    return html + '\n' + getPanelTemplate() + '\n<script type="text/javascript">\n' +
+            script + '\n</script>';
+}
+
+function saveFile(type, fileName, html) {
     var path = `${output}/${type}`;
     if (!fs.existsSync(path)) {
         fs.mkdirSync(path, 755);
     }
-    fs.writeFileSync(`${path}/${fileName}.html`, content);
+    fs.writeFileSync(`${path}/${fileName}.html`, attachScript(html));
 
     apiList.push({name: fileName, parentName: type});
 }
@@ -784,4 +791,46 @@ function getNoDataRowTemplate() {
 function anchor(name) {
     // 给这些样式是为了让这个anchor往上顶一点
     return `<a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="${name}">&nbsp;</a>`;
+}
+
+function actionTemplate() {
+    var window;
+    // === action start ===
+    window.__doc = {
+        showPanel: function() {
+            document.getElementById('panel').style.display = 'block';
+            document.getElementById('evalator').src = 'http://localhost:4200/dialog/misc';
+        },
+        hidePanel: function() {
+            document.getElementById('panel').style.display = 'none';
+        }
+    }
+    // === action end ===
+}
+
+function getPanelTemplate() {
+    return `
+<div id="panel" style="
+        display: none;
+        position: fixed;
+        background-color:#fff;
+        border: 0px solid #eee;
+        border-radius:4px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+        box-sizing:border-box;
+        height: calc(100vh - 24px);
+        width: calc(100% - 24px);
+        left: 12px;
+        top: 12px;
+        z-index: 10;">
+    <span style="
+            position: absolute;
+            right: 8px;
+            font-family: Monospaced;
+            font-size: 15px;
+            cursor: pointer;" onclick="document.getElementById('panel').style.display = 'none';">x</span>
+    <iframe id="evalator" style="border:0; width:100%; height:100%;">
+    </iframe>
+</div>
+`
 }
