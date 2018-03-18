@@ -220,6 +220,7 @@ function processProperties(ci, html) {
         var modifier = getModifierInfo(property.modifierKind);
         var description = findPropertyWithValidDescription(ci, property.name);
         description += (property.since ? `<p>起始版本：${property.since}</p>` : '');
+        description = addDescLink(description);
         properties.push(`<tr><td style="white-space: nowrap;">
             ${anchor(property.name)}${modifier}${readOnly}${property.name}</td><td>${addTypeLink(property.type)}</td>
             <td>${description}</td><td>${property.defaultValue}</td><td>${getDemoList(ci.name, property.name)}</td></tr>`);
@@ -243,8 +244,14 @@ function processMethods(ci, html) {
         fixMetaInfo(method);
 
         var returns = `<p>返回类型 ${addTypeLink(method.returnType)}</p>`;
-        var returnComment = method.jsdoctags ? method.jsdoctags.find(t => t.tagName.text == 'returns') : undefined;
-        returns += returnComment ? addDescLink(returnComment.comment) : '';
+        var parentMethod = findMethodWithValidDescription(ci, method.name,
+                m => m.jsdoctags && m.jsdoctags.find(t => t.tagName.text == 'returns' && !!t.comment));
+        var returnComment = '';
+        if (parentMethod) {
+            returnComment = parentMethod.jsdoctags
+                .find(t => t.tagName.text == 'returns' && !!t.comment).comment;
+        }
+        returns += addDescLink(returnComment);
 
         var args = [];
         var jsdoctags = method.jsdoctags ? method.jsdoctags : [];
@@ -264,8 +271,8 @@ function processMethods(ci, html) {
             var parentMethod = findMethodWithValidDescription(ci, method.name,
                 m => m.jsdoctags && m.jsdoctags.find(matchCondition));
             var comment = parentMethod ? parentMethod.jsdoctags.find(matchCondition).comment : '';
-            var arg = `<span style="white-space: nowrap;">${argument.name.text || argument.name}${type}</code>
-                </span>${comment ? addDescLink(comment) : ''}`;
+            comment = addDescLink(comment);
+            var arg = `<span style="white-space: nowrap;">${argument.name.text || argument.name}${type}</span>${comment}`;
             args.push(arg);
         });
         if (args.length == 0) {
@@ -280,6 +287,7 @@ function processMethods(ci, html) {
         var parentMethod = findMethodWithValidDescription(ci, method.name, m => !!m.description);
         var description =  parentMethod ?  parentMethod.description : '';
         description += (method.since ? `<p>起始版本：${method.since}</p>` : '');
+        description = addDescLink(description);
 
         methods.push(`
             <tr><td style="white-space: nowrap;">${anchor(method.name)}${modifier}${method.name}</td>
@@ -364,6 +372,7 @@ function addDescLink(desc) {
         return '';
     }
     return desc
+        .replace(/{@link\s+(.*?)}/g, '<code>$1</code>')
         .replace(/<code>\s*(\w+?)\.(\w+?)\s*[()]*\s*<\/code>/g, (found, clazz, property) => {
             if (!property || !clazz) {
                 console.warn('WARN: bad format found while adding description links: ' + found);
@@ -377,7 +386,9 @@ function addDescLink(desc) {
             var url = getPropertyUrl(type, processingAPI);
             var target = url.match(/^https?:/) ? '_blank' : '_self';
             return url ? `<a href="${url}" target="${target}">${found}</a>` : found;
-        });
+        })
+        .replace(/Jigsaw/g, '<a href="https://github.com/rdkmaster/jigsaw" ' +
+            'title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a>');
 }
 
 function getTypeUrl(type, allowUnknown) {
