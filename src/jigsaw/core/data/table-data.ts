@@ -423,6 +423,9 @@ export class PageableTableData extends TableData implements IServerSidePageable,
      * @internal
      */
     public updateDataSource(optionsOrUrl: HttpClientOptions | string): void {
+        if (CommonUtils.isUndefined(optionsOrUrl)) {
+            optionsOrUrl = this.sourceRequestOptions;
+        }
         this.sourceRequestOptions = typeof optionsOrUrl === 'string' ? {url: optionsOrUrl} : optionsOrUrl;
         this.pagingInfo.currentPage = 1;
         this.pagingInfo.totalPage = 1;
@@ -704,7 +707,22 @@ export class TableViewportData extends ViewportData {
 export class BigTableData extends PageableTableData implements ISlicedData {
 
     public readonly viewport: TableViewportData = new TableViewportData(this);
+
+    /**
+     * 缓存数据页数，这里的页指的是服务端单次返回的数据集，和传统服务端分页数据的概念是相同的。
+     *
+     * 这个数值越大，表格数据浏览的体验更好，更流畅，但是需要占用的浏览器内存越多；
+     * 相反的，给的数值越小，表格找服务端请求数据的机会越多，数据浏览体验下降，但是浏览器所需内存越小。
+     * 需要根据服务端性能以及单页数据量而定。最小值为3页。
+     *
+     * @type {number}
+     */
     public numCachedPages = 3;
+
+    /**
+     *
+     * @type {number}
+     */
     public fetchDataThreshold = .5;
 
     protected reallyBusy = false;
