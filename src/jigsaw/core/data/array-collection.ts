@@ -18,6 +18,7 @@ import {
 
 import {TableData} from "./table-data";
 import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
+import {Subscriber} from "rxjs/Subscriber";
 
 /**
  * we have to implement the `Array<T>` interface due to this breaking change:
@@ -580,7 +581,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
         this._emitter.emit(value);
     }
 
-    public subscribe(callback?: Function): Function {
+    public subscribe(callback?: Function): Subscriber<any> {
         return this._emitter.subscribe(callback);
     }
 

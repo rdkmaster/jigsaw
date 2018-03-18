@@ -1,5 +1,6 @@
-import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
 import {HttpHeaders} from "@angular/common/http";
+import {Subscriber} from "rxjs/Subscriber";
+import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
 
 export type DataReviser = (data: any) => any;
 
@@ -513,16 +514,19 @@ export interface IEmittable {
      *
      * ```
      * const td = new TableData();
-     * const removeSubscription = td.subscribe(data => console.log(data));
+     * const subscriber = td.subscribe(data => console.log(data));
      * ...
-     * // 注销本次订阅。注意其他的订阅不受影响
-     * removeSubscription();
+     * // 注销本次订阅。其他的订阅不受影响
+     * subscriber.unsubscribe();
+     * ...
+     * // 取消所有订阅
+     * td.unsubscribe();
      * ```
      *
      * @param {Function} callback 事件回调函数
-     * @returns {Function} 返回当前订阅的回执，利用它可以取消本次订阅
+     * @returns {Subscriber<any>} 返回当前订阅的回执，利用它可以取消本次订阅
      */
-    subscribe(callback?: Function): Function;
+    subscribe(callback?: Function): Subscriber<any>;
 
     /**
      * 取消当前对象上的所有订阅，执行它之后，任何事件监听器都将会失效。

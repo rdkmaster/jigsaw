@@ -1,9 +1,8 @@
 import {EventEmitter} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import "rxjs/add/operator/map";
-import {
-    IAjaxComponentData, DataReviser, ComponentDataHelper, HttpClientOptions, IEmittable
-} from "./component-data";
+import {Subscriber} from "rxjs/Subscriber";
+import {ComponentDataHelper, DataReviser, HttpClientOptions, IAjaxComponentData, IEmittable} from "./component-data";
 import {CallbackRemoval} from "../utils/common-utils";
 
 export abstract class AbstractGeneralCollection<T = any> implements IAjaxComponentData, IEmittable {
@@ -163,7 +162,7 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
         this._emitter.emit(value);
     }
 
-    public subscribe(callback?: Function): Function {
+    public subscribe(callback?: Function): Subscriber<any> {
         return this._emitter.subscribe(callback);
     }
 

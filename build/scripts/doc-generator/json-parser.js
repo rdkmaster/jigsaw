@@ -386,7 +386,9 @@ function addDescLink(desc) {
             var url = getPropertyUrl(type, processingAPI);
             var target = url.match(/^https?:/) ? '_blank' : '_self';
             return url ? `<a href="${url}" target="${target}">${found}</a>` : found;
-        });
+        })
+        .replace(/Jigsaw/g, '<a href="https://github.com/rdkmaster/jigsaw" ' +
+            'title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a>');
 }
 
 function getTypeUrl(type, allowUnknown) {
