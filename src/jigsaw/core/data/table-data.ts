@@ -878,6 +878,7 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
         super.fromObject(data);
         this.originalData = this.data.concat();
         this.filteredData = this.originalData;
+        this.data.length = 0; // 初始化时清空data，防止过大的data加载或屏闪
         this.firstPage();
         return this;
     }
