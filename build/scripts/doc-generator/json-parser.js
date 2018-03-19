@@ -58,6 +58,7 @@ docInfo.classes.concat(docInfo.injectables).concat(docInfo.interfaces).forEach(c
     var html = getClassesTemplate();
     html = processCommon(ci, html);
     html = processProperties(ci, html);
+    html = processConstractor(ci, html);
     html = processMethods(ci, html);
     saveFile(ci.type, ci.name, html);
 });
@@ -231,6 +232,25 @@ function processProperties(ci, html) {
     return html.replace('$properties', properties.join(''));
 }
 
+function processConstractor(ci, html) {
+    if(ci.constructorObj&&ci.type=='class'){
+        html = html.replace('$constractor', `<h3>构造函数 / Methods</h3>
+        <p>${ci.constructorObj.description}</p>
+        <p>输入参数</p>
+        <ul>
+         $parameters
+        </ul>`);
+        var parameters = [];
+        ci.constructorObj.args.forEach((parameterObj)=>{
+            parameters.push(`<li><span style="white-space: nowrap;">${parameterObj.name}: <a>${addTypeLink(parameterObj.type)}</a></span>${parameterObj.description?parameterObj.description:''}</li>`)
+        });
+        html = html.replace('$parameters',parameters.join(''));
+    }else{
+        html = html.replace('$constractor','');
+    }
+    return html;
+}
+
 function processMethods(ci, html) {
     var methods = [];
     (ci.methodsClass || ci.methods).forEach(method => {
@@ -261,13 +281,13 @@ function processMethods(ci, html) {
             }
             var type = argument.type ? `: ${addTypeLink(argument.type)}` : '';
             var matchCondition = parentArgument => {
-                    if (parentArgument.tagName.text !== 'param') {
-                        return false;
-                    }
-                    var paName = parentArgument.name.text || parentArgument.name;
-                    var name = argument.name.text || argument.name;
-                    return paName === name && !!parentArgument.comment;
+                if (parentArgument.tagName.text !== 'param') {
+                    return false;
                 }
+                var paName = parentArgument.name.text || parentArgument.name;
+                var name = argument.name.text || argument.name;
+                return paName === name && !!parentArgument.comment;
+            }
             var parentMethod = findMethodWithValidDescription(ci, method.name,
                 m => m.jsdoctags && m.jsdoctags.find(matchCondition));
             var comment = parentMethod ? parentMethod.jsdoctags.find(matchCondition).comment : '';
@@ -285,7 +305,7 @@ function processMethods(ci, html) {
 
         //如果当前方法没有描述，则往上找他的父类里要描述
         var parentMethod = findMethodWithValidDescription(ci, method.name, m => !!m.description);
-        var description =  parentMethod ?  parentMethod.description : '';
+        var description = parentMethod ? parentMethod.description : '';
         description += (method.since ? `<p>起始版本：${method.since}</p>` : '');
         description = addDescLink(description);
 
@@ -331,7 +351,7 @@ function fixMetaInfo(metaInfo) {
         metaInfo.description = '';
     }
     metaInfo.description = metaInfo.description.replace(/\$(\w+)\s*=\s*(.*?)\s*(\n|<\/p>)/g,
-        function(found, prop, value, suffix) {
+        function (found, prop, value, suffix) {
             metaInfo[prop] = value;
             // remove these messages
             return suffix;
@@ -458,7 +478,7 @@ function getTypeUrl(type, allowUnknown) {
     // - 纯数字常量类型
     // - T 一般用于泛型类型定义
     if (!type.match(/['"]/) && !type.match(/\d+/) && type != 'T'
-        && !allowUnknown &&unknownTypes.indexOf(type) == -1) {
+        && !allowUnknown && unknownTypes.indexOf(type) == -1) {
         unknownTypes.push(type);
     }
     return '';
@@ -524,9 +544,9 @@ function findPropertyMetaInfo(type, property) {
     }
 
     var info = (context.inputsClass || []).find(i => i.name == property) ||
-               (context.outputsClass || []).find(i => i.name == property) ||
-               mergeProperties(context).find(i => i.name == property) ||
-               (context.methodsClass || context.methods || []).find(i => i.name == property);
+        (context.outputsClass || []).find(i => i.name == property) ||
+        mergeProperties(context).find(i => i.name == property) ||
+        (context.methodsClass || context.methods || []).find(i => i.name == property);
     if (info) {
         return {type: context, property: info};
     }
@@ -728,6 +748,8 @@ $description
     </thead>
     <tbody>$properties</tbody>
 </table>
+
+$constractor
 
 <a name="methods"></a>
 <h3>方法 / Methods</h3>
