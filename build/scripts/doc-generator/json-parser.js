@@ -571,9 +571,34 @@ function saveFile(type, fileName, html) {
         fs.mkdirSync(path, 755);
     }
     html += getPanelTemplate();
+    html += getFooter(fileName);
     fs.writeFileSync(`${path}/${fileName}.html`, html);
 
     apiList.push({name: fileName, parentName: type});
+}
+
+function getFooter(name) {
+    var info = findTypeMetaInfo(name);
+    var type = '';
+    switch(info.subtype || info.type) {
+        case 'component':
+        case 'directive':
+        case 'injectable':
+        case 'class':
+            type = 'class'; break;
+        case 'interface':
+            type = 'interface'; break;
+        case 'typealias':
+            type = 'type'; break;
+        case 'enum':
+            type = 'enum'; break;
+    }
+    var reg = new RegExp('^\\s*export\\s+(abstract\\s+)?' + type + '\\s+' + name + '\\b');
+    var source = info.sourceCode || fs.readFileSync(`${__dirname}/../../../${info.file}`).toString();
+    var idx = source.split(/\r?\n/g).findIndex(line => line.match(reg));
+    var hash = idx != -1 ? '#L' + (idx+1) : '';
+    var url = `https://github.com/rdkmaster/jigsaw/blob/master/${info.file}${hash}`;
+    return getFooterTemplate().replace('$editThisDoc', url);
 }
 
 function checkUnknownTypes() {
@@ -784,6 +809,63 @@ function getPanelTemplate() {
               title="返回">&times;</span>
         <iframe id="evalator" style="border:0; width:100%; height:100%;">
         </iframe>
+    </div>
+</div>
+`
+}
+
+function getFooterTemplate() {
+    return `
+<div style="
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-around;
+        background-color: #fafafa;
+        border-radius: 8px;
+        height: calc(100vh - 140px);
+        width: 100%;
+        padding-top: 100px;
+        margin: 100px 0 24px 0;>
+    <div style="flex: 0 1 auto">
+        <h3>资源</h3>
+        <ul style="list-style: none; padding: 16px;">
+            <li><a href="https://zhuanlan.zhihu.com/jigsaw" target="_blank">知乎专栏</a></li>
+            <li><a href="https://github.com/rdkmaster/j-lunker"
+                    target="_blank" title="属于你自己的在线代码运行服务器">J-lunker</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw-seed" target="_blank"
+                    title="Jigsaw应用的种子工程，请让它到处生根发芽吧！">Jigsaw Seed</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw-tourist" target="_blank"
+                    title="一个简单示例工程，新手宝典">Jigsaw Tourist</a></li>
+            <hr style="border-bottom: solid 1px #bbb; margin: 10px -30px 10px -20px;">
+
+            <li><a href="http://ngfans.net" target="_blank">Angular开发者</a></li>
+            <li><a href="#" target="_blank">微信公众号</a></li>
+            <hr style="border-bottom: solid 1px #bbb; margin: 10px -30px 10px -20px;">
+
+            <li><a href="https://angular.cn" target="_blank">Angular中文</a></li>
+            <li><a href="https://angular.io" target="_blank">Angular官网</a></li>
+            <li><a href="https://blog.angular.io" target="_blank">Angular官博</a></li>
+        </ul>
+    </div>
+    <div style="flex: 0 1 auto">
+        <h3>社区</h3>
+        <ul style="list-style: none; padding: 16px;">
+            <li><a href="https://github.com/rdkmaster/jigsaw" target="_blank"
+                title="请跳过去随手帮忙点个星星，越多的星星可以吸引越多的人加入我们">Jigsaw的代码</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw/issues/new" target="_blank">报告BUG、提需求</a></li>
+            <li><a href="$editThisDoc" target="_blank"
+                title="在GitHub上直接编辑这篇文档以帮助我们改进它">改进这篇文档</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw/issues/new" target="_blank">报告BUG、提需求</a></li>
+        </ul>
+    </div>
+    <div style="flex: 0 1 auto">
+        <h3>帮助</h3>
+        <ul style="list-style: none; padding: 16px;">
+            <li><a href="http://ngfans.net" target="_blank">在线提问、寻求帮助</a></li>
+            <li><a href="#" target="_blank">Jigsaw微信群提问</a></li>
+            <li><a href="mailto:chen.xu8@zte.com.cn" target="_blank">直接联系我们</a></li>
+        </ul>
     </div>
 </div>
 `
