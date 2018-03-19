@@ -107,7 +107,7 @@ function processCommon(ci, html) {
     if (implements.length == 0) {
         implements.push('--');
     }
-    html = html.replace('$implements', implements);
+    html = html.replace('$implements', implements.join(' / '));
     html = html.replace('$demos', getDemoListWithHeader(ci));
     return html;
 }
@@ -167,16 +167,12 @@ function mergeProperties(ci) {
                 continue;
             }
             var info = ci.accessors[prop];
-            if (!info.hasOwnProperty('getSignature')) {
-                // 不可读属性，不理他
-                continue;
-            }
-
-            var desc = info.getSignature.description ? info.getSignature.description : '';
+            var desc = info.getSignature && info.getSignature.description ? info.getSignature.description : '';
             desc += info.setSignature && info.setSignature.description ? info.setSignature.description : '';
+            var type = info.getSignature ? (info.getSignature.returnType || info.getSignature.type) :
+                                            info.setSignature ? info.setSignature.args[0].type : '';
             propertiesClass.push({
-                name: info.name, description: desc,
-                type: info.getSignature.returnType || info.getSignature.type,
+                name: info.name, description: desc, type: type,
                 readOnly: info.hasOwnProperty('setSignature') ? false : true
             });
         }
@@ -184,15 +180,47 @@ function mergeProperties(ci) {
     return propertiesClass;
 }
 
+// 在当前对象以及所有父类、实现的接口中，寻找最近一个包含有效描述信息`propertyName`的描述信息
+// 因为编写文档的时候，是尽量将详细描述写在尽可能基础的接口、基类上的
+// 因此本方法优先寻找接口类，然后才是父类。
+function findPropertyWithValidDescription(type, propertyName) {
+    type = findTypeMetaInfo(type);
+    if (!type) {
+        return '';
+    }
+    var property = mergeProperties(type).find(p => p.name === propertyName && !!p.description);
+    if (property) {
+        return property.description;
+    }
+
+    var parents = (type.implements || []).concat();
+    if (type.extends) {
+        parents.push(type.extends);
+    }
+    for (var i = 0; i < parents.length; i++) {
+        var propertyDesc = findPropertyWithValidDescription(parents[i], propertyName);
+        if (propertyDesc) {
+            return propertyDesc;
+        }
+    }
+    return '';
+}
+
 function processProperties(ci, html) {
     var properties = [];
     mergeProperties(ci).forEach(property => {
+        if (property.inheritance) {
+            // 继承过来的，暂时隐藏，参考 https://github.com/rdkmaster/jigsaw/issues/554
+            return;
+        }
         fixMetaInfo(property);
         property.defaultValue = property.defaultValue ? property.defaultValue : '';
         var readOnly = property.readOnly ?
             '<span style="margin-right:4px;color:#9a14a9;" title="Read Only" class="fa fa-adjust"></span>' : '';
         var modifier = getModifierInfo(property.modifierKind);
-        var description = property.description + (property.since ? `<p>起始版本：${property.since}</p>` : '');
+        var description = findPropertyWithValidDescription(ci, property.name);
+        description += (property.since ? `<p>起始版本：${property.since}</p>` : '');
+        description = addDescLink(description);
         properties.push(`<tr><td style="white-space: nowrap;">
             ${anchor(property.name)}${modifier}${readOnly}${property.name}</td><td>${addTypeLink(property.type)}</td>
             <td>${description}</td><td>${property.defaultValue}</td><td>${getDemoList(ci.name, property.name)}</td></tr>`);
@@ -209,31 +237,58 @@ function processMethods(ci, html) {
         if (isAngularLifeCircle(method.name)) {
             return;
         }
+        if (method.inheritance) {
+            // 继承过来的，暂时隐藏，参考 https://github.com/rdkmaster/jigsaw/issues/554
+            return;
+        }
         fixMetaInfo(method);
 
         var returns = `<p>返回类型 ${addTypeLink(method.returnType)}</p>`;
-        var returnComment = method.jsdoctags ? method.jsdoctags.find(t => t.tagName.text == 'returns') : undefined;
-        returns += returnComment ? addDescLink(returnComment.comment) : '';
+        var parentMethod = findMethodWithValidDescription(ci, method.name,
+                m => m.jsdoctags && m.jsdoctags.find(t => t.tagName.text == 'returns' && !!t.comment));
+        var returnComment = '';
+        if (parentMethod) {
+            returnComment = parentMethod.jsdoctags
+                .find(t => t.tagName.text == 'returns' && !!t.comment).comment;
+        }
+        returns += addDescLink(returnComment);
 
         var args = [];
         var jsdoctags = method.jsdoctags ? method.jsdoctags : [];
-        jsdoctags.forEach(a => {
-            if (a.tagName.text !== 'param') {
+        jsdoctags.forEach((argument, index) => {
+            if (argument.tagName.text !== 'param') {
                 return;
             }
-            var type = a.type ? `: ${addTypeLink(a.type)}` : '';
-            var arg = `<span style="white-space: nowrap;">
-                ${a.name.text || a.name}${type}</code>
-                </span>${a.comment ? addDescLink(a.comment) : ''}`;
+            var type = argument.type ? `: ${addTypeLink(argument.type)}` : '';
+            var matchCondition = parentArgument => {
+                    if (parentArgument.tagName.text !== 'param') {
+                        return false;
+                    }
+                    var paName = parentArgument.name.text || parentArgument.name;
+                    var name = argument.name.text || argument.name;
+                    return paName === name && !!parentArgument.comment;
+                }
+            var parentMethod = findMethodWithValidDescription(ci, method.name,
+                m => m.jsdoctags && m.jsdoctags.find(matchCondition));
+            var comment = parentMethod ? parentMethod.jsdoctags.find(matchCondition).comment : '';
+            comment = addDescLink(comment);
+            var arg = `<span style="white-space: nowrap;">${argument.name.text || argument.name}${type}</span>${comment}`;
             args.push(arg);
         });
         if (args.length == 0) {
-            args = '<p>无参数</p>';
+            args = '--';
         } else {
             args = `<ul><li>${args.join('</li><li>')}</li></ul>`;
         }
+
         var modifier = getModifierInfo(method.modifierKind);
-        var description = method.description + (method.since ? `<p>起始版本：${method.since}</p>` : '');
+
+        //如果当前方法没有描述，则往上找他的父类里要描述
+        var parentMethod = findMethodWithValidDescription(ci, method.name, m => !!m.description);
+        var description =  parentMethod ?  parentMethod.description : '';
+        description += (method.since ? `<p>起始版本：${method.since}</p>` : '');
+        description = addDescLink(description);
+
         methods.push(`
             <tr><td style="white-space: nowrap;">${anchor(method.name)}${modifier}${method.name}</td>
             <td>${description}</td><td>${returns}</td><td>${args}</td><td>${getDemoList(ci.name, method.name)}</td></tr>`);
@@ -242,6 +297,33 @@ function processMethods(ci, html) {
         methods.push(getNoDataRowTemplate());
     }
     return html.replace('$methods', methods.join(''));
+}
+
+// 在当前对象以及所有父类、实现的接口中，寻找最近一个包含有效描述信息且名为`methodName`的方法的元信息，
+// `condition`是额外的过滤条件
+// 因为编写文档的时候，是尽量将详细描述写在尽可能基础的接口、基类上的
+// 因此本方法优先寻找接口类，然后才是父类。
+function findMethodWithValidDescription(type, methodName, condition) {
+    type = findTypeMetaInfo(type);
+    if (!type) {
+        return;
+    }
+    var methods = type.methodsClass || type.methods || [];
+    var method = methods.find(m => m.name === methodName && condition(m));
+    if (method) {
+        return method;
+    }
+
+    var parents = (type.implements || []).concat();
+    if (type.extends) {
+        parents.push(type.extends);
+    }
+    for (var i = 0; i < parents.length; i++) {
+        method = findMethodWithValidDescription(parents[i], methodName, condition);
+        if (method) {
+            return method;
+        }
+    }
 }
 
 function fixMetaInfo(metaInfo) {
@@ -290,6 +372,7 @@ function addDescLink(desc) {
         return '';
     }
     return desc
+        .replace(/{@link\s+(.*?)}/g, '<code>$1</code>')
         .replace(/<code>\s*(\w+?)\.(\w+?)\s*[()]*\s*<\/code>/g, (found, clazz, property) => {
             if (!property || !clazz) {
                 console.warn('WARN: bad format found while adding description links: ' + found);
@@ -303,7 +386,9 @@ function addDescLink(desc) {
             var url = getPropertyUrl(type, processingAPI);
             var target = url.match(/^https?:/) ? '_blank' : '_self';
             return url ? `<a href="${url}" target="${target}">${found}</a>` : found;
-        });
+        })
+        .replace(/Jigsaw/g, '<a href="https://github.com/rdkmaster/jigsaw" ' +
+            'title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a>');
 }
 
 function getTypeUrl(type, allowUnknown) {
@@ -410,14 +495,17 @@ function getPropertyUrl(type, property, context) {
 }
 
 function findTypeMetaInfo(type) {
-    return docInfo.classes.find(i => i.name === type) ||
-           docInfo.components.find(i => i.name === type) ||
-           docInfo.directives.find(i => i.name === type) ||
-           docInfo.injectables.find(i => i.name === type) ||
-           docInfo.interfaces.find(i => i.name === type) ||
-           docInfo.modules.find(i => i.name === type) ||
-           docInfo.miscellaneous.typealiases.find(i => i.name === type) ||
-           docInfo.miscellaneous.enumerations.find(i => i.name === type);
+    return typeof type === 'string' ?
+        docInfo.classes.find(i => i.name === type) ||
+        docInfo.components.find(i => i.name === type) ||
+        docInfo.directives.find(i => i.name === type) ||
+        docInfo.injectables.find(i => i.name === type) ||
+        docInfo.interfaces.find(i => i.name === type) ||
+        docInfo.modules.find(i => i.name === type) ||
+        docInfo.miscellaneous.typealiases.find(i => i.name === type) ||
+        docInfo.miscellaneous.enumerations.find(i => i.name === type)
+        :
+        type;
 }
 
 // 在一个类中寻找一个属性，这个方法支持追溯到父类里

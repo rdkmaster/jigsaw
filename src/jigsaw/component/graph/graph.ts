@@ -12,11 +12,6 @@ import {AbstractJigsawComponent} from "../common";
 import {EchartOptions} from "../../core/data/echart-types";
 import {CallbackRemoval} from "../../core/utils/common-utils";
 
-/**
- * @description graph 图标组件
- * ### 封装的eCharts, 属性具体值参考eCharts 官方文档.
- * <br /> <a href="http://echarts.baidu.com/api.html#echarts" target="_blank"> eCharts 文档</a>
- */
 @Component({
     selector: 'jigsaw-graph, j-graph',
     templateUrl: 'graph.html',
