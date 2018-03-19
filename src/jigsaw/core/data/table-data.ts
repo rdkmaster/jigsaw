@@ -690,22 +690,23 @@ export class TableViewportData extends ViewportData {
 /**
  * `BigTableData`是Jigsaw的表格呈现海量数据时的一个解决方案，**它能够以常数时间处理任何量级的数据**。
  *
- * ### 适用的场景
+ * #### 适用的场景
  *
- * 这个方法目前适用于海量对静态数据做展示的场景，暂时不支持对海量数据展示的同时提供交互能力，
+ * 这个方法目前适用于海量对静态数据做展示的场景，暂时不支持对海量数据展示的同时提供**有状态**的交互能力，
+ * 即`BigTableData`暂不支持与可编辑的渲染器（如`JigsawInput`/`JigsawCheckbox`/`JigsawSwitch`等）一起使用，
  * 如果你有这样的需求，那请给我们[提Issue](https://github.com/rdkmaster/jigsaw/issues/new)，我会考虑支持。
  *
  * 此外，这个解决方案也充分考虑到了用户在IE11等低性能浏览器上浏览海量数据的体验，针对性的做了优化，
  * 你可以使用IE11打开这个demo看看它在低性能浏览器上的表现。
  *
- * ### 原理
+ * #### 原理
  *
  * 原理非常简单，我们使用`BigTableData`这个数据对象将数据做切片处理后传递给表格呈现出来，
  * 表格控件无需处理所有数据，它始终只需要处理当前用户可视部分的数据，用户不可视部分的数据被忽略，
  * 这也就是`BigTableData`可以在常数时间处理任意量级的数据的原因了。
  * `BigTableData`充分体现了表格彻底由数据驱动的优势。
  *
- * ### 无分页浏览数据
+ * #### 无分页浏览数据
  *
  * 甚至，`BigTableData`还能够消除数据分页给浏览器数据带来的不便之处，进一步提升浏览数据的体验。
  *
@@ -727,13 +728,13 @@ export class TableViewportData extends ViewportData {
  * 你可以根据实际情况调整`BigTableData`的`numCachedPages`属性来调整缓存的页数，设置为`0`则缓存所有。
  * `BigTableData`至少缓存3页数据。
  *
- * ### 不适用的场景
+ * #### 不适用的场景
  *
  * 正如前文所说，`BigTableData`目前暂时不适用于展示有状态的交互需求的场景，例如使用有编辑功能的渲染器就是典型的有状态的交互场景。
  * 如果你有这样的需求，那请给我们[提Issue](https://github.com/rdkmaster/jigsaw/issues/new)，
  * 将你碰到的场景和需求详细描述给我们。
  *
- * ### 注意
+ * #### 注意
  *
  * `BigTableData`需要有一个统一的具备服务端分页、服务端排序、服务端过滤能力的REST服务配合使用，
  * 更多信息请参考`PagingInfo.pagingServerUrl`。
