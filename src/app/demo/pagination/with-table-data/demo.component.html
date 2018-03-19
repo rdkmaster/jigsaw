@@ -9,7 +9,9 @@
                 [current]="pageable.pagingInfo.currentPage"
                 [pageSizeOptions]="[5, 10, 20]"
                 [searchable]="true"
-                [showQuickJumper]="true">
+                [showQuickJumper]="true"
+                (currentChange)="getCurrentPage($event)"
+                (pageSizeChange)="getPageSize($event)">
 </jigsaw-pagination>
 
 <!--<p>{{pageable.data | json}}</p>-->
