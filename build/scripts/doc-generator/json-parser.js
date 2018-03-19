@@ -31,6 +31,7 @@ if (!docInfo) {
     process.exit(1);
 }
 
+var tags = getDemoTags();
 var processingAPI;
 var unknownTypes = [];
 var apiList = [];
@@ -71,6 +72,7 @@ docInfo.miscellaneous.typealiases.forEach(ci => {
     html = html.replace('$rawtype', '原始类型：' + addTypeLink(ci.rawtype));
     html = html.replace('$since', '起始版本：' + (ci.since ? ci.since : 'v1.0.0'));
     html = html.replace('$description', ci.description);
+    html = html.replace('$demos', getDemoListWithHeader(ci));
     saveFile(ci.subtype, ci.name, html);
 });
 
@@ -80,11 +82,12 @@ docInfo.miscellaneous.enumerations.forEach(ci => {
     fixMetaInfo(ci);
     var html = getTypeEnumTemplate();
     html = html.replace('$name', ci.name);
-    html = html.replace('$since', (ci.since ? ci.since : 'v1.0.0'));
+    html = html.replace('$since', '起始版本：' + (ci.since ? ci.since : 'v1.0.0'));
     var items = [];
     ci.childs.forEach(i => items.push(`<li>${i.name}</li>`));
     html = html.replace('$enumItems', items.join('\n'));
     html = html.replace('$description', ci.description);
+    html = html.replace('$demos', getDemoListWithHeader(ci));
     saveFile(ci.subtype, ci.name, html);
 });
 
@@ -98,8 +101,14 @@ function processCommon(ci, html) {
     html = html.replace('$name', ci.name);
     html = html.replace('$description', ci.description);
     html = html.replace('$extends', ci.extends ? addTypeLink(ci.extends) : '--');
-    html = html.replace('$implements', ci.implements && ci.implements.length > 0 ?
-                                        addTypeLink(ci.implements).join(' / ') : '--');
+    var implements = (ci.implements || ['--'])
+        .filter(i => !isAngularLifeCircle(i))
+        .map(i => addTypeLink(i));
+    if (implements.length == 0) {
+        implements.push('--');
+    }
+    html = html.replace('$implements', implements.join(' / '));
+    html = html.replace('$demos', getDemoListWithHeader(ci));
     return html;
 }
 
@@ -118,7 +127,8 @@ function processInputs(ci, html) {
             '<span class="fa fa-retweet" style="margin-left:4px" title="本属性支持双向绑定"></span>' : '';
         var description = input.description + (input.since ? `<p>起始版本：${input.since}</p>` : '');
         inputs.push(`<tr><td>${anchor(input.name)}${input.name}${dualBinding}</td>
-            <td>${addTypeLink(input.type)}</td><td>${input.defaultValue}</td><td>${description}</td></tr>`);
+            <td>${addTypeLink(input.type)}</td><td>${input.defaultValue}</td>
+            <td>${description}</td><td>${getDemoList(ci.name, input.name)}</td></tr>`);
     });
     if (inputs.length == 0) {
         inputs.push(getNoDataRowTemplate());
@@ -137,8 +147,8 @@ function processOutputs(ci, html) {
             type = match[1];
         }
         var description = output.description + (output.since ? `<p>起始版本：${output.since}</p>` : '');
-        outputs.push(`<tr><td>${anchor(output.name)}${output.name}</td>
-            <td>${addTypeLink(type)}</td><td>${description}</td></tr>`);
+        outputs.push(`<tr><td>${anchor(output.name)}${output.name}</td><td>${addTypeLink(type)}</td>
+            <td>${description}</td><td>${getDemoList(ci.name, output.name)}</td></tr>`);
     });
     if (outputs.length == 0) {
         outputs.push(getNoDataRowTemplate());
@@ -157,15 +167,12 @@ function mergeProperties(ci) {
                 continue;
             }
             var info = ci.accessors[prop];
-            if (!info.hasOwnProperty('getSignature')) {
-                // 不可读属性，不理他
-                continue;
-            }
-
+            var desc = info.getSignature && info.getSignature.description ? info.getSignature.description : '';
+            desc += info.setSignature && info.setSignature.description ? info.setSignature.description : '';
+            var type = info.getSignature ? (info.getSignature.returnType || info.getSignature.type) :
+                                            info.setSignature ? info.setSignature.args[0].type : '';
             propertiesClass.push({
-                name: info.name,
-                type: info.getSignature.returnType || info.getSignature.type,
-                description: info.hasOwnProperty('description') ? info.description : '',
+                name: info.name, description: desc, type: type,
                 readOnly: info.hasOwnProperty('setSignature') ? false : true
             });
         }
@@ -173,18 +180,50 @@ function mergeProperties(ci) {
     return propertiesClass;
 }
 
+// 在当前对象以及所有父类、实现的接口中，寻找最近一个包含有效描述信息`propertyName`的描述信息
+// 因为编写文档的时候，是尽量将详细描述写在尽可能基础的接口、基类上的
+// 因此本方法优先寻找接口类，然后才是父类。
+function findPropertyWithValidDescription(type, propertyName) {
+    type = findTypeMetaInfo(type);
+    if (!type) {
+        return '';
+    }
+    var property = mergeProperties(type).find(p => p.name === propertyName && !!p.description);
+    if (property) {
+        return property.description;
+    }
+
+    var parents = (type.implements || []).concat();
+    if (type.extends) {
+        parents.push(type.extends);
+    }
+    for (var i = 0; i < parents.length; i++) {
+        var propertyDesc = findPropertyWithValidDescription(parents[i], propertyName);
+        if (propertyDesc) {
+            return propertyDesc;
+        }
+    }
+    return '';
+}
+
 function processProperties(ci, html) {
     var properties = [];
     mergeProperties(ci).forEach(property => {
+        if (property.inheritance) {
+            // 继承过来的，暂时隐藏，参考 https://github.com/rdkmaster/jigsaw/issues/554
+            return;
+        }
         fixMetaInfo(property);
         property.defaultValue = property.defaultValue ? property.defaultValue : '';
         var readOnly = property.readOnly ?
             '<span style="margin-right:4px;color:#9a14a9;" title="Read Only" class="fa fa-adjust"></span>' : '';
         var modifier = getModifierInfo(property.modifierKind);
-        var description = property.description + (property.since ? `<p>起始版本：${property.since}</p>` : '');
+        var description = findPropertyWithValidDescription(ci, property.name);
+        description += (property.since ? `<p>起始版本：${property.since}</p>` : '');
+        description = addDescLink(description);
         properties.push(`<tr><td style="white-space: nowrap;">
             ${anchor(property.name)}${modifier}${readOnly}${property.name}</td><td>${addTypeLink(property.type)}</td>
-            <td>${description}</td><td>${property.defaultValue}</td></tr>`);
+            <td>${description}</td><td>${property.defaultValue}</td><td>${getDemoList(ci.name, property.name)}</td></tr>`);
     });
     if (properties.length == 0) {
         properties.push(getNoDataRowTemplate());
@@ -195,39 +234,96 @@ function processProperties(ci, html) {
 function processMethods(ci, html) {
     var methods = [];
     (ci.methodsClass || ci.methods).forEach(method => {
+        if (isAngularLifeCircle(method.name)) {
+            return;
+        }
+        if (method.inheritance) {
+            // 继承过来的，暂时隐藏，参考 https://github.com/rdkmaster/jigsaw/issues/554
+            return;
+        }
         fixMetaInfo(method);
 
         var returns = `<p>返回类型 ${addTypeLink(method.returnType)}</p>`;
-        var returnComment = method.jsdoctags ? method.jsdoctags.find(t => t.tagName.text == 'returns') : undefined;
-        returns += returnComment ? addDescLink(returnComment.comment) : '';
+        var parentMethod = findMethodWithValidDescription(ci, method.name,
+                m => m.jsdoctags && m.jsdoctags.find(t => t.tagName.text == 'returns' && !!t.comment));
+        var returnComment = '';
+        if (parentMethod) {
+            returnComment = parentMethod.jsdoctags
+                .find(t => t.tagName.text == 'returns' && !!t.comment).comment;
+        }
+        returns += addDescLink(returnComment);
 
         var args = [];
         var jsdoctags = method.jsdoctags ? method.jsdoctags : [];
-        jsdoctags.forEach(a => {
-            if (a.tagName.text !== 'param') {
+        jsdoctags.forEach((argument, index) => {
+            if (argument.tagName.text !== 'param') {
                 return;
             }
-            var type = a.type ? `: ${addTypeLink(a.type)}` : '';
-            var arg = `<span style="white-space: nowrap;">
-                ${a.name.text || a.name}${type}</code>
-                </span>${a.comment ? addDescLink(a.comment) : ''}`;
+            var type = argument.type ? `: ${addTypeLink(argument.type)}` : '';
+            var matchCondition = parentArgument => {
+                    if (parentArgument.tagName.text !== 'param') {
+                        return false;
+                    }
+                    var paName = parentArgument.name.text || parentArgument.name;
+                    var name = argument.name.text || argument.name;
+                    return paName === name && !!parentArgument.comment;
+                }
+            var parentMethod = findMethodWithValidDescription(ci, method.name,
+                m => m.jsdoctags && m.jsdoctags.find(matchCondition));
+            var comment = parentMethod ? parentMethod.jsdoctags.find(matchCondition).comment : '';
+            comment = addDescLink(comment);
+            var arg = `<span style="white-space: nowrap;">${argument.name.text || argument.name}${type}</span>${comment}`;
             args.push(arg);
         });
         if (args.length == 0) {
-            args = '<p>无参数</p>';
+            args = '--';
         } else {
             args = `<ul><li>${args.join('</li><li>')}</li></ul>`;
         }
+
         var modifier = getModifierInfo(method.modifierKind);
-        var description = method.description + (method.since ? `<p>起始版本：${method.since}</p>` : '');
+
+        //如果当前方法没有描述，则往上找他的父类里要描述
+        var parentMethod = findMethodWithValidDescription(ci, method.name, m => !!m.description);
+        var description =  parentMethod ?  parentMethod.description : '';
+        description += (method.since ? `<p>起始版本：${method.since}</p>` : '');
+        description = addDescLink(description);
+
         methods.push(`
             <tr><td style="white-space: nowrap;">${anchor(method.name)}${modifier}${method.name}</td>
-            <td>${description}</td><td>${returns}</td><td>${args}</td></tr>`);
+            <td>${description}</td><td>${returns}</td><td>${args}</td><td>${getDemoList(ci.name, method.name)}</td></tr>`);
     });
     if (methods.length == 0) {
         methods.push(getNoDataRowTemplate());
     }
     return html.replace('$methods', methods.join(''));
+}
+
+// 在当前对象以及所有父类、实现的接口中，寻找最近一个包含有效描述信息且名为`methodName`的方法的元信息，
+// `condition`是额外的过滤条件
+// 因为编写文档的时候，是尽量将详细描述写在尽可能基础的接口、基类上的
+// 因此本方法优先寻找接口类，然后才是父类。
+function findMethodWithValidDescription(type, methodName, condition) {
+    type = findTypeMetaInfo(type);
+    if (!type) {
+        return;
+    }
+    var methods = type.methodsClass || type.methods || [];
+    var method = methods.find(m => m.name === methodName && condition(m));
+    if (method) {
+        return method;
+    }
+
+    var parents = (type.implements || []).concat();
+    if (type.extends) {
+        parents.push(type.extends);
+    }
+    for (var i = 0; i < parents.length; i++) {
+        method = findMethodWithValidDescription(parents[i], methodName, condition);
+        if (method) {
+            return method;
+        }
+    }
 }
 
 function fixMetaInfo(metaInfo) {
@@ -262,16 +358,12 @@ function getModifierInfo(modifier) {
 }
 
 function addTypeLink(type) {
-    if (typeof type === 'string') {
-        type = type == 'literal type' ? '' : type;
-        return (type || '').replace(/['"]?\w+['"]?/g, subType => {
-            var url = getTypeUrl(subType);
-            var target = url.match(/^https?:/) ? '_blank' : '_self';
-            return url ? `<a href="${url}" target="${target}">${subType}</a>` : subType;
-        });
-    } else if (type instanceof Array) {
-        return type.map(i => addTypeLink(i));
-    }
+    type = type == 'literal type' ? '' : type;
+    return (type || '').replace(/['"]?\w+['"]?/g, subType => {
+        var url = getTypeUrl(subType);
+        var target = url.match(/^https?:/) ? '_blank' : '_self';
+        return url ? `<a href="${url}" target="${target}">${subType}</a>` : subType;
+    });
 }
 
 // 此规则详情参考这里  https://github.com/rdkmaster/jigsaw/issues/542
@@ -280,6 +372,7 @@ function addDescLink(desc) {
         return '';
     }
     return desc
+        .replace(/{@link\s+(.*?)}/g, '<code>$1</code>')
         .replace(/<code>\s*(\w+?)\.(\w+?)\s*[()]*\s*<\/code>/g, (found, clazz, property) => {
             if (!property || !clazz) {
                 console.warn('WARN: bad format found while adding description links: ' + found);
@@ -293,7 +386,9 @@ function addDescLink(desc) {
             var url = getPropertyUrl(type, processingAPI);
             var target = url.match(/^https?:/) ? '_blank' : '_self';
             return url ? `<a href="${url}" target="${target}">${found}</a>` : found;
-        });
+        })
+        .replace(/Jigsaw/g, '<a href="https://github.com/rdkmaster/jigsaw" ' +
+            'title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a>');
 }
 
 function getTypeUrl(type, allowUnknown) {
@@ -333,10 +428,13 @@ function getTypeUrl(type, allowUnknown) {
         return `https://developer.mozilla.org/zh-CN/docs/Web/API/${type}`;
     }
     if (type == 'IterableIterator') {
-        return `https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols`;
+        return `https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Iteration_protocols`;
     }
     if (type == 'NodeListOf') {
-        return `https://developer.mozilla.org/en-US/docs/Web/API/NodeList`;
+        return `https://developer.mozilla.org/zh-CN/docs/Web/API/NodeList`;
+    }
+    if (type == 'setTimeout') {
+        return `https://developer.mozilla.org/zh-CN/docs/Web/API/WindowOrWorkerGlobalScope/${type}`;
     }
 
     // try rxjs types
@@ -397,14 +495,17 @@ function getPropertyUrl(type, property, context) {
 }
 
 function findTypeMetaInfo(type) {
-    return docInfo.classes.find(i => i.name === type) ||
-           docInfo.components.find(i => i.name === type) ||
-           docInfo.directives.find(i => i.name === type) ||
-           docInfo.injectables.find(i => i.name === type) ||
-           docInfo.interfaces.find(i => i.name === type) ||
-           docInfo.modules.find(i => i.name === type) ||
-           docInfo.miscellaneous.typealiases.find(i => i.name === type) ||
-           docInfo.miscellaneous.enumerations.find(i => i.name === type);
+    return typeof type === 'string' ?
+        docInfo.classes.find(i => i.name === type) ||
+        docInfo.components.find(i => i.name === type) ||
+        docInfo.directives.find(i => i.name === type) ||
+        docInfo.injectables.find(i => i.name === type) ||
+        docInfo.interfaces.find(i => i.name === type) ||
+        docInfo.modules.find(i => i.name === type) ||
+        docInfo.miscellaneous.typealiases.find(i => i.name === type) ||
+        docInfo.miscellaneous.enumerations.find(i => i.name === type)
+        :
+        type;
 }
 
 // 在一个类中寻找一个属性，这个方法支持追溯到父类里
@@ -454,6 +555,109 @@ function checkUnknownTypes() {
     return false;
 }
 
+function getDemoTags() {
+    var appPath = `${__dirname}/../../../src/app`;
+    var demoStr = fs.readFileSync(`${appPath}/router-config.ts`).toString();
+    var match = demoStr.match(/\[[\s\S]*\]/);
+    if (!match) {
+        console.error('ERROR: can not read demo info, invalid router-config.ts');
+        process.exit(1);
+    }
+    var demosRouters = eval(match[0]);
+    var tags = {};
+    demosRouters.filter(r => !!r.path).forEach(r => {
+        var code = fs.readFileSync(`${appPath}/demo/${r.path}/demo-set.module.ts`).toString();
+        var match = code.match(/routerConfig\s*:?.*?=\s*(\[[\s\S]*?\])\s*;/);
+        if (!match) {
+            console.log('ERROR: can not find routerConfig source, check the following rules:');
+            console.log('1. use "routerConfig" as the router config var name.');
+            console.log('2. terminate the var definition with ";".');
+            process.exit(1);
+        }
+        var childRouterSource = match[1].replace(/component\s*:\s*\w+,?/g, '');
+        var childRouters;
+        try {
+            childRouters = eval('(' + childRouterSource + ')');
+        } catch (e) {
+            console.log('ERROR: unable to compile the router config source: ' + e.message);
+            console.log(match[1]);
+            process.exit(1);
+        }
+        childRouters.filter(cr => !!cr.path).forEach(cr => {
+            var code = fs.readFileSync(`${appPath}/demo/${r.path}/${cr.path}/demo.component.ts`).toString();
+            var tagMatch = code.match(/tags\s*:?.*?=\s*(\[[\s\S]*?\])\s*;/);
+            if (!tagMatch) {
+                console.log(`ERROR: can not find tags info for demo: ${appPath}/demo/${r.path}/${cr.path}`);
+                process.exit(1);
+            }
+            var summaryMatch = code.match(/\bsummary\s*(:.*?)?\s*=\s*['"](.*)['"]/);
+            if (!summaryMatch) {
+                console.log(`ERROR: can not summary info for demo: ${appPath}/demo/${r.path}/${cr.path}`);
+                console.log('hint: the value of summary should write in a single line!');
+                process.exit(1);
+            }
+
+            eval(tagMatch[1]).forEach(t => {
+                // verifyTag(t);
+                if (!tags.hasOwnProperty(t)) {
+                    tags[t] = [];
+                }
+                tags[t].push({
+                    summary: summaryMatch[2], label: cr.path,
+                    url: `/components/${r.path}/demo#${cr.path}`
+                });
+            });
+        });
+    });
+    return tags;
+}
+
+function verifyTag(tag) {
+    var match = tag.match(/^(.*?)\.(.*?)$/);
+    if (match) {
+        var type = match[1];
+        var property = match[2];
+    } else {
+        var type = tag;
+    }
+    var info = findTypeMetaInfo(type);
+    if (!info) {
+        console.log(`ERROR: invalid tag, type not found: ${tag}`);
+        process.exit(1);
+    }
+    if (property && !findPropertyMetaInfo(info, property)) {
+        console.log(`ERROR: invalid tag, property not found: ${tag}`);
+        process.exit(1);
+    }
+}
+
+function getDemoList(type, property) {
+    var key = property ? `${type}.${property}` : type;
+    var demos = tags[key];
+    if (!demos) {
+        return '';
+    }
+    var list = [];
+    demos.forEach(d => {
+        list.push(`<li title="${d.summary}"><a href="${d.url}">${d.label}</a></li>`);
+    });
+    return list.length > 0 ? `<ul>${list.join('')}</li></ul>` : '';
+}
+
+function getDemoListWithHeader(metaInfo) {
+    var type = metaInfo.subtype || metaInfo.type;
+    var title = type == 'typealias' || type == 'enum' ? '相关示例' : '其他示例';
+    var demos = getDemoList(metaInfo.name);
+    return demos ? '<a name="demos"></a><h3>' + title + '</h3>' + demos : '';
+}
+
+function isAngularLifeCircle(type) {
+    return [
+        'OnChaes', 'OnInit', 'DoCheck', 'AfterContentInit', 'AfterContentChecked',
+        'AfterViewInit', 'AfterViewChecked', 'OnDestroy'
+    ].find(i => i === type || 'ng' + i == type);
+}
+
 function getComponentTemplate() {
     return `
 <h2>$name</h2>
@@ -469,7 +673,7 @@ $description
 <h3>输入属性 / Inputs</h3>
 <table style="width:100%">
     <thead>
-        <tr><th>名称</th><th>类型</th><th>默认值</th><th>说明</th></tr>
+        <tr><th>名称</th><th>类型</th><th>默认值</th><th>说明</th><th>示例</th></tr>
     </thead>
     <tbody>$inputs</tbody>
 </table>
@@ -478,7 +682,7 @@ $description
 <h3>输出属性 / Outputs</h3>
 <table style="width:100%">
     <thead>
-        <tr><th>名称</th><th>数据类型</th><th>说明</th></tr>
+        <tr><th>名称</th><th>数据类型</th><th>说明</th><th>示例</th></tr>
     </thead>
     <tbody>$outputs</tbody>
 </table>
@@ -487,7 +691,7 @@ $description
 <h3>普通属性 / Properties</h3>
 <table style="width:100%">
     <thead>
-        <tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th></tr>
+        <tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th><th>示例</th></tr>
     </thead>
     <tbody>$properties</tbody>
 </table>
@@ -496,10 +700,12 @@ $description
 <h3>方法 / Methods</h3>
 <table style="width:100%">
     <thead>
-        <tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th></tr>
+        <tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th><th>示例</th></tr>
     </thead>
     <tbody>$methods</tbody>
 </table>
+
+$demos
 
 <a name="object-oriented"></a>
 <h3>面向对象 / Object Oriented</h3>
@@ -518,7 +724,7 @@ $description
 <h3>属性 / Properties</h3>
 <table style="width:100%">
     <thead>
-        <tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th></tr>
+        <tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th><th>示例</th></tr>
     </thead>
     <tbody>$properties</tbody>
 </table>
@@ -527,10 +733,12 @@ $description
 <h3>方法 / Methods</h3>
 <table style="width:100%">
     <thead>
-        <tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th></tr>
+        <tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th><th>示例</th></tr>
     </thead>
     <tbody>$methods</tbody>
 </table>
+
+$demos
 
 <a name="object-oriented"></a>
 <h3>面向对象 / Object Oriented</h3>
@@ -547,22 +755,25 @@ function getTypeAliasesTemplate() {
     <li>$since</li>
 </ul>
 $description
+
+$demos
 `
 }
 
 function getTypeEnumTemplate() {
     return `
 <h2>$name</h2>
+<p>$since</p>
 
 $description
 
-<h3>起始版本</h3>
-$since
-
+<a name="items"></a>
 <h3>枚举项</h3>
 <ul>
     $enumItems
 </ul>
+
+$demos
 `
 }
 

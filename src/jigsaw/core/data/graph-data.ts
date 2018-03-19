@@ -2,7 +2,7 @@ import {EchartTitle, EchartLegend, EchartTooltip, EchartOptions} from "./echart-
 import {TableDataBase} from "./table-data";
 import {CommonUtils} from "../utils/common-utils";
 
-export type GraphMatrixRow = Array<string | number>;
+export type GraphMatrixRow = (string | number)[];
 export type GraphDataHeader = string[];
 export type GraphDataField = string[];
 export type GraphDataRowDescriptor = string[];
@@ -11,8 +11,8 @@ export type GraphDataMatrix = GraphMatrixRow[];
 /**
  * 这是所有的图形数据的基类，正如类名所提示的，这个类是抽象的。
  *
- * Jigsaw的图形是基于[echarts]()实现的，因此在使用这个类来描述一个图之前，请确保你已经具备了echarts的相关知识了。
- * 其中最主要的是需要熟悉[echarts的配置项](http://echarts.baidu.com/option.html#title)。
+ * Jigsaw的图形是基于[echarts 3.x](http://echarts.baidu.com/index.html)实现的，因此在使用这个类来描述一个图之前，
+ * 请确保你已经具备了echarts的相关知识了。其中最主要的是需要熟悉[echarts的配置项](http://echarts.baidu.com/option.html#title)。
  */
 export abstract class AbstractGraphData extends TableDataBase {
     protected abstract createChartOptions(): EchartOptions;
@@ -153,6 +153,19 @@ export abstract class AbstractGraphData extends TableDataBase {
     }
 }
 
+export class GraphData extends AbstractGraphData {
+    echartsOptions: EchartOptions;
+
+    constructor(options: EchartOptions) {
+        super();
+        this.echartsOptions = options;
+    }
+
+    protected createChartOptions(): EchartOptions {
+        return this.echartsOptions;
+    }
+}
+
 export abstract class AbstractNormalGraphData extends AbstractGraphData {
     public title: EchartTitle;
     public legend: EchartLegend;
@@ -164,7 +177,6 @@ export class OutlineMapData extends AbstractNormalGraphData {
         return undefined;
     }
 }
-
 
 export class PieGraphData extends AbstractGraphData {
     constructor(title: string | EchartTitle, series: any[], tooltip?: EchartTooltip) {

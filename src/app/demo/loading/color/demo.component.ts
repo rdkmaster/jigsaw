@@ -42,4 +42,9 @@ export class ColorfulLoadingDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawBubbleLoading.color',
+        'JigsawFontLoading.color',
+        'JigsawBallLoading.color',
+    ];
 }

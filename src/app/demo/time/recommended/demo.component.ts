@@ -23,5 +23,9 @@ export class TimeRecommendedComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawTime.recommendedBegin',
+        'JigsawTime.recommendedEnd',
+    ];
 }
 

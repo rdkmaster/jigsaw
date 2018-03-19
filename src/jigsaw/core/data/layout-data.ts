@@ -4,25 +4,31 @@ import {CommonUtils} from "../utils/common-utils";
 import {InternalUtils} from "../utils/internal-utils";
 import {JigsawEditableBox} from "../../component/box/editable-box";
 
-export type ComponentInput = {
-    property: string,
-    type?: string,
-    default?: any,
-    binding?: string
+/**
+ * 组件的输入属性结构化信息
+ */
+export class ComponentInput {
+    property: string;
+    type?: string;
+    default?: any;
+    binding?: string;
 }
 
-export type ComponentMetaData = {
-    [index: string]: any,
-    component: Type<any>,
-    selector: string,
-    inputs?: ComponentInput[],
-    outputs?: any,
-    import?: string
+/**
+ * 组件的元数据信息
+ */
+export class ComponentMetaData {
+    [index: string]: any;
+    component: Type<any>;
+    selector: string;
+    inputs?: ComponentInput[];
+    outputs?: any;
+    import?: string;
 }
 
-export type LayoutComponentInfo = {
-    box: JigsawEditableBox,
-    component: ComponentRef<any> | EmbeddedViewRef<any>
+export class LayoutComponentInfo {
+    box: JigsawEditableBox;
+    component: ComponentRef<any> | EmbeddedViewRef<any>;
 }
 
 export class LayoutData extends GeneralCollection<any> {

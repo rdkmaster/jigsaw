@@ -32,5 +32,8 @@ export class TimeWeekStartComponent implements AfterContentInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawTime.weekStart',
+    ];
 }
 

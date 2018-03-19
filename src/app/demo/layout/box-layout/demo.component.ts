@@ -22,6 +22,14 @@ export class BoxLayoutDemoComponent {
     // ====================================================================
     summary: string = '这个demo展示了如何使用box来布局一个比较复杂的页面';
     description: string = require('!!raw-loader!./readme.md');
+    tags: string[] = [
+        'JigsawBox.direction',
+        'JigsawBox.resizable',
+        'JigsawBox.resizeStart',
+        'JigsawBox.resize',
+        'JigsawBox.width',
+        'JigsawBox.height',
+    ];
 }
 
 

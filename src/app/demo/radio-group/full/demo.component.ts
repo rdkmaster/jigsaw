@@ -65,5 +65,10 @@ export class RadioFullComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawRadioGroup.value',
+        'JigsawRadioGroup.valueChange',
+        'JigsawRadioOption.value',
+    ];
 }
 

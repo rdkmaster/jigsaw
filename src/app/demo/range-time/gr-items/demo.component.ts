@@ -49,5 +49,8 @@ export class RangeTimeGrItemsComponent implements AfterViewInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawRangeTime.grItems',
+    ];
 }
 

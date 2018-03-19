@@ -1,24 +1,46 @@
 import {EventEmitter} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import "rxjs/add/operator/map";
-import {
-    IAjaxComponentData, DataReviser, ComponentDataHelper, HttpClientOptions
-} from "./component-data";
+import {Subscriber} from "rxjs/Subscriber";
+import {ComponentDataHelper, DataReviser, HttpClientOptions, IAjaxComponentData, IEmittable} from "./component-data";
 import {CallbackRemoval} from "../utils/common-utils";
 
-export abstract class AbstractGeneralCollection<T = any> implements IAjaxComponentData {
+export abstract class AbstractGeneralCollection<T = any> implements IAjaxComponentData, IEmittable {
+    /**
+     * 将一个任意类型的数据转为一个当前类型的数据对象。
+     *
+     * @param {T} data 原始数据
+     * @returns {AbstractGeneralCollection<T>} 返回持有输入的原始数据的当前数据对象
+     */
     public abstract fromObject(data: T): AbstractGeneralCollection<T>;
 
+    /**
+     * 调用在`onAjaxSuccess`里注册的所有回调函数。
+     */
     protected abstract ajaxSuccessHandler(data): void;
 
+    /**
+     * 用于发起网络请求，在调用`fromAjax()`之前必须设置好此值。
+     */
     public http: HttpClient;
+
     public dataReviser: DataReviser;
+
+    /**
+     * 与`busy`具有相同功能
+     */
     protected _busy: boolean;
 
     get busy(): boolean {
         return this._busy;
     }
 
+    /**
+     * 安全地调用`dataReviser`函数。
+     *
+     * @param originData
+     * @return {any}
+     */
     protected reviseData(originData: any): any {
         if (!this.dataReviser) {
             return originData;
@@ -42,6 +64,9 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
 
     public fromAjax(url?: string): void;
     public fromAjax(options?: HttpClientOptions): void;
+    /**
+     * @internal
+     */
     public fromAjax(optionsOrUrl?: HttpClientOptions | string): void {
         if (!this.http) {
             console.error('set a valid HttpClient instance to the http attribute before invoking fromAjax()!');
@@ -90,11 +115,17 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
         return this.componentDataHelper.getAjaxCompleteRemoval({fn: callback, context: context});
     }
 
+    /**
+     * 调用在`onAjaxStart`里注册的所有回调函数。
+     */
     protected ajaxStartHandler(): void {
         this._busy = true;
         this.componentDataHelper.invokeAjaxStartCallback();
     }
 
+    /**
+     * 调用在`onAjaxError`里注册的所有回调函数。
+     */
     protected ajaxErrorHandler(error: Response): void {
         if (!error) {
             const reason = 'the data collection is busy now!';
@@ -108,6 +139,9 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
         this.componentDataHelper.invokeAjaxErrorCallback(error);
     }
 
+    /**
+     * 调用在`onAjaxComplete`里注册的所有回调函数。
+     */
     protected ajaxCompleteHandler(): void {
         console.log('get data from paging server complete!!');
         this._busy = false;
@@ -115,6 +149,8 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
     }
 
     public destroy(): void {
+        this._emitter.unsubscribe();
+        this._emitter = null;
         this.componentDataHelper.clearCallbacks();
         this.componentDataHelper = null;
         this.dataReviser = null;
@@ -126,8 +162,8 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
         this._emitter.emit(value);
     }
 
-    public subscribe(generatorOrNext?: any, error?: any, complete?: any): any {
-        return this._emitter.subscribe(generatorOrNext, error, complete);
+    public subscribe(callback?: Function): Subscriber<any> {
+        return this._emitter.subscribe(callback);
     }
 
     public unsubscribe() {

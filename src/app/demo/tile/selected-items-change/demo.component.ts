@@ -24,5 +24,8 @@ export class TileSelecItemsChangeComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawTile.selectedItemsChange',
+    ];
 }
 

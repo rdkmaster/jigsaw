@@ -1,5 +1,6 @@
-import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
 import {HttpHeaders} from "@angular/common/http";
+import {Subscriber} from "rxjs/Subscriber";
+import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
 
 export type DataReviser = (data: any) => any;
 
@@ -55,21 +56,35 @@ export class PreparedHttpClientOptions extends HttpClientOptions {
     }
 }
 
+/**
+ * Jigsaw数据封装对象的最基类
+ */
 export interface IComponentData {
     /**
      * Angular的变化检测机制无法检测到我们对一个对象的某个属性所做的修改，例如我们将一个数组通过输入属性的方式绑定给了一个组件之后，
      * 直接在这个数组中插入一个元素，组件内部是难以获知这个变化的。`refresh()`这个方法就是为了解决这个问题而存在的，
      * 当你更新了数据之后，请务必调用一下这个方法以通知组件及时更新。
+     *
+     * **这是Jigsaw向性能妥协后的产物。**
+     *
+     * 我们都知道，Angular里没有了脏检查了，性能提升了没错，但是Angular开发团队却把问题留给了我们，组件内部只能感知到对象引用的变化，
+     * 而无法感知到对象内部结构的变化。换句话说，应用直接修改复杂对象的内部结构的行为是没有高效的方式可以感知到的。
+     * 因此他们也就无法采用最低廉的方式给Jigsaw发出通知，而Jigsaw在这个情况下也就无法及时更新视图了。
+     *
+     * 那为啥说这是向性能妥协的产物呢？前面我说了，angular是难以感知到对象的内部结构的变化，但是这不意味着angular做不到，
+     * 实际上是能够做到的，通过`DoCheck`这个钩子，可以检测到任何变化，在这个钩子里，通过一些复杂的代码，是可以精确的筛选出这个变化的。
+     * 但是这个事情的性能代价是非常昂贵，在IE11这个搓货上，体验会很差。经过相当长的纠结之后，我们决定放弃自动检测，
+     * 和Angular团队一样，把问题丢给应用，**由应用在修改了对象内部结构后，通过`refresh()`方法来通知Jigsaw更新视图**。
      */
     refresh(): void;
 
     /**
-     * 数据销毁时要做的事情，一般无需直接调用它。
+     * 数据销毁时要做的事情，往往由Jigsaw的各个组件使用，应用一般无需调用此方法。
      */
     destroy(): void;
 
     /**
-     * 注册数据有更新时的处理逻辑，一般无需直接调用它。
+     * 注册数据有更新时的处理逻辑，往往由Jigsaw的各个组件使用，应用一般无需调用此方法。
      */
     onRefresh(callback: (thisData: IComponentData) => void, context?: any): CallbackRemoval;
 }
@@ -79,54 +94,50 @@ export interface IComponentData {
  */
 export interface IAjaxComponentData extends IComponentData {
     /**
-     * 这个属性用于标志当前数据的忙闲状态，为`true`时表示请求正在进行中，为`false`表示数据请求已经结束；
-     * 常常用于界面上的loading状态是否显示或者组件的disabled状态是否激活。
-     * 可参考[这个demo](/jigsaw/data-encapsulation/array-ssp)。
+     * 当前数据对象是否正在进行网络请求，请求过程中值为true，否则为false。
+     * 通常可以使用这个值与组件的disabled属性绑定使用，这样可以方便的实现网络请求过程中组件不可交互的目的。
      *
-     * @type boolean
+     * **注意**：当它的值为true时，此数据对象无法再次发起网络查询，控制台将出现错误打印。
      */
     busy: boolean;
 
     /**
      * 这是一个函数，作用是在数据从服务端请求回来之后，对服务端返回的数据做修正，并返回修正后的数据。
      * 一般用于数据结构的转换或者数据的微调。
-     *
-     * 可参考[这个demo](/jigsaw/data-encapsulation/array-ajax)。
-     *
-     * @type (data: any) => any
      */
     dataReviser: DataReviser;
 
     /**
-     * 使用`options`对应的信息请求一笔数据。
-     *
-     * @param {HttpClientOptions} options
-     */
-    fromAjax(options?: HttpClientOptions): void;
-
-    /**
      * 通过GET的方法请求`url`对应的数据，如果需要通过POST/PUT等方法请求数据，则请提供一个`HttpClientOptions`对象作为入参。
      *
-     * @param {string} url 提供数据的url，提示：参数可以带在url的query域中
+     * @param {string} url 采用GET方法请求这个服务，如果省略，则请求上一次指定的服务。
+     * 提示：可以将参数放到url中带给服务端；如果需要采用POST等其他方法，请提供一个`HttpClientOptions`类型的参数。
      */
     fromAjax(url?: string): void;
 
     /**
+     * 使用`options`对应的信息请求一笔数据。
+     *
+     * @param {HttpClientOptions} options 指定了本次网络请求的各种参数，如果省略，则采用上一次请求所设置的参数。
+     */
+    fromAjax(options?: HttpClientOptions): void;
+
+    /**
      * Ajax请求开始的时候，执行`callback`函数，一般可以在这个函数里触发loading效果。
      *
-     * @param {() => void} callback 回调函数
-     * @param context 回调函数`callback`执行的上下文
-     * @returns {CallbackRemoval} 这是一个函数，调用它后，`callback`则不会再次被触发。
+     * @param {() => void} callback 回调函数，必选
+     * @param context 回调函数`callback`执行的上下文，可选
+     * @returns {CallbackRemoval} 返回一个函数，调用它后，`callback`则不会再次被触发。
      * 如果你注册了这个回调，则请在组件的`ngOnDestroy()`方法中调用一下这个函数，避免内存泄露。
      */
-    onAjaxStart   (callback: () => void, context?: any): CallbackRemoval;
+    onAjaxStart(callback: () => void, context?: any): CallbackRemoval;
 
     /**
      * Ajax请求成功的时候，执行`callback`函数。
      *
      * @param {(data: any) => void} callback 回调函数
      * @param context 回调函数`callback`执行的上下文
-     * @returns {CallbackRemoval} 这是一个函数，调用它后，`callback`则不会再次被触发。
+     * @returns {CallbackRemoval} 返回一个函数，调用它后，`callback`则不会再次被触发。
      * 如果你注册了这个回调，则请在组件的`ngOnDestroy()`方法中调用一下这个函数，避免内存泄露。
      */
     onAjaxSuccess (callback: (data: any) => void, context?: any): CallbackRemoval;
@@ -136,17 +147,17 @@ export interface IAjaxComponentData extends IComponentData {
      *
      * @param {(data: any) => void} callback 回调函数
      * @param context 回调函数`callback`执行的上下文
-     * @returns {CallbackRemoval} 这是一个函数，调用它后，`callback`则不会再次被触发。
+     * @returns {CallbackRemoval} 返回一个函数，调用它后，`callback`则不会再次被触发。
      * 如果你注册了这个回调，则请在组件的`ngOnDestroy()`方法中调用一下这个函数，避免内存泄露。
      */
-    onAjaxError   (callback: (error: Response) => void, context?: any): CallbackRemoval;
+    onAjaxError(callback: (error: Response) => void, context?: any): CallbackRemoval;
 
     /**
      * Ajax请求结束（无论成功还是失败）的时候，执行`callback`函数，一般可以在这个函数里停止loading效果。
      *
      * @param {(data: any) => void} callback 回调函数
      * @param context 回调函数`callback`执行的上下文
-     * @returns {CallbackRemoval} 这是一个函数，调用它后，`callback`则不会再次被触发。
+     * @returns {CallbackRemoval} 返回一个函数，调用它后，`callback`则不会再次被触发。
      * 如果你注册了这个回调，则请在组件的`ngOnDestroy()`方法中调用一下这个函数，避免内存泄露。
      */
     onAjaxComplete(callback: () => void, context?: any): CallbackRemoval;
@@ -173,6 +184,9 @@ export interface IPageable extends IAjaxComponentData {
      */
     changePage(currentPage: number, pageSize?: number): void;
 
+    /**
+     * @param {PagingInfo} info 当前页的结构化信息
+     */
     changePage(info: PagingInfo): void;
 
     /**
@@ -198,7 +212,6 @@ export interface IPageable extends IAjaxComponentData {
 
 /**
  * 描述了服务端分页的更具体的接口，实现了这个接口的类就具备服务端分页的能力。
- *
  */
 export interface IServerSidePageable extends IPageable {
     /**
@@ -214,12 +227,28 @@ export interface IServerSidePageable extends IPageable {
  * 实现了这个接口的类就具备了数据排序的能力，数据排序能力分两种，分别是本地排序和服务端排序，含义和本地分页以及服务端分页类似。
  */
 export interface ISortable extends IAjaxComponentData {
+    /**
+     * 排序信息
+     */
     sortInfo: DataSortInfo;
 
+    /**
+     * 对数据进行排序。
+     *
+     * @param {(a: any[], b: any[]) => number} compareFn 对比函数，此函数需要返回 -1 / 0 / 1，分别表示小于等于和大于
+     */
     sort(compareFn?: (a: any[], b: any[]) => number): void;
 
+    /**
+     * @param {SortAs} as 作为数字/字符串类型来排序
+     * @param {SortOrder} order 排序顺序
+     * @param {string | number} field 对此字段进行排序
+     */
     sort(as: SortAs, order: SortOrder, field: string | number): void;
 
+    /**
+     * @param {DataSortInfo} sort 排序参数的结构化信息
+     */
     sort(sort: DataSortInfo): void;
 }
 
@@ -227,15 +256,37 @@ export interface ISortable extends IAjaxComponentData {
  * 实现了这个接口的类就具备了数据过滤的能力，数据过滤能力分两种，分别是本地过滤和服务端过滤，含义和本地分页以及服务端分页类似。
  */
 export interface IFilterable extends IAjaxComponentData {
+    /**
+     * 过滤信息
+     */
     filterInfo: DataFilterInfo;
 
+    /**
+     * 对数据进行过滤。
+     *
+     * @param {(value: any, index: number, array: any[]) => any} compareFn 实行过滤的函数。
+     * 返回有效值时，该值会被保留，否则该值被丢弃
+     * @param thisArg 执行过滤函数的上下文对象
+     * @returns {any} 返回一个过滤后的新对象，原对象不变
+     */
     filter(compareFn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
 
+    /**
+     * @param {string} term 过滤关键字
+     * @param {(string | number)[]} fields 对这些字段进行过滤
+     */
     filter(term: string, fields?: (string | number)[]): void;
 
+    /**
+     * 过滤参数的结构化信息
+     * @param {DataFilterInfo} term
+     */
     filter(term: DataFilterInfo): void;
 }
 
+/**
+ * 视口数据
+ */
 export class ViewportData {
     width: number;
     height: number;
@@ -251,12 +302,31 @@ export class ViewportData {
  * 具备切片能力的数据，这种数据对象往往数据量非常巨大，并且需要非常高的渲染性能，已知的实现类有`BigTableData`。
  */
 export interface ISlicedData extends IComponentData {
+    /**
+     * 视口数据
+     */
     viewport: ViewportData;
 
+    /**
+     * 将视口中的视图滚动到参数指定的位置
+     *
+     * @param {number} verticalTo 水平位置
+     * @param {number} horizontalTo 垂直位置
+     */
     scroll(verticalTo: number, horizontalTo: number): void;
 
+    /**
+     * 将视口中的视图在垂直方向上滚动到参数指定的位置
+     *
+     * @param {number} scrollTo 垂直位置
+     */
     vScroll(scrollTo: number): void;
 
+    /**
+     * 将视口中的视图在水平方向上滚动到参数指定的位置
+     *
+     * @param {number} scrollTo 水平位置
+     */
     hScroll(scrollTo: number): void;
 }
 
@@ -361,6 +431,9 @@ export class ComponentDataHelper {
     }
 }
 
+/**
+ * 分页信息，是分页参数的结构化信息类
+ */
 export class PagingInfo {
     /**
      * 这个属性指定了统一的在服务端进行分页、排序、过滤的服务的url。
@@ -379,22 +452,84 @@ export class PagingInfo {
     }
 }
 
+/**
+ * 数据过滤信息，是数据过滤参数的结构化信息类
+ */
 export class DataFilterInfo {
     constructor(public key: string = '', public field?: string[] | number[]) {
     }
 }
 
+/**
+ * 表示将数据以何种类型来排序。当被排序的对象是一串数字时，以何种类型对他们进行排序对排序的结果会有较大影响。
+ *
+ * 例如 `2` 和 `11` 这两个数据，在以数字方式降序排序时的顺序是 `2` -> `11`，
+ * 但是以字符串方式降序排序时的顺序是 `11` -> `2`，排序结果截然相反。
+ */
 export enum SortAs {
     string, number
 }
 
+/**
+ * 表示排序顺序，分别是升序、降序、默认序
+ */
 export enum SortOrder {
     asc, desc, default
 }
 
+/**
+ * 数据排序信息，是数据排序参数的结构化信息类
+ */
 export class DataSortInfo {
     constructor(public as: SortAs = SortAs.string,
                 public order: SortOrder | string = SortOrder.asc,
                 public field: string | number) {
     }
+}
+
+/**
+ * 实现了此接口的类都具备事件发送和监听的能力，Jigsaw有类型繁多的组件数据封装类，他们大多都实现了此接口。
+ * 可以利用这些数据类的事件交互能力传递事件，这样可以避免应用自己定义和维护事件发射器，
+ * 从而大大减少你的视图交互逻辑。
+ */
+export interface IEmittable {
+    /**
+     * 通过这个方法来发出一个事件。注意，你需要在此之前先调用`subscribe`方法注册监听器，
+     * 否则此事件可能无法被正确捕获和处理。示例：
+     *
+     * ```
+     * const td = new TableData();
+     * td.subscribe(data => console.log(data));
+     * ...
+     * td.emit('hello event emitter!');
+     * ```
+     *
+     * @param value 此事件所携带的数据
+     */
+    emit(value?: any): void;
+
+    /**
+     * 添加事件处理函数，在执行此函数之后，`emit`函数发出事件时，参数`callback`就会被调用。
+     * 注意请及时清理掉不必要的订阅以提升页面性能。示例：
+     *
+     * ```
+     * const td = new TableData();
+     * const subscriber = td.subscribe(data => console.log(data));
+     * ...
+     * // 注销本次订阅。其他的订阅不受影响
+     * subscriber.unsubscribe();
+     * ...
+     * // 取消所有订阅
+     * td.unsubscribe();
+     * ```
+     *
+     * @param {Function} callback 事件回调函数
+     * @returns {Subscriber<any>} 返回当前订阅的回执，利用它可以取消本次订阅
+     */
+    subscribe(callback?: Function): Subscriber<any>;
+
+    /**
+     * 取消当前对象上的所有订阅，执行它之后，任何事件监听器都将会失效。
+     */
+    unsubscribe();
 }

@@ -19,13 +19,17 @@ export enum NotificationPosition {
     leftTop, leftBottom, rightTop, rightBottom
 }
 
-export type NotificationMessage = {
-    caption?: string, icon?: string,
-    position?: NotificationPosition, timeout?: number,
-    buttons?: ButtonInfo | ButtonInfo[],
-    callback?: DialogCallback, callbackContext?: any,
-    height?: string | number, width?: string | number,
-    innerHtmlContext?: any
+export class NotificationMessage {
+    caption?: string;
+    icon?: string;
+    position?: NotificationPosition;
+    timeout?: number;
+    buttons?: ButtonInfo | ButtonInfo[];
+    callback?: DialogCallback;
+    callbackContext?: any;
+    height?: string | number;
+    width?: string | number;
+    innerHtmlContext?: any;
 }
 
 // all notification instances, put the list here to make it private

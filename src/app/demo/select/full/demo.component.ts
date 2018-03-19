@@ -44,5 +44,8 @@ export class SelectFullComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawSelect',
+    ];
 }
 

@@ -23,5 +23,8 @@ export class InputFocusDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawInput.focus',
+    ];
 }
 

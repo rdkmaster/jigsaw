@@ -13,7 +13,6 @@ export class TreeEventData {
     extraInfo?: object;
 }
 
-
 @Component({
     selector: 'jigsaw-tree-ext, j-tree-ext',
     template: `
@@ -54,6 +53,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
     }
 
     public set data(data: TreeData) {
+        if(!(data instanceof TreeData)) return;
         this._data = data;
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback();

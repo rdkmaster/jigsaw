@@ -1,0 +1,16 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div>
+    <j-button (click)="addRow()">直接插入一行</j-button>
+    <j-button (click)="refresh()">刷新数据</j-button>
+    <span *ngIf="updated" style="color: red">
+        提示：直接插入是无法更新视图的，单击刷新按钮试一下。
+    </span>
+
+    <br><br>
+    <jigsaw-table width="400px" [data]="data"></jigsaw-table>
+</div>

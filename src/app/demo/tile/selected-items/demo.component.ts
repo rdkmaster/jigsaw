@@ -25,5 +25,8 @@ export class TileSelectSelectedItemsComponent implements AfterContentInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawTile.selectedItems',
+    ];
 }
 

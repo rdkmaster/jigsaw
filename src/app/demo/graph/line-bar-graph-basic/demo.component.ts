@@ -43,5 +43,9 @@ export class BasicLineGraphComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'LineBarGraphData',
+        'LineBarGraphDataByRow'
+    ];
 }
 

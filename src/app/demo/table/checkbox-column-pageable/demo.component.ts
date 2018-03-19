@@ -81,5 +81,18 @@ export class TableAddCheckboxColumnPageableDemoComponent {
     // ====================================================================
     summary: string = '这demo介绍table中使用内置checkbox渲染器';
     description: string = require('!!raw-loader!../checkbox-column/readme.md');
+    tags: string[] = [
+        'LocalPageableTableData',
+        'JigsawTable.additionalColumnDefines',
+        'JigsawTable.additionalDataChange',
+        'AdditionalColumnDefine',
+        'AdditionalTableData',
+        'TableHeadCheckboxRenderer',
+        'TableCellCheckboxRenderer',
+        'TableHeader.renderer',
+        'TableCell.renderer',
+        'JigsawPagination',
+        'JigsawTag',
+    ];
 }
 

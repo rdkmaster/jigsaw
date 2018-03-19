@@ -1,17 +1,27 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {AbstractGraphData} from "jigsaw/core/data/graph-data";
 import {EchartOptions} from "jigsaw/core/data/echart-types";
 import {JigsawGraph} from "jigsaw/component/graph/graph";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
     templateUrl: './demo.component.html'
 })
-export class MapGraphComponent implements OnInit {
+export class MapGraphComponent implements AfterViewInit {
     data: AbstractGraphData;
 
-    ngOnInit() {
-        let graphData = new GraphDataDemo();
-        this.data = graphData;
+    constructor(public http: HttpClient) {
+
+    }
+
+    @ViewChild('gisGraph') gisGraph: JigsawGraph;
+
+    ngAfterViewInit() {
+        this.http.get('mock-data/map/china').subscribe(data => {
+            console.log(data);
+            this.gisGraph.registerMap('china', data);
+            this.data = new GraphDataDemo();
+        })
     }
 
     // ====================================================================
@@ -19,6 +29,9 @@ export class MapGraphComponent implements OnInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'AbstractGraphData.createChartOptions',
+    ];
 }
 
 export class GraphDataDemo extends AbstractGraphData {

@@ -20,5 +20,8 @@ export class TableDataFromAjaxDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'TableData',
+    ];
 }
 

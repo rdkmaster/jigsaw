@@ -1,6 +1,9 @@
 import {Directive, OnInit, ViewContainerRef, Input, NgModule, OnDestroy} from "@angular/core";
 import {CommonUtils} from "../core/utils/common-utils";
 
+/**
+ * 方便的定义一个渲染器视图的插槽
+ */
 @Directive({
     selector: '[jigsaw-renderer-host]',
 })
@@ -19,41 +22,52 @@ export interface IDynamicInstantiatable {
     initData: any;
 }
 
+/**
+ * Jigsaw所有的组件都实现这个接口
+ */
 export interface IJigsawComponent {
-    //组件基础样式
+    /**
+     * @internal
+     */
     basicClass: string;
     width: string;
     height: string;
     maxHeight: string;
 }
 
+/**
+ * 一般来说，应用无需关注此类
+ */
 export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
-    protected initialized: boolean = false;
     private _timerCache = [];
 
     /**
-     * 延迟一会在执行一些逻辑，常常用于解决时间差的问题
+     * Angular的`OnInit`钩子是否已经执行过，是则为true，否则为false。
+     * 方便子类判断当前组件的状态。
+     *
+     * @type {boolean}
+     */
+    protected initialized: boolean = false;
+
+    /**
+     * 延迟一会再执行一些逻辑，用法和`setTimeout`一模一样，差别在于更加安全，当组件被销毁了后，
+     * `setTimeout`里已经设置的逻辑依然会被执行，这在某些特定情况下会造成意外，从而造成组件出错。
+     * 使用本方法启动的异步逻辑在组件销毁之后，不再被执行。
      *
      * @param {Function} handler 需要延迟执行的函数
      */
     protected callLater(handler: Function);
     /**
-     * 延迟一会在执行一些逻辑，常常用于解决时间差的问题
-     *
      * @param {Function} handler 需要延迟执行的函数
      * @param {number} timeout 延迟的毫秒数
      */
     protected callLater(handler: Function, timeout: number);
     /**
-     * 延迟一会在执行一些逻辑，常常用于解决时间差的问题
-     *
      * @param {Function} handler 需要延迟执行的函数
      * @param {any} context `handler`函数执行的上下文
      */
     protected callLater(handler: Function, context: any);
     /**
-     * 延迟一会在执行一些逻辑，常常用于解决时间差的问题
-     *
      * @param {Function} handler 需要延迟执行的函数
      * @param context `handler`函数执行的上下文
      * @param {number} timeout 延迟的毫秒数
@@ -93,7 +107,13 @@ export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
     }
 }
 
+/**
+ * 一般来说，应用无需关注此类
+ */
 export abstract class AbstractJigsawComponent extends AbstractJigsawViewBase implements IJigsawComponent {
+    /**
+     * @internal
+     */
     @Input()
     public basicClass: string;
 

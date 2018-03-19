@@ -7,7 +7,7 @@ import {ArrayCollection} from "jigsaw/core/data/array-collection";
     templateUrl: './demo.component.html'
 })
 export class ComboSelectDemoComponent {
-    date = TimeService.getFormatDate('now', TimeGr.date);
+    date = TimeService.getFormatDate('now', TimeGr.second);
     singleTimeComboValue = new ArrayCollection([{
         label: this.date,
         closable: false
@@ -36,5 +36,10 @@ export class ComboSelectDemoComponent {
     // ====================================================================
     summary: string = 'ComboSelect和Time、RangeTime组合使用说明';
     description: string = require('!!raw-loader!./readme.md');
+    tags: string[] = [
+        'JigsawTime.dateChange',
+        'JigsawRangeTime.change',
+        'JigsawComboSelect'
+    ];
 }
 

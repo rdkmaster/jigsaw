@@ -139,8 +139,11 @@ export function _getColumnIndex(data: TableData, additionalData: TableData, fiel
  *
  * $since = v1.1.4
  */
-export type TouchedValue = { key: any | any[], value: any, data: any[] };
-
+export class TouchedValue {
+    key: any | any[];
+    value: any;
+    data: any[];
+}
 export class AdditionalTableData extends TableData {
     /**
      * 这个属性的值与`JigsawTable.trackRowBy`的值是相等的，关于这个属性的作用，
@@ -428,7 +431,7 @@ export class AdditionalTableData extends TableData {
      * $since = v1.1.4
      *
      * @param {string | number} field 需要获取的列名或者列索引
-     * @returns {TouchedValue[]} 所有行的详细信息
+     * @returns {TouchedValue[]} 返回所有行的详细信息
      */
     public getAllTouched(field: string | number): TouchedValue[] {
         const fieldString = this._toFieldString(field);

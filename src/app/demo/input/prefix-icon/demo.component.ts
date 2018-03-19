@@ -17,5 +17,8 @@ export class InputPrefixIconDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawInput',
+    ];
 }
 

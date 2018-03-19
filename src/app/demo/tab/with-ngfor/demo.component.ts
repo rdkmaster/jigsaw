@@ -22,4 +22,7 @@ export class JigsawTabsWithNgForComponent implements OnInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
+    tags: string[] = [
+        'JigsawTab',
+    ];
 }
