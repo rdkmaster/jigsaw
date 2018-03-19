@@ -340,7 +340,6 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     public updateDataSource(optionsOrUrl: HttpClientOptions | string): void {
         this.sourceRequestOptions = typeof optionsOrUrl === 'string' ? {url: optionsOrUrl} : optionsOrUrl;
         this.pagingInfo.currentPage = 1;
-        this.pagingInfo.totalPage = 1;
         this.pagingInfo.totalRecord = 0;
         this.filterInfo = null;
         this.sortInfo = null;
@@ -419,7 +418,6 @@ export class PageableTableData extends TableData implements IServerSidePageable,
             return;
         }
         const paging = data.paging;
-        this.pagingInfo.totalPage = paging.hasOwnProperty('totalPage') ? paging.totalPage : this.pagingInfo.totalPage;
         this.pagingInfo.totalRecord = paging.hasOwnProperty('totalRecord') ? paging.totalRecord : this.pagingInfo.totalRecord;
     }
 
@@ -461,26 +459,24 @@ export class PageableTableData extends TableData implements IServerSidePageable,
      * @internal
      */
     public changePage(currentPage, pageSize?: number): void {
+        let currentPageSelf: number;
         if (currentPage instanceof PagingInfo || CommonUtils.isDefined(pageSize)) {
             const pi: PagingInfo = currentPage instanceof PagingInfo ? currentPage : new PagingInfo(currentPage, pageSize);
             if (pi.pageSize > 0) {
                 this.pagingInfo.pageSize = pi.pageSize;
-                this.pagingInfo.totalPage = Math.ceil(this.pagingInfo.totalRecord / this.pagingInfo.pageSize);
+
             } else {
                 console.error(`invalid pageSize[${pi.pageSize}], it should be greater than 0`);
                 return;
             }
-            if (pi.currentPage >= 1 && pi.currentPage <= this.pagingInfo.totalPage) {
-                this.pagingInfo.currentPage = pi.currentPage;
-            } else {
-                console.error(`invalid currentPage[${pi.currentPage}], it should be between in [1, ${this.pagingInfo.totalPage}]`);
-            }
+            currentPageSelf = pi.currentPage;
         } else {
-            if (currentPage >= 1 && currentPage <= this.pagingInfo.totalPage) {
-                this.pagingInfo.currentPage = currentPage;
-            } else {
-                console.error(`invalid currentPage[${currentPage}], it should be between in [1, ${this.pagingInfo.totalPage}]`);
-            }
+            currentPageSelf = currentPage;
+        }
+        if (currentPageSelf >= 1 && currentPageSelf <= this.pagingInfo.totalPage) {
+            this.pagingInfo.currentPage = currentPageSelf;
+        } else {
+            console.error(`invalid currentPage[${currentPageSelf}], it should be between in [1, ${this.pagingInfo.totalPage}]`);
         }
     }
 
@@ -939,7 +935,6 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
 
     private _updatePagingInfo() {
         this.pagingInfo.totalRecord = this.filteredData.length;
-        this.pagingInfo.totalPage = Math.ceil(this.pagingInfo.totalRecord / this.pagingInfo.pageSize);
     }
 
     /**

@@ -392,13 +392,13 @@ export class PagingInfo {
                 totalRecord: number = 0) {
         this._currentPage = currentPage;
         this._pageSize = pageSize;
-        this.totalPage = totalPage;
+        this._totalPage = totalPage;
         this.totalRecord = totalRecord;
     }
 
     private _currentPage: number = 1;
     private _pageSize: number = 20;
-    public totalPage: number = 1;
+    private _totalPage: number = 1;
     public totalRecord: number = 0;
 
     public get pageSize(): number {
@@ -419,6 +419,10 @@ export class PagingInfo {
         if(isNaN(value) || value < 1 || value > this.totalPage) return;
         this._currentPage = value;
         this.emit();
+    }
+
+    public get totalPage(): number {
+        return this.totalRecord ? Math.ceil(this.totalRecord / this.pageSize) : 1;
     }
 
     private _emitter = new EventEmitter<any>();

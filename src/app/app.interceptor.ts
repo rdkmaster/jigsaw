@@ -110,8 +110,6 @@ class PageableData {
         const pagingInfo: PagingInfo = new PagingInfo();
         pagingInfo.pageSize = this._fixPageSize(req.paging.pageSize);
         pagingInfo.totalRecord = data.length;
-        pagingInfo.totalPage = Math.ceil(pagingInfo.totalRecord / pagingInfo.pageSize);
-        pagingInfo.totalPage = pagingInfo.totalPage == 0 ? 1 : pagingInfo.totalPage;
         pagingInfo.currentPage = this._fixCurrentPage(req.paging.currentPage, pagingInfo);
 
         if (CommonUtils.isDefined(req.paging)) {
