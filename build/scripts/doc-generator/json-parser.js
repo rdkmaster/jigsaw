@@ -31,7 +31,6 @@ if (!docInfo) {
     process.exit(1);
 }
 
-var tags = getDemoTags();
 var processingAPI;
 var unknownTypes = [];
 var apiList = [];
@@ -40,7 +39,7 @@ fs.mkdirSync(`${output}`, 755);
 console.log('processing components / directives...');
 docInfo.components.concat(docInfo.directives).forEach(ci => {
     processingAPI = ci;
-    fixMetaInfo(ci);
+    fixDescription(ci);
     var html = getComponentTemplate();
     html = processCommon(ci, html);
     html = processSelector(ci, html)
@@ -54,7 +53,7 @@ docInfo.components.concat(docInfo.directives).forEach(ci => {
 console.log('processing classes / injectables / interfaces...');
 docInfo.classes.concat(docInfo.injectables).concat(docInfo.interfaces).forEach(ci => {
     processingAPI = ci;
-    fixMetaInfo(ci);
+    fixDescription(ci);
     var html = getClassesTemplate();
     html = processCommon(ci, html);
     html = processProperties(ci, html);
@@ -65,7 +64,7 @@ docInfo.classes.concat(docInfo.injectables).concat(docInfo.interfaces).forEach(c
 console.log('processing typealiases...');
 docInfo.miscellaneous.typealiases.forEach(ci => {
     processingAPI = ci;
-    fixMetaInfo(ci);
+    fixDescription(ci);
     var html = getTypeAliasesTemplate();
     html = html.replace('$title', ci.name);
     html = html.replace('$name', '类型别名：' + ci.name);
@@ -79,7 +78,7 @@ docInfo.miscellaneous.typealiases.forEach(ci => {
 console.log('processing enumerations...');
 docInfo.miscellaneous.enumerations.forEach(ci => {
     processingAPI = ci;
-    fixMetaInfo(ci);
+    fixDescription(ci);
     var html = getTypeEnumTemplate();
     html = html.replace('$name', ci.name);
     html = html.replace('$since', '起始版本：' + (ci.since ? ci.since : 'v1.0.0'));
@@ -121,14 +120,14 @@ function processSelector(ci, html) {
 function processInputs(ci, html) {
     var inputs = [];
     ci.inputsClass.forEach(input => {
-        fixMetaInfo(input);
+        fixDescription(input);
         input.defaultValue = input.defaultValue ? input.defaultValue : '';
         var dualBinding = ci.outputsClass.find(i => i.name == input.name + 'Change') ?
             '<span class="fa fa-retweet" style="margin-left:4px" title="本属性支持双向绑定"></span>' : '';
         var description = input.description + (input.since ? `<p>起始版本：${input.since}</p>` : '');
         inputs.push(`<tr><td>${anchor(input.name)}${input.name}${dualBinding}</td>
             <td>${addTypeLink(input.type)}</td><td>${input.defaultValue}</td>
-            <td>${description}</td><td>${getDemoList(ci.name, input.name)}</td></tr>`);
+            <td>${description}</td><td>${getDemoList(input)}</td></tr>`);
     });
     if (inputs.length == 0) {
         inputs.push(getNoDataRowTemplate());
@@ -139,7 +138,7 @@ function processInputs(ci, html) {
 function processOutputs(ci, html) {
     var outputs = [];
     ci.outputsClass.forEach(output => {
-        fixMetaInfo(output);
+        fixDescription(output);
         output.defaultValue = output.defaultValue ? output.defaultValue : '';
         var match = output.defaultValue.match(/<(.*)>/);
         var type = 'any';
@@ -148,7 +147,7 @@ function processOutputs(ci, html) {
         }
         var description = output.description + (output.since ? `<p>起始版本：${output.since}</p>` : '');
         outputs.push(`<tr><td>${anchor(output.name)}${output.name}</td><td>${addTypeLink(type)}</td>
-            <td>${description}</td><td>${getDemoList(ci.name, output.name)}</td></tr>`);
+            <td>${description}</td><td>${getDemoList(output)}</td></tr>`);
     });
     if (outputs.length == 0) {
         outputs.push(getNoDataRowTemplate());
@@ -213,17 +212,19 @@ function processProperties(ci, html) {
             // 继承过来的，暂时隐藏，参考 https://github.com/rdkmaster/jigsaw/issues/554
             return;
         }
-        fixMetaInfo(property);
+        // 尝试从当前属性描述及其父类、接口中读取描述信息
+        var description = findPropertyWithValidDescription(ci, property.name);
+        property.description = description;
+        fixDescription(property);
+
         property.defaultValue = property.defaultValue ? property.defaultValue : '';
         var readOnly = property.readOnly ?
             '<span style="margin-right:4px;color:#9a14a9;" title="Read Only" class="fa fa-adjust"></span>' : '';
         var modifier = getModifierInfo(property.modifierKind);
-        var description = findPropertyWithValidDescription(ci, property.name);
-        description += (property.since ? `<p>起始版本：${property.since}</p>` : '');
-        description = addDescLink(description);
+        var description = property.description + (property.since ? `<p>起始版本：${property.since}</p>` : '');
         properties.push(`<tr><td style="white-space: nowrap;">
             ${anchor(property.name)}${modifier}${readOnly}${property.name}</td><td>${addTypeLink(property.type)}</td>
-            <td>${description}</td><td>${property.defaultValue}</td><td>${getDemoList(ci.name, property.name)}</td></tr>`);
+            <td>${description}</td><td>${property.defaultValue}</td><td>${getDemoList(property)}</td></tr>`);
     });
     if (properties.length == 0) {
         properties.push(getNoDataRowTemplate());
@@ -241,7 +242,16 @@ function processMethods(ci, html) {
             // 继承过来的，暂时隐藏，参考 https://github.com/rdkmaster/jigsaw/issues/554
             return;
         }
-        fixMetaInfo(method);
+        //如果当前方法没有描述，则往上找他的父类里要描述
+        //先用严格模式找一遍
+        var parentMethod = findMethodWithValidDescription(ci, method.name,
+            m => !!m.description && getArgumentsString(m) == getArgumentsString(method));
+        if (!parentMethod) {
+            //使用非严格模式再找一遍
+            parentMethod = findMethodWithValidDescription(ci, method.name, m => !!m.description);
+        }
+        method.description =  parentMethod ?  parentMethod.description : '';
+        fixDescription(method);
 
         var returns = `<p>返回类型 ${addTypeLink(method.returnType)}</p>`;
         var parentMethod = findMethodWithValidDescription(ci, method.name,
@@ -282,21 +292,20 @@ function processMethods(ci, html) {
         }
 
         var modifier = getModifierInfo(method.modifierKind);
-
-        //如果当前方法没有描述，则往上找他的父类里要描述
-        var parentMethod = findMethodWithValidDescription(ci, method.name, m => !!m.description);
-        var description =  parentMethod ?  parentMethod.description : '';
-        description += (method.since ? `<p>起始版本：${method.since}</p>` : '');
-        description = addDescLink(description);
+        var description = method.description + (method.since ? `<p>起始版本：${method.since}</p>` : '');
 
         methods.push(`
             <tr><td style="white-space: nowrap;">${anchor(method.name)}${modifier}${method.name}</td>
-            <td>${description}</td><td>${returns}</td><td>${args}</td><td>${getDemoList(ci.name, method.name)}</td></tr>`);
+            <td>${description}</td><td>${returns}</td><td>${args}</td><td>${getDemoList(method)}</td></tr>`);
     });
     if (methods.length == 0) {
         methods.push(getNoDataRowTemplate());
     }
     return html.replace('$methods', methods.join(''));
+}
+
+function getArgumentsString(method) {
+    return (method.args || []).map(a => a.name).join();
 }
 
 // 在当前对象以及所有父类、实现的接口中，寻找最近一个包含有效描述信息且名为`methodName`的方法的元信息，
@@ -326,13 +335,20 @@ function findMethodWithValidDescription(type, methodName, condition) {
     }
 }
 
-function fixMetaInfo(metaInfo) {
+function fixDescription(metaInfo) {
     if (!metaInfo.hasOwnProperty('description')) {
         metaInfo.description = '';
     }
     metaInfo.description = metaInfo.description.replace(/\$(\w+)\s*=\s*(.*?)\s*(\n|<\/p>)/g,
         function(found, prop, value, suffix) {
-            metaInfo[prop] = value;
+            var values = metaInfo[prop];
+            if (!metaInfo[prop]) {
+                values = [];
+                metaInfo[prop] = values;
+            }
+            if (values.indexOf(value) == -1) {
+                values.push(value);
+            }
             // remove these messages
             return suffix;
         });
@@ -387,8 +403,20 @@ function addDescLink(desc) {
             var target = url.match(/^https?:/) ? '_blank' : '_self';
             return url ? `<a href="${url}" target="${target}">${found}</a>` : found;
         })
-        .replace(/Jigsaw/g, '<a href="https://github.com/rdkmaster/jigsaw" ' +
-            'title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a>');
+        .replace(/<a\s+href\s*=\s*['"]\$demo\/(.+?)\/(.+?)(#|\?.*?)?['"]/g, (found, comp, demoName, extra) => {
+            var script = getDemoScript(`/${comp}/${demoName}${extra || ''}`);
+            return `<a onclick="${script}"`;
+        })
+        .replace(/([^\ba-zA-z0-9])Jigsaw([^\ba-zA-z0-9])/g, '$1<a href="https://github.com/rdkmaster/jigsaw" ' +
+            'title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a>$2');
+}
+
+function getDemoScript(url) {
+    url = url[0] == '/' ? url : '/' + url;
+    url = '/jigsaw' + url;
+    return `document.getElementById('panel').style.display = 'block';
+            var evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + '${url}') evalator.src = '${url}';`;
 }
 
 function getTypeUrl(type, allowUnknown) {
@@ -438,8 +466,8 @@ function getTypeUrl(type, allowUnknown) {
     }
 
     // try rxjs types
-    if (type == 'Subscription') {
-        return `http://cn.rx.js.org/class/es6/Subscription.js~Subscription.html`;
+    if (type == 'Subscription' || type == 'Subscriber') {
+        return `http://cn.rx.js.org/class/es6/${type}.js~${type}.html`;
     }
 
     // try third party apis
@@ -537,12 +565,13 @@ function isDefined(x) {
     return x !== null && x !== undefined;
 }
 
-function saveFile(type, fileName, content) {
+function saveFile(type, fileName, html) {
     var path = `${output}/${type}`;
     if (!fs.existsSync(path)) {
         fs.mkdirSync(path, 755);
     }
-    fs.writeFileSync(`${path}/${fileName}.html`, content);
+    html += getPanelTemplate();
+    fs.writeFileSync(`${path}/${fileName}.html`, html);
 
     apiList.push({name: fileName, parentName: type});
 }
@@ -555,100 +584,36 @@ function checkUnknownTypes() {
     return false;
 }
 
-function getDemoTags() {
-    var appPath = `${__dirname}/../../../src/app`;
-    var demoStr = fs.readFileSync(`${appPath}/router-config.ts`).toString();
-    var match = demoStr.match(/\[[\s\S]*\]/);
-    if (!match) {
-        console.error('ERROR: can not read demo info, invalid router-config.ts');
-        process.exit(1);
-    }
-    var demosRouters = eval(match[0]);
-    var tags = {};
-    demosRouters.filter(r => !!r.path).forEach(r => {
-        var code = fs.readFileSync(`${appPath}/demo/${r.path}/demo-set.module.ts`).toString();
-        var match = code.match(/routerConfig\s*:?.*?=\s*(\[[\s\S]*?\])\s*;/);
-        if (!match) {
-            console.log('ERROR: can not find routerConfig source, check the following rules:');
-            console.log('1. use "routerConfig" as the router config var name.');
-            console.log('2. terminate the var definition with ";".');
-            process.exit(1);
-        }
-        var childRouterSource = match[1].replace(/component\s*:\s*\w+,?/g, '');
-        var childRouters;
-        try {
-            childRouters = eval('(' + childRouterSource + ')');
-        } catch (e) {
-            console.log('ERROR: unable to compile the router config source: ' + e.message);
-            console.log(match[1]);
-            process.exit(1);
-        }
-        childRouters.filter(cr => !!cr.path).forEach(cr => {
-            var code = fs.readFileSync(`${appPath}/demo/${r.path}/${cr.path}/demo.component.ts`).toString();
-            var tagMatch = code.match(/tags\s*:?.*?=\s*(\[[\s\S]*?\])\s*;/);
-            if (!tagMatch) {
-                console.log(`ERROR: can not find tags info for demo: ${appPath}/demo/${r.path}/${cr.path}`);
-                process.exit(1);
-            }
-            var summaryMatch = code.match(/\bsummary\s*(:.*?)?\s*=\s*['"](.*)['"]/);
-            if (!summaryMatch) {
-                console.log(`ERROR: can not summary info for demo: ${appPath}/demo/${r.path}/${cr.path}`);
-                console.log('hint: the value of summary should write in a single line!');
-                process.exit(1);
-            }
-
-            eval(tagMatch[1]).forEach(t => {
-                // verifyTag(t);
-                if (!tags.hasOwnProperty(t)) {
-                    tags[t] = [];
-                }
-                tags[t].push({
-                    summary: summaryMatch[2], label: cr.path,
-                    url: `/components/${r.path}/demo#${cr.path}`
-                });
-            });
-        });
-    });
-    return tags;
-}
-
-function verifyTag(tag) {
-    var match = tag.match(/^(.*?)\.(.*?)$/);
-    if (match) {
-        var type = match[1];
-        var property = match[2];
-    } else {
-        var type = tag;
-    }
-    var info = findTypeMetaInfo(type);
-    if (!info) {
-        console.log(`ERROR: invalid tag, type not found: ${tag}`);
-        process.exit(1);
-    }
-    if (property && !findPropertyMetaInfo(info, property)) {
-        console.log(`ERROR: invalid tag, property not found: ${tag}`);
-        process.exit(1);
-    }
-}
-
-function getDemoList(type, property) {
-    var key = property ? `${type}.${property}` : type;
-    var demos = tags[key];
-    if (!demos) {
-        return '';
-    }
+function getDemoList(metaInfo) {
+    var demos = metaInfo.demo || [];
     var list = [];
-    demos.forEach(d => {
-        list.push(`<li title="${d.summary}"><a href="${d.url}">${d.label}</a></li>`);
+    demos.forEach(url => {
+        var match = url.match(/^\/?(.+?)\/(.+?)(#|\?.*?)?$/);
+        if (!match) {
+            console.error('ERROR: invalid demo url! url=' + url);
+            process.exit(1);
+        }
+        var comp = match[1], demoName = match[2], extra = match[3] || '';
+        list.push(`<li title="${getDemoSummary(comp, demoName)}"><a onclick="${getDemoScript(url)}">${demoName}</a></li>`);
     });
     return list.length > 0 ? `<ul>${list.join('')}</li></ul>` : '';
 }
 
+function getDemoSummary(comp, demoName) {
+    var demoPath = `${__dirname}/../../../src/app/demo/${comp}/${demoName}/demo.component.ts`;
+    var code = fs.readFileSync(demoPath).toString();
+    var summaryMatch = code.match(/\bsummary\s*(:.*?)?\s*=\s*['"](.*)['"]/);
+    if (!summaryMatch) {
+        console.log(`ERROR: can not summary info for demo: ${comp}/${demoName}`);
+        console.log('hint: the value of summary should write in a single line!');
+        process.exit(1);
+    }
+    return (summaryMatch[2] || '') + '\n单击立即运行示例';
+}
+
 function getDemoListWithHeader(metaInfo) {
-    var type = metaInfo.subtype || metaInfo.type;
-    var title = type == 'typealias' || type == 'enum' ? '相关示例' : '其他示例';
-    var demos = getDemoList(metaInfo.name);
-    return demos ? '<a name="demos"></a><h3>' + title + '</h3>' + demos : '';
+    var demos = getDemoList(metaInfo);
+    return demos ? '<a name="demos"></a><h3>相关示例</h3>' + demos : '';
 }
 
 function isAngularLifeCircle(type) {
@@ -784,4 +749,42 @@ function getNoDataRowTemplate() {
 function anchor(name) {
     // 给这些样式是为了让这个anchor往上顶一点
     return `<a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="${name}">&nbsp;</a>`;
+}
+
+function getPanelTemplate() {
+    return `
+<div id="panel" style="
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            background-color: rgba(0,0,0,0.4);
+            z-index: 10;">
+    <div style="
+            position: absolute;
+            background-color:#fff;
+            border: 0px solid #eee;
+            border-radius:4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+            box-sizing:border-box;
+            height: calc(100vh - 96px);
+            width: calc(100% - 96px);
+            left: 48px;
+            top: 48px;
+            padding: 12px 24px 0 24px">
+        <span style="
+                position: absolute;
+                right: 8px;
+                top: 0;
+                font-size: 23px;
+                cursor: pointer;"
+              onclick="document.getElementById('panel').style.display = 'none';"
+              title="返回">&times;</span>
+        <iframe id="evalator" style="border:0; width:100%; height:100%;">
+        </iframe>
+    </div>
+</div>
+`
 }

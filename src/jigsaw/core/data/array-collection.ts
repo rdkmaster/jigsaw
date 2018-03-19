@@ -22,8 +22,8 @@ import {Subscriber} from "rxjs/Subscriber";
 
 /**
  * we have to implement the `Array<T>` interface due to this breaking change:
- * https://github.com/Microsoft/TypeScript/wiki/FAQ#why-doesnt-extending-built-ins-like-error-array-and-map-work
- * https://github.com/Microsoft/TypeScript/issues/14869
+ * <https://github.com/Microsoft/TypeScript/wiki/FAQ#why-doesnt-extending-built-ins-like-error-array-and-map-work>
+ * <https://github.com/Microsoft/TypeScript/issues/14869>
  */
 export class JigsawArray<T> implements Array<T> {
     private _agent: T[] = [];
@@ -368,6 +368,8 @@ export class JigsawArray<T> implements Array<T> {
 
 /**
  * 这是Jigsaw数据体系中两大分支之一：数组类型的基类。
+ *
+ * 关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
  */
 export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponentData, IEmittable {
     /**
@@ -515,6 +517,12 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
     /**
      * 将一个普通数组对象`source`的所有元素浅拷贝到当前数据对象中。
      *
+     * ```
+     * const ac = new ArrayCollection<number>();
+     * ac.fromArray([1, 2, 3]);
+     * console.log(ac); // [1, 2, 3]
+     * ```
+     *
      * @param {T[]} source 源数据
      * @returns {ArrayCollection<T>} 返回当前数据对象的引用
      */
@@ -596,6 +604,8 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
  * 更多信息请参考`PagingInfo.pagingServerUrl`
  *
  * 实际用法请参考[这个demo]($demo/data-encapsulation/array-ssp)
+ *
+ * 关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
  */
 export class PageableArray extends ArrayCollection<any> implements IServerSidePageable, ISortable, IFilterable {
     public pagingInfo: PagingInfo;
@@ -649,6 +659,11 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         });
     }
 
+    public updateDataSource(options: HttpClientOptions): void
+    public updateDataSource(url: string): void;
+    /**
+     * @internal
+     */
     public updateDataSource(optionsOrUrl: HttpClientOptions | string): void {
         this.sourceRequestOptions = typeof optionsOrUrl === 'string' ? {url: optionsOrUrl} : optionsOrUrl;
         this.pagingInfo.currentPage = 1;
@@ -665,8 +680,10 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
      * @internal
      */
     public fromAjax(optionsOrUrl?: HttpClientOptions | string): void {
-        if (!!optionsOrUrl) {
-            this.updateDataSource(optionsOrUrl);
+        if (optionsOrUrl instanceof HttpClientOptions) {
+            this.updateDataSource(<HttpClientOptions>optionsOrUrl);
+        } else if (!!optionsOrUrl) {
+            this.updateDataSource(<string>optionsOrUrl);
         }
         this._ajax();
     }
@@ -718,10 +735,10 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this.pagingInfo.totalRecord = paging.hasOwnProperty('totalRecord') ? paging.totalRecord : this.pagingInfo.totalRecord;
     }
 
-    protected ajaxSuccessHandler(tableData: any): void {
+    protected ajaxSuccessHandler(data: any): void {
         console.log('get data from paging server success!!');
-        this.fromArray(tableData.toArray());
-        this.componentDataHelper.invokeAjaxSuccessCallback(tableData);
+        this.fromArray(data.toArray());
+        this.componentDataHelper.invokeAjaxSuccessCallback(data);
     }
 
     public filter(callbackfn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
@@ -815,6 +832,8 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
  * 如果你没有统一的服务端分页、过滤、排序服务，则需要使用这个数据对象，并且请求的提供数据的服务需要自行处理分页、过滤、排序等。
  *
  * Jigsaw暂未实现此功能，如有需要，请给我们[提issue](https://github.com/rdkmaster/jigsaw/issues/new)。
+ *
+ * 关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
  */
 export class DirectPageableArray extends PageableArray {
     constructor(public http: HttpClient, public sourceRequestOptions: HttpClientOptions) {
@@ -827,6 +846,8 @@ export class DirectPageableArray extends PageableArray {
  * 在本地分页、排序、过滤的数组。
  *
  * 部分功能未实现，如有需要，请给我们[提issue](https://github.com/rdkmaster/jigsaw/issues/new)。
+ *
+ * 关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
  */
 export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageable {
     public pagingInfo: PagingInfo;
