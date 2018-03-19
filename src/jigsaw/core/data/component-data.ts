@@ -1,6 +1,7 @@
 import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
 import {HttpHeaders} from "@angular/common/http";
 import {Subject} from "rxjs/Subject";
+import {EventEmitter} from "@angular/core";
 
 export type DataReviser = (data: any) => any;
 
@@ -399,16 +400,15 @@ export class PagingInfo {
     private _pageSize: number = 20;
     public totalPage: number = 1;
     public totalRecord: number = 0;
-    public change = new Subject();
 
     public get pageSize(): number {
         return this._pageSize;
     }
 
     public set pageSize(value: number) {
-        if(isNaN(value) || value == this._pageSize) return;
+        if(isNaN(value) || value < 1) return;
         this._pageSize = value;
-        this.change.next();
+        this.emit();
     }
 
     public get currentPage(): number {
@@ -416,18 +416,23 @@ export class PagingInfo {
     }
 
     public set currentPage(value: number) {
-        if(isNaN(value) || value == this._currentPage) return;
+        if(isNaN(value) || value < 1 || value > this.totalPage) return;
         this._currentPage = value;
-        this.change.next();
+        this.emit();
     }
 
-    public toJson() {
-        return {
-            currentPage: this.currentPage,
-            pageSize: this.pageSize,
-            totalPage: this.totalPage,
-            totalRecord: this.totalRecord
-        }
+    private _emitter = new EventEmitter<any>();
+
+    public emit(value?: any): void {
+        this._emitter.emit(value);
+    }
+
+    public subscribe(generatorOrNext?: any, error?: any, complete?: any): any {
+        return this._emitter.debounceTime(300).subscribe(generatorOrNext, error, complete);
+    }
+
+    public unsubscribe() {
+        this._emitter.unsubscribe();
     }
 }
 

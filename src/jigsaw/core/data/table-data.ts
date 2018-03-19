@@ -315,7 +315,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
             this.sortInfo = sort;
             this._ajax();
         });
-        this.pagingInfo.change.debounceTime(300).subscribe(() => {
+        this.pagingInfo.subscribe(() => {
             this._ajax();
         })
     }
@@ -364,7 +364,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     public fromAjax(optionsOrUrl?: HttpClientOptions | string): void {
         if (optionsOrUrl instanceof HttpClientOptions) {
             this.updateDataSource(<HttpClientOptions>optionsOrUrl);
-        } else if(!!optionsOrUrl) {
+        } else if (!!optionsOrUrl) {
             this.updateDataSource(<string>optionsOrUrl);
         }
         this._ajax();
@@ -381,7 +381,12 @@ export class PageableTableData extends TableData implements IServerSidePageable,
 
         const params: any = this._requestOptions.method.toLowerCase() == 'post' ?
             this._requestOptions.body : this._requestOptions.params;
-        params.paging = JSON.stringify(this.pagingInfo.toJson());
+        params.paging = JSON.stringify({
+            currentPage: this.pagingInfo.currentPage,
+            pageSize: this.pagingInfo.pageSize,
+            totalPage: this.pagingInfo.totalPage,
+            totalRecord: this.pagingInfo.totalRecord
+        });
         if (this.filterInfo) {
             params.filter = JSON.stringify(this.filterInfo);
         }
@@ -456,24 +461,26 @@ export class PageableTableData extends TableData implements IServerSidePageable,
      * @internal
      */
     public changePage(currentPage, pageSize?: number): void {
-        pageSize = isNaN(+pageSize) ? this.pagingInfo.pageSize : pageSize;
-        const pi: PagingInfo = currentPage instanceof PagingInfo ? currentPage : new PagingInfo(currentPage, +pageSize);
-        let needRefresh: boolean = false;
-
-        if (pi.currentPage >= 1 && pi.currentPage <= this.pagingInfo.totalPage) {
-            this.pagingInfo.currentPage = pi.currentPage;
-            needRefresh = true;
+        if (currentPage instanceof PagingInfo || CommonUtils.isDefined(pageSize)) {
+            const pi: PagingInfo = currentPage instanceof PagingInfo ? currentPage : new PagingInfo(currentPage, pageSize);
+            if (pi.pageSize > 0) {
+                this.pagingInfo.pageSize = pi.pageSize;
+                this.pagingInfo.totalPage = Math.ceil(this.pagingInfo.totalRecord / this.pagingInfo.pageSize);
+            } else {
+                console.error(`invalid pageSize[${pi.pageSize}], it should be greater than 0`);
+                return;
+            }
+            if (pi.currentPage >= 1 && pi.currentPage <= this.pagingInfo.totalPage) {
+                this.pagingInfo.currentPage = pi.currentPage;
+            } else {
+                console.error(`invalid currentPage[${pi.currentPage}], it should be between in [1, ${this.pagingInfo.totalPage}]`);
+            }
         } else {
-            console.error(`invalid currentPage[${pi.currentPage}], it should be between in [1, ${this.pagingInfo.totalPage}]`);
-        }
-        if (pi.pageSize > 0) {
-            this.pagingInfo.pageSize = pi.pageSize;
-            needRefresh = true;
-        } else {
-            console.error(`invalid pageSize[${pi.pageSize}], it should be greater than 0`);
-        }
-        if (needRefresh) {
-            this.fromAjax();
+            if (currentPage >= 1 && currentPage <= this.pagingInfo.totalPage) {
+                this.pagingInfo.currentPage = currentPage;
+            } else {
+                console.error(`invalid currentPage[${currentPage}], it should be between in [1, ${this.pagingInfo.totalPage}]`);
+            }
         }
     }
 
@@ -513,7 +520,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
 
         this.http = null;
         this.sourceRequestOptions = null;
-        this.pagingInfo.change.unsubscribe();
+        this.pagingInfo.unsubscribe();
         this.pagingInfo = null;
         this._requestOptions = null;
         this._filterSubject.unsubscribe();
@@ -862,7 +869,7 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
     constructor() {
         super();
         this.pagingInfo = new PagingInfo();
-        this.pagingInfo.change.debounceTime(300).subscribe(() => {
+        this.pagingInfo.subscribe(() => {
             if (!this.filteredData) {
                 return;
             }
@@ -954,21 +961,27 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
             return;
         }
 
-        const pi: PagingInfo = currentPage instanceof PagingInfo ? currentPage : new PagingInfo(currentPage, pageSize ? +pageSize : this.pagingInfo.pageSize);
-        if (pi.pageSize <= 0) {
-            console.error(`invalid pageSize[${pi.pageSize}], it should be greater than 0`);
-            return;
-        }
-        this.pagingInfo.pageSize = pi.pageSize;
-        this._updatePagingInfo();
-
-        if (pi.currentPage >= 1 && pi.currentPage <= this.pagingInfo.totalPage) {
-            this.pagingInfo.currentPage = pi.currentPage;
-            this._setDataByPageInfo();
+        let currentPageSelf: number;
+        if (currentPage instanceof PagingInfo || CommonUtils.isDefined(pageSize)) {
+            const pi: PagingInfo = currentPage instanceof PagingInfo ? currentPage : new PagingInfo(currentPage, pageSize);
+            if (pi.pageSize > 0) {
+                this.pagingInfo.pageSize = pi.pageSize;
+                this._updatePagingInfo();
+            } else {
+                console.error(`invalid pageSize[${pi.pageSize}], it should be greater than 0`);
+                return;
+            }
+            currentPageSelf = pi.currentPage;
         } else {
-            this.data.length = 0;
+            this._updatePagingInfo();
+            currentPageSelf = currentPage;
         }
-        this.refresh();
+
+        if (currentPageSelf >= 1 && currentPageSelf <= this.pagingInfo.totalPage) {
+            this.pagingInfo.currentPage = currentPageSelf;
+        } else {
+            console.error(`invalid currentPage[${currentPageSelf}], it should be between in [1, ${this.pagingInfo.totalPage}]`);
+        }
     }
 
     private _setDataByPageInfo() {
@@ -1010,6 +1023,7 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
      */
     public destroy(): void {
         super.destroy();
+        this.pagingInfo.unsubscribe();
         this.pagingInfo = null;
         this.sortInfo = null;
         this.filteredData = null;
