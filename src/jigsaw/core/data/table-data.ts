@@ -58,6 +58,8 @@ export class RawTableData {
 
 /**
  * 表格数据的基类，应用一般无需直接使用这个类。
+ *
+ * 关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
  */
 export class TableDataBase extends AbstractGeneralCollection<any> {
     /**
@@ -226,6 +228,8 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
  * - {@link BigTableData} 适用于海量数据的展示场景，它可以做到在常数时间内展示**任意量级**的数据。
  *
  * 建议尽可能的挑选以上类型的表格数据，以减少定制化的开发工作量。
+ *
+ * 表格数据是Jigsaw数据体系中的一个重要分支，关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
  */
 export class TableData extends TableDataBase implements ISortable, IFilterable {
     /**
@@ -345,6 +349,8 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
  * - {@link PageableTableData} 适用于需要在服务端进行分页、过滤、排序的场景，这是最常用的一个数据对象；
  * - {@link LocalPageableTableData} 适用于需要在浏览器本地进行分页、过滤、排序的场景，受限于数据量，不是很常用；
  * - {@link BigTableData} 适用于海量数据的展示场景，它可以做到在常数时间内展示**任意量级**的数据。
+ *
+ * 表格数据是Jigsaw数据体系中的一个重要分支，关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
  */
 export class PageableTableData extends TableData implements IServerSidePageable, IFilterable, ISortable {
     /**
@@ -749,6 +755,8 @@ export class TableViewportData extends ViewportData {
  * - {@link PageableTableData} 适用于需要在服务端进行分页、过滤、排序的场景，这是最常用的一个数据对象；
  * - {@link LocalPageableTableData} 适用于需要在浏览器本地进行分页、过滤、排序的场景，受限于数据量，不是很常用；
  * - {@link BigTableData} 适用于海量数据的展示场景，它可以做到在常数时间内展示**任意量级**的数据。
+ *
+ * 表格数据是Jigsaw数据体系中的一个重要分支，关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
  */
 export class BigTableData extends PageableTableData implements ISlicedData {
 
@@ -1004,6 +1012,8 @@ export class BigTableData extends PageableTableData implements ISlicedData {
  * - {@link PageableTableData} 适用于需要在服务端进行分页、过滤、排序的场景，这是最常用的一个数据对象；
  * - {@link LocalPageableTableData} 适用于需要在浏览器本地进行分页、过滤、排序的场景，受限于数据量，不是很常用；
  * - {@link BigTableData} 适用于海量数据的展示场景，它可以做到在常数时间内展示**任意量级**的数据。
+ *
+ * 表格数据是Jigsaw数据体系中的一个重要分支，关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
  */
 export class LocalPageableTableData extends TableData implements IPageable, IFilterable, ISortable {
     public pagingInfo: PagingInfo;

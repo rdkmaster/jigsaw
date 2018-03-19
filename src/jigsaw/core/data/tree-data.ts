@@ -2,6 +2,8 @@ import {GeneralCollection} from "./general-collection";
 
 /**
  * 用于处理树状关系的数据，目前只实现了最基础的功能，后续会增加子级数据懒加载等功能。
+ *
+ * 层次关系数据是Jigsaw数据体系中的一个分支，关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
  */
 export class TreeData extends GeneralCollection<any> {
     [index: string]: any;

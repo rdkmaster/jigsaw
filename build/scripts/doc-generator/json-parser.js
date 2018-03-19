@@ -243,8 +243,13 @@ function processMethods(ci, html) {
             return;
         }
         //如果当前方法没有描述，则往上找他的父类里要描述
+        //先用严格模式找一遍
         var parentMethod = findMethodWithValidDescription(ci, method.name,
             m => !!m.description && getArgumentsString(m) == getArgumentsString(method));
+        if (!parentMethod) {
+            //使用非严格模式再找一遍
+            parentMethod = findMethodWithValidDescription(ci, method.name, m => !!m.description);
+        }
         method.description =  parentMethod ?  parentMethod.description : '';
         fixDescription(method);
 
@@ -336,10 +341,14 @@ function fixDescription(metaInfo) {
     }
     metaInfo.description = metaInfo.description.replace(/\$(\w+)\s*=\s*(.*?)\s*(\n|<\/p>)/g,
         function(found, prop, value, suffix) {
+            var values = metaInfo[prop];
             if (!metaInfo[prop]) {
-                metaInfo[prop] = [];
+                values = [];
+                metaInfo[prop] = values;
             }
-            metaInfo[prop].push(value);
+            if (values.indexOf(value) == -1) {
+                values.push(value);
+            }
             // remove these messages
             return suffix;
         });
