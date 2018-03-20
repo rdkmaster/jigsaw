@@ -524,6 +524,13 @@ export class PagingInfo implements IEmittable {
     public unsubscribe() {
         this._emitter.unsubscribe();
     }
+
+    public valueOf() {
+        return {
+            totalRecord: this.totalRecord, currentPage: this.currentPage,
+            pageSize: this.pageSize, totalPage: this.totalPage
+        }
+    }
 }
 
 /**

@@ -461,12 +461,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
 
         const params: any = this._requestOptions.method.toLowerCase() == 'post' ?
             this._requestOptions.body : this._requestOptions.params;
-        params.paging = JSON.stringify({
-            currentPage: this.pagingInfo.currentPage,
-            pageSize: this.pagingInfo.pageSize,
-            totalPage: this.pagingInfo.totalPage,
-            totalRecord: this.pagingInfo.totalRecord
-        });
+        params.paging = JSON.stringify(this.pagingInfo.valueOf());
         if (this.filterInfo) {
             params.filter = JSON.stringify(this.filterInfo);
         }

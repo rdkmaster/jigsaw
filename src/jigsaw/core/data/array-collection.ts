@@ -679,7 +679,7 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this.ajaxStartHandler();
 
         const params: any = this._requestOptions.params;
-        params.paging = JSON.stringify(this.pagingInfo);
+        params.paging = JSON.stringify(this.pagingInfo.valueOf());
         if (this.filterInfo) {
             params.filter = JSON.stringify(this.filterInfo);
         }

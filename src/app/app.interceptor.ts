@@ -120,7 +120,7 @@ class PageableData {
         }
 
         result.data = data;
-        result.paging = pagingInfo;
+        result.paging = pagingInfo.valueOf();
         result.field = dataTable.field;
         result.header = dataTable.header;
         return result;
