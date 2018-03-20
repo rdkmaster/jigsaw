@@ -19,6 +19,7 @@ export class ArrayServerSidePaginationDemoComponent {
             });
         this.pageable.onAjaxSuccess(this.onAjaxSuccess, this);
         this.pageable.onAjaxError(this.onAjaxError, this);
+        this.pageable.pagingInfo.pageSize = 20;
     }
 
     onAjaxSuccess(data): void {

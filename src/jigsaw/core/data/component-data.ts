@@ -1,5 +1,6 @@
 import {HttpHeaders} from "@angular/common/http";
-import {Subscriber} from "rxjs/Subscriber";
+import {EventEmitter} from "@angular/core";
+import {Subscription} from "rxjs/Subscription";
 import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
 
 /**
@@ -11,7 +12,6 @@ export type DataReviser = (data: any) => any;
  * `HttpClient`类的参数结构化信息类，与官方的参数结构完全兼容，这是对Angular的一些补充。
  *
  * $demo = /data-encapsulation/array-ssp
- * $demo = /pagination/with-table-data
  */
 export class HttpClientOptions {
     public url: string;
@@ -27,7 +27,6 @@ export class HttpClientOptions {
      * 这个属性的值（一个json对象）会被当做参数整体传输给服务端。
      *
      * $demo = /data-encapsulation/array-ssp
-     * $demo = /pagination/with-table-data
      */
     public params?: { [key: string]: any | any [] };
     public reportProgress?: boolean;
@@ -554,9 +553,9 @@ export class ComponentDataHelper {
 }
 
 /**
- * 分页信息，是分页参数的结构化信息类
+ * 分页信息，在各个属性发生变化后，可以对外发出通知，参考[这个demo]($demo/pagination/with-page-info)
  */
-export class PagingInfo {
+export class PagingInfo implements IEmittable {
     /**
      * 这个属性指定了统一的在服务端进行分页、排序、过滤的服务的url。
      * - 如果你有自己的实现，则请更改这个属性指向你提供的服务；
@@ -567,10 +566,95 @@ export class PagingInfo {
      */
     public static pagingServerUrl: string = '/rdk/service/app/common/paging';
 
-    constructor(public currentPage: number = 1,
-                public pageSize: number = 20,
-                public totalPage: number = 1,
-                public totalRecord: number = 0) {
+    constructor(currentPage: number = 1,
+                pageSize: number = 20,
+                totalPage: number = 1,
+                totalRecord: number = 0) {
+        this._currentPage = currentPage;
+        this._pageSize = pageSize;
+        this._totalPage = totalPage;
+        this.totalRecord = totalRecord;
+    }
+
+    private _currentPage: number = 1;
+    private _pageSize: number = 20;
+    private _totalPage: number = 1;
+
+    /**
+     * 总记录数
+     * @type {number}
+     */
+    public totalRecord: number = 0;
+
+    /**
+     * 当前单页记录数
+     *
+     * $demo = pagination/with-page-info
+     *
+     * @return {number}
+     */
+    public get pageSize(): number {
+        return this._pageSize;
+    }
+
+    public set pageSize(value: number) {
+        if (isNaN(value) || value < 1) return;
+        this._pageSize = value;
+        this.emit();
+    }
+
+    /**
+     * 当前页索引，从1开始计数。修改此属性后，`PagingInfo`会发出获取对应页数据的事件，通过`subscribe`添加监听器可处理此事件。
+     *
+     * $demo = pagination/with-page-info
+     *
+     * @return {number}
+     */
+    public get currentPage(): number {
+        return this._currentPage;
+    }
+
+    public set currentPage(value: number) {
+        if (isNaN(value) || value < 1 || value > this.totalPage) return;
+        this._currentPage = value;
+        this.emit();
+    }
+
+    /**
+     * 总页数
+     *
+     * $demo = pagination/with-page-info
+     *
+     * @return {number}
+     */
+    public get totalPage(): number {
+        return this.totalRecord ? Math.ceil(this.totalRecord / this.pageSize) : 1;
+    }
+
+    private _emitter = new EventEmitter<any>();
+
+    public emit(value?: any): void {
+        this._emitter.emit(value);
+    }
+
+    public subscribe(callback?: (value:any) => void): Subscription {
+        return this._emitter.debounceTime(300).subscribe(callback);
+    }
+
+    public unsubscribe() {
+        this._emitter.unsubscribe();
+    }
+
+    /**
+     * 获取分页数据的结构化信息
+     *
+     * @return {any} 返回一个JSON对象
+     */
+    public valueOf(): any {
+        return {
+            totalRecord: this.totalRecord, currentPage: this.currentPage,
+            pageSize: this.pageSize, totalPage: this.totalPage
+        }
     }
 }
 
@@ -663,9 +747,9 @@ export interface IEmittable {
      * ```
      *
      * @param {Function} callback 事件回调函数
-     * @returns {Subscriber<any>} 返回当前订阅的回执，利用它可以取消本次订阅
+     * @returns {Subscription} 返回当前订阅的回执，利用它可以取消本次订阅
      */
-    subscribe(callback?: Function): Subscriber<any>;
+    subscribe(callback?: (value:any) => void): Subscription;
 
     /**
      * 取消当前对象上的所有订阅，执行它之后，任何事件监听器都将会失效。
