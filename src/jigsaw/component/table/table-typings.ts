@@ -323,13 +323,10 @@ export class AdditionalTableData extends TableData {
      */
     public getTouchedValue(field: string | number, key: any | any[]): any;
     /**
-     * $deprecatedFrom = v1.1.4
-     * $replacement = getTouchedValueByRow()
-     *
      * @deprecated
      *
      * @param {string | number} field
-     * @param {number} row
+     * @param {number} row 按行索引取值的重载**已经被废弃**，请使用`getTouchedValueByRow()`替代。
      * @returns {any}
      */
     public getTouchedValue(field: string | number, row: number): any;
