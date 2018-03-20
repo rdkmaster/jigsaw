@@ -233,19 +233,20 @@ function processProperties(ci, html) {
 }
 
 function processConstractor(ci, html) {
-    if(ci.constructorObj&&ci.type=='class'){
-        html = html.replace('$constractor', `<h3>构造函数 / Methods</h3>
+    if (ci.constructorObj && ci.type == 'class') {
+        html = html.replace('$constractor', `<h3>构造函数 / Constractor</h3>
         <p>${ci.constructorObj.description}</p>
         <p>输入参数</p>
         <ul>
          $parameters
         </ul>`);
         var parameters = [];
-        ci.constructorObj.args.forEach((parameterObj)=>{
-            parameters.push(`<li><span style="white-space: nowrap;">${parameterObj.name}: <a>${addTypeLink(parameterObj.type)}</a></span>${parameterObj.description?parameterObj.description:''}</li>`)
+        ci.constructorObj.args.forEach(parameterObj => {
+            parameters.push(`<li><span style="white-space: nowrap;">${parameterObj.name}: <a>${addTypeLink(parameterObj.type)}</a>
+                </span>${parameterObj.description ? parameterObj.description : ''}</li>`)
         });
-        html = html.replace('$parameters',parameters.join(''));
-    }else{
+        html = html.replace('$parameters', parameters.join(''));
+    } else {
         html = html.replace('$constractor','');
     }
     return html;
@@ -749,8 +750,6 @@ $description
     <tbody>$properties</tbody>
 </table>
 
-$constractor
-
 <a name="methods"></a>
 <h3>方法 / Methods</h3>
 <table style="width:100%">
@@ -759,6 +758,8 @@ $constractor
     </thead>
     <tbody>$methods</tbody>
 </table>
+
+$constractor
 
 $demos
 
