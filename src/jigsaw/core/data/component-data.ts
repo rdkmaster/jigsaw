@@ -525,7 +525,12 @@ export class PagingInfo implements IEmittable {
         this._emitter.unsubscribe();
     }
 
-    public valueOf() {
+    /**
+     * 获取分页数据的结构化信息
+     *
+     * @return {any} 返回一个JSON对象
+     */
+    public valueOf(): any {
         return {
             totalRecord: this.totalRecord, currentPage: this.currentPage,
             pageSize: this.pageSize, totalPage: this.totalPage
