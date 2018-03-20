@@ -128,8 +128,8 @@ function processInputs(ci, html) {
         var dualBinding = ci.outputsClass.find(i => i.name == input.name + 'Change') ?
             '<span class="fa fa-retweet" style="margin-left:4px" title="本属性支持双向绑定"></span>' : '';
         var description = input.description + (input.since ? `<p>起始版本：${input.since}</p>` : '');
-        inputs.push(`<tr><td>${anchor(input.name)}${input.name}${dualBinding}</td>
-            <td>${addTypeLink(input.type)}</td><td>${input.defaultValue}</td>
+        var inputName = input.deprecatedFrom ? `${anchor(input.name)}${deprecated(input.name, input)}${dualBinding}` : `${anchor(input.name)}${input.name}${dualBinding}`;
+        inputs.push(`<tr><td>${inputName}</td><td>${addTypeLink(input.type)}</td><td>${input.defaultValue}</td>
             <td>${description}</td><td>${getDemoList(input)}</td></tr>`);
     });
     if (inputs.length == 0) {
@@ -149,7 +149,8 @@ function processOutputs(ci, html) {
             type = match[1];
         }
         var description = output.description + (output.since ? `<p>起始版本：${output.since}</p>` : '');
-        outputs.push(`<tr><td>${anchor(output.name)}${output.name}</td><td>${addTypeLink(type)}</td>
+        var outputName = output.deprecatedFrom ? `${anchor(output.name)}${deprecated(output.name, output)}` : `${anchor(output.name)}${output.name}`;
+        outputs.push(`<tr><td>${outputName}</td><td>${addTypeLink(type)}</td>
             <td>${description}</td><td>${getDemoList(output)}</td></tr>`);
     });
     if (outputs.length == 0) {
@@ -172,7 +173,7 @@ function mergeProperties(ci) {
             var desc = info.getSignature && info.getSignature.description ? info.getSignature.description : '';
             desc += info.setSignature && info.setSignature.description ? info.setSignature.description : '';
             var type = info.getSignature ? (info.getSignature.returnType || info.getSignature.type) :
-                                            info.setSignature ? info.setSignature.args[0].type : '';
+                info.setSignature ? info.setSignature.args[0].type : '';
             propertiesClass.push({
                 name: info.name, description: desc, type: type,
                 readOnly: info.hasOwnProperty('setSignature') ? false : true
@@ -225,9 +226,9 @@ function processProperties(ci, html) {
             '<span style="margin-right:4px;color:#9a14a9;" title="Read Only" class="fa fa-adjust"></span>' : '';
         var modifier = getModifierInfo(property.modifierKind);
         var description = property.description + (property.since ? `<p>起始版本：${property.since}</p>` : '');
-        properties.push(`<tr><td style="white-space: nowrap;">
-            ${anchor(property.name)}${modifier}${readOnly}${property.name}</td><td>${addTypeLink(property.type)}</td>
-            <td>${description}</td><td>${property.defaultValue}</td><td>${getDemoList(property)}</td></tr>`);
+        var propertyName = property.deprecatedFrom ? `${anchor(property.name)}${modifier}${readOnly}${deprecated(property.name, property)}` : `${anchor(property.name)}${modifier}${readOnly}${property.name}`;
+        properties.push(`<tr><td style="white-space: nowrap;">${propertyName}</td>
+            <td>${addTypeLink(property.type)}</td><td>${description}</td><td>${property.defaultValue}</td><td>${getDemoList(property)}</td></tr>`);
     });
     if (properties.length == 0) {
         properties.push(getNoDataRowTemplate());
@@ -254,7 +255,7 @@ function processConstractor(ci, html) {
         });
         html = html.replace('$parameters', parameters.join(''));
     } else {
-        html = html.replace('$constractor','');
+        html = html.replace('$constractor', '');
     }
     return html;
 }
@@ -277,7 +278,7 @@ function processMethods(ci, html) {
             //使用非严格模式再找一遍
             parentMethod = findMethodWithValidDescription(ci, method.name, m => !!m.description);
         }
-        method.description =  parentMethod ?  parentMethod.description : '';
+        method.description = parentMethod ? parentMethod.description : '';
         fixDescription(method);
 
         var returns = `<p>返回类型 ${addTypeLink(method.returnType)}</p>`;
@@ -320,7 +321,7 @@ function processMethods(ci, html) {
 
         var modifier = getModifierInfo(method.modifierKind);
         var description = method.description + (method.since ? `<p>起始版本：${method.since}</p>` : '');
-        var methodName = method.deprecatedFrom?`${deprecated(method.name,method.deprecatedFrom,method.replacement)}`:`${anchor(method.name)}${modifier}${method.name}`;
+        var methodName = method.deprecatedFrom ? `${anchor(method.name)}${modifier}${deprecated(method.name, method)}` : `${anchor(method.name)}${modifier}${method.name}`;
 
         methods.push(`
             <tr><td style="white-space: nowrap;">${methodName}</td>
@@ -368,7 +369,7 @@ function fixDescription(metaInfo) {
         metaInfo.description = '';
     }
     metaInfo.description = metaInfo.description.replace(/\$(\w+)\s*=\s*(.*?)\s*(\n|<\/p>)/g,
-        function(found, prop, value, suffix) {
+        function (found, prop, value, suffix) {
             var values = metaInfo[prop];
             if (!metaInfo[prop]) {
                 values = [];
@@ -608,28 +609,32 @@ function saveFile(type, fileName, html) {
 function getFooter(name) {
     var info = findTypeMetaInfo(name);
     var type = '';
-    switch(info.subtype || info.type) {
+    switch (info.subtype || info.type) {
         case 'component':
         case 'directive':
         case 'injectable':
         case 'class':
-            type = 'class'; break;
+            type = 'class';
+            break;
         case 'interface':
-            type = 'interface'; break;
+            type = 'interface';
+            break;
         case 'typealias':
-            type = 'type'; break;
+            type = 'type';
+            break;
         case 'enum':
-            type = 'enum'; break;
+            type = 'enum';
+            break;
     }
     var reg = new RegExp('^\\s*export\\s+(abstract\\s+)?' + type + '\\s+' + name + '\\b');
     var source = info.sourceCode || fs.readFileSync(`${__dirname}/../../../${info.file}`).toString();
     var idx = source.split(/\r?\n/g).findIndex(line => line.match(reg));
-    var hash = idx != -1 ? '#L' + (idx+1) : '';
+    var hash = idx != -1 ? '#L' + (idx + 1) : '';
     var url = `https://github.com/rdkmaster/jigsaw/blob/master/${info.file}${hash}`;
     return getFooterTemplate()
-           .replace('$editThisDoc', url)
-           .replace('$wechatSubscription', getOpenPopupScript('doc/wechat-public-subscription.html'))
-           .replace('$wechatGroup', getOpenPopupScript('doc/wechat-group.html'));
+        .replace('$editThisDoc', url)
+        .replace('$wechatSubscription', getOpenPopupScript('doc/wechat-public-subscription.html'))
+        .replace('$wechatGroup', getOpenPopupScript('doc/wechat-group.html'));
 }
 
 function checkUnknownTypes() {
@@ -809,9 +814,9 @@ function anchor(name) {
     return `<a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="${name}">&nbsp;</a>`;
 }
 
-function deprecated(name,metaInfo) {
+function deprecated(name, metaInfo) {
     // 给文字弃用的样式和相应的description提示
-    return `${anchor(name)}${getModifierInfo(metaInfo.modifierKind)}<span title="${metaInfo.deprecatedFrom}版本开始废弃,替代api或者解决办法：${metaInfo.replacement}" style="color: #888;text-decoration: line-through">${name}</span><span class="fa fa-exclamation-triangle" style="color:#ffa500"></span>
+    return `<span title="${metaInfo.deprecatedFrom}版本开始废弃,替代api或者解决办法：${metaInfo.replacement}" style="color: #888;text-decoration: line-through">${name}</span><span class="fa fa-exclamation-triangle" style="color:#ffa500"></span>
 `;
 }
 
