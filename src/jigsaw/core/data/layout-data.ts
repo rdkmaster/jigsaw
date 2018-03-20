@@ -31,6 +31,11 @@ export class LayoutComponentInfo {
     component: ComponentRef<any> | EmbeddedViewRef<any>;
 }
 
+/**
+ * 用于动态布局页面的数据。
+ *
+ * 布局数据是Jigsaw数据体系中的一个分支，关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
+ */
 export class LayoutData extends GeneralCollection<any> {
     [index: string]: any;
     direction?: string;

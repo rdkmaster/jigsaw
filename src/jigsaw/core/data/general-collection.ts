@@ -5,9 +5,14 @@ import {Subscription} from "rxjs/Subscription";
 import {ComponentDataHelper, DataReviser, HttpClientOptions, IAjaxComponentData, IEmittable} from "./component-data";
 import {CallbackRemoval} from "../utils/common-utils";
 
+/**
+ * 关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
+ */
 export abstract class AbstractGeneralCollection<T = any> implements IAjaxComponentData, IEmittable {
     /**
      * 将一个任意类型的数据转为一个当前类型的数据对象。
+     *
+     * $demo = tree/basic
      *
      * @param {T} data 原始数据
      * @returns {AbstractGeneralCollection<T>} 返回持有输入的原始数据的当前数据对象
@@ -16,6 +21,8 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
 
     /**
      * 调用在`onAjaxSuccess`里注册的所有回调函数。
+     *
+     * @param {any} data 服务端返回的数据
      */
     protected abstract ajaxSuccessHandler(data): void;
 
@@ -173,6 +180,8 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
 
 /**
  * 这是Jigsaw数据体系中两大分支之一：通用的key-value（即JSON对象）的集合类型的基类。
+ *
+ * 关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
  */
 export class GeneralCollection<T> extends AbstractGeneralCollection<T> {
     [index: string]: any;
