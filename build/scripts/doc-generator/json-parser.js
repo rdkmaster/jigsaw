@@ -128,7 +128,7 @@ function processInputs(ci, html) {
         var dualBinding = ci.outputsClass.find(i => i.name == input.name + 'Change') ?
             '<span class="fa fa-retweet" style="margin-left:4px" title="本属性支持双向绑定"></span>' : '';
         var description = input.description + (input.since ? `<p>起始版本：${input.since}</p>` : '');
-        var inputName = input.deprecatedFrom ? `${anchor(input.name)}${deprecated(input.name, input)}${dualBinding}` : `${anchor(input.name)}${input.name}${dualBinding}`;
+        var inputName = `${anchor(input.name)}${dualBinding}${getRichName(input)}`
         inputs.push(`<tr><td>${inputName}</td><td>${addTypeLink(input.type)}</td><td>${input.defaultValue}</td>
             <td>${description}</td><td>${getDemoList(input)}</td></tr>`);
     });
@@ -149,7 +149,7 @@ function processOutputs(ci, html) {
             type = match[1];
         }
         var description = output.description + (output.since ? `<p>起始版本：${output.since}</p>` : '');
-        var outputName = output.deprecatedFrom ? `${anchor(output.name)}${deprecated(output.name, output)}` : `${anchor(output.name)}${output.name}`;
+        var outputName = ${anchor(output.name)}${getRichName(output.name)}
         outputs.push(`<tr><td>${outputName}</td><td>${addTypeLink(type)}</td>
             <td>${description}</td><td>${getDemoList(output)}</td></tr>`);
     });
@@ -226,9 +226,9 @@ function processProperties(ci, html) {
             '<span style="margin-right:4px;color:#9a14a9;" title="Read Only" class="fa fa-adjust"></span>' : '';
         var modifier = getModifierInfo(property.modifierKind);
         var description = property.description + (property.since ? `<p>起始版本：${property.since}</p>` : '');
-        var propertyName = property.deprecatedFrom ? `${anchor(property.name)}${modifier}${readOnly}${deprecated(property.name, property)}` : `${anchor(property.name)}${modifier}${readOnly}${property.name}`;
-        properties.push(`<tr><td style="white-space: nowrap;">${propertyName}</td>
-            <td>${addTypeLink(property.type)}</td><td>${description}</td><td>${property.defaultValue}</td><td>${getDemoList(property)}</td></tr>`);
+        var propertyName = `${anchor(property.name)}${modifier}${readOnly}${getRichName(property)}`;
+        properties.push(`<tr><td style="white-space: nowrap;">${propertyName}</td><td>${addTypeLink(property.type)}</td>
+            <td>${description}</td><td>${property.defaultValue}</td><td>${getDemoList(property)}</td></tr>`);
     });
     if (properties.length == 0) {
         properties.push(getNoDataRowTemplate());
@@ -251,7 +251,7 @@ function processConstractor(ci, html) {
             }
             var description = param.comment ? addDescLink(param.comment) : '';
             parameters.push(`<li><span style="white-space: nowrap;">${param.name.text || param.name}:
-                <a>${addTypeLink(param.type)}</a></span>${description}</li>`)
+                            <a>${addTypeLink(param.type)}</a></span>${description}</li>`)
         });
         html = html.replace('$parameters', parameters.join(''));
     } else {
@@ -321,11 +321,10 @@ function processMethods(ci, html) {
 
         var modifier = getModifierInfo(method.modifierKind);
         var description = method.description + (method.since ? `<p>起始版本：${method.since}</p>` : '');
-        var methodName = method.deprecatedFrom ? `${anchor(method.name)}${modifier}${deprecated(method.name, method)}` : `${anchor(method.name)}${modifier}${method.name}`;
+        var methodName = `${anchor(method.name)}${modifier}${getRichName(method)}`;
 
-        methods.push(`
-            <tr><td style="white-space: nowrap;">${methodName}</td>
-            <td>${description}</td><td>${returns}</td><td>${args}</td><td>${getDemoList(method)}</td></tr>`);
+        methods.push(`<tr><td style="white-space: nowrap;">${methodName}</td><td>${description}</td>
+                    <td>${returns}</td><td>${args}</td><td>${getDemoList(method)}</td></tr>`);
     });
     if (methods.length == 0) {
         methods.push(getNoDataRowTemplate());
@@ -814,10 +813,22 @@ function anchor(name) {
     return `<a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="${name}">&nbsp;</a>`;
 }
 
-function deprecated(name, metaInfo) {
-    // 给文字弃用的样式和相应的description提示
-    return `<span title="${metaInfo.deprecatedFrom}版本开始废弃,替代api或者解决办法：${metaInfo.replacement}" style="color: #888;text-decoration: line-through">${name}</span><span class="fa fa-exclamation-triangle" style="color:#ffa500"></span>
-`;
+// 有必要的话给文字弃用的样式和相应的提示
+function getRichName(metaInfo) {
+    if (metaInfo.deprecatedFrom) {
+        return getDeprecatedTemplate()
+                .replace('$version', metaInfo.$deprecatedFrom)
+                .replace('$replacement', metaInfo.$replacement)
+                .replace('$name', metaInfo.name);
+    } else {
+        return metaInfo.name;
+    }
+}
+
+function getDeprecatedTemplate() {
+    return `<span title="此api从版本 $version 开始被废弃，替代api或者解决办法：\n$replacement"
+                style="color: #888;text-decoration: line-through">$name</span>
+            <span class="fa fa-exclamation-triangle" style="color:#ffa500"></span>`;
 }
 
 function getPanelTemplate() {
