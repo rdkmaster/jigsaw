@@ -24,7 +24,7 @@ $flex-prefix-cls: #{$jigsaw-prefix}-flex;
             left: 2px dashed transparent;
             top: none;
         }
-        z-index: 101;
+        z-index: $zindex-ui-level-1;
         &:hover, &.#{$box-prefix-cls}-resizing {
             cursor: e-resize;
             border-left-color: $text-color;
