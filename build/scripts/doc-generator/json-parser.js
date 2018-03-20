@@ -91,6 +91,8 @@ docInfo.miscellaneous.enumerations.forEach(ci => {
 });
 
 fs.writeFileSync(`${output}/list`, JSON.stringify(apiList));
+fs.writeFileSync(`${workDir}/wechat-group.html`, fs.readFileSync(`${__dirname}/wechat-group.html`));
+fs.writeFileSync(`${workDir}/wechat-public-subscription.html`, fs.readFileSync(`${__dirname}/wechat-public-subscription.html`));
 if (!checkUnknownTypes()) {
     process.exit(1);
 }
@@ -404,14 +406,14 @@ function addDescLink(desc) {
             return url ? `<a href="${url}" target="${target}">${found}</a>` : found;
         })
         .replace(/<a\s+href\s*=\s*['"]\$demo\/(.+?)\/(.+?)(#|\?.*?)?['"]/g, (found, comp, demoName, extra) => {
-            var script = getDemoScript(`/${comp}/${demoName}${extra || ''}`);
+            var script = getOpenPopupScript(`/${comp}/${demoName}${extra || ''}`);
             return `<a onclick="${script}"`;
         })
         .replace(/([^\ba-zA-z0-9])Jigsaw([^\ba-zA-z0-9])/g, '$1<a href="https://github.com/rdkmaster/jigsaw" ' +
             'title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a>$2');
 }
 
-function getDemoScript(url) {
+function getOpenPopupScript(url) {
     url = url[0] == '/' ? url : '/' + url;
     url = '/jigsaw' + url;
     return `document.getElementById('panel').style.display = 'block';
@@ -598,7 +600,10 @@ function getFooter(name) {
     var idx = source.split(/\r?\n/g).findIndex(line => line.match(reg));
     var hash = idx != -1 ? '#L' + (idx+1) : '';
     var url = `https://github.com/rdkmaster/jigsaw/blob/master/${info.file}${hash}`;
-    return getFooterTemplate().replace('$editThisDoc', url);
+    return getFooterTemplate()
+           .replace('$editThisDoc', url)
+           .replace('$wechatSubscription', getOpenPopupScript('doc/wechat-public-subscription.html'))
+           .replace('$wechatGroup', getOpenPopupScript('doc/wechat-group.html'));
 }
 
 function checkUnknownTypes() {
@@ -619,7 +624,7 @@ function getDemoList(metaInfo) {
             process.exit(1);
         }
         var comp = match[1], demoName = match[2], extra = match[3] || '';
-        list.push(`<li title="${getDemoSummary(comp, demoName)}"><a onclick="${getDemoScript(url)}">${demoName}</a></li>`);
+        list.push(`<li title="${getDemoSummary(comp, demoName)}"><a onclick="${getOpenPopupScript(url)}">${demoName}</a></li>`);
     });
     return list.length > 0 ? `<ul>${list.join('')}</li></ul>` : '';
 }
@@ -778,37 +783,11 @@ function anchor(name) {
 
 function getPanelTemplate() {
     return `
-<div id="panel" style="
-            display: none;
-            width: 100%;
-            height: 100%;
-            position: fixed;
-            left: 0px;
-            top: 0px;
-            background-color: rgba(0,0,0,0.4);
-            z-index: 10;">
-    <div style="
-            position: absolute;
-            background-color:#fff;
-            border: 0px solid #eee;
-            border-radius:4px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
-            box-sizing:border-box;
-            height: calc(100vh - 96px);
-            width: calc(100% - 96px);
-            left: 48px;
-            top: 48px;
-            padding: 12px 24px 0 24px">
-        <span style="
-                position: absolute;
-                right: 8px;
-                top: 0;
-                font-size: 23px;
-                cursor: pointer;"
-              onclick="document.getElementById('panel').style.display = 'none';"
-              title="返回">&times;</span>
-        <iframe id="evalator" style="border:0; width:100%; height:100%;">
-        </iframe>
+<div id="panel" class="api-panel">
+    <div class="box">
+        <span class="close" title="返回"
+              onclick="document.getElementById('panel').style.display = 'none';">&times;</span>
+        <iframe id="evalator"></iframe>
     </div>
 </div>
 `
@@ -816,20 +795,11 @@ function getPanelTemplate() {
 
 function getFooterTemplate() {
     return `
-<div style="
-        display: flex;
-        flex-wrap: wrap;
-        align-items: baseline;
-        justify-content: space-around;
-        background-color: #fafafa;
-        border-radius: 8px;
-        height: calc(100vh - 140px);
-        width: 100%;
-        padding-top: 100px;
-        margin: 100px 0 24px 0;>
-    <div style="flex: 0 1 auto">
+<a name="footer"></a>
+<div class="api-footer-wrapper">
+    <div class="col">
         <h3>资源</h3>
-        <ul style="list-style: none; padding: 16px;">
+        <ul>
             <li><a href="https://zhuanlan.zhihu.com/jigsaw" target="_blank">知乎专栏</a></li>
             <li><a href="https://github.com/rdkmaster/j-lunker"
                     target="_blank" title="属于你自己的在线代码运行服务器">J-lunker</a></li>
@@ -837,34 +807,35 @@ function getFooterTemplate() {
                     title="Jigsaw应用的种子工程，请让它到处生根发芽吧！">Jigsaw Seed</a></li>
             <li><a href="https://github.com/rdkmaster/jigsaw-tourist" target="_blank"
                     title="一个简单示例工程，新手宝典">Jigsaw Tourist</a></li>
-            <hr style="border-bottom: solid 1px #bbb; margin: 10px -30px 10px -20px;">
 
-            <li><a href="http://ngfans.net" target="_blank">Angular开发者</a></li>
-            <li><a href="#" target="_blank">微信公众号</a></li>
-            <hr style="border-bottom: solid 1px #bbb; margin: 10px -30px 10px -20px;">
+            <li class="splitter"><a href="http://ngfans.net" target="_blank">Angular开发者</a></li>
+            <li><a onclick="$wechatSubscription" title="及时了解Jigsaw的动态、技术分享。">Jigsaw微信公众号</a></li>
 
-            <li><a href="https://angular.cn" target="_blank">Angular中文</a></li>
+            <li class="splitter"><a href="https://angular.cn" target="_blank">Angular中文</a></li>
             <li><a href="https://angular.io" target="_blank">Angular官网</a></li>
             <li><a href="https://blog.angular.io" target="_blank">Angular官博</a></li>
         </ul>
     </div>
-    <div style="flex: 0 1 auto">
+    <div class="col">
         <h3>社区</h3>
-        <ul style="list-style: none; padding: 16px;">
+        <ul>
             <li><a href="https://github.com/rdkmaster/jigsaw" target="_blank"
-                title="请跳过去随手帮忙点个星星，越多的星星可以吸引越多的人加入我们">Jigsaw的代码</a></li>
-            <li><a href="https://github.com/rdkmaster/jigsaw/issues/new" target="_blank">报告BUG、提需求</a></li>
+                title="请跳过去随手帮忙点个星星，越多的星星可以吸引越多的人加入我们">代码托管 / Github</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw/issues/new" target="_blank">报告BUG / 提需求</a></li>
             <li><a href="$editThisDoc" target="_blank"
                 title="在GitHub上直接编辑这篇文档以帮助我们改进它">改进这篇文档</a></li>
-            <li><a href="https://github.com/rdkmaster/jigsaw/issues/new" target="_blank">报告BUG、提需求</a></li>
+            <li class="splitter"><a href="https://github.com/rdkmaster/rdk" target="_blank">RDK服务端</a></li>
+            <li><a href="http://10.9.233.68:9953/webgis/default/index.html" target="_blank"
+                title="仅限中兴内部访问">Web GIS</a></li>
         </ul>
     </div>
-    <div style="flex: 0 1 auto">
+    <div class="col">
         <h3>帮助</h3>
-        <ul style="list-style: none; padding: 16px;">
-            <li><a href="http://ngfans.net" target="_blank">在线提问、寻求帮助</a></li>
-            <li><a href="#" target="_blank">Jigsaw微信群提问</a></li>
+        <ul>
+            <li><a href="http://ngfans.net" target="_blank">在线提问 / 寻求帮助</a></li>
+            <li><a onclick="$wechatGroup" title="和我们的开发者/使用者面对面交流">Jigsaw微信群提问</a></li>
             <li><a href="mailto:chen.xu8@zte.com.cn" target="_blank">直接联系我们</a></li>
+            <li class="splitter"><a href="/components/quickstart/norm" target="_self">零基础起航</a></li>
         </ul>
     </div>
 </div>
