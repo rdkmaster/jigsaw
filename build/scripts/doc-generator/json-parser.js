@@ -244,9 +244,13 @@ function processConstractor(ci, html) {
          $parameters
         </ul>`);
         var parameters = [];
-        ci.constructorObj.args.forEach(parameterObj => {
-            parameters.push(`<li><span style="white-space: nowrap;">${parameterObj.name}: <a>${addTypeLink(parameterObj.type)}</a>
-                </span>${parameterObj.description ? parameterObj.description : ''}</li>`)
+        (ci.constructorObj.jsdoctags || []).forEach(param => {
+            if (param.tagName.text != 'param') {
+                return;
+            }
+            var description = param.comment ? addDescLink(param.comment) : '';
+            parameters.push(`<li><span style="white-space: nowrap;">${param.name.text || param.name}:
+                <a>${addTypeLink(param.type)}</a></span>${description}</li>`)
         });
         html = html.replace('$parameters', parameters.join(''));
     } else {
@@ -832,7 +836,7 @@ function getFooterTemplate() {
                     title="一个简单示例工程，新手宝典">Jigsaw Tourist</a></li>
 
             <li class="splitter"><a href="http://ngfans.net" target="_blank">Angular开发者</a></li>
-            <li><a onclick="$wechatSubscription" title="及时了解Jigsaw的动态、技术分享。">Jigsaw微信公众号</a></li>
+            <li><a onclick="$wechatSubscription" title="及时了解Jigsaw的动态、新特性、技术分享">Jigsaw微信公众号</a></li>
 
             <li class="splitter"><a href="https://angular.cn" target="_blank">Angular中文</a></li>
             <li><a href="https://angular.io" target="_blank">Angular官网</a></li>
