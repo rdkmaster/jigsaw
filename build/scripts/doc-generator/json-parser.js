@@ -320,9 +320,10 @@ function processMethods(ci, html) {
 
         var modifier = getModifierInfo(method.modifierKind);
         var description = method.description + (method.since ? `<p>起始版本：${method.since}</p>` : '');
+        var methodName = method.deprecatedFrom?`${deprecated(method.name,method.deprecatedFrom,method.replacement)}`:`${anchor(method.name)}${modifier}${method.name}`;
 
         methods.push(`
-            <tr><td style="white-space: nowrap;">${anchor(method.name)}${modifier}${method.name}</td>
+            <tr><td style="white-space: nowrap;">${methodName}</td>
             <td>${description}</td><td>${returns}</td><td>${args}</td><td>${getDemoList(method)}</td></tr>`);
     });
     if (methods.length == 0) {
@@ -806,6 +807,12 @@ function getNoDataRowTemplate() {
 function anchor(name) {
     // 给这些样式是为了让这个anchor往上顶一点
     return `<a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="${name}">&nbsp;</a>`;
+}
+
+function deprecated(name,metaInfo) {
+    // 给文字弃用的样式和相应的description提示
+    return `${anchor(name)}${getModifierInfo(metaInfo.modifierKind)}<span title="${metaInfo.deprecatedFrom}版本开始废弃,替代api或者解决办法：${metaInfo.replacement}" style="color: #888;text-decoration: line-through">${name}</span><span class="fa fa-exclamation-triangle" style="color:#ffa500"></span>
+`;
 }
 
 function getPanelTemplate() {
