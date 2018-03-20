@@ -1,5 +1,14 @@
 export class DragDropInfo {
-    constructor(public event: DragEvent, public element: HTMLElement) {
+    public event: DragEvent;
+    public element: HTMLElement;
+
+    /**
+     * @param {DragEvent} event 参考`event`的说明
+     * @param {HTMLElement} element 参考`element`的说明
+     */
+    constructor(event: DragEvent, element: HTMLElement) {
+        this.event = event;
+        this.element = element;
     }
 
     public get dragDropData(): any {
