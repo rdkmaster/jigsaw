@@ -31,7 +31,6 @@ if (!docInfo) {
     process.exit(1);
 }
 
-var tags = getDemoTags();
 var processingAPI;
 var unknownTypes = [];
 var apiList = [];
@@ -40,7 +39,7 @@ fs.mkdirSync(`${output}`, 755);
 console.log('processing components / directives...');
 docInfo.components.concat(docInfo.directives).forEach(ci => {
     processingAPI = ci;
-    fixMetaInfo(ci);
+    fixDescription(ci);
     var html = getComponentTemplate();
     html = processCommon(ci, html);
     html = processSelector(ci, html)
@@ -54,7 +53,7 @@ docInfo.components.concat(docInfo.directives).forEach(ci => {
 console.log('processing classes / injectables / interfaces...');
 docInfo.classes.concat(docInfo.injectables).concat(docInfo.interfaces).forEach(ci => {
     processingAPI = ci;
-    fixMetaInfo(ci);
+    fixDescription(ci);
     var html = getClassesTemplate();
     html = processCommon(ci, html);
     html = processProperties(ci, html);
@@ -66,7 +65,7 @@ docInfo.classes.concat(docInfo.injectables).concat(docInfo.interfaces).forEach(c
 console.log('processing typealiases...');
 docInfo.miscellaneous.typealiases.forEach(ci => {
     processingAPI = ci;
-    fixMetaInfo(ci);
+    fixDescription(ci);
     var html = getTypeAliasesTemplate();
     html = html.replace('$title', ci.name);
     html = html.replace('$name', '类型别名：' + ci.name);
@@ -80,7 +79,7 @@ docInfo.miscellaneous.typealiases.forEach(ci => {
 console.log('processing enumerations...');
 docInfo.miscellaneous.enumerations.forEach(ci => {
     processingAPI = ci;
-    fixMetaInfo(ci);
+    fixDescription(ci);
     var html = getTypeEnumTemplate();
     html = html.replace('$name', ci.name);
     html = html.replace('$since', '起始版本：' + (ci.since ? ci.since : 'v1.0.0'));
@@ -93,6 +92,8 @@ docInfo.miscellaneous.enumerations.forEach(ci => {
 });
 
 fs.writeFileSync(`${output}/list`, JSON.stringify(apiList));
+fs.writeFileSync(`${workDir}/wechat-group.html`, fs.readFileSync(`${__dirname}/wechat-group.html`));
+fs.writeFileSync(`${workDir}/wechat-public-subscription.html`, fs.readFileSync(`${__dirname}/wechat-public-subscription.html`));
 if (!checkUnknownTypes()) {
     process.exit(1);
 }
@@ -122,14 +123,14 @@ function processSelector(ci, html) {
 function processInputs(ci, html) {
     var inputs = [];
     ci.inputsClass.forEach(input => {
-        fixMetaInfo(input);
+        fixDescription(input);
         input.defaultValue = input.defaultValue ? input.defaultValue : '';
         var dualBinding = ci.outputsClass.find(i => i.name == input.name + 'Change') ?
             '<span class="fa fa-retweet" style="margin-left:4px" title="本属性支持双向绑定"></span>' : '';
         var description = input.description + (input.since ? `<p>起始版本：${input.since}</p>` : '');
         inputs.push(`<tr><td>${anchor(input.name)}${input.name}${dualBinding}</td>
             <td>${addTypeLink(input.type)}</td><td>${input.defaultValue}</td>
-            <td>${description}</td><td>${getDemoList(ci.name, input.name)}</td></tr>`);
+            <td>${description}</td><td>${getDemoList(input)}</td></tr>`);
     });
     if (inputs.length == 0) {
         inputs.push(getNoDataRowTemplate());
@@ -140,7 +141,7 @@ function processInputs(ci, html) {
 function processOutputs(ci, html) {
     var outputs = [];
     ci.outputsClass.forEach(output => {
-        fixMetaInfo(output);
+        fixDescription(output);
         output.defaultValue = output.defaultValue ? output.defaultValue : '';
         var match = output.defaultValue.match(/<(.*)>/);
         var type = 'any';
@@ -149,7 +150,7 @@ function processOutputs(ci, html) {
         }
         var description = output.description + (output.since ? `<p>起始版本：${output.since}</p>` : '');
         outputs.push(`<tr><td>${anchor(output.name)}${output.name}</td><td>${addTypeLink(type)}</td>
-            <td>${description}</td><td>${getDemoList(ci.name, output.name)}</td></tr>`);
+            <td>${description}</td><td>${getDemoList(output)}</td></tr>`);
     });
     if (outputs.length == 0) {
         outputs.push(getNoDataRowTemplate());
@@ -214,17 +215,19 @@ function processProperties(ci, html) {
             // 继承过来的，暂时隐藏，参考 https://github.com/rdkmaster/jigsaw/issues/554
             return;
         }
-        fixMetaInfo(property);
+        // 尝试从当前属性描述及其父类、接口中读取描述信息
+        var description = findPropertyWithValidDescription(ci, property.name);
+        property.description = description;
+        fixDescription(property);
+
         property.defaultValue = property.defaultValue ? property.defaultValue : '';
         var readOnly = property.readOnly ?
             '<span style="margin-right:4px;color:#9a14a9;" title="Read Only" class="fa fa-adjust"></span>' : '';
         var modifier = getModifierInfo(property.modifierKind);
-        var description = findPropertyWithValidDescription(ci, property.name);
-        description += (property.since ? `<p>起始版本：${property.since}</p>` : '');
-        description = addDescLink(description);
+        var description = property.description + (property.since ? `<p>起始版本：${property.since}</p>` : '');
         properties.push(`<tr><td style="white-space: nowrap;">
             ${anchor(property.name)}${modifier}${readOnly}${property.name}</td><td>${addTypeLink(property.type)}</td>
-            <td>${description}</td><td>${property.defaultValue}</td><td>${getDemoList(ci.name, property.name)}</td></tr>`);
+            <td>${description}</td><td>${property.defaultValue}</td><td>${getDemoList(property)}</td></tr>`);
     });
     if (properties.length == 0) {
         properties.push(getNoDataRowTemplate());
@@ -262,7 +265,16 @@ function processMethods(ci, html) {
             // 继承过来的，暂时隐藏，参考 https://github.com/rdkmaster/jigsaw/issues/554
             return;
         }
-        fixMetaInfo(method);
+        //如果当前方法没有描述，则往上找他的父类里要描述
+        //先用严格模式找一遍
+        var parentMethod = findMethodWithValidDescription(ci, method.name,
+            m => !!m.description && getArgumentsString(m) == getArgumentsString(method));
+        if (!parentMethod) {
+            //使用非严格模式再找一遍
+            parentMethod = findMethodWithValidDescription(ci, method.name, m => !!m.description);
+        }
+        method.description =  parentMethod ?  parentMethod.description : '';
+        fixDescription(method);
 
         var returns = `<p>返回类型 ${addTypeLink(method.returnType)}</p>`;
         var parentMethod = findMethodWithValidDescription(ci, method.name,
@@ -303,21 +315,20 @@ function processMethods(ci, html) {
         }
 
         var modifier = getModifierInfo(method.modifierKind);
-
-        //如果当前方法没有描述，则往上找他的父类里要描述
-        var parentMethod = findMethodWithValidDescription(ci, method.name, m => !!m.description);
-        var description = parentMethod ? parentMethod.description : '';
-        description += (method.since ? `<p>起始版本：${method.since}</p>` : '');
-        description = addDescLink(description);
+        var description = method.description + (method.since ? `<p>起始版本：${method.since}</p>` : '');
 
         methods.push(`
             <tr><td style="white-space: nowrap;">${anchor(method.name)}${modifier}${method.name}</td>
-            <td>${description}</td><td>${returns}</td><td>${args}</td><td>${getDemoList(ci.name, method.name)}</td></tr>`);
+            <td>${description}</td><td>${returns}</td><td>${args}</td><td>${getDemoList(method)}</td></tr>`);
     });
     if (methods.length == 0) {
         methods.push(getNoDataRowTemplate());
     }
     return html.replace('$methods', methods.join(''));
+}
+
+function getArgumentsString(method) {
+    return (method.args || []).map(a => a.name).join();
 }
 
 // 在当前对象以及所有父类、实现的接口中，寻找最近一个包含有效描述信息且名为`methodName`的方法的元信息，
@@ -347,13 +358,20 @@ function findMethodWithValidDescription(type, methodName, condition) {
     }
 }
 
-function fixMetaInfo(metaInfo) {
+function fixDescription(metaInfo) {
     if (!metaInfo.hasOwnProperty('description')) {
         metaInfo.description = '';
     }
     metaInfo.description = metaInfo.description.replace(/\$(\w+)\s*=\s*(.*?)\s*(\n|<\/p>)/g,
-        function (found, prop, value, suffix) {
-            metaInfo[prop] = value;
+        function(found, prop, value, suffix) {
+            var values = metaInfo[prop];
+            if (!metaInfo[prop]) {
+                values = [];
+                metaInfo[prop] = values;
+            }
+            if (values.indexOf(value) == -1) {
+                values.push(value);
+            }
             // remove these messages
             return suffix;
         });
@@ -408,8 +426,20 @@ function addDescLink(desc) {
             var target = url.match(/^https?:/) ? '_blank' : '_self';
             return url ? `<a href="${url}" target="${target}">${found}</a>` : found;
         })
-        .replace(/Jigsaw/g, '<a href="https://github.com/rdkmaster/jigsaw" ' +
-            'title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a>');
+        .replace(/<a\s+href\s*=\s*['"]\$demo\/(.+?)\/(.+?)(#|\?.*?)?['"]/g, (found, comp, demoName, extra) => {
+            var script = getOpenPopupScript(`/${comp}/${demoName}${extra || ''}`);
+            return `<a onclick="${script}"`;
+        })
+        .replace(/([^\ba-zA-z0-9])Jigsaw([^\ba-zA-z0-9])/g, '$1<a href="https://github.com/rdkmaster/jigsaw" ' +
+            'title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a>$2');
+}
+
+function getOpenPopupScript(url) {
+    url = url[0] == '/' ? url : '/' + url;
+    url = '/jigsaw' + url;
+    return `document.getElementById('panel').style.display = 'block';
+            var evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + '${url}') evalator.src = '${url}';`;
 }
 
 function getTypeUrl(type, allowUnknown) {
@@ -459,8 +489,8 @@ function getTypeUrl(type, allowUnknown) {
     }
 
     // try rxjs types
-    if (type == 'Subscription') {
-        return `http://cn.rx.js.org/class/es6/Subscription.js~Subscription.html`;
+    if (type == 'Subscription' || type == 'Subscriber') {
+        return `http://cn.rx.js.org/class/es6/${type}.js~${type}.html`;
     }
 
     // try third party apis
@@ -558,14 +588,43 @@ function isDefined(x) {
     return x !== null && x !== undefined;
 }
 
-function saveFile(type, fileName, content) {
+function saveFile(type, fileName, html) {
     var path = `${output}/${type}`;
     if (!fs.existsSync(path)) {
         fs.mkdirSync(path, 755);
     }
-    fs.writeFileSync(`${path}/${fileName}.html`, content);
+    html += getPanelTemplate();
+    html += getFooter(fileName);
+    fs.writeFileSync(`${path}/${fileName}.html`, html);
 
     apiList.push({name: fileName, parentName: type});
+}
+
+function getFooter(name) {
+    var info = findTypeMetaInfo(name);
+    var type = '';
+    switch(info.subtype || info.type) {
+        case 'component':
+        case 'directive':
+        case 'injectable':
+        case 'class':
+            type = 'class'; break;
+        case 'interface':
+            type = 'interface'; break;
+        case 'typealias':
+            type = 'type'; break;
+        case 'enum':
+            type = 'enum'; break;
+    }
+    var reg = new RegExp('^\\s*export\\s+(abstract\\s+)?' + type + '\\s+' + name + '\\b');
+    var source = info.sourceCode || fs.readFileSync(`${__dirname}/../../../${info.file}`).toString();
+    var idx = source.split(/\r?\n/g).findIndex(line => line.match(reg));
+    var hash = idx != -1 ? '#L' + (idx+1) : '';
+    var url = `https://github.com/rdkmaster/jigsaw/blob/master/${info.file}${hash}`;
+    return getFooterTemplate()
+           .replace('$editThisDoc', url)
+           .replace('$wechatSubscription', getOpenPopupScript('doc/wechat-public-subscription.html'))
+           .replace('$wechatGroup', getOpenPopupScript('doc/wechat-group.html'));
 }
 
 function checkUnknownTypes() {
@@ -576,100 +635,36 @@ function checkUnknownTypes() {
     return false;
 }
 
-function getDemoTags() {
-    var appPath = `${__dirname}/../../../src/app`;
-    var demoStr = fs.readFileSync(`${appPath}/router-config.ts`).toString();
-    var match = demoStr.match(/\[[\s\S]*\]/);
-    if (!match) {
-        console.error('ERROR: can not read demo info, invalid router-config.ts');
-        process.exit(1);
-    }
-    var demosRouters = eval(match[0]);
-    var tags = {};
-    demosRouters.filter(r => !!r.path).forEach(r => {
-        var code = fs.readFileSync(`${appPath}/demo/${r.path}/demo-set.module.ts`).toString();
-        var match = code.match(/routerConfig\s*:?.*?=\s*(\[[\s\S]*?\])\s*;/);
-        if (!match) {
-            console.log('ERROR: can not find routerConfig source, check the following rules:');
-            console.log('1. use "routerConfig" as the router config var name.');
-            console.log('2. terminate the var definition with ";".');
-            process.exit(1);
-        }
-        var childRouterSource = match[1].replace(/component\s*:\s*\w+,?/g, '');
-        var childRouters;
-        try {
-            childRouters = eval('(' + childRouterSource + ')');
-        } catch (e) {
-            console.log('ERROR: unable to compile the router config source: ' + e.message);
-            console.log(match[1]);
-            process.exit(1);
-        }
-        childRouters.filter(cr => !!cr.path).forEach(cr => {
-            var code = fs.readFileSync(`${appPath}/demo/${r.path}/${cr.path}/demo.component.ts`).toString();
-            var tagMatch = code.match(/tags\s*:?.*?=\s*(\[[\s\S]*?\])\s*;/);
-            if (!tagMatch) {
-                console.log(`ERROR: can not find tags info for demo: ${appPath}/demo/${r.path}/${cr.path}`);
-                process.exit(1);
-            }
-            var summaryMatch = code.match(/\bsummary\s*(:.*?)?\s*=\s*['"](.*)['"]/);
-            if (!summaryMatch) {
-                console.log(`ERROR: can not summary info for demo: ${appPath}/demo/${r.path}/${cr.path}`);
-                console.log('hint: the value of summary should write in a single line!');
-                process.exit(1);
-            }
-
-            eval(tagMatch[1]).forEach(t => {
-                // verifyTag(t);
-                if (!tags.hasOwnProperty(t)) {
-                    tags[t] = [];
-                }
-                tags[t].push({
-                    summary: summaryMatch[2], label: cr.path,
-                    url: `/components/${r.path}/demo#${cr.path}`
-                });
-            });
-        });
-    });
-    return tags;
-}
-
-function verifyTag(tag) {
-    var match = tag.match(/^(.*?)\.(.*?)$/);
-    if (match) {
-        var type = match[1];
-        var property = match[2];
-    } else {
-        var type = tag;
-    }
-    var info = findTypeMetaInfo(type);
-    if (!info) {
-        console.log(`ERROR: invalid tag, type not found: ${tag}`);
-        process.exit(1);
-    }
-    if (property && !findPropertyMetaInfo(info, property)) {
-        console.log(`ERROR: invalid tag, property not found: ${tag}`);
-        process.exit(1);
-    }
-}
-
-function getDemoList(type, property) {
-    var key = property ? `${type}.${property}` : type;
-    var demos = tags[key];
-    if (!demos) {
-        return '';
-    }
+function getDemoList(metaInfo) {
+    var demos = metaInfo.demo || [];
     var list = [];
-    demos.forEach(d => {
-        list.push(`<li title="${d.summary}"><a href="${d.url}">${d.label}</a></li>`);
+    demos.forEach(url => {
+        var match = url.match(/^\/?(.+?)\/(.+?)(#|\?.*?)?$/);
+        if (!match) {
+            console.error('ERROR: invalid demo url! url=' + url);
+            process.exit(1);
+        }
+        var comp = match[1], demoName = match[2], extra = match[3] || '';
+        list.push(`<li title="${getDemoSummary(comp, demoName)}"><a onclick="${getOpenPopupScript(url)}">${demoName}</a></li>`);
     });
     return list.length > 0 ? `<ul>${list.join('')}</li></ul>` : '';
 }
 
+function getDemoSummary(comp, demoName) {
+    var demoPath = `${__dirname}/../../../src/app/demo/${comp}/${demoName}/demo.component.ts`;
+    var code = fs.readFileSync(demoPath).toString();
+    var summaryMatch = code.match(/\bsummary\s*(:.*?)?\s*=\s*['"](.*)['"]/);
+    if (!summaryMatch) {
+        console.log(`ERROR: can not summary info for demo: ${comp}/${demoName}`);
+        console.log('hint: the value of summary should write in a single line!');
+        process.exit(1);
+    }
+    return (summaryMatch[2] || '') + '\n单击立即运行示例';
+}
+
 function getDemoListWithHeader(metaInfo) {
-    var type = metaInfo.subtype || metaInfo.type;
-    var title = type == 'typealias' || type == 'enum' ? '相关示例' : '其他示例';
-    var demos = getDemoList(metaInfo.name);
-    return demos ? '<a name="demos"></a><h3>' + title + '</h3>' + demos : '';
+    var demos = getDemoList(metaInfo);
+    return demos ? '<a name="demos"></a><h3>相关示例</h3>' + demos : '';
 }
 
 function isAngularLifeCircle(type) {
@@ -807,4 +802,65 @@ function getNoDataRowTemplate() {
 function anchor(name) {
     // 给这些样式是为了让这个anchor往上顶一点
     return `<a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="${name}">&nbsp;</a>`;
+}
+
+function getPanelTemplate() {
+    return `
+<div id="panel" class="api-panel">
+    <div class="box">
+        <span class="close" title="返回"
+              onclick="document.getElementById('panel').style.display = 'none';">&times;</span>
+        <iframe id="evalator"></iframe>
+    </div>
+</div>
+`
+}
+
+function getFooterTemplate() {
+    return `
+<a name="footer"></a>
+<div class="api-footer-wrapper">
+    <div class="col">
+        <h3>资源</h3>
+        <ul>
+            <li><a href="https://zhuanlan.zhihu.com/jigsaw" target="_blank">知乎专栏</a></li>
+            <li><a href="https://github.com/rdkmaster/j-lunker"
+                    target="_blank" title="属于你自己的在线代码运行服务器">J-lunker</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw-seed" target="_blank"
+                    title="Jigsaw应用的种子工程，请让它到处生根发芽吧！">Jigsaw Seed</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw-tourist" target="_blank"
+                    title="一个简单示例工程，新手宝典">Jigsaw Tourist</a></li>
+
+            <li class="splitter"><a href="http://ngfans.net" target="_blank">Angular开发者</a></li>
+            <li><a onclick="$wechatSubscription" title="及时了解Jigsaw的动态、技术分享。">Jigsaw微信公众号</a></li>
+
+            <li class="splitter"><a href="https://angular.cn" target="_blank">Angular中文</a></li>
+            <li><a href="https://angular.io" target="_blank">Angular官网</a></li>
+            <li><a href="https://blog.angular.io" target="_blank">Angular官博</a></li>
+        </ul>
+    </div>
+    <div class="col">
+        <h3>社区</h3>
+        <ul>
+            <li><a href="https://github.com/rdkmaster/jigsaw" target="_blank"
+                title="请跳过去随手帮忙点个星星，越多的星星可以吸引越多的人加入我们">代码托管 / Github</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw/issues/new" target="_blank">报告BUG / 提需求</a></li>
+            <li><a href="$editThisDoc" target="_blank"
+                title="在GitHub上直接编辑这篇文档以帮助我们改进它">改进这篇文档</a></li>
+            <li class="splitter"><a href="https://github.com/rdkmaster/rdk" target="_blank">RDK服务端</a></li>
+            <li><a href="http://10.9.233.68:9953/webgis/default/index.html" target="_blank"
+                title="仅限中兴内部访问">Web GIS</a></li>
+        </ul>
+    </div>
+    <div class="col">
+        <h3>帮助</h3>
+        <ul>
+            <li><a href="http://ngfans.net" target="_blank">在线提问 / 寻求帮助</a></li>
+            <li><a onclick="$wechatGroup" title="和我们的开发者/使用者面对面交流">Jigsaw微信群提问</a></li>
+            <li><a href="mailto:chen.xu8@zte.com.cn" target="_blank">直接联系我们</a></li>
+            <li class="splitter"><a href="/components/quickstart/norm" target="_self">零基础起航</a></li>
+        </ul>
+    </div>
+</div>
+`
 }
