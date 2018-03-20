@@ -1,0 +1,36 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-combo-select [(value)]="rangeTimeComboValue" openTrigger="click" closeTrigger="click">
+    <ng-template>
+        <jigsaw-range-time [(beginDate)]="beginDate"
+                           [(endDate)]="endDate"
+                           (change)="handleRangeDateChange()">
+        </jigsaw-range-time>
+    </ng-template>
+</jigsaw-combo-select>
+<j-button (click)="popupTemplateDialog(tpDialog1)">popup dialog</j-button>
+
+<ng-template #tpDialog1>
+    <jigsaw-dialog width="50%" (close)="onAnswer()">
+        <div jigsaw-title>
+            <span class="fa fa-thumbs-up"></span>定义在template中的对话框
+        </div>
+        <div jigsaw-body style="padding: 10px;height: 300px">
+            <jigsaw-combo-select [(value)]="singleTimeComboValue" width="150px" openTrigger="click" closeTrigger="click">
+                <ng-template>
+                    <jigsaw-time [(date)]="date" (dateChange)="handleDateChange($event)">
+                    </jigsaw-time>
+                </ng-template>
+            </jigsaw-combo-select>
+            <j-button (click)="popupAlert()">popup alert</j-button>
+        </div>
+        <div jigsaw-button-bar>
+            <jigsaw-button colorType="primary" (click)="onAnswer('OK')">OK</jigsaw-button>
+            <jigsaw-button (click)="onAnswer('Cancel')">Cancel</jigsaw-button>
+        </div>
+    </jigsaw-dialog>
+</ng-template>
