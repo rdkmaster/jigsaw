@@ -1,17 +1,17 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {ServerSidePagingDemoModule} from "./with-table-data/demo.module";
+import {WithPagingInfoDemoModule} from "./with-page-info/demo.module";
 import {PaginationBasicDemoModule} from "./basic/demo.module";
 
 import {PaginationBasicDemoComponent} from "./basic/demo.component";
-import {ServerSidePagingDemoComponent} from "./with-table-data/demo.component";
+import {WithPagingInfoDemoComponent} from "./with-page-info/demo.component";
 
 export const routerConfig = [
     {
         path: 'basic', component: PaginationBasicDemoComponent
     },
     {
-        path: 'with-table-data', component: ServerSidePagingDemoComponent
+        path: 'with-page-info', component: WithPagingInfoDemoComponent
     },
 ];
 
@@ -19,7 +19,7 @@ export const routerConfig = [
     imports: [
         RouterModule.forChild(routerConfig),
         PaginationBasicDemoModule,
-        ServerSidePagingDemoModule
+        WithPagingInfoDemoModule
     ]
 })
 export class PaginationDemoModule { }

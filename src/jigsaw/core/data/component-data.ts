@@ -433,7 +433,7 @@ export class ComponentDataHelper {
 }
 
 /**
- * 分页信息，是分页参数的结构化信息类
+ * 分页信息，在各个属性发生变化后，可以对外发出通知，参考[这个demo]($demo/pagination/with-page-info)
  */
 export class PagingInfo implements IEmittable {
     /**
@@ -459,8 +459,20 @@ export class PagingInfo implements IEmittable {
     private _currentPage: number = 1;
     private _pageSize: number = 20;
     private _totalPage: number = 1;
+
+    /**
+     * 总记录数
+     * @type {number}
+     */
     public totalRecord: number = 0;
 
+    /**
+     * 当前单页记录数
+     *
+     * $demo = pagination/with-page-info
+     *
+     * @return {number}
+     */
     public get pageSize(): number {
         return this._pageSize;
     }
@@ -471,6 +483,13 @@ export class PagingInfo implements IEmittable {
         this.emit();
     }
 
+    /**
+     * 当前页索引，从1开始计数。修改此属性后，`PagingInfo`会发出获取对应页数据的事件，通过`subscribe`添加监听器可处理此事件。
+     *
+     * $demo = pagination/with-page-info
+     *
+     * @return {number}
+     */
     public get currentPage(): number {
         return this._currentPage;
     }
@@ -481,6 +500,13 @@ export class PagingInfo implements IEmittable {
         this.emit();
     }
 
+    /**
+     * 总页数
+     *
+     * $demo = pagination/with-page-info
+     *
+     * @return {number}
+     */
     public get totalPage(): number {
         return this.totalRecord ? Math.ceil(this.totalRecord / this.pageSize) : 1;
     }
