@@ -12,7 +12,6 @@ export type DataReviser = (data: any) => any;
  * `HttpClient`类的参数结构化信息类，与官方的参数结构完全兼容，这是对Angular的一些补充。
  *
  * $demo = /data-encapsulation/array-ssp
- * $demo = /pagination/with-table-data
  */
 export class HttpClientOptions {
     public url: string;
@@ -28,7 +27,6 @@ export class HttpClientOptions {
      * 这个属性的值（一个json对象）会被当做参数整体传输给服务端。
      *
      * $demo = /data-encapsulation/array-ssp
-     * $demo = /pagination/with-table-data
      */
     public params?: { [key: string]: any | any [] };
     public reportProgress?: boolean;
