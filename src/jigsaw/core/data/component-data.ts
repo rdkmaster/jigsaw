@@ -435,7 +435,7 @@ export class ComponentDataHelper {
 /**
  * 分页信息，是分页参数的结构化信息类
  */
-export class PagingInfo {
+export class PagingInfo implements IEmittable {
     /**
      * 这个属性指定了统一的在服务端进行分页、排序、过滤的服务的url。
      * - 如果你有自己的实现，则请更改这个属性指向你提供的服务；
@@ -466,7 +466,7 @@ export class PagingInfo {
     }
 
     public set pageSize(value: number) {
-        if(isNaN(value) || value < 1) return;
+        if (isNaN(value) || value < 1) return;
         this._pageSize = value;
         this.emit();
     }
@@ -476,7 +476,7 @@ export class PagingInfo {
     }
 
     public set currentPage(value: number) {
-        if(isNaN(value) || value < 1 || value > this.totalPage) return;
+        if (isNaN(value) || value < 1 || value > this.totalPage) return;
         this._currentPage = value;
         this.emit();
     }

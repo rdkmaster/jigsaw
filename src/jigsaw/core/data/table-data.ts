@@ -360,9 +360,6 @@ export class PageableTableData extends TableData implements IServerSidePageable,
      */
     public sourceRequestOptions: HttpClientOptions;
 
-    /**
-     * 分页信息，详情参考 `IPageable.pagingInfo`
-     */
     public pagingInfo: PagingInfo = new PagingInfo();
 
     private _filterSubject = new Subject<DataFilterInfo>();
@@ -540,24 +537,21 @@ export class PageableTableData extends TableData implements IServerSidePageable,
      * @internal
      */
     public changePage(currentPage, pageSize?: number): void {
-        let currentPageSelf: number;
-        if (currentPage instanceof PagingInfo || CommonUtils.isDefined(pageSize)) {
-            const pi: PagingInfo = currentPage instanceof PagingInfo ? currentPage : new PagingInfo(currentPage, pageSize);
-            if (pi.pageSize > 0) {
-                this.pagingInfo.pageSize = pi.pageSize;
-
-            } else {
-                console.error(`invalid pageSize[${pi.pageSize}], it should be greater than 0`);
-                return;
-            }
-            currentPageSelf = pi.currentPage;
-        } else {
-            currentPageSelf = currentPage;
+        if (!isNaN(pageSize) && +pageSize > 0) {
+            this.pagingInfo.pageSize = pageSize;
         }
-        if (currentPageSelf >= 1 && currentPageSelf <= this.pagingInfo.totalPage) {
-            this.pagingInfo.currentPage = currentPageSelf;
+
+        let cp: number = 0;
+        if (currentPage instanceof PagingInfo) {
+            this.pagingInfo.pageSize = currentPage.pageSize;
+            cp = currentPage.currentPage;
+        } else if (!isNaN(+currentPage)) {
+            cp = +currentPage;
+        }
+        if (cp >= 1 && cp <= this.pagingInfo.totalPage) {
+            this.pagingInfo.currentPage = cp;
         } else {
-            console.error(`invalid currentPage[${currentPageSelf}], it should be between in [1, ${this.pagingInfo.totalPage}]`);
+            console.error(`invalid currentPage[${cp}], it should be between in [1, ${this.pagingInfo.totalPage}]`);
         }
     }
 
@@ -1115,27 +1109,23 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
         if (!this.filteredData) {
             return;
         }
+        this._updatePagingInfo();
 
-        let currentPageSelf: number;
-        if (currentPage instanceof PagingInfo || CommonUtils.isDefined(pageSize)) {
-            const pi: PagingInfo = currentPage instanceof PagingInfo ? currentPage : new PagingInfo(currentPage, pageSize);
-            if (pi.pageSize > 0) {
-                this.pagingInfo.pageSize = pi.pageSize;
-                this._updatePagingInfo();
-            } else {
-                console.error(`invalid pageSize[${pi.pageSize}], it should be greater than 0`);
-                return;
-            }
-            currentPageSelf = pi.currentPage;
-        } else {
-            this._updatePagingInfo();
-            currentPageSelf = currentPage;
+        if (!isNaN(pageSize) && +pageSize > 0) {
+            this.pagingInfo.pageSize = pageSize;
         }
 
-        if (currentPageSelf >= 1 && currentPageSelf <= this.pagingInfo.totalPage) {
-            this.pagingInfo.currentPage = currentPageSelf;
+        let cp: number = 0;
+        if (currentPage instanceof PagingInfo) {
+            this.pagingInfo.pageSize = currentPage.pageSize;
+            cp = currentPage.currentPage;
+        } else if (!isNaN(+currentPage)) {
+            cp = +currentPage;
+        }
+        if (cp >= 1 && cp <= this.pagingInfo.totalPage) {
+            this.pagingInfo.currentPage = cp;
         } else {
-            console.error(`invalid currentPage[${currentPageSelf}], it should be between in [1, ${this.pagingInfo.totalPage}]`);
+            console.error(`invalid currentPage[${cp}], it should be between in [1, ${this.pagingInfo.totalPage}]`);
         }
     }
 
