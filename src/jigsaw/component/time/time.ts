@@ -2,7 +2,7 @@ import {
     Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Renderer2, Output, forwardRef
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {Subscriber} from "rxjs/Subscriber";
+import {Subscription} from "rxjs/Subscription";
 import {AbstractJigsawComponent} from "../common";
 import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../service/time.service";
 import {PopupInfo, PopupPositionType, PopupService} from "../../service/popup.service";
@@ -174,7 +174,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
 
     //定时器Id
     private _intervalId: number;
-    private _langChangeSubscriber: Subscriber<any>;
+    private _langChangeSubscriber: Subscription;
 
     constructor(private _el: ElementRef, private _renderer: Renderer2,
                 private _popService: PopupService) {

@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Subject} from "rxjs/Subject";
 import "rxjs/add/operator/map";
 import 'rxjs/add/operator/debounceTime';
+import {Subscription} from "rxjs/Subscription";
 
 import {
     ComponentDataHelper,
@@ -18,7 +19,6 @@ import {
 
 import {TableData} from "./table-data";
 import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
-import {Subscriber} from "rxjs/Subscriber";
 
 /**
  * we have to implement the `Array<T>` interface due to this breaking change:
@@ -581,7 +581,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
         this._emitter.emit(value);
     }
 
-    public subscribe(callback?: Function): Subscriber<any> {
+    public subscribe(callback?: (value:any) => void): Subscription {
         return this._emitter.subscribe(callback);
     }
 

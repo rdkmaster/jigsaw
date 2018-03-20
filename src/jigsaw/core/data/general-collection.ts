@@ -1,7 +1,7 @@
 import {EventEmitter} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import "rxjs/add/operator/map";
-import {Subscriber} from "rxjs/Subscriber";
+import {Subscription} from "rxjs/Subscription";
 import {ComponentDataHelper, DataReviser, HttpClientOptions, IAjaxComponentData, IEmittable} from "./component-data";
 import {CallbackRemoval} from "../utils/common-utils";
 
@@ -162,7 +162,7 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
         this._emitter.emit(value);
     }
 
-    public subscribe(callback?: Function): Subscriber<any> {
+    public subscribe(callback?: (value:any) => void): Subscription {
         return this._emitter.subscribe(callback);
     }
 

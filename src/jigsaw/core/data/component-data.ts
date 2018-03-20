@@ -1,6 +1,6 @@
 import {HttpHeaders} from "@angular/common/http";
 import {EventEmitter} from "@angular/core";
-import {Subscriber} from "rxjs/Subscriber";
+import {Subscription} from "rxjs/Subscription";
 import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
 
 export type DataReviser = (data: any) => any;
@@ -491,8 +491,8 @@ export class PagingInfo implements IEmittable {
         this._emitter.emit(value);
     }
 
-    public subscribe(generatorOrNext?: any, error?: any, complete?: any): any {
-        return this._emitter.debounceTime(300).subscribe(generatorOrNext, error, complete);
+    public subscribe(callback?: (value:any) => void): Subscription {
+        return this._emitter.debounceTime(300).subscribe(callback);
     }
 
     public unsubscribe() {
@@ -572,9 +572,9 @@ export interface IEmittable {
      * ```
      *
      * @param {Function} callback 事件回调函数
-     * @returns {Subscriber<any>} 返回当前订阅的回执，利用它可以取消本次订阅
+     * @returns {Subscription} 返回当前订阅的回执，利用它可以取消本次订阅
      */
-    subscribe(callback?: Function): Subscriber<any>;
+    subscribe(callback?: (value:any) => void): Subscription;
 
     /**
      * 取消当前对象上的所有订阅，执行它之后，任何事件监听器都将会失效。
