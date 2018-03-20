@@ -126,7 +126,7 @@ function processInputs(ci, html) {
         fixDescription(input);
         input.defaultValue = input.defaultValue ? input.defaultValue : '';
         var dualBinding = ci.outputsClass.find(i => i.name == input.name + 'Change') ?
-            '<span class="fa fa-retweet" style="margin-left:4px" title="本属性支持双向绑定"></span>' : '';
+            '<span class="fa fa-retweet" style="margin-right:4px" title="本属性支持双向绑定"></span>' : '';
         var description = input.description + (input.since ? `<p>起始版本：${input.since}</p>` : '');
         var inputName = `${anchor(input.name)}${dualBinding}${getRichName(input)}`
         inputs.push(`<tr><td>${inputName}</td><td>${addTypeLink(input.type)}</td><td>${input.defaultValue}</td>
@@ -149,7 +149,7 @@ function processOutputs(ci, html) {
             type = match[1];
         }
         var description = output.description + (output.since ? `<p>起始版本：${output.since}</p>` : '');
-        var outputName = ${anchor(output.name)}${getRichName(output.name)}
+        var outputName = `${anchor(output.name)}${getRichName(output)}`;
         outputs.push(`<tr><td>${outputName}</td><td>${addTypeLink(type)}</td>
             <td>${description}</td><td>${getDemoList(output)}</td></tr>`);
     });
@@ -817,18 +817,19 @@ function anchor(name) {
 function getRichName(metaInfo) {
     if (metaInfo.deprecatedFrom) {
         return getDeprecatedTemplate()
-                .replace('$version', metaInfo.$deprecatedFrom)
-                .replace('$replacement', metaInfo.$replacement)
-                .replace('$name', metaInfo.name);
+                .replace(/\$version/g, metaInfo.deprecatedFrom)
+                .replace(/\$replacement/g, metaInfo.replacement)
+                .replace(/\$name/g, metaInfo.name);
     } else {
         return metaInfo.name;
     }
 }
 
 function getDeprecatedTemplate() {
-    return `<span title="此api从版本 $version 开始被废弃，替代api或者解决办法：\n$replacement"
+    return `<span title="此api从版本 $version 开始被废弃，替代的办法为：\n$replacement"
                 style="color: #888;text-decoration: line-through">$name</span>
-            <span class="fa fa-exclamation-triangle" style="color:#ffa500"></span>`;
+            <span class="fa fa-exclamation-triangle" style="color:#ffa500"
+                title="此api从版本 $version 开始被废弃，替代的办法为：\n$replacement"></span>`;
 }
 
 function getPanelTemplate() {
