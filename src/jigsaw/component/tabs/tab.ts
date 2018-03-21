@@ -1,6 +1,6 @@
 import {
     Component, ContentChildren, QueryList, Input, ViewChildren, AfterViewInit, Output, EventEmitter, TemplateRef,
-    ViewContainerRef, ComponentFactoryResolver, Type, ChangeDetectorRef
+    ViewContainerRef, ComponentFactoryResolver, Type, ChangeDetectorRef, AfterViewChecked
 } from '@angular/core';
 import {JigsawTabPane} from "./tab-pane";
 import {JigsawTabContent, JigsawTabLabel} from "./tab-item";
@@ -10,7 +10,7 @@ import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
     selector: 'jigsaw-tab, j-tab, jigsaw-tabs, j-tabs',
     templateUrl: 'tab.html',
 })
-export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit {
+export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit, AfterViewChecked {
 
     constructor(private _cfr: ComponentFactoryResolver,
                 private _changeDetector: ChangeDetectorRef,
@@ -74,10 +74,6 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit 
         this._asyncSetStyle(index);
     }
 
-    public updateTitle() {
-        this._asyncSetStyle(this.selectedIndex);
-    }
-
     /**
      * @internal
      */
@@ -129,6 +125,10 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit 
         }
 
         this.length = this._$tabPanes.length;
+    }
+
+    ngAfterViewChecked() {
+        this._asyncSetStyle(this.selectedIndex);
     }
 
     /**

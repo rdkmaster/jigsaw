@@ -4,10 +4,10 @@
 
 
 <!-- start to learn the demo from here -->
-<button (click)="changeTitle(tabs)">change title</button>
-<jigsaw-tabs #tabs>
+<button (click)="changeTitle()">change title</button>
+<jigsaw-tabs>
     <jigsaw-tab-pane>
-        <div jigsaw-title>{{title1}}</div>
+        <div jigsaw-title>{{title}}</div>
         <ng-template>tab content 1</ng-template>
     </jigsaw-tab-pane>
     <jigsaw-tab-pane title="tab 2">

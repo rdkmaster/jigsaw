@@ -1,16 +1,14 @@
-import {Component, ViewChild} from '@angular/core';
-import {JigsawTab} from "jigsaw/component/tabs/tab";
+import {Component} from '@angular/core';
 
 @Component({
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
 export class TabsUpdateTitleDemoComponent {
-    title1 = 'a short title';
+    title = 'a short title';
 
-    changeTitle(tabs: JigsawTab) {
-        this.title1 = this.title1 == 'a short title' ? 'a looooooooooooooooooooooong title' : 'a short title';
-        tabs.updateTitle();
+    changeTitle() {
+        this.title = this.title == 'a short title' ? 'a looooooooooooooooooooooong title' : 'a short title';
     }
 
     // ====================================================================
