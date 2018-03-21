@@ -101,8 +101,14 @@ export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
         return timer;
     }
 
+    /**
+     * 终止`callLater`所发起的异步任务，用法与`clearTimeout`非常类似，但是更加安全，
+     * 可以顺便将`callLater`所缓存的定时器序号删除。
+     *
+     * @param {number} handle `callLater`的返回值
+     */
     protected clearCallLater(handle: number):void {
-        this.clearCallLater(handle);
+        clearTimeout(handle);
 
         if (!this._timerCache) {
             return;
