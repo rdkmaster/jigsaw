@@ -35,10 +35,14 @@ export class CommonUtils {
     }
 
     /**
-     * 比较两个对象是否相等
-     * - 添加string及简单值 和对象中trackItemBy 属性对比的支持;
-     * - 没有提供trackItemBy时,直接比较两个参数
-     * */
+     * 比较两个对象是否相等，如果提供`trackItemBy`参数，则只比较`trackItemBy`数组列出的属性是否相等；
+     * 如果未提供`trackItemBy`，则按值比较两个对象是否相等。
+     *
+     * @param item1 待比较的值1
+     * @param item2 待比较的值2
+     * @param {string[]} trackItemBy 待比较的属性列表
+     * @returns {boolean}
+     */
     public static compareWithKeyProperty(item1: any, item2: any, trackItemBy: string[]): boolean {
         if (trackItemBy && trackItemBy.length > 0) {
             for (let i = 0; i < trackItemBy.length; i++) {
@@ -58,21 +62,27 @@ export class CommonUtils {
             }
             return true;
         } else {
-            return item1 == item2 ? true : false;
+            return item1 == item2;
         }
     }
 
-    // 判断是否是空对象.
+    /**
+     * 判断一个对象是否不包含任何属性
+     *
+     * @param obj
+     * @returns {boolean}
+     */
     public static isEmptyObject(obj): boolean {
         for (let i in obj) return false;
         return true;
     }
 
     /**
-     * 主要负责两个对象的合并
-     * 将sourceObject 中的属性添加到targetObject 中.
+     * 负责两个对象的合并,将sourceObject 中的属性添加到targetObject 中
+     *
      * @param targetObject 要合并的源对象
      * @param sourceObject 合并的对象信息
+     * @returns {Object} 如果`targetObject`非空，则返回`targetObject`，否则返回一个新对象。
      */
     public static extendObject(targetObject: Object, sourceObject: Object): Object {
         if (!sourceObject) {
@@ -157,7 +167,7 @@ export class CommonUtils {
     }
 
     /**
-     * Returns the language code name from the browser, e.g. "zh"
+     * 获取浏览器的语言，例如 `"zh"`
      *
      * @returns string
      */
@@ -183,7 +193,7 @@ export class CommonUtils {
     }
 
     /**
-     * Returns the culture language code name from the browser, e.g. "zh-CN"
+     * 获取浏览器的语言，例如 `"zh-CN"`
      *
      * @returns string
      */
@@ -200,6 +210,14 @@ export class CommonUtils {
         return browserCultureLang;
     }
 
+    /**
+     * 安全的调用一个函数，并返回该函数的返回值。如果该函数执行失败，可以在控制台给出实际的堆栈以协助排查问题
+     *
+     * @param context 执行函数的上下文
+     * @param {Function} callback 待执行的回调函数
+     * @param {any[]} args 传递给回调函数的参数列表
+     * @returns {any} 返回该函数的返回值
+     */
     public static safeInvokeCallback(context: any, callback: Function, args?: any[]): any {
         if (CommonUtils.isUndefined(callback)) {
             return;
@@ -212,14 +230,32 @@ export class CommonUtils {
         }
     }
 
+    /**
+     * 可靠的判断一个值是否有效，输入 `""` 和 `0` 均返回true，只有`null`或者`undefined`才会返回false
+     *
+     * @param value 待测验的值
+     * @returns {boolean}
+     */
     public static isDefined(value): boolean {
         return value !== undefined && value !== null;
     }
 
+    /**
+     * 参考 `isDefined`
+     *
+     * @param value
+     * @returns {boolean}
+     */
     public static isUndefined(value): boolean {
         return !this.isDefined(value);
     }
 
+    /**
+     * 将url中的参数解析为一个对象
+     *
+     * @param {string} rawParam 格式为`var1=value1&var2=value2`
+     * @returns {Object} 返回类似`{var1: "value1", var2: "value2"}`的对象
+     */
     public static parseUrlParam(rawParam: string): Object {
         const result = {};
         if (!!rawParam) {
