@@ -1,6 +1,6 @@
 import {
     Component, ContentChildren, QueryList, Input, ViewChildren, AfterViewInit, Output, EventEmitter, TemplateRef,
-    ViewContainerRef, ComponentFactoryResolver, Type, ChangeDetectorRef, AfterViewChecked
+    ViewContainerRef, ComponentFactoryResolver, Type, ChangeDetectorRef, AfterViewChecked, ViewChild, ElementRef
 } from '@angular/core';
 import {JigsawTabPane} from "./tab-pane";
 import {JigsawTabContent, JigsawTabLabel} from "./tab-item";
@@ -32,6 +32,9 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
 
     @Output()
     public selectChange = new EventEmitter<JigsawTabPane>();
+
+    @ViewChild('tabsInkBar') 
+    private _tabsInkBar: ElementRef;
 
     public length: number;
 
@@ -128,6 +131,9 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     }
 
     ngAfterViewChecked() {
+        const labelPos = this._getLabelOffsetByKey(this.selectedIndex);
+        if (this._tabsInkBar.nativeElement.offsetWidth == labelPos.width &&
+            this._tabsInkBar.nativeElement.style.transform == 'translate3d(' + labelPos.offSet + 'px, 0px, 0px)') return;
         this._asyncSetStyle(this.selectedIndex);
     }
 
