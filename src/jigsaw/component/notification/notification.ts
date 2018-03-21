@@ -226,7 +226,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         }
 
         if (this._timeout) {
-            clearTimeout(this._timeout);
+            this.clearCallLater(this._timeout);
             // set `_timeout` to 0 to make sure `_$onLeave()` do not trigger `_$close` twice!
             this._timeout = 0;
         }
@@ -273,7 +273,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
      */
     _$onEnter() {
         if (this._timer) {
-            clearTimeout(this._timer);
+            this.clearCallLater(this._timer);
             this._timer = null;
         }
     }
@@ -283,8 +283,8 @@ export class JigsawNotification extends AbstractDialogComponentBase {
      */
     _$onLeave() {
         if (this._timeout > 0) {
-            clearTimeout(this._timer);
-            this._timer = setTimeout(() => this._$close(), this._timeout);
+            this.clearCallLater(this._timer);
+            this._timer = this.callLater(() => this._$close(), this._timeout);
         }
     }
 

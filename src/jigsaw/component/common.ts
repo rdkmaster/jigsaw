@@ -78,6 +78,7 @@ export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
      */
     protected callLater(handler: Function, contextOrTimeout: any | number = undefined, timeout: number = 0): any {
         if (!this._timerCache) {
+            // maybe this object has been destroyed!
             return;
         }
         if (typeof contextOrTimeout === 'number') {
@@ -98,6 +99,18 @@ export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
         }, timeout);
         this._timerCache.push(timer);
         return timer;
+    }
+
+    protected clearCallLater(handle: number):void {
+        this.clearCallLater(handle);
+
+        if (!this._timerCache) {
+            return;
+        }
+        const idx = this._timerCache.indexOf(handle);
+        if (idx != -1) {
+            this._timerCache.splice(idx, 1);
+        }
     }
 
     ngOnInit() {
