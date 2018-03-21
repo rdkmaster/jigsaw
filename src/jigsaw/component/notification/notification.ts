@@ -15,24 +15,88 @@ import {JigsawTrustedHtmlModule} from "../../directive/trusted-html/trusted-html
 import {CommonUtils} from "../../core/utils/common-utils";
 import {JigsawButtonModule} from "../button/button";
 
+/**
+ * 提示框所处的位置，目前支持左上、左下、右上、右下4个方向。
+ */
 export enum NotificationPosition {
     leftTop, leftBottom, rightTop, rightBottom
 }
 
+/**
+ * 一个提示消息的额外信息，用于详细配置一个弹出的消息的各种属性，所有属性都是可选的。
+ */
 export class NotificationMessage {
+    /**
+     * 提示框的标题，默认不显示标题
+     */
     caption?: string;
+    /**
+     * 提示框的图标，目前仅支持font-awesome就Jigsaw自研的iconfont图标。默认无图标。
+     */
     icon?: string;
+    /**
+     * 提示框所处的位置，目前支持左上、左下、右上、右下4个方向，默认右上角
+     */
     position?: NotificationPosition;
+    /**
+     * 提示信息超时自动关闭的毫秒数，为0则表示不关闭，默认8000ms
+     */
     timeout?: number;
+    /**
+     * 给提示框快速设置交互按钮，默认无按钮
+     *
+     * $demo = notification/full
+     */
     buttons?: ButtonInfo | ButtonInfo[];
+    /**
+     * `buttons`被单击了后的回调函数
+     */
     callback?: DialogCallback;
+    /**
+     * `callback`执行的上下文
+     */
     callbackContext?: any;
+    /**
+     * 提示框的高度，单位是px，默认由内容自动撑开
+     */
     height?: string | number;
+    /**
+     * 提示框的默认宽度，单位是px，默认350px
+     */
     width?: string | number;
+    /**
+     * 当消息的内容是html片段，并且包含了交互动作时，以此属性值作为这些函数的上下文对象。
+     *
+     * 例如使用下面的代码弹出一个提示
+     *
+     * ```
+     * JigsawNotification.show('执行xxxx成功啦，单击<a onclick="showDetail()">这里</a>查看详情。');
+     * ```
+     *
+     * 注意到提示内容带了一个超链，并且配置了`showDetail()`作为回调函数，在这个情况下，
+     * `innerHtmlContext`这个对象上必须已经定义了`showDetail()`函数，否则在用户单击了链接之后，控制台将报错。
+     *
+     * 此外，`innerHtmlContext`还作为回调函数中`this`的上下文，再如`showDetail()`函数有如下代码：
+     *
+     * ```
+     * showDetail() {
+     *     ...
+     *     alert(this.detail)
+     * }
+     * ```
+     *
+     * 在这个情况下，`innerHtmlContext`这个对象上必须已经定义了`detail`属性，否则一样报错。
+     *
+     * $demo = notification/full
+     */
     innerHtmlContext?: any;
 }
 
-// all notification instances, put the list here to make it private
+/**
+ * all notification instances, put the list here to make it private
+ *
+ * @internal
+ */
 const notificationInstances = {
     leftTop: [], leftBottom: [], rightTop: [], rightBottom: []
 };
@@ -58,6 +122,11 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         return this.elementRef.nativeElement;
     }
 
+    /**
+     * 初始化数据，应用一般无需使用。
+     *
+     * @param value
+     */
     public set initData(value: any) {
         if (!value) return;
 
@@ -73,10 +142,34 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         this._timeout = value.timeout;
     }
 
+    /**
+     * 需要提示给用户的消息，支持基础html标记，支持附加交互动作。必选。
+     */
     @Input() public message: string;
+
+    /**
+     * 提示框的标题，默认不显示标题
+     */
     @Input() public caption: string;
+
+    /**
+     * 提示框的图标，目前仅支持font-awesome就Jigsaw自研的iconfont图标。默认无图标。
+     */
     @Input() public icon: string;
+
+    /**
+     * 给提示框快速设置交互按钮
+     *
+     * $demo = notification/full
+     */
     @Input() public buttons: ButtonInfo[];
+
+    /**
+     * 当`message`里包含html交互动作时，`JigsawNotification`在执行给定的回调函数时，会将这个对象作为函数的上下文。
+     * 简单的说，这个属性值和回调函数里的`this`是同一个对象。
+     *
+     * $demo = notification/full
+     */
     @Input() public innerHtmlContext: any;
 
     private _timeout;
@@ -85,6 +178,11 @@ export class JigsawNotification extends AbstractDialogComponentBase {
     private _callbackContext: any;
     private _position: NotificationPosition;
 
+    /**
+     * 提示框所处的位置，目前支持左上、左下、右上、右下4个方向。
+     *
+     * @return {NotificationPosition | string}
+     */
     @Input()
     public get position(): NotificationPosition | string {
         return this._position;
@@ -231,6 +329,12 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         return {left, top};
     }
 
+    /**
+     * 用于重新定位视图上所有的提示框，一般需要在视图上的提示框有变动时调用。
+     * `JigsawNotification.show`方法、以及提示框被关掉时，Jigsaw会自动调用此方法，无需应用再次调用。
+     *
+     * @param {NotificationPosition} position 调整哪个方向上的提示框，可选，默认调试所有4个方向。
+     */
     public static reposition(position?: NotificationPosition) {
         if (CommonUtils.isUndefined(position)) {
             this.reposition(NotificationPosition.leftTop);
@@ -252,9 +356,32 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         });
     }
 
+    /**
+     * 方便快速地将一些信息以卡片的方式弹出在视图上，起到通知用户的作用。
+     * 这种提示方式相比[alert]($demo/alert/popup)柔和许多，对用户干扰较少，**建议优先使用**。
+     * 只有在一些非要用户立即处理不可的通知才通过[alert]($demo/alert/popup)的方式通知用户。
+     *
+     * $demo = notification/full
+     *
+     * @param {string} message 消息内容，支持基础html标记的富文本，也支持在html中添交互加动作。
+     * @return {PopupInfo} 返回的是被弹出的`JigsawNotification`组件实例的相关信息
+     */
     public static show(message: string): PopupInfo;
+    /**
+     * @param {string} message
+     * @param {string} caption 提示框的标题
+     * @return {PopupInfo}
+     */
     public static show(message: string, caption: string): PopupInfo;
+    /**
+     * @param {string} message
+     * @param {NotificationMessage} options 提示框的所有配置项，对提示做的行为做详细配置
+     * @return {PopupInfo}
+     */
     public static show(message: string, options?: NotificationMessage): PopupInfo;
+    /**
+     * @internal
+     */
     public static show(message: string, options?: string | NotificationMessage): PopupInfo {
         if (CommonUtils.isUndefined(message)) {
             return;
@@ -283,6 +410,8 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         const popupInfo = PopupService.instance.popup(JigsawNotification, popupOptions, initData);
         popupInfo.instance._popupInfo = popupInfo;
         notificationInstances[NotificationPosition[opt.position]].push(popupInfo);
+
+        setTimeout(() => this.reposition(opt.position));
 
         if (!this._removeResizeListener) {
             this._zone.runOutsideAngular(() => {
