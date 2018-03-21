@@ -204,7 +204,7 @@ export class PopupService {
                 private _zone: NgZone,
                 @Optional() private _router: Router,
                 @Optional() private _activatedRoute: ActivatedRoute) {
-        PopupService._instance = this;
+        PopupService._instance = PopupService._instance || this;
     }
 
     private _listenRouterChange(disposer: PopupDisposer): void {
