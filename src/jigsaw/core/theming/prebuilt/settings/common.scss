@@ -62,7 +62,8 @@ $zindex-level-1         : 1;
 $zindex-level-2         : 2;
 $zindex-level-3         : 3;
 // 空中部分采用后来居上的策略，所以高度设成1000
-$zindex-popover         : 1000;
+$zindex-popover-level-0 : 1000;
+$zindex-popover-level-1 : 1001;
 // ui设计器box部分
 $zindex-ui-level-0      : 100;
 $zindex-ui-level-1      : 101;

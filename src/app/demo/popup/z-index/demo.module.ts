@@ -8,14 +8,18 @@ import {JigsawButtonModule} from "jigsaw/component/button/button";
 import {JigsawRangeTimeModule} from "jigsaw/component/range-time/index";
 import {JigsawLoadingModule} from "jigsaw/component/loading/loading";
 import {LoadingService} from "jigsaw/service/loading.service";
+import {JigsawSelectModule} from "jigsaw/component/select/select";
+import {JigsawTooltipModule} from "jigsaw/component/tooltip/tooltip";
+import {JigsawNotificationModule} from "jigsaw/component/notification/notification";
 
 @NgModule({
     declarations: [PopupZIndexDemoComponent],
     exports: [PopupZIndexDemoComponent],
-    imports: [JigsawTimeModule, JigsawRangeTimeModule, JigsawComboSelectModule,JigsawDialogModule,
-        JigsawLoadingModule,JigsawButtonModule, JigsawDemoDescriptionModule],
+    imports: [JigsawTimeModule, JigsawRangeTimeModule, JigsawComboSelectModule, JigsawDialogModule,
+        JigsawSelectModule, JigsawLoadingModule, JigsawButtonModule, JigsawDemoDescriptionModule,
+        JigsawTooltipModule, JigsawNotificationModule],
     providers: [LoadingService]
 })
-export class PopupZIndexDemoModule{
+export class PopupZIndexDemoModule {
 
 }
