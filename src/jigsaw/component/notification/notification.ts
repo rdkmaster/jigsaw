@@ -41,6 +41,7 @@ const notificationInstances = {
     selector: 'jigsaw-notification,j-notification',
     templateUrl: 'notification.html',
     host: {
+        '[class.jigsaw-notification-host]': 'true',
         '[style.width]': 'width',
         '[style.height]': 'height'
     }

@@ -152,14 +152,6 @@ export enum PopupPositionType {
     absolute, fixed
 }
 
-export enum PopupEventType {
-    instanceCreated, positionReady, ready
-}
-
-export enum PopupZIndex {
-    modal = 1000, popover = 1030
-}
-
 export type PopupRef = ComponentRef<IPopupable> | EmbeddedViewRef<any>;
 
 export class ButtonInfo {
@@ -205,6 +197,8 @@ export class PopupService {
     public static _renderer: Renderer2;
 
     private _eventHelper: ElementEventHelper = new ElementEventHelper();
+
+    private _popupZIndex: number = 1000;
 
     constructor(private _cfr: ComponentFactoryResolver,
                 private _zone: NgZone,
@@ -316,11 +310,7 @@ export class PopupService {
     }
 
     private _setStyle(options: PopupOptions, element: HTMLElement): void {
-        if (this._isModal(options)) {
-            PopupService._renderer.setStyle(element, 'z-index', PopupZIndex.modal);
-        } else {
-            PopupService._renderer.setStyle(element, 'z-index', PopupZIndex.popover);
-        }
+        PopupService._renderer.setStyle(element, 'z-index', this._popupZIndex);
         PopupService._renderer.setStyle(element, 'visibility', 'hidden');
     }
 
