@@ -77,6 +77,9 @@ export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
      * @internal
      */
     protected callLater(handler: Function, contextOrTimeout: any | number = undefined, timeout: number = 0): any {
+        if (!this._timerCache) {
+            return;
+        }
         if (typeof contextOrTimeout === 'number') {
             timeout = +contextOrTimeout;
             contextOrTimeout = null;
