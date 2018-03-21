@@ -96,9 +96,10 @@ export class PopupZIndexDemoComponent implements OnInit {
     tooltipMessage: string = '这是一个内联tooltip  <span class="fa fa-thumbs-up"></span>';
 
     ngOnInit() {
-        setInterval(() => {
-            JigsawNotification.show('最简洁方便的使用方式：<code>JigsawNotification.show("message")</code>');
-        }, 3000);
+        JigsawNotification.show('这是一个JigsawNotification提示框', {timeout: 0});
+        JigsawNotification.show('这是一个JigsawNotification提示框', {timeout: 0});
+        JigsawNotification.show('这是一个JigsawNotification提示框', {timeout: 0});
+        JigsawNotification.show('这是一个JigsawNotification提示框', {timeout: 0});
     }
 
     // ====================================================================
