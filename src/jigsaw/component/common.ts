@@ -78,6 +78,7 @@ export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
      */
     protected callLater(handler: Function, contextOrTimeout: any | number = undefined, timeout: number = 0): any {
         if (!this._timerCache) {
+            // maybe this object has been destroyed!
             return;
         }
         if (typeof contextOrTimeout === 'number') {
@@ -98,6 +99,24 @@ export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
         }, timeout);
         this._timerCache.push(timer);
         return timer;
+    }
+
+    /**
+     * 终止`callLater`所发起的异步任务，用法与`clearTimeout`非常类似，但是更加安全，
+     * 可以顺便将`callLater`所缓存的定时器序号删除。
+     *
+     * @param {number} handle `callLater`的返回值
+     */
+    protected clearCallLater(handle: number):void {
+        clearTimeout(handle);
+
+        if (!this._timerCache) {
+            return;
+        }
+        const idx = this._timerCache.indexOf(handle);
+        if (idx != -1) {
+            this._timerCache.splice(idx, 1);
+        }
     }
 
     ngOnInit() {

@@ -320,7 +320,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         if (!this._removeMouseOverHandler) {
             this._removeMouseOverHandler = this._renderer.listen(
                 this._popupElement, 'mouseenter',
-                () => clearTimeout(this._rollOutDenouncesTimer));
+                () => this.clearCallLater(this._rollOutDenouncesTimer));
         }
         if (this._closeTrigger === DropDownTrigger.mouseleave && !this._removeMouseOutHandler) {
             this._removeMouseOutHandler = this._renderer.listen(
@@ -396,14 +396,14 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
      * @internal
      */
     public _$openByHover(event): void {
-        clearTimeout(this._rollOutDenouncesTimer);
+        this.clearCallLater(this._rollOutDenouncesTimer);
 
         if (this._openTrigger !== DropDownTrigger.mouseenter) return;
 
         event.preventDefault();
         event.stopPropagation();
 
-        this._rollInDenouncesTimer = setTimeout(() => {
+        this._rollInDenouncesTimer = this.callLater(() => {
             this.open = true;
             if (this._editor) this._editor.select();
         }, 100);
@@ -413,7 +413,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
      * @internal
      */
     public _$closeByHover(event) {
-        clearTimeout(this._rollInDenouncesTimer);
+        this.clearCallLater(this._rollInDenouncesTimer);
         if (this.closeTrigger !== DropDownTrigger.mouseleave) return;
         event.preventDefault();
         event.stopPropagation();

@@ -300,7 +300,7 @@ export class ChartIconFactory {
                     $legend.append($rect).append($text);
 
                     // 等待text渲染
-                    setTimeout(() => {
+                    this.callLater(() => {
                         const rangeWidth = (opts.legend.orient == 'right' ? opts.legend.width : width) - 12;
                         if ($text.width() > rangeWidth) {
                             // 加入省略号
@@ -318,7 +318,7 @@ export class ChartIconFactory {
                             });
                             $legend.append($ellipsisBg).append($ellipsis);
                         }
-                    }, 0);
+                    });
 
                     $svg.append($link);
                     $svg.append($legend);
