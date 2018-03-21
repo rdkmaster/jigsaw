@@ -1,4 +1,6 @@
 import {Component} from '@angular/core';
+import {TranslateService} from "@ngx-translate/core";
+import {TranslateHelper} from "../../../../jigsaw/core/utils/translate-helper";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -6,6 +8,15 @@ import {Component} from '@angular/core';
 })
 export class TabsUpdateTitleDemoComponent {
     title = 'a short title';
+
+    constructor(public translateService: TranslateService) {
+
+    }
+
+    changeLang() {
+        TranslateHelper.changeLanguage(this.translateService,
+            this.translateService.currentLang == 'zh' ? 'en' : 'zh');
+    }
 
     changeTitle() {
         this.title = this.title == 'a short title' ? 'a looooooooooooooooooooooong title' : 'a short title';

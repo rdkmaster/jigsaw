@@ -4,13 +4,16 @@
 
 
 <!-- start to learn the demo from here -->
-<button (click)="changeTitle()">change title</button>
+<jigsaw-button (click)="changeTitle()">change title</jigsaw-button>
+<jigsaw-button (click)="changeLang()">
+    toggle change language
+</jigsaw-button>
 <jigsaw-tabs>
     <jigsaw-tab-pane>
         <div jigsaw-title>{{title}}</div>
         <ng-template>tab content 1</ng-template>
     </jigsaw-tab-pane>
-    <jigsaw-tab-pane title="tab 2">
+    <jigsaw-tab-pane title="{{'title2' | translate}}">
         <ng-template>tab content 2</ng-template>
     </jigsaw-tab-pane>
 </jigsaw-tabs>
