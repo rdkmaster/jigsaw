@@ -15,6 +15,7 @@ import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
  * 参考[这个demo]($demo/tab/with-ngfor)。
  *
  * $demo = tab/basic
+ * $demo = tab/update-title
  * $demo = tab/with-input
  */
 @Component({
