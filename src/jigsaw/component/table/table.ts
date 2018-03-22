@@ -550,6 +550,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _bodyScrollbar: PerfectScrollbarDirective;
 
     /**
+     * @internal
+     */
+    public _$noDataSrc = CommonUtils.noDataImageSrc;
+
+    /**
      * 根据内容计算自适应列宽
      * @private
      */
@@ -578,12 +583,19 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             host.querySelectorAll('.jigsaw-table-body tbody tr:first-child td')
                 .forEach(td => widthStorage.push(td.offsetWidth));
 
-            host.querySelectorAll('.jigsaw-table-header thead tr:first-child td')
-                .forEach((td, index) => {
-                    if (td.offsetWidth > widthStorage[index]) {
-                        widthStorage[index] = td.offsetWidth;
-                    }
-                });
+            if(widthStorage.length) {
+                host.querySelectorAll('.jigsaw-table-header thead tr:first-child td')
+                    .forEach((td, index) => {
+                        if (td.offsetWidth > widthStorage[index]) {
+                            widthStorage[index] = td.offsetWidth;
+                        }
+                    });
+            } else {
+                host.querySelectorAll('.jigsaw-table-header thead tr:first-child td')
+                    .forEach(td => {
+                        widthStorage.push(td.offsetWidth);
+                    });
+            }
 
             widthStorage.forEach((width, index) => {
                 // columnDefine定义过的列宽不会被覆盖
