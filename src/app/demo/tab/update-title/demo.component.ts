@@ -27,4 +27,5 @@ export class TabsUpdateTitleDemoComponent {
     // ====================================================================
     summary: string = '此demo主要描述tab的title动态变化的处理方法，主要使用场景如语言切换等。';
     description: string = require('!!raw-loader!./readme.md');
+    tags: string[] = ['TranslateHelper', 'TranslateService']
 }
