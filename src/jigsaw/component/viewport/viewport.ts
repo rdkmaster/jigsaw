@@ -5,9 +5,9 @@ import {JigsawScrollbarModule} from "../scrollbar/index";
 import {JigsawSliderModule} from "../slider/index";
 import {AbstractJigsawComponent} from "../common";
 
-export class ViewChangeEvent {
-    direction: string;
-    value: number
+export class ViewportScrollEvent {
+    direction: "horizontal" | "vertical";
+    scrollTo: number
 }
 
 @Component({
@@ -33,7 +33,7 @@ export class JigsawViewport extends AbstractJigsawComponent implements AfterView
     public step: number = 1;
 
     @Output()
-    public viewChange = new EventEmitter<ViewChangeEvent>();
+    public scroll = new EventEmitter<ViewportScrollEvent>();
 
     constructor(private _elementRef: ElementRef, private _changeDetector: ChangeDetectorRef) {
         super();
@@ -49,11 +49,11 @@ export class JigsawViewport extends AbstractJigsawComponent implements AfterView
         }
     }
 
-    public _$handleViewChange(value: number, direction: string) {
-        this.viewChange.emit({
-            direction: direction,
-            value: value
-        })
+    /**
+     * @internal
+     */
+    public _$handleViewChange(scrollTo: number, direction: "horizontal" | "vertical") {
+        this.scroll.emit({direction, scrollTo});
     }
 
     /**
