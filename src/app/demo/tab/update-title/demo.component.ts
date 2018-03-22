@@ -19,7 +19,7 @@ export class TabsUpdateTitleDemoComponent {
     }
 
     changeTitle() {
-        this.title = this.title == 'a short title' ? 'a looooooooooooooooooooooong title' : 'a short title';
+        this.title = this.title == 'a short title' ? 'a very very very very long title' : 'a short title';
     }
 
     // ====================================================================

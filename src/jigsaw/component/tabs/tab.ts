@@ -33,7 +33,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     @Output()
     public selectChange = new EventEmitter<JigsawTabPane>();
 
-    @ViewChild('tabsInkBar') 
+    @ViewChild('tabsInkBar')
     private _tabsInkBar: ElementRef;
 
     public length: number;
@@ -130,11 +130,20 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         this.length = this._$tabPanes.length;
     }
 
+    // 注意此方法会被频繁调用，性能要求高
     ngAfterViewChecked() {
         const labelPos = this._getLabelOffsetByKey(this.selectedIndex);
-        if (this._tabsInkBar.nativeElement.offsetWidth == labelPos.width &&
-            this._tabsInkBar.nativeElement.style.transform == 'translate3d(' + labelPos.offSet + 'px, 0px, 0px)') return;
-        this._asyncSetStyle(this.selectedIndex);
+
+        const tabElem = this._tabsInkBar.nativeElement;
+        if (tabElem.offsetWidth != labelPos.width) {
+            this._asyncSetStyle(this.selectedIndex);
+        } else {
+            const match = (tabElem.style.transform + '').match(/\btranslate3d\s*\((\d+)px\s*,/);
+            const offset = match ? match[1] : -1;
+            if (offset != labelPos.offSet) {
+                this._asyncSetStyle(this.selectedIndex);
+            }
+        }
     }
 
     /**

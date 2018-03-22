@@ -23,10 +23,10 @@ export class TabsUpdateTitleDemoModule {
         translateService.use(translateService.getBrowserLang());
 
         translateService.setTranslation('zh', {
-            title2: '这是一个用于演示的标题',
+            title2: '这是一个国际化过的标题',
         }, true);
         translateService.setTranslation('en', {
-            title2: 'This is a loooooooooooong title for the demo',
+            title2: 'This is an internationalized title',
         }, true );
 
         TranslateHelper.changeLanguage(this.translateService, 'zh');
