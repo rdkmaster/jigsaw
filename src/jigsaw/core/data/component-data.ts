@@ -231,7 +231,7 @@ export interface IAjaxComponentData extends IComponentData {
     onAjaxStart(callback: () => void, context?: any): CallbackRemoval;
 
     /**
-     * Ajax请求成功的时候，执行`callback`函数。
+     * Ajax请求成功的时候，执行`callback`函数，一般需要在这个函数里停止loading效果。
      *
      * $demo = data-encapsulation/ajax-events
      *
@@ -243,7 +243,7 @@ export interface IAjaxComponentData extends IComponentData {
     onAjaxSuccess (callback: (data: any) => void, context?: any): CallbackRemoval;
 
     /**
-     * Ajax请求失败的时候，执行`callback`函数。
+     * Ajax请求失败的时候，执行`callback`函数，一般需要在这个函数里停止loading效果。
      *
      * $demo = data-encapsulation/ajax-events
      *
@@ -255,7 +255,8 @@ export interface IAjaxComponentData extends IComponentData {
     onAjaxError(callback: (error: Response) => void, context?: any): CallbackRemoval;
 
     /**
-     * Ajax请求结束（无论成功还是失败）的时候，执行`callback`函数，一般可以在这个函数里停止loading效果。
+     * Ajax请求结束的时候，执行`callback`函数。由于`HttpClient`在调用了无效的url的时候不会触发对应事件导致注册在这个事件上的回调没有被执行，
+     * 因此为了稳妥起见，请在`onAjaxSuccess`和`onAjaxError`里同时注册ajax请求的结果处理逻辑。
      *
      * $demo = data-encapsulation/ajax-events
      *

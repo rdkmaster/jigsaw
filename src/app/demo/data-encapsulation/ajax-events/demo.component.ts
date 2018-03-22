@@ -23,6 +23,7 @@ export class AjaxEventsDemoComponent {
     }
 
     load(success: boolean) {
+        this.consoleAppend("-----------------------------");
         this.array.fromAjax(success ? 'mock-data/core-members' : 'invalid-url');
     }
 
@@ -32,17 +33,17 @@ export class AjaxEventsDemoComponent {
     }
 
     onAjaxSuccess() {
+        this.loadingInfo.dispose();
         this.consoleAppend("onAjaxSuccess invoked!")
     }
 
     onAjaxError() {
+        this.loadingInfo.dispose();
         this.consoleAppend("onAjaxError invoked!")
     }
 
     onAjaxComplete() {
-        this.loadingInfo.dispose();
         this.consoleAppend("onAjaxComplete invoked!");
-        this.consoleAppend("-----------------------------")
     }
 
     consoleAppend(msg: string): void {
