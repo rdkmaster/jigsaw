@@ -877,25 +877,46 @@ export class BigTableData extends PageableTableData implements ISlicedData {
     }
 
     /**
+     * `changePage`改用debounce之后，由于有debounce，`_busy`的值就不准了，只能自己维护这个状态
+     *
+     * @type {boolean}
+     * @private
+     */
+    private _fetchingData: boolean = false;
+
+    /**
      * 向服务端发起获取数据的请求
      *
      * @param targetPage
      * @param verticalTo
      */
     protected fetchData(targetPage, verticalTo): void {
+        console.log('!!!!!!!!!!!!!!!!!!!!!!!', this._cache.startPage, this._cache.endPage, verticalTo);
+
+
+
         if (targetPage < 1 || targetPage > this.pagingInfo.totalPage) {
             return;
         }
 
-        if (this._busy) {
-            console.log('the data fetching session is busy now...');
-        } else {
+        if (!this._fetchingData) {
+            this._fetchingData = true;
             super.changePage(targetPage);
+            return;
         }
 
-        const requestedPage = Math.ceil((verticalTo + this.viewport.rows) / this.pagingInfo.pageSize);
+        console.log('BigTableData has already being fetching data, waiting for response...');
+
+        if (this.reallyBusy) {
+            return;
+        }
+
         // it is really busy if the request page is out of the cached page range.
-        this.reallyBusy = this._busy && requestedPage > this._cache.endPage - this._cache.startPage + 1;
+        const startIndex = (this._cache.startPage - 1) * this.pagingInfo.pageSize;
+        const endIndex = this._cache.endPage * this.pagingInfo.pageSize;
+
+        this.reallyBusy = verticalTo <= 0 || verticalTo + startIndex > endIndex;
+
         if (this.reallyBusy) {
             console.error('it is really busy now, please wait for a moment...');
         }
@@ -959,6 +980,7 @@ export class BigTableData extends PageableTableData implements ISlicedData {
     protected ajaxSuccessHandler(rawTableData): void {
         super.ajaxSuccessHandler(rawTableData);
         this.reallyBusy = false;
+        this._fetchingData = false;
         this.updateCache();
         console.log(`data fetched, startPage=${this._cache.startPage}, endPage=${this._cache.endPage}`);
     }
@@ -966,6 +988,7 @@ export class BigTableData extends PageableTableData implements ISlicedData {
     protected ajaxErrorHandler(error): void {
         super.ajaxErrorHandler(error);
         this.reallyBusy = false;
+        this._fetchingData = false;
         this._cache = {field: [], header: [], data: [], startPage: 1, endPage: 1};
         this._updateViewPortSize();
     }
