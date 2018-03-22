@@ -170,7 +170,8 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     /**
      * 推荐日期提示标签，默认值是"推荐日期"或"Recommend"
      */
-    @Input("recommendedLabel") private _recommendedLabel: String;
+    @Input()
+    public recommendedLabel: String;
 
     /**
      * time插件容器（jq对象）
@@ -500,7 +501,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
                         },
                         posType: PopupPositionType.absolute, //定位类型
                     }, {
-                        message: this._recommendedLabel || this._translateService.instant('time.recommendedLabel')
+                        message: this.recommendedLabel || this._translateService.instant('time.recommendedLabel')
                     });
                 });
                 this._eventHelper.put(node, "mouseenter", removeMouseEnterListener);

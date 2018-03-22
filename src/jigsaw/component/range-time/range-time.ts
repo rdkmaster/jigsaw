@@ -135,10 +135,9 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     @Input("recommendedEnd") public _$recommendedEnd: WeekTime;
 
     /**
-     * @internal
+     * 参考`JigsawTime.recommendedLabel`
      */
-    @Input("recommendedLabel") public _$recommendedLabel: String;
-
+    @Input() public recommendedLabel: String;
 
     @Output() public change = new EventEmitter<any>();
 
