@@ -1,9 +1,14 @@
-import {AfterViewChecked, ChangeDetectorRef, Component, ElementRef, Input, NgModule} from "@angular/core";
+import {AfterViewChecked, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, NgModule, Output} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ViewportData} from "../../core/data/component-data";
 import {JigsawScrollbarModule} from "../scrollbar/index";
 import {JigsawSliderModule} from "../slider/index";
 import {AbstractJigsawComponent} from "../common";
+
+export class ViewChangeEvent {
+    direction: string;
+    value: number
+}
 
 @Component({
     selector: 'jigsaw-viewport, j-viewport',
@@ -27,6 +32,9 @@ export class JigsawViewport extends AbstractJigsawComponent implements AfterView
     @Input()
     public step: number = 1;
 
+    @Output()
+    public viewChange = new EventEmitter<ViewChangeEvent>();
+
     constructor(private _elementRef: ElementRef, private _changeDetector: ChangeDetectorRef) {
         super();
         this._height = '0px';
@@ -39,6 +47,13 @@ export class JigsawViewport extends AbstractJigsawComponent implements AfterView
         if (this._height != originHeight) {
             this._changeDetector.detectChanges();
         }
+    }
+
+    public _$handleViewChange(value: number, direction: string) {
+        this.viewChange.emit({
+            direction: direction,
+            value: value
+        })
     }
 
     /**

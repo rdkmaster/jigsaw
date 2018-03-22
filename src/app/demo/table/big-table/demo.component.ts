@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {BigTableData} from "jigsaw/core/data/table-data";
 import {AdditionalColumnDefine, ColumnDefine, TableValueGenerators} from "jigsaw/component/table/table-typings";
 import {OfficeCellRenderer, OfficeHeaderRenderer, PositionHeaderRenderer} from "./renderers";
+import {ViewChangeEvent} from "../../../../jigsaw/component/viewport/viewport";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -52,6 +53,15 @@ export class BigTableDataDemoComponent {
     ];
 
     selectedStep = 10;
+
+    viewChangeMessage: string = '';
+
+    handleViewChange(event: ViewChangeEvent) {
+        // 使用setTimeout触发变更检查
+        setTimeout(() => {
+            this.viewChangeMessage = `监听到${event.direction == 'h' ? '水平' : '垂直'}方向移动到${event.value}`;
+        });
+    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
