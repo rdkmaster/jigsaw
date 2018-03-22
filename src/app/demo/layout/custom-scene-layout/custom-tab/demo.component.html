@@ -1,0 +1,33 @@
+<!--<jigsaw-tabs>
+    <jigsaw-tab-pane *ngFor="let tabData of tabDataList">
+        <div jigsaw-title>{{tabData.title}}</div>
+        <ng-template jigsaw-renderer-host></ng-template>
+    </jigsaw-tab-pane>
+</jigsaw-tabs>-->
+<ul class="tab-title-list">
+    <li *ngFor="let selectedComponent of selectedComponents; index as i"
+        [class.current]="currentTabIndex == i"
+        (click)="changeTab(i)">
+        {{selectedComponent.label}}
+    </li>
+    <li (click)="popupTemplateDialog(dialog)">+</li>
+</ul>
+
+<ng-template jigsaw-renderer-host></ng-template>
+
+<ng-template #dialog>
+    <jigsaw-dialog width="40%" (close)="onAnswer()">
+        <div jigsaw-title>
+            <span class="fa fa-thumbs-up"></span>Please choose scene
+        </div>
+        <div jigsaw-body class="dialog-body">
+            <jigsaw-tile [(selectedItems)]="selectedComponents"
+                           (selectedItemsChange)="selectChange($event)"
+                           trackItemBy="label">
+                <jigsaw-tile-option *ngFor="let item of componentMetaDataList" [value]="item">
+                    {{item.label}}
+                </jigsaw-tile-option>
+            </jigsaw-tile>
+        </div>
+    </jigsaw-dialog>
+</ng-template>

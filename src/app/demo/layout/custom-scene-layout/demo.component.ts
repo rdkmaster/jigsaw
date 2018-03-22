@@ -4,6 +4,69 @@ import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/service
 import {JigsawEditableBox} from "jigsaw/component/box/editable-box";
 import {CustomTableComponent} from "./custom-table/demo.component";
 import {CustomGraphComponent} from "./custom-graph/demo.component";
+import {CustomTabComponent} from "./custom-tab/demo.component";
+
+export const ComponentMetaDataList: ComponentMetaData[] = [
+    {
+        label: "表格",
+        component: CustomTableComponent,
+        selector: 'custom-table',
+        import: 'CustomTableModule,',
+        inputs: [
+            {
+                property: 'data',
+                binding: 'tableData',
+            },
+            {
+                property: 'additionalColumnDefine',
+                binding: 'additionalColumnDefine',
+                default: {
+                    a: 1,
+                    b: [1, 2, 3],
+                    c: 'ww'
+                }
+            },
+            {
+                property: 'additionalData',
+                binding: 'additionalData',
+                default: {
+                    a: 1,
+                    b: [1, 2, 3],
+                    c: 'ww'
+                }
+            }
+        ]
+    },
+    {
+        label: "图形",
+        component: CustomGraphComponent,
+        selector: 'custom-graph',
+        import: 'CustomGraphModule,',
+        inputs: [
+            {
+                property: 'data',
+                binding: 'graphData',
+            },
+            {
+                property: 'width',
+                binding: 'graphWidth',
+                default: 200
+            }
+        ]
+    },
+    {
+        label: "tab",
+        component: CustomTabComponent,
+        selector: 'custom-tab',
+        import: 'CustomTabModule,',
+        inputs: [
+            {
+                property: 'data',
+                binding: 'tableData',
+            },
+        ]
+    },
+];
 
 @Component({
     templateUrl: './demo.component.html',
@@ -131,55 +194,7 @@ export class CustomSceneLayoutDemoComponent {
     }
 
     selectedComponent;
-    componentMetaDataList: ComponentMetaData[] = [
-        {
-            label: "表格",
-            component: CustomTableComponent,
-            selector: 'custom-table',
-            import: 'CustomTableModule,',
-            inputs: [
-                {
-                    property: 'data',
-                    binding: 'tableData',
-                },
-                {
-                    property: 'additionalColumnDefine',
-                    binding: 'additionalColumnDefine',
-                    default: {
-                        a: 1,
-                        b: [1, 2, 3],
-                        c: 'ww'
-                    }
-                },
-                {
-                    property: 'additionalData',
-                    binding: 'additionalData',
-                    default: {
-                        a: 1,
-                        b: [1, 2, 3],
-                        c: 'ww'
-                    }
-                }
-            ]
-        },
-        {
-            label: "图形",
-            component: CustomGraphComponent,
-            selector: 'custom-graph',
-            import: 'CustomGraphModule,',
-            inputs: [
-                {
-                    property: 'data',
-                    binding: 'graphData',
-                },
-                {
-                    property: 'width',
-                    binding: 'graphWidth',
-                    default: 200
-                }
-            ]
-        },
-    ];
+    componentMetaDataList: ComponentMetaData[] = ComponentMetaDataList;
 
     dialogInfo: PopupInfo;
 

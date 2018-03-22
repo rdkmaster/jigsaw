@@ -1,0 +1,12 @@
+.tab-title-list li{
+    float: left;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid #ddd;
+    text-align: center;
+    cursor: pointer;
+}
+.tab-title-list li.current{
+    border-bottom: 2px solid blue;
+}
