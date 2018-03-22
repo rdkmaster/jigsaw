@@ -72,13 +72,14 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     &.#{$table-prefix-cls}-hide-head {
         padding-top: 0 !important;
     }
-    &.#{$table-prefix-cls}-no-data {
-        border: 1px solid $border-color-base;
-    }
 }
 
 .#{$table-prefix-cls}-body-range{
     height: 100%;
+    &.#{$table-prefix-cls}-no-data {
+        height: 160px;
+        border: 1px solid $border-color-base;
+    }
 }
 
 .#{$table-prefix-cls}-auto-width {
