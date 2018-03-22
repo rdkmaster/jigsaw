@@ -47,7 +47,7 @@ $select-option-prefix-cls: #{$jigsaw-prefix}-select-option;
     .#{$select-option-prefix-cls}-list {
         width: 100%;
         position: absolute;
-        z-index: $zindex-dropdown;
+        z-index: $zindex-popover-level-0;
         border: 1px solid $border-color-base;
         background: $default-color;
         box-shadow: $box-shadow-base;

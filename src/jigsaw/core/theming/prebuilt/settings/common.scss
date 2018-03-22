@@ -57,17 +57,18 @@ $grid-columns           : 24;
 $grid-gutter-width      : 0;
 
 // z-index list
-$zindex-affix           : 10;
-$zindex-back-top        : 10;
-$zindex-scrollbar       : 11;
-$zindex-modal-mask      : 1000;
-$zindex-modal           : 1000;
-$zindex-notification    : 1010;
-$zindex-message         : 1010;
-$zindex-popover         : 1030;
-$zindex-picker          : 1050;
-$zindex-dropdown        : 1050;
-$zindex-tooltip         : 1060;
+// 地面部分分成4层：null,1,2,3
+$zindex-level-1         : 1;
+$zindex-level-2         : 2;
+$zindex-level-3         : 3;
+// 空中部分采用后来居上的策略，所以高度设成1000
+$zindex-popover-level-0 : 1000;
+$zindex-popover-level-1 : 1001;
+// ui设计器box部分
+$zindex-ui-level-0      : 100;
+$zindex-ui-level-1      : 101;
+$zindex-ui-level-2      : 102;
+$zindex-ui-level-3      : 103;
 
 // Form
 // ---
@@ -76,7 +77,7 @@ $label-color                 : $text-color;
 $form-item-margin-bottom     : 24px;
 
 // perfect scrollbar
-// see issue https://github.com/zefoy/ngx-perfect-scrollbar/issues/121 
+// see issue https://github.com/zefoy/ngx-perfect-scrollbar/issues/121
 .ps{
     position: relative;
 }

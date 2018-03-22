@@ -21,8 +21,10 @@
 
 <br>
 
-<j-viewport [viewport]="tableData?.viewport" [step]="selectedStep" [verticalOffset]="42">
+<j-viewport [viewport]="tableData?.viewport" [step]="selectedStep" [verticalOffset]="42"
+            (scroll)="handleViewChange($event)">
     <j-table [data]="tableData" [columnDefines]="columnDefines" trackRowBy="name"
                   [additionalColumnDefines]="additionalColumnDefines">
     </j-table>
 </j-viewport>
+{{viewChangeMessage}}

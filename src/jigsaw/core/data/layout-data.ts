@@ -4,6 +4,9 @@ import {CommonUtils} from "../utils/common-utils";
 import {InternalUtils} from "../utils/internal-utils";
 import {JigsawEditableBox} from "../../component/box/editable-box";
 
+/**
+ * 组件的输入属性结构化信息
+ */
 export class ComponentInput {
     property: string;
     type?: string;
@@ -11,6 +14,9 @@ export class ComponentInput {
     binding?: string;
 }
 
+/**
+ * 组件的元数据信息
+ */
 export class ComponentMetaData {
     [index: string]: any;
     component: Type<any>;
@@ -25,6 +31,11 @@ export class LayoutComponentInfo {
     component: ComponentRef<any> | EmbeddedViewRef<any>;
 }
 
+/**
+ * 用于动态布局页面的数据。
+ *
+ * 布局数据是Jigsaw数据体系中的一个分支，关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
+ */
 export class LayoutData extends GeneralCollection<any> {
     [index: string]: any;
     direction?: string;

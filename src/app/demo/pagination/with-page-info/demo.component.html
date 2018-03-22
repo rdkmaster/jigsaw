@@ -1,0 +1,23 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-pagination [total]="pageInfo.totalRecord"
+                   [(pageSize)]="pageInfo.pageSize"
+                   [(current)]="pageInfo.currentPage"
+                   [pageSizeOptions]="[5, 10, 20]"
+                   [searchable]="false"
+                   [showQuickJumper]="true">
+</jigsaw-pagination>
+
+<br><br>
+<h5>分页数据信息：</h5>
+<ul style="list-style: disc">
+    <li>pageInfo.totalPage: {{pageInfo.totalPage}}</li>
+    <li>pageInfo.pageSize: {{pageInfo.pageSize}}</li>
+    <li>pageInfo.currentPage: {{pageInfo.currentPage}}</li>
+    <li>pageInfo.totalRecord: {{pageInfo.totalRecord}}</li>
+    <li>actions: {{actions}} <span>注意快速切换页时的debounce的效果</span></li>
+</ul>

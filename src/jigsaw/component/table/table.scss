@@ -63,7 +63,7 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
 .#{$table-prefix-cls}-header {
     position: absolute;
     top: 0;
-    z-index: $zindex-affix;
+    z-index: $zindex-level-1;
 }
 
 .#{$table-prefix-cls}-range{
@@ -76,12 +76,23 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
 
 .#{$table-prefix-cls}-body-range{
     height: 100%;
+    &.#{$table-prefix-cls}-no-data {
+        height: 160px;
+        border: 1px solid $border-color-base;
+    }
 }
 
 .#{$table-prefix-cls}-auto-width {
     .#{$table-prefix-cls}-cell-content, jigsaw-table-header {
         white-space: nowrap;
     }
+}
+
+.#{$table-prefix-cls}-no-data-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 @-moz-document url-prefix() {

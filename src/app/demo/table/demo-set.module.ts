@@ -13,8 +13,6 @@ import {TableAddColumnDemoComponent} from "./add-column/demo.component";
 import {TableAddColumnDemoModule} from "./add-column/demo.module";
 import {TableAddIDColumnDemoComponent} from "./index-column/demo.component";
 import {TableAddIDColumnDemoModule} from "./index-column/demo.module";
-import {TableAddIDWithDebouncePagingComponent} from "./debounce-while-changing-page/demo.component";
-import {TableAddIDWithDebouncePagingModule} from "./debounce-while-changing-page/demo.module";
 import {TableAddIDWithPagingComponent} from "./index-column-with-paging/demo.component";
 import {TableAddIDWithPagingModule} from "./index-column-with-paging/demo.module";
 import {TableBasicDemoComponent} from "./basic/demo.component";
@@ -75,6 +73,8 @@ import {TableAddCheckboxColumnPageableDemoModule} from "./checkbox-column-pageab
 import {TableAddCheckboxColumnPageableDemoComponent} from "./checkbox-column-pageable/demo.component";
 import {TableSwitchRendererDemoComponent} from "./switch-renderer/demo.component";
 import {TableSwitchRendererDemoModule} from "./switch-renderer/demo.module";
+import {TableNoDataDemoComponent} from "./no-data/demo.component";
+import {TableNoDataDemoModule} from "./no-data/demo.module";
 
 export const routerConfig = [
     {
@@ -153,9 +153,6 @@ export const routerConfig = [
         path: 'index-column-with-paging', component: TableAddIDWithPagingComponent
     },
     {
-        path: 'debounce-while-changing-page', component: TableAddIDWithDebouncePagingComponent
-    },
-    {
         path: 'with-popup', component: TableDataWithPopupDemoComponent
     },
     {
@@ -188,12 +185,15 @@ export const routerConfig = [
     {
         path: 'switch-renderer', component: TableSwitchRendererDemoComponent
     },
+    {
+        path: 'no-data', component: TableNoDataDemoComponent
+    },
 ];
 
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig),
-        TableAddCheckboxColumnDemoModule, TableAddColumnDemoModule, TableAddIDColumnDemoModule, TableAddIDWithDebouncePagingModule,
+        TableAddCheckboxColumnDemoModule, TableAddColumnDemoModule, TableAddIDColumnDemoModule,
         TableAddIDWithPagingModule, TableBasicDemoModule, TableDataChangeDemoModule, TableDataFromAjaxDemoModule,
         TableFixedHeadDemoModule, BigTableDataDemoModule, LocalPagingDataDemoModule, TablePageableDemoModule,
         TableRendererDemoModule, TableRendererOfTemplateRefDemoModule, TableContentWidthDemoModule, BigColumnDemoModule,
@@ -201,7 +201,8 @@ export const routerConfig = [
         TableColumnSetVisibleDemoModule, TableColumnSetWidthDemoModule, TableSetHeaderClassDemoModule, TableSetHeaderRenderDemoModule,
         TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, SwimLaneDiagramDemoModule, TableHideHeadDemoModule,
         TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule, TableCalendarDemoModule, BigRowDemoModule, TableResizeDemoModule,
-        TableScrollListenDemoModule, SodokuGameModule, TableAddCheckboxColumnPageableDemoModule, TableSwitchRendererDemoModule
+        TableScrollListenDemoModule, SodokuGameModule, TableAddCheckboxColumnPageableDemoModule, TableSwitchRendererDemoModule,
+        TableNoDataDemoModule
     ]
 })
 export class TableDemoModule {

@@ -19,6 +19,8 @@ import {JigsawHideTabComponent} from "./hide-tab/demo.component";
 import {JigsawShowTabComponent} from "./show-tab/demo.component";
 import {JigsawDestoryTabComponent} from "./destroy-tab/demo.component";
 import {DynamicTabDemoComponent} from "./api/demo.component";
+import {TabsUpdateTitleDemoComponent} from "./update-title/demo.component";
+import {TabsUpdateTitleDemoModule} from "./update-title/demo.module";
 
 export const routerConfig = [
     {
@@ -47,13 +49,16 @@ export const routerConfig = [
     {
         path: 'destroy-tab', component: JigsawDestoryTabComponent
     },
+    {
+        path: 'update-title', component: TabsUpdateTitleDemoComponent
+    },
 ];
 
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig),
         TabsBasicDemoModule, TabsDestroyDemoModule, TabsHideTabDemoModule, TabsShowTabDemoModule,
-        DynamicTabDemoModule, TabsWithInputDemoModule, TabsWithNgForDemoModule
+        DynamicTabDemoModule, TabsWithInputDemoModule, TabsWithNgForDemoModule, TabsUpdateTitleDemoModule
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

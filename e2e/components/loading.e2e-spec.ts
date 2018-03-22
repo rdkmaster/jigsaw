@@ -19,7 +19,7 @@ describe('loading', () => {
             buttons.get(0).click();
             await browser.wait(ExpectedConditions.presenceOf(element(by.css('.jigsaw-block-host'))));
             expect(loadingBlock.getCssValue('position')).toBe('absolute');
-            expect(loadingBlock.getCssValue('z-index')).toBe('1030');
+            expect(loadingBlock.getCssValue('z-index')).toBe('1000');
             await browser.wait(ExpectedConditions.presenceOf(element(by.css('.jigsaw-loading-content'))));
             expect(element(by.css('.jigsaw-loading-content')).getCssValue('width')).toBe('70px');
             expect(element(by.css('.jigsaw-loading-content')).getCssValue('margin-left')).toBe('-35px');

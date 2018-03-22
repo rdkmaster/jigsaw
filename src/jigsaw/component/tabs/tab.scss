@@ -34,7 +34,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
 
                 .#{$tab-prefix}-ink-bar {
                     position: absolute;
-                    z-index: 1;
+                    z-index: $zindex-level-1;
                     left: 0;
                     bottom: -1px;
                     height: 2px;

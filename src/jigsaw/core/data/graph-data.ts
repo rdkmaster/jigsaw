@@ -13,6 +13,8 @@ export type GraphDataMatrix = GraphMatrixRow[];
  *
  * Jigsaw的图形是基于[echarts 3.x](http://echarts.baidu.com/index.html)实现的，因此在使用这个类来描述一个图之前，
  * 请确保你已经具备了echarts的相关知识了。其中最主要的是需要熟悉[echarts的配置项](http://echarts.baidu.com/option.html#title)。
+ *
+ * 图形数据是Jigsaw数据体系中的一个分支，关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
  */
 export abstract class AbstractGraphData extends TableDataBase {
     protected abstract createChartOptions(): EchartOptions;
@@ -153,18 +155,40 @@ export abstract class AbstractGraphData extends TableDataBase {
     }
 }
 
+/**
+ * 这是一个通用的图形数据，提供给它一个`EchartOptions`，它就可以渲染出对应的图了。
+ *
+ * Jigsaw有计划对常用的图形做封装，包括使用接口和样式，尽情期待。
+ *
+ * 图形数据是Jigsaw数据体系中的一个分支，关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
+ */
+export class GraphData extends AbstractGraphData {
+    echartsOptions: EchartOptions;
+
+    constructor(options: EchartOptions) {
+        super();
+        this.echartsOptions = options;
+    }
+
+    protected createChartOptions(): EchartOptions {
+        return this.echartsOptions;
+    }
+}
+
 export abstract class AbstractNormalGraphData extends AbstractGraphData {
     public title: EchartTitle;
     public legend: EchartLegend;
     public tooltip: EchartTooltip;
 }
 
+/**
+ * @internal
+ */
 export class OutlineMapData extends AbstractNormalGraphData {
     protected createChartOptions(): any {
         return undefined;
     }
 }
-
 
 export class PieGraphData extends AbstractGraphData {
     constructor(title: string | EchartTitle, series: any[], tooltip?: EchartTooltip) {
@@ -343,6 +367,9 @@ export class PieGraphDataByRow extends PieGraphDataByColumn {
     }
 }
 
+/**
+ * @internal
+ */
 export class DonutGraphData extends PieGraphData {
     protected createChartOptions(): any {
         return undefined;
@@ -459,24 +486,36 @@ export class LineBarGraphDataByRow extends AbstractNormalGraphData {
     }
 }
 
+/**
+ * @internal
+ */
 export class GaugeGraphData extends AbstractNormalGraphData {
     protected createChartOptions(): any {
         return undefined;
     }
 }
 
+/**
+ * @internal
+ */
 export class ScatterGraphData extends AbstractNormalGraphData {
     protected createChartOptions(): any {
         return undefined;
     }
 }
 
+/**
+ * @internal
+ */
 export class RadarGraphData extends AbstractNormalGraphData {
     protected createChartOptions(): any {
         return undefined;
     }
 }
 
+/**
+ * @internal
+ */
 export class HeatGraphData extends AbstractNormalGraphData {
     protected createChartOptions(): any {
         return undefined;
