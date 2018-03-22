@@ -901,13 +901,6 @@ export class BigTableData extends PageableTableData implements ISlicedData {
         }
     }
 
-    protected ajaxSuccessHandler(rawTableData): void {
-        super.ajaxSuccessHandler(rawTableData);
-
-        this.updateCache();
-        console.log(`data fetched, startPage=${this._cache.startPage}, endPage=${this._cache.endPage}`);
-    }
-
     /**
      * 更新缓冲区
      */
@@ -963,8 +956,16 @@ export class BigTableData extends PageableTableData implements ISlicedData {
         throw new Error('_printPageError')
     }
 
+    protected ajaxSuccessHandler(rawTableData): void {
+        super.ajaxSuccessHandler(rawTableData);
+        this.reallyBusy = false;
+        this.updateCache();
+        console.log(`data fetched, startPage=${this._cache.startPage}, endPage=${this._cache.endPage}`);
+    }
+
     protected ajaxErrorHandler(error): void {
         super.ajaxErrorHandler(error);
+        this.reallyBusy = false;
         this._cache = {field: [], header: [], data: [], startPage: 1, endPage: 1};
         this._updateViewPortSize();
     }
