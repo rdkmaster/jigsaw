@@ -891,10 +891,6 @@ export class BigTableData extends PageableTableData implements ISlicedData {
      * @param verticalTo
      */
     protected fetchData(targetPage, verticalTo): void {
-        console.log('!!!!!!!!!!!!!!!!!!!!!!!', this._cache.startPage, this._cache.endPage, verticalTo);
-
-
-
         if (targetPage < 1 || targetPage > this.pagingInfo.totalPage) {
             return;
         }
@@ -967,7 +963,7 @@ export class BigTableData extends PageableTableData implements ISlicedData {
                 this._cache.data.splice(this.pagingInfo.pageSize * numCachedPages, this.pagingInfo.pageSize);
             }
         }
-
+        this.viewport.setVerticalPositionSilently(this.viewport.verticalTo);
         this._updateViewPortSize();
         this.sliceData();
     }
