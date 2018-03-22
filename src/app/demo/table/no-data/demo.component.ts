@@ -14,22 +14,28 @@ export class TableNoDataDemoComponent {
                     "Tiger Nixon1",
                     "System Architect",
                     "$320,00",
+                    "a normal content",
                     "2011/04/25",
                     "Edinburgh",
-                    "542"
+                    "542",
+                    "a normal content",
+                    "a normal content"
                 ],
                 [
                     "Garrett Winflters1",
                     "Accountant",
                     "$170,7",
+                    "a normal content",
                     "2011/07/25",
                     "Tokyo",
-                    "8422"
+                    "8422",
+                    "a normal content",
+                    "a normal content"
                 ],
             ],*/
             [],
-            ["name", "position", "salary", "enroll-date", "office", "extn"],
-            ["姓名", "职位职位职位职位职位职位职位职位职位职位", "薪资薪资薪资薪资薪资薪资薪资薪资薪资", "入职日期入职日期入职日期入职日期入职日期入职日期入职日期入职日期入职日期", "部门", "其他"]);
+            ["name", "position", "salary", "title1", "enroll-date", "office", "extn", "title2", "title3"],
+            ["姓名", "职位", "薪资", "很长很长很长很长很长很长很长的用于测试的标题", "入职日期", "部门", "其他", "很长很长很长很长很长很长很长的用于测试的标题", "很长很长很长很长很长很长很长的用于测试的标题"]);
     }
 
     // ====================================================================
