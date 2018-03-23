@@ -1,17 +1,17 @@
 <div class="jigsaw-range-time">
     <jigsaw-time [date]="beginDate" [(gr)]="_$gr" [limitStart]="_$limitStart" [limitEnd]="_$limitEnd"
-                 (dateChange)="_$dateChange('beginDate',$event)" [refreshInterval]="_$refreshInterval"
-                 [weekStart]="_$weekStart"
-                 [recommendedBegin]="_$recommendedBegin" [recommendedEnd]="_$recommendedEnd"
-                 [recommendedLabel]="recommendedLabel" [grItems]="_$grItems" #timeStart
+                 (dateChange)="_$dateChange('beginDate',$event)" [refreshInterval]="refreshInterval"
+                 [weekStart]="weekStart"
+                 [recommendedBegin]="recommendedBegin" [recommendedEnd]="recommendedEnd"
+                 [recommendedLabel]="recommendedLabel" [grItems]="grItems" #timeStart
                  class.jigsaw-range-time-startTime="false" (grChange)="_$grChange($event)">
     </jigsaw-time>
     <jigsaw-time [date]="endDate" [(gr)]="_$gr" [limitStart]="beginDate" [limitEnd]="_$endTimeLimitEnd"
-                 (dateChange)="_$dateChange('endDate',$event)" [refreshInterval]="_$refreshInterval"
-                 [weekStart]="_$weekStart"
-                 [recommendedBegin]="_$recommendedBegin" [recommendedEnd]="_$recommendedEnd"
+                 (dateChange)="_$dateChange('endDate',$event)" [refreshInterval]="refreshInterval"
+                 [weekStart]="weekStart"
+                 [recommendedBegin]="recommendedBegin" [recommendedEnd]="recommendedEnd"
                  [recommendedLabel]="recommendedLabel" #timeEnd
-                 [class.jigsaw-range-time-endTime]="(_$grItems && _$grItems.length!=0)">
+                 [class.jigsaw-range-time-endTime]="(grItems && grItems.length!=0)">
     </jigsaw-time>
     <div *ngIf="_$shortcuts && _$shortcuts.length" class="jigsaw-range-time-shortcuts">
         <span *ngFor="let item of _$shortcuts" (click)="_changeShortcut(item)">
