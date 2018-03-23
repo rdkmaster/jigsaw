@@ -47,6 +47,7 @@ docInfo.components.concat(docInfo.directives).forEach(ci => {
     html = processOutputs(ci, html);
     html = processProperties(ci, html);
     html = processMethods(ci, html);
+    html = showInheritance(html);
     saveFile(ci.type, ci.name, html);
 });
 
@@ -59,6 +60,7 @@ docInfo.classes.concat(docInfo.injectables).concat(docInfo.interfaces).forEach(c
     html = processProperties(ci, html);
     html = processConstractor(ci, html);
     html = processMethods(ci, html);
+    html = showInheritance(html);
     saveFile(ci.type, ci.name, html);
 });
 
@@ -211,11 +213,12 @@ function findPropertyWithValidDescription(type, propertyName) {
 
 function processProperties(ci, html) {
     var properties = [];
+    var invalidPropertiesLength = 0;
     mergeProperties(ci).forEach(property => {
-        if (property.inheritance) {
-            // 继承过来的，暂时隐藏，参考 https://github.com/rdkmaster/jigsaw/issues/554
-            return;
-        }
+        // if (property.inheritance) {
+        //     // 继承过来的，暂时隐藏，参考 https://github.com/rdkmaster/jigsaw/issues/554
+        //     return;
+        // }
         // 尝试从当前属性描述及其父类、接口中读取描述信息
         var description = findPropertyWithValidDescription(ci, property.name);
         property.description = description;
@@ -226,11 +229,18 @@ function processProperties(ci, html) {
             '<span style="margin-right:4px;color:#9a14a9;" title="Read Only" class="fa fa-adjust"></span>' : '';
         var modifier = getModifierInfo(property.modifierKind);
         var description = property.description + (property.since ? `<p>起始版本：${property.since}</p>` : '');
-        var propertyName = `${anchor(property.name)}${modifier}${readOnly}${getRichName(property)}`;
-        properties.push(`<tr><td style="white-space: nowrap;">${propertyName}</td><td>${addTypeLink(property.type)}</td>
-            <td>${description}</td><td>${property.defaultValue}</td><td>${getDemoList(property)}</td></tr>`);
+        var inheritance = getInheritanceInfo(property.inheritance);
+        var propertyName = `${anchor(property.name)}${inheritance}${modifier}${readOnly}${getRichName(property)}`;
+        var trChildElements = `<td style="white-space: nowrap;">${propertyName}</td><td>${addTypeLink(property.type)}</td>
+            <td>${description}</td><td>${property.defaultValue}</td><td>${getDemoList(property)}</td>`;
+        if (property.inheritance||(property.modifierKind && property.modifierKind.indexOf(PROTECTED) !== -1)) {
+            properties.push(`<tr style="display: none">${trChildElements}</tr>`);
+            invalidPropertiesLength++;
+        } else {
+            properties.push(`<tr>${trChildElements}</tr>`);
+        }
     });
-    if (properties.length == 0) {
+    if (properties.length == 0 ) {
         properties.push(getNoDataRowTemplate());
     }
     return html.replace('$properties', properties.join(''));
@@ -262,14 +272,15 @@ function processConstractor(ci, html) {
 
 function processMethods(ci, html) {
     var methods = [];
+    var invalidMethodsLength = 0;
     (ci.methodsClass || ci.methods).forEach(method => {
         if (isAngularLifeCircle(method.name)) {
             return;
         }
-        if (method.inheritance) {
-            // 继承过来的，暂时隐藏，参考 https://github.com/rdkmaster/jigsaw/issues/554
-            return;
-        }
+        // if (method.inheritance) {
+        //     // 继承过来的，暂时隐藏，参考 https://github.com/rdkmaster/jigsaw/issues/554
+        //     return;
+        // }
         //如果当前方法没有描述，则往上找他的父类里要描述
         //先用严格模式找一遍
         var parentMethod = findMethodWithValidDescription(ci, method.name,
@@ -321,11 +332,18 @@ function processMethods(ci, html) {
 
         var modifier = getModifierInfo(method.modifierKind);
         var description = method.description + (method.since ? `<p>起始版本：${method.since}</p>` : '');
-        var methodName = `${anchor(method.name)}${modifier}${getRichName(method)}`;
-
-        methods.push(`<tr><td style="white-space: nowrap;">${methodName}</td><td>${description}</td>
-                    <td>${returns}</td><td>${args}</td><td>${getDemoList(method)}</td></tr>`);
+        var inheritance = getInheritanceInfo(method.inheritance);
+        var methodName = `${anchor(method.name)}${inheritance}${modifier}${getRichName(method)}`;
+        var trChildElements = `<td style="white-space: nowrap;">${methodName}</td><td>${description}</td>
+                    <td>${returns}</td><td>${args}</td><td>${getDemoList(method)}</td>`;
+        if (method.inheritance||(method.modifierKind && method.modifierKind.indexOf(PROTECTED) !== -1)) {
+            methods.push(`<tr style="display: none">${trChildElements}</tr>`);
+            invalidMethodsLength++;
+        } else {
+            methods.push(`<tr>${trChildElements}</tr>`);
+        }
     });
+
     if (methods.length == 0) {
         methods.push(getNoDataRowTemplate());
     }
@@ -381,6 +399,14 @@ function fixDescription(metaInfo) {
             return suffix;
         });
     metaInfo.description = addDescLink(metaInfo.description);
+}
+
+function getInheritanceInfo(inheritance) {
+    if (inheritance) {
+        return `<span class="fa fa-long-arrow-up" style="color: red; margin-right: 4px" title="Inheritance"></span>`
+    } else {
+        return ``
+    }
 }
 
 function getModifierInfo(modifier) {
@@ -683,6 +709,14 @@ function isAngularLifeCircle(type) {
     ].find(i => i === type || 'ng' + i == type);
 }
 
+function showInheritance(html) {
+    html = html.replace('$showInheritanceProperties', `document.getElementById('dynamicProperties').childNodes.forEach((tr)=>{tr.style.display = 'table-row';});
+                                                       this.style.display = 'none';`);
+    html = html.replace('$showInheritanceMethods', `document.getElementById('dynamicMethods').childNodes.forEach((tr)=>{tr.style.display = 'table-row';});
+                                                    this.style.display = 'none';`);
+    return html;
+}
+
 function getComponentTemplate() {
     return `
 <h2>$name</h2>
@@ -713,21 +747,23 @@ $description
 </table>
 
 <a name="properties"></a>
-<h3>普通属性 / Properties</h3>
+<h3 style="display:inline;">普通属性 / Properties</h3>
+<a name="显示继承的和被保护的属性" style="margin-left: 10px" onclick="$showInheritanceProperties">显示继承的和被保护的属性</a>
 <table style="width:100%">
     <thead>
         <tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th><th>示例</th></tr>
     </thead>
-    <tbody>$properties</tbody>
+    <tbody id="dynamicProperties">$properties</tbody>
 </table>
 
 <a name="methods"></a>
-<h3>方法 / Methods</h3>
+<h3 style="display:inline;">方法 / Methods</h3>
+<a name="显示继承的和被保护的方法" style="margin-left: 10px" onclick="$showInheritanceMethods">显示继承的和被保护的方法</a>
 <table style="width:100%">
     <thead>
         <tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th><th>示例</th></tr>
     </thead>
-    <tbody>$methods</tbody>
+    <tbody id="dynamicMethods">$methods</tbody>
 </table>
 
 $demos
@@ -746,21 +782,23 @@ function getClassesTemplate() {
 $description
 
 <a name="properties"></a>
-<h3>属性 / Properties</h3>
-<table style="width:100%">
+<h3 style="display:inline;">普通属性 / Properties</h3>
+<a name="显示继承的和被保护的属性" style="margin-left: 10px" onclick="$showInheritanceProperties">显示继承的和被保护的属性</a>
+<table style="width:100%" >
     <thead>
         <tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th><th>示例</th></tr>
     </thead>
-    <tbody>$properties</tbody>
+    <tbody id="dynamicProperties">$properties</tbody>
 </table>
 
 <a name="methods"></a>
-<h3>方法 / Methods</h3>
+<h3 style="display:inline;">方法 / Methods</h3>
+<a name="显示继承的和被保护的方法" style="margin-left: 10px" onclick="$showInheritanceMethods">显示继承的和被保护的方法</a>
 <table style="width:100%">
     <thead>
         <tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th><th>示例</th></tr>
     </thead>
-    <tbody>$methods</tbody>
+    <tbody id="dynamicMethods">$methods</tbody>
 </table>
 
 $constractor
@@ -817,9 +855,9 @@ function anchor(name) {
 function getRichName(metaInfo) {
     if (metaInfo.deprecatedFrom) {
         return getDeprecatedTemplate()
-                .replace(/\$version/g, metaInfo.deprecatedFrom)
-                .replace(/\$replacement/g, metaInfo.replacement)
-                .replace(/\$name/g, metaInfo.name);
+            .replace(/\$version/g, metaInfo.deprecatedFrom)
+            .replace(/\$replacement/g, metaInfo.replacement)
+            .replace(/\$name/g, metaInfo.name);
     } else {
         return metaInfo.name;
     }
