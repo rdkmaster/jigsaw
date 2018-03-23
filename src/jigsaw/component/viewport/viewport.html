@@ -2,6 +2,7 @@
              *ngIf="viewport.maxHeight - viewport.height > 0"
              class="jigsaw-viewport-vertical-scrollbar"
              [(value)]="viewport.verticalTo"
+             (valueChange)="_$handleViewChange($event, 'vertical')"
              [height]="height"
              [max]="viewport.maxHeight - viewport.height"
              [vertical]="true">
@@ -13,6 +14,7 @@
                  *ngIf="viewport.maxWidth - viewport.width > 0"
                  class="jigsaw-viewport-horizontal-scrollbar"
                  [(value)]="viewport.horizontalTo"
+                 (valueChange)="_$handleViewChange($event, 'horizontal')"
                  [max]="viewport.maxWidth - viewport.width">
     </j-scrollbar>
 </div>

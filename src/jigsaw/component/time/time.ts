@@ -10,7 +10,8 @@ import {JigsawSimpleTooltipComponent} from "../tooltip/tooltip";
 import {Time, WeekTime} from "../../service/time.types";
 import {TranslateHelper} from "../../core/utils/translate-helper";
 import {CommonUtils} from "../../core/utils/common-utils";
-import {ElementEventHelper} from "../../core/utils/internal-utils";
+import {ElementEventHelper, InternalUtils} from "../../core/utils/internal-utils";
+import {TranslateService} from "@ngx-translate/core";
 
 
 export type TimeShortcutFunction = () => [WeekTime, WeekTime]
@@ -35,7 +36,7 @@ export class GrItem {
         '[class.jigsaw-time-host]': 'true'
     },
     providers: [
-        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTime), multi: true },
+        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTime), multi: true},
     ]
 })
 export class JigsawTime extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
@@ -160,12 +161,16 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         }
     }
 
-    @Input("grItems") public grItems: GrItem[];
+    @Input() public grItems: GrItem[];
 
     @Input("recommendedBegin") private _recommendedBegin: Time;
 
     @Input("recommendedEnd") private _recommendedEnd: Time;
 
+    /**
+     * 推荐日期提示标签，默认值是"推荐日期"或"Recommend"
+     */
+    @Input("recommendedLabel") private _recommendedLabel: String;
 
     /**
      * time插件容器（jq对象）
@@ -177,13 +182,19 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     private _langChangeSubscriber: Subscription;
 
     constructor(private _el: ElementRef, private _renderer: Renderer2,
-                private _popService: PopupService) {
+                private _popService: PopupService, private _translateService: TranslateService) {
         super();
         this._refreshInterval = 0;
         this.weekStart = TimeWeekStart.sun;
 
         this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(
             langInfo => this._timePicker && this._timePicker.locale(langInfo.curLang));
+
+        InternalUtils.initI18n(_translateService, 'time', {
+            zh: {recommendedLabel: '推荐日期'},
+            en: {recommendedLabel: 'Recommend'}
+        });
+        _translateService.setDefaultLang(_translateService.getBrowserLang());
     }
 
     ngOnInit() {
@@ -433,7 +444,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         let weekNum = TimeService.getWeekOfYear(<string>this.date);
         let year = TimeService.getYear(<string>this.date);
         const tdActive = this._el.nativeElement.querySelector(".jigsaw-time-box .datepicker .datepicker-days>table>tbody>tr>td.active");
-        if(tdActive){
+        if (tdActive) {
             tdActive.parentNode.classList.add("active");
         }
         return {year: year, week: weekNum};
@@ -489,7 +500,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
                         },
                         posType: PopupPositionType.absolute, //定位类型
                     }, {
-                        message: "Recommended"
+                        message: this._recommendedLabel || this._translateService.instant('time.recommendedLabel')
                     });
                 });
                 this._eventHelper.put(node, "mouseenter", removeMouseEnterListener);

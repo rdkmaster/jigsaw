@@ -73,6 +73,8 @@ import {TableAddCheckboxColumnPageableDemoModule} from "./checkbox-column-pageab
 import {TableAddCheckboxColumnPageableDemoComponent} from "./checkbox-column-pageable/demo.component";
 import {TableSwitchRendererDemoComponent} from "./switch-renderer/demo.component";
 import {TableSwitchRendererDemoModule} from "./switch-renderer/demo.module";
+import {TableNoDataDemoComponent} from "./no-data/demo.component";
+import {TableNoDataDemoModule} from "./no-data/demo.module";
 
 export const routerConfig = [
     {
@@ -183,6 +185,9 @@ export const routerConfig = [
     {
         path: 'switch-renderer', component: TableSwitchRendererDemoComponent
     },
+    {
+        path: 'no-data', component: TableNoDataDemoComponent
+    },
 ];
 
 @NgModule({
@@ -196,7 +201,8 @@ export const routerConfig = [
         TableColumnSetVisibleDemoModule, TableColumnSetWidthDemoModule, TableSetHeaderClassDemoModule, TableSetHeaderRenderDemoModule,
         TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, SwimLaneDiagramDemoModule, TableHideHeadDemoModule,
         TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule, TableCalendarDemoModule, BigRowDemoModule, TableResizeDemoModule,
-        TableScrollListenDemoModule, SodokuGameModule, TableAddCheckboxColumnPageableDemoModule, TableSwitchRendererDemoModule
+        TableScrollListenDemoModule, SodokuGameModule, TableAddCheckboxColumnPageableDemoModule, TableSwitchRendererDemoModule,
+        TableNoDataDemoModule
     ]
 })
 export class TableDemoModule {
