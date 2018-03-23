@@ -12,7 +12,7 @@ import {BigRowDemoComponent} from './demo.component';
     declarations: [
         BigRowDemoComponent,
     ],
-    exports: [BigRowDemoComponent], // 这个是给plunker用的，不能去掉。
+    exports: [BigRowDemoComponent],
 })
 export class BigRowDemoModule {
 }
