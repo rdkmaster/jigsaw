@@ -26,6 +26,7 @@ export type TimeShortcutFunction = () => [WeekTime, WeekTime]
 export class Shortcut {
     /**
      * 国际化提示信息，将被直接显示在界面上
+     * $demo = range-time/gr-items
      */
     label: string;
     /**

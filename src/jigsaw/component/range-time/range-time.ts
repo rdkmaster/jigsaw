@@ -14,6 +14,9 @@ import {WeekTime} from "../../service/time.types";
  * 参考[这个demo]($demo/range-time/with-combo-select)；
  *
  * 时间控件是对表单友好的，你可以给时间控件编写表单校验器，参考[这个demo]($demo/form/template-driven)。
+ *
+ * $demo = range-time/full
+ * $demo = range-time/basic
  */
 @Component({
     selector: 'jigsaw-range-time, j-range-time',
