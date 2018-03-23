@@ -1,7 +1,6 @@
 ## v1.1.6 (2018-3-23)
 
 ### 新特性 / New Features
-- https://github.com/rdkmaster/jigsaw/issues/535 增加switch功能的table内置渲染器
 - https://github.com/rdkmaster/jigsaw/issues/608 Viewport在滚动数据时，能发送事件出来 
 - https://github.com/rdkmaster/jigsaw/issues/317 Time RangeTime 控件的推荐日期的提示支持可定制且默认值支持国际化
 
