@@ -215,10 +215,6 @@ function processProperties(ci, html) {
     var properties = [];
     var invalidPropertiesLength = 0;
     mergeProperties(ci).forEach(property => {
-        // if (property.inheritance) {
-        //     // 继承过来的，暂时隐藏，参考 https://github.com/rdkmaster/jigsaw/issues/554
-        //     return;
-        // }
         // 尝试从当前属性描述及其父类、接口中读取描述信息
         var description = findPropertyWithValidDescription(ci, property.name);
         property.description = description;
@@ -233,14 +229,14 @@ function processProperties(ci, html) {
         var propertyName = `${anchor(property.name)}${inheritance}${modifier}${readOnly}${getRichName(property)}`;
         var trChildElements = `<td style="white-space: nowrap;">${propertyName}</td><td>${addTypeLink(property.type)}</td>
             <td>${description}</td><td>${property.defaultValue}</td><td>${getDemoList(property)}</td>`;
-        if (property.inheritance||(property.modifierKind && property.modifierKind.indexOf(PROTECTED) !== -1)) {
+        if (property.inheritance || (property.modifierKind && property.modifierKind.indexOf(PROTECTED) !== -1)) {
             properties.push(`<tr style="display: none">${trChildElements}</tr>`);
             invalidPropertiesLength++;
         } else {
             properties.push(`<tr>${trChildElements}</tr>`);
         }
     });
-    if (properties.length == 0 ) {
+    if (properties.length == 0) {
         properties.push(getNoDataRowTemplate());
     }
     return html.replace('$properties', properties.join(''));
@@ -277,10 +273,6 @@ function processMethods(ci, html) {
         if (isAngularLifeCircle(method.name)) {
             return;
         }
-        // if (method.inheritance) {
-        //     // 继承过来的，暂时隐藏，参考 https://github.com/rdkmaster/jigsaw/issues/554
-        //     return;
-        // }
         //如果当前方法没有描述，则往上找他的父类里要描述
         //先用严格模式找一遍
         var parentMethod = findMethodWithValidDescription(ci, method.name,
@@ -336,7 +328,7 @@ function processMethods(ci, html) {
         var methodName = `${anchor(method.name)}${inheritance}${modifier}${getRichName(method)}`;
         var trChildElements = `<td style="white-space: nowrap;">${methodName}</td><td>${description}</td>
                     <td>${returns}</td><td>${args}</td><td>${getDemoList(method)}</td>`;
-        if (method.inheritance||(method.modifierKind && method.modifierKind.indexOf(PROTECTED) !== -1)) {
+        if (method.inheritance || (method.modifierKind && method.modifierKind.indexOf(PROTECTED) !== -1)) {
             methods.push(`<tr style="display: none">${trChildElements}</tr>`);
             invalidMethodsLength++;
         } else {
