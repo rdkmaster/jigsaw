@@ -256,7 +256,7 @@ class MockData {
         this.dataSet['fish-bone-2'] = require('../mock-data/fish-bone-2.json');
         this.dataSet['tree-data'] = require('../mock-data/tree-data.json');
         this.dataSet['soduku-puzzles'] = require('../mock-data/soduku-puzzles.json');
-        this.dataSet['big-table-data'] = this.createBigTableData();
+        this.dataSet['big-table-data'] = this.dataSet['big-table-data'] || this.createBigTableData();
         this.dataSet['map/shanghai'] = require('echarts/map/json/province/shanghai.json');
         this.dataSet['map/china'] = require('echarts/map/json/china.json');
     }
