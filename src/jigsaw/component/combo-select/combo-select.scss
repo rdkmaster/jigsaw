@@ -28,6 +28,7 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
     }
 
     &-selection-rendered {
+        position: relative;
         min-height: $height-base;
         padding: 3px 0 0;
         overflow: hidden;
@@ -53,7 +54,7 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
     }
 
     &-placeholder {
-        @include inline-block();
+        position: absolute;
         font-size: $font-size-base;
         color: $text-color-secondary;
         padding-bottom: 3px;

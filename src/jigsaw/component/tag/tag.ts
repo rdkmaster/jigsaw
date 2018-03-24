@@ -1,6 +1,6 @@
 import {Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Output, Renderer2} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {AnimationDestroy} from "../animations/destroy";
+import {bubbleIn} from "../animations/bubble-in";
 import {AbstractJigsawComponent} from "../common";
 import {CommonUtils} from "../../core/utils/common-utils";
 
@@ -16,12 +16,10 @@ import {CommonUtils} from "../../core/utils/common-utils";
         '[class.jigsaw-tag-closable]': '_closable',
         '[class.jigsaw-tag-color]': '!!color',
         '[class.jigsaw-tag-host]': 'true',
-        '[@AnimationDestroy]': '_state',
-        '(@AnimationDestroy.done)': '_animationDone($event)',
+        '[@bubbleIn]': '_animationState',
+        '(@bubbleIn.done)': '_animationDone($event)',
     },
-    animations: [
-        AnimationDestroy
-    ]
+    animations: [bubbleIn]
 })
 export class JigsawTag extends AbstractJigsawComponent implements OnInit {
 
@@ -37,7 +35,7 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
         this._closable = CommonUtils.isDefined(value) ? value : true;
     }
 
-    private _state: string;
+    private _animationState: string;
 
     constructor(private _renderer: Renderer2,
                 public _elementRef: ElementRef) {
@@ -52,7 +50,7 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     public _$close(event) {
         event.preventDefault();
         event.stopPropagation();
-        this._state = 'inactive';
+        this._animationState = 'void';
     }
 
     @Output() public select = new EventEmitter<JigsawTag>();
@@ -67,16 +65,16 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     }
 
     private _animationDone($event) {
-        if ($event.toState === 'inactive') {
+        if ($event.toState === 'void') {
             this.close.emit(this);
-            this._renderer.parentNode(this._elementRef.nativeElement).removeChild(this._elementRef.nativeElement);
+            const parentNode = this._renderer.parentNode(this._elementRef.nativeElement);
+            if (parentNode) parentNode.removeChild(this._elementRef.nativeElement);
         }
     }
 
     ngOnInit() {
         this.basicClass && this._renderer.addClass(this._elementRef.nativeElement, this.basicClass);
     }
-
 }
 
 
@@ -86,5 +84,4 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     exports: [JigsawTag]
 })
 export class JigsawTagModule {
-
 }
