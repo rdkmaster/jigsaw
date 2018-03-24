@@ -14,7 +14,10 @@ import {CommonUtils} from "../../core/utils/common-utils";
 export type CheckBoxValue = boolean | CheckBoxStatus;
 
 /**
- * checkbox 组件
+ * 复选框组件，支持勾选、非勾选、中间状态3种状态。
+ *
+ * $demo = checkbox/full
+ * $demo = checkbox/basic
  */
 @Component({
     selector: 'jigsaw-checkbox, j-checkbox',
@@ -32,11 +35,14 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
     private _enableIndeterminate: boolean = false;
 
     /**
-     * 等于`true`时，用户可以点出中间状态；
+     * 复选框是否启用中间状态的开关
+     * - 等于`true`时，用户可以点出中间状态；
+     * - 等于`false`时，用户不可点出中间状态（默认）；
      *
-     * 等于`false`时，用户不可点出中间状态，但可赋予组件中间状态(`checked`属性);
+     * 编程模式赋值复选框状态时，不受此开关的影响，即即使`enableIndeterminate`被设置为false，
+     * 应用依然可以在代码中直接将组件的状态设置为`CheckBoxStatus.indeterminate`。
      *
-     * Default value: `false`
+     * $demo = checkbox/basic
      */
     @Input()
     public get enableIndeterminate(): boolean {
@@ -54,16 +60,9 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
     private _checked: CheckBoxStatus = CheckBoxStatus.unchecked;
 
     /**
-     * checkbox选中状态
+     * 用于设置复选框的状态，支持的所有状态参考`CheckBoxStatus`，默认值是`CheckBoxStatus.unchecked`
      *
-     * ```typescript
-     * enum CheckBoxStatus {
-     *     unchecked, checked, indeterminate
-     * }
-     * ```
-     *
-     * Default value: `CheckBoxStatus.unchecked`
-     *
+     * $demo = checkbox/basic
      */
     @Input()
     public get checked(): CheckBoxValue {
@@ -75,15 +74,17 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
     }
 
     /**
-     * 选中状态变化事件
-     * @type {EventEmitter<any>}
+     * 选中状态变化时发出此事件，此事件可以简化为`change`
+     *
+     * @type {EventEmitter<CheckBoxValue>}
      */
     @Output()
     public checkedChange: EventEmitter<CheckBoxValue> = new EventEmitter();
 
     /**
-     * 选中状态变化事件
-     * @type {EventEmitter<any>}
+     * 选中状态变化时发出此事件
+     *
+     * @type {EventEmitter<CheckBoxValue>}
      */
     @Output()
     public change = this.checkedChange;
@@ -91,9 +92,9 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
     private _disabled: boolean = false;
 
     /**
-     * checkbox不可点击状态
+     * 设置按钮不可交互状态的开关，为true则不可交互，为false则可交互。
      *
-     * Default value: false
+     * $demo = checkbox/disabled
      */
     @Input()
     public get disabled(): boolean {
