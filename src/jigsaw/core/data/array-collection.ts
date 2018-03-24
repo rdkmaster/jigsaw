@@ -603,7 +603,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
  * 注意：需要有一个统一的具备服务端分页、服务端排序、服务端过滤能力的REST服务配合使用，
  * 更多信息请参考`PagingInfo.pagingServerUrl`
  *
- * 实际用法请参考[这个demo]($demo/data-encapsulation/array-ssp)
+ * 实际用法请参考[这个demo]($demo=data-encapsulation/array-ssp)
  *
  * 关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
  */

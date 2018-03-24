@@ -16,6 +16,8 @@ export type CheckBoxValue = boolean | CheckBoxStatus;
 /**
  * 复选框组件，支持勾选、非勾选、中间状态3种状态。
  *
+ * 这是一个表单友好组件。
+ *
  * $demo = checkbox/full
  * $demo = checkbox/basic
  */

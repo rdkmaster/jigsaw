@@ -4,15 +4,21 @@ import {InputBasicDemoModule} from "./basic/demo.module";
 import {InputValueChangeDemoModule} from "./value-change/demo.module";
 import {InputClearableDemoModule} from "./clearable/demo.module";
 import {InputFocusDemoModule} from "./focus/demo.module";
-import {InputPrefixIconDemoModule} from "./prefix-icon/demo.module";
+import {InputPrefixIconDemoModule} from "./icons/demo.module";
 import {InputFullModule} from "./full/demo.module";
+import {InputDisabledModule} from "./disabled/demo.module";
+import {InputValidModule} from "./valid/demo.module";
+import {InputSelectDemoModule} from "./select/demo.module";
 
 import {InputFullComponent} from "./full/demo.component";
 import {InputBasicDemoComponent} from "./basic/demo.component";
 import {InputValueChangeDemoComponent} from "./value-change/demo.component";
 import {InputClearableDemoComponent} from "./clearable/demo.component";
 import {InputFocusDemoComponent} from "./focus/demo.component";
-import {InputPrefixIconDemoComponent} from "./prefix-icon/demo.component";
+import {InputPrefixIconDemoComponent} from "./icons/demo.component";
+import {InputDisabledComponent} from "./disabled/demo.component";
+import {InputValidComponent} from "./valid/demo.component";
+import {InputSelectDemoComponent} from "./select/demo.component";
 
 export const routerConfig = [
     {
@@ -31,7 +37,16 @@ export const routerConfig = [
         path: 'focus', component: InputFocusDemoComponent
     },
     {
-        path: 'prefix-icon', component: InputPrefixIconDemoComponent
+        path: 'icons', component: InputPrefixIconDemoComponent
+    },
+    {
+        path: 'disabled', component: InputDisabledComponent
+    },
+    {
+        path: 'valid', component: InputValidComponent
+    },
+    {
+        path: 'select', component: InputSelectDemoComponent
     },
 ];
 
@@ -43,7 +58,10 @@ export const routerConfig = [
         InputClearableDemoModule,
         InputFocusDemoModule,
         InputPrefixIconDemoModule,
-        InputFullModule
+        InputFullModule,
+        InputDisabledModule,
+        InputValidModule,
+        InputSelectDemoModule
     ]
 })
 export class InputDemoModule {

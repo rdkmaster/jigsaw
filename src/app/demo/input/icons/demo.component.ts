@@ -4,27 +4,21 @@ import {JigsawInput} from "jigsaw/component/input/input";
 @Component({
     templateUrl: './demo.component.html'
 })
-export class InputFocusDemoComponent {
-    inputValue: any;
-    focusMessage: string;
+export class InputPrefixIconDemoComponent {
+
     @ViewChild('myInput') myInput: JigsawInput;
 
     click() {
-        alert(this.myInput.select());
-    }
-
-    focusHandler(event) {
-        console.log(event);
-        this.focusMessage = 'input component focused'
+        alert('你输入的值是 ' + this.myInput.value)
     }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
+    summary: string = '左右侧可以有多个图标，并且有交互';
     description: string = '';
     tags: string[] = [
-        'JigsawInput.focus',
+        'JigsawInput',
     ];
 }
 

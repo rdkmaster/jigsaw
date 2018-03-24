@@ -1,16 +1,11 @@
-import {Component, ViewChild} from "@angular/core";
+import {Component} from "@angular/core";
 import {JigsawInput} from "jigsaw/component/input/input";
 
 @Component({
-    templateUrl: './demo.component.html'
+    templateUrl: './demo.component.html',
+    styleUrls: ['./demo.component.css']
 })
-export class InputPrefixIconDemoComponent {
-
-    @ViewChild('myInput') myInput: JigsawInput;
-
-    click() {
-        alert('你输入的值是 ' + this.myInput.value)
-    }
+export class InputValidComponent {
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

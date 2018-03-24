@@ -20,7 +20,7 @@ export class ViewportScrollEvent {
 }
 
 /**
- * 为一个视口增加滚动条，让视口可以在整体可视区域中调整位置，具体用法请参考[这个demo]($demo/table/big-table)。
+ * 为一个视口增加滚动条，让视口可以在整体可视区域中调整位置，具体用法请参考[这个demo]($demo=table/big-table)。
  */
 @Component({
     selector: 'jigsaw-viewport, j-viewport',
