@@ -2,6 +2,16 @@ import {NgModule, Component, Input} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from '../common';
 
+/**
+ * 在界面上显示一个按钮，最常见最简单的组件。
+ * - 支持多种预设颜色用于表达按钮不同的作用，参考`colorType`；
+ * - 支持多种预设尺寸以适应不同场合，参考`preSize`；
+ * - 支持任意自定义尺寸，[参考这里]($demo/button/width-height)；
+ * - 支持彻底的自定义标签，甚至与loading融合在一起使用，[参考这里]($demo/button/with-loading)；
+ *
+ * $demo = button/full
+ * $demo = button/basic
+ */
 @Component({
     selector: 'jigsaw-button, a[jigsaw-button], button[jigsaw-button], j-button, a[j-button], button[j-button]',
     templateUrl: 'button.html',
@@ -24,16 +34,22 @@ export class JigsawButton extends AbstractJigsawComponent {
 
     /**
      * 设置按钮不可交互状态的开关，为true则不可交互，为false则可交互。
+     *
+     * $demo = button/disabled
      */
     @Input() public disabled: boolean = false;
 
     /**
      * 按钮颜色类型 `default` , `primary` , `warning` , `error|danger`
+     *
+     * $demo = button/full
      */
     @Input() public colorType: 'default' | 'primary' | 'warning' | 'error' | 'danger' = 'default';
 
     /**
      * 按钮预设尺寸 `default` , `small` , `large`
+     *
+     * $demo = button/full
      */
     @Input() public preSize: 'default' | 'small' | 'large' = 'default';
 
