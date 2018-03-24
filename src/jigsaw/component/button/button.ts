@@ -23,21 +23,21 @@ import {AbstractJigsawComponent} from '../common';
 export class JigsawButton extends AbstractJigsawComponent {
 
     /**
-     * 按钮不可点击状态
+     * 设置按钮不可交互状态的开关，为true则不可交互，为false则可交互。
      */
     @Input() public disabled: boolean = false;
 
     /**
      * 按钮颜色类型 `default` , `primary` , `warning` , `error|danger`
      */
-    @Input() public colorType: string = 'default';
+    @Input() public colorType: 'default' | 'primary' | 'warning' | 'error' | 'danger' = 'default';
 
     /**
      * 按钮预设尺寸 `default` , `small` , `large`
      */
-    @Input() public preSize = 'default';
+    @Input() public preSize: 'default' | 'small' | 'large' = 'default';
 
-    //按钮动画执行状态
+    // 按钮动画执行状态
     private _clicked: boolean = false;
 
     private _onClick(): void {
