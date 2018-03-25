@@ -6,6 +6,8 @@ import {JigsawInput} from "jigsaw/component/input/input";
 })
 export class InputSelectDemoComponent {
 
+    select: boolean;
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
