@@ -7,6 +7,8 @@ import {JigsawInput} from "jigsaw/component/input/input";
 })
 export class InputDisabledComponent {
 
+    enabled: boolean;
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
