@@ -52,6 +52,7 @@ export class ComboSelectValue {
 export class JigsawComboSelect extends AbstractJigsawComponent implements ControlValueAccessor, OnDestroy, OnInit, AfterViewInit {
     private _disposePopup: PopupDisposer;
     private _popupElement: HTMLElement;
+    private _popWidth: number;
     private _removeWindowClickHandler: Function;
     private _removePopupClickHandler: Function;
     private _removeMouseOverHandler: Function;
@@ -227,13 +228,14 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         this._autoWidth();
     }
 
-    private _autoWidth() {
+    private _autoWidth(time = 400) {
         if (!this.autoWidth || !this._popupElement) {
             return;
         }
         this.callLater(() => {
-            this._renderer.setStyle(this._popupElement, 'width', this._elementRef.nativeElement.offsetWidth + 'px');
-        });
+            this._popWidth = this._elementRef.nativeElement.offsetWidth;
+            this._renderer.setStyle(this._popupElement, 'width', this._popWidth + 'px');
+        }, time);
     }
 
     private _autoClose() {
@@ -283,7 +285,8 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
                 return pos;
             },
             size: {
-                minWidth: this._elementRef.nativeElement.offsetWidth
+                minWidth: this._elementRef.nativeElement.offsetWidth,
+                width: this._popWidth
             },
             showBorder: this.showBorder
         };
@@ -440,14 +443,15 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     public ngAfterViewInit() {
+        if (this.autoWidth) this._popWidth = this._elementRef.nativeElement.offsetWidth;
         this._tags.changes.subscribe(() => {
             this._autoEditorWidth();
             this.callLater(() => {
-                // 等待combo高度变化，调整下拉位置
+                // 等待combo动画完成后，调整下拉位置
                 if (this._popupElement) {
                     this._popupService.setPosition(this._getPopupOption(), this._popupElement);
                 }
-            });
+            }, 400);
         })
     }
 
