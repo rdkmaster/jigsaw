@@ -751,12 +751,6 @@ function showInheritance(html) {
     return html;
 }
 
-function replaceEmptyTable(html, $table) {
-    html = html.replace(`$Table`, `display:none`);
-    html = html.replace(`$showInheritanceMethods`, ``);
-    return html.replace(`$methods`, ``);
-}
-
 function getComponentTemplate() {
     return `
 <h2>$name</h2>
