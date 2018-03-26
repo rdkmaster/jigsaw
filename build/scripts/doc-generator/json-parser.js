@@ -124,6 +124,16 @@ function processSelector(ci, html) {
 
 function processInputs(ci, html) {
     var inputs = [];
+    if (ci.inputsClass.length) {
+        html = html.replace(`$inputsTable`, `<table style="width:100%">
+                                                  <thead>
+                                                     <tr><th>名称</th><th>类型</th><th>默认值</th><th>说明</th><th>示例</th></tr>
+                                                  </thead>
+                                                  <tbody>$inputs</tbody>
+                                              </table>`);
+    } else {
+        html = html.replace(`$inputsTable`, `<p>无</p>`)
+    }
     ci.inputsClass.forEach(input => {
         fixDescription(input);
         input.defaultValue = input.defaultValue ? input.defaultValue : '';
@@ -134,14 +144,21 @@ function processInputs(ci, html) {
         inputs.push(`<tr><td>${inputName}</td><td>${addTypeLink(input.type)}</td><td>${input.defaultValue}</td>
             <td>${description}</td><td>${getDemoList(input)}</td></tr>`);
     });
-    if (inputs.length == 0) {
-        inputs.push(getNoDataRowTemplate());
-    }
     return html.replace('$inputs', inputs.join(''));
 }
 
 function processOutputs(ci, html) {
     var outputs = [];
+    if (ci.outputsClass.length) {
+        html = html.replace(`$outputsTable`, `<table style="width:100%">
+                                                 <thead>
+                                                    <tr><th>名称</th><th>类型</th><th>默认值</th><th>说明</th><th>示例</th></tr>
+                                                 </thead>
+                                                 <tbody>$outputs</tbody>
+                                             </table>`);
+    } else {
+        html = html.replace(`$outputsTable`, `<p>无</p>`)
+    }
     ci.outputsClass.forEach(output => {
         fixDescription(output);
         output.defaultValue = output.defaultValue ? output.defaultValue : '';
@@ -155,9 +172,6 @@ function processOutputs(ci, html) {
         outputs.push(`<tr><td>${outputName}</td><td>${addTypeLink(type)}</td>
             <td>${description}</td><td>${getDemoList(output)}</td></tr>`);
     });
-    if (outputs.length == 0) {
-        outputs.push(getNoDataRowTemplate());
-    }
     return html.replace('$outputs', outputs.join(''));
 }
 
@@ -213,8 +227,20 @@ function findPropertyWithValidDescription(type, propertyName) {
 
 function processProperties(ci, html) {
     var properties = [];
-    var invalidPropertiesLength = 0;
-    mergeProperties(ci).forEach(property => {
+    var hasHiddenAttributes = false;
+    var propertiesClass = mergeProperties(ci);
+    //如果没有属性，则显示一行“无”
+    if (propertiesClass.length) {
+        html = html.replace(`$propertiesTable`, `<table style="width:100%">
+                                                             <thead>
+                                                               <tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th><th>示例</th></tr>
+                                                             </thead>
+                                                             <tbody id="dynamicProperties">$properties</tbody>
+                                                           </table>`);
+    } else {
+        html = html.replace(`$propertiesTable`, `<p>无</p>`)
+    }
+    propertiesClass.forEach(property => {
         // 尝试从当前属性描述及其父类、接口中读取描述信息
         var description = findPropertyWithValidDescription(ci, property.name);
         property.description = description;
@@ -231,13 +257,15 @@ function processProperties(ci, html) {
             <td>${description}</td><td>${property.defaultValue}</td><td>${getDemoList(property)}</td>`;
         if (property.inheritance || (property.modifierKind && property.modifierKind.indexOf(PROTECTED) !== -1)) {
             properties.push(`<tr style="display: none">${trChildElements}</tr>`);
-            invalidPropertiesLength++;
+            hasHiddenAttributes = true;
         } else {
             properties.push(`<tr>${trChildElements}</tr>`);
         }
     });
-    if (properties.length == 0) {
-        properties.push(getNoDataRowTemplate());
+
+    //如果没有隐藏的属性，则不显示<a>标签
+    if (!hasHiddenAttributes) {
+        html = html.replace(`$showInheritanceProperties`, ``);
     }
     return html.replace('$properties', properties.join(''));
 }
@@ -268,7 +296,18 @@ function processConstractor(ci, html) {
 
 function processMethods(ci, html) {
     var methods = [];
-    var invalidMethodsLength = 0;
+    var hasHiddenMethods = false;
+    //如果没有属性，则显示一行“无”
+    if ((ci.methodsClass && ci.methodsClass.length) || (ci.methods && ci.methods.length)) {
+        html = html.replace(`$methodsTable`, `<table style="width:100%">
+                                                             <thead>
+                                                               <tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th><th>示例</th></tr>
+                                                             </thead>
+                                                             <tbody id="dynamicMethods">$methods</tbody>
+                                                           </table>`);
+    } else {
+        html = html.replace(`$methodsTable`, `<p>无</p>`)
+    }
     (ci.methodsClass || ci.methods).forEach(method => {
         if (isAngularLifeCircle(method.name)) {
             return;
@@ -330,14 +369,15 @@ function processMethods(ci, html) {
                     <td>${returns}</td><td>${args}</td><td>${getDemoList(method)}</td>`;
         if (method.inheritance || (method.modifierKind && method.modifierKind.indexOf(PROTECTED) !== -1)) {
             methods.push(`<tr style="display: none">${trChildElements}</tr>`);
-            invalidMethodsLength++;
+            hasHiddenMethods = true;
         } else {
             methods.push(`<tr>${trChildElements}</tr>`);
         }
     });
 
-    if (methods.length == 0) {
-        methods.push(getNoDataRowTemplate());
+    //如果没有隐藏的方法，则不显示<a>标签
+    if (!hasHiddenMethods) {
+        html = html.replace(`$showInheritanceMethods`, ``);
     }
     return html.replace('$methods', methods.join(''));
 }
@@ -702,11 +742,19 @@ function isAngularLifeCircle(type) {
 }
 
 function showInheritance(html) {
-    html = html.replace('$showInheritanceProperties', `document.getElementById('dynamicProperties').childNodes.forEach((tr)=>{tr.style.display = 'table-row';});
-                                                       this.style.display = 'none';`);
-    html = html.replace('$showInheritanceMethods', `document.getElementById('dynamicMethods').childNodes.forEach((tr)=>{tr.style.display = 'table-row';});
-                                                    this.style.display = 'none';`);
+    html = html.replace('$showInheritanceProperties', `<a name="显示继承的和被保护的方法" style="margin-left: 10px"
+                                                    onclick="document.getElementById('dynamicProperties').childNodes.forEach((tr)=>{tr.style.display = 'table-row';});
+                                                    this.style.display = 'none';">显示继承的和被保护的方法</a> `);
+    html = html.replace('$showInheritanceMethods', `<a name="显示继承的和被保护的属性" style="margin-left: 10px"
+                                                       onclick="document.getElementById('dynamicMethods').childNodes.forEach((tr)=>{tr.style.display = 'table-row';});
+                                                       this.style.display = 'none';">显示继承的和被保护的属性</a>`);
     return html;
+}
+
+function replaceEmptyTable(html, $table) {
+    html = html.replace(`$Table`, `display:none`);
+    html = html.replace(`$showInheritanceMethods`, ``);
+    return html.replace(`$methods`, ``);
 }
 
 function getComponentTemplate() {
@@ -722,41 +770,23 @@ $description
 
 <a name="inputs"></a>
 <h3>输入属性 / Inputs</h3>
-<table style="width:100%">
-    <thead>
-        <tr><th>名称</th><th>类型</th><th>默认值</th><th>说明</th><th>示例</th></tr>
-    </thead>
-    <tbody>$inputs</tbody>
-</table>
+$inputsTable
 
 <a name="outputs"></a>
 <h3>输出属性 / Outputs</h3>
-<table style="width:100%">
-    <thead>
-        <tr><th>名称</th><th>数据类型</th><th>说明</th><th>示例</th></tr>
-    </thead>
-    <tbody>$outputs</tbody>
-</table>
+$outputsTable
 
 <a name="properties"></a>
 <h3 style="display:inline;">普通属性 / Properties</h3>
-<a name="显示继承的和被保护的属性" style="margin-left: 10px" onclick="$showInheritanceProperties">显示继承的和被保护的属性</a>
-<table style="width:100%">
-    <thead>
-        <tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th><th>示例</th></tr>
-    </thead>
-    <tbody id="dynamicProperties">$properties</tbody>
-</table>
+$showInheritanceProperties
+
+$propertiesTable
 
 <a name="methods"></a>
 <h3 style="display:inline;">方法 / Methods</h3>
-<a name="显示继承的和被保护的方法" style="margin-left: 10px" onclick="$showInheritanceMethods">显示继承的和被保护的方法</a>
-<table style="width:100%">
-    <thead>
-        <tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th><th>示例</th></tr>
-    </thead>
-    <tbody id="dynamicMethods">$methods</tbody>
-</table>
+$showInheritanceMethods
+
+$methodsTable
 
 $demos
 
@@ -775,23 +805,17 @@ $description
 
 <a name="properties"></a>
 <h3 style="display:inline;">普通属性 / Properties</h3>
-<a name="显示继承的和被保护的属性" style="margin-left: 10px" onclick="$showInheritanceProperties">显示继承的和被保护的属性</a>
-<table style="width:100%" >
-    <thead>
-        <tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th><th>示例</th></tr>
-    </thead>
-    <tbody id="dynamicProperties">$properties</tbody>
-</table>
+
+$showInheritanceProperties
+
+$propertiesTable
 
 <a name="methods"></a>
 <h3 style="display:inline;">方法 / Methods</h3>
-<a name="显示继承的和被保护的方法" style="margin-left: 10px" onclick="$showInheritanceMethods">显示继承的和被保护的方法</a>
-<table style="width:100%">
-    <thead>
-        <tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th><th>示例</th></tr>
-    </thead>
-    <tbody id="dynamicMethods">$methods</tbody>
-</table>
+
+$showInheritanceMethods
+
+$methodsTable
 
 $constractor
 
