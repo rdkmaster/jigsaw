@@ -75,11 +75,11 @@ export class GrItem {
  * 用于在界面上提供一个时刻的选择，支持多种时间粒度切换，支持年月日时分秒及其各种组合，如下是一些常见的场景及其建议：
  *
  * - 如果需要选择的是一个时间范围，则请使用`JigsawRangeTime`；
- * - 如果你需要的是一个日历的功能，那请参考[这个demo]($demo/time/calendar)，通过表格+渲染器的方式来模拟；
+ * - 如果你需要的是一个日历的功能，那请参考[这个demo]($demo=time/calendar)，通过表格+渲染器的方式来模拟；
  * - 时间选择器常常是收纳到下拉框中以解决视图空间，Jigsaw是通过`JigsawComboSelect`来组合使用的，
- * 参考[这个demo]($demo/time/with-combo-select)；
+ * 参考[这个demo]($demo=time/with-combo-select)；
  *
- * 时间控件是对表单友好的，你可以给时间控件编写表单校验器，参考[这个demo]($demo/form/template-driven)。
+ * 时间控件是对表单友好的，你可以给时间控件编写表单校验器，参考[这个demo]($demo=form/template-driven)。
  *
  * $demo = time/full
  * $demo = time/basic

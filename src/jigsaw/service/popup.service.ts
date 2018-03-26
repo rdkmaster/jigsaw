@@ -59,7 +59,7 @@ export class PopupOptions {
      * Jigsaw会自动计算出给定元素的位置，并将弹出视图移动到该位置上。一般需要配合`posOffset`属性一起调整弹出位置，
      * 避免遮挡到给定的UI元素。这个方式在实现一些下拉功能的时候会非常有用。
      *
-     * 请参考[这个demo]($demo/dialog/popup-option)。
+     * 请参考[这个demo]($demo=dialog/popup-option)。
      *
      * @type {PopupPosition}
      */
@@ -69,7 +69,7 @@ export class PopupOptions {
      * 弹出位置的偏移量，注意left属性是以弹出组件的左侧为基准，top属性是以弹出组件的上方为基准，
      * right属性是以弹出组件的右侧为基准，bottom是以弹出组件的下方为基准点。
      *
-     * 请参考[这个demo]($demo/dialog/popup-option)。
+     * 请参考[这个demo]($demo=dialog/popup-option)。
      *
      * @type {PopupPositionOffset}
      */
@@ -78,7 +78,7 @@ export class PopupOptions {
     /**
      * 弹出的组件的定位方式，和css的 absolute/fixed 含义类似。
      *
-     * 请参考[这个demo]($demo/dialog/popup-option)。
+     * 请参考[这个demo]($demo=dialog/popup-option)。
      *
      * @type {PopupPositionType}
      */

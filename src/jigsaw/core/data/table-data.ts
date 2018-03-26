@@ -340,7 +340,7 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
 
 /**
  * 这是实际使用时做常用的表格数据对象，它具备服务端分页、服务端排序、服务端过滤能力。
- * 详细用法请参考[这个demo]($demo/table/pageable)。
+ * 详细用法请参考[这个demo]($demo=table/pageable)。
  *
  * 注意：需要有一个统一的具备服务端分页、服务端排序、服务端过滤能力的REST服务配合使用，
  * 更多信息请参考`PagingInfo.pagingServerUrl`
@@ -1024,7 +1024,7 @@ export class BigTableData extends PageableTableData implements ISlicedData {
 /**
  * `LocalPageableTableData`具备浏览器本地内存中进行分页、排序、过滤能力，
  * 受限于浏览器内存的限制，无法操作大量的数据，建议尽量采用`PageableTableData`以服务端分页的形式展示数据。
- * 详细用法请参考[这个demo]($demo/table/local-paging-data)。
+ * 详细用法请参考[这个demo]($demo=table/local-paging-data)。
  *
  * 相关的表格数据对象：
  * - {@link PageableTableData} 适用于需要在服务端进行分页、过滤、排序的场景，这是最常用的一个数据对象；

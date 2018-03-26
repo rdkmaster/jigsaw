@@ -430,7 +430,7 @@ function addDescLink(desc) {
             var target = url.match(/^https?:/) ? '_blank' : '_self';
             return url ? `<a href="${url}" target="${target}">${found}</a>` : found;
         })
-        .replace(/<a\s+href\s*=\s*['"]\$demo\/(.+?)\/(.+?)(#|\?.*?)?['"]/g, (found, comp, demoName, extra) => {
+        .replace(/<a\s+href\s*=\s*['"]\$demo\s*=\s*(.+?)\/(.+?)(#|\?.*?)?['"]/g, (found, comp, demoName, extra) => {
             var script = getOpenPopupScript(`/${comp}/${demoName}${extra || ''}`);
             return `<a onclick="${script}"`;
         })

@@ -38,7 +38,7 @@ describe('input', () => {
     describe('test prefix icon', () => {
 
         beforeEach(() => {
-            browser.get('/input/prefix-icon');
+            browser.get('/input/icons');
         });
 
         it('should be mapped into component and display prefix icon', () => {

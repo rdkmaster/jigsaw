@@ -575,7 +575,7 @@ export class ComponentDataHelper {
 }
 
 /**
- * 分页信息，在各个属性发生变化后，可以对外发出通知，参考[这个demo]($demo/pagination/with-page-info)
+ * 分页信息，在各个属性发生变化后，可以对外发出通知，参考[这个demo]($demo=pagination/with-page-info)
  */
 export class PagingInfo implements IEmittable {
     /**
