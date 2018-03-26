@@ -10,7 +10,7 @@ export class InputFocusDemoComponent {
     @ViewChild('myInput') myInput: JigsawInput;
 
     click() {
-        alert(this.myInput.select());
+        this.myInput.focus();
     }
 
     focusHandler(event) {
