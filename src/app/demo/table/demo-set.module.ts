@@ -23,8 +23,8 @@ import {TableColumnGroupDemoComponent} from "./column-group/demo.component";
 import {TableColumnGroupDemoModule} from "./column-group/demo.module";
 import {TableColumnSetVisibleDemoComponent} from "./column-visible/demo.component";
 import {TableColumnSetVisibleDemoModule} from "./column-visible/demo.module";
-import {TableColumnSetWidthDemoComponent} from "./update-column-width/demo.component";
-import {TableColumnSetWidthDemoModule} from "./update-column-width/demo.module";
+import {TableColumnSetWidthDemoComponent} from "./update-column-define/demo.component";
+import {TableColumnSetWidthDemoModule} from "./update-column-define/demo.module";
 import {TableContentWidthDemoComponent} from "./content-width/demo.component";
 import {TableContentWidthDemoModule} from "./content-width/demo.module";
 import {TableDataChangeDemoComponent} from "./data-change/demo.component";
@@ -73,6 +73,8 @@ import {TableAddCheckboxColumnPageableDemoModule} from "./checkbox-column-pageab
 import {TableAddCheckboxColumnPageableDemoComponent} from "./checkbox-column-pageable/demo.component";
 import {TableSwitchRendererDemoComponent} from "./switch-renderer/demo.component";
 import {TableSwitchRendererDemoModule} from "./switch-renderer/demo.module";
+import {TableNoDataDemoComponent} from "./no-data/demo.component";
+import {TableNoDataDemoModule} from "./no-data/demo.module";
 
 export const routerConfig = [
     {
@@ -100,7 +102,7 @@ export const routerConfig = [
         path: 'data-from-ajax', component: TableDataFromAjaxDemoComponent
     },
     {
-        path: 'update-column-width', component: TableColumnSetWidthDemoComponent
+        path: 'update-column-define', component: TableColumnSetWidthDemoComponent
     },
     {
         path: 'column-visible', component: TableColumnSetVisibleDemoComponent
@@ -183,6 +185,9 @@ export const routerConfig = [
     {
         path: 'switch-renderer', component: TableSwitchRendererDemoComponent
     },
+    {
+        path: 'no-data', component: TableNoDataDemoComponent
+    },
 ];
 
 @NgModule({
@@ -196,7 +201,8 @@ export const routerConfig = [
         TableColumnSetVisibleDemoModule, TableColumnSetWidthDemoModule, TableSetHeaderClassDemoModule, TableSetHeaderRenderDemoModule,
         TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, SwimLaneDiagramDemoModule, TableHideHeadDemoModule,
         TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule, TableCalendarDemoModule, BigRowDemoModule, TableResizeDemoModule,
-        TableScrollListenDemoModule, SodokuGameModule, TableAddCheckboxColumnPageableDemoModule, TableSwitchRendererDemoModule
+        TableScrollListenDemoModule, SodokuGameModule, TableAddCheckboxColumnPageableDemoModule, TableSwitchRendererDemoModule,
+        TableNoDataDemoModule
     ]
 })
 export class TableDemoModule {

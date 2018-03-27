@@ -10,23 +10,80 @@ import {JigsawSimpleTooltipComponent} from "../tooltip/tooltip";
 import {Time, WeekTime} from "../../service/time.types";
 import {TranslateHelper} from "../../core/utils/translate-helper";
 import {CommonUtils} from "../../core/utils/common-utils";
-import {ElementEventHelper} from "../../core/utils/internal-utils";
+import {ElementEventHelper, InternalUtils} from "../../core/utils/internal-utils";
+import {TranslateService} from "@ngx-translate/core";
 
-
+/**
+ * 时间范围生成函数，用于生成自定义的时间范围
+ *
+ * $demo = range-time/gr-items
+ */
 export type TimeShortcutFunction = () => [WeekTime, WeekTime]
 
+/**
+ * 表示一个自定义的时间范围，一般用于配合`JigsawRangeTime.grItems`属性使用，用于设置某个粒度下快速时间范围选择。
+ */
 export class Shortcut {
+    /**
+     * 国际化提示信息，将被直接显示在界面上
+     * $demo = range-time/gr-items
+     */
     label: string;
+    /**
+     * 时间范围的起止时间点，可以给出固定值，也可以给一个产生起止时间点的函数
+     * $demo = range-time/gr-items
+     */
     dateRange: [WeekTime, WeekTime] | TimeShortcutFunction;
 }
 
+/**
+ * 一个时间粒度
+ */
 export class GrItem {
+    /**
+     * 国际化提示信息，将被直接显示在界面上
+     */
     label: string;
+    /**
+     * 粒度值
+     *
+     * $demo = range-time/gr-items
+     * $demo = time/gr
+     */
     value: TimeGr;
+    /**
+     * 配置当前粒度下，用户能够选择的最大时间跨度。当某些查询请求必须约束用户选择某个范围内的时间时，这个配置项将非常有用。
+     * 例如查询银行流水时，我们常常被约束最长只能查询3个月的流水等。
+     *
+     * 支持时间宏。关于时间宏，请参考这里`TimeUnit`的说明。
+     *
+     * $demo = range-time/gr-items
+     */
     span?: string;
+    /**
+     * 给出一组预定义的时间范围，这样用户可以通过这些值快速的设置好待选的时间范围，提高易用性。
+     * 只在和`JigsawRangeTime`配合使用时才有效
+     *
+     * 支持时间宏。关于时间宏，请参考这里`TimeUnit`的说明。
+     *
+     * $demo = range-time/gr-items
+     */
     shortcuts?: Shortcut[];
 }
 
+/**
+ * 用于在界面上提供一个时刻的选择，支持多种时间粒度切换，支持年月日时分秒及其各种组合，如下是一些常见的场景及其建议：
+ *
+ * - 如果需要选择的是一个时间范围，则请使用`JigsawRangeTime`；
+ * - 如果你需要的是一个日历的功能，那请参考[这个demo]($demo=time/calendar)，通过表格+渲染器的方式来模拟；
+ * - 时间选择器常常是收纳到下拉框中以解决视图空间，Jigsaw是通过`JigsawComboSelect`来组合使用的，
+ * 参考[这个demo]($demo=time/with-combo-select)；
+ *
+ * 时间控件是对表单友好的，你可以给时间控件编写表单校验器，参考[这个demo]($demo=form/template-driven)。
+ *
+ * $demo = time/full
+ * $demo = time/basic
+ */
 @Component({
     selector: 'jigsaw-time, j-time',
     templateUrl: 'time.html',
@@ -35,18 +92,33 @@ export class GrItem {
         '[class.jigsaw-time-host]': 'true'
     },
     providers: [
-        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTime), multi: true },
+        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTime), multi: true},
     ]
 })
 export class JigsawTime extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
-    @Output() public grChange = new EventEmitter<TimeGr>();
+    /**
+     * 当时间粒度被用户切换之后，Jigsaw会发出此事件。
+     *
+     * $demo = time/gr
+     *
+     * @type {EventEmitter<TimeGr>}
+     */
+    @Output()
+    public grChange = new EventEmitter<TimeGr>();
 
     /**
      * @internal
      */
     public _$gr: TimeGr = TimeGr.date;
 
+    /**
+     * 时间当前的粒度，在双绑模式下改变这值可以让时间控件更换到对应的粒度。
+     *
+     * $demo = time/gr
+     *
+     * @return {TimeGr | string}
+     */
     public get gr(): TimeGr | string {
         return this._$gr;
     }
@@ -68,7 +140,15 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
 
     private _value: Time;
 
-    //组件暴露出去的时间数值，支持双向绑定
+    /**
+     * 当前所选中的时刻，在双绑模式下，更新这个值可以让时间控件选中对应的时刻。
+     *
+     * 支持时间宏。关于时间宏，请参考这里`TimeUnit`的说明。
+     *
+     * $demo = time/basic
+     *
+     * @return {WeekTime}
+     */
     @Input()
     public get date(): WeekTime {
         return this._value ? this._value : TimeService.convertValue(new Date(), <TimeGr>this.gr);
@@ -81,10 +161,28 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         }
     }
 
-    @Output() public dateChange = new EventEmitter<WeekTime>();
+    /**
+     * 当时间被用户切换之后，Jigsaw会发出此事件。
+     *
+     * $demo = time/basic
+     *
+     * @type {EventEmitter<WeekTime>}
+     */
+    @Output()
+    public dateChange = new EventEmitter<WeekTime>();
 
     private _limitEnd: Time;
 
+    /**
+     * 时间控件允许选择的时间截止时刻，默认是无限制的未来。这个约束对所有的粒度都生效。
+     *
+     * 支持时间宏。关于时间宏，请参考这里`TimeUnit`的说明。
+     *
+     * $demo = time/limit-start
+     * $demo = time/limit-end
+     *
+     * @return {Time}
+     */
     public get limitEnd(): Time {
         return this._limitEnd && TimeService.convertValue(this._limitEnd, <TimeGr>this.gr)
     }
@@ -107,6 +205,16 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
 
     private _limitStart: Time;
 
+    /**
+     * 时间控件允许选择的时间开始时刻，默认是无限制的过去。这个约束对所有的粒度都生效。
+     *
+     * 支持时间宏。关于时间宏，请参考这里`TimeUnit`的说明。
+     *
+     * $demo = time/limit-start
+     * $demo = time/limit-end
+     *
+     * @return {Time}
+     */
     public get limitStart(): Time {
         return this._limitStart && TimeService.convertValue(this._limitStart, <TimeGr>this.gr);
     }
@@ -132,7 +240,25 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
      * 时间刷新的间隔毫秒数，主要针对startDate或endDate设置为now或now-2h等需要不时刷新的场景
      */
     private _refreshInterval: number;
+
+    /**
+     * 刷新时间宏的间隔毫秒数，默认不刷新。
+     *
+     * 解决的场景是：在界面上弄了个时间选择器，页面打开时默认选中当前时刻，并限制了用户只能选择过去3小时的时间，这很快就可以完成，毫无难度。
+     * 然而用户使用时是这样的，他打开了页面后，就去处理别的事情去了，几个小时之后再回来想用这个已经打开的页面去查询一些东西，
+     * 结果发现界面上时间怎么选都不对（因为那个时刻初始化了一次之后就再也没有更新，还停留在几个小时之前），只好刷新页面，用户常常抱怨这一点。
+     *
+     * 这个场景下，只要设置一个大于0的数字给时间控件的这个属性即可解决。
+     *
+     * $demo = time/refresh-interval
+     *
+     * @return {number}
+     */
     @Input()
+    public get refreshInterval(): number {
+        return this._refreshInterval;
+    }
+
     public set refreshInterval(value: number) {
         if (value || value == 0) {
             this._refreshInterval = value;
@@ -140,11 +266,18 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         }
     }
 
-    /**
-     * 周开始设置，可选值 sun mon tue wed thu fri sat，默认值是sun
-     */
     private _weekStart: TimeWeekStart;
+
+    /**
+     * 设置周开始日期，可选值 sun mon tue wed thu fri sat，默认值是sun。
+     *
+     * $demo = time/week-start
+     */
     @Input()
+    public get weekStart(): string | TimeWeekStart {
+        return this._weekStart;
+    }
+
     public set weekStart(value: string | TimeWeekStart) {
         if (value) {
             if (typeof value === 'string') {
@@ -160,12 +293,35 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         }
     }
 
-    @Input("grItems") public grItems: GrItem[];
+    /**
+     * 设置时间控件所支持的粒度。如果你的场景只允许用户选择天、周，则设置了这2个粒度之后，用户无法选择其他的粒度。
+     *
+     * $demo = time/gr-items
+     */
+    @Input()
+    public grItems: GrItem[];
 
-    @Input("recommendedBegin") private _recommendedBegin: Time;
+    /**
+     * 有些时候我们需要提示用户选择那些时间是最佳的，可以通过`recommendedBegin`和`recommendedEnd`来设置。
+     *
+     * $demo = time/recommended
+     */
+    @Input()
+    public recommendedBegin: Time;
 
-    @Input("recommendedEnd") private _recommendedEnd: Time;
+    /**
+     * 有些时候我们需要提示用户选择那些时间是最佳的，可以通过`recommendedBegin`和`recommendedEnd`来设置。
+     *
+     * $demo = time/recommended
+     */
+    @Input()
+    public recommendedEnd: Time;
 
+    /**
+     * 推荐日期提示标签，默认值是`"推荐日期"`或`"Recommend"`
+     */
+    @Input()
+    public recommendedLabel: String;
 
     /**
      * time插件容器（jq对象）
@@ -177,13 +333,19 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     private _langChangeSubscriber: Subscription;
 
     constructor(private _el: ElementRef, private _renderer: Renderer2,
-                private _popService: PopupService) {
+                private _popService: PopupService, private _translateService: TranslateService) {
         super();
         this._refreshInterval = 0;
         this.weekStart = TimeWeekStart.sun;
 
         this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(
             langInfo => this._timePicker && this._timePicker.locale(langInfo.curLang));
+
+        InternalUtils.initI18n(_translateService, 'time', {
+            zh: {recommendedLabel: '推荐日期'},
+            en: {recommendedLabel: 'Recommend'}
+        });
+        _translateService.setDefaultLang(_translateService.getBrowserLang());
     }
 
     ngOnInit() {
@@ -433,7 +595,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         let weekNum = TimeService.getWeekOfYear(<string>this.date);
         let year = TimeService.getYear(<string>this.date);
         const tdActive = this._el.nativeElement.querySelector(".jigsaw-time-box .datepicker .datepicker-days>table>tbody>tr>td.active");
-        if(tdActive){
+        if (tdActive) {
             tdActive.parentNode.classList.add("active");
         }
         return {year: year, week: weekNum};
@@ -444,19 +606,19 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     private _eventHelper: ElementEventHelper = new ElementEventHelper();
 
     private _handleRecommended(nativeElement: any, popService: PopupService) {
-        if (this._recommendedBegin && this._recommendedEnd) {
-            this._recommendedBegin = TimeService.getFormatDate(this._recommendedBegin);
-            this._recommendedEnd = TimeService.getFormatDate(this._recommendedEnd);
-            if (TimeService.getYear(<string>this._recommendedBegin) != TimeService.getYear(<string>this._recommendedEnd)) { //不支持跨年设置
+        if (this.recommendedBegin && this.recommendedEnd) {
+            this.recommendedBegin = TimeService.getFormatDate(this.recommendedBegin);
+            this.recommendedEnd = TimeService.getFormatDate(this.recommendedEnd);
+            if (TimeService.getYear(<string>this.recommendedBegin) != TimeService.getYear(<string>this.recommendedEnd)) { //不支持跨年设置
                 throw "recommended not support different year times!";
             }
             const monthsNode: HTMLElement = JigsawTime._getDataPickerNode("months", nativeElement);
             const monthsHeadNode: HTMLElement = JigsawTime._getDataPickerNode("months", nativeElement, true);
-            JigsawTime._searchDateForMonth(this._recommendedBegin, this._recommendedEnd, monthsNode, monthsHeadNode);
+            JigsawTime._searchDateForMonth(this.recommendedBegin, this.recommendedEnd, monthsNode, monthsHeadNode);
             const daysNode = JigsawTime._getDataPickerNode("days", nativeElement);
             const daysHeadNode: HTMLElement = JigsawTime._getDataPickerNode("days", nativeElement, true);
             const daysObj = JigsawTime._parseDay(daysHeadNode.innerText);
-            JigsawTime._searchDateForDay(this._recommendedBegin, this._recommendedEnd, daysNode, daysObj);
+            JigsawTime._searchDateForDay(this.recommendedBegin, this.recommendedEnd, daysNode, daysObj);
             nativeElement.querySelectorAll(".jigsaw-time-box .datepicker .expect-day").forEach(node => {
 
                 // #239 移除已经注册的事件. 点击事件会触发此操作, 造成重复注册事件. 引起tooltips 不能销毁.
@@ -489,7 +651,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
                         },
                         posType: PopupPositionType.absolute, //定位类型
                     }, {
-                        message: "Recommended"
+                        message: this.recommendedLabel || this._translateService.instant('time.recommendedLabel')
                     });
                 });
                 this._eventHelper.put(node, "mouseenter", removeMouseEnterListener);

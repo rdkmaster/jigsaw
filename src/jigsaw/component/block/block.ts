@@ -2,6 +2,15 @@ import {Component, ElementRef, EventEmitter, NgModule, Renderer2} from "@angular
 import {IPopupable} from "../../service/popup.service";
 import {CommonModule} from "@angular/common";
 
+/**
+ * 这是一个特殊的组件，它唯一的作用是就挡住其他的组件，从而隔离用户与被挡住组件之间的交互。
+ * 常常用于配合模态框、loading组件一起使用，而不会单独使用。
+ *
+ * $demo = loading/full
+ * $demo = loading/ball
+ * $demo = loading/bubble
+ * $demo = loading/font-icon
+ */
 @Component({
     selector: 'jigsaw-block, j-block',
     template: `<div class="jigsaw-block"></div>`,

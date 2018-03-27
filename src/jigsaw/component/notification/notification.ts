@@ -358,8 +358,8 @@ export class JigsawNotification extends AbstractDialogComponentBase {
 
     /**
      * 方便快速地将一些信息以卡片的方式弹出在视图上，起到通知用户的作用。
-     * 这种提示方式相比[alert]($demo/alert/popup)柔和许多，对用户干扰较少，**建议优先使用**。
-     * 只有在一些非要用户立即处理不可的通知才通过[alert]($demo/alert/popup)的方式通知用户。
+     * 这种提示方式相比[alert]($demo=alert/popup)柔和许多，对用户干扰较少，**建议优先使用**。
+     * 只有在一些非要用户立即处理不可的通知才通过[alert]($demo=alert/popup)的方式通知用户。
      *
      * $demo = notification/full
      *

@@ -1,6 +1,7 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {BigTableData} from "jigsaw/core/data/table-data";
+import {ViewportScrollEvent} from "jigsaw/component/viewport/viewport";
 import {AdditionalColumnDefine, ColumnDefine, TableValueGenerators} from "jigsaw/component/table/table-typings";
 import {OfficeCellRenderer, OfficeHeaderRenderer, PositionHeaderRenderer} from "./renderers";
 
@@ -52,6 +53,15 @@ export class BigTableDataDemoComponent {
     ];
 
     selectedStep = 10;
+
+    viewChangeMessage: string = '';
+
+    handleViewChange(event: ViewportScrollEvent) {
+        // 使用setTimeout触发变更检查
+        setTimeout(() => {
+            this.viewChangeMessage = `${event.direction == 'horizontal' ? '水平' : '垂直'}方向移动到${event.scrollTo}`;
+        });
+    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

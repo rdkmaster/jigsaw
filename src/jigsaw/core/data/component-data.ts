@@ -407,16 +407,37 @@ export interface IFilterable extends IAjaxComponentData {
 }
 
 /**
- * 视口数据
+ * 一个抽象的视口数据，记录了这些信息：
+ * - 视口尺寸：`width` / `height`
+ * - 视口所处区域的尺寸：`maxWidth` / `maxHeight`
+ * - 视口左上角位置：`horizontalTo` / `verticalTo`
  */
 export class ViewportData {
+    /**
+     * 视口当前的宽度值
+     */
     width: number;
+    /**
+     * 视口当前的高度值
+     */
     height: number;
 
+    /**
+     * 视口所处区域的最大宽度值
+     */
     maxWidth: number;
+    /**
+     * 视口所处区域的最大高度值
+     */
     maxHeight: number;
 
+    /**
+     * 视口的左上角当前处于全局的水平位置，从0开始计数。
+     */
     horizontalTo: number;
+    /**
+     * 视口的左上角当前处于全局的垂直位置，从0开始计数。
+     */
     verticalTo: number;
 }
 
@@ -554,7 +575,7 @@ export class ComponentDataHelper {
 }
 
 /**
- * 分页信息，在各个属性发生变化后，可以对外发出通知，参考[这个demo]($demo/pagination/with-page-info)
+ * 分页信息，在各个属性发生变化后，可以对外发出通知，参考[这个demo]($demo=pagination/with-page-info)
  */
 export class PagingInfo implements IEmittable {
     /**

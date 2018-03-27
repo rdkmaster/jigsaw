@@ -4,6 +4,11 @@ import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent} from "../common";
 import {JigsawBlock, JigsawBlockModule} from "../block/block";
 
+/**
+ * Loading组件的基类，自定义Loading组件必须继承这个类。
+ *
+ * $demo = loading/user-defined
+ */
 export class JigsawLoadingBase extends AbstractJigsawComponent implements IPopupable {
     public initData: any;
     public answer: EventEmitter<any>;

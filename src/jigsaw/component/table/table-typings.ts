@@ -147,7 +147,7 @@ export class TouchedValue {
 export class AdditionalTableData extends TableData {
     /**
      * 这个属性的值与`JigsawTable.trackRowBy`的值是相等的，关于这个属性的作用，
-     * 请访问[这个链接]($demo/table/checkbox-column#open-desc=true)。
+     * 请访问[这个链接]($demo=table/checkbox-column#open-desc=true)。
      */
     public trackRowBy: string;
     public originData: RawTableData;
