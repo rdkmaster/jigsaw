@@ -5,6 +5,7 @@ import {CustomGraphComponent} from "../custom-graph/demo.component";
 import {ComponentMetaData} from "jigsaw/core/data/layout-data";
 import {IDynamicInstantiatable} from "jigsaw/component/common";
 import {JigsawTab} from "jigsaw/component/tabs/tab";
+import {JigsawEditableBox} from "jigsaw/component/box/editable-box";
 
 @Component({
     selector: 'custom-tab',
@@ -80,6 +81,8 @@ export class CustomTabComponent {
         },
     ];
 
+    box: JigsawEditableBox;
+
     @ViewChild(JigsawTab) tabs: JigsawTab;
 
     tabsMetaData: ComponentMetaData = {
@@ -103,14 +106,16 @@ export class CustomTabComponent {
     public addComponentTab(component: Type<IDynamicInstantiatable>) {
         this.addTab('New tab', component, 'jigsaw');
         this.tabsMetaData.panes.push({
-            tile: 'New tab',
+            title: 'New tab',
             content: this.getMetaDataByComponent(component)
-        })
+        });
+        this.box.data.setComponentMetaData([this.tabsMetaData]);
     }
 
     public removeFirstTab(){
         this.removeTab(0);
         this.tabsMetaData.panes.splice(0, 1);
+        this.box.data.setComponentMetaData([this.tabsMetaData]);
     }
 
     selectChange(){

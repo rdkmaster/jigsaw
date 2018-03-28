@@ -7,6 +7,7 @@ import {CallbackRemoval} from "../../core/utils/common-utils";
 import {ComponentInput, ComponentMetaData, LayoutData} from "../../core/data/layout-data";
 import {JigsawRendererHost} from "../common";
 import {JigsawResizableBoxBase} from "./common-box";
+import {CustomTabComponent} from "../../../app/demo/layout/custom-scene-layout/custom-tab/demo.component";
 
 @Component({
     selector: 'jigsaw-editable-box, j-editable-box',
@@ -262,7 +263,11 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         this._rendererHost.viewContainerRef.clear();
         this.data.components = []; // 初始化
         componentMetaDataList.forEach(componentMetaData => {
-            this.data.components.push(this._rendererFactory(componentMetaData.component, componentMetaData.inputs));
+            const componentRef =  this._rendererFactory(componentMetaData.component, componentMetaData.inputs);
+            this.data.components.push(componentRef);
+            if(componentRef instanceof ComponentRef && componentRef.instance instanceof CustomTabComponent){
+                componentRef.instance.box = this;
+            }
         });
     }
 

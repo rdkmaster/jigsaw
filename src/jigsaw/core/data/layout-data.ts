@@ -3,6 +3,7 @@ import {ComponentRef, EmbeddedViewRef, Type} from "@angular/core";
 import {CommonUtils} from "../utils/common-utils";
 import {InternalUtils} from "../utils/internal-utils";
 import {JigsawEditableBox} from "../../component/box/editable-box";
+import {JigsawTab} from "../../component/tabs/tab";
 
 /**
  * 组件的输入属性结构化信息
@@ -91,14 +92,38 @@ export class LayoutData extends GeneralCollection<any> {
         this.componentMetaDataList = componentMetaDataList;
         this.innerHtml = '';
         componentMetaDataList.forEach(componentMetaData => {
-            this.innerHtml += `<${componentMetaData.selector} `;
+            this.innerHtml += this._parseMetaDataToHtml(componentMetaData);
+        });
+    }
+
+    private _parseMetaDataToHtml(componentMetaData: ComponentMetaData): string {
+        let innerHtml = '';
+        innerHtml += `<${componentMetaData.selector} `;
+        if(componentMetaData.inputs instanceof Array) {
             componentMetaData.inputs.forEach(input => {
                 if (CommonUtils.isDefined(input.default) && input.default != '') {
-                    this.innerHtml += `${InternalUtils.camelToKebabCase(input.property)}='${JSON.stringify(input.default)}' `;
+                    innerHtml += `${InternalUtils.camelToKebabCase(input.property)}='${JSON.stringify(input.default)}' `;
                 }
             });
-            this.innerHtml += '>' + `</${componentMetaData.selector}> \n`;
+        }
+        innerHtml += `>
+                    ${this._parseTabPanesToHtml(componentMetaData)}
+                </${componentMetaData.selector}> \n`;
+        return innerHtml;
+    }
+
+    private _parseTabPanesToHtml(componentMetaData: ComponentMetaData): string {
+        if(componentMetaData.component != JigsawTab || !(componentMetaData.panes instanceof Array) ||
+            componentMetaData.panes.length == 0) return '';
+        let innerPaneHtml = '';
+        componentMetaData.panes.forEach(pane => {
+            innerPaneHtml += `<j-pane title="${pane.title}">
+                    <ng-template>
+                        ${this._parseMetaDataToHtml(pane.content)}
+                    </ng-template>
+                </j-pane> \n`;
         });
+        return innerPaneHtml;
     }
 
     private _getComponent(node: LayoutData, arr: LayoutComponentInfo[]): LayoutComponentInfo[] {
