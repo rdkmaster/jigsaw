@@ -86,7 +86,7 @@ export class CustomTabComponent {
         this.tabs.removeTab(index);
     }
 
-    public addTab(tabTitle: string | TemplateRef<any>, tabContent: TemplateRef<any> | Type<IDynamicInstantiatable>, initData?: Object) {
+    public addTab(tabTitle, tabContent, initData) {
         this.tabs.addTab(tabTitle, tabContent, initData)
     }
 
