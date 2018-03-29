@@ -1,21 +1,3 @@
-<button (click)="popupTemplateDialog(dialog)">add tab</button>
-<button (click)="removeFirstTab()">remove tab</button>
+<button (click)="_$handleAdd()">add tab</button>
+<button (click)="removeTabByIndex()">remove tab</button>
 <jigsaw-tabs></jigsaw-tabs>
-
-<ng-template #dialog>
-    <jigsaw-dialog width="40%" (close)="onAnswer()">
-        <div jigsaw-title>
-            <span class="fa fa-thumbs-up"></span>Please choose scene
-        </div>
-        <div jigsaw-body class="dialog-body">
-            <jigsaw-tile [(selectedItems)]="selectedComponents"
-                         (selectedItemsChange)="selectChange($event)"
-                         [multipleSelect]="false"
-                         trackItemBy="label">
-                <jigsaw-tile-option *ngFor="let item of componentMetaDataList" [value]="item">
-                    {{item.label}}
-                </jigsaw-tile-option>
-            </jigsaw-tile>
-        </div>
-    </jigsaw-dialog>
-</ng-template>

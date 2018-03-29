@@ -268,6 +268,9 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         this._bindScrollEvent();
     }
 
+    @Output()
+    public wrapperFill = new EventEmitter();
+
     /**
      * 根据componentMetaDataList信息在box里面渲染需要的组件
      * @param {ComponentMetaData[]} componentMetaDataList
@@ -282,6 +285,10 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
             this.data.components.push(componentRef);
             if (componentRef instanceof ComponentRef && componentRef.instance instanceof CustomTabComponent) {
                 componentRef.instance.box = this;
+                componentRef.instance.add.subscribe(wrapper => {
+                    debugger
+                    this.getRootBox().wrapperFill.emit(wrapper);
+                })
             }
         });
     }

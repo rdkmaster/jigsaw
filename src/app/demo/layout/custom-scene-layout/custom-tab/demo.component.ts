@@ -1,9 +1,5 @@
-import {Component, Type, ViewChild} from "@angular/core";
-import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/service/popup.service";
-import {CustomTableComponent} from "../custom-table/demo.component";
-import {CustomGraphComponent} from "../custom-graph/demo.component";
+import {Component, EventEmitter, Output, Type, ViewChild} from "@angular/core";
 import {ComponentMetaData} from "jigsaw/core/data/layout-data";
-import {IDynamicInstantiatable} from "jigsaw/component/common";
 import {JigsawTab} from "jigsaw/component/tabs/tab";
 import {JigsawEditableBox} from "jigsaw/component/box/editable-box";
 
@@ -13,140 +9,33 @@ import {JigsawEditableBox} from "jigsaw/component/box/editable-box";
     styleUrls: ['./demo.component.css']
 })
 export class CustomTabComponent {
-
-    constructor(private _popupService: PopupService) {
-
-    }
-
-    selectedComponents: ComponentMetaData[];
-    componentMetaDataList: ComponentMetaData[] = [
-        {
-            label: "表格",
-            component: CustomTableComponent,
-            selector: 'custom-table',
-            import: 'CustomTableModule,',
-            inputs: [
-                {
-                    property: 'data',
-                    binding: 'tableData',
-                },
-                {
-                    property: 'additionalColumnDefine',
-                    binding: 'additionalColumnDefine',
-                    default: {
-                        a: 1,
-                        b: [1, 2, 3],
-                        c: 'ww'
-                    }
-                },
-                {
-                    property: 'additionalData',
-                    binding: 'additionalData',
-                    default: {
-                        a: 1,
-                        b: [1, 2, 3],
-                        c: 'ww'
-                    }
-                }
-            ]
-        },
-        {
-            label: "图形",
-            component: CustomGraphComponent,
-            selector: 'custom-graph',
-            import: 'CustomGraphModule,',
-            inputs: [
-                {
-                    property: 'data',
-                    binding: 'graphData',
-                },
-                {
-                    property: 'width',
-                    binding: 'graphWidth',
-                    default: 200
-                }
-            ]
-        },
-        {
-            label: "tab",
-            component: CustomTabComponent,
-            selector: 'custom-tab',
-            import: 'CustomTabModule,',
-            inputs: [
-                {
-                    property: 'data',
-                    binding: '123',
-                },
-            ]
-        },
-    ];
-
     box: JigsawEditableBox;
 
     @ViewChild(JigsawTab) tabs: JigsawTab;
 
-    tabsMetaData: ComponentMetaData = {
-        selector: 'j-tab',
-        component: JigsawTab,
-        panes: []
-    };
+    @Output()
+    public add = new EventEmitter();
 
-    getMetaDataByComponent(component: Type<IDynamicInstantiatable>): ComponentMetaData {
-        return this.componentMetaDataList.find(metadata => metadata.component == component);
+    /**
+     * @internal
+     */
+    public _$handleAdd() {
+        this.add.emit(this);
     }
 
-    public removeTab(index) {
-        this.tabs.removeTab(index);
-    }
-
-    public addTab(tabTitle, tabContent, initData) {
-        this.tabs.addTab(tabTitle, tabContent, initData)
-    }
-
-    public addComponentTab(component: Type<IDynamicInstantiatable>) {
-        this.addTab('New tab', component, 'jigsaw');
-        this.tabsMetaData.panes.push({
-            title: 'New tab',
-            content: this.getMetaDataByComponent(component)
-        });
+    public addTab(componentMetaData: ComponentMetaData) {
+        this.tabs.addTab('New tab', componentMetaData.component, 'jigsaw');
         this.box.data.componentMetaDataList[0].tabsMetaData.panes.push({
             title: 'New tab',
-            content: this.getMetaDataByComponent(component)
+            content: [componentMetaData]
         });
         this.box.data.setComponentMetaData(this.box.data.componentMetaDataList);
     }
 
-    public removeFirstTab() {
-        this.removeTab(0);
+    public removeTabByIndex(index) {
+        this.tabs.removeTab(index);
         this.box.data.componentMetaDataList[0].tabsMetaData.panes.splice(0, 1);
         this.box.data.setComponentMetaData(this.box.data.componentMetaDataList);
-    }
-
-    selectChange() {
-        if (this.dialogInfo) {
-            this.dialogInfo.dispose();
-        }
-        this.addComponentTab(this.selectedComponents[0].component);
-    }
-
-    dialogInfo: PopupInfo;
-
-    popupTemplateDialog(tp) {
-        this.dialogInfo = this._popupService.popup(tp, this.getModalOptions());
-    }
-
-    onAnswer(message: string) {
-        if (this.dialogInfo) {
-            this.dialogInfo.dispose();
-        }
-    }
-
-    getModalOptions(): PopupOptions {
-        return {
-            modal: true, //是否模态
-            showEffect: PopupEffect.bubbleIn,
-            hideEffect: PopupEffect.bubbleOut
-        };
     }
 }
 

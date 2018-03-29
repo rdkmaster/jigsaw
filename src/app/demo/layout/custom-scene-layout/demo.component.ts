@@ -2,12 +2,11 @@ import {Component, ComponentRef, TemplateRef, ViewChild, ViewEncapsulation} from
 import {ComponentMetaData, LayoutData} from "jigsaw/core/data/layout-data";
 import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/service/popup.service";
 import {JigsawEditableBox} from "jigsaw/component/box/editable-box";
-import {CustomTableComponent} from "./custom-table/demo.component";
 import {CustomGraphComponent} from "./custom-graph/demo.component";
+import {CustomTableComponent} from "./custom-table/demo.component";
 import {CustomTabComponent} from "./custom-tab/demo.component";
-import {JigsawTab} from "../../../../jigsaw/component/tabs/tab";
 
-export const ComponentMetaDataList: ComponentMetaData[] = [
+export const GlobalComponentMetaDataList: ComponentMetaData[] = [
     {
         label: "表格",
         component: CustomTableComponent,
@@ -161,11 +160,20 @@ export class CustomSceneLayoutDemoComponent {
 
     @ViewChild('dialog') dialog: TemplateRef<any>;
     currentEditableBox: JigsawEditableBox;
+    currentWrapper: any;
+    currentMode: 'box' | 'wrapper';
 
     handleFill(box: JigsawEditableBox) {
         console.log(box);
         this.currentEditableBox = box;
         this.popupTemplateDialog(this.dialog);
+        this.currentMode = 'box';
+    }
+
+    handleWrapperFill(wrapper: any) {
+        this.currentWrapper = wrapper;
+        this.popupTemplateDialog(this.dialog);
+        this.currentMode = 'wrapper';
     }
 
     handleResizeStart(boxes: JigsawEditableBox[]) {
@@ -195,7 +203,7 @@ export class CustomSceneLayoutDemoComponent {
     }
 
     selectedComponent;
-    componentMetaDataList: ComponentMetaData[] = ComponentMetaDataList;
+    componentMetaDataList: ComponentMetaData[] = GlobalComponentMetaDataList;
 
     dialogInfo: PopupInfo;
 
@@ -210,18 +218,20 @@ export class CustomSceneLayoutDemoComponent {
     }
 
     radioChange($event) {
-        debugger
         if (this.dialogInfo) {
             this.dialogInfo.dispose();
         }
-        console.log(this.selectedComponent);
-        this.currentEditableBox.addContent([
-            {
-                component: this.selectedComponent.component,
-                selector: this.selectedComponent.selector,
-                inputs: this.selectedComponent.inputs
-            }
-        ]);
+        // 复制一遍，避免操作同一对象
+        const componentMetaData = {
+            component: this.selectedComponent.component,
+            selector: this.selectedComponent.selector,
+            inputs: this.selectedComponent.inputs
+        };
+        if (this.currentMode == 'box') {
+            this.currentEditableBox.addContent([componentMetaData]);
+        } else if (this.currentMode == 'wrapper') {
+            this.currentWrapper.addTab(componentMetaData);
+        }
     }
 
     getModalOptions(): PopupOptions {

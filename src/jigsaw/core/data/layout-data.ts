@@ -28,6 +28,19 @@ export class ComponentMetaData {
     import?: string;
 }
 
+export class TabsWrapperMetaData extends ComponentMetaData {
+    tabsMetaData: TabsMetaData;
+}
+
+export class TabsMetaData extends ComponentMetaData {
+    panes: TabPaneMetaData;
+}
+
+export class TabPaneMetaData extends ComponentMetaData {
+    title: string;
+    content: ComponentMetaData[];
+}
+
 export class LayoutComponentInfo {
     box: JigsawEditableBox;
     component: ComponentRef<any> | EmbeddedViewRef<any>;
@@ -108,9 +121,8 @@ export class LayoutData extends GeneralCollection<any> {
                 }
             });
         }
-        innerHtml += `>
-                    ${this._parseTabPanesToHtml(componentMetaData)}
-                </${componentMetaData.selector}> \n`;
+        innerHtml += `>\n ${this._parseTabPanesToHtml(componentMetaData)}
+                </${componentMetaData.selector}>\n`;
         return innerHtml;
     }
 
@@ -119,11 +131,12 @@ export class LayoutData extends GeneralCollection<any> {
             componentMetaData.panes.length == 0) return '';
         let innerPaneHtml = '';
         componentMetaData.panes.forEach(pane => {
-            innerPaneHtml += `<j-pane title="${pane.title}">
-                    <ng-template>
-                        ${this._parseMetaDataToHtml(pane.content)}
-                    </ng-template>
-                </j-pane> \n`;
+            innerPaneHtml += `<j-pane title="${pane.title}">\n<ng-template>\n`;
+            innerPaneHtml += pane.content.reduce((str, content) => {
+                str += this._parseMetaDataToHtml(content);
+                return str;
+            }, '');
+            innerPaneHtml += `</ng-template>\n</j-pane>\n`;
         });
         return innerPaneHtml;
     }
