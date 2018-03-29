@@ -1,7 +1,7 @@
 import {
     Component, Input, ViewContainerRef, TemplateRef, ViewChild, ElementRef,
     AfterViewInit, EmbeddedViewRef, ChangeDetectorRef, Type, ComponentFactoryResolver,
-    ComponentRef, OnDestroy
+    ComponentRef, OnDestroy, EventEmitter, Output, AfterContentInit
 } from '@angular/core';
 import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
 
@@ -66,13 +66,21 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements O
         <ng-template #body></ng-template>
     `
 })
-export class JigsawTabLabel extends JigsawTabBase implements AfterViewInit {
+export class JigsawTabLabel extends JigsawTabBase implements AfterViewInit,OnDestroy {
 
     constructor(public elementRef: ElementRef,
                 protected _changeDetector: ChangeDetectorRef,
                 protected _componentFactory: ComponentFactoryResolver) {
         super(_changeDetector, _componentFactory)
     }
+
+    //tab-pane组件实例
+    @Input()
+    public pane;
+
+    //tab组件实例
+    @Input()
+    public tab;
 
     // label 左侧的距离
     public getOffsetLeft(): number {
@@ -89,7 +97,16 @@ export class JigsawTabLabel extends JigsawTabBase implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this._insert()
+        this._insert();
+        this.pane.close.subscribe(
+            data => {
+                this.tab.removeTab(this.key);
+            }
+        )
+    }
+
+    ngOnDestroy(){
+        this.pane.close.unsubscribe();
     }
 
 }
