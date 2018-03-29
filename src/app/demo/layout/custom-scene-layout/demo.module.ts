@@ -10,8 +10,7 @@ import {CustomTableModule} from "./custom-table/demo.module";
 import {CustomGraphComponent} from "./custom-graph/demo.component";
 import {CustomGraphModule} from "./custom-graph/demo.module";
 import {CustomSceneLayoutDemoComponent} from "./demo.component";
-import {CustomTabModule} from "./custom-tab/demo.module";
-import {CustomTabComponent} from "./custom-tab/demo.component";
+import {JigsawTabsWrapper, JigsawTabsWrapperModule} from "jigsaw/component/box/tabs-wrapper/tabs-wrapper";
 
 @NgModule({
     declarations: [
@@ -27,10 +26,10 @@ import {CustomTabComponent} from "./custom-tab/demo.component";
         // 可选的内容模块
         CustomTableModule,
         CustomGraphModule,
-        CustomTabModule,
+        JigsawTabsWrapperModule,
     ],
     exports: [CustomSceneLayoutDemoComponent],
-    entryComponents: [CustomTableComponent, CustomGraphComponent, CustomTabComponent] // 可选的内容组件
+    entryComponents: [CustomTableComponent, CustomGraphComponent, JigsawTabsWrapper] // 可选的内容组件
 })
 export class CustomSceneLayoutDemoModule {
 

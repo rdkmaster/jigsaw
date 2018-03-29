@@ -1,14 +1,15 @@
-import {Component, EventEmitter, Output, Type, ViewChild} from "@angular/core";
+import {Component, EventEmitter, NgModule, Output, ViewChild} from "@angular/core";
 import {ComponentMetaData} from "jigsaw/core/data/layout-data";
 import {JigsawTab} from "jigsaw/component/tabs/tab";
 import {JigsawEditableBox} from "jigsaw/component/box/editable-box";
+import {JigsawTabsModule} from "../../tabs/index";
 
 @Component({
     selector: 'custom-tab',
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
+    templateUrl: './tabs-wrapper.html',
+    styleUrls: ['./tabs-wrapper.scss']
 })
-export class CustomTabComponent {
+export class JigsawTabsWrapper {
     box: JigsawEditableBox;
 
     @ViewChild(JigsawTab) tabs: JigsawTab;
@@ -37,5 +38,13 @@ export class CustomTabComponent {
         this.box.data.componentMetaDataList[0].tabsMetaData.panes.splice(0, 1);
         this.box.data.setComponentMetaData(this.box.data.componentMetaDataList);
     }
+}
+
+@NgModule({
+    imports: [JigsawTabsModule],
+    declarations: [JigsawTabsWrapper],
+    exports: [JigsawTabsWrapper]
+})
+export class JigsawTabsWrapperModule {
 }
 

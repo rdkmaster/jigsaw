@@ -4,7 +4,7 @@ import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/service
 import {JigsawEditableBox} from "jigsaw/component/box/editable-box";
 import {CustomGraphComponent} from "./custom-graph/demo.component";
 import {CustomTableComponent} from "./custom-table/demo.component";
-import {CustomTabComponent} from "./custom-tab/demo.component";
+import {JigsawTabsWrapper} from "jigsaw/component/box/tabs-wrapper/tabs-wrapper";
 
 export const GlobalComponentMetaDataList: ComponentMetaData[] = [
     {
@@ -56,7 +56,7 @@ export const GlobalComponentMetaDataList: ComponentMetaData[] = [
     },
     {
         label: "tab",
-        component: CustomTabComponent,
+        component: JigsawTabsWrapper,
         selector: 'custom-tab',
         import: 'CustomTabModule,',
         inputs: [

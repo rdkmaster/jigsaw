@@ -4,7 +4,7 @@ import {CommonUtils} from "../utils/common-utils";
 import {InternalUtils} from "../utils/internal-utils";
 import {JigsawEditableBox} from "../../component/box/editable-box";
 import {JigsawTab} from "../../component/tabs/tab";
-import {CustomTabComponent} from "../../../app/demo/layout/custom-scene-layout/custom-tab/demo.component";
+import {JigsawTabsWrapper} from "../../component/box/tabs-wrapper/tabs-wrapper";
 
 /**
  * 组件的输入属性结构化信息
@@ -212,7 +212,7 @@ export class LayoutData extends GeneralCollection<any> {
             }, []);
 
             return {
-                component: CustomTabComponent,
+                component: JigsawTabsWrapper,
                 selector: 'custom-tab',
                 inputs: inputs,
                 tabsMetaData: {
