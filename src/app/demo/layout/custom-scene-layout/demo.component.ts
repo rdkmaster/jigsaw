@@ -230,7 +230,9 @@ export class CustomSceneLayoutDemoComponent {
         if (this.currentMode == 'box') {
             this.currentEditableBox.addContent([componentMetaData]);
         } else if (this.currentMode == 'wrapper') {
-            this.currentWrapper.addTab(componentMetaData);
+            if (this.currentWrapper instanceof JigsawTabsWrapper) {
+                this.currentWrapper.addTab(componentMetaData);
+            }
         }
     }
 
