@@ -286,7 +286,6 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
             if (componentRef instanceof ComponentRef && componentRef.instance instanceof CustomTabComponent) {
                 componentRef.instance.box = this;
                 componentRef.instance.add.subscribe(wrapper => {
-                    debugger
                     this.getRootBox().wrapperFill.emit(wrapper);
                 })
             }
