@@ -41,8 +41,13 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
 
         this._rendererHost.viewContainerRef.clear();
         this._data = value;
-        if (this.initialized && !this.parent) {
-            this._setRootProperty();
+
+        if (this.initialized) {
+            this._renderComponents(this.data.componentMetaDataList);
+            this.data.box = this;
+            if (!this.parent) {
+                this._setRootProperty();
+            }
         }
         if (this._removeDataRefreshListener) {
             this._removeDataRefreshListener();
@@ -263,9 +268,9 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         this._rendererHost.viewContainerRef.clear();
         this.data.components = []; // 初始化
         componentMetaDataList.forEach(componentMetaData => {
-            const componentRef =  this._rendererFactory(componentMetaData.component, componentMetaData.inputs);
+            const componentRef = this._rendererFactory(componentMetaData.component, componentMetaData.inputs);
             this.data.components.push(componentRef);
-            if(componentRef instanceof ComponentRef && componentRef.instance instanceof CustomTabComponent){
+            if (componentRef instanceof ComponentRef && componentRef.instance instanceof CustomTabComponent) {
                 componentRef.instance.box = this;
             }
         });
