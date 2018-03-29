@@ -217,57 +217,6 @@ export class LayoutData extends GeneralCollection<any> {
         }
     }
 
-    /*  private static _parseElementToComponentMetaData(element: Element, metaDataList: ComponentMetaData[]): ComponentMetaData[] {
-          return Array.from(element.children).reduce((arr, elementNode) => {
-              const tagName = elementNode.tagName.toLowerCase();
-              const inputs = Array.from(elementNode.attributes).reduce((arr, attr) => {
-                  arr.push({
-                      property: InternalUtils.kebabToCamelCase(attr.name),
-                      default: JSON.parse(attr.value)
-                  });
-                  return arr;
-              }, []);
-
-              if(tagName == 'j-tabs') {
-                  const panes = Array.from(elementNode.children).reduce((arr, paneNode) => {
-                      if(paneNode.tagName.toLowerCase() != 'j-pane') return;
-                      const ngTemplate = Array.from(paneNode.children).find(child => child.tagName.toLowerCase() == 'ng-template');
-                      let contentMetaDataList;
-                      if(ngTemplate) {
-                          contentMetaDataList = Array.from(ngTemplate.children).reduce((arr1, content) => {
-                              const sss = this._parseElementToComponentMetaData(content, metaDataList);
-                              arr1.push(this._parseElementToComponentMetaData(content, metaDataList));
-                              return arr1;
-                          }, [])
-                      }
-                      arr.push({
-                          title: paneNode.getAttribute('title'),
-                          content: contentMetaDataList
-                      });
-                      return arr;
-                  }, []);
-
-                  arr.push({
-                      component: CustomTabComponent,
-                      selector: 'custom-tab',
-                      inputs: inputs,
-                      tabsMetaData: {
-                          selector: 'j-tabs',
-                          component: JigsawTab,
-                          panes: panes
-                      }
-                  })
-              } else {
-                  arr.push({
-                      component: metaDataList.find(metaData => metaData.selector == tagName).component,
-                      selector: tagName,
-                      inputs: inputs
-                  })
-              }
-              return arr;
-          }, []);
-      }
-  */
     private _parseNodesToHtml(nodes: LayoutData[], domStr: string): string {
         if (nodes instanceof Array) {
             nodes.forEach(node => {

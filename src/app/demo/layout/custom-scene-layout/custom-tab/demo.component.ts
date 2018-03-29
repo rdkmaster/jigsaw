@@ -91,7 +91,7 @@ export class CustomTabComponent {
         panes: []
     };
 
-    getMetaDataByComponent(component: Type<IDynamicInstantiatable>): ComponentMetaData{
+    getMetaDataByComponent(component: Type<IDynamicInstantiatable>): ComponentMetaData {
         return this.componentMetaDataList.find(metadata => metadata.component == component);
     }
 
@@ -116,13 +116,13 @@ export class CustomTabComponent {
         this.box.data.setComponentMetaData(this.box.data.componentMetaDataList);
     }
 
-    public removeFirstTab(){
+    public removeFirstTab() {
         this.removeTab(0);
         this.box.data.componentMetaDataList[0].tabsMetaData.panes.splice(0, 1);
         this.box.data.setComponentMetaData(this.box.data.componentMetaDataList);
     }
 
-    selectChange(){
+    selectChange() {
         if (this.dialogInfo) {
             this.dialogInfo.dispose();
         }
