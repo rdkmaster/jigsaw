@@ -4,6 +4,7 @@ import {CommonUtils} from "../utils/common-utils";
 import {InternalUtils} from "../utils/internal-utils";
 import {JigsawEditableBox} from "../../component/box/editable-box";
 import {JigsawTab} from "../../component/tabs/tab";
+import {CustomTabComponent} from "../../../app/demo/layout/custom-scene-layout/custom-tab/demo.component";
 
 /**
  * 组件的输入属性结构化信息
@@ -100,7 +101,7 @@ export class LayoutData extends GeneralCollection<any> {
     private _parseMetaDataToHtml(componentMetaData: ComponentMetaData): string {
         let innerHtml = '';
         innerHtml += `<${componentMetaData.selector} `;
-        if(componentMetaData.inputs instanceof Array) {
+        if (componentMetaData.inputs instanceof Array) {
             componentMetaData.inputs.forEach(input => {
                 if (CommonUtils.isDefined(input.default) && input.default != '') {
                     innerHtml += `${InternalUtils.camelToKebabCase(input.property)}='${JSON.stringify(input.default)}' `;
@@ -114,7 +115,7 @@ export class LayoutData extends GeneralCollection<any> {
     }
 
     private _parseTabPanesToHtml(componentMetaData: ComponentMetaData): string {
-        if(componentMetaData.component != JigsawTab || !(componentMetaData.panes instanceof Array) ||
+        if (componentMetaData.component != JigsawTab || !(componentMetaData.panes instanceof Array) ||
             componentMetaData.panes.length == 0) return '';
         let innerPaneHtml = '';
         componentMetaData.panes.forEach(pane => {
@@ -161,32 +162,112 @@ export class LayoutData extends GeneralCollection<any> {
                     node.nodes.push(this._parseElementToData(element.children[i], metaDataList));
                 }
             } else {
-                node = this._parseElementToComponentMetaData(node, element, metaDataList);
+                node.innerHtml = element.innerHTML;
+                node.componentMetaDataList = this._parseChildrenToComponentMetaDataList(element, metaDataList);
             }
         }
         return node;
     }
 
-    private static _parseElementToComponentMetaData(node: any, element: Element, metaDataList: ComponentMetaData[]): any {
-        node.innerHtml = element.innerHTML;
-        for (let i = 0; i < element.children.length; i++) {
-            const inputs = [];
-            for (let j = 0; j < element.children[i].attributes.length; j++) {
-                inputs.push({
-                    property: InternalUtils.kebabToCamelCase(element.children[i].attributes[j].name),
-                    default: JSON.parse(element.children[i].attributes[j].value)
-                })
+    private static _parseChildrenToComponentMetaDataList(element: Element, metaDataList: ComponentMetaData[]): ComponentMetaData[] {
+        return Array.from(element.children).reduce((arr, elementNode) => {
+            arr.push(this._parseElementToComponentMetaData(elementNode, metaDataList));
+            return arr;
+        }, []);
+    }
+
+    private static _parseElementToComponentMetaData(element: Element, metaDataList: ComponentMetaData[]): ComponentMetaData {
+        const tagName = element.tagName.toLowerCase();
+        const inputs = Array.from(element.attributes).reduce((arr, attr) => {
+            arr.push({
+                property: InternalUtils.kebabToCamelCase(attr.name),
+                default: JSON.parse(attr.value)
+            });
+            return arr;
+        }, []);
+
+        if (tagName == 'j-tabs') {
+            const panes = Array.from(element.children).reduce((arr, paneNode) => {
+                if (paneNode.tagName.toLowerCase() != 'j-pane') return;
+                const ngTemplate = Array.from(paneNode.children)
+                    .find(child => child.tagName.toLowerCase() == 'ng-template');
+                arr.push({
+                    title: paneNode.getAttribute('title'),
+                    content: ngTemplate ? this._parseChildrenToComponentMetaDataList(ngTemplate, metaDataList) : []
+                });
+                return arr;
+            }, []);
+
+            return {
+                component: CustomTabComponent,
+                selector: 'custom-tab',
+                inputs: inputs,
+                tabsMetaData: {
+                    selector: 'j-tabs',
+                    component: JigsawTab,
+                    panes: panes
+                }
             }
-            node.componentMetaDataList.push({
-                component: metaDataList.find(metaData => metaData.selector ==
-                    element.children[i].tagName.toLowerCase()).component,
-                selector: element.children[i].tagName.toLowerCase(),
+        } else {
+            return {
+                component: metaDataList.find(metaData => metaData.selector == tagName).component,
+                selector: tagName,
                 inputs: inputs
-            })
+            }
         }
-        return node;
     }
 
+    /*  private static _parseElementToComponentMetaData(element: Element, metaDataList: ComponentMetaData[]): ComponentMetaData[] {
+          return Array.from(element.children).reduce((arr, elementNode) => {
+              const tagName = elementNode.tagName.toLowerCase();
+              const inputs = Array.from(elementNode.attributes).reduce((arr, attr) => {
+                  arr.push({
+                      property: InternalUtils.kebabToCamelCase(attr.name),
+                      default: JSON.parse(attr.value)
+                  });
+                  return arr;
+              }, []);
+
+              if(tagName == 'j-tabs') {
+                  const panes = Array.from(elementNode.children).reduce((arr, paneNode) => {
+                      if(paneNode.tagName.toLowerCase() != 'j-pane') return;
+                      const ngTemplate = Array.from(paneNode.children).find(child => child.tagName.toLowerCase() == 'ng-template');
+                      let contentMetaDataList;
+                      if(ngTemplate) {
+                          contentMetaDataList = Array.from(ngTemplate.children).reduce((arr1, content) => {
+                              const sss = this._parseElementToComponentMetaData(content, metaDataList);
+                              arr1.push(this._parseElementToComponentMetaData(content, metaDataList));
+                              return arr1;
+                          }, [])
+                      }
+                      arr.push({
+                          title: paneNode.getAttribute('title'),
+                          content: contentMetaDataList
+                      });
+                      return arr;
+                  }, []);
+
+                  arr.push({
+                      component: CustomTabComponent,
+                      selector: 'custom-tab',
+                      inputs: inputs,
+                      tabsMetaData: {
+                          selector: 'j-tabs',
+                          component: JigsawTab,
+                          panes: panes
+                      }
+                  })
+              } else {
+                  arr.push({
+                      component: metaDataList.find(metaData => metaData.selector == tagName).component,
+                      selector: tagName,
+                      inputs: inputs
+                  })
+              }
+              return arr;
+          }, []);
+      }
+  */
     private _parseNodesToHtml(nodes: LayoutData[], domStr: string): string {
         if (nodes instanceof Array) {
             nodes.forEach(node => {

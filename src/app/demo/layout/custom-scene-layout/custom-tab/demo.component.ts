@@ -75,14 +75,9 @@ export class CustomTabComponent {
             inputs: [
                 {
                     property: 'data',
-                    binding: 'tableData',
+                    binding: '123',
                 },
-            ],
-            tabsMetaData: {
-                selector: 'j-tab',
-                component: JigsawTab,
-                panes: []
-            }
+            ]
         },
     ];
 

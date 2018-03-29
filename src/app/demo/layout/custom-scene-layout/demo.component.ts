@@ -63,14 +63,9 @@ export const ComponentMetaDataList: ComponentMetaData[] = [
         inputs: [
             {
                 property: 'data',
-                binding: 'tableData',
+                binding: '123',
             },
-        ],
-        tabsMetaData: {
-            selector: 'j-tab',
-            component: JigsawTab,
-            panes: []
-        }
+        ]
     },
 ];
 
@@ -215,16 +210,17 @@ export class CustomSceneLayoutDemoComponent {
     }
 
     radioChange($event) {
+        debugger
         if (this.dialogInfo) {
             this.dialogInfo.dispose();
         }
+        console.log(this.selectedComponent);
         this.currentEditableBox.addContent([
-            /*{
+            {
                 component: this.selectedComponent.component,
                 selector: this.selectedComponent.selector,
                 inputs: this.selectedComponent.inputs
-            }*/
-            this.selectedComponent
+            }
         ]);
     }
 

@@ -8,6 +8,7 @@ import {ComponentInput, ComponentMetaData, LayoutData} from "../../core/data/lay
 import {JigsawRendererHost} from "../common";
 import {JigsawResizableBoxBase} from "./common-box";
 import {CustomTabComponent} from "../../../app/demo/layout/custom-scene-layout/custom-tab/demo.component";
+import {JigsawTab} from "../tabs/tab";
 
 @Component({
     selector: 'jigsaw-editable-box, j-editable-box',
@@ -253,6 +254,15 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         if (!this.data) {
             return;
         }
+        componentMetaDataList.forEach(metadata => {
+            if(metadata.selector == 'custom-tab') {
+                metadata.tabsMetaData = {
+                    selector: 'j-tabs',
+                    component: JigsawTab,
+                    panes: []
+                }
+            }
+        });
         this._renderComponents(componentMetaDataList);
         this.data.setComponentMetaData(componentMetaDataList);
         this._bindScrollEvent();
