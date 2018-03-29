@@ -92,6 +92,7 @@ export class LayoutData extends GeneralCollection<any> {
         this.componentMetaDataList = componentMetaDataList;
         this.innerHtml = '';
         componentMetaDataList.forEach(componentMetaData => {
+            componentMetaData = componentMetaData.selector == 'custom-tab' ? componentMetaData.tabsMetaData : componentMetaData;
             this.innerHtml += this._parseMetaDataToHtml(componentMetaData);
         });
     }

@@ -77,7 +77,12 @@ export class CustomTabComponent {
                     property: 'data',
                     binding: 'tableData',
                 },
-            ]
+            ],
+            tabsMetaData: {
+                selector: 'j-tab',
+                component: JigsawTab,
+                panes: []
+            }
         },
     ];
 
@@ -109,13 +114,17 @@ export class CustomTabComponent {
             title: 'New tab',
             content: this.getMetaDataByComponent(component)
         });
-        this.box.data.setComponentMetaData([this.tabsMetaData]);
+        this.box.data.componentMetaDataList[0].tabsMetaData.panes.push({
+            title: 'New tab',
+            content: this.getMetaDataByComponent(component)
+        });
+        this.box.data.setComponentMetaData(this.box.data.componentMetaDataList);
     }
 
     public removeFirstTab(){
         this.removeTab(0);
-        this.tabsMetaData.panes.splice(0, 1);
-        this.box.data.setComponentMetaData([this.tabsMetaData]);
+        this.box.data.componentMetaDataList[0].tabsMetaData.panes.splice(0, 1);
+        this.box.data.setComponentMetaData(this.box.data.componentMetaDataList);
     }
 
     selectChange(){

@@ -5,6 +5,7 @@ import {JigsawEditableBox} from "jigsaw/component/box/editable-box";
 import {CustomTableComponent} from "./custom-table/demo.component";
 import {CustomGraphComponent} from "./custom-graph/demo.component";
 import {CustomTabComponent} from "./custom-tab/demo.component";
+import {JigsawTab} from "../../../../jigsaw/component/tabs/tab";
 
 export const ComponentMetaDataList: ComponentMetaData[] = [
     {
@@ -64,7 +65,12 @@ export const ComponentMetaDataList: ComponentMetaData[] = [
                 property: 'data',
                 binding: 'tableData',
             },
-        ]
+        ],
+        tabsMetaData: {
+            selector: 'j-tab',
+            component: JigsawTab,
+            panes: []
+        }
     },
 ];
 
@@ -213,11 +219,12 @@ export class CustomSceneLayoutDemoComponent {
             this.dialogInfo.dispose();
         }
         this.currentEditableBox.addContent([
-            {
+            /*{
                 component: this.selectedComponent.component,
                 selector: this.selectedComponent.selector,
                 inputs: this.selectedComponent.inputs
-            }
+            }*/
+            this.selectedComponent
         ]);
     }
 
