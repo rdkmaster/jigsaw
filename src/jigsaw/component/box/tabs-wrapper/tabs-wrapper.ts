@@ -12,11 +12,11 @@ import {JigsawTabsModule} from "../../tabs/index";
 export class JigsawTabsWrapper {
     public box: JigsawEditableBox;
 
-    @ViewChild(JigsawTab)
-    private _tabs: JigsawTab;
-
     @Output()
     public add = new EventEmitter();
+
+    @ViewChild(JigsawTab)
+    private _tabs: JigsawTab;
 
     /**
      * @internal
