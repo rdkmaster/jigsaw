@@ -1,10 +1,9 @@
 import {
     Component, Input, ViewContainerRef, TemplateRef, ViewChild, ElementRef,
     AfterViewInit, EmbeddedViewRef, ChangeDetectorRef, Type, ComponentFactoryResolver,
-    ComponentRef, OnDestroy
+    ComponentRef, OnDestroy, Output, EventEmitter
 } from '@angular/core';
 import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
-
 
 export abstract class JigsawTabBase extends AbstractJigsawComponent implements OnDestroy {
 
@@ -64,6 +63,7 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements O
     selector: 'jigsaw-tab-label',
     template: `
         <ng-template #body></ng-template>
+        <span class="jigsaw-tabs-remove-bar" *ngIf="editable" (click)="_$handleRemove()">&times;</span>
     `
 })
 export class JigsawTabLabel extends JigsawTabBase implements AfterViewInit {
@@ -73,6 +73,12 @@ export class JigsawTabLabel extends JigsawTabBase implements AfterViewInit {
                 protected _componentFactory: ComponentFactoryResolver) {
         super(_changeDetector, _componentFactory)
     }
+
+    @Input()
+    public editable: boolean;
+
+    @Output()
+    public remove = new EventEmitter<number>();
 
     // label 左侧的距离
     public getOffsetLeft(): number {
@@ -86,6 +92,13 @@ export class JigsawTabLabel extends JigsawTabBase implements AfterViewInit {
     // 组件的宽度
     public getOffsetWidth(): number {
         return this.elementRef.nativeElement.offsetWidth;
+    }
+
+    /**
+     * @internal
+     */
+    public _$handleRemove() {
+        this.remove.emit(this.key);
     }
 
     ngAfterViewInit() {

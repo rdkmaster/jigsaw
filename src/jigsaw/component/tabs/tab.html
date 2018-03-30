@@ -10,6 +10,7 @@
                                    *ngFor="let tab of _$tabPanes; let i = index"
                                    [key]="i"
                                    [tabItem]="tab.label"
+                                   [editable]="editable"
                                    [class.jigsaw-tabs-tab-active]="_$selectedIndex === i"
                                    [class.jigsaw-tabs-tab-disabled]="tab.disabled"
                                    [class.jigsaw-tabs-tab-hidden]="tab.hidden"

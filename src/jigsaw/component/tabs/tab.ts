@@ -1,6 +1,7 @@
 import {
     Component, ContentChildren, QueryList, Input, ViewChildren, AfterViewInit, Output, EventEmitter, TemplateRef,
-    ViewContainerRef, ComponentFactoryResolver, Type, ChangeDetectorRef, AfterViewChecked, ViewChild, ElementRef
+    ViewContainerRef, ComponentFactoryResolver, Type, ChangeDetectorRef, AfterViewChecked, ViewChild, ElementRef,
+    OnDestroy
 } from '@angular/core';
 import {JigsawTabPane} from "./tab-pane";
 import {JigsawTabContent, JigsawTabLabel} from "./tab-item";
@@ -22,7 +23,7 @@ import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
     selector: 'jigsaw-tab, j-tab, jigsaw-tabs, j-tabs',
     templateUrl: 'tab.html',
 })
-export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit, AfterViewChecked {
+export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit, AfterViewChecked, OnDestroy {
 
     constructor(private _cfr: ComponentFactoryResolver,
                 private _changeDetector: ChangeDetectorRef,
@@ -37,10 +38,10 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     public _$tabPanes: QueryList<JigsawTabPane>;
 
     @ViewChildren(JigsawTabLabel)
-    private _tabLabel: QueryList<JigsawTabLabel>;
+    private _tabLabels: QueryList<JigsawTabLabel>;
 
     @ViewChildren(JigsawTabContent)
-    private _tabContent: QueryList<JigsawTabContent>;
+    private _tabContents: QueryList<JigsawTabContent>;
 
     /**
      * 当所选的tab页发生变化时发出此事件，事件携带的是被选中的tab页实例，
@@ -51,8 +52,18 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     @Output()
     public selectChange = new EventEmitter<JigsawTabPane>();
 
+    /**
+     * 删除tab时，发出事件，携带删除的tab索引值
+     * @type {EventEmitter<number>}
+     */
+    @Output()
+    public remove = new EventEmitter<number>();
+
     @ViewChild('tabsInkBar')
     private _tabsInkBar: ElementRef;
+
+    @Input()
+    public editable: boolean;
 
     /**
      * 当前的tab页数量，包含被隐藏的tab页
@@ -125,7 +136,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
 
     // 将有纵向切换的封装.
     private _getLabelOffsetByKey(key: number): any {
-        let currentLabel = this._tabLabel.find(item => item.key === key);
+        let currentLabel = this._tabLabels.find(item => item.key === key);
 
         // 非法的 key // 有可能getTop 等扩展Tab页时再重构.
         if (currentLabel) { // 找到对应的Label
@@ -159,6 +170,13 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         }
 
         this.length = this._$tabPanes.length;
+
+        this._tabLabels.forEach(label => {
+            label.remove.subscribe(key => {
+                this.removeTab(key);
+                this.remove.emit(key);
+            })
+        })
     }
 
     // 注意此方法会被频繁调用，性能要求高
@@ -294,7 +312,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
 
         //router link
         this.callLater(() => {
-            let link = this._tabLabel.find(item => item.key === this.selectedIndex)
+            let link = this._tabLabels.find(item => item.key === this.selectedIndex)
                 .elementRef.nativeElement.querySelector('[routerLink]');
             if (link) {
                 link.click()
@@ -346,5 +364,12 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         } else {
             this._asyncSetStyle(this.selectedIndex);
         }
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        this._tabLabels.forEach(label => {
+            label.remove.unsubscribe;
+        })
     }
 }

@@ -21,6 +21,8 @@ import {JigsawDestoryTabComponent} from "./destroy-tab/demo.component";
 import {DynamicTabDemoComponent} from "./api/demo.component";
 import {TabsUpdateTitleDemoComponent} from "./update-title/demo.component";
 import {TabsUpdateTitleDemoModule} from "./update-title/demo.module";
+import {TabsEditableDemoComponent} from "./editable/demo.component";
+import {TabsEditableDemoModule} from "./editable/demo.module";
 
 export const routerConfig = [
     {
@@ -52,13 +54,17 @@ export const routerConfig = [
     {
         path: 'update-title', component: TabsUpdateTitleDemoComponent
     },
+    {
+        path: 'editable', component: TabsEditableDemoComponent
+    },
 ];
 
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig),
         TabsBasicDemoModule, TabsDestroyDemoModule, TabsHideTabDemoModule, TabsShowTabDemoModule,
-        DynamicTabDemoModule, TabsWithInputDemoModule, TabsWithNgForDemoModule, TabsUpdateTitleDemoModule
+        DynamicTabDemoModule, TabsWithInputDemoModule, TabsWithNgForDemoModule, TabsUpdateTitleDemoModule,
+        TabsEditableDemoModule
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
