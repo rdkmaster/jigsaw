@@ -15,6 +15,24 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
         outline: none;
     }
 
+    @mixin vertical-center-bar {
+        position: absolute;
+        right: 2px;
+        top: 50%;
+        transform: translate(0%, -50%);
+    }
+
+    &-remove-bar {
+        @include vertical-center-bar;
+    }
+
+    &-new-bar {
+        font-size: 24px;
+        &:hover {
+            color: $primary-color;
+        }
+    }
+
     &-nav-container {
         font-size: $font-size-lg;
         line-height: $line-height-base;
@@ -34,7 +52,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
 
                 .#{$tab-prefix}-ink-bar {
                     position: absolute;
-                    z-index: $zindex-level-1;
+                    z-index: 1;
                     left: 0;
                     bottom: -1px;
                     height: 2px;

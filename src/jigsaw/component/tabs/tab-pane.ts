@@ -1,4 +1,4 @@
-import {Component, ContentChild, Input, TemplateRef, Type, ViewChild} from '@angular/core';
+import {Component, ContentChild, EventEmitter, Input, Output, TemplateRef, Type, ViewChild} from '@angular/core';
 import {IDynamicInstantiatable} from "../common";
 
 @Component({
@@ -7,6 +7,7 @@ import {IDynamicInstantiatable} from "../common";
         <ng-template #label>
             {{title}}
             <ng-content select="[jigsaw-title]"></ng-content>
+            <span class="jigsaw-tabs-remove-bar" *ngIf="removable" (click)="closeTab($event)">&times;</span>
         </ng-template>
     `
 })
@@ -19,6 +20,9 @@ export class JigsawTabPane {
 
     @Input()
     public hidden: boolean = false;
+
+    @Input()
+    public removable: boolean = false;//设置是否可以删除tab
 
     /**
      * @deprecated use `lazy` instead
@@ -34,8 +38,17 @@ export class JigsawTabPane {
     @Input()
     public initData: Object;
 
+    @Output()
+    public close = new EventEmitter<any>();
+
     @ViewChild('label') label: TemplateRef<any> | Type<IDynamicInstantiatable>;
     @ContentChild(TemplateRef) content: TemplateRef<any> | Type<IDynamicInstantiatable>;
+
+    closeTab(event){
+        event.preventDefault();
+        event.stopPropagation();
+        this.close.emit();
+    }
 }
 
 
