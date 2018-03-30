@@ -17,7 +17,7 @@
                                       [class.jigsaw-tabs-tab-hidden]="tab.hidden"
                                       (click)="_$tabClick(i)">
                     </jigsaw-tab-label>
-                    <span class="jigsaw-tabs-add-bar" (click)="_$newTab($event)">+</span>
+                    <span class="jigsaw-tabs-new-bar" (click)="_$newTab($event)" *ngIf="newTab.observers.length">+</span>
                 </div>
             </div>
         </div>
