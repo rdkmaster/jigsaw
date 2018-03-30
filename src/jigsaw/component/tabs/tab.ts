@@ -51,6 +51,9 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     @Output()
     public selectChange = new EventEmitter<JigsawTabPane>();
 
+    @Output()
+    public newTab: EventEmitter<any> = new EventEmitter<any>();
+
     @ViewChild('tabsInkBar')
     private _tabsInkBar: ElementRef;
 
@@ -65,6 +68,10 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
      */
     public _$tabClick(index) {
         this.selectedIndex = index;
+    }
+
+    public _$newTab(event) {
+        this.newTab.emit(event);
     }
 
     /**
