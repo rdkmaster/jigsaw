@@ -33,7 +33,7 @@ export class TabsWrapperMetaData extends ComponentMetaData {
 }
 
 export class TabsMetaData extends ComponentMetaData {
-    panes: TabPaneMetaData;
+    panes: TabPaneMetaData[];
 }
 
 export class TabPaneMetaData extends ComponentMetaData {

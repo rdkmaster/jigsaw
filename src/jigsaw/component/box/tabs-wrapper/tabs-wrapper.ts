@@ -1,5 +1,5 @@
 import {Component, EventEmitter, NgModule, Output, ViewChild} from "@angular/core";
-import {ComponentMetaData} from "jigsaw/core/data/layout-data";
+import {ComponentMetaData, TabsWrapperMetaData} from "jigsaw/core/data/layout-data";
 import {JigsawTab} from "jigsaw/component/tabs/tab";
 import {JigsawEditableBox} from "jigsaw/component/box/editable-box";
 import {JigsawTabsModule} from "../../tabs/index";
@@ -30,17 +30,24 @@ export class JigsawTabsWrapper {
      */
     public _$removeTab(index) {
         this._tabs.removeTab(index);
-        this.box.data.componentMetaDataList[0].tabsMetaData.panes.splice(0, 1);
+        this.box.data.componentMetaDataList[0].tabsMetaData.panes.splice(index, 1);
         this.box.data.setComponentMetaData(this.box.data.componentMetaDataList);
     }
 
-    public addTab(componentMetaData: ComponentMetaData) {
-        this._tabs.addTab('New tab', componentMetaData.component, 'jigsaw');
+    public addTab(componentMetaData: ComponentMetaData, title?: string) {
+        title = title ? title : 'New tab';
+        this._tabs.addTab(title, componentMetaData.component, 'jigsaw');
         this.box.data.componentMetaDataList[0].tabsMetaData.panes.push({
-            title: 'New tab',
+            title: title,
             content: [componentMetaData]
         });
         this.box.data.setComponentMetaData(this.box.data.componentMetaDataList);
+    }
+
+    public renderTabByMetaData(metadata: TabsWrapperMetaData) {
+        metadata.tabsMetaData.panes.forEach(pane => {
+            this.addTab(pane.content[0], pane.title);
+        })
     }
 }
 

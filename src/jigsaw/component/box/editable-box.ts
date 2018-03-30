@@ -4,7 +4,7 @@ import {
     QueryList, Renderer2, TemplateRef, Type, ViewChild, ViewChildren, ViewRef
 } from "@angular/core";
 import {CallbackRemoval} from "../../core/utils/common-utils";
-import {ComponentInput, ComponentMetaData, LayoutData} from "../../core/data/layout-data";
+import {ComponentInput, ComponentMetaData, LayoutData, TabsWrapperMetaData} from "../../core/data/layout-data";
 import {JigsawRendererHost} from "../common";
 import {JigsawResizableBoxBase} from "./common-box";
 import {JigsawTab} from "../tabs/tab";
@@ -284,8 +284,13 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
             const componentRef = this._rendererFactory(componentMetaData.component, componentMetaData.inputs);
             this.data.components.push(componentRef);
             if (componentRef instanceof ComponentRef && componentRef.instance instanceof JigsawTabsWrapper) {
-                componentRef.instance.box = this;
-                componentRef.instance.add.subscribe(wrapper => {
+                const tabsWrapper = componentRef.instance;
+                tabsWrapper.box = this;
+                setTimeout(() => {
+                    // 等待tab渲染
+                    tabsWrapper.renderTabByMetaData(<TabsWrapperMetaData>componentMetaData);
+                });
+                tabsWrapper.add.subscribe(wrapper => {
                     this.getRootBox().wrapperFill.emit(wrapper);
                 })
             }
