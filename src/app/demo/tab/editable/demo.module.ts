@@ -5,15 +5,16 @@ import {JigsawInputModule} from "jigsaw/component/input/input";
 import {JigsawTableModule} from "jigsaw/component/table/table";
 import {JigsawGraphModule} from "jigsaw/component/graph/index";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {TabsEditableDemoComponent} from './demo.component';
+import {OneDemoComponent, TabsEditableDemoComponent} from './demo.component';
 
 @NgModule({
     imports: [
         JigsawTabsModule, JigsawButtonModule, JigsawInputModule, JigsawTableModule,
         JigsawDemoDescriptionModule, JigsawGraphModule, JigsawButtonModule
     ],
-    declarations: [TabsEditableDemoComponent],
-    exports: [TabsEditableDemoComponent]
+    declarations: [TabsEditableDemoComponent, OneDemoComponent],
+    exports: [TabsEditableDemoComponent],
+    entryComponents: [OneDemoComponent]
 })
 export class TabsEditableDemoModule {
 }

@@ -5,7 +5,7 @@
 
 <!-- start to learn the demo from here -->
 <j-button (click)="editable = !editable">toggle editable</j-button>
-<jigsaw-tabs [editable]="editable">
+<jigsaw-tabs [editable]="editable" (add)="handleAdd($event)" (remove)="handleRemove($event)">
     <jigsaw-tab-pane [lazy]="false">
         <div jigsaw-title><span class="fa fa-gift"></span>tab 1</div>
         <ng-template>tab content 1</ng-template>
@@ -51,3 +51,5 @@
         </ng-template>
     </jigsaw-tab-pane>
 </jigsaw-tabs>
+
+<p>{{removeMessage}}</p>

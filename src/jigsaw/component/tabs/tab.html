@@ -7,15 +7,16 @@
                     <!-- 负责实现动画效果 -->
                     <div #tabsInkBar class="jigsaw-tabs-ink-bar" [ngStyle]="_$inkBarStyle"></div>
                     <jigsaw-tab-label class="jigsaw-tabs-tab"
-                                   *ngFor="let tab of _$tabPanes; let i = index"
-                                   [key]="i"
-                                   [tabItem]="tab.label"
-                                   [editable]="editable"
-                                   [class.jigsaw-tabs-tab-active]="_$selectedIndex === i"
-                                   [class.jigsaw-tabs-tab-disabled]="tab.disabled"
-                                   [class.jigsaw-tabs-tab-hidden]="tab.hidden"
-                                   (click)="_$tabClick(i)">
+                                      *ngFor="let tab of _$tabPanes; let i = index"
+                                      [key]="i"
+                                      [tabItem]="tab.label"
+                                      [editable]="editable"
+                                      [class.jigsaw-tabs-tab-active]="_$selectedIndex === i"
+                                      [class.jigsaw-tabs-tab-disabled]="tab.disabled"
+                                      [class.jigsaw-tabs-tab-hidden]="tab.hidden"
+                                      (click)="_$tabClick(i)">
                     </jigsaw-tab-label>
+                    <span class="jigsaw-tabs-add-bar" *ngIf="editable" (click)="_$handleAdd()">+</span>
                 </div>
             </div>
         </div>

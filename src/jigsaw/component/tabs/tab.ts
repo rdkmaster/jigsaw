@@ -59,6 +59,13 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     @Output()
     public remove = new EventEmitter<number>();
 
+    /**
+     * 发送add事件，携带tabs的实例
+     * @type {EventEmitter<JigsawTab>}
+     */
+    @Output()
+    public add = new EventEmitter<JigsawTab>();
+
     @ViewChild('tabsInkBar')
     private _tabsInkBar: ElementRef;
 
@@ -160,6 +167,13 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
 
     private _asyncSetStyle(index: number): void {
         this.callLater(() => this._setInkBarStyle(index));
+    }
+
+    /**
+     * @internal
+     */
+    public _$handleAdd(){
+        this.add.emit(this);
     }
 
     ngAfterViewInit() {

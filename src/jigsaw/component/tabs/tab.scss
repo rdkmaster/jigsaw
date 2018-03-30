@@ -27,6 +27,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
     }
 
     &-add-bar {
+        cursor: pointer;
         font-size: 24px;
         &:hover {
             color: $primary-color;
