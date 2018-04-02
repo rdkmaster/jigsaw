@@ -9,6 +9,11 @@ import {CallbackRemoval} from "../../core/utils/common-utils";
 import {TreeData} from "../../core/data/tree-data";
 import {JigsawTrustedHtmlModule} from "../../directive/trusted-html/trusted-html";
 
+/**
+ * 标准鱼骨图组件，鱼骨图常常用于对问题的根因做分析，或者做目标分解
+ *
+ * $demo = fish-bone/full
+ */
 @Component({
     selector: 'j-fish-bone, jigsaw-fish-bone',
     templateUrl: './fish-bone.html',
@@ -30,6 +35,17 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
 
     private _data: TreeData;
 
+    /**
+     * 图形数据，是一个树状结构的数据，对于鱼骨图展示目标不同，对树状结构的各分支页有不同的理解，分别为：
+     * - 鱼骨图用于做根因分析时：
+     *     - 树根代表着根因；
+     *     - 树的各支代表着各个主要原因及其次要原因
+     * - 鱼骨图用于做目标分解时
+     *     - 树根代表着目标；
+     *     - 树的各支代表着为各个达成目标而必须完成的主要及次要任务；
+     *
+     * $demo = fish-bone/full
+     */
     @Input()
     get data(): TreeData {
         return this._data;
@@ -43,11 +59,21 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
         this._dataCallbackRemoval = this._data.onRefresh(this.ngAfterViewInit, this);
     }
 
+    /**
+     * 鱼骨图鱼头的朝向，默认是朝左。
+     *
+     * $demo = fish-bone/full
+     */
     @Input()
-    public direction: string = 'left';
+    public direction: 'left' | 'right' = 'left';
 
+    /**
+     * 鱼骨图的整体色调，默认是白色调
+     *
+     * $demo = fish-bone/full
+     */
     @Input()
-    public theme: string = 'white';
+    public theme: 'white' | 'dark' = 'white';
 
     @ViewChildren(forwardRef(() => JigsawFishBoneItem))
     private _firstLevelBones: QueryList<JigsawFishBoneItem>;

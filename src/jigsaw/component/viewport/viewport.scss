@@ -8,7 +8,7 @@ $viewport-prefix-cls: #{$jigsaw-prefix}-viewport;
     width: 100%;
     &-vertical-scrollbar, &-horizontal-scrollbar-box {
         position: absolute;
-        z-index: $zindex-scrollbar;
+        z-index: $zindex-level-1;
     }
     &-vertical-scrollbar {
         bottom: 0;

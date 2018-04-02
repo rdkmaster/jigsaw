@@ -1,5 +1,5 @@
 import {Component, Input, OnDestroy, OnInit} from "@angular/core";
-import {Subscriber} from "rxjs/Subscriber";
+import {Subscription} from "rxjs/Subscription";
 import {TableCellRendererBase} from "jigsaw/component/table/table-renderer";
 import {TableData} from "jigsaw/core/data/table-data";
 import {DropDownTrigger} from "jigsaw/component/combo-select/combo-select";
@@ -80,7 +80,7 @@ export class OfficeCellEditorRenderer extends OfficeRendererBase implements OnIn
         this.selected = {label: this.cellData};
     }
 
-    subscriber: Subscriber<any>;
+    subscriber: Subscription;
 
     ngOnInit() {
         super.ngOnInit();

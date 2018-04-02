@@ -1,5 +1,9 @@
 @import "../../assets/scss/core/base";
 
+.jigsaw-notification-host {
+    z-index: $zindex-popover-level-1 !important;
+}
+
 .jigsaw-notification {
     border-radius: $border-radius-base;
     background: $component-background;

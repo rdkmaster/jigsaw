@@ -110,8 +110,6 @@ class PageableData {
         const pagingInfo: PagingInfo = new PagingInfo();
         pagingInfo.pageSize = this._fixPageSize(req.paging.pageSize);
         pagingInfo.totalRecord = data.length;
-        pagingInfo.totalPage = Math.ceil(pagingInfo.totalRecord / pagingInfo.pageSize);
-        pagingInfo.totalPage = pagingInfo.totalPage == 0 ? 1 : pagingInfo.totalPage;
         pagingInfo.currentPage = this._fixCurrentPage(req.paging.currentPage, pagingInfo);
 
         if (CommonUtils.isDefined(req.paging)) {
@@ -122,7 +120,7 @@ class PageableData {
         }
 
         result.data = data;
-        result.paging = pagingInfo;
+        result.paging = pagingInfo.valueOf();
         result.field = dataTable.field;
         result.header = dataTable.header;
         return result;
@@ -258,7 +256,7 @@ class MockData {
         this.dataSet['fish-bone-2'] = require('../mock-data/fish-bone-2.json');
         this.dataSet['tree-data'] = require('../mock-data/tree-data.json');
         this.dataSet['soduku-puzzles'] = require('../mock-data/soduku-puzzles.json');
-        this.dataSet['big-table-data'] = this.createBigTableData();
+        this.dataSet['big-table-data'] = this.dataSet['big-table-data'] || this.createBigTableData();
         this.dataSet['map/shanghai'] = require('echarts/map/json/province/shanghai.json');
         this.dataSet['map/china'] = require('echarts/map/json/china.json');
     }

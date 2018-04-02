@@ -346,6 +346,30 @@ function findInheritedMethods(ci, methods) {
     }
 }
 
+function processConstractor(ci, html) {
+    if (ci.constructorObj && ci.type == 'class') {
+        html = html.replace('$constractor', `<h3>构造函数 / Constractor</h3>
+        <p>${ci.constructorObj.description}</p>
+        <p>输入参数</p>
+        <ul>
+         $parameters
+        </ul>`);
+        var parameters = [];
+        (ci.constructorObj.jsdoctags || []).forEach(param => {
+            if (param.tagName.text != 'param') {
+                return;
+            }
+            var description = param.comment ? addDescLink(param.comment) : '';
+            parameters.push(`<li><span style="white-space: nowrap;">${param.name.text || param.name}:
+                <a>${addTypeLink(param.type)}</a></span>${description}</li>`)
+        });
+        html = html.replace('$parameters', parameters.join(''));
+    } else {
+        html = html.replace('$constractor','');
+    }
+    return html;
+}
+
 function processMethods(ci, html) {
     var allMethods = (ci.methodsClass || ci.methods).filter(m => !m.hasOwnProperty('inheritance'));
     findInheritedMethods(ci, allMethods);
@@ -553,7 +577,7 @@ function addDescLink(desc) {
             var target = url.match(/^https?:/) ? '_blank' : '_self';
             return url ? `<a href="${url}" target="${target}">${found}</a>` : found;
         })
-        .replace(/<a\s+href\s*=\s*['"]\$demo\/(.+?)\/(.+?)(#|\?.*?)?['"]/g, (found, comp, demoName, extra) => {
+        .replace(/<a\s+href\s*=\s*['"]\$demo\s*=\s*(.+?)\/(.+?)(#|\?.*?)?['"]/g, (found, comp, demoName, extra) => {
             var script = getOpenPopupScript(`/${comp}/${demoName}${extra || ''}`);
             return `<a onclick="${script}"`;
         })
@@ -858,6 +882,8 @@ $propertiesTable
 <h3>方法 / Methods</h3>
 
 $methodsTable
+
+$constractor
 
 $constractor
 

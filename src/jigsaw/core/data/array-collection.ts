@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Subject} from "rxjs/Subject";
 import "rxjs/add/operator/map";
 import 'rxjs/add/operator/debounceTime';
+import {Subscription} from "rxjs/Subscription";
 
 import {
     ComponentDataHelper,
@@ -18,7 +19,6 @@ import {
 
 import {TableData} from "./table-data";
 import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
-import {Subscriber} from "rxjs/Subscriber";
 
 /**
  * we have to implement the `Array<T>` interface due to this breaking change:
@@ -589,7 +589,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
         this._emitter.emit(value);
     }
 
-    public subscribe(callback?: Function): Subscriber<any> {
+    public subscribe(callback?: (value:any) => void): Subscription {
         return this._emitter.subscribe(callback);
     }
 
@@ -603,7 +603,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
  * 注意：需要有一个统一的具备服务端分页、服务端排序、服务端过滤能力的REST服务配合使用，
  * 更多信息请参考`PagingInfo.pagingServerUrl`
  *
- * 实际用法请参考[这个demo]($demo/data-encapsulation/array-ssp)
+ * 实际用法请参考[这个demo]($demo=data-encapsulation/array-ssp)
  *
  * 关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
  */
@@ -667,7 +667,6 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
     public updateDataSource(optionsOrUrl: HttpClientOptions | string): void {
         this.sourceRequestOptions = typeof optionsOrUrl === 'string' ? {url: optionsOrUrl} : optionsOrUrl;
         this.pagingInfo.currentPage = 1;
-        this.pagingInfo.totalPage = 1;
         this.pagingInfo.totalRecord = 0;
         this.filterInfo = null;
         this.sortInfo = null;
@@ -697,7 +696,7 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this.ajaxStartHandler();
 
         const params: any = this._requestOptions.params;
-        params.paging = JSON.stringify(this.pagingInfo);
+        params.paging = JSON.stringify(this.pagingInfo.valueOf());
         if (this.filterInfo) {
             params.filter = JSON.stringify(this.filterInfo);
         }
@@ -731,7 +730,6 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         }
         const paging = data.paging;
         this.pagingInfo.currentPage = paging.hasOwnProperty('currentPage') ? paging.currentPage : this.pagingInfo.currentPage;
-        this.pagingInfo.totalPage = paging.hasOwnProperty('totalPage') ? paging.totalPage : this.pagingInfo.totalPage;
         this.pagingInfo.totalRecord = paging.hasOwnProperty('totalRecord') ? paging.totalRecord : this.pagingInfo.totalRecord;
     }
 

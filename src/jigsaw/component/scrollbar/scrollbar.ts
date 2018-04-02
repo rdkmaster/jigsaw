@@ -46,18 +46,21 @@ export class JigsawScrollHandle implements OnInit {
         // this setting is only from outside.
         if (this._value === value) return;
         this._value = this._scrollbar._verifyValue(value);
-        this._valueToPos();
-        if (this.globalEventMouseMove) {
-            this.globalEventMouseMove()
-        }
+        this._refreshPosition(true);
     }
 
     @Output()
     public valueChange = new EventEmitter<number>();
 
-    private _valueToPos() {
+    /**
+     * @internal
+     */
+    public _refreshPosition(clearMouseEvent: boolean) {
         this._offset = this._scrollbar._transformValueToPos(this.value);
-        this.setHandleStyle();
+        this._setHandleStyle();
+        if (clearMouseEvent && this.globalEventMouseMove) {
+            this.globalEventMouseMove()
+        }
     }
 
     private _offset: number = 0;
@@ -67,7 +70,7 @@ export class JigsawScrollHandle implements OnInit {
      */
     public _$handleStyle = {};
 
-    private setHandleStyle() {
+    private _setHandleStyle() {
         if (isNaN(this._offset)) return;
 
         if (this._scrollbar.vertical) { // 兼容垂直滑动条;
@@ -94,7 +97,8 @@ export class JigsawScrollHandle implements OnInit {
 
         posValue = posValue > offset ? posValue : offset;
 
-        let newValue = (posValue - startPosValue) / size * (this._scrollbar.max - this._scrollbar.min) + (this._scrollbar.min - 0); // 保留两位小数
+        // 保留两位小数
+        let newValue = (posValue - startPosValue) / size * (this._scrollbar.max - this._scrollbar.min) + this._scrollbar.min;
         let m = this._calFloat(this._scrollbar.step);
 
         // 解决出现的有时小数点多了N多位.
@@ -150,7 +154,7 @@ export class JigsawScrollHandle implements OnInit {
         if (this._value === value) return;
         this._value = value;
         this.valueChange.emit(this._value);
-        this._valueToPos();
+        this._refreshPosition(false);
     }
 
     _registerGlobalEvent(startPos, startValue) {
@@ -174,7 +178,7 @@ export class JigsawScrollHandle implements OnInit {
     }
 
     ngOnInit() {
-        this._valueToPos();
+        this._refreshPosition(true);
     }
 }
 
@@ -252,6 +256,9 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, 
 
     public set max(max: number) {
         this._max = max;
+        if (this._sliderHandle) {
+            this._sliderHandle._refreshPosition(true);
+        }
     }
 
     private _step: number = 1;

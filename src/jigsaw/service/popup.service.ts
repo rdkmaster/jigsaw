@@ -59,7 +59,7 @@ export class PopupOptions {
      * Jigsaw会自动计算出给定元素的位置，并将弹出视图移动到该位置上。一般需要配合`posOffset`属性一起调整弹出位置，
      * 避免遮挡到给定的UI元素。这个方式在实现一些下拉功能的时候会非常有用。
      *
-     * 请参考[这个demo]($demo/dialog/popup-option)。
+     * 请参考[这个demo]($demo=dialog/popup-option)。
      *
      * @type {PopupPosition}
      */
@@ -69,7 +69,7 @@ export class PopupOptions {
      * 弹出位置的偏移量，注意left属性是以弹出组件的左侧为基准，top属性是以弹出组件的上方为基准，
      * right属性是以弹出组件的右侧为基准，bottom是以弹出组件的下方为基准点。
      *
-     * 请参考[这个demo]($demo/dialog/popup-option)。
+     * 请参考[这个demo]($demo=dialog/popup-option)。
      *
      * @type {PopupPositionOffset}
      */
@@ -78,7 +78,7 @@ export class PopupOptions {
     /**
      * 弹出的组件的定位方式，和css的 absolute/fixed 含义类似。
      *
-     * 请参考[这个demo]($demo/dialog/popup-option)。
+     * 请参考[这个demo]($demo=dialog/popup-option)。
      *
      * @type {PopupPositionType}
      */
@@ -152,14 +152,6 @@ export enum PopupPositionType {
     absolute, fixed
 }
 
-export enum PopupEventType {
-    instanceCreated, positionReady, ready
-}
-
-export enum PopupZIndex {
-    modal = 1000, popover = 1030
-}
-
 export type PopupRef = ComponentRef<IPopupable> | EmbeddedViewRef<any>;
 
 export class ButtonInfo {
@@ -206,11 +198,13 @@ export class PopupService {
 
     private _eventHelper: ElementEventHelper = new ElementEventHelper();
 
+    private _popupZIndex: number = 1000;
+
     constructor(private _cfr: ComponentFactoryResolver,
                 private _zone: NgZone,
                 @Optional() private _router: Router,
                 @Optional() private _activatedRoute: ActivatedRoute) {
-        PopupService._instance = this;
+        PopupService._instance = PopupService._instance || this;
     }
 
     private _listenRouterChange(disposer: PopupDisposer): void {
@@ -316,11 +310,7 @@ export class PopupService {
     }
 
     private _setStyle(options: PopupOptions, element: HTMLElement): void {
-        if (this._isModal(options)) {
-            PopupService._renderer.setStyle(element, 'z-index', PopupZIndex.modal);
-        } else {
-            PopupService._renderer.setStyle(element, 'z-index', PopupZIndex.popover);
-        }
+        PopupService._renderer.setStyle(element, 'z-index', this._popupZIndex);
         PopupService._renderer.setStyle(element, 'visibility', 'hidden');
     }
 

@@ -19,7 +19,8 @@ export class TablePageableDemoComponent {
         this.pageable.onAjaxComplete(() => {
             console.log(this.pageable);
         });
-        this.pageable.fromAjax();
+        // 分页数据会根据pageInfo的改变自动获取数据，这边可不必手动调ajax
+        // this.pageable.fromAjax();
     }
 
     columnDefines: ColumnDefine[] = [
@@ -30,20 +31,6 @@ export class TablePageableDemoComponent {
             }
         }
     ];
-
-    getCurrentPage() {
-        if (this.pageable.busy) {
-            return;
-        }
-        this.pageable.changePage(this.pageable.pagingInfo);
-    }
-
-    getPageSize() {
-        if (this.pageable.busy) {
-            return;
-        }
-        this.pageable.changePage(this.pageable.pagingInfo);
-    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

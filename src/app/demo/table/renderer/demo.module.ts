@@ -26,7 +26,7 @@ import {
         TableRendererDemoComponent, PositionHeaderRenderer, OfficeCellRenderer,
         OfficeCellEditorRenderer, OfficeHeaderRenderer
     ],
-    exports: [TableRendererDemoComponent], // 这个是给plunker用的，不能去掉。
+    exports: [TableRendererDemoComponent],
     entryComponents: [
         PositionHeaderRenderer, TableCellCheckboxRenderer, TableHeadCheckboxRenderer,
         OfficeCellRenderer, OfficeCellEditorRenderer, OfficeHeaderRenderer

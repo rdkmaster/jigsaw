@@ -29,8 +29,8 @@ export class RangeTimeGrItemsComponent implements AfterViewInit {
 
     endDate = "now";
 
-    shortcuts: Shortcut[] = [{label: "自定义", dateRange: ["now-15d", "now"]},
-        {label: "这周", dateRange: RangeTimeDataRanges.RecentWeek}];
+    shortcuts: Shortcut[] = [{label: "最近三天", dateRange: ["now-3d", "now"]},
+        {label: "本周", dateRange: RangeTimeDataRanges.RecentWeek}];
 
     grItems: GrItem[] = [
         {label: "Day", value: TimeGr.date, shortcuts: this.shortcuts, span: "15d"},

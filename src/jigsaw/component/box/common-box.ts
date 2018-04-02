@@ -1,9 +1,9 @@
-import {AbstractJigsawComponent} from "../common";
 import {ElementRef, EventEmitter, Input, NgZone, OnDestroy, Output, QueryList, Renderer2} from "@angular/core";
+import {Subscription} from "rxjs/Subscription";
+import {AbstractJigsawComponent} from "../common";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {JigsawBox} from "./box";
 import {AffixUtils} from "../../core/utils/internal-utils";
-import {Subscription} from "rxjs/Subscription";
 
 export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy {
     public element: HTMLElement;

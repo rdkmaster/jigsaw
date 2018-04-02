@@ -1,5 +1,6 @@
 import {HttpHeaders} from "@angular/common/http";
-import {Subscriber} from "rxjs/Subscriber";
+import {EventEmitter} from "@angular/core";
+import {Subscription} from "rxjs/Subscription";
 import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
 
 /**
@@ -11,7 +12,6 @@ export type DataReviser = (data: any) => any;
  * `HttpClient`类的参数结构化信息类，与官方的参数结构完全兼容，这是对Angular的一些补充。
  *
  * $demo = /data-encapsulation/array-ssp
- * $demo = /pagination/with-table-data
  */
 export class HttpClientOptions {
     public url: string;
@@ -27,7 +27,6 @@ export class HttpClientOptions {
      * 这个属性的值（一个json对象）会被当做参数整体传输给服务端。
      *
      * $demo = /data-encapsulation/array-ssp
-     * $demo = /pagination/with-table-data
      */
     public params?: { [key: string]: any | any [] };
     public reportProgress?: boolean;
@@ -232,7 +231,7 @@ export interface IAjaxComponentData extends IComponentData {
     onAjaxStart(callback: () => void, context?: any): CallbackRemoval;
 
     /**
-     * Ajax请求成功的时候，执行`callback`函数。
+     * Ajax请求成功的时候，执行`callback`函数，一般需要在这个函数里停止loading效果。
      *
      * $demo = data-encapsulation/ajax-events
      *
@@ -244,7 +243,7 @@ export interface IAjaxComponentData extends IComponentData {
     onAjaxSuccess (callback: (data: any) => void, context?: any): CallbackRemoval;
 
     /**
-     * Ajax请求失败的时候，执行`callback`函数。
+     * Ajax请求失败的时候，执行`callback`函数，一般需要在这个函数里停止loading效果。
      *
      * $demo = data-encapsulation/ajax-events
      *
@@ -256,7 +255,8 @@ export interface IAjaxComponentData extends IComponentData {
     onAjaxError(callback: (error: Response) => void, context?: any): CallbackRemoval;
 
     /**
-     * Ajax请求结束（无论成功还是失败）的时候，执行`callback`函数，一般可以在这个函数里停止loading效果。
+     * Ajax请求结束的时候，执行`callback`函数。由于`HttpClient`在调用了无效的url的时候不会触发对应事件导致注册在这个事件上的回调没有被执行，
+     * 因此为了稳妥起见，请在`onAjaxSuccess`和`onAjaxError`里同时注册ajax请求的结果处理逻辑。
      *
      * $demo = data-encapsulation/ajax-events
      *
@@ -407,16 +407,37 @@ export interface IFilterable extends IAjaxComponentData {
 }
 
 /**
- * 视口数据
+ * 一个抽象的视口数据，记录了这些信息：
+ * - 视口尺寸：`width` / `height`
+ * - 视口所处区域的尺寸：`maxWidth` / `maxHeight`
+ * - 视口左上角位置：`horizontalTo` / `verticalTo`
  */
 export class ViewportData {
+    /**
+     * 视口当前的宽度值
+     */
     width: number;
+    /**
+     * 视口当前的高度值
+     */
     height: number;
 
+    /**
+     * 视口所处区域的最大宽度值
+     */
     maxWidth: number;
+    /**
+     * 视口所处区域的最大高度值
+     */
     maxHeight: number;
 
+    /**
+     * 视口的左上角当前处于全局的水平位置，从0开始计数。
+     */
     horizontalTo: number;
+    /**
+     * 视口的左上角当前处于全局的垂直位置，从0开始计数。
+     */
     verticalTo: number;
 }
 
@@ -554,9 +575,9 @@ export class ComponentDataHelper {
 }
 
 /**
- * 分页信息，是分页参数的结构化信息类
+ * 分页信息，在各个属性发生变化后，可以对外发出通知，参考[这个demo]($demo=pagination/with-page-info)
  */
-export class PagingInfo {
+export class PagingInfo implements IEmittable {
     /**
      * 这个属性指定了统一的在服务端进行分页、排序、过滤的服务的url。
      * - 如果你有自己的实现，则请更改这个属性指向你提供的服务；
@@ -567,10 +588,95 @@ export class PagingInfo {
      */
     public static pagingServerUrl: string = '/rdk/service/app/common/paging';
 
-    constructor(public currentPage: number = 1,
-                public pageSize: number = 20,
-                public totalPage: number = 1,
-                public totalRecord: number = 0) {
+    constructor(currentPage: number = 1,
+                pageSize: number = 20,
+                totalPage: number = 1,
+                totalRecord: number = 0) {
+        this._currentPage = currentPage;
+        this._pageSize = pageSize;
+        this._totalPage = totalPage;
+        this.totalRecord = totalRecord;
+    }
+
+    private _currentPage: number = 1;
+    private _pageSize: number = 20;
+    private _totalPage: number = 1;
+
+    /**
+     * 总记录数
+     * @type {number}
+     */
+    public totalRecord: number = 0;
+
+    /**
+     * 当前单页记录数
+     *
+     * $demo = pagination/with-page-info
+     *
+     * @return {number}
+     */
+    public get pageSize(): number {
+        return this._pageSize;
+    }
+
+    public set pageSize(value: number) {
+        if (isNaN(value) || value < 1) return;
+        this._pageSize = value;
+        this.emit();
+    }
+
+    /**
+     * 当前页索引，从1开始计数。修改此属性后，`PagingInfo`会发出获取对应页数据的事件，通过`subscribe`添加监听器可处理此事件。
+     *
+     * $demo = pagination/with-page-info
+     *
+     * @return {number}
+     */
+    public get currentPage(): number {
+        return this._currentPage;
+    }
+
+    public set currentPage(value: number) {
+        if (isNaN(value) || value < 1 || value > this.totalPage) return;
+        this._currentPage = value;
+        this.emit();
+    }
+
+    /**
+     * 总页数
+     *
+     * $demo = pagination/with-page-info
+     *
+     * @return {number}
+     */
+    public get totalPage(): number {
+        return this.totalRecord ? Math.ceil(this.totalRecord / this.pageSize) : 1;
+    }
+
+    private _emitter = new EventEmitter<any>();
+
+    public emit(value?: any): void {
+        this._emitter.emit(value);
+    }
+
+    public subscribe(callback?: (value:any) => void): Subscription {
+        return this._emitter.debounceTime(300).subscribe(callback);
+    }
+
+    public unsubscribe() {
+        this._emitter.unsubscribe();
+    }
+
+    /**
+     * 获取分页数据的结构化信息
+     *
+     * @return {any} 返回一个JSON对象
+     */
+    public valueOf(): any {
+        return {
+            totalRecord: this.totalRecord, currentPage: this.currentPage,
+            pageSize: this.pageSize, totalPage: this.totalPage
+        }
     }
 }
 
@@ -663,9 +769,9 @@ export interface IEmittable {
      * ```
      *
      * @param {Function} callback 事件回调函数
-     * @returns {Subscriber<any>} 返回当前订阅的回执，利用它可以取消本次订阅
+     * @returns {Subscription} 返回当前订阅的回执，利用它可以取消本次订阅
      */
-    subscribe(callback?: Function): Subscriber<any>;
+    subscribe(callback?: (value:any) => void): Subscription;
 
     /**
      * 取消当前对象上的所有订阅，执行它之后，任何事件监听器都将会失效。

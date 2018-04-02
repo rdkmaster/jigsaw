@@ -1,3 +1,31 @@
+## v1.1.6 (2018-3-23)
+
+### 新特性 / New Features
+- https://github.com/rdkmaster/jigsaw/issues/608 Viewport在滚动数据时，能发送事件出来 
+- https://github.com/rdkmaster/jigsaw/issues/317 Time RangeTime 控件的推荐日期的提示支持可定制且默认值支持国际化
+
+### 破坏性修改 / Breaking Changes
+- 无 / none
+
+###  优化 / Modified
+- 增加了数据封装的api文档
+- 增加了JigsawTime/JigswRangeTime/JigsawTab等组件的api文档
+- 声明类型时，改用class声明，尽量避免再使用type别名
+- 增加IEmittable接口，用于统一组件数据订阅功能的api；文档：完成了组件数据文档；
+- https://github.com/rdkmaster/jigsaw/pull/595 修改popup的z-index机制，避免多层弹出层次错乱的问题；重新整合皮肤的z-index
+- https://github.com/rdkmaster/jigsaw/issues/572 AbstractJigsawViewBase 中需要增加一个clearCallLater()函数
+
+### 修复 / Fixes
+- https://github.com/rdkmaster/jigsaw/issues/492 table/pageable分页时，某些情况未能采用最新分页数据；
+- https://github.com/rdkmaster/jigsaw/issues/599 JigsawNotification弹出功能在连续弹出的时候，所有提示框都堆在一起了
+- https://github.com/rdkmaster/jigsaw/issues/596 使用alert时会出现国际化不生效的问题
+- https://github.com/rdkmaster/jigsaw/issues/593 combo的callLater会报错
+- https://github.com/rdkmaster/jigsaw/issues/601 table没有数据时，不会自动计算contentWidth 
+- https://github.com/rdkmaster/jigsaw/issues/531 Tab的title在动态改变之后样式错误 
+- https://github.com/rdkmaster/jigsaw/issues/612 BigTableData.busy在往上滑到缓存数据尽头时更新不及时 
+- https://github.com/rdkmaster/jigsaw/issues/613 viewport的滚动条在底部时，BigTableData的缓存数据前两页追加进来后，滚动条位置未更新
+
+
 ## v1.1.5 (2018-3-14)
 
 ### 新特性 / New Features
@@ -14,6 +42,7 @@
 - https://github.com/rdkmaster/jigsaw/pull/562 解决combo-select触发下拉的时延错误
 - https://github.com/rdkmaster/jigsaw/issues/500 异步new TreeData在tree组件中会报错
 - https://github.com/rdkmaster/jigsaw/issues/563 Time在Combo下拉时，点击切换到配置时分秒时，会自动关闭下拉
+
  
 ## v1.1.4 (2018-3-10)
 
