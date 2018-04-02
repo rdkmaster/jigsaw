@@ -23,7 +23,7 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements O
     @ViewChild('body', {read: ViewContainerRef})
     protected _body: ViewContainerRef;
 
-    protected _tabItemRef: EmbeddedViewRef<any> | ComponentRef<IDynamicInstantiatable>;
+    public _tabItemRef: EmbeddedViewRef<any> | ComponentRef<IDynamicInstantiatable>;
 
     protected _insert(): void {
         if (!this._tabItemRef) {
@@ -79,6 +79,9 @@ export class JigsawTabLabel extends JigsawTabBase implements AfterViewInit {
 
     @Output()
     public remove = new EventEmitter<number>();
+
+    @Output()
+    public change = new EventEmitter<{ key: number, title: string }>();
 
     // label 左侧的距离
     public getOffsetLeft(): number {

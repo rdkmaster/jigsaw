@@ -37,7 +37,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     public _$tabPanes: QueryList<JigsawTabPane>;
 
     @ViewChildren(JigsawTabLabel)
-    private _tabLabels: QueryList<JigsawTabLabel>;
+    public _tabLabels: QueryList<JigsawTabLabel>;
 
     @ViewChildren(JigsawTabContent)
     private _tabContents: QueryList<JigsawTabContent>;
@@ -64,6 +64,13 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
      */
     @Output()
     public add = new EventEmitter<JigsawTab>();
+
+    /**
+     * 改变tab title是发送信息，信息的格式{key: number, title: string}
+     * @type {EventEmitter<JigsawTab>}
+     */
+    @Output()
+    public changeTitle = new EventEmitter<{ key: number, title: string }>();
 
     @ViewChild('tabsInkBar')
     private _tabsInkBar: ElementRef;
@@ -131,7 +138,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     public _$inkBarStyle: object = {};
 
     private _setInkBarStyle(index: number) {
-        if(!this._tabsInkBar || this._tabLabels.length == 0) return;
+        if (!this._tabsInkBar || this._tabLabels.length == 0) return;
 
         let labelPos = this._getLabelOffsetByKey(index);
 
@@ -173,7 +180,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     /**
      * @internal
      */
-    public _$handleAdd(){
+    public _$handleAdd() {
         this.add.emit(this);
     }
 
@@ -183,6 +190,13 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     public _$handleRemove(index) {
         this.removeTab(index);
         this.remove.emit(index);
+    }
+
+    /**
+     * @internal
+     */
+    public _$handleChangeTitle(changeInfo: { key: number, title: string }) {
+        this.changeTitle.emit(changeInfo);
     }
 
     ngAfterViewInit() {
@@ -197,7 +211,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
 
     // 注意此方法会被频繁调用，性能要求高
     ngAfterViewChecked() {
-        if(!this._tabsInkBar || this._tabLabels.length == 0) return;
+        if (!this._tabsInkBar || this._tabLabels.length == 0) return;
 
         const labelPos = this._getLabelOffsetByKey(this.selectedIndex);
 
