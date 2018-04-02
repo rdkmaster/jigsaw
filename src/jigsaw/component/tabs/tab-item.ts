@@ -63,7 +63,7 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements O
     selector: 'jigsaw-tab-label',
     template: `
         <ng-template #body></ng-template>
-        <span class="jigsaw-tabs-remove-bar" *ngIf="editable" (click)="_$handleRemove()">&times;</span>
+        <span class="jigsaw-tabs-remove-bar" *ngIf="editable" (click)="_$handleRemove($event)">&times;</span>
     `
 })
 export class JigsawTabLabel extends JigsawTabBase implements AfterViewInit {
@@ -100,7 +100,9 @@ export class JigsawTabLabel extends JigsawTabBase implements AfterViewInit {
     /**
      * @internal
      */
-    public _$handleRemove() {
+    public _$handleRemove(e) {
+        e.preventDefault();
+        e.stopPropagation();
         this.remove.emit(this.key);
     }
 
