@@ -257,7 +257,8 @@ function processProperties(ci, html) {
         property.description = description;
         fixDescription(property);
 
-        if (!property.inheritInfo) {
+        var isHidden = property.inheritInfo || (property.modifierKind && property.modifierKind.indexOf(PROTECTED) !== -1);
+        if (!isHidden) {
             shownAttributeCount++;
         }
 
@@ -270,7 +271,7 @@ function processProperties(ci, html) {
         var propertyName = `${anchor(property.name)}${inheritance}${modifier}${readOnly}${getRichName(property)}`;
         var trChildElements = `<td style="white-space: nowrap;">${propertyName}</td><td>${addTypeLink(property.type)}</td>
             <td>${description}</td><td>${property.defaultValue}</td><td>${getDemoList(property)}</td>`;
-        var display = property.inheritInfo || (property.modifierKind && property.modifierKind.indexOf(PROTECTED) !== -1) ? 'none' : 'table-row';
+        var display = isHidden ? 'none' : 'table-row';
         var bgColor = shownAttributeCount % 2 == 1 ? '#fff' : '#f8f8f8';
         properties.push(`<tr style="display:${display}; background-color:${bgColor}">${trChildElements}</tr>`);
     });
@@ -283,13 +284,17 @@ function processProperties(ci, html) {
                  <thead><tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th><th>示例</th></tr></thead>
                  <tbody id="dynamicProperties">$properties</tbody>
             </table>`;
+        if (shownAttributeCount == 0) {
+            properties = properties.map((tr, idx) =>
+                tr.replace(/style="display:(.*?);/g, () => 'style="display:table-row;')
+                  .replace(/\bbackground-color:(.*?);?"/g, () => `background-color:${idx % 2 == 0 ? '#fff' : '#f8f8f8'};"`));
+            hiddenAttributeCount = 0;
+        }
         propertiesTable += hiddenAttributeCount > 0 ?
-            `<a style="margin-left: 10px" title="单击显示所有可用的属性。"
+            `<a style="margin-left: 10px" title="单击显示所有可用的属性"
             onclick="document.getElementById('dynamicProperties').childNodes.forEach((tr,index)=> {
-                tr.style.display = 'table-row';
-                tr.style['background-color'] = index % 2 == 0 ? '#fff' : '#f8f8f8';
-            });
-            this.style.display = 'none';">列出所有可用属性</a>` : '';
+                tr.style.display = 'table-row';tr.style['background-color'] = index % 2 == 0 ? '#fff' : '#f8f8f8';
+            });this.style.display = 'none';">列出所有可用属性</a>` : '';
     } else {
         //如果没有属性，则显示一行“无”
         propertiesTable = `<p>无</p>`;
@@ -300,11 +305,7 @@ function processProperties(ci, html) {
 function processConstractor(ci, html) {
     if (ci.constructorObj && ci.type == 'class') {
         html = html.replace('$constractor', `<h3>构造函数 / Constractor</h3>
-        <p>${ci.constructorObj.description}</p>
-        <p>输入参数</p>
-        <ul>
-         $parameters
-        </ul>`);
+            <p>${ci.constructorObj.description}</p><p>输入参数</p><ul>$parameters</ul>`);
         var parameters = [];
         (ci.constructorObj.jsdoctags || []).forEach(param => {
             if (param.tagName.text != 'param') {
@@ -366,7 +367,8 @@ function processMethods(ci, html) {
         method.description = parentMethod ? parentMethod.description : '';
         fixDescription(method);
 
-        if (!method.inheritInfo) {
+        var isHidden = method.inheritInfo || (method.modifierKind && method.modifierKind.indexOf(PROTECTED) !== -1);
+        if (!isHidden) {
             shownAttributeCount++;
         }
 
@@ -414,7 +416,7 @@ function processMethods(ci, html) {
         var methodName = `${anchor(method.name)}${inheritance}${modifier}${getRichName(method)}`;
         var trChildElements = `<td style="white-space: nowrap;">${methodName}</td><td>${description}</td>
             <td>${returns}</td><td>${args}</td><td>${getDemoList(method)}</td>`;
-        var display = method.inheritInfo || (method.modifierKind && method.modifierKind.indexOf(PROTECTED) !== -1) ? 'none' : 'table-row';
+        var display = isHidden ? 'none' : 'table-row';
         var bgColor = shownAttributeCount % 2 == 1 ? '#fff' : '#f8f8f8';
 
         methods.push(`<tr style="display:${display}; background-color:${bgColor}">${trChildElements}</tr>`);
@@ -428,13 +430,17 @@ function processMethods(ci, html) {
                 <thead><tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th><th>示例</th></tr></thead>
                 <tbody id="dynamicMethods">$methods</tbody>
             </table>`;
+        if (shownAttributeCount == 0) {
+            methods = methods.map((tr, idx) =>
+                tr.replace(/style="display:(.*?);/g, () => 'style="display:table-row;')
+                  .replace(/\bbackground-color:(.*?);?"/g, () => `background-color:${idx % 2 == 0 ? '#fff' : '#f8f8f8'};"`));
+            hiddenAttributeCount = 0;
+        }
         methodsTable += hiddenAttributeCount > 0 ?
-            `<a style="margin-left: 10px" title="单击显示所有可用的方法。"
+            `<a style="margin-left: 10px" title="单击显示所有可用的方法"
             onclick="document.getElementById('dynamicMethods').childNodes.forEach((tr,index)=> {
-                tr.style.display = 'table-row';
-                tr.style['background-color'] = index % 2 == 0 ? '#fff' : '#f8f8f8';
-            });
-            this.style.display = 'none';">列出所有可用方法</a>` : '';
+                tr.style.display = 'table-row';tr.style['background-color'] = index % 2 == 0 ? '#fff' : '#f8f8f8';
+            });this.style.display = 'none';">列出所有可用方法</a>` : '';
     } else {
         methodsTable = `<p>无</p>`;
     }
