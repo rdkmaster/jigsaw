@@ -98,18 +98,57 @@ if (!checkUnknownTypes()) {
     process.exit(1);
 }
 
+function findExtends(ci) {
+    var extensions = [], originType = ci.name;
+    while (ci.extends) {
+        extensions.push(ci.extends);
+        ci = findTypeMetaInfo(ci.extends);
+    }
+    extensions = extensions.map(e => addTypeLink(e));
+    if (extensions.length > 0) {
+        extensions.unshift(originType);
+        return extensions.join(' -&gt; ');
+    } else {
+        return '--';
+    }
+}
+
+function findImplements(ci) {
+    var implements = (ci.implements || []).filter(i => !isAngularLifeCircle(i));
+    while (ci.extends) {
+        ci = findTypeMetaInfo(ci.extends);
+        (ci.implements || []).filter(i => !isAngularLifeCircle(i)).forEach(i => implements.push(i));
+    }
+    implements = implements.sort((i1, i2) => i1.localeCompare(i2)).map(i => addTypeLink(i));
+    return implements.length > 0 ? implements.join(' / ') : '--';
+}
+
+function findChildren(ci) {
+    var allTypes = docInfo.interfaces
+                    .concat(docInfo.injectables)
+                    .concat(docInfo.classes)
+                    .concat(docInfo.directives)
+                    .concat(docInfo.components)
+                    .concat(docInfo.modules);
+    var children = [];
+    allTypes.forEach(t => {
+        var info = findTypeMetaInfo(t.extends);
+        while (info) {
+            if (info.name == ci.name && children.indexOf(t) == -1) children.push(t.name);
+            info = findTypeMetaInfo(info.extends);
+        }
+    });
+    children = children.sort((c1, c2) => c1.localeCompare(c2)).map(c => addTypeLink(c));
+    return children.length > 0 ? children.join(' / ') : '--';
+}
+
 function processCommon(ci, html) {
     html = html.replace('$since', (ci.since ? ci.since : 'v1.0.0'));
     html = html.replace('$name', ci.name);
     html = html.replace('$description', ci.description);
-    html = html.replace('$extends', ci.extends ? addTypeLink(ci.extends) : '--');
-    var implements = (ci.implements || ['--'])
-        .filter(i => !isAngularLifeCircle(i))
-        .map(i => addTypeLink(i));
-    if (implements.length == 0) {
-        implements.push('--');
-    }
-    html = html.replace('$implements', implements.join(' / '));
+    html = html.replace('$extends', findExtends(ci));
+    html = html.replace('$implements', findImplements(ci));
+    html = html.replace('$children', findChildren(ci));
     html = html.replace('$demos', getDemoListWithHeader(ci));
     return html;
 }
@@ -149,7 +188,7 @@ function processOutputs(ci, html) {
     if (ci.outputsClass.length) {
         html = html.replace(`$outputsTable`,
             `<table style="width:100%">
-                 <thead><tr><th>名称</th><th>类型</th><th>默认值</th><th>说明</th><th>示例</th></tr></thead>
+                 <thead><tr><th>名称</th><th>数据类型</th><th>说明</th><th>示例</th></tr></thead>
                  <tbody>$outputs</tbody>
              </table>`);
     } else {
@@ -280,21 +319,16 @@ function processProperties(ci, html) {
     var propertiesTable;
     if (allProperties.length > 0) {
         propertiesTable =
-            `<table style="width:100%">
+            `<table id="dynamicProperties" style="width:100%; display:${shownAttributeCount == 0 ? 'none' : 'table'}">
                  <thead><tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th><th>示例</th></tr></thead>
-                 <tbody id="dynamicProperties">$properties</tbody>
+                <tbody>$properties</tbody>
             </table>`;
-        if (shownAttributeCount == 0) {
-            properties = properties.map((tr, idx) =>
-                tr.replace(/style="display:(.*?);/g, () => 'style="display:table-row;')
-                  .replace(/\bbackground-color:(.*?);?"/g, () => `background-color:${idx % 2 == 0 ? '#fff' : '#f8f8f8'};"`));
-            hiddenAttributeCount = 0;
-        }
         propertiesTable += hiddenAttributeCount > 0 ?
-            `<a style="margin-left: 10px" title="单击显示所有可用的属性"
-            onclick="document.getElementById('dynamicProperties').childNodes.forEach((tr,index)=> {
+            `<a style="margin-left: 10px" title="单击列出如下属性：\n1. 所有从父类继承过来的属性;\n2. 当前类中受保护的属性;"
+            onclick="document.getElementById('dynamicProperties').lastChild.previousSibling.childNodes.forEach((tr,index)=> {
                 tr.style.display = 'table-row';tr.style['background-color'] = index % 2 == 0 ? '#fff' : '#f8f8f8';
-            });this.style.display = 'none';">列出所有可用属性</a>` : '';
+            });this.style.display='none';document.getElementById('dynamicProperties').style.display='table'">
+            列出所有可用属性</a>` : '';
     } else {
         //如果没有属性，则显示一行“无”
         propertiesTable = `<p>无</p>`;
@@ -450,21 +484,16 @@ function processMethods(ci, html) {
     var hiddenAttributeCount = allMethods.length - shownAttributeCount;
     if (allMethods.length > 0) {
         methodsTable =
-            `<table style="width:100%">
-                <thead><tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th><th>示例</th></tr></thead>
-                <tbody id="dynamicMethods">$methods</tbody>
+            `<table id="dynamicMethods" style="width:100%; display:${shownAttributeCount == 0 ? 'none' : 'table'}">
+                <thead><tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th><th>示例</th></tr></thead>
+                <tbody>$methods</tbody>
             </table>`;
-        if (shownAttributeCount == 0) {
-            methods = methods.map((tr, idx) =>
-                tr.replace(/style="display:(.*?);/g, () => 'style="display:table-row;')
-                  .replace(/\bbackground-color:(.*?);?"/g, () => `background-color:${idx % 2 == 0 ? '#fff' : '#f8f8f8'};"`));
-            hiddenAttributeCount = 0;
-        }
         methodsTable += hiddenAttributeCount > 0 ?
-            `<a style="margin-left: 10px" title="单击显示所有可用的方法"
-            onclick="document.getElementById('dynamicMethods').childNodes.forEach((tr,index)=> {
+            `<a style="margin-left: 10px" title="单击列出如下方法：\n1. 所有从父类继承过来的方法;\n2. 当前类中受保护的方法;"
+            onclick="document.getElementById('dynamicMethods').lastChild.previousSibling.childNodes.forEach((tr,index)=> {
                 tr.style.display = 'table-row';tr.style['background-color'] = index % 2 == 0 ? '#fff' : '#f8f8f8';
-            });this.style.display = 'none';">列出所有可用方法</a>` : '';
+            });this.style.display='none';document.getElementById('dynamicMethods').style.display='table'">
+            列出所有可用方法</a>` : '';
     } else {
         methodsTable = `<p>无</p>`;
     }
@@ -506,8 +535,13 @@ function fixDescription(metaInfo) {
     if (!metaInfo.hasOwnProperty('description')) {
         metaInfo.description = '';
     }
-    metaInfo.description = metaInfo.description.replace(/\$(\w+)\s*=\s*(.*?)\s*('|"|\n|<\/p>)/g,
-        function (found, prop, value, suffix) {
+    metaInfo.description = metaInfo.description
+        .replace(/<a\s+href\s*=\s*['"]\$demo\s*=\s*(.+?)\/(.+?)(#|\?.*?)?['"]/g, (found, comp, demoName, extra) => {
+            extra = extra || '';
+            var script = getOpenPopupScript(`/${comp}/${demoName}${extra}`);
+            return `<a onclick="${script}"`;
+        })
+        .replace(/\$(\w+)\s*=\s*(.*?)\s*('|"|\n|<\/p>)/g, function (found, prop, value, suffix) {
             var values = metaInfo[prop];
             if (!metaInfo[prop]) {
                 values = [];
@@ -576,10 +610,6 @@ function addDescLink(desc) {
             var url = getPropertyUrl(type, processingAPI);
             var target = url.match(/^https?:/) ? '_blank' : '_self';
             return url ? `<a href="${url}" target="${target}">${found}</a>` : found;
-        })
-        .replace(/<a\s+href\s*=\s*['"]\$demo\s*=\s*(.+?)\/(.+?)(#|\?.*?)?['"]/g, (found, comp, demoName, extra) => {
-            var script = getOpenPopupScript(`/${comp}/${demoName}${extra || ''}`);
-            return `<a onclick="${script}"`;
         })
         .replace(/([^\ba-zA-z0-9])Jigsaw([^\ba-zA-z0-9])/g, '$1<a href="https://github.com/rdkmaster/jigsaw" ' +
             'title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a>$2');
@@ -862,7 +892,7 @@ $demos
 
 <a name="object-oriented"></a>
 <h3>面向对象 / Object Oriented</h3>
-<ul><li>继承自 $extends</li><li>实现接口 $implements</li></ul>
+<ul><li>继承关系 $extends</li><li>实现接口 $implements</li><li>已知子类 $children</li></ul>
 `
 }
 
@@ -885,13 +915,11 @@ $methodsTable
 
 $constractor
 
-$constractor
-
 $demos
 
 <a name="object-oriented"></a>
 <h3>面向对象 / Object Oriented</h3>
-<ul><li>继承自 $extends</li><li>实现接口 $implements</li></ul>
+<ul><li>继承关系 $extends</li><li>实现接口 $implements</li><li>已知子类 $children</li></ul>
 `
 }
 

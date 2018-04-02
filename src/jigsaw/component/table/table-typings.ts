@@ -249,7 +249,7 @@ export class AdditionalTableData extends TableData {
      *
      * @param {string | number} field 需要更新的列名或者列索引
      * @param {any | any[]} key 通过此值来确定更新缓存中的哪一行或者哪些行的数据，
-     * 一般需要配合[`trackRowBy`属性]($home/table/checkbox-column#open-desc=true)一起使用。
+     * 一般需要配合[`trackRowBy`属性]($demo=table/checkbox-column#open-desc=true)一起使用。
      * @param value 将此变量替代缓存里的数据，如果缓存里不存在对应的数据，则会新建一个对应的数据
      * @param {any[]} data 可选，表格内置渲染器会自动将该行对应的数据存放在这个属性上，
      * 方便应用在需要时使用该行的其他数据。
@@ -296,7 +296,7 @@ export class AdditionalTableData extends TableData {
     }
 
     /**
-     * 获取用户“摸过”的单元格的详细信息，可以直接更新得到的值，调用`table.update()`方法可以刷新界面。
+     * 获取用户“摸过”的单元格的详细信息，可以直接更新得到的值，调用`JigsawTable.update()`方法可以刷新界面。
      *
      * 只能返回当前页的数据，如果需要获取其他页的数据，请使用`getTouchedInfo()`。
      *
@@ -345,7 +345,7 @@ export class AdditionalTableData extends TableData {
     }
 
     /**
-     * 获取用户“摸过”的单元格的详细信息，可以直接更新得到的值，调用`table.update()`方法可以刷新界面。
+     * 获取用户“摸过”的单元格的详细信息，可以直接更新得到的值，调用`JigsawTable.update()`方法可以刷新界面。
      *
      * 通过此方法可获取任意页的缓存数据。
      *
@@ -353,7 +353,7 @@ export class AdditionalTableData extends TableData {
      *
      * @param {string | number} field 需要获取的列名或者列索引
      * @param {any | any[]} key 通过此值来确定更新缓存中的哪一行或者哪些行的数据，
-     * 一般需要配合[`trackRowBy`属性]($home/table/checkbox-column#open-desc=true)一起使用。
+     * 一般需要配合[`trackRowBy`属性]($demo=table/checkbox-column#open-desc=true)一起使用。
      * @return {TouchedValue}
      */
     public getTouchedInfo(field: string | number, key: any | any[]): TouchedValue {
@@ -423,7 +423,7 @@ export class AdditionalTableData extends TableData {
     }
 
     /**
-     * 获取用户在表格上“摸过”的所有行的详细信息，对这些信息做修改后调用`table.update()`方法可以刷新界面
+     * 获取用户在表格上“摸过”的所有行的详细信息，对这些信息做修改后调用`JigsawTable.update()`方法可以刷新界面
      *
      * $since = v1.1.4
      *
