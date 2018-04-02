@@ -13,6 +13,8 @@ import {JigsawTabLabel} from "../../tabs/tab-item";
     templateUrl: './tabs-wrapper.html'
 })
 export class JigsawTabsWrapper {
+    public editable: boolean;
+
     public box: JigsawEditableBox;
 
     @Output()

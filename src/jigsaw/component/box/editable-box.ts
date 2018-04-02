@@ -286,6 +286,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
             if (componentRef instanceof ComponentRef && componentRef.instance instanceof JigsawTabsWrapper) {
                 const tabsWrapper = componentRef.instance;
                 tabsWrapper.box = this;
+                tabsWrapper.editable = this.editable;
                 setTimeout(() => {
                     // 等待tab渲染
                     tabsWrapper.renderTabByMetaData(<TabsWrapperMetaData>componentMetaData);
