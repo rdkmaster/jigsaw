@@ -1,9 +1,9 @@
-import {ChangeDetectorRef, Component, ComponentRef, EventEmitter, NgModule, OnDestroy, Output, Type, ViewChild} from "@angular/core";
+import {ChangeDetectorRef, Component, ComponentRef, EventEmitter, NgModule, Output, ViewChild} from "@angular/core";
 import {JigsawEditableBox} from "../editable-box";
 import {JigsawTab} from "../../tabs/tab";
 import {ComponentMetaData, TabsWrapperMetaData} from "../../../core/data/layout-data";
 import {JigsawTabsModule} from "../../tabs/index";
-import {JigsawInputModule} from "../../input/input";
+import {JigsawInput, JigsawInputModule} from "../../input/input";
 import {IDynamicInstantiatable} from "../../common";
 import {CommonModule} from "@angular/common";
 import {JigsawTabLabel} from "../../tabs/tab-item";
@@ -40,7 +40,8 @@ export class JigsawTabsWrapper {
      * @internal
      */
     public _$changeTitle(changeInfo) {
-        if (!this.box.data.componentMetaDataList[0].tabsMetaData.panes[changeInfo.key]) return;
+        if (!this.box.data.componentMetaDataList[0].tabsMetaData.panes[changeInfo.key] ||
+            this.box.data.componentMetaDataList[0].tabsMetaData.panes[changeInfo.key].title == changeInfo.title) return;
         this.box.data.componentMetaDataList[0].tabsMetaData.panes[changeInfo.key].title = changeInfo.title;
         this.box.data.setComponentMetaData(this.box.data.componentMetaDataList);
     }
@@ -73,9 +74,9 @@ export class JigsawTabsWrapper {
     template: `
         <div *ngIf="!_$editable">
             <span>{{title}}</span>
-            <span class="fa fa-edit" (click)="_$editable = !_$editable"></span>
+            <span class="fa fa-edit jigsaw-editable-tab-title-bar" (click)="_handleEditable($event)"></span>
         </div>
-        <j-input *ngIf="_$editable" [(value)]="title" (blur)="_$handleTitleChange()"></j-input>
+        <j-input *ngIf="_$editable" [(value)]="title" (blur)="_$handleTitleChange()" class="jigsaw-editable-tab-title-input"></j-input>
     `
 })
 export class JigsawInternalEditableTabTitle implements IDynamicInstantiatable {
@@ -85,10 +86,26 @@ export class JigsawInternalEditableTabTitle implements IDynamicInstantiatable {
     public initData: any;
     public title: string = 'New Tab';
 
+    @ViewChild(JigsawInput)
+    public input: JigsawInput;
+
     /**
      * @internal
      */
     public _$editable: boolean;
+
+    /**
+     * @internal
+     */
+    public _handleEditable(e){
+        e.preventDefault();
+        e.stopPropagation();
+        this._$editable = !this._$editable;
+        setTimeout(() => {
+            // 等待input渲染
+            this.input.focus();
+        });
+    }
 
     /**
      * @internal

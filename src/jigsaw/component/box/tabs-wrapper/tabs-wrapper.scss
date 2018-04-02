@@ -1,1 +1,15 @@
+@import "../../../assets/scss/core/base";
 
+$editable-tab-title-prefix-cls: #{$jigsaw-prefix}-editable-tab-title;
+
+.#{$editable-tab-title-prefix-cls} {
+    &-bar {
+        color: $text-color-secondary;
+        &:hover {
+            color: $text-color-dark;
+        }
+    }
+    &-input {
+        color: $text-color;
+    }
+}

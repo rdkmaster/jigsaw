@@ -2,13 +2,6 @@
 
 $tab-prefix: #{$jigsaw-prefix}-tabs;
 
-@mixin vertical-center-bar {
-    position: absolute;
-    right: 2px;
-    top: 50%;
-    transform: translate(0%, -50%);
-}
-
 .#{$tab-prefix} {
     display: block;
     position: relative;
@@ -23,14 +16,23 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
     }
 
     &-remove-bar {
-        @include vertical-center-bar;
+        position: absolute;
+        right: 6px;
+        top: -2px;
+        font-size: 18px;
+        color: $text-color-secondary;
+        &:hover{
+            color: $text-color-dark;
+        }
     }
 
     &-add-bar {
         cursor: pointer;
         font-size: 24px;
+        vertical-align: middle;
+        color: $text-color-secondary;
         &:hover {
-            color: $primary-color;
+            color: $text-color-dark;
         }
     }
 
