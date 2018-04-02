@@ -1,13 +1,12 @@
 import {Component, EventEmitter, NgModule, Output, ViewChild} from "@angular/core";
-import {ComponentMetaData, TabsWrapperMetaData} from "jigsaw/core/data/layout-data";
-import {JigsawTab} from "jigsaw/component/tabs/tab";
-import {JigsawEditableBox} from "jigsaw/component/box/editable-box";
+import {JigsawEditableBox} from "../editable-box";
+import {JigsawTab} from "../../tabs/tab";
+import {ComponentMetaData, TabsWrapperMetaData} from "../../../core/data/layout-data";
 import {JigsawTabsModule} from "../../tabs/index";
 
 @Component({
     selector: 'custom-tab',
-    templateUrl: './tabs-wrapper.html',
-    styleUrls: ['./tabs-wrapper.scss']
+    templateUrl: './tabs-wrapper.html'
 })
 export class JigsawTabsWrapper {
     public box: JigsawEditableBox;
@@ -29,6 +28,7 @@ export class JigsawTabsWrapper {
      * @internal
      */
     public _$removeTab(index) {
+        console.log(index);
         this._tabs.removeTab(index);
         this.box.data.componentMetaDataList[0].tabsMetaData.panes.splice(index, 1);
         this.box.data.setComponentMetaData(this.box.data.componentMetaDataList);

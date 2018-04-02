@@ -1,5 +1,5 @@
 <div class="jigsaw-tabs">
-    <div *ngIf="_$tabPanes && _$tabPanes.length > 0" class="jigsaw-tabs-bar">
+    <div *ngIf="(_$tabPanes && _$tabPanes.length > 0) || editable" class="jigsaw-tabs-bar">
         <div class="jigsaw-tabs-nav-container">
             <!-- Todo 添加滚动条 -->
             <div class="jigsaw-tabs-nav-wrap">
@@ -14,7 +14,8 @@
                                       [class.jigsaw-tabs-tab-active]="_$selectedIndex === i"
                                       [class.jigsaw-tabs-tab-disabled]="tab.disabled"
                                       [class.jigsaw-tabs-tab-hidden]="tab.hidden"
-                                      (click)="_$tabClick(i)">
+                                      (click)="_$tabClick(i)"
+                                      (remove)="_$handleRemove($event)">
                     </jigsaw-tab-label>
                     <span class="jigsaw-tabs-add-bar" *ngIf="editable" (click)="_$handleAdd()">+</span>
                 </div>

@@ -1,7 +1,6 @@
 import {
     Component, ContentChildren, QueryList, Input, ViewChildren, AfterViewInit, Output, EventEmitter, TemplateRef,
-    ViewContainerRef, ComponentFactoryResolver, Type, ChangeDetectorRef, AfterViewChecked, ViewChild, ElementRef,
-    OnDestroy
+    ViewContainerRef, ComponentFactoryResolver, Type, ChangeDetectorRef, AfterViewChecked, ViewChild, ElementRef
 } from '@angular/core';
 import {JigsawTabPane} from "./tab-pane";
 import {JigsawTabContent, JigsawTabLabel} from "./tab-item";
@@ -23,7 +22,7 @@ import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
     selector: 'jigsaw-tab, j-tab, jigsaw-tabs, j-tabs',
     templateUrl: 'tab.html',
 })
-export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit, AfterViewChecked, OnDestroy {
+export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit, AfterViewChecked {
 
     constructor(private _cfr: ComponentFactoryResolver,
                 private _changeDetector: ChangeDetectorRef,
@@ -132,6 +131,8 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     public _$inkBarStyle: object = {};
 
     private _setInkBarStyle(index: number) {
+        if(!this._tabsInkBar || this._tabLabels.length == 0) return;
+
         let labelPos = this._getLabelOffsetByKey(index);
 
         this._$inkBarStyle = {
@@ -176,6 +177,14 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         this.add.emit(this);
     }
 
+    /**
+     * @internal
+     */
+    public _$handleRemove(index) {
+        this.removeTab(index);
+        this.remove.emit(index);
+    }
+
     ngAfterViewInit() {
         if (this.selectedIndex != null) {
             this._handleSelectChange(this.selectedIndex)
@@ -184,18 +193,11 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         }
 
         this.length = this._$tabPanes.length;
-
-        this._tabLabels.forEach(label => {
-            label.remove.subscribe(key => {
-                this.removeTab(key);
-                this.remove.emit(key);
-            })
-        })
     }
 
     // 注意此方法会被频繁调用，性能要求高
     ngAfterViewChecked() {
-        if(!this._tabsInkBar) return;
+        if(!this._tabsInkBar || this._tabLabels.length == 0) return;
 
         const labelPos = this._getLabelOffsetByKey(this.selectedIndex);
 
@@ -378,12 +380,5 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         } else {
             this._asyncSetStyle(this.selectedIndex);
         }
-    }
-
-    ngOnDestroy() {
-        super.ngOnDestroy();
-        this._tabLabels.forEach(label => {
-            label.remove.unsubscribe;
-        })
     }
 }

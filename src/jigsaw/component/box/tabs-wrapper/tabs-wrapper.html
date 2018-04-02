@@ -1,3 +1,1 @@
-<button (click)="_$handleAdd()">add tab</button>
-<button (click)="_$removeTab(0)">remove tab</button>
-<jigsaw-tabs></jigsaw-tabs>
+<jigsaw-tabs [editable]="true" (add)="_$handleAdd($event)" (remove)="_$removeTab($event)"></jigsaw-tabs>
