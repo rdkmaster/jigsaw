@@ -506,7 +506,7 @@ function fixDescription(metaInfo) {
     if (!metaInfo.hasOwnProperty('description')) {
         metaInfo.description = '';
     }
-    metaInfo.description = metaInfo.description.replace(/\$(\w+)\s*=\s*(.*?)\s*(\n|<\/p>)/g,
+    metaInfo.description = metaInfo.description.replace(/\$(\w+)\s*=\s*(.*?)\s*('|"|\n|<\/p>)/g,
         function (found, prop, value, suffix) {
             var values = metaInfo[prop];
             if (!metaInfo[prop]) {
