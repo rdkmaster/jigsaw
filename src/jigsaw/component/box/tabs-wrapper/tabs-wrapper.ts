@@ -26,7 +26,7 @@ export class JigsawTabsWrapper {
     /**
      * @internal
      */
-    public _$handleAdd() {
+    public _$handleAdd(tabs: JigsawTab) {
         this.add.emit(this);
     }
 
