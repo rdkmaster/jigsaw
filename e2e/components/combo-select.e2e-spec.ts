@@ -96,8 +96,6 @@ describe('combo-select', () => {
             await browser.get('/combo-select/disable');
             const selectEl = $('jigsaw-combo-select'),
                 button = $$('jigsaw-button');
-            await browser.actions().mouseMove(selectEl).perform();
-            await waitForPresence('jigsaw-tile');
             await expectToExist('jigsaw-tile');
             await button.click();
             await browser.actions().mouseMove(selectEl).perform();
