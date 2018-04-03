@@ -5,7 +5,7 @@ describe('tabs', () => {
     beforeEach(() => {
         browser.waitForAngularEnabled(false);
     });
-    describe('test tab', async () => {
+    describe('test tab',  () => {
         it('should present different content when click tab label ', async () => {
             const tabsLabelEl = element.all(by.tagName('jigsaw-tab-label')),
                 tabContentEl = element.all(by.tagName('jigsaw-tab-content'));
@@ -38,7 +38,7 @@ describe('tabs', () => {
             expect(await tabsLabelEl.get(0).getText()).toBe('Tab 2');
         })
     });
-    describe('test tab with input', async () => {
+    describe('test tab with input',() => {
         it('should display table when click "GetTableData"', async () => {
             const getTableDate = element(by.css('.container')).element(by.tagName('jigsaw-button')),
                 tableEl = element(by.css('.jigsaw-tabs-content')).element(by.tagName('jigsaw-table')).element(by.tagName('table'));
