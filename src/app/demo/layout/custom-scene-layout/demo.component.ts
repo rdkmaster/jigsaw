@@ -160,20 +160,11 @@ export class CustomSceneLayoutDemoComponent {
 
     @ViewChild('dialog') dialog: TemplateRef<any>;
     currentEditableBox: JigsawEditableBox;
-    currentWrapper: any;
-    currentMode: 'box' | 'wrapper';
 
     handleFill(box: JigsawEditableBox) {
         console.log(box);
         this.currentEditableBox = box;
         this.popupTemplateDialog(this.dialog);
-        this.currentMode = 'box';
-    }
-
-    handleWrapperFill(wrapper: any) {
-        this.currentWrapper = wrapper;
-        this.popupTemplateDialog(this.dialog);
-        this.currentMode = 'wrapper';
     }
 
     handleResizeStart(boxes: JigsawEditableBox[]) {
@@ -227,13 +218,7 @@ export class CustomSceneLayoutDemoComponent {
             selector: this.selectedComponent.selector,
             inputs: this.selectedComponent.inputs
         };
-        if (this.currentMode == 'box') {
-            this.currentEditableBox.addContent([componentMetaData]);
-        } else if (this.currentMode == 'wrapper') {
-            if (this.currentWrapper instanceof JigsawTabsWrapper) {
-                this.currentWrapper.addTab(componentMetaData);
-            }
-        }
+        this.currentEditableBox.addContent([componentMetaData]);
     }
 
     getModalOptions(): PopupOptions {

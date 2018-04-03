@@ -268,9 +268,6 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         this._bindScrollEvent();
     }
 
-    @Output()
-    public wrapperFill = new EventEmitter();
-
     /**
      * 根据componentMetaDataList信息在box里面渲染需要的组件
      * @param {ComponentMetaData[]} componentMetaDataList
@@ -292,25 +289,29 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
                     tabsWrapper.renderTabByMetaData(<TabsWrapperMetaData>componentMetaData);
                     // tab没有内容并且box是可编辑的，加入默认的tab
                     if (componentMetaData.tabsMetaData.panes.length == 0 && this.editable) {
-                        tabsWrapper.addTab({
-                            selector: 'j-editable-box',
-                            component: JigsawEditableBox
-                        });
-                        // 监听tab里面box的fill事件
-                        const insertComponent = tabsWrapper._tabs._tabContents.last._tabItemRef;
-                        if (insertComponent instanceof ComponentRef &&
-                            insertComponent.instance instanceof JigsawEditableBox) {
-                            insertComponent.instance.fill.subscribe(box => {
-                                this.getRootBox().fill.emit(box);
-                            })
-                        }
+                        this._addDefaultTab(tabsWrapper);
                     }
                 });
                 tabsWrapper.add.subscribe(wrapper => {
-                    this.getRootBox().wrapperFill.emit(wrapper);
+                    this._addDefaultTab(wrapper);
                 })
             }
         });
+    }
+
+    private _addDefaultTab(tabsWrapper: JigsawTabsWrapper) {
+        tabsWrapper.addTab({
+            selector: 'j-editable-box',
+            component: JigsawEditableBox
+        });
+        // 监听tab里面box的fill事件
+        const insertComponent = tabsWrapper._tabs._tabContents.last._tabItemRef;
+        if (insertComponent instanceof ComponentRef &&
+            insertComponent.instance instanceof JigsawEditableBox) {
+            insertComponent.instance.fill.subscribe(box => {
+                this.getRootBox().fill.emit(box);
+            })
+        }
     }
 
     private _rendererFactory(renderer: Type<any> | TemplateRef<any>, inputs: ComponentInput[]): ComponentRef<any> | EmbeddedViewRef<any> {
@@ -442,7 +443,6 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         }
 
         this.fill.unsubscribe();
-        this.wrapperFill.unsubscribe();
         this.add.unsubscribe();
         this.remove.unsubscribe();
     }

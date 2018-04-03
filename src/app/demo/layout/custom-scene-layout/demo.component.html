@@ -12,7 +12,6 @@
 <button (click)="parseData(data)">parse data</button>
 <j-editable-box [(data)]="data"
                 (fill)="handleFill($event)"
-                (wrapperFill)="handleWrapperFill($event)"
                 (resizeStart)="handleResizeStart($event)"
                 (resize)="handleResize($event)"
                 (add)="handleAddAndRemove()"
@@ -23,7 +22,7 @@
 <br>
 <button (click)="consoleData()">console data</button>
 <button (click)="parseData(data2)">parse data</button>
-<j-editable-box [(data)]="data2" (fill)="handleFill($event)" (wrapperFill)="handleWrapperFill($event)" height="200"></j-editable-box>
+<j-editable-box [(data)]="data2" (fill)="handleFill($event)" height="200"></j-editable-box>
 <br>
 <br>
 Parse Area:
