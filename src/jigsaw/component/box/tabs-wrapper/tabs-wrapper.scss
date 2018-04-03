@@ -1,7 +1,7 @@
 @import "../../../assets/scss/core/base";
 
 $tab-prefix: #{$jigsaw-prefix}-tabs;
-$layout-prefix-cls: #{$jigsaw-prefix}-editable-box;
+$editable-box-prefix-cls: #{$jigsaw-prefix}-editable-box;
 $editable-tab-title-prefix-cls: #{$jigsaw-prefix}-editable-tab-title;
 
 .#{$editable-tab-title-prefix-cls} {
@@ -32,7 +32,7 @@ $editable-tab-title-prefix-cls: #{$jigsaw-prefix}-editable-tab-title;
                 flex-grow: 1;
                 flex-basis: 0;
                 overflow: auto;
-                .#{$layout-prefix-cls} {
+                .#{$editable-box-prefix-cls} {
                     height: 100%;
                 }
             }
