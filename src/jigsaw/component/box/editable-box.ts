@@ -255,7 +255,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
             return;
         }
         componentMetaDataList.forEach(metadata => {
-            if (metadata.selector == 'custom-tab') {
+            if (metadata.selector == 'j-tab-wrapper') {
                 metadata.tabsMetaData = {
                     selector: 'j-tabs',
                     component: JigsawTab,

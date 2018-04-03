@@ -9,7 +9,7 @@ import {CommonModule} from "@angular/common";
 import {JigsawTabLabel} from "../../tabs/tab-item";
 
 @Component({
-    selector: 'custom-tab',
+    selector: 'j-tab-wrapper',
     templateUrl: './tabs-wrapper.html'
 })
 export class JigsawTabsWrapper implements OnDestroy{
