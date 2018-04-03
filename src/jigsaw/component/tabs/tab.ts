@@ -40,7 +40,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     public _tabLabels: QueryList<JigsawTabLabel>;
 
     @ViewChildren(JigsawTabContent)
-    private _tabContents: QueryList<JigsawTabContent>;
+    public _tabContents: QueryList<JigsawTabContent>;
 
     /**
      * 当所选的tab页发生变化时发出此事件，事件携带的是被选中的tab页实例，

@@ -60,7 +60,7 @@ export class LayoutData extends GeneralCollection<any> {
     grow?: number;
     shrink?: number;
     nodes?: LayoutData[];
-    componentMetaDataList?: ComponentMetaData[];
+    componentMetaDataList?: ComponentMetaData[] = [];
     innerHtml?: string;
     components?: (ComponentRef<any> | EmbeddedViewRef<any>)[];
     box: JigsawEditableBox;
@@ -98,12 +98,11 @@ export class LayoutData extends GeneralCollection<any> {
     }
 
     /**
-     * 根据componentMetaDataList设置LayoutData的componentMetaDataList属性及生成innerHtml
+     * 根据componentMetaDataList生成对应的html
      * @param {ComponentMetaData[]} componentMetaDataList
      */
-    public setComponentMetaData(componentMetaDataList: ComponentMetaData[]) {
+    public setInnerHtml(componentMetaDataList: ComponentMetaData[]) {
         if (!(componentMetaDataList instanceof Array) || componentMetaDataList.length == 0) return;
-        this.componentMetaDataList = componentMetaDataList;
         this.innerHtml = '';
         componentMetaDataList.forEach(componentMetaData => {
             componentMetaData = componentMetaData.selector == 'custom-tab' ? componentMetaData.tabsMetaData : componentMetaData;
@@ -113,16 +112,22 @@ export class LayoutData extends GeneralCollection<any> {
 
     private _parseMetaDataToHtml(componentMetaData: ComponentMetaData): string {
         let innerHtml = '';
-        innerHtml += `<${componentMetaData.selector} `;
-        if (componentMetaData.inputs instanceof Array) {
-            componentMetaData.inputs.forEach(input => {
-                if (CommonUtils.isDefined(input.default) && input.default != '') {
-                    innerHtml += `${InternalUtils.camelToKebabCase(input.property)}='${JSON.stringify(input.default)}' `;
-                }
-            });
-        }
-        innerHtml += `>\n ${this._parseTabPanesToHtml(componentMetaData)}
+        if (componentMetaData.selector == 'j-editable-box' &&
+            componentMetaData.ref instanceof ComponentRef &&
+            componentMetaData.ref.instance.data) {
+            innerHtml = componentMetaData.ref.instance.data.toHtml();
+        } else {
+            innerHtml += `<${componentMetaData.selector} `;
+            if (componentMetaData.inputs instanceof Array) {
+                componentMetaData.inputs.forEach(input => {
+                    if (CommonUtils.isDefined(input.default) && input.default != '') {
+                        innerHtml += `${InternalUtils.camelToKebabCase(input.property)}='${JSON.stringify(input.default)}' `;
+                    }
+                });
+            }
+            innerHtml += `>\n ${this._parseTabPanesToHtml(componentMetaData)}
                 </${componentMetaData.selector}>\n`;
+        }
         return innerHtml;
     }
 
@@ -244,6 +249,7 @@ export class LayoutData extends GeneralCollection<any> {
         if (node.nodes instanceof Array && node.nodes.length > 0) {
             domStr = this._parseNodesToHtml(node.nodes, domStr) + `</j-box> \n`;
         } else {
+            node.setInnerHtml(node.componentMetaDataList);
             domStr += (node.innerHtml ? node.innerHtml : '') + '</j-box> \n';
         }
         return domStr;

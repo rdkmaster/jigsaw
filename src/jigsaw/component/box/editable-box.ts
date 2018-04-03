@@ -264,7 +264,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
             }
         });
         this._renderComponents(componentMetaDataList);
-        this.data.setComponentMetaData(componentMetaDataList);
+        this.data.componentMetaDataList = componentMetaDataList;
         this._bindScrollEvent();
     }
 
@@ -290,6 +290,21 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
                 setTimeout(() => {
                     // 等待tab渲染
                     tabsWrapper.renderTabByMetaData(<TabsWrapperMetaData>componentMetaData);
+                    // tab没有内容并且box是可编辑的，加入默认的tab
+                    if (componentMetaData.tabsMetaData.panes.length == 0 && this.editable) {
+                        tabsWrapper.addTab({
+                            selector: 'j-editable-box',
+                            component: JigsawEditableBox
+                        });
+                        // 监听tab里面box的fill事件
+                        const insertComponent = tabsWrapper._tabs._tabContents.last._tabItemRef;
+                        if (insertComponent instanceof ComponentRef &&
+                            insertComponent.instance instanceof JigsawEditableBox) {
+                            insertComponent.instance.fill.subscribe(box => {
+                                this.getRootBox().fill.emit(box);
+                            })
+                        }
+                    }
                 });
                 tabsWrapper.add.subscribe(wrapper => {
                     this.getRootBox().wrapperFill.emit(wrapper);
@@ -423,5 +438,10 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
             this._removeDataRefreshListener();
             this._removeDataRefreshListener = null;
         }
+
+        this.fill.unsubscribe();
+        this.wrapperFill.unsubscribe();
+        this.add.unsubscribe();
+        this.remove.unsubscribe();
     }
 }

@@ -10,7 +10,7 @@ import {JigsawTabsWrapper, JigsawTabsWrapperModule} from "./tabs-wrapper/tabs-wr
     imports: [CommonModule, JigsawCommonModule, JigsawTabsWrapperModule],
     declarations: [JigsawBox, JigsawEditableBox, JigsawBoxResizable],
     exports: [JigsawBox, JigsawEditableBox],
-    entryComponents: [JigsawTabsWrapper]
+    entryComponents: [JigsawTabsWrapper, JigsawEditableBox]
 })
 export class JigsawBoxModule {
 

@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ComponentRef, EventEmitter, NgModule, Output, ViewChild} from "@angular/core";
+import {ChangeDetectorRef, Component, ComponentRef, EventEmitter, NgModule, OnDestroy, Output, ViewChild} from "@angular/core";
 import {JigsawEditableBox} from "../editable-box";
 import {JigsawTab} from "../../tabs/tab";
 import {ComponentMetaData, TabsWrapperMetaData} from "../../../core/data/layout-data";
@@ -12,7 +12,7 @@ import {JigsawTabLabel} from "../../tabs/tab-item";
     selector: 'custom-tab',
     templateUrl: './tabs-wrapper.html'
 })
-export class JigsawTabsWrapper {
+export class JigsawTabsWrapper implements OnDestroy{
     public editable: boolean;
 
     public box: JigsawEditableBox;
@@ -21,7 +21,7 @@ export class JigsawTabsWrapper {
     public add = new EventEmitter();
 
     @ViewChild(JigsawTab)
-    private _tabs: JigsawTab;
+    public _tabs: JigsawTab;
 
     /**
      * @internal
@@ -35,7 +35,6 @@ export class JigsawTabsWrapper {
      */
     public _$removeTab(index) {
         this.box.data.componentMetaDataList[0].tabsMetaData.panes.splice(index, 1);
-        this.box.data.setComponentMetaData(this.box.data.componentMetaDataList);
     }
 
     /**
@@ -45,12 +44,11 @@ export class JigsawTabsWrapper {
         if (!this.box.data.componentMetaDataList[0].tabsMetaData.panes[changeInfo.key] ||
             this.box.data.componentMetaDataList[0].tabsMetaData.panes[changeInfo.key].title == changeInfo.title) return;
         this.box.data.componentMetaDataList[0].tabsMetaData.panes[changeInfo.key].title = changeInfo.title;
-        this.box.data.setComponentMetaData(this.box.data.componentMetaDataList);
     }
 
     public addTab(componentMetaData: ComponentMetaData, title?: string) {
         title = <any>(title ? title : JigsawInternalEditableTabTitle);
-        this._tabs.addTab(title, componentMetaData.component, 'jigsaw');
+        this._tabs.addTab(title, componentMetaData.component);
         let titleStr = '';
         if (typeof title == 'string') {
             titleStr = title;
@@ -58,17 +56,22 @@ export class JigsawTabsWrapper {
             this._tabs._tabLabels.last._tabItemRef.instance instanceof JigsawInternalEditableTabTitle) {
             titleStr = this._tabs._tabLabels.last._tabItemRef.instance.title;
         }
+        // 渲染后的组件保存起来
+        componentMetaData.ref = this._tabs._tabContents.last._tabItemRef;
         this.box.data.componentMetaDataList[0].tabsMetaData.panes.push({
             title: titleStr,
             content: [componentMetaData]
         });
-        this.box.data.setComponentMetaData(this.box.data.componentMetaDataList);
     }
 
     public renderTabByMetaData(metadata: TabsWrapperMetaData) {
         metadata.tabsMetaData.panes.forEach(pane => {
             this.addTab(pane.content[0], pane.title);
         })
+    }
+
+    ngOnDestroy() {
+        this.add.unsubscribe();
     }
 }
 
