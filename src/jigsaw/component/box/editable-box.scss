@@ -4,7 +4,7 @@ $editable-box-prefix-cls: #{$jigsaw-prefix}-editable-box;
 
 .#{$editable-box-prefix-cls} {
     position: relative;
-    &-root{
+    &-root {
         border: 1px solid $border-color-base;
     }
     &-block {
@@ -91,6 +91,26 @@ $editable-box-prefix-cls: #{$jigsaw-prefix}-editable-box;
         }
         .#{$editable-box-prefix-cls}.#{$editable-box-prefix-cls}-resizing .#{$editable-box-prefix-cls}:hover > & {
             display: none;
+        }
+        &.#{$editable-box-prefix-cls}-option-box {
+            left: auto;
+            top: 10px;
+            right: 64px;
+            transform: translate(0, 0);
+            width: 16px;
+            height: 16px;
+            line-height: 16px;
+            border-radius: 16px;
+            i {
+                font-size: 12px;
+            }
+        }
+        &.#{$editable-box-prefix-cls}-option-bar {
+            top: 10px;
+            right: 10px;
+            left: auto;
+            transform: translateX(0);
+            margin-top: 0;
         }
     }
     &-resize {

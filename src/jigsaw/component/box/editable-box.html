@@ -20,7 +20,9 @@
     <i class="fa fa-plus"></i>
 </div>
 
-<div *ngIf="(!data || !data.nodes || !data.nodes.length) && editable" class="jigsaw-editable-box-option-bar">
+<div *ngIf="(!data || !data.nodes || !data.nodes.length) && editable"
+     class="jigsaw-editable-box-option-bar"
+     [class.jigsaw-editable-box-has-content]="data?.components?.length">
     <span class="fa fa-minus-square-o" (click)="_$addBox('v')"></span>
     <span class="fa fa-columns" (click)="_$addBox('h')"></span>
     <span class="fa fa-trash-o" (click)="_$remove()"></span>
