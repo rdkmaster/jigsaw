@@ -31,12 +31,16 @@ $editable-tab-title-prefix-cls: #{$jigsaw-prefix}-editable-tab-title;
             &-content {
                 flex-grow: 1;
                 flex-basis: 0;
+                overflow: auto;
                 .#{$layout-prefix-cls} {
                     height: 100%;
                 }
             }
             &-tabpane {
                 height: 100%;
+                &.#{$tab-prefix}-tabpane-inactive{
+                    height: 0;
+                }
             }
         }
     }

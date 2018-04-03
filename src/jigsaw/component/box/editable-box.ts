@@ -416,6 +416,8 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
             if (!this.parent) {
                 this._setRootProperty();
             }
+        } else {
+            this.data = new LayoutData();
         }
     }
 
