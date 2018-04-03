@@ -147,7 +147,6 @@ describe('combo-select', () => {
             await waitForNotPresence('jigsaw-tile');
             await expectToExist('jigsaw-tile', false);
         });
-        
         xit('should be searchable', async () => {
             browser.get('/combo-select/searchable');
             const input = $$('jigsaw-input').get(0),
