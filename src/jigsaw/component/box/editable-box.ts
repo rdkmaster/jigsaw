@@ -356,12 +356,26 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
                 this.renderer.setStyle(block, 'left', this.element.scrollLeft + 'px');
             }
             if (optionBox) {
-                this.renderer.setStyle(optionBox, 'top', this.element.scrollTop ? (this.element.offsetHeight / 2 + this.element.scrollTop + 'px') : '50%');
-                this.renderer.setStyle(optionBox, 'left', this.element.scrollLeft ? (this.element.offsetWidth / 2 + this.element.scrollLeft + 'px') : '50%');
+                if(this.data && this.data.components && this.data.components.length) {
+                    this.renderer.setStyle(optionBox, 'top', 10 + this.element.scrollTop + 'px');
+                    this.renderer.setStyle(optionBox, 'right', 64 + this.element.scrollLeft + 'px');
+                    this.renderer.setStyle(optionBox, 'left', 'auto');
+                } else {
+                    this.renderer.setStyle(optionBox, 'top', this.element.scrollTop ? (this.element.offsetHeight / 2 + this.element.scrollTop + 'px') : '50%');
+                    this.renderer.setStyle(optionBox, 'left', this.element.scrollLeft ? (this.element.offsetWidth / 2 + this.element.scrollLeft + 'px') : '50%');
+                    this.renderer.setStyle(optionBox, 'right', 'auto');
+                }
             }
             if (optionBar) {
-                this.renderer.setStyle(optionBar, 'top', this.element.scrollTop ? (this.element.offsetHeight / 2 + this.element.scrollTop + 'px') : '50%');
-                this.renderer.setStyle(optionBar, 'left', this.element.scrollLeft ? (this.element.offsetWidth / 2 + this.element.scrollLeft + 'px') : '50%');
+                if(this.data && this.data.components && this.data.components.length) {
+                    this.renderer.setStyle(optionBar, 'top', 10 + this.element.scrollTop + 'px');
+                    this.renderer.setStyle(optionBar, 'right', 10 + this.element.scrollLeft + 'px');
+                    this.renderer.setStyle(optionBar, 'left', 'auto');
+                } else {
+                    this.renderer.setStyle(optionBar, 'top', this.element.scrollTop ? (this.element.offsetHeight / 2 + this.element.scrollTop + 'px') : '50%');
+                    this.renderer.setStyle(optionBar, 'left', this.element.scrollLeft ? (this.element.offsetWidth / 2 + this.element.scrollLeft + 'px') : '50%');
+                    this.renderer.setStyle(optionBar, 'right', 'auto');
+                }
             }
             if (resizeBar) {
                 this.renderer.setStyle(resizeBar, 'top', this.element.scrollTop + 'px');
