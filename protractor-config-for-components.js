@@ -6,7 +6,7 @@ const {SpecReporter} = require('jasmine-spec-reporter');
 let config = {
     allScriptsTimeout: 11000,
     specs: [
-        './e2e/components/combo-select.e2e-spec.ts'
+        './e2e/components/loading.e2e-spec.ts','./e2e/components/combo-select.e2e-spec.ts','./e2e/components/tab.e2e-spec.ts'
     ],
     baseUrl: 'http://localhost:4200/',
     framework: 'jasmine',
