@@ -19,6 +19,7 @@ describe('tabs', () => {
             expect(await tabsLabelEl.get(3).getCssValue('pointer-events')).toBe('none');
         })
     });
+    
     describe('test tabApi', () => {
         it('should operate tab when click jigsaw button', async () => {
             await browser.get('/tab/api');
