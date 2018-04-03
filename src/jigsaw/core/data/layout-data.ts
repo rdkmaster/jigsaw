@@ -105,7 +105,7 @@ export class LayoutData extends GeneralCollection<any> {
         if (!(componentMetaDataList instanceof Array) || componentMetaDataList.length == 0) return;
         this.innerHtml = '';
         componentMetaDataList.forEach(componentMetaData => {
-            componentMetaData = componentMetaData.selector == 'j-tab-wrapper' ? componentMetaData.tabsMetaData : componentMetaData;
+            componentMetaData = componentMetaData.selector == 'j-tabs-wrapper' ? componentMetaData.tabsMetaData : componentMetaData;
             this.innerHtml += this._parseMetaDataToHtml(componentMetaData);
         });
     }
@@ -218,7 +218,7 @@ export class LayoutData extends GeneralCollection<any> {
 
             return {
                 component: JigsawTabsWrapper,
-                selector: 'j-tab-wrapper',
+                selector: 'j-tabs-wrapper',
                 inputs: inputs,
                 tabsMetaData: {
                     selector: 'j-tabs',

@@ -1,5 +1,7 @@
 @import "../../../assets/scss/core/base";
 
+$tab-prefix: #{$jigsaw-prefix}-tabs;
+$layout-prefix-cls: #{$jigsaw-prefix}-editable-box;
 $editable-tab-title-prefix-cls: #{$jigsaw-prefix}-editable-tab-title;
 
 .#{$editable-tab-title-prefix-cls} {
@@ -13,3 +15,31 @@ $editable-tab-title-prefix-cls: #{$jigsaw-prefix}-editable-tab-title;
         color: $text-color;
     }
 }
+
+.#{$tab-prefix} {
+    &-host {
+        display: block;
+        height: 100%;
+    }
+    &-wrapper {
+        display: block;
+        height: 100%;
+        .#{$tab-prefix} {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            &-content {
+                flex-grow: 1;
+                flex-basis: 0;
+                .#{$layout-prefix-cls} {
+                    height: 100%;
+                }
+            }
+            &-tabpane {
+                height: 100%;
+            }
+        }
+    }
+}
+
+

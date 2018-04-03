@@ -9,8 +9,11 @@ import {CommonModule} from "@angular/common";
 import {JigsawTabLabel} from "../../tabs/tab-item";
 
 @Component({
-    selector: 'j-tab-wrapper',
-    templateUrl: './tabs-wrapper.html'
+    selector: 'j-tabs-wrapper',
+    templateUrl: './tabs-wrapper.html',
+    host: {
+        '[class.jigsaw-tabs-wrapper]': 'true'
+    }
 })
 export class JigsawTabsWrapper implements OnDestroy{
     public editable: boolean;

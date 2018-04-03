@@ -57,7 +57,7 @@ export const GlobalComponentMetaDataList: ComponentMetaData[] = [
     {
         label: "tab",
         component: JigsawTabsWrapper,
-        selector: 'j-tab-wrapper',
+        selector: 'j-tabs-wrapper',
         import: 'JigsawTabsWrapperModule',
         inputs: [
             {

@@ -21,6 +21,9 @@ import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
 @Component({
     selector: 'jigsaw-tab, j-tab, jigsaw-tabs, j-tabs',
     templateUrl: 'tab.html',
+    host: {
+        '[class.jigsaw-tabs-host]': 'true'
+    }
 })
 export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit, AfterViewChecked {
 
