@@ -58,7 +58,7 @@ docInfo.classes.concat(docInfo.injectables).concat(docInfo.interfaces).forEach(c
     var html = getClassesTemplate();
     html = processCommon(ci, html);
     html = processProperties(ci, html);
-    html = processConstractor(ci, html);
+    html = processConstructor(ci, html);
     html = processMethods(ci, html);
     saveFile(ci.type, ci.name, html);
 });
@@ -341,7 +341,7 @@ function processProperties(ci, html) {
     return html.replace(`$propertiesTable`, propertiesTable).replace('$properties', properties.join(''));
 }
 
-function processConstractor(ci, html) {
+function processConstructor(ci, html) {
     if (ci.constructorObj && ci.type == 'class') {
         html = html.replace('$constractor', `<h3>构造函数 / Constractor</h3>
             <p>${ci.constructorObj.description}</p><p>输入参数</p><ul>$parameters</ul>`);
@@ -370,7 +370,7 @@ function findInheritedMethods(ci, methods) {
             continue;
         }
         (ci.methodsClass || ci.methods).forEach(m => {
-            if (methods.find(mm => mm.name === m.name)) {
+            if (methods.find(mm => mm.name === m.name && getArgumentsString(mm) == getArgumentsString(m))) {
                 return;
             }
             if (m.inheritance || isAngularLifeCircle(m.name)) {
@@ -383,30 +383,6 @@ function findInheritedMethods(ci, methods) {
             methods.push(m);
         });
     }
-}
-
-function processConstractor(ci, html) {
-    if (ci.constructorObj && ci.type == 'class') {
-        html = html.replace('$constractor', `<h3>构造函数 / Constractor</h3>
-        <p>${ci.constructorObj.description}</p>
-        <p>输入参数</p>
-        <ul>
-         $parameters
-        </ul>`);
-        var parameters = [];
-        (ci.constructorObj.jsdoctags || []).forEach(param => {
-            if (param.tagName.text != 'param') {
-                return;
-            }
-            var description = param.comment ? addDescLink(param.comment) : '';
-            parameters.push(`<li><span style="white-space: nowrap;">${param.name.text || param.name}:
-                <a>${addTypeLink(param.type)}</a></span>${description}</li>`)
-        });
-        html = html.replace('$parameters', parameters.join(''));
-    } else {
-        html = html.replace('$constractor','');
-    }
-    return html;
 }
 
 function processMethods(ci, html) {
