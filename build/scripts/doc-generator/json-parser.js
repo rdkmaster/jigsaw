@@ -409,7 +409,7 @@ function processMethods(ci, html) {
             shownAttributeCount++;
         }
 
-        var returns = `<p>返回类型 ${addTypeLink(method.returnType)}</p>`;
+        var returns = `<p style="white-space: nowrap;">返回类型 ${addTypeLink(method.returnType)}</p>`;
         var parentMethod = findMethodWithValidDescription(ci, method.name,
             m => m.jsdoctags && m.jsdoctags.find(t => t.tagName.text == 'returns' && !!t.comment));
         var returnComment = '';
