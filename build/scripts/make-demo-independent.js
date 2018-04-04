@@ -320,21 +320,23 @@ function getAjaxInterceptor(content) {
     var urls = findMockDataUrls(code, content);
 
     // merge all mock data json file into this class
+    var re = /\bthis\.dataSet\s*\[\s*['"](.*?)['"]\s*\]\s*=\s*require\s*\(['"](\.\.\/mock-data\/)?(.+)['"]\s*\)/g;
     var mockData;
-    code = code.replace(/\brequire\s*\(['"]\.\.\/mock-data\/(.+)\.json['"]\s*\)/g, function(found, file) {
+    code = code.replace(re, function(found, prop, prefix, file) {
         if (!mockData) {
             mockData = {};
         }
-        if (!mockData[file]) {
-            mockData[file] = readCode(__dirname + '/../../src/mock-data/' + file + '.json');
+        if (!mockData[prop]) {
+            var path = !!prefix ? 'src/mock-data' : 'node_modules';
+            mockData[prop] = readCode(`${__dirname}/../../${path}/${file}`);
         }
-        return `mockData["${file}"]`;
+
+        return `this.dataSet['${prop}'] = mockData["${prop}"]`;
     });
     if (!mockData) {
         console.error('ERROR: can not find any required mock data in app.interceptor.ts!');
         process.exit(1);
     }
-
 
     code += '\nconst mockData = {\n';
     for (var p in mockData) {
@@ -355,7 +357,7 @@ function getAjaxInterceptor(content) {
 }
 
 function findMockDataUrls(interceptorCode, content) {
-    var match = interceptorCode.match(/this\.dataSet\s*\[\s*['"].*?['"]\s*\]\s*=\s*require\b/g);
+    var match = interceptorCode.match(/\bthis\.dataSet\s*\[\s*['"].*?['"]\s*\]\s*=\s*require\b/g);
     if (!match) {
         console.error('ERROR: parse app.interceptor.ts failed, no mock-data url found!');
         process.exit(1);
