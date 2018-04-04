@@ -160,6 +160,9 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
             this.data.nodes[0].componentMetaDataList = this.data.componentMetaDataList;
             this.data.nodes[0].innerHtml = this.data.innerHtml;
 
+            // tabWrapper信息更新
+            this._updateTabsWrapper(this.data.nodes[0], firstChildBox);
+
             // 重置当前内容信息
             this.data.componentMetaDataList = [];
             this.data.innerHtml = '';
@@ -167,6 +170,20 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
 
             this.getRootBox().add.emit();
         });
+    }
+
+    private _updateTabsWrapper(data: LayoutData, box: JigsawEditableBox) {
+        const components = data.components;
+        if(components && components.length) {
+            const componentRef = components[0];
+            if(componentRef instanceof ComponentRef && componentRef.instance instanceof JigsawTabsWrapper){
+                componentRef.instance.box = box;
+                componentRef.instance.add.observers = []; // 删除所有订阅
+                componentRef.instance.add.subscribe(wrapper => {
+                    box._addDefaultTab(wrapper);
+                })
+            }
+        }
     }
 
     /**
@@ -204,6 +221,10 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
                     this.data.components = node.components;
                     this.data.nodes = [];
                     this.direction = null;
+
+                    // tabWrapper信息更新
+                    this._updateTabsWrapper(this.data, this);
+
                     // 等待 option bar & block 渲染
                     this.callLater(this._bindScrollEvent, this);
                 })
@@ -310,7 +331,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         });
     }
 
-    private _addDefaultTab(tabsWrapper: JigsawTabsWrapper) {
+    public _addDefaultTab(tabsWrapper: JigsawTabsWrapper) {
         const componentMetaData = {
             selector: 'j-editable-box',
             component: JigsawEditableBox

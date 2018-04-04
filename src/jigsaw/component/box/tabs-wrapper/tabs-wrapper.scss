@@ -23,6 +23,7 @@ $editable-tab-title-prefix-cls: #{$jigsaw-prefix}-editable-tab-title;
     }
     &-wrapper {
         display: block;
+        width: 100%;
         height: 100%;
         .#{$tab-prefix} {
             display: flex;
