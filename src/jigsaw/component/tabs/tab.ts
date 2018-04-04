@@ -375,7 +375,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         this.length = this._$tabPanes.length;
         if (this.selectedIndex == index) {
             this._handleSelect()
-        } else {
+        } else if (this.selectedIndex > index) {
             this.selectedIndex = this.selectedIndex - 1
         }
     }
