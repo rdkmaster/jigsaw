@@ -79,7 +79,7 @@ describe('table', () => {
             expect(canBeGroupEl.getAttribute('rowspan')).toBe('2');
         })
     });
-    describe('test column-group', () => {
+    describe('test checkbox-column-pageable', () => {
         it('should save selected information', async () => {
             await browser.get('/table/checkbox-column-pageable');
             const pagingItems = $$('jigsaw-paging-item'),
@@ -88,14 +88,13 @@ describe('table', () => {
             let tr = element(by.css('.jigsaw-table-body')).all(by.tagName('TR'));
             await browser.wait(ExpectedConditions.textToBePresentInElement(tr.get(0).$$('td').get(1), 'Michelle'));
             await tr.get(1).$('jigsaw-checkbox').click();
-            await tr.get(3).$('jigsaw-checkbox').click();
-            expect(await selectedInfo.get(0).getText()).toBe('当页前选中的行索引：1,3')
+            expect(await selectedInfo.get(0).getText()).toBe('当页前选中的行索引：1');
             await pagingItems.get(2).click();
             await browser.wait(ExpectedConditions.textToBePresentInElement(tr.get(0).$$('td').get(1), 'Rachel'));
             await element(by.css('.jigsaw-table-body')).all(by.tagName('TR')).get(4).$('jigsaw-checkbox').click();
-            expect(await selectedInfo.get(0).getText()).toBe('当页前选中的行索引：4')
+            expect(await selectedInfo.get(0).getText()).toBe('当页前选中的行索引：4');
             expect(await tags.get(0).$("span").getText()).toBe('Mignon');
-            expect(await tags.get(2).$("span").getText()).toBe('Isidore');
+            expect(await tags.get(1).$("span").getText()).toBe('Isidore');
         })
     });
 });
