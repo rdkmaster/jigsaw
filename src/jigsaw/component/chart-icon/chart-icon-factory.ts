@@ -38,22 +38,26 @@ export class ChartIconBar {
     width?: number = 32;
 }
 
+export class ChartIconCustomPieLegend {
+    /**
+     * orient只有'top'和'right'两个值
+     * - 如果是'right'，图例的默认宽度是100，用户也可以自定义
+     * - 如果是'top'，图例的高度是自动算出来的，所以height属性不需要配置，width也不用配置
+     */
+    orient: string;
+    data: string[];
+    width: number;
+    height: number;
+    marginLeft: number;
+}
+
 export class ChartIconCustomPie {
     delimiter?: string = null;
     fill?: string[] | ((...any) => string) = ["#ff9900", "#fff4dd", "#ffd592"];
     height?: number = null;
     radius?: number = 8;
     width?: number = null;
-    legend?: {
-        // orient只有'top'和'right'两个值
-        // 如果是'right'，图例的默认宽度是100，用户也可以自定义
-        // 如果是'top'，图例的高度是自动算出来的，所以height属性不需要配置，width也不用配置
-        orient: string,
-        data: string[],
-        width: number,
-        heigth: number,
-        marginLeft: number,
-    };
+    legend?: ChartIconCustomPieLegend;
     series?: any;
     after?: Function;
     link?: Function | string;
@@ -285,7 +289,7 @@ export class ChartIconFactory {
                     }
 
                     let $rect = this.svgElement('rect', {
-                        x: 0 + legendPositionX,
+                        x: legendPositionX,
                         y: 1 + i * 14,
                         width: 10,
                         height: 10,
