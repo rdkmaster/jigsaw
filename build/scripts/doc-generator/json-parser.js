@@ -450,6 +450,7 @@ function processMethods(ci, html) {
                 return;
             }
             var type = argument.type ? `: ${addTypeLink(argument.type)}` : '';
+            type += argument.defaultValue ? ' = ' + argument.defaultValue : '';
             var matchCondition = parentArgument => {
                 if (parentArgument.tagName.text !== 'param') {
                     return false;
@@ -462,7 +463,10 @@ function processMethods(ci, html) {
                 m => m.jsdoctags && m.jsdoctags.find(matchCondition));
             var comment = parentMethod ? parentMethod.jsdoctags.find(matchCondition).comment : '';
             comment = addDescLink(comment);
-            var arg = `<span style="white-space: nowrap;">${argument.name.text || argument.name}${type}</span>${comment}`;
+            var name = argument.name.text || argument.name;
+            var optional = argument.optional ? '<span style="margin:0 2px 0 2px; color:#009688" ' +
+                'title="Optional" class="fa fa-question"></span>' : '';
+            var arg = `<span style="white-space: nowrap;">${name}${optional}${type}</span>${comment}`;
             args.push(arg);
         });
         if (args.length == 0) {
