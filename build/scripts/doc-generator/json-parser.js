@@ -373,7 +373,7 @@ function findInheritedMethods(ci, methods) {
             if (methods.find(mm => mm.name === m.name)) {
                 return;
             }
-            if (m.inheritance) {
+            if (m.inheritance || isAngularLifeCircle(m.name)) {
                 return;
             }
             // deep copy
@@ -410,15 +410,13 @@ function processConstractor(ci, html) {
 }
 
 function processMethods(ci, html) {
-    var allMethods = (ci.methodsClass || ci.methods).filter(m => !m.hasOwnProperty('inheritance'));
+    var allMethods = (ci.methodsClass || ci.methods)
+        .filter(m => !m.hasOwnProperty('inheritance') && !isAngularLifeCircle(m.name));
     findInheritedMethods(ci, allMethods);
 
     var methods = [];
     var shownAttributeCount = 0;
     allMethods.sort((m1, m2) => m1.name.localeCompare(m2.name)).forEach(method => {
-        if (isAngularLifeCircle(method.name)) {
-            return;
-        }
         //如果当前方法没有描述，则往上找他的父类里要描述
         //先用严格模式找一遍
         var parentMethod = findMethodWithValidDescription(ci, method.name,
