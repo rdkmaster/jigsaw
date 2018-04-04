@@ -7,6 +7,7 @@ import {JigsawInput, JigsawInputModule} from "../../input/input";
 import {IDynamicInstantiatable} from "../../common";
 import {CommonModule} from "@angular/common";
 import {JigsawTabLabel} from "../../tabs/tab-item";
+import {CommonUtils} from "../../../core/utils/common-utils";
 
 @Component({
     selector: 'j-tabs-wrapper',
@@ -59,8 +60,16 @@ export class JigsawTabsWrapper implements OnDestroy{
             this._tabs._tabLabels.last._tabItemRef.instance instanceof JigsawInternalEditableTabTitle) {
             titleStr = this._tabs._tabLabels.last._tabItemRef.instance.title;
         }
-        // 渲染后的组件保存起来
-        componentMetaData.ref = this._tabs._tabContents.last._tabItemRef;
+        // 渲染后的组件保存起来，主要是为了保存editable box的实例
+        const componentRef = this._tabs._tabContents.last._tabItemRef;
+        componentMetaData.ref = componentRef;
+        if(componentRef instanceof ComponentRef && componentMetaData.inputs) {
+            // 给组件赋值初始化数据
+            componentMetaData.inputs.forEach(input => {
+                if(CommonUtils.isUndefined(input.property) || CommonUtils.isUndefined(input.default)) return;
+                componentRef.instance[input.property] = input.default;
+            })
+        }
         this.box.data.componentMetaDataList[0].tabsMetaData.panes.push({
             title: titleStr,
             content: [componentMetaData]

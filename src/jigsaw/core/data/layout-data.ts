@@ -226,6 +226,18 @@ export class LayoutData extends GeneralCollection<any> {
                     panes: panes
                 }
             }
+        } else if(tagName == 'j-box') {
+            const layoutData = LayoutData.of(element.outerHTML, metaDataList);
+            return {
+                component: null, // 不写JigsawEditableBox，会有循环引用，在 editable box 里面补充信息
+                selector: 'j-editable-box',
+                inputs: [
+                    {
+                        property: 'data',
+                        default: layoutData
+                    }
+                ]
+            }
         } else {
             return {
                 component: metaDataList.find(metaData => metaData.selector == tagName).component,

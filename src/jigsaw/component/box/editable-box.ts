@@ -286,6 +286,11 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
                 tabsWrapper.editable = this.editable;
                 setTimeout(() => {
                     // 等待tab渲染
+                    // 补充 box in tab 的元数据信息
+                    <TabsWrapperMetaData>componentMetaData.tabsMetaData.panes.forEach(pane => {
+                        if(!pane.content.length || pane.content[0].selector != 'j-editable-box' || pane.content[0].component) return;
+                        pane.content[0].component = JigsawEditableBox;
+                    });
                     tabsWrapper.renderTabByMetaData(<TabsWrapperMetaData>componentMetaData);
                     // tab没有内容并且box是可编辑的，加入默认的tab
                     if (componentMetaData.tabsMetaData.panes.length == 0 && this.editable) {
