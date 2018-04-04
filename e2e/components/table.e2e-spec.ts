@@ -1,5 +1,6 @@
-import {browser, element, by, ExpectedConditions} from "protractor";
+import {browser, element, by, ExpectedConditions, $, $$} from "protractor";
 import {waitForPresence} from "../utils/index";
+import {waitForTextPresence} from "../utils/await";
 
 describe('table', () => {
     beforeEach(() => {
@@ -76,6 +77,25 @@ describe('table', () => {
             const canBeGroupEl = element(by.css('.jigsaw-table-body')).all(by.tagName('TR')).get(3).all(by.tagName('TD')).get(2);
             await waitForPresence('.jigsaw-table-cell-content');
             expect(canBeGroupEl.getAttribute('rowspan')).toBe('2');
+        })
+    });
+    describe('test column-group', () => {
+        it('should save selected information', async () => {
+            await browser.get('/table/checkbox-column-pageable');
+            const pagingItems = $$('jigsaw-paging-item'),
+                selectedInfo =$('.demo-1').$$('p'),
+                tags = $$('j-tag');
+            let tr = element(by.css('.jigsaw-table-body')).all(by.tagName('TR'));
+            await browser.wait(ExpectedConditions.textToBePresentInElement(tr.get(0).$$('td').get(1), 'Michelle'));
+            await tr.get(1).$('jigsaw-checkbox').click();
+            await tr.get(3).$('jigsaw-checkbox').click();
+            expect(await selectedInfo.get(0).getText()).toBe('当页前选中的行索引：1,3')
+            await pagingItems.get(2).click();
+            await browser.wait(ExpectedConditions.textToBePresentInElement(tr.get(0).$$('td').get(1), 'Rachel'));
+            await element(by.css('.jigsaw-table-body')).all(by.tagName('TR')).get(4).$('jigsaw-checkbox').click();
+            expect(await selectedInfo.get(0).getText()).toBe('当页前选中的行索引：4')
+            expect(await tags.get(0).$("span").getText()).toBe('Mignon');
+            expect(await tags.get(2).$("span").getText()).toBe('Isidore');
         })
     });
 });
