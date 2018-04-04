@@ -53,13 +53,6 @@ export class JigsawTabsWrapper implements OnDestroy{
     public addTab(componentMetaData: ComponentMetaData, title?: string) {
         title = <any>(title ? title : JigsawInternalEditableTabTitle);
         this._tabs.addTab(title, componentMetaData.component);
-        let titleStr = '';
-        if (typeof title == 'string') {
-            titleStr = title;
-        } else if (this._tabs._tabLabels.last._tabItemRef instanceof ComponentRef &&
-            this._tabs._tabLabels.last._tabItemRef.instance instanceof JigsawInternalEditableTabTitle) {
-            titleStr = this._tabs._tabLabels.last._tabItemRef.instance.title;
-        }
         // 渲染后的组件保存起来，主要是为了保存editable box的实例
         const componentRef = this._tabs._tabContents.last._tabItemRef;
         componentMetaData.ref = componentRef;
@@ -70,10 +63,6 @@ export class JigsawTabsWrapper implements OnDestroy{
                 componentRef.instance[input.property] = input.default;
             })
         }
-        this.box.data.componentMetaDataList[0].tabsMetaData.panes.push({
-            title: titleStr,
-            content: [componentMetaData]
-        });
     }
 
     public renderTabByMetaData(metadata: TabsWrapperMetaData) {
