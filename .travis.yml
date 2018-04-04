@@ -34,6 +34,7 @@ script:
   - gulp jigsaw:build-release:clean
   - # ng test --code-coverage --watch false
   - # cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
+  - sh build/scripts/doc-generator/generate.sh ./temp/doc/
   - sh build/scripts/build-tourist.sh
   - sh build/scripts/integrate-with-seed.sh
   - sh build/scripts/sauce_connect_block.sh

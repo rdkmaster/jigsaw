@@ -1,6 +1,7 @@
 var PROTECTED = 113;
 var PUBLIC = 114;
 var STATIC = 115;
+var READ_ONLY = 131;
 
 var fs = require('fs');
 var angularApis = require(__dirname + '/angular-api-list.json');
@@ -227,10 +228,14 @@ function mergeProperties(ci) {
                 info.setSignature ? info.setSignature.args[0].type : '';
             propertiesClass.push({
                 name: info.name, description: desc, type: type,
-                readOnly: info.hasOwnProperty('setSignature') ? false : true
+                readOnly: !info.hasOwnProperty('setSignature')
             });
         }
     }
+    propertiesClass.forEach(p => {
+        if (p.readOnly || !p.modifierKind) return;
+        p.readOnly = p.modifierKind.includes(READ_ONLY);
+    });
     return propertiesClass;
 }
 
