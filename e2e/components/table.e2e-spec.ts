@@ -83,7 +83,7 @@ describe('table', () => {
         it('should save selected information', async () => {
             await browser.get('/table/checkbox-column-pageable');
             const pagingItems = $$('jigsaw-paging-item'),
-                selectedInfo =$('.demo-1').$$('p'),
+                selectedInfo = $('.demo-1').$$('p'),
                 tags = $$('j-tag');
             let tr = element(by.css('.jigsaw-table-body')).all(by.tagName('TR'));
             await browser.wait(ExpectedConditions.textToBePresentInElement(tr.get(0).$$('td').get(1), 'Michelle'));

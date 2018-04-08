@@ -117,7 +117,7 @@ describe('combo-select', () => {
             await collapse.$$("jigsaw-collapse-pane").get(1).click();
             await passwordInput.sendKeys("456");
             expect(await passwordInput.getAttribute("value")).toBe("456");
-            await mouseMove({x:500,y:500});
+            await mouseMove({x: 500, y: 500});
             await waitForNotPresence('jigsaw-collapse');
             await mouseMove(selectEl);
             await waitForPresence('jigsaw-collapse');
