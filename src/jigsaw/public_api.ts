@@ -6,6 +6,7 @@
 export * from "./component/alert/alert";
 export * from "./component/block/block";
 export * from "./component/box/index";
+export * from "./component/box/tabs-wrapper/tabs-wrapper";
 export * from "./component/button/button";
 export * from "./component/chart-icon/chart-icon-factory";
 export * from "./component/checkbox/index";
