@@ -1,4 +1,7 @@
-import {ChangeDetectorRef, Component, ComponentRef, EventEmitter, NgModule, OnDestroy, Output, ViewChild} from "@angular/core";
+import {
+    ChangeDetectorRef, Component, ComponentRef, EventEmitter, NgModule, OnDestroy, Output,
+    ViewChild
+} from "@angular/core";
 import {JigsawEditableBox} from "../editable-box";
 import {JigsawTab} from "../../tabs/tab";
 import {ComponentMetaData, TabsWrapperMetaData} from "../../../core/data/layout-data";
@@ -16,13 +19,22 @@ import {CommonUtils} from "../../../core/utils/common-utils";
         '[class.jigsaw-tabs-wrapper]': 'true'
     }
 })
-export class JigsawTabsWrapper implements OnDestroy{
+export class JigsawTabsWrapper implements OnDestroy {
     public editable: boolean;
 
     public box: JigsawEditableBox;
 
+    /**
+     * tab内容的box实例，顺序按照tab的顺序
+     * @type {Array}
+     */
+    public components: any[] = [];
+
     @Output()
     public add = new EventEmitter();
+
+    @Output()
+    public contentInit = new EventEmitter();
 
     @ViewChild(JigsawTab)
     public _tabs: JigsawTab;
@@ -39,6 +51,7 @@ export class JigsawTabsWrapper implements OnDestroy{
      */
     public _$removeTab(index) {
         this.box.data.componentMetaDataList[0].tabsMetaData.panes.splice(index, 1);
+        this.components.splice(index, 1);
     }
 
     /**
@@ -53,13 +66,15 @@ export class JigsawTabsWrapper implements OnDestroy{
     public addTab(componentMetaData: ComponentMetaData, title?: string) {
         title = <any>(title ? title : JigsawInternalEditableTabTitle);
         this._tabs.addTab(title, componentMetaData.component);
-        // 渲染后的组件保存起来，主要是为了保存editable box的实例
+        // 渲染后的组件保存起来，
         const componentRef = this._tabs._tabContents.last._tabItemRef;
+        this.components.push(componentRef);
+        // 主要是为了保存editable box的实例
         componentMetaData.ref = componentRef;
-        if(componentRef instanceof ComponentRef && componentMetaData.inputs) {
+        if (componentRef instanceof ComponentRef && componentMetaData.inputs) {
             // 给组件赋值初始化数据
             componentMetaData.inputs.forEach(input => {
-                if(CommonUtils.isUndefined(input.property) || CommonUtils.isUndefined(input.default)) return;
+                if (CommonUtils.isUndefined(input.property) || CommonUtils.isUndefined(input.default)) return;
                 componentRef.instance[input.property] = input.default;
             })
         }
@@ -68,11 +83,13 @@ export class JigsawTabsWrapper implements OnDestroy{
     public renderTabByMetaData(metadata: TabsWrapperMetaData) {
         metadata.tabsMetaData.panes.forEach(pane => {
             this.addTab(pane.content[0], pane.title);
-        })
+        });
+        this.contentInit.emit();
     }
 
     ngOnDestroy() {
         this.add.unsubscribe();
+        this.contentInit.unsubscribe();
     }
 }
 
@@ -103,7 +120,7 @@ export class JigsawInternalEditableTabTitle implements IDynamicInstantiatable {
     /**
      * @internal
      */
-    public _handleEditable(e){
+    public _handleEditable(e) {
         e.preventDefault();
         e.stopPropagation();
         this._$editable = !this._$editable;

@@ -155,6 +155,21 @@ export class CustomSceneLayoutDemoComponent {
         console.log(this.data3);
         setTimeout(() => {
             console.log(this.data3.getComponents());
+            this.data3.getComponents().forEach(item => {
+                // tab内容的渲染是异步的, 可以通过订阅事件获取
+                if (item.component instanceof ComponentRef && item.component.instance instanceof JigsawTabsWrapper) {
+                    const tabsWrapper = item.component.instance;
+                    tabsWrapper.contentInit.subscribe(() => {
+                        if (tabsWrapper.components) {
+                            tabsWrapper.components.forEach(box => {
+                                if (box.instance instanceof JigsawEditableBox) {
+                                    console.log(box.instance.data.getComponents());
+                                }
+                            })
+                        }
+                    })
+                }
+            })
         })
     }
 
