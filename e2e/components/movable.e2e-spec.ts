@@ -1,4 +1,6 @@
 import {browser, $} from "protractor";
+import {waitForNotPresence, waitForPresence} from "../utils/await";
+import {expectToExist} from "../utils/asserts";
 
 
 describe('movable', () => {
@@ -17,6 +19,10 @@ describe('movable', () => {
                 x: 106,
                 y: 50
             }));
+            await waitForNotPresence('jigsaw-alert');
+            await $("button").click();
+            await waitForPresence('jigsaw-alert');
+            await expectToExist("jigsaw-alert");
         })
     })
 });
