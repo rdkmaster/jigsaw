@@ -199,7 +199,8 @@ export class LayoutData extends GeneralCollection<any> {
         const inputs = Array.from(element.attributes).reduce((arr, attr) => {
             arr.push({
                 property: InternalUtils.kebabToCamelCase(attr.name),
-                default: JSON.parse(attr.value)
+                default: (attr.value.match(/^[A-Za-z]+$/) && !(attr.value.match(/^(true|false)+$/))) ?
+                    attr.value : JSON.parse(attr.value)
             });
             return arr;
         }, []);
