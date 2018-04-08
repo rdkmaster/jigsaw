@@ -1,5 +1,6 @@
-import {$$, $,browser} from "protractor";
+import {$$, $, browser, ExpectedConditions} from "protractor";
 import {expectToExist} from "../utils/asserts";
+import {waitForNotPresence} from "../utils/await";
 
 describe('form', () => {
     beforeEach(() => {
@@ -13,7 +14,8 @@ describe('form', () => {
             await formFieldSet2.$("input").sendKeys("abcd");
             expect(await formFieldSet2.$$("SPAN").get(1).getText()).toBe("Last name should be more than 5 alphabets.");
             await formFieldSet2.$("input").sendKeys("e");
-            await expectToExist(formFieldSet2.$$("SPAN").get(1),false);
+            await browser.sleep(300);
+            expect(await formFieldSet2.$$("SPAN").get(1).getCssValue('display')).toBe("none");
             expect(await $(".separated").$("button").getCssValue('pointer-events')).toBe('none');
             await $$(".field").get(2).$("jigsaw-radio-option").click();
             await browser.sleep(500);
