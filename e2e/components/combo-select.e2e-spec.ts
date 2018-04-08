@@ -134,9 +134,9 @@ describe('combo-select', () => {
             await dropDownButton1.click();
             await browser.sleep(1000);
             expect(await dropDownButton1.getCssValue('background-color')).toBe('rgba(212, 98, 98, 1)');
-            await selectEl.$("jigsaw-tag").click();
-            await browser.sleep(1000);
-            expect(await dropDownButton1.getCssValue('background-color')).toBe('rgba(65, 173, 220, 1)');
+            // await selectEl.$("jigsaw-tag").click();
+            // await browser.sleep(1000);
+            // expect(await dropDownButton1.getCssValue('background-color')).toBe('rgba(65, 173, 220, 1)');
         });
         it('should toggle multiple & auto close on select', async () => {
             await browser.get('/combo-select/multiple');
