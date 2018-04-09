@@ -64,6 +64,8 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
 
     public blocked: boolean;
 
+    public showOptionBar: boolean = true;
+
     /**
      * @internal
      */
@@ -161,6 +163,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
             this.data.nodes[0].innerHtml = this.data.innerHtml;
 
             // tabWrapper信息更新
+            this.showOptionBar = true;
             this._updateTabsWrapper(this.data.nodes[0], firstChildBox);
 
             // 重置当前内容信息
@@ -178,6 +181,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
             const componentRef = components[0];
             if(componentRef instanceof ComponentRef && componentRef.instance instanceof JigsawTabsWrapper){
                 componentRef.instance.box = box;
+                componentRef.instance.box.showOptionBar = false;
                 componentRef.instance.add.observers = []; // 删除所有订阅
                 componentRef.instance.add.subscribe(wrapper => {
                     box._addDefaultTab(wrapper);
@@ -289,6 +293,17 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         this._bindScrollEvent();
     }
 
+    public clearContent() {
+        this._rendererHost.viewContainerRef.clear();
+        this.data.components = [];
+        this.data.componentMetaDataList = [];
+        this.data.innerHtml = '';
+        if (this.removeElementScrollEvent) {
+            this.removeElementScrollEvent();
+            this.removeElementScrollEvent = null;
+        }
+    }
+
     /**
      * 根据componentMetaDataList信息在box里面渲染需要的组件
      * @param {ComponentMetaData[]} componentMetaDataList
@@ -304,6 +319,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
             if (componentRef instanceof ComponentRef && componentRef.instance instanceof JigsawTabsWrapper) {
                 const tabsWrapper = componentRef.instance;
                 tabsWrapper.box = this;
+                tabsWrapper.box.showOptionBar = false;
                 tabsWrapper.editable = this.editable;
                 setTimeout(() => {
                     // 等待tab渲染
@@ -396,26 +412,12 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
                 this.renderer.setStyle(block, 'left', this.element.scrollLeft + 'px');
             }
             if (optionBox) {
-                if(this.data && this.data.components && this.data.components.length) {
-                    this.renderer.setStyle(optionBox, 'top', 10 + this.element.scrollTop + 'px');
-                    this.renderer.setStyle(optionBox, 'right', 64 + this.element.scrollLeft + 'px');
-                    this.renderer.setStyle(optionBox, 'left', 'auto');
-                } else {
-                    this.renderer.setStyle(optionBox, 'top', this.element.scrollTop ? (this.element.offsetHeight / 2 + this.element.scrollTop + 'px') : '50%');
-                    this.renderer.setStyle(optionBox, 'left', this.element.scrollLeft ? (this.element.offsetWidth / 2 + this.element.scrollLeft + 'px') : '50%');
-                    this.renderer.setStyle(optionBox, 'right', 'auto');
-                }
+                this.renderer.setStyle(optionBox, 'top', this.element.scrollTop ? (this.element.offsetHeight / 2 + this.element.scrollTop + 'px') : '50%');
+                this.renderer.setStyle(optionBox, 'left', this.element.scrollLeft ? (this.element.offsetWidth / 2 + this.element.scrollLeft + 'px') : '50%');
             }
             if (optionBar) {
-                if(this.data && this.data.components && this.data.components.length) {
-                    this.renderer.setStyle(optionBar, 'top', 10 + this.element.scrollTop + 'px');
-                    this.renderer.setStyle(optionBar, 'right', 10 + this.element.scrollLeft + 'px');
-                    this.renderer.setStyle(optionBar, 'left', 'auto');
-                } else {
-                    this.renderer.setStyle(optionBar, 'top', this.element.scrollTop ? (this.element.offsetHeight / 2 + this.element.scrollTop + 'px') : '50%');
-                    this.renderer.setStyle(optionBar, 'left', this.element.scrollLeft ? (this.element.offsetWidth / 2 + this.element.scrollLeft + 'px') : '50%');
-                    this.renderer.setStyle(optionBar, 'right', 'auto');
-                }
+                this.renderer.setStyle(optionBar, 'top', this.element.scrollTop ? (this.element.offsetHeight / 2 + this.element.scrollTop + 'px') : '50%');
+                this.renderer.setStyle(optionBar, 'left', this.element.scrollLeft ? (this.element.offsetWidth / 2 + this.element.scrollLeft + 'px') : '50%');
             }
             if (resizeBar) {
                 this.renderer.setStyle(resizeBar, 'top', this.element.scrollTop + 'px');

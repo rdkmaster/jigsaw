@@ -52,6 +52,10 @@ export class JigsawTabsWrapper implements OnDestroy {
     public _$removeTab(index) {
         this.box.data.componentMetaDataList[0].tabsMetaData.panes.splice(index, 1);
         this.components.splice(index, 1);
+        if(this._tabs.length == 0) {
+            this.box.clearContent();
+            this.box.showOptionBar = true;
+        }
     }
 
     /**

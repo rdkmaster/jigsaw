@@ -14,13 +14,13 @@
     (_remove)="_$removeBox($event)">
 </j-editable-box>
 
-<div *ngIf="(!data || !data.nodes || !data.nodes.length) && editable"
+<div *ngIf="(!data || !data.nodes || !data.nodes.length) && editable && showOptionBar"
      class="jigsaw-editable-box-option-box" (click)="_$addContent()"
      [class.jigsaw-editable-box-has-content]="data?.components?.length">
     <i class="fa fa-plus"></i>
 </div>
 
-<div *ngIf="(!data || !data.nodes || !data.nodes.length) && editable"
+<div *ngIf="(!data || !data.nodes || !data.nodes.length) && editable && showOptionBar"
      class="jigsaw-editable-box-option-bar"
      [class.jigsaw-editable-box-has-content]="data?.components?.length">
     <span class="fa fa-minus-square-o" (click)="_$addBox('v')"></span>
