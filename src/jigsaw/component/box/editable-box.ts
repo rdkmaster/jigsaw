@@ -329,7 +329,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
                         const contentMetaData = pane.content[0];
                         if(contentMetaData.selector != 'j-editable-box' || contentMetaData.component) return;
                         contentMetaData.component = JigsawEditableBox;
-                        contentMetaData.inputs.push({
+                        contentMetaData.inputs.unshift({ // 放在data属性的前面，data会调用渲染内容的函数，需要在渲染前准备好其他属性
                             property: 'editable',
                             default: this.editable
                         })
