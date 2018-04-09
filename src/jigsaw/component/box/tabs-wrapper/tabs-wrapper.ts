@@ -84,6 +84,9 @@ export class JigsawTabsWrapper implements OnDestroy {
         metadata.tabsMetaData.panes.forEach(pane => {
             this.addTab(pane.content[0], pane.title);
         });
+        setTimeout(() => {
+            this._tabs.selectedIndex = 0; // 默认选中第一个tab
+        });
         this.contentInit.emit();
     }
 
