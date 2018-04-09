@@ -3,7 +3,7 @@ import {
     ViewContainerRef, ComponentFactoryResolver, Type, ChangeDetectorRef, AfterViewChecked, ViewChild, ElementRef
 } from '@angular/core';
 import {JigsawTabPane} from "./tab-pane";
-import {JigsawTabContent, JigsawTabLabel} from "./tab-item";
+import {JigsawTabContent, JigsawTabLabel, TabTitleInfo} from "./tab-item";
 import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
 
 /**
@@ -70,10 +70,10 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
 
     /**
      * 改变tab title是发送信息，信息的格式{key: number, title: string}
-     * @type {EventEmitter<JigsawTab>}
+     * @type {EventEmitter<TabTitleInfo>}
      */
     @Output()
-    public changeTitle = new EventEmitter<{ key: number, title: string }>();
+    public changeTitle = new EventEmitter<TabTitleInfo>();
 
     @ViewChild('tabsInkBar')
     private _tabsInkBar: ElementRef;

@@ -5,6 +5,8 @@ import {
 } from '@angular/core';
 import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
 
+export type TabTitleInfo = { key: number, title: string };
+
 export abstract class JigsawTabBase extends AbstractJigsawComponent implements OnDestroy {
 
     constructor(protected _changeDetector: ChangeDetectorRef, protected _componentFactory: ComponentFactoryResolver) {
@@ -81,7 +83,7 @@ export class JigsawTabLabel extends JigsawTabBase implements AfterViewInit {
     public remove = new EventEmitter<number>();
 
     @Output()
-    public change = new EventEmitter<{ key: number, title: string }>();
+    public change = new EventEmitter<TabTitleInfo>();
 
     // label 左侧的距离
     public getOffsetLeft(): number {
