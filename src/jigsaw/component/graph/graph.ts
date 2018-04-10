@@ -169,9 +169,10 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     // 注册封装的echarts事件.
     private _registerEvent() {
-        for (let index in this._eventArr) {
-            this._graph.on(this._eventArr[index], params => this._handleEvent(params, this._eventArr[index]));
-        }
+        this._eventArr.forEach(eventStr => {
+            this._graph.off(eventStr);
+            this._graph.on(eventStr, params => this._handleEvent(params, eventStr));
+        })
     }
 
     private _handleEvent(params: any, eventType?: string) {

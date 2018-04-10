@@ -21,6 +21,10 @@ export class BasicGraphComponent implements OnInit {
         }
     };
 
+    handleClick(info){
+        console.log(info);
+    }
+
     ngOnInit() {
         let graphData = new GraphDataDemo();
         this.data = graphData;
