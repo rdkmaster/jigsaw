@@ -13,14 +13,14 @@ describe('combo-select', () => {
             await browser.get('/combo-select/auto-width');
             const selectEl = element(by.tagName('jigsaw-combo-select')),
                 buttons = $$('jigsaw-tile-option');
-            browser.actions().mouseMove(selectEl).perform();
-            expect(selectEl.getText()).toBe('北京');
+            await browser.actions().mouseMove(selectEl).perform();
+            expect(await selectEl.getText()).toBe('北京');
             await waitForPresence('jigsaw-tile');
-            buttons.get(1).click();
-            expect(selectEl.getText()).toBe('北京 上海');
-            buttons.get(0).click();
-            expect(selectEl.getText()).toBe('上海');
-            expect(selectEl.getCssValue('width')).toBe(element(by.tagName('jigsaw-tile')).getCssValue('width'));
+            await buttons.get(1).click();
+            expect(await selectEl.getText()).toBe('北京 上海');
+            await buttons.get(0).click();
+            expect(await selectEl.getText()).toBe('上海');
+            expect(await selectEl.getCssValue('width')).toBe(await element(by.tagName('jigsaw-tile')).getCssValue('width'));
         });
         it('should change trigger when click button', async () => {
             await browser.get('/combo-select/trigger');
@@ -33,106 +33,119 @@ describe('combo-select', () => {
             /**
              * open: hover, close: leave
              */
-            browser.actions().mouseMove(selectEl).perform();
+            await browser.actions().mouseMove(selectEl).perform();
             await waitForPresence('.drop-down');
-            expectToExist('.drop-down', true);
-            browser.actions().mouseMove(openByClick).perform();
+            await expectToExist('.drop-down', true);
+            await browser.actions().mouseMove(openByClick).perform();
             await waitForNotPresence('.drop-down');
-            expectToExist('.drop-down', false);
+            await expectToExist('.drop-down', false);
 
             /**
              * open: click, close: leave
              */
-            openByClick.click();
-            browser.sleep(50);
-            browser.actions().mouseMove(selectEl).perform();
-            browser.sleep(200);
-            expectToExist('.drop-down', false);
-            selectEl.click();
-            browser.actions().mouseMove(selectEl).perform();
+            await openByClick.click();
+            await browser.sleep(50);
+            await browser.actions().mouseMove(selectEl).perform();
+            await browser.sleep(200);
+            await  expectToExist('.drop-down', false);
+            await  selectEl.click();
+            await  browser.actions().mouseMove(selectEl).perform();
             await waitForPresence('.drop-down');
-            expectToExist('.drop-down', true);
-            browser.actions().mouseMove(openByClick).perform();
+            await  expectToExist('.drop-down', true);
+            await  browser.actions().mouseMove(openByClick).perform();
             await waitForNotPresence('.drop-down');
-            expectToExist('.drop-down', false);
+            await  expectToExist('.drop-down', false);
 
             /**
              * open: click, close: click
              */
-            closeByClick.click();
-            browser.sleep(50);
-            browser.actions().mouseMove(selectEl).perform();
-            browser.sleep(200);
-            expectToExist('.drop-down', false);
-            selectEl.click();
+            await closeByClick.click();
+            await browser.sleep(50);
+            await browser.actions().mouseMove(selectEl).perform();
+            await  browser.sleep(200);
+            await expectToExist('.drop-down', false);
+            await  selectEl.click();
             await waitForPresence('.drop-down');
-            expectToExist('.drop-down', true);
-            browser.actions().mouseMove(openByClick).perform();
-            browser.sleep(450);
+            await expectToExist('.drop-down', true);
+            await browser.actions().mouseMove(openByClick).perform();
+            await  browser.sleep(450);
             // should not disappear after debounce timeout
-            expectToExist('.drop-down', true);
+            await  expectToExist('.drop-down', true);
             closeByClick.click();
             await waitForNotPresence('.drop-down');
-            expectToExist('.drop-down', false);
+            await  expectToExist('.drop-down', false);
 
             /**
              * open: hover, close: click
              */
-            openByHover.click();
-            browser.sleep(50);
+            await openByHover.click();
+            await browser.sleep(50);
             // check open debounce
-            browser.actions().mouseMove(selectEl).perform();
+            await browser.actions().mouseMove(selectEl).perform();
             await waitForPresence('.drop-down');
-            expectToExist('.drop-down', true);
-            browser.actions().mouseMove(openByClick).perform();
-            browser.sleep(450);
+            await expectToExist('.drop-down', true);
+            await browser.actions().mouseMove(openByClick).perform();
+            await browser.sleep(450);
             // should not disappear after debounce timeout
-            expectToExist('.drop-down', true);
-            openByHover.click();
+            await expectToExist('.drop-down', true);
+            await openByHover.click();
             await waitForNotPresence('.drop-down');
-            expectToExist('.drop-down', false);
+            await expectToExist('.drop-down', false);
         });
         it('should be disabled when toggle disable', async () => {
             await browser.get('/combo-select/disable');
             const selectEl = $('jigsaw-combo-select'),
                 button = $$('jigsaw-button');
-            browser.actions().mouseMove(selectEl).perform();
-            await waitForPresence('jigsaw-tile');
-            expectToExist('jigsaw-tile');
-            button.click();
-            browser.actions().mouseMove(selectEl).perform();
+            await expectToExist('jigsaw-tile');
+            await button.click();
+            await browser.actions().mouseMove(selectEl).perform();
             await waitForNotPresence('jigsaw-tile');
-            expectToExist('jigsaw-tile', false);
+            await expectToExist('jigsaw-tile', false);
         });
         it('should display collapse when mouse enter combo-select', async () => {
             await browser.get('/combo-select/drop-down-status');
             const selectEl = $('jigsaw-combo-select'),
-                collapse = $('jigsaw-collapse');
-            mouseMove(selectEl);
+                collapse = $('jigsaw-collapse'),
+                nameInput = collapse.$$("jigsaw-collapse-pane").get(0).$("input"),
+                passwordInput = collapse.$$("jigsaw-collapse-pane").get(1).$("input");
+            await mouseMove(selectEl);
             await waitForPresence('jigsaw-collapse');
-            expectToExist('jigsaw-collapse');
+            await expectToExist('jigsaw-collapse');
+            expect(await nameInput.getAttribute("ng-reflect-model")).toBe("Jigsaw");
+            await nameInput.sendKeys("123");
+            expect(await nameInput.getAttribute("ng-reflect-model")).toBe("Jigsaw123");
+            await collapse.$$("jigsaw-collapse-pane").get(1).click();
+            await passwordInput.sendKeys("456");
+            expect(await passwordInput.getAttribute("value")).toBe("456");
+            await mouseMove({x:500,y:500});
+            await waitForNotPresence('jigsaw-collapse');
+            await mouseMove(selectEl);
+            await waitForPresence('jigsaw-collapse');
+            expect(await nameInput.getAttribute("ng-reflect-model")).toBe("Jigsaw123");
+            await collapse.$$("jigsaw-collapse-pane").get(1).click();
+            expect(await passwordInput.getAttribute("value")).toBe("");
         });
         it('should toggle multiple & auto close on select', async () => {
             await browser.get('/combo-select/multiple');
             const selectEl = $('jigsaw-combo-select'),
                 button = $('jigsaw-button'),
                 tileOptions = $$('jigsaw-tile-option');
-            button.click();
-            browser.sleep(300);
-            mouseMove(selectEl);
+            await button.click();
+            await browser.sleep(300);
+            await mouseMove(selectEl);
             await waitForPresence('jigsaw-tile');
-            tileOptions.get(2).click();
-            expect(element(by.tagName('jigsaw-tag')).element(by.tagName('span')).getText()).toBe('南京');
+            await tileOptions.get(2).click();
+            expect(await element(by.tagName('jigsaw-tag')).element(by.tagName('span')).getText()).toBe('南京');
             await waitForNotPresence('jigsaw-tile');
-            expectToExist('jigsaw-tile', false);
+            await expectToExist('jigsaw-tile', false);
         });
         it('should open combo select through two ways', async () => {
             await browser.get('/combo-select/open');
             const button = $('jigsaw-button');
-            expectToExist('jigsaw-tile');
-            button.click();
+            await expectToExist('jigsaw-tile');
+            await  button.click();
             await waitForNotPresence('jigsaw-tile');
-            expectToExist('jigsaw-tile', false);
+            await expectToExist('jigsaw-tile', false);
         });
         xit('should be searchable', async () => {
             browser.get('/combo-select/searchable');
@@ -149,22 +162,22 @@ describe('combo-select', () => {
                 buttons = $$('input');
             let combo1Size, input3Size;
             combo1Size = await comboSelect.get(0).getSize();
-            expect(combo1Size.width).toBe(200);
-            mouseMove(comboSelect.get(1));
+            await expect(combo1Size.width).toBe(200);
+            await  mouseMove(comboSelect.get(1));
             await waitForPresence('#input3');
             const innerInput = element(by.id('input3'));
             input3Size = await innerInput.getSize();
-            expect(input3Size.width).toBe(400);
-            buttons.get(0).clear();
-            buttons.get(1).clear();
-            buttons.get(0).sendKeys(100);
-            buttons.get(1).sendKeys(100);
+            expect(await input3Size.width).toBe(400);
+            await buttons.get(0).clear();
+            await buttons.get(1).clear();
+            await buttons.get(0).sendKeys(100);
+            await buttons.get(1).sendKeys(100);
             combo1Size = await comboSelect.get(0).getSize();
-            expect(combo1Size.width).toBe(100);
-            mouseMove(comboSelect.get(1));
+            expect(await combo1Size.width).toBe(100);
+            await  mouseMove(comboSelect.get(1));
             await waitForPresence('#input3');
             input3Size = await innerInput.getSize();
-            expect(input3Size.width).toBe(240);
+            expect(await input3Size.width).toBe(240);
         });
     })
 });
