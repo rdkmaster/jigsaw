@@ -1,0 +1,8 @@
+<div class="jigsaw-drawer" [class.jigsaw-drawer-close]="close" [ngStyle]="_$handleStyle" [ngClass]="_$handleClass">
+    <div class="jigsaw-drawer-content" [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true}">
+        <ng-content></ng-content>
+    </div>
+    <div class="jigsaw-drawer-bar fa fa-angle-double-right" (click)="_$toggleClose($event)"></div>
+</div>
+
+

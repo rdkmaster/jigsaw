@@ -1,0 +1,21 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="option-box">
+    <label>请选择抽屉位置：</label>
+    <jigsaw-radios [(value)]="selectedPosition"
+                   trackItemBy="label">
+        <jigsaw-radio-option *ngFor="let item of positions" [value]="item">
+            {{item.label}}
+        </jigsaw-radio-option>
+    </jigsaw-radios>
+</div>
+
+<j-drawer [position]="selectedPosition?.label">
+    <div style="width: 200px;height: 200px;background: bisque">
+        1111111111
+    </div>
+</j-drawer>
