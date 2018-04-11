@@ -7,8 +7,10 @@ $drawer-prefix-cls: #{$jigsaw-prefix}-drawer;
     border: 1px solid $border-color-base;
     background: $component-background;
     box-shadow: $box-shadow-base;
-    transition: transform $animation-duration-slow $ease-in-circ;
     z-index: $zindex-popover-level-0;
+    &-animation {
+        transition: transform $animation-duration-slow $ease-in-circ;
+    }
     &-content {
         width: 100%;
         height: 100%;
