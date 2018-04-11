@@ -14,8 +14,10 @@
     </jigsaw-radios>
 </div>
 
-<j-drawer [position]="selectedPosition?.label">
-    <div style="width: 200px;height: 200px;background: bisque">
-        1111111111
+<j-drawer [position]="selectedPosition?.label"
+          [height]="(selectedPosition?.label == 'top' || selectedPosition?.label == 'bottom') ? 200 : '100%'">
+    <div *ngFor="let i of [1,2,3,4,5,6,7,8]" class="drawer-content"
+         [class.drawer-content-horizontal]="selectedPosition?.label == 'top' || selectedPosition?.label == 'bottom'">
+        这是一个展示内容的box
     </div>
 </j-drawer>
