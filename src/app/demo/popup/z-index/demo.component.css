@@ -1,0 +1,8 @@
+.drawer-content {
+    width: 200px;
+    height: 200px;
+    line-height: 200px;
+    margin-bottom: 6px;
+    text-align: center;
+    background: bisque;
+}
