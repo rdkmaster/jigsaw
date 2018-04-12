@@ -1,6 +1,5 @@
 import {
-    AfterViewInit, ChangeDetectorRef, Component, ComponentRef, EventEmitter, NgModule, OnDestroy,
-    OnInit, Output, ViewChild
+    AfterViewInit, ChangeDetectorRef, Component, ComponentRef, NgModule, OnDestroy, OnInit, ViewChild
 } from "@angular/core";
 import {JigsawEditableBox} from "../editable-box";
 import {JigsawTab} from "../../tabs/tab";
@@ -32,7 +31,7 @@ export class TabPaneMetaData {
         '[class.jigsaw-tabs-wrapper]': 'true'
     }
 })
-export class JigsawTabsWrapper implements OnDestroy, AfterViewInit, OnInit {
+export class JigsawTabsWrapper implements AfterViewInit, OnInit {
     private _box: JigsawEditableBox;
 
     public get box(): JigsawEditableBox {
@@ -59,9 +58,6 @@ export class JigsawTabsWrapper implements OnDestroy, AfterViewInit, OnInit {
      * @internal
      */
     public _$editable: boolean;
-
-    @Output()
-    public contentInit = new EventEmitter();
 
     @ViewChild(JigsawTab)
     /**
@@ -125,7 +121,6 @@ export class JigsawTabsWrapper implements OnDestroy, AfterViewInit, OnInit {
         if (this._metadata.tabsMetaData.panes.length == 0 && this._$editable) {
             this._addDefaultTab();
         }
-        this.contentInit.emit();
     }
 
     /**
@@ -137,8 +132,6 @@ export class JigsawTabsWrapper implements OnDestroy, AfterViewInit, OnInit {
             if (!pane.content || !pane.content.length) return;
             const contentMetaData = pane.content[0];
             if (contentMetaData.selector != 'j-editable-box') return;
-            debugger
-            //contentMetaData.component = JigsawEditableBox;
             contentMetaData.inputs.unshift({ // 放在data属性的前面，data会调用box渲染内容的函数，需要在渲染前准备好其他属性
                 property: 'editable',
                 default: this._$editable
@@ -215,10 +208,6 @@ export class JigsawTabsWrapper implements OnDestroy, AfterViewInit, OnInit {
         // 等待tab渲染
         this._refineMetaData();
         this._renderTabByMetaData();
-    }
-
-    ngOnDestroy() {
-        this.contentInit.unsubscribe();
     }
 }
 

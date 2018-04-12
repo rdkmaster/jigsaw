@@ -155,20 +155,19 @@ export class CustomSceneLayoutDemoComponent {
         this.data3 = LayoutData.of(data.toHtml(), this.componentMetaDataList);
         console.log(this.data3);
         setTimeout(() => {
+            // 等待box渲染
             console.log(this.data3.getComponents());
             this.data3.getComponents().forEach(item => {
-                // tab内容的渲染是异步的, 可以通过订阅事件获取
                 if (item.component instanceof ComponentRef && item.component.instance instanceof JigsawTabsWrapper) {
+                    // 这边只示例性的获取一层tab的内容
                     const tabsWrapper = item.component.instance;
-                    tabsWrapper.contentInit.subscribe(() => {
-                        if (tabsWrapper.components) {
-                            tabsWrapper.components.forEach(box => {
-                                if (box.instance instanceof JigsawEditableBox) {
-                                    console.log(box.instance.data.getComponents());
-                                }
-                            })
-                        }
-                    })
+                    if (tabsWrapper.components) {
+                        tabsWrapper.components.forEach(box => {
+                            if (box.instance instanceof JigsawEditableBox) {
+                                console.log(box.instance.data.getComponents());
+                            }
+                        })
+                    }
                 }
             })
         })
@@ -235,7 +234,7 @@ export class CustomSceneLayoutDemoComponent {
             inputs: this.selectedComponent.inputs
         };
 
-        if(this.selectedComponent.component == JigsawTabsWrapper) {
+        if (this.selectedComponent.component == JigsawTabsWrapper) {
             (<TabsWrapperMetaData>componentMetaData).tabsMetaData = {
                 selector: 'j-tabs',
                 component: JigsawTab,
