@@ -39,9 +39,15 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     @ContentChildren(JigsawTabPane)
     public _$tabPanes: QueryList<JigsawTabPane>;
 
+    /**
+     * @internal
+     */
     @ViewChildren(JigsawTabLabel)
     public _tabLabels: QueryList<JigsawTabLabel>;
 
+    /**
+     * @internal
+     */
     @ViewChildren(JigsawTabContent)
     public _tabContents: QueryList<JigsawTabContent>;
 
@@ -56,6 +62,9 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
 
     /**
      * 删除tab时，发出事件，携带删除的tab索引值
+     *
+     * $demo = tab/editable
+     *
      * @type {EventEmitter<number>}
      */
     @Output()
@@ -63,6 +72,9 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
 
     /**
      * 发送add事件，携带tabs的实例
+     *
+     * $demo = tab/editable
+     *
      * @type {EventEmitter<JigsawTab>}
      */
     @Output()
@@ -73,11 +85,18 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
      * @type {EventEmitter<TabTitleInfo>}
      */
     @Output()
-    public changeTitle = new EventEmitter<TabTitleInfo>();
+    public titleChange = new EventEmitter<TabTitleInfo>();
 
     @ViewChild('tabsInkBar')
     private _tabsInkBar: ElementRef;
 
+    /**
+     * 控制tab显示添加和删除按钮
+     *
+     * $demo = tab/editable
+     *
+     * @type {boolean}
+     */
     @Input()
     public editable: boolean;
 
@@ -193,13 +212,6 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     public _$handleRemove(index) {
         this.removeTab(index);
         this.remove.emit(index);
-    }
-
-    /**
-     * @internal
-     */
-    public _$handleChangeTitle(changeInfo: { key: number, title: string }) {
-        this.changeTitle.emit(changeInfo);
     }
 
     ngAfterViewInit() {

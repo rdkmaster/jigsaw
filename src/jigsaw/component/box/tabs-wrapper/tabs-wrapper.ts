@@ -59,10 +59,10 @@ export class JigsawTabsWrapper implements AfterViewInit, OnInit {
      */
     public _$editable: boolean;
 
-    @ViewChild(JigsawTab)
     /**
      * @internal
      */
+    @ViewChild(JigsawTab)
     public _tabs: JigsawTab;
 
     /**

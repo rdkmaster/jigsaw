@@ -16,7 +16,7 @@
                                       [class.jigsaw-tabs-tab-hidden]="tab.hidden"
                                       (click)="_$tabClick(i)"
                                       (remove)="_$handleRemove($event)"
-                                      (change)="_$handleChangeTitle($event)">
+                                      (change)="titleChange.emit($event)">
                     </jigsaw-tab-label>
                     <span class="fa fa-plus-square-o jigsaw-tabs-add-bar" *ngIf="editable" (click)="_$handleAdd()"></span>
                 </div>
