@@ -4,11 +4,9 @@ import {
     QueryList, Renderer2, TemplateRef, Type, ViewChild, ViewChildren, ViewRef
 } from "@angular/core";
 import {CallbackRemoval} from "../../core/utils/common-utils";
-import {ComponentInput, ComponentMetaData, LayoutData, TabsWrapperMetaData} from "../../core/data/layout-data";
+import {ComponentInput, ComponentMetaData, LayoutData} from "../../core/data/layout-data";
 import {JigsawRendererHost} from "../common";
 import {JigsawResizableBoxBase} from "./common-box";
-import {JigsawTab} from "../tabs/tab";
-import {JigsawTabsWrapper} from "./tabs-wrapper/tabs-wrapper";
 
 @Component({
     selector: 'jigsaw-editable-box, j-editable-box',
@@ -162,9 +160,9 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
             this.data.nodes[0].componentMetaDataList = this.data.componentMetaDataList;
             this.data.nodes[0].innerHtml = this.data.innerHtml;
 
-            // tabWrapper信息更新
             this.showOptionBar = true;
-            this._updateTabsWrapper(this.data.nodes[0], firstChildBox);
+            // 更新组件内部box信息
+            this._updateBoxReference(this.data.nodes[0], firstChildBox);
 
             // 重置当前内容信息
             this.data.componentMetaDataList = [];
@@ -175,17 +173,12 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         });
     }
 
-    private _updateTabsWrapper(data: LayoutData, box: JigsawEditableBox) {
+    private _updateBoxReference(data: LayoutData, box: JigsawEditableBox) {
         const components = data.components;
         if(components && components.length) {
             const componentRef = components[0];
-            if(componentRef instanceof ComponentRef && componentRef.instance instanceof JigsawTabsWrapper){
+            if(componentRef instanceof ComponentRef){
                 componentRef.instance.box = box;
-                componentRef.instance.box.showOptionBar = false;
-                componentRef.instance.add.observers = []; // 删除所有订阅
-                componentRef.instance.add.subscribe(wrapper => {
-                    box._addDefaultTab(wrapper);
-                })
             }
         }
     }
@@ -226,8 +219,8 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
                     this.data.nodes = [];
                     this.direction = null;
 
-                    // tabWrapper信息更新
-                    this._updateTabsWrapper(this.data, this);
+                    // 更新组件内部box信息
+                    this._updateBoxReference(this.data, this);
 
                     // 等待 option bar & block 渲染
                     this.callLater(this._bindScrollEvent, this);
@@ -279,17 +272,8 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         if (!this.data) {
             return;
         }
-        componentMetaDataList.forEach(metadata => {
-            if (metadata.selector == 'j-tabs-wrapper') {
-                metadata.tabsMetaData = {
-                    selector: 'j-tabs',
-                    component: JigsawTab,
-                    panes: []
-                }
-            }
-        });
-        this._renderComponents(componentMetaDataList);
         this.data.componentMetaDataList = componentMetaDataList;
+        this._renderComponents(componentMetaDataList);
         this._bindScrollEvent();
     }
 
@@ -316,58 +300,10 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         componentMetaDataList.forEach(componentMetaData => {
             const componentRef = this._rendererFactory(componentMetaData.component, componentMetaData.inputs);
             this.data.components.push(componentRef);
-            if (componentRef instanceof ComponentRef && componentRef.instance instanceof JigsawTabsWrapper) {
-                const tabsWrapper = componentRef.instance;
-                tabsWrapper.box = this;
-                tabsWrapper.box.showOptionBar = false;
-                tabsWrapper.editable = this.editable;
-                setTimeout(() => {
-                    // 等待tab渲染
-                    // 补充 box in tab 的元数据信息
-                    <TabsWrapperMetaData>componentMetaData.tabsMetaData.panes.forEach(pane => {
-                        if(!pane.content || !pane.content.length) return;
-                        const contentMetaData = pane.content[0];
-                        if(contentMetaData.selector != 'j-editable-box' || contentMetaData.component) return;
-                        contentMetaData.component = JigsawEditableBox;
-                        contentMetaData.inputs.unshift({ // 放在data属性的前面，data会调用渲染内容的函数，需要在渲染前准备好其他属性
-                            property: 'editable',
-                            default: this.editable
-                        })
-                    });
-                    tabsWrapper.renderTabByMetaData(<TabsWrapperMetaData>componentMetaData);
-                    // tab没有内容并且box是可编辑的，加入默认的tab
-                    if (componentMetaData.tabsMetaData.panes.length == 0 && this.editable) {
-                        this._addDefaultTab(tabsWrapper);
-                    }
-                });
-                tabsWrapper.add.subscribe(wrapper => {
-                    this._addDefaultTab(wrapper);
-                })
+            if (componentRef instanceof ComponentRef){
+                componentRef.instance.box = this;
             }
         });
-    }
-
-    public _addDefaultTab(tabsWrapper: JigsawTabsWrapper) {
-        const componentMetaData = {
-            selector: 'j-editable-box',
-            component: JigsawEditableBox
-        };
-        tabsWrapper.addTab(componentMetaData);
-
-        // 更新data的componentMetaData
-        this.data.componentMetaDataList[0].tabsMetaData.panes.push({
-            title: 'New Tab',
-            content: [componentMetaData]
-        });
-
-        // 监听tab里面box的fill事件
-        const insertComponent = tabsWrapper._tabs._tabContents.last._tabItemRef;
-        if (insertComponent instanceof ComponentRef &&
-            insertComponent.instance instanceof JigsawEditableBox) {
-            insertComponent.instance.fill.subscribe(box => {
-                this.getRootBox().fill.emit(box);
-            })
-        }
     }
 
     private _rendererFactory(renderer: Type<any> | TemplateRef<any>, inputs: ComponentInput[]): ComponentRef<any> | EmbeddedViewRef<any> {

@@ -1,16 +1,30 @@
 import {
+    AfterViewInit,
     ChangeDetectorRef, Component, ComponentRef, EventEmitter, NgModule, OnDestroy, Output,
     ViewChild
 } from "@angular/core";
 import {JigsawEditableBox} from "../editable-box";
 import {JigsawTab} from "../../tabs/tab";
-import {ComponentMetaData, TabsWrapperMetaData} from "../../../core/data/layout-data";
+import {ComponentMetaData} from "../../../core/data/layout-data";
 import {JigsawTabsModule} from "../../tabs/index";
 import {JigsawInput, JigsawInputModule} from "../../input/input";
 import {IDynamicInstantiatable} from "../../common";
 import {CommonModule} from "@angular/common";
 import {JigsawTabLabel} from "../../tabs/tab-item";
 import {CommonUtils} from "../../../core/utils/common-utils";
+
+export class TabsWrapperMetaData extends ComponentMetaData {
+    tabsMetaData: TabsMetaData;
+}
+
+export class TabsMetaData extends ComponentMetaData {
+    panes: TabPaneMetaData[];
+}
+
+export class TabPaneMetaData {
+    title: string;
+    content: ComponentMetaData[];
+}
 
 @Component({
     selector: 'j-tabs-wrapper',
@@ -19,10 +33,20 @@ import {CommonUtils} from "../../../core/utils/common-utils";
         '[class.jigsaw-tabs-wrapper]': 'true'
     }
 })
-export class JigsawTabsWrapper implements OnDestroy {
-    public editable: boolean;
+export class JigsawTabsWrapper implements OnDestroy, AfterViewInit {
+    private _box: JigsawEditableBox;
 
-    public box: JigsawEditableBox;
+    public get box(): JigsawEditableBox {
+        return this._box;
+    }
+
+    public set box(value: JigsawEditableBox) {
+        if(!(value instanceof JigsawEditableBox)) return;
+        this._box = value;
+        this._metadata = <TabsWrapperMetaData>this._box.data.componentMetaDataList[0];
+        this._$editable = this._box.editable;
+        this._box.showOptionBar = false; // 有tab时，外面的box不显示操作按钮
+    }
 
     /**
      * tab内容的box实例，顺序按照tab的顺序
@@ -30,31 +54,38 @@ export class JigsawTabsWrapper implements OnDestroy {
      */
     public components: any[] = [];
 
-    @Output()
-    public add = new EventEmitter();
+    private _metadata: TabsWrapperMetaData;
+
+    /**
+     * @internal
+     */
+    public _$editable: boolean;
 
     @Output()
     public contentInit = new EventEmitter();
 
     @ViewChild(JigsawTab)
+    /**
+     * @internal
+     */
     public _tabs: JigsawTab;
 
     /**
      * @internal
      */
     public _$handleAdd(tabs: JigsawTab) {
-        this.add.emit(this);
+        this._addDefaultTab();
     }
 
     /**
      * @internal
      */
     public _$removeTab(index) {
-        this.box.data.componentMetaDataList[0].tabsMetaData.panes.splice(index, 1);
+        this._metadata.tabsMetaData.panes.splice(index, 1);
         this.components.splice(index, 1);
         if(this._tabs.length == 0) {
-            this.box.clearContent();
-            this.box.showOptionBar = true;
+            this._box.clearContent();
+            this._box.showOptionBar = true;
         }
     }
 
@@ -62,9 +93,9 @@ export class JigsawTabsWrapper implements OnDestroy {
      * @internal
      */
     public _$changeTitle(changeInfo) {
-        if (!this.box.data.componentMetaDataList[0].tabsMetaData.panes[changeInfo.key] ||
-            this.box.data.componentMetaDataList[0].tabsMetaData.panes[changeInfo.key].title == changeInfo.title) return;
-        this.box.data.componentMetaDataList[0].tabsMetaData.panes[changeInfo.key].title = changeInfo.title;
+        if (!this._metadata.tabsMetaData.panes[changeInfo.key] ||
+            this._metadata.tabsMetaData.panes[changeInfo.key].title == changeInfo.title) return;
+        this._metadata.tabsMetaData.panes[changeInfo.key].title = changeInfo.title;
     }
 
     public addTab(componentMetaData: ComponentMetaData, title?: string) {
@@ -84,18 +115,67 @@ export class JigsawTabsWrapper implements OnDestroy {
         }
     }
 
-    public renderTabByMetaData(metadata: TabsWrapperMetaData) {
-        metadata.tabsMetaData.panes.forEach(pane => {
+    private _renderTabByMetaData() {
+        this._metadata.tabsMetaData.panes.forEach(pane => {
             this.addTab(pane.content[0], pane.title);
         });
         setTimeout(() => {
             this._tabs.selectedIndex = 0; // 默认选中第一个tab
         });
+        // tab没有内容并且box是可编辑的，加入默认的tab
+        if (this._metadata.tabsMetaData.panes.length == 0 && this._$editable) {
+            this._addDefaultTab();
+        }
         this.contentInit.emit();
     }
 
+    /**
+     * 补充 box in tab 的元数据信息
+     * @private
+     */
+    private _refineMetaData() {
+        this._metadata.tabsMetaData.panes.forEach(pane => {
+            if(!pane.content || !pane.content.length) return;
+            const contentMetaData = pane.content[0];
+            if(contentMetaData.selector != 'j-editable-box' || contentMetaData.component) return;
+            contentMetaData.component = JigsawEditableBox;
+            contentMetaData.inputs.unshift({ // 放在data属性的前面，data会调用渲染内容的函数，需要在渲染前准备好其他属性
+                property: 'editable',
+                default: this._$editable
+            })
+        });
+    }
+
+   private _addDefaultTab() {
+        const componentMetaData = {
+            selector: 'j-editable-box',
+            component: JigsawEditableBox
+        };
+        this.addTab(componentMetaData);
+
+        // 更新data的componentMetaData
+        this._metadata.tabsMetaData.panes.push({
+            title: 'New Tab',
+            content: [componentMetaData]
+        });
+
+        // 监听tab里面box的fill事件
+        const insertComponent = this._tabs._tabContents.last._tabItemRef;
+        if (insertComponent instanceof ComponentRef &&
+            insertComponent.instance instanceof JigsawEditableBox) {
+            insertComponent.instance.fill.subscribe(box => {
+                this._box.getRootBox().fill.emit(box);
+            })
+        }
+    }
+
+    ngAfterViewInit() {
+        // 等待tab渲染
+        this._refineMetaData();
+        this._renderTabByMetaData();
+    }
+
     ngOnDestroy() {
-        this.add.unsubscribe();
         this.contentInit.unsubscribe();
     }
 }

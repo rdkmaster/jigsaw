@@ -28,19 +28,6 @@ export class ComponentMetaData {
     import?: string;
 }
 
-export class TabsWrapperMetaData extends ComponentMetaData {
-    tabsMetaData: TabsMetaData;
-}
-
-export class TabsMetaData extends ComponentMetaData {
-    panes: TabPaneMetaData[];
-}
-
-export class TabPaneMetaData extends ComponentMetaData {
-    title: string;
-    content: ComponentMetaData[];
-}
-
 export class LayoutComponentInfo {
     box: JigsawEditableBox;
     component: ComponentRef<any> | EmbeddedViewRef<any>;

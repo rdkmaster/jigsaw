@@ -4,7 +4,8 @@ import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/service
 import {JigsawEditableBox} from "jigsaw/component/box/editable-box";
 import {CustomGraphComponent} from "./custom-graph/demo.component";
 import {CustomTableComponent} from "./custom-table/demo.component";
-import {JigsawTabsWrapper} from "jigsaw/component/box/tabs-wrapper/tabs-wrapper";
+import {JigsawTabsWrapper, TabsWrapperMetaData} from "jigsaw/component/box/tabs-wrapper/tabs-wrapper";
+import {JigsawTab} from "jigsaw/component/tabs/tab";
 
 export const GlobalComponentMetaDataList: ComponentMetaData[] = [
     {
@@ -233,6 +234,15 @@ export class CustomSceneLayoutDemoComponent {
             selector: this.selectedComponent.selector,
             inputs: this.selectedComponent.inputs
         };
+
+        if(this.selectedComponent.component == JigsawTabsWrapper) {
+            (<TabsWrapperMetaData>componentMetaData).tabsMetaData = {
+                selector: 'j-tabs',
+                component: JigsawTab,
+                panes: []
+            }
+        }
+
         this.currentEditableBox.addContent([componentMetaData]);
     }
 
