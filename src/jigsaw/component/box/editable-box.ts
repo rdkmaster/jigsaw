@@ -175,9 +175,9 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
 
     private _updateBoxReference(data: LayoutData, box: JigsawEditableBox) {
         const components = data.components;
-        if(components && components.length) {
+        if (components && components.length) {
             const componentRef = components[0];
-            if(componentRef instanceof ComponentRef){
+            if (componentRef instanceof ComponentRef) {
                 componentRef.instance.box = box;
             }
         }
@@ -300,7 +300,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         componentMetaDataList.forEach(componentMetaData => {
             const componentRef = this._rendererFactory(componentMetaData.component, componentMetaData.inputs);
             this.data.components.push(componentRef);
-            if (componentRef instanceof ComponentRef){
+            if (componentRef instanceof ComponentRef) {
                 componentRef.instance.box = this;
             }
         });

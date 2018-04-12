@@ -4,7 +4,6 @@ import {CommonUtils} from "../utils/common-utils";
 import {InternalUtils} from "../utils/internal-utils";
 import {JigsawEditableBox} from "../../component/box/editable-box";
 import {JigsawTab} from "../../component/tabs/tab";
-import {JigsawTabsWrapper} from "../../component/box/tabs-wrapper/tabs-wrapper";
 
 /**
  * 组件的输入属性结构化信息
@@ -31,6 +30,13 @@ export class ComponentMetaData {
 export class LayoutComponentInfo {
     box: JigsawEditableBox;
     component: ComponentRef<any> | EmbeddedViewRef<any>;
+}
+
+export type LayoutParseFunction = (element: Element, metaDataList: ComponentMetaData[], inputs: ComponentInput[]) => ComponentMetaData;
+
+export type LayoutParseApi = {
+    tagName: string;
+    parseFunction: LayoutParseFunction;
 }
 
 /**
@@ -74,6 +80,26 @@ export class LayoutData extends GeneralCollection<any> {
             json = this._parseElementToData(layout.children[0], metaDataList);
         }
         return json ? new LayoutData().fromObject(json) : null;
+    }
+
+    public static parseApiList: LayoutParseApi[] = [];
+
+    public static addParseApi(tagName: string, parseFunction: LayoutParseFunction) {
+        const parseApi = this.parseApiList.find(parseApi => parseApi.tagName == tagName);
+        if (parseApi) {
+            parseApi.parseFunction = parseFunction;
+        } else {
+            this.parseApiList.push({
+                tagName: tagName,
+                parseFunction: parseFunction
+            });
+        }
+    }
+
+    public static removeParseApi(tagName: string) {
+        const index = this.parseApiList.findIndex(parseApi => parseApi.tagName == tagName);
+        if (index == -1) return;
+        this.parseApiList.splice(index, 1);
     }
 
     /**
@@ -174,7 +200,7 @@ export class LayoutData extends GeneralCollection<any> {
         return node;
     }
 
-    private static _parseChildrenToComponentMetaDataList(element: Element, metaDataList: ComponentMetaData[]): ComponentMetaData[] {
+    public static _parseChildrenToComponentMetaDataList(element: Element, metaDataList: ComponentMetaData[]): ComponentMetaData[] {
         return Array.from(element.children).reduce((arr, elementNode) => {
             arr.push(this._parseElementToComponentMetaData(elementNode, metaDataList));
             return arr;
@@ -192,47 +218,16 @@ export class LayoutData extends GeneralCollection<any> {
             return arr;
         }, []);
 
-        if (tagName == 'j-tabs') {
-            const panes = Array.from(element.children).reduce((arr, paneNode) => {
-                if (paneNode.tagName.toLowerCase() != 'j-pane') return;
-                const ngTemplate = Array.from(paneNode.children)
-                    .find(child => child.tagName.toLowerCase() == 'ng-template');
-                arr.push({
-                    title: paneNode.getAttribute('title'),
-                    content: ngTemplate ? this._parseChildrenToComponentMetaDataList(ngTemplate, metaDataList) : []
-                });
-                return arr;
-            }, []);
-
-            return {
-                component: JigsawTabsWrapper,
-                selector: 'j-tabs-wrapper',
-                inputs: inputs,
-                tabsMetaData: {
-                    selector: 'j-tabs',
-                    component: JigsawTab,
-                    panes: panes
-                }
-            }
-        } else if(tagName == 'j-box') {
-            const layoutData = LayoutData.of(element.outerHTML, metaDataList);
-            return {
-                component: null, // 不写JigsawEditableBox，会有循环引用，在 editable box 里面补充信息
-                selector: 'j-editable-box',
-                inputs: [
-                    {
-                        property: 'data',
-                        default: layoutData
-                    }
-                ]
-            }
-        } else {
-            return {
-                component: metaDataList.find(metaData => metaData.selector == tagName).component,
-                selector: tagName,
-                inputs: inputs
-            }
+        const parseApi = this.parseApiList.find(parseApi => parseApi.tagName == tagName);
+        if (parseApi) {
+            return parseApi.parseFunction(element, metaDataList, inputs)
         }
+
+        return {
+            component: metaDataList.find(metaData => metaData.selector == tagName).component,
+            selector: tagName,
+            inputs: inputs
+        };
     }
 
     private _parseNodesToHtml(nodes: LayoutData[], domStr: string): string {
