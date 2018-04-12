@@ -11,9 +11,16 @@ export class DrawerBasicDemoComponent {
         {label: 'right'},
         {label: 'bottom'},
     ];
+    draweropen:boolean=false;
 
     selectedPosition = this.positions[0];
 
+    toggleClick(){
+      this.draweropen=!this.draweropen;
+    }
+    public openChangelog(message:boolean){
+        console.log("open status is:"+ message);
+    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
@@ -22,5 +29,5 @@ export class DrawerBasicDemoComponent {
     tags: string[] = [
         'JigsawDrawer'
     ];
-}
 
+}

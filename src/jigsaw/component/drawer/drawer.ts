@@ -1,4 +1,4 @@
-import {Component, Input, NgModule, OnInit} from "@angular/core";
+import {Component, Input, NgModule,Output,EventEmitter, OnInit} from "@angular/core";
 import {AbstractJigsawComponent} from "../common";
 import {CommonModule} from "@angular/common";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
@@ -25,8 +25,9 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     }
 
     @Input()
-    public close: boolean = true;
-
+    public open: boolean = false;
+    @Output()
+    public openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
     /**
      * @internal
      */
@@ -63,10 +64,11 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
         }
     }
 
-    public _$toggleClose(e) {
+    public _$toggleOpen(e) {
         e.preventDefault();
         e.stopPropagation();
-        this.close = !this.close;
+        this.open = !this.open;
+        this.openChange.emit(this.open);
     }
 
     ngOnInit() {
