@@ -8,14 +8,16 @@ import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
     templateUrl: './drawer.html'
 })
 export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
-    private _position: string = 'left';
+
+
+    private  _position: "left" | "right" | "top" | "bottom" = "left";
 
     @Input()
-    public get position(): string {
+    public get position(): "left" | "right" | "top" | "bottom" {
         return this._position;
     }
 
-    public set position(value: string) {
+    public set position(value: "left" | "right" | "top" | "bottom") {
         if (!value) return;
         this._position = value;
         if (this.initialized) {
