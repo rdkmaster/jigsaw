@@ -31,7 +31,7 @@ export class TabPaneMetaData {
         '[class.jigsaw-tabs-wrapper]': 'true'
     }
 })
-export class JigsawTabsWrapper implements AfterViewInit, OnInit {
+export class JigsawTabsWrapper implements AfterViewInit {
     private _box: JigsawEditableBox;
 
     public get box(): JigsawEditableBox {
@@ -162,48 +162,6 @@ export class JigsawTabsWrapper implements AfterViewInit, OnInit {
         }
     }
 
-    ngOnInit() {
-        // 添加wrapper的解析补丁
-        LayoutData.addParseApi('j-tabs',
-            (element: Element, metaDataList: ComponentMetaData[], inputs: ComponentInput[]): ComponentMetaData => {
-                const panes = Array.from(element.children).reduce((arr, paneNode) => {
-                    if (paneNode.tagName.toLowerCase() != 'j-pane') return;
-                    const ngTemplate = Array.from(paneNode.children)
-                        .find(child => child.tagName.toLowerCase() == 'ng-template');
-                    arr.push({
-                        title: paneNode.getAttribute('title'),
-                        content: ngTemplate ? LayoutData._parseChildrenToComponentMetaDataList(ngTemplate, metaDataList) : []
-                    });
-                    return arr;
-                }, []);
-                return {
-                    component: JigsawTabsWrapper,
-                    selector: 'j-tabs-wrapper',
-                    inputs: inputs,
-                    tabsMetaData: {
-                        selector: 'j-tabs',
-                        component: JigsawTab,
-                        panes: panes
-                    }
-                }
-            });
-
-        LayoutData.addParseApi('j-box',
-            (element: Element, metaDataList: ComponentMetaData[], inputs: ComponentInput[]): ComponentMetaData => {
-                const layoutData = LayoutData.of(element.outerHTML, metaDataList);
-                return {
-                    component: JigsawEditableBox,
-                    selector: 'j-editable-box',
-                    inputs: [
-                        {
-                            property: 'data',
-                            default: layoutData
-                        }
-                    ]
-                }
-            });
-    }
-
     ngAfterViewInit() {
         // 等待tab渲染
         this._refineMetaData();
@@ -262,8 +220,49 @@ export class JigsawInternalEditableTabTitle implements IDynamicInstantiatable {
     imports: [JigsawTabsModule, JigsawInputModule, CommonModule],
     declarations: [JigsawTabsWrapper, JigsawInternalEditableTabTitle],
     exports: [JigsawTabsWrapper],
-    entryComponents: [JigsawInternalEditableTabTitle]
+    entryComponents: [JigsawInternalEditableTabTitle, JigsawTabsWrapper, JigsawEditableBox]
 })
 export class JigsawTabsWrapperModule {
+    constructor() {
+        // 添加wrapper的解析补丁
+        LayoutData.addParseApi('j-tabs',
+            (element: Element, metaDataList: ComponentMetaData[], inputs: ComponentInput[]): ComponentMetaData => {
+                const panes = Array.from(element.children).reduce((arr, paneNode) => {
+                    if (paneNode.tagName.toLowerCase() != 'j-pane') return;
+                    const ngTemplate = Array.from(paneNode.children)
+                        .find(child => child.tagName.toLowerCase() == 'ng-template');
+                    arr.push({
+                        title: paneNode.getAttribute('title'),
+                        content: ngTemplate ? LayoutData._parseChildrenToComponentMetaDataList(ngTemplate, metaDataList) : []
+                    });
+                    return arr;
+                }, []);
+                return {
+                    component: JigsawTabsWrapper,
+                    selector: 'j-tabs-wrapper',
+                    inputs: inputs,
+                    tabsMetaData: {
+                        selector: 'j-tabs',
+                        component: JigsawTab,
+                        panes: panes
+                    }
+                }
+            });
+
+        LayoutData.addParseApi('j-box',
+            (element: Element, metaDataList: ComponentMetaData[], inputs: ComponentInput[]): ComponentMetaData => {
+                const layoutData = LayoutData.of(element.outerHTML, metaDataList);
+                return {
+                    component: JigsawEditableBox,
+                    selector: 'j-editable-box',
+                    inputs: [
+                        {
+                            property: 'data',
+                            default: layoutData
+                        }
+                    ]
+                }
+            });
+    }
 }
 

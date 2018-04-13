@@ -4,13 +4,11 @@ import {JigsawBox} from "./box";
 import {JigsawBoxResizable} from "./box-resizable";
 import {JigsawCommonModule} from "../common";
 import {JigsawEditableBox} from "./editable-box";
-import {JigsawTabsWrapper, JigsawTabsWrapperModule} from "./tabs-wrapper/tabs-wrapper";
 
 @NgModule({
-    imports: [CommonModule, JigsawCommonModule, JigsawTabsWrapperModule],
+    imports: [CommonModule, JigsawCommonModule],
     declarations: [JigsawBox, JigsawEditableBox, JigsawBoxResizable],
     exports: [JigsawBox, JigsawEditableBox],
-    entryComponents: [JigsawTabsWrapper, JigsawEditableBox]
 })
 export class JigsawBoxModule {
 
