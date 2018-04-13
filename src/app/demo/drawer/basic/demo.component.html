@@ -5,21 +5,20 @@
 
 <!-- start to learn the demo from here -->
 <div class="option-box">
-    <label>请选择抽屉位置：</label>
-    <jigsaw-radios [(value)]="selectedPosition"
-                   trackItemBy="label">
-        <jigsaw-radio-option *ngFor="let item of positions" [value]="item">
-            {{item.label}}
-        </jigsaw-radio-option>
+    <label>抽屉位置：</label>
+    <jigsaw-radios [(value)]="selectedPosition">
+        <jigsaw-radio-option value="left">left</jigsaw-radio-option>
+        <jigsaw-radio-option value="right">right</jigsaw-radio-option>
+        <jigsaw-radio-option value="top">top</jigsaw-radio-option>
+        <jigsaw-radio-option value="bottom">bottom</jigsaw-radio-option>
     </jigsaw-radios>
-      <jigsaw-button (click)="toggleClick()" colorType="primary">开关抽屉</jigsaw-button>
-
+    <br>
+    <jigsaw-button (click)="toggle()" colorType="primary">开关抽屉</jigsaw-button>
+    <span *ngIf="touched">太棒了！你{{isOpen ? '打开' : '关闭'}}了抽屉！</span>
 </div>
 
-<j-drawer [(open)]="draweropen" (openChange)="openChangelog($event)" [position]="selectedPosition?.label"
-          [height]="(selectedPosition?.label == 'top' || selectedPosition?.label == 'bottom') ? 200 : '100%'">
-    <div *ngFor="let i of [1,2,3,4,5,6,7,8]" class="drawer-content"
-         [class.drawer-content-horizontal]="selectedPosition?.label == 'top' || selectedPosition?.label == 'bottom'">
+<j-drawer [(open)]="isOpen" (openChange)="touched = true" [position]="selectedPosition">
+    <div class="drawer-content">
         这是一个展示内容的box
     </div>
 </j-drawer>

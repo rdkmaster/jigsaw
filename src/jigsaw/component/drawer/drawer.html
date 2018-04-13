@@ -3,5 +3,9 @@
     <div class="jigsaw-drawer-content" [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true}">
         <ng-content></ng-content>
     </div>
-    <div class="jigsaw-drawer-bar fa fa-angle-double-right" (click)="_$toggleOpen($event)"></div>
+    <div class="jigsaw-drawer-bar fa"
+         [class.fa-angle-double-right]="!open"
+         [class.fa-angle-double-left]="open"
+         (click)="_$toggleOpen($event)">
+    </div>
 </div>
