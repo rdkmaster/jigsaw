@@ -3,6 +3,9 @@ import {AbstractJigsawComponent} from "../common";
 import {CommonModule} from "@angular/common";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 
+/**
+ * 本组件模拟了一个类似抽屉的效果，用于收纳UI上重要性不高的视图。
+ */
 @Component({
     selector: 'jigsaw-drawer, j-drawer',
     templateUrl: './drawer.html'
@@ -12,6 +15,11 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
 
     private  _position: "left" | "right" | "top" | "bottom" = "left";
 
+    /**
+     * 用于设置抽屉的位置，支持上下左右4个方向。
+     *
+     * $demo = drawer/basic
+     */
     @Input()
     public get position(): "left" | "right" | "top" | "bottom" {
         return this._position;
@@ -26,8 +34,21 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
         }
     }
 
+    /**
+     * 代表了抽屉的状态，`true`为打开状态，`false`为关闭状态。在双绑模式下，改变此属性的值可以打开或者关闭抽屉。
+     *
+     * $demo = drawer/basic
+     */
     @Input()
     public open: boolean = false;
+
+    /**
+     * 当抽屉的状态发生变化时，Jigsaw发出此事件
+     *
+     * $demo = drawer/basic
+     *
+     * @type {EventEmitter<boolean>}
+     */
     @Output()
     public openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
     /**
