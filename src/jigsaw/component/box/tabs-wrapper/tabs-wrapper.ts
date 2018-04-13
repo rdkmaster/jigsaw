@@ -164,8 +164,11 @@ export class JigsawTabsWrapper implements AfterViewInit {
 
     ngAfterViewInit() {
         // 等待tab渲染
-        this._refineMetaData();
-        this._renderTabByMetaData();
+        // 消除变更检查错误
+        setTimeout(() => {
+            this._refineMetaData();
+            this._renderTabByMetaData();
+        })
     }
 }
 
