@@ -33,6 +33,10 @@ export const routerConfig = [
         loadChildren: "./demo/drag-drop/demo-set.module#DragDropDemoModule",
     },
     {
+        path: "drawer",
+        loadChildren: "./demo/drawer/demo-set.module#DrawerDemoModule",
+    },
+    {
         path: "fish-bone",
         loadChildren: "./demo/fish-bone/demo-set.module#FishBoneDemoModule",
     },

@@ -7,6 +7,7 @@ import {routerConfig as collapseConfig} from "./demo/collapse/demo-set.module";
 import {routerConfig as comboSelectConfig} from "./demo/combo-select/demo-set.module";
 import {routerConfig as dialogConfig} from "./demo/dialog/demo-set.module";
 import {routerConfig as dragDropConfig} from "./demo/drag-drop/demo-set.module";
+import {routerConfig as drawerConfig} from "./demo/drawer/demo-set.module";
 import {routerConfig as fishBoneConfig} from "./demo/fish-bone/demo-set.module";
 import {routerConfig as formConfig} from "./demo/form/demo-set.module";
 import {routerConfig as graphConfig} from "./demo/graph/demo-set.module";
@@ -87,6 +88,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'combo-select', comboSelectConfig);
         this._addRouterConfig(routerConfig, 'dialog', dialogConfig);
         this._addRouterConfig(routerConfig, 'drag-drop', dragDropConfig);
+        this._addRouterConfig(routerConfig, 'drawer', drawerConfig);
         this._addRouterConfig(routerConfig, 'fish-bone', fishBoneConfig);
         this._addRouterConfig(routerConfig, 'form', formConfig);
         this._addRouterConfig(routerConfig, 'graph', graphConfig);

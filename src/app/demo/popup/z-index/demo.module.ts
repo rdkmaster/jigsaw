@@ -11,13 +11,15 @@ import {LoadingService} from "jigsaw/service/loading.service";
 import {JigsawSelectModule} from "jigsaw/component/select/select";
 import {JigsawTooltipModule} from "jigsaw/component/tooltip/tooltip";
 import {JigsawNotificationModule} from "jigsaw/component/notification/notification";
+import {JigsawDrawerModule} from "jigsaw/component/drawer/drawer";
+import {CommonModule} from "@angular/common";
 
 @NgModule({
     declarations: [PopupZIndexDemoComponent],
     exports: [PopupZIndexDemoComponent],
     imports: [JigsawTimeModule, JigsawRangeTimeModule, JigsawComboSelectModule, JigsawDialogModule,
         JigsawSelectModule, JigsawLoadingModule, JigsawButtonModule, JigsawDemoDescriptionModule,
-        JigsawTooltipModule, JigsawNotificationModule],
+        JigsawTooltipModule, JigsawNotificationModule, JigsawDrawerModule, CommonModule],
     providers: [LoadingService]
 })
 export class PopupZIndexDemoModule {
