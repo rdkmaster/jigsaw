@@ -7,7 +7,8 @@ import {JigsawWarningAlert} from "jigsaw/component/alert/alert";
 import {JigsawNotification} from "../../../../jigsaw/component/notification/notification";
 
 @Component({
-    templateUrl: './demo.component.html'
+    templateUrl: './demo.component.html',
+    styleUrls: ['./demo.component.css']
 })
 export class PopupZIndexDemoComponent implements OnInit {
     constructor(private _popupService: PopupService, private _loadingService: LoadingService) {

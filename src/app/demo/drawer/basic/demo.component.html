@@ -1,0 +1,24 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="option-box">
+    <label>抽屉位置：</label>
+    <jigsaw-radios [(value)]="selectedPosition">
+        <jigsaw-radio-option value="left">left</jigsaw-radio-option>
+        <jigsaw-radio-option value="right">right</jigsaw-radio-option>
+        <jigsaw-radio-option value="top">top</jigsaw-radio-option>
+        <jigsaw-radio-option value="bottom">bottom</jigsaw-radio-option>
+    </jigsaw-radios>
+    <br>
+    <jigsaw-button (click)="toggle()" colorType="primary">开关抽屉</jigsaw-button>
+    <span *ngIf="touched">太棒了！你{{isOpen ? '打开' : '关闭'}}了抽屉！</span>
+</div>
+
+<j-drawer [(open)]="isOpen" (openChange)="touched = true" [position]="selectedPosition">
+    <div class="drawer-content">
+        这是一个展示内容的box
+    </div>
+</j-drawer>

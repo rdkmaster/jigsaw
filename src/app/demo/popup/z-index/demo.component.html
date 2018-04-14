@@ -21,6 +21,12 @@
 </jigsaw-button>
 <j-button (click)="popupTemplateDialog(tpDialog)">popup dialog</j-button>
 
+<j-drawer position="left">
+    <div *ngFor="let i of [1,2,3,4,5,6]" class="drawer-content">
+        这是一个展示内容的box
+    </div>
+</j-drawer>
+
 <ng-template #tpDialog>
     <jigsaw-dialog width="50%" (close)="onAnswer()">
         <div jigsaw-title>

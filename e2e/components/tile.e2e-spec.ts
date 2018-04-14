@@ -34,4 +34,15 @@ describe('tile', () => {
             expect(jigsawTitleEl.all(by.css('.jigsaw-tile-option-active')).count()).toBe(3);
         })
     });
+    describe('test selected-items', () => {
+        beforeEach(() => {
+            browser.get('/tile/track-item-by');
+        });
+        it('should track item by id', () => {
+            const jigsawTitleEl = element(by.tagName('jigsaw-tile')),
+                tileOptionsEl = jigsawTitleEl.all(by.tagName('jigsaw-tile-option'));
+            expect(jigsawTitleEl.$$('.jigsaw-tile-option-active').get(0).getText()).toBe('北京');
+            expect(jigsawTitleEl.$$('.jigsaw-tile-option-active').get(1).getText()).toBe('西安');
+        })
+    });
 });
