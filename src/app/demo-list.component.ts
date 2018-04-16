@@ -26,6 +26,7 @@ import {routerConfig as rangeTimeConfig} from "./demo/range-time/demo-set.module
 import {routerConfig as scrollbarConfig} from "./demo/scrollbar/demo-set.module";
 import {routerConfig as selectConfig} from "./demo/select/demo-set.module";
 import {routerConfig as sliderConfig} from "./demo/slider/demo-set.module";
+import {routerConfig as stepsConfig} from "./demo/steps/demo-set.module";
 import {routerConfig as switchConfig} from "./demo/switch/demo-set.module";
 import {routerConfig as tableConfig} from "./demo/table/demo-set.module";
 import {routerConfig as tabsConfig} from "./demo/tab/demo-set.module";
@@ -107,6 +108,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'scrollbar', scrollbarConfig);
         this._addRouterConfig(routerConfig, 'select', selectConfig);
         this._addRouterConfig(routerConfig, 'slider', sliderConfig);
+        this._addRouterConfig(routerConfig, 'steps', stepsConfig);
         this._addRouterConfig(routerConfig, 'switch', switchConfig);
         this._addRouterConfig(routerConfig, 'table', tableConfig);
         this._addRouterConfig(routerConfig, 'tab', tabsConfig);
