@@ -156,7 +156,7 @@ export class CustomSceneLayoutDemoComponent {
         console.log(this.data3);
         setTimeout(() => {
             // 等待box渲染
-            const allComponents = this.getAllComponents(this.data3);
+            const allComponents = this.data3.getAllInnerComponents();
             allComponents.forEach(item => {
                 if (!(item.component instanceof ComponentRef)) return;
                 const component = item.component.instance;
@@ -171,28 +171,6 @@ export class CustomSceneLayoutDemoComponent {
                 }
             });
         })
-    }
-
-    getAllComponents(data: LayoutData): LayoutComponentInfo[] {
-        return data.getComponents().reduce((arr, item) => {
-            if (!(item.component instanceof ComponentRef)) return arr;
-            const component = item.component.instance;
-            if (component instanceof JigsawTabsWrapper) {
-                // 这边只示例性的获取一层tab的内容
-                const tabsWrapper = component;
-                if (tabsWrapper.components) {
-                    tabsWrapper.components.forEach(box => {
-                        if (box.instance instanceof JigsawEditableBox) {
-                            arr.push(...box.instance.data.getComponents());
-                        }
-                    })
-                }
-                return arr;
-            } else {
-                arr.push(item);
-                return arr;
-            }
-        }, []);
     }
 
     @ViewChild('dialog') dialog: TemplateRef<any>;

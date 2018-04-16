@@ -39,6 +39,13 @@ export type LayoutParseApi = {
     parseFunction: LayoutParseFunction;
 }
 
+export type WrapperContentGetterApi = {
+    wrapper: Type<any>;
+    contentGetter: WrapperContentGetter;
+}
+
+export type WrapperContentGetter = (component: any, arr: LayoutComponentInfo[]) => LayoutComponentInfo[];
+
 /**
  * 用于动态布局页面的数据。
  *
@@ -102,12 +109,46 @@ export class LayoutData extends GeneralCollection<any> {
         this.parseApiList.splice(index, 1);
     }
 
+    public static wrapperContentGetterList: WrapperContentGetterApi[] = [];
+
+    public static addWrapperContentGetter(wrapper: Type<any>, contentGetter: WrapperContentGetter) {
+        if(this.wrapperContentGetterList.find(w => w.wrapper == wrapper)) return;
+        this.wrapperContentGetterList.push({
+            wrapper: wrapper,
+            contentGetter: contentGetter
+        });
+    }
+
+    public static removeWrapperContentGetter(wrapper: Type<any>) {
+        const index = this.wrapperContentGetterList.findIndex(w => w.wrapper == wrapper);
+        if(index == -1) return;
+        this.wrapperContentGetterList.splice(index, 1);
+    }
+
     /**
      * 获取所有layout box里面的内容组件，
      * @returns {LayoutComponentInfo[]}
      */
     public getComponents(): LayoutComponentInfo[] {
         return this._getComponent(this, []);
+    }
+
+    /**
+     * 获取所有layout box里面的内容组件，包括wrapper的内容
+     * @returns {LayoutComponentInfo[]}
+     */
+    public getAllInnerComponents(): LayoutComponentInfo[] {
+        const components = this.getComponents();
+        return components ? components.reduce((arr, item) => {
+            if (!(item.component instanceof ComponentRef)) return arr;
+            const component = item.component.instance;
+            const wrapperContentGetter = LayoutData.wrapperContentGetterList.find(getter => component instanceof getter.wrapper);
+            if(wrapperContentGetter) {
+                return wrapperContentGetter.contentGetter(component, arr);
+            }
+            arr.push(item);
+            return arr;
+        }, []) : null;
     }
 
     /**

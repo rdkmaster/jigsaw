@@ -1,9 +1,9 @@
 import {
-    AfterViewInit, ChangeDetectorRef, Component, ComponentRef, NgModule, OnDestroy, OnInit, ViewChild
+    AfterViewInit, ChangeDetectorRef, Component, ComponentRef, NgModule, ViewChild
 } from "@angular/core";
 import {JigsawEditableBox} from "../editable-box";
 import {JigsawTab} from "../../tabs/tab";
-import {ComponentInput, ComponentMetaData, LayoutData} from "../../../core/data/layout-data";
+import {ComponentInput, ComponentMetaData, LayoutComponentInfo, LayoutData} from "../../../core/data/layout-data";
 import {JigsawTabsModule} from "../../tabs/index";
 import {JigsawInput, JigsawInputModule} from "../../input/input";
 import {IDynamicInstantiatable} from "../../common";
@@ -267,6 +267,19 @@ export class JigsawTabsWrapperModule {
                     ]
                 }
             });
+
+        LayoutData.addWrapperContentGetter(JigsawTabsWrapper, (component: any, arr: LayoutComponentInfo[]): LayoutComponentInfo[] => {
+            if (!(component instanceof JigsawTabsWrapper)) return arr;
+            const tabsWrapper = component;
+            if (tabsWrapper.components) {
+                tabsWrapper.components.forEach(box => {
+                    if (box.instance instanceof JigsawEditableBox) {
+                        arr.push(...box.instance.data.getAllInnerComponents());
+                    }
+                })
+            }
+            return arr;
+        })
     }
 }
 
