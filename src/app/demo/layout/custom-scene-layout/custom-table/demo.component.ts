@@ -4,7 +4,7 @@ import {HttpClient} from "@angular/common/http";
 
 @Component({
     selector: 'custom-table',
-    template: '<jigsaw-table [data]="tableData" ></jigsaw-table>',
+    template: '{{message}}<br><jigsaw-table [data]="tableData" ></jigsaw-table>',
     styles: [`
         :host {
             display: block;
@@ -13,6 +13,9 @@ import {HttpClient} from "@angular/common/http";
     `]
 })
 export class CustomTableComponent {
+    subscriber: string = 'cipher123456';
+    message: string = '';
+
     tableData: TableData;
 
     constructor(http: HttpClient) {

@@ -1,11 +1,13 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, ViewChild} from '@angular/core';
 import {AbstractGraphData} from "jigsaw/core/data/graph-data";
 import {EchartOptions} from "jigsaw/core/data/echart-types";
 import {JigsawGraph} from "jigsaw/component/graph/graph";
+import {IEmittable} from "jigsaw/core/data/component-data";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
     selector: 'custom-graph',
-    template: '<jigsaw-graph [data]="data" #graph></jigsaw-graph>',
+    template: '<button (click)="handleClick()">click me</button><br><jigsaw-graph [data]="data" #graph></jigsaw-graph>',
     styles: [`
         :host {
             display: block;
@@ -13,7 +15,9 @@ import {JigsawGraph} from "jigsaw/component/graph/graph";
         }
     `]
 })
-export class CustomGraphComponent implements OnInit {
+export class CustomGraphComponent implements OnInit, IEmittable {
+    emitter: string = 'cipher123456';
+
     data: AbstractGraphData;
 
     @ViewChild("graph") graph: JigsawGraph;
@@ -27,6 +31,24 @@ export class CustomGraphComponent implements OnInit {
             text: '补丁 - 堆叠区域图'
         }
     };
+
+    private _emitter = new EventEmitter<any>();
+
+    public emit(value?: any): void {
+        this._emitter.emit(value);
+    }
+
+    public subscribe(callback?: (value:any) => void): Subscription {
+        return this._emitter.subscribe(callback);
+    }
+
+    public unsubscribe() {
+        this._emitter.unsubscribe();
+    }
+
+    handleClick() {
+        this.emit((new Date()).toLocaleString());
+    }
 
     ngOnInit() {
         let graphData = new GraphDataDemo();

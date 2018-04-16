@@ -1,5 +1,5 @@
 import {Component, ComponentRef, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
-import {ComponentMetaData, LayoutData} from "jigsaw/core/data/layout-data";
+import {ComponentMetaData, LayoutComponentInfo, LayoutData} from "jigsaw/core/data/layout-data";
 import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/service/popup.service";
 import {JigsawEditableBox} from "jigsaw/component/box/editable-box";
 import {CustomGraphComponent} from "./custom-graph/demo.component";
@@ -156,21 +156,43 @@ export class CustomSceneLayoutDemoComponent {
         console.log(this.data3);
         setTimeout(() => {
             // 等待box渲染
-            console.log(this.data3.getComponents());
-            this.data3.getComponents().forEach(item => {
-                if (item.component instanceof ComponentRef && item.component.instance instanceof JigsawTabsWrapper) {
-                    // 这边只示例性的获取一层tab的内容
-                    const tabsWrapper = item.component.instance;
-                    if (tabsWrapper.components) {
-                        tabsWrapper.components.forEach(box => {
-                            if (box.instance instanceof JigsawEditableBox) {
-                                console.log(box.instance.data.getComponents());
-                            }
+            const allComponents = this.getAllComponents(this.data3);
+            allComponents.forEach(item => {
+                if (!(item.component instanceof ComponentRef)) return;
+                const component = item.component.instance;
+                if (component.emitter) {
+                    component.subscribe(message => {
+                        allComponents.forEach(item => {
+                            if (!(item.component instanceof ComponentRef) ||
+                                item.component.instance.subscriber != component.emitter) return;
+                            item.component.instance.message = message;
                         })
-                    }
+                    })
                 }
-            })
+            });
         })
+    }
+
+    getAllComponents(data: LayoutData): LayoutComponentInfo[] {
+        return data.getComponents().reduce((arr, item) => {
+            if (!(item.component instanceof ComponentRef)) return arr;
+            const component = item.component.instance;
+            if (component instanceof JigsawTabsWrapper) {
+                // 这边只示例性的获取一层tab的内容
+                const tabsWrapper = component;
+                if (tabsWrapper.components) {
+                    tabsWrapper.components.forEach(box => {
+                        if (box.instance instanceof JigsawEditableBox) {
+                            arr.push(...box.instance.data.getComponents());
+                        }
+                    })
+                }
+                return arr;
+            } else {
+                arr.push(item);
+                return arr;
+            }
+        }, []);
     }
 
     @ViewChild('dialog') dialog: TemplateRef<any>;
