@@ -39,11 +39,8 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     @ContentChildren(JigsawTabPane)
     public _$tabPanes: QueryList<JigsawTabPane>;
 
-    /**
-     * @internal
-     */
     @ViewChildren(JigsawTabLabel)
-    public _tabLabels: QueryList<JigsawTabLabel>;
+    private _tabLabels: QueryList<JigsawTabLabel>;
 
     /**
      * @internal
@@ -81,7 +78,8 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     public add = new EventEmitter<JigsawTab>();
 
     /**
-     * 改变tab title是发送信息，信息的格式{key: number, title: string}
+     * 改变tab标题时发送此事件，事件携带一个`TabTitleInfo`类型的数据。
+     *
      * @type {EventEmitter<TabTitleInfo>}
      */
     @Output()
