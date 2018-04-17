@@ -1,4 +1,4 @@
-.option-box{
+.option-box {
     position: fixed;
     left: 50%;
     top: 50%;
@@ -6,16 +6,7 @@
 }
 
 .drawer-content {
-    width: 200px;
-    height: 200px;
-    line-height: 200px;
-    margin-bottom: 6px;
+    height: 30vh;
+    margin: 36px;
     text-align: center;
-    background: bisque;
 }
-
-.drawer-content-horizontal {
-    display: inline-block;
-    margin-right: 6px;
-}
-
