@@ -3,14 +3,15 @@
  */
 import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
-
 import {JigsawSteps} from './steps';
 import {JigsawStepItem} from './step-item';
+
 @NgModule({
     imports: [
         CommonModule
     ],
-    declarations: [JigsawSteps,JigsawStepItem],
-    exports: [JigsawSteps,JigsawStepItem],
+    declarations: [JigsawSteps, JigsawStepItem],
+    exports: [JigsawSteps, JigsawStepItem],
 })
-export class JigsawStepsModule { }
+export class JigsawStepsModule {
+}

@@ -1,49 +1,38 @@
-import { Component, ChangeDetectorRef } from "@angular/core";
-import { ArrayCollection } from "jigsaw/core/data/array-collection";
+import {ChangeDetectorRef, Component} from "@angular/core";
 
 @Component({
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
-export class StepsHorizontalTrustedHTMLComponent {
+export class StepsClickChangeStatusComponent {
     constructor(private _changeDetector: ChangeDetectorRef) {
-
     }
-
-
-
     steps = [
         {
-            title: '第一步done',
+            title: 'done',
             status: "done",
-
-
         },
         {
-            title: '第二步error',
-
+            title: 'error',
             status: "error",
 
         },
         {
-            title: '第三步',
-
+            title: 'processing',
             status: "processing",
 
         },
         {
-            title: '第四步警告',
-
+            title: 'warning',
             status: "warning",
 
         },
         {
-            title: '第5步skipped',
+            title: 'skipped',
             status: "skipped",
-
         },
         {
-            title: '第六步wait',
+            title: 'waiting',
             status: "waiting",
         },
     ];
@@ -58,7 +47,5 @@ export class StepsHorizontalTrustedHTMLComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawSteps'
-    ];
+
 }

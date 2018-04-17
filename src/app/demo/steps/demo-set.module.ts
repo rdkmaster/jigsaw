@@ -1,33 +1,22 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {StepsHorizontalBasicModule} from "./basic/demo.module";
-import {StepsHorizontalFullModule} from "./full/demo.module";
-import {StepsHorizontalTrustedHTMLModule} from "./trustedHtml/demo.module";
-import {StepsVerticalFullModule} from "./full-vertical/demo.module";
-
+import {StepsClickChangeStatusModule} from "./click-change-status/demo.module";
+import {StepsVerticalModule} from "./vertical/demo.module";
 import {StepsHorizontalBasicComponent} from "./basic/demo.component";
-import {StepsHorizontalFullComponent} from "./full/demo.component";
-import {StepsVerticalFullComponent} from "./full-vertical/demo.component";
-import {StepsHorizontalTrustedHTMLComponent} from "./trustedHtml/demo.component";
+import {StepsVerticalFullComponent} from "./vertical/demo.component";
+import {StepsClickChangeStatusComponent} from "./click-change-status/demo.component";
+
 export const routerConfig = [
     {
         path: 'basic', component: StepsHorizontalBasicComponent,
+    },
+    {
+        path: 'vertical', component: StepsVerticalFullComponent,
 
     },
     {
-
-        path: 'full', component: StepsHorizontalFullComponent,
-
-    },
-    {
-
-        path: 'full-vertical', component: StepsVerticalFullComponent,
-
-    },
-
-    {
-
-        path: 'trustedHtml', component: StepsHorizontalTrustedHTMLComponent
+        path: 'click-change-status', component: StepsClickChangeStatusComponent
     },
 ];
 
@@ -35,11 +24,10 @@ export const routerConfig = [
     imports: [
         RouterModule.forChild(routerConfig),
         StepsHorizontalBasicModule,
-        StepsHorizontalFullModule,
-        StepsHorizontalTrustedHTMLModule,
-        StepsVerticalFullModule
+        StepsClickChangeStatusModule,
+        StepsVerticalModule
     ]
 })
-export class StepsDemoModule{
+export class StepsDemoModule {
 
 }

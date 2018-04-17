@@ -1,5 +1,4 @@
-import { Component } from "@angular/core";
-import { ArrayCollection } from "jigsaw/core/data/array-collection";
+import {Component} from "@angular/core";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -7,57 +6,45 @@ import { ArrayCollection } from "jigsaw/core/data/array-collection";
 })
 export class StepsVerticalFullComponent {
 
-
-
-
     steps = [
         {
-            title: '第一步done',
+            title: 'done',
             subTitle: 'Add a window to configure its compare paramenters',
             status: "done",
-
-
         },
         {
-            title: '第二步error',
+            title: 'error',
             subTitle: 'Add a window to configure its compare paramenters',
             status: "error",
-
         },
         {
-            title: '第三步',
+            title: 'processing',
             subTitle: 'Add a window to configure its compare paramenters',
             status: "processing",
 
         },
         {
-            title: '第四步警告',
+            title: 'warning',
             subTitle: 'Add a window to configure its compare paramenters',
             status: "warning",
 
         },
         {
-            title: '第5步skipped',
+            title: 'skipped',
             subTitle: 'Add a window to configure its compare paramenters',
             status: "skipped",
 
         },
         {
-            title: '第六步wait',
+            title: 'waiting',
             subTitle: 'Add a window to configure its compare paramenters',
             status: "waiting",
-
         },
     ];
-
-
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawSteps'
-    ];
 }

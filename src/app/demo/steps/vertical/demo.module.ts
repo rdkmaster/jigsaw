@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {JigsawStepsModule} from "jigsaw/component/steps/index";
-import {StepsHorizontalTrustedHTMLComponent} from './demo.component';
+import {StepsVerticalFullComponent} from './demo.component';
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {JigsawTrustedHtmlModule} from "jigsaw/directive/trusted-html/trusted-html";
 @NgModule({
@@ -9,8 +9,8 @@ import {JigsawTrustedHtmlModule} from "jigsaw/directive/trusted-html/trusted-htm
          CommonModule,JigsawDemoDescriptionModule,JigsawStepsModule,JigsawTrustedHtmlModule
 
     ],
-    declarations: [StepsHorizontalTrustedHTMLComponent],
-    exports: [StepsHorizontalTrustedHTMLComponent]
+    declarations: [StepsVerticalFullComponent],
+    exports: [StepsVerticalFullComponent]
 })
-export class StepsHorizontalTrustedHTMLModule {
+export class StepsVerticalModule {
 }

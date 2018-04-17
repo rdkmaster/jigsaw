@@ -1,10 +1,11 @@
 @import "../../assets/scss/core/base";
+
 $steps-prefix-cls: #{$jigsaw-prefix}-steps;
 $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
 
 .#{$steps-prefix-cls} {
     @include inline-block();
-    .stepsContainer {
+    .steps-container {
         display: flex;
         width: 100%;
         overflow-x: auto;
@@ -18,19 +19,19 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
             align-items: flex-start;
             flex: 1;
 
-            .steptitle {
+            .step-title {
                 font-size: $font-size-lg;
                 color: $heading-color-dark;
                 line-height: $height-lg;
             }
 
-            .subtitle {
+            .sub-title {
                 font-size: $font-size-base;
                 color: $text-color-secondary;
+                margin-top: 5px;
             }
-
-            .steptitle,
-            .subtitle {
+            .step-title,
+            .sub-title {
                 text-align: center;
                 margin-left: -50%;
                 width: 100%;
@@ -38,11 +39,10 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
 
             }
 
-            .logolineContainer {
+            .logo-line-container {
                 display: flex;
                 align-items: center;
-
-                .stepstatuslogo {
+                .step-status-logo {
                     width: 25px;
                     height: 25px;
                     border-radius: 25px;
@@ -54,201 +54,191 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                     align-items: center;
                 }
 
-                .stepline {
+                .step-line {
                     min-width: 80px;
                     height: 2px;
                     background: #345;
                     margin: 0 20px;
                     flex-grow: 1;
                 }
-                .subtitle-v{
-                  display: none;
+                .sub-title-v {
+                    display: none;
                 }
             }
 
             &:last-child {
-                .stepline {
+                .step-line {
                     visibility: hidden;
                 }
             }
-
             .#{$step-item-prefix-cls}-processing {
-                .stepstatuslogo {
+                .step-status-logo {
                     background-color: #41ADDC;
                 }
-
-                .stepline {
+                .step-line {
                     background-color: #41ADDC;
                 }
             }
 
             .#{$step-item-prefix-cls}-done {
-                .stepstatuslogo {
+                .step-status-logo {
                     background-color: #7ACA6B;
                 }
 
-                .stepline {
+                .step-line {
                     background-color: #7ACA6B;
                 }
             }
 
             .#{$step-item-prefix-cls}-error {
-                .stepstatuslogo {
+                .step-status-logo {
                     background-color: #E67877;
                 }
 
-                .stepline {
+                .step-line {
                     background-color: #E67877;
                 }
             }
 
             .#{$step-item-prefix-cls}-warning {
-                .stepstatuslogo {
+                .step-status-logo {
                     background-color: orange;
                 }
 
-                .stepline {
+                .step-line {
                     background-color: orange;
                 }
             }
 
             .#{$step-item-prefix-cls}-skipped {
-                .stepstatuslogo {
-                    background-color: green;
+                .step-status-logo {
+                    background-color: $disabled-bg;
                 }
 
-                .stepline {
+                .step-line {
                     background-color: green;
                 }
             }
 
             .#{$step-item-prefix-cls}-waiting {
-                .stepstatuslogo {
-                    background-color: $text-color ;
+                .step-status-logo {
+                    background-color: $text-color;
                 }
 
-                .stepline {
-                    background-color: $text-color ;
+                .step-line {
+                    background-color: $text-color;
                 }
             }
         }
 
-
     }
 
 }
-.#{$steps-prefix-cls}-direction-vertical{
-  .stepsContainer{
-      overflow-x: hidden;
-      overflow-y: auto;
-      flex-direction: column;
-      display: flex;
-      width: auto;
-      height: 100%;
-      padding: 0 ;
-    .#{$step-item-prefix-cls} {
+
+.#{$steps-prefix-cls}-direction-vertical {
+    .steps-container {
+        overflow-x: hidden;
+        overflow-y: auto;
+        flex-direction: column;
         display: flex;
-        align-items: center;
-
-        align-items: flex-start;
-        flex: 1;
+        width: auto;
         height: 100%;
-        .stepitemContainer{
-          flex-direction: column;
-          height: 100%;
-
-            display: flex;
-
-        }
-
-
-        .steptitle {
-            font-size: $font-size-lg;
-            color: $heading-color-dark;
-            line-height: $height-lg;
-        }
-
-        .subtitle-v {
-            font-size: $font-size-base;
-            color: $text-color-secondary;
-        }
-
-        .steptitle,
-        .subtitle-v {
-            text-align: center;
-            margin-left: 0;
-
-            text-indent: 0;
-            margin: 5px 0;
-        }
-
-        .logolineContainer {
+        padding: 0;
+        .#{$step-item-prefix-cls} {
             display: flex;
             align-items: center;
-            flex-direction: column;
-              flex-grow: 1;
-            .stepstatuslogo {
+            align-items: flex-start;
+            flex: 1;
+            height: 100%;
+            .step-item-container {
+                flex-direction: column;
+                height: 100%;
                 display: flex;
-                justify-content: center;
+            }
+
+            .step-title {
+                font-size: $font-size-lg;
+                color: $heading-color-dark;
+                line-height: $height-lg;
+            }
+
+            .sub-title-v {
+                font-size: $font-size-base;
+                color: $text-color-secondary;
+            }
+
+            .step-title,
+            .sub-title-v {
+                text-align: center;
+                margin-left: 0;
+
+                text-indent: 0;
+                margin: 5px 0;
+            }
+
+            .logo-line-container {
+                display: flex;
                 align-items: center;
-            }
-
-            .stepline {
-                min-height: 80px;
-                width: 2px;
-                min-width: auto;
-                margin: 0 20px;
+                flex-direction: column;
                 flex-grow: 1;
+                .step-status-logo {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .step-line {
+                    min-height: 80px;
+                    width: 2px;
+                    min-width: auto;
+                    margin: 0 20px;
+                    flex-grow: 1;
+                }
+                .sub-title-v {
+                    display: block;
+                }
             }
-            .subtitle-v{
-                display: block;
-            }
+
         }
-
-
-
-
     }
-  }
 }
+
 .#{$steps-prefix-cls}-size-large {
-    .steptitle {
-        font-size: $font-size-lg + 2px!important;
-          text-indent: 30px!important;
-            line-height: $height-lg + 2!important;
+    .step-title {
+        font-size: $font-size-lg + 2px !important;
+        text-indent: 30px !important;
+        line-height: $height-lg + 2 !important;
     }
 
-    .subtitle {
-        font-size: $font-size-base + 2px!important;
-          text-indent: 30px!important;
+    .sub-title {
+        font-size: $font-size-base + 2px !important;
+        text-indent: 30px !important;
     }
-    .stepstatuslogo{
+    .step-status-logo {
         font-size: $font-size-base + 2px !important;
         width: 30px !important;
         height: 30px !important;
     }
     min-height: $height-lg;
     line-height: $height-lg - 2px;
-    color: blue;
 }
 
 .#{$steps-prefix-cls}-size-small {
-    .steptitle {
+    .step-title {
         font-size: $font-size-lg - 2px !important;
-          text-indent: 21px!important;
-            line-height: $height-lg - 2!important;
+        text-indent: 21px !important;
+        line-height: $height-lg - 2 !important;
     }
 
-    .subtitle {
+    .sub-title {
         font-size: $font-size-base - 2px !important;
-          text-indent: 21px!important;
+        text-indent: 21px !important;
     }
-    .stepstatuslogo{
+    .step-status-logo {
         font-size: $font-size-base - 2px !important;
         width: 21px !important;
         height: 21px !important;
     }
     min-height: $height-sm;
     line-height: $height-sm - 2px;
-    color: red;
 }
