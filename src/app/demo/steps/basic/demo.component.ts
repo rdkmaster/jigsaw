@@ -1,50 +1,40 @@
-import { Component } from "@angular/core";
-import { ArrayCollection } from "jigsaw/core/data/array-collection";
+import {Component} from "@angular/core";
 
 @Component({
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
 export class StepsHorizontalBasicComponent {
-
-
     steps = [
         {
-            title: '第一步done',
-            subtitle: 'Add a window to configure its compare paramenters',
+            title: 'done',
             status: "done"
         },
         {
-            title: '第二步error',
+            title: 'error',
             status: "error"
         },
         {
-            title: '第三步processing',
+            title: 'processing',
             status: "processing"
         },
         {
-            title: '第四步警告',
+            title: 'warning',
             status: "warning"
         },
         {
-            title: '第5步skipped',
+            title: 'skipped',
             status: "skipped"
         },
         {
-            title: '第六步wait',
+            title: 'waiting',
             status: "waiting"
         },
     ];
-
-
-
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawSteps'
-    ];
 }
