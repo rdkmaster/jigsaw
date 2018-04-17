@@ -1,0 +1,19 @@
+<ng-container *ngIf="true">
+  <div [ngClass]="stepStatusClass">
+    <div class="steptitle">
+      <ng-content></ng-content>
+    </div>
+    <div class="horizontal">
+      <div class="stepstatuslogo" >
+        <i class="fa" [ngClass]="stepStatusIconClass"></i>
+      </div>
+      <div class="stepline">
+
+      </div>
+    </div>
+    <div class="subtitle">
+      <ng-content select="[j-sub-title],[jigsaw-sub-title]"></ng-content>
+    </div>
+  </div>
+
+</ng-container>
