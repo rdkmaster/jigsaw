@@ -22,6 +22,9 @@ export class DrawerBasicDemoComponent {
     public openChangelog(message:boolean){
         console.log("open status from inner drawer is:"+ message);
     }
+    public skipStep(){
+        
+    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

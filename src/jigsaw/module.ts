@@ -17,6 +17,7 @@ import {JigsawRangeTimeModule} from './component/range-time/index';
 import {JigsawScrollbarModule} from './component/scrollbar/index';
 import {JigsawSelectModule} from './component/select/select';
 import {JigsawSliderModule} from './component/slider/index';
+import {JigsawStepsModule} from './component/steps/index';
 import {JigsawSwitchModule} from './component/switch/index';
 import {JigsawTableModule} from './component/table/table';
 import {JigsawTableRendererModule} from "./component/table/table-renderer";
@@ -62,6 +63,7 @@ const JIGSAW_MODULE = [
     JigsawScrollbarModule,
     JigsawSelectModule,
     JigsawSliderModule,
+    JigsawStepsModule,
     JigsawSwitchModule,
     JigsawTableModule,
     JigsawTableRendererModule,
