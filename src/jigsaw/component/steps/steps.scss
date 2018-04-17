@@ -18,7 +18,9 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
             flex-direction: column;
             align-items: flex-start;
             flex: 1;
-
+            .step-item-container {
+                width: 100%;
+            }
             .step-title {
                 font-size: $font-size-lg;
                 color: $heading-color-dark;
@@ -153,6 +155,7 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
             .step-item-container {
                 flex-direction: column;
                 height: 100%;
+                width: auto;
                 display: flex;
             }
 

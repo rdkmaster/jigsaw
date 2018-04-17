@@ -12,7 +12,7 @@
       <div class="demo-1 live-demo">
           <h3>提供交互的例子</h3>
        <!-- 配合trustedHtml对用户提供交互的例子 -->
-          <jigsaw-steps preSize="default" direction="horizontal">
+          <jigsaw-steps preSize="default" direction="horizontal" width="1500px">
               <jigsaw-step-item *ngFor="let step of steps; index as idx"  [status]="step.status">
                   <div jigsaw-title>{{step.title}}</div>
                   <div jigsaw-sub-title trustedHtml="单击<a (click)='skipStep({{idx}})'>这里</a>跳过此步骤"  [trustedHtmlContext]="this"></div>
