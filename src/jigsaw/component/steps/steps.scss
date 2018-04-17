@@ -71,9 +71,7 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                     visibility: hidden;
                 }
             }
-            .stepitemContainer{
-              display: flex;
-            }
+
             .#{$step-item-prefix-cls}-processing {
                 .stepstatuslogo {
                     background-color: #41ADDC;
@@ -157,7 +155,10 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
         height: 100%;
         .stepitemContainer{
           flex-direction: column;
-          height: 100%
+          height: 100%;
+
+            display: flex;
+
         }
 
 
