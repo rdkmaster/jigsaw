@@ -38,7 +38,7 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
 
             }
 
-            .horizontal {
+            .logolineContainer {
                 display: flex;
                 align-items: center;
 
@@ -61,6 +61,9 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                     margin: 0 20px;
                     flex-grow: 1;
                 }
+                .subtitle-v{
+                  display: none;
+                }
             }
 
             &:last-child {
@@ -68,7 +71,9 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                     visibility: hidden;
                 }
             }
-
+            .stepitemContainer{
+              display: flex;
+            }
             .#{$step-item-prefix-cls}-processing {
                 .stepstatuslogo {
                     background-color: #41ADDC;
@@ -132,8 +137,79 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
 
 
     }
-}
 
+}
+.#{$steps-prefix-cls}-direction-vertical{
+  .stepsContainer{
+      overflow-x: hidden;
+      overflow-y: auto;
+      flex-direction: column;
+      display: flex;
+      width: auto;
+      height: 100%;
+      padding: 0 ;
+    .#{$step-item-prefix-cls} {
+        display: flex;
+        align-items: center;
+
+        align-items: flex-start;
+        flex: 1;
+        height: 100%;
+        .stepitemContainer{
+          flex-direction: column;
+          height: 100%
+        }
+
+
+        .steptitle {
+            font-size: $font-size-lg;
+            color: $heading-color-dark;
+            line-height: $height-lg;
+        }
+
+        .subtitle-v {
+            font-size: $font-size-base;
+            color: $text-color-secondary;
+        }
+
+        .steptitle,
+        .subtitle-v {
+            text-align: center;
+            margin-left: 0;
+
+            text-indent: 0;
+            margin: 5px 0;
+        }
+
+        .logolineContainer {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+              flex-grow: 1;
+            .stepstatuslogo {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .stepline {
+                min-height: 80px;
+                width: 2px;
+                min-width: auto;
+                margin: 0 20px;
+                flex-grow: 1;
+            }
+            .subtitle-v{
+                display: block;
+            }
+        }
+
+
+
+
+    }
+  }
+}
 .#{$steps-prefix-cls}-size-large {
     .steptitle {
         font-size: $font-size-lg + 2px!important;

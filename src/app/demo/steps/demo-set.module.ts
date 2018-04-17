@@ -21,7 +21,7 @@ export const routerConfig = [
     },
     {
 
-        path: 'full-vertical', component: StepsVerticalFullModule,
+        path: 'full-vertical', component: StepsVerticalFullComponent,
 
     },
 

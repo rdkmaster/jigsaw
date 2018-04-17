@@ -10,39 +10,16 @@
 
     <div class="clearfix">
         <div class="demo-1 live-demo">
-            <h3>最复杂的用法small</h3>
+            <h3>垂直排列</h3>
             <!-- 最复杂的用法，所有配置项都用上 -->
-          <jigsaw-steps preSize="small" direction="vertical" width="1500">
-              <jigsaw-step-item *ngFor="let step of steps2"
-                                [status]="step.status"
-                                [waitingIcon]="step.waitingIcon"
-                                [doneIcon]="step.doneIcon"
-                                [processingIcon]="step.processingIcon"
-                                [errorIcon]="step.errorIcon"
-                                [warningIcon]="step.warningIcon"
-                                [skippedIcon]="step.skippedIcon">
+          <jigsaw-steps preSize="default" direction="vertical" width="200px" height="1500px" >
+              <jigsaw-step-item *ngFor="let step of steps" [status]="step.status" >
                   <div jigsaw-title>{{step.title}}</div>
-                  <div jigsaw-sub-title>{{step.subTitle}}</div>
+                  <div jigsaw-sub-v-title>{{step.subTitle}}</div>
               </jigsaw-step-item>
           </jigsaw-steps>
         </div>
-        <div class="demo-1 live-demo">
-            <h3>最复杂的用法large</h3>
-            <!-- 最复杂的用法，所有配置项都用上 -->
-          <jigsaw-steps preSize="large" direction="horizontal" width="400" >
-              <jigsaw-step-item *ngFor="let step of steps2"
-                                [status]="step.status"
-                                [waitingIcon]="step.waitingIcon"
-                                [doneIcon]="step.doneIcon"
-                                [processingIcon]="step.processingIcon"
-                                [errorIcon]="step.errorIcon"
-                                [warningIcon]="step.warningIcon"
-                                [skippedIcon]="step.skippedIcon">
-                  <div jigsaw-title>{{step.title}}</div>
-                  <div jigsaw-sub-title>{{step.subTitle}}</div>
-              </jigsaw-step-item>
-          </jigsaw-steps>
-        </div>
+
     </div>
 
 

@@ -11,7 +11,6 @@ import {AbstractJigsawComponent} from "../common";
     templateUrl: 'step-item.html',
     host: {
         '[class.jigsaw-step-item]': 'true',
-
     }
 })
 export class JigsawStepItem extends AbstractJigsawComponent implements OnInit {
@@ -36,7 +35,7 @@ export class JigsawStepItem extends AbstractJigsawComponent implements OnInit {
   @Input() public errorIcon:string='fa-times';
   @Input() public skippedIcon:string='fa-ban';
   @Input() public warningIcon:string='fa-exclamation-triangle';
-
+  @Input() public direction:'vertical' | 'horizontal'="horizontal";
   private stepStatusClass:string;
   private stepStatusIconClass:string;
   private _setstepStatusClass(){

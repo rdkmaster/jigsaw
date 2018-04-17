@@ -1,11 +1,14 @@
-<ng-container *ngIf="true">
-  <div [ngClass]="stepStatusClass">
+<ng-container>
+  <div [ngClass]="stepStatusClass" class="stepitemContainer">
     <div class="steptitle">
       <ng-content></ng-content>
     </div>
-    <div class="horizontal">
+    <div class="logolineContainer">
       <div class="stepstatuslogo" >
         <i class="fa" [ngClass]="stepStatusIconClass"></i>
+      </div>
+      <div class="subtitle-v">
+        <ng-content select="[j-sub-v-title],[jigsaw-sub-v-title]"></ng-content>
       </div>
       <div class="stepline">
 
