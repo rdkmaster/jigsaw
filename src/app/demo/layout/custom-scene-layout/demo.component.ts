@@ -2,8 +2,72 @@ import {Component, ComponentRef, TemplateRef, ViewChild, ViewEncapsulation} from
 import {ComponentMetaData, LayoutData} from "jigsaw/core/data/layout-data";
 import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/service/popup.service";
 import {JigsawEditableBox} from "jigsaw/component/box/editable-box";
-import {CustomTableComponent} from "./custom-table/demo.component";
 import {CustomGraphComponent} from "./custom-graph/demo.component";
+import {CustomTableComponent} from "./custom-table/demo.component";
+import {JigsawTabsWrapper, TabsWrapperMetaData} from "jigsaw/component/box/tabs-wrapper/tabs-wrapper";
+import {JigsawTab} from "jigsaw/component/tabs/tab";
+
+export const GlobalComponentMetaDataList: ComponentMetaData[] = [
+    {
+        label: "表格",
+        component: CustomTableComponent,
+        selector: 'custom-table',
+        import: 'CustomTableModule,',
+        inputs: [
+            {
+                property: 'data',
+                binding: 'tableData',
+            },
+            {
+                property: 'additionalColumnDefine',
+                binding: 'additionalColumnDefine',
+                default: {
+                    a: 1,
+                    b: [1, 2, 3],
+                    c: 'ww'
+                }
+            },
+            {
+                property: 'additionalData',
+                binding: 'additionalData',
+                default: {
+                    a: 1,
+                    b: [1, 2, 3],
+                    c: 'ww'
+                }
+            }
+        ]
+    },
+    {
+        label: "图形",
+        component: CustomGraphComponent,
+        selector: 'custom-graph',
+        import: 'CustomGraphModule,',
+        inputs: [
+            {
+                property: 'data',
+                binding: 'graphData',
+            },
+            {
+                property: 'width',
+                binding: 'graphWidth',
+                default: 200
+            }
+        ]
+    },
+    {
+        label: "tab",
+        component: JigsawTabsWrapper,
+        selector: 'j-tabs-wrapper',
+        import: 'JigsawTabsWrapperModule',
+        inputs: [
+            {
+                property: 'data',
+                binding: '123',
+            },
+        ]
+    },
+];
 
 @Component({
     templateUrl: './demo.component.html',
@@ -91,7 +155,21 @@ export class CustomSceneLayoutDemoComponent {
         this.data3 = LayoutData.of(data.toHtml(), this.componentMetaDataList);
         console.log(this.data3);
         setTimeout(() => {
+            // 等待box渲染
             console.log(this.data3.getComponents());
+            this.data3.getComponents().forEach(item => {
+                if (item.component instanceof ComponentRef && item.component.instance instanceof JigsawTabsWrapper) {
+                    // 这边只示例性的获取一层tab的内容
+                    const tabsWrapper = item.component.instance;
+                    if (tabsWrapper.components) {
+                        tabsWrapper.components.forEach(box => {
+                            if (box.instance instanceof JigsawEditableBox) {
+                                console.log(box.instance.data.getComponents());
+                            }
+                        })
+                    }
+                }
+            })
         })
     }
 
@@ -131,55 +209,7 @@ export class CustomSceneLayoutDemoComponent {
     }
 
     selectedComponent;
-    componentMetaDataList: ComponentMetaData[] = [
-        {
-            label: "表格",
-            component: CustomTableComponent,
-            selector: 'custom-table',
-            import: 'CustomTableModule,',
-            inputs: [
-                {
-                    property: 'data',
-                    binding: 'tableData',
-                },
-                {
-                    property: 'additionalColumnDefine',
-                    binding: 'additionalColumnDefine',
-                    default: {
-                        a: 1,
-                        b: [1, 2, 3],
-                        c: 'ww'
-                    }
-                },
-                {
-                    property: 'additionalData',
-                    binding: 'additionalData',
-                    default: {
-                        a: 1,
-                        b: [1, 2, 3],
-                        c: 'ww'
-                    }
-                }
-            ]
-        },
-        {
-            label: "图形",
-            component: CustomGraphComponent,
-            selector: 'custom-graph',
-            import: 'CustomGraphModule,',
-            inputs: [
-                {
-                    property: 'data',
-                    binding: 'graphData',
-                },
-                {
-                    property: 'width',
-                    binding: 'graphWidth',
-                    default: 200
-                }
-            ]
-        },
-    ];
+    componentMetaDataList: ComponentMetaData[] = GlobalComponentMetaDataList;
 
     dialogInfo: PopupInfo;
 
@@ -197,13 +227,22 @@ export class CustomSceneLayoutDemoComponent {
         if (this.dialogInfo) {
             this.dialogInfo.dispose();
         }
-        this.currentEditableBox.addContent([
-            {
-                component: this.selectedComponent.component,
-                selector: this.selectedComponent.selector,
-                inputs: this.selectedComponent.inputs
+        // 复制一遍，避免操作同一对象
+        const componentMetaData = {
+            component: this.selectedComponent.component,
+            selector: this.selectedComponent.selector,
+            inputs: this.selectedComponent.inputs
+        };
+
+        if (this.selectedComponent.component == JigsawTabsWrapper) {
+            (<TabsWrapperMetaData>componentMetaData).tabsMetaData = {
+                selector: 'j-tabs',
+                component: JigsawTab,
+                panes: []
             }
-        ]);
+        }
+
+        this.currentEditableBox.addContent([componentMetaData]);
     }
 
     getModalOptions(): PopupOptions {

@@ -1,10 +1,10 @@
 @import "../../assets/scss/core/base";
 
-$layout-prefix-cls: #{$jigsaw-prefix}-editable-box;
+$editable-box-prefix-cls: #{$jigsaw-prefix}-editable-box;
 
-.#{$layout-prefix-cls} {
+.#{$editable-box-prefix-cls} {
     position: relative;
-    &-root{
+    &-root {
         border: 1px solid $border-color-base;
     }
     &-block {
@@ -77,19 +77,19 @@ $layout-prefix-cls: #{$jigsaw-prefix}-editable-box;
                 color: $primary-9;
             }
         }
-        .#{$layout-prefix-cls}:hover > & {
+        .#{$editable-box-prefix-cls}:hover > & {
             display: block;
         }
-        .#{$layout-prefix-cls}.#{$layout-prefix-cls}-resizing .#{$layout-prefix-cls}:hover > & {
+        .#{$editable-box-prefix-cls}.#{$editable-box-prefix-cls}-resizing .#{$editable-box-prefix-cls}:hover > & {
             display: none;
         }
     }
     &-has-content {
         display: none;
-        .#{$layout-prefix-cls}:hover > & {
+        .#{$editable-box-prefix-cls}:hover > & {
             display: block;
         }
-        .#{$layout-prefix-cls}.#{$layout-prefix-cls}-resizing .#{$layout-prefix-cls}:hover > & {
+        .#{$editable-box-prefix-cls}.#{$editable-box-prefix-cls}-resizing .#{$editable-box-prefix-cls}:hover > & {
             display: none;
         }
     }

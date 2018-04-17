@@ -3,6 +3,7 @@ import {ComponentRef, EmbeddedViewRef, Type} from "@angular/core";
 import {CommonUtils} from "../utils/common-utils";
 import {InternalUtils} from "../utils/internal-utils";
 import {JigsawEditableBox} from "../../component/box/editable-box";
+import {JigsawTab} from "../../component/tabs/tab";
 
 /**
  * 组件的输入属性结构化信息
@@ -31,6 +32,13 @@ export class LayoutComponentInfo {
     component: ComponentRef<any> | EmbeddedViewRef<any>;
 }
 
+export type LayoutParseFunction = (element: Element, metaDataList: ComponentMetaData[], inputs: ComponentInput[]) => ComponentMetaData;
+
+export type LayoutParseApi = {
+    tagName: string;
+    parseFunction: LayoutParseFunction;
+}
+
 /**
  * 用于动态布局页面的数据。
  *
@@ -45,7 +53,7 @@ export class LayoutData extends GeneralCollection<any> {
     grow?: number;
     shrink?: number;
     nodes?: LayoutData[];
-    componentMetaDataList?: ComponentMetaData[];
+    componentMetaDataList?: ComponentMetaData[] = [];
     innerHtml?: string;
     components?: (ComponentRef<any> | EmbeddedViewRef<any>)[];
     box: JigsawEditableBox;
@@ -74,6 +82,26 @@ export class LayoutData extends GeneralCollection<any> {
         return json ? new LayoutData().fromObject(json) : null;
     }
 
+    public static parseApiList: LayoutParseApi[] = [];
+
+    public static addParseApi(tagName: string, parseFunction: LayoutParseFunction) {
+        const parseApi = this.parseApiList.find(parseApi => parseApi.tagName == tagName);
+        if (parseApi) {
+            parseApi.parseFunction = parseFunction;
+        } else {
+            this.parseApiList.push({
+                tagName: tagName,
+                parseFunction: parseFunction
+            });
+        }
+    }
+
+    public static removeParseApi(tagName: string) {
+        const index = this.parseApiList.findIndex(parseApi => parseApi.tagName == tagName);
+        if (index == -1) return;
+        this.parseApiList.splice(index, 1);
+    }
+
     /**
      * 获取所有layout box里面的内容组件，
      * @returns {LayoutComponentInfo[]}
@@ -83,22 +111,52 @@ export class LayoutData extends GeneralCollection<any> {
     }
 
     /**
-     * 根据componentMetaDataList设置LayoutData的componentMetaDataList属性及生成innerHtml
+     * 根据componentMetaDataList生成对应的html
      * @param {ComponentMetaData[]} componentMetaDataList
      */
-    public setComponentMetaData(componentMetaDataList: ComponentMetaData[]) {
+    public setInnerHtml(componentMetaDataList: ComponentMetaData[]) {
         if (!(componentMetaDataList instanceof Array) || componentMetaDataList.length == 0) return;
-        this.componentMetaDataList = componentMetaDataList;
         this.innerHtml = '';
         componentMetaDataList.forEach(componentMetaData => {
-            this.innerHtml += `<${componentMetaData.selector} `;
-            componentMetaData.inputs.forEach(input => {
-                if (CommonUtils.isDefined(input.default) && input.default != '') {
-                    this.innerHtml += `${InternalUtils.camelToKebabCase(input.property)}='${JSON.stringify(input.default)}' `;
-                }
-            });
-            this.innerHtml += '>' + `</${componentMetaData.selector}> \n`;
+            componentMetaData = componentMetaData.selector == 'j-tabs-wrapper' ? componentMetaData.tabsMetaData : componentMetaData;
+            this.innerHtml += this._parseMetaDataToHtml(componentMetaData);
         });
+    }
+
+    private _parseMetaDataToHtml(componentMetaData: ComponentMetaData): string {
+        let innerHtml = '';
+        if (componentMetaData.selector == 'j-editable-box' &&
+            componentMetaData.ref instanceof ComponentRef &&
+            componentMetaData.ref.instance.data) {
+            innerHtml = componentMetaData.ref.instance.data.toHtml();
+        } else {
+            innerHtml += `<${componentMetaData.selector} `;
+            if (componentMetaData.inputs instanceof Array) {
+                componentMetaData.inputs.forEach(input => {
+                    if (CommonUtils.isDefined(input.default) && input.default != '') {
+                        innerHtml += `${InternalUtils.camelToKebabCase(input.property)}='${JSON.stringify(input.default)}' `;
+                    }
+                });
+            }
+            innerHtml += `>\n ${this._parseTabPanesToHtml(componentMetaData)}
+                </${componentMetaData.selector}>\n`;
+        }
+        return innerHtml;
+    }
+
+    private _parseTabPanesToHtml(componentMetaData: ComponentMetaData): string {
+        if (componentMetaData.component != JigsawTab || !(componentMetaData.panes instanceof Array) ||
+            componentMetaData.panes.length == 0) return '';
+        let innerPaneHtml = '';
+        componentMetaData.panes.forEach(pane => {
+            innerPaneHtml += `<j-pane title="${pane.title}">\n<ng-template>\n`;
+            innerPaneHtml += pane.content.reduce((str, content) => {
+                str += this._parseMetaDataToHtml(content);
+                return str;
+            }, '');
+            innerPaneHtml += `</ng-template>\n</j-pane>\n`;
+        });
+        return innerPaneHtml;
     }
 
     private _getComponent(node: LayoutData, arr: LayoutComponentInfo[]): LayoutComponentInfo[] {
@@ -135,30 +193,41 @@ export class LayoutData extends GeneralCollection<any> {
                     node.nodes.push(this._parseElementToData(element.children[i], metaDataList));
                 }
             } else {
-                node = this._parseElementToComponentMetaData(node, element, metaDataList);
+                node.innerHtml = element.innerHTML;
+                node.componentMetaDataList = this._parseChildrenToComponentMetaDataList(element, metaDataList);
             }
         }
         return node;
     }
 
-    private static _parseElementToComponentMetaData(node: any, element: Element, metaDataList: ComponentMetaData[]): any {
-        node.innerHtml = element.innerHTML;
-        for (let i = 0; i < element.children.length; i++) {
-            const inputs = [];
-            for (let j = 0; j < element.children[i].attributes.length; j++) {
-                inputs.push({
-                    property: InternalUtils.kebabToCamelCase(element.children[i].attributes[j].name),
-                    default: JSON.parse(element.children[i].attributes[j].value)
-                })
-            }
-            node.componentMetaDataList.push({
-                component: metaDataList.find(metaData => metaData.selector ==
-                    element.children[i].tagName.toLowerCase()).component,
-                selector: element.children[i].tagName.toLowerCase(),
-                inputs: inputs
-            })
+    public static _parseChildrenToComponentMetaDataList(element: Element, metaDataList: ComponentMetaData[]): ComponentMetaData[] {
+        return Array.from(element.children).reduce((arr, elementNode) => {
+            arr.push(this._parseElementToComponentMetaData(elementNode, metaDataList));
+            return arr;
+        }, []);
+    }
+
+    private static _parseElementToComponentMetaData(element: Element, metaDataList: ComponentMetaData[]): ComponentMetaData {
+        const tagName = element.tagName.toLowerCase();
+        const inputs = Array.from(element.attributes).reduce((arr, attr) => {
+            arr.push({
+                property: InternalUtils.kebabToCamelCase(attr.name),
+                default: (attr.value.match(/^[A-Za-z]+$/) && !(attr.value.match(/^(true|false)+$/))) ?
+                    attr.value : JSON.parse(attr.value)
+            });
+            return arr;
+        }, []);
+
+        const parseApi = this.parseApiList.find(parseApi => parseApi.tagName == tagName);
+        if (parseApi) {
+            return parseApi.parseFunction(element, metaDataList, inputs)
         }
-        return node;
+
+        return {
+            component: metaDataList.find(metaData => metaData.selector == tagName).component,
+            selector: tagName,
+            inputs: inputs
+        };
     }
 
     private _parseNodesToHtml(nodes: LayoutData[], domStr: string): string {
@@ -175,6 +244,7 @@ export class LayoutData extends GeneralCollection<any> {
         if (node.nodes instanceof Array && node.nodes.length > 0) {
             domStr = this._parseNodesToHtml(node.nodes, domStr) + `</j-box> \n`;
         } else {
+            node.setInnerHtml(node.componentMetaDataList);
             domStr += (node.innerHtml ? node.innerHtml : '') + '</j-box> \n';
         }
         return domStr;

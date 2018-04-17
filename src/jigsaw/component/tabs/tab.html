@@ -1,5 +1,5 @@
 <div class="jigsaw-tabs">
-    <div *ngIf="_$tabPanes && _$tabPanes.length > 0" class="jigsaw-tabs-bar">
+    <div *ngIf="(_$tabPanes && _$tabPanes.length > 0) || editable" class="jigsaw-tabs-bar">
         <div class="jigsaw-tabs-nav-container">
             <!-- Todo 添加滚动条 -->
             <div class="jigsaw-tabs-nav-wrap">
@@ -7,14 +7,18 @@
                     <!-- 负责实现动画效果 -->
                     <div #tabsInkBar class="jigsaw-tabs-ink-bar" [ngStyle]="_$inkBarStyle"></div>
                     <jigsaw-tab-label class="jigsaw-tabs-tab"
-                                   *ngFor="let tab of _$tabPanes; let i = index"
-                                   [key]="i"
-                                   [tabItem]="tab.label"
-                                   [class.jigsaw-tabs-tab-active]="_$selectedIndex === i"
-                                   [class.jigsaw-tabs-tab-disabled]="tab.disabled"
-                                   [class.jigsaw-tabs-tab-hidden]="tab.hidden"
-                                   (click)="_$tabClick(i)">
+                                      *ngFor="let tab of _$tabPanes; let i = index"
+                                      [key]="i"
+                                      [tabItem]="tab.label"
+                                      [editable]="editable"
+                                      [class.jigsaw-tabs-tab-active]="_$selectedIndex === i"
+                                      [class.jigsaw-tabs-tab-disabled]="tab.disabled"
+                                      [class.jigsaw-tabs-tab-hidden]="tab.hidden"
+                                      (click)="_$tabClick(i)"
+                                      (remove)="_$handleRemove($event)"
+                                      (change)="titleChange.emit($event)">
                     </jigsaw-tab-label>
+                    <span class="fa fa-plus-square-o jigsaw-tabs-add-bar" *ngIf="editable" (click)="_$handleAdd()"></span>
                 </div>
             </div>
         </div>

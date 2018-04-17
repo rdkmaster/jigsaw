@@ -15,6 +15,27 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
         outline: none;
     }
 
+    &-remove-bar {
+        position: absolute;
+        right: 6px;
+        top: -2px;
+        font-size: 18px;
+        color: $text-color-secondary;
+        &:hover{
+            color: $text-color-dark;
+        }
+    }
+
+    &-add-bar {
+        cursor: pointer;
+        font-size: 24px;
+        vertical-align: middle;
+        color: $text-color-secondary;
+        &:hover {
+            color: $text-color-dark;
+        }
+    }
+
     &-nav-container {
         font-size: $font-size-lg;
         line-height: $line-height-base;
