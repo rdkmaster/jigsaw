@@ -86,7 +86,10 @@ export class JigsawStepItem extends AbstractJigsawComponent implements OnInit {
      * @internal
      */
     public _$stepStatusClass: string;
-    private _$stepStatusIconClass: string;
+    /**
+     * @internal
+     */
+    public _$stepStatusIconClass: string;
 
     private _setStepStatusClass() {
         this._$stepStatusClass = 'jigsaw-step-item-' + this._status;
