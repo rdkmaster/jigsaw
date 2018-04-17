@@ -2,7 +2,6 @@ import {Component} from "@angular/core";
 import {TableData} from "jigsaw/core/data/table-data";
 import {HttpClient} from "@angular/common/http";
 import {DragDropInfo} from "jigsaw/directive/dragdrop/types";
-import {JigsawEditableBox} from "jigsaw/component/box/editable-box";
 import {SubscribableComponent} from "../linkage.common";
 
 @Component({
@@ -31,6 +30,7 @@ export class CustomTableComponent extends SubscribableComponent {
     }
 
     dropHandle(dragInfo: DragDropInfo) {
+        if(!this.box.editable) return;
         console.log('drop', dragInfo.dragDropData);
         this.subscriberCipher = dragInfo.dragDropData;
     }

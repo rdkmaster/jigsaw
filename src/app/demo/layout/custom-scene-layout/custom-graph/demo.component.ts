@@ -42,6 +42,7 @@ export class CustomGraphComponent extends EmittableComponent implements OnInit {
 
     // 拖拽实现联动
     dragStartHandle(dragInfo: DragDropInfo) {
+        if(!this.box.editable) return;
         console.log('drag start');
         this.emitterCipher = 'cipher' + (new Date()).getTime();
         dragInfo.dragDropData = this.emitterCipher;
