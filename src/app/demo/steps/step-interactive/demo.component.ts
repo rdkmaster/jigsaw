@@ -2,7 +2,6 @@ import {ChangeDetectorRef, Component} from "@angular/core";
 
 @Component({
     templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
 })
 export class StepsClickChangeStatusComponent {
     constructor(private _changeDetector: ChangeDetectorRef) {
@@ -20,12 +19,10 @@ export class StepsClickChangeStatusComponent {
         {
             title: 'processing',
             status: "processing",
-
         },
         {
             title: 'warning',
             status: "warning",
-
         },
         {
             title: 'skipped',
@@ -45,7 +42,7 @@ export class StepsClickChangeStatusComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
+    summary: string = '本demo演示了如何配合trustedHtml对用户提供交互的例子';
     description: string = '';
 
 }

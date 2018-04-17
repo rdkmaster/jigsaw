@@ -2,7 +2,6 @@ import {Component} from "@angular/core";
 
 @Component({
     templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
 })
 export class StepsVerticalFullComponent {
 
@@ -21,19 +20,16 @@ export class StepsVerticalFullComponent {
             title: 'processing',
             subTitle: 'Add a window to configure its compare paramenters',
             status: "processing",
-
         },
         {
             title: 'warning',
             subTitle: 'Add a window to configure its compare paramenters',
             status: "warning",
-
         },
         {
             title: 'skipped',
             subTitle: 'Add a window to configure its compare paramenters',
             status: "skipped",
-
         },
         {
             title: 'waiting',
@@ -45,6 +41,6 @@ export class StepsVerticalFullComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
+    summary: string = '本demo演示了jigsaw-steps垂直排列的效果';
     description: string = '';
 }

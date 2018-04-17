@@ -1,0 +1,14 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-steps preSize="default" direction="horizontal" width="1500px">
+    <jigsaw-step-item *ngFor="let step of steps; index as idx" [status]="step.status">
+        <div jigsaw-title>{{step.title}}</div>
+        <div jigsaw-sub-title
+             trustedHtml="单击<a (click)='skipStep({{idx}})'>这里</a>跳过此步骤"
+             [trustedHtmlContext]="this"></div>
+    </jigsaw-step-item>
+</jigsaw-steps>

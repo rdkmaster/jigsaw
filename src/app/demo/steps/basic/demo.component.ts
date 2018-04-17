@@ -2,7 +2,6 @@ import {Component} from "@angular/core";
 
 @Component({
     templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
 })
 export class StepsHorizontalBasicComponent {
     steps = [
@@ -35,6 +34,6 @@ export class StepsHorizontalBasicComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
+    summary: string = '本demo演示了jigsaw-steps组件最简单的用法，所有配置项都用默认';
     description: string = '';
 }
