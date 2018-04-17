@@ -1,5 +1,5 @@
 import {Component, ComponentRef, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
-import {ComponentMetaData, LayoutComponentInfo, LayoutData} from "jigsaw/core/data/layout-data";
+import {ComponentMetaData, LayoutData} from "jigsaw/core/data/layout-data";
 import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/service/popup.service";
 import {JigsawEditableBox} from "jigsaw/component/box/editable-box";
 import {CustomGraphComponent} from "./custom-graph/demo.component";
@@ -160,11 +160,11 @@ export class CustomSceneLayoutDemoComponent {
             allComponents.forEach(item => {
                 if (!(item.component instanceof ComponentRef)) return;
                 const component = item.component.instance;
-                if (component.emitter) {
+                if (component.emitterCipher) {
                     component.subscribe(message => {
                         allComponents.forEach(item => {
                             if (!(item.component instanceof ComponentRef) ||
-                                item.component.instance.subscriber != component.emitter) return;
+                                item.component.instance.subscriberCipher != component.emitterCipher) return;
                             item.component.instance.message = message;
                         })
                     })

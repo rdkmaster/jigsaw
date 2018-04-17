@@ -1,13 +1,19 @@
-import {Component, EventEmitter, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AbstractGraphData} from "jigsaw/core/data/graph-data";
 import {EchartOptions} from "jigsaw/core/data/echart-types";
 import {JigsawGraph} from "jigsaw/component/graph/graph";
-import {IEmittable} from "jigsaw/core/data/component-data";
-import {Subscription} from "rxjs/Subscription";
+import {DragDropInfo} from "jigsaw/directive/dragdrop/types";
+import {EmittableComponent} from "../linkage.common";
 
 @Component({
     selector: 'custom-graph',
-    template: '<button (click)="handleClick()">click me</button><br><jigsaw-graph [data]="data" #graph></jigsaw-graph>',
+    template: `
+        <div class="custom-graph" jigsaw-draggable (jigsawDragStart)="dragStartHandle($event)">
+            <button (click)="handleClick()">click me</button>
+            <br>
+            <jigsaw-graph [data]="data" #graph></jigsaw-graph>
+        </div>
+    `,
     styles: [`
         :host {
             display: block;
@@ -15,9 +21,7 @@ import {Subscription} from "rxjs/Subscription";
         }
     `]
 })
-export class CustomGraphComponent implements OnInit, IEmittable {
-    emitter: string = 'cipher123456';
-
+export class CustomGraphComponent extends EmittableComponent implements OnInit {
     data: AbstractGraphData;
 
     @ViewChild("graph") graph: JigsawGraph;
@@ -32,22 +36,15 @@ export class CustomGraphComponent implements OnInit, IEmittable {
         }
     };
 
-    private _emitter = new EventEmitter<any>();
-
-    public emit(value?: any): void {
-        this._emitter.emit(value);
-    }
-
-    public subscribe(callback?: (value:any) => void): Subscription {
-        return this._emitter.subscribe(callback);
-    }
-
-    public unsubscribe() {
-        this._emitter.unsubscribe();
-    }
-
     handleClick() {
         this.emit((new Date()).toLocaleString());
+    }
+
+    // 拖拽实现联动
+    dragStartHandle(dragInfo: DragDropInfo) {
+        console.log('drag start');
+        this.emitterCipher = 'cipher' + (new Date()).getTime();
+        dragInfo.dragDropData = this.emitterCipher;
     }
 
     ngOnInit() {
