@@ -1,9 +1,9 @@
 import {JigsawEditableBox} from "jigsaw/component/box/editable-box";
-import {EventEmitter} from "@angular/core";
+import {EventEmitter, OnDestroy} from "@angular/core";
 import {Subscription} from "rxjs/Subscription";
 import {IEmittable} from "jigsaw/core/data/component-data";
 
-export class EmittableComponent implements IEmittable {
+export class EmittableComponent implements IEmittable, OnDestroy {
     public box: JigsawEditableBox;
 
     private _emitterCipher: string;
@@ -39,6 +39,10 @@ export class EmittableComponent implements IEmittable {
 
     public unsubscribe() {
         this._emitter.unsubscribe();
+    }
+
+    ngOnDestroy() {
+        this.unsubscribe();
     }
 }
 

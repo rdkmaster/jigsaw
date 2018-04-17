@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, ComponentRef} from "@angular/core";
 import {TableData} from "jigsaw/core/data/table-data";
 import {HttpClient} from "@angular/common/http";
 import {DragDropInfo} from "jigsaw/directive/dragdrop/types";
@@ -33,6 +33,14 @@ export class CustomTableComponent extends SubscribableComponent {
         if(!this.box.editable) return;
         console.log('drop', dragInfo.dragDropData);
         this.subscriberCipher = dragInfo.dragDropData;
+        this.box.getRootBox().data.getAllInnerComponents().forEach(item => {
+            if (!(item.component instanceof ComponentRef)) return;
+            const component = item.component.instance;
+            if(component.emitterCipher != this.subscriberCipher) return;
+            component.subscribe(message => {
+                this.message = message;
+            })
+        })
     }
 }
 
