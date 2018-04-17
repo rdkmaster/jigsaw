@@ -4,7 +4,7 @@
 
 
 <!-- start to learn the demo from here -->
-<jigsaw-steps preSize="default" direction="horizontal" width="1500px">
+<jigsaw-steps preSize="default" direction="horizontal">
     <jigsaw-step-item *ngFor="let step of steps; index as idx" [status]="step.status">
         <div jigsaw-title>{{step.title}}</div>
         <div jigsaw-sub-title
