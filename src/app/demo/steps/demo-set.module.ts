@@ -3,9 +3,11 @@ import {RouterModule} from "@angular/router";
 import {StepsHorizontalBasicModule} from "./basic/demo.module";
 import {StepsHorizontalFullModule} from "./full/demo.module";
 import {StepsHorizontalTrustedHTMLModule} from "./trustedHtml/demo.module";
+import {StepsVerticalFullModule} from "./full-vertical/demo.module";
 
 import {StepsHorizontalBasicComponent} from "./basic/demo.component";
 import {StepsHorizontalFullComponent} from "./full/demo.component";
+import {StepsVerticalFullComponent} from "./full-vertical/demo.component";
 import {StepsHorizontalTrustedHTMLComponent} from "./trustedHtml/demo.component";
 export const routerConfig = [
     {
@@ -19,6 +21,12 @@ export const routerConfig = [
     },
     {
 
+        path: 'full-vertical', component: StepsVerticalFullModule,
+
+    },
+
+    {
+
         path: 'trustedHtml', component: StepsHorizontalTrustedHTMLComponent
     },
 ];
@@ -28,7 +36,8 @@ export const routerConfig = [
         RouterModule.forChild(routerConfig),
         StepsHorizontalBasicModule,
         StepsHorizontalFullModule,
-        StepsHorizontalTrustedHTMLModule
+        StepsHorizontalTrustedHTMLModule,
+        StepsVerticalFullModule
     ]
 })
 export class StepsDemoModule{

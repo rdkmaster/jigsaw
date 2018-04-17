@@ -5,12 +5,12 @@ import { ArrayCollection } from "jigsaw/core/data/array-collection";
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
-export class StepsHorizontalFullComponent {
+export class StepsVerticalFullComponent {
 
 
 
 
-    steps = [
+    steps2 = [
         {
             title: '第一步done',
             subTitle: 'Add a window to configure its compare paramenters',

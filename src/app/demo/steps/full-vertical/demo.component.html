@@ -12,8 +12,8 @@
         <div class="demo-1 live-demo">
             <h3>最复杂的用法small</h3>
             <!-- 最复杂的用法，所有配置项都用上 -->
-          <jigsaw-steps preSize="small" direction="horizontal" width="1500">
-              <jigsaw-step-item *ngFor="let step of steps"
+          <jigsaw-steps preSize="small" direction="vertical" width="1500">
+              <jigsaw-step-item *ngFor="let step of steps2"
                                 [status]="step.status"
                                 [waitingIcon]="step.waitingIcon"
                                 [doneIcon]="step.doneIcon"
@@ -30,7 +30,7 @@
             <h3>最复杂的用法large</h3>
             <!-- 最复杂的用法，所有配置项都用上 -->
           <jigsaw-steps preSize="large" direction="horizontal" width="400" >
-              <jigsaw-step-item *ngFor="let step of steps"
+              <jigsaw-step-item *ngFor="let step of steps2"
                                 [status]="step.status"
                                 [waitingIcon]="step.waitingIcon"
                                 [doneIcon]="step.doneIcon"

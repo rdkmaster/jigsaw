@@ -4,16 +4,11 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
 
 .#{$steps-prefix-cls} {
     @include inline-block();
-    // width: 200px;
-    // height: 100px;
     .stepsContainer {
         display: flex;
         width: 100%;
         overflow-x: auto;
         overflow-y: hidden;
-        // border: 1px solid $border-color-base;
-        // border-radius: $border-radius-base;
-        // background: $component-background;
         padding: 0 100px;
 
         .#{$step-item-prefix-cls} {
@@ -69,9 +64,6 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
             }
 
             &:last-child {
-                // .steptitle{
-                //       margin-left:0;
-                // }
                 .stepline {
                     visibility: hidden;
                 }
@@ -129,11 +121,11 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
 
             .#{$step-item-prefix-cls}-waiting {
                 .stepstatuslogo {
-                    background-color: grey;
+                    background-color: $text-color ;
                 }
 
                 .stepline {
-                    background-color: grey;
+                    background-color: $text-color ;
                 }
             }
         }
