@@ -30,7 +30,7 @@ export class JigsawSteps extends AbstractJigsawComponent {
     @Input() public preSize: 'small' | 'default' | 'large' = "default";
 
     /**
-     * 设置`done`状态的图标，仅支持font-awesome和Jigsaw自研的iconfont图标
+     * 设置步骤条的方向，支持水平方向和垂直方向
      *
      * $demo = steps/vertical
      */
