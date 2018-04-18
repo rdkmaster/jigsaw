@@ -56,7 +56,7 @@ export class JigsawStepItem extends AbstractJigsawComponent implements OnInit {
      * $demo = steps/basic
      * $demo = steps/step-interactive
      */
-    @Input() public processingIcon: string = 'fa-cog fa-spin fa-3x fa-fw';
+    @Input() public processingIcon: string = 'fa-cog fa-spin fa-2x fa-fw';
 
     /**
      * 设置`error`状态的图标，仅支持font-awesome和Jigsaw自研的iconfont图标
