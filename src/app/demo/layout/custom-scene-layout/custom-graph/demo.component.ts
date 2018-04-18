@@ -1,9 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, Optional, ViewChild} from '@angular/core';
 import {AbstractGraphData} from "jigsaw/core/data/graph-data";
 import {EchartOptions} from "jigsaw/core/data/echart-types";
 import {JigsawGraph} from "jigsaw/component/graph/graph";
 import {DragDropInfo} from "jigsaw/directive/dragdrop/types";
 import {EmittableComponent} from "../linkage.common";
+import {JigsawTabsWrapper} from "../../../../../jigsaw/component/box/tabs-wrapper/tabs-wrapper";
+import {JigsawEditableBox} from "../../../../../jigsaw/component/box/editable-box";
 
 @Component({
     selector: 'custom-graph',
@@ -22,6 +24,10 @@ import {EmittableComponent} from "../linkage.common";
     `]
 })
 export class CustomGraphComponent extends EmittableComponent implements OnInit {
+    constructor(@Optional() public tabWrapper: JigsawTabsWrapper) {
+        super();
+    }
+
     data: AbstractGraphData;
 
     @ViewChild("graph") graph: JigsawGraph;
@@ -42,9 +48,20 @@ export class CustomGraphComponent extends EmittableComponent implements OnInit {
 
     // 拖拽实现联动
     dragStartHandle(dragInfo: DragDropInfo) {
-        if(!this.box.editable) return;
+        if (!this.box.editable) return;
         console.log('drag start');
         this.emitterCipher = 'cipher' + (new Date()).getTime();
+        if (this.tabWrapper) {
+            // 同一个wrapper里的组件实现统一发送口号
+            this.tabWrapper.components.forEach(componentRef => {
+                if(componentRef.instance instanceof JigsawEditableBox) {
+                    componentRef.instance.data.getComponents().forEach(componentInfo => {
+                        if (componentInfo.component.instance.emitterCipher == this.emitterCipher) return;
+                        componentInfo.component.instance.emitterCipher = this.emitterCipher;
+                    })
+                }
+            });
+        }
         dragInfo.dragDropData = this.emitterCipher;
     }
 

@@ -33,6 +33,7 @@ export class CustomTableComponent extends SubscribableComponent {
         if(!this.box.editable) return;
         console.log('drop', dragInfo.dragDropData);
         this.subscriberCipher = dragInfo.dragDropData;
+        // 寻找口号相同的组件进行联动
         this.box.getRootBox().data.getAllInnerComponents().forEach(item => {
             if (!(item.component instanceof ComponentRef)) return;
             const component = item.component.instance;

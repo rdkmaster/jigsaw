@@ -157,6 +157,7 @@ export class CustomSceneLayoutDemoComponent {
         setTimeout(() => {
             // 等待box渲染
             const allComponents = this.data3.getAllInnerComponents();
+            // 实现组件间的联动
             allComponents.forEach(item => {
                 if (!(item.component instanceof ComponentRef)) return;
                 const component = item.component.instance;
