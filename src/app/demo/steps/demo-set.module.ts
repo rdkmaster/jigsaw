@@ -6,6 +6,8 @@ import {StepsVerticalModule} from "./vertical/demo.module";
 import {StepsHorizontalBasicComponent} from "./basic/demo.component";
 import {StepsVerticalFullComponent} from "./vertical/demo.component";
 import {StepsClickChangeStatusComponent} from "./step-interactive/demo.component";
+import {StepsCustomIconsModule} from "./custom-icons/demo.module";
+import {StepsCustomIconsComponent} from "./custom-icons/demo.component";
 
 export const routerConfig = [
     {
@@ -18,6 +20,9 @@ export const routerConfig = [
     {
         path: 'step-interactive', component: StepsClickChangeStatusComponent
     },
+    {
+        path:'custom-icons',component:StepsCustomIconsComponent
+    }
 ];
 
 @NgModule({
@@ -25,6 +30,7 @@ export const routerConfig = [
         RouterModule.forChild(routerConfig),
         StepsHorizontalBasicModule,
         StepsClickChangeStatusModule,
+        StepsCustomIconsModule,
         StepsVerticalModule
     ]
 })

@@ -8,11 +8,11 @@ import {Component, Input} from "@angular/core";
  * $demo = steps/step-interactive
  * $demo = steps/vertical
  *
- * $since = v1.1.6
+ * $since = v1.1.7
  */
 @Component({
     selector: 'jigsaw-steps, j-steps',
-    template: '<div class="steps-container" [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true}"><div class="step-left-space"></div><ng-content></ng-content></div>',
+    template: '<div class="jigsaw-steps-container" [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true}"><div class="jigsaw-step-left-space"></div><ng-content></ng-content></div>',
     host: {
         '[class.jigsaw-steps]': 'true',
         '[style.width]': 'width',

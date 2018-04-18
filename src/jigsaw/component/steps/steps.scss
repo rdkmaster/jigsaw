@@ -5,12 +5,12 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
 
 .#{$steps-prefix-cls} {
     @include inline-block();
-    .steps-container {
+    .#{$jigsaw-prefix}-steps-container {
         display: flex;
         width: 100%;
         overflow-x: auto;
         overflow-y: hidden;
-        .step-left-space {
+        .#{$jigsaw-prefix}-step-left-space {
             flex: 0.5;
             height: 10px;
             min-width: 60px;
@@ -19,32 +19,32 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
             display: flex;
             flex-direction: column;
             flex: 1;
-            .step-item-container {
+            .#{$jigsaw-prefix}-step-item-container {
                 width: 100%;
             }
-            .step-title {
+            .#{$jigsaw-prefix}-step-title {
                 font-size: $font-size-lg;
                 color: $heading-color-dark;
                 line-height: $height-lg;
             }
 
-            .sub-title {
+            .#{$jigsaw-prefix}-sub-title {
                 font-size: $font-size-base;
                 color: $text-color-secondary;
                 margin-top: 5px;
             }
-            .step-title,
-            .sub-title {
+            .#{$jigsaw-prefix}-step-title,
+            .#{$jigsaw-prefix}-sub-title {
                 text-align: center;
                 margin-left: -50%;
                 width: 100%;
                 padding-left: 26px;
             }
 
-            .logo-line-container {
+            .#{$jigsaw-prefix}-logo-line-container {
                 display: flex;
                 align-items: center;
-                .step-status-logo {
+                .#{$jigsaw-prefix}-step-status-logo {
                     width: 26px;
                     height: 26px;
                     border-radius: 26px;
@@ -60,82 +60,83 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                     }
                 }
 
-                .step-line {
+                .#{$jigsaw-prefix}-step-line {
                     min-width: 80px;
                     height: 2px;
                     background: #345;
                     margin: 0 20px;
                     flex-grow: 1;
                 }
-                .sub-title-v {
+                .#{$jigsaw-prefix}-sub-title-v {
                     display: none;
                 }
             }
 
             &:nth-last-child(3) {
                 flex: 0.5;
-                .step-line {
+                padding-right: 26px;
+                .#{$jigsaw-prefix}-step-line {
                     display: none ;
                 }
-                .step-title,
-                .sub-title {
+                .#{$jigsaw-prefix}-step-title,
+                .#{$jigsaw-prefix}-sub-title {
                     margin-left: -100%;
                     width: 200%;
                 }
             }
             .#{$step-item-prefix-cls}-processing {
-                .step-status-logo {
+                .#{$jigsaw-prefix}-step-status-logo {
                     background-color: #41ADDC;
                 }
-                .step-line {
+                .#{$jigsaw-prefix}-step-line {
                     background-color: #41ADDC;
                 }
             }
 
             .#{$step-item-prefix-cls}-done {
-                .step-status-logo {
+                .#{$jigsaw-prefix}-step-status-logo {
                     background-color: #7ACA6B;
                 }
-                .step-line {
+                .#{$jigsaw-prefix}-step-line {
                     background-color: #7ACA6B;
                 }
             }
 
             .#{$step-item-prefix-cls}-error {
-                .step-status-logo {
+                .#{$jigsaw-prefix}-step-status-logo {
                     background-color: #E67877;
                 }
-                .step-line {
+                .#{$jigsaw-prefix}-step-line {
                     background-color: #E67877;
                 }
             }
 
             .#{$step-item-prefix-cls}-warning {
-                .step-status-logo {
+                .#{$jigsaw-prefix}-step-status-logo {
                     background-color: orange;
                 }
 
-                .step-line {
+                .#{$jigsaw-prefix}-step-line {
                     background-color: orange;
                 }
             }
 
             .#{$step-item-prefix-cls}-skipped {
-                .step-status-logo {
+                .#{$jigsaw-prefix}-step-status-logo {
                     background-color: $text-color-secondary;
                 }
 
-                .step-line {
+                .#{$jigsaw-prefix}-step-line {
                     background-color: $text-color-secondary;
                 }
             }
 
             .#{$step-item-prefix-cls}-waiting {
-                .step-status-logo {
+                .#{$jigsaw-prefix}-step-status-logo {
                     background-color: $text-color;
                 }
 
-                .step-line {
+                .#{$jigsaw-prefix}-step-line {
                     background-color: $text-color;
                 }
             }
@@ -145,14 +146,14 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
 }
 
 .#{$steps-prefix-cls}-direction-vertical {
-    .steps-container {
+    .#{$jigsaw-prefix}-steps-container {
         overflow-x: hidden;
         overflow-y: auto;
         flex-direction: column;
         display: flex;
         width: auto;
         height: 100%;
-        .step-left-space {
+        .#{$jigsaw-prefix}-step-left-space {
             flex: 0;
             min-width: 0;
             height: 0;
@@ -161,59 +162,58 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
             display: flex;
             flex: 1;
             height: 100%;
-            .step-item-container {
+            .#{$jigsaw-prefix}-step-item-container {
                 flex-direction: column;
                 height: 100%;
                 width: auto;
                 display: flex;
             }
 
-            .step-title {
+            .#{$jigsaw-prefix}-step-title {
                 font-size: $font-size-lg;
                 color: $heading-color-dark;
                 line-height: $height-lg;
                 margin: 0 0 5px 0;
             }
-            .sub-title {
+            .#{$jigsaw-prefix}-sub-title {
                display: none;
             }
-            .sub-title-v {
+            .#{$jigsaw-prefix}-sub-title-v {
                 font-size: $font-size-base;
                 color: $text-color-secondary;
                 margin: 5px 0 10px 0;
             }
 
-            .step-title,
-            .sub-title-v {
+            .#{$jigsaw-prefix}-step-title,
+            .#{$jigsaw-prefix}-sub-title-v {
                 text-align: center;
                 padding-left: 0;
                 width: 100%;
             }
 
-            .logo-line-container {
+            .#{$jigsaw-prefix}-logo-line-container {
                 display: flex;
                 align-items: center;
                 flex-direction: column;
                 flex-grow: 1;
-
-
-                .step-line {
+                .#{$jigsaw-prefix}-step-line {
                     min-height: 30px;
                     width: 2px;
                     min-width: 0;
                     margin: 0 20px;
                     flex-grow: 1;
                 }
-                .sub-title-v {
+                .#{$jigsaw-prefix}-sub-title-v {
                     display: block;
                 }
             }
             &:nth-last-child(3) {
-                .step-title {
+                .#{$jigsaw-prefix}-step-title {
                     text-align: center;
                     text-indent: 0;
                     margin: 5px 0;
                     width: 100%;
+                    padding-right: 0;
                 }
             }
         }
@@ -221,17 +221,17 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
 }
 
 .#{$steps-prefix-cls}-size-large {
-    .step-title {
+    .#{$jigsaw-prefix}-step-title {
         font-size: $font-size-lg + 2px !important;
         padding-left: 30px !important;
         line-height: $height-lg + 2 !important;
     }
 
-    .sub-title,.sub-title-v {
+    .#{$jigsaw-prefix}-sub-title,.#{$jigsaw-prefix}-sub-title-v {
         font-size: $font-size-base + 2px !important;
         padding-left: 30px !important;
     }
-    .step-status-logo {
+    .#{$jigsaw-prefix}-step-status-logo {
         font-size: $font-size-base + 2px !important;
         width: 30px !important;
         height: 30px !important;
@@ -241,24 +241,34 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
             line-height: 30px!important;
         }
     }
+    &:nth-last-child(3) {
+        .#{$jigsaw-prefix}-step-title {
+            padding-right:30px!important;
+        }
+    }
     &.#{$steps-prefix-cls}-direction-vertical{
-        .step-title,.sub-title-v{
+        .#{$jigsaw-prefix}-step-title,.#{$jigsaw-prefix}-sub-title-v{
             padding-left: 0 !important;
+        }
+        &:nth-last-child(3) {
+            .#{$jigsaw-prefix}-step-title {
+                padding-right: 0 !important;
+            }
         }
     }
 }
 
 .#{$steps-prefix-cls}-size-small {
-    .step-title {
+    .#{$jigsaw-prefix}-step-title {
         font-size: $font-size-lg - 2px !important;
         padding-left: 20px !important;
         line-height: $height-lg - 2 !important;
     }
-    .sub-title,.sub-title-v {
+    .#{$jigsaw-prefix}-sub-title,.#{$jigsaw-prefix}-sub-title-v {
         font-size: $font-size-base - 2px !important;
         padding-left: 20px !important;
     }
-    .step-status-logo {
+    .#{$jigsaw-prefix}-step-status-logo {
         font-size: $font-size-base - 2px !important;
         width: 20px !important;
         height: 20px !important;
@@ -268,9 +278,17 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
             line-height: 20px!important;
         }
     }
+    &:nth-last-child(3) {
+        .#{$jigsaw-prefix}-step-title {
+            padding-right:20px!important;
+        }
+    }
     &.#{$steps-prefix-cls}-direction-vertical{
-        .step-title,.sub-title-v{
+        .#{$jigsaw-prefix}-step-title,.#{$jigsaw-prefix}-sub-title-v{
             padding-left: 0 !important;
+        }
+        .#{$jigsaw-prefix}-step-title {
+            padding-right:0px!important;
         }
     }
 }

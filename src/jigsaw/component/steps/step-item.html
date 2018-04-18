@@ -1,20 +1,20 @@
 <ng-container>
-  <div [ngClass]="_$stepStatusClass" class="step-item-container">
-    <div class="step-title">
+  <div [ngClass]="_$stepStatusClass" class="jigsaw-step-item-container">
+    <div class="jigsaw-step-title">
       <ng-content></ng-content>
     </div>
-    <div class="logo-line-container">
-      <div class="step-status-logo" >
+    <div class="jigsaw-logo-line-container">
+      <div class="jigsaw-step-status-logo" >
         <i class="fa" [ngClass]="_$stepStatusIconClass"></i>
       </div>
-      <div class="sub-title-v">
+      <div class="jigsaw-sub-title-v">
         <ng-content select="[j-sub-v-title],[jigsaw-sub-v-title]"></ng-content>
       </div>
-      <div class="step-line">
+      <div class="jigsaw-step-line">
 
       </div>
     </div>
-    <div class="sub-title">
+    <div class="jigsaw-sub-title">
       <ng-content select="[j-sub-title],[jigsaw-sub-title]"></ng-content>
     </div>
   </div>
