@@ -38,22 +38,25 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                 text-align: center;
                 margin-left: -50%;
                 width: 100%;
-                padding-left: 25px;
+                padding-left: 26px;
             }
 
             .logo-line-container {
                 display: flex;
                 align-items: center;
                 .step-status-logo {
-                    width: 25px;
-                    height: 25px;
-                    border-radius: 25px;
+                    width: 26px;
+                    height: 26px;
+                    border-radius: 26px;
                     background: #123;
                     color: #fff;
                     font-size: $font-size-base;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
+                    i{
+                        width: 26px;
+                        height: 26px;
+                        text-align: center;
+                        line-height: 26px;
+                    }
                 }
 
                 .step-line {
@@ -191,11 +194,7 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                 align-items: center;
                 flex-direction: column;
                 flex-grow: 1;
-                .step-status-logo {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                }
+
 
                 .step-line {
                     min-height: 30px;
@@ -223,34 +222,54 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
 .#{$steps-prefix-cls}-size-large {
     .step-title {
         font-size: $font-size-lg + 2px !important;
-        text-indent: 30px !important;
+        padding-left: 30px !important;
         line-height: $height-lg + 2 !important;
     }
 
-    .sub-title {
+    .sub-title,.sub-title-v {
         font-size: $font-size-base + 2px !important;
-        text-indent: 30px !important;
+        padding-left: 30px !important;
     }
     .step-status-logo {
         font-size: $font-size-base + 2px !important;
         width: 30px !important;
         height: 30px !important;
+        i{
+            width: 30px!important;
+            height: 30px!important;
+            line-height: 30px!important;
+        }
+    }
+    &.#{$steps-prefix-cls}-direction-vertical{
+        .step-title,.sub-title-v{
+            padding-left: 0 !important;
+        }
     }
 }
 
 .#{$steps-prefix-cls}-size-small {
     .step-title {
         font-size: $font-size-lg - 2px !important;
-        text-indent: 21px !important;
+        padding-left: 20px !important;
         line-height: $height-lg - 2 !important;
     }
-    .sub-title {
+    .sub-title,.sub-title-v {
         font-size: $font-size-base - 2px !important;
-        text-indent: 21px !important;
+        padding-left: 20px !important;
     }
     .step-status-logo {
         font-size: $font-size-base - 2px !important;
-        width: 21px !important;
-        height: 21px !important;
+        width: 20px !important;
+        height: 20px !important;
+        i{
+            width: 20px!important;
+            height: 20px!important;
+            line-height: 20px!important;
+        }
+    }
+    &.#{$steps-prefix-cls}-direction-vertical{
+        .step-title,.sub-title-v{
+            padding-left: 0 !important;
+        }
     }
 }
