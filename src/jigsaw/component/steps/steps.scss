@@ -10,13 +10,14 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
         width: 100%;
         overflow-x: auto;
         overflow-y: hidden;
-        padding: 0 100px;
-
+        .step-left-space {
+            flex: 0.5;
+            height: 10px;
+            min-width: 72px;
+        }
         .#{$step-item-prefix-cls} {
             display: flex;
-            align-items: center;
             flex-direction: column;
-            align-items: flex-start;
             flex: 1;
             .step-item-container {
                 width: 100%;
@@ -38,7 +39,6 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                 margin-left: -50%;
                 width: 100%;
                 text-indent: 25px;
-
             }
 
             .logo-line-container {
@@ -69,8 +69,14 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
             }
 
             &:last-child {
+                flex: 0.5;
                 .step-line {
-                    visibility: hidden;
+                    display: none;
+                }
+                .step-title,
+                .sub-title {
+                    margin-left: -100%;
+                    width: 200%;
                 }
             }
             .#{$step-item-prefix-cls}-processing {
@@ -86,7 +92,6 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                 .step-status-logo {
                     background-color: #7ACA6B;
                 }
-
                 .step-line {
                     background-color: #7ACA6B;
                 }
@@ -96,7 +101,6 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                 .step-status-logo {
                     background-color: #E67877;
                 }
-
                 .step-line {
                     background-color: #E67877;
                 }
@@ -114,11 +118,11 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
 
             .#{$step-item-prefix-cls}-skipped {
                 .step-status-logo {
-                    background-color: $disabled-bg;
+                    background-color: $text-color-secondary;
                 }
 
                 .step-line {
-                    background-color: green;
+                    background-color: $text-color-secondary;
                 }
             }
 
@@ -134,7 +138,6 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
         }
 
     }
-
 }
 
 .#{$steps-prefix-cls}-direction-vertical {
@@ -145,11 +148,13 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
         display: flex;
         width: auto;
         height: 100%;
-        padding: 0;
+        .step-left-space {
+            flex: 0;
+            min-width: 0;
+            height: 0;
+        }
         .#{$step-item-prefix-cls} {
             display: flex;
-            align-items: center;
-            align-items: flex-start;
             flex: 1;
             height: 100%;
             .step-item-container {
@@ -163,20 +168,22 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                 font-size: $font-size-lg;
                 color: $heading-color-dark;
                 line-height: $height-lg;
+                margin: 0 0 5px 0;
             }
-
+            .sub-title {
+               display: none;
+            }
             .sub-title-v {
                 font-size: $font-size-base;
                 color: $text-color-secondary;
+                margin: 5px 0 10px 0;
             }
 
             .step-title,
             .sub-title-v {
                 text-align: center;
-                margin-left: 0;
-
                 text-indent: 0;
-                margin: 5px 0;
+                width: 100%;
             }
 
             .logo-line-container {
@@ -191,7 +198,7 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                 }
 
                 .step-line {
-                    min-height: 80px;
+                    min-height: 30px;
                     width: 2px;
                     min-width: auto;
                     margin: 0 20px;
@@ -201,7 +208,15 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                     display: block;
                 }
             }
-
+            &:last-child {
+                flex: 1;
+                .step-title {
+                    text-align: center;
+                    text-indent: 0;
+                    margin: 5px 0;
+                    width: 100%;
+                }
+            }
         }
     }
 }
@@ -222,8 +237,6 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
         width: 30px !important;
         height: 30px !important;
     }
-    min-height: $height-lg;
-    line-height: $height-lg - 2px;
 }
 
 .#{$steps-prefix-cls}-size-small {
@@ -232,7 +245,6 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
         text-indent: 21px !important;
         line-height: $height-lg - 2 !important;
     }
-
     .sub-title {
         font-size: $font-size-base - 2px !important;
         text-indent: 21px !important;
@@ -242,6 +254,4 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
         width: 21px !important;
         height: 21px !important;
     }
-    min-height: $height-sm;
-    line-height: $height-sm - 2px;
 }
