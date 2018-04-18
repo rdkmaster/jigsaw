@@ -231,7 +231,7 @@ export class CustomSceneLayoutDemoComponent {
         const componentMetaData = {
             component: this.selectedComponent.component,
             selector: this.selectedComponent.selector,
-            inputs: this.selectedComponent.inputs
+            inputs: [...this.selectedComponent.inputs]
         };
 
         if (this.selectedComponent.component == JigsawTabsWrapper) {
