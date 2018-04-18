@@ -51,6 +51,7 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                     background: #123;
                     color: #fff;
                     font-size: $font-size-base;
+                    overflow: hidden;
                     i{
                         width: 26px;
                         height: 26px;
