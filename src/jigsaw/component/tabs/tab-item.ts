@@ -5,7 +5,13 @@ import {
 } from '@angular/core';
 import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
 
-export type TabTitleInfo = { key: number, title: string };
+/**
+ * 改变tab标题时发送事件的携带数据类型。
+ */
+export class TabTitleInfo {
+    key: number;
+    title: string
+}
 
 export abstract class JigsawTabBase extends AbstractJigsawComponent implements OnDestroy {
 

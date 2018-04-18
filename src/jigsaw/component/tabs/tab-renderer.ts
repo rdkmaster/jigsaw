@@ -3,6 +3,13 @@ import {ChangeDetectorRef, Component, ViewChild} from "@angular/core";
 import {JigsawInput} from "../input/input";
 import {JigsawTabLabel} from "./tab-item";
 
+/**
+ * 此组件用于tab的可编辑的标题，主要通过addTab方法添加。
+ * 在{@link JigsawTabsWrapper}中运用的比较多。
+ *
+ * $demo = layout/custom-scene-layout
+ *
+ */
 @Component({
     template: `
         <div *ngIf="!_$editable">
