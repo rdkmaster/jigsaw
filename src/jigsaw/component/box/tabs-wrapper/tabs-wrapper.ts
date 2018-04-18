@@ -1,14 +1,11 @@
-import {
-    AfterViewInit, ChangeDetectorRef, Component, ComponentRef, NgModule, ViewChild
-} from "@angular/core";
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentRef, NgModule, ViewChild} from "@angular/core";
 import {JigsawEditableBox} from "../editable-box";
 import {JigsawTab} from "../../tabs/tab";
 import {ComponentInput, ComponentMetaData, LayoutComponentInfo, LayoutData} from "../../../core/data/layout-data";
 import {JigsawTabsModule} from "../../tabs/index";
-import {JigsawInput, JigsawInputModule} from "../../input/input";
-import {IDynamicInstantiatable} from "../../common";
+import {JigsawInputModule} from "../../input/input";
 import {CommonModule} from "@angular/common";
-import {JigsawTabLabel} from "../../tabs/tab-item";
+import {JigsawEditableTabTitleRenderer} from "../../tabs/tab-renderer";
 import {CommonUtils} from "../../../core/utils/common-utils";
 
 export class TabsWrapperMetaData extends ComponentMetaData {
@@ -97,7 +94,7 @@ export class JigsawTabsWrapper implements AfterViewInit {
     }
 
     public addTab(componentMetaData: ComponentMetaData, title?: string) {
-        title = <any>(title ? title : JigsawInternalEditableTabTitle);
+        title = <any>(title ? title : JigsawEditableTabTitleRenderer);
         this._tabs.addTab(title, componentMetaData.component);
         // 渲染后的组件保存起来，
         const componentRef = this._tabs._tabContents.last._tabItemRef;
@@ -173,58 +170,11 @@ export class JigsawTabsWrapper implements AfterViewInit {
     }
 }
 
-@Component({
-    template: `
-        <div *ngIf="!_$editable">
-            <span>{{title}}</span>
-            <span class="fa fa-edit jigsaw-editable-tab-title-bar" (click)="_handleEditable($event)"></span>
-        </div>
-        <j-input *ngIf="_$editable" [(value)]="title" (blur)="_$handleTitleChange()" class="jigsaw-editable-tab-title-input"></j-input>
-    `
-})
-export class JigsawInternalEditableTabTitle implements IDynamicInstantiatable {
-    constructor(private _tabLabel: JigsawTabLabel, private _changeDetectorRef: ChangeDetectorRef) {
-    }
-
-    public initData: any;
-    public title: string = 'New Tab';
-
-    @ViewChild(JigsawInput)
-    public input: JigsawInput;
-
-    /**
-     * @internal
-     */
-    public _$editable: boolean;
-
-    /**
-     * @internal
-     */
-    public _handleEditable(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        this._$editable = !this._$editable;
-        setTimeout(() => {
-            // 等待input渲染
-            this.input.focus();
-        });
-    }
-
-    /**
-     * @internal
-     */
-    public _$handleTitleChange() {
-        this._$editable = !this._$editable;
-        this._tabLabel.change.emit({key: this._tabLabel.key, title: this.title});
-        this._changeDetectorRef.detectChanges();
-    }
-}
-
 @NgModule({
     imports: [JigsawTabsModule, JigsawInputModule, CommonModule],
-    declarations: [JigsawTabsWrapper, JigsawInternalEditableTabTitle],
+    declarations: [JigsawTabsWrapper, JigsawEditableTabTitleRenderer],
     exports: [JigsawTabsWrapper],
-    entryComponents: [JigsawInternalEditableTabTitle, JigsawTabsWrapper, JigsawEditableBox]
+    entryComponents: [JigsawEditableTabTitleRenderer, JigsawTabsWrapper, JigsawEditableBox]
 })
 export class JigsawTabsWrapperModule {
     constructor() {

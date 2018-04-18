@@ -20,3 +20,4 @@ export class JigsawTabsModule { }
 
 export * from './tab';
 export * from './tab-pane';
+export * from './tab-renderer';
