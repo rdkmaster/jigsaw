@@ -7,6 +7,8 @@ import {Component, Input} from "@angular/core";
  * $demo = steps/basic
  * $demo = steps/step-interactive
  * $demo = steps/vertical
+ *
+ * $since = v1.1.6
  */
 @Component({
     selector: 'jigsaw-steps, j-steps',

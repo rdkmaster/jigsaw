@@ -3,6 +3,8 @@ import {AbstractJigsawComponent} from "../common";
 
 /**
  * 代表了`JigsawSteps`组件的一个步骤，需要配合`JigsawSteps`组件一起使用
+ *
+ * $since = v1.1.6
  */
 @Component({
     selector: 'jigsaw-step-item,j-step-item',
