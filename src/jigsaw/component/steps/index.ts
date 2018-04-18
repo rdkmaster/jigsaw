@@ -5,10 +5,11 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {JigsawSteps} from './steps';
 import {JigsawStepItem} from './step-item';
+import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,PerfectScrollbarModule
     ],
     declarations: [JigsawSteps, JigsawStepItem],
     exports: [JigsawSteps, JigsawStepItem],
