@@ -31,6 +31,9 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements O
     @ViewChild('body', {read: ViewContainerRef})
     protected _body: ViewContainerRef;
 
+    /**
+     * @internal
+     */
     public _tabItemRef: EmbeddedViewRef<any> | ComponentRef<IDynamicInstantiatable>;
 
     protected _insert(): void {
