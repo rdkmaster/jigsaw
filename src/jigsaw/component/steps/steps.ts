@@ -10,7 +10,7 @@ import {Component, Input} from "@angular/core";
  */
 @Component({
     selector: 'jigsaw-steps, j-steps',
-    template: '<div class="steps-container"><div class="step-left-space"></div><ng-content></ng-content></div>',
+    template: '<div class="steps-container" [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true}"><div class="step-left-space"></div><ng-content></ng-content></div>',
     host: {
         '[class.jigsaw-steps]': 'true',
         '[style.width]': 'width',
