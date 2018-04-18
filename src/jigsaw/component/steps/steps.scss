@@ -5,9 +5,12 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
 
 .#{$steps-prefix-cls} {
     @include inline-block();
+    width: 100%;
+    height: 100%;
     .#{$jigsaw-prefix}-steps-container {
         display: flex;
         width: 100%;
+        height: 100%;
         overflow-x: auto;
         overflow-y: hidden;
         .#{$jigsaw-prefix}-step-left-space {
@@ -21,6 +24,7 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
             flex: 1;
             .#{$jigsaw-prefix}-step-item-container {
                 width: 100%;
+                height: 100%;
             }
             .#{$jigsaw-prefix}-step-title {
                 font-size: $font-size-lg;
@@ -47,6 +51,8 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                 .#{$jigsaw-prefix}-step-status-logo {
                     width: 26px;
                     height: 26px;
+                    min-width: 26px;
+                    min-height: 26px;
                     border-radius: 26px;
                     background: #123;
                     color: #fff;
@@ -161,7 +167,7 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
         .#{$step-item-prefix-cls} {
             display: flex;
             flex: 1;
-            height: 100%;
+            min-height: 140px;
             .#{$jigsaw-prefix}-step-item-container {
                 flex-direction: column;
                 height: 100%;
@@ -208,12 +214,13 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                 }
             }
             &:nth-last-child(3) {
+                padding-right: 0;
                 .#{$jigsaw-prefix}-step-title {
                     text-align: center;
                     text-indent: 0;
                     margin: 5px 0;
                     width: 100%;
-                    padding-right: 0;
+
                 }
             }
         }
@@ -235,6 +242,8 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
         font-size: $font-size-base + 2px !important;
         width: 30px !important;
         height: 30px !important;
+        min-width: 30px !important;
+        min-height: 30px !important;
         i{
             width: 30px!important;
             height: 30px!important;
@@ -242,18 +251,15 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
         }
     }
     &:nth-last-child(3) {
-        .#{$jigsaw-prefix}-step-title {
             padding-right:30px!important;
-        }
     }
     &.#{$steps-prefix-cls}-direction-vertical{
         .#{$jigsaw-prefix}-step-title,.#{$jigsaw-prefix}-sub-title-v{
             padding-left: 0 !important;
         }
+
         &:nth-last-child(3) {
-            .#{$jigsaw-prefix}-step-title {
-                padding-right: 0 !important;
-            }
+                padding-right:0!important;
         }
     }
 }
@@ -272,6 +278,8 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
         font-size: $font-size-base - 2px !important;
         width: 20px !important;
         height: 20px !important;
+        min-width: 20px !important;
+        min-height: 20px !important;
         i{
             width: 20px!important;
             height: 20px!important;
@@ -279,9 +287,7 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
         }
     }
     &:nth-last-child(3) {
-        .#{$jigsaw-prefix}-step-title {
             padding-right:20px!important;
-        }
     }
     &.#{$steps-prefix-cls}-direction-vertical{
         .#{$jigsaw-prefix}-step-title,.#{$jigsaw-prefix}-sub-title-v{
@@ -289,6 +295,9 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
         }
         .#{$jigsaw-prefix}-step-title {
             padding-right:0px!important;
+        }
+        &:nth-last-child(3) {
+                padding-right:0!important;
         }
     }
 }

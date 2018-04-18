@@ -8,7 +8,7 @@ export class StepsVerticalFullComponent {
     steps = [
         {
             title: 'done',
-            subTitle: 'Add a window to configure its compare paramenters',
+            subTitle: 'Add a window to configure its compare paramenters ',
             status: "done",
         },
         {
