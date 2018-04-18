@@ -209,7 +209,6 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                 }
             }
             &:last-child {
-                flex: 1;
                 .step-title {
                     text-align: center;
                     text-indent: 0;
