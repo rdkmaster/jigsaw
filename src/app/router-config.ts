@@ -109,6 +109,10 @@ export const routerConfig = [
         loadChildren: "./demo/slider/demo-set.module#SliderDemoModule",
     },
     {
+        path: "steps",
+        loadChildren: "./demo/steps/demo-set.module#StepsDemoModule",
+    },
+    {
         path: "switch",
         loadChildren: "./demo/switch/demo-set.module#SwitchDemoModule",
     },
