@@ -96,7 +96,8 @@ fs.writeFileSync(`${output}/list`, JSON.stringify(apiList));
 fs.writeFileSync(`${workDir}/wechat-group.html`, fs.readFileSync(`${__dirname}/wechat-group.html`));
 fs.writeFileSync(`${workDir}/wechat-public-subscription.html`, fs.readFileSync(`${__dirname}/wechat-public-subscription.html`));
 if (!checkUnknownTypes()) {
-    process.exit(1);
+    console.warn('unknown types checked');
+    process.exit(0);
 }
 
 function findExtends(ci) {
