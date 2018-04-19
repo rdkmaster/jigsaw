@@ -8,7 +8,7 @@ import {JigsawEditableBox} from "./editable-box";
 @NgModule({
     imports: [CommonModule, JigsawCommonModule],
     declarations: [JigsawBox, JigsawEditableBox, JigsawBoxResizable],
-    exports: [JigsawBox, JigsawEditableBox]
+    exports: [JigsawBox, JigsawEditableBox],
 })
 export class JigsawBoxModule {
 

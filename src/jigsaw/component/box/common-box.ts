@@ -214,7 +214,7 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
         });
     }
 
-    protected getRootBox(): any {
+    public getRootBox(): any {
         let p = this.parent;
         if (!p) return this;
         while (true) {

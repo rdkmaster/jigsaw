@@ -40,8 +40,13 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
 
         this._rendererHost.viewContainerRef.clear();
         this._data = value;
-        if (this.initialized && !this.parent) {
-            this._setRootProperty();
+
+        if (this.initialized) {
+            this._renderComponents(this.data.componentMetaDataList);
+            this.data.box = this;
+            if (!this.parent) {
+                this._setRootProperty();
+            }
         }
         if (this._removeDataRefreshListener) {
             this._removeDataRefreshListener();
@@ -56,6 +61,8 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
     public editable: boolean = true;
 
     public blocked: boolean;
+
+    public showOptionBar: boolean = true;
 
     /**
      * @internal
@@ -153,6 +160,10 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
             this.data.nodes[0].componentMetaDataList = this.data.componentMetaDataList;
             this.data.nodes[0].innerHtml = this.data.innerHtml;
 
+            this.showOptionBar = true;
+            // 更新组件内部box信息
+            this._updateBoxReference(this.data.nodes[0], firstChildBox);
+
             // 重置当前内容信息
             this.data.componentMetaDataList = [];
             this.data.innerHtml = '';
@@ -160,6 +171,16 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
 
             this.getRootBox().add.emit();
         });
+    }
+
+    private _updateBoxReference(data: LayoutData, box: JigsawEditableBox) {
+        const components = data.components;
+        if (components && components.length) {
+            const componentRef = components[0];
+            if (componentRef instanceof ComponentRef) {
+                componentRef.instance.box = box;
+            }
+        }
     }
 
     /**
@@ -197,6 +218,10 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
                     this.data.components = node.components;
                     this.data.nodes = [];
                     this.direction = null;
+
+                    // 更新组件内部box信息
+                    this._updateBoxReference(this.data, this);
+
                     // 等待 option bar & block 渲染
                     this.callLater(this._bindScrollEvent, this);
                 })
@@ -247,9 +272,20 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         if (!this.data) {
             return;
         }
+        this.data.componentMetaDataList = componentMetaDataList;
         this._renderComponents(componentMetaDataList);
-        this.data.setComponentMetaData(componentMetaDataList);
         this._bindScrollEvent();
+    }
+
+    public clearContent() {
+        this._rendererHost.viewContainerRef.clear();
+        this.data.components = [];
+        this.data.componentMetaDataList = [];
+        this.data.innerHtml = '';
+        if (this.removeElementScrollEvent) {
+            this.removeElementScrollEvent();
+            this.removeElementScrollEvent = null;
+        }
     }
 
     /**
@@ -262,7 +298,11 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         this._rendererHost.viewContainerRef.clear();
         this.data.components = []; // 初始化
         componentMetaDataList.forEach(componentMetaData => {
-            this.data.components.push(this._rendererFactory(componentMetaData.component, componentMetaData.inputs));
+            const componentRef = this._rendererFactory(componentMetaData.component, componentMetaData.inputs);
+            this.data.components.push(componentRef);
+            if (componentRef instanceof ComponentRef) {
+                componentRef.instance.box = this;
+            }
         });
     }
 
@@ -369,6 +409,8 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
             if (!this.parent) {
                 this._setRootProperty();
             }
+        } else {
+            this.data = new LayoutData();
         }
     }
 
@@ -391,5 +433,9 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
             this._removeDataRefreshListener();
             this._removeDataRefreshListener = null;
         }
+
+        this.fill.unsubscribe();
+        this.add.unsubscribe();
+        this.remove.unsubscribe();
     }
 }

@@ -1,0 +1,26 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<j-button (click)="editable = !editable">toggle editable</j-button>
+
+<jigsaw-tabs [editable]="editable" (remove)="show('about to remove tab ' + $event)" (add)="add($event, newTab)">
+    <jigsaw-tab-pane title="tab1">
+        <ng-template>tab content 1</ng-template>
+    </jigsaw-tab-pane>
+    <jigsaw-tab-pane title="tab2">
+        <ng-template>tab content 2</ng-template>
+    </jigsaw-tab-pane>
+    <jigsaw-tab-pane title="tab3">
+        <ng-template>tab content 3</ng-template>
+    </jigsaw-tab-pane>
+    <jigsaw-tab-pane title="tab4">
+        <ng-template>tab content 4</ng-template>
+    </jigsaw-tab-pane>
+</jigsaw-tabs>
+
+<ng-template #newTab>
+    new tab content
+</ng-template>
