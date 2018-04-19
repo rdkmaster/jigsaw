@@ -1,3 +1,22 @@
+## v1.1.7 (2018-4-19)
+
+### 新特性 / New Features
+- https://github.com/rdkmaster/jigsaw/pull/646 新增了jigsaw-drawer组件
+- https://github.com/rdkmaster/jigsaw/issues/256 新增了jigsaw-steps组件
+- https://github.com/rdkmaster/jigsaw/pull/650 editable-box支持将tab作为容器
+
+### 破坏性修改 / Breaking Changes
+- 无 / none
+
+###  优化 / Modified
+- 增加了button/checkbox/fish-bone/input的api文档，以及一些api文档中的错漏
+- 补充了combo/table/notification/movable等组件的自动化测试用例
+- https://github.com/rdkmaster/jigsaw/issues/644 避免graph设置多次data时，一个事件会绑定多个回调
+
+### 修复 / Fixes
+- https://github.com/rdkmaster/jigsaw/issues/648 fishbone报错
+
+
 ## v1.1.6 (2018-3-23)
 
 ### 新特性 / New Features
