@@ -2,6 +2,7 @@ import {Component} from "@angular/core";
 import {routerConfig as alertConfig} from "./demo/alert/demo-set.module";
 import {routerConfig as arrayCollectionConfig} from "./demo/data-encapsulation/demo-set.module";
 import {routerConfig as buttonConfig} from "./demo/button/demo-set.module";
+import {routerConfig as cascadeConfig} from "./demo/cascade/demo-set.module";
 import {routerConfig as checkboxConfig} from "./demo/checkbox/demo-set.module";
 import {routerConfig as collapseConfig} from "./demo/collapse/demo-set.module";
 import {routerConfig as comboSelectConfig} from "./demo/combo-select/demo-set.module";
@@ -84,6 +85,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'alert', alertConfig);
         this._addRouterConfig(routerConfig, 'data-encapsulation', arrayCollectionConfig);
         this._addRouterConfig(routerConfig, 'button', buttonConfig);
+        this._addRouterConfig(routerConfig, 'cascade', cascadeConfig);
         this._addRouterConfig(routerConfig, 'checkbox', checkboxConfig);
         this._addRouterConfig(routerConfig, 'collapse', collapseConfig);
         this._addRouterConfig(routerConfig, 'combo-select', comboSelectConfig);
