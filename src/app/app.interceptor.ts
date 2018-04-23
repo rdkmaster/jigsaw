@@ -17,6 +17,7 @@ export class AjaxInterceptor implements HttpInterceptor {
     constructor() {
         AjaxInterceptor.registerProcessor('/rdk/service/app/common/paging', this.dealServerSidePagingRequest, this);
         AjaxInterceptor.registerProcessor(/\bmock-data\/.+$/, req => MockData.get(req.url));
+        AjaxInterceptor.registerProcessor('/mock-service/area', this.dealAreaRequest);
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -43,6 +44,19 @@ export class AjaxInterceptor implements HttpInterceptor {
         const filter = this.getParamValue(req, params, 'filter') ? JSON.parse(this.getParamValue(req, params, 'filter')) : null;
         const sort = this.getParamValue(req, params, 'sort') ? JSON.parse(this.getParamValue(req, params, 'sort')) : null;
         return PageableData.get({service, paging, filter, sort});
+    }
+
+    dealAreaRequest(req: HttpRequest<any>): Observable<HttpEvent<any>> {
+        const provinces = require('mock-data/provinces.json');
+        const cities = require('mock-data/cities.json');
+        const districts = require('mock-data/districts.json');
+        if (req.params.get('cityId')) {
+            return districts.filter(d => d.cityId == req.params.get('cityId')).map(d => ({...d}));
+        }
+        if (req.params.get('provinceId')) {
+            return cities.filter(c => c.provinceId == req.params.get('provinceId')).map(c => ({...c}));
+        }
+        return provinces.map(p => ({...p}));
     }
 
     getParamValue(req: HttpRequest<any>, params: string, key: string): any {

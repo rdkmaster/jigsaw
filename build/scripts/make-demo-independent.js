@@ -371,6 +371,9 @@ function findMockDataUrls(interceptorCode, content) {
     var urls = allUrls.filter(url => {
         var found = false;
         content.forEach(item => {
+            if (found) {
+                return;
+            }
             if (!item.path.match(/^app\//)) {
                 return;
             }

@@ -1,0 +1,16 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<h4>试试看跨不同的省选择</h4><br>
+<j-cascade [data]="areas" (selectedItemsChange)="onChange($event)"
+           [multipleSelect]="true" [allowCrossSelect]="true">
+</j-cascade>
+
+<br><p>选择的区域是：</p>
+
+<j-tile width="400" *ngIf="selectedArea?.length > 0">
+    <j-tile-option *ngFor="let item of selectedArea">{{item.label}}</j-tile-option>
+</j-tile>

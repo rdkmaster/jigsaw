@@ -8,10 +8,11 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
     overflow: hidden;
     @include clearfix;
     color: $text-color;
+    background: $component-background;
 
     &-bar {
         border-bottom: $border-width-base $border-style-base $border-color-base;
-        margin-bottom: 16px;
+        margin-bottom: 6px;
         outline: none;
     }
 
