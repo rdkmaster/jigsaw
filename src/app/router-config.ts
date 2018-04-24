@@ -9,6 +9,10 @@ export const routerConfig = [
         loadChildren: "./demo/data-encapsulation/demo-set.module#DataEncapsulationDemoModule",
     },
     {
+        path: "box",
+        loadChildren: "./demo/box/demo-set.module#BoxDemoModule",
+    },
+    {
         path: "button",
         loadChildren: "./demo/button/demo-set.module#ButtonDemoModule",
     },
@@ -37,6 +41,10 @@ export const routerConfig = [
         loadChildren: "./demo/drawer/demo-set.module#DrawerDemoModule",
     },
     {
+        path: "editable-box",
+        loadChildren: "./demo/editable-box/demo-set.module#EditableBoxDemoModule",
+    },
+    {
         path: "fish-bone",
         loadChildren: "./demo/fish-bone/demo-set.module#FishBoneDemoModule",
     },
@@ -55,10 +63,6 @@ export const routerConfig = [
     {
         path: "input",
         loadChildren: "./demo/input/demo-set.module#InputDemoModule",
-    },
-    {
-        path: "layout",
-        loadChildren: "./demo/layout/demo-set.module#LayoutDemoModule",
     },
     {
         path: "list",

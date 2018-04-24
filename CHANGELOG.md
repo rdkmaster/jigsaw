@@ -141,8 +141,8 @@
 ## v1.1.0 (2018-2-22)
 
 ### 新特性 / New Features
-- **重磅功能**：增强`j-box`布局功能，支持用户在界面上拖拽调整布局尺寸，[详见这里](http://rdk.zte.com.cn/jigsaw/layout/box-layout)
-- **重磅功能**：增加`j-editable-box`组件，纯数据驱动的布局方式，更加灵活，轻松实现所见即所得的布局效果，[详见这里](http://rdk.zte.com.cn/jigsaw/layout/monitor)
+- **重磅功能**：增强`j-box`布局功能，支持用户在界面上拖拽调整布局尺寸，[详见这里](http://rdk.zte.com.cn/jigsaw/box/layout)
+- **重磅功能**：增加`j-editable-box`组件，纯数据驱动的布局方式，更加灵活，轻松实现所见即所得的布局效果，[详见这里](http://rdk.zte.com.cn/jigsaw/editable-box/monitor)
 - **新组件**：增加`j-notification`组件，更加灵活&友好的消息提示功能，[详见这里](http://rdk.zte.com.cn/jigsaw/notification/full)
 - https://github.com/rdkmaster/jigsaw/issues/481 PageableTableData支持post请求
 

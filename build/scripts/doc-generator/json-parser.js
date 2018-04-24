@@ -543,7 +543,7 @@ function fixDescription(metaInfo) {
 function getInheritanceInfo(metaInfo) {
     var inherited = metaInfo.inheritInfo;
     return !inherited ? '' :
-        `<a href="/components/jigsaw/api?apiItem=${inherited.from}&parentName=${inherited.type}#${metaInfo.name}">
+        `<a href="/components/api/${inherited.type}/${inherited.from}#${metaInfo.name}">
         <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a>`;
 }
 
@@ -616,7 +616,7 @@ function getTypeUrl(type, allowUnknown) {
     // try native types
     var info = findTypeMetaInfo(type);
     if (info) {
-        return `/components/jigsaw/api?apiItem=${type}&parentName=${info.subtype || info.type}`;
+        return `/components/api/${info.subtype || info.type}/${type}`;
     }
 
     // try angular types
@@ -689,12 +689,12 @@ function getPropertyUrl(type, property, context) {
             // 此时的type是一个属性，这里的info里包含的可能是该属性在其父类里的信息
             var name = info.type.name;
             var subtype = info.type.subtype || info.type.type;
-            return `/components/jigsaw/api?apiItem=${name}&parentName=${subtype}#${type}`;
+            return `/components/api/${subtype}/${name}#${type}`;
         }
         var info = findTypeMetaInfo(type);
         if (info) {
             // 此时的type是一个类
-            return `/components/jigsaw/api?apiItem=${info.name}&parentName=${info.subtype || info.type}`;
+            return `/components/api/${info.subtype || info.type}/${info.name}`;
         }
         // 试一下是不是angular、ts等其他的类型
         return getTypeUrl(type, true);
@@ -704,7 +704,7 @@ function getPropertyUrl(type, property, context) {
             // 这里的info里包含的可能是该属性在其父类里的信息
             var name = info.type.name;
             var subtype = info.type.subtype || info.type.type;
-            return `/components/jigsaw/api?apiItem=${name}&parentName=${subtype}#${property}`;
+            return `/components/api/${subtype}/${name}#${property}`;
         }
     }
     return '';
@@ -762,7 +762,7 @@ function saveFile(type, fileName, html) {
     html += getFooter(fileName);
     fs.writeFileSync(`${path}/${fileName}.html`, html);
 
-    apiList.push({name: fileName, parentName: type});
+    apiList.push({type: fileName, category: type});
 }
 
 function getFooter(name) {
