@@ -1,5 +1,6 @@
 import {Component} from "@angular/core";
 import {CascadeData, CascadeDateGenerator} from "jigsaw/component/cascade/cascade";
+import {ArrayCollection} from "../../../../jigsaw/core/data/array-collection";
 
 const AllData: CascadeData[] = [
     {
@@ -25,6 +26,7 @@ const AllData: CascadeData[] = [
     },
     {
         label: '区',
+        cascadingOver: true,
         list: [
             {"Id": 1, "name": "东城区", "CityID": 1, "DisSort": null},
             {"Id": 2, "name": "西城区", "CityID": 1, "DisSort": null},
@@ -58,6 +60,7 @@ export class CascadeBasicDemoComponent {
         const filterKey = this.getFilterKey(level);
         return {
             label: levelData.label,
+            cascadingOver: levelData.cascadingOver,
             list: selectedItem ? levelData.list.filter(item => item[filterKey] == selectedItem[filterKey]) : levelData.list
         };
     };
@@ -76,7 +79,13 @@ export class CascadeBasicDemoComponent {
     selectedDataChange(selectedData: any[]) {
         console.log(selectedData);
         this.selectedMessage = selectedData.reduce((str, item, index) => {
-            str += `${item.name}` + (index == selectedData.length - 1 ? `` : ` | `);
+            if (item instanceof ArrayCollection) {
+                item.forEach((it, idx) => {
+                    str += `${it.name}` + (idx == item.length - 1 ? `` : ` ; `);
+                })
+            } else {
+                str += `${item.name}` + (index == selectedData.length - 1 ? `` : ` | `);
+            }
             return str;
         }, '');
     }

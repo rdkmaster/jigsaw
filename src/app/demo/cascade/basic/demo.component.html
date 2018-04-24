@@ -5,6 +5,7 @@
 
 <!-- start to learn the demo from here -->
 <j-cascade [dataGenerator]="dataGenerator" [selectedData]="selectedData"
-           (selectedDataChange)="selectedDataChange($event)" labelField="name" trackItemBy="name"></j-cascade>
+           (selectedDataChange)="selectedDataChange($event)" [multipleSelect]="true"
+           labelField="name" trackItemBy="name"></j-cascade>
 
 <p>选择的区域是：{{selectedMessage}}</p>
