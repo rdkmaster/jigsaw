@@ -50,6 +50,7 @@ const AllData: CascadeData[] = [
 export class CascadeBasicDemoComponent {
 
     selectedData = [];
+    selectedMessage: string;
 
     dataGenerator: CascadeDateGenerator = (level: number, selectedItem?: any) => {
         const levelData = AllData[level];
@@ -72,8 +73,12 @@ export class CascadeBasicDemoComponent {
         }
     }
 
-    selectedDataChange(selectedData) {
+    selectedDataChange(selectedData: any[]) {
         console.log(selectedData);
+        this.selectedMessage = selectedData.reduce((str, item, index) => {
+            str += `${item.name}` + (index == selectedData.length - 1 ? `` : ` | `);
+            return str;
+        }, '');
     }
 
     // ====================================================================

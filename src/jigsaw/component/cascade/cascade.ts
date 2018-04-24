@@ -49,13 +49,12 @@ export class JigsawCascade implements AfterViewInit {
         this._cascading(level + 1, selectedItem);
     }
 
-    private _addTab(level: number) {
+    private _addCascadingTab(level: number) {
         if(this.tabs.length > level) {
             for (let i = this.tabs.length - 1; i >= level; i--) {
                 this.tabs.removeTab(i)
             }
         }
-
         this.tabs.addTab(this.data[level].label, JigsawInnerCascadeTabContent, {
             level: level,
             list: this.data[level].list
@@ -74,7 +73,7 @@ export class JigsawCascade implements AfterViewInit {
             return;
         }
         this.data[level] = levelData;
-        this._addTab(level);
+        this._addCascadingTab(level);
     }
 
     ngAfterViewInit() {
