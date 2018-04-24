@@ -4,4 +4,5 @@
 
 
 <!-- start to learn the demo from here -->
-<j-cascade [dataGenerator]="dataGenerator" [selectedData]="selectedData" (selectedDataChange)="selectedDataChange($event)"></j-cascade>
+<j-cascade [dataGenerator]="dataGenerator" [selectedData]="selectedData"
+           (selectedDataChange)="selectedDataChange($event)" labelField="name" trackItemBy="name"></j-cascade>

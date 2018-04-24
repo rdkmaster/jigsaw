@@ -32,6 +32,12 @@ export class JigsawCascade implements AfterViewInit {
     @Output()
     public selectedDataChange = new EventEmitter<any[]>();
 
+    @Input()
+    public labelField: string = 'label';
+
+    @Input()
+    public trackItemBy: string | string[];
+
     public handleSelect(selectedItem: any, level: number) {
         this._updateTabTitle(selectedItem, level);
         this.selectedData[level] = selectedItem;
@@ -48,7 +54,7 @@ export class JigsawCascade implements AfterViewInit {
 
     private _updateTabTitle(selectedItem: any, level: number) {
         console.log(this.tabs._$tabPanes.toArray()[0]);
-        if(!this.tabs._$tabPanes || !this.tabs._$tabPanes.toArray()[level]) return;
+        if (!this.tabs._$tabPanes || !this.tabs._$tabPanes.toArray()[level]) return;
         this.tabs._$tabPanes.toArray()[level].title = selectedItem['name'];
     }
 
@@ -72,16 +78,16 @@ export class JigsawCascade implements AfterViewInit {
  */
 @Component({
     template: `
-        <j-tile [(selectedItems)]="_$selectedItem" (selectedItemsChange)="_$handleSelect($event)" trackItemBy="name"
-                [multipleSelect]="_$multipleSelect">
+        <j-tile [(selectedItems)]="_$selectedItem" (selectedItemsChange)="_$handleSelect($event)"
+                [trackItemBy]="_$cascade?.trackItemBy" [multipleSelect]="_$multipleSelect">
             <j-tile-option *ngFor="let item of initData?.list" [value]="item">
-                {{item.name}}
+                {{item[_$cascade?.labelField]}}
             </j-tile-option>
         </j-tile>
     `
 })
 export class JigsawInnerCascadeTabContent implements IDynamicInstantiatable {
-    constructor(@Optional() private _cascade: JigsawCascade) {
+    constructor(@Optional() public _$cascade: JigsawCascade) {
     }
 
     public initData: any;
@@ -94,7 +100,7 @@ export class JigsawInnerCascadeTabContent implements IDynamicInstantiatable {
      */
     public _$handleSelect(selectedItems) {
         const currentSelectedItem = selectedItems[0];
-        this._cascade.handleSelect(currentSelectedItem, this.initData.level);
+        this._$cascade.handleSelect(currentSelectedItem, this.initData.level);
     }
 }
 
