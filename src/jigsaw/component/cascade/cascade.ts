@@ -55,7 +55,7 @@ export class JigsawCascade implements AfterViewInit {
     private _updateTabTitle(selectedItem: any, level: number) {
         console.log(this.tabs._$tabPanes.toArray()[0]);
         if (!this.tabs._$tabPanes || !this.tabs._$tabPanes.toArray()[level]) return;
-        this.tabs._$tabPanes.toArray()[level].title = selectedItem['name'];
+        this.tabs._$tabPanes.toArray()[level].title = selectedItem[this.labelField];
     }
 
     private _cascading(level: number, selectedItem?: any) {
