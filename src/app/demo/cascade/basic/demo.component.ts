@@ -33,6 +33,8 @@ const AllData: CascadeData[] = [
 })
 export class CascadeBasicDemoComponent {
 
+    selectedData = [];
+
     dataGenerator: CascadeDateGenerator = (level: number, selectedItem?: any) => {
         const levelData = AllData[level];
         if(!levelData || !(levelData.list instanceof Array)) return null;
@@ -41,6 +43,10 @@ export class CascadeBasicDemoComponent {
             list: selectedItem ? levelData.list.filter(item => item['ProID'] == selectedItem['ProID']) : levelData.list
         };
     };
+
+    selectedDataChange(selectedData) {
+        console.log(selectedData);
+    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
