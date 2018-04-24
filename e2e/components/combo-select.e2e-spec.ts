@@ -33,6 +33,9 @@ describe('combo-select', () => {
             /**
              * open: hover, close: leave
              */
+            await openByHover.click();
+            await closeByLeave.click();
+            await browser.sleep(150);
             await browser.actions().mouseMove(selectEl).perform();
             await waitForPresence('.drop-down');
             await expectToExist('.drop-down', true);
@@ -44,42 +47,45 @@ describe('combo-select', () => {
              * open: click, close: leave
              */
             await openByClick.click();
-            await browser.sleep(50);
+            await closeByLeave.click();
+            await browser.sleep(150);
             await browser.actions().mouseMove(selectEl).perform();
             await browser.sleep(200);
-            await  expectToExist('.drop-down', false);
-            await  selectEl.click();
-            await  browser.actions().mouseMove(selectEl).perform();
+            await expectToExist('.drop-down', false);
+            await selectEl.click();
+            await browser.actions().mouseMove(selectEl).perform();
             await waitForPresence('.drop-down');
-            await  expectToExist('.drop-down', true);
-            await  browser.actions().mouseMove(openByClick).perform();
+            await expectToExist('.drop-down', true);
+            await browser.actions().mouseMove(openByClick).perform();
             await waitForNotPresence('.drop-down');
-            await  expectToExist('.drop-down', false);
+            await expectToExist('.drop-down', false);
 
             /**
              * open: click, close: click
              */
+            await openByClick.click();
             await closeByClick.click();
-            await browser.sleep(50);
+            await browser.sleep(150);
             await browser.actions().mouseMove(selectEl).perform();
-            await  browser.sleep(200);
+            await browser.sleep(200);
             await expectToExist('.drop-down', false);
-            await  selectEl.click();
+            await selectEl.click();
             await waitForPresence('.drop-down');
             await expectToExist('.drop-down', true);
             await browser.actions().mouseMove(openByClick).perform();
-            await  browser.sleep(450);
+            await browser.sleep(450);
             // should not disappear after debounce timeout
-            await  expectToExist('.drop-down', true);
+            await expectToExist('.drop-down', true);
             closeByClick.click();
             await waitForNotPresence('.drop-down');
-            await  expectToExist('.drop-down', false);
+            await expectToExist('.drop-down', false);
 
             /**
              * open: hover, close: click
              */
             await openByHover.click();
-            await browser.sleep(50);
+            await closeByClick.click();
+            await browser.sleep(150);
             // check open debounce
             await browser.actions().mouseMove(selectEl).perform();
             await waitForPresence('.drop-down');
