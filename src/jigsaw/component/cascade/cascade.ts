@@ -1,25 +1,97 @@
-import {AfterViewInit, Component, NgModule, ViewChild} from "@angular/core";
+import {AfterViewInit, Component, Input, NgModule, OnInit, Optional, TemplateRef, ViewChild} from "@angular/core";
 import {JigsawTabsModule} from "../tabs/index";
 import {JigsawTileSelectModule} from "../list-and-tile/tile";
 import {JigsawTab} from "../tabs/tab";
+import {CommonModule} from "@angular/common";
+import {IDynamicInstantiatable} from "../common";
+
+export class CascadeData {
+    label: string;
+    list: any[];
+}
+
+export type CascadeDateGenerator = (level: number, selectedItem?: any) => CascadeData;
 
 @Component({
     selector: 'jigsaw-cascade, j-cascade',
     templateUrl: './cascade.html'
 })
 export class JigsawCascade implements AfterViewInit {
-    @ViewChild(JigsawTab)
-    public tabs: JigsawTab;
+    @ViewChild(JigsawTab) public tabs: JigsawTab;
+
+    @ViewChild(TemplateRef) public tabContent: TemplateRef<any>;
+
+    public data: CascadeData[] = [];
+
+    @Input()
+    public dataGenerator: CascadeDateGenerator;
+
+    public selectedData;
+
+    public handleSelect(selectedItem: any, level: number) {
+        console.log(selectedItem);
+        this._cascading(level + 1, selectedItem);
+    }
+
+    private _addTab(level) {
+        this.tabs.removeTab(level);
+        this.tabs.addTab(this.data[level].label, JigsawInnerCascadeTabContent, {
+            level: level,
+            list: this.data[level].list
+        });
+    }
+
+    private _cascading(level: number, selectedItem?: any) {
+        const levelData = this.dataGenerator(level, selectedItem);
+        if (!levelData || !(levelData.list instanceof Array)) return;
+        this.data[level] = levelData;
+        this._addTab(level);
+    }
 
     ngAfterViewInit() {
-        console.log(this.tabs);
+        console.log(this.tabs, this.tabContent);
+        this._cascading(0);
     }
 }
 
+/**
+ * @internal
+ */
+@Component({
+    template: `
+        <j-tile [(selectedItems)]="_$selectedItem" (selectedItemsChange)="_$handleSelect($event)" trackItemBy="name"
+                [multipleSelect]="_$multipleSelect">
+            <j-tile-option *ngFor="let item of initData?.list" [value]="item">
+                {{item.name}}
+            </j-tile-option>
+        </j-tile>
+    `
+})
+export class JigsawInnerCascadeTabContent implements IDynamicInstantiatable {
+    constructor(@Optional() private _cascade: JigsawCascade) {
+        console.log(_cascade);
+    }
+
+    public initData: any;
+
+    public _$selectedItem;
+    public _$multipleSelect: boolean;
+
+    /**
+     * @internal
+     */
+    public _$handleSelect(selectedItems) {
+        const currentSelectedItem = selectedItems[0];
+        this._cascade.handleSelect(currentSelectedItem, this.initData.level);
+    }
+}
+
+
 @NgModule({
-    imports: [JigsawTabsModule, JigsawTileSelectModule],
-    declarations: [JigsawCascade],
-    exports: [JigsawCascade]
+    imports: [JigsawTabsModule, JigsawTileSelectModule, CommonModule],
+    declarations: [JigsawCascade, JigsawInnerCascadeTabContent],
+    exports: [JigsawCascade],
+    entryComponents: [JigsawInnerCascadeTabContent]
 })
 export class JigsawCascadeModule {
 
