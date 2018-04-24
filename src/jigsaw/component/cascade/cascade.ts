@@ -1,4 +1,6 @@
-import {AfterViewInit, Component, EventEmitter, Input, NgModule, Optional, Output, TemplateRef, ViewChild} from "@angular/core";
+import {
+    AfterViewInit, Component, EventEmitter, Input, NgModule, Optional, Output, TemplateRef, ViewChild
+} from "@angular/core";
 import {JigsawTabsModule} from "../tabs/index";
 import {JigsawTileSelectModule} from "../list-and-tile/tile";
 import {JigsawTab} from "../tabs/tab";
@@ -38,14 +40,22 @@ export class JigsawCascade implements AfterViewInit {
     @Input()
     public trackItemBy: string | string[];
 
+    @Input()
+    public multipleSelect: boolean;
+
     public handleSelect(selectedItem: any, level: number) {
         this._updateTabTitle(selectedItem, level);
         this.selectedData[level] = selectedItem;
         this._cascading(level + 1, selectedItem);
     }
 
-    private _addTab(level) {
-        this.tabs.removeTab(level);
+    private _addTab(level: number) {
+        if(this.tabs.length > level) {
+            for (let i = this.tabs.length - 1; i >= level; i--) {
+                this.tabs.removeTab(i)
+            }
+        }
+
         this.tabs.addTab(this.data[level].label, JigsawInnerCascadeTabContent, {
             level: level,
             list: this.data[level].list
@@ -53,7 +63,6 @@ export class JigsawCascade implements AfterViewInit {
     }
 
     private _updateTabTitle(selectedItem: any, level: number) {
-        console.log(this.tabs._$tabPanes.toArray()[0]);
         if (!this.tabs._$tabPanes || !this.tabs._$tabPanes.toArray()[level]) return;
         this.tabs._$tabPanes.toArray()[level].title = selectedItem[this.labelField];
     }
