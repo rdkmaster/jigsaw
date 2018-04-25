@@ -174,7 +174,7 @@ PopupService弹出[alert]()，[tooltips](http://rdk.zte.com.cn/components/toolti
 
  > 虽然关系网非常复杂，但是，应用仅需要知道关系网的最端点上的数据就可以溜溜的用起来了。
 
-数据模型[详情](http://rdk.zte.com.cn/components/jigsaw/api?apiItem=IComponentData&parentName=interface)
+数据模型[详情](http://rdk.zte.com.cn/components/api/interface/IComponentData)
 
 ### 数据源
 

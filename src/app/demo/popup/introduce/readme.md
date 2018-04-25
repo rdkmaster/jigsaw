@@ -37,7 +37,7 @@ this.popupService.popup(...);
 - `what`：必选参数，被弹出的视图，可以是一个组件，也可以是一个`ng-template`对象。**`what`参数指定的是一类视图，而不是一个视图的实例**。
 - `options`：可选参数，用于控制弹出视图的各种参数，包括是否模态、弹出位置、视图尺寸、弹出动画等等，`PopupService`能够覆盖所有弹出场景，
 很大程度上得益于这个参数的强大扩展性，熟悉这个参数的各个属性对是否能够用好`PopupService`有着决定性的影响。
-关于这个参数的所有知识，都在[这里](/components/classes/api?apiItem=PopupOptions)。
+关于这个参数的所有知识，都在[这里](/components/api/class/PopupOptions)。
 - `initData`：可选参数，只在`what`参数是一个组件时有效。这个对象会被赋值给组件实例中的`initData`属性，
 可以参考[这个demo](/jigsaw/dialog/misc)中弹出对话框组件的代码，注意该demo的控制台打印。
 

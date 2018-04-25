@@ -106,34 +106,34 @@ export class PreparedHttpClientOptions extends HttpClientOptions {
  * 本小节主要介绍Jigsaw数据对象中重要的接口，理解这些接口以及每个属性、方法的作用对使用好这些数据对象有着重要的帮助。
  *
  * 主要的接口包括：
- * - `IComponentData` 详情请访问[这个页面](/components/interface/api?apiItem=IComponentData)。
- * - `IAjaxComponentData` 详情请访问[这个页面](/components/interface/api?apiItem=IAjaxComponentData)。
- * - `IPageable` 详情请访问[这个页面](/components/interface/api?apiItem=IPageable)。
- * - `IServerSidePageable` 详情请访问[这个页面](/components/interface/api?apiItem=IServerSidePageable)。
- * - `ISortable` 详情请访问[这个页面](/components/interface/api?apiItem=ISortable)。
- * - `IFilterable` 详情请访问[这个页面](/components/interface/api?apiItem=IFilterable)。
- * - `ISlicedData` 详情请访问[这个页面](/components/interface/api?apiItem=ISlicedData)。
+ * - `IComponentData` 这是所有Jigsaw数据接口的根；
+ * - `IAjaxComponentData` 实现了这个接口的数据对象都具备访问ajax的能力；
+ * - `IPageable` 实现了这个接口的类都具备分页能力；
+ * - `IServerSidePageable` 描述了服务端分页的更具体的接口，实现了这个接口的类就具备服务端分页的能力；
+ * - `ISortable` 实现了这个接口的类就具备了数据排序的能力；
+ * - `IFilterable` 实现了这个接口的类就具备了数据过滤的能力；
+ * - `ISlicedData` 实现了这个接口的类就具备切片能力的数据；
  *
  * #### 常用数据对象介绍
  * - 数组对象
- *     - `ArrayCollection<T>` 一个基础数组对象，详情请访问[这个页面](/components/class/api?apiItem=ArrayCollection)。
- *     - `PageableArray` 一个支持服务端分页、排序、过滤的数组对象，详情请访问[这个页面](/components/class/api?apiItem=PageableArray)。
- *     - `LocalPageableArray` 一个支持本地分页、排序、过滤的数组对象，详情请访问[这个页面](/components/class/api?apiItem=LocalPageableArray)。
+ *     - `ArrayCollection` 一个基础数组对象。
+ *     - `PageableArray` 一个支持服务端分页、排序、过滤的数组对象。
+ *     - `LocalPageableArray` 一个支持本地分页、排序、过滤的数组对象。
  * - 表格数据对象
- *     - `TableData` 一个基础的表格数据对象，详情请访问[这个页面](/components/class/api?apiItem=TableData)。
- *     - `PageableTableData` 一个支持服务端分页、排序、过滤的表格数据对象，详情请访问[这个页面](/components/class/api?apiItem=PageableTableData)。
- *     - `LocalPageableTableData` 一个支持本地分页、排序、过滤的表格数据对象，详情请访问[这个页面](/components/class/api?apiItem=LocalPageableTableData)。
- *     - `BigTableData` 一个支持海量数据常数级呈现的表格数据对象，详情请访问[这个页面](/components/class/api?apiItem=BigTableData)。
+ *     - `TableData` 一个基础的表格数据对象。
+ *     - `PageableTableData` 一个支持服务端分页、排序、过滤的表格数据对象。
+ *     - `LocalPageableTableData` 一个支持本地分页、排序、过滤的表格数据对象。
+ *     - `BigTableData` 一个支持海量数据常数级呈现的表格数据对象。
  * - 图形数据对象
- *     - `GraphData` 通用的图形数据，详情请访问[这个页面](/components/class/api?apiItem=GraphData)。
- *     - `PieGraphData` 通用的饼图数据，详情请访问[这个页面](/components/class/api?apiItem=PieGraphData)。
- *     - `PieGraphDataByRow` 基于数据库表的行关系生成的饼图，详情请访问[这个页面](/components/class/api?apiItem=PieGraphDataByRow)。
- *     - `PieGraphDataByColumn` 基于数据库表的列关系生成的饼图，详情请访问[这个页面](/components/class/api?apiItem=PieGraphDataByColumn)。
- *     - `LineBarGraphData` 通用的折线柱状图数据，详情请访问[这个页面](/components/class/api?apiItem=LineBarGraphData)。
+ *     - `GraphData` 通用的图形数据。
+ *     - `PieGraphData` 通用的饼图数据。
+ *     - `PieGraphDataByRow` 基于数据库表的行关系生成的饼图。
+ *     - `PieGraphDataByColumn` 基于数据库表的列关系生成的饼图。
+ *     - `LineBarGraphData` 通用的折线柱状图数据。
  * - 层次关系数据
- *     - `TreeData` 用于任何有层次关系的组件，包括树、鱼骨图等，包括未来的级联选择器、多级菜单等，都需要用到层次关系数据，因此后续这个类会进一步抽象和扩展，
+ *     - `TreeData` 用于有层次关系的组件，包括树、鱼骨图等。
  * - 动态布局数据
- *     - `LayoutData` 用于动态布局页面的数据，详情请访问[这个页面](/components/jigsaw/api?apiItem=LayoutData&parentName=class)。
+ *     - `LayoutData` 用于动态布局页面的数据。
  *
  * 目前而言，Jigsaw在数组数据对象和表格数据对象方面的抽象程度较高，已经能够满足绝大部分场景，因此较为稳定。
  * 相对而言，图形数据、层次关系数据这2个方面还比较欠缺，后续需要进一步的抽象和扩展，也难免会引入一些破坏性修改。

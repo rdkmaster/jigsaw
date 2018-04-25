@@ -34,11 +34,11 @@ function addLinkToSVG(fileName) {
     xml.replace(/\\par&#x0D;&#x0A;/ig, '').replace(/\$_\$.*?\s(.*?)\\.*?\$(\w+)\$/g,
         function(found, className, type) {
             switch(type) {
-                case 'i': type = 'interfaces'; break;
-                case 'c': type = 'classes'; break;
-                case 'ij': type = 'injectables'; break;
-                case 'm': type = 'modules'; break;
-                case 'd': type = 'directives'; break;
+                case 'i': type = 'interface'; break;
+                case 'c': type = 'class'; break;
+                case 'ij': type = 'injectable'; break;
+                case 'm': type = 'module'; break;
+                case 'd': type = 'directive'; break;
                 default: type = ''; break;
             }
             if (!type) {
@@ -62,11 +62,11 @@ function addLinkToSVG(fileName) {
     svg = svg.replace(/<path\s.*?url\(#linear(\d+)\).*?\/>/gi, function(found, index) {
         if (classes[index]) {
             pathFound = true;
-            var fullName = classes[index].className
+            var fullName = classes[index].className;
             var idx = fullName.indexOf('&lt;');
             idx = idx == -1 ? fullName.length : idx;
             var className = fullName.substring(0, idx);
-            return '<a href="http://' + urlHost + '/components/' + classes[index].type + '/api?apiItem=' +
+            return '<a href="http://' + urlHost + '/components/api/' + classes[index].type + '/' +
                     className + '" target="_blank"><title>Click to check the detail of ' + fullName +
                     '</title>' + found + '</a>';
         } else {
