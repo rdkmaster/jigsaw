@@ -1,6 +1,7 @@
 import {Component} from "@angular/core";
 import {routerConfig as alertConfig} from "./demo/alert/demo-set.module";
 import {routerConfig as arrayCollectionConfig} from "./demo/data-encapsulation/demo-set.module";
+import {routerConfig as boxConfig} from "./demo/box/demo-set.module";
 import {routerConfig as buttonConfig} from "./demo/button/demo-set.module";
 import {routerConfig as checkboxConfig} from "./demo/checkbox/demo-set.module";
 import {routerConfig as collapseConfig} from "./demo/collapse/demo-set.module";
@@ -8,12 +9,13 @@ import {routerConfig as comboSelectConfig} from "./demo/combo-select/demo-set.mo
 import {routerConfig as dialogConfig} from "./demo/dialog/demo-set.module";
 import {routerConfig as dragDropConfig} from "./demo/drag-drop/demo-set.module";
 import {routerConfig as drawerConfig} from "./demo/drawer/demo-set.module";
+import {routerConfig as editableBoxConfig} from "./demo/editable-box/demo-set.module";
 import {routerConfig as fishBoneConfig} from "./demo/fish-bone/demo-set.module";
 import {routerConfig as formConfig} from "./demo/form/demo-set.module";
 import {routerConfig as graphConfig} from "./demo/graph/demo-set.module";
 import {routerConfig as i18nConfig} from "./demo/i18n/demo-set.module";
 import {routerConfig as inputConfig} from "./demo/input/demo-set.module";
-import {routerConfig as layoutConfig} from "./demo/layout/demo-set.module";
+import {routerConfig as layoutConfig} from "./demo/box/demo-set.module";
 import {routerConfig as listConfig} from "./demo/list/demo-set.module";
 import {routerConfig as loadingConfig} from "./demo/loading/demo-set.module";
 import {routerConfig as miscConfig} from "./demo/misc/demo-set.module";
@@ -83,6 +85,7 @@ export class DemoListManager {
     private static _mergeRoutes(routerConfig: any[]) {
         this._addRouterConfig(routerConfig, 'alert', alertConfig);
         this._addRouterConfig(routerConfig, 'data-encapsulation', arrayCollectionConfig);
+        this._addRouterConfig(routerConfig, 'box', boxConfig);
         this._addRouterConfig(routerConfig, 'button', buttonConfig);
         this._addRouterConfig(routerConfig, 'checkbox', checkboxConfig);
         this._addRouterConfig(routerConfig, 'collapse', collapseConfig);
@@ -90,6 +93,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'dialog', dialogConfig);
         this._addRouterConfig(routerConfig, 'drag-drop', dragDropConfig);
         this._addRouterConfig(routerConfig, 'drawer', drawerConfig);
+        this._addRouterConfig(routerConfig, 'editable-box', editableBoxConfig);
         this._addRouterConfig(routerConfig, 'fish-bone', fishBoneConfig);
         this._addRouterConfig(routerConfig, 'form', formConfig);
         this._addRouterConfig(routerConfig, 'graph', graphConfig);

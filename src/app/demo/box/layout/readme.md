@@ -2,12 +2,12 @@
 
 j-box布局器不仅可以很好的布局水平方向上元素，还可以很好的布局垂直方向上的元素。
 
-水平方向上的布局功能和bootstrap的栅格功能非常类似，支持多种排列方式和对齐方式，具体参考[这个demo](/jigsaw/layout/box-justify)。
+水平方向上的布局功能和bootstrap的栅格功能非常类似，支持多种排列方式和对齐方式，具体参考[这个demo](/jigsaw/box/justify)。
 也支持嵌套布局，水平上可以继续嵌套另一个垂直布局或者水平布局（请参考本demo的代码）。
 
 j-box还能够在垂直方向上布局，这是bootstrap的栅格功能所不支持的。相同的，垂直方向上的布局也支持嵌套一个水平或者垂直布局。
 
-我们还有提供了另一个功能非常类似的布局器j-editable-box，关于这个布局器的详情，请[单击这里](/jigsaw/layout/monitor)。
+我们还有提供了另一个功能非常类似的布局器j-editable-box，关于这个布局器的详情，请[单击这里](/jigsaw/editable-box/monitor)。
 
 ### 主要属性
 
