@@ -112,6 +112,7 @@ export class JigsawCascade implements AfterViewInit {
     private _fillBack() {
         this.selectedData.forEach((item, index) => {
             this._cascading(index, this.selectedData[index - 1]);
+            if(this.data[index].cascadingOver &&  this.multipleSelect) return; // 多选时的最后一个tab采用默认title
             this._updateTabTitle(item, index);
         })
     }

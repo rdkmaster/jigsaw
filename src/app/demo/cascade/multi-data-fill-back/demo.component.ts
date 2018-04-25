@@ -49,12 +49,15 @@ const AllData: CascadeData[] = [
 @Component({
     templateUrl: './demo.component.html'
 })
-export class CascadeDataFillBackDemoComponent implements OnInit {
+export class CascadeMultiDataFillBackDemoComponent implements OnInit {
 
     selectedData = [
         {"ProID": 1, "name": "北京市", "ProSort": 1, "ProRemark": "直辖市"},
         {"CityID": 1, "name": "北京市", "ProID": 1, "CitySort": 1},
-        {"Id": 2, "name": "西城区", "CityID": 1, "DisSort": null}
+        [
+            {"Id": 1, "name": "东城区", "CityID": 1, "DisSort": null},
+            {"Id": 2, "name": "西城区", "CityID": 1, "DisSort": null}
+        ]
     ];
     selectedMessage: string;
 
@@ -83,7 +86,7 @@ export class CascadeDataFillBackDemoComponent implements OnInit {
     parseSelectedData(selectedData: any[]) {
         console.log(selectedData);
         this.selectedMessage = selectedData.reduce((str, item, index) => {
-            if (item instanceof ArrayCollection) {
+            if (item instanceof ArrayCollection || item instanceof Array) {
                 item.forEach((it, idx) => {
                     str += `${it.name}` + (idx == item.length - 1 ? `` : ` ; `);
                 })
@@ -93,7 +96,7 @@ export class CascadeDataFillBackDemoComponent implements OnInit {
             return str;
         }, '');
     }
-    
+
     ngOnInit() {
         this.parseSelectedData(this.selectedData);
     }
