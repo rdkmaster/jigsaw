@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {CascadeData, CascadeDateGenerator} from "jigsaw/component/cascade/cascade";
-import {ArrayCollection} from "../../../../jigsaw/core/data/array-collection";
+import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 const AllData: CascadeData[] = [
     {

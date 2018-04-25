@@ -1,6 +1,5 @@
 import {Component} from "@angular/core";
 import {CascadeData, CascadeDateGenerator} from "jigsaw/component/cascade/cascade";
-import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 const AllData: CascadeData[] = [
     {
@@ -47,12 +46,14 @@ const AllData: CascadeData[] = [
 ];
 
 @Component({
-    templateUrl: './demo.component.html'
+    templateUrl: './demo.component.html',
+    styleUrls: ['./demo.component.css']
 })
-export class CascadeBasicDemoComponent {
+export class CascadeMultiDimensionalDemoComponent {
 
     selectedData = [];
-    selectedMessage: string;
+
+    selectedArea = [];
 
     dataGenerator: CascadeDateGenerator = (level: number, selectedItem?: any) => {
         const levelData = AllData[level];
@@ -78,16 +79,7 @@ export class CascadeBasicDemoComponent {
 
     selectedDataChange(selectedData: any[]) {
         console.log(selectedData);
-        this.selectedMessage = selectedData.reduce((str, item, index) => {
-            if (item instanceof ArrayCollection || item instanceof Array) {
-                item.forEach((it, idx) => {
-                    str += `${it.name}` + (idx == item.length - 1 ? `` : ` ; `);
-                })
-            } else {
-                str += `${item.name}` + (index == selectedData.length - 1 ? `` : ` | `);
-            }
-            return str;
-        }, '');
+        this.selectedArea = selectedData[selectedData.length - 1];
     }
 
     // ====================================================================

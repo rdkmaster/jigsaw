@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {CascadeData, CascadeDateGenerator} from "jigsaw/component/cascade/cascade";
-import {ArrayCollection} from "../../../../jigsaw/core/data/array-collection";
+import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 const AllData: CascadeData[] = [
     {
@@ -79,7 +79,7 @@ export class CascadeMultipleDemoComponent {
     selectedDataChange(selectedData: any[]) {
         console.log(selectedData);
         this.selectedMessage = selectedData.reduce((str, item, index) => {
-            if (item instanceof ArrayCollection) {
+            if (item instanceof ArrayCollection || item instanceof Array) {
                 item.forEach((it, idx) => {
                     str += `${it.name}` + (idx == item.length - 1 ? `` : ` ; `);
                 })

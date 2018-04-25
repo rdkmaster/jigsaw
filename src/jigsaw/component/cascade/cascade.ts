@@ -66,8 +66,30 @@ export class JigsawCascade implements AfterViewInit {
     @Input()
     public multipleSelect: boolean;
 
+    @Input()
+    public multidimensionalSelect: boolean;
+
     public handleMultipleSelect(selectedItems: any[], level: number) {
-        this.selectedData[level] = selectedItems;
+        if (this.multidimensionalSelect && this.selectedData[level]) {
+            // 支持多维
+            // 过滤掉已有的但是现在不选的
+            this.selectedData[level] = this.selectedData[level].filter(item => {
+                // 不是此维度的保留
+                if (!this.data[level].list
+                        .find(it => CommonUtils.compareWithKeyProperty(item, it, this._trackItemBy))) return true;
+                // 在选中项里的保留，不在选中项里的去掉
+                return selectedItems.find(it => CommonUtils.compareWithKeyProperty(item, it, this._trackItemBy));
+            });
+            // 添加原来没选的但是现在选中的
+            selectedItems.forEach(item => {
+                if (!this.selectedData[level].find(it => CommonUtils.compareWithKeyProperty(item, it, this._trackItemBy))) {
+                    this.selectedData[level].push(item);
+                }
+            })
+        } else {
+            this.selectedData[level] = [...selectedItems];
+        }
+
         // 多选的tab是级联结束的地方，在这更新选中的数据
         this.selectedDataChange.emit(this.selectedData);
     }
@@ -112,7 +134,7 @@ export class JigsawCascade implements AfterViewInit {
     private _fillBack() {
         this.selectedData.forEach((item, index) => {
             this._cascading(index, this.selectedData[index - 1]);
-            if(this.data[index].cascadingOver &&  this.multipleSelect) return; // 多选时的最后一个tab采用默认title
+            if (this.data[index].cascadingOver && this.multipleSelect) return; // 多选时的最后一个tab采用默认title
             this._updateTabTitle(item, index);
         })
     }
