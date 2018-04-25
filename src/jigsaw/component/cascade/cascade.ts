@@ -1,11 +1,13 @@
 import {
-    AfterViewInit, Component, EventEmitter, Input, NgModule, Optional, Output, TemplateRef, ViewChild
+    AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, NgModule, Optional, Output, TemplateRef, ViewChild
 } from "@angular/core";
 import {JigsawTabsModule} from "../tabs/index";
 import {JigsawTileSelectModule} from "../list-and-tile/tile";
 import {JigsawTab} from "../tabs/tab";
 import {CommonModule} from "@angular/common";
 import {IDynamicInstantiatable} from "../common";
+import {CommonUtils} from "../../core/utils/common-utils";
+import {ArrayCollection} from "../../core/data/array-collection";
 
 export class CascadeData {
     label: string;
@@ -18,7 +20,8 @@ export type CascadeDateGenerator = (level: number, selectedItem?: any) => Cascad
 export class CascadeTabContentInitData {
     level: number;
     list: any[];
-    multipleSelect: boolean
+    cascadingOver: boolean;
+    multipleSelect: boolean;
 }
 
 @Component({
@@ -26,9 +29,10 @@ export class CascadeTabContentInitData {
     templateUrl: './cascade.html'
 })
 export class JigsawCascade implements AfterViewInit {
-    @ViewChild(JigsawTab) public tabs: JigsawTab;
+    constructor(private _changeDetectorRef: ChangeDetectorRef) {
+    }
 
-    @ViewChild(TemplateRef) public tabContent: TemplateRef<any>;
+    @ViewChild(JigsawTab) public tabs: JigsawTab;
 
     public data: CascadeData[] = [];
 
@@ -44,8 +48,20 @@ export class JigsawCascade implements AfterViewInit {
     @Input()
     public labelField: string = 'label';
 
+    //设置对象的标识
+    public _trackItemBy: string[] = [];
+
     @Input()
-    public trackItemBy: string | string[];
+    public get trackItemBy(): string | string[] {
+        return this._trackItemBy;
+    }
+
+    public set trackItemBy(value: string | string[]) {
+        if (!value) {
+            return;
+        }
+        this._trackItemBy = typeof value === 'string' ? value.split(/\s*,\s*/g) : value;
+    }
 
     @Input()
     public multipleSelect: boolean;
@@ -71,6 +87,7 @@ export class JigsawCascade implements AfterViewInit {
         this.tabs.addTab(this.data[level].label, JigsawInnerCascadeTabContent, {
             level: level,
             list: this.data[level].list,
+            cascadingOver: this.data[level].cascadingOver,
             multipleSelect: this.data[level].cascadingOver && this.multipleSelect
         });
     }
@@ -78,6 +95,7 @@ export class JigsawCascade implements AfterViewInit {
     private _updateTabTitle(selectedItem: any, level: number) {
         if (!this.tabs._$tabPanes || !this.tabs._$tabPanes.toArray()[level]) return;
         this.tabs._$tabPanes.toArray()[level].title = selectedItem[this.labelField];
+        this._changeDetectorRef.detectChanges();
     }
 
     private _cascading(level: number, selectedItem?: any) {
@@ -91,8 +109,21 @@ export class JigsawCascade implements AfterViewInit {
         this._addCascadingTab(level);
     }
 
+    private _fillBack() {
+        this.selectedData.forEach((item, index) => {
+            this._cascading(index, this.selectedData[index - 1]);
+            this._updateTabTitle(item, index);
+        })
+    }
+
     ngAfterViewInit() {
-        this._cascading(0);
+        // 等待tabs渲染
+        if (!this.selectedData || this.selectedData.length == 0) {
+            // 没有初始数据
+            this._cascading(0);
+        } else {
+            this._fillBack();
+        }
     }
 }
 
@@ -113,7 +144,26 @@ export class JigsawInnerCascadeTabContent implements IDynamicInstantiatable {
     constructor(@Optional() public _$cascade: JigsawCascade) {
     }
 
-    public initData: CascadeTabContentInitData;
+    private _initData: CascadeTabContentInitData;
+
+    public get initData(): CascadeTabContentInitData {
+        return this._initData;
+    }
+
+    public set initData(value: CascadeTabContentInitData) {
+        if (!value) return;
+        this._initData = value;
+
+        if (!this._initData.cascadingOver) return;
+        let lastLevelData = this._$cascade.selectedData[this._initData.level];
+        if (!lastLevelData) return;
+        lastLevelData = (lastLevelData instanceof ArrayCollection || lastLevelData instanceof Array) ?
+            lastLevelData : [lastLevelData];
+        this._$selectedItem = lastLevelData.filter(item => {
+            return this._initData.list.find(it =>
+                CommonUtils.compareWithKeyProperty(item, it, this._$cascade._trackItemBy))
+        })
+    }
 
     public _$selectedItem;
 
@@ -121,12 +171,12 @@ export class JigsawInnerCascadeTabContent implements IDynamicInstantiatable {
      * @internal
      */
     public _$handleSelect(selectedItems: any[]) {
-        if(!this.initData.multipleSelect) {
+        if (!this._initData.multipleSelect) {
             // 单选
-            this._$cascade.handleSelect(selectedItems[0], this.initData.level);
-        }else{
+            this._$cascade.handleSelect(selectedItems[0], this._initData.level);
+        } else {
             // 多选，级联结束的tab
-            this._$cascade.handleMultipleSelect(selectedItems, this.initData.level);
+            this._$cascade.handleMultipleSelect(selectedItems, this._initData.level);
         }
     }
 }
