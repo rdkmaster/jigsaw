@@ -117,7 +117,7 @@ export class JigsawCascade implements AfterViewInit {
      * @internal
      */
     public _handleSelectAll(level: number) {
-        if(this.multipleSelect && this.multidimensionalSelect) {
+        if (this.multipleSelect && this.multidimensionalSelect) {
             console.warn('multidimensional select can not select all');
             return;
         }
@@ -187,10 +187,10 @@ export class JigsawCascade implements AfterViewInit {
  */
 @Component({
     template: `
-        <j-tile [(selectedItems)]="_$selectedItem" (selectedItemsChange)="_$handleSelect($event)"
+        <j-tile [(selectedItems)]="_$selectedItems" (selectedItemsChange)="_$handleSelect($event)"
                 [trackItemBy]="_$cascade?.trackItemBy" [multipleSelect]="initData.multipleSelect">
-            <div *ngIf="initData.showAll" class="jigsaw-tile-show-all" (click)="_$selectAll()">全部</div>
-            <j-tile-option *ngFor="let item of initData?.list" [value]="item">
+            <div *ngIf="initData?.showAll" class="jigsaw-tile-show-all" (click)="_$selectAll()">全部</div>
+            <j-tile-option *ngFor="let item of initData?.list" [value]="item" (click)="_$handleOptionClick()">
                 {{item[_$cascade?.labelField]}}
             </j-tile-option>
         </j-tile>
@@ -215,13 +215,13 @@ export class JigsawInnerCascadeTabContent implements IDynamicInstantiatable {
         if (!lastLevelData) return;
         lastLevelData = (lastLevelData instanceof ArrayCollection || lastLevelData instanceof Array) ?
             lastLevelData : [lastLevelData];
-        this._$selectedItem = lastLevelData.filter(item => {
+        this._$selectedItems = lastLevelData.filter(item => {
             return this._initData.list.find(it =>
                 CommonUtils.compareWithKeyProperty(item, it, this._$cascade._trackItemBy))
         })
     }
 
-    public _$selectedItem;
+    public _$selectedItems;
 
     /**
      * @internal
@@ -241,6 +241,15 @@ export class JigsawInnerCascadeTabContent implements IDynamicInstantiatable {
      */
     public _$selectAll() {
         this._$cascade._handleSelectAll(this.initData.level);
+    }
+
+    public _$handleOptionClick() {
+        if (this.initData.cascadingOver || this._$cascade.tabs.selectedIndex != this.initData.level) return;
+        if (this._$cascade.tabs.selectedIndex < this._$cascade.tabs.length - 1) {
+            this._$cascade.tabs.selectedIndex += 1;
+        } else {
+            this._$handleSelect(this._$selectedItems);
+        }
     }
 }
 
