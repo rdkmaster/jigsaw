@@ -8,10 +8,11 @@ import {CommonModule} from "@angular/common";
 import {IDynamicInstantiatable} from "../common";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {ArrayCollection} from "../../core/data/array-collection";
+import {Observable} from "rxjs/Observable";
 
 export class CascadeData {
     label: string;
-    list: any[];
+    list: any[] | Observable<Object>;
     cascadingOver?: boolean;
     showAll?: boolean;
 }
@@ -20,7 +21,7 @@ export type CascadeDateGenerator = (level: number, selectedItem?: any) => Cascad
 
 export class CascadeTabContentInitData {
     level: number;
-    list: any[];
+    list: any[] | Observable<Object>;
     cascadingOver: boolean;
     multipleSelect: boolean;
     showAll: boolean;
@@ -85,7 +86,7 @@ export class JigsawCascade implements AfterViewInit {
             // 过滤掉已有的但是现在不选的
             this.selectedData[level] = this.selectedData[level].filter(item => {
                 // 不是此维度的保留
-                if (!this.data[level].list
+                if (!(<any[]>this.data[level].list)
                         .find(it => CommonUtils.compareWithKeyProperty(item, it, this._trackItemBy))) return true;
                 // 在选中项里的保留，不在选中项里的去掉
                 return selectedItems.find(it => CommonUtils.compareWithKeyProperty(item, it, this._trackItemBy));
@@ -110,7 +111,11 @@ export class JigsawCascade implements AfterViewInit {
     public _handleSelect(selectedItem: any, level: number) {
         this._updateTabTitle(selectedItem, level);
         this.selectedData[level] = selectedItem;
-        this._cascading(level + 1, selectedItem);
+        if (this.data[level].cascadingOver) {
+            this.selectedDataChange.emit(this.selectedData);
+        } else {
+            this._cascading(level + 1, selectedItem);
+        }
     }
 
     /**
@@ -154,7 +159,7 @@ export class JigsawCascade implements AfterViewInit {
 
     private _cascading(level: number, selectedItem?: any) {
         const levelData = this.dataGenerator(level, selectedItem);
-        if (!levelData || !(levelData.list instanceof Array)) {
+        if (!levelData) {
             // 取不到下一级的数据，级联到此结束，更新选中的数据
             this.selectedDataChange.emit(this.selectedData);
             return;
@@ -190,7 +195,7 @@ export class JigsawCascade implements AfterViewInit {
         <j-tile [(selectedItems)]="_$selectedItems" (selectedItemsChange)="_$handleSelect($event)"
                 [trackItemBy]="_$cascade?.trackItemBy" [multipleSelect]="initData.multipleSelect">
             <div *ngIf="initData?.showAll" class="jigsaw-tile-show-all" (click)="_$selectAll()">全部</div>
-            <j-tile-option *ngFor="let item of initData?.list" [value]="item" (click)="_$handleOptionClick()">
+            <j-tile-option *ngFor="let item of _$list" [value]="item" (click)="_$handleOptionClick()">
                 {{item[_$cascade?.labelField]}}
             </j-tile-option>
         </j-tile>
@@ -210,21 +215,37 @@ export class JigsawInnerCascadeTabContent implements IDynamicInstantiatable {
         if (!value) return;
         this._initData = value;
 
-        if (!this._initData.cascadingOver) return;
-        let currentLevelData = this._$cascade.selectedData[this._initData.level];
-        if (!currentLevelData) return;
-        currentLevelData = (currentLevelData instanceof ArrayCollection || currentLevelData instanceof Array) ?
-            currentLevelData : [currentLevelData];
-        this._$selectedItems = currentLevelData.filter(item => {
-            return this._initData.list.find(it =>
-                CommonUtils.compareWithKeyProperty(item, it, this._$cascade._trackItemBy))
-        })
+        let allSelectedData = this._$cascade.selectedData[this._initData.level];
+        if (CommonUtils.isDefined(allSelectedData)) {
+            allSelectedData = (allSelectedData instanceof ArrayCollection || allSelectedData instanceof Array) ?
+                allSelectedData : [allSelectedData];
+        }
+        const list = this._initData.list;
+        if (list instanceof Observable) {
+            list.subscribe((data: any[]) => {
+                this._init(data, allSelectedData);
+            })
+        } else if (list instanceof Array) {
+            this._init(list, allSelectedData);
+        }
     }
 
     /**
      * @internal
      */
     public _$selectedItems;
+
+    public _$list: any[] = [];
+
+    private _init(data: any[], allSelectedData: any[]) {
+        this._$list = data;
+        if (allSelectedData instanceof Array || allSelectedData instanceof ArrayCollection) {
+            this._$selectedItems = allSelectedData.filter(item => {
+                return this._$list.find(it =>
+                    CommonUtils.compareWithKeyProperty(item, it, this._$cascade._trackItemBy))
+            })
+        }
+    }
 
     /**
      * @internal

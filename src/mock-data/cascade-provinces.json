@@ -1,0 +1,6 @@
+[
+    {"ProID": 1, "name": "北京市", "ProSort": 1, "ProRemark": "直辖市"},
+    {"ProID": 2, "name": "天津市", "ProSort": 2, "ProRemark": "直辖市"},
+    {"ProID": 3, "name": "河北省", "ProSort": 5, "ProRemark": "省份"},
+    {"ProID": 4, "name": "山西省", "ProSort": 6, "ProRemark": "省份"}
+]
