@@ -221,6 +221,9 @@ export class JigsawInnerCascadeTabContent implements IDynamicInstantiatable {
         })
     }
 
+    /**
+     * @internal
+     */
     public _$selectedItems;
 
     /**
@@ -243,7 +246,11 @@ export class JigsawInnerCascadeTabContent implements IDynamicInstantiatable {
         this._$cascade._handleSelectAll(this.initData.level);
     }
 
+    /**
+     * @internal
+     */
     public _$handleOptionClick() {
+        // 补充已选中的option不触发selectedItemsChange
         if (this.initData.cascadingOver || this._$cascade.tabs.selectedIndex != this.initData.level) return;
         if (this._$cascade.tabs.selectedIndex < this._$cascade.tabs.length - 1) {
             this._$cascade.tabs.selectedIndex += 1;
