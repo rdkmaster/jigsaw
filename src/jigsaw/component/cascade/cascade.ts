@@ -1,5 +1,5 @@
 import {
-    AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, NgModule, Optional, Output, TemplateRef, ViewChild
+    AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, NgModule, Optional, Output, ViewChild
 } from "@angular/core";
 import {JigsawTabsModule} from "../tabs/index";
 import {JigsawTileSelectModule} from "../list-and-tile/tile";
@@ -13,6 +13,7 @@ export class CascadeData {
     label: string;
     list: any[];
     cascadingOver?: boolean;
+    showAll?: boolean;
 }
 
 export type CascadeDateGenerator = (level: number, selectedItem?: any) => CascadeData;
@@ -22,11 +23,15 @@ export class CascadeTabContentInitData {
     list: any[];
     cascadingOver: boolean;
     multipleSelect: boolean;
+    showAll: boolean;
 }
 
 @Component({
     selector: 'jigsaw-cascade, j-cascade',
-    templateUrl: './cascade.html'
+    templateUrl: './cascade.html',
+    host: {
+        '[class.jigsaw-cascade]': 'true'
+    }
 })
 export class JigsawCascade implements AfterViewInit {
     constructor(private _changeDetectorRef: ChangeDetectorRef) {
@@ -48,7 +53,9 @@ export class JigsawCascade implements AfterViewInit {
     @Input()
     public labelField: string = 'label';
 
-    //设置对象的标识
+    /**
+     * @internal
+     */
     public _trackItemBy: string[] = [];
 
     @Input()
@@ -69,7 +76,10 @@ export class JigsawCascade implements AfterViewInit {
     @Input()
     public multidimensionalSelect: boolean;
 
-    public handleMultipleSelect(selectedItems: any[], level: number) {
+    /**
+     * @internal
+     */
+    public _handleMultipleSelect(selectedItems: any[], level: number) {
         if (this.multidimensionalSelect && this.selectedData[level]) {
             // 支持多维
             // 过滤掉已有的但是现在不选的
@@ -94,24 +104,46 @@ export class JigsawCascade implements AfterViewInit {
         this.selectedDataChange.emit(this.selectedData);
     }
 
-    public handleSelect(selectedItem: any, level: number) {
+    /**
+     * @internal
+     */
+    public _handleSelect(selectedItem: any, level: number) {
         this._updateTabTitle(selectedItem, level);
         this.selectedData[level] = selectedItem;
         this._cascading(level + 1, selectedItem);
     }
 
+    /**
+     * @internal
+     */
+    public _handleSelectAll(level: number) {
+        if(this.multipleSelect && this.multidimensionalSelect) {
+            console.warn('multidimensional select can not select all');
+            return;
+        }
+        this._removeCascadingTabs(level);
+        this.tabs.selectedIndex = this.tabs.length - 1;
+        this.selectedData = this.selectedData.slice(0, level);
+        this.selectedDataChange.emit(this.selectedData);
+    }
+
     private _addCascadingTab(level: number) {
+        this._removeCascadingTabs(level);
+        this.tabs.addTab(this.data[level].label, JigsawInnerCascadeTabContent, {
+            level: level,
+            list: this.data[level].list,
+            cascadingOver: this.data[level].cascadingOver,
+            multipleSelect: this.data[level].cascadingOver && this.multipleSelect,
+            showAll: this.data[level].showAll
+        });
+    }
+
+    private _removeCascadingTabs(level: number) {
         if (this.tabs.length > level) {
             for (let i = this.tabs.length - 1; i >= level; i--) {
                 this.tabs.removeTab(i)
             }
         }
-        this.tabs.addTab(this.data[level].label, JigsawInnerCascadeTabContent, {
-            level: level,
-            list: this.data[level].list,
-            cascadingOver: this.data[level].cascadingOver,
-            multipleSelect: this.data[level].cascadingOver && this.multipleSelect
-        });
     }
 
     private _updateTabTitle(selectedItem: any, level: number) {
@@ -157,6 +189,7 @@ export class JigsawCascade implements AfterViewInit {
     template: `
         <j-tile [(selectedItems)]="_$selectedItem" (selectedItemsChange)="_$handleSelect($event)"
                 [trackItemBy]="_$cascade?.trackItemBy" [multipleSelect]="initData.multipleSelect">
+            <div *ngIf="initData.showAll" class="jigsaw-tile-show-all" (click)="_$selectAll()">全部</div>
             <j-tile-option *ngFor="let item of initData?.list" [value]="item">
                 {{item[_$cascade?.labelField]}}
             </j-tile-option>
@@ -196,11 +229,18 @@ export class JigsawInnerCascadeTabContent implements IDynamicInstantiatable {
     public _$handleSelect(selectedItems: any[]) {
         if (!this._initData.multipleSelect) {
             // 单选
-            this._$cascade.handleSelect(selectedItems[0], this._initData.level);
+            this._$cascade._handleSelect(selectedItems[0], this._initData.level);
         } else {
             // 多选，级联结束的tab
-            this._$cascade.handleMultipleSelect(selectedItems, this._initData.level);
+            this._$cascade._handleMultipleSelect(selectedItems, this._initData.level);
         }
+    }
+
+    /**
+     * @internal
+     */
+    public _$selectAll() {
+        this._$cascade._handleSelectAll(this.initData.level);
     }
 }
 

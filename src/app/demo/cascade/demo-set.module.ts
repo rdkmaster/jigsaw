@@ -12,6 +12,8 @@ import {CascadeMultiDimensionalDemoComponent} from "./multi-dimensional-select/d
 import {CascadeMultiDimensionalDemoModule} from "./multi-dimensional-select/demo.module";
 import {CascadeMultiDimensionalFillBackDemoComponent} from "./multi-dimensional-fill-back/demo.component";
 import {CascadeMultiDimensionalFillBackDemoModule} from "./multi-dimensional-fill-back/demo.module";
+import {CascadeShowAllDemoComponent} from "./show-all/demo.component";
+import {CascadeShowAllDemoModule} from "./show-all/demo.module";
 
 export const routerConfig = [
     {
@@ -32,6 +34,9 @@ export const routerConfig = [
     {
         path: 'multi-dimensional-fill-back', component: CascadeMultiDimensionalFillBackDemoComponent
     },
+    {
+        path: 'show-all', component: CascadeShowAllDemoComponent
+    },
 ];
 
 @NgModule({
@@ -43,6 +48,7 @@ export const routerConfig = [
         CascadeMultiDataFillBackDemoModule,
         CascadeMultiDimensionalDemoModule,
         CascadeMultiDimensionalFillBackDemoModule,
+        CascadeShowAllDemoModule
     ]
 })
 export class CascadeDemoModule {
