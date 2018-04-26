@@ -5,7 +5,7 @@ import {JigsawTabsModule} from "../tabs/index";
 import {JigsawTileSelectModule} from "../list-and-tile/tile";
 import {JigsawTab} from "../tabs/tab";
 import {CommonModule} from "@angular/common";
-import {IDynamicInstantiatable} from "../common";
+import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {ArrayCollection} from "../../core/data/array-collection";
 import {Observable} from "rxjs/Observable";
@@ -201,8 +201,9 @@ export class JigsawCascade implements AfterViewInit {
         </j-tile>
     `
 })
-export class JigsawInnerCascadeTabContent implements IDynamicInstantiatable {
+export class JigsawInnerCascadeTabContent extends AbstractJigsawComponent implements IDynamicInstantiatable {
     constructor(@Optional() public _$cascade: JigsawCascade) {
+        super();
     }
 
     private _initData: CascadeTabContentInitData;
@@ -240,9 +241,12 @@ export class JigsawInnerCascadeTabContent implements IDynamicInstantiatable {
     private _init(data: any[], allSelectedData: any[]) {
         this._$list = data;
         if (allSelectedData instanceof Array || allSelectedData instanceof ArrayCollection) {
-            this._$selectedItems = allSelectedData.filter(item => {
-                return this._$list.find(it =>
-                    CommonUtils.compareWithKeyProperty(item, it, this._$cascade._trackItemBy))
+            // 等待根据list数据渲染option后回填数据
+            this.callLater(() => {
+                this._$selectedItems = allSelectedData.filter(item => {
+                    return this._$list.find(it =>
+                        CommonUtils.compareWithKeyProperty(item, it, this._$cascade._trackItemBy))
+                });
             })
         }
     }
