@@ -6,8 +6,7 @@ import {StepsHorizontalBasicComponent} from './demo.component';
 
 @NgModule({
     imports: [
-         CommonModule,JigsawDemoDescriptionModule,JigsawStepsModule
-
+        CommonModule, JigsawDemoDescriptionModule, JigsawStepsModule
     ],
     declarations: [StepsHorizontalBasicComponent],
     exports: [StepsHorizontalBasicComponent]

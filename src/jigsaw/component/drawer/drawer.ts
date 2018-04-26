@@ -5,6 +5,8 @@ import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 
 /**
  * 本组件模拟了一个类似抽屉的效果，用于收纳UI上重要性不高的视图。
+ *
+ * $since = v1.1.7
  */
 @Component({
     selector: 'jigsaw-drawer, j-drawer',
