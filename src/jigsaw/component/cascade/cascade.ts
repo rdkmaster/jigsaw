@@ -211,11 +211,11 @@ export class JigsawInnerCascadeTabContent implements IDynamicInstantiatable {
         this._initData = value;
 
         if (!this._initData.cascadingOver) return;
-        let lastLevelData = this._$cascade.selectedData[this._initData.level];
-        if (!lastLevelData) return;
-        lastLevelData = (lastLevelData instanceof ArrayCollection || lastLevelData instanceof Array) ?
-            lastLevelData : [lastLevelData];
-        this._$selectedItems = lastLevelData.filter(item => {
+        let currentLevelData = this._$cascade.selectedData[this._initData.level];
+        if (!currentLevelData) return;
+        currentLevelData = (currentLevelData instanceof ArrayCollection || currentLevelData instanceof Array) ?
+            currentLevelData : [currentLevelData];
+        this._$selectedItems = currentLevelData.filter(item => {
             return this._initData.list.find(it =>
                 CommonUtils.compareWithKeyProperty(item, it, this._$cascade._trackItemBy))
         })
