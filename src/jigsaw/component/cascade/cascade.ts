@@ -224,6 +224,7 @@ export class JigsawInnerCascadeTabContent extends AbstractJigsawComponent implem
         const list = this._initData.list;
         if (list instanceof Observable) {
             list.subscribe((data: any[]) => {
+                this._$cascade.data[this.initData.level].list = data;
                 this._init(data, allSelectedData);
             })
         } else if (list instanceof Array) {
