@@ -1,0 +1,9 @@
+[
+    {"CityID": 1, "name": "北京市", "ProID": 1, "CitySort": 1},
+    {"CityID": 2, "name": "天津市", "ProID": 2, "CitySort": 2},
+    {"CityID": 5, "name": "邯郸市", "ProID": 3, "CitySort": 5},
+    {"CityID": 7, "name": "保定市", "ProID": 3, "CitySort": 7},
+    {"CityID": 9, "name": "承德市", "ProID": 3, "CitySort": 9},
+    {"CityID": 16, "name": "朔州市", "ProID": 4, "CitySort": 16},
+    {"CityID": 17, "name": "忻州市", "ProID": 4, "CitySort": 17}
+]

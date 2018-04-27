@@ -17,6 +17,10 @@ export const routerConfig = [
         loadChildren: "./demo/button/demo-set.module#ButtonDemoModule",
     },
     {
+        path: "cascade",
+        loadChildren: "./demo/cascade/demo-set.module#CascadeDemoModule",
+    },
+    {
         path: "checkbox",
         loadChildren: "./demo/checkbox/demo-set.module#CheckBoxDemoModule",
     },

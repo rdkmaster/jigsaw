@@ -17,6 +17,7 @@ export class AjaxInterceptor implements HttpInterceptor {
     constructor() {
         AjaxInterceptor.registerProcessor('/rdk/service/app/common/paging', this.dealServerSidePagingRequest, this);
         AjaxInterceptor.registerProcessor(/\bmock-data\/.+$/, req => MockData.get(req.url));
+        AjaxInterceptor.registerProcessor('queryCascadingData', this.dealServerCascadingRequest);
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -43,6 +44,20 @@ export class AjaxInterceptor implements HttpInterceptor {
         const filter = this.getParamValue(req, params, 'filter') ? JSON.parse(this.getParamValue(req, params, 'filter')) : null;
         const sort = this.getParamValue(req, params, 'sort') ? JSON.parse(this.getParamValue(req, params, 'sort')) : null;
         return PageableData.get({service, paging, filter, sort});
+    }
+
+    dealServerCascadingRequest(req: HttpRequest<any>): Observable<HttpEvent<any>> {
+        const Provinces = require('mock-data/cascade-provinces.json');
+        const Cities = require('mock-data/cascade-cities.json');
+        const Areas = require('mock-data/cascade-areas.json');
+        if (req.method == 'GET') {
+            const level = req.params.get('level');
+            switch (level) {
+                case '0': return Provinces;
+                case '1': return Cities.filter(city => city['ProID'] == req.params.get('parentID'));
+                case '2': return Areas.filter(city => city['CityID'] == req.params.get('parentID'));
+            }
+        }
     }
 
     getParamValue(req: HttpRequest<any>, params: string, key: string): any {

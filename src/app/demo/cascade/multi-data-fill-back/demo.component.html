@@ -1,0 +1,11 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<j-cascade [dataGenerator]="dataGenerator" [selectedData]="selectedData"
+           (selectedDataChange)="parseSelectedData($event)" [multipleSelect]="true"
+           labelField="name" trackItemBy="name"></j-cascade>
+
+<p>选择的区域是：{{selectedMessage}}</p>
