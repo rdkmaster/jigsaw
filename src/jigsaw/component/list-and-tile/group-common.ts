@@ -4,6 +4,11 @@ import {AfterContentInit, ChangeDetectorRef, EventEmitter, Input, OnDestroy, Out
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {ArrayCollection} from "../../core/data/array-collection";
 
+export class GroupOptionValue {
+    [index: string]: any;
+    disabled?: boolean;
+}
+
 export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implements ControlValueAccessor, AfterContentInit, OnDestroy {
 
     protected _removeRefreshCallback: CallbackRemoval;

@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
 import {JigsawSelectModule} from "jigsaw/component/select/select";
-import {SelectFullComponent} from './demo.component';
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
+import {SelectTriggerDemoComponent} from './demo.component';
 
 @NgModule({
     imports: [JigsawSelectModule, JigsawDemoDescriptionModule],
-    declarations: [SelectFullComponent],
-    exports: [SelectFullComponent]
+    declarations: [SelectTriggerDemoComponent],
+    exports: [SelectTriggerDemoComponent]
 })
-export class SelectFullModule {
+export class SelectTriggerDemoModule {
 }

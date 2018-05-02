@@ -4,9 +4,15 @@
 
 
 <!-- start to learn the demo from here -->
-<h2> select </h2>
-<jigsaw-select id="test-select" [(value)]="selectedCityForSelect"
-               (valueChange)="selectChange($event)"
-               placeholder="请选择城市"
-               [data]="cityListForSelect">
-</jigsaw-select>
+<div class="live-demo-wrap">
+    <h2>Select</h2>
+    <div class="live-demo">
+        <h3>基本用法</h3>
+        <jigsaw-select id="test-select" [(value)]="selectedCityForSelect"
+                       (valueChange)="selectChange($event)"
+                       placeholder="请选择城市"
+                       [data]="cityListForSelect">
+        </jigsaw-select>
+        <p class="message">选择的城市是 <span>{{selectedCityName}}</span></p>
+    </div>
+</div>

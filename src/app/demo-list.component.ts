@@ -18,6 +18,7 @@ import {routerConfig as i18nConfig} from "./demo/i18n/demo-set.module";
 import {routerConfig as inputConfig} from "./demo/input/demo-set.module";
 import {routerConfig as numericInputConfig} from "./demo/numeric-input/demo-set.module";
 import {routerConfig as listConfig} from "./demo/list/demo-set.module";
+import {routerConfig as listLiteConfig} from "./demo/list-lite/demo-set.module";
 import {routerConfig as loadingConfig} from "./demo/loading/demo-set.module";
 import {routerConfig as miscConfig} from "./demo/misc/demo-set.module";
 import {routerConfig as movableConfig} from "./demo/movable/demo-set.module";
@@ -103,6 +104,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'input', inputConfig);
         this._addRouterConfig(routerConfig, 'numeric-input', numericInputConfig);
         this._addRouterConfig(routerConfig, 'list', listConfig);
+        this._addRouterConfig(routerConfig, 'list-lite', listLiteConfig);
         this._addRouterConfig(routerConfig, 'loading', loadingConfig);
         this._addRouterConfig(routerConfig, 'misc', miscConfig);
         this._addRouterConfig(routerConfig, 'movable', movableConfig);

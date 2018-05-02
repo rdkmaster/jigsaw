@@ -1,14 +1,10 @@
-<div class="jigsaw-select-box">
-    <div class="jigsaw-select" [class.jigsaw-select-opened]="!_$optionListHidden">
-        <span [hidden]="_$selectedLabel">{{placeholder}}</span>{{_$selectedLabel}}
-        <span class="jigsaw-select-icon-down fa fa-angle-down"></span>
-    </div>
-    <div class="jigsaw-select-option-list jigsaw-select-option-hidden"
-         [perfectScrollbar]="{ suppressScrollX: true, wheelSpeed: 0.5 }"
-         [width]="optionWidth"
-         [height]="optionHeight"
-         [class.jigsaw-select-option-hidden]="_$optionListHidden">
-        <ng-content></ng-content>
-        <jigsaw-select-option *ngFor="let optionItem of data" [optionItem]="optionItem"></jigsaw-select-option>
-    </div>
-</div>
+<j-combo-select [(value)]="_$selectedItems" [clearable]="clearable" [labelField]="labelField"
+                [autoClose]="!multipleSelect" [placeholder]="placeholder" [disabled]="disabled"
+                [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" width="100%" [autoWidth]="true">
+    <ng-template>
+        <j-list-lite [data]="data" [labelField]="labelField" [trackItemBy]="trackItemBy"
+                     [(selectedItems)]="_$selectedItems" [multipleSelect]="multipleSelect"
+                     [searchable]="searchable" [optionCount]="optionCount"
+                     (selectedItemsChange)="_$handleSelectChange($event)"></j-list-lite>
+    </ng-template>
+</j-combo-select>

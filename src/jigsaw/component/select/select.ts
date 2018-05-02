@@ -1,57 +1,129 @@
 import {
-    NgModule, Component, QueryList, Input, forwardRef, Optional, OnDestroy,
-    OnInit, Output, EventEmitter, ChangeDetectorRef, Directive, Renderer2, ElementRef,
-    ViewChildren, AfterViewInit
+    NgModule, Component, Input, forwardRef, OnInit, Output, EventEmitter
 } from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {AbstractJigsawComponent} from "../common";
-import {CallbackRemoval, CommonUtils} from '../../core/utils/common-utils';
 import {InternalUtils} from '../../core/utils/internal-utils';
 import {ArrayCollection} from "../../core/data/array-collection";
-import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
+import {JigsawComboSelectModule} from "../combo-select/index";
+import {JigsawListLiteModule} from "../list-and-tile/list-lite";
 
 /**
- * @internal
+ * 选择控件
+ * - 支持单选和多选，自动给出单选的对象和多选的数组
+ * - 支持静态数据，异步数据和数据回填
+ * - 支持控件不可用
+ * - 支持文本溢出显示省略号，鼠标移入有提示信息
+ * - 支持设置显示多少option，并自动产生滚动条
+ * - 支持Array、ArrayCollection、LocalPageableArray、PageableArray的检索
+ * - 支持设置下拉触发的方式
+ *
  */
-@Directive({
-    selector: '.jigsaw-select-option-list',
-    host: {
-        '[style.width]': 'width',
-        '[style.height]': 'height'
-    }
-})
-export class JigsawSelectOptionList extends AbstractJigsawComponent {
-}
-
 @Component({
     selector: 'jigsaw-select, j-select',
     templateUrl: 'select.html',
     host: {
-        "(click)": "_toggleClick($event)",
-        '[style.width]': 'width',
-        '[style.height]': 'height',
-        '[style.line-height]': 'height'
+        '[class.jigsaw-select-host]': 'true',
+        '[style.min-width]': 'width'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSelect), multi: true},
     ]
 })
-export class JigsawSelect extends AbstractJigsawComponent implements ControlValueAccessor, AfterViewInit, OnDestroy, OnInit {
+export class JigsawSelect extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
+
+    protected _width: string = '120px';
 
     /**
-     * @internal
+     * 设置对象的标识
      */
-    public _$optionListHidden: boolean = true; // 设置option列表是否显示
-    private _value: any; // select表单值
-    private _documentListen: Function; // document事件解绑函数
+    @Input() public trackItemBy: string | string[];
 
     /**
-     * @internal
+     * 设置数据的显示字段
+     * @type {string}
      */
-    public _$selectedLabel: string;
+    @Input() public labelField: string = 'label';
 
-    //select form表单值
+    /**
+     * placeholder文本
+     */
+    @Input() public placeholder: string;
+
+    /**
+     * 不可用属性
+     * $demo = select/disabled
+     */
+    @Input() public disabled: boolean;
+
+    @Input() public optionWidth: string;
+
+    @Input() public optionHeight: string;
+
+    /**
+     * 显示的option个数，超出的会显示滚动条
+     * $demo = select/optionCount
+     */
+    @Input() public optionCount: number;
+
+    /**
+     * 多选开关
+     * $demo = select/multiple
+     */
+    @Input() public multipleSelect: boolean;
+
+    /**
+     * 搜索开关
+     * $demo = select/searchable
+     */
+    @Input() public searchable: boolean;
+
+    /**
+     * 选择结果框的清除按钮的显示与隐藏
+     */
+    @Input() public clearable: boolean;
+
+    /**
+     * 打开下拉的触发方式
+     * @type {string}
+     *
+     * $demo = select/trigger
+     */
+    @Input() public openTrigger: 'click' | 'mouseenter' = 'mouseenter';
+
+    /**
+     * 关闭下拉的触发方式
+     * @type {string}
+     *
+     * $demo = select/trigger
+     */
+    @Input() public closeTrigger: 'click' | 'mouseleave' = 'mouseleave';
+
+    private _data: ArrayCollection<object>;
+
+    /**
+     * 提供选择的数据集合
+     * @returns {ArrayCollection<Object> | Object[]}
+     */
+    @Input()
+    public get data(): ArrayCollection<object> | object[] {
+        return this._data;
+    }
+
+    public set data(value: ArrayCollection<object> | object[]) {
+        this._data = value instanceof ArrayCollection ? value : new ArrayCollection(value);
+    }
+
+    private _value: any;
+
+    /**
+     * 选择的结果，单选时单个的item对象，多选时是item对象的数组
+     * @returns {any}
+     *
+     * $demo = select/basic
+     * $demo = select/multiple
+     * $demo = select/async
+     */
     @Input()
     public get value(): any {
         return this._value;
@@ -64,106 +136,29 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
         this.writeValue(newValue);
     }
 
+    /**
+     * 选择结果发生变化时，向外面发送事件
+     * @type {EventEmitter<any>}
+     *
+     * $demo = select/basic
+     */
     @Output() public valueChange: EventEmitter<any> = new EventEmitter<any>();
 
-    //设置对象的标识
-    @Input() public trackItemBy: string | string[];
+    /**
+     * @internal
+     */
+    public _$selectedItems: ArrayCollection<any> | any[];
 
-    //显示在界面上的属性名
-    @Input() public labelField: string = 'label';
-
-    @Input() public placeholder: string;
-
-    @Input() public optionWidth: string;
-
-    @Input() public optionHeight: string;
-
-    @Input() public optionCount: number;
-
-    private _dataCallbackRemoval: CallbackRemoval;
-
-    private _data: ArrayCollection<object>;
-
-    @Input()
-    public get data(): ArrayCollection<object> | object[] {
-        return this._data;
-    }
-
-    public set data(value: ArrayCollection<object> | object[]) {
-        this._data = value instanceof ArrayCollection ? value : new ArrayCollection(value);
-        if (this._dataCallbackRemoval) {
-            this._dataCallbackRemoval()
-        }
-        this._dataCallbackRemoval = this._data.onRefresh(this._setOptionListHeight, this);
-        if (this.initialized) {
-            // 初始化之后赋值，要计算下拉的高度
-            this._setOptionListHeight();
-        }
-    }
-
-    //获取映射的子组件option
-    @ViewChildren(forwardRef(() => JigsawSelectOption))
-    private _options: QueryList<JigsawSelectOption> = null;
-
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
-        super();
-        this._renderer.addClass(this._elementRef.nativeElement, 'jigsaw-select-host');
-    }
-
-    //点击组件，显示\隐藏option列表
-    private _toggleClick(event: Event): void {
-        event.stopPropagation();
-        this._$optionListHidden = !this._$optionListHidden;
-        if (this._$optionListHidden) {
-            this._documentListen();
-        } else {
-            this._documentListen = this._renderer.listen('document', 'click', () => {
-                this._$optionListHidden = true;
-                this._documentListen();
-                this._documentListen = null;
-            });
-        }
-    }
-
-    //更改option选中状态
-    private _updateSelectedOption(): void {
-        this._options.length && this._options.forEach((option) => {
-            option.selected = CommonUtils.compareWithKeyProperty(this.value, option.optionItem, <string[]>this.trackItemBy);
-            option.cdRef.detectChanges();
-        });
-    };
-
-    private _setOptionListHeight() {
-        if (this.optionCount) {
-            if (this._data && this._data.length > this.optionCount) {
-                this.optionHeight = this._elementRef.nativeElement.offsetHeight * this.optionCount + 'px';
-            }
-        }
+    public _$handleSelectChange(selectedItems: any[]) {
+        if (!selectedItems) return;
+        this._value = this.multipleSelect ? selectedItems : selectedItems[0];
+        this._propagateChange(this.value);
+        this.valueChange.emit(this.value);
     }
 
     ngOnInit() {
         super.ngOnInit();
-        if (this.value) {
-            this._$selectedLabel = this.value[this.labelField];
-        }
         this.trackItemBy = InternalUtils.initTrackItemBy(<string>this.trackItemBy, this.labelField);
-        this._setOptionListHeight();
-    }
-
-    ngAfterViewInit() {
-        if (this.value) {
-            this._updateSelectedOption();
-        }
-    }
-
-    ngOnDestroy() {
-        if (this._documentListen) {
-            // 解绑document上的点击事件
-            this._documentListen();
-        }
-        if (this._dataCallbackRemoval) {
-            this._dataCallbackRemoval()
-        }
     }
 
     private _propagateChange: any = () => {
@@ -174,9 +169,8 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
             return;
         }
         this._value = value;
+        this._$selectedItems = this.multipleSelect ? value : [value];
         if (this.initialized) {
-            this._$selectedLabel = value[this.labelField];
-            this._updateSelectedOption();
             this.valueChange.emit(this.value);
         }
     }
@@ -189,60 +183,9 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     }
 }
 
-/**
- * @internal
- */
-@Component({
-    selector: 'jigsaw-select-option, j-select-option',
-    templateUrl: 'option.html',
-    host: {
-        "(click)": "_onClick()",
-        '[style.height]': '_height',
-        '[style.line-height]': '_height'
-    }
-})
-export class JigsawSelectOption implements OnInit {
-    @Input() public optionItem: any;
-
-    /**
-     * @internal
-     */
-    public _$optionLabel: string;
-
-    private _selectCmp: JigsawSelect;
-
-    private _height: string;
-
-    public selected: boolean = false;//选中状态
-
-    constructor(@Optional() selectCmp: JigsawSelect,
-                public cdRef: ChangeDetectorRef,
-                private _renderer: Renderer2,
-                private _elementRef: ElementRef) {
-        this._selectCmp = selectCmp;
-        this._renderer.addClass(this._elementRef.nativeElement, 'jigsaw-select-option-host');
-    }
-
-    private _onClick(): void {
-        if (!this.selected) {
-            this.selected = true;
-            if (this._selectCmp) {
-                this._selectCmp.value = this.optionItem;//更新内部value
-            }
-        }
-    }
-
-    ngOnInit() {
-        //初始化option显示值
-        this._$optionLabel = this.optionItem[this._selectCmp.labelField];
-        this._selectCmp.height ? this._height = this._selectCmp.height : null;
-    }
-
-}
-
 @NgModule({
-    imports: [CommonModule, FormsModule, PerfectScrollbarModule],
-    declarations: [JigsawSelect, JigsawSelectOption, JigsawSelectOptionList],
+    imports: [JigsawComboSelectModule, JigsawListLiteModule],
+    declarations: [JigsawSelect],
     exports: [JigsawSelect]
 })
 export class JigsawSelectModule {

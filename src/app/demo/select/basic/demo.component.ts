@@ -2,8 +2,7 @@ import {Component} from "@angular/core";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 @Component({
-  templateUrl: './demo.component.html',
-  styleUrls: ['./demo.component.css']
+    templateUrl: './demo.component.html',
 })
 export class SelectBasicDemoComponent {
     selectedCityForSelect: any;
@@ -16,8 +15,11 @@ export class SelectBasicDemoComponent {
         {label: "西安"}
     ]);
 
-    public selectChange(message:any){
-        console.log("select city is:"+ message.label);
+    selectedCityName: string;
+
+    public selectChange(selectedItem: any) {
+        console.log("select city is:" + selectedItem.label);
+        this.selectedCityName = selectedItem.label;
     }
 
     // ====================================================================

@@ -1,5 +1,5 @@
 import {
-    AfterContentInit, ChangeDetectorRef, Component, ContentChildren, forwardRef, Input, NgModule,
+    AfterContentInit, ChangeDetectorRef, Component, ContentChildren, ElementRef, forwardRef, Input, NgModule,
     QueryList
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
@@ -35,11 +35,12 @@ export class JigsawList extends AbstractJigsawGroupComponent implements AfterCon
         '[class.jigsaw-list-option]': 'true',
         '[class.jigsaw-list-option-active]': 'selected',
         '[class.jigsaw-list-option-disabled]': 'disabled',
+        '[class.jigsaw-list-option-splitter]': '!value',
         '(click)': '_$handleClick()'
     }
 })
 export class JigsawListOption extends AbstractJigsawOptionComponent {
-    constructor(public changeDetector: ChangeDetectorRef) {
+    constructor(public changeDetector: ChangeDetectorRef, public elementRef: ElementRef) {
         super();
     }
 
@@ -63,9 +64,8 @@ export class JigsawListOption extends AbstractJigsawOptionComponent {
      * @internal
      */
     public _$handleClick(): void {
-        if (!this.disabled) {
-            this.change.emit(this);
-        }
+        if(this.disabled || !this.value) return;
+        this.change.emit(this);
     }
 }
 

@@ -77,6 +77,10 @@ export const routerConfig = [
         loadChildren: "./demo/list/demo-set.module#ListDemoModule",
     },
     {
+        path: "list-lite",
+        loadChildren: "./demo/list-lite/demo-set.module#ListLiteDemoModule",
+    },
+    {
         path: "loading",
         loadChildren: "./demo/loading/demo-set.module#LoadingDemoModule",
     },

@@ -13,7 +13,7 @@ export const routerConfig = [
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig),
-        ListFullDemoModule
+        ListFullDemoModule,
     ]
 })
 export class ListDemoModule{

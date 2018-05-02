@@ -1,0 +1,18 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>List lite</h2>
+
+    <div class="live-demo">
+        <h3>预设选中值</h3>
+        <j-list-lite width="200" [data]="goodsList" labelField="name" [selectedItems]="selectedItems"
+                     (selectedItemsChange)="handleSelect($event)" [multipleSelect]="true"></j-list-lite>
+        <p class="message">选中的条目是: <span>{{selectedItemsStr}}</span></p>
+    </div>
+
+</div>
+

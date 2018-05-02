@@ -1,11 +1,10 @@
-import {Component, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component} from "@angular/core";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
 
 @Component({
   templateUrl: './demo.component.html',
-  styleUrls: ['./demo.component.css']
 })
-export class SelectScrollDemoComponent {
+export class SelectOptionCountDemoComponent {
     selectedCityForSelect: any;
     cityListForSelect = new ArrayCollection([
         {label: "北京"},
@@ -15,11 +14,11 @@ export class SelectScrollDemoComponent {
         {label: "长沙"},
         {label: "西安"}
     ]);
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
-    }
-    selectChange(message:any){
-        console.log("select city is:"+ message.label);
+
+    selectedCityName: string;
+
+    public selectChange(selectedItem:any){
+        this.selectedCityName = selectedItem.label;
     }
 
     // ====================================================================
@@ -27,8 +26,5 @@ export class SelectScrollDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawSelect.optionCount',
-    ];
 }
 

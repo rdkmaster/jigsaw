@@ -1,63 +1,14 @@
 @import "../../assets/scss/core/base";
 
 $select-prefix-cls: #{$jigsaw-prefix}-select;
-$select-option-prefix-cls: #{$jigsaw-prefix}-select-option;
+$jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
 
 .#{$select-prefix-cls}-host {
     @include inline-block();
-    width: 120px;
-    height: $height-base;
-    line-height: $height-base;
-    font-size: $font-size-base;
-    color: $text-color;
-}
-
-.#{$select-prefix-cls}-box {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    .#{$select-prefix-cls} {
-        border: 1px solid $border-color-base;
-        border-radius: $border-radius-base;
-        background: $component-background;
-        cursor: pointer;
-        @include line-ellipsis(100%);
-        height: 100%;
-        padding: 0 6px;
-        box-sizing: border-box;
-        @include prefixer(transition, all 0.3s $ease-in-out);
-        &:hover {
-            border-color: $primary-color;
-        }
-        &.#{$select-prefix-cls}-opened {
-            border-color: $primary-color;
-            box-shadow: $box-focus-shadow;
-            .#{$select-prefix-cls}-icon-down {
-                @include prefixer(transform, rotate(180deg));
-            }
-        }
-        &-icon-down{
-            position: absolute;
-            right: 8px;
-            line-height: inherit;
-            @include prefixer(transition, transform 0.2s $ease-in-out);
-        }
-
-    }
-    .#{$select-option-prefix-cls}-list {
-        width: 100%;
-        position: absolute;
-        z-index: $zindex-popover-level-0;
-        border: 1px solid $border-color-base;
-        background: $default-color;
-        box-shadow: $box-shadow-base;
-        border-radius: $border-radius-base;
-        @include prefixer(transition, all 0.3s $ease-in-out);
-        @include prefixer(transform-origin, 0 0);
-        &.#{$select-option-prefix-cls}-hidden {
-            display: none\9;
-            @include opacity(0);
-            @include prefixer(transform, scale(1, 0));
+    .#{$jigsaw-combo-select}-host {
+        .jigsaw-tag-host {
+            max-width: 76px;
         }
     }
 }
+

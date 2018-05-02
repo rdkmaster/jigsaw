@@ -1,0 +1,28 @@
+$list-lite-prefix-cls: #{$jigsaw-prefix}-list-lite;
+$list-prefix-cls: #{$jigsaw-prefix}-list;
+$list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
+
+.#{$list-lite-prefix-cls} {
+    @include inline-block();
+    &-search {
+        display: block;
+    }
+    &-wrapper {
+        border: 1px solid $border-color-base;
+        border-radius: $border-radius-base;
+        background: $component-background;
+        .#{$list-prefix-cls} {
+            border: none;
+        }
+    }
+    .#{$list-option-prefix-cls}-wrapper {
+        font-size: 0;
+    }
+    .#{$list-option-prefix-cls}-block {
+        display: none;
+    }
+    &-text {
+        @include line-ellipsis(100%);
+        font-size: 12px;
+    }
+}

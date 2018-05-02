@@ -1,0 +1,32 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>Select</h2>
+    <div class="live-demo">
+        <h3>搜索功能</h3>
+        <jigsaw-select [(value)]="selectedCityForSelect" (valueChange)="selectChange($event)"
+                       placeholder="请选择城市" [data]="cityListForSelect" [searchable]="true">
+        </jigsaw-select>
+        <p class="message">选择的城市是 <span>{{selectedCityName}}</span></p>
+    </div>
+
+    <div class="live-demo">
+        <h3>本地数据过滤</h3>
+        <jigsaw-select [optionCount]="4" [data]="lpaCountries" labelField="enName"
+                       (selectedItemsChange)="handleSelect($event, 'selectedCountries', 'enName')"
+                       [multipleSelect]="true" [searchable]="true"></jigsaw-select>
+        <p class="message">选中的条目是: <span>{{selectedCountries}}</span></p>
+    </div>
+
+    <div class="live-demo">
+        <h3>服务端数据过滤</h3>
+        <jigsaw-select [optionCount]="4" [data]="spaCountries" labelField="enName"
+                       (selectedItemsChange)="handleSelect($event, 'selectedCountries2', 'enName')"
+                       [multipleSelect]="true" [searchable]="true"></jigsaw-select>
+        <p class="message">选中的条目是: <span>{{selectedCountries2}}</span></p>
+    </div>
+</div>

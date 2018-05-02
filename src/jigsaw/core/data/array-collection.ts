@@ -869,7 +869,7 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
     private _initSubjects(): void {
         this._filterSubject.debounceTime(300).subscribe(filter => {
             super.fromArray(this._bakData.filter(item => (<any[]>filter.field).find(field => {
-                const value: string = item[field] === undefined || item[field] === null ? '' : item[field].toString();
+                const value: string = !item || item[field] === undefined || item[field] === null ? '' : item[field].toString();
                 return value.includes(filter.key)
             })));
         });

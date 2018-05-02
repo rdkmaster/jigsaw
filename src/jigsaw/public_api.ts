@@ -23,6 +23,7 @@ export * from "./component/input/input";
 export * from "./component/input/numeric-input";
 export * from "./component/list-and-tile/group-common";
 export * from "./component/list-and-tile/list";
+export * from "./component/list-and-tile/list-lite";
 export * from "./component/list-and-tile/tile";
 export * from "./component/loading/loading";
 export * from "./component/notification/notification";
