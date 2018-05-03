@@ -69,6 +69,10 @@ export const routerConfig = [
         loadChildren: "./demo/input/demo-set.module#InputDemoModule",
     },
     {
+        path: "numeric-input",
+        loadChildren: "./demo/numeric-input/demo-set.module#NumericInputDemoModule",
+    },
+    {
         path: "list",
         loadChildren: "./demo/list/demo-set.module#ListDemoModule",
     },

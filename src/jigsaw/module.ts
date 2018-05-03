@@ -39,6 +39,7 @@ import {JigsawBoxModule} from "./component/box/index";
 import {JigsawTabsWrapperModule} from "./component/box/tabs-wrapper/tabs-wrapper";
 import {JigsawDrawerModule} from "./component/drawer/drawer";
 import {JigsawCascadeModule} from "./component/cascade/cascade";
+import {JigsawNumericInputModule} from "./component/input/numeric-input";
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
@@ -57,6 +58,7 @@ const JIGSAW_MODULE = [
     JigsawFishBoneModule,
     JigsawGraphModule,
     JigsawInputModule,
+    JigsawNumericInputModule,
     JigsawListModule,
     JigsawLoadingModule,
     JigsawMovableModule,

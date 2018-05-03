@@ -20,6 +20,7 @@ export * from "./component/drawer/drawer";
 export * from "./component/fish-bone/fish-bone";
 export * from "./component/graph/index";
 export * from "./component/input/input";
+export * from "./component/input/numeric-input";
 export * from "./component/list-and-tile/group-common";
 export * from "./component/list-and-tile/list";
 export * from "./component/list-and-tile/tile";

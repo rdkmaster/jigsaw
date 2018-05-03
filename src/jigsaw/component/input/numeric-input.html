@@ -1,0 +1,20 @@
+<!--<ng-content></ng-content>-->
+<input #input
+       [ngStyle]="_$inputPaddingStyle"
+       [placeholder]="placeholder"
+       [(ngModel)]="value"
+       [disabled]="disabled"
+       (blur)="_$handleBlur($event)"
+       (focus)="_$handleFocus($event)"
+       (keydown)="_handleKeyDown($event)">
+
+<div class="jigsaw-numeric-input-option-box">
+    <div class="jigsaw-numeric-input-option-bar" [class.jigsaw-numeric-input-option-bar-disabled]="_$upDisabled"
+         (click)="_$increase($event)">
+        <span class="fa fa-angle-up"></span>
+    </div>
+    <div class="jigsaw-numeric-input-option-bar" [class.jigsaw-numeric-input-option-bar-disabled]="_$downDisabled"
+         (click)="_$decrease($event)">
+        <span class="fa fa-angle-down"></span>
+    </div>
+</div>
