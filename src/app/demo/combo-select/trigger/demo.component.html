@@ -8,17 +8,23 @@
 <jigsaw-radios [(value)]="openTrigger">
     <jigsaw-radio-option id="openByClick" value="click">鼠标单击</jigsaw-radio-option>
     <jigsaw-radio-option id="openByHover" value="mouseenter">鼠标滑入</jigsaw-radio-option>
+    <jigsaw-radio-option id="openByNone" value="none">不响应鼠标事件</jigsaw-radio-option>
 </jigsaw-radios>
-<br>
+<jigsaw-button *ngIf="openTrigger=='none'" (click)="openCombo()">open</jigsaw-button>
+
+<br><br>
 触发关闭：
 <jigsaw-radios [(value)]="closeTrigger">
     <jigsaw-radio-option id="closeByClick" value="click">鼠标单击</jigsaw-radio-option>
     <jigsaw-radio-option id="closeByLeave" value="mouseleave">鼠标滑出</jigsaw-radio-option>
+    <jigsaw-radio-option id="closeByNone" value="none">不响应鼠标事件</jigsaw-radio-option>
 </jigsaw-radios>
+<jigsaw-button *ngIf="closeTrigger=='none'" (click)="closeCombo()">close</jigsaw-button>
 
 <br><br>
 <jigsaw-combo-select [openTrigger]="openTrigger"
                      [closeTrigger]="closeTrigger"
+                     [(open)]="open"
                      placeholder="根据选择的触发器测试效果">
     <ng-template>
         <div class="drop-down">

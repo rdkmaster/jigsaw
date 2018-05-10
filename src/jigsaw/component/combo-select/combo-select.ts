@@ -31,10 +31,12 @@ export enum DropDownTrigger {
     click,
     mouseenter,
     mouseleave,
+    none,
 }
 
 export class ComboSelectValue {
     [index: string]: any;
+
     closable?: boolean;
 }
 
@@ -238,6 +240,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     private _autoClose() {
         if (this.autoClose) {
+            debugger
             this.open = false;
         }
     }
@@ -300,10 +303,13 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         if (this._removeWindowClickHandler) {
             this._removeWindowClickHandler();
         }
+        //点击window时，自动关闭combo,但当closeTrigger为none时无法关掉的
         this._removeWindowClickHandler = this._renderer.listen('window', 'click', () => {
-            this._removeWindowClickHandler();
-            this._removeWindowClickHandler = null;
-            this.open = false
+            if(this.closeTrigger!=DropDownTrigger.none){
+                this._removeWindowClickHandler();
+                this._removeWindowClickHandler = null;
+                this.open = false;
+            }
         });
 
         const option: PopupOptions = this._getPopupOption();
@@ -372,10 +378,12 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public _$openAndCloseByClick(event) {
         event.preventDefault();
         event.stopPropagation();
-        if (this._openTrigger === DropDownTrigger.mouseenter && this.open) {
-            return;
+        if (this._openTrigger === DropDownTrigger.click && this.open == false) {
+            this.open = true;
         }
-        this.open = !this.open;
+        if (this._closeTrigger === DropDownTrigger.click && this.open == true) {
+            this.open = false;
+        }
     }
 
     private _$tagClick(tagItem) {

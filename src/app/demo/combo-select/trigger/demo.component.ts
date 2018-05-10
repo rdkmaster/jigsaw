@@ -15,7 +15,14 @@ import {Component} from '@angular/core';
 export class ComboSelectTriggerDemo {
     openTrigger = "mouseenter";
     closeTrigger = "mouseleave";
+    public open: boolean = true;
 
+    public openCombo() {
+        this.open = true;
+    }
+    public closeCombo() {
+        this.open = false;
+    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
