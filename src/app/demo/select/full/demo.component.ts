@@ -10,7 +10,7 @@ export class SelectFullComponent {
     constructor(public http: HttpClient) {
         this.citys2 = new ArrayCollection();
         this.citys2.http = http;
-        this.citys2.fromAjax('mock-data/cities');
+        this.citys2.fromAjax({url: '/mock-service/area', params: {provinceId: 10}});
         this.citys2.onAjaxComplete(() => {
             console.log(this.citys2);
         });

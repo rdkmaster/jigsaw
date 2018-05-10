@@ -28,8 +28,13 @@ export class JigsawTabPane {
     @Input()
     public async: boolean = true; // 默认异步加载
 
+    /**
+     * 为true时，Tab页的视图延将被迟到该Tab页被打开的时候才被初始化。
+     *
+     * @type {boolean}
+     */
     @Input()
-    public lazy: boolean = true; // 默认异步加载
+    public lazy: boolean = true;
 
     @Input()
     public initData: Object;

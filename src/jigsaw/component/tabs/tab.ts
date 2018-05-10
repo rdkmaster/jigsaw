@@ -22,7 +22,8 @@ import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
     selector: 'jigsaw-tab, j-tab, jigsaw-tabs, j-tabs',
     templateUrl: 'tab.html',
     host: {
-        '[class.jigsaw-tabs-host]': 'true'
+        '[class.jigsaw-tabs-host]': 'true',
+        '[style.width]': 'width',
     }
 })
 export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit, AfterViewChecked {
@@ -161,6 +162,9 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         if (!this._tabsInkBar || this._tabLabels.length == 0) return;
 
         let labelPos = this._getLabelOffsetByKey(index);
+        if (!labelPos) {
+            return;
+        }
 
         this._$inkBarStyle = {
             'display': 'block',
@@ -173,15 +177,13 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     private _getLabelOffsetByKey(key: number): any {
         let currentLabel = this._tabLabels.find(item => item.key === key);
 
-        // 非法的 key // 有可能getTop 等扩展Tab页时再重构.
-        if (currentLabel) { // 找到对应的Label
+        if (currentLabel) {
             return {
                 offSet: currentLabel.getOffsetLeft(),
                 width: currentLabel.getOffsetWidth()
             }
         } else {
-            console.warn("没有对应key的tab-Label");
-            return {}
+            return null;
         }
     }
 
@@ -227,6 +229,9 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         if (!this._tabsInkBar || this._tabLabels.length == 0) return;
 
         const labelPos = this._getLabelOffsetByKey(this.selectedIndex);
+        if (!labelPos) {
+            return;
+        }
 
         const tabElem = this._tabsInkBar.nativeElement;
         if (tabElem.offsetWidth != labelPos.width) {
@@ -295,48 +300,59 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
      * @param {TemplateRef<any>} contentTemplate 以一个`ng-template`标签包围起来的模板作为tab页的内容，
      * 当tab页的内容比较简单时，建议采用此方式。
      * @param {Object} initData 提供给`contentTemplate`的初始化数据
+     * @param {boolean} activateImmediately 是否立即激活新增的Tab页，默认值是`true`
      */
-    public addTab(titleString: string, contentTemplate: TemplateRef<any>, initData?: Object);
+    public addTab(titleString: string, contentTemplate: TemplateRef<any>,
+                  initData?: Object, activateImmediately?: boolean);
     /**
      * @param {TemplateRef<any>} titleTemplate 以一个`ng-template`标签包围起来的模板作为标题，
      * 这样可以彻底定制化新增的tab的标题部分，例如加图标，甚至添加按钮、进度条等复杂视图。
      * @param {TemplateRef<any>} contentTemplate
      * @param {Object} initData
+     * @param {boolean} activateImmediately
      */
-    public addTab(titleTemplate: TemplateRef<any>, contentTemplate: TemplateRef<any>, initData?: Object);
+    public addTab(titleTemplate: TemplateRef<any>, contentTemplate: TemplateRef<any>,
+                  initData?: Object, activateImmediately?: boolean);
     /**
      * @param {Type<IDynamicInstantiatable>} titleComponent 以一个组件作为标题，这样可以彻底定制化新增的tab的标题部分，
      * 例如加图标，甚至添加按钮、进度条等复杂视图。
      * @param {TemplateRef<any>} contentTemplate
      * @param {Object} initData
+     * @param {boolean} activateImmediately
      */
-    public addTab(titleComponent: Type<IDynamicInstantiatable>, contentTemplate: TemplateRef<any>, initData?: Object);
+    public addTab(titleComponent: Type<IDynamicInstantiatable>, contentTemplate: TemplateRef<any>,
+                  initData?: Object, activateImmediately?: boolean);
     /**
-     *
      * @param {string} titleString
      * @param {Type<IDynamicInstantiatable>} contentComponent 以一个组件作为tab页的内容，
      * 如果新增的tab页内容比较复杂，建议采用此方式添加，以让各部分代码的耦合解开。
      * @param {Object} initData
+     * @param {boolean} activateImmediately
      */
-    public addTab(titleString: string, contentComponent: Type<IDynamicInstantiatable>, initData?: Object);
+    public addTab(titleString: string, contentComponent: Type<IDynamicInstantiatable>,
+                  initData?: Object, activateImmediately?: boolean);
     /**
      * @param {TemplateRef<any>} titleTemplate
      * @param {Type<IDynamicInstantiatable>} contentComponent
      * @param {Object} initData
+     * @param {boolean} activateImmediately
      */
-    public addTab(titleTemplate: TemplateRef<any>, contentComponent: Type<IDynamicInstantiatable>, initData?: Object);
+    public addTab(titleTemplate: TemplateRef<any>, contentComponent: Type<IDynamicInstantiatable>,
+                  initData?: Object, activateImmediately?: boolean);
     /**
      * @param {Type<IDynamicInstantiatable>} titleComponent
      * @param {Type<IDynamicInstantiatable>} contentComponent
      * @param {Object} initData
+     * @param {boolean} activateImmediately
      */
-    public addTab(titleComponent: Type<IDynamicInstantiatable>, contentComponent: Type<IDynamicInstantiatable>, initData?: Object);
+    public addTab(titleComponent: Type<IDynamicInstantiatable>, contentComponent: Type<IDynamicInstantiatable>,
+                  initData?: Object, activateImmediately?: boolean);
     /**
      * @internal
      */
     public addTab(title: string | TemplateRef<any> | Type<IDynamicInstantiatable>,
                   content: TemplateRef<any> | Type<IDynamicInstantiatable>,
-                  initData?: Object) {
+                  initData?: Object, activateImmediately: boolean = true) {
         const factory = this._cfr.resolveComponentFactory(JigsawTabPane);
         let tabPane: JigsawTabPane = this._viewContainer.createComponent(factory).instance;
         if (typeof title == 'string') {
@@ -351,15 +367,21 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         tabTemp.push(tabPane);
         this._$tabPanes.reset(tabTemp);
         this.length = this._$tabPanes.length;
-        this.selectedIndex = this._$tabPanes.length - 1;
+        if (activateImmediately) {
+            this.selectedIndex = this._$tabPanes.length - 1;
+        }
 
         //router link
         this.callLater(() => {
-            let link = this._tabLabels.find(item => item.key === this.selectedIndex)
-                .elementRef.nativeElement.querySelector('[routerLink]');
-            if (link) {
-                link.click()
+            const label = this._tabLabels.find(item => item.key === this.selectedIndex);
+            if (!label) {
+                return;
             }
+            const link = label.elementRef.nativeElement.querySelector('[routerLink]');
+            if (!link) {
+                return;
+            }
+            link.click();
         });
     }
 

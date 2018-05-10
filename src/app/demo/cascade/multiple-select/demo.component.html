@@ -1,0 +1,10 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<j-cascade [data]="areas" [multipleSelect]="true" (selectedItemsChange)="parseMessage($event)" width="400">
+</j-cascade>
+
+<p>选择的区域是：{{message}}</p>

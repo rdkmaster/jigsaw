@@ -1,0 +1,37 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>cascade</h2>
+
+    <div class="demo-1 live-demo">
+        <h3>单选</h3>
+        <j-combo-select [value]="comboValue1">
+            <ng-template>
+                <j-cascade [(selectedItems)]="selectedItems1" [dataGenerator]="generator"
+                           [generatorContext]="this" labelField="name"
+                           (selectedItemsChange)="parseMessage($event)" width="418">
+                </j-cascade>
+            </ng-template>
+        </j-combo-select>
+    </div>
+
+    <div class="demo-2 live-demo">
+        <h3>多选</h3>
+        <j-combo-select [value]="comboValue2">
+            <ng-template>
+                <j-cascade [(selectedItems)]="selectedItems2" [dataGenerator]="generator"
+                           [generatorContext]="this" labelField="name" [multipleSelect]="true"
+                           (selectedItemsChange)="parseMultipleMessage($event)" width="418">
+                </j-cascade>
+            </ng-template>
+        </j-combo-select>
+    </div>
+</div>
+
+
+
+

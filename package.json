@@ -76,7 +76,7 @@
     "karma-jasmine-html-reporter": "~0.2.2",
     "karma-phantomjs-launcher": "~1.0.4",
     "minimist": "~1.2.0",
-    "node-sass": "~4.5.3",
+    "node-sass": "^4.5.3",
     "protractor": "~5.1.2",
     "resolve-bin": "~0.4.0",
     "rollup": "~0.41.6",
