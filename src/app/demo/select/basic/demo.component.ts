@@ -6,7 +6,7 @@ import {ArrayCollection} from "jigsaw/core/data/array-collection";
 })
 export class SelectBasicDemoComponent {
     selectedCityForSelect: any;
-    cityListForSelect = new ArrayCollection([
+    cityList = new ArrayCollection([
         {label: "北京"},
         {label: "上海"},
         {label: "南京"},
@@ -14,6 +14,9 @@ export class SelectBasicDemoComponent {
         {label: "长沙"},
         {label: "西安"}
     ]);
+
+    selectedCityForSelect2: string;
+    cityArrayList = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安"]);
 
     selectedCityName: string;
 

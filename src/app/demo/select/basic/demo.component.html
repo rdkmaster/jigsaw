@@ -11,8 +11,17 @@
         <jigsaw-select id="test-select" [(value)]="selectedCityForSelect"
                        (valueChange)="selectChange($event)"
                        placeholder="请选择城市"
-                       [data]="cityListForSelect">
+                       [data]="cityList">
         </jigsaw-select>
         <p class="message">选择的城市是 <span>{{selectedCityName}}</span></p>
+    </div>
+    <div class="live-demo">
+        <h3>字符串数组</h3>
+        <jigsaw-select [(value)]="selectedCityForSelect2"
+                       (valueChange)="selectChange($event)"
+                       placeholder="请选择城市"
+                       [data]="cityArrayList">
+        </jigsaw-select>
+        <p class="message">选择的城市是 <span>{{selectedCityForSelect2}}</span></p>
     </div>
 </div>

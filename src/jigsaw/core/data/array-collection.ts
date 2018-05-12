@@ -534,7 +534,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
     }
 
     private _fromArray(source: T[]): boolean {
-        source = source instanceof Array ? source : CommonUtils.isDefined(source) ? [source] : [];
+        source = source instanceof Array || source instanceof ArrayCollection ? source : CommonUtils.isDefined(source) ? [source] : [];
         let needRefresh = this.length > 0;
 
         this.splice(0, this.length);

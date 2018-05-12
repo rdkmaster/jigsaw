@@ -1,4 +1,4 @@
-<div class="jigsaw-list-option-wrapper" *ngIf="value; else optionSplitter">
+<div class="jigsaw-list-option-wrapper" *ngIf="value; else optionSeparator">
     <div class="jigsaw-list-option-block"></div>
     <div class="jigsaw-list-option-title-box">
         <div class="jigsaw-list-option-title">
@@ -10,6 +10,6 @@
     </div>
     <ng-content></ng-content>
 </div>
-<ng-template #optionSplitter>
-    <span class="jigsaw-list-option-splitter-line"></span>
+<ng-template #optionSeparator>
+    <span class="jigsaw-list-option-separator-line"></span>
 </ng-template>

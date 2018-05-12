@@ -1,12 +1,12 @@
 import {
-    NgModule, Component, Input, forwardRef, OnInit, Output, EventEmitter
+    NgModule, Component, Input, forwardRef, OnInit, Output, EventEmitter, ViewChild
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {AbstractJigsawComponent} from "../common";
 import {InternalUtils} from '../../core/utils/internal-utils';
 import {ArrayCollection} from "../../core/data/array-collection";
 import {JigsawComboSelectModule} from "../combo-select/index";
-import {JigsawListLiteModule} from "../list-and-tile/list-lite";
+import {JigsawListLite, JigsawListLiteModule} from "../list-and-tile/list-lite";
 
 /**
  * 选择控件
@@ -144,6 +144,8 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
      */
     @Output() public valueChange: EventEmitter<any> = new EventEmitter<any>();
 
+    @ViewChild(JigsawListLite) private _listCmp: JigsawListLite;
+
     /**
      * @internal
      */
@@ -156,9 +158,17 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
         this.valueChange.emit(this.value);
     }
 
+    public _$onComboOpenChange(optionState: boolean) {
+        if (optionState || !this.searchable) return;
+        // combo关闭时，重置数据
+        this._listCmp._$handleSearching();
+    }
+
     ngOnInit() {
         super.ngOnInit();
-        this.trackItemBy = InternalUtils.initTrackItemBy(<string>this.trackItemBy, this.labelField);
+        if (this.data && typeof this.data[0] !== 'string') {
+            this.trackItemBy = InternalUtils.initTrackItemBy(<string>this.trackItemBy, this.labelField);
+        }
     }
 
     private _propagateChange: any = () => {

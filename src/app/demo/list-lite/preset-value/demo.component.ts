@@ -39,18 +39,8 @@ export class ListLitePresetValueDemoComponent {
         },
     ];
 
-    selectedItems = [
-        {
-            logo: 'bicycle',
-            name: 'bicycle',
-            desc: 'A bicycle, also called a cycle or bike, is a human-powered, pedal-driven, single-track vehicle, having two wheels attached to a frame, one behind the other.'
-        },
-        {
-            logo: 'book',
-            name: 'book',
-            desc: 'A book is a set of sheets of paper, parchment, or similar materials that are fastened together to hinge at one side.'
-        },
-    ];
+    // selectedItems只要包含trackItemBy的name字段就能在组件中显示出来
+    selectedItems = [{name: 'bicycle',}, {name: 'book',}];
 
     selectedItemsStr: string = this.selectedItems.map(item => item.name).toString();
 

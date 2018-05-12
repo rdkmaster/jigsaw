@@ -9,7 +9,7 @@ export class SelectAsyncComponent {
     constructor(public http: HttpClient) {
         this.citys = new ArrayCollection();
         this.citys.http = http;
-        this.citys.fromAjax('mock-data/cities');
+        this.citys.fromAjax({url: '/mock-service/area' , params: {provinceId: '10'}});
         this.citys.onAjaxComplete(() => {
             console.log(this.citys);
         });

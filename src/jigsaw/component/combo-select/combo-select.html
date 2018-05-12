@@ -10,7 +10,7 @@
                         [closable]='tagItem.closable'
                         (select)="_$tagClick(tagItem)"
                         (close)="_$removeTag(tagItem)">
-                {{tagItem[labelField]}}
+                {{tagItem[labelField] ? tagItem[labelField] : tagItem}}
             </jigsaw-tag>
             <jigsaw-input #editor *ngIf="searchable && !disabled" [(value)]="searchKeyword" [disabled]="searching"
                           width="100%" (valueChange)="_$handleSearchBoxChange()"

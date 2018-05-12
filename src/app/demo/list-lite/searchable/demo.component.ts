@@ -16,7 +16,7 @@ export class ListLiteSearchableDemoComponent {
             name: 'bicycle',
             desc: 'A bicycle, also called a cycle or bike, is a human-powered, pedal-driven, single-track vehicle, having two wheels attached to a frame, one behind the other.'
         },
-        JigsawListLite.splitter,
+        JigsawListLite.SEPARATOR,
         {
             logo: 'camera',
             name: 'camera',
@@ -33,7 +33,7 @@ export class ListLiteSearchableDemoComponent {
             name: 'football',
             desc: 'Football is a family of team sports that involve, to varying degrees, kicking a ball with the foot to score a goal. '
         },
-        JigsawListLite.splitter,
+        JigsawListLite.SEPARATOR,
         {
             logo: 'book',
             name: 'book',

@@ -23,11 +23,18 @@
     </div>
 
     <div class="clearfix">
-        <div class="demo-1 live-demo live-demo-block">
+        <div class="demo-3 live-demo live-demo-block">
             <h3>异步数据</h3>
             <j-list-lite width="200" [data]="countryList" labelField="enName"
                          (selectedItemsChange)="handleSelect($event, 'selectedItems3', 'enName')"></j-list-lite>
             <p class="message">选中的条目是: <span>{{selectedItems3}}</span></p>
+        </div>
+
+        <div class="demo-4 live-demo live-demo-block">
+            <h3>字符串数组</h3>
+            <j-list-lite width="200" [data]="goodsArrayList"
+                         (selectedItemsChange)="handleSelect($event, 'selectedItems4')"></j-list-lite>
+            <p class="message">选中的条目是: <span>{{selectedItems4}}</span></p>
         </div>
     </div>
 </div>

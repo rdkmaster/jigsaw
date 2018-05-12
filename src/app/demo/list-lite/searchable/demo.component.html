@@ -7,28 +7,32 @@
 <div class="live-demo-wrap">
     <h2>List lite</h2>
 
-    <div class="live-demo">
-        <h3>搜索功能</h3>
-        <j-list-lite width="200" [data]="goodsList" labelField="name"
-                     (selectedItemsChange)="handleSelect($event, 'selectedItems', 'name')" [multipleSelect]="true"
-                     [searchable]="true"></j-list-lite>
-        <p class="message">选中的条目是: <span>{{selectedItems}}</span></p>
+    <div class="clearfix">
+        <div class="live-demo live-demo-block">
+            <h3>搜索功能</h3>
+            <j-list-lite width="200" [data]="goodsList" labelField="name"
+                         (selectedItemsChange)="handleSelect($event, 'selectedItems', 'name')" [multipleSelect]="true"
+                         [searchable]="true"></j-list-lite>
+            <p class="message">选中的条目是: <span>{{selectedItems}}</span></p>
+        </div>
+
+        <div class="live-demo live-demo-block">
+            <h3>本地数据过滤</h3>
+            <j-list-lite width="200" [optionCount]="4" [data]="lpaCountries" labelField="enName"
+                         (selectedItemsChange)="handleSelect($event, 'selectedCountries', 'enName')" [multipleSelect]="true"
+                         [searchable]="true"></j-list-lite>
+            <p class="message">选中的条目是: <span>{{selectedCountries}}</span></p>
+        </div>
     </div>
 
-    <div class="live-demo">
-        <h3>本地数据过滤</h3>
-        <j-list-lite width="200" [optionCount]="4" [data]="lpaCountries" labelField="enName"
-                     (selectedItemsChange)="handleSelect($event, 'selectedCountries', 'enName')" [multipleSelect]="true"
-                     [searchable]="true"></j-list-lite>
-        <p class="message">选中的条目是: <span>{{selectedCountries}}</span></p>
-    </div>
-
-    <div class="live-demo">
-        <h3>服务端数据过滤</h3>
-        <j-list-lite width="200" [optionCount]="4" [data]="spaCountries" labelField="enName"
-                     (selectedItemsChange)="handleSelect($event, 'selectedCountries2', 'enName')" [multipleSelect]="true"
-                     [searchable]="true"></j-list-lite>
-        <p class="message">选中的条目是: <span>{{selectedCountries2}}</span></p>
+    <div class="clearfix">
+        <div class="live-demo  live-demo-block">
+            <h3>服务端数据过滤</h3>
+            <j-list-lite width="200" [optionCount]="4" [data]="spaCountries" labelField="enName"
+                         (selectedItemsChange)="handleSelect($event, 'selectedCountries2', 'enName')" [multipleSelect]="true"
+                         [searchable]="true"></j-list-lite>
+            <p class="message">选中的条目是: <span>{{selectedCountries2}}</span></p>
+        </div>
     </div>
 </div>
 

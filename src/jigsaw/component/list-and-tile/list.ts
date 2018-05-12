@@ -35,7 +35,7 @@ export class JigsawList extends AbstractJigsawGroupComponent implements AfterCon
         '[class.jigsaw-list-option]': 'true',
         '[class.jigsaw-list-option-active]': 'selected',
         '[class.jigsaw-list-option-disabled]': 'disabled',
-        '[class.jigsaw-list-option-splitter]': '!value',
+        '[class.jigsaw-list-option-separator]': '!value',
         '(click)': '_$handleClick()'
     }
 })

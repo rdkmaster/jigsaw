@@ -240,7 +240,6 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     private _autoClose() {
         if (this.autoClose) {
-            debugger
             this.open = false;
         }
     }

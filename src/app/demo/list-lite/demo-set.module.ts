@@ -2,8 +2,8 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {ListLiteBasicDemoComponent} from "./basic/demo.component";
 import {ListLiteBasicDemoModule} from "./basic/demo.module";
-import {ListLiteOptionCountDemoModule} from "./optionCount/demo.module";
-import {ListLiteOptionCountDemoComponent} from "./optionCount/demo.component";
+import {ListLiteOptionCountDemoModule} from "./option-count/demo.module";
+import {ListLiteOptionCountDemoComponent} from "./option-count/demo.component";
 import {ListLitePresetValueDemoComponent} from "./preset-value/demo.component";
 import {ListLitePresetValueDemoModule} from "./preset-value/demo.module";
 import {ListLiteSearchableDemoComponent} from "./searchable/demo.component";
@@ -23,7 +23,7 @@ export const routerConfig = [
         path: 'basic', component: ListLiteBasicDemoComponent
     },
     {
-        path: 'optionCount', component: ListLiteOptionCountDemoComponent
+        path: 'option-count', component: ListLiteOptionCountDemoComponent
     },
     {
         path: 'preset-value', component: ListLitePresetValueDemoComponent

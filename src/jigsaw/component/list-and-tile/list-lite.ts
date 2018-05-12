@@ -1,5 +1,5 @@
 import {
-    AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, NgModule, OnInit, Output, QueryList,
+    AfterViewInit, ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, NgModule, OnInit, Output, QueryList,
     ViewChildren
 } from "@angular/core";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "../../core/data/array-collection";
@@ -8,7 +8,8 @@ import {CommonModule} from "@angular/common";
 import {JigsawListModule, JigsawListOption} from "./list";
 import {JigsawInputModule} from "../input/input";
 import {GroupOptionValue} from "./group-common";
-import {PerfectScrollbarModule} from "ngx-perfect-scrollbar/dist";
+import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 /**
  * 一个轻量的list控件，是在list控件基础上做的封装，做了一些功能的拓展
@@ -31,7 +32,8 @@ import {PerfectScrollbarModule} from "ngx-perfect-scrollbar/dist";
             <j-list width="100%" [trackItemBy]="trackItemBy" [multipleSelect]="multipleSelect"
                     [(selectedItems)]="selectedItems" (selectedItemsChange)="_$handleSelectChange($event)">
                 <j-list-option *ngFor="let item of data" [value]="item" [disabled]="item?.disabled">
-                    <p class="jigsaw-list-lite-text" title="{{item ? item[labelField] : ''}}">{{item ? item[labelField] : ''}}</p>
+                    <p class="jigsaw-list-lite-text" title="{{item && item[labelField] ? item[labelField] : item}}">
+                        {{item && item[labelField] ? item[labelField] : item}}</p>
                 </j-list-option>
             </j-list>
         </div>
@@ -39,9 +41,12 @@ import {PerfectScrollbarModule} from "ngx-perfect-scrollbar/dist";
     host: {
         '[class.jigsaw-list-lite]': 'true',
         '[style.width]': 'width'
-    }
+    },
+    providers: [
+        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawListLite), multi: true},
+    ]
 })
-export class JigsawListLite extends AbstractJigsawComponent implements OnInit, AfterViewInit {
+export class JigsawListLite extends AbstractJigsawComponent implements OnInit, AfterViewInit, ControlValueAccessor {
     constructor(private _changeDetectorRef: ChangeDetectorRef) {
         super();
     }
@@ -51,7 +56,7 @@ export class JigsawListLite extends AbstractJigsawComponent implements OnInit, A
      *
      * $demo = list-lite/basic
      */
-    public static get splitter() {
+    public static get SEPARATOR() {
         return null
     }
 
@@ -98,7 +103,8 @@ export class JigsawListLite extends AbstractJigsawComponent implements OnInit, A
     public searchable: boolean;
 
     /**
-     * 显示的option个数，超出的会显示滚动条
+     * 显示的option个数，超出的会显示滚动条；
+     * 不设置optionCount，则显示全部
      *
      * $demo = list-lite/optionCount
      */
@@ -119,12 +125,13 @@ export class JigsawListLite extends AbstractJigsawComponent implements OnInit, A
      */
     public _$handleSelectChange(items) {
         this.selectedItemsChange.emit(items);
+        this._propagateChange(items);
     }
 
     /**
      * @internal
      */
-    public _$handleSearching(filterKey) {
+    public _$handleSearching(filterKey?: string) {
         if (!(this.data instanceof LocalPageableArray) && !(this.data instanceof PageableArray)) {
             const data = new LocalPageableArray();
             data.fromArray(this.data);
@@ -142,7 +149,7 @@ export class JigsawListLite extends AbstractJigsawComponent implements OnInit, A
 
     ngOnInit() {
         super.ngOnInit();
-        if (!this.trackItemBy) {
+        if (!this.trackItemBy && this.data && typeof this.data[0] !== 'string') {
             this.trackItemBy = this.labelField;
         }
     }
@@ -152,6 +159,20 @@ export class JigsawListLite extends AbstractJigsawComponent implements OnInit, A
         this._listOptions.changes.subscribe(() => {
             this._setListWrapperHeight();
         })
+    }
+
+    private _propagateChange: any = () => {
+    };
+
+    public writeValue(value: any): void {
+
+    }
+
+    public registerOnChange(fn: any): void {
+        this._propagateChange = fn;
+    }
+
+    public registerOnTouched(fn: any): void {
     }
 }
 
