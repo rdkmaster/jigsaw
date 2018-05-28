@@ -22,6 +22,8 @@ import {MapGraphComponent} from "./map/demo.component";
 import {MapGraphModule} from "./map/demo.module";
 import {ProvinceMapGraphComponent} from "./province-map/demo.component";
 import {ProvinceMapGraphModule} from "./province-map/demo.module";
+import {GraphFormatterComponent} from "./formatter/demo.component";
+import {GraphFormatterModule} from "./formatter/demo.module";
 
 export const routerConfig = [
     {
@@ -47,6 +49,9 @@ export const routerConfig = [
     },
     {
         path: 'province-map', component: ProvinceMapGraphComponent
+    },
+    {
+        path: 'formatter', component: GraphFormatterComponent
     }
 ];
 
@@ -61,7 +66,8 @@ export const routerConfig = [
         GraphWithNoDataModule,
         GraphSetSizeModule,
         MapGraphModule,
-        ProvinceMapGraphModule
+        ProvinceMapGraphModule,
+        GraphFormatterModule
     ]
 })
 export class GraphDemoModule {
