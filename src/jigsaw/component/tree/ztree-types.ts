@@ -10,9 +10,10 @@ export class ZTreeSettingAsync {
 }
 
 
-export enum ZTreeSettingViewSpeedLevel{
+export enum ZTreeSettingViewSpeedLevel {
     slow, normal, fast
 }
+
 export class ZTreeSettingView {
     addDiyDom?: Function;
     autoCancelSelected?: boolean;
@@ -35,16 +36,19 @@ export class ZTreeSettingDataKey {
     url?: string;
     icon?: string;
 }
+
 export class ZTreeSettingDataKeep {
     parent?: boolean;
     leaf?: boolean;
 }
+
 export class ZTreeSettingDataSimpleData {
     enable?: boolean;
     idKey?: string;
     pIdKey?: string;
     rootPId?: string | number;
 }
+
 export class ZTreeSettingData {
     key?: ZTreeSettingDataKey;
     simpleData?: ZTreeSettingDataSimpleData;
@@ -52,12 +56,14 @@ export class ZTreeSettingData {
 }
 
 
-export enum ZTreeSettingCheckStyle{
+export enum ZTreeSettingCheckStyle {
     checkbox, radio
 }
-export enum ZTreeSettingCheckRadioType{
+
+export enum ZTreeSettingCheckRadioType {
     level, all
 }
+
 export class ZTreeSettingCheck {
     autoCheckTrigger?: boolean;
     chkBoxType?: JSON;
@@ -107,15 +113,16 @@ export class ZTreeSettingEditDrag {
     autoExpandTrigger?: boolean;
     isCopy?: boolean;
     isMove?: boolean;
-    prev?: boolean;
-    next?: boolean;
-    inner?: boolean;
+    prev?: boolean | Function;
+    next?: boolean | Function;
+    inner?: boolean | Function;
     borderMax?: number;
     borderMin?: number;
     minMoveSize?: number;
     maxShowNodeNum?: number;
     autoOpenTime?: number;
 }
+
 export class ZTreeSettingEdit {
     drag?: ZTreeSettingEditDrag;
     editNameSelectAll?: boolean;
