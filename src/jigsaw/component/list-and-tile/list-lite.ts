@@ -106,7 +106,7 @@ export class JigsawListLite extends AbstractJigsawComponent implements OnInit, A
      * 显示的option个数，超出的会显示滚动条；
      * 不设置optionCount，则显示全部
      *
-     * $demo = list-lite/optionCount
+     * $demo = list-lite/option-count
      */
     @Input() public optionCount: number;
 

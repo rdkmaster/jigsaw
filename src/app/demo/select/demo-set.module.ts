@@ -5,8 +5,8 @@ import {SelectAsyncModule} from "./async/demo.module";
 
 import {SelectBasicDemoComponent} from "./basic/demo.component";
 import {SelectAsyncComponent} from "./async/demo.component";
-import {SelectOptionCountDemoComponent} from "./optionCount/demo.component";
-import {SelectOptionCountDemoModule} from "./optionCount/demo.module";
+import {SelectOptionCountDemoComponent} from "./option-count/demo.component";
+import {SelectOptionCountDemoModule} from "./option-count/demo.module";
 import {SelectDisabledDemoComponent} from "app/demo/select/disabled/demo.component";
 import {SelectDisabledDemoModule} from "./disabled/demo.module";
 import {SelectLineEllipsisDemoComponent} from "./line-ellipsis/demo.component";

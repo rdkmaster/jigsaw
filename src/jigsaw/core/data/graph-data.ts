@@ -8,6 +8,10 @@ export type GraphDataField = string[];
 export type GraphDataRowDescriptor = string[];
 export type GraphDataMatrix = GraphMatrixRow[];
 
+export abstract class AbstractGraphStyle {
+    protected abstract createChartOptions(): EchartOptions;
+}
+
 /**
  * 这是所有的图形数据的基类，正如类名所提示的，这个类是抽象的。
  *

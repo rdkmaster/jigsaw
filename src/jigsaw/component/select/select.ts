@@ -62,7 +62,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 
     /**
      * 显示的option个数，超出的会显示滚动条
-     * $demo = select/optionCount
+     * $demo = select/option-count
      */
     @Input() public optionCount: number;
 
