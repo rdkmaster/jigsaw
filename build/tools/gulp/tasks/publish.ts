@@ -56,7 +56,12 @@ function _execNpmPublish(label: string, packageName: string): Promise<{}> {
   console.log(green(`Publishing ${packageName}...`));
 
   const command = npm;
-  const args = ['publish', '--access', 'public', label ? `--tag` : undefined, label || undefined];
+
+  const args = ['publish', '--access', 'public'];
+  if (label) {
+      args.push('--tag', label);
+  }
+
   return new Promise((resolve, reject) => {
     console.log(grey(`Executing: ${command} ${args.join(' ')}`));
     if (argv['dry']) {
