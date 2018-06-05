@@ -42,6 +42,7 @@ import {
     PerfectScrollbarModule
 } from "ngx-perfect-scrollbar";
 import {TableUtils} from "./table-utils";
+import {JigsawTrustedHtmlModule} from "../../directive/trusted-html/trusted-html";
 
 @Component({
     selector: 'jigsaw-table, j-table',
@@ -231,6 +232,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                     // 根据cell的data函数，生成新的cellData，并更新tableData
                     settings.cellData = cellDataGenerator(this.data, rowIndex, realColIndex, this._additionalData);
                     this._setCellDataByField(field, rowIndex, settings.cellData);
+                } else if (columnDefine.cell && typeof columnDefine.cell.data == 'string') {
+                    settings.cellData = columnDefine.cell.data;
                 } else {
                     settings.cellData = this._getCellDataByField(field, rowIndex);
                 }
@@ -583,7 +586,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             host.querySelectorAll('.jigsaw-table-body tbody tr:first-child td')
                 .forEach(td => widthStorage.push(td.offsetWidth));
 
-            if(widthStorage.length) {
+            if (widthStorage.length) {
                 host.querySelectorAll('.jigsaw-table-header thead tr:first-child td')
                     .forEach((td, index) => {
                         if (td.offsetWidth > widthStorage[index]) {
@@ -773,7 +776,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
 @NgModule({
     declarations: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
-    imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, PerfectScrollbarModule],
+    imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, PerfectScrollbarModule, JigsawTrustedHtmlModule],
     exports: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
     entryComponents: [DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer,
         TableCellCheckboxRenderer, TableCellSwitchRenderer]

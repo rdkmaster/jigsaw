@@ -65,7 +65,7 @@ export type TableAsyncRenderer = () => TemplateRef<any>;
 
 export type TableSyncRenderer = Type<TableCellRendererBase> | TemplateRef<any>;
 
-export type TableRenderer = TableSyncRenderer | TableAsyncRenderer;
+export type TableRenderer = TableSyncRenderer | TableAsyncRenderer | string;
 
 export class TableHeader {
     text?: string;
@@ -83,6 +83,7 @@ export class TableCell {
     editorRenderer?: TableRenderer;
     data?: any | TableCellDataGenerator;
     tooltip?: any;
+    innerHtmlContext?: any;
 }
 
 export class TableHeadSetting {
@@ -109,6 +110,7 @@ export class TableCellSetting {
     field: string;
     rowSpan: number;
     tooltip: any;
+    innerHtmlContext: any;
 }
 
 export class SortChangeEvent {

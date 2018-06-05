@@ -32,7 +32,7 @@ export class TableUtils {
         if (!settings) {
             settings = {
                 cellData: '', width: null, visible: true, renderer: null, clazz: '', rowSpan: 1,
-                editable: false, editorRenderer: null, group: null, field: null, tooltip: null
+                editable: false, editorRenderer: null, group: null, field: null, tooltip: null, innerHtmlContext: null
             }
         }
         settings.width = columnDefine.width;
@@ -45,6 +45,7 @@ export class TableUtils {
             settings.editable = cellDef.editable;
             settings.editorRenderer = TableUtils.getRenderer(cellDef.editorRenderer);
             settings.tooltip = cellDef.tooltip;
+            settings.innerHtmlContext = cellDef.innerHtmlContext;
         }
         return settings;
     }
