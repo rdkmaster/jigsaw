@@ -30,4 +30,7 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
             color: $text-color-dark;
         }
     }
+    &.#{$tag-prefix-cls}-without-border {
+        border: none;
+    }
 }

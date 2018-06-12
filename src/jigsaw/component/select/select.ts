@@ -7,6 +7,7 @@ import {InternalUtils} from '../../core/utils/internal-utils';
 import {ArrayCollection} from "../../core/data/array-collection";
 import {JigsawComboSelectModule} from "../combo-select/index";
 import {JigsawListLite, JigsawListLiteModule} from "../list-and-tile/list-lite";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 /**
  * 选择控件
@@ -24,7 +25,10 @@ import {JigsawListLite, JigsawListLiteModule} from "../list-and-tile/list-lite";
     templateUrl: 'select.html',
     host: {
         '[class.jigsaw-select-host]': 'true',
-        '[style.min-width]': 'width'
+        '[class.jigsaw-select-single-select]': '!multipleSelect',
+        '[style.min-width]': 'multipleSelect ? minWidth : "none"',
+        '[style.max-width]': 'multipleSelect ? maxWidth : "none"',
+        '[style.width]': '!multipleSelect ? width : "none"'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSelect), multi: true},
@@ -33,6 +37,36 @@ import {JigsawListLite, JigsawListLiteModule} from "../list-and-tile/list-lite";
 export class JigsawSelect extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
 
     protected _width: string = '120px';
+
+    private _minWidth: string = '120px';
+
+    /**
+     * 用于多选时设置最小宽度
+     * @returns {string}
+     */
+    @Input()
+    public get minWidth(): string {
+        return this._minWidth;
+    }
+
+    public set minWidth(value: string) {
+        this._minWidth = CommonUtils.getCssValue(value);
+    }
+
+    private _maxWidth: string = '100%';
+
+    /**
+     * 用于多选时设置最大宽度
+     * @returns {string}
+     */
+    @Input()
+    public get maxWidth(): string {
+        return this._maxWidth;
+    }
+
+    public set maxWidth(value: string) {
+        this._maxWidth = CommonUtils.getCssValue(value);
+    }
 
     /**
      * 设置对象的标识

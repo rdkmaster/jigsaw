@@ -7,7 +7,15 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
     @include inline-block();
     .#{$jigsaw-combo-select}-host {
         .jigsaw-tag-host {
-            max-width: 76px;
+            max-width: 100%;
+            background: none;
+        }
+    }
+    &.#{$select-prefix-cls}-single-select {
+        .#{$jigsaw-combo-select}-host {
+            .jigsaw-tag-host {
+                padding: 0;
+            }
         }
     }
 }

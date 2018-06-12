@@ -13,7 +13,8 @@ import {CommonUtils} from "../../core/utils/common-utils";
         '[style.line-height]': 'height',
         '[style.background]': 'color',
         '[style.border-color]': 'color',
-        '[class.jigsaw-tag-closable]': '_closable',
+        '[class.jigsaw-tag-without-border]': '!showBorder',
+        '[class.jigsaw-tag-closable]': 'closable && showBorder',
         '[class.jigsaw-tag-color]': '!!color',
         '[class.jigsaw-tag-host]': 'true',
         '[@AnimationDestroy]': '_state',
@@ -36,6 +37,13 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     public set closable(value: boolean) {
         this._closable = CommonUtils.isDefined(value) ? value : true;
     }
+
+    /**
+     * 是否显示tag的边框和删除按钮，默认显示
+     * @type {boolean}
+     */
+    @Input()
+    public showBorder: boolean = true;
 
     private _state: string;
 
