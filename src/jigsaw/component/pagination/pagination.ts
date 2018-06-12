@@ -6,7 +6,7 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 
 import {JigsawSelectModule} from '../select/select';
-import {JigsawInputModule} from '../input/input';
+import {JigsawInput, JigsawInputModule} from '../input/input';
 import {AbstractJigsawComponent} from "../common";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {InternalUtils} from "../../core/utils/internal-utils";
@@ -139,6 +139,8 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
 
     @ViewChildren(forwardRef(() => JigsawPagingItem))
     private _pages: QueryList<JigsawPagingItem> = null;
+
+    @ViewChildren(JigsawInput) inputs: QueryList<JigsawInput>;
 
     /*
      * 根据current设置page按钮的显示，上一页，下一页，上五页，下五页的显示
@@ -349,6 +351,11 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         });
 
         this._pageNumberInit = true;
+    }
+
+    public reset() {
+        if(!this.inputs) return;
+        this.inputs.forEach(input => input.value='');
     }
 
     ngOnInit() {
