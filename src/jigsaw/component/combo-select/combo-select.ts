@@ -208,6 +208,13 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public searchKeywordChange = new EventEmitter<any>();
 
     /**
+     * 是否显示tag的边框和删除按钮，默认显示
+     * @type {boolean}
+     */
+    @Input()
+    public showValueBorder: boolean = true;
+
+    /**
      * @internal
      */
     public _$clearValue() {

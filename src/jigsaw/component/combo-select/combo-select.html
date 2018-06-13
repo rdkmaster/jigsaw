@@ -8,6 +8,7 @@
         <div class="jigsaw-combo-select-selection-rendered">
             <jigsaw-tag *ngFor="let tagItem of value"
                         [closable]='tagItem.closable'
+                        [showBorder]="showValueBorder"
                         (select)="_$tagClick(tagItem)"
                         (close)="_$removeTag(tagItem)">
                 {{tagItem[labelField] ? tagItem[labelField] : tagItem}}

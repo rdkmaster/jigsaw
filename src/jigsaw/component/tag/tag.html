@@ -1,2 +1,2 @@
 <span #text (click)="_$select($event)" [title]="text.innerText"><ng-content></ng-content></span>
-<span *ngIf="closable" (click)="_$close($event)" class="jigsaw-tag-close-bar">&times;</span>
+<span *ngIf="closable && showBorder" (click)="_$close($event)" class="jigsaw-tag-close-bar">&times;</span>

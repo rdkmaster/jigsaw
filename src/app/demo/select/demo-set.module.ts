@@ -19,6 +19,8 @@ import {SelectMultipleDemoComponent} from "./multiple/demo.component";
 import {SelectMultipleDemoModule} from "./multiple/demo.module";
 import {SelectSearchableDemoComponent} from "./searchable/demo.component";
 import {SelectSearchableDemoModule} from "./searchable/demo.module";
+import {SelectSizeDemoComponent} from "./size/demo.component";
+import {SelectSizeDemoModule} from "./size/demo.module";
 
 export const routerConfig = [
     {
@@ -48,6 +50,9 @@ export const routerConfig = [
     {
         path: 'searchable', component: SelectSearchableDemoComponent
     },
+    {
+        path: 'size', component: SelectSizeDemoComponent
+    },
 ];
 
 @NgModule({
@@ -61,7 +66,8 @@ export const routerConfig = [
         SelectTriggerDemoModule,
         SelectPresetDemoModule,
         SelectMultipleDemoModule,
-        SelectSearchableDemoModule
+        SelectSearchableDemoModule,
+        SelectSizeDemoModule
     ]
 })
 export class SelectDemoModule {
