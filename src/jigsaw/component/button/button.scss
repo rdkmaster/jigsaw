@@ -6,7 +6,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     @include inline-block();
     min-width: 80px;
     padding: 0 10px;
-    min-height: $height-base;
+    height: $height-base;
     line-height: $height-base - 2px;
     font-size: $font-size-base;
     text-align: center;
@@ -98,13 +98,13 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
 
     &#{&}-size-large {
         font-size: $font-size-lg;
-        min-height: $height-lg;
+        height: $height-lg;
         line-height: $height-lg - 2px;
     }
 
     &#{&}-size-small {
         font-size: $font-size-sm;
-        min-height: $height-sm;
+        height: $height-sm;
         line-height: $height-sm - 2px;
     }
 
