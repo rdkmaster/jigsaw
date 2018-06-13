@@ -17,6 +17,9 @@ import {CommonUtils} from "../../core/utils/common-utils";
 @Component({
     selector: 'jigsaw-radios, j-radios',
     template: '<ng-content></ng-content>',
+    host: {
+        '[class.jigsaw-radios]': 'true'
+    },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRadioGroup), multi: true},
     ]

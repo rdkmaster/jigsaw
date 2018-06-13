@@ -1,6 +1,11 @@
 @import "../../assets/scss/core/base";
 
+$radio-prefix-cls: #{$jigsaw-prefix}-radios;
 $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
+
+.#{$radio-prefix-cls} {
+    @include inline-block();
+}
 
 .#{$radio-option-prefix-cls} {
     @include inline-block();
