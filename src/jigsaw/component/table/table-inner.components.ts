@@ -34,8 +34,22 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
     protected targetData: TableData;
     protected rendererRef: ComponentRef<TableCellRendererBase> | EmbeddedViewRef<any>;
 
+    private _cellData;
+
     @Input()
-    public cellData: any;
+    public get cellData() {
+        return this._cellData;
+    }
+
+    public set cellData(value) {
+        this._cellData = value;
+        if (this.rendererRef instanceof ComponentRef) {
+            this.rendererRef.instance.cellData = value;
+        } else if (this.rendererRef && this.rendererRef.context && this.rendererRef.context.context) {
+            this.rendererRef.context.context.cellData = value;
+        }
+    }
+
     @Input()
     public row: number;
     @Input()
@@ -348,21 +362,6 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
                 this.rendererHost.viewContainerRef.clear();
                 this.insertEditorRenderer();
             }) : null;
-    }
-
-    private _cellData;
-
-    set cellData(value) {
-        this._cellData = value;
-        if (this.rendererRef instanceof ComponentRef) {
-            this.rendererRef.instance.cellData = value;
-        } else if (this.rendererRef && this.rendererRef.context && this.rendererRef.context.context) {
-            this.rendererRef.context.context.cellData = value;
-        }
-    }
-
-    get cellData() {
-        return this._cellData;
     }
 
     ngOnInit() {
