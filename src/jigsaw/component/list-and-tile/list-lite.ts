@@ -1,15 +1,15 @@
 import {
-    AfterViewInit, ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, NgModule, OnInit, Output, QueryList,
+    AfterViewInit, ChangeDetectorRef, Component, forwardRef, Input, NgModule, QueryList,
     ViewChildren
 } from "@angular/core";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "../../core/data/array-collection";
-import {AbstractJigsawComponent} from "../common";
 import {CommonModule} from "@angular/common";
 import {JigsawListModule, JigsawListOption} from "./list";
 import {JigsawInputModule} from "../input/input";
 import {GroupOptionValue} from "./group-common";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {NG_VALUE_ACCESSOR} from "@angular/forms";
+import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
 
 /**
  * 一个轻量的list控件，是在list控件基础上做的封装，做了一些功能的拓展
@@ -31,7 +31,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
              [style.max-height]="height">
             <j-list width="100%" [trackItemBy]="trackItemBy" [multipleSelect]="multipleSelect"
                     [(selectedItems)]="selectedItems" (selectedItemsChange)="_$handleSelectChange($event)">
-                <j-list-option *ngFor="let item of data" [value]="item" [disabled]="item?.disabled">
+                <j-list-option *ngFor="let item of data; trackBy: _$trackByFn" [value]="item" [disabled]="item?.disabled">
                     <p class="jigsaw-list-lite-text" title="{{item && item[labelField] ? item[labelField] : item}}">
                         {{item && item[labelField] ? item[labelField] : item}}</p>
                 </j-list-option>
@@ -46,7 +46,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawListLite), multi: true},
     ]
 })
-export class JigsawListLite extends AbstractJigsawComponent implements OnInit, AfterViewInit, ControlValueAccessor {
+export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements AfterViewInit {
     constructor(private _changeDetectorRef: ChangeDetectorRef) {
         super();
     }
@@ -67,34 +67,6 @@ export class JigsawListLite extends AbstractJigsawComponent implements OnInit, A
     public data: ArrayCollection<GroupOptionValue> | LocalPageableArray<GroupOptionValue> | GroupOptionValue[];
 
     /**
-     * 设置对象的标识
-     */
-    @Input()
-    public trackItemBy: string | string[];
-
-    /**
-     * 设置数据的显示字段
-     * @type {string}
-     */
-    @Input()
-    public labelField: string = 'label';
-
-    /**
-     * 多选开关
-     *
-     * $demo = list-lite/basic
-     */
-    @Input() public multipleSelect: boolean;
-
-    /**
-     * 选择的结果集
-     *
-     * $demo = list-lite/basic
-     */
-    @Input()
-    public selectedItems: ArrayCollection<any> | any[];
-
-    /**
      * 设置是否可以检索数据
      *
      * $demo = list-lite/searchable
@@ -110,23 +82,7 @@ export class JigsawListLite extends AbstractJigsawComponent implements OnInit, A
      */
     @Input() public optionCount: number;
 
-    /**
-     * 选择结果发生变化时，向外面发送事件
-     * @type {EventEmitter<any[]>}
-     *
-     * $demo = list-lite/basic
-     */
-    @Output() public selectedItemsChange = new EventEmitter<any[]>();
-
     @ViewChildren(JigsawListOption) private _listOptions: QueryList<JigsawListOption>;
-
-    /**
-     * @internal
-     */
-    public _$handleSelectChange(items) {
-        this.selectedItemsChange.emit(items);
-        this._propagateChange(items);
-    }
 
     /**
      * @internal
@@ -147,32 +103,11 @@ export class JigsawListLite extends AbstractJigsawComponent implements OnInit, A
         this._changeDetectorRef.detectChanges();
     }
 
-    ngOnInit() {
-        super.ngOnInit();
-        if (!this.trackItemBy && this.data && typeof this.data[0] !== 'string') {
-            this.trackItemBy = this.labelField;
-        }
-    }
-
     ngAfterViewInit() {
         this._setListWrapperHeight();
         this._listOptions.changes.subscribe(() => {
             this._setListWrapperHeight();
         })
-    }
-
-    private _propagateChange: any = () => {
-    };
-
-    public writeValue(value: any): void {
-
-    }
-
-    public registerOnChange(fn: any): void {
-        this._propagateChange = fn;
-    }
-
-    public registerOnTouched(fn: any): void {
     }
 }
 

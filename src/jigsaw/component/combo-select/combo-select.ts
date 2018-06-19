@@ -24,7 +24,7 @@ import {AbstractJigsawComponent} from "../common";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {ArrayCollection} from "../../core/data/array-collection";
 import {JigsawInput} from "../input/input";
-import {AffixUtils} from "../../core/utils/internal-utils";
+import {AffixUtils, InternalUtils} from "../../core/utils/internal-utils";
 import {JigsawTag} from "../tag/tag";
 
 export enum DropDownTrigger {
@@ -213,6 +213,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
      */
     @Input()
     public showValueBorder: boolean = true;
+
+    public get _$trackByFn() {
+        return InternalUtils.trackByFn(this.labelField);
+    };
 
     /**
      * @internal

@@ -41,6 +41,8 @@ import {JigsawDrawerModule} from "./component/drawer/drawer";
 import {JigsawCascadeModule} from "./component/cascade/cascade";
 import {JigsawNumericInputModule} from "./component/input/numeric-input";
 import {JigsawListLiteModule} from "./component/list-and-tile/list-lite";
+import {JigsawTileLiteModule} from "./component/list-and-tile/tile-lite";
+import {JigsawRadioLiteModule} from "./component/radio/radio-lite";
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
@@ -67,6 +69,7 @@ const JIGSAW_MODULE = [
     JigsawNotificationModule,
     JigsawPaginationModule,
     JigsawRadioModule,
+    JigsawRadioLiteModule,
     JigsawRangeTimeModule,
     JigsawRootModule,
     JigsawScrollbarModule,
@@ -80,6 +83,7 @@ const JIGSAW_MODULE = [
     JigsawTabsWrapperModule,
     JigsawTagModule,
     JigsawTileSelectModule,
+    JigsawTileLiteModule,
     JigsawTimeModule,
     JigsawTooltipModule,
     JigsawTreeExtModule,

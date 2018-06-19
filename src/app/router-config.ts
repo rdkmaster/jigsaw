@@ -109,6 +109,10 @@ export const routerConfig = [
         loadChildren: "./demo/radio-group/demo-set.module#RadioDemoModule",
     },
     {
+        path: "radio-lite",
+        loadChildren: "./demo/radio-lite/demo-set.module#RadioLiteDemoModule",
+    },
+    {
         path: "range-time",
         loadChildren: "./demo/range-time/demo-set.module#RangeTimeDemoModule",
     },
@@ -147,6 +151,10 @@ export const routerConfig = [
     {
         path: "tile",
         loadChildren: "./demo/tile/demo-set.module#TileSelectDemoModule",
+    },
+    {
+        path: "tile-lite",
+        loadChildren: "./demo/tile-lite/demo-set.module#TileLiteDemoModule",
     },
     {
         path: "time",

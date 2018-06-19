@@ -6,7 +6,7 @@
      (click)="_$openAndCloseByClick($event)">
     <div class="jigsaw-combo-select-selection">
         <div class="jigsaw-combo-select-selection-rendered">
-            <jigsaw-tag *ngFor="let tagItem of value"
+            <jigsaw-tag *ngFor="let tagItem of value; trackBy: _$trackByFn"
                         [closable]='tagItem.closable'
                         [showBorder]="showValueBorder"
                         (select)="_$tagClick(tagItem)"

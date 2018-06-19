@@ -26,6 +26,7 @@ import {routerConfig as notificationConfig} from "./demo/notification/demo-set.m
 import {routerConfig as paginationConfig} from "./demo/pagination/demo-set.module";
 import {routerConfig as popupConfig} from "./demo/popup/demo-set.module";
 import {routerConfig as radioConfig} from "./demo/radio-group/demo-set.module";
+import {routerConfig as radioLiteConfig} from "./demo/radio-lite/demo-set.module";
 import {routerConfig as rangeTimeConfig} from "./demo/range-time/demo-set.module";
 import {routerConfig as scrollbarConfig} from "./demo/scrollbar/demo-set.module";
 import {routerConfig as selectConfig} from "./demo/select/demo-set.module";
@@ -36,6 +37,7 @@ import {routerConfig as tableConfig} from "./demo/table/demo-set.module";
 import {routerConfig as tabsConfig} from "./demo/tab/demo-set.module";
 import {routerConfig as tagConfig} from "./demo/tag/demo-set.module";
 import {routerConfig as tileConfig} from "./demo/tile/demo-set.module";
+import {routerConfig as tileLiteConfig} from "./demo/tile-lite/demo-set.module";
 import {routerConfig as timeConfig} from "./demo/time/demo-set.module";
 import {routerConfig as tooltipConfig} from "./demo/tooltip/demo-set.module";
 import {routerConfig as treeConfig} from "./demo/tree/demo-set.module";
@@ -112,6 +114,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'pagination', paginationConfig);
         this._addRouterConfig(routerConfig, 'popup', popupConfig);
         this._addRouterConfig(routerConfig, 'radio-group', radioConfig);
+        this._addRouterConfig(routerConfig, 'radio-lite', radioLiteConfig);
         this._addRouterConfig(routerConfig, 'range-time', rangeTimeConfig);
         this._addRouterConfig(routerConfig, 'scrollbar', scrollbarConfig);
         this._addRouterConfig(routerConfig, 'select', selectConfig);
@@ -122,6 +125,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'tab', tabsConfig);
         this._addRouterConfig(routerConfig, 'tag', tagConfig);
         this._addRouterConfig(routerConfig, 'tile', tileConfig);
+        this._addRouterConfig(routerConfig, 'tile-lite', tileLiteConfig);
         this._addRouterConfig(routerConfig, 'time', timeConfig);
         this._addRouterConfig(routerConfig, 'tooltip', tooltipConfig);
         this._addRouterConfig(routerConfig, 'tree', treeConfig);
