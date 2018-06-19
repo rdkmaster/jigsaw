@@ -1,0 +1,14 @@
+.border-box {
+    border: 1px solid #bbb;
+}
+
+.box-content {
+    /*这边的样式用来给resize line留位置，让resize line看上去像是在两个box中间*/
+    padding: 4px 1px 1px 4px;
+    height: 100%;
+}
+
+.box-content .border-content {
+    border: 1px dashed #bbb;
+    height: 100%;
+}

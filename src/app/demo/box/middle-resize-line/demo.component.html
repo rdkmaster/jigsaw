@@ -1,0 +1,39 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>Box</h2>
+    <div class="demo-1 live-demo">
+        <h3>布局</h3>
+        <j-box direction="v" [resizable]="true" height="400" width="800">
+            <j-box>
+                <div class="box-content">
+                    <div class="border-content"></div>
+                </div>
+            </j-box>
+            <j-box [resizable]="true" grow="4">
+                <j-box>
+                    <div class="box-content">
+                        <div class="border-content"></div>
+                    </div>
+                </j-box>
+                <j-box grow="4">
+                    <div class="box-content">
+                        <div class="border-content"></div>
+                    </div>
+                </j-box>
+            </j-box>
+            <j-box>
+                <div class="box-content">
+                    <div class="border-content"></div>
+                </div>
+            </j-box>
+        </j-box>
+    </div>
+</div>
+
+
+

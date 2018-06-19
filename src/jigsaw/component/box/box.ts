@@ -63,12 +63,12 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         if (!this._resizeLine) return;
         this.zone.runOutsideAngular(() => {
             if (this.parent.direction == 'column') {
-                if (this.element.offsetWidth - 2 != this._resizeLine.nativeElement.offsetWidth) {
-                    this.renderer.setStyle(this._resizeLine.nativeElement, 'width', this.element.offsetWidth - 2 + 'px');
+                if (this.element.clientWidth != this._resizeLine.nativeElement.offsetWidth) {
+                    this.renderer.setStyle(this._resizeLine.nativeElement, 'width', this.element.clientWidth + 'px');
                 }
             } else {
-                if (this.element.offsetHeight - 2 != this._resizeLine.nativeElement.offsetHeight) {
-                    this.renderer.setStyle(this._resizeLine.nativeElement, 'height', this.element.offsetHeight - 2 + 'px');
+                if (this.element.clientHeight != this._resizeLine.nativeElement.offsetHeight) {
+                    this.renderer.setStyle(this._resizeLine.nativeElement, 'height', this.element.clientHeight + 'px');
                 }
             }
         });
