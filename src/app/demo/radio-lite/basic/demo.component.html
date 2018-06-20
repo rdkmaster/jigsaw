@@ -1,0 +1,22 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>Radio</h2>
+    <div class="demo-1 live-demo">
+        <h3>单选与取消单选</h3>
+        <p class="comment">
+            通过点击无法取消单选，通过设置<code>value</code>可以<a (click)="clearSelectedCity()">取消单选</a>。
+        </p>
+
+        <jigsaw-radio-lite [(value)]="selectedCity"
+                           (valueChange)="radioChange($event)"
+                           trackItemBy="id" [data]="cities">
+        </jigsaw-radio-lite>
+        <p class="message">{{selectedCity?.label}}</p>
+    </div>
+</div>
+

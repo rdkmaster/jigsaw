@@ -3,7 +3,7 @@
 $radio-prefix-cls: #{$jigsaw-prefix}-radios;
 $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
 
-.#{$radio-prefix-cls} {
+.#{$radio-prefix-cls}, .#{$radio-prefix-cls}-lite{
     @include inline-block();
 }
 

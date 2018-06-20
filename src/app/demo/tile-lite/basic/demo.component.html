@@ -1,0 +1,31 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>Tile Lite</h2>
+    <div class="demo-1 live-demo">
+        <h3>对象数组</h3>
+        <jigsaw-tile-lite [(selectedItems)]="selectedCity"
+                          trackItemBy="id"
+                          [multipleSelect]="true"
+                          (selectedItemsChange)="basicSelectChange($event)" [data]="cities">
+        </jigsaw-tile-lite>
+        <p class="message">选择的城市是：{{selectedCityStr}}</p>
+    </div>
+    <div class="demo-2 live-demo">
+        <h3>字符串数组</h3>
+        <jigsaw-tile-lite [(selectedItems)]="selectedCity2"
+                          [multipleSelect]="false"
+                          (selectedItemsChange)="basicSelectChange2($event)" [data]="cities2">
+        </jigsaw-tile-lite>
+        <p class="message">选择的城市是：{{selectedCityStr2}}</p>
+    </div>
+</div>
+
+
+
+
+

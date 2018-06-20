@@ -14,4 +14,6 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
     }
 }
 
-
+.#{$tile-prefix-cls}-lite {
+    @include inline-block;
+}
