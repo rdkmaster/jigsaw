@@ -2,7 +2,7 @@ import {Component, NgModule, forwardRef, Input} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {JigsawTileSelectModule} from "./tile";
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
-import {AbstractJigsawGroupLiteComponent} from "jigsaw/component/list-and-tile/group-lite-common";
+import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
 
 @Component({
     selector: 'jigsaw-tile-lite, j-tile-lite',
