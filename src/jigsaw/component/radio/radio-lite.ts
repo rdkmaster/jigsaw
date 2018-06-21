@@ -8,7 +8,7 @@ import {AbstractJigsawComponent} from "../common";
 import {InternalUtils} from "../../core/utils/internal-utils";
 
 @Component({
-    selector: 'jigsaw-radio-lite, j-radio-lite',
+    selector: 'jigsaw-radios-lite, j-radio-lite',
     template: `
         <j-radios [(value)]="value" (valueChange)="radioChange($event)" [trackItemBy]="trackItemBy">
             <j-radio-option *ngFor="let item of data; trackBy: _$trackByFn" [value]="item">
@@ -19,10 +19,10 @@ import {InternalUtils} from "../../core/utils/internal-utils";
         'jigsaw-radios-lite': 'true'
     },
     providers: [
-        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRadioLite), multi: true},
+        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRadiosLite), multi: true},
     ]
 })
-export class JigsawRadioLite extends AbstractJigsawComponent implements ControlValueAccessor {
+export class JigsawRadiosLite extends AbstractJigsawComponent implements ControlValueAccessor {
 
     @Input()
     public data: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
@@ -71,8 +71,8 @@ export class JigsawRadioLite extends AbstractJigsawComponent implements ControlV
 
 @NgModule({
     imports: [CommonModule, JigsawRadioModule],
-    declarations: [JigsawRadioLite],
-    exports: [JigsawRadioLite]
+    declarations: [JigsawRadiosLite],
+    exports: [JigsawRadiosLite]
 })
 export class JigsawRadioLiteModule {
 }
