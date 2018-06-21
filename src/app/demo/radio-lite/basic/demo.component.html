@@ -12,9 +12,7 @@
             通过点击无法取消单选，通过设置<code>value</code>可以<a (click)="clearSelectedCity()">取消单选</a>。
         </p>
 
-        <jigsaw-radios-lite [(value)]="selectedCity"
-                            (valueChange)="radioChange($event)"
-                            trackItemBy="id" [data]="cities">
+        <jigsaw-radios-lite [(value)]="selectedCity" (valueChange)="radioChange($event)" [data]="cities">
         </jigsaw-radios-lite>
         <p class="message">{{selectedCity?.label}}</p>
     </div>

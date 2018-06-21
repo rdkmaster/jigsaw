@@ -13,8 +13,22 @@ export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent im
     /**
      * 设置对象的标识
      */
+    private _trackItemBy: string | string[];
+
     @Input()
-    public trackItemBy: string | string[];
+    public get trackItemBy(): string | string[] {
+        if (!this._trackItemBy && this.data && typeof this.data[0] !== 'string') {
+            this._trackItemBy = this.labelField;
+        }
+        return this._trackItemBy;
+    }
+
+    public set trackItemBy(value: string | string[]) {
+        if (!value) {
+            return;
+        }
+        this._trackItemBy = typeof value === 'string' ? value.split(/\s*,\s*/g) : value;
+    }
 
     /**
      * 设置数据的显示字段
@@ -44,7 +58,7 @@ export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent im
     @Output() public selectedItemsChange = new EventEmitter<any[]>();
 
     public get _$trackByFn() {
-        return InternalUtils.trackByFn(this.trackItemBy);
+        return InternalUtils.trackByFn(this._trackItemBy);
     };
 
     /**
@@ -57,9 +71,6 @@ export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent im
 
     ngOnInit() {
         super.ngOnInit();
-        if (!this.trackItemBy && this.data && typeof this.data[0] !== 'string') {
-            this.trackItemBy = this.labelField;
-        }
     }
 
     private _propagateChange: any = () => {

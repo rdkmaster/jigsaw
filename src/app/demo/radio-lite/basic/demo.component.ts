@@ -6,21 +6,14 @@ import {ArrayCollection} from "jigsaw/core/data/array-collection";
 })
 export class RadioLiteBasicDemoComponent {
     public selectedCity;
-    cities = new ArrayCollection([
-        {label: "北京", id: 0},
-        {label: "上海", id: 2},
-        {label: "南京", id: 3},
-        {label: "深圳", id: 4},
-        {label: "长沙", id: 5},
-        {label: "西安", id: 6}
-    ]);
+    cities = ["北京", "上海", "南京", "深圳", "长沙", "西安"];
 
     constructor() {
-        this.selectedCity = {id: 6, label: "西安"};
+        this.selectedCity = "西安";
     }
 
     public radioChange(message: any) {
-        console.log(`switch message is: ${message.label}`);
+        console.log(`selected city: ${message}`);
     }
 
     clearSelectedCity(){
@@ -32,10 +25,5 @@ export class RadioLiteBasicDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawRadioGroup.value',
-        'JigsawRadioGroup.valueChange',
-        'JigsawRadioOption.value',
-    ];
 }
 

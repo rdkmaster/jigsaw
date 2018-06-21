@@ -11,8 +11,8 @@ import {InternalUtils} from "../../core/utils/internal-utils";
     selector: 'jigsaw-radios-lite, j-radio-lite',
     template: `
         <j-radios [(value)]="value" (valueChange)="radioChange($event)" [trackItemBy]="trackItemBy">
-            <j-radio-option *ngFor="let item of data; trackBy: _$trackByFn" [value]="item">
-                {{item[labelField]}}
+            <j-radio-option *ngFor="let item of data; trackBy: _$trackByFn" [value]="item" [disabled]="item?.disabled">
+                {{item && item[labelField] ? item[labelField] : item}}
             </j-radio-option>
         </j-radios>`,
     host: {
@@ -30,8 +30,22 @@ export class JigsawRadiosLite extends AbstractJigsawComponent implements Control
     @Input()
     public value: any;
 
+    private _trackItemBy: string | string[];
+
     @Input()
-    public trackItemBy: string | string[];
+    public get trackItemBy(): string | string[] {
+        if (!this._trackItemBy && this.data && typeof this.data[0] !== 'string') {
+            this._trackItemBy = this.labelField;
+        }
+        return this._trackItemBy;
+    }
+
+    public set trackItemBy(value: string | string[]) {
+        if (!value) {
+            return;
+        }
+        this._trackItemBy = typeof value === 'string' ? value.split(/\s*,\s*/g) : value;
+    }
 
     @Input()
     public labelField: string = 'label';
@@ -39,7 +53,7 @@ export class JigsawRadiosLite extends AbstractJigsawComponent implements Control
     @Output() public valueChange: EventEmitter<any> = new EventEmitter<any>();
 
     public get _$trackByFn() {
-        return InternalUtils.trackByFn(this.trackItemBy);
+        return InternalUtils.trackByFn(this._trackItemBy);
     };
 
     radioChange(item) {
@@ -49,9 +63,6 @@ export class JigsawRadiosLite extends AbstractJigsawComponent implements Control
 
     ngOnInit() {
         super.ngOnInit();
-        if (!this.trackItemBy && this.data && typeof this.data[0] !== 'string') {
-            this.trackItemBy = this.labelField;
-        }
     }
 
     private _propagateChange: any = () => {
