@@ -8,7 +8,7 @@ import {AbstractJigsawComponent} from "../common";
 import {InternalUtils} from "../../core/utils/internal-utils";
 
 @Component({
-    selector: 'jigsaw-radios-lite, j-radio-lite',
+    selector: 'jigsaw-radios-lite, j-radios-lite',
     template: `
         <j-radios [(value)]="value" (valueChange)="radioChange($event)" [trackItemBy]="trackItemBy">
             <j-radio-option *ngFor="let item of data; trackBy: _$trackByFn" [value]="item" [disabled]="item?.disabled">

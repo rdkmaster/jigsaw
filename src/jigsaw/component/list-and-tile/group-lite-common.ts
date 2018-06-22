@@ -4,6 +4,7 @@ import {ArrayCollection} from "../../core/data/array-collection";
 import {GroupOptionValue} from "./group-common";
 import {ControlValueAccessor} from "@angular/forms";
 import {InternalUtils} from "../../core/utils/internal-utils";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent implements ControlValueAccessor {
 
@@ -17,7 +18,9 @@ export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent im
 
     @Input()
     public get trackItemBy(): string | string[] {
-        if (!this._trackItemBy && this.data && typeof this.data[0] !== 'string') {
+        if (this.data && (typeof this.data[0] == 'string' || typeof this.data[0] == 'number')) {
+            this._trackItemBy = null;
+        } else if (CommonUtils.isUndefined(this._trackItemBy) && this.data && typeof this.data[0] !== 'string') {
             this._trackItemBy = this.labelField;
         }
         return this._trackItemBy;

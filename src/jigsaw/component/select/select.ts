@@ -1,9 +1,8 @@
 import {
-    NgModule, Component, Input, forwardRef, OnInit, Output, EventEmitter, ViewChild
+    NgModule, Component, Input, forwardRef, Output, EventEmitter, ViewChild
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {AbstractJigsawComponent} from "../common";
-import {InternalUtils} from '../../core/utils/internal-utils';
 import {ArrayCollection} from "../../core/data/array-collection";
 import {JigsawComboSelectModule} from "../combo-select/index";
 import {JigsawListLite, JigsawListLiteModule} from "../list-and-tile/list-lite";
@@ -34,9 +33,24 @@ import {CommonUtils} from "../../core/utils/common-utils";
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSelect), multi: true},
     ]
 })
-export class JigsawSelect extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
+export class JigsawSelect extends AbstractJigsawComponent implements ControlValueAccessor {
 
     protected _width: string = '120px';
+
+    @Input()
+    public get width(): string {
+        return this._width;
+    }
+
+    public set width(value: string) {
+        this._width = CommonUtils.getCssValue(value);
+        this.callLater(() => {
+            if(this.multipleSelect) {
+                this.minWidth = CommonUtils.getCssValue(value);
+                this.maxWidth = CommonUtils.getCssValue(value);
+            }
+        })
+    }
 
     private _minWidth: string = '120px';
 
@@ -196,13 +210,6 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
         if (optionState || !this.searchable) return;
         // combo关闭时，重置数据
         this._listCmp._$handleSearching();
-    }
-
-    ngOnInit() {
-        super.ngOnInit();
-        if (this.data && typeof this.data[0] !== 'string') {
-            this.trackItemBy = InternalUtils.initTrackItemBy(<string>this.trackItemBy, this.labelField);
-        }
     }
 
     private _propagateChange: any = () => {
