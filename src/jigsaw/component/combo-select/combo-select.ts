@@ -148,7 +148,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     public set open(value: boolean) {
-        if (value === this._$opened || (this.disabled && value)) {
+        if (value === this._$opened || (this.disabled && value && this.openTrigger!=DropDownTrigger.none)) {
             // 设置值等于当前值
             // 控件disabled，并且想打开下拉
             return;
