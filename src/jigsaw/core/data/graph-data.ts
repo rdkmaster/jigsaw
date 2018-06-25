@@ -79,7 +79,7 @@ export abstract class AbstractGraphData extends TableDataBase {
         CommonUtils.extendObject(this.echartOptions, patchOpt);
     }
 
-    protected echartOptions: EchartOptions;
+    public echartOptions: EchartOptions;
 
     public get options(): EchartOptions {
         if (this.echartOptions) {
@@ -167,15 +167,15 @@ export abstract class AbstractGraphData extends TableDataBase {
  * 图形数据是Jigsaw数据体系中的一个分支，关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
  */
 export class GraphData extends AbstractGraphData {
-    echartsOptions: EchartOptions;
-
-    constructor(options: EchartOptions) {
+    constructor(options?: EchartOptions) {
         super();
-        this.echartsOptions = options;
+        if (options) {
+            this.echartOptions = options;
+        }
     }
 
     protected createChartOptions(): EchartOptions {
-        return this.echartsOptions;
+        return this.echartOptions;
     }
 }
 
