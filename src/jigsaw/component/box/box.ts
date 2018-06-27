@@ -11,6 +11,7 @@ import {CallbackRemoval} from "../../core/utils/common-utils";
     host: {
         '[class.jigsaw-box]': 'true',
         '[class.jigsaw-flex]': 'type == "flex"',
+        '[class.jigsaw-box-flicker]': '_$isFlicker',
         '[style.width]': 'width',
         '[style.height]': 'height',
     }
@@ -25,6 +26,8 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
 
     @Input()
     public resizable: boolean;
+
+    public _$isFlicker: boolean = true;
 
     /**
      * @internal
@@ -161,6 +164,10 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
                 box._$showResizeLine = true;
             }
             this._supportSetSize(box, this);
+        });
+
+        this.callLater(() => {
+            this._$isFlicker = false;
         });
     }
 

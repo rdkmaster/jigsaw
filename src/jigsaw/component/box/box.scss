@@ -42,11 +42,17 @@ $flex-prefix-cls: #{$jigsaw-prefix}-flex;
             }
         }
     }
+    &-flicker {
+        display: none;
+    }
 }
 
 .#{$flex-prefix-cls} {
     display: flex;
     &:after {
         content: normal;
+    }
+    &.#{$box-prefix-cls}-flicker {
+        display: none;
     }
 }
