@@ -13,7 +13,8 @@ export class InternalUtils {
 
     public static trackByFn(trackBy: string | string[]) {
         return function (index: number, item: any) {
-            if (typeof item === 'string' || !trackBy || !item) return index;
+            if (typeof item === 'string') return item;
+            if (!trackBy || !item) return index;
             let tracker;
             if (trackBy instanceof Array) {
                 try {
