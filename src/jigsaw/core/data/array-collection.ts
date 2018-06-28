@@ -869,13 +869,13 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
     private _initSubjects(): void {
         this._filterSubject.debounceTime(300).subscribe(filter => {
             super.fromArray(this._bakData.filter(item => {
-                if (filter.field) {
+                if (typeof item == 'string') {
+                    return item.toLowerCase().includes(filter.key.toLowerCase())
+                } else if (filter.field) {
                     return (<any[]>filter.field).find(field => {
                         const value: string = !item || item[field] === undefined || item[field] === null ? '' : item[field].toString();
                         return value.toLowerCase().includes(filter.key.toLowerCase())
                     })
-                } else if (typeof item == 'string') {
-                    return item.toLowerCase().includes(filter.key.toLowerCase())
                 } else {
                     return false
                 }

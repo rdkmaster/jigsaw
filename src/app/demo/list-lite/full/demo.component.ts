@@ -8,6 +8,8 @@ import {JigsawListLite} from "jigsaw/component/list-and-tile/list-lite";
     styleUrls: ['./demo.component.css']
 })
 export class ListLiteFullDemoComponent {
+    goodsStrList=['bicycle','camera','car','futbol-o','book','puzzle-piece'];
+
     goodsList: GroupOptionValue[] = [
         {
             logo: 'bicycle',

@@ -27,9 +27,6 @@ export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent im
     }
 
     public set trackItemBy(value: string | string[]) {
-        if (!value) {
-            return;
-        }
         this._trackItemBy = typeof value === 'string' ? value.split(/\s*,\s*/g) : value;
     }
 
