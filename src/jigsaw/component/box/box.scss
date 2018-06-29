@@ -43,7 +43,7 @@ $flex-prefix-cls: #{$jigsaw-prefix}-flex;
         }
     }
     &-flicker {
-        display: none;
+        visibility: hidden;
     }
 }
 
@@ -53,6 +53,6 @@ $flex-prefix-cls: #{$jigsaw-prefix}-flex;
         content: normal;
     }
     &.#{$box-prefix-cls}-flicker {
-        display: none;
+        visibility: hidden;
     }
 }
