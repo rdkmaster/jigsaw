@@ -159,11 +159,12 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
 
         this._$childrenBox.forEach((box, index) => {
             box.parent = this;
-            if (this.resizable && index != 0) {
+            this._supportSetSize(box, this);
+            if (this.resizable && index != 0 && !box._isFixedSize && !this._$childrenBox[index - 1]._isFixedSize) {
                 // 第一个child box没有resize line
+                // 设置了尺寸的box没有resize line
                 box._$showResizeLine = true;
             }
-            this._supportSetSize(box, this);
         });
 
         this.callLater(() => {
@@ -176,10 +177,12 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         if (box.width && parent.direction != 'column') {
             box.renderer.setStyle(box.element, 'flex-grow', '0');
             box.renderer.setStyle(box.element, 'flex-basis', box.width);
+            box._isFixedSize = true;
         }
         if (box.height && parent.direction == 'column') {
             box.renderer.setStyle(box.element, 'flex-grow', '0');
             box.renderer.setStyle(box.element, 'flex-basis', box.height);
+            box._isFixedSize = true;
         }
     }
 

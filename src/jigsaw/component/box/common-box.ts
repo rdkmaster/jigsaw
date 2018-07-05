@@ -175,6 +175,8 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
 
     private _rawOffsets: number[];
 
+    public _isFixedSize: boolean;
+
     protected removeElementScrollEvent: CallbackRemoval;
 
     /**
@@ -207,6 +209,7 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
         const sizeProp = this._getPropertyByDirection()[1];
         const sizeRatios = this._computeSizeRatios(sizeProp, offset);
         this.parent.childrenBox.forEach((box, index) => {
+            if(box._isFixedSize) return;
             box.grow = sizeRatios[index];
             if (emitEvent) {
                 box.growChange.emit(sizeRatios[index]);
@@ -224,17 +227,26 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
     }
 
     private _computeSizeRatios(sizeProp: string, updateOffset: number): number[] {
-        const sizes = this.parent.childrenBox.reduce((arr, box) => {
-            arr.push(box.element[sizeProp]);
-            return arr;
-        }, []);
         const curIndex = this._getCurrentIndex();
         this._rawOffsets.splice(curIndex, 1, updateOffset);
-        if (curIndex < 1) return;
-        const prevBoxSize = this._rawOffsets[curIndex] - this._rawOffsets[curIndex - 1];
-        const curBoxSize = this._rawOffsets[curIndex + 1] - this._rawOffsets[curIndex];
-        sizes.splice(curIndex - 1, 2, prevBoxSize, curBoxSize);
-        return sizes.map(size => size / this.parent.element[sizeProp] * 100);
+
+        const sizes = this._rawOffsets.reduce((ss, offset, index) => {
+            if(index > 0) {
+                ss.push(offset - this._rawOffsets[index - 1])
+            }
+            return ss;
+        }, []);
+
+        const fixedSize = sizes.reduce((fs, size, index) => {
+            const box = this.parent.childrenBox instanceof QueryList ?
+                this.parent.childrenBox.toArray()[index] : this.parent.childrenBox[index];
+            if(box._isFixedSize) {
+                fs += size;
+            }
+            return fs;
+        }, 0);
+
+        return sizes.map(size => size / (this.parent.element[sizeProp] - fixedSize) * 100);
     }
 
     /**

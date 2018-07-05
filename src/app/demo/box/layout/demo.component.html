@@ -33,6 +33,19 @@
         </j-box>
         <p class="message">{{resizeInfo}}</p>
     </div>
+
+    <div class="demo-2 live-demo">
+        <h3>resize</h3>
+        <p class="comment">设置尺寸的box不能resize</p>
+        <j-box [resizable]="true" height="400" class="border-box">
+            <j-box width="50" class="border-box">fixed size</j-box>
+            <j-box class="border-box"></j-box>
+            <j-box class="border-box" grow="2"></j-box>
+            <j-box width="50" class="border-box">fixed size</j-box>
+            <j-box class="border-box" grow="2"></j-box>
+            <j-box class="border-box" grow="2"></j-box>
+        </j-box>
+    </div>
 </div>
 
 
