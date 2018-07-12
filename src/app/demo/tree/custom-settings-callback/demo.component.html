@@ -1,0 +1,11 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<p>通过自定义setting 来添加click事件</p>
+<p>如果要取消onEventName类事件的触发，可以通过自定义setting实现的beforeEventName类事件返回false来实现 </p>
+<p>注意如果直接在模板上通过（beforeEventName）绑定beforeEventName类事件，其返回值是无效的，无法干扰onEventName类事件的是否触发 </p>
+<jigsaw-tree-ext [(data)]="data" (beforeClick)="beforeClick($event)" [setting]="setting">
+</jigsaw-tree-ext>
