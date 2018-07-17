@@ -481,7 +481,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         }
 
         this._popupElement = null;
-        this._disposePopup = null;
+        if (this._disposePopup) {
+            this._disposePopup();
+            this._disposePopup = null;
+        }
     }
 
     private _propagateChange: any = () => {
