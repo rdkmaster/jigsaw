@@ -33,7 +33,7 @@ export const routerConfig = [
         path: 'preset', component: SelectPresetDemoComponent
     },
     {
-        path: 'optionCount', component: SelectOptionCountDemoComponent
+        path: 'option-count', component: SelectOptionCountDemoComponent
     },
     {
         path: 'disabled', component: SelectDisabledDemoComponent
