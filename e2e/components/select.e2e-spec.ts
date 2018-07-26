@@ -15,32 +15,26 @@ describe('select', () => {
 
             // mouse enter
             mouseMove(selectEl);
-            await waitForPresence('app-root > j-list-lite .jigsaw-list-option');
-            expectToExist('.jigsaw-list-option');
-            browser.sleep(1000);
-            await waitForPresence('app-root > j-list-lite .jigsaw-list-option');
-            expectToExist('.jigsaw-list-option');
-
-            // select
-            const optionIndexOf0 = $$('.jigsaw-list-option').get(0);
-            optionIndexOf0.click();
-            const selectedEl = selectEl.element(by.css('.jigsaw-combo-select-selection jigsaw-tag span'));
-            expect(selectedEl.getText()).toBe(optionIndexOf0.getText());
-
-            await waitForNotPresence('.jigsaw-list-option');
-            expectToExist('.jigsaw-list-option', false);
-            mouseMove(selectEl);
             await waitForPresence('.jigsaw-list-option');
             expectToExist('.jigsaw-list-option');
-
-            const optionIndexOf3 = $$('.jigsaw-list-option').get(3);
-            optionIndexOf3.click();
-            expect(selectedEl.getText()).toBe(optionIndexOf3.getText());
 
             // mouse leave
             mouseMove($('body'));
             await waitForNotPresence('.jigsaw-list-option');
+            expectToExist('.jigsaw-list-option', false);
 
+            mouseMove(selectEl);
+            await waitForPresence('.jigsaw-list-option');
+            expectToExist('.jigsaw-list-option');
+
+            // select
+            const optionIndexOf2 = $$('.jigsaw-list-option').get(2);
+            optionIndexOf2.click();
+            const selectedEl = selectEl.element(by.css('.jigsaw-combo-select-selection jigsaw-tag span'));
+            expect(selectedEl.getText()).toBe(optionIndexOf2.getText());
+
+            await waitForNotPresence('.jigsaw-list-option');
+            expectToExist('.jigsaw-list-option', false);
         });
 
     });
