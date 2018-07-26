@@ -17,12 +17,15 @@ describe('select', () => {
             mouseMove(selectEl);
             await waitForPresence('app-root > j-list-lite .jigsaw-list-option');
             expectToExist('.jigsaw-list-option');
+            browser.sleep(1000);
+            await waitForPresence('app-root > j-list-lite .jigsaw-list-option');
+            expectToExist('.jigsaw-list-option');
 
             // select
-            const optionIndexOf1 = $$('.jigsaw-list-option').get(1);
-            optionIndexOf1.click();
+            const optionIndexOf0 = $$('.jigsaw-list-option').get(0);
+            optionIndexOf0.click();
             const selectedEl = selectEl.element(by.css('.jigsaw-combo-select-selection jigsaw-tag span'));
-            expect(selectedEl.getText()).toBe(optionIndexOf1.getText());
+            expect(selectedEl.getText()).toBe(optionIndexOf0.getText());
 
             await waitForNotPresence('.jigsaw-list-option');
             expectToExist('.jigsaw-list-option', false);
