@@ -13,6 +13,8 @@ describe('select', () => {
         it('should drop down by hover and click option can select', async () => {
             const selectEl = $('#test-select');
 
+            await waitForPresence('#test-select .jigsaw-combo-select-host');
+
             // mouse enter
             mouseMove(selectEl);
             await waitForPresence('.jigsaw-list-option');
