@@ -26,7 +26,7 @@ export const routerConfig = [
         path: 'async', component: ZtreeAsynDemoComponent
     },
     {
-        path: 'custom-setting-callback', component: ZtreeCustomSettingCallbackDemoComponent
+        path: 'custom-settings-callback', component: ZtreeCustomSettingCallbackDemoComponent
     },
 ];
 

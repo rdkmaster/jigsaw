@@ -1,4 +1,6 @@
-import {browser, element, by, protractor, ExpectedConditions} from "protractor";
+import {browser, element, by, protractor, ExpectedConditions, $$, $} from "protractor";
+import {waitForPresence} from "../utils/await";
+import {mouseMove} from "../utils/actions";
 // import {beforeEach} from "selenium-webdriver/testing";
 
 describe('pagination', () => {
@@ -42,14 +44,15 @@ describe('pagination', () => {
             browser.sleep(300);
             expect(jigsawPagingEl.element(by.css('.jigsaw-page-current')).getText()).toBe('1');
         });
-        it('should change the number of pieces per page', () => {
-            const jigsawPagingEl = element(by.css('.jigsaw-paging')),
+        it('should change the number of pieces per page', async () => {
+            const jigsawPagingEl = $('.jigsaw-paging'),
                 pageItemEl = jigsawPagingEl.all(by.tagName('jigsaw-paging-item')),
-                paginationSelectEl = element(by.css('.jigsaw-select-box')),
-                selectOptionEl = paginationSelectEl.all(by.tagName('jigsaw-select-option'));
-            paginationSelectEl.click();
-            // expect(selectOptionEl.get(0).getText()).toBe('5/Page');
+                paginationSelectEl = $('.jigsaw-select-host');
+
             expect(pageItemEl.count()).toBe(55);
+            mouseMove(paginationSelectEl);
+            await waitForPresence('.jigsaw-list-option');
+            const selectOptionEl = $$('.jigsaw-list-option');
             selectOptionEl.get(0).click();
             expect(pageItemEl.count()).toBe(110);
         });
