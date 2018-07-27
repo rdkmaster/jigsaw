@@ -9,6 +9,8 @@ import {ZtreeDemoComponent} from "./basic/demo.component";
 import {ZtreeDemoDataFromAjaxComponent} from "./data-from-ajax/demo.component";
 import {ZtreeDemoEditableComponent} from "./editable/demo.component";
 import {ZtreeAsynDemoComponent} from "./async/demo.component";
+import {ZtreeCustomSettingCallbackDemoComponent} from "./custom-settings-callback/demo.component";
+import {TreeCustomSettingCallbackDemoModule} from "./custom-settings-callback/demo.module";
 
 export const routerConfig = [
     {
@@ -23,12 +25,15 @@ export const routerConfig = [
     {
         path: 'async', component: ZtreeAsynDemoComponent
     },
+    {
+        path: 'custom-settings-callback', component: ZtreeCustomSettingCallbackDemoComponent
+    },
 ];
 
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig),
-        TreeAsyncDemoModule, TreeBasicDemoModule, TreeAjaxDataDemoModule, TreeEditableDemoModule
+        TreeAsyncDemoModule, TreeBasicDemoModule, TreeAjaxDataDemoModule, TreeEditableDemoModule,TreeCustomSettingCallbackDemoModule
     ],
     exports: [
     ],

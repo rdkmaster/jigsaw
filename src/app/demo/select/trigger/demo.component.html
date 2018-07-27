@@ -9,7 +9,7 @@
     <div class="live-demo">
         <h3>下拉触发</h3>
         <p class="comment">默认是hover触发，可以设置点击触发</p>
-        <jigsaw-select [(value)]="selectedCityForSelect"
+        <jigsaw-select id="test-select" [(value)]="selectedCityForSelect"
                        (valueChange)="selectChange($event)"
                        [data]="cityListForSelect"
                        placeholder="请选择城市"

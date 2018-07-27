@@ -1,8 +1,8 @@
 import {browser, $, $$} from 'protractor';
 import {waitForInvisibility, waitForVisibility} from "../utils/index";
 import {expectToExist} from "../utils/asserts";
-import {mouseMove} from "../utils/actions";
-import {waitForPresence} from "../utils/await";
+import {mouseMove, pressKeys} from "../utils/actions";
+import {waitForNotPresence, waitForPresence} from "../utils/await";
 
 
 describe('tree', () => {
@@ -36,12 +36,26 @@ describe('tree', () => {
         });
         it('should be editable and deleted', async () => {
             await waitForPresence('#__unique_id__1_1_a');
-            mouseMove($('#__unique_id__1_1_a'));
+
+            const firstNode = $('#__unique_id__1_1_a');
+
+            // 修改第一个节点名
+            mouseMove(firstNode);
             $('#__unique_id__1_1_edit').click();
-            await waitForPresence('.curSelectedNode_Edit');
-            mouseMove($('#__unique_id__1_2_span'));
-            $('#__unique_id__1_2_remove').click();
-            expectToExist($('#__unique_id__1_2_span'), false);
+            await waitForPresence('#__unique_id__1_1_span input');
+            pressKeys('-修改后');
+            $('body').click();
+            await waitForNotPresence('#__unique_id__1_1_span input');
+            expect(firstNode.$('#__unique_id__1_1_span').getText()).toBe('北京市-修改后');
+
+            // 删除第一个节点里的第一个子节点
+            browser.actions().doubleClick(firstNode).perform();
+            await waitForPresence('#__unique_id__1_2_a');
+            const firstChildNode = $('#__unique_id__1_2_a');
+            firstChildNode.click();
+            await waitForPresence('#__unique_id__1_2_remove');
+            firstChildNode.$('#__unique_id__1_2_remove').click();
+            expectToExist(firstChildNode, false);
         });
     })
 });
