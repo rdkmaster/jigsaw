@@ -28,13 +28,13 @@ describe('select', () => {
             await expectToExist('.jigsaw-list-option');
 
             // select
-            const optionIndexOf2 = $$('.jigsaw-list-option').get(2);
+            /*const optionIndexOf2 = $$('.jigsaw-list-option').get(2);
             await optionIndexOf2.click();
             const selectedEl = selectEl.element(by.css('.jigsaw-combo-select-selection jigsaw-tag span'));
             await expect(selectedEl.getText()).toBe(optionIndexOf2.getText());
 
             await waitForNotPresence('.jigsaw-list-option');
-            await expectToExist('.jigsaw-list-option', false);
+            await expectToExist('.jigsaw-list-option', false);*/
         });
 
     });
