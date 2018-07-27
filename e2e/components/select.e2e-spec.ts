@@ -10,7 +10,7 @@ describe('select', () => {
             browser.get('/select/basic');
         });
 
-        it('should drop down by hover and click option can select', async () => {
+        xit('should drop down by hover and click option can select', async () => {
             const selectEl = $('#test-select');
 
             // mouse enter
@@ -19,13 +19,13 @@ describe('select', () => {
             expectToExist('.jigsaw-list-option');
 
             // mouse leave
-            /*mouseMove($('body'));
+            mouseMove($('body'));
             await waitForNotPresence('.jigsaw-list-option');
             expectToExist('.jigsaw-list-option', false);
 
             mouseMove(selectEl);
             await waitForPresence('.jigsaw-list-option');
-            expectToExist('.jigsaw-list-option');*/
+            expectToExist('.jigsaw-list-option');
 
             // select
             const optionIndexOf2 = $$('.jigsaw-list-option').get(2);
