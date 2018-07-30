@@ -372,11 +372,371 @@ export class PieGraphDataByRow extends PieGraphDataByColumn {
 }
 
 /**
- * @internal
+ * 环形对比图
  */
-export class DonutGraphData extends PieGraphData {
+export class DoughnutGraphData extends AbstractGraphData {
+    public title: string;
+
+    public series: {name: string, value: string | number}[];
+
+    private _calcSeries() {
+        if(!(this.data instanceof Array) || !this.data.length) return;
+        this.series = this.data.map((row:any) => ({value: row[0], name: row[1]}));
+    }
+
     protected createChartOptions(): any {
-        return undefined;
+        this._calcSeries();
+
+        const labelFormatter = {
+            normal: {
+                label: {
+                    formatter: function (params) {
+                        return params.name + '\n' + params.value + '%'
+                    },
+                    textStyle: {
+                        baseline: 'top',
+                        color: '#000',
+                        fontFamily: '微软雅黑'
+                    }
+                }
+            },
+        };
+        return {
+            title: {
+                text: this.title,
+                x: 'center',
+                y: 'center',
+                itemGap: 20,
+                textStyle: {
+                    color: '#000',
+                    fontFamily: '微软雅黑',
+                    fontSize: 12,
+                    fontWeight: 'normal'
+                }
+            },
+            series: [
+                {
+
+                    type: 'pie',
+                    radius: ['45', '57'],
+                    avoidLabelOverlap: false,
+                    hoverAnimation: false,
+                    itemStyle: labelFormatter,
+                    label: {
+                        normal: {
+                            show: true,
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: true
+                        }
+                    },
+                    data: this.series
+                }
+            ]
+        };
+    }
+}
+
+/**
+ * 环形比例图
+ */
+export class DoughnutRateGraphData extends AbstractGraphData {
+    private _data: GraphDataMatrix;
+
+    public get data(): any {
+        return this._data;
+    }
+
+    public set data(value: any) {
+        if(CommonUtils.isUndefined(value)) return;
+        if(value instanceof Array) {
+            if(value[0] instanceof Array) {
+                this._data = value;
+            }else {
+                this._data = [value];
+            }
+        }else {
+            this._data = [[value]]
+        }
+    }
+
+    protected createChartOptions(): any {
+        if(!(this.data instanceof Array) || !this.data.length || !(this.data[0]  instanceof Array)) return;
+
+        //不同区域得分颜色
+        const color = Number(this.data[0][0]) >= 95 ? '#98e2a6' : (Number(this.data[0][0]) >= 90 && Number(this.data[0][0]) < 95) ? '#9ad0e2' : (Number(this.data[0][0]) >= 80 && Number(this.data[0][0]) < 90) ? '#f7e685' : (Number(this.data[0][0]) >= 70 && Number(this.data[0][0]) < 80) ? '#f6c88a' : Number(this.data[0][0]) < 70 ? '#ff8e74' : '#dedede';
+
+        const labelTop = {
+            normal: {
+                color: color,
+                label: {
+                    show: true,
+                    position: 'top',
+                    formatter: '{b}',
+                    textStyle: {
+                        baseline: 'top',
+                        fontFamily: '微软雅黑',
+                        fontSize: 14
+                    }
+                },
+                labelLine: {
+                    show: false
+                }
+            },
+            emphasis: {
+                color: color
+            }
+        };
+
+        //中间显示
+        const labelFormatter = {
+            normal: {
+                label: {
+                    formatter: function (params) {
+                        return 100 - params.value + '%'
+                    },
+                    textStyle: {
+                        baseline: 'bottom',
+                        color: '#333',
+                        fontFamily: 'Arial'
+                    }
+                },
+                labelLine: {
+                    show: false
+                }
+            },
+            emphasis: {
+                color: 'rgba(0,0,0,0)'
+            }
+        };
+
+        const labelBottom = {
+            normal: {
+                color: '#DEDEDE',
+                label: {
+                    show: true,
+                    position: 'center',
+                    textStyle: {
+                        fontSize: 24
+                    }
+                },
+                labelLine: {
+                    show: false
+                }
+
+            },
+            emphasis: {
+                color: '#DEDEDE'
+            }
+        };
+
+        //饼图的点击label
+        const placeHolderStyle = {
+            normal: {
+                color: 'rgba(0,0,0,0)',
+                label: {
+                    show: false
+                },
+                labelLine: {
+                    show: false
+                }
+            },
+            emphasis: {
+                color: 'rgba(0,0,0,0)'
+            }
+        };
+
+        return {
+            series: [
+                {
+                    type: 'pie',
+                    radius: ['31', '34'],
+                    itemStyle: labelFormatter,
+                    minAngle: 0,
+                    data: [
+                        {
+                            name: '',
+                            value: this.data[0][0],
+                            itemStyle: labelTop
+                        },
+                        {
+                            name: '',
+                            value: 100 - Number(this.data[0][0]),
+                            itemStyle: labelBottom
+                        }
+                    ]
+                },
+                //点击
+                {
+                    name: '点击环',
+                    clickable: true,
+                    type: 'pie',
+                    hoverAnimation: false,
+                    radius: ['0', '31'],
+                    minAngle: 0,
+                    data: [{
+                        name: "",
+                        value: 100,
+                        itemStyle: placeHolderStyle
+                    }]
+                }
+            ]
+        };
+    }
+}
+
+/**
+ * 环形得分图
+ */
+export class DoughnutScoreGraphData extends AbstractGraphData {
+    private _data: GraphDataMatrix;
+
+    public get data(): any {
+        return this._data;
+    }
+
+    public set data(value: any) {
+        if(CommonUtils.isUndefined(value)) return;
+        if(value instanceof Array) {
+            if(value[0] instanceof Array) {
+                this._data = value;
+            }else {
+                this._data = [value];
+            }
+        }else {
+            this._data = [[value]]
+        }
+    }
+
+    protected createChartOptions(): any {
+        if(!(this.data instanceof Array) || !this.data.length || !(this.data[0]  instanceof Array)) return;
+
+        // innerColor 内圆颜色
+        // outerColor 外环颜色
+        const innerColor = Number(this.data[0][0]) >= 95 ? 'rgb(152,226,166)' : (Number(this.data[0][0]) >= 90 && Number(this.data[0][0]) < 95) ? 'rgb(154,208,226)' : (Number(this.data[0][0]) >= 80 && Number(this.data[0][0]) < 90) ? 'rgb(247,230,133)' : (Number(this.data[0][0]) >= 70 && Number(this.data[0][0]) < 80) ? 'rgb(246,200,138)' : (Number(this.data[0][0]) < 70) ? 'rgb(255,142,116)' : '#dedede';
+        const outerColor = Number(this.data[0][0]) >= 95 ? 'rgba(152,226,166,.2)' : (Number(this.data[0][0]) >= 90 && Number(this.data[0][0]) < 95) ? 'rgba(154,208,226,.2)' : (Number(this.data[0][0]) >= 80 && Number(this.data[0][0]) < 90) ? 'rgba(247,230,133,.2)' : (Number(this.data[0][0]) >= 70 && Number(this.data[0][0]) < 80) ? 'rgba(246,200,138,.2)' : (Number(this.data[0][0]) < 70) ? 'rgba(255,142,116,.2)' : '#dedede';
+        const labelTop = {
+            normal: {
+                color: outerColor,
+                label: {
+                    show: true,
+                    position: 'center',
+                    formatter: '{b}',
+                    textStyle: {
+                        baseline: 'top',
+                        fontFamily: 'arial',
+                        fontSize: 30,
+                        color: '#fff',
+                        fontWeight: 'bold'
+                    }
+                },
+                labelLine: {
+                    show: false
+                }
+            },
+            emphasis: {
+                color: outerColor
+            }
+        };
+
+        //中间显示
+        const labelFormatter = {
+            normal: {
+                label: {
+                    // formatter: function(params) {
+                    //     return 100 - params.value
+                    // },
+                    position: 'center',
+                    textStyle: {
+                        baseline: 'bottom',
+                        color: '#333',
+                        fontFamily: 'Arial'
+                    }
+                },
+                labelLine: {
+                    show: false
+                }
+            },
+            emphasis: {
+                color: outerColor
+            }
+        };
+
+        const labelBottom = {
+            normal: {
+                label: {
+                    show: true,
+                    position: 'center',
+                    textStyle: {
+                        fontSize: 14,
+                        color: '#fff',
+                        fontFamily: '微软雅黑'
+                    }
+                },
+                labelLine: {
+                    show: false
+                }
+
+            }
+        };
+
+        //饼图的点击label
+        const placeHolderStyle = {
+            normal: {
+                color: innerColor,
+                label: {
+                    show: false
+                },
+                labelLine: {
+                    show: false
+                }
+            },
+            emphasis: {
+                color: innerColor,
+                labelLine: {
+                    show: false
+                }
+            }
+        };
+
+        return {
+            series: [
+                {
+                    type: 'pie',
+                    radius: ['45', '50'],
+                    itemStyle: labelFormatter,
+                    minAngle: 0,
+                    data: [
+                        {
+                            name: Number(this.data[0][0]) == 0 ? '0' : Number(this.data[0][0]),
+                            value: 100,
+                            itemStyle: labelTop
+                        },
+                        {
+                            name: this.data[0][1],
+                            value: 0,
+                            itemStyle: labelBottom
+                        }
+                    ]
+                },
+                //点击
+                {
+                    name: '点击环',
+                    clickable: false,
+                    type: 'pie',
+                    hoverAnimation: false,
+                    radius: ['0', '45'],
+                    minAngle: 0,
+                    data: [{
+                        name: "",
+                        value: 100,
+                        itemStyle: placeHolderStyle
+                    }]
+                }
+            ]
+        };
     }
 }
 

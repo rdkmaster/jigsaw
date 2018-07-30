@@ -24,6 +24,8 @@ import {ProvinceMapGraphComponent} from "./province-map/demo.component";
 import {ProvinceMapGraphModule} from "./province-map/demo.module";
 import {GraphFormatterComponent} from "./formatter/demo.component";
 import {GraphFormatterModule} from "./formatter/demo.module";
+import {DoughnutGraphComponent} from "./doughnut/demo.component";
+import {DoughnutGraphModule} from "./doughnut/demo.module";
 
 export const routerConfig = [
     {
@@ -52,6 +54,9 @@ export const routerConfig = [
     },
     {
         path: 'formatter', component: GraphFormatterComponent
+    },
+    {
+        path: 'doughnut', component: DoughnutGraphComponent
     }
 ];
 
@@ -67,7 +72,8 @@ export const routerConfig = [
         GraphSetSizeModule,
         MapGraphModule,
         ProvinceMapGraphModule,
-        GraphFormatterModule
+        GraphFormatterModule,
+        DoughnutGraphModule
     ]
 })
 export class GraphDemoModule {
