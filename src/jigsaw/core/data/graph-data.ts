@@ -1189,6 +1189,85 @@ export class StripColorGraphData extends AbstractGraphData {
 
 
 /**
+ * 堆叠区域图
+ */
+export class StackAreaGraphData extends AbstractGraphData {
+    protected createChartOptions(): any {
+        return {
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    alignWithLabel: true,
+                    axisLabel: { // 类轴刻度间隔
+                        interval: 4
+                    },
+                    axisTick: {  //坐标轴刻度相关设置
+                        show: true,
+                        inside: true,
+                        interval: 0,
+                        length: 5,//刻度长短设置
+                        lineStyle: {
+                            color: '#bbb',
+                        }
+                    },
+                    splitLine: {//网格线相关设置
+                        interval: 0,//类目轴为true且为这个为0时才会显示
+                        lineStyle: {
+                            color: "#eee"
+                        }
+                    },
+                    data: this.header
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    max: 3,
+                    axisTick: {
+                        show: false,
+                    },
+                    axisLine: {//轴线设置
+                        lineStyle: {
+                            color: '#ccc'
+                        }
+                    },
+                    min: 0,
+                    axisLabel: {
+                        formatter: function (params) {
+                            return params.toFixed(1) == "0.0" ? "" : params.toFixed(1) + "%"
+                        }
+                    }
+                }
+            ],
+            series: [
+                {
+                    type: 'line',
+                    connectNulls: true,
+                    smooth: true,
+                    symbolSize: [5, 5],
+                    showAllSymbol: true,
+                    areaStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                                {
+                                    offset: 0, color: '#ff7c24' // 0% 处的颜色
+                                },
+                                {
+                                    offset: 1, color: '#fff' // 100% 处的颜色
+                                }
+                            ], false)
+                        }
+                    },
+                    data: this.data[0],
+                }
+            ]
+        };
+
+    }
+}
+
+/**
  * @internal
  */
 export class GaugeGraphData extends AbstractNormalGraphData {

@@ -28,6 +28,8 @@ import {DoughnutGraphComponent} from "./doughnut/demo.component";
 import {DoughnutGraphModule} from "./doughnut/demo.module";
 import {StripGraphComponent} from "./strip/demo.component";
 import {StripGraphModule} from "./strip/demo.module";
+import {StackAreaGraphComponent} from "./stack-area/demo.component";
+import {StackAreaGraphModule} from "./stack-area/demo.module";
 
 export const routerConfig = [
     {
@@ -62,6 +64,9 @@ export const routerConfig = [
     },
     {
         path: 'strip', component: StripGraphComponent
+    },
+    {
+        path: 'stack-area', component: StackAreaGraphComponent
     }
 ];
 
@@ -79,7 +84,8 @@ export const routerConfig = [
         ProvinceMapGraphModule,
         GraphFormatterModule,
         DoughnutGraphModule,
-        StripGraphModule
+        StripGraphModule,
+        StackAreaGraphModule
     ]
 })
 export class GraphDemoModule {
