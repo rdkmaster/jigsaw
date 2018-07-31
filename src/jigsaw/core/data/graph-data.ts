@@ -1408,7 +1408,7 @@ export class RadarGraphData extends AbstractGraphData {
     public title: string;
 
     private _calcSeriesData(){
-        return this.data.map(row => {
+        return this.data.slice(0, this.data.length - 1).map(row => {
             return {
                 value: row.slice(0, row.length - 1),
                 name: row[row.length - 1]
@@ -1417,7 +1417,13 @@ export class RadarGraphData extends AbstractGraphData {
     }
 
     private _calcLegendData() {
-        return this.data.map(row => row[row.length - 1]);
+        return this.data.slice(0, this.data.length - 1).map(row => row[row.length - 1]);
+    }
+
+    private _calcRadar() {
+        return this.header.slice(0, this.header.length - 1).map((h, i) => {
+            return {name: h, max: this.data[this.data.length - 1][i]}
+        })
     }
 
     protected createChartOptions(): any {
@@ -1435,14 +1441,7 @@ export class RadarGraphData extends AbstractGraphData {
             },
             radar: {
                 // shape: 'circle',
-                indicator: [
-                    { name: '销售（sales）', max: 6500},
-                    { name: '管理（Administration）', max: 16000},
-                    { name: '信息技术（Information Techology）', max: 30000},
-                    { name: '客服（Customer Support）', max: 38000},
-                    { name: '研发（Development）', max: 52000},
-                    { name: '市场（Marketing）', max: 25000}
-                ]
+                indicator: this._calcRadar()
             },
             series: [{
                 type: 'radar',
