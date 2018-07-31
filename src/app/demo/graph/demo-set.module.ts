@@ -32,6 +32,8 @@ import {StackAreaGraphComponent} from "./stack-area/demo.component";
 import {StackAreaGraphModule} from "./stack-area/demo.module";
 import {ScatterGraphComponent} from "./scatter/demo.component";
 import {ScatterGraphModule} from "./scatter/demo.module";
+import {RadarGraphComponent} from "./radar/demo.component";
+import {RadarGraphModule} from "./radar/demo.module";
 
 export const routerConfig = [
     {
@@ -72,6 +74,9 @@ export const routerConfig = [
     },
     {
         path: 'scatter', component: ScatterGraphComponent
+    },
+    {
+        path: 'radar', component: RadarGraphComponent
     }
 ];
 
@@ -91,7 +96,8 @@ export const routerConfig = [
         DoughnutGraphModule,
         StripGraphModule,
         StackAreaGraphModule,
-        ScatterGraphModule
+        ScatterGraphModule,
+        RadarGraphModule
     ]
 })
 export class GraphDemoModule {

@@ -17,10 +17,10 @@ export const VMAX_GRAPH_THEME = {
         fontFamily2: 'microsoft yahei' // IE8- 字体模糊并且不支持不同字体混排，额外指定一份
     },
     title: {
-        x: 'center', // 水平安放位置，默认为左对齐，可选为：
+        left: 'center', // 水平安放位置，默认为左对齐，可选为：
         // 'center' ¦ 'left' ¦ 'right'
         // ¦ {number}（x坐标，单位px）
-        y: 'top', // 垂直安放位置，默认为全图顶端，可选为：
+        top: 'top', // 垂直安放位置，默认为全图顶端，可选为：
         // 'top' ¦ 'bottom' ¦ 'center'
         // ¦ {number}（y坐标，单位px）
         //textAlign: null          // 水平对齐方式，默认根据x设置自动调整
@@ -31,10 +31,12 @@ export const VMAX_GRAPH_THEME = {
         // 接受数组分别设定上右下左边距，同css
         itemGap: 25, // 主副标题纵向间隔，单位px，默认为10，
 
-        fontSize: 14,
-        fontWeight: 'normal',
-        fontStyle: 'normal',
-        fontFamily: '微软雅黑, Arial, Verdana, sans-serif',
+        textStyle: {
+            fontSize: 14,
+            fontWeight: 'normal',
+            fontStyle: 'normal',
+            fontFamily: '微软雅黑, Arial, Verdana, sans-serif',
+        },
         subtextStyle: {
             color: '#aaa' // 副标题文字颜色
         }
@@ -44,10 +46,10 @@ export const VMAX_GRAPH_THEME = {
     legend: {
         orient: 'horizontal', // 布局方式，默认为水平布局，可选为：
         // 'horizontal' ¦ 'vertical'
-        x: 'right', // 水平安放位置，默认为全图居中，可选为：
+        left: 'right', // 水平安放位置，默认为全图居中，可选为：
         // 'center' ¦ 'left' ¦ 'right'
         // ¦ {number}（x坐标，单位px）
-        y: 'top', // 垂直安放位置，默认为全图顶端，可选为：
+        top: 'top', // 垂直安放位置，默认为全图顶端，可选为：
         // 'top' ¦ 'bottom' ¦ 'center'
         // ¦ {number}（y坐标，单位px）
         backgroundColor: 'rgba(0,0,0,0)',

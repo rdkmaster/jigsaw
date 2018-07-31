@@ -1382,11 +1382,73 @@ export class ScatterGraphData extends AbstractGraphData {
 }
 
 /**
- * @internal
+ * 雷达图
  */
-export class RadarGraphData extends AbstractNormalGraphData {
+export class RadarGraphData extends AbstractGraphData {
+
+    private _data: GraphDataMatrix;
+
+    public get data(): any {
+        return this._data;
+    }
+
+    public set data(value: any) {
+        if (CommonUtils.isUndefined(value)) return;
+        if (value instanceof Array) {
+            if (value[0] instanceof Array) {
+                this._data = value;
+            } else {
+                this._data = [value];
+            }
+        } else {
+            this._data = [[value]]
+        }
+    }
+
+    public title: string;
+
+    private _calcSeriesData(){
+        return this.data.map(row => {
+            return {
+                value: row.slice(0, row.length - 1),
+                name: row[row.length - 1]
+            }
+        })
+    }
+
+    private _calcLegendData() {
+        return this.data.map(row => row[row.length - 1]);
+    }
+
     protected createChartOptions(): any {
-        return undefined;
+        if (!this.data || !this.data.length) return;
+
+        return {
+            title: {
+                left: 'left',
+                text: this.title
+            },
+            tooltip: {},
+            legend: {
+                left: 'center',
+                data: this._calcLegendData()
+            },
+            radar: {
+                // shape: 'circle',
+                indicator: [
+                    { name: '销售（sales）', max: 6500},
+                    { name: '管理（Administration）', max: 16000},
+                    { name: '信息技术（Information Techology）', max: 30000},
+                    { name: '客服（Customer Support）', max: 38000},
+                    { name: '研发（Development）', max: 52000},
+                    { name: '市场（Marketing）', max: 25000}
+                ]
+            },
+            series: [{
+                type: 'radar',
+                data : this._calcSeriesData()
+            }]
+        };
     }
 }
 
