@@ -38,6 +38,8 @@ import {KLineGraphComponent} from "./k-line/demo.component";
 import {KlineGraphModule} from "./k-line/demo.module";
 import {BoxPlotGraphComponent} from "./box-plot/demo.component";
 import {BoxPlotGraphModule} from "./box-plot/demo.module";
+import {HeatGraphComponent} from "./heat/demo.component";
+import {HeatGraphModule} from "./heat/demo.module";
 
 export const routerConfig = [
     {
@@ -87,6 +89,9 @@ export const routerConfig = [
     },
     {
         path: 'box-plot', component: BoxPlotGraphComponent
+    },
+    {
+        path: 'heat', component: HeatGraphComponent
     }
 ];
 
@@ -109,7 +114,8 @@ export const routerConfig = [
         ScatterGraphModule,
         RadarGraphModule,
         KlineGraphModule,
-        BoxPlotGraphModule
+        BoxPlotGraphModule,
+        HeatGraphModule
     ]
 })
 export class GraphDemoModule {
