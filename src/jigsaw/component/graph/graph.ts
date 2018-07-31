@@ -82,6 +82,22 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         }
     }
 
+    private _globalTheme: any = VMAX_GRAPH_THEME;
+
+    @Input()
+    public get globalTheme() {
+        return this._globalTheme;
+    };
+
+    public set globalTheme(value) {
+        if(!value) return;
+        this._globalTheme = value;
+        if(this._graph) {
+            this._graph._theme = value;
+            this.data.refresh();
+        }
+    }
+
     constructor(private _elementRef: ElementRef, private _renderer: Renderer2, private _zone: NgZone) {
         super();
         this._host = this._elementRef.nativeElement;
