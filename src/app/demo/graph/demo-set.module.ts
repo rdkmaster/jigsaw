@@ -36,6 +36,8 @@ import {RadarGraphComponent} from "./radar/demo.component";
 import {RadarGraphModule} from "./radar/demo.module";
 import {KLineGraphComponent} from "./k-line/demo.component";
 import {KlineGraphModule} from "./k-line/demo.module";
+import {BoxPlotGraphComponent} from "./box-plot/demo.component";
+import {BoxPlotGraphModule} from "./box-plot/demo.module";
 
 export const routerConfig = [
     {
@@ -82,6 +84,9 @@ export const routerConfig = [
     },
     {
         path: 'k-line', component: KLineGraphComponent
+    },
+    {
+        path: 'box-plot', component: BoxPlotGraphComponent
     }
 ];
 
@@ -103,7 +108,8 @@ export const routerConfig = [
         StackAreaGraphModule,
         ScatterGraphModule,
         RadarGraphModule,
-        KlineGraphModule
+        KlineGraphModule,
+        BoxPlotGraphModule
     ]
 })
 export class GraphDemoModule {
