@@ -1289,94 +1289,17 @@ export class ScatterGraphData extends AbstractGraphData {
     protected createChartOptions(): any {
         if (!this.data || !this.data.length) return;
 
-        const markLineOpt = {
-            animation: false,
-            label: {
-                normal: {
-                    formatter: 'y = 0.5 * x + 3',
-                    textStyle: {
-                        align: 'right'
-                    }
-                }
-            },
-            lineStyle: {
-                normal: {
-                    type: 'solid'
-                }
-            },
-            tooltip: {
-                formatter: 'y = 0.5 * x + 3'
-            },
-            data: [[{
-                coord: [0, 3],
-                symbol: 'none'
-            }, {
-                coord: [20, 13],
-                symbol: 'none'
-            }]]
-        };
-
         return {
             title: {
-                text: this.title,
-                x: 'center',
-                y: 0
+              text: this.title
             },
-            grid: [
-                {x: '7%', y: '7%', width: '38%', height: '38%'},
-                {x2: '7%', y: '7%', width: '38%', height: '38%'},
-                {x: '7%', y2: '7%', width: '38%', height: '38%'},
-                {x2: '7%', y2: '7%', width: '38%', height: '38%'}
-            ],
-            tooltip: {
-                formatter: 'Group {a}: ({c})'
-            },
-            xAxis: [
-                {gridIndex: 0, min: 0, max: 20},
-                {gridIndex: 1, min: 0, max: 20},
-                {gridIndex: 2, min: 0, max: 20},
-                {gridIndex: 3, min: 0, max: 20}
-            ],
-            yAxis: [
-                {gridIndex: 0, min: 0, max: 15},
-                {gridIndex: 1, min: 0, max: 15},
-                {gridIndex: 2, min: 0, max: 15},
-                {gridIndex: 3, min: 0, max: 15}
-            ],
-            series: [
-                {
-                    name: 'I',
-                    type: 'scatter',
-                    xAxisIndex: 0,
-                    yAxisIndex: 0,
-                    data: this.data[0],
-                    markLine: markLineOpt
-                },
-                {
-                    name: 'II',
-                    type: 'scatter',
-                    xAxisIndex: 1,
-                    yAxisIndex: 1,
-                    data: this.data[1],
-                    markLine: markLineOpt
-                },
-                {
-                    name: 'III',
-                    type: 'scatter',
-                    xAxisIndex: 2,
-                    yAxisIndex: 2,
-                    data: this.data[2],
-                    markLine: markLineOpt
-                },
-                {
-                    name: 'IV',
-                    type: 'scatter',
-                    xAxisIndex: 3,
-                    yAxisIndex: 3,
-                    data: this.data[3],
-                    markLine: markLineOpt
-                }
-            ]
+            xAxis: {},
+            yAxis: {},
+            series: [{
+                symbolSize: 20,
+                data: this.data,
+                type: 'scatter'
+            }]
         };
     }
 }

@@ -6,16 +6,18 @@
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
     <h2>散点图</h2>
+    <div class="clearfix">
+        <div class="live-demo live-demo-block">
+            <h3>ScatterGraphData静态数据</h3>
+            <jigsaw-graph [data]="scatterData" height="400" (click)="handleClick($event)"></jigsaw-graph>
+        </div>
 
-    <div class="live-demo">
-        <h3>ScatterGraphData静态数据</h3>
-        <jigsaw-graph [data]="scatterData" height="400" (click)="handleClick($event)"></jigsaw-graph>
+        <div class="live-demo live-demo-block">
+            <h3>ScatterGraphData异步数据</h3>
+            <jigsaw-graph [data]="scatterFromAjax" height="400" (click)="handleClick($event)"></jigsaw-graph>
+        </div>
     </div>
 
-    <div class="live-demo">
-        <h3>ScatterGraphData异步数据</h3>
-        <jigsaw-graph [data]="scatterFromAjax" height="400" (click)="handleClick($event)"></jigsaw-graph>
-    </div>
 </div>
 
 
