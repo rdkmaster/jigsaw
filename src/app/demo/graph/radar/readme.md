@@ -11,7 +11,7 @@
     [...value, legend],
     [...value, legend],
         ...
-    [...maxRadar]
+    [...maxRadar, '']
 ]
 
 ```

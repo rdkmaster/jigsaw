@@ -1291,7 +1291,7 @@ export class ScatterGraphData extends AbstractGraphData {
 
         return {
             title: {
-              text: this.title
+                text: this.title
             },
             xAxis: {},
             yAxis: {},
@@ -1309,28 +1309,9 @@ export class ScatterGraphData extends AbstractGraphData {
  */
 export class RadarGraphData extends AbstractGraphData {
 
-    private _data: GraphDataMatrix;
-
-    public get data(): any {
-        return this._data;
-    }
-
-    public set data(value: any) {
-        if (CommonUtils.isUndefined(value)) return;
-        if (value instanceof Array) {
-            if (value[0] instanceof Array) {
-                this._data = value;
-            } else {
-                this._data = [value];
-            }
-        } else {
-            this._data = [[value]]
-        }
-    }
-
     public title: string;
 
-    private _calcSeriesData(){
+    private _calcSeriesData() {
         return this.data.slice(0, this.data.length - 1).map(row => {
             return {
                 value: row.slice(0, row.length - 1),
@@ -1368,14 +1349,110 @@ export class RadarGraphData extends AbstractGraphData {
             },
             series: [{
                 type: 'radar',
-                data : this._calcSeriesData()
+                data: this._calcSeriesData()
             }]
         };
     }
 }
 
 /**
- * @internal
+ * K线图
+ */
+export class KLineGraphData extends AbstractGraphData {
+    private _calcSeries(legendData: any[]) {
+        return this.data.map((row, index) => {
+            return {
+                name: legendData[index],
+                type: 'line',
+                showAllSymbol: true,
+                animation: true,
+                smooth: false,
+                symbolSize: [5, 5],
+                hoverAnimation: false,
+                data: row.slice(0, row.length - 1)
+            }
+        });
+    }
+
+    private _calcLegendData() {
+        return this.data.map(row => row[row.length - 1]);
+    }
+
+    protected createChartOptions(): any {
+        if (!this.data || !this.data.length) return;
+
+        const legendData = this._calcLegendData();
+
+        const selectedLegend = legendData.reduce((s, legend, i) => {
+            s[legend] = i < 3 ? true : false;
+            return s;
+        }, {});
+
+        const sampleColors = ["#54acd5", "#f99660", "#a4bf6a", "#ec6d6d", "#f7b913", "#8ac9b6", "#bea5c8", "#01c5c2", "#a17660"];
+        const vmaxColors = ['#41addc', '#bea5c8', '#85c56c', '#f99660', '#ffc20e', '#ec6d6d', '#8ac9b6', '#585eaa', '#b22c46', '#96582a'];
+        const colors = vmaxColors;
+
+        return {
+            color: colors,
+            tooltip: {
+                trigger: 'axis',
+                position: function (point) {// 固定在顶部
+                    return [point[0] + 10, point[1]];
+                }
+            },
+            legend: {
+                left: 'center',
+                data: legendData,
+                itemWidth: 25,//设置icon长高
+                itemHeight: 5,
+                top: 20,
+                inactiveColor: "#bbb",
+                itemGap: 10,
+                selected: selectedLegend
+            },
+            grid: {
+                left: 45,
+                right: 45,
+                top: 60
+            },
+            calculable: true,
+            /*当某天无数据不补零，同时不连线的效果实现*/
+            /*
+            *以x轴为类目轴为例:如下
+            *坐标轴 刻度标签 设显示间隔:xAxis.axisLabel.interval根据具体情况设置标签显示间隔;
+            *坐标轴 刻度 的显示间隔:xAxis.axisTick.interval设置全部显示为0;
+            *标志图形全部显示:series.showAllSymbol设置为true,
+            * */
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    axisLabel: {//标签设置
+                        interval: 4
+                    },
+                    splitLine: {//设置网格
+                        interval: 0
+                    },
+                    scale: true,
+                    data: this.header.slice(0, this.header.length - 1)
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    splitNumber: 10,//不是类轴才会生效，设置网格多少
+                    axisLabel: {//标签设置
+                        interval: 4
+                    }
+                }
+            ],
+            series: this._calcSeries(legendData)
+        };
+    }
+}
+
+/**
+ * 热力图
  */
 export class HeatGraphData extends AbstractNormalGraphData {
     protected createChartOptions(): any {

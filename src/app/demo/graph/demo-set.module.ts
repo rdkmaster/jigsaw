@@ -34,6 +34,8 @@ import {ScatterGraphComponent} from "./scatter/demo.component";
 import {ScatterGraphModule} from "./scatter/demo.module";
 import {RadarGraphComponent} from "./radar/demo.component";
 import {RadarGraphModule} from "./radar/demo.module";
+import {KLineGraphComponent} from "./k-line/demo.component";
+import {KlineGraphModule} from "./k-line/demo.module";
 
 export const routerConfig = [
     {
@@ -77,6 +79,9 @@ export const routerConfig = [
     },
     {
         path: 'radar', component: RadarGraphComponent
+    },
+    {
+        path: 'k-line', component: KLineGraphComponent
     }
 ];
 
@@ -97,7 +102,8 @@ export const routerConfig = [
         StripGraphModule,
         StackAreaGraphModule,
         ScatterGraphModule,
-        RadarGraphModule
+        RadarGraphModule,
+        KlineGraphModule
     ]
 })
 export class GraphDemoModule {
