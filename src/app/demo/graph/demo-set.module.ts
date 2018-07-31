@@ -30,6 +30,8 @@ import {StripGraphComponent} from "./strip/demo.component";
 import {StripGraphModule} from "./strip/demo.module";
 import {StackAreaGraphComponent} from "./stack-area/demo.component";
 import {StackAreaGraphModule} from "./stack-area/demo.module";
+import {ScatterGraphComponent} from "./scatter/demo.component";
+import {ScatterGraphModule} from "./scatter/demo.module";
 
 export const routerConfig = [
     {
@@ -67,6 +69,9 @@ export const routerConfig = [
     },
     {
         path: 'stack-area', component: StackAreaGraphComponent
+    },
+    {
+        path: 'scatter', component: ScatterGraphComponent
     }
 ];
 
@@ -85,7 +90,8 @@ export const routerConfig = [
         GraphFormatterModule,
         DoughnutGraphModule,
         StripGraphModule,
-        StackAreaGraphModule
+        StackAreaGraphModule,
+        ScatterGraphModule
     ]
 })
 export class GraphDemoModule {
