@@ -26,6 +26,8 @@ import {GraphFormatterComponent} from "./formatter/demo.component";
 import {GraphFormatterModule} from "./formatter/demo.module";
 import {DoughnutGraphComponent} from "./doughnut/demo.component";
 import {DoughnutGraphModule} from "./doughnut/demo.module";
+import {StripGraphComponent} from "./strip/demo.component";
+import {StripGraphModule} from "./strip/demo.module";
 
 export const routerConfig = [
     {
@@ -57,6 +59,9 @@ export const routerConfig = [
     },
     {
         path: 'doughnut', component: DoughnutGraphComponent
+    },
+    {
+        path: 'strip', component: StripGraphComponent
     }
 ];
 
@@ -73,7 +78,8 @@ export const routerConfig = [
         MapGraphModule,
         ProvinceMapGraphModule,
         GraphFormatterModule,
-        DoughnutGraphModule
+        DoughnutGraphModule,
+        StripGraphModule
     ]
 })
 export class GraphDemoModule {

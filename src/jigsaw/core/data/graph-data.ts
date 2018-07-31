@@ -377,11 +377,11 @@ export class PieGraphDataByRow extends PieGraphDataByColumn {
 export class DoughnutGraphData extends AbstractGraphData {
     public title: string;
 
-    public series: {name: string, value: string | number}[];
+    public series: { name: string, value: string | number }[];
 
     private _calcSeries() {
-        if(!(this.data instanceof Array) || !this.data.length) return;
-        this.series = this.data.map((row:any) => ({value: row[0], name: row[1]}));
+        if (!(this.data instanceof Array) || !this.data.length) return;
+        this.series = this.data.map((row: any) => ({value: row[0], name: row[1]}));
     }
 
     protected createChartOptions(): any {
@@ -450,20 +450,20 @@ export class DoughnutRateGraphData extends AbstractGraphData {
     }
 
     public set data(value: any) {
-        if(CommonUtils.isUndefined(value)) return;
-        if(value instanceof Array) {
-            if(value[0] instanceof Array) {
+        if (CommonUtils.isUndefined(value)) return;
+        if (value instanceof Array) {
+            if (value[0] instanceof Array) {
                 this._data = value;
-            }else {
+            } else {
                 this._data = [value];
             }
-        }else {
+        } else {
             this._data = [[value]]
         }
     }
 
     protected createChartOptions(): any {
-        if(!(this.data instanceof Array) || !this.data.length || !(this.data[0]  instanceof Array)) return;
+        if (!(this.data instanceof Array) || !this.data.length || !(this.data[0] instanceof Array)) return;
 
         //不同区域得分颜色
         const color = Number(this.data[0][0]) >= 95 ? '#98e2a6' : (Number(this.data[0][0]) >= 90 && Number(this.data[0][0]) < 95) ? '#9ad0e2' : (Number(this.data[0][0]) >= 80 && Number(this.data[0][0]) < 90) ? '#f7e685' : (Number(this.data[0][0]) >= 70 && Number(this.data[0][0]) < 80) ? '#f6c88a' : Number(this.data[0][0]) < 70 ? '#ff8e74' : '#dedede';
@@ -598,20 +598,20 @@ export class DoughnutScoreGraphData extends AbstractGraphData {
     }
 
     public set data(value: any) {
-        if(CommonUtils.isUndefined(value)) return;
-        if(value instanceof Array) {
-            if(value[0] instanceof Array) {
+        if (CommonUtils.isUndefined(value)) return;
+        if (value instanceof Array) {
+            if (value[0] instanceof Array) {
                 this._data = value;
-            }else {
+            } else {
                 this._data = [value];
             }
-        }else {
+        } else {
             this._data = [[value]]
         }
     }
 
     protected createChartOptions(): any {
-        if(!(this.data instanceof Array) || !this.data.length || !(this.data[0]  instanceof Array)) return;
+        if (!(this.data instanceof Array) || !this.data.length || !(this.data[0] instanceof Array)) return;
 
         // innerColor 内圆颜色
         // outerColor 外环颜色
@@ -849,6 +849,344 @@ export class LineBarGraphDataByRow extends AbstractNormalGraphData {
         return options;
     }
 }
+
+/**
+ * 条形图
+ */
+export class StripGraphData extends AbstractGraphData {
+
+    protected _getBrowserInfo() {
+        //只做了谷歌和火狐的兼容性
+        var agent = navigator.userAgent.toLowerCase();
+        if (agent.indexOf("firefox") > 0) {
+            return -10;
+        } else {
+            return -15;
+        }
+    }
+
+    protected _getGridRight() {
+        var gridRight = "" + this.data[0][0];
+        return gridRight.length * 8
+    }
+
+    optionTemplate: EchartOptions = {
+        grid: {
+            left: 100,
+            top: 60
+        },
+        tooltip: {
+            trigger: 'item',
+            axisPointer: {type: ''},
+            formatter: function (params) {
+                return params[1].name + '<br/>'
+                    + params[1].seriesName + ' : ' + params[1].value
+            }
+        },
+        xAxis: [
+            {
+                type: 'value',
+                splitNumber: 4,
+                splitLine: {show: false},
+                position: 'bottom',
+                max: "dataMax",
+                axisLabel: {
+                    textStyle: {
+                        color: '#bbbbbb'
+                    }
+                },
+                axisTick: {//坐标轴刻度相关设置
+                    show: true,
+                    inside: false,
+                    color: '#ddd',
+                    length: 3,//刻度长短设置
+                    lineStyle: {
+                        color: '#ddd',
+                    }
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#ddd',
+                        width: 1
+                    }
+                }
+            }
+        ],
+        yAxis: [
+            {
+
+                splitLine: {show: false},
+                data: this.header,
+                boundaryGap: [0.01, 0.01],
+                axisLabel: {
+                    textStyle: {
+                        color: '#666'
+                    }
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#ddd',
+                        width: 1
+                    }
+                },
+                axisTick: {//坐标轴刻度相关设置
+                    show: true,
+                    length: 3,//刻度长短设置
+                    lineStyle: {
+                        color: '#54acd5',
+                    }
+                }
+            }
+        ]
+    };
+
+    protected createChartOptions(): any {
+        if (!this.data || !this.data.length) return;
+        const options = {...this.optionTemplate};
+        options.grid.right = this._getGridRight();
+        options.yAxis[0].data = this.header;
+        options.series = [
+            {
+                type: 'bar',
+                barGap: '-100%',
+                silent: true,
+                itemStyle: {
+                    normal: {
+                        barBorderColor: '#54acd5',
+                        opacity: 0.2,
+                        color: '#54acd5',
+                        barBorderRadius: 5
+                    }
+                },
+                barWidth: 10,
+                data: this.data[0]
+            },
+            {
+                animation: true,
+                type: 'bar',
+                label: {
+                    normal: {
+                        show: true,
+                        position: ['100%', this._getBrowserInfo()],
+                        textStyle: {
+                            fontSize: 12,
+                            color: "#54acd5"
+                        }
+                    }
+                },
+                barGap: '-100%',
+                itemStyle: {
+                    normal: {
+                        barBorderColor: '#54acd5',
+                        color: '#54acd5',
+                        barBorderRadius: 5
+                    }
+                },
+                barWidth: 10,
+                tooltip: {
+                    trigger: 'axis',
+                },
+                data: this.data[1]
+            }
+        ];
+        return options;
+    }
+}
+
+/**
+ * 条形时序图
+ */
+export class StripSequenceGraphData extends StripGraphData {
+    protected createChartOptions(): any {
+        if (!this.data || !this.data.length) return;
+        const options = {...this.optionTemplate};
+        options.grid.right = this._getGridRight();
+        options.yAxis[0].type = 'category';
+        options.yAxis[0].data = this.header;
+        options.series = [
+            {
+                type: 'bar',
+                barGap: '-100%',
+                silent: true,
+                itemStyle: {
+                    normal: {
+                        barBorderColor: '#54acd5',
+                        opacity: 0.2,
+                        color: '#54acd5',
+                        barBorderRadius: 5
+                    }
+                },
+                barWidth: 10,
+                data: this.data[0]
+            },
+            {
+                type: 'bar',
+                stack: '总量',
+                barGap: '-100%',
+                silent: true,
+                itemStyle: {
+                    normal: {
+                        barBorderColor: 'rgba(0,0,0,0)',
+                        color: 'rgba(0,0,0,0)',
+                        barBorderRadius: 5,
+                        textStyle: {
+                            align: 'right'
+                        }
+                    }
+                },
+                barWidth: 10,
+                data: this.data[1]
+            },
+            {
+                type: 'bar',
+                stack: '总量',
+                barGap: '-100%',
+                silent: true,
+                animation: true,
+                label: {
+                    normal: {
+                        show: true,
+                        position: ['100%', this._getBrowserInfo()],
+                        textStyle: {
+                            color: "#54acd5"
+                        }
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        barBorderColor: '#54acd5',
+                        color: '#54acd5',
+                        barBorderRadius: 5
+                    }
+                },
+                barWidth: 10,
+                data: this.data[2]
+            }
+        ];
+        return options;
+    }
+}
+
+/**
+ * 条形色值图
+ */
+export class StripColorGraphData extends AbstractGraphData {
+    protected createChartOptions(): any {
+        if (!this.data || !this.data.length) return;
+
+        let allData = [];
+        let len = this.data[0].length;
+        if (this.data[0].length) {
+            for (let i = 0; i < len; i++) {
+                allData[i] = {};
+                allData[i].value = this.data[0][i];
+                allData[i].itemStyle = {
+                    normal: {
+                        color: this.data[0][i] > 95 ? "#98e2a6" : this.data[0][i] > 90 ? "#9ad0e2" : this.data[0][i] > 80 ?
+                            "#f7e685" : this.data[0][i] > 70 ? "#f6c88a" : "#ff8e74"
+                    }
+                }
+            }
+        }
+        return {
+            title: {
+                text: '各市得分排名',
+                left: "center",
+                top: 20,
+                textStyle: {
+                    color: '#434343',
+                    fontSize: 12
+                }
+            },
+            calculable: true,
+            grid: {
+                left: 90,
+                right: 60,
+                top: 60
+            },
+            xAxis: [
+                {
+                    type: 'value',
+                    splitNumber: 4,
+                    axisLine: {
+                        show: false
+                    },
+                    splitLine: {//出网格线
+                        show: false
+                    },
+                    axisLabel: {
+                        show: false
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    splitLine: {
+                        show: false
+                    },
+                    boundaryGap: true,
+                    type: 'category',
+                    scale: false,
+                    axisLabel: {
+                        textStyle: {
+                            color: '#434343'//刻度标签样式
+                        }
+
+                    },
+                    axisLine: {
+                        show: false
+                    },
+                    axisTick: {//坐标轴刻度相关设置
+                        show: false
+                    },
+                    data: this.header
+                }
+            ],
+            series: [
+                {
+                    name: 'bar',
+                    type: 'bar',
+                    stack: "总量",
+                    silent: true,
+                    animation: false,//关闭动漫
+                    barWidth: '10px',
+                    data: allData
+
+                },
+                {
+                    name: 'bar6',
+                    type: 'bar',
+                    stack: "总量",
+                    silent: true,
+                    animation: false,//关闭动漫
+                    label: {//图形数据显示位置
+                        normal: {
+                            show: true, position: ['100%', -5],
+                            textStyle: {
+                                color: "#585858"
+                            },
+                            formatter: function (params) {
+                                return "  " + (100 - params.value)
+                            }
+                        },
+                    },
+                    itemStyle: {//图形边框设置，如边框大小，圆角，填充着色
+                        normal: {
+                            color: "#dedede"
+                        }
+                    },
+                    barWidth: '10px',//条形宽度
+                    data: [100 - Number(this.data[0][0]), 100 - Number(this.data[0][1]), 100 - Number(this.data[0][2]), 100 - Number(this.data[0][3]), 100 - Number(this.data[0][4]), 100 - Number(this.data[0][5])]
+                }
+
+            ]
+        };
+
+    }
+}
+
 
 /**
  * @internal

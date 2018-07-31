@@ -1,10 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {AbstractGraphData, DoughnutGraphData, DoughnutRateGraphData, DoughnutScoreGraphData} from "jigsaw/core/data/graph-data";
-import {EchartOptions} from "jigsaw/core/data/echart-types";
-import {JigsawGraph} from "jigsaw/component/graph/graph";
+import {Component} from '@angular/core';
+import {DoughnutGraphData, DoughnutRateGraphData, DoughnutScoreGraphData} from "jigsaw/core/data/graph-data";
 import {AjaxInterceptor} from "../../../app.interceptor";
-import {HttpClient, HttpEvent, HttpRequest} from "@angular/common/http";
-import {Observable} from "rxjs/Observable";
+import {HttpClient, HttpRequest} from "@angular/common/http";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -30,14 +27,14 @@ export class DoughnutGraphComponent {
 
         this.doughnutRateFromAjax = new DoughnutRateGraphData();
         this.doughnutRateFromAjax.http = http;
-        this.doughnutRateFromAjax.fromAjax({url:'/doughnut-data', params: {source: '无线网'}});
+        this.doughnutRateFromAjax.fromAjax({url: '/doughnut-data', params: {source: '无线网'}});
 
         this.doughnutScore = new DoughnutScoreGraphData();
         this.doughnutScore.data = [78, "IELTS得分"];
 
         this.doughnutScoreFromAjax = new DoughnutScoreGraphData();
         this.doughnutScoreFromAjax.http = http;
-        this.doughnutScoreFromAjax.fromAjax({url:'/doughnut-data', params: {score: 'TOEFL'}});
+        this.doughnutScoreFromAjax.fromAjax({url: '/doughnut-data', params: {score: 'TOEFL'}});
     }
 
     doughnut: DoughnutGraphData;
@@ -63,8 +60,9 @@ export class DoughnutGraphComponent {
 
 /* 模拟请求代码 start */
 AjaxInterceptor.registerProcessor('/doughnut-data', dealAreaRequest);
+
 function dealAreaRequest(req: HttpRequest<any>) {
-    if(req.params.get('source') == '无线网') {
+    if (req.params.get('source') == '无线网') {
         return {
             "header": ["次数", "来源"],
             "field": ["field1", "field2"],
@@ -73,7 +71,7 @@ function dealAreaRequest(req: HttpRequest<any>) {
             ]
         };
     }
-    if(req.params.get('score') == 'TOEFL') {
+    if (req.params.get('score') == 'TOEFL') {
         return {
             "header": ["得分", "科目"],
             "field": ["field1", "field2"],
@@ -93,4 +91,5 @@ function dealAreaRequest(req: HttpRequest<any>) {
         ]
     };
 }
-/* 模拟请求代码 start */
+
+/* 模拟请求代码 end */
