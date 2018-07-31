@@ -1579,7 +1579,7 @@ export class HeatGraphData extends AbstractNormalGraphData {
             series: [{
                 name: 'Punch Card',
                 type: 'heatmap',
-                data: this.data,
+                data: this.data.slice(0, this.data.length - 2),
                 label: {
                     normal: {
                         show: true
@@ -1592,6 +1592,55 @@ export class HeatGraphData extends AbstractNormalGraphData {
                     }
                 }
             }]
+        };
+    }
+}
+
+/**
+ * 关系图
+ */
+export class RelationalGraphData extends AbstractGraphData {
+    public data: any[];
+
+    public title: string;
+
+    protected createChartOptions(): any {
+        if (!this.data || !this.data.length) return;
+        return {
+            title: {
+                text: this.title
+            },
+            tooltip: {},
+            xAxis: {
+                type : 'category',
+                boundaryGap : false,
+                data : this.data[this.data.length - 2]
+            },
+            yAxis: {
+                type : 'value'
+            },
+            series: [
+                {
+                    type: 'graph',
+                    layout: 'none',
+                    coordinateSystem: 'cartesian2d',
+                    symbolSize: 40,
+                    label: {
+                        normal: {
+                            show: true
+                        }
+                    },
+                    edgeSymbol: ['circle', 'arrow'],
+                    edgeSymbolSize: [4, 10],
+                    data: this.data[0],
+                    links: this.data[this.data.length - 1],
+                    lineStyle: {
+                        normal: {
+                            color: '#2f4554'
+                        }
+                    }
+                }
+            ]
         };
     }
 }
