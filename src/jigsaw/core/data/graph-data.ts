@@ -180,28 +180,10 @@ export class GraphData extends AbstractGraphData {
 }
 
 export abstract class AbstractNormalGraphData extends AbstractGraphData {
-    public title: EchartTitle;
+    public title: EchartTitle | string;
     public legend: EchartLegend;
     public tooltip: EchartTooltip;
 
-    protected _getLastData(): any[] {
-        return this.data.map(row => row[row.length - 1]);
-    }
-}
-
-/**
- * @internal
- */
-export class OutlineMapData extends AbstractNormalGraphData {
-    protected createChartOptions(): any {
-        return undefined;
-    }
-}
-
-/**
- * 饼图
- */
-export class PieGraphData extends AbstractNormalGraphData {
     private _data: GraphDataMatrix;
 
     public get data(): any {
@@ -221,13 +203,46 @@ export class PieGraphData extends AbstractNormalGraphData {
         }
     }
 
+    protected _getLastData(data?: any[]): any[] {
+        if (!data) {
+            data = this.data;
+        }
+        return data.map(row => row[row.length - 1]);
+    }
+
+    protected _extendOption(option: EchartOptions) {
+        if (typeof this.title == 'string') {
+            option.title.text = this.title;
+        } else if (this.title) {
+            option.title = this.title;
+        }
+
+        if (this.tooltip) {
+            option.tooltip = this.tooltip;
+        }
+    }
+}
+
+/**
+ * @internal
+ */
+export class OutlineMapData extends AbstractNormalGraphData {
+    protected createChartOptions(): any {
+        return undefined;
+    }
+}
+
+/**
+ * 饼图
+ */
+export class PieGraphData extends AbstractNormalGraphData {
     protected _calcSeriesData() {
         return this.data[0].map((v, i) => {
             return {value: v, name: this.header[i]}
         });
     }
 
-    protected optionsTemplate: EchartOptions = {
+    protected _optionsTemplate: EchartOptions = {
         tooltip: {
             trigger: 'item',
             formatter: "{a}<br>{b} : {c} ({d}%)"
@@ -256,13 +271,9 @@ export class PieGraphData extends AbstractNormalGraphData {
 
     protected createChartOptions(): EchartOptions {
         if (!this.data || !this.data.length) return;
-
-        const opt: EchartOptions = this.optionsTemplate;
+        const opt: EchartOptions = {...this._optionsTemplate};
+        this._extendOption(opt);
         opt.legend.data = this.header;
-        opt.title = this.title;
-        if (this.tooltip) {
-            opt.tooltip = this.tooltip;
-        }
         opt.series[0].data = this._calcSeriesData();
         return opt;
     }
@@ -277,15 +288,10 @@ export class PieGraphDataByRow extends PieGraphData {
 
     protected createChartOptions(): EchartOptions {
         if (!this.data || !this.data.length) return;
-
-        const opt: EchartOptions = this.optionsTemplate;
-        opt.title = this.title;
+        const opt: EchartOptions = {...this._optionsTemplate};
+        this._extendOption(opt);
         opt.legend.data = this._getLastData();
-        if (this.tooltip) {
-            opt.tooltip = this.tooltip;
-        }
         opt.series[0].data = this._calcSeriesData();
-
         return opt;
     }
 }
@@ -663,61 +669,65 @@ export class DoughnutScoreGraphData extends AbstractGraphData {
  * 折线图
  */
 export class LineBarGraphData extends AbstractNormalGraphData {
-    private _calcSeries() {
+    protected _calcSeries(data?: any) {
         return this.data.map((row, index) => {
             return {name: this.header[index], type: 'line', data: this.data.map(row => row[index])}
         });
     }
 
+    protected _optionsTemplate: EchartOptions = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            }
+        },
+        legend: {
+            left: 'center',
+            data: []
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: false,
+                data: []
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: []
+    };
+
     protected createChartOptions(): EchartOptions {
         if (!this.data || !this.data.length) return;
-
-        const options: EchartOptions = {
-            tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                    type: 'cross',
-                    label: {
-                        backgroundColor: '#6a7985'
-                    }
-                }
-            },
-            legend: {
-                left: 'center',
-                data: this.header
-            },
-            toolbox: {
-                feature: {
-                    saveAsImage: {}
-                }
-            },
-            grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                containLabel: true
-            },
-            xAxis: [
-                {
-                    type: 'category',
-                    boundaryGap: false,
-                    data: this._getLastData()
-                }
-            ],
-            yAxis: [
-                {
-                    type: 'value'
-                }
-            ],
-            series: this._calcSeries()
-        };
-        options.title = this.title;
-        return options;
+        const opt: EchartOptions = {...this._optionsTemplate};
+        this._extendOption(opt);
+        opt.legend.data = this.header;
+        opt.xAxis[0].data = this._getLastData();
+        opt.series = this._calcSeries();
+        return opt;
     }
 }
 
-export class LineBarGraphDataByRow extends AbstractNormalGraphData {
-    private _calcSeries(legendData: string[]) {
+export class LineBarGraphDataByRow extends LineBarGraphData {
+    protected _calcSeries(legendData: string[]) {
         return this.data.map((row, index) => {
             return {name: legendData[index], type: 'line', data: row.slice(0, row.length - 1)}
         });
@@ -727,54 +737,19 @@ export class LineBarGraphDataByRow extends AbstractNormalGraphData {
         const legendData = this._getLastData();
 
         if (!this.data || !this.data.length) return;
-        const options: EchartOptions = {
-            tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                    type: 'cross',
-                    label: {
-                        backgroundColor: '#6a7985'
-                    }
-                }
-            },
-            legend: {
-                left: 'center',
-                data: legendData
-            },
-            toolbox: {
-                feature: {
-                    saveAsImage: {}
-                }
-            },
-            grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                containLabel: true
-            },
-            xAxis: [
-                {
-                    type: 'category',
-                    boundaryGap: false,
-                    data: this.header
-                }
-            ],
-            yAxis: [
-                {
-                    type: 'value'
-                }
-            ],
-            series: this._calcSeries(legendData)
-        };
-        options.title = this.title;
-        return options;
+        const opt: EchartOptions = {...this._optionsTemplate};
+        this._extendOption(opt);
+        opt.legend.data = legendData;
+        opt.xAxis[0].data = this.header;
+        opt.series = this._calcSeries(legendData);
+        return opt;
     }
 }
 
 /**
  * 条形图
  */
-export class StripGraphData extends AbstractGraphData {
+export class StripGraphData extends AbstractNormalGraphData {
 
     protected _getBrowserInfo() {
         //只做了谷歌和火狐的兼容性
@@ -791,7 +766,7 @@ export class StripGraphData extends AbstractGraphData {
         return gridRight.length * 8
     }
 
-    optionTemplate: EchartOptions = {
+    protected _optionsTemplate: EchartOptions = {
         grid: {
             left: 100,
             top: 60
@@ -838,7 +813,7 @@ export class StripGraphData extends AbstractGraphData {
             {
 
                 splitLine: {show: false},
-                data: this.header,
+                data: [],
                 boundaryGap: [0.01, 0.01],
                 axisLabel: {
                     textStyle: {
@@ -865,7 +840,8 @@ export class StripGraphData extends AbstractGraphData {
 
     protected createChartOptions(): any {
         if (!this.data || !this.data.length) return;
-        const options = {...this.optionTemplate};
+        const options = {...this._optionsTemplate};
+        this._extendOption(options);
         options.grid.right = this._getGridRight();
         options.yAxis[0].data = this.header;
         options.series = [
@@ -922,7 +898,8 @@ export class StripGraphData extends AbstractGraphData {
 export class StripSequenceGraphData extends StripGraphData {
     protected createChartOptions(): any {
         if (!this.data || !this.data.length) return;
-        const options = {...this.optionTemplate};
+        const options = {...this._optionsTemplate};
+        this._extendOption(options);
         options.grid.right = this._getGridRight();
         options.yAxis[0].type = 'category';
         options.yAxis[0].data = this.header;
@@ -993,118 +970,124 @@ export class StripSequenceGraphData extends StripGraphData {
 /**
  * 条形色值图
  */
-export class StripColorGraphData extends AbstractGraphData {
-    protected createChartOptions(): any {
-        if (!this.data || !this.data.length) return;
-
-        let allData = [];
-        let len = this.data[0].length;
-        if (this.data[0].length) {
-            for (let i = 0; i < len; i++) {
-                allData[i] = {};
-                allData[i].value = this.data[0][i];
-                allData[i].itemStyle = {
-                    normal: {
-                        color: this.data[0][i] > 95 ? "#98e2a6" : this.data[0][i] > 90 ? "#9ad0e2" : this.data[0][i] > 80 ?
-                            "#f7e685" : this.data[0][i] > 70 ? "#f6c88a" : "#ff8e74"
-                    }
+export class StripColorGraphData extends AbstractNormalGraphData {
+    protected _optionsTemplate: EchartOptions = {
+        title: {
+            text: '',
+            left: "center",
+            top: 20,
+            textStyle: {
+                color: '#434343',
+                fontSize: 12
+            }
+        },
+        calculable: true,
+        grid: {
+            left: 90,
+            right: 60,
+            top: 60
+        },
+        xAxis: [
+            {
+                type: 'value',
+                splitNumber: 4,
+                axisLine: {
+                    show: false
+                },
+                splitLine: {//出网格线
+                    show: false
+                },
+                axisLabel: {
+                    show: false
                 }
             }
-        }
-        return {
-            title: {
-                text: '各市得分排名',
-                left: "center",
-                top: 20,
-                textStyle: {
-                    color: '#434343',
-                    fontSize: 12
-                }
-            },
-            calculable: true,
-            grid: {
-                left: 90,
-                right: 60,
-                top: 60
-            },
-            xAxis: [
-                {
-                    type: 'value',
-                    splitNumber: 4,
-                    axisLine: {
-                        show: false
-                    },
-                    splitLine: {//出网格线
-                        show: false
-                    },
-                    axisLabel: {
-                        show: false
+        ],
+        yAxis: [
+            {
+                splitLine: {
+                    show: false
+                },
+                boundaryGap: true,
+                type: 'category',
+                scale: false,
+                axisLabel: {
+                    textStyle: {
+                        color: '#434343'//刻度标签样式
                     }
-                }
-            ],
-            yAxis: [
-                {
-                    splitLine: {
-                        show: false
-                    },
-                    boundaryGap: true,
-                    type: 'category',
-                    scale: false,
-                    axisLabel: {
-                        textStyle: {
-                            color: '#434343'//刻度标签样式
-                        }
-
-                    },
-                    axisLine: {
-                        show: false
-                    },
-                    axisTick: {//坐标轴刻度相关设置
-                        show: false
-                    },
-                    data: this.header
-                }
-            ],
-            series: [
-                {
-                    name: 'bar',
-                    type: 'bar',
-                    stack: "总量",
-                    silent: true,
-                    animation: false,//关闭动漫
-                    barWidth: '10px',
-                    data: allData
 
                 },
-                {
-                    name: 'bar6',
-                    type: 'bar',
-                    stack: "总量",
-                    silent: true,
-                    animation: false,//关闭动漫
-                    label: {//图形数据显示位置
-                        normal: {
-                            show: true, position: ['100%', -5],
-                            textStyle: {
-                                color: "#585858"
-                            },
-                            formatter: function (params) {
-                                return "  " + (100 - params.value)
-                            }
+                axisLine: {
+                    show: false
+                },
+                axisTick: {//坐标轴刻度相关设置
+                    show: false
+                },
+                data: []
+            }
+        ],
+        series: [
+            {
+                name: 'bar',
+                type: 'bar',
+                stack: "总量",
+                silent: true,
+                animation: false,//关闭动漫
+                barWidth: '10px',
+                data: []
+
+            },
+            {
+                name: 'bar6',
+                type: 'bar',
+                stack: "总量",
+                silent: true,
+                animation: false,//关闭动漫
+                label: {//图形数据显示位置
+                    normal: {
+                        show: true, position: ['100%', -5],
+                        textStyle: {
+                            color: "#585858"
                         },
-                    },
-                    itemStyle: {//图形边框设置，如边框大小，圆角，填充着色
-                        normal: {
-                            color: "#dedede"
+                        formatter: function (params) {
+                            return "  " + (100 - params.value)
                         }
                     },
-                    barWidth: '10px',//条形宽度
-                    data: [100 - Number(this.data[0][0]), 100 - Number(this.data[0][1]), 100 - Number(this.data[0][2]), 100 - Number(this.data[0][3]), 100 - Number(this.data[0][4]), 100 - Number(this.data[0][5])]
+                },
+                itemStyle: {//图形边框设置，如边框大小，圆角，填充着色
+                    normal: {
+                        color: "#dedede"
+                    }
+                },
+                barWidth: '10px',//条形宽度
+                data: []
+            }
+
+        ]
+    };
+
+    private _calcSeriesData(): any[][] {
+        return [
+            this.data[0].map(v => {
+                return {
+                    value: v,
+                    itemStyle: {
+                        normal: {
+                            color: v > 95 ? "#98e2a6" : v > 90 ? "#9ad0e2" : v > 80 ? "#f7e685" : v > 70 ? "#f6c88a" : "#ff8e74"
+                        }
+                    }
                 }
+            }),
+            this.data[0].map(v => 100 - v)
+        ]
+    }
 
-            ]
-        };
-
+    protected createChartOptions(): EchartOptions {
+        if (!this.data || !this.data.length) return;
+        const opt = {...this._optionsTemplate};
+        this._extendOption(opt);
+        opt.yAxis[0].data = this.header;
+        [opt.series[0].data, opt.series[1].data] = this._calcSeriesData();
+        return opt;
     }
 }
 
@@ -1193,30 +1176,11 @@ export class StackAreaGraphData extends AbstractGraphData {
  * 仪表盘
  */
 export class GaugeGraphData extends AbstractNormalGraphData {
-    private _data: GraphDataMatrix;
-
-    public get data(): any {
-        return this._data;
-    }
-
-    public set data(value: any) {
-        if (CommonUtils.isUndefined(value)) return;
-        if (value instanceof Array) {
-            if (value[0] instanceof Array) {
-                this._data = value;
-            } else {
-                this._data = [value];
-            }
-        } else {
-            this._data = [[value]]
-        }
-    }
-
     protected createChartOptions(): any {
         if (!this.data || !this.data.length) return;
 
         return {
-            tooltip : {
+            tooltip: {
                 formatter: "{a} <br/>{b} : {c}%"
             },
             toolbox: {
@@ -1229,7 +1193,7 @@ export class GaugeGraphData extends AbstractNormalGraphData {
                 {
                     name: '业务指标',
                     type: 'gauge',
-                    detail: {formatter:'{value}%'},
+                    detail: {formatter: '{value}%'},
                     data: this.data.map(row => ({value: row[0], name: row[1]}))
                 }
             ]
@@ -1240,36 +1204,33 @@ export class GaugeGraphData extends AbstractNormalGraphData {
 /**
  * 散点图
  */
-export class ScatterGraphData extends AbstractGraphData {
-    public title: string;
+export class ScatterGraphData extends AbstractNormalGraphData {
+    protected _optionsTemplate: EchartOptions = {
+        title: {
+            text: ''
+        },
+        xAxis: {},
+        yAxis: {},
+        series: [{
+            symbolSize: 20,
+            data: [],
+            type: 'scatter'
+        }]
+    };
 
-    public data: any;
-
-    protected createChartOptions(): any {
+    protected createChartOptions(): EchartOptions {
         if (!this.data || !this.data.length) return;
-
-        return {
-            title: {
-                text: this.title
-            },
-            xAxis: {},
-            yAxis: {},
-            series: [{
-                symbolSize: 20,
-                data: this.data,
-                type: 'scatter'
-            }]
-        };
+        const opt = {...this._optionsTemplate};
+        this._extendOption(opt);
+        opt.series[0].data = this.data;
+        return opt;
     }
 }
 
 /**
  * 雷达图
  */
-export class RadarGraphData extends AbstractGraphData {
-
-    public title: string;
-
+export class RadarGraphData extends AbstractNormalGraphData {
     private _calcSeriesData() {
         return this.data.slice(0, this.data.length - 1).map(row => {
             return {
@@ -1279,46 +1240,48 @@ export class RadarGraphData extends AbstractGraphData {
         })
     }
 
-    private _calcLegendData() {
-        return this.data.slice(0, this.data.length - 1).map(row => row[row.length - 1]);
-    }
-
     private _calcRadar() {
         return this.header.slice(0, this.header.length - 1).map((h, i) => {
             return {name: h, max: this.data[this.data.length - 1][i]}
         })
     }
 
+    protected _optionsTemplate: EchartOptions = {
+        title: {
+            left: 'left',
+            text: ''
+        },
+        tooltip: {},
+        legend: {
+            left: 'center',
+            data: []
+        },
+        radar: {
+            // shape: 'circle',
+            indicator: []
+        },
+        series: [{
+            type: 'radar',
+            data: []
+        }]
+    };
+
     protected createChartOptions(): any {
         if (!this.data || !this.data.length) return;
-
-        return {
-            title: {
-                left: 'left',
-                text: this.title
-            },
-            tooltip: {},
-            legend: {
-                left: 'center',
-                data: this._calcLegendData()
-            },
-            radar: {
-                // shape: 'circle',
-                indicator: this._calcRadar()
-            },
-            series: [{
-                type: 'radar',
-                data: this._calcSeriesData()
-            }]
-        };
+        const opt = {...this._optionsTemplate};
+        this._extendOption(opt);
+        opt.legend.data = this._getLastData(this.data.slice(0, this.data.length - 1));
+        opt.radar.indicator = this._calcRadar();
+        opt.series[0].data = this._calcSeriesData();
+        return opt;
     }
 }
 
 /**
  * K线图
  */
-export class KLineGraphData extends AbstractGraphData {
-    private _calcSeries(legendData: any[]) {
+export class KLineGraphData extends AbstractNormalGraphData {
+    private _calcSeries(legendData: any[]): any[] {
         return this.data.map((row, index) => {
             return {
                 name: legendData[index],
@@ -1333,80 +1296,83 @@ export class KLineGraphData extends AbstractGraphData {
         });
     }
 
-    private _calcLegendData() {
-        return this.data.map(row => row[row.length - 1]);
-    }
+    public sampleColors = ["#54acd5", "#f99660", "#a4bf6a", "#ec6d6d", "#f7b913", "#8ac9b6", "#bea5c8", "#01c5c2", "#a17660"];
+    public vmaxColors = ['#41addc', '#bea5c8', '#85c56c', '#f99660', '#ffc20e', '#ec6d6d', '#8ac9b6', '#585eaa', '#b22c46', '#96582a'];
 
-    protected createChartOptions(): any {
+    protected _optionsTemplate = {
+        color: this.vmaxColors,
+        tooltip: {
+            trigger: 'axis',
+            position: function (point) {// 固定在顶部
+                return [point[0] + 10, point[1]];
+            }
+        },
+        legend: {
+            left: 'center',
+            data: [],
+            itemWidth: 25,//设置icon长高
+            itemHeight: 5,
+            top: 20,
+            inactiveColor: "#bbb",
+            itemGap: 10,
+            selected: {}
+        },
+        grid: {
+            left: 45,
+            right: 45,
+            top: 60
+        },
+        calculable: true,
+        /*当某天无数据不补零，同时不连线的效果实现*/
+        /*
+        *以x轴为类目轴为例:如下
+        *坐标轴 刻度标签 设显示间隔:xAxis.axisLabel.interval根据具体情况设置标签显示间隔;
+        *坐标轴 刻度 的显示间隔:xAxis.axisTick.interval设置全部显示为0;
+        *标志图形全部显示:series.showAllSymbol设置为true,
+        * */
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: false,
+                axisLabel: {//标签设置
+                    interval: 4
+                },
+                splitLine: {//设置网格
+                    interval: 0
+                },
+                scale: true,
+                data: []
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                splitNumber: 10,//不是类轴才会生效，设置网格多少
+                axisLabel: {//标签设置
+                    interval: 4
+                }
+            }
+        ],
+        series: []
+    };
+
+    protected createChartOptions(): EchartOptions {
         if (!this.data || !this.data.length) return;
 
-        const legendData = this._calcLegendData();
+        const legendData = this._getLastData();
 
         const selectedLegend = legendData.reduce((s, legend, i) => {
             s[legend] = i < 3 ? true : false;
             return s;
         }, {});
 
-        const sampleColors = ["#54acd5", "#f99660", "#a4bf6a", "#ec6d6d", "#f7b913", "#8ac9b6", "#bea5c8", "#01c5c2", "#a17660"];
-        const vmaxColors = ['#41addc', '#bea5c8', '#85c56c', '#f99660', '#ffc20e', '#ec6d6d', '#8ac9b6', '#585eaa', '#b22c46', '#96582a'];
-        const colors = vmaxColors;
-
-        return {
-            color: colors,
-            tooltip: {
-                trigger: 'axis',
-                position: function (point) {// 固定在顶部
-                    return [point[0] + 10, point[1]];
-                }
-            },
-            legend: {
-                left: 'center',
-                data: legendData,
-                itemWidth: 25,//设置icon长高
-                itemHeight: 5,
-                top: 20,
-                inactiveColor: "#bbb",
-                itemGap: 10,
-                selected: selectedLegend
-            },
-            grid: {
-                left: 45,
-                right: 45,
-                top: 60
-            },
-            calculable: true,
-            /*当某天无数据不补零，同时不连线的效果实现*/
-            /*
-            *以x轴为类目轴为例:如下
-            *坐标轴 刻度标签 设显示间隔:xAxis.axisLabel.interval根据具体情况设置标签显示间隔;
-            *坐标轴 刻度 的显示间隔:xAxis.axisTick.interval设置全部显示为0;
-            *标志图形全部显示:series.showAllSymbol设置为true,
-            * */
-            xAxis: [
-                {
-                    type: 'category',
-                    boundaryGap: false,
-                    axisLabel: {//标签设置
-                        interval: 4
-                    },
-                    splitLine: {//设置网格
-                        interval: 0
-                    },
-                    scale: true,
-                    data: this.header.slice(0, this.header.length - 1)
-                }
-            ],
-            yAxis: [
-                {
-                    type: 'value',
-                    splitNumber: 10,//不是类轴才会生效，设置网格多少
-                    axisLabel: {//标签设置
-                        interval: 4
-                    }
-                }
-            ],
-            series: this._calcSeries(legendData)
-        };
+        const opt = {...this._optionsTemplate};
+        this._extendOption(opt);
+        opt.legend.data = legendData;
+        opt.legend.selected = selectedLegend;
+        opt.xAxis[0].data = this.header.slice(0, this.header.length - 1);
+        opt.series = this._calcSeries(legendData);
+        return opt;
     }
 }
 
@@ -1607,84 +1573,81 @@ export class RelationalGraphData extends AbstractGraphData {
 /**
  * 漏斗图
  */
-export class FunnelPlotGraphData extends AbstractGraphData {
-
-    public title: string;
-
-    private _calcLegendData() {
-        return this.data.map(row => row[row.length - 1]).reverse();
-    }
+export class FunnelPlotGraphData extends AbstractNormalGraphData {
+    protected _optionsTemplate = {
+        title: {
+            text: '',
+            left: 'left'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c}%"
+        },
+        toolbox: {
+            feature: {
+                dataView: {readOnly: false},
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        legend: {
+            left: 'center',
+            data: []
+        },
+        calculable: true,
+        series: [
+            {
+                name: '漏斗图',
+                type: 'funnel',
+                left: '10%',
+                top: 60,
+                //x2: 80,
+                bottom: 60,
+                width: '80%',
+                // height: {totalHeight} - y - y2,
+                min: 0,
+                max: 100,
+                minSize: '0%',
+                maxSize: '100%',
+                sort: 'descending',
+                gap: 2,
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'inside'
+                    },
+                    emphasis: {
+                        textStyle: {
+                            fontSize: 20
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        length: 10,
+                        lineStyle: {
+                            width: 1,
+                            type: 'solid'
+                        }
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        borderColor: '#fff',
+                        borderWidth: 1
+                    }
+                },
+                data: []
+            }
+        ]
+    };
 
     protected createChartOptions(): any {
         if (!this.data || !this.data.length) return;
-
-        console.log(this._calcLegendData(), this.data.map(row => ({value: row[0], name: row[1]})));
-        return {
-            title: {
-                text: this.title,
-                left: 'left'
-            },
-            tooltip: {
-                trigger: 'item',
-                formatter: "{a} <br/>{b} : {c}%"
-            },
-            toolbox: {
-                feature: {
-                    dataView: {readOnly: false},
-                    restore: {},
-                    saveAsImage: {}
-                }
-            },
-            legend: {
-                left: 'center',
-                data: this._calcLegendData()
-            },
-            calculable: true,
-            series: [
-                {
-                    name: '漏斗图',
-                    type: 'funnel',
-                    left: '10%',
-                    top: 60,
-                    //x2: 80,
-                    bottom: 60,
-                    width: '80%',
-                    // height: {totalHeight} - y - y2,
-                    min: 0,
-                    max: 100,
-                    minSize: '0%',
-                    maxSize: '100%',
-                    sort: 'descending',
-                    gap: 2,
-                    label: {
-                        normal: {
-                            show: true,
-                            position: 'inside'
-                        },
-                        emphasis: {
-                            textStyle: {
-                                fontSize: 20
-                            }
-                        }
-                    },
-                    labelLine: {
-                        normal: {
-                            length: 10,
-                            lineStyle: {
-                                width: 1,
-                                type: 'solid'
-                            }
-                        }
-                    },
-                    itemStyle: {
-                        normal: {
-                            borderColor: '#fff',
-                            borderWidth: 1
-                        }
-                    },
-                    data: this.data.map(row => ({value: row[0], name: row[1]}))
-                }
-            ]
-        };
+        const opt = {...this._optionsTemplate};
+        this._extendOption(opt);
+        opt.legend.data = this._getLastData().reverse();
+        opt.series[0].data = this.data.map(row => ({value: row[0], name: row[1]}))
+        return opt;
     }
 }
