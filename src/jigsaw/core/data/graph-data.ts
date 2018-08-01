@@ -198,98 +198,33 @@ export class OutlineMapData extends AbstractNormalGraphData {
     }
 }
 
-export class PieGraphData extends AbstractGraphData {
-    constructor(title: string | EchartTitle, series: any[], tooltip?: EchartTooltip) {
-        super();
-        this._title = <EchartTitle>(typeof title === 'string' ? {title: title} : title);
-        this._series = series;
-        this._tooltip = tooltip;
+/**
+ * 饼图
+ */
+export class PieGraphData extends AbstractNormalGraphData {
+    private _data: GraphDataMatrix;
+
+    public get data(): any {
+        return this._data;
     }
 
-    private _series: any[];
-
-    public get series(): any[] {
-        return this._series;
-    }
-
-    public set series(value: any[]) {
-        this._series = value;
-        this.refresh();
-    }
-
-    private _title: EchartTitle;
-
-    public get title(): string | EchartTitle {
-        return this._title;
-    }
-
-    public set title(value: string | EchartTitle) {
-        this._title = <EchartTitle>(typeof value === 'string' ? {title: value} : value);
-        this.refresh();
-    }
-
-    private _tooltip: EchartTooltip;
-
-    public get tooltip(): EchartTooltip {
-        return this._tooltip;
-    }
-
-    public set tooltip(value: EchartTooltip) {
-        this._tooltip = value;
-        this.refresh();
-    }
-
-    protected createChartOptions(): EchartOptions {
-        const opt: EchartOptions = {
-            tooltip: {
-                trigger: 'item',
-                formatter: "{b} : {c} ({d}%)"
-            },
-            legend: {
-                orient: 'vertical',
-                left: 'left',
-                data: []
-            },
-            series: [
-                {
-                    type: 'pie',
-                    radius: '55%',
-                    center: ['50%', '60%'],
-                    itemStyle: {
-                        emphasis: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        }
-                    }
-                }
-            ]
-        };
-        opt.title = this._title;
-        if (this._tooltip) {
-            opt.tooltip = this._tooltip;
-        }
-        opt.series[0].data = this._series;
-        this._series.forEach(item => {
-            if (!item.hasOwnProperty('name')) {
-                item.name = 'no-name-series';
+    public set data(value: any) {
+        if (CommonUtils.isUndefined(value)) return;
+        if (value instanceof Array) {
+            if (value[0] instanceof Array) {
+                this._data = value;
+            } else {
+                this._data = [value];
             }
-            opt.legend.data.push(item.name);
+        } else {
+            this._data = [[value]]
+        }
+    }
+
+    protected _calcSeriesData() {
+        return this.data[0].map((v, i) => {
+            return {value: v, name: this.header[i]}
         });
-        return opt;
-    }
-}
-
-export class PieGraphDataByColumn extends AbstractNormalGraphData {
-    private _column: number = 0;
-
-    public get column(): number {
-        return this._column;
-    }
-
-    public set column(value: number) {
-        this._column = value;
-        this.refresh();
     }
 
     protected optionsTemplate: EchartOptions = {
@@ -320,57 +255,37 @@ export class PieGraphDataByColumn extends AbstractNormalGraphData {
     };
 
     protected createChartOptions(): EchartOptions {
-        if (!this.isDataValid(this, 'rowDescriptor', 'header')) {
-            return undefined;
-        }
+        if (!this.data || !this.data.length) return;
+
         const opt: EchartOptions = this.optionsTemplate;
-        opt.legend.data = this.rowDescriptor;
+        opt.legend.data = this.header;
         opt.title = this.title;
         if (this.tooltip) {
             opt.tooltip = this.tooltip;
         }
-        opt.series[0].name = this.header[this.column];
-        this.data.forEach((row, index) => {
-            const val = row[this.column];
-            opt.series[0].data.push({value: val, name: this.rowDescriptor[index]});
-        });
+        opt.series[0].data = this._calcSeriesData();
         return opt;
     }
 }
 
-export class PieGraphDataByRow extends PieGraphDataByColumn {
-    private _row: number = 0;
-
-    public get row(): number {
-        return this._row;
-    }
-
-    public set row(value: number) {
-        this._row = value;
-        this.refresh();
+export class PieGraphDataByRow extends PieGraphData {
+    protected _calcSeriesData() {
+        return this.data.map(row => {
+            return {value: row[0], name: row[1]}
+        });
     }
 
     protected createChartOptions(): EchartOptions {
-        if (!this.isDataValid(this, 'rowDescriptor', 'header')) {
-            return undefined;
-        }
-        const rowData = this.data[this.row];
-        if (!rowData) {
-            console.error('invalid data, row[%s] not found!', this.row);
-            return undefined;
-        }
+        if (!this.data || !this.data.length) return;
 
         const opt: EchartOptions = this.optionsTemplate;
         opt.title = this.title;
-        opt.legend.data = this.header;
+        opt.legend.data = this._getLastData();
         if (this.tooltip) {
             opt.tooltip = this.tooltip;
         }
-        opt.series[0].name = this.rowDescriptor[this.row];
+        opt.series[0].data = this._calcSeriesData();
 
-        rowData.forEach((val, index) => {
-            opt.series[0].data.push({value: val, name: this.header[index]});
-        });
         return opt;
     }
 }
@@ -744,6 +659,9 @@ export class DoughnutScoreGraphData extends AbstractGraphData {
     }
 }
 
+/**
+ * 折线图
+ */
 export class LineBarGraphData extends AbstractNormalGraphData {
     private _calcSeries() {
         return this.data.map((row, index) => {

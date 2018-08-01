@@ -6,7 +6,6 @@ import {AjaxInterceptor} from "../../../app.interceptor";
 @Component({
     templateUrl: './demo.component.html'
 })
-
 export class LineBarGraphComponent {
     lineBarData: LineBarGraphData;
     lineBarFromAjax: LineBarGraphData;
@@ -31,6 +30,7 @@ export class LineBarGraphComponent {
 
 
         this.lineBarByRow = new LineBarGraphDataByRow();
+        this.lineBarByRow.header = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
         this.lineBarByRow.data = [
             [120, 132, 101, 134, 90, 230, 210, '邮件营销'],
             [220, 182, 191, 234, 290, 330, 310, '联盟广告'],
@@ -38,7 +38,6 @@ export class LineBarGraphComponent {
             [320, 332, 301, 334, 390, 330, 320, '直接访问'],
             [820, 932, 901, 934, 1290, 1330, 1320, '搜索引擎']
         ];
-        this.lineBarByRow.header = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
 
         this.lineBarByRowFromAjax = new LineBarGraphDataByRow();
         this.lineBarByRowFromAjax.http = http;
@@ -48,8 +47,8 @@ export class LineBarGraphComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
-    description: string = '';
+    summary: string = '这个demo展示了如何使用折线图';
+    description: string = require('!!raw-loader!./readme.md');
 }
 
 /* 模拟请求代码 start */
