@@ -183,6 +183,10 @@ export abstract class AbstractNormalGraphData extends AbstractGraphData {
     public title: EchartTitle;
     public legend: EchartLegend;
     public tooltip: EchartTooltip;
+
+    protected _getLastData(): any[] {
+        return this.data.map(row => row[row.length - 1]);
+    }
 }
 
 /**
@@ -741,16 +745,14 @@ export class DoughnutScoreGraphData extends AbstractGraphData {
 }
 
 export class LineBarGraphData extends AbstractNormalGraphData {
-    protected getDataByColumn(index: number): any[] {
-        const result: any[] = [];
-        this.data.forEach(row => result.push(row[index]));
-        return result;
+    private _calcSeries() {
+        return this.data.map((row, index) => {
+            return {name: this.header[index], type: 'line', data: this.data.map(row => row[index])}
+        });
     }
 
     protected createChartOptions(): EchartOptions {
-        if (!this.isDataValid(this, 'header', 'rowDescriptor')) {
-            return null;
-        }
+        if (!this.data || !this.data.length) return;
 
         const options: EchartOptions = {
             tooltip: {
@@ -763,6 +765,7 @@ export class LineBarGraphData extends AbstractNormalGraphData {
                 }
             },
             legend: {
+                left: 'center',
                 data: this.header
             },
             toolbox: {
@@ -780,7 +783,7 @@ export class LineBarGraphData extends AbstractNormalGraphData {
                 {
                     type: 'category',
                     boundaryGap: false,
-                    data: this.rowDescriptor
+                    data: this._getLastData()
                 }
             ],
             yAxis: [
@@ -788,22 +791,24 @@ export class LineBarGraphData extends AbstractNormalGraphData {
                     type: 'value'
                 }
             ],
-            series: []
+            series: this._calcSeries()
         };
-        this.data.forEach((row, index) => {
-            options.series.push({name: this.header[index], type: 'line', data: this.getDataByColumn(index)});
-        });
         options.title = this.title;
         return options;
     }
 }
 
 export class LineBarGraphDataByRow extends AbstractNormalGraphData {
+    private _calcSeries(legendData: string[]) {
+        return this.data.map((row, index) => {
+            return {name: legendData[index], type: 'line', data: row.slice(0, row.length - 1)}
+        });
+    }
+
     protected createChartOptions(): EchartOptions {
-        if (!this.isDataValid(this, 'header', 'rowDescriptor')) {
-            console.error('invalid data, "need these properties: "data"/"rowDescriptor"/"header"');
-            return null;
-        }
+        const legendData = this._getLastData();
+
+        if (!this.data || !this.data.length) return;
         const options: EchartOptions = {
             tooltip: {
                 trigger: 'axis',
@@ -815,7 +820,8 @@ export class LineBarGraphDataByRow extends AbstractNormalGraphData {
                 }
             },
             legend: {
-                data: this.rowDescriptor
+                left: 'center',
+                data: legendData
             },
             toolbox: {
                 feature: {
@@ -840,11 +846,8 @@ export class LineBarGraphDataByRow extends AbstractNormalGraphData {
                     type: 'value'
                 }
             ],
-            series: []
+            series: this._calcSeries(legendData)
         };
-        this.data.forEach((row, index) => {
-            options.series.push({name: this.rowDescriptor[index], type: 'line', data: row});
-        });
         options.title = this.title;
         return options;
     }
@@ -1186,7 +1189,6 @@ export class StripColorGraphData extends AbstractGraphData {
 
     }
 }
-
 
 /**
  * 堆叠区域图
