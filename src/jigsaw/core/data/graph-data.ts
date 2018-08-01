@@ -1270,11 +1270,50 @@ export class StackAreaGraphData extends AbstractGraphData {
 }
 
 /**
- * @internal
+ * 仪表盘
  */
 export class GaugeGraphData extends AbstractNormalGraphData {
+    private _data: GraphDataMatrix;
+
+    public get data(): any {
+        return this._data;
+    }
+
+    public set data(value: any) {
+        if (CommonUtils.isUndefined(value)) return;
+        if (value instanceof Array) {
+            if (value[0] instanceof Array) {
+                this._data = value;
+            } else {
+                this._data = [value];
+            }
+        } else {
+            this._data = [[value]]
+        }
+    }
+
     protected createChartOptions(): any {
-        return undefined;
+        if (!this.data || !this.data.length) return;
+
+        return {
+            tooltip : {
+                formatter: "{a} <br/>{b} : {c}%"
+            },
+            toolbox: {
+                feature: {
+                    restore: {},
+                    saveAsImage: {}
+                }
+            },
+            series: [
+                {
+                    name: '业务指标',
+                    type: 'gauge',
+                    detail: {formatter:'{value}%'},
+                    data: this.data.map(row => ({value: row[0], name: row[1]}))
+                }
+            ]
+        }
     }
 }
 
