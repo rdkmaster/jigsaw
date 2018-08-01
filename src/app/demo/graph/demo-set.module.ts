@@ -42,6 +42,8 @@ import {HeatGraphComponent} from "./heat/demo.component";
 import {HeatGraphModule} from "./heat/demo.module";
 import {RelationalGraphComponent} from "./relational/demo.component";
 import {RelationalGraphModule} from "./relational/demo.module";
+import {FunnelPlotGraphComponent} from "./funnel-plot/demo.component";
+import {FunnelPlotGraphModule} from "./funnel-plot/demo.module";
 
 export const routerConfig = [
     {
@@ -97,6 +99,9 @@ export const routerConfig = [
     },
     {
         path: 'relational', component: RelationalGraphComponent
+    },
+    {
+        path: 'funnel-plot', component: FunnelPlotGraphComponent
     }
 ];
 
@@ -121,7 +126,8 @@ export const routerConfig = [
         KlineGraphModule,
         BoxPlotGraphModule,
         HeatGraphModule,
-        RelationalGraphModule
+        RelationalGraphModule,
+        FunnelPlotGraphModule
     ]
 })
 export class GraphDemoModule {
