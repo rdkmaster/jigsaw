@@ -7,14 +7,16 @@
 <div class="live-demo-wrap">
     <h2>漏斗图</h2>
 
-    <div class="live-demo">
-        <h3>FunnelPlotGraphData静态数据</h3>
-        <jigsaw-graph [data]="funnelPlotData" height="400" (click)="handleClick($event)"></jigsaw-graph>
-    </div>
+    <div class="clearfix">
+        <div class="live-demo live-demo-block">
+            <h3>FunnelPlotGraphData静态数据</h3>
+            <jigsaw-graph [data]="funnelPlotData" height="400" (click)="handleClick($event)"></jigsaw-graph>
+        </div>
 
-    <div class="live-demo">
-        <h3>FunnelPlotGraphData异步数据</h3>
-        <jigsaw-graph [data]="funnelPlotFromAjax" height="400" (click)="handleClick($event)"></jigsaw-graph>
+        <div class="live-demo live-demo-block">
+            <h3>FunnelPlotGraphData异步数据</h3>
+            <jigsaw-graph [data]="funnelPlotFromAjax" height="400" (click)="handleClick($event)"></jigsaw-graph>
+        </div>
     </div>
 </div>
 

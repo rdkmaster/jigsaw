@@ -9,27 +9,26 @@
     <div class="clearfix">
         <div class="live-demo live-demo-block">
             <h3>StripGraphData静态数据</h3>
-            <jigsaw-graph [data]="stripData" (click)="handleClick($event)"></jigsaw-graph>
+            <jigsaw-graph [data]="stripData" height="300" (click)="handleClick($event)"></jigsaw-graph>
         </div>
 
         <div class="live-demo live-demo-block">
             <h3>StripGraphData异步数据</h3>
-            <jigsaw-graph [data]="stripFromAjax" (click)="handleClick($event)"></jigsaw-graph>
+            <jigsaw-graph [data]="stripFromAjax" height="300" (click)="handleClick($event)"></jigsaw-graph>
         </div>
     </div>
 
     <div class="clearfix">
         <div class="live-demo live-demo-block">
             <h3>StripSequenceGraphData静态数据</h3>
-            <jigsaw-graph [data]="stripSequenceData" (click)="handleClick($event)"></jigsaw-graph>
+            <jigsaw-graph [data]="stripSequenceData" height="300" (click)="handleClick($event)"></jigsaw-graph>
         </div>
 
         <div class="live-demo live-demo-block">
             <h3>StripSequenceGraphData异步数据</h3>
-            <jigsaw-graph [data]="stripSequenceFromAjax" (click)="handleClick($event)"></jigsaw-graph>
+            <jigsaw-graph [data]="stripSequenceFromAjax" height="300" (click)="handleClick($event)"></jigsaw-graph>
         </div>
     </div>
-
 
     <div class="clearfix">
         <div class="live-demo live-demo-block">

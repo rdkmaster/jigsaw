@@ -23,7 +23,7 @@ export class DoughnutGraphComponent {
         this.doughnutFromAjax.fromAjax('/doughnut-data');
 
         this.doughnutRate = new DoughnutRateGraphData();
-        this.doughnutRate.data = 55;
+        this.doughnutRate.data = 85;
 
         this.doughnutRateFromAjax = new DoughnutRateGraphData();
         this.doughnutRateFromAjax.http = http;
@@ -67,7 +67,7 @@ function dealAreaRequest(req: HttpRequest<any>) {
             "header": ["次数", "来源"],
             "field": ["field1", "field2"],
             "data": [
-                [15, "无线网"]
+                [55, "无线网"]
             ]
         };
     }

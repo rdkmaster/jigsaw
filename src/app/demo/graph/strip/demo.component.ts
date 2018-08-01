@@ -32,12 +32,12 @@ export class StripGraphComponent {
         this.stripSequenceFromAjax.fromAjax({url: '/strip-data', params: {type: 'timeout'}});
 
         this.stripColorData = new StripColorGraphData();
+        this.stripColorData.title = '各市得分排名';
         this.stripColorData.header = ["保定", "石家庄", "唐山", "秦皇岛", "邢台", "承德"];
-        this.stripColorData.data = [
-            [30, 66, 71, 88, 93, 98]
-        ];
+        this.stripColorData.data = [30, 66, 71, 88, 93, 98];
 
         this.stripColorFromAjax = new StripColorGraphData();
+        this.stripColorFromAjax.title = '各市得分排名';
         this.stripColorFromAjax.http = http;
         this.stripColorFromAjax.fromAjax({url: '/strip-data', params: {type: 'color'}});
     }
@@ -58,8 +58,8 @@ export class StripGraphComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
-    description: string = '';
+    summary: string = '这个demo展示了如何使用条形图';
+    description: string = require('!!raw-loader!./readme.md');
 }
 
 
@@ -92,8 +92,6 @@ function dealAreaRequest(req: HttpRequest<any>) {
             ]
         }
     }
-
-
 }
 
 /* 模拟请求代码 end */
