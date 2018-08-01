@@ -378,12 +378,12 @@ export class DoughnutRateGraphData extends AbstractNormalGraphData {
                 data: [
                     {
                         name: '',
-                        value: this.data[0][0],
+                        value: null,
                         itemStyle: {}
                     },
                     {
                         name: '',
-                        value: 100 - Number(this.data[0][0]),
+                        value: null,
                         itemStyle: {}
                     }
                 ]
@@ -503,25 +503,43 @@ export class DoughnutRateGraphData extends AbstractNormalGraphData {
 /**
  * 环形得分图
  */
-export class DoughnutScoreGraphData extends AbstractGraphData {
-    private _data: GraphDataMatrix;
-
-    public get data(): any {
-        return this._data;
-    }
-
-    public set data(value: any) {
-        if (CommonUtils.isUndefined(value)) return;
-        if (value instanceof Array) {
-            if (value[0] instanceof Array) {
-                this._data = value;
-            } else {
-                this._data = [value];
+export class DoughnutScoreGraphData extends AbstractNormalGraphData {
+    protected _optionsTemplate: EchartOptions = {
+        series: [
+            {
+                type: 'pie',
+                radius: ['45', '50'],
+                itemStyle: {},
+                minAngle: 0,
+                data: [
+                    {
+                        name: null,
+                        value: 100,
+                        itemStyle: {}
+                    },
+                    {
+                        name: null,
+                        value: 0,
+                        itemStyle: {}
+                    }
+                ]
+            },
+            //点击
+            {
+                name: '点击环',
+                clickable: false,
+                type: 'pie',
+                hoverAnimation: false,
+                radius: ['0', '45'],
+                minAngle: 0,
+                data: [{
+                    name: "",
+                    value: 100,
+                    itemStyle: {}
+                }]
             }
-        } else {
-            this._data = [[value]]
-        }
-    }
+        ]
+    };
 
     protected createChartOptions(): any {
         if (!(this.data instanceof Array) || !this.data.length || !(this.data[0] instanceof Array)) return;
@@ -614,42 +632,12 @@ export class DoughnutScoreGraphData extends AbstractGraphData {
             }
         };
 
-        return {
-            series: [
-                {
-                    type: 'pie',
-                    radius: ['45', '50'],
-                    itemStyle: labelFormatter,
-                    minAngle: 0,
-                    data: [
-                        {
-                            name: Number(this.data[0][0]) == 0 ? '0' : Number(this.data[0][0]),
-                            value: 100,
-                            itemStyle: labelTop
-                        },
-                        {
-                            name: this.data[0][1],
-                            value: 0,
-                            itemStyle: labelBottom
-                        }
-                    ]
-                },
-                //点击
-                {
-                    name: '点击环',
-                    clickable: false,
-                    type: 'pie',
-                    hoverAnimation: false,
-                    radius: ['0', '45'],
-                    minAngle: 0,
-                    data: [{
-                        name: "",
-                        value: 100,
-                        itemStyle: placeHolderStyle
-                    }]
-                }
-            ]
-        };
+        const opt = {...this._optionsTemplate};
+        this._extendOption(opt);
+        opt.series[0].itemStyle = labelFormatter;
+        [opt.series[0].data[0].name, opt.series[0].data[1].name] = [Number(this.data[0][0]) == 0 ? '0' : Number(this.data[0][0]), this.data[0][1]];
+        [opt.series[0].data[0].itemStyle, opt.series[0].data[1].itemStyle, opt.series[1].data[0].itemStyle] = [labelTop, labelBottom, placeHolderStyle];
+        return opt;
     }
 }
 
