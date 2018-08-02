@@ -5,6 +5,8 @@ import {JigsawButtonModule} from "../button/button";
 import {HttpClient} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
 
+export type UploadFileInfo = {name: string, state: 'loading' | 'success' | 'error'};
+
 @Component({
     selector: 'jigsaw-upload, j-upload',
     templateUrl: 'upload.html',
@@ -19,7 +21,7 @@ export class JigsawUpload extends AbstractJigsawComponent {
 
     public _$uploadMode: 'select' | 'single' | 'multiple' = 'select';
 
-    public _$fileInfoList: {name: string, state: string}[] = [];
+    public _$fileInfoList: UploadFileInfo[] = [];
 
     @ViewChild('fileInput') fileInput: ElementRef;
 
@@ -43,7 +45,7 @@ export class JigsawUpload extends AbstractJigsawComponent {
         }
 
         files.forEach((file: File) => {
-            const fileInfo = {name: file.name, state: 'loading'};
+            const fileInfo: UploadFileInfo = {name: file.name, state: 'loading'};
             this._$fileInfoList.push(fileInfo);
 
             const formData = new FormData();
@@ -53,7 +55,7 @@ export class JigsawUpload extends AbstractJigsawComponent {
                 console.log(res);
                 fileInfo.state = 'success';
             }, err => {
-                fileInfo.state = 'fail'
+                fileInfo.state = 'error'
             });
         });
 
