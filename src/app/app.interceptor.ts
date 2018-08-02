@@ -24,6 +24,11 @@ export class AjaxInterceptor implements HttpInterceptor {
         console.log('the ajax request is intercepted, here is the original request:');
         console.log(req);
 
+        if(req.url.match(/\/rdk\/service\/common\/upload/g)) {
+            console.log(1111111111, req);
+            return next.handle(req);
+        }
+
         const processor = AjaxInterceptor._processors.find(p => {
             const url = p.urlPattern;
             return url instanceof RegExp ? url.test(req.url) : url === req.url;

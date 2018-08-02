@@ -3,6 +3,20 @@
 $upload-prefix-cls: #{$jigsaw-prefix}-upload;
 
 .#{$upload-prefix-cls} {
-    @include inline-block();
-
+    display: inline-block;
+    border: 1px dashed $border-color-base;
+    border-radius: 4px;
+    width: 400px;
+    height: 400px;
+    &-icon {
+        display: inline-block;
+        font-size: 60px;
+        margin-bottom: 18px;
+        color: #999;
+    }
+    &-prompt {
+        font-size: 14px;
+        color: #999;
+        margin-bottom: 12px;
+    }
 }
