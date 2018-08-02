@@ -13,7 +13,7 @@ export class LineGraphComponent {
     lineBarByRowFromAjax: LineGraphDataByRow;
     constructor(public http: HttpClient) {
         this.lineBarData = new LineGraphData();
-        this.lineBarData.header = ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎'];
+        this.lineBarData.header = ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎', '横坐标'];
         this.lineBarData.data = [
             [120, 220, 150, 320, 820, '周一'],
             [132, 182, 232, 332, 932, '周二'],
@@ -30,7 +30,7 @@ export class LineGraphComponent {
 
 
         this.lineBarByRow = new LineGraphDataByRow();
-        this.lineBarByRow.header = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+        this.lineBarByRow.header = ['周一', '周二', '周三', '周四', '周五', '周六', '周日', '图例'];
         this.lineBarByRow.data = [
             [120, 132, 101, 134, 90, 230, 210, '邮件营销'],
             [220, 182, 191, 234, 290, 330, 310, '联盟广告'],
@@ -41,7 +41,7 @@ export class LineGraphComponent {
 
         this.lineBarByRowFromAjax = new LineGraphDataByRow();
         this.lineBarByRowFromAjax.http = http;
-        this.lineBarByRowFromAjax.fromAjax({url: '/line-bar-data', params: {byRow: true}});
+        this.lineBarByRowFromAjax.fromAjax({url: '/line-data', params: {byRow: true}});
     }
 
     // ====================================================================
@@ -57,7 +57,7 @@ AjaxInterceptor.registerProcessor('/line-data', dealAreaRequest);
 function dealAreaRequest(req: HttpRequest<any>) {
     if(req.params.get('byCol')) {
         return {
-            "header": ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎'],
+            "header": ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎', '横坐标'],
             "data": [
                 [120, 220, 150, 320, 820, '周一'],
                 [132, 182, 232, 332, 932, '周二'],
@@ -70,7 +70,7 @@ function dealAreaRequest(req: HttpRequest<any>) {
         }
     }else if(req.params.get('byRow')) {
         return {
-            "header": ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+            "header": ['周一', '周二', '周三', '周四', '周五', '周六', '周日', '图例'],
             "data": [
                 [120, 132, 101, 134, 90, 230, 210, '邮件营销'],
                 [220, 182, 191, 234, 290, 330, 310, '联盟广告'],

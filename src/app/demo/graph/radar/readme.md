@@ -18,7 +18,7 @@
 
 ```
 {
-    "header": ["销售（sales）", "管理（Administration）", "信息技术（Information Techology）", "客服（Customer Support）", "研发（Development）", "市场（Marketing）", "系列"],
+    "header": ["销售（sales）", "管理（Administration）", "信息技术（Information Techology）", "客服（Customer Support）", "研发（Development）", "市场（Marketing）", "图例"],
     "data": [
         [4300, 10000, 28000, 35000, 50000, 19000, '预算分配（Allocated Budget）'],
         [5000, 14000, 28000, 31000, 42000, 21000, '实际开销（Actual Spending）'],

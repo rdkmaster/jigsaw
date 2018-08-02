@@ -695,7 +695,7 @@ export class LineGraphData extends AbstractNormalGraphData {
         if (!this.data || !this.data.length) return;
         const opt: EchartOptions = {...this._optionsTemplate};
         this._extendOption(opt);
-        opt.legend.data = this.header;
+        opt.legend.data = this.header.slice(0, this.header.length - 1);
         opt.xAxis[0].data = this._getLastData();
         opt.series = this._calcSeries();
         return opt;
@@ -716,7 +716,7 @@ export class LineGraphDataByRow extends LineGraphData {
         const opt: EchartOptions = {...this._optionsTemplate};
         this._extendOption(opt);
         opt.legend.data = legendData;
-        opt.xAxis[0].data = this.header;
+        opt.xAxis[0].data = this.header.slice(0, this.header.length - 1);
         opt.series = this._calcSeries(legendData);
         return opt;
     }
@@ -1067,7 +1067,6 @@ export class StripColorGraphData extends AbstractNormalGraphData {
     }
 }
 
-
 /**
  * 柱状折线图
  *
@@ -1095,7 +1094,7 @@ export class LineBarGraphData extends AbstractNormalGraphData {
             trigger: 'axis'
         },
         title: {
-            text: '掉话排行',
+            text: '',
             textAlign: 'left',
             top: 20
         },
