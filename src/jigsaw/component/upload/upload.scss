@@ -14,9 +14,25 @@ $upload-prefix-cls: #{$jigsaw-prefix}-upload;
         margin-bottom: 18px;
         color: #999;
     }
+    &-icon-small {
+        font-size: 30px;
+        margin-right: 8px;
+    }
     &-prompt {
         font-size: 14px;
         color: #999;
         margin-bottom: 12px;
     }
+    &-file-list {
+        padding: 0 20px;
+    }
+    &-file {
+        padding: 20px 0;
+        border-bottom: 1px solid $border-color-base;
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+
 }
