@@ -1,0 +1,8 @@
+@import "../../assets/scss/core/base";
+
+$upload-prefix-cls: #{$jigsaw-prefix}-upload;
+
+.#{$upload-prefix-cls} {
+    @include inline-block();
+
+}
