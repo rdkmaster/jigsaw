@@ -5,14 +5,14 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {BasicGraphModule} from "./basic/demo.module";
-import {LineBarGraphModule} from "./line-bar/demo.module";
+import {LineGraphModule} from "./line/demo.module";
 import {PieGraphDemoModule} from "./pie/demo.module";
 import {GraphResizeModule} from "./resize/demo.module";
 import {GraphWithNoDataModule} from "./no-data/demo.module";
 import {GraphSetSizeModule} from "./set-size/demo.module";
 import {BasicGraphComponent} from "./basic/demo.component";
 import {GraphResizeComponent} from "./resize/demo.component";
-import {LineBarGraphComponent} from "./line-bar/demo.component";
+import {LineGraphComponent} from "./line/demo.component";
 import {PieGraphDemoComponent} from "./pie/demo.component";
 import {GraphWithNoDataComponent} from "./no-data/demo.component";
 import {MapGraphComponent} from "./map/demo.component";
@@ -43,6 +43,8 @@ import {FunnelPlotGraphComponent} from "./funnel-plot/demo.component";
 import {FunnelPlotGraphModule} from "./funnel-plot/demo.module";
 import {GaugeGraphComponent} from "./gauge/demo.component";
 import {GaugeGraphModule} from "./gauge/demo.module";
+import {LineBarGraphComponent} from "./line-bar/demo.component";
+import {LineBarGraphModule} from "./line-bar/demo.module";
 
 export const routerConfig = [
     {
@@ -52,7 +54,7 @@ export const routerConfig = [
         path: 'basic', component: BasicGraphComponent
     },
     {
-        path: 'line-bar', component: LineBarGraphComponent
+        path: 'line', component: LineGraphComponent
     },
     {
         path: 'pie', component: PieGraphDemoComponent
@@ -101,6 +103,9 @@ export const routerConfig = [
     },
     {
         path: 'gauge', component: GaugeGraphComponent
+    },
+    {
+        path: 'line-bar', component: LineBarGraphComponent
     }
 ];
 
@@ -108,7 +113,7 @@ export const routerConfig = [
     imports: [
         RouterModule.forChild(routerConfig),
         BasicGraphModule,
-        LineBarGraphModule,
+        LineGraphModule,
         PieGraphDemoModule,
         GraphResizeModule,
         GraphWithNoDataModule,
@@ -126,7 +131,8 @@ export const routerConfig = [
         HeatGraphModule,
         RelationalGraphModule,
         FunnelPlotGraphModule,
-        GaugeGraphModule
+        GaugeGraphModule,
+        LineBarGraphModule
     ]
 })
 export class GraphDemoModule {

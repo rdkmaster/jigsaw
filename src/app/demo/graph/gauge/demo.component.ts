@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {GaugeGraphData, KLineGraphData} from "jigsaw/core/data/graph-data";
+import {GaugeGraphData} from "jigsaw/core/data/graph-data";
 import {AjaxInterceptor} from "../../../app.interceptor";
 import {HttpClient, HttpRequest} from "@angular/common/http";
 

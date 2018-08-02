@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/core/data/table-data";
-import {LineBarGraphData, PieGraphData} from "jigsaw/core/data/graph-data";
+import {LineGraphData, PieGraphData} from "jigsaw/core/data/graph-data";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -10,7 +10,7 @@ import {LineBarGraphData, PieGraphData} from "jigsaw/core/data/graph-data";
 export class CollapseFullComponent {
     tableData: TableData;
     public pieGraphDataByCol: PieGraphData;
-    public lineBarGraphData: LineBarGraphData;
+    public lineGraphData: LineGraphData;
 
     constructor(http: HttpClient) {
         this.tableData = new TableData();
@@ -21,9 +21,9 @@ export class CollapseFullComponent {
         this.pieGraphDataByCol.http = http;
         this.pieGraphDataByCol.fromAjax('mock-data/marketing');
 
-        this.lineBarGraphData = new LineBarGraphData();
-        this.lineBarGraphData.http = http;
-        this.lineBarGraphData.fromAjax('mock-data/marketing');
+        this.lineGraphData = new LineGraphData();
+        this.lineGraphData.http = http;
+        this.lineGraphData.fromAjax('mock-data/marketing');
     }
 
     goodsList = [
