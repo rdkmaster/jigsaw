@@ -9,11 +9,12 @@ import {HttpClient, HttpRequest} from "@angular/common/http";
 export class DoughnutGraphComponent {
     constructor(public http: HttpClient) {
         this.doughnut = new DoughnutGraphData();
+        this.doughnut.rowDescriptor = ["终端", "无线网", "互联网", "核心网"];
         this.doughnut.data = [
-            [22, "终端"],
-            [35, "无线网"],
-            [15, "互联网"],
-            [28, "核心网"]
+            [22],
+            [35],
+            [15],
+            [28]
         ];
         this.doughnut.title = '问题定界分布';
 
@@ -30,7 +31,8 @@ export class DoughnutGraphComponent {
         this.doughnutRateFromAjax.fromAjax({url: '/doughnut-data', params: {source: '无线网'}});
 
         this.doughnutScore = new DoughnutScoreGraphData();
-        this.doughnutScore.data = [78, "IELTS得分"];
+        this.doughnutScore.rowDescriptor = ["IELTS得分"];
+        this.doughnutScore.data = [78];
 
         this.doughnutScoreFromAjax = new DoughnutScoreGraphData();
         this.doughnutScoreFromAjax.http = http;
@@ -64,30 +66,33 @@ AjaxInterceptor.registerProcessor('/doughnut-data', dealAreaRequest);
 function dealAreaRequest(req: HttpRequest<any>) {
     if (req.params.get('source') == '无线网') {
         return {
-            "header": ["次数", "来源"],
-            "field": ["field1", "field2"],
+            "rowDescriptor": ["无线网"],
+            "header": ["次数"],
+            "field": ["field1"],
             "data": [
-                [55, "无线网"]
+                [55]
             ]
         };
     }
     if (req.params.get('score') == 'TOEFL') {
         return {
-            "header": ["得分", "科目"],
-            "field": ["field1", "field2"],
+            "rowDescriptor": ["TOEFL得分"],
+            "header": ["得分"],
+            "field": ["field1"],
             "data": [
-                [60, "TOEFL得分"]
+                [60]
             ]
         };
     }
     return {
-        "header": ["次数", "来源"],
-        "field": ["field1", "field2"],
+        "rowDescriptor": ["终端", "无线网", "互联网", "核心网"],
+        "header": ["次数"],
+        "field": ["field1"],
         "data": [
-            [52, "终端"],
-            [15, "无线网"],
-            [15, "互联网"],
-            [18, "核心网"]
+            [52],
+            [15],
+            [15],
+            [18]
         ]
     };
 }

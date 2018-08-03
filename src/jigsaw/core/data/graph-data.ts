@@ -203,13 +203,6 @@ export abstract class AbstractNormalGraphData extends AbstractGraphData {
         }
     }
 
-    protected _getLastData(data?: any[]): any[] {
-        if (!data) {
-            data = this.data;
-        }
-        return data.map(row => row[row.length - 1]);
-    }
-
     protected _extendOption(option: EchartOptions) {
         if (typeof this.title == 'string') {
             option.title.text = this.title;
@@ -281,8 +274,8 @@ export class PieGraphData extends AbstractNormalGraphData {
 
 export class PieGraphDataByRow extends PieGraphData {
     protected _calcSeriesData() {
-        return this.data.map(row => {
-            return {value: row[0], name: row[1]}
+        return this.data.map((row, i) => {
+            return {value: row[0], name: this.rowDescriptor[i]}
         });
     }
 
@@ -290,7 +283,7 @@ export class PieGraphDataByRow extends PieGraphData {
         if (!this.data || !this.data.length) return;
         const opt: EchartOptions = {...this._optionsTemplate};
         this._extendOption(opt);
-        opt.legend.data = this._getLastData();
+        opt.legend.data = this.rowDescriptor;
         opt.series[0].data = this._calcSeriesData();
         return opt;
     }
@@ -301,7 +294,7 @@ export class PieGraphDataByRow extends PieGraphData {
  */
 export class DoughnutGraphData extends AbstractNormalGraphData {
     private _calcSeries(): any[] {
-        return this.data.map((row: any) => ({value: row[0], name: row[1]}));
+        return this.data.map((row: any, i) => ({value: row[0], name: this.rowDescriptor[i]}));
     }
 
     protected _optionsTemplate: EchartOptions = {
@@ -635,7 +628,7 @@ export class DoughnutScoreGraphData extends AbstractNormalGraphData {
         const opt = {...this._optionsTemplate};
         this._extendOption(opt);
         opt.series[0].itemStyle = labelFormatter;
-        [opt.series[0].data[0].name, opt.series[0].data[1].name] = [Number(this.data[0][0]) == 0 ? '0' : Number(this.data[0][0]), this.data[0][1]];
+        [opt.series[0].data[0].name, opt.series[0].data[1].name] = [Number(this.data[0][0]) == 0 ? '0' : Number(this.data[0][0]), this.rowDescriptor[0]];
         [opt.series[0].data[0].itemStyle, opt.series[0].data[1].itemStyle, opt.series[1].data[0].itemStyle] = [labelTop, labelBottom, placeHolderStyle];
         return opt;
     }
@@ -645,7 +638,7 @@ export class DoughnutScoreGraphData extends AbstractNormalGraphData {
  * 折线图
  */
 export class LineGraphData extends AbstractNormalGraphData {
-    protected _calcSeries(data?: any) {
+    protected _calcSeries() {
         return this.data.map((row, index) => {
             return {name: this.header[index], type: 'line', data: this.data.map(row => row[index])}
         });
@@ -695,29 +688,27 @@ export class LineGraphData extends AbstractNormalGraphData {
         if (!this.data || !this.data.length) return;
         const opt: EchartOptions = {...this._optionsTemplate};
         this._extendOption(opt);
-        opt.legend.data = this.header.slice(0, this.header.length - 1);
-        opt.xAxis[0].data = this._getLastData();
+        opt.legend.data = this.header;
+        opt.xAxis[0].data = this.rowDescriptor;
         opt.series = this._calcSeries();
         return opt;
     }
 }
 
 export class LineGraphDataByRow extends LineGraphData {
-    protected _calcSeries(legendData: string[]) {
+    protected _calcSeries() {
         return this.data.map((row, index) => {
-            return {name: legendData[index], type: 'line', data: row.slice(0, row.length - 1)}
+            return {name: this.rowDescriptor[index], type: 'line', data: row}
         });
     }
 
     protected createChartOptions(): EchartOptions {
-        const legendData = this._getLastData();
-
         if (!this.data || !this.data.length) return;
         const opt: EchartOptions = {...this._optionsTemplate};
         this._extendOption(opt);
-        opt.legend.data = legendData;
-        opt.xAxis[0].data = this.header.slice(0, this.header.length - 1);
-        opt.series = this._calcSeries(legendData);
+        opt.legend.data = this.rowDescriptor;
+        opt.xAxis[0].data = this.header;
+        opt.series = this._calcSeries();
         return opt;
     }
 }
@@ -1221,7 +1212,7 @@ export class LineBarGraphData extends AbstractNormalGraphData {
 
     private _calcSeriesData(series: any) {
         series.forEach((s, i) => {
-            [s.name, s.data] = [this.data[i][this.data[i].length - 1], this.data[i].slice(0, this.data[i].length - 1)];
+            [s.name, s.data] = [this.rowDescriptor[i], this.data[i]];
         })
     }
 
@@ -1229,8 +1220,8 @@ export class LineBarGraphData extends AbstractNormalGraphData {
         if (!this.data || !this.data.length) return;
         const opt = {...this._optionsTemplate};
         this._extendOption(opt);
-        opt.legend.data = this._getLastData();
-        opt.xAxis[0].data = this.header.slice(0, this.header.length - 1);
+        opt.legend.data = this.rowDescriptor;
+        opt.xAxis[0].data = this.header;
         this._calcSeriesData(opt.series);
         return opt;
     }
@@ -1339,7 +1330,7 @@ export class GaugeGraphData extends AbstractNormalGraphData {
                     name: '业务指标',
                     type: 'gauge',
                     detail: {formatter: '{value}%'},
-                    data: this.data.map(row => ({value: row[0], name: row[1]}))
+                    data: this.data.map(row => ({value: row[0], name: this.rowDescriptor[0]}))
                 }
             ]
         }
@@ -1377,16 +1368,16 @@ export class ScatterGraphData extends AbstractNormalGraphData {
  */
 export class RadarGraphData extends AbstractNormalGraphData {
     private _calcSeriesData() {
-        return this.data.slice(0, this.data.length - 1).map(row => {
+        return this.data.slice(0, this.data.length - 1).map((row, i) => {
             return {
-                value: row.slice(0, row.length - 1),
-                name: row[row.length - 1]
+                value: row,
+                name: this.rowDescriptor[i]
             }
         })
     }
 
     private _calcRadar() {
-        return this.header.slice(0, this.header.length - 1).map((h, i) => {
+        return this.header.map((h, i) => {
             return {name: h, max: this.data[this.data.length - 1][i]}
         })
     }
@@ -1415,7 +1406,7 @@ export class RadarGraphData extends AbstractNormalGraphData {
         if (!this.data || !this.data.length) return;
         const opt = {...this._optionsTemplate};
         this._extendOption(opt);
-        opt.legend.data = this._getLastData(this.data.slice(0, this.data.length - 1));
+        opt.legend.data = this.rowDescriptor;
         opt.radar.indicator = this._calcRadar();
         opt.series[0].data = this._calcSeriesData();
         return opt;
@@ -1426,17 +1417,17 @@ export class RadarGraphData extends AbstractNormalGraphData {
  * K线图
  */
 export class KLineGraphData extends AbstractNormalGraphData {
-    private _calcSeries(legendData: any[]): any[] {
+    private _calcSeries(): any[] {
         return this.data.map((row, index) => {
             return {
-                name: legendData[index],
+                name: this.rowDescriptor[index],
                 type: 'line',
                 showAllSymbol: true,
                 animation: true,
                 smooth: false,
                 symbolSize: [5, 5],
                 hoverAnimation: false,
-                data: row.slice(0, row.length - 1)
+                data: row
             }
         });
     }
@@ -1504,19 +1495,17 @@ export class KLineGraphData extends AbstractNormalGraphData {
     protected createChartOptions(): EchartOptions {
         if (!this.data || !this.data.length) return;
 
-        const legendData = this._getLastData();
-
-        const selectedLegend = legendData.reduce((s, legend, i) => {
+        const selectedLegend = this.rowDescriptor.reduce((s, legend, i) => {
             s[legend] = i < 3 ? true : false;
             return s;
         }, {});
 
         const opt = {...this._optionsTemplate};
         this._extendOption(opt);
-        opt.legend.data = legendData;
+        opt.legend.data = this.rowDescriptor;
         opt.legend.selected = selectedLegend;
-        opt.xAxis[0].data = this.header.slice(0, this.header.length - 1);
-        opt.series = this._calcSeries(legendData);
+        opt.xAxis[0].data = this.header;
+        opt.series = this._calcSeries();
         return opt;
     }
 }
@@ -1791,8 +1780,8 @@ export class FunnelPlotGraphData extends AbstractNormalGraphData {
         if (!this.data || !this.data.length) return;
         const opt = {...this._optionsTemplate};
         this._extendOption(opt);
-        opt.legend.data = this._getLastData().reverse();
-        opt.series[0].data = this.data.map(row => ({value: row[0], name: row[1]}))
+        opt.legend.data = this.rowDescriptor.reverse();
+        opt.series[0].data = this.data.map((row, i) => ({value: row[0], name: this.rowDescriptor[i]}));
         return opt;
     }
 }

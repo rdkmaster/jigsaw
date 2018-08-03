@@ -23,12 +23,13 @@ export class PieGraphDemoComponent {
 
 
         this.pieGraphDataByRow = new PieGraphDataByRow();
+        this.pieGraphDataByRow.rowDescriptor = ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎'];
         this.pieGraphDataByRow.data = [
-            [120, '邮件营销'],
-            [220, '联盟广告'],
-            [150, '视频广告'],
-            [320, '直接访问'],
-            [820, '搜索引擎']
+            [120],
+            [220],
+            [150],
+            [320],
+            [820]
         ];
 
         this.pieGraphDataByRowFromAjax = new PieGraphDataByRow();
@@ -56,12 +57,13 @@ function dealAreaRequest(req: HttpRequest<any>) {
         }
     }else if(req.params.get('byRow')) {
         return {
+            "rowDescriptor": ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎'],
             "data": [
-                [120, '邮件营销'],
-                [220, '联盟广告'],
-                [150, '视频广告'],
-                [320, '直接访问'],
-                [820, '搜索引擎']
+                [120],
+                [220],
+                [150],
+                [320],
+                [820]
             ]
         }
     }

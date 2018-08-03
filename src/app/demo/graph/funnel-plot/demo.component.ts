@@ -10,12 +10,13 @@ export class FunnelPlotGraphComponent {
     constructor(public http: HttpClient) {
         this.funnelPlotData = new FunnelPlotGraphData();
         this.funnelPlotData.title = '漏斗图';
+        this.funnelPlotData.rowDescriptor = ['访问', '咨询', '订单', '点击', '展现'];
         this.funnelPlotData.data = [
-            [60, '访问'],
-            [40, '咨询'],
-            [20, '订单'],
-            [80, '点击'],
-            [100, '展现']
+            [60],
+            [40],
+            [20],
+            [80],
+            [100]
         ];
 
         this.funnelPlotFromAjax = new FunnelPlotGraphData();
@@ -44,12 +45,13 @@ AjaxInterceptor.registerProcessor('/funnel-plot-data', dealAreaRequest);
 
 function dealAreaRequest(req: HttpRequest<any>) {
     return {
+        "rowDescriptor": ['访问', '咨询', '订单', '点击', '展现'],
         "data": [
-            [60, '访问'],
-            [40, '咨询'],
-            [20, '订单'],
-            [80, '点击'],
-            [100, '展现']
+            [60],
+            [40],
+            [20],
+            [80],
+            [100]
         ]
     }
 }

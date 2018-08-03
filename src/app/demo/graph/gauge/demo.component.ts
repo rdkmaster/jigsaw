@@ -9,7 +9,8 @@ import {HttpClient, HttpRequest} from "@angular/common/http";
 export class GaugeGraphComponent {
     constructor(public http: HttpClient) {
         this.gaugeData = new GaugeGraphData();
-        this.gaugeData.data = [35, '完成率'];
+        this.gaugeData.rowDescriptor = ['完成率'];
+        this.gaugeData.data = [35];
 
         this.gaugeFromAjax = new GaugeGraphData();
         this.gaugeFromAjax.http = http;
@@ -36,8 +37,9 @@ AjaxInterceptor.registerProcessor('/gauge-data', dealAreaRequest);
 
 function dealAreaRequest(req: HttpRequest<any>) {
     return  {
+        "rowDescriptor": ['完成率'],
         "data": [
-            [35, '完成率']
+            [35]
         ]
     }
 }

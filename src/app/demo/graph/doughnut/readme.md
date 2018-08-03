@@ -2,27 +2,44 @@
 
 ### DoughnutGraphData
 
-对data的格式要求是[value, name]
-
 ```
 {
-    "header": ["次数", "来源"],
-    "field": ["field1", "field2"],
+    "rowDescriptor": ["终端", "无线网", "互联网", "核心网"],
+    "header": ["次数"],
+    "field": ["field1"],
     "data": [
-        [52, "终端"],
-        [15, "无线网"],
-        [15, "互联网"],
-        [18, "核心网"]
+        [52],
+        [15],
+        [15],
+        [18]
     ]
 }
 ```
 
 ### DoughnutRateGraphData
 
-对data的格式要求是[value]
+```
+{
+    "rowDescriptor": ["无线网"],
+    "header": ["次数"],
+    "field": ["field1"],
+    "data": [
+        [55]
+    ]
+}
+```
 
 ### DoughnutScoreGraphData
 
-对data的格式要求是[value, name]
+```
+{
+    "rowDescriptor": ["TOEFL得分"],
+    "header": ["得分"],
+    "field": ["field1"],
+    "data": [
+        [60]
+    ]
+}
+```
 
 

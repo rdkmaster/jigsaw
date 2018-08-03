@@ -5,17 +5,10 @@
 对data的格式要求是
 
 ```
-[
-    [value, legend],
-    [value, legend]
-]
-
-```
-
-```
 {
+    "rowDescriptor": ['完成率'],
     "data": [
-        [35, '完成率']
+        [35]
     ]
 }
 ```
