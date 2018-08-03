@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, NgModule, Renderer2, ViewChild} from "@angular/core";
+import {Component, ElementRef, EventEmitter, Input, NgModule, Output, Renderer2, ViewChild} from "@angular/core";
 import {AbstractJigsawComponent} from "../common";
 import {JigsawBoxModule} from "../box/index";
 import {JigsawButtonModule} from "../button/button";
@@ -32,6 +32,12 @@ export class JigsawUpload extends AbstractJigsawComponent {
 
     @ViewChild('fileInput') fileInput: ElementRef;
 
+    @Output()
+    public process = new EventEmitter<UploadFileInfo>();
+
+    @Output()
+    public complete = new EventEmitter<UploadFileInfo[]>();
+
     public _$selectFile($event) {
         $event.preventDefault();
         $event.stopPropagation();
@@ -54,7 +60,7 @@ export class JigsawUpload extends AbstractJigsawComponent {
             return;
         }
 
-        Array.from(files).forEach((file: File) => {
+        Array.from(files).forEach((file: File, index) => {
             const fileInfo: UploadFileInfo = {name: file.name, state: 'loading', url: ''};
             this._$fileInfoList.push(fileInfo);
 
@@ -62,9 +68,12 @@ export class JigsawUpload extends AbstractJigsawComponent {
             formData.append('file', file);
             formData.append("filename", encodeURI(file.name));
             this._http.post('/rdk/service/common/upload', formData, {responseType: 'text'}).subscribe(res => {
-                console.log(res);
                 fileInfo.state = 'success';
                 fileInfo.url = res;
+                this.process.emit(fileInfo);
+                if(this._isAllFilesUploaded()) {
+                    this.complete.emit(this._$fileInfoList);
+                }
             }, err => {
                 fileInfo.state = 'error'
             });
@@ -75,6 +84,10 @@ export class JigsawUpload extends AbstractJigsawComponent {
 
     set _$selectedFileChange(value) {
         this._$upload();
+    }
+
+    private _isAllFilesUploaded(): boolean {
+        return !this._$fileInfoList.find(f => f.state == 'loading');
     }
 
     public _$fileDragEnterHandle(dragInfo: DragDropInfo) {
@@ -99,7 +112,6 @@ export class JigsawUpload extends AbstractJigsawComponent {
 
     public _$fileDropHandle(dragInfo: DragDropInfo) {
         this._renderer.removeClass(this._elementRef.nativeElement, 'jigsaw-upload-drag-over');
-        console.log(dragInfo.event.dataTransfer.files);
         this._$upload(dragInfo.event.dataTransfer.files);
     }
 

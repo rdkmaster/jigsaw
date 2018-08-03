@@ -4,4 +4,4 @@
 
 
 <!-- start to learn the demo from here -->
-<j-upload></j-upload>
+<j-upload (process)="getUploadFile($event)" (complete)="getAllUploadFiles($event)"></j-upload>
