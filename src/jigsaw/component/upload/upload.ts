@@ -7,8 +7,9 @@ import {CommonModule} from "@angular/common";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {JigsawDraggableModule, JigsawDroppableModule} from "../../directive/dragdrop/index";
 import {DragDropInfo} from "../../directive/dragdrop/types";
+import {FormsModule} from "@angular/forms";
 
-export type UploadFileInfo = {name: string, state: 'loading' | 'success' | 'error', url: string};
+export type UploadFileInfo = { name: string, state: 'loading' | 'success' | 'error', url: string };
 
 @Component({
     selector: 'jigsaw-upload, j-upload',
@@ -40,7 +41,7 @@ export class JigsawUpload extends AbstractJigsawComponent {
     }
 
     public _$upload(files?: FileList) {
-        if(!files) {
+        if (!files) {
             const fileInput = this.fileInput.nativeElement;
             files = fileInput['files'];
         }
@@ -72,6 +73,10 @@ export class JigsawUpload extends AbstractJigsawComponent {
         this._$uploadMode = files.length == 1 ? 'single' : 'multiple';
     }
 
+    set _$selectedFileChange(value) {
+        this._$upload();
+    }
+
     public _$fileDragEnterHandle(dragInfo: DragDropInfo) {
         dragInfo.event.dataTransfer.dropEffect = 'all';
         console.log(dragInfo.event.dataTransfer.effectAllowed);
@@ -97,11 +102,12 @@ export class JigsawUpload extends AbstractJigsawComponent {
         console.log(dragInfo.event.dataTransfer.files);
         this._$upload(dragInfo.event.dataTransfer.files);
     }
+
 }
 
 @NgModule({
     imports: [JigsawBoxModule, JigsawButtonModule, PerfectScrollbarModule, JigsawDraggableModule,
-        JigsawDroppableModule, CommonModule],
+        JigsawDroppableModule, CommonModule, FormsModule],
     declarations: [JigsawUpload],
     exports: [JigsawUpload]
 })

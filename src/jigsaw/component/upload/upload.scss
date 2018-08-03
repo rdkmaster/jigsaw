@@ -11,6 +11,9 @@ $upload-prefix-cls: #{$jigsaw-prefix}-upload;
     &.#{$upload-prefix-cls}-drag-over {
         border: 1px solid $primary-color;
     }
+    &-file-input {
+        display: none !important;
+    }
     &-icon {
         display: inline-block;
         font-size: 60px;
