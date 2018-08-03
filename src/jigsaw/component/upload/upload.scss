@@ -8,6 +8,9 @@ $upload-prefix-cls: #{$jigsaw-prefix}-upload;
     border-radius: 4px;
     width: 400px;
     height: 400px;
+    &.#{$upload-prefix-cls}-drag-over {
+        border: 1px solid $primary-color;
+    }
     &-icon {
         display: inline-block;
         font-size: 60px;
@@ -37,7 +40,11 @@ $upload-prefix-cls: #{$jigsaw-prefix}-upload;
         .#{$upload-prefix-cls}-file-name {
             font-size: 14px;
             color: $text-color-secondary;
-            vertical-align: 5px;
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100px;
         }
     }
     &-file-right {

@@ -25,7 +25,6 @@ export class AjaxInterceptor implements HttpInterceptor {
         console.log(req);
 
         if(req.url.match(/\/rdk\/service\/common\/upload/g)) {
-            console.log(1111111111, req);
             return next.handle(req);
         }
 
