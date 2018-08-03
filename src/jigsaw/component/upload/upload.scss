@@ -30,6 +30,7 @@ $upload-prefix-cls: #{$jigsaw-prefix}-upload;
         padding: 0 20px;
     }
     &-file {
+        position: relative;
         padding: 20px 0;
         border-bottom: 1px solid $border-color-base;
         &:last-child {
@@ -37,6 +38,8 @@ $upload-prefix-cls: #{$jigsaw-prefix}-upload;
         }
     }
     &-file-left {
+        width: 100%;
+        text-align: left;
         .#{$upload-prefix-cls}-file-name {
             font-size: 14px;
             color: $text-color-secondary;
@@ -44,10 +47,12 @@ $upload-prefix-cls: #{$jigsaw-prefix}-upload;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 100px;
+            max-width: calc(100% - 120px);
         }
     }
     &-file-right {
+        position: absolute;
+        right: 0;
         .#{$upload-prefix-cls}-loading, .#{$upload-prefix-cls}-success, .#{$upload-prefix-cls}-error {
             margin-left: 6px;
         }
