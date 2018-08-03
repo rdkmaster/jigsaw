@@ -1,11 +1,12 @@
-import {Component, ElementRef, NgModule, ViewChild} from "@angular/core";
+import {Component, ElementRef, Input, NgModule, ViewChild} from "@angular/core";
 import {AbstractJigsawComponent} from "../common";
 import {JigsawBoxModule} from "../box/index";
 import {JigsawButtonModule} from "../button/button";
 import {HttpClient} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
+import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 
-export type UploadFileInfo = {name: string, state: 'loading' | 'success' | 'error'};
+export type UploadFileInfo = {name: string, state: 'loading' | 'success' | 'error', url: string};
 
 @Component({
     selector: 'jigsaw-upload, j-upload',
@@ -18,6 +19,9 @@ export class JigsawUpload extends AbstractJigsawComponent {
     constructor(private _http: HttpClient) {
         super();
     }
+
+    @Input()
+    public multiple: boolean = true;
 
     public _$uploadMode: 'select' | 'single' | 'multiple' = 'select';
 
@@ -45,7 +49,7 @@ export class JigsawUpload extends AbstractJigsawComponent {
         }
 
         files.forEach((file: File) => {
-            const fileInfo: UploadFileInfo = {name: file.name, state: 'loading'};
+            const fileInfo: UploadFileInfo = {name: file.name, state: 'loading', url: ''};
             this._$fileInfoList.push(fileInfo);
 
             const formData = new FormData();
@@ -54,22 +58,18 @@ export class JigsawUpload extends AbstractJigsawComponent {
             this._http.post('/rdk/service/common/upload', formData, {responseType: 'text'}).subscribe(res => {
                 console.log(res);
                 fileInfo.state = 'success';
+                fileInfo.url = res;
             }, err => {
                 fileInfo.state = 'error'
             });
         });
 
-        if (files.length == 1) {
-            this._$uploadMode = 'single';
-        } else {
-            this._$uploadMode = 'multiple';
-        }
-
+        this._$uploadMode = files.length == 1 ? 'single' : 'multiple';
     }
 }
 
 @NgModule({
-    imports: [JigsawBoxModule, JigsawButtonModule, CommonModule],
+    imports: [JigsawBoxModule, JigsawButtonModule, PerfectScrollbarModule, CommonModule],
     declarations: [JigsawUpload],
     exports: [JigsawUpload]
 })

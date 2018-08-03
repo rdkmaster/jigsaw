@@ -3,7 +3,7 @@
         <span class="jigsaw-upload-icon fa fa-upload"></span>
         <span class="jigsaw-upload-prompt">将文件拖拽到此处上传</span>
         <j-button (click)="_$selectFile($event)">选择文件</j-button>
-        <input #fileInput class="jigsaw-upload-file-input" type='file' multiple="multiple">
+        <input #fileInput class="jigsaw-upload-file-input" type='file' [multiple]="multiple">
         <button (click)="_$upload()">上传</button>
     </j-box>
 
@@ -17,7 +17,7 @@
         </ng-container>
     </j-box>
     <j-box *ngSwitchCase="'multiple'" direction="v" justify="start" align="center" width="100%" height="100%"
-           class="jigsaw-upload-file-list">
+           class="jigsaw-upload-file-list" [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}">
         <j-box *ngFor="let file of _$fileInfoList" type="flex" justify="between" align="center"
                width="100%" height="80px" class="jigsaw-upload-file">
             <div class="jigsaw-upload-file-left">
