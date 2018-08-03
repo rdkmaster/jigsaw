@@ -9,7 +9,7 @@ import {JigsawDraggableModule, JigsawDroppableModule} from "../../directive/drag
 import {DragDropInfo} from "../../directive/dragdrop/types";
 import {FormsModule} from "@angular/forms";
 
-export type UploadFileInfo = { name: string, state: 'loading' | 'success' | 'error', url: string };
+export type UploadFileInfo = { name: string, state: 'pause' | 'loading' | 'success' | 'error', url: string, file: File };
 
 @Component({
     selector: 'jigsaw-upload, j-upload',
@@ -55,28 +55,14 @@ export class JigsawUpload extends AbstractJigsawComponent {
         if (!files || !files.length) {
             console.warn('there are no upload files');
             return;
-        } else if (files.length > 10) {
-            console.warn('there are too more upload files');
-            return;
         }
 
         Array.from(files).forEach((file: File, index) => {
-            const fileInfo: UploadFileInfo = {name: file.name, state: 'loading', url: ''};
+            const fileInfo: UploadFileInfo = {name: file.name, state: 'pause', url: '', file: file};
             this._$fileInfoList.push(fileInfo);
-
-            const formData = new FormData();
-            formData.append('file', file);
-            formData.append("filename", encodeURI(file.name));
-            this._http.post('/rdk/service/common/upload', formData, {responseType: 'text'}).subscribe(res => {
-                fileInfo.state = 'success';
-                fileInfo.url = res;
-                this.process.emit(fileInfo);
-                if(this._isAllFilesUploaded()) {
-                    this.complete.emit(this._$fileInfoList);
-                }
-            }, err => {
-                fileInfo.state = 'error'
-            });
+            if(index < 5) {
+                this._sequenceUpload(fileInfo);
+            }
         });
 
         this._$uploadMode = files.length == 1 ? 'single' : 'multiple';
@@ -87,7 +73,27 @@ export class JigsawUpload extends AbstractJigsawComponent {
     }
 
     private _isAllFilesUploaded(): boolean {
-        return !this._$fileInfoList.find(f => f.state == 'loading');
+        return !this._$fileInfoList.find(f => f.state == 'loading' || f.state == 'pause');
+    }
+
+    private _sequenceUpload(fileInfo: UploadFileInfo) {
+        fileInfo.state = 'loading';
+        const formData = new FormData();
+        formData.append('file', fileInfo.file);
+        formData.append("filename", encodeURI(fileInfo.file.name));
+        this._http.post('/rdk/service/common/upload', formData, {responseType: 'text'}).subscribe(res => {
+            fileInfo.state = 'success';
+            fileInfo.url = res;
+            this.process.emit(fileInfo);
+            const waitedFile = this._$fileInfoList.find(f => f.state == 'pause');
+            if(waitedFile) {
+                this._sequenceUpload(waitedFile)
+            } else if(this._isAllFilesUploaded()) {
+                this.complete.emit(this._$fileInfoList);
+            }
+        }, err => {
+            fileInfo.state = 'error'
+        });
     }
 
     public _$fileDragEnterHandle(dragInfo: DragDropInfo) {

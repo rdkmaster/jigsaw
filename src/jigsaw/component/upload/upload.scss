@@ -56,7 +56,7 @@ $upload-prefix-cls: #{$jigsaw-prefix}-upload;
     &-file-right {
         position: absolute;
         right: 0;
-        .#{$upload-prefix-cls}-loading, .#{$upload-prefix-cls}-success, .#{$upload-prefix-cls}-error {
+        .#{$upload-prefix-cls}-pause, .#{$upload-prefix-cls}-loading, .#{$upload-prefix-cls}-success, .#{$upload-prefix-cls}-error {
             margin-left: 6px;
         }
     }
