@@ -19,7 +19,7 @@ export class PieGraphDemoComponent {
 
         this.pieGraphDataFromAjax = new PieGraphData();
         this.pieGraphDataFromAjax.http = http;
-        this.pieGraphDataFromAjax.fromAjax({url: '/pie-data', params: {byCol: true}});
+        this.pieGraphDataFromAjax.fromAjax({url: '/graph-data/pie-data', params: {byCol: true}});
 
 
         this.pieGraphDataByRow = new PieGraphDataByRow();
@@ -34,7 +34,7 @@ export class PieGraphDemoComponent {
 
         this.pieGraphDataByRowFromAjax = new PieGraphDataByRow();
         this.pieGraphDataByRowFromAjax.http = http;
-        this.pieGraphDataByRowFromAjax.fromAjax({url: '/pie-data', params: {byRow: true}});
+        this.pieGraphDataByRowFromAjax.fromAjax({url: '/graph-data/pie-data', params: {byRow: true}});
     }
 
     // ====================================================================
@@ -45,7 +45,7 @@ export class PieGraphDemoComponent {
 }
 
 /* 模拟请求代码 start */
-AjaxInterceptor.registerProcessor('/pie-data', dealAreaRequest);
+AjaxInterceptor.registerProcessor('/graph-data/pie-data', dealAreaRequest);
 
 function dealAreaRequest(req: HttpRequest<any>) {
     if(req.params.get('byCol')) {

@@ -10,11 +10,11 @@ export class GaugeGraphComponent {
     constructor(public http: HttpClient) {
         this.gaugeData = new GaugeGraphData();
         this.gaugeData.rowDescriptor = ['完成率'];
-        this.gaugeData.data = [35];
+        this.gaugeData.data = 35;
 
         this.gaugeFromAjax = new GaugeGraphData();
         this.gaugeFromAjax.http = http;
-        this.gaugeFromAjax.fromAjax('/gauge-data');
+        this.gaugeFromAjax.fromAjax('/graph-data/gauge-data');
     }
 
     gaugeData: GaugeGraphData;
@@ -33,7 +33,7 @@ export class GaugeGraphComponent {
 
 
 /* 模拟请求代码 start */
-AjaxInterceptor.registerProcessor('/gauge-data', dealAreaRequest);
+AjaxInterceptor.registerProcessor('/graph-data/gauge-data', dealAreaRequest);
 
 function dealAreaRequest(req: HttpRequest<any>) {
     return  {

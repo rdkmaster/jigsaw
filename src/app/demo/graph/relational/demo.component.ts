@@ -26,7 +26,7 @@ export class RelationalGraphComponent {
         this.relationalFromAjax = new RelationalGraphData();
         this.relationalFromAjax.http = http;
         this.relationalFromAjax.title = '笛卡尔坐标系上的 Graph';
-        this.relationalFromAjax.fromAjax('/relational-data');
+        this.relationalFromAjax.fromAjax('/graph-data/relational-data');
     }
 
     relationalData: RelationalGraphData;
@@ -45,7 +45,7 @@ export class RelationalGraphComponent {
 
 
 /* 模拟请求代码 start */
-AjaxInterceptor.registerProcessor('/relational-data', dealAreaRequest);
+AjaxInterceptor.registerProcessor('/graph-data/relational-data', dealAreaRequest);
 
 function dealAreaRequest(req: HttpRequest<any>) {
     return  {

@@ -17,7 +17,7 @@ export class StripGraphComponent {
 
         this.stripFromAjax = new StripGraphData();
         this.stripFromAjax.http = http;
-        this.stripFromAjax.fromAjax({url: '/strip-data', params: {type: 'video'}});
+        this.stripFromAjax.fromAjax({url: '/graph-data/strip-data', params: {type: 'video'}});
 
         this.stripSequenceData = new StripSequenceGraphData();
         this.stripSequenceData.header = ["网页打开总时延", "网页首包总时延", "GET时延", "TCP至GET时延", "TCP无线建链时延", "TCP有线建链时延", "DNS至TCP时延", "DNS时延"];
@@ -29,7 +29,7 @@ export class StripGraphComponent {
 
         this.stripSequenceFromAjax = new StripSequenceGraphData();
         this.stripSequenceFromAjax.http = http;
-        this.stripSequenceFromAjax.fromAjax({url: '/strip-data', params: {type: 'timeout'}});
+        this.stripSequenceFromAjax.fromAjax({url: '/graph-data/strip-data', params: {type: 'timeout'}});
 
         this.stripColorData = new StripColorGraphData();
         this.stripColorData.title = '各市得分排名';
@@ -39,7 +39,7 @@ export class StripGraphComponent {
         this.stripColorFromAjax = new StripColorGraphData();
         this.stripColorFromAjax.title = '各市得分排名';
         this.stripColorFromAjax.http = http;
-        this.stripColorFromAjax.fromAjax({url: '/strip-data', params: {type: 'color'}});
+        this.stripColorFromAjax.fromAjax({url: '/graph-data/strip-data', params: {type: 'color'}});
     }
 
     stripData: StripGraphData;
@@ -64,7 +64,7 @@ export class StripGraphComponent {
 
 
 /* 模拟请求代码 start */
-AjaxInterceptor.registerProcessor('/strip-data', dealAreaRequest);
+AjaxInterceptor.registerProcessor('/graph-data/strip-data', dealAreaRequest);
 
 function dealAreaRequest(req: HttpRequest<any>) {
     if (req.params.get('type') == 'video') {

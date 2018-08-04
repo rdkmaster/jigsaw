@@ -1,21 +1,21 @@
 import {Component} from "@angular/core";
-import {LineGraphData, LineGraphDataByRow} from "jigsaw/core/data/graph-data";
+import {BarGraphData, BarGraphDataByRow} from "jigsaw/core/data/graph-data";
 import {HttpClient, HttpRequest} from "@angular/common/http";
 import {AjaxInterceptor} from "../../../app.interceptor";
 
 @Component({
     templateUrl: './demo.component.html'
 })
-export class LineGraphComponent {
-    lineBarData: LineGraphData;
-    lineBarFromAjax: LineGraphData;
-    lineBarByRow: LineGraphDataByRow;
-    lineBarByRowFromAjax: LineGraphDataByRow;
+export class BarGraphComponent {
+    barData: BarGraphData;
+    barFromAjax: BarGraphData;
+    barByRow: BarGraphDataByRow;
+    barByRowFromAjax: BarGraphDataByRow;
     constructor(public http: HttpClient) {
-        this.lineBarData = new LineGraphData();
-        this.lineBarData.rowDescriptor = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
-        this.lineBarData.header = ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎'];
-        this.lineBarData.data = [
+        this.barData = new BarGraphData();
+        this.barData.rowDescriptor = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+        this.barData.header = ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎'];
+        this.barData.data = [
             [120, 220, 150, 320, 820],
             [132, 182, 232, 332, 932],
             [101, 191, 201, 301, 901],
@@ -25,15 +25,15 @@ export class LineGraphComponent {
             [210, 310, 410, 320, 1320]
         ];
 
-        this.lineBarFromAjax = new LineGraphData();
-        this.lineBarFromAjax.http = http;
-        this.lineBarFromAjax.fromAjax({url: '/graph-data/line-data', params: {byCol: true}});
+        this.barFromAjax = new BarGraphData();
+        this.barFromAjax.http = http;
+        this.barFromAjax.fromAjax({url: '/graph-data/line-data', params: {byCol: true}});
 
 
-        this.lineBarByRow = new LineGraphDataByRow();
-        this.lineBarByRow.rowDescriptor = ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎'];
-        this.lineBarByRow.header = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
-        this.lineBarByRow.data = [
+        this.barByRow = new BarGraphDataByRow();
+        this.barByRow.rowDescriptor = ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎'];
+        this.barByRow.header = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+        this.barByRow.data = [
             [120, 132, 101, 134, 90, 230, 210],
             [220, 182, 191, 234, 290, 330, 310],
             [150, 232, 201, 154, 190, 330, 410],
@@ -41,9 +41,9 @@ export class LineGraphComponent {
             [820, 932, 901, 934, 1290, 1330, 1320]
         ];
 
-        this.lineBarByRowFromAjax = new LineGraphDataByRow();
-        this.lineBarByRowFromAjax.http = http;
-        this.lineBarByRowFromAjax.fromAjax({url: '/graph-data/line-data', params: {byRow: true}});
+        this.barByRowFromAjax = new BarGraphDataByRow();
+        this.barByRowFromAjax.http = http;
+        this.barByRowFromAjax.fromAjax({url: '/graph-data/line-data', params: {byRow: true}});
     }
 
     // ====================================================================

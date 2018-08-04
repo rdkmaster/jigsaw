@@ -21,7 +21,7 @@ export class RadarGraphComponent {
         this.radarFromAjax = new RadarGraphData();
         this.radarFromAjax.http = http;
         this.radarFromAjax.title = '基础雷达图';
-        this.radarFromAjax.fromAjax('/radar-data');
+        this.radarFromAjax.fromAjax('/graph-data/radar-data');
     }
 
     radarData: RadarGraphData;
@@ -40,7 +40,7 @@ export class RadarGraphComponent {
 
 
 /* 模拟请求代码 start */
-AjaxInterceptor.registerProcessor('/radar-data', dealAreaRequest);
+AjaxInterceptor.registerProcessor('/graph-data/radar-data', dealAreaRequest);
 
 function dealAreaRequest(req: HttpRequest<any>) {
     return {

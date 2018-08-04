@@ -21,7 +21,7 @@ export class BoxPlotGraphComponent {
         this.boxPlotFromAjax = new BoxPlotGraphData();
         this.boxPlotFromAjax.http = http;
         this.boxPlotFromAjax.title = 'Michelson-Morley Experiment';
-        this.boxPlotFromAjax.fromAjax('/box-plot-data');
+        this.boxPlotFromAjax.fromAjax('/graph-data/box-plot-data');
     }
 
     boxPlotData: BoxPlotGraphData;
@@ -40,7 +40,7 @@ export class BoxPlotGraphComponent {
 
 
 /* 模拟请求代码 start */
-AjaxInterceptor.registerProcessor('/box-plot-data', dealAreaRequest);
+AjaxInterceptor.registerProcessor('/graph-data/box-plot-data', dealAreaRequest);
 
 function dealAreaRequest(req: HttpRequest<any>) {
     return {

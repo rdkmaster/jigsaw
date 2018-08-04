@@ -714,6 +714,25 @@ export class LineGraphDataByRow extends LineGraphData {
 }
 
 /**
+ * 折线图
+ */
+export class BarGraphData extends LineGraphData {
+    protected _calcSeries() {
+        return this.data.map((row, index) => {
+            return {name: this.header[index], type: 'bar', data: this.data.map(row => row[index])}
+        });
+    }
+}
+
+export class BarGraphDataByRow extends LineGraphDataByRow {
+    protected _calcSeries() {
+        return this.data.map((row, index) => {
+            return {name: this.rowDescriptor[index], type: 'bar', data: row}
+        });
+    }
+}
+
+/**
  * 条形图
  */
 export class StripGraphData extends AbstractNormalGraphData {
@@ -1054,175 +1073,6 @@ export class StripColorGraphData extends AbstractNormalGraphData {
         this._extendOption(opt);
         opt.yAxis[0].data = this.header;
         [opt.series[0].data, opt.series[1].data] = this._calcSeriesData();
-        return opt;
-    }
-}
-
-/**
- * 柱状折线图
- *
- * */
-export class LineBarGraphData extends AbstractNormalGraphData {
-    public sampleColors = ["#54acd5", "#f99660", "#a4bf6a", "#ec6d6d", "#f7b913", "#8ac9b6", "#bea5c8", "#01c5c2", "#a17660"];
-    public vmaxColors = ['#41addc', '#bea5c8', '#85c56c', '#f99660', '#ffc20e', '#ec6d6d', '#8ac9b6', '#585eaa', '#b22c46', '#96582a'];
-
-    protected _optionsTemplate = {
-        /*对于有的内容进行换行处理方式*/
-        /*
-        * 在echarts里面配置项里面用到2种内容换行方式;
-        * 1、内容支持html解析,可以用<br>标签换行，如tooltip内容
-        * 2、内容支持js解析,可能用\n转义字符，如title标题
-        * */
-        //tooltip内容设置：
-        /*
-        * 1、没有特殊要求，设置项应该能满足要求（字符串模板和回调函数都行）;
-        * 2、有特殊情况，如：每一条前面的图形标志不用echarts默认的标志，但又没有相关项的设置，怎么办了：
-        *    可以这样处理:用回调函数处理，回调函数可以拿到这个点的所有值（如：颜色，内容），其返回值
-        *    就是提示框的内容。而返回值是支持html标签解析的，所以你可以用html写出设计模板，再将数据放
-        *    到相应的位置就行了。
-        * */
-        tooltip: {
-            trigger: 'axis'
-        },
-        title: {
-            text: '',
-            textAlign: 'left',
-            top: 20
-        },
-        grid: {
-            left: 45,
-            right: 45,
-            top: 60,
-            show: true,
-            borderWidth: 1
-        },
-        legend: {
-            data: [],
-            top: 20,
-            right: 43,
-            inactiveColor: "#bbb",
-            itemWidth: 20,//设置icon长高
-            itemHeight: 10
-        },
-        xAxis: [
-            {
-                type: 'category',
-                boundaryGap: true,
-                position: 'bottom',
-                axisLabel: {
-                    interval: 4,//坐标轴文本标签
-                    textStyle: {
-                        color: '#666'
-                    }
-                },
-                splitLine: {//网格相关设置
-                    show: true,
-                    interval: 0
-                },
-                data: []
-            }
-
-        ],
-        /*双数字轴和数据对应那个数字轴设置*/
-        /*
-        * 数字轴的位置设置：yAxis.position设置为"right"，表示在右侧;
-        * 数据显示相对应的数字轴：yAxisIndex：1，表示对应第2个数字轴;
-        * */
-        yAxis: [
-            {
-                // name: '掉话次数',
-                nameTextStyle: {
-                    color: this.vmaxColors[0],
-                },
-                axisLabel: {
-                    textStyle: {
-                        color: this.vmaxColors[0],
-                    },
-                    formatter: function (params) {
-                        return params.toFixed(1) == 0 ? "" : params.toFixed(1)
-                    }
-                },
-                max: 6,
-                splitLine: {show: false},// 是否现示网格
-                type: 'value',
-                // splitNumber:4,
-                axisLine: {
-                    lineStyle: {
-                        color: this.vmaxColors[0]
-                    }
-                }
-            },
-            {
-                type: 'value',
-                splitLine: {show: false},
-                position: 'right',
-                axisLabel: {//标签名样式
-                    textStyle: {
-                        color: this.vmaxColors[1]
-                    },
-                    formatter: function (params) {
-                        return params.toFixed(1) == 0 ? "" : params.toFixed(1)
-                    }
-                },
-                nameTextStyle: {
-                    color: this.vmaxColors[1],
-                },
-                axisLine: {
-                    lineStyle: {
-                        color: this.vmaxColors[1],
-                    }
-                },
-            }
-        ],
-        series: [
-            {
-                name: '',
-                animation: true,
-                type: 'bar',
-                data: [],
-                showAllSymbol: true,
-                legendHoverLink: false,
-                itemStyle: {
-                    normal: {
-                        barBorderColor: this.vmaxColors[0],
-                        color: this.vmaxColors[0],
-                    }
-                },
-                barCategoryGap: '15%',//控制条形柱间的间距
-                barMaxWidth: 20,
-            },
-            {
-                name: '',
-                animation: true,
-                type: 'line',
-                symbolSize: [5, 5],
-                itemStyle: {
-                    normal: {
-                        color: this.vmaxColors[1],
-                    }
-                },
-                yAxisIndex: 1,
-                smooth: false,
-                data: [],
-                showAllSymbol: true,
-                hoverAnimation: false,
-            }
-        ]
-    };
-
-    private _calcSeriesData(series: any) {
-        series.forEach((s, i) => {
-            [s.name, s.data] = [this.rowDescriptor[i], this.data[i]];
-        })
-    }
-
-    protected createChartOptions(): any {
-        if (!this.data || !this.data.length) return;
-        const opt = {...this._optionsTemplate};
-        this._extendOption(opt);
-        opt.legend.data = this.rowDescriptor;
-        opt.xAxis[0].data = this.header;
-        this._calcSeriesData(opt.series);
         return opt;
     }
 }

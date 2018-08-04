@@ -28,7 +28,7 @@ export class KLineGraphComponent {
 
         this.kLineFromAjax = new KLineGraphData();
         this.kLineFromAjax.http = http;
-        this.kLineFromAjax.fromAjax('/k-line-data');
+        this.kLineFromAjax.fromAjax('/graph-data/k-line-data');
     }
 
     kLineData: KLineGraphData;
@@ -47,7 +47,7 @@ export class KLineGraphComponent {
 
 
 /* 模拟请求代码 start */
-AjaxInterceptor.registerProcessor('/k-line-data', dealAreaRequest);
+AjaxInterceptor.registerProcessor('/graph-data/k-line-data', dealAreaRequest);
 
 function dealAreaRequest(req: HttpRequest<any>) {
     return {

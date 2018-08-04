@@ -43,8 +43,8 @@ import {FunnelPlotGraphComponent} from "./funnel-plot/demo.component";
 import {FunnelPlotGraphModule} from "./funnel-plot/demo.module";
 import {GaugeGraphComponent} from "./gauge/demo.component";
 import {GaugeGraphModule} from "./gauge/demo.module";
-import {LineBarGraphComponent} from "./line-bar/demo.component";
-import {LineBarGraphModule} from "./line-bar/demo.module";
+import {BarGraphComponent} from "app/demo/graph/bar/demo.component";
+import {BarGraphModule} from "./bar/demo.module";
 
 export const routerConfig = [
     {
@@ -95,9 +95,9 @@ export const routerConfig = [
     {
         path: 'heat', component: HeatGraphComponent
     },
-    {
+    /*{
         path: 'relational', component: RelationalGraphComponent
-    },
+    },*/
     {
         path: 'funnel-plot', component: FunnelPlotGraphComponent
     },
@@ -105,7 +105,7 @@ export const routerConfig = [
         path: 'gauge', component: GaugeGraphComponent
     },
     {
-        path: 'line-bar', component: LineBarGraphComponent
+        path: 'bar', component: BarGraphComponent
     }
 ];
 
@@ -132,7 +132,7 @@ export const routerConfig = [
         RelationalGraphModule,
         FunnelPlotGraphModule,
         GaugeGraphModule,
-        LineBarGraphModule
+        BarGraphModule,
     ]
 })
 export class GraphDemoModule {

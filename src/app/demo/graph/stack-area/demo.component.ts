@@ -16,7 +16,7 @@ export class StackAreaGraphComponent {
 
         this.stackAreaFromAjax = new StackedAreaGraphData();
         this.stackAreaFromAjax.http = http;
-        this.stackAreaFromAjax.fromAjax('/stack-area-data');
+        this.stackAreaFromAjax.fromAjax('/graph-data/stack-area-data');
     }
 
     stackAreaData: StackedAreaGraphData;
@@ -35,7 +35,7 @@ export class StackAreaGraphComponent {
 
 
 /* 模拟请求代码 start */
-AjaxInterceptor.registerProcessor('/stack-area-data', dealAreaRequest);
+AjaxInterceptor.registerProcessor('/graph-data/stack-area-data', dealAreaRequest);
 
 function dealAreaRequest(req: HttpRequest<any>) {
     return {

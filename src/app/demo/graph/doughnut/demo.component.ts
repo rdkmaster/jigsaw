@@ -21,14 +21,14 @@ export class DoughnutGraphComponent {
         this.doughnutFromAjax = new DoughnutGraphData();
         this.doughnutFromAjax.http = http;
         this.doughnutFromAjax.title = '问题定界分布';
-        this.doughnutFromAjax.fromAjax('/doughnut-data');
+        this.doughnutFromAjax.fromAjax('/graph-data/doughnut-data');
 
         this.doughnutRate = new DoughnutRateGraphData();
         this.doughnutRate.data = 85;
 
         this.doughnutRateFromAjax = new DoughnutRateGraphData();
         this.doughnutRateFromAjax.http = http;
-        this.doughnutRateFromAjax.fromAjax({url: '/doughnut-data', params: {source: '无线网'}});
+        this.doughnutRateFromAjax.fromAjax({url: '/graph-data/doughnut-data', params: {source: '无线网'}});
 
         this.doughnutScore = new DoughnutScoreGraphData();
         this.doughnutScore.rowDescriptor = ["IELTS得分"];
@@ -36,7 +36,7 @@ export class DoughnutGraphComponent {
 
         this.doughnutScoreFromAjax = new DoughnutScoreGraphData();
         this.doughnutScoreFromAjax.http = http;
-        this.doughnutScoreFromAjax.fromAjax({url: '/doughnut-data', params: {score: 'TOEFL'}});
+        this.doughnutScoreFromAjax.fromAjax({url: '/graph-data/doughnut-data', params: {score: 'TOEFL'}});
     }
 
     doughnut: DoughnutGraphData;
@@ -61,7 +61,7 @@ export class DoughnutGraphComponent {
 
 
 /* 模拟请求代码 start */
-AjaxInterceptor.registerProcessor('/doughnut-data', dealAreaRequest);
+AjaxInterceptor.registerProcessor('/graph-data/doughnut-data', dealAreaRequest);
 
 function dealAreaRequest(req: HttpRequest<any>) {
     if (req.params.get('source') == '无线网') {

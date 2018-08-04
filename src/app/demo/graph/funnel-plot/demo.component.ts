@@ -22,7 +22,7 @@ export class FunnelPlotGraphComponent {
         this.funnelPlotFromAjax = new FunnelPlotGraphData();
         this.funnelPlotFromAjax.http = http;
         this.funnelPlotFromAjax.title = '漏斗图';
-        this.funnelPlotFromAjax.fromAjax('/funnel-plot-data');
+        this.funnelPlotFromAjax.fromAjax('/graph-data/funnel-plot-data');
     }
 
     funnelPlotData: FunnelPlotGraphData;
@@ -41,7 +41,7 @@ export class FunnelPlotGraphComponent {
 
 
 /* 模拟请求代码 start */
-AjaxInterceptor.registerProcessor('/funnel-plot-data', dealAreaRequest);
+AjaxInterceptor.registerProcessor('/graph-data/funnel-plot-data', dealAreaRequest);
 
 function dealAreaRequest(req: HttpRequest<any>) {
     return {

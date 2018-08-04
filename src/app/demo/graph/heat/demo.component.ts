@@ -17,7 +17,7 @@ export class HeatGraphComponent {
 
         this.heatFromAjax = new HeatGraphData();
         this.heatFromAjax.http = http;
-        this.heatFromAjax.fromAjax('/heat-data');
+        this.heatFromAjax.fromAjax('/graph-data/heat-data');
     }
 
     heatData: HeatGraphData;
@@ -36,7 +36,7 @@ export class HeatGraphComponent {
 
 
 /* 模拟请求代码 start */
-AjaxInterceptor.registerProcessor('/heat-data', dealAreaRequest);
+AjaxInterceptor.registerProcessor('/graph-data/heat-data', dealAreaRequest);
 
 function dealAreaRequest(req: HttpRequest<any>) {
     return {

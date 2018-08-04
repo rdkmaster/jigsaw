@@ -17,7 +17,7 @@ export class ScatterGraphComponent {
         this.scatterFromAjax = new ScatterGraphData();
         this.scatterFromAjax.http = http;
         this.scatterFromAjax.title = '散点图';
-        this.scatterFromAjax.fromAjax('/scatter-data');
+        this.scatterFromAjax.fromAjax('/graph-data/scatter-data');
     }
 
     scatterData: ScatterGraphData;
@@ -36,7 +36,7 @@ export class ScatterGraphComponent {
 
 
 /* 模拟请求代码 start */
-AjaxInterceptor.registerProcessor('/scatter-data', dealAreaRequest);
+AjaxInterceptor.registerProcessor('/graph-data/scatter-data', dealAreaRequest);
 
 function dealAreaRequest(req: HttpRequest<any>) {
     return {
