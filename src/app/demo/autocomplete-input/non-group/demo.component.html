@@ -1,0 +1,10 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<h3>不分组</h3>
+<p class="notes">输入值是：<span id="bind-property">{{inputValue}}</span></p>
+<jigsaw-autocomplete-input [(value)]="inputValue" placeholder="auto complete input demo" [width]="250" [data]="_$dropdownData">
+</jigsaw-autocomplete-input>
+<br><br><br>
