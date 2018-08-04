@@ -98,9 +98,7 @@ export class JigsawUpload extends AbstractJigsawComponent {
 
     public _$fileDragEnterHandle(dragInfo: DragDropInfo) {
         dragInfo.event.dataTransfer.dropEffect = 'all';
-        console.log(dragInfo.event.dataTransfer.effectAllowed);
         if (dragInfo.event.dataTransfer.effectAllowed == 'all') {
-            console.log(this._elementRef.nativeElement);
             this._renderer.addClass(this._elementRef.nativeElement, 'jigsaw-upload-drag-over');
         }
     }
