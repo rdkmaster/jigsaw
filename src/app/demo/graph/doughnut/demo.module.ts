@@ -1,13 +1,13 @@
 import {NgModule} from "@angular/core";
 import {JigsawGraphModule} from "jigsaw/component/graph/index";
-import {AjaxLineGraphComponent} from "./demo.component";
+import {DoughnutGraphComponent} from "./demo.component";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 
 @NgModule({
-    declarations: [AjaxLineGraphComponent],
-    exports: [AjaxLineGraphComponent],
+    declarations: [DoughnutGraphComponent],
+    exports: [DoughnutGraphComponent],
     imports: [JigsawGraphModule, JigsawDemoDescriptionModule]
 })
-export class AjaxLineGraphModule {
+export class DoughnutGraphModule {
 
 }

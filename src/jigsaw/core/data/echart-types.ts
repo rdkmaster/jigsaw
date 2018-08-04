@@ -10,10 +10,10 @@ export class EchartTitle {
     //TODO: 补充完整
     text: string;
     subtext?: string;
-    left?: string;
-    right?: string;
-    top?: string;
-    bottom?: string;
+    left?: string | number;
+    right?: string | number;
+    top?: string | number;
+    bottom?: string | number;
     show?: boolean;
     [prop:string]: any;
 }
@@ -27,10 +27,10 @@ export class GraphLegendItem {
 export class EchartLegend {
     //TODO: 补充完整
     data: Array<GraphLegendItem|string>;
-    left?: string;
-    right?: string;
-    top?: string;
-    bottom?: string;
+    left?: string | number;
+    right?: string | number;
+    top?: string | number;
+    bottom?: string | number;
     show?: boolean;
     [prop:string]: any;
 }

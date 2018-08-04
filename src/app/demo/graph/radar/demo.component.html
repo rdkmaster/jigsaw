@@ -1,0 +1,30 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>雷达图</h2>
+
+    <div class="clearfix">
+        <div class="live-demo live-demo-block">
+            <h3>RadarGraphData静态数据</h3>
+            <jigsaw-graph [data]="radarData" height="500" (click)="handleClick($event)"></jigsaw-graph>
+        </div>
+
+        <div class="live-demo live-demo-block">
+            <h3>RadarGraphData异步数据</h3>
+            <jigsaw-graph [data]="radarFromAjax" height="500" (click)="handleClick($event)"></jigsaw-graph>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+

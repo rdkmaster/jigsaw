@@ -4,7 +4,7 @@
 import {Component} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/core/data/table-data";
-import {LineBarGraphData} from "jigsaw/core/data/graph-data";
+import {LineGraphData} from "jigsaw/core/data/graph-data";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -28,10 +28,10 @@ export class JigsawTabsDemoComponent {
         console.info(value);
     }
 
-    public lineBarGraphData: LineBarGraphData;
+    public lineBarGraphData: LineGraphData;
 
     constructor(http: HttpClient) {
-        this.lineBarGraphData = new LineBarGraphData();
+        this.lineBarGraphData = new LineGraphData();
         this.lineBarGraphData.http = http;
         this.lineBarGraphData.fromAjax('mock-data/marketing');
     }
