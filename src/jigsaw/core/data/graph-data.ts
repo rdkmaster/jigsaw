@@ -229,13 +229,13 @@ export class OutlineMapData extends AbstractNormalGraphData {
  * 饼图
  */
 export class PieGraphData extends AbstractNormalGraphData {
-    protected _calcSeriesData() {
+    protected createSeries() {
         return this.data[0].map((v, i) => {
             return {value: v, name: this.header[i]}
         });
     }
 
-    protected _optionsTemplate: EchartOptions = {
+    protected optionsTemplate: EchartOptions = {
         tooltip: {
             trigger: 'item',
             formatter: "{a}<br>{b} : {c} ({d}%)"
@@ -264,16 +264,16 @@ export class PieGraphData extends AbstractNormalGraphData {
 
     protected createChartOptions(): EchartOptions {
         if (!this.data || !this.data.length) return;
-        const opt: EchartOptions = {...this._optionsTemplate};
+        const opt: EchartOptions = {...this.optionsTemplate};
         this._extendOption(opt);
         opt.legend.data = this.header;
-        opt.series[0].data = this._calcSeriesData();
+        opt.series[0].data = this.createSeries();
         return opt;
     }
 }
 
 export class PieGraphDataByRow extends PieGraphData {
-    protected _calcSeriesData() {
+    protected createSeries() {
         return this.data.map((row, i) => {
             return {value: row[0], name: this.rowDescriptor[i]}
         });
@@ -281,10 +281,10 @@ export class PieGraphDataByRow extends PieGraphData {
 
     protected createChartOptions(): EchartOptions {
         if (!this.data || !this.data.length) return;
-        const opt: EchartOptions = {...this._optionsTemplate};
+        const opt: EchartOptions = {...this.optionsTemplate};
         this._extendOption(opt);
         opt.legend.data = this.rowDescriptor;
-        opt.series[0].data = this._calcSeriesData();
+        opt.series[0].data = this.createSeries();
         return opt;
     }
 }
@@ -297,7 +297,7 @@ export class DoughnutGraphData extends AbstractNormalGraphData {
         return this.data.map((row: any, i) => ({value: row[0], name: this.rowDescriptor[i]}));
     }
 
-    protected _optionsTemplate: EchartOptions = {
+    protected optionsTemplate: EchartOptions = {
         title: {
             text: '',
             x: 'center',
@@ -349,7 +349,7 @@ export class DoughnutGraphData extends AbstractNormalGraphData {
                 }
             },
         };
-        const opt = {...this._optionsTemplate};
+        const opt = {...this.optionsTemplate};
         this._extendOption(opt);
         opt.series[0].itemStyle = labelFormatter;
         opt.series[0].data = this._calcSeries();
@@ -361,7 +361,7 @@ export class DoughnutGraphData extends AbstractNormalGraphData {
  * 环形比例图
  */
 export class DoughnutRateGraphData extends AbstractNormalGraphData {
-    protected _optionsTemplate: EchartOptions = {
+    protected optionsTemplate: EchartOptions = {
         series: [
             {
                 type: 'pie',
@@ -484,7 +484,7 @@ export class DoughnutRateGraphData extends AbstractNormalGraphData {
             }
         };
 
-        const opt = {...this._optionsTemplate};
+        const opt = {...this.optionsTemplate};
         this._extendOption(opt);
         opt.series[0].itemStyle = labelFormatter;
         [opt.series[0].data[0].value, opt.series[0].data[1].value] = [this.data[0][0], 100 - Number(this.data[0][0])];
@@ -497,7 +497,7 @@ export class DoughnutRateGraphData extends AbstractNormalGraphData {
  * 环形得分图
  */
 export class DoughnutScoreGraphData extends AbstractNormalGraphData {
-    protected _optionsTemplate: EchartOptions = {
+    protected optionsTemplate: EchartOptions = {
         series: [
             {
                 type: 'pie',
@@ -625,7 +625,7 @@ export class DoughnutScoreGraphData extends AbstractNormalGraphData {
             }
         };
 
-        const opt = {...this._optionsTemplate};
+        const opt = {...this.optionsTemplate};
         this._extendOption(opt);
         opt.series[0].itemStyle = labelFormatter;
         [opt.series[0].data[0].name, opt.series[0].data[1].name] = [Number(this.data[0][0]) == 0 ? '0' : Number(this.data[0][0]), this.rowDescriptor[0]];
@@ -638,13 +638,16 @@ export class DoughnutScoreGraphData extends AbstractNormalGraphData {
  * 折线图
  */
 export class LineGraphData extends AbstractNormalGraphData {
-    protected _calcSeries() {
+
+    protected defaultType = 'line';
+
+    protected createSeries() {
         return this.data.map((row, index) => {
-            return {name: this.header[index], type: 'line', data: this.data.map(row => row[index])}
+            return {name: this.header[index], type: this.defaultType, data: this.data.map(row => row[index])}
         });
     }
 
-    protected _optionsTemplate: EchartOptions = {
+    protected optionsTemplate: EchartOptions = {
         tooltip: {
             trigger: 'axis',
             axisPointer: {
@@ -686,50 +689,45 @@ export class LineGraphData extends AbstractNormalGraphData {
 
     protected createChartOptions(): EchartOptions {
         if (!this.data || !this.data.length) return;
-        const opt: EchartOptions = {...this._optionsTemplate};
+        const opt: EchartOptions = {...this.optionsTemplate};
         this._extendOption(opt);
         opt.legend.data = this.header;
         opt.xAxis[0].data = this.rowDescriptor;
-        opt.series = this._calcSeries();
+        opt.series = this.createSeries();
         return opt;
     }
 }
 
 export class LineGraphDataByRow extends LineGraphData {
-    protected _calcSeries() {
+    protected createSeries() {
         return this.data.map((row, index) => {
-            return {name: this.rowDescriptor[index], type: 'line', data: row}
+            return {name: this.rowDescriptor[index], type: this.defaultType, data: row}
         });
     }
 
     protected createChartOptions(): EchartOptions {
         if (!this.data || !this.data.length) return;
-        const opt: EchartOptions = {...this._optionsTemplate};
+        const opt: EchartOptions = {...this.optionsTemplate};
         this._extendOption(opt);
         opt.legend.data = this.rowDescriptor;
         opt.xAxis[0].data = this.header;
-        opt.series = this._calcSeries();
+        opt.series = this.createSeries();
         return opt;
     }
 }
 
 /**
- * 折线图
+ * 柱状图
  */
 export class BarGraphData extends LineGraphData {
-    protected _calcSeries() {
-        return this.data.map((row, index) => {
-            return {name: this.header[index], type: 'bar', data: this.data.map(row => row[index])}
-        });
-    }
+    protected defaultType = 'bar';
 }
 
+/**
+ * 柱状图（按行）
+ */
 export class BarGraphDataByRow extends LineGraphDataByRow {
-    protected _calcSeries() {
-        return this.data.map((row, index) => {
-            return {name: this.rowDescriptor[index], type: 'bar', data: row}
-        });
-    }
+    protected defaultType = 'bar';
 }
 
 /**
@@ -737,9 +735,9 @@ export class BarGraphDataByRow extends LineGraphDataByRow {
  */
 export class StripGraphData extends AbstractNormalGraphData {
 
-    protected _getBrowserInfo() {
+    protected getBrowserInfo() {
         //只做了谷歌和火狐的兼容性
-        var agent = navigator.userAgent.toLowerCase();
+        let agent = navigator.userAgent.toLowerCase();
         if (agent.indexOf("firefox") > 0) {
             return -10;
         } else {
@@ -747,12 +745,12 @@ export class StripGraphData extends AbstractNormalGraphData {
         }
     }
 
-    protected _getGridRight() {
-        var gridRight = "" + this.data[0][0];
+    protected getGridRight() {
+        let gridRight = "" + this.data[0][0];
         return gridRight.length * 8
     }
 
-    protected _optionsTemplate: EchartOptions = {
+    protected optionsTemplate: EchartOptions = {
         grid: {
             left: 100,
             top: 60
@@ -826,9 +824,9 @@ export class StripGraphData extends AbstractNormalGraphData {
 
     protected createChartOptions(): any {
         if (!this.data || !this.data.length) return;
-        const options = {...this._optionsTemplate};
+        const options = {...this.optionsTemplate};
         this._extendOption(options);
-        options.grid.right = this._getGridRight();
+        options.grid.right = this.getGridRight();
         options.yAxis[0].data = this.header;
         options.series = [
             {
@@ -852,7 +850,7 @@ export class StripGraphData extends AbstractNormalGraphData {
                 label: {
                     normal: {
                         show: true,
-                        position: ['100%', this._getBrowserInfo()],
+                        position: ['100%', this.getBrowserInfo()],
                         textStyle: {
                             fontSize: 12,
                             color: "#54acd5"
@@ -884,9 +882,9 @@ export class StripGraphData extends AbstractNormalGraphData {
 export class StripSequenceGraphData extends StripGraphData {
     protected createChartOptions(): any {
         if (!this.data || !this.data.length) return;
-        const options = {...this._optionsTemplate};
+        const options = {...this.optionsTemplate};
         this._extendOption(options);
-        options.grid.right = this._getGridRight();
+        options.grid.right = this.getGridRight();
         options.yAxis[0].type = 'category';
         options.yAxis[0].data = this.header;
         options.series = [
@@ -932,7 +930,7 @@ export class StripSequenceGraphData extends StripGraphData {
                 label: {
                     normal: {
                         show: true,
-                        position: ['100%', this._getBrowserInfo()],
+                        position: ['100%', this.getBrowserInfo()],
                         textStyle: {
                             color: "#54acd5"
                         }
@@ -957,7 +955,7 @@ export class StripSequenceGraphData extends StripGraphData {
  * 条形色值图
  */
 export class StripColorGraphData extends AbstractNormalGraphData {
-    protected _optionsTemplate: EchartOptions = {
+    protected optionsTemplate: EchartOptions = {
         title: {
             text: '',
             left: "center",
@@ -1051,7 +1049,7 @@ export class StripColorGraphData extends AbstractNormalGraphData {
         ]
     };
 
-    private _calcSeriesData(): any[][] {
+    protected createSeries(): any[][] {
         return [
             this.data[0].map(v => {
                 return {
@@ -1069,10 +1067,10 @@ export class StripColorGraphData extends AbstractNormalGraphData {
 
     protected createChartOptions(): EchartOptions {
         if (!this.data || !this.data.length) return;
-        const opt = {...this._optionsTemplate};
+        const opt = {...this.optionsTemplate};
         this._extendOption(opt);
         opt.yAxis[0].data = this.header;
-        [opt.series[0].data, opt.series[1].data] = this._calcSeriesData();
+        [opt.series[0].data, opt.series[1].data] = this.createSeries();
         return opt;
     }
 }
@@ -1191,7 +1189,7 @@ export class GaugeGraphData extends AbstractNormalGraphData {
  * 散点图
  */
 export class ScatterGraphData extends AbstractNormalGraphData {
-    protected _optionsTemplate: EchartOptions = {
+    protected optionsTemplate: EchartOptions = {
         title: {
             text: ''
         },
@@ -1206,7 +1204,7 @@ export class ScatterGraphData extends AbstractNormalGraphData {
 
     protected createChartOptions(): EchartOptions {
         if (!this.data || !this.data.length) return;
-        const opt = {...this._optionsTemplate};
+        const opt = {...this.optionsTemplate};
         this._extendOption(opt);
         opt.series[0].data = this.data;
         return opt;
@@ -1217,7 +1215,7 @@ export class ScatterGraphData extends AbstractNormalGraphData {
  * 雷达图
  */
 export class RadarGraphData extends AbstractNormalGraphData {
-    private _calcSeriesData() {
+    protected createSeries() {
         return this.data.slice(0, this.data.length - 1).map((row, i) => {
             return {
                 value: row,
@@ -1232,7 +1230,7 @@ export class RadarGraphData extends AbstractNormalGraphData {
         })
     }
 
-    protected _optionsTemplate: EchartOptions = {
+    protected optionsTemplate: EchartOptions = {
         title: {
             left: 'left',
             text: ''
@@ -1254,11 +1252,11 @@ export class RadarGraphData extends AbstractNormalGraphData {
 
     protected createChartOptions(): any {
         if (!this.data || !this.data.length) return;
-        const opt = {...this._optionsTemplate};
+        const opt = {...this.optionsTemplate};
         this._extendOption(opt);
         opt.legend.data = this.rowDescriptor;
         opt.radar.indicator = this._calcRadar();
-        opt.series[0].data = this._calcSeriesData();
+        opt.series[0].data = this.createSeries();
         return opt;
     }
 }
@@ -1267,7 +1265,7 @@ export class RadarGraphData extends AbstractNormalGraphData {
  * K线图
  */
 export class KLineGraphData extends AbstractNormalGraphData {
-    private _calcSeries(): any[] {
+    protected createSeries(): any[] {
         return this.data.map((row, index) => {
             return {
                 name: this.rowDescriptor[index],
@@ -1285,7 +1283,7 @@ export class KLineGraphData extends AbstractNormalGraphData {
     public sampleColors = ["#54acd5", "#f99660", "#a4bf6a", "#ec6d6d", "#f7b913", "#8ac9b6", "#bea5c8", "#01c5c2", "#a17660"];
     public vmaxColors = ['#41addc', '#bea5c8', '#85c56c', '#f99660', '#ffc20e', '#ec6d6d', '#8ac9b6', '#585eaa', '#b22c46', '#96582a'];
 
-    protected _optionsTemplate = {
+    protected optionsTemplate = {
         color: this.vmaxColors,
         tooltip: {
             trigger: 'axis',
@@ -1350,12 +1348,12 @@ export class KLineGraphData extends AbstractNormalGraphData {
             return s;
         }, {});
 
-        const opt = {...this._optionsTemplate};
+        const opt = {...this.optionsTemplate};
         this._extendOption(opt);
         opt.legend.data = this.rowDescriptor;
         opt.legend.selected = selectedLegend;
         opt.xAxis[0].data = this.header;
-        opt.series = this._calcSeries();
+        opt.series = this.createSeries();
         return opt;
     }
 }
@@ -1558,7 +1556,7 @@ export class RelationalGraphData extends AbstractGraphData {
  * 漏斗图
  */
 export class FunnelPlotGraphData extends AbstractNormalGraphData {
-    protected _optionsTemplate = {
+    protected optionsTemplate = {
         title: {
             text: '',
             left: 'left'
@@ -1628,7 +1626,7 @@ export class FunnelPlotGraphData extends AbstractNormalGraphData {
 
     protected createChartOptions(): any {
         if (!this.data || !this.data.length) return;
-        const opt = {...this._optionsTemplate};
+        const opt = {...this.optionsTemplate};
         this._extendOption(opt);
         opt.legend.data = this.rowDescriptor.reverse();
         opt.series[0].data = this.data.map((row, i) => ({value: row[0], name: this.rowDescriptor[i]}));
