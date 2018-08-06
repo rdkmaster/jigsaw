@@ -43,6 +43,7 @@ import {routerConfig as timeConfig} from "./demo/time/demo-set.module";
 import {routerConfig as tooltipConfig} from "./demo/tooltip/demo-set.module";
 import {routerConfig as treeConfig} from "./demo/tree/demo-set.module";
 import {routerConfig as trustedHtmlConfig} from "./demo/trusted-html/demo-set.module";
+import {routerConfig as uploadConfig} from "./demo/upload/demo-set.module";
 import {routerConfig} from "./router-config";
 
 @Component({
@@ -132,6 +133,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'tooltip', tooltipConfig);
         this._addRouterConfig(routerConfig, 'tree', treeConfig);
         this._addRouterConfig(routerConfig, 'trusted-html', trustedHtmlConfig);
+        this._addRouterConfig(routerConfig, 'upload', uploadConfig);
     }
 
     private static _addRouterConfig(routerConfig: any[], path: string, childConfig: any[]) {

@@ -1,0 +1,54 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>条形图</h2>
+    <div class="clearfix">
+        <div class="live-demo live-demo-block">
+            <h3>StripGraphData静态数据</h3>
+            <jigsaw-graph [data]="stripData" height="300" (click)="handleClick($event)"></jigsaw-graph>
+        </div>
+
+        <div class="live-demo live-demo-block">
+            <h3>StripGraphData异步数据</h3>
+            <jigsaw-graph [data]="stripFromAjax" height="300" (click)="handleClick($event)"></jigsaw-graph>
+        </div>
+    </div>
+
+    <div class="clearfix">
+        <div class="live-demo live-demo-block">
+            <h3>StripSequenceGraphData静态数据</h3>
+            <jigsaw-graph [data]="stripSequenceData" height="300" (click)="handleClick($event)"></jigsaw-graph>
+        </div>
+
+        <div class="live-demo live-demo-block">
+            <h3>StripSequenceGraphData异步数据</h3>
+            <jigsaw-graph [data]="stripSequenceFromAjax" height="300" (click)="handleClick($event)"></jigsaw-graph>
+        </div>
+    </div>
+
+    <div class="clearfix">
+        <div class="live-demo live-demo-block">
+            <h3>StripSequenceGraphData静态数据</h3>
+            <jigsaw-graph [data]="stripColorData" (click)="handleClick($event)"></jigsaw-graph>
+        </div>
+
+        <div class="live-demo live-demo-block">
+            <h3>StripSequenceGraphData异步数据</h3>
+            <jigsaw-graph [data]="stripColorFromAjax" (click)="handleClick($event)"></jigsaw-graph>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+

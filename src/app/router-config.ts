@@ -174,5 +174,9 @@ export const routerConfig = [
     {
         path: "trusted-html",
         loadChildren: "./demo/trusted-html/demo-set.module#TrustedHtmlDemoModule",
+    },
+    {
+        path: "upload",
+        loadChildren: "./demo/upload/demo-set.module#UploadDemoModule",
     }
 ];

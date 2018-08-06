@@ -16,6 +16,7 @@ export class AjaxInterceptor implements HttpInterceptor {
 
     constructor() {
         AjaxInterceptor.registerProcessor('/rdk/service/app/common/paging', this.dealServerSidePagingRequest, this);
+        AjaxInterceptor.registerProcessor('/rdk/service/common/upload', this.dealServerSideUploadRequest, this);
         AjaxInterceptor.registerProcessor(/\bmock-data\/.+$/, req => MockData.get(req.url));
         AjaxInterceptor.registerProcessor('/mock-service/area', this.dealAreaRequest);
     }
@@ -23,6 +24,10 @@ export class AjaxInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         console.log('the ajax request is intercepted, here is the original request:');
         console.log(req);
+
+        /*if(req.url.match(/\/rdk\/service\/common\/upload/g)) {
+            return next.handle(req);
+        }*/
 
         const processor = AjaxInterceptor._processors.find(p => {
             const url = p.urlPattern;
@@ -35,6 +40,10 @@ export class AjaxInterceptor implements HttpInterceptor {
             console.error('no mock data processor found!');
         }
         return this.createResult(body, req.url);
+    }
+
+    dealServerSideUploadRequest(req: HttpRequest<any>) {
+        return `upload_files/${new Date().getTime()}/${req.body.get('filename')}`;
     }
 
     dealServerSidePagingRequest(req: HttpRequest<any>): Observable<HttpEvent<any>> {

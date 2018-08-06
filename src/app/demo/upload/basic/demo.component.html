@@ -4,9 +4,4 @@
 
 
 <!-- start to learn the demo from here -->
-<jigsaw-graph id="test-graph" [data]="data"
-              [(width)]="graphWidth"
-              [(height)]="graphHeight">
-</jigsaw-graph>
-
-
+<j-upload (process)="getUploadFile($event)" (complete)="getAllUploadFiles($event)"></j-upload>

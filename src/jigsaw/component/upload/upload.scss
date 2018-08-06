@@ -1,0 +1,75 @@
+@import "../../assets/scss/core/base";
+
+$upload-prefix-cls: #{$jigsaw-prefix}-upload;
+
+.#{$upload-prefix-cls} {
+    display: inline-block;
+    border: 1px dashed $border-color-base;
+    border-radius: 4px;
+    width: 400px;
+    height: 400px;
+    &.#{$upload-prefix-cls}-drag-over {
+        border: 1px solid $primary-color;
+    }
+    &-file-input {
+        display: none !important;
+    }
+    &-icon {
+        display: inline-block;
+        font-size: 60px;
+        margin-bottom: 18px;
+        color: $text-color-secondary;
+    }
+    &-icon-small {
+        font-size: 30px;
+        margin-right: 8px;
+    }
+    &-prompt {
+        font-size: 14px;
+        color: $text-color-secondary;
+        margin-bottom: 12px;
+    }
+    &-file-list {
+        padding: 0 20px;
+    }
+    &-file {
+        position: relative;
+        padding: 20px 0;
+        border-bottom: 1px solid $border-color-base;
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+    &-file-left {
+        width: 100%;
+        text-align: left;
+        .#{$upload-prefix-cls}-file-name {
+            font-size: 14px;
+            color: $text-color-secondary;
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: calc(100% - 120px);
+        }
+    }
+    &-file-right {
+        position: absolute;
+        right: 0;
+        .#{$upload-prefix-cls}-pause, .#{$upload-prefix-cls}-loading, .#{$upload-prefix-cls}-success, .#{$upload-prefix-cls}-error {
+            margin-left: 6px;
+        }
+    }
+    &-loading, &-success, &-error {
+        font-size: 16px;
+    }
+    &-loading {
+        color: $primary-color;
+    }
+    &-success {
+        color: $success-color;
+    }
+    &-error {
+        color: $error-color;
+    }
+}
