@@ -97,7 +97,7 @@ export class JigsawAutoCompleteInput extends JigsawInput {
                 return arr;
             }, data);
             this._$data = data;
-        });
+        }, 100);
     }
 
     private _filter(category: DropDownValue, key) {
@@ -120,9 +120,7 @@ export class JigsawAutoCompleteInput extends JigsawInput {
 
     public _$handleBlur(event: FocusEvent) {
         super._$handleBlur(event);
-        window.setTimeout(() => {
-            this._$closeListPopup();
-        }, 50)
+        this._$closeListPopup();
     }
 
     private _isPropertyListPopped: boolean;
