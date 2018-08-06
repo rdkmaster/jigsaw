@@ -1,6 +1,6 @@
 <!--<ng-content></ng-content>-->
 
-<j-input [placeholder]="placeholder" [(value)]="value" [width]="width" [height]="height" [blurOnClear]="blurOnClear"
+<j-input [placeholder]="placeholder" [(value)]="value" width="100%" [blurOnClear]="blurOnClear"
          [clearable]="clearable" [disabled]="disabled" [valid]="valid"
          (valueChange)="_$handleSearching($event)" (focus)="_$handleFocus($event)" (blur)="_$handleBlur($event)">
     <span *ngIf="showSearchIcon" jigsaw-prefix-icon class="fa fa-search" style="font-size: 14px;"></span>

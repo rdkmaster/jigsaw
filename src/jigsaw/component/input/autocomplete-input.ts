@@ -29,6 +29,8 @@ export class DropDownValue {
     selector: 'jigsaw-autocomplete-input, j-autocomplete-input',
     templateUrl: 'autocomplete-input.html',
     host: {
+        '[style.width]': 'width',
+        '[style.height]': 'height',
         '[class.jigsaw-autocomplete-input]': 'true'
     },
     providers: [

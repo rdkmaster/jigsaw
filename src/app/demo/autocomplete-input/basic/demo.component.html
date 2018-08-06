@@ -8,7 +8,7 @@
     <h3>是否需要搜索图标</h3>
     <jigsaw-switch id="test-switch1" [(checked)]="_$showSearchIcon"></jigsaw-switch>
     <p class="notes">输入值是：<span id="bind-property">{{inputValue}}</span></p>
-    <jigsaw-autocomplete-input [(value)]="inputValue" placeholder="auto complete input demo" [width]="250"
+    <jigsaw-autocomplete-input [(value)]="inputValue" placeholder="auto complete input demo" width="250"
                                [showSearchIcon]="_$showSearchIcon"
                                (valueChange)="valueChanged($event)" [data]="_$dropdownData">
     </jigsaw-autocomplete-input>
@@ -18,7 +18,7 @@
 <div class="demo-2">
     <h3>带默认值</h3>
     <p class="notes">输入值是：<span id="bind-property">{{inputValue2}}</span></p>
-    <jigsaw-autocomplete-input [(value)]="inputValue2" placeholder="auto complete input demo" [width]="250"
+    <jigsaw-autocomplete-input [(value)]="inputValue2" placeholder="auto complete input demo" width="20%"
                                [data]="_$dropdownData">
     </jigsaw-autocomplete-input>
 </div>
@@ -29,7 +29,7 @@
     <p class="notes">最大高度：
         <jigsaw-input [(value)]="dropDownMaxHeight"></jigsaw-input>
     </p>
-    <jigsaw-autocomplete-input placeholder="auto complete input demo" [width]="250" [data]="_$dropdownData"
+    <jigsaw-autocomplete-input placeholder="auto complete input demo" [data]="_$dropdownData" [width]="width"
                                [dropDownMaxHeight]="dropDownMaxHeight">
     </jigsaw-autocomplete-input>
 </div>
