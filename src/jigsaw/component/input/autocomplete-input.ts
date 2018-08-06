@@ -1,4 +1,7 @@
-import {ChangeDetectorRef, Component, ElementRef, forwardRef, Input, NgModule, Renderer2, TemplateRef, ViewChild} from "@angular/core";
+import {
+    ChangeDetectorRef, Component, ElementRef, forwardRef, Input, NgModule, OnDestroy, Renderer2, TemplateRef,
+    ViewChild
+} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {JigsawInput, JigsawInputModule} from "./input";
@@ -37,7 +40,7 @@ export class DropDownValue {
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawAutoCompleteInput), multi: true},
     ]
 })
-export class JigsawAutoCompleteInput extends JigsawInput {
+export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy {
     public _$data: string[] | ArrayCollection<DropDownValue>;
     public _bakData: ArrayCollection<DropDownValue>;
     public _$dropDownMaxHeight: string = '300px';
@@ -151,6 +154,11 @@ export class JigsawAutoCompleteInput extends JigsawInput {
 
     public _$add(item) {
         this.value = item;
+    }
+
+    public ngOnDestroy() {
+        super.ngOnDestroy();
+        this._$closeListPopup();
     }
 }
 
