@@ -3,16 +3,17 @@
 <j-input [placeholder]="placeholder" [(value)]="value" width="100%" [blurOnClear]="blurOnClear"
          [clearable]="clearable" [disabled]="disabled" [valid]="valid"
          (valueChange)="_$handleSearching($event)" (focus)="_$handleFocus($event)" (blur)="_$handleBlur($event)">
-    <span *ngIf="showSearchIcon" jigsaw-prefix-icon class="fa fa-search" style="font-size: 14px;"></span>
+    <ng-content jigsaw-prefix-icon select="[jigsaw-prefix-icon], [j-prefix-icon]"></ng-content>
+    <ng-content jigsaw-icon select="[jigsaw-icon], [j-icon]"></ng-content>
 </j-input>
 
 <ng-template #dropdownTemp>
-    <div class="jigsaw-autocomplete-input-list-box" [style.max-height]="_$dropDownMaxHeight"
+    <div class="jigsaw-auto-complete-input-list-box" [style.max-height]="_$maxDropDownHeight"
          [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, wheelPropagation: true, minScrollbarLength: 20}">
         <div *ngFor="let category of _$data;">
-            <label *ngIf="category.category" class="jigsaw-autocomplete-input-item-title">{{category.category}}</label>
+            <label *ngIf="category.category" class="jigsaw-auto-complete-input-item-title">{{category.category}}</label>
             <ul>
-                <li class="jigsaw-autocomplete-input-item" (click)="_$add(item)" *ngFor="let item of category.items;">
+                <li class="jigsaw-auto-complete-input-item" (click)="_$add(item)" *ngFor="let item of category.items;">
                     <label>{{item}}</label>
                 </li>
             </ul>

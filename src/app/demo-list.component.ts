@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {routerConfig as alertConfig} from "./demo/alert/demo-set.module";
-import {routerConfig as autoCompleteInputConfig} from "./demo/autocomplete-input/demo-set.module";
+import {routerConfig as autoCompleteInputConfig} from "./demo/auto-complete-input/demo-set.module";
 import {routerConfig as arrayCollectionConfig} from "./demo/data-encapsulation/demo-set.module";
 import {routerConfig as boxConfig} from "./demo/box/demo-set.module";
 import {routerConfig as buttonConfig} from "./demo/button/demo-set.module";
@@ -90,7 +90,7 @@ export class DemoListManager {
 
     private static _mergeRoutes(routerConfig: any[]) {
         this._addRouterConfig(routerConfig, 'alert', alertConfig);
-        this._addRouterConfig(routerConfig, 'autocomplete-input', autoCompleteInputConfig);
+        this._addRouterConfig(routerConfig, 'auto-complete-input', autoCompleteInputConfig);
         this._addRouterConfig(routerConfig, 'data-encapsulation', arrayCollectionConfig);
         this._addRouterConfig(routerConfig, 'box', boxConfig);
         this._addRouterConfig(routerConfig, 'button', buttonConfig);

@@ -6,9 +6,9 @@ import {CommonModule} from "@angular/common";
 import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {JigsawInput, JigsawInputModule} from "./input";
 import {PopupInfo, PopupOptions, PopupService} from "../../service/popup.service";
-import {ArrayCollection} from "../../core/data/array-collection";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {CommonUtils} from "../../core/utils/common-utils";
+import {ArrayCollection} from "../../core/data/array-collection";
 
 export class DropDownValue {
     constructor(data = null) {
@@ -26,55 +26,52 @@ export class DropDownValue {
 /**
  * 自动完成输入框
  *
- * $demo = autocomplete-input/full
+ * $demo = auto-complete-input/non-group
  */
 @Component({
-    selector: 'jigsaw-autocomplete-input, j-autocomplete-input',
-    templateUrl: 'autocomplete-input.html',
+    selector: 'jigsaw-auto-complete-input, j-auto-complete-input',
+    templateUrl: 'auto-complete-input.html',
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[class.jigsaw-autocomplete-input]': 'true'
+        '[class.jigsaw-auto-complete-input]': 'true'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawAutoCompleteInput), multi: true},
     ]
 })
 export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy {
-    public _$data: string[] | ArrayCollection<DropDownValue>;
-    public _bakData: ArrayCollection<DropDownValue>;
-    public _$dropDownMaxHeight: string = '300px';
+    public _$data: string[] | DropDownValue[];
+    public _bakData: any[];
+    public _$maxDropDownHeight: string = '300px';
 
     @Input()
-    public showSearchIcon: boolean = false;
-
-    @Input()
-    public set dropDownMaxHeight(value: string) {
-        if (value == this._$dropDownMaxHeight || !value) {
+    public set maxDropDownHeight(value: string) {
+        if (value == this._$maxDropDownHeight || !value) {
             return;
         }
-        this._$dropDownMaxHeight = CommonUtils.getCssValue(value);
+        this._$maxDropDownHeight = CommonUtils.getCssValue(value);
     }
 
     @Input()
-    public get data(): string[] | ArrayCollection<DropDownValue> {
+    public get data(): string[] | DropDownValue[] {
         return this._$data;
     }
 
-    public set data(value: string[] | ArrayCollection<DropDownValue>) {
+    public set data(value: string[] | DropDownValue[]) {
         if (value == this._$data || !value || value.length == 0) {
             return;
         }
 
         if (typeof value[0] == 'string') {
-            this._$data = new ArrayCollection([new DropDownValue({
+            this._$data = [new DropDownValue({
                 category: '',
                 items: value
-            })]);
+            })];
         } else {
             this._$data = value;
         }
-        this._bakData = new ArrayCollection(this._$data);
+        [ ...this._bakData] = this._$data;
     }
 
     @ViewChild('dropdownTemp')

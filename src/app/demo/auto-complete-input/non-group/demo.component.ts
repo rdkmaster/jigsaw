@@ -11,6 +11,6 @@ export class AutoCompleteInputNonGroupDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '这个DEMO详细演示了`j-autocomplete-input`组件的各个参数的效果以及推荐的用法';
+    summary: string = '这个DEMO详细演示了`j-auto-complete-input`组件的各个参数的效果以及推荐的用法';
     description: string = '';
 }

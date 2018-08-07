@@ -4,8 +4,8 @@ export const routerConfig = [
         loadChildren: "./demo/alert/demo-set.module#AlertDemoModule",
     },
     {
-        path: "autocomplete-input",
-        loadChildren: "./demo/autocomplete-input/demo-set.module#AutoCompleteInputDemoModule",
+        path: "auto-complete-input",
+        loadChildren: "./demo/auto-complete-input/demo-set.module#AutoCompleteInputDemoModule",
     },
     {
         path: "data-encapsulation",

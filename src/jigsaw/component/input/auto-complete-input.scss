@@ -1,8 +1,8 @@
 @import "../../assets/scss/core/base";
 
-$jigsaw-autocomplete-input: #{$jigsaw-prefix}-autocomplete-input;
+$jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
 
-.#{$jigsaw-autocomplete-input} {
+.#{$jigsaw-auto-complete-input} {
     @include inline-block();
 
     &-list-box{
