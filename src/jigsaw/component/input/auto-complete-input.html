@@ -1,8 +1,8 @@
 <!--<ng-content></ng-content>-->
 
-<j-input [placeholder]="placeholder" [(value)]="value" width="100%" [blurOnClear]="blurOnClear"
+<j-input #input [placeholder]="placeholder" [(value)]="value" width="100%" [blurOnClear]="blurOnClear"
          [clearable]="clearable" [disabled]="disabled" [valid]="valid"
-         (valueChange)="_$handleSearching($event)" (focus)="_$handleFocus($event)" (blur)="_$handleBlur($event)">
+         (focus)="_$handleFocus($event)" (blur)="_$handleBlur($event)">
     <ng-content jigsaw-prefix-icon select="[jigsaw-prefix-icon], [j-prefix-icon]"></ng-content>
     <ng-content jigsaw-icon select="[jigsaw-icon], [j-icon]"></ng-content>
 </j-input>

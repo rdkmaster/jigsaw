@@ -1,5 +1,5 @@
 import {
-    ChangeDetectorRef, Component, ElementRef, forwardRef, Input, NgModule, OnDestroy, Renderer2, TemplateRef,
+    ChangeDetectorRef, Component, ElementRef, forwardRef, Input, NgModule, OnDestroy, OnInit, Renderer2, TemplateRef,
     ViewChild
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
@@ -40,7 +40,7 @@ export class DropDownValue {
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawAutoCompleteInput), multi: true},
     ]
 })
-export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy {
+export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, OnInit {
     public _$data: string[] | DropDownValue[];
     public _bakData: any[];
     public _$maxDropDownHeight: string = '300px';
@@ -75,7 +75,10 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy {
     }
 
     @ViewChild('dropdownTemp')
-    dropdownTemp: TemplateRef<any>;
+    private _dropdownTemp: TemplateRef<any>;
+
+    @ViewChild('input')
+    private _input: JigsawInput;
 
     constructor(_render2: Renderer2,
                 _elementRef: ElementRef,
@@ -84,20 +87,24 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy {
         super(_render2, _elementRef, _changeDetectorRef);
     }
 
-
-    public _$handleSearching(filterKey?: string) {
-        filterKey = filterKey ? filterKey.trim() : '';
-        setTimeout(() => { // 解决对象数组改变时，抛出 ExpressionChangedAfterItHasBeenCheckedError 的问题
-            let data: any = [];
-            data = this._bakData.reduce((arr, category) => {
-                let result = this._filter(category, filterKey);
-                if (result) {
-                    arr.push(result);
-                }
-                return arr;
-            }, data);
-            this._$data = data;
-        }, 100);
+    ngOnInit() {
+        super.ngOnInit();
+        this._input.valueChange.debounceTime(300).subscribe(() => {
+            let filterKey = this._input.value;
+            filterKey = filterKey ? filterKey.trim() : '';
+            // 解决对象数组改变时，抛出 ExpressionChangedAfterItHasBeenCheckedError 的问题
+            this.callLater(() => {
+                let data: any = [];
+                data = this._bakData.reduce((arr, category) => {
+                    let result = this._filter(category, filterKey);
+                    if (result) {
+                        arr.push(result);
+                    }
+                    return arr;
+                }, data);
+                this._$data = data;
+            });
+        });
     }
 
     private _filter(category: DropDownValue, key) {
@@ -136,7 +143,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy {
                 posOffset: {top: 35},
                 size: {width: event.target.offsetWidth}
             };
-            this._propertyListPopup = this._popupService.popup(this.dropdownTemp, popupOptions);
+            this._propertyListPopup = this._popupService.popup(this._dropdownTemp, popupOptions);
             this._isPropertyListPopped = true;
         }
     }
