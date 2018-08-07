@@ -21,6 +21,7 @@ export * from "./component/fish-bone/fish-bone";
 export * from "./component/graph/index";
 export * from "./component/input/input";
 export * from "./component/input/numeric-input";
+export * from "./component/input/auto-complete-input";
 export * from "./component/list-and-tile/group-common";
 export * from "./component/list-and-tile/group-lite-common";
 export * from "./component/list-and-tile/list";

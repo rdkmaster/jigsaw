@@ -1,0 +1,10 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+
+<h3>带分组</h3>
+<p class="notes">输入值是：<span>{{inputValue}}</span></p>
+<jigsaw-auto-complete-input [(value)]="inputValue" placeholder="auto complete input demo" [width]="250" [data]="_$dropdownData">
+</jigsaw-auto-complete-input>

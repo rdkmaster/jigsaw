@@ -1,0 +1,46 @@
+@import "../../assets/scss/core/base";
+
+$jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
+
+.#{$jigsaw-auto-complete-input} {
+    @include inline-block();
+
+    &-list-box{
+        background-color: #fff;
+        overflow: auto;
+        border-radius: 4px;
+        ul{
+            margin: 0;
+            padding: 0;
+            li{
+                padding: 6px 10px;
+                border-bottom: 1px solid #f2f2f2;
+                cursor: pointer;
+                font-size: 12px;
+                label{
+                    margin: 0;
+                    font-weight: 400;
+                    color: #666;
+                }
+                span{
+                    margin-left: 10px;
+                    color: #999;
+                }
+                &:hover{
+                    background-color:rgba(28,173,247,.2);
+                }
+            }
+        }
+    }
+    &-item-title{
+        font-weight: 400;
+        margin: 0;
+        padding: 3px 10px;
+        background: #f2f2f2;
+        width: 100%;
+        font-size: 12px;
+        color: #999;
+    }
+}
+
+

@@ -1,8 +1,11 @@
-
 export const routerConfig = [
     {
         path: "alert",
         loadChildren: "./demo/alert/demo-set.module#AlertDemoModule",
+    },
+    {
+        path: "auto-complete-input",
+        loadChildren: "./demo/auto-complete-input/demo-set.module#AutoCompleteInputDemoModule",
     },
     {
         path: "data-encapsulation",
