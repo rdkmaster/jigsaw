@@ -8,7 +8,6 @@ import {JigsawInput, JigsawInputModule} from "./input";
 import {PopupInfo, PopupOptions, PopupService} from "../../service/popup.service";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {CommonUtils} from "../../core/utils/common-utils";
-import {ArrayCollection} from "../../core/data/array-collection";
 
 export class DropDownValue {
     constructor(data = null) {
