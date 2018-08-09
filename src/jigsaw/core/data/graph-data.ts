@@ -698,6 +698,13 @@ export class LineGraphData extends AbstractNormalGraphData {
     }
 }
 
+/**
+ * 加这个类是为了保持向下兼容
+ * @internal
+ */
+export class LineBarGraphData extends LineGraphData {
+}
+
 export class LineGraphDataByRow extends LineGraphData {
     protected createSeries() {
         return this.data.map((row, index) => {
