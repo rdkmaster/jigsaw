@@ -1,6 +1,7 @@
 import {EchartTitle, EchartLegend, EchartTooltip, EchartOptions} from "./echart-types";
-import {TableDataBase} from "./table-data";
+import {TableData, TableDataBase} from "./table-data";
 import {CommonUtils} from "../utils/common-utils";
+import {Type} from "@angular/core";
 
 export type GraphMatrixRow = (string | number)[];
 export type GraphDataHeader = string[];
@@ -176,6 +177,102 @@ export class GraphData extends AbstractGraphData {
 
     protected createChartOptions(): EchartOptions {
         return this.echartOptions;
+    }
+
+    /**
+     * 用于通过type属性快速构建出对应的图形类型实例
+     *
+     * @param rawTableData
+     * @returns {AbstractGraphData}
+     */
+    public static of(rawTableData: any): AbstractGraphData {
+        if (!super.isGraphData(rawTableData) || !rawTableData.type) {
+            return null;
+        }
+        let GraphDataType: Type<AbstractGraphData>;
+        switch (rawTableData.type) {
+            case 'OutlineMapData':
+                GraphDataType = OutlineMapData;
+                break;
+            case 'PieGraphData':
+                GraphDataType = PieGraphData;
+                break;
+            case 'PieGraphDataByRow':
+                GraphDataType = PieGraphDataByRow;
+                break;
+            case 'DoughnutGraphData':
+                GraphDataType = DoughnutGraphData;
+                break;
+            case 'DoughnutRateGraphData':
+                GraphDataType = DoughnutRateGraphData;
+                break;
+            case 'DoughnutScoreGraphData':
+                GraphDataType = DoughnutScoreGraphData;
+                break;
+            case 'LineGraphData':
+                GraphDataType = LineGraphData;
+                break;
+            case 'LineBarGraphData':
+                GraphDataType = LineBarGraphData;
+                break;
+            case 'BarGraphData':
+                GraphDataType = BarGraphData;
+                break;
+            case 'BarGraphDataByRow':
+                GraphDataType = BarGraphDataByRow;
+                break;
+            case 'StripGraphData':
+                GraphDataType = StripGraphData;
+                break;
+            case 'StripSequenceGraphData':
+                GraphDataType = StripSequenceGraphData;
+                break;
+            case 'StripColorGraphData':
+                GraphDataType = StripColorGraphData;
+                break;
+            case 'StackedAreaGraphData':
+                GraphDataType = StackedAreaGraphData;
+                break;
+            case 'GaugeGraphData':
+                GraphDataType = GaugeGraphData;
+                break;
+            case 'ScatterGraphData':
+                GraphDataType = ScatterGraphData;
+                break;
+            case 'RadarGraphData':
+                GraphDataType = RadarGraphData;
+                break;
+            case 'KLineGraphData':
+                GraphDataType = KLineGraphData;
+                break;
+            case 'BoxPlotGraphData':
+                GraphDataType = BoxPlotGraphData;
+                break;
+            case 'HeatGraphData':
+                GraphDataType = HeatGraphData;
+                break;
+            case 'RelationalGraphData':
+                GraphDataType = RelationalGraphData;
+                break;
+            case 'FunnelPlotGraphData':
+                GraphDataType = FunnelPlotGraphData;
+                break;
+        }
+        return GraphDataType ? this._createGraphData(GraphDataType, rawTableData) : null;
+    }
+
+    private static _createGraphData<T extends AbstractGraphData>(ClassName: Type<T>, rawData): T {
+        const gd = new ClassName();
+        if (rawData.hasOwnProperty('header')) {
+            gd.header = rawData.header;
+        }
+        if (rawData.hasOwnProperty('data')) {
+            gd.data = rawData.data;
+        }
+        if (rawData.hasOwnProperty('rowDescriptor')) {
+            gd.rowDescriptor = rawData.rowDescriptor;
+        }
+        return gd;
     }
 }
 
