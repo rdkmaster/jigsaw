@@ -1,5 +1,5 @@
-import {EchartTitle, EchartLegend, EchartTooltip, EchartOptions} from "./echart-types";
-import {TableData, TableDataBase} from "./table-data";
+import {EchartLegend, EchartOptions, EchartTitle, EchartTooltip} from "./echart-types";
+import {TableDataBase} from "./table-data";
 import {CommonUtils} from "../utils/common-utils";
 import {Type} from "@angular/core";
 
