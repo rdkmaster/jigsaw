@@ -212,6 +212,9 @@ export class GraphData extends AbstractGraphData {
             case 'LineGraphData':
                 GraphDataType = LineGraphData;
                 break;
+            case 'LineGraphDataByRow':
+                GraphDataType = LineGraphDataByRow;
+                break;
             case 'LineBarGraphData':
                 GraphDataType = LineBarGraphData;
                 break;
