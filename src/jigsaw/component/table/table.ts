@@ -311,6 +311,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             this.additionalDataChange.emit(this.additionalData);
             // 等待滚动条初始化
             this._handleScrollBar();
+            // 自动再次标记选中行
+            this._$selectRow(this.selectedRow);
         })
     }
 
@@ -368,6 +370,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (!this._removeAdditionalDataRefresh) {
             this._removeAdditionalDataRefresh = this._additionalData.onRefresh(this.update, this);
         }
+
+        this.dataChange.emit()
     }
 
     @Output()
