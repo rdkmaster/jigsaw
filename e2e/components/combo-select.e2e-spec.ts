@@ -22,7 +22,7 @@ describe('combo-select', () => {
             expect(await selectEl.getText()).toBe('上海');
             expect(await selectEl.getCssValue('width')).toBe(await element(by.tagName('jigsaw-tile')).getCssValue('width'));
         });
-        it('should change trigger when click button', async () => {
+        xit('should change trigger when click button', async () => {
             await browser.get('/combo-select/trigger');
             const selectEl = $('jigsaw-combo-select');
             const openByClick = element(by.id('openByClick'));
