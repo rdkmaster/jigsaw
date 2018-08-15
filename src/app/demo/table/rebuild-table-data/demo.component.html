@@ -1,0 +1,18 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<button (click)="changeData()">click to change data</button>
+<jigsaw-table [data]="tableData" [columnDefines]="columns" ></jigsaw-table>
+
+<jigsaw-pagination
+    [total]="tableData.pagingInfo.totalRecord"
+    [(pageSize)]="tableData.pagingInfo.pageSize"
+    [(current)]="tableData.pagingInfo.currentPage"
+    [pageSizeOptions]="[5, 10, 20]"
+    [searchable]="true"
+    [showQuickJumper]="true"
+></jigsaw-pagination>
+
