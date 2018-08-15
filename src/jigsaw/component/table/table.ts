@@ -356,8 +356,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return;
         }
         this._data = value;
-        this._additionalData.data.splice(0, this._additionalData.data.length);
-        this._additionalData.clearTouchedValues();
+        this._additionalData.reset();
         this._additionalData.originData = value;
 
         this.update();
