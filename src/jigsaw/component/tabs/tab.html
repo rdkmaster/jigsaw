@@ -23,7 +23,8 @@
             </div>
         </div>
     </div>
-    <div class="jigsaw-tabs-content" *ngIf="_$tabPanes && _$tabPanes.length > 0">
+    <div class="jigsaw-tabs-content" [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true}"
+         [style.height]="_$contentHeight">
         <jigsaw-tab-content
             *ngFor="let tab of _$tabPanes; let i = index;"
             [key]="i"

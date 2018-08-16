@@ -24,13 +24,15 @@ import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
     host: {
         '[class.jigsaw-tabs-host]': 'true',
         '[style.width]': 'width',
+        '[style.height]': 'height'
     }
 })
 export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit, AfterViewChecked {
 
     constructor(private _cfr: ComponentFactoryResolver,
                 private _changeDetector: ChangeDetectorRef,
-                private _viewContainer: ViewContainerRef) {
+                private _viewContainer: ViewContainerRef,
+                private _elementRef: ElementRef) {
         super()
     }
 
@@ -212,6 +214,20 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     public _$handleRemove(index) {
         this.removeTab(index);
         this.remove.emit(index);
+    }
+
+    /**
+     * @internal
+     */
+    public _$contentHeight: string = 'auto';
+
+    ngOnInit() {
+        if(this.height) {
+            setTimeout(() => {
+                // 等待dom渲染
+                this._$contentHeight = this._elementRef.nativeElement.offsetHeight - 46 + 'px';
+            })
+        }
     }
 
     ngAfterViewInit() {
