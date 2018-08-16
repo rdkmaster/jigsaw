@@ -274,6 +274,7 @@ class MockData {
         this.dataSet['marketing'] = require('../mock-data/marketing.json');
         this.dataSet['hr-list-full'] = require('../mock-data/hr-list-full.json');
         this.dataSet['hr-list'] = require('../mock-data/hr-list.json');
+        this.dataSet['hr-list-short'] = require('../mock-data/hr-list-short.json');
         this.dataSet['hr-list-complex'] = require('../mock-data/hr-list-complex.json');
         this.dataSet['fish-bone-1'] = require('../mock-data/fish-bone-1.json');
         this.dataSet['fish-bone-2'] = require('../mock-data/fish-bone-2.json');

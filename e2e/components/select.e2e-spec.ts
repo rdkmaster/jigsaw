@@ -44,7 +44,7 @@ describe('select', () => {
             browser.get('/select/trigger');
         });
 
-        it('should drop down by click', async () => {
+        xit('should drop down by click', async () => {
             const selectEl = $('#test-select');
 
             // click open

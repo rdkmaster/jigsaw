@@ -196,6 +196,11 @@ export class AdditionalTableData extends TableData {
         this._touchedValues = {};
     }
 
+    public reset() {
+        this.data.splice(0, this.data.length);
+        this.clearTouchedValues();
+    }
+
     private _getKeysByRow(field: string, row: number): any[] {
         const keys = [];
         if (!this.originData) {

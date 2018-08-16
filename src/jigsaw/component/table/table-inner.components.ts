@@ -43,11 +43,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
 
     public set cellData(value) {
         this._cellData = value;
-        if (this.rendererRef instanceof ComponentRef) {
-            this.rendererRef.instance.cellData = value;
-        } else if (this.rendererRef && this.rendererRef.context && this.rendererRef.context.context) {
-            this.rendererRef.context.context.cellData = value;
-        }
+        this._updateDataInRenderer('cellData', value);
     }
 
     @Input()
@@ -75,6 +71,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
 
     public set tableData(value: TableData) {
         this._tableData = value;
+        this._updateDataInRenderer('tableData', value);
         this._initTargetData();
     }
 
@@ -87,7 +84,16 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
 
     public set additionalData(value: TableData) {
         this._additionalData = value;
+        this._updateDataInRenderer('additionalData', value);
         this._initTargetData();
+    }
+
+    private _updateDataInRenderer(prop: string, value: any) {
+        if (this.rendererRef instanceof ComponentRef) {
+            this.rendererRef.instance[prop] = value;
+        } else if (this.rendererRef && this.rendererRef.context && this.rendererRef.context.context) {
+            this.rendererRef.context.context[prop] = value;
+        }
     }
 
     private _initTargetData(): void {
