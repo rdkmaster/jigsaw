@@ -12,6 +12,11 @@ export class TableAddCheckboxColumnDemoComponent {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');
+        this.tableData.onAjaxComplete(() => {
+            setTimeout(() => {
+                if(this.additionalData) console.log(this.additionalData.data);
+            }, 1000)
+        })
     }
 
     tableData: TableData;
@@ -44,6 +49,13 @@ export class TableAddCheckboxColumnDemoComponent {
             }
             return selectedRows;
         }, []).join(',');
+    }
+
+    changeData() {
+        this.tableData.fromAjax('mock-data/hr-list-short');
+        // 重置additionalData
+        this.additionalData.reset();
+        this.selectedRows = '';
     }
 
     // ====================================================================

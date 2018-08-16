@@ -77,6 +77,8 @@ import {TableNoDataDemoComponent} from "./no-data/demo.component";
 import {TableNoDataDemoModule} from "./no-data/demo.module";
 import {TableHtmlRendererDemoComponent} from "./html-renderer/demo.component";
 import {TableHtmlRendererDemoModule} from "./html-renderer/demo.module";
+import {RebuildTableDataDemoComponent} from "./rebuild-table-data/demo.component";
+import {RebuildTableDataDemoModule} from "./rebuild-table-data/demo.module";
 
 export const routerConfig = [
     {
@@ -193,6 +195,9 @@ export const routerConfig = [
     {
         path: 'html-renderer', component: TableHtmlRendererDemoComponent
     },
+    {
+        path: 'rebuild-table-data', component: RebuildTableDataDemoComponent
+    },
 ];
 
 @NgModule({
@@ -207,7 +212,7 @@ export const routerConfig = [
         TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, SwimLaneDiagramDemoModule, TableHideHeadDemoModule,
         TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule, TableCalendarDemoModule, BigRowDemoModule, TableResizeDemoModule,
         TableScrollListenDemoModule, SodokuGameModule, TableAddCheckboxColumnPageableDemoModule, TableSwitchRendererDemoModule,
-        TableNoDataDemoModule, TableHtmlRendererDemoModule
+        TableNoDataDemoModule, TableHtmlRendererDemoModule, RebuildTableDataDemoModule
     ]
 })
 export class TableDemoModule {

@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {LocalPageableTableData} from "jigsaw/core/data/table-data";
+import {LocalPageableTableData, PageableTableData} from "jigsaw/core/data/table-data";
 import {AdditionalColumnDefine, AdditionalTableData} from "jigsaw/component/table/table-typings";
 import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/component/table/table-renderer";
 
@@ -13,13 +13,22 @@ import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/compo
     `]
 })
 export class TableAddCheckboxColumnPageableDemoComponent {
-    pageable: LocalPageableTableData;
+    pageable: LocalPageableTableData | PageableTableData;
 
     constructor(http: HttpClient) {
         this.pageable = new LocalPageableTableData();
+        /*//切换成服务端分页
+        this.pageable = new PageableTableData(http, {
+            url: 'mock-data/hr-list', body: {aa: 11, bb: 22}, method: 'post'
+        });*/
         this.pageable.http = http;
         this.pageable.pagingInfo.pageSize = 10;
         this.pageable.fromAjax('mock-data/hr-list');
+        this.pageable.onAjaxComplete(() => {
+            setTimeout(() => {
+                if(this.additionalData) console.log(this.additionalData.data);
+            }, 1000)
+        })
     }
 
     selectedRows: string;
@@ -74,6 +83,15 @@ export class TableAddCheckboxColumnPageableDemoComponent {
         console.log(row);
         this.additionalData.touchValue(0, row.key, false);
         this.additionalData.refresh();
+    }
+
+    changeData() {
+        this.pageable.fromAjax('mock-data/hr-list-short');
+        // 重置additionalData
+        this.additionalData.reset();
+
+        this.allSelectedRows = [];
+        this.selectedRows = '';
     }
 
     // ====================================================================

@@ -7,7 +7,7 @@ describe('auto-complete-input', () => {
     });
 
     describe('test basic function', () => {
-        it('should display options', async () => {
+        xit('should display options', async () => {
             await browser.get('/auto-complete-input/non-group');
             const selectEl = element(by.tagName('jigsaw-auto-complete-input')),
                 buttons = $$('jigsaw-auto-complete-input-item');

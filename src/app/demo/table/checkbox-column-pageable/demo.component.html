@@ -6,6 +6,8 @@
 <div class="live-demo-wrap">
     <div class="demo-1 live-demo">
         <h3>分页数据缓存</h3>
+        <button (click)="changeData()">click to change data</button>
+
         <jigsaw-pagination
             [total]="pageable.pagingInfo.totalRecord"
             [(pageSize)]="pageable.pagingInfo.pageSize"
@@ -26,7 +28,7 @@
             </j-tag>
         </p>
 
-        <jigsaw-table [data]="pageable"
+        <jigsaw-table #tableComponent [data]="pageable"
                       [additionalColumnDefines]="additionalColumns"
                       [(additionalData)]="additionalData"
                       (additionalDataChange)="additionalDataChange($event)">
