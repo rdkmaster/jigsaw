@@ -1,0 +1,9 @@
+@import "../../assets/scss/core/base";
+
+$icon-prefix-cls: #{$jigsaw-prefix}icon;
+
+.#{$icon-prefix-cls} {
+    @include inline-block();
+
+}
+

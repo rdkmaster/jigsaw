@@ -1,0 +1,7 @@
+<a *ngIf="isLinkButton" class="fa" [ngClass]="icon" [href]="_$secureUrl" [target]="target" [title]="title">
+    {{text}}
+</a>
+<span *ngIf="!isLinkButton" class="fa" [ngClass]="icon" [title]="title">
+    {{text}}
+</span>
+
