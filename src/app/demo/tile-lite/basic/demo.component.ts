@@ -28,6 +28,8 @@ export class TileLiteBasicDemoComponent implements AfterContentInit {
         this.selectedCityStr2 = cityArr.join(',');
     }
 
+    tabSelected: ArrayCollection<any>;
+
     ngAfterContentInit() {
         this.selectedCity = new ArrayCollection([{label: "深圳", id: 1}, {label: "西安", id: 6}]);
         this.selectedCityStr = this.selectedCity.map(city => city.label).join(',');

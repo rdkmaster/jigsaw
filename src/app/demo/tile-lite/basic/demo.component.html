@@ -23,6 +23,11 @@
         </jigsaw-tile-lite>
         <p class="message">选择的城市是：{{selectedCityStr2}}</p>
     </div>
+    <div class="demo-2 live-demo">
+        <h3>tab风格</h3>
+        <jigsaw-tile-lite [(selectedItems)]="tabSelected" [data]="cities" [tabStyle]="true" [backgroundStyle]="true">
+        </jigsaw-tile-lite>
+    </div>
 </div>
 
 

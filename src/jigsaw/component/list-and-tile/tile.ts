@@ -10,7 +10,8 @@ import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "./gro
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[class.jigsaw-tile]': 'true'
+        '[class.jigsaw-tile]': 'true',
+        '[class.jigsaw-tile-tab-style]': 'tabStyle'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTile), multi: true},
@@ -19,6 +20,20 @@ import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "./gro
 export class JigsawTile extends AbstractJigsawGroupComponent {
     // 默认多选
     public multipleSelect: boolean = true;
+
+    private _tabStyle: boolean;
+
+    @Input()
+    public get tabStyle(): boolean {
+        return this._tabStyle
+    };
+
+    public set tabStyle(value: boolean) {
+        this._tabStyle = value;
+        if(value) {
+            this.multipleSelect = false;
+        }
+    }
 
     @ContentChildren(forwardRef(() => JigsawTileOption))
     protected _items: QueryList<JigsawTileOption>;
@@ -35,6 +50,7 @@ export class JigsawTile extends AbstractJigsawGroupComponent {
         '[class.jigsaw-tile-option]': 'true',
         '[class.jigsaw-tile-option-active]': 'selected',
         '[class.jigsaw-tile-option-disabled]': 'disabled',
+        '[class.jigsaw-tile-option-background]': 'backgroundStyle',
         '(click)': '_$handleClick()'
     }
 })
@@ -43,6 +59,9 @@ export class JigsawTileOption extends AbstractJigsawOptionComponent {
     constructor(public changeDetector: ChangeDetectorRef) {
         super();
     }
+
+    @Input()
+    public backgroundStyle: boolean;
 
     /**
      * 点击组件触发
