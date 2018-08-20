@@ -15,6 +15,8 @@ import {TileSelectMultipleSelectDemoComponent} from "./multiple-select/demo.comp
 import {TileSelectOptionWidthComponent} from "./tile-option-width/demo.component";
 import {TileSelectLabelFieldComponent} from "./label-field/demo.component";
 import {TileSelecItemsChangeComponent} from "./selected-items-change/demo.component";
+import {TileSelectStyleComponent} from "./style/demo.component";
+import {TileSelectStyleDemoModule} from "./style/demo.module";
 
 
 export const routerConfig = [
@@ -39,6 +41,9 @@ export const routerConfig = [
     {
         path: 'selected-items-change', component: TileSelecItemsChangeComponent
     },
+    {
+        path: 'style', component: TileSelectStyleComponent
+    },
 ];
 
 @NgModule({
@@ -46,7 +51,7 @@ export const routerConfig = [
         RouterModule.forChild(routerConfig),
         TileSelectFullDemoModule, TileSelectLabelFieldDemoModule, TileSelectMultiSelectDemoModule,
         TileSelectSelectedItemsDemoModule, TileSelectItemsChangeDemoModule,
-        TileSelectOptionWidthDemoModule, TileSelectTrackItemByDemoModule
+        TileSelectOptionWidthDemoModule, TileSelectTrackItemByDemoModule, TileSelectStyleDemoModule
     ]
 })
 export class TileSelectDemoModule { }

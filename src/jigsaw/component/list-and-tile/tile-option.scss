@@ -26,8 +26,10 @@ $option-prefix-cls: #{$jigsaw-prefix}-tile-option;
     }
     &.#{$option-prefix-cls}-active {
         border: 1px solid $primary-color;
-        background: $primary-color;
-        color: #fff;
+        &.#{$option-prefix-cls}-background {
+            background: $primary-color;
+            color: #fff;
+        }
     }
     &.#{$option-prefix-cls}-disabled {
         background: $disabled-bg;

@@ -35,9 +35,6 @@ export class JigsawTile extends AbstractJigsawGroupComponent {
         }
     }
 
-    @Input()
-    public buttonBackground: boolean;
-
     @ContentChildren(forwardRef(() => JigsawTileOption))
     protected _items: QueryList<JigsawTileOption>;
 
@@ -53,6 +50,7 @@ export class JigsawTile extends AbstractJigsawGroupComponent {
         '[class.jigsaw-tile-option]': 'true',
         '[class.jigsaw-tile-option-active]': 'selected',
         '[class.jigsaw-tile-option-disabled]': 'disabled',
+        '[class.jigsaw-tile-option-background]': 'backgroundStyle',
         '(click)': '_$handleClick()'
     }
 })
@@ -61,6 +59,9 @@ export class JigsawTileOption extends AbstractJigsawOptionComponent {
     constructor(public changeDetector: ChangeDetectorRef) {
         super();
     }
+
+    @Input()
+    public backgroundStyle: boolean;
 
     /**
      * 点击组件触发
