@@ -1,5 +1,6 @@
 @import "../../assets/scss/core/base";
 
+$tile-prefix-cls: #{$jigsaw-prefix}-tile;
 $option-prefix-cls: #{$jigsaw-prefix}-tile-option;
 
 .#{$option-prefix-cls} {
@@ -25,10 +26,31 @@ $option-prefix-cls: #{$jigsaw-prefix}-tile-option;
     }
     &.#{$option-prefix-cls}-active {
         border: 1px solid $primary-color;
+        background: $primary-color;
+        color: #fff;
     }
     &.#{$option-prefix-cls}-disabled {
         background: $disabled-bg;
         @include compatible(color, $disabled-color, $disabled-color-ie11);
         cursor: not-allowed;
+    }
+
+    .#{$tile-prefix-cls}-tab-style & {
+        margin: 0 0;
+        border-radius: 0;
+        border-right: none;
+
+        &:first-child {
+            border-radius: 4px 0 0 4px;
+        }
+
+        &:last-child {
+            border-radius: 0 4px 4px 0;
+            border-right: 1px solid $border-color-base;
+        }
+
+        &.#{$option-prefix-cls}-active {
+            border-right: 1px solid $primary-color;
+        }
     }
 }
