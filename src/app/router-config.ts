@@ -20,6 +20,10 @@ export const routerConfig = [
         loadChildren: "./demo/button/demo-set.module#ButtonDemoModule",
     },
     {
+        path: "button-bar",
+        loadChildren: "./demo/button-bar/demo-set.module#ButtonBarDemoModule",
+    },
+    {
         path: "cascade",
         loadChildren: "./demo/cascade/demo-set.module#CascadeDemoModule",
     },

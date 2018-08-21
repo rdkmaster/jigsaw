@@ -4,6 +4,7 @@ import {routerConfig as autoCompleteInputConfig} from "./demo/auto-complete-inpu
 import {routerConfig as arrayCollectionConfig} from "./demo/data-encapsulation/demo-set.module";
 import {routerConfig as boxConfig} from "./demo/box/demo-set.module";
 import {routerConfig as buttonConfig} from "./demo/button/demo-set.module";
+import {routerConfig as buttonBarConfig} from "./demo/button-bar/demo-set.module";
 import {routerConfig as cascadeConfig} from "./demo/cascade/demo-set.module";
 import {routerConfig as checkboxConfig} from "./demo/checkbox/demo-set.module";
 import {routerConfig as collapseConfig} from "./demo/collapse/demo-set.module";
@@ -94,6 +95,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'data-encapsulation', arrayCollectionConfig);
         this._addRouterConfig(routerConfig, 'box', boxConfig);
         this._addRouterConfig(routerConfig, 'button', buttonConfig);
+        this._addRouterConfig(routerConfig, 'button-bar', buttonBarConfig);
         this._addRouterConfig(routerConfig, 'cascade', cascadeConfig);
         this._addRouterConfig(routerConfig, 'checkbox', checkboxConfig);
         this._addRouterConfig(routerConfig, 'collapse', collapseConfig);
