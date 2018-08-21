@@ -5,14 +5,7 @@ import {Component} from "@angular/core";
     styleUrls: ['./demo.component.css']
 })
 export class IconBasicDemoComponent {
-
-    public _$edit = '编辑';
-
-    public _$icon = 'fa-edit';
-
     public _$url = 'http://rdk.zte.com.cn/home';
-
-    public _$target = '_blank';
 
     public _$clickHandler() {
         alert('图标被点击');
@@ -21,7 +14,7 @@ export class IconBasicDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
+    summary: string = '这个Demo演示了Icon组件的基本用法';
     description: string = '';
     tags: string[] = [
         'JigsawIcon'

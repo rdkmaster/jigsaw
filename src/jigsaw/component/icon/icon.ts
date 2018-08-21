@@ -20,7 +20,7 @@ import {CommonUtils} from "../../core/utils/common-utils";
 })
 export class JigsawIcon extends AbstractJigsawComponent {
     public _$secureUrl;
-    private _$href: string = 'javascript:void(0);';
+    private _href: string = 'javascript:void(0);';
 
     /**
      * 为true    生成的html是 <a class="fa fa-edit">some text</a>
@@ -29,7 +29,7 @@ export class JigsawIcon extends AbstractJigsawComponent {
     @Input() public isLinkButton: boolean = false;
 
     /**
-     * 图标类型 fa-xxx
+     * 图标类型 fa fa-xxx
      */
     @Input() public icon: string;
 
@@ -43,14 +43,14 @@ export class JigsawIcon extends AbstractJigsawComponent {
      */
     @Input()
     public set href(value: any) {
-        if (this._$href == value || CommonUtils.isUndefined(value)) {
+        if (this._href == value || CommonUtils.isUndefined(value)) {
             if (CommonUtils.isUndefined(this._$secureUrl)) {
-                this._$secureUrl = this._sanitizer.bypassSecurityTrustResourceUrl(this._$href);
+                this._$secureUrl = this._sanitizer.bypassSecurityTrustResourceUrl(this._href);
             }
             return;
         }
-        this._$href = value;
-        this._$secureUrl = this._sanitizer.bypassSecurityTrustResourceUrl(this._$href);
+        this._href = value;
+        this._$secureUrl = this._sanitizer.bypassSecurityTrustResourceUrl(this._href);
     }
 
     /**
@@ -62,7 +62,7 @@ export class JigsawIcon extends AbstractJigsawComponent {
 
     constructor(private _sanitizer: DomSanitizer) {
         super();
-        this._$secureUrl = this._sanitizer.bypassSecurityTrustResourceUrl(this._$href);
+        this._$secureUrl = this._sanitizer.bypassSecurityTrustResourceUrl(this._href);
     }
 }
 

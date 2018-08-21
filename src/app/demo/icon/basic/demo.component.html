@@ -7,22 +7,22 @@
 <div class="live-demo-wrap">
     <div class="demo-a">
         <h3>超链接图标</h3>
-        <jigsaw-icon [isLinkButton]="true" [text]="_$edit" [icon]="_$icon"
-                     [href]="_$url" [target]="_$target" title="编辑"></jigsaw-icon>
+        <jigsaw-icon [isLinkButton]="true" [text]="'编辑'" [icon]="'fa fa-edit'"
+                     [href]="_$url" [target]="'_blank'" title="编辑"></jigsaw-icon>
     </div>
 
     <br><br><br>
 
     <div class="demo-span">
         <h3>显示用途的图标</h3>
-        <jigsaw-icon [text]="'删除'" [icon]="'fa-info'" title="删除"></jigsaw-icon>
+        <jigsaw-icon [text]="'删除'" [icon]="'fa fa-info'" title="删除"></jigsaw-icon>
     </div>
 
     <br><br><br>
 
     <div class="demo-a">
         <h3>点击事件</h3>
-        <jigsaw-icon [text]="'点击事件'" [isLinkButton]="true" [icon]="'fa-edit'" (click)="_$clickHandler()"></jigsaw-icon>
+        <jigsaw-icon [text]="'点击事件'" [isLinkButton]="true" [icon]="'fa fa-edit'" (click)="_$clickHandler()"></jigsaw-icon>
     </div>
 
 </div>
