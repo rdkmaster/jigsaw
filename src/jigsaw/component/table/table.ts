@@ -1,18 +1,6 @@
 ﻿import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    NgModule,
-    NgZone,
-    OnDestroy,
-    OnInit,
-    Output,
-    QueryList,
-    Renderer2,
-    ViewChild,
-    ViewChildren
+    AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, NgModule, NgZone,
+    OnDestroy, OnInit, Output, QueryList, Renderer2, ViewChild, ViewChildren
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule} from "../common";
@@ -55,7 +43,8 @@ import {JigsawTrustedHtmlModule} from "../../directive/trusted-html/trusted-html
 })
 export class JigsawTable extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
 
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, private _zone: NgZone) {
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef,
+                private _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef) {
         super();
     }
 
@@ -305,6 +294,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         const columnDefines = this._getMixedColumnDefines();
         this._updateHeaderSettings(columnDefines);
         this._updateCellSettings(columnDefines);
+        this._changeDetectorRef.detectChanges();
 
         this.callLater(() => {
             // 等待additionalTableData在renderer更新完成
