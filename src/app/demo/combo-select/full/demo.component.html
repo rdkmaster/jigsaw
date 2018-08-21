@@ -14,12 +14,14 @@
             <j-button (click)="toggle('open')">toggle open</j-button>
             <j-button (click)="toggle('autoWidth')">toggle auto width</j-button>
             <j-button (click)="toggle('disabled')">toggle disabled</j-button>
+            <j-button (click)="toggle('showValueBorder')">toggle value border</j-button>
         </div>
         <p class="message up">
             selected: <span>{{selected}}</span><br>
             removed: <span>{{removed}}</span>
         </p>
         <j-combo-select
+            [showValueBorder]="showValueBorder"
             [showBorder]="true"
             [clearable]="true"
             [openTrigger]="openTrigger"

@@ -12,6 +12,10 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
         margin-bottom: 8px;
         margin-right: 8px;
     }
+
+    &.#{$tile-prefix-cls}-without-border {
+        border: none;
+    }
 }
 
 .#{$tile-prefix-cls}-lite {

@@ -23,6 +23,15 @@
         </jigsaw-tile-lite>
         <p class="message">选择的城市是：{{selectedCityStr2}}</p>
     </div>
+    <div class="demo-3 live-demo">
+        <h3>是否显示边框</h3>
+        <jigsaw-tile-lite [showBorder]="showBorder" [data]="cities2">
+        </jigsaw-tile-lite>
+        <div class="toggle">
+            <label>切换边框显示：</label>
+            <j-switch [(checked)]="showBorder"></j-switch>
+        </div>
+    </div>
 </div>
 
 

@@ -10,7 +10,8 @@ import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "./gro
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[class.jigsaw-tile]': 'true'
+        '[class.jigsaw-tile]': 'true',
+        '[class.jigsaw-tile-without-border]': '!showBorder'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTile), multi: true},
@@ -19,6 +20,13 @@ import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "./gro
 export class JigsawTile extends AbstractJigsawGroupComponent {
     // 默认多选
     public multipleSelect: boolean = true;
+
+    /**
+     * 是否显示边框，默认显示
+     * @type {boolean}
+     */
+    @Input()
+    public showBorder: boolean = true;
 
     @ContentChildren(forwardRef(() => JigsawTileOption))
     protected _items: QueryList<JigsawTileOption>;
