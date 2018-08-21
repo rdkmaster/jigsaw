@@ -89,7 +89,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     }
 
     //根据选中的item更新selectedItems
-    protected _updateSelectItemsForForm(itemValue, selected): void {
+    public updateSelectItemsForForm(itemValue, selected): void {
         this._updateSelectItems(itemValue, selected);
         this._propagateChange(this.selectedItems);
     }
@@ -119,11 +119,11 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
             item.change.subscribe(() => {
                 if (this.multipleSelect) { //多选
                     item.selected = !item.selected;//切换组件选中状态
-                    this._updateSelectItemsForForm(item.value, item.selected);
+                    this.updateSelectItemsForForm(item.value, item.selected);
                 } else { //单选
                     if (!item.selected) {
                         item.selected = true;
-                        this._updateSelectItemsForForm(item.value, item.selected);
+                        this.updateSelectItemsForForm(item.value, item.selected);
                     }
                 }
             })
