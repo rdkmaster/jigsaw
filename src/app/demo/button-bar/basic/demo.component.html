@@ -1,0 +1,42 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>Button Bar</h2>
+    <div class="demo-1 live-demo">
+        <h3>对象数组</h3>
+        <jigsaw-button-bar [(selectedItems)]="selectedCity" [data]="cities"
+                           (selectedItemsChange)="basicSelectChange($event)">
+        </jigsaw-button-bar>
+        <p class="message">选择的城市是：{{selectedCityStr}}</p>
+    </div>
+    <div class="demo-2 live-demo">
+        <h3>字符串数组</h3>
+        <jigsaw-button-bar [(selectedItems)]="selectedCity2" [data]="cities2"
+                           (selectedItemsChange)="basicSelectChange2($event)">
+        </jigsaw-button-bar>
+        <p class="message">选择的城市是：{{selectedCityStr2}}</p>
+    </div>
+
+    <div class="demo-2 live-demo">
+        <h3>colorType</h3>
+        <jigsaw-radios-lite [data]="colorTypeList" [(value)]="colorType">
+        </jigsaw-radios-lite><br>
+        <jigsaw-button-bar [data]="cities2" [(selectedItems)]="selectedCity3" [colorType]="colorType">
+        </jigsaw-button-bar>
+    </div>
+
+    <div class="demo-2 live-demo">
+        <h3>height</h3>
+        <jigsaw-button-bar [data]="cities2" [(selectedItems)]="selectedCity4"height="22">
+        </jigsaw-button-bar>
+    </div>
+</div>
+
+
+
+
+
