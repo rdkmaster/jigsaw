@@ -43,12 +43,14 @@ import {JigsawNumericInputModule} from "./component/input/numeric-input";
 import {JigsawListLiteModule} from "./component/list-and-tile/list-lite";
 import {JigsawTileLiteModule} from "./component/list-and-tile/tile-lite";
 import {JigsawRadioLiteModule} from "./component/radio/radio-lite";
+import {JigsawButtonBarModule} from "./component/list-and-tile/button-bar";
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
     JigsawBlockModule,
     JigsawBoxModule,
     JigsawButtonModule,
+    JigsawButtonBarModule,
     JigsawCascadeModule,
     JigsawCheckBoxModule,
     JigsawCollapseModule,

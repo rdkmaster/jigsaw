@@ -28,6 +28,7 @@ export * from "./component/list-and-tile/list";
 export * from "./component/list-and-tile/list-lite";
 export * from "./component/list-and-tile/tile";
 export * from "./component/list-and-tile/tile-lite";
+export * from "./component/list-and-tile/button-bar";
 export * from "./component/loading/loading";
 export * from "./component/notification/notification";
 export * from "./component/pagination/pagination";
