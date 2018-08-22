@@ -53,8 +53,8 @@ export class JigsawRadioGroup extends AbstractJigsawGroupComponent {
         this._setSelectedItems(newValue);
     }
 
-    // 重写updateSelectItems
-    public updateSelectItemsForForm(itemValue, selected): void {
+    // 重写_updateSelectItems
+    protected _updateSelectItemsForForm(itemValue, selected): void {
         this._updateSelectItems(itemValue, selected);
         this.valueChange.emit(this.selectedItems[0]);
         this._propagateChange(this.selectedItems[0]);
