@@ -31,7 +31,7 @@ export class JigsawButtonBar extends AbstractJigsawGroupLiteComponent {
     public optionWidth: number | string;
 
     @Input()
-    public colorType: 'default' | 'primary' | 'warning' | 'error' | 'danger' = 'default';
+    public colorType: 'default' | 'primary' | 'warning' | 'error' | 'danger' = 'primary';
 }
 
 @NgModule({
