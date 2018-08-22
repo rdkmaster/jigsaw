@@ -7,19 +7,20 @@ import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
 @Component({
     selector: 'jigsaw-button-bar, j-button-bar',
     template: `
-        <j-tile [(selectedItems)]="selectedItems"
-                [trackItemBy]="trackItemBy"
-                [multipleSelect]="false"
+        <j-tile [(selectedItems)]="selectedItems" [trackItemBy]="trackItemBy"
+                [multipleSelect]="false" [height]="height"
                 (selectedItemsChange)="_$handleSelectChange($event)">
-            <j-tile-option *ngFor="let item of data; trackBy: _$trackByFn" [value]="item"
-                           [width]="optionWidth" [height]="optionHeight" [disabled]="item?.disabled"
-                           [class.jigsaw-tile-option-background]="backgroundStyle">
+            <j-tile-option #tileOpt *ngFor="let item of data; trackBy: _$trackByFn" [value]="item"
+                           [width]="optionWidth" [height]="height" [disabled]="item?.disabled">
                 {{item && item[labelField] ? item[labelField] : item}}
             </j-tile-option>
         </j-tile>`,
     host: {
         '[class.jigsaw-button-bar]': 'true',
-        '[style.width]': 'width'
+        '[class.jigsaw-button-bar-primary]': "colorType === 'primary'",
+        '[class.jigsaw-button-bar-warning]': "colorType === 'warning'",
+        '[class.jigsaw-button-bar-error]': "colorType === 'error' || colorType === 'danger'",
+        '[style.height]': 'height',
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawButtonBar), multi: true},
@@ -30,10 +31,7 @@ export class JigsawButtonBar extends AbstractJigsawGroupLiteComponent {
     public optionWidth: number | string;
 
     @Input()
-    public optionHeight: number | string;
-
-    @Input()
-    public backgroundStyle: boolean;
+    public colorType: 'default' | 'primary' | 'warning' | 'error' | 'danger' = 'default';
 }
 
 @NgModule({

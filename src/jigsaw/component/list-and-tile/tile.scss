@@ -15,14 +15,6 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
         margin-bottom: 8px;
         margin-right: 8px;
     }
-    .#{$button-bar-prefix-cls} & {
-        padding: 0 0;
-        border: none;
-    }
-}
-
-.#{$tile-lite-prefix-cls}, .#{$button-bar-prefix-cls} {
-    @include inline-block;
 }
 
 .#{$tile-option-prefix-cls} {
@@ -48,23 +40,31 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
     }
     &.#{$tile-option-prefix-cls}-active {
         border: 1px solid $primary-color;
-        &.#{$tile-option-prefix-cls}-background {
-            background: $primary-color;
-            color: #fff;
-        }
     }
     &.#{$tile-option-prefix-cls}-disabled {
         background: $disabled-bg;
         @include compatible(color, $disabled-color, $disabled-color-ie11);
         cursor: not-allowed;
     }
-    .#{$button-bar-prefix-cls} & {
-        margin: 0 0;
-        border-radius: 0;
-        border-right: none;
+}
+
+.#{$tile-lite-prefix-cls}, .#{$button-bar-prefix-cls} {
+    @include inline-block;
+}
+
+.#{$button-bar-prefix-cls} {
+    height: $height-base;
+    .#{$tile-prefix-cls} {
+        padding: 0 0;
+        border: none;
+    }
+    .#{$tile-option-prefix-cls} {
         width: auto;
         min-width: 60px;
+        margin: 0 0;
         padding: 0 8px;
+        border-radius: 0;
+        border-right: none;
         &:first-child {
             border-radius: 4px 0 0 4px;
         }
@@ -76,5 +76,19 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
             border-right: 1px solid $primary-color;
         }
     }
+    &-primary .#{$tile-option-prefix-cls}.#{$tile-option-prefix-cls}-active {
+        border: 1px solid $primary-color;
+        background-color: $primary-color;
+        color: $text-color-of-bg;
+    }
+    &-warning .#{$tile-option-prefix-cls}.#{$tile-option-prefix-cls}-active {
+        border: 1px solid $warning-color;
+        background-color: $warning-color;
+        color: $text-color-of-bg;
+    }
+    &-error .#{$tile-option-prefix-cls}.#{$tile-option-prefix-cls}-active {
+        border: 1px solid $error-color;
+        background-color: $error-color;
+        color: $text-color-of-bg;
+    }
 }
-

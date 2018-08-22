@@ -28,11 +28,19 @@ export class ButtonBarBasicDemoComponent implements AfterContentInit {
         this.selectedCityStr2 = cityArr.join(',');
     }
 
+    colorType: string = 'warning';
+    colorTypeList = ['default', 'primary','warning', 'danger', 'error'];
+    selectedCity3: any[];
+
+    selectedCity4: any[];
+
     ngAfterContentInit() {
         this.selectedCity = [{label: "南京", id: 3}];
         this.selectedCityStr = this.selectedCity.map(city => city.label).join(',');
-        this.selectedCity2 = ['上海'];
+        this.selectedCity2 = ['南京'];
         this.selectedCityStr2 = this.selectedCity2.join(',');
+        this.selectedCity3 = ['南京'];
+        this.selectedCity4 = ['南京'];
     }
 
     // ====================================================================
