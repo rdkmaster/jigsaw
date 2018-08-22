@@ -43,6 +43,7 @@ import {JigsawNumericInputModule} from "./component/input/numeric-input";
 import {JigsawListLiteModule} from "./component/list-and-tile/list-lite";
 import {JigsawTileLiteModule} from "./component/list-and-tile/tile-lite";
 import {JigsawRadioLiteModule} from "./component/radio/radio-lite";
+import {JigsawIconModule} from "./component/icon/icon";
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
@@ -89,6 +90,7 @@ const JIGSAW_MODULE = [
     JigsawTreeExtModule,
     JigsawTrustedHtmlModule,
     JigsawViewportModule,
+    JigsawIconModule
 ];
 
 @NgModule({

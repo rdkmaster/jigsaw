@@ -1,0 +1,25 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+
+    <j-box width="100%">
+        <j-box>
+            <h3>Icon Font 图标</h3>
+            <div *ngFor="let icon of _$fontIcons">
+                <jigsaw-icon [text]="'　icon：' + icon" [icon]="icon"></jigsaw-icon>
+            </div>
+        </j-box>
+        <j-box width="50%">
+            <h3>Font Awesome 常用图标</h3>
+            <div *ngFor="let icon of _$icons" style="font-size: 16px;">
+                <jigsaw-icon [text]="'　icon：' + icon" [icon]="icon"></jigsaw-icon>
+            </div>
+        </j-box>
+    </j-box>
+
+</div>
+
