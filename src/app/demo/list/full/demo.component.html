@@ -34,10 +34,11 @@
         <div class="demo-3 live-demo live-demo-block">
             <h3>多组件复合用法</h3>
             <j-list [multipleSelect]="true" trackItemBy="name" [selectedItems]="selectedItems3"
-                    (selectedItemsChange)="handleSelect3($event)">
+                    (selectedItemsChange)="handleSelect3($event)" #listGroup>
                 <j-list-option *ngFor="let goods of goodsList" #listItem [value]="goods" [disabled]="goods.disabled">
                     <div class="goods-box">
-                        <j-checkbox [(checked)]="listItem.selected" [disabled]="goods.disabled"></j-checkbox>
+                        <j-checkbox [(checked)]="listItem.selected" [disabled]="goods.disabled"
+                                    (checkedChange)="listGroup.update(goods, $event)"></j-checkbox>
                         <span class="logo fa fa-{{goods.logo}}"></span>
                         <p>{{goods.desc}}</p>
                     </div>

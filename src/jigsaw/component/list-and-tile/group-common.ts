@@ -94,6 +94,10 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         this._propagateChange(this.selectedItems);
     }
 
+    public update(itemValue, selected) {
+        this._updateSelectItemsForForm(itemValue, selected);
+    }
+
     //根据selectedItems设置选中的option
     protected _setItemState(items: QueryList<AbstractJigsawOptionComponent>): void {
         if (!(this.selectedItems instanceof ArrayCollection) || !items.length) {
