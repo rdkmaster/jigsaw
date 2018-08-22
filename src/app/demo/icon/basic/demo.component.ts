@@ -5,7 +5,6 @@ import {Component} from "@angular/core";
     styleUrls: ['./demo.component.css']
 })
 export class IconBasicDemoComponent {
-    public _$url = 'http://rdk.zte.com.cn/home';
 
     public _$clickHandler() {
         alert('图标被点击');
