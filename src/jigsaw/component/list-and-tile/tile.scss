@@ -64,16 +64,17 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
         margin: 0 0;
         padding: 0 8px;
         border-radius: 0;
-        border-right: none;
         &:first-child {
             border-radius: 4px 0 0 4px;
         }
         &:last-child {
             border-radius: 0 4px 4px 0;
-            border-right: 1px solid $border-color-base;
+        }
+        &:not(:first-child) {
+            margin-left: -1px;
         }
         &.#{$tile-option-prefix-cls}-active {
-            border-right: 1px solid $primary-color;
+            position: relative;
         }
     }
     &-primary .#{$tile-option-prefix-cls}.#{$tile-option-prefix-cls}-active {
