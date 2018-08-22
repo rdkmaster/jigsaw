@@ -1,3 +1,5 @@
+import {IconDemoModule} from "./demo/icon/demo-set.module";
+
 export const routerConfig = [
     {
         path: "alert",
@@ -182,5 +184,9 @@ export const routerConfig = [
     {
         path: "upload",
         loadChildren: "./demo/upload/demo-set.module#UploadDemoModule",
+    },
+    {
+        path: "icon",
+        loadChildren: "./demo/icon/demo-set.module#IconDemoModule",
     }
 ];

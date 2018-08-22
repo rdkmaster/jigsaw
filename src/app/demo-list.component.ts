@@ -45,6 +45,7 @@ import {routerConfig as tooltipConfig} from "./demo/tooltip/demo-set.module";
 import {routerConfig as treeConfig} from "./demo/tree/demo-set.module";
 import {routerConfig as trustedHtmlConfig} from "./demo/trusted-html/demo-set.module";
 import {routerConfig as uploadConfig} from "./demo/upload/demo-set.module";
+import {routerConfig as iconConfig} from "./demo/icon/demo-set.module";
 import {routerConfig} from "./router-config";
 
 @Component({
@@ -136,6 +137,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'tree', treeConfig);
         this._addRouterConfig(routerConfig, 'trusted-html', trustedHtmlConfig);
         this._addRouterConfig(routerConfig, 'upload', uploadConfig);
+        this._addRouterConfig(routerConfig, 'icon', iconConfig);
     }
 
     private static _addRouterConfig(routerConfig: any[], path: string, childConfig: any[]) {
