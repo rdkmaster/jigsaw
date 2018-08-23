@@ -107,6 +107,9 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
     public fill = new EventEmitter<JigsawEditableBox>();
 
     @Output()
+    public fillTabs = new EventEmitter<JigsawEditableBox>();
+
+    @Output()
     public add = new EventEmitter<any>();
 
     @Output()
@@ -171,6 +174,13 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
 
             this.getRootBox().add.emit();
         });
+    }
+
+    /**
+     * @internal
+     */
+    public _$addTabsWrapper() {
+        this.getRootBox().fillTabs.emit(this);
     }
 
     private _updateBoxReference(data: LayoutData, box: JigsawEditableBox) {
@@ -435,6 +445,7 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         }
 
         this.fill.unsubscribe();
+        this.fillTabs.unsubscribe();
         this.add.unsubscribe();
         this.remove.unsubscribe();
     }

@@ -53,7 +53,7 @@ $editable-box-prefix-cls: #{$jigsaw-prefix}-editable-box;
         position: absolute;
         font-size: 0;
         line-height: 1;
-        width: 52px;
+        width: 78px;
         top: 50%;
         left: 50%;
         transform: translateX(-48%);
@@ -64,7 +64,7 @@ $editable-box-prefix-cls: #{$jigsaw-prefix}-editable-box;
         z-index: $zindex-ui-level-1;
         span {
             font-size: 16px;
-            margin-right: 4px;
+            margin-right: 6px;
             cursor: pointer;
             color: $primary-color;
             &:last-child {
