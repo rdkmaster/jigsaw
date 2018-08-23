@@ -20,6 +20,11 @@ export class ZtreeDemoEditableComponent {
         },
         edit: {
             enable: true
+        },
+        check: {
+            enable: true,
+            chkStyle: "checkbox",
+            chkboxType: { "Y": "ps", "N": "ps" }
         }
     };
 
