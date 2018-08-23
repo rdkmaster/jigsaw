@@ -10,6 +10,7 @@ import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
         <j-tile [(selectedItems)]="selectedItems"
                 [trackItemBy]="trackItemBy"
                 [multipleSelect]="multipleSelect"
+                [showBorder]="showBorder"
                 (selectedItemsChange)="_$handleSelectChange($event)">
             <j-tile-option *ngFor="let item of data; trackBy: _$trackByFn" [value]="item"
                            [width]="optionWidth" [height]="optionHeight" [disabled]="item?.disabled">
@@ -30,6 +31,13 @@ export class JigsawTileLite extends AbstractJigsawGroupLiteComponent {
 
     @Input()
     public optionHeight: number | string;
+
+    /**
+     * 是否显示边框，默认显示
+     * @type {boolean}
+     */
+    @Input()
+    public showBorder: boolean = true;
 }
 
 @NgModule({

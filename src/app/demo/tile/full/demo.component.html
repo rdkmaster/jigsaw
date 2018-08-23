@@ -45,4 +45,16 @@
 
         <p class="message">选中的条目是: <span>{{selectedItemsStr3}}</span></p>
     </div>
+    <div class="demo-4 live-demo">
+        <h3>是否显示边框</h3>
+        <j-tile trackItemBy="label" [showBorder]="showBorder">
+            <j-tile-option *ngFor="let city of citys" [value]="city">
+                {{city.label}}
+            </j-tile-option>
+        </j-tile>
+        <div class="toggle">
+            <label>切换边框显示：</label>
+            <j-switch [(checked)]="showBorder"></j-switch>
+        </div>
+    </div>
 </div>

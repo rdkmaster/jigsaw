@@ -15,6 +15,10 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
         margin-bottom: 8px;
         margin-right: 8px;
     }
+
+    &.#{$tile-prefix-cls}-without-border {
+        border: none;
+    }
 }
 
 .#{$tile-option-prefix-cls} {

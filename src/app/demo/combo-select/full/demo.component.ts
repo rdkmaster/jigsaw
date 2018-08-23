@@ -33,6 +33,7 @@ export class ComboSelectFullComponent {
     open: boolean = false;
     disabled: boolean = false;
     autoWidth: boolean = false;
+    showValueBorder: boolean = true;
 
     selected: string = '';
     removed: string = '';
