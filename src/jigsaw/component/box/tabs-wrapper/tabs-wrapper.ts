@@ -152,12 +152,15 @@ export class JigsawTabsWrapper implements AfterViewInit {
             content: [componentMetaData]
         });
 
-        // 监听tab里面box的fill事件
+        // 监听tab里面box的fill/fillTabs事件
         const insertComponent = this._tabs._tabContents.last._tabItemRef;
         if (insertComponent instanceof ComponentRef &&
             insertComponent.instance instanceof JigsawEditableBox) {
             insertComponent.instance.fill.subscribe(box => {
                 this._box.getRootBox().fill.emit(box);
+            });
+            insertComponent.instance.fillTabs.subscribe(box => {
+                this._box.getRootBox().fillTabs.emit(box);
             })
         }
     }

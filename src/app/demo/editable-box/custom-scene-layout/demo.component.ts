@@ -246,6 +246,26 @@ export class CustomSceneLayoutDemoComponent {
         this.currentEditableBox.addContent([componentMetaData]);
     }
 
+    handleFillTabs(box: JigsawEditableBox) {
+        const tabsWrapperMetadata = {
+            component: JigsawTabsWrapper,
+            selector: 'j-tabs-wrapper',
+            import: 'JigsawTabsWrapperModule',
+            inputs: [
+                {
+                    property: 'data',
+                    binding: '123',
+                },
+            ],
+            tabsMetaData: {
+                selector: 'j-tabs',
+                component: JigsawTab,
+                panes: []
+            }
+        };
+        box.addContent([tabsWrapperMetadata]);
+    }
+
     getModalOptions(): PopupOptions {
         return {
             modal: true, //是否模态
