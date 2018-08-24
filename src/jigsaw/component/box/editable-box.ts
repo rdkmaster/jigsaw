@@ -67,7 +67,9 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
     public set editable(value: boolean) {
         if(this.editable == value) return;
         this._editable = value;
-        this.editableChange.emit(value);
+        if(!this.parent) {
+            this.editableChange.emit(value);
+        }
     }
 
     @Output()
@@ -461,5 +463,6 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         this.fillTabs.unsubscribe();
         this.add.unsubscribe();
         this.remove.unsubscribe();
+        this.editableChange.unsubscribe();
     }
 }

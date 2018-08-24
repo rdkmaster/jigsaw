@@ -108,6 +108,7 @@ export class JigsawTabsWrapper implements AfterViewInit {
                 componentRef.instance[input.property] = input.default;
             })
         }
+        this._listenEvents(componentRef);
     }
 
     private _renderTabByMetaData() {
@@ -154,20 +155,24 @@ export class JigsawTabsWrapper implements AfterViewInit {
 
         // 监听tab里面box的fill/fillTabs事件
         const insertComponent = this._tabs._tabContents.last._tabItemRef;
-        if (insertComponent instanceof ComponentRef &&
-            insertComponent.instance instanceof JigsawEditableBox) {
-            insertComponent.instance.fill.subscribe(box => {
-                this._box.getRootBox().fill.emit(box);
-            });
-            insertComponent.instance.fillTabs.subscribe(box => {
-                this._box.getRootBox().fillTabs.emit(box);
-            });
-            this._box.getRootBox().editableChange.subscribe(editable => {
-                if(insertComponent.instance instanceof JigsawEditableBox) {
-                    insertComponent.instance.editable = editable;
-                }
-            })
-        }
+        this._listenEvents(insertComponent);
+    }
+
+    private _listenEvents(insertComponent) {
+        if (!(insertComponent instanceof ComponentRef) ||
+            !(insertComponent.instance instanceof JigsawEditableBox)) return;
+
+        insertComponent.instance.fill.subscribe(box => {
+            this._box.getRootBox().fill.emit(box);
+        });
+        insertComponent.instance.fillTabs.subscribe(box => {
+            this._box.getRootBox().fillTabs.emit(box);
+        });
+        this._box.getRootBox().editableChange.subscribe(editable => {
+            if(insertComponent.instance instanceof JigsawEditableBox) {
+                insertComponent.instance.editable = editable;
+            }
+        })
     }
 
     ngAfterViewInit() {
