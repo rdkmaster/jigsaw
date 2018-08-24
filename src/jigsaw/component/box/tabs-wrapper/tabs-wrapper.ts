@@ -161,6 +161,11 @@ export class JigsawTabsWrapper implements AfterViewInit {
             });
             insertComponent.instance.fillTabs.subscribe(box => {
                 this._box.getRootBox().fillTabs.emit(box);
+            });
+            this._box.getRootBox().editableChange.subscribe(editable => {
+                if(insertComponent.instance instanceof JigsawEditableBox) {
+                    insertComponent.instance.editable = editable;
+                }
             })
         }
     }

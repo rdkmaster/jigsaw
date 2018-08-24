@@ -10,6 +10,7 @@
                (valueChange)="changeData($event)">
 </jigsaw-select>
 <button (click)="parseData(data)">parse data</button>
+<button (click)="editable = !editable">toggle editable</button>
 <j-editable-box [(data)]="data"
                 (fill)="handleFill($event)"
                 (fillTabs)="handleFillTabs($event)"
@@ -17,6 +18,7 @@
                 (resize)="handleResize($event)"
                 (add)="handleAddAndRemove()"
                 (remove)="handleAddAndRemove()"
+                [editable]="editable"
                 resizeLineWidth="4"
                 height="400"></j-editable-box>
 <br>
