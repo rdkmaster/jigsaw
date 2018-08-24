@@ -88,6 +88,9 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
     @Input()
     public parent: JigsawEditableBox;
 
+    @Input()
+    public showTabBar: boolean;
+
     private _resizeLineWidth: string;
 
     @Input()

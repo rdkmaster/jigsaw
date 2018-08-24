@@ -8,6 +8,7 @@
     [(grow)]="itemData.grow"
     [shrink]="itemData.shrink"
     [editable]="editable"
+    [showTabBar]="showTabBar"
     [_isFirst]="isFirst"
     [resizeLineWidth]="resizeLineWidth"
     [parent]="this"
@@ -25,7 +26,7 @@
      [class.jigsaw-editable-box-has-content]="data?.components?.length">
     <span class="fa fa-minus-square-o" (click)="_$addBox('v')"></span>
     <span class="fa fa-columns" (click)="_$addBox('h')"></span>
-    <span class="fa fa fa-clone" (click)="_$addTabsWrapper()"></span>
+    <span *ngIf="showTabBar" class="fa fa fa-clone" (click)="_$addTabsWrapper()"></span>
     <span class="fa fa-trash-o" (click)="_$remove()"></span>
 </div>
 

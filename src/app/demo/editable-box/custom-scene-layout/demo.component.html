@@ -19,6 +19,7 @@
                 (add)="handleAddAndRemove()"
                 (remove)="handleAddAndRemove()"
                 [editable]="editable"
+                [showTabBar]="true"
                 resizeLineWidth="4"
                 height="400"></j-editable-box>
 <br>
@@ -29,7 +30,7 @@
 <br>
 <br>
 Parse Area:
-<j-editable-box [(data)]="data3" [editable]="editable" height="400"></j-editable-box>
+<j-editable-box [(data)]="data3" [editable]="false" height="400"></j-editable-box>
 
 <ng-template #dialog>
     <jigsaw-dialog width="40%" (close)="onAnswer()">
