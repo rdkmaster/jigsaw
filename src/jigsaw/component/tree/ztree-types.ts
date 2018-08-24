@@ -55,19 +55,14 @@ export class ZTreeSettingData {
     keep?: ZTreeSettingDataKeep;
 }
 
-
-export enum ZTreeSettingCheckStyle {
-    checkbox, radio
-}
-
 export enum ZTreeSettingCheckRadioType {
     level, all
 }
 
 export class ZTreeSettingCheck {
     autoCheckTrigger?: boolean;
-    chkBoxType?: JSON;
-    chkStyle?: ZTreeSettingCheckStyle;
+    chkboxType?: {"Y"?: string, "N"?: string};
+    chkStyle?: "checkbox" | "radio";
     enable?: boolean;
     nocheckInherit?: boolean;
     chkDisabledInherit?: boolean;

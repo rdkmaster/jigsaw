@@ -159,6 +159,12 @@
                 content: "\f00c";
             }
         }
+        &.checkbox_true_part, &.checkbox_true_part_focus {
+            background: $border-color-split;
+            &:before {
+                content: "\f00c";
+            }
+        }
     }
     &.edit {
         margin-left: 5px;
