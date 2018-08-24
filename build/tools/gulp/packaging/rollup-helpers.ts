@@ -15,6 +15,7 @@ const ROLLUP_GLOBALS = {
     '@angular/common': 'ng.common',
     '@angular/forms': 'ng.forms',
     '@angular/http': 'ng.http',
+    '@angular/common/http': 'ng.http',
     '@angular/router': 'ng.router',
     '@angular/platform-browser': 'ng.platformBrowser',
     '@angular/platform-browser-dynamic': 'ng.platformBrowserDynamic',
@@ -69,6 +70,7 @@ const ROLLUP_GLOBALS = {
     'rxjs/operator/switchMap': 'Rx.Observable.prototype',
     'rxjs/operator/takeUntil': 'Rx.Observable.prototype',
     'rxjs/operator/toPromise': 'Rx.Observable.prototype',
+    'rxjs/operator/concatMap': 'Rx.Observable.concatMap',
 
     //@ngx-translate
     '@ngx-translate': 'ngx.translate',

@@ -2,7 +2,7 @@ import {Component, ElementRef, EventEmitter, Input, NgModule, Output, Renderer2,
 import {AbstractJigsawComponent} from "../common";
 import {JigsawBoxModule} from "../box/index";
 import {JigsawButtonModule} from "../button/button";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {JigsawDraggableModule, JigsawDroppableModule} from "../../directive/dragdrop/index";
@@ -123,7 +123,7 @@ export class JigsawUpload extends AbstractJigsawComponent {
 
 @NgModule({
     imports: [JigsawBoxModule, JigsawButtonModule, PerfectScrollbarModule, JigsawDraggableModule,
-        JigsawDroppableModule, CommonModule, FormsModule],
+        JigsawDroppableModule, CommonModule, FormsModule, HttpClientModule],
     declarations: [JigsawUpload],
     exports: [JigsawUpload]
 })
