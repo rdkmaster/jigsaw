@@ -466,6 +466,5 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         this.fillTabs.unsubscribe();
         this.add.unsubscribe();
         this.remove.unsubscribe();
-        this.editableChange.unsubscribe();
     }
 }

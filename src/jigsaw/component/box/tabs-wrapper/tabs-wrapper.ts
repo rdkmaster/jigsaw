@@ -133,17 +133,27 @@ export class JigsawTabsWrapper implements AfterViewInit {
             if (!pane.content || !pane.content.length) return;
             const contentMetaData = pane.content[0];
             if (contentMetaData.selector != 'j-editable-box') return;
-            contentMetaData.inputs.unshift({ // 放在data属性的前面，data会调用box渲染内容的函数，需要在渲染前准备好其他属性
+            // 放在data属性的前面，data会调用box渲染内容的函数，需要在渲染前准备好其他属性
+            contentMetaData.inputs.unshift({
                 property: 'editable',
                 default: this._$editable
-            })
+            },{
+                property: 'showTabBar',
+                default: this._box.showTabBar
+            });
         });
     }
 
     private _addDefaultTab() {
         const componentMetaData = {
             selector: 'j-editable-box',
-            component: JigsawEditableBox
+            component: JigsawEditableBox,
+            inputs: [
+                {
+                    property: 'showTabBar',
+                    default: this._box.showTabBar
+                }
+            ]
         };
         this.addTab(componentMetaData);
 
