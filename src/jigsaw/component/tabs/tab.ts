@@ -129,7 +129,6 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     }
 
     public set selectedIndex(value: number) {
-        debugger
         if (this._$selectedIndex !== value && typeof value == 'number') {
             this._$selectedIndex = value;
 
@@ -150,7 +149,6 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     public selectedIndexChange = new EventEmitter<number>();
 
     private _handleSelectChange(index) {
-        console.log(111);
         this.selectChange.emit(this._getTabPaneByIndex(index));
         this.selectedIndexChange.emit(index);
 
