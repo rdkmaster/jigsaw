@@ -28,6 +28,10 @@ export class JigsawTabsDemoComponent {
         console.info(value);
     }
 
+    selectedIndexChange($event) {
+        console.log($event);
+    }
+
     public lineBarGraphData: LineGraphData;
 
     constructor(http: HttpClient) {
