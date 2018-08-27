@@ -108,6 +108,7 @@ export class JigsawTabsWrapper implements AfterViewInit {
                 componentRef.instance[input.property] = input.default;
             })
         }
+        // 监听tab里面box的fill/fillTabs事件
         this._listenEvents(componentRef);
     }
 
@@ -162,10 +163,6 @@ export class JigsawTabsWrapper implements AfterViewInit {
             title: 'New Tab',
             content: [componentMetaData]
         });
-
-        // 监听tab里面box的fill/fillTabs事件
-        const insertComponent = this._tabs._tabContents.last._tabItemRef;
-        this._listenEvents(insertComponent);
     }
 
     private _listenEvents(insertComponent) {
