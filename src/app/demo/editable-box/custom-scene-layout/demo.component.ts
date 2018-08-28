@@ -266,6 +266,8 @@ export class CustomSceneLayoutDemoComponent {
         box.addContent([tabsWrapperMetadata]);
     }
 
+    editable: boolean = true;
+
     getModalOptions(): PopupOptions {
         return {
             modal: true, //是否模态

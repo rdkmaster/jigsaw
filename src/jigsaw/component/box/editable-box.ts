@@ -57,8 +57,23 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
         });
     }
 
+    private _editable: boolean = true;
+
     @Input()
-    public editable: boolean = true;
+    public get editable(): boolean {
+        return this._editable;
+    }
+
+    public set editable(value: boolean) {
+        if(this.editable == value) return;
+        this._editable = value;
+        if(!this.parent) {
+            this.editableChange.emit(value);
+        }
+    }
+
+    @Output()
+    public editableChange = new EventEmitter<boolean>();
 
     public blocked: boolean;
 
@@ -72,6 +87,9 @@ export class JigsawEditableBox extends JigsawResizableBoxBase implements AfterVi
 
     @Input()
     public parent: JigsawEditableBox;
+
+    @Input()
+    public showTabBar: boolean;
 
     private _resizeLineWidth: string;
 
