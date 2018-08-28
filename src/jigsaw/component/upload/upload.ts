@@ -68,7 +68,10 @@ export class JigsawUpload extends AbstractJigsawComponent {
         this._$uploadMode = files.length == 1 ? 'single' : 'multiple';
     }
 
-    set _$selectedFileChange(value) {
+    /**
+     * @internal
+     */
+    public _$selectedFileChange() {
         this._$upload();
     }
 
