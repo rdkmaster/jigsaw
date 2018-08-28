@@ -222,8 +222,9 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     public _$contentHeight: string = 'auto';
 
     ngOnInit() {
+        super.ngOnInit();
         if(this.height) {
-            setTimeout(() => {
+            this.callLater(() => {
                 // 等待dom渲染
                 this._$contentHeight = this._elementRef.nativeElement.offsetHeight - 46 + 'px';
             })
