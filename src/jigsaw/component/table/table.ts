@@ -155,18 +155,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         return tableData.data[row][index];
     }
 
-    private _setCellDataByField(field: string, row: number, data: any): void {
-        let [index, tableData] = this._getColumnIndex(field);
-        if (index == -1) {
-            console.error('no cell data found, unable to set, field: ' + field);
-            return;
-        }
-        if (!tableData.data[row]) {
-            tableData.data[row] = [];
-        }
-        tableData.data[row][index] = data;
-    }
-
     /**
      * @internal
      */
@@ -216,7 +204,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
                 const cellDataGenerator = TableUtils.getGenerator(columnDefine, 'data');
                 if (cellDataGenerator) {
-                    // 根据cell的data函数，生成新的cellData，并更新tableData
                     settings.cellData = cellDataGenerator(this.data, rowIndex, realColIndex, this._additionalData);
                 } else if (columnDefine.cell && typeof columnDefine.cell.data == 'string') {
                     settings.cellData = columnDefine.cell.data;
