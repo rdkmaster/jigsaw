@@ -1,3 +1,73 @@
+## v1.1.10 (2018-9-3)
+
+### 新特性 / New Features
+- editable-box增加加入tab-wrapper的操作按钮
+- 新增 jigsaw-button-bar 组件
+- 增加 jigsaw-icon 组件
+
+### 破坏性修改 / Breaking Changes
+- 无
+
+###  优化 / Modified
+- [优化]tab wrapper 添加 editableChange的监听
+
+### 修复 / Fixes
+- tab无法监听selectedIndexChange和selectedChange事件 fixes #708
+- upload的input：file文件上传无法在低版本的chrome上监听ngModelChange fixes #710
+- 将upload组件添加到公共api里去
+- ZTreeSettingCheck类型修正
+- 修复list option有蒙层，导致option内部元素无法交互 fixes #700 
+
+## v1.1.9 (2018-8-16)
+
+### 新特性 / New Features
+- 新增jigsaw-auto-complete-input组件
+- 增加 graph data factory: GraphData.of()
+- fixes #691 现在支持设置tabs的height属性，content部分会自动计算出一个固定的高度，并随高度出滚动条，tabs不设height属性时默认随内容改变
+
+### 破坏性修改 / Breaking Changes
+- 无
+
+###  优化 / Modified
+- 增加LineBarGraphData类，保持向下兼容
+- 表格在update的时候，自动标记已经设置的选中行
+
+### 修复 / Fixes
+- fixes #674 解决table data刷新时， additionalData 和渲染器里面的tableData没有刷新的问题，现在additionalData 需要调reset方法手动刷新，渲染器里面的tableData会自动刷新
+
+## v1.1.8 (2018-8-4)
+
+### 新特性 / New Features
+- 新增了jigsaw-cascade级联选择组件
+- 新增了jigsaw-numeric-input数字输入组件
+- Table组件支持直接将单元格的内容按照html方式来渲染，为单元格增加超链更简单了
+- 增加了jigsaw-radios-lite组件
+- 增加了jigsaw-tile-lite组件
+- array-collection支持直接对字符串进行搜索
+- box支持固定尺寸子组件自动冻结无法resize尺寸的功能
+- 新增上传文件组件
+- 新增多种图形数据
+
+### 破坏性修改 / Breaking Changes
+- 在增加了多种图形数据过程中，对少部分原有的GraphData做了不兼容调整，这些数据对象均未在文档中提及，因此估计未被外部知晓，影响范围有限。
+
+###  优化 / Modified
+- combo组件的trigger增加了none类型，用于完全通过编码方式控制combo下拉的开关
+- 给Graph组件添加了一个x轴太长的解决方案的dome
+- ZTreeSettingEditDrag优化，`prev` `next` `inner`属性增加了函数类型的支持
+- 分页组件支持一键清除文本框内容
+- 优化select组件在某个条目很长时的界面显示
+- 表格支持列头渲染器实时刷新
+- 按钮组件样式优化：使用height替代min-height
+- box的reisze线实现优化，解决某些情况下resize线计算错误
+- GraphData优化，将echartOptions属性改为public的
+- 优化box组件渲染过程中，消除子组件的跳动
+- ztree支持更多的事件
+
+### 修复 / Fixes
+- radio组件样式优化，解决啊awade里显示不正常的问题
+- 解决list使用字符串数组搜索时，option的选中状态失效的问题
+
 ## v1.1.7 (2018-4-19)
 
 ### 新特性 / New Features
