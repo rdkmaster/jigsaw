@@ -24,6 +24,9 @@ export class JigsawUpload extends AbstractJigsawComponent {
     }
 
     @Input()
+    public fileType: string;
+
+    @Input()
     public multiple: boolean = true;
 
     public _$uploadMode: 'select' | 'single' | 'multiple' = 'select';
