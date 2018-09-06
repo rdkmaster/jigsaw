@@ -1,0 +1,24 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>Box</h2>
+    <div class="demo-1 live-demo">
+        <h3>ViewInit事件</h3>
+        <p class="comment">ViewInit事件是box框架初始化完成，即整个布局初始化完成。有时graph会在box渲染完成之前先渲染，
+            导致graph的尺寸和box最终的尺寸不一致。这个时候可以监听box的ViewInit事件来进行resize</p>
+        <j-box height="400">
+            <j-box>
+                <jigsaw-graph [data]="lineBarData"></jigsaw-graph>
+            </j-box>
+            <j-box>
+                <jigsaw-graph [data]="lineBarData"></jigsaw-graph>
+            </j-box>
+        </j-box>
+    </div>
+</div>
+
+
