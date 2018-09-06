@@ -23,6 +23,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
 
     public static resizeEnd = new EventEmitter();
     public static resizeStart = new EventEmitter();
+    public static viewInit = new EventEmitter();
 
     @Input()
     public resizable: boolean;
@@ -169,6 +170,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
 
         this.callLater(() => {
             this._$isFlicker = false;
+            if(!this.parent) JigsawBox.viewInit.emit();
         });
     }
 
