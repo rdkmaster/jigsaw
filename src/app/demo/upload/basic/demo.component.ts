@@ -5,6 +5,12 @@ import {UploadFileInfo} from "jigsaw/component/upload/upload";
     templateUrl: './demo.component.html'
 })
 export class uploadDemoComponent {
+    fileType = ['.png'];
+
+    fileTypes = ['.png', '.docx', '.json', '.png, .jpg'];
+
+    multiple: boolean;
+
     getUploadFile(fileInfo: UploadFileInfo) {
         console.log(fileInfo);
     }
