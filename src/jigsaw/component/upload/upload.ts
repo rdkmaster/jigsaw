@@ -24,6 +24,9 @@ export class JigsawUpload extends AbstractJigsawComponent {
     }
 
     @Input()
+    public fileType: string;
+
+    @Input()
     public multiple: boolean = true;
 
     public _$uploadMode: 'select' | 'single' | 'multiple' = 'select';
@@ -87,16 +90,21 @@ export class JigsawUpload extends AbstractJigsawComponent {
         this._http.post('/rdk/service/common/upload', formData, {responseType: 'text'}).subscribe(res => {
             fileInfo.state = 'success';
             fileInfo.url = res;
-            this.process.emit(fileInfo);
-            const waitedFile = this._$fileInfoList.find(f => f.state == 'pause');
-            if(waitedFile) {
-                this._sequenceUpload(waitedFile)
-            } else if(this._isAllFilesUploaded()) {
-                this.complete.emit(this._$fileInfoList);
-            }
+            this._afterCurFileUploaded(fileInfo);
         }, err => {
-            fileInfo.state = 'error'
+            fileInfo.state = 'error';
+            this._afterCurFileUploaded(fileInfo);
         });
+    }
+
+    private _afterCurFileUploaded(fileInfo: UploadFileInfo) {
+        this.process.emit(fileInfo);
+        const waitingFile = this._$fileInfoList.find(f => f.state == 'pause');
+        if(waitingFile) {
+            this._sequenceUpload(waitingFile)
+        } else if(this._isAllFilesUploaded()) {
+            this.complete.emit(this._$fileInfoList);
+        }
     }
 
     public _$fileDragEnterHandle(dragInfo: DragDropInfo) {
