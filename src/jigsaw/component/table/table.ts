@@ -348,7 +348,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     @Output()
-    public tableDataChange = new EventEmitter<TableDataChangeEvent>();
+    public edit = new EventEmitter<TableDataChangeEvent>();
 
     @Input()
     public columnDefines: ColumnDefine[] | ColumnDefineGenerator;
