@@ -345,12 +345,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (!this._removeAdditionalDataRefresh) {
             this._removeAdditionalDataRefresh = this._additionalData.onRefresh(this.update, this);
         }
-
-        this.dataChange.emit()
     }
 
     @Output()
-    public dataChange = new EventEmitter<TableDataChangeEvent>();
+    public tableDataChange = new EventEmitter<TableDataChangeEvent>();
 
     @Input()
     public columnDefines: ColumnDefine[] | ColumnDefineGenerator;

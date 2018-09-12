@@ -4,6 +4,6 @@
 
 
 <!-- start to learn the demo from here -->
-<jigsaw-table [data]="tableData" [columnDefines]="columns" (dataChange)="onCellChange($event)" height="500px"></jigsaw-table>
+<jigsaw-table [data]="tableData" [columnDefines]="columns" (tableDataChange)="onCellChange($event)" height="500px"></jigsaw-table>
 
 更改数据的信息： {{changeMsg}}
