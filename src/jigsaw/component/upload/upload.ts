@@ -24,6 +24,9 @@ export class JigsawUpload extends AbstractJigsawComponent {
     }
 
     @Input()
+    public targetUrl: string = '/rdk/service/common/upload';
+
+    @Input()
     public fileType: string;
 
     @Input()
@@ -63,7 +66,7 @@ export class JigsawUpload extends AbstractJigsawComponent {
         Array.from(files).forEach((file: File, index) => {
             const fileInfo: UploadFileInfo = {name: file.name, state: 'pause', url: '', file: file};
             this._$fileInfoList.push(fileInfo);
-            if(index < 5) {
+            if (index < 5) {
                 this._sequenceUpload(fileInfo);
             }
         });
@@ -87,7 +90,7 @@ export class JigsawUpload extends AbstractJigsawComponent {
         const formData = new FormData();
         formData.append('file', fileInfo.file);
         formData.append("filename", encodeURI(fileInfo.file.name));
-        this._http.post('/rdk/service/common/upload', formData, {responseType: 'text'}).subscribe(res => {
+        this._http.post(this.targetUrl, formData, {responseType: 'text'}).subscribe(res => {
             fileInfo.state = 'success';
             fileInfo.url = res;
             this._afterCurFileUploaded(fileInfo);
@@ -100,9 +103,9 @@ export class JigsawUpload extends AbstractJigsawComponent {
     private _afterCurFileUploaded(fileInfo: UploadFileInfo) {
         this.process.emit(fileInfo);
         const waitingFile = this._$fileInfoList.find(f => f.state == 'pause');
-        if(waitingFile) {
+        if (waitingFile) {
             this._sequenceUpload(waitingFile)
-        } else if(this._isAllFilesUploaded()) {
+        } else if (this._isAllFilesUploaded()) {
             this.complete.emit(this._$fileInfoList);
         }
     }
