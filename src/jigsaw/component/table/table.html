@@ -38,7 +38,7 @@
                     [attr.rowspan]="cell.rowSpan > 1 ? cell.rowSpan : null"
                     [style.display]="cell.rowSpan ? 'table-cell' : 'none'"
                     class="{{cell.clazz}} {{cell.tooltip ? 'jigsaw-table-line-ellipsis': ''}}">
-                    <div [ngSwitch]="cell.renderer">
+                    <ng-container [ngSwitch]="cell.renderer">
                         <div *ngSwitchCase="null || undefined" class="jigsaw-table-cell-content">
                             <span class="jigsaw-table-cell-text" title="{{cell.tooltip ? cell.tooltip : ''}}">{{cell.cellData}}</span>
                         </div>
@@ -58,7 +58,7 @@
                                            [rowSpan]="cell.rowSpan"
                                            (edit)="dataChange.emit($event)">
                         </jigsaw-table-cell>
-                    </div>
+                    </ng-container>
                 </td>
             </tr>
             </tbody>
