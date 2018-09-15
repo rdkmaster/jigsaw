@@ -8,7 +8,7 @@ export class CascadeCrossSelectDemoComponent {
     constructor(private cd: ChangeDetectorRef) {
     }
 
-    areas = require('../../../../mock-data/tree-data.json');
+    areas = require('mock-data/tree-data.json');
     selectedArea: any;
 
     onChange(selectedItems) {
