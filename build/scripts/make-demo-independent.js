@@ -218,9 +218,27 @@ function fixDemoComponentTs(component, moduleCode) {
             return found.replace(/@Component\s*\(\s*\{/, '@Component({\n    selector: "jigsaw-live-demo",');
         });
 
-    // 处理description变量
-    component.code = component.code.replace(/require\s*\(\s*["']!!raw-loader!\s*.*\/readme.md["']\s*\)/,
-                                            '"## 本DEMO的详细描述在readme.md中 ##"');
+    var requiredFiles = [];
+    // 处理代码中的 require mock data 部分，将真实的数据替换掉require引用
+    component.code = component.code.replace(/\brequire\s*\(\s*["']\s*(.*?\.(.*?))\s*["']\s*\)/g,
+        function(found, file, ext) {
+            if (file.match(/!!raw-loader!\s*.*\/readme\.md$/)) {
+                // 这里是description里，引用read me，不需要处理
+                return '"## 本DEMO的详细描述在readme.md中 ##"';
+            }
+
+            var requiredFile = readCode(`${__dirname}/../../src/${file}`);
+            if (ext.toLowerCase() == 'json') {
+                // JSON文件去掉格式，等于压缩一下
+                requiredFile = JSON.stringify(JSON.parse(requiredFile));
+            }
+            requiredFiles.push(requiredFile);
+            return 'requiredFile' + requiredFiles.length + '; // ' + found;
+        });
+
+    requiredFiles.forEach(function(requiredFile, index) {
+        component.code += '\n\nconst requiredFile' + (index+1) + ' = ' + requiredFile;
+    });
 }
 
 // 转变demo.module.ts文件
