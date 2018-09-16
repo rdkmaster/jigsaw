@@ -160,6 +160,8 @@ function fixImport(code) {
             imports.forEach(item => {
                 if (!!item) jigsawImports.push(item)
             });
+        } else if (match[1].includes('AjaxInterceptor')) {
+            rawImports.push('import {AjaxInterceptor} from "../app.interceptor"');
         } else {
             rawImports.push(match[0]);
         }
@@ -233,7 +235,7 @@ function fixDemoComponentTs(component, moduleCode) {
                 requiredFile = JSON.stringify(JSON.parse(requiredFile));
             }
             requiredFiles.push(requiredFile);
-            return 'requiredFile' + requiredFiles.length + '; // ' + found;
+            return 'requiredFile' + requiredFiles.length + '; // ' + file;
         });
 
     requiredFiles.forEach(function(requiredFile, index) {
