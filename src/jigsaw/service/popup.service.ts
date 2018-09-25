@@ -599,4 +599,27 @@ export class PopupService {
             return result;
         }
     }
+
+    /**
+     * 计算弹窗的位置，是向上弹，还是向下弹
+     * @param {HTMLElement} targetElement
+     * @param {PopupPositionValue} pos
+     * @param {HTMLElement} popupElement
+     * @returns {PopupPositionValue}
+     */
+    public smartPositionReviser(targetElement: HTMLElement, pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue {
+        const upDelta = targetElement.offsetHeight + popupElement.offsetHeight;
+        if (document.body.clientHeight <= upDelta) {
+            //可视区域比弹出的UI高度还小就不要调整了
+            return pos;
+        }
+
+        const needHeight = pos.top + popupElement.offsetHeight;
+        const totalHeight = window.scrollY + document.body.clientHeight;
+        if (needHeight >= totalHeight && pos.top > upDelta) {
+            //下方位置不够且上方位置足够的时候才做调整
+            pos.top -= upDelta;
+        }
+        return pos;
+    }
 }

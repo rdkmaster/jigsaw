@@ -281,19 +281,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
                 top: this._elementRef.nativeElement.offsetHeight
             },
             posReviser: (pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue => {
-                const upDelta = this._elementRef.nativeElement.offsetHeight + popupElement.offsetHeight;
-                if (document.body.clientHeight <= upDelta) {
-                    //可视区域比弹出的UI高度还小就不要调整了
-                    return pos;
-                }
-
-                const needHeight = pos.top + popupElement.offsetHeight;
-                const totalHeight = document.body.scrollTop + document.body.clientHeight;
-                if (needHeight >= totalHeight && pos.top > upDelta) {
-                    //下方位置不够且上方位置足够的时候才做调整
-                    pos.top -= upDelta;
-                }
-                return pos;
+                return this._popupService.smartPositionReviser(this._elementRef.nativeElement, pos, popupElement);
             },
             size: {
                 minWidth: this._elementRef.nativeElement.offsetWidth
