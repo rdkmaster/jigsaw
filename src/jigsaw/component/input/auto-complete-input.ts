@@ -1,11 +1,20 @@
 import {
-    ChangeDetectorRef, Component, ElementRef, forwardRef, Input, NgModule, OnDestroy, OnInit, Renderer2, TemplateRef,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    forwardRef,
+    Input,
+    NgModule,
+    OnDestroy,
+    OnInit,
+    Renderer2,
+    TemplateRef,
     ViewChild
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {JigsawInput, JigsawInputModule} from "./input";
-import {PopupInfo, PopupOptions, PopupService} from "../../service/popup.service";
+import {PopupInfo, PopupOptions, PopupPositionValue, PopupService} from "../../service/popup.service";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {CommonUtils} from "../../core/utils/common-utils";
 
@@ -70,7 +79,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
         } else {
             this._$data = value;
         }
-        [ ...this._bakData] = this._$data;
+        [...this._bakData] = this._$data;
     }
 
     @ViewChild('dropdownTemp')
@@ -139,8 +148,13 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
             const popupOptions: PopupOptions = {
                 modal: false,
                 pos: event.currentTarget,
-                posOffset: {top: 35},
-                size: {width: event.target.offsetWidth}
+                posOffset: {top: event.target.offsetHeight},
+                size: {width: event.target.offsetWidth},
+                posReviser: (pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue => {
+                    return this._popupService.verticalPositionReviser(pos, popupElement, {
+                        offsetHeight: event.target.offsetHeight
+                    });
+                }
             };
             this._propertyListPopup = this._popupService.popup(this._dropdownTemp, popupOptions);
             this._isPropertyListPopped = true;
