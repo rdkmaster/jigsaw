@@ -601,14 +601,10 @@ export class PopupService {
     }
 
     /**
-     * 计算弹窗的位置，是向上弹，还是向下弹
-     * @param {HTMLElement} targetElement
-     * @param {PopupPositionValue} pos
-     * @param {HTMLElement} popupElement
-     * @returns {PopupPositionValue}
+     * 计算弹窗的位置，是向上弹，还是向下弹, 默认向下弹出
      */
-    public smartPositionReviser(targetElement: HTMLElement, pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue {
-        const upDelta = targetElement.offsetHeight + popupElement.offsetHeight;
+    public verticalPositionReviser(pos: PopupPositionValue, popupElement: HTMLElement, options?: any): PopupPositionValue {
+        const upDelta = (options && options.offsetHeight ? options.offsetHeight : 0) + popupElement.offsetHeight;
         if (document.body.clientHeight <= upDelta) {
             //可视区域比弹出的UI高度还小就不要调整了
             return pos;
