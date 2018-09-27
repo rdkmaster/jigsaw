@@ -47,7 +47,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef,
                 private _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef) {
         super();
-        console.log(CommonUtils.getBrowserType());
         if(CommonUtils.getBrowserType() == 'Firefox') {
             this._$isFFBrowser = true;
         }
