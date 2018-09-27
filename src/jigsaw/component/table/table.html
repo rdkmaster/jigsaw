@@ -31,6 +31,11 @@
             <colgroup>
                 <col *ngFor="let head of _$headerSettings;" width="{{head.width}}">
             </colgroup>
+            <thead *ngIf="_$isFFBrowser">
+            <tr>
+                <td *ngFor="let head of _$headerSettings;" class="{{head.clazz}}"></td>
+            </tr>
+            </thead>
             <tbody>
             <tr #tableRow *ngFor="let row of _$cellSettings; index as rowIndex"
                 (click)="_$selectRow(rowIndex)" (dblclick)="_$handleRowDoubleClick(rowIndex)">

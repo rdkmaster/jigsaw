@@ -16,7 +16,12 @@ export class TableBasicDemoComponent {
                     "$320,00",
                     "2011/04/25",
                     "Edinburgh",
-                    "542"
+                    "542",
+                    "111wwww2rfrrrrtt5yy5",
+                    "111wwww2rfrrrrtt5yy5",
+                    "111wwww2rfrrrrtt5yy5",
+                    "111wwww2rfrrrrtt5yy5",
+                    "111wwww2rfrrrrtt5yy5"
                 ],
                 [
                     "Garrett Winflters1",
@@ -24,7 +29,12 @@ export class TableBasicDemoComponent {
                     "$170,7",
                     "2011/07/25",
                     "Tokyo",
-                    "8422"
+                    "8422",
+                    "111wwww2rfrrrrtt5yy5",
+                    "111wwww2rfrrrrtt5yy5",
+                    "111wwww2rfrrrrtt5yy5",
+                    "111wwww2rfrrrrtt5yy5",
+                    "111wwww2rfrrrrtt5yy5"
                 ],
                 [
                     "Tiger Nixon2",
@@ -32,7 +42,12 @@ export class TableBasicDemoComponent {
                     "$320,8000",
                     "2011/04/25",
                     "Edinburgh",
-                    "5421"
+                    "5421",
+                    "111wwww2rfrrrrtt5yy5",
+                    "111wwww2rfrrrrtt5yy5",
+                    "111wwww2rfrrrrtt5yy5",
+                    "111wwww2rfrrrrtt5yy5",
+                    "111wwww2rfrrrrtt5yy5"
                 ],
                 [
                     "Garrett Winslters1",
@@ -40,7 +55,12 @@ export class TableBasicDemoComponent {
                     "$170,7",
                     "2011/07/25",
                     "Tokyo",
-                    "8422"
+                    "8422",
+                    "111wwww2rfrrrrtt5yy5",
+                    "111wwww2rfrrrrtt5yy5",
+                    "111wwww2rfrrrrtt5yy5",
+                    "111wwww2rfrrrrtt5yy5",
+                    "111wwww2rfrrrrtt5yy5"
                 ],
                 [
                     "Tiger Nixon2",
@@ -48,123 +68,16 @@ export class TableBasicDemoComponent {
                     "$320,8000",
                     "2011/04/25",
                     "Edinburgh",
-                    "5421"
-                ],
-                [
-                    "Garrett Winflters1",
-                    "Accountant",
-                    "$170,7",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
-                ],
-                [
-                    "Tiger Nixon2",
-                    "System Arcfhitect",
-                    "$320,8000",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ],
-                [
-                    "Garrett Winflters1",
-                    "Accountant",
-                    "$170,7",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
-                ],
-                [
-                    "Tiger Nixon2",
-                    "System Arcfhitect",
-                    "$320,8000",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ],
-                [
-                    "Garrett Wintsers2",
-                    "Accountant",
-                    "$170,50",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
-                ],
-                [
-                    "Tigser Nixon3",
-                    "System Architect",
-                    "$320,800",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ],
-                [
-                    "Tiger Nixon3",
-                    "System Architect",
-                    "$3,800",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ],
-                [
-                    "Tiger Nixon3",
-                    "System Architect",
-                    "$320,800",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ],
-                [
-                    "Tiger Nixon1",
-                    "System Architect",
-                    "$320,80",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "542111"
-                ],
-                [
-                    "Garrett Winters1",
-                    "Accountant",
-                    "$170,750",
-                    "2011/07/25",
-                    "Tokyo",
-                    "84212"
-                ],
-                [
-                    "Tiger Nixon2",
-                    "System Architect",
-                    "$320,800",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ],
-                [
-                    "Tigesr Nixon1",
-                    "System Architect",
-                    "$320,800",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ],
-                [
-                    "Garretst Winters1",
-                    "Accountant",
-                    "$170,750",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
-                ],
-                [
-                    "Tigers Nixon2",
-                    "System Architect",
-                    "$320,800",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
+                    "5421",
+                    "111wwww2rfrrrrtt5yy5",
+                    "111wwww2rfrrrrtt5yy5",
+                    "111wwww2rfrrrrtt5yy5",
+                    "111wwww2rfrrrrtt5yy5",
+                    "111wwww2rfrrrrtt5yy5"
                 ]
             ],
-            ["name", "position", "salary", "enroll-date", "office", "extn"],
-            ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
+            ["name", "position", "salary", "enroll-date", "office", "extn", "test1", "test2", "test3", "test4", "test5"],
+            ["姓名", "职位", "薪资", "入职日期", "部门", "其他", "测试测试测试测试1", "测试测试测试测试2", "测试测试测试测试3", "测试测试测试测试4", "测试测试测试测试5"]);
     }
 
     // ====================================================================
