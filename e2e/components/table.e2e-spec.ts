@@ -47,8 +47,8 @@ describe('table', () => {
             await waitForPresence('.jigsaw-table-sort-up');
             const tableSortUp = element(by.css('.jigsaw-table-sort-up')),
                 tableSortDown = element(by.css('.jigsaw-table-sort-down')),
-                columnFirstEl = element(by.css('.jigsaw-table-body')).all(by.tagName('TR')).first().all(by.tagName('TD')).get(0),
-                columnlastEl = element(by.css('.jigsaw-table-body')).all(by.tagName('TR')).last().all(by.tagName('TD')).get(0);
+                columnFirstEl = element(by.css('.jigsaw-table-body tbody')).all(by.tagName('TR')).first().all(by.tagName('TD')).get(0),
+                columnlastEl = element(by.css('.jigsaw-table-body tbody')).all(by.tagName('TR')).last().all(by.tagName('TD')).get(0);
             expect(columnFirstEl.getText()).toBe('Michelle');
             expect(columnlastEl.getText()).toBe('Dave');
             tableSortUp.click();
@@ -74,7 +74,7 @@ describe('table', () => {
             browser.get('/table/column-group');
         });
         it('should set column group', async () => {
-            const canBeGroupEl = element(by.css('.jigsaw-table-body')).all(by.tagName('TR')).get(3).all(by.tagName('TD')).get(2);
+            const canBeGroupEl = element(by.css('.jigsaw-table-body tbody')).all(by.tagName('TR')).get(3).all(by.tagName('TD')).get(2);
             await waitForPresence('.jigsaw-table-cell-content');
             expect(canBeGroupEl.getAttribute('rowspan')).toBe('2');
         })
@@ -85,13 +85,13 @@ describe('table', () => {
             const pagingItems = $$('jigsaw-paging-item'),
                 selectedInfo = $('.demo-1').$$('p'),
                 tags = $$('j-tag');
-            let tr = element(by.css('.jigsaw-table-body')).all(by.tagName('TR'));
+            let tr = element(by.css('.jigsaw-table-body tbody')).all(by.tagName('TR'));
             await browser.wait(ExpectedConditions.textToBePresentInElement(tr.get(0).$$('td').get(1), 'Michelle'));
             await tr.get(1).$('jigsaw-checkbox').click();
             expect(await selectedInfo.get(0).getText()).toBe('当页前选中的行索引：1');
             await pagingItems.get(2).click();
             await browser.wait(ExpectedConditions.textToBePresentInElement(tr.get(0).$$('td').get(1), 'Rachel'));
-            await element(by.css('.jigsaw-table-body')).all(by.tagName('TR')).get(4).$('jigsaw-checkbox').click();
+            await element(by.css('.jigsaw-table-body tbody')).all(by.tagName('TR')).get(4).$('jigsaw-checkbox').click();
             expect(await selectedInfo.get(0).getText()).toBe('当页前选中的行索引：4');
             expect(await tags.get(0).$("span").getText()).toBe('Mignon');
             expect(await tags.get(1).$("span").getText()).toBe('Isidore');
