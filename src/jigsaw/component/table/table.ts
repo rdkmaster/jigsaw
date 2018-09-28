@@ -38,7 +38,8 @@ import {JigsawTrustedHtmlModule} from "../../directive/trusted-html/trusted-html
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[class.jigsaw-table-host]': 'true'
+        '[class.jigsaw-table-host]': 'true',
+        '[class.jigsaw-table-ff]': '_$isFFBrowser'
     },
 })
 export class JigsawTable extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -46,7 +47,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef,
                 private _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef) {
         super();
+        if(CommonUtils.getBrowserType() == 'Firefox') {
+            this._$isFFBrowser = true;
+        }
     }
+
+    public _$isFFBrowser;
 
     @Input()
     public get width(): string {
@@ -553,59 +559,69 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @private
      */
     private _calculateContentWidth() {
-        if (this.contentWidth == 'auto') {
-            const host = this._elementRef.nativeElement;
-            host.querySelectorAll('table').forEach(table => {
-                this._renderer.setStyle(table, 'table-layout', 'auto');
-            });
+        const host = this._elementRef.nativeElement;
+        const tHeadColGroup = host.querySelectorAll('.jigsaw-table-header colgroup col');
+        const tBodyColGroup = host.querySelectorAll('.jigsaw-table-body colgroup col');
+        const tHeadTds = host.querySelectorAll('.jigsaw-table-header thead td');
+        const tBodyTds = host.querySelectorAll('.jigsaw-table-body thead td');
+        if(this.contentWidth != 'auto' || !tHeadColGroup || !tHeadColGroup.length) return;
 
-            // 设置表头随内容撑开
-            this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', 'auto');
-            this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'white-space', 'nowrap');
+        host.querySelectorAll('table').forEach(table => {
+            this._renderer.setStyle(table, 'table-layout', 'auto');
+        });
 
-            this._renderer.setStyle(host.querySelector('.jigsaw-table-body'), 'width', 'auto');
-            this._renderer.setStyle(host.querySelector('.jigsaw-table-body-range'), 'width', '100%');
+        // 设置表头随内容撑开
+        this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', 'auto');
+        this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'white-space', 'nowrap');
 
-            const tHeadColGroup = host.querySelectorAll('.jigsaw-table-header colgroup col');
-            const tBodyColGroup = host.querySelectorAll('.jigsaw-table-body colgroup col');
-            const widthStorage = [];
+        this._renderer.setStyle(host.querySelector('.jigsaw-table-body'), 'width', 'auto');
+        this._renderer.setStyle(host.querySelector('.jigsaw-table-body-range'), 'width', '100%');
 
-            // 清空col的width
-            tHeadColGroup.forEach(col => col.setAttribute('width', ''));
-            tBodyColGroup.forEach(col => col.setAttribute('width', ''));
+        const widthStorage = [];
 
-            host.querySelectorAll('.jigsaw-table-body tbody tr:first-child td')
-                .forEach(td => widthStorage.push(td.offsetWidth));
-
-            if (widthStorage.length) {
-                host.querySelectorAll('.jigsaw-table-header thead tr:first-child td')
-                    .forEach((td, index) => {
-                        if (td.offsetWidth > widthStorage[index]) {
-                            widthStorage[index] = td.offsetWidth;
-                        }
-                    });
-            } else {
-                host.querySelectorAll('.jigsaw-table-header thead tr:first-child td')
-                    .forEach(td => {
-                        widthStorage.push(td.offsetWidth);
-                    });
-            }
-
-            widthStorage.forEach((width, index) => {
-                // columnDefine定义过的列宽不会被覆盖
-                const colWidth = this._$headerSettings && this._$headerSettings[index].width ? this._$headerSettings[index].width : width;
-                tHeadColGroup[index].setAttribute('width', colWidth);
-                tBodyColGroup[index].setAttribute('width', colWidth);
-            });
-
-            // 还原
-            host.querySelectorAll('table').forEach(table => {
-                this._renderer.setStyle(table, 'table-layout', 'fixed');
-            });
-            this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', '100%');
-            this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'white-space', 'normal');
-            this._renderer.setStyle(host.querySelector('.jigsaw-table-body'), 'width', '100%');
+        // 清空col的width
+        tHeadColGroup.forEach(col => col.setAttribute('width', ''));
+        tBodyColGroup.forEach(col => col.setAttribute('width', ''));
+        if(this._$isFFBrowser) {
+            tHeadTds.forEach(col => col.setAttribute('width', ''));
+            tBodyTds.forEach(col => col.setAttribute('width', ''));
         }
+
+        host.querySelectorAll('.jigsaw-table-body tbody tr:first-child td')
+            .forEach(td => widthStorage.push(td.offsetWidth));
+
+        if (widthStorage.length) {
+            host.querySelectorAll('.jigsaw-table-header thead tr:first-child td')
+                .forEach((td, index) => {
+                    if (td.offsetWidth > widthStorage[index]) {
+                        widthStorage[index] = td.offsetWidth;
+                    }
+                });
+        } else {
+            host.querySelectorAll('.jigsaw-table-header thead tr:first-child td')
+                .forEach(td => {
+                    widthStorage.push(td.offsetWidth);
+                });
+        }
+
+        widthStorage.forEach((width, index) => {
+            // columnDefine定义过的列宽不会被覆盖
+            const colWidth = this._$headerSettings && this._$headerSettings[index].width ? this._$headerSettings[index].width : width;
+            tHeadColGroup[index].setAttribute('width', colWidth);
+            tBodyColGroup[index].setAttribute('width', colWidth);
+            if(this._$isFFBrowser) {
+                tHeadTds[index].setAttribute('width', colWidth);
+                tBodyTds[index].setAttribute('width', colWidth);
+            }
+        });
+
+        // 还原
+        host.querySelectorAll('table').forEach(table => {
+            this._renderer.setStyle(table, 'table-layout', 'fixed');
+        });
+        this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', '100%');
+        this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'white-space', 'normal');
+        this._renderer.setStyle(host.querySelector('.jigsaw-table-body'), 'width', '100%');
     }
 
     /**
