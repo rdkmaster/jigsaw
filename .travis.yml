@@ -5,6 +5,7 @@ node_js:
 
 branches:
   - master
+  - v1.1
   - plunker-live-demo-test
 env:
   global:
