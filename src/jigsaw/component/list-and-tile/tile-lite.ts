@@ -30,9 +30,6 @@ export class JigsawTileLite extends AbstractJigsawGroupLiteComponent {
 
     @Input()
     public optionHeight: number | string;
-
-    @Input()
-    public valid: boolean = true;
 }
 
 @NgModule({

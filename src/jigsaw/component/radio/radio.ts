@@ -28,9 +28,6 @@ import {CommonUtils} from "../../core/utils/common-utils";
 export class JigsawRadioGroup extends AbstractJigsawGroupComponent {
 
     @Input()
-    public valid: boolean = true;
-
-    @Input()
     public get value(): any {
         return this.selectedItems && this.selectedItems.length != 0 ? this.selectedItems[0] : null;
     }

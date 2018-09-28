@@ -21,9 +21,6 @@ import {AbstractJigsawGroupComponent} from "./group-common";
     ]
 })
 export class JigsawList extends AbstractJigsawGroupComponent implements AfterContentInit {
-    @Input()
-    public valid: boolean = true;
-
     // 默认单选
     public multipleSelect: boolean = false;
 

@@ -82,8 +82,6 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
      */
     @Input() public optionCount: number;
 
-    @Input() public valid: boolean = true;
-
     @ViewChildren(JigsawListOption) private _listOptions: QueryList<JigsawListOption>;
 
     /**

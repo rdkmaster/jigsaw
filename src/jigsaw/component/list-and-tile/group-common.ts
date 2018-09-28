@@ -13,6 +13,9 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
 
     protected _removeRefreshCallback: CallbackRemoval;
 
+    @Input()
+    public valid: boolean = true;
+
     //设置对象的标识
     private _trackItemBy: string[] = [];
 

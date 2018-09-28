@@ -18,9 +18,6 @@ import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "./gro
     ]
 })
 export class JigsawTile extends AbstractJigsawGroupComponent {
-    @Input()
-    public valid: boolean = true;
-
     // 默认多选
     public multipleSelect: boolean = true;
 
