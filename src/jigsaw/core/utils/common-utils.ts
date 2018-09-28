@@ -290,6 +290,26 @@ export class CommonUtils {
     public static isIE(): boolean {
         return !!navigator.userAgent.match(/MSIE|Trident/g);
     }
+
+    public static getBrowserType(): string {
+        if(navigator.userAgent.indexOf("MSIE")!=-1) {
+            return "MSIE";
+        }
+        if(navigator.userAgent.indexOf("Firefox")!=-1){
+            return "Firefox";
+        }
+        if(navigator.userAgent.indexOf("Chrome")!=-1){
+            return "Chrome";
+        }
+        if(navigator.userAgent.indexOf("Safari")!=-1) {
+            return "Safari";
+        }
+        if(navigator.userAgent.indexOf("Opera")!=-1){
+            return "Opera";
+        }
+        return null;
+    }
+
 }
 
 export type CallbackRemoval = () => void;

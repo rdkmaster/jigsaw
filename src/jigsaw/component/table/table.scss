@@ -80,6 +80,11 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
         height: 160px;
         border: 1px solid $border-color-base;
     }
+
+    .#{$table-prefix-cls}-ff & {
+        border-left: 1px solid $border-color-base;
+        border-right: 1px solid $border-color-base;
+    }
 }
 
 .#{$table-prefix-cls}-auto-width {
@@ -93,6 +98,13 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.#{$table-prefix-cls}-body {
+    thead td{
+        height: 0 !important;
+        border: none;
+    }
 }
 
 @-moz-document url-prefix() {

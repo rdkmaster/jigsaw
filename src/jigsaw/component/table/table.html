@@ -26,11 +26,17 @@
     <div #bodyScrollbar class="jigsaw-table-body-range" [style.width]="contentWidth"
          [class.jigsaw-table-no-data]="!_$cellSettings.length"
          [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, wheelPropagation: true, minScrollbarLength: 20}">
-        <img [style.display]="!!_$cellSettings.length ? 'none' : 'block'" class="jigsaw-table-no-data-img" src="{{_$noDataSrc}}">
+        <img [style.display]="!!_$cellSettings.length ? 'none' : 'block'" class="jigsaw-table-no-data-img"
+             src="{{_$noDataSrc}}">
         <table class="jigsaw-table-body">
             <colgroup>
                 <col *ngFor="let head of _$headerSettings;" width="{{head.width}}">
             </colgroup>
+            <thead *ngIf="_$isFFBrowser">
+            <tr>
+                <td *ngFor="let head of _$headerSettings;" class="{{head.clazz}}"></td>
+            </tr>
+            </thead>
             <tbody>
             <tr #tableRow *ngFor="let row of _$cellSettings; index as rowIndex"
                 (click)="_$selectRow(rowIndex)" (dblclick)="_$handleRowDoubleClick(rowIndex)">
