@@ -82,6 +82,9 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
         [...this._bakData] = this._$data;
     }
 
+    @Input()
+    public valid: boolean = true;
+
     @ViewChild('dropdownTemp')
     private _dropdownTemp: TemplateRef<any>;
 

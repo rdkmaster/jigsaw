@@ -11,6 +11,9 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
     border-radius: $border-radius-base;
     padding: 8px 0px 0px 8px;
     background: $component-background;
+    &.#{$tile-prefix-cls}-error {
+        border-color: $error-color;
+    }
     .#{$tile-prefix-cls}-search {
         margin-bottom: 8px;
         margin-right: 8px;
@@ -57,6 +60,9 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
     .#{$tile-prefix-cls} {
         padding: 0 0;
         border: none;
+        &.#{$tile-prefix-cls}-error {
+            border: 1px solid $error-color;
+        }
     }
     .#{$tile-option-prefix-cls} {
         width: auto;

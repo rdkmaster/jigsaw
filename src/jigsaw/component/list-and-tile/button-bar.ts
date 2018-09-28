@@ -8,7 +8,7 @@ import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
     selector: 'jigsaw-button-bar, j-button-bar',
     template: `
         <j-tile [(selectedItems)]="selectedItems" [trackItemBy]="trackItemBy"
-                [multipleSelect]="false" [height]="height"
+                [multipleSelect]="false" [height]="height" [valid]="valid"
                 (selectedItemsChange)="_$handleSelectChange($event)">
             <j-tile-option #tileOpt *ngFor="let item of data; trackBy: _$trackByFn" [value]="item"
                            [width]="optionWidth" [height]="height" [disabled]="item?.disabled">
@@ -32,6 +32,9 @@ export class JigsawButtonBar extends AbstractJigsawGroupLiteComponent {
 
     @Input()
     public colorType: 'default' | 'primary' | 'warning' | 'error' | 'danger' = 'primary';
+
+    @Input()
+    public valid: boolean = true;
 }
 
 @NgModule({

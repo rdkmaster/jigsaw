@@ -18,13 +18,17 @@ import {CommonUtils} from "../../core/utils/common-utils";
     selector: 'jigsaw-radios, j-radios',
     template: '<ng-content></ng-content>',
     host: {
-        '[class.jigsaw-radios]': 'true'
+        '[class.jigsaw-radios]': 'true',
+        '[class.jigsaw-radios-error]': '!valid'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRadioGroup), multi: true},
     ]
 })
 export class JigsawRadioGroup extends AbstractJigsawGroupComponent {
+
+    @Input()
+    public valid: boolean = true;
 
     @Input()
     public get value(): any {

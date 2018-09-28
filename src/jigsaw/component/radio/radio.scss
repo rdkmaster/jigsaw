@@ -5,6 +5,9 @@ $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
 
 .#{$radio-prefix-cls}, .#{$radio-prefix-cls}-lite{
     @include inline-block();
+    &.#{$radio-prefix-cls}-error {
+        border: 1px solid $error-color;
+    }
 }
 
 .#{$radio-option-prefix-cls} {

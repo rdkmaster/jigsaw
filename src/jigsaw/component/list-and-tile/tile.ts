@@ -10,13 +10,17 @@ import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "./gro
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[class.jigsaw-tile]': 'true'
+        '[class.jigsaw-tile]': 'true',
+        '[class.jigsaw-tile-error]': '!valid'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTile), multi: true},
     ]
 })
 export class JigsawTile extends AbstractJigsawGroupComponent {
+    @Input()
+    public valid: boolean = true;
+
     // 默认多选
     public multipleSelect: boolean = true;
 

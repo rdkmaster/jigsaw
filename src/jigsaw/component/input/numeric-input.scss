@@ -37,6 +37,16 @@ $numeric-input-prefix-cls: #{$jigsaw-prefix}-numeric-input;
     input:-moz-placeholder {
         color: $text-color-secondary;
     }
+    &.#{$numeric-input-prefix-cls}-error input {
+        border: 1px solid $error-color;
+        &:hover {
+            border: 1px solid $error-color;
+        }
+        &:focus {
+            border: 1px solid $error-color;
+            box-shadow: none;
+        }
+    }
 
     &-option-box {
         position: absolute;

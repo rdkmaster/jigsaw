@@ -16,13 +16,17 @@ import {InternalUtils} from "../../core/utils/internal-utils";
             </j-radio-option>
         </j-radios>`,
     host: {
-        'jigsaw-radios-lite': 'true'
+        '[class.jigsaw-radios-lite]': 'true',
+        '[class.jigsaw-radios-error]': '!valid'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRadiosLite), multi: true},
     ]
 })
 export class JigsawRadiosLite extends AbstractJigsawComponent implements ControlValueAccessor {
+
+    @Input()
+    public valid: boolean = true;
 
     @Input()
     public data: ArrayCollection<GroupOptionValue> | GroupOptionValue[];

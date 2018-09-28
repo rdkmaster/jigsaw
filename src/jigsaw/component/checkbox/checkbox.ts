@@ -26,7 +26,8 @@ export type CheckBoxValue = boolean | CheckBoxStatus;
     templateUrl: './checkbox.html',
     host: {
         '[style.width]': 'width',
-        '[class.jigsaw-checkbox-host]': 'true'
+        '[class.jigsaw-checkbox-host]': 'true',
+        '[class.jigsaw-checkbox-error]': '!valid'
     },
     providers: [
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawCheckBox), multi: true },
@@ -107,6 +108,9 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
         this._disabled = value;
         this._setCheckBoxClass();
     }
+
+    @Input()
+    public valid: boolean = true;
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
         super();

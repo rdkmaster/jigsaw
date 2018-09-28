@@ -12,6 +12,7 @@ import {AbstractJigsawGroupComponent} from "./group-common";
     template: '<ng-content></ng-content>',
     host: {
         '[class.jigsaw-list]': 'true',
+        '[class.jigsaw-list-error]': '!valid',
         '[style.width]': 'width',
         '[style.height]': 'height',
     },
@@ -20,6 +21,9 @@ import {AbstractJigsawGroupComponent} from "./group-common";
     ]
 })
 export class JigsawList extends AbstractJigsawGroupComponent implements AfterContentInit {
+    @Input()
+    public valid: boolean = true;
+
     // 默认单选
     public multipleSelect: boolean = false;
 
