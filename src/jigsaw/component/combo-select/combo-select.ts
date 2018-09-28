@@ -387,10 +387,6 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     private _$tagClick(tagItem) {
-        // 阻止事件冒泡;
-        event.preventDefault();
-        event.stopPropagation();
-
         // 返回选中的tag
         this.select.emit(tagItem);
 
