@@ -9,6 +9,9 @@ $time-prefix-cls: #{$jigsaw-prefix}-time;
     border-radius: $border-radius-base;
     padding: 5px;
     background: #fff;
+    &.#{$time-prefix-cls}-error {
+        border-color: $error-color;
+    }
     .#{$time-prefix-cls}-box {
         width: 100%;
         .bootstrap-datetimepicker-widget table {

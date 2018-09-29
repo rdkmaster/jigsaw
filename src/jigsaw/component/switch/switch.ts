@@ -10,12 +10,19 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 @Component({
     selector: 'jigsaw-switch, j-switch',
     templateUrl: './switch.html',
+    host: {
+        '[class.jigsaw-switch-host]': 'true',
+        '[class.jigsaw-switch-error]': '!valid'
+    },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSwitch), multi: true},
     ]
 })
 
 export class JigsawSwitch implements ControlValueAccessor, OnInit {
+    @Input()
+    public valid: boolean = true;
+
     /**
      * @internal
      */

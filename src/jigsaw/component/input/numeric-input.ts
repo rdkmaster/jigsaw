@@ -27,7 +27,8 @@ import {CommonUtils} from "../../core/utils/common-utils";
         '[class.jigsaw-numeric-input]': 'true',
         '[class.jigsaw-numeric-input-disabled]': 'disabled',
         '[class.jigsaw-numeric-input-small]': 'size == "small"',
-        '[class.jigsaw-numeric-input-large]': 'size == "large"'
+        '[class.jigsaw-numeric-input-large]': 'size == "large"',
+        '[class.jigsaw-numeric-input-error]': '!valid'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawNumericInput), multi: true},
@@ -38,6 +39,9 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
                 private _elementRef: ElementRef) {
         super();
     }
+
+    @Input()
+    public valid: boolean;
 
     /**
      * 设置不可用

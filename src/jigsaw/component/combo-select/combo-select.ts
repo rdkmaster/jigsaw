@@ -45,7 +45,8 @@ export class ComboSelectValue {
     templateUrl: 'combo-select.html',
     host: {
         '[style.min-width]': 'width',
-        '[class.jigsaw-combo-select-host]': 'true'
+        '[class.jigsaw-combo-select-host]': 'true',
+        '[class.jigsaw-combo-select-error]': '!valid'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawComboSelect), multi: true},
@@ -213,6 +214,14 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
      */
     @Input()
     public showValueBorder: boolean = true;
+
+    /**
+     * 当用户输入非法时，组件给予样式上的提示，以提升易用性，常常和表单配合使用。
+     *
+     * $demo = form/template-driven
+     */
+    @Input()
+    public valid: boolean = true;
 
     public get _$trackByFn() {
         return InternalUtils.trackByFn(this.labelField);

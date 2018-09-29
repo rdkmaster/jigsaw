@@ -34,6 +34,8 @@ import {CommonUtils} from "../../core/utils/common-utils";
     ]
 })
 export class JigsawSelect extends AbstractJigsawComponent implements ControlValueAccessor {
+    @Input()
+    public valid: boolean = true;
 
     protected _width: string = '120px';
 

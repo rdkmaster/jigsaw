@@ -12,6 +12,9 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
         background-color: #fff;
         color: #666;
     }
+    &.#{$jigsaw-slider}-error {
+        border: 1px solid $error-color;
+    }
 }
 
 .#{$jigsaw-slider} {

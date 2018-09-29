@@ -7,6 +7,7 @@ import {InternalUtils} from "../../core/utils/internal-utils";
 import {CommonUtils} from "../../core/utils/common-utils";
 
 export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent implements ControlValueAccessor {
+    @Input() public valid: boolean = true;
 
     @Input()
     public data: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
