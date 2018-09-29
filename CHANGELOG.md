@@ -1,4 +1,4 @@
-## v1.1.12 (2018-9-28)
+## v1.1.12 (2018-9-29)
 
 ### 新特性 / New Features
 - 无
@@ -7,6 +7,7 @@
 - 无
 
 ###  优化 / Modified
+- [新增] 表单控件增加valid属性和验证不通过样式
 - [优化] 改正combo-select和auto-complete-input的弹出位置修正函数
 - [优化] table的列对齐兼容火狐
 
