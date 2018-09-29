@@ -6,4 +6,7 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
     border: 1px solid $border-color-base;
     border-radius: $border-radius-base;
     background: $component-background;
+    &.#{$list-prefix-cls}-error {
+        border-color: $error-color;
+    }
 }

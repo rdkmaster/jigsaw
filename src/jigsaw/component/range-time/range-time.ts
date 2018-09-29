@@ -25,10 +25,14 @@ import {WeekTime} from "../../service/time.types";
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRangeTime), multi: true},
     ],
     host: {
-        '[class.jigsaw-range-time-host]': 'true'
+        '[class.jigsaw-range-time-host]': 'true',
+        '[class.jigsaw-range-time-error]': '!valid'
     }
 })
 export class JigsawRangeTime extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
+
+    @Input()
+    public valid: boolean = true;
 
     @ViewChild("timeStart") private _timeStart: JigsawTime;
 

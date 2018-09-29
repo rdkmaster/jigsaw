@@ -10,6 +10,9 @@ $range-time-prefix-cls: #{$jigsaw-prefix}-range-time;
     border: 1px solid $border-color-base ;
     border-radius: $border-radius-base;
     background: $component-background;
+    &.#{$range-time-prefix-cls}-error {
+        border-color: $error-color;
+    }
     jigsaw-time{
         border: none;
     }

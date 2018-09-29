@@ -4,6 +4,16 @@ $checkbox-prefix-cls: #{$jigsaw-prefix}-checkbox;
 
 .#{$checkbox-prefix-cls}-host {
     @include inline-block;
+    &.#{$checkbox-prefix-cls}-error .#{$checkbox-prefix-cls}-wrapper {
+        &:hover {
+            > .#{$checkbox-prefix-cls} {
+                border-color: $error-color;
+            }
+        }
+        .#{$checkbox-prefix-cls} {
+            border-color: $error-color;
+        }
+    }
 }
 
 .#{$checkbox-prefix-cls}-wrapper {
@@ -14,9 +24,6 @@ $checkbox-prefix-cls: #{$jigsaw-prefix}-checkbox;
     outline: none;
     line-height: 18px;
     vertical-align: text-bottom;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
     left: 0;
     margin: 0;

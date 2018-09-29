@@ -8,7 +8,7 @@ import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
     selector: 'jigsaw-tile-lite, j-tile-lite',
     template: `
         <j-tile [(selectedItems)]="selectedItems"
-                [trackItemBy]="trackItemBy"
+                [trackItemBy]="trackItemBy" [valid]="valid"
                 [multipleSelect]="multipleSelect"
                 (selectedItemsChange)="_$handleSelectChange($event)">
             <j-tile-option *ngFor="let item of data; trackBy: _$trackByFn" [value]="item"

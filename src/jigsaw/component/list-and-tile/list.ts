@@ -12,6 +12,7 @@ import {AbstractJigsawGroupComponent} from "./group-common";
     template: '<ng-content></ng-content>',
     host: {
         '[class.jigsaw-list]': 'true',
+        '[class.jigsaw-list-error]': '!valid',
         '[style.width]': 'width',
         '[style.height]': 'height',
     },

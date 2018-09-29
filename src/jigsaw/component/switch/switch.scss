@@ -2,6 +2,13 @@
 
 $switch-prefix: #{$jigsaw-prefix}-switch;
 
+.#{$switch-prefix}-host {
+    @include inline-block;
+    &.#{$switch-prefix}-error .#{$switch-prefix} {
+        border-color: $error-color;
+    }
+}
+
 .#{$switch-prefix} {
     @include inline-block;
     position: relative;

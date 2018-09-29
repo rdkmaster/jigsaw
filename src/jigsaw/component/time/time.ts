@@ -89,13 +89,17 @@ export class GrItem {
     templateUrl: 'time.html',
     host: {
         '[style.width]': 'width',
-        '[class.jigsaw-time-host]': 'true'
+        '[class.jigsaw-time-host]': 'true',
+        '[class.jigsaw-time-error]': '!valid',
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTime), multi: true},
     ]
 })
 export class JigsawTime extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
+
+    @Input()
+    public valid: boolean = true;
 
     /**
      * 当时间粒度被用户切换之后，Jigsaw会发出此事件。

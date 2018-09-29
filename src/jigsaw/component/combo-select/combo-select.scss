@@ -25,6 +25,13 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
             border-color: $primary-color;
             box-shadow: $box-focus-shadow;
         }
+        .#{$jigsaw-combo-select}-error & {
+            border: 1px solid $error-color;
+            &:hover {
+                border: 1px solid $error-color;
+                box-shadow: none;
+            }
+        }
     }
 
     &-selection-rendered {

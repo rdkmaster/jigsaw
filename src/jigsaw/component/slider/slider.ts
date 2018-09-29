@@ -204,6 +204,7 @@ export class JigsawSliderHandle implements OnInit {
     templateUrl: './slider.html',
     host: {
         '[class.jigsaw-slider-host]': 'true',
+        '[class.jigsaw-slider-error]': '!valid',
         '[class.jigsaw-slider-vertical]': 'vertical',
         '[style.width]': 'width',
         '[style.height]': 'height'
@@ -218,6 +219,9 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
     constructor(private _element: ElementRef, private _render: Renderer2, private _zone: NgZone) {
         super();
     }
+
+    @Input()
+    public valid: boolean = true;
 
     // Todo 支持滑动条点击.
     @ViewChildren(JigsawSliderHandle) private _sliderHandle: QueryList<JigsawSliderHandle>;

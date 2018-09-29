@@ -29,7 +29,7 @@ import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
         </j-input>
         <div class="jigsaw-list-lite-wrapper" [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"
              [style.max-height]="height">
-            <j-list width="100%" [trackItemBy]="trackItemBy" [multipleSelect]="multipleSelect"
+            <j-list width="100%" [trackItemBy]="trackItemBy" [multipleSelect]="multipleSelect" [valid]="valid"
                     [(selectedItems)]="selectedItems" (selectedItemsChange)="_$handleSelectChange($event)">
                 <j-list-option *ngFor="let item of data; trackBy: _$trackByFn" [value]="item" [disabled]="item?.disabled">
                     <p class="jigsaw-list-lite-text" title="{{item && item[labelField] ? item[labelField] : item}}">
