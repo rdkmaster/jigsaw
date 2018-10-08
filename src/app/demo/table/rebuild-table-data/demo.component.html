@@ -8,9 +8,7 @@
 <jigsaw-table [data]="tableData" [columnDefines]="columns" ></jigsaw-table>
 
 <jigsaw-pagination
-    [total]="tableData.pagingInfo.totalRecord"
-    [(pageSize)]="tableData.pagingInfo.pageSize"
-    [(current)]="tableData.pagingInfo.currentPage"
+    [data]="tableData"
     [pageSizeOptions]="[5, 10, 20]"
     [searchable]="true"
     [showQuickJumper]="true"
