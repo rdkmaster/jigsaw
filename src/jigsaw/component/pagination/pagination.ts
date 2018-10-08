@@ -11,7 +11,8 @@ import {AbstractJigsawComponent} from "../common";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {InternalUtils} from "../../core/utils/internal-utils";
 import {TranslateHelper} from "../../core/utils/translate-helper";
-import {IPageable} from "../../core/data/component-data";
+import {IPageable, PagingInfo} from "../../core/data/component-data";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 export class PageSizeData {
     value: number;
@@ -68,10 +69,13 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     }
 
     public set data(value: IPageable) {
+        if(CommonUtils.isUndefined(value) || !(value.pagingInfo instanceof PagingInfo)) return;
         this._data = value;
-        this._data.onRefresh(() => {
-            this._renderPages();
-        });
+        if(typeof this._data.onRefresh == 'function') {
+            this._data.onRefresh(() => {
+                this._renderPages();
+            });
+        }
     }
 
     /**
@@ -138,7 +142,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
             this._$pageSize.label = newValue + '/' + this._translateService.instant('pagination.page');
             this.pageSizeChange.emit(newValue);
             if(this.data.pagingInfo.pageSize != newValue) {
-                // pagingInfo.currentPage采用的getter&setter，不可随便赋值
+                // pagingInfo.pageSize采用的getter&setter，不可随便赋值
                 this.data.pagingInfo.pageSize = newValue;
             }
         }

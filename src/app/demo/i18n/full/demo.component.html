@@ -31,9 +31,7 @@
 <h4>time</h4><jigsaw-time></jigsaw-time>
 <br>
 <h4>pagination</h4>
-<jigsaw-pagination [total]="550"
-                   [pageSize]="10"
-                   [(current)]="currentPage"
+<jigsaw-pagination [data]="pageable"
                    [pageSizeOptions]="[5,10,20]"
                    [searchable]="true"
                    [showQuickJumper]="true"

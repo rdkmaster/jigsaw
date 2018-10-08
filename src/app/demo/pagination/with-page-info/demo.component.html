@@ -4,9 +4,7 @@
 
 
 <!-- start to learn the demo from here -->
-<jigsaw-pagination [total]="pageInfo.totalRecord"
-                   [(pageSize)]="pageInfo.pageSize"
-                   [(current)]="pageInfo.currentPage"
+<jigsaw-pagination [data]="pageable"
                    [pageSizeOptions]="[5, 10, 20]"
                    [searchable]="false"
                    [showQuickJumper]="true">
@@ -15,9 +13,9 @@
 <br><br>
 <h5>分页数据信息：</h5>
 <ul style="list-style: disc">
-    <li>pageInfo.totalPage: {{pageInfo.totalPage}}</li>
-    <li>pageInfo.pageSize: {{pageInfo.pageSize}}</li>
-    <li>pageInfo.currentPage: {{pageInfo.currentPage}}</li>
-    <li>pageInfo.totalRecord: {{pageInfo.totalRecord}}</li>
+    <li>pagingInfo.totalPage: {{pageable.pagingInfo.totalPage}}</li>
+    <li>pageInfo.pageSize: {{pageable.pagingInfo.pageSize}}</li>
+    <li>pageInfo.currentPage: {{pageable.pagingInfo.currentPage}}</li>
+    <li>pageInfo.totalRecord: {{pageable.pagingInfo.totalRecord}}</li>
     <li>actions: {{actions}} <span>注意快速切换页时的debounce的效果</span></li>
 </ul>
