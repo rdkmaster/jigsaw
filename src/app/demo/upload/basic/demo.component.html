@@ -7,3 +7,6 @@
 文件数目：<j-switch [(checked)]="multiple" onLabel="上传多个文件" offLabel="上传单个文件"></j-switch><br>
 文件类型：<jigsaw-radios-lite [(value)]="fileType" [data]="fileTypes"></jigsaw-radios-lite><br>
 <j-upload [multiple]="multiple" [fileType]="fileType" (process)="getUploadFile($event)" (complete)="getAllUploadFiles($event)"></j-upload>
+
+
+<button j-upload>click to upload</button>

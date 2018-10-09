@@ -1,0 +1,114 @@
+import {AbstractJigsawComponent} from "../common";
+import {ElementRef, EventEmitter, Input, OnDestroy, Output, Renderer2} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
+
+export type UploadFileInfo = { name: string, state: 'pause' | 'loading' | 'success' | 'error', url: string, file: File };
+
+export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestroy {
+    constructor(protected _http: HttpClient, protected _renderer: Renderer2, protected _elementRef: ElementRef) {
+        super();
+    }
+
+    @Input()
+    public targetUrl: string = '/rdk/service/common/upload';
+
+    @Input()
+    public fileType: string;
+
+    @Input()
+    public multiple: boolean = true;
+
+    @Output()
+    public process = new EventEmitter<UploadFileInfo>();
+
+    @Output()
+    public complete = new EventEmitter<UploadFileInfo[]>();
+
+    public _$uploadMode: 'select' | 'single' | 'multiple' = 'select';
+
+    public _$fileInfoList: UploadFileInfo[] = [];
+
+    protected _fileInputEl: Element;
+
+    private _removeFileChangeEvent: Function;
+
+    public _$selectFile($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        let e = document.createEvent("MouseEvent");
+        e.initEvent("click", true, true);
+
+        if (!this._fileInputEl) {
+            this._fileInputEl = document.createElement('input');
+            this._fileInputEl.setAttribute('type', 'file');
+        }
+        this._removeFileChangeEvent = this._removeFileChangeEvent ? this._removeFileChangeEvent :
+            this._renderer.listen(this._fileInputEl, 'change', () => {
+                this._$upload();
+            });
+
+        this._fileInputEl.dispatchEvent(e);
+    }
+
+    public _$upload(files?: FileList) {
+        if (!files) {
+            const fileInput = this._fileInputEl;
+            files = fileInput['files'];
+        }
+
+        if (!files || !files.length) {
+            console.warn('there are no upload files');
+            return;
+        }
+
+        Array.from(files).forEach((file: File, index) => {
+            const fileInfo: UploadFileInfo = {name: file.name, state: 'pause', url: '', file: file};
+            this._$fileInfoList.push(fileInfo);
+            if (index < 5) {
+                this._sequenceUpload(fileInfo);
+            }
+        });
+
+        this._$uploadMode = files.length == 1 ? 'single' : 'multiple';
+    }
+
+    private _isAllFilesUploaded(): boolean {
+        return !this._$fileInfoList.find(f => f.state == 'loading' || f.state == 'pause');
+    }
+
+    private _sequenceUpload(fileInfo: UploadFileInfo) {
+        fileInfo.state = 'loading';
+        const formData = new FormData();
+        formData.append('file', fileInfo.file);
+        formData.append("filename", encodeURI(fileInfo.file.name));
+        this._http.post(this.targetUrl, formData, {responseType: 'text'}).subscribe(res => {
+            fileInfo.state = 'success';
+            fileInfo.url = res;
+            this._afterCurFileUploaded(fileInfo);
+        }, err => {
+            fileInfo.state = 'error';
+            this._afterCurFileUploaded(fileInfo);
+        });
+    }
+
+    private _afterCurFileUploaded(fileInfo: UploadFileInfo) {
+        this.process.emit(fileInfo);
+        const waitingFile = this._$fileInfoList.find(f => f.state == 'pause');
+        if (waitingFile) {
+            this._sequenceUpload(waitingFile)
+        } else if (this._isAllFilesUploaded()) {
+            this.complete.emit(this._$fileInfoList);
+        }
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        if (this._removeFileChangeEvent) {
+            this._removeFileChangeEvent();
+            this._removeFileChangeEvent = null;
+        }
+
+        this._fileInputEl = null;
+    }
+
+}

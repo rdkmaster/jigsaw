@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {UploadFileInfo} from "jigsaw/component/upload/upload";
+import {UploadFileInfo} from "jigsaw/component/upload/upload.base";
 
 @Component({
     templateUrl: './demo.component.html'
