@@ -49,12 +49,12 @@ describe('pagination', () => {
                 pageItemEl = jigsawPagingEl.all(by.tagName('jigsaw-paging-item')),
                 paginationSelectEl = $('.jigsaw-select-host');
 
-            expect(pageItemEl.count()).toBe(55);
+            expect(pageItemEl.count()).toBe(77);
             mouseMove(paginationSelectEl);
             await waitForPresence('.jigsaw-list-option');
             const selectOptionEl = $$('.jigsaw-list-option');
             selectOptionEl.get(0).click();
-            expect(pageItemEl.count()).toBe(110);
+            expect(pageItemEl.count()).toBe(154);
         });
         xit('"..." change to ">>" when move the mouse to jigsaw page nexts', () => {
             const nextsiconEl = element(by.css('.jigsaw-page-nexts'));
