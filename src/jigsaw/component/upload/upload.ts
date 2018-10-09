@@ -1,13 +1,6 @@
-import {AfterViewInit, Component, ElementRef, NgModule, Renderer2, ViewChild} from "@angular/core";
-import {JigsawBoxModule} from "../box/index";
-import {JigsawButtonModule} from "../button/button";
-import {HttpClient, HttpClientModule} from "@angular/common/http";
-import {CommonModule} from "@angular/common";
-import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
-import {JigsawDraggableModule, JigsawDroppableModule} from "../../directive/dragdrop/index";
+import {AfterViewInit, Component, ElementRef, Renderer2, ViewChild} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import {DragDropInfo} from "../../directive/dragdrop/types";
-import {FormsModule} from "@angular/forms";
-import {JigsawUploadDirective} from "./upload.directive";
 import {JigsawUploadBase} from "./upload.base";
 
 @Component({
@@ -54,12 +47,3 @@ export class JigsawUpload extends JigsawUploadBase implements AfterViewInit {
     }
 }
 
-@NgModule({
-    imports: [JigsawBoxModule, JigsawButtonModule, PerfectScrollbarModule, JigsawDraggableModule,
-        JigsawDroppableModule, CommonModule, FormsModule, HttpClientModule],
-    declarations: [JigsawUpload, JigsawUploadDirective],
-    exports: [JigsawUpload, JigsawUploadDirective]
-})
-export class JigsawUploadModule {
-
-}

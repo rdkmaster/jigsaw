@@ -1,23 +1,144 @@
-import {Directive, ElementRef, HostListener, Renderer2} from "@angular/core";
-import {JigsawUploadBase} from "./upload.base";
+import {Component, Directive, ElementRef, EventEmitter, HostListener, Renderer2} from "@angular/core";
+import {JigsawUploadBase, UploadFileInfo} from "./upload.base";
 import {HttpClient} from "@angular/common/http";
+import {
+    ButtonInfo, IPopupable, PopupEffect, PopupInfo, PopupOptions, PopupPositionType, PopupPositionValue,
+    PopupService
+} from "../../service/popup.service";
 
 @Directive({
-    selector: '[j-upload], [jigsaw-upload]',
-
+    selector: '[j-upload], [jigsaw-upload]'
 })
 export class JigsawUploadDirective extends JigsawUploadBase {
-    constructor(protected _http: HttpClient, protected _renderer: Renderer2, protected _elementRef: ElementRef) {
+    constructor(protected _http: HttpClient,
+                protected _renderer: Renderer2,
+                protected _elementRef: ElementRef,
+                private _popupService: PopupService) {
         super(_http, _renderer, _elementRef);
     }
+
+    private _removeMouseOverHandler: Function;
+    private _removeMouseOutHandler: Function;
+    private _rollOutDenouncesTimer: any = null;
+    private _rollInDenouncesTimer: any = null;
 
     @HostListener('click', ['$event'])
     onClick($event) {
         this._$selectFile($event);
     }
 
-    @HostListener('mouseenter', ['$event.target'])
+    @HostListener('mouseenter', ['$event'])
     onMouseEnter() {
-
+        if (!this._$fileInfoList.length) return;
+        this.clearCallLater(this._rollOutDenouncesTimer);
+        this._addRollInDenouncesTimer();
     }
+
+    @HostListener('mouseleave', ['$event'])
+    onMouseLeave() {
+        this.clearCallLater(this._rollInDenouncesTimer);
+        this._addRollOutDenouncesTimer();
+    }
+
+    private _addRollInDenouncesTimer() {
+        this._rollInDenouncesTimer = this.callLater(() => {
+            if(this._popupInfo) return;
+            this._popupInfo = this._popupService.popup(FileInfoList, this._getUnModalOptions(), this._$fileInfoList);
+            this._closeAllListener();
+            this._removeMouseOverHandler = this._renderer.listen(
+                this._popupInfo.element, 'mouseenter',
+                () => this.clearCallLater(this._rollOutDenouncesTimer));
+            this._removeMouseOutHandler = this._renderer.listen(
+                this._popupInfo.element, 'mouseleave', () => {
+                    this._addRollOutDenouncesTimer();
+                });
+        }, 100);
+    }
+
+    private _addRollOutDenouncesTimer() {
+        this._rollOutDenouncesTimer = this.callLater(() => {
+            this._closePopup();
+        }, 400);
+    }
+
+    private _popupInfo: PopupInfo;
+
+    private _getUnModalOptions(): PopupOptions {
+        return {
+            modal: false,
+            showEffect: PopupEffect.bubbleIn,
+            hideEffect: PopupEffect.bubbleOut,
+            pos: this._elementRef,
+            posOffset: {
+                top: this._elementRef.nativeElement.offsetHeight
+            },
+            posReviser: (pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue => {
+                return this._popupService.verticalPositionReviser(pos, popupElement, {
+                    offsetHeight: this._elementRef.nativeElement.offsetHeight
+                });
+            },
+            posType: PopupPositionType.absolute
+        };
+    }
+
+    private _closePopup() {
+        if (this._popupInfo) {
+            this._popupInfo.dispose();
+            this._popupInfo = null;
+        }
+        this._closeAllListener();
+    }
+
+    private _closeAllListener() {
+        if (this._removeMouseOverHandler) {
+            this._removeMouseOverHandler();
+            this._removeMouseOverHandler = null;
+        }
+        if (this._removeMouseOutHandler) {
+            this._removeMouseOutHandler();
+            this._removeMouseOutHandler = null;
+        }
+    }
+}
+
+@Component({
+    template: `
+        <div class="jigsaw-upload-file-list-container">
+            <j-box direction="v" justify="start" align="center" width="100%" height="100%"
+                   class="jigsaw-upload-file-list" [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}">
+                <j-box *ngFor="let file of initData" type="flex" justify="between" align="center"
+                       width="100%" height="40px" class="jigsaw-upload-file">
+                    <div class="jigsaw-upload-file-left">
+                        <span class="jigsaw-upload-icon-small fa fa-file"></span>
+                        <span class="jigsaw-upload-file-name" title="{{file.name}}">{{file.name}}</span>
+                    </div>
+                    <div [ngSwitch]="file.state" class="jigsaw-upload-file-right">
+                        <ng-container *ngSwitchCase="'pause'">
+                            <span>等待中</span>
+                            <span class="jigsaw-upload-pause fa fa-pause-circle"></span>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'loading'">
+                            <span>上传中</span>
+                            <span class="jigsaw-upload-loading iconfont iconfont-e8dd jigsaw-am-rotation"></span>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'success'">
+                            <span>上传成功</span>
+                            <span class="jigsaw-upload-success fa fa-check-circle"></span>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'error'">
+                            <span>上传失败</span>
+                            <span class="jigsaw-upload-error fa fa-times-circle"></span>
+                        </ng-container>
+                    </div>
+                </j-box>
+            </j-box>
+        </div>
+    `,
+    styles: [`
+
+    `]
+})
+export class FileInfoList implements IPopupable {
+    answer: EventEmitter<ButtonInfo>;
+    initData: UploadFileInfo[];
 }

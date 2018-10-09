@@ -74,3 +74,4 @@ export * from "./service/loading.service";
 export * from "./service/popup.service";
 export * from "./service/time.service";
 export * from "./service/time.types";
+export {JigsawUploadModule} from "./component/upload/index";
