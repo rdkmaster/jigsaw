@@ -34,6 +34,7 @@ $upload-prefix-cls: #{$jigsaw-prefix}-upload;
         position: relative;
         height: 40px;
         padding: 0 20px;
+        z-index: $zindex-level-1;
         &:last-child {
             .#{$upload-prefix-cls}-file-left {
                 border-bottom: none;
@@ -91,6 +92,7 @@ $upload-prefix-cls: #{$jigsaw-prefix}-upload;
         margin-left: 4px;
         cursor: pointer;
         color: $text-color-secondary;
+        z-index: $zindex-level-1;
         &:hover {
             color: $text-color;
         }

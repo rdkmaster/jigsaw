@@ -122,7 +122,9 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
         if (this._isAllFilesUploaded()) {
             this.complete.emit(this._$fileInfoList);
         }
-        this._fileInputEl['value'] = null;
+        if(this._fileInputEl) {
+            this._fileInputEl['value'] = null;
+        }
     }
 
     ngOnDestroy() {
