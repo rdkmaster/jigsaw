@@ -9,4 +9,4 @@
 <j-upload [multiple]="multiple" [fileType]="fileType" (process)="getUploadFile($event)" (complete)="getAllUploadFiles($event)"></j-upload>
 
 
-<button j-upload>click to upload</button>
+<button j-upload [multiple]="multiple" [fileType]="fileType" (process)="getUploadFile($event)" (complete)="getAllUploadFiles($event)">click to upload</button>

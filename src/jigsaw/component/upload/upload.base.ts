@@ -42,6 +42,13 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
             this._fileInputEl = document.createElement('input');
             this._fileInputEl.setAttribute('type', 'file');
         }
+        if(this.multiple) {
+            this._fileInputEl.setAttribute('multiple', 'true');
+        } else {
+            this._fileInputEl.removeAttribute('multiple');
+        }
+        this._fileInputEl.setAttribute('accept', this.fileType);
+
         this._removeFileChangeEvent = this._removeFileChangeEvent ? this._removeFileChangeEvent :
             this._renderer.listen(this._fileInputEl, 'change', () => {
                 this._$upload();
@@ -63,7 +70,11 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
 
         Array.from(files).forEach((file: File, index) => {
             const fileInfo: UploadFileInfo = {name: file.name, state: 'pause', url: '', file: file};
-            this._$fileInfoList.push(fileInfo);
+            if(this.multiple) {
+                this._$fileInfoList.push(fileInfo);
+            } else {
+                this._$fileInfoList = [fileInfo];
+            }
             if (index < 5) {
                 this._sequenceUpload(fileInfo);
             }

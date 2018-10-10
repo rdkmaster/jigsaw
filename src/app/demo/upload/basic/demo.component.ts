@@ -12,11 +12,11 @@ export class uploadDemoComponent {
     multiple: boolean;
 
     getUploadFile(fileInfo: UploadFileInfo) {
-        console.log(fileInfo);
+        console.log('one file uploaded',fileInfo);
     }
 
     getAllUploadFiles(fileInfoList: UploadFileInfo[]) {
-        console.log(fileInfoList);
+        console.log('all files uploaded', fileInfoList);
     }
 
     // ====================================================================

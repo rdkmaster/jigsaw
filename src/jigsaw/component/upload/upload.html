@@ -10,8 +10,7 @@
         <p class="jigsaw-upload-prompt">将文件拖拽到此处上传</p>
         <j-button (click)="_$selectFile($event)">选择文件</j-button>
     </div>
-    <input #fileInput class="jigsaw-upload-file-input" type='file' [accept]="fileType"
-           [multiple]="multiple">
+    <input #fileInput class="jigsaw-upload-file-input" type='file'>
 </j-box>
 
 <div *ngIf="_$uploadMode == 'selectAndList'" class="jigsaw-upload-file-list-container">

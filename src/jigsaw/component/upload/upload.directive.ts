@@ -44,6 +44,12 @@ export class JigsawUploadDirective extends JigsawUploadBase {
         this._rollInDenouncesTimer = this.callLater(() => {
             if(this._popupInfo) return;
             this._popupInfo = this._popupService.popup(FileInfoList, this._getUnModalOptions(), this._$fileInfoList);
+
+            if (!this._popupInfo || !this._popupInfo.element) {
+                console.error('unable to popup drop down, unknown error!');
+                return;
+            }
+
             this._closeAllListener();
             this._removeMouseOverHandler = this._renderer.listen(
                 this._popupInfo.element, 'mouseenter',
