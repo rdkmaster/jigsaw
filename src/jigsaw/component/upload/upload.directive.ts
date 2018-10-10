@@ -77,6 +77,7 @@ export class JigsawUploadDirective extends JigsawUploadBase {
                     offsetHeight: this._elementRef.nativeElement.offsetHeight
                 });
             },
+            size: {width: 300, height: 300},
             posType: PopupPositionType.absolute
         };
     }
@@ -103,36 +104,32 @@ export class JigsawUploadDirective extends JigsawUploadBase {
 
 @Component({
     template: `
-        <div class="jigsaw-upload-file-list-container">
-            <j-box direction="v" justify="start" align="center" width="100%" height="100%"
-                   class="jigsaw-upload-file-list" [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}">
-                <j-box *ngFor="let file of initData" type="flex" justify="between" align="center"
-                       width="100%" height="40px" class="jigsaw-upload-file">
-                    <div class="jigsaw-upload-file-left">
-                        <span class="jigsaw-upload-icon-small fa fa-file"></span>
-                        <span class="jigsaw-upload-file-name" title="{{file.name}}">{{file.name}}</span>
-                    </div>
-                    <div [ngSwitch]="file.state" class="jigsaw-upload-file-right">
-                        <ng-container *ngSwitchCase="'pause'">
-                            <span>等待中</span>
-                            <span class="jigsaw-upload-pause fa fa-pause-circle"></span>
-                        </ng-container>
-                        <ng-container *ngSwitchCase="'loading'">
-                            <span>上传中</span>
-                            <span class="jigsaw-upload-loading iconfont iconfont-e8dd jigsaw-am-rotation"></span>
-                        </ng-container>
-                        <ng-container *ngSwitchCase="'success'">
-                            <span>上传成功</span>
-                            <span class="jigsaw-upload-success fa fa-check-circle"></span>
-                        </ng-container>
-                        <ng-container *ngSwitchCase="'error'">
-                            <span>上传失败</span>
-                            <span class="jigsaw-upload-error fa fa-times-circle"></span>
-                        </ng-container>
-                    </div>
-                </j-box>
-            </j-box>
-        </div>
+        <ul class="jigsaw-upload-file-list" [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}">
+            <li *ngFor="let file of initData" class="jigsaw-upload-file">
+                <div class="jigsaw-upload-file-left">
+                    <span class="jigsaw-upload-icon-small fa fa-file"></span>
+                    <span class="jigsaw-upload-file-name" title="{{file.name}}">{{file.name}}</span>
+                </div>
+                <div [ngSwitch]="file.state" class="jigsaw-upload-file-right">
+                    <ng-container *ngSwitchCase="'pause'">
+                        <span>等待中</span>
+                        <span class="jigsaw-upload-pause fa fa-pause-circle"></span>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'loading'">
+                        <span>上传中</span>
+                        <span class="jigsaw-upload-loading iconfont iconfont-e8dd jigsaw-am-rotation"></span>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'success'">
+                        <span>上传成功</span>
+                        <span class="jigsaw-upload-success fa fa-check-circle"></span>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'error'">
+                        <span>上传失败</span>
+                        <span class="jigsaw-upload-error fa fa-times-circle"></span>
+                    </ng-container>
+                </div>
+            </li>
+        </ul>
     `,
     styles: [`
 
