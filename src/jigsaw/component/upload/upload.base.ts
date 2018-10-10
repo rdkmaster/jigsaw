@@ -32,6 +32,9 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
 
     private _removeFileChangeEvent: Function;
 
+    /**
+     * @internal
+     */
     public _$selectFile($event) {
         $event.preventDefault();
         $event.stopPropagation();
@@ -108,6 +111,18 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
         if (waitingFile) {
             this._sequenceUpload(waitingFile)
         } else if (this._isAllFilesUploaded()) {
+            this.complete.emit(this._$fileInfoList);
+        }
+    }
+
+    /**
+     * @internal
+     */
+    public _$removeFile(file) {
+        const fileIndex = this._$fileInfoList.findIndex(f => f == file);
+        if(fileIndex == -1) return;
+        this._$fileInfoList.splice(fileIndex,1);
+        if (this._isAllFilesUploaded()) {
             this.complete.emit(this._$fileInfoList);
         }
     }

@@ -45,9 +45,13 @@ export class JigsawUploadDirective extends JigsawUploadBase {
             if(this._popupInfo) return;
             this._popupInfo = this._popupService.popup(FileInfoList, this._getUnModalOptions(), this._$fileInfoList);
 
-            if (!this._popupInfo || !this._popupInfo.element) {
+            if (!this._popupInfo || !this._popupInfo.element || !this._popupInfo.instance) {
                 console.error('unable to popup drop down, unknown error!');
                 return;
+            }
+
+            if(this._popupInfo.instance instanceof FileInfoList) {
+                this._popupInfo.instance.uploader = this;
             }
 
             this._closeAllListener();
@@ -113,7 +117,7 @@ export class JigsawUploadDirective extends JigsawUploadBase {
         <ul class="jigsaw-upload-file-list" [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}">
             <li *ngFor="let file of initData" class="jigsaw-upload-file">
                 <div class="jigsaw-upload-file-left">
-                    <span class="jigsaw-upload-icon-small fa fa-file"></span>
+                    <span class="jigsaw-upload-file-icon fa fa-file"></span>
                     <span class="jigsaw-upload-file-name" title="{{file.name}}">{{file.name}}</span>
                 </div>
                 <div [ngSwitch]="file.state" class="jigsaw-upload-file-right">
@@ -134,6 +138,7 @@ export class JigsawUploadDirective extends JigsawUploadBase {
                         <span class="jigsaw-upload-error fa fa-times-circle"></span>
                     </ng-container>
                 </div>
+                <span class="jigsaw-upload-file-remove fa fa-trash" (click)="uploader?._$removeFile(file)"></span>
             </li>
         </ul>
     `,
@@ -144,4 +149,5 @@ export class JigsawUploadDirective extends JigsawUploadBase {
 export class FileInfoList implements IPopupable {
     answer: EventEmitter<ButtonInfo>;
     initData: UploadFileInfo[];
+    uploader: JigsawUploadDirective;
 }
