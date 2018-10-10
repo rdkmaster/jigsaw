@@ -54,13 +54,13 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
 
         this._removeFileChangeEvent = this._removeFileChangeEvent ? this._removeFileChangeEvent :
             this._renderer.listen(this._fileInputEl, 'change', () => {
-                this._$upload();
+                this._upload();
             });
 
         this._fileInputEl.dispatchEvent(e);
     }
 
-    public _$upload(files?: FileList) {
+    protected _upload(files?: FileList) {
         if (!files) {
             const fileInput = this._fileInputEl;
             files = fileInput['files'];
@@ -115,9 +115,6 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
         }
     }
 
-    /**
-     * @internal
-     */
     public _$removeFile(file) {
         const fileIndex = this._$fileInfoList.findIndex(f => f == file);
         if(fileIndex == -1) return;
@@ -125,6 +122,7 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
         if (this._isAllFilesUploaded()) {
             this.complete.emit(this._$fileInfoList);
         }
+        this._fileInputEl['value'] = null;
     }
 
     ngOnDestroy() {

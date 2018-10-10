@@ -20,7 +20,7 @@ export class JigsawUpload extends JigsawUploadBase implements AfterViewInit {
     private _fileInput: ElementRef;
 
     ngAfterViewInit() {
-        this._fileInputEl = this._fileInput.nativeElement;
+        this._fileInputEl = this._fileInput ? this._fileInput.nativeElement : undefined;
     }
 
     public _$fileDragEnterHandle(dragInfo: DragDropInfo) {
@@ -43,7 +43,7 @@ export class JigsawUpload extends JigsawUploadBase implements AfterViewInit {
 
     public _$fileDropHandle(dragInfo: DragDropInfo) {
         this._renderer.removeClass(this._elementRef.nativeElement, 'jigsaw-upload-drag-over');
-        this._$upload(dragInfo.event.dataTransfer.files);
+        this._upload(dragInfo.event.dataTransfer.files);
     }
 }
 

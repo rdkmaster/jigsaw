@@ -1,15 +1,14 @@
-import {Component, Directive, ElementRef, EventEmitter, HostListener, Renderer2} from "@angular/core";
+import {Component, Directive, ElementRef, EventEmitter, HostListener, OnDestroy, Renderer2} from "@angular/core";
 import {JigsawUploadBase, UploadFileInfo} from "./upload.base";
 import {HttpClient} from "@angular/common/http";
 import {
-    ButtonInfo, IPopupable, PopupEffect, PopupInfo, PopupOptions, PopupPositionType, PopupPositionValue,
-    PopupService
+    ButtonInfo, IPopupable, PopupEffect, PopupInfo, PopupOptions, PopupPositionType, PopupPositionValue, PopupService
 } from "../../service/popup.service";
 
 @Directive({
     selector: '[j-upload], [jigsaw-upload]'
 })
-export class JigsawUploadDirective extends JigsawUploadBase {
+export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy {
     constructor(protected _http: HttpClient,
                 protected _renderer: Renderer2,
                 protected _elementRef: ElementRef,
@@ -42,7 +41,7 @@ export class JigsawUploadDirective extends JigsawUploadBase {
 
     private _addRollInDenouncesTimer() {
         this._rollInDenouncesTimer = this.callLater(() => {
-            if(this._popupInfo) return;
+            if (this._popupInfo) return;
             this._popupInfo = this._popupService.popup(FileInfoList, this._getUnModalOptions(), this._$fileInfoList);
 
             if (!this._popupInfo || !this._popupInfo.element || !this._popupInfo.instance) {
@@ -50,7 +49,7 @@ export class JigsawUploadDirective extends JigsawUploadBase {
                 return;
             }
 
-            if(this._popupInfo.instance instanceof FileInfoList) {
+            if (this._popupInfo.instance instanceof FileInfoList) {
                 this._popupInfo.instance.uploader = this;
             }
 
@@ -110,6 +109,11 @@ export class JigsawUploadDirective extends JigsawUploadBase {
             this._removeMouseOutHandler = null;
         }
     }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        this._closePopup();
+    }
 }
 
 @Component({
@@ -141,10 +145,7 @@ export class JigsawUploadDirective extends JigsawUploadBase {
                 <span class="jigsaw-upload-file-remove fa fa-trash" (click)="uploader?._$removeFile(file)"></span>
             </li>
         </ul>
-    `,
-    styles: [`
-
-    `]
+    `
 })
 export class FileInfoList implements IPopupable {
     answer: EventEmitter<ButtonInfo>;
