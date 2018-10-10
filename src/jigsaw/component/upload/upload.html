@@ -1,29 +1,21 @@
-<ng-container [ngSwitch]="_$uploadMode">
-    <j-box *ngSwitchCase="'select'" type="flex" direction="v" justify="center" align="center" width="100%" height="100%"
-           jigsaw-droppable (jigsawDragEnter)="_$fileDragEnterHandle($event)"
-           (jigsawDragOver)="_$fileDragOverHandle($event)"
-           (jigsawDragLeave)="_$fileDragLeaveHandle($event)" (jigsawDrop)="_$fileDropHandle($event)">
-        <span class="jigsaw-upload-icon fa fa-upload"></span>
-        <span class="jigsaw-upload-prompt">将文件拖拽到此处上传</span>
+<j-box class="jigsaw-upload-select-box" [class.jigsaw-upload-select-box-small]="_$uploadMode == 'selectAndList'"
+       type="flex" justify="center" align="center" width="100%"
+       [direction]="_$uploadMode == 'selectAndList' ? 'h' : 'v'"
+       [height]="_$uploadMode == 'selectAndList' ? '30%' : '100%'"
+       jigsaw-droppable (jigsawDragEnter)="_$fileDragEnterHandle($event)"
+       (jigsawDragOver)="_$fileDragOverHandle($event)"
+       (jigsawDragLeave)="_$fileDragLeaveHandle($event)" (jigsawDrop)="_$fileDropHandle($event)">
+    <span class="jigsaw-upload-icon fa fa-upload"></span>
+    <div class="jigsaw-upload-select-right">
+        <p class="jigsaw-upload-prompt">将文件拖拽到此处上传</p>
         <j-button (click)="_$selectFile($event)">选择文件</j-button>
-        <input #fileInput class="jigsaw-upload-file-input" type='file' [accept]="fileType"
-               [multiple]="multiple">
-    </j-box>
+    </div>
+    <input #fileInput class="jigsaw-upload-file-input" type='file' [accept]="fileType"
+           [multiple]="multiple">
+</j-box>
 
-    <j-box *ngSwitchCase="'single'" type="flex" direction="v" justify="center" align="center" width="100%"
-           height="100%">
-        <span class="jigsaw-upload-icon fa fa-file"></span>
-        <span class="jigsaw-upload-prompt">{{_$fileInfoList[0]?.name}}</span>
-        <ng-container [ngSwitch]="_$fileInfoList[0]?.state">
-            <span *ngSwitchCase="'pause'" class="jigsaw-upload-pause fa fa-pause-circle"></span>
-            <span *ngSwitchCase="'loading'"
-                  class="jigsaw-upload-loading iconfont iconfont-e8dd jigsaw-am-rotation"></span>
-            <span *ngSwitchCase="'success'" class="jigsaw-upload-success fa fa-check-circle"></span>
-            <span *ngSwitchCase="'error'" class="jigsaw-upload-error fa fa-times-circle"></span>
-        </ng-container>
-    </j-box>
-    <ul *ngSwitchCase="'multiple'" class="jigsaw-upload-file-list"
-        [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}">
+<div *ngIf="_$uploadMode == 'selectAndList'" class="jigsaw-upload-file-list-container">
+    <ul class="jigsaw-upload-file-list" [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}">
         <li *ngFor="let file of _$fileInfoList" class="jigsaw-upload-file">
             <div class="jigsaw-upload-file-left">
                 <span class="jigsaw-upload-icon-small fa fa-file"></span>
@@ -49,6 +41,4 @@
             </div>
         </li>
     </ul>
-</ng-container>
-
-
+</div>

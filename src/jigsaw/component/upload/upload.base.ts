@@ -24,7 +24,7 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
     @Output()
     public complete = new EventEmitter<UploadFileInfo[]>();
 
-    public _$uploadMode: 'select' | 'single' | 'multiple' = 'select';
+    public _$uploadMode: 'select' | 'selectAndList' = 'select';
 
     public _$fileInfoList: UploadFileInfo[] = [];
 
@@ -69,7 +69,7 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
             }
         });
 
-        this._$uploadMode = files.length == 1 ? 'single' : 'multiple';
+        this._$uploadMode = 'selectAndList';
     }
 
     private _isAllFilesUploaded(): boolean {

@@ -4,12 +4,12 @@ $upload-prefix-cls: #{$jigsaw-prefix}-upload;
 
 .#{$upload-prefix-cls} {
     display: inline-block;
-    border: 1px dashed $border-color-base;
-    border-radius: 4px;
     width: 400px;
     height: 400px;
     &.#{$upload-prefix-cls}-drag-over {
-        border: 1px solid $primary-color;
+        .#{$upload-prefix-cls}-select-box {
+            border: 1px solid $primary-color;
+        }
     }
     &-file-input {
         display: none !important;
@@ -84,5 +84,35 @@ $upload-prefix-cls: #{$jigsaw-prefix}-upload;
     }
     &-error {
         color: $error-color;
+    }
+
+    &-file-list-container {
+        height: 70%;
+        border: 1px solid $border-color-base;
+        border-top: none;
+        border-radius: 0 0 4px 4px;
+    }
+
+    &-select-box-small {
+        .#{$upload-prefix-cls}-icon {
+            margin-bottom: 0;
+        }
+        .#{$upload-prefix-cls}-select-right {
+            text-align: left;
+            margin-left: 12px;
+            .#{$upload-prefix-cls}-prompt {
+                margin-bottom: 6px;
+            }
+        }
+    }
+
+    &-select-box {
+        border: 1px dashed $border-color-base;
+        border-radius: 4px;
+        &.#{$upload-prefix-cls}-select-box-small {
+            border: 1px solid $border-color-base;
+            border-bottom: 1px dashed $border-color-base;
+            border-radius: 4px 4px 0 0;
+        }
     }
 }
