@@ -1,3 +1,35 @@
+## v1.1.12 (2018-9-29)
+
+### 新特性 / New Features
+- 无
+
+### 破坏性修改 / Breaking Changes
+- 无
+
+###  优化 / Modified
+- [新增] 表单控件增加valid属性和验证不通过样式
+- [优化] 改正combo-select和auto-complete-input的弹出位置修正函数
+- [优化] table的列对齐兼容火狐
+
+### 修复 / Fixes
+- [修复] 修复combo里的tag在火狐里面无法点击打开下拉
+
+## v1.1.11 (2018-9-15)
+
+### 新特性 / New Features
+- [新增] upload组件支持限制文件类型，上传失败的文件信息也能从组件传出来，fixes #717
+- [新增] Box增加viewInit静态事件，用于监听box整体布局样式的初始化 (#722)
+- [新增] 给jigsaw-upload组件增加一个新的输入属性targetUrl，允许应用自定自己的上传目标服务器
+
+### 破坏性修改 / Breaking Changes
+- 无
+
+###  优化 / Modified
+- 无
+
+### 修复 / Fixes
+- [修复] 修复table编译渲染器在输入空白字符，退出编辑后不能再切换到编辑，fixes #725
+
 ## v1.1.10 (2018-9-3)
 
 ### 新特性 / New Features
