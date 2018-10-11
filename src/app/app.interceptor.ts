@@ -24,10 +24,6 @@ export class AjaxInterceptor implements HttpInterceptor {
         console.log('the ajax request is intercepted, here is the original request:');
         console.log(req);
 
-        /*if(req.url.match(/\/rdk\/service\/common\/upload/g)) {
-            return next.handle(req);
-        }*/
-
         const processor = AjaxInterceptor._processors.find(p => {
             const url = p.urlPattern;
             return url instanceof RegExp ? url.test(req.url) : url === req.url;
@@ -41,8 +37,17 @@ export class AjaxInterceptor implements HttpInterceptor {
         return this.createResult(body, req.url);
     }
 
-    dealServerSideUploadRequest(req: HttpRequest<any>) {
-        return `upload_files/${new Date().getTime()}/${req.body.get('filename')}`;
+    dealServerSideUploadRequest(req: HttpRequest<any>): Observable<HttpEvent<any>> {
+        return new Observable<HttpEvent<any>>(subscriber => {
+            // simulate network latency
+            setTimeout(() => {
+                const body = `upload_files/${new Date().getTime()}/${req.body.get('filename')}`;
+                const url = '/rdk/service/common/upload';
+                const resp = new HttpResponse({body: body, url: url, status: 200});
+                subscriber.next(resp);
+                subscriber.complete();
+            }, Math.random() * 1000);
+        });
     }
 
     dealServerSidePagingRequest(req: HttpRequest<any>): Observable<HttpEvent<any>> {

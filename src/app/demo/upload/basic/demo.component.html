@@ -20,9 +20,9 @@
     </div>
     <div class="demo-2 live-demo">
         <h3>指令</h3>
-        <button j-upload [multiple]="multiple" [fileType]="fileType" (process)="getUploadFile($event)"
+        <button j-upload [multiple]="multiple" [fileType]="fileType" (progress)="getUploadFile($event)"
                 (complete)="getAllUploadFiles($event)">click to upload</button>
-        <a j-upload [multiple]="multiple" [fileType]="fileType" (process)="getUploadFile($event)"
+        <a j-upload [multiple]="multiple" [fileType]="fileType" (progress)="getUploadFile($event)"
            (complete)="getAllUploadFiles($event)" class="link-upload">上传文件</a>
     </div>
 </div>

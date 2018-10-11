@@ -18,8 +18,16 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
     @Input()
     public multiple: boolean = true;
 
+    /**
+     * @internal
+     *
+     * 前面版本用错了单词，这里保留下来以求向下兼容
+     */
     @Output()
     public process = new EventEmitter<UploadFileInfo>();
+
+    @Output()
+    public progress = new EventEmitter<UploadFileInfo>();
 
     @Output()
     public complete = new EventEmitter<UploadFileInfo[]>();
@@ -107,6 +115,8 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
 
     private _afterCurFileUploaded(fileInfo: UploadFileInfo) {
         this.process.emit(fileInfo);
+        this.progress.emit(fileInfo);
+
         const waitingFile = this._$fileInfoList.find(f => f.state == 'pause');
         if (waitingFile) {
             this._sequenceUpload(waitingFile)
