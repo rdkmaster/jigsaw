@@ -1,11 +1,11 @@
 import {AbstractJigsawComponent} from "../common";
-import {ElementRef, EventEmitter, Input, OnDestroy, Output, Renderer2} from "@angular/core";
+import {ElementRef, EventEmitter, Input, OnDestroy, Optional, Output, Renderer2} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 
 export type UploadFileInfo = { name: string, state: 'pause' | 'loading' | 'success' | 'error', url: string, file: File };
 
 export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestroy {
-    constructor(protected _http: HttpClient, protected _renderer: Renderer2, protected _elementRef: ElementRef) {
+    constructor(@Optional() protected _http: HttpClient, protected _renderer: Renderer2, protected _elementRef: ElementRef) {
         super();
     }
 
@@ -103,6 +103,10 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
         const formData = new FormData();
         formData.append('file', fileInfo.file);
         formData.append("filename", encodeURI(fileInfo.file.name));
+        if(!this._http) {
+            console.error('Jigsaw upload component must inject HttpClientModule, please import it to the module!');
+            return;
+        }
         this._http.post(this.targetUrl, formData, {responseType: 'text'}).subscribe(res => {
             fileInfo.state = 'success';
             fileInfo.url = res;

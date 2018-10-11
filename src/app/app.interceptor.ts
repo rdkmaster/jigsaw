@@ -37,17 +37,8 @@ export class AjaxInterceptor implements HttpInterceptor {
         return this.createResult(body, req.url);
     }
 
-    dealServerSideUploadRequest(req: HttpRequest<any>): Observable<HttpEvent<any>> {
-        return new Observable<HttpEvent<any>>(subscriber => {
-            // simulate network latency
-            setTimeout(() => {
-                const body = `upload_files/${new Date().getTime()}/${req.body.get('filename')}`;
-                const url = '/rdk/service/common/upload';
-                const resp = new HttpResponse({body: body, url: url, status: 200});
-                subscriber.next(resp);
-                subscriber.complete();
-            }, Math.random() * 1000);
-        });
+    dealServerSideUploadRequest(req: HttpRequest<any>) {
+        return `upload_files/${new Date().getTime()}/${req.body.get('filename')}`;
     }
 
     dealServerSidePagingRequest(req: HttpRequest<any>): Observable<HttpEvent<any>> {

@@ -1,4 +1,4 @@
-import {Component, Directive, ElementRef, EventEmitter, HostListener, OnDestroy, Renderer2} from "@angular/core";
+import {Component, Directive, ElementRef, EventEmitter, HostListener, OnDestroy, Optional, Renderer2} from "@angular/core";
 import {JigsawUploadBase, UploadFileInfo} from "./upload.base";
 import {HttpClient} from "@angular/common/http";
 import {
@@ -9,7 +9,7 @@ import {
     selector: '[j-upload], [jigsaw-upload]'
 })
 export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy {
-    constructor(protected _http: HttpClient,
+    constructor(@Optional() protected _http: HttpClient,
                 protected _renderer: Renderer2,
                 protected _elementRef: ElementRef,
                 private _popupService: PopupService) {

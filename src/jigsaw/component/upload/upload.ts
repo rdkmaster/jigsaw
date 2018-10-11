@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Renderer2, ViewChild} from "@angular/core";
+import {AfterViewInit, Component, ElementRef, Optional, Renderer2, ViewChild} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {DragDropInfo} from "../../directive/dragdrop/types";
 import {JigsawUploadBase} from "./upload.base";
@@ -12,7 +12,7 @@ import {JigsawUploadBase} from "./upload.base";
 })
 export class JigsawUpload extends JigsawUploadBase implements AfterViewInit {
 
-    constructor(protected _http: HttpClient, protected _renderer: Renderer2, protected _elementRef: ElementRef) {
+    constructor(@Optional() protected _http: HttpClient, protected _renderer: Renderer2, protected _elementRef: ElementRef) {
         super(_http, _renderer, _elementRef);
     }
 
