@@ -2,6 +2,8 @@ import {Component} from "@angular/core";
 import {TranslateService} from "@ngx-translate/core";
 import {TranslateHelper} from "jigsaw/core/utils/translate-helper";
 import {ButtonInfo} from "jigsaw/service/popup.service";
+import {LocalPageableTableData} from "../../../../jigsaw/core/data/table-data";
+import {HttpClient} from "@angular/common/http";
 
 /**
  * 覆盖控件内部的国际化词条
@@ -36,7 +38,13 @@ TranslateHelper.alert.en = {
         }`]
 })
 export class I18nFullDemoComponent {
-    constructor(public translateService: TranslateService) {
+    pageable: LocalPageableTableData;
+    constructor(public translateService: TranslateService, http: HttpClient) {
+        this.pageable = new LocalPageableTableData();
+        this.pageable.http = http;
+        this.pageable.pagingInfo.pageSize = 10;
+        this.pageable.fromAjax('mock-data/hr-list');
+
         translateService.use(translateService.getBrowserLang());
 
         // 增加自定义词条
@@ -83,8 +91,6 @@ export class I18nFullDemoComponent {
             type: 'primary'
         },
     ];
-
-    currentPage: number = 1;
 
     changeLang(lang: string) {
         TranslateHelper.changeLanguage(this.translateService, lang);

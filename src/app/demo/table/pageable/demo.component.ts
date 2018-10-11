@@ -19,8 +19,8 @@ export class TablePageableDemoComponent {
         this.pageable.onAjaxComplete(() => {
             console.log(this.pageable);
         });
-        // 分页数据会根据pageInfo的改变自动获取数据，这边可不必手动调ajax
-        // this.pageable.fromAjax();
+        this.pageable.pagingInfo.pageSize = 5;
+        this.pageable.fromAjax();
     }
 
     columnDefines: ColumnDefine[] = [

@@ -6,9 +6,7 @@
 <!-- start to learn the demo from here -->
 <jigsaw-table [data]="pageable" [columnDefines]="columns"></jigsaw-table>
 <jigsaw-pagination
-    [total]="pageable.pagingInfo.totalRecord"
-    [(pageSize)]="pageable.pagingInfo.pageSize"
-    [(current)]="pageable.pagingInfo.currentPage"
+    [data]="pageable"
     [pageSizeOptions]="[5, 10, 20]"
     [searchable]="true"
     [showQuickJumper]="true"

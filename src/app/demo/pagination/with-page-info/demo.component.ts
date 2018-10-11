@@ -1,20 +1,29 @@
 import {Component} from "@angular/core";
-import {PageableTableData} from "jigsaw/core/data/table-data";
+import {LocalPageableTableData, PageableTableData} from "jigsaw/core/data/table-data";
 import {PagingInfo} from "jigsaw/core/data/component-data";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
     templateUrl: './demo.component.html'
 })
 export class WithPagingInfoDemoComponent {
-    pageInfo = new PagingInfo();
     actions = 0;
+    pageable: LocalPageableTableData;
 
-    constructor() {
-        this.pageInfo.totalRecord = 200;
-        this.pageInfo.subscribe(() => {
+    constructor(http: HttpClient) {
+        this.pageable = new LocalPageableTableData();
+        this.pageable.http = http;
+        this.pageable.pagingInfo.pageSize = 10;
+        this.pageable.fromAjax('mock-data/hr-list');
+
+        this.pageable.pagingInfo.totalRecord = 200;
+        this.pageable.pagingInfo.subscribe(() => {
             this.actions++;
         })
     }
+
+
+
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

@@ -11,6 +11,8 @@ import {AbstractJigsawComponent} from "../common";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {InternalUtils} from "../../core/utils/internal-utils";
 import {TranslateHelper} from "../../core/utils/translate-helper";
+import {IPageable, PagingInfo} from "../../core/data/component-data";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 export class PageSizeData {
     value: number;
@@ -31,13 +33,12 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         super()
     }
 
+    private _totalRecord: number; // 数据总数
     private _totalPage: number;
-    private _current: number;
     private _showPages: number[] = [];
     private _firstPage: JigsawPagingItem;
     private _lastPage: JigsawPagingItem;
     private _pageSizeOptions: any[];
-    private _pageNumberInit: boolean = false;
 
     /**
      * @internal
@@ -60,63 +61,26 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      */
     public _$nextDisabled: boolean = false;
 
-    // 当前页(双绑)
-    @Input()
-    public get current(): number {
-        return this._current
-    };
-
-    public set current(newValue: number) {
-        newValue = newValue ? newValue : 1; //双绑初始值为undefined或null时，设默认值为1
-        if (this.current != newValue) {
-            this._current = newValue;
-            this.currentChange.emit(newValue);
-            if (this.initialized && this._pageNumberInit) {
-                this._setCurrentShow();
-            }
-        }
-    }
-
-    @Output() public currentChange: EventEmitter<any> = new EventEmitter<any>(); //页码改变的事件
-
-    private _total: number; // 数据总数
+    private _data: IPageable;
 
     @Input()
-    get total(): number {
-        return this._total;
+    public get data(): IPageable {
+        return this._data;
     }
 
-    set total(value: number) {
-        if (this._total != value) {
-            this._total = value;
-            if (this.initialized) {
+    public set data(value: IPageable) {
+        if(CommonUtils.isUndefined(value) || !(value.pagingInfo instanceof PagingInfo)) return;
+        this._data = value;
+        if(typeof this._data.onRefresh == 'function') {
+            this._data.onRefresh(() => {
                 this._renderPages();
-            }
+            });
         }
     }
 
-    @Output()
-    public pageSizeChange: EventEmitter<number> = new EventEmitter<number>(); // pageSize 变化的事件
-
-    // 每页条数
-    @Input()
-    public get pageSize(): number {
-        return this._$pageSize ? this._$pageSize.value : null;
-    }
-
-    public set pageSize(newValue: number) {
-        newValue = newValue ? newValue : 10;
-        if (this.pageSize != newValue) {
-            this._$pageSize.value = newValue;
-            this._$pageSize.label = newValue + '/' + this._translateService.instant('pagination.page');
-            this.pageSizeChange.emit(newValue);
-            if (this.initialized) {
-                this._renderPages();
-            }
-        }
-    }
-
-    // 指定每页可以显示多少条
+    /**
+     * 指定每页可以显示多少条
+     */
     @Input()
     public get pageSizeOptions() {
         return this._pageSizeOptions
@@ -131,18 +95,60 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     };
 
     @Input() public searchable: boolean = false; // 搜索功能开关
-    @Output() public search = new EventEmitter<string>();
-
     @Input() public showQuickJumper: boolean = false; // 是否可以快速跳转至某页
-
     @Input() public size: string; // 当为「small」时，是小尺寸分页
+
+    @Output() public search = new EventEmitter<string>();
+    @Output() public currentChange: EventEmitter<any> = new EventEmitter<any>(); //页码改变的事件
+    @Output() public pageSizeChange: EventEmitter<number> = new EventEmitter<number>(); // pageSize 变化的事件
 
     @ViewChildren(forwardRef(() => JigsawPagingItem))
     private _pages: QueryList<JigsawPagingItem> = null;
 
     @ViewChildren(JigsawInput) inputs: QueryList<JigsawInput>;
 
-    /*
+    /**
+     * 当前页
+     */
+    private _current: number;
+
+    public get current(): number {
+        return this._current
+    };
+
+    public set current(newValue: number) {
+        newValue = newValue ? newValue : 1; //双绑初始值为undefined或null时，设默认值为1
+        if (this.current != newValue) {
+            this._current = newValue;
+            this.currentChange.emit(newValue);
+            if(this.data.pagingInfo.currentPage != newValue) {
+                // pagingInfo.currentPage采用的getter&setter，不可随便赋值
+                this.data.pagingInfo.currentPage = newValue;
+            }
+        }
+    }
+
+    /**
+     * 每页条数
+     */
+    public get pageSize(): number {
+        return this._$pageSize ? this._$pageSize.value : null;
+    }
+
+    public set pageSize(newValue: number) {
+        newValue = newValue ? newValue : 10;
+        if (this.pageSize != newValue) {
+            this._$pageSize.value = newValue;
+            this._$pageSize.label = newValue + '/' + this._translateService.instant('pagination.page');
+            this.pageSizeChange.emit(newValue);
+            if(this.data.pagingInfo.pageSize != newValue) {
+                // pagingInfo.pageSize采用的getter&setter，不可随便赋值
+                this.data.pagingInfo.pageSize = newValue;
+            }
+        }
+    }
+
+    /**
      * 根据current设置page按钮的显示，上一页，下一页，上五页，下五页的显示
      * */
     private _setCurrentShow() {
@@ -159,7 +165,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         this._setCurrentPage();
     }
 
-    /*
+    /**
      * 根据current设置当前页
      * */
     private _setCurrentPage(): void {
@@ -172,7 +178,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         });
     }
 
-    /*
+    /**
      * 根据current控制page显示
      * */
     private _pageShow(): void {
@@ -224,7 +230,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         this.current = pageNum;
     }
 
-    /*
+    /**
      * 下五页
      * */
     public pagesNext(): void {
@@ -238,7 +244,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         this.current = pageNum;
     }
 
-    /*
+    /**
      * 上五页
      * */
     public pagesPrev(): void {
@@ -252,7 +258,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         this.current = pageNum;
     }
 
-    /*
+    /**
      * 显示上五页、下五页按钮
      * */
     private _showPrevAndNextBtn(): void {
@@ -274,7 +280,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         }
     }
 
-    /*
+    /**
      * 获取第一个和最后一个page组件实例
      * */
     private _getFirstAndLastPage(): void {
@@ -282,7 +288,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         this._lastPage = this._pages.find(page => page.pageNumber == this._totalPage);
     }
 
-    /*
+    /**
      * 上一页、下一页按钮设置
      * */
     private _updatePrevAndNextStatus(): void {
@@ -301,7 +307,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         }
     }
 
-    /*
+    /**
      * goto功能
      * */
     private _goto(pageNum): void {
@@ -313,23 +319,28 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         }
     }
 
-    /*
+    /**
      * select组件改变pageSize
      * */
     private _changePageSize(pageSize) {
         if (this.pageSize != pageSize.value) {
-            this._pageNumberInit = false;
             this.pageSize = pageSize.value;
             this.current = 1;
         }
     }
 
-    /*
+    /**
      * 渲染page按钮
      * */
     private _renderPages(): void {
+        if(!this.data || !this.data.pagingInfo) return;
+
+        this.current = this.data.pagingInfo.currentPage;
+        this._totalRecord = this.data.pagingInfo.totalRecord;
+        this.pageSize = this.data.pagingInfo.pageSize;
+
         //计算总页数
-        this._totalPage = Math.ceil(this.total / this.pageSize);
+        this._totalPage = Math.ceil(this._totalRecord / this.pageSize);
         if (isNaN(this._totalPage) || this._totalPage < 0) {
             this._totalPage = 0;
         }
@@ -349,10 +360,11 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
             this._getFirstAndLastPage();
             this._setCurrentShow();
         });
-
-        this._pageNumberInit = true;
     }
 
+    /**
+     * 刷新数据时清空搜索框
+     */
     public reset() {
         if(!this.inputs) return;
         this.inputs.forEach(input => input.value='');
@@ -361,6 +373,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     ngOnInit() {
         super.ngOnInit();
         this._renderPages();
+
         // 国际化
         TranslateHelper.languageChangEvent.subscribe(langInfo => {
             this._translateService.use(langInfo.curLang);
