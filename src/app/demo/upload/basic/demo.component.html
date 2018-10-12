@@ -21,12 +21,13 @@
     <div class="demo-2 live-demo">
         <h3>指令</h3>
         <j-button j-upload [multiple]="multiple" [fileType]="fileType" (start)="isButtonUploadWaiting = true"
-                  (progress)="getUploadFile($event)" (complete)="getAllUploadFiles($event, 'button')">
+                  (progress)="getUploadFile($event)" (complete)="getAllUploadFiles($event, 'button')"
+                  [optionCount]="4">
             <j-font-loading *ngIf="isButtonUploadWaiting" width="16px" height="16px" color="#41addc"></j-font-loading>
             click to upload
         </j-button>
         <a j-upload [multiple]="multiple" [fileType]="fileType" (start)="isLinkUploadWaiting = true"
-           (progress)="getUploadFile($event)" (complete)="getAllUploadFiles($event, 'link')"
+           (progress)="getUploadFile($event)" (complete)="getAllUploadFiles($event, 'link')" [optionCount]="3"
            class="link-upload">上传文件</a>
         <j-font-loading *ngIf="isLinkUploadWaiting" width="16px" height="16px" color="#41addc"></j-font-loading>
     </div>

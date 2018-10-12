@@ -1,9 +1,10 @@
-import {Component, Directive, ElementRef, EventEmitter, HostListener, OnDestroy, Optional, Renderer2} from "@angular/core";
+import {Component, Directive, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Optional, Renderer2} from "@angular/core";
 import {JigsawUploadBase, UploadFileInfo} from "./upload.base";
 import {HttpClient} from "@angular/common/http";
 import {
     ButtonInfo, IPopupable, PopupEffect, PopupInfo, PopupOptions, PopupPositionType, PopupPositionValue, PopupService
 } from "../../service/popup.service";
+import {AbstractJigsawComponent} from "../common";
 
 @Directive({
     selector: '[j-upload], [jigsaw-upload]'
@@ -20,6 +21,9 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
     private _removeMouseOutHandler: Function;
     private _rollOutDenouncesTimer: any = null;
     private _rollInDenouncesTimer: any = null;
+
+    @Input()
+    public optionCount: number;
 
     @HostListener('click', ['$event'])
     onClick($event) {
@@ -42,15 +46,16 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
     private _addRollInDenouncesTimer() {
         this._rollInDenouncesTimer = this.callLater(() => {
             if (this._popupInfo) return;
-            this._popupInfo = this._popupService.popup(FileInfoList, this._getUnModalOptions(), this._$fileInfoList);
+            this._popupInfo = this._popupService.popup(JigsawUploadFileInfoList, this._getUnModalOptions(), this._$fileInfoList);
 
             if (!this._popupInfo || !this._popupInfo.element || !this._popupInfo.instance) {
                 console.error('unable to popup drop down, unknown error!');
                 return;
             }
 
-            if (this._popupInfo.instance instanceof FileInfoList) {
+            if (this._popupInfo.instance instanceof JigsawUploadFileInfoList) {
                 this._popupInfo.instance.uploader = this;
+                this._popupInfo.instance.optionCount = this.optionCount;
             }
 
             this._closeAllListener();
@@ -86,7 +91,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
                     offsetHeight: this._elementRef.nativeElement.offsetHeight
                 });
             },
-            size: {width: 300, height: 300},
+            size: {width: 300},
             posType: PopupPositionType.absolute
         };
     }
@@ -110,6 +115,24 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
         }
     }
 
+    protected _upload() {
+        super._upload();
+        this._reCalculatePopupPosition();
+    }
+
+    public _$removeFile(file) {
+        super._$removeFile(file);
+        this._reCalculatePopupPosition();
+    }
+
+    private _reCalculatePopupPosition() {
+        setTimeout(() => {
+            if(this._popupInfo) {
+                this._popupService.setPosition(this._getUnModalOptions(), this._popupInfo.element);
+            }
+        });
+    }
+
     ngOnDestroy() {
         super.ngOnDestroy();
         this._closePopup();
@@ -117,8 +140,10 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
 }
 
 @Component({
+    selector: 'jigsaw-upload-file-list, j-upload-file-list',
     template: `
-        <ul class="jigsaw-upload-file-list" [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}">
+        <ul class="jigsaw-upload-file-list" [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}"
+            [style.width]="width" [style.maxHeight.px]="optionCount > 0 ? 40*optionCount : ''">
             <li *ngFor="let file of initData" class="jigsaw-upload-file">
                 <div class="jigsaw-upload-file-left">
                     <span class="jigsaw-upload-file-icon fa fa-file"></span>
@@ -147,8 +172,12 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
         </ul>
     `
 })
-export class FileInfoList implements IPopupable {
-    answer: EventEmitter<ButtonInfo>;
-    initData: UploadFileInfo[];
-    uploader: JigsawUploadDirective;
+export class JigsawUploadFileInfoList extends AbstractJigsawComponent implements IPopupable {
+    public answer: EventEmitter<ButtonInfo>;
+    @Input()
+    public initData: UploadFileInfo[];
+    @Input()
+    public uploader: JigsawUploadDirective;
+    @Input()
+    public optionCount: number = 5;
 }
