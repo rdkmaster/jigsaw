@@ -23,7 +23,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
     private _rollInDenouncesTimer: any = null;
 
     @Input()
-    public optionCount: number;
+    public uploadOptionCount: number;
 
     @HostListener('click', ['$event'])
     onClick($event) {
@@ -55,7 +55,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
 
             if (this._popupInfo.instance instanceof JigsawUploadFileInfoList) {
                 this._popupInfo.instance.uploader = this;
-                this._popupInfo.instance.optionCount = this.optionCount;
+                this._popupInfo.instance.optionCount = this.uploadOptionCount;
             }
 
             this._closeAllListener();
