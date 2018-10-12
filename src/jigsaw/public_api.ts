@@ -53,7 +53,7 @@ export * from "./component/tree/tree-ext";
 export * from "./component/tree/ztree-types";
 export * from "./component/viewport/viewport";
 export * from "./component/icon/icon";
-export * from "./component/upload/upload";
+export * from "./component/upload/index";
 export * from "./core/data/array-collection";
 export * from "./core/data/component-data";
 export * from "./core/data/echart-types";
