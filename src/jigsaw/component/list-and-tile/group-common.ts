@@ -153,7 +153,9 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback()
         }
-        this._items.forEach(item => item.change.unsubscribe());
+        if(this._items) {
+            this._items.forEach(item => item.change.unsubscribe());
+        }
     }
 
     protected _propagateChange: any = () => {
