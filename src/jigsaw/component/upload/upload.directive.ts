@@ -1,4 +1,15 @@
-import {Component, Directive, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Optional, Renderer2} from "@angular/core";
+import {
+    Component,
+    Directive,
+    ElementRef,
+    EventEmitter,
+    HostListener,
+    Input,
+    OnDestroy,
+    Optional,
+    Output,
+    Renderer2
+} from "@angular/core";
 import {JigsawUploadBase, UploadFileInfo} from "./upload.base";
 import {HttpClient} from "@angular/common/http";
 import {
@@ -23,7 +34,81 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
     private _rollInDenouncesTimer: any = null;
 
     @Input()
+    public uploadTargetUrl: string = '/rdk/service/common/upload';
+
+    public get targetUrl(): string {
+        return this.uploadTargetUrl;
+    }
+
+    public set targetUrl(value: string) {
+        this.uploadTargetUrl = value;
+    }
+
+    @Input()
+    public uploadFileType: string;
+
+    public get fileType(): string {
+        return this.uploadFileType;
+    }
+
+    public set fileType(value: string) {
+        this.uploadFileType = value;
+    }
+
+    @Input()
+    public uploadMultiple: boolean = true;
+
+    public get multiple(): boolean {
+        return this.uploadMultiple;
+    }
+
+    public set multiple(value: boolean) {
+        this.uploadMultiple = value;
+    }
+
+    @Input()
     public uploadOptionCount: number;
+
+    public get optionCount(): number {
+        return this.uploadOptionCount;
+    }
+
+    public set optionCount(value: number) {
+        this.uploadOptionCount = value;
+    }
+
+    @Output()
+    public uploadProgress = new EventEmitter<UploadFileInfo>();
+
+    public get progress(): EventEmitter<UploadFileInfo> {
+        return this.uploadProgress;
+    }
+
+    public set progress(value: EventEmitter<UploadFileInfo>) {
+        this.uploadProgress = value;
+    }
+
+    @Output()
+    public uploadComplete = new EventEmitter<UploadFileInfo[]>();
+
+    public get complete(): EventEmitter<UploadFileInfo[]> {
+        return this.uploadComplete;
+    }
+
+    public set complete(value: EventEmitter<UploadFileInfo[]>) {
+        this.uploadComplete = value;
+    }
+
+    @Output()
+    public uploadStart = new EventEmitter<void>();
+
+    public get start(): EventEmitter<void> {
+        return this.uploadStart;
+    }
+
+    public set start(value: EventEmitter<void>) {
+        this.uploadStart = value;
+    }
 
     @HostListener('click', ['$event'])
     onClick($event) {
@@ -80,8 +165,8 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
     private _getUnModalOptions(): PopupOptions {
         return {
             modal: false,
-            showEffect: PopupEffect.bubbleIn,
-            hideEffect: PopupEffect.bubbleOut,
+            showEffect: PopupEffect.fadeIn,
+            hideEffect: PopupEffect.fadeOut,
             pos: this._elementRef,
             posOffset: {
                 top: this._elementRef.nativeElement.offsetHeight
@@ -127,7 +212,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
 
     private _reCalculatePopupPosition() {
         setTimeout(() => {
-            if(this._popupInfo) {
+            if (this._popupInfo) {
                 this._popupService.setPosition(this._getUnModalOptions(), this._popupInfo.element);
             }
         });

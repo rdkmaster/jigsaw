@@ -15,8 +15,10 @@
 
     <div class="demo-1 live-demo">
         <h3>组件</h3>
-        <j-upload [uploadMultiple]="multiple" [uploadFileType]="fileType" (uploadProgress)="getUploadFile($event)"
-                  (uploadComplete)="getAllUploadFiles($event)"></j-upload>
+        <j-upload [multiple]="multiple" [fileType]="fileType"
+                  (progress)="getUploadFile($event)"
+                  (complete)="getAllUploadFiles($event)">
+        </j-upload>
     </div>
     <div class="demo-2 live-demo">
         <h3>指令</h3>
