@@ -96,6 +96,10 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
 
         this._$uploadMode = 'selectAndList';
         this.start.emit();
+
+        if(this._fileInputEl) {
+            this._fileInputEl['value'] = null;
+        }
     }
 
     private _isAllFilesUploaded(): boolean {

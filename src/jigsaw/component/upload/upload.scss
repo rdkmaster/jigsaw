@@ -99,6 +99,7 @@ $upload-prefix-cls: #{$jigsaw-prefix}-upload;
     }
     &-loading, &-success, &-error {
         font-size: 16px;
+        display: inline-block;
     }
     &-loading {
         color: $primary-color;
