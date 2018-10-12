@@ -18,7 +18,7 @@ import {UploadFileInfo} from "jigsaw/component/upload/upload.base";
     `]
 })
 export class uploadDemoComponent {
-    fileType = ['.png'];
+    fileType = '.png';
 
     fileTypes = ['.png', '.docx', '.json', '.png, .jpg'];
 

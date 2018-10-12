@@ -82,7 +82,10 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
             return;
         }
 
-        Array.from(files).forEach((file: File, index) => {
+        let validFiles = this._filterValidFiles(Array.from(files));
+        this._$fileInfoList = this._filterValidFiles(this._$fileInfoList);
+
+        validFiles.forEach((file: File, index) => {
             const fileInfo: UploadFileInfo = {name: file.name, state: 'pause', url: '', file: file};
             if(this.multiple) {
                 this._$fileInfoList.push(fileInfo);
@@ -99,6 +102,16 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
 
         if(this._fileInputEl) {
             this._fileInputEl['value'] = null;
+        }
+    }
+
+    private _filterValidFiles(files) {
+        if(this.fileType) {
+            const fileTypes = this.fileType.split(',');
+            return files.filter(f =>
+                !!fileTypes.find(ft => new RegExp(`${ft.trim()}$`).test(f.name)));
+        }else{
+            return files;
         }
     }
 
