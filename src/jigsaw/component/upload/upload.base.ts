@@ -12,7 +12,6 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
     public targetUrl: string = '/rdk/service/common/upload';
     public fileType: string;
     public multiple: boolean = true;
-    public process: EventEmitter<UploadFileInfo>;
     public progress: EventEmitter<UploadFileInfo>;
     public complete: EventEmitter<UploadFileInfo[]>;
     public start: EventEmitter<void>;
@@ -119,9 +118,6 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
 
     private _afterCurFileUploaded(fileInfo: UploadFileInfo) {
         this.progress.emit(fileInfo);
-        if (this.process) {
-            this.process.emit(fileInfo);
-        }
 
         const waitingFile = this._$fileInfoList.find(f => f.state == 'pause');
         if (waitingFile) {

@@ -35,14 +35,6 @@ export class JigsawUpload extends JigsawUploadBase implements AfterViewInit {
     @Input()
     public multiple: boolean = true;
 
-    /**
-     * @internal
-     *
-     * 前面版本用错了单词，这里保留下来以求向下兼容
-     */
-    @Output()
-    public process = new EventEmitter<UploadFileInfo>();
-
     @Output()
     public progress = new EventEmitter<UploadFileInfo>();
 
