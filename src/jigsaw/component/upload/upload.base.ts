@@ -106,13 +106,10 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
     }
 
     private _filterValidFiles(files) {
-        if(this.uploadFileType) {
-            const fileTypes = this.uploadFileType.split(',');
-            return files.filter(f =>
-                !!fileTypes.find(ft => new RegExp(`${ft.trim()}$`).test(f.name)));
-        }else{
-            return files;
-        }
+        if(!this.uploadFileType) return files;
+        const fileTypes = this.uploadFileType.split(',');
+        return files.filter(f =>
+            !!fileTypes.find(ft => new RegExp(`${ft.trim()}$`).test(f.name)));
     }
 
     private _isAllFilesUploaded(): boolean {
