@@ -1,22 +1,45 @@
 import {Component} from "@angular/core";
-import {UploadFileInfo} from "jigsaw/component/upload/upload";
+import {UploadFileInfo} from "jigsaw/component/upload/upload.base";
 
 @Component({
-    templateUrl: './demo.component.html'
+    templateUrl: './demo.component.html',
+    styles: [`
+        .common-param-setting {
+            margin-bottom: 30px;
+        }
+        .common-param-setting h3{
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .link-upload {
+            text-decoration: underline;
+            margin-left: 6px
+        }
+    `]
 })
 export class uploadDemoComponent {
-    fileType = ['.png'];
+    fileType = '.png';
 
     fileTypes = ['.png', '.docx', '.json', '.png, .jpg'];
 
     multiple: boolean;
 
+    isButtonUploadWaiting: boolean;
+    isLinkUploadWaiting: boolean;
+
     getUploadFile(fileInfo: UploadFileInfo) {
-        console.log(fileInfo);
+        console.log('one file uploaded',fileInfo);
     }
 
-    getAllUploadFiles(fileInfoList: UploadFileInfo[]) {
-        console.log(fileInfoList);
+    getAllUploadFiles(fileInfoList: UploadFileInfo[], mode?: string) {
+        console.log('all files uploaded', fileInfoList);
+        switch(mode) {
+            case 'button':
+                this.isButtonUploadWaiting = false;
+                break;
+            case 'link':
+                this.isLinkUploadWaiting =false;
+        }
     }
 
     // ====================================================================
