@@ -20,10 +20,15 @@
     </div>
     <div class="demo-2 live-demo">
         <h3>指令</h3>
-        <button j-upload [multiple]="multiple" [fileType]="fileType" (progress)="getUploadFile($event)"
-                (complete)="getAllUploadFiles($event)">click to upload</button>
-        <a j-upload [multiple]="multiple" [fileType]="fileType" (progress)="getUploadFile($event)"
-           (complete)="getAllUploadFiles($event)" class="link-upload">上传文件</a>
+        <j-button j-upload [multiple]="multiple" [fileType]="fileType" (start)="isButtonUploadWaiting = true"
+                  (progress)="getUploadFile($event)" (complete)="getAllUploadFiles($event, 'button')">
+            <j-font-loading *ngIf="isButtonUploadWaiting" width="16px" height="16px" color="#41addc"></j-font-loading>
+            click to upload
+        </j-button>
+        <a j-upload [multiple]="multiple" [fileType]="fileType" (start)="isLinkUploadWaiting = true"
+           (progress)="getUploadFile($event)" (complete)="getAllUploadFiles($event, 'link')"
+           class="link-upload">上传文件</a>
+        <j-font-loading *ngIf="isLinkUploadWaiting" width="16px" height="16px" color="#41addc"></j-font-loading>
     </div>
 </div>
 

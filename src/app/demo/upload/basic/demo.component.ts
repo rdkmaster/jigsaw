@@ -24,12 +24,22 @@ export class uploadDemoComponent {
 
     multiple: boolean;
 
+    isButtonUploadWaiting: boolean;
+    isLinkUploadWaiting: boolean;
+
     getUploadFile(fileInfo: UploadFileInfo) {
         console.log('one file uploaded',fileInfo);
     }
 
-    getAllUploadFiles(fileInfoList: UploadFileInfo[]) {
+    getAllUploadFiles(fileInfoList: UploadFileInfo[], mode?: string) {
         console.log('all files uploaded', fileInfoList);
+        switch(mode) {
+            case 'button':
+                this.isButtonUploadWaiting = false;
+                break;
+            case 'link':
+                this.isLinkUploadWaiting =false;
+        }
     }
 
     // ====================================================================
