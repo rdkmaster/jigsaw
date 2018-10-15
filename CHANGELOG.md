@@ -1,3 +1,21 @@
+## v1.2.0-beta1 (2018-10-15)
+
+### 新特性 / New Features
+- [新增] upload的基类，upload指令，修改单文件多文件添加逻辑，增加删除功能
+
+### 破坏性修改 / Breaking Changes
+- [破坏性修改] 分页组件现在不传入current、pageSize、total属性，改由一次性传入含pagingInfo的data
+
+###  优化 / Modified
+- [优化] 主分支上删除upload里不必要的兼容性代码
+
+### 修复 / Fixes
+- [修复] 修复group items为空时，在destroy中会报错的问题
+- [修复] upload组件的api回退，并保持upload指令的api里都带有upload关键字
+- [修复] 修复numeric-input初始化时样式标红的问题
+- [修复] 删除tab自动滚动条，改由用户自己添加
+
+
 ## v1.1.12 (2018-9-29)
 
 ### 新特性 / New Features
