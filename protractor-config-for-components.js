@@ -41,6 +41,7 @@ if (process.env['TRAVIS']) {
             version: 'latest',
             platform: 'Windows 7',
             shardTestFiles: true,
+            extendedDebugging: true,
             'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
             'build': process.env['TRAVIS_BUILD_NUMBER']
         },
@@ -49,6 +50,7 @@ if (process.env['TRAVIS']) {
             version: 'latest',
             platform: 'OS X 10.10',
             shardTestFiles: true,
+            extendedDebugging: true,
             'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
             'build': process.env['TRAVIS_BUILD_NUMBER']
         }
