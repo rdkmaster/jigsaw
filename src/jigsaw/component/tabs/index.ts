@@ -8,10 +8,9 @@ import {JigsawTab} from './tab';
 import {JigsawTabPane} from "./tab-pane";
 import {CommonModule} from "@angular/common";
 import {JigsawTabContent, JigsawTabLabel} from "./tab-item";
-import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 
 @NgModule({
-    imports: [CommonModule, PerfectScrollbarModule],
+    imports: [CommonModule],
     exports: [JigsawTab, JigsawTabPane],
     declarations: [JigsawTab, JigsawTabPane, JigsawTabLabel, JigsawTabContent],
     providers: [],
