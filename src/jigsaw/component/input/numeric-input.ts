@@ -41,7 +41,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     }
 
     @Input()
-    public valid: boolean;
+    public valid: boolean = true;
 
     /**
      * 设置不可用
