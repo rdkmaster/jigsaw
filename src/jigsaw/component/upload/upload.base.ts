@@ -1,5 +1,5 @@
 import {AbstractJigsawComponent} from "../common";
-import {ElementRef, EventEmitter, OnDestroy, Optional, Renderer2} from "@angular/core";
+import {ElementRef, EventEmitter, Input, OnDestroy, Optional, Output, Renderer2} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 
 export type UploadFileInfo = { name: string, state: 'pause' | 'loading' | 'success' | 'error', url: string, file: File };
@@ -9,12 +9,23 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
         super();
     }
 
+    @Input()
     public targetUrl: string = '/rdk/service/common/upload';
+
+    @Input()
     public fileType: string;
+
+    @Input()
     public multiple: boolean = true;
-    public progress: EventEmitter<UploadFileInfo>;
-    public complete: EventEmitter<UploadFileInfo[]>;
-    public start: EventEmitter<void>;
+
+    @Output()
+    public progress = new EventEmitter<UploadFileInfo>();
+
+    @Output()
+    public complete = new EventEmitter<UploadFileInfo[]>();
+
+    @Output()
+    public start = new EventEmitter<void>();
 
     public _$uploadMode: 'select' | 'selectAndList' = 'select';
 

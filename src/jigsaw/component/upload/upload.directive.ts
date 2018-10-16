@@ -33,82 +33,26 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
     private _rollOutDenouncesTimer: any = null;
     private _rollInDenouncesTimer: any = null;
 
-    @Input()
-    public uploadTargetUrl: string = '/rdk/service/common/upload';
+    @Input('uploadTargetUrl')
+    public targetUrl: string = '/rdk/service/common/upload';
 
-    public get targetUrl(): string {
-        return this.uploadTargetUrl;
-    }
+    @Input('uploadFileType')
+    public fileType: string;
 
-    public set targetUrl(value: string) {
-        this.uploadTargetUrl = value;
-    }
+    @Input('uploadMultiple')
+    public multiple: boolean = true;
 
-    @Input()
-    public uploadFileType: string;
+    @Output('uploadProgress')
+    public progress = new EventEmitter<UploadFileInfo>();
 
-    public get fileType(): string {
-        return this.uploadFileType;
-    }
+    @Output('uploadComplete')
+    public complete = new EventEmitter<UploadFileInfo[]>();
 
-    public set fileType(value: string) {
-        this.uploadFileType = value;
-    }
-
-    @Input()
-    public uploadMultiple: boolean = true;
-
-    public get multiple(): boolean {
-        return this.uploadMultiple;
-    }
-
-    public set multiple(value: boolean) {
-        this.uploadMultiple = value;
-    }
+    @Output('uploadStart')
+    public start = new EventEmitter<void>();
 
     @Input()
     public uploadOptionCount: number;
-
-    public get optionCount(): number {
-        return this.uploadOptionCount;
-    }
-
-    public set optionCount(value: number) {
-        this.uploadOptionCount = value;
-    }
-
-    @Output()
-    public uploadProgress = new EventEmitter<UploadFileInfo>();
-
-    public get progress(): EventEmitter<UploadFileInfo> {
-        return this.uploadProgress;
-    }
-
-    public set progress(value: EventEmitter<UploadFileInfo>) {
-        this.uploadProgress = value;
-    }
-
-    @Output()
-    public uploadComplete = new EventEmitter<UploadFileInfo[]>();
-
-    public get complete(): EventEmitter<UploadFileInfo[]> {
-        return this.uploadComplete;
-    }
-
-    public set complete(value: EventEmitter<UploadFileInfo[]>) {
-        this.uploadComplete = value;
-    }
-
-    @Output()
-    public uploadStart = new EventEmitter<void>();
-
-    public get start(): EventEmitter<void> {
-        return this.uploadStart;
-    }
-
-    public set start(value: EventEmitter<void>) {
-        this.uploadStart = value;
-    }
 
     @HostListener('click', ['$event'])
     onClick($event) {
