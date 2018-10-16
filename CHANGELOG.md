@@ -1,3 +1,18 @@
+## v1.1.14 (2018-10-16)
+
+### 新特性 / New Features
+- [新增] JigsawUpload组件增加update事件，用于提供给用户可用的文件列表信息，现在complete只用于监听所有文件上传成功，不包含删除文件；增加clearFileList功能；去掉指令的remove功能
+
+### 破坏性修改 / Breaking Changes
+- 无
+
+###  优化 / Modified
+- 无
+
+### 修复 / Fixes
+- 无
+
+
 ## v1.1.13 (2018-10-15)
 
 ### 新特性 / New Features
