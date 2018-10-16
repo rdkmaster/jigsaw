@@ -2,16 +2,13 @@ import {
     AfterViewInit,
     Component,
     ElementRef,
-    EventEmitter,
-    Input,
     Optional,
-    Output,
     Renderer2,
     ViewChild
 } from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {DragDropInfo} from "../../directive/dragdrop/types";
-import {JigsawUploadBase, UploadFileInfo} from "./upload.base";
+import {JigsawUploadBase} from "./upload.base";
 
 @Component({
     selector: 'jigsaw-upload, j-upload',
@@ -25,32 +22,6 @@ export class JigsawUpload extends JigsawUploadBase implements AfterViewInit {
     constructor(@Optional() protected _http: HttpClient, protected _renderer: Renderer2, protected _elementRef: ElementRef) {
         super(_http, _renderer, _elementRef);
     }
-
-    @Input()
-    public targetUrl: string = '/rdk/service/common/upload';
-
-    @Input()
-    public fileType: string;
-
-    @Input()
-    public multiple: boolean = true;
-
-    /**
-     * @internal
-     *
-     * 前面版本用错了单词，这里保留下来以求向下兼容
-     */
-    @Output()
-    public process = new EventEmitter<UploadFileInfo>();
-
-    @Output()
-    public progress = new EventEmitter<UploadFileInfo>();
-
-    @Output()
-    public complete = new EventEmitter<UploadFileInfo[]>();
-
-    @Output()
-    public start = new EventEmitter<void>();
 
     @ViewChild('fileInput')
     private _fileInput: ElementRef;
