@@ -9,32 +9,39 @@
     <h2>Upload</h2>
     <div class="common-param-setting">
         <h3>配置参数</h3>
-        文件数目：<j-switch [(checked)]="multiple" onLabel="上传多个文件" offLabel="上传单个文件"></j-switch><br>
-        文件类型：<jigsaw-radios-lite [(value)]="fileType" [data]="fileTypes"></jigsaw-radios-lite>
+        文件数目：
+        <j-switch [(checked)]="multiple" onLabel="上传多个文件" offLabel="上传单个文件"></j-switch>
+        <br>
+        文件类型：
+        <jigsaw-radios-lite [(value)]="fileType" [data]="['.png', '.docx', '.json', '.png, .jpg']">
+        </jigsaw-radios-lite>
     </div>
 
     <div class="demo-1 live-demo">
         <h3>组件</h3>
         <j-upload [multiple]="multiple" [fileType]="fileType"
                   (progress)="getUploadFile($event)"
-                  (complete)="getAllUploadFiles($event)">
+                  (update)="getAllUploadFiles($event)">
         </j-upload>
     </div>
     <div class="demo-2 live-demo">
         <h3>指令</h3>
-        <j-button j-upload [uploadMultiple]="multiple" [uploadFileType]="fileType" (uploadStart)="isButtonUploadWaiting = true"
-                  (uploadProgress)="getUploadFile($event)" (uploadComplete)="getAllUploadFiles($event, 'button')"
-                  [uploadOptionCount]="4">
-            <j-font-loading *ngIf="isButtonUploadWaiting" width="16px" height="16px" color="#41addc"></j-font-loading>
+        <j-button #uploadDirective j-upload [uploadMultiple]="multiple" [uploadFileType]="fileType"
+                  (uploadStart)="isButtonUploadWaiting = true" (uploadProgress)="getUploadFile($event)"
+                  (uploadComplete)="getAllUploadFiles($event, 'button')" [uploadOptionCount]="4">
+            <j-font-loading *ngIf="isButtonUploadWaiting" width="16px" height="16px" color="#41addc">
+            </j-font-loading>
             click to upload
         </j-button>
-        <a j-upload [uploadMultiple]="multiple" [uploadFileType]="fileType" (uploadStart)="isLinkUploadWaiting = true"
-           (uploadProgress)="getUploadFile($event)" (uploadComplete)="getAllUploadFiles($event, 'link')" [uploadOptionCount]="3"
+        <a #uploadDirective j-upload [uploadMultiple]="multiple" [uploadFileType]="fileType"
+           [uploadOptionCount]="3" (uploadStart)="isLinkUploadWaiting = true"
+           (uploadProgress)="getUploadFile($event)" (uploadComplete)="getAllUploadFiles($event, 'link')"
            class="link-upload">上传文件</a>
         <j-font-loading *ngIf="isLinkUploadWaiting" width="16px" height="16px" color="#41addc"></j-font-loading>
+        <br><br>
+        <a (click)="clearFileList()">Click here</a> to clear the uploaded files.
     </div>
 </div>
-
 
 
 
