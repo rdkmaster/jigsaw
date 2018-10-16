@@ -21,8 +21,6 @@ import {JigsawUploadDirective} from "../../../../jigsaw/component/upload/upload.
 export class uploadDemoComponent {
     fileType = '.png';
 
-    fileTypes = ['.png', '.docx', '.json', '.png, .jpg'];
-
     multiple: boolean;
 
     isButtonUploadWaiting: boolean;
