@@ -21,14 +21,14 @@
         </j-upload>
     </div>
     <div class="demo-2 live-demo">
-        <h3>指令</h3>
-        <j-button j-upload [uploadMultiple]="multiple" [uploadFileType]="fileType" (uploadStart)="isButtonUploadWaiting = true"
+        <h3>指令 <button (click)="clearFileList()">clear directive file list</button></h3>
+        <j-button #uploadDirective j-upload [uploadMultiple]="multiple" [uploadFileType]="fileType" (uploadStart)="isButtonUploadWaiting = true"
                   (uploadProgress)="getUploadFile($event)" (uploadComplete)="getAllUploadFiles($event, 'button')"
                   [uploadOptionCount]="4">
             <j-font-loading *ngIf="isButtonUploadWaiting" width="16px" height="16px" color="#41addc"></j-font-loading>
             click to upload
         </j-button>
-        <a j-upload [uploadMultiple]="multiple" [uploadFileType]="fileType" (uploadStart)="isLinkUploadWaiting = true"
+        <a #uploadDirective j-upload [uploadMultiple]="multiple" [uploadFileType]="fileType" (uploadStart)="isLinkUploadWaiting = true"
            (uploadProgress)="getUploadFile($event)" (uploadComplete)="getAllUploadFiles($event, 'link')" [uploadOptionCount]="3"
            class="link-upload">上传文件</a>
         <j-font-loading *ngIf="isLinkUploadWaiting" width="16px" height="16px" color="#41addc"></j-font-loading>

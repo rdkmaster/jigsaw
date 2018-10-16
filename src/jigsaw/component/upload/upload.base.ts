@@ -154,6 +154,10 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
         }
     }
 
+    public clearFileList() {
+        this._$fileInfoList = [];
+    }
+
     ngOnDestroy() {
         super.ngOnDestroy();
         if (this._removeFileChangeEvent) {
