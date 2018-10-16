@@ -51,6 +51,9 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
     @Output('uploadStart')
     public start = new EventEmitter<void>();
 
+    @Output('uploadUpdate')
+    public update = new EventEmitter<UploadFileInfo[]>();
+
     @Input()
     public uploadOptionCount: number;
 

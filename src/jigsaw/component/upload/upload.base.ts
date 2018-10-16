@@ -27,6 +27,9 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
     @Output()
     public start = new EventEmitter<void>();
 
+    @Output()
+    public update = new EventEmitter<UploadFileInfo[]>();
+
     public _$uploadMode: 'select' | 'selectAndList' = 'select';
 
     public _$fileInfoList: UploadFileInfo[] = [];
@@ -135,6 +138,7 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
             this._sequenceUpload(waitingFile)
         } else if (this._isAllFilesUploaded()) {
             this.complete.emit(this._$fileInfoList);
+            this.update.emit(this._$fileInfoList)
         }
     }
 
@@ -143,7 +147,7 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
         if(fileIndex == -1) return;
         this._$fileInfoList.splice(fileIndex,1);
         if (this._isAllFilesUploaded()) {
-            this.complete.emit(this._$fileInfoList);
+            this.update.emit(this._$fileInfoList);
         }
         if(this._fileInputEl) {
             this._fileInputEl['value'] = null;

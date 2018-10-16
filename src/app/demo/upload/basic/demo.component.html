@@ -17,7 +17,7 @@
         <h3>组件</h3>
         <j-upload [multiple]="multiple" [fileType]="fileType"
                   (progress)="getUploadFile($event)"
-                  (complete)="getAllUploadFiles($event)">
+                  (update)="getAllUploadFiles($event)">
         </j-upload>
     </div>
     <div class="demo-2 live-demo">
