@@ -88,6 +88,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
             if (this._popupInfo.instance instanceof JigsawUploadFileInfoList) {
                 this._popupInfo.instance.uploader = this;
                 this._popupInfo.instance.optionCount = this.uploadOptionCount;
+                this._popupInfo.instance.removable = false;
             }
 
             this._closeAllListener();
@@ -199,7 +200,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
                         <span class="jigsaw-upload-error fa fa-times-circle"></span>
                     </ng-container>
                 </div>
-                <span class="jigsaw-upload-file-remove fa fa-trash" (click)="uploader?._$removeFile(file)"></span>
+                <span *ngIf="removable" class="jigsaw-upload-file-remove fa fa-trash" (click)="uploader?._$removeFile(file)"></span>
             </li>
         </ul>
     `
@@ -212,4 +213,6 @@ export class JigsawUploadFileInfoList extends AbstractJigsawComponent implements
     public uploader: JigsawUploadDirective;
     @Input()
     public optionCount: number = 5;
+
+    public removable: boolean = true;
 }
