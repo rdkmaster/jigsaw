@@ -2,6 +2,8 @@ import {Component, TemplateRef, ViewChild} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/core/data/table-data";
 import {ColumnDefine} from "jigsaw/component/table/table-typings";
+import {OfficeHeaderRenderer} from "../renderer/renderers";
+import {TableCellRendererBase, TableCellSelectRenderer} from "../../../../jigsaw/component/table/table-renderer";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -25,6 +27,35 @@ export class TableSetCellRenderDemoComponent {
                 // 通过ViewChild获取的TemplateRef,在AfterViewInit之后才能拿到,这边必须采用异步获取。
                 renderer: () => this.jobCellRender
             }
+        },
+        {
+            target: 'office', width: '180',
+            cell: {
+                renderer: OfficeCellRenderer,
+                rendererInitData: 'fa fa-edit',
+                editorRenderer: TableCellSelectRenderer,
+                editorRendererInitData: (tableData, row, col) => {
+                    console.log('tableData =====> ', tableData, row, col);
+                    let initData = [
+                        {label: 'Online Prod I'}, {label: 'Online Prod II'},
+                        {label: 'Offline Prod I'}, {label: 'Offline Prod II'},
+                        {label: 'Platform I'}, {label: 'Platform II'}, {label: 'Platform III'}
+                    ];
+                    if(0 == row) {
+                        initData.push({label: 'Platform IV'});
+                        return initData;
+                    }
+                    if(1 == row) {
+                        initData.push({label: 'Offline Prod III'});
+                        return initData;
+                    }
+                    return initData;
+                },
+                editable: true
+            },
+            header: {
+                renderer: OfficeHeaderRenderer
+            }
         }
     ];
 
@@ -38,6 +69,15 @@ export class TableSetCellRenderDemoComponent {
         'ColumnDefine',
         'TableCell.renderer'
     ];
+}
+
+
+@Component({
+    template: `
+        <span [ngClass]="initData"></span> {{cellData}}
+    `
+})
+export class OfficeCellRenderer extends TableCellRendererBase {
 }
 
 
