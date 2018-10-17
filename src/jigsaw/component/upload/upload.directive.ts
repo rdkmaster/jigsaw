@@ -16,6 +16,7 @@ import {
     ButtonInfo, IPopupable, PopupEffect, PopupInfo, PopupOptions, PopupPositionType, PopupPositionValue, PopupService
 } from "../../service/popup.service";
 import {AbstractJigsawComponent} from "../common";
+import {TranslateService} from "@ngx-translate/core";
 
 @Directive({
     selector: '[j-upload], [jigsaw-upload]'
@@ -24,8 +25,8 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
     constructor(@Optional() protected _http: HttpClient,
                 protected _renderer: Renderer2,
                 protected _elementRef: ElementRef,
-                private _popupService: PopupService) {
-        super(_http, _renderer, _elementRef);
+                private _popupService: PopupService, protected _translateService: TranslateService) {
+        super(_http, _renderer, _elementRef, _translateService);
     }
 
     private _removeMouseOverHandler: Function;
@@ -196,8 +197,10 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
                         <span class="jigsaw-upload-success fa fa-check-circle"></span>
                     </ng-container>
                     <ng-container *ngSwitchCase="'error'">
-                        <span>上传失败</span>
-                        <span class="jigsaw-upload-error fa fa-times-circle"></span>
+                        <div [title]="file.reason">
+                            <span>上传失败</span>
+                            <span class="jigsaw-upload-error fa fa-times-circle"></span>
+                        </div>
                     </ng-container>
                 </div>
                 <span *ngIf="removable" class="jigsaw-upload-file-remove fa fa-trash" (click)="uploader?._$removeFile(file)"></span>
