@@ -4,12 +4,12 @@ import {
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {JigsawInput, JigsawInputModule} from "../input/input";
-import {JigsawCheckBoxModule} from "../checkbox/index";
+import {JigsawCheckBoxModule} from "../checkbox";
 import {CheckBoxStatus} from "../checkbox/typings";
 import {TableData} from "../../core/data/table-data";
 import {_getColumnIndex, AdditionalTableData} from "./table-typings";
 import {CommonUtils} from "../../core/utils/common-utils";
-import {JigsawSwitchModule} from "../switch/index";
+import {JigsawSwitchModule} from "../switch";
 import {Subscription} from "rxjs/Subscription";
 import {JigsawSelectModule} from "../select/select";
 import {ArrayCollection} from "../../core/data/array-collection";
@@ -257,6 +257,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
         } else {
             this.data = this.initData;
         }
+        this.selected = {label: this.cellData};
     }
 
     private _cellData: any;
@@ -268,7 +269,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
 
     set cellData(value: any) {
         this._cellData = value;
-        this.selected = {label: this.cellData};
+        this.selected = {label: value};
     }
 
     subscriber: Subscription;

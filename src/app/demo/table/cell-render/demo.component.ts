@@ -31,25 +31,17 @@ export class TableSetCellRenderDemoComponent {
         {
             target: 'office', width: '180',
             cell: {
-                renderer: OfficeCellRenderer,
-                rendererInitData: 'fa fa-edit',
                 editorRenderer: TableCellSelectRenderer,
                 editorRendererInitData: (tableData, row, col) => {
                     console.log('tableData =====> ', tableData, row, col);
-                    let initData = [
-                        {label: 'Online Prod I'}, {label: 'Online Prod II'},
-                        {label: 'Offline Prod I'}, {label: 'Offline Prod II'},
-                        {label: 'Platform I'}, {label: 'Platform II'}, {label: 'Platform III'}
-                    ];
-                    if(0 == row) {
-                        initData.push({label: 'Platform IV'});
-                        return initData;
-                    }
-                    if(1 == row) {
-                        initData.push({label: 'Offline Prod III'});
-                        return initData;
-                    }
-                    return initData;
+                    // 找出当前列所有可选项
+                    return tableData.data.reduce(
+                        (offices, row) => {
+                            if (offices.indexOf(row[col]) == -1) {
+                                offices.push(row[col])
+                            }
+                            return offices;
+                        }, []);
                 },
                 editable: true
             },
@@ -71,14 +63,6 @@ export class TableSetCellRenderDemoComponent {
     ];
 }
 
-
-@Component({
-    template: `
-        <span [ngClass]="initData"></span> {{cellData}}
-    `
-})
-export class OfficeCellRenderer extends TableCellRendererBase {
-}
 
 
 
