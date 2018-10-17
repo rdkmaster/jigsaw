@@ -110,7 +110,6 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
                 "Network connect timeout error": "Network connect timeout error"
             }
         });
-        console.log(_translateService.getBrowserLang());
         _translateService.setDefaultLang(_translateService.getBrowserLang());
         TranslateHelper.languageChangEvent.subscribe(langInfo => {
             _translateService.use(langInfo.curLang);
@@ -231,6 +230,7 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
         this._http.post(this.targetUrl, formData, {responseType: 'text'}).subscribe(res => {
             fileInfo.state = 'success';
             fileInfo.url = res;
+            fileInfo.reason = '';
             this._afterCurFileUploaded(fileInfo);
         }, (e) => {
             fileInfo.state = 'error';
