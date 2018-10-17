@@ -7,20 +7,23 @@ import {
     ViewChild
 } from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {DragDropInfo} from "../../directive/dragdrop/types";
-import {JigsawUploadBase} from "./upload.base";
 import {TranslateService} from "@ngx-translate/core";
+import {JigsawUploadBase} from "./upload.base";
+import {DragDropInfo} from "../../directive/dragdrop/types";
 
 @Component({
     selector: 'jigsaw-upload, j-upload',
     templateUrl: 'upload.html',
     host: {
-        '[class.jigsaw-upload]': 'true' 
+        '[class.jigsaw-upload]': 'true'
     }
 })
 export class JigsawUpload extends JigsawUploadBase implements AfterViewInit {
 
-    constructor(@Optional() protected _http: HttpClient, protected _renderer: Renderer2, protected _elementRef: ElementRef, protected _translateService: TranslateService) {
+    constructor(@Optional() protected _http: HttpClient,
+                protected _renderer: Renderer2,
+                protected _elementRef: ElementRef,
+                protected _translateService: TranslateService) {
         super(_http, _renderer, _elementRef, _translateService);
     }
 

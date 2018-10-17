@@ -10,13 +10,13 @@ import {
     Output,
     Renderer2
 } from "@angular/core";
-import {JigsawUploadBase, UploadFileInfo} from "./upload.base";
+import {TranslateService} from "@ngx-translate/core";
 import {HttpClient} from "@angular/common/http";
 import {
-    ButtonInfo, IPopupable, PopupEffect, PopupInfo, PopupOptions, PopupPositionType, PopupPositionValue, PopupService
+ButtonInfo, IPopupable, PopupEffect, PopupInfo, PopupOptions, PopupPositionType, PopupPositionValue, PopupService
 } from "../../service/popup.service";
+import {JigsawUploadBase, UploadFileInfo} from "./upload.base";
 import {AbstractJigsawComponent} from "../common";
-import {TranslateService} from "@ngx-translate/core";
 
 @Directive({
     selector: '[j-upload], [jigsaw-upload]'
@@ -25,7 +25,8 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
     constructor(@Optional() protected _http: HttpClient,
                 protected _renderer: Renderer2,
                 protected _elementRef: ElementRef,
-                private _popupService: PopupService, protected _translateService: TranslateService) {
+                private _popupService: PopupService,
+                protected _translateService: TranslateService) {
         super(_http, _renderer, _elementRef, _translateService);
     }
 

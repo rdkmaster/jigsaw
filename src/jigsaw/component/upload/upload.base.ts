@@ -8,7 +8,10 @@ import {TranslateHelper} from "../../core/utils/translate-helper";
 export type UploadFileInfo = { name: string, state: 'pause' | 'loading' | 'success' | 'error', url: string, file: File, reason: string };
 
 export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestroy {
-    constructor(@Optional() protected _http: HttpClient, protected _renderer: Renderer2, protected _elementRef: ElementRef, protected _translateService: TranslateService) {
+    constructor(@Optional() protected _http: HttpClient,
+                protected _renderer: Renderer2,
+                protected _elementRef: ElementRef,
+                protected _translateService: TranslateService) {
         super();
         InternalUtils.initI18n(_translateService, 'upload', {
             zh: {
