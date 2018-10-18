@@ -1,8 +1,9 @@
 import {
-    AfterViewInit, Component, EventEmitter, Input, NgModule, OnDestroy, OnInit, Output,
+    AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, NgModule, OnDestroy, OnInit, Output, Renderer2,
     ViewChild
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
+import {Observable} from "rxjs/Observable";
 import {JigsawInput, JigsawInputModule} from "../input/input";
 import {JigsawCheckBoxModule} from "../checkbox";
 import {CheckBoxStatus} from "../checkbox/typings";
@@ -233,15 +234,17 @@ export class TableCellSwitchRenderer extends TableCellRendererBase {
 
 }
 
-export type InitDataGenerator = (td: TableData, row: number, column: number) => ArrayCollection<any> | any[];
+export type InitDataGenerator = (td: TableData, row: number, column: number) =>
+    ArrayCollection<any> | any[] | Observable<ArrayCollection<any> | any[]>;
 
 /**
  * Select renderer
  */
 @Component({
     template: `
-        <jigsaw-select [value]="selected" (valueChange)="dispatchChangeEvent($event.label)"
-                       [data]="data" width="100%" height="25">
+        <jigsaw-select [value]="selected" [data]="data"
+                       (valueChange)="dispatchChangeEvent($event.label)"
+                       optionCount="5" width="100%" height="20">
         </jigsaw-select>
     `
 })
@@ -250,13 +253,55 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     public initData: InitDataGenerator | ArrayCollection<any> | any[];
     public data: ArrayCollection<any> | any[];
 
+    constructor(private _changeDetector: ChangeDetectorRef, renderer: Renderer2) {
+        super();
+        this._removeKeyDownHandler = renderer.listen('document', 'keydown.esc', this._onKeyDown.bind(this));
+    }
+
+    private readonly _removeKeyDownHandler;
+
+    private _onKeyDown() {
+        this.dispatchChangeEvent(this.selected ? this.selected.label : '');
+    }
+
     protected onDataRefresh() {
-        super.onDataRefresh();
         if (this.initData instanceof Function) {
-            this.data = this.initData(this.tableData, this.row, this.column);
+            const data = this.initData(this.tableData, this.row, this.column);
+            if (data instanceof Observable) {
+                this.data = [];
+                const subscription = data.subscribe(
+                    value => {
+                        subscription.unsubscribe();
+                        if (!this.hasDestroyed) {
+                            this.data = value;
+                            this._changeDetector.detectChanges();
+                        }
+                    },
+                    error => {
+                        subscription.unsubscribe();
+                        console.log('select renderer: read async data error', error);
+                        if (!this.hasDestroyed) {
+                            this.data = [];
+                            this._changeDetector.detectChanges();
+                        }
+                    });
+            } else {
+                this.data = data;
+            }
         } else {
             this.data = this.initData;
         }
+    }
+
+    public static defaultInitDataGenerator(tableData, row, col) {
+        // 找出当前列所有可选项
+        return tableData.data.reduce(
+            (items, row) => {
+                if (items.findIndex(office => office.label == row[col]) == -1) {
+                    items.push({label: row[col]})
+                }
+                return items;
+            }, []);
     }
 
     private _cellData: any;
@@ -273,6 +318,10 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
 
     subscriber: Subscription;
 
+    public get hasDestroyed(): boolean {
+        return !this.subscriber;
+    }
+
     ngOnInit() {
         super.ngOnInit();
 
@@ -288,6 +337,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     ngOnDestroy() {
         super.ngOnDestroy();
 
+        this._removeKeyDownHandler();
         // 随手清理垃圾是一个好习惯
         if (this.subscriber) {
             this.subscriber.unsubscribe();
