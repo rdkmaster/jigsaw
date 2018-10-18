@@ -31,8 +31,8 @@ export class TableUtils {
     public static updateCellSettings(columnDefine: ColumnDefine, settings: TableCellSetting): TableCellSetting {
         if (!settings) {
             settings = {
-                cellData: '', width: null, visible: true, renderer: null, clazz: '', rowSpan: 1,
-                editable: false, editorRenderer: null, group: null, field: null, tooltip: null, innerHtmlContext: null
+                cellData: '', width: null, visible: true, renderer: null, rendererInitData: null, clazz: '', rowSpan: 1,
+                editable: false, editorRenderer: null, editorRendererInitData: null, group: null, field: null, tooltip: null, innerHtmlContext: null
             }
         }
         settings.width = columnDefine.width;
@@ -41,9 +41,11 @@ export class TableUtils {
         let cellDef = columnDefine.cell;
         if (cellDef) {
             settings.renderer = TableUtils.getRenderer(cellDef.renderer);
+            settings.rendererInitData = cellDef.rendererInitData;
             settings.clazz = cellDef.clazz;
             settings.editable = cellDef.editable;
             settings.editorRenderer = TableUtils.getRenderer(cellDef.editorRenderer);
+            settings.editorRendererInitData = cellDef.editorRendererInitData;
             settings.tooltip = cellDef.tooltip;
             settings.innerHtmlContext = cellDef.innerHtmlContext;
         }
