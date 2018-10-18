@@ -22,7 +22,7 @@ import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {SortOrder} from "../../core/data/component-data";
 import {
     DefaultCellRenderer, JigsawTableRendererModule, TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellTextEditorRenderer,
-    TableHeadCheckboxRenderer
+    TableHeadCheckboxRenderer, TableCellSelectRenderer
 } from "./table-renderer";
 import {AffixUtils} from "../../core/utils/internal-utils";
 import {
@@ -786,7 +786,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, PerfectScrollbarModule, JigsawTrustedHtmlModule],
     exports: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
     entryComponents: [DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer,
-        TableCellCheckboxRenderer, TableCellSwitchRenderer]
+        TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellSelectRenderer]
 })
 export class JigsawTableModule {
 }
