@@ -53,6 +53,8 @@ import {TableSetCellEditableDemoComponent} from "./cell-editable/demo.component"
 import {TableSetCellEditableDemoModule} from "./cell-editable/demo.module";
 import {TableSetCellRenderDemoComponent} from "./cell-render/demo.component";
 import {TableSetCellRenderDemoModule} from "./cell-render/demo.module";
+import {TableCellSelectRenderDemoComponent} from "./cell-select-renderer/demo.component";
+import {TableCellSelectRenderDemoModule} from "./cell-select-renderer/demo.module";
 import {TableSetHeaderClassDemoComponent} from "./header-class/demo.component";
 import {TableSetHeaderClassDemoModule} from "./header-class/demo.module";
 import {TableSetHeaderRenderDemoComponent} from "./header-render/demo.component";
@@ -122,6 +124,9 @@ export const routerConfig = [
     },
     {
         path: 'cell-render', component: TableSetCellRenderDemoComponent
+    },
+    {
+        path: 'cell-select-renderer', component: TableCellSelectRenderDemoComponent
     },
     {
         path: 'set-cell-class', component: TableSetCellClassDemoComponent
@@ -212,7 +217,7 @@ export const routerConfig = [
         TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, SwimLaneDiagramDemoModule, TableHideHeadDemoModule,
         TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule, TableCalendarDemoModule, BigRowDemoModule, TableResizeDemoModule,
         TableScrollListenDemoModule, SodokuGameModule, TableAddCheckboxColumnPageableDemoModule, TableSwitchRendererDemoModule,
-        TableNoDataDemoModule, TableHtmlRendererDemoModule, RebuildTableDataDemoModule
+        TableNoDataDemoModule, TableHtmlRendererDemoModule, RebuildTableDataDemoModule, TableCellSelectRenderDemoModule
     ]
 })
 export class TableDemoModule {
