@@ -186,20 +186,20 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
                 </div>
                 <div [ngSwitch]="file.state" class="jigsaw-upload-file-right">
                     <ng-container *ngSwitchCase="'pause'">
-                        <span>等待中</span>
+                        <span>{{'upload.waiting' | translate}}</span>
                         <span class="jigsaw-upload-pause fa fa-pause-circle"></span>
                     </ng-container>
                     <ng-container *ngSwitchCase="'loading'">
-                        <span>上传中</span>
+                        <span>{{'upload.uploading' | translate}}</span>
                         <span class="jigsaw-upload-loading iconfont iconfont-e8dd jigsaw-am-rotation"></span>
                     </ng-container>
                     <ng-container *ngSwitchCase="'success'">
-                        <span>上传成功</span>
+                        <span>{{'upload.done' | translate}}</span>
                         <span class="jigsaw-upload-success fa fa-check-circle"></span>
                     </ng-container>
                     <ng-container *ngSwitchCase="'error'">
                         <div [title]="file.reason">
-                            <span>上传失败</span>
+                            <span>{{'upload.failed' | translate}}</span>
                             <span class="jigsaw-upload-error fa fa-times-circle"></span>
                         </div>
                     </ng-container>

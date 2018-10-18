@@ -3,7 +3,10 @@ import {ElementRef, EventEmitter, Input, OnDestroy, Optional, Output, Renderer2}
 import {HttpClient} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
 
-export type UploadFileInfo = { name: string, state: 'pause' | 'loading' | 'success' | 'error', url: string, file: File, reason: string };
+export type UploadFileInfo = {
+    name: string, url: string, file: File, reason: string,
+    state: 'pause' | 'loading' | 'success' | 'error'
+};
 
 export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestroy {
     constructor(@Optional() protected _http: HttpClient,
@@ -85,7 +88,9 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
         this._$fileInfoList = this._filterValidFiles(this._$fileInfoList);
 
         validFiles.forEach((file: File, index) => {
-            const fileInfo: UploadFileInfo = {name: file.name, state: 'pause', url: '', file: file, reason: ''};
+            const fileInfo: UploadFileInfo = {
+                name: file.name, state: 'pause', url: '', file: file, reason: ''
+            };
             if (this.multiple) {
                 this._$fileInfoList.push(fileInfo);
             } else {
