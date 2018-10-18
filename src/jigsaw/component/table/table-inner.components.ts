@@ -52,6 +52,8 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
     public field: string;
     @Input()
     public renderer: Type<TableCellRendererBase> | TemplateRef<any>;
+    @Input()
+    public rendererInitData: any;
 
     @Output()
     public cellDataChange = new EventEmitter<any>();
@@ -106,7 +108,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
     /*
      * 渲染器制造工厂
      * */
-    protected rendererFactory(renderer: Type<TableCellRendererBase> | TemplateRef<any>): ComponentRef<TableCellRendererBase> | EmbeddedViewRef<any> {
+    protected rendererFactory(renderer: Type<TableCellRendererBase> | TemplateRef<any>, initData: any): ComponentRef<TableCellRendererBase> | EmbeddedViewRef<any> {
         if (renderer instanceof TemplateRef) {
             return this.rendererHost.viewContainerRef.createEmbeddedView(renderer, {
                 context: {
@@ -122,6 +124,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
             componentRef.instance.tableData = this.tableData;
             componentRef.instance.additionalData = this.additionalData;
             componentRef.instance.cellData = this.cellData;
+            componentRef.instance.initData = initData;
             return componentRef;
         }
     }
@@ -130,7 +133,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
      * 插入渲染器
      * */
     protected insertRenderer() {
-        this.rendererRef = this.rendererFactory(this.renderer);
+        this.rendererRef = this.rendererFactory(this.renderer, this.rendererInitData);
         this.changeDetector.detectChanges();
     }
 
@@ -261,6 +264,8 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
 
     @Input()
     public editorRenderer: Type<TableCellRendererBase>;
+    @Input()
+    public editorRendererInitData: any;
 
     @Input()
     public group: boolean;
@@ -344,7 +349,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
      * 插入编辑渲染器
      * */
     protected insertEditorRenderer() {
-        this.editorRendererRef = this.rendererFactory(this.editorRenderer);
+        this.editorRendererRef = this.rendererFactory(this.editorRenderer, this.editorRendererInitData);
         if (this.editorRendererRef instanceof ComponentRef) {
             this._editorRendererSubscribe(this.editorRendererRef.instance);
         }

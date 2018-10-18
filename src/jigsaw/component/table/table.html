@@ -58,8 +58,10 @@
                                            [row]="rowIndex"
                                            [field]="cell.field"
                                            [renderer]="cell.renderer"
+                                           [rendererInitData]="cell.rendererInitData"
                                            [editable]="cell.editable"
                                            [editorRenderer]="cell.editorRenderer"
+                                           [editorRendererInitData]="cell.editorRendererInitData"
                                            [group]="cell.group"
                                            [rowSpan]="cell.rowSpan"
                                            (edit)="edit.emit($event)">

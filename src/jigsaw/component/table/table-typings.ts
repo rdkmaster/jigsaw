@@ -78,9 +78,11 @@ export class TableHeader {
 
 export class TableCell {
     renderer?: TableRenderer;
+    rendererInitData?: any;
     clazz?: string;
     editable?: boolean;
     editorRenderer?: TableRenderer;
+    editorRendererInitData?: any;
     data?: any | TableCellDataGenerator;
     tooltip?: any;
     innerHtmlContext?: any;
@@ -103,9 +105,11 @@ export class TableCellSetting {
     width: string | number;
     visible: boolean;
     renderer: Type<TableCellRendererBase> | TemplateRef<any>;
+    rendererInitData: any;
     clazz: string;
     editable: boolean;
     editorRenderer: Type<TableCellRendererBase> | TemplateRef<any>;
+    editorRendererInitData: any;
     group: boolean;
     field: string;
     rowSpan: number;
