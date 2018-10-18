@@ -37,8 +37,8 @@ export class TableSetCellRenderDemoComponent {
                     // 找出当前列所有可选项
                     return tableData.data.reduce(
                         (offices, row) => {
-                            if (offices.indexOf(row[col]) == -1) {
-                                offices.push(row[col])
+                            if (offices.findIndex(office => office.label == row[col]) == -1) {
+                                offices.push({label: row[col]})
                             }
                             return offices;
                         }, []);

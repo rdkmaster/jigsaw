@@ -257,7 +257,6 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
         } else {
             this.data = this.initData;
         }
-        this.selected = {label: this.cellData};
     }
 
     private _cellData: any;
