@@ -20,6 +20,8 @@ export class TableSetCellRenderDemoComponent {
         this.tableData.fromAjax('mock-data/hr-list');
     }
 
+    offices: any[];
+
     columns: ColumnDefine[] = [
         {
             target: 'position',
@@ -35,13 +37,16 @@ export class TableSetCellRenderDemoComponent {
                 editorRendererInitData: (tableData, row, col) => {
                     console.log('tableData =====> ', tableData, row, col);
                     // 找出当前列所有可选项
-                    return tableData.data.reduce(
-                        (offices, row) => {
-                            if (offices.findIndex(office => office.label == row[col]) == -1) {
-                                offices.push({label: row[col]})
-                            }
-                            return offices;
-                        }, []);
+                    if (!this.offices) {
+                        this.offices = tableData.data.reduce(
+                            (offices, row) => {
+                                if (offices.findIndex(office => office.label == row[col]) == -1) {
+                                    offices.push({label: row[col]})
+                                }
+                                return offices;
+                            }, []);
+                    }
+                    return this.offices;
                 },
                 editable: true
             },
