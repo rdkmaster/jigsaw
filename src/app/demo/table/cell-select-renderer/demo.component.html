@@ -1,0 +1,17 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<h3>基本用法</h3><br>
+<jigsaw-table [data]="tableData" [columnDefines]="columnsWithDefaultGenerator" ></jigsaw-table>
+<br><br>
+
+<h3>自定义下拉列表</h3><br>
+<jigsaw-table [data]="tableData" [columnDefines]="columnsWithUserDefinedGenerator" ></jigsaw-table>
+<br><br>
+
+<h3>异步下拉列表</h3><br>
+<jigsaw-table [data]="tableData" [columnDefines]="columnsWithAsyncGenerator" ></jigsaw-table>
+

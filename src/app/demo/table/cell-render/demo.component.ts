@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/core/data/table-data";
 import {ColumnDefine} from "jigsaw/component/table/table-typings";
 import {OfficeHeaderRenderer} from "../renderer/renderers";
-import {TableCellRendererBase, TableCellSelectRenderer} from "jigsaw/component/table/table-renderer";
+import {TableCellSelectRenderer} from "jigsaw/component/table/table-renderer";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -20,8 +20,6 @@ export class TableSetCellRenderDemoComponent {
         this.tableData.fromAjax('mock-data/hr-list');
     }
 
-    offices: any[];
-
     columns: ColumnDefine[] = [
         {
             target: 'position',
@@ -34,20 +32,6 @@ export class TableSetCellRenderDemoComponent {
             target: 'office', width: '180',
             cell: {
                 editorRenderer: TableCellSelectRenderer,
-                editorRendererInitData: (tableData, row, col) => {
-                    console.log('tableData =====> ', tableData, row, col);
-                    // 找出当前列所有可选项
-                    if (!this.offices) {
-                        this.offices = tableData.data.reduce(
-                            (offices, row) => {
-                                if (offices.findIndex(office => office.label == row[col]) == -1) {
-                                    offices.push({label: row[col]})
-                                }
-                                return offices;
-                            }, []);
-                    }
-                    return this.offices;
-                },
                 editable: true
             },
             header: {
