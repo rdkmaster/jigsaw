@@ -20,6 +20,7 @@ export class TableSetCellRenderDemoComponent {
         this.tableData.fromAjax('mock-data/hr-list');
     }
 
+    offices: any[];
     columns: ColumnDefine[] = [
         {
             target: 'position',
@@ -32,6 +33,12 @@ export class TableSetCellRenderDemoComponent {
             target: 'office', width: '180',
             cell: {
                 editorRenderer: TableCellSelectRenderer,
+                editorRendererInitData: (td, row, col) => {
+                    if (!this.offices) {
+                        this.offices = TableCellSelectRenderer.defaultInitDataGenerator(td, row, col);
+                    }
+                    return this.offices
+                },
                 editable: true
             },
             header: {
