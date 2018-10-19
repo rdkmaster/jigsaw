@@ -7,8 +7,8 @@
        (jigsawDragLeave)="_$fileDragLeaveHandle($event)" (jigsawDrop)="_$fileDropHandle($event)">
     <span class="jigsaw-upload-icon fa fa-upload"></span>
     <div class="jigsaw-upload-select-right">
-        <p class="jigsaw-upload-prompt">将文件拖拽到此处上传</p>
-        <j-button (click)="_$selectFile($event)">选择文件</j-button>
+        <p class="jigsaw-upload-prompt">{{'upload.dragHere' | translate}}</p>
+        <j-button (click)="_$selectFile($event)">{{'upload.selectFile' | translate}}</j-button>
     </div>
     <input #fileInput class="jigsaw-upload-file-input" type='file'>
 </j-box>
