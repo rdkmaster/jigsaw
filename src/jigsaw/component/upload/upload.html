@@ -1,7 +1,6 @@
-<j-box class="jigsaw-upload-select-box" [class.jigsaw-upload-select-box-small]="_$uploadMode == 'selectAndList'"
-       type="flex" justify="center" align="center" width="100%"
-       [direction]="_$uploadMode == 'selectAndList' ? 'h' : 'v'"
-       [height]="_$uploadMode == 'selectAndList' ? '30%' : '100%'"
+<div class="jigsaw-upload-select-box" [class.jigsaw-upload-select-box-small]="_$uploadMode == 'selectAndList'"
+       [style.flex-direction]="_$uploadMode == 'selectAndList' ? 'row' : 'column'"
+       [style.height]="_$uploadMode == 'selectAndList' ? '30%' : '100%'"
        jigsaw-droppable (jigsawDragEnter)="_$fileDragEnterHandle($event)"
        (jigsawDragOver)="_$fileDragOverHandle($event)"
        (jigsawDragLeave)="_$fileDragLeaveHandle($event)" (jigsawDrop)="_$fileDropHandle($event)">
@@ -11,7 +10,7 @@
         <j-button (click)="_$selectFile($event)">{{'upload.selectFile' | translate}}</j-button>
     </div>
     <input #fileInput class="jigsaw-upload-file-input" type='file'>
-</j-box>
+</div>
 
 <div *ngIf="_$uploadMode == 'selectAndList'" class="jigsaw-upload-file-list-container">
     <j-upload-file-list [initData]="_$fileInfoList" [uploader]="this" [optionCount]="null"></j-upload-file-list>
