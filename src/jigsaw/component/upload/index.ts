@@ -4,7 +4,7 @@ import {FormsModule} from "@angular/forms";
 import {NgModule} from "@angular/core";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {JigsawButtonModule} from "../button/button";
-import {JigsawDraggableModule, JigsawDroppableModule} from "../../directive/dragdrop";
+import {JigsawDraggableModule, JigsawDroppableModule} from "../../directive/dragdrop/index";
 import {JigsawUploadFileInfoList, JigsawUploadDirective} from "./upload.directive";
 import {JigsawUpload} from "./upload";
 import {PopupService} from "../../service/popup.service";

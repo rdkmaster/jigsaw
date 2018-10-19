@@ -5,12 +5,12 @@ import {
 import {CommonModule} from "@angular/common";
 import {Observable} from "rxjs/Observable";
 import {JigsawInput, JigsawInputModule} from "../input/input";
-import {JigsawCheckBoxModule} from "../checkbox";
+import {JigsawCheckBoxModule} from "../checkbox/index";
 import {CheckBoxStatus} from "../checkbox/typings";
 import {TableData} from "../../core/data/table-data";
 import {_getColumnIndex, AdditionalTableData} from "./table-typings";
 import {CommonUtils} from "../../core/utils/common-utils";
-import {JigsawSwitchModule} from "../switch";
+import {JigsawSwitchModule} from "../switch/index";
 import {Subscription} from "rxjs/Subscription";
 import {JigsawSelectModule} from "../select/select";
 import {ArrayCollection} from "../../core/data/array-collection";
