@@ -118,26 +118,30 @@ $upload-prefix-cls: #{$jigsaw-prefix}-upload;
         border-radius: 0 0 4px 4px;
     }
 
-    &-select-box-small {
-        .#{$upload-prefix-cls}-icon {
-            margin-bottom: 0;
-        }
-        .#{$upload-prefix-cls}-select-right {
-            text-align: left;
-            margin-left: 12px;
-            .#{$upload-prefix-cls}-prompt {
-                margin-bottom: 6px;
-            }
-        }
-    }
-
     &-select-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1 0 0;
         border: 1px dashed $border-color-base;
         border-radius: 4px;
         &.#{$upload-prefix-cls}-select-box-small {
             border: 1px solid $border-color-base;
             border-bottom: 1px dashed $border-color-base;
             border-radius: 4px 4px 0 0;
+            .#{$upload-prefix-cls}-icon {
+                margin-bottom: 0;
+            }
+            .#{$upload-prefix-cls}-select-right {
+                text-align: left;
+                margin-left: 12px;
+                .#{$upload-prefix-cls}-prompt {
+                    margin-bottom: 6px;
+                }
+            }
+        }
+        .#{$upload-prefix-cls}-select-right {
+            text-align: center;
         }
     }
 }
