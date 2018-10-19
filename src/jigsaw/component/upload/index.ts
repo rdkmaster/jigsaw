@@ -3,7 +3,6 @@ import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {NgModule} from "@angular/core";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
-import {JigsawBoxModule} from "../box";
 import {JigsawButtonModule} from "../button/button";
 import {JigsawDraggableModule, JigsawDroppableModule} from "../../directive/dragdrop";
 import {JigsawUploadFileInfoList, JigsawUploadDirective} from "./upload.directive";
@@ -14,7 +13,7 @@ import {TranslateHelper} from "../../core/utils/translate-helper";
 
 @NgModule({
     imports: [
-        JigsawBoxModule, JigsawButtonModule, PerfectScrollbarModule, JigsawDraggableModule,
+        JigsawButtonModule, PerfectScrollbarModule, JigsawDraggableModule,
         JigsawDroppableModule, CommonModule, FormsModule, TranslateModule.forRoot()
     ],
     declarations: [JigsawUpload, JigsawUploadDirective, JigsawUploadFileInfoList],
