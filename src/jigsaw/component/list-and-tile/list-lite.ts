@@ -40,6 +40,7 @@ import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
     `,
     host: {
         '[class.jigsaw-list-lite]': 'true',
+        '[class.jigsaw-list-lite-error]': '!valid',
         '[style.width]': 'width'
     },
     providers: [
