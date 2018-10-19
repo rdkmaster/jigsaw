@@ -25,4 +25,7 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
         @include line-ellipsis(100%);
         font-size: 12px;
     }
+    &-error {
+        border: 1px solid $error-color;
+    }
 }
