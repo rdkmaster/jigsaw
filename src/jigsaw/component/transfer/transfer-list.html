@@ -1,0 +1,29 @@
+<div class="jigsaw-transfer-head">
+    <j-checkbox [checked]="selectedItems && selectedItems.length ? (selectedItems.length == data.length ? 1 : 2) : 0"
+                (checkedChange)="_$handleHeadSelect($event)"></j-checkbox>
+    <span class="jigsaw-transfer-middle-title">
+        {{selectedItems ? selectedItems.length : 0}}/{{data ? data.length : 0}}项</span>
+</div>
+<div class="jigsaw-transfer-list-box">
+    <div class="jigsaw-transfer-search-wrapper" *ngIf="searchable">
+        <j-input class="jigsaw-transfer-list-search" width="100%" (valueChange)="_$handleSearching($event)">
+            <span jigsaw-prefix-icon class="fa fa-search"></span>
+        </j-input>
+    </div>
+    <div class="jigsaw-transfer-list-wrapper"
+         [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"
+         [style.max-height]="searchable ? 'calc(100% - 38px)': '100%'">
+        <j-list #listGroup width="100%" [multipleSelect]="true" [trackItemBy]="trackItemBy"
+                [(selectedItems)]="selectedItems">
+            <j-list-option *ngFor="let item of data" #listItem [value]="item" [disabled]="item.disabled">
+                <div j-title>
+                    <j-checkbox [(checked)]="listItem.selected" [disabled]="item.disabled"
+                                (checkedChange)="listGroup.update(item, $event)"></j-checkbox>
+                    <span
+                        class="jigsaw-transfer-middle-title">{{item && item[labelField] ? item[labelField] : item}}</span>
+                </div>
+                <span j-sub-title>{{item && item[subLabelField] ? item[subLabelField] : ''}}</span>
+            </j-list-option>
+        </j-list>
+    </div>
+</div>
