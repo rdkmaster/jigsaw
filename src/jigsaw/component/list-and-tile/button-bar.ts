@@ -8,9 +8,9 @@ import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
     selector: 'jigsaw-button-bar, j-button-bar',
     template: `
         <j-tile [(selectedItems)]="selectedItems" [trackItemBy]="trackItemBy"
-                [multipleSelect]="false" [height]="height" [valid]="valid"
+                [multipleSelect]="multipleSelect" [height]="height" [valid]="valid"
                 (selectedItemsChange)="_$handleSelectChange($event)">
-            <j-tile-option #tileOpt *ngFor="let item of data; trackBy: _$trackByFn" [value]="item"
+            <j-tile-option #tileOpt *ngFor="let item of data; trackBy: _$trackByFn" [value]="item" [ngClass]="{'jigsaw-button-bar-one-option': data && data.length == 1}"
                            [width]="optionWidth" [height]="height" [disabled]="item?.disabled">
                 {{item && item[labelField] ? item[labelField] : item}}
             </j-tile-option>
