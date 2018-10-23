@@ -16,3 +16,9 @@
 </jigsaw-pagination>
 <p>当前第{{pageable.pagingInfo.currentPage}}页</p>
 
+<jigsaw-pagination [data]="pageable"
+                   [pageSizeOptions]="[5, 10, 20]"
+                   (currentChange)="getCurrentPage($event)"
+                   (pageSizeChange)="getPageSize($event)"
+                   size="small">
+</jigsaw-pagination>
