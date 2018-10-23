@@ -5,6 +5,8 @@ import {ArrayCollection} from "jigsaw/core/data/array-collection";
     templateUrl: './demo.component.html'
 })
 export class ButtonBarBasicDemoComponent implements AfterContentInit {
+    multiple: boolean = false;
+
     selectedCityStr: string;
     selectedCity: any[];
     cities = new ArrayCollection([
@@ -35,6 +37,10 @@ export class ButtonBarBasicDemoComponent implements AfterContentInit {
     selectedCity4: any[];
 
     ngAfterContentInit() {
+        this.resetSelection();
+    }
+
+    resetSelection() {
         this.selectedCity = [{label: "南京", id: 3}];
         this.selectedCityStr = this.selectedCity.map(city => city.label).join(',');
         this.selectedCity2 = ['南京'];

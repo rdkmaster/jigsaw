@@ -98,4 +98,7 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
         background-color: $error-color;
         color: $text-color-of-bg;
     }
+    &-one-option {
+        border-radius: 4px !important;
+    }
 }
