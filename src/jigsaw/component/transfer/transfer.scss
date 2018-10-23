@@ -25,18 +25,29 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
         align-items: center;
     }
     &-option-bar {
-        border: 1px solid $border-color-base;
+        border: 1px solid $primary-color;
+        background: $primary-color;
+        color: $text-color-of-bg;
         border-radius: $border-radius-base;
         margin: 0 8px 4px;
         padding: 2px 12px;
         font-size: 12px;
-        color: $text-color-secondary;
+        &:hover {
+            background: $primary-7;
+            color: $text-color-of-bg;
+        }
+        &:active {
+            background: $primary-8;
+            color: $text-color-of-bg;
+        }
     }
     &-option-disabled {
         pointer-events: none;
         cursor: default;
         @include compatible(color, $disabled-color, $disabled-color-ie11);
-        background-color: $disabled-bg;
+        border: 1px solid $border-color-base;
+        background: $disabled-bg;
+        color: $text-color-secondary;
     }
     &-head {
         height: 32px;
