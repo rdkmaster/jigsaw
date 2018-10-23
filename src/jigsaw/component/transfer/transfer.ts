@@ -6,6 +6,7 @@ import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {JigsawInputModule} from "../input/input";
 import {GroupOptionValue} from "../list-and-tile/group-common";
 import {AbstractJigsawGroupLiteComponent} from "jigsaw/component/list-and-tile/group-lite-common";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 @Component({
     selector: 'jigsaw-transfer, j-transfer',
@@ -25,6 +26,35 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent {
 
     @Input()
     public searchable: boolean;
+
+    /**
+     * @internal
+     */
+    public _$sourceSelectedItems: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
+    /**
+     * @internal
+     */
+    public _$targetSelectedItems: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
+
+    /**
+     * @internal
+     */
+    public _$transferTo(frame: string) {
+        if(frame == 'target') {
+            this.selectedItems = this.selectedItems ? this.selectedItems : [];
+            this.selectedItems.push(...this._$sourceSelectedItems);
+            this.data = (<any[]>this.data).filter(item =>
+                !this._$sourceSelectedItems.some(i => CommonUtils.compareWithKeyProperty(item, i, <string[]>this.trackItemBy)))
+            this._$sourceSelectedItems = [];
+        }
+        if(frame == 'source') {
+            this.data.push(...this._$targetSelectedItems);
+            this.selectedItems = this.selectedItems.filter(item =>
+                !this._$targetSelectedItems.some(i => CommonUtils.compareWithKeyProperty(item, i, <string[]>this.trackItemBy)))
+            this._$targetSelectedItems = [];
+        }
+        this.selectedItemsChange.emit(this.selectedItems);
+    }
 }
 
 @Component({
@@ -65,6 +95,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
      */
     public _$handleHeadSelect($event) {
         this.selectedItems = $event ? this.data : [];
+        this.selectedItemsChange.emit(this.selectedItems);
     }
 }
 
