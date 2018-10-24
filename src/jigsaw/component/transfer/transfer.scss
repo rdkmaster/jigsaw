@@ -42,12 +42,15 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
         }
     }
     &-option-disabled {
-        pointer-events: none;
-        cursor: default;
+        cursor: not-allowed;
         @include compatible(color, $disabled-color, $disabled-color-ie11);
         border: 1px solid $border-color-base;
         background: $disabled-bg;
         color: $text-color-secondary;
+        &:hover, &:active {
+            background: $disabled-bg;
+            color: $text-color-secondary;
+        }
     }
     &-head {
         height: 32px;

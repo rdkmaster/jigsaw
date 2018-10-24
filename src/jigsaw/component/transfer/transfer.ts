@@ -41,6 +41,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent {
      */
     public _$transferTo(frame: string) {
         if (frame == 'target') {
+            if (!this._$sourceSelectedItems || !this._$sourceSelectedItems.length) return;
             this.selectedItems = this.selectedItems ? this.selectedItems : [];
             this.selectedItems.push(...this._$sourceSelectedItems);
             this.data = (<any[]>this.data).filter(item =>
@@ -48,6 +49,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent {
             this._$sourceSelectedItems = [];
         }
         if (frame == 'source') {
+            if (!this._$targetSelectedItems || !this._$targetSelectedItems.length) return;
             this.data.push(...this._$targetSelectedItems);
             this.selectedItems = this.selectedItems.filter(item =>
                 !this._$targetSelectedItems.some(i => CommonUtils.compareWithKeyProperty(item, i, <string[]>this.trackItemBy)))
