@@ -65,6 +65,8 @@ export class ListLiteSearchableDemoComponent {
         // RDK的服务端返回的数据多数是TableData格式，直接调用对应api做转换就行了
         // 如果服务端返回的就是一个数组，则就无需写这些代码了
         this.lpaCountries.dataReviser = (td: TableData) => TableData.toArray(td);
+        // 我们这里不演示本地分页功能，因此只给一页数据就好
+        this.lpaCountries.pagingInfo.pageSize = 1000;
         // 如果需要设置默认值，则可以放开下面这几行代码
         // this.lpaCountries.onAjaxComplete(() => {
         //     this.selectedCountries = this.lpaCountries.get(17);
