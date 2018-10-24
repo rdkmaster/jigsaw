@@ -1,5 +1,5 @@
 import {
-    AfterViewInit, ChangeDetectorRef, Component, forwardRef, Input, NgModule, QueryList,
+    AfterViewInit, ChangeDetectorRef, Component, forwardRef, Input, NgModule, QueryList, ViewChild,
     ViewChildren
 } from "@angular/core";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "../../core/data/array-collection";
@@ -7,7 +7,7 @@ import {CommonModule} from "@angular/common";
 import {JigsawListModule, JigsawListOption} from "./list";
 import {JigsawInputModule} from "../input/input";
 import {GroupOptionValue} from "./group-common";
-import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
+import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
 
@@ -85,6 +85,8 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
 
     @ViewChildren(JigsawListOption) private _listOptions: QueryList<JigsawListOption>;
 
+    @ViewChild(PerfectScrollbarDirective) private _listScrollbar: PerfectScrollbarDirective;
+
     /**
      * @internal
      */
@@ -96,6 +98,7 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
         }
         filterKey = filterKey ? filterKey.trim() : '';
         (<LocalPageableArray<any> | PageableArray>this.data).filter(filterKey, [this.labelField]);
+        this._listScrollbar && this._listScrollbar.scrollToTop();
     }
 
     private _setListWrapperHeight() {
