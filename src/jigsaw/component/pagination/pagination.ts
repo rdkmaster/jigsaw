@@ -26,7 +26,7 @@ export class PageSizeData {
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[class.jigsaw-paging]': 'true',
-        '[class.jigsaw-paging-small]': 'size == "small"'
+        '[class.jigsaw-paging-small]': 'mode == "simple"'
     }
 })
 export class JigsawPagination extends AbstractJigsawComponent implements OnInit, AfterViewInit {
@@ -97,7 +97,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
 
     @Input() public searchable: boolean = false; // 搜索功能开关
     @Input() public showQuickJumper: boolean = false; // 是否可以快速跳转至某页
-    @Input() public size: 'large' | 'small' = 'large'; // 当为「small」时，是小尺寸分页
+    @Input() public mode: 'complex' | 'simple' = 'complex'; // 当为「small」时，是小尺寸分页
 
     @Output() public search = new EventEmitter<string>();
     @Output() public currentChange: EventEmitter<any> = new EventEmitter<any>(); //页码改变的事件
@@ -206,7 +206,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * @internal
      */
     public _$pagePrev(): void {
-        if(this.size == 'small') {
+        if(this.mode == 'simple') {
             this.current--;
         } else {
             let pageCur = this._pages.find(page => page.current == true);
@@ -225,7 +225,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * @internal
      */
     public _$pageNext(): void {
-        if(this.size == 'small') {
+        if(this.mode == 'simple') {
             this.current++;
         } else {
             let pageCur = this._pages.find(page => page.current == true);
@@ -322,7 +322,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     private _goto(pageNum): void {
         pageNum = parseInt(pageNum);
         if (pageNum <= this._totalPage && pageNum >= 1) {
-            if(this.size != 'small') {
+            if(this.mode != 'simple') {
                 this._pages.find(page => page.current == true).cancelCurrent();
                 this._pages.find(page => page.pageNumber == pageNum).setCurrent();
             }

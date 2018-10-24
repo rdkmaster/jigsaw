@@ -1,5 +1,5 @@
-<ng-container [ngSwitch]="size">
-    <ng-container *ngSwitchCase="'large'">
+<ng-container [ngSwitch]="mode">
+    <ng-container *ngSwitchDefault>
         <jigsaw-input class="jigsaw-paging-search" *ngIf="searchable" width="160" (valueChange)="search.emit($event)">
             <span jigsaw-prefix-icon class="fa fa-search"></span>
         </jigsaw-input>
@@ -22,7 +22,7 @@
             <jigsaw-input #input (keyup.enter)="_goto(input.value)" width="60"></jigsaw-input>
         </div>
     </ng-container>
-    <ng-container *ngSwitchCase="'small'">
+    <ng-container *ngSwitchCase="'simple'">
         <div class="jigsaw-paging-prev jigsaw-paging-page fa fa-angle-double-left"
              [class.jigsaw-paging-disabled]="_$prevDisabled" (click)="_goto(1)"></div>
         <div class="jigsaw-paging-prev jigsaw-paging-page fa fa-angle-left"

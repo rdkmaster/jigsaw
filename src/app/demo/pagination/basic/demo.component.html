@@ -24,7 +24,7 @@
         <h3>小尺寸</h3>
         <jigsaw-pagination [data]="pageableForSmall"
                            (currentChange)="getCurrentPage($event)"
-                           size="small">
+                           mode="simple">
         </jigsaw-pagination>
         <p class="message">当前第{{pageableForSmall.pagingInfo.currentPage}}页</p>
     </div>
