@@ -15,6 +15,7 @@
         <jigsaw-button [disabled]="pageable.busy || pageable.pagingInfo.currentPage == 1" (click)="previousPage()">last page</jigsaw-button>
         <jigsaw-button [disabled]="pageable.busy || pageable.pagingInfo.currentPage == pageable.pagingInfo.totalPage" (click)="nextPage()">next page</jigsaw-button>
         <jigsaw-input (valueChange)="_$handleSearching($event)" placeholder="请输入关键字搜索"></jigsaw-input>
+        <jigsaw-button (click)="sort()">{{toggleSortOrder == 0 ? '降序' : '升序'}}</jigsaw-button>
     </p>
 </div>
 <p *ngIf="!!errorInfo" style="color: red">Error: {{errorInfo}}</p>

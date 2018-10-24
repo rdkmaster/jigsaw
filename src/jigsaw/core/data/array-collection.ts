@@ -900,6 +900,7 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
             } else {
                 this.filteredData.sort((a, b) => orderFlag * String(sortInfo.field ? a[sortInfo.field] : a).localeCompare(String(sortInfo.field ? b[sortInfo.field] : b)));
             }
+            this.firstPage();
         })
     }
 
@@ -919,7 +920,7 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
     }
 
     public sort(compareFn?: (a: any, b: any) => number): any;
-    public sort(as: SortAs, order: SortOrder, field: string | number): void;
+    public sort(as: SortAs, order: SortOrder, field?: string | number): void;
     public sort(sort: DataSortInfo): void;
     /**
      * @internal
