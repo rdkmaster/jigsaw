@@ -968,9 +968,13 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
     }
 
     private _setDataByPageInfo() {
-        const begin = (this.pagingInfo.currentPage - 1) * this.pagingInfo.pageSize;
-        const end = this.pagingInfo.currentPage * this.pagingInfo.pageSize < this.pagingInfo.totalRecord ? this.pagingInfo.currentPage * this.pagingInfo.pageSize : this.pagingInfo.totalRecord;
-        super.fromArray(this.filteredData.slice(begin, end));
+        if(this.pagingInfo.pageSize == Infinity) {
+            super.fromArray(this.filteredData);
+        } else {
+            const begin = (this.pagingInfo.currentPage - 1) * this.pagingInfo.pageSize;
+            const end = this.pagingInfo.currentPage * this.pagingInfo.pageSize < this.pagingInfo.totalRecord ? this.pagingInfo.currentPage * this.pagingInfo.pageSize : this.pagingInfo.totalRecord;
+            super.fromArray(this.filteredData.slice(begin, end));
+        }
     }
 
     public firstPage(): void {

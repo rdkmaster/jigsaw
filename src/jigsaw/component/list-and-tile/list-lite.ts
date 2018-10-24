@@ -93,6 +93,7 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
     public _$handleSearching(filterKey?: string) {
         if (!(this.data instanceof LocalPageableArray) && !(this.data instanceof PageableArray)) {
             const data = new LocalPageableArray();
+            data.pagingInfo.pageSize = Infinity;
             data.fromArray(this.data);
             this.data = data;
         }
