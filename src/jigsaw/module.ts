@@ -9,6 +9,7 @@ import {JigsawComboSelectModule} from './component/combo-select/index';
 import {JigsawDialogModule} from './component/dialog/dialog';
 import {JigsawGraphModule} from './component/graph/index';
 import {JigsawInputModule} from './component/input/input';
+import {JigsawAutoCompleteInputModule} from './component/input/auto-complete-input';
 import {JigsawLoadingModule} from './component/loading/loading';
 import {JigsawNotificationModule} from './component/notification/notification';
 import {JigsawPaginationModule} from './component/pagination/pagination';
@@ -65,6 +66,7 @@ const JIGSAW_MODULE = [
     JigsawFishBoneModule,
     JigsawGraphModule,
     JigsawInputModule,
+    JigsawAutoCompleteInputModule,
     JigsawNumericInputModule,
     JigsawListModule,
     JigsawListLiteModule,
