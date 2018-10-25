@@ -56,6 +56,19 @@ export class JigsawInput extends AbstractJigsawComponent
      */
     @Input() public valid: boolean = true;
 
+
+    /**
+     * 当用户设置类型为password时，输入内容隐藏为特殊字符。
+     *
+     * $demo = input/password
+     */
+    @Input() public password: boolean = false;
+
+    @Input()
+    public get type(): string {
+        return this.password ? "password" : "text";
+    }
+
     @Output('focus')
     private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 

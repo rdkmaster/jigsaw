@@ -8,7 +8,8 @@
        [(ngModel)]="value"
        [disabled]="disabled"
        (blur)="_$handleBlur($event)"
-       (focus)="_$handleFocus($event)">
+       (focus)="_$handleFocus($event)"
+       [type]="type" >
 <div class="jigsaw-input-icon-end">
     <span *ngIf="clearable" (click)="_$clearValue($event)" [hidden]="!value" class="jigsaw-input-clear-bar">&times;</span>
     <ng-content select="[jigsaw-icon], [j-icon]"></ng-content>
