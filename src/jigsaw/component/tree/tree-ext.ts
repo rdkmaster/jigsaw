@@ -158,6 +158,14 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         this.ztree = $.fn.zTree.init($('#' + this._$uniqueId), this._setting, this._data.nodes);
     }
 
+    public selectNodes(key: string, value: any, parentNode: any) {
+        if (!this.ztree) return;
+        let nodes = this.ztree.getNodesByParam(key, value, parentNode);
+        if(nodes.length > 0) {
+            this.ztree.selectNode(nodes[0]);
+        }
+    }
+
     callCustomCallbackEvent(eventName, event, ...para) {
         if (CommonUtils.isDefined(this._customCallback) && CommonUtils.isDefined(this._customCallback[eventName])) {
             if (event) {
