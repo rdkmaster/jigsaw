@@ -50,4 +50,31 @@ $paging-prefix-cls: #{$jigsaw-prefix}-paging;
         margin-right: 8px;
     }
 
+    &.#{$paging-prefix-cls}-small {
+        &:before {
+            content: '';
+            display: inline-block;;
+            vertical-align: middle;
+            height: $height-sm;
+        }
+        .#{$paging-prefix-cls}-page {
+            height: $height-sm;
+            line-height: $height-sm;
+            border: none;
+            font-size: 16px;
+            width: 12px;
+            margin-right: 0;
+        }
+        .#{$paging-prefix-cls}-total-page-number {
+            vertical-align: middle;
+            margin-right: 4px;
+        }
+        jigsaw-input {
+            margin: 0 4px;
+            input {
+                text-align: center;
+                padding: 0 2px !important;
+            }
+        }
+    }
 }
