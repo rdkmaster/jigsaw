@@ -7,16 +7,18 @@ import {Component} from "@angular/core";
 export class TrustedHtmlFullComponent {
     showDetail:boolean = false;
     html = this.stripPrefixSpaces(`
-        <a onclick="hello('trustedHtml directive')">
+        <a onclick="aa.hello('trustedHtml directive')">
             <i class="fa fa-question"></i> say hello to trustedHtml
         </a><br><br>
-        <input onblur="onBlur()" value="onblur....">
+        <input onblur="aa.onBlur()" value="onblur....">
     `);
     jsCode = this.stripPrefixSpaces(`
         // 这边不要使用箭头函数，因为很多浏览器还不支持原生es6
         this.context = {
-            hello: function(who) { alert('hello ' + who) },
-            onBlur: function() { alert('the input has lost focus!') }
+            aa: {
+                hello: function(who) { alert('hello ' + who) },
+                onBlur: function() { alert('the input has lost focus!') }
+            }
         }
     `);
 

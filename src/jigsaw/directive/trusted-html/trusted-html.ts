@@ -137,17 +137,19 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
             return;
         }
         const modifiedHtml = !this._trustedHtmlContext ? this._trustedHtml : this._trustedHtml
-            .replace(/(on|\()(\w+)\)?\s*=(['"])\s*([_$a-z][_$a-z0-9]*)\s*\((.*?)\)/ig,
-                (found, prefix, event, quot, func, args) => {
-                    JigsawTrustedHtml._declareCallback(this._trustedHtmlContext, func, this._trustedHtmlContext[func]);
-                    const modified = `on${event}=${quot}_jigsawInternalCallbackWrapper(&quot;${func}&quot;,${this._contextMagicNumber}`;
+            .replace(/(on|\()(\w+)\)?\s*=(['"])\s*([_$a-z][_$a-z0-9.]*)\s*\((.*?)\)/ig,
+                (found, prefix, event, quot, funcAccessor, args) => {
+                    const callback = this._getCallbackFromContext(this._trustedHtmlContext, funcAccessor);
+                    JigsawTrustedHtml._declareCallback(this._trustedHtmlContext, funcAccessor, callback);
+                    const modified = `on${event}=${quot}_jigsawInternalCallbackWrapper(&quot;${funcAccessor}&quot;,${this._contextMagicNumber}`;
                     args = CommonUtils.isDefined(args) ? args.trim() : '';
                     return modified + (!!args ? ',' + args + ')' : ')');
                 })
             .replace(/(javascript\s*:)\s*([_$a-z][_$a-z0-9]*)\s*\((.*?)\)/ig,
-                (found, jsPrefix, func, args) => {
-                    JigsawTrustedHtml._declareCallback(this._trustedHtmlContext, func, this._trustedHtmlContext[func]);
-                    const modified = `${jsPrefix}_jigsawInternalCallbackWrapper(&quot;${func}&quot;,${this._contextMagicNumber}`;
+                (found, jsPrefix, funcAccessor, args) => {
+                    const callback = this._getCallbackFromContext(this._trustedHtmlContext, funcAccessor);
+                    JigsawTrustedHtml._declareCallback(this._trustedHtmlContext, funcAccessor, callback);
+                    const modified = `${jsPrefix}_jigsawInternalCallbackWrapper(&quot;${funcAccessor}&quot;,${this._contextMagicNumber}`;
                     args = CommonUtils.isDefined(args) ? args.trim() : '';
                     return modified + (!!args ? ',' + args + ')' : ')');
                 });
@@ -155,6 +157,19 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
             this._modifiedHtml = modifiedHtml;
             this._safeHtml = this._sanitizer.bypassSecurityTrustHtml(modifiedHtml);
         }
+    }
+
+    private _getCallbackFromContext(context: any, accessor: string | string[]): HtmlCallback {
+        if (CommonUtils.isUndefined(context) || CommonUtils.isUndefined(accessor)) {
+            return null;
+        }
+        const accessors = accessor instanceof Array ? accessor : accessor.split(/\./);
+        const tmp: any = context[accessors[0]];
+        if (accessors.length == 1) {
+            return tmp;
+        }
+        accessors.shift();
+        return this._getCallbackFromContext(tmp, accessors);
     }
 
     @HostBinding('innerHtml')
