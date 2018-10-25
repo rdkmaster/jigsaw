@@ -66,10 +66,7 @@ export class JigsawInput extends AbstractJigsawComponent
 
     @Input()
     public get type(): string {
-        if (this.password) {
-            return "password";
-        }
-        return "text";
+        return this.password ? "password" : "text";
     }
 
     @Output('focus')
