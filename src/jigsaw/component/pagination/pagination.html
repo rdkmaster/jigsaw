@@ -1,22 +1,37 @@
-<jigsaw-input class="jigsaw-paging-search" *ngIf="searchable" width="160" (valueChange)="search.emit($event)">
-    <span jigsaw-prefix-icon class="fa fa-search"></span>
-</jigsaw-input>
+<ng-container [ngSwitch]="mode">
+    <ng-container *ngSwitchDefault>
+        <jigsaw-input class="jigsaw-paging-search" *ngIf="searchable" width="160" (valueChange)="search.emit($event)">
+            <span jigsaw-prefix-icon class="fa fa-search"></span>
+        </jigsaw-input>
 
-<div class="jigsaw-paging-prev jigsaw-paging-page fa fa-angle-left" [class.jigsaw-paging-disabled]="_$prevDisabled" (click)="_$pagePrev()"></div>
-<jigsaw-paging-item *ngFor="let pageNumber of _$pageNumbers" [pageNumber]="pageNumber"></jigsaw-paging-item>
-<div class="jigsaw-paging-next jigsaw-paging-page fa fa-angle-right" [class.jigsaw-paging-disabled]="_$nextDisabled" (click)="_$pageNext()"></div>
+        <div class="jigsaw-paging-prev jigsaw-paging-page fa fa-angle-left" [class.jigsaw-paging-disabled]="_$prevDisabled" (click)="_$pagePrev()"></div>
+        <jigsaw-paging-item *ngFor="let pageNumber of _$pageNumbers" [pageNumber]="pageNumber"></jigsaw-paging-item>
+        <div class="jigsaw-paging-next jigsaw-paging-page fa fa-angle-right" [class.jigsaw-paging-disabled]="_$nextDisabled" (click)="_$pageNext()"></div>
 
-<jigsaw-select *ngIf="pageSizeOptions"
-            [value]="_$pageSize"
-            (valueChange)="_changePageSize($event)"
-            trackItemBy="value"
-            labelField="label"
-            width="80"
-            [data]="pageSizeOptions">
-</jigsaw-select>
+        <jigsaw-select *ngIf="pageSizeOptions"
+                       [value]="_$pageSize"
+                       (valueChange)="_changePageSize($event)"
+                       trackItemBy="value"
+                       labelField="label"
+                       width="80"
+                       [data]="pageSizeOptions">
+        </jigsaw-select>
 
-<div class="jigsaw-paging-goto" *ngIf="showQuickJumper">
-    <span>{{'pagination.goto' | translate}}</span>
-    <jigsaw-input #input (keyup.enter)="_goto(input.value)" width="60"></jigsaw-input>
-</div>
-
+        <div class="jigsaw-paging-goto" *ngIf="showQuickJumper">
+            <span>{{'pagination.goto' | translate}}</span>
+            <jigsaw-input #input (keyup.enter)="_goto(input.value)" width="60"></jigsaw-input>
+        </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="'simple'">
+        <div class="jigsaw-paging-prev jigsaw-paging-page fa fa-angle-double-left"
+             [class.jigsaw-paging-disabled]="_$prevDisabled" (click)="_goto(1)"></div>
+        <div class="jigsaw-paging-prev jigsaw-paging-page fa fa-angle-left"
+             [class.jigsaw-paging-disabled]="_$prevDisabled" (click)="_$pagePrev()"></div>
+        <jigsaw-input #input [value]="current" (keyup.enter)="_goto(input.value)" width="50" height="22"
+                      [clearable]="false"></jigsaw-input><span class="jigsaw-paging-total-page-number">&nbsp;/&nbsp;&nbsp;{{_$totalPage}}</span>
+        <div class="jigsaw-paging-next jigsaw-paging-page fa fa-angle-right"
+             [class.jigsaw-paging-disabled]="_$nextDisabled" (click)="_$pageNext()"></div>
+        <div class="jigsaw-paging-next jigsaw-paging-page fa fa-angle-double-right"
+             [class.jigsaw-paging-disabled]="_$nextDisabled" (click)="_goto(_$totalPage)"></div>
+    </ng-container>
+</ng-container>
