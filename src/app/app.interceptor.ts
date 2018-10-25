@@ -225,8 +225,8 @@ class PageableData {
         const pageSize = pagingInfo.pageSize;
         if (currentPage * pageSize - pageSize > pagingInfo.totalRecord) {
             //应用给的当前页过大，调整为最后一页
-            console.warn('adjust currentPage[' + currentPage + '] to lastPage[' + pagingInfo.totalPage + ']');
-            currentPage = pagingInfo.totalPage;
+            console.warn('adjust currentPage[' + currentPage + '] to lastPage[' + pagingInfo._$totalPage + ']');
+            currentPage = pagingInfo._$totalPage;
         }
         return currentPage;
     }

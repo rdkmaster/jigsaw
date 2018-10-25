@@ -28,10 +28,10 @@
         <div class="jigsaw-paging-prev jigsaw-paging-page fa fa-angle-left"
              [class.jigsaw-paging-disabled]="_$prevDisabled" (click)="_$pagePrev()"></div>
         <jigsaw-input #input [value]="current" (keyup.enter)="_goto(input.value)" width="50" height="22"
-                      [clearable]="false"></jigsaw-input><span class="jigsaw-paging-total-page-number">&nbsp;/&nbsp;&nbsp;{{totalPage}}</span>
+                      [clearable]="false"></jigsaw-input><span class="jigsaw-paging-total-page-number">&nbsp;/&nbsp;&nbsp;{{_$totalPage}}</span>
         <div class="jigsaw-paging-next jigsaw-paging-page fa fa-angle-right"
              [class.jigsaw-paging-disabled]="_$nextDisabled" (click)="_$pageNext()"></div>
         <div class="jigsaw-paging-next jigsaw-paging-page fa fa-angle-double-right"
-             [class.jigsaw-paging-disabled]="_$nextDisabled" (click)="_goto(totalPage)"></div>
+             [class.jigsaw-paging-disabled]="_$nextDisabled" (click)="_goto(_$totalPage)"></div>
     </ng-container>
 </ng-container>
