@@ -7,7 +7,7 @@
 <div class="live-demo-wrap">
     <h2>Pagination</h2>
     <div class="demo-1 live-demo">
-        <h3>默认尺寸</h3>
+        <h3>默认模式</h3>
         <button style="margin: 10px 0" (click)="changeCurrentPage(6)">第6页</button><br>
         <jigsaw-pagination [data]="pageable"
                            [pageSizeOptions]="[5, 10, 20]"
@@ -21,12 +21,13 @@
     </div>
 
     <div class="demo-2 live-demo">
-        <h3>小尺寸</h3>
-        <jigsaw-pagination [data]="pageableForSmall"
+        <h3>简约模式</h3>
+        <jigsaw-pagination [data]="pageableForSimple"
+                           [showQuickJumper]="true"
                            (currentChange)="getCurrentPage($event)"
                            mode="simple">
         </jigsaw-pagination>
-        <p class="message">当前第{{pageableForSmall.pagingInfo.currentPage}}页</p>
+        <p class="message">当前第{{pageableForSimple.pagingInfo.currentPage}}页</p>
     </div>
 
 </div>

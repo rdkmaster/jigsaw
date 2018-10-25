@@ -171,11 +171,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * */
     private _setCurrentPage(): void {
         this._pages.forEach(page => {
-            if (page.pageNumber != this.current) {
-                page.current = false;
-            } else {
-                page.current = true;
-            }
+            page.current = page.pageNumber == this.current;
         });
     }
 
