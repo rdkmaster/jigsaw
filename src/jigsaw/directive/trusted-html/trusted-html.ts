@@ -16,17 +16,19 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
         return JigsawTrustedHtml._contexts[magicNumber];
     }
 
-    private static _registerContext(context: any): void {
+    private static _registerContext(context: any): number {
         if (CommonUtils.isUndefined(context)) {
-            return;
+            return -1;
         }
-        let info = JigsawTrustedHtml._contexts.find(i => i && i.context === context);
+        const index = JigsawTrustedHtml._contexts.findIndex(i => i && i.context === context);
+        let info = JigsawTrustedHtml._contexts[index];
         if (CommonUtils.isUndefined(info)) {
             info = {context: context, counter: 1};
             JigsawTrustedHtml._contexts.push(info);
         } else {
             info.counter++;
         }
+        return index;
     }
 
     private static _jigsawInternalCallbackWrapper(callbackName: string, contextMagicNumber: number, ...args) {
@@ -175,16 +177,14 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
             return -1;
         }
 
-        let num = this._registeredContexts.findIndex(ctx => ctx === context);
-        if (num == -1) {
+        if (!this._registeredContexts.find(ctx => ctx === context)) {
             JigsawTrustedHtml._registerContext(context);
             this._registeredContexts.push(context);
-            num = this._registeredContexts.length - 1;
         }
-        return num;
+        return this._getMagicNumber(context);
     }
 
-    private _getContextMagicNumber(context: any): number {
+    private _getMagicNumber(context: any): number {
         return JigsawTrustedHtml._contexts.findIndex(i => i && i.context === context);
     }
 
