@@ -19,6 +19,8 @@ import {InputPrefixIconDemoComponent} from "./icons/demo.component";
 import {InputDisabledComponent} from "./disabled/demo.component";
 import {InputValidComponent} from "./valid/demo.component";
 import {InputSelectDemoComponent} from "./select/demo.component";
+import {InputPasswordModule} from "./password/demo.module";
+import {InputPasswordComponent} from "./password/demo.component";
 
 export const routerConfig = [
     {
@@ -48,6 +50,9 @@ export const routerConfig = [
     {
         path: 'select', component: InputSelectDemoComponent
     },
+    {
+        path: 'password', component: InputPasswordComponent
+    }
 ];
 
 @NgModule({
@@ -61,7 +66,8 @@ export const routerConfig = [
         InputFullModule,
         InputDisabledModule,
         InputValidModule,
-        InputSelectDemoModule
+        InputSelectDemoModule,
+        InputPasswordModule
     ]
 })
 export class InputDemoModule {
