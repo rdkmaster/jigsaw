@@ -8,12 +8,19 @@ import {HttpClient} from "@angular/common/http";
 export class PaginationBasicDemoComponent {
 
     pageable: LocalPageableTableData;
+    pageableForSimple: LocalPageableTableData;
 
     constructor(http: HttpClient) {
         this.pageable = new LocalPageableTableData();
         this.pageable.http = http;
         this.pageable.pagingInfo.pageSize = 10;
         this.pageable.fromAjax('mock-data/hr-list-full');
+
+        this.pageableForSimple = new LocalPageableTableData();
+        this.pageableForSimple.http = http;
+        // 小尺寸的分页通过data设置pageSize
+        this.pageableForSimple.pagingInfo.pageSize = 20;
+        this.pageableForSimple.fromAjax('mock-data/hr-list-full');
     }
 
     getCurrentPage(message: any) {
