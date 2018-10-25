@@ -589,7 +589,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
         this._emitter.emit(value);
     }
 
-    public subscribe(callback?: (value:any) => void): Subscription {
+    public subscribe(callback?: (value: any) => void): Subscription {
         return this._emitter.subscribe(callback);
     }
 
@@ -853,7 +853,18 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
     private _filterSubject = new Subject<DataFilterInfo>();
     private _sortSubject = new Subject<DataSortInfo>();
 
-    public filteredData: T[];
+    private _filteredData: T[];
+
+    public get filteredData(): T[] {
+        return this._filteredData;
+    }
+
+    public set filteredData(value: T[]) {
+        this._filteredData = value;
+        if (this._filteredData instanceof Array) {
+            this.pagingInfo.totalRecord = this._filteredData.length;
+        }
+    }
 
     constructor(source?: T[]) {
         super(source);
@@ -926,17 +937,13 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
      * @internal
      */
     public sort(as, order?: SortOrder, field?: string | number): void {
-        if(!this.filteredData) return;
+        if (!this.filteredData) return;
         if (as instanceof Function) {
             this.filteredData.sort(as);
             this.firstPage();
         }
         const psi = as instanceof DataSortInfo ? as : new DataSortInfo(as, order, field);
         this._sortSubject.next(psi);
-    }
-
-    private _updatePagingInfo() {
-        this.pagingInfo.totalRecord = this.filteredData.length;
     }
 
     public changePage(currentPage: number, pageSize?: number): void;
@@ -948,7 +955,6 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
         if (!this.filteredData) {
             return;
         }
-        this._updatePagingInfo();
 
         if (!isNaN(pageSize) && +pageSize > 0) {
             this.pagingInfo.pageSize = pageSize;
@@ -969,11 +975,12 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
     }
 
     private _setDataByPageInfo() {
-        if(this.pagingInfo.pageSize == Infinity) {
+        if (this.pagingInfo.pageSize == Infinity) {
             super.fromArray(this.filteredData);
         } else {
             const begin = (this.pagingInfo.currentPage - 1) * this.pagingInfo.pageSize;
-            const end = this.pagingInfo.currentPage * this.pagingInfo.pageSize < this.pagingInfo.totalRecord ? this.pagingInfo.currentPage * this.pagingInfo.pageSize : this.pagingInfo.totalRecord;
+            const end = this.pagingInfo.currentPage * this.pagingInfo.pageSize < this.pagingInfo.totalRecord ?
+                this.pagingInfo.currentPage * this.pagingInfo.pageSize : this.pagingInfo.totalRecord;
             super.fromArray(this.filteredData.slice(begin, end));
         }
     }
@@ -997,9 +1004,10 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
     public destroy() {
         super.destroy();
         this._filterSubject.unsubscribe();
-        this._bakData = null;
+        this._sortSubject.unsubscribe();
         this.pagingInfo.unsubscribe();
-        this.pagingInfo = null;
+        this._bakData = null;
         this.filteredData = null;
+        this.pagingInfo = null;
     }
 }
