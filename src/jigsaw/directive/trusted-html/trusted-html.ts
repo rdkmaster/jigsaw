@@ -10,11 +10,7 @@ type CallbackValues = { [callbackName: string]: HtmlCallback };
 })
 export class JigsawTrustedHtml implements OnInit, OnDestroy {
     private static _callbacks = new Map<any, CallbackValues>();
-    private static _contexts: {context: any, counter: number}[] = [];
-
-    private static _getContextMagicNumber(context: any): number {
-        return JigsawTrustedHtml._contexts.findIndex(i => i && i.context === context);
-    }
+    private static _contexts: { context: any, counter: number }[] = [];
 
     private static _getContext(magicNumber: number): any {
         return JigsawTrustedHtml._contexts[magicNumber];
@@ -98,7 +94,6 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
         }
     }
 
-    private _contextMagicNumber: number = -1;
     private _trustedHtmlContext: any;
     private _initialized: boolean = false;
 
@@ -112,8 +107,6 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
             return;
         }
         this._trustedHtmlContext = value;
-        JigsawTrustedHtml._registerContext(value);
-        this._contextMagicNumber = JigsawTrustedHtml._getContextMagicNumber(value);
         this._updateHtml();
     }
 
@@ -130,46 +123,69 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
         this._updateHtml();
     }
 
-    private _modifiedHtml:string;
+    private _modifiedHtml: string;
 
-    private _updateHtml():void {
+    private _updateHtml(): void {
         if (!this._trustedHtml || !this._initialized) {
             return;
         }
         const modifiedHtml = !this._trustedHtmlContext ? this._trustedHtml : this._trustedHtml
             .replace(/(on|\()(\w+)\)?\s*=(['"])\s*([_$a-z][_$a-z0-9.]*)\s*\((.*?)\)/ig,
-                (found, prefix, event, quot, funcAccessor, args) => {
-                    const callback = this._getCallbackFromContext(this._trustedHtmlContext, funcAccessor);
-                    JigsawTrustedHtml._declareCallback(this._trustedHtmlContext, funcAccessor, callback);
-                    const modified = `on${event}=${quot}_jigsawInternalCallbackWrapper(&quot;${funcAccessor}&quot;,${this._contextMagicNumber}`;
-                    args = CommonUtils.isDefined(args) ? args.trim() : '';
-                    return modified + (!!args ? ',' + args + ')' : ')');
-                })
+                (found, prefix, event, quot, funcAccessor, args) => this._replacer(`on${event}=${quot}`, funcAccessor, args))
             .replace(/(javascript\s*:)\s*([_$a-z][_$a-z0-9]*)\s*\((.*?)\)/ig,
-                (found, jsPrefix, funcAccessor, args) => {
-                    const callback = this._getCallbackFromContext(this._trustedHtmlContext, funcAccessor);
-                    JigsawTrustedHtml._declareCallback(this._trustedHtmlContext, funcAccessor, callback);
-                    const modified = `${jsPrefix}_jigsawInternalCallbackWrapper(&quot;${funcAccessor}&quot;,${this._contextMagicNumber}`;
-                    args = CommonUtils.isDefined(args) ? args.trim() : '';
-                    return modified + (!!args ? ',' + args + ')' : ')');
-                });
+                (found, jsPrefix, funcAccessor, args) => this._replacer(jsPrefix, funcAccessor, args));
         if (modifiedHtml != this._modifiedHtml || !this._safeHtml) {
             this._modifiedHtml = modifiedHtml;
             this._safeHtml = this._sanitizer.bypassSecurityTrustHtml(modifiedHtml);
         }
     }
 
-    private _getCallbackFromContext(context: any, accessor: string | string[]): HtmlCallback {
+    private _replacer(prefix, funcAccessor, args) {
+        const [realContext, callback] = this._getCallback(this._trustedHtmlContext, funcAccessor);
+        const magicNumber = this._registerContext(realContext);
+        JigsawTrustedHtml._declareCallback(realContext, funcAccessor, callback);
+        const modified = `${prefix}_jigsawInternalCallbackWrapper(&quot;${funcAccessor}&quot;,${magicNumber}`;
+        args = CommonUtils.isDefined(args) ? args.trim() : '';
+        return modified + (!!args ? ',' + args + ')' : ')');
+    }
+
+    private _getCallback(context: any, accessor: string | string[]): [any, HtmlCallback] {
         if (CommonUtils.isUndefined(context) || CommonUtils.isUndefined(accessor)) {
-            return null;
+            return [null, null];
         }
         const accessors = accessor instanceof Array ? accessor : accessor.split(/\./);
+        if (accessors[0] == 'this') {
+            // 例如 this.aa.bb() 这里的this指context本身，要跳过
+            // 这里可能会误伤这样的情况 this.aa.this.bb()，因为实际情况下是不可能有这样的属性链的，因此无视这个情况
+            accessors.shift();
+        }
+
         const tmp: any = context[accessors[0]];
         if (accessors.length == 1) {
-            return tmp;
+            return [context, tmp];
         }
         accessors.shift();
-        return this._getCallbackFromContext(tmp, accessors);
+        return this._getCallback(tmp, accessors);
+    }
+
+    private _registeredContexts: any[] = [];
+
+    private _registerContext(context: any): number {
+        if (CommonUtils.isUndefined(context)) {
+            return -1;
+        }
+
+        let num = this._registeredContexts.findIndex(ctx => ctx === context);
+        if (num == -1) {
+            JigsawTrustedHtml._registerContext(context);
+            this._registeredContexts.push(context);
+            num = this._registeredContexts.length - 1;
+        }
+        return num;
+    }
+
+    private _getContextMagicNumber(context: any): number {
+        return JigsawTrustedHtml._contexts.findIndex(i => i && i.context === context);
     }
 
     @HostBinding('innerHtml')
@@ -183,7 +199,8 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        JigsawTrustedHtml._clearCallbacks(this._trustedHtmlContext);
+        this._registeredContexts.forEach(ctx => JigsawTrustedHtml._clearCallbacks(ctx));
+        this._registeredContexts = null;
         this._trustedHtmlContext = null;
         this._trustedHtml = null;
         this._safeHtml = null;
