@@ -5,7 +5,7 @@
 
 <!-- start to learn the demo from here -->
 <p><strong>Tip:</strong> use <a href="/pagination/basic">jigsaw-pagination</a> in your product development is strongly recommended!</p>
-<p [ngClass]="tipClass" *ngIf="!ready"><strong>Tip:</strong> this demo shows how use ServerSidePagingArray, <a (click)="start()">continue</a>.</p>
+<p [ngClass]="tipClass" *ngIf="!ready"><strong>Tip:</strong> this demo shows how to use LocalPageableArray, <a (click)="start()">continue</a>.</p>
 <div *ngIf="ready">
     <p>
         <span>current page {{pageable.pagingInfo.currentPage}} / {{pageable.pagingInfo.totalPage}} total page,
