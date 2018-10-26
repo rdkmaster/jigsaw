@@ -14,8 +14,5 @@ export class TextareaDisabledComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTextarea',
-    ];
 }
 

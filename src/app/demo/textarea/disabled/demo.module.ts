@@ -3,7 +3,6 @@ import {JigsawTextareaModule} from "jigsaw/component/textarea";
 import {JigsawSwitchModule} from "jigsaw/component/switch/index";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {TextareaDisabledComponent} from "./demo.component";
-import {TextareaClearableDemoModule} from "../clearable/demo.module";
 
 @NgModule({
     declarations: [TextareaDisabledComponent],

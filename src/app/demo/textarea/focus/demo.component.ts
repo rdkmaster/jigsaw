@@ -22,8 +22,5 @@ export class TextareaFocusDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTextarea.focus',
-    ];
 }
 

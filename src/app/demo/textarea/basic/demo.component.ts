@@ -7,10 +7,6 @@ import {JigsawTextarea} from "jigsaw/component/textarea/textarea";
 export class TextareaBasicDemoComponent {
     textareaValue: any;
 
-    valueChanged(message: string) {
-        console.log(`textarea value is: ${message}`);
-    }
-
     @ViewChild('myTextarea') myTextarea: JigsawTextarea;
 
     // ====================================================================
@@ -18,9 +14,5 @@ export class TextareaBasicDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTextarea.value',
-        'JigsawTextarea.placeholder',
-    ];
 }
 

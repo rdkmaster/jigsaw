@@ -11,8 +11,5 @@ export class TextareaClearableDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTextarea.clearable',
-    ];
 }
 

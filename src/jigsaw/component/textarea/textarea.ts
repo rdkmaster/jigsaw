@@ -16,8 +16,7 @@ import {CommonUtils} from "../../core/utils/common-utils";
     templateUrl: './textarea.html',
     host: {
         '[style.width]': 'width',
-        '[style.height]': 'maxHeight',
-        '[style.line-height]': 'height',
+        '[style.height]': 'height',
         '[class.jigsaw-textarea]': 'true',
         '[class.jigsaw-textarea-error]': '!valid'
     },

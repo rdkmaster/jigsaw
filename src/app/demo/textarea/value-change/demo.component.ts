@@ -15,8 +15,5 @@ export class TextareaValueChangeDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTextarea.valueChange',
-    ];
 }
 
