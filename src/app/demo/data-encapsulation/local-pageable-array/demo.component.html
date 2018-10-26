@@ -1,0 +1,26 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<p><strong>Tip:</strong> use <a href="/pagination/basic">jigsaw-pagination</a> in your product development is strongly recommended!</p>
+<p [ngClass]="tipClass" *ngIf="!ready"><strong>Tip:</strong> this demo shows how to use LocalPageableArray, <a (click)="start()">continue</a>.</p>
+<div *ngIf="ready">
+    <p>
+        <span>current page {{pageable.pagingInfo.currentPage}} / {{pageable.pagingInfo.totalPage}} total page,
+            showing {{pageable.pagingInfo.pageSize}} items / page, {{pageable.pagingInfo.totalRecord}} records totally.</span>
+    </p>
+    <p>
+        <jigsaw-button [disabled]="pageable.busy || pageable.pagingInfo.currentPage == 1" (click)="previousPage()">last page</jigsaw-button>
+        <jigsaw-button [disabled]="pageable.busy || pageable.pagingInfo.currentPage == pageable.pagingInfo.totalPage" (click)="nextPage()">next page</jigsaw-button>
+        <jigsaw-input (valueChange)="_$handleSearching($event)" placeholder="请输入关键字搜索"></jigsaw-input>
+        <jigsaw-button (click)="sort()">{{toggleSortOrder == 0 ? '降序' : '升序'}}</jigsaw-button>
+    </p>
+</div>
+<p *ngIf="!!errorInfo" style="color: red">Error: {{errorInfo}}</p>
+
+<hr style="margin-top: 20px">
+<div *ngIf="ready">
+    <p *ngFor="let item of pageable">{{item | json}}</p>
+</div>

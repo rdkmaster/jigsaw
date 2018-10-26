@@ -589,7 +589,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
         this._emitter.emit(value);
     }
 
-    public subscribe(callback?: (value:any) => void): Subscription {
+    public subscribe(callback?: (value: any) => void): Subscription {
         return this._emitter.subscribe(callback);
     }
 
@@ -843,8 +843,6 @@ export class DirectPageableArray extends PageableArray {
 /**
  * 在本地分页、排序、过滤的数组。
  *
- * 部分功能未实现，如有需要，请给我们[提issue](https://github.com/rdkmaster/jigsaw/issues/new)。
- *
  * 关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
  */
 export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageable {
@@ -853,22 +851,45 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
     private _bakData: T[] = [];
 
     private _filterSubject = new Subject<DataFilterInfo>();
+    private _sortSubject = new Subject<DataSortInfo>();
+
+    private _filteredData: T[];
+
+    public get filteredData(): T[] {
+        return this._filteredData;
+    }
+
+    public set filteredData(value: T[]) {
+        this._filteredData = value;
+        if (this._filteredData instanceof Array) {
+            this.pagingInfo.totalRecord = this._filteredData.length;
+        }
+    }
 
     constructor(source?: T[]) {
         super(source);
         this._bakData = source;
+        this.pagingInfo = new PagingInfo();
+        this.pagingInfo.subscribe(() => {
+            if (!this.filteredData) {
+                return;
+            }
+            this._setDataByPageInfo();
+            this.refresh();
+        });
         this._initSubjects();
     }
 
     public fromArray(source: T[]): ArrayCollection<T> {
-        const result = super.fromArray(source);
         this._bakData = source;
-        return result;
+        this.filteredData = source;
+        this.firstPage();
+        return this;
     }
 
     private _initSubjects(): void {
         this._filterSubject.debounceTime(300).subscribe(filter => {
-            super.fromArray(this._bakData.filter(item => {
+            this.filteredData = this._bakData.filter(item => {
                 if (typeof item == 'string') {
                     return item.toLowerCase().includes(filter.key.toLowerCase())
                 } else if (filter.field) {
@@ -879,8 +900,19 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
                 } else {
                     return false
                 }
-            }));
+            });
+            this.firstPage();
         });
+
+        this._sortSubject.debounceTime(300).subscribe((sortInfo: DataSortInfo) => {
+            const orderFlag = sortInfo.order == SortOrder.asc ? 1 : -1;
+            if (sortInfo.as == SortAs.number) {
+                this.filteredData.sort((a, b) => orderFlag * (Number(sortInfo.field ? a[sortInfo.field] : a) - Number(sortInfo.field ? b[sortInfo.field] : b)));
+            } else {
+                this.filteredData.sort((a, b) => orderFlag * String(sortInfo.field ? a[sortInfo.field] : a).localeCompare(String(sortInfo.field ? b[sortInfo.field] : b)));
+            }
+            this.firstPage();
+        })
     }
 
     public filter(callbackfn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
@@ -891,65 +923,91 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
      */
     public filter(term, fields?: string[] | number[]): void {
         if (term instanceof Function) {
-            throw 'filter function is NOT accepted by this class!';
+            this.filteredData = this._bakData.filter(term);
+            this.firstPage();
         }
         const pfi = term instanceof DataFilterInfo ? term : new DataFilterInfo(term, fields);
         this._filterSubject.next(pfi);
     }
 
     public sort(compareFn?: (a: any, b: any) => number): any;
-    public sort(as: SortAs, order: SortOrder, field: string | number): void;
+    public sort(as: SortAs, order: SortOrder, field?: string | number): void;
     public sort(sort: DataSortInfo): void;
     /**
      * @internal
      */
     public sort(as, order?: SortOrder, field?: string | number): void {
-        throw new Error('not implemented yet!');
+        if (!this.filteredData) return;
+        if (as instanceof Function) {
+            this.filteredData.sort(as);
+            this.firstPage();
+        }
+        const psi = as instanceof DataSortInfo ? as : new DataSortInfo(as, order, field);
+        this._sortSubject.next(psi);
     }
 
-    /**
-     * 方法暂未实现
-     */
     public changePage(currentPage: number, pageSize?: number): void;
     public changePage(info: PagingInfo): void;
     /**
      * @internal
      */
     public changePage(currentPage, pageSize?: number): void {
-        throw new Error('not implemented yet!');
+        if (!this.filteredData) {
+            return;
+        }
+
+        if (!isNaN(pageSize) && +pageSize > 0) {
+            this.pagingInfo.pageSize = pageSize;
+        }
+
+        let cp: number = 0;
+        if (currentPage instanceof PagingInfo) {
+            this.pagingInfo.pageSize = currentPage.pageSize;
+            cp = currentPage.currentPage;
+        } else if (!isNaN(+currentPage)) {
+            cp = +currentPage;
+        }
+        if (cp >= 1 && cp <= this.pagingInfo.totalPage) {
+            this.pagingInfo.currentPage = cp;
+        } else {
+            console.error(`invalid currentPage[${cp}], it should be between in [1, ${this.pagingInfo.totalPage}]`);
+        }
     }
 
-    /**
-     * 方法暂未实现
-     */
+    private _setDataByPageInfo() {
+        if (this.pagingInfo.pageSize == Infinity) {
+            super.fromArray(this.filteredData);
+        } else {
+            const begin = (this.pagingInfo.currentPage - 1) * this.pagingInfo.pageSize;
+            const end = this.pagingInfo.currentPage * this.pagingInfo.pageSize < this.pagingInfo.totalRecord ?
+                this.pagingInfo.currentPage * this.pagingInfo.pageSize : this.pagingInfo.totalRecord;
+            super.fromArray(this.filteredData.slice(begin, end));
+        }
+    }
+
     public firstPage(): void {
-        throw new Error('not implemented yet!');
+        this.changePage(1);
     }
 
-    /**
-     * 方法暂未实现
-     */
     public previousPage(): void {
-        throw new Error('not implemented yet!');
+        this.changePage(this.pagingInfo.currentPage - 1);
     }
 
-    /**
-     * 方法暂未实现
-     */
     public nextPage(): void {
-        throw new Error('not implemented yet!');
+        this.changePage(this.pagingInfo.currentPage + 1);
     }
 
-    /**
-     * 方法暂未实现
-     */
     public lastPage(): void {
-        throw new Error('not implemented yet!');
+        this.changePage(this.pagingInfo.totalPage);
     }
 
     public destroy() {
         super.destroy();
         this._filterSubject.unsubscribe();
+        this._sortSubject.unsubscribe();
+        this.pagingInfo.unsubscribe();
         this._bakData = null;
+        this.filteredData = null;
+        this.pagingInfo = null;
     }
 }

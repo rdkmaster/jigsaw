@@ -650,7 +650,7 @@ export class PagingInfo implements IEmittable {
      * @return {number}
      */
     public get totalPage(): number {
-        return this.totalRecord ? Math.ceil(this.totalRecord / this.pageSize) : 1;
+        return this.totalRecord && this.pageSize != Infinity ? Math.ceil(this.totalRecord / this.pageSize) : 1;
     }
 
     private _emitter = new EventEmitter<any>();
