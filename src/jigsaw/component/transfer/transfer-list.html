@@ -16,7 +16,7 @@
          [style.max-height]="searchable ? 'calc(100% - 38px)': '100%'">
         <j-list #listGroup width="100%" [multipleSelect]="true" [trackItemBy]="trackItemBy"
                 [(selectedItems)]="selectedItems" (selectedItemsChange)="selectedItemsChange.emit($event)">
-            <j-list-option *ngFor="let item of data" #listItem [value]="item" [disabled]="item.disabled">
+            <j-list-option #listItem *ngFor="let item of data; trackBy: _$trackByFn" [value]="item" [disabled]="item.disabled">
                 <div j-title>
                     <j-checkbox [(checked)]="listItem.selected" [disabled]="item.disabled"
                                 (checkedChange)="listGroup.update(item, $event)"></j-checkbox>
@@ -27,4 +27,7 @@
             </j-list-option>
         </j-list>
     </div>
+</div>
+<div class="jigsaw-transfer-foot">
+    <j-pagination [data]="data" mode="simple"></j-pagination>
 </div>

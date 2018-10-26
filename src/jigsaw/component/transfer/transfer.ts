@@ -7,6 +7,8 @@ import {JigsawInputModule} from "../input/input";
 import {GroupOptionValue} from "../list-and-tile/group-common";
 import {AbstractJigsawGroupLiteComponent} from "jigsaw/component/list-and-tile/group-lite-common";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
+import {JigsawPaginationModule} from "../pagination/pagination";
+import {InternalUtils} from "../../core/utils/internal-utils";
 
 @Component({
     selector: 'jigsaw-transfer, j-transfer',
@@ -44,15 +46,17 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent {
             if (!this._$sourceSelectedItems || !this._$sourceSelectedItems.length) return;
             this.selectedItems = this.selectedItems ? this.selectedItems : [];
             this.selectedItems.push(...this._$sourceSelectedItems);
-            this.data = (<any[]>this.data).filter(item =>
-                !this._$sourceSelectedItems.some(i => CommonUtils.compareWithKeyProperty(item, i, <string[]>this.trackItemBy)))
+            this.selectedItems = this.selectedItems.concat();
+            this.data = (<GroupOptionValue[]>this.data).filter(item =>
+                !this._$sourceSelectedItems.some(i => CommonUtils.compareWithKeyProperty(item, i, <string[]>this.trackItemBy)));
             this._$sourceSelectedItems = [];
         }
         if (frame == 'source') {
             if (!this._$targetSelectedItems || !this._$targetSelectedItems.length) return;
             this.data.push(...this._$targetSelectedItems);
+            this.data = (<GroupOptionValue[]>this.data).concat();
             this.selectedItems = this.selectedItems.filter(item =>
-                !this._$targetSelectedItems.some(i => CommonUtils.compareWithKeyProperty(item, i, <string[]>this.trackItemBy)))
+                !this._$targetSelectedItems.some(i => CommonUtils.compareWithKeyProperty(item, i, <string[]>this.trackItemBy)));
             this._$targetSelectedItems = [];
         }
         this.selectedItemsChange.emit(this.selectedItems);
@@ -74,8 +78,41 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
         })
     }
 
+    public get _$trackByFn() {
+        return InternalUtils.trackByFn(this.trackItemBy);
+    };
+
+    private _data: LocalPageableArray<GroupOptionValue> | PageableArray;
+
     @Input()
-    public data: ArrayCollection<GroupOptionValue> | LocalPageableArray<GroupOptionValue> | GroupOptionValue[];
+    public get data(): LocalPageableArray<GroupOptionValue> | PageableArray {
+        return this._data;
+    }
+
+    public set data(value) {
+        if(!value || this._data == value) return;
+        if(value instanceof Array || value instanceof ArrayCollection) {
+            this._updateData(value);
+            if(value instanceof ArrayCollection) {
+                value.onAjaxSuccess(res => {
+                    this._updateData(res);
+                })
+            }
+        } else if(value instanceof LocalPageableArray || value instanceof PageableArray) {
+            this._data = value;
+        }
+    }
+
+    private _updateData(value: GroupOptionValue[] | ArrayCollection<GroupOptionValue>) {
+        if(!(value instanceof Array) && !(value instanceof ArrayCollection)) return;
+        const data = new LocalPageableArray();
+        data.pagingInfo.pageSize = Infinity;
+        data.fromArray(value);
+        const removeDataOnRefresh = data.onRefresh(() => {
+            removeDataOnRefresh();
+            this._data = data;
+        })
+    }
 
     @Input()
     public subLabelField: string;
@@ -94,11 +131,6 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
      * @internal
      */
     public _$handleSearching(filterKey?: string) {
-        if (!(this.data instanceof LocalPageableArray) && !(this.data instanceof PageableArray)) {
-            const data = new LocalPageableArray();
-            data.fromArray(this.data);
-            this.data = data;
-        }
         filterKey = filterKey ? filterKey.trim() : '';
         (<LocalPageableArray<any> | PageableArray>this.data).filter(filterKey, [this.labelField]);
     }
@@ -122,7 +154,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
 
 
 @NgModule({
-    imports: [JigsawListModule, JigsawCheckBoxModule, PerfectScrollbarModule, JigsawInputModule],
+    imports: [JigsawListModule, JigsawCheckBoxModule, PerfectScrollbarModule, JigsawInputModule, JigsawPaginationModule],
     declarations: [JigsawTransfer, JigsawTransferInternalList],
     exports: [JigsawTransfer]
 })
