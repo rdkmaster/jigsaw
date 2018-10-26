@@ -64,7 +64,7 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
         }
     }
     &-list-box {
-        height: calc(100% - 32px);
+        height: calc(100% - 54px);
     }
     &-list-wrapper {
         .#{$list-prefix-cls} {
@@ -81,5 +81,8 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
     &-list-frame {
         display: block;
         height: 100%;
+    }
+    &-foot {
+        text-align: center;
     }
 }
