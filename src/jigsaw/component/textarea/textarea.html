@@ -1,0 +1,11 @@
+<textarea #textarea
+          [placeholder]="placeholder"
+          [(ngModel)]="value"
+          [disabled]="disabled"
+          (focus)="_$handleFocus($event)"
+          style ="resize:none">
+</textarea>
+<div class="jigsaw-textarea-icon-end">
+    <span *ngIf="clearable" (click)="_$clearValue($event)" [hidden]="!value" class="jigsaw-textarea-clear-bar">&times;</span>
+    <ng-content select="[jigsaw-icon], [j-icon]"></ng-content>
+</div>

@@ -1,0 +1,11 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-button id="call-function" (click)="click()">获取Input焦点</jigsaw-button>
+
+<jigsaw-textarea [(value)]="textareaValue" (focus)="focusHandler($event)" #myTextarea></jigsaw-textarea>
+
+<p id="focus-message">{{focusMessage}}</p>
