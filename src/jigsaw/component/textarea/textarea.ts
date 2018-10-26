@@ -7,10 +7,9 @@ import {AbstractJigsawComponent, IJigsawFormControl} from "../common";
 import {CommonUtils} from "../../core/utils/common-utils";
 
 /**
- * @description 开关组件
+ * @description 多行输入框组件，常常用于接收用户的文本输入
  *
- * 何时使用
- * 只有两种状态切换时.
+ * 这是一个表单友好组件
  */
 @Component({
     selector: 'jigsaw-textarea, j-textarea',
