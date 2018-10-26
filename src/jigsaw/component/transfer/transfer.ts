@@ -39,7 +39,12 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent {
     public _$targetSelectedItems: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
 
     /**
-     * @internal
+     * @Internal
+     *
+     * data和selectedItems不和list里数据双绑，list里面要做一些转换
+     *
+     * @param {string} frame
+     * @private
      */
     public _$transferTo(frame: string) {
         if (frame == 'target') {
@@ -47,14 +52,30 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent {
             this.selectedItems = this.selectedItems ? this.selectedItems : [];
             this.selectedItems.push(...this._$sourceSelectedItems);
             this.selectedItems = this.selectedItems.concat();
-            this.data = (<GroupOptionValue[]>this.data).filter(item =>
-                !this._$sourceSelectedItems.some(i => CommonUtils.compareWithKeyProperty(item, i, <string[]>this.trackItemBy)));
+            if(this.data instanceof LocalPageableArray && this.data.pagingInfo) {
+                const bakData = this.data._bakData;
+                if(bakData) {
+                    this.data.fromArray(bakData.filter(item =>
+                        !this._$sourceSelectedItems.some(i => CommonUtils.compareWithKeyProperty(item, i, <string[]>this.trackItemBy))))
+                }
+            } else if(this.data instanceof Array || this.data instanceof ArrayCollection) {
+                this.data = this.data.filter(item =>
+                    !this._$sourceSelectedItems.some(i => CommonUtils.compareWithKeyProperty(item, i, <string[]>this.trackItemBy)));
+            }
             this._$sourceSelectedItems = [];
         }
         if (frame == 'source') {
             if (!this._$targetSelectedItems || !this._$targetSelectedItems.length) return;
-            this.data.push(...this._$targetSelectedItems);
-            this.data = (<GroupOptionValue[]>this.data).concat();
+            if(this.data instanceof LocalPageableArray && this.data.pagingInfo) {
+                const bakData = this.data._bakData;
+                if(bakData) {
+                    bakData.push(...this._$targetSelectedItems);
+                    this.data.fromArray(bakData);
+                }
+            } else if(this.data instanceof Array || this.data instanceof ArrayCollection) {
+                this.data.push(...this._$targetSelectedItems);
+                this.data = (<GroupOptionValue[]>this.data).concat();
+            }
             this.selectedItems = this.selectedItems.filter(item =>
                 !this._$targetSelectedItems.some(i => CommonUtils.compareWithKeyProperty(item, i, <string[]>this.trackItemBy)));
             this._$targetSelectedItems = [];
@@ -71,12 +92,15 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent {
     }
 })
 export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent implements OnDestroy {
-    constructor(@Optional() transfer: JigsawTransfer) {
+    constructor(@Optional() private _transfer: JigsawTransfer) {
         super();
-        this._removeHostSubscribe = transfer.selectedItemsChange.subscribe(() => {
+        this._removeHostSubscribe = _transfer.selectedItemsChange.subscribe(() => {
             this._$searchKey = '';
         })
     }
+
+    @Input()
+    public isTarget: boolean;
 
     public get _$trackByFn() {
         return InternalUtils.trackByFn(this.trackItemBy);
@@ -91,26 +115,38 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
 
     public set data(value) {
         if(!value || this._data == value) return;
-        if(value instanceof Array || value instanceof ArrayCollection) {
+        if((value instanceof LocalPageableArray || value instanceof PageableArray) && value.pagingInfo) {
+            this._data = value;
+        } else if(value instanceof Array || value instanceof ArrayCollection) {
             this._updateData(value);
             if(value instanceof ArrayCollection) {
                 value.onAjaxSuccess(res => {
                     this._updateData(res);
                 })
             }
-        } else if(value instanceof LocalPageableArray || value instanceof PageableArray) {
-            this._data = value;
         }
     }
 
+    /**
+     * 这边把transfer过来的数组转成分页数据，中间变量data主要用于消除数据闪动
+     * @param {GroupOptionValue[] | ArrayCollection<GroupOptionValue>} value
+     * @private
+     */
     private _updateData(value: GroupOptionValue[] | ArrayCollection<GroupOptionValue>) {
         if(!(value instanceof Array) && !(value instanceof ArrayCollection)) return;
         const data = new LocalPageableArray();
-        data.pagingInfo.pageSize = Infinity;
+        if(this.isTarget && this._transfer.data && (<LocalPageableArray<GroupOptionValue>>this._transfer.data).pagingInfo) {
+            // target列同步用户给的data的pageSize
+            data.pagingInfo.pageSize = (<LocalPageableArray<GroupOptionValue>>this._transfer.data).pagingInfo.pageSize;
+        } else {
+            data.pagingInfo.pageSize =  Infinity;
+        }
         data.fromArray(value);
         const removeDataOnRefresh = data.onRefresh(() => {
             removeDataOnRefresh();
             this._data = data;
+            // 用于刷新分页
+            this._data.refresh();
         })
     }
 

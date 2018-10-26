@@ -848,7 +848,7 @@ export class DirectPageableArray extends PageableArray {
 export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageable {
     public pagingInfo: PagingInfo;
 
-    private _bakData: T[] = [];
+    public _bakData: T[] = [];
 
     private _filterSubject = new Subject<DataFilterInfo>();
     private _sortSubject = new Subject<DataSortInfo>();
