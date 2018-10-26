@@ -6,7 +6,7 @@ import {JigsawTextarea} from "jigsaw/component/textarea";
 })
 export class TextareaSelectDemoComponent {
 
-    select: boolean;
+    select: boolean = true;
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

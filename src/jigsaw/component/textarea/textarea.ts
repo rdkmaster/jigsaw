@@ -1,6 +1,13 @@
 import {
-    Component, Input, Output, EventEmitter, OnInit, forwardRef, ElementRef, ViewChild,
-    Renderer2, ChangeDetectorRef
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    EventEmitter,
+    forwardRef,
+    Input,
+    Output,
+    Renderer2,
+    ViewChild
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent, IJigsawFormControl} from "../common";
@@ -49,6 +56,8 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
      * $demo = form/template-driven
      */
     @Input() public valid: boolean = true;
+
+    @Output() public blur: EventEmitter<Event> = new EventEmitter<Event>();
 
     @Output('focus')
     private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
@@ -149,7 +158,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     /**
      * @internal
      */
-    public _$clearValue(event): void {
+    public _$clearValue(): void {
         this.value = '';
         this.focus();
     }
@@ -172,5 +181,4 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
         this._focused = true;
         this._focusEmitter.emit(event);
     }
-
 }

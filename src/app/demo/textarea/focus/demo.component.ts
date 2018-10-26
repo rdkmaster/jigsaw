@@ -5,17 +5,7 @@ import {JigsawTextarea} from "jigsaw/component/textarea";
     templateUrl: './demo.component.html'
 })
 export class TextareaFocusDemoComponent {
-    textareaValue: any;
     focusMessage: string;
-    @ViewChild('myTextarea') myTextarea: JigsawTextarea;
-
-    click() {
-        this.myTextarea.focus();
-    }
-
-    focusHandler(event) {
-        this.focusMessage = 'input component focused'
-    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

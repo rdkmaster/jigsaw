@@ -4,8 +4,12 @@
 
 
 <!-- start to learn the demo from here -->
-<jigsaw-button id="call-function" (click)="click()">获取Input焦点</jigsaw-button>
+<jigsaw-button id="call-function" (click)="myTextarea.focus()">获取焦点</jigsaw-button>
+<br><br>
 
-<jigsaw-textarea [(value)]="textareaValue" (focus)="focusHandler($event)" #myTextarea></jigsaw-textarea>
+<jigsaw-textarea #myTextarea
+                 (focus)="focusMessage = 'The textarea was focused'"
+                 (blur)="focusMessage='The textarea lost focus'">
+</jigsaw-textarea>
 
 <p id="focus-message">{{focusMessage}}</p>
