@@ -866,7 +866,7 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
 
     public set filteredData(value: T[]) {
         this._filteredData = value;
-        if (this._filteredData instanceof Array) {
+        if (this._filteredData instanceof Array || this._filteredData instanceof ArrayCollection) {
             this.pagingInfo.totalRecord = this._filteredData.length;
         }
     }
