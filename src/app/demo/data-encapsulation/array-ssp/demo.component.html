@@ -14,7 +14,16 @@
     <p>
         <jigsaw-button [disabled]="pageable.busy || pageable.pagingInfo.currentPage == 1" (click)="previousPage()">last page</jigsaw-button>
         <jigsaw-button [disabled]="pageable.busy || pageable.pagingInfo.currentPage == pageable.pagingInfo.totalPage" (click)="nextPage()">next page</jigsaw-button>
+
+        <span>key word filter:</span>
+        <j-input [(value)]="keyword" (valueChange)="pageable.filter(keyword)"></j-input>
+
+
+        <span>reg exp filter:</span>
+        <j-input title="传递一个自定义过滤函数源码到服务端，实现任意复杂逻辑过滤"
+                 [(value)]="regExp" (valueChange)="regExpFilter()"></j-input>
     </p>
+
 </div>
 <p *ngIf="!!errorInfo" style="color: red">Error: {{errorInfo}}</p>
 

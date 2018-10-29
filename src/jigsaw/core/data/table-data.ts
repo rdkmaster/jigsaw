@@ -510,10 +510,15 @@ export class PageableTableData extends TableData implements IServerSidePageable,
      * @internal
      */
     public filter(term, fields?: string[] | number[]): void {
-        if (term instanceof Function) {
-            throw new Error('compare function is not supported by PageableTableData which filters data in the server side');
+        let pfi: DataFilterInfo;
+        if (term instanceof DataFilterInfo) {
+            pfi = term;
+        } else if (term instanceof Function) {
+            // 这里的fields相当于thisArg，即函数执行的上下文对象
+            pfi = new DataFilterInfo(null, null, term.toString(), fields);
+        } else {
+            pfi = new DataFilterInfo(term, fields);
         }
-        const pfi = term instanceof DataFilterInfo ? term : new DataFilterInfo(term, fields);
         this._filterSubject.next(pfi);
     }
 
