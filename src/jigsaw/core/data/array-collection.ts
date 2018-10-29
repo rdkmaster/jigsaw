@@ -644,7 +644,7 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         const originParams = this.sourceRequestOptions.params;
         const peerParams = CommonUtils.isDefined(originParams) ? CommonUtils.shallowCopy(originParams) : {};
         this._requestOptions.params = {};
-        this._requestOptions.params.peerParam = JSON.stringify(peerParams);
+        this._requestOptions.params.peerParam = peerParams;
         this._requestOptions.params.service = this.sourceRequestOptions.url;
     }
 
@@ -696,12 +696,12 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this.ajaxStartHandler();
 
         const params: any = this._requestOptions.params;
-        params.paging = JSON.stringify(this.pagingInfo.valueOf());
+        params.paging = this.pagingInfo.valueOf();
         if (this.filterInfo) {
-            params.filter = JSON.stringify(this.filterInfo);
+            params.filter = this.filterInfo;
         }
         if (this.sortInfo) {
-            params.sort = JSON.stringify(this.sortInfo);
+            params.sort = this.sortInfo;
         }
 
         this.http.request(this._requestOptions.method, PagingInfo.pagingServerUrl, this._requestOptions)
