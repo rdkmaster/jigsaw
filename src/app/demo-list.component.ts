@@ -38,6 +38,7 @@ import {routerConfig as switchConfig} from "./demo/switch/demo-set.module";
 import {routerConfig as tableConfig} from "./demo/table/demo-set.module";
 import {routerConfig as tabsConfig} from "./demo/tab/demo-set.module";
 import {routerConfig as tagConfig} from "./demo/tag/demo-set.module";
+import {routerConfig as textareaConfig} from "./demo/textarea/demo-set.module";
 import {routerConfig as tileConfig} from "./demo/tile/demo-set.module";
 import {routerConfig as tileLiteConfig} from "./demo/tile-lite/demo-set.module";
 import {routerConfig as timeConfig} from "./demo/time/demo-set.module";
@@ -131,6 +132,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'table', tableConfig);
         this._addRouterConfig(routerConfig, 'tab', tabsConfig);
         this._addRouterConfig(routerConfig, 'tag', tagConfig);
+        this._addRouterConfig(routerConfig, 'textarea', textareaConfig);
         this._addRouterConfig(routerConfig, 'tile', tileConfig);
         this._addRouterConfig(routerConfig, 'tile-lite', tileLiteConfig);
         this._addRouterConfig(routerConfig, 'time', timeConfig);

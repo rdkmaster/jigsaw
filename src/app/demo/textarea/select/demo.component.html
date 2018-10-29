@@ -1,0 +1,12 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-textarea #myTextarea value="文本框获得焦点时这些文本会自动被选中" width="200px"
+              (focus)="select && myTextarea.select()">
+</jigsaw-textarea>
+
+<jigsaw-checkbox [(checked)]="select">自动选中文本</jigsaw-checkbox>
+

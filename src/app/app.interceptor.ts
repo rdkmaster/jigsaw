@@ -96,7 +96,7 @@ class PageableData {
 
         let data;
         if (CommonUtils.isDefined(req.filter)) {
-            data = this._filter(dataTable.data, req.filter.key, req.filter.field, dataTable.field);
+            data = this._filter(dataTable, req.filter);
         } else {
             //浅拷贝一份
             data = dataTable.data.concat();
@@ -170,7 +170,13 @@ class PageableData {
         }
     }
 
-    private static _filter(data, key, field, allField) {
+    private static _filter(dataTable, filter) {
+        return filter.hasOwnProperty('rawFunction') ?
+            this._filterWithFunction(dataTable.data, filter.rawFunction, filter.context) :
+            this._filterWithKeyword(dataTable.data, filter.key, filter.field, dataTable.field);
+    }
+
+    private static _filterWithKeyword(data, key, field, allField) {
         if (!key) {
             console.warn('invalid filter key, need at least ONE char!');
             return data.concat();
@@ -206,6 +212,26 @@ class PageableData {
             }
             return false;
         });
+    }
+
+    private static _filterWithFunction(data, rawFunction, context) {
+        let func;
+        try {
+            func = eval('(' + rawFunction.replace(/\b_this\b/g, 'this') + ')');
+        } catch (e) {
+            console.error('eval raw filter function error, detail: ' + e.message);
+            return data;
+        }
+        if (!(func instanceof Function)) {
+            console.warn('invalid filter function, it is not a function.');
+            return data;
+        }
+        try {
+            return data.filter(func.bind(context));
+        } catch (e) {
+            console.error('filter width function error, detail: ' + e.message);
+            return data;
+        }
     }
 
     private static _paging(data, pagingInfo) {

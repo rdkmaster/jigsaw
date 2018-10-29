@@ -158,6 +158,10 @@ export const routerConfig = [
         loadChildren: "./demo/tag/demo-set.module#TagDemoModule",
     },
     {
+        path: "textarea",
+        loadChildren: "./demo/textarea/demo-set.module#TextareaDemoModule",
+    },
+    {
         path: "tile",
         loadChildren: "./demo/tile/demo-set.module#TileSelectDemoModule",
     },
