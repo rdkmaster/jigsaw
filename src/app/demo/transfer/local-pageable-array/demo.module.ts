@@ -1,13 +1,13 @@
 import {NgModule} from "@angular/core";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {TransferArrayDemoComponent} from "./demo.component";
+import {TransferLocalPageableArrayComponent} from "./demo.component";
 import {JigsawTransferModule} from "jigsaw/component/transfer/transfer";
 
 @NgModule({
-    declarations: [TransferArrayDemoComponent],
-    exports: [ TransferArrayDemoComponent ],
+    declarations: [TransferLocalPageableArrayComponent],
+    exports: [ TransferLocalPageableArrayComponent ],
     imports: [JigsawDemoDescriptionModule, JigsawTransferModule]
 })
-export class TransferArrayDemoModule{
+export class TransferLocalPageableArrayDemoModule{
 
 }

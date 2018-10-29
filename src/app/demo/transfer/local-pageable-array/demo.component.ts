@@ -6,9 +6,9 @@ import {TableData} from "jigsaw/core/data/table-data";
 @Component({
     templateUrl: './demo.component.html'
 })
-export class TransferArrayDemoComponent {
+export class TransferLocalPageableArrayComponent {
     constructor(private _http: HttpClient) {
-        this.data = new ArrayCollection();
+        this.data = new LocalPageableArray();
         this.data.http = _http;
         this.data.fromAjax('mock-data/countries');
         this.data.dataReviser = (td: TableData) => TableData.toArray(td);
@@ -19,11 +19,11 @@ export class TransferArrayDemoComponent {
         this.selectedCountries.dataReviser = (td: TableData) => TableData.toArray(td).slice(0,5);
     }
 
-    data: ArrayCollection<any>;
-    selectedCountries: ArrayCollection<any>;
+    data: LocalPageableArray<any>;
+    selectedCountries:  ArrayCollection<any>;
     selectedCountriesStr: string;
 
-    handleSelectChange($event, index) {
+    handleSelectChange($event) {
         this.selectedCountriesStr = $event.map(item => item.zhName).join(',');
     }
 
