@@ -395,7 +395,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         const originParams = this.sourceRequestOptions[paramKey];
         const peerParams = CommonUtils.isDefined(originParams) ? CommonUtils.shallowCopy(originParams) : {};
         this._requestOptions[paramKey] = {};
-        this._requestOptions[paramKey].peerParam = JSON.stringify(peerParams);
+        this._requestOptions[paramKey].peerParam = peerParams;
         this._requestOptions[paramKey].service = this.sourceRequestOptions.url;
     }
 
@@ -467,12 +467,12 @@ export class PageableTableData extends TableData implements IServerSidePageable,
 
         const params: any = this._requestOptions.method.toLowerCase() == 'post' ?
             this._requestOptions.body : this._requestOptions.params;
-        params.paging = JSON.stringify(this.pagingInfo.valueOf());
+        params.paging = this.pagingInfo.valueOf();
         if (this.filterInfo) {
-            params.filter = JSON.stringify(this.filterInfo);
+            params.filter = this.filterInfo;
         }
         if (this.sortInfo) {
-            params.sort = JSON.stringify(this.sortInfo);
+            params.sort = this.sortInfo;
         }
 
         this.http.request(this._requestOptions.method, PagingInfo.pagingServerUrl, this._requestOptions)
