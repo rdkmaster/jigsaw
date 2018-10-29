@@ -12,5 +12,6 @@
     [pageSizeOptions]="[5, 10, 20]"
     [searchable]="true"
     [showQuickJumper]="true"
+    (search)="onSearch($event)"
 ></jigsaw-pagination>
 <span>共{{pageable.pagingInfo.totalRecord}}条记录</span>
