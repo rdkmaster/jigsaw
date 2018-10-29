@@ -44,9 +44,9 @@ export class AjaxInterceptor implements HttpInterceptor {
     dealServerSidePagingRequest(req: HttpRequest<any>): Observable<HttpEvent<any>> {
         const params = req.method.toLowerCase() == 'post' ? 'body' : 'params';
         const service = this.getParamValue(req, params, 'service');
-        const paging = this.getParamValue(req, params, 'paging') ? JSON.parse(this.getParamValue(req, params, 'paging')) : null;
-        const filter = this.getParamValue(req, params, 'filter') ? JSON.parse(this.getParamValue(req, params, 'filter')) : null;
-        const sort = this.getParamValue(req, params, 'sort') ? JSON.parse(this.getParamValue(req, params, 'sort')) : null;
+        const paging = this.getParamValue(req, params, 'paging') ? this.getParamValue(req, params, 'paging') : null;
+        const filter = this.getParamValue(req, params, 'filter') ? this.getParamValue(req, params, 'filter') : null;
+        const sort = this.getParamValue(req, params, 'sort') ? this.getParamValue(req, params, 'sort') : null;
         return PageableData.get({service, paging, filter, sort});
     }
 
