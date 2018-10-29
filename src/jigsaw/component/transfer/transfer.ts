@@ -20,8 +20,30 @@ import {InternalUtils} from "../../core/utils/internal-utils";
     }
 })
 export class JigsawTransfer extends AbstractJigsawGroupLiteComponent {
+    private _data: LocalPageableArray<GroupOptionValue> | PageableArray;
+
     @Input()
-    public data: ArrayCollection<GroupOptionValue> | LocalPageableArray<GroupOptionValue> | GroupOptionValue[];
+    public get data() {
+        return this._data;
+    }
+
+    public set data(value) {
+        if(!value || value == this.data) return;
+        if((value instanceof LocalPageableArray || value instanceof PageableArray)  && value.pagingInfo) {
+            this._data = value;
+        } else if(value instanceof Array || value instanceof ArrayCollection) {
+            this._data = new LocalPageableArray();
+            this._data.pagingInfo.pageSize = Infinity;
+            this._data.fromArray(value);
+            if(value instanceof ArrayCollection) {
+                value.onAjaxSuccess(res => {
+                    (<LocalPageableArray<GroupOptionValue>>this._data).fromArray(res);
+                })
+            }
+        }
+        (<LocalPageableArray<GroupOptionValue>>this._data).filterGlobalFunction = item =>
+            !this.selectedItems || !this.selectedItems.some(i => CommonUtils.compareWithKeyProperty(item, i, <string[]>this.trackItemBy));
+    }
 
     @Input()
     public subLabelField: string;
@@ -53,31 +75,17 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent {
             this.selectedItems.push(...this._$sourceSelectedItems);
             this.selectedItems = this.selectedItems.concat();
             if(this.data instanceof LocalPageableArray && this.data.pagingInfo) {
-                const bakData = this.data._bakData;
-                if(bakData) {
-                    this.data.fromArray(bakData.filter(item =>
-                        !this._$sourceSelectedItems.some(i => CommonUtils.compareWithKeyProperty(item, i, <string[]>this.trackItemBy))))
-                }
-            } else if(this.data instanceof Array || this.data instanceof ArrayCollection) {
-                this.data = this.data.filter(item =>
-                    !this._$sourceSelectedItems.some(i => CommonUtils.compareWithKeyProperty(item, i, <string[]>this.trackItemBy)));
+                this.data.filter(() => true);
             }
             this._$sourceSelectedItems = [];
         }
         if (frame == 'source') {
             if (!this._$targetSelectedItems || !this._$targetSelectedItems.length) return;
-            if(this.data instanceof LocalPageableArray && this.data.pagingInfo) {
-                const bakData = this.data._bakData;
-                if(bakData) {
-                    bakData.push(...this._$targetSelectedItems);
-                    this.data.fromArray(bakData);
-                }
-            } else if(this.data instanceof Array || this.data instanceof ArrayCollection) {
-                this.data.push(...this._$targetSelectedItems);
-                this.data = (<GroupOptionValue[]>this.data).concat();
-            }
             this.selectedItems = this.selectedItems.filter(item =>
                 !this._$targetSelectedItems.some(i => CommonUtils.compareWithKeyProperty(item, i, <string[]>this.trackItemBy)));
+            if(this.data instanceof LocalPageableArray && this.data.pagingInfo) {
+                this.data.filter(() => true);
+            }
             this._$targetSelectedItems = [];
         }
         this.selectedItemsChange.emit(this.selectedItems);

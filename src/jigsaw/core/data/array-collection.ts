@@ -882,14 +882,18 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
 
     public fromArray(source: T[]): ArrayCollection<T> {
         this._bakData = source;
-        this.filteredData = source;
+        if(this.filterGlobalFunction) {
+            this.filteredData = this._bakData.filter(this.filterGlobalFunction);
+        }else {
+            this.filteredData = this._bakData.concat();
+        }
         this.firstPage();
         return this;
     }
 
     private _initSubjects(): void {
         this._filterSubject.debounceTime(300).subscribe(filter => {
-            this.filteredData = this._bakData.filter(item => {
+            this.filteredData = this.filteredData.filter(item => {
                 if (typeof item == 'string') {
                     return item.toLowerCase().includes(filter.key.toLowerCase())
                 } else if (filter.field) {
@@ -915,6 +919,8 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
         })
     }
 
+    public filterGlobalFunction: (value: any, index: number, array: any[]) => any;
+
     public filter(callbackfn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
     public filter(term: string, fields?: string[] | number[]): void;
     public filter(term: DataFilterInfo): void;
@@ -922,9 +928,15 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
      * @internal
      */
     public filter(term, fields?: string[] | number[]): void {
+        if(this.filterGlobalFunction) {
+            this.filteredData = this._bakData.filter(this.filterGlobalFunction);
+        }else {
+            this.filteredData = this._bakData.concat();
+        }
         if (term instanceof Function) {
-            this.filteredData = this._bakData.filter(term);
+            this.filteredData = this.filteredData.filter(term);
             this.firstPage();
+            return;
         }
         const pfi = term instanceof DataFilterInfo ? term : new DataFilterInfo(term, fields);
         this._filterSubject.next(pfi);

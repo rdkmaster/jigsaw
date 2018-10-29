@@ -25,6 +25,19 @@ export class TransferDemoComponent {
     data1: ArrayCollection<any>;
     data2: LocalPageableArray<any>;
 
+    selectedCountries: any[] = [
+        {
+            enName: 'andorra',
+            zhName: '安道尔',
+            shortName: 'and'
+        },
+        {
+            enName: 'angola',
+            zhName: '安哥拉',
+            shortName: 'ago'
+        },
+    ];
+
     selectedCountries1: string;
     selectedCountries2: string;
 
