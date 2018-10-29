@@ -6,9 +6,10 @@ import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {JigsawInputModule} from "../input/input";
 import {GroupOptionValue} from "../list-and-tile/group-common";
 import {AbstractJigsawGroupLiteComponent} from "jigsaw/component/list-and-tile/group-lite-common";
-import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
+import {CommonUtils} from "../../core/utils/common-utils";
 import {JigsawPaginationModule} from "../pagination/pagination";
 import {InternalUtils} from "../../core/utils/internal-utils";
+import {Subscriber} from "rxjs/Subscriber";
 
 const transferFilterFunction = function(item) {
     function compareWithKeyProperty(item1, item2, trackItemBy) {
@@ -229,7 +230,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
 
     public _$searchKey: string;
 
-    private _removeHostSubscribe: CallbackRemoval;
+    private _removeHostSubscribe: Subscriber<any>;
 
     /**
      * @internal
@@ -255,7 +256,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
     ngOnDestroy() {
         super.ngOnDestroy();
         if (this._removeHostSubscribe) {
-            this._removeHostSubscribe();
+            this._removeHostSubscribe.unsubscribe();
             this._removeHostSubscribe = null;
         }
     }

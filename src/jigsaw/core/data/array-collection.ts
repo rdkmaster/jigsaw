@@ -931,10 +931,10 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
         if (term instanceof Function) {
             this.filteredData = this._bakData.filter(term.bind(fields));
             this.firstPage();
-            return;
+        } else {
+            const pfi = term instanceof DataFilterInfo ? term : new DataFilterInfo(term, fields);
+            this._filterSubject.next(pfi);
         }
-        const pfi = term instanceof DataFilterInfo ? term : new DataFilterInfo(term, fields);
-        this._filterSubject.next(pfi);
     }
 
     public sort(compareFn?: (a: any, b: any) => number): any;
