@@ -695,7 +695,16 @@ export class DataFilterInfo {
                 /**
                  * 在这些字段中过滤
                  */
-                public field?: string[] | number[]) {
+                public field?: string[] | number[],
+                /**
+                 * 过滤函数源码，主要是传给服务端做自定义过滤用的
+                 */
+                public rawFunction?: string,
+                /**
+                 * `rawFunction`执行时的上下文
+                 */
+                public context?: any
+                ) {
     }
 }
 

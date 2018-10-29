@@ -746,10 +746,15 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
      * @internal
      */
     public filter(term: string | DataFilterInfo | Function, fields?: string[] | number[]): void {
-        if (term instanceof Function) {
-            throw 'filter function is NOT accepted by this class!';
+        let pfi: DataFilterInfo;
+        if (term instanceof DataFilterInfo) {
+            pfi = term;
+        } else if (term instanceof Function) {
+            // 这里的fields相当于thisArg，即函数执行的上下文对象
+            pfi = new DataFilterInfo(undefined, undefined, term.toString(), fields);
+        } else {
+            pfi = new DataFilterInfo(term, fields);
         }
-        const pfi = term instanceof DataFilterInfo ? term : new DataFilterInfo(term, fields);
         this._filterSubject.next(pfi);
     }
 
