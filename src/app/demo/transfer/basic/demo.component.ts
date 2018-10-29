@@ -25,7 +25,7 @@ export class TransferDemoComponent {
     data1: ArrayCollection<any>;
     data2: LocalPageableArray<any>;
 
-    selectedCountries: any[] = [
+    selectedCountries1: any[] = [
         {
             enName: 'andorra',
             zhName: '安道尔',
@@ -38,11 +38,24 @@ export class TransferDemoComponent {
         },
     ];
 
-    selectedCountries1: string;
-    selectedCountries2: string;
+    selectedCountries2: any[] = [
+        {
+            enName: 'andorra',
+            zhName: '安道尔',
+            shortName: 'and'
+        },
+        {
+            enName: 'angola',
+            zhName: '安哥拉',
+            shortName: 'ago'
+        },
+    ];
+
+    selectedCountriesStr1: string;
+    selectedCountriesStr2: string;
 
     handleSelectChange($event, index) {
-        this[`selectedCountries${index}`] = $event.map(item => item.zhName).join(',');
+        this[`selectedCountriesStr${index}`] = $event.map(item => item.zhName).join(',');
     }
 
     // ====================================================================

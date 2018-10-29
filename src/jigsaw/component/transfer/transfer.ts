@@ -10,6 +10,58 @@ import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {JigsawPaginationModule} from "../pagination/pagination";
 import {InternalUtils} from "../../core/utils/internal-utils";
 
+const transferFilterFunction = function(item) {
+    function compareWithKeyProperty(item1, item2, trackItemBy) {
+        if (trackItemBy && trackItemBy.length > 0) {
+            for (var i = 0; i < trackItemBy.length; i++) {
+                if(!item1 || !item2) {
+                    // 过滤掉 typeof null == 'object'
+                    return false;
+                } else if (typeof item1 === 'object' && typeof item2 === 'object') {
+                    if (item1[trackItemBy[i]] != item2[trackItemBy[i]]) {
+                        return false;
+                    }
+                } else if (typeof item1 !== 'object' && typeof item2 === 'object') {
+                    if (item1 != item2[trackItemBy[i]]) {
+                        return false;
+                    }
+                } else if (typeof item1 === 'object' && typeof item2 !== 'object') {
+                    if (item1[trackItemBy[i]] != item2) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        } else {
+            return item1 == item2;
+        }
+    }
+
+    var listResult = true;
+    var keyResult = true;
+    if(this.selectedItems) {
+        for (var i = 0; i < this.selectedItems.length; i++) {
+            if(compareWithKeyProperty(item, this.selectedItems[i], this.trackItemBy)) {
+                listResult = false;
+                break;
+            }
+        }
+    }
+    if (this.keyword !== null && this.keyword !== undefined) {
+        if (typeof item == 'string') {
+            keyResult = item.toLowerCase().includes(this.keyword.toLowerCase())
+        } else if (this.fields) {
+            keyResult = (<any[]>this.fields).find(field => {
+                const value: string = !item || item[field] === undefined || item[field] === null ? '' : item[field].toString();
+                return value.toLowerCase().includes(this.keyword.toLowerCase())
+            })
+        } else {
+            keyResult = false
+        }
+    }
+    return listResult && keyResult;
+};
+
 @Component({
     selector: 'jigsaw-transfer, j-transfer',
     templateUrl: './transfer.html',
@@ -31,18 +83,26 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent {
         if(!value || value == this.data) return;
         if((value instanceof LocalPageableArray || value instanceof PageableArray)  && value.pagingInfo) {
             this._data = value;
+            setTimeout(() => {
+                this._data.filter(transferFilterFunction, {selectedItems: this.selectedItems, trackItemBy: this.trackItemBy});
+            });
+            value.onAjaxComplete(() => {
+                this._data.filter(transferFilterFunction, {selectedItems: this.selectedItems, trackItemBy: this.trackItemBy});
+            })
         } else if(value instanceof Array || value instanceof ArrayCollection) {
             this._data = new LocalPageableArray();
             this._data.pagingInfo.pageSize = Infinity;
             this._data.fromArray(value);
+            setTimeout(() => {
+                this._data.filter(transferFilterFunction, {selectedItems: this.selectedItems, trackItemBy: this.trackItemBy});
+            });
             if(value instanceof ArrayCollection) {
                 value.onAjaxSuccess(res => {
                     (<LocalPageableArray<GroupOptionValue>>this._data).fromArray(res);
+                    this._data.filter(transferFilterFunction, {selectedItems: this.selectedItems, trackItemBy: this.trackItemBy});
                 })
             }
         }
-        (<LocalPageableArray<GroupOptionValue>>this._data).filterGlobalFunction = item =>
-            !this.selectedItems || !this.selectedItems.some(i => CommonUtils.compareWithKeyProperty(item, i, <string[]>this.trackItemBy));
     }
 
     @Input()
@@ -75,7 +135,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent {
             this.selectedItems.push(...this._$sourceSelectedItems);
             this.selectedItems = this.selectedItems.concat();
             if(this.data instanceof LocalPageableArray && this.data.pagingInfo) {
-                this.data.filter(() => true);
+                this._data.filter(transferFilterFunction, {selectedItems: this.selectedItems, trackItemBy: this.trackItemBy});
             }
             this._$sourceSelectedItems = [];
         }
@@ -84,7 +144,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent {
             this.selectedItems = this.selectedItems.filter(item =>
                 !this._$targetSelectedItems.some(i => CommonUtils.compareWithKeyProperty(item, i, <string[]>this.trackItemBy)));
             if(this.data instanceof LocalPageableArray && this.data.pagingInfo) {
-                this.data.filter(() => true);
+                this._data.filter(transferFilterFunction, {selectedItems: this.selectedItems, trackItemBy: this.trackItemBy});
             }
             this._$targetSelectedItems = [];
         }
@@ -176,7 +236,12 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
      */
     public _$handleSearching(filterKey?: string) {
         filterKey = filterKey ? filterKey.trim() : '';
-        (<LocalPageableArray<any> | PageableArray>this.data).filter(filterKey, [this.labelField]);
+        this._data.filter(transferFilterFunction, {
+            selectedItems: this.isTarget ? null : this._transfer.selectedItems,
+            trackItemBy: this._transfer.trackItemBy,
+            keyword: filterKey,
+            fields: [this.labelField]
+        });
     }
 
     /**
