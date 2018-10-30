@@ -10,6 +10,7 @@ import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {JigsawPaginationModule} from "../pagination/pagination";
 import {InternalUtils} from "../../core/utils/internal-utils";
 import {Subscriber} from "rxjs/Subscriber";
+import {CommonModule} from "@angular/common";
 
 const transferFilterFunction = function (item) {
     let listResult = true;
@@ -253,6 +254,13 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
 
     private _filterFunction: (item: any) => boolean;
 
+    /**
+     * @internal
+     * @type {number}
+     * @private
+     */
+    public _$infinity = Infinity;
+
     @Input()
     public isTarget: boolean;
 
@@ -267,7 +275,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
         return this._data;
     }
 
-    public set data(value) {
+    public set data(value: LocalPageableArray<GroupOptionValue> | PageableArray) {
         if (!value || this._data == value) return;
         if ((value instanceof LocalPageableArray || value instanceof PageableArray) && value.pagingInfo) {
             this._data = value;
@@ -368,7 +376,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
 
 
 @NgModule({
-    imports: [JigsawListModule, JigsawCheckBoxModule, PerfectScrollbarModule, JigsawInputModule, JigsawPaginationModule],
+    imports: [JigsawListModule, JigsawCheckBoxModule, PerfectScrollbarModule, JigsawInputModule, JigsawPaginationModule, CommonModule],
     declarations: [JigsawTransfer, JigsawTransferInternalList],
     exports: [JigsawTransfer]
 })

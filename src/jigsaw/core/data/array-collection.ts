@@ -576,10 +576,10 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
         console.log('destroying ArrayCollection....');
         this.splice(0, this.length);
 
-        this.componentDataHelper.clearCallbacks();
+        this.componentDataHelper && this.componentDataHelper.clearCallbacks();
         this.componentDataHelper = null;
         this.dataReviser = null;
-        this._emitter.unsubscribe();
+        this._emitter && this._emitter.unsubscribe();
         this._emitter = null;
     }
 
@@ -822,6 +822,7 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
 
         this.http = null;
         this.sourceRequestOptions = null;
+        this.pagingInfo && this.pagingInfo.unsubscribe();
         this.pagingInfo = null;
         this.filterInfo = null;
         this.sortInfo = null;
@@ -894,6 +895,13 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
         return this;
     }
 
+    /**
+     * @internal
+     * @param item
+     * @param {string} keyword
+     * @param {any[]} fields
+     * @returns {boolean}
+     */
     public static filterItemByKeyword(item: any, keyword: string, fields: any[]): boolean {
         if (typeof item == 'string') {
             return item.toLowerCase().includes(keyword.toLowerCase())
@@ -1016,7 +1024,7 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
         super.destroy();
         this._filterSubject.unsubscribe();
         this._sortSubject.unsubscribe();
-        this.pagingInfo.unsubscribe();
+        this.pagingInfo && this.pagingInfo.unsubscribe();
         this._bakData = null;
         this.filteredData = null;
         this.pagingInfo = null;

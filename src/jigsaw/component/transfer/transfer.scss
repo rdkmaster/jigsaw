@@ -63,9 +63,6 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
             height: 100%;
         }
     }
-    &-list-box {
-        height: calc(100% - 54px);
-    }
     &-list-wrapper {
         .#{$list-prefix-cls} {
             border: none;
@@ -83,6 +80,13 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
         height: 100%;
     }
     &-foot {
+        height: 28px;
         text-align: center;
+        &:before {
+            content: '';
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+        }
     }
 }
