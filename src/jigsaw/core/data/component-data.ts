@@ -787,3 +787,15 @@ export interface IEmittable {
      */
     unsubscribe();
 }
+
+export function serializeFilterFunction(filter: Function): string {
+    if (!filter) {
+        return undefined;
+    }
+    let funcString = filter.toString();
+    if (!funcString.match(/(const|var|let)\s+_this\s*=\s*this\b/)) {
+        // 在函数的开头添加一行 `var _this = this;`
+        funcString = funcString.replace(/{/, '{\nvar _this = this;\n');
+    }
+    return funcString;
+}
