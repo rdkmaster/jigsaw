@@ -171,7 +171,7 @@ class PageableData {
     }
 
     private static _filter(dataTable, filter) {
-        return filter.hasOwnProperty('rawFunction') ?
+        return filter.hasOwnProperty('rawFunction') && !!filter.rawFunction ?
             this._filterWithFunction(dataTable.data, filter.rawFunction, filter.context) :
             this._filterWithKeyword(dataTable.data, filter.key, filter.field, dataTable.field);
     }
@@ -217,7 +217,7 @@ class PageableData {
     private static _filterWithFunction(data, rawFunction, context) {
         let func;
         try {
-            func = eval('(' + rawFunction.replace(/\b_this\b/g, 'this') + ')');
+            func = eval('(' + rawFunction + ')');
         } catch (e) {
             console.error('eval raw filter function error, detail: ' + e.message);
             return data;

@@ -14,7 +14,7 @@ import {
     DataFilterInfo,
     DataSortInfo,
     SortAs,
-    SortOrder, IServerSidePageable, HttpClientOptions, IEmittable
+    SortOrder, IServerSidePageable, HttpClientOptions, IEmittable, serializeFilterFunction
 } from "./component-data";
 
 import {TableData} from "./table-data";
@@ -751,7 +751,7 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
             pfi = term;
         } else if (term instanceof Function) {
             // 这里的fields相当于thisArg，即函数执行的上下文对象
-            pfi = new DataFilterInfo(undefined, undefined, term.toString(), fields);
+            pfi = new DataFilterInfo(undefined, undefined, serializeFilterFunction(term), fields);
         } else {
             pfi = new DataFilterInfo(term, fields);
         }

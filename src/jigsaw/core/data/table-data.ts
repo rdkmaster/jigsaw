@@ -13,7 +13,7 @@ import {
     ISortable,
     PagingInfo,
     SortAs,
-    SortOrder
+    SortOrder, serializeFilterFunction
 } from "./component-data";
 import {CommonUtils} from "../utils/common-utils";
 
@@ -515,7 +515,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
             pfi = term;
         } else if (term instanceof Function) {
             // 这里的fields相当于thisArg，即函数执行的上下文对象
-            pfi = new DataFilterInfo(undefined, undefined, term.toString(), fields);
+            pfi = new DataFilterInfo(undefined, undefined, serializeFilterFunction(term), fields);
         } else {
             pfi = new DataFilterInfo(term, fields);
         }
