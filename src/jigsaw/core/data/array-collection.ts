@@ -629,6 +629,9 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         }
 
         this.pagingInfo = new PagingInfo();
+        this.pagingInfo.subscribe(() => {
+            this._ajax();
+        });
         this.sourceRequestOptions = typeof requestOptionsOrUrl === 'string' ? {url: requestOptionsOrUrl} : requestOptionsOrUrl;
 
         this._initRequestOptions();
@@ -729,7 +732,6 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
             return;
         }
         const paging = data.paging;
-        this.pagingInfo.currentPage = paging.hasOwnProperty('currentPage') ? paging.currentPage : this.pagingInfo.currentPage;
         this.pagingInfo.totalRecord = paging.hasOwnProperty('totalRecord') ? paging.totalRecord : this.pagingInfo.totalRecord;
     }
 

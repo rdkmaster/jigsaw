@@ -89,21 +89,23 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
         if ((value instanceof LocalPageableArray || value instanceof PageableArray) && value.pagingInfo) {
             this._data = value;
             setTimeout(() => {
-                // 等待input属性初始化
+                // 等待输入属性初始化
                 this._filterDataBySelectedItems();
             });
-            if (this._removePageableCallbackListener) {
-                this._removePageableCallbackListener();
+            if(value instanceof LocalPageableArray) {
+                if (this._removePageableCallbackListener) {
+                    this._removePageableCallbackListener();
+                }
+                this._removePageableCallbackListener = value.onAjaxComplete(() => {
+                    this._filterDataBySelectedItems();
+                })
             }
-            this._removePageableCallbackListener = value.onAjaxComplete(() => {
-                this._filterDataBySelectedItems();
-            })
         } else if (value instanceof Array || value instanceof ArrayCollection) {
             this._data = new LocalPageableArray();
             this._data.pagingInfo.pageSize = Infinity;
             this._data.fromArray(value);
             setTimeout(() => {
-                // 等待input属性初始化
+                // 等待输入属性初始化
                 this._filterDataBySelectedItems();
             });
             if (value instanceof ArrayCollection) {

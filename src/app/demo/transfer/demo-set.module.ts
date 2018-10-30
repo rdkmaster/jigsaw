@@ -4,6 +4,8 @@ import {TransferArrayDemoComponent} from "./basic/demo.component";
 import {TransferArrayDemoModule} from "./basic/demo.module";
 import {TransferLocalPageableArrayComponent} from "./local-pageable-array/demo.component";
 import {TransferLocalPageableArrayDemoModule} from "./local-pageable-array/demo.module";
+import {TransferPageableArrayComponent} from "./pageable-array/demo.component";
+import {TransferPageableArrayDemoModule} from "./pageable-array/demo.module";
 
 export const routerConfig = [
     {
@@ -11,6 +13,9 @@ export const routerConfig = [
     },
     {
         path: 'local-pageable-array', component: TransferLocalPageableArrayComponent
+    },
+    {
+        path: 'pageable-array', component: TransferPageableArrayComponent
     }
 ];
 
@@ -18,7 +23,8 @@ export const routerConfig = [
     imports: [
         RouterModule.forChild(routerConfig),
         TransferArrayDemoModule,
-        TransferLocalPageableArrayDemoModule
+        TransferLocalPageableArrayDemoModule,
+        TransferPageableArrayDemoModule
     ]
 })
 export class TransferDemoModule {
