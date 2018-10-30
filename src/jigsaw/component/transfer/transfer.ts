@@ -12,53 +12,15 @@ import {InternalUtils} from "../../core/utils/internal-utils";
 import {Subscriber} from "rxjs/Subscriber";
 
 const transferFilterFunction = function (item) {
-    function compareWithKeyProperty(item1, item2, trackItemBy) {
-        if (trackItemBy && trackItemBy.length > 0) {
-            for (var i = 0; i < trackItemBy.length; i++) {
-                if (!item1 || !item2) {
-                    // 过滤掉 typeof null == 'object'
-                    return false;
-                } else if (typeof item1 === 'object' && typeof item2 === 'object') {
-                    if (item1[trackItemBy[i]] != item2[trackItemBy[i]]) {
-                        return false;
-                    }
-                } else if (typeof item1 !== 'object' && typeof item2 === 'object') {
-                    if (item1 != item2[trackItemBy[i]]) {
-                        return false;
-                    }
-                } else if (typeof item1 === 'object' && typeof item2 !== 'object') {
-                    if (item1[trackItemBy[i]] != item2) {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        } else {
-            return item1 == item2;
-        }
-    }
-
-    var listResult = true;
-    var keyResult = true;
+    let listResult = true;
+    let keyResult = true;
     if (this.selectedItems) {
-        for (var i = 0; i < this.selectedItems.length; i++) {
-            if (compareWithKeyProperty(item, this.selectedItems[i], this.trackItemBy)) {
-                listResult = false;
-                break;
-            }
+        if (this.selectedItems.some(si => CommonUtils.compareWithKeyProperty(item, si, this.trackItemBy))) {
+            listResult = false;
         }
     }
     if (this.keyword !== null && this.keyword !== undefined) {
-        if (typeof item == 'string') {
-            keyResult = item.toLowerCase().includes(this.keyword.toLowerCase())
-        } else if (this.fields) {
-            keyResult = (<any[]>this.fields).find(field => {
-                const value: string = !item || item[field] === undefined || item[field] === null ? '' : item[field].toString();
-                return value.toLowerCase().includes(this.keyword.toLowerCase())
-            })
-        } else {
-            keyResult = false
-        }
+        keyResult = LocalPageableArray.filterItemByKeyword(item, this.keyword, this.fields);
     }
     return listResult && keyResult;
 };

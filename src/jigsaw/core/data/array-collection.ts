@@ -855,7 +855,7 @@ export class DirectPageableArray extends PageableArray {
 export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageable {
     public pagingInfo: PagingInfo;
 
-    public _bakData: T[] = [];
+    private _bakData: T[] = [];
 
     private _filterSubject = new Subject<DataFilterInfo>();
     private _sortSubject = new Subject<DataSortInfo>();
@@ -894,20 +894,22 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
         return this;
     }
 
+    public static filterItemByKeyword(item: any, keyword: string, fields: any[]): boolean {
+        if (typeof item == 'string') {
+            return item.toLowerCase().includes(keyword.toLowerCase())
+        } else if (fields) {
+            return fields.find(field => {
+                const value: string = !item || item[field] === undefined || item[field] === null ? '' : item[field].toString();
+                return value.toLowerCase().includes(keyword.toLowerCase())
+            })
+        } else {
+            return false
+        }
+    }
+
     private _initSubjects(): void {
         this._filterSubject.debounceTime(300).subscribe(filter => {
-            this.filteredData = this._bakData.filter(item => {
-                if (typeof item == 'string') {
-                    return item.toLowerCase().includes(filter.key.toLowerCase())
-                } else if (filter.field) {
-                    return (<any[]>filter.field).find(field => {
-                        const value: string = !item || item[field] === undefined || item[field] === null ? '' : item[field].toString();
-                        return value.toLowerCase().includes(filter.key.toLowerCase())
-                    })
-                } else {
-                    return false
-                }
-            });
+            this.filteredData = this._bakData.filter(item => LocalPageableArray.filterItemByKeyword(item, filter.key, filter.field));
             this.firstPage();
         });
 
