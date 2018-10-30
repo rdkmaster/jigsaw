@@ -6,14 +6,18 @@ import 'rxjs/add/operator/debounceTime';
 import {AbstractGeneralCollection} from "./general-collection";
 import {
     DataFilterInfo,
-    DataSortInfo, HttpClientOptions, ViewportData,
+    DataSortInfo,
+    HttpClientOptions,
     IFilterable,
     IPageable,
-    IServerSidePageable, ISlicedData,
+    IServerSidePageable,
+    ISlicedData,
     ISortable,
     PagingInfo,
+    PreparedHttpClientOptions,
     SortAs,
-    SortOrder, PreparedHttpClientOptions
+    SortOrder,
+    ViewportData
 } from "./component-data";
 import {CommonUtils} from "../utils/common-utils";
 
@@ -53,6 +57,7 @@ export class RawTableData {
      * 表格的数据，是一个二维数组。
      */
     data: TableDataMatrix;
+
     [property: string]: any;
 }
 

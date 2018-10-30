@@ -11,7 +11,7 @@ export class TablePageableDemoComponent {
 
     constructor(http: HttpClient) {
         this.pageable = new PageableTableData(http, {
-            url: 'http://localhost:5812/rdk/service/app/example/server/my_service', body: {aa: 11, bb: 22}, method: 'get'
+            url: 'mock-data/countries', body: {aa: 11, bb: 22}, method: 'post'
         });
         /*this.pageable = new PageableTableData(http, {
             url: 'mock-data/countries', params: {aa: 11, bb: 22}

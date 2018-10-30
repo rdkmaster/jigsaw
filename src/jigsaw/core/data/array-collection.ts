@@ -7,14 +7,20 @@ import {Subscription} from "rxjs/Subscription";
 
 import {
     ComponentDataHelper,
-    DataReviser,
-    IAjaxComponentData, IFilterable,
-    IPageable, ISortable,
-    PagingInfo,
     DataFilterInfo,
+    DataReviser,
     DataSortInfo,
+    HttpClientOptions,
+    IAjaxComponentData,
+    IEmittable,
+    IFilterable,
+    IPageable,
+    IServerSidePageable,
+    ISortable,
+    PagingInfo,
+    PreparedHttpClientOptions,
     SortAs,
-    SortOrder, IServerSidePageable, HttpClientOptions, IEmittable, PreparedHttpClientOptions
+    SortOrder
 } from "./component-data";
 
 import {TableData} from "./table-data";
