@@ -63,6 +63,60 @@ const transferFilterFunction = function (item) {
     return listResult && keyResult;
 };
 
+const transferServerFilterFunction = (item) => {
+    function compareWithKeyProperty(item1, item2, trackItemBy) {
+        if (trackItemBy && trackItemBy.length > 0) {
+            for (var i = 0; i < trackItemBy.length; i++) {
+                if (!item1 || !item2) {
+                    // 过滤掉 typeof null == 'object'
+                    return false;
+                } else if (typeof item1 === 'object' && typeof item2 === 'object') {
+                    if (item1[trackItemBy[i]] != item2[trackItemBy[i]]) {
+                        return false;
+                    }
+                } else if (typeof item1 !== 'object' && typeof item2 === 'object') {
+                    if (item1 != item2[trackItemBy[i]]) {
+                        return false;
+                    }
+                } else if (typeof item1 === 'object' && typeof item2 !== 'object') {
+                    if (item1[trackItemBy[i]] != item2) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        } else {
+            return item1 == item2;
+        }
+    }
+
+    var listResult = true;
+    var keyResult = true;
+    var _that = this;
+    if (this.selectedItems && this.selectedItems.length && typeof this.selectedItems[0] == 'object') {
+        const itemJson = Object.create(null);
+        Object.keys(this.selectedItems[0]).forEach((k, i) => {
+            itemJson[k] = item[i];
+        });
+        if(this.selectedItems.some(si => compareWithKeyProperty(itemJson, si, _that.trackItemBy))) {
+            listResult = false;
+        }
+    }
+    if (this.keyword !== null && this.keyword !== undefined) {
+        if (typeof item == 'string') {
+            keyResult = item.toLowerCase().includes(this.keyword.toLowerCase())
+        } else if (this.fields) {
+            keyResult = (<any[]>this.fields).find(field => {
+                const value: string = !item || item[field] === undefined || item[field] === null ? '' : item[field].toString();
+                return value.toLowerCase().includes(_that.keyword.toLowerCase())
+            })
+        } else {
+            keyResult = false
+        }
+    }
+    return listResult && keyResult;
+};
+
 @Component({
     selector: 'jigsaw-transfer, j-transfer',
     templateUrl: './transfer.html',
@@ -76,6 +130,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     private _removePageableCallbackListener: CallbackRemoval;
     private _removeArrayCallbackListener: CallbackRemoval;
     private _removeSelectedArrayCallbackListener: CallbackRemoval;
+    private _filterFunction: (item: any) => boolean;
 
     private _data: LocalPageableArray<GroupOptionValue> | PageableArray;
 
@@ -88,6 +143,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
         if (!value || value == this.data) return;
         if ((value instanceof LocalPageableArray || value instanceof PageableArray) && value.pagingInfo) {
             this._data = value;
+            this._filterFunction = value instanceof LocalPageableArray ? transferFilterFunction : transferServerFilterFunction;
             setTimeout(() => {
                 // 等待输入属性初始化
                 this._filterDataBySelectedItems();
@@ -104,6 +160,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
             this._data = new LocalPageableArray();
             this._data.pagingInfo.pageSize = Infinity;
             this._data.fromArray(value);
+            this._filterFunction = transferFilterFunction;
             setTimeout(() => {
                 // 等待输入属性初始化
                 this._filterDataBySelectedItems();
@@ -156,7 +213,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     public _$targetSelectedItems: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
 
     private _filterDataBySelectedItems() {
-        this._data.filter(transferFilterFunction, {selectedItems: this.selectedItems, trackItemBy: this.trackItemBy});
+        this._data.filter(this._filterFunction, {selectedItems: this.selectedItems, trackItemBy: this.trackItemBy});
     }
 
     /**
@@ -173,8 +230,8 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
             this.selectedItems = this.selectedItems ? this.selectedItems : [];
             this.selectedItems.push(...this._$sourceSelectedItems);
             this.selectedItems = this.selectedItems.concat();
-            if (this.data instanceof LocalPageableArray && this.data.pagingInfo) {
-                this._data.filter(transferFilterFunction, {selectedItems: this.selectedItems, trackItemBy: this.trackItemBy});
+            if ((this.data instanceof LocalPageableArray || this.data instanceof PageableArray) && this.data.pagingInfo) {
+                this._filterDataBySelectedItems();
             }
             this._$sourceSelectedItems = [];
         }
@@ -182,8 +239,8 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
             if (!this._$targetSelectedItems || !this._$targetSelectedItems.length) return;
             this.selectedItems = this.selectedItems.filter(item =>
                 !this._$targetSelectedItems.some(i => CommonUtils.compareWithKeyProperty(item, i, <string[]>this.trackItemBy)));
-            if (this.data instanceof LocalPageableArray && this.data.pagingInfo) {
-                this._data.filter(transferFilterFunction, {selectedItems: this.selectedItems, trackItemBy: this.trackItemBy});
+            if ((this.data instanceof LocalPageableArray || this.data instanceof PageableArray) && this.data.pagingInfo) {
+                this._filterDataBySelectedItems();
             }
             this._$targetSelectedItems = [];
         }
@@ -221,6 +278,8 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
         })
     }
 
+    private _filterFunction: (item: any) => boolean;
+
     @Input()
     public isTarget: boolean;
 
@@ -239,7 +298,9 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
         if (!value || this._data == value) return;
         if ((value instanceof LocalPageableArray || value instanceof PageableArray) && value.pagingInfo) {
             this._data = value;
+            this._filterFunction = value instanceof LocalPageableArray ? transferFilterFunction : transferServerFilterFunction;
         } else if (value instanceof Array || value instanceof ArrayCollection) {
+            this._filterFunction = transferFilterFunction;
             this._updateData(value);
             if (value instanceof ArrayCollection) {
                 if (this._removeArrayCallbackListener) {
@@ -295,11 +356,16 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
      */
     public _$handleSearching(filterKey?: string) {
         filterKey = filterKey ? filterKey.trim() : '';
-        this._data.filter(transferFilterFunction, {
+        let field: string | number = this.labelField;
+        if(this._data instanceof PageableArray && this._data.length && typeof this._data[0] == 'object') {
+            field = Object.keys(this._data[0]).findIndex(k => k === this.labelField);
+        }
+
+        this._data.filter(this._filterFunction, {
             selectedItems: this.isTarget ? null : this._transfer.selectedItems,
             trackItemBy: this._transfer.trackItemBy,
             keyword: filterKey,
-            fields: [this.labelField]
+            fields: [field]
         });
     }
 
