@@ -70,9 +70,9 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     }
 
     public set data(value: IPageable) {
-        if(CommonUtils.isUndefined(value) || !(value.pagingInfo instanceof PagingInfo)) return;
+        if (CommonUtils.isUndefined(value) || !(value.pagingInfo instanceof PagingInfo)) return;
         this._data = value;
-        if(typeof this._data.onRefresh == 'function') {
+        if (typeof this._data.onRefresh == 'function') {
             this._data.onRefresh(() => {
                 this._renderPages();
             });
@@ -122,7 +122,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         if (this.current != newValue) {
             this._current = newValue;
             this.currentChange.emit(newValue);
-            if(this.data.pagingInfo.currentPage != newValue) {
+            if (this.data.pagingInfo.currentPage != newValue) {
                 // pagingInfo.currentPage采用的getter&setter，不可随便赋值
                 this.data.pagingInfo.currentPage = newValue;
             }
@@ -142,7 +142,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
             this._$pageSize.value = newValue;
             this._$pageSize.label = newValue + '/' + this._translateService.instant('pagination.page');
             this.pageSizeChange.emit(newValue);
-            if(this.data.pagingInfo.pageSize != newValue) {
+            if (this.data.pagingInfo.pageSize != newValue) {
                 // pagingInfo.pageSize采用的getter&setter，不可随便赋值
                 this.data.pagingInfo.pageSize = newValue;
             }
@@ -202,7 +202,8 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * @internal
      */
     public _$pagePrev(): void {
-        if(this.mode == 'simple') {
+        if (this.mode == 'simple') {
+            if (this.current == 1) return;
             this.current--;
         } else {
             let pageCur = this._pages.find(page => page.current == true);
@@ -221,7 +222,8 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * @internal
      */
     public _$pageNext(): void {
-        if(this.mode == 'simple') {
+        if (this.mode == 'simple') {
+            if (this.current == this._totalPage) return;
             this.current++;
         } else {
             let pageCur = this._pages.find(page => page.current == true);
@@ -318,7 +320,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     private _goto(pageNum): void {
         pageNum = parseInt(pageNum);
         if (pageNum <= this._totalPage && pageNum >= 1) {
-            if(this.mode != 'simple') {
+            if (this.mode != 'simple') {
                 this._pages.find(page => page.current == true).cancelCurrent();
                 this._pages.find(page => page.pageNumber == pageNum).setCurrent();
             }
@@ -340,7 +342,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * 渲染page按钮
      * */
     private _renderPages(): void {
-        if(!this.data || !this.data.pagingInfo) return;
+        if (!this.data || !this.data.pagingInfo) return;
 
         this.current = this.data.pagingInfo.currentPage;
         this._totalRecord = this.data.pagingInfo.totalRecord;
@@ -373,8 +375,8 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * 刷新数据时清空搜索框
      */
     public reset() {
-        if(!this.inputs) return;
-        this.inputs.forEach(input => input.value='');
+        if (!this.inputs) return;
+        this.inputs.forEach(input => input.value = '');
     }
 
     ngOnInit() {
