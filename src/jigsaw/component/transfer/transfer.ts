@@ -101,7 +101,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
         return this._data;
     }
 
-    public set data(value) {
+    public set data(value: any[] | ArrayCollection<GroupOptionValue> | LocalPageableArray<GroupOptionValue> | PageableArray) {
         if (!value || value == this.data) return;
         if ((value instanceof LocalPageableArray || value instanceof PageableArray) && value.pagingInfo) {
             this._data = value;
@@ -136,18 +136,24 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
                     this._filterDataBySelectedItems();
                 })
             }
+        } else {
+            console.error('data type error, data support Array, ArrayCollection, LocalPageableArray and PageableArray.')
         }
     }
 
-    private _selectedItems: ArrayCollection<any> | any[];
+    private _selectedItems: ArrayCollection<any> | any[] = [];
 
     @Input()
     public get selectedItems() {
         return this._selectedItems;
     }
 
-    public set selectedItems(value) {
+    public set selectedItems(value: ArrayCollection<any> | any[]) {
         if (!value || this._selectedItems == value) return;
+        if(!(value instanceof Array) && !(value instanceof ArrayCollection)) {
+            console.error('selectedItems type error, selectedItems support Array and ArrayCollection');
+            return;
+        }
         this._selectedItems = value;
         if (value instanceof ArrayCollection) {
             if (this._removeSelectedArrayCallbackListener) {
@@ -175,7 +181,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     public _$targetSelectedItems: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
 
     private _filterDataBySelectedItems() {
-        this._data.filter(this._filterFunction, {selectedItems: this.selectedItems, trackItemBy: this.trackItemBy});
+        this._data.filter(this._filterFunction, {selectedItems: this.selectedItems.concat(), trackItemBy: this.trackItemBy});
     }
 
     /**
@@ -183,11 +189,11 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
      *
      * data和selectedItems不和list里数据双绑，list里面要做一些转换
      *
-     * @param {string} frame
+     * @param {string} from
      * @private
      */
-    public _$transferTo(frame: string) {
-        if (frame == 'target') {
+    public _$transferTo(from: string) {
+        if (from == 'target') {
             if (!this._$sourceSelectedItems || !this._$sourceSelectedItems.length) return;
             this.selectedItems = this.selectedItems ? this.selectedItems : [];
             this.selectedItems.push(...this._$sourceSelectedItems);
@@ -197,7 +203,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
             }
             this._$sourceSelectedItems = [];
         }
-        if (frame == 'source') {
+        if (from == 'source') {
             if (!this._$targetSelectedItems || !this._$targetSelectedItems.length) return;
             this.selectedItems = this.selectedItems.filter(item =>
                 !this._$targetSelectedItems.some(i => CommonUtils.compareWithKeyProperty(item, i, <string[]>this.trackItemBy)));
@@ -210,6 +216,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     }
 
     ngOnDestroy() {
+        super.ngOnDestroy();
         if (this._removePageableCallbackListener) {
             this._removePageableCallbackListener();
             this._removePageableCallbackListener = null;
@@ -221,6 +228,10 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
         if (this._removeSelectedArrayCallbackListener) {
             this._removeSelectedArrayCallbackListener();
             this._removeSelectedArrayCallbackListener = null;
+        }
+        this.data && (<ArrayCollection<any>>this.data).destroy();
+        if(this.selectedItems instanceof ArrayCollection) {
+            this.selectedItems.destroy();
         }
     }
 }
@@ -268,9 +279,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
                 if (this._removeArrayCallbackListener) {
                     this._removeArrayCallbackListener();
                 }
-                this._removeArrayCallbackListener = value.onAjaxSuccess(res => {
-                    this._updateData(res);
-                })
+                this._removeArrayCallbackListener = value.onAjaxSuccess(this._updateData, this);
             }
         }
     }
@@ -324,7 +333,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
         }
 
         this._data.filter(this._filterFunction, {
-            selectedItems: this.isTarget ? null : this._transfer.selectedItems,
+            selectedItems: this.isTarget ? null : this._transfer.selectedItems.concat(),
             trackItemBy: this._transfer.trackItemBy,
             keyword: filterKey,
             fields: [field]
@@ -335,7 +344,8 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
      * @internal
      */
     public _$handleHeadSelect($event) {
-        this.selectedItems = $event ? this.data : [];
+        if(!$event && (!this.selectedItems || !this.selectedItems.length)) return;
+        this.selectedItems = $event ? this.data.concat() : [];
         this.selectedItemsChange.emit(this.selectedItems);
     }
 
@@ -348,6 +358,10 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
         if (this._removeArrayCallbackListener) {
             this._removeArrayCallbackListener();
             this._removeArrayCallbackListener = null;
+        }
+        this.data && this.data.destroy();
+        if(this.selectedItems instanceof ArrayCollection) {
+            this.selectedItems.destroy();
         }
     }
 }

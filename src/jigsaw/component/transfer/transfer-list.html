@@ -29,5 +29,5 @@
     </div>
 </div>
 <div class="jigsaw-transfer-foot">
-    <j-pagination [data]="data" mode="simple"></j-pagination>
+    <j-pagination [data]="data" mode="simple" (currentChange)="_$handleHeadSelect(false)"></j-pagination>
 </div>
