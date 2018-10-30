@@ -200,7 +200,8 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * @internal
      */
     public _$pagePrev(): void {
-        if(this.mode == 'simple') {
+        if (this.mode == 'simple') {
+            if (this.current == 1) return;
             this.current--;
         } else {
             let pageCur = this._pages.find(page => page.current == true);
@@ -219,7 +220,8 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * @internal
      */
     public _$pageNext(): void {
-        if(this.mode == 'simple') {
+        if (this.mode == 'simple') {
+            if (this.current == this._$totalPage) return;
             this.current++;
         } else {
             let pageCur = this._pages.find(page => page.current == true);
@@ -316,7 +318,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     private _goto(pageNum): void {
         pageNum = parseInt(pageNum);
         if (pageNum <= this._$totalPage && pageNum >= 1) {
-            if(this.mode != 'simple') {
+            if (this.mode != 'simple') {
                 this._pages.find(page => page.current == true).cancelCurrent();
                 this._pages.find(page => page.pageNumber == pageNum).setCurrent();
             }
@@ -365,8 +367,8 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     }
 
     public reset() {
-        if(!this.inputs) return;
-        this.inputs.forEach(input => input.value='');
+        if (!this.inputs) return;
+        this.inputs.forEach(input => input.value = '');
     }
 
     ngOnInit() {
