@@ -22,7 +22,7 @@ export class AjaxInterceptor implements HttpInterceptor {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (AjaxInterceptor._usingRealRDK && req.url.match(/^\/rdk\/service\/.+/)) {
+        if (AjaxInterceptor._usingRealRDK && req.url.match(/\/rdk\/service\/.+/)) {
             return next.handle(req)
         }
 
