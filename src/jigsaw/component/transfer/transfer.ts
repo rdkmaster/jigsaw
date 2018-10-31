@@ -182,6 +182,17 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     public _$targetSelectedItems: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
 
     private _filterDataBySelectedItems() {
+        if(this._data.busy) {
+            const removeAjaxCallback = this._data.onAjaxComplete(() => {
+                removeAjaxCallback();
+                this._filterData();
+            })
+        } else {
+            this._filterData();
+        }
+    }
+
+    private _filterData() {
         this._data.filter(this._filterFunction, {selectedItems: [].concat(...this.selectedItems), trackItemBy: this.trackItemBy});
     }
 
@@ -359,13 +370,26 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
         if (this._data instanceof PageableArray && this._data.length && typeof this._data[0] == 'object') {
             field = Object.keys(this._data[0]).findIndex(k => k === this.labelField);
         }
+        if(this._data.busy) {
+            const removeAjaxCallback = this._data.onAjaxComplete(() => {
+                removeAjaxCallback();
+                this._filterData(filterKey, field);
+            })
+        } else {
+            this._filterData(filterKey, field);
+        }
+    }
 
-        this._data.filter(this._filterFunction, {
-            selectedItems: this.isTarget ? null : this._transfer.selectedItems.concat(),
-            trackItemBy: this._transfer.trackItemBy,
-            keyword: filterKey,
-            fields: [field]
-        });
+    private _filterData(filterKey: string, field: string | number) {
+        setTimeout(() => {
+            // 触发变更检查
+            this._data.filter(this._filterFunction, {
+                selectedItems: this.isTarget ? null : [].concat(...this._transfer.selectedItems),
+                trackItemBy: this._transfer.trackItemBy,
+                keyword: filterKey,
+                fields: [field]
+            });
+        })
     }
 
     /**
