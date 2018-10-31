@@ -182,7 +182,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     public _$targetSelectedItems: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
 
     private _filterDataBySelectedItems() {
-        this._data.filter(this._filterFunction, {selectedItems: this.selectedItems.concat(), trackItemBy: this.trackItemBy});
+        this._data.filter(this._filterFunction, {selectedItems: [].concat(...this.selectedItems), trackItemBy: this.trackItemBy});
     }
 
     /**

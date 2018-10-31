@@ -57,7 +57,7 @@ export class AjaxInterceptor implements HttpInterceptor {
 
     getParamValue(req: HttpRequest<any>, params: string, key: string): any {
         const p = req[params];
-        return req.method.toLowerCase() == 'post' ? p[key] : p.get(key);
+        return req.method.toLowerCase() == 'post' ? p[key] : (p.get(key) && p.get(key).trim().match(/^{[\s\S]*}$/) ? JSON.parse(p.get(key)) : p.get(key));
     }
 
     createResult(body: any, url: string): Observable<HttpEvent<any>> {
