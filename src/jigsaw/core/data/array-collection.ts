@@ -827,9 +827,9 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this.filterInfo = null;
         this.sortInfo = null;
         this._requestOptions = null;
-        this._filterSubject.unsubscribe();
+        this._filterSubject && this._filterSubject.unsubscribe();
         this._filterSubject = null;
-        this._sortSubject.unsubscribe();
+        this._sortSubject && this._sortSubject.unsubscribe();
         this._sortSubject = null;
     }
 }
@@ -1022,11 +1022,13 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
 
     public destroy() {
         super.destroy();
-        this._filterSubject.unsubscribe();
-        this._sortSubject.unsubscribe();
+        this._filterSubject && this._filterSubject.unsubscribe();
+        this._sortSubject && this._sortSubject.unsubscribe();
         this.pagingInfo && this.pagingInfo.unsubscribe();
         this._bakData = null;
         this.filteredData = null;
         this.pagingInfo = null;
+        this._filterSubject = null;
+        this._sortSubject = null;
     }
 }

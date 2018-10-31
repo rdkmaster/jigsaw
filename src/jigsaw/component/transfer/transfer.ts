@@ -12,6 +12,7 @@ import {InternalUtils} from "../../core/utils/internal-utils";
 import {Subscriber} from "rxjs/Subscriber";
 import {CommonModule} from "@angular/common";
 
+// 此处不能使用箭头函数
 const transferFilterFunction = function (item) {
     let listResult = true;
     let keyResult = true;
@@ -26,10 +27,10 @@ const transferFilterFunction = function (item) {
     return listResult && keyResult;
 };
 
-const transferServerFilterFunction = (item) => {
-    function compareWithKeyProperty(item1, item2, trackItemBy) {
+const transferServerFilterFunction = function (item) {
+    function compareWithKeyProperty(item1: any, item2: any, trackItemBy: string[]): boolean {
         if (trackItemBy && trackItemBy.length > 0) {
-            for (var i = 0; i < trackItemBy.length; i++) {
+            for (let i = 0; i < trackItemBy.length; i++) {
                 if (!item1 || !item2) {
                     // 过滤掉 typeof null == 'object'
                     return false;
@@ -53,15 +54,14 @@ const transferServerFilterFunction = (item) => {
         }
     }
 
-    var listResult = true;
-    var keyResult = true;
-    var _that = this;
+    let listResult = true;
+    let keyResult = true;
     if (this.selectedItems && this.selectedItems.length && typeof this.selectedItems[0] == 'object') {
         const itemJson = Object.create(null);
         Object.keys(this.selectedItems[0]).forEach((k, i) => {
             itemJson[k] = item[i];
         });
-        if(this.selectedItems.some(si => compareWithKeyProperty(itemJson, si, _that.trackItemBy))) {
+        if (this.selectedItems.some(si => compareWithKeyProperty(itemJson, si, this.trackItemBy))) {
             listResult = false;
         }
     }
@@ -71,7 +71,7 @@ const transferServerFilterFunction = (item) => {
         } else if (this.fields) {
             keyResult = (<any[]>this.fields).find(field => {
                 const value: string = !item || item[field] === undefined || item[field] === null ? '' : item[field].toString();
-                return value.toLowerCase().includes(_that.keyword.toLowerCase())
+                return value.toLowerCase().includes(this.keyword.toLowerCase())
             })
         } else {
             keyResult = false
@@ -111,7 +111,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
                 // 等待输入属性初始化
                 this._filterDataBySelectedItems();
             });
-            if(value instanceof LocalPageableArray) {
+            if (value instanceof LocalPageableArray) {
                 if (this._removePageableCallbackListener) {
                     this._removePageableCallbackListener();
                 }
@@ -151,7 +151,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
 
     public set selectedItems(value: ArrayCollection<any> | any[]) {
         if (!value || this._selectedItems == value) return;
-        if(!(value instanceof Array) && !(value instanceof ArrayCollection)) {
+        if (!(value instanceof Array) && !(value instanceof ArrayCollection)) {
             console.error('selectedItems type error, selectedItems support Array and ArrayCollection');
             return;
         }
@@ -231,7 +231,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
             this._removeSelectedArrayCallbackListener = null;
         }
         this.data && (<ArrayCollection<any>>this.data).destroy();
-        if(this.selectedItems instanceof ArrayCollection) {
+        if (this.selectedItems instanceof ArrayCollection) {
             this.selectedItems.destroy();
         }
     }
@@ -336,7 +336,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
     public _$handleSearching(filterKey?: string) {
         filterKey = filterKey ? filterKey.trim() : '';
         let field: string | number = this.labelField;
-        if(this._data instanceof PageableArray && this._data.length && typeof this._data[0] == 'object') {
+        if (this._data instanceof PageableArray && this._data.length && typeof this._data[0] == 'object') {
             field = Object.keys(this._data[0]).findIndex(k => k === this.labelField);
         }
 
@@ -352,7 +352,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
      * @internal
      */
     public _$handleHeadSelect($event) {
-        if(!$event && (!this.selectedItems || !this.selectedItems.length)) return;
+        if (!$event && (!this.selectedItems || !this.selectedItems.length)) return;
         this.selectedItems = $event ? this.data.concat() : [];
         this.selectedItemsChange.emit(this.selectedItems);
     }
@@ -368,7 +368,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
             this._removeArrayCallbackListener = null;
         }
         this.data && this.data.destroy();
-        if(this.selectedItems instanceof ArrayCollection) {
+        if (this.selectedItems instanceof ArrayCollection) {
             this.selectedItems.destroy();
         }
     }
