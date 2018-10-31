@@ -1,0 +1,98 @@
+@import "../../assets/scss/core/base";
+
+$transfer-prefix-cls: #{$jigsaw-prefix}-transfer;
+$list-prefix-cls: #{$jigsaw-prefix}-list;
+
+.#{$transfer-prefix-cls} {
+    display: inline-block;
+    width: 400px;
+    height: 200px;
+    &-wrapper {
+        display: flex;
+        flex: 1 1 0;
+        width: 100%;
+        height: 100%;
+    }
+    &-box {
+        border: 1px solid $border-color-base;
+        border-radius: $border-radius-base;
+        flex: 1 1 0;
+    }
+    &-option-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    &-option-bar {
+        border: 1px solid $primary-color;
+        background: $primary-color;
+        color: $text-color-of-bg;
+        border-radius: $border-radius-base;
+        margin: 0 8px 4px;
+        padding: 2px 12px;
+        font-size: 12px;
+        &:hover {
+            background: $primary-7;
+            color: $text-color-of-bg;
+        }
+        &:active {
+            background: $primary-8;
+            color: $text-color-of-bg;
+        }
+    }
+    &-option-disabled {
+        cursor: not-allowed;
+        @include compatible(color, $disabled-color, $disabled-color-ie11);
+        border: 1px solid $border-color-base;
+        background: $disabled-bg;
+        color: $text-color-secondary;
+        &:hover, &:active {
+            background: $disabled-bg;
+            color: $text-color-secondary;
+        }
+    }
+    &-head {
+        position: relative;
+        height: 32px;
+        padding: 0 4px;
+        border-bottom: 1px solid $border-color-base;
+        &:before {
+            content: '';
+            display: inline-block;
+            vertical-align: middle;
+            height: 100%;
+        }
+    }
+    &-list-wrapper {
+        .#{$list-prefix-cls} {
+            border: none;
+        }
+    }
+    &-search-wrapper {
+        padding: 4px;
+    }
+    &-middle-title {
+        vertical-align: middle;
+        margin-left: 4px;
+    }
+    &-right-title {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+    }
+    &-list-frame {
+        display: block;
+        height: 100%;
+    }
+    &-foot {
+        height: 28px;
+        text-align: center;
+        &:before {
+            content: '';
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+        }
+    }
+}
