@@ -1,3 +1,17 @@
+## v1.1.16 (2018-10-31)
+
+### 新特性 / New Features
+- 无
+
+### 破坏性修改 / Breaking Changes
+- 无
+
+###  优化 / Modified
+- 无
+
+### 修复 / Fixes
+- [修复] 修复在transfer中给pagination设置属性错误
+
 ## v1.1.15 (2018-10-31)
 
 ### 新特性 / New Features
