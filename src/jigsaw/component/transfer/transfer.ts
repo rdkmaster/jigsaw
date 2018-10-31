@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Input, NgModule, OnDestroy, Optional} from "@angular/core";
+import {Component, Input, NgModule, OnDestroy, Optional} from "@angular/core";
 import {JigsawListModule} from "../list-and-tile/list";
 import {JigsawCheckBoxModule} from "../checkbox/index";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "../../core/data/array-collection";
@@ -252,26 +252,8 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
         })
     }
 
-    private _filterFunction: (item: any) => boolean;
-
-    /**
-     * @internal
-     */
-    public _$currentPageSelectedItems: any[] | ArrayCollection<any>;
-
-    /**
-     * @internal
-     * @type {number}
-     * @private
-     */
-    public _$infinity = Infinity;
-
     @Input()
     public isTarget: boolean;
-
-    public get _$trackByFn() {
-        return InternalUtils.trackByFn(this.trackItemBy);
-    };
 
     private _data: LocalPageableArray<GroupOptionValue> | PageableArray;
 
@@ -303,7 +285,40 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
         }
     }
 
+    @Input()
+    public subLabelField: string;
+
+    @Input()
+    public trackItemBy: string | string[];
+
+    @Input()
+    public searchable: boolean;
+
+    private _removeHostSubscribe: Subscriber<any>;
+    private _filterFunction: (item: any) => boolean;
     private _removeArrayCallbackListener: CallbackRemoval;
+
+    /**
+     * @internal
+     */
+    public _$searchKey: string;
+
+    /**
+     * @internal
+     */
+    public _$currentPageSelectedItems: any[] | ArrayCollection<any>;
+
+    /**
+     * @internal
+     */
+    public _$infinity = Infinity;
+
+    /**
+     * @internal
+     */
+    public get _$trackByFn() {
+        return InternalUtils.trackByFn(this.trackItemBy);
+    };
 
     /**
      * 这边把transfer过来的数组转成分页数据，中间变量data主要用于消除数据闪动
@@ -334,19 +349,6 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
             this._data.refresh();
         })
     }
-
-    @Input()
-    public subLabelField: string;
-
-    @Input()
-    public trackItemBy: string | string[];
-
-    @Input()
-    public searchable: boolean;
-
-    public _$searchKey: string;
-
-    private _removeHostSubscribe: Subscriber<any>;
 
     /**
      * @internal
