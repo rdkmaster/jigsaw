@@ -5,7 +5,7 @@ import {ArrayCollection, LocalPageableArray, PageableArray} from "../../core/dat
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {JigsawInputModule} from "../input/input";
 import {GroupOptionValue} from "../list-and-tile/group-common";
-import {AbstractJigsawGroupLiteComponent} from "jigsaw/component/list-and-tile/group-lite-common";
+import {AbstractJigsawGroupLiteComponent} from "../list-and-tile/group-lite-common";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {JigsawPaginationModule} from "../pagination/pagination";
 import {InternalUtils} from "../../core/utils/internal-utils";
