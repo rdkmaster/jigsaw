@@ -107,7 +107,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
         if ((value instanceof LocalPageableArray || value instanceof PageableArray) && value.pagingInfo) {
             this._data = value;
             this._filterFunction = value instanceof LocalPageableArray ? transferFilterFunction : transferServerFilterFunction;
-            setTimeout(() => {
+            this.callLater(() => {
                 // 等待输入属性初始化
                 this._filterDataBySelectedItems();
             });
@@ -124,7 +124,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
             this._data.pagingInfo.pageSize = Infinity;
             this._data.fromArray(value);
             this._filterFunction = transferFilterFunction;
-            setTimeout(() => {
+            this.callLater(() => {
                 // 等待输入属性初始化
                 this._filterDataBySelectedItems();
             });
@@ -160,9 +160,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
             if (this._removeSelectedArrayCallbackListener) {
                 this._removeSelectedArrayCallbackListener();
             }
-            this._removeSelectedArrayCallbackListener = value.onAjaxComplete(() => {
-                this._filterDataBySelectedItems();
-            })
+            this._removeSelectedArrayCallbackListener = value.onAjaxComplete(this._filterDataBySelectedItems, this);
         }
     }
 
@@ -241,7 +239,9 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
             this._removeSelectedArrayCallbackListener();
             this._removeSelectedArrayCallbackListener = null;
         }
-        this.data && (<ArrayCollection<any>>this.data).destroy();
+        if (this.data) {
+            (<ArrayCollection<any>>this.data).destroy();
+        }
         if (this.selectedItems instanceof ArrayCollection) {
             this.selectedItems.destroy();
         }
@@ -355,7 +355,6 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
                     this.selectedItems = this.selectedItems.concat();
                     this._$updateCurrentPageSelectedItems();
                 }
-
             });
             this._data.refresh();
         })
@@ -381,7 +380,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
     }
 
     private _filterData(filterKey: string, field: string | number) {
-        setTimeout(() => {
+        this.callLater(() => {
             // 触发变更检查
             this._data.filter(this._filterFunction, {
                 selectedItems: this.isTarget ? null : [].concat(...this._transfer.selectedItems),
@@ -394,17 +393,21 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
 
     /**
      * @internal
+     *
+     * 这里有几个需要注意的地方：
+     * - this.data.concat() 不仅为了浅拷贝数据，当this.data是分页数据的时候，还有一个目的是为了取出this.data的当前页数据
+     * - 在过滤选中的条目是直接用了`item.disabled`，在item的类型是字符串时，也没问题，因为字符串的时候，`item.disabled`必然是false
      */
-    public _$handleHeadSelect($event) {
-        this._$currentPageSelectedItems = $event ? this.data.concat() : [];
+    public _$handleHeadSelect(checked) {
+        this._$currentPageSelectedItems = checked ? this.data.concat().filter(item => !item.disabled) : [];
         this.selectedItems = this.selectedItems ? this.selectedItems : [];
-        if ($event) {
+        if (checked) {
             this.selectedItems.push(...this.data.concat().filter(item =>
-                !this.selectedItems.some(it => CommonUtils.compareWithKeyProperty(it, item, <string[]>this.trackItemBy))));
+                !item.disabled && !this.selectedItems.some(it => CommonUtils.compareWithKeyProperty(it, item, <string[]>this.trackItemBy))));
             this.selectedItems = this.selectedItems.concat();
         } else {
             this.selectedItems = this.selectedItems.filter(item =>
-                !(<any[]>this.data).some(it => CommonUtils.compareWithKeyProperty(it, item, <string[]>this.trackItemBy)))
+                !item.disabled && !(<any[]>this.data).some(it => CommonUtils.compareWithKeyProperty(it, item, <string[]>this.trackItemBy)))
         }
         this.selectedItemsChange.emit(this.selectedItems);
     }
@@ -413,7 +416,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
      * @internal
      */
     public _$updateCurrentPageSelectedItems() {
-        setTimeout(() => {
+        this.callLater(() => {
             // 初始化时触发变更检查
             this.selectedItems = this.selectedItems ? this.selectedItems : [];
             if (this.data && this.data.pagingInfo && this.data.pagingInfo.pageSize != Infinity) {
@@ -450,7 +453,9 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
             this._removeArrayCallbackListener();
             this._removeArrayCallbackListener = null;
         }
-        this.data && this.data.destroy();
+        if (this.data) {
+            this.data.destroy();
+        }
         if (this.selectedItems instanceof ArrayCollection) {
             this.selectedItems.destroy();
         }
@@ -463,5 +468,4 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
     exports: [JigsawTransfer]
 })
 export class JigsawTransferModule {
-
 }

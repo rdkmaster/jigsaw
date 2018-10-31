@@ -2,9 +2,9 @@
     <j-checkbox [checked]="_$currentPageSelectedItems && _$currentPageSelectedItems.length ? (_$currentPageSelectedItems.length == data.length ? 1 : 2) : 0"
                 (checkedChange)="_$handleHeadSelect($event)"></j-checkbox>
     <span class="jigsaw-transfer-middle-title">
-        {{_$currentPageSelectedItems ? _$currentPageSelectedItems.length : 0}}/{{data ? data.length : 0}}项</span>
+        {{_$currentPageSelectedItems ? _$currentPageSelectedItems.length : 0}} / {{data ? data.length : 0}} 项</span>
     <span class="jigsaw-transfer-right-title" *ngIf="data && data.pagingInfo && data.pagingInfo.pageSize != _$infinity">
-        共 {{selectedItems ? selectedItems.length : 0}}/{{data && data.pagingInfo ? data.pagingInfo.totalRecord : 0}} 项
+        共 {{selectedItems ? selectedItems.length : 0}} / {{data && data.pagingInfo ? data.pagingInfo.totalRecord : 0}} 项
     </span>
 </div>
 <div class="jigsaw-transfer-list-box" [style.height]="data && data.pagingInfo && data.pagingInfo.pageSize != _$infinity ? 'calc(100% - 60px)' : 'calc(100% - 32px)'">

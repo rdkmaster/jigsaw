@@ -17,7 +17,7 @@ export class TransferPageableArrayComponent {
         this.selectedCountries = new ArrayCollection();
         this.selectedCountries.http = _http;
         this.selectedCountries.fromAjax('/rdk/service/app/example/server/my_service');
-        this.selectedCountries.dataReviser = (td: TableData) => TableData.toArray(td).slice(0,5);
+        this.selectedCountries.dataReviser = (td: TableData) => TableData.toArray(td).slice(10,15);
     }
 
     data: PageableArray;
