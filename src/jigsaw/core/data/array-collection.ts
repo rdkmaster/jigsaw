@@ -7,14 +7,21 @@ import {Subscription} from "rxjs/Subscription";
 
 import {
     ComponentDataHelper,
-    DataReviser,
-    IAjaxComponentData, IFilterable,
-    IPageable, ISortable,
-    PagingInfo,
     DataFilterInfo,
+    DataReviser,
     DataSortInfo,
+    HttpClientOptions,
+    IAjaxComponentData,
+    IEmittable,
+    IFilterable,
+    IPageable,
+    IServerSidePageable,
+    ISortable,
+    PagingInfo,
+    PreparedHttpClientOptions,
     SortAs,
-    SortOrder, IServerSidePageable, HttpClientOptions, IEmittable, serializeFilterFunction
+    SortOrder,
+    serializeFilterFunction
 } from "./component-data";
 
 import {TableData} from "./table-data";
@@ -619,7 +626,6 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
 
     private _filterSubject = new Subject<DataFilterInfo>();
     private _sortSubject = new Subject<DataSortInfo>();
-    private _requestOptions: HttpClientOptions;
 
     constructor(public http: HttpClient, requestOptionsOrUrl: HttpClientOptions | string) {
         super();
@@ -634,21 +640,7 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         });
         this.sourceRequestOptions = typeof requestOptionsOrUrl === 'string' ? {url: requestOptionsOrUrl} : requestOptionsOrUrl;
 
-        this._initRequestOptions();
         this._initSubjects();
-    }
-
-    private _initRequestOptions(): void {
-        this._requestOptions = HttpClientOptions.prepare(this.sourceRequestOptions);
-        if (!this._requestOptions) {
-            return;
-        }
-
-        const originParams = this.sourceRequestOptions.params;
-        const peerParams = CommonUtils.isDefined(originParams) ? CommonUtils.shallowCopy(originParams) : {};
-        this._requestOptions.params = {};
-        this._requestOptions.params.peerParam = peerParams;
-        this._requestOptions.params.service = this.sourceRequestOptions.url;
     }
 
     private _initSubjects(): void {
@@ -673,7 +665,6 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this.pagingInfo.totalRecord = 0;
         this.filterInfo = null;
         this.sortInfo = null;
-        this._initRequestOptions();
     }
 
     public fromAjax(url?: string): void;
@@ -695,19 +686,38 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
             this.ajaxErrorHandler(null);
             return;
         }
+        const options = HttpClientOptions.prepare(this.sourceRequestOptions);
+        if (!options) {
+            console.error('invalid source request options, use updateDataSource() to reset the option.');
+            return;
+        }
 
+        this._busy = true;
         this.ajaxStartHandler();
 
-        const params: any = this._requestOptions.params;
-        params.paging = this.pagingInfo.valueOf();
-        if (this.filterInfo) {
-            params.filter = this.filterInfo;
+        const method = this.sourceRequestOptions.method ? this.sourceRequestOptions.method.toLowerCase() : 'get';
+        const paramProperty = method == 'get' ? 'params' : 'body';
+        let originParams = this.sourceRequestOptions[paramProperty];
+
+        delete options.params;
+        delete options.body;
+        options[paramProperty] = {
+            service: options.url, paging: this.pagingInfo.valueOf()
+        };
+        if (CommonUtils.isDefined(originParams)) {
+            options[paramProperty].peerParam = originParams;
         }
-        if (this.sortInfo) {
-            params.sort = this.sortInfo;
+        if (CommonUtils.isDefined(this.filterInfo)) {
+            options[paramProperty].filter = this.filterInfo;
+        }
+        if (CommonUtils.isDefined(this.sortInfo)) {
+            options[paramProperty].sortInfo = this.sortInfo;
+        }
+        if (paramProperty == 'params') {
+            options.params = PreparedHttpClientOptions.prepareParams(options.params)
         }
 
-        this.http.request(this._requestOptions.method, PagingInfo.pagingServerUrl, this._requestOptions)
+        this.http.request(options.method, PagingInfo.pagingServerUrl, options)
             .map(res => this.reviseData(res))
             .map(data => {
                 this._updatePagingInfo(data);
@@ -826,7 +836,6 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this.pagingInfo = null;
         this.filterInfo = null;
         this.sortInfo = null;
-        this._requestOptions = null;
         this._filterSubject && this._filterSubject.unsubscribe();
         this._filterSubject = null;
         this._sortSubject && this._sortSubject.unsubscribe();

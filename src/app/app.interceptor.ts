@@ -8,6 +8,7 @@ import {PagingInfo} from "../jigsaw/core/data/component-data";
 @Injectable()
 export class AjaxInterceptor implements HttpInterceptor {
 
+    private static _usingRealRDK: boolean = false;
     private static _processors: any[] = [];
 
     public static registerProcessor(urlPattern: RegExp | string, processor: (req: HttpRequest<any>) => any, context?: any) {
@@ -21,6 +22,10 @@ export class AjaxInterceptor implements HttpInterceptor {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        if (AjaxInterceptor._usingRealRDK && req.url.match(/\/rdk\/service\/.+/)) {
+            return next.handle(req)
+        }
+
         console.log('the ajax request is intercepted, here is the original request:');
         console.log(req);
 
@@ -68,9 +73,9 @@ export class AjaxInterceptor implements HttpInterceptor {
                 } else {
                     subscriber.error({
                         error: '<!DOCTYPE html>\n' +
-                        '<html lang="en">\n<head>\n<meta charset="utf-8">\n' +
-                        '<title>Error</title>\n</head>\n<body>\n' +
-                        '<pre>Cannot GET ' + url + '</pre>\n</body>\n</html>\n',
+                            '<html lang="en">\n<head>\n<meta charset="utf-8">\n' +
+                            '<title>Error</title>\n</head>\n<body>\n' +
+                            '<pre>Cannot GET ' + url + '</pre>\n</body>\n</html>\n',
                         headers: new HttpHeaders(), name: "HttpErrorResponse",
                         message: "ajax interceptor can not find data for " + url,
                         ok: false, status: 404, statusText: "Not Found", url: url
