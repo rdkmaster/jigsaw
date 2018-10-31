@@ -23,7 +23,7 @@ export class TransferArrayDemoComponent {
     selectedCountries: ArrayCollection<any>;
     selectedCountriesStr: string;
 
-    handleSelectChange($event, index) {
+    handleSelectChange($event) {
         this.selectedCountriesStr = $event.map(item => item.zhName).join(',');
     }
 
