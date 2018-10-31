@@ -50,11 +50,11 @@ export class AjaxInterceptor implements HttpInterceptor {
         const params = req.method.toLowerCase() == 'post' ? 'body' : 'params';
         const service = this.getParamValue(req, params, 'service');
         let paging = this.getParamValue(req, params, 'paging') ? this.getParamValue(req, params, 'paging') : null;
-        paging = typeof paging === 'string' ? JSON.stringify(paging) : paging;
+        paging = typeof paging === 'string' ? JSON.parse(paging) : paging;
         let filter = this.getParamValue(req, params, 'filter') ? this.getParamValue(req, params, 'filter') : null;
-        filter = typeof filter === 'string' ? JSON.stringify(filter) : filter;
+        filter = typeof filter === 'string' ? JSON.parse(filter) : filter;
         let sort = this.getParamValue(req, params, 'sort') ? this.getParamValue(req, params, 'sort') : null;
-        sort = typeof sort === 'string' ? JSON.stringify(sort) : sort;
+        sort = typeof sort === 'string' ? JSON.parse(sort) : sort;
         return PageableData.get({service, paging, filter, sort});
     }
 
