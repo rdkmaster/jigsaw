@@ -53,6 +53,7 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
         }
     }
     &-head {
+        position: relative;
         height: 32px;
         padding: 0 4px;
         border-bottom: 1px solid $border-color-base;
@@ -74,6 +75,11 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
     &-middle-title {
         vertical-align: middle;
         margin-left: 4px;
+    }
+    &-right-title {
+        position: absolute;
+        top: 8px;
+        right: 8px;
     }
     &-list-frame {
         display: block;

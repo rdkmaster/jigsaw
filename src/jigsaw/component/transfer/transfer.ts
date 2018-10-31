@@ -1,4 +1,4 @@
-import {Component, Input, NgModule, OnDestroy, Optional} from "@angular/core";
+import {ChangeDetectorRef, Component, Input, NgModule, OnDestroy, Optional} from "@angular/core";
 import {JigsawListModule} from "../list-and-tile/list";
 import {JigsawCheckBoxModule} from "../checkbox/index";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "../../core/data/array-collection";
@@ -256,6 +256,11 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
 
     /**
      * @internal
+     */
+    public _$currentPageSelectedItems: any[] | ArrayCollection<any>;
+
+    /**
+     * @internal
      * @type {number}
      * @private
      */
@@ -279,6 +284,12 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
         if (!value || this._data == value) return;
         if ((value instanceof LocalPageableArray || value instanceof PageableArray) && value.pagingInfo) {
             this._data = value;
+            (<LocalPageableArray<any>>this._data).onRefresh(() => {
+                if (this.selectedItems) {
+                    this.selectedItems = this.selectedItems.concat();
+                    this._$updateCurrentPageSelectedItems();
+                }
+            });
             this._filterFunction = value instanceof LocalPageableArray ? transferFilterFunction : transferServerFilterFunction;
         } else if (value instanceof Array || value instanceof ArrayCollection) {
             this._filterFunction = transferFilterFunction;
@@ -313,6 +324,13 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
             removeDataOnRefresh();
             this._data = data;
             // 用于刷新分页
+            this._data.onRefresh(() => {
+                if (this.selectedItems) {
+                    this.selectedItems = this.selectedItems.concat();
+                    this._$updateCurrentPageSelectedItems();
+                }
+
+            });
             this._data.refresh();
         })
     }
@@ -352,8 +370,47 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
      * @internal
      */
     public _$handleHeadSelect($event) {
-        if (!$event && (!this.selectedItems || !this.selectedItems.length)) return;
-        this.selectedItems = $event ? this.data.concat() : [];
+        this._$currentPageSelectedItems = $event ? this.data.concat() : [];
+        this.selectedItems = this.selectedItems ? this.selectedItems : [];
+        if ($event) {
+            this.selectedItems.push(...this.data.concat().filter(item =>
+                !this.selectedItems.some(it => CommonUtils.compareWithKeyProperty(it, item, <string[]>this.trackItemBy))));
+            this.selectedItems = this.selectedItems.concat();
+        } else {
+            this.selectedItems = this.selectedItems.filter(item =>
+                !(<any[]>this.data).some(it => CommonUtils.compareWithKeyProperty(it, item, <string[]>this.trackItemBy)))
+        }
+        this.selectedItemsChange.emit(this.selectedItems);
+    }
+
+    /**
+     * @internal
+     */
+    public _$updateCurrentPageSelectedItems() {
+        setTimeout(() => {
+            // 初始化时触发变更检查
+            this.selectedItems = this.selectedItems ? this.selectedItems : [];
+            if (this.data && this.data.pagingInfo && this.data.pagingInfo.pageSize != Infinity) {
+                this._$currentPageSelectedItems = this.selectedItems.filter(item => (<any[]>this.data).some(it =>
+                    CommonUtils.compareWithKeyProperty(it, item, <string[]>this.trackItemBy)));
+            } else {
+                this._$currentPageSelectedItems = this.selectedItems;
+            }
+        });
+    }
+
+    /**
+     * @internal
+     */
+    public _$updateSelectedItemsByCurrent() {
+        this._$currentPageSelectedItems = this._$currentPageSelectedItems ? this._$currentPageSelectedItems : [];
+        this.selectedItems = this.selectedItems ? this.selectedItems : [];
+        this.selectedItems.push(...this._$currentPageSelectedItems.filter(item =>
+            !this.selectedItems.some(it => CommonUtils.compareWithKeyProperty(item, it, <string[]>this.trackItemBy))));
+        const currentUnselectedItems = this.data.concat().filter(item =>
+            !this._$currentPageSelectedItems.some(it => CommonUtils.compareWithKeyProperty(item, it, <string[]>this.trackItemBy)));
+        this.selectedItems = this.selectedItems.filter(item =>
+            !currentUnselectedItems.some(it => CommonUtils.compareWithKeyProperty(item, it, <string[]>this.trackItemBy)));
         this.selectedItemsChange.emit(this.selectedItems);
     }
 
@@ -373,7 +430,6 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
         }
     }
 }
-
 
 @NgModule({
     imports: [JigsawListModule, JigsawCheckBoxModule, PerfectScrollbarModule, JigsawInputModule, JigsawPaginationModule, CommonModule],
