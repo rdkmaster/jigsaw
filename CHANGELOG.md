@@ -1,3 +1,32 @@
+## v1.1.15 (2018-10-31)
+
+### 新特性 / New Features
+- [新增] 新增穿梭（Transfer）组件，支持大数据量的呈现和选择
+- [新增] 给jigsaw-list-lite添加invalid属性
+- [新增] ButtonBar支持多选;只有一个选项时的圆角问题
+- [新增] tree中增加选中节点的函数，以解决awade的调试界面代码框和树节点选中的不一致
+- [新增] 分页组件增加mode属性，用于让分页支持精简版布局
+- [新增] input添加password属性
+- [新增] trusted-html支持复杂的多级属性下的函数
+- [新增] 增加内置表格下拉选择单元格渲染器
+- [新增] 实现了LocalPageableArray的分页功能、排序功能，优化了list-lite的搜索
+- [新增] 添加jigsaw-textarea组件 (#777)
+- [新增] 服务端分页功能支持自定义函数过滤
+
+### 破坏性修改 / Breaking Changes
+- 无
+
+###  优化 / Modified
+- [优化]upload控件在上传失败时给出tooltip失败原因
+- [优化] trusted-html指令支持在多级属性时自动处理好上下文
+- [优化] trusted-html指令支持在多级属性时自动处理好上下文
+- [优化] 优化upload的布局，使用div替代j-box
+
+### 修复 / Fixes
+- [修复] 数据对象在处理ajax请求时，误将json对象转为json字符串，导致服务端解析失败
+- [修复] PageableTable和PageableArray对齐rdk新版paging服务，取数据的HTTP方法与数据源的HTTP方法保持一致
+- [修复] 分页下一页按钮的bug问题
+
 ## v1.1.14 (2018-10-16)
 
 ### 新特性 / New Features
