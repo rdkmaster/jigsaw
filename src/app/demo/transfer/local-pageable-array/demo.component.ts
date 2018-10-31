@@ -10,6 +10,7 @@ export class TransferLocalPageableArrayComponent {
     constructor(private _http: HttpClient) {
         this.data = new LocalPageableArray();
         this.data.http = _http;
+        this.data.pagingInfo.pageSize = 15;
         this.data.fromAjax('mock-data/countries');
         this.data.dataReviser = (td: TableData) => TableData.toArray(td);
 

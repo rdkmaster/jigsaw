@@ -8,12 +8,15 @@ import {TableData} from "jigsaw/core/data/table-data";
 })
 export class TransferPageableArrayComponent {
     constructor(private _http: HttpClient) {
-        this.data = new PageableArray(_http, 'mock-data/countries');
+        this.data = new PageableArray(_http, {
+            url: '/rdk/service/app/example/server/my_service',
+            method: 'post'
+        });
         this.data.fromAjax();
 
         this.selectedCountries = new ArrayCollection();
         this.selectedCountries.http = _http;
-        this.selectedCountries.fromAjax('mock-data/countries');
+        this.selectedCountries.fromAjax('/rdk/service/app/example/server/my_service');
         this.selectedCountries.dataReviser = (td: TableData) => TableData.toArray(td).slice(0,5);
     }
 

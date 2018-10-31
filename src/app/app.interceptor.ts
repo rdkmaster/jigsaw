@@ -8,7 +8,7 @@ import {PagingInfo} from "../jigsaw/core/data/component-data";
 @Injectable()
 export class AjaxInterceptor implements HttpInterceptor {
 
-    private static _usingRealRDK: boolean = false;
+    private static _usingRealRDK: boolean = true;
     private static _processors: any[] = [];
 
     public static registerProcessor(urlPattern: RegExp | string, processor: (req: HttpRequest<any>) => any, context?: any) {
@@ -49,15 +49,18 @@ export class AjaxInterceptor implements HttpInterceptor {
     dealServerSidePagingRequest(req: HttpRequest<any>): Observable<HttpEvent<any>> {
         const params = req.method.toLowerCase() == 'post' ? 'body' : 'params';
         const service = this.getParamValue(req, params, 'service');
-        const paging = this.getParamValue(req, params, 'paging') ? this.getParamValue(req, params, 'paging') : null;
-        const filter = this.getParamValue(req, params, 'filter') ? this.getParamValue(req, params, 'filter') : null;
-        const sort = this.getParamValue(req, params, 'sort') ? this.getParamValue(req, params, 'sort') : null;
+        let paging = this.getParamValue(req, params, 'paging') ? this.getParamValue(req, params, 'paging') : null;
+        paging = typeof paging === 'string' ? JSON.stringify(paging) : paging;
+        let filter = this.getParamValue(req, params, 'filter') ? this.getParamValue(req, params, 'filter') : null;
+        filter = typeof filter === 'string' ? JSON.stringify(filter) : filter;
+        let sort = this.getParamValue(req, params, 'sort') ? this.getParamValue(req, params, 'sort') : null;
+        sort = typeof sort === 'string' ? JSON.stringify(sort) : sort;
         return PageableData.get({service, paging, filter, sort});
     }
 
     getParamValue(req: HttpRequest<any>, params: string, key: string): any {
         const p = req[params];
-        return req.method.toLowerCase() == 'post' ? p[key] : (p.get(key) && p.get(key).trim().match(/^{[\s\S]*}$/) ? JSON.parse(p.get(key)) : p.get(key));
+        return req.method.toLowerCase() == 'post' ? p[key] : p.get(key);
     }
 
     createResult(body: any, url: string): Observable<HttpEvent<any>> {
