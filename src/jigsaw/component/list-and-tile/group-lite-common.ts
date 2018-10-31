@@ -22,7 +22,7 @@ export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent im
         if (this.data && (typeof this.data[0] == 'string' || typeof this.data[0] == 'number')) {
             this._trackItemBy = null;
         } else if (CommonUtils.isUndefined(this._trackItemBy) && this.data && typeof this.data[0] !== 'string') {
-            this._trackItemBy = this.labelField;
+            this._trackItemBy = [this.labelField];
         }
         return this._trackItemBy;
     }

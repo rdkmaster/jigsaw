@@ -8,7 +8,7 @@ import {PagingInfo} from "../jigsaw/core/data/component-data";
 @Injectable()
 export class AjaxInterceptor implements HttpInterceptor {
 
-    private static _usingRealRDK: boolean = false;
+    private static _usingRealRDK: boolean = true;
     private static _processors: any[] = [];
 
     public static registerProcessor(urlPattern: RegExp | string, processor: (req: HttpRequest<any>) => any, context?: any) {
@@ -49,9 +49,12 @@ export class AjaxInterceptor implements HttpInterceptor {
     dealServerSidePagingRequest(req: HttpRequest<any>): Observable<HttpEvent<any>> {
         const params = req.method.toLowerCase() == 'post' ? 'body' : 'params';
         const service = this.getParamValue(req, params, 'service');
-        const paging = this.getParamValue(req, params, 'paging') ? JSON.parse(this.getParamValue(req, params, 'paging')) : null;
-        const filter = this.getParamValue(req, params, 'filter') ? JSON.parse(this.getParamValue(req, params, 'filter')) : null;
-        const sort = this.getParamValue(req, params, 'sort') ? JSON.parse(this.getParamValue(req, params, 'sort')) : null;
+        let paging = this.getParamValue(req, params, 'paging') ? this.getParamValue(req, params, 'paging') : null;
+        paging = typeof paging === 'string' ? JSON.stringify(paging) : paging;
+        let filter = this.getParamValue(req, params, 'filter') ? this.getParamValue(req, params, 'filter') : null;
+        filter = typeof filter === 'string' ? JSON.stringify(filter) : filter;
+        let sort = this.getParamValue(req, params, 'sort') ? this.getParamValue(req, params, 'sort') : null;
+        sort = typeof sort === 'string' ? JSON.stringify(sort) : sort;
         return PageableData.get({service, paging, filter, sort});
     }
 
@@ -176,7 +179,7 @@ class PageableData {
     }
 
     private static _filter(dataTable, filter) {
-        return filter.hasOwnProperty('rawFunction') ?
+        return filter.hasOwnProperty('rawFunction') && !!filter.rawFunction ?
             this._filterWithFunction(dataTable.data, filter.rawFunction, filter.context) :
             this._filterWithKeyword(dataTable.data, filter.key, filter.field, dataTable.field);
     }
@@ -222,7 +225,7 @@ class PageableData {
     private static _filterWithFunction(data, rawFunction, context) {
         let func;
         try {
-            func = eval('(' + rawFunction.replace(/\b_this\b/g, 'this') + ')');
+            func = eval('(' + rawFunction + ')');
         } catch (e) {
             console.error('eval raw filter function error, detail: ' + e.message);
             return data;
