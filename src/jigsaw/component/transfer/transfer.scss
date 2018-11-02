@@ -14,7 +14,7 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
         height: 100%;
         background: #000;
         opacity: 0.4;
-        z-index: 2;
+        z-index: $zindex-level-2;
         span {
             position: absolute;
             width: 20px;
@@ -52,7 +52,7 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
         height: 100%;
         opacity: 0.6;
         position: absolute;
-        z-index: 3;
+        z-index: $zindex-level-3;
     }
     &-box {
         border: 1px solid $border-color-base;

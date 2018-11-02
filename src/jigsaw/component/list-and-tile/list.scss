@@ -19,6 +19,6 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
         height: 100%;
         opacity: 0.6;
         position: absolute;
-        z-index: 2;
+        z-index: $zindex-level-2;
     }
 }
