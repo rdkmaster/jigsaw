@@ -1,5 +1,5 @@
 import {
-    AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, NgModule, OnInit, Optional, Output, ViewChild
+    AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, NgModule, OnInit, Optional, Output, ViewChild, OnDestroy
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
@@ -8,7 +8,7 @@ import {JigsawTabsModule} from "../tabs/index";
 import {JigsawTileSelectModule} from "../list-and-tile/tile";
 import {JigsawTab} from "../tabs/tab";
 import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
-import {CommonUtils} from "../../core/utils/common-utils";
+import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "../../core/data/array-collection";
 import {InternalUtils} from "../../core/utils/internal-utils";
 import {TranslateHelper} from "../../core/utils/translate-helper";
@@ -413,39 +413,14 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
         </div>
     `
 })
-export class InternalTabContent extends AbstractJigsawComponent implements IDynamicInstantiatable, OnInit {
+export class InternalTabContent extends AbstractJigsawComponent implements IDynamicInstantiatable, OnInit, OnDestroy {
     constructor(@Optional() public _$cascade: JigsawCascade) {
         super();
     }
 
+    private _removeListRefreshListener: CallbackRemoval;
+
     public initData: CascadeTabContentInitData;
-
-    ngOnInit() {
-        super.ngOnInit();
-
-        if (!this.initData) {
-            return;
-        }
-
-        let allSelectedData = this._$cascade.selectedItems[this.initData.level];
-        if (CommonUtils.isDefined(allSelectedData)) {
-            const isArray = allSelectedData instanceof ArrayCollection || allSelectedData instanceof Array;
-            allSelectedData = isArray ? allSelectedData : [allSelectedData];
-        }
-        const list = this.initData.list;
-        if (list instanceof Observable) {
-            this._$showLoading = true;
-            const subscriber = list.subscribe((data: any[]) => {
-                this._$cascade._cascadeDataList[this.initData.level].list = data; // 更新list变成实体数据
-                this._init(data, allSelectedData);
-
-                subscriber.unsubscribe();
-                this._$showLoading = false;
-            }, () => subscriber.unsubscribe());
-        } else if (list instanceof Array) {
-            this._init(list, allSelectedData);
-        }
-    }
 
     /**
      * @internal
@@ -463,6 +438,11 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
      * @internal
      */
     public _$searchKey: string;
+
+    /**
+     * @internal
+     */
+    public _$showLoading: boolean;
 
     private _list: LocalPageableArray<any> = new LocalPageableArray();
 
@@ -484,8 +464,12 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
             const removeDataOnRefresh = data.onRefresh(() => {
                 removeDataOnRefresh();
                 this._list = data;
+                if(this._removeListRefreshListener) {
+                    this._removeListRefreshListener();
+                    this._removeListRefreshListener = null;
+                }
                 // 用于刷新分页
-                this._list.onRefresh(() => {
+                this._removeListRefreshListener = this._list.onRefresh(() => {
                     if (this._$selectedItems) {
                         this._$updateCurrentPageSelectedItems();
                     }
@@ -501,32 +485,9 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
     /**
      * @internal
      */
-    public _$showLoading: boolean;
-
-    /**
-     * @internal
-     */
     public get _$trackByFn() {
         return InternalUtils.trackByFn(this._$cascade.trackItemBy);
     };
-
-    private _init(data: any[], allSelectedData: any[]) {
-        this._$list = data;
-        if (allSelectedData instanceof Array || allSelectedData instanceof ArrayCollection) {
-            // 等待根据list数据渲染option后回填数据
-            this.callLater(() => {
-                this._$currentPageSelectedItems = allSelectedData.filter(item => {
-                    return this._$list.find(it =>
-                        CommonUtils.compareWithKeyProperty(item, it, <string[]>this._$cascade.trackItemBy))
-                });
-
-                this._$selectedItems = allSelectedData.filter(item => {
-                    return data.find(it =>
-                        CommonUtils.compareWithKeyProperty(item, it, <string[]>this._$cascade.trackItemBy))
-                });
-            })
-        }
-    }
 
     /**
      * @internal
@@ -600,6 +561,57 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
         });
     }
 
+    private _init(data: any[], allSelectedData: any[]) {
+        this._$list = data;
+        if (allSelectedData instanceof Array || allSelectedData instanceof ArrayCollection) {
+            // 等待根据list数据渲染option后回填数据
+            this.callLater(() => {
+                this._$currentPageSelectedItems = allSelectedData.filter(item => {
+                    return this._$list.find(it =>
+                        CommonUtils.compareWithKeyProperty(item, it, <string[]>this._$cascade.trackItemBy))
+                });
+
+                this._$selectedItems = allSelectedData.filter(item => {
+                    return data.find(it =>
+                        CommonUtils.compareWithKeyProperty(item, it, <string[]>this._$cascade.trackItemBy))
+                });
+            })
+        }
+    }
+
+    ngOnInit() {
+        super.ngOnInit();
+
+        if (!this.initData) {
+            return;
+        }
+
+        let allSelectedData = this._$cascade.selectedItems[this.initData.level];
+        if (CommonUtils.isDefined(allSelectedData)) {
+            const isArray = allSelectedData instanceof ArrayCollection || allSelectedData instanceof Array;
+            allSelectedData = isArray ? allSelectedData : [allSelectedData];
+        }
+        const list = this.initData.list;
+        if (list instanceof Observable) {
+            this._$showLoading = true;
+            const subscriber = list.subscribe((data: any[]) => {
+                this._$cascade._cascadeDataList[this.initData.level].list = data; // 更新list变成实体数据
+                this._init(data, allSelectedData);
+
+                subscriber.unsubscribe();
+                this._$showLoading = false;
+            }, () => subscriber.unsubscribe());
+        } else if (list instanceof Array) {
+            this._init(list, allSelectedData);
+        }
+    }
+
+    ngOnDestroy() {
+        if(this._removeListRefreshListener) {
+            this._removeListRefreshListener();
+            this._removeListRefreshListener = null;
+        }
+    }
 }
 
 @NgModule({
