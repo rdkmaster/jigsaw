@@ -8,6 +8,12 @@ import {TransferPageableArrayComponent} from "./pageable-array/demo.component";
 import {TransferPageableArrayDemoModule} from "./pageable-array/demo.module";
 import {TransferItemDisabledDemoComponent} from "./item-disabled/demo.component";
 import {TransferItemDisabledDemoModule} from "./item-disabled/demo.module";
+import {TransferArrayDisabledDemoComponent} from "./disabled/demo.component";
+import {TransferArrayDisabledDemoModule} from "./disabled/demo.module";
+import {TransferArrayValidDemoComponent} from "./valid/demo.component";
+import {TransferArrayValidDemoModule} from "./valid/demo.module";
+import {TransferArrayI18nDemoComponent} from "./i18n/demo.component";
+import {TransferArrayI18nDemoModule} from "./i18n/demo.module";
 
 export const routerConfig = [
     {
@@ -21,6 +27,15 @@ export const routerConfig = [
     },
     {
         path: 'item-disabled', component: TransferItemDisabledDemoComponent
+    },
+    {
+        path: 'disabled', component: TransferArrayDisabledDemoComponent
+    },
+    {
+        path: 'valid', component: TransferArrayValidDemoComponent
+    },
+    {
+        path: 'i18n', component: TransferArrayI18nDemoComponent
     }
 ];
 
@@ -30,7 +45,10 @@ export const routerConfig = [
         TransferArrayDemoModule,
         TransferLocalPageableArrayDemoModule,
         TransferPageableArrayDemoModule,
-        TransferItemDisabledDemoModule
+        TransferItemDisabledDemoModule,
+        TransferArrayDisabledDemoModule,
+        TransferArrayValidDemoModule,
+        TransferArrayI18nDemoModule
     ]
 })
 export class TransferDemoModule {

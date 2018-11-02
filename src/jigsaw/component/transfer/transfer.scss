@@ -7,11 +7,53 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
     display: inline-block;
     width: 400px;
     height: 200px;
+    &-loading {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        opacity: 0.4;
+        span {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            font-size: 20px;
+            color: #fff;
+            left: 50%;
+            top: 50%;
+            margin-left: -10px;
+            margin-top: -10px;
+        }
+    }
+    &.#{$transfer-prefix-cls}-error > div{
+        border: 1px solid $error-color;
+        &:hover {
+            border: 1px solid $error-color;
+        }
+        &:focus {
+            border: 1px solid $error-color;
+            box-shadow: none;
+        }
+    }
     &-wrapper {
         display: flex;
         flex: 1 1 0;
         width: 100%;
         height: 100%;
+    }
+    &-disabled {
+    cursor: not-allowed;
+    border-color: $border-color-base !important;
+    background-color: $disabled-bg;
+        & > div {
+            color: #ccc;
+            cursor: not-allowed;
+        }
+        &:after {
+            animation-name: none;
+            border-color: #ccc;
+        }
     }
     &-box {
         border: 1px solid $border-color-base;

@@ -11,6 +11,13 @@ import {JigsawPaginationModule} from "../pagination/pagination";
 import {InternalUtils} from "../../core/utils/internal-utils";
 import {Subscriber} from "rxjs/Subscriber";
 import {CommonModule} from "@angular/common";
+import {CheckBoxStatus} from "../checkbox/typings";
+import {TableData} from "../../core/data/table-data";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {LoadingService} from "../../service/loading.service";
+import {PopupInfo} from "../../service/popup.service";
+import {TranslateHelper} from "../../core/utils/translate-helper";
+
 
 // 此处不能使用箭头函数
 const transferFilterFunction = function (item) {
@@ -86,7 +93,8 @@ const transferServerFilterFunction = function (item) {
     host: {
         '[class.jigsaw-transfer]': 'true',
         '[style.width]': 'width',
-        '[style.height]': 'height'
+        '[style.height]': 'height',
+        '[class.jigsaw-transfer-error]': '!valid'
     }
 })
 export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements OnDestroy {
@@ -97,6 +105,44 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
 
     private _data: LocalPageableArray<GroupOptionValue> | PageableArray;
 
+    public _$showLoading: boolean;
+
+    constructor(public translateService: TranslateService) {
+        super();
+    }
+
+    @Input()
+    public lang: string = this.translateService.getBrowserLang();
+    /**
+     * 设置按钮不可交互状态的开关，为true则不可交互，为false则可交互。
+     *
+     * $demo = transfer/disabled
+     */
+    private _disabled: boolean = false;
+
+    @Input()
+    public get disabled(): boolean {
+        return this._disabled;
+    }
+
+    public set disabled(value: boolean) {
+        this._disabled = value;
+        this._setTransferxClass();
+    }
+
+    /**
+     * 更新transfer的样式信息
+     * @internal
+     */
+    public _$transferClass: {};
+
+    private _setTransferxClass() {
+        this._$transferClass = {
+            'jigsaw-transfer-disabled': this.disabled
+        }
+
+    }
+
     @Input()
     public get data() {
         return this._data;
@@ -105,11 +151,15 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     public set data(value: any[] | ArrayCollection<GroupOptionValue> | LocalPageableArray<GroupOptionValue> | PageableArray) {
         if (!value || value == this.data) return;
         if ((value instanceof LocalPageableArray || value instanceof PageableArray) && value.pagingInfo) {
+            this._$showLoading = true;
             this._data = value;
             this._filterFunction = value instanceof LocalPageableArray ? transferFilterFunction : transferServerFilterFunction;
             this.callLater(() => {
                 // 等待输入属性初始化
                 this._filterDataBySelectedItems();
+            });
+            value.onAjaxComplete(() => {
+                this._$showLoading = false;
             });
             if (value instanceof LocalPageableArray) {
                 if (this._removePageableCallbackListener) {
@@ -180,7 +230,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     public _$targetSelectedItems: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
 
     private _filterDataBySelectedItems() {
-        if(this._data.busy) {
+        if (this._data.busy) {
             const removeAjaxCallback = this._data.onAjaxComplete(() => {
                 removeAjaxCallback();
                 this._filterData();
@@ -203,6 +253,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
      * @private
      */
     public _$transferTo(from: string) {
+        if (this.disabled) return;
         if (from == 'target') {
             if (!this._$sourceSelectedItems || !this._$sourceSelectedItems.length) return;
             this.selectedItems = this.selectedItems ? this.selectedItems : [];
@@ -256,12 +307,41 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     }
 })
 export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent implements OnDestroy {
-    constructor(@Optional() private _transfer: JigsawTransfer) {
+    constructor(@Optional() private _transfer: JigsawTransfer, private translateService: TranslateService) {
         super();
         this._removeHostSubscribe = _transfer.selectedItemsChange.subscribe(() => {
             this._$searchKey = '';
-        })
+        });
+
+        this.translateService.use(this.lang);
+
+        this.translateService.setTranslation('zh', {
+            items: '项',
+            total: '共',
+        }, true);
+        translateService.setTranslation('en', {
+            items: 'Items',
+            total: 'Total',
+        }, true /* shouldMerge参数必须是true */);
+        TranslateHelper.changeLanguage(this.translateService, this.lang);
     }
+
+    private _lang: string = this.translateService.getBrowserLang();
+
+    @Input()
+    public get lang(): string {
+        return this._lang;
+    }
+
+    public set lang(value) {
+        if (!value || this._lang == value) return;
+        this._lang = value;
+        TranslateHelper.changeLanguage(this.translateService, this._lang);
+    }
+
+    @Input()
+    public disabled: boolean = false;
+
 
     @Input()
     public isTarget: boolean;
@@ -369,7 +449,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
         if (this._data instanceof PageableArray && this._data.length && typeof this._data[0] == 'object') {
             field = Object.keys(this._data[0]).findIndex(k => k === this.labelField);
         }
-        if(this._data.busy) {
+        if (this._data.busy) {
             const removeAjaxCallback = this._data.onAjaxComplete(() => {
                 removeAjaxCallback();
                 this._filterData(filterKey, field);
@@ -463,9 +543,10 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
 }
 
 @NgModule({
-    imports: [JigsawListModule, JigsawCheckBoxModule, PerfectScrollbarModule, JigsawInputModule, JigsawPaginationModule, CommonModule],
+    imports: [JigsawListModule, JigsawCheckBoxModule, PerfectScrollbarModule, JigsawInputModule, JigsawPaginationModule, CommonModule, TranslateModule],
     declarations: [JigsawTransfer, JigsawTransferInternalList],
-    exports: [JigsawTransfer]
+    exports: [JigsawTransfer],
+    providers: [TranslateService, LoadingService]
 })
 export class JigsawTransferModule {
 }
