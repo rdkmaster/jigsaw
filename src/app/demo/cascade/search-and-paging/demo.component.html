@@ -1,0 +1,12 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<h4>设置懒加载数据默认选中条目</h4><br>
+<j-cascade [data]="generator" [generatorContext]="this" [selectedItems]="lazyLoadSelectedItems"
+           labelField="name" [multipleSelect]="true" (selectedItemsChange)="parseMessage($event)"
+           [searchable]="true" [pageSize]="5" width="400">
+</j-cascade>
+<p>选择的区域是：{{message}}</p>

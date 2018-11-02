@@ -19,7 +19,7 @@ export class CascadeMultipleDemoComponent {
     parseMessage(selectedItems) {
         this.message = selectedItems.reduce((result, item) => {
             const districts = [];
-            if (item instanceof ArrayCollection) {
+            if (item instanceof ArrayCollection || item instanceof Array) {
                 item.forEach(district => districts.push(district.label));
             } else {
                 districts.push(item.label);

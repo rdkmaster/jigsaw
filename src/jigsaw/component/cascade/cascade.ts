@@ -572,12 +572,16 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
     private _updateSelectedItemsByCurrent() {
         this._$currentPageSelectedItems = this._$currentPageSelectedItems ? this._$currentPageSelectedItems : [];
         this._$selectedItems = this._$selectedItems ? this._$selectedItems : [];
-        this._$selectedItems.push(...this._$currentPageSelectedItems.filter(item =>
-            !this._$selectedItems.some(it => CommonUtils.compareWithKeyProperty(item, it, <string[]>this._$cascade.trackItemBy))));
-        const currentUnselectedItems = this._$list.concat().filter(item =>
-            !this._$currentPageSelectedItems.some(it => CommonUtils.compareWithKeyProperty(item, it, <string[]>this._$cascade.trackItemBy)));
-        this._$selectedItems = this._$selectedItems.filter(item =>
-            !currentUnselectedItems.some(it => CommonUtils.compareWithKeyProperty(item, it, <string[]>this._$cascade.trackItemBy)));
+        if(this.initData.multipleSelect) {
+            this._$selectedItems.push(...this._$currentPageSelectedItems.filter(item =>
+                !this._$selectedItems.some(it => CommonUtils.compareWithKeyProperty(item, it, <string[]>this._$cascade.trackItemBy))));
+            const currentUnselectedItems = this._$list.concat().filter(item =>
+                !this._$currentPageSelectedItems.some(it => CommonUtils.compareWithKeyProperty(item, it, <string[]>this._$cascade.trackItemBy)));
+            this._$selectedItems = this._$selectedItems.filter(item =>
+                !currentUnselectedItems.some(it => CommonUtils.compareWithKeyProperty(item, it, <string[]>this._$cascade.trackItemBy)));
+        } else {
+            this._$selectedItems = this._$currentPageSelectedItems;
+        }
     }
 
     /**
@@ -587,7 +591,7 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
         this.callLater(() => {
             // 初始化时触发变更检查
             this._$selectedItems = this._$selectedItems ? this._$selectedItems : [];
-            if(this._$list instanceof LocalPageableArray && this._$list.pagingInfo.totalPage > 1) {
+            if(this._$list instanceof LocalPageableArray && this._$list.pagingInfo.pageSize != Infinity) {
                 this._$currentPageSelectedItems = this._$selectedItems.filter(item => (<any[]>this._$list).some(it =>
                     CommonUtils.compareWithKeyProperty(it, item, <string[]>this._$cascade.trackItemBy)));
             } else {
