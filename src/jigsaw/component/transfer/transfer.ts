@@ -15,7 +15,6 @@ import {CheckBoxStatus} from "../checkbox/typings";
 import {TableData} from "../../core/data/table-data";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {LoadingService} from "../../service/loading.service";
-import {PopupInfo} from "../../service/popup.service";
 import {TranslateHelper} from "../../core/utils/translate-helper";
 
 
@@ -105,14 +104,6 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
 
     private _data: LocalPageableArray<GroupOptionValue> | PageableArray;
 
-    public _$showLoading: boolean;
-
-    constructor(public translateService: TranslateService) {
-        super();
-    }
-
-    @Input()
-    public lang: string = this.translateService.getBrowserLang();
     /**
      * 设置按钮不可交互状态的开关，为true则不可交互，为false则可交互。
      *
@@ -127,7 +118,6 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
 
     public set disabled(value: boolean) {
         this._disabled = value;
-        this._setTransferxClass();
     }
 
     /**
@@ -136,12 +126,6 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
      */
     public _$transferClass: {};
 
-    private _setTransferxClass() {
-        this._$transferClass = {
-            'jigsaw-transfer-disabled': this.disabled
-        }
-
-    }
 
     @Input()
     public get data() {
@@ -151,15 +135,11 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     public set data(value: any[] | ArrayCollection<GroupOptionValue> | LocalPageableArray<GroupOptionValue> | PageableArray) {
         if (!value || value == this.data) return;
         if ((value instanceof LocalPageableArray || value instanceof PageableArray) && value.pagingInfo) {
-            this._$showLoading = true;
             this._data = value;
             this._filterFunction = value instanceof LocalPageableArray ? transferFilterFunction : transferServerFilterFunction;
             this.callLater(() => {
                 // 等待输入属性初始化
                 this._filterDataBySelectedItems();
-            });
-            value.onAjaxComplete(() => {
-                this._$showLoading = false;
             });
             if (value instanceof LocalPageableArray) {
                 if (this._removePageableCallbackListener) {
@@ -307,36 +287,11 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     }
 })
 export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent implements OnDestroy {
-    constructor(@Optional() private _transfer: JigsawTransfer, private translateService: TranslateService) {
+    constructor(@Optional() private _transfer: JigsawTransfer) {
         super();
         this._removeHostSubscribe = _transfer.selectedItemsChange.subscribe(() => {
             this._$searchKey = '';
         });
-
-        this.translateService.use(this.lang);
-
-        this.translateService.setTranslation('zh', {
-            items: '项',
-            total: '共',
-        }, true);
-        translateService.setTranslation('en', {
-            items: 'Items',
-            total: 'Total',
-        }, true /* shouldMerge参数必须是true */);
-        TranslateHelper.changeLanguage(this.translateService, this.lang);
-    }
-
-    private _lang: string = this.translateService.getBrowserLang();
-
-    @Input()
-    public get lang(): string {
-        return this._lang;
-    }
-
-    public set lang(value) {
-        if (!value || this._lang == value) return;
-        this._lang = value;
-        TranslateHelper.changeLanguage(this.translateService, this._lang);
     }
 
     @Input()
@@ -549,4 +504,20 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
     providers: [TranslateService, LoadingService]
 })
 export class JigsawTransferModule {
+    constructor(translateService: TranslateService) {
+        InternalUtils.initI18n(translateService, 'transfer', {
+            zh: {
+                items: '项',
+                total: '共',
+            },
+            en: {
+                items: 'Items',
+                total: 'Total',
+            }
+        });
+        translateService.setDefaultLang(translateService.getBrowserLang());
+        TranslateHelper.languageChangEvent.subscribe(langInfo => {
+            translateService.use(langInfo.curLang);
+        });
+    }
 }

@@ -7,12 +7,13 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
     display: inline-block;
     width: 400px;
     height: 200px;
+    position: relative;
     &-loading {
-        position: relative;
+        position: absolute;
         width: 100%;
         height: 100%;
-        background: #000;
-        opacity: 0.4;
+        background: #dcdcdc;
+        z-index: 2;
         span {
             position: absolute;
             width: 20px;
@@ -26,7 +27,7 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
             margin-top: -10px;
         }
     }
-    &.#{$transfer-prefix-cls}-error > div{
+    &.#{$transfer-prefix-cls}-error > div {
         border: 1px solid $error-color;
         &:hover {
             border: 1px solid $error-color;
@@ -43,22 +44,20 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
         height: 100%;
     }
     &-disabled {
-    cursor: not-allowed;
-    border-color: $border-color-base !important;
-    background-color: $disabled-bg;
-        & > div {
-            color: #ccc;
-            cursor: not-allowed;
-        }
-        &:after {
-            animation-name: none;
-            border-color: #ccc;
-        }
+        cursor: not-allowed;
+        border-color: $border-color-base !important;
+        background-color: $disabled-bg;
+        width: 100%;
+        height: 100%;
+        opacity: 0.6;
+        position: absolute;
+        z-index: 3;
     }
     &-box {
         border: 1px solid $border-color-base;
         border-radius: $border-radius-base;
         flex: 1 1 0;
+        position: relative;
     }
     &-option-box {
         display: flex;

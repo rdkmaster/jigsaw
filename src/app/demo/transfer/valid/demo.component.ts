@@ -25,6 +25,7 @@ export class TransferArrayValidDemoComponent {
 
     handleSelectChange($event) {
         this.selectedCountriesStr = $event.map(item => item.zhName).join(',');
+        this.selectedCountries = $event;
     }
 
     // ====================================================================

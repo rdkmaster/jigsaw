@@ -2,12 +2,14 @@ import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {ArrayCollection, LocalPageableArray} from "jigsaw/core/data/array-collection";
 import {TableData} from "jigsaw/core/data/table-data";
+import {TranslateHelper} from "../../../../jigsaw/core/utils/translate-helper";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     templateUrl: './demo.component.html'
 })
 export class TransferArrayI18nDemoComponent {
-    constructor(private _http: HttpClient) {
+    constructor(private _http: HttpClient,private _translateService:TranslateService) {
         this.data = new ArrayCollection();
         this.data.http = _http;
         this.data.fromAjax('mock-data/countries');
@@ -42,7 +44,7 @@ export class TransferArrayI18nDemoComponent {
 
 
     changeLang(lang: string) {
-        this.lang = lang;
+        TranslateHelper.changeLanguage(this._translateService, lang);
     }
 
     // ====================================================================
