@@ -403,7 +403,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
                         {{'cascade.all' | translate}}
                     </div>
                     <j-tile-option *ngFor="let item of _$list; trackBy: _$trackByFn" [value]="item" (click)="_$handleOptionClick()">
-                        <span [title]="item[_$cascade?.labelField]">{{item[_$cascade?.labelField]}}</span>
+                        <span [title]="item && item[_$cascade?.labelField] ? item[_$cascade?.labelField] : item">{{item && item[_$cascade?.labelField] ? item[_$cascade?.labelField] : item}}</span>
                     </j-tile-option>
                 </j-tile>
                 <div class="jigsaw-cascade-pagination-wrapper" *ngIf="_$list && _$list.pagingInfo && _$list.pagingInfo.totalPage > 1">
@@ -457,6 +457,14 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
         if(!value || this._list == value) return;
         if (value instanceof LocalPageableArray && value.pagingInfo) {
             this._list = value;
+            if(this._removeListRefreshListener) {
+                this._removeListRefreshListener();
+                this._removeListRefreshListener = null;
+            }
+            // 用于刷新分页
+            this._removeListRefreshListener = this._list.onRefresh(() => {
+                this._$updateCurrentPageSelectedItems();
+            });
         } else if(value instanceof Array || value instanceof ArrayCollection) {
             const data = new LocalPageableArray();
             data.pagingInfo.pageSize = this._$cascade.pageSize;
@@ -470,9 +478,7 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
                 }
                 // 用于刷新分页
                 this._removeListRefreshListener = this._list.onRefresh(() => {
-                    if (this._$selectedItems) {
-                        this._$updateCurrentPageSelectedItems();
-                    }
+                    this._$updateCurrentPageSelectedItems();
                 });
                 this._list.refresh();
             })

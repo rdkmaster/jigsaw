@@ -37,7 +37,7 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
     border: 1px solid $border-color-base;
     border-radius: 4px;
     @include line-ellipsis-style();
-    @include prefixer(transition, all .3s $ease-in-out);
+    @include prefixer(transition, color .3s $ease-in-out);
     &:hover, &.#{$tile-option-prefix-cls}-active {
         color: $primary-color;
     }
