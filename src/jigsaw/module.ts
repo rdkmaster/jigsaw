@@ -47,6 +47,8 @@ import {JigsawRadioLiteModule} from "./component/radio/radio-lite";
 import {JigsawButtonBarModule} from "./component/list-and-tile/button-bar";
 import {JigsawIconModule} from "./component/icon/icon";
 import {JigsawUploadModule} from "./component/upload/index";
+import {JigsawTransferModule} from "./component/transfer/transfer";
+import {JigsawTextareaModule} from "./component/textarea/index";
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
@@ -96,7 +98,9 @@ const JIGSAW_MODULE = [
     JigsawTrustedHtmlModule,
     JigsawViewportModule,
     JigsawIconModule,
-    JigsawUploadModule
+    JigsawUploadModule,
+    JigsawTransferModule,
+    JigsawTextareaModule
 ];
 
 @NgModule({

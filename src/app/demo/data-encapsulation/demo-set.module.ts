@@ -11,6 +11,8 @@ import {ArrayCollectionAjaxDemoComponent} from "./array-ajax/demo.component";
 import {ArrayServerSidePaginationDemoComponent} from "./array-ssp/demo.component";
 import {RefreshDemoComponent} from "./refresh/demo.component";
 import {AjaxEventsDemoComponent} from "./ajax-events/demo.component";
+import {LocalPageableArrayDemoComponent} from "./local-pageable-array/demo.component";
+import {LocalPageableArrayDemoModule} from "./local-pageable-array/demo.module";
 
 export const routerConfig = [
     {
@@ -28,6 +30,9 @@ export const routerConfig = [
     {
         path: 'ajax-events', component: AjaxEventsDemoComponent
     },
+    {
+        path: 'local-pageable-array', component: LocalPageableArrayDemoComponent
+    }
 ];
 
 @NgModule({
@@ -36,7 +41,8 @@ export const routerConfig = [
         ArrayCollectionAjaxDemoModule,
         ArrayCollectionBasicDemoModule,
         ArrayServerSidePaginationDemoModule,
-        RefreshDemoModule, AjaxEventsDemoModule
+        RefreshDemoModule, AjaxEventsDemoModule,
+        LocalPageableArrayDemoModule
     ]
 })
 export class DataEncapsulationDemoModule {

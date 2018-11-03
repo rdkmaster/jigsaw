@@ -1,0 +1,25 @@
+<div class="jigsaw-transfer-wrapper">
+    <div class="jigsaw-transfer-left-box jigsaw-transfer-box">
+        <j-transfer-list [data]="data" [trackItemBy]="trackItemBy" [labelField]="labelField"
+                         [subLabelField]="subLabelField" [searchable]="searchable"
+                         [(selectedItems)]="_$sourceSelectedItems"></j-transfer-list>
+    </div>
+    <div class="jigsaw-transfer-option-box">
+        <a class="jigsaw-transfer-to-right-bar jigsaw-transfer-option-bar"
+           [class.jigsaw-transfer-option-disabled]="!_$sourceSelectedItems || !_$sourceSelectedItems.length"
+           (click)="_$transferTo('target')">
+            <i class="fa fa-angle-right"></i>
+        </a>
+        <a class="jigsaw-transfer-to-left-bar jigsaw-transfer-option-bar"
+           [class.jigsaw-transfer-option-disabled]="!_$targetSelectedItems || !_$targetSelectedItems.length"
+           (click)="_$transferTo('source')">
+            <i class="fa fa-angle-left"></i>
+        </a>
+    </div>
+    <div class="jigsaw-transfer-right-box jigsaw-transfer-box">
+        <j-transfer-list [data]="selectedItems" [trackItemBy]="trackItemBy" [labelField]="labelField"
+                         [subLabelField]="subLabelField" [searchable]="searchable"
+                         [(selectedItems)]="_$targetSelectedItems" [isTarget]="true"></j-transfer-list>
+    </div>
+</div>
+

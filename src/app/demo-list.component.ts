@@ -38,6 +38,7 @@ import {routerConfig as switchConfig} from "./demo/switch/demo-set.module";
 import {routerConfig as tableConfig} from "./demo/table/demo-set.module";
 import {routerConfig as tabsConfig} from "./demo/tab/demo-set.module";
 import {routerConfig as tagConfig} from "./demo/tag/demo-set.module";
+import {routerConfig as textareaConfig} from "./demo/textarea/demo-set.module";
 import {routerConfig as tileConfig} from "./demo/tile/demo-set.module";
 import {routerConfig as tileLiteConfig} from "./demo/tile-lite/demo-set.module";
 import {routerConfig as timeConfig} from "./demo/time/demo-set.module";
@@ -46,6 +47,7 @@ import {routerConfig as treeConfig} from "./demo/tree/demo-set.module";
 import {routerConfig as trustedHtmlConfig} from "./demo/trusted-html/demo-set.module";
 import {routerConfig as uploadConfig} from "./demo/upload/demo-set.module";
 import {routerConfig as iconConfig} from "./demo/icon/demo-set.module";
+import {routerConfig as transferConfig} from "./demo/transfer/demo-set.module";
 import {routerConfig} from "./router-config";
 
 @Component({
@@ -130,6 +132,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'table', tableConfig);
         this._addRouterConfig(routerConfig, 'tab', tabsConfig);
         this._addRouterConfig(routerConfig, 'tag', tagConfig);
+        this._addRouterConfig(routerConfig, 'textarea', textareaConfig);
         this._addRouterConfig(routerConfig, 'tile', tileConfig);
         this._addRouterConfig(routerConfig, 'tile-lite', tileLiteConfig);
         this._addRouterConfig(routerConfig, 'time', timeConfig);
@@ -138,6 +141,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'trusted-html', trustedHtmlConfig);
         this._addRouterConfig(routerConfig, 'upload', uploadConfig);
         this._addRouterConfig(routerConfig, 'icon', iconConfig);
+        this._addRouterConfig(routerConfig, 'transfer', transferConfig);
     }
 
     private static _addRouterConfig(routerConfig: any[], path: string, childConfig: any[]) {

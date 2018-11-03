@@ -1,0 +1,20 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+
+<div class="live-demo-wrap">
+    <h2>Transfer</h2>
+    <div class="demo-1 live-demo">
+        <h3>普通数据</h3>
+        <j-transfer width="100%" height="500" [data]="data" labelField="zhName" subLabelField="shortName"
+                    [searchable]="true" (selectedItemsChange)="handleSelectChange($event)"
+                    [selectedItems]="selectedCountries"></j-transfer>
+        <p class="message">选择的地区：{{selectedCountriesStr}}</p>
+    </div>
+</div>
+
+
+

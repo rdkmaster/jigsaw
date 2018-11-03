@@ -8,6 +8,7 @@ import {PagingInfo} from "../jigsaw/core/data/component-data";
 @Injectable()
 export class AjaxInterceptor implements HttpInterceptor {
 
+    private static _usingRealRDK: boolean = false;
     private static _processors: any[] = [];
 
     public static registerProcessor(urlPattern: RegExp | string, processor: (req: HttpRequest<any>) => any, context?: any) {
@@ -21,6 +22,10 @@ export class AjaxInterceptor implements HttpInterceptor {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        if (AjaxInterceptor._usingRealRDK && req.url.match(/\/rdk\/service\/.+/)) {
+            return next.handle(req)
+        }
+
         console.log('the ajax request is intercepted, here is the original request:');
         console.log(req);
 
@@ -44,9 +49,12 @@ export class AjaxInterceptor implements HttpInterceptor {
     dealServerSidePagingRequest(req: HttpRequest<any>): Observable<HttpEvent<any>> {
         const params = req.method.toLowerCase() == 'post' ? 'body' : 'params';
         const service = this.getParamValue(req, params, 'service');
-        const paging = this.getParamValue(req, params, 'paging') ? JSON.parse(this.getParamValue(req, params, 'paging')) : null;
-        const filter = this.getParamValue(req, params, 'filter') ? JSON.parse(this.getParamValue(req, params, 'filter')) : null;
-        const sort = this.getParamValue(req, params, 'sort') ? JSON.parse(this.getParamValue(req, params, 'sort')) : null;
+        let paging = this.getParamValue(req, params, 'paging') ? this.getParamValue(req, params, 'paging') : null;
+        paging = typeof paging === 'string' ? JSON.parse(paging) : paging;
+        let filter = this.getParamValue(req, params, 'filter') ? this.getParamValue(req, params, 'filter') : null;
+        filter = typeof filter === 'string' ? JSON.parse(filter) : filter;
+        let sort = this.getParamValue(req, params, 'sort') ? this.getParamValue(req, params, 'sort') : null;
+        sort = typeof sort === 'string' ? JSON.parse(sort) : sort;
         return PageableData.get({service, paging, filter, sort});
     }
 
@@ -68,9 +76,9 @@ export class AjaxInterceptor implements HttpInterceptor {
                 } else {
                     subscriber.error({
                         error: '<!DOCTYPE html>\n' +
-                        '<html lang="en">\n<head>\n<meta charset="utf-8">\n' +
-                        '<title>Error</title>\n</head>\n<body>\n' +
-                        '<pre>Cannot GET ' + url + '</pre>\n</body>\n</html>\n',
+                            '<html lang="en">\n<head>\n<meta charset="utf-8">\n' +
+                            '<title>Error</title>\n</head>\n<body>\n' +
+                            '<pre>Cannot GET ' + url + '</pre>\n</body>\n</html>\n',
                         headers: new HttpHeaders(), name: "HttpErrorResponse",
                         message: "ajax interceptor can not find data for " + url,
                         ok: false, status: 404, statusText: "Not Found", url: url
@@ -96,7 +104,7 @@ class PageableData {
 
         let data;
         if (CommonUtils.isDefined(req.filter)) {
-            data = this._filter(dataTable.data, req.filter.key, req.filter.field, dataTable.field);
+            data = this._filter(dataTable, req.filter);
         } else {
             //浅拷贝一份
             data = dataTable.data.concat();
@@ -170,7 +178,13 @@ class PageableData {
         }
     }
 
-    private static _filter(data, key, field, allField) {
+    private static _filter(dataTable, filter) {
+        return filter.hasOwnProperty('rawFunction') && !!filter.rawFunction ?
+            this._filterWithFunction(dataTable.data, filter.rawFunction, filter.context) :
+            this._filterWithKeyword(dataTable.data, filter.key, filter.field, dataTable.field);
+    }
+
+    private static _filterWithKeyword(data, key, field, allField) {
         if (!key) {
             console.warn('invalid filter key, need at least ONE char!');
             return data.concat();
@@ -206,6 +220,26 @@ class PageableData {
             }
             return false;
         });
+    }
+
+    private static _filterWithFunction(data, rawFunction, context) {
+        let func;
+        try {
+            func = eval('(' + rawFunction + ')');
+        } catch (e) {
+            console.error('eval raw filter function error, detail: ' + e.message);
+            return data;
+        }
+        if (!(func instanceof Function)) {
+            console.warn('invalid filter function, it is not a function.');
+            return data;
+        }
+        try {
+            return data.filter(func.bind(context));
+        } catch (e) {
+            console.error('filter width function error, detail: ' + e.message);
+            return data;
+        }
     }
 
     private static _paging(data, pagingInfo) {

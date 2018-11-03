@@ -650,7 +650,7 @@ export class PagingInfo implements IEmittable {
      * @return {number}
      */
     public get totalPage(): number {
-        return this.totalRecord ? Math.ceil(this.totalRecord / this.pageSize) : 1;
+        return this.totalRecord && this.pageSize != Infinity ? Math.ceil(this.totalRecord / this.pageSize) : 1;
     }
 
     private _emitter = new EventEmitter<any>();
@@ -695,7 +695,16 @@ export class DataFilterInfo {
                 /**
                  * 在这些字段中过滤
                  */
-                public field?: string[] | number[]) {
+                public field?: string[] | number[],
+                /**
+                 * 过滤函数源码，主要是传给服务端做自定义过滤用的
+                 */
+                public rawFunction?: string,
+                /**
+                 * `rawFunction`执行时的上下文
+                 */
+                public context?: any
+                ) {
     }
 }
 
@@ -777,4 +786,16 @@ export interface IEmittable {
      * 取消当前对象上的所有订阅，执行它之后，任何事件监听器都将会失效。
      */
     unsubscribe();
+}
+
+export function serializeFilterFunction(filter: Function): string {
+    if (!filter) {
+        return undefined;
+    }
+    let funcString = filter.toString();
+    if (!funcString.match(/(const|var|let)\s+_this\s*=\s*this\b/)) {
+        // 在函数的开头添加一行 `var _this = this;`
+        funcString = funcString.replace(/{/, '{\nvar _this = this;\n');
+    }
+    return funcString;
 }

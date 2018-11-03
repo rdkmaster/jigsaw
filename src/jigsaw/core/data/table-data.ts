@@ -6,14 +6,19 @@ import 'rxjs/add/operator/debounceTime';
 import {AbstractGeneralCollection} from "./general-collection";
 import {
     DataFilterInfo,
-    DataSortInfo, HttpClientOptions, ViewportData,
+    DataSortInfo,
+    HttpClientOptions,
     IFilterable,
     IPageable,
-    IServerSidePageable, ISlicedData,
+    IServerSidePageable,
+    ISlicedData,
     ISortable,
     PagingInfo,
+    PreparedHttpClientOptions,
     SortAs,
-    SortOrder
+    SortOrder,
+    serializeFilterFunction,
+    ViewportData
 } from "./component-data";
 import {CommonUtils} from "../utils/common-utils";
 
@@ -53,6 +58,7 @@ export class RawTableData {
      * 表格的数据，是一个二维数组。
      */
     data: TableDataMatrix;
+
     [property: string]: any;
 }
 
@@ -370,7 +376,6 @@ export class PageableTableData extends TableData implements IServerSidePageable,
 
     private _filterSubject = new Subject<DataFilterInfo>();
     private _sortSubject = new Subject<DataSortInfo>();
-    private _requestOptions: HttpClientOptions;
 
     constructor(public http: HttpClient, requestOptionsOrUrl: HttpClientOptions | string) {
         super();
@@ -380,23 +385,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         }
         this.sourceRequestOptions = typeof requestOptionsOrUrl === 'string' ? {url: requestOptionsOrUrl} : requestOptionsOrUrl;
 
-        this._initRequestOptions();
         this._initSubjects();
-    }
-
-    private _initRequestOptions(): void {
-        if (!this.sourceRequestOptions || !this.sourceRequestOptions.url) {
-            throw new Error('invalid data source request options or invalid url!');
-        }
-        this._requestOptions = HttpClientOptions.prepare(this.sourceRequestOptions);
-
-        const paramKey = this._requestOptions.method.toLowerCase() == 'post' ? 'body' : 'params';
-
-        const originParams = this.sourceRequestOptions[paramKey];
-        const peerParams = CommonUtils.isDefined(originParams) ? CommonUtils.shallowCopy(originParams) : {};
-        this._requestOptions[paramKey] = {};
-        this._requestOptions[paramKey].peerParam = JSON.stringify(peerParams);
-        this._requestOptions[paramKey].service = this.sourceRequestOptions.url;
     }
 
     private _initSubjects(): void {
@@ -439,7 +428,6 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this.pagingInfo.totalRecord = 0;
         this.filterInfo = null;
         this.sortInfo = null;
-        this._initRequestOptions();
     }
 
     public fromAjax(url?: string): void;
@@ -461,21 +449,38 @@ export class PageableTableData extends TableData implements IServerSidePageable,
             this.ajaxErrorHandler(null);
             return;
         }
+        const options = HttpClientOptions.prepare(this.sourceRequestOptions);
+        if (!options) {
+            console.error('invalid source request options, use updateDataSource() to reset the option.');
+            return;
+        }
 
         this._busy = true;
         this.ajaxStartHandler();
 
-        const params: any = this._requestOptions.method.toLowerCase() == 'post' ?
-            this._requestOptions.body : this._requestOptions.params;
-        params.paging = JSON.stringify(this.pagingInfo.valueOf());
-        if (this.filterInfo) {
-            params.filter = JSON.stringify(this.filterInfo);
+        const method = this.sourceRequestOptions.method ? this.sourceRequestOptions.method.toLowerCase() : 'get';
+        const paramProperty = method == 'get' ? 'params' : 'body';
+        let originParams = this.sourceRequestOptions[paramProperty];
+
+        delete options.params;
+        delete options.body;
+        options[paramProperty] = {
+            service: options.url, paging: this.pagingInfo.valueOf()
+        };
+        if (CommonUtils.isDefined(originParams)) {
+            options[paramProperty].peerParam = originParams;
         }
-        if (this.sortInfo) {
-            params.sort = JSON.stringify(this.sortInfo);
+        if (CommonUtils.isDefined(this.filterInfo)) {
+            options[paramProperty].filter = this.filterInfo;
+        }
+        if (CommonUtils.isDefined(this.sortInfo)) {
+            options[paramProperty].sortInfo = this.sortInfo;
+        }
+        if (paramProperty == 'params') {
+            options.params = PreparedHttpClientOptions.prepareParams(options.params)
         }
 
-        this.http.request(this._requestOptions.method, PagingInfo.pagingServerUrl, this._requestOptions)
+        this.http.request(options.method, PagingInfo.pagingServerUrl, options)
             .map(res => this.reviseData(res))
             .map(data => {
                 this._updatePagingInfo(data);
@@ -510,10 +515,15 @@ export class PageableTableData extends TableData implements IServerSidePageable,
      * @internal
      */
     public filter(term, fields?: string[] | number[]): void {
-        if (term instanceof Function) {
-            throw new Error('compare function is not supported by PageableTableData which filters data in the server side');
+        let pfi: DataFilterInfo;
+        if (term instanceof DataFilterInfo) {
+            pfi = term;
+        } else if (term instanceof Function) {
+            // 这里的fields相当于thisArg，即函数执行的上下文对象
+            pfi = new DataFilterInfo(undefined, undefined, serializeFilterFunction(term), fields);
+        } else {
+            pfi = new DataFilterInfo(term, fields);
         }
-        const pfi = term instanceof DataFilterInfo ? term : new DataFilterInfo(term, fields);
         this._filterSubject.next(pfi);
     }
 
@@ -579,7 +589,6 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this.sourceRequestOptions = null;
         this.pagingInfo.unsubscribe();
         this.pagingInfo = null;
-        this._requestOptions = null;
         this._filterSubject.unsubscribe();
         this._filterSubject = null;
         this._sortSubject.unsubscribe();

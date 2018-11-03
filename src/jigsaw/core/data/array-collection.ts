@@ -7,14 +7,21 @@ import {Subscription} from "rxjs/Subscription";
 
 import {
     ComponentDataHelper,
-    DataReviser,
-    IAjaxComponentData, IFilterable,
-    IPageable, ISortable,
-    PagingInfo,
     DataFilterInfo,
+    DataReviser,
     DataSortInfo,
+    HttpClientOptions,
+    IAjaxComponentData,
+    IEmittable,
+    IFilterable,
+    IPageable,
+    IServerSidePageable,
+    ISortable,
+    PagingInfo,
+    PreparedHttpClientOptions,
     SortAs,
-    SortOrder, IServerSidePageable, HttpClientOptions, IEmittable
+    SortOrder,
+    serializeFilterFunction
 } from "./component-data";
 
 import {TableData} from "./table-data";
@@ -576,10 +583,10 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
         console.log('destroying ArrayCollection....');
         this.splice(0, this.length);
 
-        this.componentDataHelper.clearCallbacks();
+        this.componentDataHelper && this.componentDataHelper.clearCallbacks();
         this.componentDataHelper = null;
         this.dataReviser = null;
-        this._emitter.unsubscribe();
+        this._emitter && this._emitter.unsubscribe();
         this._emitter = null;
     }
 
@@ -589,7 +596,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
         this._emitter.emit(value);
     }
 
-    public subscribe(callback?: (value:any) => void): Subscription {
+    public subscribe(callback?: (value: any) => void): Subscription {
         return this._emitter.subscribe(callback);
     }
 
@@ -619,7 +626,6 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
 
     private _filterSubject = new Subject<DataFilterInfo>();
     private _sortSubject = new Subject<DataSortInfo>();
-    private _requestOptions: HttpClientOptions;
 
     constructor(public http: HttpClient, requestOptionsOrUrl: HttpClientOptions | string) {
         super();
@@ -629,23 +635,12 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         }
 
         this.pagingInfo = new PagingInfo();
+        this.pagingInfo.subscribe(() => {
+            this._ajax();
+        });
         this.sourceRequestOptions = typeof requestOptionsOrUrl === 'string' ? {url: requestOptionsOrUrl} : requestOptionsOrUrl;
 
-        this._initRequestOptions();
         this._initSubjects();
-    }
-
-    private _initRequestOptions(): void {
-        this._requestOptions = HttpClientOptions.prepare(this.sourceRequestOptions);
-        if (!this._requestOptions) {
-            return;
-        }
-
-        const originParams = this.sourceRequestOptions.params;
-        const peerParams = CommonUtils.isDefined(originParams) ? CommonUtils.shallowCopy(originParams) : {};
-        this._requestOptions.params = {};
-        this._requestOptions.params.peerParam = JSON.stringify(peerParams);
-        this._requestOptions.params.service = this.sourceRequestOptions.url;
     }
 
     private _initSubjects(): void {
@@ -670,7 +665,6 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this.pagingInfo.totalRecord = 0;
         this.filterInfo = null;
         this.sortInfo = null;
-        this._initRequestOptions();
     }
 
     public fromAjax(url?: string): void;
@@ -692,19 +686,38 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
             this.ajaxErrorHandler(null);
             return;
         }
+        const options = HttpClientOptions.prepare(this.sourceRequestOptions);
+        if (!options) {
+            console.error('invalid source request options, use updateDataSource() to reset the option.');
+            return;
+        }
 
+        this._busy = true;
         this.ajaxStartHandler();
 
-        const params: any = this._requestOptions.params;
-        params.paging = JSON.stringify(this.pagingInfo.valueOf());
-        if (this.filterInfo) {
-            params.filter = JSON.stringify(this.filterInfo);
+        const method = this.sourceRequestOptions.method ? this.sourceRequestOptions.method.toLowerCase() : 'get';
+        const paramProperty = method == 'get' ? 'params' : 'body';
+        let originParams = this.sourceRequestOptions[paramProperty];
+
+        delete options.params;
+        delete options.body;
+        options[paramProperty] = {
+            service: options.url, paging: this.pagingInfo.valueOf()
+        };
+        if (CommonUtils.isDefined(originParams)) {
+            options[paramProperty].peerParam = originParams;
         }
-        if (this.sortInfo) {
-            params.sort = JSON.stringify(this.sortInfo);
+        if (CommonUtils.isDefined(this.filterInfo)) {
+            options[paramProperty].filter = this.filterInfo;
+        }
+        if (CommonUtils.isDefined(this.sortInfo)) {
+            options[paramProperty].sortInfo = this.sortInfo;
+        }
+        if (paramProperty == 'params') {
+            options.params = PreparedHttpClientOptions.prepareParams(options.params)
         }
 
-        this.http.request(this._requestOptions.method, PagingInfo.pagingServerUrl, this._requestOptions)
+        this.http.request(options.method, PagingInfo.pagingServerUrl, options)
             .map(res => this.reviseData(res))
             .map(data => {
                 this._updatePagingInfo(data);
@@ -729,7 +742,6 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
             return;
         }
         const paging = data.paging;
-        this.pagingInfo.currentPage = paging.hasOwnProperty('currentPage') ? paging.currentPage : this.pagingInfo.currentPage;
         this.pagingInfo.totalRecord = paging.hasOwnProperty('totalRecord') ? paging.totalRecord : this.pagingInfo.totalRecord;
     }
 
@@ -746,10 +758,15 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
      * @internal
      */
     public filter(term: string | DataFilterInfo | Function, fields?: string[] | number[]): void {
-        if (term instanceof Function) {
-            throw 'filter function is NOT accepted by this class!';
+        let pfi: DataFilterInfo;
+        if (term instanceof DataFilterInfo) {
+            pfi = term;
+        } else if (term instanceof Function) {
+            // 这里的fields相当于thisArg，即函数执行的上下文对象
+            pfi = new DataFilterInfo(undefined, undefined, serializeFilterFunction(term), fields);
+        } else {
+            pfi = new DataFilterInfo(term, fields);
         }
-        const pfi = term instanceof DataFilterInfo ? term : new DataFilterInfo(term, fields);
         this._filterSubject.next(pfi);
     }
 
@@ -815,13 +832,13 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
 
         this.http = null;
         this.sourceRequestOptions = null;
+        this.pagingInfo && this.pagingInfo.unsubscribe();
         this.pagingInfo = null;
         this.filterInfo = null;
         this.sortInfo = null;
-        this._requestOptions = null;
-        this._filterSubject.unsubscribe();
+        this._filterSubject && this._filterSubject.unsubscribe();
         this._filterSubject = null;
-        this._sortSubject.unsubscribe();
+        this._sortSubject && this._sortSubject.unsubscribe();
         this._sortSubject = null;
     }
 }
@@ -843,8 +860,6 @@ export class DirectPageableArray extends PageableArray {
 /**
  * 在本地分页、排序、过滤的数组。
  *
- * 部分功能未实现，如有需要，请给我们[提issue](https://github.com/rdkmaster/jigsaw/issues/new)。
- *
  * 关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
  */
 export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageable {
@@ -853,103 +868,176 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
     private _bakData: T[] = [];
 
     private _filterSubject = new Subject<DataFilterInfo>();
+    private _sortSubject = new Subject<DataSortInfo>();
+
+    private _filteredData: T[];
+
+    public get filteredData(): T[] {
+        return this._filteredData;
+    }
+
+    public set filteredData(value: T[]) {
+        this._filteredData = value;
+        if (this._filteredData instanceof Array || this._filteredData instanceof ArrayCollection) {
+            this.pagingInfo.totalRecord = this._filteredData.length;
+        }
+    }
 
     constructor(source?: T[]) {
         super(source);
         this._bakData = source;
+        this.pagingInfo = new PagingInfo();
+        this.pagingInfo.subscribe(() => {
+            if (!this.filteredData) {
+                return;
+            }
+            this._setDataByPageInfo();
+            this.refresh();
+        });
         this._initSubjects();
     }
 
     public fromArray(source: T[]): ArrayCollection<T> {
-        const result = super.fromArray(source);
         this._bakData = source;
-        return result;
+        this.filteredData = source;
+        this.firstPage();
+        return this;
+    }
+
+    /**
+     * @internal
+     * @param item
+     * @param {string} keyword
+     * @param {any[]} fields
+     * @returns {boolean}
+     */
+    public static filterItemByKeyword(item: any, keyword: string, fields: any[]): boolean {
+        if (typeof item == 'string') {
+            return item.toLowerCase().includes(keyword.toLowerCase())
+        } else if (fields) {
+            return fields.find(field => {
+                const value: string = !item || item[field] === undefined || item[field] === null ? '' : item[field].toString();
+                return value.toLowerCase().includes(keyword.toLowerCase())
+            })
+        } else {
+            return false
+        }
     }
 
     private _initSubjects(): void {
         this._filterSubject.debounceTime(300).subscribe(filter => {
-            super.fromArray(this._bakData.filter(item => {
-                if (typeof item == 'string') {
-                    return item.toLowerCase().includes(filter.key.toLowerCase())
-                } else if (filter.field) {
-                    return (<any[]>filter.field).find(field => {
-                        const value: string = !item || item[field] === undefined || item[field] === null ? '' : item[field].toString();
-                        return value.toLowerCase().includes(filter.key.toLowerCase())
-                    })
-                } else {
-                    return false
-                }
-            }));
+            this.filteredData = this._bakData.filter(item => LocalPageableArray.filterItemByKeyword(item, filter.key, filter.field));
+            this.firstPage();
         });
+
+        this._sortSubject.debounceTime(300).subscribe((sortInfo: DataSortInfo) => {
+            const orderFlag = sortInfo.order == SortOrder.asc ? 1 : -1;
+            if (sortInfo.as == SortAs.number) {
+                this.filteredData.sort((a, b) => orderFlag * (Number(sortInfo.field ? a[sortInfo.field] : a) - Number(sortInfo.field ? b[sortInfo.field] : b)));
+            } else {
+                this.filteredData.sort((a, b) => orderFlag * String(sortInfo.field ? a[sortInfo.field] : a).localeCompare(String(sortInfo.field ? b[sortInfo.field] : b)));
+            }
+            this.firstPage();
+        })
     }
 
-    public filter(callbackfn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
+    public filter(callbackfn: (value: any, index: number, array: any[]) => any, context?: any): any;
     public filter(term: string, fields?: string[] | number[]): void;
     public filter(term: DataFilterInfo): void;
     /**
      * @internal
      */
     public filter(term, fields?: string[] | number[]): void {
+        if(!this._bakData) return;
         if (term instanceof Function) {
-            throw 'filter function is NOT accepted by this class!';
+            this.filteredData = this._bakData.filter(term.bind(fields));
+            this.firstPage();
+        } else {
+            const pfi = term instanceof DataFilterInfo ? term : new DataFilterInfo(term, fields);
+            this._filterSubject.next(pfi);
         }
-        const pfi = term instanceof DataFilterInfo ? term : new DataFilterInfo(term, fields);
-        this._filterSubject.next(pfi);
     }
 
     public sort(compareFn?: (a: any, b: any) => number): any;
-    public sort(as: SortAs, order: SortOrder, field: string | number): void;
+    public sort(as: SortAs, order: SortOrder, field?: string | number): void;
     public sort(sort: DataSortInfo): void;
     /**
      * @internal
      */
     public sort(as, order?: SortOrder, field?: string | number): void {
-        throw new Error('not implemented yet!');
+        if (!this.filteredData) return;
+        if (as instanceof Function) {
+            this.filteredData.sort(as);
+            this.firstPage();
+        }
+        const psi = as instanceof DataSortInfo ? as : new DataSortInfo(as, order, field);
+        this._sortSubject.next(psi);
     }
 
-    /**
-     * 方法暂未实现
-     */
     public changePage(currentPage: number, pageSize?: number): void;
     public changePage(info: PagingInfo): void;
     /**
      * @internal
      */
     public changePage(currentPage, pageSize?: number): void {
-        throw new Error('not implemented yet!');
+        if (!this.filteredData) {
+            return;
+        }
+
+        if (!isNaN(pageSize) && +pageSize > 0) {
+            this.pagingInfo.pageSize = pageSize;
+        }
+
+        let cp: number = 0;
+        if (currentPage instanceof PagingInfo) {
+            this.pagingInfo.pageSize = currentPage.pageSize;
+            cp = currentPage.currentPage;
+        } else if (!isNaN(+currentPage)) {
+            cp = +currentPage;
+        }
+        if (cp >= 1 && cp <= this.pagingInfo.totalPage) {
+            this.pagingInfo.currentPage = cp;
+        } else {
+            console.error(`invalid currentPage[${cp}], it should be between in [1, ${this.pagingInfo.totalPage}]`);
+        }
     }
 
-    /**
-     * 方法暂未实现
-     */
+    private _setDataByPageInfo() {
+        if (this.pagingInfo.pageSize == Infinity) {
+            super.fromArray(this.filteredData);
+        } else {
+            const begin = (this.pagingInfo.currentPage - 1) * this.pagingInfo.pageSize;
+            const end = this.pagingInfo.currentPage * this.pagingInfo.pageSize < this.pagingInfo.totalRecord ?
+                this.pagingInfo.currentPage * this.pagingInfo.pageSize : this.pagingInfo.totalRecord;
+            super.fromArray(this.filteredData.slice(begin, end));
+        }
+    }
+
     public firstPage(): void {
-        throw new Error('not implemented yet!');
+        this.changePage(1);
     }
 
-    /**
-     * 方法暂未实现
-     */
     public previousPage(): void {
-        throw new Error('not implemented yet!');
+        this.changePage(this.pagingInfo.currentPage - 1);
     }
 
-    /**
-     * 方法暂未实现
-     */
     public nextPage(): void {
-        throw new Error('not implemented yet!');
+        this.changePage(this.pagingInfo.currentPage + 1);
     }
 
-    /**
-     * 方法暂未实现
-     */
     public lastPage(): void {
-        throw new Error('not implemented yet!');
+        this.changePage(this.pagingInfo.totalPage);
     }
 
     public destroy() {
         super.destroy();
-        this._filterSubject.unsubscribe();
+        this._filterSubject && this._filterSubject.unsubscribe();
+        this._sortSubject && this._sortSubject.unsubscribe();
+        this.pagingInfo && this.pagingInfo.unsubscribe();
         this._bakData = null;
+        this.filteredData = null;
+        this.pagingInfo = null;
+        this._filterSubject = null;
+        this._sortSubject = null;
     }
 }
