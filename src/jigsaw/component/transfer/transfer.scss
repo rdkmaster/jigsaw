@@ -13,8 +13,8 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
         width: 100%;
         height: 100%;
         background: #000;
-        opacity: 0.4;
         z-index: $zindex-level-2;
+        opacity:0;
         span {
             position: absolute;
             width: 20px;
