@@ -408,7 +408,10 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
                     </j-tile-option>
                 </j-tile>
                 <div class="jigsaw-cascade-pagination-wrapper" *ngIf="_$list?.pagingInfo?.totalPage > 1">
-                    <j-pagination [data]="_$list" mode="simple"></j-pagination>
+                    <j-pagination [total]="_$list.pagingInfo.totalRecord"
+                                  [pageSize]="_$list.pagingInfo.pageSize"
+                                  [(current)]="_$list.pagingInfo.currentPage"
+                                  mode="simple"></j-pagination>
                 </div>
             </ng-template>
         </div>
