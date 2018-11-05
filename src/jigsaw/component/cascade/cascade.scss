@@ -52,5 +52,14 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
             margin-top: -10px;
         }
     }
+
+    &-search-wrapper {
+        padding: 0 8px;
+    }
+
+    &-pagination-wrapper {
+        padding: 4px 0;
+        text-align: center;
+    }
 }
 

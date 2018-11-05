@@ -1,0 +1,21 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>Cascade</h2>
+    <div class="demo-1 live-demo">
+        <h3>搜索与分页</h3>
+        <p class="comment">
+            <code>searchable</code>为<code>true</code>时可以搜索；
+            <code>pageSize</code>默认是<code>Infinity</code>，即不分页，设置了<code>pageSize</code>数值即可实现分页
+        </p>
+        <j-cascade [data]="generator" [generatorContext]="this" [selectedItems]="lazyLoadSelectedItems"
+                   labelField="name" [multipleSelect]="true" (selectedItemsChange)="parseMessage($event)"
+                   [searchable]="true" [pageSize]="5" width="400">
+        </j-cascade>
+        <p class="message">选择的区域是：{{message}}</p>
+    </div>
+</div>
