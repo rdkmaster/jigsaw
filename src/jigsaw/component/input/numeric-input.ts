@@ -40,6 +40,17 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         super();
     }
 
+    ngOnInit() {
+        this.valueChange.debounceTime(300).subscribe((val) => {
+            if(val < this.min) {
+                this._value = this.min;
+                this.valueChange.emit(this._value);
+                this._checkDisabled();
+                this._checkInputValue();
+            }
+        });
+    }
+
     @Input()
     public valid: boolean = true;
 
@@ -159,9 +170,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         if (value > this.max) {
             value = this.max;
         }
-        if (value < this.min) {
-            value = this.min;
-        }
+
         this._value = value;
         this.valueChange.emit(this._value);
         this._propagateChange(this._value);
@@ -239,8 +248,14 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         if (CommonUtils.isUndefined(this.value)) {
             this.value = this.min == -Infinity ? 0 : this.min;
         }
-        this.value = this._toPrecisionAsStep((this._precisionFactor * this._value -
+        let tempValue = this._toPrecisionAsStep((this._precisionFactor * this._value -
             this._precisionFactor * this._step) / this._precisionFactor);
+
+        if(tempValue < this.min) {
+            this.value = this.min;
+        }else {
+            this.value = tempValue;
+        }
     }
 
     private _toPrecisionAsStep(num) {
