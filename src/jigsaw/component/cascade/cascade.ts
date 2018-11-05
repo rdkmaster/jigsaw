@@ -1,5 +1,5 @@
 import {
-    AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, NgModule, OnInit, Optional, Output, ViewChild
+    AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, NgModule, OnInit, Optional, Output, ViewChild, OnDestroy
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
@@ -8,11 +8,13 @@ import {JigsawTabsModule} from "../tabs/index";
 import {JigsawTileSelectModule} from "../list-and-tile/tile";
 import {JigsawTab} from "../tabs/tab";
 import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
-import {CommonUtils} from "../../core/utils/common-utils";
-import {ArrayCollection} from "../../core/data/array-collection";
+import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
+import {ArrayCollection, LocalPageableArray, PageableArray} from "../../core/data/array-collection";
 import {InternalUtils} from "../../core/utils/internal-utils";
 import {TranslateHelper} from "../../core/utils/translate-helper";
 import {TreeData} from "../../core/data/tree-data";
+import {JigsawInputModule} from "../input/input";
+import {JigsawPaginationModule} from "../pagination/pagination";
 
 export class CascadeData {
     /**
@@ -239,6 +241,19 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
     public allowCrossSelect: boolean = false;
 
     /**
+     * 是否可搜索
+     */
+    @Input()
+    public searchable: boolean;
+
+    /**
+     * 设置数据分页存储数，默认不分页
+     * @type {number}
+     */
+    @Input()
+    public pageSize: number = Infinity;
+
+    /**
      * @internal
      */
     public _handleMultipleSelect(selectedItems: any[], level: number) {
@@ -375,26 +390,196 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
                 <span class="iconfont iconfont-e8dd jigsaw-am-rotation"></span>
             </div>
             <ng-template #tile>
-                <j-tile [(selectedItems)]="_$selectedItems" (selectedItemsChange)="_$handleSelect($event)"
+                <div class="jigsaw-cascade-search-wrapper" *ngIf="_$cascade?.searchable">
+                    <j-input class="jigsaw-cascade-tile-search" width="100%" [(value)]="_$searchKey"
+                             (valueChange)="_$handleSearching($event)">
+                        <span jigsaw-prefix-icon class="fa fa-search"></span>
+                    </j-input>
+                </div>
+                <j-tile [(selectedItems)]="_$currentPageSelectedItems" (selectedItemsChange)="_$handleSelect()"
                         [trackItemBy]="_$cascade?.trackItemBy" [multipleSelect]="initData.multipleSelect">
                     <div *ngIf="initData?.showAll" class="jigsaw-cascade-show-all"
                          (click)="_$cascade?._selectAll(initData.level)">
                         {{'cascade.all' | translate}}
                     </div>
-                    <j-tile-option *ngFor="let item of _$list" [value]="item" (click)="_$handleOptionClick()">
-                        <span [title]="item[_$cascade?.labelField]">{{item[_$cascade?.labelField]}}</span>
+                    <j-tile-option *ngFor="let item of _$list; trackBy: _$trackByFn" [value]="item" (click)="_$handleOptionClick()">
+                        <span [title]="item && item[_$cascade?.labelField] ? item[_$cascade?.labelField] : item">
+                            {{item && item[_$cascade?.labelField] ? item[_$cascade?.labelField] : item}}</span>
                     </j-tile-option>
                 </j-tile>
+                <div class="jigsaw-cascade-pagination-wrapper" *ngIf="_$list?.pagingInfo?.totalPage > 1">
+                    <j-pagination [data]="_$list" mode="simple"></j-pagination>
+                </div>
             </ng-template>
         </div>
     `
 })
-export class InternalTabContent extends AbstractJigsawComponent implements IDynamicInstantiatable, OnInit {
+export class InternalTabContent extends AbstractJigsawComponent implements IDynamicInstantiatable, OnInit, OnDestroy {
     constructor(@Optional() public _$cascade: JigsawCascade) {
         super();
     }
 
+    private _removeListRefreshListener: CallbackRemoval;
+
     public initData: CascadeTabContentInitData;
+
+    /**
+     * @internal
+     * 当前tab总选择
+     */
+    public _$selectedItems: any[];
+
+    /**
+     * @internal
+     * 当前page选择
+     */
+    public _$currentPageSelectedItems: any[];
+
+    /**
+     * @internal
+     */
+    public _$searchKey: string;
+
+    /**
+     * @internal
+     */
+    public _$showLoading: boolean;
+
+    private _list: LocalPageableArray<any> = new LocalPageableArray();
+
+    /**
+     * @internal
+     */
+    public get _$list() {
+        return this._list;
+    }
+
+    public set _$list(value: any[] | ArrayCollection<any> | LocalPageableArray<any>) {
+        if(!value || this._list == value) return;
+        if (value instanceof LocalPageableArray && value.pagingInfo) {
+            this._list = value;
+            if(this._removeListRefreshListener) {
+                this._removeListRefreshListener();
+                this._removeListRefreshListener = null;
+            }
+            // 用于刷新分页
+            this._removeListRefreshListener = this._list.onRefresh(this._$updateCurrentPageSelectedItems, this);
+        } else if(value instanceof Array || value instanceof ArrayCollection) {
+            const data = new LocalPageableArray();
+            data.pagingInfo.pageSize = this._$cascade.pageSize;
+            data.fromArray(value);
+            const removeDataOnRefresh = data.onRefresh(() => {
+                removeDataOnRefresh();
+                this._list = data;
+                if(this._removeListRefreshListener) {
+                    this._removeListRefreshListener();
+                    this._removeListRefreshListener = null;
+                }
+                // 用于刷新分页
+                this._removeListRefreshListener = this._list.onRefresh(this._$updateCurrentPageSelectedItems, this);
+                this._list.refresh();
+            });
+        } else {
+            console.error('value type error, jigsaw-list supports Array and ArrayCollection');
+        }
+    }
+
+    /**
+     * @internal
+     */
+    public get _$trackByFn() {
+        return InternalUtils.trackByFn(this._$cascade.trackItemBy);
+    };
+
+    /**
+     * @internal
+     */
+    public _$handleSelect() {
+        this._updateSelectedItemsByCurrent();
+        if (this.initData.multipleSelect) {
+            // 多选，级联结束的tab
+            this._$cascade._handleMultipleSelect(this._$selectedItems, this.initData.level);
+        } else {
+            // 单选
+            this._$cascade._handleSelect(this._$selectedItems[0], this.initData.level);
+        }
+    }
+
+    /**
+     * @internal
+     */
+    public _$handleOptionClick() {
+        // 补充已选中的option不触发selectedItemsChange
+        if (this.initData.noMore || this._$cascade._tabs.selectedIndex != this.initData.level) return;
+        if (this._$cascade._tabs.selectedIndex < this._$cascade._tabs.length - 1) {
+            this._$cascade._tabs.selectedIndex += 1;
+        } else {
+            this._$handleSelect();
+        }
+    }
+
+    /**
+     * @internal
+     */
+    public _$handleSearching(filterKey?: string) {
+        if (!(this._$list instanceof LocalPageableArray) && !(this._$list instanceof PageableArray)) {
+            const data = new LocalPageableArray();
+            data.pagingInfo.pageSize = Infinity;
+            data.fromArray(this._$list);
+            this._$list = data;
+        }
+        filterKey = filterKey ? filterKey.trim() : '';
+        (<LocalPageableArray<any> | PageableArray>this._$list).filter(filterKey, [this._$cascade.labelField]);
+    }
+
+    private _updateSelectedItemsByCurrent() {
+        this._$currentPageSelectedItems = this._$currentPageSelectedItems ? this._$currentPageSelectedItems : [];
+        this._$selectedItems = this._$selectedItems ? this._$selectedItems : [];
+        if(this.initData.multipleSelect) {
+            this._$selectedItems.push(...this._$currentPageSelectedItems.filter(item =>
+                !this._$selectedItems.some(it => CommonUtils.compareWithKeyProperty(item, it, <string[]>this._$cascade.trackItemBy))));
+            const currentUnselectedItems = this._$list.concat().filter(item =>
+                !this._$currentPageSelectedItems.some(it => CommonUtils.compareWithKeyProperty(item, it, <string[]>this._$cascade.trackItemBy)));
+            this._$selectedItems = this._$selectedItems.filter(item =>
+                !currentUnselectedItems.some(it => CommonUtils.compareWithKeyProperty(item, it, <string[]>this._$cascade.trackItemBy)));
+        } else {
+            this._$selectedItems = this._$currentPageSelectedItems;
+        }
+    }
+
+    /**
+     * @internal
+     */
+    public _$updateCurrentPageSelectedItems() {
+        this.callLater(() => {
+            // 初始化时触发变更检查
+            this._$selectedItems = this._$selectedItems ? this._$selectedItems : [];
+            if(this._$list instanceof LocalPageableArray && this._$list.pagingInfo.pageSize != Infinity) {
+                this._$currentPageSelectedItems = this._$selectedItems.filter(item => (<any[]>this._$list).some(it =>
+                    CommonUtils.compareWithKeyProperty(it, item, <string[]>this._$cascade.trackItemBy)));
+            } else {
+                this._$currentPageSelectedItems = this._$selectedItems;
+            }
+        });
+    }
+
+    private _init(data: any[], allSelectedData: any[]) {
+        this._$list = data;
+        if (allSelectedData instanceof Array || allSelectedData instanceof ArrayCollection) {
+            // 等待根据list数据渲染option后回填数据
+            this.callLater(() => {
+                this._$currentPageSelectedItems = allSelectedData.filter(item => {
+                    return this._$list.find(it =>
+                        CommonUtils.compareWithKeyProperty(item, it, <string[]>this._$cascade.trackItemBy))
+                });
+
+                this._$selectedItems = allSelectedData.filter(item => {
+                    return data.find(it =>
+                        CommonUtils.compareWithKeyProperty(item, it, <string[]>this._$cascade.trackItemBy))
+                });
+            })
+        }
+    }
 
     ngOnInit() {
         super.ngOnInit();
@@ -416,70 +601,25 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
                 this._init(data, allSelectedData);
 
                 subscriber.unsubscribe();
-                this._$showLoading = false;
+                this.callLater(() => {
+                    this._$showLoading = false;
+                }, 300);
             }, () => subscriber.unsubscribe());
         } else if (list instanceof Array) {
             this._init(list, allSelectedData);
         }
     }
 
-    /**
-     * @internal
-     */
-    public _$selectedItems;
-
-    /**
-     * @internal
-     */
-    public _$list: any[] = [];
-
-    /**
-     * @internal
-     */
-    public _$showLoading: boolean;
-
-    private _init(data: any[], allSelectedData: any[]) {
-        this._$list = data;
-        if (allSelectedData instanceof Array || allSelectedData instanceof ArrayCollection) {
-            // 等待根据list数据渲染option后回填数据
-            this.callLater(() => {
-                this._$selectedItems = allSelectedData.filter(item => {
-                    return this._$list.find(it =>
-                        CommonUtils.compareWithKeyProperty(item, it, <string[]>this._$cascade.trackItemBy))
-                });
-            })
-        }
-    }
-
-    /**
-     * @internal
-     */
-    public _$handleSelect(selectedItems: any[]) {
-        if (this.initData.multipleSelect) {
-            // 多选，级联结束的tab
-            this._$cascade._handleMultipleSelect(selectedItems, this.initData.level);
-        } else {
-            // 单选
-            this._$cascade._handleSelect(selectedItems[0], this.initData.level);
-        }
-    }
-
-    /**
-     * @internal
-     */
-    public _$handleOptionClick() {
-        // 补充已选中的option不触发selectedItemsChange
-        if (this.initData.noMore || this._$cascade._tabs.selectedIndex != this.initData.level) return;
-        if (this._$cascade._tabs.selectedIndex < this._$cascade._tabs.length - 1) {
-            this._$cascade._tabs.selectedIndex += 1;
-        } else {
-            this._$handleSelect(this._$selectedItems);
+    ngOnDestroy() {
+        if(this._removeListRefreshListener) {
+            this._removeListRefreshListener();
+            this._removeListRefreshListener = null;
         }
     }
 }
 
 @NgModule({
-    imports: [JigsawTabsModule, JigsawTileSelectModule, TranslateModule, CommonModule],
+    imports: [JigsawTabsModule, JigsawTileSelectModule, TranslateModule, CommonModule, JigsawInputModule, JigsawPaginationModule],
     declarations: [JigsawCascade, InternalTabContent],
     exports: [JigsawCascade],
     providers: [TranslateService],
