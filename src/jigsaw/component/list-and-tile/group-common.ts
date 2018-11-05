@@ -87,6 +87,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
             //添加选中数据
             this.selectedItems.push(itemValue);
         }
+        this._removeInvalidSelectedItems();
         this._selectedItems.refresh();
         this.selectedItemsChange.emit(this.selectedItems);
     }

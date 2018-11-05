@@ -14,6 +14,8 @@ import {CascadeShowAllDemoComponent} from "./show-all/demo.component";
 import {CascadeShowAllDemoModule} from "./show-all/demo.module";
 import {CascadeWithComboDemoComponent} from "./with-combo/demo.component";
 import {CascadeWithComboDemoModule} from "./with-combo/demo.module";
+import {CascadeSearchAndPagingDemoComponent} from "./search-and-paging/demo.component";
+import {CascadeSearchAndPagingDemoModule} from "./search-and-paging/demo.module";
 
 export const routerConfig = [
     {
@@ -43,6 +45,9 @@ export const routerConfig = [
     {
         path: 'with-combo', component: CascadeWithComboDemoComponent
     },
+    {
+        path: 'search-and-paging', component: CascadeSearchAndPagingDemoComponent
+    }
 ];
 
 @NgModule({
@@ -56,7 +61,8 @@ export const routerConfig = [
         // CascadeMultiDimensionalFillBackDemoModule,
         CascadeTrackItemByDemoModule,
         CascadeShowAllDemoModule,
-        CascadeWithComboDemoModule
+        CascadeWithComboDemoModule,
+        CascadeSearchAndPagingDemoModule
     ]
 })
 export class CascadeDemoModule {
