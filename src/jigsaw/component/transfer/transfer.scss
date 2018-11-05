@@ -28,15 +28,13 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
             margin-top: -10px;
         }
     }
+    & > div{
+        transition-duration: 300ms;
+        border: 1px solid rgba(236,109,109,0);
+    }
     &.#{$transfer-prefix-cls}-error > div {
-        border: 1px solid $error-color;
-        &:hover {
-            border: 1px solid $error-color;
-        }
-        &:focus {
-            border: 1px solid $error-color;
-            box-shadow: none;
-        }
+        transition-duration: 300ms;
+        border: 1px solid rgba(236,109,109,1);
     }
     &-wrapper {
         display: flex;

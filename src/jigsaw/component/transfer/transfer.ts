@@ -1,4 +1,5 @@
 import {Component, Input, NgModule, OnDestroy, Optional} from "@angular/core";
+import {trigger, state, style, transition, animate} from "@angular/animations"
 import {JigsawListModule} from "../list-and-tile/list";
 import {JigsawCheckBoxModule} from "../checkbox/index";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "../../core/data/array-collection";
@@ -94,15 +95,26 @@ const transferServerFilterFunction = function (item) {
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[class.jigsaw-transfer-error]': '!valid'
-    }
+    },
+    animations: [
+        trigger('loading', [
+            transition(':enter', [
+                animate(300)
+            ]),
+            transition(':leave', [
+                animate(300)
+            ]),
+        ])]
+
 })
+
 export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements OnDestroy {
     private _removePageableCallbackListener: CallbackRemoval;
     private _removeArrayCallbackListener: CallbackRemoval;
     private _removeSelectedArrayCallbackListener: CallbackRemoval;
     private _filterFunction: (item: any) => boolean;
 
-    private _data: LocalPageableArray<GroupOptionValue> | PageableArray;
+    public _$data: LocalPageableArray<GroupOptionValue> | PageableArray;
 
     /**
      * 设置按钮不可交互状态的开关，为true则不可交互，为false则可交互。
@@ -129,13 +141,13 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
 
     @Input()
     public get data() {
-        return this._data;
+        return this._$data;
     }
 
     public set data(value: any[] | ArrayCollection<GroupOptionValue> | LocalPageableArray<GroupOptionValue> | PageableArray) {
         if (!value || value == this.data) return;
         if ((value instanceof LocalPageableArray || value instanceof PageableArray) && value.pagingInfo) {
-            this._data = value;
+            this._$data = value;
             this._filterFunction = value instanceof LocalPageableArray ? transferFilterFunction : transferServerFilterFunction;
             this.callLater(() => {
                 // 等待输入属性初始化
@@ -150,9 +162,9 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
                 })
             }
         } else if (value instanceof Array || value instanceof ArrayCollection) {
-            this._data = new LocalPageableArray();
-            this._data.pagingInfo.pageSize = Infinity;
-            this._data.fromArray(value);
+            this._$data = new LocalPageableArray();
+            this._$data.pagingInfo.pageSize = Infinity;
+            this._$data.fromArray(value);
             this._filterFunction = transferFilterFunction;
             this.callLater(() => {
                 // 等待输入属性初始化
@@ -163,7 +175,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
                     this._removeArrayCallbackListener();
                 }
                 this._removeArrayCallbackListener = value.onAjaxSuccess(res => {
-                    (<LocalPageableArray<GroupOptionValue>>this._data).fromArray(res);
+                    (<LocalPageableArray<GroupOptionValue>>this._$data).fromArray(res);
                     this._filterDataBySelectedItems();
                 })
             }
@@ -210,8 +222,8 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     public _$targetSelectedItems: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
 
     private _filterDataBySelectedItems() {
-        if (this._data.busy) {
-            const removeAjaxCallback = this._data.onAjaxComplete(() => {
+        if (this._$data.busy) {
+            const removeAjaxCallback = this._$data.onAjaxComplete(() => {
                 removeAjaxCallback();
                 this._filterData();
             })
@@ -221,7 +233,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     }
 
     private _filterData() {
-        this._data.filter(this._filterFunction, {selectedItems: [].concat(...this.selectedItems), trackItemBy: this.trackItemBy});
+        this._$data.filter(this._filterFunction, {selectedItems: [].concat(...this.selectedItems), trackItemBy: this.trackItemBy});
     }
 
     /**

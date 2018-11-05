@@ -2,7 +2,7 @@
 </div>
 <div class="jigsaw-transfer-wrapper" [ngClass]="_$transferClass">
     <div  class="jigsaw-transfer-left-box jigsaw-transfer-box">
-        <div *ngIf="data.busy" class="jigsaw-transfer-loading">
+        <div *ngIf="_$data?.busy" class="jigsaw-transfer-loading" @loading>
             <span class="iconfont iconfont-e8dd jigsaw-am-rotation"></span>
         </div>
         <j-transfer-list [data]="data" [trackItemBy]="trackItemBy" [labelField]="labelField"
