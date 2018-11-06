@@ -99,10 +99,10 @@ const transferServerFilterFunction = function (item) {
     animations: [
         trigger('loading', [
             transition(':enter', [
-                animate('300ms', style({ opacity: 0.4 }))
+                animate('600ms', style({ opacity: 0.4 }))
             ]),
             transition(':leave', [
-                animate('300ms', style({ opacity: 0 }))
+                animate('600ms', style({ opacity: 0 }))
             ])
         ])]
 
