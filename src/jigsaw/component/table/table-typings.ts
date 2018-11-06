@@ -391,19 +391,15 @@ export class AdditionalTableData extends TableData {
      * @private
      */
     private _isKeyEquals(key1: any, key2: any): boolean {
-        let equals;
         if (key1 instanceof Array && key2 instanceof Array) {
             if (key1.length != key2.length || key1.length == 0) {
                 return false;
             }
             // 注意，对数组的元素的比较，不再区分类型，一律采用值比较
-            key1.forEach((item, index) => {
-                equals = this._getObjectValue(item) === this._getObjectValue(key2[index])
-            });
+            return !key1.some((item, index) => (this._getObjectValue(item) !== this._getObjectValue(key2[index])));
         } else {
-            equals = this._getObjectValue(key1) === this._getObjectValue(key2);
+            return this._getObjectValue(key1) === this._getObjectValue(key2);
         }
-        return equals;
     }
 
     private _getObjectValue(obj: any): any {
