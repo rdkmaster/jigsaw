@@ -1,4 +1,4 @@
-import {Directive, HostBinding, Input, NgModule, OnDestroy, OnInit} from "@angular/core";
+import {Directive, HostBinding, Input, NgModule, NgZone, OnDestroy, OnInit} from "@angular/core";
 import {DomSanitizer} from "@angular/platform-browser";
 import {CommonUtils} from "../../core/utils/common-utils";
 
@@ -11,6 +11,10 @@ type CallbackValues = { [callbackName: string]: HtmlCallback };
 export class JigsawTrustedHtml implements OnInit, OnDestroy {
     private static _callbacks = new Map<any, CallbackValues>();
     private static _contexts: { context: any, counter: number }[] = [];
+    /**
+     * @internal
+     */
+    public static _zone: NgZone;
 
     private static _getContext(magicNumber: number): any {
         return JigsawTrustedHtml._contexts[magicNumber];
@@ -48,7 +52,7 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
             console.log(`Hint: add a member method named ${callbackName} to the context object.`);
             return;
         }
-        CommonUtils.safeInvokeCallback(contextInfo.context, callback, args);
+        JigsawTrustedHtml._zone.run(() => CommonUtils.safeInvokeCallback(contextInfo.context, callback, args));
     }
 
     private static _declareCallback(context: any, name: string, callback: HtmlCallback) {
@@ -90,10 +94,11 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
 
     //====================================================
 
-    constructor(private _sanitizer: DomSanitizer) {
+    constructor(private _sanitizer: DomSanitizer, zone: NgZone) {
         if (!window.hasOwnProperty('_jigsawInternalCallbackWrapper') || !(window['_jigsawInternalCallbackWrapper'] instanceof Function)) {
             window['_jigsawInternalCallbackWrapper'] = JigsawTrustedHtml._jigsawInternalCallbackWrapper;
         }
+        JigsawTrustedHtml._zone = zone;
     }
 
     private _trustedHtmlContext: any;
