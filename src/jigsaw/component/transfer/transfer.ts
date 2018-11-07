@@ -1,5 +1,5 @@
 import {Component, Input, NgModule, OnDestroy, Optional} from "@angular/core";
-import {trigger, style, transition, state, animate} from "@angular/animations"
+import {trigger, style, transition, state, animate, keyframes} from "@angular/animations"
 import {JigsawListModule} from "../list-and-tile/list";
 import {JigsawCheckBoxModule} from "../checkbox/index";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "../../core/data/array-collection";
@@ -98,11 +98,17 @@ const transferServerFilterFunction = function (item) {
     },
     animations: [
         trigger('loading', [
-            transition(':enter', [
-                animate('600ms', style({ opacity: 0.4 }))
+            transition('void => *', [
+                animate(300, keyframes([
+                    style({opacity: 0}),
+                    style({opacity: 0.6})
+                ]))
             ]),
-            transition(':leave', [
-                animate('600ms', style({ opacity: 0 }))
+            transition('* => void', [
+                animate(300, keyframes([
+                    style({opacity: 0.6}),
+                    style({opacity: 0})
+                ]))
             ])
         ])]
 
