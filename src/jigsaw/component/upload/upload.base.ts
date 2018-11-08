@@ -29,6 +29,9 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
     public progress = new EventEmitter<UploadFileInfo>();
 
     @Output()
+    public remove = new EventEmitter<UploadFileInfo>();
+
+    @Output()
     public complete = new EventEmitter<UploadFileInfo[]>();
 
     @Output()
@@ -154,6 +157,7 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
     }
 
     public _$removeFile(file) {
+        this.remove.emit(file);
         const fileIndex = this._$fileInfoList.findIndex(f => f == file);
         if (fileIndex == -1) return;
         this._$fileInfoList.splice(fileIndex, 1);
