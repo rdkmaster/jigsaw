@@ -151,37 +151,35 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     }
 
     public set data(value: any[] | ArrayCollection<GroupOptionValue> | LocalPageableArray<GroupOptionValue> | PageableArray) {
-        if (!value || value == this.data) return;
+        if (!value || value == this.data) {
+            return;
+        }
+
+        if (!(value instanceof ArrayCollection)) {
+            this.callLater(this._filterDataBySelectedItems, this);
+        }
+
         if ((value instanceof LocalPageableArray || value instanceof PageableArray) && value.pagingInfo) {
             this._$data = value;
             this._filterFunction = value instanceof LocalPageableArray ? transferFilterFunction : transferServerFilterFunction;
-            this.callLater(() => {
-                // 等待输入属性初始化
-                this._filterDataBySelectedItems();
-            });
             if (value instanceof LocalPageableArray) {
                 if (this._removePageableCallbackListener) {
                     this._removePageableCallbackListener();
                 }
-                this._removePageableCallbackListener = value.onAjaxComplete(() => {
-                    this._filterDataBySelectedItems();
-                })
+                this._removePageableCallbackListener = value.onRefresh(this._filterDataBySelectedItems, this);
             }
         } else if (value instanceof Array || value instanceof ArrayCollection) {
             this._$data = new LocalPageableArray();
             this._$data.pagingInfo.pageSize = Infinity;
             this._$data.fromArray(value);
             this._filterFunction = transferFilterFunction;
-            this.callLater(() => {
-                // 等待输入属性初始化
-                this._filterDataBySelectedItems();
-            });
+
             if (value instanceof ArrayCollection) {
                 if (this._removeArrayCallbackListener) {
                     this._removeArrayCallbackListener();
                 }
-                this._removeArrayCallbackListener = value.onAjaxSuccess(res => {
-                    (<LocalPageableArray<GroupOptionValue>>this._$data).fromArray(res);
+                this._removeArrayCallbackListener = value.onRefresh(() => {
+                    (<LocalPageableArray<GroupOptionValue>>this._$data).fromArray(value);
                     this._filterDataBySelectedItems();
                 })
             }
@@ -198,17 +196,20 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     }
 
     public set selectedItems(value: ArrayCollection<any> | any[]) {
-        if (!value || this._selectedItems == value) return;
+        if (!value || this._selectedItems == value) {
+            return;
+        }
         if (!(value instanceof Array) && !(value instanceof ArrayCollection)) {
             console.error('selectedItems type error, selectedItems support Array and ArrayCollection');
             return;
         }
+
         this._selectedItems = value;
         if (value instanceof ArrayCollection) {
             if (this._removeSelectedArrayCallbackListener) {
                 this._removeSelectedArrayCallbackListener();
             }
-            this._removeSelectedArrayCallbackListener = value.onAjaxComplete(this._filterDataBySelectedItems, this);
+            this._removeSelectedArrayCallbackListener = value.onRefresh(this._filterDataBySelectedItems, this);
         }
     }
 
@@ -344,7 +345,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
                 if (this._removeArrayCallbackListener) {
                     this._removeArrayCallbackListener();
                 }
-                this._removeArrayCallbackListener = value.onAjaxSuccess(this._updateData, this);
+                this._removeArrayCallbackListener = (<ArrayCollection<any>>value).onRefresh(() => this._updateData(value));
             }
         }
     }
