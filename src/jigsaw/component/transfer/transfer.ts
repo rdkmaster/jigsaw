@@ -1,4 +1,5 @@
 import {Component, Input, NgModule, OnDestroy, Optional} from "@angular/core";
+import {trigger, style, transition, state, animate, keyframes} from "@angular/animations"
 import {JigsawListModule} from "../list-and-tile/list";
 import {JigsawCheckBoxModule} from "../checkbox/index";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "../../core/data/array-collection";
@@ -11,6 +12,12 @@ import {JigsawPaginationModule} from "../pagination/pagination";
 import {InternalUtils} from "../../core/utils/internal-utils";
 import {Subscriber} from "rxjs/Subscriber";
 import {CommonModule} from "@angular/common";
+import {CheckBoxStatus} from "../checkbox/typings";
+import {TableData} from "../../core/data/table-data";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {LoadingService} from "../../service/loading.service";
+import {TranslateHelper} from "../../core/utils/translate-helper";
+
 
 // 此处不能使用箭头函数
 const transferFilterFunction = function (item) {
@@ -86,26 +93,67 @@ const transferServerFilterFunction = function (item) {
     host: {
         '[class.jigsaw-transfer]': 'true',
         '[style.width]': 'width',
-        '[style.height]': 'height'
-    }
+        '[style.height]': 'height',
+        '[class.jigsaw-transfer-error]': '!valid'
+    },
+    animations: [
+        trigger('loading', [
+            transition('void => *', [
+                animate(300, keyframes([
+                    style({opacity: 0}),
+                    style({opacity: 0.6})
+                ]))
+            ]),
+            transition('* => void', [
+                animate(300, keyframes([
+                    style({opacity: 0.6}),
+                    style({opacity: 0})
+                ]))
+            ])
+        ])]
+
 })
+
 export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements OnDestroy {
     private _removePageableCallbackListener: CallbackRemoval;
     private _removeArrayCallbackListener: CallbackRemoval;
     private _removeSelectedArrayCallbackListener: CallbackRemoval;
     private _filterFunction: (item: any) => boolean;
 
-    private _data: LocalPageableArray<GroupOptionValue> | PageableArray;
+    public _$data: LocalPageableArray<GroupOptionValue> | PageableArray;
+
+    /**
+     * 设置按钮不可交互状态的开关，为true则不可交互，为false则可交互。
+     *
+     * $demo = transfer/disabled
+     */
+    private _disabled: boolean = false;
+
+    @Input()
+    public get disabled(): boolean {
+        return this._disabled;
+    }
+
+    public set disabled(value: boolean) {
+        this._disabled = value;
+    }
+
+    /**
+     * 更新transfer的样式信息
+     * @internal
+     */
+    public _$transferClass: {};
+
 
     @Input()
     public get data() {
-        return this._data;
+        return this._$data;
     }
 
     public set data(value: any[] | ArrayCollection<GroupOptionValue> | LocalPageableArray<GroupOptionValue> | PageableArray) {
         if (!value || value == this.data) return;
         if ((value instanceof LocalPageableArray || value instanceof PageableArray) && value.pagingInfo) {
-            this._data = value;
+            this._$data = value;
             this._filterFunction = value instanceof LocalPageableArray ? transferFilterFunction : transferServerFilterFunction;
             this.callLater(() => {
                 // 等待输入属性初始化
@@ -120,9 +168,9 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
                 })
             }
         } else if (value instanceof Array || value instanceof ArrayCollection) {
-            this._data = new LocalPageableArray();
-            this._data.pagingInfo.pageSize = Infinity;
-            this._data.fromArray(value);
+            this._$data = new LocalPageableArray();
+            this._$data.pagingInfo.pageSize = Infinity;
+            this._$data.fromArray(value);
             this._filterFunction = transferFilterFunction;
             this.callLater(() => {
                 // 等待输入属性初始化
@@ -133,7 +181,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
                     this._removeArrayCallbackListener();
                 }
                 this._removeArrayCallbackListener = value.onAjaxSuccess(res => {
-                    (<LocalPageableArray<GroupOptionValue>>this._data).fromArray(res);
+                    (<LocalPageableArray<GroupOptionValue>>this._$data).fromArray(res);
                     this._filterDataBySelectedItems();
                 })
             }
@@ -180,8 +228,8 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     public _$targetSelectedItems: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
 
     private _filterDataBySelectedItems() {
-        if(this._data.busy) {
-            const removeAjaxCallback = this._data.onAjaxComplete(() => {
+        if (this._$data.busy) {
+            const removeAjaxCallback = this._$data.onAjaxComplete(() => {
                 removeAjaxCallback();
                 this._filterData();
             })
@@ -191,7 +239,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     }
 
     private _filterData() {
-        this._data.filter(this._filterFunction, {selectedItems: [].concat(...this.selectedItems), trackItemBy: this.trackItemBy});
+        this._$data.filter(this._filterFunction, {selectedItems: [].concat(...this.selectedItems), trackItemBy: this.trackItemBy});
     }
 
     /**
@@ -203,6 +251,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
      * @private
      */
     public _$transferTo(from: string) {
+        if (this.disabled) return;
         if (from == 'target') {
             if (!this._$sourceSelectedItems || !this._$sourceSelectedItems.length) return;
             this.selectedItems = this.selectedItems ? this.selectedItems : [];
@@ -260,8 +309,12 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
         super();
         this._removeHostSubscribe = _transfer.selectedItemsChange.subscribe(() => {
             this._$searchKey = '';
-        })
+        });
     }
+
+    @Input()
+    public disabled: boolean = false;
+
 
     @Input()
     public isTarget: boolean;
@@ -369,7 +422,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
         if (this._data instanceof PageableArray && this._data.length && typeof this._data[0] == 'object') {
             field = Object.keys(this._data[0]).findIndex(k => k === this.labelField);
         }
-        if(this._data.busy) {
+        if (this._data.busy) {
             const removeAjaxCallback = this._data.onAjaxComplete(() => {
                 removeAjaxCallback();
                 this._filterData(filterKey, field);
@@ -463,9 +516,26 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
 }
 
 @NgModule({
-    imports: [JigsawListModule, JigsawCheckBoxModule, PerfectScrollbarModule, JigsawInputModule, JigsawPaginationModule, CommonModule],
+    imports: [JigsawListModule, JigsawCheckBoxModule, PerfectScrollbarModule, JigsawInputModule, JigsawPaginationModule, CommonModule, TranslateModule],
     declarations: [JigsawTransfer, JigsawTransferInternalList],
-    exports: [JigsawTransfer]
+    exports: [JigsawTransfer],
+    providers: [TranslateService, LoadingService]
 })
 export class JigsawTransferModule {
+    constructor(translateService: TranslateService) {
+        InternalUtils.initI18n(translateService, 'transfer', {
+            zh: {
+                items: '项',
+                total: '共',
+            },
+            en: {
+                items: 'Items',
+                total: 'Total',
+            }
+        });
+        translateService.setDefaultLang(translateService.getBrowserLang());
+        TranslateHelper.languageChangEvent.subscribe(langInfo => {
+            translateService.use(langInfo.curLang);
+        });
+    }
 }

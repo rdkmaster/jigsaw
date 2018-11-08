@@ -1,5 +1,10 @@
-<div class="jigsaw-transfer-wrapper">
-    <div class="jigsaw-transfer-left-box jigsaw-transfer-box">
+<div *ngIf="disabled" class="jigsaw-transfer-disabled">
+</div>
+<div class="jigsaw-transfer-wrapper" [ngClass]="_$transferClass">
+    <div  class="jigsaw-transfer-left-box jigsaw-transfer-box">
+        <div *ngIf="_$data?.busy" class="jigsaw-transfer-loading" @loading>
+            <span class="iconfont iconfont-e8dd jigsaw-am-rotation"></span>
+        </div>
         <j-transfer-list [data]="data" [trackItemBy]="trackItemBy" [labelField]="labelField"
                          [subLabelField]="subLabelField" [searchable]="searchable"
                          [(selectedItems)]="_$sourceSelectedItems"></j-transfer-list>
@@ -22,4 +27,3 @@
                          [(selectedItems)]="_$targetSelectedItems" [isTarget]="true"></j-transfer-list>
     </div>
 </div>
-

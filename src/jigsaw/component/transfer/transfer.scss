@@ -7,16 +7,56 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
     display: inline-block;
     width: 400px;
     height: 200px;
+    position: relative;
+    &-loading {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: $zindex-level-2;
+        opacity:0.6;
+        span {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            font-size: 20px;
+            color: #fff;
+            left: 50%;
+            top: 50%;
+            margin-left: -10px;
+            margin-top: -10px;
+        }
+    }
+    & > div{
+        transition-duration: 300ms;
+        border: 1px solid rgba(236,109,109,0);
+    }
+    &.#{$transfer-prefix-cls}-error > div {
+        transition-duration: 300ms;
+        border: 1px solid rgba(236,109,109,1);
+    }
     &-wrapper {
         display: flex;
         flex: 1 1 0;
         width: 100%;
         height: 100%;
     }
+    &-disabled {
+        cursor: not-allowed;
+        border-color: $border-color-base !important;
+        background-color: $disabled-bg;
+        width: 100%;
+        height: 100%;
+        opacity: 0.6;
+        position: absolute;
+        z-index: $zindex-level-3;
+    }
     &-box {
         border: 1px solid $border-color-base;
         border-radius: $border-radius-base;
         flex: 1 1 0;
+        position: relative;
     }
     &-option-box {
         display: flex;
