@@ -63,6 +63,15 @@
                 </ng-template>
             </j-combo-select>
         </div>
+        <div class="demo-5 live-demo live-demo-block">
+            <h3>disabled属性为true</h3>
+            <j-list width="200" trackItemBy="name" (selectedItemsChange)="handleSelect($event)" [disabled]="true">
+                <j-list-option *ngFor="let goods of goodsList" [value]="goods">
+                    {{goods.name}}
+                </j-list-option>
+            </j-list>
+            <p class="message">选中的条目是: <span>{{selectedItems1}}</span></p>
+        </div>
     </div>
 </div>
 
