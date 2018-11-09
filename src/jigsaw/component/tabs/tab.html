@@ -2,7 +2,7 @@
     <div *ngIf="(_$tabPanes && _$tabPanes.length > 0) || editable" class="jigsaw-tabs-bar">
         <div class="jigsaw-tabs-nav-container">
             <!-- Todo 添加滚动条 -->
-            <div class="jigsaw-tabs-nav-wrap">
+            <div class="jigsaw-tabs-nav-wrap" [perfectScrollbar]="{suppressScrollY: true}">
                 <div class="jigsaw-tabs-nav">
                     <!-- 负责实现动画效果 -->
                     <div #tabsInkBar class="jigsaw-tabs-ink-bar" [ngStyle]="_$inkBarStyle"></div>
@@ -18,7 +18,8 @@
                                       (remove)="_$handleRemove($event)"
                                       (change)="titleChange.emit($event)">
                     </jigsaw-tab-label>
-                    <span class="fa fa-plus-square-o jigsaw-tabs-add-bar" *ngIf="editable" (click)="_$handleAdd()"></span>
+                    <span class="fa fa-plus-square-o jigsaw-tabs-add-bar" *ngIf="editable"
+                          (click)="_$handleAdd()"></span>
                 </div>
             </div>
         </div>
