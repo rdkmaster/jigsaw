@@ -1,13 +1,13 @@
 import {NgModule} from "@angular/core";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {BreadcrumbBasicDemoComponent} from "./demo.component";
+import {BreadcrumbRouterDemoComponent} from "./demo.component";
 import {JigsawBreadcrumbModule} from "jigsaw/component/breadcrumb/breadcrumb";
 
 @NgModule({
-    declarations: [BreadcrumbBasicDemoComponent],
-    exports: [ BreadcrumbBasicDemoComponent ],
+    declarations: [BreadcrumbRouterDemoComponent],
+    exports: [ BreadcrumbRouterDemoComponent ],
     imports: [JigsawBreadcrumbModule, JigsawDemoDescriptionModule]
 })
-export class BreadcrumbBasicDemoModule{
+export class BreadcrumbRouterDemoModule{
 
 }
