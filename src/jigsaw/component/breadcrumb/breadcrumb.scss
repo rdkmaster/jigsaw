@@ -1,0 +1,12 @@
+@import "../../assets/scss/core/base";
+
+$bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
+
+.#{$bc-prefix-cls} {
+    @include inline-block;
+
+    &-item {
+        @include inline-block;
+    }
+}
+
