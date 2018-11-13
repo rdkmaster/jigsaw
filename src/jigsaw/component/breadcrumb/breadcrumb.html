@@ -1,4 +1,4 @@
 <ng-content></ng-content>
-<ng-container *ngFor="let item of _$routeNavList">
-    <span>{{item?.label}}</span>{{separator}}
-</ng-container>
+<j-breadcrumb-item *ngFor="let item of _$routeNavList; let isLast = last" [isLast]="isLast">
+    {{item?.label}}
+</j-breadcrumb-item>

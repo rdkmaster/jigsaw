@@ -1,4 +1,4 @@
-import {Component, Input, NgModule, OnDestroy, Optional} from "@angular/core";
+import {AfterContentInit, Component, ContentChildren, forwardRef, Input, NgModule, OnDestroy, Optional, QueryList} from "@angular/core";
 import {NavigationEnd, Router} from "@angular/router";
 import {TreeData} from "../../core/data/tree-data";
 import {CommonModule} from "@angular/common";
@@ -11,12 +11,13 @@ import {Subscription} from "rxjs/Subscription";
         '[class.jigsaw-breadcrumb]': 'true'
     }
 })
-export class JigsawBreadcrumb implements OnDestroy {
+export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
     constructor(private _router: Router) {
 
     }
 
-    private _removeRouterSubscriber: Subscription;
+    private _removeRouterEventSubscriber: Subscription;
+    private _removeItemChangeSubscriber: Subscription;
 
     @Input()
     public separator: string = '/';
@@ -31,11 +32,11 @@ export class JigsawBreadcrumb implements OnDestroy {
     public set routes(value: TreeData) {
         if (!value || this._routes == value) return;
         this._routes = value;
-        if (this._removeRouterSubscriber) {
-            this._removeRouterSubscriber.unsubscribe();
-            this._removeRouterSubscriber = null;
+        if (this._removeRouterEventSubscriber) {
+            this._removeRouterEventSubscriber.unsubscribe();
+            this._removeRouterEventSubscriber = null;
         }
-        this._removeRouterSubscriber = this._router.events.subscribe(event => {
+        this._removeRouterEventSubscriber = this._router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
                 console.log(event.url);
                 this._$routeNavList = [];
@@ -54,6 +55,9 @@ export class JigsawBreadcrumb implements OnDestroy {
         })
     }
 
+    @ContentChildren(forwardRef(() => JigsawBreadcrumbItem))
+    private _items: QueryList<JigsawBreadcrumbItem>;
+
     public _$routeNavList: any[] = [];
 
     private _findBreadcrumbByRoutes(routes: TreeData, routeNav: string): TreeData {
@@ -63,10 +67,31 @@ export class JigsawBreadcrumb implements OnDestroy {
         return searchRoute.find(route => route.route == routeNav);
     }
 
+    ngAfterContentInit() {
+        if (this._items) {
+            if (this._items.last) {
+                this._items.last.isLast = true;
+            }
+            if (this._removeItemChangeSubscriber) {
+                this._removeItemChangeSubscriber.unsubscribe();
+                this._removeItemChangeSubscriber = null;
+            }
+            this._removeItemChangeSubscriber = this._items.changes.subscribe(() => {
+                if (this._items.last) {
+                    this._items.last.isLast = true;
+                }
+            })
+        }
+    }
+
     ngOnDestroy() {
-        if (this._removeRouterSubscriber) {
-            this._removeRouterSubscriber.unsubscribe();
-            this._removeRouterSubscriber = null;
+        if (this._removeRouterEventSubscriber) {
+            this._removeRouterEventSubscriber.unsubscribe();
+            this._removeRouterEventSubscriber = null;
+        }
+        if (this._removeItemChangeSubscriber) {
+            this._removeItemChangeSubscriber.unsubscribe();
+            this._removeItemChangeSubscriber = null;
         }
     }
 }
@@ -74,14 +99,19 @@ export class JigsawBreadcrumb implements OnDestroy {
 @Component({
     selector: 'jigsaw-breadcrumb-item, j-breadcrumb-item',
     template: `
-        <ng-content></ng-content>{{_$breadcrumbHost.separator}}`,
+        <ng-content></ng-content>
+        <span class="jigsaw-breadcrumb-separator" *ngIf="!isLast">{{_$breadcrumbHost?.separator}}</span>`,
     host: {
-        '[class.jigsaw-breadcrumb-item]': 'true'
+        '[class.jigsaw-breadcrumb-item]': 'true',
+        '[class.jigsaw-breadcrumb-current]': 'isLast'
     }
 })
 export class JigsawBreadcrumbItem {
     constructor(@Optional() public _$breadcrumbHost: JigsawBreadcrumb) {
     }
+
+    @Input()
+    public isLast: boolean;
 }
 
 @NgModule({

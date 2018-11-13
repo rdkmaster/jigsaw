@@ -4,9 +4,17 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
 
 .#{$bc-prefix-cls} {
     @include inline-block;
-
+    font-size: 14px;
     &-item {
         @include inline-block;
+        color: $text-color-secondary;
+        &.#{$bc-prefix-cls}-current {
+            color: $text-color;
+        }
+    }
+    &-separator {
+        margin: 0 8px;
+        color: $text-color-secondary;
     }
 }
 
