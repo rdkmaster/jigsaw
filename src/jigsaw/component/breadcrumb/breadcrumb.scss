@@ -11,10 +11,14 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
         &.#{$bc-prefix-cls}-current {
             color: $text-color;
         }
+        .#{$bc-prefix-cls}-link {
+            color: inherit;
+        }
     }
     &-separator {
         margin: 0 8px;
         color: $text-color-secondary;
     }
+
 }
 

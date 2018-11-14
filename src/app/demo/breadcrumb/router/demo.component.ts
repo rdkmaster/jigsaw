@@ -9,33 +9,23 @@ export class BreadcrumbRouterDemoComponent {
         this.routes = new TreeData();
         this.routes.fromObject([
             {
-                label: '提示框',
-                route: 'alert',
+                label: '面包屑',
+                route: 'breadcrumb',
+                routeLink: '/breadcrumb/router',
                 nodes: [
                     {
-                        label: '弹出',
-                        route: 'popup'
-                    },
-                    {
-                        label: '在文档里',
-                        route: 'in-dom'
-                    },
-                    {
-                        label: '自定义',
-                        route: 'customized'
-                    }
-                ]
-            },
-            {
-                label: 'breadcrumb',
-                nodes: [
-                    {
-                        label: '基本用法',
-                        route: 'basic',
-                    },
-                    {
-                        label: '路由',
-                        route: 'router'
+                        label: '路由-案例列表',
+                        route: 'router',
+                        nodes: [
+                            {
+                                label: '案例一',
+                                route: 'demo1'
+                            },
+                            {
+                                label: '案例二',
+                                route: 'demo2'
+                            }
+                        ]
                     }
                 ]
             }

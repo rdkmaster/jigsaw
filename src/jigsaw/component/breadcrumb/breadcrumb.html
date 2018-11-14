@@ -1,4 +1,4 @@
 <ng-content></ng-content>
 <j-breadcrumb-item *ngFor="let item of _$routeNavList; let isLast = last" [isLast]="isLast">
-    {{item?.label}}
+    <a class="jigsaw-breadcrumb-link" [routerLink]="item?.routeLink">{{item?.label}}</a>
 </j-breadcrumb-item>

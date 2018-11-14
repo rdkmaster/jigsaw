@@ -1,5 +1,5 @@
 import {AfterContentInit, Component, ContentChildren, forwardRef, Input, NgModule, OnDestroy, Optional, QueryList} from "@angular/core";
-import {NavigationEnd, Router} from "@angular/router";
+import {NavigationEnd, Router, RouterModule} from "@angular/router";
 import {TreeData} from "../../core/data/tree-data";
 import {CommonModule} from "@angular/common";
 import {Subscription} from "rxjs/Subscription";
@@ -32,6 +32,7 @@ export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
     public set routes(value: TreeData) {
         if (!value || this._routes == value) return;
         this._routes = value;
+        this._generateBreadcrumb(this._router.url);
         if (this._removeRouterEventSubscriber) {
             this._removeRouterEventSubscriber.unsubscribe();
             this._removeRouterEventSubscriber = null;
@@ -39,18 +40,7 @@ export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
         this._removeRouterEventSubscriber = this._router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
                 console.log(event.url);
-                this._$routeNavList = [];
-                if (!event.url || event.url == '/') return;
-                const routeNavList = event.url.slice(1).split('/');
-                for (let i = 0; i < routeNavList.length; i++) {
-                    const routes = i == 0 ? this._routes : this._$routeNavList[i - 1];
-                    const breadcrumb = this._findBreadcrumbByRoutes(routes, routeNavList[i]);
-                    if (!breadcrumb) {
-                        console.warn('The breadcrumb cannot find this route config: ' + event.url);
-                        break;
-                    }
-                    this._$routeNavList.push(breadcrumb);
-                }
+                this._generateBreadcrumb(event.url);
             }
         })
     }
@@ -60,11 +50,27 @@ export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
 
     public _$routeNavList: any[] = [];
 
-    private _findBreadcrumbByRoutes(routes: TreeData, routeNav: string): TreeData {
+    private _findBreadcrumbItemByRoutes(routes: TreeData, routeNav: string): TreeData {
         if (!routes || !routeNav) return null;
         let searchRoute = routes instanceof Array ? routes : routes.nodes;
         if (!searchRoute) return null;
         return searchRoute.find(route => route.route == routeNav);
+    }
+
+    private _generateBreadcrumb(url: string) {
+        this._$routeNavList = [];
+        if (!url || url == '/') return;
+        const routeNavList = url.slice(1).split('/');
+        for (let i = 0; i < routeNavList.length; i++) {
+            const routes = i == 0 ? this._routes : this._$routeNavList[i - 1];
+            const breadcrumb = this._findBreadcrumbItemByRoutes(routes, routeNavList[i]);
+            if (!breadcrumb) {
+                console.warn('The breadcrumb cannot find this route config: ' + url);
+                break;
+            }
+            breadcrumb.routeLink = breadcrumb.routeLink ? breadcrumb.routeLink : '/' + routeNavList.slice(0, i + 1).join('/');
+            this._$routeNavList.push(breadcrumb);
+        }
     }
 
     ngAfterContentInit() {
@@ -115,7 +121,7 @@ export class JigsawBreadcrumbItem {
 }
 
 @NgModule({
-    imports: [CommonModule],
+    imports: [CommonModule, RouterModule],
     declarations: [JigsawBreadcrumb, JigsawBreadcrumbItem],
     exports: [JigsawBreadcrumb, JigsawBreadcrumbItem]
 })

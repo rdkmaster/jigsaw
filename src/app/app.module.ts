@@ -9,7 +9,6 @@ import {AppComponent} from './app.component';
 import {AjaxInterceptor} from './app.interceptor';
 import {DemoListComponent} from "./demo-list.component";
 import {routerConfig} from "./router-config";
-import {JigsawBreadcrumbModule} from "../jigsaw/component/breadcrumb/breadcrumb";
 
 {
     (<any[]>routerConfig).push(
@@ -25,7 +24,7 @@ import {JigsawBreadcrumbModule} from "../jigsaw/component/breadcrumb/breadcrumb"
     imports: [
         BrowserModule, BrowserAnimationsModule, HttpClientModule,
         RouterModule.forRoot(routerConfig),
-        JigsawRootModule, JigsawBreadcrumbModule
+        JigsawRootModule
     ],
     providers: [
         {
