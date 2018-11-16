@@ -33,7 +33,7 @@ export const routerConfig = [
                 path: 'digital', component: BreadcrumbRouterDigital,
                 children: [
                     {
-                        path: 'detail/:id', component: BreadcrumbRouterDetail,
+                        path: ':id', component: BreadcrumbRouterDetail,
                         children: [
                             {
                                 path: 'buy', component: BreadcrumbRouterBuy

@@ -54,7 +54,8 @@ export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
         if (!routes || !routeNode) return null;
         let searchRoute = routes instanceof Array ? routes : routes.nodes;
         if (!searchRoute) return null;
-        return searchRoute.find(r => r.route == routeNode || r.route.indexOf(routeNode + '/') == 0);
+        return searchRoute.find(r => r.route == routeNode || r.route.indexOf(routeNode + '/') == 0 ||
+            r.route == '*');
     }
 
     private _generateBreadcrumb(url: string) {

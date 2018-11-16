@@ -40,7 +40,7 @@ export class BreadcrumbRouterDemoComponent {
                                 nodes: [
                                     {
                                         label: 'Detail',
-                                        route: 'detail/*',
+                                        route: '*',
                                         nodes: [
                                             {
                                                 label: 'Buy',
