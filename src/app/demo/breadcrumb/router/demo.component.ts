@@ -12,18 +12,31 @@ export class BreadcrumbRouterDemoComponent {
                 label: '面包屑',
                 route: 'breadcrumb',
                 routeLink: '/breadcrumb/router',
+                visible: false,
                 nodes: [
                     {
-                        label: '路由-案例列表',
+                        label: 'Product List',
                         route: 'router',
                         nodes: [
                             {
-                                label: '案例一',
-                                route: 'demo1'
+                                label: 'Fruits',
+                                route: 'fruits',
+                                nodes: [
+                                    {
+                                        label: 'Detail',
+                                        route: 'detail'
+                                    }
+                                ]
                             },
                             {
-                                label: '案例二',
-                                route: 'demo2'
+                                label: 'Digital',
+                                route: 'digital',
+                                nodes: [
+                                    {
+                                        label: 'Detail',
+                                        route: 'detail'
+                                    }
+                                ]
                             }
                         ]
                     }

@@ -58,19 +58,20 @@ export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
     }
 
     private _generateBreadcrumb(url: string) {
-        this._$routeNavList = [];
+        const routeNavList = [];
         if (!url || url == '/') return;
-        const routeNavList = url.slice(1).split('/');
-        for (let i = 0; i < routeNavList.length; i++) {
-            const routes = i == 0 ? this._routes : this._$routeNavList[i - 1];
-            const breadcrumb = this._findBreadcrumbItemByRoutes(routes, routeNavList[i]);
+        const routeNodes = url.slice(1).split('/');
+        for (let i = 0; i < routeNodes.length; i++) {
+            const routes = i == 0 ? this._routes : routeNavList[i - 1];
+            const breadcrumb = this._findBreadcrumbItemByRoutes(routes, routeNodes[i]);
             if (!breadcrumb) {
                 console.warn('The breadcrumb cannot find this route config: ' + url);
                 break;
             }
-            breadcrumb.routeLink = breadcrumb.routeLink ? breadcrumb.routeLink : '/' + routeNavList.slice(0, i + 1).join('/');
-            this._$routeNavList.push(breadcrumb);
+            breadcrumb.routeLink = breadcrumb.routeLink ? breadcrumb.routeLink : '/' + routeNodes.slice(0, i + 1).join('/');
+            routeNavList.push(breadcrumb);
         }
+        this._$routeNavList = routeNavList.filter(rn => rn.visible !== false);
     }
 
     ngAfterContentInit() {

@@ -4,8 +4,9 @@ import {BreadcrumbBasicDemoModule} from "./basic/demo.module";
 import {BreadcrumbBasicDemoComponent} from "./basic/demo.component";
 import {BreadcrumbRouterDemoComponent} from "./router/demo.component";
 import {BreadcrumbRouterDemoModule} from "./router/demo.module";
-import {BreadcrumbRouterDemo1} from "./router/demo1/demo1";
-import {BreadcrumbRouterDemo2} from "./router/demo2/demo2";
+import {BreadcrumbRouterFruits} from "./router/fruits/fruits";
+import {BreadcrumbRouterDigital} from "./router/digital/digital";
+import {BreadcrumbRouterDetail, BreadcrumbRouterDetailModule} from "./router/detail/detail";
 
 export const routerConfig = [
     /*{
@@ -18,10 +19,20 @@ export const routerConfig = [
         path: 'router', component: BreadcrumbRouterDemoComponent,
         children: [
             {
-                path: 'demo1', component: BreadcrumbRouterDemo1
+                path: 'fruits', component: BreadcrumbRouterFruits,
+                children: [
+                    {
+                        path: 'detail/:id', component: BreadcrumbRouterDetail
+                    }
+                ]
             },
             {
-                path: 'demo2', component: BreadcrumbRouterDemo2
+                path: 'digital', component: BreadcrumbRouterDigital,
+                children: [
+                    {
+                        path: 'detail/:id', component: BreadcrumbRouterDetail
+                    }
+                ]
             }
         ]
     }
@@ -31,7 +42,8 @@ export const routerConfig = [
     imports: [
         RouterModule.forChild(routerConfig),
         BreadcrumbBasicDemoModule,
-        BreadcrumbRouterDemoModule
+        BreadcrumbRouterDemoModule,
+        BreadcrumbRouterDetailModule
     ]
 })
 export class BreadcrumbDemoModule {
