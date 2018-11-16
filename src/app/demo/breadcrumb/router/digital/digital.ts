@@ -8,6 +8,7 @@ import {RouterModule} from "@angular/router";
             <li><a routerLink="detail/4">pad</a></li>
             <li><a routerLink="detail/5">computer</a></li>
         </ul>
+        <hr>
         <router-outlet></router-outlet>
     `,
     styles: [`

@@ -1,11 +1,14 @@
 import {Component, NgModule, OnInit} from "@angular/core";
 import {ProductService} from "../product.service";
-import {ActivatedRoute, ParamMap} from "@angular/router";
+import {ActivatedRoute, ParamMap, RouterModule} from "@angular/router";
 
 @Component({
     template: `
         name: {{product?.name}}<br>
-        price: {{product?.price}}
+        price: {{product?.price}}<br>
+        <a routerLink="buy">buy now</a>
+        <hr>
+        <router-outlet></router-outlet>
     `
 })
 export class BreadcrumbRouterDetail implements OnInit {
@@ -25,6 +28,7 @@ export class BreadcrumbRouterDetail implements OnInit {
 }
 
 @NgModule({
+    imports: [RouterModule],
     declarations: [BreadcrumbRouterDetail],
     exports: [ BreadcrumbRouterDetail],
     providers: [ProductService]

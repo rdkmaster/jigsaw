@@ -24,7 +24,13 @@ export class BreadcrumbRouterDemoComponent {
                                 nodes: [
                                     {
                                         label: 'Detail',
-                                        route: 'detail'
+                                        route: 'detail/*',
+                                        nodes: [
+                                            {
+                                                label: 'Buy',
+                                                route: 'buy'
+                                            }
+                                        ]
                                     }
                                 ]
                             },
@@ -34,7 +40,13 @@ export class BreadcrumbRouterDemoComponent {
                                 nodes: [
                                     {
                                         label: 'Detail',
-                                        route: 'detail'
+                                        route: 'detail/*',
+                                        nodes: [
+                                            {
+                                                label: 'Buy',
+                                                route: 'buy'
+                                            }
+                                        ]
                                     }
                                 ]
                             }

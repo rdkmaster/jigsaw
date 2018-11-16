@@ -8,6 +8,7 @@ import {RouterModule} from "@angular/router";
             <li><a routerLink="detail/1">pear</a></li>
             <li><a routerLink="detail/2">orange</a></li>
         </ul>
+        <hr>
         <router-outlet></router-outlet>
     `,
     styles: [`

@@ -6,12 +6,10 @@ import {BreadcrumbRouterDemoComponent} from "./router/demo.component";
 import {BreadcrumbRouterDemoModule} from "./router/demo.module";
 import {BreadcrumbRouterFruits} from "./router/fruits/fruits";
 import {BreadcrumbRouterDigital} from "./router/digital/digital";
-import {BreadcrumbRouterDetail, BreadcrumbRouterDetailModule} from "./router/detail/detail";
+import {BreadcrumbRouterDetail} from "./router/detail/detail";
+import {BreadcrumbRouterBuy} from "./router/buy/buy";
 
 export const routerConfig = [
-    /*{
-        path: '', redirectTo: 'router'
-    },*/
     {
         path: 'basic', component: BreadcrumbBasicDemoComponent
     },
@@ -22,7 +20,12 @@ export const routerConfig = [
                 path: 'fruits', component: BreadcrumbRouterFruits,
                 children: [
                     {
-                        path: 'detail/:id', component: BreadcrumbRouterDetail
+                        path: 'detail/:id', component: BreadcrumbRouterDetail,
+                        children: [
+                            {
+                                path: 'buy', component: BreadcrumbRouterBuy
+                            }
+                        ]
                     }
                 ]
             },
@@ -30,7 +33,12 @@ export const routerConfig = [
                 path: 'digital', component: BreadcrumbRouterDigital,
                 children: [
                     {
-                        path: 'detail/:id', component: BreadcrumbRouterDetail
+                        path: 'detail/:id', component: BreadcrumbRouterDetail,
+                        children: [
+                            {
+                                path: 'buy', component: BreadcrumbRouterBuy
+                            }
+                        ]
                     }
                 ]
             }
@@ -42,8 +50,7 @@ export const routerConfig = [
     imports: [
         RouterModule.forChild(routerConfig),
         BreadcrumbBasicDemoModule,
-        BreadcrumbRouterDemoModule,
-        BreadcrumbRouterDetailModule
+        BreadcrumbRouterDemoModule
     ]
 })
 export class BreadcrumbDemoModule {
