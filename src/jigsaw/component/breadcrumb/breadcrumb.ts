@@ -62,8 +62,9 @@ export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
         if (!url || url == '/') return;
         const routeNodes = url.slice(1).split('/');
         for (let i = 0; i < routeNodes.length; i++) {
+            const routeNode = routeNodes[i];
             const routes = i == 0 ? this._routes : routeNavList[i - 1];
-            let breadcrumb = this._findBreadcrumbItemByRoutes(routes, routeNodes[i]);
+            let breadcrumb = this._findBreadcrumbItemByRoutes(routes, routeNode);
             if (!breadcrumb) {
                 console.warn('The breadcrumb cannot find this route config: ' + url);
                 break;
@@ -72,6 +73,8 @@ export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
             breadcrumb = Object.assign({}, breadcrumb);
             breadcrumb.routeLink = breadcrumb.routeLink ? breadcrumb.routeLink :
                 (breadcrumb.route[0] == '/' ? breadcrumb.route : '/' + routeNodes.slice(0, i + 1).join('/'));
+            breadcrumb.label = typeof breadcrumb.label == 'function' ? breadcrumb.label(routeNode) : breadcrumb.label;
+            breadcrumb.icon = typeof breadcrumb.icon == 'function' ? breadcrumb.icon(routeNode) : breadcrumb.icon;
             routeNavList.push(breadcrumb);
         }
         this._$routeNavList = routeNavList.filter(rn => rn.visible !== false);

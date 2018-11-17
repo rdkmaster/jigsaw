@@ -1,5 +1,7 @@
 import {GeneralCollection} from "./general-collection";
 
+export type breadcrumbGenerator = (routeNode: string) => string;
+
 /**
  * 用于处理树状关系的数据，目前只实现了最基础的功能，后续会增加子级数据懒加载等功能。
  *
@@ -11,12 +13,12 @@ export class BreadcrumbData extends GeneralCollection<any> {
     /**
      * 单节点在面包屑中的显示文本
      */
-    label?: string;
+    label?: string | breadcrumbGenerator;
 
     /**
      * 字体的class，支持font-awesome，icon-font
      */
-    icon?: string;
+    icon?: string | breadcrumbGenerator;
 
     /**
      * 单个路由节点
