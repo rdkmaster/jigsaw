@@ -49,6 +49,7 @@ import {JigsawIconModule} from "./component/icon/icon";
 import {JigsawUploadModule} from "./component/upload/index";
 import {JigsawTransferModule} from "./component/transfer/transfer";
 import {JigsawTextareaModule} from "./component/textarea/index";
+import {JigsawBreadcrumbModule} from "./component/breadcrumb/breadcrumb";
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
@@ -100,7 +101,8 @@ const JIGSAW_MODULE = [
     JigsawIconModule,
     JigsawUploadModule,
     JigsawTransferModule,
-    JigsawTextareaModule
+    JigsawTextareaModule,
+    JigsawBreadcrumbModule
 ];
 
 @NgModule({
