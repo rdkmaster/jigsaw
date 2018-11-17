@@ -9,9 +9,7 @@ export class BreadcrumbRouterDemoComponent {
         this.routes = new TreeData();
         this.routes.fromObject([
             {
-                label: '面包屑',
                 route: 'breadcrumb',
-                routeLink: '/breadcrumb/router',
                 visible: false,
                 nodes: [
                     {
@@ -23,12 +21,18 @@ export class BreadcrumbRouterDemoComponent {
                                 route: 'fruits',
                                 nodes: [
                                     {
-                                        label: 'Detail',
-                                        route: 'detail/*',
+                                        route: 'detail',
+                                        visible: false,
                                         nodes: [
                                             {
-                                                label: 'Buy',
-                                                route: 'buy'
+                                                label: 'Detail',
+                                                route: '*',
+                                                nodes: [
+                                                    {
+                                                        label: 'Buy',
+                                                        route: 'buy'
+                                                    }
+                                                ]
                                             }
                                         ]
                                     }
