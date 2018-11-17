@@ -1,6 +1,6 @@
-import {Component, NgModule, OnInit} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {ProductService} from "../product.service";
-import {ActivatedRoute, ParamMap, RouterModule} from "@angular/router";
+import {ActivatedRoute, ParamMap} from "@angular/router";
 
 @Component({
     template: `
@@ -25,14 +25,4 @@ export class BreadcrumbRouterDetail implements OnInit {
             this.product = this.productService.getProductById(parseInt(params.get('id')))
         });
     }
-}
-
-@NgModule({
-    imports: [RouterModule],
-    declarations: [BreadcrumbRouterDetail],
-    exports: [ BreadcrumbRouterDetail],
-    providers: [ProductService]
-})
-export class BreadcrumbRouterDetailModule{
-
 }

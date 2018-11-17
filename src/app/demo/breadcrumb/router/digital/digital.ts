@@ -1,5 +1,4 @@
-import {Component, NgModule} from "@angular/core";
-import {RouterModule} from "@angular/router";
+import {Component} from "@angular/core";
 
 @Component({
     template: `
@@ -18,14 +17,5 @@ import {RouterModule} from "@angular/router";
     `]
 })
 export class BreadcrumbRouterDigital {
-
-}
-
-@NgModule({
-    imports: [RouterModule],
-    declarations: [BreadcrumbRouterDigital],
-    exports: [ BreadcrumbRouterDigital]
-})
-export class BreadcrumbRouterDigitalModule{
 
 }

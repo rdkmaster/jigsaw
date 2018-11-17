@@ -1,6 +1,4 @@
-import {Component, NgModule, OnInit} from "@angular/core";
-import {ProductService} from "../product.service";
-import {ActivatedRoute, ParamMap} from "@angular/router";
+import {Component, OnInit} from "@angular/core";
 
 @Component({
     template: `
@@ -13,15 +11,6 @@ export class BreadcrumbRouterBuy implements OnInit {
     ngOnInit() {
         setTimeout(() => {
             this.text = 'congratulations, payment successful!'
-        }, 3000)
+        }, 2000)
     }
-}
-
-@NgModule({
-    declarations: [BreadcrumbRouterBuy],
-    exports: [BreadcrumbRouterBuy],
-    providers: [ProductService]
-})
-export class BreadcrumbRouterBuyModule {
-
 }

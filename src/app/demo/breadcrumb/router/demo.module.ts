@@ -3,16 +3,18 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 import {BreadcrumbRouterDemoComponent} from "./demo.component";
 import {JigsawBreadcrumbModule} from "jigsaw/component/breadcrumb/breadcrumb";
 import {RouterModule} from "@angular/router";
-import {BreadcrumbRouterFruitsModule} from "./fruits/fruits";
-import {BreadcrumbRouterDigitalModule} from "./digital/digital";
-import {BreadcrumbRouterDetailModule} from "./detail/detail";
-import {BreadcrumbRouterBuyModule} from "./buy/buy";
+import {BreadcrumbRouterFruits} from "./fruits/fruits";
+import {BreadcrumbRouterDigital} from "./digital/digital";
+import {BreadcrumbRouterDetail} from "./detail/detail";
+import {BreadcrumbRouterBuy} from "./buy/buy";
+import {ProductService} from "./product.service";
 
 @NgModule({
-    declarations: [BreadcrumbRouterDemoComponent],
+    declarations: [BreadcrumbRouterDemoComponent, BreadcrumbRouterFruits, BreadcrumbRouterDigital,
+        BreadcrumbRouterDetail, BreadcrumbRouterBuy],
     exports: [BreadcrumbRouterDemoComponent],
-    imports: [JigsawBreadcrumbModule, JigsawDemoDescriptionModule, RouterModule, BreadcrumbRouterFruitsModule,
-        BreadcrumbRouterDigitalModule, BreadcrumbRouterDetailModule, BreadcrumbRouterBuyModule]
+    imports: [JigsawBreadcrumbModule, JigsawDemoDescriptionModule, RouterModule],
+    providers: [ProductService]
 })
 export class BreadcrumbRouterDemoModule {
 
