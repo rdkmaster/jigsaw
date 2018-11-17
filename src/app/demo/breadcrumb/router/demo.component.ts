@@ -15,6 +15,7 @@ export class BreadcrumbRouterDemoComponent {
                     {
                         label: 'Product List',
                         route: 'router',
+                        icon: 'fa fa-list',
                         nodes: [
                             {
                                 label: 'Fruits',
@@ -30,7 +31,8 @@ export class BreadcrumbRouterDemoComponent {
                                                 nodes: [
                                                     {
                                                         label: 'Buy',
-                                                        route: 'buy'
+                                                        route: 'buy',
+                                                        icon: 'fa fa-shopping-cart'
                                                     }
                                                 ]
                                             }
@@ -48,7 +50,8 @@ export class BreadcrumbRouterDemoComponent {
                                         nodes: [
                                             {
                                                 label: 'Buy',
-                                                route: 'buy'
+                                                route: 'buy',
+                                                icon: 'fa fa-shopping-cart'
                                             }
                                         ]
                                     }

@@ -19,6 +19,8 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
         margin: 0 8px;
         color: $text-color-secondary;
     }
-
+    &-icon {
+        margin-right: 4px;
+    }
 }
 
