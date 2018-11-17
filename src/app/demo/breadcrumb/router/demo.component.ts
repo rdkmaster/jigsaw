@@ -1,12 +1,12 @@
 import {Component} from "@angular/core";
-import {TreeData} from "jigsaw/core/data/tree-data";
+import {BreadcrumbData} from "jigsaw/core/data/breadcrumb-data";
 
 @Component({
     templateUrl: './demo.component.html'
 })
 export class BreadcrumbRouterDemoComponent {
     constructor() {
-        this.routes = new TreeData();
+        this.routes = new BreadcrumbData();
         this.routes.fromObject([
             {
                 route: 'breadcrumb',
@@ -61,7 +61,7 @@ export class BreadcrumbRouterDemoComponent {
         ]);
     }
 
-    routes: TreeData;
+    routes: BreadcrumbData;
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

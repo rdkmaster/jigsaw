@@ -1,8 +1,8 @@
 import {AfterContentInit, Component, ContentChildren, forwardRef, Input, NgModule, OnDestroy, Optional, QueryList} from "@angular/core";
 import {NavigationEnd, Router, RouterModule} from "@angular/router";
-import {TreeData} from "../../core/data/tree-data";
 import {CommonModule} from "@angular/common";
 import {Subscription} from "rxjs/Subscription";
+import {BreadcrumbData} from "../../core/data/breadcrumb-data";
 
 @Component({
     selector: 'jigsaw-breadcrumb, j-breadcrumb',
@@ -22,14 +22,14 @@ export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
     @Input()
     public separator: string = '/';
 
-    private _routes: TreeData;
+    private _routes: BreadcrumbData;
 
     @Input()
-    public get routes(): TreeData {
+    public get routes(): BreadcrumbData {
         return this._routes;
     }
 
-    public set routes(value: TreeData) {
+    public set routes(value: BreadcrumbData) {
         if (!value || this._routes == value) return;
         this._routes = value;
         this._generateBreadcrumb(this._router.url);
@@ -48,9 +48,9 @@ export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
     @ContentChildren(forwardRef(() => JigsawBreadcrumbItem))
     private _items: QueryList<JigsawBreadcrumbItem>;
 
-    public _$routeNavList: any[] = [];
+    public _$routeNavList: BreadcrumbData[] = [];
 
-    private _findBreadcrumbItemByRoutes(routes: TreeData, routeNode: string): TreeData {
+    private _findBreadcrumbItemByRoutes(routes: BreadcrumbData, routeNode: string): BreadcrumbData {
         if (!routes || !routeNode) return null;
         let searchRoute = routes instanceof Array ? routes : routes.nodes;
         if (!searchRoute) return null;
