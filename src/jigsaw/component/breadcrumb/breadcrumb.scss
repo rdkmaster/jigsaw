@@ -3,13 +3,22 @@
 $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
 
 .#{$bc-prefix-cls} {
-    @include inline-block;
-    font-size: 14px;
+    display: block;
+    font-size: 16px;
+    height: 54px;
+    background: $background-color-base;
+    padding: 0 12px;
+    &:before {
+        height: 100%;
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+    }
     &-item {
         @include inline-block;
         color: $text-color-secondary;
-        &.#{$bc-prefix-cls}-current {
-            color: $text-color;
+        &:hover, &.#{$bc-prefix-cls}-current {
+            color: $heading-color;
         }
         .#{$bc-prefix-cls}-link {
             color: inherit;
@@ -21,6 +30,46 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
     }
     &-icon {
         margin-right: 4px;
+    }
+    &.#{$bc-prefix-cls}-light {
+        background: $background-color-base;
+        .#{$bc-prefix-cls}-item {
+            color: $text-color-secondary;
+            &:hover, &.#{$bc-prefix-cls}-current {
+                color: $heading-color;
+            }
+        }
+    }
+    &.#{$bc-prefix-cls}-dark {
+        background: $background-color-dark;
+        .#{$bc-prefix-cls}-item {
+            color: $text-color-secondary;
+            &:hover, &.#{$bc-prefix-cls}-current {
+                color: $text-color-of-bg;
+            }
+        }
+    }
+    &.#{$bc-prefix-cls}-white {
+        height: 44px;
+        padding: 0 8px;
+        font-size: 14px;
+        background: $component-background;
+        .#{$bc-prefix-cls}-item {
+            .#{$bc-prefix-cls}-icon {
+                color: $primary-color;
+            }
+            .#{$bc-prefix-cls}-label {
+                color: $heading-color;
+                &:hover {
+                    color: $primary-color;
+                }
+            }
+            &.#{$bc-prefix-cls}-current {
+                .#{$bc-prefix-cls}-label {
+                    color: $primary-color;
+                }
+            }
+        }
     }
 }
 

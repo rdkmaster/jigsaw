@@ -9,7 +9,10 @@ import {CommonUtils} from "../../core/utils/common-utils";
     selector: 'jigsaw-breadcrumb, j-breadcrumb',
     templateUrl: 'breadcrumb.html',
     host: {
-        '[class.jigsaw-breadcrumb]': 'true'
+        '[class.jigsaw-breadcrumb]': 'true',
+        '[class.jigsaw-breadcrumb-light]': 'theme == "light"',
+        '[class.jigsaw-breadcrumb-dark]': 'theme == "dark"',
+        '[class.jigsaw-breadcrumb-white]': 'theme == "white"'
     }
 })
 export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
@@ -25,6 +28,9 @@ export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
 
     @Input()
     public generatorContext: any;
+
+    @Input()
+    public theme: 'light' | 'dark' | 'white' = 'light';
 
     private _routesConfig: BreadcrumbData;
 

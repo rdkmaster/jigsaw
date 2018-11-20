@@ -1,6 +1,7 @@
 <ng-content></ng-content>
 <j-breadcrumb-item *ngFor="let item of _$routeNavList; let isLast = last" [isLast]="isLast">
     <a class="jigsaw-breadcrumb-link" [routerLink]="item?.routeLink">
-        <span *ngIf="item?.icon" class="jigsaw-breadcrumb-icon {{item.icon}}"></span>{{item?.label}}
+        <span *ngIf="item?.icon" class="jigsaw-breadcrumb-icon {{item.icon}}"></span>
+        <span class="jigsaw-breadcrumb-label">{{item?.label}}</span>
     </a>
 </j-breadcrumb-item>

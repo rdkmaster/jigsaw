@@ -50,6 +50,7 @@ $border-style-base      : solid;
 
 // Background color
 $background-color-base  : #f7f7f7;
+$background-color-dark  : mix(#000, $background-color-base, 80%);
 
 // Shadow
 $shadow-color           : rgba(#000, .2);
