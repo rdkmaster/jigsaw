@@ -3,7 +3,22 @@ import {BreadcrumbData} from "jigsaw/core/data/breadcrumb-data";
 import {ProductService} from "./product.service";
 
 @Component({
-    templateUrl: './demo.component.html'
+    templateUrl: './demo.component.html',
+    styles: [`
+        h3 {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 6px;
+        }
+
+        p {
+            margin-bottom: 4px;
+        }
+
+        j-breadcrumb {
+            margin-bottom: 12px;
+        }
+    `]
 })
 export class BreadcrumbRouterDemoComponent {
     constructor(public productService: ProductService) {

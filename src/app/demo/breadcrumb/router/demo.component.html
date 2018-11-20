@@ -4,8 +4,12 @@
 
 
 <!-- start to learn the demo from here -->
+<h3>导航面包屑</h3>
+<p>浅色背景</p>
 <j-breadcrumb [routesConfig]="routes" separator=">" [generatorContext]="this"></j-breadcrumb>
+<p>深色背景</p>
 <j-breadcrumb [routesConfig]="routes" separator=">" [generatorContext]="this" theme="dark"></j-breadcrumb>
+<h3>内页面包屑</h3>
 <j-breadcrumb [routesConfig]="routes" separator=">" [generatorContext]="this" theme="white"></j-breadcrumb>
 
 <a routerLink="fruits">Fruits</a> |
