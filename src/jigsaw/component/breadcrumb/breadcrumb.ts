@@ -3,6 +3,7 @@ import {NavigationEnd, Router, RouterModule} from "@angular/router";
 import {CommonModule} from "@angular/common";
 import {Subscription} from "rxjs/Subscription";
 import {BreadcrumbData} from "../../core/data/breadcrumb-data";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 @Component({
     selector: 'jigsaw-breadcrumb, j-breadcrumb',
@@ -22,16 +23,16 @@ export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
     @Input()
     public separator: string = '/';
 
-    private _routes: BreadcrumbData;
+    private _routesConfig: BreadcrumbData;
 
     @Input()
-    public get routes(): BreadcrumbData {
-        return this._routes;
+    public get routesConfig(): BreadcrumbData {
+        return this._routesConfig;
     }
 
-    public set routes(value: BreadcrumbData) {
-        if (!value || this._routes == value) return;
-        this._routes = value;
+    public set routesConfig(value: BreadcrumbData) {
+        if (!value || this._routesConfig == value) return;
+        this._routesConfig = value;
         this._generateBreadcrumb(this._router.url);
         if (this._removeRouterEventSubscriber) {
             this._removeRouterEventSubscriber.unsubscribe();
@@ -39,7 +40,6 @@ export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
         }
         this._removeRouterEventSubscriber = this._router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
-                console.log(event.url);
                 this._generateBreadcrumb(event.url);
             }
         })
@@ -63,7 +63,7 @@ export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
         const routeNodes = url.slice(1).split('/');
         for (let i = 0; i < routeNodes.length; i++) {
             const routeNode = routeNodes[i];
-            const routes = i == 0 ? this._routes : routeNavList[i - 1];
+            const routes = i == 0 ? this._routesConfig : routeNavList[i - 1];
             let breadcrumb = this._findBreadcrumbItemByRoutes(routes, routeNode);
             if (!breadcrumb) {
                 console.warn('The breadcrumb cannot find this route config: ' + url);
