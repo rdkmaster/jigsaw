@@ -69,12 +69,12 @@ export class BreadcrumbRouterDemoComponent {
 
     routes: BreadcrumbData;
 
-    detailLabelGenerator = (routeNode: string) => {
+    detailLabelGenerator(routeNode: string) {
         return this.productService.getProductById(parseInt(routeNode)).name;
     };
 
-    productIconGenerator = (routeNode: string) => {
-        switch(routeNode) {
+    productIconGenerator(routeNode: string) {
+        switch (routeNode) {
             case 'fruits':
                 return 'fa fa-lemon-o';
             case 'digital':

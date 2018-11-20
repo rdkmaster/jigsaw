@@ -23,6 +23,9 @@ export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
     @Input()
     public separator: string = '/';
 
+    @Input()
+    public generatorContext: any;
+
     private _routesConfig: BreadcrumbData;
 
     @Input()
@@ -73,8 +76,10 @@ export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
             breadcrumb = Object.assign({}, breadcrumb);
             breadcrumb.routeLink = breadcrumb.routeLink ? breadcrumb.routeLink :
                 (breadcrumb.route[0] == '/' ? breadcrumb.route : '/' + routeNodes.slice(0, i + 1).join('/'));
-            breadcrumb.label = typeof breadcrumb.label == 'function' ? breadcrumb.label(decodeURI(routeNode)) : breadcrumb.label;
-            breadcrumb.icon = typeof breadcrumb.icon == 'function' ? breadcrumb.icon(decodeURI(routeNode)) : breadcrumb.icon;
+            breadcrumb.label = typeof breadcrumb.label == 'function' ?
+                CommonUtils.safeInvokeCallback(this.generatorContext, breadcrumb.label, [decodeURI(routeNode)]) : breadcrumb.label;
+            breadcrumb.icon = typeof breadcrumb.icon == 'function' ?
+                CommonUtils.safeInvokeCallback(this.generatorContext, breadcrumb.icon, [decodeURI(routeNode)]) : breadcrumb.icon;
             routeNavList.push(breadcrumb);
         }
         this._$routeNavList = routeNavList.filter(rn => rn.visible !== false);
