@@ -23,9 +23,10 @@ export enum CollapseMode {
     selector: 'jigsaw-collapse-pane, j-collapse-pane',
     templateUrl: './collapse-pane.html'
 })
-export class JigsawCollapsePane {
+export class JigsawCollapsePane extends AbstractJigsawComponent {
 
     constructor(@Host() @Inject(forwardRef(() => JigsawCollapse)) private _collapse) {
+        super();
     }
 
     @Input('header')
@@ -53,7 +54,7 @@ export class JigsawCollapsePane {
             })
         }
         this._$isTransitionEnd = false;
-        setTimeout(() => {
+        this.callLater(() => {
             this.isActive = !this.isActive;
         })
     }
@@ -71,11 +72,11 @@ export class JigsawCollapsePane {
     templateUrl: 'collapse.html',
     host: {
         '[style.width]': 'width',
-        '[class.jigsaw-collapse-host]':'true'
+        '[class.jigsaw-collapse-host]': 'true'
     },
     encapsulation: ViewEncapsulation.None
 })
-export class JigsawCollapse extends AbstractJigsawComponent{
+export class JigsawCollapse extends AbstractJigsawComponent {
 
     @ContentChildren(JigsawCollapsePane) panes: QueryList<JigsawCollapsePane>;
 
@@ -84,7 +85,7 @@ export class JigsawCollapse extends AbstractJigsawComponent{
      * @type {string| CollapseMode}
      */
     @Input()
-    public mode: string| CollapseMode = 'default';  // accordion
+    public mode: string | CollapseMode = 'default';  // accordion
 }
 
 /**
@@ -95,5 +96,6 @@ export class JigsawCollapse extends AbstractJigsawComponent{
     declarations: [JigsawCollapse, JigsawCollapsePane],
     exports: [JigsawCollapse, JigsawCollapsePane]
 })
-export class JigsawCollapseModule { }
+export class JigsawCollapseModule {
+}
 
