@@ -37,6 +37,11 @@ export class JigsawCollapsePane {
     /**
      * @internal
      */
+    public _$isTransitionEnd = true;
+
+    /**
+     * @internal
+     */
     public _$onClick() {
         // 手风琴, 自动关闭其他的pane;
         if (this._collapse && this._collapse.panes &&
@@ -47,8 +52,10 @@ export class JigsawCollapsePane {
                 }
             })
         }
-
-        this.isActive = !this.isActive;
+        this._$isTransitionEnd = false;
+        setTimeout(() => {
+            this.isActive = !this.isActive;
+        })
     }
 }
 

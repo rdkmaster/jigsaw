@@ -19,13 +19,6 @@ $collapse-prefix: #{$jigsaw-prefix}-collapse;
                     @include prefixer(transform, rotate(90deg));
                 }
             }
-
-            > .#{$collapse-prefix}-content {
-                height: 0;
-                padding: 0 16px;
-                @include prefixer(transform, scaleY(0));
-                @include prefixer(transform-origin, top);
-            }
         }
     }
 
@@ -50,11 +43,12 @@ $collapse-prefix: #{$jigsaw-prefix}-collapse;
 
     &-item &-content {
         overflow: hidden;
-        padding: 16px 16px;
         color: rgba(0, 0, 0, .65);
         background-color: $default-color;
-
-        @include prefixer(transition, all .3s ease);
+        @include prefixer(transition, height .3s ease);
+        .#{$collapse-prefix}-padding {
+            padding: 16px;
+        }
     }
 }
 
