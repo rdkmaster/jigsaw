@@ -5,8 +5,10 @@
 
 <!-- start to learn the demo from here -->
 <j-breadcrumb>
-    <j-breadcrumb-item *ngFor="let item of breadcrumbItems;">
-        <a (click)="onClick(item)"><span class="{{item.icon}}"></span>  {{item.label}}</a>
+    <j-breadcrumb-item *ngFor="let item of breadcrumbItems;let idx = index;">
+        <a (click)="onClick(item)" [ngClass]="{last: idx == breadcrumbItems.length - 1}">
+            <span class="{{item.icon}}"></span> {{item.label}}
+        </a>
     </j-breadcrumb-item>
 </j-breadcrumb>
 
