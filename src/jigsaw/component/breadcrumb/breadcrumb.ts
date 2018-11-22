@@ -4,7 +4,7 @@ import {CommonModule} from "@angular/common";
 import {Subscription} from "rxjs/Subscription";
 import {CommonUtils} from "../../core/utils/common-utils";
 
-export class BreadcrumbRouteConfig {
+export type BreadcrumbRouteConfig = {
     [url: string]: BreadcrumbNode;
 }
 
@@ -85,7 +85,8 @@ export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
             let configUrl = Object.keys(route)[0];
             if (!configUrl) return false;
             configUrl = configUrl[0] == '/' ? configUrl : '/' + configUrl;
-            let urlRegStr = '^' + configUrl.replace(/\*/g, '[^\/]+\/?') + '$';
+            let urlRegStr = '^' + configUrl.replace(/([\[\]\-\|\(\)\{\}\^\.\+\?\$\=\!\,\\])/g, '\\$1')
+                .replace(/\*/g, '[^\/]+\/?') + '$';
             return new RegExp(urlRegStr).test(url);
         });
         if (routeConfig) {
