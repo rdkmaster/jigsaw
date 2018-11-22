@@ -85,7 +85,7 @@ export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
             let configUrl = Object.keys(route)[0];
             if (!configUrl) return false;
             configUrl = configUrl[0] == '/' ? configUrl : '/' + configUrl;
-            let urlRegStr = '^' + configUrl.replace(/([\[\]\-\|\(\)\{\}\^\.\+\?\$\=\!\,\\])/g, '\\$1')
+            let urlRegStr = '^' + configUrl.replace(/([\[\]\-|(){}^.+?$=!,\\])/g, '\\$1')
                 .replace(/\*/g, '[^\/]+\/?') + '$';
             return new RegExp(urlRegStr).test(url);
         });

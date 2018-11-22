@@ -5,10 +5,10 @@
 
 <!-- start to learn the demo from here -->
 <j-breadcrumb>
-    <j-breadcrumb-item>Home</j-breadcrumb-item>
-    <j-breadcrumb-item>Application</j-breadcrumb-item>
-    <j-breadcrumb-item>List</j-breadcrumb-item>
-    <j-breadcrumb-item>Detail</j-breadcrumb-item>
+    <j-breadcrumb-item *ngFor="let item of breadcrumbItems;">
+        <a (click)="onClick(item)"><span class="{{item.icon}}"></span>  {{item.label}}</a>
+    </j-breadcrumb-item>
 </j-breadcrumb>
 
-
+<br>
+<a (click)="resetBreadcrumbItems()">reset</a>

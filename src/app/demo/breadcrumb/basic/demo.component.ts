@@ -4,8 +4,24 @@ import {Component} from "@angular/core";
     templateUrl: './demo.component.html'
 })
 export class BreadcrumbBasicDemoComponent {
-    onClick() {
-        alert('hello jigsaw button');
+    breadcrumbItems: any[];
+
+    constructor() {
+        this.resetBreadcrumbItems();
+    }
+
+    onClick(item) {
+        const idx = this.breadcrumbItems.indexOf(item);
+        this.breadcrumbItems.splice(idx + 1, this.breadcrumbItems.length - idx);
+    }
+
+    resetBreadcrumbItems() {
+        this.breadcrumbItems = [
+            {id: 0, label: 'Home', icon: 'fa fa-home'},
+            {id: 1, label: 'Digital', icon: 'fa fa-camera'},
+            {id: 2, label: 'List', icon: 'fa fa-list'},
+            {id: 3, label: 'Detail', icon: 'fa fa-shopping-cart'},
+        ];
     }
 
     // ====================================================================
