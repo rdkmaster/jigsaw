@@ -48,6 +48,7 @@ import {routerConfig as trustedHtmlConfig} from "./demo/trusted-html/demo-set.mo
 import {routerConfig as uploadConfig} from "./demo/upload/demo-set.module";
 import {routerConfig as iconConfig} from "./demo/icon/demo-set.module";
 import {routerConfig as transferConfig} from "./demo/transfer/demo-set.module";
+import {routerConfig as breadcrumbConfig} from "./demo/breadcrumb/demo-set.module";
 import {routerConfig} from "./router-config";
 
 @Component({
@@ -142,6 +143,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'upload', uploadConfig);
         this._addRouterConfig(routerConfig, 'icon', iconConfig);
         this._addRouterConfig(routerConfig, 'transfer', transferConfig);
+        this._addRouterConfig(routerConfig, 'breadcrumb', breadcrumbConfig);
     }
 
     private static _addRouterConfig(routerConfig: any[], path: string, childConfig: any[]) {
