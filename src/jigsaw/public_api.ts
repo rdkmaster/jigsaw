@@ -64,7 +64,6 @@ export * from "./core/data/graph-data";
 export * from "./core/data/table-data";
 export * from "./core/data/tree-data";
 export * from "./core/data/layout-data";
-export * from "./core/data/breadcrumb-data";
 export * from "./core/utils/common-utils";
 export * from "./core/utils/internal-utils";
 export * from "./core/utils/translate-helper";

@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
-import {BreadcrumbData} from "jigsaw/core/data/breadcrumb-data";
 import {ProductService} from "./product.service";
+import {BreadcrumbRouteConfig} from "jigsaw/component/breadcrumb/breadcrumb";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -22,67 +22,17 @@ import {ProductService} from "./product.service";
 })
 export class BreadcrumbRouterDemoComponent {
     constructor(public productService: ProductService) {
-        this.routes = new BreadcrumbData();
-        this.routes.fromObject([
-            {
-                route: 'breadcrumb',
-                visible: false,
-                nodes: [
-                    {
-                        label: 'Product List',
-                        route: 'router',
-                        icon: 'fa fa-list',
-                        nodes: [
-                            {
-                                label: 'Fruits',
-                                route: 'fruits',
-                                icon: this.productIconGenerator,
-                                nodes: [
-                                    {
-                                        route: 'detail',
-                                        visible: false,
-                                        nodes: [
-                                            {
-                                                label: this.detailLabelGenerator,
-                                                route: '*',
-                                                nodes: [
-                                                    {
-                                                        label: 'Buy',
-                                                        route: 'buy',
-                                                        icon: 'fa fa-shopping-cart'
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                label: 'Digital',
-                                route: 'digital',
-                                icon: this.productIconGenerator,
-                                nodes: [
-                                    {
-                                        label: this.detailLabelGenerator,
-                                        route: '*',
-                                        nodes: [
-                                            {
-                                                label: 'Buy',
-                                                route: 'buy',
-                                                icon: 'fa fa-shopping-cart'
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            }
-        ]);
     }
 
-    routes: BreadcrumbData;
+    routes: BreadcrumbRouteConfig[] = [
+        {'breadcrumb/router': {label: 'Product List', icon: 'fa fa-list'}},
+        {'breadcrumb/router/fruits': {label: 'Fruits', icon: this.productIconGenerator}},
+        {'breadcrumb/router/fruits/detail/*': {label: this.detailLabelGenerator}},
+        {'breadcrumb/router/fruits/detail/*/buy': {label: 'Buy', icon: 'fa fa-shopping-cart'}},
+        {'breadcrumb/router/digital': {label: 'Digital', icon: this.productIconGenerator}},
+        {'breadcrumb/router/digital/*': {label: this.detailLabelGenerator}},
+        {'breadcrumb/router/digital/*/buy': {label: 'Buy', icon: 'fa fa-shopping-cart'}}
+    ];
 
     detailLabelGenerator(routeNode: string) {
         return this.productService.getProductById(parseInt(routeNode)).name;

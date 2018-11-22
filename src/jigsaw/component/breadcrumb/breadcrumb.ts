@@ -2,8 +2,28 @@ import {AfterContentInit, Component, ContentChildren, forwardRef, Input, NgModul
 import {NavigationEnd, Router, RouterModule} from "@angular/router";
 import {CommonModule} from "@angular/common";
 import {Subscription} from "rxjs/Subscription";
-import {BreadcrumbData} from "../../core/data/breadcrumb-data";
 import {CommonUtils} from "../../core/utils/common-utils";
+
+export class BreadcrumbRouteConfig {
+    [url: string]: BreadcrumbNode;
+}
+
+export type BreadcrumbNode = {
+    /**
+     * 单节点在面包屑中的显示文本
+     */
+    label: string | BreadcrumbGenerator,
+    /**
+     * 字体的class，支持font-awesome，icon-font
+     */
+    icon?: string | BreadcrumbGenerator,
+    /**
+     * 节点链接，一般不填的会自动生成
+     */
+    routeLink?: string;
+}
+
+export type BreadcrumbGenerator = (routeNode: string) => string;
 
 @Component({
     selector: 'jigsaw-breadcrumb, j-breadcrumb',
@@ -17,7 +37,6 @@ import {CommonUtils} from "../../core/utils/common-utils";
 })
 export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
     constructor(private _router: Router) {
-
     }
 
     private _removeRouterEventSubscriber: Subscription;
@@ -32,24 +51,24 @@ export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
     @Input()
     public theme: 'light' | 'dark' | 'white' = 'light';
 
-    private _routesConfig: BreadcrumbData;
+    private _routesConfig: BreadcrumbRouteConfig[];
 
     @Input()
-    public get routesConfig(): BreadcrumbData {
+    public get routesConfig(): BreadcrumbRouteConfig[] {
         return this._routesConfig;
     }
 
-    public set routesConfig(value: BreadcrumbData) {
+    public set routesConfig(value: BreadcrumbRouteConfig[]) {
         if (!value || this._routesConfig == value) return;
         this._routesConfig = value;
-        this._generateBreadcrumb(this._router.url);
+        this._$breadcrumbNodes = this._generateBreadcrumb(this._router.url);
         if (this._removeRouterEventSubscriber) {
             this._removeRouterEventSubscriber.unsubscribe();
             this._removeRouterEventSubscriber = null;
         }
         this._removeRouterEventSubscriber = this._router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
-                this._generateBreadcrumb(event.url);
+                this._$breadcrumbNodes = this._generateBreadcrumb(event.url);
             }
         })
     }
@@ -57,38 +76,30 @@ export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
     @ContentChildren(forwardRef(() => JigsawBreadcrumbItem))
     private _items: QueryList<JigsawBreadcrumbItem>;
 
-    public _$routeNavList: BreadcrumbData[] = [];
+    public _$breadcrumbNodes: BreadcrumbNode[] = [];
 
-    private _findBreadcrumbItemByRoutes(routes: BreadcrumbData, routeNode: string): BreadcrumbData {
-        if (!routes || !routeNode) return null;
-        let searchRoute = routes instanceof Array ? routes : routes.nodes;
-        if (!searchRoute) return null;
-        return searchRoute.find(r => r.route == routeNode || r.route == '*');
-    }
-
-    private _generateBreadcrumb(url: string) {
-        const routeNavList = [];
-        if (!url || url == '/') return;
-        const routeNodes = url.slice(1).split('/');
-        for (let i = 0; i < routeNodes.length; i++) {
-            const routeNode = routeNodes[i];
-            const routes = i == 0 ? this._routesConfig : routeNavList[i - 1];
-            let breadcrumb = this._findBreadcrumbItemByRoutes(routes, routeNode);
-            if (!breadcrumb) {
-                console.warn('The breadcrumb cannot find this route config: ' + url);
-                break;
-            }
-            // 拷贝一份，保证原数据不变
-            breadcrumb = Object.assign({}, breadcrumb);
-            breadcrumb.routeLink = breadcrumb.routeLink ? breadcrumb.routeLink :
-                (breadcrumb.route[0] == '/' ? breadcrumb.route : '/' + routeNodes.slice(0, i + 1).join('/'));
-            breadcrumb.label = typeof breadcrumb.label == 'function' ?
-                CommonUtils.safeInvokeCallback(this.generatorContext, breadcrumb.label, [decodeURI(routeNode)]) : breadcrumb.label;
-            breadcrumb.icon = typeof breadcrumb.icon == 'function' ?
-                CommonUtils.safeInvokeCallback(this.generatorContext, breadcrumb.icon, [decodeURI(routeNode)]) : breadcrumb.icon;
-            routeNavList.push(breadcrumb);
+    private _generateBreadcrumb(url: string, breadcrumbNodes?: BreadcrumbNode[]): BreadcrumbNode[] {
+        breadcrumbNodes = breadcrumbNodes ? breadcrumbNodes : [];
+        if (!url) return breadcrumbNodes;
+        let routeConfig = this.routesConfig.find(route => {
+            let configUrl = Object.keys(route)[0];
+            if (!configUrl) return false;
+            configUrl = configUrl[0] == '/' ? configUrl : '/' + configUrl;
+            let urlRegStr = '^' + configUrl.replace(/\*/g, '[^\/]+\/?') + '$';
+            return new RegExp(urlRegStr).test(url);
+        });
+        if (routeConfig) {
+            const urlNode = url.slice(url.lastIndexOf('/') + 1);
+            // 找到option部分，拷贝一份，保证原数据不变
+            const breadcrumbNode: BreadcrumbNode = Object.assign({}, routeConfig[Object.keys(routeConfig)[0]]);
+            breadcrumbNode.routeLink = breadcrumbNode.routeLink ? breadcrumbNode.routeLink : url;
+            breadcrumbNode.label = typeof breadcrumbNode.label == 'function' ?
+                CommonUtils.safeInvokeCallback(this.generatorContext, breadcrumbNode.label, [urlNode]) : breadcrumbNode.label;
+            breadcrumbNode.icon = typeof breadcrumbNode.icon == 'function' ?
+                CommonUtils.safeInvokeCallback(this.generatorContext, breadcrumbNode.icon, [urlNode]) : breadcrumbNode.icon;
+            breadcrumbNodes.unshift(breadcrumbNode);
         }
-        this._$routeNavList = routeNavList.filter(rn => rn.visible !== false);
+        return this._generateBreadcrumb(url.slice(0, url.lastIndexOf('/') == -1 ? 0 : url.lastIndexOf('/')), breadcrumbNodes);
     }
 
     ngAfterContentInit() {
