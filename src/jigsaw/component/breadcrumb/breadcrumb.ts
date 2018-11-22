@@ -3,6 +3,7 @@ import {NavigationEnd, Router, RouterModule} from "@angular/router";
 import {CommonModule} from "@angular/common";
 import {Subscription} from "rxjs/Subscription";
 import {CommonUtils} from "../../core/utils/common-utils";
+import {AbstractJigsawComponent} from "../common";
 
 export type BreadcrumbRouteConfig = {
     [url: string]: BreadcrumbNode | BreadcrumbGenerator;
@@ -35,8 +36,9 @@ export type BreadcrumbGenerator = (routeNode: string) => string | BreadcrumbNode
         '[class.jigsaw-breadcrumb-inner]': 'theme == "inner"'
     }
 })
-export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
+export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestroy, AfterContentInit {
     constructor(private _router: Router) {
+        super();
     }
 
     private _removeRouterEventSubscriber: Subscription;
@@ -108,7 +110,9 @@ export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
     ngAfterContentInit() {
         if (this._items) {
             if (this._items.last) {
-                this._items.last.isLast = true;
+                this.callLater(() => {
+                    this._items.last.isLast = true;
+                })
             }
             if (this._removeItemChangeSubscriber) {
                 this._removeItemChangeSubscriber.unsubscribe();
@@ -116,13 +120,16 @@ export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
             }
             this._removeItemChangeSubscriber = this._items.changes.subscribe(() => {
                 if (this._items.last) {
-                    this._items.last.isLast = true;
+                    this.callLater(() => {
+                        this._items.last.isLast = true;
+                    })
                 }
             })
         }
     }
 
     ngOnDestroy() {
+        super.ngOnDestroy();
         if (this._removeRouterEventSubscriber) {
             this._removeRouterEventSubscriber.unsubscribe();
             this._removeRouterEventSubscriber = null;

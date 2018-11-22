@@ -8,7 +8,7 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
     height: 54px;
     background: $background-color-base;
     padding: 0 12px;
-    &:before {
+    &:after {
         height: 100%;
         content: '';
         display: inline-block;
