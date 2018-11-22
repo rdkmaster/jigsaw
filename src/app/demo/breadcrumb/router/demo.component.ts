@@ -26,7 +26,7 @@ export class BreadcrumbRouterDemoComponent {
 
     routes: BreadcrumbRouteConfig[] = [
         {'breadcrumb/router': {label: 'Product List', icon: 'fa fa-list'}},
-        {'breadcrumb/router/fruits': {label: 'Fruits', icon: this.productIconGenerator}},
+        {'breadcrumb/router/fruits': (routeNode: string) => ({label: 'Fruits', icon: this.productIconGenerator(routeNode)})},
         {'breadcrumb/router/fruits/detail/*': {label: this.detailLabelGenerator}},
         {'breadcrumb/router/fruits/detail/*/buy': {label: 'Buy', icon: 'fa fa-shopping-cart'}},
         {'breadcrumb/router/digital': {label: 'Digital', icon: this.productIconGenerator}},

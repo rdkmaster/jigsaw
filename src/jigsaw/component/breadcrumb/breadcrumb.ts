@@ -5,7 +5,7 @@ import {Subscription} from "rxjs/Subscription";
 import {CommonUtils} from "../../core/utils/common-utils";
 
 export type BreadcrumbRouteConfig = {
-    [url: string]: BreadcrumbNode;
+    [url: string]: BreadcrumbNode | BreadcrumbGenerator;
 }
 
 export type BreadcrumbNode = {
@@ -23,7 +23,7 @@ export type BreadcrumbNode = {
     routeLink?: string;
 }
 
-export type BreadcrumbGenerator = (routeNode: string) => string;
+export type BreadcrumbGenerator = (routeNode: string) => string | BreadcrumbNode;
 
 @Component({
     selector: 'jigsaw-breadcrumb, j-breadcrumb',
@@ -92,7 +92,9 @@ export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
         if (routeConfig) {
             const urlNode = url.slice(url.lastIndexOf('/') + 1);
             // 找到option部分，拷贝一份，保证原数据不变
-            const breadcrumbNode: BreadcrumbNode = Object.assign({}, routeConfig[Object.keys(routeConfig)[0]]);
+            let breadcrumbNodeTemp: any = routeConfig[Object.keys(routeConfig)[0]];
+            breadcrumbNodeTemp = typeof breadcrumbNodeTemp == 'function' ? breadcrumbNodeTemp(urlNode) : breadcrumbNodeTemp;
+            const breadcrumbNode: BreadcrumbNode = Object.assign({}, breadcrumbNodeTemp);
             breadcrumbNode.routeLink = breadcrumbNode.routeLink ? breadcrumbNode.routeLink : url;
             breadcrumbNode.label = typeof breadcrumbNode.label == 'function' ?
                 CommonUtils.safeInvokeCallback(this.generatorContext, breadcrumbNode.label, [urlNode]) : breadcrumbNode.label;
