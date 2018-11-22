@@ -154,8 +154,9 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
                 posOffset: {top: event.target.offsetHeight},
                 size: {width: event.target.offsetWidth},
                 posReviser: (pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue => {
-                    return this._popupService.verticalPositionReviser(pos, popupElement, {
-                        offsetHeight: event.target.offsetHeight
+                    return this._popupService.positionReviser(pos, popupElement, {
+                        offsetHeight: event.target.offsetHeight,
+                        direction: 'v'
                     });
                 }
             };

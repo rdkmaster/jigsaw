@@ -601,21 +601,42 @@ export class PopupService {
     }
 
     /**
-     * 计算弹窗的位置，是向上弹，还是向下弹, 默认向下弹出
+     * 计算弹窗的位置，默认向下弹出，当下面的位置不足时，改成向上弹
+     * 默认靠左弹，当右边位置不足时，靠右弹
      */
-    public verticalPositionReviser(pos: PopupPositionValue, popupElement: HTMLElement, options?: any): PopupPositionValue {
-        const upDelta = (options && options.offsetHeight ? options.offsetHeight : 0) + popupElement.offsetHeight;
-        if (document.body.clientHeight <= upDelta) {
-            //可视区域比弹出的UI高度还小就不要调整了
-            return pos;
+    public positionReviser(pos: PopupPositionValue, popupElement: HTMLElement,
+                           options?: {offsetWidth?: number, offsetHeight?: number, direction?: 'v' | 'h'}): PopupPositionValue {
+        if(!options || !options.direction || options.direction == 'v') {
+            // 调整上下位置
+            const upDelta = (options && options.offsetHeight ? options.offsetHeight : 0) + popupElement.offsetHeight;
+            if (document.body.clientHeight <= upDelta) {
+                // 可视区域比弹出的UI高度还小就不要调整了
+                return pos;
+            }
+            const needHeight = pos.top + popupElement.offsetHeight;
+            const totalHeight = window.scrollY + document.body.clientHeight;
+            if (needHeight >= totalHeight && pos.top > upDelta) {
+                // 下方位置不够且上方位置足够的时候才做调整
+                pos.top -= upDelta;
+            }
         }
 
-        const needHeight = pos.top + popupElement.offsetHeight;
-        const totalHeight = window.scrollY + document.body.clientHeight;
-        if (needHeight >= totalHeight && pos.top > upDelta) {
-            //下方位置不够且上方位置足够的时候才做调整
-            pos.top -= upDelta;
+        if(!options || !options.direction || options.direction == 'h') {
+            // 调整左右位置
+            const leftDelta = popupElement.offsetWidth - (options && options.offsetWidth ? options.offsetWidth : 0);
+            if (document.body.clientWidth <= leftDelta && leftDelta <= 0) {
+                // 可视区域比弹出的UI高度还小就不要调整了
+                // 弹框宽度比宿主宽度小也不用调整
+                return pos;
+            }
+            const needWidth = pos.left + popupElement.offsetWidth;
+            const totalWidth = window.scrollX + document.body.clientWidth;
+            if (needWidth >= totalWidth && pos.left > leftDelta) {
+                // 右边位置不够且左边位置足够的时候才做调整
+                pos.left -= leftDelta;
+            }
         }
+
         return pos;
     }
 }
