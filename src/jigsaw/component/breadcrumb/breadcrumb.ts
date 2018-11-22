@@ -24,7 +24,7 @@ export type BreadcrumbNode = {
     routeLink?: string;
 }
 
-export type BreadcrumbGenerator = (routeNode: string) => string | BreadcrumbNode;
+export type BreadcrumbGenerator = (routeNode: string) => BreadcrumbNode;
 
 @Component({
     selector: 'jigsaw-breadcrumb, j-breadcrumb',
@@ -95,13 +95,10 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
             const urlNode = url.slice(url.lastIndexOf('/') + 1);
             // 找到option部分，拷贝一份，保证原数据不变
             let breadcrumbNodeTemp: any = routeConfig[Object.keys(routeConfig)[0]];
-            breadcrumbNodeTemp = typeof breadcrumbNodeTemp == 'function' ? breadcrumbNodeTemp(urlNode) : breadcrumbNodeTemp;
+            breadcrumbNodeTemp = typeof breadcrumbNodeTemp == 'function' ?
+                CommonUtils.safeInvokeCallback(this.generatorContext, breadcrumbNodeTemp, [urlNode])  : breadcrumbNodeTemp;
             const breadcrumbNode: BreadcrumbNode = Object.assign({}, breadcrumbNodeTemp);
             breadcrumbNode.routeLink = breadcrumbNode.routeLink ? breadcrumbNode.routeLink : url;
-            breadcrumbNode.label = typeof breadcrumbNode.label == 'function' ?
-                CommonUtils.safeInvokeCallback(this.generatorContext, breadcrumbNode.label, [urlNode]) : breadcrumbNode.label;
-            breadcrumbNode.icon = typeof breadcrumbNode.icon == 'function' ?
-                CommonUtils.safeInvokeCallback(this.generatorContext, breadcrumbNode.icon, [urlNode]) : breadcrumbNode.icon;
             breadcrumbNodes.unshift(breadcrumbNode);
         }
         return this._generateBreadcrumb(url.slice(0, url.lastIndexOf('/') == -1 ? 0 : url.lastIndexOf('/')), breadcrumbNodes);
