@@ -32,7 +32,7 @@ export type BreadcrumbGenerator = (routeNode: string) => string;
         '[class.jigsaw-breadcrumb]': 'true',
         '[class.jigsaw-breadcrumb-light]': 'theme == "light"',
         '[class.jigsaw-breadcrumb-dark]': 'theme == "dark"',
-        '[class.jigsaw-breadcrumb-white]': 'theme == "white"'
+        '[class.jigsaw-breadcrumb-inner]': 'theme == "inner"'
     }
 })
 export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
@@ -49,7 +49,7 @@ export class JigsawBreadcrumb implements OnDestroy, AfterContentInit {
     public generatorContext: any;
 
     @Input()
-    public theme: 'light' | 'dark' | 'white' = 'light';
+    public theme: 'light' | 'dark' | 'inner' = 'light';
 
     private _routesConfig: BreadcrumbRouteConfig[];
 
