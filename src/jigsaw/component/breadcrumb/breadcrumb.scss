@@ -1,0 +1,75 @@
+@import "../../assets/scss/core/base";
+
+$bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
+
+.#{$bc-prefix-cls} {
+    display: block;
+    font-size: 16px;
+    height: 54px;
+    background: $background-color-base;
+    padding: 0 12px;
+    &:after {
+        height: 100%;
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+    }
+    &-item {
+        @include inline-block;
+        color: $text-color-secondary;
+        &:hover, &.#{$bc-prefix-cls}-current {
+            color: $heading-color;
+        }
+        .#{$bc-prefix-cls}-link {
+            color: inherit;
+        }
+    }
+    &-separator {
+        margin: 0 8px;
+        color: $text-color-secondary;
+    }
+    &-icon {
+        margin-right: 4px;
+    }
+    &.#{$bc-prefix-cls}-light {
+        background: $background-color-base;
+        .#{$bc-prefix-cls}-item {
+            color: $text-color-secondary;
+            &:hover, &.#{$bc-prefix-cls}-current {
+                color: $heading-color;
+            }
+        }
+    }
+    &.#{$bc-prefix-cls}-dark {
+        background: $background-color-dark;
+        .#{$bc-prefix-cls}-item {
+            color: $text-color-secondary;
+            &:hover, &.#{$bc-prefix-cls}-current {
+                color: $text-color-of-bg;
+            }
+        }
+    }
+    &.#{$bc-prefix-cls}-inner {
+        height: 44px;
+        padding: 0 8px;
+        font-size: 14px;
+        background: $component-background;
+        .#{$bc-prefix-cls}-item {
+            .#{$bc-prefix-cls}-icon {
+                color: $primary-color;
+            }
+            .#{$bc-prefix-cls}-label {
+                color: $heading-color;
+                &:hover {
+                    color: $primary-color;
+                }
+            }
+            &.#{$bc-prefix-cls}-current {
+                .#{$bc-prefix-cls}-label {
+                    color: $primary-color;
+                }
+            }
+        }
+    }
+}
+

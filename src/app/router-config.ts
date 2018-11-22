@@ -196,5 +196,9 @@ export const routerConfig = [
     {
         path: "transfer",
         loadChildren: "./demo/transfer/demo-set.module#TransferDemoModule",
+    },
+    {
+        path: "breadcrumb",
+        loadChildren: "./demo/breadcrumb/demo-set.module#BreadcrumbDemoModule",
     }
 ];
