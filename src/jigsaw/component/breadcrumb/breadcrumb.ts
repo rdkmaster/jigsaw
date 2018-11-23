@@ -96,7 +96,7 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
             // 找到option部分，拷贝一份，保证原数据不变
             let breadcrumbNodeTemp: any = routeConfig[Object.keys(routeConfig)[0]];
             breadcrumbNodeTemp = typeof breadcrumbNodeTemp == 'function' ?
-                CommonUtils.safeInvokeCallback(this.generatorContext, breadcrumbNodeTemp, [decodeURI(urlNode)])  : breadcrumbNodeTemp;
+                CommonUtils.safeInvokeCallback(this.generatorContext, breadcrumbNodeTemp, [decodeURIComponent(urlNode)])  : breadcrumbNodeTemp;
             const breadcrumbNode: BreadcrumbNode = Object.assign({}, breadcrumbNodeTemp);
             breadcrumbNode.routeLink = breadcrumbNode.routeLink ? breadcrumbNode.routeLink : decodeURI(url);
             breadcrumbNodes.unshift(breadcrumbNode);
