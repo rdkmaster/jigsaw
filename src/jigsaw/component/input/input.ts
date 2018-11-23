@@ -22,10 +22,10 @@ import {CommonUtils} from "../../core/utils/common-utils";
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[style.line-height]': 'height',
         '(click)': '_$stopPropagation($event)',
         '[class.jigsaw-input]': 'true',
-        '[class.jigsaw-input-error]': '!valid'
+        '[class.jigsaw-input-error]': '!valid',
+        '[class.jigsaw-input-focused]': 'focused'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawInput), multi: true},
@@ -76,7 +76,7 @@ export class JigsawInput extends AbstractJigsawComponent
     private _blurEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 
     constructor(private _render2: Renderer2,
-                private _elementRef: ElementRef,
+                protected _elementRef: ElementRef,
                 private _changeDetectorRef: ChangeDetectorRef) {
         super();
     }
