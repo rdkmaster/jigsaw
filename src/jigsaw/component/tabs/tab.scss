@@ -37,6 +37,47 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
         }
     }
 
+    &-overflow-bar {
+        display: inline-block;
+        cursor: pointer;
+        font-size: 24px;
+        vertical-align: middle;
+        color: $text-color-secondary;
+        float: right;
+        width: 40px;
+        height: 100%;
+        text-align: center;
+        vertical-align: central;
+        &:hover {
+            background-color: $primary-color;
+            color: $primary-1;
+        }
+    }
+
+    &-list {
+        box-shadow: none !important;
+        border-radius: 0;
+        border: none;
+        width: 200px;
+        .jigsaw-list-option {
+            //border-top: 1px solid $border-color-base;
+            .span-margin {
+                margin: 0 4px;
+                width: 10px;
+                height: 9px;
+            }
+            &:hover {
+                background: #CCCCCC;
+            }
+            &-selected{
+                color: $primary-color;
+            }
+            &-hidden {
+                display: none;
+            }
+        }
+    }
+
     &-nav-container {
         font-size: $font-size-lg;
         line-height: $line-height-base;
@@ -47,6 +88,9 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
 
         .#{$tab-prefix}-nav-wrap {
             @include clearfix();
+            display: inline-block;
+            width: calc( 100% - 40px );
+            overflow: hidden;
             .#{$tab-prefix}-nav {
                 position: relative;
                 list-style: none;

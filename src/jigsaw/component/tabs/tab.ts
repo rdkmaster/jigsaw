@@ -1,10 +1,11 @@
 import {
     Component, ContentChildren, QueryList, Input, ViewChildren, AfterViewInit, Output, EventEmitter, TemplateRef,
-    ViewContainerRef, ComponentFactoryResolver, Type, ChangeDetectorRef, AfterViewChecked, ViewChild, ElementRef
+    ViewContainerRef, ComponentFactoryResolver, Type, ChangeDetectorRef, AfterViewChecked, ViewChild, ElementRef, EmbeddedViewRef
 } from '@angular/core';
 import {JigsawTabPane} from "./tab-pane";
 import {JigsawTabContent, JigsawTabLabel, TabTitleInfo} from "./tab-item";
 import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
+import {PopupService, PopupSize, PopupInfo} from "../../service/popup.service";
 
 /**
  * 使用`JigsawTab`来将一组视图叠加在同一个区域使用，并以页签的方式来切换这些视图。
@@ -32,8 +33,9 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     constructor(private _cfr: ComponentFactoryResolver,
                 private _changeDetector: ChangeDetectorRef,
                 private _viewContainer: ViewContainerRef,
-                private _elementRef: ElementRef) {
-        super()
+                private _elementRef: ElementRef,
+                private _popupService: PopupService) {
+        super();
     }
 
     /**
@@ -90,7 +92,6 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
 
     @ViewChild('tabsInkBar')
     private _tabsInkBar: ElementRef;
-
     /**
      * 控制tab显示添加和删除按钮
      *
@@ -223,7 +224,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
 
     ngOnInit() {
         super.ngOnInit();
-        if(this.height) {
+        if (this.height) {
             this.callLater(() => {
                 // 等待dom渲染
                 this._$contentHeight = this._elementRef.nativeElement.offsetHeight - 46 + 'px';
@@ -232,6 +233,10 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     }
 
     ngAfterViewInit() {
+        this._$createTabList();
+        this._tabLabels.changes.subscribe(data => {
+            this._$createTabList();
+        });
         if (this.selectedIndex != null) {
             this._handleSelectChange(this.selectedIndex)
         } else {
@@ -447,4 +452,71 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
             this._asyncSetStyle(this.selectedIndex);
         }
     }
+
+    @ViewChild('tabsList')
+    private _tabsList: TemplateRef<any>;
+
+    private _pop: PopupInfo;
+    private _popStatus: boolean = false;
+    private _popupTimeout: any;
+
+    popupTabList(e) {
+        if (!this._popStatus) {
+            this._popStatus = true;
+            let size = new PopupSize();
+            size.width = 190;
+            size.height = 300;
+            this._pop = this._popupService.popup(this._tabsList, {
+                modal: false,
+                size: size,
+                showBorder: false,
+                pos: e.target,
+                posOffset: { //偏移位置
+                    top: 36,
+                    right: 40
+                },
+            });
+        }
+
+    }
+
+    menuAreaLeave() {
+        this._popupTimeout = setTimeout(() => {
+            if (this._popStatus) {
+                this._popStatus = false;
+                this._pop.dispose();
+                this._pop.element = null;
+                this._pop = null;
+            }
+            this._popupTimeout = null;
+        }, 400);
+    }
+
+    clearPopupTimeout() {
+        if (this._popupTimeout) clearTimeout(this._popupTimeout);
+    }
+
+    public _$listOptionClick(index) {
+        if (this._$tabPanes.toArray()[index].disabled) return;
+        this.selectedIndex = index;
+    }
+
+    public _$tabList = [];
+
+    public _$createTabList() {
+        this._$tabList = [];
+        this._tabLabels.toArray().forEach((label: JigsawTabLabel, index) => {
+            let title = "";
+            let rootNodes = (<EmbeddedViewRef<any>>this._tabLabels.toArray()[index]._tabItemRef).rootNodes;
+            for (let i = 0; i < rootNodes.length; i++) {
+                if (rootNodes[i] instanceof HTMLElement) {
+                    title += " " + rootNodes[i].outerHTML;
+                } else {
+                    title += " " + rootNodes[i].textContent.trim();
+                }
+            }
+            this._$tabList.push(title.trim());
+        });
+    }
+
 }
