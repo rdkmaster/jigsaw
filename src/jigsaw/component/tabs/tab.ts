@@ -232,10 +232,11 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         }
     }
 
+    private _tabLabelsChangeHandler;
     ngAfterViewInit() {
-        this._$createTabList();
-        this._tabLabels.changes.subscribe(data => {
-            this._$createTabList();
+        this._createTabList();
+        this._tabLabelsChangeHandler=this._tabLabels.changes.subscribe(data => {
+            this._createTabList();
         });
         if (this.selectedIndex != null) {
             this._handleSelectChange(this.selectedIndex)
@@ -244,6 +245,10 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         }
 
         this.length = this._$tabPanes.length;
+    }
+
+    ngOnDestroy(){
+        this._tabLabelsChangeHandler.dispose();
     }
 
     // 注意此方法会被频繁调用，性能要求高
@@ -456,17 +461,19 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     @ViewChild('tabsList')
     private _tabsList: TemplateRef<any>;
 
-    private _pop: PopupInfo;
-    private _popStatus: boolean = false;
+    private _tabsListPopupInfo: PopupInfo;
     private _popupTimeout: any;
 
-    popupTabList(e) {
-        if (!this._popStatus) {
-            this._popStatus = true;
+    /**
+     * @internal
+     */
+    public _$popupTabList(e) {
+        this._$clearPopupTimeout();
+        if (!this._tabsListPopupInfo) {
             let size = new PopupSize();
             size.width = 190;
             size.height = 300;
-            this._pop = this._popupService.popup(this._tabsList, {
+            this._tabsListPopupInfo = this._popupService.popup(this._tabsList, {
                 modal: false,
                 size: size,
                 showBorder: false,
@@ -480,34 +487,47 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
 
     }
 
-    menuAreaLeave() {
-        this._popupTimeout = setTimeout(() => {
-            if (this._popStatus) {
-                this._popStatus = false;
-                this._pop.dispose();
-                this._pop.element = null;
-                this._pop = null;
+    /**
+     * @internal
+     */
+    public _$menuAreaLeave() {
+        this._$clearPopupTimeout();
+        this._popupTimeout = this.callLater(() => {
+            if (this._tabsListPopupInfo) {
+                this._tabsListPopupInfo.dispose();
+                this._tabsListPopupInfo.element = null;
+                this._tabsListPopupInfo = null;
             }
             this._popupTimeout = null;
         }, 400);
     }
 
-    clearPopupTimeout() {
+    /**
+     * @internal
+     */
+    public _$clearPopupTimeout() {
         if (this._popupTimeout) clearTimeout(this._popupTimeout);
     }
 
+    /**
+     * @internal
+     */
     public _$listOptionClick(index) {
         if (this._$tabPanes.toArray()[index].disabled) return;
         this.selectedIndex = index;
     }
 
+
+    /**
+     * @internal
+     */
     public _$tabList = [];
 
-    public _$createTabList() {
+    private _createTabList() {
         this._$tabList = [];
-        this._tabLabels.toArray().forEach((label: JigsawTabLabel, index) => {
+        this._tabLabels.forEach((label: JigsawTabLabel, index) => {
             let title = "";
-            let rootNodes = (<EmbeddedViewRef<any>>this._tabLabels.toArray()[index]._tabItemRef).rootNodes;
+            let rootNodes = (<EmbeddedViewRef<any>>label._tabItemRef).rootNodes;
             for (let i = 0; i < rootNodes.length; i++) {
                 if (rootNodes[i] instanceof HTMLElement) {
                     title += " " + rootNodes[i].outerHTML;
