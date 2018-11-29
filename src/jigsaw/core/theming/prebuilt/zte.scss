@@ -66,10 +66,9 @@
 /**
  * 设置按钮字体大小，和默认形式按钮的字体颜色
  */
-@mixin setBtnDefault($defaultTextColor, $defaultFontSize: 12px) {
+@mixin setBtnDefault($defaultTextColor) {
     .#{$btn-prefix-cls} {
         color: $defaultTextColor;
-        font-size: $defaultFontSize;
     }
 }
 
