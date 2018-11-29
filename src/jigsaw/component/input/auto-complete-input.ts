@@ -145,17 +145,18 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     private _propertyListPopup: PopupInfo;
 
     private _showDropdownList(event) {
+        const hostElement = this._elementRef.nativeElement;
         if (this._isPropertyListPopped) {
             this._$closeListPopup();
         } else {
             const popupOptions: PopupOptions = {
                 modal: false,
-                pos: event.currentTarget,
-                posOffset: {top: event.target.offsetHeight},
-                size: {width: event.target.offsetWidth},
+                pos: hostElement,
+                posOffset: {top: hostElement.offsetHeight},
+                size: {width: hostElement.offsetWidth},
                 posReviser: (pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue => {
                     return this._popupService.positionReviser(pos, popupElement, {
-                        offsetHeight: event.target.offsetHeight,
+                        offsetHeight: hostElement.offsetHeight,
                         direction: 'v'
                     });
                 }
