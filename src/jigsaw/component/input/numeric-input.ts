@@ -22,13 +22,13 @@ import {CommonUtils} from "../../core/utils/common-utils";
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[style.line-height]': 'height',
         '(click)': '_$stopPropagation($event)',
         '[class.jigsaw-numeric-input]': 'true',
         '[class.jigsaw-numeric-input-disabled]': 'disabled',
         '[class.jigsaw-numeric-input-small]': 'size == "small"',
         '[class.jigsaw-numeric-input-large]': 'size == "large"',
-        '[class.jigsaw-numeric-input-error]': '!valid'
+        '[class.jigsaw-numeric-input-error]': '!valid',
+        '[class.jigsaw-numeric-input-focused]': 'focused'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawNumericInput), multi: true},

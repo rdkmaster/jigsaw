@@ -7,46 +7,47 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
     position: relative;
     width: 120px;
     height: $height-base;
-    line-height: $height-base;
     font-size: $font-size-base;
     opacity: 0;
+    border: 1px solid $border-color-base;
+    border-radius: 3px;
+    @include prefixer(transition, (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out));
+    &:hover {
+        border: 1px solid $primary-color;
+    }
+    &.#{$input-prefix-cls}-focused {
+        border: 1px solid $primary-color;
+        box-shadow: $box-focus-shadow;
+    }
+    &.#{$input-prefix-cls}-error {
+        border: 1px solid $error-color;
+        &:hover {
+            border: 1px solid $error-color;
+        }
+        &.#{$input-prefix-cls}-focused {
+            border: 1px solid $error-color;
+            box-shadow: none;
+        }
+    }
     &-icon-front {
         position: absolute;
         left: 8px;
-        top: 0;
-        line-height: inherit;
+        top: 50%;
+        transform: translateY(-50%);
     }
     &-icon-end {
         position: absolute;
         right: 8px;
-        top: 0;
-        line-height: inherit;
+        top: 50%;
+        transform: translateY(-50%);
     }
     input {
         width: 100%;
         height: 100%;
         padding-right: 20px;
-        border: 1px solid $border-color-base;
-        border-radius: 3px;
+        border: none;
         outline: none;
-        @include prefixer(transition, (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out));
-        &:hover {
-            border: 1px solid $primary-color;
-        }
-        &:focus {
-            border: 1px solid $primary-color;
-            box-shadow: $box-focus-shadow;
-        }
-    }
-    &.#{$input-prefix-cls}-error input {
-        border: 1px solid $error-color;
-        &:hover {
-            border: 1px solid $error-color;
-        }
-        &:focus {
-            border: 1px solid $error-color;
-            box-shadow: none;
-        }
+        border-radius: 3px;
     }
     input::-webkit-input-placeholder {
         color: $text-color-secondary;
