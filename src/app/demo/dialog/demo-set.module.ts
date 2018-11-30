@@ -13,6 +13,8 @@ import {DialogTopDemo} from "./top/demo.component";
 import {DialogPopOptionDemo} from "./popup-option/demo.component";
 import {DialogInDomDemoComponent} from "./in-dom/demo.component";
 import {DialogMiscDemoComponent} from "./misc/demo.component";
+import {DialogHeightDemo} from "./height/demo.component";
+import {DialogHeightDemoModule} from "./height/demo.module";
 
 export const routerConfig:any = [
     {
@@ -33,6 +35,9 @@ export const routerConfig:any = [
     {
         path: 'in-dom', component: DialogInDomDemoComponent
     },
+    {
+        path: 'height', component: DialogHeightDemo
+    },
 ];
 
 @NgModule({
@@ -43,7 +48,8 @@ export const routerConfig:any = [
         DialogMiscDemoModule,
         DialogPopOptionDemoModule,
         DialogTitleDemoModule,
-        DialogTopDemoModule
+        DialogTopDemoModule,
+        DialogHeightDemoModule
     ]
 })
 export class DialogDemoModule {

@@ -23,7 +23,7 @@ import {AbstractJigsawComponent} from '../common';
         '[class.jigsaw-button]': 'true',
         '[class.jigsaw-button-disabled]': 'disabled',
         '(click)': '_onClick()',
-        '[style.width]': 'width',
+        '[style.min-width]': 'width',
         '[style.height]': 'height',
         '[class.jigsaw-button-clicked]': "_clicked",
         '[class.jigsaw-button-size-small]': "preSize === 'small'",
