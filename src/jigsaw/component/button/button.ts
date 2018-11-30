@@ -23,9 +23,8 @@ import {AbstractJigsawComponent} from '../common';
         '[class.jigsaw-button]': 'true',
         '[class.jigsaw-button-disabled]': 'disabled',
         '(click)': '_onClick()',
-        '[style.width]': 'width',
+        '[style.min-width]': 'width',
         '[style.height]': 'height',
-        '[style.line-height]': '_calcLineHeight()',
         '[class.jigsaw-button-clicked]': "_clicked",
         '[class.jigsaw-button-size-small]': "preSize === 'small'",
         '[class.jigsaw-button-size-large]': "preSize === 'large'",
@@ -65,10 +64,6 @@ export class JigsawButton extends AbstractJigsawComponent {
             this._clicked = true;
             this.callLater(() => this._clicked = false, 360);
         }
-    }
-
-    private _calcLineHeight(): string {
-        return parseInt(this.height) - 4 + 'px';
     }
 }
 

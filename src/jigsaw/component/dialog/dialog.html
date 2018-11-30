@@ -5,7 +5,9 @@
         <span class="jigsaw-dialog-close jigsaw-popup-close" (click)='dispose()'>&times;</span>
     </div>
     <div class="jigsaw-dialog-content">
-        <ng-content></ng-content>
+        <div class="jigsaw-dialog-content-inner">
+            <ng-content></ng-content>
+        </div>
     </div>
     <div class="jigsaw-dialog-button-group"
          *ngIf="(_$inlineButtons && _$inlineButtons.length > 0) || (buttons && buttons.length > 0)">
