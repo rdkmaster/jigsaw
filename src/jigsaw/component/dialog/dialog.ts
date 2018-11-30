@@ -151,6 +151,11 @@ export abstract class AbstractDialogComponentBase
         if (this.width) {
             this.renderer.setStyle(this.popupElement, 'width', this.width);
         }
+        
+        if(this.height) {
+            this.renderer.setStyle(this.popupElement, 'height', this.height);
+            this.renderer.addClass(this.popupElement, 'jigsaw-dialog-fixed-height');
+        }
 
         //设置弹出位置和尺寸
         this.callLater(() => {

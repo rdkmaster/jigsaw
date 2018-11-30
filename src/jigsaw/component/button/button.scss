@@ -5,8 +5,10 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
 .#{$btn-prefix-cls} {
     @include inline-block();
     padding: 0 10px;
+    min-width: 80px;
     height: $height-base;
-    font-size: 0;
+    font-size: $font-size-base;
+    line-height: 1;
     text-align: center;
     position: relative;
     border-radius: $border-radius-base;
@@ -50,7 +52,6 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
 
     &-content {
         @include inline-block;
-        font-size: $font-size-base;
     }
 
     &-icon {
@@ -108,16 +109,12 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
 
     &#{&}-size-large {
         height: $height-lg;
-        .#{$btn-prefix-cls}-content {
-            font-size: $font-size-lg;
-        }
+        font-size: $font-size-lg;
     }
 
     &#{&}-size-small {
         height: $height-sm;
-        .#{$btn-prefix-cls}-content {
-            font-size: $font-size-sm;
-        }
+        font-size: $font-size-sm;
     }
 
     &#{&}-disabled {
