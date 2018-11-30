@@ -1,0 +1,19 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-button (click)="popupDialog1(dialog1)">popup</jigsaw-button>
+
+<ng-template #dialog1>
+    <jigsaw-dialog width="80%" height="400" caption="dialog title" (close)="close()">
+        <div class="dialog-content" style="height: 100%">
+            <p>dialog content</p>
+        </div>
+        <div jigsaw-button-bar>
+            <jigsaw-button colorType="danger" (click)="close()">OK</jigsaw-button>
+        </div>
+    </jigsaw-dialog>
+</ng-template>
+

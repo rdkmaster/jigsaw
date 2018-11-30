@@ -5,8 +5,10 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
 .#{$btn-prefix-cls} {
     @include inline-block();
     padding: 0 10px;
+    min-width: 80px;
     height: $height-base;
     font-size: 0;
+    line-height: 1;
     text-align: center;
     position: relative;
     border-radius: $border-radius-base;
