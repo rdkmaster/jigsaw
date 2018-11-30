@@ -6,10 +6,7 @@ import {PopupInfo, PopupService} from "jigsaw/service/popup.service";
     styleUrls: ['./demo.component.css']
 })
 export class DialogHeightDemo {
-    message: string;
     dialogInfo: PopupInfo;
-
-    top = "20%";
 
     constructor(private popupService: PopupService) {
     }
