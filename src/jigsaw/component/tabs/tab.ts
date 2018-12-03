@@ -5,7 +5,7 @@ import {
 import {JigsawTabPane} from "./tab-pane";
 import {JigsawTabContent, JigsawTabLabel, TabTitleInfo} from "./tab-item";
 import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
-import {PopupService, PopupSize, PopupInfo} from "../../service/popup.service";
+import {PopupService, PopupSize, PopupInfo, PopupPositionValue} from "../../service/popup.service";
 
 /**
  * 使用`JigsawTab`来将一组视图叠加在同一个区域使用，并以页签的方式来切换这些视图。
@@ -113,6 +113,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
      */
     public _$tabClick(index) {
         this.selectedIndex = index;
+        this._setTabStyle(index);
     }
 
     /**
@@ -233,9 +234,10 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     }
 
     private _tabLabelsChangeHandler;
+
     ngAfterViewInit() {
         this._createTabList();
-        this._tabLabelsChangeHandler=this._tabLabels.changes.subscribe(data => {
+        this._tabLabelsChangeHandler = this._tabLabels.changes.subscribe(data => {
             this._createTabList();
         });
         if (this.selectedIndex != null) {
@@ -247,7 +249,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         this.length = this._$tabPanes.length;
     }
 
-    ngOnDestroy(){
+    ngOnDestroy() {
         this._tabLabelsChangeHandler.dispose();
     }
 
@@ -458,8 +460,10 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         }
     }
 
-    @ViewChild('tabsList')
-    private _tabsList: TemplateRef<any>;
+    @ViewChild('tabsNavWrap')
+    private _tabsNavWrap: ElementRef;
+    @ViewChild('tabsNav')
+    private _tabsNav: TemplateRef<any>;
 
     private _tabsListPopupInfo: PopupInfo;
     private _popupTimeout: any;
@@ -467,21 +471,27 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     /**
      * @internal
      */
-    public _$popupTabList(e) {
+    public _$popupTabList(tabsList, event, overflowButton) {
         this._$clearPopupTimeout();
         if (!this._tabsListPopupInfo) {
             let size = new PopupSize();
             size.width = 190;
-            size.height = 300;
-            this._tabsListPopupInfo = this._popupService.popup(this._tabsList, {
+            size.height = 150;
+            this._tabsListPopupInfo = this._popupService.popup(tabsList, {
                 modal: false,
                 size: size,
                 showBorder: false,
-                pos: e.target,
+                pos: overflowButton,
                 posOffset: { //偏移位置
                     top: 36,
                     right: 40
                 },
+                posReviser: (pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue => {
+                    return this._popupService.positionReviser(pos, popupElement, {
+                        offsetHeight: overflowButton.offsetWidth,
+                        direction: 'v'
+                    });
+                }
             });
         }
 
@@ -512,6 +522,11 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     /**
      * @internal
      */
+    public _$selectTabStyle: {};
+
+    /**
+     * @internal
+     */
     public _$listOptionClick(index) {
         if (this._$tabPanes.toArray()[index].disabled) return;
         this.selectedIndex = index;
@@ -523,8 +538,11 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
      */
     public _$tabList = [];
 
+    private _tabLeftMap: Map<number, number> = new Map<number, number>();
+
     private _createTabList() {
         this._$tabList = [];
+        this._tabLeftMap.clear();
         this._tabLabels.forEach((label: JigsawTabLabel, index) => {
             let title = "";
             let rootNodes = (<EmbeddedViewRef<any>>label._tabItemRef).rootNodes;
@@ -536,7 +554,15 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
                 }
             }
             this._$tabList.push(title.trim());
+            let distance = label.getOffsetLeft() + label.getOffsetWidth() - this._tabsNavWrap.nativeElement.offsetWidth;
+            this._tabLeftMap.set(index, distance > 0 ? (0 - distance) : 0);
         });
+        this._setTabStyle(this.selectedIndex);
     }
 
+    private _setTabStyle(index) {
+        this._$selectTabStyle = {
+            "left": this._tabLeftMap.get(index) + "px",
+        };
+    }
 }

@@ -22,7 +22,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
         top: -2px;
         font-size: 18px;
         color: $text-color-secondary;
-        &:hover{
+        &:hover {
             color: $text-color-dark;
         }
     }
@@ -37,7 +37,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
         }
     }
 
-    &-overflow-bar {
+    &-overflow-button {
         display: inline-block;
         cursor: pointer;
         font-size: 24px;
@@ -60,16 +60,12 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
         border: none;
         width: 200px;
         .jigsaw-list-option {
-            //border-top: 1px solid $border-color-base;
             .span-margin {
                 margin: 0 4px;
                 width: 10px;
                 height: 9px;
             }
-            &:hover {
-                background: #CCCCCC;
-            }
-            &-selected{
+            &-selected {
                 color: $primary-color;
             }
             &-hidden {
@@ -89,13 +85,13 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
         .#{$tab-prefix}-nav-wrap {
             @include clearfix();
             display: inline-block;
-            width: calc( 100% - 40px );
+            width: calc(100% - 40px);
             overflow: hidden;
             .#{$tab-prefix}-nav {
                 position: relative;
                 list-style: none;
                 float: left;
-                transition: transform 0.5s $ease-in-out;
+                transition: transform 0.5s $ease-in-out, left 0.5s $ease-in-out;
                 @include clearfix;
 
                 .#{$tab-prefix}-ink-bar {
