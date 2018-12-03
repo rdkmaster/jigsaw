@@ -85,7 +85,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
         .#{$tab-prefix}-nav-wrap {
             @include clearfix();
             display: inline-block;
-            width: calc(100% - 40px);
+            width: calc( 100% - 40px );
             overflow: hidden;
             .#{$tab-prefix}-nav {
                 position: relative;
