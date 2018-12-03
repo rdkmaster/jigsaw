@@ -2,8 +2,8 @@
     <div *ngIf="(_$tabPanes && _$tabPanes.length > 0) || editable" class="jigsaw-tabs-bar">
         <div class="jigsaw-tabs-nav-container">
             <!-- Todo 添加滚动条 -->
-            <div class="jigsaw-tabs-nav-wrap">
-                <div class="jigsaw-tabs-nav">
+            <div #tabsNavWrap class="jigsaw-tabs-nav-wrap">
+                <div #tabsNav class="jigsaw-tabs-nav" [ngStyle]="_$selectTabStyle">
                     <!-- 负责实现动画效果 -->
                     <div #tabsInkBar class="jigsaw-tabs-ink-bar" [ngStyle]="_$inkBarStyle"></div>
                     <jigsaw-tab-label class="jigsaw-tabs-tab"
@@ -18,8 +18,15 @@
                                       (remove)="_$handleRemove($event)"
                                       (change)="titleChange.emit($event)">
                     </jigsaw-tab-label>
-                    <span class="fa fa-plus-square-o jigsaw-tabs-add-bar" *ngIf="editable" (click)="_$handleAdd()"></span>
+                    <span class="fa fa-plus-square-o jigsaw-tabs-add-bar" *ngIf="editable"
+                          (click)="_$handleAdd()"></span>
                 </div>
+            </div>
+            <div class="jigsaw-tabs-overflow-button" *ngIf="tabsNav.offsetWidth > tabsNavWrap.offsetWidth"
+                 (mouseenter)="_$popupTabList(tabsList,$event,overflowButton)"
+                 (mouseleave)="_$menuAreaLeave(false)">
+                <span class="fa  fa-angle-double-right" #overflowButton>
+                </span>
             </div>
         </div>
     </div>
@@ -35,3 +42,18 @@
         </jigsaw-tab-content>
     </div>
 </div>
+
+<ng-template #tabsList>
+    <j-list class="jigsaw-tabs-list"
+            (mouseenter)="_$clearPopupTimeout()"
+            (mouseleave)="_$menuAreaLeave(false)"
+            [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, wheelPropagation: true, minScrollbarLength: 20}">
+        <jigsaw-list-option *ngFor="let tab of _$tabPanes; let i = index;" [value]="tab" (click)="_$listOptionClick(i)"
+                            [disabled]="tab.disabled" [class.jigsaw-list-option-hidden]="tab.hidden">
+            <div [class.jigsaw-list-option-selected]="_$selectedIndex === i">
+                <span class="fa fa-check" *ngIf="_$selectedIndex === i"></span>
+                <span style="display: inline-block" [innerHTML]="_$tabList[i]"></span>
+            </div>
+        </jigsaw-list-option>
+    </j-list>
+</ng-template>
