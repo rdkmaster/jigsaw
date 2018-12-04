@@ -1,11 +1,28 @@
 import {
-    Component, ContentChildren, QueryList, Input, ViewChildren, AfterViewInit, Output, EventEmitter, TemplateRef,
-    ViewContainerRef, ComponentFactoryResolver, Type, ChangeDetectorRef, AfterViewChecked, ViewChild, ElementRef, EmbeddedViewRef
+    Component,
+    ContentChildren,
+    QueryList,
+    Input,
+    ViewChildren,
+    AfterViewInit,
+    Output,
+    EventEmitter,
+    TemplateRef,
+    ViewContainerRef,
+    ComponentFactoryResolver,
+    Type,
+    ChangeDetectorRef,
+    AfterViewChecked,
+    ViewChild,
+    ElementRef,
+    EmbeddedViewRef,
+    HostListener
 } from '@angular/core';
 import {JigsawTabPane} from "./tab-pane";
 import {JigsawTabContent, JigsawTabLabel, TabTitleInfo} from "./tab-item";
 import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
 import {PopupService, PopupSize, PopupInfo, PopupPositionValue} from "../../service/popup.service";
+import {Subscription} from "rxjs/Subscription";
 
 /**
  * 使用`JigsawTab`来将一组视图叠加在同一个区域使用，并以页签的方式来切换这些视图。
@@ -234,7 +251,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         }
     }
 
-    private _tabLabelsChangeHandler;
+    private _tabLabelsChangeHandler: Subscription;
 
     ngAfterViewInit() {
         this._createTabList();
@@ -251,7 +268,9 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     }
 
     ngOnDestroy() {
-        this._tabLabelsChangeHandler.dispose();
+        if (this._tabLabelsChangeHandler) {
+            this._tabLabelsChangeHandler.unsubscribe();
+        }
     }
 
     // 注意此方法会被频繁调用，性能要求高
@@ -464,10 +483,15 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     @ViewChild('tabsNavWrap')
     private _tabsNavWrap: ElementRef;
     @ViewChild('tabsNav')
-    private _tabsNav: TemplateRef<any>;
+    private _tabsNav: ElementRef;
 
     private _tabsListPopupInfo: PopupInfo;
     private _popupTimeout: any;
+
+    /**
+     * @internal
+     */
+    public _$showOverflowButton: boolean = false;
 
     /**
      * @internal
@@ -489,7 +513,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
                 },
                 posReviser: (pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue => {
                     return this._popupService.positionReviser(pos, popupElement, {
-                        offsetHeight: overflowButton.offsetWidth,
+                        offsetHeight: overflowButton.offsetHeight,
                         direction: 'v'
                     });
                 }
@@ -558,12 +582,22 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
             let distance = label.getOffsetLeft() + label.getOffsetWidth() - this._tabsNavWrap.nativeElement.offsetWidth;
             this._tabLeftMap.set(index, distance > 0 ? (0 - distance) : 0);
         });
+        this._setShowOverflowButton();
         this._setTabStyle(this.selectedIndex);
     }
 
     private _setTabStyle(index) {
         this._$selectTabStyle = {
-            "left": this._tabLeftMap.get(index) + "px",
+            "left": this._tabLeftMap.get(index) + "px"
         };
+    }
+
+    private _setShowOverflowButton() {
+        this._$showOverflowButton = this._tabsNavWrap.nativeElement.offsetWidth < this._tabsNav.nativeElement.offsetWidth
+    }
+
+    @HostListener('window:resize')
+    onResize() {
+        this._createTabList();
     }
 }

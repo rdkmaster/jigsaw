@@ -22,7 +22,7 @@
                           (click)="_$handleAdd()"></span>
                 </div>
             </div>
-            <div class="jigsaw-tabs-overflow-button" *ngIf="tabsNav.offsetWidth > tabsNavWrap.offsetWidth"
+            <div class="jigsaw-tabs-overflow-button" *ngIf="_$showOverflowButton"
                  (mouseenter)="_$popupTabList(tabsList,$event,overflowButton)"
                  (mouseleave)="_$menuAreaLeave(false)">
                 <span class="fa  fa-angle-double-right" #overflowButton>
