@@ -24,8 +24,8 @@
             </div>
             <div class="jigsaw-tabs-overflow-button" *ngIf="_$showOverflowButton"
                  (mouseenter)="_$popupTabList(tabsList,$event,overflowButton)"
-                 (mouseleave)="_$menuAreaLeave(false)">
-                <span class="fa  fa-angle-double-right" #overflowButton>
+                 (mouseleave)="_$menuAreaLeave(false)" #overflowButton>
+                <span class="fa  fa-angle-double-right">
                 </span>
             </div>
         </div>

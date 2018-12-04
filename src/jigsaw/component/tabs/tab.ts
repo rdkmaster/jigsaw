@@ -508,8 +508,8 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
                 showBorder: false,
                 pos: overflowButton,
                 posOffset: { //偏移位置
-                    top: 36,
-                    right: 40
+                    top: overflowButton.offsetHeight,
+                    right: overflowButton.offsetWidth
                 },
                 posReviser: (pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue => {
                     return this._popupService.positionReviser(pos, popupElement, {
