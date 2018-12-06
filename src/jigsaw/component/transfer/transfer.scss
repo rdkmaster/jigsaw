@@ -109,6 +109,9 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
             border: none;
         }
     }
+    &-list-box{
+        background-color: #fff;
+    }
     &-search-wrapper {
         padding: 4px;
     }
