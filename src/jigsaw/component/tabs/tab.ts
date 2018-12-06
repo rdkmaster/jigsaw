@@ -1,10 +1,28 @@
 import {
-    Component, ContentChildren, QueryList, Input, ViewChildren, AfterViewInit, Output, EventEmitter, TemplateRef,
-    ViewContainerRef, ComponentFactoryResolver, Type, ChangeDetectorRef, AfterViewChecked, ViewChild, ElementRef
+    Component,
+    ContentChildren,
+    QueryList,
+    Input,
+    ViewChildren,
+    AfterViewInit,
+    Output,
+    EventEmitter,
+    TemplateRef,
+    ViewContainerRef,
+    ComponentFactoryResolver,
+    Type,
+    ChangeDetectorRef,
+    AfterViewChecked,
+    ViewChild,
+    ElementRef,
+    EmbeddedViewRef,
+    HostListener
 } from '@angular/core';
 import {JigsawTabPane} from "./tab-pane";
 import {JigsawTabContent, JigsawTabLabel, TabTitleInfo} from "./tab-item";
 import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
+import {PopupService, PopupSize, PopupInfo, PopupPositionValue} from "../../service/popup.service";
+import {Subscription} from "rxjs/Subscription";
 
 /**
  * 使用`JigsawTab`来将一组视图叠加在同一个区域使用，并以页签的方式来切换这些视图。
@@ -32,8 +50,9 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     constructor(private _cfr: ComponentFactoryResolver,
                 private _changeDetector: ChangeDetectorRef,
                 private _viewContainer: ViewContainerRef,
-                private _elementRef: ElementRef) {
-        super()
+                private _elementRef: ElementRef,
+                private _popupService: PopupService) {
+        super();
     }
 
     /**
@@ -112,6 +131,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
      */
     public _$tabClick(index) {
         this.selectedIndex = index;
+        this._updateTitlePosition(index);
     }
 
     /**
@@ -223,7 +243,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
 
     ngOnInit() {
         super.ngOnInit();
-        if(this.height) {
+        if (this.height) {
             this.callLater(() => {
                 // 等待dom渲染
                 this._$contentHeight = this._elementRef.nativeElement.offsetHeight - 46 + 'px';
@@ -231,7 +251,11 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         }
     }
 
+    private _tabLabelsChangeHandler: Subscription;
+
     ngAfterViewInit() {
+        this._createTabList();
+        this._tabLabelsChangeHandler = this._tabLabels.changes.subscribe(() => this._createTabList());
         if (this.selectedIndex != null) {
             this._handleSelectChange(this.selectedIndex)
         } else {
@@ -239,6 +263,12 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         }
 
         this.length = this._$tabPanes.length;
+    }
+
+    ngOnDestroy() {
+        if (this._tabLabelsChangeHandler) {
+            this._tabLabelsChangeHandler.unsubscribe();
+        }
     }
 
     // 注意此方法会被频繁调用，性能要求高
@@ -446,5 +476,128 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         } else {
             this._asyncSetStyle(this.selectedIndex);
         }
+    }
+
+    /**
+     * @internal
+     */
+    public _$showOverflowButton: boolean = false;
+    private _tabsListPopupInfo: PopupInfo;
+    private _popupTimeout: any;
+
+    /**
+     * @internal
+     */
+    public _$popupTabList(tabsList, event, overflowButton) {
+        this._$clearPopupTimeout();
+        if (!this._tabsListPopupInfo) {
+            let size = new PopupSize();
+            size.width = 190;
+            size.height = 150;
+            this._tabsListPopupInfo = this._popupService.popup(tabsList, {
+                modal: false,
+                size: size,
+                showBorder: false,
+                pos: overflowButton,
+                posOffset: { //偏移位置
+                    top: overflowButton.offsetHeight,
+                    right: overflowButton.offsetWidth
+                },
+                posReviser: (pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue => {
+                    return this._popupService.positionReviser(pos, popupElement, {
+                        offsetHeight: overflowButton.offsetHeight,
+                        direction: 'v'
+                    });
+                }
+            });
+        }
+    }
+
+    /**
+     * @internal
+     */
+    public _$menuAreaLeave() {
+        this._$clearPopupTimeout();
+        this._popupTimeout = this.callLater(() => {
+            if (this._tabsListPopupInfo) {
+                this._tabsListPopupInfo.dispose();
+                this._tabsListPopupInfo.element = null;
+                this._tabsListPopupInfo = null;
+            }
+            this._popupTimeout = null;
+        }, 400);
+    }
+
+    /**
+     * @internal
+     */
+    public _$clearPopupTimeout() {
+        if (this._popupTimeout) {
+            this.clearCallLater(this._popupTimeout);
+            this._popupTimeout = null;
+        }
+    }
+
+    /**
+     * @internal
+     */
+    public _$selectTabStyle: {};
+
+    /**
+     * @internal
+     */
+    public _$listOptionClick(index) {
+        if (this._$tabPanes.toArray()[index].disabled) return;
+        this.selectedIndex = index;
+    }
+
+
+    /**
+     * @internal
+     */
+    public _$tabList = [];
+
+    private _tabLeftMap: Map<number, number> = new Map<number, number>();
+
+    private _createTabList() {
+        this._$tabList = [];
+        this._tabLeftMap.clear();
+        this._tabLabels.forEach((label: JigsawTabLabel, index) => {
+            let title = "";
+            let rootNodes = (<EmbeddedViewRef<any>>label._tabItemRef).rootNodes;
+            for (let i = 0; i < rootNodes.length; i++) {
+                if (rootNodes[i] instanceof HTMLElement) {
+                    title += " " + rootNodes[i].outerHTML;
+                } else {
+                    title += " " + rootNodes[i].textContent.trim();
+                }
+            }
+            this._$tabList.push(title.trim());
+            let distance = label.getOffsetLeft() + label.getOffsetWidth() - this._tabsNavWrap.nativeElement.offsetWidth;
+            this._tabLeftMap.set(index, distance > 0 ? (0 - distance) : 0);
+        });
+        this._updateOverflowButton();
+        this._updateTitlePosition(this.selectedIndex);
+    }
+
+    private _updateTitlePosition(index) {
+        this._$selectTabStyle = {
+            "left": this._tabLeftMap.get(index) + "px"
+        };
+    }
+
+    @ViewChild('tabsNavWrap')
+    private _tabsNavWrap: ElementRef;
+
+    @ViewChild('tabsNav')
+    private _tabsNav: ElementRef;
+
+    private _updateOverflowButton() {
+        this._$showOverflowButton = this._tabsNavWrap.nativeElement.offsetWidth < this._tabsNav.nativeElement.offsetWidth
+    }
+
+    @HostListener('window:resize')
+    onResize() {
+        this._createTabList();
     }
 }
