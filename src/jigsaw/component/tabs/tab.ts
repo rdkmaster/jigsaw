@@ -131,7 +131,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
      */
     public _$tabClick(index) {
         this.selectedIndex = index;
-        this._setTabStyle(index);
+        this._updateTitlePosition(index);
     }
 
     /**
@@ -255,9 +255,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
 
     ngAfterViewInit() {
         this._createTabList();
-        this._tabLabelsChangeHandler = this._tabLabels.changes.subscribe(data => {
-            this._createTabList();
-        });
+        this._tabLabelsChangeHandler = this._tabLabels.changes.subscribe(() => this._createTabList());
         if (this.selectedIndex != null) {
             this._handleSelectChange(this.selectedIndex)
         } else {
@@ -480,18 +478,12 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         }
     }
 
-    @ViewChild('tabsNavWrap')
-    private _tabsNavWrap: ElementRef;
-    @ViewChild('tabsNav')
-    private _tabsNav: ElementRef;
-
-    private _tabsListPopupInfo: PopupInfo;
-    private _popupTimeout: any;
-
     /**
      * @internal
      */
     public _$showOverflowButton: boolean = false;
+    private _tabsListPopupInfo: PopupInfo;
+    private _popupTimeout: any;
 
     /**
      * @internal
@@ -519,7 +511,6 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
                 }
             });
         }
-
     }
 
     /**
@@ -541,7 +532,10 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
      * @internal
      */
     public _$clearPopupTimeout() {
-        if (this._popupTimeout) clearTimeout(this._popupTimeout);
+        if (this._popupTimeout) {
+            this.clearCallLater(this._popupTimeout);
+            this._popupTimeout = null;
+        }
     }
 
     /**
@@ -582,17 +576,23 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
             let distance = label.getOffsetLeft() + label.getOffsetWidth() - this._tabsNavWrap.nativeElement.offsetWidth;
             this._tabLeftMap.set(index, distance > 0 ? (0 - distance) : 0);
         });
-        this._setShowOverflowButton();
-        this._setTabStyle(this.selectedIndex);
+        this._updateOverflowButton();
+        this._updateTitlePosition(this.selectedIndex);
     }
 
-    private _setTabStyle(index) {
+    private _updateTitlePosition(index) {
         this._$selectTabStyle = {
             "left": this._tabLeftMap.get(index) + "px"
         };
     }
 
-    private _setShowOverflowButton() {
+    @ViewChild('tabsNavWrap')
+    private _tabsNavWrap: ElementRef;
+
+    @ViewChild('tabsNav')
+    private _tabsNav: ElementRef;
+
+    private _updateOverflowButton() {
         this._$showOverflowButton = this._tabsNavWrap.nativeElement.offsetWidth < this._tabsNav.nativeElement.offsetWidth
     }
 
