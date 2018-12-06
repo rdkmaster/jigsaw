@@ -57,6 +57,7 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
         border-radius: $border-radius-base;
         flex: 1 1 0;
         position: relative;
+        background-color: #fff;
     }
     &-option-box {
         display: flex;
@@ -108,9 +109,6 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
         .#{$list-prefix-cls} {
             border: none;
         }
-    }
-    &-list-box{
-        background-color: #fff;
     }
     &-search-wrapper {
         padding: 4px;
