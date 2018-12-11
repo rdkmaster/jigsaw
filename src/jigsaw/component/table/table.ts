@@ -89,14 +89,17 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     public set selectedRow(value: number) {
+        if (this._selectedRow === value) return;
         this._selectedRow = value;
         if (this.initialized) {
-            this._$selectRow(value);
+            this._selectRow(value);
         }
     }
 
     @Output()
     public selectChange: EventEmitter<number> = new EventEmitter<number>();
+    @Output()
+    public selectedRowChange: EventEmitter<number> = new EventEmitter<number>();
 
     private _getColumnIndex(field: string): [number, TableData] {
         return _getColumnIndex(this.data, this._additionalData, field);
@@ -294,7 +297,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             // 等待滚动条初始化
             this._handleScrollBar();
             // 自动再次标记选中行
-            this._$selectRow(this.selectedRow);
+            this._selectRow(this.selectedRow);
         })
     }
 
@@ -406,12 +409,18 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     /**
      * @internal
      */
-    public _$selectRow(rowIndex: number, suppressEvent: boolean = false) {
+    public _$clickRow(rowIndex: number){
+        this._selectedRow = rowIndex;
+        this._selectRow(rowIndex);
+    }
+
+    private _selectRow(rowIndex: number, suppressEvent: boolean = false) {
         this._rowElementRefs.forEach((row, index) => {
             if (index === rowIndex) {
                 this._renderer.addClass(row.nativeElement, 'jigsaw-table-row-selected');
                 if (!suppressEvent) {
                     this.selectChange.emit(rowIndex);
+                    this.selectedRowChange.emit(rowIndex);
                 }
             } else {
                 this._renderer.removeClass(row.nativeElement, 'jigsaw-table-row-selected');
@@ -714,7 +723,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     ngAfterViewInit() {
-        this._$selectRow(this.selectedRow, true);
+        this._selectRow(this.selectedRow, true);
 
         // 初始化滚动条
         this._initVerticalScroll();

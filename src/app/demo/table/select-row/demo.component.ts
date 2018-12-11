@@ -1,6 +1,7 @@
-import {Component} from "@angular/core";
+import {Component, ViewChild} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/core/data/table-data";
+import {JigsawTable} from "../../../../jigsaw/component/table/table";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -15,8 +16,16 @@ export class TableSelectRowDemoComponent {
         this.tableData.fromAjax('mock-data/hr-list');
     }
 
-    getSelectedRow(rowIndex: number) {
-        console.log(`row number ${rowIndex + 1} was selected`)
+
+    @ViewChild('Table1')
+    private _table1:  JigsawTable;
+
+    getSelectedRow() {
+        console.log(this._table1.selectedRow);
+    }
+
+    getCurrentRow(rowIndex: number){
+        console.log(`row number ${rowIndex + 1} was selected`);
     }
 
     // ====================================================================
