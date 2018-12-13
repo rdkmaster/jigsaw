@@ -6,6 +6,9 @@
 <!-- start to learn the demo from here -->
 <jigsaw-button (click)="selectedRow = 2">选择第三行</jigsaw-button>
 
-<jigsaw-table height="400px" [data]="tableData" [(selectedRow)]="selectedRow"></jigsaw-table>
+<jigsaw-table #Table1 height="400px" [data]="tableData"
+              [(selectedRow)]= "selectedRow"
+              (selectedRowChange)="getCurrentRow()">
+</jigsaw-table>
 
 <p>row index {{selectedRow}} was selected</p>

@@ -39,7 +39,7 @@
             </thead>
             <tbody>
             <tr #tableRow *ngFor="let row of _$cellSettings; index as rowIndex"
-                (click)="_$selectRow(rowIndex)" (dblclick)="_$handleRowDoubleClick(rowIndex)">
+                (click)="_$clickRow(rowIndex)" (dblclick)="_$handleRowDoubleClick(rowIndex)">
                 <td *ngFor="let cell of row;"
                     [attr.rowspan]="cell.rowSpan > 1 ? cell.rowSpan : null"
                     [style.display]="cell.rowSpan ? 'table-cell' : 'none'"

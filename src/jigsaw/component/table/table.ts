@@ -21,8 +21,13 @@ import {
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {SortOrder} from "../../core/data/component-data";
 import {
-    DefaultCellRenderer, JigsawTableRendererModule, TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellTextEditorRenderer,
-    TableHeadCheckboxRenderer, TableCellSelectRenderer
+    DefaultCellRenderer,
+    JigsawTableRendererModule,
+    TableCellCheckboxRenderer,
+    TableCellSwitchRenderer,
+    TableCellTextEditorRenderer,
+    TableHeadCheckboxRenderer,
+    TableCellSelectRenderer
 } from "./table-renderer";
 import {AffixUtils} from "../../core/utils/internal-utils";
 import {
@@ -47,7 +52,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef,
                 private _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef) {
         super();
-        if(CommonUtils.getBrowserType() == 'Firefox') {
+        if (CommonUtils.getBrowserType() == 'Firefox') {
             this._$isFFBrowser = true;
         }
     }
@@ -89,14 +94,19 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     public set selectedRow(value: number) {
+        if (this._selectedRow === value) {
+            return;
+        }
         this._selectedRow = value;
         if (this.initialized) {
-            this._$selectRow(value);
+            this._selectRow(value);
         }
     }
 
     @Output()
     public selectChange: EventEmitter<number> = new EventEmitter<number>();
+    @Output()
+    public selectedRowChange: EventEmitter<number> = new EventEmitter<number>();
 
     private _getColumnIndex(field: string): [number, TableData] {
         return _getColumnIndex(this.data, this._additionalData, field);
@@ -294,7 +304,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             // 等待滚动条初始化
             this._handleScrollBar();
             // 自动再次标记选中行
-            this._$selectRow(this.selectedRow);
+            this._selectRow(this.selectedRow);
         })
     }
 
@@ -406,12 +416,21 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     /**
      * @internal
      */
-    public _$selectRow(rowIndex: number, suppressEvent: boolean = false) {
+    public _$clickRow(rowIndex: number) {
+        if (this._selectedRow === rowIndex) {
+            return;
+        }
+        this._selectedRow = rowIndex;
+        this._selectRow(rowIndex);
+    }
+
+    private _selectRow(rowIndex: number, suppressEvent: boolean = false) {
         this._rowElementRefs.forEach((row, index) => {
             if (index === rowIndex) {
                 this._renderer.addClass(row.nativeElement, 'jigsaw-table-row-selected');
                 if (!suppressEvent) {
                     this.selectChange.emit(rowIndex);
+                    this.selectedRowChange.emit(rowIndex);
                 }
             } else {
                 this._renderer.removeClass(row.nativeElement, 'jigsaw-table-row-selected');
@@ -548,7 +567,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         const tBodyColGroup = host.querySelectorAll('.jigsaw-table-body colgroup col');
         const tHeadTds = host.querySelectorAll('.jigsaw-table-header thead td');
         const tBodyTds = host.querySelectorAll('.jigsaw-table-body thead td');
-        if(this.contentWidth != 'auto' || !tHeadColGroup || !tHeadColGroup.length) return;
+        if (this.contentWidth != 'auto' || !tHeadColGroup || !tHeadColGroup.length) return;
 
         host.querySelectorAll('table').forEach(table => {
             this._renderer.setStyle(table, 'table-layout', 'auto');
@@ -566,7 +585,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         // 清空col的width
         tHeadColGroup.forEach(col => col.setAttribute('width', ''));
         tBodyColGroup.forEach(col => col.setAttribute('width', ''));
-        if(this._$isFFBrowser) {
+        if (this._$isFFBrowser) {
             tHeadTds.forEach(col => col.setAttribute('width', ''));
             tBodyTds.forEach(col => col.setAttribute('width', ''));
         }
@@ -593,7 +612,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             const colWidth = this._$headerSettings && this._$headerSettings[index].width ? this._$headerSettings[index].width : width;
             tHeadColGroup[index].setAttribute('width', colWidth);
             tBodyColGroup[index].setAttribute('width', colWidth);
-            if(this._$isFFBrowser) {
+            if (this._$isFFBrowser) {
                 tHeadTds[index].setAttribute('width', colWidth);
                 tBodyTds[index].setAttribute('width', colWidth);
             }
@@ -714,7 +733,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     ngAfterViewInit() {
-        this._$selectRow(this.selectedRow, true);
+        this._selectRow(this.selectedRow, true);
 
         // 初始化滚动条
         this._initVerticalScroll();
