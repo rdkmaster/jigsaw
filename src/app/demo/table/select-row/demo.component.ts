@@ -16,16 +16,11 @@ export class TableSelectRowDemoComponent {
         this.tableData.fromAjax('mock-data/hr-list');
     }
 
-
     @ViewChild('Table1')
-    private _table1:  JigsawTable;
+    private _table: JigsawTable;
 
-    getSelectedRow() {
-        console.log(this._table1.selectedRow);
-    }
-
-    getCurrentRow(rowIndex: number){
-        console.log(`row number ${rowIndex + 1} was selected`);
+    getCurrentRow() {
+        console.log(`row number ${this._table.selectedRow} was selected`);
     }
 
     // ====================================================================
@@ -33,8 +28,5 @@ export class TableSelectRowDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTable.selectedRow'
-    ];
 }
 

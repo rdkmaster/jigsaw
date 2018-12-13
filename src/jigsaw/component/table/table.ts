@@ -21,8 +21,13 @@ import {
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {SortOrder} from "../../core/data/component-data";
 import {
-    DefaultCellRenderer, JigsawTableRendererModule, TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellTextEditorRenderer,
-    TableHeadCheckboxRenderer, TableCellSelectRenderer
+    DefaultCellRenderer,
+    JigsawTableRendererModule,
+    TableCellCheckboxRenderer,
+    TableCellSwitchRenderer,
+    TableCellTextEditorRenderer,
+    TableHeadCheckboxRenderer,
+    TableCellSelectRenderer
 } from "./table-renderer";
 import {AffixUtils} from "../../core/utils/internal-utils";
 import {
@@ -47,7 +52,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef,
                 private _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef) {
         super();
-        if(CommonUtils.getBrowserType() == 'Firefox') {
+        if (CommonUtils.getBrowserType() == 'Firefox') {
             this._$isFFBrowser = true;
         }
     }
@@ -89,7 +94,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     public set selectedRow(value: number) {
-        if (this._selectedRow === value) return;
+        if (this._selectedRow === value) {
+            return;
+        }
         this._selectedRow = value;
         if (this.initialized) {
             this._selectRow(value);
@@ -409,7 +416,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     /**
      * @internal
      */
-    public _$clickRow(rowIndex: number){
+    public _$clickRow(rowIndex: number) {
+        if (this._selectedRow === rowIndex) {
+            return;
+        }
         this._selectedRow = rowIndex;
         this._selectRow(rowIndex);
     }
@@ -557,7 +567,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         const tBodyColGroup = host.querySelectorAll('.jigsaw-table-body colgroup col');
         const tHeadTds = host.querySelectorAll('.jigsaw-table-header thead td');
         const tBodyTds = host.querySelectorAll('.jigsaw-table-body thead td');
-        if(this.contentWidth != 'auto' || !tHeadColGroup || !tHeadColGroup.length) return;
+        if (this.contentWidth != 'auto' || !tHeadColGroup || !tHeadColGroup.length) return;
 
         host.querySelectorAll('table').forEach(table => {
             this._renderer.setStyle(table, 'table-layout', 'auto');
@@ -575,7 +585,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         // 清空col的width
         tHeadColGroup.forEach(col => col.setAttribute('width', ''));
         tBodyColGroup.forEach(col => col.setAttribute('width', ''));
-        if(this._$isFFBrowser) {
+        if (this._$isFFBrowser) {
             tHeadTds.forEach(col => col.setAttribute('width', ''));
             tBodyTds.forEach(col => col.setAttribute('width', ''));
         }
@@ -602,7 +612,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             const colWidth = this._$headerSettings && this._$headerSettings[index].width ? this._$headerSettings[index].width : width;
             tHeadColGroup[index].setAttribute('width', colWidth);
             tBodyColGroup[index].setAttribute('width', colWidth);
-            if(this._$isFFBrowser) {
+            if (this._$isFFBrowser) {
                 tHeadTds[index].setAttribute('width', colWidth);
                 tBodyTds[index].setAttribute('width', colWidth);
             }
