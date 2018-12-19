@@ -1,11 +1,9 @@
 <div class="jigsaw-tabs">
     <div *ngIf="(_$tabPanes && _$tabPanes.length > 0) || editable" class="jigsaw-tabs-bar">
         <div class="jigsaw-tabs-nav-container">
-            <!-- Todo 添加滚动条 -->
+            <div #tabsInkBar class="jigsaw-tabs-ink-bar" [ngStyle]="_$inkBarStyle"></div>
             <div #tabsNavWrap class="jigsaw-tabs-nav-wrap">
                 <div #tabsNav class="jigsaw-tabs-nav" [ngStyle]="_$selectTabStyle">
-                    <!-- 负责实现动画效果 -->
-                    <div #tabsInkBar class="jigsaw-tabs-ink-bar" [ngStyle]="_$inkBarStyle"></div>
                     <jigsaw-tab-label class="jigsaw-tabs-tab"
                                       *ngFor="let tab of _$tabPanes; let i = index"
                                       [key]="i"
