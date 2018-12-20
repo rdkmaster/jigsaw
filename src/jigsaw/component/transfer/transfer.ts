@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, NgModule, OnDestroy, Optional, ViewChild} from "@angular/core";
+import {Component, Input, NgModule, OnDestroy, Optional} from "@angular/core";
 import {trigger, style, transition, state, animate, keyframes} from "@angular/animations"
 import {JigsawListModule} from "../list-and-tile/list";
 import {JigsawCheckBoxModule} from "../checkbox/index";
@@ -302,7 +302,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
         '[class.jigsaw-transfer-list-frame]': 'true'
     }
 })
-export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent implements OnDestroy, AfterViewInit {
+export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent implements OnDestroy {
     constructor(@Optional() private _transfer: JigsawTransfer) {
         super();
         this._removeHostSubscribe = _transfer.selectedItemsChange.subscribe(() => {
@@ -356,9 +356,6 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
     @Input()
     public searchable: boolean;
 
-    @ViewChild('searchWrapper')
-    public _searchWrapper: ElementRef;
-
     private _removeHostSubscribe: Subscriber<any>;
     private _filterFunction: (item: any) => boolean;
     private _removeArrayCallbackListener: CallbackRemoval;
@@ -384,11 +381,6 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
     public get _$trackByFn() {
         return InternalUtils.trackByFn(this.trackItemBy);
     };
-
-    /**
-     * @internal
-     */
-    public _$listWrapperHeight: string = '100%';
 
     /**
      * 这边把transfer过来的数组转成分页数据，中间变量data主要用于消除数据闪动
@@ -500,13 +492,6 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
         this.selectedItems = this.selectedItems.filter(item =>
             !currentUnselectedItems.some(it => CommonUtils.compareWithKeyProperty(item, it, <string[]>this.trackItemBy)));
         this.selectedItemsChange.emit(this.selectedItems);
-    }
-
-    ngAfterViewInit() {
-        setTimeout(() => {
-            this._$listWrapperHeight = this.searchable && this._searchWrapper ?
-                'calc(100% - ' + this._searchWrapper.nativeElement.offsetHeight + 'px)': '100%';
-        });
     }
 
     ngOnDestroy() {

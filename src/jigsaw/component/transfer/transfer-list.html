@@ -8,7 +8,7 @@
     </span>
 </div>
 <div class="jigsaw-transfer-list-box" [style.height]="data && data.pagingInfo && data.pagingInfo.pageSize != _$infinity ? 'calc(100% - 60px)' : 'calc(100% - 32px)'">
-    <div class="jigsaw-transfer-search-wrapper" *ngIf="searchable" #searchWrapper>
+    <div class="jigsaw-transfer-search-wrapper" *ngIf="searchable">
         <j-input class="jigsaw-transfer-list-search" width="100%" [(value)]="_$searchKey"
                  (valueChange)="_$handleSearching($event)" >
             <span jigsaw-prefix-icon class="fa fa-search"></span>
@@ -16,7 +16,7 @@
     </div>
     <div class="jigsaw-transfer-list-wrapper"
          [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"
-         [style.max-height]="_$listWrapperHeight">
+         [class.jigsaw-transfer-list-searchable]="searchable">
         <j-list #listGroup width="100%" [multipleSelect]="true" [trackItemBy]="trackItemBy"
                 [(selectedItems)]="_$currentPageSelectedItems" (selectedItemsChange)="_$updateSelectedItemsByCurrent()" >
             <j-list-option #listItem *ngFor="let item of data; trackBy: _$trackByFn" [value]="item" [disabled]="item.disabled">
