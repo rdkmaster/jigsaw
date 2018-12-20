@@ -35,7 +35,7 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
     }
 
     &-selection-rendered {
-        min-height: $height-base;
+        min-height: $height-base - 2;
         padding: 3px 0 0;
         overflow: hidden;
         font-size: 0;
@@ -45,8 +45,8 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
             margin-bottom: 2px;
         }
         .jigsaw-input {
-            height: $height-base - 6;
-            line-height: $height-base - 6;
+            height: $height-base - 8;
+            line-height: $height-base - 8;
             input {
                 padding: 0 !important;
                 font-size: $font-size-base;
@@ -64,8 +64,8 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
         font-size: $font-size-base;
         color: $text-color-secondary;
         padding-bottom: 3px;
-        height: $height-base - 3;
-        line-height: $height-base - 6;
+        height: $height-base - 6;
+        line-height: $height-base - 9;
     }
 
     &-disabled {

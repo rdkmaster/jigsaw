@@ -8,7 +8,7 @@ $page-prefix-cls: #{$jigsaw-prefix}-page;
     vertical-align: top;
     span {
         @include inline-block();
-        width: 28px;
+        width: $height-base;
         height: $height-base;
         line-height: $height-base;
         font-size: $font-size-base;
@@ -33,8 +33,8 @@ $page-prefix-cls: #{$jigsaw-prefix}-page;
     }
     i{
         @include inline-block();
-        width: 28px;
-        height: 28px;
+        width: $height-base;
+        height: $height-base;
         cursor: pointer;
         &:after{
             display: block;
@@ -54,11 +54,11 @@ $page-prefix-cls: #{$jigsaw-prefix}-page;
         &:hover{
             &.#{$page-prefix-cls}-prevs:after{
                 content: '<<';
-                line-height: 28px;
+                line-height: $height-base;
             }
             &.#{$page-prefix-cls}-nexts:after{
                 content: '>>';
-                line-height: 28px;
+                line-height: $height-base;
             }
         }
     }

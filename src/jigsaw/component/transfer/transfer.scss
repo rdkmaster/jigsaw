@@ -59,6 +59,7 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
         flex: 1 1 0;
         position: relative;
         background-color: $component-background;
+        overflow: hidden;
     }
     &-option-box {
         display: flex;

@@ -16,7 +16,7 @@
     </div>
     <div class="jigsaw-transfer-list-wrapper"
          [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"
-         [style.max-height]="searchable ? 'calc(100% - 38px)': '100%'">
+         [style.max-height]="searchable ? 'calc(100% - 40px)': '100%'">
         <j-list #listGroup width="100%" [multipleSelect]="true" [trackItemBy]="trackItemBy"
                 [(selectedItems)]="_$currentPageSelectedItems" (selectedItemsChange)="_$updateSelectedItemsByCurrent()" >
             <j-list-option #listItem *ngFor="let item of data; trackBy: _$trackByFn" [value]="item" [disabled]="item.disabled">
