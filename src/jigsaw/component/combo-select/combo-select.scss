@@ -47,14 +47,14 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
         .jigsaw-input {
             height: $height-base - 8;
             line-height: $height-base - 8;
+            border: none;
+            &.jigsaw-input-focused, &:hover {
+                box-shadow: none;
+                border: none;
+            }
             input {
                 padding: 0 !important;
                 font-size: $font-size-base;
-                border: none;
-                &:focus, &:hover {
-                    box-shadow: none;
-                    border: none;
-                }
             }
         }
     }

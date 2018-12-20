@@ -193,7 +193,7 @@
  */
 @mixin setTabTriangle($showTriangle: true) {
     .jigsaw-tabs {
-        .jigsaw-tabs-nav-container .jigsaw-tabs-nav-wrap .jigsaw-tabs-nav .jigsaw-tabs-ink-bar:after {
+        .jigsaw-tabs-nav-container .jigsaw-tabs-ink-bar:after {
             display: if($showTriangle, block, none);
         }
     }

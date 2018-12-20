@@ -190,7 +190,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
 
         this._$inkBarStyle = {
             'display': 'block',
-            'transform': 'translate3d(' + labelPos.offSet + 'px, 0px, 0px)',
+            'transform': 'translate3d(' + (labelPos.offSet + this._tabLeftMap.get(this.selectedIndex)) + 'px, 0px, 0px)',
             'width': labelPos.width + 'px'
         }
     }
@@ -286,7 +286,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         } else {
             const match = (tabElem.style.transform + '').match(/\btranslate3d\s*\((\d+)px\s*,/);
             const offset = match ? match[1] : -1;
-            if (offset != labelPos.offSet) {
+            if (offset != labelPos.offSet + this._tabLeftMap.get(this.selectedIndex)) {
                 this._asyncSetStyle(this.selectedIndex);
             }
         }
