@@ -9,7 +9,7 @@ $paging-prefix-cls: #{$jigsaw-prefix}-paging;
     &-page {
         position: relative;
         @include inline-block;
-        width: 28px;
+        width: $height-base;
         height: $height-base;
         line-height: $height-base;
         text-align: center;
@@ -38,21 +38,21 @@ $paging-prefix-cls: #{$jigsaw-prefix}-paging;
     }
     &-goto {
         @include inline-block;
-        height: 28px;
-        line-height: 28px;
+        height: $height-base;
         vertical-align: top;
         > span {
             margin-right: 8px;
+            vertical-align: middle;
         }
     }
     jigsaw-input {
-        vertical-align: top;
+        vertical-align: middle;
         margin-right: 8px;
     }
     &.#{$paging-prefix-cls}-small {
         &:before {
             content: '';
-            display: inline-block;;
+            display: inline-block;
             vertical-align: middle;
             height: $height-sm;
         }
@@ -70,6 +70,7 @@ $paging-prefix-cls: #{$jigsaw-prefix}-paging;
         }
         jigsaw-input {
             margin: 0 4px;
+            vertical-align: middle;
             input {
                 text-align: center;
                 padding: 0 2px !important;

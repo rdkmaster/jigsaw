@@ -12,8 +12,6 @@ import {JigsawPaginationModule} from "../pagination/pagination";
 import {InternalUtils} from "../../core/utils/internal-utils";
 import {Subscriber} from "rxjs/Subscriber";
 import {CommonModule} from "@angular/common";
-import {CheckBoxStatus} from "../checkbox/typings";
-import {TableData} from "../../core/data/table-data";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {LoadingService} from "../../service/loading.service";
 import {TranslateHelper} from "../../core/utils/translate-helper";

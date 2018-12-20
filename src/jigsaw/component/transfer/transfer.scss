@@ -59,6 +59,7 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
         flex: 1 1 0;
         position: relative;
         background-color: $component-background;
+        overflow: hidden;
     }
     &-option-box {
         display: flex;
@@ -107,6 +108,10 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
         }
     }
     &-list-wrapper {
+        max-height: 100%;
+        &.#{$transfer-prefix-cls}-list-searchable {
+            max-height: calc(100% - #{$height-base + 8px});
+        }
         .#{$list-prefix-cls} {
             border: none;
         }
