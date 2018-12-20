@@ -9,6 +9,14 @@ $icon-prefix-cls: #{$jigsaw-prefix}-icon;
         text-decoration: none;
         color: #008fd4;
     }
-
 }
 
+.whole-icon {
+    display:flex;
+    align-items:center;
+}
+
+.text {
+    font-size: 14px;
+    padding-left: 4px;
+}

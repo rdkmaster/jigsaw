@@ -1,7 +1,8 @@
-<a *ngIf="isLinkButton" [ngClass]="icon" [href]="_$secureUrl" [target]="target" [title]="title">
-    {{text}}
+<a *ngIf="isLinkButton" class="whole-icon" [href]="_$secureUrl" [target]="target" [title]="title">
+    <i [ngClass]="icon"></i>
+    <span class="text">{{text}}</span>
 </a>
-<span *ngIf="!isLinkButton" [ngClass]="icon" [title]="title">
-    {{text}}
-</span>
-
+<div *ngIf="!isLinkButton" class="whole-icon" [title]="title">
+    <i [ngClass]="icon"></i>
+    <span class="text">{{text}}</span>
+</div>
