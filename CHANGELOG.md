@@ -1,3 +1,21 @@
+## v1.1.19 (2018-12-24)
+
+### 新特性 / New Features
+- [新增] 表格的selectedRow属性支持双绑
+
+### 破坏性修改 / Breaking Changes
+- 无
+
+###  优化 / Modified
+- [优化] tab过多时，显示下拉列表供选择
+- [优化] transfer组件加背景色
+- [优化] 优化autoinput设置尺寸的逻辑，现在可以随意设置高度了
+
+### 修复 / Fixes
+- [修复] 修改在加入滚动条后tab的样式问题，fixes #831
+- [修复] 修复input在combo中有边框的问题
+- [修复] 修复slider的value为数组时，改变value的元素不能更新视图的问题，fixes#840
+
 ## v1.1.18 (2018-11-30)
 
 ### 新特性 / New Features
