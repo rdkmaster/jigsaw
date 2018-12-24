@@ -4,11 +4,31 @@ $icon-prefix-cls: #{$jigsaw-prefix}-icon;
 
 .#{$icon-prefix-cls} {
     @include inline-block();
-
     a:link, a:visited, a:hover, a:active {
         text-decoration: none;
         color: #008fd4;
     }
-
 }
 
+.icon-position-left {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    align-content: flex-start;
+}
+
+.icon-position-top {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    align-content: flex-start;
+}
+
+.text-padding-left {
+    padding-left: 1px;
+}
+
+.text-padding-top {
+    padding-top: 0;
+    line-height: 1;
+}

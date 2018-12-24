@@ -23,7 +23,7 @@ export class JigsawIcon extends AbstractJigsawComponent {
     private _href: string = 'javascript:void(0);';
 
     /**
-     * 为true    生成的html是 <a class="fa fa-edit">some text</a>
+     * 为true    生成的html是 <a class="fa fa-edit">some text</a> 不改变图标的颜色，只将鼠标cursor改为pointer
      * 为false   生成的html是 <span class="fa fa-edit">some text</span>
      */
     @Input() public isLinkButton: boolean = false;
@@ -32,12 +32,31 @@ export class JigsawIcon extends AbstractJigsawComponent {
      * 图标类型 fa fa-xxx
      */
     @Input() public icon: string;
+    /**
+     * 图标字号，单位是px
+     */
+    @Input() public iconSize: number = 14;
+    /**
+     * 图标颜色
+     */
+    @Input() public iconColor: string = 'black';
 
     /**
      * 图标的文本
      */
     @Input() public text: string = '';
-
+    /**
+     * 文字的字号，单位是px
+     */
+    @Input() public textSize: number = 14;
+    /**
+     * 文字的颜色
+     */
+    @Input() public textColor: string = 'black';
+    /**
+     * 图标相对于文字的位置，left为左侧，默认值：top为上方
+     */
+    @Input() public iconPosition: 'left' | 'top' = 'left';
     /**
      * 超链接 href
      */
