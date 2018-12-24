@@ -47,8 +47,6 @@ export class JigsawSliderHandle implements OnInit {
     }
 
     public set value(value) {
-        if (this._value === value) return;
-
         this._value = this._slider._verifyValue(value);
         this._valueToPos();
     }
@@ -249,6 +247,17 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
     public set value(value: number | ArrayCollection<number>) {
         this.writeValue(value);
     }
+
+    /**
+     * 此函数用于ngFor比较数组的值更新视图时，使数组不管值是否相等都能够更新
+     * @internal
+     * @param index
+     * @param item
+     * @private
+     */
+    public _$trackByFun = function(index: number, item: any) {
+        return index + new Date().getTime()
+    };
 
     /**
      * 设置单个的值。内部使用
