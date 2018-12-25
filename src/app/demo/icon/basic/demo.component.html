@@ -4,25 +4,60 @@
 
 
 <!-- start to learn the demo from here -->
-<div class="live-demo-wrap">
-    <div class="demo-a">
-        <h3>超链接图标</h3>
-        <jigsaw-icon [isLinkButton]="true" [text]="'编辑'" [icon]="'fa fa-edit'"
-                     [href]="'http://rdk.zte.com.cn/home'" [target]="'_blank'" title="编辑"></jigsaw-icon>
+<div class="boxes">
+    <div class="box">
+        <h3>仅图标</h3>
+        <p>只有图标，没有文字</p>
+        <hr>
+        <jigsaw-icon [icon]="'fa fa-edit'" [iconSize]="40" title="编辑"
+                     [href]="'http://rdk.zte.com.cn/home'" [target]="'_blank'">
+        </jigsaw-icon>
     </div>
 
-    <br><br><br>
-
-    <div class="demo-span">
-        <h3>显示用途的图标</h3>
-        <jigsaw-icon [text]="'删除'" [icon]="'fa fa-info'" title="删除"></jigsaw-icon>
+    <div class="box">
+        <h3>图文都有</h3>
+        <p>既有图标，又有文字</p>
+        <hr>
+        <jigsaw-icon [icon]="'fa fa-edit'" [iconSize]="20" [text]="'编辑'" title="编辑">
+        </jigsaw-icon>
     </div>
 
-    <br><br><br>
+    <div class="box">
+        <h3>类似超链</h3>
+        <p>点击一下试试看</p>
+        <hr>
+        <jigsaw-icon [isLinkButton]="true" [icon]="'fa fa-edit'" [iconSize]="16" text="这是超链"
+                     [href]="'http://rdk.zte.com.cn/home'" [target]="'_blank'" title="这是超链">
+        </jigsaw-icon>
+    </div>
+</div>
 
-    <div class="demo-a">
-        <h3>点击事件</h3>
-        <jigsaw-icon [text]="'点击事件'" [isLinkButton]="true" [icon]="'fa fa-edit'" (click)="_$clickHandler()"></jigsaw-icon>
+<div class="boxes">
+    <div class="box">
+        <h3>设置图文样式</h3>
+        <p>可独立对图文的颜色做配置</p>
+        <hr>
+        <jigsaw-icon [icon]="'fa fa-edit'" [iconSize]="20" iconColor="green"
+                     [text]="'编辑'" title="编辑" textColor="blue">
+        </jigsaw-icon>
+    </div>
+
+    <div class="box">
+        <h3>按钮模式</h3>
+        <p>改变鼠标光标样式</p>
+        <hr>
+        <jigsaw-icon [isLinkButton]="true" [icon]="'fa fa-edit'" [iconSize]="20"
+                     [text]="'编辑'" title="编辑" (click)="onClick()">
+        </jigsaw-icon>
+    </div>
+
+    <div class="box">
+        <h3>图标位置</h3>
+        <p>图标在上，文字在下</p>
+        <hr>
+        <jigsaw-icon [isLinkButton]="true" [icon]="'fa fa-info'" [iconSize]="40"
+                     [text]="'提示'" title="提示" iconPosition="top" (click)="onClick()">
+        </jigsaw-icon>
     </div>
 
 </div>
