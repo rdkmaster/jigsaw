@@ -1,0 +1,13 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+
+<div class="demo-1">
+    <h3>图标</h3>
+    <p class="notes">选中的条目是：<span>{{selectedItem}}</span></p>
+    <jigsaw-auto-complete-input placeholder="auto complete input demo" width="250"
+                               (select)="onSelect($event)" [data]="_$dropdownData">
+    </jigsaw-auto-complete-input>
+</div>

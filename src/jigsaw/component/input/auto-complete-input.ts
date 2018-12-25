@@ -93,6 +93,11 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     @ViewChild('input')
     private _input: JigsawInput;
 
+    /**
+     * 下拉提示内容被选中时，会发出`select`事件，此事件可用于区分用户手工输入的还是选择的
+     *
+     * $demo = auto-complete-input/select-event
+     */
     @Output('select')
     public selectEvent = new EventEmitter<string>();
 
