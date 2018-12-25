@@ -1,7 +1,8 @@
-import {Component, Input, NgModule,Output,EventEmitter, OnInit} from "@angular/core";
+import {Component, Input, NgModule, Output, EventEmitter, OnInit, ElementRef} from "@angular/core";
 import {AbstractJigsawComponent} from "../common";
 import {CommonModule} from "@angular/common";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 /**
  * 本组件模拟了一个类似抽屉的效果，用于收纳UI上重要性不高的视图。
@@ -13,7 +14,9 @@ import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
     templateUrl: './drawer.html'
 })
 export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
-
+    constructor(private _elementRef: ElementRef) {
+        super();
+    }
 
     private  _position: "left" | "right" | "top" | "bottom" = "left";
 
@@ -33,6 +36,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
         if (this.initialized) {
             this._setStyle();
             this._setClass();
+            this._setContainer();
         }
     }
 
@@ -53,6 +57,14 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
      */
     @Output()
     public openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+    /**
+     * 容器的selector，支持'.className'、'#id'、'[attr]'、'tagName'
+     * 向上寻找离抽屉最近的
+     */
+    @Input()
+    public container: string;
+
     /**
      * @internal
      */
@@ -60,7 +72,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
 
     private _setStyle() {
         this._$handleStyle = {
-            position: 'fixed',
+            position: this.container ? 'absolute' : 'fixed',
             width: this.width ? this.width : ((this.position == "left" || this.position == "right") ? "auto" : "100%"),
             height: this.height ? this.height : ((this.position == "top" || this.position == "bottom") ? "auto" : "100%"),
             left: (this.position == "left" || this.position == "top" || this.position == "bottom") ? 0 : 'auto',
@@ -96,10 +108,33 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
         this.openChange.emit(this.open);
     }
 
+    private _setContainer() {
+        if(this.container) {
+            const containerEl = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, this.container);
+            if(containerEl) {
+                console.log(containerEl, containerEl.style.position, containerEl.style.overflow, containerEl.style.overflowX, containerEl.style.overflowY);
+                if(!containerEl.style.position || containerEl.style.position == 'static') {
+                    containerEl.style.position = 'relative';
+                }
+                if((this.position == 'left' || this.position == 'right') && containerEl.style.overflowX != 'hidden' &&
+                    containerEl.style.overflowX != 'scroll' && containerEl.style.overflowX != 'auto') {
+                    containerEl.style.overflowX = 'hidden';
+                }
+                if((this.position == 'top' || this.position == 'bottom') && containerEl.style.overflowY != 'hidden' &&
+                    containerEl.style.overflowY != 'scroll' && containerEl.style.overflowY != 'auto') {
+                    containerEl.style.overflowY = 'hidden';
+                }
+            } else {
+                console.error('Can not find drawer container.');
+            }
+        }
+    }
+
     ngOnInit() {
         super.ngOnInit();
         this._setStyle();
         this._setClass();
+        this._setContainer();
         // 异步添加动画，为了初始化时没有拉伸的动作
         setTimeout(() => {
             this._$onAnimation = true;

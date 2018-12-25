@@ -1,0 +1,55 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>Drawer</h2>
+    <div class="demo-1 live-demo">
+        <h3>容器</h3>
+        <p class="comment"><code>container</code>属性可以支持'.className'、'#id'、'[attr]'、'tagName'，向上寻找离抽屉最近的。</p>
+        <label>抽屉位置：</label>
+        <jigsaw-radios [(value)]="selectedPosition">
+            <jigsaw-radio-option value="left">left</jigsaw-radio-option>
+            <jigsaw-radio-option value="right">right</jigsaw-radio-option>
+            <jigsaw-radio-option value="top">top</jigsaw-radio-option>
+            <jigsaw-radio-option value="bottom">bottom</jigsaw-radio-option>
+        </jigsaw-radios>
+        <div class="custom-container">
+            <j-drawer container=".custom-container" [position]="selectedPosition">
+                <div class="drawer-content">
+                    这是一个展示内容的box
+                </div>
+            </j-drawer>
+        </div>
+    </div>
+    <div class="demo-2 live-demo">
+        <h3>在tab中</h3>
+        <j-tabs height="300">
+            <j-tab-pane title="container1">
+                <ng-template>
+                    <j-drawer container="jigsaw-tab-content">
+                        <div class="drawer-content">
+                            这是一个展示内容的box1
+                        </div>
+                    </j-drawer>
+                </ng-template>
+            </j-tab-pane>
+            <j-tab-pane title="container2">
+                <ng-template>
+                    <j-drawer container="jigsaw-tab-content" position="top">
+                        <div class="drawer-content">
+                            这是一个展示内容的box2
+                        </div>
+                    </j-drawer>
+                </ng-template>
+            </j-tab-pane>
+        </j-tabs>
+    </div>
+</div>
+
+
+
+
+
