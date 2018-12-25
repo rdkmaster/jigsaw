@@ -6,8 +6,8 @@ import {Component} from "@angular/core";
 })
 export class IconBasicDemoComponent {
 
-    public _$clickHandler() {
-        alert('图标被点击');
+    public onClick() {
+        alert('你戳到我啦');
     }
 
     // ====================================================================
