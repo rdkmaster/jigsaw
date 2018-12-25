@@ -23,6 +23,7 @@ import {JigsawTabContent, JigsawTabLabel, TabTitleInfo} from "./tab-item";
 import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
 import {PopupService, PopupSize, PopupInfo, PopupPositionValue} from "../../service/popup.service";
 import {Subscription} from "rxjs/Subscription";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 /**
  * 使用`JigsawTab`来将一组视图叠加在同一个区域使用，并以页签的方式来切换这些视图。
@@ -41,6 +42,7 @@ import {Subscription} from "rxjs/Subscription";
     templateUrl: 'tab.html',
     host: {
         '[class.jigsaw-tabs-host]': 'true',
+        '[class.jigsaw-tabs-in-ie]': '_$isIE',
         '[style.width]': 'width',
         '[style.height]': 'height'
     }
@@ -53,7 +55,13 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
                 private _elementRef: ElementRef,
                 private _popupService: PopupService) {
         super();
+        this._$isIE = CommonUtils.isIE();
     }
+
+    /**
+     * @internal
+     */
+    public _$isIE: boolean;
 
     /**
      * @internal
@@ -282,12 +290,12 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
 
         const tabElem = this._tabsInkBar.nativeElement;
         if (tabElem.offsetWidth != labelPos.width) {
-            this._asyncSetStyle(this.selectedIndex);
+            this._setInkBarStyle(this.selectedIndex);
         } else {
             const match = (tabElem.style.transform + '').match(/\btranslate3d\s*\((\d+)px\s*,/);
             const offset = match ? match[1] : -1;
             if (offset != labelPos.offSet + this._tabLeftMap.get(this.selectedIndex)) {
-                this._asyncSetStyle(this.selectedIndex);
+                this._setInkBarStyle(this.selectedIndex);
             }
         }
     }

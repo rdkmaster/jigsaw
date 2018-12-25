@@ -179,7 +179,6 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
 
         .#{$tab-prefix}-tabpane {
             display: block;
-            flex-shrink: 0;
             width: 100%;
             height: 100%;
             transition: transform 0.5s;
@@ -195,5 +194,9 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
                 display: none;
             }
         }
+    }
+
+    &-in-ie &-content &-tabpane, &-in-ie &-nav-container &-ink-bar {
+        transition: null;
     }
 }

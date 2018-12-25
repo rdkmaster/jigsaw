@@ -1,0 +1,32 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="container">
+    <jigsaw-tabs (selectChange)="testEvent()">
+        <jigsaw-tab-pane *ngFor="let tabData of tabDatas">
+            <div jigsaw-title><span class="fa fa-gift"></span>{{tabData}}</div>
+            <ng-template>
+                <table-content [tabData]="tabData"></table-content>
+                <!--{{tabData}} Content
+                <jigsaw-table style="margin-bottom: 10px;" maxHeight="500px" [data]="pageable"></jigsaw-table>
+                <jigsaw-pagination
+                    [data]="pageable"
+                    [pageSizeOptions]="[5, 10, 20, 50]"
+                    [searchable]="true"
+                    [showQuickJumper]="true"
+                ></jigsaw-pagination>-->
+            </ng-template>
+        </jigsaw-tab-pane>
+    </jigsaw-tabs>
+</div>
+
+<!--<jigsaw-table style="margin-bottom: 10px;" maxHeight="500px" [data]="pageable"></jigsaw-table>
+<jigsaw-pagination
+    [data]="pageable"
+    [pageSizeOptions]="[5, 10, 20]"
+    [searchable]="true"
+    [showQuickJumper]="true"
+></jigsaw-pagination>-->
