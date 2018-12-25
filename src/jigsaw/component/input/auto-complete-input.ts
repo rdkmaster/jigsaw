@@ -93,7 +93,8 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     @ViewChild('input')
     private _input: JigsawInput;
 
-    @Output() public selectItem = new EventEmitter<string>();
+    @Output('select')
+    public selectEvent = new EventEmitter<string>();
 
     constructor(_render2: Renderer2,
                 _elementRef: ElementRef,
@@ -180,7 +181,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
 
     public _$add(item) {
         this.value = item;
-        this.selectItem.emit(item);
+        this.selectEvent.emit(item);
     }
 
     public ngOnDestroy() {
