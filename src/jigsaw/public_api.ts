@@ -47,6 +47,7 @@ export * from "./component/table/table-renderer";
 export * from "./component/table/table-typings";
 export * from "./component/tabs/index";
 export * from "./component/tag/tag";
+export * from "./component/textarea/index";
 export * from "./component/time/index";
 export * from "./component/tooltip/tooltip";
 export * from "./component/tree/tree-ext";
