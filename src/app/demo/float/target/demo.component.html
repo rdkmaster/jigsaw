@@ -1,0 +1,27 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+更换弹出目标：
+
+<jigsaw-button  (click)="change()">change</jigsaw-button>
+
+<br><br>
+<span class="fa fa-bars" jigsaw-float
+        jigsawFloatOpenTrigger="click"
+        jigsawFloatCloseTrigger="click"
+      [jigsawFloatTarget]="target"  >
+</span>
+<ng-template #jigsawFloatArea1>
+    <div class="jigsawFloatArea1">
+        jigsawFloatArea1
+    </div>
+</ng-template>
+
+<ng-template #jigsawFloatArea2>
+    <div class="jigsawFloatArea2">
+        jigsawFloatArea2
+    </div>
+</ng-template>
