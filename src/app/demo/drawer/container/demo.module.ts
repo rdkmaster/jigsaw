@@ -6,9 +6,11 @@ import {JigsawRadioModule} from "jigsaw/component/radio/radio";
 import {JigsawButtonModule} from "jigsaw/component/button/button";
 import {CommonModule} from "@angular/common";
 import {JigsawTabsModule} from "../../../../jigsaw/component/tabs";
+import {JigsawInputModule} from "../../../../jigsaw/component/input/input";
 
 @NgModule({
-    imports: [JigsawDrawerModule, JigsawRadioModule,JigsawButtonModule, CommonModule, JigsawDemoDescriptionModule, JigsawTabsModule],
+    imports: [JigsawDrawerModule, JigsawRadioModule,JigsawButtonModule, CommonModule, JigsawDemoDescriptionModule,
+        JigsawTabsModule, JigsawInputModule],
     declarations: [DrawerContainerDemoComponent],
     exports: [ DrawerContainerDemoComponent ]
 })

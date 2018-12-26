@@ -5,14 +5,15 @@ import {Component} from "@angular/core";
     styleUrls: ['./demo.component.css']
 })
 export class DrawerContainerDemoComponent {
-    isOpen: boolean = false;
-    selectedPosition = 'left';
-    touched = false;
+    width: string;
+    height: string;
 
-    toggle() {
-        this.isOpen = !this.isOpen;
-        this.touched = true;
-    }
+    selectedPosition = 'left';
+
+    offsetLeft: string;
+    offsetTop: string;
+    offsetRight: string;
+    offsetBottom: string;
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

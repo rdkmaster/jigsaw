@@ -19,3 +19,8 @@
     border: 1px solid #000;
 }
 
+.size-box, .position-box, .offset-box {
+    margin-bottom: 10px;
+}
+
+
