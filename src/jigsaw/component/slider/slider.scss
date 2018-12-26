@@ -20,12 +20,10 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
 .#{$jigsaw-slider} {
     display: block;
     position: relative;
-    height: 12px;
+    height: 4px;
     border-radius: 4px;
     cursor: pointer;
     background-color: $border-color-split;
-    border-top: 4px solid #fff;
-    border-bottom: 4px solid #fff;
     user-select: none;
 
     transition: background-color 0.3s ease;
@@ -163,12 +161,9 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
         width: auto;
         padding: 6px 0;
         .#{$jigsaw-slider} {
-            width: 12px;
+            width: 4px;
             height: 100%;
-            //margin: 6px 10px;
             border: 4px;
-            border-left: 4px solid #fff;
-            border-right: 4px solid #fff;
 
             .#{$jigsaw-slider}-track {
                 width: 4px;
