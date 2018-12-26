@@ -45,7 +45,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnInit, OnDes
     }
 
     public set jigsawFloatTarget(value: Type<IPopupable> | TemplateRef<any>) {
-        if(this._$target!=value){
+        if (this._$target != value) {
             this._$target = value;
             this.jigsawFloatTargetChange.emit(value);
             if (this._$opened == true) {
@@ -308,7 +308,8 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnInit, OnDes
                 top: this._elementRef.nativeElement.offsetHeight
             },
             posReviser: (pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue => {
-                this.changePosByFloatPosition(pos, popupElement)
+                this.changePosByFloatPosition(pos, popupElement);
+                this.positionReviser(pos, popupElement)
                 return pos;
             },
             size: {
@@ -326,8 +327,56 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnInit, OnDes
                 console.warn('pos can not be set')
                 option.pos = calc.pos;
             }
+            if (CommonUtils.isDefined(this.jigsawFloatOptions.posReviser)) {
+                option.posReviser = (pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue => {
+                    this.changePosByFloatPosition(pos, popupElement);
+                    this.jigsawFloatOptions.posReviser(pos, popupElement)
+                    return pos;
+                };
+            }
         }
         return option;
+    }
+
+    /**
+     * 计算弹层区域的位置，当指定的方向位置不够，且反向弹位置足够时，那么反向弹层
+     */
+    public positionReviser(pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue {
+        const offsetWidth = this._elementRef.nativeElement.offsetWidth;
+        const offsetHeight = this._elementRef.nativeElement.offsetHeight;
+        if (this.jigsawFloatPosition === 'topLeft' || this.jigsawFloatPosition === 'topRight' ||
+            this.jigsawFloatPosition === 'bottomLeft' || this.jigsawFloatPosition === 'bottomRight') {
+            // 调整上下位置
+            const upDelta = offsetHeight + popupElement.offsetHeight;
+            if (document.body.clientHeight <= upDelta) {
+                // 可视区域比弹出的UI高度还小就不要调整了
+                return pos;
+            }
+            const totalHeight = window.scrollY + document.body.clientHeight;
+            if (pos.top < 0 && pos.top + upDelta <= totalHeight) {
+                // 上位置不够且下方位置足够的时候才做调整
+                pos.top += upDelta;
+            } else if (pos.top + popupElement.offsetHeight >= totalHeight && pos.top >= upDelta) {
+                // 下方位置不够且上方位置足够的时候才做调整
+                pos.top -= upDelta;
+            }
+        } else {
+            // 调整左右位置
+            const leftDelta = popupElement.offsetWidth + offsetWidth;
+            if (document.body.clientWidth <= leftDelta) {
+                // 可视区域比弹出的UI高度还小就不要调整了
+                return pos;
+            }
+            const totalWidth = window.scrollX + document.body.clientWidth;
+            if (pos.left < 0 && pos.left + leftDelta <= totalWidth) {
+                // 左边位置不够且右边位置足够的时候才做调整
+                pos.left += leftDelta;
+            } else if (pos.left + popupElement.offsetWidth >= totalWidth && pos.left >= leftDelta) {
+                // 右边位置不够且左边位置足够的时候才做调整
+                pos.left -= leftDelta;
+            }
+        }
+        return pos;
     }
 
     private _closeFloat(): void {
