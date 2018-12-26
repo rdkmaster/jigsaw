@@ -65,6 +65,47 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     @Input()
     public container: string;
 
+    private _offsetTop: string;
+    private _offsetLeft: string;
+    private _offsetRight: string;
+    private _offsetBottom: string;
+
+    @Input()
+    get offsetTop(): string {
+        return this._offsetTop;
+    }
+
+    set offsetTop(value: string) {
+        this._offsetTop = CommonUtils.getCssValue(value);
+    }
+
+    @Input()
+    get offsetLeft(): string {
+        return this._offsetLeft;
+    }
+
+    set offsetLeft(value: string) {
+        this._offsetLeft = CommonUtils.getCssValue(value);
+    }
+
+    @Input()
+    get offsetRight(): string {
+        return this._offsetRight;
+    }
+
+    set offsetRight(value: string) {
+        this._offsetRight = CommonUtils.getCssValue(value);
+    }
+
+    @Input()
+    get offsetBottom(): string {
+        return this._offsetBottom;
+    }
+
+    set offsetBottom(value: string) {
+        this._offsetBottom = CommonUtils.getCssValue(value);
+    }
+
     /**
      * @internal
      */
@@ -75,10 +116,10 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
             position: this.container ? 'absolute' : 'fixed',
             width: this.width ? this.width : ((this.position == "left" || this.position == "right") ? "auto" : "100%"),
             height: this.height ? this.height : ((this.position == "top" || this.position == "bottom") ? "auto" : "100%"),
-            left: (this.position == "left" || this.position == "top" || this.position == "bottom") ? 0 : 'auto',
-            top: (this.position == "left" || this.position == "top" || this.position == "right") ? 0 : 'auto',
-            right: this.position == "right" ? 0 : 'auto',
-            bottom: this.position == "bottom" ? 0 : 'auto'
+            left: (this.position == "top" || this.position == "bottom") && CommonUtils.isDefined(this.offsetLeft) ? this.offsetLeft : null,
+            right: (this.position == "top" || this.position == "bottom") && CommonUtils.isDefined(this.offsetRight) ? this.offsetRight : null,
+            top: (this.position == "left" || this.position == "right") && CommonUtils.isDefined(this.offsetTop) ? this.offsetTop : null,
+            bottom: (this.position == "left" || this.position == "right") && CommonUtils.isDefined(this.offsetBottom) ? this.offsetBottom : null,
         }
     }
 
@@ -98,6 +139,10 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
             'jigsaw-drawer-top': this.position == 'top',
             'jigsaw-drawer-right': this.position == 'right',
             'jigsaw-drawer-bottom': this.position == 'bottom',
+            'jigsaw-drawer-left-center': this.position == 'left' && CommonUtils.isUndefined(this.offsetTop)  && CommonUtils.isUndefined(this.offsetBottom),
+            'jigsaw-drawer-right-center': this.position == 'right' && CommonUtils.isUndefined(this.offsetTop)  && CommonUtils.isUndefined(this.offsetBottom),
+            'jigsaw-drawer-top-center': this.position == 'top' && CommonUtils.isUndefined(this.offsetLeft)  && CommonUtils.isUndefined(this.offsetRight),
+            'jigsaw-drawer-bottom-center': this.position == 'bottom' && CommonUtils.isUndefined(this.offsetLeft)  && CommonUtils.isUndefined(this.offsetRight),
         }
     }
 
