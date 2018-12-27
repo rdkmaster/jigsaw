@@ -218,7 +218,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
         if(this.floating) {
             return this.width ? this.width : (this.position == 'left' || this.position == 'right' ? 'auto' : '100%');
         } else {
-            return this.width ? 'calc(100% - 14px)' : 'auto';
+            return this.width ? (this.position == 'left' || this.position == 'right' ? 'calc(100% - 14px)' : '100%') : 'auto';
         }
     }
 
@@ -226,7 +226,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
         if(this.floating) {
             return this.height ? this.height : (this.position == 'top' || this.position == 'bottom' ? 'auto' : '100%');
         } else {
-            return this.height ? 'calc(100% - 14px)' : 'auto';
+            return this.height ? (this.position == 'top' || this.position == 'bottom' ? 'calc(100% - 14px)' : '100%') : 'auto';
         }
     }
 
