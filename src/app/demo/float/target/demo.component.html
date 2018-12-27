@@ -12,7 +12,7 @@
 <span class="fa fa-bars" jigsaw-float
         jigsawFloatOpenTrigger="click"
         jigsawFloatCloseTrigger="click"
-      [jigsawFloatTarget]="target"  >
+      [jigsawFloatTarget]="target" (jigsawFloatTargetChange)="targetChange($event)"  >
 </span>
 <ng-template #jigsawFloatArea1>
     <div class="jigsawFloatArea1">

@@ -8,6 +8,8 @@ import {FloatPositionDemoModule} from "./position/demo.module";
 import {FloatPositionDemo} from "./position/demo.component";
 import {FloatTargetDemo} from "./target/demo.component";
 import {FloatTargetDemoModule} from "./target/demo.module";
+import {FloatOptionDemo} from "./option/demo.component";
+import {FloatOptionDemoModule} from "./option/demo.module";
 
 export const routerConfig = [
     {
@@ -22,12 +24,15 @@ export const routerConfig = [
     {
         path: 'target', component: FloatTargetDemo
     },
+    {
+        path: 'option', component: FloatOptionDemo
+    },
 ];
 
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig),
-        FloatBasicModule, FloatTriggerDemoModule, FloatPositionDemoModule, FloatTargetDemoModule
+        FloatBasicModule, FloatTriggerDemoModule, FloatPositionDemoModule, FloatTargetDemoModule, FloatOptionDemoModule
     ]
 })
 export class FloatDemoModule {

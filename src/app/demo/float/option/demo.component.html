@@ -1,0 +1,81 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<!-- start to learn the demo from here -->
+<div class="wrapper">
+    <h4>所有可用选项：</h4>
+
+
+    <div class="row">
+        <label>弹出的动效</label>
+        <jigsaw-radios [(value)]="showEffect" (valueChange)="valueChange()">
+            <jigsaw-radio-option value="fadeIn">fadeIn</jigsaw-radio-option>
+            <jigsaw-radio-option value="bubbleIn">bubbleIn</jigsaw-radio-option>
+        </jigsaw-radios>
+    </div>
+    <div class="row">
+        <label>隐藏的动效</label>
+        <jigsaw-radios [(value)]="hideEffect" (valueChange)="valueChange()">
+            <jigsaw-radio-option value="fadeOut">fadeOut</jigsaw-radio-option>
+            <jigsaw-radio-option value="bubbleOut">bubbleOut</jigsaw-radio-option>
+        </jigsaw-radios>
+    </div>
+
+    <div class="row">
+        <label>PositionType：</label>
+        <jigsaw-radios [(value)]="selectedPositionType" (valueChange)="valueChange()">
+            <jigsaw-radio-option value="absolute">absolute</jigsaw-radio-option>
+            <jigsaw-radio-option value="fixed">fixed</jigsaw-radio-option>
+        </jigsaw-radios>
+    </div>
+    <h4>Position offset</h4><br>
+    <div class="row">
+        <label>top: </label>
+        <j-numeric-input [(value)]="offset.top" (valueChange)="valueChange()" placeholder="Top"
+                         width="100px"></j-numeric-input>
+        <label>left: </label>
+        <j-numeric-input [(value)]="offset.left" (valueChange)="valueChange()" placeholder="Left"
+                         width="100px"></j-numeric-input>
+    </div>
+
+    <div class="row"><label>showBorder:</label>
+        <jigsaw-switch [(checked)]="showBorder" (checkedChange)="valueChange()"></jigsaw-switch>
+    </div>
+    <div class="row">
+        <label>宽度</label>
+        <j-numeric-input [(value)]="size.width" (valueChange)="valueChange()" min="0"
+                         placeholder="请输入数字"></j-numeric-input>
+        <label>最小宽度</label>
+        <j-numeric-input [(value)]="size.minWidth" (valueChange)="valueChange()" (valueChange)="valueChange()" min="0"
+                         placeholder="请输入数字"></j-numeric-input>
+    </div>
+    <div class="row">
+        <label>高度</label>
+        <j-numeric-input [(value)]="size.height" (valueChange)="valueChange()" min="0"
+                         placeholder="请输入数字"></j-numeric-input>
+    </div>
+    <hr>
+    <br>
+    <div class="row">
+        <label>配置的代码，可以直接用于项目中</label>
+        <p>{{optionStr}}</p>
+    </div>
+
+    <span class="fa fa-bars" jigsaw-float
+          jigsawFloatOpenTrigger="click"
+          jigsawFloatCloseTrigger="click"
+          [jigsawFloatOptions]="options"
+          [jigsawFloatTarget]="jigsawFloatArea"> click me!
+    </span>
+</div>
+
+
+<ng-template #jigsawFloatArea>
+    <div class="jigsawFloatArea">
+        jigsawFloatArea
+    </div>
+</ng-template>
+

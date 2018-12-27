@@ -2,7 +2,7 @@ import {AfterViewInit, Component, TemplateRef, ViewChild} from '@angular/core';
 
 @Component({
     templateUrl: './demo.component.html',
-     styles: [`.fa-bars{
+    styles: [`.fa-bars{
                      margin:100px
                }
                .jigsawFloatArea1{
@@ -29,12 +29,19 @@ export class FloatTargetDemo implements AfterViewInit {
     @ViewChild('jigsawFloatArea2')
     jigsawFloatArea2: TemplateRef<any>;
     target;
+
     public change() {
         this.target = this.target === this.jigsawFloatArea1 ? this.jigsawFloatArea2 : this.jigsawFloatArea1;
     }
 
+    public targetChange(element) {
+        console.log(element, 'target changed !');
+    }
+
     ngAfterViewInit() {
-        this.target = this.jigsawFloatArea1;
+        setTimeout(() => {
+            this.target = this.jigsawFloatArea1;
+        })
     }
 
     // ====================================================================
@@ -43,7 +50,6 @@ export class FloatTargetDemo implements AfterViewInit {
     summary: string = '演示了如何改变jigsawFloat指令的弹出目标';
     description: string = '';
     tags: string[] = [
-        'JigsawFloat.jigsawFloatOpenTrigger',
-        'JigsawFloat.jigsawFloatCloseTrigger',
+        'JigsawFloat.jigsawFloatTarget'
     ];
 }

@@ -1,4 +1,4 @@
-import {Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2, TemplateRef, Type} from "@angular/core";
+import {Directive, ElementRef, EventEmitter, Input, OnDestroy, Output, Renderer2, TemplateRef, Type} from "@angular/core";
 import {
     IPopupable,
     PopupDisposer,
@@ -27,7 +27,7 @@ export enum FloatTrigger {
         '(click)': "_$openAndCloseByClick($event)"
     }
 })
-export class JigsawFloat extends AbstractJigsawViewBase implements OnInit, OnDestroy {
+export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     private _disposePopup: PopupDisposer;
     private _popupElement: HTMLElement;
     private _removeWindowClickHandler: Function;
@@ -69,7 +69,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnInit, OnDes
     // 避免视图超时浏览器边界的情况
     @Input()
     public jigsawFloatPosition: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' |
-        'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom'
+        'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom' = 'bottomLeft';
 
     /**
      * @internal
@@ -123,10 +123,6 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnInit, OnDes
                 private _elementRef: ElementRef,
                 private _popupService: PopupService) {
         super();
-    }
-
-    ngOnInit() {
-        console.log(this.jigsawFloatOpenTrigger);
     }
 
     public ngOnDestroy() {
@@ -247,25 +243,25 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnInit, OnDes
         point.x = AffixUtils.offset(this._elementRef.nativeElement).left;
         window['jigsawFloatTarget'] = this.jigsawFloatTarget;
         switch (this.jigsawFloatPosition) {
+            case 'bottomLeft':
+                point.y += this._elementRef.nativeElement.offsetHeight;
+                break;
             case 'bottomRight':
                 point.x += this._elementRef.nativeElement.offsetWidth;
-                break;
-            case 'topLeft':
-                point.y -= this._elementRef.nativeElement.offsetHeight;
+                point.y += this._elementRef.nativeElement.offsetHeight;
                 break;
             case 'topRight':
-                point.y -= this._elementRef.nativeElement.offsetHeight;
                 point.x += this._elementRef.nativeElement.offsetWidth;
+                break;
+            case 'leftBottom':
+                point.y += this._elementRef.nativeElement.offsetHeight;
                 break;
             case 'rightTop':
                 point.x += this._elementRef.nativeElement.offsetWidth;
-                point.y -= this._elementRef.nativeElement.offsetHeight;
                 break;
             case 'rightBottom':
                 point.x += this._elementRef.nativeElement.offsetWidth;
-                break;
-            case 'leftTop':
-                point.y -= this._elementRef.nativeElement.offsetHeight;
+                point.y += this._elementRef.nativeElement.offsetHeight;
                 break;
         }
         return point;
@@ -304,9 +300,6 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnInit, OnDes
         const calc: any = {
             pos: this._getPos(),
             posType: PopupPositionType.absolute,
-            posOffset: {
-                top: this._elementRef.nativeElement.offsetHeight
-            },
             posReviser: (pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue => {
                 this.changePosByFloatPosition(pos, popupElement);
                 this.positionReviser(pos, popupElement)
@@ -317,6 +310,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnInit, OnDes
             }
         };
         Object.assign(option, calc)
+        console.log(this.jigsawFloatOptions)
         if (this.jigsawFloatOptions) {
             Object.assign(option, this.jigsawFloatOptions);
             if (CommonUtils.isDefined(this.jigsawFloatOptions.modal)) {
