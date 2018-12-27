@@ -1,4 +1,4 @@
-import {Component, Input, NgModule, Output, EventEmitter, OnInit, ElementRef, ViewChild} from "@angular/core";
+import {Component, Input, NgModule, Output, EventEmitter, OnInit, ElementRef, ViewChild, HostBinding} from "@angular/core";
 import {AbstractJigsawComponent} from "../common";
 import {CommonModule} from "@angular/common";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
@@ -13,18 +13,7 @@ import {CommonUtils} from "../../core/utils/common-utils";
     selector: 'jigsaw-drawer, j-drawer',
     templateUrl: './drawer.html',
     host: {
-        '[class.jigsaw-drawer-in-dom]': '!floating',
-        /**
-         * host(jigsaw-drawer)宽高的计算方法：
-         *
-         * 浮动模式下：不做任何处理。
-         * 文档流模式下：
-         * position为top和bottom时，计算高度为内容的高度，宽度为width属性的值，默认为100%；
-         * position为left和right时，计算宽高为内容的宽高。
-         */
-        '[style.height]': 'floating ? null :  position == "left" || position == "right" ? drawerEl.nativeElement.offsetHeight + "px" : (open ? drawerEl.nativeElement.offsetHeight + 14 + "px" : "14px")',
-        '[style.width]': 'floating ? null : position == "top" || position == "bottom" ? width : (open ? drawerEl.nativeElement.offsetWidth + 14 + "px" : "14px")',
-        '[style.display]': 'floating ? null : position == "left" || position == "right" ? "inline-block" : position == "top" || position == "bottom" ? "block" : null'
+        '[class.jigsaw-drawer-in-dom]': '!floating'
     }
 })
 export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
@@ -50,13 +39,22 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
         this._update();
     }
 
+    private _open: boolean = false;
+
     /**
      * 代表了抽屉的状态，`true`为打开状态，`false`为关闭状态。在双绑模式下，改变此属性的值可以打开或者关闭抽屉。
      *
      * $demo = drawer/basic
      */
     @Input()
-    public open: boolean = false;
+    public get open(): boolean {
+        return this._open;
+    }
+
+    public set open(value:boolean) {
+        this._open = value;
+        this._update();
+    }
 
     /**
      * 当抽屉的状态发生变化时，Jigsaw发出此事件
@@ -145,8 +143,48 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
 
     @ViewChild('drawer') drawerEl: ElementRef;
 
+    @HostBinding('style.width') private _$hostWidth: string;
+    @HostBinding('style.height') private _$hostHeight: string;
+
+    private _setHostSize() {
+        this._$hostWidth = this._calcHostWidth();
+        this._$hostHeight = this._calcHostHeight();
+    }
+
+    /**
+     * host(jigsaw-drawer)宽高的计算方法：
+     * 浮动模式下：不做任何处理。
+     * 文档流模式下：
+     * host是inline-block的模式，所以width和height属性没值时，默认按内容计算尺寸；
+     * 有值时则为width和height的属性值
+     */
+    private _calcHostWidth(): string {
+        if(this.floating) return null;
+        if(this.position == "top" || this.position == "bottom") {
+            // 上下抽屉宽度为固定值
+            return this.width ? this.width : this.drawerEl.nativeElement.offsetWidth + "px";
+        } else if(this.open) {
+            return this.width ? this.width : this.drawerEl.nativeElement.offsetWidth + 14 + "px";
+        } else {
+            return "14px";
+        }
+    }
+
+    private _calcHostHeight(): string {
+        if(this.floating) return null;
+        if(this.position == "left" || this.position == "right") {
+            // 左右抽屉height为固定值
+            return this.height ? this.height : this.drawerEl.nativeElement.offsetHeight + "px";
+        } else if(this.open) {
+            return this.height ? this.height : this.drawerEl.nativeElement.offsetHeight + 14 + "px";
+        } else {
+            return "14px";
+        }
+    }
+
     private _update() {
         if (!this.initialized) return;
+        this._setHostSize();
         this._setStyle();
         this._setClass();
         this._setContainer();
@@ -218,7 +256,6 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
         if(this.container) {
             const containerEl = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, this.container);
             if(containerEl) {
-                console.log(containerEl, containerEl.style.position, containerEl.style.overflow, containerEl.style.overflowX, containerEl.style.overflowY);
                 if(!containerEl.style.position || containerEl.style.position == 'static') {
                     containerEl.style.position = 'relative';
                 }

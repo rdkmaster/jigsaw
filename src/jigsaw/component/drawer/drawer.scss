@@ -9,7 +9,7 @@ $drawer-prefix-cls: #{$jigsaw-prefix}-drawer;
     z-index: $zindex-popover-level-0;
     &-in-dom {
         position: relative;
-        display: block;
+        display: inline-block;
         transition: height $animation-duration-slow $ease-in-circ, width $animation-duration-slow $ease-in-circ;
         overflow: hidden;
         .#{$drawer-prefix-cls} {
