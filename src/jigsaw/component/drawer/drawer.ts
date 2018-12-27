@@ -182,14 +182,6 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
         }
     }
 
-    private _update() {
-        if (!this.initialized) return;
-        this._setHostSize();
-        this._setStyle();
-        this._setClass();
-        this._setContainer();
-    }
-
     /**
      * @internal
      */
@@ -204,21 +196,37 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
             bottom: (this.position == "left" || this.position == "right") && this.offsetBottom ? this.offsetBottom : null,
         } : {};
         this._$handleStyle = {
-            /**
-             * 抽屉(div.jigsaw-drawer)宽高的计算方法：
-             *
-             * 在浮动模式下：
-             * 有width和height属性值时，按照width和height的值；
-             * 否则position为top或bottom时，宽度为100%，跟随容器的宽度，高度为auto，按内容撑开；
-             * position为left或right时，宽度为auto，按内容撑开，高度为100%，跟随容器的宽度；
-             *
-             * 在文档流模式下：
-             * position为top或bottom时，宽度为100%，跟随host的宽度，高度为auto，按照内容撑开；
-             * position为left或right时，宽高都为auto，按内容撑开
-             */
-            width: this.width && this.floating ? this.width : ((this.position == "left" || this.position == "right") ? "auto" : "100%"),
-            height: this.height && this.floating ? this.height : ((this.position == "top" || this.position == "bottom" || !this.floating) ? "auto" : "100%"),
+            width: this._calcDrawerWidth(),
+            height: this._calcDrawerHeight(),
             ...styleTemp
+        }
+    }
+
+    /**
+     * 抽屉(div.jigsaw-drawer)宽高的计算方法：
+     *
+     * 在浮动模式下：
+     * 有width和height属性值时，按照width和height的值；
+     * 否则position为top或bottom时，宽度为100%，跟随容器的宽度，高度为auto，按内容撑开；
+     * position为left或right时，宽度为auto，按内容撑开，高度为100%，跟随容器的宽度；
+     *
+     * 在文档流模式下：
+     * 当有width和height属性值时，因为width和height是设置在host上的，所以采用计算值calc(100% - 14px)
+     * 当没有width和height属性值时，则宽高设置为auto，按照内容撑开
+     */
+    private _calcDrawerWidth() {
+        if(this.floating) {
+            return this.width ? this.width : (this.position == 'left' || this.position == 'right' ? 'auto' : '100%');
+        } else {
+            return this.width ? 'calc(100% - 14px)' : 'auto';
+        }
+    }
+
+    private _calcDrawerHeight() {
+        if(this.floating) {
+            return this.height ? this.height : (this.position == 'top' || this.position == 'bottom' ? 'auto' : '100%');
+        } else {
+            return this.height ? 'calc(100% - 14px)' : 'auto';
         }
     }
 
@@ -271,6 +279,17 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
                 console.error('Can not find drawer container.');
             }
         }
+    }
+
+    private _update() {
+        if (!this.initialized) return;
+        this._setStyle();
+        this._setClass();
+        this._setContainer();
+        this.callLater(() => {
+            // 等待抽屉的尺寸渲染完毕
+            this._setHostSize();
+        })
     }
 
     ngOnInit() {

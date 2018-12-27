@@ -5,16 +5,22 @@
 
 <!-- start to learn the demo from here -->
 <div class="option-box">
-    <label>抽屉位置：</label>
-    <jigsaw-radios [(value)]="selectedPosition">
-        <jigsaw-radio-option value="left">left</jigsaw-radio-option>
-        <jigsaw-radio-option value="right">right</jigsaw-radio-option>
-        <jigsaw-radio-option value="top">top</jigsaw-radio-option>
-        <jigsaw-radio-option value="bottom">bottom</jigsaw-radio-option>
-    </jigsaw-radios>
+    <div class="position-box">
+        <label>抽屉位置：</label>
+        <jigsaw-radios [(value)]="selectedPosition">
+            <jigsaw-radio-option value="left">left</jigsaw-radio-option>
+            <jigsaw-radio-option value="right">right</jigsaw-radio-option>
+            <jigsaw-radio-option value="top">top</jigsaw-radio-option>
+            <jigsaw-radio-option value="bottom">bottom</jigsaw-radio-option>
+        </jigsaw-radios>
+    </div>
+    <div class="size-box">
+        宽度：<j-input [(value)]="width"></j-input>
+        高度：<j-input [(value)]="height"></j-input>
+    </div>
 </div>
 <section>Page Content</section>
-<j-drawer [floating]="false" [position]="selectedPosition">
+<j-drawer [floating]="false" [position]="selectedPosition" [width]="width" [height]="height">
     <div class="drawer-content">
         这是一个展示内容的box
     </div>

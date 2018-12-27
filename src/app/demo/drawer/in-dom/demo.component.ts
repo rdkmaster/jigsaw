@@ -5,14 +5,9 @@ import {Component} from "@angular/core";
     styleUrls: ['./demo.component.css']
 })
 export class DrawerInDomDemoComponent {
-    isOpen: boolean = false;
     selectedPosition = 'left';
-    touched = false;
-
-    toggle() {
-        this.isOpen = !this.isOpen;
-        this.touched = true;
-    }
+    width: string;
+    height: string;
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
