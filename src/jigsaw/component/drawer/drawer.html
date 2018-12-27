@@ -1,4 +1,4 @@
-<div class="jigsaw-drawer" [class.jigsaw-drawer-animation]="_$onAnimation"
+<div #drawer class="jigsaw-drawer" [class.jigsaw-drawer-animation]="_$onAnimation"
      [class.jigsaw-drawer-close]="!open" [ngStyle]="_$handleStyle" [ngClass]="_$handleClass">
     <div class="jigsaw-drawer-content" [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true}">
         <ng-content></ng-content>

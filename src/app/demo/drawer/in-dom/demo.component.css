@@ -1,0 +1,13 @@
+.drawer-content {
+    width: 200px;
+    height: 200px;
+    text-align: center;
+}
+
+section {
+    height: 200px;
+    background: #ddd;
+    line-height: 200px;
+    font-size: 20px;
+    text-align: center;
+}

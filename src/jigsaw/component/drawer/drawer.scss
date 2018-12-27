@@ -3,11 +3,24 @@
 $drawer-prefix-cls: #{$jigsaw-prefix}-drawer;
 
 .#{$drawer-prefix-cls} {
-    position: fixed;
     border: 1px solid $border-color-base;
     background: $component-background;
     box-shadow: $box-shadow-base;
     z-index: $zindex-popover-level-0;
+    &-in-dom {
+        position: relative;
+        display: block;
+        transition: height $animation-duration-slow $ease-in-circ, width $animation-duration-slow $ease-in-circ;
+        overflow: hidden;
+        .#{$drawer-prefix-cls} {
+            position: absolute;
+        }
+        .#{$drawer-prefix-cls}-content {
+            width: auto;
+            height: auto;
+        }
+    }
+
     &-animation {
         transition: transform $animation-duration-slow $ease-in-circ;
     }

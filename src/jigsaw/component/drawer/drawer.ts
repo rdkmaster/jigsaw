@@ -1,4 +1,4 @@
-import {Component, Input, NgModule, Output, EventEmitter, OnInit, ElementRef} from "@angular/core";
+import {Component, Input, NgModule, Output, EventEmitter, OnInit, ElementRef, ViewChild} from "@angular/core";
 import {AbstractJigsawComponent} from "../common";
 import {CommonModule} from "@angular/common";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
@@ -11,7 +11,21 @@ import {CommonUtils} from "../../core/utils/common-utils";
  */
 @Component({
     selector: 'jigsaw-drawer, j-drawer',
-    templateUrl: './drawer.html'
+    templateUrl: './drawer.html',
+    host: {
+        '[class.jigsaw-drawer-in-dom]': '!floating',
+        /**
+         * host(jigsaw-drawer)宽高的计算方法：
+         *
+         * 浮动模式下：不做任何处理。
+         * 文档流模式下：
+         * position为top和bottom时，计算高度为内容的高度，宽度为width属性的值，默认为100%；
+         * position为left和right时，计算宽高为内容的宽高。
+         */
+        '[style.height]': 'floating ? null :  position == "left" || position == "right" ? drawerEl.nativeElement.offsetHeight + "px" : (open ? drawerEl.nativeElement.offsetHeight + 14 + "px" : "14px")',
+        '[style.width]': 'floating ? null : position == "top" || position == "bottom" ? width : (open ? drawerEl.nativeElement.offsetWidth + 14 + "px" : "14px")',
+        '[style.display]': 'floating ? null : position == "left" || position == "right" ? "inline-block" : position == "top" || position == "bottom" ? "block" : null'
+    }
 })
 export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     constructor(private _elementRef: ElementRef) {
@@ -126,6 +140,11 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
         this._update();
     }
 
+    @Input()
+    public floating: boolean = true;
+
+    @ViewChild('drawer') drawerEl: ElementRef;
+
     private _update() {
         if (!this.initialized) return;
         this._setStyle();
@@ -139,14 +158,29 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     public _$handleStyle = {};
 
     private _setStyle() {
-        this._$handleStyle = {
+        const styleTemp = this.floating ? {
             position: this.container ? 'absolute' : 'fixed',
-            width: this.width ? this.width : ((this.position == "left" || this.position == "right") ? "auto" : "100%"),
-            height: this.height ? this.height : ((this.position == "top" || this.position == "bottom") ? "auto" : "100%"),
             left: (this.position == "top" || this.position == "bottom") && this.offsetLeft ? this.offsetLeft : null,
             right: (this.position == "top" || this.position == "bottom") && this.offsetRight ? this.offsetRight : null,
             top: (this.position == "left" || this.position == "right") && this.offsetTop ? this.offsetTop : null,
             bottom: (this.position == "left" || this.position == "right") && this.offsetBottom ? this.offsetBottom : null,
+        } : {};
+        this._$handleStyle = {
+            /**
+             * 抽屉(div.jigsaw-drawer)宽高的计算方法：
+             *
+             * 在浮动模式下：
+             * 有width和height属性值时，按照width和height的值；
+             * 否则position为top或bottom时，宽度为100%，跟随容器的宽度，高度为auto，按内容撑开；
+             * position为left或right时，宽度为auto，按内容撑开，高度为100%，跟随容器的宽度；
+             *
+             * 在文档流模式下：
+             * position为top或bottom时，宽度为100%，跟随host的宽度，高度为auto，按照内容撑开；
+             * position为left或right时，宽高都为auto，按内容撑开
+             */
+            width: this.width && this.floating ? this.width : ((this.position == "left" || this.position == "right") ? "auto" : "100%"),
+            height: this.height && this.floating ? this.height : ((this.position == "top" || this.position == "bottom" || !this.floating) ? "auto" : "100%"),
+            ...styleTemp
         }
     }
 
@@ -166,10 +200,10 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
             'jigsaw-drawer-top': this.position == 'top',
             'jigsaw-drawer-right': this.position == 'right',
             'jigsaw-drawer-bottom': this.position == 'bottom',
-            'jigsaw-drawer-left-center': this.position == 'left' && !this.offsetTop  && !this.offsetBottom,
-            'jigsaw-drawer-right-center': this.position == 'right' && !this.offsetTop  && !this.offsetBottom,
-            'jigsaw-drawer-top-center': this.position == 'top' && !this.offsetLeft  && !this.offsetRight,
-            'jigsaw-drawer-bottom-center': this.position == 'bottom' && !this.offsetLeft  && !this.offsetRight,
+            'jigsaw-drawer-left-center': this.floating && this.position == 'left' && !this.offsetTop  && !this.offsetBottom,
+            'jigsaw-drawer-right-center': this.floating && this.position == 'right' && !this.offsetTop  && !this.offsetBottom,
+            'jigsaw-drawer-top-center': this.floating && this.position == 'top' && !this.offsetLeft  && !this.offsetRight,
+            'jigsaw-drawer-bottom-center': this.floating && this.position == 'bottom' && !this.offsetLeft  && !this.offsetRight,
         }
     }
 
