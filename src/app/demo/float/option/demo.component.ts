@@ -26,6 +26,9 @@ import {CommonUtils} from "../../../../jigsaw/core/utils/common-utils";
                 label{
                     min-width:50px
                 }
+                .code{
+                    word-wrap: break-word;
+                }
     `]
 })
 export class FloatOptionDemo implements OnInit {
@@ -62,13 +65,13 @@ export class FloatOptionDemo implements OnInit {
             ${CommonUtils.isDefined(this.offset.top) ? `top:${this.offset.top}` : ''}}`);
         }
         temp.push(`showBorder:${this.showBorder}`);
-        if (CommonUtils.isDefined(this.size.width) || CommonUtils.isDefined(this.size.minWidth)|| CommonUtils.isDefined(this.size.height)) {
-            temp.push(`posOffset:{${CommonUtils.isDefined(this.offset.left) ? `left:${this.offset.left},` : ''}
-            ${CommonUtils.isDefined(this.offset.top) ? `top:${this.offset.top}` : ''}
-            ${CommonUtils.isDefined(this.offset.top) ? `top:${this.offset.top}` : ''}}`);
+        if (CommonUtils.isDefined(this.size.width) || CommonUtils.isDefined(this.size.minWidth)
+            || CommonUtils.isDefined(this.size.height)) {
+            temp.push(`size:{${CommonUtils.isDefined(this.size.width) ? `width:${this.size.width},` : ''}
+            ${CommonUtils.isDefined(this.size.minWidth) ? `minWidth:${this.size.minWidth},` : ''}
+            ${CommonUtils.isDefined(this.size.height) ? `height:${this.size.height}` : ''}}`);
         }
-        this.optionStr = JSON.stringify(temp);
-        console.log(this.options)
+        this.optionStr = `{${temp.join(',')}}`;
     }
 
     ngOnInit() {
