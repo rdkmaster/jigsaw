@@ -1,0 +1,44 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="container">
+    <h3>headList属性为true，没有高度</h3>
+
+    <jigsaw-tabs [headList]="true">
+        <jigsaw-tab-pane title="Tab 1">
+            <ng-template>This is the body of the first tab</ng-template>
+        </jigsaw-tab-pane>
+        <jigsaw-tab-pane title="Tab 2">
+            <ng-template>This is the body of the second tab</ng-template>
+        </jigsaw-tab-pane>
+    </jigsaw-tabs>
+</div>
+<div class="container">
+    <h3>headList属性为true，高度为200px</h3>
+
+    <jigsaw-tabs [headList]="true" height="200px">
+        <jigsaw-tab-pane title="Tab 1">
+            <ng-template>This is the body of the first tab</ng-template>
+        </jigsaw-tab-pane>
+        <jigsaw-tab-pane title="Tab 2">
+            <ng-template>This is the body of the second tab</ng-template>
+        </jigsaw-tab-pane>
+    </jigsaw-tabs>
+</div>
+<div class="container">
+    <h3>headList属性为false，高度为200px</h3>
+
+    <jigsaw-tabs [headList]="false" height="200px">
+        <jigsaw-tab-pane title="Tab 1">
+            <ng-template>This is the body of the first tab</ng-template>
+        </jigsaw-tab-pane>
+        <jigsaw-tab-pane title="Tab 2">
+            <ng-template>This is the body of the second tab</ng-template>
+        </jigsaw-tab-pane>
+    </jigsaw-tabs>
+</div>
+
+

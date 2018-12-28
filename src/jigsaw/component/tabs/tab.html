@@ -1,5 +1,5 @@
 <div class="jigsaw-tabs">
-    <div *ngIf="(_$tabPanes && _$tabPanes.length > 0) || editable" class="jigsaw-tabs-bar">
+    <div *ngIf="((_$tabPanes && _$tabPanes.length > 0) || editable ) && !headList" class="jigsaw-tabs-bar">
         <div class="jigsaw-tabs-nav-container">
             <div #tabsInkBar class="jigsaw-tabs-ink-bar" [ngStyle]="_$inkBarStyle"></div>
             <div #tabsNavWrap class="jigsaw-tabs-nav-wrap">

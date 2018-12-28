@@ -121,6 +121,16 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     public editable: boolean;
 
     /**
+     * 控制tab头部是否显示
+     *
+     * $demo = tab/headList
+     *
+     * @type {boolean}
+     */
+    @Input()
+    public headList: boolean = false;
+
+    /**
      * 当前的tab页数量，包含被隐藏的tab页
      */
     public length: number;
@@ -246,7 +256,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         if (this.height) {
             this.callLater(() => {
                 // 等待dom渲染
-                this._$contentHeight = this._elementRef.nativeElement.offsetHeight - 46 + 'px';
+                this._$contentHeight = this.headList ? this._elementRef.nativeElement.offsetHeight : this._elementRef.nativeElement.offsetHeight - 46 + 'px';
             })
         }
     }
@@ -560,6 +570,9 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     private _tabLeftMap: Map<number, number> = new Map<number, number>();
 
     private _createTabList() {
+        if(this.headList){
+            return;
+        }
         this._$tabList = [];
         this._tabLeftMap.clear();
         this._tabLabels.forEach((label: JigsawTabLabel, index) => {
