@@ -4,7 +4,7 @@ import {JigsawSwitchModule} from "jigsaw/component/switch";
 import {JigsawTabsModule} from "jigsaw/component/tabs/index";
 
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {TabHeadListDemoComponent} from './demo.component';
+import {TabHeadlessDemoComponent} from './demo.component';
 
 /* #for-live-demo-only#
 const routes = [{
@@ -16,8 +16,8 @@ const routes = [{
         JigsawTabsModule, JigsawSwitchModule, JigsawDemoDescriptionModule,
         RouterModule/* #for-live-demo-only# .forRoot(routes) */
     ],
-    declarations: [TabHeadListDemoComponent],
-    exports: [TabHeadListDemoComponent]
+    declarations: [TabHeadlessDemoComponent],
+    exports: [TabHeadlessDemoComponent]
 })
-export class TabHeadListDemoModule {
+export class TabHeadlessDemoModule {
 }

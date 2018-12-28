@@ -5,9 +5,9 @@
 
 <!-- start to learn the demo from here -->
 <div class="container">
-    <h3>headList属性为true，没有高度</h3>
+    <h3>headless属性为true，没有高度</h3>
 
-    <jigsaw-tabs [headList]="true">
+    <jigsaw-tabs [headless]="true">
         <jigsaw-tab-pane title="Tab 1">
             <ng-template>This is the body of the first tab</ng-template>
         </jigsaw-tab-pane>
@@ -19,7 +19,7 @@
 <div class="container">
     <h3>headList属性为true，高度为200px</h3>
 
-    <jigsaw-tabs [headList]="true" height="200px">
+    <jigsaw-tabs [headless]="true" height="200px">
         <jigsaw-tab-pane title="Tab 1">
             <ng-template>This is the body of the first tab</ng-template>
         </jigsaw-tab-pane>
@@ -31,7 +31,7 @@
 <div class="container">
     <h3>headList属性为false，高度为200px</h3>
 
-    <jigsaw-tabs [headList]="false" height="200px">
+    <jigsaw-tabs [headless]="false" height="200px">
         <jigsaw-tab-pane title="Tab 1">
             <ng-template>This is the body of the first tab</ng-template>
         </jigsaw-tab-pane>
