@@ -10,6 +10,8 @@ import {FloatTargetDemo} from "./target/demo.component";
 import {FloatTargetDemoModule} from "./target/demo.module";
 import {FloatOptionDemo} from "./option/demo.component";
 import {FloatOptionDemoModule} from "./option/demo.module";
+import {FloatPosReviserComponent} from "./pos-reviser/demo.component";
+import {FloatPosReviserModule} from "./pos-reviser/demo.module";
 
 export const routerConfig = [
     {
@@ -27,11 +29,14 @@ export const routerConfig = [
     {
         path: 'option', component: FloatOptionDemo
     },
+    {
+        path: 'pos-reviser', component: FloatPosReviserComponent
+    },
 ];
 
 @NgModule({
     imports: [
-        RouterModule.forChild(routerConfig),
+        RouterModule.forChild(routerConfig), FloatPosReviserModule,
         FloatBasicModule, FloatTriggerDemoModule, FloatPositionDemoModule, FloatTargetDemoModule, FloatOptionDemoModule
     ]
 })

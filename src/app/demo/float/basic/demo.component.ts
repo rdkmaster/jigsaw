@@ -16,8 +16,6 @@ import {Component} from "@angular/core";
     `]
 })
 export class FloatBasicComponent {
-    MyFloatingComponent = "";
-
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
