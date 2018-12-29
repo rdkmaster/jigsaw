@@ -32,8 +32,7 @@ import {CommonUtils} from "../../../../jigsaw/core/utils/common-utils";
     `]
 })
 export class FloatOptionDemo implements OnInit {
-    showEffect = "";
-    hideEffect = "";
+    showHideEffect = "";
     selectedPositionType = "";
     offset: PopupPositionOffset = {};
     showBorder = true;
@@ -43,19 +42,17 @@ export class FloatOptionDemo implements OnInit {
 
     valueChange() {
         this.options = {};
-        this.options.showEffect = PopupEffect[<string>this.showEffect];
-        this.options.hideEffect = PopupEffect[<string>this.hideEffect];
+        this.options.showEffect = PopupEffect[<string>this.showHideEffect + 'In'];
+        this.options.hideEffect = PopupEffect[<string>this.showHideEffect + 'Out'];
         this.options.posType = PopupPositionType[<string>this.selectedPositionType];
         this.options.posOffset = this.offset;
         this.options.showBorder = this.showBorder;
         this.options.size = this.size;
         this.optionStr = "{";
         let temp = [];
-        if (this.showEffect) {
-            temp.push(`showEffect:PopupEffect.${this.showEffect}`);
-        }
-        if (this.hideEffect) {
-            temp.push(`hideEffect:PopupEffect.${this.hideEffect}`);
+        if (this.showHideEffect) {
+            temp.push(`showEffect:PopupEffect.${this.showHideEffect}In`);
+            temp.push(`hideEffect:PopupEffect.${this.showHideEffect}Out`);
         }
         if (this.selectedPositionType) {
             temp.push(`posType:PopupPositionType.${this.selectedPositionType}`);

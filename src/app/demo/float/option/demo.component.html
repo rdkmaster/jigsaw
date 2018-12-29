@@ -10,20 +10,12 @@
 
 
     <div class="row">
-        <label>弹出的动效</label>
-        <jigsaw-radios [(value)]="showEffect" (valueChange)="valueChange()">
-            <jigsaw-radio-option value="fadeIn">fadeIn</jigsaw-radio-option>
-            <jigsaw-radio-option value="bubbleIn">bubbleIn</jigsaw-radio-option>
+        <label>弹出及隐藏时动效：</label>
+        <jigsaw-radios [(value)]="showHideEffect" (valueChange)="valueChange()">
+            <jigsaw-radio-option value="fade">fade</jigsaw-radio-option>
+            <jigsaw-radio-option value="bubble">bubble</jigsaw-radio-option>
         </jigsaw-radios>
     </div>
-    <div class="row">
-        <label>隐藏的动效</label>
-        <jigsaw-radios [(value)]="hideEffect" (valueChange)="valueChange()">
-            <jigsaw-radio-option value="fadeOut">fadeOut</jigsaw-radio-option>
-            <jigsaw-radio-option value="bubbleOut">bubbleOut</jigsaw-radio-option>
-        </jigsaw-radios>
-    </div>
-
     <div class="row">
         <label>PositionType：</label>
         <jigsaw-radios [(value)]="selectedPositionType" (valueChange)="valueChange()">
