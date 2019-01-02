@@ -48,9 +48,6 @@ export class FloatTargetDemo implements AfterViewInit {
         }
     }
 
-    public targetChange(element) {
-        console.log(element, 'target changed !');
-    }
 
     ngAfterViewInit() {
         setTimeout(() => {

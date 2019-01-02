@@ -12,12 +12,6 @@ import {AbstractJigsawViewBase} from "../../component/common";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {AffixUtils} from "../../core/utils/internal-utils";
 
-export enum FloatTrigger {
-    click,
-    mouseenter,
-    mouseleave,
-    none,
-}
 
 @Directive({
     selector: '[jigsaw-float],[j-float],[jigsawFloat]',
@@ -39,6 +33,9 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     private _rollInDenouncesTimer: any = null;
     private _$target: Type<IPopupable> | TemplateRef<any>;
 
+    /**
+     * $demo = float/target
+     */
     @Input()
     public get jigsawFloatTarget(): Type<IPopupable> | TemplateRef<any> {
         return this._$target;
@@ -47,26 +44,29 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     public set jigsawFloatTarget(value: Type<IPopupable> | TemplateRef<any>) {
         if (this._$target != value) {
             this._$target = value;
-            this.jigsawFloatTargetChange.emit(value);
             if (this._$opened == true) {
-                this._$opened = false
+                this._$opened = false;
                 this._closeFloat();
                 this.callLater(() => {
                     this._openFloat();
-                    this._$opened = true
-                })
+                    this._$opened = true;
+                });
             }
         }
     }
 
-    @Output()
-    public jigsawFloatTargetChange: EventEmitter<any> = new EventEmitter<any>();
+    /**
+     * $demo = float/option
+     */
     @Input()
     public jigsawFloatOptions: PopupOptions;
 
     // 一共8个位置，其中第一个单词表示弹出视图在触发点的哪个位置，第二个单词控制弹出视图的哪个边缘与触发点对齐，比如'bottomLeft'表示在下面弹出来，
     // 并且视图左侧与触发点左侧对齐。注意，这个位置是应用给的理想位置，在弹出的时候，我们应该使用PopupService的位置修正函数来对理想位置坐修正，
     // 避免视图超时浏览器边界的情况
+    /**
+     * $demo = float/position
+     */
     @Input()
     public jigsawFloatPosition: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' |
         'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom' = 'bottomLeft';
@@ -97,26 +97,32 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
 
     @Output()
     public jigsawFloatOpenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-    private _openTrigger: FloatTrigger = FloatTrigger.mouseenter; // 打开下拉触发方式，默认值是'mouseenter'
+    private _openTrigger: 'click' | 'mouseenter' | 'none' = 'mouseenter'; // 打开下拉触发方式，默认值是'mouseenter'
+    /**
+     * $demo = float/trigger
+     */
     @Input()
-    public get jigsawFloatOpenTrigger(): FloatTrigger {
+    public get jigsawFloatOpenTrigger(): 'click' | 'mouseenter' | 'none' {
         return this._openTrigger;
     }
 
-    public set jigsawFloatOpenTrigger(value: FloatTrigger) {
+    public set jigsawFloatOpenTrigger(value: 'click' | 'mouseenter' | 'none') {
         // 从模板过来的值，不会受到类型的约束
-        this._openTrigger = typeof value === 'string' ? FloatTrigger[<string>value] : value;
+        this._openTrigger = value;
     }
 
-    private _closeTrigger: FloatTrigger = FloatTrigger.mouseleave; // 打开下拉触发方式，默认值是'mouseleave'
+    private _closeTrigger: 'click' | 'mouseleave' | 'none' = 'mouseleave'; // 打开下拉触发方式，默认值是'mouseleave'
+    /**
+     * $demo = float/trigger
+     */
     @Input()
-    public get jigsawFloatCloseTrigger(): FloatTrigger {
+    public get jigsawFloatCloseTrigger(): 'click' | 'mouseleave' | 'none' {
         return this._closeTrigger;
     }
 
-    public set jigsawFloatCloseTrigger(value: FloatTrigger) {
+    public set jigsawFloatCloseTrigger(value: 'click' | 'mouseleave' | 'none') {
         // 从模板过来的值，不会受到类型的约束
-        this._closeTrigger = typeof value === 'string' ? FloatTrigger[<string>value] : value;
+        this._closeTrigger = value;
     }
 
     constructor(private _renderer: Renderer2,
@@ -128,6 +134,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     public ngOnDestroy() {
         super.ngOnDestroy();
         this.jigsawFloatOpen = false;
+        this._$target = null;
         this._clearAllListeners();
 
         if (this._removeRefreshCallback) {
@@ -148,7 +155,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     public _$openByHover(event): void {
         this.clearCallLater(this._rollOutDenouncesTimer);
 
-        if (this.jigsawFloatOpenTrigger != FloatTrigger.mouseenter) {
+        if (this.jigsawFloatOpenTrigger != 'mouseenter') {
             return;
         }
 
@@ -165,7 +172,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
      */
     public _$closeByHover(event) {
         this.clearCallLater(this._rollInDenouncesTimer);
-        if (this.jigsawFloatCloseTrigger != FloatTrigger.mouseleave) {
+        if (this.jigsawFloatCloseTrigger != 'mouseleave') {
             return;
         }
         event.preventDefault();
@@ -181,10 +188,10 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     public _$openAndCloseByClick(event) {
         event.preventDefault();
         event.stopPropagation();
-        if (this._openTrigger == FloatTrigger.click && this.jigsawFloatOpen == false) {
+        if (this._openTrigger == 'click' && this.jigsawFloatOpen == false) {
             this.jigsawFloatOpen = true;
         }
-        if (this._closeTrigger == FloatTrigger.click && this.jigsawFloatOpen == true) {
+        if (this._closeTrigger == 'click' && this.jigsawFloatOpen == true) {
             this.jigsawFloatOpen = false;
         }
     }
@@ -199,7 +206,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         }
         // 点击window时，自动关闭,但当closeTrigger为none时无法关掉的
         this._removeWindowClickHandler = this._renderer.listen('window', 'click', () => {
-            if (this.jigsawFloatCloseTrigger != FloatTrigger.none) {
+            if (this.jigsawFloatCloseTrigger != 'none') {
                 this._removeWindowClickHandler();
                 this._removeWindowClickHandler = null;
                 this.jigsawFloatOpen = false;
@@ -221,7 +228,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
                 this._popupElement, 'mouseenter',
                 () => this.clearCallLater(this._rollOutDenouncesTimer));
         }
-        if (this._closeTrigger == FloatTrigger.mouseleave && !this._removeMouseOutHandler) {
+        if (this._closeTrigger == 'mouseleave' && !this._removeMouseOutHandler) {
             this._removeMouseOutHandler = this._renderer.listen(
                 this._popupElement, 'mouseleave', () => {
                     this._rollOutDenouncesTimer = this.callLater(() => this.jigsawFloatOpen = false, 400);
@@ -302,28 +309,28 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
             posType: PopupPositionType.absolute,
             posReviser: (pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue => {
                 this.changePosByFloatPosition(pos, popupElement);
-                this.positionReviser(pos, popupElement)
+                this.positionReviser(pos, popupElement);
                 return pos;
             },
             size: {
                 minWidth: this._elementRef.nativeElement.offsetWidth
             }
         };
-        Object.assign(option, calc)
+        Object.assign(option, calc);
         if (this.jigsawFloatOptions) {
             Object.assign(option, this.jigsawFloatOptions);
             if (CommonUtils.isDefined(this.jigsawFloatOptions.modal)) {
-                console.warn('modal can not be set')
+                console.warn('modal can not be set');
                 option.modal = false;
             }
             if (CommonUtils.isDefined(this.jigsawFloatOptions.pos)) {
-                console.warn('pos can not be set')
+                console.warn('pos can not be set');
                 option.pos = calc.pos;
             }
             if (CommonUtils.isDefined(this.jigsawFloatOptions.posReviser)) {
                 option.posReviser = (pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue => {
                     this.changePosByFloatPosition(pos, popupElement);
-                    this.jigsawFloatOptions.posReviser(pos, popupElement)
+                    this.jigsawFloatOptions.posReviser(pos, popupElement);
                     return pos;
                 };
             }
@@ -334,7 +341,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     /**
      * 计算弹层区域的位置，当指定的方向位置不够，且反向弹位置足够时，那么反向弹层
      */
-    public positionReviser(pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue {
+    private positionReviser(pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue {
         const offsetWidth = this._elementRef.nativeElement.offsetWidth;
         const offsetHeight = this._elementRef.nativeElement.offsetHeight;
         if (this.jigsawFloatPosition === 'topLeft' || this.jigsawFloatPosition === 'topRight' ||
@@ -345,7 +352,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
                 // 可视区域比弹出的UI高度还小就不要调整了
                 return pos;
             }
-            const totalHeight = window.scrollY + document.body.clientHeight;
+            const totalHeight = window.scrollY || window.pageYOffset + document.body.clientHeight;
             if (pos.top < 0 && pos.top + upDelta <= totalHeight) {
                 // 上位置不够且下方位置足够的时候才做调整
                 pos.top += upDelta;
@@ -360,7 +367,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
                 // 可视区域比弹出的UI高度还小就不要调整了
                 return pos;
             }
-            const totalWidth = window.scrollX + document.body.clientWidth;
+            const totalWidth = window.scrollX || window.pageXOffset + document.body.clientWidth;
             if (pos.left < 0 && pos.left + leftDelta <= totalWidth) {
                 // 左边位置不够且右边位置足够的时候才做调整
                 pos.left += leftDelta;

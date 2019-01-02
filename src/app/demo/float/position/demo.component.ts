@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {FloatTrigger} from "../../../../jigsaw/directive/float/float";
 
 @Component({
     templateUrl: './demo.component.html',

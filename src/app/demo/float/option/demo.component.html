@@ -61,7 +61,7 @@
           jigsawFloatOpenTrigger="click"
           jigsawFloatCloseTrigger="click"
           [jigsawFloatOptions]="options"
-          [jigsawFloatTarget]="jigsawFloatArea"> click me!
+          [jigsawFloatTarget]="jigsawFloatArea" [ngStyle]="{'position':selectedPositionType=='fixed'?'fixed':'inherit'}"> click me!
     </span>
 </div>
 
