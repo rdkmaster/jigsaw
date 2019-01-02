@@ -86,32 +86,9 @@ $drawer-prefix-cls: #{$jigsaw-prefix}-drawer;
     @each $direction in 'left', 'top', 'right', 'bottom' {
         .#{$drawer-prefix-cls}-#{$direction} {
             #{$direction}: 0;
-            /*@if $direction == 'left' or $direction == 'top' {
-                top: 0;
-            }
-            @if $direction == 'top' or $direction == 'bottom' {
-                left: 0;
-            }
-            &.#{$drawer-prefix-cls}-sticky-in-ie {
-                @if $direction == 'left' or $direction == 'top' {
-                    top: auto;
-                }
-                @if $direction == 'top' or $direction == 'bottom' {
-                    left: auto;
-                }
-            }*/
         }
-
     }
 }
 
 @include setPosition();
 
-/*@media screen and(-ms-high-contrast:active),(-ms-high-contrast:none) {
-    .#{$drawer-prefix-cls}-left, .#{$drawer-prefix-cls}-right {
-        top: auto;
-    }
-    .#{$drawer-prefix-cls}-top, .#{$drawer-prefix-cls}--bottom {
-        left: auto;
-    }
-}*/
