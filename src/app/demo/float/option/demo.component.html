@@ -5,7 +5,7 @@
 
 <!-- start to learn the demo from here -->
 <!-- start to learn the demo from here -->
-<div class="wrapper">
+<div class="wrapper" [ngStyle]="{'height':_$height}">
     <h4>所有可用选项：</h4>
 
 
@@ -22,6 +22,7 @@
             <jigsaw-radio-option value="absolute">absolute</jigsaw-radio-option>
             <jigsaw-radio-option value="fixed">fixed</jigsaw-radio-option>
         </jigsaw-radios>
+        <a (click)="expandHeight()"> 加高页面，出现滚动条 </a>
     </div>
     <h4>Position offset</h4><br>
     <div class="row">
@@ -67,7 +68,7 @@
 
 <ng-template #jigsawFloatArea>
     <div class="jigsawFloatArea">
-        jigsawFloatArea
+        dropdown placeholder
     </div>
 </ng-template>
 

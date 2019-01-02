@@ -5,9 +5,8 @@
 
 <!-- start to learn the demo from here -->
 更换弹出目标：
-
-<jigsaw-button  (click)="change()">change</jigsaw-button>
-
+<jigsaw-button-bar [data]="targets" (selectedItemsChange)="change($event)">
+</jigsaw-button-bar>
 <br><br>
 <span class="fa fa-bars" jigsaw-float
         jigsawFloatOpenTrigger="click"
@@ -16,12 +15,12 @@
 </span>
 <ng-template #jigsawFloatArea1>
     <div class="jigsawFloatArea1">
-        jigsawFloatArea1
+        dropdown placeholder 1
     </div>
 </ng-template>
 
 <ng-template #jigsawFloatArea2>
     <div class="jigsawFloatArea2">
-        jigsawFloatArea2
+        dropdown placeholder 2
     </div>
 </ng-template>

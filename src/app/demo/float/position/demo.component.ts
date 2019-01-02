@@ -4,7 +4,7 @@ import {FloatTrigger} from "../../../../jigsaw/directive/float/float";
 @Component({
     templateUrl: './demo.component.html',
     styles: [`.fa-bars{
-                     margin:100px
+                     margin:160px
                }
                .jigsawFloatArea{
                    width:150px;

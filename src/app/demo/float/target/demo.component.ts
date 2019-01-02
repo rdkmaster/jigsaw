@@ -1,4 +1,6 @@
 import {AfterViewInit, Component, TemplateRef, ViewChild} from '@angular/core';
+import {ArrayCollection} from "../../../../jigsaw/core/data/array-collection";
+import {UserComponent} from "./user-component/user-component";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -29,9 +31,21 @@ export class FloatTargetDemo implements AfterViewInit {
     @ViewChild('jigsawFloatArea2')
     jigsawFloatArea2: TemplateRef<any>;
     target;
+    targets = new ArrayCollection(["template1", "template2", "component"]);
 
-    public change() {
-        this.target = this.target === this.jigsawFloatArea1 ? this.jigsawFloatArea2 : this.jigsawFloatArea1;
+
+    public change(e) {
+        switch (e[0]) {
+            case 'template1':
+                this.target = this.jigsawFloatArea1;
+                break;
+            case 'template2':
+                this.target = this.jigsawFloatArea2;
+                break;
+            case 'component':
+                this.target = UserComponent;
+                break;
+        }
     }
 
     public targetChange(element) {

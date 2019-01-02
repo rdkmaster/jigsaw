@@ -5,7 +5,7 @@ import {CommonUtils} from "../../../../jigsaw/core/utils/common-utils";
 @Component({
     templateUrl: './demo.component.html',
     styles: [`.fa-bars{
-                     margin: 100px 100px 1000px 100px;
+                     margin: 100px;
                }
                .jigsawFloatArea{
                    width:150px;
@@ -39,6 +39,7 @@ export class FloatOptionDemo implements OnInit {
     size: PopupSize = {};
     options: PopupOptions = {};
     optionStr = '{}';
+    _$height = 'auto';
 
     valueChange() {
         this.options = {};
@@ -69,6 +70,10 @@ export class FloatOptionDemo implements OnInit {
             ${CommonUtils.isDefined(this.size.height) ? `height:${this.size.height}` : ''}}`);
         }
         this.optionStr = `{${temp.join(',')}}`;
+    }
+
+    expandHeight() {
+        this._$height = '2000px';
     }
 
     ngOnInit() {
