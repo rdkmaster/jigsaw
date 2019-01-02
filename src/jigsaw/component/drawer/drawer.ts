@@ -310,15 +310,16 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit, OnD
             const containerEl = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, this.container);
             if (containerEl) {
                 this._containerEl = containerEl;
-                if (!containerEl.style.position || containerEl.style.position == 'static') {
+                const containerStyle = getComputedStyle(containerEl);
+                if (!containerStyle.position || containerStyle.position == 'static') {
                     containerEl.style.position = 'relative';
                 }
-                if ((this.position == 'left' || this.position == 'right') && containerEl.style.overflowX != 'hidden' &&
-                    containerEl.style.overflowX != 'scroll' && containerEl.style.overflowX != 'auto') {
+                if ((this.position == 'left' || this.position == 'right') && containerStyle.overflowX != 'hidden' &&
+                    containerStyle.overflowX != 'scroll' && containerStyle.overflowX != 'auto') {
                     containerEl.style.overflowX = 'hidden';
                 }
-                if ((this.position == 'top' || this.position == 'bottom') && containerEl.style.overflowY != 'hidden' &&
-                    containerEl.style.overflowY != 'scroll' && containerEl.style.overflowY != 'auto') {
+                if ((this.position == 'top' || this.position == 'bottom') && containerStyle.overflowY != 'hidden' &&
+                    containerStyle.overflowY != 'scroll' && containerStyle.overflowY != 'auto') {
                     containerEl.style.overflowY = 'hidden';
                 }
                 if (this._removeScrollListener) {
