@@ -120,6 +120,8 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     @Input()
     public editable: boolean;
 
+    public _$headless: boolean = false;
+
     /**
      * 控制tab头部是否显示
      *
@@ -127,8 +129,22 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
      *
      * @type {boolean}
      */
+
     @Input()
-    public headless: boolean = false;
+    public get headless(): boolean {
+        return this._$headless;
+    }
+
+    public set headless(value: boolean) {
+        if (this._$headless == value) {
+            return;
+        }
+        this._$headless = value;
+        this.headlessChange.emit(value);
+    }
+
+    @Output()
+    public headlessChange = new EventEmitter<boolean>();
 
     /**
      * 当前的tab页数量，包含被隐藏的tab页
@@ -253,15 +269,20 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
 
     ngOnInit() {
         super.ngOnInit();
+        this._calulateContentHeight();
+    }
+
+    private _calulateContentHeight() {
         if (this.height) {
             this.callLater(() => {
                 // 等待dom渲染
-                this._$contentHeight = this.headless ? this._elementRef.nativeElement.offsetHeight : this._elementRef.nativeElement.offsetHeight - 46 + 'px';
+                this._$contentHeight = this._$headless ? this._elementRef.nativeElement.offsetHeight + 'px' : this._elementRef.nativeElement.offsetHeight - 46 + 'px';
             })
         }
     }
 
     private _tabLabelsChangeHandler: Subscription;
+    private _headlessChangeHandler: Subscription;
 
     ngAfterViewInit() {
         this._createTabList();
@@ -273,11 +294,17 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         }
 
         this.length = this._$tabPanes.length;
+        this.headlessChange.subscribe(() => {
+            this._calulateContentHeight();
+        });
     }
 
     ngOnDestroy() {
         if (this._tabLabelsChangeHandler) {
             this._tabLabelsChangeHandler.unsubscribe();
+        }
+        if (this._headlessChangeHandler) {
+            this._headlessChangeHandler.unsubscribe();
         }
     }
 
@@ -570,7 +597,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     private _tabLeftMap: Map<number, number> = new Map<number, number>();
 
     private _createTabList() {
-        if(this.headless){
+        if (this._$headless || !this._tabsNavWrap) {
             return;
         }
         this._$tabList = [];

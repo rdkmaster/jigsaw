@@ -5,9 +5,10 @@
 
 <!-- start to learn the demo from here -->
 <div class="container">
-    <h3>headless属性为true，没有高度</h3>
-
-    <jigsaw-tabs [headless]="true">
+    <h3>tab没有设置高度</h3>
+    <jigsaw-switch [(checked)]="checkWithoutHeight"></jigsaw-switch>
+    <span>headless属性为：{{checkWithoutHeight}}</span>
+    <jigsaw-tabs [headless]="checkWithoutHeight">
         <jigsaw-tab-pane title="Tab 1">
             <ng-template>This is the body of the first tab</ng-template>
         </jigsaw-tab-pane>
@@ -17,9 +18,10 @@
     </jigsaw-tabs>
 </div>
 <div class="container">
-    <h3>headList属性为true，高度为200px</h3>
-
-    <jigsaw-tabs [headless]="true" height="200px">
+    <h3>tab高度为200px</h3>
+    <jigsaw-switch [(checked)]="checkWithHeight"></jigsaw-switch>
+    <span>headless属性为：{{checkWithHeight}}</span>
+    <jigsaw-tabs [headless]="checkWithHeight" height="200px">
         <jigsaw-tab-pane title="Tab 1">
             <ng-template>This is the body of the first tab</ng-template>
         </jigsaw-tab-pane>
@@ -29,9 +31,8 @@
     </jigsaw-tabs>
 </div>
 <div class="container">
-    <h3>headList属性为false，高度为200px</h3>
-
-    <jigsaw-tabs [headless]="false" height="200px">
+    <h3>tab高度为200px，没有设置headless属性</h3>
+    <jigsaw-tabs height="200px">
         <jigsaw-tab-pane title="Tab 1">
             <ng-template>This is the body of the first tab</ng-template>
         </jigsaw-tab-pane>
