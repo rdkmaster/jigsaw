@@ -140,11 +140,9 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
             return;
         }
         this._$headless = value;
-        this.headlessChange.emit(value);
+        this._calulateContentHeight();
     }
 
-    @Output()
-    public headlessChange = new EventEmitter<boolean>();
 
     /**
      * 当前的tab页数量，包含被隐藏的tab页
@@ -282,7 +280,6 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     }
 
     private _tabLabelsChangeHandler: Subscription;
-    private _headlessChangeHandler: Subscription;
 
     ngAfterViewInit() {
         this._createTabList();
@@ -294,17 +291,11 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         }
 
         this.length = this._$tabPanes.length;
-        this.headlessChange.subscribe(() => {
-            this._calulateContentHeight();
-        });
     }
 
     ngOnDestroy() {
         if (this._tabLabelsChangeHandler) {
             this._tabLabelsChangeHandler.unsubscribe();
-        }
-        if (this._headlessChangeHandler) {
-            this._headlessChangeHandler.unsubscribe();
         }
     }
 
@@ -578,7 +569,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     /**
      * @internal
      */
-    public _$selectTabStyle: {};
+    public _$selectTabStyle:  object ={};
 
     /**
      * @internal
