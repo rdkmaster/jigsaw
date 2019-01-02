@@ -209,7 +209,6 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit, OnD
             right: (this.position == "top" || this.position == "bottom") && this.offsetRight ? this.offsetRight : null,
             bottom: (this.position == "left" || this.position == "right") && this.offsetBottom ? this.offsetBottom : null
         } : {};
-
         this._$handleStyle = {
             width: this._calcDrawerWidth(),
             height: this._calcDrawerHeight(),
@@ -222,14 +221,10 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit, OnD
                 const [rawOffsetTop, rawOffsetLeft] = [this.drawerEl.nativeElement.offsetTop, this.drawerEl.nativeElement.offsetLeft];
                 this.callLater(() => {
                     this._$handleStyle = Object.assign(this._$handleStyle, {
-                        left: (this.position == "top" || this.position == "bottom") && (this.offsetLeft || this.offsetRight) ?
-                            this._containerEl.scrollLeft + rawOffsetLeft + 'px' :
-                            this._isHorizontalCenter() ? this._containerEl.scrollLeft + (this._containerEl.clientWidth -
-                                this.drawerEl.nativeElement.offsetWidth) / 2 + 'px' : null,
-                        top: (this.position == "left" || this.position == "right") && (this.offsetTop || this.offsetBottom) ?
-                            this._containerEl.scrollTop + rawOffsetTop + 'px' :
-                            this._isVerticalCenter() ? this._containerEl.scrollTop + (this._containerEl.clientHeight -
-                                this.drawerEl.nativeElement.offsetHeight) / 2 + 'px' : null
+                        left: this._isHorizontalCenter() ? this._containerEl.scrollLeft + (this._containerEl.clientWidth -
+                                this.drawerEl.nativeElement.offsetWidth) / 2 + 'px' : this._containerEl.scrollLeft + rawOffsetLeft + 'px',
+                        top: this._isVerticalCenter() ? this._containerEl.scrollTop + (this._containerEl.clientHeight -
+                                this.drawerEl.nativeElement.offsetHeight) / 2 + 'px' : this._containerEl.scrollTop + rawOffsetTop + 'px'
                     });
                 })
             })
@@ -339,7 +334,6 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit, OnD
         if (!this.initialized) return;
         this._setStyle();
         this._setClass();
-        this._setContainer();
         this.callLater(() => {
             // 等待抽屉的尺寸渲染完毕
             this._setHostSize();
@@ -349,8 +343,10 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit, OnD
     ngOnInit() {
         super.ngOnInit();
         this._update();
-        // 异步添加动画，为了初始化时没有拉伸的动作
         this.callLater(() => {
+            // 等待视图初始化完成
+            this._setContainer();
+            // 异步添加动画，为了初始化时没有拉伸的动作
             this._$onAnimation = true;
         });
         this._containerScroll.subscribe(() => {
