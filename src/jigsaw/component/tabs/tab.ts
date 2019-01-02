@@ -302,7 +302,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     // 注意此方法会被频繁调用，性能要求高
     ngAfterViewChecked() {
         if (!this._tabsInkBar || this._tabLabels.length == 0) return;
-
+        this._createTabList();
         const labelPos = this._getLabelOffsetByKey(this.selectedIndex);
         if (!labelPos) {
             return;
