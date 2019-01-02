@@ -6,33 +6,35 @@
 <!-- start to learn the demo from here -->
 <div class="container">
     <div class="items">
-        <jigsaw-switch [(checked)]="checked"></jigsaw-switch>
-        <span>headless属性为：{{checked}}</span>
+        <span>隐藏tab头</span>
+        <jigsaw-switch [(checked)]="headless"></jigsaw-switch>
     </div>
     <div class="items">
-        <jigsaw-button-bar style="display:block;" [selectedItems]="selectedtab" [data]="tabs" [multipleSelect]="false"
-                           (selectedItemsChange)="selectChange($event)">
+        <jigsaw-button-bar style="display:block;" [data]="tabs"
+                           (selectedItemsChange)="selectedIndex = $event[0].idx">
         </jigsaw-button-bar>
     </div>
-    <jigsaw-tabs [headless]="checked" height="200px" [selectedIndex]="selectedIndex">
-        <jigsaw-tab-pane title="Tab 1">
-            <ng-template>This is the body of the first tab</ng-template>
-        </jigsaw-tab-pane>
-        <jigsaw-tab-pane title="Tab 2" [disabled]="true">
-            <ng-template>This is the body of the second tab</ng-template>
-        </jigsaw-tab-pane>
-        <jigsaw-tab-pane>
-            <div jigsaw-title><span class="fa fa-bicycle"></span>tab 5</div>
-            <ng-template>
-                <jigsaw-table [data]="fruitList"></jigsaw-table>
-            </ng-template>
-        </jigsaw-tab-pane>
-        <jigsaw-tab-pane title="tab 6">
-            <ng-template>
-                <jigsaw-graph [data]="lineBarGraphData"></jigsaw-graph>
-            </ng-template>
-        </jigsaw-tab-pane>
-    </jigsaw-tabs>
+    <div style="border: 1px solid #eee; width: 600px">
+        <jigsaw-tabs [headless]="headless" height="200px" [selectedIndex]="selectedIndex">
+            <jigsaw-tab-pane title="Tab 1">
+                <ng-template>This is the body of the first tab</ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane title="Tab 2">
+                <ng-template>This is the body of the second tab</ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane>
+                <div jigsaw-title><span class="fa fa-bicycle"></span>Tab 3</div>
+                <ng-template>
+                    <jigsaw-table [data]="fruitList"></jigsaw-table>
+                </ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane title="Tab 4">
+                <ng-template>
+                    <jigsaw-graph [data]="lineBarGraphData"></jigsaw-graph>
+                </ng-template>
+            </jigsaw-tab-pane>
+        </jigsaw-tabs>
+    </div>
 </div>
 
 

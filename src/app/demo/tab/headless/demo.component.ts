@@ -10,18 +10,15 @@ import {LineGraphData} from "../../../../jigsaw/core/data/graph-data";
 })
 export class TabHeadlessDemoComponent {
 
-    checked:boolean = false;
+    headless:boolean = true;
+
     tabs = new ArrayCollection([
-        {label: "显示第一个tab页", id: 0},
-        {label: "显示第二个tab页", id: 1},
-        {label: "显示第三个tab页", id: 2},
-        {label: "显示第四个tab页", id: 3}
+        {label: "Tab 1", idx: 0},
+        {label: "Tab 2", idx: 1},
+        {label: "Tab 3", idx: 2},
+        {label: "Tab 4", idx: 3}
     ]);
     selectedIndex = 0;
-
-    selectChange(cityArr: ArrayCollection<any>){
-        this.selectedIndex = Number(cityArr.map(city => city.id).join(','));
-    }
 
     fruitList: TableData = new TableData(
         [
@@ -37,7 +34,6 @@ export class TabHeadlessDemoComponent {
     );
 
     lineBarGraphData: LineGraphData;
-    selectedtab: any[];
 
     constructor(http: HttpClient) {
         this.lineBarGraphData = new LineGraphData();
@@ -45,14 +41,10 @@ export class TabHeadlessDemoComponent {
         this.lineBarGraphData.fromAjax('mock-data/marketing');
     }
 
-    ngAfterContentInit() {
-        this.selectedtab = [{label: "显示第一个tab页", id: 0}];
-    }
-
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
 
-    summary: string = '';
+    summary: string = '将tab的页签部分隐藏起来，在某些场景下，可以实现定制性更高的视图，或者将tab作为一个视图叠加容器来使用';
     description: string = '';
 }
