@@ -7,10 +7,11 @@ import {JigsawButtonModule} from "jigsaw/component/button/button";
 import {CommonModule} from "@angular/common";
 import {JigsawTabsModule} from "../../../../jigsaw/component/tabs";
 import {JigsawInputModule} from "../../../../jigsaw/component/input/input";
+import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 
 @NgModule({
     imports: [JigsawDrawerModule, JigsawRadioModule,JigsawButtonModule, CommonModule, JigsawDemoDescriptionModule,
-        JigsawTabsModule, JigsawInputModule],
+        JigsawTabsModule, JigsawInputModule, PerfectScrollbarModule],
     declarations: [DrawerContainerDemoComponent],
     exports: [ DrawerContainerDemoComponent ]
 })

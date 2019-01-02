@@ -1,8 +1,21 @@
-import {Component, Input, NgModule, Output, EventEmitter, OnInit, ElementRef, ViewChild, HostBinding} from "@angular/core";
+import {
+    Component,
+    Input,
+    NgModule,
+    Output,
+    EventEmitter,
+    OnInit,
+    ElementRef,
+    ViewChild,
+    HostBinding,
+    Renderer2,
+    OnDestroy
+} from "@angular/core";
 import {AbstractJigsawComponent} from "../common";
 import {CommonModule} from "@angular/common";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
-import {CommonUtils} from "../../core/utils/common-utils";
+import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
+import {Subject} from "rxjs";
 
 /**
  * 本组件模拟了一个类似抽屉的效果，用于收纳UI上重要性不高的视图。
@@ -16,8 +29,8 @@ import {CommonUtils} from "../../core/utils/common-utils";
         '[class.jigsaw-drawer-in-dom]': '!floating'
     }
 })
-export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
-    constructor(private _elementRef: ElementRef) {
+export class JigsawDrawer extends AbstractJigsawComponent implements OnInit, OnDestroy {
+    constructor(private _elementRef: ElementRef, private _renderer: Renderer2) {
         super();
     }
 
@@ -188,18 +201,63 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     public _$handleStyle = {};
 
     private _setStyle() {
-        const styleTemp = this.floating ? {
-            position: this.container ? 'absolute' : 'fixed',
+        let styleTemp = this.floating ? {
+            position: this.container ? 'sticky' : 'fixed',
+            float: this.container ? 'left' : null, // sticky状态下由内容撑开
             left: (this.position == "top" || this.position == "bottom") && this.offsetLeft ? this.offsetLeft : null,
-            right: (this.position == "top" || this.position == "bottom") && this.offsetRight ? this.offsetRight : null,
             top: (this.position == "left" || this.position == "right") && this.offsetTop ? this.offsetTop : null,
-            bottom: (this.position == "left" || this.position == "right") && this.offsetBottom ? this.offsetBottom : null,
+            right: (this.position == "top" || this.position == "bottom") && this.offsetRight ? this.offsetRight : null,
+            bottom: (this.position == "left" || this.position == "right") && this.offsetBottom ? this.offsetBottom : null
         } : {};
+
+        if(CommonUtils.isIE() && this.floating) {
+            styleTemp = Object.assign(styleTemp, {
+                position: this.container ? 'absolute' : 'fixed',
+            })
+        }
+
         this._$handleStyle = {
             width: this._calcDrawerWidth(),
             height: this._calcDrawerHeight(),
             ...styleTemp
-        }
+        };
+
+        this.callLater(() => {
+            // 等待抽屉尺寸渲染
+            // 自动居中
+            if(CommonUtils.isIE()) {
+                const [rawOffsetTop, rawOffsetLeft] = [this.drawerEl.nativeElement.offsetTop, this.drawerEl.nativeElement.offsetLeft];
+                this.callLater(() => {
+                    this._$handleStyle = Object.assign(this._$handleStyle,{
+                        left: (this.position == "top" || this.position == "bottom") && (this.offsetLeft || this.offsetRight || rawOffsetLeft == 0) ?
+                            this._containerEl.scrollLeft + rawOffsetLeft + 'px' :
+                            this._isHorizontalCenter() ? this._containerEl.scrollLeft + (this._containerEl.clientWidth -
+                                this.drawerEl.nativeElement.offsetWidth)/2 + 'px' : null,
+                        top: (this.position == "left" || this.position == "right") && (this.offsetTop || this.offsetBottom || rawOffsetTop == 0) ?
+                            this._containerEl.scrollTop + rawOffsetTop + 'px' :
+                            this._isVerticalCenter() ? this._containerEl.scrollTop + (this._containerEl.clientHeight -
+                                this.drawerEl.nativeElement.offsetHeight)/2 + 'px' : null
+                    });
+                })
+            } else {
+                this._$handleStyle = Object.assign(this._$handleStyle,{
+                    left: (this.position == "top" || this.position == "bottom") && this.offsetLeft ? this.offsetLeft :
+                        this._isHorizontalCenter() ? `calc(50% - ${this.drawerEl.nativeElement.offsetWidth/2}px)` : null,
+                    top: (this.position == "left" || this.position == "right") && this.offsetTop ? this.offsetTop :
+                        this._isVerticalCenter() ? `calc(50% - ${this.drawerEl.nativeElement.offsetHeight/2}px)` : null,
+                });
+            }
+        })
+    }
+
+    private _isHorizontalCenter() {
+        return this.floating && (this.position == "top" || this.position == "bottom") && !this.offsetLeft
+            && !this.offsetRight;
+    }
+
+    private _isVerticalCenter() {
+        return this.floating && (this.position == "left" || this.position == "right") && !this.offsetTop
+            && !this.offsetBottom;
     }
 
     /**
@@ -246,10 +304,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
             'jigsaw-drawer-top': this.position == 'top',
             'jigsaw-drawer-right': this.position == 'right',
             'jigsaw-drawer-bottom': this.position == 'bottom',
-            'jigsaw-drawer-left-center': this.floating && this.position == 'left' && !this.offsetTop  && !this.offsetBottom,
-            'jigsaw-drawer-right-center': this.floating && this.position == 'right' && !this.offsetTop  && !this.offsetBottom,
-            'jigsaw-drawer-top-center': this.floating && this.position == 'top' && !this.offsetLeft  && !this.offsetRight,
-            'jigsaw-drawer-bottom-center': this.floating && this.position == 'bottom' && !this.offsetLeft  && !this.offsetRight,
+            'jigsaw-drawer-sticky-in-ie': this.floating && this.container && CommonUtils.isIE()
         }
     }
 
@@ -260,10 +315,15 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
         this.openChange.emit(this.open);
     }
 
+    private _containerEl: HTMLElement;
+    private _removeIEScrollListener: CallbackRemoval;
+    private _containerIEScroll = new EventEmitter();
+
     private _setContainer() {
         if(this.container) {
             const containerEl = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, this.container);
             if(containerEl) {
+                this._containerEl = containerEl;
                 if(!containerEl.style.position || containerEl.style.position == 'static') {
                     containerEl.style.position = 'relative';
                 }
@@ -274,6 +334,15 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
                 if((this.position == 'top' || this.position == 'bottom') && containerEl.style.overflowY != 'hidden' &&
                     containerEl.style.overflowY != 'scroll' && containerEl.style.overflowY != 'auto') {
                     containerEl.style.overflowY = 'hidden';
+                }
+                if(CommonUtils.isIE()) {
+                    if(this._removeIEScrollListener) {
+                        this._removeIEScrollListener();
+                        this._removeIEScrollListener = null;
+                    }
+                    this._removeIEScrollListener = this._renderer.listen(containerEl, 'scroll', () => {
+                        this._containerIEScroll.emit();
+                    })
                 }
             } else {
                 console.error('Can not find drawer container.');
@@ -298,7 +367,23 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
         // 异步添加动画，为了初始化时没有拉伸的动作
         this.callLater(() => {
             this._$onAnimation = true;
-        })
+        });
+        if(CommonUtils.isIE()) {
+            this._containerIEScroll.debounceTime(300).subscribe(() => {
+                this._setStyle();
+            })
+        }
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        if(CommonUtils.isIE()) {
+            if(this._removeIEScrollListener) {
+                this._removeIEScrollListener();
+                this._removeIEScrollListener = null;
+            }
+            this._containerIEScroll.unsubscribe();
+        }
     }
 }
 

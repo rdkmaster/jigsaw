@@ -32,13 +32,14 @@
             offsetRight：<j-input [(value)]="offsetRight"></j-input>
             offsetBottom：<j-input [(value)]="offsetBottom"></j-input>
         </div>
-        <div class="custom-container">
+        <div class="custom-container" [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true, minScrollbarLength: 20}">
             <j-drawer container=".custom-container" [position]="selectedPosition" [width]="width" [height]="height"
                       [offsetLeft]="offsetLeft" [offsetTop]="offsetTop" [offsetRight]="offsetRight" [offsetBottom]="offsetBottom">
                 <div class="drawer-content">
                     这是一个展示内容的box
                 </div>
             </j-drawer>
+            <div style="height:1000px"></div>
         </div>
     </div>
     <div class="demo-2 live-demo">
