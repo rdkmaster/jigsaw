@@ -5,7 +5,8 @@
 
 <!-- start to learn the demo from here -->
 更换弹出目标：
-<jigsaw-button-bar [data]="targets" (selectedItemsChange)="change($event)">
+<jigsaw-button-bar [data]="targets" [selectedItems]="'component'"
+                   (selectedItemsChange)="target = $event[0].target">
 </jigsaw-button-bar>
 <br><br>
 <span class="fa fa-bars" jigsaw-float
