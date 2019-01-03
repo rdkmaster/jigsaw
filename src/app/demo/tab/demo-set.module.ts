@@ -23,6 +23,8 @@ import {TabsUpdateTitleDemoComponent} from "./update-title/demo.component";
 import {TabsUpdateTitleDemoModule} from "./update-title/demo.module";
 import {TabsEditableDemoComponent} from "./editable/demo.component";
 import {TabsEditableDemoModule} from "./editable/demo.module";
+import {TabHeadlessDemoComponent} from "./headless/demo.component";
+import {TabHeadlessDemoModule} from "./headless/demo.module";
 
 export const routerConfig = [
     {
@@ -57,6 +59,9 @@ export const routerConfig = [
     {
         path: 'editable', component: TabsEditableDemoComponent
     },
+    {
+        path: 'headless', component: TabHeadlessDemoComponent
+    },
 ];
 
 @NgModule({
@@ -64,7 +69,7 @@ export const routerConfig = [
         RouterModule.forChild(routerConfig),
         TabsBasicDemoModule, TabsDestroyDemoModule, TabsHideTabDemoModule, TabsShowTabDemoModule,
         DynamicTabDemoModule, TabsWithInputDemoModule, TabsWithNgForDemoModule, TabsUpdateTitleDemoModule,
-        TabsEditableDemoModule
+        TabsEditableDemoModule, TabHeadlessDemoModule
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
