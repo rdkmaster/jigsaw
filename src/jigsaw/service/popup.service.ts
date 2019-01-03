@@ -614,7 +614,7 @@ export class PopupService {
                 return pos;
             }
             const needHeight = pos.top + popupElement.offsetHeight;
-            const totalHeight = window.scrollY + document.body.clientHeight;
+            const totalHeight = window.pageYOffset + document.body.clientHeight;
             if (needHeight >= totalHeight && pos.top > upDelta) {
                 // 下方位置不够且上方位置足够的时候才做调整
                 pos.top -= upDelta;
@@ -630,7 +630,7 @@ export class PopupService {
                 return pos;
             }
             const needWidth = pos.left + popupElement.offsetWidth;
-            const totalWidth = window.scrollX + document.body.clientWidth;
+            const totalWidth = window.pageXOffset  + document.body.clientWidth;
             if (needWidth >= totalWidth && pos.left > leftDelta) {
                 // 右边位置不够且左边位置足够的时候才做调整
                 pos.left -= leftDelta;
