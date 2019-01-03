@@ -120,6 +120,30 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     @Input()
     public editable: boolean;
 
+    public _$headless: boolean = false;
+
+    /**
+     * 控制tab头部是否显示
+     *
+     * $demo = tab/headless
+     *
+     * @type {boolean}
+     */
+
+    @Input()
+    public get headless(): boolean {
+        return this._$headless;
+    }
+
+    public set headless(value: boolean) {
+        if (this._$headless == value) {
+            return;
+        }
+        this._$headless = value;
+        this._calulateContentHeight();
+    }
+
+
     /**
      * 当前的tab页数量，包含被隐藏的tab页
      */
@@ -243,10 +267,14 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
 
     ngOnInit() {
         super.ngOnInit();
+        this._calulateContentHeight();
+    }
+
+    private _calulateContentHeight() {
         if (this.height) {
             this.callLater(() => {
                 // 等待dom渲染
-                this._$contentHeight = this._elementRef.nativeElement.offsetHeight - 46 + 'px';
+                this._$contentHeight = this._$headless ? this._elementRef.nativeElement.offsetHeight + 'px' : this._elementRef.nativeElement.offsetHeight - 46 + 'px';
             })
         }
     }
@@ -274,7 +302,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     // 注意此方法会被频繁调用，性能要求高
     ngAfterViewChecked() {
         if (!this._tabsInkBar || this._tabLabels.length == 0) return;
-
+        this._createTabList();
         const labelPos = this._getLabelOffsetByKey(this.selectedIndex);
         if (!labelPos) {
             return;
@@ -541,7 +569,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     /**
      * @internal
      */
-    public _$selectTabStyle: {};
+    public _$selectTabStyle:  object ={};
 
     /**
      * @internal
@@ -560,6 +588,9 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     private _tabLeftMap: Map<number, number> = new Map<number, number>();
 
     private _createTabList() {
+        if (this._$headless || !this._tabsNavWrap) {
+            return;
+        }
         this._$tabList = [];
         this._tabLeftMap.clear();
         this._tabLabels.forEach((label: JigsawTabLabel, index) => {
