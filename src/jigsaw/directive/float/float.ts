@@ -246,8 +246,15 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
 
     private _getPos(): PopupPoint {
         let point = new PopupPoint();
-        point.y = AffixUtils.offset(this._elementRef.nativeElement).top;
-        point.x = AffixUtils.offset(this._elementRef.nativeElement).left;
+        if (this.jigsawFloatOptions && this.jigsawFloatOptions.posType == PopupPositionType.fixed) {
+            // 获取触发点相对于视窗的位置
+            const tempRect = this._elementRef.nativeElement.getBoundingClientRect()
+            point.y = tempRect.top;
+            point.x = tempRect.left;
+        } else {
+            point.y = AffixUtils.offset(this._elementRef.nativeElement).top;
+            point.x = AffixUtils.offset(this._elementRef.nativeElement).left;
+        }
         window['jigsawFloatTarget'] = this.jigsawFloatTarget;
         switch (this.jigsawFloatPosition) {
             case 'bottomLeft':
@@ -352,7 +359,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
                 // 可视区域比弹出的UI高度还小就不要调整了
                 return pos;
             }
-            const totalHeight = window.scrollY || window.pageYOffset + document.body.clientHeight;
+            const totalHeight = window.pageYOffset + document.body.clientHeight;
             if (pos.top < 0 && pos.top + upDelta <= totalHeight) {
                 // 上位置不够且下方位置足够的时候才做调整
                 pos.top += upDelta;
@@ -367,7 +374,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
                 // 可视区域比弹出的UI高度还小就不要调整了
                 return pos;
             }
-            const totalWidth = window.scrollX || window.pageXOffset + document.body.clientWidth;
+            const totalWidth = window.pageXOffset + document.body.clientWidth;
             if (pos.left < 0 && pos.left + leftDelta <= totalWidth) {
                 // 左边位置不够且右边位置足够的时候才做调整
                 pos.left += leftDelta;
