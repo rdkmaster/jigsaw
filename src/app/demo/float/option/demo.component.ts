@@ -4,7 +4,8 @@ import {CommonUtils} from "../../../../jigsaw/core/utils/common-utils";
 
 @Component({
     templateUrl: './demo.component.html',
-    styles: [`.fa-bars{
+    styles: [`
+               .fa-bars{
                      margin: 100px;
                }
                .jigsawFloatArea{

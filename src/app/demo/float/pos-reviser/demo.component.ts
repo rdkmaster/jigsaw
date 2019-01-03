@@ -3,7 +3,8 @@ import {PopupOptions, PopupPositionValue} from "../../../../jigsaw/service/popup
 
 @Component({
     templateUrl: './demo.component.html',
-    styles: [`.fa-bars{
+    styles: [`
+               .fa-bars{
                      margin:40px
                }
                .jigsawFloatArea{

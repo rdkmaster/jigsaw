@@ -248,7 +248,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         let point = new PopupPoint();
         if (this.jigsawFloatOptions && this.jigsawFloatOptions.posType == PopupPositionType.fixed) {
             // 获取触发点相对于视窗的位置
-            const tempRect = this._elementRef.nativeElement.getBoundingClientRect()
+            const tempRect = this._elementRef.nativeElement.getBoundingClientRect();
             point.y = tempRect.top;
             point.x = tempRect.left;
         } else {

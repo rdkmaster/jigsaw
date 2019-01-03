@@ -17,36 +17,33 @@
         </jigsaw-radios>
     </div>
     <div class="row">
-        <label>PositionType：</label>
+        <label>定位方式：</label>
         <jigsaw-radios [(value)]="selectedPositionType" (valueChange)="valueChange()">
             <jigsaw-radio-option value="absolute">absolute</jigsaw-radio-option>
             <jigsaw-radio-option value="fixed">fixed</jigsaw-radio-option>
         </jigsaw-radios>
         <a (click)="expandHeight()"> 加高页面，出现滚动条 </a>
     </div>
-    <h4>Position offset</h4><br>
     <div class="row">
-        <label>top: </label>
-        <j-numeric-input [(value)]="offset.top" (valueChange)="valueChange()" placeholder="Top"
-                         width="100px"></j-numeric-input>
-        <label>left: </label>
-        <j-numeric-input [(value)]="offset.left" (valueChange)="valueChange()" placeholder="Left"
-                         width="100px"></j-numeric-input>
+        <label>垂直偏移: </label>
+        <j-numeric-input [(value)]="offset.top" (valueChange)="valueChange()" placeholder="请输入数字"></j-numeric-input>
+        <label>水平偏移: </label>
+        <j-numeric-input [(value)]="offset.left" (valueChange)="valueChange()" placeholder="请输入数字"></j-numeric-input>
     </div>
 
-    <div class="row"><label>showBorder:</label>
+    <div class="row"><label>弹出视图加边框:</label>
         <jigsaw-switch [(checked)]="showBorder" (checkedChange)="valueChange()"></jigsaw-switch>
     </div>
     <div class="row">
-        <label>宽度</label>
+        <label>宽度:</label>
         <j-numeric-input [(value)]="size.width" (valueChange)="valueChange()" min="0"
                          placeholder="请输入数字"></j-numeric-input>
-        <label>最小宽度</label>
+        <label>最小宽度:</label>
         <j-numeric-input [(value)]="size.minWidth" (valueChange)="valueChange()" (valueChange)="valueChange()" min="0"
                          placeholder="请输入数字"></j-numeric-input>
     </div>
     <div class="row">
-        <label>高度</label>
+        <label>高度:</label>
         <j-numeric-input [(value)]="size.height" (valueChange)="valueChange()" min="0"
                          placeholder="请输入数字"></j-numeric-input>
     </div>
@@ -61,7 +58,8 @@
           jigsawFloatOpenTrigger="click"
           jigsawFloatCloseTrigger="click"
           [jigsawFloatOptions]="options"
-          [jigsawFloatTarget]="jigsawFloatArea" [ngStyle]="{'position':selectedPositionType=='fixed'?'fixed':'inherit'}"> click me!
+          [jigsawFloatTarget]="jigsawFloatArea"
+          [ngStyle]="{'position':selectedPositionType=='fixed'?'fixed':'inherit'}"> click me!
     </span>
 </div>
 
