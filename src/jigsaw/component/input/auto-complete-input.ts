@@ -11,6 +11,7 @@ import {
     TemplateRef,
     ViewChild,
     Output,
+    HostListener,
     EventEmitter
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
@@ -100,6 +101,14 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
      */
     @Output('select')
     public selectEvent = new EventEmitter<string>();
+
+    @HostListener('document:mousedown', ['$event'])
+    onMouseDown(event: Event) {
+        const element = this._elementRef.nativeElement;
+        if (!element.contains(document.activeElement)) {
+            this._$closeListPopup();
+        }
+    }
 
     constructor(_render2: Renderer2,
                 _elementRef: ElementRef,
