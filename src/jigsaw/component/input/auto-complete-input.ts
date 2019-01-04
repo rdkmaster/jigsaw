@@ -54,9 +54,6 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     public _$data: string[] | DropDownValue[];
     public _bakData: any[];
     public _$maxDropDownHeight: string = '300px';
-    /**
-     * @internal
-     */
     private _removeWindowMouseDownListener: Function;
 
     @Input()
@@ -105,7 +102,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     @Output('select')
     public selectEvent = new EventEmitter<string>();
 
-    private _$onMouseDown = () => {
+    private _onMouseDown = () => {
         const element = this._elementRef.nativeElement;
         if (!element.contains(document.activeElement)) {
             this._$closeListPopup();
@@ -185,7 +182,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
             this._propertyListPopup = this._popupService.popup(this._dropdownTemp, popupOptions);
             this._isPropertyListPopped = true;
             this._removeWindowListener();
-            this._removeWindowMouseDownListener = this._render2.listen(document, 'mousedown', this._$onMouseDown);
+            this._removeWindowMouseDownListener = this._render2.listen(document, 'mousedown', this._onMouseDown);
         }
     }
 
