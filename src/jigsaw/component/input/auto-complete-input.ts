@@ -54,6 +54,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     public _$data: string[] | DropDownValue[];
     public _bakData: any[];
     public _$maxDropDownHeight: string = '300px';
+    private _removeWindowMouseDownListener: Function;
 
     @Input()
     public set maxDropDownHeight(value: string) {
@@ -101,9 +102,16 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     @Output('select')
     public selectEvent = new EventEmitter<string>();
 
-    constructor(_render2: Renderer2,
-                _elementRef: ElementRef,
-                _changeDetectorRef: ChangeDetectorRef,
+    private _onMouseDown = () => {
+        const element = this._elementRef.nativeElement;
+        if (!element.contains(document.activeElement)) {
+            this._$closeListPopup();
+        }
+    };
+
+    constructor(protected _render2: Renderer2,
+                protected _elementRef: ElementRef,
+                protected _changeDetectorRef: ChangeDetectorRef,
                 private _popupService: PopupService) {
         super(_render2, _elementRef, _changeDetectorRef);
     }
@@ -173,8 +181,17 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
             };
             this._propertyListPopup = this._popupService.popup(this._dropdownTemp, popupOptions);
             this._isPropertyListPopped = true;
+            this._removeWindowListener();
+            this._removeWindowMouseDownListener = this._render2.listen(document, 'mousedown', this._onMouseDown);
         }
     }
+
+    private _removeWindowListener() {
+        if (this._removeWindowMouseDownListener) {
+            this._removeWindowMouseDownListener();
+        }
+    }
+
 
     private _$closeListPopup() {
         if (this._isPropertyListPopped) {
@@ -182,6 +199,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
             this._propertyListPopup = null;
             this._isPropertyListPopped = false;
         }
+        this._removeWindowListener();
     }
 
     public _$add(item) {
