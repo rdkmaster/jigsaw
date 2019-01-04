@@ -81,6 +81,8 @@ import {TableHtmlRendererDemoComponent} from "./html-renderer/demo.component";
 import {TableHtmlRendererDemoModule} from "./html-renderer/demo.module";
 import {RebuildTableDataDemoComponent} from "./rebuild-table-data/demo.component";
 import {RebuildTableDataDemoModule} from "./rebuild-table-data/demo.module";
+import {TableMixinTableDemoComponent} from "./mixin-table/demo.component";
+import {TableMixinTableDemoModule} from "./mixin-table/demo.module";
 
 export const routerConfig = [
     {
@@ -203,6 +205,9 @@ export const routerConfig = [
     {
         path: 'rebuild-table-data', component: RebuildTableDataDemoComponent
     },
+    {
+        path: 'mixin-table', component: TableMixinTableDemoComponent
+    },
 ];
 
 @NgModule({
@@ -217,7 +222,7 @@ export const routerConfig = [
         TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, SwimLaneDiagramDemoModule, TableHideHeadDemoModule,
         TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule, TableCalendarDemoModule, BigRowDemoModule, TableResizeDemoModule,
         TableScrollListenDemoModule, SodokuGameModule, TableAddCheckboxColumnPageableDemoModule, TableSwitchRendererDemoModule,
-        TableNoDataDemoModule, TableHtmlRendererDemoModule, RebuildTableDataDemoModule, TableCellSelectRenderDemoModule
+        TableNoDataDemoModule, TableHtmlRendererDemoModule, RebuildTableDataDemoModule, TableCellSelectRenderDemoModule, TableMixinTableDemoModule
     ]
 })
 export class TableDemoModule {
