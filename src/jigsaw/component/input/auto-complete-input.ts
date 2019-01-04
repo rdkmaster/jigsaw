@@ -105,12 +105,12 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     @Output('select')
     public selectEvent = new EventEmitter<string>();
 
-    private _$onMouseDown() {
+    private _$onMouseDown = () => {
         const element = this._elementRef.nativeElement;
         if (!element.contains(document.activeElement)) {
             this._$closeListPopup();
         }
-    }
+    };
 
     constructor(protected _render2: Renderer2,
                 protected _elementRef: ElementRef,
