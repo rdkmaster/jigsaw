@@ -69,7 +69,11 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
 
     /**
      * 容器的selector，支持'.className'、'#id'、'[attr]'、'tagName'
-     * 向上寻找离抽屉最近的
+     * 向上寻找离抽屉最近的匹配节点作为抽屉的容器
+     *
+     * $demo = drawer/with-div
+     * $demo = drawer/with-scrollbar
+     * $demo = drawer/with-tab
      */
     @Input()
     public container: string;
@@ -79,6 +83,9 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     private _offsetRight: string;
     private _offsetBottom: string;
 
+    /**
+     * $demo = drawer/with-div
+     */
     @Input()
     get offsetTop(): string {
         return this._offsetTop;
@@ -89,6 +96,9 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
         this._update();
     }
 
+    /**
+     * $demo = drawer/with-div
+     */
     @Input()
     get offsetLeft(): string {
         return this._offsetLeft;
@@ -99,6 +109,9 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
         this._update();
     }
 
+    /**
+     * $demo = drawer/with-div
+     */
     @Input()
     get offsetRight(): string {
         return this._offsetRight;
@@ -109,6 +122,9 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
         this._update();
     }
 
+    /**
+     * $demo = drawer/with-div
+     */
     @Input()
     get offsetBottom(): string {
         return this._offsetBottom;
@@ -119,6 +135,9 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
         this._update();
     }
 
+    /**
+     * $demo = drawer/with-div
+     */
     @Input()
     public get width(): string {
         return this._width;
@@ -129,6 +148,9 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
         this._update();
     }
 
+    /**
+     * $demo = drawer/with-div
+     */
     @Input()
     public get height(): string {
         return this._height;
@@ -139,13 +161,20 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
         this._update();
     }
 
+    /**
+     * $demo = drawer/in-dom
+     */
     @Input()
     public floating: boolean = true;
 
-    @ViewChild('drawer') private _drawerEl: ElementRef;
+    @ViewChild('drawer')
+    private _drawerEl: ElementRef;
 
-    @HostBinding('style.width') private _$hostWidth: string;
-    @HostBinding('style.height') private _$hostHeight: string;
+    @HostBinding('style.width')
+    private _$hostWidth: string;
+
+    @HostBinding('style.height')
+    private _$hostHeight: string;
 
     private _setHostSize() {
         this._$hostWidth = this._calcHostWidth();

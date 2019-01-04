@@ -10,6 +10,8 @@ import {DrawerWithScrollbarDemoComponent} from "./with-scrollbar/demo.component"
 import {DrawerWithScrollbarDemoModule} from "./with-scrollbar/demo.module";
 import {DrawerWithTabDemoComponent} from "./with-tab/demo.component";
 import {DrawerWithTabDemoModule} from "./with-tab/demo.module";
+import {DrawerInDrawerDemoComponent} from "./drawer-in-drawer/demo.component";
+import {DrawerInDrawerDemoModule} from "./drawer-in-drawer/demo.module";
 
 export const routerConfig = [
     {
@@ -27,6 +29,9 @@ export const routerConfig = [
     {
         path: 'in-dom', component: DrawerInDomDemoComponent
     },
+    {
+        path: 'drawer-in-drawer', component: DrawerInDrawerDemoComponent
+    },
 ];
 
 @NgModule({
@@ -36,7 +41,8 @@ export const routerConfig = [
         DrawerWithDivDemoModule,
         DrawerWithScrollbarDemoModule,
         DrawerWithTabDemoModule,
-        DrawerInDomDemoModule
+        DrawerInDomDemoModule,
+        DrawerInDrawerDemoModule
     ]
 })
 export class DrawerDemoModule {
