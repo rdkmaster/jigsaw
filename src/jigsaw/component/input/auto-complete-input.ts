@@ -111,13 +111,6 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     @Output('select')
     public selectEvent = new EventEmitter<string>();
 
-    private _onMouseDown = () => {
-        const element = this._elementRef.nativeElement;
-        if (!element.contains(document.activeElement)) {
-            this._closeListPopup();
-        }
-    };
-
     constructor(protected _render2: Renderer2,
                 protected _elementRef: ElementRef,
                 protected _changeDetectorRef: ChangeDetectorRef,
@@ -182,30 +175,36 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
         this.selectEvent.emit(item);
     }
 
-    private _isPropertyListPopped: boolean;
-    private _propertyListPopup: PopupInfo;
+    private _propertyListPopupInfo: PopupInfo;
 
     private _showDropdownList(event) {
         const hostElement = this._elementRef.nativeElement;
-        if (this._isPropertyListPopped) {
+        if (this._propertyListPopupInfo) {
             this._closeListPopup();
-        } else {
-            const popupOptions: PopupOptions = {
-                modal: false,
-                pos: hostElement,
-                posOffset: {top: hostElement.offsetHeight},
-                size: {width: hostElement.offsetWidth},
-                posReviser: (pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue => {
-                    return this._popupService.positionReviser(pos, popupElement, {
-                        offsetHeight: hostElement.offsetHeight,
-                        direction: 'v'
-                    });
-                }
-            };
-            this._propertyListPopup = this._popupService.popup(this._dropdownTemp, popupOptions);
-            this._isPropertyListPopped = true;
-            this._removeWindowListener();
-            this._removeWindowMouseDownListener = this._render2.listen(document, 'mousedown', this._onMouseDown);
+            return;
+        }
+
+        const popupOptions: PopupOptions = {
+            modal: false,
+            pos: hostElement,
+            posOffset: {top: hostElement.offsetHeight},
+            size: {width: hostElement.offsetWidth},
+            posReviser: (pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue => {
+                return this._popupService.positionReviser(pos, popupElement, {
+                    offsetHeight: hostElement.offsetHeight,
+                    direction: 'v'
+                });
+            }
+        };
+        this._propertyListPopupInfo = this._popupService.popup(this._dropdownTemp, popupOptions);
+        this._removeWindowListener();
+        this._removeWindowMouseDownListener = this._render2.listen(document, 'mousedown', this._onMouseDown);
+    }
+
+    private _onMouseDown() {
+        const element = this._elementRef.nativeElement;
+        if (!element.contains(document.activeElement)) {
+            this._closeListPopup();
         }
     }
 
@@ -215,12 +214,10 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
         }
     }
 
-
     private _closeListPopup() {
-        if (this._isPropertyListPopped) {
-            this._propertyListPopup.dispose();
-            this._propertyListPopup = null;
-            this._isPropertyListPopped = false;
+        if (this._propertyListPopupInfo) {
+            this._propertyListPopupInfo.dispose();
+            this._propertyListPopupInfo = null;
         }
         this._removeWindowListener();
     }
