@@ -62,6 +62,10 @@ export const routerConfig = [
         loadChildren: "./demo/fish-bone/demo-set.module#FishBoneDemoModule",
     },
     {
+        path: "float",
+        loadChildren: "./demo/float/demo-set.module#FloatDemoModule",
+    },
+    {
         path: "form",
         loadChildren: "./demo/form/demo-set.module#FormDemoModule",
     },

@@ -1,0 +1,30 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+弹出的位置：
+<jigsaw-radios [(value)]="floatPosition">
+    <jigsaw-radio-option value="bottomLeft">bottomLeft</jigsaw-radio-option>
+    <jigsaw-radio-option  value="bottomRight">bottomRight</jigsaw-radio-option>
+    <jigsaw-radio-option  value="topLeft">topLeft</jigsaw-radio-option>
+    <jigsaw-radio-option  value="topRight">topRight</jigsaw-radio-option>
+    <jigsaw-radio-option  value="leftTop">leftTop</jigsaw-radio-option>
+    <jigsaw-radio-option  value="leftBottom">leftBottom</jigsaw-radio-option>
+    <jigsaw-radio-option  value="rightTop">rightTop</jigsaw-radio-option>
+    <jigsaw-radio-option  value="rightBottom">rightBottom</jigsaw-radio-option>
+</jigsaw-radios>
+<br><br>
+<span class="fa fa-bars" jigsaw-float
+      jigsawFloatOpenTrigger="click"
+      jigsawFloatCloseTrigger="click"
+      [jigsawFloatPosition]="floatPosition"
+      [jigsawFloatTarget]="jigsawFloatArea" > click me!
+</span>
+<ng-template #jigsawFloatArea>
+    <div class="jigsawFloatArea">
+        dropdown placeholder
+    </div>
+</ng-template>
+

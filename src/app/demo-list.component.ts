@@ -14,6 +14,7 @@ import {routerConfig as dragDropConfig} from "./demo/drag-drop/demo-set.module";
 import {routerConfig as drawerConfig} from "./demo/drawer/demo-set.module";
 import {routerConfig as editableBoxConfig} from "./demo/editable-box/demo-set.module";
 import {routerConfig as fishBoneConfig} from "./demo/fish-bone/demo-set.module";
+import {routerConfig as floatConfig} from "./demo/float/demo-set.module";
 import {routerConfig as formConfig} from "./demo/form/demo-set.module";
 import {routerConfig as graphConfig} from "./demo/graph/demo-set.module";
 import {routerConfig as i18nConfig} from "./demo/i18n/demo-set.module";
@@ -109,6 +110,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'drawer', drawerConfig);
         this._addRouterConfig(routerConfig, 'editable-box', editableBoxConfig);
         this._addRouterConfig(routerConfig, 'fish-bone', fishBoneConfig);
+        this._addRouterConfig(routerConfig, 'float', floatConfig);
         this._addRouterConfig(routerConfig, 'form', formConfig);
         this._addRouterConfig(routerConfig, 'graph', graphConfig);
         this._addRouterConfig(routerConfig, 'i18n', i18nConfig);
