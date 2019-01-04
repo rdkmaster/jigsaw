@@ -51,8 +51,17 @@ export class DropDownValue {
     ]
 })
 export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, OnInit {
+    /**
+     * @internal
+     */
     public _$data: string[] | DropDownValue[];
+    /**
+     * @internal
+     */
     public _bakData: any[];
+    /**
+     * @internal
+     */
     public _$maxDropDownHeight: string = '300px';
     private _removeWindowMouseDownListener: Function;
 
@@ -102,13 +111,6 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     @Output('select')
     public selectEvent = new EventEmitter<string>();
 
-    private _onMouseDown = () => {
-        const element = this._elementRef.nativeElement;
-        if (!element.contains(document.activeElement)) {
-            this._$closeListPopup();
-        }
-    };
-
     constructor(protected _render2: Renderer2,
                 protected _elementRef: ElementRef,
                 protected _changeDetectorRef: ChangeDetectorRef,
@@ -149,40 +151,60 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
         });
     }
 
+    /**
+     * @internal
+     */
     public _$handleFocus(event: FocusEvent) {
         super._$handleFocus(event);
         this._showDropdownList(event);
     }
 
+    /**
+     * @internal
+     */
     public _$handleBlur(event: FocusEvent) {
         super._$handleBlur(event);
-        this._$closeListPopup();
+        this._closeListPopup();
     }
 
-    private _isPropertyListPopped: boolean;
-    private _propertyListPopup: PopupInfo;
+    /**
+     * @internal
+     */
+    public _$add(item) {
+        this.value = item;
+        this.selectEvent.emit(item);
+    }
+
+    private _propertyListPopupInfo: PopupInfo;
 
     private _showDropdownList(event) {
         const hostElement = this._elementRef.nativeElement;
-        if (this._isPropertyListPopped) {
-            this._$closeListPopup();
-        } else {
-            const popupOptions: PopupOptions = {
-                modal: false,
-                pos: hostElement,
-                posOffset: {top: hostElement.offsetHeight},
-                size: {width: hostElement.offsetWidth},
-                posReviser: (pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue => {
-                    return this._popupService.positionReviser(pos, popupElement, {
-                        offsetHeight: hostElement.offsetHeight,
-                        direction: 'v'
-                    });
-                }
-            };
-            this._propertyListPopup = this._popupService.popup(this._dropdownTemp, popupOptions);
-            this._isPropertyListPopped = true;
-            this._removeWindowListener();
-            this._removeWindowMouseDownListener = this._render2.listen(document, 'mousedown', this._onMouseDown);
+        if (this._propertyListPopupInfo) {
+            this._closeListPopup();
+            return;
+        }
+
+        const popupOptions: PopupOptions = {
+            modal: false,
+            pos: hostElement,
+            posOffset: {top: hostElement.offsetHeight},
+            size: {width: hostElement.offsetWidth},
+            posReviser: (pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue => {
+                return this._popupService.positionReviser(pos, popupElement, {
+                    offsetHeight: hostElement.offsetHeight,
+                    direction: 'v'
+                });
+            }
+        };
+        this._propertyListPopupInfo = this._popupService.popup(this._dropdownTemp, popupOptions);
+        this._removeWindowListener();
+        this._removeWindowMouseDownListener = this._render2.listen(document, 'mousedown', this._onMouseDown);
+    }
+
+    private _onMouseDown() {
+        const element = this._elementRef.nativeElement;
+        if (!element.contains(document.activeElement)) {
+            this._closeListPopup();
         }
     }
 
@@ -192,24 +214,17 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
         }
     }
 
-
-    private _$closeListPopup() {
-        if (this._isPropertyListPopped) {
-            this._propertyListPopup.dispose();
-            this._propertyListPopup = null;
-            this._isPropertyListPopped = false;
+    private _closeListPopup() {
+        if (this._propertyListPopupInfo) {
+            this._propertyListPopupInfo.dispose();
+            this._propertyListPopupInfo = null;
         }
         this._removeWindowListener();
     }
 
-    public _$add(item) {
-        this.value = item;
-        this.selectEvent.emit(item);
-    }
-
     public ngOnDestroy() {
         super.ngOnDestroy();
-        this._$closeListPopup();
+        this._closeListPopup();
     }
 }
 
