@@ -4,16 +4,7 @@ import {Component} from "@angular/core";
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
-export class DrawerContainerDemoComponent {
-    width: string;
-    height: string;
-
-    selectedPosition = 'left';
-
-    offsetLeft: string;
-    offsetTop: string;
-    offsetRight: string;
-    offsetBottom: string;
+export class DrawerWithTabDemoComponent {
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

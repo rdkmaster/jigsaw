@@ -1,0 +1,48 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>Drawer with DIV</h2>
+    <div class="demo-1 live-demo">
+        <p class="comment">
+            <code>container</code>属性可以支持'.className'、'#id'、'[attr]'、'tagName'，向上寻找离抽屉最近的。<br>
+            <code>position</code>为left或者right时，只有<code>offsetTop</code>和<code>offsetBottom</code>能生效；
+            为top或者bottom时，只有<code>offsetLeft</code>和<code>offsetRight</code>能生效
+        </p>
+        <div class="size-box">
+            宽度：<j-input width="200" [(value)]="width"></j-input>
+            高度：<j-input width="200" [(value)]="height"></j-input>
+        </div>
+        <div class="position-box">
+            <label>抽屉位置：</label>
+            <jigsaw-radios [(value)]="selectedPosition">
+                <jigsaw-radio-option value="left">left</jigsaw-radio-option>
+                <jigsaw-radio-option value="right">right</jigsaw-radio-option>
+                <jigsaw-radio-option value="top">top</jigsaw-radio-option>
+                <jigsaw-radio-option value="bottom">bottom</jigsaw-radio-option>
+            </jigsaw-radios>
+        </div>
+        <div class="offset-box">
+            offsetLeft：<j-input [(value)]="offsetLeft"></j-input>
+            offsetTop：<j-input [(value)]="offsetTop"></j-input>
+            offsetRight：<j-input [(value)]="offsetRight"></j-input>
+            offsetBottom：<j-input [(value)]="offsetBottom"></j-input>
+        </div>
+        <div class="custom-container">
+            <j-drawer container=".custom-container" [position]="selectedPosition" [width]="width" [height]="height"
+                      [offsetLeft]="offsetLeft" [offsetTop]="offsetTop" [offsetRight]="offsetRight" [offsetBottom]="offsetBottom">
+                <div class="drawer-content">
+                    这是一个展示内容的box
+                </div>
+            </j-drawer>
+        </div>
+    </div>
+</div>
+
+
+
+
+

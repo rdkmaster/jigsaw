@@ -5,9 +5,9 @@
 }
 
 section {
-    height: 200px;
-    background: #ddd;
-    line-height: 200px;
+    height: 100px;
+    background: #eee;
+    line-height: 100px;
     font-size: 20px;
     text-align: center;
 }

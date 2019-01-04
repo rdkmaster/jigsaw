@@ -1,0 +1,37 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>Drawer with Scrollbar</h2>
+    <div class="demo-3 live-demo">
+        <h3>内容撑出滚动条</h3>
+        <p class="comment">注意：容器上是不允许产生滚动条的，如果内容太长出现滚动条，请在内容的外面套一个wrapper，设置滚动样式</p>
+        <div class="custom-container">
+            <j-drawer container=".custom-container" [width]="width">
+                <div class="drawer-content">
+                    这是一个展示内容的box
+                </div>
+            </j-drawer>
+            <!-- 在内容的外面加个wrapper，用来生成滚动条 -->
+            <div class="drawer-content-wrapper" style="height: 100%; overflow: auto;">
+                <div style="text-align: center;line-height: 50px;width: 120%">
+                    这是一段展示文本,这是一段展示文本,这是一段展示文本,这是一段展示文本,这是一段展示文本,<br>
+                    这是一段展示文本,这是一段展示文本,这是一段展示文本,这是一段展示文本,这是一段展示文本,<br>
+                    这是一段展示文本,这是一段展示文本,这是一段展示文本,这是一段展示文本,这是一段展示文本,<br>
+                    这是一段展示文本,这是一段展示文本,这是一段展示文本,这是一段展示文本,这是一段展示文本,<br>
+                    这是一段展示文本,这是一段展示文本,这是一段展示文本,这是一段展示文本,这是一段展示文本,<br>
+                    这是一段展示文本,这是一段展示文本,这是一段展示文本,这是一段展示文本,这是一段展示文本,<br>
+                    这是一段展示文本,这是一段展示文本,这是一段展示文本,这是一段展示文本,这是一段展示文本,<br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

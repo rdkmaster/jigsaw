@@ -2,17 +2,27 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {DrawerBasicDemoModule} from "./basic/demo.module";
 import {DrawerBasicDemoComponent} from "./basic/demo.component";
-import {DrawerContainerDemoComponent} from "./container/demo.component";
-import {DrawerContainerDemoModule} from "./container/demo.module";
+import {DrawerWithDivDemoComponent} from "./with-div/demo.component";
+import {DrawerWithDivDemoModule} from "./with-div/demo.module";
 import {DrawerInDomDemoComponent} from "./in-dom/demo.component";
 import {DrawerInDomDemoModule} from "./in-dom/demo.module";
+import {DrawerWithScrollbarDemoComponent} from "./with-scrollbar/demo.component";
+import {DrawerWithScrollbarDemoModule} from "./with-scrollbar/demo.module";
+import {DrawerWithTabDemoComponent} from "./with-tab/demo.component";
+import {DrawerWithTabDemoModule} from "./with-tab/demo.module";
 
 export const routerConfig = [
     {
         path: 'basic', component: DrawerBasicDemoComponent
     },
     {
-        path: 'container', component: DrawerContainerDemoComponent
+        path: 'with-div', component: DrawerWithDivDemoComponent
+    },
+    {
+        path: 'with-scrollbar', component: DrawerWithScrollbarDemoComponent
+    },
+    {
+        path: 'with-tab', component: DrawerWithTabDemoComponent
     },
     {
         path: 'in-dom', component: DrawerInDomDemoComponent
@@ -23,7 +33,9 @@ export const routerConfig = [
     imports: [
         RouterModule.forChild(routerConfig),
         DrawerBasicDemoModule,
-        DrawerContainerDemoModule,
+        DrawerWithDivDemoModule,
+        DrawerWithScrollbarDemoModule,
+        DrawerWithTabDemoModule,
         DrawerInDomDemoModule
     ]
 })
