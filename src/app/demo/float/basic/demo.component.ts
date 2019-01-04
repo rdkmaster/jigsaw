@@ -4,17 +4,18 @@ import {FloatTargetDemo} from "../target/demo.component";
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
-               .fa-bars{
-                     margin:100px
-               }
-               .jigsawFloatArea{
-                   width:150px;
-                   height:60px;
-                   background:orange;
-                   color:#fff;
-                   text-align:center;
-                   line-height:60px;
-               }
+        .fa-bars {
+            margin: 20px 100px;
+        }
+
+        .jigsawFloatArea {
+            width: 150px;
+            height: 60px;
+            background: orange;
+            color: #fff;
+            text-align: center;
+            line-height: 60px;
+        }
     `]
 })
 export class FloatBasicDemo {

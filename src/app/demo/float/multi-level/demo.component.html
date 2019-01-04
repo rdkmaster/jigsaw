@@ -9,6 +9,7 @@
       [jigsawFloatTarget]="subMenu">
     菜单 hover
 </span>
+
 <ng-template #subMenu>
     <j-list width="200" trackItemBy="title">
         <j-list-option *ngFor="let title of titles" [value]="title" jigsaw-float jigsawFloatPosition="rightTop"
@@ -22,11 +23,9 @@
 </ng-template>
 
 <ng-template #subMenu2>
-    <j-list width="200" trackItemBy="title">
-        <j-list-option *ngFor="let title of titles" [value]="title">
-            <span j-title>{{title.title}}</span>
-            <div j-sub-title>{{title.subTitle}}
-            </div>
+    <j-list width="200">
+        <j-list-option *ngFor="let idx of [1,2,3,4]" [value]="idx">
+            子菜单 {{idx}}
         </j-list-option>
     </j-list>
 </ng-template>

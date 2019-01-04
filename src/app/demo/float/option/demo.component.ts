@@ -1,35 +1,48 @@
 import {Component, OnInit} from '@angular/core';
-import {PopupEffect, PopupOptions, PopupPositionOffset, PopupPositionType, PopupSize} from "../../../../jigsaw/service/popup.service";
+import {
+    PopupEffect,
+    PopupOptions,
+    PopupPositionOffset,
+    PopupPositionType,
+    PopupSize
+} from "../../../../jigsaw/service/popup.service";
 import {CommonUtils} from "../../../../jigsaw/core/utils/common-utils";
 
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
-               .fa-bars{
-                     margin: 100px;
-               }
-               .jigsawFloatArea{
-                   width:150px;
-                   height:60px;
-                   background:orange;
-                   color:#fff;
-                   text-align:center;
-                   line-height:60px;
-               }
-               .row {
-                    margin: 6px;
-                }
-                .wrapper {
-                    width: 380px;
-                    margin: auto;
-                    overflow: hidden;
-                }
-                label{
-                    min-width:50px
-                }
-                .code{
-                    word-wrap: break-word;
-                }
+        .fa-bars {
+            margin: 20px 100px;
+            color: blue;
+        }
+
+        .jigsawFloatArea {
+            width: 150px;
+            height: 60px;
+            background: orange;
+            color: #fff;
+            text-align: center;
+            line-height: 60px;
+        }
+
+        .row {
+            margin: 6px;
+        }
+
+        .group {
+            width: 380px;
+            overflow: hidden;
+            display: inline-block;
+        }
+        
+        .wrapper {
+            display: flex;
+            height: 220px;
+        }
+
+        label {
+            min-width: 50px
+        }
     `]
 })
 export class FloatOptionDemo implements OnInit {
@@ -39,7 +52,6 @@ export class FloatOptionDemo implements OnInit {
     showBorder = true;
     size: PopupSize = {};
     options: PopupOptions = {};
-    optionStr = '{}';
     _$height = 'auto';
 
     valueChange() {
@@ -50,31 +62,21 @@ export class FloatOptionDemo implements OnInit {
         this.options.posOffset = this.offset;
         this.options.showBorder = this.showBorder;
         this.options.size = this.size;
-        this.optionStr = "{";
-        let temp = [];
-        if (this.showHideEffect) {
-            temp.push(`showEffect:PopupEffect.${this.showHideEffect}In`);
-            temp.push(`hideEffect:PopupEffect.${this.showHideEffect}Out`);
-        }
-        if (this.selectedPositionType) {
-            temp.push(`posType:PopupPositionType.${this.selectedPositionType}`);
-        }
-        if (CommonUtils.isDefined(this.offset.left) || CommonUtils.isDefined(this.offset.top)) {
-            temp.push(`posOffset:{${CommonUtils.isDefined(this.offset.left) ? `left:${this.offset.left},` : ''}
-            ${CommonUtils.isDefined(this.offset.top) ? `top:${this.offset.top}` : ''}}`);
-        }
-        temp.push(`showBorder:${this.showBorder}`);
-        if (CommonUtils.isDefined(this.size.width) || CommonUtils.isDefined(this.size.minWidth)
-            || CommonUtils.isDefined(this.size.height)) {
-            temp.push(`size:{${CommonUtils.isDefined(this.size.width) ? `width:${this.size.width},` : ''}
-            ${CommonUtils.isDefined(this.size.minWidth) ? `minWidth:${this.size.minWidth},` : ''}
-            ${CommonUtils.isDefined(this.size.height) ? `height:${this.size.height}` : ''}}`);
-        }
-        this.optionStr = `{${temp.join(',')}}`;
+    }
+
+    get optionsString(): string {
+        const options: any = CommonUtils.deepCopy(this.options);
+        options.showEffect = PopupEffect[this.options.showEffect];
+        options.hideEffect = PopupEffect[this.options.hideEffect];
+        options.posType = PopupPositionType[this.options.posType];
+
+        return JSON.stringify(options, null, '    ')
+            .replace(/\n/g, '<br>')
+            .replace(/\s/g, '&nbsp;');
     }
 
     expandHeight() {
-        this._$height = '2000px';
+        this._$height = '3000px';
     }
 
     ngOnInit() {
@@ -86,7 +88,4 @@ export class FloatOptionDemo implements OnInit {
     // ====================================================================
     summary: string = '演示了如何改变float option参数';
     description: string = '';
-    tags: string[] = [
-        'JigsawFloat.jigsawFloatOptions',
-    ];
 }

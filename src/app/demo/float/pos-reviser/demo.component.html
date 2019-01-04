@@ -4,22 +4,43 @@
 
 
 <!-- start to learn the demo from here -->
-<span class="fa fa-bars" jigsaw-float jigsawFloatPosition="leftTop" [jigsawFloatTarget]="jigsawFloatArea">
-    原生算法
+<span class="fa fa-bars" jigsaw-float jigsawFloatPosition="leftTop"
+      [jigsawFloatTarget]="jigsawFloatArea1">
+    内置位置修正算法
+    <ng-template #jigsawFloatArea1>
+        <div class="jigsawFloatArea">
+            <p>本该在左侧弹出，但位置不够，自动调整到右侧了</p>
+        </div>
+    </ng-template>
 </span>
-<span class="fa fa-bars" jigsaw-float jigsawFloatPosition="leftTop" [jigsawFloatTarget]="jigsawFloatArea">
-    原生算法
+<span class="fa fa-bars" jigsaw-float jigsawFloatPosition="leftTop"
+      [jigsawFloatTarget]="jigsawFloatArea2">
+    无需修正位置
+    <ng-template #jigsawFloatArea2>
+        <div class="jigsawFloatArea">
+            <p>左侧位置足够，无需修正位置</p>
+        </div>
+    </ng-template>
 </span>
-<div>
-    <span class="fa fa-bars" jigsaw-float jigsawFloatPosition="leftTop" [jigsawFloatTarget]="jigsawFloatArea" [jigsawFloatOptions]="options">
-       自定义算法
-    </span>
-    <span class="fa fa-bars" jigsaw-float jigsawFloatPosition="leftTop" [jigsawFloatTarget]="jigsawFloatArea" [jigsawFloatOptions]="options">
-       自定义算法
-    </span>
-</div>
-<ng-template #jigsawFloatArea>
-    <div class="jigsawFloatArea">
-        dropdown placeholder
-    </div>
-</ng-template>
+
+<br><br>
+
+<span class="fa fa-bars" jigsaw-float jigsawFloatPosition="leftTop"
+      [jigsawFloatTarget]="jigsawFloatArea3" [jigsawFloatOptions]="options">
+   自定义位置修正算法
+    <ng-template #jigsawFloatArea3>
+        <div class="jigsawFloatArea">
+            <p>本该在左侧弹出，但位置不够，自动往右挤</p>
+        </div>
+    </ng-template>
+</span>
+<span class="fa fa-bars" jigsaw-float jigsawFloatPosition="leftTop"
+      [jigsawFloatTarget]="jigsawFloatArea4" [jigsawFloatOptions]="options">
+   无需修正位置
+    <ng-template #jigsawFloatArea4>
+        <div class="jigsawFloatArea">
+            <p>左侧位置足够，无需修正位置</p>
+        </div>
+    </ng-template>
+</span>
+

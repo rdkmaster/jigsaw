@@ -1,4 +1,14 @@
-import {Directive, ElementRef, EventEmitter, Input, OnDestroy, Output, Renderer2, TemplateRef, Type} from "@angular/core";
+import {
+    Directive,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    Output,
+    Renderer2,
+    TemplateRef,
+    Type
+} from "@angular/core";
 import {
     IPopupable,
     PopupDisposer,
@@ -316,7 +326,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
             posType: PopupPositionType.absolute,
             posReviser: (pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue => {
                 this.changePosByFloatPosition(pos, popupElement);
-                this.positionReviser(pos, popupElement);
+                this._positionReviser(pos, popupElement);
                 return pos;
             },
             size: {
@@ -348,7 +358,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     /**
      * 计算弹层区域的位置，当指定的方向位置不够，且反向弹位置足够时，那么反向弹层
      */
-    private positionReviser(pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue {
+    private _positionReviser(pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue {
         const offsetWidth = this._elementRef.nativeElement.offsetWidth;
         const offsetHeight = this._elementRef.nativeElement.offsetHeight;
         if (this.jigsawFloatPosition === 'topLeft' || this.jigsawFloatPosition === 'topRight' ||

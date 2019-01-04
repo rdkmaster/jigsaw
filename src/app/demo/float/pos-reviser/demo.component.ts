@@ -5,17 +5,21 @@ import {FloatBasicDemo} from "../basic/demo.component";
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
-               .fa-bars{
-                     margin:40px
-               }
-               .jigsawFloatArea{
-                   width:150px;
-                   height:60px;
-                   background:orange;
-                   color:#fff;
-                   text-align:center;
-                   line-height:60px;
-               }
+        .fa-bars {
+            margin: 40px
+        }
+
+        .jigsawFloatArea {
+            width: 190px;
+            height: 60px;
+            background: orange;
+            color: #fff;
+            text-align: center;
+        }
+        
+        p {
+            margin: 10px;
+        }
     `]
 })
 export class FloatPosReviserDemo {
@@ -27,7 +31,8 @@ export class FloatPosReviserDemo {
             }
             return pos;
         }
-    }
+    };
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

@@ -5,64 +5,72 @@
 
 <!-- start to learn the demo from here -->
 <!-- start to learn the demo from here -->
-<div class="wrapper" [ngStyle]="{'height':_$height}">
-    <h4>所有可用选项：</h4>
+<h4>所有可用选项：</h4>
 
+<div class="wrapper">
+    <div class="group" [ngStyle]="{'height':_$height}">
+        <div class="row">
+            <label>弹出及隐藏时动效：</label>
+            <jigsaw-radios [(value)]="showHideEffect" (valueChange)="valueChange()">
+                <jigsaw-radio-option value="fade">fade</jigsaw-radio-option>
+                <jigsaw-radio-option value="bubble">bubble</jigsaw-radio-option>
+            </jigsaw-radios>
+        </div>
+        <div class="row">
+            <label>定位方式：</label>
+            <jigsaw-radios [(value)]="selectedPositionType" (valueChange)="valueChange()">
+                <jigsaw-radio-option value="absolute">absolute</jigsaw-radio-option>
+                <jigsaw-radio-option value="fixed">fixed</jigsaw-radio-option>
+            </jigsaw-radios>
+            <a (click)="expandHeight()"> 加高页面，出现滚动条 </a>
+        </div>
+        <div class="row">
+            <label>垂直偏移: </label>
+            <j-numeric-input [(value)]="offset.top" (valueChange)="valueChange()"
+                             placeholder="请输入数字" [step]="10">
+            </j-numeric-input>
 
-    <div class="row">
-        <label>弹出及隐藏时动效：</label>
-        <jigsaw-radios [(value)]="showHideEffect" (valueChange)="valueChange()">
-            <jigsaw-radio-option value="fade">fade</jigsaw-radio-option>
-            <jigsaw-radio-option value="bubble">bubble</jigsaw-radio-option>
-        </jigsaw-radios>
-    </div>
-    <div class="row">
-        <label>定位方式：</label>
-        <jigsaw-radios [(value)]="selectedPositionType" (valueChange)="valueChange()">
-            <jigsaw-radio-option value="absolute">absolute</jigsaw-radio-option>
-            <jigsaw-radio-option value="fixed">fixed</jigsaw-radio-option>
-        </jigsaw-radios>
-        <a (click)="expandHeight()"> 加高页面，出现滚动条 </a>
-    </div>
-    <div class="row">
-        <label>垂直偏移: </label>
-        <j-numeric-input [(value)]="offset.top" (valueChange)="valueChange()" placeholder="请输入数字"></j-numeric-input>
-        <label>水平偏移: </label>
-        <j-numeric-input [(value)]="offset.left" (valueChange)="valueChange()" placeholder="请输入数字"></j-numeric-input>
+            <label>水平偏移: </label>
+            <j-numeric-input [(value)]="offset.left" (valueChange)="valueChange()"
+                             placeholder="请输入数字" [step]="10">
+            </j-numeric-input>
+        </div>
+
+        <div class="row"><label>弹出视图加边框:</label>
+            <jigsaw-switch [(checked)]="showBorder" (checkedChange)="valueChange()">
+            </jigsaw-switch>
+        </div>
+        <div class="row">
+            <label>宽度:</label>
+            <j-numeric-input [(value)]="size.width" (valueChange)="valueChange()" min="0"
+                             placeholder="请输入数字" [step]="50">
+            </j-numeric-input>
+            <label>最小宽度:</label>
+            <j-numeric-input [(value)]="size.minWidth" (valueChange)="valueChange()" min="0"
+                             placeholder="请输入数字" [step]="50">
+            </j-numeric-input>
+        </div>
+        <div class="row">
+            <label>高度:</label>
+            <j-numeric-input [(value)]="size.height" (valueChange)="valueChange()" min="0"
+                             placeholder="请输入数字" [step]="50">
+            </j-numeric-input>
+        </div>
     </div>
 
-    <div class="row"><label>弹出视图加边框:</label>
-        <jigsaw-switch [(checked)]="showBorder" (checkedChange)="valueChange()"></jigsaw-switch>
+    <div class="group">
+        <label>根据设置生成的代码，可以直接用于项目中</label>
+        <p [trustedHtml]="optionsString"></p>
     </div>
-    <div class="row">
-        <label>宽度:</label>
-        <j-numeric-input [(value)]="size.width" (valueChange)="valueChange()" min="0"
-                         placeholder="请输入数字"></j-numeric-input>
-        <label>最小宽度:</label>
-        <j-numeric-input [(value)]="size.minWidth" (valueChange)="valueChange()" (valueChange)="valueChange()" min="0"
-                         placeholder="请输入数字"></j-numeric-input>
-    </div>
-    <div class="row">
-        <label>高度:</label>
-        <j-numeric-input [(value)]="size.height" (valueChange)="valueChange()" min="0"
-                         placeholder="请输入数字"></j-numeric-input>
-    </div>
-    <hr>
-    <br>
-    <div class="row">
-        <label>配置的代码，可以直接用于项目中</label>
-        <p class="code">{{optionStr}}</p>
-    </div>
-
-    <span class="fa fa-bars" jigsaw-float
-          jigsawFloatOpenTrigger="click"
-          jigsawFloatCloseTrigger="click"
-          [jigsawFloatOptions]="options"
-          [jigsawFloatTarget]="jigsawFloatArea"
-          [ngStyle]="{'position':selectedPositionType=='fixed'?'fixed':'inherit'}"> click me!
-    </span>
 </div>
 
+<span class="fa fa-bars" jigsaw-float
+      jigsawFloatOpenTrigger="click"
+      jigsawFloatCloseTrigger="click"
+      [jigsawFloatOptions]="options"
+      [jigsawFloatTarget]="jigsawFloatArea"
+      [ngStyle]="{'position':selectedPositionType=='fixed'?'fixed':'inherit'}"> click me!
+</span>
 
 <ng-template #jigsawFloatArea>
     <div class="jigsawFloatArea">

@@ -10,7 +10,7 @@
     <jigsaw-radio-option id="openByHover" value="mouseenter">鼠标滑入</jigsaw-radio-option>
     <jigsaw-radio-option id="openByNone" value="none">不响应鼠标事件</jigsaw-radio-option>
 </jigsaw-radios>
-<jigsaw-button *ngIf="openTrigger=='none'" (click)="openFloat()">open</jigsaw-button>
+<a *ngIf="openTrigger=='none'" (click)="openFloat()">open</a>
 
 <br><br>
 触发关闭：
@@ -19,7 +19,7 @@
     <jigsaw-radio-option id="closeByLeave" value="mouseleave">鼠标滑出</jigsaw-radio-option>
     <jigsaw-radio-option id="closeByNone" value="none">不响应鼠标事件</jigsaw-radio-option>
 </jigsaw-radios>
-<jigsaw-button *ngIf="closeTrigger=='none'" (click)="closeFloat()">close</jigsaw-button>
+<a *ngIf="closeTrigger=='none'" (click)="closeFloat()">close</a>
 
 <br><br>
 <span class="fa fa-bars" jigsaw-float
