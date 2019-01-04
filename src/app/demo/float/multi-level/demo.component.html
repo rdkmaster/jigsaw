@@ -4,37 +4,30 @@
 
 
 <!-- start to learn the demo from here -->
-<span  jigsaw-float class="menu"
+<span jigsaw-float class="menu"
       jigsawFloatCloseTrigger="click"
-      [jigsawFloatTarget]="jigsawFloatArea1">
+      [jigsawFloatTarget]="subMenu">
     菜单 hover
 </span>
-<ng-template #jigsawFloatArea1>
-    <ul>
-        <li jigsaw-float jigsawFloatPosition="rightTop" jigsawFloatCloseTrigger="click" [jigsawFloatTarget]="jigsawFloatArea2">
-            选项1 hover
-        </li>
-        <li>
-            选项2
-        </li>
-        <li>
-            选项3
-        </li>
-    </ul>
+<ng-template #subMenu>
+    <j-list width="200" trackItemBy="title">
+
+        <j-list-option *ngFor="let title of titles" [value]="title" jigsaw-float jigsawFloatPosition="rightTop"
+                       jigsawFloatOpenTrigger="click" jigsawFloatCloseTrigger="mouseleave"
+                       [jigsawFloatTarget]="subMenu2">
+            <span j-title>{{title.title}}</span>
+            <div j-sub-title>{{title.subTitle}} <span class="fa fa-angle-right"></span>
+            </div>
+        </j-list-option>
+    </j-list>
 </ng-template>
-<ng-template #jigsawFloatArea2>
-    <ul>
-        <li jigsaw-float jigsawFloatPosition="rightTop" jigsawFloatCloseTrigger="click" [jigsawFloatTarget]="jigsawFloatArea1">
-            选项11 hover
-        </li>
-        <li>
-            选项12
-        </li>
-        <li>
-            选项13
-        </li>
-        <li>
-            选项14
-        </li>
-    </ul>
+
+<ng-template #subMenu2>
+    <j-list width="200" trackItemBy="title">
+        <j-list-option *ngFor="let title of titles" [value]="title">
+            <span j-title>{{title.title}}</span>
+            <div j-sub-title>{{title.subTitle}}
+            </div>
+        </j-list-option>
+    </j-list>
 </ng-template>

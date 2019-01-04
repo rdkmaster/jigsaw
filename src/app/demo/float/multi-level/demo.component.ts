@@ -22,6 +22,25 @@ import {Component} from "@angular/core";
     `]
 })
 export class FloatMultiLevelDemo {
+    titles = [
+        {
+            title: 'Settings',
+            subTitle: 'Ctrl+Alt+A'
+        },
+        {
+            title: 'Print',
+            subTitle: ''
+        },
+        {
+            title: 'Save All',
+            subTitle: 'Ctrl+S'
+        },
+        {
+            title: 'Exit',
+            subTitle: ''
+        }
+    ];
+    selectedItems: string;
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
