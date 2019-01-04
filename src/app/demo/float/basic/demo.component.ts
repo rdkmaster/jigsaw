@@ -1,4 +1,5 @@
 import {Component} from "@angular/core";
+import {FloatTargetDemo} from "../target/demo.component";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -16,7 +17,7 @@ import {Component} from "@angular/core";
                }
     `]
 })
-export class FloatBasicComponent {
+export class FloatBasicDemo {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

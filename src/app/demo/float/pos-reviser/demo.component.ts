@@ -1,5 +1,6 @@
 import {Component} from "@angular/core";
 import {PopupOptions, PopupPositionValue} from "../../../../jigsaw/service/popup.service";
+import {FloatBasicDemo} from "../basic/demo.component";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -17,7 +18,7 @@ import {PopupOptions, PopupPositionValue} from "../../../../jigsaw/service/popup
                }
     `]
 })
-export class FloatPosReviserComponent {
+export class FloatPosReviserDemo {
     options: PopupOptions = {
         posReviser: (pos: PopupPositionValue, popupElement: HTMLElement) => {
             // pos.left < 0表示：自动调整区域后左侧还是被盖住一部分
