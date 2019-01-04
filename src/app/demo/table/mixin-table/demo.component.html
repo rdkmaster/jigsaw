@@ -1,0 +1,15 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-table [data]="tableData" [columnDefines]="columns" ></jigsaw-table>
+
+<ng-template #jobCellRender let-context="context">
+    <div [ngSwitch]="context.cellData" style="font-size: 16px;">
+        <span *ngSwitchCase="'Test Engineer'" class="fa fa-money"></span>
+        <span *ngSwitchCase="'System Architect'" class="fa fa-universal-access"></span>
+        <span *ngSwitchCase="'Developer'" class="fa fa-file-code-o"></span>
+    </div>
+</ng-template>
