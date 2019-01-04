@@ -563,10 +563,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      */
     private _calculateContentWidth() {
         const host = this._elementRef.nativeElement;
-        const tHeadColGroup = host.querySelectorAll('.jigsaw-table-header colgroup col');
-        const tBodyColGroup = host.querySelectorAll('.jigsaw-table-body colgroup col');
-        const tHeadTds = host.querySelectorAll('.jigsaw-table-header thead td');
-        const tBodyTds = host.querySelectorAll('.jigsaw-table-body thead td');
+        const tHeadColGroup = host.querySelectorAll('.jigsaw-table-header > colgroup col');
+        const tBodyColGroup = host.querySelectorAll('.jigsaw-table-body > colgroup col');
+        const tHeadTds = host.querySelectorAll('.jigsaw-table-header > thead td');
+        const tBodyTds = host.querySelectorAll('.jigsaw-table-body > thead td');
         if (this.contentWidth != 'auto' || !tHeadColGroup || !tHeadColGroup.length) return;
 
         host.querySelectorAll('table').forEach(table => {
@@ -590,18 +590,18 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             tBodyTds.forEach(col => col.setAttribute('width', ''));
         }
 
-        host.querySelectorAll('.jigsaw-table-body tbody tr:first-child td')
+        host.querySelectorAll('.jigsaw-table-body > tbody tr:first-child td')
             .forEach(td => widthStorage.push(td.offsetWidth));
 
         if (widthStorage.length) {
-            host.querySelectorAll('.jigsaw-table-header thead tr:first-child td')
+            host.querySelectorAll('.jigsaw-table-header > thead tr:first-child td')
                 .forEach((td, index) => {
                     if (td.offsetWidth > widthStorage[index]) {
                         widthStorage[index] = td.offsetWidth;
                     }
                 });
         } else {
-            host.querySelectorAll('.jigsaw-table-header thead tr:first-child td')
+            host.querySelectorAll('.jigsaw-table-header > thead tr:first-child td')
                 .forEach(td => {
                     widthStorage.push(td.offsetWidth);
                 });
@@ -609,12 +609,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
         widthStorage.forEach((width, index) => {
             // columnDefine定义过的列宽不会被覆盖
-            const colWidth = this._$headerSettings && this._$headerSettings[index].width ? this._$headerSettings[index].width : width;
-            tHeadColGroup[index].setAttribute('width', colWidth);
-            tBodyColGroup[index].setAttribute('width', colWidth);
+            const colWidth = this._$headerSettings && this._$headerSettings[index] && this._$headerSettings[index].width ? this._$headerSettings[index].width : width;
+            tHeadColGroup[index] && tHeadColGroup[index].setAttribute('width', colWidth);
+            tBodyColGroup[index] && tBodyColGroup[index].setAttribute('width', colWidth);
             if (this._$isFFBrowser) {
-                tHeadTds[index].setAttribute('width', colWidth);
-                tBodyTds[index].setAttribute('width', colWidth);
+                tHeadTds[index] && tHeadTds[index].setAttribute('width', colWidth);
+                tBodyTds[index] && tBodyTds[index].setAttribute('width', colWidth);
             }
         });
 

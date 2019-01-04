@@ -101,7 +101,7 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
 }
 
 .#{$table-prefix-cls}-body {
-    thead td{
+    > thead td{
         height: 0 !important;
         border: none;
     }
