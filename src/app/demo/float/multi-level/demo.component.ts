@@ -9,16 +9,6 @@ import {Component} from "@angular/core";
                      padding: 2px 10px;
                      border-radius: 3px;
                }
-                ul {
-                    width: 100px;
-                    line-height: 20px;
-                    border-radius: 6px;
-                    text-indent: 10px;
-                }
-                ul li:hover{
-                    background:#999;
-                    color:#fff;
-                }
     `]
 })
 export class FloatMultiLevelDemo {
