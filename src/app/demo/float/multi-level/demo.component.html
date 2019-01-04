@@ -1,0 +1,40 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<span  jigsaw-float class="menu"
+      jigsawFloatCloseTrigger="click"
+      [jigsawFloatTarget]="jigsawFloatArea1">
+    菜单 hover
+</span>
+<ng-template #jigsawFloatArea1>
+    <ul>
+        <li jigsaw-float jigsawFloatPosition="rightTop" jigsawFloatCloseTrigger="click" [jigsawFloatTarget]="jigsawFloatArea2">
+            选项1 hover
+        </li>
+        <li>
+            选项2
+        </li>
+        <li>
+            选项3
+        </li>
+    </ul>
+</ng-template>
+<ng-template #jigsawFloatArea2>
+    <ul>
+        <li jigsaw-float jigsawFloatPosition="rightTop" jigsawFloatCloseTrigger="click" [jigsawFloatTarget]="jigsawFloatArea1">
+            选项11 hover
+        </li>
+        <li>
+            选项12
+        </li>
+        <li>
+            选项13
+        </li>
+        <li>
+            选项14
+        </li>
+    </ul>
+</ng-template>
