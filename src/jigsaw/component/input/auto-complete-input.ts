@@ -11,7 +11,6 @@ import {
     TemplateRef,
     ViewChild,
     Output,
-    HostListener,
     EventEmitter
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
@@ -19,7 +18,7 @@ import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {JigsawInput, JigsawInputModule} from "./input";
 import {PopupInfo, PopupOptions, PopupPositionValue, PopupService} from "../../service/popup.service";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
-import {CommonUtils} from "../../core/utils/common-utils";
+import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 
 export class DropDownValue {
     constructor(data = null) {
@@ -102,7 +101,6 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     @Output('select')
     public selectEvent = new EventEmitter<string>();
 
-    @HostListener('document:mousedown', ['$event'])
     onMouseDown(event: Event) {
         const element = this._elementRef.nativeElement;
         if (!element.contains(document.activeElement)) {
@@ -162,6 +160,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
 
     private _isPropertyListPopped: boolean;
     private _propertyListPopup: PopupInfo;
+    private _removeWindowMouseDownListener: CallbackRemoval;
 
     private _showDropdownList(event) {
         const hostElement = this._elementRef.nativeElement;
@@ -182,14 +181,24 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
             };
             this._propertyListPopup = this._popupService.popup(this._dropdownTemp, popupOptions);
             this._isPropertyListPopped = true;
+            this._removeWindowListener();
+            this._removeWindowMouseDownListener = this._render2.listen(document, 'mousedown', this.onMouseDown);
         }
     }
+
+    private _removeWindowListener() {
+        if (this._removeWindowMouseDownListener) {
+            this._removeWindowMouseDownListener();
+        }
+    }
+
 
     private _$closeListPopup() {
         if (this._isPropertyListPopped) {
             this._propertyListPopup.dispose();
             this._propertyListPopup = null;
             this._isPropertyListPopped = false;
+            this._removeWindowListener();
         }
     }
 

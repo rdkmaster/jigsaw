@@ -75,7 +75,7 @@ export class JigsawInput extends AbstractJigsawComponent
     @Output('blur')
     private _blurEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 
-    constructor(private _render2: Renderer2,
+    constructor(protected _render2: Renderer2,
                 protected _elementRef: ElementRef,
                 private _changeDetectorRef: ChangeDetectorRef) {
         super();
