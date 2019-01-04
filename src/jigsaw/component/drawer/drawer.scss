@@ -80,15 +80,43 @@ $drawer-prefix-cls: #{$jigsaw-prefix}-drawer;
             transform: translate(0, 100%);
         }
     }
+
+    &-left-center {
+        top: 50%;
+        transform: translate(0, -50%);
+        &.#{$drawer-prefix-cls}-close {
+            transform: translate(-100%, -50%);
+        }
+    }
+    &-top-center {
+        left: 50%;
+        transform: translate(-50%, 0);
+        &.#{$drawer-prefix-cls}-close {
+            transform: translate(-50%, -100%);
+        }
+    }
+    &-right-center {
+        top: 50%;
+        transform: translate(0, -50%);
+        &.#{$drawer-prefix-cls}-close {
+            transform: translate(100%, -50%);
+        }
+    }
+    &-bottom-center {
+        left: 50%;
+        transform: translate(-50%, 0);
+        &.#{$drawer-prefix-cls}-close {
+            transform: translate(-50%, 100%);
+        }
+    }
 }
 
 @mixin setPosition() {
     @each $direction in 'left', 'top', 'right', 'bottom' {
         .#{$drawer-prefix-cls}-#{$direction} {
-            #{$direction}: 0;
+            #{$direction}: 0
         }
     }
 }
 
 @include setPosition();
-

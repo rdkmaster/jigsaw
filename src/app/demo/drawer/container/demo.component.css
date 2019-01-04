@@ -18,7 +18,6 @@
     background: #ddd;
     margin-left: 100px;
     border: 1px solid #000;
-    overflow: auto;
 }
 
 .size-box, .position-box, .offset-box {

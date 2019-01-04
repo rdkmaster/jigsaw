@@ -1,20 +1,8 @@
-import {
-    Component,
-    Input,
-    NgModule,
-    Output,
-    EventEmitter,
-    OnInit,
-    ElementRef,
-    ViewChild,
-    HostBinding,
-    Renderer2,
-    OnDestroy
-} from "@angular/core";
+import {Component, Input, NgModule, Output, EventEmitter, OnInit, ElementRef, ViewChild, HostBinding} from "@angular/core";
 import {AbstractJigsawComponent} from "../common";
 import {CommonModule} from "@angular/common";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
-import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 /**
  * 本组件模拟了一个类似抽屉的效果，用于收纳UI上重要性不高的视图。
@@ -28,8 +16,8 @@ import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
         '[class.jigsaw-drawer-in-dom]': '!floating'
     }
 })
-export class JigsawDrawer extends AbstractJigsawComponent implements OnInit, OnDestroy {
-    constructor(private _elementRef: ElementRef, private _renderer: Renderer2) {
+export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
+    constructor(private _elementRef: ElementRef) {
         super();
     }
 
@@ -49,6 +37,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit, OnD
         if (!value) return;
         this._position = value;
         this._update();
+        this._setContainer();
     }
 
     private _open: boolean = false;
@@ -200,45 +189,18 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit, OnD
     public _$handleStyle = {};
 
     private _setStyle() {
-        let styleTemp = this.floating ? {
+        const styleTemp = this.floating ? {
             position: this.container ? 'absolute' : 'fixed',
-            left: (this.position == "top" || this.position == "bottom") && this.offsetLeft ? this.offsetLeft :
-                CommonUtils.isUndefined(this.offsetRight) && this.position != "right" ? 0 : null,
-            top: (this.position == "left" || this.position == "right") && this.offsetTop ? this.offsetTop :
-                CommonUtils.isUndefined(this.offsetBottom) && this.position != "bottom" ? 0 : null,
+            left: (this.position == "top" || this.position == "bottom") && this.offsetLeft ? this.offsetLeft : null,
             right: (this.position == "top" || this.position == "bottom") && this.offsetRight ? this.offsetRight : null,
-            bottom: (this.position == "left" || this.position == "right") && this.offsetBottom ? this.offsetBottom : null
+            top: (this.position == "left" || this.position == "right") && this.offsetTop ? this.offsetTop : null,
+            bottom: (this.position == "left" || this.position == "right") && this.offsetBottom ? this.offsetBottom : null,
         } : {};
         this._$handleStyle = {
             width: this._calcDrawerWidth(),
             height: this._calcDrawerHeight(),
             ...styleTemp
-        };
-        if (this._containerEl) {
-            this.callLater(() => {
-                // 等待抽屉尺寸渲染
-                // 自动居中
-                const [rawOffsetTop, rawOffsetLeft] = [this.drawerEl.nativeElement.offsetTop, this.drawerEl.nativeElement.offsetLeft];
-                this.callLater(() => {
-                    this._$handleStyle = Object.assign(this._$handleStyle, {
-                        left: this._isHorizontalCenter() ? this._containerEl.scrollLeft + (this._containerEl.clientWidth -
-                                this.drawerEl.nativeElement.offsetWidth) / 2 + 'px' : this._containerEl.scrollLeft + rawOffsetLeft + 'px',
-                        top: this._isVerticalCenter() ? this._containerEl.scrollTop + (this._containerEl.clientHeight -
-                                this.drawerEl.nativeElement.offsetHeight) / 2 + 'px' : this._containerEl.scrollTop + rawOffsetTop + 'px'
-                    });
-                })
-            })
         }
-    }
-
-    private _isHorizontalCenter() {
-        return this.floating && (this.position == "top" || this.position == "bottom") && !this.offsetLeft
-            && !this.offsetRight;
-    }
-
-    private _isVerticalCenter() {
-        return this.floating && (this.position == "left" || this.position == "right") && !this.offsetTop
-            && !this.offsetBottom;
     }
 
     /**
@@ -284,7 +246,11 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit, OnD
             'jigsaw-drawer-left': this.position == 'left',
             'jigsaw-drawer-top': this.position == 'top',
             'jigsaw-drawer-right': this.position == 'right',
-            'jigsaw-drawer-bottom': this.position == 'bottom'
+            'jigsaw-drawer-bottom': this.position == 'bottom',
+            'jigsaw-drawer-left-center': this.floating && this.position == 'left' && !this.offsetTop && !this.offsetBottom,
+            'jigsaw-drawer-right-center': this.floating && this.position == 'right' && !this.offsetTop && !this.offsetBottom,
+            'jigsaw-drawer-top-center': this.floating && this.position == 'top' && !this.offsetLeft && !this.offsetRight,
+            'jigsaw-drawer-bottom-center': this.floating && this.position == 'bottom' && !this.offsetLeft && !this.offsetRight,
         }
     }
 
@@ -295,34 +261,20 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit, OnD
         this.openChange.emit(this.open);
     }
 
-    private _containerEl: HTMLElement;
-    private _removeScrollListener: CallbackRemoval;
-    private _containerScroll = new EventEmitter();
-
     private _setContainer() {
         if (this.container && this.floating) {
             const containerEl = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, this.container);
             if (containerEl) {
-                this._containerEl = containerEl;
                 const containerStyle = getComputedStyle(containerEl);
                 if (!containerStyle.position || containerStyle.position == 'static') {
                     containerEl.style.position = 'relative';
                 }
-                if ((this.position == 'left' || this.position == 'right') && containerStyle.overflowX != 'hidden' &&
-                    containerStyle.overflowX != 'scroll' && containerStyle.overflowX != 'auto') {
+                if ((this.position == 'left' || this.position == 'right') && containerStyle.overflowX != 'hidden') {
                     containerEl.style.overflowX = 'hidden';
                 }
-                if ((this.position == 'top' || this.position == 'bottom') && containerStyle.overflowY != 'hidden' &&
-                    containerStyle.overflowY != 'scroll' && containerStyle.overflowY != 'auto') {
+                if ((this.position == 'top' || this.position == 'bottom') && containerStyle.overflowY != 'hidden') {
                     containerEl.style.overflowY = 'hidden';
                 }
-                if (this._removeScrollListener) {
-                    this._removeScrollListener();
-                    this._removeScrollListener = null;
-                }
-                this._removeScrollListener = this._renderer.listen(containerEl, 'scroll', () => {
-                    this._containerScroll.emit();
-                })
             } else {
                 console.error('Can not find drawer container.');
             }
@@ -343,23 +295,11 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit, OnD
         super.ngOnInit();
         this._update();
         this.callLater(() => {
-            // 等待视图初始化完成
+            // 等待视图初始化完成，获取computedStyle
             this._setContainer();
             // 异步添加动画，为了初始化时没有拉伸的动作
             this._$onAnimation = true;
         });
-        this._containerScroll.subscribe(() => {
-            this._setStyle();
-        })
-    }
-
-    ngOnDestroy() {
-        super.ngOnDestroy();
-        if (this._removeScrollListener) {
-            this._removeScrollListener();
-            this._removeScrollListener = null;
-        }
-        this._containerScroll.unsubscribe();
     }
 }
 
