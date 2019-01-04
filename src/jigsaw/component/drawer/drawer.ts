@@ -142,7 +142,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     @Input()
     public floating: boolean = true;
 
-    @ViewChild('drawer') drawerEl: ElementRef;
+    @ViewChild('drawer') private _drawerEl: ElementRef;
 
     @HostBinding('style.width') private _$hostWidth: string;
     @HostBinding('style.height') private _$hostHeight: string;
@@ -163,9 +163,9 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
         if (this.floating) return null;
         if (this.position == "top" || this.position == "bottom") {
             // 上下抽屉宽度为固定值
-            return this.width ? this.width : this.drawerEl.nativeElement.offsetWidth + "px";
+            return this.width ? this.width : this._drawerEl.nativeElement.offsetWidth + "px";
         } else if (this.open) {
-            return this.width ? this.width : this.drawerEl.nativeElement.offsetWidth + 14 + "px";
+            return this.width ? this.width : this._drawerEl.nativeElement.offsetWidth + 14 + "px";
         } else {
             return "14px";
         }
@@ -175,9 +175,9 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
         if (this.floating) return null;
         if (this.position == "left" || this.position == "right") {
             // 左右抽屉height为固定值
-            return this.height ? this.height : this.drawerEl.nativeElement.offsetHeight + "px";
+            return this.height ? this.height : this._drawerEl.nativeElement.offsetHeight + "px";
         } else if (this.open) {
-            return this.height ? this.height : this.drawerEl.nativeElement.offsetHeight + 14 + "px";
+            return this.height ? this.height : this._drawerEl.nativeElement.offsetHeight + 14 + "px";
         } else {
             return "14px";
         }
