@@ -26,8 +26,6 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
     }
 
     private _dragStart = (event) => {
-        event.preventDefault();
-        event.stopPropagation();
         this._position = [event.clientX - AffixUtils.offset(this._movableTarget).left,
             event.clientY - AffixUtils.offset(this._movableTarget).top];
         this._moving = true;
