@@ -284,8 +284,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit, OnD
             'jigsaw-drawer-left': this.position == 'left',
             'jigsaw-drawer-top': this.position == 'top',
             'jigsaw-drawer-right': this.position == 'right',
-            'jigsaw-drawer-bottom': this.position == 'bottom',
-            'jigsaw-drawer-sticky-in-ie': this.floating && this.container
+            'jigsaw-drawer-bottom': this.position == 'bottom'
         }
     }
 
@@ -301,7 +300,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit, OnD
     private _containerScroll = new EventEmitter();
 
     private _setContainer() {
-        if (this.container) {
+        if (this.container && this.floating) {
             const containerEl = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, this.container);
             if (containerEl) {
                 this._containerEl = containerEl;
