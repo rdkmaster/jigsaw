@@ -51,8 +51,17 @@ export class DropDownValue {
     ]
 })
 export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, OnInit {
+    /**
+     * @internal
+     */
     public _$data: string[] | DropDownValue[];
+    /**
+     * @internal
+     */
     public _bakData: any[];
+    /**
+     * @internal
+     */
     public _$maxDropDownHeight: string = '300px';
     private _removeWindowMouseDownListener: Function;
 
@@ -105,7 +114,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     private _onMouseDown = () => {
         const element = this._elementRef.nativeElement;
         if (!element.contains(document.activeElement)) {
-            this._$closeListPopup();
+            this._closeListPopup();
         }
     };
 
@@ -149,14 +158,28 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
         });
     }
 
+    /**
+     * @internal
+     */
     public _$handleFocus(event: FocusEvent) {
         super._$handleFocus(event);
         this._showDropdownList(event);
     }
 
+    /**
+     * @internal
+     */
     public _$handleBlur(event: FocusEvent) {
         super._$handleBlur(event);
-        this._$closeListPopup();
+        this._closeListPopup();
+    }
+
+    /**
+     * @internal
+     */
+    public _$add(item) {
+        this.value = item;
+        this.selectEvent.emit(item);
     }
 
     private _isPropertyListPopped: boolean;
@@ -165,7 +188,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     private _showDropdownList(event) {
         const hostElement = this._elementRef.nativeElement;
         if (this._isPropertyListPopped) {
-            this._$closeListPopup();
+            this._closeListPopup();
         } else {
             const popupOptions: PopupOptions = {
                 modal: false,
@@ -193,7 +216,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     }
 
 
-    private _$closeListPopup() {
+    private _closeListPopup() {
         if (this._isPropertyListPopped) {
             this._propertyListPopup.dispose();
             this._propertyListPopup = null;
@@ -202,14 +225,9 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
         this._removeWindowListener();
     }
 
-    public _$add(item) {
-        this.value = item;
-        this.selectEvent.emit(item);
-    }
-
     public ngOnDestroy() {
         super.ngOnDestroy();
-        this._$closeListPopup();
+        this._closeListPopup();
     }
 }
 
