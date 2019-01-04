@@ -18,7 +18,7 @@ import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {JigsawInput, JigsawInputModule} from "./input";
 import {PopupInfo, PopupOptions, PopupPositionValue, PopupService} from "../../service/popup.service";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
-import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 export class DropDownValue {
     constructor(data = null) {
@@ -54,6 +54,10 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     public _$data: string[] | DropDownValue[];
     public _bakData: any[];
     public _$maxDropDownHeight: string = '300px';
+    /**
+     * @internal
+     */
+    private _removeWindowMouseDownListener: Function;
 
     @Input()
     public set maxDropDownHeight(value: string) {
@@ -101,16 +105,16 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     @Output('select')
     public selectEvent = new EventEmitter<string>();
 
-    onMouseDown(event: Event) {
+    private _$onMouseDown() {
         const element = this._elementRef.nativeElement;
         if (!element.contains(document.activeElement)) {
             this._$closeListPopup();
         }
     }
 
-    constructor(_render2: Renderer2,
-                _elementRef: ElementRef,
-                _changeDetectorRef: ChangeDetectorRef,
+    constructor(protected _render2: Renderer2,
+                protected _elementRef: ElementRef,
+                protected _changeDetectorRef: ChangeDetectorRef,
                 private _popupService: PopupService) {
         super(_render2, _elementRef, _changeDetectorRef);
     }
@@ -160,7 +164,6 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
 
     private _isPropertyListPopped: boolean;
     private _propertyListPopup: PopupInfo;
-    private _removeWindowMouseDownListener: CallbackRemoval;
 
     private _showDropdownList(event) {
         const hostElement = this._elementRef.nativeElement;
@@ -182,7 +185,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
             this._propertyListPopup = this._popupService.popup(this._dropdownTemp, popupOptions);
             this._isPropertyListPopped = true;
             this._removeWindowListener();
-            this._removeWindowMouseDownListener = this._render2.listen(document, 'mousedown', this.onMouseDown);
+            this._removeWindowMouseDownListener = this._render2.listen(document, 'mousedown', this._$onMouseDown);
         }
     }
 
@@ -198,8 +201,8 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
             this._propertyListPopup.dispose();
             this._propertyListPopup = null;
             this._isPropertyListPopped = false;
-            this._removeWindowListener();
         }
+        this._removeWindowListener();
     }
 
     public _$add(item) {

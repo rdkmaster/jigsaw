@@ -77,7 +77,7 @@ export class JigsawInput extends AbstractJigsawComponent
 
     constructor(protected _render2: Renderer2,
                 protected _elementRef: ElementRef,
-                private _changeDetectorRef: ChangeDetectorRef) {
+                protected _changeDetectorRef: ChangeDetectorRef) {
         super();
     }
 
