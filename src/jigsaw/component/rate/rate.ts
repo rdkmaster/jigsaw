@@ -22,7 +22,7 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
     /**
      * @internal
      */
-    public _$starArray: Array<any> = [];
+    public _$stars: number[];
     /**
      * @internal
      */
@@ -61,6 +61,7 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
 
     public set max(value: number) {
         this._max = value;
+        this._initStars();
     }
 
     private _allowHalf: boolean = false;
@@ -109,10 +110,10 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
         };
     }
 
-    private _setChildrenClassMap(): void {
-        let index = 0;
-        while (index < this._max) {
-            this._$starArray.push(index++);
+    private _initStars(): void {
+        this._$stars = [];
+        for (let i = 0; i < this.max; i++) {
+            this._$stars.push(i);
         }
     }
 
@@ -151,7 +152,10 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
         this._hasHalf = isHalf;
     }
 
-    private _leaveRate(event): void {
+    /**
+     * @internal
+     */
+    public _$leaveRate(event): void {
         event.stopPropagation();
         let oldVal = this._value;
         if (this._floatReg.test(oldVal + '')) {
@@ -167,10 +171,10 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
     public _$setClasses(idx: number): any {
         return {
             [this._innerPrefixCls]: true,
-            [`${this._innerPrefixCls}-full`]: (idx + 1 < this._hoverValue) || (!this._hasHalf) && (idx + 1 === this._hoverValue),
-            [`${this._innerPrefixCls}-half`]: (this._hasHalf) && (idx + 1 === this._hoverValue),
-            [`${this._innerPrefixCls}-active`]: (this._hasHalf) && (idx + 1 === this._hoverValue),
-            [`${this._innerPrefixCls}-zero`]: (idx + 1 > this._hoverValue)
+            [`${this._innerPrefixCls}-full`]: idx + 1 < this._hoverValue || !this._hasHalf && idx + 1 === this._hoverValue,
+            [`${this._innerPrefixCls}-half`]: this._hasHalf && idx + 1 === this._hoverValue,
+            [`${this._innerPrefixCls}-active`]: this._hasHalf && idx + 1 === this._hoverValue,
+            [`${this._innerPrefixCls}-zero`]: idx + 1 > this._hoverValue
         };
     }
 
@@ -192,6 +196,6 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
 
     ngOnInit() {
         this._setClassMap();
-        this._setChildrenClassMap();
+        this._initStars();
     }
 }

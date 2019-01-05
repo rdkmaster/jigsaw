@@ -1,12 +1,12 @@
-<ul [ngClass]="_classMap" (mouseleave)="_leaveRate($event)">
-    <li *ngFor="let star of _$starArray; let i = index"
-        [ngClass]="_$setClasses(i)"
+<ul [ngClass]="_$classMap" (mouseleave)="_$leaveRate($event)">
+    <li *ngFor="let i of _$stars" [ngClass]="_$setClasses(i)"
         (mouseover)="_$hoverRate($event, i, true)"
         (click)="_$clickRate($event, i, true)">
         <div class="jigsaw-rate-star-first" (mouseover)="_$hoverRate($event, i)" (click)="_$clickRate($event, i)">
             <i [ngClass]="icon"></i>
         </div>
-        <div class="jigsaw-rate-star-second" (mouseover)="_$hoverRate($event, i, true)" (click)="_$clickRate($event, i, true)">
+        <div class="jigsaw-rate-star-second" (mouseover)="_$hoverRate($event, i, true)"
+             (click)="_$clickRate($event, i, true)">
             <i [ngClass]="icon"></i>
         </div>
     </li>
