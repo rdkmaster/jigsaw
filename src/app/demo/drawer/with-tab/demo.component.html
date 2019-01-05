@@ -1,0 +1,36 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>Drawer with Tabs</h2>
+    <div class="demo-2 live-demo">
+        <j-tabs height="300" width="400">
+            <j-tab-pane title="container1">
+                <ng-template>
+                    <j-drawer container="jigsaw-tab-content">
+                        <div class="drawer-content">
+                            这是一个展示内容的box1
+                        </div>
+                    </j-drawer>
+                </ng-template>
+            </j-tab-pane>
+            <j-tab-pane title="container2">
+                <ng-template>
+                    <j-drawer container="jigsaw-tab-content" position="top">
+                        <div class="drawer-content">
+                            这是一个展示内容的box2
+                        </div>
+                    </j-drawer>
+                </ng-template>
+            </j-tab-pane>
+        </j-tabs>
+    </div>
+</div>
+
+
+
+
+

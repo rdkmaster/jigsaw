@@ -125,6 +125,7 @@ export class CommonUtils {
      * @returns string
      */
     public static getCssValue(value: string | number): string {
+        if(CommonUtils.isUndefined(value)) return null;
         value = typeof value === 'string' ? value : value + '';
         const match = value ? value.match(/^\s*\d+\.*\d*\s*$/) : null;
         return match ? (value + 'px') : value;

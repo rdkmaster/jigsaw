@@ -3,11 +3,24 @@
 $drawer-prefix-cls: #{$jigsaw-prefix}-drawer;
 
 .#{$drawer-prefix-cls} {
-    position: fixed;
     border: 1px solid $border-color-base;
     background: $component-background;
     box-shadow: $box-shadow-base;
     z-index: $zindex-popover-level-0;
+    &-in-dom {
+        position: relative;
+        display: inline-block;
+        transition: height $animation-duration-slow $ease-in-circ, width $animation-duration-slow $ease-in-circ;
+        overflow: hidden;
+        > .#{$drawer-prefix-cls} {
+            position: absolute;
+            .#{$drawer-prefix-cls}-content {
+                width: auto;
+                height: auto;
+            }
+        }
+    }
+
     &-animation {
         transition: transform $animation-duration-slow $ease-in-circ;
     }
@@ -33,22 +46,22 @@ $drawer-prefix-cls: #{$jigsaw-prefix}-drawer;
             background: $primary-8;
         }
     }
-    &-left &-bar {
+    &-left > &-bar {
         right: -14px;
         top: 50%;
         transform: translate(0, -50%);
     }
-    &-top &-bar {
+    &-top > &-bar {
         left: 50%;
         bottom: -32px;
         transform: translate(-50%, 0) rotate(90deg);
     }
-    &-right &-bar {
+    &-right > &-bar {
         left: -14px;
         top: 50%;
         transform: translate(0%, -50%) rotate(180deg);
     }
-    &-bottom &-bar {
+    &-bottom > &-bar {
         left: 50%;
         top: -32px;
         transform: translate(-50%, 0) rotate(270deg);
@@ -67,4 +80,43 @@ $drawer-prefix-cls: #{$jigsaw-prefix}-drawer;
             transform: translate(0, 100%);
         }
     }
+
+    &-left-center {
+        top: 50%;
+        transform: translate(0, -50%);
+        &.#{$drawer-prefix-cls}-close {
+            transform: translate(-100%, -50%);
+        }
+    }
+    &-top-center {
+        left: 50%;
+        transform: translate(-50%, 0);
+        &.#{$drawer-prefix-cls}-close {
+            transform: translate(-50%, -100%);
+        }
+    }
+    &-right-center {
+        top: 50%;
+        transform: translate(0, -50%);
+        &.#{$drawer-prefix-cls}-close {
+            transform: translate(100%, -50%);
+        }
+    }
+    &-bottom-center {
+        left: 50%;
+        transform: translate(-50%, 0);
+        &.#{$drawer-prefix-cls}-close {
+            transform: translate(-50%, 100%);
+        }
+    }
 }
+
+@mixin setPosition() {
+    @each $direction in 'left', 'top', 'right', 'bottom' {
+        .#{$drawer-prefix-cls}-#{$direction} {
+            #{$direction}: 0
+        }
+    }
+}
+
+@include setPosition();

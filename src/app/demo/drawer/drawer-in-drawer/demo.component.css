@@ -1,0 +1,21 @@
+
+.drawer-content {
+    height: 100%;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.custom-container {
+    width: 60%;
+    height: 300px;
+    background: #ddd;
+    margin-left: 100px;
+    border: 1px solid #000;
+}
+
+.drawer-content-wrapper {
+    margin: 20px;
+}
+
+
+
