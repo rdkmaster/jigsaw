@@ -1,0 +1,20 @@
+.drawer-content {
+    height: 100px;
+    margin: 36px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.custom-container {
+    width: 60%;
+    height: 300px;
+    background: #ddd;
+    margin-left: 100px;
+    border: 1px solid #000;
+}
+
+.size-box, .position-box, .offset-box {
+    margin-bottom: 10px;
+}
+
+
