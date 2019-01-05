@@ -12,12 +12,12 @@ $drawer-prefix-cls: #{$jigsaw-prefix}-drawer;
         display: inline-block;
         transition: height $animation-duration-slow $ease-in-circ, width $animation-duration-slow $ease-in-circ;
         overflow: hidden;
-        .#{$drawer-prefix-cls} {
+        > .#{$drawer-prefix-cls} {
             position: absolute;
-        }
-        .#{$drawer-prefix-cls}-content {
-            width: auto;
-            height: auto;
+            .#{$drawer-prefix-cls}-content {
+                width: auto;
+                height: auto;
+            }
         }
     }
 
@@ -46,22 +46,22 @@ $drawer-prefix-cls: #{$jigsaw-prefix}-drawer;
             background: $primary-8;
         }
     }
-    &-left &-bar {
+    &-left > &-bar {
         right: -14px;
         top: 50%;
         transform: translate(0, -50%);
     }
-    &-top &-bar {
+    &-top > &-bar {
         left: 50%;
         bottom: -32px;
         transform: translate(-50%, 0) rotate(90deg);
     }
-    &-right &-bar {
+    &-right > &-bar {
         left: -14px;
         top: 50%;
         transform: translate(0%, -50%) rotate(180deg);
     }
-    &-bottom &-bar {
+    &-bottom > &-bar {
         left: 50%;
         top: -32px;
         transform: translate(-50%, 0) rotate(270deg);
