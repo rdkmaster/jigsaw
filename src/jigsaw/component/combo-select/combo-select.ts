@@ -447,7 +447,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public ngOnInit() {
         super.ngOnInit();
         let maxWidth: string | number = CommonUtils.getCssValue(this.maxWidth);
-        if (!maxWidth.match(/%/)) {
+        if (maxWidth && !maxWidth.match(/%/)) {
             maxWidth = parseInt(maxWidth.replace('px', ''));
             this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.jigsaw-combo-select-selection-rendered'),
                 'max-width', (maxWidth - 39) + 'px')
