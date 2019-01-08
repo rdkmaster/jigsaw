@@ -32,7 +32,7 @@ export class BreadcrumbRouterDemoComponent {
     ];
 
     listBreadcrumbGenerator(routeNode: string): BreadcrumbNode | BreadcrumbNode[] {
-        return this.getListNode(routeNode);
+        return this.getListNode(parseInt(routeNode));
     }
 
     detailBreadcrumbGenerator(routeNode: string): BreadcrumbNode | BreadcrumbNode[] {
