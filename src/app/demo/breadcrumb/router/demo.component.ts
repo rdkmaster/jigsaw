@@ -27,16 +27,45 @@ export class BreadcrumbRouterDemoComponent {
     routes: BreadcrumbRouteConfig[] = [
         {'breadcrumb/router': {label: 'Product List', icon: 'fa fa-list'}},
         {'breadcrumb/router/fruits': {label: 'Fruits', icon: 'fa fa-lemon-o'}},
-        {'breadcrumb/router/fruits/detail/*': this.detailBreadcrumbGenerator},
-        {'breadcrumb/router/fruits/detail/*/buy': {label: 'Buy', icon: 'fa fa-shopping-cart'}},
         {'breadcrumb/router/digital': {label: 'Digital', icon: 'fa fa-camera'}},
-        {'breadcrumb/router/digital/*': this.detailBreadcrumbGenerator},
-        {'breadcrumb/router/digital/*/buy': {label: 'Buy', icon: 'fa fa-shopping-cart'}}
+        {'breadcrumb/router/detail/*': this.detailBreadcrumbGenerator},
+        {'breadcrumb/router/buy/*': this.buyBreadcrumbGenerator},
     ];
 
-    detailBreadcrumbGenerator(routeNode: string): BreadcrumbNode {
-        return {label: this.productService.getProductById(parseInt(routeNode)).name};
+    detailBreadcrumbGenerator(routeNode: string): BreadcrumbNode | BreadcrumbNode[] {
+        const detail = this.productService.getProductById(parseInt(routeNode));
+        return [
+            this.getListNode(detail.type), // 自定义的节点写在前面，随便写会导致面包屑生成的位置不对
+            {label: detail.name}
+        ];
     };
+
+    buyBreadcrumbGenerator(routeNode: string): BreadcrumbNode | BreadcrumbNode[] {
+        const detail = this.productService.getProductById(parseInt(routeNode));
+        return [
+            this.getListNode(detail.type),
+            this.getDetailNode(detail),
+            {label: 'Buy', icon: 'fa fa-shopping-cart'}
+        ];
+    }
+
+    getDetailNode(detail) {
+        return {label: detail.name, routeLink: '/breadcrumb/router/detail/' + detail.id}
+    }
+
+    getListNode(type) {
+        let listNode;
+        switch(type) {
+            case 'fruit':
+                listNode = {label: 'Fruits', icon: 'fa fa-lemon-o', routeLink: '/breadcrumb/router/fruits'}; // 请尽量使用绝对路径
+                break;
+            case 'digital':
+                listNode = {label: 'Digital', icon: 'fa fa-camera', routeLink: '/breadcrumb/router/digital'};
+                break;
+            default: listNode = {label: 'Fruits', icon: 'fa fa-lemon-o', routeLink: '/breadcrumb/router/fruits'};
+        }
+        return listNode;
+    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

@@ -17,30 +17,16 @@ export const routerConfig = [
         path: 'router', component: BreadcrumbRouterDemoComponent,
         children: [
             {
-                path: 'fruits', component: BreadcrumbRouterFruits,
-                children: [
-                    {
-                        path: 'detail/:id', component: BreadcrumbRouterDetail,
-                        children: [
-                            {
-                                path: 'buy', component: BreadcrumbRouterBuy
-                            }
-                        ]
-                    }
-                ]
+                path: 'fruits', component: BreadcrumbRouterFruits
             },
             {
-                path: 'digital', component: BreadcrumbRouterDigital,
-                children: [
-                    {
-                        path: ':id', component: BreadcrumbRouterDetail,
-                        children: [
-                            {
-                                path: 'buy', component: BreadcrumbRouterBuy
-                            }
-                        ]
-                    }
-                ]
+                path: 'digital', component: BreadcrumbRouterDigital
+            },
+            {
+                path: 'detail/:id', component: BreadcrumbRouterDetail
+            },
+            {
+                path: 'buy/:id', component: BreadcrumbRouterBuy
             }
         ]
     }

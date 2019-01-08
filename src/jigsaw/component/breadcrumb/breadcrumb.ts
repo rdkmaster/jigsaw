@@ -24,7 +24,7 @@ export type BreadcrumbNode = {
     routeLink?: string;
 }
 
-export type BreadcrumbGenerator = (routeNode: string) => BreadcrumbNode;
+export type BreadcrumbGenerator = (routeNode: string) => BreadcrumbNode | BreadcrumbNode[];
 
 @Component({
     selector: 'jigsaw-breadcrumb, j-breadcrumb',
@@ -97,9 +97,12 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
             let breadcrumbNodeTemp: any = routeConfig[Object.keys(routeConfig)[0]];
             breadcrumbNodeTemp = typeof breadcrumbNodeTemp == 'function' ?
                 CommonUtils.safeInvokeCallback(this.generatorContext, breadcrumbNodeTemp, [decodeURIComponent(urlNode)])  : breadcrumbNodeTemp;
-            const breadcrumbNode: BreadcrumbNode = Object.assign({}, breadcrumbNodeTemp);
-            breadcrumbNode.routeLink = breadcrumbNode.routeLink ? breadcrumbNode.routeLink : decodeURI(url);
-            breadcrumbNodes.unshift(breadcrumbNode);
+            breadcrumbNodeTemp = breadcrumbNodeTemp instanceof Array ? breadcrumbNodeTemp : [breadcrumbNodeTemp];
+            breadcrumbNodeTemp.reverse().forEach((breadcrumbNode: BreadcrumbNode) => {
+                breadcrumbNode = Object.assign({}, breadcrumbNode);
+                breadcrumbNode.routeLink = breadcrumbNode.routeLink ? breadcrumbNode.routeLink : decodeURI(url);
+                breadcrumbNodes.unshift(breadcrumbNode);
+            })
         }
         return this._generateBreadcrumb(url.slice(0, url.lastIndexOf('/') == -1 ? 0 : url.lastIndexOf('/')), breadcrumbNodes);
     }

@@ -8,7 +8,6 @@ import {Component} from "@angular/core";
             <li><a routerLink="5">computer</a></li>
         </ul>
         <hr>
-        <router-outlet></router-outlet>
     `,
     styles: [`
         li:focus {

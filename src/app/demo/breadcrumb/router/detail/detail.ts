@@ -6,9 +6,7 @@ import {ActivatedRoute, ParamMap} from "@angular/router";
     template: `
         name: {{product?.name}}<br>
         price: {{product?.price}}<br>
-        <a routerLink="buy">buy now</a>
-        <hr>
-        <router-outlet></router-outlet>
+        <a routerLink="/breadcrumb/router/buy/{{product?.id}}">buy now</a>
     `
 })
 export class BreadcrumbRouterDetail implements OnInit {
