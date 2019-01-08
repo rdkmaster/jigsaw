@@ -64,14 +64,14 @@ export class JigsawDemoDescription implements OnInit {
 
     gotoPlunker() {
         const pathName = location.pathname;
-        let match = pathName.match(/\/(jigsaw\/)?([^\/]*?\/[^\/]*?)$/);
+        let match = pathName.match(/(\/jigsaw)?(\/.*?\/.*?)(\/.*)*$/);
         if (!match) {
             alert('unexpected demo url[' + pathName + '], please send us an issue here:\n' +
                 'https://github.com/rdkmaster/jigsaw/issues/new');
             return;
         }
         const host = location.hostname == 'localhost' ? 'http://rdk.zte.com.cn' : '';
-        const url = `${host}/jigsaw/live-demo/${match[2]}/index.html`;
+        const url = `${host}/jigsaw/live-demo/${match[2].substring(1)}/index.html`;
         console.log(url);
         window.open(url, '_blank');
     }
