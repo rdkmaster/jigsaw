@@ -42,11 +42,11 @@ export class AjaxInterceptor implements HttpInterceptor {
         return this.createResult(body, req.url);
     }
 
-    dealServerSideUploadRequest(req: HttpRequest<any>) {
+    dealServerSideUploadRequest(req: HttpRequest<any>): any {
         return `upload_files/${new Date().getTime()}/${req.body.get('filename')}`;
     }
 
-    dealServerSidePagingRequest(req: HttpRequest<any>): Observable<HttpEvent<any>> {
+    dealServerSidePagingRequest(req: HttpRequest<any>): any {
         const params = req.method.toLowerCase() == 'post' ? 'body' : 'params';
         const service = this.getParamValue(req, params, 'service');
         let paging = this.getParamValue(req, params, 'paging') ? this.getParamValue(req, params, 'paging') : null;
