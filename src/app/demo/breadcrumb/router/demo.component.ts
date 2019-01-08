@@ -26,17 +26,62 @@ export class BreadcrumbRouterDemoComponent {
 
     routes: BreadcrumbRouteConfig[] = [
         {'breadcrumb/router': {label: 'Product List', icon: 'fa fa-list'}},
-        {'breadcrumb/router/fruits': {label: 'Fruits', icon: 'fa fa-lemon-o'}},
-        {'breadcrumb/router/fruits/detail/*': this.detailBreadcrumbGenerator},
-        {'breadcrumb/router/fruits/detail/*/buy': {label: 'Buy', icon: 'fa fa-shopping-cart'}},
-        {'breadcrumb/router/digital': {label: 'Digital', icon: 'fa fa-camera'}},
-        {'breadcrumb/router/digital/*': this.detailBreadcrumbGenerator},
-        {'breadcrumb/router/digital/*/buy': {label: 'Buy', icon: 'fa fa-shopping-cart'}}
+        {'breadcrumb/router/list/*': this.listBreadcrumbGenerator},
+        {'breadcrumb/router/detail/*': this.detailBreadcrumbGenerator},
+        {'breadcrumb/router/buy/*': this.buyBreadcrumbGenerator},
     ];
 
-    detailBreadcrumbGenerator(routeNode: string): BreadcrumbNode {
-        return {label: this.productService.getProductById(parseInt(routeNode)).name};
+    listBreadcrumbGenerator(routeNode: string): BreadcrumbNode | BreadcrumbNode[] {
+        return this.getListNode(parseInt(routeNode));
+    }
+
+    detailBreadcrumbGenerator(routeNode: string): BreadcrumbNode | BreadcrumbNode[] {
+        // routeNode指当前url的最后一个节点，比如url为breadcrumb/router/detail/1这边的routeNode是1
+        const detail = this.productService.getProductById(parseInt(routeNode));
+        // 自定义面包屑节点
+        return [
+            // 节点的顺序是面包屑从左往右的显示顺序
+            this.getListNode(detail.typeId),
+            {label: detail.name}
+        ];
     };
+
+    buyBreadcrumbGenerator(routeNode: string): BreadcrumbNode | BreadcrumbNode[] {
+        // routeNode指当前url的最后一个节点，比如url为breadcrumb/router/buy/1这边的routeNode是1
+        const detail = this.productService.getProductById(parseInt(routeNode));
+        // 自定义面包屑节点
+        return [
+            // 节点的顺序是面包屑从左往右的显示顺序
+            this.getListNode(detail.typeId),
+            this.getDetailNode(detail),
+            {label: 'Buy', icon: 'fa fa-shopping-cart'}
+        ];
+    }
+
+    getDetailNode(detail) {
+        return {label: detail.name, routeLink: '/breadcrumb/router/detail/' + detail.id} // 请尽量使用绝对路径
+    }
+
+    getListNode(typeId) {
+        let listNode;
+        switch (typeId) {
+            case 0:
+                listNode = {label: 'Fruits', icon: 'fa fa-lemon-o'};
+                break;
+            case 1:
+                listNode = {label: 'Digital', icon: 'fa fa-camera'};
+                break;
+            default:
+                listNode = {label: 'Fruits', icon: 'fa fa-lemon-o'};
+        }
+        listNode.routeLink = '/breadcrumb/router/list/' + typeId; // 请尽量使用绝对路径
+        return listNode;
+    }
+
+    productTypeList = [
+        {id: 0, name: 'Fruits'},
+        {id: 1, name: 'Digital'}
+    ];
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
