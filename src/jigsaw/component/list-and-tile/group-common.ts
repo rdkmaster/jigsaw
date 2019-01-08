@@ -142,11 +142,15 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         this._setItemState(this._items);
         this._subscribeItemSelectedChange(this._items);
         this._items.changes.subscribe(items => {
+            // 异步变更data数据
             this._setItemState(items);
             this._subscribeItemSelectedChange(items);
+            this._removeInvalidSelectedItems();
         });
-
-        this._removeInvalidSelectedItems();
+        if(this._items.length) {
+            // 在本地数据为空时，不检查无用选项
+            this._removeInvalidSelectedItems();
+        }
     }
 
     ngOnDestroy() {
