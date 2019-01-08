@@ -93,12 +93,12 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
         });
         if (routeConfig) {
             const urlNode = url.slice(url.lastIndexOf('/') + 1);
-            // 找到option部分，拷贝一份，保证原数据不变
             let breadcrumbNodeTemp: any = routeConfig[Object.keys(routeConfig)[0]];
             breadcrumbNodeTemp = typeof breadcrumbNodeTemp == 'function' ?
                 CommonUtils.safeInvokeCallback(this.generatorContext, breadcrumbNodeTemp, [decodeURIComponent(urlNode)])  : breadcrumbNodeTemp;
             breadcrumbNodeTemp = breadcrumbNodeTemp instanceof Array ? breadcrumbNodeTemp : [breadcrumbNodeTemp];
             breadcrumbNodeTemp.reverse().forEach((breadcrumbNode: BreadcrumbNode) => {
+                // 拷贝一份，保证原数据不变
                 breadcrumbNode = Object.assign({}, breadcrumbNode);
                 breadcrumbNode.routeLink = breadcrumbNode.routeLink ? breadcrumbNode.routeLink : decodeURI(url);
                 breadcrumbNodes.unshift(breadcrumbNode);
