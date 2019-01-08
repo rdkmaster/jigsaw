@@ -36,18 +36,22 @@ export class BreadcrumbRouterDemoComponent {
     }
 
     detailBreadcrumbGenerator(routeNode: string): BreadcrumbNode | BreadcrumbNode[] {
+        // routeNode指当前url的最后一个节点，比如url为breadcrumb/router/detail/1这边的routeNode是1
         const detail = this.productService.getProductById(parseInt(routeNode));
+        // 自定义面包屑节点
         return [
-            // 自定义的节点写在前面，随便写会导致面包屑生成的位置不对
+            // 节点的顺序是面包屑从左往右的显示顺序
             this.getListNode(detail.typeId),
             {label: detail.name}
         ];
     };
 
     buyBreadcrumbGenerator(routeNode: string): BreadcrumbNode | BreadcrumbNode[] {
+        // routeNode指当前url的最后一个节点，比如url为breadcrumb/router/buy/1这边的routeNode是1
         const detail = this.productService.getProductById(parseInt(routeNode));
+        // 自定义面包屑节点
         return [
-            // 自定义的节点写在前面，随便写会导致面包屑生成的位置不对
+            // 节点的顺序是面包屑从左往右的显示顺序
             this.getListNode(detail.typeId),
             this.getDetailNode(detail),
             {label: 'Buy', icon: 'fa fa-shopping-cart'}
