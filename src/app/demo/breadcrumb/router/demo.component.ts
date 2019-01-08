@@ -26,16 +26,20 @@ export class BreadcrumbRouterDemoComponent {
 
     routes: BreadcrumbRouteConfig[] = [
         {'breadcrumb/router': {label: 'Product List', icon: 'fa fa-list'}},
-        {'breadcrumb/router/fruits': {label: 'Fruits', icon: 'fa fa-lemon-o'}},
-        {'breadcrumb/router/digital': {label: 'Digital', icon: 'fa fa-camera'}},
+        {'breadcrumb/router/list/*': this.listBreadcrumbGenerator},
         {'breadcrumb/router/detail/*': this.detailBreadcrumbGenerator},
         {'breadcrumb/router/buy/*': this.buyBreadcrumbGenerator},
     ];
 
+    listBreadcrumbGenerator(routeNode: string): BreadcrumbNode | BreadcrumbNode[] {
+        return this.getListNode(routeNode);
+    }
+
     detailBreadcrumbGenerator(routeNode: string): BreadcrumbNode | BreadcrumbNode[] {
         const detail = this.productService.getProductById(parseInt(routeNode));
         return [
-            this.getListNode(detail.type), // 自定义的节点写在前面，随便写会导致面包屑生成的位置不对
+            // 自定义的节点写在前面，随便写会导致面包屑生成的位置不对
+            this.getListNode(detail.typeId),
             {label: detail.name}
         ];
     };
@@ -43,29 +47,37 @@ export class BreadcrumbRouterDemoComponent {
     buyBreadcrumbGenerator(routeNode: string): BreadcrumbNode | BreadcrumbNode[] {
         const detail = this.productService.getProductById(parseInt(routeNode));
         return [
-            this.getListNode(detail.type),
+            // 自定义的节点写在前面，随便写会导致面包屑生成的位置不对
+            this.getListNode(detail.typeId),
             this.getDetailNode(detail),
             {label: 'Buy', icon: 'fa fa-shopping-cart'}
         ];
     }
 
     getDetailNode(detail) {
-        return {label: detail.name, routeLink: '/breadcrumb/router/detail/' + detail.id}
+        return {label: detail.name, routeLink: '/breadcrumb/router/detail/' + detail.id} // 请尽量使用绝对路径
     }
 
-    getListNode(type) {
+    getListNode(typeId) {
         let listNode;
-        switch(type) {
-            case 'fruit':
-                listNode = {label: 'Fruits', icon: 'fa fa-lemon-o', routeLink: '/breadcrumb/router/fruits'}; // 请尽量使用绝对路径
+        switch (typeId) {
+            case 0:
+                listNode = {label: 'Fruits', icon: 'fa fa-lemon-o'};
                 break;
-            case 'digital':
-                listNode = {label: 'Digital', icon: 'fa fa-camera', routeLink: '/breadcrumb/router/digital'};
+            case 1:
+                listNode = {label: 'Digital', icon: 'fa fa-camera'};
                 break;
-            default: listNode = {label: 'Fruits', icon: 'fa fa-lemon-o', routeLink: '/breadcrumb/router/fruits'};
+            default:
+                listNode = {label: 'Fruits', icon: 'fa fa-lemon-o'};
         }
+        listNode.routeLink = '/breadcrumb/router/list/' + typeId; // 请尽量使用绝对路径
         return listNode;
     }
+
+    productTypeList = [
+        {id: 0, name: 'Fruits'},
+        {id: 1, name: 'Digital'}
+    ];
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

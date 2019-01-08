@@ -11,11 +11,11 @@ import {ActivatedRoute, ParamMap} from "@angular/router";
 })
 export class BreadcrumbRouterDetail implements OnInit {
     constructor(public productService: ProductService, public route: ActivatedRoute) {
-
         this.product = this.route.paramMap.map((params: ParamMap) => {
             return this.productService.getProductById(parseInt(params.get('id')))
         })
     }
+
     product: any;
 
     ngOnInit() {
