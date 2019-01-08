@@ -6,18 +6,16 @@ import {ActivatedRoute, ParamMap} from "@angular/router";
     template: `
         name: {{product?.name}}<br>
         price: {{product?.price}}<br>
-        <a routerLink="buy">buy now</a>
-        <hr>
-        <router-outlet></router-outlet>
+        <a routerLink="/breadcrumb/router/buy/{{product?.id}}">buy now</a>
     `
 })
 export class BreadcrumbRouterDetail implements OnInit {
     constructor(public productService: ProductService, public route: ActivatedRoute) {
-
         this.product = this.route.paramMap.map((params: ParamMap) => {
             return this.productService.getProductById(parseInt(params.get('id')))
         })
     }
+
     product: any;
 
     ngOnInit() {
