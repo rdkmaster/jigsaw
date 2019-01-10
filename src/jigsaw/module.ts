@@ -50,7 +50,7 @@ import {JigsawUploadModule} from "./component/upload/index";
 import {JigsawTransferModule} from "./component/transfer/transfer";
 import {JigsawTextareaModule} from "./component/textarea/index";
 import {JigsawBreadcrumbModule} from "./component/breadcrumb/breadcrumb";
-import {JigsawRateModule} from "./component/rate";
+import {JigsawRateModule} from "./component/rate/index";
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
