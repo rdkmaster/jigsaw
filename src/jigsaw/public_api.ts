@@ -57,6 +57,7 @@ export * from "./component/icon/icon";
 export * from "./component/upload/index";
 export * from "./component/transfer/transfer";
 export * from "./component/breadcrumb/breadcrumb";
+export * from "./component/rate/rate";
 export * from "./core/data/array-collection";
 export * from "./core/data/component-data";
 export * from "./core/data/echart-types";

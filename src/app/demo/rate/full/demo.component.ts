@@ -6,6 +6,13 @@ import {Component} from "@angular/core";
 })
 export class RateFullComponent {
 
+    selectedValue = 3;
+    selectedHalfValue = 2.5;
+
+    selectChange(value: any) {
+        console.log(value);
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

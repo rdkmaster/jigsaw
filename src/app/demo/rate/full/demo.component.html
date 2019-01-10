@@ -8,14 +8,21 @@
     <h2>Rate</h2>
     <div class="clearfix">
         <div class="demo-1 live-demo live-demo-block">
-            <h3>基本用法</h3>
-            <jigsaw-rate [value]="3">普通用法</jigsaw-rate>
+            <h3>基本</h3>
+            <p class="comment">基本用法</p>
+            <jigsaw-rate class="rate-font-size" max="5" icon="fa fa-paper-plane" [(value)]="selectedValue" (valueChange)="selectChange($event)"></jigsaw-rate>
         </div>
 
         <div class="demo-2 live-demo live-demo-block">
-            <h3>类型</h3>
-            <p class="comment">四种类型：<code>default</code> <code>primary</code> <code>warning</code>
-                <code>error|danger</code></p>
+            <h3>半星</h3>
+            <p class="comment">支持选中半星</p>
+            <jigsaw-rate class="rate-font-size" max="5" [allowHalf]="true" [(value)]="selectedHalfValue" (valueChange)="selectChange($event)"></jigsaw-rate>
+        </div>
+
+        <div class="demo-2 live-demo live-demo-block">
+            <h3>只读</h3>
+            <p class="comment">支持标签和属性两种写法</p>
+            <jigsaw-rate class="rate-font-size" max="5" [disabled]="true" [(value)]="selectedValue"></jigsaw-rate>
         </div>
     </div>
 </div>
