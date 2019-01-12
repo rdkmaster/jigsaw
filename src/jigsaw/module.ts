@@ -29,6 +29,7 @@ import {JigsawTimeModule} from './component/time/index';
 import {JigsawTooltipModule} from './component/tooltip/tooltip';
 import {JigsawTreeExtModule} from './component/tree/tree-ext';
 import {JigsawMovableModule} from "./directive/movable/index";
+import {JigsawFloatModule} from "./directive/float/index";
 import {JigsawDraggableModule, JigsawDroppableModule} from './directive/dragdrop/index';
 import {JigsawRootModule} from "./component/root/root";
 import {JigsawFishBoneModule} from "./component/fish-bone/fish-bone";
@@ -75,6 +76,7 @@ const JIGSAW_MODULE = [
     JigsawListLiteModule,
     JigsawLoadingModule,
     JigsawMovableModule,
+    JigsawFloatModule,
     JigsawNotificationModule,
     JigsawPaginationModule,
     JigsawRadioModule,
