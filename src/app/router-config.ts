@@ -130,6 +130,10 @@ export const routerConfig = [
         loadChildren: "./demo/range-time/demo-set.module#RangeTimeDemoModule",
     },
     {
+        path: "rate",
+        loadChildren: "./demo/rate/demo-set.module#RateDemoModule",
+    },
+    {
         path: "scrollbar",
         loadChildren: "./demo/scrollbar/demo-set.module#ScrollbarDemoModule",
     },
