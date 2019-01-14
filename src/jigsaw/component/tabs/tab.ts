@@ -596,11 +596,13 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         this._tabLabels.forEach((label: JigsawTabLabel, index) => {
             let title = "";
             let rootNodes = (<EmbeddedViewRef<any>>label._tabItemRef).rootNodes;
-            for (let i = 0; i < rootNodes.length; i++) {
-                if (rootNodes[i] instanceof HTMLElement) {
-                    title += " " + rootNodes[i].outerHTML;
-                } else {
-                    title += " " + rootNodes[i].textContent.trim();
+            if(rootNodes) {
+                for (let i = 0; i < rootNodes.length; i++) {
+                    if (rootNodes[i] instanceof HTMLElement) {
+                        title += " " + rootNodes[i].outerHTML;
+                    } else {
+                        title += " " + rootNodes[i].textContent.trim();
+                    }
                 }
             }
             this._$tabList.push(title.trim());
@@ -624,6 +626,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     private _tabsNav: ElementRef;
 
     private _updateOverflowButton() {
+        if(!this._tabsNav || !this._tabsNavWrap) return;
         this._$showOverflowButton = this._tabsNavWrap.nativeElement.offsetWidth < this._tabsNav.nativeElement.offsetWidth
     }
 
