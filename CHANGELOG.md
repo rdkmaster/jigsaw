@@ -1,3 +1,32 @@
+## v1.1.20 (2019-1-15)
+
+### 新特性 / New Features
+- [新增] 给auto-complete-input组件增加select事件
+- [新增] tab组件支持headless属性，以支持隐藏页签部分
+- [新增] 增加float指令，用于控制任意视图的下拉，并提供预设多种下拉位置
+- [新增] 抽屉功能扩展，支持设置容器和偏移，以及直接在文档流中显示
+- [新增] 增加Rate组件，可用于评分, fixes #258
+
+### 破坏性修改 / Breaking Changes
+- 无
+
+###  优化 / Modified
+- [优化] 去掉slider的边框，这样slider可以与深色背景更好的融合在一起
+- [优化] jigsaw-auto-complete-input组件在鼠标按下时，自动关闭下拉提示列表，避免在对话框拖动时，下拉列表位置出错
+- [优化] 优化对table内部嵌套含table的渲染器的支持，fixes #859
+- [优化] auto-complete-input代码格式化，给私有属性增加显式的internal标志
+- [优化] 解决combo不设置maxWidth会报错的问题
+- [优化] 修正demo系统中ajax拦截器的处理器定义，把float加入到导出列表
+- [优化] 面包屑现在支持无层级关系的路由显示，fixes #855
+- [优化] 面包屑的demo中增加live-demo必要的路由信息，优化live-demo调整逻辑
+
+### 修复 / Fixes
+- [修复] 将JigsawTextarea加入到public列表中
+- [修复] popup无法在ie里矫正位置，fixes #850
+- [修复] 修复radio在data异步获取，无法显示已有选中选的问题，fixes #823
+- [修复] 修复最新tab在editable-box里面会报错，fixes #870
+
+
 ## v1.1.19 (2018-12-24)
 
 ### 新特性 / New Features
