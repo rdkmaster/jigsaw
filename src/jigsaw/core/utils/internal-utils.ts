@@ -11,24 +11,6 @@ export class InternalUtils {
     public static _uniqueIdIndex = 0;
     public static _defaultPrefix = '__unique_id__';
 
-    public static trackByFn(trackBy: string | string[]) {
-        return function (index: number, item: any) {
-            if (typeof item === 'string') return item;
-            if (!trackBy || !item) return index;
-            let tracker;
-            if (trackBy instanceof Array) {
-                try {
-                    tracker = JSON.stringify(trackBy.map(t => item[t] + ''));
-                } catch (e) {
-                    console.error('trackBy value must be javascript native object')
-                }
-            } else {
-                tracker = item[trackBy];
-            }
-            return tracker;
-        }
-    }
-
     /*
      * 初始化对象标识，转化为数组
      * */

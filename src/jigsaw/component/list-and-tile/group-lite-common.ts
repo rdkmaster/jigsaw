@@ -3,7 +3,6 @@ import {EventEmitter, Input, Output} from "@angular/core";
 import {ArrayCollection} from "../../core/data/array-collection";
 import {GroupOptionValue} from "./group-common";
 import {ControlValueAccessor} from "@angular/forms";
-import {InternalUtils} from "../../core/utils/internal-utils";
 import {CommonUtils} from "../../core/utils/common-utils";
 
 export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent implements ControlValueAccessor {
@@ -59,7 +58,7 @@ export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent im
     @Output() public selectedItemsChange = new EventEmitter<any[]>();
 
     public get _$trackByFn() {
-        return InternalUtils.trackByFn(this._trackItemBy);
+        return CommonUtils.toTrackByFunction(this._trackItemBy);
     };
 
     /**

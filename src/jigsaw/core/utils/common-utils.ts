@@ -311,6 +311,24 @@ export class CommonUtils {
         return null;
     }
 
+    public static toTrackByFunction(trackBy: string | string[]) {
+        return function (index: number, item: any) {
+            if (typeof item === 'string') return item;
+            if (!trackBy || !item) return index;
+            let tracker;
+            if (trackBy instanceof Array) {
+                try {
+                    tracker = JSON.stringify(trackBy.map(t => item[t] + ''));
+                } catch (e) {
+                    console.error('trackBy value must be javascript native object')
+                }
+            } else {
+                tracker = item[trackBy];
+            }
+            return tracker;
+        }
+    }
+
 }
 
 export type CallbackRemoval = () => void;
