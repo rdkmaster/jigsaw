@@ -491,7 +491,7 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
      * @internal
      */
     public get _$trackByFn() {
-        return InternalUtils.trackByFn(this._$cascade.trackItemBy);
+        return CommonUtils.toTrackByFunction(this._$cascade.trackItemBy);
     };
 
     /**

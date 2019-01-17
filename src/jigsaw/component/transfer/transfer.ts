@@ -381,7 +381,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
      * @internal
      */
     public get _$trackByFn() {
-        return InternalUtils.trackByFn(this.trackItemBy);
+        return CommonUtils.toTrackByFunction(this.trackItemBy);
     };
 
     /**

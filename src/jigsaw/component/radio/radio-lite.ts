@@ -5,7 +5,7 @@ import {JigsawRadioModule} from "./radio";
 import {GroupOptionValue} from "../list-and-tile/group-common";
 import {ArrayCollection} from "../../core/data/array-collection";
 import {AbstractJigsawComponent} from "../common";
-import {InternalUtils} from "../../core/utils/internal-utils";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 @Component({
     selector: 'jigsaw-radios-lite, j-radios-lite',
@@ -57,7 +57,7 @@ export class JigsawRadiosLite extends AbstractJigsawComponent implements Control
     @Output() public valueChange: EventEmitter<any> = new EventEmitter<any>();
 
     public get _$trackByFn() {
-        return InternalUtils.trackByFn(this._trackItemBy);
+        return CommonUtils.toTrackByFunction(this._trackItemBy);
     };
 
     radioChange(item) {
