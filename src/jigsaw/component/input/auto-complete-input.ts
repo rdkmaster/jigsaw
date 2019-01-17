@@ -198,7 +198,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
         };
         this._propertyListPopupInfo = this._popupService.popup(this._dropdownTemp, popupOptions);
         this._removeWindowListener();
-        this._removeWindowMouseDownListener = this._render2.listen(document, 'mousedown', this._onMouseDown);
+        this._removeWindowMouseDownListener = this._render2.listen(document, 'mousedown', this._onMouseDown.bind(this));
     }
 
     private _onMouseDown() {
