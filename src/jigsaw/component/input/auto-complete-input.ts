@@ -121,21 +121,22 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     ngOnInit() {
         super.ngOnInit();
         this._input.valueChange.debounceTime(300).subscribe(() => {
-            let filterKey = this._input.value;
-            filterKey = filterKey ? filterKey.trim() : '';
-            // 解决对象数组改变时，抛出 ExpressionChangedAfterItHasBeenCheckedError 的问题
-            this.callLater(() => {
-                let data: any = [];
-                data = this._bakData.reduce((arr, category) => {
-                    let result = this._filter(category, filterKey);
-                    if (result) {
-                        arr.push(result);
-                    }
-                    return arr;
-                }, data);
-                this._$data = data;
-            });
+            this.getfilteredDropDownData();
         });
+    }
+
+    getfilteredDropDownData() {
+        let filterKey = this._input.value;
+        filterKey = filterKey ? filterKey.trim() : '';
+        let data: any = [];
+        data = this._bakData.reduce((arr, category) => {
+            let result = this._filter(category, filterKey);
+            if (result) {
+                arr.push(result);
+            }
+            return arr;
+        }, data);
+        this._$data = data;
     }
 
     private _filter(category: DropDownValue, key) {
@@ -155,7 +156,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
      * @internal
      */
     public _$handleFocus(event: FocusEvent) {
-        super._$handleFocus(event);
+        this.getfilteredDropDownData();
         this._showDropdownList(event);
     }
 
