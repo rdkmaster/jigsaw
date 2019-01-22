@@ -8,9 +8,13 @@
     <h2>Drawer with DIV</h2>
     <div class="demo-1 live-demo">
         <p class="comment">
-            <code>container</code>属性可以支持'.className'、'#id'、'[attr]'、'tagName'，向上寻找离抽屉最近的。<br>
-            <code>position</code>为left或者right时，只有<code>offsetTop</code>和<code>offsetBottom</code>能生效；
-            为top或者bottom时，只有<code>offsetLeft</code>和<code>offsetRight</code>能生效
+            1、<code>container</code>属性可以支持'.className'、'#id'、'[attr]'、'tagName'，向上寻找离抽屉最近的。<br>
+            2、<code>position</code>为left或者right时，只有<code>offsetTop</code>和<code>offsetBottom</code>能生效；
+            为top或者bottom时，只有<code>offsetLeft</code>和<code>offsetRight</code>能生效。<br>
+            3、<code>width</code>属性设置为'auto'，并且<code>offsetLeft</code>属性或者<code>offsetRight</code>属性设置有值，<br>
+            例如设置为30px，则在抽屉内部，自动会将<code>width</code>属性的值转为calc(100% - 30px)，如果<code>offsetLeft</code><br>
+            和<code>offsetRight</code>属性的值均没有设置，则<code>width</code>属性当做没有设置处理。对于<code>height</code>属性<br>
+            设置为'auto'的时候，配合<code>offsetTop</code>与<code>offsetBottom</code>属性值的设置也做类似处理
         </p>
         <div class="size-box">
             宽度：<j-input width="200" [(value)]="width"></j-input>
