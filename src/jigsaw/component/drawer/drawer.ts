@@ -190,11 +190,12 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
      */
     private _calcHostWidth(): string {
         if (this.floating) return null;
+        let width = this._calcWidth();
         if (this.position == "top" || this.position == "bottom") {
             // 上下抽屉宽度为固定值
-            return this.width ? this.width : this._drawerEl.nativeElement.offsetWidth + "px";
+            return width ? width : this._drawerEl.nativeElement.offsetWidth + "px";
         } else if (this.open) {
-            return this.width ? this.width : this._drawerEl.nativeElement.offsetWidth + 14 + "px";
+            return width ? width : this._drawerEl.nativeElement.offsetWidth + 14 + "px";
         } else {
             return "14px";
         }
@@ -202,11 +203,12 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
 
     private _calcHostHeight(): string {
         if (this.floating) return null;
+        let height = this._calcHeight();
         if (this.position == "left" || this.position == "right") {
             // 左右抽屉height为固定值
-            return this.height ? this.height : this._drawerEl.nativeElement.offsetHeight + "px";
+            return height ? height : this._drawerEl.nativeElement.offsetHeight + "px";
         } else if (this.open) {
-            return this.height ? this.height : this._drawerEl.nativeElement.offsetHeight + 14 + "px";
+            return height ? height : this._drawerEl.nativeElement.offsetHeight + 14 + "px";
         } else {
             return "14px";
         }
@@ -244,19 +246,50 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
      * 当有width和height属性值时，因为width和height是设置在host上的，所以采用计算值calc(100% - 14px)
      * 当没有width和height属性值时，则宽高设置为auto，按照内容撑开
      */
+
+    private _calcWidth(): string | undefined {
+        if(this.width && this.width != "auto") {
+            return this.width;
+        }
+        if(this.width == "auto") {
+            if(this.offsetLeft) {
+                return `calc(100% - ${this.offsetLeft})`;
+            }else if(this.offsetRight) {
+                return `calc(100% - ${this.offsetRight})`;
+            }
+        }
+        return undefined;
+    }
+
     private _calcDrawerWidth() {
+        let width = this._calcWidth();
         if (this.floating) {
-            return this.width ? this.width : (this.position == 'left' || this.position == 'right' ? 'auto' : '100%');
+            return width ? width : this.position == 'left' || this.position == 'right' ? 'auto' : '100%';
         } else {
-            return this.width ? (this.position == 'left' || this.position == 'right' ? 'calc(100% - 14px)' : '100%') : 'auto';
+            return width ? (this.position == 'left' || this.position == 'right' ? 'calc(100% - 14px)' : '100%') : 'auto';
         }
     }
 
+    private _calcHeight(): string | undefined {
+        if(this.height && this.height != "auto") {
+            return this.height;
+        }
+        if(this.height == "auto") {
+            if(this.offsetTop) {
+                return `calc(100% - ${this.offsetTop})`;
+            }else if(this.offsetBottom) {
+                return `calc(100% - ${this.offsetBottom})`;
+            }
+        }
+        return undefined;
+    }
+
     private _calcDrawerHeight() {
+        let height = this._calcHeight();
         if (this.floating) {
-            return this.height ? this.height : (this.position == 'top' || this.position == 'bottom' ? 'auto' : '100%');
+            return height ? height : this.position == 'top' || this.position == 'bottom' ? 'auto' : '100%';
         } else {
-            return this.height ? (this.position == 'top' || this.position == 'bottom' ? 'calc(100% - 14px)' : '100%') : 'auto';
+            return height ? (this.position == 'top' || this.position == 'bottom' ? 'calc(100% - 14px)' : '100%') : 'auto';
         }
     }
 
