@@ -5,7 +5,7 @@ import {Component} from "@angular/core";
     styleUrls: ['./demo.component.css']
 })
 export class DrawerWithDivDemoComponent {
-    width: string;
+    width: string = 'auto';
     height: string = 'calc(100% - 30px)';
 
     selectedPosition = 'left';
