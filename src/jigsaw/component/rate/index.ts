@@ -11,3 +11,5 @@ import { JigsawRateComponent } from './rate';
   exports: [JigsawRateComponent]
 })
 export class JigsawRateModule { }
+
+export * from './rate';
