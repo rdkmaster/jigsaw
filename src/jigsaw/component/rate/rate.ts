@@ -41,7 +41,7 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
     private _onTouched = () => {
     };
 
-    private _icon: string = 'fa fa-star';
+    private _icon: string;
 
     @Input()
     public get icon(): string {
