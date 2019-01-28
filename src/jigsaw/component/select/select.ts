@@ -47,7 +47,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     public set width(value: string) {
         this._width = CommonUtils.getCssValue(value);
         this.callLater(() => {
-            if(this.multipleSelect) {
+            if (this.multipleSelect) {
                 this.minWidth = CommonUtils.getCssValue(value);
                 this.maxWidth = CommonUtils.getCssValue(value);
             }
@@ -210,11 +210,11 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     }
 
     public _$handleClearable(selectedItems: any[]) {
-        if(!this.clearable) return;
+        if (!this.clearable) {
+            return;
+        }
         if (!selectedItems || selectedItems.length == 0) {
-            this._value = undefined;
-            this._propagateChange(this.value);
-            this.valueChange.emit(this.value);
+            this.value = [];
         }
     }
 
