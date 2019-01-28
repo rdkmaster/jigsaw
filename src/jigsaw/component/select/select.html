@@ -1,7 +1,8 @@
 <j-combo-select [(value)]="_$selectedItems" [clearable]="clearable" [labelField]="labelField"
                 [autoClose]="!multipleSelect" [placeholder]="placeholder" [disabled]="disabled"
                 [showValueBorder]="multipleSelect" [openTrigger]="openTrigger" [closeTrigger]="closeTrigger"
-                (openChange)="_$onComboOpenChange($event)" width="100%" [autoWidth]="true" [valid]="valid">
+                (openChange)="_$onComboOpenChange($event)" (valueChange)="_$handleClearable($event)"
+                width="100%" [autoWidth]="true" [valid]="valid">
     <ng-template>
         <j-list-lite [data]="data" [labelField]="labelField" [trackItemBy]="trackItemBy"
                      [(selectedItems)]="_$selectedItems" [multipleSelect]="multipleSelect"

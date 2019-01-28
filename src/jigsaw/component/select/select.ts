@@ -130,6 +130,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 
     /**
      * 选择结果框的清除按钮的显示与隐藏
+     * $demo = select/clearable
      */
     @Input() public clearable: boolean;
 
@@ -206,6 +207,15 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
         this._value = this.multipleSelect ? selectedItems : selectedItems[0];
         this._propagateChange(this.value);
         this.valueChange.emit(this.value);
+    }
+
+    public _$handleClearable(selectedItems: any[]) {
+        if(!this.clearable) return;
+        if (!selectedItems || selectedItems.length == 0) {
+            this._value = undefined;
+            this._propagateChange(this.value);
+            this.valueChange.emit(this.value);
+        }
     }
 
     public _$onComboOpenChange(optionState: boolean) {
