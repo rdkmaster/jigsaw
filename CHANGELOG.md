@@ -1,3 +1,22 @@
+## v1.1.21 (2019-1-31)
+
+### 新特性 / New Features
+- [新增] 把InternalUtils.trackByFn挪到CommonUtils里去，并改名为toTrackByFunction
+- [新增] 抽屉的width/height支持一个快捷标志：auto，降低抽屉的尺寸与偏移量配合使用的复杂性
+
+### 破坏性修改 / Breaking Changes
+- 无
+
+###  优化 / Modified
+- 无
+
+### 修复 / Fixes
+- [修复] 修复auto-compoment-input下拉报错的问题, fixes #876
+- [修复] auto-complete-input输入框存在内容popup下拉框时不会自动过滤
+- [修复] 把rate组件导出到npm包中去
+- [修复] select控件的clearable为true时，点击clear按钮未能清空所选项的问题
+
+
 ## v1.1.20 (2019-1-15)
 
 ### 新特性 / New Features
