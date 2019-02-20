@@ -90,9 +90,9 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     };
 
     public set globalTheme(value) {
-        if(!value) return;
+        if (!value) return;
         this._globalTheme = value;
-        if(this._graph) {
+        if (this._graph) {
             this._graph._theme = value;
             this.data.refresh();
         }
@@ -197,8 +197,9 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         // 防止和ng2 事件冲突，响应两遍.
         event.preventDefault();
         event.stopPropagation();
-
-        this[eventType].emit(params);
+        this._zone.run(() => {
+            this[eventType].emit(params)
+        });
     }
 
     /* ********************** echarts api 封装区 start  ******************************** */
