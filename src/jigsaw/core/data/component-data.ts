@@ -620,7 +620,7 @@ export class PagingInfo implements IEmittable {
     }
 
     public set pageSize(value: number) {
-        if (isNaN(value) || value < 1) return;
+        if (isNaN(value) || value < 1 || this._pageSize == value) return;
         this._pageSize = value;
         this.emit();
     }
@@ -637,7 +637,7 @@ export class PagingInfo implements IEmittable {
     }
 
     public set currentPage(value: number) {
-        if (isNaN(value) || value < 1 || value > this.totalPage) return;
+        if (isNaN(value) || value < 1 || value > this.totalPage || this._currentPage == value) return;
         this._currentPage = value;
         this.emit();
     }

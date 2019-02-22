@@ -424,7 +424,6 @@ export class PageableTableData extends TableData implements IServerSidePageable,
             optionsOrUrl = this.sourceRequestOptions;
         }
         this.sourceRequestOptions = typeof optionsOrUrl === 'string' ? {url: optionsOrUrl} : optionsOrUrl;
-        this.pagingInfo.currentPage = 1;
         this.pagingInfo.totalRecord = 0;
         this.filterInfo = null;
         this.sortInfo = null;
@@ -479,8 +478,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         if (paramProperty == 'params') {
             options.params = PreparedHttpClientOptions.prepareParams(options.params)
         }
-
-        this.http.request(options.method, PagingInfo.pagingServerUrl, options)
+        this.http.request(options.method, PagingInfo.pagingServerUrl, options).debounceTime(300)
             .map(res => this.reviseData(res))
             .map(data => {
                 this._updatePagingInfo(data);
