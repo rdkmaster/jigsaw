@@ -124,7 +124,7 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
         if (!this.fileType) return files;
         const fileTypes = this.fileType.split(',');
         return files.filter(f =>
-            !!fileTypes.find(ft => new RegExp(`${ft.trim()}$`).test(f.name)));
+            !!fileTypes.find(ft => new RegExp(`${ft.trim()}$`,'i').test(f.name)));
     }
 
     private _isAllFilesUploaded(): boolean {
