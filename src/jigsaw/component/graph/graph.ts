@@ -3,7 +3,8 @@
  */
 import {
     Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output,
-    Renderer2
+    Renderer2,
+    AfterViewInit,
 } from "@angular/core";
 import {AbstractGraphData} from "../../core/data/graph-data";
 
@@ -17,7 +18,7 @@ import {VMAX_GRAPH_THEME} from "./vmax-theme";
     selector: 'jigsaw-graph, j-graph',
     templateUrl: 'graph.html',
 })
-export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDestroy {
+export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDestroy, AfterViewInit {
     // TODO 当前属性判断不正确, 当前判断是是否option为空
     public dataValid: boolean = false;
 
@@ -172,7 +173,9 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
         this._listenWindowResize();
     }
-
+    ngAfterViewInit(){
+        this.resize();
+    }
     ngOnDestroy() {
         if (this._resizeEventRemoval) {
             this._resizeEventRemoval();
