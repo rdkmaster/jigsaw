@@ -18,9 +18,21 @@ export class EchartTitle {
     [prop:string]: any;
 }
 
+export class EchartXAxis {
+    [prop:string]: any;
+}
+
+export class EchartYAxis {
+    [prop:string]: any;
+}
+
 export class GraphLegendItem {
     name?: string;
     icon?: string;
+    [prop:string]: any;
+}
+
+export class EchartToolbox {
     [prop:string]: any;
 }
 
