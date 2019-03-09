@@ -42,9 +42,9 @@ export type AggregateAlgorithm = 'sum' | 'average' | 'max' | 'min' | 'head' | 't
 
 function aggregateAlgorithms2Function(algorithm: AggregateAlgorithm): ReduceFunction {
     if (algorithm == 'sum') {
-        return (previous: number, current: number) => previous + current;
+        return (previous: number, current: number) => previous + parseFloat(String(current));
     } else if (algorithm == 'average') {
-        return (previous: number, current: number, index: number, array: number[]) => previous + current / array.length;
+        return (previous: number, current: number, index: number, array: number[]) => previous + parseFloat(String(current)) / array.length;
     } else if (algorithm == 'max') {
         return (previous: number, current: number) => Math.max(previous, current);
     } else if (algorithm == 'min') {
