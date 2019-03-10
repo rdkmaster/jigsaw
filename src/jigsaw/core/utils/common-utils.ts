@@ -120,9 +120,6 @@ export class CommonUtils {
     }
 
     public static extendObjects<T = Object>(targetObject: T, ...sources): T {
-        if (!sources) {
-            return targetObject;
-        }
         sources.forEach(s => this.extendObject(targetObject, s));
         return targetObject;
     }

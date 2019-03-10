@@ -163,7 +163,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
 
     protected createChartOptions(): EchartOptions {
         if (!this.seriesField || !this.xAxis || !this.xAxis.field) {
-            return;
+            return undefined;
         }
         if (!this.indicators || this.indicators.length == 0) {
             return undefined;
@@ -187,7 +187,10 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         if (this.usingAllDimensions) {
             const series = distinct(getColumn(this.data, serialIndex));
             if (series) {
-                dimensions.push(...series.map(s => new Dimension(s)));
+                dimensions.push(...series.map(s => {
+                    const d = this.dimensions.find(d => d.name === s);
+                    return d ? d : new Dimension(s);
+                }));
             }
         } else {
             dimensions.push(...this.dimensions);

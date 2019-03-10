@@ -3,6 +3,9 @@ export function getColumn(matrix: any[][], column: number): any[] {
     if (!matrix || matrix.length == 0) {
         return undefined;
     }
+    if (column < 0) {
+        return undefined;
+    }
     if (matrix[0].length <= column) {
         return undefined;
     }
@@ -10,11 +13,17 @@ export function getColumn(matrix: any[][], column: number): any[] {
 }
 
 export function getRow(matrix: any[][], row: number): any[] {
-    return matrix[row];
+    if (!matrix || matrix.length == 0) {
+        return undefined;
+    }
+    if (row < 0) {
+        return undefined;
+    }
+    return matrix[row] ? matrix[row].concat() : undefined;
 }
 
 export function distinct(list: any[]): any[] {
-    return list.filter((item, index) => index === list.indexOf(item));
+    return list ? list.filter((item, index) => index === list.indexOf(item)) : list;
 }
 
 export type Grouped = { _$groupItems: any[], [group: string]: any[][] };
@@ -22,6 +31,9 @@ export type Grouped = { _$groupItems: any[], [group: string]: any[][] };
 export function group(matrix: any[][], groupBy: number): Grouped {
     const grouped: Grouped = {_$groupItems: []};
     const index = distinct(getColumn(matrix, groupBy));
+    if (!index) {
+        return undefined;
+    }
     grouped._$groupItems = index;
     index.forEach(group => {
         grouped[group] = matrix.filter(row => row[groupBy] == group);
@@ -40,33 +52,37 @@ export function flat(group: Grouped): string[][] {
 type ReduceFunction = (previousValue?: number, currentValue?: number, currentIndex?: number, array?: number[]) => number;
 export type AggregateAlgorithm = 'sum' | 'average' | 'max' | 'min' | 'head' | 'tail' | ReduceFunction;
 
-function aggregateAlgorithms2Function(algorithm: AggregateAlgorithm): ReduceFunction {
+function aggregateAlgorithms2Function(algorithm: AggregateAlgorithm): [ReduceFunction, number] {
+    let func: ReduceFunction, initialValue = 0;
     if (algorithm == 'sum') {
-        return (previous: number, current: number) => previous + parseFloat(String(current));
+        func = (previous, current) => previous + parseFloat(String(current));
     } else if (algorithm == 'average') {
-        return (previous: number, current: number, index: number, array: number[]) => previous + parseFloat(String(current)) / array.length;
+        func = (previous, current, index, array) => previous + parseFloat(String(current)) / array.length;
     } else if (algorithm == 'max') {
-        return (previous: number, current: number) => Math.max(previous, current);
+        func = (previous, current) => Math.max(previous, parseFloat(String(current)));
     } else if (algorithm == 'min') {
-        return (previous: number, current: number) => Math.min(previous, current);
+        func = (previous, current) => Math.min(previous, parseFloat(String(current)));
+        initialValue = Infinity;
     } else if (algorithm == 'head') {
-        return (previous: number, current: number, index: number, array: number[]) => array[0];
+        func = (previous, current, index, array) => array[0];
     } else if (algorithm == 'tail') {
-        return (previous: number, current: number, index: number, array: number[]) => array[array.length - 1];
+        func = (previous, current, index, array) => array[array.length - 1];
     } else if (typeof algorithm === 'function') {
-        return algorithm;
+        func = algorithm;
     } else {
-        throw new Error('unsupported aggregate algorithm:' + algorithm);
+        throw new Error('unsupported aggregate algorithm: ' + algorithm);
     }
+    return [func, initialValue];
 }
 
 export function aggregate(matrix: string[][], by: { index: number, algorithm: AggregateAlgorithm }[]): string[] {
-    if (!matrix || matrix.length == 0) {
+    if (!matrix || matrix.length == 0 || !by) {
         return [];
     }
-    const result: string[] = matrix[0];
+    const result: string[] = matrix[0].concat();
     by.forEach(item => {
-        result[item.index] = getColumn(matrix, item.index).reduce(aggregateAlgorithms2Function(item.algorithm), 0);
+        const [func, initial] = aggregateAlgorithms2Function(item.algorithm);
+        result[item.index] = getColumn(matrix, item.index).reduce(func, initial);
     });
     return result;
 }
