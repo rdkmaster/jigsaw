@@ -7,6 +7,8 @@ import {createTypingsReexportFile} from './typings-reexport';
 import {createMetadataReexportFile} from './metadata-reexport';
 import {buildConfig} from './build-config';
 import {updatePackageForLabs} from "./package-for-labs";
+import {readFileSync, writeFileSync} from 'fs';
+import {sync as glob} from "glob";
 
 const {packagesDir, outputDir, projectDir} = buildConfig;
 
@@ -24,6 +26,13 @@ export function composeRelease(packageName: string) {
   const releasePath = join(outputDir, 'releases', packageName);
 
   inlinePackageMetadataFiles(packagePath);
+
+  // fix @ngx-translate/core/index in umd error
+  glob(`${packageName}.umd?(.min).js`, {cwd: bundlesDir}).forEach(fileName => {
+    let umdStr = readFileSync(join(bundlesDir,fileName)).toString();
+    umdStr = umdStr.replace(/@ngx-translate\/core\/index/g, '@ngx-translate/core');
+    writeFileSync(join(bundlesDir, fileName), umdStr);
+  });
 
   copyFiles(packagePath, '**/*.+(d.ts|metadata.json)', join(releasePath, 'typings'));
   copyFiles(bundlesDir, `${packageName}.umd?(.min).js?(.map)`, join(releasePath, 'bundles'));
