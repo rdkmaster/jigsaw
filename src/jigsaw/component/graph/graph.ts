@@ -111,12 +111,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         if (!this._graph) {
             return;
         }
-        if (!this._isOptionsValid(option)) {
-            this.dataValid = false;
-            return;
-        }
-        this.dataValid = true;
-
+        this.setDataValid(option);
         this._graph.setOption(option, true, lazyUpdate);
         this._registerEvent();
     }
@@ -129,6 +124,14 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
                 silence: true
             });
         }
+    }
+
+    private setDataValid(option) {
+        if (!this._isOptionsValid(option)) {
+            this.dataValid = false;
+            return;
+        }
+        this.dataValid = true;
     }
 
     private _resizeEventRemoval: Function;
@@ -155,9 +158,12 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     ngOnInit() {
         super.ngOnInit();
+        if (this.data) this.setDataValid(this.data.options);
+    }
+
+    ngAfterViewInit() {
         this._renderer.addClass(this._host, 'jigsaw-graph-host');
         this._graphContainer = <HTMLElement>this._host.querySelector(".jigsaw-graph");
-
         this._zone.runOutsideAngular(() => {
             // echarts的Animation对象里的_startLoop方法有个递归调用requestAnimationFrame,会触发变更检查，见#289
             this._graph = echarts.init(this._graphContainer);
@@ -167,10 +173,6 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         if (this.data) this.setOption(this.data.options);
 
         this._listenWindowResize();
-    }
-
-    ngAfterViewInit() {
-        this.resize();
     }
 
     ngOnDestroy() {
