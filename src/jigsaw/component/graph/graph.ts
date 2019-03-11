@@ -1,17 +1,12 @@
 /**
  * Created by 10177553 on 2017/3/23.
  */
-import {
-    Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output,
-    Renderer2,
-    AfterViewInit,
-} from "@angular/core";
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output, Renderer2,} from "@angular/core";
 import {AbstractGraphData} from "../../core/data/graph-data";
 
-import {CommonUtils} from "../../core/utils/common-utils";
+import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {AbstractJigsawComponent} from "../common";
 import {EchartOptions} from "../../core/data/echart-types";
-import {CallbackRemoval} from "../../core/utils/common-utils";
 import {VMAX_GRAPH_THEME} from "./vmax-theme";
 
 @Component({
@@ -173,9 +168,11 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
         this._listenWindowResize();
     }
-    ngAfterViewInit(){
+
+    ngAfterViewInit() {
         this.resize();
     }
+
     ngOnDestroy() {
         if (this._resizeEventRemoval) {
             this._resizeEventRemoval();
