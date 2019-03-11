@@ -33,8 +33,8 @@ script:
   - gulp ensure-url-matches-path
   - gulp generate-demo-info
   - gulp jigsaw:build-release:clean
-  - # ng test --code-coverage --watch false
-  - # cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
+  - ng test --code-coverage --watch false
+  - cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
   - sh build/scripts/doc-generator/generate.sh ./temp/doc/
   - sh build/scripts/build-tourist.sh
   - sh build/scripts/integrate-with-seed.sh
