@@ -111,7 +111,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         if (!this._graph) {
             return;
         }
-        this.setDataValid(option);
+        this._setDataValid(option);
         this._graph.setOption(option, true, lazyUpdate);
         this._registerEvent();
     }
@@ -126,7 +126,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         }
     }
 
-    private setDataValid(option) {
+    private _setDataValid(option) {
         if (!this._isOptionsValid(option)) {
             this.dataValid = false;
             return;
@@ -158,7 +158,9 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     ngOnInit() {
         super.ngOnInit();
-        if (this.data) this.setDataValid(this.data.options);
+        if (this.data) {
+            this._setDataValid(this.data.options);
+        }
     }
 
     ngAfterViewInit() {
@@ -170,7 +172,9 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
             this._graph._theme = VMAX_GRAPH_THEME;
         });
 
-        if (this.data) this.setOption(this.data.options);
+        if (this.data) {
+            this.setOption(this.data.options);
+        }
 
         this._listenWindowResize();
     }
