@@ -112,6 +112,10 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
             return;
         }
         this._setDataValid(option);
+        // 若数据非法，那么不能给graph赋值，故直接返回
+        if (!this.dataValid) {
+            return;
+        }
         this._graph.setOption(option, true, lazyUpdate);
         this._registerEvent();
     }
@@ -127,11 +131,12 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     }
 
     private _setDataValid(option) {
-        if (!this._isOptionsValid(option)) {
+        if (this._isOptionsValid(option)) {
+            this.dataValid = true;
+        } else {
             this.dataValid = false;
-            return;
         }
-        this.dataValid = true;
+
     }
 
     private _resizeEventRemoval: Function;
@@ -171,12 +176,10 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
             this._graph = echarts.init(this._graphContainer);
             this._graph._theme = VMAX_GRAPH_THEME;
         });
-
+        this._listenWindowResize();
         if (this.data) {
             this.setOption(this.data.options);
         }
-
-        this._listenWindowResize();
     }
 
     ngOnDestroy() {
