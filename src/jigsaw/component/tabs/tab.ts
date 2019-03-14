@@ -627,9 +627,9 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
 
     private _updateOverflowButton() {
         if(!this._tabsNav || !this._tabsNavWrap) return;
-        this._$showOverflowButton = this._tabsNavWrap.nativeElement.offsetWidth < this._tabsNav.nativeElement.offsetWidth
+        this._$showOverflowButton = this._tabsNavWrap.nativeElement.offsetWidth < this._tabsNav.nativeElement.offsetWidth;
+        this._changeDetector.detectChanges();
     }
-
     @HostListener('window:resize')
     onResize() {
         this._createTabList();
