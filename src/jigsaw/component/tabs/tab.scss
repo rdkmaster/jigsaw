@@ -5,7 +5,6 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
 .#{$tab-prefix} {
     display: block;
     position: relative;
-    overflow: hidden;
     @include clearfix;
     color: $text-color;
     background: $component-background;
