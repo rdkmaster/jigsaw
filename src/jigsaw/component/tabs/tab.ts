@@ -143,6 +143,8 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         this._calulateContentHeight();
     }
 
+    @Input()
+    public enableAnimation: boolean = true;
 
     /**
      * 当前的tab页数量，包含被隐藏的tab页
