@@ -36,7 +36,7 @@
             [isActive]="selectedIndex === i"
             [lazy]="tab.lazy"
             [initData]="tab.initData"
-            [ngStyle]="{transform: 'translate3d('+(i-_$selectedIndex)*100+'%, 0px, 0px)'}">
+            [ngStyle]="{transform: 'translate3d('+(i-_$selectedIndex)*100+'%, 0px, 0px)', transition: enableAnimation ?  'transform 0.5s' : ''}">
         </jigsaw-tab-content>
     </div>
 </div>
