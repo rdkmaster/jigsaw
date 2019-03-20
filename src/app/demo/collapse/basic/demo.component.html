@@ -5,7 +5,7 @@
 
 <!-- start to learn the demo from here -->
 <jigsaw-collapse id="test-collapse1" width="80%">
-    <jigsaw-collapse-pane header="测试col" [isActive]="true">
+    <jigsaw-collapse-pane header="测试col" [isActive]="true" (isActiveChange)="_$isActiveChange($event)">
         <jigsaw-input></jigsaw-input>
     </jigsaw-collapse-pane>
 
