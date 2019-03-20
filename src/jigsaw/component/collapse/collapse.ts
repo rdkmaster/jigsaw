@@ -26,20 +26,21 @@ export enum CollapseMode {
     templateUrl: './collapse-pane.html'
 })
 export class JigsawCollapsePane extends AbstractJigsawComponent {
+
+    private _isActive: boolean = false;
+
     @Input()
-    get isActive(): boolean {
+    public get isActive(): boolean {
         return this._isActive;
     }
 
-    set isActive(value: boolean) {
+    public set isActive(value: boolean) {
         if (this._isActive != value) {
             this._isActive = value;
             this.isActiveChange.emit(value);
             this._changeDetector.detectChanges();
         }
     }
-
-    private _isActive: boolean = false;
 
     @Output()
     public isActiveChange = new EventEmitter<boolean>();
@@ -63,7 +64,7 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
     public _$onClick() {
         // 手风琴, 自动关闭其他的pane;
         if (this._collapse && this._collapse.panes) {
-            this._collapse.currentIndex = this._collapse.panes.toArray().indexOf(this);
+            this._collapse._selectedIndex = this._collapse.panes.toArray().indexOf(this);
             if (this._collapse.mode === "accordion" || this._collapse.mode === CollapseMode.accordion) {
                 this._collapse.panes.forEach(item => {
                     if (item !== this && item.isActive) {
@@ -106,7 +107,10 @@ export class JigsawCollapse extends AbstractJigsawComponent {
     @Input()
     public mode: string | CollapseMode = 'default';  // accordion
 
-    public currentIndex: number = 0;
+    /**
+     * @internal
+     */
+    public _selectedIndex: number = 0;
 
 }
 
