@@ -1,10 +1,12 @@
 import {
+    ChangeDetectorRef,
     Component,
-    ContentChildren,
+    ContentChildren, EventEmitter,
     forwardRef,
     Host,
     Inject,
     Input,
+    Output,
     NgModule,
     QueryList,
     ViewEncapsulation
@@ -24,16 +26,31 @@ export enum CollapseMode {
     templateUrl: './collapse-pane.html'
 })
 export class JigsawCollapsePane extends AbstractJigsawComponent {
+    @Input()
+    get isActive(): boolean {
+        return this._isActive;
+    }
 
-    constructor(@Host() @Inject(forwardRef(() => JigsawCollapse)) private _collapse) {
+    set isActive(value: boolean) {
+        if (this._isActive != value) {
+            this._isActive = value;
+            this.isActiveChange.emit(value);
+            this._changeDetector.detectChanges();
+        }
+    }
+
+    private _isActive: boolean = false;
+
+    @Output()
+    public isActiveChange = new EventEmitter<boolean>();
+
+    constructor(@Host() @Inject(forwardRef(() => JigsawCollapse)) private _collapse,
+                private _changeDetector: ChangeDetectorRef) {
         super();
     }
 
     @Input('header')
     public title: string;
-
-    @Input()
-    public isActive: boolean = false;
 
     /**
      * @internal
@@ -45,13 +62,15 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
      */
     public _$onClick() {
         // 手风琴, 自动关闭其他的pane;
-        if (this._collapse && this._collapse.panes &&
-            (this._collapse.mode === "accordion" || this._collapse.mode === CollapseMode.accordion)) {
-            this._collapse.panes.forEach(item => {
-                if (item !== this && item.isActive) {
-                    item.isActive = false;
-                }
-            })
+        if (this._collapse && this._collapse.panes) {
+            this._collapse.currentIndex = this._collapse.panes.toArray().indexOf(this);
+            if (this._collapse.mode === "accordion" || this._collapse.mode === CollapseMode.accordion) {
+                this._collapse.panes.forEach(item => {
+                    if (item !== this && item.isActive) {
+                        item.isActive = false;
+                    }
+                })
+            }
         }
         this._$isTransitionEnd = false;
         this.callLater(() => {
@@ -86,6 +105,9 @@ export class JigsawCollapse extends AbstractJigsawComponent {
      */
     @Input()
     public mode: string | CollapseMode = 'default';  // accordion
+
+    public currentIndex: number = 0;
+
 }
 
 /**
