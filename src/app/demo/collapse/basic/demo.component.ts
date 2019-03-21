@@ -8,8 +8,14 @@ import {Component} from '@angular/core';
 })
 export class CollapseBasicDemoComponent {
 
-    public _$isActiveChange(isActive:boolean){
+    public _$isActiveChange(isActive: boolean) {
         console.log(isActive);
+    }
+
+    public isActive = true;
+
+    public _$click() {
+        this.isActive = !this.isActive;
     }
 
     // ====================================================================

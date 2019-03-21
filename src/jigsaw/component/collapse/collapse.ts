@@ -36,8 +36,12 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
 
     public set isActive(value: boolean) {
         if (this._isActive != value) {
-            this._isActive = value;
+            this._$isTransitionEnd = false;
+            this.callLater(() => {
+                this._isActive = value;
+            });
             this.isActiveChange.emit(value);
+            this._modeHandle();
             this._changeDetector.detectChanges();
         }
     }
@@ -62,6 +66,10 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
      * @internal
      */
     public _$onClick() {
+        this.isActive = !this.isActive;
+    }
+
+    private _modeHandle() {
         // 手风琴, 自动关闭其他的pane;
         if (this._collapse && this._collapse.panes) {
             this._collapse._selectedIndex = this._collapse.panes.toArray().indexOf(this);
@@ -73,10 +81,6 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
                 })
             }
         }
-        this._$isTransitionEnd = false;
-        this.callLater(() => {
-            this.isActive = !this.isActive;
-        })
     }
 }
 
