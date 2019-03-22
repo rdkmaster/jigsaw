@@ -39,9 +39,9 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
             this._$isTransitionEnd = false;
             this.callLater(() => {
                 this._isActive = value;
+                this.isActiveChange.emit(value);
             });
-            this.isActiveChange.emit(value);
-            this._modeHandle();
+            this._updateCollapsePaneStatus();
             this._changeDetector.detectChanges();
         }
     }
@@ -69,7 +69,7 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
         this.isActive = !this.isActive;
     }
 
-    private _modeHandle() {
+    private _updateCollapsePaneStatus() {
         // 手风琴, 自动关闭其他的pane;
         if (this._collapse && this._collapse.panes) {
             this._collapse._selectedIndex = this._collapse.panes.toArray().indexOf(this);
