@@ -2,15 +2,18 @@
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
 
-
+<j-button (click)="_$click()">切换 测试col 打开状态</j-button>
+<br>
+<br>
 <!-- start to learn the demo from here -->
 <jigsaw-collapse id="test-collapse1" width="80%">
-    <jigsaw-collapse-pane header="测试col" [isActive]="true" (isActiveChange)="_$isActiveChange($event)">
-        <jigsaw-input></jigsaw-input>
+    <jigsaw-collapse-pane header="测试col" [(isActive)]="isActive" (isActiveChange)="_$isActiveChange($event)">
+        <jigsaw-input placeholder="请输入姓名~"></jigsaw-input>
     </jigsaw-collapse-pane>
 
     <jigsaw-collapse-pane header="afdafd">
-        姓名: <jigsaw-input placeholder="请输入姓名~"></jigsaw-input>
+        姓名:
+        <jigsaw-input placeholder="请输入姓名~"></jigsaw-input>
     </jigsaw-collapse-pane>
 
     <jigsaw-collapse-pane header="嵌套">
@@ -20,7 +23,8 @@
             </jigsaw-collapse-pane>
 
             <jigsaw-collapse-pane header="afdafd" isactive="true">
-                姓名: <jigsaw-input placeholder="请输入姓名~"></jigsaw-input>
+                姓名:
+                <jigsaw-input placeholder="请输入姓名~"></jigsaw-input>
             </jigsaw-collapse-pane>
         </jigsaw-collapse>
     </jigsaw-collapse-pane>
@@ -44,7 +48,8 @@
     </jigsaw-collapse-pane>
 
     <jigsaw-collapse-pane header="afdafd">
-        密码: <jigsaw-input placeholder="请输入姓名~"></jigsaw-input>
+        密码:
+        <jigsaw-input placeholder="请输入姓名~"></jigsaw-input>
     </jigsaw-collapse-pane>
     <jigsaw-collapse-pane header="3">
         <p>今天是个好天气</p>
