@@ -135,7 +135,6 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         }
         if (<TimeGr>value != this._$gr) {
             this._$gr = <TimeGr>value;
-            this._value = TimeService.getFormatDate(this._value, this._$gr);
             if (this._timePicker) {
                 this._initDatePicker();
             }
@@ -471,10 +470,6 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     private _initDatePicker() {
         const insert = this._el.nativeElement.querySelector(".jigsaw-time-box");
         TimeService.setWeekStart(this._weekStart);
-        let [result, isChange] = this._handleValue(<Time>this.date);
-        if (isChange) {
-            this._value = result;
-        }
         this._destroyPicker();
         const picker = $(insert).datetimepicker({
             inline: true,
@@ -486,9 +481,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         picker.off('dp.change');
         picker.on("dp.change", (e) => {
             let changeValue = TimeService.getFormatDate(e.date, <TimeGr>this.gr);
-            if (this.date != changeValue) {
-                this._handleValueChange(changeValue, <TimeGr>this.gr);
-            }
+            this._handleValueChange(changeValue, <TimeGr>this.gr);
             this._bindActiveDayClickHandler(picker);
 
             // 选择了日期，让recommend的tooltip的销毁
@@ -510,7 +503,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         this._timePicker = $(insert).data("DateTimePicker");
         this._timePicker.locale(CommonUtils.getBrowserLang());
 
-        this._handleValueChange(<Time>this.date, <TimeGr>this.gr, true);
+        this._handleValueChange(<Time>this.date, <TimeGr>this.gr);
     }
 
     private _bindActiveDayClickHandler(picker) {
@@ -573,8 +566,8 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         }
     }
 
-    private _handleValueChange(changeValue: Time, gr: TimeGr, emit?: boolean) {
-        if (this.date != changeValue || emit) {
+    private _handleValueChange(changeValue: Time, gr: TimeGr) {
+        if (this.date != changeValue) {
             this._value = changeValue;
             this.callLater(() => {
                 const val = gr == TimeGr.week ? this._handleWeekSelect() : this._value;
@@ -814,7 +807,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     }
 
 
-    private _propagateChange:any = () => {};
+    private _propagateChange: any = () => {};
 
     public writeValue(newValue: any): void {
         if (!newValue || newValue == this._value) {
